@@ -2,8 +2,8 @@
 #define RACE_DATA_BASE_IDL
 
 #include <Components.idl>
-#include "RACE/common/OpString.idl"
-#include "RACE/common/Utils.idl"
+#include "common/OpString.idl"
+#include "common/Utils.idl"
 
 module CIAO
 {

@@ -11,7 +11,7 @@
 #define EFFECTOR_BASE_IDL
 
 #include "ciao/Components.idl"
-#include "RACE/common/OpString.idl"
+#include "common/OpString.idl"
 
 module CIAO
 {

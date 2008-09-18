@@ -1,4 +1,4 @@
-#include "RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_AdapterC.h"
+#include "Input_Adapters/Interactive_Input_Adapter/Interactive_Input_AdapterC.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 #include <sstream>

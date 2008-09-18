@@ -6,7 +6,7 @@
 #include "ace/OS.h"
 #include "ace/SString.h"
 #include "orbsvcs/CosNamingC.h"
-#include "RACE/common/OpStringC.h"
+#include "common/OpStringC.h"
 #include "Plan_Generator_Impl.h"
 
 #include "Planner.h"

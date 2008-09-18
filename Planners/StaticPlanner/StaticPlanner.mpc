@@ -1,4 +1,4 @@
-project(Planner_StaticPlanner_stub): ciao_deployment_stub, ciao_race_component {
+project(Planner_StaticPlanner_stub): ciao_deployment_stub, ciao_race_component, race_idl {
   after += Planner_stub Planner_Interface_stub
   libs += Planner_stub Planner_Interface_stub
   sharedname = StaticPlanner_stub
@@ -18,7 +18,7 @@ project(Planner_StaticPlanner_stub): ciao_deployment_stub, ciao_race_component {
   }
 }
 
-project(Planner_StaticPlanner_svnt) : ciao_servant_dnc, ciao_race_component {
+project(Planner_StaticPlanner_svnt) : ciao_servant_dnc, ciao_race_component, race_idl {
   after += Planner_svnt Planner_StaticPlanner_stub Planner_Interface_svnt
   sharedname  = StaticPlanner_svnt
   libs    += StaticPlanner_stub Planner_stub Planner_svnt \
@@ -45,7 +45,7 @@ project(Planner_StaticPlanner_svnt) : ciao_servant_dnc, ciao_race_component {
 }
 
 
-project(Planner_StaticPlanner_exec) : ciao_component_dnc, ciao_race_component {
+project(Planner_StaticPlanner_exec) : ciao_component_dnc, ciao_race_component, race_common {
   after   += Planner_StaticPlanner_svnt
   sharedname = StaticPlanner_exec
   libs      += StaticPlanner_stub\

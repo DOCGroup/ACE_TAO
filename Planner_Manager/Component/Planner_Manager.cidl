@@ -3,8 +3,8 @@
 
 #include "Planner_Manager.idl"
 
-#include "RACE/Planners/Interface/Planner_I.idl"
-#include "RACE/Output_Adapters/Interface/PlanEgress.idl"
+#include "Planners/Interface/Planner_I.idl"
+#include "Output_Adapters/Interface/PlanEgress.idl"
 
 module CIAO
 {

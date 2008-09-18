@@ -33,7 +33,7 @@ module CIAO
 
       component Tester_Component supports Testing
       {
-        uses CIAO::RACE::SA_POP_IA::Admin RACE_IA;
+        uses CIAO::RACE::Input_Adapter::Admin RACE_IA;
 
         uses CIAO::RACE::SA_POP::Planning SAPOP;
       };

@@ -1,3 +1,169 @@
+Thu Sep 18 18:12:57 UTC 2008  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Allocator/Base/Allocator_Base.idl:
+        * Allocator/Base/Allocator_Base.mpc:
+
+        * Allocator/FirstFit/FirstFit.idl:
+        * Allocator/FirstFit/FirstFit.mpc:
+
+        * Conductor/Conductor.idl:
+        * Conductor/Conductor.mpc:
+
+        * Controller/Base/Controller_Base.idl:
+        * Controller/Base/Controller_Base.mpc:
+
+        * Controller/Component/Controller.idl:
+        * Controller/Component/Controller.mpc:
+        * Controller/Component/Poller.h:
+
+        * Controller/EUCON/EUCON_Controller.idl:
+        * Controller/EUCON/EUCON_Controller.mpc:
+
+        * Controller/FMUF/FMUF_Controller.idl:
+        * Controller/FMUF/FMUF_Controller.mpc:
+
+        * Data_Base/Data_Base.idl:
+        * Data_Base/Data_Base.mpc:
+
+        * Effectors/Base/Effector_Base.idl:
+        * Effectors/Base/Effector_Base.mpc:
+
+        * Effectors/Callback/Callback.mpc:
+
+        * Effectors/EUCON/ApplicationActuator_exec.h:
+        * Effectors/EUCON/EUCON_Effector.idl:
+        * Effectors/EUCON/EUCON_Effector.mpc:
+
+        * Input_Adapters/Base/Input_Adapter_Base.idl:
+        * Input_Adapters/Base/Input_Adapter_Base.mpc:
+
+        * Input_Adapters/Interactive_Input_Adapter/Admin_exec.h:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
+
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
+
+        * MPC:
+
+        * MPC/config:
+
+        * MPC/config/race_common.mpb:
+        * MPC/config/race_idl.mpb:
+
+        * Monitor/Central_Monitor/Monitor.idl:
+        * Monitor/Central_Monitor/Monitor.mpc:
+
+        * Monitor/Local_Monitor/Local_Monitor.h:
+        * Monitor/Local_Monitor/Local_Monitor.cpp:
+
+        * Output_Adapters/Base/Output_Adapter.idl:
+        * Output_Adapters/Base/Output_Adapter.mpc:
+
+        * Output_Adapters/Component/Output_Manager.idl:
+        * Output_Adapters/Component/Output_Manager.mpc:
+
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+
+        * Output_Adapters/Interface/Output_Adapter_Interface.mpc:
+        * Output_Adapters/Interface/PlanEgress.idl:
+
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.idl:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.mpc:
+
+        * Plan_Analyzer/Component/Plan_Analyzer.idl:
+        * Plan_Analyzer/Component/Plan_Analyzer.mpc:
+
+        * Plan_Analyzer/Interface/Analyzer_I.idl:
+        * Plan_Analyzer/Interface/PlanIngress.idl:
+        * Plan_Analyzer/Interface/Plan_Analyzer_Interface.mpc:
+
+        * Planner_Manager/Component/Planner_Manager.cidl:
+        * Planner_Manager/Component/Planner_Manager.idl:
+        * Planner_Manager/Component/Planner_Manager.mpc:
+
+        * Planner_Manager/Interface/Planner_Manager_I.idl:
+        * Planner_Manager/Interface/Planner_Manager_Interface.mpc:
+
+        * Planners/Base/Planner.idl:
+        * Planners/Base/Planner.mpc:
+
+        * Planners/Interface/Planner_I.idl:
+        * Planners/Interface/Planner_Interface.mpc:
+
+        * Planners/StaticPlanner/StaticPlanner.mpc:
+
+        * RACE.mwc:
+        * RACE_SAPOP.mwc:
+
+        * SA_POP/Component/Planning_exec.h:
+        * SA_POP/Component/Planning_exec.cpp:
+        * SA_POP/Component/SA_POP_Component.idl:
+        * SA_POP/Component/SA_POP_Component.mpc:
+
+        * SA_POP/SA_POP_for_RACE.mpc:
+
+        * SA_POP/Tester/Tester_Component.idl:
+        * SA_POP/Tester/Tester_Component.mpc:
+
+        * SA_POP/examples/Space/source/Analysis/Analysis_Component.mpc:
+
+        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.mpc:
+
+        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.mpc:
+
+        * SA_POP/examples/Space/source/Comm/Comm_Component.mpc:
+
+        * SA_POP/examples/Space/source/Compression/Compression_Component.mpc:
+
+        * SA_POP/examples/Space/source/Exec/Exec_Component.mpc:
+
+        * SA_POP/examples/Space/source/Filter/Filter_Component.mpc:
+
+        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High.mpc:
+
+        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low.mpc:
+
+        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.mpc:
+
+        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High.mpc:
+
+        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.mpc:
+
+        * SA_POP/examples/Space/source/Ground/Ground_Component.mpc:
+
+        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo.mpc:
+
+        * SA_POP/examples/Space/source/common/Event_Types.mpc:
+
+        * SA_POP/server/Driver.h:
+        * SA_POP/server/Driver.idl:
+        * SA_POP/server/Driver.mpc:
+
+        * TM_Proxy/TM_Proxy.mpc:
+
+        * Tester/Interactive_IA_Tester.cpp:
+        * Tester/tester.mpc:
+
+        * common/OpString.idl:
+        * common/RACE_common.idl:
+        * common/RACE_common.mpc:
+
+        * examples/E2E_Task/Base/Event_Types.mpc:
+
+        * examples/E2E_Task/Subtask/Subtask.mpc:
+
+        * examples/E2E_Task/Trigger/Trigger.mpc:
+
+        * examples/E2E_Task/Workload/Workload.mpc:
+
+        * examples/E2E_Task/utils/App_utils.mpc:
+
+        * utils/RACE_utils.mpc:
+
+          Updated RACE build system to use $(RACE_ROOT) environment variable.
+
 Thu Apr 10 23:06:32 UTC 2008  Nilabja R  <nilabjar@nospam.com>
 
         * Allocator/Base/Allocator_Base.idl:
@@ -16,8 +182,8 @@ Thu Apr 10 23:06:32 UTC 2008  Nilabja R  <nilabjar@nospam.com>
         * Allocator/FirstFit/FirstFit_svnt_export.h:
         * Allocator/FirstFit/Single_D_BP.h:
         * Allocator/FirstFit/Single_D_BP.cpp:
-          
-	  The allocator component.
+
+          The allocator component.
 
 Thu Apr  3 20:13:49 UTC 2008  Nilabja Roy  <nilabja@nospam.com>
 

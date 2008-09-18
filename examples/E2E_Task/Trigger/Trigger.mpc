@@ -1,4 +1,4 @@
-project(Trigger_idl_gen) : taoidldefaults, anytypecode {
+project(Trigger_idl_gen) : taoidldefaults, anytypecode, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=TRIGGER_STUB_Export \
@@ -13,7 +13,7 @@ project(Trigger_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Trigger_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(Trigger_cidl_gen) : ciaocidldefaults, taoidldefaults, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro TRIGGER_SVNT_Export \
@@ -34,7 +34,7 @@ project(Trigger_cidl_gen) : ciaocidldefaults, taoidldefaults {
   }
 }
 
-project(Trigger_stub) : ciao_client_dnc {
+project(Trigger_stub) : ciao_client_dnc, race_common {
   avoids += ace_for_tao
   after += Trigger_idl_gen \
            Event_Types_stub
@@ -64,7 +64,7 @@ project(Trigger_stub) : ciao_client_dnc {
   }
 }
 
-project(Trigger_exec) : ciao_component_dnc {
+project(Trigger_exec) : ciao_component_dnc, race_common {
   avoids += ace_for_tao
   after   += Trigger_cidl_gen \
              Trigger_stub \
@@ -101,7 +101,7 @@ project(Trigger_exec) : ciao_component_dnc {
 }
 
 
-project(Trigger_svnt) : ciao_servant_dnc {
+project(Trigger_svnt) : ciao_servant_dnc, race_common {
   avoids += ace_for_tao
   after      +=  Trigger_exec \
                  Event_Types_svnt

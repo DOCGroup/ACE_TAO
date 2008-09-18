@@ -1,10 +1,10 @@
-project(SA_POP) : ciao_config_handlers, ciao_deployment_stub, xerces {
+project(SA_POP) : ciao_config_handlers, ciao_deployment_stub, xerces, race_common {
 
    after += XSC_Config_Handlers
    sharedname   = SA_POP
 
    includes += $(CIAO_ROOT)/tools/Config_Handlers \
-               $(CIAO_ROOT)/RACE/SA_POP
+               $(SAPOP_ROOT)
 
    macros = SA_POP_HAS_ACE SA_POP_HAS_CIAO
 

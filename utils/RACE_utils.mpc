@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl RACE_utils"
 
-project(RACE_utils) : acelib {
+project(RACE_utils) : acelib, race_common {
 
   libout       = $(ACE_ROOT)/lib
   sharedname = RACE_utils

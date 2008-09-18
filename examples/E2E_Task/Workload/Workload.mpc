@@ -1,4 +1,4 @@
-project(Workload): taoexe, ciao_servant_dnc {
+project(Workload): taoexe, ciao_servant_dnc, race_common {
   exename = Workload
   after += Trigger_stub
 

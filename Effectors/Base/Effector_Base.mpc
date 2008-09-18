@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl Effector_Base"
 
-project(Effector_Base_idl_gen) : taoidldefaults, anytypecode {
+project(Effector_Base_idl_gen) : taoidldefaults, anytypecode, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=EFFECTOR_BASE_STUB_Export \
@@ -14,7 +14,7 @@ project(Effector_Base_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Effector_Base_stub) : ciao_client_dnc {
+project(Effector_Base_stub) : ciao_client_dnc, race_common {
   avoids += ace_for_tao
   after += Effector_Base_idl_gen \
            OpString_stub
@@ -40,7 +40,7 @@ project(Effector_Base_stub) : ciao_client_dnc {
   }
 }
 
-project(Effector_Base_svnt) : ciao_servant_dnc {
+project(Effector_Base_svnt) : ciao_servant_dnc, race_common {
   avoids += ace_for_tao
   after      +=  Effector_Base_stub
   sharedname  = Effector_Base_svnt

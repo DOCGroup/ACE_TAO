@@ -3,9 +3,9 @@
 #define RACE_PLAN_ANALYZER_IDL
 
 #include <Components.idl>
-#include "RACE/Plan_Analyzer/Interface/Analyzer_I.idl"
-#include "RACE/Plan_Analyzer/Interface/PlanIngress.idl"
-#include "RACE/Planner_Manager/Interface/Planner_Manager_I.idl"
+#include "Plan_Analyzer/Interface/Analyzer_I.idl"
+#include "Plan_Analyzer/Interface/PlanIngress.idl"
+#include "Planner_Manager/Interface/Planner_Manager_I.idl"
 
 module CIAO
 {

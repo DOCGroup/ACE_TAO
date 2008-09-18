@@ -1,4 +1,4 @@
-project(Planner_Manager_stub): ciao_deployment_stub, ciao_race_component {
+project(Planner_Manager_stub): ciao_deployment_stub, ciao_race_component, race_idl {
   after += Planner_Manager_Interface_stub \
            Planner_Interface_stub \
            Output_Adapter_Interface_stub
@@ -33,7 +33,7 @@ project(Planner_Manager_stub): ciao_deployment_stub, ciao_race_component {
   }
 }
 
-project(Planner_Manager_svnt) : ciao_servant_dnc, ciao_race_component {
+project(Planner_Manager_svnt) : ciao_servant_dnc, ciao_race_component, race_idl {
   after += Planner_Manager_stub \
            Planner_Manager_Interface_svnt
   sharedname  = Planner_Manager_svnt
@@ -80,7 +80,7 @@ project(Planner_Manager_svnt) : ciao_servant_dnc, ciao_race_component {
 }
 
 
-project(Planner_Manager_exec) : ciao_component_dnc, ciao_race_component {
+project(Planner_Manager_exec) : ciao_component_dnc, ciao_race_component, race_common {
   after   += Planner_Manager_svnt Planner_stub
   sharedname = Planner_Manager_exec
   libs    += Planner_Manager_stub \

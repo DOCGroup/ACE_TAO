@@ -4,7 +4,7 @@
 #define RACE_INPUT_ADAPTER_BASE_IDL
 
 #include <Components.idl>
-#include "RACE/Conductor/Conductor.idl"
+#include "Conductor/Conductor.idl"
 
 module CIAO
 {

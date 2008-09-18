@@ -1,4 +1,4 @@
-project(Controller_stub): ciao_deployment_stub {
+project(Controller_stub): ciao_deployment_stub, race_idl {
 
   after += CIAO_TargetManager_stub \
            TargetManager_stub       \
@@ -29,7 +29,7 @@ project(Controller_stub): ciao_deployment_stub {
   }
 }
 
-project(Controller_svnt) : ciao_servant_dnc {
+project(Controller_svnt) : ciao_servant_dnc, race_idl {
   after +=  Controller_stub \
             CIAO_TargetManager_svnt
 
@@ -62,7 +62,7 @@ project(Controller_svnt) : ciao_servant_dnc {
   }
 }
 
-project(Controller_exec) : ciao_component_dnc, ciao_config_handlers {
+project(Controller_exec) : ciao_component_dnc, ciao_config_handlers, race_common {
   after   += Controller_svnt \
              XSC_Config_Handlers \
              Path_stub
@@ -95,7 +95,7 @@ project(Controller_exec) : ciao_component_dnc, ciao_config_handlers {
 }
 
 
-project (Controller_Starter) : ciao_client_dnc, ciao_deployment_stub, valuetype {
+project (Controller_Starter) : ciao_client_dnc, ciao_deployment_stub, valuetype, race_common {
   exename = starter
   after += Controller_stub
   libs += Controller_stub \

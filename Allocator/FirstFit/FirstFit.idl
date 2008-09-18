@@ -12,7 +12,7 @@
  */
 
 #include <Components.idl>
-#include "RACE/Allocator/Base/Allocator_Base.idl"
+#include "Allocator/Base/Allocator_Base.idl"
 
 
 module CIAO

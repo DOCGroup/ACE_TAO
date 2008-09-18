@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl Conductor"
 
-project(Conductor_idl_gen) : taoidldefaults, anytypecode {
+project(Conductor_idl_gen) : taoidldefaults, anytypecode, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=CONDUCTOR_STUB_Export \
@@ -14,7 +14,7 @@ project(Conductor_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Conductor_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(Conductor_cidl_gen) : ciaocidldefaults, taoidldefaults, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro CONDUCTOR_SVNT_Export \
@@ -33,7 +33,7 @@ project(Conductor_cidl_gen) : ciaocidldefaults, taoidldefaults {
   }
 }
 
-project(Conductor_stub) : ciao_client_dnc {
+project(Conductor_stub) : ciao_client_dnc, race_common {
   avoids += ace_for_tao
   after += Conductor_idl_gen \
            OpString_stub \
@@ -68,7 +68,7 @@ project(Conductor_stub) : ciao_client_dnc {
   }
 }
 
-project(Conductor_exec) : ciao_component_dnc, ciao_config_handlers {
+project(Conductor_exec) : ciao_component_dnc, ciao_config_handlers, race_common {
   avoids += ace_for_tao
   after   += Conductor_cidl_gen Conductor_stub RACE_utils
   sharedname = Conductor_Component_exec
@@ -80,7 +80,7 @@ project(Conductor_exec) : ciao_component_dnc, ciao_config_handlers {
            RACE_common_stub \
            Controller_Base_stub
 
-  includes += $(CIAO_ROOT)/RACE/utils
+  includes += $(RACE_ROOT)/utils
   dynamicflags   = CONDUCTOR_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -105,7 +105,7 @@ project(Conductor_exec) : ciao_component_dnc, ciao_config_handlers {
 }
 
 
-project(Conductor_svnt) : ciao_servant_dnc {
+project(Conductor_svnt) : ciao_servant_dnc, race_common {
   avoids += ace_for_tao
   after += Conductor_exec
 

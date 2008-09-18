@@ -1,4 +1,4 @@
-project (Interactive_IA_Tester) : ciao_client_dnc, valuetype, ciao_deployment_stub {
+project (Interactive_IA_Tester) : ciao_client_dnc, valuetype, ciao_deployment_stub, race_common {
   avoids += ace_for_tao
   exename = Interactive_IA_Tester
   after += Interactive_Input_Adapter_stub

@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl Exec_Component"
 
-project(Exec_Component_stub): ciao_client_dnc {
+project(Exec_Component_stub): ciao_client_dnc, race_idl {
 
   after += Event_Types_stub
   includes += ../common
@@ -24,7 +24,7 @@ project(Exec_Component_stub): ciao_client_dnc {
   }
 }
 
-project(Exec_Component_svnt) : ciao_servant_dnc {
+project(Exec_Component_svnt) : ciao_servant_dnc, race_idl {
   after +=  Exec_Component_stub Event_Types_svnt
   sharedname  = Exec_Component_svnt
   libs    += Exec_Component_stub Event_Types_stub Event_Types_svnt
@@ -54,7 +54,7 @@ project(Exec_Component_svnt) : ciao_servant_dnc {
 }
 
 
-project(Exec_Component_exec) : ciao_component_dnc {
+project(Exec_Component_exec) : ciao_component_dnc, race_common {
   includes += ../common
   after   += Exec_Component_svnt
   sharedname = Exec_Component_exec

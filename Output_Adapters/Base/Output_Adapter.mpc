@@ -2,7 +2,7 @@
 //Output_Adapter.mpc,v 1.3 2005/09/27 18:20:01 wotte Exp
 // This file is generated with "generate_component_mpc.pl -n Planner"
 
-project(Output_Adapter_stub): ciao_deployment_stub, ciao_race_component  {
+project(Output_Adapter_stub): ciao_deployment_stub, ciao_race_component , race_idl {
 
   after += Output_Adapter_Interface_stub
   sharedname = Output_Adapter_stub
@@ -31,7 +31,7 @@ project(Output_Adapter_stub): ciao_deployment_stub, ciao_race_component  {
   }
 }
 
-project(Output_Adapter_svnt) : ciao_servant_dnc, ciao_race_component  {
+project(Output_Adapter_svnt) : ciao_servant_dnc, ciao_race_component , race_idl {
 
   after +=  Output_Adapter_stub Output_Adapter_Interface_svnt
   sharedname  = Output_Adapter_svnt

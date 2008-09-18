@@ -12,7 +12,7 @@
  */
 
 #include <Components.idl>
-#include "RACE/Controller/Base/Controller_Base.idl"
+#include "Controller/Base/Controller_Base.idl"
 
 
 module CIAO

@@ -2,9 +2,9 @@
 #define SA_POP_COMPONENT_IDL
 
 #include <Components.idl>
-#include "RACE/common/OpString.idl"
-#include "RACE/common/Goal.idl"
-#include "RACE/Data_Base/Data_Base.idl"
+#include "common/OpString.idl"
+#include "common/Goal.idl"
+#include "Data_Base/Data_Base.idl"
 
 module CIAO
 {

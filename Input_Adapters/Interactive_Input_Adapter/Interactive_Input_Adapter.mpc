@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl Interactive_Input_Adapter"
 
-project(Interactive_Input_Adapter_idl_gen) : taoidldefaults, anytypecode {
+project(Interactive_Input_Adapter_idl_gen) : taoidldefaults, anytypecode, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=INTERACTIVE_INPUT_ADAPTER_STUB_Export \
@@ -14,7 +14,7 @@ project(Interactive_Input_Adapter_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Interactive_Input_Adapter_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(Interactive_Input_Adapter_cidl_gen) : ciaocidldefaults, taoidldefaults, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro INTERACTIVE_INPUT_ADAPTER_SVNT_Export \
@@ -32,7 +32,7 @@ project(Interactive_Input_Adapter_cidl_gen) : ciaocidldefaults, taoidldefaults {
   }
 }
 
-project(Interactive_Input_Adapter_stub) : ciao_client_dnc {
+project(Interactive_Input_Adapter_stub) : ciao_client_dnc, race_common {
   avoids += ace_for_tao
   after += Interactive_Input_Adapter_idl_gen \
            Input_Adapter_Base_stub \
@@ -60,7 +60,7 @@ project(Interactive_Input_Adapter_stub) : ciao_client_dnc {
   }
 }
 
-project(Interactive_Input_Adapter_exec) : ciao_component_dnc, ciao_config_handlers {
+project(Interactive_Input_Adapter_exec) : ciao_component_dnc, ciao_config_handlers, race_common {
   avoids += ace_for_tao
   after   += Interactive_Input_Adapter_cidl_gen \
              Interactive_Input_Adapter_stub \
@@ -73,7 +73,7 @@ project(Interactive_Input_Adapter_exec) : ciao_component_dnc, ciao_config_handle
           OpString_stub \
           RACE_common_stub
 
-  includes += $(CIAO_ROOT)/RACE/utils
+  includes += $(RACE_ROOT)/utils
   dynamicflags   = INTERACTIVE_INPUT_ADAPTER_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -98,7 +98,7 @@ project(Interactive_Input_Adapter_exec) : ciao_component_dnc, ciao_config_handle
 }
 
 
-project(Interactive_Input_Adapter_svnt) : ciao_servant_dnc {
+project(Interactive_Input_Adapter_svnt) : ciao_servant_dnc, race_common {
   avoids += ace_for_tao
   after      +=  Interactive_Input_Adapter_exec \
                  Input_Adapter_Base_svnt

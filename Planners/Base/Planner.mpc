@@ -1,4 +1,4 @@
-project(Planner_stub): ciao_deployment_stub, ciao_race_component {
+project(Planner_stub): ciao_deployment_stub, ciao_race_component, race_idl {
 
   after += Planner_Interface_stub RACE_common_stub
   sharedname = Planner_stub
@@ -27,7 +27,7 @@ project(Planner_stub): ciao_deployment_stub, ciao_race_component {
   }
 }
 
-project(Planner_svnt) : ciao_servant_dnc, ciao_race_component  {
+project(Planner_svnt) : ciao_servant_dnc, ciao_race_component , race_common {
 
   after +=  Planner_Interface_svnt Planner_stub
   sharedname  = Planner_svnt

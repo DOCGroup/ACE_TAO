@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl Callback"
 
-project(Callback_idl_gen) : taoidldefaults, anytypecode {
+project(Callback_idl_gen) : taoidldefaults, anytypecode, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=CALLBACK_STUB_Export \
@@ -14,7 +14,7 @@ project(Callback_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Callback_stub) : taolib, anytypecode {
+project(Callback_stub) : taolib, anytypecode, race_common {
   avoids += ace_for_tao
   after += Callback_idl_gen
   libout       = $(ACE_ROOT)/lib

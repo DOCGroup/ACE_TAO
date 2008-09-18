@@ -1,4 +1,4 @@
-project(RACE_common_stub): anytypecode {
+project(RACE_common_stub): anytypecode, race_idl {
 
    libout       = $(ACE_ROOT)/lib	
    sharedname = RACE_common_stub
@@ -24,7 +24,7 @@ project(RACE_common_stub): anytypecode {
    }
  }
 
-project(OpString_stub): ciao_deployment_stub {
+project(OpString_stub): ciao_deployment_stub, race_idl {
 
   after += RACE_common_stub
   sharedname = OpString_stub

@@ -1,4 +1,4 @@
-// project(Monitor_Interface_stub): taolib_with_idl {
+// project(Monitor_Interface_stub): taolib_with_idl, race_idl {
 
 //   sharedname = Monitor_Interface_stub
 //   idlflags -= -GT
@@ -17,7 +17,7 @@
 //     InterfaceC.cpp
 //   }
 // }
-// project(Monitor_Interface_svnt): taolib_with_idl, portableserver {
+// project(Monitor_Interface_svnt): taolib_with_idl, portableserver, race_common {
 
 //   after += Monitor_Interface_stub
 //   sharedname = Monitor_Interface_svnt
@@ -33,7 +33,7 @@
 //   }
 // }
 
-project(Monitor_stub): ciao_client_dnc {
+project(Monitor_stub): ciao_client_dnc, race_idl {
 
   sharedname = Monitor_stub
   idlflags += -Wb,stub_export_macro=MONITOR_STUB_Export \
@@ -51,7 +51,7 @@ project(Monitor_stub): ciao_client_dnc {
   }
 }
 
-project(Monitor_svnt) : ciao_servant_dnc {
+project(Monitor_svnt) : ciao_servant_dnc, race_idl {
   after +=  Monitor_stub
   sharedname  = Monitor_svnt
   libs    += Monitor_stub
@@ -76,7 +76,7 @@ project(Monitor_svnt) : ciao_servant_dnc {
 }
 
 
-project(Monitor_exec) : ciao_component_dnc {
+project(Monitor_exec) : ciao_component_dnc, race_common {
   after   += Monitor_svnt
   sharedname = Monitor_exec
   libs      += Monitor_stub Monitor_svnt

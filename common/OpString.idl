@@ -1,11 +1,12 @@
 #ifndef OPERATIONAL_STRING_IDL
 #define OPERATIONAL_STRING_IDL
 
+#include "RACE_common.idl"
 #include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
 #include "QoS.idl"
 #include "Utils.idl"
 #include "Goal.idl"
-#include "RACE_common.idl"
+
 
 module CIAO
 {

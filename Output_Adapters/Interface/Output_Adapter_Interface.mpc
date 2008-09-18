@@ -1,4 +1,4 @@
-project(Output_Adapter_Interface_stub): ciao_deployment_stub, ciao_race_component  {
+project(Output_Adapter_Interface_stub): ciao_deployment_stub, ciao_race_component , race_idl {
 
   sharedname = Output_Adapter_Interface_stub
   idlflags += -Wb,stub_export_macro=OUTPUT_ADAPTER_INTERFACE_STUB_Export \
@@ -24,7 +24,7 @@ project(Output_Adapter_Interface_stub): ciao_deployment_stub, ciao_race_componen
   }
 }
 
-project(Output_Adapter_Interface_svnt) : ciao_servant_dnc, ciao_race_component  {
+project(Output_Adapter_Interface_svnt) : ciao_servant_dnc, ciao_race_component , race_common {
 
   after +=  Output_Adapter_Interface_stub
   sharedname  = Output_Adapter_Interface_svnt

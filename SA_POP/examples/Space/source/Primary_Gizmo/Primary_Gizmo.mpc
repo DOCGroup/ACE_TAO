@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl Primary_Gizmo"
 
-project(Primary_Gizmo_stub): ciao_client_dnc {
+project(Primary_Gizmo_stub): ciao_client_dnc, race_idl {
 
   after += Event_Types_stub
   includes += ../common
@@ -23,7 +23,7 @@ project(Primary_Gizmo_stub): ciao_client_dnc {
   }
 }
 
-project(Primary_Gizmo_svnt) : ciao_servant_dnc {
+project(Primary_Gizmo_svnt) : ciao_servant_dnc, race_idl {
   after +=  Primary_Gizmo_stub  Event_Types_svnt
   includes += ../common
   sharedname  = Primary_Gizmo_svnt
@@ -53,7 +53,7 @@ project(Primary_Gizmo_svnt) : ciao_servant_dnc {
 }
 
 
-project(Primary_Gizmo_exec) : ciao_component_dnc {
+project(Primary_Gizmo_exec) : ciao_component_dnc, race_idl {
   after   += Primary_Gizmo_svnt
   includes += ../common
   sharedname = Primary_Gizmo_exec

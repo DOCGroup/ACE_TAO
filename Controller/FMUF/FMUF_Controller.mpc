@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl FMUF_Controller"
 
-project(FMUF_Controller_idl_gen) : taoidldefaults, anytypecode {
+project(FMUF_Controller_idl_gen) : taoidldefaults, anytypecode, race_idl {
   after += Controller_Base_idl_gen
   avoids += ace_for_tao
   custom_only = 1
@@ -15,7 +15,7 @@ project(FMUF_Controller_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(FMUF_Controller_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(FMUF_Controller_cidl_gen) : ciaocidldefaults, taoidldefaults, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro FMUF_CONTROLLER_SVNT_Export \
@@ -34,7 +34,7 @@ project(FMUF_Controller_cidl_gen) : ciaocidldefaults, taoidldefaults {
   }
 }
 
-project(FMUF_Controller_stub) : ciao_client_dnc {
+project(FMUF_Controller_stub) : ciao_client_dnc, race_common {
   avoids += ace_for_tao
   after += FMUF_Controller_idl_gen \
            Controller_Base_stub
@@ -61,7 +61,7 @@ project(FMUF_Controller_stub) : ciao_client_dnc {
   }
 }
 
-project(FMUF_Controller_exec) : ciao_component_dnc {
+project(FMUF_Controller_exec) : ciao_component_dnc, race_common {
   avoids += ace_for_tao
   after   += FMUF_Controller_cidl_gen FMUF_Controller_stub
   sharedname = FMUF_Controller_exec
@@ -72,7 +72,7 @@ project(FMUF_Controller_exec) : ciao_component_dnc {
           RACE_common_stub \
           TM_Proxy_Component_stub
 
-  includes += $(CIAO_ROOT)/RACE/utils
+  includes += $(RACE_ROOT)/utils
   dynamicflags   = FMUF_CONTROLLER_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -101,7 +101,7 @@ project(FMUF_Controller_exec) : ciao_component_dnc {
 }
 
 
-project(FMUF_Controller_svnt) : ciao_servant_dnc {
+project(FMUF_Controller_svnt) : ciao_servant_dnc, race_common {
   avoids += ace_for_tao
   after      +=  FMUF_Controller_exec
   sharedname  = FMUF_Controller_svnt

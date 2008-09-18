@@ -1,20 +1,21 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl Input_Adapter_Base"
 
-project(Input_Adapter_Base_idl_gen) : taoidldefaults, anytypecode {
+project(Input_Adapter_Base_idl_gen) : taoidldefaults, anytypecode, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=INPUT_ADAPTER_BASE_STUB_Export \
               -Wb,stub_export_include=Input_Adapter_Base_stub_export.h \
               -Wb,skel_export_macro=INPUT_ADAPTER_BASE_SVNT_Export \
-              -Wb,skel_export_include=Input_Adapter_Base_svnt_export.h
+              -Wb,skel_export_include=Input_Adapter_Base_svnt_export.h \
+              -I$(RACE_ROOT)
 
   IDL_Files {
     Input_Adapter_Base.idl
   }
 }
 
-project(Input_Adapter_Base_stub) : ciao_client_dnc {
+project(Input_Adapter_Base_stub) : ciao_client_dnc, race_common {
   avoids += ace_for_tao
   after += Input_Adapter_Base_idl_gen  Conductor_stub
   libs  += Conductor_Component_stub
@@ -39,7 +40,7 @@ project(Input_Adapter_Base_stub) : ciao_client_dnc {
   }
 }
 
-project(Input_Adapter_Base_svnt) : ciao_servant_dnc {
+project(Input_Adapter_Base_svnt) : ciao_servant_dnc, race_common {
   avoids += ace_for_tao
   after      +=  Input_Adapter_Base_stub
   sharedname  = Input_Adapter_Base_svnt

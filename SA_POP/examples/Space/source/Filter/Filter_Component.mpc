@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl Filter_Component"
 
-project(Filter_Component_stub): ciao_client_dnc {
+project(Filter_Component_stub): ciao_client_dnc, race_idl {
 
   sharedname = Filter_Component_stub
   after += Event_Types_stub
@@ -23,7 +23,7 @@ project(Filter_Component_stub): ciao_client_dnc {
   }
 }
 
-project(Filter_Component_svnt) : ciao_servant_dnc {
+project(Filter_Component_svnt) : ciao_servant_dnc, race_idl {
   after +=  Filter_Component_stub
   sharedname  = Filter_Component_svnt
   includes += ../common
@@ -53,7 +53,7 @@ project(Filter_Component_svnt) : ciao_servant_dnc {
 }
 
 
-project(Filter_Component_exec) : ciao_component_dnc {
+project(Filter_Component_exec) : ciao_component_dnc, race_common {
   after   += Filter_Component_svnt
   includes += ../common
   sharedname = Filter_Component_exec

@@ -6,7 +6,7 @@
 #include "ace/Mutex.h"
 #include "ace/High_Res_Timer.h"
 #include "orbsvcs/Naming/Naming_Server.h"
-#include "RACE/Monitor/Central_Monitor/MonitorC.h"
+#include "Monitor/Central_Monitor/MonitorC.h"
 #include "Local_Monitor_export.h"
 
 namespace CIAO

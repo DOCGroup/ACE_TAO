@@ -6,7 +6,7 @@
 #include "Interactive_Input_Adapter_exec_export.h"
 #include "tao/LocalObject.h"
 #include "Logger.h"
-#include "RACE/common/OpStringC.h"
+#include "common/OpStringC.h"
 
 namespace CIAO
 {

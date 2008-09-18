@@ -3,8 +3,8 @@
 #define RACE_PLANNER_IDL
 
 #include <Components.idl>
-#include "RACE/Planners/Interface/Planner_I.idl"
-#include "RACE/common/RACE_common.idl"
+#include "Planners/Interface/Planner_I.idl"
+#include "common/RACE_common.idl"
 
 module CIAO
 {

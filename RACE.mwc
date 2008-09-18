@@ -1,4 +1,5 @@
 workspace {
+  cmdline += -include $RACE_ROOT/MPC/config
   common
   Output_Adapters/DAnCE_Output_Adapter
   Input_Adapters

@@ -12,7 +12,7 @@
  */
 
 #include <Components.idl>
-#include "RACE/Effectors/Base/Effector_Base.idl"
+#include "Effectors/Base/Effector_Base.idl"
 
 
 module CIAO
