@@ -15,7 +15,7 @@ unlink $file;
 
 my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
                                           'PerlACE::Process');
-$SV = new $class ("bug2936");
+$SV = new $class ("server");
 
 print STDERR "\n\n==== Running bug 2936 regression test\n";
 
