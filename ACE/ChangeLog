@@ -1,3 +1,14 @@
+Thu Sep 18 21:15:57 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/ace_defines.m4:
+        * m4/ace_functions.m4:
+        * m4/ace_headers.m4:
+        
+          Update m4 quoting so that macros work with both old and current
+          versions of autoconf.  Tested with both autoconf 2.58 (which is
+          the earliest version we support) and the recently released 2.63.
+          Fixes bugzilla issue #3396.
+
 Thu Sep 18 18:54:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/INET_Addr.{h,cpp}:
