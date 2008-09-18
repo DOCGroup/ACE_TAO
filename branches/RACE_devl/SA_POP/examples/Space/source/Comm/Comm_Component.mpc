@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl Comm_Component"
 
-project(Comm_Component_stub): ciao_client_dnc {
+project(Comm_Component_stub): ciao_client_dnc, race_idl {
   sharedname = Comm_Component_stub
   after += Event_Types_stub
   includes += ../common
@@ -22,7 +22,7 @@ project(Comm_Component_stub): ciao_client_dnc {
   }
 }
 
-project(Comm_Component_svnt) : ciao_servant_dnc {
+project(Comm_Component_svnt) : ciao_servant_dnc, race_idl {
   after +=  Comm_Component_stub Event_Types_svnt
   includes += ../common
   sharedname  = Comm_Component_svnt
@@ -52,7 +52,7 @@ project(Comm_Component_svnt) : ciao_servant_dnc {
 }
 
 
-project(Comm_Component_exec) : ciao_component_dnc {
+project(Comm_Component_exec) : ciao_component_dnc, race_common {
   after   += Comm_Component_svnt
   includes += ../common
   sharedname = Comm_Component_exec

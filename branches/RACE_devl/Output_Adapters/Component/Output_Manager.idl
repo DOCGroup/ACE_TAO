@@ -3,7 +3,7 @@
 #define RACE_OUTPUT_MANAGER_IDL
 
 #include <Components.idl>
-#include "RACE/Output_Adapters/Interface/PlanEgress.idl"
+#include "Output_Adapters/Interface/PlanEgress.idl"
 
 module CIAO
 {

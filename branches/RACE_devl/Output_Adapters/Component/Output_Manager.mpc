@@ -1,4 +1,4 @@
-project(Output_Manager_stub): ciao_deployment_stub, ciao_race_component  {
+project(Output_Manager_stub): ciao_deployment_stub, ciao_race_component , race_idl {
 
   after += Output_Adapter_Interface_stub
 
@@ -22,7 +22,7 @@ project(Output_Manager_stub): ciao_deployment_stub, ciao_race_component  {
   }
 }
 
-project(Output_Manager_svnt) : ciao_servant_dnc, ciao_race_component  {
+project(Output_Manager_svnt) : ciao_servant_dnc, ciao_race_component , race_idl {
   after +=  Output_Manager_stub
   sharedname  = Output_Manager_svnt
   libs    += Output_Manager_stub \
@@ -50,7 +50,7 @@ project(Output_Manager_svnt) : ciao_servant_dnc, ciao_race_component  {
 }
 
 
-project(Output_Manager_exec) : ciao_component_dnc, ciao_race_component  {
+project(Output_Manager_exec) : ciao_component_dnc, ciao_race_component , race_common {
   after   += Output_Manager_svnt
   sharedname = Output_Manager_exec
   libs      += Output_Manager_stub \

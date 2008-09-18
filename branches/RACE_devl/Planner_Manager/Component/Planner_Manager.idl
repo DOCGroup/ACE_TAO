@@ -3,10 +3,10 @@
 #define RACE_PLANNER_MANAGER_IDL
 
 #include <Components.idl>
-#include "RACE/Planner_Manager/Interface/Planner_Manager_I.idl"
+#include "Planner_Manager/Interface/Planner_Manager_I.idl"
 
-#include "RACE/Planners/Interface/Planner_I.idl"
-#include "RACE/Output_Adapters/Interface/PlanEgress.idl"
+#include "Planners/Interface/Planner_I.idl"
+#include "Output_Adapters/Interface/PlanEgress.idl"
 
 #include "DAnCE/TargetManager/DomainEvents.idl"
 

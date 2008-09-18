@@ -2,12 +2,13 @@
 #define RACE_CONDUCTOR_IDL
 
 #include <Components.idl>
-#include "RACE/common/OpString.idl"
-#include "RACE/common/RACE_common.idl"
+#include "common/RACE_common.idl"
+#include "common/OpString.idl"
 
-#include "RACE/Data_Base/Data_Base.idl"
-#include "RACE/Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl"
-#include "RACE/Controller/Base/Controller_Base.idl"
+
+#include "Data_Base/Data_Base.idl"
+#include "Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl"
+#include "Controller/Base/Controller_Base.idl"
 
 module CIAO
 {

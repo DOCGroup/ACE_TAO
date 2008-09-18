@@ -1,4 +1,4 @@
-#include "RACE/common/OpString.idl"
+#include "common/OpString.idl"
 
 module CIAO
 {

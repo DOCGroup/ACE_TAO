@@ -1,4 +1,4 @@
-project(Subtask_idl_gen) : taoidldefaults, anytypecode {
+project(Subtask_idl_gen) : taoidldefaults, anytypecode, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SUBTASK_STUB_Export \
@@ -12,7 +12,7 @@ project(Subtask_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Subtask_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(Subtask_cidl_gen) : ciaocidldefaults, taoidldefaults, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro SUBTASK_SVNT_Export \
@@ -31,7 +31,7 @@ project(Subtask_cidl_gen) : ciaocidldefaults, taoidldefaults {
   }
 }
 
-project(Subtask_stub) : ciao_client_dnc {
+project(Subtask_stub) : ciao_client_dnc, race_common {
   avoids += ace_for_tao
   after += Subtask_idl_gen \
            Event_Types_stub
@@ -59,7 +59,7 @@ project(Subtask_stub) : ciao_client_dnc {
   }
 }
 
-project(Subtask_exec) : ciao_component_dnc {
+project(Subtask_exec) : ciao_component_dnc, race_common {
   avoids += ace_for_tao
   after   += Subtask_cidl_gen \
              Subtask_stub \
@@ -95,7 +95,7 @@ project(Subtask_exec) : ciao_component_dnc {
 }
 
 
-project(Subtask_svnt) : ciao_servant_dnc {
+project(Subtask_svnt) : ciao_servant_dnc, race_common {
   avoids += ace_for_tao
   after      +=  Subtask_exec \
                  Event_Types_svnt

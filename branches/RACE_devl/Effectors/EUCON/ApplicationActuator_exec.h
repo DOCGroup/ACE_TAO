@@ -9,7 +9,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
-#include "RACE/Effectors/Callback/CallbackC.h"
+#include "Effectors/Callback/CallbackC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

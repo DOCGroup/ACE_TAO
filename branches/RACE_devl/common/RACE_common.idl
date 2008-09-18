@@ -5,7 +5,7 @@ module CIAO
 {
   module RACE
     {
-
+	typedef long bar;
       /// UUID type.
       typedef string UUID;
 

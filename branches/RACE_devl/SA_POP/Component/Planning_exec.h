@@ -15,7 +15,7 @@
 #include "SA_POP_Component_exec_export.h"
 #include "tao/LocalObject.h"
 
-#include "RACE/common/OpStringC.h"
+#include "common/OpStringC.h"
 
 #include "Planner.h"
 #include "LogScreenOut.h"

@@ -1,0 +1,6 @@
+project : taoidldefaults, ciaocidldefaults, race_common {
+
+  cidlflags += -I$(RACE_ROOT)
+
+  idlflags += -I$(RACE_ROOT)
+}

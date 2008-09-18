@@ -3,8 +3,8 @@
 #define RACE_INTERACTIVE_INPUT_ADAPTER_IDL
 
 #include <Components.idl>
-#include "RACE/Input_Adapters/Base/Input_Adapter_Base.idl"
-#include "RACE/common/RACE_common.idl"
+#include "Input_Adapters/Base/Input_Adapter_Base.idl"
+#include "common/RACE_common.idl"
 
 module CIAO
 {

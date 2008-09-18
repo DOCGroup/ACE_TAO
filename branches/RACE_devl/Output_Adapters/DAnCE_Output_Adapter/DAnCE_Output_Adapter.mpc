@@ -1,4 +1,4 @@
-project(DAnCE_Output_Adapter_stub):  ciao_deployment_stub {
+project(DAnCE_Output_Adapter_stub):  ciao_deployment_stub, race_idl {
   after += OpString_stub Data_Base_stub
 
   libs += Data_Base_Component_stub  OpString_stub RACE_common_stub
@@ -27,7 +27,7 @@ project(DAnCE_Output_Adapter_stub):  ciao_deployment_stub {
   }
 }
 
-project(DAnCE_Output_Adapter_svnt) : ciao_servant_dnc {
+project(DAnCE_Output_Adapter_svnt) : ciao_servant_dnc, race_idl {
 // , 
 //                                  , ciao_race_component {
   after +=  DAnCE_Output_Adapter_stub
@@ -68,11 +68,11 @@ project(DAnCE_Output_Adapter_svnt) : ciao_servant_dnc {
 }
 
 
-project(DAnCE_Output_Adapter_exec) : ciao_component_dnc, ciao_plan_generator, ciao_config_handlers, ciao_deployment_stub {
+project(DAnCE_Output_Adapter_exec) : ciao_component_dnc, ciao_plan_generator, ciao_config_handlers, ciao_deployment_stub, race_common {
   //  , ciao_race_component, ciao_config_handlers, ciao_plan_generator {
   after   += DAnCE_Output_Adapter_svnt RACE_utils
   sharedname = DAnCE_OA_Component_exec
-  includes += $(CIAO_ROOT)/RACE/utils
+  includes += $(RACE_ROOT)/utils
   libs += Data_Base_Component_stub DAnCE_Utils TAO_RTCORBA ExecutionManager_stub
   libs      +=  OpString_stub \
 				RACE_common_stub \

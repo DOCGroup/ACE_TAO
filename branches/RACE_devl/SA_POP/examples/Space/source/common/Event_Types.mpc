@@ -1,4 +1,4 @@
-project(Event_Types_stub): ciao_client_dnc {
+project(Event_Types_stub): ciao_client_dnc, race_idl {
 
   sharedname = Event_Types_stub
   idlflags += -Wb,stub_export_macro=EVENT_TYPES_STUB_Export \
@@ -16,7 +16,7 @@ project(Event_Types_stub): ciao_client_dnc {
   }
 }
 
-project(Event_Types_svnt) : ciao_servant_dnc {
+project(Event_Types_svnt) : ciao_servant_dnc, race_common {
   after +=  Event_Types_stub
   sharedname  = Event_Types_svnt
   libs    += Event_Types_stub

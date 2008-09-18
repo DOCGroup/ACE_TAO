@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl EUCON_Effector"
 
-project(EUCON_Effector_stub) : ciao_client_dnc, ciao_deployment_stub {
+project(EUCON_Effector_stub) : ciao_client_dnc, ciao_deployment_stub, race_idl {
   after += Effector_Base_stub
   sharedname = EUCON_Effector_Component_stub
   libs += Effector_Base_stub
@@ -34,7 +34,7 @@ project(EUCON_Effector_stub) : ciao_client_dnc, ciao_deployment_stub {
   }
 }
 
-project(EUCON_Effector_svnt) : ciao_servant_dnc {
+project(EUCON_Effector_svnt) : ciao_servant_dnc, race_idl {
   after      += EUCON_Effector_stub \
                 Effector_Base_svnt
 
@@ -77,7 +77,7 @@ project(EUCON_Effector_svnt) : ciao_servant_dnc {
   }
 }
 
-project(EUCON_Effector_exec) : ciao_component_dnc {
+project(EUCON_Effector_exec) : ciao_component_dnc, race_common {
   after += EUCON_Effector_svnt \
            Callback_stub \
            OpString_stub
@@ -92,7 +92,7 @@ project(EUCON_Effector_exec) : ciao_component_dnc {
           Callback_stub \
           OpString_stub
 
- includes += $(CIAO_ROOT)/RACE/utils
+ includes += $(RACE_ROOT)/utils
 
   dynamicflags   = EUCON_EFFECTOR_EXEC_BUILD_DLL
 

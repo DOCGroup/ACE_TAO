@@ -1,4 +1,4 @@
-project(Plan_Analyzer_stub): ciao_deployment_stub, ciao_race_component {
+project(Plan_Analyzer_stub): ciao_deployment_stub, ciao_race_component, race_idl {
   after += Plan_Analyzer_Interface_stub \
            Planner_Manager_Interface_stub \
            Analyzer_I_stub
@@ -33,7 +33,7 @@ project(Plan_Analyzer_stub): ciao_deployment_stub, ciao_race_component {
   }
 }
 
-project(Plan_Analyzer_svnt) : ciao_servant_dnc, ciao_race_component {
+project(Plan_Analyzer_svnt) : ciao_servant_dnc, ciao_race_component, race_idl {
   after += Plan_Analyzer_stub \
            Plan_Analyzer_Interface_svnt
   sharedname  = Plan_Analyzer_svnt
@@ -76,7 +76,7 @@ project(Plan_Analyzer_svnt) : ciao_servant_dnc, ciao_race_component {
 }
 
 
-project(Plan_Analyzer_exec) : ciao_component_dnc, ciao_race_component {
+project(Plan_Analyzer_exec) : ciao_component_dnc, ciao_race_component, race_common {
   after   += Plan_Analyzer_svnt
   sharedname = Plan_Analyzer_exec
   libs    += Plan_Analyzer_stub \

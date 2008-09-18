@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl EUCON_Controller"
 
-project(EUCON_Controller_idl_gen) : taoidldefaults, anytypecode {
+project(EUCON_Controller_idl_gen) : taoidldefaults, anytypecode, race_idl {
   avoids += ace_for_tao
   after += Controller_Base_idl_gen
   custom_only = 1
@@ -15,7 +15,7 @@ project(EUCON_Controller_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(EUCON_Controller_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(EUCON_Controller_cidl_gen) : ciaocidldefaults, taoidldefaults, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro EUCON_CONTROLLER_SVNT_Export \
@@ -34,7 +34,7 @@ project(EUCON_Controller_cidl_gen) : ciaocidldefaults, taoidldefaults {
   }
 }
 
-project(EUCON_Controller_stub) : ciao_client_dnc {
+project(EUCON_Controller_stub) : ciao_client_dnc, race_common {
   avoids += ace_for_tao
   after += EUCON_Controller_idl_gen \
            Controller_Base_stub
@@ -60,14 +60,14 @@ project(EUCON_Controller_stub) : ciao_client_dnc {
   }
 }
 
-project(EUCON_Controller_exec) : ciao_component_dnc, ciao_config_handlers {
+project(EUCON_Controller_exec) : ciao_component_dnc, ciao_config_handlers, race_common {
   avoids += ace_for_tao
   after   += EUCON_Controller_cidl_gen EUCON_Controller_stub
   sharedname = EUCON_Controller_exec
   includes += "C:/Program Files/MATLAB/R2007b/extern/include"
-  includes += $(CIAO_ROOT)/RACE/extern/MATLAB/include
+  includes += $(RACE_ROOT)/extern/MATLAB/include
   libpaths += "C:/Program Files/MATLAB/R2007b/extern/lib/win32/microsoft"
-  libpaths += $(CIAO_ROOT)/RACE/extern/MATLAB/lib
+  libpaths += $(RACE_ROOT)/extern/MATLAB/lib
   lit_libs += liblsq mclmcr
   libs += EUCON_Controller_stub \
           Controller_Base_stub \
@@ -77,7 +77,7 @@ project(EUCON_Controller_exec) : ciao_component_dnc, ciao_config_handlers {
           TM_Proxy_Component_stub \
           Effector_Base_stub
 
-  includes += $(CIAO_ROOT)/RACE/utils
+  includes += $(RACE_ROOT)/utils
 
   dynamicflags   = EUCON_CONTROLLER_EXEC_BUILD_DLL
 
@@ -115,7 +115,7 @@ project(EUCON_Controller_exec) : ciao_component_dnc, ciao_config_handlers {
 }
 
 
-project(EUCON_Controller_svnt) : ciao_servant_dnc {
+project(EUCON_Controller_svnt) : ciao_servant_dnc, race_common {
   avoids += ace_for_tao
   after      +=  EUCON_Controller_exec
   sharedname  = EUCON_Controller_svnt
@@ -153,11 +153,11 @@ project(EUCON_Controller_svnt) : ciao_servant_dnc {
   }
 }
 
-project(EUCON_Tester) {
+project(EUCON_Tester), race_common {
   includes += "C:/Program Files/MATLAB/R2007b/extern/include"
-  includes += $(CIAO_ROOT)/RACE/extern/MATLAB/include
+  includes += $(RACE_ROOT)/extern/MATLAB/include
   libpaths += "C:/Program Files/MATLAB/R2007b/extern/lib/win32/microsoft"
-  libpaths += $(CIAO_ROOT)/RACE/extern/MATLAB/lib
+  libpaths += $(RACE_ROOT)/extern/MATLAB/lib
   lit_libs += liblsq mclmcr
   exename = EUCON
 

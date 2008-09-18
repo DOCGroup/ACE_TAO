@@ -1,4 +1,4 @@
-project(Allocator_Base_idl_gen) : taoidldefaults, anytypecode {
+project(Allocator_Base_idl_gen) : taoidldefaults, anytypecode, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ALLOCATOR_BASE_STUB_Export \
@@ -11,7 +11,7 @@ project(Allocator_Base_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Allocator_Base_stub) : ciao_client_dnc {
+project(Allocator_Base_stub) : ciao_client_dnc, race_common {
   avoids += ace_for_tao
   after += Allocator_Base_idl_gen \
            OpString_stub \
@@ -43,7 +43,7 @@ project(Allocator_Base_stub) : ciao_client_dnc {
   }
 }
 
-project(Allocator_Base_svnt) : ciao_servant_dnc {
+project(Allocator_Base_svnt) : ciao_servant_dnc, race_common {
   avoids += ace_for_tao
   after      +=  Allocator_Base_exec
   sharedname  = Allocator_Base_svnt

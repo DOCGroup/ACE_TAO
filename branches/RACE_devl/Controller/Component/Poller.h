@@ -1,7 +1,7 @@
 #ifndef POLLER_H
 #define POLLER_H
 
-#include "RACE/Monitor/Central_Monitor/MonitorC.h"
+#include "Monitor/Central_Monitor/MonitorC.h"
 #include "TargetManager/TargetManagerExtC.h"
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"

@@ -1,4 +1,4 @@
-project(XML_Output_Adapter_stub): ciao_deployment_stub, ciao_race_component  {
+project(XML_Output_Adapter_stub): ciao_deployment_stub, ciao_race_component , race_idl {
   after += Output_Adapter_stub
 
   sharedname = XML_Output_Adapter_stub
@@ -22,7 +22,7 @@ project(XML_Output_Adapter_stub): ciao_deployment_stub, ciao_race_component  {
   }
 }
 
-project(XML_Output_Adapter_svnt) : ciao_servant_dnc, ciao_race_component  {
+project(XML_Output_Adapter_svnt) : ciao_servant_dnc, ciao_race_component , race_idl {
   after += Output_Adapter_svnt XML_Output_Adapter_stub
   sharedname  = XML_Output_Adapter_svnt
   libs    += XML_Output_Adapter_stub \
@@ -51,7 +51,7 @@ project(XML_Output_Adapter_svnt) : ciao_servant_dnc, ciao_race_component  {
 }
 
 
-project(XML_Output_Adapter_exec) : ciao_component_dnc, ciao_race_component, ciao_config_handlers  {
+project(XML_Output_Adapter_exec) : ciao_component_dnc, ciao_race_component, ciao_config_handlers , race_common {
   after   += XML_Output_Adapter_svnt
   sharedname = XML_Output_Adapter_exec
   libs    += XML_Output_Adapter_stub \

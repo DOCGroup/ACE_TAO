@@ -2,7 +2,7 @@
 #include "ace/Reactor.h"
 #include "orbsvcs/CosNamingC.h"
 #include "tao/ORB_Core.h"
-#include "RACE/Monitor/Central_Monitor/MonitorC.h"
+#include "Monitor/Central_Monitor/MonitorC.h"
 
 namespace CIAO
 {

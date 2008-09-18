@@ -1,6 +1,6 @@
 // $Id$
 
-project(Tester_Component_stub): ciao_client_dnc, ciao_deployment_stub {
+project(Tester_Component_stub): ciao_client_dnc, ciao_deployment_stub, race_idl {
   
   sharedname = Tester_Component_stub
   
@@ -12,15 +12,13 @@ project(Tester_Component_stub): ciao_client_dnc, ciao_deployment_stub {
           RACE_common_stub Data_Base_Component_stub DAnCE_OA_Component_stub
 
 
-  includes += $(CIAO_ROOT)/RACE
 
   idlflags -= -GT
   idlflags += -St \
               -Wb,stub_export_macro=TESTER_COMPONENT_STUB_Export \
               -Wb,stub_export_include=Tester_Component_stub_export.h \
               -Wb,skel_export_macro=TESTER_COMPONENT_SVNT_Export \
-              -Wb,skel_export_include=Tester_Component_svnt_export.h \
-              -I $(CIAO_ROOT)/RACE
+              -Wb,skel_export_include=Tester_Component_svnt_export.h
 
   dynamicflags   = TESTER_COMPONENT_STUB_BUILD_DLL
 
@@ -33,7 +31,7 @@ project(Tester_Component_stub): ciao_client_dnc, ciao_deployment_stub {
   }
 }
 
-project(Tester_Component_svnt) : ciao_servant_dnc {
+project(Tester_Component_svnt) : ciao_servant_dnc, race_idl {
   after      +=  Tester_Component_stub
   sharedname  = Tester_Component_svnt
   libs       += Tester_Component_stub \
@@ -43,17 +41,15 @@ project(Tester_Component_svnt) : ciao_servant_dnc {
                 RACE_common_stub Data_Base_Component_stub DAnCE_OA_Component_stub
                 
 
-  includes += $(CIAO_ROOT)/RACE
    
   idlflags -= -GT
   idlflags += -St -SS \
               -Wb,export_macro=TESTER_COMPONENT_SVNT_Export \
-              -Wb,export_include=Tester_Component_svnt_export.h \
-              -I $(CIAO_ROOT)/RACE
+              -Wb,export_include=Tester_Component_svnt_export.h
 
 
-//  cidlflags += -I $(CIAO_ROOT)/RACE --gen-exec-impl
-  cidlflags += -I $(CIAO_ROOT)/RACE
+//  cidlflags += -I $(RACE_ROOT) --gen-exec-impl
+  cidlflags += -I $(RACE_ROOT)
 
   dynamicflags = TESTER_COMPONENT_SVNT_BUILD_DLL
   
@@ -72,7 +68,7 @@ project(Tester_Component_svnt) : ciao_servant_dnc {
   }
 }
 
-project(Tester_Component_exec) : ciao_component_dnc {
+project(Tester_Component_exec) : ciao_component_dnc, race_common {
   after   += Tester_Component_svnt
   sharedname = Tester_Component_exec
 
@@ -81,7 +77,6 @@ project(Tester_Component_exec) : ciao_component_dnc {
                 OpString_stub \
                 SA_POP_Component_stub
 
-  includes += $(CIAO_ROOT)/RACE
   libs += OpString_stub Data_Base_Component_stub DAnCE_OA_Component_stub RACE_common_stub CIAO_Deployment_stub TAO_Messaging CIAO_Events_Base CIAO_Container TAO_PortableServer   
   libpaths += $(ACE_ROOT)/lib
 
@@ -98,15 +93,13 @@ project(Tester_Component_exec) : ciao_component_dnc {
 }
 
 
-project (Tester_Client) : ciao_client_dnc, valuetype, ciao_deployment_stub {
+project (Tester_Client) : ciao_client_dnc, valuetype, ciao_deployment_stub, race_common {
   avoids += ace_for_tao
   exename = tester_client
   after += Tester_Component_stub
   libs += Tester_Component_stub OpString_stub
   libs += SA_POP_Component_stub SA_POP_Component_stub SA_POP_IA_Component_stub RACE_common_stub Data_Base_Component_stub DAnCE_OA_Component_stub
 
-
-  includes += $(CIAO_ROOT)/RACE
 
   IDL_Files {
   }

@@ -12,10 +12,10 @@
  */
 
 #include <Components.idl>
-#include "RACE/TM_Proxy/TM_Proxy.idl"
-#include "RACE/common/OpString.idl"
-#include "RACE/common/RACE_common.idl"
-#include "RACE/Effectors/Base/Effector_Base.idl"
+#include "TM_Proxy/TM_Proxy.idl"
+#include "common/OpString.idl"
+#include "common/RACE_common.idl"
+#include "Effectors/Base/Effector_Base.idl"
 
 module CIAO
 {

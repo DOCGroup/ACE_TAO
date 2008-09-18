@@ -1,4 +1,4 @@
-project(Data_Base_stub): ciao_client_dnc, ciao_deployment_stub {
+project(Data_Base_stub): ciao_client_dnc, ciao_deployment_stub, race_idl {
 
   sharedname = Data_Base_Component_stub
   after += OpString_stub
@@ -9,7 +9,6 @@ project(Data_Base_stub): ciao_client_dnc, ciao_deployment_stub {
               -Wb,stub_export_include=Data_Base_stub_export.h \
               -Wb,skel_export_macro=DATA_BASE_SVNT_Export \
               -Wb,skel_export_include=Data_Base_svnt_export.h
-
   dynamicflags   = DATA_BASE_STUB_BUILD_DLL
 
   libs +=	OpString_stub \
@@ -24,7 +23,7 @@ project(Data_Base_stub): ciao_client_dnc, ciao_deployment_stub {
   }
 }
 
-project(Data_Base_svnt) : ciao_servant_dnc {
+project(Data_Base_svnt) : ciao_servant_dnc, race_idl {
   after      +=  Data_Base_stub
   sharedname  = Data_Base_Component_svnt
   libs       += Data_Base_Component_stub \
@@ -53,7 +52,7 @@ project(Data_Base_svnt) : ciao_servant_dnc {
   }
 }
 
-project(Data_Base_exec) : ciao_component_dnc {
+project(Data_Base_exec) : ciao_component_dnc, race_common {
   after   += Data_Base_svnt
   sharedname = Data_Base_Component_exec
   libs +=	Data_Base_Component_stub \

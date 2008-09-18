@@ -3,9 +3,9 @@
 #define RACE_SA_POP_INPUT_ADAPTER_IDL
 
 #include <Components.idl>
-#include "RACE/common/OpString.idl"
-#include "RACE/common/RACE_common.idl"
-#include "RACE/Input_Adapters/Base/Input_Adapter_Base.idl"
+#include "common/OpString.idl"
+#include "common/RACE_common.idl"
+#include "Input_Adapters/Base/Input_Adapter_Base.idl"
 
 module CIAO
 {

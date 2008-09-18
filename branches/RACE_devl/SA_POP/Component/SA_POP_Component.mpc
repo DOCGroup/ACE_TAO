@@ -1,6 +1,6 @@
 // $Id$
 
-project(SA_POP_Component_stub): ciao_client_dnc, ciao_deployment_stub {
+project(SA_POP_Component_stub): ciao_client_dnc, ciao_deployment_stub, race_idl {
   
   sharedname = SA_POP_Component_stub
   after += OpString_stub Data_Base_stub SA_POP
@@ -26,7 +26,7 @@ project(SA_POP_Component_stub): ciao_client_dnc, ciao_deployment_stub {
   }
 }
 
-project(SA_POP_Component_svnt) : ciao_servant_dnc {
+project(SA_POP_Component_svnt) : ciao_servant_dnc, race_idl {
   after      +=  SA_POP_Component_stub
   sharedname  = SA_POP_Component_svnt
   libs       += SA_POP_Component_stub \
@@ -59,12 +59,12 @@ project(SA_POP_Component_svnt) : ciao_servant_dnc {
   }
 }
 
-project(SA_POP_Component_exec) : ciao_component_dnc, ciao_config_handlers  {
+project(SA_POP_Component_exec) : ciao_component_dnc, ciao_config_handlers , race_common {
   after   += SA_POP_Component_svnt
   sharedname = SA_POP_Component_exec
 
   includes += $(CIAO_ROOT)/tools/Config_Handlers \
-              $(CIAO_ROOT)/RACE/SA_POP
+              $(SAPOP_ROOT)
 
   libs += SA_POP_Component_stub \
           SA_POP_Component_svnt \

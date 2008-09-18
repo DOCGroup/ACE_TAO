@@ -2,7 +2,7 @@
 #define RACE_MONITOR_IDL
 
 #include <Components.idl>
-//#include "RACE/Monitor/Central_Monitor/Interface.idl"
+//#include "Monitor/Central_Monitor/Interface.idl"
 
 module CIAO
 {

@@ -2,8 +2,8 @@
 #define RACE_DANCE_OUTPUT_ADAPTER_IDL
 
 #include <Components.idl>
-#include "RACE/common/OpString.idl"
-#include "RACE/common/RACE_common.idl"
+#include "common/OpString.idl"
+#include "common/RACE_common.idl"
 #include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
 
 module CIAO

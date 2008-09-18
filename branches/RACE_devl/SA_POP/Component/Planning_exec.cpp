@@ -4,7 +4,7 @@
 #include "Planning_exec.h"
 #include "ciao/CIAO_common.h"
 #include "ace/UUID.h"
-#include "RACE/common/OpStringC.h"
+#include "common/OpStringC.h"
 
 #include "SA_POP_Types.h"
 #include "SA_Builder.h"

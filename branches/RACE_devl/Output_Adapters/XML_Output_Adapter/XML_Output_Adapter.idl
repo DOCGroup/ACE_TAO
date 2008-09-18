@@ -3,7 +3,7 @@
 #define RACE_XML_OUTPUT_ADAPTER_IDL
 
 #include <Components.idl>
-#include "RACE/Output_Adapters/Base/Output_Adapter.idl"
+#include "Output_Adapters/Base/Output_Adapter.idl"
 module CIAO
 {
   module RACE

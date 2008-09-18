@@ -1,4 +1,4 @@
-project(Gizmo2_High_stub): ciao_client_dnc {
+project(Gizmo2_High_stub): ciao_client_dnc, race_idl {
 
   sharedname = Gizmo2_High_stub
   libs    += Event_Types_stub
@@ -22,7 +22,7 @@ project(Gizmo2_High_stub): ciao_client_dnc {
   }
 }
 
-project(Gizmo2_High_svnt) : ciao_servant_dnc {
+project(Gizmo2_High_svnt) : ciao_servant_dnc, race_idl {
   after +=  Gizmo2_High_stub
   sharedname  = Gizmo2_High_svnt
   libs    += Gizmo2_High_stub Event_Types_stub
@@ -55,7 +55,7 @@ project(Gizmo2_High_svnt) : ciao_servant_dnc {
 }
 
 
-project(Gizmo2_High_exec) : ciao_component_dnc {
+project(Gizmo2_High_exec) : ciao_component_dnc, race_common {
   after   += Gizmo2_High_svnt
   sharedname = Gizmo2_High_exec
   libs      += Gizmo2_High_stub Gizmo2_High_svnt Event_Types_stub

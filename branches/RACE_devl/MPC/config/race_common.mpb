@@ -1,0 +1,4 @@
+project {
+  includes += $(RACE_ROOT)
+}
+

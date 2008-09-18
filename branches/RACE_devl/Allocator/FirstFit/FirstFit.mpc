@@ -1,4 +1,4 @@
-project(FirstFit_idl_gen) : taoidldefaults, anytypecode {
+project(FirstFit_idl_gen) : taoidldefaults, anytypecode, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=FIRSTFIT_STUB_Export \
@@ -11,7 +11,7 @@ project(FirstFit_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(FirstFit_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(FirstFit_cidl_gen) : ciaocidldefaults, taoidldefaults, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro FIRSTFIT_SVNT_Export \
@@ -31,7 +31,7 @@ project(FirstFit_cidl_gen) : ciaocidldefaults, taoidldefaults {
   }
 }
 
-project(FirstFit_stub) : ciao_client_dnc {
+project(FirstFit_stub) : ciao_client_dnc, race_common {
   avoids += ace_for_tao
   after += FirstFit_idl_gen 
   libs  += Allocator_Base_stub  
@@ -56,7 +56,7 @@ project(FirstFit_stub) : ciao_client_dnc {
   }
 }
 
-project(FirstFit_exec) : ciao_component_dnc, ciao_config_handlers {
+project(FirstFit_exec) : ciao_component_dnc, ciao_config_handlers, race_common {
   avoids += ace_for_tao
   after   += FirstFit_cidl_gen FirstFit_stub
   sharedname = FirstFit_exec
@@ -89,7 +89,7 @@ project(FirstFit_exec) : ciao_component_dnc, ciao_config_handlers {
 }
 
 
-project(FirstFit_svnt) : ciao_servant_dnc {
+project(FirstFit_svnt) : ciao_servant_dnc, race_common {
   avoids += ace_for_tao
   after      +=  FirstFit_exec
   sharedname  = FirstFit_svnt

@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl Controller_Base"
 
-project(Controller_Base_idl_gen) : taoidldefaults, anytypecode {
+project(Controller_Base_idl_gen) : taoidldefaults, anytypecode, race_idl {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=CONTROLLER_BASE_STUB_Export \
@@ -14,7 +14,7 @@ project(Controller_Base_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Controller_Base_stub) : ciao_client_dnc {
+project(Controller_Base_stub) : ciao_client_dnc, race_common {
   avoids += ace_for_tao
   after += Controller_Base_idl_gen \
            OpString_stub \
@@ -48,7 +48,7 @@ project(Controller_Base_stub) : ciao_client_dnc {
   }
 }
 
-project(Controller_Base_svnt) : ciao_servant_dnc {
+project(Controller_Base_svnt) : ciao_servant_dnc, race_common {
   avoids += ace_for_tao
   after      +=  Controller_Base_stub
 

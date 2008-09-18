@@ -1,4 +1,4 @@
-project(Driver_stub): ciao_client_dnc {
+project(Driver_stub): ciao_client_dnc, race_idl {
   sharedname = Driver_stub
   idlflags += -Wb,stub_export_macro=DRIVER_STUB_Export \
               -Wb,stub_export_include=Driver_stub_export.h \
@@ -18,7 +18,7 @@ project(Driver_stub): ciao_client_dnc {
   }
 }
 
-project(Driver_svnt) : ciao_servant_dnc {
+project(Driver_svnt) : ciao_servant_dnc, race_common {
   after +=  Driver_stub
   sharedname  = Driver_svnt
   libs    += Driver_stub \
@@ -33,15 +33,15 @@ project(Driver_svnt) : ciao_servant_dnc {
   }
 }
 
-project(Server): ciao_component_dnc, ciao_config_handlers, ciao_plan_generator {
+project(Server): ciao_component_dnc, ciao_config_handlers, ciao_plan_generator, race_common {
 
   exename = server
 
   after += Driver_svnt SA_POP
 
-  includes += $(CIAO_ROOT)/RACE/Input_Adapters/Interactive_Input_Adapter \
+  includes += $(RACE_ROOT)/Input_Adapters/Interactive_Input_Adapter \
               $(CIAO_ROOT)/tools/Config_Handlers \
-              $(CIAO_ROOT)/RACE/SA_POP
+              $(SAPOP_ROOT)
 
   libs += OpString_stub \
           Driver_stub \
@@ -64,13 +64,13 @@ project(Server): ciao_component_dnc, ciao_config_handlers, ciao_plan_generator {
   }
 }
 
-project(client): taoclient, ciao_component_dnc, ciao_plan_generator {
+project(client): taoclient, ciao_component_dnc, ciao_plan_generator, race_common {
 
   exename = client
   after += Driver_stub SA_POP
   libs += Driver_stub \
           OpString_stub
-  includes += $(CIAO_ROOT)/RACE/SA_POP
+  includes += $(SAPOP_ROOT)
 
   IDL_Files {
   }
