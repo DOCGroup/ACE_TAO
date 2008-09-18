@@ -230,12 +230,16 @@ namespace ACE_OS
                    const char *format,
                    const struct tm *timeptr);
 
+  /**
+   * strptime wrapper. Note that the struct @a tm will always be set to
+   * zero
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   char *strptime (const char *buf,
                   const char *format,
                   struct tm *tm);
 
-# if defined (ACE_LACKS_STRPTIME) && !defined (ACE_REFUSE_STRPTIME_EMULATION)
+# if defined (ACE_LACKS_STRPTIME)
   extern ACE_Export
   char *strptime_emulation (const char *buf,
                             const char *format,
@@ -244,7 +248,7 @@ namespace ACE_OS
   extern ACE_Export
   int strptime_getnum (const char *buf, int *num, int *bi,
                        int *fi, int min, int max);
-# endif /* ACE_LACKS_STRPTIME && !ACE_REFUSE_STRPTIME_EMULATION */
+# endif /* ACE_LACKS_STRPTIME  */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   time_t time (time_t *tloc = 0);

@@ -354,7 +354,7 @@ ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
 }
 #endif /* ACE_HAS_POWERPC_TIMER && ghs */
 
-#if defined (ACE_LACKS_STRPTIME) && !defined (ACE_REFUSE_STRPTIME_EMULATION)
+#if defined (ACE_LACKS_STRPTIME)
 char *
 ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
 {
@@ -630,6 +630,6 @@ ACE_OS::strptime_getnum (const char *buf,
   else
     return 0;
 }
-#endif /* ACE_LACKS_STRPTIME && !ACE_REFUSE_STRPTIME_EMULATION */
+#endif /* ACE_LACKS_STRPTIME */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
