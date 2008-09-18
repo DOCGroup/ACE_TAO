@@ -1,3 +1,8 @@
+Thu Sep 18 18:54:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/INET_Addr.{h,cpp}:
+          Use bool and several doxygen changes
+
 Thu Sep 18 10:30:00 UTC 2008  Simon Massey  <sma@prismtech.com>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh:
