@@ -1,3 +1,14 @@
+Thu Sep 18 06:33:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Time.{h,cpp,inl} (strptime):
+          Always clear struct tm to zero
+
+        * tests/OS_Test.cpp:
+          Updated for change above
+
+        * tests/Cached_Conn_Test.cpp:
+          Removed check for deprecated compiler
+
 Wed Sep 17 18:47:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Cached_Connect_Strategy_T.{h,cpp}:

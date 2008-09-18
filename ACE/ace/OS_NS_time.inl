@@ -443,15 +443,9 @@ ACE_OS::strftime (char *s, size_t maxsize, const char *format,
 ACE_INLINE char *
 ACE_OS::strptime (const char *buf, const char *format, struct tm *tm)
 {
+  ACE_OS::memset (tm, 0, sizeof (struct tm));
 #if defined (ACE_LACKS_STRPTIME)
-#  if defined (ACE_REFUSE_STRPTIME_EMULATION)
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (format);
-  ACE_UNUSED_ARG (tm);
-  ACE_NOTSUP_RETURN (0);
-#  else
   return ACE_OS::strptime_emulation (buf, format, tm);
-#  endif /* ACE_REFUSE_STRPTIME_EMULATION */
 #else
   return ACE_STD_NAMESPACE::strptime (buf, format, tm);
 #endif /* ACE_LACKS_STRPTIME */
