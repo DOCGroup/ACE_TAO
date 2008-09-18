@@ -19,9 +19,9 @@ bin_PROGRAMS =
 
 if BUILD_EXCEPTIONS
 
-bin_PROGRAMS += nsadd
+bin_PROGRAMS += tao_nsadd
 
-nsadd_CPPFLAGS = \
+tao_nsadd_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -29,10 +29,10 @@ nsadd_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs
 
-nsadd_SOURCES = \
+tao_nsadd_SOURCES = \
   nsadd.cpp
 
-nsadd_LDADD = \
+tao_nsadd_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -45,9 +45,9 @@ endif BUILD_EXCEPTIONS
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-bin_PROGRAMS += nsdel
+bin_PROGRAMS += tao_nsdel
 
-nsdel_CPPFLAGS = \
+tao_nsdel_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -55,10 +55,10 @@ nsdel_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs
 
-nsdel_SOURCES = \
+tao_nsdel_SOURCES = \
   nsdel.cpp
 
-nsdel_LDADD = \
+tao_nsdel_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
@@ -78,9 +78,9 @@ endif BUILD_CORBA_MESSAGING
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-bin_PROGRAMS += nslist
+bin_PROGRAMS += tao_nslist
 
-nslist_CPPFLAGS = \
+tao_nslist_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -88,10 +88,11 @@ nslist_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs
 
-nslist_SOURCES = \
+tao_nslist_SOURCES = \
   nslist.cpp
 
-nslist_LDADD = \
+tao_nslist_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
