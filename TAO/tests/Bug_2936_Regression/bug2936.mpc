@@ -2,7 +2,7 @@
 // $Id$
 
 project (bug2936-exe): aceexe {
-  exename=bug2936
+  exename=server
   Source_Files {
     bug2936.cpp
   }

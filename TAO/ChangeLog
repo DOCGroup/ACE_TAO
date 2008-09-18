@@ -1,3 +1,11 @@
+Thu Sep 18 18:36:39 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2936_Regression/bug2936.mpc:
+        * tests/Bug_2936_Regression/run_test.pl:
+          Changed the exe project to build the executable server. We
+          first build an exe and lib with the same name which caused
+          the vxtest mpc generator to issue a warning
+
 Thu Sep 18 11:03:39 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * utils/nslist/Makefile.am:
