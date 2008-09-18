@@ -223,7 +223,6 @@
   #if !defined (IOV_MAX) || (IOV_MAX == 0)
     #define ACE_IOV_MAX 16
   #endif
-  #define ACE_HAS_TIMEZONE
 #else
   // We are building for kernel mode
   #define ACE_LACKS_SUSECONDS_T
