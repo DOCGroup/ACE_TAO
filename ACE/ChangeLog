@@ -1,9 +1,15 @@
+Fri Sep 19 09:32:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/unload_libace.mpb:
+          This project doesn't use acedefaults which then results in some
+          borland required flags not being set
+
 Thu Sep 18 21:15:57 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/ace_defines.m4:
         * m4/ace_functions.m4:
         * m4/ace_headers.m4:
-        
+
           Update m4 quoting so that macros work with both old and current
           versions of autoconf.  Tested with both autoconf 2.58 (which is
           the earliest version we support) and the recently released 2.63.
