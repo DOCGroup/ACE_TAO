@@ -1,3 +1,10 @@
+Fri Sep 19 17:51:12 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/ETCL/ETCL_Constraint.cpp:
+
+          Avoid core dump by returning 0 when evaluating division by zero.
+          Partial fix for bugzilla issue #3429.
+
 Fri Sep 19 13:57:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Test_Outpot.cpp:
