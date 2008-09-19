@@ -31,7 +31,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_INET_Addr)
 int
 ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
                                size_t size,
-                               bool ipaddr_format) const
+                               int ipaddr_format) const
 {
   ACE_TRACE ("ACE_INET_Addr::addr_to_string");
 
@@ -39,7 +39,7 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
   char  hoststr[MAXHOSTNAMELEN+1];
 
   bool result = false;
-  if (!ipaddr_format)
+  if (ipaddr_format == 0)
     result = (this->get_host_name (hoststr, MAXHOSTNAMELEN+1) == 0);
   else
     result = (this->get_host_addr (hoststr, MAXHOSTNAMELEN+1) != 0);
