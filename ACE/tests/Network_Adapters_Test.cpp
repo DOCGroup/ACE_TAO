@@ -874,13 +874,13 @@ Fini_Guard::~Fini_Guard (void)
 static int number_of_ping_points  = 0;
 static char ping_points_ips [MAX_NUMBER_OF_PING_POINTS][16];
 static ACE_INET_Addr ping_points_addrs [MAX_NUMBER_OF_PING_POINTS];
-static ACE_TCHAR local_ip_to_bind [16];
+static char local_ip_to_bind [16];
 
 static int wait_echo_reply_timer = 500; // 500 ms to wait is the default
 static int repeats_seconds_timer = 60; // 60 seconds between repeats
 
 static int
-is_ip_address_local (ACE_TCHAR const * const ip_to_bind)
+is_ip_address_local (char const * const ip_to_bind)
 {
   ACE_INET_Addr *the_addr_array = 0;
   size_t how_many = 0;
@@ -951,7 +951,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         {
         case 'b':     // ip-address of the interface to bind to
           ACE_OS::strncpy (local_ip_to_bind,
-                           get_opt.optarg,
+                           ACE_TEXT_ALWAYS_CHAR (get_opt.optarg),
                            sizeof local_ip_to_bind);
 
           if (!ACE_OS::strlen (local_ip_to_bind) ||
@@ -1074,7 +1074,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   milliseconds =  wait_echo_reply_timer % 1000;
   ACE_Time_Value const wait_timer (seconds, milliseconds);
 
-  Echo_Handler *ping_handler;
+  Echo_Handler *ping_handler = 0;
   ACE_NEW_RETURN (ping_handler, Echo_Handler, -1);
 
   if (ACE_OS::strlen (local_ip_to_bind))
@@ -1117,7 +1117,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  Repeats_Handler *repeats_handler;
+  Repeats_Handler *repeats_handler = 0;
   ACE_NEW_RETURN (repeats_handler, Repeats_Handler, -1);
   if (repeats_handler->open (ping_handler,
                              main_reactor,
