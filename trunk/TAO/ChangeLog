@@ -1,8 +1,15 @@
+Fri Sep 19 16:24:20 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Updated to not compare realpath if it's not found.
+           
 Thu Sep 18 22:45:39 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * TAO_IDL/fe/lex.yy.cpp:
         * TAO_IDL/fe/idl.ll:
-        
+
           Made idl_parse_line_and_file() to compare the full path to verify
           two path are referring to the same file. This would correctly verify
           even one path is full path and the other is real path.
