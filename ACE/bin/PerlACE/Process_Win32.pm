@@ -158,6 +158,7 @@ sub CommandLine ()
     my $self = shift;
 
     my $commandline = $self->Executable ();
+    $commandline = '"' . $commandline . '"' if $commandline =~ /\s/;
 
     if (defined $self->{ARGUMENTS}) {
         $commandline .= ' '.$self->{ARGUMENTS};
