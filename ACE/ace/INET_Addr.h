@@ -206,7 +206,7 @@ public:
    */
   virtual int addr_to_string (ACE_TCHAR buffer[],
                               size_t size,
-                              bool ipaddr_format = true) const;
+                              int ipaddr_format = 1) const;
 
   /**
    * Initializes an ACE_INET_Addr from the @a address, which can be
