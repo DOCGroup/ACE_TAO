@@ -1,3 +1,10 @@
+Fri Sep 19 19:26:18 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/PerlACE/Process_Win32.pm:
+
+          If the executable contains whitespace, quote it when composing the
+          command line.
+
 Fri Sep 19 17:51:12 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/ETCL/ETCL_Constraint.cpp:
@@ -28,7 +35,7 @@ Fri Sep 19 09:32:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Sep 18 21:15:57 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/ace_defines.m4:
+        * m4/ace_defines.m4:
         * m4/ace_functions.m4:
         * m4/ace_headers.m4:
 
