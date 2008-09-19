@@ -384,17 +384,26 @@ TAO_ETCL_Literal_Constraint::operator/ (const TAO_ETCL_Literal_Constraint & rhs)
     {
     case ACE_ETCL_DOUBLE:
       {
+        if ((ACE_CDR::Double) rhs == 0.0)
+	  return TAO_ETCL_Literal_Constraint ((ACE_CDR::Double) 0.0);
+	
         CORBA::Double result = (CORBA::Double) *this / (CORBA::Double) rhs;
         return TAO_ETCL_Literal_Constraint ((CORBA::Double) result);
       }
     case ACE_ETCL_INTEGER:
     case ACE_ETCL_SIGNED:
       {
+        if ((ACE_CDR::Long) rhs == 0)
+	  return TAO_ETCL_Literal_Constraint ((ACE_CDR::Long) 0);
+	
         CORBA::Long result = (CORBA::Long) *this / (CORBA::Long) rhs;
         return TAO_ETCL_Literal_Constraint ((CORBA::Long) result);
       }
     case ACE_ETCL_UNSIGNED:
       {
+        if ((ACE_CDR::ULong) rhs == 0)
+	  return TAO_ETCL_Literal_Constraint ((ACE_CDR::ULong) 0);
+
         CORBA::ULong result = (CORBA::ULong) *this / (CORBA::ULong) rhs;
         return TAO_ETCL_Literal_Constraint ((CORBA::ULong) result);
       }
