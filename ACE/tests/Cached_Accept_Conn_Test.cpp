@@ -27,11 +27,6 @@
 
 #include "test_config.h"
 
-// IBM C Set++ just can't grok the templates in here for auto template
-// instantiation. It ends up overwriting a tempinc/*.C file and mashes
-// its contents.
-#if !defined (__xlC__) || (__xlC__ > 0x0301)
-
 #include "Cached_Accept_Conn_Test.h"
 
 #include "ace/OS_NS_string.h"
@@ -502,20 +497,6 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
-
-#else   /* Do this for C Set++ 3.1 */
-
-int
-run_main (int argc, ACE_TCHAR *argv[])
-{
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-
-  ACE_START_TEST (ACE_TEXT ("Cached_Accept_Conn_Test"));
-  ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("C Set++ won't build this test correctly\n")));
-
-#endif /* !__xlC__ || __xlC > 0x0301 */
 
   ACE_END_TEST;
   return 0;
