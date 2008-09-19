@@ -1,10 +1,18 @@
+Fri Sep 19 17:53:29 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+        * tao/ETCL/TAO_ETCL_Constraint.cpp:
+
+          Avoid core dump by returning 0 when evaluating division by zero.
+          Partial fix for bugzilla issue #3429.
+
 Fri Sep 19 16:24:20 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * TAO_IDL/fe/idl.ll:
         * TAO_IDL/fe/lex.yy.cpp:
 
           Updated to not compare realpath if it's not found.
-           
+
 Thu Sep 18 22:45:39 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * TAO_IDL/fe/lex.yy.cpp:
