@@ -181,7 +181,7 @@
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #define ACE_LACKS_STDINT_H
 #define ACE_HAS_SYSENT_H
-#define ACE_HAS_SYSINFO
+#define ACE_HAS_SYSV_SYSINFO
 #define ACE_HAS_SYS_SYSTEMINFO_H
 
 // Platform has support for multi-byte character support compliant

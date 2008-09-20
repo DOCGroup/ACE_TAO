@@ -191,7 +191,7 @@
 
 // Platform supports system configuration information.
 #define ACE_HAS_SYS_SYSTEMINFO_H
-#define ACE_HAS_SYSINFO
+#define ACE_HAS_SYSV_SYSINFO
 
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG
