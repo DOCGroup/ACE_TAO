@@ -686,10 +686,6 @@ ACE_CHECK_LACKS_HEADERS(sys/sysctl.h, [], [],
 #endif
 ])
 
-ACE_CHECK_HAS_HEADERS(sys/sysinfo.h)
-
-ACE_CHECK_HAS_HEADERS(sys/systeminfo.h)
-
 ACE_CHECK_LACKS_HEADERS(sys/time.h)
 
 ACE_CHECK_LACKS_HEADERS(sys/uio.h)
@@ -705,8 +701,6 @@ ACE_CHECK_LACKS_HEADERS(time.h)
 ACE_CHECK_LACKS_HEADERS(termio.h termios.h)
 
 ACE_CHECK_LACKS_HEADERS(wctype.h)
-
-AC_CHECK_HEADER([sys/systeminfo.h],[],[])
 
 AC_CHECK_TYPE([struct termio],
 	      [AC_DEFINE([ACE_HAS_TERMIO], 1,
@@ -3484,12 +3478,7 @@ ACE_CHECK_LACKS_FUNCS(sysconf)
 
 ACE_CHECK_HAS_FUNCS(sysctl)
 
-AC_CHECK_FUNC([sysinfo],
-  [
-   if test "$ac_cv_header_sys_systeminfo_h" = yes; then
-     AC_DEFINE([ACE_HAS_SYSV_SYSINFO])
-   fi
-  ],)
+ACE_CHECK_FUNC_SYSINFO
 
 ACE_CHECK_LACKS_FUNCS(system)
 
