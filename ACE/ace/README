@@ -640,7 +640,7 @@ ACE_HAS_SYSCALL_GETRUSAGE               HP/UX has an undefined syscall
                                         for GETRUSAGE...
 ACE_HAS_SYSENT_H                        Platform provides <sysent.h>
                                         header
-ACE_HAS_SYSINFO                         Platform supports system
+ACE_HAS_SYSV_SYSINFO                    Platform supports system
                                         configuration information
 ACE_HAS_SYSV_IPC                        Platform supports System V IPC
                                         (most versions of UNIX, but

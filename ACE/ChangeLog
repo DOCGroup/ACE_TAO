@@ -1,3 +1,20 @@
+Sat Sep 20 12:23:10 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_unistd.inl:
+        * ace/README:
+        * ace/config-irix6.x-common.h:
+        * ace/config-sunos5.4-g++.h:
+        * ace/config-sunos5.4-sunc++-4.x.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-tandem.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
+        * configure.ac:
+        * m4/config_h.m4:
+
+          Rename ACE_HAS_SYSINFO feature test macro to ACE_HAS_SYSV_SYSINFO,
+          to further distinguish it from ACE_HAS_LINUX_SYSINFO.
+
 Fri Sep 19 19:26:18 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * bin/PerlACE/Process_Win32.pm:

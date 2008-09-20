@@ -292,7 +292,7 @@
 
 /* Platform supports system configuration information */
 #define ACE_HAS_SYS_SYSTEMINFO_H
-#define ACE_HAS_SYSINFO 1
+#define ACE_HAS_SYSV_SYSINFO 1
 
 /* Platform supports System V IPC (most versions of UNIX, but not Win32) */
 #define ACE_HAS_SYSV_IPC 1
