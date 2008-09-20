@@ -1,3 +1,24 @@
+Sat Sep 20 13:13:29 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+
+          Remove ACE_HAS_SYSV_SYSINFO autoheader template.  This is now
+          handled within the ACE_CHECK_FUNC_SYSINFO macro.
+
+        * configure.ac:
+
+          Remove checks for ACE_HAS_SYS_SYSINFO_H, ACE_HAS_SYSTEMINFO_H,
+          and ACE_HAS_SYSV_SYSINFO, and replace them with a single call
+          to the new ACE_CHEC_FUNC_SYSINFO macro, which handles all the
+          details.  Fixes bugzilla issue #3325.
+
+        * m4/ace_func.m4:
+
+          New autoconf macro ACE_CHECK_FUNC_SYSINFO, which sets the
+          ACE_HAS_SYS_SYSINFO_H, ACE_HAS_SYS_SYSTEMINFO_H,
+          ACE_HAS_SYSV_SYSINFO, and/or ACE_HAS_LINUX_SYSINFO feature
+          test macros as appropriate for the system.
+
 Sat Sep 20 12:23:10 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/OS_NS_unistd.inl:
