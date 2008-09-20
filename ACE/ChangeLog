@@ -9,7 +9,7 @@ Sat Sep 20 13:13:29 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
           Remove checks for ACE_HAS_SYS_SYSINFO_H, ACE_HAS_SYSTEMINFO_H,
           and ACE_HAS_SYSV_SYSINFO, and replace them with a single call
-          to the new ACE_CHEC_FUNC_SYSINFO macro, which handles all the
+          to the new ACE_CHECK_FUNC_SYSINFO macro, which handles all the
           details.  Fixes bugzilla issue #3325.
 
         * m4/ace_func.m4:
