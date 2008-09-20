@@ -1007,7 +1007,7 @@ ACE_INLINE long
 ACE_OS::sysinfo (int cmd, char *buf, long count)
 {
   ACE_OS_TRACE ("ACE_OS::sysinfo");
-#if defined (ACE_HAS_SYSINFO)
+#if defined (ACE_HAS_SYSV_SYSINFO)
   ACE_OSCALL_RETURN (::sysinfo (cmd, buf, count), long, -1);
 #else
   ACE_UNUSED_ARG (cmd);
@@ -1015,7 +1015,7 @@ ACE_OS::sysinfo (int cmd, char *buf, long count)
   ACE_UNUSED_ARG (count);
 
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_SYSINFO */
+#endif /* ACE_HAS_SYSV_SYSINFO */
 }
 
 ACE_INLINE int

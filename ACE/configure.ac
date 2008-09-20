@@ -3487,7 +3487,7 @@ ACE_CHECK_HAS_FUNCS(sysctl)
 AC_CHECK_FUNC([sysinfo],
   [
    if test "$ac_cv_header_sys_systeminfo_h" = yes; then
-     AC_DEFINE([ACE_HAS_SYSINFO])
+     AC_DEFINE([ACE_HAS_SYSV_SYSINFO])
    fi
   ],)
 

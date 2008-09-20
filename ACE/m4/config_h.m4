@@ -598,7 +598,7 @@ AH_TEMPLATE([ACE_HAS_SVR4_SIGNAL_T],
 AH_TEMPLATE([ACE_HAS_SVR4_TLI],
 [Compiler/platform supports SVR4 TLI (in particular, T_GETNAME stuff).])
 
-AH_TEMPLATE([ACE_HAS_SYSINFO],
+AH_TEMPLATE([ACE_HAS_SYSV_SYSINFO],
 [Platform supports system configuration information.])
 
 AH_TEMPLATE([ACE_HAS_SYSV_IPC],
