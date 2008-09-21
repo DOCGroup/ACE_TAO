@@ -1,3 +1,10 @@
+Sat Sep 19 10:04:29 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.{h,cpp}:
+          Added a string_to_object with a wchar_t argument which is TAO
+          specific. This makes it much easier to use TAO in an unicode
+          application
+
 Fri Sep 19 17:53:29 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:

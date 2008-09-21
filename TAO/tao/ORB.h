@@ -216,6 +216,15 @@ namespace CORBA
      */
     CORBA::Object_ptr string_to_object (const char *str);
 
+#if defined (ACE_USES_WCHAR)
+    /**
+     * Turn a string-ified object reference back into an object
+     * pointer.  Typically these strings are created using
+     * object_to_string(), but not necessarily locally.
+     * This is a TAO specific extension.
+     */
+    CORBA::Object_ptr string_to_object (const wchar_t *str);
+#endif
     /**
      * Turn an object reference into a string.  Each type of ORB,
      * e.g. an IIOP ORB, must implement this.  This can be used by
