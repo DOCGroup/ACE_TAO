@@ -1539,6 +1539,14 @@ CORBA::ORB::string_to_object (const char *str)
     return this->url_ior_string_to_object (str);
 }
 
+#if defined (ACE_USES_WCHAR)
+CORBA::Object_ptr
+CORBA::ORB::string_to_object (const wchar_t *str)
+{
+  return this->string_to_object (ACE_TEXT_ALWAYS_CHAR (str));
+}
+#endif
+
 // ****************************************************************
 
 char *
