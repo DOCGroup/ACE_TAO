@@ -1,3 +1,10 @@
+Mon Sep 22 11:25:53 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Use variable CURDIR instead of PWD where possible to identify the
+          current working directory. Fixes bug #3393.
+
 Sat Sep 20 13:13:29 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/config_h.m4:
@@ -1557,7 +1564,7 @@ Sat Jul 19 19:58:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-macosx-tiger.h:
           Make sure we set the correct ACE_SIZEOF_LONG_DOUBLE value. Thanks
-          to Frank Förster <F dot Forster at herts dot ac dot uk> for reporting this
+          to Frank Fï¿½rster <F dot Forster at herts dot ac dot uk> for reporting this
 
 Thu Jul 17 20:24:11 UTC 2008  Steve Huston  <shuston@riverace.com>
 
