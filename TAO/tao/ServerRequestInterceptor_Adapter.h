@@ -74,7 +74,6 @@ namespace TAO
     /// This method implements the "starting" server side interception
     /// point. It will be used as the first interception point and it is
     /// proprietary to TAO.
-    /// @@ Will go away once Bug 1369 is fixed
     virtual void tao_ft_interception_point (
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],

@@ -205,7 +205,7 @@ be_visitor_component_ch::visit_component (be_component *node)
 
   *os << be_nl << be_nl
       << node->local_name () << " (" << be_idt << be_idt_nl
-      << "IOP::IOR *ior," << be_nl
+      << "::IOP::IOR *ior," << be_nl
       << "TAO_ORB_Core *orb_core = 0" << be_uidt_nl
       << ");" << be_uidt;
 

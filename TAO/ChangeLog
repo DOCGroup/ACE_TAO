@@ -1,3 +1,22 @@
+Mon Sep 22 13:30:28 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+
+          Scope use of IOP module.
+
+        * tao/PI_Server/ServerInterceptorAdapter.h:
+        * tao/ServerRequestInterceptor_Adapter.h:
+
+          Remove misleading comments.
+
+        * tao/Utils/Servant_Var.inl:
+
+          Remove pointless try / catch.
+
 Sat Sep 19 10:05:29 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Hello/client.cpp:

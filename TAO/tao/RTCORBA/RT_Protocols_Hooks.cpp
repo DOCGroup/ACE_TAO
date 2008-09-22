@@ -504,7 +504,9 @@ void
 TAO_RT_Protocols_Hooks::add_rt_service_context_hook (
     TAO_Service_Context &service_context,
     CORBA::Policy *model_policy,
-    CORBA::Short &client_priority)
+    CORBA::Short &client_priority
+
+  )
 {
   RTCORBA::PriorityModelPolicy_var model_policy_ptr =
     RTCORBA::PriorityModelPolicy::_narrow (model_policy);
@@ -523,7 +525,7 @@ TAO_RT_Protocols_Hooks::add_rt_service_context_hook (
           throw ::CORBA::MARSHAL ();
         }
 
-      service_context.set_context (IOP::RTCorbaPriority, cdr);
+      service_context.set_context ( ::IOP::RTCorbaPriority, cdr);
     }
 }
 
