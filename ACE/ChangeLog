@@ -214,7 +214,7 @@ Tue Sep 16 17:54:56 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:
 
-          Reverted th exceptions=0 part of the previous commit.  exceptions=0
+          Reverted the exceptions=0 part of the previous commit.  exceptions=0
           is still supported for ACE, but not for TAO.
 
 Tue Sep 16 14:53:16 UTC 2008  Adam Mitz  <mitza@ociweb.com>
