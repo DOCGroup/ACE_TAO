@@ -306,7 +306,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         {
           *os << "// Concrete non-local interface only." << be_nl
               << node->local_name () << " (" << be_idt << be_idt_nl
-              << "IOP::IOR *ior," << be_nl
+              << "::IOP::IOR *ior," << be_nl
               << "TAO_ORB_Core *orb_core = 0);" << be_uidt
               << be_uidt_nl << be_nl;
         }

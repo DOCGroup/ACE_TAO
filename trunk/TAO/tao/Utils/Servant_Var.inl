@@ -10,16 +10,9 @@ template <class T>
 ACE_INLINE T *
 TAO::Utils::Servant_Var<T>::_duplicate (T * p)
 {
-  try
+  if (p != 0)
     {
-      if (p != 0)
-        {
-          p->_add_ref ();
-        }
-    }
-  catch (...)
-    {
-      throw;
+      p->_add_ref ();
     }
 
   return p;
