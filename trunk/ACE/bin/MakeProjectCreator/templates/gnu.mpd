@@ -120,8 +120,12 @@ PRJ_TYPE = library
 INSBIN ?= <%install%>
 <%endif%>
 ifeq ($(INSBIN),.)
-  ifeq ($(PWD),)
-    PWD=$(shell pwd)
+  ifeq ($(CURDIR),)
+    ifeq ($(PWD),)
+      PWD=$(shell pwd)
+    endif
+  else
+    PWD=$(CURDIR)
   endif
   INSBIN = $(PWD)<%if(targetoutdir)%>/<%targetoutdir%><%endif%>
 <%if(targetoutdir)%>
@@ -137,8 +141,12 @@ OUTPUT_DIRECTORY = $(INSBIN)
 INSLIB ?= <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
 <%endif%>
 ifeq ($(INSLIB),.)
-  ifeq ($(PWD),)
-    PWD=$(shell pwd)
+  ifeq ($(CURDIR),)
+    ifeq ($(PWD),)
+      PWD=$(shell pwd)
+    endif
+  else
+    PWD=$(CURDIR)
   endif
   INSLIB = $(PWD)<%if(targetoutdir)%>/<%targetoutdir%><%endif%>
 <%if(targetoutdir)%>
