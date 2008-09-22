@@ -151,7 +151,7 @@ ACE_INLINE int
 ACE_OS::rmdir (const char *path)
 {
 #if defined (ACE_HAS_WINCE)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectoryA (path),
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (ACE_TEXT_CHAR_TO_TCHAR(path)),
                                           ace_result_),
                         int, -1);
 #else

@@ -381,7 +381,7 @@ ACE_OS::num_processors (void)
 #elif defined (_SC_NPROCESSORS_CONF)
   return ::sysconf (_SC_NPROCESSORS_CONF);
 #elif defined (ACE_HAS_SYSCTL)
-  int num_processors;
+  int num_processors = 0;
   int mib[2] = { CTL_HW, HW_NCPU };
   size_t len = sizeof (num_processors);
   if (::sysctl (mib, 2, &num_processors, &len, 0, 0) != -1)
