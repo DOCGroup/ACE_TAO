@@ -1,3 +1,11 @@
+Mon Sep 22 16:33:41 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Rolled back previous version for main file name comparison
+          on OPENVMS.
+          
 Mon Sep 22 14:57:34 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:

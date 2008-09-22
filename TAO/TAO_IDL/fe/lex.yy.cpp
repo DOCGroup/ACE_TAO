@@ -2711,10 +2711,21 @@ idl_parse_line_and_file (char *buf)
   bool is_main_filename = false;
   if (!is_real_filename)
     {
+#if defined (ACE_OPENVMS) 	       
+      char full_path[MAXPATHLEN] = ""; 	         
+      char *full_fname = ACE_OS::realpath (fname->get_string (), full_path); 	          
+      // I don't see the benefit of using ->compare since this is targeted at IDL identifiers 
+      // not at filenames and in the case of OpenVMS (case-insensitive filesystem) gets really 	 
+      // problematic as filenames retrieved through different mechanisms may give different 	 
+      // casing. 	 
+      is_main_filename = idl_global->path_cmp (idl_global->main_filename ()->get_string (), 	 
+                                               full_fname) == 0; 	
+#else
       is_main_filename 
         = fname->compare (idl_global->main_filename ()) 
           || same_file (fname->get_string(), 
                         idl_global->main_filename ()->get_string());
+#endif
     }
 
   if (is_real_filename || is_main_filename)
