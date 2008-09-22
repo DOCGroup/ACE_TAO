@@ -455,8 +455,8 @@ ACE_INLINE time_t
 ACE_OS::time (time_t *tloc)
 {
   ACE_OS_TRACE ("ACE_OS::time");
-#if !defined (ACE_LACKS_TIME)
-  time_t retv = ACE_OS::gettimeofday ().sec ();
+#if defined (ACE_LACKS_TIME)
+  time_t const retv = ACE_OS::gettimeofday ().sec ();
   if (tloc)
     *tloc = retv;
   return retv;

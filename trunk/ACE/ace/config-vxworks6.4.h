@@ -72,7 +72,7 @@
 
 #if !defined __RTP__
 # if defined (TOOL) && (TOOL == gnu)
-#  if defined (CPU) && (CPU == PPC85XX || CPU == PPC604 || CPU == PPC603)
+#  if defined (CPU) && (CPU == PPC85XX || CPU == PPC604 || CPU == PPC603 || CPU == PPC32)
 // These PPC's do lack log2 in kernel mode
 #   define ACE_LACKS_LOG2
 #  endif
