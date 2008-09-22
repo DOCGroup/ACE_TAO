@@ -1,3 +1,16 @@
+Mon Sep 22 19:26:42 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/Union_Forward_Test:
+
+        * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/README.txt:
+        * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/Union_Forward_Test.mpc:
+        * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/test.idl:
+
+          New test added to support bugzilla #3431
+        
+        
 Mon Sep 22 16:33:41 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * TAO_IDL/fe/idl.ll:
@@ -5,7 +18,7 @@ Mon Sep 22 16:33:41 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
           Rolled back previous version for main file name comparison
           on OPENVMS.
-          
+
 Mon Sep 22 14:57:34 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
