@@ -796,16 +796,16 @@ operator/ (const TAO_Literal_Constraint& left,
     {
     case TAO_DOUBLE:
       {
-	if ((CORBA::Double) right == 0.0) 
-	  return TAO_Literal_Constraint ((CORBA::Double) 0.0);
+        if ((CORBA::Double) right == 0.0) 
+          return TAO_Literal_Constraint ((CORBA::Double) 0.0);
 
         CORBA::Double result = (CORBA::Double) left / (CORBA::Double) right;
         return TAO_Literal_Constraint (result);
       }
     case TAO_SIGNED:
       {
-	if (static_cast<CORBA::LongLong> (right) == 0) 
-	  return TAO_Literal_Constraint (static_cast<CORBA::LongLong> (0));
+        if (static_cast<CORBA::LongLong> (right) == 0) 
+          return TAO_Literal_Constraint (static_cast<CORBA::LongLong> (0));
 
         CORBA::LongLong result = static_cast<CORBA::LongLong> (left) /
                                  static_cast<CORBA::LongLong> (right);
@@ -813,8 +813,8 @@ operator/ (const TAO_Literal_Constraint& left,
       }
     case TAO_UNSIGNED:
       {
-	if (static_cast<CORBA::ULongLong> (right) == 0) 
-	  return TAO_Literal_Constraint (static_cast<CORBA::ULongLong> (0));
+        if (static_cast<CORBA::ULongLong> (right) == 0) 
+          return TAO_Literal_Constraint (static_cast<CORBA::ULongLong> (0));
 
         CORBA::ULongLong result = static_cast<CORBA::ULongLong> (left) /
                                   static_cast<CORBA::ULongLong> (right);
