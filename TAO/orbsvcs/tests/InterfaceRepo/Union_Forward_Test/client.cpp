@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-// $Id:$
+// $Id$
 
 #include <tao/IFR_Client_Adapter.h>
 #include <tao/IFR_Client/IFR_BasicC.h>
@@ -35,11 +35,11 @@ main (int argc, char ** argv)
     intDef->contents (CORBA::dk_Attribute,1);
   CORBA::ULong n_ats = attributes->length();
 
-  CORBA::String_var name = attributes[0]->name();
+  CORBA::String_var name = (*attributes)[0]->name();
   ACE_DEBUG ((LM_DEBUG,"found %d attributes, name = %s\n", n_ats, name.in()));
 
   CORBA::AttributeDef_var attr =
-    CORBA::AttributeDef::_narrow (attributes[0]);
+    CORBA::AttributeDef::_narrow ((*attributes)[0]);
 
   if (CORBA::is_nil (attr.in()))
     ACE_ERROR_RETURN ((LM_ERROR,"could not narrow attribute ref\n"), 1);
