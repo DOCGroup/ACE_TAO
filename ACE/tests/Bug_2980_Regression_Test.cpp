@@ -24,6 +24,13 @@
 
 #  include <dlfcn.h>
 
+namespace {
+#  if defined (ACE_DLL_SUFFIX)
+  const char *DllTestName = "./libBug_2980_Regression" ACE_DLL_SUFFIX;
+#else
+  const char *DllTestName = "./libBug_2980_Regression.so";
+#endif /* ACE_DLL_SUFFIX */
+}
 
 #  if defined CAN_USE_THREADS
 #    include <pthread.h>
@@ -57,20 +64,7 @@ void* loadDll(void*)
   PRINTF ("loadDll - entered\n");
 
 #if defined (CAN_RUN_TEST)
-  char buf[BUFSIZ];
-
-  strcpy (buf, "./libBug_2980_Regression");
-
-// Next bit cribbed from Unload_libACE.cpp
-#if defined (__hpux) && !(defined (__ia64) && (__ia64 == 1))
-          strcat (buf, ".sl");
-#elif defined (__APPLE__)
-          strcat (buf, ".dylib");
-#else
-          strcat (buf, ".so");
-#endif /* (__hpux) */
-
-  dllHandle = dlopen(buf, RTLD_NOW);
+  dllHandle = dlopen(DllTestName, RTLD_NOW);
   if (dllHandle == 0)
   {
     PRINTF ("unable to load library: %s\n", dlerror());
