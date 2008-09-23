@@ -1,3 +1,26 @@
+Tue Sep 23 20:50:05 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        
+          Changes to the logic of union and struct processing,
+          especially in the discrimination of the case where a
+          full definition of a previous forward declaration is
+          being processed. Thanks to Phil Mesnier <mesnier_p@ociweb.com>
+          for discovering the problem, adding a regression test
+          for forward delcared unions. These changes fix [BUGID:3431].
+          
+        * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/client.cpp:
+        
+          Elimination of some #includes, other minor changes.
+          
+        * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/run_test.pl:
+        
+          Changed the path in the command string that launches tao_ifr
+          to $ACE_ROOT/bin, which is portable, from tao_ifr's
+          build directory, which doesn't work on Windows.
+
 Tue Sep 23 12:00:26 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/client.cpp:

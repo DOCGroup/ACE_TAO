@@ -193,44 +193,29 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
                 -1
               );
             }
-        }
+           
+          this->ir_current_ = CORBA::IDLType::_narrow (struct_def.in ());
+        } // if (CORBA::is_nil (...))
       else
         {
-          // Are we seeing the full definition of a previous forward
-          // declaration. If so, just add the members so the repo
-          // entry referencing the StructDef will still be valid.
-          if (node->ifr_fwd_added ())
+          // We are seeing the full definition of a forward
+          // declaration - just add the members so repo
+          // entries referencing the UnionDef will stay valid.
+          // Also we know node->ifr_fwd_added_ is true.
+          struct_def = CORBA::StructDef::_narrow (prev_def.in ());
+      
+          if (this->add_members (node, struct_def.in ()) == -1)
             {
-              struct_def = CORBA::StructDef::_narrow (prev_def.in ());
-          
-              if (this->add_members (node, struct_def.in ()) == -1)
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
-                      ACE_TEXT ("visit_structure -")
-                      ACE_TEXT (" visit_scope failed\n")
-                    ),
-                    -1
-                  );
-                }
-                
-              // We shouldn't see this node again, but just in case.
-              node->ifr_fwd_added (false);
-           }
-           
-          // Are we clobbering a previous
-          // entry (from another IDL file) of another type? In that
-          // case we do what other ORB vendors do, and destroy the
-          // original entry, create the new one, and let the user beware.
-          if (!node->ifr_added ())
-            {
-              prev_def->destroy ();
-
-              // This call will take the other branch.
-              return this->visit_structure (node);
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
+                  ACE_TEXT ("visit_structure -")
+                  ACE_TEXT (" visit_scope failed\n")
+                ),
+                -1
+              );
             }
-
+           
           this->ir_current_ = CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
