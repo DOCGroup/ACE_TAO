@@ -1,3 +1,18 @@
+Tue Sep 23 15:41:43  2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_test.pl: Don't delete Service_Config_Test.conf from the
+          target; on local builds, it deletes it from the working dir and
+          svn needs to restore it. Fixes Bugzilla #3409. Thanks to Johnny
+          Willemsen for noticing this.
+
+        * ace/os_include/sys/os_types.h:
+        * ace/OS_NS_sys_stat.inl (umask): Changed mode_t from an int back to
+          u_short. int conflicts with other packages' defs of mode_t (in
+          particular, Perl). Of all the places mode_t is used, the only place
+          int made a real difference was in calling _umask_s() on Windows
+          VC8+. This change reverts the affected piece of
+          Fri Mar  9 00:53:43 UTC 2007  Steve Huston  <shuston@riverace.com>
+
 Tue Sep 23 15:32:57 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_other_tests.lst:

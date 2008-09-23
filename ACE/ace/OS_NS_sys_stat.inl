@@ -277,9 +277,10 @@ namespace ACE_OS
     ACE_UNUSED_ARG (cmask);
     ACE_NOTSUP_RETURN ((mode_t)-1);
 # elif defined (ACE_HAS_TR24731_2005_CRT)
-    mode_t old_mode;
-    ACE_SECURECRTCALL (_umask_s (cmask, &old_mode), mode_t, -1, old_mode);
-    return old_mode;
+    int old_mode;
+    int new_mode = static_cast<int> (cmask);
+    ACE_SECURECRTCALL (_umask_s (new_mode, &old_mode), mode_t, -1, old_mode);
+    return static_cast<mode_t> (old_mode);
 # elif defined (ACE_WIN32) && !defined (__BORLANDC__)
     ACE_OSCALL_RETURN (::_umask (cmask), mode_t, -1);
 # else

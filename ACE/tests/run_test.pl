@@ -563,9 +563,6 @@ else {
     }
     $target->GetStderrLog();
   }
-
-  # Clean up specially placed test files.
-  $target->DeleteFile($svc_conf_file);
 }
 
 check_resources ($oh) if (!defined $opt_d);

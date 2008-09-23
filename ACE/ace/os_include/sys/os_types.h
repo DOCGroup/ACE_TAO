@@ -102,7 +102,7 @@ typedef double ACE_timer_t;
 #  if !defined (__BORLANDC__)
      typedef DWORD nlink_t;
 #    if !defined(__MINGW32__)
-        typedef int mode_t;
+        typedef u_short mode_t;
 #    endif /* !__MINGW32__ */
      typedef long uid_t;
      typedef long gid_t;
