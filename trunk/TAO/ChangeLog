@@ -1,3 +1,10 @@
+Tue Sep 23 12:00:26 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/client.cpp:
+
+          Fix for fussy compilers that don't like direct sequence element
+          dereferencing from a var.
+
 Mon Sep 22 19:26:42 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/InterfaceRepo/Union_Forward_Test:
@@ -9,8 +16,8 @@ Mon Sep 22 19:26:42 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
         * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/test.idl:
 
           New test added to support bugzilla #3431
-        
-        
+
+
 Mon Sep 22 16:33:41 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * TAO_IDL/fe/idl.ll:
