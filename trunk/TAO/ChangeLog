@@ -1,22 +1,99 @@
+Tue Sep 23 21:31:40 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/Time_Service/Time_Service.mpc:
+
+          Changed to inherit from the time_serv base project.
+
+        * MPC/config/time_serv.mpb:
+        * MPC/config/time_skel.mpb:
+
+          New MPC base projects for the time server skeleton and server
+          implementation libraries.
+
+        * MPC/config/time.mpb:
+
+          Update time base project so it reflects only the client stub
+          library.
+
+        * orbsvcs/orbsvcs/TAO_CosTime_Serv.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosTime_Skel.pc.in:
+
+          New files, pkgconfig templates for server skeleton and server
+          implementation libraries.
+
+        * orbsvcs/orbsvcs/TAO_CosTime.pc.in:
+
+          Update pkgconfig template so it reflects only the client stub
+          library.
+
+        * orbsvcs/orbsvcs/Time/time_serv_export.h:
+        * orbsvcs/orbsvcs/Time/time_skel_export.h:
+
+          New files, export directives for server skeleton and server
+          implementation libraries.
+
+        * orbsvcs/orbsvcs/CosTime.mpc:
+
+          Split CosTime project into separate projects for IDL
+          compilation, client stub libray, server skeleton library, and
+          server implementation library.
+
+          Fixes bugzilla issue #3433.
+
+        * examples/Quoter/Quoter.mpc:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.mpc:
+
+          Changed to inherit from lifecycle_skel base project.
+
+        * MPC/config/lifecycle_skel.mpb:
+
+          New file, MPC base project for the lifecycle server skeleton
+          library.
+
+        * MPC/config/lifecycle.mpb:
+
+          Update lifecycle base project so it reflects only the client
+          stub library.
+
+        * orbsvcs/orbsvcs/TAO_CosLifeCycle_Skel.pc.in:
+
+          New file, pkgconfig template for server skeleton library.
+
+        * orbsvcs/orbsvcs/TAO_CosLifeCycle.pc.in
+
+          Update pkgconfig template so it reflects only the client stub
+          library.
+
+        * orbsvcs/orbsvcs/LifeCycle/lifecycle_skel_export.h:
+
+          New file, export directives for server skeleton library.
+
+        * orbsvcs/orbsvcs/CosLifeCycle.mpc:
+
+          Split CosLifeCycle project into separate projects for IDL
+          compilation, client stub library, and server skeleton library.
+
+          Fixes bugzilla issue #2409.
+
 Tue Sep 23 20:50:05 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
         * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
         * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
-        
+
           Changes to the logic of union and struct processing,
           especially in the discrimination of the case where a
           full definition of a previous forward declaration is
           being processed. Thanks to Phil Mesnier <mesnier_p@ociweb.com>
           for discovering the problem, adding a regression test
           for forward delcared unions. These changes fix [BUGID:3431].
-          
+
         * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/client.cpp:
-        
+
           Elimination of some #includes, other minor changes.
-          
+
         * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/run_test.pl:
-        
+
           Changed the path in the command string that launches tao_ifr
           to $ACE_ROOT/bin, which is portable, from tao_ifr's
           build directory, which doesn't work on Windows.

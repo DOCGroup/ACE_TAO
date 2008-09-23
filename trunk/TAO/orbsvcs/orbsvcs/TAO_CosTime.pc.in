@@ -4,8 +4,8 @@ libdir=@libdir@
 includedir=@includedir@
 
 Name: TAO_CosTime
-Description: TAO CosTime Library
-Requires: TAO_PortableServer, TAO
+Description: TAO CosTime Stub Library
+Requires: TAO_AnyTypeCode, TAO
 Version: @VERSION@
 Libs: -L${libdir} -lTAO_CosTime
 Cflags: -I${includedir}
