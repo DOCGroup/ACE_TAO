@@ -1557,19 +1557,39 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
         }
       else
         {
-          // If the line below is true, we are clobbering a previous
-          // entry (from another IDL file) of another type. In that
-          // case we do what other ORB vendors do, and destroy the
-          // original entry, create the new one, and let the user beware.
-          if (!node->ifr_added ())
+          if (node->ifr_added ())
             {
-              prev_def->destroy ();
+              // We have visited this node before in the same IDL
+              // compilation unit - just update ir_current_.
+              this->ir_current_ =
+                CORBA::StructDef::_narrow (prev_def.in ());
+            }
+          else if (node->ifr_fwd_added ())
+            {
+              // We are seeing the full definition of a forward
+              // declaration - just visit the scope to populate
+              // the IFR entry while keeping the same section key
+              // so as not to invalidate existing references.
+              ifr_adding_visitor_structure visitor (node, false);
+              int retval = visitor.visit_structure (node);
 
+              if (retval == 0)
+                {
+                  this->ir_current_ =
+                    CORBA::IDLType::_duplicate (visitor.ir_current ());
+                }
+
+              return retval;
+            }
+          else
+            {
+              // We are clobbering a previous entry
+              // from another IDL file. In this case we do what
+              // other ORB vendors do - destroy the original
+              // entry, create a new one, and let the user beware.
+              prev_def->destroy ();
               return this->visit_structure (node);
             }
-
-          this->ir_current_ =
-            CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
   catch (const CORBA::Exception& ex)
@@ -1893,9 +1913,7 @@ ifr_adding_visitor::visit_union (AST_Union *node)
 
       if (CORBA::is_nil (prev_def.in ()))
         {
-          ifr_adding_visitor_union visitor (node,
-                                            0);
-
+          ifr_adding_visitor_union visitor (node, 0);
           int retval = visitor.visit_union (node);
 
           if (retval == 0)
@@ -1908,19 +1926,39 @@ ifr_adding_visitor::visit_union (AST_Union *node)
         }
       else
         {
-          // If the line below is true, we are clobbering a previous
-          // entry (from another IDL file) of another type. In that
-          // case we do what other ORB vendors do, and destroy the
-          // original entry, create the new one, and let the user beware.
-          if (!node->ifr_added ())
+          if (node->ifr_added ())
             {
-              prev_def->destroy ();
+              // We have visited this node before in the same IDL
+              // compilation unit - just update ir_current_.
+              this->ir_current_ =
+                CORBA::UnionDef::_narrow (prev_def.in ());
+            }
+          else if (node->ifr_fwd_added ())
+            {
+              // We are seeing the full definition of a forward
+              // declaration - just visit the scope to populate
+              // the IFR entry while keeping the same section key
+              // so as not to invalidate existing references.
+              ifr_adding_visitor_union visitor (node, false);
+              int retval = visitor.visit_union (node);
 
+              if (retval == 0)
+                {
+                  this->ir_current_ =
+                    CORBA::IDLType::_duplicate (visitor.ir_current ());
+                }
+
+              return retval;
+            }
+          else
+            {
+              // We are clobbering a previous entry
+              // from another IDL file. In this case we do what
+              // other ORB vendors do - destroy the original
+              // entry, create a new one, and let the user beware.
+              prev_def->destroy ();
               return this->visit_union (node);
             }
-
-          this->ir_current_ =
-            CORBA::UnionDef::_narrow (prev_def.in ());
         }
     }
   catch (const CORBA::Exception& ex)
