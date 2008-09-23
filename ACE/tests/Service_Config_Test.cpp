@@ -17,6 +17,7 @@
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_Thread.h"
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
 #include "ace/Service_Config.h"
@@ -208,6 +209,9 @@ testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
               || new_argv.add (ACE_TEXT ("-f")) == -1
               || new_argv.add (svc_conf) == -1)
     {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("line %l %p\n"),
+                  ACE_TEXT ("new_argv.add")));
       ++error;
     }
 
@@ -218,7 +222,9 @@ testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
   if (daemon.open (new_argv.argc (), new_argv.argv ()) == -1 &&
       errno != ENOENT)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("line %l %p\n"), ACE_TEXT ("daemon.open")));
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("line %l %p\n"),
+                  ACE_TEXT ("daemon.open")));
       ++error;
     }
 
@@ -274,6 +280,9 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
               || new_argv.add (ACE_TEXT ("-f")) == -1
               || new_argv.add (svc_conf) == -1)
     {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("line %l %p\n"),
+                  ACE_TEXT ("new_argv.add")));
       ++error;
     }
 
@@ -281,11 +290,16 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
   // <ACE_Service_Config> gets called.
   ACE_Service_Config daemon;
 
-  if (daemon.open (new_argv.argc (), new_argv.argv ()) == -1 &&
-      errno != ENOENT)
+  if (daemon.open (new_argv.argc (), new_argv.argv ()) == -1)
     {
-      ++error;
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("line %l %p\n"), ACE_TEXT ("daemon.open")));
+      if (errno == ENOENT)
+        ACE_DEBUG ((LM_WARNING,
+                    ACE_TEXT ("ACE_Service_Config::open: %p\n"),
+                    svc_conf));
+      else
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("ACE_Service_Config::open: %p\n"),
+                    ACE_TEXT ("error")));
     }
 
   ACE_Time_Value tv (argc > 1 ? ACE_OS::atoi (argv[1]) : 2);
@@ -378,6 +392,143 @@ testOrderlyInstantiation (int , ACE_TCHAR *[])
     }
 }
 
+// This test verifies that services loaded by a normal ACE startup can be
+// located from a thread spawned outside of ACE's control.
+//
+// To do this, we need a native thread entry and, thus, it needs special care
+// for each platform type. Feel free to add more platforms as needed here and
+// in main() where the test is called.
+#if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_PTHREADS_STD)
+#  if defined (ACE_HAS_WTHREADS)
+extern "C" unsigned int __stdcall
+#  else
+extern "C" ACE_THR_FUNC_RETURN
+#  endif
+nonacethreadentry (void *args)
+{
+  ACE_Log_Msg::inherit_hook (0, *(ACE_OS_Log_Msg_Attributes *)args);
+
+  if (ACE_Service_Config::instance()->find(ACE_TEXT("Test_Object_1_Thr")) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("In thr %t cannot find Test_Object_1_Thr ")
+                  ACE_TEXT ("via ACE_Service_Config\n")));
+      ++error;
+    }
+  else
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
+                ACE_TEXT ("via ACE_Service_Config\n")));
+
+  if (0 != ACE_Service_Repository::instance()->find
+      (ACE_TEXT("Test_Object_1_Thr")))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("In thr %t cannot find Test_Object_1_Thr ")
+                  ACE_TEXT ("via ACE_Service_Repository\n")));
+      ++error;
+    }
+  else
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
+                ACE_TEXT ("via ACE_Service_Repository\n")));
+
+  return 0;
+}
+
+void
+testNonACEThread ()
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Beginning non-ACE thread lookup test\n")));
+
+  static const ACE_TCHAR *svc_desc =
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
+    ACE_TEXT ("dynamic Test_Object_1_Thr Service_Object * ")
+    ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_1_Thr\"")
+#else
+    ACE_TEXT ("<dynamic id=\"Test_Object_1_Thr\" type=\"Service_Object\">")
+    ACE_TEXT ("  <initializer init=\"_make_Service_Config_DLL\" path=\"Service_Config_DLL\" params=\"Test_Object_1_Thr\"/>")
+    ACE_TEXT ("</dynamic>")
+#endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
+    ;
+
+  static const ACE_TCHAR *svc_remove =
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
+    ACE_TEXT ("remove Test_Object_1_Thr")
+#else
+    ACE_TEXT ("<remove id=\"Test_Object_1_Thr\"/>")
+    ACE_TEXT ("</remove>")
+#endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
+    ;
+
+  if (-1 == ACE_Service_Config::process_directive (svc_desc))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("Error loading service")));
+      ++error;
+      return;
+    }
+
+  // Allow the spawned thread to contribute to the logging output.
+  ACE_OS_Log_Msg_Attributes log_msg_attrs;
+  ACE_Log_Msg::init_hook (log_msg_attrs);
+
+  u_int errors_before = error;
+
+#if defined (ACE_HAS_WTHREADS)
+  HANDLE thr_h = (HANDLE)_beginthreadex (0,
+                                         0,
+                                         &nonacethreadentry,
+                                         &log_msg_attrs,
+                                         0,
+                                         0);
+  if (thr_h == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("_beginthreadex")));
+    }
+  else
+    {
+      WaitForSingleObject (thr_h, INFINITE);
+      CloseHandle (thr_h);
+    }
+#elif defined (ACE_HAS_PTHREADS_STD)
+  pthread_t thr_id;
+  int status = pthread_create (&thr_id, 0, nonacethreadentry, &log_msg_attrs);
+  if (status != 0)
+    {
+      errno = status;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pthread_create")));
+    }
+  else
+    {
+      pthread_join (thr_id, 0);
+    }
+#endif
+
+  if (error != errors_before)  // The test failed; see if we can still see it
+    {
+      if (0 != ACE_Service_Config::instance()->find
+          (ACE_TEXT ("Test_Object_1_Thr")))
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Main thr %t cannot find Test_Object_1_Thr\n")));
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("Main thr %t DOES find Test_Object_1_Thr\n")));
+    }
+
+  if (-1 == ACE_Service_Config::process_directive (svc_remove))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("Error removing service")));
+      ++error;
+      return;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Non-ACE thread lookup test completed\n")));
+}
+#endif /* ACE_HAS_WTHREADS || ACE_HAS_PTHREADS_STD */
+
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
@@ -388,6 +539,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   testLoadingServiceConfFile (argc, argv);
   testLoadingServiceConfFileAndProcessNo (argc, argv);
   testLimits (argc, argv);
+#if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_PTHREADS_STD)
+  testNonACEThread();
+#endif
 
   ACE_END_TEST;
   return error;

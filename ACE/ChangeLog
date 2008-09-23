@@ -1,3 +1,13 @@
+Tue Sep 23 19:32:38  2008  Steve Huston  <shuston@riverace.com>
+
+        Brought in from ACE 5.6a:
+        Tue Aug 26 17:11:10 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/Service_Config_Test.cpp: Add a test for looking up services
+          from a thread started outside ACE's control. This has code for
+          Pthreads and Windows; other platforms will require additions if
+          desired.
+
 Tue Sep 23 16:49:12 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * tests/Bug_2980_Regression_Test.cpp: Adjust to shared lib suffix
