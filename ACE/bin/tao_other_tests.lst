@@ -96,6 +96,7 @@ TAO/orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:  !MINIMUM !CORBA_E_COMPACT
 TAO/orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/run_test.pl:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/InterfaceRepo/Latency_Test/run_test.pl:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/run_test.pl:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO !VxWorks !VxWorks_RTP
+TAO/orbsvcs/tests/InterfaceRepo/Union_Forward_Test/run_test.pl:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO !VxWorks !VxWorks_RTP !FIXED_BUGS_ONLY
 TAO/orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/run_test.pl:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/run_test.pl:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/run_test.pl:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO !VxWorks !VxWorks_RTP
