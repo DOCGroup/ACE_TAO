@@ -18,8 +18,9 @@ $nice = "";
 $ifrref = "-ORBInitRef InterfaceRepository=file://$iorfile";
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("../../../IFR_Service/IFR_Service", " $nice " . " -o $iorfile" . " $locking");
-$TAO_IFR = new PerlACE::Process ("../../../IFR_Service/tao_ifr", 
+$SV = new PerlACE::Process ("../../../IFR_Service/IFR_Service",
+                            " $nice " . " -o $iorfile" . " $locking");
+$TAO_IFR = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/tao_ifr", 
                                  $ifrref . " test.idl");
 $CLIENT = new PerlACE::Process ("./client", $ifrref);
 
