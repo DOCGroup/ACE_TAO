@@ -556,16 +556,14 @@ development and target platforms. The platform/name mapping is shown below.
 All solution files have a <code>.sln</code> suffix and all project files have
 a <code>.vcproj</code> suffix.</p>
 
-The free Visual C++ 2005 Express Edition will work in place of the traditional
-Visual Studio 2005 editions.  Please note that there are additional setup steps
-needed to install the Windows Platform SDK and to make VC++ aware of it.  All
-of the steps documented
-<a href="http://msdn2.microsoft.com/en-us/express/aa700755.aspx">here</a>
-need to be done before ACE will build.  All the other notes in this document
-that are for VC8 also apply to the express edition.  MFC, 64-bit, and
+<p>Visual Studio 2008 (VC9) is also supported.</p>
+
+<p>
+The free Visual C++ 2008 Express Edition will work in place of the traditional
+Visual Studio editions.  All the other notes in this document
+that are for VC8 / VC9 also apply to the express edition.  MFC, 64-bit, and
 CE/mobile options are not available with the express edition.  64-bit binaries
-can be built with the tools included in the Platform SDK, using nmake as the
-build system.</p>
+can be built with the compiler and linker included in the <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=E6E1C3DF-A74F-4207-8586-711EBE331CDC&displaylang=en">Windows SDK</a>, using nmake as the build system (generate nmake makefiles with mwc.pl -type nmake).</p>
 
 <table border="1" width="400">
 <caption><b>Mapping of Platform to Solution/Project File Name</b></caption>
@@ -588,6 +586,11 @@ build system.</p>
   <tr>
     <th>VC8 for Windows CE/Mobile</th>
     <td><i>name</i><code>_WinCE</code>
+    </td>
+  </tr>
+  <tr>
+    <th>VC9 for desktop/server</th>
+    <td><i>name</i><code>_vc9</code>
     </td>
   </tr>
 </tbody></table>
