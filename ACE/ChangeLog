@@ -1,10 +1,16 @@
+Wed Sep 24 14:16:50 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * ACE-INSTALL.html:
+
+          Updated info on Visual Studio 2008 / VC9 and 64-bit Windows.
+
 Tue Sep 23 21:55:28 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_other_tests.lst:
 
           Bug 3431 was fixed, so I'm making this test part of the nightly
           build.
-        
+
 Tue Sep 23 19:32:38  2008  Steve Huston  <shuston@riverace.com>
 
         Brought in from ACE 5.6a:
