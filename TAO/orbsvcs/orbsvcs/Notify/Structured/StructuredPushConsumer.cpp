@@ -12,7 +12,7 @@ ACE_RCSID(RT_Notify, TAO_Notify_StructuredPushConsumer, "$Id$")
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_StructuredPushConsumer::TAO_Notify_StructuredPushConsumer (TAO_Notify_ProxySupplier* proxy)
-  :TAO_Notify_Consumer (proxy)
+  :TAO_Notify_Consumer (proxy), connection_valid(0)
 {
 }
 
@@ -52,6 +52,7 @@ TAO_Notify_StructuredPushConsumer::init (CosNotifyComm::StructuredPushConsumer_p
 
           this->push_consumer_ = CosNotifyComm::StructuredPushConsumer::_duplicate (new_push_consumer.in());
           this->publish_ = CosNotifyComm::NotifyPublish::_duplicate (new_push_consumer.in());
+
           //--cj verify dispatching ORB
           if (TAO_debug_level >= 10)
             {
@@ -88,6 +89,24 @@ TAO_Notify_StructuredPushConsumer::push (const CORBA::Any& event)
 
   TAO_Notify_Event::translate (event, notification);
 
+  // Check if we have to validate connection
+  if ( !connection_valid ) {
+    try
+      {
+        CORBA::PolicyList_var inconsistent_policies; 
+        this->push_consumer_->_validate_connection (inconsistent_policies.out()); 
+      }
+    catch (const CORBA::COMM_FAILURE&)
+      {
+        // Expected exception when a bad connection is found
+        if (TAO_debug_level >= 1)
+          {
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t) Found bad connection.\n"));
+          }
+      }
+    connection_valid = 1;
+  }
+
   this->push_consumer_->push_structured_event (notification);
 }
 
@@ -100,6 +119,24 @@ TAO_Notify_StructuredPushConsumer::push (const CosNotification::StructuredEvent&
                 this->push_consumer_->_stubobj()->orb_core()->orbid()));
   }
   //--cj end
+
+  // Check if we have to validate connection
+  if ( !connection_valid ) {
+    try
+      {
+        CORBA::PolicyList_var inconsistent_policies; 
+        this->push_consumer_->_validate_connection (inconsistent_policies.out()); 
+      }
+    catch (const CORBA::COMM_FAILURE&)
+      {
+        // Expected exception when a bad connection is found
+        if (TAO_debug_level >= 1)
+          {
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t) Found bad connection.\n"));
+          }
+      }
+    connection_valid = 1;
+  }
 
   this->push_consumer_->push_structured_event (event);
 }
