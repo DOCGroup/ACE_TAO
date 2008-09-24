@@ -10,7 +10,7 @@ project(CosTime_IDL) : orbsvcslib, orbsvcs_output, install, tao_versioning_idl_d
   }
 }
 
-project(CosTime) : orbsvcslib, orbsvcs_output, install {
+project(CosTime) : orbsvcslib, orbsvcs_output, svc_utils, install {
   sharedname   = TAO_CosTime
   dynamicflags = TAO_TIME_BUILD_DLL
   tagchecks   += Time
