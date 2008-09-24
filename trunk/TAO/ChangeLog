@@ -1,3 +1,18 @@
+Wed Sep 24 10:59:39 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * MPC/time.mpb:
+        * MPC/time_serv.mpb:
+
+          Changed client stub base project to inherit from svc_utils
+          base project.  Changed server implementation base project
+          so it no longer inherits from svc_utils base project.
+
+        * orbsvcs/orbsvcs/CosTime.mpc:
+
+          Changed client stub library project to inherit from svc_utils
+          base project, to insure the orbsvcs TimeBase.idl wrapper has
+          been compiled.
+
 Wed Sep 24 10:03:02 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/README.txt:
