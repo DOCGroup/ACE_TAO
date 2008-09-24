@@ -4,7 +4,7 @@
 #ifndef TAO_TIME_IDL
 #define TAO_TIME_IDL
 
-#include "TimeBase.idl"
+#include "tao/TimeBase.pidl"
 
 #pragma prefix "omg.org"
 

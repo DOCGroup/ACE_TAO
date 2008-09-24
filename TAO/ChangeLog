@@ -1,7 +1,23 @@
+Wed Sep 24 17:22:00 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/TimeService.idl:
+
+          Changed to #include "tao/TimeBase.pidl" instead of orbsvcs
+          wrapper "TimeBase.idl", as that forces a dependency on the
+          Svc_Utils project / library.
+
+        * MPC/config/time.mpb:
+        * MPC/config/time_serv.mpb:
+        * orbsvcs/orbsvcs/CosTime.mpc:
+
+          Revert change:
+
+          Wed Sep 24 10:59:39 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
 Wed Sep 24 10:59:39 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
-        * MPC/time.mpb:
-        * MPC/time_serv.mpb:
+        * MPC/config/time.mpb:
+        * MPC/config/time_serv.mpb:
 
           Changed client stub base project to inherit from svc_utils
           base project.  Changed server implementation base project
