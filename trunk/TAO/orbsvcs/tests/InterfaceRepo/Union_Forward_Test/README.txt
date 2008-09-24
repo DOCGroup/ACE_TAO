@@ -1,19 +1,14 @@
 // $Id $
 
-This test illustrates a problem with the IFR service in that it cannot 
+This test illustrates a problem with the IFR service in that it cannot
 properly handle forward declared unions.
 
-To validate that this test case is correct as written, modify the test.idl 
+To validate that this test case is correct as written, modify the test.idl
 so that the sequence's typedef is a string rather than the forward declared
 union. See that runtest.pl terminates normally.
 
 Second, the IDL may be compiled by the TAO IDL compiler, demonstrating that
 it is well-formed IDL.
-
-There is currently no funding to support developing a solution, this test
-exists merely as a demonstration. For that reason, this test should not
-be included in the nightly builds until someone is in a position to find
-and resolve the problem.
 
 Here is a stack trace relative to the IFR service in TAO 1.6.6:
 
@@ -35,11 +30,11 @@ Here is a stack trace relative to the IFR service in TAO 1.6.6:
     (this=0x672150) at ../../orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.inl:5355
 #8  0x00007f68cc4a4b75 in POA_CORBA::_get_type_AttributeDef::execute (
     this=0x7fffd4cdd230) at IFRService/IFR_BasicS.cpp:14059
-#9  0x00007f68cb02ed1b in TAO::Upcall_Wrapper::upcall (this=0x7fffd4cdd27f, 
-    server_request=@0x7fffd4cdda90, args=0x7fffd4cdd270, nargs=1, 
-    command=@0x7fffd4cdd230, servant_upcall=0x7fffd4cdd3d0, exceptions=0x0, 
+#9  0x00007f68cb02ed1b in TAO::Upcall_Wrapper::upcall (this=0x7fffd4cdd27f,
+    server_request=@0x7fffd4cdda90, args=0x7fffd4cdd270, nargs=1,
+    command=@0x7fffd4cdd230, servant_upcall=0x7fffd4cdd3d0, exceptions=0x0,
     nexceptions=0) at PortableServer/Upcall_Wrapper.cpp:113
 #10 0x00007f68cc47dc25 in POA_CORBA::AttributeDef::_get_type_skel (
-    server_request=@0x7fffd4cdda90, servant_upcall=0x7fffd4cdd3d0, 
+    server_request=@0x7fffd4cdda90, servant_upcall=0x7fffd4cdd3d0,
     servant=0x672150) at IFRService/IFR_BasicS.cpp:14111
 
