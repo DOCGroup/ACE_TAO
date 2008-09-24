@@ -1,3 +1,9 @@
+Wed Sep 24 17:43:22 UTC 2008  Rich Seibel <seibel_r@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Added test for Bug 3387.
+
 Wed Sep 24 14:16:50 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * ACE-INSTALL.html:
