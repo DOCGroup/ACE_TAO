@@ -1,3 +1,13 @@
+Wed Sep 24 17:43:22 UTC 2008  Rich Seibel <seibel_r@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
+        * orbsvcs/tests/Bug_3387_Regression/:
+
+          Fix and test for Bug 3387.  The fix causes validation
+          of connection on first attempt to use it.  This will purge the
+          bad connection and then create a new one.
+
 Wed Sep 24 17:22:00 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/TimeService.idl:
