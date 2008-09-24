@@ -72,6 +72,9 @@ protected:
 private:
   /// Release
   virtual void release (void);
+
+  /// Connection valid flag
+  int connection_valid;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
