@@ -143,6 +143,7 @@ TAO/orbsvcs/tests/EC_Mcast/run_test.pl: !NO_MCAST !NO_MESSAGING !DISABLE_ToFix_L
 # FAILS 'TAO/orbsvcs/tests/EC_Multiple/run_test.pl !VxWorks !VxWorks_RTP
 # NO REDIRECTION TAO/examples/Simple/echo/run_test.pl < Echo.idl !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Property/run_test.pl: !NO_MESSAGING !ACE_FOR_TAO !CORBA_E_MICRO !VxWorks !VxWorks_RTP
+TAO/orbsvcs/tests/Bug_3387_Regression/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 #HANGS TAO/orbsvcs/tests/ImplRepo/run_test.pl airplane !VxWorks !VxWorks_RTP
 #HANGS'TAO/orbsvcs/tests/ImplRepo/run_test.pl airplane_ir !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Security/Secure_Invocation/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !VxWorks !VxWorks_RTP
