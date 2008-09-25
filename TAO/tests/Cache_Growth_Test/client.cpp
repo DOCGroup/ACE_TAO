@@ -5,7 +5,7 @@
 
 ACE_RCSID(Hello, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int do_shutdown = 0;
 
 int

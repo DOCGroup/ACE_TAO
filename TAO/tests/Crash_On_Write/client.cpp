@@ -6,7 +6,7 @@
 
 ACE_RCSID(Crash_On_Write, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int iterations = 2000;
 
 int

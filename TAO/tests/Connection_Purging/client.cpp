@@ -5,7 +5,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/Strategies/advanced_resource.h"
 
-const char *ior = "server.ior";
+const ACE_TCHAR *ior = ACE_TEXT("server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

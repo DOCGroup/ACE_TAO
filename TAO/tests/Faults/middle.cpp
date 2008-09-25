@@ -6,8 +6,8 @@
 
 ACE_RCSID(Failure, middle, "$Id$")
 
-const char *ior_output_file = "middle.ior";
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("middle.ior");
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 10;
 
 int

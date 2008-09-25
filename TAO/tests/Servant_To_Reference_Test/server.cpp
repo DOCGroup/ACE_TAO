@@ -9,7 +9,7 @@ ACE_RCSID (Hello,
            server,
            "$Id$")
 
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 class MT_Task : public ACE_Task_Base
 {

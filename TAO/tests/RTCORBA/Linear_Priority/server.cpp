@@ -66,7 +66,7 @@ static CORBA::ULong max_buffered_requests = 0;
 static CORBA::ULong max_request_buffer_size = 0;
 static CORBA::Boolean allow_borrowing = 0;
 
-static const char *ior = "ior";
+static const ACE_TCHAR *ior = ACE_TEXT("ior");
 static int debug = 1;
 
 static const ACE_TCHAR *bands_file = ACE_TEXT ("bands");

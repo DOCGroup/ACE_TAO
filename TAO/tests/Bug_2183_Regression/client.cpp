@@ -5,7 +5,7 @@
 
 ACE_RCSID(Hello, client, "client.cpp,v 1.5 2002/01/29 20:21:07 okellogg Exp")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

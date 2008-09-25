@@ -7,7 +7,7 @@
 
 ACE_RCSID(Failure, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 10;
 int do_shutdown = 0;
 int do_suicide = 0;

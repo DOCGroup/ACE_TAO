@@ -7,7 +7,7 @@ ACE_RCSID(Connect_Strategy_Test,
           client,
           "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int do_shutdown = 0;
 int
 parse_args (int argc, ACE_TCHAR *argv[])

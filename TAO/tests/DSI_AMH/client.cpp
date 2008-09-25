@@ -5,7 +5,7 @@
 #include "ace/High_Res_Timer.h"
 #include "tao/debug.h"
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 100;
 int do_shutdown = 1;
 

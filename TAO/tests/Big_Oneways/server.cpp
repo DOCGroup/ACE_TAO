@@ -8,7 +8,7 @@
 
 ACE_RCSID(Big_Oneways, server, "$Id$")
 
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 CORBA::ULong peer_count    = 4;
 CORBA::ULong payload_size  = 1024;
 CORBA::ULong message_count = 1000;

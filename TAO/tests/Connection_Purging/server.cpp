@@ -4,7 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "tao/Strategies/advanced_resource.h"
 
-const char *ior_output_file = "server.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

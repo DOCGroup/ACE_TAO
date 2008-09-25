@@ -11,8 +11,8 @@ ACE_RCSID (Service_Context_Manipulation,
            server,
            "$Id$" )
 
-const char *ior_output_file = "test.ior";
-const char *ior_input_file = "file://thr_server.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+const ACE_TCHAR *ior_input_file = ACE_TEXT("file://thr_server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

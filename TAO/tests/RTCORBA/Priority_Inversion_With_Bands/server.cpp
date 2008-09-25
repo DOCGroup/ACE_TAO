@@ -9,7 +9,7 @@
 
 ACE_RCSID(Priority_Inversion_With_Bands, server, "$Id$")
 
-static const char *ior_output_file = "ior";
+static const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 static int ior_count = 1;
 static CORBA::ULong static_threads = 1;
 static CORBA::ULong dynamic_threads = 0;

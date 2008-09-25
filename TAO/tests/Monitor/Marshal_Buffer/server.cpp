@@ -4,7 +4,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/CORBA_macros.h"
 
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

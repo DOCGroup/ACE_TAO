@@ -16,7 +16,7 @@
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
-const char *ior_input_file = "file://test.ior";
+const ACE_TCHAR *ior_input_file = ACE_TEXT("file://test.ior");
 const char *monitor_output_file = "monitor.ior";
 
 /// Runs the ORB in a separate thread so we can listen

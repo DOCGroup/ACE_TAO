@@ -7,7 +7,7 @@
 
 ACE_RCSID(MT_Client, orb_creation, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
 int niterations = 5;
 

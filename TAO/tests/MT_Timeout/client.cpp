@@ -5,7 +5,7 @@
 
 ACE_RCSID(Client_Leaks, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int iterations = 500;
 int threads = 4;
 

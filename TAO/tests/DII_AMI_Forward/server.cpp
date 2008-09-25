@@ -12,7 +12,7 @@
 #include "orb_initializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-const char *ior_filename = "server.ior";
+const ACE_TCHAR *ior_filename = ACE_TEXT("server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

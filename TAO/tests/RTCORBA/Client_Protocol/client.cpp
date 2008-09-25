@@ -9,8 +9,8 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-const char *ior1 = "file://test1.ior";
-const char *ior2 = "file://test2.ior";
+const ACE_TCHAR *ior1 = ACE_TEXT("file://test1.ior");
+const ACE_TCHAR *ior2 = ACE_TEXT("file://test2.ior");
 CORBA::ULong protocol_type = 0;
 
 int

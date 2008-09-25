@@ -8,8 +8,8 @@
 #include "../check_supported_priorities.cpp"
 
 // Default IOR files.
-const char *ior1 = "file://test1.ior";
-const char *ior2 = "file://test2.ior";
+const ACE_TCHAR *ior1 = ACE_TEXT("file://test1.ior");
+const ACE_TCHAR *ior2 = ACE_TEXT("file://test2.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

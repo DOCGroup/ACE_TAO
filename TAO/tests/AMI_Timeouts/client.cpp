@@ -23,7 +23,7 @@ ACE_RCSID (AMI,
            client,
            "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 unsigned int msec = 50;
 
 int

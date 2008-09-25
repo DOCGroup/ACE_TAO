@@ -48,7 +48,7 @@ private:
 };
 
 // ****************************************************************
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int iterations = 100;
 CORBA::Short priority1 = -1;
 CORBA::Short priority2 = -1;

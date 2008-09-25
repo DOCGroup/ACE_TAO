@@ -2,7 +2,7 @@
 
 #include "Messenger_i.h"
 
-const char *ior_output_file = "Messenger.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("Messenger.ior");
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

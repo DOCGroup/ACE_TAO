@@ -35,7 +35,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-const char *ior_argument = "file://test.ior";
+const ACE_TCHAR *ior_argument = ACE_TEXT("file://test.ior");
 int niterations = 100;
 
 void

@@ -7,7 +7,7 @@
 
 ACE_RCSID(Big_Reply, server, "$Id$")
 
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 // We can change this value if wanted..
 const CORBA::ULong data_size = 4000000;

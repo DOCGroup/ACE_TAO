@@ -11,7 +11,7 @@ ACE_RCSID (Bug_1230_Regression,
            server,
            "$Id$")
 
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 #if defined (ACE_OPENVMS)
 // need this to circumvent link error on OpenVMS

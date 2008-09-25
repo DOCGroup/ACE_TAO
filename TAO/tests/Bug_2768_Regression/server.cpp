@@ -3,7 +3,7 @@
 #include "tao/IORTable/IORTable.h"
 #include "Messenger_i.h"
 
-const char *ior_output_file = "server.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

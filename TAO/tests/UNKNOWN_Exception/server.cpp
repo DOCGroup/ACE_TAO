@@ -7,7 +7,7 @@
 
 ACE_RCSID (UNKNOWN_Exception, server, "$Id$")
 
-const char *ior_output_file = "ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 static int done = 0;
 
 void
