@@ -1254,10 +1254,26 @@ dnl SECTION 7: checks for structures
 
 
 dnl TODO: Check whether these structures can be defined somewhere else.
-ACE_CHECK_STRUCT([dirent],[dirent.h],,[AC_DEFINE([ACE_LACKS_STRUCT_DIR])])
-ACE_CHECK_STRUCT([flock],[fcntl.h],,[AC_DEFINE([ACE_LACKS_FILELOCKS])])
-ACE_CHECK_STRUCT([rwlock_t],[synch.h],,[AC_DEFINE([ACE_LACKS_RWLOCK_T])])
-ACE_CHECK_STRUCT([strbuf],[stropts.h],[AC_DEFINE([ACE_HAS_STRBUF_T])],)
+AC_CHECK_TYPE([struct dirent],
+              [],
+              [AC_DEFINE([ACE_LACKS_STRUCT_DIR], 1,
+                         [Define to 1 if the system lacks the type `struct dirent'.])],
+              [#include <dirent.h>])
+AC_CHECK_TYPE([struct flock],
+              [],
+              [AC_DEFINE([ACE_LACKS_FILELOCKS], 1,
+                         [Define to 1 if the system lacks the type `struct flock'.])],
+              [#include <fcntl.h>])
+AC_CHECK_TYPE([rwlock_t],
+              [],
+              [AC_DEFINE([ACE_LACKS_RWLOCK_T], 1,
+                         [Define to 1 if the system lacks the type `rwlock_t'.])],
+              [#include <synch.h>])
+AC_CHECK_TYPE([struct strbuf],
+              [AC_DEFINE([ACE_HAS_STRBUF_T], 1,
+                         [Define to 1 if the system has the type `struct strbuf'.])],
+              [],
+              [#include <stropts.h>])
 case "$host" in
 *irix*)
   dnl IRIX prusage fields don't match what ACE currently supports.
