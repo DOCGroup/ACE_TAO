@@ -13,6 +13,7 @@ ACE_RCSID (RTCORBA,
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
+#include "tao/TSS_Resources.h"
 #include "tao/ORB.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Transport_Cache_Manager.h"
@@ -93,6 +94,9 @@ TAO_Thread_Pool_Threads::set_tss_resources (TAO_ORB_Core &orb_core,
 
   /// Set the lane attribute in TSS.
   tss.lane_ = &thread_lane;
+
+  TAO_TSS_Resources::instance ()->rtcorba_current_priority_
+    = thread_lane.lane_priority ();
 }
 
 TAO_Dynamic_Thread_Pool_Threads::TAO_Dynamic_Thread_Pool_Threads (TAO_Thread_Lane &lane)
@@ -269,7 +273,7 @@ TAO_Thread_Lane::validate_and_map_priority (void)
     pm->to_native (this->lane_priority_, this->native_priority_);
 
   if (!result)
-    throw ::CORBA::DATA_CONVERSION ();
+    throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
 
   if (TAO_debug_level > 3)
     {

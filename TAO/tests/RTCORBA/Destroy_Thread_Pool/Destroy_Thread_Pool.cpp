@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "tao/ORB.h"
 #include "tao/RTCORBA/RTCORBA.h"
+#include "../check_supported_priorities.cpp"
 
 ACE_RCSID(Destroy_Thread_Pools, Destroy_Thread_Pools, "$Id$")
 
@@ -104,7 +105,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         RTCORBA::Current::_narrow (object.in ());
 
       default_thread_priority =
-        current->the_priority ();
+        get_implicit_thread_CORBA_priority (orb.in ());
 
       int result =
         parse_args (argc, argv);

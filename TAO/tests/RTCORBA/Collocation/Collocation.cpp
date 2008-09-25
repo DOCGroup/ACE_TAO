@@ -300,8 +300,32 @@ setup_test_parameters (Test_Object_And_Servant *test,
                        RTCORBA::Current_ptr current,
                        CORBA::ORB_ptr orb)
 {
-  CORBA::Short current_thread_priority =
-    current->the_priority ();
+  CORBA::Short current_thread_priority;
+
+  try
+    {
+      current_thread_priority =
+        current->the_priority ();
+    }
+  catch (const CORBA::INITIALIZE&)
+    {
+      try
+        {
+          current_thread_priority = get_implicit_thread_CORBA_priority (orb);
+        }
+      catch (const CORBA::Exception &ex)
+        {
+          ex._tao_print_exception ("Exception in ::setup_test_parameters calling ::get_implicit_thread_CORBA_priority: ");
+          throw;
+        }
+    }
+  catch (const CORBA::Exception& dc)
+    {
+      dc._tao_print_exception ("Exception in ::setup_test_parameters calling current->the_priority(): ");
+      throw;
+    }
+
+   current->the_priority (current_thread_priority);
 
   if (!test->servant_->serviced_by_rt_tp () ||
       test->servant_->client_propagated ())
@@ -406,7 +430,7 @@ Server::Server (CORBA::ORB_ptr orb)
     RTCORBA::Current::_narrow (object.in ());
 
   default_thread_priority =
-    this->current_->the_priority ();
+    get_implicit_thread_CORBA_priority (this->orb_.in ());
 
   object =
     this->orb_->resolve_initial_references ("RootPOA");

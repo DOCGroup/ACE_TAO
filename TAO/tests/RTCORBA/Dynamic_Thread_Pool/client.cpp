@@ -86,6 +86,16 @@ Task::svc (void)
       pid_t pid =
         ACE_OS::getpid ();
 
+      object =
+        this->orb_->resolve_initial_references ("RTCurrent");
+
+      RTCORBA::Current_var current =
+        RTCORBA::Current::_narrow (object.in ());
+
+      // We need to set the client thread CORBA priority
+      current->the_priority (get_implicit_thread_CORBA_priority (this->orb_.in ()));
+
+
       CORBA::Long tc = 0;
 
       for (int i = 0; i != iterations; ++i)

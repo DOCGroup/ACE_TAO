@@ -6,6 +6,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
+#include "../check_supported_priorities.cpp"
+
 class test_i :
   public POA_test
 {
@@ -320,7 +322,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         RTCORBA::Current::_narrow (object.in ());
 
       default_thread_priority =
-        current->the_priority ();
+        get_implicit_thread_CORBA_priority (orb.in ());
 
       object =
         orb->resolve_initial_references ("RootPOA");

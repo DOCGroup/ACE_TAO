@@ -103,7 +103,7 @@ Task::svc (void)
         RTCORBA::Current::_narrow (object.in ());
 
       RTCORBA::Priority default_thread_priority =
-        rt_current->the_priority ();
+        get_implicit_thread_CORBA_priority (this->orb_.in ());
 
       RTCORBA::Priority low_priority =
         default_thread_priority;

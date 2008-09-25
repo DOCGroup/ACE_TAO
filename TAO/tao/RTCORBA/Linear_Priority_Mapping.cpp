@@ -56,14 +56,14 @@ TAO_Linear_Priority_Mapping::to_native (
   int native_priority_index =
     1
     + ((n - 1)
-       * corba_priority
+       * (corba_priority - RTCORBA::minPriority)
        / (RTCORBA::maxPriority - RTCORBA::minPriority));
 
   // Now, find the value corresponding to this index.
   native_priority = static_cast<RTCORBA::NativePriority> (this->min_);
   for (int i = 2; i <= native_priority_index; ++i)
     {
-      native_priority = static_cast<RTCORBA::NativePriority> 
+      native_priority = static_cast<RTCORBA::NativePriority>
         (ACE_Sched_Params::next_priority (this->policy_, native_priority));
     }
   return 1;
@@ -73,7 +73,7 @@ TAO_Linear_Priority_Mapping::to_native (
   native_priority =
     this->min_
     + ((this->max_ - this->min_)
-       * corba_priority
+       * (corba_priority - RTCORBA::minPriority)
        / (RTCORBA::maxPriority - RTCORBA::minPriority));
 
   return 1;
@@ -114,9 +114,21 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
   int delta = total - 1;
   if (delta != 0)
     {
-      corba_priority = static_cast<RTCORBA::Priority> (RTCORBA::minPriority
-          + ((RTCORBA::maxPriority - RTCORBA::minPriority)
-          * (native_priority_index - 1) / delta));
+      int numerator = ((RTCORBA::maxPriority - RTCORBA::minPriority)
+                            * (native_priority_index - 1);
+
+      div_t corba_offset = div (numerator, delta);
+
+      int rounding = 0;
+
+      if (corba_offset.rem)
+        {
+          rounding = ((numerator < 0 && delta < 0) ||
+                      (numerator >= 0 && delta >= 0) ? 1 : -1);
+        }
+
+      corba_priority = static_cast<RTCORBA::Priority>
+        (RTCORBA::minPriority + corba_offset.quot + rounding);
     }
   else
     {
@@ -145,10 +157,21 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
   int delta = this->max_ - this->min_;
   if (delta != 0)
     {
+      int numerator = (RTCORBA::maxPriority - RTCORBA::minPriority)
+                            * (native_priority - this->min_);
+
+      div_t corba_offset = div (numerator, delta);
+
+      int rounding = 0;
+
+      if (corba_offset.rem)
+        {
+          rounding = ((numerator < 0 && delta < 0) ||
+                      (numerator >= 0 && delta >= 0) ? 1 : -1);
+        }
+
       corba_priority =
-        RTCORBA::minPriority
-        + ((RTCORBA::maxPriority - RTCORBA::minPriority)
-           * (native_priority - this->min_) / delta);
+        RTCORBA::minPriority + corba_offset.quot + rounding;
     }
   else
     {

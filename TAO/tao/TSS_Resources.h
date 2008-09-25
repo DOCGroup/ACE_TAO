@@ -82,6 +82,10 @@ public:
 
   void * rtscheduler_previous_current_impl_;
 
+  /// The CORBA priority of the thread if set via RTCORBA::Current.
+  /// RTCORBA::minPriority - 1 otherwise.
+  CORBA::Short rtcorba_current_priority_;
+
   /// The default environment for the thread.
   CORBA::Environment * default_environment_;
 

@@ -132,6 +132,9 @@ Task::svc (void)
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in ());
 
+      // We need to set the client thread CORBA priority
+      current->the_priority (get_implicit_thread_CORBA_priority (this->orb_.in ()));
+
       // Test object 1 (with CLIENT_PROPAGATED priority model).
       object =
         this->orb_->string_to_object (ior1);

@@ -210,15 +210,21 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
           // Client propagated.
           else
             {
-              // Get client thread priority.
-              int status =
-                protocol_hooks->get_thread_CORBA_priority (
-                  client_thread_priority);   // side effect
-              if (status == -1)
+              // Get client thread priority from 'Current' or if not set by implying one
+              // from the native thread priority via the mapping.
+              if (protocol_hooks->get_thread_CORBA_priority (client_thread_priority) != -1 ||
+                  protocol_hooks->get_thread_implicit_CORBA_priority (client_thread_priority) != -1)
                 {
-                  throw ::CORBA::DATA_CONVERSION (
-                    CORBA::OMGVMCID | 1,
-                    CORBA::COMPLETED_NO);
+                  // OK
+                }
+              else
+                {
+                  if (TAO_debug_level > 0)
+                    ACE_DEBUG ((LM_DEBUG, "ERROR: TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile. "
+                                "Unable to access RT CORBA Priority in client thread "
+                                "accessing object with CLIENT_PROPAGATED priority model.\n"));
+                  throw CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+
                 }
 
               // If there are no bands.

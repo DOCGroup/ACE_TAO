@@ -378,6 +378,15 @@ Worker_Thread::svc (void)
           == -1)
         return 0;
 
+      object =
+        this->orb_->resolve_initial_references ("RTCurrent");
+
+      RTCORBA::Current_var current =
+        RTCORBA::Current::_narrow (object.in ());
+
+      // We need to set the client thread CORBA priority
+      current->the_priority (get_implicit_thread_CORBA_priority (this->orb_));
+
       // Set ClientProtocolPolicy override on the Current.
       RTCORBA::ProtocolList protocols;
       protocols.length (1);
