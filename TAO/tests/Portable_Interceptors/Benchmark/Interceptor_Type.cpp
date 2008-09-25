@@ -8,13 +8,13 @@
 
 ACE_RCSID (Benchmark, Interceptor_Type, "$Id$")
 
-void get_interceptor_type (int argc, char *argv[],
+void get_interceptor_type (int argc, ACE_TCHAR *argv[],
                            int &interceptor_type)
 {
   interceptor_type = IT_NONE;
   for (int i = 1; i < argc - 1; ++i)
     {
-      if (ACE_OS_String::strcmp (argv[i], "-r") == 0)
+      if (ACE_OS_String::strcmp (argv[i], ACE_TEXT ("-r")) == 0)
         {
           if (ACE_OS_String::strcmp (argv[i+1], ACE_TEXT ("none")) == 0)
             interceptor_type = IT_NONE;

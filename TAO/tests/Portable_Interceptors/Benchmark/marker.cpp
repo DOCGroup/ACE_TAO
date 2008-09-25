@@ -17,13 +17,13 @@ Marker::accumulate_into (ACE_Throughput_Stats &throughput,
       throughput.accumulate (this->throughput_method_update_records_);
       break;
     default:
-      break; 
+      break;
     }
-  
+
 }
 
 void
-Marker::dump_stats (const char* msg, 
+Marker::dump_stats (const ACE_TCHAR* msg,
                     ACE_UINT32 gsf,
                     int which_method)
 {
@@ -51,19 +51,19 @@ Marker::sample (ACE_hrtime_t throughput_diff,
   switch (which_method)
     {
     case 1: // method ready
-      this->throughput_method_ready_.sample (throughput_diff, 
+      this->throughput_method_ready_.sample (throughput_diff,
                                              latency_diff);
       break;
     case 2: // method authentciate
-      this->throughput_method_authenticate_.sample (throughput_diff, 
+      this->throughput_method_authenticate_.sample (throughput_diff,
                                                     latency_diff);
       break;
     case 3: // method update_records
-      this->throughput_method_update_records_.sample (throughput_diff, 
+      this->throughput_method_update_records_.sample (throughput_diff,
                                                       latency_diff);
       break;
     default:
       break;
     }
 
-} 
+}

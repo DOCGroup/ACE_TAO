@@ -1,3 +1,16 @@
+Thu Sep 25 20:28:39 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/AMI/server.cpp
+        * tests/Portable_Interceptors/Benchmark/client.cpp
+        * tests/Portable_Interceptors/Benchmark/Interceptor_Type.cpp
+        * tests/Portable_Interceptors/Benchmark/Interceptor_Type.h
+        * tests/Portable_Interceptors/Benchmark/marker.cpp
+        * tests/Portable_Interceptors/Benchmark/marker.h
+        * tests/Portable_Interceptors/Benchmark/server.cpp
+        * tests/Portable_Interceptors/Bug_1559/client.cpp
+        * tests/Portable_Interceptors/Bug_1559/server.cpp
+          ACE_TCHAR changes
+
 Thu Sep 25 20:19:39 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/File_IO/client.cpp:
