@@ -6,7 +6,7 @@
 
 ACE_RCSID(Bug_2494_Regression, server, "$Id$")
 
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 int nthreads = 4;
 
 int

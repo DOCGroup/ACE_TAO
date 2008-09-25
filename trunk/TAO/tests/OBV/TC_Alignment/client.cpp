@@ -7,7 +7,7 @@ ACE_RCSID (TC_Alignment,
            client,
            "$Id$")
 
-static const char *ior_input_file = "file://test.ior";
+static const ACE_TCHAR *ior_input_file = ACE_TEXT("file://test.ior");
 
 static obvmod::tcOffset1 *vt1 = 0;
 static obvmod::tcOffset003 *vt3 = 0;

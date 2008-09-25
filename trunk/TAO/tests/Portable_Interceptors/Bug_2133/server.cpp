@@ -9,7 +9,7 @@ ACE_RCSID (Hello,
            server,
            "server.cpp,v 1.6 2003/11/01 11:15:11 dhinton Exp")
 
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

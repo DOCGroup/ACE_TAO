@@ -4,7 +4,7 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-const char *ior = "corbaloc:iiop:localhost:12345/Name\\2dwith\\2dhyphens";
+const ACE_TCHAR *ior = ACE_TEXT("corbaloc:iiop:localhost:12345/Name\\2dwith\\2dhyphens");
 int shutdown_server = 0;
 
 int

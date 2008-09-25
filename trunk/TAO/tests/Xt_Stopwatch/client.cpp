@@ -65,7 +65,7 @@ void
 Client::parse_args (int argc,
                     char *argv[])
 {
-  const char *ior = "file://test.ior";
+  const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;

@@ -11,7 +11,7 @@ ACE_RCSID (Dynamic,
            server,
            "$Id$")
 
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

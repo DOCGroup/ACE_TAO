@@ -6,7 +6,7 @@
 
 namespace Test
 {
-  const char *ior_output_file = "server.ior";
+  const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
 
   static int
   try_main (int argc,

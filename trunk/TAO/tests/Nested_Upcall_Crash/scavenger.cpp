@@ -8,7 +8,7 @@
 
 ACE_RCSID(Nested_Upcall_Crash, scavenger, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 #if defined (ACE_OPENVMS)
 // need this to circumvent link error on OpenVMS

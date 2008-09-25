@@ -8,7 +8,7 @@
 
 ACE_RCSID (LongDoubleTest, client, "$Id$")
 
-const char *ior = "file://server.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

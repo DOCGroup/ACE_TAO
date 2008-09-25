@@ -9,7 +9,7 @@
 
 ACE_RCSID(Priority_Inversion_With_Bands, client, "$Id$")
 
-static const char *ior = "file://ior_1";
+static const ACE_TCHAR *ior = ACE_TEXT("file://ior_1");
 static int iterations = 12;
 static CORBA::ULong work = 2;
 static int make_banded_invocations = 0;

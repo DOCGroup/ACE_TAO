@@ -6,10 +6,10 @@
 
 ACE_RCSID(DSI_Gateway, server, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 int do_shutdown = 0;
-const char *ior_output_file = "gateway.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("gateway.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

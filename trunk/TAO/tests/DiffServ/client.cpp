@@ -7,7 +7,7 @@
 #include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
 #include "tao/DiffServPolicy/Server_Network_Priority_Policy.h"
 
-static const char *ior = "file://simple_servant.ior";
+static const ACE_TCHAR *ior = ACE_TEXT("file://simple_servant.ior");
 static int iterations = 1;
 
 #define IPDSFIELD_DSCP_DEFAULT  0x00

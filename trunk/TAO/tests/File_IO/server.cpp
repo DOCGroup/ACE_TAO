@@ -12,7 +12,7 @@ ACE_RCSID (File_IO,
            server,
            "$Id$")
 
-static const char *ior_output_file = "ior";
+static const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 static const int nthreads = 2;
 
 

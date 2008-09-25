@@ -2,7 +2,7 @@
 
 #include "testS.h"
 
-const char *ior_output_file = "server.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
 
 class Test_impl : public virtual POA_Test
 {

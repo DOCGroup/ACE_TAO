@@ -4,7 +4,7 @@
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 test_var global_client;
 int iterations = 100;

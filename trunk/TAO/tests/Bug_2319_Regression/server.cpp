@@ -15,8 +15,8 @@ const int sleep_time = 1; // sleep for  1 sec on each call
 // This should equal num_calls within 'sleep * num_calls' seconds
 int calls_received = 0;
 
-const char *ior      = "file://test.ior";
-const char *ior_file = "test.ior";
+const ACE_TCHAR *ior      = ACE_TEXT("file://test.ior");
+const ACE_TCHAR *ior_file = ACE_TEXT("test.ior");
 
 
 

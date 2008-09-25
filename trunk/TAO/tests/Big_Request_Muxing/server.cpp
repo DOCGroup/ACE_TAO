@@ -10,7 +10,7 @@ ACE_RCSID(Big_Request_Muxing, server, "$Id$")
 namespace
 {
   // defaults only
-  const char *ior_output_file = "test.ior";
+  const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
   int expected   = 200;
   int maybe_lost = 400;
 }

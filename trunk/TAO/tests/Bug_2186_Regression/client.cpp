@@ -7,7 +7,7 @@
 ACE_RCSID(Hello, client, "$Id$")
 
 const char *server_ior = "file://server.ior";
-const char *ior_output_file = "client.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("client.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

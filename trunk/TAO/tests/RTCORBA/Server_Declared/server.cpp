@@ -71,8 +71,8 @@ Test_i::shutdown (void)
 
 //*************************************************************************
 
-const char *ior_output_file1 = "test1.ior";
-const char *ior_output_file2 = "test2.ior";
+const ACE_TCHAR *ior_output_file1 = ACE_TEXT("test1.ior");
+const ACE_TCHAR *ior_output_file2 = ACE_TEXT("test2.ior");
 CORBA::Short poa_priority = -1;
 CORBA::Short object_priority = -1;
 

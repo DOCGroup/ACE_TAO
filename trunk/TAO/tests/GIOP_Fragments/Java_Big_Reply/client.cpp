@@ -5,7 +5,7 @@
 
 ACE_RCSID(Muxing, client, "$Id$")
 
-static const char *ior = "file://server.ior";
+static const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
 static size_t nthreads = 1;
 
 int

@@ -12,7 +12,7 @@ ACE_RCSID(MProfile_Connection_Timeout,
           client,
           "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int do_shutdown = 0;
 
 const char *name = "file://amba.ior";

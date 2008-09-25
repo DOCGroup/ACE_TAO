@@ -10,7 +10,7 @@
 
 ACE_RCSID(Thread_Pool, server, "$Id$")
 
-const char *ior_output_file = "ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 int ior_count = 1;
 CORBA::ULong static_threads = 2;
 CORBA::ULong dynamic_threads = 2;

@@ -5,7 +5,7 @@
 
 ACE_RCSID(Muxing, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 bool shutdown_srv = false;
 
 int
