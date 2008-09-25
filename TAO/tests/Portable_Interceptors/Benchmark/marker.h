@@ -13,7 +13,7 @@ class Marker
                         int which_method) const;
   // Accumulate the throughput statistics into <throughput>
 
-  void dump_stats (const char* msg,
+  void dump_stats (const ACE_TCHAR* msg,
                    ACE_UINT32 gsf,
                    int which_method);
   // Print stats
