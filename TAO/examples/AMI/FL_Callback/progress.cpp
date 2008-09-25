@@ -12,7 +12,7 @@ ACE_RCSID (FL_Callback,
 #include <FL/Fl.h>
 #include <FL/Fl_Window.h>
 
-const char *ior_output_file = "progress.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("progress.ior");
 int n_iterations = 1000;
 int n_peers = 1;
 

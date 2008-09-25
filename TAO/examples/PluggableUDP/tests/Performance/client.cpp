@@ -31,7 +31,7 @@
 
 ACE_RCSID(Performance, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 ACE_UINT32 burst_messages = 1000;
 
 unsigned char performance_test = 0;

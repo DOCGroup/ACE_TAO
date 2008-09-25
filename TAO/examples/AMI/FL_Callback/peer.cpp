@@ -10,7 +10,7 @@ ACE_RCSID (FL_Callback,
            peer,
            "$Id$")
 
-const char *ior = "file://progress.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://progress.ior");
 int nthreads = 4;
 int interval = 0; // microseconds
 

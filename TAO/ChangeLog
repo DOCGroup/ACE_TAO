@@ -1,3 +1,23 @@
+Thu Sep 25 20:55:39 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMI/FL_Callback/peer.cpp
+        * examples/AMI/FL_Callback/progress.cpp
+        * examples/Buffered_AMI/server.cpp
+        * examples/Buffered_Oneways/server.cpp
+        * examples/Kokyu_dsrt_schedulers/fp_example/client.cpp
+        * examples/Kokyu_dsrt_schedulers/fp_example/server.cpp
+        * examples/Kokyu_dsrt_schedulers/mif_example/client.cpp
+        * examples/Kokyu_dsrt_schedulers/mif_example/server.cpp
+        * examples/Kokyu_dsrt_schedulers/muf_example/client.cpp
+        * examples/Kokyu_dsrt_schedulers/muf_example/server.cpp
+        * examples/mfc/client.cpp
+        * examples/mfc/server.cpp
+        * examples/PluggableUDP/tests/Performance/client.cpp
+        * examples/PluggableUDP/tests/Performance/server.cpp
+        * examples/PluggableUDP/tests/SimplePerformance/client.cpp
+        * examples/PluggableUDP/tests/SimplePerformance/server.cpp
+          ACE_TCHAR changes
+
 Thu Sep 25 20:46:39 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Abstract_Interface/server.cpp

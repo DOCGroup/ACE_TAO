@@ -45,13 +45,7 @@ spawn_my_orb_thread (void *)
 {
   try
     {
-      // Initialization arguments for the ORB
-      const char *orb_name = "";
-
-      CORBA::ORB_var the_orb =
-        CORBA::ORB_init (__argc,
-                         __argv,
-                         orb_name);
+      CORBA::ORB_var the_orb = CORBA::ORB_init (__argc, __argv);
 
       CORBA::Object_var orb_obj =
         the_orb->resolve_initial_references ("RootPOA");
@@ -72,8 +66,7 @@ spawn_my_orb_thread (void *)
       CORBA::String_var ior =
         the_orb->object_to_string (orb_servant.in ());
 
-      FILE *output_file = ACE_OS::fopen ("ior.txt",
-                                        "w");
+      FILE *output_file = ACE_OS::fopen ("ior.txt", "w");
       ACE_OS::fprintf (output_file,
                        "%s",
                        ior.in ());
@@ -108,7 +101,7 @@ CServerApp::~CServerApp()
 
       int argc = 0;
       char **argv = 0;
-      const char *orb_name = "";
+      const ACE_TCHAR *orb_name = ACE_TEXT("");
 
       // Retrieving a reference to the ORB used inside the thread
       the_shutdown_orb =

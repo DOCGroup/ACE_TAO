@@ -8,13 +8,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      const char *orb_name = "";
-
       ACE_DEBUG ((LM_DEBUG,
                   "Initializing the ORB!\n"));
-      CORBA::ORB_var the_orb = CORBA::ORB_init (argc,
-                                                argv,
-                                                orb_name);
+      CORBA::ORB_var the_orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var orb_obj =
         the_orb->resolve_initial_references ("RootPOA");
@@ -29,8 +25,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Reading the IOR!\n"));
 
-      const char *filename =
-        "file://ior.txt";
+      const ACE_TCHAR *filename = ACE_TEXT("file://ior.txt");
 
       orb_obj =
         the_orb->string_to_object (filename);
