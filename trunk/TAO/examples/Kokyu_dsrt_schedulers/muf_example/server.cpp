@@ -10,7 +10,7 @@
 
 ACE_RCSID(MT_Server, server, "$Id$")
 
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int nthreads = 3;
 int enable_dynamic_scheduling = 0;

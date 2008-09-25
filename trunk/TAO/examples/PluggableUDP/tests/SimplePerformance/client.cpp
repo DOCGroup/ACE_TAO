@@ -30,7 +30,7 @@
 # define ACE_MAIN testClient
 #endif
 
-const char *iorFile = "file://test.ior";
+const ACE_TCHAR *iorFile = ACE_TEXT("file://test.ior");
 ACE_UINT32 niter = 10;
 ACE_UINT32 SIZE_BLOCK= 256;
 
