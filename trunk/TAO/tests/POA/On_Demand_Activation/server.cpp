@@ -25,7 +25,7 @@ ACE_RCSID(On_Demand_Activation, server, "$Id$")
 static const char *ior_output_file = "ior";
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:"));
   int c;
