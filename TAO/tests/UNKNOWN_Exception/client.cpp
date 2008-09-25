@@ -5,11 +5,11 @@
 
 ACE_RCSID (UNKNOWN_Exception, client, "$Id$")
 
-static const char *ior = "file://ior";
+static const ACE_TCHAR *ior = "file://ior";
 static int shutdown_server = 1;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:x:"));
   int c;
@@ -49,8 +49,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      int result =
-        parse_args (argc, argv);
+      int const result = parse_args (argc, argv);
+
       if (result != 0)
         return result;
 

@@ -34,7 +34,7 @@ static int iterations = 100;
 static CORBA::ORB_var orb;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:dk:f:i:"));
   int c;
