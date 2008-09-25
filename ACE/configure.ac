@@ -1098,7 +1098,10 @@ AC_CHECK_TYPE([key_t],
 			 [Define to 1 if the system lacks the type `key_t'.])],
 	      [#include <sys/types.h>])
 
-ACE_CHECK_TYPE([sem_t],[semaphore.h],,)
+AC_CHECK_TYPE([sem_t],
+              [],
+              [],
+              [#include <semaphore.h>])
 
 AC_CHECK_TYPE([pri_t],
 	      [],
@@ -3599,10 +3602,14 @@ main ()
     ;;
 esac
 
-AC_CHECK_FUNC([gethrtime],
-  [
-   ACE_CHECK_TYPE([hrtime_t],[sys/time.h],[AC_DEFINE([ACE_HAS_HI_RES_TIMER])],)
-  ],)
+AC_CHECK_FUNC([gethrtime])
+if $ac_cv_func_gethrtime = "yes"; then
+  AC_CHECK_TYPE([hrtime_t],
+                [AC_DEFINE([ACE_HAS_HI_RES_TIMER], 1,
+                           [Define to 1 if system has SunOS high resolution timer.])],
+                [],
+                [#include <sys/time.h>])
+fi
 
 AC_CHECK_FUNC([pread],
   [AC_CHECK_FUNC([pwrite],
@@ -3891,7 +3898,7 @@ AC_SEARCH_LIBS([sem_destroy],rt,[ace_cv_func_sem_destroy=yes],,)
 
 if test "$ace_cv_func_sem_init" = yes &&
    test "$ace_cv_func_sem_destroy" = yes &&
-   test "$ace_cv_type_sem_t" = yes; then
+   test "$ac_cv_type_sem_t" = yes; then
 
 dnl Only enable POSIX semaphore support if process shared semaphores
 dnl are supported.  Presumably process shared semaphores are only
