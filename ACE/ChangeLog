@@ -1,3 +1,16 @@
+Thu Sep 25 11:49:45 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/acinclude.m4:
+
+          Remove ACE_CHECK_TYPE autoconf macro.  All use of it has been
+          replaced by the standard autoconf AC_CHECK_TYPE macro.
+
+        * configure.ac:
+
+          Replace use of ACE_CHECK_TYPE with AC_CHECK_TYPE and the use
+          of AH_TEMPLATE with AC_DEFINE with a third argument for the
+          ACE_HAS_HI_RES_TIMER feature test.
+
 Thu Sep 25 00:28:52 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:

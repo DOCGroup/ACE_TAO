@@ -201,32 +201,6 @@ dnl   checks for header files
 
 dnl   checks for typedefs
 
-dnl Check for specific typedef in given header file
-dnl Usage: ACE_CHECK_TYPE(TYPEDEF, INCLUDE,
-dnl                       [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]])
-dnl This macro can only check for one typedef in one header file at a time!!
-AC_DEFUN([ACE_CHECK_TYPE],
-[
-dnl  AC_REQUIRE([AC_PROG_CXX])
-dnl  AC_REQUIRE([AC_PROG_CXXCPP])
-dnl  AC_LANG([C++])
-dnl  AC_REQUIRE([AC_LANG])
-
-  ACE_CACHE_CHECK([for $1 in $2], [ace_cv_type_$1],
-    [
-     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#include <$2>
-       ]], [[
-        $1 ace_$1;
-       ]])],[
-        ace_cv_type_$1=yes
-       ],[
-        ace_cv_type_$1=no
-       ])
-    ],[$3],[$4])
-])
-
-
 dnl   checks for structures
 
 dnl Check for specific struct in given header file
