@@ -505,8 +505,6 @@ AC_CHECK_HEADER([dlfcn.h],
 
 ACE_CHECK_LACKS_HEADERS(inttypes.h malloc.h memory.h stdint.h)
 
-ACE_CHECK_HAS_HEADERS(bytesex.h)
-
 AC_CHECK_HEADER([sys/msg.h],
   [
    ACE_CACHE_CHECK([if _KERNEL is needed for msg prototypes],
@@ -591,6 +589,8 @@ AC_CHECK_HEADER([sys/procfs.h],
   ],)
 
 ACE_CHECK_LACKS_HEADERS(arpa/inet.h)
+
+ACE_CHECK_HAS_HEADERS(bytesex.h)
 
 ACE_CHECK_HAS_HEADERS(byteswap.h)
 
@@ -1309,46 +1309,16 @@ AC_CHECK_TYPE([struct utsname],
               [AC_DEFINE([ACE_LACKS_UTSNAME_T], 1,
                          [Define to 1 if the system lacks the type `struct utsname'.])],
               [#include <sys/utsname.h>])
-
-ACE_CACHE_CHECK([for struct sembuf],[ace_cv_struct_sembuf],
-  [
-   dnl Some platforms may need to include some headers before <sys/sem.h>.
-     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+AC_CHECK_TYPE([struct sembuf],
+              [],
+              [AC_DEFINE([ACE_LACKS_SEMBUF_T], 1,
+                         [Define to 1 if the system lacks the type `struct sembuf'.])],
+              [
 #ifndef ACE_LACKS_SYS_TYPES_H
 # include <sys/types.h>
 #endif
 #include <sys/ipc.h>
-#include <sys/sem.h>
-       ]],[[
-        struct sembuf ace_sembuf;
-       ]])],[
-        ace_cv_struct_sembuf=yes
-       ],[
-dnl Some compilers don't like the "struct" but we need the struct for
-dnl some platforms to resolve ambiguities between functions and
-dnl structures with with the same name.  So, we try the same test but
-dnl without "struct" if the above test with "struct" fails.  If both
-dnl tests fail, then we can be reasonably sure that we don't have the
-dnl structure we are testing for.
-        AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
-          [[
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <sys/ipc.h>
-#include <sys/sem.h>
-          ]],
-          [[
-           sembuf ace_sembuf;
-          ]])],
-          [
-           ace_cv_struct_sembuf=yes
-          ],
-          [
-           ace_cv_struct_sembuf=no
-          ])
-       ])
-  ],,[AC_DEFINE([ACE_LACKS_SEMBUF_T])])
+#include <sys/sem.h>])
 
 dnl Thanks to Konstantinos Margaritis <kmargar@cc.uoa.gr> for pointing out
 dnl that struct siginfo_t may also be defined in signal.h

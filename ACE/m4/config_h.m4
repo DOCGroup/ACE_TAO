@@ -785,9 +785,6 @@ AH_TEMPLATE([ACE_LACKS_PWD_FUNCTIONS],
 AH_TEMPLATE([ACE_LACKS_PWD_REENTRANT_FUNCTIONS],
 [Platform lacks getpwnam_r() methods (e.g., SGI 6.2).])
 
-AH_TEMPLATE([ACE_LACKS_SEMBUF_T],
-[Platform lacks struct sembuf (e.g., Win32 and VxWorks)])
-
 AH_TEMPLATE([ACE_LACKS_SETDETACH],
 [Platform lacks pthread_attr_setdetachstate() (e.g., HP/UX 10.x)])
 
