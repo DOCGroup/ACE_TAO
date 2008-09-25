@@ -1,3 +1,25 @@
+Thu Sep 25 17:37:19 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+
+          Add comment explaining why I'm bothering replacing autoheader
+          templates in this file.
+
+        * m4/acinclude.m4:
+        * m4/config_h.m4:
+
+          Move ACE_HAS_LLSEEK, ACE_HAS_LSEEK64,
+          ACE_LACKS_LLSEEK_PROTOTYPE, and ACE_LACKS_LSEEK64_PROTOTYPE
+          autoheader templates to ACE_CHECK_LSEEK64 feature test macro.
+
+        * configure.ac:
+        * m4/config_h.m4:
+
+          Replace use of autoheader templates with AC_DEFINE macro's third
+          argument for ACE_LACKS_CONDATTR_PSHARED,
+          ACE_LACKS_MUTEXATTR_PSHARED, and ACE_LACKS_RWLOCKATTR_PSHARED
+          feature tests.
+
 Thu Sep 25 16:45:16 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
