@@ -1282,13 +1282,33 @@ case "$host" in
   dnl IRIX prusage fields don't match what ACE currently supports.
   ;;
 *)
-  ACE_CHECK_STRUCT([prusage_t],[sys/procfs.h],[AC_DEFINE([ACE_HAS_PRUSAGE_T])],)
+  AC_CHECK_TYPE([prusage_t],
+                [AC_DEFINE([ACE_HAS_PRUSAGE_T], 1,
+		           [Define to 1 if the system has the type `prusage_t'.])],
+                [],
+                [#include <sys/procfs.h>])
   ;;
 esac
-ACE_CHECK_STRUCT([strrecvfd],[stropts.h],,[AC_DEFINE([ACE_LACKS_STRRECVFD])])
-ACE_CHECK_STRUCT([sigaction],[signal.h],,[AC_DEFINE([ACE_LACKS_SIGACTION])])
-ACE_CHECK_STRUCT([sigset_t],[signal.h],,[AC_DEFINE([ACE_LACKS_SIGSET])])
-ACE_CHECK_STRUCT([utsname],[sys/utsname.h],,[AC_DEFINE([ACE_LACKS_UTSNAME_T])])
+AC_CHECK_TYPE([struct strrecvfd],
+              [],
+              [AC_DEFINE([ACE_LACKS_STRRECVFD], 1,
+                         [Define to 1 if the system lacks the type `struct strrecvfd'.])],
+              [#include <stropts.h>])
+AC_CHECK_TYPE([struct sigaction],
+              [],
+              [AC_DEFINE([ACE_LACKS_SIGACTION], 1,
+                         [Define to 1 if the system lacks the type `struct sigaction'.])],
+              [#include <signal.h>])
+AC_CHECK_TYPE([sigset_t],
+              [],
+              [AC_DEFINE([ACE_LACKS_SIGSET], 1,
+                         [Define to 1 if the system lacks the type `sigset_t'.])],
+              [#include <signal.h>])
+AC_CHECK_TYPE([struct utsname],
+              [],
+              [AC_DEFINE([ACE_LACKS_UTSNAME_T], 1,
+                         [Define to 1 if the system lacks the type `struct utsname'.])],
+              [#include <sys/utsname.h>])
 
 ACE_CACHE_CHECK([for struct sembuf],[ace_cv_struct_sembuf],
   [
@@ -1528,26 +1548,6 @@ ACE_CACHE_CHECK([for limited struct rusage],
            ace_cv_lib_limited_rusage=yes
           ])
 ],[AC_DEFINE([ACE_HAS_LIMITED_RUSAGE_T])],)
-
-if test "$ace_cv_struct_siginfo_t" = yes; then
-  dnl Check for si_addr member in struct siginfo_t
-  ACE_CACHE_CHECK([for si_addr member in struct siginfo_t],
-    [ace_cv_lib_posix_si_addr],[
-        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#ifndef ACE_LACKS_SIGINFO_H
-# include <siginfo.h>
-#endif
-#include <signal.h>
-          ]],[[
-           siginfo_t acesig;
-           acesig.si_addr = 0;
-          ]])],[
-           ace_cv_lib_posix_si_addr=yes
-          ],[
-           ace_cv_lib_posix_si_addr=no
-          ])
-  ],,[AC_DEFINE([ACE_LACKS_SI_ADDR])])
-fi dnl test "$ace_cv_struct_siginfo_t" = yes
 
 dnl Check for sin_len member in struct sockaddr_in
 AC_CHECK_MEMBER([struct sockaddr_in.sin_len],
@@ -3089,9 +3089,9 @@ case "$host_os" in
 esac
 
 ACE_CHECK_HAS_FUNCS(_InterlockedIncrement _InterlockedDecrement _InterlockedExchangeAdd)
-if test "$ac_cv_func__InterlockedIncrement" == yes &&
-   test "$ac_cv_func__InterlockedDecrement" == yes &&
-   test "$ac_cv_func__InterlockedExchangeAdd" == yes; then
+if test "$ac_cv_func__InterlockedIncrement" = yes &&
+   test "$ac_cv_func__InterlockedDecrement" = yes &&
+   test "$ac_cv_func__InterlockedExchangeAdd" = yes; then
   AC_DEFINE([ACE_HAS_INTRINSIC_INTERLOCKED])
 fi
 
@@ -3603,7 +3603,7 @@ main ()
 esac
 
 AC_CHECK_FUNC([gethrtime])
-if $ac_cv_func_gethrtime = "yes"; then
+if test $ac_cv_func_gethrtime = "yes"; then
   AC_CHECK_TYPE([hrtime_t],
                 [AC_DEFINE([ACE_HAS_HI_RES_TIMER], 1,
                            [Define to 1 if system has SunOS high resolution timer.])],
@@ -3644,7 +3644,7 @@ ACE_CHECK_HAS_FUNCS(sigsuspend sigtimedwait)
 ACE_CHECK_LACKS_FUNCS(socketpair)
 
 AC_CHECK_FUNC(strptime)
-if test "$ac_cv_func_strptime" == yes; then
+if test "$ac_cv_func_strptime" = yes; then
   dnl strptime() is available, but its prototype is not always visible to
   dnl the compiler. Check if _XOPEN_SOURCE macro is needed to make the
   dnl strptime() prototype visible.
@@ -4248,47 +4248,23 @@ dnl  AC_CHECK_FUNC(sched_yield,,)
 dnl We already check for this during the library checks.
 
 dnl Check for Unix98 pthreads extensions
-  ACE_CACHE_CHECK([for struct pthread_rwlock_t],
-    [ace_cv_struct_pthread_rwlock_t],
-    [
-     dnl Since we are checking for pthread_rwlock_t in more than one header
-     dnl we can't use the ACE_CHECK_STRUCT macro so we have to do things
-     dnl manually.
-     ACE_TRY_COMPILE_STRUCT([pthread_rwlock_t], [pthread.h],
-       [
-        ace_cv_struct_pthread_rwlock_t=yes
-       ],
-       [
-        ACE_TRY_COMPILE_STRUCT([pthread_rwlock_t], [sys/types.h],
-          [
-           ace_cv_struct_pthread_rwlock_t=yes
-          ],
-          [
-           ace_cv_struct_pthread_rwlock_t=no
-          ])
-       ])
-    ],,)
+  AC_CHECK_TYPE([pthread_rwlock_t],
+                [],
+                [],
+                [
+#ifndef ACE_LACKS_SYS_TYPES_H
+#include <sys/types.h>
+#endif
+#include <pthread.h>])
 
-  ACE_CACHE_CHECK([for struct pthread_rwlockattr_t],
-    [ace_cv_struct_pthread_rwlockattr_t],
-    [
-     dnl Since we are checking for pthread_rwlockattr_t in more than one
-     dnl header, we can't use the ACE_CHECK_STRUCT macro so we have to do
-     dnl things manually.
-     ACE_TRY_COMPILE_STRUCT([pthread_rwlockattr_t], [pthread.h],
-       [
-        ace_cv_struct_pthread_rwlockattr_t=yes
-       ],
-       [
-        ACE_TRY_COMPILE_STRUCT([pthread_rwlockattr_t], [sys/types.h],
-          [
-           ace_cv_struct_pthread_rwlockattr_t=yes
-          ],
-          [
-           ace_cv_struct_pthread_rwlockattr_t=no
-          ])
-       ])
-    ],,)
+  AC_CHECK_TYPE([pthread_rwlockattr_t],
+                [],
+                [],
+                [
+#ifndef ACE_LACKS_SYS_TYPES_H
+#include <sys/types.h>
+#endif
+#include <pthread.h>])
 
   ACE_CHECK_HAS_FUNCS(pthread_continue pthread_continue_np pthread_resume_np pthread_suspend pthread_suspend_np)
   ACE_CHECK_HAS_FUNCS(pthread_getconcurrency pthread_setconcurrency)
@@ -4410,8 +4386,8 @@ fi dnl test "$ac_cv_type_cpu_set_t" = yes
     ,
     [AC_DEFINE([ACE_LACKS_RWLOCKATTR_PSHARED])])
 
-  if test "$ace_cv_struct_pthread_rwlock_t" = yes &&
-     test "$ace_cv_struct_pthread_rwlockattr_t" = yes &&
+  if test "$ac_cv_type_pthread_rwlock_t" = yes &&
+     test "$ac_cv_type_pthread_rwlockattr_t" = yes &&
      test "$ac_cv_func_pthread_rwlock_init" = yes &&
      test "$ac_cv_func_pthread_rwlock_destroy" = yes &&
      test "$ac_cv_func_pthread_rwlock_rdlock" = yes &&
@@ -5642,7 +5618,7 @@ typedef void (*SA)(...);
       ])
   ])
 
-if test "$ace_cv_struct_sigaction" = yes; then
+if test "$ac_cv_type_struct_sigaction" = yes; then
 dnl Check if struct sigaction takes a void (*)(int) handler
   AC_CACHE_CHECK([if struct sigaction takes a void (*)(int) handler],
     [ace_cv_lib_struct_sigaction_vi1_handler],[
@@ -5718,7 +5694,7 @@ dnl Check if struct sigaction takes a void (*)(...) handler
          ace_cv_lib_struct_sigaction_va1_handler=no
         ])
     ])
-fi dnl test "$ace_cv_struct_sigaction" = yes
+fi dnl test "$ac_cv_type_struct_sigaction" = yes
 
 dnl TODO: This doesn't work.
 dnl The linux compiler issues a warning regarding the invalid void*

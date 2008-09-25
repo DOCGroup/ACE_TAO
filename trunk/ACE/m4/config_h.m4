@@ -470,8 +470,6 @@ AH_TEMPLATE([ACE_HAS_PROC_FS],
 [Platform supports the /proc file system and defines tid_t
    in <sys/procfs.h>])
 
-AH_TEMPLATE([ACE_HAS_PRUSAGE_T],[Platform supports the prusage_t struct])
-
 AH_TEMPLATE([ACE_HAS_PTHREADS_UNIX98_EXT],
 [Platform has the UNIX98 extensions to Pthreads (rwlocks)])
 
@@ -796,14 +794,8 @@ AH_TEMPLATE([ACE_LACKS_SETDETACH],
 AH_TEMPLATE([ACE_LACKS_SETSCHED],
 [Platform lacks pthread_attr_setsched() (e.g. MVS)])
 
-AH_TEMPLATE([ACE_LACKS_SIGACTION],
-[Platform lacks struct sigaction (e.g., Win32 and Chorus)])
-
 AH_TEMPLATE([ACE_LACKS_SIGNED_CHAR],
 [Platform lacks "signed char" type (broken!)])
-
-AH_TEMPLATE([ACE_LACKS_SIGSET],
-[Platform lacks signal sets (e.g., Chorus and Win32)])
 
 AH_TEMPLATE([ACE_LACKS_SYS_MSG_H],
 [Platform lacks sys/msg.h (e.g., Chorus and VxWorks)])
@@ -823,8 +815,6 @@ AH_TEMPLATE([ACE_LACKS_SOCKET_BUFSIZ],
 
 AH_TEMPLATE([ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES],
 [Compiler doesn't support static data member templates])
-
-AH_TEMPLATE([ACE_LACKS_STRRECVFD],[Platform doesn't define struct strrecvfd.])
 
 AH_TEMPLATE([ACE_LACKS_T_ERRNO],[Header files lack t_errno for TLI])
 
@@ -865,9 +855,6 @@ AH_TEMPLATE([ACE_LACKS_UNIX_DOMAIN_SOCKETS],
 
 AH_TEMPLATE([ACE_LACKS_UNIX_SIGNALS],
 [Platform lacks full signal support (e.g., Win32 and Chorus).])
-
-AH_TEMPLATE([ACE_LACKS_UTSNAME_T],
-[Platform lacks struct utsname (e.g., Win32 and VxWorks)])
 
 AH_TEMPLATE([ACE_MAIN],
 [Renames "main (int, char *[])", for platforms such as g++/VxWorks
