@@ -198,7 +198,7 @@ Task::svc (void)
         RTCORBA::Current::_narrow (object.in ());
 
       RTCORBA::Priority default_thread_priority =
-        current->the_priority ();
+        get_implicit_thread_CORBA_priority (this->orb_.in ());
 
       test_i servant (this->orb_.in (),
                       root_poa.in (),

@@ -1,3 +1,87 @@
+Thu Sep 25 07:47:24 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * tao/Protocols_Hooks.h:
+        * tao/TSS_Resources.h:
+        * tao/TSS_Resources.cpp:
+        * tao/RTCORBA/Continuous_Priority_Mapping.cpp:
+        * tao/RTCORBA/Linear_Priority_Mapping.cpp:
+        * tao/RTCORBA/RT_Current.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.h:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTCORBA/Thread_Pool.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+
+          The CORBA priority as set by the user with RTCurrent::the_priority
+          is now held in thread local storage. This value is propagated in
+          request contexts and returned via the RTCurrent accessor method.
+          Previously the value propagated / returned was the result of calling
+          ::to_CORBA on the result of ::to_native on the original priority
+          using the effective priority mapping. This had the potential to
+          introduce rounding effects with mappings like 'linear' particularly
+          in systems comprised of heterogenuous RTOS flavours.
+          An implicit CORBA priority, derived from the native thread priority,
+          will now only be transmitted as the request context in the even that
+          a CORBA priority hasn't been explicitly set.
+          The RTCurrent::the_priority read accessor now throws a
+          CORBA::INITIALIZE exception if no value has previously been set via
+          the write accessor as required by the spec.
+          The RTCurrent::the_priority write accessor will now throw a
+          CORBA::BAD_PARAM exception, as required by section "2.6 RTCurrent" of
+          the RT specification, if an attempt has been made to set an out of
+          range CORBA priority if the effective priority mapping indicates that
+          the CORBA priority cannot be mapped to_native or the attempt to set
+          the priority on the RTOS has failed. If the CORBA priortiy is not out
+          of the maximum permitted range then a DATA_CONVERSION exception will
+          continue to be thrown in these circumstances.
+          The linear priority mapping has been changed such that, for an
+          instance of the linear priority mapping 'pm' and a CORBA::Priority
+          'x', the result of calling pm->to_CORBA (pm->to_native (x)) is equal
+          to pm->to_CORBA (pm->to_native (pm->to_CORBA (pm->to_native (x)))).
+          This means that whilst a rounding effect may occur on the initial
+          conversion between priority types and back, subsequent repeat
+          conversions should be idempotent.
+          The continuous priority mapping will now correctly return the value
+          false when asked to convert RTCORBA::maxPriority ::to_native when
+          there are less that 32768 native priorities available on the RTOS.
+
+        * tests/RTCORBA/Bug_3382_Regression:
+        * tests/RTCORBA/Bug_3382_Regression/Bug_3382_Regression.mpc:
+        * tests/RTCORBA/Bug_3382_Regression/Client_ORBInitializer.h:
+        * tests/RTCORBA/Bug_3382_Regression/Client_ORBInitializer.cpp:
+        * tests/RTCORBA/Bug_3382_Regression/README:
+        * tests/RTCORBA/Bug_3382_Regression/client.cpp:
+        * tests/RTCORBA/Bug_3382_Regression/interceptors.h:
+        * tests/RTCORBA/Bug_3382_Regression/interceptors.cpp:
+        * tests/RTCORBA/Bug_3382_Regression/run_test.pl:
+        * tests/RTCORBA/Bug_3382_Regression/server.cpp:
+        * tests/RTCORBA/Bug_3382_Regression/simple_client.cpp:
+        * tests/RTCORBA/Bug_3382_Regression/svc.conf:
+        * tests/RTCORBA/Bug_3382_Regression/test.idl:
+
+          Regression test for as much of the above as is feasible.
+
+        * tests/RTCORBA/Banded_Connections/client.cpp:
+        * tests/RTCORBA/Client_Propagated/server.cpp:
+        * tests/RTCORBA/Collocation/Collocation.cpp:
+        * tests/RTCORBA/Destroy_Thread_Pool/Destroy_Thread_Pool.cpp:
+        * tests/RTCORBA/Dynamic_Thread_Pool/client.cpp:
+        * tests/RTCORBA/Dynamic_Thread_Pool/server.cpp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
+        * tests/RTCORBA/Persistent_IOR/server.cpp:
+        * tests/RTCORBA/Policy_Combinations/client.cpp:
+        * tests/RTCORBA/Policy_Combinations/server.cpp:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/server.cpp:
+        * tests/RTCORBA/Thread_Pool/client.cpp:
+        * tests/RTCORBA/Thread_Pool/server.cpp:
+        * tests/RTCORBA/check_supported_priorities.cpp:
+
+          Update the above tests for the corrected RTCurrent behaviour.
+          In essence, accessing ::the_priority when it hasn't been set is an
+          error as per spec so these tests have been changed so they don't do
+          that anymore.
+
 Wed Sep 24 17:43:22 UTC 2008  Rich Seibel <seibel_r@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.h:

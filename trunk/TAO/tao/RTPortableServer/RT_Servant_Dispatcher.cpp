@@ -205,7 +205,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
             throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
                                             CORBA::COMPLETED_NO);
 
-          // Priority needs to be changed temporarily changed for the
+          // Priority needs to be temporarily changed for the
           // duration of request.
           if (target_priority != pre_invoke_state.original_CORBA_priority_)
             {
@@ -346,8 +346,9 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
 
           if (tph != 0)
             {
-              if (tph->set_thread_native_priority (
-                     pre_invoke_state.original_native_priority_) == -1)
+              if (tph->restore_thread_CORBA_and_native_priority (
+                       pre_invoke_state.original_CORBA_priority_,
+                       pre_invoke_state.original_native_priority_) == -1)
                 throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
                                                 CORBA::COMPLETED_NO);
             }

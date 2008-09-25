@@ -20,9 +20,7 @@ public:
   // = The Test methods.
   void test_method (CORBA::Short priority);
 
-  //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown (void);
-  //FUZZ: enable check_for_lack_ACE_OS
+  void shutdown ();
 
 private:
   CORBA::ORB_var orb_;
@@ -47,7 +45,7 @@ Test_i::test_method (CORBA::Short priority)
     RTCORBA::Current::_narrow (obj.in ());
 
   if (CORBA::is_nil (obj.in ()))
-    throw CORBA::INTERNAL ();
+    throw (CORBA::INTERNAL ());
 
   CORBA::Short servant_thread_priority =
     current->the_priority ();
@@ -65,7 +63,7 @@ Test_i::test_method (CORBA::Short priority)
 }
 
 void
-Test_i::shutdown (void)
+Test_i::shutdown ()
 {
   this->orb_->shutdown (0);
 }
@@ -76,9 +74,9 @@ const char *ior_output_file = "test.ior";
 
 // Parse command-line arguments.
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  ACE_Get_Opt get_opts (argc, argv, "o:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -141,10 +139,13 @@ Task::svc (void)
         root_poa->the_POAManager ();
 
       object = this->orb_->resolve_initial_references ("RTORB");
+
       RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
+
 
       object =
         this->orb_->resolve_initial_references ("RTCurrent");
+
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in ());
 
@@ -188,10 +189,9 @@ Task::svc (void)
         }
 
       // Get the initial priority of the current thread.
-      // Note that it is an error to access the priority via the current in a thread that it
-      // where it hasn't been set following the fix for tao681.
-      CORBA::Short initial_thread_priority
-        = get_implicit_thread_CORBA_priority (this->orb_.in ());
+      CORBA::Short initial_thread_priority =
+        get_implicit_thread_CORBA_priority (this->orb_.in ());
+
       current->the_priority (initial_thread_priority);
 
       // Run ORB Event loop.
@@ -214,12 +214,13 @@ Task::svc (void)
       else
         ACE_DEBUG ((LM_DEBUG,
                     "Final priority of the servant thread"
-                    " = its initial priority\n"));
+                    " == its initial priority\n"));
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (const ::CORBA::Exception & ex)
     {
-      ex._tao_print_exception ("Exception caught:");
+      ex._tao_print_exception(
+                           "Exception caught:");
       return -1;
     }
 
@@ -227,15 +228,17 @@ Task::svc (void)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+main (int argc, char *argv[])
 {
+  int result = 0;
+
   try
     {
       // Standard initialization:
       // parse arguments and get all the references (ORB,
       // RootPOA, RTORB, RTCurrent, POAManager).
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "" );
 
       if (parse_args (argc, argv) != 0)
         return -1;
@@ -259,7 +262,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->orb_core ()->orb_params ()->thread_creation_flags ();
 
       // Activate task.
-      int result =
+      result =
         task.activate (flags);
       if (result == -1)
         {
@@ -274,19 +277,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
           else
             // Unexpected error.
-            ACE_ASSERT (0);
+            ACE_ERROR_RETURN ((LM_ERROR,
+                                 "ERROR: Cannot create thread. errno = %d\n",
+                                 errno),
+                                -1);
         }
 
       // Wait for task to exit.
       result =
         thread_manager.wait ();
-      ACE_ASSERT (result != -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const ::CORBA::Exception & ex)
     {
-      ex._tao_print_exception ("Exception caught");
+      ex._tao_print_exception(
+                           "Exception caught:");
       return -1;
     }
 
-  return 0;
+  return result;
 }

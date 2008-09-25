@@ -37,10 +37,16 @@ TAO_RT_Current::the_priority (void)
 
   RTCORBA::Priority priority = 0;
 
-  if (tph != 0)
+  int result =
+      tph->get_thread_CORBA_priority (priority);
+
+  if (result == -1)
     {
-      if (tph->get_thread_CORBA_priority (priority) == -1)
-        throw ::CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO);
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "ERROR: TAO_RT_Current::the_priority. "
+                    "RT CORBA Priority accessed in a thread where it has not been set.\n"));
+      // Spec does not define a minor code
+      throw CORBA::INITIALIZE ();
     }
 
   return priority;
@@ -52,10 +58,23 @@ TAO_RT_Current::the_priority (RTCORBA::Priority the_priority)
 
   TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks ();
 
-  if (tph != 0)
+  if (tph->set_thread_CORBA_priority (the_priority) == -1)
     {
-      if (tph->set_thread_CORBA_priority (the_priority) == -1)
-        throw ::CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO);
+      // Note this check is required by "2.6 Real-time Current" which states:
+      // "A BAD_PARAM system exception shall be thrown if an attempt is made to set the
+      // priority to a value outside the range 0 to 32767."
+      // Note that it is not enough to assume that the mapping's rejection will deal with
+      // this as it also says: "If the to_native call returns FALSE ... then a Real-time ORB
+      // shall raise a DATA_CONVERSION system exception" i.e different exception.
+
+      if (the_priority < 0) // short
+        throw (CORBA::BAD_PARAM (
+                  CORBA::SystemException::_tao_minor_code (
+                  0,
+                  EINVAL),
+                  CORBA::COMPLETED_NO));
+
+      throw (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO));
     }
 }
 
