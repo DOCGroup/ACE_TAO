@@ -2236,31 +2236,6 @@ if test "$ace_cv_lib_auto_ptr_class" = yes; then
     ],,[AC_DEFINE([ACE_AUTO_PTR_LACKS_RESET])])
 fi  dnl test $ace_cv_lib_auto_ptr_class=yes
 
-dnl Check if platform supports placement new operator
-ACE_CACHE_CHECK([for C++ placement new operator],
-  [ace_cv_feature_placement_new],[
-    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#if defined (ACE_HAS_NEW_NO_H)
-# include <new>
-#elif defined (ACE_HAS_NEW_H)
-# include <new.h>
-#endif
-
-class foo
-{
-public:
-  void *operator new (size_t, void *p) { return p; }
-};
-                   ]],[[
-int *x = 0;
-foo *f = new (x) foo;
-                   ]])],[
-                    ace_cv_feature_placement_new=yes
-                   ],[
-                    ace_cv_feature_placement_new=no
-                   ])
-  ],,[AC_DEFINE([ACE_LACKS_PLACEMENT_OPERATOR_NEW])])
-
 dnl Check if platform supports placement delete operator
 ACE_CACHE_CHECK([for C++ placement delete operator],
   [ace_cv_feature_placement_delete],[
