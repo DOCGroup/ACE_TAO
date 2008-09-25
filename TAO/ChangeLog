@@ -1,3 +1,10 @@
+Thu Sep 25 11:27:39 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/CosLifeCycle.mpc:
+
+          Changed server skeleton project to inherit from portableserver
+          base project.
+
 Thu Sep 25 07:47:24 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * tao/Protocols_Hooks.h:
