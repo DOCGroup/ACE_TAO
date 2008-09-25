@@ -1,3 +1,15 @@
+Thu Sep 25 16:23:26 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        * m4/config_h.m4:
+
+          Replace ~50 lines of open code with simple call to AC_CHECK_TYPE
+          with ACE_DEFINE with a third argument for the ACE_LACKS_SEMBUF_T
+          feature test.
+
+          Move feature test for ACE_HAS_BYTESEX_H so it's adjacent to the
+          test for ACE_HAS_BYTESWAP_H.
+
 Thu Sep 25 13:58:48 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/acinclude.m4:
