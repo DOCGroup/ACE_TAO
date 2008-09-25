@@ -1,3 +1,28 @@
+Thu Sep 25 13:58:48 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/acinclude.m4:
+
+          Remove ACE_CHECK_STRUCT and ACE_TRY_COMPILE_STRUCT autoconf
+          macros.  All use has been replaced by the standard autoconf
+          AC_CHECK_TYPE macro.
+
+        * configure.ac:
+        * m4/config_h.m4:
+
+          Replace use of ACE_CHECK_STRUCT with AC_CHECK_TYPE, and the use
+          of AH_TEMPLATE with AC_DEFINE with a third argument for the
+          ACE_HAS_PRUSAGE_T, ACE_LACKS_STRRECVFD, ACE_LACKS_SIGACTION,
+          ACE_LACKS_SIGSET, and ACE_LACKS_UTSNAME_T feature tests.
+
+          Replace use of ACE_TRY_COMPILE_STRUCT with AC_CHECK_TYPE in
+          internal feature tests (no feature test macros are defined)
+          for pthread_rwlock_t and pthread_rwlockattr_t.
+
+          Remove duplicate ACE_LACKS_SI_ADDR feature test.
+
+          Replace use of "test xxx == yyy" with "test xxx = yyy", the
+          former is a GNU extension.
+
 Thu Sep 25 11:49:45 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/acinclude.m4:
@@ -6,6 +31,7 @@ Thu Sep 25 11:49:45 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
           replaced by the standard autoconf AC_CHECK_TYPE macro.
 
         * configure.ac:
+        * m4/config_h.m4:
 
           Replace use of ACE_CHECK_TYPE with AC_CHECK_TYPE and the use
           of AH_TEMPLATE with AC_DEFINE with a third argument for the
