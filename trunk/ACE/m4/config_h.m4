@@ -343,9 +343,6 @@ AH_TEMPLATE([ACE_HAS_LLSEEK],
 [Platform supports llseek(). This should not be defined if
    ACE_HAS_LSEEK64 is defined.])
 
-AH_TEMPLATE([ACE_HAS_HI_RES_TIMER],
-[Compiler/platform supports SunOS high resolution timers])
-
 AH_TEMPLATE([ACE_HAS_INLINED_OSCALLS],[
 Inline all the static class OS methods to remove call overhead
 Note: This gets defined by OS.h if __ACE_INLINE__ is defined])
