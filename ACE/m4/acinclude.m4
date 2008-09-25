@@ -399,6 +399,22 @@ dnl Check for 64 bit llseek() or lseek64()
 dnl Usage: ACE_CHECK_LSEEK64
 AC_DEFUN([ACE_CHECK_LSEEK64],
 [
+  AH_TEMPLATE([ACE_HAS_LSEEK64],
+    [Platform supports lseek64(). This should not be defined if
+    ACE_HAS_LLSEEK is defined.])
+
+  AH_TEMPLATE([ACE_LACKS_LSEEK64_PROTOTYPE],
+    [Platform/compiler lacks the lseek64() prototype.  This should not
+    be defined if ACE_LACKS_LLSEEK_PROTOTYPE is defined.])
+
+  AH_TEMPLATE([ACE_HAS_LLSEEK],
+    [Platform supports llseek(). This should not be defined if
+     ACE_HAS_LSEEK64 is defined.])
+
+  AH_TEMPLATE([ACE_LACKS_LLSEEK_PROTOTYPE],
+    [Platform/compiler lacks the llseek() prototype.  This should not
+    be defined if ACE_LACKS_LSEEK64_PROTOTYPE is defined.])
+
  AC_CHECK_FUNC([lseek64],
    [
     AC_DEFINE([ACE_HAS_LSEEK64])
