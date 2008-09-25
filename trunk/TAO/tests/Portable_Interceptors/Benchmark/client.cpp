@@ -15,7 +15,7 @@ ACE_RCSID (Benchmark,
            client,
            "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 int niterations = 5;
 int register_interceptor = 1;
 
@@ -83,7 +83,7 @@ run_test (Test_Interceptors::Secure_Vault_ptr server)
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
     }
 
-  marker.dump_stats ("Ready method  ", gsf, 1);
+  marker.dump_stats (ACE_TEXT ("Ready method  "), gsf, 1);
 
   try
     {
@@ -108,7 +108,7 @@ run_test (Test_Interceptors::Secure_Vault_ptr server)
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
         }
-      marker.dump_stats ("Authenticate method  ", gsf, 2);
+      marker.dump_stats (ACE_TEXT ("Authenticate method  "), gsf, 2);
     }
   catch (const Test_Interceptors::Invalid&)
     {
@@ -144,7 +144,7 @@ run_test (Test_Interceptors::Secure_Vault_ptr server)
 
     }
 
-  marker.dump_stats ("update records  method  ", gsf, 3);
+  marker.dump_stats (ACE_TEXT ("update records  method  "), gsf, 3);
 }
 
 
