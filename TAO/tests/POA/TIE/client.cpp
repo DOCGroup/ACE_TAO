@@ -26,7 +26,7 @@ ACE_RCSID(TIE, client, "$Id$")
 static int iterations = 1;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:b:c:d:e:f:i:"));
   int c;

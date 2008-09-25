@@ -86,7 +86,7 @@ public:
   ~Options (void);
   // destructor
 
-  int parse_args (int argc, char **argv);
+  int parse_args (int argc, ACE_TCHAR **argv);
   // Parses the arguments passed on the command line.
 
   char const * param_test_ior (void) const;

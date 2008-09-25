@@ -46,7 +46,7 @@ Options::~Options (void)
 // Parses the command line arguments and returns an error status.
 
 int
-Options::parse_args (int argc, char **argv)
+Options::parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xdn:f:i:t:k:"));
   int c;

@@ -1,3 +1,20 @@
+Thu Sep 25 20:19:39 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/File_IO/client.cpp:
+        * tests/File_IO/server.cpp:
+        * tests/Multiple_Inheritance/client.cpp:
+        * tests/Multiple_Inheritance/server.cpp:
+        * tests/Param_Test/options.cpp:
+        * tests/Param_Test/options.h:
+        * tests/POA/DSI/server.cp:
+        * tests/POA/Forwarding/client.cpp:
+        * tests/POA/Forwarding/server.cpp:
+        * tests/POA/Object_Reactivation/Object_Reactivation.cpp:
+        * tests/POA/On_Demand_Actiation/server.cpp:
+        * tests/POA/TIE/client.cpp:
+        * tests/UNKNOWN_Exception/client.cpp:
+          ACE_TCHAR changes
+
 Thu Sep 25 11:27:39 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/CosLifeCycle.mpc:

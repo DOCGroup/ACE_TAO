@@ -28,7 +28,7 @@ static int servers = 2;
 static int iterations = 3;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:i:k:"));
   int c;
