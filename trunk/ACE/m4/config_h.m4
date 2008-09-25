@@ -568,8 +568,6 @@ AH_TEMPLATE([ACE_HAS_THR_YIELD],[Platform has thr_yield()])
 AH_TEMPLATE([ACE_HAS_STANDARD_CPP_LIBRARY],
 [Platform/compiler supports Standard C++ Library])
 
-AH_TEMPLATE([ACE_HAS_STRBUF_T],[Compiler/platform supports struct strbuf])
-
 AH_TEMPLATE([ACE_HAS_STREAMS],[Platform supports STREAMS])
 
 AH_TEMPLATE([ACE_HAS_STREAM_PIPES],[Platform supports STREAM pipes])
@@ -729,8 +727,6 @@ AH_TEMPLATE([ACE_LACKS_EXEC],
 [Platform lacks the exec() family of system calls (e.g., Win32,
    VxWorks, Chorus)])
 
-AH_TEMPLATE([ACE_LACKS_FILELOCKS],[Platform lacks file locking mechanism])
-
 AH_TEMPLATE([ACE_LACKS_GETSERVBYNAME],
 [Platforms lacks getservbyname() (e.g., VxWorks and Chorus).])
 
@@ -794,8 +790,6 @@ AH_TEMPLATE([ACE_LACKS_PWD_FUNCTIONS],
 AH_TEMPLATE([ACE_LACKS_PWD_REENTRANT_FUNCTIONS],
 [Platform lacks getpwnam_r() methods (e.g., SGI 6.2).])
 
-AH_TEMPLATE([ACE_LACKS_RWLOCK_T],[Platform lacks readers/writer locks.])
-
 AH_TEMPLATE([ACE_LACKS_SEMBUF_T],
 [Platform lacks struct sembuf (e.g., Win32 and VxWorks)])
 
@@ -813,9 +807,6 @@ AH_TEMPLATE([ACE_LACKS_SIGNED_CHAR],
 
 AH_TEMPLATE([ACE_LACKS_SIGSET],
 [Platform lacks signal sets (e.g., Chorus and Win32)])
-
-AH_TEMPLATE([ACE_LACKS_STRUCT_DIR],
-[Platform lacks dirent structure.])
 
 AH_TEMPLATE([ACE_LACKS_SYS_MSG_H],
 [Platform lacks sys/msg.h (e.g., Chorus and VxWorks)])

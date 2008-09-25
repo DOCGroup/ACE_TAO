@@ -1,3 +1,13 @@
+Thu Sep 25 00:28:52 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        * m4/config_h.m4:
+
+          Replace use of ACE_CHECK_STRUCT with AC_CHECK_TYPE, and the use
+          of AH_TEMPLATE with AC_DEFINE with a third argument for the
+          ACE_LACKS_STRUCT_DIR, ACE_LACKS_FILELOCKS, ACE_LACKS_RWLOCK_T,
+          and ACE_HAS_STRBUF_T feature tests.
+
 Wed Sep 24 17:43:22 UTC 2008  Rich Seibel <seibel_r@ociweb.com>
 
         * bin/tao_other_tests.lst:
