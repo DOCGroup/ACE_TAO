@@ -768,9 +768,6 @@ AH_TEMPLATE([ACE_LACKS_RLIMIT],
 AH_TEMPLATE([ACE_LACKS_RWLOCKATTR_PSHARED],
 [Platform lacks pthread_rwlockattr_setpshared().])
 
-AH_TEMPLATE([ACE_LACKS_PLACEMENT_OPERATOR_NEW],
-[Compiler doesn't support placement operator new(size_t, void *).])
-
 AH_TEMPLATE([ACE_LACKS_PLACEMENT_OPERATOR_DELETE],
 [Compiler doesn't support placement operator delete(void *, void *).])
 

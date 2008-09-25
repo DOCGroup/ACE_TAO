@@ -1,3 +1,11 @@
+Thu Sep 25 16:45:16 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        * m4/config_h.m4:
+
+          Remove feature test and autoheader template for
+          ACE_LACKS_PLACEMENT_OPERATOR_NEW, as it is no longer used.
+
 Thu Sep 25 16:23:26 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
