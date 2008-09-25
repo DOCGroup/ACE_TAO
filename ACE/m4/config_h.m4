@@ -750,9 +750,6 @@ AH_TEMPLATE([ACE_HAS_MUTEX_TIMEOUTS],
 AH_TEMPLATE([ACE_LACKS_NAMED_POSIX_SEM],
 [Platform lacks named POSIX semaphores (e.g., Chorus)])
 
-AH_TEMPLATE([ACE_LACKS_STRPTIME],
-[Platform lacks native strptime() implementation.])
-
 AH_TEMPLATE([ACE_LACKS_RLIMIT],
 [Platform/compiler lacks {get,set}rlimit() function (e.g., VxWorks,
    Chorus, and SCO UNIX)])
@@ -785,10 +782,6 @@ AH_TEMPLATE([ACE_LACKS_SYS_MSG_H],
 
 AH_TEMPLATE([ACE_LACKS_SYSV_MSQ_PROTOS],
 [Platform lacks SYSV message queue prototypes])
-
-AH_TEMPLATE([ACE_LACKS_SI_ADDR],
-[Platform lacks the si_addr field of siginfo_t (e.g., VxWorks and
-   HP/UX 10.x)])
 
 AH_TEMPLATE([ACE_LACKS_SYSV_SHMEM],
 [Platform lacks System V shared memory (e.g., Win32 and VxWorks)])
