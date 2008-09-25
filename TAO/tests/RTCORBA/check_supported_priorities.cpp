@@ -3,6 +3,8 @@
 #include "ace/Sched_Params.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
+#include "tao/RTCORBA/Priority_Mapping_Manager.h"
+#include "tao/Protocols_Hooks.h"
 
 const char *
 sched_policy_name (int sched_policy)
@@ -51,3 +53,35 @@ check_supported_priorities (CORBA::ORB_ptr orb)
 
   return true;
 }
+
+CORBA::Short
+get_implicit_thread_CORBA_priority (CORBA::ORB_ptr orb)
+{
+  CORBA::Object_var obj =
+    orb->resolve_initial_references (TAO_OBJID_PRIORITYMAPPINGMANAGER);
+
+  TAO_Priority_Mapping_Manager_var mapping_manager =
+    TAO_Priority_Mapping_Manager::_narrow (obj.in ());
+
+  if (CORBA::is_nil (mapping_manager.in ()))
+    throw CORBA::INTERNAL ();
+
+  RTCORBA::PriorityMapping *pm =
+    mapping_manager.in ()->mapping ();
+
+  TAO_Protocols_Hooks *tph =
+    orb->orb_core ()->get_protocols_hooks ();
+
+  CORBA::Short corba_priority;
+  CORBA::Short native_priority;
+
+  if (tph->get_thread_native_priority (native_priority) == 0 &&
+      pm->to_CORBA (native_priority, corba_priority))
+  {
+    return corba_priority;
+  }
+
+  ACE_DEBUG ((LM_DEBUG, "get_implicit_thread_CORBA_priority - failed to access priority\n"));
+  throw CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+}
+

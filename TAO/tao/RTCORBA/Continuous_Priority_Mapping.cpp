@@ -48,17 +48,18 @@ TAO_Continuous_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
   return true;
 
 #else
+  int native;
 
   if (this->min_ < this->max_)
     {
-      native_priority = corba_priority + this->min_;
-      if (native_priority > this->max_)
+      native = corba_priority + this->min_;
+      if (native > this->max_)
         return false;
     }
   else if (this->min_ > this->max_)
     {
-      native_priority = this->min_ - corba_priority;
-      if (native_priority < this->max_)
+      native = this->min_ - corba_priority;
+      if (native < this->max_)
         return false;
     }
   else
@@ -67,8 +68,10 @@ TAO_Continuous_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
       if (corba_priority != 0)
         return false;
 
-      native_priority = this->min_;
+      native = this->min_;
     }
+
+  native_priority = native;
 
   return true;
 

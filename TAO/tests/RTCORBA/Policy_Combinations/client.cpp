@@ -85,7 +85,7 @@ Task::svc (void)
         RTCORBA::Current::_narrow (object.in ());
 
       default_thread_priority =
-        current->the_priority ();
+        get_implicit_thread_CORBA_priority (this->orb_.in ());
 
       object =
         this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));

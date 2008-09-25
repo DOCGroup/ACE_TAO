@@ -84,10 +84,6 @@ public:
                            TAO_Service_Context &service_context,
                            CORBA::Boolean restart);
 
-  void add_rt_service_context_hook (TAO_Service_Context &service_context,
-                                    CORBA::Policy *model_policy,
-                                    CORBA::Short &client_priority);
-
   void get_selector_hook (CORBA::Policy *model_policy,
                           CORBA::Boolean
                           &is_client_propagated,
@@ -111,13 +107,17 @@ public:
 
   int get_thread_CORBA_and_native_priority (CORBA::Short &, CORBA::Short &);
 
+  int get_thread_implicit_CORBA_priority (CORBA::Short&);
+
   int set_thread_CORBA_priority (CORBA::Short);
 
-  int set_thread_native_priority (CORBA::Short);
+  int restore_thread_CORBA_and_native_priority (CORBA::Short,
+                                                CORBA::Short);
 
   //@}
 
 protected:
+  int set_thread_native_priority (CORBA::Short);
 
   RTCORBA::ProtocolProperties_ptr server_protocol_properties (IOP::ProfileId protocol_tag,
                                                               CORBA::Policy_ptr policy

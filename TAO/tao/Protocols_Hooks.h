@@ -156,11 +156,6 @@ public:
                                    TAO_Service_Context &service_context,
                                    CORBA::Boolean restart) = 0;
 
-  virtual void add_rt_service_context_hook (
-    TAO_Service_Context &service_context,
-    CORBA::Policy *model_policy,
-    CORBA::Short &client_priority) = 0;
-
   virtual void get_selector_hook (CORBA::Policy *model_policy,
                                   CORBA::Boolean &is_client_propagated,
                                   CORBA::Short &server_priority) = 0;
@@ -186,9 +181,12 @@ public:
     CORBA::Short &,
     CORBA::Short &) = 0;
 
+  virtual int get_thread_implicit_CORBA_priority (CORBA::Short&) = 0;
+
   virtual int set_thread_CORBA_priority (CORBA::Short) = 0;
 
-  virtual int set_thread_native_priority (CORBA::Short) = 0;
+  virtual int restore_thread_CORBA_and_native_priority (CORBA::Short,
+                                                        CORBA::Short) = 0;
   //@}
 };
 

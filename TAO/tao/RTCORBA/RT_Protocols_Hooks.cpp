@@ -15,6 +15,7 @@
 #include "tao/Protocol_Factory.h"
 #include "tao/Transport_Acceptor.h"
 #include "tao/Transport_Connector.h"
+#include "tao/TSS_Resources.h"
 #include "tao/Policy_Set.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
@@ -480,52 +481,49 @@ TAO_RT_Protocols_Hooks::rt_service_context (
 
       if (!CORBA::is_nil (priority_model_policy.in ()))
         {
-          CORBA::Short client_priority;
+          RTCORBA::PriorityModelPolicy_var model_policy_ptr =
+            RTCORBA::PriorityModelPolicy::_narrow (priority_model_policy.in ());
 
-          int const status =
-            this->get_thread_CORBA_priority (client_priority);
+          TAO_PriorityModelPolicy *priority_model =
+            static_cast<TAO_PriorityModelPolicy *> (model_policy_ptr.in ());
 
-          if (status == -1)
-            throw ::CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO);
+          if (priority_model->get_priority_model () == RTCORBA::CLIENT_PROPAGATED)
+            {
+              CORBA::Short client_priority = -1;
+              // Get client thread priority from 'Current' or if not set by implying one
+              // from the native thread priority via the mapping.
+              if (this->get_thread_CORBA_priority (client_priority) != -1 ||
+                  this->get_thread_implicit_CORBA_priority (client_priority) != -1)
+                {
+                  // OK
+                }
+              else
+                {
+                  if (TAO_debug_level > 0)
+                    ACE_DEBUG ((LM_DEBUG, "ERROR: TAO_RT_Protocols_Hooks::rt_service_context. "
+                                "Unable to access RT CORBA Priority in client thread "
+                                "accessing object with CLIENT_PROPAGATED priority model.\n"));
+                  throw CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
 
-          this->add_rt_service_context_hook (service_context,
-                                             priority_model_policy.in (),
-                                             client_priority);
+                }
+
+              // Encapsulate the priority of the current thread into
+              // a service context.
+              TAO_OutputCDR cdr;
+              if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
+                  || (cdr << client_priority) == 0)
+                {
+                  throw (CORBA::MARSHAL ());
+                }
+
+              service_context.set_context (IOP::RTCorbaPriority, cdr);
+            }
         }
       else
         {
           // The Object does not contain PriorityModel policy in its IOR.
           // We must be talking to a non-RT ORB.  Do nothing.
         }
-    }
-}
-
-void
-TAO_RT_Protocols_Hooks::add_rt_service_context_hook (
-    TAO_Service_Context &service_context,
-    CORBA::Policy *model_policy,
-    CORBA::Short &client_priority
-
-  )
-{
-  RTCORBA::PriorityModelPolicy_var model_policy_ptr =
-    RTCORBA::PriorityModelPolicy::_narrow (model_policy);
-
-  TAO_PriorityModelPolicy *priority_model =
-    static_cast<TAO_PriorityModelPolicy *> (model_policy_ptr.in ());
-
-  if (priority_model->get_priority_model () == RTCORBA::CLIENT_PROPAGATED)
-    {
-      // Encapsulate the priority of the current thread into
-      // a service context.
-      TAO_OutputCDR cdr;
-      if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
-          || (cdr << client_priority) == 0)
-        {
-          throw ::CORBA::MARSHAL ();
-        }
-
-      service_context.set_context ( ::IOP::RTCorbaPriority, cdr);
     }
 }
 
@@ -589,14 +587,9 @@ TAO_RT_Protocols_Hooks::get_selector_bands_policy_hook (
 int
 TAO_RT_Protocols_Hooks::get_thread_CORBA_priority (CORBA::Short &priority)
 {
-  CORBA::Short native_priority = 0;
+  priority = TAO_TSS_Resources::instance ()->rtcorba_current_priority_;
 
-  if (this->get_thread_CORBA_and_native_priority (priority, native_priority) == -1)
-    {
-      return -1;
-    }
-
-  return 0;
+  return (priority == -1 ? -1 : 0);
 }
 
 int
@@ -612,8 +605,8 @@ TAO_RT_Protocols_Hooks::get_thread_native_priority (
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ")
-                  ACE_TEXT ("RT_Protocols_Hooks::get_thread_priority: ")
-                  ACE_TEXT (" ACE_Thread::get_prio\n")));
+                  ACE_TEXT ("RT_Protocols_Hooks::get_thread_native_priority: ")
+                  ACE_TEXT (" ACE_Thread::get_prio failed\n")));
 
       return -1;
     }
@@ -632,19 +625,47 @@ TAO_RT_Protocols_Hooks::get_thread_CORBA_and_native_priority (
       return -1;
     }
 
-  TAO_Priority_Mapping *priority_mapping =
-    this->mapping_manager_.in ()->mapping ();
-
-  if (priority_mapping->to_CORBA (native_priority, priority) == 0)
+  if (this->get_thread_CORBA_priority (priority) == -1)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - ")
-                  ACE_TEXT ("RT_Protocols_Hooks::get_thread_priority: ")
-                  ACE_TEXT ("Priority_Mapping::to_CORBA\n")));
-      return -1;
+      // This thread had an unset CORBA priority - as this method
+      // should only be used to get and restore the state of play before and
+      // after invocations that might be OK for all I know. Or care frankly.
+      priority = -1;
     }
 
   return 0;
+}
+
+int
+TAO_RT_Protocols_Hooks::get_thread_implicit_CORBA_priority (CORBA::Short &priority)
+{
+  TAO_Priority_Mapping *pm =
+    this->mapping_manager_.in ()->mapping ();
+
+  CORBA::Short native_priority = 0;
+  if (this->get_thread_native_priority (native_priority) == 0 &&
+      pm->to_CORBA (native_priority, priority))
+    {
+      return 0;
+    }
+
+  return -1;
+}
+
+int
+TAO_RT_Protocols_Hooks::restore_thread_CORBA_and_native_priority (
+    CORBA::Short priority,
+    CORBA::Short native_priority
+  )
+{
+  // Only used for restoration of values that were previously set /
+  // checked when so no need to re-apply the mapping.
+  int result = this->set_thread_native_priority (native_priority);
+
+  if (result == 0)
+    TAO_TSS_Resources::instance ()->rtcorba_current_priority_ = priority;
+
+  return result;
 }
 
 int
@@ -660,7 +681,8 @@ TAO_RT_Protocols_Hooks::set_thread_CORBA_priority (CORBA::Short priority)
       return -1;
     }
 
-  return this->set_thread_native_priority (native_priority);
+  return this->restore_thread_CORBA_and_native_priority (priority,
+                                                         native_priority);
 }
 
 int
