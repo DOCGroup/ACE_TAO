@@ -11,7 +11,7 @@
 
 ACE_RCSID(MT_Server, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 int do_shutdown = 0;
 int enable_dynamic_scheduling = 0;
