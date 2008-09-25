@@ -23,8 +23,8 @@
 
 ACE_RCSID(Smart_Proxy, client, "$Id$")
 
-const char *ior1 = "file://test1.ior";
-const char *ior2 = "file://test2.ior";
+const ACE_TCHAR *ior1 = ACE_TEXT("file://test1.ior");
+const ACE_TCHAR *ior2 = ACE_TEXT("file://test2.ior");
 int one_shot_factory = 1;
 
 int

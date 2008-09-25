@@ -9,7 +9,7 @@
 
 ACE_RCSID(OctetSeq, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 ACE_RANDR_TYPE seed = 0;
 int verbose = 0;

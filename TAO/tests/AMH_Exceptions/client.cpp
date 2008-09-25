@@ -2,7 +2,7 @@
 
 #include "TestC.h"
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

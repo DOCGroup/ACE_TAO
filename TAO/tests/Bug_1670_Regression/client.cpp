@@ -12,7 +12,7 @@
 
 ACE_RCSID(Bug_1670_Regression, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

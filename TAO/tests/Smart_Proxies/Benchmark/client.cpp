@@ -31,7 +31,7 @@ ACE_RCSID (Benchmark,
            client,
            "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 int register_smart_proxy = 1;
 

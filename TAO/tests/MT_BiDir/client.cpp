@@ -9,7 +9,7 @@
 
 ACE_RCSID(BiDirectional, client, "client.cpp,v 1.6 2001/03/30 20:11:05 bala Exp")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

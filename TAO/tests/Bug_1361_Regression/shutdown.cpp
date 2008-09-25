@@ -16,7 +16,7 @@ ACE_RCSID(Bug_1361_Regression, shutdown, "$Id$")
 ACE_Time_Value dum = ACE_Time_Value::zero;
 #endif
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[]);

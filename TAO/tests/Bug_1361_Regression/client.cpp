@@ -11,7 +11,7 @@
 
 ACE_RCSID(Bug_1270_Regression, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int serverthreads = 4;
 
 int

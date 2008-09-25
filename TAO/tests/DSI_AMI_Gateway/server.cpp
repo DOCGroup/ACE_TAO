@@ -6,7 +6,7 @@
 
 ACE_RCSID(DSI_Gateway, server, "$Id$")
 
-const char *ior_output_file = "server.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
 
 int nthreads = 4;
 

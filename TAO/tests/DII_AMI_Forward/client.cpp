@@ -15,7 +15,7 @@
 #include "tao/PortableServer/POAC.h"
 #include "tao/PortableServer/POAManagerC.h"
 
-const char *ior = "file://server.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
 
 int do_shutdown = 0;
 

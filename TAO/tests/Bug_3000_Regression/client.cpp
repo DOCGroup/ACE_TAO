@@ -8,7 +8,7 @@
 
 ACE_RCSID(Crashed_Callback, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 bool shutdown_server = false;
 
 int

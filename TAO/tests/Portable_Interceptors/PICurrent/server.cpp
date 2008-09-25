@@ -15,7 +15,7 @@ ACE_RCSID (PICurrent,
            server,
            "$Id$")
 
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 extern PortableInterceptor::SlotId slot_id;
 

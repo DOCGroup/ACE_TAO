@@ -40,7 +40,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       int nthreads = 10;
-      const char *ior_file = "test.ior";
+      const ACE_TCHAR *ior_file = ACE_TEXT("test.ior");
       bool endpoint_found = false;
       for (int i = 0; i < argc; i++)
         {

@@ -9,7 +9,7 @@
 #include "tao/Policy_ManagerC.h"
 #include "tao/Policy_CurrentC.h"
 
-static const char *ior = "file://simple_servant.ior";
+static const ACE_TCHAR *ior = ACE_TEXT("file://simple_servant.ior");
 static int iterations = 1;
 static int corba_priority = RTCORBA::minPriority;
 static int shutdown_server = 0;

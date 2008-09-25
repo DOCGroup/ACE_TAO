@@ -8,7 +8,7 @@
 
 ACE_RCSID(Reliable_Oneways, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int test_sync_with_target    = 0;
 int test_sync_with_server    = 0;
 int test_sync_with_transport = 0;

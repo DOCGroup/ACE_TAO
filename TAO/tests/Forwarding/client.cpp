@@ -6,7 +6,7 @@
 
 ACE_RCSID(Forwarding, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 10;
 int nthreads = 1;
 int do_shutdown = 0;

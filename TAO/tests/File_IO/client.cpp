@@ -25,7 +25,7 @@
 
 ACE_RCSID(Default_Servant, client, "client.cpp,v 1.8 2001/03/26 21:16:52 coryan Exp")
 
-  static const char *iorfile = "ior";
+  static const ACE_TCHAR *iorfile = ACE_TEXT("ior");
 static const char *filename = "big.txt";
 
 static int NUM_THREADS = 4;

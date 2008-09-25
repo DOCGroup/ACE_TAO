@@ -10,7 +10,7 @@ ACE_RCSID(Hello, client, "$Id$")
 
 namespace Test
 {
-  const char *ior = "file://server.ior";
+  const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
 
   ACE_Profile_Timer profile_timer;
   bool blocked = false;

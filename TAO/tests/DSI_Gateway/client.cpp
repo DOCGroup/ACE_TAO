@@ -7,7 +7,7 @@
 
 ACE_RCSID(DSI_Gateway, client, "$Id$")
 
-const char *ior = "file://gateway.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://gateway.ior");
 int niterations = 5;
 int do_shutdown = 0;
 int test_user_exception = 0;

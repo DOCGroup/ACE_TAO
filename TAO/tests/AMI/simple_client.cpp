@@ -23,7 +23,7 @@ ACE_RCSID (AMI,
            simple_client,
            "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 int shutdown_flag = 0;
 int debug = 0;

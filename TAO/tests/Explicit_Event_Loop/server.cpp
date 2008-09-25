@@ -26,7 +26,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_time.h"
 
-const char *ior_output_file = "server.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
 int done = 0;
 
 int

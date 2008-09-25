@@ -8,7 +8,7 @@
 
 ACE_RCSID(Blocking_Sync_None, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int iterations = 1000;
 
 int

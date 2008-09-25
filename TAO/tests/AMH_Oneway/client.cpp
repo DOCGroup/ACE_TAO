@@ -4,7 +4,7 @@
 #include "TestC.h"
 #include "ace/OS_NS_unistd.h"
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int num_calls = 10;
 
 int
