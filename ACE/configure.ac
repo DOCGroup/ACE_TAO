@@ -4075,8 +4075,9 @@ dnl name.
   dnl Can't use ACE_CHECK_LACKS_FUNCS because the macro doesn't match the
   dnl tested function name.
   AC_CHECK_FUNC([pthread_condattr_setpshared],
-    ,
-    [AC_DEFINE([ACE_LACKS_CONDATTR_PSHARED])])
+    [],
+    [AC_DEFINE([ACE_LACKS_CONDATTR_PSHARED], 1, 
+               [Define to 1 if system lacks pthread_condattr_setpshared()])])
 
   dnl ACE_CHECK_LACKS_FUNCS(pthread_attr_setstack)
   dnl Can't use ACE_CHECK_LACKS_FUNCS because the lower-down AC macros build
@@ -4153,12 +4154,13 @@ dnl name.
     ])
 
   AC_CHECK_FUNC([pthread_attr_setscope],
-    ,
+    [],
     [AC_DEFINE([ACE_LACKS_THREAD_PROCESS_SCOPING])])
 
   AC_CHECK_FUNC([pthread_mutexattr_setpshared],
-    ,
-    [AC_DEFINE([ACE_LACKS_MUTEXATTR_PSHARED])])
+    [],
+    [AC_DEFINE([ACE_LACKS_MUTEXATTR_PSHARED], 1,
+               [Define to 1 if system lacks pthread_mutexattr_setpshared().])])
 
 dnl Check for POSIX Threads Draft 4 functions
   AC_CHECK_FUNC([pthread_mutexattr_create],,)
@@ -4328,8 +4330,9 @@ fi dnl test "$ac_cv_type_cpu_set_t" = yes
   AC_CHECK_FUNC([pthread_rwlockattr_init],,)
   AC_CHECK_FUNC([pthread_rwlockattr_destroy],,)
   AC_CHECK_FUNC([pthread_rwlockattr_setpshared],
-    ,
-    [AC_DEFINE([ACE_LACKS_RWLOCKATTR_PSHARED])])
+    [],
+    [AC_DEFINE([ACE_LACKS_RWLOCKATTR_PSHARED], 1,
+               [Define to 1 if system lacks pthread_rwlockattr_setpshared().])])
 
   if test "$ac_cv_type_pthread_rwlock_t" = yes &&
      test "$ac_cv_type_pthread_rwlockattr_t" = yes &&

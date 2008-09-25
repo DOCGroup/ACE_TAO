@@ -7,6 +7,13 @@ dnl       ACE M4 include file which contains preprocessor constants
 dnl       and other items to be place in the generated ace/config.h
 dnl       header.
 dnl
+dnl       Please try to avoid adding new autoheader templates to this
+dnl       file, as they get included in both ACE and TAO config.h.in
+dnl       files, even though the cooresponding feature tests are only
+dnl       included in the ACE configure script.  Put the autoheader
+dnl       template in a AC_DEFUN used for the feature test, or use the
+dnl       AC_DEFINE macro's third argument.
+dnl
 dnl -------------------------------------------------------------------------
 
 dnl  Copyright (C) 2002, 2003  Ossama Othman
@@ -334,14 +341,6 @@ AH_TEMPLATE([ACE_HAS_GPERF],
 
 AH_TEMPLATE([ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT],
 [Optimize ACE_Handle_Set::count_bits for select() operations (common case)])
-
-AH_TEMPLATE([ACE_HAS_LSEEK64],
-[Platform supports lseek64().  This should not be defined if
-   ACE_HAS_LLSEEK is defined.])
-
-AH_TEMPLATE([ACE_HAS_LLSEEK],
-[Platform supports llseek(). This should not be defined if
-   ACE_HAS_LSEEK64 is defined.])
 
 AH_TEMPLATE([ACE_HAS_INLINED_OSCALLS],[
 Inline all the static class OS methods to remove call overhead
@@ -707,10 +706,6 @@ AH_TEMPLATE([ACE_LACKS_COND_TIMEDWAIT_RESET],
 [pthread_cond_timedwait does *not* reset the time argument when
    the lock is acquired.])
 
-AH_TEMPLATE([ACE_LACKS_CONDATTR_PSHARED],
-[Platform has no implementation of pthread_condattr_setpshared(), even
-   though it supports pthreads!])
-
 AH_TEMPLATE([ACE_LACKS_CONST_STRBUF_PTR],
 [Platform uses struct strbuf * rather than const struct strbuf *
    (e.g., HP/UX 10.x)])
@@ -746,9 +741,6 @@ AH_TEMPLATE([ACE_LACKS_MODE_MASKS],
 AH_TEMPLATE([ACE_LACKS_MSG_ACCRIGHTS],
 [Platform defines ACE_HAS_MSG, but lacks msg_accrights{len}.])
 
-AH_TEMPLATE([ACE_LACKS_MUTEXATTR_PSHARED],
-[Platform lacks pthread_mutexattr_setpshared().])
-
 AH_TEMPLATE([ACE_LACKS_NULL_PTHREAD_STATUS],
 [OS requires non-null status pointer for pthread_join ()])
 
@@ -764,9 +756,6 @@ AH_TEMPLATE([ACE_LACKS_STRPTIME],
 AH_TEMPLATE([ACE_LACKS_RLIMIT],
 [Platform/compiler lacks {get,set}rlimit() function (e.g., VxWorks,
    Chorus, and SCO UNIX)])
-
-AH_TEMPLATE([ACE_LACKS_RWLOCKATTR_PSHARED],
-[Platform lacks pthread_rwlockattr_setpshared().])
 
 AH_TEMPLATE([ACE_LACKS_PLACEMENT_OPERATOR_DELETE],
 [Compiler doesn't support placement operator delete(void *, void *).])
@@ -822,14 +811,6 @@ AH_TEMPLATE([ACE_LACKS_TIMESPEC_T],
 
 AH_TEMPLATE([ACE_LACKS_STRTOK_R_PROTOTYPE],
 [Platform/compiler lacks the strtok_r() prototype])
-
-AH_TEMPLATE([ACE_LACKS_LSEEK64_PROTOTYPE],
-[Platform/compiler lacks the lseek64() prototype.  This should not
-   be defined if ACE_LACKS_LLSEEK_PROTOTYPE is defined.])
-
-AH_TEMPLATE([ACE_LACKS_LLSEEK_PROTOTYPE],
-[Platform/compiler lacks the llseek() prototype.  This should not
-   be defined if ACE_LACKS_LSEEK64_PROTOTYPE is defined.])
 
 AH_TEMPLATE([ACE_LACKS_PREAD_PROTOTYPE],
 [Platform/compiler lacks the pread() and pwrite() prototypes])
