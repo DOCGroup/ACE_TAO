@@ -1,8 +1,11 @@
+// $Id:$
+
 #include "MessengerC.h"
-#include <orbsvcs/CosNamingC.h> 
+#include "orbsvcs/CosNamingC.h"
 #include <iostream>
 
-int main(int argc, char * argv[])
+int 
+ACE_TMAIN(int argc, ACE_TCHAR * argv[])
 {
   try
   {
