@@ -72,7 +72,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   result = -1;
                 }
               }
-          i = i + 1;
+          i = i + 1; // There's a reason to not use unary increment
         }
       while (i != RTCORBA::minPriority);
 
@@ -106,7 +106,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       try
         {
           current->the_priority (-1);
-          ACE_DEBUG ((LM_DEBUG, "ERROR: Unexpectedly was able to set an thread CORBA priority\n"));
+          ACE_DEBUG ((LM_DEBUG, "ERROR: Unexpectedly was able to set a thread CORBA priority\n"));
           result = -1;
         }
       catch (const CORBA::BAD_PARAM &)
@@ -123,10 +123,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG, "ERROR: Wildly unexpected exception setting an invalid CORBA priority\n"));
           result = -1;
         }
-
-
-      return result;
-
     }
   catch (const CORBA::Exception & ex)
     {
@@ -136,8 +132,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (...)
     {
       ACE_DEBUG ((LM_DEBUG, "ERROR: Unknown exception\n"));
-      return -1;
+      result = -1;
     }
 
-  return 0;
+  return result;
 }
