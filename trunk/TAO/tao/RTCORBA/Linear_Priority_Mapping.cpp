@@ -114,7 +114,7 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
   int delta = total - 1;
   if (delta != 0)
     {
-      int numerator = ((RTCORBA::maxPriority - RTCORBA::minPriority)
+      int numerator = (RTCORBA::maxPriority - RTCORBA::minPriority)
                             * (native_priority_index - 1);
 
       div_t corba_offset = div (numerator, delta);
