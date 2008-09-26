@@ -1,3 +1,9 @@
+Fri Sep 26 09:25:50 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * tao/RTCORBA/Linear_Priority_Mapping.cpp:
+
+          Fix windows compilation error.
+
 Thu Sep 25 20:55:39 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/AMI/FL_Callback/peer.cpp
