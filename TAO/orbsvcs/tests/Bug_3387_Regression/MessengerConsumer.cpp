@@ -1,11 +1,12 @@
-#include <orbsvcs/CosNotifyChannelAdminC.h>
-#include <orbsvcs/CosNotifyCommC.h>
-#include <orbsvcs/CosNamingC.h>
+// $Id:$
+#include "orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/CosNamingC.h"
 
 #include "StructuredEventConsumer_i.h"
 #include <iostream>
 
-#include <tao/ORB_Core.h>
+#include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 
 static CORBA::ORB_ptr orb;
@@ -38,7 +39,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 
 int 
-main(int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -48,10 +49,10 @@ main(int argc, char *argv[])
         return 1;
 
       CORBA::Object_var naming_obj =
-	orb->resolve_initial_references ("NameService");
+        orb->resolve_initial_references ("NameService");
      
       CosNaming::NamingContext_var naming_context =
-	CosNaming::NamingContext::_narrow(naming_obj.in());
+        CosNaming::NamingContext::_narrow(naming_obj.in());
      
       CosNaming::Name name;
       name.length (1);
@@ -59,21 +60,21 @@ main(int argc, char *argv[])
       CORBA::Object_var ecObj = naming_context->resolve(name);
            
       CosNotifyChannelAdmin::EventChannel_var ec = 
-	CosNotifyChannelAdmin::EventChannel::_narrow(ecObj.in());
+        CosNotifyChannelAdmin::EventChannel::_narrow(ecObj.in());
      
       CosNotifyChannelAdmin::AdminID adminid;
       CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
-	CosNotifyChannelAdmin::OR_OP;
+        CosNotifyChannelAdmin::OR_OP;
       
       CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin = 
-	ec->new_for_consumers(ifgop, 
-			      adminid);
+        ec->new_for_consumers(ifgop, 
+                              adminid);
       
       CORBA::Object_var poa_object =
-	orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references("RootPOA");
                   
       PortableServer::POA_var poa = 
-	PortableServer::POA::_narrow (poa_object.in());
+        PortableServer::POA::_narrow (poa_object.in());
       
       StructuredEventConsumer_i  servant (orb);
 
@@ -87,12 +88,12 @@ main(int argc, char *argv[])
       CosNotifyChannelAdmin::ProxyID consumeradmin_proxy_id; 
       
       CosNotifyChannelAdmin::ProxySupplier_var proxy_supplier =
-	consumer_admin->obtain_notification_push_supplier(
-				  CosNotifyChannelAdmin::STRUCTURED_EVENT,
-				  consumeradmin_proxy_id);
+        consumer_admin->obtain_notification_push_supplier(
+                                  CosNotifyChannelAdmin::STRUCTURED_EVENT,
+                                  consumeradmin_proxy_id);
       
       supplier_proxy = CosNotifyChannelAdmin::StructuredProxyPushSupplier::
-	_narrow(proxy_supplier.in());
+        _narrow(proxy_supplier.in());
       
       supplier_proxy->connect_structured_push_consumer(consumer.in());
            
@@ -135,7 +136,7 @@ main(int argc, char *argv[])
   }
   catch(const CORBA::Exception& ex)
     {
-	  std::cerr << "Caught exception: " << ex << std::endl;
+          std::cerr << "Caught exception: " << ex << std::endl;
       return 1;
     }
 

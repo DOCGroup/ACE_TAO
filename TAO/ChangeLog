@@ -1,3 +1,25 @@
+Fri Sep 26 11:54:14 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+
+        * orbsvcs/tests/Bug_3387_Regression/Messenger.idl:
+        * orbsvcs/tests/Bug_3387_Regression/Messenger.mpc:
+        * orbsvcs/tests/Bug_3387_Regression/MessengerClient.cpp:
+        * orbsvcs/tests/Bug_3387_Regression/MessengerConsumer.cpp:
+        * orbsvcs/tests/Bug_3387_Regression/MessengerServer.cpp:
+        * orbsvcs/tests/Bug_3387_Regression/Messenger_i.h:
+        * orbsvcs/tests/Bug_3387_Regression/Messenger_i.cpp:
+        * orbsvcs/tests/Bug_3387_Regression/StructuredEventConsumer_i.h:
+        * orbsvcs/tests/Bug_3387_Regression/StructuredEventConsumer_i.cpp:
+        * orbsvcs/tests/Bug_3387_Regression/StructuredEventSupplier_i.h:
+        * orbsvcs/tests/Bug_3387_Regression/StructuredEventSupplier_i.cpp:
+        * orbsvcs/tests/Bug_3387_Regression/run_test.pl:
+
+        * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/test.idl:
+
+          Fuzz fixes
+        
 Fri Sep 26 11:07:48 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * tao/RTCORBA/RT_Current.cpp:

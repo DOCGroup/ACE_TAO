@@ -1,7 +1,10 @@
+// -*- C++ -*-
+// $Id$
+
 #ifndef MESSENGER_H_
 #define MESSENGER_H_
 
-#include <orbsvcs/CosNotifyChannelAdminC.h>
+#include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "MessengerS.h"
 
 class  Messenger_i : public POA_Messenger
@@ -13,8 +16,7 @@ class  Messenger_i : public POA_Messenger
 
   CORBA::Boolean send_message (const char * user_name,
                                const char * subject,
-                               char *& message)
-    throw (CORBA::SystemException);
+                               char *& message);
 
  private:
   CORBA::ORB_var orb_;

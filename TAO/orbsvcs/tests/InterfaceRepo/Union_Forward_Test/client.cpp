@@ -2,11 +2,11 @@
 
 // $Id$
 
-#include <tao/IFR_Client/IFR_BasicC.h>
-#include <tao/ORB_Core.h>
+#include "tao/IFR_Client/IFR_BasicC.h"
+#include "tao/ORB_Core.h"
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   //init IFR objref
 
