@@ -513,7 +513,7 @@ TAO_RT_Protocols_Hooks::rt_service_context (
               if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
                   || (cdr << client_priority) == 0)
                 {
-                  throw (CORBA::MARSHAL ());
+                  throw CORBA::MARSHAL ();
                 }
 
               service_context.set_context (IOP::RTCorbaPriority, cdr);
