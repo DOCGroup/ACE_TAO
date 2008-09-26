@@ -6,7 +6,7 @@
 #include "ace/Get_Opt.h"
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
 
@@ -22,7 +22,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTCurrent");

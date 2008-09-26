@@ -68,13 +68,13 @@ TAO_RT_Current::the_priority (RTCORBA::Priority the_priority)
       // shall raise a DATA_CONVERSION system exception" i.e different exception.
 
       if (the_priority < 0) // short
-        throw (CORBA::BAD_PARAM (
+        throw CORBA::BAD_PARAM (
                   CORBA::SystemException::_tao_minor_code (
                   0,
                   EINVAL),
-                  CORBA::COMPLETED_NO));
+                  CORBA::COMPLETED_NO);
 
-      throw (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO));
+      throw CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
 }
 
