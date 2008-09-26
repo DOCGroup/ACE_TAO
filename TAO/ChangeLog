@@ -1,3 +1,13 @@
+Fri Sep 26 11:07:48 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * tao/RTCORBA/RT_Current.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tests/RTCORBA/Bug_3382_Regression/client.cpp:
+        * tests/RTCORBA/Bug_3382_Regression/server.cpp:
+        * tests/RTCORBA/Bug_3382_Regression/simple_client.cpp:
+
+          Fuzz errors.
+
 Fri Sep 26 09:25:50 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * tao/RTCORBA/Linear_Priority_Mapping.cpp:

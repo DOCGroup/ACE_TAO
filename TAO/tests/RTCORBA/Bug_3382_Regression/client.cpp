@@ -179,7 +179,7 @@ Task::svc (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   try
@@ -198,7 +198,7 @@ main (int argc, char *argv[])
 
       // Initialize and obtain reference to the Test object.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return -1;

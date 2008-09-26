@@ -45,7 +45,7 @@ Test_i::test_method (CORBA::Short priority)
     RTCORBA::Current::_narrow (obj.in ());
 
   if (CORBA::is_nil (obj.in ()))
-    throw (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
 
   CORBA::Short servant_thread_priority =
     current->the_priority ();
@@ -228,7 +228,7 @@ Task::svc (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
 
@@ -238,7 +238,7 @@ main (int argc, char *argv[])
       // parse arguments and get all the references (ORB,
       // RootPOA, RTORB, RTCurrent, POAManager).
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" );
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return -1;
