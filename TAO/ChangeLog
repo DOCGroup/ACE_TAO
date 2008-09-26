@@ -1,3 +1,9 @@
+Fri Sep 26 15:08:45 UTC 2008  Rich Seibel <seibel_r@ociweb.com>
+
+        * orbsvcs/tests/Bug_3387_Regression/MessengerClient.cpp:
+
+          Added include to find sleep. 
+
 Fri Sep 26 11:54:14 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/fe/lex.yy.cpp:
