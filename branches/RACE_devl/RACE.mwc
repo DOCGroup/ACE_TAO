@@ -8,6 +8,7 @@ workspace {
   Conductor
   Controller/Base
   Tester
+  TM_Daemon
   TM_Proxy
   Effectors
 }

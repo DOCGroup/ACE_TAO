@@ -79,7 +79,7 @@ project(TM_Proxy_exec) : ciao_component_dnc, race_common {
           TM_Daemon_stub
 
  includes += $(RACE_ROOT)/utils \
-             $(CIAO_ROOT)/DAnCE/TM_Daemon
+             $(RACE_ROOT)/TM_Daemon
 
   dynamicflags   = TM_PROXY_EXEC_BUILD_DLL
 
