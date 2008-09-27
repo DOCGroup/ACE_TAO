@@ -1,8 +1,13 @@
 project(SA_POP) : xerces, acelib {
 
-   after += SAPOP_XSC SAPOP_XML_Utils
-
    sharedname   = SA_POP
+
+   libout = $(SAPOP_ROOT)/lib
+
+   libpaths += $(SAPOP_ROOT)/lib
+
+   after += SAPOP_XML_Utils
+
 
    includes += $(SAPOP_ROOT) \
                $(SAPOP_ROOT)/Standalone/XML_Utils

@@ -1,6 +1,7 @@
 project(SA_POP_Input_Adapter_stub): ciao_client_dnc, ciao_deployment_stub, race_idl {
 
   sharedname = SA_POP_IA_Component_stub
+
   after += OpString_stub \
            Input_Adapter_Base_stub
 
@@ -27,15 +28,18 @@ project(SA_POP_Input_Adapter_stub): ciao_client_dnc, ciao_deployment_stub, race_
 }
 
 project(SA_POP_Input_Adapter_svnt) : ciao_servant_dnc, race_idl {
-  after      +=  SA_POP_Input_Adapter_stub
+
   sharedname  = SA_POP_IA_Component_svnt
+
+  after      +=  SA_POP_Input_Adapter_stub \
+                 Input_Adapter_Base_svnt
+
   libs       += SA_POP_IA_Component_stub \
                 OpString_stub \
                 Conductor_Component_stub \
                 RACE_common_stub \
                 Input_Adapter_Base_stub \
                 Input_Adapter_Base_svnt
-
 
   idlflags -= -GT
   idlflags += -St -SS \
@@ -61,8 +65,11 @@ project(SA_POP_Input_Adapter_svnt) : ciao_servant_dnc, race_idl {
 }
 
 project(SA_POP_Input_Adapter_exec) : ciao_component_dnc, ciao_config_handlers, race_common {
- after   += SA_POP_Input_Adapter_svnt SA_POP_Component_stub RACE_utils
+
  sharedname = SA_POP_IA_Component_exec
+
+ after   += SA_POP_Input_Adapter_svnt SA_POP_Component_stub RACE_utils
+
  libs += SA_POP_IA_Component_stub \
          SA_POP_IA_Component_svnt \
          OpString_stub \
@@ -71,7 +78,6 @@ project(SA_POP_Input_Adapter_exec) : ciao_component_dnc, ciao_config_handlers, r
          RACE_utils \
          Input_Adapter_Base_stub \
          Input_Adapter_Base_svnt
-
 
  includes += $(RACE_ROOT)/utils
 

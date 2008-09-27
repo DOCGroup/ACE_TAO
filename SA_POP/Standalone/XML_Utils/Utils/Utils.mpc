@@ -1,10 +1,16 @@
 // $Id$
 
-project (SAPOP_XML_Utils) : acelib, ace_output, xerces {
+project (SAPOP_XML_Utils) : acelib, xerces {
+
+  sharedname   += SAPOP_XML_Utils
+
+  libout = $(SAPOP_ROOT)/lib
+
   includes += $(SAPOP_ROOT)/Standalone/XML_Utils \
               $(ACE_ROOT)
-  sharedname   += SAPOP_XML_Utils
+
   dynamicflags  = CIAO_XML_UTILS_BUILD_DLL
+
   macros       += XML_USE_PTHREADS
 
   Source_Files {
