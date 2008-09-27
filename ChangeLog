@@ -1,3 +1,20 @@
+Sat Sep 27 18:55:14 UTC 2008  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP/Component/Planning_exec.cpp:
+
+          Updated UUID generation code with changed function name in ace/UUID.h
+
+        * RACE.mwc:
+        * RACE_SAPOP.mwc:
+        * TM_Daemon:
+        * TM_Daemon/TM_Daemon.idl:
+        * TM_Daemon/TM_Daemon.mpc:
+        * TM_Daemon/TM_Daemon_stub_export.h:
+        * TM_Daemon/TM_Daemon_svnt_export.h:
+        * TM_Proxy/TM_Proxy.mpc:
+
+          Updated RACE to include TM_Daemon (TEMPORARY until TM_Daemon is included in DAnCE)
+
 Thu Sep 18 18:12:57 UTC 2008  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * Allocator/Base/Allocator_Base.idl:

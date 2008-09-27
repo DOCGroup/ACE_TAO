@@ -1,0 +1,19 @@
+project(TM_Daemon_stub): ciao_deployment_stub {
+  sharedname = TM_Daemon_stub
+  dynamicflags = TM_DAEMON_STUB_BUILD_DLL
+
+  idlflags -= -GT
+  idlflags += -St \
+              -Wb,stub_export_macro=TM_DAEMON_STUB_Export \
+              -Wb,stub_export_include=TM_Daemon_stub_export.h \
+              -Wb,skel_export_macro=TM_DAEMON_SVNT_Export \
+              -Wb,skel_export_include=TM_Daemon_svnt_export.h
+
+  IDL_Files {
+    TM_Daemon.idl
+  }
+
+  Source_Files {
+    TM_DaemonC.cpp
+  }
+}

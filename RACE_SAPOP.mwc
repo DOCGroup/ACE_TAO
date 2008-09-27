@@ -3,6 +3,7 @@ workspace {
   common
   utils
   Controller/Base
+  TM_Daemon
   TM_Proxy
   Effectors/Base
   Conductor

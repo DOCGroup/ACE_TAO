@@ -105,7 +105,7 @@ namespace CIAO
           // (Get ID from Goal or Plan)
           // Create and set the opstring_idl ID.
           ACE_Utils::UUID uuid;
-          ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (uuid);
+          ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
           opstring_idl.ID = CORBA::string_dup (uuid.to_string()->c_str ());
 //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
 
@@ -150,7 +150,7 @@ namespace CIAO
             // (Get instance ID from instance in opstring)
             // Create and set task instance ID.
             ACE_Utils::UUID inst_uuid;
-            ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (inst_uuid);
+            ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (inst_uuid);
             inst_desc.ID = CORBA::string_dup (inst_uuid.to_string()->c_str());
 //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
 
