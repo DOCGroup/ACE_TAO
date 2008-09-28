@@ -26,7 +26,7 @@ my $status= 0;
 
 my  $doxy_path = '/usr/local/bin';
 
-my $doxy_version = '1.5.5';
+my $doxy_version = '1.5.6';
 
 &can_run($doxy_path.'/doxygen --version | grep '.$doxy_version.' >/dev/null') ||
   die "$0: doxygen path or version incorrect, please fix the script\n";
