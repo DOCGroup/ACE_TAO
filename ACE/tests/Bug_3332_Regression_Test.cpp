@@ -6,7 +6,7 @@
 //    tests
 //
 // = FILENAME
-//    RB_3332_Regression_Test.cpp
+//    Bug_3332_Regression_Test.cpp
 //
 // = DESCRIPTION
 //    This is a test to verify the node unbind/remove stability.

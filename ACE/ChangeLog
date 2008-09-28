@@ -1,3 +1,15 @@
+Sun Sep 28 18:16:53 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3432_Regression_Test.cpp:
+        * tests/OS_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Moved strptime test to its own file because ACE_OS::strptime() seems to
+          behave differently on HPUX and no time to sort that out at this moment
+
+        * tests/Pipe_Test.cpp:
+          Renamed a few methods so that we don't have to disable the ACE_OS check
+
 Sun Sep 28 10:28:53 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_rel_manpages:
