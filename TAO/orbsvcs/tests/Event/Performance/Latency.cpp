@@ -17,7 +17,7 @@ ACE_RCSID(EC_Tests_Performance, Latency, "$Id$")
 
 int iterations = 1000;
 int do_dump_history = 0;
-const char *ec_ior = "file://ec.ior";
+const ACE_TCHAR ec_ior = ACE_TEXT("file://ec.ior");
 
 /// Parse the arguments.
 static int parse_args (int argc, ACE_TCHAR *argv[]);
