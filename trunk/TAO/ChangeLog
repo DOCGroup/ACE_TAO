@@ -1,3 +1,10 @@
+Sun Sep 28 18:51:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/LoadBalancer/LoadManager.cpp
+        * orbsvcs/tests/Bug_2615_Regression/server.cpp
+        * orbsvcs/tests/Event/Performance/Latency.cpp
+          ACE_TCHAR changes
+
 Sun Sep 28 18:48:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI_Buffering/client.cpp

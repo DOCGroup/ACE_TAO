@@ -20,7 +20,7 @@ ACE_RCSID (LoadBalancer,
            "$Id$")
 
 
-static const char * lm_ior_file = "lm.ior";
+static const ACE_TCHAR  lm_ior_file = ACE_TEXT("lm.ior");
 
 void
 usage (const ACE_TCHAR * cmd)
