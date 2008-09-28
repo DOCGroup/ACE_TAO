@@ -11,7 +11,7 @@
 
 ACE_RCSID(AMI_Latency, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 ACE_hrtime_t throughput_base;
 

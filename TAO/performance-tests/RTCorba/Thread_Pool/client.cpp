@@ -26,7 +26,7 @@ enum Priority_Setting
   AFTER_THREAD_CREATION = 1
 };
 
-static const char *ior = "file://ior";
+static const ACE_TCHAR *ior = ACE_TEXT("file://ior");
 static const char *rates_file = "rates";
 static const char *invocation_priorities_file = "empty-file";
 static int shutdown_server = 0;

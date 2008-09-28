@@ -20,7 +20,7 @@ ACE_RCSID (DII,
            client,
            "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 100;
 int do_dump_history = 0;
 int do_shutdown = 1;

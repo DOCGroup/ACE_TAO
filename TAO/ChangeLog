@@ -1,3 +1,57 @@
+Sun Sep 28 11:31:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Callback/client.cpp
+        * performance-tests/Callback/server.cpp
+        * performance-tests/Latency/AMH_Single_Threaded/client.cpp
+        * performance-tests/Latency/AMH_Single_Threaded/server.cpp
+        * performance-tests/Latency/AMI/client.cpp
+        * performance-tests/Latency/AMI/server.cpp
+        * performance-tests/Latency/Deferred/client.cpp
+        * performance-tests/Latency/Deferred/server.cpp
+        * performance-tests/Latency/DII/client.cpp
+        * performance-tests/Latency/DII/server.cpp
+        * performance-tests/Latency/DSI/client.cpp
+        * performance-tests/Latency/DSI/server.cpp
+        * performance-tests/Latency/Single_Threaded/client.cpp
+        * performance-tests/Latency/Single_Threaded/server.cpp
+        * performance-tests/Latency/Thread_Per_Connection/client.cpp
+        * performance-tests/Latency/Thread_Per_Connection/server.cpp
+        * performance-tests/Latency/Thread_Pool/client.cpp
+        * performance-tests/Latency/Thread_Pool/server.cpp
+        * performance-tests/Memory/IORsize/client.cpp
+        * performance-tests/Memory/IORsize/server.cpp
+        * performance-tests/Memory/Single_Threaded/client.cpp
+        * performance-tests/Memory/Single_Threaded/server.cpp
+        * performance-tests/POA/Implicit_Activation/client.cpp
+        * performance-tests/POA/Implicit_Activation/server.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.cpp
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp
+        * performance-tests/RTCorba/Oneways/Reliable/server.cpp
+        * performance-tests/RTCorba/Thread_Pool/client.cpp
+        * performance-tests/RTCorba/Thread_Pool/server.cpp
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/client.cpp
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/server.cpp
+        * performance-tests/Sequence_Latency/AMI/client.cpp
+        * performance-tests/Sequence_Latency/AMI/server.cpp
+        * performance-tests/Sequence_Latency/Deferred/client.cpp
+        * performance-tests/Sequence_Latency/Deferred/server.cpp
+        * performance-tests/Sequence_Latency/DII/client.cpp
+        * performance-tests/Sequence_Latency/DII/server.cpp
+        * performance-tests/Sequence_Latency/DSI/client.cpp
+        * performance-tests/Sequence_Latency/DSI/server.cpp
+        * performance-tests/Sequence_Latency/Single_Threaded/client.cpp
+        * performance-tests/Sequence_Latency/Single_Threaded/server.cpp
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/client.cpp
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/server.cpp
+        * performance-tests/Sequence_Latency/Thread_Pool/client.cpp
+        * performance-tests/Sequence_Latency/Thread_Pool/server.cpp
+        * performance-tests/Throughput/client.cpp
+        * performance-tests/Throughput/server.cpp
+          ACE_TCHAR changes
+
 Sun Sep 28 11:29:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/File_IO/client.cpp

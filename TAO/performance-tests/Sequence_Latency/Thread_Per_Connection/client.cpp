@@ -12,7 +12,7 @@
 
 ACE_RCSID(Thread_Per_Connection_Latency, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 1000;
 int do_shutdown = 1;
 int sz = 512;
