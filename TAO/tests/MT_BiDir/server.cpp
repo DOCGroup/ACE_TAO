@@ -16,7 +16,7 @@ ACE_RCSID (MT_BirDir,
            "$Id$")
 
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 static int no_iterations = 10;
 static int no_clients = 2;
 
