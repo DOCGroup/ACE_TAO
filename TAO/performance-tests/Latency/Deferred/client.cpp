@@ -22,7 +22,7 @@ ACE_RCSID (Deferred_Latency,
            client,
            "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 1000;
 int burst = 10;
 int do_shutdown = 1;

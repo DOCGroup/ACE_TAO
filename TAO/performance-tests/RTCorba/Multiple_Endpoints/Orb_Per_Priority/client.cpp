@@ -65,7 +65,7 @@ private:
 
 // ****************************************************************
 
-const char *ior_base = "file://test.ior";
+const ACE_TCHAR *ior_base = ACE_TEXT("file://test.ior");
 int nthreads = 0;
 int niterations = 1000;
 int period = -1;

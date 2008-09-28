@@ -53,7 +53,7 @@ inline int QuantifyStopRecordingData ()
 #endif /* USING_QUANTIFY */
 
 // Default IOR.
-static const char *ior = "file://test.ior";
+static const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 // Levels at which syncscope policy can be set.
 enum LEVEL {ORB_LEVEL, THREAD_LEVEL, OBJECT_LEVEL};

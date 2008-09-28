@@ -68,7 +68,7 @@ test_i::shutdown (void)
   this->orb_->shutdown (0);
 }
 
-static const char *ior_output_file = "ior";
+static const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 static CORBA::ULong static_threads = 1;
 static CORBA::ULong dynamic_threads = 0;
 static CORBA::ULong number_of_lanes = 0;
