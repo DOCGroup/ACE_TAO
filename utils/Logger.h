@@ -11,6 +11,8 @@
 #ifndef RACE_LOGGER_H
 #define RACE_LOGGER_H
 
+#include "ace/OS_NS_stdio.h"
+
 #include <string>
 #include "Logger_export.h"
 

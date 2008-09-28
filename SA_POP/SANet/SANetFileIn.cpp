@@ -53,7 +53,7 @@ Network *SANetFileIn::build_net (std::string filename)
   if (!dom)
     return 0;
 
-  SANet::XML::Network xml_net = SANet::XML::network (dom);
+  SANet::XML::Network xml_net = SANet::XML::reader::network (dom);
 
   SANet::Network *net = new SANet::Network ();
 
@@ -61,7 +61,8 @@ Network *SANetFileIn::build_net (std::string filename)
   for (SANet::XML::Network::taskNode_iterator iter = xml_net.begin_taskNode ();
     iter != xml_net.end_taskNode (); iter++)
   {
-    TaskID nodeID = (*iter).nodeID ();
+    ::SANet::XML::TaskNode node (*iter);
+    TaskID nodeID = node.nodeID ();
     Probability priorProb = (*iter).priorProb ();
     MultFactor attenFactor = (*iter).attenFactor ();
     TaskCost cost = (*iter).cost ();
@@ -163,7 +164,7 @@ void SANetFileIn::build_net (std::string filename, SA_POP::Builder *builder)
   if (!dom)
     return;
 
-  SANet::XML::Network xml_net = SANet::XML::network (dom);
+  SANet::XML::Network xml_net = SANet::XML::reader::network (dom);
 
   // Get task nodes.
   for (SANet::XML::Network::taskNode_iterator iter = xml_net.begin_taskNode ();

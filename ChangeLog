@@ -1,3 +1,17 @@
+Sun Sep 28 21:14:16 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * SA_POP/SANet/SANetFileIn.cpp:
+        * SA_POP/SANet/XML_SANet.cpp:
+        * SA_POP/SANet/XML_SANet.hpp:
+        * SA_POP/TaskMapFileIn.cpp:
+        * SA_POP/XML_TaskMap.hpp:
+        * SA_POP/XML_TaskMap.cpp:
+
+	  Updated to latest XSC genrated code to solve borland compilation errors.
+        * utils/Logger.h:
+
+	  Borland compilation errors. 
+	
 Sat Sep 27 18:55:14 UTC 2008  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * SA_POP/Component/Planning_exec.cpp:
