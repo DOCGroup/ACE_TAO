@@ -1,3 +1,14 @@
+Sun Sep 28 12:35:32 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Time/TAO_UTO.h:
+        * orbsvcs/orbsvcs/Time/TAO_TIO.h:
+        * orbsvcs/orbsvcs/Time/Timer_Helper.h:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.h:
+
+          Fixed export macros.  Thanks to Johnny to bringing this to
+          my attention.
+
 Sun Sep 28 11:41:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/nslist/nsadd.cpp

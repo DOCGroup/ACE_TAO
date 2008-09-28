@@ -25,7 +25,7 @@
 
 #include "ace/Event_Handler.h"
 #include "ace/Containers.h"
-#include "orbsvcs/Time/time_export.h"
+#include "orbsvcs/Time/time_serv_export.h"
 
 #include "orbsvcs/TimeServiceS.h"
 
@@ -47,7 +47,7 @@ class TAO_Time_Service_Clerk;
  * globally synchronized time by contacting the various Time
  * Servers.
  */
-class TAO_Time_Export Timer_Helper : public ACE_Event_Handler
+class TAO_Time_Serv_Export Timer_Helper : public ACE_Event_Handler
 {
 public:
   // = Initialization and termination methods.
