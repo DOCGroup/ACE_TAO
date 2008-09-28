@@ -1,3 +1,64 @@
+Sun Sep 28 18:48:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI_Buffering/client.cpp
+        * tests/Any/Recursive/client.cpp
+        * tests/Bug_2084_Regression/Collocated_Test.cpp
+        * tests/Bug_2186_Regression/client.cpp
+        * tests/Bug_2289_Regression/client.cpp
+        * tests/Bug_2289_Regression/server.cpp
+        * tests/Bug_2429_Regression/client.cpp
+        * tests/Bug_2804_Regression/client.cpp
+        * tests/Bug_2844_Regression/client.cpp
+        * tests/Bug_2918_Regression/client.cpp
+        * tests/COIOP/COIOP_Test.cpp
+        * tests/Collocation_Exception_Test/Collocated_Test.cpp
+        * tests/Collocation_Oneway_Tests/Collocated_Test.cpp
+        * tests/Collocation_Tests/Collocated_Test.cpp
+        * tests/CSD_Strategy_Tests/Broken/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/Broken/ClientApp.h
+        * tests/CSD_Strategy_Tests/Broken/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/Broken/ServerApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_1/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_1/ClientApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_1/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_1/ServerApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_2/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_2/ServerApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_4/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_4/ServerApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_Static/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_Static/ClientApp.h
+        * tests/DiffServ/server.cpp
+        * tests/DII_Collocation_Tests/oneway/Collocated_Test.cpp
+        * tests/DII_Collocation_Tests/twoway/Collocated_Test.cpp
+        * tests/Exposed_Policies/Policy_Verifier.cpp
+        * tests/Exposed_Policies/Policy_Verifier.h
+        * tests/Monitor/Marshal_Buffer/client.cpp
+        * tests/OBV/Collocated/Forward/Collocated_Test.cpp
+        * tests/OBV/Supports/client.cpp
+        * tests/OBV/Supports/server.cpp
+        * tests/Oneway_Buffering/client.cpp
+        * tests/Oneway_Timeouts/client.cpp
+        * tests/Param_Test/options.cpp
+        * tests/Param_Test/options.h
+        * tests/POA/EndpointPolicy/server.cpp
+        * tests/POA/Loader/Server_Manager.cpp
+        * tests/POA/Loader/Server_Manager.h
+        * tests/Portable_Interceptors/Collocated/Dynamic/Collocated_Test.cpp
+        * tests/Portable_Interceptors/PICurrent/server.cpp
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Collocated_Test.cpp
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/client_main.cpp
+        * tests/RTCORBA/Diffserv/server.cpp
+          ACE_TCHAR changes
+
 Sun Sep 28 12:35:32 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Time/TAO_UTO.h:

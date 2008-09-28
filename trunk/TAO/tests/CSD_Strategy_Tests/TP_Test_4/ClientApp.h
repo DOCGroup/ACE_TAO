@@ -17,7 +17,7 @@ class ClientApp : public TestAppBase
 
   protected:
 
-    virtual int run_i(int argc, char* argv[]);
+    virtual int run_i(int argc, ACE_TCHAR* argv[]);
 
 
   private:

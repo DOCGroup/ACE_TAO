@@ -25,7 +25,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   bool error = false;
   for(int i = 1; i < argc; i++)
     {
-      if (ACE_OS::strncasecmp(argv[i], "-ORB", 4) != 0)
+      if (ACE_OS::strncasecmp(argv[i], ACE_TEXT("-ORB"), 4) != 0)
         {
           switch (argv[i][1])
             {

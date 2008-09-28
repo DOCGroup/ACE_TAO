@@ -18,8 +18,7 @@ Policy_Verifier::~Policy_Verifier (void)
 }
 
 bool
-Policy_Verifier::init (int argc,
-                       char *argv[])
+Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
 {
   this->orb_ =
     CORBA::ORB_init (argc, argv);

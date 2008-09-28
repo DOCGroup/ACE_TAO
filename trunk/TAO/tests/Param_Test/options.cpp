@@ -84,82 +84,82 @@ Options::parse_args (int argc, ACE_TCHAR **argv)
         break;
 
       case 'i':  // invocation
-        if (!ACE_OS::strcmp (get_opts.opt_arg (), "dii"))
+        if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("dii")))
           this->invoke_type_ = Options::DII;
         break;
 
       case 't': // data type
-        if (!ACE_OS::strcmp (get_opts.opt_arg (), "short"))
+        if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("short")))
           this->test_type_ = Options::TEST_SHORT;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "ulonglong"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ulonglong")))
           this->test_type_ = Options::TEST_ULONGLONG;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "ubstring"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ubstring")))
           this->test_type_ = Options::TEST_UB_STRING;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "ubwstring"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ubwstring")))
           this->test_type_ = Options::TEST_UB_WSTRING;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "bdstring"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("bdstring")))
           this->test_type_ = Options::TEST_BD_STRING;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "bdwstring"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("bdwstring")))
           this->test_type_ = Options::TEST_BD_WSTRING;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "fixed_struct"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("fixed_struct")))
           this->test_type_ = Options::TEST_FIXED_STRUCT;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "ub_strseq"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ub_strseq")))
           this->test_type_ = Options::TEST_UB_STRING_SEQUENCE;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "bd_strseq"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("bd_strseq")))
           this->test_type_ = Options::TEST_BD_STRING_SEQUENCE;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "ub_wstrseq"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ub_wstrseq")))
           this->test_type_ = Options::TEST_UB_WSTRING_SEQUENCE;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "bd_wstrseq"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("bd_wstrseq")))
           this->test_type_ = Options::TEST_BD_WSTRING_SEQUENCE;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "var_struct"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("var_struct")))
           this->test_type_ = Options::TEST_VAR_STRUCT;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "nested_struct"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("nested_struct")))
           this->test_type_ = Options::TEST_NESTED_STRUCT;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "recursive_struct"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("recursive_struct")))
           this->test_type_ = Options::TEST_RECURSIVE_STRUCT;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "objref_struct"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("objref_struct")))
           this->test_type_ = Options::TEST_OBJREF_STRUCT;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "ub_struct_seq"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ub_struct_seq")))
           this->test_type_ = Options::TEST_UB_STRUCT_SEQUENCE;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "bd_struct_seq"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("bd_struct_seq")))
           this->test_type_ = Options::TEST_BD_STRUCT_SEQUENCE;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "ub_array_seq"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ub_array_seq")))
           this->test_type_ = Options::TEST_UB_ARRAY_SEQUENCE;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "bd_array_seq"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("bd_array_seq")))
           this->test_type_ = Options::TEST_BD_ARRAY_SEQUENCE;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "objref"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("objref")))
           this->test_type_ = Options::TEST_OBJREF;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "typecode"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("typecode")))
           this->test_type_ = Options::TEST_TYPECODE;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "any"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("any")))
           this->test_type_ = Options::TEST_ANY;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "objref_sequence"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("objref_sequence")))
           this->test_type_ = Options::TEST_OBJREF_SEQUENCE;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "any_sequence"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("any_sequence")))
           this->test_type_ = Options::TEST_ANYSEQ;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "ub_short_sequence"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ub_short_sequence")))
           this->test_type_ = Options::TEST_UB_SHORTSEQ;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "bd_short_sequence"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("bd_short_sequence")))
           this->test_type_ = Options::TEST_BD_SHORTSEQ;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "ub_long_sequence"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ub_long_sequence")))
           this->test_type_ = Options::TEST_UB_LONGSEQ;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "bd_long_sequence"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("bd_long_sequence")))
           this->test_type_ = Options::TEST_BD_LONGSEQ;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "fixed_array"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("fixed_array")))
           this->test_type_ = Options::TEST_FIXED_ARRAY;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "var_array"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("var_array")))
           this->test_type_ = Options::TEST_VAR_ARRAY;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "multdim_array"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("multdim_array")))
           this->test_type_ = Options::TEST_MULTDIM_ARRAY;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "exception"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("exception")))
           this->test_type_ = Options::TEST_EXCEPTION;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "big_union"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("big_union")))
           this->test_type_ = Options::TEST_BIG_UNION;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "small_union"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("small_union")))
           this->test_type_ = Options::TEST_SMALL_UNION;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "recursive_union"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("recursive_union")))
           this->test_type_ = Options::TEST_RECURSIVE_UNION;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "complex_any"))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("complex_any")))
           this->test_type_ = Options::TEST_COMPLEX_ANY;
          break;
 
@@ -183,7 +183,7 @@ Options::parse_args (int argc, ACE_TCHAR **argv)
 
 // Get the factory IOR from the file created by the server.
 int
-Options::read_ior (char *filename)
+Options::read_ior (ACE_TCHAR *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
