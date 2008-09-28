@@ -637,38 +637,6 @@ snprintf_test (void)
   return error_count;
 }
 
-int
-strptime_test (void)
-{
-  // convert UTC time string to UTC ACE_Time_Value
-  int error_count = 0;
-  const char* original_time = "2008-06-21 23:45";
-  tm lTime;
-  ACE_OS::strptime(original_time, "%Y-%m-%d %H:%M", &lTime);
-  lTime.tm_isdst = 0; // do not change due to daylight saving time
-  time_t lNewTime = ACE_OS::mktime(&lTime);
-  ACE_Time_Value lValue(lNewTime - ACE_OS::timezone(), 0); // do  not change because of timezone
-
-  // convert UTC ACE_Time_Value to UTC time string
-  char lBuffer[128];
-  time_t time = lValue.sec();
-  struct tm tm_time;
-  ACE_OS::gmtime_r (&time, &tm_time);
-  ACE_OS::strftime(lBuffer, 128, "%Y-%m-%d %H:%M", &tm_time);
-
-  if (ACE_OS::strcmp (lBuffer, original_time) != 0)
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%s != %s\n"),lBuffer, original_time));
-      ++error_count;
-    }
-  else
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("strptime_test succeeded\n")));
-    }
-
-  return error_count;
-}
-
 static int
 ctime_r_test (void)
 {
@@ -1080,9 +1048,6 @@ run_main (int, ACE_TCHAR *[])
       status = result;
 
   if ((result = log2_test ()) != 0)
-      status = result;
-
-  if ((result = strptime_test ()) != 0)
       status = result;
 
   if ((result = last_error_test ()) != 0)
