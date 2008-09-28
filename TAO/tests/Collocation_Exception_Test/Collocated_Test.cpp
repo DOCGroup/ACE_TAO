@@ -6,8 +6,8 @@
 #include "ace/SString.h"
 #include "ace/Manual_Event.h"
 
-const char *output = "test.ior";
-const char *input = "file://test.ior";
+const ACE_TCHAR output = ACE_TEXT("test.ior");
+const ACE_TCHAR input = ACE_TEXT("file://test.ior");
 const char *mode = "SYNC_NONE";
 
 // static int named_orbs = 0;

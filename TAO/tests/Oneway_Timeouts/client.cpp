@@ -17,7 +17,7 @@ using namespace PortableServer;
 
 namespace
 {
-  const char *non_existent_ior = "corbaloc:iiop:1.2@63.246.9.65:12345/test";
+  const ACE_TCHAR non_existent_ior = ACE_TEXT("corbaloc:iiop:1.2@63.246.9.65:12345/test");
   const int TIME_THRESHOLD = 100; //ms
 
   int request_timeout = 0;
@@ -252,7 +252,7 @@ namespace
     if (use_sync_scope)
       {
         Any a;
-        if (make_request_queued) 
+        if (make_request_queued)
           a <<= Messaging::SYNC_NONE;
         else
           a <<= sync_scope;
@@ -358,20 +358,20 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
 
       Long i = 0;
 
-      // Using make_request_queued option to work around test failure due to 
-      // different connection establishment behavior between OS.  Some system 
-      // can connect immediately and some may take longer time. With the flag on, 
+      // Using make_request_queued option to work around test failure due to
+      // different connection establishment behavior between OS.  Some system
+      // can connect immediately and some may take longer time. With the flag on,
       // the test sets the SYNC_NONE scope and sends a request so the transport
-      // queue is not empty for some SYNC_DELAYED_BUFFERING test case and hence 
-      // the requests are all queued and will be received by server continueously 
+      // queue is not empty for some SYNC_DELAYED_BUFFERING test case and hence
+      // the requests are all queued and will be received by server continueously
       // during a short period.
-      if (make_request_queued) 
+      if (make_request_queued)
       {
         //Send this message while using SYNC_NONE.
         //This would leave the request in transport queue.
         tester->test (-3);
         //Set to SYNC_DELAYED_BUFFERING.
-        //The requests will be queued since queue is not 
+        //The requests will be queued since queue is not
         //empty.
         reset_buffering (orb.in ());
       }

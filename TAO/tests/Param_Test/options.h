@@ -108,7 +108,7 @@ public:
   // If we should request the server to shutdown.
 
 private:
-  int read_ior (char *filename);
+  int read_ior (ACE_TCHAR *filename);
   // Function to read the servant IOR from a file.
 
   CORBA::String_var ior_;

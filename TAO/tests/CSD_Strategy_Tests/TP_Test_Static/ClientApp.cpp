@@ -22,7 +22,7 @@ ClientApp::~ClientApp()
 
 
 int
-ClientApp::run_i(int argc, char* argv[])
+ClientApp::run_i(int argc, ACE_TCHAR* argv[])
 {
   // Initialize the ORB before parsing our own args.
   CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);

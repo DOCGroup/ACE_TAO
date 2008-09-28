@@ -2,7 +2,7 @@
 
 #include "Supports_Test_impl.h"
 
-const char * ior = "file://test.ior";
+const ACE_TCHAR  ior = ACE_TEXT("file://test.ior");
 int num_trials = 1;
 int id = 0;
 

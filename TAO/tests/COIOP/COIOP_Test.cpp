@@ -7,8 +7,8 @@
 #include "ace/Manual_Event.h"
 #include "tao/Strategies/advanced_resource.h"
 
-const char *output = "test.ior";
-const char *input = "file://test.ior";
+const ACE_TCHAR output = ACE_TEXT("test.ior");
+const ACE_TCHAR input = ACE_TEXT("file://test.ior");
 ACE_CString server_orb;
 ACE_CString client_orb;
 CORBA::Boolean result = false;

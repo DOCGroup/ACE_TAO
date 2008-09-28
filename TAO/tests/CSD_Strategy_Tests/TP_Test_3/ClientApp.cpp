@@ -29,7 +29,7 @@ ClientApp::~ClientApp()
 
 
 int
-ClientApp::run_i(int argc, char* argv[])
+ClientApp::run_i(int argc, ACE_TCHAR* argv[])
 {
   int result = this->init(argc, argv);
   if (result != 0)

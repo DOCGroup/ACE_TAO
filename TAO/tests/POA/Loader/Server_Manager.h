@@ -43,7 +43,7 @@ public:
   ~Server_i (void);
   // Destruction.
 
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
   // Initialisation of the ORB and poa.
 
   PortableServer::POA_ptr create_poa (const char* name,
@@ -71,7 +71,7 @@ private:
                           const char *second_ior);
   // The IORs are written to a file for future use.
 
-  char *ior_output_file_;
+  ACE_TCHAR *ior_output_file_;
   // Default ior file.
 
   CORBA::ORB_var orb_;

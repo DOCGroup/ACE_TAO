@@ -22,8 +22,7 @@ Server_i::~Server_i (void)
 // This method parses the input.
 
 int
-Server_i::parse_args (int argc,
-                      char **argv)
+Server_i::parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:"));
   int c;

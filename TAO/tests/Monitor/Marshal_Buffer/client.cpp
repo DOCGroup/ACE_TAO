@@ -17,7 +17,7 @@
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 const ACE_TCHAR *ior_input_file = ACE_TEXT("file://test.ior");
-const char *monitor_output_file = "monitor.ior";
+const ACE_TCHAR monitor_output_file = ACE_TEXT("monitor.ior");
 
 /// Runs the ORB in a separate thread so we can listen
 /// for calls on our MC interface without blocking.
