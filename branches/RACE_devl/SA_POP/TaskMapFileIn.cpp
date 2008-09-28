@@ -49,7 +49,7 @@ void TaskMapFileIn::build_task_map (std::string filename, Builder *builder)
   if (!dom)
     throw "SA_POP::TaskMapFileIn::build_task_map (): Could not create Xerces DOMDocument from file";
 
-  SA_POP::XML::TaskMap xml_tm = SA_POP::XML::taskMap (dom);
+  SA_POP::XML::TaskMap xml_tm = SA_POP::XML::reader::taskMap (dom);
 
   // Get task implementations.
   for (SA_POP::XML::TaskMap::taskImpl_iterator impl_iter =
