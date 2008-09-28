@@ -5,7 +5,7 @@
 #include "test_i.h"
 #include "Server_Worker.h"
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 char *another_output_file = 0;
 const char *ior_table_name = 0;
 char *another_table_name = 0;

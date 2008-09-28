@@ -7,7 +7,7 @@
 
 ACE_RCSID(Send_File, server, "$Id$")
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

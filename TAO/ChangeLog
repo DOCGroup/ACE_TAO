@@ -1,3 +1,26 @@
+Sun Sep 28 11:39:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/ORT/gateway_server.cpp
+        * orbsvcs/examples/ORT/server.cpp
+        * orbsvcs/examples/Security/SecurityLevel1/server.cpp
+        * orbsvcs/examples/Security/Send_File/server.cpp
+        * orbsvcs/tests/Bug_1395_Regression/server.cpp
+        * orbsvcs/tests/Bug_2247_Regression/server.cpp
+        * orbsvcs/tests/Bug_2248_Regression/server.cpp
+        * orbsvcs/tests/Bug_2925_Regression/server.cpp
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.cpp
+        * orbsvcs/tests/FaultTolerance/IOGR/server.cpp
+        * orbsvcs/tests/HTIOP/AMI/server.cpp
+        * orbsvcs/tests/HTIOP/BiDirectional/server.cpp
+        * orbsvcs/tests/Security/BiDirectional/server.cpp
+        * orbsvcs/tests/Security/Big_Request/server.cpp
+        * orbsvcs/tests/Security/Bug_1107_Regression/server.cpp
+        * orbsvcs/tests/Security/Crash_Test/server.cpp
+        * orbsvcs/tests/Security/MT_IIOP_SSL/server.cpp
+        * orbsvcs/tests/Security/MT_SSLIOP/server.cpp
+        * orbsvcs/tests/Security/Secure_Invocation/server.cpp
+          ACE_TCHAR changes
+
 Sun Sep 28 11:38:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/ORB_Shutdown/client.cpp

@@ -8,7 +8,7 @@
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 #include "tao/ORBInitializer_Registry.h"
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 const char* merged_iorstr = 0;
 const char *key = 0;
 

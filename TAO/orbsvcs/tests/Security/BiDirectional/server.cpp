@@ -8,7 +8,7 @@
 
 ACE_RCSID(BiDirectional, server, "$Id$")
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 int no_iterations = 10;
 
 int
