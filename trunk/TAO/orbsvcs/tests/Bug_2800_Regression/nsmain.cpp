@@ -7,7 +7,7 @@
 #include "ace/OS.h"
 #include "ace/Get_Opt.h"
 
-const char *ior_output_file = "shutdown.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("shutdown.ior");
 
 class TestTask : public ACE_Task_Base
 {

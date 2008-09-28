@@ -10,7 +10,7 @@ ACE_RCSID (McastHello,
            server,
            "$Id$")
 
-static const char *ior_output_file = "test.ior";
+static const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 // Use a multicast address in the administrative "site local" range, 239.255.0.0 to
 // 239.255.255.255.  The range 224.255.0.0 to 238.255.255.255 should also be valid

@@ -8,7 +8,7 @@ ACE_RCSID (Big_Request,
            client,
            "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 const char *cert_file = "cacert.pem";
 long number_iterations = 1;
 long data_size = 3461724;

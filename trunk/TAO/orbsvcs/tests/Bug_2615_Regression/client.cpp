@@ -9,7 +9,7 @@
 
 ACE_RCSID(Hello, client, "$Id$")
 
-const char *ior = "file://ior.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://ior.ior");
 const char *iogr = "file://iogr.ior";
 
 int

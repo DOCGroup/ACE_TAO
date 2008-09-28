@@ -16,7 +16,7 @@ ACE_RCSID (LoadBalancing,
            server,
            "$Id$")
 
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 CORBA::Float reject_threshold = 0;
 CORBA::Float critical_threshold = 0;

@@ -6,7 +6,7 @@
 
 ACE_RCSID(Application_Test, server, "$Id$")
 
-static const char *ior_output_file = "iorfile";
+static const ACE_TCHAR *ior_output_file = ACE_TEXT("iorfile");
 
 static int
 write_ior_to_file (const char *ior)

@@ -3,8 +3,8 @@
 #include "Test_impl.h"
 #include "ace/OS_NS_stdio.h"
 
-const char *ior_callback = "callback.ior";
-const char *ior_server = "file://server.ior";
+const ACE_TCHAR *ior_callback = ACE_TEXT("callback.ior");
+const ACE_TCHAR *ior_server = ACE_TEXT("file://server.ior");
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

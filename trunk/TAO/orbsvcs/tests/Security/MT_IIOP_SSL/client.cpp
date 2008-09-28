@@ -4,7 +4,7 @@
 #include "Client_Worker.h"
 
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 int do_shutdown = 0;
 int nthreads = 5;
