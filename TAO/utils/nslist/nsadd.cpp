@@ -32,7 +32,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 {
   CosNaming::Name the_name (0);
   CORBA::ORB_var orb;
-  const char *ior = 0;
+  const ACE_TCHAR *ior = 0;
 
   try
     {
