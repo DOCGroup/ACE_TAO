@@ -20,7 +20,7 @@ CORBA::Boolean Messenger_i::send_message (
     char *&)
 {
   ACE_DEBUG((LM_DEBUG, "\nInside send_message()...."));
-  const char *ior = "file://server.ior";
+  const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
   CORBA::Object_var obj =
     orb_->string_to_object (ior);
 

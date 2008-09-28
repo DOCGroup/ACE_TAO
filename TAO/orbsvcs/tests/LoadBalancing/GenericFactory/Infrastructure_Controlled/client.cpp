@@ -7,7 +7,7 @@ ACE_RCSID (Infrastructure_Controlled,
            "$Id$")
 
 
-const char *ior = "file://obj.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://obj.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

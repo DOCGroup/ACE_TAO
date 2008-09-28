@@ -10,7 +10,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Initialize orb
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv );
 
-    const char *ior = "file://server.ior";
+    const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
     CORBA::Object_var obj =
       orb->string_to_object (ior);
 

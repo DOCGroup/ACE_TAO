@@ -13,7 +13,7 @@ ACE_RCSID (Hello,
            server,
            "$Id$")
 
-const char *ior_output_file = "";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("");
 
 CORBA::ULong my_id_number = 0;
 

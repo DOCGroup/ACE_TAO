@@ -23,7 +23,7 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_stdio.h"
 
-const char *ior_output_file = "server.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
 char *node_        = 0;
 char *file_        = 0;
 char *shared_file_ = 0;

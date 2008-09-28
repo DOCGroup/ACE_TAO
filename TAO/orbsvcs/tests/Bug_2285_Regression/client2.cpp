@@ -10,7 +10,7 @@
 
 ACE_RCSID(Hello, client, "$Id$")
 
-//const char *ior = "file://test.ior";
+//const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
 CORBA::ULong number_of_servers = 0;
 

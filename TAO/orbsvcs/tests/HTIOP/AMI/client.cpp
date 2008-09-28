@@ -25,7 +25,7 @@
 
 ACE_RCSID(AMI, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
 int niterations = 5;
 int debug = 0;
