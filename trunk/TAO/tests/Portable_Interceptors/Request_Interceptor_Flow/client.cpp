@@ -11,7 +11,7 @@ ACE_RCSID (Request_Interceptor_Flow,
            client,
            "$Id$")
 
-const char *ior = 0;
+const ACE_TCHAR *ior = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
