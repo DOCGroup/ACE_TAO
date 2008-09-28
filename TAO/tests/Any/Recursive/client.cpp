@@ -15,7 +15,7 @@ ACE_RCSID (Recursive,
            "$Id$")
 
 
-const char * ior = "file://test.ior";
+const ACE_TCHAR  ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

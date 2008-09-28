@@ -91,7 +91,7 @@ Test_i::shutdown (void)
   this->orb_->shutdown (0);
 }
 
-static const char *simple_servant_ior_file = "simple_servant.ior";
+static const ACE_TCHAR simple_servant_ior_file = ACE_TEXT("simple_servant.ior");
 
 void
 create_object (PortableServer::POA_ptr poa,

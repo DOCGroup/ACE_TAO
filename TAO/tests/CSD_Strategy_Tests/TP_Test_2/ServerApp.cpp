@@ -30,7 +30,7 @@ ServerApp::~ServerApp()
 
 
 int
-ServerApp::run_i(int argc, char* argv[])
+ServerApp::run_i(int argc, ACE_TCHAR* argv[])
 {
   int result = this->init(argc, argv);
   if (result != 0)

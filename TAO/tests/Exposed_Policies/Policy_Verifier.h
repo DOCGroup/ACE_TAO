@@ -40,8 +40,7 @@ public:
   Policy_Verifier (void);
   ~Policy_Verifier (void);
 
-  bool init (int argc,
-             char *argv[]);
+  bool init (int argc, ACE_TCHAR *argv[]);
 
   void run (void);
 
