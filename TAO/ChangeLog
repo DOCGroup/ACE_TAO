@@ -1,3 +1,9 @@
+Sun Sep 28 11:38:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/ORB_Shutdown/client.cpp
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/client.cpp
+          ACE_TCHAR changes
+
 Sun Sep 28 11:36:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI/server.cpp
