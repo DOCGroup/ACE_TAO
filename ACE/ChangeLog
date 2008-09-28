@@ -1,3 +1,8 @@
+Sun Sep 28 10:28:53 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_rel_manpages:
+          We are using doxygen 1.5.6 from now
+
 Thu Sep 25 18:27:53 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/config_h.m4:
