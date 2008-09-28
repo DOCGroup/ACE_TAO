@@ -8,7 +8,7 @@ ACE_RCSID(FL_Cube, server, "$Id$")
 
 #include <FL/Fl.h>
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

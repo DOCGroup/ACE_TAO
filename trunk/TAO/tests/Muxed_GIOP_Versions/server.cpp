@@ -7,7 +7,7 @@
 
 ACE_RCSID(MT_Server, server, "server.cpp,v 1.7 2002/01/29 20:21:08 okellogg Exp")
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 const char *corbaloc_arg = "corbaloc:iiop:1.0@localhost:12000/ObjectName";
 int niterations = 5;
 

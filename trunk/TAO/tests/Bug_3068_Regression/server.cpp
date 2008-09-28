@@ -10,7 +10,7 @@
 
 ACE_RCSID (Bug_3068_Regression, server, "$Id$")
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 int iterations = 10;
 
 int

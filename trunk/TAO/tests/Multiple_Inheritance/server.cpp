@@ -8,7 +8,7 @@
 
 ACE_RCSID(Multiple_Inheritance, server, "$Id$")
 
-static char *ior_output_file = 0;
+static ACE_TCHAR *ior_output_file = 0;
 
 Multiple_Inheritance_i::Multiple_Inheritance_i (void)
 {

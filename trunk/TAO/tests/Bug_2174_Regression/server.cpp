@@ -6,7 +6,7 @@
 
 ACE_RCSID(Bug_2174_Regression, server, "$Id$")
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 bool remove_object = false;
 
 int

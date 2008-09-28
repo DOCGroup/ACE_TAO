@@ -65,7 +65,7 @@ Test_i::shutdown (void)
   this->orb_->shutdown (0);
 }
 
-static const char *ior_output_file = 0;
+static const ACE_TCHAR *ior_output_file = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
