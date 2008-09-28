@@ -10,7 +10,7 @@ ACE_RCSID (Big_Request,
            server,
            "$Id$")
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 const char *cert_file = "cacert.pem";
 
 class OrbTask : public ACE_Task_Base

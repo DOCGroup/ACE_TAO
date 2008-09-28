@@ -6,7 +6,7 @@ ACE_RCSID (SecurityLevel1,
            server,
            "$Id$")
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

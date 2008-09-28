@@ -10,7 +10,7 @@ ACE_RCSID (Group_Ref_Manip,
            client,
            "$Id$")
 
-const char *ior = 0;
+const ACE_TCHAR *ior = 0;
 
 
 int

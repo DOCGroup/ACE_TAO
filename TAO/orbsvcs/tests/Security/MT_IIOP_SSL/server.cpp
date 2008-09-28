@@ -4,7 +4,7 @@
 #include "test_i.h"
 #include "Server_Worker.h"
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 int nthreads = 4;
 
 int

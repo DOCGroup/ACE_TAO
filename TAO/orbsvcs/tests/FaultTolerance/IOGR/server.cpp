@@ -3,7 +3,7 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

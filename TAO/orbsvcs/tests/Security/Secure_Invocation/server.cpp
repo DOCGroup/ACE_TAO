@@ -9,7 +9,7 @@ ACE_RCSID (Secure_Invocation,
            server,
            "$Id$")
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 const char *cert_file = "cacert.pem";
 
 int
