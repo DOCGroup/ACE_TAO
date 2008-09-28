@@ -22,7 +22,7 @@
 
 #include "orbsvcs/TimeServiceS.h"
 #include "orbsvcs/Time/Timer_Helper.h"
-#include "orbsvcs/Time/time_export.h"
+#include "orbsvcs/Time/time_serv_export.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -39,7 +39,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * manages the UTOs and the TIOs. The notion of time returned
  * here is the globally synchronized time.
  */
-class TAO_Time_Export TAO_Time_Service_Clerk : public POA_CosTime::TimeService
+class TAO_Time_Serv_Export TAO_Time_Service_Clerk : public POA_CosTime::TimeService
 {
 public:
 

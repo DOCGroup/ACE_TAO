@@ -20,7 +20,7 @@
 
 #include "orbsvcs/TimeServiceS.h"
 #include "orbsvcs/Time/TAO_UTO.h"
-#include "orbsvcs/Time/time_export.h"
+#include "orbsvcs/Time/time_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -34,7 +34,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * operation to create a UTO from the value of it's time
  * interval.
  */
-class TAO_Time_Export TAO_TIO : public POA_CosTime::TIO
+class TAO_Time_Serv_Export TAO_TIO : public POA_CosTime::TIO
 {
 public:
   // = Initialization and termination methods.
