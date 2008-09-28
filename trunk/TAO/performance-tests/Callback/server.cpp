@@ -11,7 +11,7 @@
 
 ACE_RCSID(Callback, server, "$Id$")
 
-const char *ior_file_name = "test.ior";
+const ACE_TCHAR *ior_file_name = ACE_TEXT("test.ior");
 
 /// Parse the arguments.
 static int parse_args (int argc, ACE_TCHAR *argv[]);

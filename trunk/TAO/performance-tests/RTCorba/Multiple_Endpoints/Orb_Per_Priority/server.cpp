@@ -47,7 +47,7 @@ int nthreads = 0;
 const int MAX_THREADS = 128;
 Server servers[MAX_THREADS];
 int priorities[MAX_THREADS];
-const char *ior_output_file_base = "test.ior";
+const ACE_TCHAR *ior_output_file_base = ACE_TEXT("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

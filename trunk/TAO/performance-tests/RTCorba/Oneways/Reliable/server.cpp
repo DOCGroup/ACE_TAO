@@ -9,7 +9,7 @@
 ACE_RCSID(Reliable, server, "$Id$")
 
 // IOR file name
-static const char *ior_output_file = "test.ior";
+static const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[])

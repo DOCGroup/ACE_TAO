@@ -19,7 +19,7 @@ ACE_RCSID(Callback, client, "$Id$")
 
 int iterations = 1000;
 int do_dump_history = 0;
-const char *ior = "file://server.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
 
 /// Parse the arguments.
 static int parse_args (int argc, ACE_TCHAR *argv[]);
