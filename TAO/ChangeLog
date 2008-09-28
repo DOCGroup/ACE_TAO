@@ -1,8 +1,66 @@
+Sun Sep 28 11:24:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/Secure_Invocation/client.cpp
+        * orbsvcs/tests/Security/MT_SSLIOP/client.cpp
+        * orbsvcs/tests/Security/MT_IIOP_SSL/client.cpp
+        * orbsvcs/tests/Security/InsecureReferences/test.cpp
+        * orbsvcs/tests/Security/EndpointPolicy/test.cpp
+        * orbsvcs/tests/Security/Crash_Test/client.cpp
+        * orbsvcs/tests/Security/Bug_2908_Regression/MessengerServer.cpp
+        * orbsvcs/tests/Security/Bug_2908_Regression/MessengerClient.cpp
+        * orbsvcs/tests/Security/Bug_2908_Regression/Messenger_i.cpp
+        * orbsvcs/tests/Security/Bug_1107_Regression/client.cpp
+        * orbsvcs/tests/Security/Big_Request/client.cpp
+        * orbsvcs/tests/Security/BiDirectional/client.cpp
+        * orbsvcs/tests/RTCosScheduling/server.cpp
+        * orbsvcs/tests/Miop/McastHello/server.cpp
+        * orbsvcs/tests/Miop/McastHello/client.cpp
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/client.cpp
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/client.cpp
+        * orbsvcs/tests/InterfaceRepo/Application_Test/server.cpp
+        * orbsvcs/tests/HTIOP/Hello/server.cpp
+        * orbsvcs/tests/HTIOP/Hello/client.cpp
+        * orbsvcs/tests/HTIOP/BiDirectional/client.cpp
+        * orbsvcs/tests/HTIOP/AMI/simple_client.cpp
+        * orbsvcs/tests/HTIOP/AMI/client.cpp
+        * orbsvcs/tests/Event/Performance/Latency_Server.cpp
+        * orbsvcs/tests/Event/Mcast/AddrServer/Client.cpp
+        * orbsvcs/tests/Bug_3216_Regression/server.cpp
+        * orbsvcs/tests/Bug_3216_Regression/client.cpp
+        * orbsvcs/tests/Bug_3215_Regression/server.cpp
+        * orbsvcs/tests/Bug_3215_Regression/client.cpp
+        * orbsvcs/tests/Bug_2800_Regression/nsmain.cpp
+        * orbsvcs/tests/Bug_2800_Regression/client.cpp
+        * orbsvcs/tests/Bug_2709_Regression/server.cpp
+        * orbsvcs/tests/Bug_2615_Regression/server.cpp
+        * orbsvcs/tests/Bug_2615_Regression/client.cpp
+        * orbsvcs/tests/Bug_2316_Regression/client.cpp
+        * orbsvcs/tests/Bug_2287_Regression/server.cpp
+        * orbsvcs/tests/Bug_2287_Regression/client.cpp
+        * orbsvcs/tests/Bug_2285_Regression/server2.cpp
+        * orbsvcs/tests/Bug_2285_Regression/server.cpp
+        * orbsvcs/tests/Bug_2285_Regression/client2.cpp
+        * orbsvcs/tests/Bug_2285_Regression/client.cpp
+        * orbsvcs/tests/Bug_1395_Regression/client.cpp
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/server.cpp
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/server.cpp
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/client.cpp
+        * orbsvcs/examples/Security/Send_File/client.cpp
+        * orbsvcs/examples/Security/SecurityLevel1/client.cpp
+        * orbsvcs/examples/RtEC/Simple/Service.cpp
+        * orbsvcs/examples/PSS/Simple_Naming.cpp
+        * orbsvcs/examples/ORT/client.cpp
+        * orbsvcs/examples/LoadBalancing/server.cpp
+        * orbsvcs/examples/LoadBalancing/client.cpp
+        * orbsvcs/examples/CosEC/Simple/Service.cpp
+          ACE_TCHAR changes
+
 Fri Sep 26 15:08:45 UTC 2008  Rich Seibel <seibel_r@ociweb.com>
 
         * orbsvcs/tests/Bug_3387_Regression/MessengerClient.cpp:
 
-          Added include to find sleep. 
+          Added include to find sleep.
 
 Fri Sep 26 11:54:14 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -25,7 +83,7 @@ Fri Sep 26 11:54:14 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
         * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/test.idl:
 
           Fuzz fixes
-        
+
 Fri Sep 26 11:07:48 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * tao/RTCORBA/RT_Current.cpp:
