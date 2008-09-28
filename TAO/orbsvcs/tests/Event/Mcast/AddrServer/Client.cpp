@@ -7,7 +7,7 @@
 
 ACE_RCSID(Hello, client, "$Id$")
 
-const char *ior = "file://as.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://as.ior");
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

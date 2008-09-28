@@ -14,7 +14,7 @@
 
 ACE_RCSID(EC_Tests_Performance, Latency_Server, "$Id$")
 
-const char *ior_file_name = "ec.ior";
+const ACE_TCHAR *ior_file_name = ACE_TEXT("ec.ior");
 
 /// Parse the arguments.
 static int parse_args (int argc, ACE_TCHAR *argv[]);

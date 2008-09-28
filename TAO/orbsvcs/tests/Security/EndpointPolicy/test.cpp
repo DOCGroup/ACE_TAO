@@ -9,7 +9,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdio.h"
 
-const char *ior_file = "test.ior";
+const ACE_TCHAR *ior_file = ACE_TEXT("test.ior");
 
 CORBA::Short endpoint_port = 12345;
 int verbose = 0;

@@ -23,7 +23,7 @@
 
 ACE_RCSID (PSS, client, "$Id$")
 
-const char *ior_output_file = "simple_naming.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("simple_naming.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
