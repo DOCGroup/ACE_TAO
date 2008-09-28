@@ -1,3 +1,13 @@
+Sun Sep 28 18:52:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/CSD_Strategy/TestApps/ClientApp.cpp
+        * performance-tests/CSD_Strategy/TestApps/ClientApp.h
+        * performance-tests/CSD_Strategy/TestApps/ServerApp.cpp
+        * performance-tests/CSD_Strategy/TestApps/ServerApp.h
+        * performance-tests/CSD_Strategy/TestInf/TestAppBase.h
+        * performance-tests/RTCorba/Thread_Pool/client.cpp
+          ACE_TCHAR changes
+
 Sun Sep 28 18:51:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/LoadBalancer/LoadManager.cpp
