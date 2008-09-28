@@ -19,7 +19,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/TimeServiceS.h"
-#include "orbsvcs/Time/time_export.h"
+#include "orbsvcs/Time/time_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -41,7 +41,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * - Conversion from relative to absolute time, and conversion to
  * an interval (TIO).
  */
-class TAO_Time_Export TAO_UTO : public POA_CosTime::UTO
+class TAO_Time_Serv_Export TAO_UTO : public POA_CosTime::UTO
 {
 public:
   // = Initialization and termination methods.
