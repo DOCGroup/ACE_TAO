@@ -1,3 +1,38 @@
+Sun Sep 28 11:36:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI/server.cpp
+        * tests/AMI_Timeouts/server.cpp
+        * tests/BiDirectional/server.cpp
+        * tests/BiDirectional_DelayedUpcall/server.cpp
+        * tests/BiDirectional_NestedUpcall/server.cpp
+        * tests/Big_AMI/server.cpp
+        * tests/Bug_2174_Regression/server.cpp
+        * tests/Bug_2356_Regression/server.cpp
+        * tests/Bug_2734_Regression/server.cpp
+        * tests/Bug_3068_Regression/server.cpp
+        * tests/Faults/server.cpp
+        * tests/FL_Cube/server.cpp
+        * tests/MProfile/server.cpp
+        * tests/MProfile_Connection_Timeout/server.cpp
+        * tests/MProfile_Forwarding/server.cpp
+        * tests/MT_BiDir/server.cpp
+        * tests/MT_Client/server.cpp
+        * tests/MT_Server/server.cpp
+        * tests/Multiple_Inheritance/server.cpp
+        * tests/Muxed_GIOP_Versions/server.cpp
+        * tests/Native_Exceptions/server.cpp
+        * tests/No_Server_MT_Connect_Test/server.cpp
+        * tests/POA/Forwarding/server.cpp
+        * tests/QtTests/server.cpp
+        * tests/Smart_Proxies/Benchmark/server.cpp
+        * tests/Smart_Proxies/On_Demand/server.cpp
+        * tests/Smart_Proxies/Policy/server.cpp
+        * tests/Smart_Proxies/server.cpp
+        * tests/Strategies/server.cpp
+        * tests/Timeout/server.cpp
+        * tests/Xt_Stopwatch/server.cpp
+          ACE_TCHAR changes
+
 Sun Sep 28 11:31:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Callback/client.cpp

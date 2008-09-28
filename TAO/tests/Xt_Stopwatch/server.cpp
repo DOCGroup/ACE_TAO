@@ -13,7 +13,7 @@ ACE_RCSID (Xt_Stopwatch,
 #include "Stopwatch_display.h"
 #include "timer.h"
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

@@ -8,7 +8,7 @@ ACE_RCSID(MProfile_Connection_Timeout,
           server,
           "$Id$")
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 int orb_run = 0;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
