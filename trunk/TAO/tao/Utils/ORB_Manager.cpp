@@ -41,7 +41,7 @@ TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
 
 int
 TAO_ORB_Manager::init (int &argc,
-                       char **argv,
+                       ACE_TCHAR **argv,
                        const char *orb_name)
 {
   if (CORBA::is_nil (this->orb_.in ()))
@@ -76,7 +76,7 @@ TAO_ORB_Manager::init (int &argc,
 #if !defined (CORBA_E_MICRO)
 int
 TAO_ORB_Manager::init_child_poa (int& argc,
-                                 char **argv,
+                                 ACE_TCHAR **argv,
                                  const char *poa_name,
                                  const char *orb_name)
 {
