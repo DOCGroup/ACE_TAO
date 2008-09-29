@@ -171,7 +171,7 @@ namespace Test
   };
 
   static int
-  try_main (int argc, char *argv[])
+  try_main (int argc, ACE_TCHAR *argv[])
   {
 
     try

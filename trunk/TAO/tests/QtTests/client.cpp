@@ -59,7 +59,7 @@ Client::~Client (void)
 
 void
 Client::parse_args (int argc,
-                    char *argv[])
+                    ACE_TCHAR *argv[])
 {
   const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 

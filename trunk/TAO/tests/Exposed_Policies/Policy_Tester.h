@@ -39,7 +39,7 @@ public:
   // Runs the test.
 
   int init (int argc,
-            char *argv[]);
+            ACE_TCHAR *argv[]);
 
   void shutdown (void);
 private:

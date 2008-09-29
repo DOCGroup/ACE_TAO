@@ -22,7 +22,7 @@
 
 ACE_RCSID(TIE, client, "$Id$")
 
-  static char *IOR[7] = { 0, 0, 0, 0, 0, 0, 0 };
+static char *ACE_TCHAR[7] = { 0, 0, 0, 0, 0, 0, 0 };
 static int iterations = 1;
 
 static int
