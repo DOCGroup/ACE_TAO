@@ -1,3 +1,16 @@
+Mon Sep 29 14:01:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2289_Regression/server.cpp
+        * tests/DiffServ/server.cpp
+        * tests/DII_Collocation_Tests/oneway/Collocated_Test.cpp
+        * tests/Monitor/Marshal_Buffer/client.cpp
+        * tests/Oneway_Buffering/client.cpp
+        * tests/Oneway_Timeouts/client.cpp
+        * tests/POA/EndpointPolicy/server.cpp
+        * tests/POA/TIE/client.cpp
+        * tests/RTCORBA/Diffserv/server.cpp
+          ACE_TCHAR fixes
+
 Mon Sep 29 13:35:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_generator.h:

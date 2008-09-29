@@ -17,7 +17,7 @@ ACE_RCSID (Hello,
 
 const ACE_TCHAR *good_ior_file = ACE_TEXT ("good.ior");
 const ACE_TCHAR *bad_ior_file = ACE_TEXT ("bad.ior");
-const ACE_TCHAR root_ior_file = ACE_TEXT("root.ior");
+const ACE_TCHAR *root_ior_file = ACE_TEXT("root.ior");
 int load_advanced_resources =
 ACE_Service_Config::process_directive (ace_svc_desc_TAO_Advanced_Resource_Factory);
 
