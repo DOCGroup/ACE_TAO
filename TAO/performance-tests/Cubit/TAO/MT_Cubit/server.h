@@ -64,7 +64,7 @@ public:
   Server (void);
   // Default constructor.
 
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
   // Initialize the server state.
 
   int run (void);
@@ -92,7 +92,7 @@ private:
   int argc_;
   // Number of arguments for the servant.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // Arguments for the ORB.
 
   char * *cubits_;

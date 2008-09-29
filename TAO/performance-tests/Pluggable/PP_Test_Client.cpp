@@ -376,7 +376,7 @@ PP_Test_Client::~PP_Test_Client (void)
 }
 
 int
-PP_Test_Client::init (int argc, char **argv)
+PP_Test_Client::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;

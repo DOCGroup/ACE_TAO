@@ -1,3 +1,21 @@
+Mon Sep 29 07:40:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.h
+        * performance-tests/Cubit/TAO/MT_Cubit/client.h
+        * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.h
+        * performance-tests/Cubit/TAO/MT_Cubit/server.cpp
+        * performance-tests/Cubit/TAO/MT_Cubit/server.h
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h
+        * performance-tests/Pluggable/PP_Test_Client.cpp
+        * performance-tests/Pluggable/PP_Test_Client.h
+        * performance-tests/Pluggable/PP_Test_Server.h
+        * performance-tests/POA/Demux/demux_test_client.h
+          ACE_TCHAR changes
+
 Mon Sep 29 07:37:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/AMH/Sink_Server/Base_Server.h

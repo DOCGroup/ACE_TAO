@@ -51,7 +51,7 @@ public:
   // Destructor
 
   int init (int argc,
-            char **argv);
+            ACE_TCHAR **argv);
   // Initialize the Cubit_Server state - parsing arguments and ...
 
   int run (void);
@@ -76,7 +76,7 @@ private:
   int argc_;
   // Number of commandline arguments.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // commandline arguments.
 };
 

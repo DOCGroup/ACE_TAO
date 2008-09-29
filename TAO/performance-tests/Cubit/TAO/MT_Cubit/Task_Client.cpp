@@ -259,7 +259,7 @@ Task_State::~Task_State (void)
 Client::Client (ACE_Thread_Manager *thread_manager,
                 Task_State *ts,
                 int argc,
-                char **argv,
+                ACE_TCHAR **argv,
                 u_int id)
   : ACE_Task<ACE_SYNCH> (thread_manager),
     cubit_impl_ (CORBA::ORB::_nil (),
@@ -574,7 +574,7 @@ Client::init_orb (void)
   // Convert back to argv vector style.
   ACE_ARGV tmp_args2 (tmp_buf);
   int argc = tmp_args2.argc ();
-  char **argv = tmp_args2.argv ();
+  ACE_TCHAR **argv = tmp_args2.argv ();
 
   char orbid[64];
   ACE_OS::sprintf (orbid, "orb:%d", this->id_);

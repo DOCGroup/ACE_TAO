@@ -119,7 +119,7 @@ public:
   Globals (void);
   // default constructor.
 
-  int parse_args (int argc, char **argv);
+  int parse_args (int argc, ACE_TCHAR **argv);
   // parse the arguments.
 
   static int sched_fifo_init (void);
