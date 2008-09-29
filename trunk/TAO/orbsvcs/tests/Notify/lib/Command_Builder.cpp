@@ -19,7 +19,7 @@ TAO_Notify_Tests_Command_Builder::~TAO_Notify_Tests_Command_Builder ()
 }
 
 int
-TAO_Notify_Tests_Command_Builder::init (int argc, char *argv[])
+TAO_Notify_Tests_Command_Builder::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 

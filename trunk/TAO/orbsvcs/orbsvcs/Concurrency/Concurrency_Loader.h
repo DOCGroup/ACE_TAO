@@ -41,7 +41,7 @@ public:
 
   /// Called by the Service Configurator framework to initialize the
   /// Event Service. Defined in <ace/Service_Config.h>
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Called by the Service Configurator framework to remove the
   /// Event Service. Defined in <ace/Service_Config.h>
@@ -50,7 +50,7 @@ public:
   /// This function call initializes the Concurrency Service given a
   /// reference to the ORB and the command line parameters.
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                   int argc, char *argv[]);
+                                   int argc, ACE_TCHAR *argv[]);
 
 
  protected:

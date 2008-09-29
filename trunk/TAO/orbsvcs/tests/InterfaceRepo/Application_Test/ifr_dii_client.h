@@ -19,7 +19,7 @@ public:
   ~IFR_DII_Client (void);
 
   int init (int argc,
-            char *argv[]);
+            ACE_TCHAR *argv[]);
   // Initialize the client.
 
   int run (void);
@@ -27,7 +27,7 @@ public:
 
 private:
   int parse_args (int argc,
-                  char *argv[]);
+                  ACE_TCHAR *argv[]);
   // Process the command line arguments.
 
   int find_interface_def (void);

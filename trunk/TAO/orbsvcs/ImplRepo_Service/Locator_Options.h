@@ -51,7 +51,7 @@ public:
   Options ();
 
   /// Parse the command-line arguments and initialize the options.
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   /// This version should only be used when run as an nt service.
   int init_from_registry();
 
@@ -96,7 +96,7 @@ public:
 
 private:
   /// Parses and pulls out arguments for the ImR
-  int parse_args (int &argc, char *argv[]);
+  int parse_args (int &argc, ACE_TCHAR *argv[]);
 
   /// Print the usage information.
   void print_usage (void) const;

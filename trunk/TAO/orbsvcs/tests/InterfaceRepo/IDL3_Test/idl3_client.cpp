@@ -258,7 +258,7 @@ IDL3_Client::~IDL3_Client (void)
 
 int
 IDL3_Client::init (int argc,
-                   char *argv[])
+                   ACE_TCHAR *argv[])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
@@ -328,7 +328,7 @@ IDL3_Client::run (void)
 
 int
 IDL3_Client::parse_args (int argc,
-                         char *argv[])
+                         ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("d"));
   int c;

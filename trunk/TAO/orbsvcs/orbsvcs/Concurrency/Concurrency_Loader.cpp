@@ -29,7 +29,7 @@ TAO_Concurrency_Loader::~TAO_Concurrency_Loader (void)
 }
 
 int
-TAO_Concurrency_Loader::init (int argc, char *argv[])
+TAO_Concurrency_Loader::init (int argc, ACE_TCHAR *argv[])
 {
   try
     {

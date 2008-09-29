@@ -25,7 +25,7 @@ IFR_Service::~IFR_Service (void)
 
 int
 IFR_Service::init (int argc,
-                   char *argv[])
+                   ACE_TCHAR *argv[])
 {
   int result;
   try

@@ -43,7 +43,7 @@ class RtEC_Based_CosEC : public CosEC_ServantBase
   int parse_args (int argc, char *argv []);
   // Parses the command line arguments.
 
-  void startup (int argc, char *argv[]);
+  void startup (int argc, ACE_TCHAR *argv[]);
   // Initializes the COS Event Service.
   // Returns 0 on success, -1 on error.
 

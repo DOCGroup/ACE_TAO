@@ -24,7 +24,7 @@ LifeCycle::~LifeCycle (void)
 
 int
 LifeCycle::parse_args (int argc,
-                           char *argv[])
+                           ACE_TCHAR *argv[])
 {
     ACE_Arg_Shifter arg_shifter (argc,
                                  argv);
@@ -61,7 +61,7 @@ LifeCycle::parse_args (int argc,
 }
 
 void
-LifeCycle::init (int argc, char *argv[])
+LifeCycle::init (int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 

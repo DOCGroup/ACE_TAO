@@ -23,7 +23,7 @@ IFR_DII_Client::~IFR_DII_Client (void)
 
 int
 IFR_DII_Client::init (int argc,
-                      char *argv[])
+                      ACE_TCHAR *argv[])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
@@ -88,7 +88,7 @@ IFR_DII_Client::run (void)
 
 int
 IFR_DII_Client::parse_args (int argc,
-                            char *argv[])
+                            ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("dn"));
   int c;

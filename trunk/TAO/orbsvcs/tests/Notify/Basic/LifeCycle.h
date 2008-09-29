@@ -23,10 +23,10 @@ public:
   ~LifeCycle (void);
 
   void init (int argc,
-             char *argv[]);
+             ACE_TCHAR *argv[]);
   void run_test (void);
   int parse_args (int argc,
-                  char *argv[]);
+                  ACE_TCHAR *argv[]);
 
 private:
    void create_ec (void);

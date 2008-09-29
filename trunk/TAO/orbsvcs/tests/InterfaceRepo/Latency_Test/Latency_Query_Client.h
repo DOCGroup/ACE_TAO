@@ -38,14 +38,14 @@ public:
   // Destructor
 
   int init (int argc,
-            char *argv[]);
+            ACE_TCHAR *argv[]);
   // Initialize the ORB and get the IFR object reference.
 
   int run (void);
   // Execute test code.
 private:
   int parse_args (int argc,
-                  char *argv[]);
+                  ACE_TCHAR *argv[]);
   // Process the command line arguments.
 
   int populate_ifr (void);

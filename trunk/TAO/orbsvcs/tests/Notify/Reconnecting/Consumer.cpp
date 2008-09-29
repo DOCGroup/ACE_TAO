@@ -798,7 +798,7 @@ Consumer_Main::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Consumer_Main::parse_single_arg (int argc, char *argv[])
+Consumer_Main::parse_single_arg (int argc, ACE_TCHAR *argv[])
 {
   int consumed = 0;
   if (ACE_OS::strcasecmp (argv[0], "-any") == 0)
@@ -873,7 +873,7 @@ void Consumer_Main::usage(FILE * out)const
   //FUZZ: enable check_for_lack_ACE_OS
 }
 
-int Consumer_Main::init (int argc, char *argv[])
+int Consumer_Main::init (int argc, ACE_TCHAR *argv[])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 

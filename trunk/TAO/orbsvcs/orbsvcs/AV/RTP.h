@@ -405,7 +405,7 @@ public:
   /// Initialization hook.
   TAO_AV_RTP_Flow_Factory (void);
   virtual ~TAO_AV_RTP_Flow_Factory (void);
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int match_protocol (const char *flow_string);
   virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                         TAO_Base_StreamEndPoint *endpoint,

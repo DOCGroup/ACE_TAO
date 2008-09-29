@@ -45,7 +45,7 @@ public:
   ~TAO_Notify_Tests_Command_Factory_T ();
 
   /// = Service_Object virtual method overloads.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int fini (void);
 
   /// Create the <COMMAND> command.

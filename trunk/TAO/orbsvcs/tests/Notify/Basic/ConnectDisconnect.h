@@ -70,7 +70,7 @@ public:
   // Keeps track of how many objects were destroyed.
 
   int parse_args (int argc,
-                  char *argv[]);
+                  ACE_TCHAR *argv[]);
 
   int init (int argc,
             char *argv []);

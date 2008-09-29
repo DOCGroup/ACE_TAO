@@ -5,7 +5,7 @@
 #include "../../tao/Version.h"
 
 int
-BE_save_orb_args (int &argc, char *argv[])
+BE_save_orb_args (int &argc, ACE_TCHAR *argv[])
 {
   int i = 1;
   ACE_CString holder;
@@ -95,7 +95,7 @@ BE_version (void)
 }
 
 TAO_IFR_BE_Export int
-BE_init (int &argc, char *argv[])
+BE_init (int &argc, ACE_TCHAR *argv[])
 {
   // Initialize BE global data object.
   ACE_NEW_RETURN (be_global,

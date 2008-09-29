@@ -241,7 +241,7 @@ Supplier_Main::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Supplier_Main::parse_single_arg (int argc, char *argv[])
+Supplier_Main::parse_single_arg (int argc, ACE_TCHAR *argv[])
 {
   int consumed = 0;
   if (ACE_OS::strcasecmp (argv[0], ACE_TEXT ("-v")) == 0)
@@ -316,7 +316,7 @@ void Supplier_Main::usage(FILE * log)const
   //FUZZ: enable check_for_lack_ACE_OS
 }
 
-int Supplier_Main::init (int argc, char *argv[])
+int Supplier_Main::init (int argc, ACE_TCHAR *argv[])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 

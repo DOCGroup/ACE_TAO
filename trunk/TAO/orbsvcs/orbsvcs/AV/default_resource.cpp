@@ -41,7 +41,7 @@ TAO_AV_Default_Resource_Factory::~TAO_AV_Default_Resource_Factory (void)
 }
 
 int
-TAO_AV_Default_Resource_Factory::init (int argc, char *argv[])
+TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 {
   if (TAO_debug_level > 0)
   ACE_DEBUG ((LM_DEBUG,

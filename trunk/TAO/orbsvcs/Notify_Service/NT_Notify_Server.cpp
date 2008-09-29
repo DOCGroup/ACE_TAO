@@ -57,7 +57,7 @@ public:
   Options (void);
   ~Options (void);
 
-  int run (int argc, char *argv[]);
+  int run (int argc, ACE_TCHAR *argv[]);
 
 private:
   void parse_args (int argc, ACE_TCHAR *argv[]);

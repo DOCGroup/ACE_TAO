@@ -71,7 +71,7 @@ class RedGreen_Test
   RedGreen_Test (void);
 
   int parse_args (int argc,
-                  char *argv[]);
+                  ACE_TCHAR *argv[]);
 
   void dump_results (void);
 

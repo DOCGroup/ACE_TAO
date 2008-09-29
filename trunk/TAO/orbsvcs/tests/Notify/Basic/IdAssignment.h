@@ -25,9 +25,9 @@ public:
   ~IdAssignment (void);
 
   int parse_args (int argc,
-                  char *argv[]);
+                  ACE_TCHAR *argv[]);
   void init (int argc,
-             char *argv[]);
+             ACE_TCHAR *argv[]);
   void run_test (void);
 
 private:
