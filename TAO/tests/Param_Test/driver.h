@@ -35,7 +35,7 @@ public:
   Driver (void);
   ~Driver (void);
 
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
   // Initialize the driver object
 
   int run (void);

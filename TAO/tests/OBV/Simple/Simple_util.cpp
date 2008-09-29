@@ -228,7 +228,7 @@ Client<InterfaceObj, Var>::~Client (void)
 template <class InterfaceObj, class Var> int
 Client<InterfaceObj, Var>::init (const char *name,
                                  int argc,
-                                 char **argv)
+                                 ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;

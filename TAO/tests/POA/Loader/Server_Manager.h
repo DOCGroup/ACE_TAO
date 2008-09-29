@@ -64,7 +64,7 @@ public:
   // The server is executed.
 
 private:
-  int parse_args (int argc, char **argv);
+  int parse_args (int argc, ACE_TCHAR **argv);
   // Parses the input arguments.
 
   int write_iors_to_file (const char *first_ior,

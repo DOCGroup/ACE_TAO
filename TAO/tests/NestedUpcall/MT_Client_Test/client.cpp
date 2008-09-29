@@ -28,7 +28,7 @@
 
 ACE_RCSID(MT_Client_Test, client, "$Id$")
 
-MT_Client_Task::MT_Client_Task (int argc, char **argv,
+MT_Client_Task::MT_Client_Task (int argc, ACE_TCHAR **argv,
                                 int client_number)
   : argc_ (argc),
     argv_ (argv),
@@ -185,7 +185,7 @@ MT_Client::~MT_Client (void)
 
 
 int
-MT_Client::init (int argc, char **argv,
+MT_Client::init (int argc, ACE_TCHAR **argv,
                  int client_number)
 {
 

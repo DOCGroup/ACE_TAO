@@ -85,7 +85,7 @@ protected:
   int argc_;
   // Number of command line arguments.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // The command line arguments.
 };
 
@@ -136,7 +136,7 @@ protected:
   int argc_;
   // # of arguments on the command line.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // arguments from command line.
 
   char *ior_;

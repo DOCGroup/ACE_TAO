@@ -109,7 +109,7 @@ Server_i::write_iors_to_file (const char *first_ior,
 // Initialisation of the ORB and POA.
 
 int
-Server_i::init (int argc, char **argv)
+Server_i::init (int argc, ACE_TCHAR **argv)
 {
   try
     {

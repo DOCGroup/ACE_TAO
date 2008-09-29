@@ -60,7 +60,7 @@ Driver::~Driver (void)
 
 // initialize the driver
 int
-Driver::init (int argc, char **argv)
+Driver::init (int argc, ACE_TCHAR **argv)
 {
   // environment to track exceptions
 

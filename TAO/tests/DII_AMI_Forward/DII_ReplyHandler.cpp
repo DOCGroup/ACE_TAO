@@ -105,7 +105,7 @@ DII_ReplyHandler::handle_location_forward (TAO_InputCDR &incoming,
     }
 
   int argc = 0;
-  char **argv = 0;
+  ACE_TCHAR **argv = 0;
   CORBA::ORB_var  orb = CORBA::ORB_init(argc,argv);
 
   CORBA::String_var iorstr = orb->object_to_string(fwd.in ());
