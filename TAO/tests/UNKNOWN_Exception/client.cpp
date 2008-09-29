@@ -5,7 +5,7 @@
 
 ACE_RCSID (UNKNOWN_Exception, client, "$Id$")
 
-static const ACE_TCHAR *ior = "file://ior";
+static const ACE_TCHAR *ior = ACE_TEXT("file://ior");
 static int shutdown_server = 1;
 
 static int
