@@ -51,7 +51,7 @@ public:
   virtual ~Client_i (void);
   // destructor.
 
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the state of <Client_i>.
 
   void run (void);
