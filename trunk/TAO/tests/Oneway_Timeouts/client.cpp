@@ -17,7 +17,7 @@ using namespace PortableServer;
 
 namespace
 {
-  const ACE_TCHAR non_existent_ior = ACE_TEXT("corbaloc:iiop:1.2@63.246.9.65:12345/test");
+  const ACE_TCHAR *non_existent_ior = ACE_TEXT("corbaloc:iiop:1.2@63.246.9.65:12345/test");
   const int TIME_THRESHOLD = 100; //ms
 
   int request_timeout = 0;
