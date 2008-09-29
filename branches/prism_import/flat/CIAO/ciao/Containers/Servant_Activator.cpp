@@ -1,7 +1,7 @@
 #include "Servant_Activator.h"
 
-#include <tao/PortableServer/PortableServer_Functions.h>
-#include <ciao/CIAO_common.h>
+#include "tao/PortableServer/PortableServer_Functions.h"
+#include "ciao/CIAO_common.h"
 
 ACE_RCSID (ciao,
            Servant_Activator_i,

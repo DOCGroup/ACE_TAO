@@ -2,10 +2,10 @@
 
 #include "Session_Container.h"
 
-#include <tao/Utils/PolicyList_Destroyer.h>
-#include <ciao/CIAO_common.h>
-#include <ciao/Containers/Servant_Activator.h>
-#include <ccm/ComponentServer/ComponentServer_BaseC.h>
+#include "tao/Utils/PolicyList_Destroyer.h"
+#include "ciao/CIAO_common.h"
+#include "ciao/Containers/Servant_Activator.h"
+#include "ccm/ComponentServer/ComponentServer_BaseC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Session_Container.inl"

@@ -1,11 +1,11 @@
 // $Id$
 
-#include <ace/Get_Opt.h>
-#include <ciao/ComponentServer/CIAO_CS_ClientS.h>
-#include <ciao/ComponentServer/CIAO_ComponentServerC.h>
-#include <ciao/ComponentServer/CIAO_ServerActivator_Impl.h>
-#include <ciao/Valuetype_Factories/ConfigValue.h>
-#include <ciao/Logger/Logger_Service.h>
+#include "ace/Get_Opt.h"
+#include "ciao/ComponentServer/CIAO_CS_ClientS.h"
+#include "ciao/ComponentServer/CIAO_ComponentServerC.h"
+#include "ciao/ComponentServer/CIAO_ServerActivator_Impl.h"
+#include "ciao/Valuetype_Factories/ConfigValue.h"
+#include "ciao/Logger/Logger_Service.h"
 
 #include "SimpleComponentC.h"
 

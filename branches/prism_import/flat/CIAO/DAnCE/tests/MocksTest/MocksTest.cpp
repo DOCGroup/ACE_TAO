@@ -1,6 +1,6 @@
-#include <orbsvcs/orbsvcs/CosNamingC.h>
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "Mocks/ComponentServer_Impl.h"
-#include <tao/ORB.h>
+#include "tao/ORB.h"
 
 int main(int argc, char* argv[])
   {

@@ -13,10 +13,10 @@
 #define DANCE_COMMON_H
 #include /**/ <ace/pre.h>
 
-#include <ace/config-all.h>
-#include <ace/Hash_Map_Manager_T.h>
-#include <tao/AnyTypeCode/Any.h>
-#include <Deployment/Deployment_ConnectionC.h>
+#include "ace/config-all.h"
+#include "ace/Hash_Map_Manager_T.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "Deployment/Deployment_ConnectionC.h"
 
 #if !defined ACE_LACKS_PRAGMA_ONCE
 #pragma once

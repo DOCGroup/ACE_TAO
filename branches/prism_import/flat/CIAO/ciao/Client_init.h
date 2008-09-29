@@ -21,10 +21,10 @@
 #pragma once
 #endif /* ! ACE_LACKS_PRAGMA_ONCE */
 
-#include <ace/Hash_Map_Manager_T.h>
-#include <tao/orbconf.h>
-#include <tao/AnyTypeCode/Any.h>
-#include <ccm/CCM_StandardConfiguratorC.h>
+#include "ace/Hash_Map_Manager_T.h"
+#include "tao/orbconf.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "ccm/CCM_StandardConfiguratorC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA

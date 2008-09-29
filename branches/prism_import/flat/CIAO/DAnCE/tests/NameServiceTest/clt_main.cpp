@@ -1,6 +1,7 @@
 
 #include "ace/String_Base.h"
 #include <orbsvcs/orbsvcs/CosNamingC.h>
+#include "DAnCE/Logger/Log_Macros.h"
 #include "RegistrationPath.h"
 #include "DummyC.h"
 

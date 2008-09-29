@@ -17,12 +17,12 @@
 #define NODEMANAGER_IMPL_H_
 
 #include "NodeManager_Export.h"
-#include <tao/Object.h>
-#include <tao/ORB.h>
-#include <Deployment/Deployment_common.h>
-#include <Deployment/Deployment_NodeManagerS.h>
-#include <NodeApplicationManager/NodeApplicationManager_Impl.h>
-#include <RedirectionService/RedirectionService.h>
+#include "tao/Object.h"
+#include "tao/ORB.h"
+#include "Deployment/Deployment_common.h"
+#include "Deployment/Deployment_NodeManagerS.h"
+#include "NodeApplicationManager/NodeApplicationManager_Impl.h"
+#include "RedirectionService/RedirectionService.h"
 
 namespace DAnCE
 {

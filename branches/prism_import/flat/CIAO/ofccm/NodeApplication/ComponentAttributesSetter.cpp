@@ -5,8 +5,8 @@
 //#include "Cdmw_ccm_dance1_cif.stub.hpp"
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
-#include <tao/DynamicInterface/Context.h>
-#include <tao/DynamicInterface/Request.h>
+#include "tao/DynamicInterface/Context.h"
+#include "tao/DynamicInterface/Request.h"
 
 //bool read_config_value( const ACE_CString & name,
 //                        const Deployment::Properties & prop,

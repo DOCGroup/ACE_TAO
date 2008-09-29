@@ -13,8 +13,8 @@
 // Includes
 //-------------------------------------------------------------------
 
-#include <ace/streams.h>
-#include <ace/Get_Opt.h>
+#include "ace/streams.h"
+#include "ace/Get_Opt.h"
 
 #include "TSEC_CheckPointC.h"
 

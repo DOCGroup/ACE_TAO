@@ -1,11 +1,11 @@
 #ifndef NAMESERVICEREDIRECTION_H_
 #define NAMESERVICEREDIRECTION_H_
 
-#include <ace/SString.h>
-#include <ace/Vector_T.h>
-#include <ace/Map_Manager.h>
-#include <ace/Null_Mutex.h>
-#include <orbsvcs/orbsvcs/CosNamingC.h>
+#include "ace/SString.h"
+#include "ace/Vector_T.h"
+#include "ace/Map_Manager.h"
+#include "ace/Null_Mutex.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 #include "RedirectionService_Export.h"
 

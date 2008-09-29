@@ -51,7 +51,7 @@ namespace MyImpl
     ccm_activate (void);
 
     virtual void
-    ccm_passivate (void);
+      ccm_passivate (void)  {};
 
     virtual void
     ccm_remove (void);

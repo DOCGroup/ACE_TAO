@@ -1,5 +1,6 @@
 #include "DAnCE/Deployment/Deployment_NodeManagerC.h"
 #include "DAnCE/Deployment/Deployment_NodeApplicationC.h"
+#include "DAnCE/Logger/Log_Macros.h"
 
 int main (int argc, char * argv[])
 {

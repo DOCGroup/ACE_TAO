@@ -40,7 +40,7 @@ project(Hello_Base_stub) : ccm_stub {
 }
 
 
-project(Hello_Base_skel) : ciao_executor {
+project(Hello_Base_skel) : ccm_svnt {
   avoids += ace_for_tao
   after      +=  Hello_Base_stub
   sharedname  = Hello_Base_skel

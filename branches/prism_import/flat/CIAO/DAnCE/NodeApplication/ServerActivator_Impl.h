@@ -16,8 +16,8 @@
 #define SERVERACTIVATOR_IMPL_H_
 
 #include "ace/Map_Manager.h"
-#include <tao/ORB.h>
-#include <orbsvcs/orbsvcs/CosNamingC.h>
+#include "tao/ORB.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 #include "Cdmw/CDMW_IDLS.h"
 #include "ComponentServer/ComponentServerS.h"

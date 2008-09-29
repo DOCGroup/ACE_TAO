@@ -12,8 +12,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <ace/String_Base.h>
-#include <ace/Unbounded_Set_Ex.h>
+#include "ace/String_Base.h"
+#include "ace/Unbounded_Set_Ex.h"
 
 namespace CIAO
 {

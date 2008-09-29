@@ -1,5 +1,6 @@
 
 #include "ace/String_Base.h"
+#include "DAnCE/Logger/Log_Macros.h"
 #include "RegistrationPath.h"
 #include "DummyC.h"
 
