@@ -25,7 +25,7 @@
 ACE_RCSID(Forwarding, server, "$Id$")
 
 static const ACE_TCHAR *ior_output_file = 0;
-static const char *forward_to_ior = 0;
+static const ACE_TCHAR *forward_to_ior = 0;
 
 static int
 parse_args (int argc, ACE_TCHAR **argv)

@@ -43,7 +43,7 @@ public:
   ~Server_i (void);
   // Destruction.
 
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
   // Initialisation of the ORB and poa.
 
   PortableServer::POA_ptr create_poa (const char* name,
@@ -64,7 +64,7 @@ public:
   // The server is executed.
 
 private:
-  int parse_args (int argc, char **argv);
+  int parse_args (int argc, ACE_TCHAR **argv);
   // Parses the input arguments.
 
   int write_iors_to_file (const char *first_ior,

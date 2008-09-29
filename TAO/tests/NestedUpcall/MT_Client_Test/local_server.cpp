@@ -28,7 +28,7 @@ ACE_RCSID(MT_Client_Test, local_server, "$Id$")
 
 MT_Server_Task::MT_Server_Task (ACE_Thread_Manager* thr_mgr_ptr,
                                 int argc,
-                                char **argv,
+                                ACE_TCHAR **argv,
                                 TAO_ORB_Manager* orb_manager_ptr)
    :ACE_Task<ACE_SYNCH> (thr_mgr_ptr),
     argc_ (argc),

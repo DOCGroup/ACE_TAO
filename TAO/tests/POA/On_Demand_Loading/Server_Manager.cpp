@@ -24,7 +24,7 @@ Server_i::~Server_i(void)
 
 int
 Server_i::parse_args (int argc,
-                      char **argv)
+                      ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:"));
   int c;
@@ -111,7 +111,7 @@ Server_i::write_iors_to_file (const char *first_ior,
 // Initialisation of the ORB and POA.
 
 int
-Server_i::init (int argc, char **argv)
+Server_i::init (int argc, ACE_TCHAR **argv)
 {
 
   try

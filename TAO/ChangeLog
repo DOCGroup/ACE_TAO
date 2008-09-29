@@ -1,3 +1,32 @@
+Mon Sep 29 07:33:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMH_Exceptions/server.cpp
+        * tests/AMH_Oneway/server.cpp
+        * tests/BiDirectional_MultipleORB/destroy.cpp
+        * tests/DII_AMI_Forward/DII_ReplyHandler.cpp
+        * tests/Hang_Shutdown/server.cpp
+        * tests/InterOp-Naming/Server_i.h
+        * tests/NestedUpcall/MT_Client_Test/client.cpp
+        * tests/NestedUpcall/MT_Client_Test/client.h
+        * tests/NestedUpcall/MT_Client_Test/local_server.cpp
+        * tests/NestedUpcall/MT_Client_Test/local_server.h
+        * tests/NestedUpcall/MT_Client_Test/server.h
+        * tests/NestedUpcall/Triangle_Test/initiator.h
+        * tests/NestedUpcall/Triangle_Test/server_A.h
+        * tests/NestedUpcall/Triangle_Test/server_B.h
+        * tests/OBV/Simple/Simple_util.cpp
+        * tests/OBV/Simple/Simple_util.h
+        * tests/ORB_destroy/ORB_destroy.cpp
+        * tests/Param_Test/driver.cpp
+        * tests/Param_Test/driver.h
+        * tests/POA/Forwarding/client.cpp
+        * tests/POA/Forwarding/server.cpp
+        * tests/POA/Loader/Server_Manager.cpp
+        * tests/POA/Loader/Server_Manager.h
+        * tests/POA/On_Demand_Loading/Server_Manager.cpp
+        * tests/POA/On_Demand_Loading/Server_Manager.h
+          ACE_TCHAR changes
+
 Sun Sep 28 18:52:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/CSD_Strategy/TestApps/ClientApp.cpp

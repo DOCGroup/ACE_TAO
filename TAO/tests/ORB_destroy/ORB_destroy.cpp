@@ -25,7 +25,7 @@ ACE_RCSID(ORB_destroy, ORB_destroy, "$Id$")
 
 int
 test_with_regular_poa_manager (int argc,
-                               char **argv,
+                               ACE_TCHAR **argv,
                                const char *orb_name,
                                int destroy_orb,
                                int destroy_poa)
@@ -67,7 +67,7 @@ test_with_regular_poa_manager (int argc,
 
 int
 test_with_funky_poa_manager (int argc,
-                             char **argv,
+                             ACE_TCHAR **argv,
                              const char *orb_name,
                              int destroy_orb,
                              int destroy_poa,

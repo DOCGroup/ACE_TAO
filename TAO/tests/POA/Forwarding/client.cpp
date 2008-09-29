@@ -23,7 +23,7 @@
 
 ACE_RCSID(Forwarding, client, "$Id$")
 
-static char *IOR = 0;
+static ACE_TCHAR *IOR = 0;
 static int servers = 2;
 static int iterations = 3;
 
