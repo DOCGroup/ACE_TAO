@@ -26,7 +26,7 @@ ACE_RCSID(BiDir_Multiple_ORB, destroy, "$Id$")
 
 int
 test_with_bidir_poa (int argc,
-                     char **argv,
+                     ACE_TCHAR **argv,
                      const char *orb_name,
                      int destroy_orb)
 {

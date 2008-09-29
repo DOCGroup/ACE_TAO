@@ -52,7 +52,7 @@ public:
   // Destructor
 
   int init (int argc,
-            char **argv,
+            ACE_TCHAR **argv,
             TAO_ORB_Manager* orb_manager_ptr);
   // Initialize the MT_Server state - parsing arguments and ...
 
@@ -87,7 +87,7 @@ private:
   int argc_;
   // Number of commandline arguments.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // commandline arguments.
 
   unsigned int iterations_;
@@ -108,7 +108,7 @@ class MT_Server_Task : public ACE_Task<ACE_SYNCH>
 public:
   MT_Server_Task (ACE_Thread_Manager* thr_mgr_ptr,
                   int argc,
-                  char **argv,
+                  ACE_TCHAR **argv,
                   TAO_ORB_Manager* orb_manager_ptr);
 
   virtual int svc (void);
@@ -116,7 +116,7 @@ public:
 private:
   MT_Server mT_Server_;
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
   TAO_ORB_Manager* orb_manager_ptr_;
 };
 

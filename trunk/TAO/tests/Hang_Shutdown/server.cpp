@@ -54,7 +54,7 @@ namespace Test
         if (output_file == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",
-                             ACE_TEXT_CHAR_TO_TCHAR (ior_output_file)),
+                             ior_output_file),
                             1);
         ACE_OS::fprintf (output_file, "%s", ior.in ());
         ACE_OS::fclose (output_file);

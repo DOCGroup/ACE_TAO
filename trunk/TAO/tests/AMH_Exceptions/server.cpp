@@ -71,7 +71,7 @@ ST_AMH_Servant::shutdown (Test::AMH_RoundtripResponseHandler_ptr /*_tao_rh*/)
 class ST_AMH_Server
 {
 public:
-  ST_AMH_Server (int *argc, char **argv);
+  ST_AMH_Server (int *argc, ACE_TCHAR **argv);
   virtual ~ST_AMH_Server ();
 
   /// ORB inititalisation stuff
@@ -89,7 +89,7 @@ public:
 
 protected:
   int *argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
   char *ior_output_file_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
@@ -103,7 +103,7 @@ private:
 
 /*** Server Declaration ***/
 
-ST_AMH_Server::ST_AMH_Server (int* argc, char **argv)
+ST_AMH_Server::ST_AMH_Server (int* argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
 {

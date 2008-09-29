@@ -49,7 +49,7 @@ public:
   // Execute client example code.
 
   int init (int argc,
-            char **argv,
+            ACE_TCHAR **argv,
             int client_number);
   // Initialize the client communication endpoint with server.
 
@@ -63,7 +63,7 @@ private:
   int argc_;
   // # of arguments on the command line.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // arguments from command line.
 
   char *object_key_;
@@ -94,14 +94,14 @@ class MT_Client_Task : public ACE_Task<ACE_SYNCH>
   // = DESCRIPTION
   //    No big purpose, just wrapping
 public:
-  MT_Client_Task (int argc, char **argv, int client_number);
+  MT_Client_Task (int argc, ACE_TCHAR **argv, int client_number);
 
   virtual int svc (void);
 
 private:
   MT_Client mT_Client_;
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
 
   int client_number_;
   // To determine if we use the first or the second server.
