@@ -82,7 +82,7 @@ AST_EnumVal::AST_EnumVal (void)
 {
 }
 
-AST_EnumVal::AST_EnumVal (unsigned long v,
+AST_EnumVal::AST_EnumVal (ACE_CDR::ULong v,
                           UTL_ScopedName *n)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_enum_val, n),

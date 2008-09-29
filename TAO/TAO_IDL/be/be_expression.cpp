@@ -46,17 +46,17 @@ be_expression::be_expression (AST_Expression::ExprComb c,
 {
 }
 
-be_expression::be_expression (long l)
+be_expression::be_expression (ACE_CDR::Long l)
   : AST_Expression (l)
 {
 }
 
-be_expression::be_expression (bool b)
+be_expression::be_expression (ACE_CDR::Boolean b)
   : AST_Expression (b)
 {
 }
 
-be_expression::be_expression (idl_uns_long l,
+be_expression::be_expression (ACE_CDR::ULong l,
                               AST_Expression::ExprType t)
   : AST_Expression (l,
                     t)
@@ -73,7 +73,7 @@ be_expression::be_expression (char *s)
 {
 }
 
-be_expression::be_expression (char c)
+be_expression::be_expression (ACE_CDR::Char c)
   : AST_Expression (c)
 {
 }
@@ -83,7 +83,7 @@ be_expression::be_expression (ACE_OutputCDR::from_wchar wc)
 {
 }
 
-be_expression::be_expression (double d)
+be_expression::be_expression (ACE_CDR::Double d)
   : AST_Expression (d)
 {
 }

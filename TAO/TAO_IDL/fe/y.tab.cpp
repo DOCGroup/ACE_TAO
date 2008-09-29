@@ -304,12 +304,12 @@ typedef union TAO_YYSTYPE {
   AST_Argument::Direction       dival;          /* Argument direction   */
   AST_Operation::Flags          ofval;          /* Operation flags      */
   FE_Declarator                 *deval;         /* Declarator value     */
-  bool                          bval;           /* Boolean value        */
-  long                          ival;           /* Long value           */
-  idl_uns_long                  uival;          /* Unsigned long value  */
-  double                        dval;           /* Double value         */
-  float                         fval;           /* Float value          */
-  char                          cval;           /* Char value           */
+  ACE_CDR::Boolean              bval;           /* Boolean value        */
+  ACE_CDR::Long                 ival;           /* Long value           */
+  ACE_CDR::ULong                uival;          /* Unsigned long value  */
+  ACE_CDR::Double               dval;           /* Double value         */
+  ACE_CDR::Float                fval;           /* Float value          */
+  ACE_CDR::Char                 cval;           /* Char value           */
   ACE_CDR::WChar                wcval;          /* WChar value          */
   UTL_String                    *sval;          /* String value         */
   char                          *wsval;         /* WString value        */
@@ -5316,13 +5316,13 @@ tao_yyreduce:
               else
                 {
                   Identifier id ("sequence");
-                  UTL_ScopedName sn (&id,
-                                     0);
+                  UTL_ScopedName sn (&id, 0);
+                  ACE_CDR::ULong bound = 0UL;
 
                   tao_yyval.dcval =
                     idl_global->gen ()->create_sequence (
                         idl_global->gen ()->create_expr (
-                                                (idl_uns_long) 0,
+                                                bound,
                                                 AST_Expression::EV_ulong
                                               ),
                         tp,
@@ -5429,9 +5429,11 @@ tao_yyreduce:
           /*
            * Create a node representing a string.
            */
+          ACE_CDR::ULong bound = 0UL;
+          
           tao_yyval.dcval =
             idl_global->gen ()->create_string (
-                idl_global->gen ()->create_expr ((idl_uns_long) 0,
+                idl_global->gen ()->create_expr (bound,
                                                  AST_Expression::EV_ulong)
               );
           /*
@@ -5507,9 +5509,11 @@ tao_yyreduce:
           /*
            * Create a node representing a wstring.
            */
+          ACE_CDR::ULong bound = 0UL;
+          
           tao_yyval.dcval =
             idl_global->gen ()->create_wstring (
-                idl_global->gen ()->create_expr ((idl_uns_long) 0,
+                idl_global->gen ()->create_expr (bound,
                                                  AST_Expression::EV_ulong)
               );
           /*

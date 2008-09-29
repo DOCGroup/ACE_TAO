@@ -68,7 +68,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _AST_EXPRESSION_AST_EXPRESSION_HH
 
 #include "ace/CDR_Stream.h"
-#include "idl_uns_long.h"
 #include "utl_scoped_name.h"
 
 class UTL_String;
@@ -163,11 +162,11 @@ public:
 
       union
         {
-          short               sval;     // Contains short expression value.
-          unsigned short      usval;    // Contains unsigned short expr value.
-          long                lval;     // Contains long expression value.
-          unsigned long       ulval;    // Contains unsigned long expr value.
-          bool                bval;     // Contains boolean expression value.
+          ACE_CDR::Short      sval;     // Contains short expression value.
+          ACE_CDR::UShort     usval;    // Contains unsigned short expr value.
+          ACE_CDR::Long       lval;     // Contains long expression value.
+          ACE_CDR::ULong      ulval;    // Contains unsigned long expr value.
+          ACE_CDR::Boolean    bval;     // Contains boolean expression value.
 #if ! defined (ACE_LACKS_LONGLONG_T)
           ACE_CDR::LongLong   llval;   // Contains long long expr value.
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
@@ -176,14 +175,14 @@ public:
 #elif ! defined (ACE_LACKS_LONGLONG_T)
           ACE_CDR::ULongLong  ullval;  // Contains unsigned long long expr value.
 #endif /* defined (ACE_LACKS_UNSIGNEDLONGLONG_T) && ! defined (ACE_LACKS_LONGLONG_T) */
-          float               fval;     // Contains 32-bit float expr value.
-          double              dval;     // Contains 64-bit float expr value.
-          char                cval;     // Contains char expression value.
+          ACE_CDR::Float      fval;     // Contains 32-bit float expr value.
+          ACE_CDR::Double     dval;     // Contains 64-bit float expr value.
+          ACE_CDR::Char       cval;     // Contains char expression value.
           ACE_CDR::WChar      wcval;    // Contains wchar expression value.
-          unsigned char       oval;     // Contains unsigned char expr value.
+          ACE_CDR::Octet      oval;     // Contains octet expr value.
           UTL_String          *strval;  // Contains String * expr value.
           char                *wstrval; // Contains wide string expr value.
-          unsigned long       eval;     // Contains enumeration value.
+          ACE_CDR::ULong      eval;     // Contains enumeration value.
         } u;
 
       ExprType et;
@@ -199,28 +198,28 @@ public:
                   AST_Expression *v1,
                   AST_Expression *v2);
 
-  AST_Expression (short s);
+  AST_Expression (ACE_CDR::Short s);
 
-  AST_Expression (unsigned short us);
+  AST_Expression (ACE_CDR::UShort us);
 
-  AST_Expression (long l);
+  AST_Expression (ACE_CDR::Long l);
 
-  AST_Expression (bool b);
+  AST_Expression (ACE_CDR::Boolean b);
 
-  AST_Expression (unsigned long ul);
+  AST_Expression (ACE_CDR::ULong ul);
 
-  AST_Expression (idl_uns_long,
+  AST_Expression (ACE_CDR::ULong,
                   ExprType t);
 
-  AST_Expression (float f);
+  AST_Expression (ACE_CDR::Float f);
 
-  AST_Expression (double d);
+  AST_Expression (ACE_CDR::Double d);
 
-  AST_Expression (char c);
+  AST_Expression (ACE_CDR::Char c);
 
   AST_Expression (ACE_OutputCDR::from_wchar wc);
 
-  AST_Expression (unsigned char uc);
+  AST_Expression (ACE_CDR::Octet o);
 
   AST_Expression (UTL_String *s);
 

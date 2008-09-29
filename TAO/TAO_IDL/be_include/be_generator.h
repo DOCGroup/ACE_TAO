@@ -217,28 +217,28 @@ public:
                                        AST_Expression *v1,
                                        AST_Expression *v2);
 
-  virtual AST_Expression *create_expr (long v);
+  virtual AST_Expression *create_expr (ACE_CDR::Long v);
 
-  virtual AST_Expression *create_expr (bool b);
+  virtual AST_Expression *create_expr (ACE_CDR::Boolean b);
 
-  virtual AST_Expression *create_expr (idl_uns_long v,
+  virtual AST_Expression *create_expr (ACE_CDR::ULong v,
                                        AST_Expression::ExprType t);
 
   virtual AST_Expression *create_expr( UTL_String *s);
 
   virtual AST_Expression *create_expr (char *s);
 
-  virtual AST_Expression *create_expr (char c);
+  virtual AST_Expression *create_expr (ACE_CDR::Char c);
 
   virtual AST_Expression *create_expr (ACE_OutputCDR::from_wchar wc);
 
-  virtual AST_Expression *create_expr (double d);
+  virtual AST_Expression *create_expr (ACE_CDR::Double d);
 
-  virtual AST_EnumVal *create_enum_val (unsigned long v,
+  virtual AST_EnumVal *create_enum_val (ACE_CDR::ULong v,
                                         UTL_ScopedName *n);
 
   virtual AST_Array *create_array (UTL_ScopedName *n,
-                                   unsigned long ndims,
+                                   ACE_CDR::ULong ndims,
                                    UTL_ExprList *dims,
                                    bool is_local,
                                    bool is_abstract);

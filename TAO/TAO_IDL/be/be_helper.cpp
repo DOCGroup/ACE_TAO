@@ -381,6 +381,7 @@ TAO_OutStream::operator<< (const ACE_CDR::LongLong num)
   return *this;
 }
 #endif
+/*
 TAO_OutStream &
 TAO_OutStream::operator<< (const unsigned long num)
 {
@@ -400,7 +401,7 @@ TAO_OutStream::operator<< (const long num)
 
   return *this;
 }
-
+*/
 TAO_OutStream &
 TAO_OutStream::operator<< (const TAO_NL&)
 {

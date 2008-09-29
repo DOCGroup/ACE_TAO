@@ -174,9 +174,9 @@ int be_visitor_array_ci::visit_array (be_array *node)
     }
 
   char buf[NAMEBUFSIZE];
-  unsigned long i;
+  ACE_CDR::ULong i;
 
-  for (i = 0; i < node->n_dims (); ++i)
+  for (i = 0UL; i < node->n_dims (); ++i)
     {
       ACE_OS::memset (buf,
                       '\0',
@@ -232,7 +232,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  unsigned long ndims = node->n_dims ();
+  ACE_CDR::ULong ndims = node->n_dims ();
   be_array *primitive_type = 0;
 
   if (bt->node_type () == AST_Decl::NT_typedef)
