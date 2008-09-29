@@ -27,7 +27,7 @@ ACE_RCSID(CosPropertyService, client, "$Id$")
 
 int
 Client::init (int argc,
-              char *argv[])
+              ACE_TCHAR *argv[])
 {
   // Init the ORB.
   manager_.init (argc, argv);

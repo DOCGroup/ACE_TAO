@@ -45,7 +45,7 @@ class TAO_TS_Export TimeStamp_Protocol_Factory : public TAO_AV_Flow_Protocol_Fac
   /// Initialization hook.
   TimeStamp_Protocol_Factory (void);
   virtual ~TimeStamp_Protocol_Factory (void);
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int match_protocol (const char *flow_string);
   // Note : Some platforms still don't support Covariant returns
   virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,

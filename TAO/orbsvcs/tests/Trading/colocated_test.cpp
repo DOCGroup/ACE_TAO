@@ -14,7 +14,7 @@ ACE_RCSID (Trading,
            "$Id$")
 
 void
-parse_args (int argc, char *argv[],
+parse_args (int argc, ACE_TCHAR *argv[],
             CORBA::Boolean& verbose)
 {
   int opt;

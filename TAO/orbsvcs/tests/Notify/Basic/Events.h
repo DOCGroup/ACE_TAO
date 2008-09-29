@@ -68,7 +68,7 @@ public:
   virtual ~Events (void);
 
   int parse_args (int argc,
-                  char *argv[]) ;
+                  ACE_TCHAR *argv[]) ;
 
   int init (int argc,
             char *argv []);

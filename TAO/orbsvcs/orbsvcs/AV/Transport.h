@@ -328,7 +328,7 @@ public:
   /// Initialization hook.
   TAO_AV_Transport_Factory (void);
   virtual ~TAO_AV_Transport_Factory (void);
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int match_protocol (const char *protocol_string);
   virtual TAO_AV_Acceptor *make_acceptor (void);
   virtual TAO_AV_Connector *make_connector (void);

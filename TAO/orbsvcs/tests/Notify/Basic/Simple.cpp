@@ -102,7 +102,7 @@ Simple_Test::init (int argc,
 
 int
 Simple_Test::parse_args (int argc,
-                         char *argv[])
+                         ACE_TCHAR *argv[])
 {
     ACE_Arg_Shifter arg_shifter (argc,
                                  argv);

@@ -49,7 +49,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-gen_objref (int argc, char *argv[])
+gen_objref (int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb;
   CORBA::Object_var obj;
@@ -119,7 +119,7 @@ gen_objref (int argc, char *argv[])
 }
 
 int
-parse_objref (int argc, char *argv[])
+parse_objref (int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb;
   CORBA::Object_var obj;

@@ -35,7 +35,7 @@ Activator_Options::Activator_Options ()
 }
 
 int
-Activator_Options::parse_args (int &argc, char *argv[])
+Activator_Options::parse_args (int &argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter shifter (argc, argv);
 
@@ -175,7 +175,7 @@ Activator_Options::parse_args (int &argc, char *argv[])
 }
 
 int
-Activator_Options::init (int argc, char *argv[])
+Activator_Options::init (int argc, ACE_TCHAR *argv[])
 {
   // Make an initial pass through and grab the arguments that we recognize.
   // This may also run the commands to install or remove the nt service.

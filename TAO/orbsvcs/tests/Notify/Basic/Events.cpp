@@ -121,7 +121,7 @@ Events::init (int argc,
 
 int
 Events::parse_args (int argc,
-                         char *argv[])
+                         ACE_TCHAR *argv[])
 {
     ACE_Arg_Shifter arg_shifter (argc,
                                  argv);

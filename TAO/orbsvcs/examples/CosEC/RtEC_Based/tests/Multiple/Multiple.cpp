@@ -17,7 +17,7 @@ Multiple::~Multiple (void)
 }
 
 int
-Multiple::init (int argc, char *argv[])
+Multiple::init (int argc, ACE_TCHAR *argv[])
 {
   if (init_ORB (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

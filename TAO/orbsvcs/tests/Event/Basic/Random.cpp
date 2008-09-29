@@ -47,7 +47,7 @@ RND_Driver::RND_Driver (void)
 }
 
 int
-RND_Driver::run (int argc, char *argv[])
+RND_Driver::run (int argc, ACE_TCHAR *argv[])
 {
   try
     {

@@ -88,7 +88,7 @@ RtEC_Based_CosEC::parse_args (int argc, char *argv [])
 }
 
 void
-RtEC_Based_CosEC::startup (int argc, char *argv[])
+RtEC_Based_CosEC::startup (int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
               "Starting up the CosEvent Service...\n"));

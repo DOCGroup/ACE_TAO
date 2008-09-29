@@ -15,7 +15,7 @@ ACE_RCSID (TAO_PERF_RTEC,
            Client_Options,
            "$Id$")
 
-Client_Options::Client_Options (int &argc, char *argv[])
+Client_Options::Client_Options (int &argc, ACE_TCHAR *argv[])
   : ior ("file://test.ior")
   , iterations (1000)
   , nthreads (0)

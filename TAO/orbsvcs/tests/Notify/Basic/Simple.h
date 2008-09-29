@@ -69,7 +69,7 @@ public:
   virtual ~Simple_Test (void);
 
   int parse_args (int argc,
-                  char *argv[]) ;
+                  ACE_TCHAR *argv[]) ;
 
   int init (int argc,
             char *argv []);

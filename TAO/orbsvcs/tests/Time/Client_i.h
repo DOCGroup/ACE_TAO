@@ -41,7 +41,7 @@ public:
   int run (void);
   // Execute client example code.
 
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the client communication endpoint with server.
 
   void test_for_secure_universal_time (void);
