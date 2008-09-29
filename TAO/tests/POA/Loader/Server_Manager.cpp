@@ -40,7 +40,7 @@ Server_i::parse_args (int argc, ACE_TCHAR **argv)
                            "usage:  %s "
                            "[-f ior_output_file] "
                            "\n",
-                           ACE_TEXT_CHAR_TO_TCHAR (argv [0])),
+                           argv [0]),
                           -1);
       }
 
