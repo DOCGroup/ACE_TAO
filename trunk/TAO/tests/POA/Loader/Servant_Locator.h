@@ -61,7 +61,7 @@ public:
   // the servant.
 
   ServantLocator (CORBA::ORB_ptr orb,
-                    const char *dllname,
+                    const ACE_TCHAR *dllname,
                     const char *factory_function,
                     const char *garbage_collection_function);
   // Constructor.

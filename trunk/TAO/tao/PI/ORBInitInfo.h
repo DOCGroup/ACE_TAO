@@ -244,7 +244,7 @@ private:
   int argc_;
 
   /// The argument vector passed to CORBA::ORB_init().
-  ACE_TCHAR **argv_;
+  char **argv_;
 
   /// Reference to the CodecFactory returned by
   /// ORBInitInfo::codec_factory().
