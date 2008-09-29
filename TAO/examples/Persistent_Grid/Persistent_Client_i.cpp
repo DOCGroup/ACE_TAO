@@ -21,7 +21,7 @@ Persistent_Client_i::~Persistent_Client_i (void)
 
 int
 Persistent_Client_i::parse_args (int argc,
-                                 char *argv[])
+                                 ACE_TCHAR *argv[])
 {
   // Parses some of the options that are specific to this example
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dk:f:xw:h:r"));
@@ -49,7 +49,7 @@ Persistent_Client_i::parse_args (int argc,
 int
 Persistent_Client_i::run (const char *name,
                           int argc,
-                          char *argv[])
+                          ACE_TCHAR *argv[])
 {
   // Initialize the client.
   if (client.init (name, argc, argv) == -1)

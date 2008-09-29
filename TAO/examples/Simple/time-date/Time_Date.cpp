@@ -57,7 +57,7 @@ DLL_ORB::svc (void)
 }
 
 int
-DLL_ORB::init (int argc, char *argv[])
+DLL_ORB::init (int argc, ACE_TCHAR *argv[])
 {
   // Prevent TAO from registering with the ACE_Object_Manager so
   // that it can be dynamically unloaded successfully.
@@ -165,7 +165,7 @@ Time_Date_Servant::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Time_Date_Servant::init (int argc, char *argv[])
+Time_Date_Servant::init (int argc, ACE_TCHAR *argv[])
 {
   try
     {

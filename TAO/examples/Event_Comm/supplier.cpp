@@ -43,7 +43,7 @@ Supplier::close (void)
 }
 
 int
-Supplier::init (int argc, char *argv[])
+Supplier::init (int argc, ACE_TCHAR *argv[])
 {
   if (this->nh_.init (argc, argv, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

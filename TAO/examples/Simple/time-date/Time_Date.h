@@ -42,7 +42,7 @@ class ACE_Svc_Export DLL_ORB : public ACE_Task_Base
 public:
 
   /// Initialize the @c TAO_ORB_Manager.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Shutdown the @c TAO_ORB_Manager.
   virtual int fini (void);
@@ -75,7 +75,7 @@ class ACE_Svc_Export Time_Date_Servant : public ACE_Service_Object
 public:
 
   /// Initialize the @c Time_Date servant.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Parse the "command-line" arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);

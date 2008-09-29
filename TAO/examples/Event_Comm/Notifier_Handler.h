@@ -41,7 +41,7 @@ public:
   virtual ~Notifier_Handler (void);
   // Destructor.
 
-  int init (int argc, char *argv[], ShutdownCallback* _shutdowncallback);
+  int init (int argc, ACE_TCHAR *argv[], ShutdownCallback* _shutdowncallback);
   // Initialize the client communication endpoint with server.
 
   // = Accessors.

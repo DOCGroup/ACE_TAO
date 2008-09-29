@@ -38,7 +38,7 @@ public:
   // Destructor
 
   int init (int argc,
-            char *argv[]);
+            ACE_TCHAR *argv[]);
   // Initialize the Quoter_Server state - parsing arguments and ...
 
   int run (void);

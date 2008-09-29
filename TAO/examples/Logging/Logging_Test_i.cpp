@@ -28,7 +28,7 @@ Logger_Client::~Logger_Client (void)
 }
 
 int
-Logger_Client::init (int argc, char *argv[])
+Logger_Client::init (int argc, ACE_TCHAR *argv[])
 {
   this->argc_ = argc;
   this->argv_ = argv;

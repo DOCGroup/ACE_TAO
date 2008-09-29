@@ -20,7 +20,7 @@ Consumer_Handler::~Consumer_Handler (void)
 
 int
 Consumer_Handler::init (int argc,
-                        char *argv[],
+                        ACE_TCHAR *argv[],
                         ShutdownCallback *_shutdowncallback)
 {
   const char *filtering_criteria = "";

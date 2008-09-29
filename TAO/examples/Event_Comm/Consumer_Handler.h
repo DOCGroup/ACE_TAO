@@ -43,7 +43,7 @@ public:
  virtual ~Consumer_Handler (void);
   // Destructor.
 
-  int init (int argc, char *argv[], ShutdownCallback *_shutdowncallback);
+  int init (int argc, ACE_TCHAR *argv[], ShutdownCallback *_shutdowncallback);
   // Initializes the ORB, gets the Notifier reference from the Naming
   // Service, and starts the servant for the Consumer object.
 

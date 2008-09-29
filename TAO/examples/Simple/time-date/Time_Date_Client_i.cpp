@@ -28,7 +28,7 @@ Time_Date_Client_i::parse_args (int,
 int
 Time_Date_Client_i::run (const char *name,
                          int argc,
-                         char *argv[])
+                         ACE_TCHAR *argv[])
 {
   // Initialize the client.
   if (client_.init (name, argc, argv) == -1)

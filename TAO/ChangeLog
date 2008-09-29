@@ -1,3 +1,60 @@
+Mon Sep 29 07:57:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Callback_Quoter/Consumer_Handler.h
+        * examples/Callback_Quoter/Notifier_Input_Handler.cpp
+        * examples/Callback_Quoter/Notifier_Input_Handler.h
+        * examples/Callback_Quoter/Supplier_i.h
+        * examples/Content_Server/AMI_Iterator/client.cpp
+        * examples/Content_Server/AMI_Observer/client.cpp
+        * examples/Event_Comm/consumer.cpp
+        * examples/Event_Comm/Consumer_Handler.cpp
+        * examples/Event_Comm/Consumer_Handler.h
+        * examples/Event_Comm/notifier.cpp
+        * examples/Event_Comm/notifier.h
+        * examples/Event_Comm/Notifier_Handler.cpp
+        * examples/Event_Comm/Notifier_Handler.h
+        * examples/Event_Comm/Notifier_Server.cpp
+        * examples/Event_Comm/Notifier_Server.h
+        * examples/Event_Comm/supplier.cpp
+        * examples/Event_Comm/supplier.h
+        * examples/ior_corbaloc/ior_corbaloc_client_i.cpp
+        * examples/ior_corbaloc/ior_corbaloc_client_i.h
+        * examples/Load_Balancing/Identity_Client.h
+        * examples/Load_Balancing/Identity_Server.h
+        * examples/Load_Balancing/Load_Balancing_Service.h
+        * examples/Load_Balancing_persistent/Identity_Server.h
+        * examples/Logging/Logging_Service_i.cpp
+        * examples/Logging/Logging_Test_i.cpp
+        * examples/OBV/Simple_util.h
+        * examples/OBV/Typed_Events/Client_i.cpp
+        * examples/Persistent_Grid/Grid_Client_i.cpp
+        * examples/Persistent_Grid/Persistent_Client_i.cpp
+        * examples/Persistent_Grid/Simple_util.cpp
+        * examples/Persistent_Grid/Simple_util.h
+        * examples/Quoter/Factory_Finder.cpp
+        * examples/Quoter/Factory_Finder.h
+        * examples/Quoter/Generic_Factory.cpp
+        * examples/Quoter/Generic_Factory.h
+        * examples/Quoter/server.h
+        * examples/RTCORBA/Activity/Activity.cpp
+        * examples/RTCORBA/Activity/Activity.h
+        * examples/RTCORBA/Activity/Builder.cpp
+        * examples/RTCORBA/Activity/Builder.h
+        * examples/Simple/bank/Bank_Client_i.cpp
+        * examples/Simple/chat/Client_i.cpp
+        * examples/Simple/chat/Client_i.h
+        * examples/Simple/chat/Server_i.cpp
+        * examples/Simple/chat/Server_i.h
+        * examples/Simple/echo/Echo_Client_i.cpp
+        * examples/Simple/grid/Grid_Client_i.cpp
+        * examples/Simple/Simple_util.cpp
+        * examples/Simple/Simple_util.h
+        * examples/Simple/time-date/Time_Date.cpp
+        * examples/Simple/time-date/Time_Date.h
+        * examples/Simple/time-date/Time_Date_Client_i.cpp
+        * examples/Simple/time/Time_Client_i.cpp
+          ACE_TCHAR changes
+
 Mon Sep 29 07:55:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Cubit/TAO/MT_Cubit/client.cpp

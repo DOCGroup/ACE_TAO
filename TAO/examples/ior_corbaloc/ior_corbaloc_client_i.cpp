@@ -87,7 +87,7 @@ IOR_corbaloc_Client_i::run (void)
 
 int
 IOR_corbaloc_Client_i::init (int& argc,
-                             char *argv[])
+                             ACE_TCHAR *argv[])
 {
 
   try

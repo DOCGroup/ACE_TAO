@@ -92,7 +92,7 @@ Notifier_Server::init_naming_service (void)
 // Initialize the server.
 int
 Notifier_Server::init (int argc,
-                       char *argv[])
+                       ACE_TCHAR *argv[])
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create the child poa under the root POA.

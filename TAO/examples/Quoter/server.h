@@ -52,7 +52,7 @@ public:
   ~Quoter_Server (void);
   // Destructor
 
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the Quoter_Server state - parsing arguments and ...
 
   int run (void);

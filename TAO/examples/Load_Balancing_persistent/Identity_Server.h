@@ -48,7 +48,7 @@ public:
   int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parses the commandline arguments.
 
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Performs all the initializations necessary before going into the
   // ORB event loop.
 

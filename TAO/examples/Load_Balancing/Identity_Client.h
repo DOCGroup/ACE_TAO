@@ -51,7 +51,7 @@ public:
   ~Identity_Client (void);
   // Destructor.
 
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initializes <orb_manager_>, and parses commandline arguments.
 
   int run (void);

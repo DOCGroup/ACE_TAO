@@ -21,7 +21,7 @@ public:
   ~Consumer (void);
   // Destructor.
 
-  int initialize (int argc, char *argv[]);
+  int initialize (int argc, ACE_TCHAR *argv[]);
   // Initialization method.
 
   int run (void);
@@ -87,7 +87,7 @@ Consumer::run (void)
 }
 
 int
-Consumer::initialize (int argc, char *argv[])
+Consumer::initialize (int argc, ACE_TCHAR *argv[])
 {
   // Initialize the <Consumer_Handler>.
   if (this->ch_.init (argc, argv, this) == -1)

@@ -44,7 +44,7 @@ class activity_Export Builder : public ACE_Service_Object
   ~Builder ();
 
   /// = Service_Object virtual method overloads.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int fini (void);
 
   /// = List access

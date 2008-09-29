@@ -28,7 +28,7 @@ Grid_Client_i::~Grid_Client_i (void)
 
 int
 Grid_Client_i::parse_args (int argc,
-                           char *argv[])
+                           ACE_TCHAR *argv[])
 {
   // Parses some of the options that are specific to this example
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("df:nk:xw:h:p:q:v:"));
@@ -68,7 +68,7 @@ Grid_Client_i::parse_args (int argc,
 int
 Grid_Client_i::run (const char *name,
                     int argc,
-                    char *argv[])
+                    ACE_TCHAR *argv[])
 {
   // Initialize the client.
   if (client.init (name, argc, argv) == -1)

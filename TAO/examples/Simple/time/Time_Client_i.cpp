@@ -20,7 +20,7 @@ Time_Client_i::~Time_Client_i (void)
 int
 Time_Client_i::run (const char *name,
                     int argc,
-                    char *argv[])
+                    ACE_TCHAR *argv[])
 {
   // Initialize the client.
   if (client.init (name, argc, argv) == -1)
@@ -51,7 +51,7 @@ Time_Client_i::run (const char *name,
 
       ACE_OS::ctime_r (&timedate,
                        ascii_timedate, 64);
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   "string time is %s\n",
                   ascii_timedate));
