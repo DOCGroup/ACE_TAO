@@ -60,7 +60,7 @@ Server_i::parse_args (int argc, ACE_TCHAR *argv[])
 
 int
 Server_i::init (int argc,
-                char *argv[])
+                ACE_TCHAR *argv[])
 {
   // Parse the command line options.
   if (this-> parse_args(argc, argv) == -1)

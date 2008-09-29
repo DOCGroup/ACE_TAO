@@ -47,7 +47,7 @@ public:
 
   int init (const char *servant_name,
             int argc,
-            char *argv[]);
+            ACE_TCHAR *argv[]);
   // Initialize the Server state - parsing arguments and waiting.
   // interface_name is the name used to register the Servant.
 
@@ -114,7 +114,7 @@ public:
   ~Client (void);
   // Destructor.
 
-  int init (const char *name,int argc, char *argv[]);
+  int init (const char *name,int argc, ACE_TCHAR *argv[]);
   // Initialize the client communication endpoint with server.
 
   INTERFACE_OBJECT *operator-> () { return server_.in ();};

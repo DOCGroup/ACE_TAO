@@ -53,7 +53,7 @@ public:
 
 
   /// Activate the tasks, jobs, poas.
-  void run (int argc, char *argv[]);
+  void run (int argc, ACE_TCHAR *argv[]);
 
   /// Resolve the naming service.
   int resolve_naming_service (void);
@@ -88,7 +88,7 @@ protected:
 
   /// Create a file whose name is specified in the -Started_Flag <file_name> argument at startup.
   /// This file flags that the Activity has finished its bootstrapping step.
-  void create_started_flag_file (int argc, char *argv[]);
+  void create_started_flag_file (int argc, ACE_TCHAR *argv[]);
 
   /// = Data members
 

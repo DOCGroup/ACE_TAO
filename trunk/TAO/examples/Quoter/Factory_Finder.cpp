@@ -47,7 +47,7 @@ Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server (void)
 
 int
 Quoter_Factory_Finder_Server::init (int argc,
-                                    char *argv[])
+                                    ACE_TCHAR *argv[])
 {
   const char *exception_message = "Null Message";
 

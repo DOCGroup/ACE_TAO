@@ -78,7 +78,7 @@ Client_i::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Client_i::init (int argc, char *argv[])
+Client_i::init (int argc, ACE_TCHAR *argv[])
 {
   // Check if the command line arguments are ok.
   if (this->parse_args (argc, argv) == -1)

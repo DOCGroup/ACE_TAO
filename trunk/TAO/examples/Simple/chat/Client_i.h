@@ -50,7 +50,7 @@ public:
   ~Client_i (void);
   // Destructor.
 
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the client communication with the server.
 
   int run (void);

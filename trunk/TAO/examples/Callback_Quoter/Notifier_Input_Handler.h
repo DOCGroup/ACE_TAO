@@ -45,7 +45,7 @@ public:
   // Destructor.
 
   int init (int argc,
-            char *argv[]);
+            ACE_TCHAR *argv[]);
   // Initialize the Notifier who plays the role of the server here.
 
   int run (void);

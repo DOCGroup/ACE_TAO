@@ -318,7 +318,7 @@ Activity::get_server_priority (CORBA::Object_ptr server)
 }
 
 void
-Activity::run (int argc, char *argv[])
+Activity::run (int argc, ACE_TCHAR *argv[])
 {
   this->init (argc, argv);
 
@@ -346,7 +346,7 @@ Activity::run (int argc, char *argv[])
 }
 
 void
-Activity::create_started_flag_file (int argc, char *argv[])
+Activity::create_started_flag_file (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 

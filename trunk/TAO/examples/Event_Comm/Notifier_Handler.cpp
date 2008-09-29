@@ -79,7 +79,7 @@ Notifier_Handler::notifier (Event_Comm::Notifier *notifier)
 
 int
 Notifier_Handler::init (int argc,
-                        char *argv[],
+                        ACE_TCHAR *argv[],
                         ShutdownCallback* _shutdowncallback)
 {
   // set the callback
