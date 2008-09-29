@@ -7,7 +7,7 @@ const char * ior_input_file = 0;
 char input_ior[5000];
 
 
-void eat_args (int & argc, char *argv[], int argp, int how_many)
+void eat_args (int & argc, ACE_TCHAR *argv[], int argp, int how_many)
 {
   for (int marg = argp; marg + how_many < argc; ++marg)
     {
@@ -16,7 +16,7 @@ void eat_args (int & argc, char *argv[], int argp, int how_many)
   argc -= how_many;
 }
 
-bool parse_args (int & argc, char *argv[])
+bool parse_args (int & argc, ACE_TCHAR *argv[])
 {
   int argp = 1;
   while (argp < argc)

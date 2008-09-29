@@ -74,7 +74,7 @@ const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 // Parse command-line arguments.
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:");
   int c;

@@ -1,3 +1,28 @@
+Mon Sep 29 07:53:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2429_Regression/client.cpp
+        * tests/Bug_2935_Regression/middle.cpp
+        * tests/Bug_2935_Regression/sink.cpp
+        * tests/Bug_2935_Regression/source_i.h
+        * tests/Bug_2936_Regression/PersistentPOA.cpp
+        * tests/Bug_2936_Regression/PersistentPOA.h
+        * tests/Collocated_Forwarding/Server_Request_Interceptor.cpp
+        * tests/Exposed_Policies/Policy_Tester.cpp
+        * tests/Exposed_Policies/Policy_Tester.h
+        * tests/Hang_Shutdown/client.cpp
+        * tests/InterOp-Naming/Server_i.cpp
+        * tests/InterOp-Naming/Server_i.h
+        * tests/OBV/Simple/Client_i.cpp
+        * tests/OBV/Simple/Simple_util.cpp
+        * tests/OBV/Simple/Simple_util.h
+        * tests/POA/TIE/client.cpp
+        * tests/QtTests/client.cpp
+        * tests/RTCORBA/Bug_3382_Regression/client.cpp
+        * tests/RTCORBA/Bug_3382_Regression/server.cpp
+        * tests/TransportCurrent/Framework/simple.cpp
+        * tests/Xt_Stopwatch/client.cpp
+          ACE_TCHAR changes
+
 Mon Sep 29 07:44:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ORBInitInfo.h:

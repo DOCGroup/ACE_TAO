@@ -96,7 +96,7 @@ Server_i::add_IOR_to_table (CORBA::String_var ior)
 // Initialize the server.
 int
 Server_i::init (int argc,
-                char *argv[])
+                ACE_TCHAR *argv[])
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.

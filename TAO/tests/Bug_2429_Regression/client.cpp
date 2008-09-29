@@ -72,7 +72,7 @@ class Reply_Handler
 static const ACE_TCHAR  server_ior = ACE_TEXT("file://server.ior");
 
 static int
-client_parse_args(int argc, char *argv[])
+client_parse_args(int argc, ACE_TCHAR *argv[])
 {
    ACE_Get_Opt
    get_opts(argc, argv, "f:");

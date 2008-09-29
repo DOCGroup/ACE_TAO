@@ -25,7 +25,7 @@ class bug2936_Export PersistentPoa
 
   // protected types and methods
   protected:
-    virtual int init (int argc, char *argv[]);
+    virtual int init (int argc, ACE_TCHAR *argv[]);
 
     virtual int fini (void);
 

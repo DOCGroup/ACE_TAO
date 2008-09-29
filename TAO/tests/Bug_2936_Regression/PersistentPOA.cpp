@@ -24,7 +24,7 @@ PersistentPoa::~PersistentPoa ( )
 } /* end of PersistentPoa::~PersistentPoa ( ) */
 
 
-int PersistentPoa::init (int argc, char *argv[])
+int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
 

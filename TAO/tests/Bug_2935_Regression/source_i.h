@@ -35,7 +35,7 @@ public:
 
   ~Source_i ();
 
-  bool parse_args(int argc, char *argv[]);
+  bool parse_args(int argc, ACE_TCHAR *argv[]);
 
   int run ();
   // Execute the methods

@@ -11,7 +11,7 @@ ACE_RCSID (Transport_Current,
            "$Id$")
 
 int
-testCurrentORBInitializer (int argc, char *argv[])
+testCurrentORBInitializer (int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
