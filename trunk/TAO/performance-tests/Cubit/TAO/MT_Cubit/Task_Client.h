@@ -107,7 +107,7 @@ public:
   Task_State (void);
   // Constructor.
 
-  int parse_args (int argc,char **argv);
+  int parse_args (int argc,ACE_TCHAR **argv);
   // parses the arguments with the provided argc and argv.
 
   ~Task_State (void);
@@ -238,7 +238,7 @@ public:
   Client (ACE_Thread_Manager *,
           Task_State *ts,
           int argc,
-          char **argv,
+          ACE_TCHAR **argv,
           u_int id);
   // Constructor, with a pointer to the common task state.
 
@@ -359,7 +359,7 @@ private:
 
   // command-line arguments.
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
 };
 
 #endif /* !defined (TASK_CLIENT_H) */

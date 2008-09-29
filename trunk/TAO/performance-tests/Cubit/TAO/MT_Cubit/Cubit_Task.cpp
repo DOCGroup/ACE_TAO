@@ -106,7 +106,7 @@ Cubit_Task::initialize_orb (void)
       ACE_ARGV args (this->orbargs_);
 
       int argc = args.argc ();
-      char **argv = args.argv ();
+      ACE_TCHAR **argv = args.argv ();
 
       char orb_name[BUFSIZ];
       ACE_OS::sprintf (orb_name,

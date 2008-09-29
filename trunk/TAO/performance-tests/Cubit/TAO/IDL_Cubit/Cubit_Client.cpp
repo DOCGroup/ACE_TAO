@@ -1597,7 +1597,7 @@ Cubit_Client::~Cubit_Client (void)
 
 
 int
-Cubit_Client::init (int argc, char **argv)
+Cubit_Client::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;

@@ -50,7 +50,7 @@ Server::Server (void)
 }
 
 int
-Server::init (int argc, char **argv)
+Server::init (int argc, ACE_TCHAR **argv)
 {
   int result;
 

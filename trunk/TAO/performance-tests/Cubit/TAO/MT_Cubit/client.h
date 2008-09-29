@@ -161,7 +161,7 @@ private:
   int argc_;
   // number of command line arguments.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // command line argument array.
 
   ACE_Thread_Manager client_thread_manager_;

@@ -82,7 +82,7 @@ private:
   int argc_;
   // number of command line arguments
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // the actual command line arguments
 
   CORBA::ORB_var orb_;
