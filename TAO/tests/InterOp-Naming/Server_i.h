@@ -37,7 +37,7 @@ public:
   // Destructor.
 
   int init (int argc,
-            char *argv[]);
+            ACE_TCHAR *argv[]);
   // Initialize the Server state - parsing arguments and waiting.
 
   int add_IOR_to_table (CORBA::String_var ior);

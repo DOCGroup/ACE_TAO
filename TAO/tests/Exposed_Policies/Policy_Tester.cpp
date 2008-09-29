@@ -44,7 +44,7 @@ Policy_Tester::run (void)
 
 int
 Policy_Tester::init (int argc,
-                     char *argv[])
+                     ACE_TCHAR *argv[])
 {
   // ORB Initialization.
   this->orb_ =
