@@ -43,8 +43,8 @@ Test_i::shutdown (void)
   this->orb_->shutdown (0);
 }
 
-static const ACE_TCHAR simple_servant_ior_file = ACE_TEXT("simple_servant.ior");
-static const ACE_TCHAR diffserv_servant_ior_file = ACE_TEXT("diffserv_servant.ior");
+static const ACE_TCHAR *simple_servant_ior_file = ACE_TEXT("simple_servant.ior");
+static const ACE_TCHAR *diffserv_servant_ior_file = ACE_TEXT("diffserv_servant.ior");
 static RTCORBA::Priority corba_priority = RTCORBA::minPriority;
 
 int

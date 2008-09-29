@@ -9,8 +9,8 @@
 
 const ACE_TCHAR *output = ACE_TEXT("server.ior");
 const ACE_TCHAR *input = ACE_TEXT("file://server.ior");
-const ACE_TCHAR simple_test_output = ACE_TEXT("simple_test.ior");
-const ACE_TCHAR simple_test_input = ACE_TEXT("file://simple_test.ior");
+const ACE_TCHAR *simple_test_output = ACE_TEXT("simple_test.ior");
+const ACE_TCHAR *simple_test_input = ACE_TEXT("file://simple_test.ior");
 // static int named_orbs = 0;
 ACE_CString server_orb;
 ACE_CString client_orb;
