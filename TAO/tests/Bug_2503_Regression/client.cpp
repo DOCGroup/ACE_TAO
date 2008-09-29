@@ -4,7 +4,7 @@
 #include "common.h"
 #include "ace/Get_Opt.h"
 
-void parse_args(int argc, char * argv[]);
+void parse_args(int argc, ACE_TCHAR * argv[]);
 void test_remote_calls(CORBA::ORB_ptr orb);
 void test_colocated_calls(CORBA::ORB_ptr orb);
 

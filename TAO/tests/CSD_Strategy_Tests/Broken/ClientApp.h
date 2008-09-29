@@ -27,7 +27,7 @@ class ClientApp : public TestAppBase
   private:
 
     // These are all called, in order, by the run_i() method.
-    int init(int argc, char* argv[]);
+    int init(int argc, ACE_TCHAR* argv[]);
     void poa_setup(void);
     void csd_setup(void);
     void client_setup(void);

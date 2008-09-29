@@ -4,7 +4,7 @@
 #include "tao/PortableServer/PortableServer.h"
 
 CORBA::ORB_ptr
-initialize_orb_and_poa(int & argc, char * argv[])
+initialize_orb_and_poa(int & argc, ACE_TCHAR * argv[])
 {
   CORBA::ORB_var orb =
     CORBA::ORB_init (argc, argv);

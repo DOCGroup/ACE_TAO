@@ -131,7 +131,7 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 ST_AMH_Server::ST_AMH_Server (int* argc, ACE_TCHAR **argv)
   : argc_ (argc), argv_ (argv)
 {
-  this->ior_output_file_ = const_cast<char*>(ior_file);
+  this->ior_output_file_ = const_cast<ACE_TCHAR*>(ior_file);
 }
 
 // ------------------------------------------------------------------------
@@ -306,7 +306,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Nil Test::Roundtrip reference <%s>\n",
-                         ACE_TEXT_CHAR_TO_TCHAR (ior)),
+                         ior),
                         1);
     }
 

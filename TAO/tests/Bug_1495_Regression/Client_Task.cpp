@@ -13,7 +13,7 @@
 #include "tid_to_int.h"
 
 
-Client_Task::Client_Task (const char *input,
+Client_Task::Client_Task (const ACE_TCHAR *input,
                           CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr),
