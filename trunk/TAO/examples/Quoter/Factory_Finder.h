@@ -59,7 +59,7 @@ private:
   int argc_;
   // Number of commandline arguments.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // commandline arguments.
 
   int debug_level_;

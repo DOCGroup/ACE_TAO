@@ -250,7 +250,7 @@ Supplier::via_naming_service (void)
 // Init function.
 
 int
-Supplier::init (int argc, char **argv)
+Supplier::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;

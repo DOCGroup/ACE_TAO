@@ -64,7 +64,7 @@ private:
   int argc_;
   // # of arguments on the command line.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // arguments from command line.
 
   char *quoter_factory_key_;
