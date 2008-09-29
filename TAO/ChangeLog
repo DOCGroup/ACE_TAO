@@ -1,3 +1,13 @@
+Mon Sep 29 14:16:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/ORBInitInfo.h
+        * tao/Utils/ORB_Manager.cpp
+        * tao/Utils/ORB_Manager.h
+        * tests/POA/Loader/Servant_Locator.cpp
+        * tests/POA/Loader/Servant_Locator.h
+        * tests/POA/Loader/Server_Manager.cpp
+          ACE_TCHAR fixes
+
 Mon Sep 29 14:01:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2289_Regression/server.cpp

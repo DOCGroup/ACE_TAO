@@ -41,7 +41,7 @@ TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
 
 int
 TAO_ORB_Manager::init (int &argc,
-                       ACE_TCHAR **argv,
+                       ACE_TCHAR *argv[],
                        const char *orb_name)
 {
   if (CORBA::is_nil (this->orb_.in ()))

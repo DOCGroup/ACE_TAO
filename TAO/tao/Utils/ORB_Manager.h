@@ -57,7 +57,7 @@ public:
    */
   TAO_ORB_Manager (CORBA::ORB_ptr orb = CORBA::ORB::_nil(),
                    PortableServer::POA_ptr poa = PortableServer::POA::_nil(),
-                   PortableServer::POAManager_ptr poa_manager = 
+                   PortableServer::POAManager_ptr poa_manager =
                       PortableServer::POAManager::_nil());
 
   /**
@@ -68,7 +68,7 @@ public:
    * @retval 0 Success
    */
   int init (int &argc,
-            char *argv[],
+            ACE_TCHAR *argv[],
             const char *orb_name = 0);
 
 #if !defined (CORBA_E_MICRO)
@@ -81,7 +81,7 @@ public:
    * @retval 0 Success
    */
   int init_child_poa (int &argc,
-                      char *argv[],
+                      ACE_TCHAR *argv[],
                       const char *poa_name,
                       const char *orb_name = 0);
 #endif /* CORBA_E_MICRO */
