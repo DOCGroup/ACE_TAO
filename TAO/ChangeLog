@@ -1,3 +1,11 @@
+Mon Sep 29 07:55:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp
+        * performance-tests/Cubit/TAO/MT_Cubit/client.h
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp
+          ACE_TCHAR changes
+
 Mon Sep 29 07:53:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2429_Regression/client.cpp

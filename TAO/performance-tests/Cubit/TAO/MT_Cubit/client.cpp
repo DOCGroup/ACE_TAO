@@ -99,7 +99,7 @@ Client_i::~Client_i (void)
 }
 
 int
-Client_i::init (int argc, char *argv[])
+Client_i::init (int argc, ACE_TCHAR *argv[])
 {
   this->argc_ = argc;
   this->argv_ = argv;

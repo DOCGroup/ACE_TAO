@@ -24,7 +24,7 @@ public:
   Server (void);
   // ctor
 
-  void set (Test_i *server, int priority, int argc, char *argv[]);
+  void set (Test_i *server, int priority, int argc, ACE_TCHAR *argv[]);
   // Set the test attributes.
 
   // = The ACE_Task_Base methods....
@@ -180,7 +180,7 @@ void
 Server::set (Test_i *server,
              int priority,
              int argc,
-             char *argv[])
+             ACE_TCHAR *argv[])
 {
   server_ = server;
   priority_ = priority;
