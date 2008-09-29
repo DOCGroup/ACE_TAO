@@ -182,10 +182,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                        node->is_local (),
                        node->is_abstract ());
     is_a.set_defined_in (node);
+    
+    ACE_CDR::ULong bound = 0UL;
 
     auto_ptr<AST_String> s (
       idl_global->gen ()->create_string (
-        idl_global->gen ()->create_expr ((idl_uns_long) 0,
+        idl_global->gen ()->create_expr (bound,
                                          AST_Expression::EV_ulong)));
 
     Identifier arg_name ("repository_id");
@@ -395,10 +397,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   if (!be_global->gen_minimum_corba ())
   {
+    ACE_CDR::ULong bound = 0UL;
+  
     // Generate code for the _repository_id skeleton.
     auto_ptr<AST_String> s (
       idl_global->gen ()->create_string (
-        idl_global->gen ()->create_expr ((idl_uns_long) 0,
+        idl_global->gen ()->create_expr (bound,
                                          AST_Expression::EV_ulong)));
 
     // @@ Cheat a little by placing a space before the operation name

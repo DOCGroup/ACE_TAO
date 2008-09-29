@@ -690,7 +690,7 @@ AST_Generator::create_expr (AST_Expression::ExprComb c,
 }
 
 AST_Expression *
-AST_Generator::create_expr (long v)
+AST_Generator::create_expr (ACE_CDR::Long v)
 {
   AST_Expression *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -701,7 +701,7 @@ AST_Generator::create_expr (long v)
 }
 
 AST_Expression *
-AST_Generator::create_expr (bool b)
+AST_Generator::create_expr (ACE_CDR::Boolean b)
 {
   AST_Expression *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -712,7 +712,7 @@ AST_Generator::create_expr (bool b)
 }
 
 AST_Expression *
-AST_Generator::create_expr (idl_uns_long v,
+AST_Generator::create_expr (ACE_CDR::ULong v,
                             AST_Expression::ExprType t)
 {
   AST_Expression *retval = 0;
@@ -736,7 +736,7 @@ AST_Generator::create_expr (UTL_String *s)
 }
 
 AST_Expression *
-AST_Generator::create_expr (char c)
+AST_Generator::create_expr (ACE_CDR::Char c)
 {
   AST_Expression *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -769,7 +769,7 @@ AST_Generator::create_expr (char *s)
 }
 
 AST_Expression *
-AST_Generator::create_expr (double d)
+AST_Generator::create_expr (ACE_CDR::Double d)
 {
   AST_Expression *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -780,7 +780,7 @@ AST_Generator::create_expr (double d)
 }
 
 AST_EnumVal *
-AST_Generator::create_enum_val (unsigned long v,
+AST_Generator::create_enum_val (ACE_CDR::ULong v,
                                 UTL_ScopedName *n)
 {
   AST_EnumVal *retval = 0;
@@ -794,7 +794,7 @@ AST_Generator::create_enum_val (unsigned long v,
 
 AST_Array *
 AST_Generator::create_array (UTL_ScopedName *n,
-                             unsigned long ndims,
+                             ACE_CDR::ULong ndims,
                              UTL_ExprList *dims,
                              bool is_local,
                              bool is_abstract)

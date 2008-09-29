@@ -279,8 +279,8 @@ be_array::gen_ostream_operator (TAO_OutStream *os)
       << "{" << be_idt_nl
       << "strm << \"" << this->name () << "\";" <<  be_nl << be_nl;
   
-  unsigned long ndims = this->n_dims ();
-  unsigned long i = 0;
+  ACE_CDR::ULong ndims = this->n_dims ();
+  ACE_CDR::ULong i = 0;
   
   for (i = 0; i < ndims; ++i)
     {

@@ -35,7 +35,7 @@ be_enum_val::be_enum_val (void)
 {
 }
 
-be_enum_val::be_enum_val (unsigned long v,
+be_enum_val::be_enum_val (ACE_CDR::ULong v,
                           UTL_ScopedName *n)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_enum_val,
