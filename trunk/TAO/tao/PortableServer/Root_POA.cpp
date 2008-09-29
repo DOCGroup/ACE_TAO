@@ -632,26 +632,21 @@ TAO_Root_POA::find_POA_i (const ACE_CString &child_name,
               this->check_state ();
 
               CORBA::Boolean success = false;
-              try
-                {
-                  // ATTENTION: Trick locking here, see class header for details
-                  TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (
-                    *this);
-                  ACE_UNUSED_ARG (non_servant_upcall);
 
-                  // When unknown_adapter gives a system exception, the POA
-                  // should raise OBJ_ADAPTER with standard minor code 1.
-                  // See 11.3.9.2 of the Corba spec
-                  success =
-                    this->adapter_activator_->unknown_adapter (
-                      this,
-                      child_name.c_str ());
-                }
-              catch (const ::CORBA::SystemException&)
-                {
-                  throw ::CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 1,
-                                              CORBA::COMPLETED_NO);
-                }
+              {
+                // ATTENTION: Trick locking here, see class header for details
+                TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (
+                  *this);
+                ACE_UNUSED_ARG (non_servant_upcall);
+
+                // When unknown_adapter gives a system exception, the POA
+                // should just pass the system exception through
+                // See 15.3.9.2 of the 3.1 CORBA spec
+                success =
+                  this->adapter_activator_->unknown_adapter (
+                    this,
+                    child_name.c_str ());
+              }
 
               if (success)
                 {

@@ -91,19 +91,19 @@ void
 TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
                                CORBA::Boolean wait_for_completion)
 {
-  // Is the <wait_for_completion> semantics for this thread correct?
+  // Is the @a wait_for_completion semantics for this thread correct?
   TAO_Root_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
                                                       wait_for_completion);
 
   // This operation changes the state of the POA manager to
   // inactive. If issued while the POA manager is in the inactive
-  // state, the AdapterInactive exception is raised.  Entering the
+  // state, this operation has not effect.  Entering the
   // inactive state causes the associated POAs to reject requests that
   // have not begun to be executed as well as any new requests.
 
   if (this->state_ == PortableServer::POAManager::INACTIVE)
     {
-      throw PortableServer::POAManager::AdapterInactive ();
+      return;
     }
   else
     {
