@@ -97,7 +97,7 @@ AST_Array::AST_Array (void)
 }
 
 AST_Array::AST_Array (UTL_ScopedName *n,
-                      unsigned long nd,
+                      ACE_CDR::ULong nd,
                       UTL_ExprList *ds,
                       bool local,
                       bool abstract)
@@ -128,7 +128,7 @@ AST_Array::~AST_Array (void)
 // into an array.
 AST_Expression **
 AST_Array::compute_dims (UTL_ExprList *ds,
-                         unsigned long nds)
+                         ACE_CDR::ULong nds)
 {
   if (ds == 0)
     {
@@ -142,7 +142,7 @@ AST_Array::compute_dims (UTL_ExprList *ds,
 
   UTL_ExprlistActiveIterator iter (ds);
 
-  for (unsigned long i = 0;
+  for (ACE_CDR::ULong i = 0;
        !iter.is_done () && i < nds;
        iter.next (), i++)
     {
@@ -170,7 +170,7 @@ AST_Array::dump (ACE_OSTREAM_TYPE &o)
 
   this->local_name ()->dump (o);
 
-  for (unsigned long i = 0; i < this->pd_n_dims; i++)
+  for (ACE_CDR::ULong i = 0; i < this->pd_n_dims; i++)
     {
       this->dump_i (o, "[");
 
@@ -209,7 +209,7 @@ AST_Array::compute_size_type (void)
 }
 
 // Data accessors.
-unsigned long
+ACE_CDR::ULong
 AST_Array::n_dims (void)
 {
   return this->pd_n_dims;
@@ -256,7 +256,7 @@ AST_Array::destroy (void)
       this->pd_base_type = 0;
     }
 
-  for (unsigned long i = 0; i < this->pd_n_dims; ++i)
+  for (ACE_CDR::ULong i = 0; i < this->pd_n_dims; ++i)
     {
       this->pd_dims[i]->destroy ();
       delete this->pd_dims[i];
@@ -272,7 +272,7 @@ AST_Array::destroy (void)
 
 void
 AST_Array::set_dims (AST_Expression **ds,
-                     unsigned long nds)
+                     ACE_CDR::ULong nds)
 {
   this->pd_dims = ds;
   this->pd_n_dims = nds;

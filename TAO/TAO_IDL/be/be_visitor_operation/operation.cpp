@@ -456,7 +456,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
     {
       AST_String *s = AST_String::narrow_from_decl (bt->unaliased_type  ());
-      unsigned long bound = s->max_size ()->ev ()->u.ulval;
+      ACE_CDR::ULong bound = s->max_size ()->ev ()->u.ulval;
 
       // If the (w)string is unbounded, code is generated below by the
       // last line of this method, whether bt is a typedef or not.

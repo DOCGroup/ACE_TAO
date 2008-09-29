@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_ARRAY_AST_ARRAY_HH
 #define _AST_ARRAY_AST_ARRAY_HH
 
+#include "ace/CDR_Base.h"
+
 #include "ast_concrete_type.h"
 
 class UTL_ExprList;
@@ -86,7 +88,7 @@ public:
   AST_Array (void);
 
   AST_Array (UTL_ScopedName *n,
-             unsigned long ndims,
+             ACE_CDR::ULong ndims,
              UTL_ExprList *dims,
              bool local,
              bool abstract);
@@ -96,11 +98,11 @@ public:
 
   // Data Accessors.
 
-  unsigned long n_dims (void);
+  ACE_CDR::ULong n_dims (void);
 
   AST_Expression **dims (void);
   void set_dims (AST_Expression **,
-                 unsigned long);
+                 ACE_CDR::ULong);
 
   AST_Type *base_type (void) const;
   void set_base_type (AST_Type *nbt);
@@ -130,7 +132,7 @@ protected:
 private:
   // Data.
 
-  unsigned long pd_n_dims;
+  ACE_CDR::ULong pd_n_dims;
   // How many dimensions?
 
   AST_Expression **pd_dims;
@@ -147,7 +149,7 @@ private:
 
   // Compute how many dimensions.
   AST_Expression **compute_dims (UTL_ExprList *dims,
-                                 unsigned long ndims);
+                                 ACE_CDR::ULong ndims);
 };
 
 #endif           // _AST_ARRAY_AST_ARRAY_HH

@@ -79,7 +79,7 @@ public:
   // Constructor(s).
   AST_EnumVal (void);
 
-  AST_EnumVal (unsigned long v,
+  AST_EnumVal (ACE_CDR::ULong v,
                UTL_ScopedName *n);
 
   // Destructor.

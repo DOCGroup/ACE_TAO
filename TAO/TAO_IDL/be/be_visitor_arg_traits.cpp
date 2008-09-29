@@ -389,7 +389,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
     {
       AST_String *str = AST_String::narrow_from_decl (rt);
-      unsigned long bound = str->max_size ()->ev ()->u.ulval;
+      ACE_CDR::ULong bound = str->max_size ()->ev ()->u.ulval;
 
       if (bound > 0)
         {
@@ -464,7 +464,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
       return 0;
     }
 
-  unsigned long bound = st->max_size ()->ev ()->u.ulval;
+  ACE_CDR::ULong bound = st->max_size ()->ev ()->u.ulval;
 
   if (bound == 0)
     {
@@ -541,7 +541,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
     }
 
   be_string *st = be_string::narrow_from_decl (bt);
-  unsigned long bound = st->max_size ()->ev ()->u.ulval;
+  ACE_CDR::ULong bound = st->max_size ()->ev ()->u.ulval;
 
   if (bound == 0)
     {
@@ -654,7 +654,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
       return 0;
     }
 
-  unsigned long bound = node->max_size ()->ev ()->u.ulval;
+  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
   be_type *alias = this->ctx_->alias ();
 
   // Unbounded (w)string args are handled as a predefined type.
@@ -682,13 +682,15 @@ be_visitor_arg_traits::visit_string (be_string *node)
   else
     {
       // Form a unique macro name using the local name and the bound.
-      unsigned long l = bound;
+      ACE_CDR::ULong l = bound;
       int num_digits = 0;
+      
       while (l > 0)
         {
           l /= 10 ;
           ++num_digits ;
         }
+        
       size_t bound_length = num_digits + 1;
       char* bound_string = 0;
       ACE_NEW_RETURN (bound_string, char[bound_length], -1) ;

@@ -752,7 +752,7 @@ int
 be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  unsigned long i;
+  ACE_CDR::ULong i;
   be_array *node = this->ctx_->be_node_as_array ();
   AST_Decl::NodeType nt = bt->node_type ();
 
@@ -925,7 +925,7 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
               *os << "::CORBA::Boolean _tao_marshal_flag = true;" << be_nl;
             }
 
-    unsigned long ndims = node->n_dims ();
+    ACE_CDR::ULong ndims = node->n_dims ();
 
     // We get here if the "type" of individual elements of the array is not a
     // primitive type. In this case, we are left with no other alternative but to
@@ -954,7 +954,9 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
                 << expr->ev ()->u.ulval;
 
             if (TAO_CodeGen::TAO_FIND_SIZE != this->ctx_->sub_state ())
+              {
                 *os << " && _tao_marshal_flag";
+              }
 
             *os << "; i" << i
                 << "++)" << be_idt_nl

@@ -175,7 +175,7 @@ AST_Expression::AST_Expression (ExprComb c,
 }
 
 // An AST_Expression denoting a short integer.
-AST_Expression::AST_Expression (short sv)
+AST_Expression::AST_Expression (ACE_CDR::Short sv)
   : pd_ec (EC_none),
     pd_ev (0),
     pd_v1 (0),
@@ -193,7 +193,7 @@ AST_Expression::AST_Expression (short sv)
 }
 
 // An AST_Expression denoting an unsigned short integer.
-AST_Expression::AST_Expression (unsigned short usv)
+AST_Expression::AST_Expression (ACE_CDR::UShort usv)
   : pd_ec (EC_none),
     pd_ev (0),
     pd_v1 (0),
@@ -211,7 +211,7 @@ AST_Expression::AST_Expression (unsigned short usv)
 }
 
 // An AST_Expression denoting a long integer.
-AST_Expression::AST_Expression (long lv)
+AST_Expression::AST_Expression (ACE_CDR::Long lv)
   : pd_ec (EC_none),
     pd_ev (0),
     pd_v1 (0),
@@ -229,7 +229,7 @@ AST_Expression::AST_Expression (long lv)
 }
 
 // An AST_Expression denoting a boolean.
-AST_Expression::AST_Expression (bool b)
+AST_Expression::AST_Expression (ACE_CDR::Boolean b)
   : pd_ec (EC_none),
     pd_ev (0),
     pd_v1 (0),
@@ -247,7 +247,7 @@ AST_Expression::AST_Expression (bool b)
 }
 
 // An AST_Expression denoting an unsigned long integer.
-AST_Expression::AST_Expression (unsigned long ulv)
+AST_Expression::AST_Expression (ACE_CDR::ULong ulv)
   : pd_ec (EC_none),
     pd_ev (0),
     pd_v1 (0),
@@ -265,7 +265,7 @@ AST_Expression::AST_Expression (unsigned long ulv)
 }
 
 // An AST_Expression denoting an unsigned long integer.
-AST_Expression::AST_Expression (idl_uns_long ulv,
+AST_Expression::AST_Expression (ACE_CDR::ULong ulv,
                                 ExprType t)
   : pd_ec (EC_none),
     pd_ev (0),
@@ -288,7 +288,7 @@ AST_Expression::AST_Expression (idl_uns_long ulv,
 }
 
 // An AST_Expression denoting a 32-bit floating point number.
-AST_Expression::AST_Expression (float fv)
+AST_Expression::AST_Expression (ACE_CDR::Float fv)
   : pd_ec (EC_none),
     pd_ev (0),
     pd_v1 (0),
@@ -306,7 +306,7 @@ AST_Expression::AST_Expression (float fv)
 }
 
 // An AST_Expression denoting a 64-bit floating point number.
-AST_Expression::AST_Expression (double dv)
+AST_Expression::AST_Expression (ACE_CDR::Double dv)
   : pd_ec (EC_none),
     pd_ev (0),
     pd_v1 (0),
@@ -324,7 +324,7 @@ AST_Expression::AST_Expression (double dv)
 }
 
 // An AST_Expression denoting a character.
-AST_Expression::AST_Expression (char cv)
+AST_Expression::AST_Expression (ACE_CDR::Char cv)
   : pd_ec (EC_none),
     pd_ev (0),
     pd_v1 (0),
@@ -360,7 +360,7 @@ AST_Expression::AST_Expression (ACE_OutputCDR::from_wchar wcv)
 }
 
 // An AST_Expression denoting an octet (unsigned char).
-AST_Expression::AST_Expression (unsigned char ov)
+AST_Expression::AST_Expression (ACE_CDR::Octet ov)
   : pd_ec (EC_none),
     pd_ev (0),
     pd_v1 (0),

@@ -181,10 +181,10 @@ public:
   TAO_OutStream &operator<< (const ACE_CDR::LongLong num);
   // output the integer and return a reference to ourselves
 #endif
-  TAO_OutStream &operator<< (const unsigned long num);
+//  TAO_OutStream &operator<< (const unsigned long num);
   // output the integer and return a reference to ourselves
 
-  TAO_OutStream &operator<< (const long num);
+//  TAO_OutStream &operator<< (const long num);
   // output the integer and return a reference to ourselves
 
   // = MANIPULATORS

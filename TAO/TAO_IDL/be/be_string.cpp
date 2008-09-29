@@ -106,8 +106,8 @@ void
 be_string::compute_tc_name (void)
 {
   Identifier * id = 0;
-
-  AST_Expression zero (static_cast<unsigned long> (0));
+  ACE_CDR::ULong val = 0UL;
+  AST_Expression zero (val);
 
   if (*this->max_size () == &zero)
     {
