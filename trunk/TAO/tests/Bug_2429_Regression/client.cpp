@@ -69,7 +69,7 @@ class Reply_Handler
 };
 
 // Server ior.
-static const ACE_TCHAR  server_ior = ACE_TEXT("file://server.ior");
+static const ACE_TCHAR *server_ior = ACE_TEXT("file://server.ior");
 
 static int
 client_parse_args(int argc, ACE_TCHAR *argv[])

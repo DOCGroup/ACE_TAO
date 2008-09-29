@@ -6,8 +6,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-const ACE_TCHAR server_ior = ACE_TEXT("");
-
+const ACE_TCHAR *server_ior = ACE_TEXT("");
 const ACE_TCHAR *ior_output_file = ACE_TEXT("client.ior");
 
 int
