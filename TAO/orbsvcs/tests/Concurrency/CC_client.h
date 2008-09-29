@@ -63,7 +63,7 @@ public:
   int run (void);
   // Run the test.
 
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
   // Initialize the test with the parameters from the command line.
 
 private:
@@ -113,7 +113,7 @@ private:
   int argc_;
   // The number of arguments passed on the command line.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // The arguments from the command line.
 
   int use_naming_service_;

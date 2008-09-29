@@ -362,7 +362,7 @@ Client_i::obtain_initial_references (void)
 // file, else it uses the Naming Service
 
 int
-Client_i::init (int argc, char **argv)
+Client_i::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;

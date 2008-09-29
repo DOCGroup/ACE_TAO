@@ -159,7 +159,7 @@ namespace TAO
           ri->orb_id ();
 
         int argc = 0;
-        char **argv = 0;
+        ACE_TCHAR **argv = 0;
 
         this->orb_ =
           CORBA::ORB_init (argc,

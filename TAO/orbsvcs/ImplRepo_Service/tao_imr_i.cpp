@@ -36,7 +36,7 @@ TAO_IMR_i::run ()
 }
 
 int
-TAO_IMR_i::init (int argc, char **argv)
+TAO_IMR_i::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;

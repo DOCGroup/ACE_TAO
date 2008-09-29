@@ -159,7 +159,7 @@ public:
 
   /// Initializes the ORB, creates and activates the
   /// T_StreamEndpoint, T_VDev, T_MediaCtrl in the POA
-  int init (int argc, char **argv, CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
+  int init (int argc, ACE_TCHAR **argv, CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// runs the ORB event loop
   int run (ACE_Time_Value *tv = 0);
@@ -171,7 +171,7 @@ protected:
    * return them to the client
    */
   int activate_objects (int argc,
-                        char **argv);
+                        ACE_TCHAR **argv);
 
   ///activate the servant with the poa
   char* activate_with_poa (PortableServer::Servant servant);

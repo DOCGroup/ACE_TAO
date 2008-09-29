@@ -42,7 +42,7 @@ public:
   int run (void);
 
   /// Initialize the client communication endpoint with server.
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
 
 private:
   /// Print out information about all operations.

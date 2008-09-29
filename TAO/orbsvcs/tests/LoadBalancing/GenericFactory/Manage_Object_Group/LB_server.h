@@ -37,7 +37,7 @@ class LB_server
 public:
 
   /// Constructor
-  LB_server (int argc, char **argv);
+  LB_server (int argc, ACE_TCHAR **argv);
 
   /// destroys LoadManager, ORB and POA.
   int destroy (void);
@@ -46,7 +46,7 @@ public:
   int start_orb_and_poa (void);
 
   /// Get the LoadManager Interface.
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
 
   /// Create the basic Object Group using the Load Manager Reference.
   int create_basic_object_group (void);
@@ -100,7 +100,7 @@ private:
 
   /// command line arguments
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
 
   /// root poa pointer
   PortableServer::POA_var root_poa_;

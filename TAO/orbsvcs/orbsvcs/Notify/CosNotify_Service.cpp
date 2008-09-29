@@ -244,7 +244,7 @@ TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb)
 
           int argc = 0;
           char *argv0 = 0;
-          char **argv = &argv0;  // ansi requires argv be null terminated.
+          ACE_TCHAR **argv = &argv0;  // ansi requires argv be null terminated.
           CORBA::ORB_var dispatcher = CORBA::ORB_init (argc, argv,
                                                        "default_dispatcher");
 

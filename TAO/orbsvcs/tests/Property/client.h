@@ -45,7 +45,7 @@ public:
   // Constructor.
 
   int init (int argc,
-            char **argv);
+            ACE_TCHAR **argv);
   // Initialize the ORB etc, and bind the MMDevices.
 
   int run (void);
