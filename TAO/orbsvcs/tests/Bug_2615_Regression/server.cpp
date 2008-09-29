@@ -16,7 +16,7 @@ ACE_RCSID (Hello,
            "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ior.ior");
-const ACE_TCHAR iogr_output_file = ACE_TEXT("iogr.ior");
+const ACE_TCHAR *iogr_output_file = ACE_TEXT("iogr.ior");
 TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
 
 int

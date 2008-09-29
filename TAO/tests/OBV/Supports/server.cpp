@@ -3,7 +3,7 @@
 #include "Supports_Test_impl.h"
 #include "tao/Strategies/advanced_resource.h"
 
-const ACE_TCHAR  ior_output_file = ACE_TEXT("test.ior");
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

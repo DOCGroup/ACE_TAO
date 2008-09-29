@@ -8,8 +8,8 @@
 #include <ace/ARGV.h>
 #include <iostream>
 
-const ACE_TCHAR output = ACE_TEXT("test.ior");
-const ACE_TCHAR input = ACE_TEXT("file://test.ior");
+const ACE_TCHAR *output = ACE_TEXT("test.ior");
+const ACE_TCHAR *input = ACE_TEXT("file://test.ior");
 // static int named_orbs = 0;
 ACE_CString server_orb;
 ACE_CString client_orb;
