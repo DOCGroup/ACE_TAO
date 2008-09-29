@@ -43,7 +43,7 @@ Logger_Server::parse_args (void)
 
 int
 Logger_Server::init (int argc,
-                     char *argv[])
+                     ACE_TCHAR *argv[])
 {
   this->argc_ = argc;
   this->argv_ = argv;

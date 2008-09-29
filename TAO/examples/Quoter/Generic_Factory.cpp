@@ -51,7 +51,7 @@ Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server (void)
 
 int
 Quoter_Generic_Factory_Server::init (int argc,
-                                     char *argv[])
+                                     ACE_TCHAR *argv[])
 {
   const char *exception_message = "Null Message";
 

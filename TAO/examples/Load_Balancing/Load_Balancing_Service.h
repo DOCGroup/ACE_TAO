@@ -40,7 +40,7 @@ public:
   ~Load_Balancing_Service (void);
   // Destructor.
 
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the <Load_Balancing_Service>: initializes the ORB, parses
   // arguments, creates a servant ...
 

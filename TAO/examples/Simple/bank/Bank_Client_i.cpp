@@ -23,7 +23,7 @@ Bank_Client_i::~Bank_Client_i (void)
 int
 Bank_Client_i::run (const char *name,
                     int argc,
-                    char *argv[])
+                    ACE_TCHAR *argv[])
 {
   // Initialize the client.
   if (client.init (name,argc, argv) == -1)

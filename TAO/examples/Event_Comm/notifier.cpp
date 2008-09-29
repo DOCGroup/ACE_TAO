@@ -30,7 +30,7 @@ Notifier::run (void)
     }
 }
 
-Notifier::Notifier (int argc, char *argv[])
+Notifier::Notifier (int argc, ACE_TCHAR *argv[])
 {
   try
     {

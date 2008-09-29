@@ -136,7 +136,7 @@ Notifier_Input_Handler::parse_args (void)
 
 int
 Notifier_Input_Handler::init (int argc,
-                              char *argv[])
+                              ACE_TCHAR *argv[])
 {
 
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and

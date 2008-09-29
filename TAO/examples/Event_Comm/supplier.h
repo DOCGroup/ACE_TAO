@@ -1,5 +1,5 @@
 // -*- C++ -*-
-// $Id$ 
+// $Id$
 
 // ============================================================================
 //
@@ -33,7 +33,7 @@ public:
   ~Supplier (void);
   // Destructor.
 
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initialization method. returns 0 on success, -1 on error.
 
   void run (void);

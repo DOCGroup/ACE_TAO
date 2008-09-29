@@ -23,7 +23,7 @@ Builder::~Builder(void)
 }
 
 int
-Builder::init (int argc, char *argv[])
+Builder::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 

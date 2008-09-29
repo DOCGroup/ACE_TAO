@@ -1,5 +1,5 @@
 // $Id$
- 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -26,21 +26,21 @@ class Notifier : public ACE_Event_Handler
   //    The driver class for the <Event_Comm::Notifier> object.
  public:
   // = Initialization and termination methods.
-  Notifier (int argc, char *argv[]);
+  Notifier (int argc, ACE_TCHAR *argv[]);
   // Constructor.
-  
+
   ~Notifier (void);
   // Destructor.
-  
+
   void run (void);
   // Execute the notifier.
-  
+
  private:
   virtual int handle_signal (int signum,
                              siginfo_t *,
                              ucontext_t *);
   // Handle signals that shut us down.
-  
+
   Notifier_Server ns_;
   // The notifier server.
 };

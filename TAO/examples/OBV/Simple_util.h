@@ -108,7 +108,7 @@ public:
   ~Client (void);
   // Destructor.
 
-  int init (const char *name,int argc, char *argv[]);
+  int init (const char *name,int argc, ACE_TCHAR *argv[]);
   // Initialize the client communication endpoint with server.
 
   InterfaceObj *operator-> () { return server_.in ();};

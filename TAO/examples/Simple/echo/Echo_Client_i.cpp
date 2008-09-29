@@ -22,7 +22,7 @@ Echo_Client_i::~Echo_Client_i (void)
 int
 Echo_Client_i::run (const char *name,
                     int argc,
-                    char *argv[])
+                    ACE_TCHAR *argv[])
 {
   // Initialize the client.
   if (client.init (name,argc, argv) == -1)

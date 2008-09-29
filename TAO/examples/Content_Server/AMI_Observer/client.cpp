@@ -19,7 +19,7 @@ get_iterator (CORBA::ORB_ptr orb);
 
 // Perform file requests
 void invoke_requests (int argc,
-                      char *argv[],
+                      ACE_TCHAR *argv[],
                       int *request_count,
                       Web_Server::Iterator_Factory_ptr f);
 
@@ -153,7 +153,7 @@ get_iterator (CORBA::ORB_ptr o)
 }
 
 void invoke_requests (int argc,
-                      char *argv[],
+                      ACE_TCHAR *argv[],
                       int *request_count,
                       Web_Server::Iterator_Factory_ptr f)
 {

@@ -35,7 +35,7 @@ public:
   ~Notifier_Server (void);
   // Destructor.
 
- int init (int argc, char *argv[]);
+ int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the Server state.
 
   int run (void);
