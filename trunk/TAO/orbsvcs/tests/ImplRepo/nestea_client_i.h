@@ -39,7 +39,7 @@ public:
   int run ();
 
   /// Initialize the client communication endpoint with server.
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
 
 private:
   /// Parses the arguments passed on the command line.
@@ -49,7 +49,7 @@ private:
   int argc_;
 
   /// arguments from command line.
-  char **argv_;
+  ACE_TCHAR **argv_;
 
   /// Key of the obj ref of the server.
   char *server_key_;

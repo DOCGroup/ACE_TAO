@@ -1,3 +1,48 @@
+Mon Sep 29 07:42:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h
+        * orbsvcs/Naming_Service/NT_Naming_Service.h
+        * orbsvcs/Notify_Service/NT_Notify_Service.h
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.cpp
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp
+        * orbsvcs/orbsvcs/Security/Security_Current.cpp
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.h
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.h
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.h
+        * orbsvcs/tests/Concurrency/CC_client.cpp
+        * orbsvcs/tests/Concurrency/CC_client.h
+        * orbsvcs/tests/ImplRepo/airplane_client_i.cpp
+        * orbsvcs/tests/ImplRepo/airplane_client_i.h
+        * orbsvcs/tests/ImplRepo/airplane_server_i.h
+        * orbsvcs/tests/ImplRepo/nestea_client_i.cpp
+        * orbsvcs/tests/ImplRepo/nestea_client_i.h
+        * orbsvcs/tests/ImplRepo/nestea_server_i.h
+        * orbsvcs/tests/ImplRepo/scale/server_i.h
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.h
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/LB_server.cpp
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/LB_server.h
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/LB_server.cpp
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/LB_server.h
+        * orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h
+        * orbsvcs/tests/Property/client.h
+        * orbsvcs/tests/RTCosScheduling/client.cpp
+        * orbsvcs/tests/Security/ssliop_corbaloc/client.cpp
+        * orbsvcs/tests/Security/ssliop_corbaloc/client.h
+        * orbsvcs/tests/Simple_Naming/client.cpp
+        * orbsvcs/tests/Simple_Naming/client.h
+        * orbsvcs/tests/Time/Client_i.cpp
+        * orbsvcs/tests/Time/Client_i.h
+          ACE_TCHAR changes
+
 Mon Sep 29 07:40:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp

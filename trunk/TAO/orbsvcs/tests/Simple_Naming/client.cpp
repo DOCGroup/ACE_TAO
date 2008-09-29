@@ -207,7 +207,7 @@ CosNaming_Client::~CosNaming_Client (void)
 }
 
 int
-CosNaming_Client::init (int argc, char **argv)
+CosNaming_Client::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;

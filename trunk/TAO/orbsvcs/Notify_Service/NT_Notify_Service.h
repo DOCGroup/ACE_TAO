@@ -11,7 +11,7 @@
  *
  *  @author John Tucker <jtucker@infoglide.com>
  *  @author Mike Vitalo <mvitalo@infoglide.com>
- *  @author David Robison <drrobison@openroadsconsulting.com> 
+ *  @author David Robison <drrobison@openroadsconsulting.com>
  */
 //=============================================================================
 
@@ -52,7 +52,7 @@ public:
 
   /// This is a virtual method inherited from ACE_NT_Service.
   virtual int svc (void);
-        
+
   /// Initialize the objects argc_ and argv_ attributes values.
   virtual int init (int argc,
                     ACE_TCHAR *argv[]);
@@ -64,8 +64,8 @@ private:
   int argc_save_;
 
   /// Argument list.
-  char **argv_;
-  char **argv_save_; 
+  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_save_;
 
   friend class ACE_Singleton<TAO_NT_Notify_Service, MUTEX>;
 };

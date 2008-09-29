@@ -136,7 +136,7 @@ class ORB_Thread : public ACE_Task<ACE_SYNCH>
 public:
 ORB_Thread(CORBA::ORB_var orb,
            int argc,
-           char **argv)
+           ACE_TCHAR **argv)
 : orb_(orb),
   argc_(argc),
   argv_(argv)

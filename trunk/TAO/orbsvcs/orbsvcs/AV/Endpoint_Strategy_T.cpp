@@ -343,7 +343,7 @@ TAO_AV_Child_Process <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::TAO_AV_Child_Pro
     pid_ (-1),
     stream_endpoint_(0),
     vdev_ (0),
-    media_ctrl_ (0) 
+    media_ctrl_ (0)
 {
   this->pid_ = ACE_OS::getpid ();
   if (this->pid_ == 0)
@@ -356,7 +356,7 @@ TAO_AV_Child_Process <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::TAO_AV_Child_Pro
 template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
 int
 TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::init (int argc,
-                                                                       char **argv,
+                                                                       ACE_TCHAR **argv,
                                                                        CORBA::ORB_ptr orb,
                                                                        PortableServer::POA_ptr poa)
 {

@@ -15,7 +15,7 @@ public:
   Server_i (void);
   ~Server_i (void);
 
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
 
   int run (void);
 

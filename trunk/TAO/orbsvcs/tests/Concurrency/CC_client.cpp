@@ -378,7 +378,7 @@ CC_Client::init_naming_service (void)
 }
 
 int
-CC_Client::init (int argc, char **argv)
+CC_Client::init (int argc, ACE_TCHAR **argv)
 {
   int naming_result;
   this->argc_ = argc;
