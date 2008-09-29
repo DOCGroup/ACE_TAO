@@ -196,7 +196,7 @@ Consumer_Handler::via_naming_service (void)
 
 // Init function.
 int
-Consumer_Handler::init (int argc, char **argv)
+Consumer_Handler::init (int argc, ACE_TCHAR **argv)
 {
 
   this->argc_ = argc;

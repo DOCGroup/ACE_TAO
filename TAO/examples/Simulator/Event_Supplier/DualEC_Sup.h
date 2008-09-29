@@ -172,7 +172,7 @@ private:
   ACE_Unbounded_Queue<Weapons *> weapons_data_;
 
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
   long total_messages_;
   long break_count_;
   char *input_file_name_;
