@@ -40,13 +40,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'l':
   {
-    char *level = get_opts.opt_arg ();
+    ACE_TCHAR *level = get_opts.opt_arg ();
     level_obj = false;
 
-    if (ACE_OS::strcmp (level, "orb") == 0) {
+    if (ACE_OS::strcmp (level, ACE_TEXT("orb")) == 0) {
       level_orb = true;
     }
-    else if (ACE_OS::strcmp (level, "thread") == 0) {
+    else if (ACE_OS::strcmp (level, ACE_TEXT("thread")) == 0) {
       level_thread = true;
     }
     else {
@@ -56,10 +56,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
   }
       case 's':
   {
-    char *synch = get_opts.opt_arg ();
+    ACE_TCHAR *synch = get_opts.opt_arg ();
     synch_none = false;
 
-    if (ACE_OS::strcmp (synch, "delayed") == 0) {
+    if (ACE_OS::strcmp (synch, ACE_TEXT("delayed")) == 0) {
       synch_delayed = true;
     }
     else {

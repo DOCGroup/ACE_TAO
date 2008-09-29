@@ -1,3 +1,37 @@
+Mon Sep 29 17:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1476_Test/client.cpp
+        * tests/Bug_1495_Regression/Client_Task.cpp
+        * tests/Bug_1495_Regression/Client_Task.h
+        * tests/Bug_1495_Regression/Server_Task.cpp
+        * tests/Bug_1495_Regression/Server_Task.h
+        * tests/Bug_2084_Regression/Client_Task.cpp
+        * tests/Bug_2084_Regression/Client_Task.h
+        * tests/Bug_2084_Regression/Server_Task.cpp
+        * tests/Bug_2084_Regression/Server_Task.h
+        * tests/Bug_2319_Regression/server.cpp
+        * tests/Bug_2503_Regression/client.cpp
+        * tests/Bug_2503_Regression/common.cpp
+        * tests/Bug_2503_Regression/common.h
+        * tests/CSD_Strategy_Tests/Broken/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/Broken/ClientApp.h
+        * tests/CSD_Strategy_Tests/Broken/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/Broken/ServerApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_2/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_2/ServerApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_4/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_4/ServerApp.h
+        * tests/UNKNOWN_Exception/client.cpp
+          ACE_TCHAR fixes
+
 Mon Sep 29 14:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Updates to comply with CORBA 3.1 (08-01-05)
