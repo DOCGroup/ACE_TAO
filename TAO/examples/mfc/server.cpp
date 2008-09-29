@@ -100,7 +100,7 @@ CServerApp::~CServerApp()
       CORBA::ORB_var the_shutdown_orb;
 
       int argc = 0;
-      char **argv = 0;
+      ACE_TCHAR **argv = 0;
       const ACE_TCHAR *orb_name = ACE_TEXT("");
 
       // Retrieving a reference to the ORB used inside the thread

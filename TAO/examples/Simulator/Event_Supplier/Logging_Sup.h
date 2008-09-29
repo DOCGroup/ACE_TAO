@@ -75,7 +75,7 @@ private:
   Weapons weapons_;
 
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
   unsigned long total_messages_;
   char *input_file_name_;
   unsigned long update_data_;

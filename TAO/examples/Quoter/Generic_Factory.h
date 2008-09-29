@@ -60,7 +60,7 @@ private:
   int argc_;
   // Number of commandline arguments.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // commandline arguments.
 
   unsigned char use_LifeCycle_Service_;

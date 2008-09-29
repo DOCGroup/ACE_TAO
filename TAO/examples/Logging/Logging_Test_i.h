@@ -53,7 +53,7 @@ public:
   ~Logger_Client (void);
   // Destructor.
 
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
   // Initialize the client communication endpoint with server.
 
   int run (void);
@@ -87,7 +87,7 @@ private:
   int argc_;
   // # of arguments on the command line.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // arguments from command line.
 
   Logger_Factory_var factory_;

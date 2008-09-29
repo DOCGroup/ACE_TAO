@@ -1,3 +1,29 @@
+Mon Sep 29 07:37:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMH/Sink_Server/Base_Server.h
+        * examples/Callback_Quoter/Consumer_Handler.cpp
+        * examples/Callback_Quoter/Consumer_Handler.h
+        * examples/Callback_Quoter/Notifier_Input_Handler.h
+        * examples/Callback_Quoter/Supplier_i.cpp
+        * examples/Callback_Quoter/Supplier_i.h
+        * examples/Logging/Logging_Service_i.h
+        * examples/Logging/Logging_Test_i.h
+        * examples/mfc/server.cpp
+        * examples/OBV/Simple_util.cpp
+        * examples/OBV/Simple_util.h
+        * examples/Persistent_Grid/Simple_util.cpp
+        * examples/Persistent_Grid/Simple_util.h
+        * examples/Quoter/client.h
+        * examples/Quoter/Factory_Finder.h
+        * examples/Quoter/Generic_Factory.h
+        * examples/Quoter/server.h
+        * examples/Simple/Simple_util.cpp
+        * examples/Simple/Simple_util.h
+        * examples/Simulator/Event_Supplier/DualEC_Sup.h
+        * examples/Simulator/Event_Supplier/Event_Sup.h
+        * examples/Simulator/Event_Supplier/Logging_Sup.h
+          ACE_TCHAR changes
+
 Mon Sep 29 07:33:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMH_Exceptions/server.cpp
