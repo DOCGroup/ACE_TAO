@@ -10,8 +10,8 @@
 #include "ace/SString.h"
 #include "ace/Manual_Event.h"
 
-const ACE_TCHAR output = ACE_TEXT("test.ior");
-const ACE_TCHAR input = ACE_TEXT("file://test.ior");
+const ACE_TCHAR *output = ACE_TEXT("test.ior");
+const ACE_TCHAR *input = ACE_TEXT("file://test.ior");
 ACE_CString server_orb;
 ACE_CString client_orb;
 int

@@ -8,7 +8,7 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "client_interceptor.h"
 
-const ACE_TCHAR input = ACE_TEXT("file://test.ior");
+const ACE_TCHAR *input = ACE_TEXT("file://test.ior");
 
 ACE_CString proc_mode_str;
 
