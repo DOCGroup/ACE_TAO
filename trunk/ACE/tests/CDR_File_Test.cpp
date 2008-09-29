@@ -411,7 +411,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                        filename.get_path_name ()),
                       1);
 
-#if !defined (ACE_VXWORKS) && !defined (ACE_HAS_PHARLAP) || (defined(ACE_VXWORKS) && (ACE_VXWORKS >= 0x640))
+#if !defined (ACE_VXWORKS) && !defined (ACE_HAS_PHARLAP) || (defined(ACE_VXWORKS) && (ACE_VXWORKS > 0x660))
 # define TEST_CAN_UNLINK_IN_ADVANCE
 #endif
 
