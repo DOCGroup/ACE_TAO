@@ -1,3 +1,9 @@
+Mon Sep 29 13:36:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * tests/unload_libace.mpb:
+          Use unicode lib modifier
+
 Sun Sep 28 18:16:53 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3432_Regression_Test.cpp:
