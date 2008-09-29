@@ -674,7 +674,7 @@ TAO_EC_Default_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *)
   if (this->timeout_ == 0)
     {
       int argc = 0;
-      char **argv = 0;
+      ACE_TCHAR **argv = 0;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
@@ -984,7 +984,7 @@ TAO_EC_Default_Factory::create_consumer_control (TAO_EC_Event_Channel_Base* ec)
   else if (this->consumer_control_ == 1)
     {
       int argc = 0;
-      char **argv = 0;
+      ACE_TCHAR **argv = 0;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
@@ -1008,7 +1008,7 @@ TAO_EC_Default_Factory::create_supplier_control (TAO_EC_Event_Channel_Base* ec)
   else if (this->supplier_control_ == 1)
     {
       int argc = 0;
-      char **argv = 0;
+      ACE_TCHAR **argv = 0;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 

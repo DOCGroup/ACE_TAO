@@ -63,8 +63,8 @@ private:
   int argc_save_;
 
   /// Argument list.
-  char **argv_;
-  char **argv_save_;
+  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_save_;
 
   friend class ACE_Singleton<TAO_NT_Naming_Service, MUTEX>;
   friend class AutoFinalizer;
@@ -78,11 +78,11 @@ private:
   */
 class AutoFinalizer
 {
-    
+
 public:
     AutoFinalizer (TAO_NT_Naming_Service &service);
     ~AutoFinalizer ();
-    
+
 private:
     TAO_NT_Naming_Service &service_;
 };

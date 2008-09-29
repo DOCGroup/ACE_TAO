@@ -133,7 +133,7 @@ private:
   // destroys the is log is it exists
 
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
   // command line
 
   char* logServiceIor_;

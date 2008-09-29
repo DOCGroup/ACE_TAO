@@ -8,7 +8,7 @@ ACE_RCSID (Application_Controlled,
            LB_server,
            "$Id$")
 
-LB_server::LB_server (int argc, char **argv)
+LB_server::LB_server (int argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
 {

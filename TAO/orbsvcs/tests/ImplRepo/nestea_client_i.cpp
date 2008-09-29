@@ -92,7 +92,7 @@ Nestea_Client_i::~Nestea_Client_i (void)
 
 
 int
-Nestea_Client_i::init (int argc, char **argv)
+Nestea_Client_i::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;

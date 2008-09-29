@@ -39,7 +39,7 @@ public:
   ~Airplane_Server_i (void);
 
   /// Initialize the Server state - parsing arguments and waiting
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
 
   /// Run the orb
   int run (void);
@@ -52,7 +52,7 @@ private:
   int argc_;
 
   /// The command line arguments.
-  char **argv_;
+  ACE_TCHAR **argv_;
 
   /// The ORB.
   CORBA::ORB_var orb_;

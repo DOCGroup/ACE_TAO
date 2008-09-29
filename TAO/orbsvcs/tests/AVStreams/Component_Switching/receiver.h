@@ -106,11 +106,11 @@ public:
   /// Destructor.
 
   int init (int argc,
-            char **argv);
+            ACE_TCHAR **argv);
   /// Initialize data components.
 
   int parse_args (int argc,
-                  char **argv);
+                  ACE_TCHAR **argv);
   /// Parse args.
 
   ACE_CString output_file_name (void);

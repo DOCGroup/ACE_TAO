@@ -337,7 +337,7 @@ public:
   int run (void);
   // Execute client example code.
 
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
   // Initialize the client communication endpoint with server.
 
   // = Symbolic ids.
@@ -354,7 +354,7 @@ private:
   int argc_;
   // # of arguments on the command line.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // arguments from command line.
 
   Naming_Test *test_;
