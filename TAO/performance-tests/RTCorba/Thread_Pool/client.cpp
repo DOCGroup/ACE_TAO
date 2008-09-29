@@ -28,7 +28,7 @@ enum Priority_Setting
 
 static const ACE_TCHAR *ior = ACE_TEXT("file://ior");
 static const char *rates_file = "rates";
-static const ACE_TCHAR invocation_priorities_file = ACE_TEXT("empty-file");
+static const ACE_TCHAR *invocation_priorities_file = ACE_TEXT("empty-file");
 static int shutdown_server = 0;
 static int do_dump_history = 0;
 static ACE_UINT32 gsf = 0;
