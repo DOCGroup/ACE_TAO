@@ -52,7 +52,7 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
 #if defined (ACE_HAS_IPV6) && defined (ACE_USES_IPV4_IPV6_MIGRATION)
   if (ACE::ipv6_enabled())
     default_address_.set (
-      static_cast<unsigned short> (0), 
+      static_cast<unsigned short> (0),
       ACE_IPV6_ANY,
       AF_INET6);
 #endif /* ACE_HAS_IPV6 && ACE_USES_IPV4_IPV6_MIGRATION */
@@ -458,7 +458,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                   ACCEPT_STRATEGY (this->orb_core_),
                   -1);
 
-  unsigned short requested_port = addr.get_port_number ();
+  unsigned short const requested_port = addr.get_port_number ();
   if (requested_port == 0)
     {
       // don't care, i.e., let the OS choose an ephemeral port
