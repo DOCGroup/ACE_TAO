@@ -70,7 +70,7 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
 
       *os << be_uidt_nl << "};" << be_uidt_nl
           << "static ::CORBA::ULong const nexceptions = "
-          << node->exceptions()->length () << ";";
+          << node->exceptions ()->length () << ";";
     }
   else
     {

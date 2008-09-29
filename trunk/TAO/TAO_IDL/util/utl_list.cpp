@@ -89,8 +89,8 @@ UTL_List::~UTL_List (void)
 }
 
 // Compute list length.
-long
-UTL_List::list_length (long n)
+ACE_CDR::Long
+UTL_List::list_length (ACE_CDR::Long n)
 {
   if (this->pd_cdr_data == 0)
     {
@@ -155,7 +155,7 @@ UTL_List::set_tail (UTL_List *l)
 }
 
 // Compute list length.
-long
+ACE_CDR::Long
 UTL_List::length (void)
 {
   return list_length (1);

@@ -1,3 +1,16 @@
+Mon Sep 29 18:18:10 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/utl_list.h:
+        * TAO_IDL/be/be_visitor_operation/exceptlist_ss.cpp:
+        * TAO_IDL/util/utl_list.cpp:
+        
+          Changed utility list class length accessor method
+          signature to use ACE_CDR::Long instead of the
+          native long, due to compile errors on the
+          VxWorks6.6_Solaris_Host build. Thanks to Johnny
+          Willemsen <jwillemsen@remedy.nl> for reporting the
+          scoreboard problem.
+
 Mon Sep 29 17:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1476_Test/client.cpp
