@@ -132,7 +132,7 @@ ConnectDisconnect::init (int argc,
 }
 
 int
-ConnectDisconnect::parse_args(int argc, char *argv[])
+ConnectDisconnect::parse_args(int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc,
                               argv);

@@ -32,7 +32,7 @@ class Manager
 {
 public:
   void init (int argc,
-             char *argv[]);
+             ACE_TCHAR *argv[]);
 
   // Initialize the ORB, POA etc.
 

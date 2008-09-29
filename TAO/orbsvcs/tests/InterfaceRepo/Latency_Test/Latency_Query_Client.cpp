@@ -27,7 +27,7 @@ Latency_Query_Client::~Latency_Query_Client (void)
 
 int
 Latency_Query_Client::init (int argc,
-                            char *argv[])
+                            ACE_TCHAR *argv[])
 {
   try
     {
@@ -148,7 +148,7 @@ Latency_Query_Client::run (void)
 
 int
 Latency_Query_Client::parse_args (int argc,
-                                  char *argv[])
+                                  ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("dhi:"));
   int c;

@@ -135,7 +135,7 @@ public:
   Notify_Throughput (void);
   virtual ~Notify_Throughput ();
 
-  int parse_args(int argc, char *argv[]) ;
+  int parse_args(int argc, ACE_TCHAR *argv[]) ;
 
   int init (int argc, char *argv []);
   // initialization.

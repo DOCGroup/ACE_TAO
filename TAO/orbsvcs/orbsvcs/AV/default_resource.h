@@ -33,7 +33,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *        The AV Streams resource factory loads the
  *        pluggable transport and flow protocol factories
  *        in the corresponding factory sets.
- *  
+ *
  *
  */
 
@@ -53,8 +53,8 @@ public:
    */
   //@{
   /// Dynamic linking hook
-  virtual int init (int argc, char *argv[]);
-  
+  virtual int init (int argc, ACE_TCHAR *argv[]);
+
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

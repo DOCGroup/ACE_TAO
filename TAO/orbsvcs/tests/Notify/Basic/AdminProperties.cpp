@@ -141,7 +141,7 @@ AdminProperties::~AdminProperties (void)
 }
 
 int
-AdminProperties::parse_args(int argc, char *argv[])
+AdminProperties::parse_args(int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 

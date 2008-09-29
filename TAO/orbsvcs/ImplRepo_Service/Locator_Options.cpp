@@ -42,7 +42,7 @@ Options::Options ()
 }
 
 int
-Options::parse_args (int &argc, char *argv[])
+Options::parse_args (int &argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter shifter (argc, argv);
 
@@ -209,7 +209,7 @@ Options::parse_args (int &argc, char *argv[])
 }
 
 int
-Options::init (int argc, char *argv[])
+Options::init (int argc, ACE_TCHAR *argv[])
 {
   // Make an initial pass through and grab the arguments that we recognize.
   // This may also run the commands to install or remove the nt service.

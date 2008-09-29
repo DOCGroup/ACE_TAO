@@ -36,7 +36,7 @@ public:
   // Constructor
 
   // = The EC_Driver methods
-  int parse_args (int &argc, char *argv[]);
+  int parse_args (int &argc, ACE_TCHAR *argv[]);
   // Parse the arguments, but override the number of consumers.
   // The options controlling the event types are ignored, and only two
   // consumers are created.

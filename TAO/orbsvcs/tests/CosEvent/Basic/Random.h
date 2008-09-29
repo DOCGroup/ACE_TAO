@@ -130,7 +130,7 @@ class RND_Driver
 public:
   RND_Driver (void);
 
-  int run (int argc, char *argv[]);
+  int run (int argc, ACE_TCHAR *argv[]);
   // Run the test
 
   void timer (const CORBA::Any &e);

@@ -28,7 +28,7 @@ BasicLog_Test::~BasicLog_Test (void)
 }
 
 int
-BasicLog_Test::init (int argc, char *argv[])
+BasicLog_Test::init (int argc, ACE_TCHAR *argv[])
 {
   try
     {

@@ -107,7 +107,7 @@ Notify_Logging_Service::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Notify_Logging_Service::init (int argc, char *argv[])
+Notify_Logging_Service::init (int argc, ACE_TCHAR *argv[])
 {
   // initialize the ORB.
   if (this->init_ORB (argc, argv) != 0)

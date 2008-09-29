@@ -91,7 +91,7 @@ Basic_Logging_Service::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Basic_Logging_Service::init (int argc, char *argv[])
+Basic_Logging_Service::init (int argc, ACE_TCHAR *argv[])
 {
   // initialize the ORB.
   this->init_ORB (argc, argv);

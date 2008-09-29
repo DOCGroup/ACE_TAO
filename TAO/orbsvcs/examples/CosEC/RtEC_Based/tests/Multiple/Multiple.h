@@ -39,7 +39,7 @@ class Multiple
   virtual ~Multiple (void);
   // Destructor.
 
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Calls parse_args, Starts up an ORB, gets hold of the Event Service.
   // Returns 0 on success, -1 on error.
 
@@ -60,7 +60,7 @@ class Multiple
 // The name with which to locate the Event Service.
 
  private:
-  int init_ORB (int argc, char *argv[]);
+  int init_ORB (int argc, ACE_TCHAR *argv[]);
   // initializes the ORB.
   // Returns 0 on success, -1 on error.
 

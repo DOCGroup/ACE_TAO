@@ -90,7 +90,7 @@ public:
   void on_received_event (MultiTypes_SequencePushConsumer* consumer);
 
   int parse_args (int argc,
-                  char *argv[]);
+                  ACE_TCHAR *argv[]);
 
   int init (int argc,
             char *argv []);

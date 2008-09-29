@@ -42,7 +42,7 @@ public:
 
   /// Initialize the IFR service.
   int init (int argc,
-            char *argv[]);
+            ACE_TCHAR *argv[]);
 
   /// Shut down the IFR Service.
   int fini (void);

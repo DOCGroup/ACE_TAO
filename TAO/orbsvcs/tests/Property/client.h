@@ -56,7 +56,7 @@ public:
 
 protected:
   int bind_to_remote_mmdevice (int argc,
-                               char *argv[]);
+                               ACE_TCHAR *argv[]);
   // Bind to the remote MMDevice.
 
   // = Property Testing.

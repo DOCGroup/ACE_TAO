@@ -25,7 +25,7 @@ RTEvent_Logging_Service::~RTEvent_Logging_Service (void)
 }
 
 void
-RTEvent_Logging_Service::init_ORB (int& argc, char *argv[])
+RTEvent_Logging_Service::init_ORB (int& argc, ACE_TCHAR *argv[])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 

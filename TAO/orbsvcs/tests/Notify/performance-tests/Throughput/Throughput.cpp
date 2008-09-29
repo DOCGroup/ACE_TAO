@@ -301,7 +301,7 @@ Notify_Throughput::init (int argc, char* argv [])
 }
 
 int
-Notify_Throughput::parse_args(int argc, char *argv[])
+Notify_Throughput::parse_args(int argc, ACE_TCHAR *argv[])
 {
     ACE_Arg_Shifter arg_shifter (argc, argv);
 

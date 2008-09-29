@@ -42,7 +42,7 @@ Basic::~Basic (void)
 }
 
 void
-Basic::init (int argc, char *argv[])
+Basic::init (int argc, ACE_TCHAR *argv[])
 {
   this->init_ORB (argc, argv);
 

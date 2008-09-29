@@ -39,7 +39,7 @@ class Basic_Logging_Service
   virtual ~Basic_Logging_Service (void);
   // Destructor.
 
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initializes the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 

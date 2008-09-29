@@ -39,7 +39,7 @@ class BasicLog_Test
   ~BasicLog_Test(void);
   // destructor
 
-  int init(int argc, char *argv[]);
+  int init(int argc, ACE_TCHAR *argv[]);
 
   int
   test_CreateLog(CORBA::ULongLong maxSize = MAX_LOG_SIZE);
@@ -114,7 +114,7 @@ private:
     init_factory (void);
 
   int
-    parse_args(int argc, char *argv[]);
+    parse_args(int argc, ACE_TCHAR *argv[]);
   // command line argument parser
 
   int write_records(CORBA::ULongLong numberOfRecordsToWrite);
