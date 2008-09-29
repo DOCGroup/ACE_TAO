@@ -39,8 +39,7 @@ module PortableServer
       raises(AdapterInactive);
 
     void deactivate (in boolean etherealize_objects,
-                     in boolean wait_for_completion)
-      raises(AdapterInactive);
+                     in boolean wait_for_completion);
 #endif
 
     State get_state ();

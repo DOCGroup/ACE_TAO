@@ -62,7 +62,7 @@ public:
 
 private:
   /// Stub for the call back method in the Reply Handler.
-  const TAO_Reply_Handler_Stub reply_handler_stub_;
+  TAO_Reply_Handler_Stub const reply_handler_stub_;
 
   /// Reply Handler passed in the Asynchronous Invocation.
   Messaging::ReplyHandler_var reply_handler_;
