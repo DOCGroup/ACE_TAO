@@ -20,8 +20,6 @@
 
 #include "tao/LocalObject.h"
 
-#include "ciao/Session_Container.h"
-
 #include "ENWS.h"
 #include "TSEC_CheckPointEIC.h"
 #include "TSEC_CheckPoint_exec_export.h"

@@ -1,17 +1,17 @@
 
 #include "Logger_Service.h"
 #include "Log_Macros.h"
-#include <ace/Get_Opt.h>
-#include <ace/CORBA_macros.h>
-#include <ace/Env_Value_T.h> 
-#include <tao/SystemException.h>
+#include "ace/Get_Opt.h"
+#include "ace/CORBA_macros.h"
+#include "ace/Env_Value_T.h" 
+#include "tao/SystemException.h"
 
 namespace CIAO
 {
   Logger_Service::Logger_Service (void)
     : filename_ (""),
       trace_ (false),
-      log_level_ (10)
+      log_level_ (5)
   {
   }
   
@@ -94,39 +94,39 @@ namespace CIAO
     
     u_long new_mask = 0;
     
-    if (this->log_level_ <= 1)
+    if (this->log_level_ >= 9)
       {
         new_mask |= LM_TRACE;
       }
-    if (this->log_level_ <= 2)
+    if (this->log_level_ >= 8)
       {
         new_mask |= LM_DEBUG;
       }
-    if (this->log_level_ <= 3)
+    if (this->log_level_ >= 7)
       {
         new_mask |= LM_INFO;
       }
-    if (this->log_level_ <= 4)
+    if (this->log_level_ >= 6)
       {
         new_mask |= LM_NOTICE;
       }
-    if (this->log_level_ <= 5)
+    if (this->log_level_ >= 5)
       {
         new_mask |= LM_WARNING;
       }
-    if (this->log_level_ <= 6)
+    if (this->log_level_ >= 4)
       {
         new_mask |= LM_ERROR;
       }
-    if (this->log_level_ <= 7)
+    if (this->log_level_ >= 3)
       {
         new_mask |= LM_CRITICAL;
       }
-    if (this->log_level_ <= 8)
+    if (this->log_level_ >= 2)
       {
         new_mask |= LM_ALERT;
       }
-    if (this->log_level_ <= 9)
+    if (this->log_level_ >= 1)
       {
         new_mask |= LM_EMERGENCY;
       }

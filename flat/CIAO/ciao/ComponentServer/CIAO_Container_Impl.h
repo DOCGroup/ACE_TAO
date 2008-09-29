@@ -12,7 +12,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <ciao/Containers/Session/Session_Container.h>
+#include "ciao/Containers/Session/Session_Container.h"
 
 #include "CIAO_ComponentServer_svnt_export.h"
 

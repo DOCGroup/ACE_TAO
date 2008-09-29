@@ -1,9 +1,9 @@
 #ifndef REDIRECTIONSERVICE_H_
 #define REDIRECTIONSERVICE_H_
 
-#include <ace/Map_Manager.h>
-#include <tao/PortableServer/PortableServer.h>
-#include <orbsvcs/orbsvcs/CosNamingC.h>
+#include "ace/Map_Manager.h"
+#include "tao/PortableServer/PortableServer.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 #include "RedirectionService_Export.h"
 

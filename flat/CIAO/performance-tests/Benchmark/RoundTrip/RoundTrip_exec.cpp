@@ -1,13 +1,12 @@
 // $Id$
 
 #include "RoundTrip_exec.h"
-#include "CIAO_common.h"
 
 //-- ACE Scheduling Params
 #include "ace/Sched_Params.h"
-
 #include "ace/OS_NS_errno.h"
 
+#include "ciao/Logger/Log_Macros.h"
 //=================================================================
 
 void
@@ -24,7 +23,7 @@ set_priority ()
     {
       if (ACE_OS::last_error () == EPERM)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          CIAO_DEBUG ((LM_WARNING, CLINFO
                       "client (%P|%t): user is not superuser, "
                       "test runs in time-shared class\n"));
         }
@@ -63,8 +62,7 @@ void
 MyImpl::RoundTrip_exec_i::set_session_context (
     Components::SessionContext_ptr ctx)
 {
-  if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::set_session_context\n"));
+  CIAO_DEBUG ((LM_TRACE, CLINFO "MyImpl::RoundTrip_exec_i::set_session_context\n"));
   //cout << "MyImpl::RoundTrip_exec_i::set_session_context\n" << endl;
 
   this->context_ =
@@ -83,8 +81,7 @@ MyImpl::RoundTrip_exec_i::configuration_complete ()
 void
 MyImpl::RoundTrip_exec_i::ccm_activate ()
 {
-  if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::ccm_activate\n"));
+  CIAO_DEBUG ((LM_TRACE, CLINFO "MyImpl::RoundTrip_exec_i::ccm_activate\n"));
   //cout << "MyImpl::RoundTrip_exec_i::ccm_activate\n";
 
   // Starting method!
@@ -94,15 +91,13 @@ MyImpl::RoundTrip_exec_i::ccm_activate ()
 void
 MyImpl::RoundTrip_exec_i::ccm_passivate ()
 {
-  if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::ccm_passivate\n"));
+  CIAO_DEBUG ((LM_TRACE, CLINFO "MyImpl::RoundTrip_exec_i::ccm_passivate\n"));
 }
 
 void
 MyImpl::RoundTrip_exec_i::ccm_remove ()
 {
-  if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::ccm_remove\n"));
+  CIAO_DEBUG ((LM_INFO, CLINFO "MyImpl::RoundTrip_exec_i::ccm_remove\n"));
 }
 
 

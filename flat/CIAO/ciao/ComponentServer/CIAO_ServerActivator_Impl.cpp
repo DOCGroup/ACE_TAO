@@ -1,10 +1,10 @@
 #include "CIAO_ServerActivator_Impl.h"
 
-#include <ace/Log_Msg.h>
-#include <ace/UUID.h>
-#include <ciao/CIAO_common.h>
-#include <ciao/Client_init.h>
-#include <ciao/CIAO_FailureReasonsC.h>
+#include "ace/Log_Msg.h"
+#include "ace/UUID.h"
+#include "ciao/CIAO_common.h"
+#include "ciao/Client_init.h"
+#include "ciao/CIAO_FailureReasonsC.h"
 
 #include "CIAO_ServerResourcesC.h"
 #include "CIAO_ComponentServerC.h"

@@ -2,7 +2,7 @@
 
 #include "SimpleAddressServer.h"
 
-#include <ace/INET_Addr.h>
+#include "ace/INET_Addr.h"
 
 SimpleAddressServer::SimpleAddressServer (const ACE_INET_Addr& address)
 {

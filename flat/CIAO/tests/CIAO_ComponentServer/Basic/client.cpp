@@ -1,7 +1,7 @@
 // $Id$
 
-#include <ace/Get_Opt.h>
-#include <ciao/ComponentServer/CIAO_ComponentServerC.h>
+#include "ace/Get_Opt.h"
+#include "ciao/ComponentServer/CIAO_ComponentServerC.h"
 
 const char *server_1 = "file://test1.ior";
 const char *server_2 = "file://test2.ior";

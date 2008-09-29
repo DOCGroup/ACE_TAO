@@ -57,7 +57,7 @@ project(Minimum_Base_Sender_stub) : ccm_stub {
   }
 }
 
-project(Minimum_Base_Sender_exec) : ccm_executor {
+project(Minimum_Base_Sender_exec) : ciao_executor {
   avoids += ace_for_tao
   after   += Minimum_Base_Sender_cidl_gen Minimum_Base_Sender_stub
   sharedname = Sender_exec

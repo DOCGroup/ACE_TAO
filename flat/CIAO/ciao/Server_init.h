@@ -22,9 +22,9 @@
 #pragma once
 #endif /* ! ACE_LACKS_PRAGMA_ONCE */
 
-#include <ace/SString.h>
-#include <orbsvcs/CosNamingC.h>
-#include <ccm/CCM_StandardConfiguratorC.h>
+#include "ace/SString.h"
+#include "orbsvcs/CosNamingC.h"
+#include "ccm/CCM_StandardConfiguratorC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA

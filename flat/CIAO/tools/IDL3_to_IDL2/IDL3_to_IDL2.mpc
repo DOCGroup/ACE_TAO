@@ -101,7 +101,7 @@ project (CDMW_IDL3_TO_IDL2_BE) : acelib, install, tao_output, crosscompile {
   }
 }
 
-project (CDMW_IDL3_TO_IDL2_EXE) : aceexe, install, tao_output, crosscompile {
+project (CDMW_IDL3_TO_IDL2_EXE) : aceexe, install, tao_output, crosscompile, tao_idl_mcpp {
   exename    = cdmw_idl3_to_idl2
   install    = $(ACE_ROOT)/bin
   after     += CDMW_IDL3_TO_IDL2_BE
@@ -129,7 +129,6 @@ project (CDMW_IDL3_TO_IDL2_EXE) : aceexe, install, tao_output, crosscompile {
   Source_Files {
     cdmw_idl.cpp
     $(TAO_ROOT)/TAO_IDL/driver/drv_args.cpp
-    $(TAO_ROOT)/TAO_IDL/driver/drv_preproc.cpp
   }
   
   Header_Files {

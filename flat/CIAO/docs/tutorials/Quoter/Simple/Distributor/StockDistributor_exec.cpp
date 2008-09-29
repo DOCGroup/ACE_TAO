@@ -116,14 +116,11 @@ namespace CIDL_StockDistributor_Impl
   pulse_Generator::handle_close (ACE_HANDLE handle,
                                  ACE_Reactor_Mask close_mask)
   {
-    if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),
-                  this,
-                  handle,
-                  close_mask));
-    }
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),
+                this,
+                handle,
+                close_mask));
     return 0;
   }
 

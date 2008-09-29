@@ -5,7 +5,7 @@
 
 #include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
 //@! From DOCGroup source
-//#include <ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl>
+//#include "ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl"
 
 module Deployment
 {

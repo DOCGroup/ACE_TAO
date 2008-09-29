@@ -8,7 +8,7 @@
 #ifndef CIAO_PORT_ACTIVATOR_IDL_
 #define CIAO_PORT_ACTIVATOR_IDL_
 
-#include <tao/PortableServer/ServantActivator.pidl>
+#include "tao/PortableServer/ServantActivator.pidl"
 
 module CIAO
 {

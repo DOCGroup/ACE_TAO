@@ -1,6 +1,7 @@
 //$Id$
 
 project(TSEC_CheckPoint_stub): ccm_stub, event {
+  requires += dummy_label                               
   avoids += ace_for_tao
   after  += ENW_stub
   libpaths += ../interfaces
@@ -24,6 +25,7 @@ project(TSEC_CheckPoint_stub): ccm_stub, event {
 }
 
 project(TSEC_CheckPoint_svnt) : ciao_servant, event {
+  requires += dummy_label                               
   avoids += ace_for_tao
   after +=  TSEC_CheckPoint_stub
   after +=  ENW_skel ENW_stub
@@ -55,6 +57,7 @@ project(TSEC_CheckPoint_svnt) : ciao_servant, event {
 
 
 project(TSEC_CheckPoint_exec) : ciao_executor, event, ccm_svnt {
+  requires += dummy_label
   avoids += ace_for_tao
   after   += TSEC_CheckPoint_svnt
   after   += ENW_skel ENW_stub
@@ -84,6 +87,7 @@ project(TSEC_CheckPoint_exec) : ciao_executor, event, ccm_svnt {
 
 
 project(TSEC_CheckPoint_controller) : ccm_stub, valuetype, event {
+  requires += dummy_label
   avoids += ace_for_tao
   exename = controller
   after += TSEC_CheckPoint_stub

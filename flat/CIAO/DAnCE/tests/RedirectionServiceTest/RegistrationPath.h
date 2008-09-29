@@ -1,6 +1,6 @@
 #ifndef REGISTRATIONPATH_H_
 #define REGISTRATIONPATH_H_
-#include <ace/SString.h>
+#include "ace/SString.h"
 
 const ACE_CString node_name = "MyNode";
 const ACE_CString app_name = "app1";

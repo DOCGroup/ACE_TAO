@@ -24,11 +24,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <ace/Null_Mutex.h>
-#include <ace/SString.h>
-#include <ace/Hash_Map_Manager_T.h>
-#include <tao/RTCORBA/RTCORBA.h>
-#include <ciao/ComponentServer/CIAO_ServerResourcesC.h>
+#include "ace/Null_Mutex.h"
+#include "ace/SString.h"
+#include "ace/Hash_Map_Manager_T.h"
+#include "tao/RTCORBA/RTCORBA.h"
+#include "ciao/ComponentServer/CIAO_ServerResourcesC.h"
 
 #include "Config_Manager.h"
 #include "RTNA_Configurator_Export.h"

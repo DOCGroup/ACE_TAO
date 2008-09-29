@@ -1,6 +1,6 @@
 #include "CIAO_ComponentServer_Impl.h"
 
-#include <ciao/CIAO_common.h>
+#include "ciao/CIAO_common.h"
 
 #include "CIAO_CS_ClientC.h"
 #include "CIAO_Container_Impl.h"

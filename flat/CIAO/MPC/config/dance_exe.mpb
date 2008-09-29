@@ -2,5 +2,5 @@
 // $Id$
 
 project : dance {
-  install = $(ACE_ROOT)/bin
+  install = $(DANCE_ROOT)/bin
 }

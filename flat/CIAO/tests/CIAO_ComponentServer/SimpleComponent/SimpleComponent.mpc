@@ -59,9 +59,9 @@ project(SimpleComponent_stub) : ccm_stub {
 
 project(SimpleComponent_exec) : ciao_executor, ccm_svnt {
   avoids += ace_for_tao
-  after   += SimpleComponent_cidl_gen SimpleComponent_stub
+  after   += SimpleComponent_cidl_gen SimpleComponent_svnt
   sharedname = SimpleComponent_exec
-  libs += SimpleComponent_stub 
+  libs += SimpleComponent_stub SimpleComponent_svnt 
   
   dynamicflags   = SIMPLECOMPONENT_EXEC_BUILD_DLL
 
@@ -87,11 +87,9 @@ project(SimpleComponent_exec) : ciao_executor, ccm_svnt {
 
 project(SimpleComponent_svnt) : ciao_servant, ccm_svnt {
   avoids += ace_for_tao
-  after      +=  SimpleComponent_exec
   sharedname  = SimpleComponent_svnt
-  libs       += SimpleComponent_exec \
-                SimpleComponent_stub 
-  
+  libs       += SimpleComponent_stub 
+  after +=   SimpleComponent_stub SimpleComponent_cidl_gen
   dynamicflags = SIMPLECOMPONENT_SVNT_BUILD_DLL
   
   CIDL_Files {
@@ -102,6 +100,7 @@ project(SimpleComponent_svnt) : ciao_servant, ccm_svnt {
 
   Source_Files {
     SimpleComponentS.cpp
+    SimpleComponentEC.cpp
     SimpleComponent_svnt.cpp
   }
   
@@ -117,7 +116,7 @@ project(SimpleComponent_svnt) : ciao_servant, ccm_svnt {
 }
 
 project (SimpleComponent_CIAOComponentServer_Test) : ciao_componentserver_stub, ccm_configvalue, ciao_cs_client {
-   after += SimpleComponent_stub
+   after += SimpleComponent_stub SimpleComponent_svnt
    libs += SimpleComponent_stub CIAO_Logger
    IDL_Files {
    }

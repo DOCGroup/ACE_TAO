@@ -13,7 +13,7 @@
 
 #include "ciao/CIAO_common.h"
 #include "ciao/Version.h"
-
+#include "ciao/Containers/Session/Session_Container.h"
 #include "TSEC_CheckPoint_exec.h"
 #include "TSEC_CheckPoint_svnt.h"
 

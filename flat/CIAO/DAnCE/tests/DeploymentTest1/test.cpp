@@ -5,9 +5,9 @@
 #include "DAnCE/Deployment/Deployment_DomainApplicationC.h"
 #include "DAnCE/Deployment/Deployment_NodeManagerC.h"
 #include "DAnCE/Deployment/Deployment_NodeApplicationManagerC.h"
+#include "DAnCE/Logger/Log_Macros.h"
 #include "tools/Config_Handlers/DnC_Dump.h"
 #include "tools/Config_Handlers/XML_File_Intf.h"
-
 
 int main (int argc, char * argv[])
 {
