@@ -52,7 +52,7 @@ TAO_PortableGroup_ORBInitializer::pre_init (
 
   // If the application resolves the root POA, make sure we load the PG POA.
   tao_info->orb_core ()->orb_params ()->poa_factory_name (pg_poa_factory_name);
-  tao_info->orb_core ()->orb_params ()->poa_factory_directive (ACE_TEXT_ALWAYS_CHAR (pg_poa_factory_directive));
+  tao_info->orb_core ()->orb_params ()->poa_factory_directive (pg_poa_factory_directive);
 }
 
 void
