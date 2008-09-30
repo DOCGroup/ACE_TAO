@@ -29,8 +29,6 @@ public:
 
   int result_;
 private:
-  const char *input_;
-
   CORBA::ORB_var corb_;
 
   Messenger_var messenger_;

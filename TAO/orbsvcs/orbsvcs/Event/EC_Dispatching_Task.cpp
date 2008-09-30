@@ -47,9 +47,9 @@ TAO_EC_Simple_Queue_Full_Action::init (int argc, ACE_TCHAR* argv[])
     if (argc == 0)
       break;
 
-    if (ACE_OS::strcasecmp ("wait", argv[0]) == 0)
+    if (ACE_OS::strcasecmp (ACE_TEXT("wait"), argv[0]) == 0)
       this->queue_full_action_return_value_ = WAIT_TO_EMPTY;
-    else if (ACE_OS::strcasecmp ("discard", argv[0]) == 0)
+    else if (ACE_OS::strcasecmp (ACE_TEXT("discard"), argv[0]) == 0)
       this->queue_full_action_return_value_ = SILENTLY_DISCARD;
 #if 0
     else
@@ -100,13 +100,13 @@ int
 TAO_EC_Dispatching_Task::svc (void)
 {
   bool done = false;
-  
+
   while (!done)
     {
       try
         {
           ACE_Message_Block *mb = 0;
-          
+
           if (this->getq (mb) == -1)
             {
               if (ACE_OS::last_error () == ESHUTDOWN)
@@ -143,7 +143,7 @@ TAO_EC_Dispatching_Task::svc (void)
           ex._tao_print_exception ("EC (%P|%t) exception in dispatching queue");
         }
     }
-    
+
   return 0;
 }
 

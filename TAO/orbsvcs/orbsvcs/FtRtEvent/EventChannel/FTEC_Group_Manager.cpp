@@ -72,7 +72,7 @@ void TAO_FTEC_Group_Manager::create_group (
     const FTRT::ManagerInfoList & info_list,
     CORBA::ULong object_group_ref_version)
 {
-  TAO_FTRTEC::Log(1, "create_group\n");
+  TAO_FTRTEC::Log(1, ACE_TEXT("create_group\n"));
 
   impl_->info_list = info_list;
   impl_->my_position = find_by_location(info_list,
@@ -107,7 +107,7 @@ void TAO_FTEC_Group_Manager::create_group (
 void TAO_FTEC_Group_Manager::join_group (
     const FTRT::ManagerInfo & info)
 {
-  TAO_FTRTEC::Log(1, "join group\n");
+  TAO_FTRTEC::Log(1, ACE_TEXT("join group\n"));
   if (impl_->my_position == 0) {
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
     ACE_Write_Guard<FTRTEC::Replication_Service> lock(*svc);
@@ -119,7 +119,7 @@ void TAO_FTEC_Group_Manager::add_member (
     const FTRT::ManagerInfo & info,
     CORBA::ULong object_group_ref_version)
 {
-  TAO_FTRTEC::Log(1, "add_member location = <%s>\n",
+  TAO_FTRTEC::Log(1, ACE_TEXT("add_member location = <%s>\n"),
     (const char*)info.the_location[0].id);
 
   auto_ptr<TAO_FTEC_Group_Manager_Impl> new_impl(new TAO_FTEC_Group_Manager_Impl);
@@ -218,11 +218,11 @@ void TAO_FTEC_Group_Manager::add_member (
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
     }
 
-    TAO_FTRTEC::Log(2, "Setting state\n");
+    TAO_FTRTEC::Log(2, ACE_TEXT("Setting state\n"));
     info.ior->set_state(s);
     info.ior->create_group(new_impl->info_list,
                            object_group_ref_version);
-    TAO_FTRTEC::Log(2, "After create_group\n");
+    TAO_FTRTEC::Log(2, ACE_TEXT("After create_group\n"));
   }
 
   // commit the changes
@@ -245,7 +245,7 @@ void remove_item(SEQ & seq, int position)
 void TAO_FTEC_Group_Manager::replica_crashed (
     const FTRT::Location & location)
 {
-  TAO_FTRTEC::Log(1, "TAO_FTEC_Group_Manager::replica_crashed\n");
+  TAO_FTRTEC::Log(1, ACE_TEXT("TAO_FTEC_Group_Manager::replica_crashed\n"));
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
     ACE_Write_Guard<FTRTEC::Replication_Service> lock(*svc);
     remove_member(location, IOGR_Maker::instance()->get_ref_version()+1);
@@ -288,14 +288,14 @@ void TAO_FTEC_Group_Manager::remove_member (
     }
   }
 
-  TAO_FTRTEC::Log(3, "my_position = %d, crashed_pos = %d\n", impl_->my_position, crashed_pos);
+  TAO_FTRTEC::Log(3, ACE_TEXT("my_position = %d, crashed_pos = %d\n"), impl_->my_position, crashed_pos);
   if (impl_->my_position == crashed_pos && impl_->my_position > 0)
     Fault_Detector::instance()->connect(impl_->info_list[impl_->my_position-1].the_location);
 }
 
 void TAO_FTEC_Group_Manager::connection_closed()
 {
-  TAO_FTRTEC::Log(1, "TAO_FTEC_Group_Manager::connection_closed\n");
+  TAO_FTRTEC::Log(1, ACE_TEXT("TAO_FTEC_Group_Manager::connection_closed\n"));
   ACE_ASSERT(impl_->my_position > 0);
 
   // do not use referere here, because the the value pointed by the pointer to
