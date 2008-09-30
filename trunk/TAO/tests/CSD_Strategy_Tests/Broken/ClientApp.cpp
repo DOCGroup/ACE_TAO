@@ -58,7 +58,7 @@ ClientApp::run_i(int argc, ACE_TCHAR* argv[])
 
 
 int
-ClientApp::init(int argc, ACE_TCHAR* argv[]);
+ClientApp::init(int argc, ACE_TCHAR* argv[])
 {
   this->orb_ = CORBA::ORB_init(argc, argv);
 
