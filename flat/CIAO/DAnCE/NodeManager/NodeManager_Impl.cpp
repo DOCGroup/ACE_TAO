@@ -92,7 +92,7 @@ namespace DAnCE
         // What should we do here if we already have application for this plan?
         // Probably it is mistake because we should previously call destroyApplication
         // before performe relaunching of application
-        DANCE_ERROR ((LM_ERROR, "[%M] NodeManager_impl::preparePlan - "
+        DANCE_ERROR ((LM_ERROR, DLINFO "NodeManager_impl::preparePlan - "
                       "ApplicationManager for  UUID %s already exists\n",
                       plan.UUID.in ()));
         throw ::Deployment::PlanError();

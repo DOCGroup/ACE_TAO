@@ -1,3 +1,25 @@
+Tue Sep 30 14:32:34 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/DAnCE_Loader.h:
+        * DAnCE/Deployment/Module_Main.h:
+        * DAnCE/Logger/Log_Macros.h:
+        * DAnCE/Logger/Logger_Service.h:
+        * DAnCE/Logger/Logger_Service.cpp:
+        * DAnCE/NodeManager/NodeManager.mpc:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/NodeManager/Node_Manager_Exec.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/Starter/Starter.h:
+        * DAnCE/Starter/Starter.cpp:
+
+          Fixed logging infrastructure, enableed NodeManager binary and ensured
+          its ability to start up. 
+        
+        * ciao/Logger/Log_Macros.h:
+
+          Fixed tracing facility.
+        
 Mon Sep 29 17:26:48 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment_Connection.idl:
@@ -78,7 +100,7 @@ Mon Sep 29 17:26:48 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
 
           Compile fixes, converted from <> includes to "" includes where appropriate.
-        
+
 Tue Jun  3 14:01:08 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment_Connection.idl:

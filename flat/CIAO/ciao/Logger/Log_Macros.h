@@ -8,16 +8,6 @@
 #ifndef CIAO_LOG_MACROS_H_
 #define CIAO_LOG_MACROS_H_
 
-
-// By default tracing is turned off.
-#if !defined (CIAO_NTRACE)
-#  if !defined (ACE_NTRACE)
-#    define CIAO_NTRACE 1
-#  else
-#    define CIAO_NTRACE ACE_NTRACE
-#  endif
-#endif /* CIAO_NTRACE */
-
 // default information printed with CIAO logging messages.
 
 #define CLINFO "(%P|%t) [%M] - %T - "
