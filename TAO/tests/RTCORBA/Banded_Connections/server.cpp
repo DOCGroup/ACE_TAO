@@ -113,7 +113,7 @@ Test_i::shutdown (void)
 
 //*************************************************************************
 
-const char *bands_file = "bands";
+const ACE_TCHAR *bands_file = ACE_TEXT("bands");
 const ACE_TCHAR *ior_output_file1 = ACE_TEXT("test1.ior");
 const ACE_TCHAR *ior_output_file2 = ACE_TEXT("test2.ior");
 
@@ -219,7 +219,7 @@ int
 create_object (PortableServer::POA_ptr poa,
                CORBA::ORB_ptr orb,
                Test_i *server_impl,
-               const char *filename)
+               const ACE_TCHAR *filename)
 {
   // Register servant with the POA.
   PortableServer::ObjectId_var id;

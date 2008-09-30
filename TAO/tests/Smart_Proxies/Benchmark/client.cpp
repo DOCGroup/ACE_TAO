@@ -44,7 +44,7 @@ class Marker
       // Accumulate the throughput statistics into <throughput>
       throughput.accumulate (this->throughput_);
     }
-  void dump_stats (const char* msg,
+  void dump_stats (const ACE_TCHAR* msg,
                    ACE_UINT32 gsf)
     {
       // Print stats

@@ -6,8 +6,8 @@
 #include "testC.h"
 #include "tao/ORB_Constants.h"
 
-const char *proxy_ior = 0;
-const char *control_ior = 0;
+const ACE_TCHAR *proxy_ior = 0;
+const ACE_TCHAR *control_ior = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

@@ -5,7 +5,7 @@
 #include "ace/TP_Reactor.h"
 #include "ace/Reactor.h"
 
-const char *host = "localhost";
+const ACE_TCHAR *host = ACE_TEXT("localhost");
 static int port = 10008;
 const int iter = 55;
 int purged_handles = 0;
@@ -123,7 +123,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // Handle events moved to here to prevent this test taking best part
   // of a minute
   ACE_Time_Value tv (3);
-  
+
   while (singleton->handle_events (&tv) >= 1)
     {
       // No action.
