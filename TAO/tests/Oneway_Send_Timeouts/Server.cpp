@@ -32,7 +32,7 @@ Server::Server (int , ACE_TCHAR* argv[])
     int my_argc = args_1.argc ();
     int count = 0;
     for (count = my_argc-1; count > -1; count--) {
-      if (ACE_OS::strcasecmp ("-ORBEndpoint", my_argv[count]) == 0) {
+      if (ACE_OS::strcasecmp (ACE_TEXT("-ORBEndpoint"), my_argv[count]) == 0) {
         break;
       }
     }
@@ -53,7 +53,7 @@ Server::Server (int , ACE_TCHAR* argv[])
     my_argv = args_2.argv();
     my_argc = args_2.argc();
     for (count = 0; count < my_argc; count++) {
-      if (ACE_OS::strcasecmp ("-ORBEndpoint", my_argv[count]) == 0) {
+      if (ACE_OS::strcasecmp (ACE_TEXT("-ORBEndpoint"), my_argv[count]) == 0) {
         break;
       }
     }

@@ -10,7 +10,7 @@ ACE_RCSID (Redirection,
            client,
            "$Id$")
 
-const char *ior1 = 0;
+const ACE_TCHAR *ior1 = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

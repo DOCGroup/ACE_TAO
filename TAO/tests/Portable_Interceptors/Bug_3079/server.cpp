@@ -12,7 +12,7 @@ ACE_RCSID (Redirection,
            server,
            "$Id$")
 
-const char *ior_file = 0;
+const ACE_TCHAR *ior_file = 0;
 int number = 0;
 int server_number = 0;
 

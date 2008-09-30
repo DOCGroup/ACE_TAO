@@ -47,7 +47,7 @@ public:
   ~Initiator_Server (void);
   // Destructor
 
-  int read_ior (char *filename, unsigned int A_B);
+  int read_ior (ACE_TCHAR *filename, unsigned int A_B);
   // read in the IOR's for the two objects A and B
 
   int init (int argc,

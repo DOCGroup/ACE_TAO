@@ -180,13 +180,13 @@ Client::parse_args (int argc, ACE_TCHAR* argv[])
   obj = orb_->string_to_object (back_ior.c_str());
   management_ = Test::_narrow (obj.in ());
 
-  if (ACE_OS::strcasecmp ("lf", flush_strategy.c_str()) == 0) {
+  if (ACE_OS::strcasecmp (ACE_TEXT("lf"), flush_strategy.c_str()) == 0) {
     flush_strategy_ = LF;
   }
-  else if (ACE_OS::strcasecmp ("blocking", flush_strategy.c_str()) == 0) {
+  else if (ACE_OS::strcasecmp (ACE_TEXT("blocking"), flush_strategy.c_str()) == 0) {
     flush_strategy_ = BLOCKING;
   }
-  else if (ACE_OS::strcasecmp ("reactive", flush_strategy.c_str()) == 0) {
+  else if (ACE_OS::strcasecmp (ACE_TEXT("reactive"), flush_strategy.c_str()) == 0) {
     flush_strategy_ = REACTIVE;
   }
 

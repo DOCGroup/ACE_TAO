@@ -1,3 +1,28 @@
+Tue Sep 30 18:25:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Exposed_Policies/Policy_Verifier.cpp
+        * tests/InterOp-Naming/INS_test_client.cpp
+        * tests/Monitor/Marshal_Buffer/client.cpp
+        * tests/Monitor/Marshal_Buffer/server.cpp
+        * tests/NestedUpcall/MT_Client_Test/client.cpp
+        * tests/NestedUpcall/MT_Client_Test/local_server.cpp
+        * tests/NestedUpcall/MT_Client_Test/local_server.h
+        * tests/NestedUpcall/MT_Client_Test/server.cpp
+        * tests/NestedUpcall/Triangle_Test/initiator.cpp
+        * tests/NestedUpcall/Triangle_Test/initiator.h
+        * tests/NestedUpcall/Triangle_Test/server_A.cpp
+        * tests/Oneway_Send_Timeouts/Client.cpp
+        * tests/Oneway_Send_Timeouts/main.cpp
+        * tests/Oneway_Send_Timeouts/Server.cpp
+        * tests/Oneway_Timeouts/client.cpp
+        * tests/Portable_Interceptors/Bug_3079/server.cpp
+        * tests/Portable_Interceptors/Bug_3080/client.cpp
+        * tests/Portable_Interceptors/Bug_3080/server.cpp
+        * tests/Portable_Interceptors/ORB_Shutdown/server.cpp
+        * tests/Portable_Interceptors/Redirection/server.cpp
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/server.cpp
+          ACE_TCHAR fixes
+
 Tue Sep 30 18:24:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/FaultTolerance/RolyPoly/server.cpp
