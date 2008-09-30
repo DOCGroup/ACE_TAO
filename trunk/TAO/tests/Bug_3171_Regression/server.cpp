@@ -14,7 +14,7 @@ bool g_setTimeout = true;
 bool g_registerORBinitializer = true;
 bool g_initInMain = false;
 int g_argc;
-char ** g_argv;
+ACE_TCHAR ** g_argv;
 
 int initORB(int threadID);
 

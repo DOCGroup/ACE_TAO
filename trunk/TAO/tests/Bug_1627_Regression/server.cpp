@@ -7,7 +7,7 @@
 
 #include "tao/IORTable/IORTable.h"
 
-const char *object_key = 0;
+const ACE_TCHAR *object_key = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

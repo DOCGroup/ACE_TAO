@@ -6,7 +6,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/High_Res_Timer.h"
 
-void parse_args(int argc, char * argv[]);
+void parse_args(int argc, ACE_TCHAR* argv[]);
 void write_ior_to_file(char const * ior);
 
 int
@@ -48,7 +48,7 @@ const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 }
 
 void
-parse_args(int argc, char * argv[])
+parse_args(int argc, ACE_TCHAR* argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
