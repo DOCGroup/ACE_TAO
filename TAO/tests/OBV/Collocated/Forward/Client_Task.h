@@ -22,7 +22,7 @@ class Client_Task : public ACE_Task_Base
 public:
 
   /// Constructor
-  Client_Task (const char *input,
+  Client_Task (const ACE_TCHAR *input,
                CORBA::ORB_ptr corb,
                ACE_Thread_Manager *thr_mgr);
 
@@ -38,7 +38,7 @@ public:
   int is_equal_node (BaseNode * node1, BaseNode * node2);
 
 private:
-  const char *input_;
+  const ACE_TCHAR *input_;
 
   CORBA::ORB_var corb_;
 

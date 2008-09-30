@@ -71,7 +71,7 @@ private:
                           const char *second_ior);
   // The IORs are written to a file for future use.
 
-  char *ior_output_file_;
+  ACE_TCHAR *ior_output_file_;
   // Default ior file.
 
   CORBA::ORB_var orb_;

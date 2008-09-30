@@ -19,18 +19,18 @@ class Client_Task : public ACE_Task_Base
 public:
 
   /// Constructor
-  Client_Task (const char *input,
+  Client_Task (const ACE_TCHAR *input,
                const char *simple_test_ior,
                CORBA::ORB_ptr corb,
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
   int svc (void);
- 
+
   CORBA::ULong error_count () const;
-  
+
 private:
-  const char *input_;
+  const ACE_TCHAR *input_;
   const char *simple_test_input_;
 
   CORBA::ORB_var corb_;

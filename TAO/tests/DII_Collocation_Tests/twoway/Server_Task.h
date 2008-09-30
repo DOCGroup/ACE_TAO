@@ -21,7 +21,7 @@ class Server_Task : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Server_Task (const char *output,
+  Server_Task (const ACE_TCHAR *output,
                const char *simple_test_output,
                CORBA::ORB_ptr sorb,
                ACE_Manual_Event &me,
@@ -34,7 +34,7 @@ public:
 
 private:
   /// Output file for server IOR
-  const char *output_;
+  const ACE_TCHAR *output_;
 
   /// Output file for Simple_Test IOR
   const char *simple_test_output_;

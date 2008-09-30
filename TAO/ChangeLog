@@ -1,10 +1,56 @@
-Tue Sep 30 02:11:40 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+Tue Sep 30 14:47:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/COIOP/Client_Task.h
+        * tests/COIOP/Server_Task.cpp
+        * tests/COIOP/Server_Task.h
+        * tests/Collocation_Exception_Test/Client_Task.h
+        * tests/Collocation_Exception_Test/Server_Task.cpp
+        * tests/Collocation_Exception_Test/Server_Task.h
+        * tests/Collocation_Oneway_Tests/Client_Task.h
+        * tests/Collocation_Oneway_Tests/Server_Task.cpp
+        * tests/Collocation_Oneway_Tests/Server_Task.h
+        * tests/Collocation_Tests/Client_Task.h
+        * tests/Collocation_Tests/Server_Task.cpp
+        * tests/Collocation_Tests/Server_Task.h
+        * tests/DII_Collocation_Tests/oneway/Client_Task.h
+        * tests/DII_Collocation_Tests/oneway/Server_Task.cpp
+        * tests/DII_Collocation_Tests/oneway/Server_Task.h
+        * tests/DII_Collocation_Tests/twoway/Client_Task.h
+        * tests/DII_Collocation_Tests/twoway/Server_Task.cpp
+        * tests/DII_Collocation_Tests/twoway/Server_Task.h
+        * tests/MProfile/client.cpp
+        * tests/MProfile_Connection_Timeout/client.cpp
+        * tests/MProfile_Forwarding/client.cpp
+        * tests/Multiple_Inheritance/client.cpp
+        * tests/Muxed_GIOP_Versions/client.cpp
+        * tests/Muxed_GIOP_Versions/server.cpp
+        * tests/OBV/Collocated/Forward/Client_Task.cpp
+        * tests/OBV/Collocated/Forward/Client_Task.h
+        * tests/OBV/Collocated/Forward/Server_Task.cpp
+        * tests/OBV/Collocated/Forward/Server_Task.h
+        * tests/OBV/Simple/Client_i.h
+        * tests/POA/On_Demand_Loading/Servant_Manager.cpp
+        * tests/POA/On_Demand_Loading/Server_Manager.h
+        * tests/POA/TIE/client.cpp
+        * tests/Portable_Interceptors/Collocated/Dynamic/Client_Task.h
+        * tests/Portable_Interceptors/Collocated/Dynamic/Server_Task.cpp
+        * tests/Portable_Interceptors/Collocated/Dynamic/Server_Task.h
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Client_Task.h
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.h
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Client_Task.h
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Server_Task.cpp
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Server_Task.h
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Client_Task.h
+          ACE_TCHAR fixes
+
+\Tue Sep 30 02:11:40 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * tao/String_Manager_T.h:
 
-          Removed TAO_Export in global String_Manager less operator 
+          Removed TAO_Export in global String_Manager less operator
           to fix a warning.
-          
+
 Mon Sep 29 18:18:10 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/utl_list.h:
