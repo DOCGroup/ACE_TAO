@@ -13,7 +13,7 @@ ACE_RCSID (ORB_Shutdown,
            "$Id$")
 
 
-const char *ior_file = 0;
+const ACE_TCHAR *ior_file = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

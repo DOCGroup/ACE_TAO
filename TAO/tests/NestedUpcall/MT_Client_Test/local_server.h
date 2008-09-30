@@ -63,7 +63,7 @@ public:
   // Just run it briefly
 
 private:
-  int read_ior (char *filename);
+  int read_ior (ACE_TCHAR *filename);
   // reading the IOR of mt object in
 
   int parse_args (void);

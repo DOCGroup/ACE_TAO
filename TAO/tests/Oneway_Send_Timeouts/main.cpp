@@ -92,17 +92,17 @@ MyMain::MyMain (int argc, ACE_TCHAR* argv[])
   argc--;
   for (int p = 1; p <= argc; p++)
     {
-      if (ACE_OS::strcmp (argv[p], "-?") == 0) {
+      if (ACE_OS::strcmp (argv[p], ACE_TEXT("-?")) == 0) {
         print_usage ();
         return;
       }
 
-      if (ACE_OS::strcasecmp (argv[p], "-s") == 0) {
+      if (ACE_OS::strcasecmp (argv[p], ACE_TEXT("-s")) == 0) {
         const ACE_TCHAR* s_args = (((p+1) <= argc) ? argv[p+1] : 0);
         s_init_ = this->init_server (s_args);
         p++;
       }
-      else if (ACE_OS::strcasecmp (argv[p], "-c") == 0) {
+      else if (ACE_OS::strcasecmp (argv[p], ACE_TEXT("-c")) == 0) {
         const ACE_TCHAR* s_args = (((p+1) <= argc) ? argv[p+1] : 0);
         if (s_init_) {
           this->init_client (s_args);
