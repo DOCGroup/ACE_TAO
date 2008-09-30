@@ -29,7 +29,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       for (i = 1; i < argc; ++i)
         {
-          if (ACE_OS::strcmp (argv[i], "-l") == 0)
+          if (ACE_OS::strcmp (argv[i], ACE_TEXT("-l")) == 0)
             {
               // List initial services
               CORBA::ORB::ObjectIdList_var list =

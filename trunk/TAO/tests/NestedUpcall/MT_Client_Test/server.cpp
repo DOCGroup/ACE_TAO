@@ -63,8 +63,7 @@ MT_Object_Server::parse_args (void)
 }
 
 int
-MT_Object_Server::init (int argc,
-                       char** argv)
+MT_Object_Server::init (int argc, ACE_TCHAR** argv)
 {
   // Call the init of TAO_ORB_Manager to create a child POA
   // under the root POA.

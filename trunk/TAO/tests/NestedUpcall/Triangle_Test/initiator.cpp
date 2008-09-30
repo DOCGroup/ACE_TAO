@@ -39,7 +39,7 @@ Initiator_Server::Initiator_Server (void)
 // A_B == 1, means read Object B's IOR
 
 int
-Initiator_Server::read_ior (char *filename, unsigned int A_B)
+Initiator_Server::read_ior (ACE_TCHAR *filename, unsigned int A_B)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename,0);

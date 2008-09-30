@@ -75,108 +75,108 @@ namespace
 
     while (args.is_anything_left ())
       {
-        if (args.cur_arg_strncasecmp ("-request_timeout") == 0)
+        if (args.cur_arg_strncasecmp (ACE_TEXT("-request_timeout")) == 0)
           {
             args.consume_arg ();
             request_timeout = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-connect_timeout") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-connect_timeout")) == 0)
           {
             args.consume_arg ();
             connect_timeout = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-request_interval") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-request_interval")) == 0)
           {
             args.consume_arg ();
             request_interval = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-run_orb_delay") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-run_orb_delay")) == 0)
           {
             args.consume_arg ();
             run_orb_delay = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-run_orb_time") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-run_orb_time")) == 0)
           {
             args.consume_arg ();
             run_orb_time = ACE_OS::atoi(args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-max_request_time") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-max_request_time")) == 0)
           {
             args.consume_arg ();
             max_request_time = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-num_requests") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-num_requests")) == 0)
           {
             args.consume_arg ();
             num_requests = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-use_twoway") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-use_twoway")) == 0)
           {
             use_twoway = true;
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-retry_transients") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-retry_transients")) == 0)
           {
             retry_transients = true;
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-retry_timeouts") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-retry_timeouts")) == 0)
           {
             retry_timeouts = true;
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-use_sleep") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-use_sleep")) == 0)
           {
             use_sleep = true;
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-force_timeout") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-force_timeout")) == 0)
           {
             force_timeout = true;
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-force_connect") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-force_connect")) == 0)
           {
             force_connect = true;
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-buffer_count") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-buffer_count")) == 0)
           {
             args.consume_arg ();
             use_buf_constraints = true;
             bc_count =  ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-buffer_bytes") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-buffer_bytes")) == 0)
           {
             args.consume_arg ();
             use_buf_constraints = true;
             bc_bytes = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-buffer_timeout") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-buffer_timeout")) == 0)
           {
             args.consume_arg ();
             use_buf_constraints = true;
             bc_timeout = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-sync") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-sync")) == 0)
         {
           args.consume_arg ();
-          if (args.cur_arg_strncasecmp ("delayed") == 0)
+          if (args.cur_arg_strncasecmp (ACE_TEXT("delayed")) == 0)
           {
             sync_scope = TAO::SYNC_DELAYED_BUFFERING;
             use_sync_scope = true;
           }
-          else if (args.cur_arg_strncasecmp ("none") == 0)
+          else if (args.cur_arg_strncasecmp (ACE_TEXT("none")) == 0)
           {
             sync_scope = Messaging::SYNC_NONE;
             use_sync_scope = true;
@@ -189,7 +189,7 @@ namespace
 
           args.consume_arg ();
         }
-        else if (args.cur_arg_strncasecmp ("-make_request_queued") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT("-make_request_queued")) == 0)
         {
           make_request_queued = true;
           args.consume_arg ();
