@@ -44,15 +44,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       bool endpoint_found = false;
       for (int i = 0; i < argc; i++)
         {
-          if ((ACE_OS::strcasecmp (argv[i],"-ORBEndpoint") == 0) ||
-              (ACE_OS::strcasecmp (argv[i],"-ORBListenEndpoints") == 0))
+          if ((ACE_OS::strcasecmp (argv[i],ACE_TEXT("-ORBEndpoint")) == 0) ||
+              (ACE_OS::strcasecmp (argv[i],ACE_TEXT("-ORBListenEndpoints")) == 0))
             endpoint_found = 1;
-          else if (ACE_OS::strcasecmp (argv[i],"-threads") == 0)
+          else if (ACE_OS::strcasecmp (argv[i],ACE_TEXT("-threads")) == 0)
             {
               ++i;
               nthreads = ACE_OS::atoi (argv[i]);
             }
-          else if (ACE_OS::strcasecmp (argv[i],"-o") == 0)
+          else if (ACE_OS::strcasecmp (argv[i],ACE_TEXT("-o")) == 0)
             {
               ++i;
               ior_file = argv[i];

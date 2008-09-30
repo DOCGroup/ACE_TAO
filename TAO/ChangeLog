@@ -1,3 +1,22 @@
+Tue Sep 30 18:35:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1330_Regression/server.cpp
+        * tests/Bug_1627_Regression/server.cpp
+        * tests/Bug_2503_Regression/server.cpp
+        * tests/Bug_2678_Regression/server.cpp
+        * tests/Bug_2683_Regression/server.cpp
+        * tests/Bug_2768_Regression/server.cpp
+        * tests/Bug_2935_Regression/middle.cpp
+        * tests/Bug_2935_Regression/sink.cpp
+        * tests/Bug_3171_Regression/server.cpp
+        * tests/Bug_3276_Regression/client.cpp
+        * tests/RTCORBA/Banded_Connections/server.cpp
+        * tests/Server_Connection_Purging/client.cpp
+        * tests/Smart_Proxies/Benchmark/client.cpp
+        * tests/TransportCurrent/Framework/client.cpp
+        * tests/TransportCurrent/IIOP/client.cpp
+          ACE_TCHAR fixes
+
 Tue Sep 30 18:34:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2800_Regression/nsmain.cpp:
