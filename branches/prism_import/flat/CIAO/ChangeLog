@@ -1,3 +1,10 @@
+Tue Sep 30 14:52:09 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+
+          Changes necessary to pass NodeManager-NodeApplicationManager test.
+        
 Tue Sep 30 14:32:34 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/DAnCE_Loader.h:
@@ -14,12 +21,12 @@ Tue Sep 30 14:32:34 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/Starter/Starter.cpp:
 
           Fixed logging infrastructure, enableed NodeManager binary and ensured
-          its ability to start up. 
-        
+          its ability to start up.
+
         * ciao/Logger/Log_Macros.h:
 
           Fixed tracing facility.
-        
+
 Mon Sep 29 17:26:48 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment_Connection.idl:

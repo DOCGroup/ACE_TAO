@@ -393,12 +393,17 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
       // Parsing Node name and node manager ior file name
       ACE_CString node_name = this->options_.node_managers_[0].c_str ();
       ACE_CString node_file;
-      size_t npos = node_name.find (' ');
+      size_t npos = node_name.find ('=');
       if (ACE_CString::npos != npos)
         {
           node_file = node_name.substring (npos + 1, node_name.length() - npos + 1);
           node_name = node_name.substring (0, npos);
         }
+      
+      DANCE_DEBUG ((LM_INFO, DLINFO "DAnCE_NodeManager_Module::create_object - "                                
+                    "Creating node named '%s' and outputting ior to file '%s'\n",
+                    node_name.c_str (),
+                    node_file.c_str ()));
 
       //Creating node manager servant
       DAnCE::NodeManager_Impl * nm = 0;
@@ -445,7 +450,8 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
       // Writing ior to file
       if (0 != node_file.length ())
         {
-          node_file += ".ior";
+          DANCE_DEBUG ((LM_TRACE,  DLINFO "DAnCE_NodeManager_Module::create_object - "                         
+                        "Writing node IOR to file.\n"));
           DAnCE::Node_Manager::write_IOR (node_file.c_str (), ior.in ());
         }
 
