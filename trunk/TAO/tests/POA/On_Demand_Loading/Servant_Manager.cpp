@@ -46,7 +46,7 @@ ServantManager_i::obtain_servant (const char *str,
   this->parse_string (str);
 
   // Create the DLL object.
-  ACE_DLL *dll;
+  ACE_DLL *dll = 0;
 
   ACE_NEW_RETURN (dll,
                   ACE_DLL,

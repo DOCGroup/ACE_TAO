@@ -20,7 +20,7 @@ class Client_Task : public ACE_Task_Base
 public:
 
   /// Constructor
-  Client_Task (const char *input,
+  Client_Task (const ACE_TCHAR *input,
                CORBA::ORB_ptr corb,
                ACE_Thread_Manager *thr_mgr);
 
@@ -32,7 +32,7 @@ private:
   void test_user_exception_expected (Test::Hello_ptr hello_ptr);
   void test_user_exception_not_expected (Test::Hello_ptr hello_ptr);
 
-  const char *input_;
+  const ACE_TCHAR *input_;
 
   CORBA::ORB_var corb_;
 };
