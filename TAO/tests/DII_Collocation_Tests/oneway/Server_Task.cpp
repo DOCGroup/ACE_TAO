@@ -12,7 +12,7 @@ ACE_RCSID(DII_Collocation_Tests,
           "$Id$")
 
 
-Server_Task::Server_Task (const char *output,
+Server_Task::Server_Task (const ACE_TCHAR *output,
                           const char *simple_test_output,
                           CORBA::ORB_ptr sorb,
                           ACE_Manual_Event &me,

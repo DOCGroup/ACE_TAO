@@ -110,28 +110,16 @@ class Test
 {
 public:
   static void run (CORBA::ORB_ptr orb,
-                   char *IOR)
+                   ACE_TCHAR *IOR)
   {
     if (IOR != 0)
       {
         // Get an object reference from the argument string.
         CORBA::Object_var object = orb->string_to_object (IOR);
 
-        /*if (.exception () != 0)
-          {
-.print_exception ("CORBA::ORB::string_to_object");
-            return;
-          }
-        */
         // Try to narrow the object reference to a reference.
         T_var test = T::_narrow (object.in ());
 
-        /*if (.exception () != 0)
-          {
-.print_exception ("_narrow");
-            return;
-          }
-        */
         ACE_Profile_Timer timer;
         ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
 
@@ -153,12 +141,6 @@ public:
         // compute average time.
         print_stats (elapsed_time, i);
 
-        /*if (.exception () != 0)
-          {
-.print_exception ("doit");
-            return;
-          }
-        */
         // Print the result of doit () method on the reference.
         ACE_DEBUG ((LM_DEBUG,
                     "%d\n",

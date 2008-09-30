@@ -15,7 +15,7 @@ ACE_RCSID(MProfile_Connection_Timeout,
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int do_shutdown = 0;
 
-const char *name = "file://amba.ior";
+const ACE_TCHAR *name = "file://amba.ior";
 TimeBase::TimeT timeout_period = 1000000;
 
 int
