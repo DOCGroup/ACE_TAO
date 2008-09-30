@@ -10,7 +10,7 @@
 #include "ORB_Initializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-const char *ior_file = 0;
+const ACE_TCHAR *ior_file = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

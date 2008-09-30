@@ -64,7 +64,7 @@ static int const dscp[] =
   IPDSFIELD_DSCP_EF
 };
 
-const char *ior_file = 0;
+const ACE_TCHAR *ior_file = 0;
 
 void
 test_sleep (int microsec)
