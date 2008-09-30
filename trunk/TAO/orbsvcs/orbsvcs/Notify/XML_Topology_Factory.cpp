@@ -68,14 +68,14 @@ namespace TAO_Notify
     for (int narg = 0; narg < argc; ++narg)
     {
       ACE_TCHAR * av = argv[narg];
-      if (ACE_OS::strcasecmp (av, "-v") == 0)
+      if (ACE_OS::strcasecmp (av, ACE_TEXT("-v")) == 0)
       {
         verbose = true;
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Standard_Event_Persistence: -verbose\n")
           ));
       }
-      else if (ACE_OS::strcasecmp (av, "-base_path") == 0 && narg + 1 < argc)
+      else if (ACE_OS::strcasecmp (av, ACE_TEXT("-base_path")) == 0 && narg + 1 < argc)
       {
         this->save_base_path_ = argv[narg + 1];
         this->load_base_path_ = argv[narg + 1];
@@ -88,7 +88,7 @@ namespace TAO_Notify
         }
         narg += 1;
       }
-      else if (ACE_OS::strcasecmp (av, "-save_base_path") == 0 && narg + 1 < argc)
+      else if (ACE_OS::strcasecmp (av, ACE_TEXT("-save_base_path")) == 0 && narg + 1 < argc)
       {
         this->save_base_path_ = argv[narg + 1];
         if (TAO_debug_level > 0 || verbose)
@@ -100,7 +100,7 @@ namespace TAO_Notify
         }
         narg += 1;
       }
-      else if (ACE_OS::strcasecmp (av, "-load_base_path") == 0 && narg + 1 < argc)
+      else if (ACE_OS::strcasecmp (av, ACE_TEXT("-load_base_path")) == 0 && narg + 1 < argc)
       {
         this->load_base_path_ = argv[narg + 1];
         if (TAO_debug_level > 0 || verbose)
@@ -112,7 +112,7 @@ namespace TAO_Notify
         }
         narg += 1;
       }
-      else if (ACE_OS::strcasecmp (av, "-backup_count") == 0 && narg + 1 < argc)
+      else if (ACE_OS::strcasecmp (av, ACE_TEXT("-backup_count")) == 0 && narg + 1 < argc)
       {
         this->backup_count_ = ACE_OS::atoi(argv[narg + 1]);
         if (TAO_debug_level > 0 || verbose)
@@ -124,7 +124,7 @@ namespace TAO_Notify
         }
         narg += 1;
       }
-      else if (ACE_OS::strcasecmp (av, "-no_timestamp") == 0)
+      else if (ACE_OS::strcasecmp (av, ACE_TEXT("-no_timestamp")) == 0)
       {
         this->timestamp_ = false;
         if (TAO_debug_level > 0 || verbose)

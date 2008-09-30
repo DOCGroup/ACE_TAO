@@ -6,7 +6,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-Server_Task::Server_Task (const char *output,
+Server_Task::Server_Task (const ACE_TCHAR *output,
   CORBA::ORB_ptr sorb,
   ACE_Manual_Event &me,
   ACE_Thread_Manager *thr_mgr) :
