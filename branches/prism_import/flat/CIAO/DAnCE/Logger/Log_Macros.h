@@ -5,26 +5,44 @@
  * Macros used for logging in DAnCE
  */
 
+
 #ifndef DANCE_LOG_MACROS_H_
 #define DANCE_LOG_MACROS_H_
+
+// By default tracing is turned off.
+#if !defined (DANCE_NTRACE)
+#  if !defined (ACE_NTRACE)
+#    define DANCE_NTRACE 1
+#  else
+#    define DANCE_NTRACE ACE_NTRACE
+#  endif
+#endif /* DANCE_NTRACE */
 
 #define DLINFO "(%P|%t) [%M] - %T - "
 
 #if (DANCE_NTRACE == 1)
 #  if !defined (ACE_NTRACE)
-#    define DANCE_TRACE(X)
+#    define DANCE_TRACE(X) do {} while (0)
+#    define DANCE_ENABLE_TRACE(X) do {} while (0)
+#    define DANCE_DISABLE_TRACE(X) do {} while (0)
 #  else
 #    if (ACE_NTRACE == 0)
 #      error DANCE_TRACE cannot be disabled if ACE_TRACE is enabled
 #    else
-#      define DANCE_TRACE(X)
+#      define DANCE_TRACE(X) do {} while (0)
+#      define DANCE_ENABLE_TRACE(X) do {} while (0)
+#      define DANCE_DISABLE_TRACE(X) do {} while (0)
 #    endif
 #  endif
 #else
 #  if !defined (ACE_HAS_TRACE)
 #    define ACE_HAS_TRACE
 #  endif /* ACE_HAS_TRACE */
-#  define DANCE_TRACE(X) ACE_TRACE_IMPL(DLINFO X)
+#  define DANCE_TRACE(X) ACE_TRACE_IMPL(CLINFO X)
+#  define DANCE_ENABLE_TRACE() ACE_Trace::start_tracing ()
+#  define DANCE_DISABLE_TRACE() ACE_Trace::stop_tracing ()
+#  undef CLINFO // Make log messages indent with tracing.
+#  define CLINFO "%I(%P|%t) [%M] - %T - "
 #  include "ace/Trace.h"
 #endif /* DANCE_NTRACE */
 

@@ -27,6 +27,8 @@
 
 using namespace DAnCE;
 
+#ifdef DANCE_BUILD_STARTER_EXE
+
 int main(int argc, ACE_TCHAR * argv[])
 {
   try
@@ -50,38 +52,46 @@ int main(int argc, ACE_TCHAR * argv[])
   return -1;
 }
 
+#endif /* DANCE_BUILD_STARTER_EXE */
+
 namespace DAnCE
 {
 
 Starter::Starter(int argc, ACE_TCHAR * argv[]) :
-      orb_(CORBA::ORB_init (argc, argv, ""))
-      , optLogLevel_(5) //default
-      , argc_(argc), argv_(argv), optNS_(false), optEM_(false), optPLB_(false)
-      , optPL_(false)
+      orb_(CORBA::ORB_init (argc, argv, "")), 
+      optLogLevel_(5), //default
+      argc_(argc), 
+      argv_(argv), 
+      optNS_(false), 
+      optEM_(false), 
+      optPLB_(false),
+      optPL_(false)
 {
-  this->getLogLevel(argc, argv);
-  this->setLogLevel();
-  DANCE_DEBUG ( (LM_TRACE, "[%M] Creating starter...\n"));
+  DANCE_TRACE ("DAnCE::Starter::Starter ()");
+
+  Logger_Service
+      * dlf = ACE_Dynamic_Service<Logger_Service>::instance ("DAnCE_Logger_Backend_Factory");  
+
+  if (!dlf)
+    dlf = new Logger_Service;
+  
+  this->logger_.reset (dlf);
+  this->logger_->init (argc, argv);
+
+  DANCE_DEBUG ((LM_TRACE, DLINFO
+                "Starter::Starter - Creating starter...\n"));
+
   this->parseArgs(argc, argv);
 
-  DAnCELoggerFactory
-      * dlf = ACE_Dynamic_Service<DAnCELoggerFactory>::instance ("DAnCE_Logger_Backend_Factory");
-  if (dlf)
-    {
-      DANCE_DEBUG ( (LM_TRACE, "[%M] Replacing logger backend.\n"));
-      ACE_Log_Msg_Backend * backend = dlf->get_logger_backend(this->orb_);
-      backend->open(0);
-      ACE_Log_Msg::msg_backend (backend);
-      ACE_Log_Msg * ace = ACE_Log_Msg::instance();
-      ace->clr_flags(ace->flags());
-      ace->set_flags(ACE_Log_Msg::CUSTOM);
-    }
-  DANCE_DEBUG ( (LM_TRACE, "[%M] Starter was created successfully.\n"));
+  this->configure_logging_backend ();
+
+  DANCE_DEBUG ((LM_TRACE, DLINFO 
+                "Starter::Starter - Starter was created successfully.\n"));
 }
 
 Starter::~Starter()
 {
-  DANCE_DEBUG ( (LM_TRACE, "[%M] Starter::~Starter - starting ...\n"));
+  DANCE_TRACE ("Starter::~Starter");
 /*  TAO_Object_Loader
       * loader = ACE_Dynamic_Service<TAO_Object_Loader>::instance ("ExecutionManager_Loader");
   if (0 != loader)
@@ -100,30 +110,7 @@ Starter::~Starter()
     }
 
   this->orb_._retn()->destroy(); */
-  DANCE_DEBUG ( (LM_TRACE, "[%M] Starter::~Starter - completed.\n"));
 }
-
-void Starter::getLogLevel(int argc, ACE_TCHAR* argv[])
-  {
-    ACE_Get_Opt opts(argc, argv, "l:", 1, 0, ACE_Get_Opt::RETURN_IN_ORDER);
-    opts.long_option("log-level", 'l', ACE_Get_Opt::ARG_REQUIRED);
-    int c = -1;
-    while ( (c = opts ()) != -1)
-      {
-        if ( c  == 'l')
-          {
-            int j = ACE_OS::atoi (opts.opt_arg());
-            if (j != 0)
-              {
-                this->optLogLevel_ = j;
-              }
-            else
-              {
-                DANCE_ERROR ( (LM_WARNING, "--log-level without argument. Using default.\n"));
-              }
-          }
-      }
-  }
 
 void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
 {
@@ -363,49 +350,6 @@ void Starter::usage()
           "In addition to the options above, the Service Configurator options are processed too.\n"));
 }
 
-void Starter::setLogLevel()
-{
-  u_long new_mask = 0;
-  if (this->optLogLevel_ <= 1)
-    {
-      new_mask |= LM_TRACE;
-    }
-  if (this->optLogLevel_ <= 2)
-    {
-      new_mask |= LM_DEBUG;
-    }
-  if (this->optLogLevel_ <= 3)
-    {
-      new_mask |= LM_INFO;
-    }
-  if (this->optLogLevel_ <= 4)
-    {
-      new_mask |= LM_NOTICE;
-    }
-  if (this->optLogLevel_ <= 5)
-    {
-      new_mask |= LM_WARNING;
-    }
-  if (this->optLogLevel_ <= 6)
-    {
-      new_mask |= LM_ERROR;
-    }
-  if (this->optLogLevel_ <= 7)
-    {
-      new_mask |= LM_CRITICAL;
-    }
-  if (this->optLogLevel_ <= 8)
-    {
-      new_mask |= LM_ALERT;
-    }
-  if (this->optLogLevel_ <= 9)
-    {
-      new_mask |= LM_EMERGENCY;
-    }
-  ACE_Log_Msg::instance()->priority_mask(new_mask, ACE_Log_Msg::PROCESS);
-  DANCE_DEBUG ( (LM_TRACE, "[%M] Logging level is set to %i\n", this->optLogLevel_));
-}
-
 void Starter::generateObjectKey(const char * keyargs)
 {
   ACE_CString args = keyargs;
@@ -618,11 +562,10 @@ Starter::initNodeManager (const char * node)
     TAO_Object_Loader * loader = ACE_Dynamic_Service<TAO_Object_Loader>::instance ("NodeManager_Loader");
     if (0 == loader)
       {
-        ACE_Service_Config::process_directive (
-            ACE_DYNAMIC_SERVICE_DIRECTIVE ("NodeManager_Loader"
-                , "DAnCE_NodeManager"
-                , "_make_DAnCE_NodeManager_Module"
-                , ""));
+        ACE_Service_Config::process_directive (ACE_DYNAMIC_SERVICE_DIRECTIVE ("NodeManager_Loader",
+                                                                              "DAnCE_NodeManager",
+                                                                              "_make_DAnCE_NodeManager_Module",
+                                                                              ""));
         loader = ACE_Dynamic_Service<TAO_Object_Loader>::instance ("NodeManager_Loader");
       }
     if (0 == loader)
@@ -958,6 +901,24 @@ Starter::isPossibleOption(const char* opt)
       if ( option == validOptions[i]) return true;
     }
   return false;
+}
+
+void 
+Starter::configure_logging_backend (void)
+{
+  Logger_Service
+    *clf = ACE_Dynamic_Service<Logger_Service>::instance ("DAnCE_Logger_Backend_Factory");
+  if (clf)
+    {
+      DANCE_DEBUG ((LM_TRACE, DLINFO "Starter::configure_logging_backend - "
+                   "Replacing logger backend\n"));
+      ACE_Log_Msg_Backend * backend = clf->get_logger_backend(this->orb_);
+      backend->open(0);
+      ACE_Log_Msg::msg_backend (backend);
+      ACE_Log_Msg * ace = ACE_Log_Msg::instance();
+      ace->clr_flags(ace->flags());
+      ace->set_flags(ACE_Log_Msg::CUSTOM);
+    }  
 }
 
 } // DAnCE
