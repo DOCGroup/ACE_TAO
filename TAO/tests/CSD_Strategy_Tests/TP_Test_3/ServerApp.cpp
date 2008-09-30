@@ -72,7 +72,7 @@ ServerApp::run_i(int argc, ACE_TCHAR* argv[])
 
 
 int
-ServerApp::init(int argc, ACE_TCHAR* argv[]);
+ServerApp::init(int argc, ACE_TCHAR* argv[])
 {
   this->orb_ = CORBA::ORB_init(argc, argv);
 
