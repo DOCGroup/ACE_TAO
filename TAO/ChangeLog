@@ -1,3 +1,11 @@
+Tue Sep 30 18:39:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/WstringDef_i.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.cpp
+          ACE_TCHAR fixes
+
 Tue Sep 30 18:35:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1330_Regression/server.cpp

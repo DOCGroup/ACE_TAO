@@ -45,7 +45,7 @@ TAO_WstringDef_i::destroy_i (void)
 {
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT("name"),
                                             name);
 
   this->repo_->config ()->remove_section (this->repo_->wstrings_key (),
@@ -86,7 +86,7 @@ TAO_WstringDef_i::bound_i (void)
 {
   u_int retval = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "bound",
+                                             ACE_TEXT("bound"),
                                              retval);
 
   return static_cast<CORBA::ULong> (retval);
@@ -106,7 +106,7 @@ void
 TAO_WstringDef_i::bound_i (CORBA::ULong bound)
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
-                                             "bound",
+                                             ACE_TEXT("bound"),
                                              bound);
 }
 
