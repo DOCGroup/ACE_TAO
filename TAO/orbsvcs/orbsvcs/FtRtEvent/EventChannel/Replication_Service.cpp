@@ -68,11 +68,11 @@ namespace FTRTEC
     Replication_Strategy* strategy;
     if (ami) {
       ACE_NEW_RETURN (strategy, AMI_Replication_Strategy(threads() > 1), -1);
-      TAO_FTRTEC::Log(3, "AMI replication strategy\n");
+      TAO_FTRTEC::Log(3, ACE_TEXT("AMI replication strategy\n"));
     }
     else {
       ACE_NEW_RETURN (strategy, Basic_Replication_Strategy(threads() > 1), -1);
-      TAO_FTRTEC::Log(3, "Basic replication strategy\n");
+      TAO_FTRTEC::Log(3, ACE_TEXT("Basic replication strategy\n"));
     }
 
      ACE_AUTO_PTR_RESET (replication_strategy, strategy, Replication_Strategy);
@@ -103,7 +103,7 @@ namespace FTRTEC
 
   void Replication_Service::become_primary()
   {
-    TAO_FTRTEC::Log(3, "become_primary\n");
+    TAO_FTRTEC::Log(3, ACE_TEXT("become_primary\n"));
 
     Replication_Strategy* strategy =
       replication_strategy->make_primary_strategy();
@@ -162,21 +162,21 @@ namespace FTRTEC
   int  Replication_Service::acquire_read (void)
   {
     int r =  replication_strategy->acquire_read();
-    TAO_FTRTEC::Log(3, "Read Lock acquired %d\n", r);
+    TAO_FTRTEC::Log(3, ACE_TEXT("Read Lock acquired %d\n"), r);
     return r;
   }
 
   int  Replication_Service::acquire_write (void)
   {
     int r= replication_strategy->acquire_write();
-    TAO_FTRTEC::Log(3, "Write Lock acqured %d\n", r);
+    TAO_FTRTEC::Log(3, ACE_TEXT("Write Lock acqured %d\n"), r);
     return r;
   }
 
   int  Replication_Service::release (void)
   {
     int r= replication_strategy->release();
-    TAO_FTRTEC::Log(3, "Lock Released %d\n", r);
+    TAO_FTRTEC::Log(3, ACE_TEXT("Lock Released %d\n"), r);
     return r;
   }
 

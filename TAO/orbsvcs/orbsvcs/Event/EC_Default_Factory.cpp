@@ -56,8 +56,8 @@ TAO_EC_Default_Factory::init_svcs (void)
 }
 
 void
-TAO_EC_Default_Factory::unsupported_option_value (const char * option_name,
-                                                  const char * option_value)
+TAO_EC_Default_Factory::unsupported_option_value (const ACE_TCHAR * option_name,
+                                                  const ACE_TCHAR * option_value)
 {
   ACE_ERROR ((LM_ERROR,
               "EC_Default_Factory - "
@@ -482,7 +482,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
               this->queue_full_service_object_name_.set(opt);
               arg_shifter.consume_arg ();
             }

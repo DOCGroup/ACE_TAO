@@ -35,7 +35,7 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
 
   for (int i = 0; i < argc; ++i)
     {
-      if (ACE_OS::strcasecmp (argv[i], "-LBGroup") == 0)
+      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-LBGroup")) == 0)
         {
           const CORBA::ULong j = len;
           ++len;
@@ -47,7 +47,7 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
 
           ++i;  // 2
 
-          if (ACE_OS::strcasecmp (argv[i], "-LBTypeId") != 0)
+          if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-LBTypeId")) != 0)
             return -1;
 
           ++i;  // 3
@@ -55,7 +55,7 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
           repository_ids.length (len);
           repository_ids[j] = CORBA::string_dup (argv[i]);
         }
-      else if (ACE_OS::strcasecmp (argv[i], "-LBTypeId") == 0)
+      else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-LBTypeId")) == 0)
         {
           const CORBA::ULong j = len;
           ++len;
@@ -67,7 +67,7 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
 
           ++i;  // 2
 
-          if (ACE_OS::strcasecmp (argv[i], "-LBGroup") != 0)
+          if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-LBGroup")) != 0)
             return -1;
 
           ++i;  // 3
@@ -75,7 +75,7 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
           object_groups.length (len);
           object_groups[j] = CORBA::string_dup (argv[i]);
         }
-      else if (ACE_OS::strcasecmp (argv[i], "-LBLocation") == 0)
+      else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-LBLocation")) == 0)
         {
           ++i;
           location = CORBA::string_dup (argv[i]);

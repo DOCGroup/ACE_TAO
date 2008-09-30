@@ -1,3 +1,18 @@
+Tue Sep 30 18:03:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp
+        * orbsvcs/orbsvcs/LoadBalancing/LB_Component.cpp
+        * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.cpp
+        * orbsvcs/tests/Bug_2709_Regression/Server_Task.cpp
+        * orbsvcs/tests/Bug_2709_Regression/Server_Task.h
+        * orbsvcs/tests/Security/Bug_2908_Regression/Client_Task.h
+          ACE_TCHAR fixes
+
 Tue Sep 30 14:47:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/COIOP/Client_Task.h
