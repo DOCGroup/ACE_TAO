@@ -1,9 +1,16 @@
+Tue Sep 30 02:11:40 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * tao/String_Manager_T.h:
+
+          Removed TAO_Export in global String_Manager less operator 
+          to fix a warning.
+          
 Mon Sep 29 18:18:10 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/utl_list.h:
         * TAO_IDL/be/be_visitor_operation/exceptlist_ss.cpp:
         * TAO_IDL/util/utl_list.cpp:
-        
+
           Changed utility list class length accessor method
           signature to use ACE_CDR::Long instead of the
           native long, due to compile errors on the
