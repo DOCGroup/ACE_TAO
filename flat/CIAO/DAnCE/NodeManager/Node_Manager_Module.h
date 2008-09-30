@@ -29,6 +29,7 @@
 #include "ace/Map_Manager.h"
 #include "ace/Null_Mutex.h"
 #include "tao/ORB.h"
+#include "tao/PortableServer/POAC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "tao/Object_Loader.h"
 #include "Deployment/DAnCE_Loader.h"
