@@ -1,3 +1,8 @@
+Tue Sep 30 18:34:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2800_Regression/nsmain.cpp:
+          ACE_TCHAR fixes
+
 Tue Sep 30 18:25:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Exposed_Policies/Policy_Verifier.cpp

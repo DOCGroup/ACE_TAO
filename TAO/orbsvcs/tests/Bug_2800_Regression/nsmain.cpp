@@ -146,7 +146,7 @@ int TestTask::svc()
     if (output_file == 0)
       ACE_ERROR_RETURN ((LM_ERROR,
                           "Cannot open output file %s for writing IOR: %s\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (ior_output_file),
+                          ior_output_file,
                           ACE_TEXT_CHAR_TO_TCHAR (ior.in ()) ),
                           1);
     ACE_OS::fprintf (output_file, "%s", ior.in ());
