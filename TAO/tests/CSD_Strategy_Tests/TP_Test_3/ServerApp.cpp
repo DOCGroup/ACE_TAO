@@ -320,7 +320,7 @@ ServerApp::arg_dependency_checks()
 
 int
 ServerApp::set_arg(unsigned&   value,
-                   const char* arg,
+                   const ACE_TCHAR* arg,
                    char        opt,
                    const char* name,
                    int         min)
