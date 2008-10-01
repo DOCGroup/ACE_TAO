@@ -1,3 +1,11 @@
+Wed Oct  1 12:18:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Simple/Simple_util.cpp
+        * examples/Simple/time-date/Time_Date_Client_i.cpp
+        * examples/Simple/time-date/Time_Date_Client_i.h
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp
+          ACE_TCHAR fixes
+
 Wed Oct  1 12:02:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2935_Regression/middle.cpp
