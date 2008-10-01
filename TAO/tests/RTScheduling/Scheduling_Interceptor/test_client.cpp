@@ -5,7 +5,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
 
-ACE_CString ior = "file://test.ior";
+ACE_TString ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc,
@@ -20,7 +20,7 @@ parse_args (int argc,
       switch (c)
         {
         case 'f':
-          ior = "file://";
+          ior = ACE_TEXT("file://");
           ior += opts.opt_arg ();
           break;
         default:
@@ -45,8 +45,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
 
-      orb = CORBA::ORB_init (argc,
-                             argv);
+      orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) == -1)
         return (-1);
@@ -55,7 +54,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
-      TAO_Scheduler* scheduler;
+      TAO_Scheduler* scheduler = 0;
       ACE_NEW_RETURN (scheduler,
                       TAO_Scheduler (orb.in ()),
                       -1);

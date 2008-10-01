@@ -1,3 +1,11 @@
+Wed Oct  1 18:37:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1495_Regression/Client_Task.cpp
+        * tests/RTScheduling/Scheduling_Interceptor/test_client.cpp
+        * tests/RTScheduling/Scheduling_Interceptor/test_server.cpp
+        * tests/Smart_Proxies/Benchmark/client.cpp
+          ACE_TCHAR fixes
+
 Wed Oct  1 14:38:20 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_union.h:
@@ -7,7 +15,7 @@ Wed Oct  1 14:38:20 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_operation/operation.cpp:
         * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
         * TAO_IDL/ast/ast_structure.cpp:
-        
+
           Changed types of members, local variables and method
           parameters to use ACE_CDR::* types, mostly from size_t
           to ACE_CDR::ULong, to satisfy the Solaris10_Studio12_x86_Debug

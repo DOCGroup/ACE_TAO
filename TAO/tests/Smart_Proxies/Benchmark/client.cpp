@@ -187,7 +187,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
              ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
          }
 
-       marker.dump_stats ("buying tickets ", gsf);
+       marker.dump_stats (ACE_TEXT("buying tickets "), gsf);
 
        server->shutdown ();
       /*
@@ -232,7 +232,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
              ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
          }
 
-       marker1.dump_stats ("buying tickets using a default proxy ", gsf1);
+       marker1.dump_stats (ACE_TEXT("buying tickets using a default proxy "), gsf1);
 
        server1->shutdown ();
       */

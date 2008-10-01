@@ -53,9 +53,9 @@ Client_Task::svc (void)
           server->get_thread_id (remote_thread_id);
 
           ACE_DEBUG ((LM_INFO,
-                      "Remote thread ID was"
+                      ACE_TEXT ("Remote thread ID was")
                       ACE_INT64_FORMAT_SPECIFIER
-                      "\n",
+                      ACE_TEXT ("\n"),
                       remote_thread_id));
 
           ThreadId const mythread_id =
@@ -64,24 +64,24 @@ Client_Task::svc (void)
           if (mythread_id != remote_thread_id)
             {
               ACE_ERROR ((LM_ERROR,
-                          "ERROR:  Failed Bug_1495_Regression test. "
-                          "Expected thread id was"
+                          ACE_TEXT ("ERROR:  Failed Bug_1495_Regression test. ")
+                          ACE_TEXT ("Expected thread id was")
                           ACE_INT64_FORMAT_SPECIFIER
-                          ", received"
+                          ACE_TEXT (", received")
                           ACE_INT64_FORMAT_SPECIFIER
-                          ".\n",
+                          ACE_TEXT (".\n"),
                           mythread_id,
                           remote_thread_id));
             }
           else
             {
               ACE_DEBUG ((LM_INFO,
-                          "Passed Bug_1495_Regression test.\n"
-                          "Local thread id was "
+                          ACE_TEXT ("Passed Bug_1495_Regression test.\n")
+                          ACE_TEXT ("Local thread id was ")
                           ACE_INT64_FORMAT_SPECIFIER
-                          ", received "
+                          ACE_TEXT (", received ")
                           ACE_INT64_FORMAT_SPECIFIER
-                          ".\n",
+                          ACE_TEXT (".\n"),
                           mythread_id,
                           remote_thread_id));
             }
