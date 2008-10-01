@@ -1,3 +1,23 @@
+Wed Oct  1 18:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CSD_Strategy_Tests/Broken/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/Broken/ClientApp.h
+        * tests/CSD_Strategy_Tests/Broken/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/Broken/ServerApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_2/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_2/ServerApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_4/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_4/ServerApp.h
+          ACE_TCHAR fixes
+
 Wed Oct  1 18:50:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/AMH/Sink_Server/Client_Task.cpp

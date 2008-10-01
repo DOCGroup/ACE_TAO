@@ -169,7 +169,7 @@ ClientApp::arg_dependency_checks()
 
 int
 ClientApp::set_arg(unsigned&   value,
-                   const char* arg,
+                   const ACE_TCHAR* arg,
                    char        opt,
                    const char* name,
                    int         min)
