@@ -92,7 +92,7 @@ namespace
 }
 
 int
-Server_i::init (int argc, char** argv)
+Server_i::init (int argc, ACE_TCHAR** argv)
 {
   try
   {

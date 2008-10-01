@@ -35,7 +35,7 @@ public:
   virtual ~Filter (void);
 
   int init (int argc,
-            char *argv []);
+            ACE_TCHAR *argv []);
   // initialization.
 
   void run_test (void);

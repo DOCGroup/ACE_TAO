@@ -182,7 +182,7 @@ class TAO_TTest_Export TT_Parse_Args
 {
   public:
 
-  TT_Parse_Args (int& argc, char** argv);
+  TT_Parse_Args (int& argc, ACE_TCHAR** argv);
 
   ~TT_Parse_Args ();
 

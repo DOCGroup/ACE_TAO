@@ -77,7 +77,7 @@ ConnectDisconnect::on_entity_destroyed (void)
 
 int
 ConnectDisconnect::init (int argc,
-                         char* argv [])
+                         ACE_TCHAR* argv [])
 {
   // Initialize the base class.
   Notify_Test_Client::init (argc,
@@ -141,17 +141,17 @@ ConnectDisconnect::parse_args(int argc, ACE_TCHAR *argv[])
 
     while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter ("-count")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-count"))))
         {
           this->count_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-consumers")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-consumers"))))
         {
           this->consumers_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-suppliers")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-suppliers"))))
         {
           this->suppliers_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();

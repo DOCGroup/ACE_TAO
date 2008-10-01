@@ -86,7 +86,7 @@ static void printEnvVars() {
 }
 
 int
-Nestea_Server_i::init (int argc, char** argv)
+Nestea_Server_i::init (int argc, ACE_TCHAR** argv)
 {
   printEnvVars();
   // Since the Implementation Repository keys off of the POA name, we need

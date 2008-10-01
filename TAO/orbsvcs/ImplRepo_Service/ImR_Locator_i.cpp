@@ -176,7 +176,7 @@ ImR_Locator_i::init (Options& opts)
   cmdline += " -orbcollocation no -orbuseimr 0";
   ACE_ARGV av (cmdline.c_str ());
   int argc = av.argc ();
-  char** argv = av.argv ();
+  ACE_TCHAR** argv = av.argv ();
 
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "TAO_ImR_Locator");
   int err = this->init_with_orb (orb.in (), opts);

@@ -72,7 +72,7 @@ public:
   Updates (void);
   virtual ~Updates ();
 
-  int init (int argc, char *argv []);
+  int init (int argc, ACE_TCHAR *argv []);
   // initialization.
 
   void run_test (void);

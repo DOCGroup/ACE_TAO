@@ -33,7 +33,7 @@ LifeCycle::parse_args (int argc,
 
     while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter ("-count")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-count"))))
         {
           this->count_ = ACE_OS::atoi (current_arg);
           // The number of times to create and destroy.
