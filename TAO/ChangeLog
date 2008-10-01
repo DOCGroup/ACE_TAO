@@ -1,3 +1,8 @@
+Wed Oct  1 19:17:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Exposed_Policies/Policy_Tester.cpp
+          ACE_TCHAR fixes
+
 Wed Oct  1 18:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CSD_Strategy_Tests/Broken/ClientApp.cpp
