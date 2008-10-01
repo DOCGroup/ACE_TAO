@@ -48,7 +48,7 @@ class Logging_Supplier
   //    is connected to the event channel
 public:
 
-  Logging_Supplier (int argc, char** argv);
+  Logging_Supplier (int argc, ACE_TCHAR** argv);
 
   ~Logging_Supplier (void);
 

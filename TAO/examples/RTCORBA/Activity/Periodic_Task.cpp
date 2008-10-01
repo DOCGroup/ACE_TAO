@@ -31,32 +31,32 @@ Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
 
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter ("-JobName")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-JobName"))))
         {
           name_ = current_arg;
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-Priority")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Priority"))))
         {
           task_priority_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-Period")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Period"))))
         {
           period_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-ExecTime")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ExecTime"))))
         {
           exec_time_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-Phase")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Phase"))))
         {
           phase_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-Iter")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Iter"))))
         {
           iter_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -67,7 +67,7 @@ Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
           if (task_stats_->init () == -1)
             return -1;
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-Load")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Load"))))
         {
           load_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();

@@ -58,7 +58,7 @@ static const char usage [] =
 "                 [-p to suppress prioritization of operations]\n";
 //FUZZ: enable check_for_lack_ACE_OS
 
-DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
+DualEC_Supplier::DualEC_Supplier (int argc, ACE_TCHAR** argv)
 : nav_pause_ (0, 100000),
   weap_pause_ (0, 100000),
   channel_hi_name_ (1),
