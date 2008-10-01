@@ -66,7 +66,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_Manual_Event me;
 
-      Server_Task server_task (ACE_TEXT_ALWAYS_CHAR (output),
+      Server_Task server_task (output,
                                sorb.in (),
                                me,
                                ACE_Thread_Manager::instance ());
@@ -84,7 +84,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var corb =
         CORBA::ORB_init (argc, argv, client_orb.c_str ());
 
-      Client_Task client_task (ACE_TEXT_ALWAYS_CHAR (input),
+      Client_Task client_task (input,
                                corb.in (),
                                ACE_Thread_Manager::instance ());
 

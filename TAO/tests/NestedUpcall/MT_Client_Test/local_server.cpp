@@ -135,7 +135,7 @@ MT_Server::parse_args (void)
 
 int
 MT_Server::init (int argc,
-                 char** argv,
+                 ACE_TCHAR** argv,
                  TAO_ORB_Manager* orb_manager_ptr)
 {
   this->argc_ = argc;

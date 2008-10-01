@@ -11,7 +11,7 @@ ACE_RCSID(MT_Server, client, "$Id$")
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int do_shutdown = 0;
 
-const ACE_TCHAR *name = "file://amba.ior";
+const ACE_TCHAR *name = ACE_TEXT("file://amba.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

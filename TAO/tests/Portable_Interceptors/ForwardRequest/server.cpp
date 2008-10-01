@@ -14,8 +14,8 @@ ACE_RCSID (ForwardRequest,
            server,
            "$Id$")
 
-const char *ior1_file = 0;
-const char *ior2_file = 0;
+const ACE_TCHAR *ior1_file = 0;
+const ACE_TCHAR *ior2_file = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
