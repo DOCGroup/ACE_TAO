@@ -66,7 +66,7 @@ private:
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
-  u_int opt_to_mask (const char *opt);
+  u_int opt_to_mask (const ACE_TCHAR *opt);
   // Obtain the bit mask representation of the specified test
 
   void enable_test (u_int mask);

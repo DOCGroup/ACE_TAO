@@ -175,7 +175,7 @@ public:
   int iors_count_;
   // count on the number of iors
 
-  char *ior_file_;
+  ACE_TCHAR *ior_file_;
   // Name of the filename that the server used to store the iors.
 
   u_int granularity_;

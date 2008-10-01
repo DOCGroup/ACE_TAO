@@ -129,7 +129,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_Basic_Stats activation_stats;
       activation.collect_basic_stats (activation_stats);
-      activation_stats.dump_results ("Activation", gsf);
+      activation_stats.dump_results (ACE_TEXT("Activation"), gsf);
 
       ACE_Sample_History destruction (niterations);
 
@@ -152,7 +152,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_Basic_Stats destruction_stats;
       destruction.collect_basic_stats (destruction_stats);
-      destruction_stats.dump_results ("Destruction", gsf);
+      destruction_stats.dump_results (ACE_TEXT("Destruction"), gsf);
 
       root_poa->destroy (1, 1);
 

@@ -1,3 +1,44 @@
+Wed Oct  1 18:39:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Anyop/anyop.cpp
+        * performance-tests/Callback/client.cpp
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h
+        * performance-tests/Latency/AMH_Single_Threaded/client.cpp
+        * performance-tests/Latency/AMI/client.cpp
+        * performance-tests/Latency/AMI/Roundtrip_Handler.cpp
+        * performance-tests/Latency/Collocation/Client_Task.cpp
+        * performance-tests/Latency/Deferred/client.cpp
+        * performance-tests/Latency/DII/client.cpp
+        * performance-tests/Latency/DSI/client.cpp
+        * performance-tests/Latency/Single_Threaded/client.cpp
+        * performance-tests/Latency/Thread_Per_Connection/client.cpp
+        * performance-tests/Latency/Thread_Pool/client.cpp
+        * performance-tests/Pluggable/PP_Test_Server.cpp
+        * performance-tests/POA/Create_Reference/create_reference.cpp
+        * performance-tests/POA/Implicit_Activation/client.cpp
+        * performance-tests/POA/Implicit_Activation/collocated.cpp
+        * performance-tests/Protocols/receiver.cpp
+        * performance-tests/Protocols/sender.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp
+        * performance-tests/RTCorba/Thread_Pool/client.cpp
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/client.cpp
+        * performance-tests/Sequence_Latency/AMI/client.cpp
+        * performance-tests/Sequence_Latency/AMI/Roundtrip_Handler.cpp
+        * performance-tests/Sequence_Latency/Deferred/client.cpp
+        * performance-tests/Sequence_Latency/DII/client.cpp
+        * performance-tests/Sequence_Latency/DSI/client.cpp
+        * performance-tests/Sequence_Latency/Single_Threaded/client.cpp
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/client.cpp
+        * performance-tests/Sequence_Latency/Thread_Pool/client.cpp
+        * performance-tests/Sequence_Latency/Thread_Pool/Client_Task.cpp
+        * performance-tests/Sequence_Latency/Thread_Pool/Client_Task.h
+          ACE_TCHAR fixes
+
 Wed Oct  1 18:37:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1495_Regression/Client_Task.cpp

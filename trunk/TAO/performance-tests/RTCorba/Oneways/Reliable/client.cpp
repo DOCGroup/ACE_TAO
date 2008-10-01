@@ -177,7 +177,7 @@ twoway_work_test (Test_ptr server)
 #endif /* USING_QUANTIFY */
 
 #if defined (USING_TIMERS)
-  latency.dump_results ("Twoway", gsf);
+  latency.dump_results (ACE_TEXT("Twoway"), gsf);
 #endif /* USING_TIMERS */
 }
 
@@ -219,7 +219,7 @@ oneway_work_test (Test_ptr server)
 #endif /* USING_QUANTIFY */
 
 #if defined (USING_TIMERS)
-  latency.dump_results ("Oneway (work based)", gsf);
+  latency.dump_results (ACE_TEXT("Oneway (work based)"), gsf);
 #endif /* USING_TIMERS */
 }
 
@@ -264,7 +264,7 @@ oneway_payload_test (Test_ptr server)
 #endif /* USING_QUANTIFY */
 
 #if defined (USING_TIMERS)
-  latency.dump_results ("Oneway (payload based)", gsf);
+  latency.dump_results (ACE_TEXT("Oneway (payload based)"), gsf);
 #endif /* USING_TIMERS */
 }
 

@@ -20,7 +20,7 @@ Roundtrip_Handler::pending_callbacks (void) const
 void
 Roundtrip_Handler::dump_results (ACE_UINT32 gsf)
 {
-  this->latency_stats_.dump_results ("AMI Latency", gsf);
+  this->latency_stats_.dump_results (ACE_TEXT("AMI Latency"), gsf);
 }
 
 void

@@ -217,7 +217,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_OS::sprintf (buf, "Thread (index= %d)", j);
           client[j].dump_stats (buf, gsf);
         }
-      throughput.dump_results ("Aggregated", gsf);
+      throughput.dump_results (ACE_TEXT("Aggregated"), gsf);
 
       server->shutdown ("");
 
