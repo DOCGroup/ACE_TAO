@@ -85,7 +85,7 @@ namespace CIAO
     if (this->trace_)
       {
         CIAO_ENABLE_TRACE ();
-        this->log_level_ = 1;
+        this->log_level_ = 10;
       }
     else
       {

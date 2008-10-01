@@ -1,3 +1,9 @@
+Wed Oct  1 20:42:34 UTC 2008  William R. Otte  <wotte@70-11-197-37.area7.spcsdns.net>
+
+        * ciao/Logger/Logger_Service.cpp:
+        
+          Enabling tracing inadvertantly disabled logging.
+
 Wed Oct  1 20:27:33 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/XML_File_Intf.cpp:
