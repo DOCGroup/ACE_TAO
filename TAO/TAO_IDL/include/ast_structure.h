@@ -113,11 +113,11 @@ public:
   virtual int member_count (void);
   // Return the count of members.
 
-  virtual size_t nfields (void) const;
+  virtual ACE_CDR::ULong nfields (void) const;
   // Return the count of actual fields.
 
   virtual int field (AST_Field **&result,
-                     size_t slot) const;
+                     ACE_CDR::ULong slot) const;
   // Get an individual field node.
 
   virtual bool is_local (void);
