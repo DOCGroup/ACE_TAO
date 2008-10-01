@@ -8,7 +8,7 @@
 
 ACE_RCSID(Muxing, Client_Task, "$Id$")
 
-Client_Task::Client_Task (const char *ior,
+Client_Task::Client_Task (const ACE_TCHAR *ior,
                           CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr,
                           CORBA::Boolean result)

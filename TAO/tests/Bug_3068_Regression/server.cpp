@@ -23,7 +23,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'o':
-        ior_output_file = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+        ior_output_file = get_opts.opt_arg ();
         break;
       case 'i':
         iterations = ACE_OS::atoi (get_opts.opt_arg ());

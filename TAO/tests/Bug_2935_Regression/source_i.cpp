@@ -12,7 +12,7 @@ Source_i::~Source_i ()
 }
 
 bool
-Source_i::parse_args(int, char *[])
+Source_i::parse_args(int, ACE_TCHAR *[])
 {
   return true;
 }

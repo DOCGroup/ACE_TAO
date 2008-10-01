@@ -22,7 +22,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'k':
-        ior = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+        ior = get_opts.opt_arg ();
         break;
 
       case '?':
