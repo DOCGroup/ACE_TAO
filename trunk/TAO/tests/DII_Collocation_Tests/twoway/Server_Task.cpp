@@ -11,7 +11,7 @@ ACE_RCSID(DII_Collocation_Tests,
 
 
 Server_Task::Server_Task (const ACE_TCHAR *output,
-                          const char *simple_test_output,
+                          const ACE_TCHAR *simple_test_output,
                           CORBA::ORB_ptr sorb,
                           ACE_Manual_Event &me,
                           ACE_Thread_Manager *thr_mgr)

@@ -1,9 +1,9 @@
 // $Id$
 #include "middle_i.h"
 
-const char * ior_output_file = 0;
+const ACE_TCHAR * ior_output_file = 0;
 
-const char * ior_input_file = 0;
+const ACE_TCHAR * ior_input_file = 0;
 char input_ior[5000];
 
 
