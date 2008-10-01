@@ -114,9 +114,9 @@ test_octet_seq (Test::Roundtrip_ptr roundtrip)
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
-  stats.dump_results ("Total", gsf);
+  stats.dump_results (ACE_TEXT("Total"), gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          stats.samples_count ());
 }
@@ -156,9 +156,9 @@ test_long_seq (Test::Roundtrip_ptr roundtrip)
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
-  stats.dump_results ("Total", gsf);
+  stats.dump_results (ACE_TEXT("Total"), gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          stats.samples_count ());
 }
@@ -199,9 +199,9 @@ test_short_seq (Test::Roundtrip_ptr roundtrip)
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
-  stats.dump_results ("Total", gsf);
+  stats.dump_results (ACE_TEXT("Total"), gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          stats.samples_count ());
 }
@@ -242,9 +242,9 @@ test_char_seq (Test::Roundtrip_ptr roundtrip)
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
-  stats.dump_results ("Total", gsf);
+  stats.dump_results (ACE_TEXT("Total"), gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          stats.samples_count ());
 }
@@ -285,9 +285,9 @@ test_longlong_seq (Test::Roundtrip_ptr roundtrip)
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
-  stats.dump_results ("Total", gsf);
+  stats.dump_results (ACE_TEXT("Total"), gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          stats.samples_count ());
 }
@@ -328,9 +328,9 @@ test_double_seq (Test::Roundtrip_ptr roundtrip)
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
-  stats.dump_results ("Total", gsf);
+  stats.dump_results (ACE_TEXT("Total"), gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          stats.samples_count ());
 }

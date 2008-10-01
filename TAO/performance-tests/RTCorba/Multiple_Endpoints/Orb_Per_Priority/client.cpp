@@ -202,7 +202,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           client[j].dump_stats (buf, gsf);
         }
 
-      throughput.dump_results ("Aggregated", gsf);
+      throughput.dump_results (ACE_TEXT("Aggregated"), gsf);
     }
   catch (const CORBA::Exception& ex)
     {

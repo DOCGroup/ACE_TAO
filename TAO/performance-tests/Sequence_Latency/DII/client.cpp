@@ -129,9 +129,9 @@ test_octet_seq (const CORBA::Object_var object)
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
-  stats.dump_results ("Total", gsf);
+  stats.dump_results (ACE_TEXT("Total"), gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          stats.samples_count ());
 }
@@ -177,9 +177,9 @@ test_long_seq (const CORBA::Object_var object)
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
-  stats.dump_results ("Total", gsf);
+  stats.dump_results (ACE_TEXT("Total"), gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          stats.samples_count ());
 }
@@ -225,9 +225,9 @@ test_short_seq (const CORBA::Object_var object)
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
-  stats.dump_results ("Total", gsf);
+  stats.dump_results (ACE_TEXT("Total"), gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          stats.samples_count ());
 }
@@ -273,9 +273,9 @@ test_char_seq (const CORBA::Object_var object)
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
-  stats.dump_results ("Total", gsf);
+  stats.dump_results (ACE_TEXT("Total"), gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          stats.samples_count ());
 }
@@ -321,9 +321,9 @@ test_double_seq (const CORBA::Object_var object)
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
-  stats.dump_results ("Total", gsf);
+  stats.dump_results (ACE_TEXT("Total"), gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          stats.samples_count ());
 }
@@ -369,9 +369,9 @@ test_longlong_seq (const CORBA::Object_var object)
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
-  stats.dump_results ("Total", gsf);
+  stats.dump_results (ACE_TEXT("Total"), gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          stats.samples_count ());
 }

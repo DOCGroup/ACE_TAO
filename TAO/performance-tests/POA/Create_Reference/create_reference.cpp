@@ -122,7 +122,7 @@ object_creation_test (PortableServer::POA_ptr poa,
 
   ACE_Basic_Stats creation_stats;
   creation.collect_basic_stats (creation_stats);
-  creation_stats.dump_results ("Creation", gsf);
+  creation_stats.dump_results (ACE_TEXT("Creation"), gsf);
 }
 
 int

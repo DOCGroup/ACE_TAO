@@ -116,7 +116,7 @@ void test_octet_seq (Test::Roundtrip_ptr roundtrip,
 
   roundtrip_handler_impl->dump_results (gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          niterations);
 }
@@ -161,7 +161,7 @@ void test_char_seq  (Test::Roundtrip_ptr roundtrip,
 
   roundtrip_handler_impl->dump_results (gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          niterations);
 }
@@ -206,7 +206,7 @@ void test_long_seq  (Test::Roundtrip_ptr roundtrip,
 
   roundtrip_handler_impl->dump_results (gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          niterations);
 }
@@ -251,7 +251,7 @@ void test_short_seq (Test::Roundtrip_ptr roundtrip,
 
   roundtrip_handler_impl->dump_results (gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          niterations);
 }
@@ -296,7 +296,7 @@ void test_double_seq (Test::Roundtrip_ptr roundtrip,
 
   roundtrip_handler_impl->dump_results (gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          niterations);
 }
@@ -341,7 +341,7 @@ void test_longlong_seq (Test::Roundtrip_ptr roundtrip,
 
   roundtrip_handler_impl->dump_results (gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          niterations);
 }

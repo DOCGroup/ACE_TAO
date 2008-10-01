@@ -49,7 +49,7 @@ PP_Test_Server::parse_args (void)
 
 int
 PP_Test_Server::init (int argc,
-                      char** argv)
+                      ACE_TCHAR** argv)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
