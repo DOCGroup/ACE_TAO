@@ -1,3 +1,18 @@
+Wed Oct  1 19:23:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/RTCORBA/Activity/Builder.cpp
+        * examples/RTCORBA/Activity/Periodic_Task.cpp
+        * examples/RTCORBA/Activity/POA_Holder.cpp
+        * examples/RTScheduling/DT_Creator.cpp
+        * examples/RTScheduling/POA_Holder.cpp
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp
+        * examples/Simulator/Event_Supplier/DualEC_Sup.h
+        * examples/Simulator/Event_Supplier/Event_Sup.cpp
+        * examples/Simulator/Event_Supplier/Event_Sup.h
+        * examples/Simulator/Event_Supplier/Logging_Sup.cpp
+        * examples/Simulator/Event_Supplier/Logging_Sup.h
+          ACE_TCHAR fixes
+
 Wed Oct  1 19:19:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp

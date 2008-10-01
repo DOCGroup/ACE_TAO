@@ -35,7 +35,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter ("-TaskCount")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-TaskCount"))))
         {
           task_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (task_list_, Periodic_Task*[task_count_], -1);
@@ -44,7 +44,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
                           0);
           arg_shifter.consume_arg ();
         }
-      if (0 != (current_arg = arg_shifter.get_the_parameter ("-JobCount")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-JobCount"))))
         {
           job_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (job_list_, Job_i*[job_count_], -1);
@@ -53,7 +53,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
                           0);
           arg_shifter.consume_arg ();
         }
-      if (0 != (current_arg = arg_shifter.get_the_parameter ("-POACount")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-POACount"))))
         {
           poa_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (poa_list_, POA_Holder*[poa_count_], -1);

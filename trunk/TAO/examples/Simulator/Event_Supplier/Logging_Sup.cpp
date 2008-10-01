@@ -60,7 +60,7 @@ static const char usage [] =
 "                 [-s to suppress data updates by EC]]\n";
 
 
-Logging_Supplier::Logging_Supplier (int argc, char** argv)
+Logging_Supplier::Logging_Supplier (int argc, ACE_TCHAR** argv)
 : argc_(argc),
   argv_(argv),
   total_messages_(10),
