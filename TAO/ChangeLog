@@ -1,3 +1,19 @@
+Wed Oct  1 14:38:20 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_union.h:
+        * TAO_IDL/include/ast_structure.h:
+        * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        
+          Changed types of members, local variables and method
+          parameters to use ACE_CDR::* types, mostly from size_t
+          to ACE_CDR::ULong, to satisfy the Solaris10_Studio12_x86_Debug
+          build, which was having a problem when any of the above
+          were passed to a TAO_OutStream insertion operator.
+
 Wed Oct  1 12:18:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Simple/Simple_util.cpp

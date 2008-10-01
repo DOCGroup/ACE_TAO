@@ -210,7 +210,7 @@ AST_Structure::member_count (void)
   return this->member_count_;
 }
 
-size_t
+ACE_CDR::ULong
 AST_Structure::nfields (void) const
 {
   return this->fields_.size ();
@@ -218,10 +218,9 @@ AST_Structure::nfields (void) const
 
 int
 AST_Structure::field (AST_Field **&result,
-                      size_t slot) const
+                      ACE_CDR::ULong slot) const
 {
-  return this->fields_.get (result,
-                            slot);
+  return this->fields_.get (result, slot);
 }
 
 bool

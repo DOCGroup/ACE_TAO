@@ -170,7 +170,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
   // Start with static instances of each array element-to-be.
   size_t const count = node->nfields ();
 
-  for (size_t i = 0; i < count; ++i)
+  for (ACE_CDR::ULong i = 0; i < count; ++i)
     {
       AST_Field ** member_ptr = 0;
 
