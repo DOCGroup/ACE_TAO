@@ -71,7 +71,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
                         -1);
     }
 
-  size_t const count =
+  ACE_CDR::ULong const count =
     node->data_members_count (AST_Field::vis_PUBLIC)
     + node->data_members_count (AST_Field::vis_PRIVATE);
 
@@ -169,7 +169,9 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
      << be_uidt_nl;
 
   if (this->gen_typecode_ptr (be_type::narrow_from_decl (node)) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }

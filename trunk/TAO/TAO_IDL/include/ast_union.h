@@ -114,16 +114,16 @@ public:
   {
     union PermittedTypes
     {
-      char char_val;
+      ACE_CDR::Char char_val;
       ACE_CDR::WChar wchar_val;
-      bool bool_val;
-      ACE_INT16 short_val;
-      ACE_UINT16 ushort_val;
-      ACE_INT32 long_val;
-      ACE_UINT32 ulong_val;
-      ACE_UINT32 enum_val;
-      ACE_INT64 longlong_val;
-      ACE_UINT64 ulonglong_val;
+      ACE_CDR::Boolean bool_val;
+      ACE_CDR::Short short_val;
+      ACE_CDR::UShort ushort_val;
+      ACE_CDR::Long long_val;
+      ACE_CDR::ULong ulong_val;
+      ACE_CDR::ULong enum_val;
+      ACE_CDR::LongLong longlong_val;
+      ACE_CDR::ULongLong ulonglong_val;
     } u;
     long computed_;
     // computed == -1 => error condition
