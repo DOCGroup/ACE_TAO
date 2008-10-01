@@ -415,7 +415,7 @@ TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_with_poa 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
 TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_objects (int /*argc*/,
-                                                                                 char ** /*argv*/)
+                                                                                 ACE_TCHAR ** /*argv*/)
 {
   try
     {
