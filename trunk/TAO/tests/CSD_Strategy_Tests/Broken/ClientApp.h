@@ -41,7 +41,7 @@ class ClientApp : public TestAppBase
     int parse_args(int argc, ACE_TCHAR* argv[]);
 
     int set_arg(unsigned&   value,
-                 const char* arg,
+                 const ACE_TCHAR* arg,
                  char        opt,
                  const char* name,
                  int         min = 0);
@@ -63,7 +63,7 @@ class ClientApp : public TestAppBase
 
     ClientTask client_task_;
 
-    ACE_CString exe_name_;
+    ACE_TString exe_name_;
 
     unsigned num_servants_;
     unsigned num_csd_threads_;
