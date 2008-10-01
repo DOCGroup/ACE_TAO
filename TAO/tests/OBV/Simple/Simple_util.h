@@ -139,7 +139,7 @@ protected:
   ACE_TCHAR **argv_;
   // arguments from command line.
 
-  char *ior_;
+  ACE_TCHAR *ior_;
   // IOR of the obj ref of the server.
 
   char *name_;
