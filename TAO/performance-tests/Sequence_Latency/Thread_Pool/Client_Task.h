@@ -23,7 +23,7 @@ public:
   /// Add this thread results to the global numbers and print the
   /// per-thread results.
   void accumulate_and_dump (ACE_Basic_Stats &totals,
-                            const char *msg,
+                            const ACE_TCHAR *msg,
                             ACE_UINT32 gsf);
 
   /// The service method

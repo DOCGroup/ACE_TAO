@@ -542,9 +542,9 @@ Paced_Worker::print_stats (ACE_hrtime_t test_end)
 
   ACE_Basic_Stats stats;
   this->history_.collect_basic_stats (stats);
-  stats.dump_results ("Total", gsf);
+  stats.dump_results (ACE_TEXT("Total"), gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          stats.samples_count ());
 
@@ -757,9 +757,9 @@ Continuous_Worker::print_stats (ACE_Sample_History &history,
 
       ACE_Basic_Stats stats;
       history.collect_basic_stats (stats);
-      stats.dump_results ("Total", gsf);
+      stats.dump_results (ACE_TEXT("Total"), gsf);
 
-      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                              test_end - test_start,
                                              stats.samples_count ());
     }
@@ -788,14 +788,14 @@ Continuous_Worker::print_collective_stats (void)
                   this->collective_stats_.samples_count () /
                   continuous_workers));
 
-      this->collective_stats_.dump_results ("Collective", gsf);
+      this->collective_stats_.dump_results (ACE_TEXT("Collective"), gsf);
 
-      ACE_Throughput_Stats::dump_throughput ("Individual", gsf,
+      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Individual"), gsf,
                                              this->time_for_test_,
                                              this->collective_stats_.samples_count () /
                                              continuous_workers);
 
-      ACE_Throughput_Stats::dump_throughput ("Collective", gsf,
+      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Collective"), gsf,
                                              this->time_for_test_,
                                              this->collective_stats_.samples_count ());
     }

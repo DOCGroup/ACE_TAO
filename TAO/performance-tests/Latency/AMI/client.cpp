@@ -151,7 +151,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       roundtrip_handler_impl->dump_results (gsf);
 
-      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                              test_end - test_start,
                                              niterations);
 

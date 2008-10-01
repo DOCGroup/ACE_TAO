@@ -402,9 +402,9 @@ Worker::print_stats (void)
 
       ACE_Basic_Stats stats;
       this->history_.collect_basic_stats (stats);
-      stats.dump_results ("Total", gsf);
+      stats.dump_results (ACE_TEXT("Total"), gsf);
 
-      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                              this->test_end_ - this->test_start_,
                                              iterations);
     }
