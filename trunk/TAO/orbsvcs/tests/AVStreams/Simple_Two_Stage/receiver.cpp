@@ -100,7 +100,7 @@ Receiver_Callback::dump_samples (const char* file)
       stats_.sample ((ACE_UINT64)stats [i]);
     }
 
-  stats_.dump_results ("Inter Frame Arrival Time Statistics ",
+  stats_.dump_results (ACE_TEXT("Inter Frame Arrival Time Statistics "),
                        stats_file,
                        1);
   //  ACE_High_Res_Timer::global_scale_factor ());

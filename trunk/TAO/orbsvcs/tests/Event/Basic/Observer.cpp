@@ -328,10 +328,10 @@ EC_Observer::dump_results (void)
     }
 
   ACE_DEBUG ((LM_DEBUG, "\nTotals:\n"));
-  throughput.dump_results ("EC_Consumer/totals", gsf);
+  throughput.dump_results (ACE_TEXT("EC_Consumer/totals"), gsf);
 
   ACE_DEBUG ((LM_DEBUG, "\n"));
-  suppliers.dump_results ("EC_Supplier/totals", gsf);
+  suppliers.dump_results (ACE_TEXT("EC_Supplier/totals"), gsf);
 }
 
 void

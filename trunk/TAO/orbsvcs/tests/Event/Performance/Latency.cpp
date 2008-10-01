@@ -202,7 +202,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_Basic_Stats stats;
       history.collect_basic_stats (stats);
-      stats.dump_results ("Latency", gsf);
+      stats.dump_results (ACE_TEXT("Latency"), gsf);
 
       ACE_hrtime_t elapsed_microseconds = (end - start) / gsf;
       double elapsed_seconds =

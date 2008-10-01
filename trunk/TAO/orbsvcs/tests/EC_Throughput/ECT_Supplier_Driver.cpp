@@ -271,7 +271,7 @@ ECT_Supplier_Driver::dump_results (void)
       this->suppliers_[i]->dump_results (buf, gsf);
       this->suppliers_[i]->accumulate (throughput);
     }
-  throughput.dump_results ("ECT_Supplier/totals", gsf);
+  throughput.dump_results (ACE_TEXT("ECT_Supplier/totals"), gsf);
 }
 
 int

@@ -1,3 +1,30 @@
+Wed Oct  1 18:47:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/Notify/ThreadPool/Consumer.cpp
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/client.cpp
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/driver.cpp
+        * orbsvcs/performance-tests/RTEvent/lib/Control.cpp
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/client.cpp
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.cpp
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/client.cpp
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/client.cpp
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp
+        * orbsvcs/tests/AVStreams/Latency/pong.cpp
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp
+        * orbsvcs/tests/Event/Basic/Observer.cpp
+        * orbsvcs/tests/Event/Basic/Reconnect.cpp
+        * orbsvcs/tests/Event/lib/Driver.cpp
+        * orbsvcs/tests/Event/Performance/Connect.cpp
+        * orbsvcs/tests/Event/Performance/Latency.cpp
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.cpp
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp
+          ACE_TCHAR fixes
+
 Wed Oct  1 18:39:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Anyop/anyop.cpp
