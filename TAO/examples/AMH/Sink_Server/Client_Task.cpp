@@ -142,9 +142,9 @@ Client_Task::run_test (void)
 
   this->accumulate_and_dump (totals, "Task", gsf);
 
-  totals.dump_results ("Total", gsf);
+  totals.dump_results (ACE_TEXT("Total"), gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          totals.samples_count ());
 

@@ -1,3 +1,10 @@
+Wed Oct  1 18:50:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMH/Sink_Server/Client_Task.cpp
+        * examples/Load_Balancing_persistent/Identity_Client.cpp
+        * examples/Load_Balancing_persistent/Load_Balancer_i.cpp
+          ACE_TCHAR fixes
+
 Wed Oct  1 18:47:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/Notify/ThreadPool/Consumer.cpp
