@@ -1,10 +1,23 @@
+Wed Oct  1 02:08:47 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/Deployment_common.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.h:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+
+          Changes necessary for NodeApplicationManager-NodeApplication test to pass.
+        
 Tue Sep 30 14:52:09 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/Node_Manager_Module.h:
         * DAnCE/NodeManager/Node_Manager_Module.cpp:
 
           Changes necessary to pass NodeManager-NodeApplicationManager test.
-        
+
 Tue Sep 30 14:32:34 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/DAnCE_Loader.h:

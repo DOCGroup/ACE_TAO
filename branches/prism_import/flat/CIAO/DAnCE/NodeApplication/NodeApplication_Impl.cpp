@@ -25,22 +25,38 @@ namespace
   template<class T>
   bool get_property_value (const char *name, PROPERTY_MAP &properties, T &val)
   {
+    DANCE_TRACE ("NodeApplicion::<anonymous>::get_property_value<T>");
     CORBA::Any any;
+    
+    DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
+                  "Finding property value for name '%s'\n",
+                  name));
     
     if (properties.find (name, any) == 0)
       if (any >>= val)
         return true;
+    
+    DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
+                  "Property value for name '%s' has no value\n", name));
 
     return false;
   }
   template<>
   bool get_property_value (const char *name, PROPERTY_MAP &properties, bool &val)
   {
+    DANCE_TRACE ("NodeApplicion::<anonymous>::get_property_value<bool>");
     CORBA::Any any;
     
+    DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<bool> - "
+                  "Finding property value for name '%s'\n",
+                  name));
+
     if (properties.find (name, any) == 0)
       if (any >>= CORBA::Any::to_boolean(val))
         return true;
+
+    DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<bool> - "
+                  "Property value for name '%s' has no value\n", name));
 
     return false;
   }
@@ -52,21 +68,26 @@ NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
                                             const Deployment::DeploymentPlan& plan, 
                                             RedirectionService & redirection, 
                                             const ACE_CString& node_name,
-                                            PROPERTY_MAP &properties)
+                                            const PROPERTY_MAP &properties)
   : orb_ (CORBA::ORB::_duplicate (orb)), 
     poa_ (PortableServer::POA::_duplicate (poa)), 
     plan_ (plan), 
     redirection_ (redirection), 
     node_name_ (node_name),
-    properties_ (properties)
+    properties_ ()
 {
-  DANCE_TRACE (DLINFO "NodeApplication_Impl::NodeApplication_Impl");
+  DANCE_TRACE ("NodeApplication_Impl::NodeApplication_Impl");
+  PROPERTY_MAP::const_iterator i = properties.begin ();
+  while (!i.done ())
+    {
+      this->properties_.bind (i->key (), i->item ());
+    }
   this->init ();
 }
 
 NodeApplication_Impl::~NodeApplication_Impl()
 {
-  DANCE_TRACE(DLINFO "NodeApplication_Impl::~NodeApplication_Impl()");
+  DANCE_TRACE( "NodeApplication_Impl::~NodeApplication_Impl()");
 
   using namespace Components;
   ConfigValues config_values;
@@ -104,7 +125,7 @@ NodeApplication_Impl::~NodeApplication_Impl()
 void
 NodeApplication_Impl::init()
 {
-  DANCE_TRACE(DLINFO "NodeApplication_Impl::init()");
+  DANCE_TRACE( "NodeApplication_Impl::init()");
   
   /* TODO:  Lets move this stuff to the constructor, shall we?!? */
   /* TODO:  Might be nice to use a component configurator here to load the proper versions
@@ -112,13 +133,21 @@ NodeApplication_Impl::init()
 
   /* ServerActivator configuration */
   CORBA::ULong spawn;
-  const char *cs_path;
+  const char *cs_path = 0;
   CORBA::Boolean multithread;
 
   get_property_value ("edu.vanderbilt.dre.CS_Path", this->properties_, cs_path);
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::init - "
+                "Component server path: %s\n", cs_path));
   get_property_value ("edu.vanderbilt.dre.SpawnDelay", this->properties_, spawn);
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::init - "
+                "Spawn delay: %u\n", spawn));
   get_property_value ("edu.vanderbilt.dre.Multithreaded", this->properties_, multithread);
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::init - "
+                "Threading: %s\n",  multithread ? "Multi" : "Single"));
   
+  DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::init - "
+                "Spawning server activator\n"));
   ACE_NEW_THROW_EX (this->activator_,
                     CIAO::Deployment::CIAO_ServerActivator_i (spawn, 
                                                               cs_path,
@@ -136,7 +165,7 @@ NodeApplication_Impl::init()
 void
 NodeApplication_Impl::start ()
 {
-  DANCE_TRACE(DLINFO "NodeApplication_Impl::start ()");
+  DANCE_TRACE( "NodeApplication_Impl::start ()");
   
   DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::start - started\n"));
   for (TComponents::iterator iter = this->components_.begin();
@@ -164,7 +193,7 @@ NodeApplication_Impl::start ()
 void
 NodeApplication_Impl::create_home (unsigned int index)
 {
-  DANCE_TRACE(DLINFO "NodeApplication_Impl::create_home (unsigned int index)");
+  DANCE_TRACE( "NodeApplication_Impl::create_home (unsigned int index)");
 
   
 }

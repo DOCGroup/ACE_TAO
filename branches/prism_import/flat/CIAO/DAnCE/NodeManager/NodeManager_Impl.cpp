@@ -15,17 +15,22 @@ namespace DAnCE
                                      PortableServer::POA_ptr poa, 
                                      const char* name, 
                                      RedirectionService& redirection,
-                                     PROPERTY_MAP &properties)
+                                     const PROPERTY_MAP &properties)
     : orb_ (CORBA::ORB::_duplicate (orb)), 
       poa_ (PortableServer::POA::_duplicate (poa)), 
       name_ (name), 
       redirection_ (redirection),
-      properties_ (properties)
+      properties_ (properties.current_size ())
   {
     DANCE_TRACE (DLINFO "NodeManager_Impl::NodeManager_Impl");
     redirection.add_node (name);
     DANCE_DEBUG ((LM_INFO, DLINFO "NodeManager_impl::NodeManager_impl has been created\n"));
     
+    PROPERTY_MAP::const_iterator i = properties.begin ();
+    while (!i.done ())
+      {
+        this->properties_.bind (i->key (), i->item ());
+      }
   }
 
   NodeManager_Impl::~NodeManager_Impl()
@@ -97,7 +102,7 @@ namespace DAnCE
                       plan.UUID.in ()));
         throw ::Deployment::PlanError();
       }
-
+    ACE_DEBUG ((LM_DEBUG, "*** size of properties_:%u\n", properties_.current_size ()));
     DANCE_DEBUG ((LM_TRACE, DLINFO "NodeManager_impl::preparePlan - creating NodeApplicationManager...\n"));
     NodeApplicationManager_Impl* manager;
     ACE_NEW_THROW_EX (manager,

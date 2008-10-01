@@ -34,7 +34,7 @@ namespace DAnCE
                       PortableServer::POA_ptr poa, 
                       const char* name, 
                       RedirectionService& redirection,
-                      PROPERTY_MAP &options);
+                      const PROPERTY_MAP &options);
 
     virtual ~NodeManager_Impl();
 
@@ -62,7 +62,7 @@ namespace DAnCE
     typedef ACE_Map_Manager<ACE_CString, NodeApplicationManager_Impl*, ACE_Null_Mutex > TManagers;
     TManagers managers_;
     RedirectionService& redirection_;
-    PROPERTY_MAP &properties_;
+    PROPERTY_MAP properties_;
   };
 };
 

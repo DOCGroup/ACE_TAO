@@ -35,7 +35,7 @@ namespace DAnCE
                                    const Deployment::DeploymentPlan& plan, 
                                    RedirectionService & redirection, 
                                    const ACE_CString& name,
-                                   PROPERTY_MAP &properties);
+                                   const PROPERTY_MAP &properties);
 
       virtual ~NodeApplicationManager_Impl();
 
@@ -53,7 +53,7 @@ namespace DAnCE
       NodeApplication_Impl* application_;
       RedirectionService & redirection_;
       ACE_CString node_name_;
-      PROPERTY_MAP &properties_;
+      PROPERTY_MAP properties_;
     };
 };
 #endif /*NODEAPPLICATIONMANAGER_IMPL_H_*/
