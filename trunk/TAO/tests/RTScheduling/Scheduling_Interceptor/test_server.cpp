@@ -6,7 +6,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-const char* filename = "test.ior";
+const ACE_TCHAR* filename = "test.ior";
 
 class test_impl : public POA_test
 {
