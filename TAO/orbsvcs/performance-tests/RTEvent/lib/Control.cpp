@@ -152,7 +152,7 @@ Control::join (Federated_Test::Peer_ptr peer)
 
       ACE_Basic_Stats stats;
       history.collect_basic_stats (stats);
-      stats.dump_results ("Total", fake_scale_factor);
+      stats.dump_results (ACE_TEXT("Total"), fake_scale_factor);
 
       if (this->do_dump_history_)
         {

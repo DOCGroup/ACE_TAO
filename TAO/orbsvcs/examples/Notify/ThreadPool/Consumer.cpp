@@ -171,7 +171,7 @@ TAO_Notify_ThreadPool_Consumer::dump_throughput (void)
 
   ACE_DEBUG ((LM_DEBUG, "(%P,%t) Consumer %d \n", proxy_supplier_id_));
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          t_last_ - t_first_,
                                          this->max_events_);
 }

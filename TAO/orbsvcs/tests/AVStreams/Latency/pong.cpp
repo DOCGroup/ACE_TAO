@@ -192,9 +192,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
-      recv_latency.dump_results ("Receive", gsf);
+      recv_latency.dump_results (ACE_TEXT("Receive"), gsf);
 
-      send_latency.dump_results ("Send", gsf);
+      send_latency.dump_results (ACE_TEXT("Send"), gsf);
 
     }
   catch (const CORBA::Exception& ex)

@@ -102,8 +102,8 @@ EC_Connect::dump_results (void)
 {
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "\nConnect time:\n"));
-  this->consumer_connect_.dump_results ("Consumer/connect", gsf);
-  this->supplier_connect_.dump_results ("Supplier/connect", gsf);
+  this->consumer_connect_.dump_results (ACE_TEXT("Consumer/connect"), gsf);
+  this->supplier_connect_.dump_results (ACE_TEXT("Supplier/connect"), gsf);
 
   ACE_DEBUG ((LM_DEBUG, "\nDisconnect time:\n"));
 }
@@ -246,8 +246,8 @@ EC_Connect::disconnect_clients (void)
         }
     }
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-  this->consumer_disconnect_.dump_results ("Consumer/disconnect", gsf);
-  this->supplier_disconnect_.dump_results ("Supplier/disconnect", gsf);
+  this->consumer_disconnect_.dump_results (ACE_TEXT("Consumer/disconnect"), gsf);
+  this->supplier_disconnect_.dump_results (ACE_TEXT("Supplier/disconnect"), gsf);
 }
 
 void
@@ -265,7 +265,7 @@ EC_Connect::disconnect_consumers (void)
                                          now - start);
     }
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-  this->consumer_disconnect_.dump_results ("Consumer/disconnect",
+  this->consumer_disconnect_.dump_results (ACE_TEXT("Consumer/disconnect"),
                                            gsf);
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Connect (%P|%t) consumers disconnected\n"));
@@ -286,7 +286,7 @@ EC_Connect::disconnect_suppliers (void)
                                          now - start);
     }
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-  this->supplier_disconnect_.dump_results ("Supplier/disconnect",
+  this->supplier_disconnect_.dump_results (ACE_TEXT("Supplier/disconnect"),
                                            gsf);
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Connect (%P|%t) suppliers disconnected\n"));
