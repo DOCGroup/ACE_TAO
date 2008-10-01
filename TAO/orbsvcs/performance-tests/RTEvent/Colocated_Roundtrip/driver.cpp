@@ -207,11 +207,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_Basic_Stats high_priority_stats;
       history.collect_basic_stats (high_priority_stats);
-      high_priority_stats.dump_results ("High Priority", gsf);
+      high_priority_stats.dump_results (ACE_TEXT("High Priority"), gsf);
 
       ACE_Basic_Stats low_priority_stats;
       low_priority_setup.collect_basic_stats (low_priority_stats);
-      low_priority_stats.dump_results ("Low Priority", gsf);
+      low_priority_stats.dump_results (ACE_TEXT("Low Priority"), gsf);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - starting cleanup\n"));
     }

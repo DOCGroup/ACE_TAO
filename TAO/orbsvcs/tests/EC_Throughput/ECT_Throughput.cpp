@@ -422,7 +422,7 @@ ECT_Throughput::dump_results (void)
       this->consumers_[j]->dump_results (buf, gsf);
       this->consumers_[j]->accumulate (consumers);
     }
-  consumers.dump_results ("ECT_Consumer/totals", gsf);
+  consumers.dump_results (ACE_TEXT("ECT_Consumer/totals"), gsf);
 
   ACE_Throughput_Stats suppliers;
   for (int i = 0; i < this->n_suppliers_; ++i)
@@ -433,7 +433,7 @@ ECT_Throughput::dump_results (void)
       this->suppliers_[i]->dump_results (buf, gsf);
       this->suppliers_[i]->accumulate (suppliers);
     }
-  suppliers.dump_results ("ECT_Supplier/totals", gsf);
+  suppliers.dump_results (ACE_TEXT("ECT_Supplier/totals"), gsf);
 }
 
 int

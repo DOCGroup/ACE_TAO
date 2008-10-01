@@ -253,7 +253,7 @@ ECT_Consumer_Driver::dump_results (void)
       this->consumers_[i]->dump_results (buf, gsf);
       this->consumers_[i]->accumulate (throughput);
     }
-  throughput.dump_results ("ECT_Consumer/totals", gsf);
+  throughput.dump_results (ACE_TEXT("ECT_Consumer/totals"), gsf);
 }
 
 void

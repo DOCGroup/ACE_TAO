@@ -538,10 +538,10 @@ Notify_Throughput::dump_results (void)
     }
 
   ACE_DEBUG ((LM_DEBUG, "\nTotals:\n"));
-  throughput.dump_results ("Notify_Consumer/totals", gsf);
+  throughput.dump_results (ACE_TEXT("Notify_Consumer/totals"), gsf);
 
   ACE_DEBUG ((LM_DEBUG, "\n"));
-  suppliers.dump_results ("Notify_Supplier/totals", gsf);
+  suppliers.dump_results (ACE_TEXT("Notify_Supplier/totals"), gsf);
 }
 
 /***************************************************************************/
