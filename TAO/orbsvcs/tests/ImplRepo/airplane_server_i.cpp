@@ -61,7 +61,7 @@ Airplane_Server_i::parse_args (void)
 }
 
 int
-Airplane_Server_i::init (int argc, char** argv)
+Airplane_Server_i::init (int argc, ACE_TCHAR** argv)
 {
   // Since the Implementation Repository keys off of the POA name, we need
   // to use the SERVER_NAME as the POA's name.

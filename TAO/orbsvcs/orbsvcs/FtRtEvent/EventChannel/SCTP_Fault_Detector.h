@@ -76,7 +76,7 @@ class SCTP_Fault_Detector : public Fault_Detector_T<
 public:
     virtual ~SCTP_Fault_Detector();
 private:
-    virtual int parse_conf(int argc, char** argv);
+    virtual int parse_conf(int argc, ACE_TCHAR** argv);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -52,7 +52,7 @@ Simple_Test::~Simple_Test (void)
 
 int
 Simple_Test::init (int argc,
-                   char* argv [])
+                   ACE_TCHAR* argv [])
 {
   // Initialized the base class.
   Notify_Test_Client::init (argc,
@@ -111,7 +111,7 @@ Simple_Test::parse_args (int argc,
 
     while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter ("-events")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-events"))))
         {
           this->event_count_ = ACE_OS::atoi (current_arg);
           // The number of events to send/receive.

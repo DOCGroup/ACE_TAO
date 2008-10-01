@@ -262,7 +262,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
     }
 }
 
-TT_Parse_Args::TT_Parse_Args (int& argc, char** argv)
+TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
   : federated_ (0),
     quiet_ (0),
     ior_ (0)

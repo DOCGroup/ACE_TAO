@@ -137,7 +137,7 @@ public:
 
   int parse_args(int argc, ACE_TCHAR *argv[]) ;
 
-  int init (int argc, char *argv []);
+  int init (int argc, ACE_TCHAR *argv []);
   // initialization.
 
   void run_test (void);

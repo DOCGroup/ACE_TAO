@@ -93,7 +93,7 @@ public:
                   ACE_TCHAR *argv[]);
 
   int init (int argc,
-            char *argv []);
+            ACE_TCHAR *argv []);
   // initialization.
 
   void run_test (void);

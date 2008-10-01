@@ -58,7 +58,7 @@ Updates::~Updates ()
 
 int
 Updates::init (int argc,
-               char* argv [])
+               ACE_TCHAR* argv [])
 {
   // Initialize base class.
   Notify_Test_Client::init (argc,

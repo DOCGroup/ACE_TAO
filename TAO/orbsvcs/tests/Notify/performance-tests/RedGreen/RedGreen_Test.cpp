@@ -35,7 +35,7 @@ RedGreen_Test::parse_args (int argc,
 
     while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter ("-burst_size")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-burst_size"))))
         {
           this->burst_size_ = ACE_OS::atoi (current_arg);
           ACE_DEBUG ((LM_DEBUG,
@@ -107,7 +107,7 @@ RedGreen_Test::destroy_ec ()
 
 void
 RedGreen_Test::init (int argc,
-                     char *argv [])
+                     ACE_TCHAR *argv [])
 {
   this->init_ORB (argc,
                   argv);
@@ -152,7 +152,7 @@ RedGreen_Test::done (void)
 }
 
 void
-RedGreen_Test::init_ORB (int argc, char *argv [])
+RedGreen_Test::init_ORB (int argc, ACE_TCHAR *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 

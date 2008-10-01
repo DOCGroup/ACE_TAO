@@ -51,7 +51,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
 
           while (arg_shifter.is_anything_left ())
             {
-              if (0 != (current_arg = arg_shifter.get_the_parameter ("-PriorityModel")))
+              if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-PriorityModel"))))
                 {
                   if (arg_shifter.cur_arg_strncasecmp ("CLIENT") == 0)
                     priority_model_ = RTCORBA::CLIENT_PROPAGATED;
@@ -65,7 +65,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                   continue;
                 }
               // -Lanes lane-count -Lane prio statc_thr dyn_thr
-              if (0 != (current_arg = arg_shifter.get_the_parameter ("-Lanes")))
+              if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Lanes"))))
                 {
                   int lanecount = ACE_OS::atoi (current_arg);
                   lanes_.length (lanecount);
@@ -103,7 +103,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                   continue;
                 } /* if -Lanes */
 
-              if (0 != (current_arg = arg_shifter.get_the_parameter ("-Bands")))
+              if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Bands"))))
                 {
                   int bandcount = ACE_OS::atoi (current_arg);
                   bands_.length (bandcount);

@@ -76,7 +76,7 @@ class RedGreen_Test
   void dump_results (void);
 
   void init (int argc,
-             char *argv []);
+             ACE_TCHAR *argv []);
   // Initialize the Client.
 
   void run (void);
@@ -94,7 +94,7 @@ class RedGreen_Test
 
  protected:
   void init_ORB (int argc,
-                 char *argv []);
+                 ACE_TCHAR *argv []);
   // Initializes the ORB.
 
   void resolve_naming_service (void);
