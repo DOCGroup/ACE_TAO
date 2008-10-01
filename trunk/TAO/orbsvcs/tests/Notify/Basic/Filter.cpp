@@ -17,7 +17,7 @@ Filter::~Filter (void)
 }
 
 int
-Filter::init (int argc, char* argv [])
+Filter::init (int argc, ACE_TCHAR* argv [])
 {
   // Initialized the base class.
   Notify_Test_Client::init (argc,

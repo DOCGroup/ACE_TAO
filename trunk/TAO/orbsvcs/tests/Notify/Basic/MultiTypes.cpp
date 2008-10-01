@@ -129,7 +129,7 @@ MultiTypes::on_received_event (MultiTypes_SequencePushConsumer* consumer)
 
 int
 MultiTypes::init (int argc,
-                         char* argv [])
+                         ACE_TCHAR* argv [])
 {
   // Initialize the base class.
   Notify_Test_Client::init (argc,

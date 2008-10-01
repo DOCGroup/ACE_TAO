@@ -42,7 +42,7 @@ Fault_Detector* Fault_Detector::instance()
   return detector;
 }
 
-int Fault_Detector::init(int argc, char** argv)
+int Fault_Detector::init(int argc, ACE_TCHAR** argv)
 {
   detector = this;
   if (this->parse_conf(argc, argv)==0 &&

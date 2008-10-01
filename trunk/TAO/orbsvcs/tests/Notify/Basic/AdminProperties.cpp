@@ -149,20 +149,20 @@ AdminProperties::parse_args(int argc, ACE_TCHAR *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter ("-max_queue_length")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-max_queue_length"))))
         {
           this->max_queue_length_ = ACE_OS::atoi (current_arg);
           // Max. queue length.
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-max_consumers")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-max_consumers"))))
         {
           this->max_consumers_ = ACE_OS::atoi (current_arg);
           // Max consumers allowed to connect.
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-max_suppliers")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-max_suppliers"))))
         {
           this->max_suppliers_ = ACE_OS::atoi (current_arg);
           // Max. number of suppliers allowed to connect.
@@ -173,13 +173,13 @@ AdminProperties::parse_args(int argc, ACE_TCHAR *argv[])
           this->reject_new_events_ = 1;
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-consumers")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-consumers"))))
         {
           this->consumers_ = ACE_OS::atoi (current_arg);
           // Number of consumers to create.
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-suppliers")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-suppliers"))))
         {
           this->suppliers_ = ACE_OS::atoi (current_arg);
           // Number of suppliers to create.

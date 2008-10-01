@@ -70,7 +70,7 @@ public:
                   ACE_TCHAR *argv[]) ;
 
   int init (int argc,
-            char *argv []);
+            ACE_TCHAR *argv []);
   // Initialization.
 
   void on_event_received (void);

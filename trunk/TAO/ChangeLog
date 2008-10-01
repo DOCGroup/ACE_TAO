@@ -1,3 +1,43 @@
+Wed Oct  1 19:19:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.h
+        * orbsvcs/tests/Bug_2248_Regression/Server_Request_Interceptor.cpp
+        * orbsvcs/tests/COIOP_Naming_Test/NamingTask.cpp
+        * orbsvcs/tests/COIOP_Naming_Test/NamingTask.h
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp
+        * orbsvcs/tests/ImplRepo/scale/server_i.cpp
+        * orbsvcs/tests/Notify/Basic/AdminProperties.cpp
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.h
+        * orbsvcs/tests/Notify/Basic/Events.cpp
+        * orbsvcs/tests/Notify/Basic/Events.h
+        * orbsvcs/tests/Notify/Basic/Filter.cpp
+        * orbsvcs/tests/Notify/Basic/Filter.h
+        * orbsvcs/tests/Notify/Basic/LifeCycle.cpp
+        * orbsvcs/tests/Notify/Basic/MultiTypes.cpp
+        * orbsvcs/tests/Notify/Basic/MultiTypes.h
+        * orbsvcs/tests/Notify/Basic/Sequence.cpp
+        * orbsvcs/tests/Notify/Basic/Sequence.h
+        * orbsvcs/tests/Notify/Basic/Simple.cpp
+        * orbsvcs/tests/Notify/Basic/Simple.h
+        * orbsvcs/tests/Notify/Basic/Updates.cpp
+        * orbsvcs/tests/Notify/Basic/Updates.h
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer.cpp
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.cpp
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h
+        * orbsvcs/tests/Notify/RT_lib/RT_POA_Command.cpp
+        * orbsvcs/tests/Trading/TT_Info.cpp
+        * orbsvcs/tests/Trading/TT_Info.h
+          ACE_TCHAR fixes
+
 Wed Oct  1 19:17:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Exposed_Policies/Policy_Tester.cpp
