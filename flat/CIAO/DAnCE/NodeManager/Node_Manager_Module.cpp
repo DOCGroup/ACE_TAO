@@ -409,7 +409,9 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
       DAnCE::NodeManager_Impl * nm = 0;
       if (this->nm_map_.find (node_name, nm) == -1)
         {
-          DAnCE::PROPERTY_MAP properties;
+          int size = 1024;
+          DAnCE::PROPERTY_MAP properties (size);
+          ACE_DEBUG ((LM_DEBUG, "*** size of properties_:%u\n", properties.current_size ()));
           ACE_NEW_RETURN (nm,
                           DAnCE::NodeManager_Impl (orb,
                                                    this->root_poa_.in (),

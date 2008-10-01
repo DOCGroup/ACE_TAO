@@ -15,22 +15,28 @@ NodeApplicationManager_Impl::NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
                                                           const Deployment::DeploymentPlan& plan, 
                                                           RedirectionService & redirection, 
                                                           const ACE_CString& node_name,
-                                                          PROPERTY_MAP &properties)
+                                                          const PROPERTY_MAP &properties)
     : plan_ (plan), 
       orb_ (CORBA::ORB::_duplicate (orb)), 
       poa_ (PortableServer::POA::_duplicate (poa)), 
       application_ (0), 
       redirection_ (redirection),
       node_name_ (node_name),
-      properties_ (properties)
+      properties_ ()
 {
   DANCE_TRACE (DLINFO " NodeApplicationManager_Impl::NodeApplicationManager_Impl");
   
   DANCE_DEBUG((LM_DEBUG, DLINFO " NodeApplicationManager_Impl::NodeApplicationManager_Impl - "
-               "Initializing for node %s and plan %s starting...\n", 
+               "Initializing for node '%s' and plan '%s' starting...\n", 
                node_name.c_str(), 
                plan_.UUID.in()));
   this->register_plan();
+
+  PROPERTY_MAP::const_iterator i = properties.begin ();
+  while (!i.done ())
+    {
+      this->properties_.bind (i->key (), i->item ());
+    }
 }
 
 NodeApplicationManager_Impl::~NodeApplicationManager_Impl()
@@ -63,9 +69,9 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &,
   DANCE_TRACE (DLINFO "NodeApplicationManager_Impl::startLaunch");
   
   // Creating NodeApplication object
-  DANCE_DEBUG((LM_TRACE, DLINFO " NodeApplicationManager_impl::startLaunch - "
+  DANCE_DEBUG((LM_TRACE, DLINFO "NodeApplicationManager_impl::startLaunch - "
                "Initializing NodeApplication\n"));
-
+  ACE_DEBUG ((LM_DEBUG, "*** size of properties_:%u\n", properties_.current_size ()));
   ACE_NEW_THROW_EX (this->application_,
                     NodeApplication_Impl (this->orb_.in(),
                                           this->poa_.in(),
@@ -75,16 +81,16 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &,
                                           this->properties_),
                     CORBA::NO_MEMORY ());
 
-  DANCE_DEBUG((LM_TRACE, DLINFO " NodeApplicationManager_impl::startLaunch - "
+  DANCE_DEBUG((LM_TRACE, DLINFO "NodeApplicationManager_impl::startLaunch - "
                "Instructing NodeApplication to initialize components. \n"));
   this->application_->init_components();
 
-  DANCE_DEBUG((LM_TRACE, DLINFO " NodeApplicationManager_impl::startLaunch - "
+  DANCE_DEBUG((LM_TRACE, DLINFO "NodeApplicationManager_impl::startLaunch - "
                "Collecting connection references\n"));
   providedReference = this->application_->getAllConnections();
   //this->parent_.registerConnections(this->plan_.UUID.in(), *providedReference);
 
-  DANCE_DEBUG((LM_DEBUG, DLINFO " NodeApplicationManager_impl::startLaunch - "
+  DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplicationManager_impl::startLaunch - "
                "Activating NodeApplication servant\n"));
   PortableServer::ObjectId_var as_id =
     this->poa_->activate_object (this->application_);

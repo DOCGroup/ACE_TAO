@@ -31,7 +31,7 @@ namespace DAnCE
                                   ACE_Hash<ACE_CString>,
                                   ACE_Equal_To<ACE_CString>,
                                   ACE_Null_Mutex> PROPERTY_MAP;
-
+  
   /// A struct which captures the compnent  binding information, which
   /// is useful for inter-assembly connection setup
   typedef struct _component_binding
