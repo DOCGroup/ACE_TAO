@@ -163,7 +163,7 @@ Identity_Client::run (void)
     }
 
   ACE_OS::printf ("*=*=*=*=Aggregated result *=*=*=*=*= \n");
-  throughput.dump_results ("Aggregated", gsf);
+  throughput.dump_results (ACE_TEXT("Aggregated"), gsf);
 #endif /*TAO_MEASURE_STATS */
 
   if (CORBA::is_nil (object_group.in ()))
