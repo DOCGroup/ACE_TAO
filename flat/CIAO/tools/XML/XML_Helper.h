@@ -21,6 +21,7 @@
 #include "XML/XML_Schema_Resolver.h"
 
 #include "xercesc/util/XercesDefs.hpp"
+#include "xercesc/parsers/XercesDOMParser.hpp"
 
 namespace XERCES_CPP_NAMESPACE
 {
@@ -81,6 +82,7 @@ namespace CIAO
     private:
       bool initialized_;
       XERCES_CPP_NAMESPACE::DOMImplementation *impl_;
+      mutable std::auto_ptr<XERCES_CPP_NAMESPACE::XercesDOMParser> parser_;
       
       Resolver &resolver_;
       Error_Handler &e_handler_;
