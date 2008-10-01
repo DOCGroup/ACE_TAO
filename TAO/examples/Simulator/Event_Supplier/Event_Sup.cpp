@@ -46,7 +46,7 @@ static const char usage [] =
 "                 [-f name of schedler input data file]]\n";
 
 
-Event_Supplier::Event_Supplier (int argc, char** argv)
+Event_Supplier::Event_Supplier (int argc, ACE_TCHAR** argv)
 : argc_(argc),
   argv_(argv),
   total_messages_(10),

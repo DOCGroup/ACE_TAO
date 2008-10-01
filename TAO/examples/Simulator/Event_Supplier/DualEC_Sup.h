@@ -55,7 +55,7 @@ class DualEC_Supplier
   //    is connected to the event channel
 public:
 
-  DualEC_Supplier (int argc, char** argv);
+  DualEC_Supplier (int argc, ACE_TCHAR** argv);
 
   ~DualEC_Supplier (void);
 

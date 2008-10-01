@@ -32,25 +32,25 @@ DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
       arg_shifter.consume_arg ();
     }
 
-  if (0 != (current_arg = arg_shifter.get_the_parameter ("-Start_Time")))
+  if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Start_Time"))))
     {
       start_time = ACE_OS::atoi (current_arg);
       arg_shifter.consume_arg ();
     }
 
-  if (0 != (current_arg = arg_shifter.get_the_parameter ("-Iter")))
+  if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Iter"))))
     {
       iter = ACE_OS::atoi (current_arg);
       arg_shifter.consume_arg ();
     }
 
-  if (0 != (current_arg = arg_shifter.get_the_parameter ("-Load")))
+  if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Load"))))
     {
       load = ACE_OS::atoi (current_arg);
       arg_shifter.consume_arg ();
     }
 
-  if (0 != (current_arg = arg_shifter.get_the_parameter ("-JobName")))
+  if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-JobName"))))
     {
       job_name = (char *)current_arg;
       dist = 1;
@@ -90,25 +90,25 @@ DT_Creator::init (int argc, char *argv [])
   int job_count = 0;
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter ("-GuidSeed")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-GuidSeed"))))
         {
           guid_counter = (long) ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-DT_Count")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-DT_Count"))))
         {
           dt_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (dt_list_, Thread_Task*[dt_count_], -1);
           active_dt_count_ = dt_count_;
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-POA_Count")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-POA_Count"))))
         {
           poa_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (poa_list_, POA_Holder*[poa_count_], -1);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-JOB_Count")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-JOB_Count"))))
         {
           job_count_ = ACE_OS::atoi (current_arg);
           active_job_count_ = job_count_;
@@ -152,12 +152,12 @@ DT_Creator::init (int argc, char *argv [])
               job_count++;
             }
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-OutFile")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-OutFile"))))
         {
           file_name_ = CORBA::string_dup (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-LogFile")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-LogFile"))))
         {
           log_file_name_ = CORBA::string_dup (current_arg);
           arg_shifter.consume_arg ();

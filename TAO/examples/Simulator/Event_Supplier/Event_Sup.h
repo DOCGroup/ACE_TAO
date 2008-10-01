@@ -44,7 +44,7 @@ class Event_Supplier
   //    is connected to the event channel
 public:
 
-  Event_Supplier (int argc, char** argv);
+  Event_Supplier (int argc, ACE_TCHAR** argv);
 
   ~Event_Supplier (void);
 

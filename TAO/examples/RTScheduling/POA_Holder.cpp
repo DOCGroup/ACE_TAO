@@ -27,7 +27,7 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
 
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter ("-PriorityModel")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-PriorityModel"))))
         {
           if (arg_shifter.cur_arg_strncasecmp ("CLIENT") == 0)
             priority_model_ = RTCORBA::CLIENT_PROPAGATED;
@@ -38,7 +38,7 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
           server_priority_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-Lanes")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Lanes"))))
         {
           int lanecount = ACE_OS::atoi (current_arg);
           lanes_.length (lanecount);
@@ -94,7 +94,7 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
           "Thread Pool Initialized\n"));
 
   }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-Bands")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Bands"))))
         {
     ACE_DEBUG ((LM_DEBUG,
           "Initializing Bands\n"));
