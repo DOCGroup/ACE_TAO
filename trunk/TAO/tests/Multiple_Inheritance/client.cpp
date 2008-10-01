@@ -24,7 +24,7 @@
 
 ACE_RCSID(Multiple_Inheritance, client, "$Id$")
 
-static ACE_TCHAR *ior = 0;
+static char *ior = 0;
 static ACE_TCHAR *ior_input_file = 0;
 
 static int

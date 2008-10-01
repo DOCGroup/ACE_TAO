@@ -58,7 +58,7 @@ MT_Client::MT_Client ()
 // Reads the Object A IOR from a file
 
 int
-MT_Client::read_ior (char *filename)
+MT_Client::read_ior (ACE_TCHAR *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename,0);

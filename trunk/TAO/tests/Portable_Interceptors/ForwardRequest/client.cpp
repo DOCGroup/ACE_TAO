@@ -11,8 +11,8 @@ ACE_RCSID (ForwardRequest,
            client,
            "$Id$")
 
-const char *ior1 = 0;
-const char *ior2 = 0;
+const ACE_TCHAR *ior1 = 0;
+const ACE_TCHAR *ior2 = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

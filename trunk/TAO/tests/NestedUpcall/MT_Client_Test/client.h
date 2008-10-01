@@ -54,7 +54,7 @@ public:
   // Initialize the client communication endpoint with server.
 
 private:
-  int read_ior (char *filename);
+  int read_ior (ACE_TCHAR *filename);
   // reading the IOR of object A in
 
   int parse_args (void);

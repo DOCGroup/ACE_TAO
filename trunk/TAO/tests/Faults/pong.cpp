@@ -10,7 +10,7 @@ ACE_RCSID(Faults, server, "$Id$")
 int iterations = 60;
 int period = 10;
 int kill_on = 30;
-const char* ior = "file://ping.ior";
+const ACE_TCHAR* ior = ACE_TEXT("file://ping.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
