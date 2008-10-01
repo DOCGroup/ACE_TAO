@@ -29,16 +29,30 @@ namespace CIAO
           if (!XML_Helper::XML_HELPER.is_initialized ())
             return false;
           
-          XERCES_CPP_NAMESPACE::DOMDocument *dom =
+          CIAO_DEBUG ((LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
+                       "Constructing DOM\n"));
+          XERCES_CPP_NAMESPACE::DOMDocument *dom = 0;
+          dom = 
             XML_Helper::XML_HELPER.create_dom (file);
           
-          if (!dom)
-            return false;
+          if (dom == 0)
+            {
+              CIAO_DEBUG ((LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
+                           "Failed to open file $s\n", file));
+              return false;
+            }
           
+          XERCES_CPP_NAMESPACE::DOMElement *foo = dom->getDocumentElement ();
+          CIAO_DEBUG ((LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
+                       "DOMElement pointer: %u\n", foo));
+          
+          CIAO_DEBUG ((LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
+                       "Parsing XML file with XSC\n"));
           deploymentPlan dp =
             DeploymentPlan (dom);
           
-          
+          CIAO_DEBUG ((LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
+                       "Processing using config handlers\n"));
           DP_Handler dp_handler (dp);
           
           this->idl_dp_.reset (dp_handler.plan ());
