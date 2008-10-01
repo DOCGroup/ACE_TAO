@@ -20,7 +20,7 @@ public:
 
   /// Constructor
   Client_Task (const ACE_TCHAR *input,
-               const char *simple_test_ior,
+               const ACE_TCHAR *simple_test_ior,
                CORBA::ORB_ptr corb,
                ACE_Thread_Manager *thr_mgr);
 
@@ -31,7 +31,7 @@ public:
 
 private:
   const ACE_TCHAR *input_;
-  const char *simple_test_input_;
+  const ACE_TCHAR *simple_test_input_;
 
   CORBA::ORB_var corb_;
   CORBA::ULong error_count_;

@@ -21,7 +21,7 @@ Sink_i::~Sink_i ()
 }
 
 bool
-Sink_i::parse_args(int &, char *[])
+Sink_i::parse_args(int &, ACE_TCHAR *[])
 {
   return true;
 }

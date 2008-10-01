@@ -34,7 +34,7 @@ public:
   ~Sink_i ();
   // Destructor
 
-  bool parse_args (int & argc, char * argv[]);
+  bool parse_args (int & argc, ACE_TCHAR * argv[]);
 
   ///Implement ThreeTier methods
   virtual void tick ();
