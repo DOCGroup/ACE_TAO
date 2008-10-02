@@ -162,7 +162,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         callback_i.sample_history ();
       if (do_dump_history)
         {
-          history.dump_samples ("HISTORY", gsf);
+          history.dump_samples (ACE_TEXT("HISTORY"), gsf);
         }
 
       ACE_Basic_Stats stats;

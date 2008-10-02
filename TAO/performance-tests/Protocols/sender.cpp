@@ -397,7 +397,7 @@ Worker::print_stats (void)
     {
       if (do_dump_history)
         {
-          this->history_.dump_samples ("HISTORY", gsf);
+          this->history_.dump_samples (ACE_TEXT("HISTORY"), gsf);
         }
 
       ACE_Basic_Stats stats;
