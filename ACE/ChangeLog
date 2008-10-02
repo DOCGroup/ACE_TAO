@@ -1,3 +1,11 @@
+Thu Oct  2 16:41:57 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Basic_Types.h: Adjust the byte order decision for Itanium
+          hardware. Itanium can run either byte order - the OS selects it
+          at boot. The checks were correct for Windows (and maybe Linux)
+          but not for HP-UX. Apparantly something in the predefined macros
+          at aC++ 06.20 changed enough to fool this check.
+
 Mon Sep 29 18:04:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CDR_File_Test.cpp:
