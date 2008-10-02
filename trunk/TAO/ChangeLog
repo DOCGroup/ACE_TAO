@@ -1,9 +1,37 @@
+Thu Oct  2 18:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2319_Regression/server.cpp
+        * tests/Bug_2935_Regression/middle_i.cpp
+        * tests/Bug_2935_Regression/middle_i.h
+        * tests/Bug_2935_Regression/sink.cpp
+        * tests/Bug_2935_Regression/source.cpp
+        * tests/Client_Leaks/Process_Factory.cpp
+        * tests/Collocation_Oneway_Tests/Collocated_Test.cpp
+        * tests/Connection_Timeout/client.cpp
+        * tests/Exposed_Policies/Policy_Tester.cpp
+        * tests/Exposed_Policies/Policy_Verifier.cpp
+        * tests/Multiple_Inheritance/client.cpp
+        * tests/OBV/Simple/Simple_util.cpp
+        * tests/OBV/Simple/Simple_util.h
+        * tests/POA/EndpointPolicy/server.cpp
+        * tests/POA/Loader/Servant_Locator.cpp
+        * tests/POA/Loader/Servant_Locator.h
+        * tests/POA/Loader/Server_Manager.cpp
+        * tests/POA/On_Demand_Loading/Server_Manager.cpp
+        * tests/Portable_Interceptors/PICurrent/server.cpp
+        * tests/RTCORBA/Diffserv/server.cpp
+        * tests/RTCORBA/Explicit_Binding/server.cpp
+        * tests/RTCORBA/Linear_Priority/server.cpp
+        * tests/RTCORBA/Private_Connection/server.cpp
+        * tests/RTCORBA/Server_Declared/server.cpp
+        * orbsvcs/TAO_Service/TAO_Service.cpp
+
 Thu Oct  2 14:01:39 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
         * TAO_IDL/be/be_helper.cpp:
         * TAO_IDL/be_include/be_helper.h:
-        
+
           More fixes for TAO_OutStream operator ambiguity errors,
           these on OpenSUSE_10_3_GCC_4_2. Part of the fix involves
           removing the #ifdef guards around the TAO_OutStream

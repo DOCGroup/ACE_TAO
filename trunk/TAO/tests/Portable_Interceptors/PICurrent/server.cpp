@@ -39,12 +39,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
               case 't':
 #if defined (ACE_HAS_THREADS)
-              argv[i] = const_cast<ACE_TCHAR*> ("-ORBSvcConfDirective");
+              argv[i] = const_cast<ACE_TCHAR*> (ACE_TEXT("-ORBSvcConfDirective"));
 #endif /* ACE_HAS_THREADS */
               i++;
               if (i < argc)
 #if defined (ACE_HAS_THREADS)
-                argv[i] = const_cast<ACE_TCHAR*> ("static Server_Strategy_Factory \"-ORBConcurrency thread-per-connection\"");
+                argv[i] = const_cast<ACE_TCHAR*> (ACE_TEXT("static Server_Strategy_Factory \"-ORBConcurrency thread-per-connection\""));
 #else
                 ACE_DEBUG ((LM_DEBUG, "NOTE: Non-threaded build.  "
                                       "Defaulting to single threaded.\n"));

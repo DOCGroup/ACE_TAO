@@ -270,12 +270,12 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
     {
       // An Servant Locator object is created which will activate
       // the servant on demand.
-      ServantLocator *temp_servant_locator;
+      ServantLocator *temp_servant_locator = 0;
       ACE_NEW_RETURN (temp_servant_locator,
                       ServantLocator (orb_.in (),
-                                      "Generic_Servant",
-                                      "supply_servant",
-                                      "destroy_servant"),
+                                      ACE_TEXT ("Generic_Servant"),
+                                      ACE_TEXT ("supply_servant"),
+                                      ACE_TEXT ("destroy_servant")),
                       0);
       // Set ServantLocator object as the servant Manager of
       // secondPOA.

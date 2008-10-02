@@ -8,7 +8,7 @@
 
 const ACE_TCHAR *output = ACE_TEXT("test.ior");
 const ACE_TCHAR *input = ACE_TEXT("file://test.ior");
-const char *mode = "SYNC_NONE";
+const ACE_TCHAR *mode = ACE_TEXT("SYNC_NONE");
 
 Client_Task::ClientSyncModeEnum syncMode = Client_Task::MODE_NONE;
 
@@ -40,16 +40,16 @@ parse_args (int argc, ACE_TCHAR *argv[])
         // cout << "mode = " << mode << endl;
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) - mode set to <%C> for collocated oneway test\n", mode));
         if(mode) {
-             if(!ACE_OS::strcmp("none", mode)) {
+             if(!ACE_OS::strcmp(ACE_TEXT("none"), mode)) {
                 syncMode = Client_Task::MODE_NONE;
              }
-             else if (!ACE_OS::strcmp("transport", mode)) {
+             else if (!ACE_OS::strcmp(ACE_TEXT("transport"), mode)) {
                 syncMode = Client_Task::MODE_TRANSPORT;
              }
-             else if (!ACE_OS::strcmp("server", mode)) {
+             else if (!ACE_OS::strcmp(ACE_TEXT("server"), mode)) {
                 syncMode = Client_Task::MODE_SERVER;
              }
-             else if (!ACE_OS::strcmp("target", mode)) {
+             else if (!ACE_OS::strcmp(ACE_TEXT("target"), mode)) {
                 syncMode = Client_Task::MODE_TARGET;
              }
           }

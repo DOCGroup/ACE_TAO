@@ -46,8 +46,8 @@ Process_Factory::create_new_process (void)
   CORBA::String_var ior =
     this->orb_->object_to_string (startup_callback.in ());
 
-  const char* argv[3] = {
-    "child",
+  const ACE_TCHAR* argv[3] = {
+    ACE_TEXT("child"),
     ior.in (),
     0};
 
