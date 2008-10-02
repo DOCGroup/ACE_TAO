@@ -8,8 +8,8 @@
 
 ACE_RCSID(Connection_Timeout, client, "$Id$")
 
-const char *ior =
-  "corbaloc:iiop:192.3.47/10007/RandomObject";
+const ACE_TCHAR *ior =
+  ACE_TEXT("corbaloc:iiop:192.3.47/10007/RandomObject");
 
 ACE_Profile_Timer profile_timer;
 TimeBase::TimeT timeout_period = 1000000;

@@ -316,7 +316,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (result != 0)
         return result;
 
-      result = make_ior (orb.in(), good_poa.in(), hello_impl, ACE_TEXT_ALWAYS_CHAR (good_ior_file));
+      result = make_ior (orb.in(), good_poa.in(), hello_impl, good_ior_file);
       if (result != 0)
         return result;
 
@@ -330,7 +330,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           root_poa->create_POA ("badPOA",
                                 bad_pm.in (),
                                 policies);
-          result = make_ior (orb.in(), bad_poa.in(), hello_impl, ACE_TEXT_ALWAYS_CHAR (bad_ior_file));
+          result = make_ior (orb.in(), bad_poa.in(), hello_impl, bad_ior_file);
           if (result != 0)
             return result;
 
