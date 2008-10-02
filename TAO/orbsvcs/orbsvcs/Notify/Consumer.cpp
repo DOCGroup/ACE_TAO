@@ -174,8 +174,8 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request)
           {
             if (DEBUG_LEVEL  > 0)
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Consumer %d: Error during "
-                                    "direct dispatch. Discarding event:%d.\n"),
+                          ACE_TEXT ("(%P|%t) Consumer %d: Error during ")
+                          ACE_TEXT ("direct dispatch. Discarding event:%d.\n"),
                           static_cast<int> (this->proxy ()->id ()),
                           request->sequence ()
                           ));
@@ -189,8 +189,8 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request)
           {
             if (DEBUG_LEVEL  > 0)
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Consumer %d: Failed during "
-                                    "direct dispatch :%d. Discarding event.\n"),
+                          ACE_TEXT ("(%P|%t) Consumer %d: Failed during ")
+                          ACE_TEXT ("direct dispatch :%d. Discarding event.\n"),
                           static_cast<int> (this->proxy ()->id ()),
                           request->sequence ()
                           ));
@@ -229,8 +229,8 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
       if (DEBUG_LEVEL  > 0)
         {
           ACE_DEBUG ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %d::push "
-                                "(request) %s\n"),
+                      ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %d::push ")
+                      ACE_TEXT ("(request) %s\n"),
                       static_cast<int> (this->proxy ()->id ()),
                       ex._info ().c_str ()
                       ));
@@ -241,8 +241,8 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
     {
       if (DEBUG_LEVEL  > 0)
         ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %d::push "
-                              "(request) Transient (minor=%d) %s\n"),
+                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %d::push ")
+                    ACE_TEXT ("(request) Transient (minor=%d) %s\n"),
                     static_cast<int> (this->proxy ()->id ()),
                     ex.minor (),
                     ex._info ().c_str ()
@@ -281,8 +281,8 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
     {
       if (DEBUG_LEVEL  > 0)
         ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %u::push "
-                              "(request) %s\n"),
+                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %u::push ")
+                    ACE_TEXT ("(request) %s\n"),
                     this->proxy ()->id (),
                     ex._info().c_str ()
                     ));
@@ -292,8 +292,8 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
     {
       if (DEBUG_LEVEL  > 0)
         ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %u::push "
-                              "(request) %s\n"),
+                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %u::push ")
+                    ACE_TEXT ("(request) %s\n"),
                     this->proxy ()->id (),
                     ex._info().c_str ()
                     ));
@@ -304,8 +304,8 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
       if (DEBUG_LEVEL  > 0)
         {
           ACE_DEBUG ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %d::push "
-                                "(request) SystemException %s\n"),
+                      ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %d::push ")
+                      ACE_TEXT ("(request) SystemException %s\n"),
                       static_cast<int> (this->proxy ()->id ()),
                       ex._info ().c_str ()
                       ));
@@ -315,9 +315,9 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
   catch (const CORBA::Exception&)
     {
       ACE_ERROR ( (LM_ERROR,
-                   ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %d::push "
-                             "(request) Caught unexpected exception "
-                             "pushing event to consumer.\n"),
+                   ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %d::push ")
+                   ACE_TEXT ("(request) Caught unexpected exception ")
+                   ACE_TEXT ("pushing event to consumer.\n"),
                    static_cast<int> (this->proxy ()->id ())
                    ));
       result = DISPATCH_DISCARD;
@@ -357,8 +357,8 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
     {
       if (DEBUG_LEVEL  > 0)
         ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer "
-                              "%d::dispatch_batch() %s\n"),
+                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
+                    ACE_TEXT ("%d::dispatch_batch() %s\n"),
                     static_cast<int> (this->proxy ()->id ()),
                     ex._info ().c_str ()
                     ));
@@ -368,8 +368,8 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
     {
       if (DEBUG_LEVEL  > 0)
         ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer "
-                              "%d::dispatch_batch() Transient (minor=%d) %s\n"),
+                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
+                    ACE_TEXT ("%d::dispatch_batch() Transient (minor=%d) %s\n"),
                     static_cast<int> (this->proxy ()->id ()),
                     ex.minor (),
                     ex._info ().c_str ()
@@ -408,8 +408,8 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
     {
       if (DEBUG_LEVEL  > 0)
         ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer "
-                              "%u::dispatch_batch() %s\n"),
+                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
+                    ACE_TEXT ("%u::dispatch_batch() %s\n"),
                     this->proxy ()->id (),
                     ex._info().c_str ()
                     ));
@@ -419,8 +419,8 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
     {
       if (DEBUG_LEVEL  > 0)
         ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer "
-                              "%u::dispatch_batch() %s\n"),
+                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
+                    ACE_TEXT ("%u::dispatch_batch() %s\n"),
                     this->proxy ()->id (),
                     ex._info().c_str ()
                     ));
@@ -431,8 +431,8 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
       if (DEBUG_LEVEL  > 0)
         {
           ACE_DEBUG ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) TAO_Notify_Consumer "
-                                "%d::dispatch_batch() SystemException %s\n"),
+                      ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
+                      ACE_TEXT ("%d::dispatch_batch() SystemException %s\n"),
                       static_cast<int>  (this->proxy ()->id ()),
                       ex._info ().c_str ()
                       ));
@@ -442,9 +442,9 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
   catch (const CORBA::Exception&)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) TAO_Notify_Consumer "
-                            "%d::dispatch_batch() Caught unexpected "
-                            "exception pushing batch to consumer.\n"),
+                  ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
+                  ACE_TEXT ("%d::dispatch_batch() Caught unexpected ")
+                  ACE_TEXT ("exception pushing batch to consumer.\n"),
                   static_cast<int> (this->proxy ()->id ())
                   ));
       result = DISPATCH_DISCARD;
@@ -518,8 +518,8 @@ TAO_Notify_Consumer::dispatch_from_queue (Request_Queue & requests, ACE_Guard <T
           {
             if (DEBUG_LEVEL  > 0)
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Consumer %d: Error during "
-                                    "dispatch. Discarding event:%d.\n"),
+                          ACE_TEXT ("(%P|%t) Consumer %d: Error during ")
+                          ACE_TEXT ("dispatch. Discarding event:%d.\n"),
                           static_cast<int> (this->proxy ()->id ()),
                           request->sequence ()
                           ));
@@ -532,8 +532,8 @@ TAO_Notify_Consumer::dispatch_from_queue (Request_Queue & requests, ACE_Guard <T
           {
             if (DEBUG_LEVEL  > 0)
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Consumer %d: Failed. "
-                                    "Discarding event %d.\n"),
+                          ACE_TEXT ("(%P|%t) Consumer %d: Failed. ")
+                          ACE_TEXT ("Discarding event %d.\n"),
                           static_cast<int> (this->proxy ()->id ()),
                           request->sequence ()
                           ));
@@ -611,8 +611,8 @@ TAO_Notify_Consumer::schedule_timer (bool is_error)
   if (this->timer_id_ == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO_Notify_Consumer %d::schedule_timer () "
-                            "Error scheduling timer.\n"),
+                  ACE_TEXT ("TAO_Notify_Consumer %d::schedule_timer () ")
+                  ACE_TEXT ("Error scheduling timer.\n"),
                   static_cast<int> (this->proxy ()->id ())
                   ));
     }

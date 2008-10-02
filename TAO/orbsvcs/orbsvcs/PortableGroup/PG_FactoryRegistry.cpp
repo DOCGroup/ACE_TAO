@@ -64,7 +64,7 @@ TAO::PG_FactoryRegistry::~PG_FactoryRegistry (void)
 //////////////////////////////////////////////////////
 // PG_FactoryRegistry public, non-CORBA methods
 
-int TAO::PG_FactoryRegistry::parse_args (int argc, char * argv[])
+int TAO::PG_FactoryRegistry::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:q"));
   int c;
@@ -669,7 +669,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
 //////////////////////////////
 // Implementation methods
 
-int TAO::PG_FactoryRegistry::write_ior_file(const char * outputFile, const char * ior)
+int TAO::PG_FactoryRegistry::write_ior_file(const ACE_TCHAR * outputFile, const char * ior)
 {
   int result = -1;
   FILE* out = ACE_OS::fopen (outputFile, "w");
