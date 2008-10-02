@@ -1,3 +1,10 @@
+Thu Oct  2 19:25:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Kokyu_dsrt_schedulers/fp_example/server.cpp
+        * examples/Kokyu_dsrt_schedulers/mif_example/server.cpp
+        * examples/Kokyu_dsrt_schedulers/muf_example/server.cpp
+          ACE_TCHAR fixes
+
 Thu Oct  2 19:23:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/client.cpp
