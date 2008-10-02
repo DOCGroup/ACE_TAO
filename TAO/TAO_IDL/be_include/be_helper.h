@@ -161,31 +161,18 @@ public:
   // =overloaded operators
 
   TAO_OutStream &operator<< (const char *str);
-  // output the char string and return a reference to ourselves
-
   TAO_OutStream &operator<< (const ACE_CDR::UShort num);
-  // output the integer and return a reference to ourselves
-
   TAO_OutStream &operator<< (const ACE_CDR::Short num);
-  // output the integer and return a reference to ourselves
-
   TAO_OutStream &operator<< (const ACE_CDR::ULong num);
-  // output the integer and return a reference to ourselves
-
   TAO_OutStream &operator<< (const ACE_CDR::Long num);
-  // output the integer and return a reference to ourselves
-#if defined (ACE_WIN64) || ! (! defined (ACE_HAS_UINT64_T) && ACE_SIZEOF_LONG == 8)
+
+// (JP) 2008-10-02 - let's try depending on the ACE_CDR basic
+// types to make the two operators below unambiguous and portable.
+//#if defined (ACE_WIN64) || ! (! defined (ACE_HAS_UINT64_T) && ACE_SIZEOF_LONG == 8)
   TAO_OutStream &operator<< (const ACE_CDR::ULongLong num);
-  // output the integer and return a reference to ourselves
 
   TAO_OutStream &operator<< (const ACE_CDR::LongLong num);
-  // output the integer and return a reference to ourselves
-#endif
-//  TAO_OutStream &operator<< (const unsigned long num);
-  // output the integer and return a reference to ourselves
-
-//  TAO_OutStream &operator<< (const long num);
-  // output the integer and return a reference to ourselves
+//#endif
 
   // = MANIPULATORS
 

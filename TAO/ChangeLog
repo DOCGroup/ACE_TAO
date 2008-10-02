@@ -1,3 +1,17 @@
+Thu Oct  2 14:01:39 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be_include/be_helper.h:
+        
+          More fixes for TAO_OutStream operator ambiguity errors,
+          these on OpenSUSE_10_3_GCC_4_2. Part of the fix involves
+          removing the #ifdef guards around the TAO_OutStream
+          insertion operators for longlong and ulonglong - we
+          should be depending on the definition of the ACE_CDR
+          basic types in CDR_Base.h to make all this unambiguous
+          and portable.
+
 Thu Oct  2 11:15:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.cpp
