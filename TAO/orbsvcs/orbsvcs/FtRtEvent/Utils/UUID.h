@@ -72,7 +72,7 @@ class TAO_FtRtEvent_Export  UUID
      * Construct an UUID from the string representation. Use is_valid() to test if the
      * construction is successful or not.
      */
-    UUID(const char *);
+    UUID(const ACE_TCHAR *);
 
     /* Construct an uuid from the string representation. */
     bool from_string(const char *string_rep);

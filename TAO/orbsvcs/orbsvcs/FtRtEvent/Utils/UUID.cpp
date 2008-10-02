@@ -49,7 +49,7 @@ static const char *seperators = "----";
 /**
  * construct an UUID from the string representation
  */
-UUID::UUID (const char  *string_rep)
+UUID::UUID (const ACE_TCHAR  *string_rep)
 {
   if (this->from_string(string_rep) == false)
     rep_.timestamp.hi = 0;

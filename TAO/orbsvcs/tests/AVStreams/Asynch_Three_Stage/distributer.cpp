@@ -28,8 +28,7 @@ Distributer_Sender_StreamEndPoint::set_protocol_object (const char *flowname,
                                                object);
 
   // Store the related streamctrl.
-  connection_manager.add_streamctrl (flowname,
-                                     this);
+  connection_manager.add_streamctrl (flowname, this);
 
   return 0;
 }
