@@ -75,10 +75,10 @@ private:
   int use_naming_service_;
 
   /// The name of the file where we output the IOR.
-  const char *ior_file_name_;
+  const ACE_TCHAR *ior_file_name_;
 
   /// The name of a file where the process stores its pid.
-  const char *pid_file_name_;
+  const ACE_TCHAR *pid_file_name_;
 
   /// The ORB manager
   TAO_ORB_Manager orb_manager_;

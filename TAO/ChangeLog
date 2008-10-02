@@ -1,3 +1,12 @@
+Thu Oct  2 19:10:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Concurrency_Service/Concurrency_Service.h
+        * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp
+        * orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.cpp
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp
+          ACE_TCHAR fixes
+
 Thu Oct  2 18:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2319_Regression/server.cpp
@@ -25,6 +34,7 @@ Thu Oct  2 18:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/RTCORBA/Private_Connection/server.cpp
         * tests/RTCORBA/Server_Declared/server.cpp
         * orbsvcs/TAO_Service/TAO_Service.cpp
+          ACE_TCHAR fixes
 
 Thu Oct  2 14:01:39 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 

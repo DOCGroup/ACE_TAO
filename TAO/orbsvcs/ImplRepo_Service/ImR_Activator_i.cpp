@@ -299,11 +299,11 @@ ImR_Activator_i::start_server(const char* name,
   // process's environment.
   proc_opts.enable_unicode_environment ();
 
-  proc_opts.setenv ("TAO_USE_IMR", "1");
+  proc_opts.setenv (ACE_TEXT("TAO_USE_IMR"), "1");
   if (!CORBA::is_nil (this->locator_.in ()))
     {
       CORBA::String_var ior = orb_->object_to_string (locator_.in ());
-      proc_opts.setenv ("ImplRepoServiceIOR", ior.in());
+      proc_opts.setenv (ACE_TEXT("ImplRepoServiceIOR"), ior.in());
     }
 
   for (CORBA::ULong i = 0; i < env.length (); ++i)
