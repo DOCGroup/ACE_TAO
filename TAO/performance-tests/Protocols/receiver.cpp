@@ -172,7 +172,7 @@ test_i::end_test (void)
 
   if (do_dump_history)
     {
-      this->inter_arrival_times_->dump_samples ("Inter-arrival times", gsf);
+      this->inter_arrival_times_->dump_samples (ACE_TEXT("Inter-arrival times"), gsf);
     }
 
   ACE_Basic_Stats stats;

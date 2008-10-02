@@ -1,3 +1,24 @@
+Thu Oct  2 19:20:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Callback/client.cpp
+        * performance-tests/Latency/AMH_Single_Threaded/client.cpp
+        * performance-tests/Latency/Deferred/client.cpp
+        * performance-tests/Latency/DII/client.cpp
+        * performance-tests/Latency/DSI/client.cpp
+        * performance-tests/Latency/Single_Threaded/client.cpp
+        * performance-tests/POA/Create_Reference/create_reference.cpp
+        * performance-tests/POA/Implicit_Activation/client.cpp
+        * performance-tests/POA/Implicit_Activation/collocated.cpp
+        * performance-tests/Protocols/receiver.cpp
+        * performance-tests/Protocols/sender.cpp
+        * performance-tests/RTCorba/Thread_Pool/client.cpp
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/client.cpp
+        * performance-tests/Sequence_Latency/Deferred/client.cpp
+        * performance-tests/Sequence_Latency/DII/client.cpp
+        * performance-tests/Sequence_Latency/DSI/client.cpp
+        * performance-tests/Sequence_Latency/Single_Threaded/client.cpp
+          ACE_TCHAR fixes
+
 Thu Oct  2 19:10:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Concurrency_Service/Concurrency_Service.h

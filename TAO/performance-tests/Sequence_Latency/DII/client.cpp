@@ -124,7 +124,7 @@ test_octet_seq (const CORBA::Object_var object)
 
   if (do_dump_history)
     {
-      history.dump_samples ("HISTORY", gsf);
+      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
 
   ACE_Basic_Stats stats;
@@ -172,7 +172,7 @@ test_long_seq (const CORBA::Object_var object)
 
   if (do_dump_history)
     {
-      history.dump_samples ("HISTORY", gsf);
+      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
 
   ACE_Basic_Stats stats;
@@ -220,7 +220,7 @@ test_short_seq (const CORBA::Object_var object)
 
   if (do_dump_history)
     {
-      history.dump_samples ("HISTORY", gsf);
+      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
 
   ACE_Basic_Stats stats;
@@ -268,7 +268,7 @@ test_char_seq (const CORBA::Object_var object)
 
   if (do_dump_history)
     {
-      history.dump_samples ("HISTORY", gsf);
+      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
 
   ACE_Basic_Stats stats;
@@ -316,7 +316,7 @@ test_double_seq (const CORBA::Object_var object)
 
   if (do_dump_history)
     {
-      history.dump_samples ("HISTORY", gsf);
+      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
 
   ACE_Basic_Stats stats;
@@ -364,7 +364,7 @@ test_longlong_seq (const CORBA::Object_var object)
 
   if (do_dump_history)
     {
-      history.dump_samples ("HISTORY", gsf);
+      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
 
   ACE_Basic_Stats stats;

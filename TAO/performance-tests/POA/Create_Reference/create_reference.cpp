@@ -117,7 +117,7 @@ object_creation_test (PortableServer::POA_ptr poa,
 
   if (do_dump_history)
     {
-      creation.dump_samples ("HISTORY", gsf);
+      creation.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
 
   ACE_Basic_Stats creation_stats;

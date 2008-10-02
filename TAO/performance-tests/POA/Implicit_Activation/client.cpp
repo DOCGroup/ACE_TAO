@@ -124,7 +124,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (do_dump_history)
         {
-          activation.dump_samples ("ACTIVATION_HISTORY", gsf);
+          activation.dump_samples (ACE_TEXT("ACTIVATION_HISTORY"), gsf);
         }
 
       ACE_Basic_Stats activation_stats;
@@ -147,7 +147,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (do_dump_history)
         {
-          destruction.dump_samples ("DESTRUCTION_HISTORY", gsf);
+          destruction.dump_samples (ACE_TEXT("DESTRUCTION_HISTORY"), gsf);
         }
 
       ACE_Basic_Stats destruction_stats;
