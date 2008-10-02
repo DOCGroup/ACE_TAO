@@ -170,9 +170,9 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   for (int curarg = 0; curarg != argc; ++curarg)
     {
       if ((ACE_OS::strcasecmp (argv[curarg],
-                               "-verbose") == 0)
+                               ACE_TEXT("-verbose")) == 0)
           || (ACE_OS::strcasecmp (argv[curarg],
-                                  "-v") == 0))
+                                  ACE_TEXT("-v")) == 0))
         {
           if (TAO_debug_level == 0)
             {
@@ -182,7 +182,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLNoProtection") == 0)
+                                   ACE_TEXT("-SSLNoProtection")) == 0)
         {
           // Enable the eNULL cipher.  Note that enabling the "eNULL"
           // cipher only disables encryption.  However, certificate
@@ -214,7 +214,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLCertificate") == 0)
+                                   ACE_TEXT("-SSLCertificate")) == 0)
         {
           curarg++;
           if (curarg < argc)
@@ -224,7 +224,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLPrivateKey") == 0)
+                                   ACE_TEXT("-SSLPrivateKey")) == 0)
         {
           curarg++;
           if (curarg < argc)
@@ -234,17 +234,17 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLAuthenticate") == 0)
+                                   ACE_TEXT("-SSLAuthenticate")) == 0)
         {
           curarg++;
           if (curarg < argc)
             {
               int mode = SSL_VERIFY_NONE;
-              if (ACE_OS::strcasecmp (argv[curarg], "NONE") == 0)
+              if (ACE_OS::strcasecmp (argv[curarg], ACE_TEXT("NONE")) == 0)
                 {
                   mode = SSL_VERIFY_NONE;
                 }
-              else if (ACE_OS::strcasecmp (argv[curarg], "SERVER") == 0)
+              else if (ACE_OS::strcasecmp (argv[curarg], ACE_TEXT("SERVER")) == 0)
                 {
                   mode = SSL_VERIFY_PEER;
 
@@ -252,9 +252,9 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
                                 CSIIOP::EstablishTrustInTarget
                                 | CSIIOP::EstablishTrustInClient);
                 }
-              else if (ACE_OS::strcasecmp (argv[curarg], "CLIENT") == 0
+              else if (ACE_OS::strcasecmp (argv[curarg], ACE_TEXT("CLIENT")) == 0
                        || ACE_OS::strcasecmp (argv[curarg],
-                                              "SERVER_AND_CLIENT") == 0)
+                                              ACE_TEXT("SERVER_AND_CLIENT")) == 0)
                 {
                   mode = SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT;
 
@@ -271,7 +271,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLAcceptTimeout") == 0)
+                                   ACE_TEXT("-SSLAcceptTimeout")) == 0)
         {
           curarg++;
           if (curarg < argc)
@@ -291,7 +291,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLDHparams") == 0)
+                                   ACE_TEXT("-SSLDHparams")) == 0)
         {
           curarg++;
           if (curarg < argc)
@@ -301,7 +301,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLCAfile") == 0)
+                                   ACE_TEXT("-SSLCAfile")) == 0)
         {
           curarg++;
           if (curarg < argc)
@@ -311,7 +311,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLCApath") == 0)
+                                   ACE_TEXT("-SSLCApath")) == 0)
         {
           curarg++;
           if (curarg < argc)
@@ -321,7 +321,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLrand") == 0)
+                                   ACE_TEXT("-SSLrand")) == 0)
         {
           curarg++;
           if (curarg < argc)

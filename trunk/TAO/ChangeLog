@@ -1,3 +1,17 @@
+Thu Oct  2 11:15:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.h
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp
+        * orbsvcs/TAO_Service/TAO_Service.cpp
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.cpp
+          ACE_TCHAR fixes
+
 Wed Oct  1 19:23:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RTCORBA/Activity/Builder.cpp

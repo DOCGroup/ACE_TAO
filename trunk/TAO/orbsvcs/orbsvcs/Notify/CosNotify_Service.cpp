@@ -243,7 +243,7 @@ TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb)
           ACE_DEBUG ((LM_DEBUG, "No dispatching orb supplied. Creating default one.\n"));
 
           int argc = 0;
-          char *argv0 = 0;
+          ACE_TCHAR *argv0 = 0;
           ACE_TCHAR **argv = &argv0;  // ansi requires argv be null terminated.
           CORBA::ORB_var dispatcher = CORBA::ORB_init (argc, argv,
                                                        "default_dispatcher");

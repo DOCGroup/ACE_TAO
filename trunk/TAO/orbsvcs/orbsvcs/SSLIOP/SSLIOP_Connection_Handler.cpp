@@ -171,17 +171,17 @@ TAO::SSLIOP::Connection_Handler::open (void *)
     {
       if (TAO_debug_level > 0)
         {
-          char remote_as_string[MAXHOSTNAMELEN + 16];
-          char local_as_string[MAXHOSTNAMELEN + 16];
+          ACE_TCHAR remote_as_string[MAXHOSTNAMELEN + 16];
+          ACE_TCHAR local_as_string[MAXHOSTNAMELEN + 16];
 
           (void) remote_addr.addr_to_string (remote_as_string,
                                              sizeof (remote_as_string));
           (void) local_addr.addr_to_string (local_as_string,
                                             sizeof (local_as_string));
           ACE_ERROR ((LM_ERROR,
-                      "TAO(%P|%t) - TAO::SSLIOP::Connection_Handler::open, "
-                      "Holy Cow! The remote addr and "
-                      "local addr are identical (%s == %s)\n",
+                      ACE_TEXT("TAO(%P|%t) - TAO::SSLIOP::Connection_Handler::open, ")
+                      ACE_TEXT("Holy Cow! The remote addr and ")
+                      ACE_TEXT("local addr are identical (%s == %s)\n"),
                       remote_as_string, local_as_string));
         }
 
