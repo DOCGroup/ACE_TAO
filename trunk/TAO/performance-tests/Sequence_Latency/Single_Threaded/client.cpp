@@ -109,7 +109,7 @@ test_octet_seq (Test::Roundtrip_ptr roundtrip)
 
   if (do_dump_history)
     {
-      history.dump_samples ("HISTORY", gsf);
+      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
 
   ACE_Basic_Stats stats;
@@ -151,7 +151,7 @@ test_long_seq (Test::Roundtrip_ptr roundtrip)
 
   if (do_dump_history)
     {
-      history.dump_samples ("HISTORY", gsf);
+      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
 
   ACE_Basic_Stats stats;
@@ -192,7 +192,7 @@ test_short_seq (Test::Roundtrip_ptr roundtrip)
 
   if (do_dump_history)
     {
-      history.dump_samples ("HISTORY", gsf);
+      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
 
   ACE_Basic_Stats stats;
@@ -234,7 +234,7 @@ test_char_seq (Test::Roundtrip_ptr roundtrip)
 
   if (do_dump_history)
     {
-      history.dump_samples ("HISTORY", gsf);
+      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
 
   ACE_Basic_Stats stats;
@@ -277,7 +277,7 @@ test_longlong_seq (Test::Roundtrip_ptr roundtrip)
 
   if (do_dump_history)
     {
-      history.dump_samples ("HISTORY", gsf);
+      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
 
   ACE_Basic_Stats stats;
@@ -320,7 +320,7 @@ test_double_seq (Test::Roundtrip_ptr roundtrip)
 
   if (do_dump_history)
     {
-      history.dump_samples ("HISTORY", gsf);
+      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
 
   ACE_Basic_Stats stats;
