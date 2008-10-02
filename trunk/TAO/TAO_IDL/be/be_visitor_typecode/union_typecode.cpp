@@ -25,13 +25,16 @@ int
 TAO::be_visitor_union_typecode::visit_union (be_union * node)
 {
   if (!node->is_defined ())
-    return this->gen_forward_declared_typecode (node);
+    {
+      return this->gen_forward_declared_typecode (node);
+    }
 
   // Check if we are repeated.
   be_visitor_typecode_defn::QNode const * const qnode =
     this->queue_lookup (this->tc_queue_, node);
 
   ACE_Unbounded_Queue<AST_Type *> recursion_queue;
+  
   if (qnode
       && node->in_recursion (recursion_queue))
     {
@@ -49,7 +52,9 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
     }
 
   if (this->recursion_detect_ || this->is_nested_)
-    return 0;
+    {
+      return 0;
+    }
 
   this->is_nested_ = true;
 
@@ -65,14 +70,18 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
   ACE_ASSERT (discriminant_type != 0);
 
   if (this->gen_case_typecodes (node) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO::be_visitor_union_typecode::visit_union - "
-                       "Unable to generate union field "
-                       "TypeCodes.\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO::be_visitor_union_typecode::visit_union - "
+                         "Unable to generate union field "
+                         "TypeCodes.\n"),
+                        -1);
+    }
 
   if (this->visit_cases (node) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   static char const StringType[]      = "char const *";
   static char const TypeCodeType[]    = "::CORBA::TypeCode_ptr const *";
@@ -89,11 +98,10 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
     }
 
   // -- TypeCodeBase --
-  os
-    << "TAO::TypeCode::Union<" << StringType << "," << be_nl
-    << "                            " << TypeCodeType << "," << be_nl
-    << "                            " << MemberArrayType << "," << be_nl
-    << "                            TAO::Null_RefCount_Policy>";
+  os << "TAO::TypeCode::Union<" << StringType << "," << be_nl
+     << "                            " << TypeCodeType << "," << be_nl
+     << "                            " << MemberArrayType << "," << be_nl
+     << "                            TAO::Null_RefCount_Policy>";
 
   if (this->is_recursive_)
     {
@@ -102,19 +110,20 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
          << MemberArrayType << " >" << be_uidt_nl;
     }
 
-  os
-    << be_idt_nl
-    << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
-    << "\"" << node->repoID () << "\"," << be_nl
-    << "\"" << node->original_local_name () << "\"," << be_nl
-    << "&" << discriminant_type->tc_name () << "," << be_nl
-    << "_tao_cases_" << node->flat_name () << "," << be_nl
-    << node->nfields () << ", "
-    << node->default_index () << ");" << be_uidt_nl
-    << be_uidt_nl;
+  os << be_idt_nl
+     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
+     << "\"" << node->repoID () << "\"," << be_nl
+     << "\"" << node->original_local_name () << "\"," << be_nl
+     << "&" << discriminant_type->tc_name () << "," << be_nl
+     << "_tao_cases_" << node->flat_name () << "," << be_nl
+     << node->nfields () << ", "
+     << node->default_index () << ");" << be_uidt_nl
+     << be_uidt_nl;
 
   if (this->gen_typecode_ptr (be_type::narrow_from_decl (node)) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -164,6 +173,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
   static ACE_CString tao_cases ("_tao_cases_");
   ACE_CString const fields_name (tao_cases
                                  + node->flat_name ());
+  const char *fields_name_str = fields_name.c_str ();
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -187,7 +197,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
       os << "static TAO::TypeCode::Case_T<"
          << discriminant_type->full_name () << ", "
          << "char const *, ::CORBA::TypeCode_ptr const *> const "
-         << fields_name.c_str () << "__" << i <<" (";
+         << fields_name_str << "__" << i <<" (";
 
       if (branch->label ()->label_kind () == AST_UnionLabel::UL_label)
         {
@@ -215,8 +225,9 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
 
   // Now generate the TAO::TypeCode::Case array.
   os << be_nl
-     << "static TAO::TypeCode::Case<char const *, ::CORBA::TypeCode_ptr const *> const * const "
-     << fields_name.c_str ()
+     << "static TAO::TypeCode::Case<char const *, "
+     << "::CORBA::TypeCode_ptr const *> const * const "
+     << fields_name_str
      << "[] =" << be_idt_nl
      << "{" << be_idt_nl;
 
@@ -225,7 +236,9 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
       os << "&" << fields_name.c_str () << "__" << n;
 
       if (n < count - 1)
-        os << ",";
+        {
+          os << ",";
+        }
 
       os << be_nl;
     }
