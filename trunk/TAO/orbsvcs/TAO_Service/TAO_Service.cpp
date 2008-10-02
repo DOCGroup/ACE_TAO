@@ -42,7 +42,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       // ORB initialization boiler plate...
-      CORBA::ORB_var orb = CORBA::ORB_init (arg, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGHUP);
 
