@@ -124,7 +124,7 @@ Latency_Query_Client::run (void)
 
           if (this->do_dump_history_)
             {
-              history.dump_samples ("HISTORY", gsf);
+              history.dump_samples (ACE_TEXT("HISTORY"), gsf);
             }
 
           ACE_Basic_Stats stats;

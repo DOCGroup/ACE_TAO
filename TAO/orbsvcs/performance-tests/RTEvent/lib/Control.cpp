@@ -156,7 +156,7 @@ Control::join (Federated_Test::Peer_ptr peer)
 
       if (this->do_dump_history_)
         {
-          history.dump_samples ("HISTORY", fake_scale_factor);
+          history.dump_samples (ACE_TEXT("HISTORY"), fake_scale_factor);
         }
     }
 }
