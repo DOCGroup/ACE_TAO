@@ -1,3 +1,17 @@
+Thu Oct  2 19:23:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/client.cpp
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/driver.cpp
+        * orbsvcs/performance-tests/RTEvent/lib/Control.cpp
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/client.cpp
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.cpp
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/client.cpp
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/client.cpp
+        * orbsvcs/tests/Event/Performance/Latency.cpp
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.cpp
+          ACE_TCHAR fixes
+
 Thu Oct  2 19:20:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Callback/client.cpp
