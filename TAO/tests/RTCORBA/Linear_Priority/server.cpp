@@ -111,7 +111,7 @@ parse_args (int argc, ACE_TCHAR **argv)
 static void
 write_iors_to_file (CORBA::Object_ptr object,
                     CORBA::ORB_ptr orb,
-                    const char *filename)
+                    const ACE_TCHAR *filename)
 {
   FILE *file =
     ACE_OS::fopen (filename, "w");

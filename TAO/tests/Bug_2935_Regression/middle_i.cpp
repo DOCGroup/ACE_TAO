@@ -19,7 +19,7 @@ Middle_i::~Middle_i ()
 
 
 bool
-Middle_i::parse_args(int /*argc*/ , char* /*argv*/[] )
+Middle_i::parse_args(int /*argc*/ , ACE_TCHAR* /*argv*/[] )
 {
   return true;
 }

@@ -31,8 +31,8 @@ ACE_RCSID (Loader,
 
 ServantLocator::ServantLocator (CORBA::ORB_ptr orb,
                                 const ACE_TCHAR *dllname,
-                                const char *factory_function,
-                                const char *garbage_collection_function)
+                                const ACE_TCHAR *factory_function,
+                                const ACE_TCHAR *garbage_collection_function)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
   // The dll is opened using the dllname passed.

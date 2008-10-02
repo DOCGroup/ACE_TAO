@@ -22,7 +22,7 @@ bool parse_args (int & argc, ACE_TCHAR *argv[])
   int argp = 1;
   while (argp < argc)
     {
-      const char * arg = argv[argp];
+      const ACE_TCHAR* arg = argv[argp];
       if(arg[0] == '-' && arg[1] == 'f' && argp + 1 < argc)
         {
           if (ior_input_file != 0)
