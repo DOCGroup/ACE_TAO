@@ -1,3 +1,11 @@
+Fri Oct  3 19:05:39 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * ace/Reactor_Token_T.cpp:
+
+          Made reactor notify with zero timeout and ignore timeout case in
+          sleep_hook(). This would fix bugzilla 2465 reactor deadlock 
+          problem.
+          
 Thu Oct  2 16:41:57 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Basic_Types.h: Adjust the byte order decision for Itanium
