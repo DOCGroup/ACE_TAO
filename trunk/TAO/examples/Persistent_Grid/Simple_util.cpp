@@ -45,7 +45,7 @@ Server<Servant>::parse_args (void)
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
-                             ACE_TEXT_CHAR_TO_TCHAR (get_opts.opt_arg ())), -1);
+                             get_opts.opt_arg ()), -1);
         break;
 
       case 'm':

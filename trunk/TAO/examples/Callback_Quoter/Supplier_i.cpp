@@ -54,7 +54,7 @@ Supplier::~Supplier (void)
 // Reads the Server factory IOR from a file.
 
 int
-Supplier::read_ior (char *filename)
+Supplier::read_ior (ACE_TCHAR *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
@@ -62,7 +62,7 @@ Supplier::read_ior (char *filename)
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open %s for reading\n",
-                        ACE_TEXT_CHAR_TO_TCHAR (filename)),
+                        filename),
                         -1);
 
   ACE_Read_Buffer ior_buffer (f_handle);

@@ -40,7 +40,7 @@ public:
   virtual ~Bank_Client_i (void);
   // Destructor
 
-  virtual int run (const char *, int, char *[]);
+  virtual int run (const char *, int, ACE_TCHAR *[]);
   // Execute the methods.
 
 private:

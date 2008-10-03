@@ -66,7 +66,7 @@ Identity_Server::parse_args (int argc, ACE_TCHAR *argv[])
 
 int
 Identity_Server::init (int argc,
-                       char* argv[])
+                       ACE_TCHAR* argv[])
 {
   int result;
 

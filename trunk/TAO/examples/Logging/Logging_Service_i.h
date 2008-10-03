@@ -93,7 +93,7 @@ private:
   ACE_TCHAR **argv_;
   // commandline arguments.
 
-  char* service_name_;
+  const ACE_TCHAR* service_name_;
   // The id to give the Logger_Factory instance (defaults to
   // "LoggingService")
 };
