@@ -1,3 +1,24 @@
+Fri Oct  3 11:08:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Callback_Quoter/Consumer_Handler.cpp
+        * examples/Callback_Quoter/Consumer_Handler.h
+        * examples/Callback_Quoter/Supplier_i.cpp
+        * examples/Callback_Quoter/Supplier_i.h
+        * examples/Load_Balancing/Identity_Client.h
+        * examples/Load_Balancing/Identity_Server.cpp
+        * examples/Load_Balancing/Load_Balancing_Service.cpp
+        * examples/Logging/Logger_i.cpp
+        * examples/Logging/Logging_Service_i.cpp
+        * examples/Logging/Logging_Service_i.h
+        * examples/OBV/Typed_Events/Client_i.h
+        * examples/Persistent_Grid/Grid_Client_i.h
+        * examples/Persistent_Grid/Persistent_Client.h
+        * examples/Persistent_Grid/Simple_util.cpp
+        * examples/Quoter/client.cpp
+        * examples/Simple/bank/Bank_Client_i.h
+        * examples/Simple/grid/Grid_Client_i.h
+          ACE_TCHAR fixes
+
 Thu Oct  2 19:25:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Kokyu_dsrt_schedulers/fp_example/server.cpp

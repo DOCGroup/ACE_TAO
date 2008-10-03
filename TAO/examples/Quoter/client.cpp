@@ -358,7 +358,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int threads = 1;
 
   for (i = 0; i < argc; i++)
-    if (ACE_OS::strcmp (argv[i], "-n") == 0)
+    if (ACE_OS::strcmp (argv[i], ACE_TEXT("-n")) == 0)
       threads = ACE_OS::atoi(argv[i + 1]);
 
   Quoter_Task **clients = new Quoter_Task*[threads];

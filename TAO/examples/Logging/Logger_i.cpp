@@ -142,7 +142,7 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
   ACE_TCHAR msgbuf [ACE_MAXLOGMSGLEN + 4];
 
   // Format the message for proper display.
-  ACE_OS::strcpy (msgbuf, "::");
+  ACE_OS::strcpy (msgbuf, ACE_TEXT("::"));
 
   // Copy the message data into the temporary buffer
   ACE_OS::strncat (msgbuf,
