@@ -61,7 +61,7 @@ Load_Balancing_Service::parse_args (int argc, ACE_TCHAR *argv[])
 
 int
 Load_Balancing_Service::init (int argc,
-                    char* argv[])
+                    ACE_TCHAR* argv[])
 {
   int result;
   CORBA::String_var ior;
