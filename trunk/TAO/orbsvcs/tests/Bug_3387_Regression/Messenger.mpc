@@ -1,5 +1,5 @@
 // -*- MPC -*-
-// $Id:$
+// $Id$
 
 project(*Server): taoexe, portableserver, namingexe, notification_skel {
   Source_Files {
@@ -10,6 +10,12 @@ project(*Server): taoexe, portableserver, namingexe, notification_skel {
 }
 
 project(*Client): taoexe, namingexe, notification {
+
+  after += *Server
+
+  IDL_Files {
+  }
+
   Source_Files {
     MessengerC.cpp
     MessengerClient.cpp
@@ -17,8 +23,11 @@ project(*Client): taoexe, namingexe, notification {
 }
 
 project(*Consumer): taoexe, portableserver, namingexe, notification_skel {
+
+  after += *Server
   IDL_Files {
   }
+
   Source_Files {
     MessengerConsumer.cpp
     StructuredEventConsumer_i.cpp
