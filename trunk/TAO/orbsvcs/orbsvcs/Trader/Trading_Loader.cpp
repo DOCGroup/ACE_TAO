@@ -87,7 +87,7 @@ TAO_Trading_Loader::init (int argc, ACE_TCHAR *argv[])
 
       // Initialize the ORB Manager
       this->orb_manager_.init (command_line.get_argc(),
-                               command_line.get_ASCII_argv());
+                               command_line.get_TCHAR_argv());
 
       CORBA::ORB_var orb =
         this->orb_manager_.orb ();
