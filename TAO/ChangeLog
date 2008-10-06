@@ -1,3 +1,9 @@
+Mon Oct  6 18:43:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Collocated_Test.cpp
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/client_main.cpp
+          ACE_TCHAR fixes
+
 Mon Oct  6 18:31:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * Restored some checkin entries below that were inadvertently
@@ -49,215 +55,215 @@ Mon Oct  6 16:10:42 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Oct  6 15:11:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           * tests/DIOP/UDP_Client_i.cpp:
-          * tests/DLL_ORB/Test_Client_Module.cpp   
-          * tests/DLL_ORB/Test_Server_Module.cpp   
-          * tests/DLL_ORB/Test_Server_Module.h   
-          * tests/DiffServ/server.cpp   
-          * tests/Exposed_Policies/Policy_Tester.cpp   
-          * tests/Exposed_Policies/Policy_Verifier.cpp   
-          * tests/Exposed_Policies/Policy_Verifier.h   
-          * tests/Exposed_Policies/RT_Properties.cpp   
-          * tests/Exposed_Policies/RT_Properties.h   
-          * tests/File_IO/client.cpp   
-          * tests/InterOp-Naming/INS_test_client.cpp   
-          * tests/InterOp-Naming/Server_i.cpp   
-          * tests/Multiple_Inheritance/client.cpp   
-            ACE_TCHAR fixes   
-     
-  Mon Oct  6 14:38:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>   
-     
-          * tests/CollocationLockup/SimpleNamingService.cpp   
-          * tests/Connection_Purging/client.cpp   
-            ACE_TCHAR fixes   
-     
-          * tests/CollocationLockup/SimpleNamingService.cpp   
-            Make it possible to specify the IOR file on the commandline   
-     
-          * tests/NestedUpcall/Triangle_Test/initiator.cpp:   
-            Fixed invalid free   
-     
-          * tests/NestedUpcall/MT_Client_Test/server.cpp:   
-            Changed scope of variable   
-     
-          * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:   
-            Removed borland template type   
-     
-  Mon Oct  6 14:30:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>   
-     
-          * tests/Big_Reply/client.cpp   
-          * tests/Big_Reply/run_test.pl   
-            Only do a shutdown of the server when -x is specified   
-     
-          * tests/CodeSets/simple/client.cpp   
-            ACE_TCHAR fixes   
-     
-  Mon Oct  6 14:14:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>   
-     
-          * TAO_IDL/driver/drv_preproc.cpp   
-            ACE_TCHAR fixes   
-     
-  Mon Oct  6 14:04:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>   
-     
-          * tests/CSD_Strategy_Tests/Broken/ClientApp.cpp   
-          * tests/CSD_Strategy_Tests/Broken/ClientApp.h   
-          * tests/CSD_Strategy_Tests/Broken/ServerApp.cpp   
-          * tests/CSD_Strategy_Tests/TP_Common/AppHelper.cpp   
-          * tests/CSD_Strategy_Tests/TP_Common/AppHelper.h   
-          * tests/CSD_Strategy_Tests/TP_Common/ServantList_T.cpp   
-          * tests/CSD_Strategy_Tests/TP_Common/ServantList_T.h   
-          * tests/CSD_Strategy_Tests/TP_Test_1/ClientApp.h   
-          * tests/CSD_Strategy_Tests/TP_Test_1/ServerApp.h   
-          * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.cpp   
-          * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.h   
-          * tests/CSD_Strategy_Tests/TP_Test_2/ServerApp.cpp   
-          * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.cpp   
-          * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.h   
-          * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.cpp   
-          * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.cpp   
-          * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.h   
-          * tests/CSD_Strategy_Tests/TP_Test_4/ServerApp.cpp   
-          * tests/CSD_Strategy_Tests/TP_Test_Static/ClientApp.cpp   
-          * tests/CSD_Strategy_Tests/TP_Test_Static/ClientApp.h   
-          * tests/CSD_Strategy_Tests/TP_Test_Static/ServerApp.h   
-          * tests/Bug_2289_Regression/server.cpp   
-          * tests/Bug_2503_Regression/client.cpp   
-          * tests/Bug_2683_Regression/client.cpp   
-          * tests/Bug_2683_Regression/client.cpp   
-          * tests/Bug_2936_Regression/PersistentPOA.cpp   
-          * tests/CDR/alignment.cpp   
-          * tests/Client_Leaks/Process_Factory.cpp   
-            ACE_TCHAR fixes   
-     
-          * tests/Client_Leaks/run_test.pl   
-            No need to specify ORB id   
-     
-  Mon Oct  6 08:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>   
-     
-          * tests/POA/Loader/Servant_Activator.cpp   
-          * tests/POA/Loader/Servant_Activator.h   
-          * tests/POA/Loader/Server_Manager.cpp   
-          * tests/POA/On_Demand_Loading/Servant_Activator.cpp   
-          * tests/POA/On_Demand_Loading/Servant_Locator.cpp   
-          * tests/POA/On_Demand_Loading/Servant_Manager.cpp   
-          * tests/POA/On_Demand_Loading/Servant_Manager.h   
-          * tests/POA/On_Demand_Loading/Server_Manager.cpp   
-            ACE_TCHAR fixes   
-     
-  Mon Oct  6 07:45:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>   
-     
-          * tests/Bug_2319_Regression/server.cpp:   
-            ACE_TCHAR fixes   
-     
-          * tests/IORManipulation/IORTest.cpp:   
-            Zap old workaround and return a correct return value   
-     
-  Fri Oct  3 19:25:29 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>   
-     
-          * orbsvcs/tests/Bug_3387_Regression/Messenger.mpc:   
-     
-            Fix to avoid build problems on some platforms such as OpenMVS   
-            IA64.   
-     
-  Fri Oct  3 11:08:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>   
-     
-          * examples/Callback_Quoter/Consumer_Handler.cpp   
-          * examples/Callback_Quoter/Consumer_Handler.h   
-          * examples/Callback_Quoter/Supplier_i.cpp   
-          * examples/Callback_Quoter/Supplier_i.h   
-          * examples/Load_Balancing/Identity_Client.h   
-          * examples/Load_Balancing/Identity_Server.cpp   
-          * examples/Load_Balancing/Load_Balancing_Service.cpp   
-          * examples/Logging/Logger_i.cpp   
-          * examples/Logging/Logging_Service_i.cpp   
-          * examples/Logging/Logging_Service_i.h   
-          * examples/OBV/Typed_Events/Client_i.h   
-          * examples/Persistent_Grid/Grid_Client_i.h   
-          * examples/Persistent_Grid/Persistent_Client.h   
-          * examples/Persistent_Grid/Simple_util.cpp   
-          * examples/Quoter/client.cpp   
-          * examples/Simple/bank/Bank_Client_i.h   
-          * examples/Simple/grid/Grid_Client_i.h   
-            ACE_TCHAR fixes   
-     
-  Thu Oct  2 19:25:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>   
-     
-          * examples/Kokyu_dsrt_schedulers/fp_example/server.cpp   
-          * examples/Kokyu_dsrt_schedulers/mif_example/server.cpp   
-          * examples/Kokyu_dsrt_schedulers/muf_example/server.cpp   
-            ACE_TCHAR fixes   
-     
-  Thu Oct  2 19:23:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>   
-     
-          * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/client.cpp   
-          * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp   
-          * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/driver.cpp   
-          * orbsvcs/performance-tests/RTEvent/lib/Control.cpp   
-          * orbsvcs/performance-tests/RTEvent/Roundtrip/client.cpp   
-          * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.cpp   
-          * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/client.cpp   
-          * orbsvcs/performance-tests/RTEvent/TCP_Baseline/client.cpp   
-          * orbsvcs/tests/Event/Performance/Latency.cpp   
-          * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.cpp   
-            ACE_TCHAR fixes   
-     
-  Thu Oct  2 19:20:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>   
-     
-          * performance-tests/Callback/client.cpp   
-          * performance-tests/Latency/AMH_Single_Threaded/client.cpp   
-          * performance-tests/Latency/Deferred/client.cpp   
-          * performance-tests/Latency/DII/client.cpp   
-          * performance-tests/Latency/DSI/client.cpp   
-          * performance-tests/Latency/Single_Threaded/client.cpp   
-          * performance-tests/POA/Create_Reference/create_reference.cpp   
-          * performance-tests/POA/Implicit_Activation/client.cpp   
-          * performance-tests/POA/Implicit_Activation/collocated.cpp   
-          * performance-tests/Protocols/receiver.cpp   
-          * performance-tests/Protocols/sender.cpp   
-          * performance-tests/RTCorba/Thread_Pool/client.cpp   
-          * performance-tests/Sequence_Latency/AMH_Single_Threaded/client.cpp   
-          * performance-tests/Sequence_Latency/Deferred/client.cpp   
-          * performance-tests/Sequence_Latency/DII/client.cpp   
-          * performance-tests/Sequence_Latency/DSI/client.cpp   
-          * performance-tests/Sequence_Latency/Single_Threaded/client.cpp   
-            ACE_TCHAR fixes   
-     
-  Thu Oct  2 19:10:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>   
-     
-          * orbsvcs/Concurrency_Service/Concurrency_Service.h   
-          * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp   
-          * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp   
-          * orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.cpp   
-          * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp   
-            ACE_TCHAR fixes   
-     
-  Thu Oct  2 18:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>   
+          * tests/DLL_ORB/Test_Client_Module.cpp
+          * tests/DLL_ORB/Test_Server_Module.cpp
+          * tests/DLL_ORB/Test_Server_Module.h
+          * tests/DiffServ/server.cpp
+          * tests/Exposed_Policies/Policy_Tester.cpp
+          * tests/Exposed_Policies/Policy_Verifier.cpp
+          * tests/Exposed_Policies/Policy_Verifier.h
+          * tests/Exposed_Policies/RT_Properties.cpp
+          * tests/Exposed_Policies/RT_Properties.h
+          * tests/File_IO/client.cpp
+          * tests/InterOp-Naming/INS_test_client.cpp
+          * tests/InterOp-Naming/Server_i.cpp
+          * tests/Multiple_Inheritance/client.cpp
+            ACE_TCHAR fixes
+
+  Mon Oct  6 14:38:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * tests/CollocationLockup/SimpleNamingService.cpp
+          * tests/Connection_Purging/client.cpp
+            ACE_TCHAR fixes
+
+          * tests/CollocationLockup/SimpleNamingService.cpp
+            Make it possible to specify the IOR file on the commandline
+
+          * tests/NestedUpcall/Triangle_Test/initiator.cpp:
+            Fixed invalid free
+
+          * tests/NestedUpcall/MT_Client_Test/server.cpp:
+            Changed scope of variable
+
+          * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
+            Removed borland template type
+
+  Mon Oct  6 14:30:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * tests/Big_Reply/client.cpp
+          * tests/Big_Reply/run_test.pl
+            Only do a shutdown of the server when -x is specified
+
+          * tests/CodeSets/simple/client.cpp
+            ACE_TCHAR fixes
+
+  Mon Oct  6 14:14:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * TAO_IDL/driver/drv_preproc.cpp
+            ACE_TCHAR fixes
+
+  Mon Oct  6 14:04:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * tests/CSD_Strategy_Tests/Broken/ClientApp.cpp
+          * tests/CSD_Strategy_Tests/Broken/ClientApp.h
+          * tests/CSD_Strategy_Tests/Broken/ServerApp.cpp
+          * tests/CSD_Strategy_Tests/TP_Common/AppHelper.cpp
+          * tests/CSD_Strategy_Tests/TP_Common/AppHelper.h
+          * tests/CSD_Strategy_Tests/TP_Common/ServantList_T.cpp
+          * tests/CSD_Strategy_Tests/TP_Common/ServantList_T.h
+          * tests/CSD_Strategy_Tests/TP_Test_1/ClientApp.h
+          * tests/CSD_Strategy_Tests/TP_Test_1/ServerApp.h
+          * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.cpp
+          * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.h
+          * tests/CSD_Strategy_Tests/TP_Test_2/ServerApp.cpp
+          * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.cpp
+          * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.h
+          * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.cpp
+          * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.cpp
+          * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.h
+          * tests/CSD_Strategy_Tests/TP_Test_4/ServerApp.cpp
+          * tests/CSD_Strategy_Tests/TP_Test_Static/ClientApp.cpp
+          * tests/CSD_Strategy_Tests/TP_Test_Static/ClientApp.h
+          * tests/CSD_Strategy_Tests/TP_Test_Static/ServerApp.h
+          * tests/Bug_2289_Regression/server.cpp
+          * tests/Bug_2503_Regression/client.cpp
+          * tests/Bug_2683_Regression/client.cpp
+          * tests/Bug_2683_Regression/client.cpp
+          * tests/Bug_2936_Regression/PersistentPOA.cpp
+          * tests/CDR/alignment.cpp
+          * tests/Client_Leaks/Process_Factory.cpp
+            ACE_TCHAR fixes
+
+          * tests/Client_Leaks/run_test.pl
+            No need to specify ORB id
+
+  Mon Oct  6 08:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * tests/POA/Loader/Servant_Activator.cpp
+          * tests/POA/Loader/Servant_Activator.h
+          * tests/POA/Loader/Server_Manager.cpp
+          * tests/POA/On_Demand_Loading/Servant_Activator.cpp
+          * tests/POA/On_Demand_Loading/Servant_Locator.cpp
+          * tests/POA/On_Demand_Loading/Servant_Manager.cpp
+          * tests/POA/On_Demand_Loading/Servant_Manager.h
+          * tests/POA/On_Demand_Loading/Server_Manager.cpp
+            ACE_TCHAR fixes
+
+  Mon Oct  6 07:45:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * tests/Bug_2319_Regression/server.cpp:
+            ACE_TCHAR fixes
+
+          * tests/IORManipulation/IORTest.cpp:
+            Zap old workaround and return a correct return value
+
+  Fri Oct  3 19:25:29 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+          * orbsvcs/tests/Bug_3387_Regression/Messenger.mpc:
+
+            Fix to avoid build problems on some platforms such as OpenMVS
+            IA64.
+
+  Fri Oct  3 11:08:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * examples/Callback_Quoter/Consumer_Handler.cpp
+          * examples/Callback_Quoter/Consumer_Handler.h
+          * examples/Callback_Quoter/Supplier_i.cpp
+          * examples/Callback_Quoter/Supplier_i.h
+          * examples/Load_Balancing/Identity_Client.h
+          * examples/Load_Balancing/Identity_Server.cpp
+          * examples/Load_Balancing/Load_Balancing_Service.cpp
+          * examples/Logging/Logger_i.cpp
+          * examples/Logging/Logging_Service_i.cpp
+          * examples/Logging/Logging_Service_i.h
+          * examples/OBV/Typed_Events/Client_i.h
+          * examples/Persistent_Grid/Grid_Client_i.h
+          * examples/Persistent_Grid/Persistent_Client.h
+          * examples/Persistent_Grid/Simple_util.cpp
+          * examples/Quoter/client.cpp
+          * examples/Simple/bank/Bank_Client_i.h
+          * examples/Simple/grid/Grid_Client_i.h
+            ACE_TCHAR fixes
+
+  Thu Oct  2 19:25:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * examples/Kokyu_dsrt_schedulers/fp_example/server.cpp
+          * examples/Kokyu_dsrt_schedulers/mif_example/server.cpp
+          * examples/Kokyu_dsrt_schedulers/muf_example/server.cpp
+            ACE_TCHAR fixes
+
+  Thu Oct  2 19:23:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/client.cpp
+          * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp
+          * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/driver.cpp
+          * orbsvcs/performance-tests/RTEvent/lib/Control.cpp
+          * orbsvcs/performance-tests/RTEvent/Roundtrip/client.cpp
+          * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.cpp
+          * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/client.cpp
+          * orbsvcs/performance-tests/RTEvent/TCP_Baseline/client.cpp
+          * orbsvcs/tests/Event/Performance/Latency.cpp
+          * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.cpp
+            ACE_TCHAR fixes
+
+  Thu Oct  2 19:20:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * performance-tests/Callback/client.cpp
+          * performance-tests/Latency/AMH_Single_Threaded/client.cpp
+          * performance-tests/Latency/Deferred/client.cpp
+          * performance-tests/Latency/DII/client.cpp
+          * performance-tests/Latency/DSI/client.cpp
+          * performance-tests/Latency/Single_Threaded/client.cpp
+          * performance-tests/POA/Create_Reference/create_reference.cpp
+          * performance-tests/POA/Implicit_Activation/client.cpp
+          * performance-tests/POA/Implicit_Activation/collocated.cpp
+          * performance-tests/Protocols/receiver.cpp
+          * performance-tests/Protocols/sender.cpp
+          * performance-tests/RTCorba/Thread_Pool/client.cpp
+          * performance-tests/Sequence_Latency/AMH_Single_Threaded/client.cpp
+          * performance-tests/Sequence_Latency/Deferred/client.cpp
+          * performance-tests/Sequence_Latency/DII/client.cpp
+          * performance-tests/Sequence_Latency/DSI/client.cpp
+          * performance-tests/Sequence_Latency/Single_Threaded/client.cpp
+            ACE_TCHAR fixes
+
+  Thu Oct  2 19:10:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * orbsvcs/Concurrency_Service/Concurrency_Service.h
+          * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp
+          * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp
+          * orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.cpp
+          * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp
+            ACE_TCHAR fixes
+
+  Thu Oct  2 18:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           * tests/Bug_2319_Regression/server.cpp
           * tests/Bug_2935_Regression/middle_i.cpp
           * tests/Bug_2935_Regression/middle_i.h
           * tests/Bug_2935_Regression/sink.cpp
           * tests/Bug_2935_Regression/source.cpp
           * tests/Client_Leaks/Process_Factory.cpp
-          * tests/Collocation_Oneway_Tests/Collocated_Test.cpp   
-          * tests/Connection_Timeout/client.cpp   
-          * tests/Exposed_Policies/Policy_Tester.cpp   
-          * tests/Exposed_Policies/Policy_Verifier.cpp   
-          * tests/Multiple_Inheritance/client.cpp   
-          * tests/OBV/Simple/Simple_util.cpp   
-          * tests/OBV/Simple/Simple_util.h   
-          * tests/POA/EndpointPolicy/server.cpp   
-          * tests/POA/Loader/Servant_Locator.cpp   
-          * tests/POA/Loader/Servant_Locator.h   
-          * tests/POA/Loader/Server_Manager.cpp   
-          * tests/POA/On_Demand_Loading/Server_Manager.cpp   
-          * tests/Portable_Interceptors/PICurrent/server.cpp   
-          * tests/RTCORBA/Diffserv/server.cpp   
-          * tests/RTCORBA/Explicit_Binding/server.cpp   
-          * tests/RTCORBA/Linear_Priority/server.cpp   
-          * tests/RTCORBA/Private_Connection/server.cpp   
-          * tests/RTCORBA/Server_Declared/server.cpp   
-          * orbsvcs/TAO_Service/TAO_Service.cpp   
-            ACE_TCHAR fixes 
-            
+          * tests/Collocation_Oneway_Tests/Collocated_Test.cpp
+          * tests/Connection_Timeout/client.cpp
+          * tests/Exposed_Policies/Policy_Tester.cpp
+          * tests/Exposed_Policies/Policy_Verifier.cpp
+          * tests/Multiple_Inheritance/client.cpp
+          * tests/OBV/Simple/Simple_util.cpp
+          * tests/OBV/Simple/Simple_util.h
+          * tests/POA/EndpointPolicy/server.cpp
+          * tests/POA/Loader/Servant_Locator.cpp
+          * tests/POA/Loader/Servant_Locator.h
+          * tests/POA/Loader/Server_Manager.cpp
+          * tests/POA/On_Demand_Loading/Server_Manager.cpp
+          * tests/Portable_Interceptors/PICurrent/server.cpp
+          * tests/RTCORBA/Diffserv/server.cpp
+          * tests/RTCORBA/Explicit_Binding/server.cpp
+          * tests/RTCORBA/Linear_Priority/server.cpp
+          * tests/RTCORBA/Private_Connection/server.cpp
+          * tests/RTCORBA/Server_Declared/server.cpp
+          * orbsvcs/TAO_Service/TAO_Service.cpp
+            ACE_TCHAR fixes
+
 Thu Oct  2 14:01:39 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
