@@ -1,3 +1,12 @@
+Mon Oct  6 14:30:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_Reply/client.cpp
+        * tests/Big_Reply/run_test.pl
+          Only do a shutdown of the server when -x is specified
+
+        * tests/CodeSets/simple/client.cpp
+          ACE_TCHAR fixes
+
 Mon Oct  6 14:14:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/driver/drv_preproc.cpp

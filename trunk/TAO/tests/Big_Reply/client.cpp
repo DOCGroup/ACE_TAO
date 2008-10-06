@@ -3,9 +3,10 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Muxing, client, "$Id$")
+ACE_RCSID(Big_Reply, client, "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+bool server_shutdown = false;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -19,11 +20,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'k':
         ior = get_opts.opt_arg ();
         break;
+      case 'x':
+        server_shutdown = true;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-k <ior>"
+                           "-x shutdown"
                            "\n",
                            argv [0]),
                           -1);
@@ -69,8 +74,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Got all the replies...\n"));
 
-      // Request the server to shutdown
-      reply_gen->shutdown ();
+      if (server_shutdown)
+        {
+          // Request the server to shutdown
+          reply_gen->shutdown ();
+        }
 
       orb->destroy ();
     }

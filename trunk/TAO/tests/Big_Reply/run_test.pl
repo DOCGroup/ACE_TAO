@@ -18,7 +18,7 @@ if (PerlACE::is_vxworks_test()) {
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile");
 }
-$CL = new PerlACE::Process ("client", " -k file://$iorfile");
+$CL = new PerlACE::Process ("client", " -k file://$iorfile -x");
 
 $server = $SV->Spawn ();
 
