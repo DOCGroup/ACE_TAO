@@ -119,13 +119,13 @@ MT_Object_Server::~MT_Object_Server (void)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  MT_Object_Server MT_Object_Server;
-
   ACE_DEBUG ((LM_DEBUG,
               "\n \t NestedUpCalls.Triangle_Test: Object A Server \n \n"));
 
   try
     {
+      MT_Object_Server MT_Object_Server;
+
       int r = MT_Object_Server.init (argc,argv);
 
       if (r == -1)

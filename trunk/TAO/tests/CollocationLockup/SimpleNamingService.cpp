@@ -10,10 +10,11 @@
 
 #include "ace/String_Base.h"
 #include "ace/streams.h"
+#include "ace/Get_Opt.h"
 
 namespace
 {
-  const char* iorFileName = "SimpleNamingService.ior";
+  const ACE_TCHAR* iorFileName = ACE_TEXT("SimpleNamingService.ior");
 }
 
 class SimpleNamingService_i : public virtual POA_SimpleNamingService
@@ -40,11 +41,41 @@ private:
 };
 
 int
+parse_args (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'o':
+        iorFileName = get_opts.opt_arg ();
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-o <iorfile>"
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
+
+
+int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+
+      if (parse_args (argc, argv) != 0)
+        return 1;
 
       CORBA::Object_var pPoaObj =
         orb->resolve_initial_references ("RootPOA");
@@ -58,9 +89,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var obj = poa->id_to_reference (oid.in ());
       CORBA::String_var str = orb->object_to_string (obj.in ());
 
-      ofstream iorFile (iorFileName);
-      iorFile << str.in () << endl;
-      iorFile.close ();
+      FILE *output_file= ACE_OS::fopen (iorFileName, "w");
+      if (output_file == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s\n",
+                           iorFileName),
+                           1);
+      ACE_OS::fprintf (output_file, "%s", str.in ());
+      ACE_OS::fclose (output_file);
 
       orb->run ();
     }
