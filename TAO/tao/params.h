@@ -235,8 +235,8 @@ public:
   void poa_factory_name (const char *s);
   const char *poa_factory_name (void) const;
 
-  void poa_factory_directive (const char *s);
-  const char *poa_factory_directive (void) const;
+  void poa_factory_directive (const ACE_TCHAR *s);
+  const ACE_TCHAR *poa_factory_directive (void) const;
 
   void endpoint_selector_factory_name (const char *s);
   const char *endpoint_selector_factory_name (void) const;
@@ -446,7 +446,7 @@ private:
    * The service configurator directive used to load
    * poa_factory_name_ dynamically.
    */
-  ACE_CString poa_factory_directive_;
+  ACE_TString poa_factory_directive_;
 
   /**
    * Name of the collocation resolver that needs to be instantiated.

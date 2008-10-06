@@ -1,4 +1,9 @@
-Mon Oct  6 15:20:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Oct  6 18:23:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/params.{h,cpp}:
+          Changed poa directive to ACE_TCHAR
+
+Mon Oct  6 18:20:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Oneway_Send_Timeouts/Client.cpp
         * tests/Oneway_Send_Timeouts/main.cpp
