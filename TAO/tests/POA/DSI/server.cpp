@@ -21,7 +21,7 @@
 
 ACE_RCSID(DSI, server, "$Id$")
 
-static const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
+static const ACE_TCHAR *ior_output_file = ACE_TEXT ("ior");
 
 static int
 parse_args (int argc, ACE_TCHAR **argv)

@@ -2,7 +2,6 @@
 
 #include "testC.h"
 
-
 ACE_RCSID (ServantLocator,
            client,
            "$Id$")
