@@ -47,7 +47,7 @@ protected:
 private:
   /// Print Statistics
   void accumulate_and_dump (ACE_Basic_Stats &totals,
-                            const char *msg,
+                            const ACE_TCHAR *msg,
                             ACE_UINT32 gsf);
 
 private:
@@ -59,7 +59,7 @@ private:
 
   int &argc_;
   ACE_TCHAR **argv_;
-  const char *ior_;
+  const ACE_TCHAR *ior_;
   int iterations_;
 };
 

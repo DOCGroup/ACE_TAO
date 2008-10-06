@@ -77,7 +77,7 @@ public:
 protected:
   int &argc_;
   ACE_TCHAR **argv_;
-  const char *ior_output_file_;
+  const ACE_TCHAR *ior_output_file_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
 

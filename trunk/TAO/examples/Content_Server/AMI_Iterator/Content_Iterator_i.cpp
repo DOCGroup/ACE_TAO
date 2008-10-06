@@ -11,7 +11,7 @@ ACE_RCSID (AMI_Iterator, Content_Iterator_i, "$Id$")
 
 Content_Iterator_i::Content_Iterator_i (const char *pathname,
                                         CORBA::ULongLong file_size)
-  : file_ (pathname),
+  : file_ (ACE_TEXT_CHAR_TO_TCHAR(pathname)),
     file_io_ (),
     file_size_ (file_size),
     chunk_index_ (1)

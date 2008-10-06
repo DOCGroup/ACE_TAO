@@ -21,8 +21,8 @@ class ServerApp
     int parse_args(int argc, ACE_TCHAR* argv[]);
     void usage_statement();
 
-    ACE_CString exe_name_;
-    ACE_CString ior_filename_;
+    ACE_TString exe_name_;
+    ACE_TString ior_filename_;
     unsigned    num_servants_;
     unsigned    num_csd_threads_;
     unsigned    num_clients_;

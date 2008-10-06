@@ -14,7 +14,7 @@
 Client_Task::Client_Task (int &argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
-  , ior_ ("file://test.ior")
+  , ior_ (ACE_TEXT("file://test.ior"))
   , iterations_ (1000)
 {
 }
@@ -140,7 +140,7 @@ Client_Task::run_test (void)
 
   ACE_Basic_Stats totals;
 
-  this->accumulate_and_dump (totals, "Task", gsf);
+  this->accumulate_and_dump (totals, ACE_TEXT("Task"), gsf);
 
   totals.dump_results (ACE_TEXT("Total"), gsf);
 
@@ -175,7 +175,7 @@ Client_Task::svc (void)
 
 void
 Client_Task::accumulate_and_dump (ACE_Basic_Stats &totals,
-                                  const char *msg,
+                                  const ACE_TCHAR *msg,
                                   ACE_UINT32 gsf)
 {
   totals.accumulate (this->latency_);
