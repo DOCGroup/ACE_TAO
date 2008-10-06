@@ -1,7 +1,20 @@
+Mon Oct  6 15:12:49 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+        * ciao/ComponentServer/CIAO_Properties.idl:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        
+          Codified some component server configvalue names in IDL.
+        
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+
+          Fixed a couple bugs w.r.t respecting default vs. custom server timeouts. 
+        
 Wed Oct  1 20:42:34 UTC 2008  William R. Otte  <wotte@70-11-197-37.area7.spcsdns.net>
 
         * ciao/Logger/Logger_Service.cpp:
-        
+
           Enabling tracing inadvertantly disabled logging.
 
 Wed Oct  1 20:27:33 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
@@ -12,7 +25,7 @@ Wed Oct  1 20:27:33 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           Fixed some incompatibilities with Xerces 3.0, and improved logging in the
           XML_File_Intf.
-        
+
 Wed Oct  1 02:08:47 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment_common.h:

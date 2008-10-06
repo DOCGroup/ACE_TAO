@@ -8,9 +8,7 @@
 
 #include "CIAO_ServerResourcesC.h"
 #include "CIAO_ComponentServerC.h"
-
-const ACE_CString SERVER_RESOURCES = "edu.vanderbilt.dre.ServerResources";
-const ACE_CString SERVER_UUID = "edu.vanderbilt.dre.ServerUUID";
+#include "CIAO_PropertiesC.h"
 
 namespace CIAO
 {
@@ -207,11 +205,31 @@ namespace CIAO
                    "Attempting to spawn ComponentServer with UUID %s\n",
                    server->uuid_.c_str ()));
       // Now we need to get a copy of the one that was inserted...
-      pid_t pid = this->spawn_component_server (cmd_options);
+      pid_t pid = this->spawn_component_server (*server, cmd_options);
       
       
-      ACE_Time_Value timeout (this->spawn_delay_, 0);
+      ACE_Time_Value timeout (this->spawn_delay_);
+      
+      CORBA::Any val;
 
+      if (server->cmap_->find (SERVER_TIMEOUT, val) == 0)
+        {
+          time_t t;
+          if (val >>= t)
+            {
+              CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ServerActivator_i::create_component_server - "
+                           "Using provided non-default server timeout of %u\n", t));
+              timeout = ACE_Time_Value (t);
+            }
+          else
+            {
+              CIAO_ERROR ((LM_WARNING, CLINFO "CIAO_ServerActivator_i::create_component_server - "
+                           "Failed to extract provided non-default server timeout from property '%s', "
+                           "falling back to default timeout of %u\n",
+                           this->spawn_delay_));
+            }
+        }
+      
       if (this->multithreaded_)
         this->multi_threaded_wait_for_callback (*server, timeout/*, pid*/);
       else
@@ -295,7 +313,8 @@ namespace CIAO
     }
     
     pid_t
-    CIAO_ServerActivator_i::spawn_component_server (const ACE_CString &cmd_line)
+    CIAO_ServerActivator_i::spawn_component_server (const Server_Info &si,
+                                                    const ACE_CString &cmd_line)
     {
       CIAO_TRACE ("CIAO_ServerActivator_i::spawn_component_server\n");
       
@@ -304,15 +323,25 @@ namespace CIAO
       // Get my object reference
       CORBA::Object_var obj = this->poa_->servant_to_reference (this);
       CORBA::String_var ior = this->orb_->object_to_string (obj.in ());
+      CORBA::Any val;
+      
+      const char *path = this->cs_path_.c_str ();
+
+      if (si.cmap_->find (SERVER_EXECUTABLE, val) == 0)
+        {
+          val >>= path;
+          CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ServerActivator_i::spawn_component_server - "
+                       "Using provided component server executable:%s\n", path));
+        }
+      else CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ServerActivator_i::spawn_component_server - "
+                        "Using default component server execuable\n"));
       
       options.command_line ("%s %s -c %s",
-                            this->cs_path_.c_str (),
+                            path,
                             cmd_line.c_str (),
                             ior.in ());
       
       options.avoid_zombies (0);
-      ACE_DEBUG ((LM_DEBUG, "***%s\n",
-                  cmd_line.c_str ()));
       
       CIAO_DEBUG ((LM_TRACE, CLINFO 
                    "CIAO_ServerActivator_i::spawn_component_server - Spawning process, command line is %s\n",

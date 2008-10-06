@@ -109,7 +109,8 @@ namespace CIAO
 
       /// Spawns the component server process, but does not wait for it
       /// to call back. 
-      pid_t spawn_component_server (const ACE_CString &cmd_line);
+      pid_t spawn_component_server (const Server_Info &si,
+                                    const ACE_CString &cmd_line);
       
       /// This method is only applicable when our program is configured as
       /// singled threaded . Internally it uses a <perform_work> blocking
@@ -134,7 +135,7 @@ namespace CIAO
             ref_ (Components::Deployment::ComponentServer::_nil ()),
             pid_ (ACE_INVALID_PID),
             activated_ (false) {}
-        
+
         typedef ACE_Refcounted_Auto_Ptr <CIAO::Utility::CONFIGVALUE_MAP,
                                          ACE_Null_Mutex> CONFIGVALUE_MAP_PTR;
         
