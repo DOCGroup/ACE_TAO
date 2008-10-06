@@ -123,7 +123,7 @@ Policy_Tester::check_reference (CORBA::Object_ptr object,
 {
   if (CORBA::is_nil (object))
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT (msg)));
+      ACE_DEBUG ((LM_DEBUG, msg));
       return 0;
     }
   return 1;

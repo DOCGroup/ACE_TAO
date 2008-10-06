@@ -29,7 +29,7 @@ public:
   RT_Properties (void);
   ~RT_Properties (void);
 
-  static RT_Properties * read_from (const char *file_name);
+  static RT_Properties * read_from (const ACE_TCHAR *file_name);
 
   // -- Accessor Methods --
   void priority (RTCORBA::Priority priority);
@@ -38,14 +38,14 @@ public:
   void priority_bands (const RTCORBA::PriorityBands& priority_bands);
   const RTCORBA::PriorityBands& priority_bands (void);
 
-  void ior_source (const char *s);
-  const char* ior_source (void);
+  void ior_source (const ACE_TCHAR *s);
+  const ACE_TCHAR* ior_source (void);
 
 private:
 
   RTCORBA::Priority priority_;
   RTCORBA::PriorityBands priority_bands_;
-  char ior_source_[256];
+  ACE_TCHAR ior_source_[256];
 };
 
 #endif /* RT_PROPERTIES_H_ */
