@@ -176,7 +176,7 @@ Client<InterfaceObj, Var>::read_ior (ACE_TCHAR *filename)
                        "Unable to read ior: %p\n"),
                       -1);
 
-  this->ior_ = ACE_OS::strdup (data);
+  this->ior_ = ACE_OS::strdup (ACE_TEXT_CHAR_TO_TCHAR(data));
   ior_buffer.alloc ()->free (data);
 
   ACE_OS::close (f_handle);
