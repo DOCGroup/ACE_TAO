@@ -1,3 +1,44 @@
+Mon Oct  6 19:34:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMH/Sink_Server/Base_Server.cpp
+        * examples/AMH/Sink_Server/Base_Server.h
+        * examples/AMH/Sink_Server/Client_Task.cpp
+        * examples/AMH/Sink_Server/Client_Task.h
+        * examples/Callback_Quoter/Consumer_Handler.cpp
+        * examples/Callback_Quoter/Consumer_Handler.h
+        * examples/Callback_Quoter/Supplier_i.cpp
+        * examples/Callback_Quoter/Supplier_i.h
+        * examples/Content_Server/AMI_Iterator/client.cpp
+        * examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp
+        * examples/Content_Server/AMI_Observer/Callback_Handler.cpp
+        * examples/Content_Server/AMI_Observer/client.cpp
+        * examples/Content_Server/SMI_Iterator/client.cpp
+        * examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp
+        * examples/CSD_Strategy/ThreadPool2/ClientApp.h
+        * examples/CSD_Strategy/ThreadPool2/Foo_i.cpp
+        * examples/CSD_Strategy/ThreadPool2/Foo_i.h
+        * examples/CSD_Strategy/ThreadPool2/FooServantList.cpp
+        * examples/CSD_Strategy/ThreadPool2/FooServantList.h
+        * examples/CSD_Strategy/ThreadPool2/ServerApp.cpp
+        * examples/CSD_Strategy/ThreadPool2/ServerApp.h
+        * examples/CSD_Strategy/ThreadPool3/ClientApp.h
+        * examples/CSD_Strategy/ThreadPool3/ServerApp.cpp
+        * examples/CSD_Strategy/ThreadPool3/ServerApp.h
+        * examples/CSD_Strategy/ThreadPool4/ServerApp.h
+        * examples/CSD_Strategy/ThreadPool5/ClientApp.h
+        * examples/CSD_Strategy/ThreadPool5/FooServantList.cpp
+        * examples/CSD_Strategy/ThreadPool5/FooServantList.h
+        * examples/CSD_Strategy/ThreadPool5/ServerApp.cpp
+        * examples/CSD_Strategy/ThreadPool5/ServerApp.h
+        * examples/CSD_Strategy/ThreadPool6/ClientApp.h
+        * examples/CSD_Strategy/ThreadPool6/ServerApp.cpp
+        * examples/CSD_Strategy/ThreadPool6/ServerApp.h
+        * examples/CSD_Strategy/ThreadPool/ClientApp.h
+        * examples/CSD_Strategy/ThreadPool/ServerApp.h
+        * examples/Event_Comm/Consumer_Handler.cpp
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp
+          ACE_TCHAR fixes
+
 Mon Oct  6 18:43:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Collocated_Test.cpp
