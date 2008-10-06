@@ -1,10 +1,10 @@
 Mon Oct  6 22:27:54 UTC 2008  Steve Huston  <shuston@riverace.com>
 
-        * ace/WFMO_Reactor.inl (suBspend_handlers): Never suspend the notify
-          or the wakeup_all_threBBads handles - these are specially set up by
+        * ace/WFMO_Reactor.inl (suspend_handlers): Never suspend the notify
+          or the wakeup_all_threads handles - these are specially set up by
           ACE_WFMO_Reactor::open(), not by users, and are critical to the
           proper functioning of the event loop.
-          Fixes Bugzilla #3267.b
+          Fixes Bugzilla #3267.
 
         * tests/Reactor_Dispatch_Order_Test.cpp: Added some additional
           sanity checks and fixed some logging.
