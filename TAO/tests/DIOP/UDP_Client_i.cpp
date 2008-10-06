@@ -32,7 +32,7 @@ UDP_Client_i::svc (void)
 {
   ACE_CString client_name ("UDP");
 
-  ACE_TCHAR pid[256];
+  char pid[256];
   ACE_OS::sprintf (pid,
                    "%u",
                    static_cast<u_int> (ACE_OS::getpid ()));
