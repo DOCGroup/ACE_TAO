@@ -1,15 +1,11 @@
 #include "CIAO_Container_Impl.h"
 
 #include "ace/Log_Msg.h"
+#include "ccm/CCM_HomeC.h"
 #include "ciao/CIAO_common.h"
 #include "ciao/Server_init.h"
 #include "ciao/Client_init.h"
-#include "ccm/CCM_HomeC.h"
-
-
-const ACE_TCHAR *SVNT_ENTRYPT = "edu.vanderbilt.dre.ServantEntrypoint";
-const ACE_TCHAR *SVNT_ARTIFACT = "edu.vanderbilt.dre.ServantArtifact";
-const ACE_TCHAR *EXEC_ARTIFACT = "edu.vanderbilt.dre.ExecutorArtifact";
+#include "CIAO_PropertiesC.h"
 
 namespace CIAO
 {

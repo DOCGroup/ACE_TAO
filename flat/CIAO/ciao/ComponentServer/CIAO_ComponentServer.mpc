@@ -22,6 +22,7 @@ project(CIAO_CS_Client_IDL) : taoidldefaults, anytypecode {
   
   IDL_Files {
     CIAO_CS_Client.idl
+    CIAO_Properties.idl
   }
 }
 
@@ -34,6 +35,7 @@ project(CIAO_ComponentServer_stub) : ccm_componentserver_stub, taolib_with_idl, 
     CIAO_ComponentServerC.cpp
     CIAO_CS_ClientC.cpp
     CIAO_ServerResourcesC.cpp
+    CIAO_PropertiesC.cpp
   }
 }
 
