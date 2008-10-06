@@ -5,6 +5,7 @@
 #include "tao/StringSeqC.h"
 
 #include "ace/Service_Config.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (DLL_ORB,
            Test_Server_Module,
@@ -36,6 +37,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
 
   return 0;
+}
+
+Test_Server_Module::~Test_Server_Module (void)
+{
 }
 
 int
@@ -84,7 +89,7 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
       for (int i = new_argc - argc, j = 0;
            j < argc;
            ++i, ++j)
-        new_argv[i] = CORBA::string_dup (argv[j]);
+        new_argv[i] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(argv[j]));
 
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (new_argc,
@@ -109,7 +114,8 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
 
       this->poa_manager_->activate ();
 
-      if (::parse_args (new_argc, new_argv.get_buffer ()) != 0)
+      ACE_Argv_Type_Converter converter (new_argc, new_argv.get_buffer ());
+      if (::parse_args (new_argc, converter.get_TCHAR_argv ()) != 0)
         return -1;
 
       PortableServer::ObjectId_var id =
