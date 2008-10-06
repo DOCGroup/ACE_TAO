@@ -58,9 +58,9 @@ public:
   // the servant.
 
   ServantActivator (CORBA::ORB_ptr orb,
-                    const char *dllname,
-                    const char *factory_function,
-                    const char *garbage_collection_function);
+                    const ACE_TCHAR *dllname,
+                    const ACE_TCHAR *factory_function,
+                    const ACE_TCHAR *garbage_collection_function);
   // Initialization.
 
   virtual PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,

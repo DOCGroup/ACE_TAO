@@ -67,7 +67,7 @@ public:
   // @@ *done*Kirthika, please explain what this function is USED for, i.e.,
   // who calls it and why?
 
-  PortableServer::Servant obtain_servant (const char *str,
+  PortableServer::Servant obtain_servant (const ACE_TCHAR *str,
                                           PortableServer::POA_ptr poa);
   // Obtains a servant on activation by linking and loading the
   // appropriate DLL and creating the servant object.  The <str>
@@ -82,7 +82,7 @@ public:
   // is closed.
 
  private:
-  void parse_string (const char *s);
+  void parse_string (const ACE_TCHAR *s);
   // Parse the string to obtain the DLL name and the factory function
   // symbol that we will used to dynamically obtain the servant
   // pointer.
@@ -90,10 +90,10 @@ public:
   CORBA::ORB_var orb_;
   // A reference to the ORB.
 
-  ACE_CString dllname_;
+  ACE_TString dllname_;
   // The name of the dll containing the servant.
 
-  ACE_CString create_symbol_;
+  ACE_TString create_symbol_;
   // The symbol which on getting invoked will give us the servant
   // pointer.
 
