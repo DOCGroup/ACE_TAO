@@ -1,10 +1,18 @@
+Mon Oct  6 07:45:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2319_Regression/server.cpp:
+          ACE_TCHAR fixes
+
+        * tests/IORManipulation/IORTest.cpp:
+          Zap old workaround and return a correct return value
+
 Fri Oct  3 19:25:29 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Bug_3387_Regression/Messenger.mpc:
 
           Fix to avoid build problems on some platforms such as OpenMVS
           IA64.
-        
+
 Fri Oct  3 11:08:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Callback_Quoter/Consumer_Handler.cpp

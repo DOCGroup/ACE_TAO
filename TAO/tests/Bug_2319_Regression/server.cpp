@@ -241,7 +241,7 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var iorstr)
     {
       ACE_ERROR ((LM_ERROR,
                   "Cannot open output file for writing IOR: %s",
-                  ACE_TEXT_CHAR_TO_TCHAR (ST_AMH_Server::ior_output_file_)));
+                  ST_AMH_Server::ior_output_file_));
       return -1;
     }
 
