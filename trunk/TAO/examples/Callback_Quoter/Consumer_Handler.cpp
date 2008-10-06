@@ -81,7 +81,7 @@ Consumer_Handler::read_ior (ACE_TCHAR *filename)
                        "Unable to read ior: %p\n"),
                       -1);
 
-  this->ior_ = ACE_OS::strdup (data);
+  this->ior_ = ACE_OS::strdup (ACE_TEXT_CHAR_TO_TCHAR(data));
   ior_buffer.alloc ()->free (data);
 
   ACE_OS::close (f_handle);
@@ -114,7 +114,7 @@ Consumer_Handler::parse_args (void)
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-                             ACE_TEXT_CHAR_TO_TCHAR (get_opts.opt_arg ())),
+                             get_opts.opt_arg ()),
                             -1);
         break;
 
@@ -123,7 +123,7 @@ Consumer_Handler::parse_args (void)
         break;
 
       case 'a': // to be given only on using run_test.pl
-        this->stock_name_ = get_opts.opt_arg ();
+        this->stock_name_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         this->interactive_ = 0;
         break;
 
@@ -148,7 +148,7 @@ Consumer_Handler::parse_args (void)
                            " [-a stock_name]"
                            " [-t threshold]"
                            "\n",
-                           ACE_TEXT_CHAR_TO_TCHAR (this->argv_ [0])),
+                           this->argv_ [0]),
                           -1);
       }
 
@@ -264,7 +264,7 @@ Consumer_Handler::init (int argc, ACE_TCHAR **argv)
           if (this->ior_ == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%s: no ior specified\n",
-                               ACE_TEXT_CHAR_TO_TCHAR (this->argv_[0])),
+                               this->argv_[0]),
                               -1);
 
           CORBA::Object_var server_object =
@@ -273,7 +273,7 @@ Consumer_Handler::init (int argc, ACE_TCHAR **argv)
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "invalid ior <%s>\n",
-                               ACE_TEXT_CHAR_TO_TCHAR (this->ior_)),
+                               this->ior_),
                               -1);
           // The downcasting from CORBA::Object_var to Notifier_var is
           // done using the <_narrow> method.
