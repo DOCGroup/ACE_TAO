@@ -332,7 +332,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
       set_connect_timeout (orb.in ());
       set_buffering (orb.in ());
 
-      ACE_CString ior ("file://server.ior");
+      ACE_TString ior (ACE_TEXT("file://server.ior"));
       if (force_timeout)
         {
           ior = non_existent_ior;
