@@ -12,7 +12,7 @@ class FooServantList
 {
   public:
 
-    FooServantList(const char* prefix,
+    FooServantList(const ACE_TCHAR* prefix,
                    unsigned num_servants,
                    unsigned num_clients,
                    CORBA::ORB_ptr orb);
@@ -29,7 +29,7 @@ class FooServantList
     typedef ACE_Guard<LockType> GuardType;
 
     PortableServer::ServantBase_var* servants_;
-    ACE_CString prefix_;
+    ACE_TString prefix_;
     unsigned num_servants_;
 
     LockType num_clients_lock_;

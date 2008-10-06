@@ -22,9 +22,9 @@ class ClientApp
     int parse_args(int argc, ACE_TCHAR* argv[]);
     void usage_statement();
 
-    ACE_CString ior_;
+    ACE_TString ior_;
 
-    ACE_CString exe_name_;
+    ACE_TString exe_name_;
 };
 
 #endif

@@ -12,7 +12,7 @@
 
 
 ServerApp::ServerApp()
-: ior_filename_ ("server.ior")
+: ior_filename_ (ACE_TEXT("server.ior"))
 {
 }
 

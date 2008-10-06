@@ -12,7 +12,7 @@
 
 
 ServerApp::ServerApp()
-  : ior_filename_("ServerApp.default.ior"),
+  : ior_filename_(ACE_TEXT("ServerApp.default.ior")),
     num_clients_(1),
     num_orb_threads_(1)
 {

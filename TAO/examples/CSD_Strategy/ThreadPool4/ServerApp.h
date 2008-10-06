@@ -32,7 +32,7 @@ class ServerApp
       const char* servant_name);
 
 
-    ACE_CString exe_name_;
+    ACE_TString exe_name_;
 
     CORBA::ORB_var orb_;
 
