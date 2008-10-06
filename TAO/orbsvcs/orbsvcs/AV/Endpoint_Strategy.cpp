@@ -101,11 +101,11 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
                       -1);
 
   // Create a unique semaphore name, using my hostname, and pid.
-  char sem_str [BUFSIZ];
+  ACE_TCHAR sem_str [BUFSIZ];
 
   // create a unique semaphore name
   ACE_OS::sprintf (sem_str,
-                   "%s:%s:%ld",
+                   ACE_TEXT("%s:%s:%ld"),
                    "TAO_AV_Process_Semaphore",
                    this->host_,
                    static_cast<long int> (this->pid_));

@@ -350,7 +350,7 @@ TAO_AV_RTCP_Flow_Factory::match_protocol (const char *flow_string)
 
 int
 TAO_AV_RTCP_Flow_Factory::init (int /* argc */,
-                                char * /* argv */ [])
+                                ACE_TCHAR * /* argv */ [])
 {
   return 0;
 }

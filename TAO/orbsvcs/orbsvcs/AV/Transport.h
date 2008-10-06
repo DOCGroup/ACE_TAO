@@ -46,25 +46,25 @@ class TAO_AV_Transport;
 class TAO_AV_Export TAO_AV_Transport_Item
 {
 public:
-  /// creator method, the Transport name can only be set when the
+  /// Creator method, the Transport name can only be set when the
   /// object is created.
   TAO_AV_Transport_Item (const ACE_CString &name);
 
-  /// return a reference to the character representation of the Transport
+  /// Return a reference to the character representation of the Transport
   /// factories name.
   const ACE_CString &name (void);
 
-  /// return a pointer to the Transport factory.
+  /// Return a pointer to the Transport factory.
   TAO_AV_Transport_Factory *factory (void);
 
-  /// set the factory pointer's valus.
+  /// Set the factory pointer's valus.
   void factory (TAO_AV_Transport_Factory *factory);
 
 private:
   /// Transport factory name.
   ACE_CString name_;
 
-  /// pointer to factory object.
+  /// Pointer to factory object.
   TAO_AV_Transport_Factory *factory_;
 };
 

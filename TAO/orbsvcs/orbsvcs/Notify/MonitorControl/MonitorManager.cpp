@@ -26,7 +26,7 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->task_.mutex_, -1);
 
-  this->task_.argv_.add ("fake_process_name");
+  this->task_.argv_.add (ACE_TEXT("fake_process_name"));
 
   ACE_Get_Opt opts (argc,
                     argv,
@@ -51,7 +51,7 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
         case 0:
           if (ACE_OS::strcmp (opts.long_option (), orbarg) == 0)
             {
-              this->task_.argv_.add (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
+              this->task_.argv_.add (opts.opt_arg ());
             }
           else if (ACE_OS::strcmp (opts.long_option (), nonamesvc) == 0)
             {
@@ -151,7 +151,7 @@ TAO_MonitorManager::shutdown (void)
 TAO_MonitorManager::ORBTask::ORBTask (void)
  : use_name_svc_ (true)
    , startup_barrier_ (2) // synch the parent with the single child thread
-   , mc_orb_name_ ("TAO_MonitorAndControl")
+   , mc_orb_name_ (ACE_TEXT("TAO_MonitorAndControl"))
 {
 }
 
@@ -212,7 +212,7 @@ TAO_MonitorManager::ORBTask::svc (void)
                               1);
           }
 
-        iortable->bind(mc_orb_name_.c_str(), ior.in ());
+        iortable->bind(ACE_TEXT_ALWAYS_CHAR(mc_orb_name_.c_str()), ior.in ());
 
         if (this->use_name_svc_)
           {
@@ -220,7 +220,7 @@ TAO_MonitorManager::ORBTask::svc (void)
             nc.init (this->orb_.in ());
             CosNaming::Name name (1);
             name.length (1);
-            name[0].id = CORBA::string_dup (mc_orb_name_.c_str());
+            name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(mc_orb_name_.c_str()));
             nc->rebind (name, monitor.in ());
           }
 

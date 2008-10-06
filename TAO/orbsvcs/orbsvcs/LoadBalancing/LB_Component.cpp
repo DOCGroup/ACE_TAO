@@ -43,7 +43,7 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
           ++i;  // 1
 
           object_groups.length (len);
-          object_groups[j] = CORBA::string_dup (argv[i]);
+          object_groups[j] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(argv[i]));
 
           ++i;  // 2
 
@@ -53,17 +53,17 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
           ++i;  // 3
 
           repository_ids.length (len);
-          repository_ids[j] = CORBA::string_dup (argv[i]);
+          repository_ids[j] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(argv[i]));
         }
       else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-LBTypeId")) == 0)
         {
-          const CORBA::ULong j = len;
+          CORBA::ULong const j = len;
           ++len;
 
           ++i;  // 1
 
           repository_ids.length (len);
-          repository_ids[j] = CORBA::string_dup (argv[i]);
+          repository_ids[j] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(argv[i]));
 
           ++i;  // 2
 
@@ -73,12 +73,12 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
           ++i;  // 3
 
           object_groups.length (len);
-          object_groups[j] = CORBA::string_dup (argv[i]);
+          object_groups[j] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(argv[i]));
         }
       else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-LBLocation")) == 0)
         {
           ++i;
-          location = CORBA::string_dup (argv[i]);
+          location = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(argv[i]));
         }
     }
 

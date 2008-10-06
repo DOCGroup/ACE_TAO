@@ -1,7 +1,35 @@
+Mon Oct  6 15:20:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Oneway_Send_Timeouts/Client.cpp
+        * tests/Oneway_Send_Timeouts/main.cpp
+        * tests/Oneway_Timeouts/client.cpp
+        * tests/Param_Test/options.cpp
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp
+        * orbsvcs/orbsvcs/AV/default_resource.cpp
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp
+        * orbsvcs/orbsvcs/AV/Protocol_Factory.cpp
+        * orbsvcs/orbsvcs/AV/RTCP.cpp
+        * orbsvcs/orbsvcs/AV/RTP.cpp
+        * orbsvcs/orbsvcs/AV/sfp.cpp
+        * orbsvcs/orbsvcs/AV/TCP.cpp
+        * orbsvcs/orbsvcs/AV/Transport.cpp
+        * orbsvcs/orbsvcs/AV/Transport.h
+        * orbsvcs/orbsvcs/AV/UDP.cpp
+        * orbsvcs/orbsvcs/Concurrency/Concurrency_Loader.cpp
+        * orbsvcs/orbsvcs/LoadBalancing/LB_Component.cpp
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.cpp
+        * orbsvcs/orbsvcs/Notify/XML_Loader.cpp
+        * orbsvcs/orbsvcs/Notify/XML_Loader.h
+        * orbsvcs/orbsvcs/Notify/XML_Saver.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp
+          ACE_TCHAR fixes
+
 Mon Oct  6 16:10:42 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
-        
+
           Fixed one overlooked case where a const char* is
           passed to TAO_OutStream, similar to other fixes where
           an explicitly declared const char* is initialized
@@ -14,7 +42,7 @@ Thu Oct  2 14:01:39 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
         * TAO_IDL/be/be_helper.cpp:
         * TAO_IDL/be_include/be_helper.h:
-        
+
           More fixes for TAO_OutStream operator ambiguity errors,
           these on OpenSUSE_10_3_GCC_4_2. Part of the fix involves
           removing the #ifdef guards around the TAO_OutStream

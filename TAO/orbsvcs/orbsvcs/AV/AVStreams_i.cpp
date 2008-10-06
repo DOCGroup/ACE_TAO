@@ -2487,7 +2487,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
               if (result == 0)
                 {
                   mcast_addr = dynamic_cast<ACE_INET_Addr *> (entry->address ());
-                  char str_addr [BUFSIZ];
+                  ACE_TCHAR str_addr [BUFSIZ];
                   result = mcast_addr->addr_to_string (str_addr, BUFSIZ);
                   if (result < 0)
                     ACE_ERROR_RETURN ((LM_ERROR, "TAO_StreamEndPointA::multiconnect ::addr_to_string failed\n"), 0);
@@ -2512,7 +2512,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                                         0);
                         mcast_addr->set (this->mcast_port_, this->mcast_addr_.c_str ());
                         this->mcast_port_++;
-                        char buf[BUFSIZ];
+                        ACE_TCHAR buf[BUFSIZ];
                         mcast_addr->addr_to_string (buf, BUFSIZ);
                         if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "%s\n", buf));
                         TAO_Forward_FlowSpec_Entry *new_entry;
@@ -3621,7 +3621,7 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr producer,
                               this->mcast_addr_.c_str ()
                               );
 
-              char buf [BUFSIZ];
+              ACE_TCHAR buf [BUFSIZ];
               mcast_addr.addr_to_string (buf, BUFSIZ);
               ACE_OS::sprintf (mcast_address, "%s=%s", this->protocol_.in (), buf);
             }
