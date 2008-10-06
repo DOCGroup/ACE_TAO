@@ -735,7 +735,9 @@ ACE_WFMO_Reactor::suspend_handlers (void)
   // First suspend all current handles
   bool changes_required = false;
 
-  for (size_t i = 0;
+  // Skip over the notify and wakeup_all_threads handles. These are registered
+  // by ACE_WFMO_Reactor::open(), not by users, and should not be suspended.
+  for (size_t i = 2;
        i < this->handler_rep_.max_handlep1_ && !error;
        i++)
     {
