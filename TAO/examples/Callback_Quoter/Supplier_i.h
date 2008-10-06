@@ -78,7 +78,7 @@ private:
    ACE_Reactor *reactor_used (void) const;
   // returns the TAO instance of the singleton Reactor.
 
-  int read_file (char *filename);
+  int read_file (ACE_TCHAR *filename);
   // This method used for getting stock information from a file.
 
   int argc_;
@@ -87,7 +87,7 @@ private:
   ACE_TCHAR **argv_;
   // arguments from command line.
 
-  char *ior_;
+  ACE_TCHAR *ior_;
   // IOR of the obj ref of the Notifier.
 
   TAO_Naming_Client naming_services_client_;
