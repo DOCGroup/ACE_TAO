@@ -55,11 +55,10 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   , thread_lane_resources_manager_factory_name_ ("Default_Thread_Lane_Resources_Manager_Factory")
   , poa_factory_name_ ("TAO_Object_Adapter_Factory")
   , poa_factory_directive_
-      (ACE_TEXT_ALWAYS_CHAR
-        (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory",
-                                       "TAO_PortableServer",
-                                       "_make_TAO_Object_Adapter_Factory",
-                                       "")))
+      (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory",
+                                     "TAO_PortableServer",
+                                     "_make_TAO_Object_Adapter_Factory",
+                                     ""))
   , collocation_resolver_name_ ("Default_Collocation_Resolver")
 {
   for (int i = 0; i != TAO_NO_OF_MCAST_SERVICES; ++i)
@@ -382,12 +381,12 @@ TAO_ORB_Parameters::poa_factory_name (void) const
 }
 
 void
-TAO_ORB_Parameters::poa_factory_directive (const char *s)
+TAO_ORB_Parameters::poa_factory_directive (const ACE_TCHAR *s)
 {
   this->poa_factory_directive_ = s;
 }
 
-const char *
+const ACE_TCHAR *
 TAO_ORB_Parameters::poa_factory_directive (void) const
 {
   return this->poa_factory_directive_.c_str ();
