@@ -97,7 +97,7 @@ void
 create_object (PortableServer::POA_ptr poa,
                CORBA::ORB_ptr orb,
                Test_i *servant,
-               const char *filename)
+               const ACE_TCHAR *filename)
 {
   // Register with poa.
   PortableServer::ObjectId_var id =
