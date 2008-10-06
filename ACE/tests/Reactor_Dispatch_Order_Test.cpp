@@ -200,12 +200,19 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
   // Suspend the handlers - only the timer should be dispatched
   ACE_Time_Value tv (1);
   reactor.suspend_handlers ();
-  reactor.run_reactor_event_loop (tv);
+  if (0 != reactor.run_reactor_event_loop (tv))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("run_reactor_event_loop")));
+      ok_to_go = false;
+    }
 
   // only the timer should have fired
   if (handler.dispatch_order_ != 2)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Incorrect number fired %d\n"),
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Incorrect number fired %d; expected 2\n"),
                   handler.dispatch_order_));
       ok_to_go = false;
     }
@@ -225,7 +232,13 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
 
   if (ok_to_go)
     {
-      reactor.run_reactor_event_loop (tv);
+      if (0 != reactor.run_reactor_event_loop (tv))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("run_reactor_event_loop 2")));
+          ok_to_go = false;
+        }
     }
 
   if (0 != reactor.remove_handler (handler.pipe_.read_handle (),
@@ -237,11 +250,17 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
 
   if (handler.dispatch_order_ != 4)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Incorrect number fired %d\n"),
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Incorrect number fired %d; expected 4\n"),
                   handler.dispatch_order_));
       ok_to_go = false;
     }
 
+  int nr_cancelled = reactor.cancel_timer (&handler);
+  if (nr_cancelled > 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Finishing test with %d timers still scheduled\n"),
+                nr_cancelled));
   return ok_to_go;
 }
 
