@@ -251,9 +251,9 @@ Initiator_Server::run (void)
 Initiator_Server::~Initiator_Server (void)
 {
   if (this->object_A_key_ != 0)
-    ACE_OS::free (this->object_A_key_);
+    ACE_Allocator::instance ()->free (this->object_A_key_);
   if (this->object_B_key_ != 0)
-    ACE_OS::free (this->object_B_key_);
+    ACE_Allocator::instance ()->free (this->object_B_key_);
 
   try
     {

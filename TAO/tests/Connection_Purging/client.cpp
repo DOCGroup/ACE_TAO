@@ -48,15 +48,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       test_var holder;
       for(int i = 0; !done; i++)
         {
-          char number[64];
-          ACE_CString iorfile(ior);
+          ACE_TCHAR number[64];
+          ACE_TString iorfile(ior);
 
-          ACE_OS::sprintf (number, ".%d", i);
+          ACE_OS::sprintf (number, ACE_TEXT(".%d"), i);
           iorfile += number;
 
           if (ACE_OS::access(iorfile.c_str (), R_OK) == 0)
             {
-              iorfile = "file://" + iorfile;
+              iorfile = ACE_TEXT("file://") + iorfile;
               CORBA::Object_var tmp =
                 orb->string_to_object(iorfile.c_str ());
 
