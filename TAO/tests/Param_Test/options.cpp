@@ -80,7 +80,7 @@ Options::parse_args (int argc, ACE_TCHAR **argv)
         break;
 
      case 'k':
-        this->ior_ = CORBA::string_dup (get_opts.opt_arg ());
+        this->ior_ = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
 
       case 'i':  // invocation
