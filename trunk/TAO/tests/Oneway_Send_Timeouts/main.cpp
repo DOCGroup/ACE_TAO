@@ -37,7 +37,7 @@ MyMain::print_usage ()
 bool
 MyMain::init_server (const ACE_TCHAR* args)
 {
-  std::string my_args (args);
+  std::string my_args (ACE_TEXT_ALWAYS_CHAR(args));
   // main thread and extra thread for backdoor operations
   int thread_pool = 2;
 
@@ -74,7 +74,7 @@ MyMain::init_server (const ACE_TCHAR* args)
 bool
 MyMain::init_client (const ACE_TCHAR* args)
 {
-  std::string my_args (args);
+  std::string my_args (ACE_TEXT_ALWAYS_CHAR(args));
   int thread_pool = 1;
 
   ACE_auto_ptr_reset (client_task_, new Client_Task (my_args));
