@@ -117,8 +117,8 @@ MTTEST (void *args)
       // Narrow the object reference to a File::System
       File::System_var file_system = File::System::_narrow (object.in ());
 
-      // Creat the file filename i.e "test"
-      File::Descriptor_var fd = file_system->open (filename,
+      // Create the file filename i.e "test"
+      File::Descriptor_var fd = file_system->open (ACE_TEXT_ALWAYS_CHAR(filename),
                                                    O_RDONLY);
 
       for( int i = 0; i < iterations; ++i)
