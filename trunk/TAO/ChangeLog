@@ -1,3 +1,38 @@
+Mon Oct  6 14:04:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CSD_Strategy_Tests/Broken/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/Broken/ClientApp.h
+        * tests/CSD_Strategy_Tests/Broken/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Common/AppHelper.cpp
+        * tests/CSD_Strategy_Tests/TP_Common/AppHelper.h
+        * tests/CSD_Strategy_Tests/TP_Common/ServantList_T.cpp
+        * tests/CSD_Strategy_Tests/TP_Common/ServantList_T.h
+        * tests/CSD_Strategy_Tests/TP_Test_1/ClientApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_1/ServerApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_2/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_4/ServerApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_Static/ClientApp.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_Static/ClientApp.h
+        * tests/CSD_Strategy_Tests/TP_Test_Static/ServerApp.h
+        * tests/Bug_2289_Regression/server.cpp
+        * tests/Bug_2503_Regression/client.cpp
+        * tests/Bug_2683_Regression/client.cpp
+        * tests/Bug_2683_Regression/client.cpp
+        * tests/Bug_2936_Regression/PersistentPOA.cpp
+        * tests/CDR/alignment.cpp
+        * tests/Client_Leaks/Process_Factory.cpp
+          ACE_TCHAR fixes
+
+        * tests/Client_Leaks/run_test.pl
+          No need to specify ORB id
+
 Mon Oct  6 08:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Loader/Servant_Activator.cpp

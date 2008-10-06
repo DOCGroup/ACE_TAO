@@ -48,7 +48,7 @@ Process_Factory::create_new_process (void)
 
   const ACE_TCHAR* argv[3] = {
     ACE_TEXT("child"),
-    ior.in (),
+    ACE_TEXT_CHAR_TO_TCHAR(ior.in ()),
     0};
 
   ACE_Process_Options options;

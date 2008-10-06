@@ -21,13 +21,13 @@ void
 ServantList<T>::create_and_activate(unsigned                num_servants,
                                     CORBA::ORB_ptr          orb,
                                     PortableServer::POA_ptr poa,
-                                    const char*             ior_fname_prefix)
+                                    const ACE_TCHAR*        ior_fname_prefix)
 {
   for (unsigned i = 0; i < num_servants; i++)
     {
-      char buf[32];
-      ACE_OS::sprintf(buf, "%02d", i + 1);
-      ACE_CString filename = ACE_CString(ior_fname_prefix) + "_" + buf + ".ior";
+      ACE_TCHAR buf[32];
+      ACE_OS::sprintf(buf, ACE_TEXT("%02d"), i + 1);
+      ACE_TString filename = ACE_TString(ior_fname_prefix) + ACE_TEXT("_") + buf + ACE_TEXT(".ior");
       ServantRecord record;
       record.servant_ = new T();
       record.safe_servant_ = record.servant_;

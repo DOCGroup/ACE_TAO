@@ -341,8 +341,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Wait for task to exit.
-      result =
-        thread_manager.wait ();
+      result = thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
   catch (const CORBA::Exception& ex)

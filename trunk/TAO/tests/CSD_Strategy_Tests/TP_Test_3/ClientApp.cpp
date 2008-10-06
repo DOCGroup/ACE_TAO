@@ -16,7 +16,7 @@ ClientApp::ClientApp()
   num_servants_ (1),
   num_csd_threads_ (1),
   num_orb_threads_ (1),
-  ior_("Not Set"),
+  ior_(ACE_TEXT("Not Set")),
   client_kind_(0),
   client_id_(0)
 {
@@ -245,7 +245,7 @@ ClientApp::usage_statement()
 int
 ClientApp::arg_dependency_checks()
 {
-  if (this->ior_ == "Not Set")
+  if (this->ior_ == ACE_TEXT("Not Set"))
     {
       ACE_ERROR((LM_ERROR,
                  "Error: Missing required command-line option (-i <ior>).\n"));
