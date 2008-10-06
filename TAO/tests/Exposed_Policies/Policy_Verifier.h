@@ -62,8 +62,8 @@ private:
   Counter_var base_object_;
   Counter_var overridden_object_;
 
-  char base_object_ref_[256];
-  char overridden_object_ref_[256];
+  ACE_TCHAR base_object_ref_[256];
+  ACE_TCHAR overridden_object_ref_[256];
 };
 
 #endif /* POLICY_VERIFIER_H_ */

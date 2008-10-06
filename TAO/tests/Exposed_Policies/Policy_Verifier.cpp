@@ -7,9 +7,9 @@ Policy_Verifier::Policy_Verifier (void)
   : priority_bands_ (0)
 {
   ACE_OS::strcpy (this->base_object_ref_,
-                  "file://default.ior");
+                  ACE_TEXT("file://default.ior"));
   ACE_OS::strcpy (this->overridden_object_ref_,
-                  "file://overridden.ior");
+                  ACE_TEXT("file://overridden.ior"));
 }
 
 Policy_Verifier::~Policy_Verifier (void)
@@ -51,7 +51,7 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
                                                   CORBA::COMPLETED_NO));
             }
           this->rt_poa_properties_->ior_source (arg);
-          ACE_OS::strcpy (this->base_object_ref_, "file://");
+          ACE_OS::strcpy (this->base_object_ref_, ACE_TEXT("file://"));
           ACE_OS::strcat (this->base_object_ref_,
                           this->rt_poa_properties_->ior_source ());
         }
@@ -65,7 +65,7 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
                                                   CORBA::COMPLETED_NO));
             }
           this->rt_object_properties_->ior_source (arg);
-          ACE_OS::strcpy (this->overridden_object_ref_, "file://");
+          ACE_OS::strcpy (this->overridden_object_ref_, ACE_TEXT("file://"));
           ACE_OS::strcat (this->overridden_object_ref_,
                           this->rt_object_properties_->ior_source ());
         }
@@ -230,7 +230,7 @@ Policy_Verifier::check_reference (CORBA::Object_ptr object,
 {
   if (CORBA::is_nil (object))
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT (msg)));
+      ACE_DEBUG ((LM_DEBUG, msg));
       return 0;
     }
   return 1;
