@@ -343,7 +343,7 @@ DRV_sweep_dirs (const char *rel_path,
   char abspath[MAXPATHLEN] = "";
   char *full_path = 0;
 
-  for (dirent *dir_entry; (dir_entry = dir.read ()) != 0;)
+  for (ACE_DIRENT *dir_entry; (dir_entry = dir.read ()) != 0;)
     {
       // Skip the ".." and "." files in each directory.
       if (ACE_OS::strcmp (dir_entry->d_name, DIR_DOT) == 0
