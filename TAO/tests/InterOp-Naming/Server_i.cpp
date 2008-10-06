@@ -43,7 +43,7 @@ Server_i::parse_args (void)
         break;
 
       case 'i': // For Testing the InterOperable Naming Service.
-        this->ins_ = CORBA::string_dup (get_opts.opt_arg ());
+        this->ins_ = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
 
       case '?':  // display help for use of the server.
