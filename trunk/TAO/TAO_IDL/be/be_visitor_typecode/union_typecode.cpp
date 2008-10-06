@@ -233,7 +233,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
 
   for (size_t n = 0; n < count; ++n)
     {
-      os << "&" << fields_name.c_str () << "__" << n;
+      os << "&" << fields_name_str << "__" << n;
 
       if (n < count - 1)
         {
