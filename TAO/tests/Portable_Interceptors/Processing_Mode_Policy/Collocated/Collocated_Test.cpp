@@ -12,8 +12,8 @@
 const ACE_TCHAR *output = ACE_TEXT("test.ior");
 const ACE_TCHAR *input = ACE_TEXT("file://test.ior");
 
-ACE_CString server_proc_mode_str;
-ACE_CString client_proc_mode_str;
+ACE_TString server_proc_mode_str;
+ACE_TString client_proc_mode_str;
 ACE_CString server_orb;
 ACE_CString client_orb;
 
@@ -23,8 +23,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:c:k:o"));
   int c;
 
-  server_proc_mode_str.set ("LOCAL_AND_REMOTE");
-  client_proc_mode_str.set ("LOCAL_AND_REMOTE");
+  server_proc_mode_str.set (ACE_TEXT("LOCAL_AND_REMOTE"));
+  client_proc_mode_str.set (ACE_TEXT("LOCAL_AND_REMOTE"));
 
   while ((c = get_opts ()) != -1)
   {
@@ -73,13 +73,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableInterceptor::ProcessingMode client_proc_mode =
                                    PortableInterceptor::LOCAL_AND_REMOTE;
 
-      if (client_proc_mode_str == "LOCAL_ONLY")
+      if (client_proc_mode_str == ACE_TEXT("LOCAL_ONLY"))
         {
           client_proc_mode = PortableInterceptor::LOCAL_ONLY;
           ACE_DEBUG((LM_DEBUG,
                      "Using LOCAL_ONLY for client-side ProcessingMode.\n"));
         }
-      else if (client_proc_mode_str == "REMOTE_ONLY")
+      else if (client_proc_mode_str == ACE_TEXT("REMOTE_ONLY"))
         {
           client_proc_mode = PortableInterceptor::REMOTE_ONLY;
           ACE_DEBUG((LM_DEBUG,
@@ -100,13 +100,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableInterceptor::ProcessingMode server_proc_mode =
                                    PortableInterceptor::LOCAL_AND_REMOTE;
 
-      if (server_proc_mode_str == "LOCAL_ONLY")
+      if (server_proc_mode_str == ACE_TEXT("LOCAL_ONLY"))
         {
           server_proc_mode = PortableInterceptor::LOCAL_ONLY;
           ACE_DEBUG((LM_DEBUG,
                      "Using LOCAL_ONLY for server-side ProcessingMode.\n"));
         }
-      else if (server_proc_mode_str == "REMOTE_ONLY")
+      else if (server_proc_mode_str == ACE_TEXT("REMOTE_ONLY"))
         {
           server_proc_mode = PortableInterceptor::REMOTE_ONLY;
           ACE_DEBUG((LM_DEBUG,
