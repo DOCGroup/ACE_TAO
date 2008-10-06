@@ -95,7 +95,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Unable to read ior\n"),
                               -1);
-          ior = ACE_OS::strdup (data);
+          ior = ACE_OS::strdup (ACE_TEXT_CHAR_TO_TCHAR(data));
           ior_buffer.alloc ()->free (data);
           ACE_OS::close (input_file);
         }
