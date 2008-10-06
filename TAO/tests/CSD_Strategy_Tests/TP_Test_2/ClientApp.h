@@ -41,8 +41,8 @@ class ClientApp : public TestAppBase
 
 
     CORBA::ORB_var      orb_;
-    ACE_CString         exe_name_;
-    ACE_CString         ior_;
+    ACE_TString         exe_name_;
+    ACE_TString         ior_;
     unsigned            client_kind_;
     ClientEngine_Handle engine_;
     unsigned            client_id_;

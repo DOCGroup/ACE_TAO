@@ -9,9 +9,8 @@
 #include "PersistentPOA.h"
 #include "DllORB.h"
 
-const char *POAname_ = 0;
-const char *ORBname_ = 0;
-
+const ACE_TCHAR *POAname_ = 0;
+const ACE_TCHAR *ORBname_ = 0;
 
 PersistentPoa::PersistentPoa ( )
 {
@@ -75,7 +74,7 @@ int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
     policies[2] = mv_rootPOA->create_id_assignment_policy(PortableServer::USER_ID);
 
     mv_thisPOA = mv_rootPOA->create_POA(
-      POAname_,
+      ACE_TEXT_ALWAYS_CHAR(POAname_),
       PortableServer::POAManager::_nil(),
       policies
     );

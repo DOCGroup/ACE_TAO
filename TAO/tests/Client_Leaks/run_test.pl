@@ -15,7 +15,7 @@ $iorfile = $target->LocalFile ("server.ior");
 $target->DeleteFile ($iorfile);
 $status = 0;
 
-$SV = $target->CreateProcess ("server", "-ORBid Client_Leaks_server -o $iorfile");
+$SV = $target->CreateProcess ("server", " -o $iorfile");
 $CL = $target->CreateProcess ("client", " -k file://$iorfile");
 
 $SV->Spawn ();

@@ -24,7 +24,7 @@ class ServantList
     void create_and_activate(unsigned                num_servants,
                              CORBA::ORB_ptr          orb,
                              PortableServer::POA_ptr poa,
-                             const char*             ior_fname_prefix);
+                             const ACE_TCHAR*        ior_fname_prefix);
 
     /// Activate servant and not output ior to a file.
     void create_and_activate(unsigned                num_servants,

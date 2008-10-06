@@ -69,7 +69,7 @@ class ClientApp : public TestAppBase
     unsigned num_csd_threads_;
     unsigned num_orb_threads_;
 
-    ACE_CString         ior_;
+    ACE_TString         ior_;
     unsigned            client_kind_;
     unsigned            client_id_;
 };

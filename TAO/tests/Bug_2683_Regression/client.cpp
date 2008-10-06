@@ -69,7 +69,7 @@ public:
 };
 
 int port = 0;
-char const * target_host = "localhost";
+ACE_TCHAR const * target_host = ACE_TEXT("localhost");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

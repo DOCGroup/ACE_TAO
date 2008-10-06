@@ -109,7 +109,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          adapter->bind ("collocated_ior_bound_in_remote_iortable", client_ior);
+          adapter->bind ("collocated_ior_bound_in_remote_iortable",
+                         ACE_TEXT_ALWAYS_CHAR(client_ior));
         }
 
       orb->run ();
