@@ -726,7 +726,7 @@ TAO_AV_RTP_Flow_Factory::~TAO_AV_RTP_Flow_Factory (void)
 
 int
 TAO_AV_RTP_Flow_Factory::init (int /* argc */,
-                                char * /* argv */ [])
+                               ACE_TCHAR * /* argv */ [])
 {
   return 0;
 }

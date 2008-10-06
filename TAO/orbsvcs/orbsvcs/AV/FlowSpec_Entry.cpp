@@ -205,7 +205,7 @@ TAO_FlowSpec_Entry::set_protocol (void)
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::set_protocol address is not 0\n"));
       ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*> (this->address_);
-      char buf[BUFSIZ];
+      ACE_TCHAR buf[BUFSIZ];
       inet_addr->addr_to_string (buf,BUFSIZ);
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,"TAO_FlowSpec_Entry::set_protocol:%s %x\n",buf, inet_addr->get_ip_address ()));
@@ -468,14 +468,14 @@ TAO_FlowSpec_Entry::get_local_addr_str (void)
     {
     case AF_INET:
       {
-        char *buf;
+        ACE_TCHAR *buf = 0;
         ACE_NEW_RETURN (buf,
-                        char [BUFSIZ],
+                        ACE_TCHAR [BUFSIZ],
                         0);
 
         ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr *> (this->local_addr_);
         inet_addr->addr_to_string (buf,BUFSIZ);
-        ACE_CString cstring (buf, 0, false);
+        ACE_CString cstring (ACE_TEXT_ALWAYS_CHAR(buf), 0, false);
 
         return cstring.rep ();
       }
@@ -595,7 +595,7 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
       this->delete_peer_addr_ = true;
       this->peer_addr_ = addr;
 
-      char buf [BUFSIZ];
+      ACE_TCHAR buf [BUFSIZ];
       addr->addr_to_string (buf, BUFSIZ);
       ACE_DEBUG ((LM_DEBUG,
                   "Peer Address %s \n",
@@ -635,7 +635,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
   if (this->flowname_.length() == 0)
     return "";
 
-  char address [BUFSIZ];
+  ACE_TCHAR address [BUFSIZ];
   ACE_CString address_str;
   ACE_CString peer_address_str;
 
@@ -662,7 +662,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
         default:
           break;
         }
-      ACE_CString cstring (address);
+      ACE_CString cstring (ACE_TEXT_ALWAYS_CHAR(address));
 
       address_str = this->carrier_protocol_;
       address_str += "=";
@@ -747,7 +747,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
           break;
         }
 
-          ACE_CString cstring (address);
+          ACE_CString cstring (ACE_TEXT_ALWAYS_CHAR(address));
 
           //peer_address_str = this->carrier_protocol_;
           //peer_address_str += "=";
@@ -922,7 +922,7 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
   if (this->flowname_.length() == 0)
     return "";
 
-  char address [BUFSIZ];
+  ACE_TCHAR address [BUFSIZ];
   ACE_CString address_str;
   if (this->address_ != 0)
     {
@@ -944,7 +944,7 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
         default:
           break;
         }
-      ACE_CString cstring (address);
+      ACE_CString cstring (ACE_TEXT_ALWAYS_CHAR(address));
 
       address_str = this->carrier_protocol_;
       address_str += "=";

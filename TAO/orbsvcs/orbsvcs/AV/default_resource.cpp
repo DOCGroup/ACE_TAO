@@ -52,7 +52,7 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
   for (curarg = 0; curarg < argc; ++curarg)
     {
       if (ACE_OS::strcasecmp (argv[curarg],
-                              "-AVTransportFactory") == 0)
+                              ACE_TEXT("-AVTransportFactory")) == 0)
         {
           TAO_AV_TransportFactorySet *tset = TAO_AV_CORE::instance ()->transport_factories ();
           curarg++;
@@ -60,7 +60,7 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             {
               TAO_AV_Transport_Item *item = 0;
               ACE_NEW_RETURN (item,
-                              TAO_AV_Transport_Item (argv[curarg]),
+                              TAO_AV_Transport_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                               -1);
               if (tset->insert (item) == -1)
                 ACE_ERROR ((LM_ERROR,
@@ -70,7 +70,7 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-AVFlowProtocolFactory") == 0)
+                                   ACE_TEXT("-AVFlowProtocolFactory")) == 0)
         {
           TAO_AV_Flow_ProtocolFactorySet *fpset = TAO_AV_CORE::instance ()->flow_protocol_factories ();
           curarg++;
@@ -78,7 +78,7 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             {
               TAO_AV_Flow_Protocol_Item *item = 0;
               ACE_NEW_RETURN (item,
-                              TAO_AV_Flow_Protocol_Item (argv[curarg]),
+                              TAO_AV_Flow_Protocol_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                               -1);
               if (fpset->insert (item) == -1)
                 ACE_ERROR ((LM_ERROR,

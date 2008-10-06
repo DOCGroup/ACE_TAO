@@ -1232,7 +1232,7 @@ TAO_AV_SFP_Factory::~TAO_AV_SFP_Factory (void)
 
 // Initialization hook from service configurator.
 int
-TAO_AV_SFP_Factory::init (int /*argc*/, char ** /*argv*/)
+TAO_AV_SFP_Factory::init (int /*argc*/, ACE_TCHAR ** /*argv*/)
 {
   return 0;
 }
