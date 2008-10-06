@@ -63,7 +63,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
           else
             {
-              objref = orb->resolve_initial_references (argv[i]);
+              objref = orb->resolve_initial_references (ACE_TEXT_ALWAYS_CHAR(argv[i]));
 
               if (CORBA::is_nil (objref.in ()))
                 ACE_ERROR_RETURN ((LM_ERROR,
