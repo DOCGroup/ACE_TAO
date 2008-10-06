@@ -20,7 +20,7 @@ class ServerApp : public TestAppBase
 
     int parse_args (int argc, ACE_TCHAR *argv[]);
 
-    ACE_CString ior_filename_;
+    ACE_TString ior_filename_;
     unsigned    num_clients_;
 };
 

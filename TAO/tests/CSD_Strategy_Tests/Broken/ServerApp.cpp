@@ -15,7 +15,7 @@
 
 ServerApp::ServerApp()
   : TestAppBase("TP_Test_3_Server"),
-    ior_filename_prefix_("foo"),
+    ior_filename_prefix_(ACE_TEXT("foo")),
     num_servants_(1),
     num_csd_threads_(1),
     num_orb_threads_(1),

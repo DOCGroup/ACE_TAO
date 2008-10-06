@@ -4,11 +4,11 @@
 void
 AppHelper::ref_to_file(CORBA::ORB_ptr    orb,
                        CORBA::Object_ptr obj,
-                       const char*       filename)
+                       const ACE_TCHAR*  filename)
 {
   CORBA::String_var ior = orb->object_to_string(obj);
 
-  FILE* ior_file = ACE_OS::fopen(filename, (const ACE_TCHAR *)("w"));
+  FILE* ior_file = ACE_OS::fopen(filename, ACE_TEXT("w"));
 
   if (ior_file == 0)
     {

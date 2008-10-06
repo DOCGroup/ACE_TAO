@@ -6,25 +6,24 @@
 
 char const * const scpc_orbId = "testDllOrb";
 
-char const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testDllOrb",
   "bug2936",
   "_make_DllORB",
   "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -ORBDottedDecimalAddresses 1"
 );
 
-char const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
+ACE_TCHAR const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
 
 
-char const * const scpc_loadPersistentPoa = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+ACE_TCHAR const * const scpc_loadPersistentPoa = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testPersistentPoa",
   "bug2936",
   "_make_PersistentPoa",
   "testPersistentPoa testDllOrb"
 );
 
-char const * const scpc_unloadPersistentPoa = ACE_REMOVE_SERVICE_DIRECTIVE("testPersistentPoa");
-
+ACE_TCHAR const * const scpc_unloadPersistentPoa = ACE_REMOVE_SERVICE_DIRECTIVE("testPersistentPoa");
 
 void loadunloadcycle()
 {

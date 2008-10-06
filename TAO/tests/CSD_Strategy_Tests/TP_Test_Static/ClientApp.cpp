@@ -11,7 +11,7 @@
 
 ClientApp::ClientApp()
   : TestAppBase("TP_Test_1_Client"),
-    ior_ ("file://test.ior")
+    ior_ (ACE_TEXT("file://test.ior"))
 {
 }
 

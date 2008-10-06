@@ -65,7 +65,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 void test_impl(
     CORBA::ORB_ptr orb,
-    char const * ior,
+    ACE_TCHAR const * ior,
     bool shutdown)
 {
   CORBA::Object_var object = orb->string_to_object(ior);
@@ -99,5 +99,5 @@ void test_colocated_calls(CORBA::ORB_ptr orb)
   CORBA::String_var ior =
     servant.create_and_activate_server();
 
-  test_impl(orb, ior.in(), false);
+  test_impl(orb, ACE_TEXT_CHAR_TO_TCHAR(ior.in()), false);
 }

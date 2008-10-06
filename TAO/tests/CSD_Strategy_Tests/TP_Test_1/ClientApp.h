@@ -22,7 +22,7 @@ class ClientApp : public TestAppBase
 
     int parse_args(int argc, ACE_TCHAR* argv[]);
 
-    ACE_CString ior_;
+    ACE_TString ior_;
 };
 
 #endif

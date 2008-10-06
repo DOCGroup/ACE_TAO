@@ -76,13 +76,13 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
               ACE_HEX_DUMP ((LM_DEBUG,
                              j->rd_ptr (),
                              j->length (),
-                             "Output CDR stream"));
+                             ACE_TEXT("Output CDR stream")));
             }
           TAO_InputCDR debug (cdr);
           ACE_HEX_DUMP ((LM_DEBUG,
                          debug.rd_ptr (),
                          debug.length (),
-                         "Input CDR stream"));
+                         ACE_TEXT("Input CDR stream")));
         }
     }
 
