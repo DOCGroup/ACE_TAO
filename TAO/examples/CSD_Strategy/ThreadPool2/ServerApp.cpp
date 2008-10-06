@@ -12,7 +12,7 @@
 
 
 ServerApp::ServerApp()
-  : ior_filename_("foo"),
+  : ior_filename_(ACE_TEXT("foo")),
     num_servants_(1),
     num_clients_(1)
 {

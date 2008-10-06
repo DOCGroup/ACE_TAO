@@ -14,7 +14,7 @@ class FooServantList
 {
   public:
 
-    FooServantList(const char* prefix,
+    FooServantList(const ACE_TCHAR* prefix,
                    unsigned num_servants,
                    unsigned num_clients,
                    int      collocated_test,
@@ -38,7 +38,7 @@ class FooServantList
 
     Foo_i** servants_;
     PortableServer::ServantBase_var* safe_servants_;
-    ACE_CString prefix_;
+    ACE_TString prefix_;
     unsigned num_servants_;
 
     LockType num_clients_lock_;

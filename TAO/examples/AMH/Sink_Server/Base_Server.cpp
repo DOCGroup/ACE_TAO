@@ -16,7 +16,7 @@
 Base_Server::Base_Server (int &argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
-  , ior_output_file_ ("test.ior")
+  , ior_output_file_ (ACE_TEXT("test.ior"))
 {
 }
 

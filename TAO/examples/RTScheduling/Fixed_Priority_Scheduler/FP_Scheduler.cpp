@@ -120,7 +120,6 @@ Fixed_Priority_Scheduler::end_nested_scheduling_segment (const RTScheduling::Cur
                                                          const char *,
                                                          CORBA::Policy_ptr)
 {
-
 }
 
 
@@ -176,7 +175,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
       DT_TEST::instance ()->dt_creator ()->log_msg (msg);
 
-      RTScheduling::Current::IdType* guid;
+      RTScheduling::Current::IdType* guid = 0;
       ACE_NEW (guid,
                RTScheduling::Current::IdType);
 

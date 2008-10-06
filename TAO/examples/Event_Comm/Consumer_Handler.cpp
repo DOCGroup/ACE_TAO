@@ -31,7 +31,7 @@ Consumer_Handler::init (int argc,
 
    // Then override these variables with command-line arguments if
    // necessary.
-  filtering_criteria = argc > 1 ? argv[1] : "";
+  filtering_criteria = argc > 1 ? ACE_TEXT_ALWAYS_CHAR(argv[1]) : "";
 
   try
     {

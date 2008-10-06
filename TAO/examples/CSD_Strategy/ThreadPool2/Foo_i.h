@@ -13,7 +13,7 @@ class Foo_i : public virtual POA_Foo
 {
   public:
 
-    Foo_i(const char* servant_name, FooServantList* mgr);
+    Foo_i(const ACE_TCHAR* servant_name, FooServantList* mgr);
     virtual ~Foo_i();
 
     virtual void op1(void);
@@ -39,7 +39,7 @@ class Foo_i : public virtual POA_Foo
     unsigned count_op4_;
     unsigned count_op5_;
 
-    ACE_CString     servant_name_;
+    ACE_TString     servant_name_;
     FooServantList* mgr_;
 };
 

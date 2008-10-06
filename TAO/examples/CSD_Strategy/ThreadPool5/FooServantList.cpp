@@ -7,7 +7,7 @@
 #include "ace/OS.h"
 
 
-FooServantList::FooServantList(const char* prefix,
+FooServantList::FooServantList(const ACE_TCHAR* prefix,
                                unsigned    num_servants,
                                unsigned    num_clients,
                                int         collocated_test,
@@ -43,15 +43,15 @@ FooServantList::create_and_activate(CORBA::ORB_ptr orb,
 
   for (unsigned i = 0; i < this->num_servants_; i++)
     {
-      char buf[32];
-      ACE_OS::sprintf(buf, "%02d", i + 1);
-      ACE_CString servant_name = this->prefix_ + "_" + buf;
+      ACE_TCHAR buf[32];
+      ACE_OS::sprintf(buf, ACE_TEXT("%02d"), i + 1);
+      ACE_TString servant_name = this->prefix_ + ACE_TEXT("_") + buf;
 
-      this->servants_[i] = new Foo_i(servant_name.c_str(),this);
+      this->servants_[i] = new Foo_i(ACE_TEXT_ALWAYS_CHAR(servant_name.c_str()),this);
       this->safe_servants_[i] = this->servants_[i];
 
       PortableServer::ObjectId_var id =
-                    PortableServer::string_to_ObjectId(servant_name.c_str());
+                    PortableServer::string_to_ObjectId(ACE_TEXT_ALWAYS_CHAR(servant_name.c_str()));
 
       poa->activate_object_with_id(id.in(),
                                    this->safe_servants_[i].in());
@@ -109,7 +109,7 @@ FooServantList::create_and_activate(CORBA::ORB_ptr orb,
       CORBA::String_var ior
         = this->orb_->object_to_string(obj.in());
 
-      ACE_CString filename = servant_name + ".ior";
+      ACE_TString filename = servant_name + ACE_TEXT(".ior");
       FILE* ior_file = ACE_OS::fopen(filename.c_str(), "w");
 
       if (ior_file == 0)

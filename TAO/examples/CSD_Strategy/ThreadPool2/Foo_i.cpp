@@ -3,7 +3,7 @@
 #include "FooServantList.h"
 #include "ace/OS.h"
 
-Foo_i::Foo_i(const char* servant_name,FooServantList* mgr)
+Foo_i::Foo_i(const ACE_TCHAR* servant_name,FooServantList* mgr)
   : value_(0),
     count_op1_(0),
     count_op2_(0),

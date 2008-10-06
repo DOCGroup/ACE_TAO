@@ -175,7 +175,7 @@ void invoke_requests (int argc,
 
       // This ends up being an AMI call, so it won't block.
       handler->run (request_count,
-                    argv[i + 1],
+                    ACE_TEXT_ALWAYS_CHAR(argv[i + 1]),
                     factory.in ());
     }
 }
