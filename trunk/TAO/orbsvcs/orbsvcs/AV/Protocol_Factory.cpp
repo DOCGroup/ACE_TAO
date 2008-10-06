@@ -20,7 +20,7 @@ TAO_AV_Flow_Protocol_Factory::~TAO_AV_Flow_Protocol_Factory (void)
 
 int
 TAO_AV_Flow_Protocol_Factory::init (int /* argc */,
-                                    char * /* argv */ [])
+                                    ACE_TCHAR * /* argv */ [])
 {
   return -1;
 }

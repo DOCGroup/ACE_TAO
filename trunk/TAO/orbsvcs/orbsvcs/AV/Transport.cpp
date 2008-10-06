@@ -657,7 +657,7 @@ TAO_AV_Transport_Factory::~TAO_AV_Transport_Factory (void)
 
 int
 TAO_AV_Transport_Factory::init (int /* argc */,
-                                char * /* argv */ [])
+                                ACE_TCHAR * /* argv */ [])
 {
   return -1;
 }

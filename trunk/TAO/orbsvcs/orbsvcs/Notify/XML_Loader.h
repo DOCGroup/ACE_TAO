@@ -44,7 +44,7 @@ public:
 
   /// Open a file and perform preliminary validation to determine whether
   /// the file is complete and valid.
-  bool open (const ACE_CString & file_name);
+  bool open (const ACE_TString & file_name);
 
   ///////////////////////////////////
   // Override Topology_Loader methods
@@ -66,7 +66,7 @@ public:
 
 private:
   /// The name of the file from which data is read.
-  ACE_CString file_name_;
+  ACE_TString file_name_;
   /// A stream representing our current output.
   FILE * input_;
 

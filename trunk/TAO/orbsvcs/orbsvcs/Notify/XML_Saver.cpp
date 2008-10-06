@@ -125,7 +125,7 @@ namespace TAO_Notify
         ACE_UINT64 const tmpus = now.sec();
         nowus += tmpus * USECSPERSEC;
 
-        char nowusstr[128];
+        ACE_TCHAR nowusstr[128];
 #ifdef ACE_LACKS_LONGLONG_T
         nowus.as_string(nowusstr);
 #else
@@ -135,7 +135,7 @@ namespace TAO_Notify
         attrs.push_back(NVP("version", "1.0"));
         if (this->timestamp_)
         {
-          attrs.push_back(NVP("timestamp", nowusstr));
+          attrs.push_back(NVP("timestamp", ACE_TEXT_ALWAYS_CHAR(nowusstr)));
         }
         this->begin_object(0, "notification_service", attrs, changed);
       }
@@ -173,8 +173,8 @@ namespace TAO_Notify
       ACE_OS::fprintf (out, " %s%s%ld%s", TOPOLOGY_ID_NAME, "=\"", lid, "\"");
     }
 
-    ACE_CString::size_type const BUF_SIZE = 512;
-    ACE_CString tmp(BUF_SIZE);
+    ACE_TString::size_type const BUF_SIZE = 512;
+    ACE_TString tmp(BUF_SIZE);
     for (size_t idx = 0; idx < attrs.size(); ++idx)
     {
       ACEXML_escape_string(attrs[idx].value, tmp);

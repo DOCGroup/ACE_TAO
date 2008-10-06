@@ -80,7 +80,7 @@ int TAO::PG_FactoryRegistry::parse_args (int argc, ACE_TCHAR * argv[])
       }
       case 'n':
       {
-        this->ns_name_ = get_opts.opt_arg();
+        this->ns_name_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg());
         break;
       }
       case 'q':
@@ -216,11 +216,10 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
   // and create a ior string
   this->ior_ = this->orb_->object_to_string (this->this_obj_.in ());
 
-
   if (this->ior_output_file_ != 0)
   {
     this->identity_ = "file:";
-    this->identity_ += this->ior_output_file_;
+    this->identity_ += ACE_TEXT_ALWAYS_CHAR(this->ior_output_file_);
     result = write_ior_file (this->ior_output_file_,
                              this->ior_.in ());
   }
