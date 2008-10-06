@@ -42,7 +42,7 @@ ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
 
   // Activate and return the servant else exception.
   PortableServer::Servant servant =
-    this->servant_manager_.obtain_servant (s.in (),
+    this->servant_manager_.obtain_servant (ACE_TEXT_CHAR_TO_TCHAR(s.in ()),
                                            poa);
   if (servant != 0)
     return servant;

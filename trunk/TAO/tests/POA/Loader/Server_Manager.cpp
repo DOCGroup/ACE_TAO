@@ -225,9 +225,9 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
       ServantActivator *temp_servant_activator;
       ACE_NEW_RETURN (temp_servant_activator,
                       ServantActivator (orb_.in (),
-                                        "Generic_Servant",
-                                        "supply_servant",
-                                        "destroy_servant"),
+                                        ACE_TEXT("Generic_Servant"),
+                                        ACE_TEXT("supply_servant"),
+                                        ACE_TEXT("destroy_servant")),
                       0);
 
       // Set ServantActivator object as the servant_manager of

@@ -60,14 +60,14 @@ Server_i::write_iors_to_file (const char *first_ior,
     // No filename was specified; simply return
     return 0;
 
-  char ior_output_file_1[BUFSIZ];
-  char ior_output_file_2[BUFSIZ];
+  ACE_TCHAR ior_output_file_1[BUFSIZ];
+  ACE_TCHAR ior_output_file_2[BUFSIZ];
 
   ACE_OS::sprintf (ior_output_file_1,
-                   "%s_1",
+                   ACE_TEXT("%s_1"),
                    ior_output_file_);
   ACE_OS::sprintf (ior_output_file_2,
-                   "%s_2",
+                   ACE_TEXT("%s_2"),
                    ior_output_file_);
 
   FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1,
@@ -78,8 +78,8 @@ Server_i::write_iors_to_file (const char *first_ior,
       || output_file_2 == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open output files for writing IORs: %s, %s\n",
-                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_1),
-                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_2)),
+                       ior_output_file_1,
+                       ior_output_file_2),
                       -1);
 
   int result = ACE_OS::fprintf (output_file_1,
@@ -89,8 +89,8 @@ Server_i::write_iors_to_file (const char *first_ior,
       || static_cast<size_t> (result) != ACE_OS::strlen (first_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %s to %s\n",
-                       ACE_TEXT_CHAR_TO_TCHAR (first_ior),
-                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_1)),
+                       first_ior,
+                       ior_output_file_1),
                       -1);
 
   result = ACE_OS::fprintf (output_file_2,
@@ -100,8 +100,8 @@ Server_i::write_iors_to_file (const char *first_ior,
       || static_cast<size_t> (result) != ACE_OS::strlen (second_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %s to %s\n",
-                       ACE_TEXT_CHAR_TO_TCHAR (second_ior),
-                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_2)),
+                       second_ior,
+                       ior_output_file_2),
                       -1);
   ACE_OS::fclose (output_file_1);
   ACE_OS::fclose (output_file_2);
