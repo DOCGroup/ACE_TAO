@@ -1,3 +1,15 @@
+Mon Oct  6 08:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Loader/Servant_Activator.cpp
+        * tests/POA/Loader/Servant_Activator.h
+        * tests/POA/Loader/Server_Manager.cpp
+        * tests/POA/On_Demand_Loading/Servant_Activator.cpp
+        * tests/POA/On_Demand_Loading/Servant_Locator.cpp
+        * tests/POA/On_Demand_Loading/Servant_Manager.cpp
+        * tests/POA/On_Demand_Loading/Servant_Manager.h
+        * tests/POA/On_Demand_Loading/Server_Manager.cpp
+          ACE_TCHAR fixes
+
 Mon Oct  6 07:45:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2319_Regression/server.cpp:

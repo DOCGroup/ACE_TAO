@@ -38,7 +38,7 @@ ServantManager_i::~ServantManager_i (void)
 // operations in the DLL.
 
 PortableServer::Servant
-ServantManager_i::obtain_servant (const char *str,
+ServantManager_i::obtain_servant (const ACE_TCHAR *str,
                                   PortableServer::POA_ptr poa)
 {
   // The string format is <dllname:factory_function> that must be
@@ -55,7 +55,7 @@ ServantManager_i::obtain_servant (const char *str,
   // Obtain the ObjectId from the string argument.
 
   PortableServer::ObjectId_var oid =
-    PortableServer::string_to_ObjectId (str);
+    PortableServer::string_to_ObjectId (ACE_TEXT_ALWAYS_CHAR (str));
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -107,15 +107,15 @@ ServantManager_i::obtain_servant (const char *str,
 // to be parsed and separated into tokens to be used.
 
 void
-ServantManager_i::parse_string (const char *s)
+ServantManager_i::parse_string (const ACE_TCHAR *s)
 {
   // The format of the objectid is <dll:factory_function>.  This
   // string is parsed to obtain the dll name and the function name
   // which will create trhe servant and return it to us.
 
-  ACE_CString str (s);
+  ACE_TString str (s);
 
-  ACE_CString::size_type index = str.find (':');
+  ACE_TString::size_type index = str.find (':');
   // On error, npos is returned.
   if (index == ACE_CString::npos)
     ACE_ERROR ((LM_ERROR,
