@@ -143,10 +143,10 @@ protected:
   TAO_MMDevice* distributer_sender_mmdevice_;
   // The distributer receiver multimedia device
 
-  ACE_TString sender_name_;
+  ACE_CString sender_name_;
   // The name of the sender to connect to.
 
-  ACE_TString distributer_name_;
+  ACE_CString distributer_name_;
   // Our name.
 
   int done_;

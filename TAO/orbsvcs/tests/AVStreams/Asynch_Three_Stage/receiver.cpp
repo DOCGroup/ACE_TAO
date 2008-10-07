@@ -82,8 +82,8 @@ Receiver::Receiver (void)
   : mmdevice_ (0),
     output_file_name_ (ACE_TEXT ("output")),
     addr_file_ (ACE_TEXT ("addr_file")),
-    sender_name_ (ACE_TEXT ("distributer")),
-    receiver_name_ (ACE_TEXT ("receiver"))
+    sender_name_ ("distributer"),
+    receiver_name_ ("receiver")
 {
 }
 
@@ -122,8 +122,8 @@ Receiver::init (int, ACE_TCHAR *[])
     this->mmdevice_->_this ();
 
   // Bind to sender.
-  this->connection_manager_.bind_to_sender (ACE_TEXT_ALWAYS_CHAR (this->sender_name_),
-                                            ACE_TEXT_ALWAYS_CHAR (this->receiver_name_),
+  this->connection_manager_.bind_to_sender (this->sender_name_,
+                                            this->receiver_name_,
                                             mmdevice.in ());
 
   // Connect to the sender.
@@ -152,10 +152,10 @@ Receiver::parse_args (int argc, ACE_TCHAR *argv[])
           this->output_file_name_ = opts.opt_arg ();
           break;
         case 's':
-          this->sender_name_ = opts.opt_arg ();
+          this->sender_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
-          this->receiver_name_ = opts.opt_arg ();
+          this->receiver_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,

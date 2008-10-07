@@ -180,8 +180,8 @@ public:
   /// Parse args.
 
   /// Flag to know when we are done.
-  int done (void) const;
-  void done (int);
+  bool done (void) const;
+  void done (bool);
 
   Connection_Manager &connection_manager (void);
   /// Accessor to connection manager.
@@ -217,7 +217,7 @@ protected:
   ACE_CString distributer_name_;
   /// Our name.
 
-  int done_;
+  bool done_;
   /// Flag to know when we are done.
 
   int stream_count_;

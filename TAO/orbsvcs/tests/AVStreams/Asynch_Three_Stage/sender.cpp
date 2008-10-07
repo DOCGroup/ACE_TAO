@@ -43,12 +43,12 @@ Sender_StreamEndPoint::set_protocol_object (const char *flowname,
 Sender::Sender (void)
   : sender_mmdevice_ (0),
     frame_count_ (0),
-    filename_ ("input"),
+    filename_ (ACE_TEXT("input")),
     input_file_ (0),
     addr_file_ (ACE_TEXT ("addr_file")),
     frame_rate_ (10.0),
     mb_ (BUFSIZ),
-    sender_name_ ("sender")
+    sender_name_ (ACE_TEXT("sender"))
 {
 }
 
@@ -120,7 +120,7 @@ Sender::init (int argc, ACE_TCHAR *argv[])
   if (this->input_file_ == 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %s\n",
-                       ACE_TEXT_CHAR_TO_TCHAR (this->filename_.c_str ())),
+                       this->filename_.c_str ()),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
@@ -140,7 +140,7 @@ Sender::init (int argc, ACE_TCHAR *argv[])
 
   // Register the object reference with the Naming Service and bind to
   // the receivers
-  this->connection_manager_.bind_to_receivers (this->sender_name_,
+  this->connection_manager_.bind_to_receivers (ACE_TEXT_ALWAYS_CHAR (this->sender_name_.c_str()),
                                                mmdevice.in ());
 
   // Connect to the receivers
