@@ -290,11 +290,22 @@ Echo_Handler::open (ACE_Reactor * const reactor,
   this->max_attempts_num_ = max_attempts_num;
   this->current_attempt_ = this->max_attempts_num_;
 
+  // If this process doesn't have privileges to open a raw socket, log
+  // a warning instead of an error.
   if (this->ping_socket ().open (local_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Echo_Handler::open: %p\n"),
-                       ACE_TEXT ("ping_socket_")),
-                      -1);
+    {
+      if (errno == EPERM)
+        ACE_ERROR_RETURN ((LM_WARNING,
+                           ACE_TEXT ("(%P|%t) Echo_Handler::open: ")
+                           ACE_TEXT ("ping_socket_: insufficient privs to ")
+                           ACE_TEXT ("run this test\n")),
+                          -1);
+      else
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%P|%t) Echo_Handler::open: %p\n"),
+                           ACE_TEXT ("ping_socket_")),
+                          -1);
+    }
 
   // register with the reactor for input
   if (this->reactor ()->register_handler (this,
@@ -1092,9 +1103,16 @@ run_main (int argc, ACE_TCHAR *argv[])
                               2,  // max_attempts_number
                               local_adapter) == -1)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %p\n"),
-                      ACE_TEXT ("main() - ping_handler->open")));
+          // If this process doesn't have privileges to open a raw socket, log
+          // a warning instead of an error.
+          if (errno == EPERM)
+            ACE_ERROR ((LM_WARNING,
+                        ACE_TEXT ("(%P|%t) main() - ping_handler->open: ")
+                        ACE_TEXT ("insufficient privs to run this test\n")));
+          else
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("main() - ping_handler->open")));
           ACE_OS::exit (-4);
         }
     }
@@ -1110,9 +1128,14 @@ run_main (int argc, ACE_TCHAR *argv[])
                               ping_status,
                               2) == -1)   // max_attempts_number
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %p\n"),
-                      ACE_TEXT ("main() - ping_handler->open ()")));
+          if (errno == EPERM)
+            ACE_ERROR ((LM_WARNING,
+                        ACE_TEXT ("(%P|%t) main() - ping_handler->open: ")
+                        ACE_TEXT ("insufficient privs to run this test\n")));
+          else
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("main() - ping_handler->open")));
           ACE_OS::exit (-4);
         }
     }
