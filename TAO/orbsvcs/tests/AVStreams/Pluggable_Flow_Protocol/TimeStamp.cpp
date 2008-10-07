@@ -184,7 +184,7 @@ TimeStamp_Protocol_Factory::~TimeStamp_Protocol_Factory (void)
 }
 
 int
-TimeStamp_Protocol_Factory::init (int, char **)
+TimeStamp_Protocol_Factory::init (int, ACE_TCHAR **)
 {
   ACE_DEBUG ((LM_DEBUG,
               "TimeStamp_Protocol_Factory::init\n"));

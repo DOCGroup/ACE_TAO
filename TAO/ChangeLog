@@ -1,3 +1,9 @@
+Tue Oct  7 15:09:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.cpp
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp
+          ACE_TCHAR fixes
+
 Tue Oct  7 14:50:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp
