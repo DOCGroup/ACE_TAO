@@ -53,12 +53,10 @@ Distributer_Sender_StreamEndPoint::set_protocol_object (const char *flowname,
     DISTRIBUTER::instance ()->connection_manager ();
 
   /// Add to the map of protocol objects.
-  connection_manager.protocol_objects ().bind (flowname,
-                                               object);
+  connection_manager.protocol_objects ().bind (flowname, object);
 
   /// Store the related streamctrl.
-  connection_manager.add_streamctrl (flowname,
-                                     this);
+  connection_manager.add_streamctrl (flowname, this);
 
   return 0;
 }
@@ -114,8 +112,7 @@ Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flo
 
       ACE_CString flowname (entry.flowname ());
 
-      int result =
-               connection_manager.streamctrls ().find (flowname);
+      int const result = connection_manager.streamctrls ().find (flowname);
 
       /// If the flowname is found.
       if (result == 0)
@@ -128,11 +125,10 @@ Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flo
         }
 
       /// Store the related streamctrl.
-      connection_manager.add_streamctrl (flowname.c_str (),
-                                         this);
+      connection_manager.add_streamctrl (flowname.c_str (), this);
 
     }
-  return 1;
+  return true;
 
 }
 
@@ -174,8 +170,7 @@ Distributer_Receiver_Callback::receive_frame (ACE_Message_Block *frame,
        iterator != protocol_objects.end ();
        ++iterator)
     {
-      int result =
-        (*iterator).int_id_->send_frame (frame);
+      int const result = (*iterator).int_id_->send_frame (frame);
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -232,9 +227,10 @@ Distributer_Sender_Callback::handle_destroy (void)
 }
 
 Distributer::Distributer (void)
-  : sender_name_ ("sender"),
+  : distributer_receiver_mmdevice_ (0),
+    sender_name_ ("sender"),
     distributer_name_ ("distributer"),
-    done_ (0),
+    done_ (false),
     stream_count_ (0)
 {
 }
@@ -246,16 +242,16 @@ Distributer::~Distributer (void)
 void
 Distributer::stream_created (void)
 {
-  this->stream_count_++;
+  ++this->stream_count_;
 }
 
 void
 Distributer::stream_destroyed (void)
 {
-  this->stream_count_--;
+  --this->stream_count_;
 
   if (this->stream_count_ == 0)
-    this->done_ = 1;
+    this->done_ = true;
 }
 
 
@@ -373,7 +369,7 @@ Distributer::init (int argc,
   return 0;
 }
 
-int
+bool
 Distributer::done (void) const
 {
   return this->done_;
@@ -406,41 +402,34 @@ Distributer::shut_down (void)
 }
 
 void
-Distributer::done (int done)
+Distributer::done (bool done)
 {
   this->done_ = done;
 }
 
 int
-ACE_TMAIN (int argc,
-      ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       /// Initialize the ORB first.
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
       /// Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
-      PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager ();
+      PortableServer::POAManager_var mgr = root_poa->the_POAManager ();
 
       mgr->activate ();
 
       /// Initialize the AVStreams components.
-      TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in ());
+      TAO_AV_CORE::instance ()->init (orb.in (), root_poa.in ());
 
       /// Initialize the Distributer
-      int result =
-        DISTRIBUTER::instance ()->init (argc,
-                                        argv);
+      int result = DISTRIBUTER::instance ()->init (argc, argv);
 
       if (result != 0)
         return result;

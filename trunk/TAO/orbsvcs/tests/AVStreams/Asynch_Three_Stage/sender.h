@@ -84,7 +84,7 @@ private:
   int frame_count_;
   // Number of frames sent.
 
-  ACE_CString filename_;
+  ACE_TString filename_;
   // File from which data is read.
 
   FILE *input_file_;
@@ -99,7 +99,7 @@ private:
   ACE_Message_Block mb_;
   // Message block into which data is read from a file and then sent.
 
-  ACE_CString sender_name_;
+  ACE_TString sender_name_;
   // Name of this sender.
 
   // Connection manager.

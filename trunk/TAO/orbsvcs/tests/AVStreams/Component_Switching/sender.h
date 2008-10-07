@@ -152,9 +152,6 @@ private:
   Connection_Manager connection_manager_;
   /// Connection manager.
 
-  //  int stream_count_;
-  /// Teh count of the number of streams that are active
-
   Signal_Handler signal_handler_;
   /// Reference to the signal handler.
 };
