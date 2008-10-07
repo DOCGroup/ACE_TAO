@@ -22,7 +22,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:"));
   int c;
-  ACE_CString ior_file ("n");
+  ACE_TString ior_file (ACE_TEXT("n"));
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -32,8 +32,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'n':
         my_id_number = (CORBA::ULong) ACE_OS::atoi (get_opts.opt_arg ());
         ior_file += get_opts.opt_arg ();
-        ior_file += ".ior";
-        ior_output_file = CORBA::string_dup (ior_file.c_str ());
+        ior_file += ACE_TEXT(".ior");
+        ior_output_file = ACE_OS::strdup (ior_file.c_str ());
         break;
       case '?':
       default:

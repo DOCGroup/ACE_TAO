@@ -38,7 +38,7 @@ public:
 private:
 
   /// Write the merged IOGRs to a file
-  int write_to_file (CORBA::Object_ptr ior, const char* ior_output_file);
+  int write_to_file (CORBA::Object_ptr ior, const ACE_TCHAR* ior_output_file);
 
   /// Sets the properties for the profiles
   int set_properties (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,

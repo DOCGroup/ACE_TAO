@@ -25,10 +25,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior_output_file = get_opts.opt_arg ();
         break;
       case 'k':
-        key = get_opts.opt_arg ();
+        key = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
       case 'f':
-        merged_iorstr = get_opts.opt_arg ();
+        merged_iorstr = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
 
       case '?':
