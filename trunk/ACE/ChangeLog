@@ -1,3 +1,9 @@
+Tue Oct  7 23:01:44 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/Network_Adapters_Test.cpp: If the ping/raw socket open fails
+          because of a lack of privilege, issue a warning that the test can't
+          run, not an error.
+
 Mon Oct  6 22:27:54 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/WFMO_Reactor.inl (suspend_handlers): Never suspend the notify
