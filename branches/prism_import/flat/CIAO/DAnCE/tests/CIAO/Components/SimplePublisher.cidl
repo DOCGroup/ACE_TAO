@@ -1,0 +1,11 @@
+// $Id$
+#include "SimplePublisher.idl"
+
+composition session SimplePublisher_Impl
+{
+  home executor SimplePublisherHome_Exec
+  {
+    implements Simple::SimplePublisherHome;
+    manages SimplePublisher_Exec;
+  };
+};
