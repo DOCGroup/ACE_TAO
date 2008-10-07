@@ -55,7 +55,7 @@ namespace FTRTEC {
         --argc; ++argv;
         if (argv[0][0] == '-') continue;
         else if (argv[0][0] != '$') {
-          name_[0].id = CORBA::string_dup(argv[0]);
+          name_[0].id = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR(argv[0]));
         }
         --argc; ++argv;
       }

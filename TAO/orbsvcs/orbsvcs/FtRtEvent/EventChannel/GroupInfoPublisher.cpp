@@ -142,7 +142,7 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr& info)
     }
 
     if (!CORBA::is_nil(naming_context_.in())) {
-      TAO_FTRTEC::Log(1, "Registering to the Name Service\n");
+      TAO_FTRTEC::Log(1, ACE_TEXT("Registering to the Name Service\n"));
       try{
         naming_context_->rebind(FTRTEC::Identification_Service::instance()->name(),
           info->iogr.in());

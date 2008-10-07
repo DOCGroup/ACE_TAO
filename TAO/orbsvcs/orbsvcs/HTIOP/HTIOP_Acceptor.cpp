@@ -410,10 +410,10 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
 
 int
 TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
-                                  ACE_Reactor *reactor,
-                                  int major,
-                                  int minor,
-                                  const char *options)
+                                    ACE_Reactor *reactor,
+                                    int major,
+                                    int minor,
+                                    const char *options)
 {
   this->orb_core_ = orb_core;
 
@@ -456,7 +456,7 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
                       sizeof (char*) * this->endpoint_count_);
 
       ACE::HTBP::ID_Requestor req(ht_env_);
-      this->addrs_[0] = req.get_HTID();
+      this->addrs_[0] = ACE_TEXT_ALWAYS_CHAR(req.get_HTID());
       return 0;
 
     }
