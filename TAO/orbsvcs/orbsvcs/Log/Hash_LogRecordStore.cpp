@@ -456,7 +456,7 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
 {
   // Decide between forward vs backward retrieval.
   char constraint[32];
-  char uint64_formating[32];
+  ACE_TCHAR uint64_formating[32];
 
 #if defined (ACE_LACKS_LONGLONG_T)
   ACE_OS::sprintf (uint64_formating,

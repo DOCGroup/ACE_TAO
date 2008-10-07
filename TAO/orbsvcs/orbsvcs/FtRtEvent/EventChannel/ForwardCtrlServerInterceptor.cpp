@@ -152,7 +152,7 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
   // pass a new IOGR if the client use an outdated version
 
   IOGR_Maker* maker = IOGR_Maker::instance();
-  TAO_FTRTEC::Log(3, "Current GROUP Version = %d, received version = %d\n",
+  TAO_FTRTEC::Log(3, ACE_TEXT("Current GROUP Version = %d, received version = %d\n"),
     maker->get_ref_version(), version);
 
   if (version < maker->get_ref_version()) {

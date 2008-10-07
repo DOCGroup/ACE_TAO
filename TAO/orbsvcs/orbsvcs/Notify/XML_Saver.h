@@ -42,7 +42,7 @@ public:
   /// Open the output file.
   /// \param file_name the fully qualified file name
   /// \return true if successful
-  bool open (const ACE_CString & file_name, size_t backup_count);
+  bool open (const ACE_TString & file_name, size_t backup_count);
 
   //////////////////////////////////
   // Override Topology_Saver methods
@@ -58,7 +58,7 @@ public:
   virtual void close (void);
 
 private:
-  void backup_file_name (char * file_path, size_t nfile);
+  void backup_file_name (ACE_TCHAR * file_path, size_t nfile);
 
 private:
   /// A stream representing our current output.
@@ -66,7 +66,7 @@ private:
   bool close_out_;
 
   /// the name of the output file
-  ACE_CString base_name_;
+  ACE_TString base_name_;
   size_t backup_count_;
 
   /// true to enable timestamping
