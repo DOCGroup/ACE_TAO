@@ -1,3 +1,16 @@
+Tue Oct  7 07:49:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h
+        * orbsvcs/orbsvcs/Event/EC_Defaults.h
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.cpp
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.h
+        * orbsvcs/orbsvcs/Event/EC_TPC_Factory.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.inl
+          ACE_TCHAR fixes
+
 Mon Oct  6 19:34:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/AMH/Sink_Server/Base_Server.cpp

@@ -264,7 +264,7 @@ private:
   Address_Server_Type address_server_type_;
   ACE_CString address_server_arg_;
   u_char ttl_value_;
-  ACE_CString nic_;
+  ACE_TString nic_;
   int ip_multicast_loop_;
   int non_blocking_;
 

@@ -72,8 +72,8 @@ public:
 private:
   /// Helper for agrument parsing.  Prints out an error message about
   /// unsupported option value.
-  void unsupported_option_value (const char * option_name,
-                                 const char * option_value);
+  void unsupported_option_value (const ACE_TCHAR * option_name,
+                                 const ACE_TCHAR * option_value);
 
 protected:
   /// Use this ORB to locate global resources.
