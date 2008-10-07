@@ -1794,8 +1794,7 @@ TAO_ORB_Core::root_poa (void)
       if (factory == 0)
         {
           this->configuration()->process_directive (
-           ACE_TEXT_CHAR_TO_TCHAR (
-             this->orb_params ()->poa_factory_directive ()));
+             this->orb_params ()->poa_factory_directive ());
 
           factory =
             ACE_Dynamic_Service<TAO_Adapter_Factory>::instance
