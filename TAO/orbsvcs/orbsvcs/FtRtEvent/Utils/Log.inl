@@ -19,7 +19,7 @@ namespace TAO_FTRTEC {
   }
 
   ACE_INLINE
-  void Log::hexdump(unsigned int level, const char* buf, size_t len, const char* msg)
+  void Log::hexdump(unsigned int level, const char* buf, size_t len, const ACE_TCHAR* msg)
   {
     if (Log::log_level_ >= level)
       ACE_HEX_DUMP((LM_DEBUG, buf, len, msg));
@@ -42,7 +42,7 @@ namespace TAO_FTRTEC {
   }
 
   ACE_INLINE
-  void Log::hexdump(unsigned int, const char*, size_t, const char*)
+  void Log::hexdump(unsigned int, const char*, size_t, const ACE_TCHAR*)
   {
   }
 #endif

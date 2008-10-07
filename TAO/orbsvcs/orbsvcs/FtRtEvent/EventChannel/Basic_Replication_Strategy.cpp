@@ -31,7 +31,7 @@ Basic_Replication_Strategy::check_validity(void)
 {
     FTRT::SequenceNumber seq_no = Request_Context_Repository().get_sequence_number();
 
-    TAO_FTRTEC::Log(1 , "check_validity : sequence no = %d\n", sequence_num_);
+    TAO_FTRTEC::Log(1 , ACE_TEXT("check_validity : sequence no = %d\n"), sequence_num_);
 
     if (this->sequence_num_ == 0) {
       // this is the first set_update received from the primary
@@ -44,7 +44,7 @@ Basic_Replication_Strategy::check_validity(void)
       //            client_interceptor_->sequence_num_--;
       FTRT::OutOfSequence exception;
       exception.current = this->sequence_num_;
-      TAO_FTRTEC::Log(3, "Throwing FTRT::OutOfSequence (old sequence_num_ = %d)\n", this->sequence_num_);
+      TAO_FTRTEC::Log(3, ACE_TEXT("Throwing FTRT::OutOfSequence (old sequence_num_ = %d)\n"), this->sequence_num_);
       throw FTRT::OutOfSequence(exception);
     }
     else
@@ -85,7 +85,7 @@ Basic_Replication_Strategy::replicate_request(
     if (info_publisher->is_primary())
       this->sequence_num_++;
 
-    TAO_FTRTEC::Log(1, "replicate_request : sequence no = %d\n", sequence_num_);
+    TAO_FTRTEC::Log(1, ACE_TEXT("replicate_request : sequence no = %d\n"), sequence_num_);
     Request_Context_Repository().set_sequence_number(sequence_num_);
 
     Request_Context_Repository().set_transaction_depth(transaction_depth-1);
@@ -102,7 +102,7 @@ Basic_Replication_Strategy::replicate_request(
     }
   }
   else if (transaction_depth > 1) {
-    TAO_FTRTEC::Log(3, "Throwing FTRT::TransactionDepthTooHigh\n");
+    TAO_FTRTEC::Log(3, ACE_TEXT("Throwing FTRT::TransactionDepthTooHigh\n"));
     throw FTRT::TransactionDepthTooHigh();
   }
 }

@@ -1,3 +1,20 @@
+Tue Oct  7 08:02:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/Log.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/Log.h
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/Log.inl
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.cpp
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp
+        * orbsvcs/orbsvcs/Notify/XML_Saver.cpp
+        * orbsvcs/orbsvcs/Notify/XML_Saver.h
+        * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.cpp
+        * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.h
+          ACE_TCHAR fixes
+
 Tue Oct  7 07:49:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp

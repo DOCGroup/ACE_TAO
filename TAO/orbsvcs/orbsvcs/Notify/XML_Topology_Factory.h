@@ -69,8 +69,8 @@ namespace TAO_Notify
     virtual int fini ();
 
    private:
-    ACE_CString save_base_path_;
-    ACE_CString load_base_path_;
+    ACE_TString save_base_path_;
+    ACE_TString load_base_path_;
     size_t backup_count_;
     bool timestamp_;
   };
