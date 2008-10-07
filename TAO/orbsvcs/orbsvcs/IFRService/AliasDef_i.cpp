@@ -46,17 +46,17 @@ TAO_AliasDef_i::type_i (void)
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT("id"),
                                             id);
 
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT("name"),
                                             name);
 
   ACE_TString original_type;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "original_type",
+                                            ACE_TEXT("original_type"),
                                             original_type);
 
   TAO_IDLType_i *impl =
@@ -89,7 +89,7 @@ TAO_AliasDef_i::original_type_def_i (void)
 {
   ACE_TString original_type;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "original_type",
+                                            ACE_TEXT("original_type"),
                                             original_type);
 
   CORBA::Object_var obj =
@@ -116,7 +116,7 @@ TAO_AliasDef_i::original_type_def_i (CORBA::IDLType_ptr original_type_def)
     TAO_IFR_Service_Utils::reference_to_path (original_type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "original_type",
+                                            ACE_TEXT("original_type"),
                                             original_type);
 }
 
