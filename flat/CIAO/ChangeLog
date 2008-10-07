@@ -1,10 +1,26 @@
+Tue Oct  7 14:50:57 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Logger/Log_Macros.h:
+        * DAnCE/Logger/Logger_Service.cpp:
+        
+          Missing from previous commit. 
+        
+        * DAnCE/tests/CIAO:
+        * tests/DAnCE:
+        * tests/DAnCE/NodeManager-Deployments:
+        * tests/DAnCE/NodeManager-Deployments/SimpleHome.cdp:
+        * tests/DAnCE/NodeManager-Deployments/nm_launcher.mpc:
+        * tests/DAnCE/NodeManager-Deployments/simple_nm_launcher.cpp:
+
+          Moved test under DAnCE tree. 
+
 Tue Oct  7 14:37:30 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Logger/Log_Macros.h:
         * DAnCE/Logger/Logger_Service.cpp:
 
           Bugfixes.
-        
+
         * DAnCE/NodeApplication/NodeApplication_Impl.h:
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
@@ -15,19 +31,19 @@ Tue Oct  7 14:37:30 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
 
           Fixes necessary to pass NodeManager-Deployments/SimpleHome.cdp.
-        
+
         * DAnCE/RedirectionService/RedirectionService.cpp:
-        
-          Improved logging. 
-        
+
+          Improved logging.
+
         * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_exec.cpp:
         * tests/DAnCE/NodeManager-Deployments:
         * tests/DAnCE/NodeManager-Deployments/SimpleHome.cdp:
         * tests/DAnCE/NodeManager-Deployments/nm_launcher.mpc:
         * tests/DAnCE/NodeManager-Deployments/simple_nm_launcher.cpp:
 
-          Simple test to excercise installation of a single home. 
-        
+          Simple test to excercise installation of a single home.
+
 Mon Oct  6 15:12:49 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/ComponentServer/CIAO_ComponentServer.mpc:
