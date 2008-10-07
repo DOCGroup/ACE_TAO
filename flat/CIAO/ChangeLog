@@ -1,10 +1,68 @@
+Tue Oct  7 19:16:06 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/Components:
+        * DAnCE/tests/CIAO/Components/SimpleCommon.idl:
+        * DAnCE/tests/CIAO/Components/SimpleCommon.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleCommon_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleCommon_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer.cidl:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer.idl:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter.cidl:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter.idl:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser.cidl:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser.idl:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleProvider.cidl:
+        * DAnCE/tests/CIAO/Components/SimpleProvider.idl:
+        * DAnCE/tests/CIAO/Components/SimpleProvider.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleProvider_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleProvider_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleProvider_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleProvider_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleProvider_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimplePublisher.cidl:
+        * DAnCE/tests/CIAO/Components/SimplePublisher.idl:
+        * DAnCE/tests/CIAO/Components/SimplePublisher.mpc:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_exec.h:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleUser.cidl:
+        * DAnCE/tests/CIAO/Components/SimpleUser.idl:
+        * DAnCE/tests/CIAO/Components/SimpleUser.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleUser_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleUser_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleUser_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleUser_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleUser_svnt_export.h:
+
+          Several components that individually test a single port type.
+        
 Tue Oct  7 14:50:57 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Logger/Log_Macros.h:
         * DAnCE/Logger/Logger_Service.cpp:
-        
-          Missing from previous commit. 
-        
+
+          Missing from previous commit.
+
         * DAnCE/tests/CIAO:
         * tests/DAnCE:
         * tests/DAnCE/NodeManager-Deployments:
@@ -12,7 +70,7 @@ Tue Oct  7 14:50:57 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/DAnCE/NodeManager-Deployments/nm_launcher.mpc:
         * tests/DAnCE/NodeManager-Deployments/simple_nm_launcher.cpp:
 
-          Moved test under DAnCE tree. 
+          Moved test under DAnCE tree.
 
 Tue Oct  7 14:37:30 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
