@@ -161,9 +161,9 @@ protected:
   int dispatching_threads_flags_; //! flags for thread creation; default: TAO_EC_DEFAULT_DISPATCHING_THREADS_FLAGS
   int dispatching_threads_priority_; //! dispatching thread priority; default: TAO_EC_DEFAULT_DISPATCHING_THREADS_PRIORITY
   int dispatching_threads_force_active_; //! create threads with innocuous default values if creation with requested values fails
-  ACE_CString queue_full_service_object_name_; //! name of ACE_Service_Object which should be invoked when output queue becomes full
-  TAO_EC_Queue_Full_Service_Object* find_service_object (const char* wanted,
-                                                         const char* fallback);
+  ACE_TString queue_full_service_object_name_; //! name of ACE_Service_Object which should be invoked when output queue becomes full
+  TAO_EC_Queue_Full_Service_Object* find_service_object (const ACE_TCHAR* wanted,
+                                                         const ACE_TCHAR* fallback);
 
   /// Use this ORB to locate global resources.
   ACE_CString orbid_;

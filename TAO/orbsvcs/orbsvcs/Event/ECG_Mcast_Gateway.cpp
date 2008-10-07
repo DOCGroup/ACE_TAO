@@ -115,7 +115,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              this->address_server_arg_.set (arg_shifter.get_current ());
+              this->address_server_arg_.set (ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()));
               arg_shifter.consume_arg ();
             }
         }
@@ -222,7 +222,7 @@ TAO_ECG_Mcast_Gateway::init (const char * address_server_arg,
   this->handler_type_ = attr.handler_type;
   this->service_type_ = attr.service_type;
   this->ttl_value_ = attr.ttl_value;
-  this->nic_.set (attr.nic.c_str ());
+  this->nic_.set (ACE_TEXT_CHAR_TO_TCHAR(attr.nic.c_str ()));
   this->ip_multicast_loop_ = attr.ip_multicast_loop;
   this->non_blocking_ = attr.non_blocking;
 
@@ -420,7 +420,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
 {
   TAO_ECG_Refcounted_Handler handler;
 
-  const char * nic =
+  const ACE_TCHAR * nic =
     (this->nic_.length ()) ? this->nic_.c_str () : 0;
   const char * address_server_arg =
     (this->address_server_arg_.length ())
