@@ -93,8 +93,8 @@ Distributer_Receiver_Callback::handle_destroy (void)
 }
 
 Distributer::Distributer (void)
-  : sender_name_ (ACE_TEXT ("sender"))
-  , distributer_name_ (ACE_TEXT ("distributer"))
+  : sender_name_ ("sender")
+  , distributer_name_ ("distributer")
   , done_ (0)
   , addr_file_ (ACE_TEXT ("addr_file"))
 {
@@ -125,10 +125,10 @@ Distributer::parse_args (int argc, ACE_TCHAR *argv[])
           this->addr_file_ = opts.opt_arg ();
           break;
         case 's':
-          this->sender_name_ = opts.opt_arg ();
+          this->sender_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
-          this->distributer_name_ = opts.opt_arg ();
+          this->distributer_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         default:
           ACE_DEBUG ((LM_DEBUG,"Unknown Option\n"));
@@ -189,15 +189,15 @@ Distributer::init (int argc, ACE_TCHAR *argv[])
     this->distributer_receiver_mmdevice_->_this ();
 
   // Bind to receivers.
-  this->connection_manager_.bind_to_receivers (ACE_TEXT_ALWAYS_CHAR (this->distributer_name_),
+  this->connection_manager_.bind_to_receivers (this->distributer_name_,
                                                distributer_sender_mmdevice.in ());
 
   // Connect to receivers
   this->connection_manager_.connect_to_receivers (distributer_sender_mmdevice.in ());
 
   // Bind to sender.
-  this->connection_manager_.bind_to_sender (ACE_TEXT_ALWAYS_CHAR (this->sender_name_),
-                                            ACE_TEXT_ALWAYS_CHAR (this->distributer_name_),
+  this->connection_manager_.bind_to_sender (this->sender_name_,
+                                            this->distributer_name_,
                                             distributer_receiver_mmdevice.in ());
 
   // Connect to sender.

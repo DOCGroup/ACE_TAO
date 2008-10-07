@@ -145,8 +145,7 @@ void
 Connection_Manager::bind_to_receivers (const ACE_CString &sender_name,
                                        AVStreams::MMDevice_ptr sender)
 {
-  this->sender_name_ =
-    sender_name;
+  this->sender_name_ = sender_name;
 
   /*
   this->sender_ =

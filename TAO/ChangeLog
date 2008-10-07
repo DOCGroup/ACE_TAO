@@ -1,3 +1,17 @@
+Tue Oct  7 14:50:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.cpp
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.h
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.cpp
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.h
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.h
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.h
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.h
+          ACE_TCHAR fixes
+
 Tue Oct  7 10:53:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CodeSets/simple/client.cpp:
