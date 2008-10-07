@@ -109,7 +109,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ++error_count;
         }
 #if defined (ACE_HAS_WCHAR)
-      wchar_t *wide_string = ACE_OS::strdup(ACE_TEXT_ALWAYS_WCHAR ("Wide String"));
+      wchar_t *wide_string = ACE_OS::strdup(ACE_TEXT_ALWAYS_WCHAR(ACE_TEXT ("Wide String")));
       wchar_t *wide_reply = server->op2 (wide_string);
       ACE_DEBUG ((LM_DEBUG,
                   "sent %W, got %W\n", wide_string, wide_reply));
