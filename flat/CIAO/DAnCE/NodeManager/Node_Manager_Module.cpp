@@ -12,8 +12,8 @@
 #include "orbsvcs/orbsvcs/Naming/Naming_Loader.h"
 #include "ciao/CIAO_common.h"
 #include "ciao/Valuetype_Factories/Cookies.h"
+#include "ciao/ComponentServer/CIAO_PropertiesC.h"
 #include "DAnCE/Logger/Log_Macros.h"
-#include "DAnCE/Deployment/Deployment_common.h"
 
 #include "Node_Manager_Module.h"
 #include "NodeManager_Impl.h"
@@ -71,13 +71,15 @@ DAnCE_NodeManager_Module::usage (void)
 {
   DANCE_TRACE ("DAnCE_NodeManager_Module::usage");
   return "Node Manager Options:\n"
-    "\t-e,exec-mgr\t\t\t [execution manager ior file name]\n"
-    "\t-n,node-mgr\t\t\t <node name> [=node manager ior file name]\n"
-    "\t-p,process-ns\t\t\t [file name] create process name service and store its ior to file name\n"
-    "\t-c,create-plan-ns\t\t [NC] create plan objects (components and ports) representation in name context with ior NC\n"
-    "\t-r,rebind-plan-ns\t\t [NC] bind plan representation name context to NC\n"
-    "\t-i,port-indirection\t\t enable plan objects indirection via servant locator\n"
-    "\t-f,ignore-failure\t\t ignore deployment failures\n"
+    "\t-e,--exec-mgr\t\t\t [execution manager ior file name]\n"
+    "\t-n,--node-mgr\t\t\t <node name> [=node manager ior file name]\n"
+    "\t-p,--process-ns\t\t\t [file name] create process name service and store its ior to file name\n"
+    "\t-c,--create-plan-ns\t\t [NC] create plan objects (components and ports) representation in name context with ior NC\n"
+    "\t-r,--rebind-plan-ns\t\t [NC] bind plan representation name context to NC\n"
+    "\t-i,--port-indirection\t\t enable plan objects indirection via servant locator\n"
+    "\t-f,--ignore-failure\t\t ignore deployment failures\n"
+    "\t-s,--server-executable\t\t default component server executable\n"
+    "\t-t,--timeout\t\t\t default timeout in seconds to wait for component server spawn\n"
     "\t-h,help\t\t\t\t print this help message\n";
 }
 
@@ -86,7 +88,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc,
                         argv,
-                        "e:n:p::c::r::ifh",
+                        "e:n:p::c::r::ifs:t:h",
                         0,
                         0,
                         ACE_Get_Opt::RETURN_IN_ORDER);
@@ -98,6 +100,8 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
   get_opts.long_option ("rebind-plan-ns", 'r', ACE_Get_Opt::ARG_OPTIONAL);
   get_opts.long_option ("port-indirection", 'i', ACE_Get_Opt::NO_ARG);
   get_opts.long_option ("ignore-failure", 'f', ACE_Get_Opt::NO_ARG);
+  get_opts.long_option ("server-executable", 's', ACE_Get_Opt::ARG_REQUIRED);
+  get_opts.long_option ("timeout", 't', ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option ("help", 'h', ACE_Get_Opt::NO_ARG);
   //get_opts.long_option ("help", '?');
 
@@ -144,7 +148,21 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
                         "Instructed to ignore deployment errors\n"));
           this->options_.ignore_failure_ = true;
           break;
-              
+          
+        case 's':
+          DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
+                        "Using provided component server executable:%s\n",
+                        get_opts.opt_arg ()));
+          this->options_.cs_path_ = get_opts.opt_arg ();
+          break;
+          
+        case 't':
+          DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
+                        "Using provided component server spawn timeout:%s\n",
+                        get_opts.opt_arg ()));
+          this->options_.timeout_ = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+
         case 'h':
           //case '?': // Display help for use of the server.
           //default:
@@ -409,9 +427,12 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
       DAnCE::NodeManager_Impl * nm = 0;
       if (this->nm_map_.find (node_name, nm) == -1)
         {
-          int size = 1024;
+          DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_object - "                                
+                        "Allocating new NodeManger servant instance for NodeManager\n"));
+          int size = 64;
           DAnCE::PROPERTY_MAP properties (size);
-          ACE_DEBUG ((LM_DEBUG, "*** size of properties_:%u\n", properties.current_size ()));
+          this->create_nm_properties (properties);
+          
           ACE_NEW_RETURN (nm,
                           DAnCE::NodeManager_Impl (orb,
                                                    this->root_poa_.in (),
@@ -419,7 +440,8 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                                                    *this->redirection_,
                                                    properties),
                           CORBA::Object::_nil ());
-
+          DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_object - "                                
+                        "New NodeManger servant instance for NodeManager allocated.\n"));
           this->nm_map_.bind (node_name, nm);
         }
 
@@ -516,6 +538,23 @@ DAnCE_NodeManager_Module::create_poas (void)
                     "Using exiswting \"Managers\" POA\n"));
       this->nm_poa_ = this->root_poa_->find_POA ("Managers", 0);
     }
+}
+
+void 
+DAnCE_NodeManager_Module::create_nm_properties (DAnCE::PROPERTY_MAP &props)
+{
+  {
+    CORBA::Any val;
+    val <<= this->options_.timeout_;
+    props.bind (CIAO::Deployment::SERVER_TIMEOUT,
+                val);
+  }
+  {
+    CORBA::Any val;
+    val <<= this->options_.cs_path_;
+    props.bind (CIAO::Deployment::SERVER_EXECUTABLE,
+                val);
+  }
 }
 
 #ifndef BUILD_NODE_MANAGER_EXE

@@ -99,6 +99,9 @@ namespace CIDL_SimpleComponent_Impl
 
   SimpleHome_exec_i::SimpleHome_exec_i (void)
   {
+    CIAO_TRACE ("SimpleHome_exec_i::SimpleHome_exec_i");
+    CIAO_DEBUG ((LM_NOTICE, CLINFO "SimpleHome_exec_i::SimpleHome_exec_i - "
+                 "Home constructed\n"));
   }
 
   SimpleHome_exec_i::~SimpleHome_exec_i (void)

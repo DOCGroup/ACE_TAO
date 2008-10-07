@@ -1,0 +1,90 @@
+<Deployment:DeploymentPlan
+  xmlns:Deployment="http://www.omg.org/Deployment"
+  xmlns:xmi="http://www.omg.org/XMI"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>SimpleComponent_Home</label>
+  <UUID>SimpleComponent_Home</UUID>
+
+  <!-- Implementations declarations -->
+
+  <!-- Server Dance implementation-->
+  <!-- Home implementation -->
+  <implementation xmi:id="SimpleComponentHomeImplementation">
+    <name>SimpleComponentHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="SimpleComponent_ExecArtifact" />
+    <artifact xmi:idref="SimpleComponent_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see §10.6.1) -->
+      <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Foo_SimpleHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Foo_SimpleHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleComponent_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleComponent_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <!-- Instances declarations -->
+
+  <!-- Server Dance instances-->
+  <instance xmi:id="SimpleComponentHomeInstance">
+    <name>SimpleComponentHome</name>
+    <node>Node</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SimpleComponentHomeImplementation" />
+  </instance>
+
+  <!-- Artifacts declarations -->
+  <artifact xmi:id="SimpleComponent_ExecArtifact">
+    <name>SimpleComponent_exec</name>
+    <source/>
+    <node/>
+    <location>SimpleComponent_exec</location>
+  </artifact>
+  <artifact xmi:id="SimpleComponent_SvntArtifact">
+    <name>SimpleComponent_svnt</name>
+    <source/>
+    <node/>
+    <location>SimpleComponent_svnt</location>
+  </artifact>
+
+  </Deployment:DeploymentPlan>

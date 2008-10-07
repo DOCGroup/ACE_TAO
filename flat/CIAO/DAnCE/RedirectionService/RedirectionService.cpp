@@ -15,17 +15,20 @@ RedirectionService::RedirectionService (CORBA::ORB_ptr orb,
     , ns_ (ns)
     , sl_ (sl)
 {
+  DANCE_TRACE ("RedirectionService::RedirectionService");
   if (this->ns_)
     {
       if (CORBA::is_nil (hosting_naming))
         {
-          DANCE_DEBUG ( (LM_DEBUG, "[%M] RedirectionService::RedirectionService ERROR - Name Service redirection is enabled but name context is nil!!!!.\n"));
+          DANCE_DEBUG ((LM_DEBUG, DLINFO "RedirectionService::RedirectionService - "
+                        "Name Service redirection is enabled but name context is nil.\n"));
         }
     }
 }
 
 RedirectionService::~RedirectionService()
 {
+  DANCE_TRACE ("RedirectionService::~RedirectionService");
   for (TLocators::iterator it = this->locators_.begin ();
        it != this->locators_.end ();
        ++it)
@@ -37,6 +40,7 @@ RedirectionService::~RedirectionService()
 void
 RedirectionService::add_node (const ACE_CString& node)
 {
+  DANCE_TRACE ("RedirectionService::add_node");
   if (this->sl_)
     {
       CCMObjectLocator* locator;
@@ -56,6 +60,7 @@ RedirectionService::add_node (const ACE_CString& node)
 void
 RedirectionService::registration_start (const ACE_CString& node, const ACE_CString& plan)
 {
+  DANCE_TRACE ("RedirectionService::registration_start");
   if (this->sl_)
     {
       CCMObjectLocator* locator;
@@ -75,11 +80,13 @@ RedirectionService::registration_start (const ACE_CString& node, const ACE_CStri
 void
 RedirectionService::registration (const ACE_CString& node, const ACE_CString& plan, const ACE_CString& component, const ACE_CString& port, CORBA::Object_ptr obj)
 {
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] RedirectionService::registration for node %s plan %s component %s and port %s is started.\n",
-               node.c_str(),
-               plan.c_str(),
-               component.c_str(),
-               port.c_str()));
+  DANCE_TRACE ("RedirectionService::registration");
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "RedirectionService::registration - "
+                "for node %s plan %s component %s and port %s is started.\n",
+                node.c_str(),
+                plan.c_str(),
+                component.c_str(),
+                port.c_str()));
   CORBA::Object_var ns_obj = CORBA::Object::_duplicate (obj);
   if (this->sl_)
     {
@@ -102,18 +109,21 @@ RedirectionService::registration (const ACE_CString& node, const ACE_CString& pl
           this->naming_.bind (node, plan, component, port, ns_obj.in());
         }
     }
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] RedirectionService::registration has been finished.\n"));
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "RedirectionService::registration - "
+                "Registration has been finished.\n"));
 }
 
 void
 RedirectionService::registration (const ACE_CString& node, const ACE_CString& plan, const ACE_CString& component, CORBA::Object_ptr obj)
 {
+  DANCE_TRACE ("RedirectionService::registration");
   this->registration (node, plan, component, "", obj);
 }
 
 void
 RedirectionService::registration_finish (const ACE_CString& node, const ACE_CString& plan)
 {
+  DANCE_TRACE ("RedirectionService::registration_finish");
   if (this->sl_)
     {
       CCMObjectLocator* locator;
@@ -133,14 +143,18 @@ RedirectionService::registration_finish (const ACE_CString& node, const ACE_CStr
 void
 RedirectionService::unregister (const ACE_CString& node, const ACE_CString& plan)
 {
-  DANCE_DEBUG((LM_TRACE, "[%M] RedirectionService::unregister - unregistering %s/%s...\n", node.c_str(), plan.c_str()));
+  DANCE_TRACE ("RedirectionService::unregister");
+  DANCE_DEBUG((LM_TRACE, DLINFO "RedirectionService::unregister - "
+               "unregistering %s/%s...\n", node.c_str(), plan.c_str()));
   if (this->ns_)
     {
       this->naming_.unbind_context (node, plan);
-      DANCE_DEBUG((LM_TRACE, "[%M] RedirectionService::unregister - finished.\n"));
+      DANCE_DEBUG((LM_TRACE, DLINFO "RedirectionService::unregister - "
+                   "finished.\n"));
     }
   else
     {
-      DANCE_DEBUG((LM_TRACE, "[%M] RedirectionService::unregister - nothing to do.\n"));
+      DANCE_DEBUG((LM_TRACE, DLINFO "RedirectionService::unregister - "
+                   "nothing to do.\n"));
     }
 }

@@ -1,16 +1,46 @@
+Tue Oct  7 14:37:30 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Logger/Log_Macros.h:
+        * DAnCE/Logger/Logger_Service.cpp:
+
+          Bugfixes.
+        
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+
+          Fixes necessary to pass NodeManager-Deployments/SimpleHome.cdp.
+        
+        * DAnCE/RedirectionService/RedirectionService.cpp:
+        
+          Improved logging. 
+        
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_exec.cpp:
+        * tests/DAnCE/NodeManager-Deployments:
+        * tests/DAnCE/NodeManager-Deployments/SimpleHome.cdp:
+        * tests/DAnCE/NodeManager-Deployments/nm_launcher.mpc:
+        * tests/DAnCE/NodeManager-Deployments/simple_nm_launcher.cpp:
+
+          Simple test to excercise installation of a single home. 
+        
 Mon Oct  6 15:12:49 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/ComponentServer/CIAO_ComponentServer.mpc:
         * ciao/ComponentServer/CIAO_Properties.idl:
         * ciao/ComponentServer/CIAO_Container_Impl.cpp:
-        
+
           Codified some component server configvalue names in IDL.
-        
+
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
 
-          Fixed a couple bugs w.r.t respecting default vs. custom server timeouts. 
-        
+          Fixed a couple bugs w.r.t respecting default vs. custom server timeouts.
+
 Wed Oct  1 20:42:34 UTC 2008  William R. Otte  <wotte@70-11-197-37.area7.spcsdns.net>
 
         * ciao/Logger/Logger_Service.cpp:
