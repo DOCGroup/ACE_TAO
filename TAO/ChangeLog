@@ -169,7 +169,7 @@ Mon Oct  6 15:11:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           * tests/Multiple_Inheritance/client.cpp
             ACE_TCHAR fixes
 
-  Mon Oct  6 14:38:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Oct  6 14:38:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           * tests/CollocationLockup/SimpleNamingService.cpp
           * tests/Connection_Purging/client.cpp
@@ -187,7 +187,7 @@ Mon Oct  6 15:11:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
             Removed borland template type
 
-  Mon Oct  6 14:30:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Oct  6 14:30:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           * tests/Big_Reply/client.cpp
           * tests/Big_Reply/run_test.pl
@@ -196,12 +196,12 @@ Mon Oct  6 15:11:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           * tests/CodeSets/simple/client.cpp
             ACE_TCHAR fixes
 
-  Mon Oct  6 14:14:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Oct  6 14:14:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           * TAO_IDL/driver/drv_preproc.cpp
             ACE_TCHAR fixes
 
-  Mon Oct  6 14:04:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Oct  6 14:04:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           * tests/CSD_Strategy_Tests/Broken/ClientApp.cpp
           * tests/CSD_Strategy_Tests/Broken/ClientApp.h
@@ -236,7 +236,7 @@ Mon Oct  6 15:11:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           * tests/Client_Leaks/run_test.pl
             No need to specify ORB id
 
-  Mon Oct  6 08:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Oct  6 08:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           * tests/POA/Loader/Servant_Activator.cpp
           * tests/POA/Loader/Servant_Activator.h
@@ -248,7 +248,7 @@ Mon Oct  6 15:11:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           * tests/POA/On_Demand_Loading/Server_Manager.cpp
             ACE_TCHAR fixes
 
-  Mon Oct  6 07:45:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Oct  6 07:45:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           * tests/Bug_2319_Regression/server.cpp:
             ACE_TCHAR fixes
@@ -256,14 +256,14 @@ Mon Oct  6 15:11:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           * tests/IORManipulation/IORTest.cpp:
             Zap old workaround and return a correct return value
 
-  Fri Oct  3 19:25:29 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+Fri Oct  3 19:25:29 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
           * orbsvcs/tests/Bug_3387_Regression/Messenger.mpc:
 
             Fix to avoid build problems on some platforms such as OpenMVS
             IA64.
 
-  Fri Oct  3 11:08:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Oct  3 11:08:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           * examples/Callback_Quoter/Consumer_Handler.cpp
           * examples/Callback_Quoter/Consumer_Handler.h
@@ -284,14 +284,14 @@ Mon Oct  6 15:11:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           * examples/Simple/grid/Grid_Client_i.h
             ACE_TCHAR fixes
 
-  Thu Oct  2 19:25:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Oct  2 19:25:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           * examples/Kokyu_dsrt_schedulers/fp_example/server.cpp
           * examples/Kokyu_dsrt_schedulers/mif_example/server.cpp
           * examples/Kokyu_dsrt_schedulers/muf_example/server.cpp
             ACE_TCHAR fixes
 
-  Thu Oct  2 19:23:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Oct  2 19:23:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/client.cpp
           * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp
@@ -305,7 +305,7 @@ Mon Oct  6 15:11:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.cpp
             ACE_TCHAR fixes
 
-  Thu Oct  2 19:20:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Oct  2 19:20:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           * performance-tests/Callback/client.cpp
           * performance-tests/Latency/AMH_Single_Threaded/client.cpp
@@ -326,7 +326,7 @@ Mon Oct  6 15:11:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           * performance-tests/Sequence_Latency/Single_Threaded/client.cpp
             ACE_TCHAR fixes
 
-  Thu Oct  2 19:10:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Oct  2 19:10:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           * orbsvcs/Concurrency_Service/Concurrency_Service.h
           * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp
@@ -335,7 +335,7 @@ Mon Oct  6 15:11:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp
             ACE_TCHAR fixes
 
-  Thu Oct  2 18:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Oct  2 18:59:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           * tests/Bug_2319_Regression/server.cpp
           * tests/Bug_2935_Regression/middle_i.cpp
           * tests/Bug_2935_Regression/middle_i.h
