@@ -42,9 +42,9 @@ TAO_EC_TPC_Factory::init (int argc, ACE_TCHAR* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcasecmp (arg, "-ECDispatching") == 0)
+      if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECDispatching")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -60,7 +60,7 @@ TAO_EC_TPC_Factory::init (int argc, ACE_TCHAR* argv[])
               arg_shifter.consume_arg ();
             }
         }
-      if (ACE_OS::strcasecmp (arg, "-ECTPCDebug") == 0)
+      if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECTPCDebug")) == 0)
         {
           arg_shifter.consume_arg ();
           ++TAO_EC_TPC_debug_level;
