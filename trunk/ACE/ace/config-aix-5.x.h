@@ -179,6 +179,7 @@
 
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
+#define ACE_HAS_ICMP_SUPPORT 1
 #define ACE_HAS_IP_MULTICAST
 
 // Lacks perfect filtering, must bind group address.
