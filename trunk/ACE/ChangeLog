@@ -1,3 +1,11 @@
+Tue Oct  7 23:04:50 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-5.x.h: Added ACE_HAS_ICMP_SUPPORT
+
+        * ace/Ping_Socket.cpp: When setting or checking the ICMP id field,
+          it's 16 bits, so restrict values to that range. AIX pids are 32 bits,
+          and the ID checks failed; this fixes it.
+
 Tue Oct  7 23:01:44 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * tests/Network_Adapters_Test.cpp: If the ping/raw socket open fails
