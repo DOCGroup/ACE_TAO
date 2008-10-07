@@ -1,3 +1,18 @@
+Tue Oct  7 08:15:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.cpp
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp
+        * orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp
+          ACE_TCHAR fixes
+
+        * orbsvcs/orbsvcs/IFRService.mpc
+        * MPC/config/ifrservice.mpb
+          Disable IFRService with uses_wchar set, this service needs a lot of
+          work to get compiling
+
 Tue Oct  7 08:02:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp

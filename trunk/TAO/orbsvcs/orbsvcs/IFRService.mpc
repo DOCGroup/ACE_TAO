@@ -2,7 +2,7 @@
 // $Id$
 
 project(IFRService) : orbsvcslib, orbsvcs_output, install, typecodefactory, svc_utils, iortable {
-  avoids      += ace_for_tao    // Requires ace/Configuration
+  avoids      += ace_for_tao uses_wchar   // Requires ace/Configuration
   sharedname   = TAO_IFRService
   dynamicflags = TAO_IFRSERVICE_BUILD_DLL
   tagchecks   += IFRService
