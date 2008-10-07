@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project: portableserver, iortable, naming, tao_monitor {
-  after += CosNotification_MC
-  libs  += TAO_CosNotification_MC
-}

@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project {
-  after   += Codeset
-  libs    += TAO_Codeset
-}

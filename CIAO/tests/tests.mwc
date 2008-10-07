@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-workspace {
-        exclude {
-                RTCCM
-        }
-
-}

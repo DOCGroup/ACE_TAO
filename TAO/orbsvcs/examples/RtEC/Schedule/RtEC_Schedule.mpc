@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcsexe, rtevent_serv, rtsched {
-  exename = Service
-}
