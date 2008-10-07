@@ -21,15 +21,18 @@ namespace DAnCE
     // Get prospective values from the environment first, those given on
     // command line can override
     ACE_Env_Value<int> log ("DANCE_LOG_LEVEL", this->log_level_);
-    this->log_level_ = log;
     
+    this->log_level_ = log;
+
     ACE_Env_Value<int> trace ("DANCE_TRACE_ENABLE", this->trace_);
     this->trace_ = trace;
+
     
     ACE_Env_Value<const char *> filename ("DANCE_LOG_FILE", this->filename_.c_str ());
     this->filename_ = filename;
 
     this->parse_args (argc, argv);
+
     this->set_levels ();
 
     return 0;
@@ -42,7 +45,7 @@ namespace DAnCE
     const ACE_TCHAR *shortl = "-l";
     const ACE_TCHAR *longl = "--log-level";
     const ACE_TCHAR *tracel = "--trace";
-    const ACE_TCHAR *traces = "-t";
+    //    const ACE_TCHAR *traces = "-t";
     const ACE_TCHAR *lfl = "--log-file";
     const ACE_TCHAR *lfs = "-f";    
       
@@ -50,7 +53,7 @@ namespace DAnCE
     // the ORB options and such. 
     for (int i = 0; i < argc; ++i)
       {
-        if (ACE_OS::strncmp (argv[i], traces, 2) == 0 ||
+        if (//ACE_OS::strncmp (argv[i], traces, 2) == 0 ||
             ACE_OS::strncmp (argv[i], tracel, 7) == 0)
           {
             this->trace_ = true;
@@ -86,7 +89,7 @@ namespace DAnCE
     if (this->trace_)
       {
         DANCE_ENABLE_TRACE ();
-        this->log_level_ = 1;
+        this->log_level_ = 10;
       }
     else
       {
