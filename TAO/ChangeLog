@@ -1,3 +1,13 @@
+Tue Oct  7 16:03:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2377_Regression/uipmc_test.cpp
+        * orbsvcs/tests/Bug_2615_Regression/client.cpp
+        * orbsvcs/tests/Bug_2709_Regression/client.cpp
+        * orbsvcs/tests/Bug_2709_Regression/Client_Task.cpp
+        * orbsvcs/tests/Bug_2709_Regression/Client_Task.h
+        * orbsvcs/tests/Bug_2925_Regression/server.cpp
+          ACE_TCHAR fixes
+
 Tue Oct  7 15:20:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2247_Regression/server.cpp
