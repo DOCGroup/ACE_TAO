@@ -1,3 +1,11 @@
+Tue Oct  7 10:22:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          ACE_TCHAR fixes
+
+        * tao/PI_Server.mpc:
+          Removed borland as mpc template
+
 Tue Oct  7 08:15:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp
