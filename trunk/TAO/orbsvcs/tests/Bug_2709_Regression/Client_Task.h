@@ -13,8 +13,8 @@ public:
   /// Constructor
   Client_Task (CORBA::ORB_ptr corb,
     ACE_Thread_Manager *thr_mgr,
-    const ACE_CString& collocated_ior_file,
-    const ACE_CString& server_ior_file);
+    const ACE_TString& collocated_ior_file,
+    const ACE_TString& server_ior_file);
 
   CORBA::Object_ptr make_iogr (
      const char* domain_id,
@@ -29,7 +29,7 @@ private:
 
   TAO_IOP::TAO_IOR_Manipulation_var iorm_;
 
-  const ACE_CString& collocated_ior_file_;
+  const ACE_TString& collocated_ior_file_;
 
-  const ACE_CString& server_ior_file_;
+  const ACE_TString& server_ior_file_;
 };

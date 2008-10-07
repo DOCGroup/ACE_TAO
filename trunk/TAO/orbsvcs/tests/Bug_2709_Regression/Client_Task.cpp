@@ -6,13 +6,13 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-ACE_CString file_prefix("file://");
+ACE_TString file_prefix(ACE_TEXT("file://"));
 
 /// Constructor
 Client_Task::Client_Task (CORBA::ORB_ptr corb,
   ACE_Thread_Manager *thr_mgr,
-  const ACE_CString& collocated_ior_file,
-  const ACE_CString& server_ior_file)
+  const ACE_TString& collocated_ior_file,
+  const ACE_TString& server_ior_file)
   : ACE_Task_Base (thr_mgr)
   , corb_ (CORBA::ORB::_duplicate (corb))
   , collocated_ior_file_(collocated_ior_file)
@@ -24,7 +24,7 @@ CORBA::Object_ptr
 Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_version)
 {
   CORBA::Object_var remote_server(
-    corb_->string_to_object (ACE_CString(file_prefix + this->server_ior_file_).c_str()));
+    corb_->string_to_object (ACE_TString(file_prefix + this->server_ior_file_).c_str()));
 
   if (CORBA::is_nil (remote_server.in ()))
     {
@@ -33,7 +33,7 @@ Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA:
     }
 
   CORBA::Object_var collocated_server(
-    corb_->string_to_object (ACE_CString(file_prefix + this->collocated_ior_file_).c_str()));
+    corb_->string_to_object (ACE_TString(file_prefix + this->collocated_ior_file_).c_str()));
 
   if (CORBA::is_nil (collocated_server.in ()))
     {
@@ -115,13 +115,13 @@ int Client_Task::svc (void)
         }
 
       CORBA::Object_var remote_server(
-        corb_->string_to_object (ACE_CString(file_prefix + this->server_ior_file_).c_str()));
+        corb_->string_to_object (ACE_TString(file_prefix + this->server_ior_file_).c_str()));
 
       Test_var remote_server_as_test =
         Test::_narrow (remote_server.in ());
 
       CORBA::Object_var collocated_server(
-        corb_->string_to_object (ACE_CString(file_prefix + this->collocated_ior_file_).c_str()));
+        corb_->string_to_object (ACE_TString(file_prefix + this->collocated_ior_file_).c_str()));
 
       Test_var collocated_server_as_test =
         Test::_narrow (collocated_server.in ());

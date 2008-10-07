@@ -10,7 +10,7 @@
 ACE_RCSID(Hello, client, "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://ior.ior");
-const char *iogr = "file://iogr.ior";
+const ACE_TCHAR *iogr = ACE_TEXT("file://iogr.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
