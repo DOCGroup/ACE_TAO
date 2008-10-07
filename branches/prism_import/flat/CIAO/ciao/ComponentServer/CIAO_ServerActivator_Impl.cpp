@@ -316,7 +316,7 @@ namespace CIAO
     CIAO_ServerActivator_i::spawn_component_server (const Server_Info &si,
                                                     const ACE_CString &cmd_line)
     {
-      CIAO_TRACE ("CIAO_ServerActivator_i::spawn_component_server\n");
+      CIAO_TRACE ("CIAO_ServerActivator_i::spawn_component_server");
       
       ACE_Process_Options options;
       

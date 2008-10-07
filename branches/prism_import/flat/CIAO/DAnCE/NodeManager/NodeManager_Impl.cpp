@@ -29,7 +29,10 @@ namespace DAnCE
     PROPERTY_MAP::const_iterator i = properties.begin ();
     while (!i.done ())
       {
+        DANCE_DEBUG ((LM_TRACE, DLINFO "NodeManager_Impl::NodeManager_Impl - "
+                      "Binding property %s provided by caller.\n", i->key ().c_str ()));
         this->properties_.bind (i->key (), i->item ());
+        i.advance ();
       }
   }
 

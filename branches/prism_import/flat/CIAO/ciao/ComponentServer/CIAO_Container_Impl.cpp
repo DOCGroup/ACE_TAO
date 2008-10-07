@@ -71,6 +71,7 @@ namespace CIAO
                                          const ::Components::ConfigValues & /*config*/)
     {
       CIAO_TRACE("CIAO_Container_i::install_component");
+      throw CORBA::NO_IMPLEMENT ();
       return 0;
     }
     
@@ -78,12 +79,14 @@ namespace CIAO
     CIAO_Container_i::remove_component (::Components::CCMObject_ptr /*cref*/)
     {
       CIAO_TRACE("CIAO_Container_i::remove_component");
+      throw CORBA::NO_IMPLEMENT ();
     }
     
     ::CIAO::Deployment::CCMObjects * 
     CIAO_Container_i::get_components (void)
     {
       CIAO_TRACE("CIAO_Container_i::get_components");
+      throw CORBA::NO_IMPLEMENT ();
       return 0;
     }
     
@@ -91,6 +94,7 @@ namespace CIAO
     CIAO_Container_i::configuration (void)
     {
       CIAO_TRACE("CIAO_Container_i::configuration");
+      throw CORBA::NO_IMPLEMENT ();
       return 0;
     }
     
@@ -98,6 +102,7 @@ namespace CIAO
     CIAO_Container_i::get_component_server (void)
     {
       CIAO_TRACE("CIAO_Container_i::get_component_server");
+      throw CORBA::NO_IMPLEMENT ();
       return 0;
     }
     

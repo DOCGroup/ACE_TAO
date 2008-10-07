@@ -11,6 +11,7 @@
 #include "ccm/CCM_ObjectC.h"
 #include "ciao/Valuetype_Factories/ConfigValue.h"
 #include "ciao/ComponentServer/CIAO_ServerActivator_Impl.h"
+#include "ciao/ComponentServer/CIAO_PropertiesC.h"
 #include "DAnCE/Logger/Log_Macros.h"
 #include "Deployment/Deployment_BaseC.h"
 #include "Deployment/Deployment_ApplicationC.h"
@@ -35,12 +36,18 @@ namespace
     if (properties.find (name, any) == 0)
       if (any >>= val)
         return true;
-    
+      else
+        {
+          DANCE_ERROR ((LM_WARNING, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
+                        "Failed to extract property value for %s\n", name));
+          return false;
+        }    
     DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
                   "Property value for name '%s' has no value\n", name));
 
     return false;
   }
+
   template<>
   bool get_property_value (const char *name, PROPERTY_MAP &properties, bool &val)
   {
@@ -54,8 +61,47 @@ namespace
     if (properties.find (name, any) == 0)
       if (any >>= CORBA::Any::to_boolean(val))
         return true;
+      else
+        {
+          DANCE_ERROR ((LM_WARNING, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
+                        "Failed to extract property value for %s\n", name));
+          return false;
+        }
 
     DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<bool> - "
+                  "Property value for name '%s' has no value\n", name));
+
+    return false;
+  }
+
+  template<class T>
+  bool get_property_value (const char *name, const Deployment::Properties &properties, T &val)
+  {
+    DANCE_TRACE ("NodeApplicion::<anonymous>::get_property_value<T>");
+    
+    DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
+                  "Finding property value for name '%s'\n",
+                  name));
+    
+    for (CORBA::ULong i = 0; i < properties.length (); ++i)
+      {
+        if (ACE_OS::strcmp (properties[i].name.in (), name) == 0)
+          {
+            DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
+                          "Found property '%s'\n", name));
+            if (properties[i].value >>= val)
+              return true;
+            else
+              {
+                DANCE_ERROR ((LM_WARNING, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
+                              "Failed to extract property value for %s\n", name));
+                return false;
+              }
+          }
+      }
+    
+    
+    DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
                   "Property value for name '%s' has no value\n", name));
 
     return false;
@@ -80,7 +126,10 @@ NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
   PROPERTY_MAP::const_iterator i = properties.begin ();
   while (!i.done ())
     {
+      DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::NodeApplication_Impl - "
+                    "Binding value for property '%s'\n", i->key ().c_str ()));
       this->properties_.bind (i->key (), i->item ());
+      i.advance ();
     }
   this->init ();
 }
@@ -132,17 +181,17 @@ NodeApplication_Impl::init()
      of the serveractivator.  */
 
   /* ServerActivator configuration */
-  CORBA::ULong spawn;
+  CORBA::ULong spawn = 0;
   const char *cs_path = 0;
-  CORBA::Boolean multithread;
+  CORBA::Boolean multithread = false;
 
-  get_property_value ("edu.vanderbilt.dre.CS_Path", this->properties_, cs_path);
+  get_property_value (CIAO::Deployment::SERVER_EXECUTABLE, this->properties_, cs_path);
   DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::init - "
                 "Component server path: %s\n", cs_path));
-  get_property_value ("edu.vanderbilt.dre.SpawnDelay", this->properties_, spawn);
+  get_property_value (CIAO::Deployment::SERVER_TIMEOUT, this->properties_, spawn);
   DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::init - "
                 "Spawn delay: %u\n", spawn));
-  get_property_value ("edu.vanderbilt.dre.Multithreaded", this->properties_, multithread);
+  get_property_value (CIAO::Deployment::SERVER_MULTITHREAD, this->properties_, multithread);
   DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::init - "
                 "Threading: %s\n",  multithread ? "Multi" : "Single"));
   
@@ -191,13 +240,181 @@ NodeApplication_Impl::start ()
 }
 
 void
-NodeApplication_Impl::create_home (unsigned int index)
+NodeApplication_Impl::install_home (Container &cont, Instance &inst)
 {
-  DANCE_TRACE( "NodeApplication_Impl::create_home (unsigned int index)");
+  DANCE_TRACE( "NodeApplication_Impl::install_home");
+
+  const ::Deployment::MonolithicDeploymentDescription &mdd = this->plan_.implementation[inst.mdd_idx];
+  const ::Deployment::InstanceDeploymentDescription &idd = this->plan_.instance[inst.idd_idx];
+  
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::install_home - "
+                "Attempting to install home %s on node %s\n",
+                idd.name.in (), idd.node.in ()));
+  
+  // need to get significant property values
+  const char *entrypt = 0;
+  get_property_value ("home factory", mdd.execParameter, entrypt);
+  
+  if (entrypt == 0)
+    {
+      DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::install_home - "
+                    "Unable to find home factory property on home %s\n",
+                    idd.name.in ()));
+      throw ::Deployment::PlanError (mdd.name.in (),
+                                      "No 'home factory' property present on MDD\n");
+    }
+  
+  // @@TODO: Perhaps need better way to do this.
+  Components::ConfigValues config;
+  config.length (mdd.execParameter.length () + idd.configProperty.length ());
+  CORBA::ULong pos (0);
+
+  for (CORBA::ULong i = 0; i < mdd.execParameter.length (); ++i)
+    {
+      DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::install_home - "
+                    "Inserting value for execParameter %s\n", mdd.execParameter[i].name.in ()));
+      config[pos++] = new CIAO::ConfigValue_impl (mdd.execParameter[i].name.in (),
+                                                  mdd.execParameter[i].value);
+    }
+
+  for (CORBA::ULong i = 0; i < idd.configProperty.length (); ++i)
+    {
+      DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::install_home - "
+                    "Inserting value for configProperty %s\n", idd.configProperty[i].name.in ()));
+      config[pos++] =  new CIAO::ConfigValue_impl (idd.configProperty[i].name.in (),
+                                                   idd.configProperty[i].value);
+    }
+  
+  try
+    {
+      DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::install_home - "
+                    "Calling install_home on container.  Home id '%s', entrypt '%s', "
+                    "length of config values is %u\n",
+                    idd.name.in (), entrypt, config.length ()));
+      
+      ::Components::CCMHome_var home = cont.ref->install_home (idd.name.in (),
+                                                               entrypt,
+                                                               config);
+
+      if (CORBA::is_nil (home))
+        {
+          DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::install_home - "
+                        "Got nil object reference from container while installing home %s on node %s,"
+                        "throwing PlanError\n",
+                        idd.name.in (), idd.node.in ()));
+          throw ::Deployment::PlanError (idd.name.in (),
+                                         "Nil object reference returned from conainer");
+        }
+      
+      DANCE_DEBUG ((LM_INFO, DLINFO  "NodeApplication_Impl::install_home - "
+                    "Home '%s' on node '%s' successfully installed\n",
+                    idd.name.in (), idd.node.in ()));
+
+      inst.ref = CORBA::Object::_narrow (home);
+      inst.configured = true;
+    }
+  catch (Components::InvalidConfiguration &)
+    {
+      DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::install_home - "
+                    "Error creating home %s on node %s, caught InvalidConfiguration.  Throwing PlanError\n",
+                    idd.name.in (), idd.node.in ()));
+      throw ::Deployment::PlanError (idd.name.in (),
+                                     "Invalid configuration exception from container");
+    }
+}
+
+void
+NodeApplication_Impl::install_component (Container &cont, Instance &inst)
+{
+  DANCE_TRACE( "NodeApplication_Impl::install_component (unsigned int index)");
 
   
 }
 
+void
+NodeApplication_Impl::create_component_server (size_t index)
+{
+  DANCE_TRACE ("NodeApplication_Impl::create_component_server");
+  
+  ComponentServer &server = this->servers_[index];
+  
+    try
+    {
+      DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::create_component_Server - "
+                   "creating component server %u\n", index));
+      ::Components::ConfigValues config_values;
+      server.ref = this->activator_->create_component_server (config_values);
+      DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::create_component_server - "
+                   "component server created\n"));
+    }
+  catch (::Components::CreateFailure& )
+    {
+      DANCE_ERROR((LM_ERROR, DLINFO "NodeApplication_impl::create_container - "
+                   "Components::Deployment::ServerActivator_var::create_component_server() "
+                   "returned ::Components::CreateFailure exception\n"));
+      throw ::Deployment::StartError();
+    }
+  catch (::Components::Deployment::InvalidConfiguration& )
+    {
+      DANCE_ERROR((LM_ERROR, DLINFO "NodeApplication_impl::create_container - "
+                   "Components::Deployment::ServerActivator_var::create_component_server() "
+                   "returned ::Components::Deployment::InvalidConfiguration exception\n"));
+      throw ::Deployment::InvalidProperty();
+    }
+    
+    try
+      {
+        for (size_t i = 0; i < server.containers.size (); ++i)
+          {
+            this->create_container (index, i);
+          }
+      }
+    catch (...)
+      {
+        DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_impl::create_container - "
+                      "Caught exception whilst creating container; re-throwing.\n"));
+        throw;
+      }
+}
+
+void
+NodeApplication_Impl::create_container (size_t server, size_t cont_idx)
+{
+  DANCE_TRACE ("NodeApplication_impl::create_container - started");
+  
+  Container &container = this->servers_[server].containers[cont_idx];
+  
+  DANCE_DEBUG ((LM_TRACE, "NodeApplication_impl::create_container - "
+                "Creating container\n"));
+  // TODO: Need to create configvalues
+  Components::ConfigValues cvs;
+  
+  container.ref = this->servers_[server].ref->create_container (cvs);
+  
+  DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_impl::create_container - "
+                "Configuring %u homes on container %u on server %u\n",
+                container.homes.size (),
+                server, cont_idx));
+  
+  // Configure homes first
+  for (size_t i = 0; i < container.homes.size (); ++i)
+    {
+      this->install_home (container, container.homes[i]);
+    }
+  
+  DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_impl::create_container - "
+                "Configuring %u homes on container %u on server %u\n",
+                container.components.size (),
+                server, cont_idx));
+
+  // Configure components
+  for (size_t i = 0; i < container.components.size (); ++i)
+    {
+      this->install_component (container, container.components[i]);
+    }
+}
+
+/*
 void
 NodeApplication_Impl::create_container (unsigned int index)
 {
@@ -212,28 +429,7 @@ NodeApplication_Impl::create_container (unsigned int index)
                               config_values);
 
   ::Components::Deployment::ComponentServer_var compServer;
-  try
-    {
-      DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::create_container - "
-                   "creating component server for destination: %s\n", processDest.c_str()));
-      compServer = this->activator_->create_component_server (config_values);
-      DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::create_container - "
-                   "component server created\n"));
-    }
-  catch (::Components::CreateFailure& )
-    {
-      DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::create_container - "
-                   "Components::Deployment::ServerActivator_var::create_component_server() "
-                   "returned ::Components::CreateFailure exception\n"));
-      throw ::Deployment::StartError();
-    }
-  catch (::Components::Deployment::InvalidConfiguration& )
-    {
-      DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::create_container - "
-                   "Components::Deployment::ServerActivator_var::create_component_server() "
-                   "returned ::Components::Deployment::InvalidConfiguration exception\n"));
-      throw ::Deployment::InvalidProperty();
-    }
+
 
   // COMPONENT_KIND
   this->create_config_values (this->plan_.implementation[this->plan_.instance[index].implementationRef].execParameter,
@@ -263,7 +459,7 @@ NodeApplication_Impl::create_container (unsigned int index)
 
   DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::create_container - finished\n"));
 }
-
+*/
 void
 NodeApplication_Impl::create_component (unsigned int index)
 {
@@ -279,7 +475,17 @@ NodeApplication_Impl::init_components()
   DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::init_components - "
                "Configuring %u component/home instances\n", 
                this->plan_.instance.length()));
-
+  
+  // @@TODO:  For the moment, we are only going to support a single component server and container. 
+  // in the future, we will need to determine how many component servers we need.
+  if (this->plan_.instance.length () > 0)
+    {
+      ComponentServer server;
+      server.containers.size (1);
+      this->servers_.size (1);
+      this->servers_[0] = server;
+    }
+  
   for (unsigned int i = 0; i < this->plan_.instance.length(); i++)
     {
       try
@@ -288,12 +494,20 @@ NodeApplication_Impl::init_components()
             {
             case eHome:
               {
-                //this->configure_home (i);
+                size_t pos = this->servers_[0].containers[0].homes.size ();
+                this->servers_[0].containers[0].homes.size (pos + 1);
+                this->servers_[0].containers[0].homes[pos] = Instance (eHome,
+                                                                       i,
+                                                                       this->plan_.instance[i].implementationRef);
                 break;
               }
             case eComponent:
               {
-                //this->configure_component (i);
+                size_t pos = this->servers_[0].containers[0].homes.size ();
+                this->servers_[0].containers[0].components.size (pos + 1);
+                this->servers_[0].containers[0].components[pos] = Instance (eHome,
+                                                                            i,
+                                                                            this->plan_.instance[i].implementationRef);
                 break;
               }
             default:
@@ -305,11 +519,21 @@ NodeApplication_Impl::init_components()
             } // switch
         } catch (...)
         {
-          DANCE_ERROR((LM_ERROR, DLINFO "Exception was thrown while creating instance \"%s\".\n", this->plan_.instance[i].name.in()));
+          DANCE_ERROR((LM_ERROR, DLINFO "Exception was thrown while sorting instance \"%s\".\n", this->plan_.instance[i].name.in()));
           throw;
         }
     }
-
+  
+  DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_impl::init_components - "
+                "Creating component servers and installing components.\n"));
+  for (size_t i = 0; i < this->servers_.size (); ++i)
+    {
+      DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_impl::init_components - "
+                    "Creating component server with index %u\n", i));
+      this->create_component_server (i);
+    }
+  
+  
   DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::init_components - finished\n"));
 }
 
@@ -325,7 +549,7 @@ NodeApplication_Impl::create_config_values (const Deployment::Properties& prop,
                                             const ERequestType request,
                                             Components::ConfigValues& cfg) const
 {
-  DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::create_config_values - started\n"));
+  DANCE_TRACE ("NodeApplication_Impl::create_config_values");
 
   unsigned int ind = 0;
   CORBA::Any_var feature_any;
@@ -350,8 +574,6 @@ NodeApplication_Impl::create_config_values (const Deployment::Properties& prop,
         throw ::Deployment::InvalidProperty();
       }
     }
-
-  DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::create_config_values - finished\n"));
 }
 
 Deployment::Connections*

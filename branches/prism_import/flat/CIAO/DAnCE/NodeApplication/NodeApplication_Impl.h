@@ -84,10 +84,18 @@ namespace DAnCE
     
     struct Instance
     {
+      Instance (EInstanceType type = eInvalid, 
+                CORBA::ULong idd = 0, 
+                CORBA::ULong mdd = 0) : 
+        configured (false), type (type), idd_idx (idd), mdd_idx (mdd)
+      {
+      }
+      
       bool configured;
       EInstanceType type;
       CORBA::ULong idd_idx;
       CORBA::ULong mdd_idx;
+      CORBA::Object_var ref;
     };
     
     typedef ACE_Array<Instance> INSTANCES;
@@ -97,6 +105,7 @@ namespace DAnCE
       INSTANCES homes;
       INSTANCES components;
       Deployment::Properties properties;
+      Components::Deployment::Container_var ref;
     };
     
     typedef ACE_Array<Container> CONTAINERS;
@@ -105,6 +114,7 @@ namespace DAnCE
     {
       CONTAINERS containers;
       Deployment::Properties properties;
+      Components::Deployment::ComponentServer_var ref;
     };
     
     typedef ACE_Array<ComponentServer> COMPONENTSERVERS;
@@ -119,9 +129,15 @@ namespace DAnCE
 
     void create_config_values(const Deployment::Properties& prop,
                             Components::ConfigValues& cfg) const;
+    
+    void create_component_server (size_t index);
+    
+    void create_container (size_t server, size_t container);
 
-    void create_container (unsigned int index);
+    void install_home (Container &cont, Instance &inst);
 
+    void install_component (Container &cont, Instance &inst);
+    
     void create_home (unsigned int index);
 
     void create_component (unsigned int index);

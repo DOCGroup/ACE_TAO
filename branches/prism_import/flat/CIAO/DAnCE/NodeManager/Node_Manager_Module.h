@@ -33,6 +33,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "tao/Object_Loader.h"
 #include "Deployment/DAnCE_Loader.h"
+#include "DAnCE/Deployment/Deployment_common.h"
 
 namespace DAnCE
 {
@@ -63,15 +64,19 @@ class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
         bool port_indirection_;
         ACE_Vector<ACE_CString> node_managers_;
         bool ignore_failure_;
-
+        const char * cs_path_;
+        unsigned int timeout_;
+        
         SOptions()
-            : process_ns_ (false)
-            , process_ns_file_ (0)
-            , create_plan_ns_ (false)
-            , create_plan_ns_ior_ (0)
-            , rebind_plan_ns_ (false)
-            , rebind_plan_ns_ior_ (0)
-            , ignore_failure_ (false)
+            : process_ns_ (false), 
+              process_ns_file_ (0),
+              create_plan_ns_ (false),
+              create_plan_ns_ior_ (0),
+              rebind_plan_ns_ (false),
+              rebind_plan_ns_ior_ (0),
+              ignore_failure_ (false),
+              cs_path_ (0),
+              timeout_ (5)
         {
         }
       };
@@ -96,6 +101,7 @@ class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
  private:
   void register_value_factories (void);
   void create_poas (void);
+  void create_nm_properties (DAnCE::PROPERTY_MAP &props);
   
   /// Here we store the servants.
   typedef ACE_Map_Manager < ACE_CString,
