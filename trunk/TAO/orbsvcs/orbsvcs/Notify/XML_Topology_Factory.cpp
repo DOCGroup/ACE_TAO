@@ -16,8 +16,8 @@ namespace TAO_Notify
   const char TOPOLOGY_ID_NAME[] = "TopologyID";
 
   XML_Topology_Factory::XML_Topology_Factory()
-    : save_base_path_ ("./Notification_Service_Topology")
-    , load_base_path_ ("./Notification_Service_Topology")
+    : save_base_path_ (ACE_TEXT("./Notification_Service_Topology"))
+    , load_base_path_ (ACE_TEXT("./Notification_Service_Topology"))
     , backup_count_ (2)
     , timestamp_ (true)
   {

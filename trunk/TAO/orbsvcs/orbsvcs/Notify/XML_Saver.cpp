@@ -33,9 +33,9 @@ namespace TAO_Notify
   }
 
   void
-  XML_Saver::backup_file_name (char * file_path, size_t nfile)
+  XML_Saver::backup_file_name (ACE_TCHAR * file_path, size_t nfile)
   {
-    ACE_OS::snprintf(file_path, MAXPATHLEN, "%s.%3.3d",
+    ACE_OS::snprintf(file_path, MAXPATHLEN, ACE_TEXT("%s.%3.3d"),
       this->base_name_.c_str (),
       nfile);
   }
@@ -52,13 +52,13 @@ namespace TAO_Notify
 
       // delete the oldest backup file (if it exists)
       size_t nfile = this->backup_count_ - 1;
-      char old_path [MAXPATHLEN + 1];
+      ACE_TCHAR old_path [MAXPATHLEN + 1];
       backup_file_name (old_path, nfile);
       ACE_OS::unlink (old_path);
 
       while (nfile != 0)
       {
-        char new_path [MAXPATHLEN + 1];
+        ACE_TCHAR new_path [MAXPATHLEN + 1];
         nfile -= 1;
         backup_file_name (new_path, nfile);
         // this may fail, we don't care
@@ -66,37 +66,37 @@ namespace TAO_Notify
         ACE_OS::strcpy (old_path, new_path);
       }
       // old_path now contains the name of the backup file
-      ACE_CString xml_name = this->base_name_;
-      xml_name += ".xml";
+      ACE_TString xml_name = this->base_name_;
+      xml_name += ACE_TEXT(".xml");
 
       ACE_OS::rename (xml_name.c_str (), old_path);
 
-      ACE_CString new_name = this->base_name_;
-      new_name += ".new";
+      ACE_TString new_name = this->base_name_;
+      new_name += ACE_TEXT(".new");
       ACE_OS::rename (new_name.c_str (), xml_name.c_str ());
     }
     this->output_ = 0;
   }
 
   bool
-  XML_Saver::open(const ACE_CString & base_name, size_t backup_count)
+  XML_Saver::open(const ACE_TString & base_name, size_t backup_count)
   {
     this->base_name_ = base_name;
     this->backup_count_ = backup_count;
-    if (base_name ==  "cout")
+    if (base_name ==  ACE_TEXT("cout"))
     {
       this->output_ = stdout;
       this->close_out_ = false;
     }
-    else if (base_name ==  "cerr")
+    else if (base_name ==  ACE_TEXT("cerr"))
     {
       this->output_ = stderr;
       this->close_out_ = false;
     }
     else
     {
-      ACE_CString file_name = base_name;
-      file_name += ".new";
+      ACE_TString file_name = base_name;
+      file_name += ACE_TEXT(".new");
 
       this->output_ = ACE_OS::fopen (file_name.c_str(), ACE_TEXT("wb"));
       if (this->output_) {
@@ -177,7 +177,8 @@ namespace TAO_Notify
     ACE_TString tmp(BUF_SIZE);
     for (size_t idx = 0; idx < attrs.size(); ++idx)
     {
-      ACEXML_escape_string(attrs[idx].value, tmp);
+      ACE_TString valuetmp (ACE_TEXT_CHAR_TO_TCHAR(attrs[idx].value.c_str()));
+      ACEXML_escape_string(valuetmp, tmp);
       ACE_OS::fprintf (out, "%s%s%s%s%s", " ",
         attrs[idx].name.c_str (), "=\"", tmp.c_str(), "\"");
     }

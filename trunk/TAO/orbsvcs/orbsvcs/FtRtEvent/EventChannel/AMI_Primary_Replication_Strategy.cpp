@@ -108,7 +108,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
    size_t num_backups = backups.length();
 
    if ((size_t)transaction_depth > num_backups) {
-     TAO_FTRTEC::Log(3, "Throwing FTRT::TransactionDepthTooHigh\n");
+     TAO_FTRTEC::Log(3, ACE_TEXT("Throwing FTRT::TransactionDepthTooHigh\n"));
      throw FTRT::TransactionDepthTooHigh();
    }
 
@@ -149,7 +149,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
        catch (...){
        }
      }
-     TAO_FTRTEC::Log(3, "Throwing FTRT::TransactionDepthTooHigh\n");
+     TAO_FTRTEC::Log(3, ACE_TEXT("Throwing FTRT::TransactionDepthTooHigh\n"));
      throw FTRT::TransactionDepthTooHigh();
    }
 
