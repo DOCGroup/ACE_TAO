@@ -50,11 +50,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
       switch (c)
         {
         case 'u':
-          uipmc_url = get_opts.opt_arg ();
+          uipmc_url = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
           success |= 0x01;
           break;
         case 'c':
-          client_uipmc_url = get_opts.opt_arg ();
+          client_uipmc_url = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
           success |= 0x02;
           break;
         }

@@ -13,8 +13,8 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-ACE_CString collocated_ior_file("collocated_server.ior");
-ACE_CString server_ior_file("server.ior");
+ACE_TString collocated_ior_file(ACE_TEXT("collocated_server.ior"));
+ACE_TString server_ior_file(ACE_TEXT("server.ior"));
 
 //////////////////////////////////////////////////////////////////////////
 
