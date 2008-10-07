@@ -99,7 +99,7 @@ Sender::parse_args (int argc,
           }
         case 'l':
           {
-            TAO_Tokenizer addr_token (opts.opt_arg (), ',');
+            TAO_Tokenizer addr_token (ACE_TEXT_ALWAYS_CHAR(opts.opt_arg ()), ',');
             this->address_ = CORBA::string_dup (addr_token [0]);
             num_local_sec_addrs_ = addr_token.num_tokens () - 1;
             if (num_local_sec_addrs_ != 0)
@@ -116,7 +116,7 @@ Sender::parse_args (int argc,
           break;
         case 'a':
           {
-            TAO_Tokenizer addr_token (opts.opt_arg (), ',');
+            TAO_Tokenizer addr_token (ACE_TEXT_ALWAYS_CHAR(opts.opt_arg ()), ',');
             this->peer_address_ = CORBA::string_dup (addr_token [0]);
             num_peer_sec_addrs_ = addr_token.num_tokens () - 1;
             if (num_peer_sec_addrs_ != 0)
