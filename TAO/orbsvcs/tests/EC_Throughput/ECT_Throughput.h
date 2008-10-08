@@ -111,7 +111,7 @@ private:
   // Supplier2: [start + 2*shift, start + 2*shift + count)
   // And so on.
 
-  const char* pid_file_name_;
+  const ACE_TCHAR* pid_file_name_;
   // The name of a file where the process stores its pid
 
   CORBA::ORB_var orb_;

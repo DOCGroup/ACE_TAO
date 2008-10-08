@@ -172,7 +172,7 @@ public:
                             const RtecScheduler::Dependency_Set& dependencies,
                             const RtecScheduler::Config_Info_Set& configs,
                             const RtecScheduler::Scheduling_Anomaly_Set& anomalies,
-                            const char* file_name = 0,
+                            const ACE_TCHAR* file_name = 0,
                             const char* rt_info_format = 0,
                             const char* dependency_format = 0,
                             const char* config_info_format = 0,

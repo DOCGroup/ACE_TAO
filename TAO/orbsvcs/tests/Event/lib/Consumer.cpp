@@ -87,7 +87,7 @@ EC_Consumer::shutdown (void)
 }
 
 void
-EC_Consumer::dump_results (const char* name,
+EC_Consumer::dump_results (const ACE_TCHAR* name,
                            ACE_UINT32 gsf)
 {
   this->throughput_.dump_results (name, gsf);

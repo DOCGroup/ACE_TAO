@@ -61,7 +61,7 @@ public:
   // We talk to the EC (as a supplier) using this proxy, no duplicates
   // are done here...
 
-  void dump_results (const char* name,
+  void dump_results (const ACE_TCHAR* name,
                      ACE_UINT32 global_scale_factor);
   // Dump the results...
 

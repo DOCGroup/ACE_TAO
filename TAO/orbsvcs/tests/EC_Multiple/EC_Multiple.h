@@ -230,7 +230,7 @@ private:
   // Block event delivery until all the consumers are ready.
 
   struct Stats;
-  void dump_results (const char* name, Stats& stats);
+  void dump_results (const ACE_TCHAR* name, Stats& stats);
   // Dump the results for a particular consumer.
 
   int local_source (RtecEventComm::EventSourceID id) const;
@@ -326,11 +326,11 @@ private:
   // two other types. The types for high-priority clients can be
   // different from the types to low priority clients.
 
-  const char* schedule_file_;
+  const ACE_TCHAR* schedule_file_;
   // Ask the schedule to compute and dump its schedule after the test
   // execution.
 
-  const char* pid_file_name_;
+  const ACE_TCHAR* pid_file_name_;
   // The name of a file where the process stores its pid
 
   struct Stats {

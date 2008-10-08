@@ -9,7 +9,7 @@
 #include "ace/OS_NS_stdio.h"
 
 Gateway_EC::Gateway_EC (void)
-  : ec_ior_file_ ("gateway-ec.ior")
+  : ec_ior_file_ (ACE_TEXT("gateway-ec.ior"))
 {
 }
 
@@ -26,7 +26,7 @@ Gateway_EC::check_for_nil (CORBA::Object_ptr obj, const char *message)
 }
 
 int
-Gateway_EC::parse_args (int argc, char *argv [])
+Gateway_EC::parse_args (int argc, ACE_TCHAR *argv [])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:"));
   int opt;
@@ -75,7 +75,7 @@ Gateway_EC::write_ior_file (CORBA::ORB_ptr orb,
 }
 
 int
-Gateway_EC::run (int argc, char ** argv)
+Gateway_EC::run (int argc, ACE_TCHAR ** argv)
 {
   // Event Channel Configuration.
   TAO_EC_Default_Factory::init_svcs ();

@@ -281,7 +281,7 @@ protected:
   int supplier_type_shift_;
 
   /// The name of a file where the process stores its pid
-  const char* pid_file_name_;
+  const ACE_TCHAR* pid_file_name_;
 
   /// Verbosity flag
   int verbose_;

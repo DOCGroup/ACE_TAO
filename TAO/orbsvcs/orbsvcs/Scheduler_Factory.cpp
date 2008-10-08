@@ -300,7 +300,7 @@ int ACE_Scheduler_Factory::dump_schedule
     const RtecScheduler::Dependency_Set& dependencies,
     const RtecScheduler::Config_Info_Set& configs,
     const RtecScheduler::Scheduling_Anomaly_Set& anomalies,
-    const char* file_name,
+    const ACE_TCHAR* file_name,
     const char* rt_info_format,
     const char* dependency_format,
     const char* config_info_format,
@@ -343,7 +343,7 @@ int ACE_Scheduler_Factory::dump_schedule
   FILE* file = stdout;
   if (file_name != 0)
     {
-      file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(file_name), ACE_TEXT("w"));
+      file = ACE_OS::fopen (file_name, ACE_TEXT("w"));
       if (file == 0)
           return -1;
     }

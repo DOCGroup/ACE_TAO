@@ -77,8 +77,8 @@ EC_Master::run (int argc, ACE_TCHAR* argv[])
       }
 
       {
-        char** targv;
-        ACE_NEW_RETURN (targv, char*[argc], 1);
+        ACE_TCHAR** targv;
+        ACE_NEW_RETURN (targv, ACE_TCHAR*[argc], 1);
 
         for (int i = 0; i != this->n_channels_; ++i)
           {
@@ -149,7 +149,7 @@ EC_Master::run (int argc, ACE_TCHAR* argv[])
 }
 
 void
-EC_Master::initialize_orb_and_poa (int &argc, char* argv[])
+EC_Master::initialize_orb_and_poa (int &argc, ACE_TCHAR* argv[])
 {
   this->orb_ =
     CORBA::ORB_init (argc, argv);
@@ -174,20 +174,20 @@ EC_Master::initialize_orb_and_poa (int &argc, char* argv[])
 }
 
 int
-EC_Master::parse_args (int &argc, char *argv [])
+EC_Master::parse_args (int &argc, ACE_TCHAR *argv [])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcmp (arg, "-channels") == 0)
+      if (ACE_OS::strcmp (arg, ACE_TEXT("-channels")) == 0)
         {
           arg_shifter.consume_arg ();
           this->n_channels_ = ACE_OS::atoi (arg_shifter.get_current ());
         }
-      else if (ACE_OS::strcmp (arg, "-seed") == 0)
+      else if (ACE_OS::strcmp (arg, ACE_TEXT("-seed")) == 0)
         {
           arg_shifter.consume_arg ();
           this->seed_ = ACE_OS::atoi (arg_shifter.get_current ());
@@ -233,7 +233,7 @@ EC_Observer::~EC_Observer (void)
 }
 
 void
-EC_Observer::initialize_orb_and_poa (int&, char*[])
+EC_Observer::initialize_orb_and_poa (int&, ACE_TCHAR*[])
 {
 }
 

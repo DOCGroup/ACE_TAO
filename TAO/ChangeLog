@@ -1,3 +1,56 @@
+Wed Oct  8 12:54:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp
+        * orbsvcs/orbsvcs/Scheduler_Factory.h
+        * orbsvcs/tests/Bug_2925_Regression/server.cpp
+        * orbsvcs/tests/Bug_2926_Regression/server.cpp
+        * orbsvcs/tests/Concurrency/CC_client.cpp
+        * orbsvcs/tests/Concurrency/CC_client.h
+        * orbsvcs/tests/CosEvent/Basic/Random.cpp
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.h
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.h
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.h
+        * orbsvcs/tests/EC_MT_Mcast/MCast.cpp
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.h
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.h
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.h
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.h
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.h
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.h
+        * orbsvcs/tests/Event/Basic/BCast.cpp
+        * orbsvcs/tests/Event/Basic/Observer.cpp
+        * orbsvcs/tests/Event/Basic/Observer.h
+        * orbsvcs/tests/Event/Basic/Random.cpp
+        * orbsvcs/tests/Event/lib/Consumer.cpp
+        * orbsvcs/tests/Event/lib/Consumer.h
+        * orbsvcs/tests/Event/lib/Driver.cpp
+        * orbsvcs/tests/Event/lib/Driver.h
+        * orbsvcs/tests/Event/lib/Supplier.cpp
+        * orbsvcs/tests/Event/lib/Supplier.h
+        * orbsvcs/tests/Event/Mcast/AddrServer/Client.cpp
+        * orbsvcs/tests/Event/Mcast/AddrServer/TestAddrServer.cpp
+        * orbsvcs/tests/Event/Mcast/Common/Gateway_EC.cpp
+        * orbsvcs/tests/Event/Mcast/Common/Gateway_EC.h
+        * orbsvcs/tests/Event/Mcast/Complex/consumer.cpp
+        * orbsvcs/tests/Event/Mcast/Complex/supplier.cpp
+        * orbsvcs/tests/Event/Performance/Connect.cpp
+        * orbsvcs/tests/Event/Performance/Connect.h
+        * orbsvcs/tests/Event/Performance/Inversion.cpp
+          ACE_TCHAR fixes
+
 Wed Oct  8 11:31:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/server.cpp

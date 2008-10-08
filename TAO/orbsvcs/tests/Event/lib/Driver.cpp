@@ -87,7 +87,7 @@ EC_Driver::run (int argc, ACE_TCHAR* argv[])
 }
 
 void
-EC_Driver::run_init (int &argc, char* argv[])
+EC_Driver::run_init (int &argc, ACE_TCHAR* argv[])
 {
   this->initialize_orb_and_poa (argc, argv);
 
@@ -152,7 +152,7 @@ EC_Driver::run_cleanup (void)
 }
 
 void
-EC_Driver::initialize_orb_and_poa (int &argc, char* argv[])
+EC_Driver::initialize_orb_and_poa (int &argc, ACE_TCHAR* argv[])
 {
   this->orb_ =
     CORBA::ORB_init (argc, argv);
@@ -209,7 +209,7 @@ EC_Driver::print_args (void) const
               this->supplier_type_count_,
               this->supplier_type_shift_,
 
-              this->pid_file_name_?this->pid_file_name_:"nil"
+              this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")
               ) );
 }
 
@@ -642,10 +642,10 @@ EC_Driver::dump_results (void)
 {
   ACE_Throughput_Stats throughput;
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
   for (int j = 0; j < this->n_consumers_; ++j)
     {
-      ACE_OS::sprintf (buf, "Consumer [%02d]", j);
+      ACE_OS::sprintf (buf, ACE_TEXT("Consumer [%02d]"), j);
 
       this->consumers_[j]->dump_results (buf, gsf);
       this->consumers_[j]->accumulate (throughput);
@@ -655,7 +655,7 @@ EC_Driver::dump_results (void)
   ACE_Throughput_Stats suppliers;
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      ACE_OS::sprintf (buf, "Supplier [%02d]", i);
+      ACE_OS::sprintf (buf, ACE_TEXT("Supplier [%02d]"), i);
 
       this->suppliers_[i]->dump_results (buf, gsf);
       this->suppliers_[i]->accumulate (suppliers);
@@ -669,33 +669,33 @@ EC_Driver::dump_results (void)
 }
 
 int
-EC_Driver::parse_args (int &argc, char *argv [])
+EC_Driver::parse_args (int &argc, ACE_TCHAR *argv [])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcmp (arg, "-verbose") == 0)
+      if (ACE_OS::strcmp (arg, ACE_TEXT("-verbose")) == 0)
         {
           arg_shifter.consume_arg ();
           this->verbose_ = 1;
         }
 
-      else if (ACE_OS::strcmp (arg, "-remote") == 0)
+      else if (ACE_OS::strcmp (arg, ACE_TEXT("-remote")) == 0)
         {
           arg_shifter.consume_arg ();
 
           this->use_remote_ec_ = 1;
           if (arg_shifter.is_parameter_next ())
             {
-              this->event_service_name_ = arg_shifter.get_current ();
+              this->event_service_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcmp (arg, "-suppliers") == 0)
+      else if (ACE_OS::strcmp (arg, ACE_TEXT("-suppliers")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -706,7 +706,7 @@ EC_Driver::parse_args (int &argc, char *argv [])
             }
         }
 
-      else if (ACE_OS::strcmp (arg, "-consumers") == 0)
+      else if (ACE_OS::strcmp (arg, ACE_TEXT("-consumers")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -717,7 +717,7 @@ EC_Driver::parse_args (int &argc, char *argv [])
             }
         }
 
-      else if (ACE_OS::strcmp (arg, "-burstcount") == 0)
+      else if (ACE_OS::strcmp (arg, ACE_TEXT("-burstcount")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -728,7 +728,7 @@ EC_Driver::parse_args (int &argc, char *argv [])
             }
         }
 
-      else if (ACE_OS::strcmp (arg, "-burstsize") == 0)
+      else if (ACE_OS::strcmp (arg, ACE_TEXT("-burstsize")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -739,7 +739,7 @@ EC_Driver::parse_args (int &argc, char *argv [])
             }
         }
 
-      else if (ACE_OS::strcmp (arg, "-payloadsize") == 0)
+      else if (ACE_OS::strcmp (arg, ACE_TEXT("-payloadsize")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -750,7 +750,7 @@ EC_Driver::parse_args (int &argc, char *argv [])
             }
         }
 
-      else if (ACE_OS::strcmp (arg, "-burstpause") == 0)
+      else if (ACE_OS::strcmp (arg, ACE_TEXT("-burstpause")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -761,7 +761,7 @@ EC_Driver::parse_args (int &argc, char *argv [])
             }
         }
 
-      else if (ACE_OS::strcmp (arg, "-consumer_tstart") == 0)
+      else if (ACE_OS::strcmp (arg, ACE_TEXT("-consumer_tstart")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -774,7 +774,7 @@ EC_Driver::parse_args (int &argc, char *argv [])
             }
         }
 
-      else if (ACE_OS::strcmp (arg, "-consumer_tcount") == 0)
+      else if (ACE_OS::strcmp (arg, ACE_TEXT("-consumer_tcount")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -786,7 +786,7 @@ EC_Driver::parse_args (int &argc, char *argv [])
             }
         }
 
-      else if (ACE_OS::strcmp (arg, "-consumer_tshift") == 0)
+      else if (ACE_OS::strcmp (arg, ACE_TEXT("-consumer_tshift")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -798,7 +798,7 @@ EC_Driver::parse_args (int &argc, char *argv [])
             }
         }
 
-      else if (ACE_OS::strcmp (arg, "-supplier_tstart") == 0)
+      else if (ACE_OS::strcmp (arg, ACE_TEXT("-supplier_tstart")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -811,7 +811,7 @@ EC_Driver::parse_args (int &argc, char *argv [])
             }
         }
 
-      else if (ACE_OS::strcmp (arg, "-supplier_tcount") == 0)
+      else if (ACE_OS::strcmp (arg, ACE_TEXT("-supplier_tcount")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -823,7 +823,7 @@ EC_Driver::parse_args (int &argc, char *argv [])
             }
         }
 
-      else if (ACE_OS::strcmp (arg, "-supplier_tshift") == 0)
+      else if (ACE_OS::strcmp (arg, ACE_TEXT("-supplier_tshift")) == 0)
         {
           arg_shifter.consume_arg ();
 

@@ -84,7 +84,7 @@ private:
   int shutdown_event_channel_;
   // If not zero it will shutdown the event channel upon exit.
 
-  const char* pid_file_name_;
+  const ACE_TCHAR* pid_file_name_;
   // The name of a file where the process stores its pid
 
   CORBA::ORB_var orb_;

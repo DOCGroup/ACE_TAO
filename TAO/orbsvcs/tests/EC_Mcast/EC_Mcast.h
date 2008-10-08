@@ -460,10 +460,10 @@ private:
   int event_count_;
   // How many events will the suppliers send
 
-  char* config_filename_;
+  ACE_TCHAR* config_filename_;
   // The name of the file where we read the configuration.
 
-  const char* pid_filename_;
+  const ACE_TCHAR* pid_filename_;
   // The name of a file where the process stores its pid
 
   int local_federations_count_;

@@ -42,7 +42,7 @@ EC_Connect::parse_args (int& argc, ACE_TCHAR* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (arg, "-connection_order") == 0)
         {
@@ -50,7 +50,7 @@ EC_Connect::parse_args (int& argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "consumers") == 0)
                 this->order_ = 0;
               else if (ACE_OS::strcasecmp (opt, "suppliers") == 0)
@@ -324,7 +324,7 @@ ECC_Consumer::connect (
 }
 
 void
-ECC_Consumer::dump_results (const char* name,
+ECC_Consumer::dump_results (const ACE_TCHAR* name,
                             ACE_UINT32 gsf)
 {
   this->connect_time_.dump_results (name, gsf);
@@ -362,7 +362,7 @@ ECC_Supplier::connect (
 }
 
 void
-ECC_Supplier::dump_results (const char* name,
+ECC_Supplier::dump_results (const ACE_TCHAR* name,
                             ACE_UINT32 gsf)
 {
   this->connect_time_.dump_results (name, gsf);

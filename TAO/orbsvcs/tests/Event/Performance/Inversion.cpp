@@ -33,7 +33,7 @@ EC_Inversion::parse_args (int &argc, char *argv [])
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (arg, "-same_events") == 0)
         {

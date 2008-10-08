@@ -171,7 +171,7 @@ EC_Supplier::disconnect_push_supplier (void)
 }
 
 void
-EC_Supplier::dump_results (const char* name,
+EC_Supplier::dump_results (const ACE_TCHAR* name,
                            ACE_UINT32 gsf)
 {
   this->throughput_.dump_results (name, gsf);
