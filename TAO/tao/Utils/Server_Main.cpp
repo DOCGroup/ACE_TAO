@@ -45,7 +45,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
   // hide unicode if necessary.
   ACE_Argv_Type_Converter command_line (argc, argv);
 
-  char ** asciiArgv = command_line.get_ASCII_argv ();
+  ACE_TCHAR ** asciiArgv = command_line.get_TCHAR_argv ();
 
   try
   {
