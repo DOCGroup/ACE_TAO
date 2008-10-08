@@ -82,6 +82,7 @@ struct ACE_DIR {
   int started_reading_;
 };
 #elif defined (ACE_WIN32) && (__BORLANDC__) && defined (ACE_USES_WCHAR)
+#define ACE_HAS_WCHAR_DIRENT
 #define ACE_DIRENT wdirent
 typedef wDIR ACE_DIR;
 #else
