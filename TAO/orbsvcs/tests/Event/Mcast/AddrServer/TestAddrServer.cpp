@@ -11,7 +11,7 @@ TestAddrServer_i::TestAddrServer_i (const ACE_INET_Addr& addr,
   this->addr_ = addr;
   this->addr6_ = addr6;
 
-  char abuf[256];
+  ACE_TCHAR abuf[256];
   addr_.addr_to_string (abuf,256);
 
   ACE_DEBUG ((LM_DEBUG,"Test Addr (v4) = %s\n",abuf));
@@ -41,7 +41,7 @@ TestAddrServer_i::get_address (const RtecEventComm::EventHeader& h,
                                RtecUDPAdmin::UDP_Address_out outaddr)
 {
   ACE_INET_Addr &addr = (h.type == 0) ? this->addr_ : this->addr6_;
-  char abuf[256];
+  ACE_TCHAR abuf[256];
   addr.addr_to_string (abuf,256);
 
   ACE_DEBUG ((LM_DEBUG,"get_address returning = %s\n",abuf));

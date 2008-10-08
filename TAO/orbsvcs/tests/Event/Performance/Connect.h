@@ -96,7 +96,7 @@ public:
   virtual void connect (
       const RtecEventChannelAdmin::ConsumerQOS& qos,
       int shutdown_event_type);
-  virtual void dump_results (const char* name,
+  virtual void dump_results (const ACE_TCHAR* name,
                              ACE_UINT32 global_scale_factor);
 
 private:
@@ -117,7 +117,7 @@ public:
   virtual void connect (
       const RtecEventChannelAdmin::SupplierQOS& qos,
       int shutdown_event_type);
-  virtual void dump_results (const char* name,
+  virtual void dump_results (const ACE_TCHAR* name,
                              ACE_UINT32 global_scale_factor);
 
 private:

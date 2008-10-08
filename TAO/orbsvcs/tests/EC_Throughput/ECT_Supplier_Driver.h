@@ -83,7 +83,7 @@ private:
   int type_count_;
   // We send two types of events, with different contents.
 
-  const char* pid_file_name_;
+  const ACE_TCHAR* pid_file_name_;
   // The name of a file where the process stores its pid
 };
 

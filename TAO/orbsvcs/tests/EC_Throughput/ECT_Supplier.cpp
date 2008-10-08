@@ -238,7 +238,7 @@ Test_Supplier::consumer_proxy (void)
 }
 
 void
-Test_Supplier::dump_results (const char* name,
+Test_Supplier::dump_results (const ACE_TCHAR* name,
                              ACE_UINT32 gsf)
 {
   this->throughput_.dump_results (name, gsf);

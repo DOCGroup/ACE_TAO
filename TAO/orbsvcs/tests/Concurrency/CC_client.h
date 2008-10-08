@@ -73,18 +73,18 @@ private:
   int parse_args (void);
   // Function to parse the command line arguments.
 
-  int read_ior (char *filename);
+  int read_ior (ACE_TCHAR *filename);
   // Function to read the ior from the given file.
 
   int run_basic_tests (void);
   // Runs the basic tests (on a single lock set). Returns CC_SUCCESS
   // upon success CC_FAIL otherwise.
 
-  int run_extended_tests (char *params);
+  int run_extended_tests (ACE_TCHAR *params);
   // Runs the extended tests (on more lock sets). Returns CC_SUCCESS
   // upon success CC_FAIL otherwise.
 
-  int check_extended_test_params(char *params);
+  int check_extended_test_params(ACE_TCHAR *params);
   // Checks the parameters given to the run_extended_tests() function.
   // returns -1 if an error is found.
 
@@ -126,14 +126,14 @@ private:
   int run_extended_tests_;
   // flag to tell which test should be run.
 
-  char *extended_tests_params_;
+  ACE_TCHAR *extended_tests_params_;
   // Parameters to the extended tests. The parameters are of the
   // following format: <test>:<parm1>:<parm2>...
 
   int use_script_file_;
   // Flag to tell whethter to use a script file to run the tests.
 
-  char *script_file_;
+  ACE_TCHAR *script_file_;
   // The script file to run
 
   void print_usage (void);

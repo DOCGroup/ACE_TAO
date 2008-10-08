@@ -28,7 +28,7 @@ public:
 
   /// Run the server.
   /// Valid arguments: [-i ior_filename].
-  int run (int argc, char ** argv);
+  int run (int argc, ACE_TCHAR ** argv);
 
 private:
 
@@ -43,7 +43,7 @@ private:
   /// Event Channel ior is written to this file.
   /// Default is "gateway-ec.ior", which can be overridden with the "-i"
   /// argument option.
-  const char * ec_ior_file_;
+  const ACE_TCHAR * ec_ior_file_;
 };
 
 #endif /* GATEWAY_EC_H */

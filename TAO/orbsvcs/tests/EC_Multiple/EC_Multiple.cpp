@@ -210,8 +210,8 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                   this->lpc_event_a_,
                   this->lpc_event_b_,
 
-                  this->schedule_file_?this->schedule_file_:"nil",
-                  this->pid_file_name_?this->pid_file_name_:"nil") );
+                  this->schedule_file_?this->schedule_file_:ACE_TEXT("nil"),
+                  this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")) );
 
       print_priority_info ("Test_ECG::run (Main)");
 
@@ -936,7 +936,7 @@ Test_ECG::shutdown_consumer (int id)
 {
   ACE_DEBUG ((LM_DEBUG, "Shutdown consumer %d\n", id));
   this->running_consumers_--;
-  
+
   if (this->running_consumers_ == 0)
     {
       if (TAO_ORB_Core_instance ()->orb () == 0)
@@ -970,17 +970,17 @@ void
 Test_ECG::dump_results (void)
 {
   const int bufsize = 512;
-  char buf[bufsize];
+  ACE_TCHAR buf[bufsize];
 
   int i;
   for (i = 0; i < this->hp_consumers_; ++i)
     {
-      ACE_OS::sprintf (buf, "HP%02d", i);
+      ACE_OS::sprintf (buf, ACE_TEXT("HP%02d"), i);
       this->dump_results (buf, this->stats_[i]);
     }
   for (i = 0; i < this->lp_consumers_; ++i)
     {
-      ACE_OS::sprintf (buf, "LP%02d", i);
+      ACE_OS::sprintf (buf, ACE_TEXT("LP%02d"), i);
       this->dump_results (buf, this->stats_[i + this->hp_consumers_]);
     }
   CORBA::ULong tmp = ACE_U64_TO_U32 (this->test_stop_ - this->test_start_);
@@ -989,7 +989,7 @@ Test_ECG::dump_results (void)
 }
 
 void
-Test_ECG::dump_results (const char* name, Stats& stats)
+Test_ECG::dump_results (const ACE_TCHAR* name, Stats& stats)
 {
   // @@ We are reporting the information without specifics about
   double usec = ACE_U64_TO_U32 (stats.total_time_) / 1000.0;
@@ -1025,7 +1025,7 @@ Test_ECG::local_source (RtecEventComm::EventSourceID id) const
 }
 
 int
-Test_ECG::parse_args (int argc, char *argv [])
+Test_ECG::parse_args (int argc, ACE_TCHAR *argv [])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("l:r:s:i:xh:w:p:d:"));
   int opt;
@@ -1035,23 +1035,23 @@ Test_ECG::parse_args (int argc, char *argv [])
       switch (opt)
         {
         case 'l':
-          this->lcl_name_ = get_opt.opt_arg ();
+          this->lcl_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case 'r':
-          this->rmt_name_ = get_opt.opt_arg ();
+          this->rmt_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case 's':
-          if (ACE_OS::strcasecmp (get_opt.opt_arg (), "global") == 0)
+          if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("global")) == 0)
             {
               this->scheduling_type_ = Test_ECG::ss_global;
             }
-          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "local") == 0)
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("local")) == 0)
             {
               this->scheduling_type_ = Test_ECG::ss_local;
             }
-          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "runtime") == 0)
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("runtime")) == 0)
             {
               this->scheduling_type_ = Test_ECG::ss_runtime;
             }
@@ -1072,7 +1072,7 @@ Test_ECG::parse_args (int argc, char *argv [])
         case 'i':
           {
             char* aux = 0;
-            char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
+            char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
             this->consumer_disconnects_ = ACE_OS::atoi (arg);
             arg = ACE_OS::strtok_r (0, ",", &aux);
             this->supplier_disconnects_ = ACE_OS::atoi (arg);
@@ -1082,7 +1082,7 @@ Test_ECG::parse_args (int argc, char *argv [])
         case 'h':
           {
             char* aux = 0;
-                char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
+                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
 
             this->hp_suppliers_ = ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);
@@ -1107,7 +1107,7 @@ Test_ECG::parse_args (int argc, char *argv [])
         case 'w':
           {
             char* aux = 0;
-                char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
+                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
 
             this->lp_suppliers_ = ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);

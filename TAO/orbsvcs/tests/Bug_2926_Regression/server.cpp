@@ -9,25 +9,23 @@
 
 char const * const scpc_orbId = "testDllOrb";
 
-char const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testDllOrb",
   "bug2926",
   "_make_DllORB",
   "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -ORBDottedDecimalAddresses 1"
 );
 
-char const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
+ACE_TCHAR const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
 
-
-char const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testNotifyService",
   "TAO_CosNotification_Serv",
   "_make_TAO_CosNotify_Service",
   ""
 );
 
-char const * const scpc_unloadNotifyService = ACE_REMOVE_SERVICE_DIRECTIVE("testNotifyService");
-
+ACE_TCHAR const * const scpc_unloadNotifyService = ACE_REMOVE_SERVICE_DIRECTIVE("testNotifyService");
 
 void loadunloadcycle()
 {

@@ -75,8 +75,8 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
                   this->event_period_,
                   this->event_count_,
 
-                  this->config_filename_?this->config_filename_:"nil",
-                  this->pid_filename_?this->pid_filename_:"nil") );
+                  this->config_filename_?this->config_filename_:ACE_TEXT("nil"),
+                  this->pid_filename_?this->pid_filename_:ACE_TEXT("nil")) );
 
       int i;
       for (i = 0; i < this->local_federations_count_; ++i)
@@ -309,7 +309,7 @@ ECM_Driver::dump_results (void)
 // ****************************************************************
 
 int
-ECM_Driver::parse_args (int argc, char *argv [])
+ECM_Driver::parse_args (int argc, ACE_TCHAR *argv [])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("l:p:c:n:t:f:"));
   int opt;
@@ -338,7 +338,7 @@ ECM_Driver::parse_args (int argc, char *argv [])
           {
             char* aux;
             int i = 0;
-            for (char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
+            for (char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
                  arg != 0 && i < ECM_Driver::MAX_LOCAL_FEDERATIONS;
                  arg = ACE_OS::strtok_r (0, ",", &aux), ++i)
               {
@@ -525,7 +525,7 @@ ECM_Driver::skip_blanks (FILE* file,
     {
       // No action.
     }
-  
+
   if (c == EOF)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -533,7 +533,7 @@ ECM_Driver::skip_blanks (FILE* file,
                          error_msg),
                         -1);
     }
-    
+
   ACE_OS::ungetc (c, file);
   return 0;
 }

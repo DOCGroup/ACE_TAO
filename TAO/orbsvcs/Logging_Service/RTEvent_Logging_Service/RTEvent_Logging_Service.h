@@ -79,10 +79,10 @@ private:
   const char* service_name_;
   // The name we use to bind with the NameService
 
-  const char* ior_file_name_;
+  const ACE_TCHAR* ior_file_name_;
   // The name of the file were we output the factory IOR.
 
-  const char* pid_file_name_;
+  const ACE_TCHAR* pid_file_name_;
   // The name of a file where the process stores its pid
 
   bool bind_to_naming_service_;

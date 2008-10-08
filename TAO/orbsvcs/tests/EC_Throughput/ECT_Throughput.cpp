@@ -123,7 +123,7 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
                       this->supplier_type_count_,
                       this->supplier_type_shift_,
 
-                      this->pid_file_name_?this->pid_file_name_:"nil",
+                      this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil"),
                       this->ec_concurrency_hwm_
                       ) );
         }
@@ -416,8 +416,8 @@ ECT_Throughput::dump_results (void)
   ACE_Throughput_Stats consumers;
   for (int j = 0; j < this->n_consumers_; ++j)
     {
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "consumer_%02d", j);
+      ACE_TCHAR buf[BUFSIZ];
+      ACE_OS::sprintf (buf, ACE_TEXT("consumer_%02d"), j);
 
       this->consumers_[j]->dump_results (buf, gsf);
       this->consumers_[j]->accumulate (consumers);
@@ -427,8 +427,8 @@ ECT_Throughput::dump_results (void)
   ACE_Throughput_Stats suppliers;
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "supplier_%02d", i);
+      ACE_TCHAR buf[BUFSIZ];
+      ACE_OS::sprintf (buf, ACE_TEXT("supplier_%02d"), i);
 
       this->suppliers_[i]->dump_results (buf, gsf);
       this->suppliers_[i]->accumulate (suppliers);
@@ -437,7 +437,7 @@ ECT_Throughput::dump_results (void)
 }
 
 int
-ECT_Throughput::parse_args (int argc, char *argv [])
+ECT_Throughput::parse_args (int argc, ACE_TCHAR *argv [])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dc:s:u:n:t:b:h:l:p:w:"));
   int opt;
@@ -473,7 +473,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
         case 'h':
           {
             char* aux;
-                char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
+                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
 
             this->consumer_type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);
@@ -486,7 +486,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
         case 'l':
           {
             char* aux;
-                char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
+                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
 
             this->supplier_type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);

@@ -65,7 +65,7 @@ CC_Client::~CC_Client (void)
 // Reads the lock set factory ior from a file
 
 int
-CC_Client::read_ior (char *filename)
+CC_Client::read_ior (ACE_TCHAR *filename)
 {
   // Open the file for reading.
   this->f_handle_ = ACE_OS::open (filename,0);
@@ -127,7 +127,7 @@ CC_Client::parse_args (void)
             break;
       case 'k': // read the cubit IOR from the command-line.
         this->cc_factory_key_ =
-          ACE_OS::strdup (get_opts.opt_arg ());
+          ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       case 'x':
         this->shutdown_ = 1;
@@ -178,7 +178,7 @@ CC_Client::run (void)
       FILE *f;
 
       // Open the command file for parsing if the filename!=stdin
-      if(ACE_OS::strcmp(this->script_file_, "stdin")!=0)
+      if(ACE_OS::strcmp(this->script_file_, ACE_TEXT("stdin"))!=0)
         {
           f = ACE_OS::fopen(this->script_file_, "r");
           if(f==0)
@@ -239,11 +239,11 @@ CC_Client::run_basic_tests (void)
 }
 
 int
-CC_Client::check_extended_test_params(char *params)
+CC_Client::check_extended_test_params(ACE_TCHAR *params)
 {
   // Format (regexp): [0-9]+;.*;.*
   int no_of_params = 0;
-  char *cp = params; // pointer to walk along the string
+  ACE_TCHAR *cp = params; // pointer to walk along the string
   enum {TAO_START, TAO_NUMBER, TAO_ARG, TAO_ERROR} state = TAO_START;
 
   while(*cp!='\0')
@@ -292,7 +292,7 @@ CC_Client::check_extended_test_params(char *params)
 }
 
 int
-CC_Client::run_extended_tests (char *params)
+CC_Client::run_extended_tests (ACE_TCHAR *params)
 {
   int success = CC_FAIL;
   int no_of_args = 0;
@@ -310,7 +310,7 @@ CC_Client::run_extended_tests (char *params)
 
   ACE_DEBUG((LM_DEBUG, "Number of arguments: %i\n", no_of_args));
 
-  char *cmd  = ACE_OS::strtok (params, ";");
+  char *cmd  = ACE_OS::strtok (ACE_TEXT_ALWAYS_CHAR(params), ";");
   char *arg1 = ACE_OS::strtok (0, ";");
   //  char *arg2 = ACE_OS::strtok (0, ";");
 

@@ -83,7 +83,7 @@ public:
   void shutdown (void);
 
   /// Dump the results...
-  virtual void dump_results (const char* name,
+  virtual void dump_results (const ACE_TCHAR* name,
                              ACE_UINT32 global_scale_factor);
 
   /// Add our statistics to <stats>

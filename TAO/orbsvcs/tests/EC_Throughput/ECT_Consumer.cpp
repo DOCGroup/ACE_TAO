@@ -96,7 +96,7 @@ Test_Consumer::disconnect (void)
 }
 
 void
-Test_Consumer::dump_results (const char* name,
+Test_Consumer::dump_results (const ACE_TCHAR* name,
                              ACE_UINT32 gsf)
 {
   this->throughput_.dump_results (name, gsf);
