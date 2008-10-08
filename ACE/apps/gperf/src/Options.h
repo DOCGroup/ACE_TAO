@@ -152,7 +152,7 @@ private:
   static int argc_;
   // Records count of command-line arguments.
 
-  static char **argv_;
+  static ACE_TCHAR **argv_;
   // Stores a pointer to command-line vector.
 
   static const char *function_name_;
