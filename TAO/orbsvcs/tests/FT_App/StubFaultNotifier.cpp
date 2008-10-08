@@ -32,7 +32,7 @@ PortableServer::ObjectId StubFaultNotifier::objectId()const
   return this->object_id_.in();
 }
 
-int StubFaultNotifier::parse_args (int argc, char * argv[])
+int StubFaultNotifier::parse_args (int argc, ACE_TCHAR * argv[])
 {
   int optionError = 0;
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:r:d:n:"));

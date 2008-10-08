@@ -125,7 +125,7 @@ int TAO::FT_FaultDetectorFactory_i::write_ior()
 //////////////////////////////////////////////////////
 // FT_FaultDetectorFactory_i public, non-CORBA methods
 
-int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, char * argv[])
+int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:l:o:qr"));
   int c;

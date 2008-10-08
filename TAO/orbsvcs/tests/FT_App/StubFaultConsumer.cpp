@@ -33,7 +33,7 @@ size_t StubFaultConsumer::notifications () const
 }
 
 
-int StubFaultConsumer::parse_args (int argc, char * argv[])
+int StubFaultConsumer::parse_args (int argc, ACE_TCHAR * argv[])
 {
   int optionError = 0;
 #ifndef NO_ARGS_FOR_NOW

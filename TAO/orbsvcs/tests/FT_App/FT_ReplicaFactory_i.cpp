@@ -158,7 +158,7 @@ int FT_ReplicaFactory_i::write_ior(const char * outputFile, const char * ior)
 //////////////////////////////////////////////////////
 // FT_ReplicaFactory_i public, non-CORBA methods
 
-int FT_ReplicaFactory_i::parse_args (int argc, char * argv[])
+int FT_ReplicaFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:f:i:l:t:qu"));
   int c;

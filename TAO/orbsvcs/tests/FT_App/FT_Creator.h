@@ -69,7 +69,7 @@ namespace FTAPP
 
     TAO::Object_Group_Creator creator_;
     CORBA::ORB_var orb_;
-    const char * registry_ior_;
+    const ACE_TCHAR * registry_ior_;
     StringVec create_roles_;
     StringVec unregister_roles_;
 

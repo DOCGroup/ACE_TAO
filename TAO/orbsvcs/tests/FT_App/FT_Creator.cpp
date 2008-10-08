@@ -52,12 +52,12 @@ FTAPP::FT_Creator::parse_args (int argc, ACE_TCHAR *argv[])
     {
       case 'r':
       {
-        this->create_roles_.push_back (get_opts.opt_arg ());
+        this->create_roles_.push_back (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       }
       case 'u':
       {
-        this->unregister_roles_.push_back (get_opts.opt_arg ());
+        this->unregister_roles_.push_back (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       }
       case 'f':
@@ -86,7 +86,7 @@ FTAPP::FT_Creator::parse_args (int argc, ACE_TCHAR *argv[])
 
       case 'p':
       {
-        this->prefix_ = get_opts.opt_arg();
+        this->prefix_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg());
         break;
       }
 

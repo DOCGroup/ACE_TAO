@@ -43,7 +43,7 @@ public:
   /**
    * Parse command line arguments.
    */
-  int parse_args (int argc, char * argv[]);
+  int parse_args (int argc, ACE_TCHAR * argv[]);
 
   /**
    * Initialize this object
@@ -71,7 +71,7 @@ public:
   /////////////////
   // Implementation
 private:
-  int readIORFile(const char * fileName, CORBA::String_var & ior);
+  int readIORFile(const ACE_TCHAR * fileName, CORBA::String_var & ior);
 
   ///////////////
   // Data Members
@@ -99,19 +99,19 @@ private:
   /**
    * a file to write to to signal "ready"
    */
-  const char * readyFile_;
+  const ACE_TCHAR * readyFile_;
 
   /**
    * The detecor's IOR  (-d option)
    */
-  const char * detector_ior_;
+  const ACE_TCHAR * detector_ior_;
 
   ::FT::FaultDetectorFactory_var factory_;
 
   /**
    * The notifier's IOR (-n option)
    */
-  const char * notifier_ior_;
+  const ACE_TCHAR * notifier_ior_;
 
   ::FT::FaultNotifier_var notifier_;
 

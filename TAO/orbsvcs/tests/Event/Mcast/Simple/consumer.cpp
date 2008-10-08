@@ -91,7 +91,7 @@ check_for_nil (CORBA::Object_ptr obj, const char *message)
 }
 
 int
-parse_args (int /* argc */, char ** /* argv */)
+parse_args (int /* argc */, ACE_TCHAR ** /* argv */)
 {
   return 0;
 }

@@ -44,7 +44,7 @@ public:
   /**
    * Parse command line arguments.
    */
-  int parse_args (int argc, char * argv[]);
+  int parse_args (int argc, ACE_TCHAR * argv[]);
 
   /**
    * Publish this objects IOR.
