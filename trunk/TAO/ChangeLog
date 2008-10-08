@@ -1,3 +1,38 @@
+Wed Oct  8 13:19:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.h
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp
+        * orbsvcs/tests/Event/Mcast/Simple/consumer.cpp
+        * orbsvcs/tests/Event/Mcast/Simple/supplier.cpp
+        * orbsvcs/tests/Event/Mcast/Two_Way/application.cpp
+        * orbsvcs/tests/Event/Performance/Connect.cpp
+        * orbsvcs/tests/Event/Performance/Inversion.cpp
+        * orbsvcs/tests/Event/ThreadFlags/testflags.cpp
+        * orbsvcs/tests/Event/UDP/receiver.cpp
+        * orbsvcs/tests/Event/UDP/sender.cpp
+        * orbsvcs/tests/FT_App/FT_Client.cpp
+        * orbsvcs/tests/FT_App/FT_Creator.cpp
+        * orbsvcs/tests/FT_App/FT_Creator.h
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h
+        * orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.cpp
+        * orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.h
+        * orbsvcs/tests/FT_App/StubBatchConsumer.cpp
+        * orbsvcs/tests/FT_App/StubBatchConsumer.h
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.cpp
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.h
+        * orbsvcs/tests/FT_App/StubFaultConsumer.cpp
+        * orbsvcs/tests/FT_App/StubFaultConsumer.h
+        * orbsvcs/tests/FT_App/StubFaultNotifier.cpp
+        * orbsvcs/tests/FT_App/StubFaultNotifier.h
+          ACE_TCHAR fixes
+
 Wed Oct  8 13:16:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Utils/Server_Main.cpp:

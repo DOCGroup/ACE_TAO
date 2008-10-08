@@ -27,7 +27,7 @@ EC_Inversion::EC_Inversion (void)
 }
 
 int
-EC_Inversion::parse_args (int &argc, char *argv [])
+EC_Inversion::parse_args (int &argc, ACE_TCHAR *argv [])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -35,7 +35,7 @@ EC_Inversion::parse_args (int &argc, char *argv [])
     {
       const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcmp (arg, "-same_events") == 0)
+      if (ACE_OS::strcmp (arg, ACE_TEXT("-same_events")) == 0)
         {
           arg_shifter.consume_arg ();
           this->same_events_ = 1;

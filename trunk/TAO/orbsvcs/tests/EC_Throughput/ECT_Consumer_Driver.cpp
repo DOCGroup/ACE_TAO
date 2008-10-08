@@ -247,8 +247,8 @@ ECT_Consumer_Driver::dump_results (void)
   ACE_Throughput_Stats throughput;
   for (int i = 0; i < this->n_consumers_; ++i)
     {
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "consumer_%02d", i);
+      ACE_TCHAR buf[BUFSIZ];
+      ACE_OS::sprintf (buf, ACE_TEXT("consumer_%02d"), i);
 
       this->consumers_[i]->dump_results (buf, gsf);
       this->consumers_[i]->accumulate (throughput);

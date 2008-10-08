@@ -44,18 +44,18 @@ EC_Connect::parse_args (int& argc, ACE_TCHAR* argv[])
     {
       const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcmp (arg, "-connection_order") == 0)
+      if (ACE_OS::strcmp (arg, ACE_TEXT("-connection_order")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "consumers") == 0)
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT("consumers")) == 0)
                 this->order_ = 0;
-              else if (ACE_OS::strcasecmp (opt, "suppliers") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("suppliers")) == 0)
                 this->order_ = 1;
-              else if (ACE_OS::strcasecmp (opt, "interleaved") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("interleaved")) == 0)
                 this->order_ = 2;
               else
                 ACE_ERROR ((LM_ERROR,

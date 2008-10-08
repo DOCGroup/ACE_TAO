@@ -55,8 +55,8 @@ private:
   CORBA::ORB_var orb_;
 
   int argc_;
-  char ** argv_;
-  const char * inFileName_;
+  ACE_TCHAR ** argv_;
+  const ACE_TCHAR * inFileName_;
   FILE *inFile_;
   FILE *commandIn_;
 
@@ -196,7 +196,7 @@ FTClientMain::parse_args (int argc, ACE_TCHAR *argv[])
       }
       case 'f':
       {
-        replica_iors_.push_back(get_opts.opt_arg ());
+        replica_iors_.push_back(ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       }
 

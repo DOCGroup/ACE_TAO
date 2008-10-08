@@ -60,7 +60,7 @@ namespace TAO
      * @param argv traditional C argv
      * @return zero for success; nonzero is process return code for failure.
      */
-    int parse_args (int argc, char * argv[]);
+    int parse_args (int argc, ACE_TCHAR * argv[]);
 
     /**
      * Initialize this object.

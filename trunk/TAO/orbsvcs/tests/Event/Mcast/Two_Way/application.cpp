@@ -540,7 +540,7 @@ check_for_nil (CORBA::Object_ptr obj, const char *message)
 }
 
 int
-parse_args (int argc, char ** argv)
+parse_args (int argc, ACE_TCHAR ** argv)
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("d"));
   int opt;
