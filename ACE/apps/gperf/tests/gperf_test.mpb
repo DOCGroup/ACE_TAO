@@ -3,7 +3,6 @@
 
 project: aceexe, crosscompile {
   after += gperf
-  avoids += uses_wchar
   Define_Custom(GPERF) {
     command           = $(ACE_ROOT)/bin/ace_gperf
     libpath          += $(ACE_ROOT)/lib
