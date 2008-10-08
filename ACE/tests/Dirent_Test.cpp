@@ -44,7 +44,7 @@ ACE_RCSID (tests,
 #  define DIR_DOT_DOT ".."
 #  define TEST_ENTRY ".."
 #else
-#  if defined (ACE_LACKS_STRUCT_DIR) || !defined (ACE_HAS_SCANDIR)
+#  if defined (ACE_HAS_TCHAR_DIRENT)
 #    define DIR_DOT ACE_TEXT (".")
 #    define DIR_DOT_DOT ACE_TEXT ("..")
 #    define TEST_ENTRY ACE_TEXT ("run_test.lst")
@@ -52,7 +52,7 @@ ACE_RCSID (tests,
 #    define DIR_DOT "."
 #    define DIR_DOT_DOT ".."
 #    define TEST_ENTRY "run_test.lst"
-#  endif /* ACE_LACKS_STRUCT_DIR */
+#  endif /* ACE_HAS_TCHAR_DIRENT */
 #endif /* ACE_VXWORKS < 0x600 */
 
 // Directory to scan - we need to figure it out based on environment.
@@ -246,12 +246,12 @@ dirent_count (const ACE_TCHAR *dir_path,
         continue;
       ++entry_count;
 
-#if !defined (ACE_LACKS_STRUCT_DIR) && !defined (__BORLANDC__)
+#if defined (ACE_HAS_TCHAR_DIRENT)
+      ACE_OS::strncpy (tname, directory->d_name, maxnamlen);
+#else
       ACE_OS::strncpy (tname,
                        ACE_TEXT_CHAR_TO_TCHAR (directory->d_name),
                        maxnamlen);
-#else
-      ACE_OS::strncpy (tname, directory->d_name, maxnamlen);
 #endif /* ACE_LACKS_STRUCT_DIR */
 
       int local_file_count = 0;
