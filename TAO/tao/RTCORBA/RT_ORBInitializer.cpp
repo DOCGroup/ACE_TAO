@@ -104,7 +104,7 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 
   // If the application resolves the root POA, make sure we load the RT POA.
   tao_info->orb_core ()->orb_params ()->poa_factory_name (rt_poa_factory_name);
-  tao_info->orb_core ()->orb_params ()->poa_factory_directive (ACE_TEXT_ALWAYS_CHAR (rt_poa_factory_directive));
+  tao_info->orb_core ()->orb_params ()->poa_factory_directive (rt_poa_factory_directive);
 
   // Create the initial priority mapping instance.
   TAO_Priority_Mapping *pm = 0;

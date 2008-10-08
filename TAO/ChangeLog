@@ -1,3 +1,9 @@
+Wed Oct  8 08:37:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CSD_Framework/CSD_ORBInitializer.cpp:
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+          ACE_TCHAR fixes
+
 Tue Oct  7 16:03:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2377_Regression/uipmc_test.cpp
