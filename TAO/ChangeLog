@@ -1,3 +1,8 @@
+Wed Oct  8 18:31:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_global.cpp:
+          gperf now compiles in a unicode build so invoke gperf
+
 Wed Oct  8 18:17:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/driver/drv_preproc.cpp:
