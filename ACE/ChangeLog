@@ -6,9 +6,10 @@ Wed Oct  8 18:11:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 Wed Oct  8 18:08:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_dirent.h:
-          Set ACE_HAS_WCHAR_DIRENT when the dirent struct has a wchar
-          filename. This is currently only with CodeGear C++ with
-          uses wchar enabled. This fixes bugzilla 3438
+          Set ACE_HAS_TCHAR_DIRENT when the dirent struct has a tchar
+          filename. This is currently with CodeGear C++ with
+          uses wchar enabled or with dirent emulation. This fixes bugzilla
+          3438
 
 Wed Oct  8 09:44:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
