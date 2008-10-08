@@ -1,3 +1,12 @@
+Wed Oct  8 09:44:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-borland-common.h:
+          Moved the contents to config-win32-borland.h and removed
+          this file
+
+        * ace/config-win32-borland.h:
+          Added contents of config-borland-common.h
+
 Tue Oct  7 23:04:50 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-5.x.h: Added ACE_HAS_ICMP_SUPPORT
@@ -28,9 +37,9 @@ Fri Oct  3 19:05:39 UTC 2008  Yan Dai  <dai_y@ociweb.com>
         * ace/Reactor_Token_T.cpp:
 
           Made reactor notify with zero timeout and ignore timeout case in
-          sleep_hook(). This would fix bugzilla 2465 reactor deadlock 
+          sleep_hook(). This would fix bugzilla 2465 reactor deadlock
           problem.
-          
+
 Thu Oct  2 16:41:57 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Basic_Types.h: Adjust the byte order decision for Itanium
