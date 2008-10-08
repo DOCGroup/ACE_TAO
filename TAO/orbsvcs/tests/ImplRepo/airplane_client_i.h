@@ -55,7 +55,7 @@ private:
   ACE_TCHAR **argv_;
 
   /// Key of the obj ref of the server.
-  char *server_key_;
+  ACE_TCHAR *server_key_;
 
   /// Number of airplanes to query for.
   size_t loop_count_;

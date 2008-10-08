@@ -10,7 +10,7 @@ ACE_RCSID(ImplRepo, airplane_client_i, "$Id$")
 
 // Constructor.
 Airplane_Client_i::Airplane_Client_i (void)
-  : server_key_ (ACE::strnew ("key0")),
+  : server_key_ (ACE::strnew (ACE_TEXT("key0"))),
     loop_count_ (10),
     server_ (Paper_Airplane_Server::_nil ())
 {

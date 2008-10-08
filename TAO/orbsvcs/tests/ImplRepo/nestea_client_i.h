@@ -52,7 +52,7 @@ private:
   ACE_TCHAR **argv_;
 
   /// Key of the obj ref of the server.
-  char *server_key_;
+  ACE_TCHAR *server_key_;
 
   /// Server object ptr.
   Nestea_Bookshelf_ptr server_;
