@@ -154,12 +154,12 @@ Supplier::parse_args (int argc, ACE_TCHAR *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcmp (arg, "-e") == 0)
+      if (ACE_OS::strcmp (arg, ACE_TEXT("-e")) == 0)
         {
           arg_shifter.consume_arg ();
-          ecname = arg_shifter.get_current ();
+          ecname = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
         }
 
       arg_shifter.ignore_arg ();

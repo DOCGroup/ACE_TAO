@@ -11,7 +11,7 @@ Consumer::Consumer ()
 }
 
 int
-Consumer::parse_args (int argc, char *argv [])
+Consumer::parse_args (int argc, ACE_TCHAR *argv [])
 {
  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:c:"));
   int opt;
@@ -21,7 +21,7 @@ Consumer::parse_args (int argc, char *argv [])
       switch (opt)
         {
         case 'n':
-          this->service_name = get_opt.opt_arg ();
+          this->service_name = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case 'c':

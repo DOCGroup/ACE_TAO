@@ -18,7 +18,7 @@ RtEC_Based_CosEC::~RtEC_Based_CosEC (void)
 }
 
 void
-RtEC_Based_CosEC::init_ORB  (int& argc, char *argv [])
+RtEC_Based_CosEC::init_ORB  (int& argc, ACE_TCHAR *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
@@ -35,7 +35,7 @@ RtEC_Based_CosEC::init_ORB  (int& argc, char *argv [])
 }
 
 int
-RtEC_Based_CosEC::parse_args (int argc, char *argv [])
+RtEC_Based_CosEC::parse_args (int argc, ACE_TCHAR *argv [])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("t:n:e:o:p:r"));
   int opt;
@@ -45,11 +45,11 @@ RtEC_Based_CosEC::parse_args (int argc, char *argv [])
       switch (opt)
         {
         case 'n':
-          this->service_name = get_opt.opt_arg ();
+          this->service_name = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case 't':
-          this->rt_service_name = get_opt.opt_arg ();
+          this->rt_service_name = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case 'r':
@@ -57,15 +57,15 @@ RtEC_Based_CosEC::parse_args (int argc, char *argv [])
           break;
 
         case 'e':
-          this->eventTypeIds_ =  get_opt.opt_arg ();
+          this->eventTypeIds_ =  ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case 'o':
-          this->eventSourceIds_ = get_opt.opt_arg ();
+          this->eventSourceIds_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case 'p':
-          this->source_type_pairs_ = get_opt.opt_arg ();
+          this->source_type_pairs_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case '?':

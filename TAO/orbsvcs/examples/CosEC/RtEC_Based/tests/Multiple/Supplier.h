@@ -58,7 +58,7 @@ public:
   // Sends the events to the EC.
 
   // = Multiple methods.
-  virtual int parse_args (int argc, char *argv []);
+  virtual int parse_args (int argc, ACE_TCHAR *argv []);
   // Parses the command line arguments.
 private:
   CosEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;

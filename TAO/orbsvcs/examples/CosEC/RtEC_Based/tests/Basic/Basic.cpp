@@ -50,7 +50,7 @@ Basic::init (int argc, ACE_TCHAR *argv[])
 }
 
 void
-Basic::init_ORB  (int argc, char *argv [])
+Basic::init_ORB  (int argc, ACE_TCHAR *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 

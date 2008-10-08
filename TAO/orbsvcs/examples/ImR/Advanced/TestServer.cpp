@@ -46,7 +46,7 @@ string normalizePath(const string& dir, char delim, bool toLower)
     {
       return string ();
     }
-    
+
   char buffer[PATH_MAX + 2];
 
   string::size_type i = 0;
@@ -59,7 +59,7 @@ string normalizePath(const string& dir, char delim, bool toLower)
   string::size_type begin = i;
 
   int j = 0;
-  
+
   for (; i < dir.size (); i++)
     {
       if (dir[i] == '\\' || dir[i] == '/')
@@ -99,21 +99,21 @@ string normalizePath(const string& dir, char delim, bool toLower)
                   ACE_OS::strncpy (buffer, curDir.c_str (), sizeof( buffer));
                   j = curDir.length();
                 }
-                
+
               int k = j;
-              
+
               for (; buffer[k] != delim; k--)
                 {
                   // No action.
                 }
-                
+
               k--;
-              
+
               for (; buffer[k] != delim; k--)
                 {
                   // No action.
                 }
-                
+
               j = (k + 1);
               i += 2;
             }
@@ -127,7 +127,7 @@ string normalizePath(const string& dir, char delim, bool toLower)
                 {
                   buffer[j] = dir[i];
                 }
-                
+
               j++;
             }
         }
@@ -142,7 +142,7 @@ string normalizePath(const string& dir, char delim, bool toLower)
             {
               buffer[j] = dir[i];
             }
-            
+
           j++;
         }
     }
@@ -151,7 +151,7 @@ string normalizePath(const string& dir, char delim, bool toLower)
     {
       j--;
     }
-    
+
   buffer[j] ='\0';
   return string(buffer);
 }
@@ -204,12 +204,12 @@ int TestServer::parseCommands (int argc, ACE_TCHAR *argv[])
     switch (c)
     {
     case 'w':
-      expectedDir_ = normalizePath(get_opts.opt_arg());
+      expectedDir_ = normalizePath(ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg()));
       break;
 
     case 'e':
       {
-        string name = get_opts.opt_arg();
+        string name = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg());
         string::size_type i = name.find_first_of("=");
         string value = name.substr(i +  1, name.length() - 1);
         name.resize(i);
@@ -223,21 +223,21 @@ int TestServer::parseCommands (int argc, ACE_TCHAR *argv[])
 
     case 't':
       {
-        const char* opt = get_opts.opt_arg();
+        const ACE_TCHAR* opt = get_opts.opt_arg();
         useIORTable_ = (opt && opt[0] != '0');
         break;
       }
 
     case 'q':
       {
-        const char* opt = get_opts.opt_arg();
+        const ACE_TCHAR* opt = get_opts.opt_arg();
         retryQuery_ = (opt && opt[0] != '0');
         break;
       }
 
     case 'o':
       {
-        const char* opt = get_opts.opt_arg();
+        const ACE_TCHAR* opt = get_opts.opt_arg();
         writeIORFile_ = (opt && opt[0] != '0');
         break;
       }
@@ -275,7 +275,7 @@ int TestServer::parseCommands (int argc, ACE_TCHAR *argv[])
       break;
 
     case 'b':
-      baseDir_ =  get_opts.opt_arg();
+      baseDir_ =  ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg());
       break;
 
     case '?':
