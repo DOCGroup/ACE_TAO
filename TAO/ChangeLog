@@ -1,3 +1,13 @@
+Wed Oct  8 19:17:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/OBV/Simple_util.cpp
+        * examples/OBV/Simple_util.h
+        * examples/Persistent_Grid/Simple_util.cpp
+        * examples/Persistent_Grid/Simple_util.h
+        * examples/Simple/Simple_util.cpp
+        * examples/Simple/Simple_util.h
+          ACE_TCHAR fixes
+
 Wed Oct  8 19:14:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/CSD_Strategy/TestApps/ClientApp.cpp
