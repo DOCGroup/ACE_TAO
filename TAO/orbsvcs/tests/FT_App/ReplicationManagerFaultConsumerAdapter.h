@@ -102,12 +102,12 @@ private:
   /**
    * a file to write to to signal "ready"
    */
-  const char * readyFile_;
+  const ACE_TCHAR * readyFile_;
 
   /**
-   * Detecor's IOR
+   * Detector's IOR
    */
-  const char * detector_ior_;
+  const ACE_TCHAR * detector_ior_;
 
   /**
    * The FaultDetectorFactory object reference.
@@ -127,7 +127,7 @@ private:
   /**
    * A file from which the notifier's IOR should be read.
    */
-  const char * notifier_ior_;
+  const ACE_TCHAR * notifier_ior_;
 
   /**
    * the fault notifier

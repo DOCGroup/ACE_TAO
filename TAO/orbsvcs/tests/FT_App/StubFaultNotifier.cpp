@@ -43,7 +43,7 @@ int StubFaultNotifier::parse_args (int argc, ACE_TCHAR * argv[])
     {
       case 'r':
       {
-        this->iorReplicaFiles_.push_back( get_opts.opt_arg ());
+        this->iorReplicaFiles_.push_back( ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       }
       case 'd':
@@ -53,7 +53,7 @@ int StubFaultNotifier::parse_args (int argc, ACE_TCHAR * argv[])
       }
       case 'n':
       {
-        this->ns_name_ = get_opts.opt_arg ();
+        this->ns_name_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
       }
       case 'o':
@@ -264,7 +264,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
 
     if (this->ior_output_file_ != 0)
     {
-      this->identity_ = "file:";
+      this->identity_ = ACE_TEXT("file:");
       this->identity_ += this->ior_output_file_;
       result = write_ior_file();
     }
@@ -277,8 +277,8 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
 
     if(this->ns_name_ != 0)
     {
-      this->identity_ = "name:";
-      this->identity_ += this->ns_name_;
+      this->identity_ = ACE_TEXT("name:");
+      this->identity_ += ACE_TEXT_CHAR_TO_TCHAR(this->ns_name_);
 
       CORBA::Object_var naming_obj =
         this->orb_->resolve_initial_references ("NameService");
@@ -318,7 +318,7 @@ int StubFaultNotifier::write_ior_file()
 /**
  * Return a string to identify this object for logging/console message purposes.
  */
-const char * StubFaultNotifier::identity () const
+const ACE_TCHAR * StubFaultNotifier::identity () const
 {
   return this->identity_.c_str();
 }

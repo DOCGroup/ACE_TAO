@@ -58,7 +58,7 @@ public:
   /**
    * Return a string to identify this object for logging/console message purposes.
    */
-  const char * identity () const;
+  const ACE_TCHAR * identity () const;
 
   /**
    * idle time activity.
@@ -143,12 +143,12 @@ private:
   /**
    * A file to which the factory's IOR should be written.
    */
-  const char * ior_output_file_;
+  const ACE_TCHAR * ior_output_file_;
 
   /**
-   * A file from which the detecor's IOR should be read.
+   * A file from which the detector's IOR should be read.
    */
-  const char * detector_ior_;
+  const ACE_TCHAR * detector_ior_;
 
   ::FT::FaultDetectorFactory_var factory_;
 
@@ -167,7 +167,7 @@ private:
   /**
    * A human-readable string to distinguish this from other Notifiers.
    */
-  ACE_CString identity_;
+  ACE_TString identity_;
 };
 
 #include /**/ <ace/post.h>
