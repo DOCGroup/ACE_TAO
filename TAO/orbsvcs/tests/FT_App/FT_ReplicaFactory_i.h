@@ -89,7 +89,7 @@ public:
    * Identify this replica factory.
    * @return a string to identify this object for logging/console message purposes.
    */
-  const char * identity () const;
+  const ACE_TCHAR * identity () const;
 
   const char * location () const;
 
@@ -141,7 +141,7 @@ private:
   /**
    * Write this factory's IOR to a file
    */
-  int write_ior (const char * outputFile, const char * ior);
+  int write_ior (const ACE_TCHAR * outputFile, const char * ior);
 
   /**
    * Clean house for factory shut down.
@@ -186,12 +186,12 @@ private:
   /**
    * A file to which the factory's IOR should be written.
    */
-  const char * ior_output_file_;
+  const ACE_TCHAR * ior_output_file_;
 
   /**
    * A human-readable string to distinguish this from other Notifiers.
    */
-  ACE_CString identity_;
+  ACE_TString identity_;
 
   /**
    * bool: true if we found a replication manager
@@ -208,7 +208,7 @@ private:
   /**
    * The factory registry IOR
    */
-  const char * factory_registry_ior_;
+  const ACE_TCHAR * factory_registry_ior_;
 
   /**
    * The factory registry with which to register.
@@ -223,7 +223,7 @@ private:
   /**
    * A file to which the test replica's IOR will be written
    */
-  const char * test_output_file_;
+  const ACE_TCHAR * test_output_file_;
 
   /**
    * A name to be used to register the factory with the name service.
