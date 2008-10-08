@@ -178,7 +178,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
   TAO_OutStream & os = *this->ctx_->stream ();
 
   // Start with static instances of each array element-to-be.
-  size_t const count = node->nfields ();
+  ACE_CDR::ULong const count = node->nfields ();
 
   for (ACE_CDR::ULong i = 0; i < count; ++i)
     {
@@ -231,7 +231,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
      << "[] =" << be_idt_nl
      << "{" << be_idt_nl;
 
-  for (size_t n = 0; n < count; ++n)
+  for (ACE_CDR::ULong n = 0; n < count; ++n)
     {
       os << "&" << fields_name_str << "__" << n;
 

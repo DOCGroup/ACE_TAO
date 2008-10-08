@@ -1,3 +1,11 @@
+Wed Oct  8 15:35:46 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+        
+          Changed an overlooked loop variable's type from unsigned long
+          to ACE_CDR::ULong, since the loop index is also passed to
+          the TAO_OutStream insertion operator.
+
 Wed Oct  8 14:46:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/ImplRepo/airplane_client_i.cpp
