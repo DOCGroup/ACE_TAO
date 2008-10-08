@@ -10,7 +10,7 @@ ACE_RCSID(ImplRepo, nestea_client_i, "$Id$")
 
 // Constructor.
 Nestea_Client_i::Nestea_Client_i (void)
-  : server_key_ (ACE::strnew ("key0"))
+  : server_key_ (ACE::strnew (ACE_TEXT("key0")))
   , server_ (Nestea_Bookshelf::_nil ())
   , shutdown_server_(false)
 {

@@ -61,7 +61,7 @@ Server_i::parse_args (int argc, ACE_TCHAR* argv[])
     switch (c)
     {
     case 'p':  // prefix for all created objects
-      this->server_name_ = get_opts.opt_arg ();
+      this->server_name_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
       break;
     case 'c':  // Number of imr-ified objects to create.
       this->count_ = ACE_OS::atoi(get_opts.opt_arg());
