@@ -1,3 +1,14 @@
+Wed Oct  8 20:57:24 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Ping_Socket.cpp (send_echo_check): Fixed problem introduced in
+          Tue Oct  7 23:04:50 UTC 2008  Steve Huston  <shuston@riverace.com>
+          while setting the ICMP id.
+
+        * tests/Network_Adapters_Test.cpp: If the test can't run due to
+          insufficient privs, do ACE_END_TEST and return; don't exit. Want
+          to avoid triggering a test fail in the scoreboard when the test
+          can't be run.
+
 Wed Oct  8 18:29:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/gperf/src/Options.cpp
