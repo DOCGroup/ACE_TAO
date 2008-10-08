@@ -100,8 +100,13 @@ ACE_TCHAR const * DRV_arglist[DRV_MAX_ARGCOUNT] = { 0 };
 static char const * output_arg_format = 0;
 static long output_arg_index = 0;
 
+#if defined (ACE_HAS_TCHAR_DIRENT)
+ACE_TCHAR const DIR_DOT[] = ACE_TEXT(".");
+ACE_TCHAR const DIR_DOT_DOT[] = ACE_TEXT("..");
+#else
 char const DIR_DOT[] = ".";
 char const DIR_DOT_DOT[] = "..";
+#endif /* ACE_HAS_TCHAR_DIRENT */
 
 // File names.
 static char tmp_file [MAXPATHLEN + 1] = { 0 };
@@ -335,7 +340,7 @@ DRV_sweep_dirs (const char *rel_path,
                         -1);
     }
 
-  ACE_Dirent dir (ACE_TEXT_CHAR_TO_TCHAR(DIR_DOT));
+  ACE_Dirent dir (DIR_DOT);
   ACE_CString bname (base_path);
   bname += (bname.length () > 0 ? "/" : "");
   bname += rel_path;
@@ -346,20 +351,24 @@ DRV_sweep_dirs (const char *rel_path,
   for (ACE_DIRENT *dir_entry; (dir_entry = dir.read ()) != 0;)
     {
       // Skip the ".." and "." files in each directory.
-      if (ACE_OS::strcmp (ACE_TEXT_ALWAYS_CHAR(dir_entry->d_name), DIR_DOT) == 0
-          || ACE_OS::strcmp (ACE_TEXT_ALWAYS_CHAR(dir_entry->d_name), DIR_DOT_DOT) == 0)
+      if (ACE_OS::strcmp (dir_entry->d_name, DIR_DOT) == 0
+          || ACE_OS::strcmp (dir_entry->d_name, DIR_DOT_DOT) == 0)
         {
           continue;
         }
 
+#if defined (ACE_HAS_TCHAR_DIRENT)
       ACE_CString lname (ACE_TEXT_ALWAYS_CHAR (dir_entry->d_name));
+#else
+      ACE_CString lname (dir_entry->d_name);
+#endif
       ACE_stat stat_buf;
 
       if (ACE_OS::lstat (lname.c_str (), &stat_buf) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "DRV_sweep_dirs: ACE_OS::lstat (%s) failed\n",
-                             ACE_TEXT_CHAR_TO_TCHAR (lname.c_str ())),
+                             lname.c_str ()),
                             -1);
         }
 
