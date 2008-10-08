@@ -1,7 +1,7 @@
 Wed Oct  8 18:11:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Dirent_Test.cpp:
-          Use the new ACE_HAS_WCHAR_DIRENT. Fixes bugzilla
+          Use the new ACE_HAS_WCHAR_DIRENT. Fixes bugzilla 3130
 
 Wed Oct  8 18:08:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
