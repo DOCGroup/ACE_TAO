@@ -140,17 +140,17 @@ Gateway::parse_args (int argc, ACE_TCHAR *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcmp (arg, "-s") == 0)
+      if (ACE_OS::strcmp (arg, ACE_TEXT("-s")) == 0)
         {
           arg_shifter.consume_arg ();
-          supplierec = arg_shifter.get_current ();
+          supplierec = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
         }
-      if (ACE_OS::strcmp (arg, "-c") == 0)
+      if (ACE_OS::strcmp (arg, ACE_TEXT("-c")) == 0)
         {
           arg_shifter.consume_arg ();
-          consumerec = arg_shifter.get_current ();
+          consumerec = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
         }
 
       arg_shifter.ignore_arg ();

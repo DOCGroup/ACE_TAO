@@ -29,7 +29,7 @@ FilterClient::~FilterClient ()
 }
 
 void
-FilterClient::init (int argc, char *argv [])
+FilterClient::init (int argc, ACE_TCHAR *argv [])
 {
   init_ORB (argc, argv);
 
@@ -68,7 +68,7 @@ FilterClient::done (void)
 }
 
 void
-FilterClient::init_ORB (int argc, char *argv [])
+FilterClient::init_ORB (int argc, ACE_TCHAR *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 

@@ -31,7 +31,7 @@ Subscribe::~Subscribe ()
 }
 
 void
-Subscribe::init (int argc, char *argv [])
+Subscribe::init (int argc, ACE_TCHAR *argv [])
 {
   init_ORB (argc, argv);
   resolve_naming_service ();
@@ -63,7 +63,7 @@ Subscribe::done (void)
 }
 
 void
-Subscribe::init_ORB (int argc, char *argv [])
+Subscribe::init_ORB (int argc, ACE_TCHAR *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 

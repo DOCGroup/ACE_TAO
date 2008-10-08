@@ -266,7 +266,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     if (argc < 3)
       space_craft_name = "a";  // Default to spacecraft "a".
     else
-      space_craft_name = argv[2];
+      space_craft_name = ACE_TEXT_ALWAYS_CHAR(argv[2]);
 
     // Do a quick mapping to mcast addresses.
     //
@@ -301,7 +301,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Start the agent.
     //
-    Agent agent (space_craft_name, argv[1], channel.in ());
+    Agent agent (space_craft_name, ACE_TEXT_ALWAYS_CHAR(argv[1]), channel.in ());
 
     orb->run ();
 

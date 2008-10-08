@@ -29,7 +29,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     {
     case 'k':
       {
-      ACE_SString ior(get_opts.opt_arg ());
+      ACE_SString ior(ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
       if (ior_strs.enqueue_tail (ior) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Unable to enqueue IOR: %s\n",

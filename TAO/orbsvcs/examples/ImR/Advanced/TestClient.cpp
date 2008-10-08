@@ -51,7 +51,7 @@ int TestClient::parseCommands (int argc, ACE_TCHAR *argv[])
 
     case 'r':
       {
-        const char* opt = get_opts.opt_arg();
+        const ACE_TCHAR* opt = get_opts.opt_arg();
         if (opt[0] == 'r') { randomRequests_ = true; opt++; }
         requestCount_ = ACE_OS::atoi(opt);
         break;
@@ -59,14 +59,14 @@ int TestClient::parseCommands (int argc, ACE_TCHAR *argv[])
 
     case 'x':
       {
-        const char* opt = get_opts.opt_arg();
+        const ACE_TCHAR* opt = get_opts.opt_arg();
         shutdownOrb_ = (opt && opt[0] != '0');
         break;
       }
 
     case 'e':
       {
-        const char* opt = get_opts.opt_arg();
+        const ACE_TCHAR* opt = get_opts.opt_arg();
         while (opt && *opt != '\0')
         {
           if (*opt == 'h') expectHolding_ = true;
@@ -252,7 +252,7 @@ int TestClient::svc()
   catch (CORBA::Exception& ex)
   {
     ACE_ERROR((LM_ERROR,"CORBA client error with (%d.%d.%d.%d):%s\n",
-               threadNum, i, objIter, requestIter, ACE_TEXT_CHAR_TO_TCHAR (currentIOR.c_str())));
+               threadNum, i, objIter, requestIter, currentIOR.c_str()));
     ex._tao_print_exception ("");
   }
   return 1;

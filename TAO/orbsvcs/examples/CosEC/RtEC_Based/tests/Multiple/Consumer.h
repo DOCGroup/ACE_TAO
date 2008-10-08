@@ -60,7 +60,7 @@ public:
   // disconnect the consumer from the EC.
 
   // = CosEC_Multiple methods.
-  virtual int parse_args (int argc, char *argv []);
+  virtual int parse_args (int argc, ACE_TCHAR *argv []);
   // Parse the command line options.
 
 private:

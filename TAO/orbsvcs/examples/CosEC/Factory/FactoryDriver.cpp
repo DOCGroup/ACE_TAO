@@ -19,7 +19,7 @@ FactoryDriver::~FactoryDriver (void)
 }
 
 int
-FactoryDriver::parse_args (int argc, char *argv [])
+FactoryDriver::parse_args (int argc, ACE_TCHAR *argv [])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dr:"));
   int c = 0;
@@ -32,7 +32,7 @@ FactoryDriver::parse_args (int argc, char *argv [])
         break;
 
       case 'r':
-        factoryName_ = get_opts.opt_arg ();
+        factoryName_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
 
       case '?':  // display help for use of the server.
@@ -50,7 +50,7 @@ FactoryDriver::parse_args (int argc, char *argv [])
 }
 
 int
-FactoryDriver::start (int argc, char *argv [])
+FactoryDriver::start (int argc, ACE_TCHAR *argv [])
 {
   try
     {
