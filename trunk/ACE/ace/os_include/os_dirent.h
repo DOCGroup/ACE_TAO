@@ -64,6 +64,7 @@ struct dirent {
 };
 
 #define ACE_DIRENT dirent
+#define ACE_HAS_TCHAR_DIRENT
 
 struct ACE_DIR {
   /// The name of the directory we are looking into
@@ -82,7 +83,7 @@ struct ACE_DIR {
   int started_reading_;
 };
 #elif defined (ACE_WIN32) && (__BORLANDC__) && defined (ACE_USES_WCHAR)
-#define ACE_HAS_WCHAR_DIRENT
+#define ACE_HAS_TCHAR_DIRENT
 #define ACE_DIRENT wdirent
 typedef wDIR ACE_DIR;
 #else
