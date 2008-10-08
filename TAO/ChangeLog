@@ -1,3 +1,10 @@
+Wed Oct  8 11:31:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/server.cpp
+        * orbsvcs/performance-tests/RTEvent/lib/Client_Options.cpp
+        * orbsvcs/performance-tests/RTEvent/lib/Client_Options.h
+          ACE_TCHAR fixes
+
 Wed Oct  8 10:58:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/CosEC/Factory/FactoryClient.cpp

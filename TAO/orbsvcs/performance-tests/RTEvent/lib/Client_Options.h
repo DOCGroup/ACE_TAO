@@ -30,7 +30,7 @@ public:
   /// Constructor
   Client_Options (int &argc, ACE_TCHAR *argv[]);
 
-  const char *ior;
+  const ACE_TCHAR *ior;
   int iterations;
   int nthreads;
   int high_priority_period;
@@ -48,11 +48,11 @@ public:
 
 private:
   int option (ACE_Arg_Shifter &arg_shifter,
-              const char *option_name,
+              const ACE_TCHAR *option_name,
               int &option_value);
 
   int boolean_option (ACE_Arg_Shifter &arg_shifter,
-                      const char *option_name,
+                      const ACE_TCHAR *option_name,
                       int &option_value);
 };
 
