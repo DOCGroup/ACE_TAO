@@ -1,3 +1,8 @@
+Wed Oct  8 09:05:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/driver/drv_preproc.cpp
+          ACE_TCHAR fixes
+
 Wed Oct  8 08:37:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CSD_Framework/CSD_ORBInitializer.cpp:
