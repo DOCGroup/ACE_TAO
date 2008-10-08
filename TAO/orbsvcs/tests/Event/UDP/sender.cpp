@@ -260,7 +260,7 @@ int parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'm':
-        udp_mcast_address = get_opts.opt_arg ();
+        udp_mcast_address = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
 
       case 'v':

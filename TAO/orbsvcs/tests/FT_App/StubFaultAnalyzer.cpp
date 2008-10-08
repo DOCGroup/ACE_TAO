@@ -22,7 +22,7 @@ StubFaultAnalyzer::~StubFaultAnalyzer ()
 }
 
 
-int StubFaultAnalyzer::parse_args (int argc, char * argv[])
+int StubFaultAnalyzer::parse_args (int argc, ACE_TCHAR * argv[])
 {
   int optionError = 0;
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:r:d:n:"));
@@ -33,7 +33,7 @@ int StubFaultAnalyzer::parse_args (int argc, char * argv[])
     {
       case 'r':
       {
-        this->replicaIORs.push_back (get_opts.opt_arg ());
+        this->replicaIORs.push_back (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       }
       case 'd':

@@ -145,7 +145,7 @@ int TAO::FT_FaultNotifier_i::write_ior()
 //////////////////////////////////////////////////////
 // FT_FaultNotifier_i public, non-CORBA methods
 
-int TAO::FT_FaultNotifier_i::parse_args (int argc, char * argv[])
+int TAO::FT_FaultNotifier_i::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:rq"));
   int c;

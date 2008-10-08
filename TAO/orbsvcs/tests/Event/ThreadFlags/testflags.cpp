@@ -163,7 +163,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   const size_t numtests = sizeof(static_tests)/sizeof(static_tests[0]);
   if (argc > 1)
     {
-      char* which_test;
+      ACE_TCHAR* which_test = 0;
       while (0 != (which_test = *++argv))
         {
           size_t testnum = ACE_OS_String::strtol (which_test, 0, 0);

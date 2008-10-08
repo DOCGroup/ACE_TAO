@@ -110,7 +110,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CosNaming::NamingContextExt::_narrow(tmpobj.in());
 
     // Bind the Event Channel using Naming Services
-    CosNaming::Name_var name = 
+    CosNaming::Name_var name =
       root_context->to_name (ACE_TEXT_ALWAYS_CHAR (ecname));
     root_context->rebind(name.in(), ec.in());
 
@@ -226,7 +226,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 #if !defined (TAO_LACKS_EVENT_CHANNEL_ANY)
     // Initialize data fields in event.
-    const CORBA::String_var eventData = 
+    const CORBA::String_var eventData =
       CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (ecname));
 
     event[0].data.any_value <<= eventData;
@@ -242,7 +242,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     if (iorfile != 0) {
       CORBA::String_var str = orb->object_to_string( ec.in() );
-      std::ofstream iorFile( iorfile );
+      std::ofstream iorFile( ACE_TEXT_ALWAYS_CHAR(iorfile) );
       iorFile << str.in() << std::endl;
       iorFile.close();
     }
