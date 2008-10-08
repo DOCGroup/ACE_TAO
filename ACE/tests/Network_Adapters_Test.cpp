@@ -1106,14 +1106,20 @@ run_main (int argc, ACE_TCHAR *argv[])
           // If this process doesn't have privileges to open a raw socket, log
           // a warning instead of an error.
           if (errno == EPERM)
-            ACE_ERROR ((LM_WARNING,
-                        ACE_TEXT ("(%P|%t) main() - ping_handler->open: ")
-                        ACE_TEXT ("insufficient privs to run this test\n")));
+            {
+              ACE_ERROR ((LM_WARNING,
+                          ACE_TEXT ("(%P|%t) main() - ping_handler->open: ")
+                          ACE_TEXT ("insufficient privs to run this test\n")));
+              ACE_END_TEST;
+              return 0;
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %p\n"),
-                        ACE_TEXT ("main() - ping_handler->open")));
-          ACE_OS::exit (-4);
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) %p\n"),
+                          ACE_TEXT ("main() - ping_handler->open")));
+              return -4;
+            }
         }
     }
   else
@@ -1129,14 +1135,20 @@ run_main (int argc, ACE_TCHAR *argv[])
                               2) == -1)   // max_attempts_number
         {
           if (errno == EPERM)
-            ACE_ERROR ((LM_WARNING,
-                        ACE_TEXT ("(%P|%t) main() - ping_handler->open: ")
-                        ACE_TEXT ("insufficient privs to run this test\n")));
+            {
+              ACE_ERROR ((LM_WARNING,
+                          ACE_TEXT ("(%P|%t) main() - ping_handler->open: ")
+                          ACE_TEXT ("insufficient privs to run this test\n")));
+              ACE_END_TEST;
+              return 0;
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %p\n"),
-                        ACE_TEXT ("main() - ping_handler->open")));
-          ACE_OS::exit (-4);
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) %p\n"),
+                          ACE_TEXT ("main() - ping_handler->open")));
+              return -4;
+            }
         }
     }
 

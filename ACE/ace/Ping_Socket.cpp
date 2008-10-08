@@ -248,7 +248,7 @@ ACE_Ping_Socket::process_incoming_dgram (char * ptr, ssize_t len)
           ACE_TEXT ("(%P|%t) ACE_Ping_Socket::process_incoming_dgram")
           ACE_TEXT (" - ICMP_ECHOREPLY received.\n")));
 
-      if (icmp->icmp_id != getpid () & 0xFFFF)
+      if (icmp->icmp_id != (getpid () & 0xFFFF))
         {
           ACE_ERROR_RETURN
             ((LM_ERROR,
@@ -330,7 +330,7 @@ ACE_Ping_Socket::send_echo_check (ACE_INET_Addr &remote_addr,
   _icmp = (struct icmp *) this->icmp_send_buff_;
   _icmp->icmp_type = ICMP_ECHO;
   _icmp->icmp_code = 0;
-  _icmp->icmp_id = getpid () && 0xFFFF;
+  _icmp->icmp_id = getpid () & 0xFFFF;
   _icmp->icmp_seq = sequence_number_++;
 
 #if defined (ACE_WIN32)
