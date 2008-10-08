@@ -294,7 +294,7 @@ Echo_Handler::open (ACE_Reactor * const reactor,
   // a warning instead of an error.
   if (this->ping_socket ().open (local_addr) == -1)
     {
-      if (errno == EPERM)
+      if (errno == EPERM || errno == EACCES)
         ACE_ERROR_RETURN ((LM_WARNING,
                            ACE_TEXT ("(%P|%t) Echo_Handler::open: ")
                            ACE_TEXT ("ping_socket_: insufficient privs to ")
@@ -1105,7 +1105,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         {
           // If this process doesn't have privileges to open a raw socket, log
           // a warning instead of an error.
-          if (errno == EPERM)
+          if (errno == EPERM || errno == EACCES)
             {
               ACE_ERROR ((LM_WARNING,
                           ACE_TEXT ("(%P|%t) main() - ping_handler->open: ")
@@ -1134,7 +1134,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                               ping_status,
                               2) == -1)   // max_attempts_number
         {
-          if (errno == EPERM)
+          if (errno == EPERM || errno == EACCES)
             {
               ACE_ERROR ((LM_WARNING,
                           ACE_TEXT ("(%P|%t) main() - ping_handler->open: ")
