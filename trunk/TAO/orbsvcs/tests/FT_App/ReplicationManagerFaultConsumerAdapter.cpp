@@ -46,7 +46,7 @@ int ReplicationManagerFaultConsumerAdapter::parse_args (int argc, ACE_TCHAR * ar
     {
       case 'r':
       {
-        this->replica_iors_.push_back (get_opts.opt_arg ());
+        this->replica_iors_.push_back (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       }
       case 'd':

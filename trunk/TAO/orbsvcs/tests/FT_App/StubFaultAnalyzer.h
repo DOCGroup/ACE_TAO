@@ -102,7 +102,7 @@ private:
   const ACE_TCHAR * readyFile_;
 
   /**
-   * The detecor's IOR  (-d option)
+   * The detector's IOR  (-d option)
    */
   const ACE_TCHAR * detector_ior_;
 

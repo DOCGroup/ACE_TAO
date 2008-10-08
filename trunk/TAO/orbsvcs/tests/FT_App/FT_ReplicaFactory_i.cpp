@@ -136,7 +136,7 @@ void FT_ReplicaFactory_i::shutdown_i()
   }
 }
 
-int FT_ReplicaFactory_i::write_ior(const char * outputFile, const char * ior)
+int FT_ReplicaFactory_i::write_ior(const ACE_TCHAR * outputFile, const char * ior)
 {
   int result = -1;
   FILE* out = ACE_OS::fopen (outputFile, "w");
@@ -174,7 +174,7 @@ int FT_ReplicaFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
       }
       case 'n':
       {
-        this->ns_name_ = get_opts.opt_arg ();
+        this->ns_name_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
       }
       case 'f':
@@ -184,12 +184,12 @@ int FT_ReplicaFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
       }
       case 'i':
       {
-        this->roles_.push_back(get_opts.opt_arg ());
+        this->roles_.push_back(ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       }
       case 'l':
       {
-        this->location_ = get_opts.opt_arg ();
+        this->location_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
       }
       case 'q':
@@ -236,7 +236,7 @@ const char * FT_ReplicaFactory_i::location () const
   return this->location_;
 }
 
-const char * FT_ReplicaFactory_i::identity () const
+const ACE_TCHAR * FT_ReplicaFactory_i::identity () const
 {
   return this->identity_.c_str();
 }
@@ -328,7 +328,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
 
   if (this->factory_registry_ior_ != 0)
   {
-    if (ACE_OS::strcmp (this->factory_registry_ior_, "none") != 0)
+    if (ACE_OS::strcmp (this->factory_registry_ior_, ACE_TEXT("none")) != 0)
     {
       CORBA::Object_var reg_obj = this->orb_->string_to_object(factory_registry_ior_);
       this->factory_registry_ = ::PortableGroup::FactoryRegistry::_narrow(reg_obj.in ());
@@ -422,11 +422,11 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
 
   if (this->roles_.size() > 0)
   {
-    this->identity_ = "Factory";
+    this->identity_ = ACE_TEXT("Factory");
     if (this->location_ != 0)
     {
-      this->identity_ += "@";
-      this->identity_ += this->location_;
+      this->identity_ += ACE_TEXT("@");
+      this->identity_ += ACE_TEXT_CHAR_TO_TCHAR(this->location_);
     }
     identified = 1;
   }
@@ -435,7 +435,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
   {
     if (!identified)
     {
-      this->identity_ = "file:";
+      this->identity_ = ACE_TEXT("file:");
       this->identity_ += this->ior_output_file_;
       // note: don't set identified--ns identity overrides file identitiy
     }

@@ -271,29 +271,29 @@ TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *current_arg = arg_shifter.get_current ();
+      const ACE_TCHAR *current_arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcmp (current_arg, "-f") == 0 ||
-          ACE_OS::strcmp (current_arg, "-federate") == 0)
+      if (ACE_OS::strcmp (current_arg, ACE_TEXT("-f")) == 0 ||
+          ACE_OS::strcmp (current_arg, ACE_TEXT("-federate")) == 0)
         {
           arg_shifter.consume_arg ();
           this->federated_ = 1;
         }
-      else if (ACE_OS::strcmp (current_arg, "-q") == 0 ||
-               ACE_OS::strcmp (current_arg, "-quiet") == 0)
+      else if (ACE_OS::strcmp (current_arg, ACE_TEXT("-q")) == 0 ||
+               ACE_OS::strcmp (current_arg, ACE_TEXT("-quiet")) == 0)
         {
           arg_shifter.consume_arg ();
           this->quiet_ = 1;
         }
-      else if (ACE_OS::strcmp (current_arg, "-i") == 0 ||
-               ACE_OS::strcmp (current_arg, "-iorfile") == 0)
+      else if (ACE_OS::strcmp (current_arg, ACE_TEXT("-i")) == 0 ||
+               ACE_OS::strcmp (current_arg, ACE_TEXT("-iorfile")) == 0)
         {
           arg_shifter.consume_arg ();
           FILE* ior_file = 0;
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* file_name = arg_shifter.get_current ();
+              const ACE_TCHAR* file_name = arg_shifter.get_current ();
               ior_file = ACE_OS::fopen (file_name, "r");
 
               if (ior_file == 0)
