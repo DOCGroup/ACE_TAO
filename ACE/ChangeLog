@@ -1,3 +1,8 @@
+Wed Oct  8 21:06:42 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/Network_Adapters_Test.cpp: Extend the errno checks to correctly
+          sense insufficient privs on AIX (EACCESS).
+
 Wed Oct  8 20:57:24 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Ping_Socket.cpp (send_echo_check): Fixed problem introduced in
