@@ -70,7 +70,7 @@ int Options::key_pos_;
 int Options::jump_;
 int Options::initial_asso_value_;
 int Options::argc_;
-char **Options::argv_;
+ACE_TCHAR **Options::argv_;
 int Options::iterations_;
 const char *Options::function_name_;
 const char *Options::fill_default_;
@@ -322,7 +322,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Allows user to provide keyword/attribute separator
         case 'e':
           {
-            delimiters_ = getopt.opt_arg ();
+            delimiters_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
             break;
           }
         case 'E':
@@ -454,7 +454,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Sets the name for the hash function.
         case 'H':
           {
-            hash_name_ = getopt.opt_arg ();
+            hash_name_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
             break;
           }
         // Sets the initial value for the associated values array.
@@ -502,7 +502,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
           {
             const int BAD_VALUE = -1;
             int value;
-            Iterator expand (getopt.opt_arg (),
+            Iterator expand (ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ()),
                              1,
                              MAX_KEY_POS - 1,
                              WORD_END,
@@ -551,7 +551,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Make this the keyname for the keyword component field.
         case 'K':
           {
-            key_name_ = getopt.opt_arg ();
+            key_name_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
             break;
           }
         // Create length table to avoid extra string compares.
@@ -564,9 +564,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         case 'L':
           {
             option_word_ &= ~C;
-            if (!ACE_OS::strcmp (getopt.opt_arg (), "C++"))
+            if (!ACE_OS::strcmp (getopt.opt_arg (), ACE_TEXT("C++")))
               ACE_SET_BITS (option_word_, (CPLUSPLUS | ANSI));
-            else if (!ACE_OS::strcmp (getopt.opt_arg (), "C"))
+            else if (!ACE_OS::strcmp (getopt.opt_arg (), ACE_TEXT("C")))
               ACE_SET_BITS (option_word_, C);
             else
               {
@@ -598,13 +598,13 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Make generated lookup function name be.opt_arg ()
         case 'N':
           {
-            function_name_ = getopt.opt_arg ();
+            function_name_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
             break;
           }
         // Make fill_default be.opt_arg ()
         case 'F':
           {
-            fill_default_ = getopt.opt_arg ();
+            fill_default_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
             break;
           }
         // Order input by frequency of key set occurrence.
@@ -686,7 +686,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Set the class name.
         case 'Z':
           {
-            class_name_ = getopt.opt_arg ();
+            class_name_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
             break;
           }
         default:
@@ -700,7 +700,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
   if (argv[getopt.opt_ind ()] &&
     ACE_OS::freopen (argv[getopt.opt_ind ()],
-                     "r",
+                     ACE_TEXT("r"),
                      stdin) == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open keyword file %p\n%r",
