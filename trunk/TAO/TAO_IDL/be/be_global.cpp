@@ -2500,8 +2500,7 @@ BE_GlobalData::arg_post_proc (void)
 {
   // Let us try to use Perfect Hashing Operation Lookup Strategy. Let
   // us check whether things are fine with GPERF.
-  // *** NOTE *** gperf currently avoids wide character builds
-#if defined (ACE_HAS_GPERF) && !defined (ACE_USES_WCHAR)
+#if defined (ACE_HAS_GPERF)
   // If Perfect Hashing or Binary Search or Linear Search strategies
   // have been selected, let us make sure that it exists and will
   // work.
