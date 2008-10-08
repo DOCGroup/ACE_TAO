@@ -100,6 +100,8 @@ ACE_TCHAR const * DRV_arglist[DRV_MAX_ARGCOUNT] = { 0 };
 static char const * output_arg_format = 0;
 static long output_arg_index = 0;
 
+ACE_TCHAR const TCHAR_DIR_DOT[] = ACE_TEXT(".");
+
 #if defined (ACE_HAS_TCHAR_DIRENT)
 ACE_TCHAR const DIR_DOT[] = ACE_TEXT(".");
 ACE_TCHAR const DIR_DOT_DOT[] = ACE_TEXT("..");
@@ -340,7 +342,7 @@ DRV_sweep_dirs (const char *rel_path,
                         -1);
     }
 
-  ACE_Dirent dir (DIR_DOT);
+  ACE_Dirent dir (TCHAR_DIR_DOT);
   ACE_CString bname (base_path);
   bname += (bname.length () > 0 ? "/" : "");
   bname += rel_path;
