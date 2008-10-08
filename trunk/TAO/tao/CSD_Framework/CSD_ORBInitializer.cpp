@@ -10,6 +10,13 @@ ACE_RCSID (CSD,
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/debug.h"
 
+static const ACE_TCHAR csd_poa_factory_directive[] =
+  ACE_DYNAMIC_SERVICE_DIRECTIVE(
+    "TAO_CSD_Object_Adapter_Factory",
+    "TAO_CSD_Framework",
+    "_make_TAO_CSD_Object_Adapter_Factory",
+    "");
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
@@ -34,7 +41,7 @@ TAO_CSD_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
   // If the application resolves the root POA, make sure we load the CSD POA.
   tao_info->orb_core ()->orb_params ()->poa_factory_name ("TAO_CSD_Object_Adapter_Factory");
 
-  tao_info->orb_core ()->orb_params ()->poa_factory_directive ("dynamic TAO_CSD_Object_Adapter_Factory Service_Object * TAO_CSD_Framework:_make_TAO_CSD_Object_Adapter_Factory()");
+  tao_info->orb_core ()->orb_params ()->poa_factory_directive (csd_poa_factory_directive);
 }
 
 void
