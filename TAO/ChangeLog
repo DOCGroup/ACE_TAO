@@ -1,3 +1,8 @@
+Wed Oct  8 13:16:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Utils/Server_Main.cpp:
+          ACE_TCHAR fixes
+
 Wed Oct  8 12:54:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h
