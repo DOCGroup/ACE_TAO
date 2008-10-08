@@ -74,7 +74,7 @@ private:
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
-  int read_ior (char *filename);
+  int read_ior (ACE_TCHAR *filename);
   // Function to read the cubit factory IOR from a file.
 
   void print_stats (const char *call_name,
@@ -266,7 +266,7 @@ DII_Cubit_Client::parse_args (void)
         this->loop_count_ = ACE_OS::atoi (opts.opt_arg ());
         break;
       case 'i':   // Get the IOR from the command line.
-        this->factory_IOR_ = opts.opt_arg ();
+        this->factory_IOR_ = ACE_TEXT_ALWAYS_CHAR(opts.opt_arg ());
         break;
       case 'f':   // Read the IOR from the file.
         result = this->read_ior (opts.opt_arg ());
@@ -297,7 +297,7 @@ DII_Cubit_Client::parse_args (void)
 
 // Get the factory IOR from the file created by the server.
 int
-DII_Cubit_Client::read_ior (char *filename)
+DII_Cubit_Client::read_ior (ACE_TCHAR *filename)
 {
   // Open the file for reading.
   this->f_handle_ = ACE_OS::open (filename,0);

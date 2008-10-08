@@ -1,3 +1,22 @@
+Wed Oct  8 19:14:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/CSD_Strategy/TestApps/ClientApp.cpp
+        * performance-tests/CSD_Strategy/TestApps/ClientApp.h
+        * performance-tests/CSD_Strategy/TestApps/ServerApp.cpp
+        * performance-tests/CSD_Strategy/TestApps/ServerApp.h
+        * performance-tests/CSD_Strategy/TestInf/AppHelper.cpp
+        * performance-tests/CSD_Strategy/TestInf/AppHelper.h
+        * performance-tests/CSD_Strategy/TestInf/ServantList_T.cpp
+        * performance-tests/CSD_Strategy/TestInf/ServantList_T.h
+        * performance-tests/Cubit/TAO/DII_Cubit/client.cpp
+        * performance-tests/Cubit/TAO/IDL_Cubit/client.cpp
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h
+        * performance-tests/Cubit/TAO/IDL_Cubit/server.cpp
+        * performance-tests/Pluggable/PP_Test_Client.cpp
+        * performance-tests/Pluggable/PP_Test_Client.h
+          ACE_TCHAR fixes
+
 Wed Oct  8 18:31:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_global.cpp:

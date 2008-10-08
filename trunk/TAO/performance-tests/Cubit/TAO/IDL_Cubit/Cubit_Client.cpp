@@ -180,7 +180,7 @@ Cubit_Client::func (u_int i)
 // Reads the Cubit factory ior from a file
 
 int
-Cubit_Client::read_ior (const char *filename)
+Cubit_Client::read_ior (const ACE_TCHAR *filename)
 {
   // Open the file for reading.
   this->f_handle_ = ACE_OS::open (filename,0);
@@ -204,7 +204,7 @@ Cubit_Client::read_ior (const char *filename)
                         -1);
     }
 
-  this->cubit_factory_key_ = ACE_OS::strdup (data);
+  this->cubit_factory_key_ = ACE_OS::strdup (ACE_TEXT_CHAR_TO_TCHAR(data));
 
   ior_buffer.alloc ()->free (data);
 
@@ -250,14 +250,14 @@ Cubit_Client::parse_args (void)
         break;
       case 'v':
         // For backward compatibility
-        test_mask = this->opt_to_mask ("void");
+        test_mask = this->opt_to_mask (ACE_TEXT("void"));
         if (test_mask == 0)
           return -1;
         this->enable_test (test_mask);
         break;
       case 'o':
         // For backward compatibility
-        test_mask = this->opt_to_mask ("one_way");
+        test_mask = this->opt_to_mask (ACE_TEXT("one_way"));
         if (test_mask == 0)
           return -1;
         this->enable_test (test_mask);

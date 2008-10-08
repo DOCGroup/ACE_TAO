@@ -37,7 +37,7 @@ class ServerApp : public TestAppBase
   private:
 
     // These are all called, in order, by the run_i() method.
-    int init(int argc, char* argv[]);
+    int init(int argc, ACE_TCHAR* argv[]);
     void poa_setup(void);
     void csd_setup(void);
     void servant_setup(void);
@@ -53,7 +53,7 @@ class ServerApp : public TestAppBase
     int parse_args(int argc, ACE_TCHAR* argv[]);
 
     int set_arg(unsigned&   value,
-                 const char* arg,
+                 const ACE_TCHAR* arg,
                  char        opt,
                  const char* name,
                  int         min = 0);
@@ -75,8 +75,8 @@ class ServerApp : public TestAppBase
 
     ClientTask collocated_client_task_;
 
-    ACE_CString exe_name_;
-    ACE_CString ior_filename_prefix_;
+    ACE_TString exe_name_;
+    ACE_TString ior_filename_prefix_;
     unsigned    num_servants_;
     unsigned    num_csd_threads_;
     unsigned    num_orb_threads_;
