@@ -85,7 +85,7 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
                       this->type_start_,
                       this->type_count_,
 
-                      this->pid_file_name_?this->pid_file_name_:"nil") );
+                      this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")) );
         }
 
       if (this->pid_file_name_ != 0)
@@ -269,7 +269,7 @@ ECT_Consumer_Driver::disconnect_consumers (void)
 }
 
 int
-ECT_Consumer_Driver::parse_args (int argc, char *argv [])
+ECT_Consumer_Driver::parse_args (int argc, ACE_TCHAR *argv [])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("xdc:s:h:p:o:"));
   int opt;
@@ -293,7 +293,7 @@ ECT_Consumer_Driver::parse_args (int argc, char *argv [])
         case 'h':
           {
             char* aux;
-                char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
+                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
 
             this->type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);

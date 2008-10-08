@@ -60,48 +60,48 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
       while (arg_shifter.is_anything_left ())
         {
-          const char *arg = arg_shifter.get_current ();
+          const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-          if (ACE_OS::strcasecmp (arg, "-suppliers") == 0)
+          if (ACE_OS::strcasecmp (arg, ACE_TEXT("-suppliers")) == 0)
             {
               arg_shifter.consume_arg ();
 
               if (arg_shifter.is_parameter_next ())
                 {
-                  const char* opt = arg_shifter.get_current ();
+                  const ACE_TCHAR* opt = arg_shifter.get_current ();
                   int n = ACE_OS::atoi (opt);
                   if (n >= 1)
                     this->nsuppliers_ = n;
                   arg_shifter.consume_arg ();
                 }
             }
-          else if (ACE_OS::strcasecmp (arg, "-consumers") == 0)
+          else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-consumers")) == 0)
             {
               arg_shifter.consume_arg ();
 
               if (arg_shifter.is_parameter_next ())
                 {
-                  const char* opt = arg_shifter.get_current ();
+                  const ACE_TCHAR* opt = arg_shifter.get_current ();
                   int n = ACE_OS::atoi (opt);
                   if (n >= 1)
                     this->nconsumers_ = n;
                   arg_shifter.consume_arg ();
                 }
             }
-          else if (ACE_OS::strcasecmp (arg, "-max_recursion") == 0)
+          else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-max_recursion")) == 0)
             {
               arg_shifter.consume_arg ();
 
               if (arg_shifter.is_parameter_next ())
                 {
-                  const char* opt = arg_shifter.get_current ();
+                  const ACE_TCHAR* opt = arg_shifter.get_current ();
                   int n = ACE_OS::atoi (opt);
                   if (n >= 0)
                     this->max_recursion_ = n;
                   arg_shifter.consume_arg ();
                 }
             }
-          else if (ACE_OS::strcasecmp (arg, "-verbose") == 0)
+          else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-verbose")) == 0)
             {
               arg_shifter.consume_arg ();
 

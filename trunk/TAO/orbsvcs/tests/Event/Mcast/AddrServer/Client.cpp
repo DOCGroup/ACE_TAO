@@ -19,7 +19,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       for (int i = 1; i < argc; i++)
         {
-          if (ACE_OS::strcasecmp(argv[i], "-k") == 0)
+          if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-k")) == 0)
             {
               if (argv[i+1] != 0)
                 ior = argv[++i];
@@ -87,7 +87,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           inet_addr.set (udp_addr.port, udp_addr.ipaddr);
         }
 
-      char buffer[256];
+      ACE_TCHAR buffer[256];
       inet_addr.addr_to_string (buffer,256);
       ACE_DEBUG ((LM_DEBUG,"Should be IPv4: %s\n",buffer));
       ACE_OS::memset (buffer,0,255);

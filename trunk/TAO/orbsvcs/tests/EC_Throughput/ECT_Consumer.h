@@ -53,7 +53,7 @@ public:
   void disconnect (void);
   // Disconnect from the EC.
 
-  void dump_results (const char* name,
+  void dump_results (const ACE_TCHAR* name,
                      ACE_UINT32 global_scale_factor);
   // Print out the results
 

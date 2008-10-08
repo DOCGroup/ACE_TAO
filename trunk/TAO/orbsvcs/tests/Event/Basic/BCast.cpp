@@ -37,18 +37,18 @@ EC_BCast::parse_args (int& argc, ACE_TCHAR* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcmp (arg, "-port") == 0)
+      if (ACE_OS::strcmp (arg, ACE_TEXT("-port")) == 0)
         {
           arg_shifter.consume_arg ();
           this->bcast_port_ = ACE_OS::atoi (arg_shifter.get_current ());
         }
 
-      else if (ACE_OS::strcmp (arg, "-address") == 0)
+      else if (ACE_OS::strcmp (arg, ACE_TEXT("-address")) == 0)
         {
           arg_shifter.consume_arg ();
-          this->bcast_address_ = arg_shifter.get_current ();
+          this->bcast_address_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
         }
 
       arg_shifter.ignore_arg ();
@@ -84,7 +84,7 @@ EC_BCast::execute_test (void)
   this->build_consumer_qos (0, sub, shutdown_event_type);
 
   // Obtain UDP address in the string format for Gateway initialization.
-  char address_server_arg [256];
+  ACE_TCHAR address_server_arg [256];
   ACE_INET_Addr udp_addr;
   if (udp_addr.set (this->bcast_port_, this->bcast_address_) == -1
       || udp_addr.addr_to_string (address_server_arg, 256) == -1)
@@ -102,7 +102,7 @@ EC_BCast::execute_test (void)
 
   TAO_ECG_Mcast_Gateway gateway;
   if (gateway.init (sub,
-                    address_server_arg,
+                    ACE_TEXT_ALWAYS_CHAR(address_server_arg),
                     lAttributes)
       == -1)
     return;
