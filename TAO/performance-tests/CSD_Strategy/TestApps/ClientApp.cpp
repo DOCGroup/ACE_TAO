@@ -8,7 +8,7 @@
 
 ClientApp::ClientApp()
   : TestAppBase("CSD_PT_ClientApp"),
-    ior_("Not Set"),
+    ior_(ACE_TEXT("Not Set")),
     client_id_(0),
     num_loops_(1)
 {
@@ -39,7 +39,7 @@ ClientApp::run_i(int argc, ACE_TCHAR* argv[])
 
 
 int
-ClientApp::init(int argc, char* argv[])
+ClientApp::init(int argc, ACE_TCHAR* argv[])
 {
   this->orb_ = CORBA::ORB_init(argc, argv);
 
@@ -146,7 +146,7 @@ ClientApp::usage_statement()
 int
 ClientApp::arg_dependency_checks()
 {
-  if (this->ior_ == "Not Set")
+  if (this->ior_ == ACE_TEXT("Not Set"))
     {
       ACE_ERROR((LM_ERROR,
                  "Error: Missing required command-line option (-i <ior>).\n"));
@@ -169,7 +169,7 @@ ClientApp::arg_dependency_checks()
 
 int
 ClientApp::set_arg(unsigned&   value,
-                   const char* arg,
+                   const ACE_TCHAR* arg,
                    char        opt,
                    const char* name,
                    int         min)

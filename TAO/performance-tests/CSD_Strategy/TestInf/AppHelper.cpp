@@ -4,7 +4,7 @@
 void
 AppHelper::ref_to_file(CORBA::ORB_ptr    orb,
                        CORBA::Object_ptr obj,
-                       const char*       filename)
+                       const ACE_TCHAR*  filename)
 {
   CORBA::String_var ior = orb->object_to_string(obj);
 

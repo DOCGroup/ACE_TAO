@@ -17,7 +17,7 @@ struct RefHelper
   typedef typename T::_var_type T_var;
 
   static T_ptr string_to_ref(CORBA::ORB_ptr orb,
-                             const char* ior)
+                             const ACE_TCHAR* ior)
   {
     CORBA::Object_var obj = orb->string_to_object(ior);
 
@@ -75,7 +75,7 @@ struct CSD_PT_TestInf_Export AppHelper
 
   static void ref_to_file(CORBA::ORB_ptr    orb,
                           CORBA::Object_ptr obj,
-                          const char*       filename);
+                          const ACE_TCHAR*  filename);
 
   static PortableServer::POA_ptr create_poa
                               (const char*                    name,

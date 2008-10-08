@@ -45,7 +45,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (cubit_client.init (argc, argv) == -1)
     return 1;
 
-  int retval = cubit_client.run ();
+  int const retval = cubit_client.run ();
 
   ACE_TIMEPROBE_PRINT;
 

@@ -73,7 +73,7 @@ PP_Test_Client::PP_Test_Client (int shutdown)
 // Reads the Cubit factory ior from a file
 
 int
-PP_Test_Client::read_ior (char *filename)
+PP_Test_Client::read_ior (ACE_TCHAR *filename)
 {
   // Open the file for reading.
   this->f_handle_ = ACE_OS::open (filename,0);
