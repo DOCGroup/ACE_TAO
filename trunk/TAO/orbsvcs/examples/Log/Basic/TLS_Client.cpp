@@ -25,7 +25,7 @@ TLS_Client::~TLS_Client ()
 }
 
 void
-TLS_Client::init (int argc, char *argv [])
+TLS_Client::init (int argc, ACE_TCHAR *argv [])
 {
   init_ORB (argc, argv);
   resolve_naming_service ();
@@ -34,7 +34,7 @@ TLS_Client::init (int argc, char *argv [])
 
 void
 TLS_Client::init_ORB (int argc,
-                      char *argv [])
+                      ACE_TCHAR *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 }

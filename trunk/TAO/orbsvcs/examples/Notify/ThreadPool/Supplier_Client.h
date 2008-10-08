@@ -63,7 +63,7 @@ protected:
   int consumer_count_;
 
   /// Name of the file to write the supplier ior to.
-  ACE_CString ior_file_name_;
+  ACE_TString ior_file_name_;
 
   /// Number of threads at the EC
   int ec_thread_count_;

@@ -50,7 +50,7 @@ class Multiple
   // Closes down the ORB and exits.
 
  protected:
-  virtual int parse_args (int argc, char *argv []) = 0;
+  virtual int parse_args (int argc, ACE_TCHAR *argv []) = 0;
   // Parse the command line arguments.
 
   CosEventChannelAdmin::EventChannel_ptr cos_ec_;

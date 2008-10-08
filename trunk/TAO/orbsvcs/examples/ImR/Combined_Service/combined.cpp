@@ -26,7 +26,7 @@ public:
   {
     ACE_ASSERT(s != 0);
     ACE_ASSERT(ACE_OS::strlen(s) > 0);
-    return asc_.process_directive(s);
+    return asc_.process_directive(ACE_TEXT_CHAR_TO_TCHAR(s));
   }
 
   virtual void reconfigure()

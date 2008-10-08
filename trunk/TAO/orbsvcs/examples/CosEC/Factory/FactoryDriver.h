@@ -45,14 +45,14 @@ class FactoryDriver
   ~FactoryDriver (void);
   // Destructor.
 
-  int start (int argc, char *argv []);
+  int start (int argc, ACE_TCHAR *argv []);
   // Start the driver.
 
   int stop (void);
   //Stop the driver.
 
  protected:
-  int parse_args (int argc, char *argv []);
+  int parse_args (int argc, ACE_TCHAR *argv []);
   // Parse the command-line arguments and set options.
 
   const char* factoryName_;

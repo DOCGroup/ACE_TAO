@@ -1,3 +1,39 @@
+Wed Oct  8 10:58:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.cpp
+        * orbsvcs/examples/CosEC/Factory/FactoryDriver.cpp
+        * orbsvcs/examples/CosEC/Factory/FactoryDriver.h
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.cpp
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.h
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Basic.cpp
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Consumer.cpp
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Consumer.h
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Multiple.cpp
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Multiple.h
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Supplier.cpp
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Supplier.h
+        * orbsvcs/examples/FaultTolerance/RolyPoly/client.cpp
+        * orbsvcs/examples/ImR/Advanced/TestClient.cpp
+        * orbsvcs/examples/ImR/Advanced/TestServer.cpp
+        * orbsvcs/examples/ImR/Combined_Service/combined.cpp
+        * orbsvcs/examples/LoadBalancing/server.cpp
+        * orbsvcs/examples/Log/Basic/TLS_Client.cpp
+        * orbsvcs/examples/Log/Basic/TLS_Client.h
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp
+        * orbsvcs/examples/Notify/Filter/Filter.cpp
+        * orbsvcs/examples/Notify/Filter/Filter.h
+        * orbsvcs/examples/Notify/Lanes/Supplier_Client.h
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.cpp
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.h
+        * orbsvcs/examples/Notify/ThreadPool/Supplier_Client.h
+        * orbsvcs/examples/RtEC/IIOPGateway/Consumer.cpp
+        * orbsvcs/examples/RtEC/IIOPGateway/EC.cpp
+        * orbsvcs/examples/RtEC/IIOPGateway/Gateway.cpp
+        * orbsvcs/examples/RtEC/IIOPGateway/Supplier.cpp
+        * orbsvcs/examples/RtEC/MCast/MCast.cpp
+          ACE_TCHAR fixes
+
 Wed Oct  8 09:06:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/unit/Notify/MC/MonitorManager/MonitorManager.cpp

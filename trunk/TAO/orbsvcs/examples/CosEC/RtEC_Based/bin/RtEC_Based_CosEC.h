@@ -40,7 +40,7 @@ class RtEC_Based_CosEC : public CosEC_ServantBase
   virtual ~RtEC_Based_CosEC (void);
   // Destructor.
 
-  int parse_args (int argc, char *argv []);
+  int parse_args (int argc, ACE_TCHAR *argv []);
   // Parses the command line arguments.
 
   void startup (int argc, ACE_TCHAR *argv[]);
@@ -67,7 +67,7 @@ protected:
   virtual void deactivate_rtec (void);
   // Deactivates the rtec.
 
-  void init_ORB (int& argc, char *argv []);
+  void init_ORB (int& argc, ACE_TCHAR *argv []);
   // initialize the ORB.
 
   void resolve_naming_service (void);

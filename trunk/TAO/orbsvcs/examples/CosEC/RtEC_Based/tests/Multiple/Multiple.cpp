@@ -37,7 +37,7 @@ Multiple::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Multiple::init_ORB  (int argc, char *argv [])
+Multiple::init_ORB  (int argc, ACE_TCHAR *argv [])
 {
   try
     {

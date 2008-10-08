@@ -35,7 +35,7 @@ class Subscribe
   Subscribe (void);
   ~Subscribe ();
 
-  void init (int argc, char *argv []);
+  void init (int argc, ACE_TCHAR *argv []);
   // Init the Client.
 
   void run (void);
@@ -45,7 +45,7 @@ class Subscribe
   // Called when all events we are waiting for have occured.
 
  protected:
-  void init_ORB (int argc, char *argv []);
+  void init_ORB (int argc, ACE_TCHAR *argv []);
   // Initializes the ORB.
 
   void resolve_naming_service (void);
