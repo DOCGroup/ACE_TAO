@@ -55,7 +55,7 @@ public:
   // <collocation_test_ior> is used to pass in the ior file name.
 
 private:
-  int read_ior (char *filename);
+  int read_ior (ACE_TCHAR *filename);
   // Function to read the cubit factory ior from a file.
 
   int parse_args (void);

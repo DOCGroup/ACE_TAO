@@ -34,7 +34,7 @@ class ClientApp : public TestAppBase
   private:
 
     // These are all called, in order, by the run_i() method.
-    int init(int argc, char* argv[]);
+    int init(int argc, ACE_TCHAR* argv[]);
     void client_setup(void);
     int  run_engine(void);
     void cleanup();
@@ -43,7 +43,7 @@ class ClientApp : public TestAppBase
     int parse_args(int argc, ACE_TCHAR* argv[]);
 
     int set_arg(unsigned&   value,
-                 const char* arg,
+                 const ACE_TCHAR* arg,
                  char        opt,
                  const char* name,
                  int         min = 0);
@@ -53,8 +53,8 @@ class ClientApp : public TestAppBase
 
 
     CORBA::ORB_var      orb_;
-    ACE_CString         exe_name_;
-    ACE_CString         ior_;
+    ACE_TString         exe_name_;
+    ACE_TString         ior_;
     ClientEngine_Handle engine_;
     unsigned            client_id_;
     unsigned            num_loops_;

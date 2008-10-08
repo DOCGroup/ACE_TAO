@@ -60,7 +60,7 @@ private:
   // Simple function that returns the substraction of 117 from the
   // parameter.
 
-  int read_ior (const char *filename);
+  int read_ior (const ACE_TCHAR *filename);
   // Function to read the cubit factory ior from a file.
 
   int parse_args (void);
@@ -130,7 +130,7 @@ private:
   ACE_TCHAR **argv_;
   // arguments from command line.
 
-  char *cubit_factory_key_;
+  ACE_TCHAR *cubit_factory_key_;
   // Key of factory obj ref.
 
   u_int loop_count_;

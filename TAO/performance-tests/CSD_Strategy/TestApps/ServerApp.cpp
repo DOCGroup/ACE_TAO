@@ -16,7 +16,7 @@
 
 ServerApp::ServerApp()
   : TestAppBase("CSD_PT_ServerApp"),
-    ior_filename_prefix_("foo"),
+    ior_filename_prefix_(ACE_TEXT("foo")),
     num_servants_(1),
     num_csd_threads_(1),
     num_orb_threads_(1),
@@ -85,7 +85,7 @@ ServerApp::run_i(int argc, ACE_TCHAR* argv[])
 
 
 int
-ServerApp::init(int argc, char* argv[])
+ServerApp::init(int argc, ACE_TCHAR* argv[])
 {
   this->orb_ = CORBA::ORB_init(argc, argv);
 
@@ -276,7 +276,7 @@ ServerApp::parse_args(int argc, ACE_TCHAR* argv[])
           break;
 
         case 'x':
-          this->scenario_id_ = get_opts.opt_arg();
+          this->scenario_id_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg());
           break;
 
         case 'z':
@@ -336,7 +336,7 @@ ServerApp::arg_dependency_checks()
 
 int
 ServerApp::set_arg(unsigned&   value,
-                   const char* arg,
+                   const ACE_TCHAR* arg,
                    char        opt,
                    const char* name,
                    int         min)

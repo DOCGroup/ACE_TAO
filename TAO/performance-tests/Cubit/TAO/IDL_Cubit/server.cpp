@@ -19,7 +19,6 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-
 ACE_RCSID(IDL_Cubit, server, "$Id$")
 
 // This runs the server test.
@@ -53,9 +52,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               "\n\tIDL_Cubit: server\n\n"));
   try
     {
-      int ret = cubit_server.init (argc, argv);
-
-      if (ret == -1)
+      if (cubit_server.init (argc, argv)== -1)
         return -1;
 
       cubit_server.run ();
