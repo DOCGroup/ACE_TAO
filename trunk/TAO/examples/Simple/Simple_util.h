@@ -134,7 +134,7 @@ protected:
   CORBA::ORB_var orb_;
   // Remember our orb.
 
-  int read_ior (char *filename);
+  int read_ior (ACE_TCHAR *filename);
   // Function to read the server IOR from a file.
 
   int parse_args (void);

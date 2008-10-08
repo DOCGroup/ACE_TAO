@@ -157,7 +157,7 @@ Client<InterfaceObj, Var>::Client (void)
 // Reads the Server ior from a file
 
 template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::read_ior (char *filename)
+Client<InterfaceObj, Var>::read_ior (ACE_TCHAR *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
