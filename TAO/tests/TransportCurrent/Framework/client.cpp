@@ -24,7 +24,7 @@ test_transport_current (CORBA::ORB_ptr);
 
 using namespace TAO;
 
-const ACE_TCHAR* CLIENT_ORB_ID = ACE_TEXT ("client orb");
+const char* CLIENT_ORB_ID = "client orb";
 const ACE_TCHAR* ior = ACE_TEXT("file://server.ior");
 
 int nthreads = 1;
