@@ -1,3 +1,11 @@
+Thu Oct  9 17:54:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Added more WinCE6 support by integrating some changes from OCI.
+        Mon Aug 11 15:40:37 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+        * ace/config-win32-msvc-8.h:
+        * ace/config-WinCE.h:
+          WinCE 6.0 supports TSS and still does not support sig_atomic_t.
+
 Wed Oct  8 21:06:42 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * tests/Network_Adapters_Test.cpp: Extend the errno checks to correctly
