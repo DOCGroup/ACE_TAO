@@ -38,7 +38,7 @@ private:
   // used for creating the name of the orb.)
 
   int argc_;
-  char *argv_[256];
+  ACE_TCHAR *argv_[256];
 };
 
 // ****************************************************************
@@ -117,7 +117,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      char *argv_[256];
+      ACE_TCHAR *argv_[256];
       int argc_ = argc;
       for (int i = 0; i < argc; ++i)
         argv_[i] = argv[i];
