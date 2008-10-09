@@ -33,7 +33,7 @@ Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
     {
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-JobName"))))
         {
-          name_ = current_arg;
+          name_ = ACE_TEXT_ALWAYS_CHAR(current_arg);
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Priority"))))
@@ -102,12 +102,12 @@ Periodic_Task::job (Job_ptr job)
 void
 Periodic_Task::dump_stats (ACE_TCHAR* msg)
 {
-  char buf[BUFSIZ];
-  ACE_OS::sprintf (buf, "%s%s", name_.c_str (),".dat");
+  ACE_TCHAR buf[BUFSIZ];
+  ACE_OS::sprintf (buf, ACE_TEXT("%s%s"), name_.c_str (), ACE_TEXT(".dat"));
 
-  ACE_CString fname (buf);
+  ACE_TString fname (buf);
 
-  ACE_OS::sprintf (buf,"#%s #name %s, priority %d, period %ld, exec_time %ld, phase %ld, iter_ %d , load_ %d",
+  ACE_OS::sprintf (buf,ACE_TEXT("#%s #name %s, priority %d, period %ld, exec_time %ld, phase %ld, iter_ %d , load_ %d"),
                    msg, name_.c_str(), task_priority_, period_, exec_time_, phase_, iter_, load_);
 
   task_stats_->dump_samples (fname.c_str (), buf,

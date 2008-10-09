@@ -1,3 +1,14 @@
+Thu Oct  9 18:33:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/RTCORBA/Activity/Activity.cpp
+        * examples/RTCORBA/Activity/Activity.h
+        * examples/RTCORBA/Activity/Builder.cpp
+        * examples/RTCORBA/Activity/Job_i.cpp
+        * examples/RTCORBA/Activity/Periodic_Task.cpp
+        * examples/RTCORBA/Activity/POA_Holder.cpp
+        * examples/RTCORBA/Activity/Task_Stats.cpp
+          ACE_TCHAR fixes
+
 Thu Oct  9 15:19:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp

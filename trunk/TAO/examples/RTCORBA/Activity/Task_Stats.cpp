@@ -75,8 +75,8 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
   double throughput =
     double(samples_count_) / elapsed_seconds;
 
-  ACE_OS::sprintf (out_msg, "#Throughtput: %f\n", throughput);
-  ACE_OS::fprintf (output_file, "%s\n",out_msg);
+  ACE_OS::sprintf (out_msg, ACE_TEXT("#Throughtput: %f\n"), throughput);
+  ACE_OS::fprintf (output_file, ACE_TEXT("%s\n"),out_msg);
 
   // dump latency stats.
   this->dump_latency_stats (out_msg, scale_factor);
