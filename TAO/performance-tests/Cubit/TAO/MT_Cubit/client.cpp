@@ -591,17 +591,17 @@ Client_i::print_priority_inversion_stats (void)
 int
 Client_i::start_servant (void)
 {
-  char high_thread_args[BUFSIZ];
+  ACE_TCHAR high_thread_args[BUFSIZ];
 
   ACE_OS::sprintf (high_thread_args,
-                   "-ORBSndSock 32768 "
-                   "-ORBRcvSock 32768 ");
+                   ACE_TEXT("-ORBSndSock 32768 ")
+                   ACE_TEXT("-ORBRcvSock 32768 "));
 
   Cubit_Task *high_priority_task;
 
   ACE_NEW_RETURN (high_priority_task,
-                  Cubit_Task ((const char *) high_thread_args,
-                              (const char *) "internet",
+                  Cubit_Task (high_thread_args,
+                              "internet",
                               (u_int) 1,
                               &this->server_thread_manager_,
                               (u_int) 0), // task id 0.
