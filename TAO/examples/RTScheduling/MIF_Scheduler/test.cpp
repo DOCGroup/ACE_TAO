@@ -15,7 +15,7 @@ DT_Test::DT_Test (void)
 }
 
 int
-DT_Test::init (int argc, char *argv [])
+DT_Test::init (int argc, ACE_TCHAR *argv [])
 {
   orb_ = CORBA::ORB_init (argc, argv);
 
@@ -41,7 +41,7 @@ DT_Test::init (int argc, char *argv [])
 }
 
 void
-DT_Test::run (int argc, char* argv [])
+DT_Test::run (int argc, ACE_TCHAR* argv [])
 {
   init (argc,argv);
 
@@ -135,7 +135,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_MIF_DT_Creator);
 
-    ACE_DEBUG ((LM_DEBUG,
+      ACE_DEBUG ((LM_DEBUG,
          "%t\n"));
       DT_TEST::instance ()->run (argc, argv);
 
