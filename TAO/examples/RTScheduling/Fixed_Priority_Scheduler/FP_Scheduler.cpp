@@ -167,13 +167,13 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
                       serv_cxt->context_data.get_buffer (),
                       serv_cxt->context_data.length ());
 
-      char msg [BUFSIZ];
+      ACE_TCHAR msg [BUFSIZ];
       ACE_OS::sprintf (msg,
-                       "The Guid is "
+                       ACE_TEXT("The Guid is ")
                        ACE_SIZE_T_FORMAT_SPECIFIER
-                       "\n", gu_id);
+                       ACE_TEXT("\n"), gu_id);
 
-      DT_TEST::instance ()->dt_creator ()->log_msg (msg);
+      DT_TEST::instance ()->dt_creator ()->log_msg (ACE_TEXT_ALWAYS_CHAR(msg));
 
       RTScheduling::Current::IdType* guid = 0;
       ACE_NEW (guid,
