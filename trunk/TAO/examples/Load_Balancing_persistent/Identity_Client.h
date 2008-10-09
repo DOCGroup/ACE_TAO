@@ -64,7 +64,7 @@ private:
   TAO_ORB_Manager orb_manager_;
   // The ORB manager.
 
-  const char *group_factory_ior_;
+  const ACE_TCHAR *group_factory_ior_;
   // The ior of the <Object_Group_Factory> object we shall use to
   // to obtain an <Object_Group> object.
 
