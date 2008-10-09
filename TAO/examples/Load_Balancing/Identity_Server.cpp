@@ -152,9 +152,9 @@ Identity_Server::create_objects (size_t number_of_objects,
                        i);
 
       // Create and activate a servant.
-      Identity_i * identity_servant;
+      Identity_i * identity_servant = 0;
       ACE_NEW_THROW_EX (identity_servant,
-                        Identity_i (id),
+                        Identity_i (ACE_TEXT_ALWAYS_CHAR(id)),
                         CORBA::NO_MEMORY ());
       PortableServer::ServantBase_var s = identity_servant;
       orb_manager_.activate (identity_servant);
