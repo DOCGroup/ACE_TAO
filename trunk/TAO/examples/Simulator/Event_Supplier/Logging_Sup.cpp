@@ -409,12 +409,9 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
   }
 }
 
-
-
 // Function get_options.
-
 unsigned int
-Logging_Supplier::get_options (int argc, char *argv [])
+Logging_Supplier::get_options (int argc, ACE_TCHAR *argv [])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("f:m:d:s"));
   int opt;
