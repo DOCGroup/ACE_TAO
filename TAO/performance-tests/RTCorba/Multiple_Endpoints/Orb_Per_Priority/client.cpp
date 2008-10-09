@@ -38,7 +38,7 @@ public:
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
   // Accumulate the throughput statistics into <throughput>
 
-  void dump_stats (const char* msg, ACE_UINT32 gsf);
+  void dump_stats (const ACE_TCHAR* msg, ACE_UINT32 gsf);
   // Accumulate the throughput statistics into <throughput>
 
   // = The ACE_Task_Base methods....
@@ -197,8 +197,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           client[j].accumulate_into (throughput);
 
-          char buf[64];
-          ACE_OS::sprintf (buf, "Thread[index= %d]", j);
+          ACE_TCHAR buf[64];
+          ACE_OS::sprintf (buf, ACE_TEXT("Thread[index= %d]"), j);
           client[j].dump_stats (buf, gsf);
         }
 
@@ -332,7 +332,7 @@ Client::accumulate_into (ACE_Throughput_Stats &throughput) const
 }
 
 void
-Client::dump_stats (const char* msg, ACE_UINT32 gsf)
+Client::dump_stats (const ACE_TCHAR* msg, ACE_UINT32 gsf)
 {
   this->throughput_.dump_results (msg, gsf);
 }
