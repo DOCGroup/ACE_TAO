@@ -1,3 +1,10 @@
+Thu Oct  9 15:19:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp
+        * orbsvcs/tests/Time/Client_i.cpp
+        * orbsvcs/tests/Time/Client_i.h
+          ACE_TCHAR fixes
+
 Thu Oct  9 09:45:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/TransportCurrent/Framework/client.cpp:

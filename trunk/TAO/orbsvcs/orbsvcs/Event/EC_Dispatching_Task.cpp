@@ -79,7 +79,7 @@ TAO_EC_Simple_Queue_Full_Action::queue_full_action (TAO_EC_Dispatching_Task * /*
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_EC_Simple_Queue_Full_Action,
-                       ACE_TEXT (TAO_EC_DEFAULT_QUEUE_FULL_SERVICE_OBJECT_NAME),
+                       TAO_EC_DEFAULT_QUEUE_FULL_SERVICE_OBJECT_NAME,
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_EC_Simple_Queue_Full_Action),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
