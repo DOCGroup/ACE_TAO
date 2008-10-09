@@ -160,7 +160,7 @@ Identity_Server::create_objects (size_t number_of_objects,
       orb_manager_.activate (identity_servant);
 
       Load_Balancer::Member member;
-      member.id = CORBA::string_dup (id);
+      member.id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(id));
       member.obj = identity_servant->_this ();
 
       // Bind the servant in the <Object_Group>.
