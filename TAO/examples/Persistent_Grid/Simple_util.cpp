@@ -58,7 +58,7 @@ Server<Servant>::parse_args (void)
                            " [-d]"
                            " [-o] <ior_output_file>"
                            "\n",
-                           ACE_TEXT_CHAR_TO_TCHAR (this->argv_ [0])),
+                           this->argv_ [0]),
                           -1);
       }
 
