@@ -200,7 +200,7 @@ Client<InterfaceObj, Var>::parse_args (void)
         TAO_debug_level++;
         break;
       case 'k':  // ior provide on command line
-        this->ior_ = ACE_OS::strdup (get_opts.opt_arg ());
+        this->ior_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       case 'f': // read the IOR from the file.
         result = this->read_ior (get_opts.opt_arg ());
@@ -245,8 +245,6 @@ Client<InterfaceObj, Var>::init (const char *name,
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
         return -1;
-
-
 
       if(this->ior_ != 0)
         {
