@@ -54,7 +54,7 @@ Identity_Server::parse_args (int argc, ACE_TCHAR *argv[])
 
 int
 Identity_Server::init (int argc,
-                       char* argv[])
+                       ACE_TCHAR* argv[])
 {
   int result;
 
@@ -186,15 +186,15 @@ Identity_Server::create_objects (size_t number_of_objects,
   for (size_t i = 0; i < number_of_objects; ++i)
     {
       // Create an id for this servant.
-      char id[BUFSIZ];
+      ACE_TCHAR id[BUFSIZ];
       ACE_OS::sprintf (id,
-                       "Identity object " ACE_SIZE_T_FORMAT_SPECIFIER,
+                       ACE_TEXT("Identity object ") ACE_SIZE_T_FORMAT_SPECIFIER,
                        i);
 
       // Create and activate a servant.
       Identity_i * identity_servant;
       ACE_NEW_THROW_EX (identity_servant,
-                        Identity_i (id, this->persistent_POA_.in ()),
+                        Identity_i (ACE_TEXT_ALWAYS_CHAR(id), this->persistent_POA_.in ()),
                         CORBA::NO_MEMORY ());
 
       PortableServer::ServantBase_var s = identity_servant;
@@ -203,14 +203,13 @@ Identity_Server::create_objects (size_t number_of_objects,
       CORBA::Object_var obj = identity_servant->_this ();
 
       Load_Balancer::Member member;
-      member.id = CORBA::string_dup (id);
-      member.obj =
-        this->orb_manager_.orb ()->object_to_string (obj.in ());
+      member.id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(id));
+      member.obj = this->orb_manager_.orb ()->object_to_string (obj.in ());
 
       // Do an unbind and then bind
       try
         {
-          group->unbind (id);
+          group->unbind (ACE_TEXT_ALWAYS_CHAR(id));
         }
       catch (const CORBA::Exception&)
         {
