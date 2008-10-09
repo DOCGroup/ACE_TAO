@@ -171,7 +171,7 @@ Client<InterfaceObj, Var>::read_ior (ACE_TCHAR *filename)
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open %s for writing: %p\n",
-                       ACE_TEXT_CHAR_TO_TCHAR (filename)),
+                       filename),
                       -1);
 
   ACE_Read_Buffer ior_buffer (f_handle);
@@ -206,14 +206,14 @@ Client<InterfaceObj, Var>::parse_args (void)
         TAO_debug_level++;
         break;
       case 'k':  // ior provide on command line
-        this->ior_ = ACE_OS::strdup (get_opts.opt_arg ());
+        this->ior_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       case 'f': // read the IOR from the file.
         result = this->read_ior (get_opts.opt_arg ());
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-                             ACE_TEXT_CHAR_TO_TCHAR (get_opts.opt_arg ())),
+                             get_opts.opt_arg ()),
                             -1);
         break;
       case 'x': // read the flag for shutting down
