@@ -49,7 +49,7 @@ ACE_TMAIN(int, ACE_TCHAR ** argv)
 
     ACE_ARGV args;
     args.add(argv[0]);
-    args.add("-s");
+    args.add(ACE_TEXT("-s"));
     args.add(signum);
 
     result = serviceConfig.open (
@@ -69,9 +69,9 @@ ACE_TMAIN(int, ACE_TCHAR ** argv)
 
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) serviceConfig.process_file ...\n")));
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
-    result = serviceConfig.process_file("Bug_3251.conf");
+    result = serviceConfig.process_file(ACE_TEXT("Bug_3251.conf"));
 #else
-    result = serviceConfig.process_file("Bug_3251.conf.xml");
+    result = serviceConfig.process_file(ACE_TEXT("Bug_3251.conf.xml"));
 #endif
     if(0 != result)
     {
