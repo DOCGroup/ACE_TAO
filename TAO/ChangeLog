@@ -1,3 +1,10 @@
+Thu Oct  9 09:43:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp
+        * performance-tests/POA/Demux/demux_test_client.cpp
+        * performance-tests/POA/Demux/demux_test_client.h
+          ACE_TCHAR fixes
+
 Thu Oct  9 09:30:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp

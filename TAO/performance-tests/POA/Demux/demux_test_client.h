@@ -50,7 +50,7 @@ public:
   ~Demux_Test_Client (void);
   // DTOR
 
-  int init (int argc, char *argv []);
+  int init (int argc, ACE_TCHAR *argv []);
   // initialize the client test bed
 
   int run (void);

@@ -47,7 +47,7 @@ Demux_Test_Client::~Demux_Test_Client (void)
 //
 
 int
-Demux_Test_Client::init (int argc, char *argv [])
+Demux_Test_Client::init (int argc, ACE_TCHAR *argv [])
 {
   this->argc_ = argc;
   this->argv_ = argv;
