@@ -62,7 +62,7 @@ public:
   // Tests if a new TIO is created according to the given bounds.
 
 private:
-  int read_ior (char *filename);
+  int read_ior (ACE_TCHAR *filename);
   // Function to read the server IOR from a file.
 
   int parse_args (void);
