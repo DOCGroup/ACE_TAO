@@ -78,8 +78,8 @@ DualEC_Supplier::DualEC_Supplier (int argc, ACE_TCHAR** argv)
   dump_schedule_headers_ (0),
   use_runtime_schedulers_ (0),
   suppress_priority_ (0),
-  hi_schedule_file_name_ ("DualEC_Runtime_Hi.h"),
-  lo_schedule_file_name_ ("DualEC_Runtime_Lo.h"),
+  hi_schedule_file_name_ (ACE_TEXT("DualEC_Runtime_Hi.h")),
+  lo_schedule_file_name_ (ACE_TEXT("DualEC_Runtime_Lo.h")),
   nav_roll_ (0),
   nav_pitch_ (0)
 {
@@ -890,7 +890,7 @@ DualEC_Supplier::load_schedule_data ()
 // Get command line options.
 
 unsigned int
-DualEC_Supplier::get_options (int argc, char *argv [])
+DualEC_Supplier::get_options (int argc, ACE_TCHAR *argv [])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("f:m:b:n:w:dsrp"));
   int opt;

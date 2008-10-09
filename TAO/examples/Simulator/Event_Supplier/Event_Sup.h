@@ -64,7 +64,7 @@ private:
                           ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *> &schedule_iter);
   // just a helper to put all the information into the CORBA::Any
 
-  unsigned int get_options (int argc, char *argv []);
+  unsigned int get_options (int argc, ACE_TCHAR *argv []);
 
   DOVE_Supplier dOVE_Supplier_;
   Navigation navigation_;
@@ -73,7 +73,7 @@ private:
   int argc_;
   ACE_TCHAR **argv_;
   unsigned long total_messages_;
-  char *input_file_name_;
+  ACE_TCHAR *input_file_name_;
 };
 
 #endif /* EVENT_SUP_H */
