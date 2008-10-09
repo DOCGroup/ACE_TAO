@@ -61,7 +61,7 @@ Quoter_Server::parse_args (void)
 
 int
 Quoter_Server::init (int argc,
-                    char* argv[])
+                    ACE_TCHAR* argv[])
 {
   const char *exception_message = "Null Message";
   try
@@ -80,7 +80,7 @@ Quoter_Server::init (int argc,
       int i;
 
       // Make a copy of argv since ORB_init will change it.
-      this->argv_ = new char *[argc];
+      this->argv_ = new ACE_TCHAR *[argc];
 
       for (i = 0; i < argc; i++)
         this->argv_[i] = argv[i];
