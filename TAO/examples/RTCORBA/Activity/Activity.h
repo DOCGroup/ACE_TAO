@@ -49,7 +49,7 @@ private:
 
 public:
   /// initialize the ORB et. al.
-  int init (int& argc, char *argv []);
+  int init (int& argc, ACE_TCHAR *argv []);
 
 
   /// Activate the tasks, jobs, poas.

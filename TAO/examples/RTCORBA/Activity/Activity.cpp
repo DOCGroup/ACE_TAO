@@ -61,14 +61,13 @@ Activity::current (void)
 }
 
 int
-Activity::init (int& argc, char *argv [])
+Activity::init (int& argc, ACE_TCHAR *argv [])
 {
   // Copy command line parameter.
   ACE_Argv_Type_Converter command_line(argc, argv);
 
   this->orb_ = CORBA::ORB_init (command_line.get_argc(),
-                                command_line.get_ASCII_argv(),
-                                "");
+                                command_line.get_TCHAR_argv());
 
   CORBA::Object_var object =
     orb_->resolve_initial_references ("RootPOA");
@@ -283,8 +282,8 @@ Activity::check_ifexit (void)
       TASK_LIST task_list;
       int count = builder_->task_list (task_list);
 
-      char msg[BUFSIZ];
-      ACE_OS::sprintf (msg, "# Stats generated on --\n");
+      ACE_TCHAR msg[BUFSIZ];
+      ACE_OS::sprintf (msg, ACE_TEXT("# Stats generated on --\n"));
 
       for (int i = 0; i < count; ++i)
         {

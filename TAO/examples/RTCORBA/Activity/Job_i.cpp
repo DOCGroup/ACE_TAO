@@ -24,10 +24,12 @@ Job_i::poa (void)
 int
 Job_i::init (ACE_Arg_Shifter& arg_shifter)
 {
-  job_name_ = arg_shifter.get_current (); // Read the name of the Job
+  // Read the name of the Job
+  job_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
   arg_shifter.consume_arg ();
 
-  POA_name_ = arg_shifter.get_current (); // Read the name of the POA
+  // Read the name of the POA
+  POA_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
   arg_shifter.consume_arg ();
 
   return 0;
