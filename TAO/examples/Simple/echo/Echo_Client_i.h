@@ -13,9 +13,9 @@
 //    This class implements the  interface calls for RMI.
 //
 // = AUTHOR
-//    
+//
 //   Balachandran Natarajan <bala@cs.wustl.edu>
-//    
+//
 // ============================================================================
 
 #ifndef ECHO_CLIENT_I_H
@@ -40,7 +40,7 @@ public:
   virtual  ~Echo_Client_i (void);
   // Destructor
 
-  virtual int run (const char *, int, char **);
+  virtual int run (const char *, int, ACE_TCHAR **);
   // Execute the methods
 
 private:

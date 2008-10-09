@@ -64,13 +64,13 @@ public:
   // Parse the command line arguments.
   // Returns 0 on success, -1 on error.
 
-  int read_ior (const char *filename);
+  int read_ior (const ACE_TCHAR *filename);
   // Function to read the server ior from a file.
 
   char *ior_;
   // IOR of the obj ref of the server.
 
-  const char* ior_file_name_;
+  const ACE_TCHAR* ior_file_name_;
   // The filename that stores the ior of the server
 
   const char* nickname_;

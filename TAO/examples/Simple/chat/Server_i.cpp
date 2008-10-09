@@ -22,7 +22,7 @@
 #include "ace/OS_NS_stdio.h"
 
 Server_i::Server_i ()
-  : ior_file_name_ ("chat.ior")
+  : ior_file_name_ (ACE_TEXT("chat.ior"))
 {
   // No Op.
 }

@@ -19,7 +19,7 @@ Time_Date_i::str_date (CORBA::String_out time_date)
 {
   const time_t time = ACE_OS::time (0);
 
-  time_date = CORBA::string_dup (ACE_OS::ctime (&time));
+  time_date = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(ACE_OS::ctime (&time)));
 }
 
 void

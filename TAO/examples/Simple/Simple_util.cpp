@@ -55,7 +55,7 @@ Server<Servant>::parse_args (void)
         this->naming_ = 1;
         break;
       case 'i': // For Testing the InterOperable Naming Service.
-        this->ins_ = CORBA::string_dup (get_opts.opt_arg ());
+        this->ins_ = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       case 'h':  // display help for use of the server.
       default:
@@ -276,7 +276,7 @@ Client<INTERFACE_OBJECT, Var>::read_ior (ACE_TCHAR *filename)
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open %s for writing: %p\n",
-                       ACE_TEXT_CHAR_TO_TCHAR (filename)),
+                       filename),
                       -1);
 
   ACE_Read_Buffer ior_buffer (f_handle);
@@ -311,7 +311,7 @@ Client<INTERFACE_OBJECT, Var>::parse_args (void)
         TAO_debug_level++;
         break;
       case 'k':  // ior provide on command line
-        this->ior_ = ACE_OS::strdup (get_opts.opt_arg ());
+        this->ior_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       case 'n': // Use naming service
         this->naming_ = 1;
@@ -321,7 +321,7 @@ Client<INTERFACE_OBJECT, Var>::parse_args (void)
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-                             ACE_TEXT_CHAR_TO_TCHAR (get_opts.opt_arg ())),
+                             get_opts.opt_arg ()),
                             -1);
         break;
       case 'x': // read the flag for shutting down
@@ -337,7 +337,7 @@ Client<INTERFACE_OBJECT, Var>::parse_args (void)
                            " [-x (shutdown server)]"
                            " [-h (help)]"
                            "\n",
-                           ACE_TEXT_CHAR_TO_TCHAR (this->argv_ [0])),
+                           this->argv_ [0]),
                           -1);
       }
 
