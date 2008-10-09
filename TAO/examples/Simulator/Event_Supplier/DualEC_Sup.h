@@ -101,7 +101,7 @@ private:
   // Create two event service instances, registers
   // them with the Naming Service.
 
-  unsigned int get_options (int argc, char *argv []);
+  unsigned int get_options (int argc, ACE_TCHAR *argv []);
   // Get command line options.
 
   // Time values to pause before notifying the supplier each time.
@@ -175,13 +175,13 @@ private:
   ACE_TCHAR **argv_;
   long total_messages_;
   long break_count_;
-  char *input_file_name_;
+  ACE_TCHAR *input_file_name_;
   unsigned long update_data_;
   int dump_schedule_headers_;
   int use_runtime_schedulers_;
   int suppress_priority_;
-  const char * hi_schedule_file_name_;
-  const char * lo_schedule_file_name_;
+  const ACE_TCHAR * hi_schedule_file_name_;
+  const ACE_TCHAR * lo_schedule_file_name_;
   CORBA::Long nav_roll_;
   CORBA::Long nav_pitch_;
 };
