@@ -436,6 +436,7 @@
 
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+# define ACE_HAS_ICMP_SUPPORT 1
 # if !defined (_WINSOCK2API_)
 // will also include windows.h, if not present
 #  include /**/ <winsock2.h>

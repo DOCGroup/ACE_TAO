@@ -447,8 +447,7 @@ Echo_Handler::handle_input (ACE_HANDLE)
         {
           for (size_t k = 0; k <this->number_remotes_; ++k)
             {
-              if (addr.get_ip_address () ==
-                  this->remote_addrs_[k].get_ip_address ())
+              if (addr.is_ip_equal (this->remote_addrs_[k]))
                 {
                   if (addr.addr_to_string (buf, sizeof buf) == -1)
                     {
@@ -869,17 +868,6 @@ BOOL CtrlHandler(DWORD fdwCtrlType)
 }
 #endif /* #if defined (ACE_WIN32) */
 
-
-Fini_Guard::Fini_Guard (void)
-{
-}
-
-Fini_Guard::~Fini_Guard (void)
-{
-  ACE::fini ();
-}
-
-
 #define MAX_NUMBER_OF_PING_POINTS   16
 
 static int number_of_ping_points  = 0;
@@ -1035,11 +1023,6 @@ int
 run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Network_Adapters_Test"));
-
-  ACE::init ();
-
-  // to call for ACE::fini () in its destructor
-  Fini_Guard fg;
 
 #if defined (ACE_WIN32)
   SetConsoleCtrlHandler((PHANDLER_ROUTINE) CtrlHandler, TRUE);

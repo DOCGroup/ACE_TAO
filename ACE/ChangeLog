@@ -1,3 +1,13 @@
+Thu Oct  9 21:52:18 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-common.h: Add ACE_HAS_ICMP_SUPPORT if Winsock 2
+          is available.
+
+        * tests/Network_Adapters_Test.{h cpp}: Removed extraneous ACE::init.
+          Compare IP addresses using ACE_INET_Addr::is_ip_equal() instead of
+          comparing get_ip_address() returns - this allows it to work with
+          either IPv4 or IPv6.
+
 Thu Oct  9 17:54:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Added more WinCE6 support by integrating some changes from OCI.
