@@ -123,9 +123,9 @@ Client_i::init (int argc, ACE_TCHAR *argv[])
        i< this->argc_;
        ++i)
     {
-      if (ACE_OS::strcmp (this->argv_[i],"-r") == 0)
+      if (ACE_OS::strcmp (this->argv_[i],ACE_TEXT("-r")) == 0)
         this->ts_->thread_per_rate_ = 1;
-      else if (ACE_OS::strcmp (this->argv_[i],"-t") == 0
+      else if (ACE_OS::strcmp (this->argv_[i],ACE_TEXT("-t")) == 0
                && (i - 1 < this->argc_))
         this->ts_->thread_count_ =
           ACE_OS::atoi (this->argv_[i+1]);
@@ -654,7 +654,7 @@ Client_i::do_priority_inversion_test (void)
   GLOBALS::instance ()->num_of_objs = 1;
 
   for (int j = 0; j < this->argc_; j++)
-    if (ACE_OS::strcmp (this->argv_[j], "-u") == 0)
+    if (ACE_OS::strcmp (this->argv_[j], ACE_TEXT("-u")) == 0)
       {
         this->start_servant ();
         break;

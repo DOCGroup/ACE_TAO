@@ -13,7 +13,7 @@
 
 ACE_RCSID(IDL_Cubit, collocation_test, "$Id$")
 
-#define  THE_IOR "theior"
+#define  THE_IOR ACE_TEXT("theior")
 
 struct Barriers
 {
@@ -26,7 +26,7 @@ struct Barriers
   ACE_Barrier client_fini_;
 };
 
-static const char *server_cmd = 0;
+static const ACE_TCHAR *server_cmd = 0;
 
 void *
 svr_worker (void *arg)
@@ -34,11 +34,11 @@ svr_worker (void *arg)
   Cubit_Server cubit_server;
   Barriers *thread_barrier = (Barriers *) arg;
 
-  char cmd_line[BUFSIZ];
-  ACE_OS::strcpy (cmd_line, "server ");
+  ACE_TCHAR cmd_line[BUFSIZ];
+  ACE_OS::strcpy (cmd_line, ACE_TEXT("server "));
   if (server_cmd != 0)
     ACE_OS::strcat (cmd_line, server_cmd);
-  ACE_OS::strcat (cmd_line, " -f " THE_IOR);
+  ACE_OS::strcat (cmd_line, ACE_TEXT(" -f ") THE_IOR);
   ACE_ARGV args (cmd_line);
 
   try
@@ -73,7 +73,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:c:"));
   int c = -1;
-  const char *client_cmd = 0;
+  const ACE_TCHAR *client_cmd = 0;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -92,11 +92,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  char cmd_line[1024];
-  ACE_OS::strcpy (cmd_line, "client ");
+  ACE_TCHAR cmd_line[1024];
+  ACE_OS::strcpy (cmd_line, ACE_TEXT("client "));
   if (client_cmd != 0)
     ACE_OS::strcat (cmd_line, client_cmd);
-  ACE_OS::strcat (cmd_line, " -f " THE_IOR);
+  ACE_OS::strcat (cmd_line, ACE_TEXT(" -f ") THE_IOR);
   ACE_ARGV args (cmd_line);
 
   Barriers thread_barrier (2);

@@ -17,7 +17,7 @@ Globals::Globals (void)
     ready_cnd_ (ready_mtx_),
     barrier_ (0)
 {
-  const char default_endpoint[] = "iiop://";
+  const ACE_TCHAR default_endpoint[] = ACE_TEXT("iiop://");
   // Default to iiop
 
   ACE_OS::strcpy (endpoint, default_endpoint);
@@ -41,7 +41,7 @@ Globals::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'f':
         ACE_NEW_RETURN (ior_file,
-                        char[BUFSIZ],
+                        ACE_TCHAR[BUFSIZ],
                         -1);
         ACE_OS::strcpy (ior_file,
                         opts.opt_arg ());
