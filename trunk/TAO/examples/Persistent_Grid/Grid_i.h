@@ -54,14 +54,14 @@ public:
   void orb (CORBA::ORB_ptr o);
   // Set the ORB pointer.
 
-  void pool_name (const char *name);
+  void pool_name (const ACE_TCHAR *name);
   // Set the pool pointer
 
 private:
   CORBA::ORB_var orb_;
   // ORB pointer.
 
-  char *pool_name_;
+  ACE_TCHAR *pool_name_;
   // Name of the pool
 
   pool_t *pool_t_;

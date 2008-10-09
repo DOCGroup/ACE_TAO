@@ -25,9 +25,9 @@ Grid_i::Grid_i (CORBA::Short x,
   // First try to locate the matrix in the pool. If it is there then
   // it has already been created. In such a case we just get that
   // memory and assign it to array_
-  
+
   void *tmp_array (0);
-  
+
   if (mem_pool->find ("Array", tmp_array) != -1)
     {
       array_ = reinterpret_cast <CORBA::Long **> (tmp_array);
@@ -38,7 +38,7 @@ Grid_i::Grid_i (CORBA::Short x,
       ACE_ALLOCATOR (array_,
                      static_cast<CORBA::Long **> (mem_pool->malloc (y * sizeof (CORBA::Long *))));
       //array_ = (CORBA::Long **) mem_pool->malloc (y * sizeof (CORBA::Long *));
-      
+
       if (array_ != 0)
         {
           for (int ctr = 0; ctr < y; ctr++)
@@ -54,7 +54,7 @@ Grid_i::Grid_i (CORBA::Short x,
           mem_pool->bind ("Array", array_);
         }
     }
-  
+
 }
 
 // Default destructor.
@@ -232,7 +232,7 @@ Grid_Factory_i::cleanup (void)
 }
 
 void
-Grid_Factory_i::pool_name (const char *name)
+Grid_Factory_i::pool_name (const ACE_TCHAR *name)
 {
   this->pool_name_ = ACE_OS::strdup (name);
 }
