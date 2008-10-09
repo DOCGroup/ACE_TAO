@@ -232,7 +232,9 @@ typedef long off_t;
 #endif
 #define ACE_DEFAULT_BASE_ADDR 0
 
+#if (_WIN32_WCE < 600)
 #define ACE_HAS_TSS_EMULATION
+#endif  // WinCE version < 6.0
 
 // This is still true up thru VC8...
 #define ACE_LACKS_ERRNO_H
