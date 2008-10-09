@@ -48,7 +48,7 @@ class IOR_corbaloc_Client_i
 
  private:
   /// corbaloc url to test
-  ACE_CString corbaloc_url_;
+  ACE_TString corbaloc_url_;
 
   /// Naming context
   CosNaming::NamingContextExt_var naming_context_;

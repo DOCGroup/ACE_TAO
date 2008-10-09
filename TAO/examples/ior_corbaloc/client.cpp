@@ -28,7 +28,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       IOR_corbaloc_Client_i client;
 
       int init_result;
-      init_result = client.init (atc.get_argc (), atc.get_ASCII_argv ());
+      init_result = client.init (atc.get_argc (), atc.get_TCHAR_argv ());
 
         if (init_result == 0)
           {
