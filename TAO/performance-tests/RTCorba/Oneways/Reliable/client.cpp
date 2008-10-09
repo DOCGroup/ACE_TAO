@@ -296,17 +296,17 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       case 't':
         {
-          char *tmp = get_opts.opt_arg ();
+          ACE_TCHAR *tmp = get_opts.opt_arg ();
 
-          if (!ACE_OS::strcmp (tmp, "none"))
+          if (!ACE_OS::strcmp (tmp, ACE_TEXT("none")))
             sync_scope = Messaging::SYNC_NONE;
-          else if (!ACE_OS::strcmp (tmp, "transport"))
+          else if (!ACE_OS::strcmp (tmp, ACE_TEXT("transport")))
             sync_scope = Messaging::SYNC_WITH_TRANSPORT;
-          else if (!ACE_OS::strcmp (tmp, "server"))
+          else if (!ACE_OS::strcmp (tmp, ACE_TEXT("server")))
             sync_scope = Messaging::SYNC_WITH_SERVER;
-          else if (!ACE_OS::strcmp (tmp, "target"))
+          else if (!ACE_OS::strcmp (tmp, ACE_TEXT("target")))
             sync_scope = Messaging::SYNC_WITH_TARGET;
-          else if (!ACE_OS::strcmp (tmp, "twoway"))
+          else if (!ACE_OS::strcmp (tmp, ACE_TEXT("twoway")))
             test_twoway = 1;
           else
             error = 1;
@@ -315,13 +315,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       case 'l':
         {
-          char *tmp = get_opts.opt_arg ();
+          ACE_TCHAR *tmp = get_opts.opt_arg ();
 
-          if (!ACE_OS::strcmp (tmp, "orb"))
+          if (!ACE_OS::strcmp (tmp, ACE_TEXT("orb")))
             level = ORB_LEVEL;
-          else if (!ACE_OS::strcmp (tmp, "thread"))
+          else if (!ACE_OS::strcmp (tmp, ACE_TEXT("thread")))
             level = THREAD_LEVEL;
-          else if (!ACE_OS::strcmp (tmp, "object"))
+          else if (!ACE_OS::strcmp (tmp, ACE_TEXT("object")))
             level = OBJECT_LEVEL;
           else
             error = 1;
