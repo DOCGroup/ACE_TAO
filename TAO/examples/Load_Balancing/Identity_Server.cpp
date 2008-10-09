@@ -146,9 +146,9 @@ Identity_Server::create_objects (size_t number_of_objects,
   for (size_t i = 0; i < number_of_objects; ++i)
     {
       // Create an id for this servant.
-      char id[BUFSIZ];
+      ACE_TCHAR id[BUFSIZ];
       ACE_OS::sprintf (id,
-                       "Identity object " ACE_SIZE_T_FORMAT_SPECIFIER,
+                       ACE_TEXT("Identity object ") ACE_SIZE_T_FORMAT_SPECIFIER,
                        i);
 
       // Create and activate a servant.
