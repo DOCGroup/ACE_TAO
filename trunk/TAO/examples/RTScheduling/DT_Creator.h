@@ -29,7 +29,7 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 
   virtual ~DT_Creator (void);
 
-  int init (int argc, char *argv []);
+  int init (int argc, ACE_TCHAR *argv []);
 
   int dt_task_init (ACE_Arg_Shifter& arg_shifter);
 
@@ -102,8 +102,8 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
   ACE_Time_Value* base_time_;
   /// A naming context.
   CosNaming::NamingContextExt_var naming_;
-  char* file_name_;
-  char* log_file_name_;
+  ACE_TCHAR* file_name_;
+  ACE_TCHAR* log_file_name_;
   ACE_UINT32 gsf_;
   Synch_i* synch_;
 };

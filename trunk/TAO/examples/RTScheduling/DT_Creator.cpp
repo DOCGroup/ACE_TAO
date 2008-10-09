@@ -24,7 +24,7 @@ DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
   int dist = 0;
   const ACE_TCHAR* current_arg = 0;
 
-  if (arg_shifter.cur_arg_strncasecmp ("-Importance") == 0)
+  if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Importance")) == 0)
     {
       arg_shifter.consume_arg ();
       current_arg = arg_shifter.get_current ();
@@ -70,7 +70,7 @@ DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
 int log_index = 0;
 
 int
-DT_Creator::init (int argc, char *argv [])
+DT_Creator::init (int argc, ACE_TCHAR *argv [])
 {
   gsf_ = ACE_High_Res_Timer::global_scale_factor ();
   state_lock_ = new ACE_Lock_Adapter <TAO_SYNCH_MUTEX>;
@@ -115,12 +115,12 @@ DT_Creator::init (int argc, char *argv [])
           ACE_NEW_RETURN (job_list_, Job_i*[job_count_], -1);
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-DT_Task") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-DT_Task")) == 0)
         {
           arg_shifter.consume_arg ();
           dt_task_init (arg_shifter);
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-POA") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-POA")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -136,7 +136,7 @@ DT_Creator::init (int argc, char *argv [])
               poa_count++;
             }
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Job") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Job")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -154,12 +154,12 @@ DT_Creator::init (int argc, char *argv [])
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-OutFile"))))
         {
-          file_name_ = CORBA::string_dup (current_arg);
+          file_name_ = ACE_OS::strdup (current_arg);
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-LogFile"))))
         {
-          log_file_name_ = CORBA::string_dup (current_arg);
+          log_file_name_ = ACE_OS::strdup (current_arg);
           arg_shifter.consume_arg ();
         }
       else
@@ -551,7 +551,7 @@ DT_Creator::check_ifexit (void)
         }
       */
       TASK_STATS::instance ()->dump_samples (file_name_,
-               "#Schedule Output",
+               ACE_TEXT("#Schedule Output"),
                ACE_High_Res_Timer::global_scale_factor ());
 
       shutdown = 1;

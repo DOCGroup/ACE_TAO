@@ -108,20 +108,21 @@ Thread_Task::dist (void)
 void
 Thread_Task::dump_stats (void)
 {
-  char fname [BUFSIZ];
+  ACE_TCHAR fname [BUFSIZ];
   ACE_OS::sprintf (fname,
-                   "DT_"
+                   ACE_TEXT("DT_")
                    ACE_SIZE_T_FORMAT_SPECIFIER
-                   ".dat",count_);
+                   ACE_TEXT(".dat"),
+                   count_);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
     "File name %s\n",
     fname));
 
-  char msg [BUFSIZ];
+  ACE_TCHAR msg [BUFSIZ];
   ACE_OS::sprintf (msg,
-                   "#Schedule Output for DT "
+                   ACE_TEXT("#Schedule Output for DT ")
                    ACE_SIZE_T_FORMAT_SPECIFIER,
                    count_);
 
