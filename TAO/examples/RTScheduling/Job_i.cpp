@@ -81,13 +81,13 @@ Job_i::work (CORBA::ULong work,
     guid_,
     importance));
 
-  char msg [BUFSIZ];
+  ACE_TCHAR msg [BUFSIZ];
   ACE_OS::sprintf (msg,
-                   "Guid is "
+                   ACE_TEXT("Guid is ")
                    ACE_SIZE_T_FORMAT_SPECIFIER
-                   "\n", guid_);
+                   ACE_TEXT("\n"), guid_);
 
-  dt_creator_->log_msg (msg);
+  dt_creator_->log_msg (ACE_TEXT_ALWAYS_CHAR(msg));
 
   for (; work != 0; work--)
     {
