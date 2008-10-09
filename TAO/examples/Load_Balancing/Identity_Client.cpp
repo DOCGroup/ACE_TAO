@@ -70,14 +70,13 @@ Identity_Client::parse_args (int argc, ACE_TCHAR *argv[])
 
 int
 Identity_Client::init (int argc,
-                       char* argv[])
+                       ACE_TCHAR* argv[])
 {
   int result;
 
   try
     {
-      result = this->orb_manager_.init (argc,
-                                        argv);
+      result = this->orb_manager_.init (argc, argv);
       if (result == -1)
         return result;
 
