@@ -559,14 +559,14 @@ Client::init_orb (void)
 
   // Convert the argv vector into a string.
   ACE_ARGV tmp_args (this->argv_);
-  char tmp_buf[BUFSIZ];
+  ACE_TCHAR tmp_buf[BUFSIZ];
 
   ACE_OS::strcpy (tmp_buf,
                   tmp_args.buf ());
   // Add the argument.
   ACE_OS::strcat (tmp_buf,
-                  " -ORBRcvSock 32768 "
-                  " -ORBSndSock 32768 ");
+                  ACE_TEXT(" -ORBRcvSock 32768 ")
+                  ACE_TEXT(" -ORBSndSock 32768 "));
 
   ACE_DEBUG ((LM_DEBUG,
               tmp_buf));
