@@ -44,8 +44,8 @@ ACE_TMAIN(int, ACE_TCHAR ** argv)
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) parent using ACE_Service_Config, pid=%d\n"), pid));
     ACE_Service_Config serviceConfig;
 
-    char signum[64];
-    ACE_OS::sprintf(signum, "%d", SIGUSR1);
+    ACE_TCHAR signum[64];
+    ACE_OS::sprintf(signum, ACE_TEXT("%d"), SIGUSR1);
 
     ACE_ARGV args;
     args.add(argv[0]);
