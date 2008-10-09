@@ -41,10 +41,12 @@ Job_i::poa (void)
 int
 Job_i::init (ACE_Arg_Shifter& arg_shifter)
 {
-  job_name_ = arg_shifter.get_current (); // Read the name of the Job
+  // Read the name of the Job
+  job_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
   arg_shifter.consume_arg ();
 
-  POA_name_ = arg_shifter.get_current (); // Read the name of the POA
+  // Read the name of the POA
+  POA_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
   arg_shifter.consume_arg ();
 
   return 0;
@@ -138,11 +140,11 @@ Job_i::shutdown (void)
 void
 Job_i::dump_stats (void)
 {
-  char fname [BUFSIZ];
+  ACE_TCHAR fname [BUFSIZ];
   ACE_OS::sprintf (fname,
-                   "Job_"
+                   ACE_TEXT("Job_")
                    ACE_SIZE_T_FORMAT_SPECIFIER
-                   ".dat",
+                   ACE_TEXT(".dat"),
                    guid_);
 
   if (TAO_debug_level > 0)
@@ -150,10 +152,9 @@ Job_i::dump_stats (void)
     "File name %s\n",
     fname));
 
-
-  char msg [BUFSIZ];
+  ACE_TCHAR msg [BUFSIZ];
   ACE_OS::sprintf (msg,
-                   "#Schedule Output for DT "
+                   ACE_TEXT("#Schedule Output for DT ")
                    ACE_SIZE_T_FORMAT_SPECIFIER,
                    guid_);
 
