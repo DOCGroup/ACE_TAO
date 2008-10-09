@@ -146,7 +146,7 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
 
   // Copy the message data into the temporary buffer
   ACE_OS::strncat (msgbuf,
-                   log_rec.msg_data,
+                   ACE_TEXT_CHAR_TO_TCHAR(log_rec.msg_data),
                    ACE_MAXLOGMSGLEN);
 
   // Set <ACE_Log_Record.msg_data> to the value stored in <msgbuf>.
@@ -162,7 +162,7 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
   // Create a buffer and fill it with the host name of the logger
   ACE_TCHAR namebuf[MAXHOSTNAMELEN + 1];
 
-  ACE_OS::strncpy (namebuf, addy.get_host_addr (), MAXHOSTNAMELEN);
+  ACE_OS::strncpy (namebuf, ACE_TEXT_CHAR_TO_TCHAR(addy.get_host_addr ()), MAXHOSTNAMELEN);
 
   u_long verb_level = this->verbosity_conversion (verbosity);
 
