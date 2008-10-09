@@ -88,13 +88,13 @@ MIF_Task::perform_task (void)
   try
     {
 
-      char msg [BUFSIZ];
+      ACE_TCHAR msg [BUFSIZ];
       ACE_OS::sprintf (msg,
-                       "MIF_Task::perform_task "
+                       ACE_TEXT("MIF_Task::perform_task ")
                        ACE_SIZE_T_FORMAT_SPECIFIER
-                       "\n",
+                       ACE_TEXT("\n"),
                        count_);
-      dt_creator_->log_msg (msg);
+      dt_creator_->log_msg (ACE_TEXT_ALWAYS_CHAR(msg));
 
       static CORBA::ULong prime_number = 9619;
       CORBA::Policy_var sched_param;
