@@ -95,7 +95,7 @@ Server::prelim_args_process (void)
 
   for (i = 0; i < this->argc_ ; i++)
     {
-      if (ACE_OS::strcmp (this->argv_[i], "-e") == 0 &&
+      if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT("-e")) == 0 &&
           i - 1 < this->argc_)
         ACE_OS::strcpy (GLOBALS::instance ()->endpoint,
                         this->argv_[i+1]);
@@ -248,19 +248,19 @@ Server::activate_low_servants (void)
   // e.g.: orignal endpoint:    iiop://foobar:10001
   //       random endpoint      iiop://
 
-  const char protocol_delimiter[] = "://";
+  const ACE_TCHAR protocol_delimiter[] = ACE_TEXT("://");
 
-  char *addr = ACE_OS::strstr (GLOBALS::instance ()->endpoint,
-                               protocol_delimiter);
+  ACE_TCHAR *addr = ACE_OS::strstr (GLOBALS::instance ()->endpoint,
+                                    protocol_delimiter);
 
   size_t random_endpoint_length =
     ACE_OS::strlen (GLOBALS::instance ()->endpoint) -
     ACE_OS::strlen (addr) +
     ACE_OS::strlen (protocol_delimiter);
 
-  char random_endpoint[BUFSIZ];
+  ACE_TCHAR random_endpoint[BUFSIZ];
 
-  ACE_OS::sprintf (random_endpoint, "-ORBEndpoint ");
+  ACE_OS::sprintf (random_endpoint, ACE_TEXT("-ORBEndpoint "));
 
   ACE_OS::strncat (random_endpoint,
                    GLOBALS::instance ()->endpoint,
@@ -270,10 +270,10 @@ Server::activate_low_servants (void)
        i > 0;
        i--)
     {
-      char *low_second_argv[] =
+      ACE_TCHAR *low_second_argv[] =
         {random_endpoint,
-         const_cast<char *> ("-ORBSndSock 32768 "),
-         const_cast<char *> ("-ORBRcvSock 32768 "),
+         const_cast<ACE_TCHAR *> (ACE_TEXT("-ORBSndSock 32768 ")),
+         const_cast<ACE_TCHAR *> (ACE_TEXT("-ORBRcvSock 32768 ")),
          0};
       ACE_NEW_RETURN (this->low_argv_,
                       ACE_ARGV (this->argv_,

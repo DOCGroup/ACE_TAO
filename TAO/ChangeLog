@@ -1,3 +1,24 @@
+Thu Oct  9 09:30:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp
+        * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp
+        * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.h
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.h
+        * performance-tests/Cubit/TAO/MT_Cubit/server.cpp
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp
+        * performance-tests/Latency/Thread_Per_Connection/client.cpp
+        * performance-tests/Latency/Thread_Per_Connection/Client_Task.cpp
+        * performance-tests/Latency/Thread_Per_Connection/Client_Task.h
+        * performance-tests/Latency/Thread_Pool/client.cpp
+        * performance-tests/Latency/Thread_Pool/Client_Task.cpp
+        * performance-tests/Latency/Thread_Pool/Client_Task.h
+        * performance-tests/Pluggable/PP_Test_Client.cpp
+        * performance-tests/Pluggable/PP_Test_Client.h
+        * tests/Bug_3251_Regression/server.cpp
+          ACE_TCHAR fixes
+
 Thu Oct  9 08:50:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_global.cpp:

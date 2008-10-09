@@ -85,7 +85,7 @@ private:
   CORBA::ORB_var orb_;
   // Remember our orb.
 
-  char *factory_key_;
+  ACE_TCHAR *factory_key_;
   // Key of factory obj ref.
 
   CORBA::ULong loop_count_;

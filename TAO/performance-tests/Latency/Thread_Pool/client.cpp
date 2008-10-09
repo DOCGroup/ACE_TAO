@@ -120,10 +120,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
       ACE_Basic_Stats totals;
-      task0.accumulate_and_dump (totals, "Task[0]", gsf);
-      task1.accumulate_and_dump (totals, "Task[1]", gsf);
-      task2.accumulate_and_dump (totals, "Task[2]", gsf);
-      task3.accumulate_and_dump (totals, "Task[3]", gsf);
+      task0.accumulate_and_dump (totals, ACE_TEXT("Task[0]"), gsf);
+      task1.accumulate_and_dump (totals, ACE_TEXT("Task[1]"), gsf);
+      task2.accumulate_and_dump (totals, ACE_TEXT("Task[2]"), gsf);
+      task3.accumulate_and_dump (totals, ACE_TEXT("Task[3]"), gsf);
 
       totals.dump_results (ACE_TEXT("Total"), gsf);
 

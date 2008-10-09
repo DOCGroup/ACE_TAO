@@ -33,7 +33,7 @@ class Cubit_Task : public ACE_Task<ACE_SYNCH>
   // = TITLE
   //    Encapsulates an ORB for the Cubit application.
 public:
-  Cubit_Task (const char *args,
+  Cubit_Task (const ACE_TCHAR *args,
               const char* orbname,
               u_int num_of_objs,
               ACE_Thread_Manager *thr_mgr,
@@ -60,10 +60,10 @@ private:
   const char *key_;
   // All cubit objects will have this as prefix to its key.
 
-  char *orbname_;
+  const char *orbname_;
   // Name of the ORB.
 
-  char *orbargs_;
+  const ACE_TCHAR *orbargs_;
   // ORB arguments.
 
   u_int num_of_objs_;

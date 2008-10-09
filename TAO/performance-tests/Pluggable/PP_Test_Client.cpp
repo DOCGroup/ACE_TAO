@@ -97,7 +97,7 @@ PP_Test_Client::read_ior (ACE_TCHAR *filename)
                         -1);
     }
 
-  this->factory_key_ = ACE_OS::strdup (data);
+  this->factory_key_ = ACE_OS::strdup (ACE_TEXT_CHAR_TO_TCHAR(data));
 
   ior_buffer.alloc ()->free (data);
 

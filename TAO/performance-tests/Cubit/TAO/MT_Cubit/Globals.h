@@ -136,10 +136,10 @@ public:
   // Default thread priority, used for the high thread priority.
   // Must call sched_fifo_init () before accessing.
 
-  char endpoint[BUFSIZ];
+  ACE_TCHAR endpoint[BUFSIZ];
   // endpoint to be used for ORB_init.
 
-  char *ior_file;
+  ACE_TCHAR *ior_file;
   // file name to read/write the iors of the servants.
 
   u_int num_of_objs;
