@@ -45,15 +45,15 @@ Thread_Task::svc (void)
                       this->current_->id ()->get_buffer (),
                       this->current_->id ()->length ());
 
-      char msg [BUFSIZ];
+      ACE_TCHAR msg [BUFSIZ];
       ACE_OS::sprintf (msg,
-                       "Thread_Task::svc Imp=%d Guid="
+                       ACE_TEXT("Thread_Task::svc Imp=%d Guid=")
                        ACE_SIZE_T_FORMAT_SPECIFIER
-                       "\n",
+                       ACE_TEXT("\n"),
                        importance_,
                        count_);
 
-      dt_creator_->log_msg (msg);
+      dt_creator_->log_msg (ACE_TEXT_ALWAYS_CHAR(msg));
 
       this->perform_task ();
 
