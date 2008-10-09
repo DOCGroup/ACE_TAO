@@ -74,7 +74,7 @@ public:
   FILE *ior_output_file_;
   // File where the IOR of the server object is stored.
 
-  char* mem_pool_name_;
+  ACE_TCHAR* mem_pool_name_;
   // Memory pool name that stores the state
 
   int argc_;
