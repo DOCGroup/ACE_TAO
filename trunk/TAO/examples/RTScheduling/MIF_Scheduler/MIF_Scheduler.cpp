@@ -161,7 +161,7 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
   if (desired_priority != 100)
     {
       //NOT Main Thread
-      DT* new_dt;
+      DT* new_dt = 0;
       ACE_NEW (new_dt,
                DT (this->lock_,
                    count));
@@ -208,7 +208,7 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
                 "%t MIF_Scheduler::update_scheduling_segment - Importance %d\n",
                 desired_priority));
 
-  DT* new_dt;
+  DT* new_dt = 0;
   ACE_NEW (new_dt,
            DT (this->lock_,
                count));
@@ -218,7 +218,7 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
   if (ready_que_.message_count () > 0)
     {
       DT* run_dt;
-      ACE_Message_Block* msg;
+      ACE_Message_Block* msg = 0;
       ready_que_.dequeue_head (msg);
       run_dt = dynamic_cast<DT*> (msg);
       if ((desired_priority == 100) || run_dt->msg_priority () >= (unsigned int)desired_priority)
@@ -253,8 +253,8 @@ MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
 
   if (ready_que_.message_count () > 0)
     {
-      DT* run_dt;
-      ACE_Message_Block* msg;
+      DT* run_dt = 0;
+      ACE_Message_Block* msg = 0;
       ready_que_.dequeue_head (msg);
       run_dt = dynamic_cast<DT*> (msg);
       lock_.acquire ();
@@ -341,8 +341,8 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
                       priority));
         }
 
-      DT* run_dt;
-      ACE_Message_Block* msg;
+      DT* run_dt = 0;
+      ACE_Message_Block* msg = 0;
       ready_que_.dequeue_head (msg);
       run_dt = dynamic_cast<DT*> (msg);
       run_dt->resume ();
@@ -441,8 +441,8 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr)
 
   if (ready_que_.message_count () > 0)
     {
-      DT* run_dt;
-      ACE_Message_Block* msg;
+      DT* run_dt = 0;
+      ACE_Message_Block* msg = 0;
       ready_que_.dequeue_head (msg);
       run_dt = dynamic_cast<DT*> (msg);
       lock_.acquire ();
@@ -456,8 +456,8 @@ MIF_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr)
 {
   if (ready_que_.message_count () > 0)
     {
-      DT* run_dt;
-      ACE_Message_Block* msg;
+      DT* run_dt = 0;
+      ACE_Message_Block* msg = 0;
       ready_que_.dequeue_head (msg);
       run_dt = dynamic_cast<DT*> (msg);
       lock_.acquire ();
@@ -619,7 +619,7 @@ MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr)
                   guid->get_buffer (),
                   guid->length ());
 
-  DT* new_dt;
+  DT* new_dt = 0;
   ACE_NEW (new_dt,
            DT (this->lock_,
                gu_id));
