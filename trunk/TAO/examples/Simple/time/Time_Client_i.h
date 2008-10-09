@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //   Balachandran Natarajan <bala@cs.wustl.edu>
-//    
+//
 // ============================================================================
 
 #ifndef TIME_CLIENT_I_H
@@ -39,7 +39,7 @@ public:
   virtual ~Time_Client_i (void);
   // Destructor
 
-  virtual int run (const char *,int, char** );
+  virtual int run (const char *,int, ACE_TCHAR** );
   // Execute the methods
 
 private:

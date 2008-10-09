@@ -147,7 +147,7 @@ Time_Date_Servant::parse_args (int argc, ACE_TCHAR *argv[])
         break;
         // Find the ORB in the Service Repository.
       case 'n':
-        this->orb_ = get_opts.opt_arg ();
+        this->orb_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
       case '?':  // display help for use of the server.
       default:

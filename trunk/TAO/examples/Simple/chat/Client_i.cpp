@@ -26,7 +26,7 @@
 #include "ace/OS_NS_unistd.h"
 
 Client_i::Client_i ()
-  : ior_file_name_ ("chat.ior"),
+  : ior_file_name_ (ACE_TEXT("chat.ior")),
     nickname_ ("noname")
 {
 }
@@ -52,7 +52,7 @@ Client_i::parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'n':  // get the users nickname
-        this->nickname_ = get_opts.opt_arg ();
+        this->nickname_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
 
       case 'f':  // get the file name to write to
@@ -203,7 +203,7 @@ Client_i::handle_input (ACE_HANDLE)
 }
 
 int
-Client_i::read_ior (const char *filename)
+Client_i::read_ior (const ACE_TCHAR *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);

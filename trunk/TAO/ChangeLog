@@ -1,3 +1,18 @@
+Thu Oct  9 19:03:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Simple/chat/Client_i.cpp
+        * examples/Simple/chat/Client_i.h
+        * examples/Simple/chat/Server_i.cpp
+        * examples/Simple/chat/Server_i.h
+        * examples/Simple/echo/Echo_Client_i.h
+        * examples/Simple/Simple_util.cpp
+        * examples/Simple/time-date/Time_Date.cpp
+        * examples/Simple/time-date/Time_Date_i.cpp
+        * examples/Simple/time/client.cpp
+        * examples/Simple/time/Time_Client_i.cpp
+        * examples/Simple/time/Time_Client_i.h
+          ACE_TCHAR fixes
+
 Thu Oct  9 18:45:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RTScheduling/DT_Creator.cpp
