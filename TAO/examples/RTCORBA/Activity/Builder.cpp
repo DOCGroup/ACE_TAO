@@ -62,13 +62,13 @@ Builder::init (int argc, ACE_TCHAR *argv[])
                           0);
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-ThreadTask") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ThreadTask")) == 0)
         {
           if (task_count < this->task_count_)
             {
               arg_shifter.consume_arg ();
 
-              Periodic_Task *task;
+              Periodic_Task *task = 0;
 
               ACE_NEW_RETURN (task, Thread_Task (), -1);
 
@@ -80,7 +80,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
           else
             return -1;
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Job") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Job")) == 0)
         {
           if (job_count < this->job_count_)
             {
@@ -98,13 +98,13 @@ Builder::init (int argc, ACE_TCHAR *argv[])
           else
             return -1;
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-POA") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-POA")) == 0)
         {
           if (poa_count < this->poa_count_)
             {
               arg_shifter.consume_arg ();
 
-              POA_Holder *poa_holder;
+              POA_Holder *poa_holder = 0;
 
               ACE_NEW_RETURN (poa_holder, POA_Holder (), -1);
 
