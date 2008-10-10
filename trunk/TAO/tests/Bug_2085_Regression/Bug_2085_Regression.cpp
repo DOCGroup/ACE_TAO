@@ -30,7 +30,7 @@ test_string_to_object (CORBA::ORB_ptr orb, const char* ior, CORBA::ULong minor)
   if (!succeed)
   {
     ACE_ERROR ((LM_ERROR,
-                "(%t) ERROR, test_string_to_object for <%s> didn't result in minor code %d\n",
+                "(%t) ERROR, test_string_to_object for <%C> didn't result in minor code %d\n",
                 ior,
                 minor));
   }
