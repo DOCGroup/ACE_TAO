@@ -72,7 +72,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'p':
-        result = ::sscanf (get_opts.opt_arg (),
+        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()),
                            "%u",
                            &protocol_type);
         if (result == 0 || result == EOF)
@@ -112,7 +112,7 @@ int
 create_object (PortableServer::POA_ptr poa,
                CORBA::ORB_ptr orb,
                Test_i *server_impl,
-               const char *filename)
+               const ACE_TCHAR *filename)
 {
   // Register with poa.
   PortableServer::ObjectId_var id =
