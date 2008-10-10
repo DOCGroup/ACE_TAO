@@ -490,7 +490,7 @@ TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
 
   if (TAO_debug_level > 0)
     {
-      char buf [BUFSIZ];
+      ACE_TCHAR buf [BUFSIZ];
       ACE_INET_Addr *remote_addr = dynamic_cast<ACE_INET_Addr*> (address);
       remote_addr->addr_to_string (buf, BUFSIZ);
 
@@ -701,7 +701,7 @@ TAO_AV_UDP_QoS_Transport::send (const char *buf,
     ACE_DEBUG ((LM_DEBUG,
                 "(%N,%l) TAO_AV_UDP_QoS_Transport::send "));
 
-  char addr [BUFSIZ];
+  ACE_TCHAR addr [BUFSIZ];
   this->peer_addr_.addr_to_string (addr,BUFSIZ);
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -830,7 +830,7 @@ TAO_AV_UDP_QoS_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   ACE_INET_Addr *inet_addr = (ACE_INET_Addr *) entry->address ();
 //   inet_addr->set (inet_addr->get_port_number (),
 //                   inet_addr->get_host_name ());
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
   inet_addr->addr_to_string (buf,
                              BUFSIZ);
   if (TAO_debug_level > 0)
@@ -953,7 +953,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
       dest_addr.set  (local_addr->get_port_number (),
                       local_addr->get_host_name ());
 
-      char dest_buf [BUFSIZ];
+      ACE_TCHAR dest_buf [BUFSIZ];
       dest_addr.addr_to_string (dest_buf,
                                 BUFSIZ);
 
@@ -1054,7 +1054,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 
   if (TAO_debug_level > 0)
     {
-      char buf [BUFSIZ];
+      ACE_TCHAR buf [BUFSIZ];
       local_addr->addr_to_string (buf,
                                   BUFSIZ);
       ACE_DEBUG ((LM_DEBUG,
@@ -1233,7 +1233,7 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
       session_addr = inet_addr;
     }
 
-  char sess_buf [BUFSIZ];
+  ACE_TCHAR sess_buf [BUFSIZ];
   session_addr->addr_to_string (sess_buf,
                                 BUFSIZ);
 
@@ -1346,7 +1346,7 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 
   if (TAO_debug_level > 0)
     {
-      char buf[BUFSIZ];
+      ACE_TCHAR buf[BUFSIZ];
       local_addr->addr_to_string (buf,
                                   BUFSIZ);
 
@@ -1444,7 +1444,7 @@ TAO_AV_UDP_QoS_Factory::make_connector (void)
 
 int
 TAO_AV_UDP_QoS_Factory::init (int /* argc */,
-                              char * /* argv */ [])
+                              ACE_TCHAR * /* argv */ [])
 {
   return 0;
 }
@@ -1466,7 +1466,7 @@ TAO_AV_UDP_QoS_Flow_Factory::~TAO_AV_UDP_QoS_Flow_Factory (void)
 
 int
 TAO_AV_UDP_QoS_Flow_Factory::init (int /* argc */,
-                                   char * /* argv */ [])
+                                   ACE_TCHAR * /* argv */ [])
 {
   return 0;
 }
