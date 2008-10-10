@@ -1,3 +1,10 @@
+Fri Oct 10 15:08:48 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Bug_2953_Regression/server.cpp:
+
+          Now an error to access RTCurrent::the_priority () in a thread where
+          it hasn't been set. Should fix spurious test fail.
+
 Fri Oct 11 14:09:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_init.cpp

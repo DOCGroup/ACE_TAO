@@ -7,6 +7,8 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
+#include "tao/Protocols_Hooks.h"
+#include "tao/ORB_Core.h"
 #include "ace/Log_Msg.h"
 #include "ace/Thread.h"
 
@@ -51,7 +53,17 @@ createThreadpool(CORBA::ORB_ptr orb, RTCORBA::RTORB_ptr rtorb, CORBA::ULong nthr
   CORBA::ULong const stacksize = 0; // default
   CORBA::ULong const minThreads = 1;
   CORBA::ULong const dynamicThreads = nthreads - minThreads;
-  RTCORBA::Priority dfltThreadPrio = rtcurrent->the_priority();
+
+  TAO_Protocols_Hooks *tph =
+    orb->orb_core ()->get_protocols_hooks ();
+
+  RTCORBA::Priority dfltThreadPrio;
+
+  if (!(tph->get_thread_implicit_CORBA_priority (dfltThreadPrio) == 0))
+  {
+    throw CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+  }
+
   CORBA::Boolean const doBuffering = false;
   CORBA::ULong maxBufRequests = 0;
   CORBA::ULong maxReqBufSize = 0;
