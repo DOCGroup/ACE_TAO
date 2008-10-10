@@ -35,51 +35,51 @@ TAO_Notify_Tests_SupplierAdmin_Command::init (ACE_Arg_Shifter& arg_shifter)
   if (arg_shifter.is_anything_left ())
     {
       /// -Create sa_name factory_name
-      if (arg_shifter.cur_arg_strncasecmp ("-Create") == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Create")) == 0)
         {
           this->command_ = CREATE;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
 
-          this->factory_ = arg_shifter.get_current ();
+          this->factory_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
 
-          if (arg_shifter.cur_arg_strncasecmp ("-AND_OP") == 0)
+          if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-AND_OP")) == 0)
             {
               arg_shifter.consume_arg ();
 
               this->ifgop_ = CosNotifyChannelAdmin::AND_OP;
             }
-          else if (arg_shifter.cur_arg_strncasecmp ("-OR_OP") == 0)
+          else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-OR_OP")) == 0)
             {
               arg_shifter.consume_arg ();
 
               this->ifgop_ = CosNotifyChannelAdmin::OR_OP;
             }
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Offer") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Offer")) == 0)
         // -Subscription admin_name +added_type1 +-added_type2 ... -added_type3 -added_type4..
         {
           this->command_ = OFFER;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
 
           TAO_Notify_Tests_Options_Parser options_parser;
           options_parser.execute (this->added_, this->removed_, arg_shifter);
         } // Subscription
-      else if (arg_shifter.cur_arg_strncasecmp ("-Set_QoS") == 0) // -Set_QoS ec_name [Qos Options]
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Set_QoS")) == 0) // -Set_QoS ec_name [Qos Options]
         {
           this->command_ = SET_QOS;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
 
           arg_shifter.consume_arg ();
 

@@ -36,47 +36,47 @@ TAO_Notify_Tests_EventChannel_Command::init (ACE_Arg_Shifter& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {
-      if (arg_shifter.cur_arg_strncasecmp ("-Create") == 0) // -Create ec_name factory_name [COLLOCATED]
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Create")) == 0) // -Create ec_name factory_name [COLLOCATED]
         {
           this->command_ = CREATE;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
 
-          this->factory_ = arg_shifter.get_current ();
+          this->factory_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
 
-          if (arg_shifter.cur_arg_strncasecmp ("COLLOCATED") == 0)
+          if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("COLLOCATED")) == 0)
             {
               this->collocated_ = 1;
             }
 
-          if (arg_shifter.cur_arg_strncasecmp ("COLOCATED") == 0) // grandfather in misspelled
+          if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("COLOCATED")) == 0) // grandfather in misspelled
             {
               this->collocated_ = 1;
               ACE_DEBUG ((LM_WARNING, "TAO_Notify_Tests_EventChannel_Command::init --"
                           " warning: deprecated misspelled COLOCATED option used.\n"));
             }
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Destroy") == 0) // -Destroy ec_name
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Destroy")) == 0) // -Destroy ec_name
         {
           this->command_ = DESTROY;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
 
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Set_QoS") == 0) // -Set_QoS ec_name [Qos Options]
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Set_QoS")) == 0) // -Set_QoS ec_name [Qos Options]
         {
           this->command_ = SET_QOS;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
 
           arg_shifter.consume_arg ();
 

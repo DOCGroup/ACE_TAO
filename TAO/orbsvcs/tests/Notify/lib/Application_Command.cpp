@@ -38,50 +38,50 @@ TAO_Notify_Tests_Application_Command::init (ACE_Arg_Shifter& arg_shifter)
   if (arg_shifter.is_anything_left ())
     {
       /// -Init | Run | Shutdown
-      if (arg_shifter.cur_arg_strncasecmp ("-Init") == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Init")) == 0)
         {
           this->command_ = INIT;
 
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Run") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Run")) == 0)
         {
           this->command_ = RUN;
 
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-WaitForEvents") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-WaitForEvents")) == 0)
         {
           this->command_ = WAIT_FOR_EVENTS;
 
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Shutdown") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Shutdown")) == 0)
         {
           this->command_ = SHUTDOWN;
 
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-DumpStats") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-DumpStats")) == 0)
         {
           this->command_ = DUMP_STATE;
 
           arg_shifter.consume_arg ();
 
-          if (arg_shifter.cur_arg_strncasecmp ("-Samples") == 0)
+          if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Samples")) == 0)
             {
               this->dump_samples_ = 1;
 
               arg_shifter.consume_arg ();
             }
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-SignalPeer") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-SignalPeer")) == 0)
         {
           this->command_ = SIGNAL_PEER;
 
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-WaitToStart") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-WaitToStart")) == 0)
         {
           this->command_ = WAIT_TO_START;
 

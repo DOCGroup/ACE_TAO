@@ -123,7 +123,7 @@ protected:
   FILE *ior_output_file_;
 
   /// The file for input
-  ACE_CString ior_input_file_;
+  ACE_TString ior_input_file_;
 
   /// Set when the start method is called.
   CORBA::Boolean started_;

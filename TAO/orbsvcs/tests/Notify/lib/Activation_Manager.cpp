@@ -188,8 +188,8 @@ TAO_Notify_Tests_Activation_Manager::dump_stats (int dump_samples)
   ACE_OS::hostname (hostname, MAXHOSTNAMELEN);
 
   /// dump suppliers:
-  char msg[BUFSIZ];
-  ACE_OS::sprintf (msg, "# Stats generated on %s\n", hostname);
+  ACE_TCHAR msg[BUFSIZ];
+  ACE_OS::sprintf (msg, ACE_TEXT("# Stats generated on %s\n"), hostname);
 
   TAO_Notify_Tests_PeriodicSupplier_Iterator sup_iter(this->supplier_map_);
 
