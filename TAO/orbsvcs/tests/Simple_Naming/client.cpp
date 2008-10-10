@@ -1101,7 +1101,7 @@ Persistent_Test_Begin::execute (TAO_Naming_Client &root_context)
 
 Persistent_Test_End::Persistent_Test_End (CORBA::ORB_ptr orb,
                                           PortableServer::POA_ptr poa,
-                                          const char *ior)
+                                          const ACE_TCHAR *ior)
   : Naming_Test (poa),
     orb_ (orb),
     ior_ (ior)
