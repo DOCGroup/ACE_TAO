@@ -47,9 +47,6 @@ module Components
     public PublisherDescriptions publishers;
   };
 
-  /// CIAO specific forward declaration, shouldn't be here
-  interface StandardConfigurator;
-
   exception NoKeyAvailable {};
 
   interface CCMObject : Navigation, Receptacles, Events
@@ -63,18 +60,6 @@ module Components
     void remove()
       raises (RemoveFailure);
     ComponentPortDescription get_all_ports ();
-
-    /// Factory method to return a StandardConfigurator interface.
-    /// CIAO specific
-    StandardConfigurator get_standard_configurator ( );
-
-    /// CIAO specific
-    void ciao_activate ()
-      raises (InvalidConfiguration);
-
-    /// CIAO specific
-    void ciao_passivate ()
-      raises (InvalidConfiguration);
   };
 };
 #endif /* CCM_OBJECT_IDL */

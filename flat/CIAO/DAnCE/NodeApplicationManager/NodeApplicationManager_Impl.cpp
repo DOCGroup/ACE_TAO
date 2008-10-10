@@ -2,6 +2,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/streams.h"
+#include "DAnCE/Deployment/DAnCE_PropertiesC.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
 #include "NodeApplicationManager_Impl.h"
@@ -110,14 +111,36 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
   
   try
   {
-    this->redirection_.unregister (this->node_name_, this->plan_.UUID.in());
-
     if (!application->_is_equivalent (this->poa_->servant_to_reference (this->application_)))
       {
-        DANCE_ERROR((LM_ERROR, DLINFO " NodeApplicationManager_Impl::destroyApplication - "
+        DANCE_ERROR((LM_ERROR, DLINFO "NodeApplicationManager_Impl::destroyApplication - "
                      "application is equivalent to current application \n"));
         throw ::Deployment::StopError();
       }
+    this->redirection_.unregister (this->node_name_, this->plan_.UUID.in());
+    
+    CORBA::Any val;
+
+    if (this->properties_.find (DAnCE::STANDALONE_NM,
+                                val) == 0)
+      {
+        DANCE_TRACE ((LM_TRACE, DLINFO "NodeApplicationManager_Impl::destroyApplication - "
+                      "Found STANDALONE_NM property\n"));
+        
+        CORBA::Boolean standalone (false);
+        
+        val >>= CORBA::Any::to_boolean (standalone);
+        if (standalone)
+          {
+            DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplicationManager_Impl::destroyApplication - "
+                          "Acting as a standalone NM, passivating and removing installed components\n"));
+            
+            this->application_->passivate_components ();
+            this->application_->remove_components ();
+          }
+      }
+    
+    
     PortableServer::ObjectId_var id = this->poa_->reference_to_id (application);
     this->poa_->deactivate_object (id);
 

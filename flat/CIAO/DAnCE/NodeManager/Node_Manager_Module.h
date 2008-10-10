@@ -66,6 +66,8 @@ class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
         bool ignore_failure_;
         const char * cs_path_;
         unsigned int timeout_;
+        CORBA::Boolean standalone_;
+        const char * server_args_;
         
         SOptions()
             : process_ns_ (false), 
@@ -76,7 +78,9 @@ class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
               rebind_plan_ns_ior_ (0),
               ignore_failure_ (false),
               cs_path_ (0),
-              timeout_ (5)
+              timeout_ (5),
+              standalone_ (false),
+              server_args_ (0)
         {
         }
       };

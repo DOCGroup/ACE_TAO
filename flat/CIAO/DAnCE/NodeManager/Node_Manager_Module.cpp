@@ -14,7 +14,7 @@
 #include "ciao/Valuetype_Factories/Cookies.h"
 #include "ciao/ComponentServer/CIAO_PropertiesC.h"
 #include "DAnCE/Logger/Log_Macros.h"
-
+#include "DAnCE/Deployment/DAnCE_PropertiesC.h"
 #include "Node_Manager_Module.h"
 #include "NodeManager_Impl.h"
 #include "RedirectionService/RedirectionService.h"
@@ -79,6 +79,8 @@ DAnCE_NodeManager_Module::usage (void)
     "\t-i,--port-indirection\t\t enable plan objects indirection via servant locator\n"
     "\t-f,--ignore-failure\t\t ignore deployment failures\n"
     "\t-s,--server-executable\t\t default component server executable\n"
+    "\t--server-args\t\t additional arguments to supply to the component server\n"
+    "\t--standalone-nm\t\t Indicates that this NodeManager is not managed by an ExecutionManager\n"
     "\t-t,--timeout\t\t\t default timeout in seconds to wait for component server spawn\n"
     "\t-h,help\t\t\t\t print this help message\n";
 }
@@ -101,6 +103,8 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
   get_opts.long_option ("port-indirection", 'i', ACE_Get_Opt::NO_ARG);
   get_opts.long_option ("ignore-failure", 'f', ACE_Get_Opt::NO_ARG);
   get_opts.long_option ("server-executable", 's', ACE_Get_Opt::ARG_REQUIRED);
+  get_opts.long_option ("server-args", ACE_Get_Opt::ARG_REQUIRED);
+  get_opts.long_option ("standalone-nm", ACE_Get_Opt::NO_ARG);
   get_opts.long_option ("timeout", 't', ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option ("help", 'h', ACE_Get_Opt::NO_ARG);
   //get_opts.long_option ("help", '?');
@@ -171,7 +175,25 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
                                 argv [0], c),
                                false);
           break;
-              
+          
+        case 0:
+          if (ACE_OS::strcmp (get_opts.long_option (),
+                              "standalone-nm") == 0)
+            {
+              DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
+                            "Found option directing NodeManager to run as standalone entity.\n"));
+              this->options_.standalone_ = true;
+            }
+          else if (ACE_OS::strcmp (get_opts.long_option (),
+                                   "server-args") == 0)
+            {
+              DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
+                            "Using provided compoent server arguments: '%s'\n",
+                            get_opts.opt_arg ()));
+              this->options_.server_args_ = get_opts.opt_arg ();
+            }
+          break;
+          
         default:
           DANCE_DEBUG ((LM_TRACE, DLINFO "Node_Manager_Module::parse_args - ignoring unknown option %c\n",
                         c));
@@ -511,10 +533,14 @@ DAnCE_NodeManager_Module::create_poas (void)
 {
   DANCE_TRACE("DAnCE_Node_Manager_Module::create_poas");
   // Get reference to Root POA.
+  DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_poas - " 
+                "Resolving root POA\n"));
   CORBA::Object_var obj = this->orb_->resolve_initial_references ("RootPOA");
   
   this->root_poa_ = PortableServer::POA::_narrow (obj.in ());
   
+  DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_poas - " 
+                "Obtaining the POAManager\n"));
   PortableServer::POAManager_var mgr = this->root_poa_->the_POAManager ();
   
   TAO::Utils::PolicyList_Destroyer policies (2);
@@ -551,9 +577,19 @@ DAnCE_NodeManager_Module::create_nm_properties (DAnCE::PROPERTY_MAP &props)
   }
   {
     CORBA::Any val;
-    val <<= this->options_.cs_path_;
+    val <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.cs_path_),0);
     props.bind (CIAO::Deployment::SERVER_EXECUTABLE,
                 val);
+  }
+  {
+    CORBA::Any val;
+    val <<= CORBA::Any::from_boolean (this->options_.standalone_);
+    props.bind (DAnCE::STANDALONE_NM, val);
+  }
+  {
+    CORBA::Any val;
+    val <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.server_args_),0);
+    props.bind (CIAO::Deployment::SERVER_ARGUMENTS, val);
   }
 }
 

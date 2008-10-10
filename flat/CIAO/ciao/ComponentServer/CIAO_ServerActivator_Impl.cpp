@@ -16,6 +16,7 @@ namespace CIAO
   {
     CIAO_ServerActivator_i::CIAO_ServerActivator_i (CORBA::ULong def_spawn_delay,
                                                     const char * default_cs_path,
+                                                    const char * cs_args,
                                                     bool multithreaded,
                                                     CORBA::ORB_ptr orb,
                                                     PortableServer::POA_ptr poa)
@@ -24,6 +25,7 @@ namespace CIAO
         orb_ (CORBA::ORB::_duplicate (orb)),
         poa_ (PortableServer::POA::_duplicate (poa)),
         cs_path_ (default_cs_path),
+        cs_args_ (cs_args),
         mutex_ (),
         condition_ (mutex_)
     {
@@ -240,7 +242,7 @@ namespace CIAO
                    "ComponentServer %s successfully spawned and configured!\n",
                    server->uuid_.c_str ()));
       
-      return server->ref_.in ();
+      return ::Components::Deployment::ComponentServer::_duplicate (server->ref_.in ());
     }
     
     ACE_CString
@@ -248,7 +250,7 @@ namespace CIAO
     {
       CIAO_TRACE (CLINFO "CIAO_ServerActivator_i::construct_command_line");
       // Build our command line to launch the compoent server
-      ACE_CString cmd_options;
+      ACE_CString cmd_options (this->cs_args_);
       
       CORBA::Any val;
       

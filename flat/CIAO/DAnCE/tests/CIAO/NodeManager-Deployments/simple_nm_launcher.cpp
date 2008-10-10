@@ -107,6 +107,19 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       
       orb->destroy ();
     }
+  catch (Deployment::StopError &ex)
+    {
+      ACE_ERROR ((LM_ERROR, "*** Caught StopError exception with name %s and reason %s\n",
+                  ex.name.in (), ex.reason.in ()));
+      return -1;
+    }
+  catch (CORBA::Exception &ex)
+    {
+      ACE_ERROR ((LM_ERROR, "*** Caught CORBA exception: %s\n",
+                  ex._info ().c_str ()));
+      return -1;
+      
+    }
   catch (...)
     {
       orb->destroy ();

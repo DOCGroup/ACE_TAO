@@ -162,6 +162,13 @@ namespace CIAO
                 }
             }
         }
+      catch (CORBA::Exception &ex)
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_ComponentServer_i::remove_container - "
+                       "Caught CORBA exception whilst removing container: %s\n",
+                       ex._info ().c_str ()));
+        }
+      
       catch (...)
         {
           CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_ComponentServer_i::remove_container - Error: Unknown exception caught while removing a container.\n"));
@@ -209,10 +216,18 @@ namespace CIAO
             {
               (*i)->remove ();
             }
+          catch (CORBA::Exception &ex)
+            {
+              successful = false;
+              CIAO_ERROR ((LM_ERROR, CLINFO
+                           "CIAO_ComponentServer_i::remove - "
+                           "Intercepted CORBA exception while trying to remove a container:%s\n",
+                           ex._info ().c_str ()));
+            }
           catch (...)
             {
               successful = false;
-              ACE_ERROR ((LM_ERROR, CLINFO
+              CIAO_ERROR ((LM_ERROR, CLINFO
                           "CIAO_ComponentServer_i::remove - "
                           "Intercepted exception while trying to remove a container\n"));
             }

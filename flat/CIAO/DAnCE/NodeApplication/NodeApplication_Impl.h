@@ -62,7 +62,11 @@ namespace DAnCE
 
     //TODO Exception specification should be customized
     void init_components();
-
+    
+    void passivate_components ();
+    
+    void remove_components ();
+    
   private:
     //TODO Add throw specification
     void init();
@@ -79,27 +83,47 @@ namespace DAnCE
     {
       eHome,
       eComponent,
+      eHomedComponent,
       eInvalid
     };
+    
+    enum EComponentState
+    {
+      eUninstalled,
+      eInstalled,
+      eConfigured,
+      eActive,
+      ePassive,
+      eRemoved,
+      eInvalidState
+    };
+    
+    struct Container;
     
     struct Instance
     {
       Instance (EInstanceType type = eInvalid, 
+                Container *cont = 0,
                 CORBA::ULong idd = 0, 
                 CORBA::ULong mdd = 0) : 
-        configured (false), type (type), idd_idx (idd), mdd_idx (mdd)
+        state (eUninstalled),
+        type (type), idd_idx (idd), mdd_idx (mdd), home(0),
+        container (cont)
       {
       }
       
-      bool configured;
+      EComponentState state;
       EInstanceType type;
       CORBA::ULong idd_idx;
       CORBA::ULong mdd_idx;
       CORBA::Object_var ref;
+      Instance *home;
+      Container *container;
     };
     
     typedef ACE_Array<Instance> INSTANCES;
-    
+    typedef ACE_Array<Instance *> INSTANCE_PTRS;
+
     struct Container
     {
       INSTANCES homes;
@@ -119,8 +143,6 @@ namespace DAnCE
     
     typedef ACE_Array<ComponentServer> COMPONENTSERVERS;
     
-    COMPONENTSERVERS servers_;
-    
     EInstanceType get_instance_type (const Deployment::Properties& prop) const;
 
     void create_config_values (const Deployment::Properties& prop,
@@ -137,11 +159,9 @@ namespace DAnCE
     void install_home (Container &cont, Instance &inst);
 
     void install_component (Container &cont, Instance &inst);
+
+    void install_homed_component (Container &cont, Instance &inst);
     
-    void create_home (unsigned int index);
-
-    void create_component (unsigned int index);
-
     Components::Cookie* connect_receptacle (Components::CCMObject_ptr inst,
                                            const ACE_CString& port_name,
                                            CORBA::Object_ptr facet);
@@ -163,26 +183,23 @@ namespace DAnCE
                                            CORBA::Object_ptr consumer);
 
     CORBA::ORB_var orb_;
+
     PortableServer::POA_var poa_;
+
     const Deployment::DeploymentPlan& plan_;
 
     //ComponentInstallation_Impl* installation_;
-    CIAO::Deployment::CIAO_ServerActivator_i* activator_;
-
-    typedef ACE_Map_Manager<ACE_CString, ::Components::Deployment::Container_var, ACE_Null_Mutex> TContainers;
-    TContainers containers_;
-
-    typedef ACE_Map_Manager<ACE_CString, Components::KeylessCCMHome_var, ACE_Null_Mutex> THomes;
-    THomes    homes_;
-
-    typedef ACE_Map_Manager<ACE_CString, Components::CCMObject_var,  ACE_Null_Mutex> TComponents;
-    TComponents components_;
+    auto_ptr<CIAO::Deployment::CIAO_ServerActivator_i>  activator_;
 
     RedirectionService & redirection_;
 
     ACE_CString node_name_;
     
     PROPERTY_MAP properties_;
+    
+    COMPONENTSERVERS servers_;
+    
+    INSTANCE_PTRS instances_;
   };
 };
 #endif /*NODEAPPLICATION_IMPL_H_*/

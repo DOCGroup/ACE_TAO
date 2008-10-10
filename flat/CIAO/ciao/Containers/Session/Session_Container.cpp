@@ -424,7 +424,7 @@ namespace CIAO
     PortableServer::ObjectId_var oid;
     
     CORBA::Object_var objref =
-      this->install_servant (home_servant, Container_Types::COMPONENT_t, oid.out ());
+      this->install_servant (home_servant, Container_Types::HOME_t, oid.out ());
 
     Components::CCMHome_var homeref =
       Components::CCMHome::_narrow (objref.in ());
@@ -659,8 +659,23 @@ namespace CIAO
   void 
   Session_Container::uninstall (CORBA::Object_ptr objref, Container_Types::OA_Type y)
   {
-    CIAO_TRACE ("Session_Container::uninstall_home");
-    throw CORBA::NO_IMPLEMENT ();
+    CIAO_TRACE ("Session_Container::uninstall");
+    
+    PortableServer::Servant svnt;
+    
+    switch (y)
+      {
+      case Container_Types::COMPONENT_t:
+      case Container_Types::HOME_t:
+        svnt = this->component_poa_->reference_to_servant (objref);
+        break;
+      default:
+        svnt = this->facet_cons_poa_->reference_to_servant (objref);
+        break;
+      }
+   
+    PortableServer::ObjectId_var oid;
+    this->uninstall_servant (svnt, y, oid.out ());
   }
   
   void
@@ -691,18 +706,37 @@ namespace CIAO
     if ((t == Container_Types::COMPONENT_t) ||
         (t == Container_Types::HOME_t))
       {
+        CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::uninstall_servant - "
+                     "Removing component or home servant\n"));
         tmp = this->component_poa_.in ();
       }
     else
       {
+        CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::uninstall_servant - "
+                     "Removing facet or consumer servant\n"));
         tmp = this->facet_cons_poa_.in ();
       }
 
-    PortableServer::ObjectId_var tmp_id;
-    tmp_id = tmp->servant_to_id (svnt);
-    tmp->deactivate_object (tmp_id);
+    try
+      {
+        PortableServer::ObjectId_var tmp_id;
+        tmp_id = tmp->servant_to_id (svnt);
+        tmp->deactivate_object (tmp_id);
+        svnt->_remove_ref ();
+        
+        CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::uninstall_servant - "
+                     "Servant successfully removed\n"));
+        
+        oid = tmp_id._retn ();
+      }
+    catch (CORBA::Exception &ex)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::uninstall_servant - "
+                     "Caught CORBA exception while uninstalling servant: %s\n",
+                     ex._info ().c_str ()));
+        throw Components::RemoveFailure ();
+      }
     
-    oid = tmp_id._retn ();
   }
 
   void
