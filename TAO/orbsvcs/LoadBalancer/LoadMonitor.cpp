@@ -17,11 +17,11 @@ ACE_RCSID (LoadBalancer,
            "$Id$")
 
 
-static const char * location_id = 0;
-static const char * location_kind = 0;
-static const char * mtype = "CPU";
-static const char * mstyle = "PUSH";
-static const char * custom_monitor_ior = 0;
+static const ACE_TCHAR * location_id = 0;
+static const ACE_TCHAR * location_kind = 0;
+static const ACE_TCHAR * mtype = ACE_TEXT("CPU");
+static const ACE_TCHAR * mstyle = ACE_TEXT("PUSH");
+static const ACE_TCHAR * custom_monitor_ior = 0;
 
 // For the sake of consistency, make default push monitoring interval
 // the same as the pull monitoring interval.
@@ -47,13 +47,12 @@ usage (const ACE_TCHAR * cmd)
 }
 
 void
-parse_args (int argc,
-            ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("l:k:t:s:i:m:h"));
 
   int c = 0;
-  const char * s;
+  const ACE_TCHAR * s = 0;
 
   while ((c = get_opts ()) != -1)
     {
@@ -155,12 +154,12 @@ get_load_monitor (CORBA::ORB_ptr orb,
 
       poa_manager->activate ();
 
-      if (ACE_OS::strcasecmp (::mtype, "CPU") == 0)
+      if (ACE_OS::strcasecmp (::mtype, ACE_TEXT("CPU")) == 0)
         {
           TAO_LB_CPU_Load_Average_Monitor * monitor = 0;
           ACE_NEW_THROW_EX (monitor,
                             TAO_LB_CPU_Load_Average_Monitor (::location_id,
-                                                ::location_kind),
+                                                             ::location_kind),
                             CORBA::NO_MEMORY ());
 
           // Transfer ownership to the POA.
@@ -168,9 +167,9 @@ get_load_monitor (CORBA::ORB_ptr orb,
 
           return monitor->_this ();
         }
-      else if (ACE_OS::strcasecmp (::mtype, "Disk") == 0
-               || ACE_OS::strcasecmp (::mtype, "Memory") == 0
-               || ACE_OS::strcasecmp (::mtype, "Network") == 0)
+      else if (ACE_OS::strcasecmp (::mtype, ACE_TEXT("Disk")) == 0
+               || ACE_OS::strcasecmp (::mtype, ACE_TEXT("Memory")) == 0
+               || ACE_OS::strcasecmp (::mtype, ACE_TEXT("Network")) == 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("ERROR: \"%s\" load monitor currently ")
@@ -198,7 +197,7 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
                        ACE_Reactor * reactor,
                        long & timer_id)
 {
-  if (ACE_OS::strcasecmp (::mstyle, "PULL") == 0)
+  if (ACE_OS::strcasecmp (::mstyle, ACE_TEXT("PULL")) == 0)
     {
       PortableGroup::Location_var location =
         monitor->the_location ();
@@ -206,7 +205,7 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
       manager->register_load_monitor (location.in (),
                                       monitor);
     }
-  else if (ACE_OS::strcasecmp (::mstyle, "PUSH") == 0)
+  else if (ACE_OS::strcasecmp (::mstyle, ACE_TEXT("PUSH")) == 0)
     {
       ACE_Time_Value interval (::push_interval, 0);
       ACE_Time_Value restart (::push_interval, 0);

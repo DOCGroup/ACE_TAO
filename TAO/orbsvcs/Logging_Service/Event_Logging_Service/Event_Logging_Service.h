@@ -53,10 +53,10 @@ class Event_Logging_Service
   // Returns 0 on success, -1 on error.
 
 protected:
-  void init_ORB (int& argc, char *argv []);
+  void init_ORB (int& argc, ACE_TCHAR *argv []);
   // initialize the ORB.
 
-  int parse_args (int argc, char *argv []);
+  int parse_args (int argc, ACE_TCHAR *argv []);
   // Parses the command line arguments.
 
   void resolve_naming_service (void);

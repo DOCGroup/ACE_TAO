@@ -57,7 +57,7 @@ class Notify_Logging_Service
   // Returns 0 on success, -1 on error.
 
 protected:
-  int init_ORB (int& argc, char *argv []);
+  int init_ORB (int& argc, ACE_TCHAR *argv []);
   // initialize the ORB.
 
   int parse_args (int argc, ACE_TCHAR *argv[]);

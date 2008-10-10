@@ -414,14 +414,11 @@ Clerk_i::init (int argc,
 
       // Call the init of <TAO_ORB_Manager> to initialize the ORB and
       // create a child POA under the root POA.
-
-
       this->orb_manager_.init (command.get_argc(),
-                               command.get_ASCII_argv());
-
+                               command.get_TCHAR_argv());
 
       if (this->orb_manager_.init_child_poa (command.get_argc(),
-                                             command.get_ASCII_argv(),
+                                             command.get_TCHAR_argv(),
                                              "child_poa") == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("%p\n"),

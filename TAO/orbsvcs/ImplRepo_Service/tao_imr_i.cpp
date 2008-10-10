@@ -282,7 +282,7 @@ TAO_IMR_Op_Activate::parse (int argc, ACE_TCHAR **argv)
   // Skip both the program name and the "activate" command
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("h"));
 
-  this->server_name_ = argv[1];
+  this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[1]);
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -361,7 +361,7 @@ TAO_IMR_Op_IOR::parse (int argc, ACE_TCHAR **argv)
   // Skip both the program name and the "ior" command
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hf:"));
 
-  this->server_name_ = argv[1];
+  this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[1]);
   if (this->server_name_.length() == 0 || this->server_name_[0] == '-')
     {
       ACE_ERROR((LM_ERROR, "ERROR : name is required.\n"));

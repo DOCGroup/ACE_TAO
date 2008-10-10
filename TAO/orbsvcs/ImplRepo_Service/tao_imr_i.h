@@ -177,7 +177,7 @@ protected:
   ACE_CString server_name_;
 
   /// Filename to output to.
-  ACE_CString filename_;
+  ACE_TString filename_;
 };
 
 

@@ -56,13 +56,13 @@ parse_args (int argc,
 
         case 's':
           if (ACE_OS::strcasecmp (get_opts.opt_arg (),
-                                  "RoundRobin") == 0)
+                                  ACE_TEXT("RoundRobin")) == 0)
             default_strategy = 0;
           else if (ACE_OS::strcasecmp (get_opts.opt_arg (),
-                                       "Random") == 0)
+                                       ACE_TEXT("Random")) == 0)
             default_strategy = 1;
           else if (ACE_OS::strcasecmp (get_opts.opt_arg (),
-                                       "LeastLoaded") == 0)
+                                       ACE_TEXT("LeastLoaded")) == 0)
             default_strategy = 2;
           else
             ACE_DEBUG ((LM_DEBUG,

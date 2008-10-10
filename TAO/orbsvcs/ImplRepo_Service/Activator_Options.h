@@ -66,7 +66,7 @@ public:
   unsigned int debug (void) const;
 
   /// Returns the file where the IOR should be stored.
-  const ACE_CString& ior_filename (void) const;
+  const ACE_TString& ior_filename (void) const;
 
   /// The nt service command to run (install/remove)
   SERVICE_COMMAND service_command(void) const;
@@ -101,7 +101,7 @@ private:
   unsigned int debug_;
 
   /// File where the IOR of the server object is stored.
-  ACE_CString ior_output_file_;
+  ACE_TString ior_output_file_;
 
   /// Should we run as a service?
   bool service_;

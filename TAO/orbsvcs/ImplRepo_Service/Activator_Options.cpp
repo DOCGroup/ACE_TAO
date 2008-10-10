@@ -156,7 +156,7 @@ Activator_Options::parse_args (int &argc, ACE_TCHAR *argv[])
               this->print_usage ();
               return -1;
             }
-          this->name_ = shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(shifter.get_current ());
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-l")) == 0)
@@ -187,7 +187,7 @@ Activator_Options::init (int argc, ACE_TCHAR *argv[])
 
   for (int i = 0; i < argc; ++i)
     {
-      this->cmdline_ += ACE_CString (argv[i]) + ACE_CString (" ");
+      this->cmdline_ += ACE_CString (ACE_TEXT_ALWAYS_CHAR(argv[i])) + ACE_CString (" ");
     }
 
   return 0;
@@ -227,7 +227,7 @@ Activator_Options::save_registry_options()
   LONG err = ACE_TEXT_RegCreateKeyEx (SERVICE_REG_ROOT,
                              SERVICE_REG_PATH,
                              0,
-                             "", // class
+                             ACE_TEXT(""), // class
                              REG_OPTION_NON_VOLATILE,
                              KEY_ALL_ACCESS,
                              0,
@@ -238,24 +238,24 @@ Activator_Options::save_registry_options()
     {
       return -1;
     }
-  err = ACE_TEXT_RegSetValueEx (key, "ORBInitOptions", 0, REG_SZ,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("ORBInitOptions"), 0, REG_SZ,
     (LPBYTE) this->cmdline_.c_str (), this->cmdline_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx (key, "IORFile", 0, REG_SZ,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("IORFile"), 0, REG_SZ,
     (LPBYTE) this->ior_output_file_.c_str (), this->ior_output_file_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx (key, "DebugLevel", 0, REG_DWORD,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("DebugLevel"), 0, REG_DWORD,
     (LPBYTE) &this->debug_ , sizeof (this->debug_));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx( key, "Name", 0, REG_SZ,
+  err = ACE_TEXT_RegSetValueEx( key, ACE_TEXT("Name"), 0, REG_SZ,
     (LPBYTE) this->name_.c_str (), this->name_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   DWORD tmpint = this->notify_imr_;
-  err = ACE_TEXT_RegSetValueEx (key, "NotifyImR", 0, REG_DWORD,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("NotifyImR"), 0, REG_DWORD,
     (LPBYTE) &tmpint , sizeof (tmpint));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
@@ -295,7 +295,7 @@ Activator_Options::load_registry_options ()
   char tmpstr[4096];
   DWORD sz = sizeof (tmpstr);
   DWORD type = 0;
-  err = ACE_TEXT_RegQueryValueEx (key, "ORBInitOptions", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("ORBInitOptions"), 0, &type,
     (LPBYTE) tmpstr, &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -305,17 +305,17 @@ Activator_Options::load_registry_options ()
     }
 
   sz = sizeof(tmpstr);
-  err = ACE_TEXT_RegQueryValueEx (key, "IORFile", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("IORFile"), 0, &type,
     (LPBYTE) tmpstr, &sz);
   if (err == ERROR_SUCCESS)
     {
       ACE_ASSERT (type == REG_SZ);
       tmpstr[sz - 1] = '\0';
-      this->ior_output_file_ = tmpstr;
+      this->ior_output_file_ = ACE_TEXT_CHAR_TO_TCHAR(tmpstr);
     }
 
   sz = sizeof(debug_);
-  err = ACE_TEXT_RegQueryValueEx (key, "DebugLevel", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("DebugLevel"), 0, &type,
     (LPBYTE) &this->debug_ , &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -323,7 +323,7 @@ Activator_Options::load_registry_options ()
     }
 
   sz = sizeof(tmpstr);
-  err = ACE_TEXT_RegQueryValueEx (key, "Name", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("Name"), 0, &type,
     (LPBYTE) tmpstr, &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -334,7 +334,7 @@ Activator_Options::load_registry_options ()
 
   DWORD tmpint = 0;
   sz = sizeof(tmpint);
-  err = ACE_TEXT_RegQueryValueEx (key, "NotifyImR", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("NotifyImR"), 0, &type,
     (LPBYTE) &tmpint , &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -380,7 +380,7 @@ Activator_Options::debug (void) const
   return this->debug_;
 }
 
-const ACE_CString&
+const ACE_TString&
 Activator_Options::ior_filename (void) const
 {
   return this->ior_output_file_;

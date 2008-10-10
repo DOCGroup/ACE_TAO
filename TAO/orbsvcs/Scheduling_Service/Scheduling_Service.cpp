@@ -56,7 +56,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
       ACE_Argv_Type_Converter command_line(argc, argv);
 
       // Initialize ORB manager.
-      this->orb_manager_.init (command_line.get_argc(), command_line.get_ASCII_argv());
+      this->orb_manager_.init (command_line.get_argc(), command_line.get_TCHAR_argv());
 
       orb = this->orb_manager_.orb ();
 

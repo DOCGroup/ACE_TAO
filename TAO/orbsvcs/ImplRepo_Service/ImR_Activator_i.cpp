@@ -308,7 +308,7 @@ ImR_Activator_i::start_server(const char* name,
 
   for (CORBA::ULong i = 0; i < env.length (); ++i)
     {
-      proc_opts.setenv (env[i].name.in (), env[i].value.in ());
+      proc_opts.setenv (ACE_TEXT_CHAR_TO_TCHAR(env[i].name.in ()), env[i].value.in ());
     }
 
   int pid = this->process_mgr_.spawn (proc_opts);

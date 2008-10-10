@@ -46,7 +46,7 @@ Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::connect(const FTRT::Lo
 
     typename CONNECTOR::PEER_ADDR prev_addr(location[0].id);
 
-    DETECTION_HANDLER* handler;
+    DETECTION_HANDLER* handler = 0;
     ACE_NEW_RETURN(handler, DETECTION_HANDLER(listener_), 0) ;
 
     handler->reactor(&reactor_task_.reactor_);

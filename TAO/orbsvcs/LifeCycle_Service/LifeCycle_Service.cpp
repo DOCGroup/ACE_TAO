@@ -53,7 +53,7 @@ Life_Cycle_Service_Server::init (int argc,
   ACE_Argv_Type_Converter command(argc, argv);
 
   retval = this->orb_manager_.init (command.get_argc(),
-                                    command.get_ASCII_argv());
+                                    command.get_TCHAR_argv());
 
   if (retval == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
