@@ -25,7 +25,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'l':
-        location = get_opts.opt_arg ();
+        location = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
 
       default:
