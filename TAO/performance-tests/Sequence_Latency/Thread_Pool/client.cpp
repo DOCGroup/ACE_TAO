@@ -17,7 +17,7 @@ int niterations = 1000;
 int do_shutdown = 1;
 int sz = 512;
 
-const char *data_type = "octet";
+const ACE_TCHAR *data_type = ACE_TEXT("octet");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -31,12 +31,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 't':
         data_type = get_opts.opt_arg ();
 
-        if (ACE_OS::strcmp (data_type, "octet") != 0 &&
-            ACE_OS::strcmp (data_type, "char") != 0 &&
-            ACE_OS::strcmp (data_type, "long") != 0 &&
-            ACE_OS::strcmp (data_type, "short") != 0 &&
-            ACE_OS::strcmp (data_type, "double") != 0 &&
-            ACE_OS::strcmp (data_type, "longlong") != 0)
+        if (ACE_OS::strcmp (data_type, ACE_TEXT("octet")) != 0 &&
+            ACE_OS::strcmp (data_type, ACE_TEXT("char")) != 0 &&
+            ACE_OS::strcmp (data_type, ACE_TEXT("long")) != 0 &&
+            ACE_OS::strcmp (data_type, ACE_TEXT("short")) != 0 &&
+            ACE_OS::strcmp (data_type, ACE_TEXT("double")) != 0 &&
+            ACE_OS::strcmp (data_type, ACE_TEXT("longlong")) != 0)
           return -1;
         break;
 
@@ -144,10 +144,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
       ACE_Basic_Stats totals;
-      task0.accumulate_and_dump (totals, "Task[0]", gsf);
-      task1.accumulate_and_dump (totals, "Task[1]", gsf);
-      task2.accumulate_and_dump (totals, "Task[2]", gsf);
-      task3.accumulate_and_dump (totals, "Task[3]", gsf);
+      task0.accumulate_and_dump (totals, ACE_TEXT("Task[0]"), gsf);
+      task1.accumulate_and_dump (totals, ACE_TEXT("Task[1]"), gsf);
+      task2.accumulate_and_dump (totals, ACE_TEXT("Task[2]"), gsf);
+      task3.accumulate_and_dump (totals, ACE_TEXT("Task[3]"), gsf);
 
       totals.dump_results (ACE_TEXT("Total"), gsf);
 
