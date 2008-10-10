@@ -108,7 +108,7 @@ IFR_DII_Client::parse_args (int argc,
                             "usage: %s"
                             " [-n]"
                             "\n",
-                            ACE_TEXT_CHAR_TO_TCHAR argv [0]),
+                            argv [0]),
                             -1);
       }
 
