@@ -774,7 +774,7 @@ Consumer_Main::parse_args (int argc, ACE_TCHAR *argv[])
       narg += consumed;
       corba_arg = false;
     }
-    else if (ACE_OS::strncmp (argv[narg], "-ORB", 4) == 0)
+    else if (ACE_OS::strncmp (argv[narg], ACE_TEXT("-ORB"), 4) == 0)
     {
       corba_arg = true;
     }
@@ -801,52 +801,52 @@ int
 Consumer_Main::parse_single_arg (int argc, ACE_TCHAR *argv[])
 {
   int consumed = 0;
-  if (ACE_OS::strcasecmp (argv[0], "-any") == 0)
+  if (ACE_OS::strcasecmp (argv[0], ACE_TEXT("-any")) == 0)
   {
     this->mode_ = MODE_ANY;
     consumed = 1;
   }
-  else if (ACE_OS::strcasecmp (argv[0], "-structured") == 0)
+  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT("-structured")) == 0)
   {
     this->mode_ = MODE_STRUCTURED;
     consumed = 1;
   }
-  else if (ACE_OS::strcasecmp (argv[0], "-sequence") == 0)
+  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT("-sequence")) == 0)
   {
     this->mode_ = MODE_SEQUENCE;
     consumed = 1;
   }
-  else if (ACE_OS::strcasecmp (argv[0], "-v") == 0)
+  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT("-v")) == 0)
   {
     this->verbose_ = true;
     consumed = 1;
   }
-  else if (ACE_OS::strcasecmp (argv[0], "-channel") == 0)
+  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT("-channel")) == 0)
   {
     this->channel_file_= argv[1];
     consumed = 2;
   }
-  else if (ACE_OS::strcasecmp (argv[0], "-expect") == 0 && argc > 1)
+  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT("-expect")) == 0 && argc > 1)
   {
     this->expect_ = ACE_OS::atoi (argv[1]);
     consumed = 2;
   }
-  else if (ACE_OS::strcasecmp (argv[0], "-fail") == 0 && argc > 1)
+  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT("-fail")) == 0 && argc > 1)
   {
     this->fail_ = ACE_OS::atoi (argv[1]);
     consumed = 2;
   }
-  else if (ACE_OS::strcasecmp (argv[0], "-serial_number") == 0)
+  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT("-serial_number")) == 0)
   {
     this->serial_number_= ACE_OS::atoi (argv[1]);
     consumed = 2;
   }
-  else if (ACE_OS::strcasecmp (argv[0], "-nonamesvc") == 0)
+  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT("-nonamesvc")) == 0)
   {
     this->use_naming_service_ = false;
     consumed = 1;
   }
-  else if (ACE_OS::strcasecmp (argv[0], "-disconnect") == 0)
+  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT("-disconnect")) == 0)
   {
     this->disconnect_on_exit_ = true;
     consumed = 1;
@@ -1210,7 +1210,7 @@ Consumer_Main::init_event_channel (void)
               ));
           }
           // kill the channel filename so we don't overwrite the file
-          this->channel_file_ = "";
+          this->channel_file_ = ACE_TEXT("");
         }
       }
       catch (...)
