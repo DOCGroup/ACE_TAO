@@ -30,8 +30,9 @@ Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::init_acceptor()
 
   ACE_DEBUG((LM_DEBUG, "listening at %s:%d\n", listen_addr.get_host_name(),
                                                listen_addr.get_port_number()));
-  char* buf = CORBA::string_alloc(MAXHOSTNAMELEN);
-  listen_addr.addr_to_string(buf, MAXHOSTNAMELEN, 0);
+  ACE_TCHAR tcharbuf [MAXHOSTNAMELEN];
+  listen_addr.addr_to_string(tcharbuf, MAXHOSTNAMELEN, 0);
+  char* buf = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR(tcharbuf));
   location_.length(1);
   location_[0].id = buf;
   return 0;
