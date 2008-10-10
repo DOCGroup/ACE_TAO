@@ -145,7 +145,7 @@ AdminProperties::parse_args(int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const char *current_arg = 0;
+  const ACE_TCHAR *current_arg = 0;
 
   while (arg_shifter.is_anything_left ())
     {
@@ -168,7 +168,7 @@ AdminProperties::parse_args(int argc, ACE_TCHAR *argv[])
           // Max. number of suppliers allowed to connect.
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-reject_new_events") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-reject_new_events")) == 0)
         {
           this->reject_new_events_ = 1;
           arg_shifter.consume_arg ();
@@ -185,7 +185,7 @@ AdminProperties::parse_args(int argc, ACE_TCHAR *argv[])
           // Number of suppliers to create.
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-?") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-?")) == 0)
         {
           ACE_DEBUG((LM_DEBUG,
                      "usage: %s "

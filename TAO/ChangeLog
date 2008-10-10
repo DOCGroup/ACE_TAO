@@ -1,3 +1,22 @@
+Fri Oct 11 13:49:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2926_Regression/DllORB.cpp
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/client.cpp
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/server.cpp
+        * orbsvcs/tests/Notify/Basic/AdminProperties.cpp
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp
+        * orbsvcs/tests/Notify/Basic/Events.cpp
+        * orbsvcs/tests/Notify/Basic/LifeCycle.cpp
+        * orbsvcs/tests/Notify/Basic/MultiTypes.cpp
+        * orbsvcs/tests/Notify/Basic/Sequence.cpp
+        * orbsvcs/tests/Notify/Basic/Simple.cpp
+        * orbsvcs/tests/Notify/Bug_2561_Regression/Consumer.cpp
+        * orbsvcs/tests/Notify/Bug_2561_Regression/Supplier.cpp
+        * orbsvcs/tests/Notify/Bug_3252_Regression/DllOrb.cpp
+        * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp
+        * orbsvcs/tests/Notify/RT_lib/RT_POA_Command.cpp
+          ACE_TCHAR fixes
+
 Fri Oct 11 12:42:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Sequence_Latency/AMI/client.cpp
