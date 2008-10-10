@@ -17,8 +17,8 @@ ACE_RCSID (LoadBalancing,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_CPU_Load_Average_Monitor::TAO_LB_CPU_Load_Average_Monitor (
-  const char * location_id,
-  const char * location_kind)
+  const ACE_TCHAR * location_id,
+  const ACE_TCHAR * location_kind)
   : location_ (1)
 {
   this->location_.length (1);
@@ -48,10 +48,10 @@ TAO_LB_CPU_Load_Average_Monitor::TAO_LB_CPU_Load_Average_Monitor (
     }
   else
     {
-      this->location_[0].id = CORBA::string_dup (location_id);
+      this->location_[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(location_id));
 
       if (location_kind != 0)
-        this->location_[0].kind = CORBA::string_dup (location_kind);
+        this->location_[0].kind = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(location_kind));
     }
 }
 

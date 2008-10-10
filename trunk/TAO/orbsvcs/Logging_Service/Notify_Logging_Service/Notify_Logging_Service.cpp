@@ -27,7 +27,7 @@ Notify_Logging_Service::~Notify_Logging_Service (void)
 }
 
 int
-Notify_Logging_Service::init_ORB (int& argc, char *argv [])
+Notify_Logging_Service::init_ORB (int& argc, ACE_TCHAR *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
@@ -69,7 +69,7 @@ Notify_Logging_Service::parse_args (int argc, ACE_TCHAR *argv[])
       switch (opt)
         {
         case 'n':
-          this->service_name_ = get_opt.opt_arg ();
+          this->service_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case 'o':

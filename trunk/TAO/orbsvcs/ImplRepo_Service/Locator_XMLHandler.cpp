@@ -5,10 +5,10 @@
 
 ACE_RCSID (ImplRepo_Service,Locator_XMLHandler,"$Id$")
 
-const char* Locator_XMLHandler::ROOT_TAG = "ImplementationRepository";
-const char* Locator_XMLHandler::SERVER_INFO_TAG = "Servers";
-const char* Locator_XMLHandler::ACTIVATOR_INFO_TAG = "Activators";
-const char* Locator_XMLHandler::ENVIRONMENT_TAG = "EnvironmentVariables";
+const ACE_TCHAR* Locator_XMLHandler::ROOT_TAG = ACE_TEXT("ImplementationRepository");
+const ACE_TCHAR* Locator_XMLHandler::SERVER_INFO_TAG = ACE_TEXT("Servers");
+const ACE_TCHAR* Locator_XMLHandler::ACTIVATOR_INFO_TAG = ACE_TEXT("Activators");
+const ACE_TCHAR* Locator_XMLHandler::ENVIRONMENT_TAG = ACE_TEXT("EnvironmentVariables");
 
 Locator_XMLHandler::Locator_XMLHandler (Callback& cb)
 : callback_ (cb)
@@ -25,7 +25,7 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
   if (ACE_OS::strcasecmp (qName, SERVER_INFO_TAG) == 0)
     {
       // We'll use this as a key to determine if we've got a valid record
-      this->server_name_ = "";
+      this->server_name_ = ACE_TEXT("");
       this->env_vars_.clear();
 
       if (attrs != 0 && attrs->getLength () == 8)
@@ -46,10 +46,10 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
   {
     if (attrs != 0 && attrs->getLength () == 3)
       {
-        ACE_CString aname = attrs->getValue ((size_t)0);
-        ACE_CString token_str = attrs->getValue ((size_t)1);
+        ACE_CString aname = ACE_TEXT_ALWAYS_CHAR(attrs->getValue ((size_t)0));
+        ACE_TString token_str = attrs->getValue ((size_t)1);
         long token = ACE_OS::atoi (token_str.c_str ());
-        ACE_CString ior = attrs->getValue ((size_t)2);
+        ACE_CString ior = ACE_TEXT_ALWAYS_CHAR(attrs->getValue ((size_t)2));
         this->callback_.next_activator (aname, token, ior);
       }
   }

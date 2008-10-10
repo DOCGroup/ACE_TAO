@@ -208,7 +208,7 @@ Server_i::init (int argc,
 
       int retval = this->orb_manager_.init_child_poa (
                       command.get_argc(),
-                      command.get_ASCII_argv(),
+                      command.get_TCHAR_argv(),
                       "time_server");
 
       if (retval == -1)

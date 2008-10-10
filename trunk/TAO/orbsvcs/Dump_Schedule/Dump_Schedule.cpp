@@ -25,7 +25,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), "internet");
+        CORBA::ORB_init (command_line.get_argc(), command_line.get_TCHAR_argv(), "internet");
 
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService");
@@ -61,7 +61,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                                             deps.in (),
                                             configs.in (),
                                             anomalies.in (),
-                                            "Scheduler_Runtime.cpp");
+                                            ACE_TEXT("Scheduler_Runtime.cpp"));
     }
   catch (const CORBA::Exception& ex)
     {

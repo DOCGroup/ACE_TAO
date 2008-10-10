@@ -119,7 +119,7 @@ run_service_command (Activator_Options& opts)
     opts.service_command () == Activator_Options::SC_INSTALL_NO_LOCATOR)
       {
         const DWORD MAX_PATH_LENGTH = 4096;
-        char pathname[MAX_PATH_LENGTH];
+        ACE_TCHAR pathname[MAX_PATH_LENGTH];
 
         DWORD length = ACE_TEXT_GetModuleFileName(0, pathname, MAX_PATH_LENGTH);
         if (length == 0 || length >= MAX_PATH_LENGTH - sizeof(" -s"))
@@ -133,15 +133,16 @@ run_service_command (Activator_Options& opts)
         int ret = -1;
         if (opts.service_command () == Activator_Options::SC_INSTALL)
           {
-            const char* DEPENDS_ON = "TAOImR"; // Must match Locator_NT_Service.h
+            // Must match Locator_NT_Service.h
+            const ACE_TCHAR* DEPENDS_ON = ACE_TEXT("TAOImR");
 
             ret =  SERVICE::instance ()->insert (SERVICE_DEMAND_START,
-                                                SERVICE_ERROR_NORMAL,
-                                                pathname,
-                                                0, // group
-                                                0, // tag
-                                                DEPENDS_ON
-                                                );
+                                                 SERVICE_ERROR_NORMAL,
+                                                 pathname,
+                                                 0, // group
+                                                 0, // tag
+                                                 DEPENDS_ON
+                                                 );
           }
         else
           {

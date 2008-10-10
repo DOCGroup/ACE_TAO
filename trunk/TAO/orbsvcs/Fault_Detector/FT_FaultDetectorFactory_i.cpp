@@ -136,13 +136,13 @@ int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
     {
       case 'd':
       {
-        this->domain_ = CORBA::string_dup (get_opts.opt_arg ());
+        this->domain_ = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       }
       case 'l':
       {
         this->location_.length(1);
-        this->location_[0].id = CORBA::string_dup(get_opts.opt_arg ());
+        this->location_[0].id = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       }
       case 'o':
@@ -316,7 +316,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
   if (this->ior_output_file_ != 0)
   {
     this->identity_ = "file:";
-    this->identity_ += this->ior_output_file_;
+    this->identity_ += ACE_TEXT_ALWAYS_CHAR(this->ior_output_file_);
     write_ior();
   }
 

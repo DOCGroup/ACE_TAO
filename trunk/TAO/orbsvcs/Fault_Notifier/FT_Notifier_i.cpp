@@ -419,7 +419,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
     if (this->ior_output_file_ != 0)
     {
       this->identity_ = "file:";
-      this->identity_ += this->ior_output_file_;
+      this->identity_ += ACE_TEXT_ALWAYS_CHAR(this->ior_output_file_);
       result = write_ior();
     }
   }

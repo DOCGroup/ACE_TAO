@@ -107,7 +107,7 @@ int TAO::FT_ReplicationManager::parse_args (int argc, ACE_TCHAR * argv[])
         break;
 
       case 'n':
-        this->ns_name_ = get_opts.opt_arg ();
+        this->ns_name_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
 
       case 'f':
@@ -234,7 +234,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
   if (this->ior_output_file_ != 0)
   {
     this->identity_ = "file:";
-    this->identity_ += this->ior_output_file_;
+    this->identity_ += ACE_TEXT_ALWAYS_CHAR(this->ior_output_file_);
     result = this->write_ior ();
   }
 
