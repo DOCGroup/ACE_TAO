@@ -16,7 +16,7 @@ static const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 // 239.255.255.255.  The range 224.255.0.0 to 238.255.255.255 should also be valid
 // too.
 //static const char *group_ior = "corbaloc:miop:1.0@1.0-TestDomain-1/239.255.0.1:16000";
-static const char *group_ior = "corbaloc:miop:1.0@1.0-TestDomain-1/224.1.239.2:1234";
+static const ACE_TCHAR *group_ior = ACE_TEXT("corbaloc:miop:1.0@1.0-TestDomain-1/224.1.239.2:1234");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -74,12 +74,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      // Get the group IOR.
-      CORBA::String_var ior = CORBA::string_dup (group_ior);
-
-
       CORBA::Object_var group1 =
-        orb->string_to_object (ior.in ());
+        orb->string_to_object (group_ior);
 
       // Output the Group IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -87,8 +83,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
-                              1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
+                           1);
+      ACE_OS::fprintf (output_file, "%s", group_ior);
       ACE_OS::fclose (output_file);
 
       PortableServer::ObjectId_var id =
