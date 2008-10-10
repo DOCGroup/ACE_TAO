@@ -119,6 +119,10 @@ public:
   /// Calls <fini> on <type_>
   int fini (void);
 
+  /// Calls <fini_delete> on <type_>. Only used on ACE_Module_Type instances to cleanup
+  /// during shutdown.
+  int fini_delete (void);
+
   /// Check if the service has been fini'ed.
   bool fini_called (void) const;
 

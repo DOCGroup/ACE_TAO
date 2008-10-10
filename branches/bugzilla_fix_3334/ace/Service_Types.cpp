@@ -35,11 +35,13 @@ ACE_Service_Type_Impl::dump (void) const
 ACE_Service_Type_Impl::ACE_Service_Type_Impl (void *so,
                                               const ACE_TCHAR *s_name,
                                               u_int f,
-                                              ACE_Service_Object_Exterminator gobbler)
+                                              ACE_Service_Object_Exterminator gobbler,
+                                              int stype)
   : name_ (0),
     obj_ (so),
     gobbler_ (gobbler),
-    flags_ (f)
+    flags_ (f),
+    service_type_(stype)
 {
   ACE_TRACE ("ACE_Service_Type_Impl::ACE_Service_Type_Impl");
   this->name (s_name);
@@ -79,11 +81,19 @@ ACE_Service_Type_Impl::fini (void) const
   return 0;
 }
 
+int
+ACE_Service_Type_Impl::fini_delete (void) const
+{
+  ACE_TRACE ("ACE_Service_Type_Impl::fini_delete");
+  return ACE_Service_Type_Impl::fini ();
+}
+
 ACE_Service_Object_Type::ACE_Service_Object_Type (void *so,
                                                   const ACE_TCHAR *s_name,
                                                   u_int f,
-                                                  ACE_Service_Object_Exterminator gobbler)
-  : ACE_Service_Type_Impl (so, s_name, f, gobbler)
+                                                  ACE_Service_Object_Exterminator gobbler,
+                                                  int stype)
+  : ACE_Service_Type_Impl (so, s_name, f, gobbler, stype)
   , initialized_ (-1)
 {
   ACE_TRACE ("ACE_Service_Object_Type::ACE_Service_Object_Type");
@@ -164,8 +174,9 @@ ACE_Module_Type::dump (void) const
 
 ACE_Module_Type::ACE_Module_Type (void *m,
                                   const ACE_TCHAR *m_name,
-                                  u_int f)
-  : ACE_Service_Type_Impl (m, m_name, f)
+                                  u_int f,
+                                  int stype)
+  : ACE_Service_Type_Impl (m, m_name, f, 0, stype)
 {
   ACE_TRACE ("ACE_Module_Type::ACE_Module_Type");
 }
@@ -230,21 +241,8 @@ int
 ACE_Module_Type::fini (void) const
 {
   ACE_TRACE ("ACE_Module_Type::fini");
-
-  void *obj = this->object ();
-  MT_Module *mod = (MT_Module *) obj;
-  MT_Task *reader = mod->reader ();
-  MT_Task *writer = mod->writer ();
-
-  if (reader != 0)
-    reader->fini ();
-
-  if (writer != 0)
-    writer->fini ();
-
-  // Close the module and delete the memory.
-  mod->close (MT_Module::M_DELETE);
-  return ACE_Service_Type_Impl::fini ();
+  // ACE_Module_Type(s) get deleted by fini_delete Bugzilla #3334
+  return 0;
 }
 
 int
@@ -324,8 +322,9 @@ ACE_Stream_Type::resume (void) const
 
 ACE_Stream_Type::ACE_Stream_Type (void *s,
                                   const ACE_TCHAR *s_name,
-                                  u_int f)
-  : ACE_Service_Type_Impl (s, s_name, f),
+                                  u_int f,
+                                  int stype)
+  : ACE_Service_Type_Impl (s, s_name, f, 0, stype),
     head_ (0)
 {
   ACE_TRACE ("ACE_Stream_Type::ACE_Stream_Type");
