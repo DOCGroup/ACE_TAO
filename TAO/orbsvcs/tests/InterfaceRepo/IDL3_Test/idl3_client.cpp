@@ -345,7 +345,7 @@ IDL3_Client::parse_args (int argc,
                            "usage: %s"
                            " [-d]"
                            "\n",
-                           ACE_TEXT_CHAR_TO_TCHAR (argv [0])),
+                           ACE_TEXT_CHAR_TO_TCHAR argv [0]),
                           -1);
       }
 
