@@ -57,15 +57,15 @@ TAO_Notify_Tests_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
     {
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-EventType"))))
         {
-          this->event_.type ("*", current_arg) ;
-          zeroth_event.type ("*", current_arg) ;
+          this->event_.type ("*", ACE_TEXT_ALWAYS_CHAR(current_arg)) ;
+          zeroth_event.type ("*", ACE_TEXT_ALWAYS_CHAR(current_arg)) ;
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-FilterLongData") == 0) // -FilterLongData name value
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-FilterLongData")) == 0) // -FilterLongData name value
         {
           arg_shifter.consume_arg ();
 
-          ACE_CString name = arg_shifter.get_current ();
+          ACE_CString name = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
 
           arg_shifter.consume_arg ();
 
@@ -335,12 +335,12 @@ TAO_Notify_Tests_Periodic_Supplier::svc (void)
 void
 TAO_Notify_Tests_Periodic_Supplier::dump_stats (ACE_TCHAR* msg, int dump_samples)
 {
-  char buf[BUFSIZ];
-  ACE_OS::sprintf (buf, "%s.dat", this->name_.c_str ());
+  ACE_TCHAR buf[BUFSIZ];
+  ACE_OS::sprintf (buf, ACE_TEXT("%s.dat"), this->name_.c_str ());
 
-  ACE_CString fname (buf);
+  ACE_TString fname (buf);
 
-  ACE_OS::sprintf (buf,"%s# : Supplier Name = %s, Proxy ID = %d, Event Type = %s, priority %d, period %ld, exec_time %ld, phase %ld, iter_ %d , load_ %d, deadlines missed = %ld\n",
+  ACE_OS::sprintf (buf, ACE_TEXT("%s# : Supplier Name = %s, Proxy ID = %d, Event Type = %s, priority %d, period %ld, exec_time %ld, phase %ld, iter_ %d , load_ %d, deadlines missed = %ld\n"),
                    msg, this->name_.c_str (), this->proxy_id_, this->event_.type (), priority_, period_, exec_time_, phase_, iter_, load_, this->total_deadlines_missed_);
 
   stats_.dump_samples (fname.c_str (), buf, dump_samples);

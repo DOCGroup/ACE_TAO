@@ -62,7 +62,7 @@ TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
               this->client_->done (this);
           }
         }
-       else if (arg_shifter.cur_arg_strncasecmp ("-Check_Priority") == 0)
+       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Check_Priority")) == 0)
          {
           this->check_priority_ = 1;
 
@@ -254,13 +254,13 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
 void
 TAO_Notify_Tests_Periodic_Consumer::dump_stats (ACE_TCHAR* msg, int dump_samples)
 {
-  char buf[BUFSIZ];
-  ACE_OS::sprintf (buf, "%s.dat", this->name_.c_str ());
+  ACE_TCHAR buf[BUFSIZ];
+  ACE_OS::sprintf (buf, ACE_TEXT("%s.dat"), this->name_.c_str ());
 
-  ACE_CString fname (buf);
+  ACE_TString fname (buf);
 
   ACE_OS::sprintf (buf,
-                   "%s# Consumer Name = %s, Proxy ID = %d Load = %u\n",
+                   ACE_TEXT("%s# Consumer Name = %s, Proxy ID = %d Load = %u\n"),
                    msg,
                    this->name_.c_str (), this->proxy_id_, this->load_);
 

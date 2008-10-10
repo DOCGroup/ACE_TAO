@@ -36,29 +36,29 @@ TAO_Notify_Tests_Peer::init_state (ACE_Arg_Shifter& arg_shifter)
 {
   while (arg_shifter.is_anything_left ())
     {
-      if (arg_shifter.cur_arg_strncasecmp ("-Admin") == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Admin")) == 0)
         {
           arg_shifter.consume_arg ();
 
-          this->admin_name_ = arg_shifter.get_current ();
+          this->admin_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Proxy") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Proxy")) == 0)
         {
           arg_shifter.consume_arg ();
 
-          this->proxy_name_ = arg_shifter.get_current ();
+          this->proxy_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
         }
       // Is a POA name specified?
-      else if (arg_shifter.cur_arg_strncasecmp ("-POA") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-POA")) == 0)
         {
           arg_shifter.consume_arg ();
 
-          this->poa_name_ = arg_shifter.get_current ();
+          this->poa_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Set_QoS") == 0) // -Set_QoS [Qos Options]
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Set_QoS")) == 0) // -Set_QoS [Qos Options]
         {
           arg_shifter.consume_arg ();
 

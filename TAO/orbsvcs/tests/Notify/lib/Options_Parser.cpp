@@ -35,7 +35,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::EventTypeSeq& added, 
           added.length (seq_ln + 1);
 
           added[seq_ln].domain_name = CORBA::string_dup ("*");
-          added[seq_ln].type_name = CORBA::string_dup (++current_arg); // Skip the '+' sign.
+          added[seq_ln].type_name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(++current_arg)); // Skip the '+' sign.
         }
       else if (current_arg[0] == '-')
         {
@@ -44,7 +44,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::EventTypeSeq& added, 
           removed.length (seq_ln + 1);
 
           removed[seq_ln].domain_name = CORBA::string_dup ("*");
-          removed[seq_ln].type_name = CORBA::string_dup (++current_arg); // Skip the '-' sign.
+          removed[seq_ln].type_name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(++current_arg)); // Skip the '-' sign.
         }
     }
 }
@@ -55,13 +55,13 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
   const ACE_TCHAR *current_arg = 0;
   int default_priority = ACE_DEFAULT_THREAD_PRIORITY;
 
-  if (arg_shifter.cur_arg_strncasecmp ("-ThreadPool") == 0) // -ThreadPool [-Threads static_threads] [-Priority default_priority]
+  if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ThreadPool")) == 0) // -ThreadPool [-Threads static_threads] [-Priority default_priority]
     {
       arg_shifter.consume_arg ();
 
       int static_threads = 1;
 
-      if (arg_shifter.cur_arg_strncasecmp ("-Threads") == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Threads")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -72,7 +72,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
           arg_shifter.consume_arg ();
         }
 
-      if (arg_shifter.cur_arg_strncasecmp ("-Priority") == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Priority")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -92,7 +92,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
       qos[0].value <<= tp_params;
 
     } /* ThreadPool */
-  else if (arg_shifter.cur_arg_strncasecmp ("-Lanes") == 0) // -Lanes lane_count -Lane prio static_thr dy_thr
+  else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Lanes")) == 0) // -Lanes lane_count -Lane prio static_thr dy_thr
     {
       arg_shifter.consume_arg ();
 
@@ -116,7 +116,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
       //parse lane values ...
       while (arg_shifter.is_anything_left ())
         {
-          if (arg_shifter.cur_arg_strncasecmp ("-Lane") == 0)
+          if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Lane")) == 0)
             {
               arg_shifter.consume_arg ();
 
