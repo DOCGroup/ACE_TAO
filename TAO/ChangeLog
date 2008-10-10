@@ -40,7 +40,7 @@ Fri Oct 11 11:39:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.cpp
         * orbsvcs/tests/Notify/lib/Driver.cpp
         * orbsvcs/tests/Notify/lib/EventChannel_Command.cpp
-        * orbsvcs/ests/Notify/lib/Filter_Command.cpp
+        * orbsvcs/tests/Notify/lib/Filter_Command.cpp
         * orbsvcs/tests/Notify/lib/Name.cpp
         * orbsvcs/tests/Notify/lib/Name.h
         * orbsvcs/tests/Notify/lib/Options_Parser.cpp
