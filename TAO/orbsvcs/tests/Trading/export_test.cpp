@@ -103,12 +103,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "*** Now serving dynamic properties.\n"));
 
       size_t offset = 0;
-      char file[1024];
+      ACE_TCHAR file[1024];
       ACE_OS::strcpy(file, argv[0]);
-      if ((offset = (size_t)ACE_OS::strrchr(file, '/')) != 0) {
+      if ((offset = (size_t)ACE_OS::strrchr(file, ACE_TEXT('/'))) != 0) {
         offset -= ((size_t)file - 1);
       }
-      ACE_OS::strcpy(file + offset, "export_test_ready");
+      ACE_OS::strcpy(file + offset, ACE_TEXT("export_test_ready"));
 
       FILE *ready_file =
         ACE_OS::fopen (file, "w");
