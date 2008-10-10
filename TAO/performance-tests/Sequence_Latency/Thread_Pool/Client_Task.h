@@ -15,7 +15,7 @@ class Client_Task : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Client_Task (const char *data_type,
+  Client_Task (const ACE_TCHAR *data_type,
                            int size,
                Test::Roundtrip_ptr roundtrip,
                int niterations);
@@ -43,7 +43,7 @@ private:
 
 private:
   /// The data type of the sequence load to be tested
-  CORBA::String_var data_type_;
+  const ACE_TCHAR* data_type_;
 
   /// The size of the sequence data
   int size_;

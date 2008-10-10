@@ -6,11 +6,11 @@
 
 ACE_RCSID(Thread_Pool_Latency, Client_Task, "$Id$")
 
-Client_Task::Client_Task (const char *data_type,
+Client_Task::Client_Task (const ACE_TCHAR *data_type,
                           int size,
                           Test::Roundtrip_ptr roundtrip,
                           int niterations)
-  : data_type_ (CORBA::string_dup (data_type))
+  : data_type_ (data_type)
   , size_ (size)
   , roundtrip_ (Test::Roundtrip::_duplicate (roundtrip))
   , niterations_ (niterations)
@@ -24,27 +24,27 @@ Client_Task::svc (void)
     {
       this->validate_connection ();
 
-      if (ACE_OS::strcmp (this->data_type_.in (), "octet") == 0 )
+      if (ACE_OS::strcmp (this->data_type_, ACE_TEXT("octet")) == 0 )
         {
           this->test_octet_seq ();
         }
-      if (ACE_OS::strcmp (this->data_type_.in (), "long") == 0 )
+      if (ACE_OS::strcmp (this->data_type_, ACE_TEXT("long")) == 0 )
         {
           this->test_long_seq ();
         }
-      if (ACE_OS::strcmp (this->data_type_.in (), "short") == 0 )
+      if (ACE_OS::strcmp (this->data_type_, ACE_TEXT("short")) == 0 )
         {
           this->test_short_seq ();
         }
-      if (ACE_OS::strcmp (this->data_type_.in (), "char") == 0 )
+      if (ACE_OS::strcmp (this->data_type_, ACE_TEXT("char")) == 0 )
         {
           this->test_char_seq ();
         }
-      if (ACE_OS::strcmp (this->data_type_.in (), "longlong") == 0 )
+      if (ACE_OS::strcmp (this->data_type_, ACE_TEXT("longlong")) == 0 )
         {
           this->test_longlong_seq ();
         }
-      if (ACE_OS::strcmp (this->data_type_.in (), "double") == 0 )
+      if (ACE_OS::strcmp (this->data_type_, ACE_TEXT("double")) == 0 )
         {
           this->test_double_seq ();
         }
