@@ -456,7 +456,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
   {
     if (!identified)
     {
-      this->identity_ = "name:";
+      this->identity_ = ACE_TEXT("name:");
       this->identity_ += this->ns_name_;
     }
 
