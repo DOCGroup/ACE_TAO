@@ -221,7 +221,7 @@ Options::init (int argc, ACE_TCHAR *argv[])
 
   for (int i = 0; i < argc; ++i)
     {
-      this->cmdline_ += ACE_CString (argv[i]) + ACE_CString (" ");
+      this->cmdline_ += ACE_CString (ACE_TEXT_ALWAYS_CHAR(argv[i])) + ACE_CString (" ");
     }
   return 0;
 }
@@ -264,7 +264,7 @@ Options::save_registry_options ()
   LONG err = ACE_TEXT_RegCreateKeyEx (SERVICE_REG_ROOT,
                              SERVICE_REG_PATH,
                              0,
-                             "", // class
+                             ACE_TEXT(""), // class
                              REG_OPTION_NON_VOLATILE,
                              KEY_ALL_ACCESS,
                              0,
@@ -275,44 +275,44 @@ Options::save_registry_options ()
     {
       return -1;
     }
-  err = ACE_TEXT_RegSetValueEx (key, "ORBInitOptions", 0, REG_SZ,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("ORBInitOptions"), 0, REG_SZ,
     (LPBYTE) this->cmdline_.c_str (), this->cmdline_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx (key, "IORFile", 0, REG_SZ,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("IORFile"), 0, REG_SZ,
     (LPBYTE) ior_output_file_.c_str (), ior_output_file_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx (key, "DebugLevel", 0, REG_DWORD,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("DebugLevel"), 0, REG_DWORD,
     (LPBYTE) &debug_ , sizeof (debug_));
   ACE_ASSERT(err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx (key, "PersistFile", 0, REG_SZ,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("PersistFile"), 0, REG_SZ,
     (LPBYTE) this->persist_file_name_.c_str (), this->persist_file_name_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   DWORD tmp = this->ping_interval_.msec ();
-  err = ACE_TEXT_RegSetValueEx (key, "PingInterval", 0, REG_DWORD,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("PingInterval"), 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   tmp = this->readonly_ ? 1 : 0;
-  err = ACE_TEXT_RegSetValueEx (key, "Lock", 0, REG_DWORD,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("Lock"), 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   tmp = this->repo_mode_;
-  err = ACE_TEXT_RegSetValueEx (key, "PersistType", 0, REG_DWORD,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("PersistType"), 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   tmp = static_cast<DWORD> (this->startup_timeout_.sec());
-  err = ACE_TEXT_RegSetValueEx (key, "Timeout", 0, REG_DWORD,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("Timeout"), 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   tmp = multicast_ ? 1 : 0;
-  err = ACE_TEXT_RegSetValueEx (key, "Multicast", 0, REG_DWORD,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("Multicast"), 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
@@ -342,17 +342,17 @@ Options::load_registry_options ()
   ACE_TCHAR tmpstr[4096];
   DWORD sz = sizeof (tmpstr);
   DWORD type = 0;
-  err = ACE_TEXT_RegQueryValueEx (key, "ORBInitOptions", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("ORBInitOptions"), 0, &type,
     (LPBYTE) tmpstr, &sz);
   if (err == ERROR_SUCCESS)
     {
       ACE_ASSERT (type == REG_SZ);
       tmpstr[sz - 1] = '\0';
-      this->cmdline_ = tmpstr;
+      this->cmdline_ = ACE_TEXT_ALWAYS_CHAR(tmpstr);
     }
 
   sz = sizeof(tmpstr);
-  err = ACE_TEXT_RegQueryValueEx (key, "IORFile", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("IORFile"), 0, &type,
     (LPBYTE) tmpstr, &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -362,7 +362,7 @@ Options::load_registry_options ()
     }
 
   sz = sizeof(debug_);
-  err = ACE_TEXT_RegQueryValueEx (key, "DebugLevel", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("DebugLevel"), 0, &type,
     (LPBYTE) &this->debug_ , &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -371,7 +371,7 @@ Options::load_registry_options ()
 
   DWORD tmp = 0;
   sz = sizeof(tmp);
-  err = ACE_TEXT_RegQueryValueEx (key, "PingInterval", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("PingInterval"), 0, &type,
     (LPBYTE) &tmp, &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -381,7 +381,7 @@ Options::load_registry_options ()
 
   tmp = 0;
   sz = sizeof(tmp);
-  err = ACE_TEXT_RegQueryValueEx (key, "Lock", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("Lock"), 0, &type,
     (LPBYTE) &tmp, &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -390,7 +390,7 @@ Options::load_registry_options ()
     }
 
   sz = sizeof(this->repo_mode_);
-  err = ACE_TEXT_RegQueryValueEx (key, "PersistType", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("PersistType"), 0, &type,
     (LPBYTE) &this->repo_mode_, &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -399,7 +399,7 @@ Options::load_registry_options ()
 
   tmp = 0;
   sz = sizeof(tmp);
-  err = ACE_TEXT_RegQueryValueEx (key, "Timeout", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("Timeout"), 0, &type,
     (LPBYTE) &tmp, &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -409,7 +409,7 @@ Options::load_registry_options ()
 
   tmp = 0;
   sz = sizeof(tmp);
-  err = ACE_TEXT_RegQueryValueEx (key, "Multicast", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("Multicast"), 0, &type,
     (LPBYTE) &tmp, &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -418,7 +418,7 @@ Options::load_registry_options ()
     }
 
   sz = sizeof(tmpstr);
-  err = ACE_TEXT_RegQueryValueEx (key, "PersistFile", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("PersistFile"), 0, &type,
     (LPBYTE) tmpstr, &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -445,7 +445,7 @@ Options::debug (void) const
   return this->debug_;
 }
 
-const ACE_CString&
+const ACE_TString&
 Options::ior_filename (void) const
 {
   return this->ior_output_file_;
@@ -468,7 +468,7 @@ Options::cmdline(void) const {
   return this->cmdline_.c_str ();
 }
 
-const ACE_CString&
+const ACE_TString&
 Options::persist_file_name(void) const {
   return this->persist_file_name_;
 }

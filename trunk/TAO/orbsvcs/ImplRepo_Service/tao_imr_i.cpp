@@ -411,7 +411,7 @@ TAO_IMR_Op_List::parse (int argc, ACE_TCHAR **argv)
 
   if (argc > 1 && argv[1][0] != '-')
   {
-    this->server_name_ = argv[1];
+    this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[1]);
     server_flag = 2;
   }
 
@@ -463,7 +463,7 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
   // Skip both the program name and the "remove" command
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("h"));
 
-  this->server_name_ = argv[1];
+  this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[1]);
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -506,7 +506,7 @@ TAO_IMR_Op_Shutdown::parse (int argc, ACE_TCHAR **argv)
   // Skip both the program name and the "shutdown" command
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("h"));
 
-  this->server_name_ = argv[1];
+  this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[1]);
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -582,8 +582,8 @@ TAO_IMR_Op_Register::addenv (ACE_TCHAR *opt)
   CORBA::ULong length = this->environment_vars_.length ();
   // Increase the length of the sequence
   this->environment_vars_.length (length + 1);
-  ACE_CString tokens (opt);
-  int index = tokens.find ("=");
+  ACE_TString tokens (opt);
+  int index = tokens.find (ACE_TEXT("="));
   // Insert at position length since that is our new element
   this->environment_vars_ [length].name =
     CORBA::string_dup (tokens.substr (0, index).c_str ());
@@ -624,7 +624,7 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
   // Skip both the program name and the "update" command
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hc:w:a:e:r:R:l:"));
 
-  this->server_name_ = argv[1];
+  this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[1]);
   int c;
 
   while ((c = get_opts ()) != -1)
