@@ -1007,7 +1007,7 @@ Persistent_Test_Begin::execute (TAO_Naming_Client &root_context)
 }
 
 Persistent_Test_End::Persistent_Test_End (CORBA::ORB_ptr orb,
-                                          const char *ior)
+                                          const ACE_TCHAR *ior)
   : orb_ (orb),
     ior_ (ior)
 {
