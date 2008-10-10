@@ -12,7 +12,7 @@
 
 ServerApp::ServerApp()
   : TestAppBase ("TP_Test_1_Server"),
-    ior_filename_ ("test.ior"),
+    ior_filename_ (ACE_TEXT("test.ior")),
     num_clients_ (1)
 {
 }
@@ -124,7 +124,7 @@ ServerApp::parse_args (int argc, ACE_TCHAR *argv[])
       switch (c)
       {
         case 'o':
-          this->ior_filename_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg());
+          this->ior_filename_ = get_opts.opt_arg();
           break;
 
         case 'n':
