@@ -51,8 +51,9 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         argc = argcon.get_argc ();
       ACE_TCHAR
         **argv = argcon.get_TCHAR_argv ();
+      const ACE_TCHAR
+        *const pname = argv[0];
       const char
-        *const pname = ACE_TEXT_ALWAYS_CHAR (argv[0]),
         *nameService = 0;
       char
         kindsep= '.',
@@ -155,7 +156,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       failed = true;
                     }
                   else
-                    ior = ACE_TEXT_ALWAYS_CHAR (*++argv);
+                    ior = *++argv;
                 }
               else if ((0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ctx")))
                        ||(0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--newcontext"))))
