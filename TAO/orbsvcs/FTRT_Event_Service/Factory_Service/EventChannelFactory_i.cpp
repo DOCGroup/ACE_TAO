@@ -95,7 +95,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   acceptor.get_local_addr(server_addr);
 
   ACE_Process_Options options;
-  ACE_CString str;
+  ACE_TString str;
 
   char* pos = ACE_OS::strrchr(process_str, '/');
   if (pos !=0) { //
@@ -103,12 +103,12 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
     options.working_directory(process_str);
     *pos = '/';
   }
-  str = process_str;
+  str = ACE_TEXT_CHAR_TO_TCHAR(process_str);
 
   const int ENV_BUF_LEN = 512;
-  char buf[ENV_BUF_LEN];
+  ACE_TCHAR buf[ENV_BUF_LEN];
   server_addr.addr_to_string(buf,ENV_BUF_LEN,0);
-  options.setenv("EventChannelFactoryAddr", buf);
+  options.setenv(ACE_TEXT("EventChannelFactoryAddr"), buf);
 
   // extract the object ID from the criteria
   for (size_t i = 0; i < the_criteria.length(); ++i)
@@ -119,9 +119,9 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
       const char* id_str = name[0].id.in();
       the_criteria[i].val >>= val;
       if (id_str[0] != '-') // environment variable
-        options.setenv(id_str, "%s", val);
+        options.setenv(ACE_TEXT_CHAR_TO_TCHAR(id_str), ACE_TEXT("%s"), val);
       else {// command line option
-        ACE_OS::sprintf(buf, " %s %s", id_str, val);
+        ACE_OS::sprintf(buf, ACE_TEXT(" %s %s"), id_str, val);
         str += buf;
       }
     }
