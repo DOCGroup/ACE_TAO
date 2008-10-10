@@ -1,3 +1,11 @@
+Fri Oct 11 14:09:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_init.cpp
+        * TAO_IDL/be_include/be_extern.h
+        * TAO_IDL/driver/drv_args.cpp
+        * TAO_IDL/tao_idl.cpp
+          ACE_TCHAR fixes
+
 Fri Oct 11 13:49:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2926_Regression/DllORB.cpp

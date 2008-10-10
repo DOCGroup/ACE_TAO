@@ -14,7 +14,7 @@ BE_version (void)
 }
 
 TAO_IDL_BE_Export int
-BE_init (int &, char *[])
+BE_init (int &, ACE_TCHAR *[])
 {
   // Initialize BE global data object.
   ACE_NEW_RETURN (be_global,
