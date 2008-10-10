@@ -176,7 +176,7 @@ namespace TAO
     /**
      * A file to which the notifier's IOR should be written.
      */
-    const char * ior_output_file_;
+    const ACE_TCHAR * ior_output_file_;
 
     /**
      * A name to be used to register the notifier with the name service.

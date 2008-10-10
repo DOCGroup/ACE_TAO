@@ -96,7 +96,7 @@ Concurrency_Service::init (int argc,
   ACE_Argv_Type_Converter command_line(argc, argv);
 
   if (this->orb_manager_.init_child_poa (command_line.get_argc(),
-                                         command_line.get_ASCII_argv(),
+                                         command_line.get_TCHAR_argv(),
                                          "child_poa") == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("%p\n"),

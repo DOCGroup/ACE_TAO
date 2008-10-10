@@ -8,14 +8,14 @@ int
 BE_save_orb_args (int &argc, ACE_TCHAR *argv[])
 {
   int i = 1;
-  ACE_CString holder;
+  ACE_TString holder;
 
   while (i < argc)
     {
-      if (ACE_OS::strncmp (argv[i], "-ORB", 4) == 0)
+      if (ACE_OS::strncmp (argv[i], ACE_TEXT("-ORB"), 4) == 0)
         {
-          holder += ACE_CString (argv[i]);
-          holder += " ";
+          holder += ACE_TString (argv[i]);
+          holder += ACE_TEXT(" ");
 
           // Could be another -ORBxxx arg or an IDL compiler arg.
           if (*argv[i + 1] == '-')
@@ -25,21 +25,21 @@ BE_save_orb_args (int &argc, ACE_TCHAR *argv[])
             }
 
           // No-copy constructor.
-          ACE_CString tmp (argv[i + 1],
+          ACE_TString tmp (argv[i + 1],
                            0,
                            false);
 
           // If the arg ends with either .idl or .pidl, we're done.
 
           size_t len = tmp.length ();
-          ssize_t pos = tmp.find (".idl");
+          ssize_t pos = tmp.find (ACE_TEXT(".idl"));
 
           if (len - pos == 4)
             {
               return 0;
             }
 
-          pos = tmp.find (".pidl");
+          pos = tmp.find (ACE_TEXT(".pidl"));
 
           if (len - pos == 5)
             {
@@ -48,7 +48,7 @@ BE_save_orb_args (int &argc, ACE_TCHAR *argv[])
 
           // If we're here, the next arg goes with the preceding -ORBxxx.
           holder += tmp;
-          holder += " ";
+          holder += ACE_TEXT(" ");
           i += 2;
         }
       else
@@ -67,13 +67,14 @@ BE_save_orb_args (int &argc, ACE_TCHAR *argv[])
 // After BE_ifr_init returns to main() the modified argc
 // must be passed to DRV_parse_args().
 int
-BE_ifr_orb_init (int &ac, char *av[])
+BE_ifr_orb_init (int &ac, ACE_TCHAR *av[])
 {
   try
     {
+      ACE_TCHAR* name = 0;
       be_global->orb (CORBA::ORB_init (ac,
                                        av,
-                                       0));
+                                       name));
     }
   catch (const CORBA::Exception& ex)
     {

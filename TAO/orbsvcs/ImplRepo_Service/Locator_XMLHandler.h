@@ -28,14 +28,14 @@ class Locator_XMLHandler : public ACEXML_DefaultHandler
 public:
 
   // XML ELEMENT names
-  static const char* ROOT_TAG;
-  static const char* SERVER_INFO_TAG;
-  static const char* ENVIRONMENT_TAG;
-  static const char* ACTIVATOR_INFO_TAG;
+  static const ACE_TCHAR* ROOT_TAG;
+  static const ACE_TCHAR* SERVER_INFO_TAG;
+  static const ACE_TCHAR* ENVIRONMENT_TAG;
+  static const ACE_TCHAR* ACTIVATOR_INFO_TAG;
 
   struct EnvVar {
-    ACE_CString name;
-    ACE_CString value;
+    ACE_TString name;
+    ACE_TString value;
     bool operator==(const EnvVar&) const; // To allow Vector explicit instantiation
     bool operator!=(const EnvVar&) const; // To allow Vector explicit instantiation
   };
@@ -72,13 +72,13 @@ public:
   // callback on completion of an element
   Callback& callback_;
 
-  ACE_CString server_name_;
-  ACE_CString activator_name_;
-  ACE_CString command_line_;
-  ACE_CString activation_;
-  ACE_CString working_dir_;
-  ACE_CString server_object_ior_;
-  ACE_CString partial_ior_;
+  ACE_TString server_name_;
+  ACE_TString activator_name_;
+  ACE_TString command_line_;
+  ACE_TString activation_;
+  ACE_TString working_dir_;
+  ACE_TString server_object_ior_;
+  ACE_TString partial_ior_;
   int start_limit_;
   EnvList env_vars_;
 };
