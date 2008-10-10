@@ -34,7 +34,7 @@ parse_args (int argc, ACE_TCHAR *argv [])
       switch (opt)
         {
         case 'n':
-          service_name = get_opt.opt_arg ();
+          service_name = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
         case '?':
         default:
@@ -427,7 +427,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                             deps.in (),
                                             configs.in (),
                                             anomalies.in (),
-                                            "Sched_Conf_Runtime.h",
+                                            ACE_TEXT("Sched_Conf_Runtime.h"),
                                             format_string);
     }
   catch (const CORBA::Exception& ex)
