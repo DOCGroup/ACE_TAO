@@ -204,7 +204,7 @@ Client_i::read_ior (ACE_TCHAR *filename)
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "[CLIENT] Process/Thread Id : (%P/%t) Unable to open %s for writing: %p\n",
-                       ACE_TEXT_CHAR_TO_TCHAR (filename)),
+                       filename),
                       -1);
 
   ACE_Read_Buffer ior_buffer (f_handle);
@@ -244,7 +244,7 @@ Client_i::parse_args (void)
          this->loop_count_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
          break;
        case 'k':  // ior provide on command line
-         this->ior_ = ACE_OS::strdup (get_opts.opt_arg ());
+         this->ior_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
          break;
        case 'f': // read the IOR from the file.
          result = this->read_ior (get_opts.opt_arg ());
@@ -267,7 +267,7 @@ Client_i::parse_args (void)
                            " [-k ior]"
                             " [-x]"
                            "\n",
-                            ACE_TEXT_CHAR_TO_TCHAR (this->argv_ [0])),
+                            this->argv_ [0]),
                            -1);
        }
 
