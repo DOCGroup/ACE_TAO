@@ -61,7 +61,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'p':
-        result = ::sscanf (get_opts.opt_arg (),
+        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()),
                            "%u",
                            &protocol_type);
         if (result == 0 || result == EOF)
