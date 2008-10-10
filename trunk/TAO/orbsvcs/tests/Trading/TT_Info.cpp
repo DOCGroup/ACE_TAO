@@ -304,7 +304,7 @@ TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
               arg_shifter.consume_arg ();
             }
           else
-            ior_file = ACE_OS::fdopen (ACE_STDIN, "r");
+            ior_file = ACE_OS::fdopen (ACE_STDIN, ACE_TEXT("r"));
 
           if (ior_file != 0)
             {
