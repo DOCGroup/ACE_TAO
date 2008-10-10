@@ -352,7 +352,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                             dependencies.in (),
                                             configs.in (),
                                             unsafe_anomalies,
-                                            "schedule.out");
+                                            ACE_TEXT("schedule.out"));
 
       // Obtain the range of valid priorities in the current
       // platform, the scheduler hard-code this values in the
@@ -377,7 +377,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                             dependencies.in (),
                                             configs.in (),
                                             anomalies.in (),
-                                            "schedule.out");
+                                            ACE_TEXT("schedule.out"));
 
       // ****************************************************************
       ACE_DEBUG ((LM_DEBUG, "Pushing events\n"));
