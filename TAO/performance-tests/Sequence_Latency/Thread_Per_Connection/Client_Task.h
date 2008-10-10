@@ -15,15 +15,15 @@ class Client_Task : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Client_Task (const char *data_type,
-                           int size,
+  Client_Task (const ACE_TCHAR *data_type,
+               int size,
                Test::Roundtrip_ptr roundtrip,
                int niterations);
 
   /// Add this thread results to the global numbers and print the
   /// per-thread results.
   void accumulate_and_dump (ACE_Basic_Stats &totals,
-                            const char *msg,
+                            const ACE_TCHAR *msg,
                             ACE_UINT32 gsf);
 
   /// The service method
@@ -43,7 +43,7 @@ private:
 
 private:
   /// The data type of the sequence load to be tested
-  CORBA::String_var data_type_;
+  const ACE_TCHAR* data_type_;
 
   /// The size of the sequence data
   int size_;

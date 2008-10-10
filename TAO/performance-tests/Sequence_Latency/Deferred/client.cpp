@@ -28,7 +28,7 @@ int do_shutdown = 1;
 int do_dump_history = 0;
 int sz = 512;
 
-const char *data_type = "octet";
+const ACE_TCHAR *data_type = ACE_TEXT("octet");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -42,12 +42,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 't':
         data_type = get_opts.opt_arg ();
 
-        if (ACE_OS::strcmp (data_type, "octet") != 0 &&
-            ACE_OS::strcmp (data_type, "char") != 0 &&
-            ACE_OS::strcmp (data_type, "long") != 0 &&
-            ACE_OS::strcmp (data_type, "short") != 0 &&
-            ACE_OS::strcmp (data_type, "double") != 0 &&
-            ACE_OS::strcmp (data_type, "longlong") != 0)
+        if (ACE_OS::strcmp (data_type, ACE_TEXT("octet")) != 0 &&
+            ACE_OS::strcmp (data_type, ACE_TEXT("char")) != 0 &&
+            ACE_OS::strcmp (data_type, ACE_TEXT("long")) != 0 &&
+            ACE_OS::strcmp (data_type, ACE_TEXT("short")) != 0 &&
+            ACE_OS::strcmp (data_type, ACE_TEXT("double")) != 0 &&
+            ACE_OS::strcmp (data_type, ACE_TEXT("longlong")) != 0)
           return -1;
         break;
 
@@ -570,27 +570,27 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           // Test various sequence types
 
-          if (ACE_OS::strcmp (data_type, "octet") == 0 )
+      if (ACE_OS::strcmp (data_type, ACE_TEXT("octet")) == 0)
         {
           test_octet_seq (roundtrip.in ());
         }
-      else if (ACE_OS::strcmp (data_type, "char") == 0)
+      else if (ACE_OS::strcmp (data_type, ACE_TEXT("char")) == 0)
         {
           test_char_seq (roundtrip.in ());
         }
-      else if (ACE_OS::strcmp (data_type, "long") == 0)
+      else if (ACE_OS::strcmp (data_type, ACE_TEXT("long")) == 0)
         {
           test_long_seq (roundtrip.in ());
         }
-      else if (ACE_OS::strcmp (data_type, "short") == 0)
+      else if (ACE_OS::strcmp (data_type, ACE_TEXT("short")) == 0)
         {
           test_short_seq (roundtrip.in ());
         }
-      else if (ACE_OS::strcmp (data_type, "double") == 0)
+      else if (ACE_OS::strcmp (data_type, ACE_TEXT("double")) == 0)
         {
           test_double_seq (roundtrip.in ());
         }
-      else if (ACE_OS::strcmp (data_type, "longlong") == 0)
+      else if (ACE_OS::strcmp (data_type, ACE_TEXT("longlong")) == 0)
         {
           test_longlong_seq (roundtrip.in ());
         }

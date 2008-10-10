@@ -1,3 +1,15 @@
+Fri Oct 11 12:42:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Sequence_Latency/AMI/client.cpp
+        * performance-tests/Sequence_Latency/Deferred/client.cpp
+        * performance-tests/Sequence_Latency/DII/client.cpp
+        * performance-tests/Sequence_Latency/DSI/client.cpp
+        * performance-tests/Sequence_Latency/Single_Threaded/client.cpp
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/client.cpp
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Client_Task.cpp
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Client_Task.h
+          ACE_TCHAR fixes
+
 Fri Oct 11 11:39:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/lib/Activation_Manager.cpp
