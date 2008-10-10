@@ -1,3 +1,53 @@
+Fri Oct 10 01:02:20 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/DAnCE_Core.mpc:
+        * DAnCE/Deployment/DAnCE_Properties.idl:
+
+          Codify DAnCE configuration property names in IDL.
+        
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+
+          Implemented passivation, removal, and destruction logic.  
+
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+
+          Added new command line options. 
+        
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleNull.cidl:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleNull.idl:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleNull.mpc:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleNull_exec.h:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleNull_exec.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleNull_exec_export.h:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleNull_stub_export.h:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleNull_svnt_export.h:
+
+          Component with no ports to test lifecycle operations. 
+        
+        * DAnCE/tests/CIAO/NodeManager-Deployments/SimpleComponentExplicitHome.cdp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/SimpleHome.cdp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
+
+          Fixes for test passing. 
+        
+        * ccm/CCM_Object.idl:
+
+          Removed CIAO-specific interfaces. 
+        
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:
+        * ciao/ComponentServer/CIAO_Container_Impl.h:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/ComponentServer/CIAO_Properties.idl:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Servants/Home_Servant_Impl_Base.cpp:
+
+          Fixes for proper component/servant lifecycle management. 
+        
 Tue Oct  7 19:20:38 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/NodeManager-Deployments/Components:

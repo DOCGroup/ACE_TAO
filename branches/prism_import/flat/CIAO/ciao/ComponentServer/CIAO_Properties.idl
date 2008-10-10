@@ -12,14 +12,17 @@ module CIAO
 {
   module Deployment
   {
-    const string SVNT_ENTRYPT = "edu.vanderbilt.dre.ServantEntrypoint";
-    const string SVNT_ARTIFACT = "edu.vanderbilt.dre.ServantArtifact";
-    const string EXEC_ARTIFACT = "edu.vanderbilt.dre.ExecutorArtifact";
-    const string SERVER_RESOURCES = "edu.vanderbilt.dre.ServerResources";
-    const string SERVER_UUID = "edu.vanderbilt.dre.ServerUUID";
-    const string SERVER_EXECUTABLE = "edu.vanderbilt.dre.ComponentServerExecutable";
-    const string SERVER_TIMEOUT = "edu.vanderbilt.dre.ServerTimeout";
-    const string SERVER_MULTITHREAD = "edu.vanderbilt.dre.Multithreaded";
+    const string SVNT_ENTRYPT = "edu.vanderbilt.dre.CIAO.ServantEntrypoint";
+    const string SVNT_ARTIFACT = "edu.vanderbilt.dre.CIAO.ServantArtifact";
+    const string EXEC_ARTIFACT = "edu.vanderbilt.dre.CIAO.ExecutorArtifact";
+    const string SERVER_RESOURCES = "edu.vanderbilt.dre.CIAO.ServerResources";
+    const string SERVER_UUID = "edu.vanderbilt.dre.CIAO.ServerUUID";
+    const string SERVER_EXECUTABLE = "edu.vanderbilt.dre.CIAO.ComponentServerExecutable";
+    const string SERVER_ARGUMENTS = "edu.vanderbilt.dre.CIAO.ComponentServerArgs";
+    const string SERVER_TIMEOUT = "edu.vanderbilt.dre.CIAO.ServerTimeout";
+    const string SERVER_MULTITHREAD = "edu.vanderbilt.dre.CIAO.Multithreaded";
+    const string REGISTER_NAMING = "edu.vanderbilt.dre.CIAO.RegisterNaming";
+    
   };
 };
 #endif /* CIAO_PROPERTIES_IDL */

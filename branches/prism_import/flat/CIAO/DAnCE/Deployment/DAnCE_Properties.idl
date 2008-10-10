@@ -1,0 +1,17 @@
+/** 
+ * $Id$
+ * 
+ * @file DAnCE_Properties.idl
+ * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ *
+ * Codifies properties used to configure the deployment engine.
+ */
+
+module DAnCE
+{
+  const string HOME_FACTORY = "home factory";
+  const string COMPONENT_FACTORY = "component factory";
+  const string EXPLICIT_HOME = "edu.vanderbilt.dre.DAnCE.ExplicitHome";
+  const string STANDALONE_NM = "edu.vanderbilt.dre.DAnCE.StandaloneNM";
+};
+

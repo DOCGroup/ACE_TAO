@@ -8,10 +8,12 @@ namespace CIAO
   Home_Servant_Impl_Base::Home_Servant_Impl_Base (Container_ptr c)
     : container_ (Container::_duplicate(c))
   {
+    CIAO_TRACE ("Home_Servant_Impl_Base::Home_Servant_Impl_Base");
   }
 
   Home_Servant_Impl_Base::~Home_Servant_Impl_Base (void)
   {
+    CIAO_TRACE ("Home_Servant_Impl_Base::~Home_Servant_Impl_Base");
   }
 
   // Operations for CCMHome interface.

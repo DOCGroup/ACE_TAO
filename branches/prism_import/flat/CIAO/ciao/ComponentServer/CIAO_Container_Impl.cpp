@@ -120,6 +120,16 @@ namespace CIAO
 	  throw ::Components::Deployment::InvalidConfiguration ();
 	}
       
+      Components::CCMHome_var home;
+      
+      if (this->home_map_.find (id, home) == 0)
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
+                       "Home with id %s already installed, aborting\n",
+                       id));
+          throw Components::CreateFailure ();
+        }
+      
       if (entrypt == 0)
 	{
 	  CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
@@ -201,23 +211,34 @@ namespace CIAO
       //"Executor entrypoint [%s], servant entrypoint [%s], servant library [%s]\n",
       //entrypt, svnt_entrypt.in (), svnt_library.in ()));
       
-      Components::CCMHome_var home = this->container_->install_home (exec_art,
-                                                                     entrypt,
-                                                                     svnt_art,
-                                                                     svnt_entry,
-                                                                     id);
-
-      if (cm.find (register_naming, val) == 0)
+      home = this->container_->install_home (exec_art,
+                                             entrypt,
+                                             svnt_art,
+                                             svnt_entry,
+                                             id);
+      
+      if (this->home_map_.bind (id,
+                                Components::CCMHome::_duplicate (home.in ())) == -1)
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO 
+                       "CIAO_Container_i::install_home - "
+                       "Unable to bind home into home map\n"));
+        }
+      
+      if (cm.find (REGISTER_NAMING, val) == 0)
 	{
           const char *str_val;
           
 	  if (val >>= str_val)
 	    {
-	      
-	      CIAO_DEBUG ((LM_NOTICE, CLINFO
-			  "CIAO_Container_i::install_home - "
-			  "Home with ID [%s] registered in naming service with name [%s]\n",
-			  id, str_val));
+	      CIAO_ERROR ((LM_WARNING, CLINFO
+                           "CIAO_Container_i::install_home - "
+                           "Naming service registration not yet supported\n"));
+              
+                           //CIAO_DEBUG ((LM_NOTICE, CLINFO
+                           //                           "CIAO_Container_i::install_home - "
+                           //			  "Home with ID [%s] registered in naming service with name [%s]\n",
+                           //			  id, str_val));
 	    }
 	  else
 	    CIAO_ERROR ((LM_WARNING, CLINFO
@@ -229,22 +250,87 @@ namespace CIAO
     }
     
     void 
-    CIAO_Container_i::remove_home (::Components::CCMHome_ptr /*href*/)
+    CIAO_Container_i::remove_home (::Components::CCMHome_ptr href)
     {
       CIAO_TRACE("CIAO_Container_i::remove_home");
+      
+      ::Components::CCMHome_var home (href);
+      
+      Home_Iterator i = this->home_map_.begin ();
+      while (!i.done ())
+        {
+          if (i->item ()->_is_equivalent (home.in ()))
+            {
+              CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_Container_i::remove_home - "
+                           "Successfully found matching home\n"));
+              break;
+            }
+          i.advance ();
+        }
+      
+      if (i.done ())
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::remove_home - "
+                       "Unable to find matching home managed by this container, throwing RemoveFailure\n"));
+          throw Components::RemoveFailure ();
+        }
+      
+      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_Container_i::remove_home - "
+                   "Invoking remove on the container impl for home %s.\n",
+                   i->key ().c_str ()));
+      this->container_->uninstall_home (home.in ());
+      CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::remove_home - "
+                   "Successfully removed home %s\n",
+                   i->key ().c_str ()));
+
+      if (this->home_map_.unbind (i->key ()) != 0)
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::remove_home - "
+                       "Unable to unbind removed home with id %s from home map\n",
+                       i->key ().c_str ()));
+        }
     }
     
     ::Components::CCMHomes * 
     CIAO_Container_i::get_homes (void)
     {
       CIAO_TRACE("CIAO_Container_i::get_homes");
-      return 0;
+      
+      ::Components::CCMHomes * tmp_homes;
+      
+      ACE_NEW_THROW_EX (tmp_homes,
+                        ::Components::CCMHomes (this->home_map_.current_size ()),
+                        CORBA::NO_MEMORY ());
+      
+      ::Components::CCMHomes_var retval (tmp_homes);
+      retval->length (this->home_map_.current_size ());
+      Home_Iterator i = this->home_map_.begin ();
+      CORBA::ULong pos = 0;
+      while (!i.done ())
+        {
+          retval[pos++] = ::Components::CCMHome::_duplicate (i->item ().in ());
+          i.advance ();
+        }
+
+      return retval._retn ();
     }
     
     void 
     CIAO_Container_i::remove (void)
     {
       CIAO_TRACE("CIAO_Container_i::remove");
+      
+      if (this->home_map_.current_size () != 0 ||
+          this->component_map_.current_size () != 0)
+        {
+          CIAO_ERROR ((LM_WARNING, CLINFO "CIAO_Container_i::remove - "
+                       "Attempting to remove container that still has %u homes and %u components installed\n",
+                       this->home_map_.current_size (),
+                       this->component_map_.current_size ()));
+          
+        }
+
+      //this->container_->_remove_ref ();
     }
     
     PortableServer::POA_ptr 

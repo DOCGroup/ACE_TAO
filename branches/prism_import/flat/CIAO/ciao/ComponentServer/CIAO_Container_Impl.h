@@ -85,7 +85,7 @@ namespace CIAO
       
       /// To store all created CCMHome object
       typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-	Components::CCMHome_ptr,
+	Components::CCMHome_var,
 	ACE_Hash<ACE_CString>,
 	ACE_Equal_To<ACE_CString>,
 	ACE_Null_Mutex> CCMHome_Map;

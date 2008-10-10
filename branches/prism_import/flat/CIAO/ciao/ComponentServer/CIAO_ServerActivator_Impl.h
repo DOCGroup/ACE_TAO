@@ -75,6 +75,7 @@ namespace CIAO
       // Constructor 
       CIAO_ServerActivator_i (CORBA::ULong def_spawn_delay,
                               const char * default_cs_path,
+                              const char * cs_args,
                               bool multithreaded,
                               CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa_);
@@ -178,6 +179,8 @@ namespace CIAO
       PortableServer::POA_var poa_;
       
       ACE_CString cs_path_;
+      
+      ACE_CString cs_args_;
       
       ACE_Thread_Mutex mutex_;
       
