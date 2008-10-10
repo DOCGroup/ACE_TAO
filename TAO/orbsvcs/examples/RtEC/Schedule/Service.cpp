@@ -288,7 +288,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                                 deps.in (),
                                                 configs.in (),
                                                 anomalies.in (),
-                                                "schedule.out");
+                                                ACE_TEXT("schedule.out"));
         }
 
       // ****************************************************************
