@@ -265,7 +265,7 @@ public:
 
   Persistent_Test_End (CORBA::ORB_ptr orb,
                        PortableServer::POA_ptr poa,
-                       const char * ior);
+                       const ACE_TCHAR * ior);
   // Constructor.  Takes in an orb pointer and the ior received from
   // <Persistent_Test_Begin>.
 
@@ -280,7 +280,7 @@ private:
   CORBA::ORB_var orb_;
   // A pointer to our ORB (used for string/object conversion).
 
-  const char* ior_;
+  const ACE_TCHAR* ior_;
   // IOR of <level1_context> recorded during the run of part 1 of
   // persistent test.
 };
