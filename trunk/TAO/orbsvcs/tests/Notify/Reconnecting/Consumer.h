@@ -216,7 +216,7 @@ class Consumer_Main
     MODE_ANY,
     MODE_STRUCTURED,
     MODE_SEQUENCE} mode_;   // -any, -structured, or -sequence
-  ACE_CString channel_file_; // -channel fileneame
+  ACE_TString channel_file_; // -channel fileneame
   size_t expect_;           // -expect n
   size_t fail_;             // -fail n
   bool use_naming_service_; // -nonamesvc

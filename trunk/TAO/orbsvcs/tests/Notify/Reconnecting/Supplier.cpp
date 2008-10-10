@@ -218,7 +218,7 @@ Supplier_Main::parse_args (int argc, ACE_TCHAR *argv[])
       narg += consumed;
       corba_arg = false;
     }
-    else if (ACE_OS::strncmp (argv[narg], "-ORB", 4) == 0)
+    else if (ACE_OS::strncmp (argv[narg], ACE_TEXT("-ORB"), 4) == 0)
     {
       corba_arg = true;
     }
@@ -289,7 +289,7 @@ Supplier_Main::parse_single_arg (int argc, ACE_TCHAR *argv[])
     this->use_naming_service_ = false;
     consumed = 1;
   }
-  else if (ACE_OS::strcasecmp (argv[0], "-disconnect") == 0)
+  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT("-disconnect")) == 0)
   {
     this->disconnect_on_exit_ = true;
     consumed = 1;
@@ -612,7 +612,7 @@ Supplier_Main::init_event_channel (void)
               ));
           }
           // kill the channel filename so we don't overwrite the file
-          this->channel_file_ = "";
+          this->channel_file_ = ACE_TEXT("");
         }
       }
       catch (...)

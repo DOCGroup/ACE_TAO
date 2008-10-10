@@ -134,12 +134,12 @@ class Supplier_Main
     MODE_ANY,
     MODE_STRUCTURED,
     MODE_SEQUENCE} mode_;    // -any, -structured, or -sequence
-  ACE_CString channel_file_; // -channel filename
+  ACE_TString channel_file_; // -channel filename
   size_t send_;              // -send n
   bool use_naming_service_;  // -nonamesvc
   size_t serial_number_;     // -serial_number
   bool disconnect_on_exit_;  // -disconnect
-  ACE_CString id_file_;      // -ids
+  ACE_TString id_file_;      // -ids
   size_t pause_;             // -pause n (pause after sending n messages)
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
