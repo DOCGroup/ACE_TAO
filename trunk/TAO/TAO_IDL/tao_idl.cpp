@@ -106,7 +106,7 @@ DRV_version (void)
 }
 
 int
-DRV_init (int &argc, char *argv[])
+DRV_init (int &argc, ACE_TCHAR *argv[])
 {
   // Initialize front end.
   FE_init ();
@@ -306,7 +306,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Argv_Type_Converter atc (argc, argv);
   try
     {
-      if (0 != DRV_init (atc.get_argc (), atc.get_ASCII_argv ()))
+      if (0 != DRV_init (atc.get_argc (), atc.get_TCHAR_argv ()))
         {
           throw Bailout ();
         }
