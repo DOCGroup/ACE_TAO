@@ -11,7 +11,7 @@ ACE_RCSID (Bug_1107_Regression,
            "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-const char *cert_file = "cacert.pem";
+const ACE_TCHAR *cert_file = ACE_TEXT("cacert.pem");
 
 void
 insecure_invocation_test (CORBA::ORB_ptr orb,
@@ -134,14 +134,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // will look at argv manually.
       for(int i = 0; i < argc; i++)
         {
-          if (ACE_OS::strcmp(argv[i], "-n") == 0)
+          if (ACE_OS::strcmp(argv[i], ACE_TEXT("-n")) == 0)
             {
               set_cert_file = false;
               break;
             }
         }
 
-      ACE_TString env ("SSL_CERT_FILE=");
+      ACE_CString env (ACE_TEXT("SSL_CERT_FILE="));
       env += cert_file;
       if (set_cert_file)
         {
