@@ -649,7 +649,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                         get_opt.opt_arg ()));
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-            ifstream ifstr (get_opt.opt_arg ());
+            ifstream ifstr (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()));
 
             if (!ifstr.good ())
               {
