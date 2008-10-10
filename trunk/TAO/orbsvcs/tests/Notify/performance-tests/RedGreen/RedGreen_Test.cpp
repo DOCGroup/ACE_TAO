@@ -31,7 +31,7 @@ RedGreen_Test::parse_args (int argc,
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-    const char *current_arg = 0;
+    const ACE_TCHAR *current_arg = 0;
 
     while (arg_shifter.is_anything_left ())
     {
@@ -44,7 +44,7 @@ RedGreen_Test::parse_args (int argc,
           // The number of events to send/receive.
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-?") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-?")) == 0)
         {
           ACE_DEBUG((LM_DEBUG,
                      "usage: %s "
@@ -344,17 +344,17 @@ RedGreen_Test::dump_results (void)
 {
   ACE_Throughput_Stats throughput;
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
 
   ACE_OS::sprintf (buf,
-                   "Normal Consumer [%02d]",
+                   ACE_TEXT ("Normal Consumer [%02d]"),
                    1);
   normal_consumer_->dump_stats (buf,
                                 gsf);
   normal_consumer_->accumulate_into (throughput);
 
   ACE_OS::sprintf (buf,
-                   "Slow Consumer [%02d]",
+                   ACE_TEXT ("Slow Consumer [%02d]"),
                    2);
   slow_consumer_->dump_stats (buf,
                               gsf);
@@ -366,11 +366,10 @@ RedGreen_Test::dump_results (void)
   ACE_Throughput_Stats suppliers;
 
   ACE_OS::sprintf (buf,
-                   "Supplier [%02d]",
+                   ACE_TEXT ("Supplier [%02d]"),
                    1);
 
-  this->supplier_->dump_stats (buf,
-                               gsf);
+  this->supplier_->dump_stats (buf, gsf);
   this->supplier_->accumulate_into (suppliers);
 
   ACE_DEBUG ((LM_DEBUG, "\nTotals:\n"));
@@ -405,11 +404,10 @@ RedGreen_Test_StructuredPushConsumer::accumulate_into (
 }
 
 void
-RedGreen_Test_StructuredPushConsumer::dump_stats (const char* msg,
+RedGreen_Test_StructuredPushConsumer::dump_stats (const ACE_TCHAR* msg,
                                                   ACE_UINT32 gsf)
 {
-  this->throughput_.dump_results (msg,
-                                  gsf);
+  this->throughput_.dump_results (msg, gsf);
 }
 
 void
@@ -557,7 +555,7 @@ RedGreen_Test_StructuredPushSupplier::accumulate_into (
 }
 
 void
-RedGreen_Test_StructuredPushSupplier::dump_stats (const char* msg,
+RedGreen_Test_StructuredPushSupplier::dump_stats (const ACE_TCHAR* msg,
                                                   ACE_UINT32 gsf)
 {
   this->throughput_.dump_results (msg,
