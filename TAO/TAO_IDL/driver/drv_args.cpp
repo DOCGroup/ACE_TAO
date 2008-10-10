@@ -242,7 +242,7 @@ DRV_parse_args (long ac, char **av)
                           ACE_TEXT ("IDL: incorrect use of ")
                           ACE_TEXT ("the -A option\n")
                         ));
-                        
+
                       idl_global->set_compile_flags (
                                       idl_global->compile_flags ()
                                       | IDL_CF_ONLY_USAGE
@@ -274,13 +274,13 @@ DRV_parse_args (long ac, char **av)
                       ACE_TEXT (" the '%s' option\n"),
                       ACE_TEXT_CHAR_TO_TCHAR (av[i])
                     ));
-                    
+
                   idl_global->set_compile_flags (
                                   idl_global->compile_flags ()
                                   | IDL_CF_ONLY_USAGE
                                 );
                 }
-                
+
               break;
             case 'D':
             case 'U':
@@ -311,7 +311,7 @@ DRV_parse_args (long ac, char **av)
                           ACE_TEXT (" the '%s' option\n"),
                           ACE_TEXT_CHAR_TO_TCHAR (av[i])
                         ));
-                        
+
                       idl_global->set_compile_flags (
                                       idl_global->compile_flags ()
                                       | IDL_CF_ONLY_USAGE
@@ -333,7 +333,7 @@ DRV_parse_args (long ac, char **av)
                   idl_global->add_include_path (arg.substr (2).c_str ());
                   DRV_cpp_putarg (arg.c_str ());
                 }
-                
+
               break;
             case 'E':
               idl_global->set_compile_flags (idl_global->compile_flags () |
@@ -359,7 +359,7 @@ DRV_parse_args (long ac, char **av)
                           ACE_TEXT (" the '%s' option\n"),
                           ACE_TEXT_CHAR_TO_TCHAR (av[i])
                         ));
-                        
+
                       idl_global->set_compile_flags (
                                       idl_global->compile_flags ()
                                       | IDL_CF_ONLY_USAGE
@@ -379,7 +379,7 @@ DRV_parse_args (long ac, char **av)
                       LM_ERROR,
                       ACE_TEXT ("IDL: Incorrect use of -W option\n")
                     ));
-                        
+
                   idl_global->set_compile_flags (
                                   idl_global->compile_flags ()
                                   | IDL_CF_ONLY_USAGE
@@ -390,17 +390,17 @@ DRV_parse_args (long ac, char **av)
                     {
                       DRV_prep_cpp_arg (s + 2);
                     }
-                    
+
                   break;
                 case 'b':
                   if (*(s + 1) == ',')
                     {
                       be_global->prep_be_arg (s + 2);
                     }
-                    
+
                   break;
                 }
-                
+
               break;
             case 'Y':
               if (av[i][2] == '\0')
@@ -418,7 +418,7 @@ DRV_parse_args (long ac, char **av)
                           ACE_TEXT (" the '%s' option\n"),
                           ACE_TEXT_CHAR_TO_TCHAR (av[i])
                         ));
-                        
+
                       idl_global->set_compile_flags (
                                       idl_global->compile_flags ()
                                       | IDL_CF_ONLY_USAGE
@@ -446,13 +446,13 @@ DRV_parse_args (long ac, char **av)
                             ACE_TEXT ("IDL: I don't understand")
                             ACE_TEXT (" the '-Y' option\n")
                           ));
-                          
+
                         idl_global->set_compile_flags (
                                         idl_global->compile_flags ()
                                         | IDL_CF_ONLY_USAGE
                                       );
                       }
-                      
+
                     break;
                   default:
                     ACE_ERROR ((
@@ -461,7 +461,7 @@ DRV_parse_args (long ac, char **av)
                         ACE_TEXT (" %s with the '-Y' option\n"),
                         ACE_TEXT_CHAR_TO_TCHAR (s)
                       ));
-                    
+
                     idl_global->set_compile_flags (
                                     idl_global->compile_flags ()
                                     | IDL_CF_ONLY_USAGE
