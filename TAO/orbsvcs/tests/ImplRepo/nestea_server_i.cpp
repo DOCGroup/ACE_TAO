@@ -14,7 +14,7 @@
 ACE_RCSID(ImplRepo, nestea_server_i, "$Id$")
 
 // The file to save the persistent state to.
-const char NESTEA_DATA_FILENAME[] = "nestea.dat";
+const ACE_TCHAR NESTEA_DATA_FILENAME[] = ACE_TEXT("nestea.dat");
 
 // The server name of the Nestea Server
 const char SERVER_NAME[] = "nestea_server";
