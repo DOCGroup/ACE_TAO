@@ -117,7 +117,7 @@ run_service_command (Options& opts)
   if (opts.service_command () == Options::SC_INSTALL)
     {
       const DWORD MAX_PATH_LENGTH = 4096;
-      char pathname[MAX_PATH_LENGTH];
+      ACE_TCHAR pathname[MAX_PATH_LENGTH];
 
       DWORD length = ACE_TEXT_GetModuleFileName (0, pathname, MAX_PATH_LENGTH);
       if (length == 0 || length >= MAX_PATH_LENGTH - sizeof(" -s"))
