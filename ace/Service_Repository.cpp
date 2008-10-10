@@ -131,8 +131,11 @@ ACE_Service_Repository::ACE_Service_Repository (size_t size)
                 ACE_TEXT ("ACE_Service_Repository")));
 }
 
-// Finalize (call <fini> and possibly delete) all the services.
 
+// Finalize (call <fini> and possibly delete) all the services.
+// ACE_Stream_Types instances are closed first to get ACE_Module cleanup to occur first.
+// Then, ACE_Service_Type and ACE_Module_Type instances are finalized.
+// <fini_delete> is called on ACE_Module_Type(s) only to perform cleanup.
 int
 ACE_Service_Repository::fini (void)
 {
@@ -143,46 +146,95 @@ ACE_Service_Repository::fini (void)
     return 0;
 
   int retval = 0;
-
-  // Do not be tempted to use the prefix decrement operator.  Use
-  // postfix decrement operator since the index is unsigned and may
-  // wrap around the 0
-  for (size_t i = this->current_size_; i-- != 0; )
+  
+  bool removeStreams = true;
+  for (int i = 0; i < 2; i++)
     {
-      // <fini> the services in reverse order.
-      ACE_Service_Type *s =
-        const_cast<ACE_Service_Type *> (this->service_vector_[i]);
-
-#ifndef ACE_NLOGGING
-      if (ACE::debug ())
+      if (i == 1)
         {
-          if (s != 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] (%d), ")
-                        ACE_TEXT ("name=%s, type=%@, object=%@, active=%d\n"),
-                        this,
-                        i,
-                        this->total_size_,
-                        s->name(),
-                        s->type (),
-                        (s->type () != 0) ? s->type ()->object () : 0,
-                        s->active ()));
-          else
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] (%d) -> 0\n"),
-                        this,
-                        i,
-                        this->total_size_));
+          removeStreams = false;
         }
+      // Do not be tempted to use the prefix decrement operator.  Use
+      // postfix decrement operator since the index is unsigned and may
+      // wrap around the 0
+      for (size_t i = this->current_size_; i-- != 0;) 
+        {
+          // <fini> the services in reverse order.
+          ACE_Service_Type *s =
+            const_cast<ACE_Service_Type *> (this->service_vector_[i]);
+      
+          if (s != 0)
+            {
+              if (s->type()->service_type() == ACE_Service_Type::STREAM && removeStreams)
+                {
+#ifndef ACE_NLOGGING
+                  if (ACE::debug()) 
+                    {
+                      ACE_DEBUG((LM_DEBUG,
+                                 ACE_TEXT("ACE (%P|%t) SR::fini, repo=%@ [%d] (%d), ")
+                                 ACE_TEXT("name=%s, type=%@, object=%@, active=%d\n"),
+                                 this,
+                                 i,
+                                 this->total_size_,
+                                 s->name(),
+                                 s->type(),
+                                 (s->type() != 0) ? s->type()->object() : 0,
+                                 s->active()));
+                    }
 #endif
-
-      // Collect any errors.
-      if (s != 0)
-        retval += s->fini ();
+          
+                  retval += s->fini();
+                }
+        
+              if (s->type()->service_type() != ACE_Service_Type::STREAM && !removeStreams) 
+                {
+                  if (s->type()->service_type() == ACE_Service_Type::MODULE) 
+                    {
+#ifndef ACE_NLOGGING
+                      if (ACE::debug()) 
+                        {
+                          ACE_DEBUG((LM_DEBUG,
+                                     ACE_TEXT("ACE (%P|%t) SR::fini_delete, repo=%@ [%d] (%d), ")
+                                     ACE_TEXT("name=%s, type=%@, object=%@, active=%d\n"),
+                                     this,
+                                     i,
+                                     this->total_size_,
+                                     s->name(),
+                                     s->type(),
+                                     (s->type() != 0) ? s->type()->object() : 0,
+                                     s->active()));
+                        }
+#endif
+                      retval += s->fini_delete();
+                    } 
+                  else 
+                    {
+#ifndef ACE_NLOGGING
+                      if (ACE::debug()) 
+                        {
+                          ACE_DEBUG((LM_DEBUG,
+                                     ACE_TEXT("ACE (%P|%t) SR::fini, repo=%@ [%d] (%d), ")
+                                     ACE_TEXT("name=%s, type=%@, object=%@, active=%d\n"),
+                                     this,
+                                     i,
+                                     this->total_size_,
+                                     s->name(),
+                                     s->type(),
+                                     (s->type() != 0) ? s->type()->object() : 0,
+                                     s->active()));
+                        }
+#endif
+                      retval += s->fini();
+                    }
+                }
+        
+            }
+        }
     }
-
+  
   return (retval == 0) ? 0 : -1;
 }
+
 
 // Close down all the services.
 
