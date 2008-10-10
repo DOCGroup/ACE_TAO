@@ -90,11 +90,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "Making a one-way request\n"));
-      server->one_way (ior.c_str ());
+      server->one_way (ACE_TEXT_ALWAYS_CHAR(ior.c_str ()));
 
       ACE_DEBUG ((LM_DEBUG,
                   "Making a two-way request\n"));
-      server->two_way (ior.c_str ());
+      server->two_way (ACE_TEXT_ALWAYS_CHAR(ior.c_str ()));
 
       current->end_scheduling_segment (name);
 
