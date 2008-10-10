@@ -1,3 +1,10 @@
+Fri Oct 10 08:57:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/Stack_Trace.cpp:
+          Disable MSVC warning 4748 "/GS can not protect parameters
+          and local variables from local buffer overrun because
+          optimizations are disabled in function"
+
 Thu Oct  9 21:52:18 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/config-win32-common.h: Add ACE_HAS_ICMP_SUPPORT if Winsock 2
