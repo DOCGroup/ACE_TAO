@@ -13,7 +13,7 @@
 
 #include "DllOrb.h"
 
-char const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testDllOrb",
   "Bug_3252",
   "_make_DllOrb",
@@ -21,17 +21,16 @@ char const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "-ORBDottedDecimalAddresses 1 -ORBCollocationStrategy thru_poa"
 );
 
-char const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
+ACE_TCHAR const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
 
-char const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testNotifyService",
   "TAO_CosNotification_Serv",
   "_make_TAO_CosNotify_Service",
   "-UseSeparateDispatchingORB 1"
 );
 
-char const * const scpc_unloadNotifyService = ACE_REMOVE_SERVICE_DIRECTIVE("testNotifyService");
-
+ACE_TCHAR const * const scpc_unloadNotifyService = ACE_REMOVE_SERVICE_DIRECTIVE("testNotifyService");
 
 int
 unloadNotify(ACE_Service_Config & r_serviceConfig)
@@ -145,12 +144,12 @@ ACE_TMAIN(int, ACE_TCHAR **argv)
 {
   int result = 0;
 
-  char signum[64];
-  ACE_OS::sprintf(signum, "%d", SIGUSR1);
+  ACE_TCHAR signum[64];
+  ACE_OS::sprintf(signum, ACE_TEXT("%d"), SIGUSR1);
 
   ACE_ARGV args;
   args.add(argv[0]);
-  args.add("-s");
+  args.add(ACE_TEXT("-s"));
   args.add(signum);
 
   ACE_Service_Config &serviceConfig = *ACE_Service_Config::singleton ();

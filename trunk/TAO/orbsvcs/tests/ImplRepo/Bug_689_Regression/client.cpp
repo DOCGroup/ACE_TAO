@@ -44,7 +44,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       ACE_Argv_Type_Converter argcon (argc, argv);
       CORBA::ORB_var orb = CORBA::ORB_init (argcon.get_argc (),
-                                            argcon.get_ASCII_argv ());
+                                            argcon.get_TCHAR_argv ());
 
       if (parse_args (argc, argv) != 0)
         return 1;
