@@ -10,7 +10,8 @@ ACE_RCSID (Factory_Service,
            "$Id$")
 
 namespace {
-  ACE_CString id, kind, output;
+  ACE_CString id, kind;
+  ACE_TString output;
 }
 
 int parse_args(int argc, ACE_TCHAR* argv[])
@@ -24,10 +25,10 @@ int parse_args(int argc, ACE_TCHAR* argv[])
     switch (opt)
     {
     case 'i':
-      id = get_opt.opt_arg ();
+      id = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
       break;
     case 'k':
-      kind = get_opt.opt_arg ();
+      kind = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
       break;
     case 'o':
       output = get_opt.opt_arg ();
@@ -104,10 +105,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // get the IOR of factory
       CORBA::String_var str = orb->object_to_string(event_channel_factory.in());
 
-      if (ACE_OS::strcmp(output.c_str(), "") != 0)
+      if (ACE_OS::strcmp(output.c_str(), ACE_TEXT("")) != 0)
       {
         FILE *output_file=
-          ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(output.c_str()),
+          ACE_OS::fopen (output.c_str(),
           ACE_TEXT("w"));
         if (output_file == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
