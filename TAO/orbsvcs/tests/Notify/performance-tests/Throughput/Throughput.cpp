@@ -35,7 +35,7 @@ Throughput_StructuredPushConsumer::accumulate_into (
 }
 
 void
-Throughput_StructuredPushConsumer::dump_stats (const char* msg,
+Throughput_StructuredPushConsumer::dump_stats (const ACE_TCHAR* msg,
                                                ACE_UINT32 gsf)
 {
   this->throughput_.dump_results (msg, gsf);
@@ -115,7 +115,7 @@ Throughput_StructuredPushSupplier::accumulate_into (
 }
 
 void
-Throughput_StructuredPushSupplier::dump_stats (const char* msg,
+Throughput_StructuredPushSupplier::dump_stats (const ACE_TCHAR* msg,
                                                ACE_UINT32 gsf)
 {
   this->throughput_.dump_results (msg, gsf);
@@ -308,7 +308,7 @@ Notify_Throughput::parse_args(int argc, ACE_TCHAR *argv[])
     const ACE_TCHAR* current_arg = 0;
     while (arg_shifter.is_anything_left ())
     {
-      if (arg_shifter.cur_arg_strncasecmp ("-collocated_ec") == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-collocated_ec")) == 0)
         {
           this->collocated_ec_ = 1;
           arg_shifter.consume_arg ();
@@ -354,7 +354,7 @@ Notify_Throughput::parse_args(int argc, ACE_TCHAR *argv[])
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-EC"))))
         {
-          this->ec_name_ = current_arg;
+          this->ec_name_ = ACE_TEXT_ALWAYS_CHAR(current_arg);
           //
           arg_shifter.consume_arg ();
         }
@@ -365,7 +365,7 @@ Notify_Throughput::parse_args(int argc, ACE_TCHAR *argv[])
           //
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-?") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-?")) == 0)
         {
           ACE_DEBUG((LM_DEBUG,
                      "usage: %s "
@@ -515,11 +515,11 @@ Notify_Throughput::dump_results (void)
 {
   ACE_Throughput_Stats throughput;
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
 
   for (int j = 0; j < this->consumer_count_; ++j)
     {
-      ACE_OS::sprintf (buf, "Consumer [%02d]", j);
+      ACE_OS::sprintf (buf, ACE_TEXT("Consumer [%02d]"), j);
 
       this->consumers_[j]->dump_stats (buf, gsf);
       this->consumers_[j]->accumulate_into (throughput);
@@ -531,7 +531,7 @@ Notify_Throughput::dump_results (void)
 
   for (int i = 0; i < this->supplier_count_; ++i)
     {
-      ACE_OS::sprintf (buf, "Supplier [%02d]", i);
+      ACE_OS::sprintf (buf, ACE_TEXT("Supplier [%02d]"), i);
 
       this->suppliers_[i]->dump_stats (buf, gsf);
       this->suppliers_[i]->accumulate_into (suppliers);

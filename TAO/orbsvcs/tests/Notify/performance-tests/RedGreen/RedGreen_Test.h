@@ -189,7 +189,7 @@ class RedGreen_Test_StructuredPushConsumer
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
   // Accumulate the throughput statistics into <throughput>
 
-  void dump_stats (const char* msg, ACE_UINT32 gsf);
+  void dump_stats (const ACE_TCHAR* msg, ACE_UINT32 gsf);
   // Accumulate the throughput statistics into <throughput>
 
 protected:
@@ -271,7 +271,7 @@ class RedGreen_Test_StructuredPushSupplier
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
   // Accumulate the throughput statistics into <throughput>
 
-  void dump_stats (const char* msg, ACE_UINT32 gsf);
+  void dump_stats (const ACE_TCHAR* msg, ACE_UINT32 gsf);
   // Accumulate the throughput statistics into <throughput>
 
 protected:
