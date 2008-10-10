@@ -180,7 +180,7 @@ Latency_Query_Client::parse_args (int argc,
                             " [-d]"
                             " [-i iterations]"
                             "\n",
-                            ACE_TEXT_CHAR_TO_TCHAR (argv [0])),
+                            argv [0]),
                             -1);
         }
     }
