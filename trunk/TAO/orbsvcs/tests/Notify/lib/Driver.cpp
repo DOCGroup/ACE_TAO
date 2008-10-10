@@ -213,7 +213,7 @@ TAO_Notify_Tests_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Skip_Priority_Levels_Check") == 0) // Skip the check for multiple priority levels.
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Skip_Priority_Levels_Check")) == 0) // Skip the check for multiple priority levels.
         {
           this->skip_priority_levels_check_ = 1;
 
@@ -234,7 +234,7 @@ TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[])
   ACE_Argv_Type_Converter command_line(argc, argv);
 
   this->orb_ = CORBA::ORB_init (command_line.get_argc(),
-                                command_line.get_ASCII_argv(),
+                                command_line.get_TCHAR_argv(),
                                 "");
 
   if (this->parse_args (argc, argv) == -1)

@@ -28,7 +28,7 @@ TAO_Notify_Tests_Command_Builder::init (int argc, ACE_TCHAR *argv[])
 
   if (arg_shifter.is_anything_left ())
     {
-      current_arg = arg_shifter.get_current ();
+      current_arg = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
 
       arg_shifter.consume_arg ();
 

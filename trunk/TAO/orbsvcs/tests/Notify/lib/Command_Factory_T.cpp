@@ -25,7 +25,7 @@ TAO_Notify_Tests_Command_Factory_T<COMMAND>::~TAO_Notify_Tests_Command_Factory_T
 }
 
 template <class COMMAND> int
-TAO_Notify_Tests_Command_Factory_T<COMMAND>::init (int /*argc*/, char/*argv*/ *[])
+TAO_Notify_Tests_Command_Factory_T<COMMAND>::init (int /*argc*/, ACE_TCHAR/*argv*/ *[])
 {
   /// register with Command builder
   TAO_Notify_Tests_Command_Builder* cmd_builder =

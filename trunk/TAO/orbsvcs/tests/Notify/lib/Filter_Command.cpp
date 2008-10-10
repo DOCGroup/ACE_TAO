@@ -33,64 +33,64 @@ TAO_Notify_Tests_Filter_Command::init (ACE_Arg_Shifter& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {
-      if (arg_shifter.cur_arg_strncasecmp ("-CreateFactory") == 0) // -Create factory_name ec
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-CreateFactory")) == 0) // -Create factory_name ec
         {
           this->command_ = CREATE_FACTORY;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current (); // FF name
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); // FF name
           arg_shifter.consume_arg ();
 
-          this->factory_ = arg_shifter.get_current (); //EC
+          this->factory_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); //EC
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-CreateFilter") == 0) // -CreateFilter filter_name filterfactory_name
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-CreateFilter")) == 0) // -CreateFilter filter_name filterfactory_name
         {
           this->command_ = CREATE_FILTER;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current (); // Filter name
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); // Filter name
 
           arg_shifter.consume_arg ();
 
-          this->factory_ = arg_shifter.get_current (); //FF
+          this->factory_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); //FF
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Add_Constraint") == 0) // -Add_Constraint filter_name constraint_expr
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Add_Constraint")) == 0) // -Add_Constraint filter_name constraint_expr
         {
           this->command_ = ADD_CONSTRAINT;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current (); // Filter name
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); // Filter name
 
           arg_shifter.consume_arg ();
 
-          this->constraint_ = arg_shifter.get_current (); //Constraint
+          this->constraint_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); //Constraint
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Add_Filter") == 0) // -Add_Filter filter_name FilterAdmin_Name
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Add_Filter")) == 0) // -Add_Filter filter_name FilterAdmin_Name
         {
           this->command_ = ADD_FILTER;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current (); // Filter name
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); // Filter name
 
           arg_shifter.consume_arg ();
 
-          this->factory_ = arg_shifter.get_current (); //FilterAdmin
+          this->factory_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); //FilterAdmin
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Destroy") == 0) // -Destroy filter_name
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Destroy")) == 0) // -Destroy filter_name
         {
           this->command_ = DESTROY;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current (); // filter
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); // filter
 
           arg_shifter.consume_arg ();
         }

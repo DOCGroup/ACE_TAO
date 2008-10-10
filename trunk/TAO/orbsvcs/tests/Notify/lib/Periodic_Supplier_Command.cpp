@@ -40,25 +40,25 @@ TAO_Notify_Tests_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
   if (arg_shifter.is_anything_left ())
     {
       /// -Create supplier_name admin_name -POA [POA_name] supplier_specific_options
-      if (arg_shifter.cur_arg_strncasecmp ("-Create") == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Create")) == 0)
         {
           this->command_ = CREATE;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
 
           int is_direct = 0;
           ACE_CString direct_target;
 
-          if (arg_shifter.cur_arg_strncasecmp ("-Direct") == 0)
+          if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Direct")) == 0)
             {
               is_direct = 1;
 
               arg_shifter.consume_arg ();
 
-              direct_target = arg_shifter.get_current ();
+              direct_target = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
 
@@ -81,52 +81,52 @@ TAO_Notify_Tests_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
 
          supplier->init_state (arg_shifter);
         } /* -Create */
-      else if (arg_shifter.cur_arg_strncasecmp ("-Offer") == 0) // -Offer supplier_name +added_type1 +-added_type2 ... -added_type3 -added_type4..
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Offer")) == 0) // -Offer supplier_name +added_type1 +-added_type2 ... -added_type3 -added_type4..
         {
           this->command_ = OFFER;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
 
           TAO_Notify_Tests_Options_Parser options_parser;
           options_parser.execute (this->added_, this->removed_, arg_shifter);
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Disconnect") == 0) //
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Disconnect")) == 0) //
         {
           this->command_ = DISCONNECT;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
         } /* disconnect */
-      else if (arg_shifter.cur_arg_strncasecmp ("-Deactivate") == 0) //
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Deactivate")) == 0) //
         {
           this->command_ = DEACTIVATE;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
         } /* deactivate */
-      else if (arg_shifter.cur_arg_strncasecmp ("-Status") == 0) //
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Status")) == 0) //
         {
           this->command_ = DUMP_STATE;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
         } /* -Dump */
-      else if (arg_shifter.cur_arg_strncasecmp ("-Set_QoS") == 0) // -Set_QoS ec_name [Qos Options]
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Set_QoS")) == 0) // -Set_QoS ec_name [Qos Options]
         {
           this->command_ = SET_QOS;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
 
           arg_shifter.consume_arg ();
 

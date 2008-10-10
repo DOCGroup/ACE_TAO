@@ -1,3 +1,66 @@
+Fri Oct 11 11:39:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/lib/Activation_Manager.cpp
+        * orbsvcs/tests/Notify/lib/Activation_Manager.h
+        * orbsvcs/tests/Notify/lib/Application_Command.cpp
+        * orbsvcs/tests/Notify/lib/Command_Builder.cpp
+        * orbsvcs/tests/Notify/lib/Command_Factory_T.cpp
+        * orbsvcs/tests/Notify/lib/common.cpp
+        * orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.cpp
+        * orbsvcs/tests/Notify/lib/Driver.cpp
+        * orbsvcs/tests/Notify/lib/EventChannel_Command.cpp
+        * orbsvcs/ests/Notify/lib/Filter_Command.cpp
+        * orbsvcs/tests/Notify/lib/Name.cpp
+        * orbsvcs/tests/Notify/lib/Name.h
+        * orbsvcs/tests/Notify/lib/Options_Parser.cpp
+        * orbsvcs/tests/Notify/lib/Peer.cpp
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer.cpp
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer_Command.cpp
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.cpp
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.cpp
+        * orbsvcs/tests/Notify/lib/SupplierAdmin_Command.cpp
+          ACE_TCHAR fixes
+
+Fri Oct 11 08:51:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Concurrency_Service/Concurrency_Service.cpp
+        * orbsvcs/Dump_Schedule/Dump_Schedule.cpp
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.h
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h
+        * orbsvcs/IFR_Service/be_global.h
+        * orbsvcs/IFR_Service/be_init.cpp
+        * orbsvcs/ImplRepo_Service/Activator_NT_Service.h
+        * orbsvcs/ImplRepo_Service/Activator_Options.cpp
+        * orbsvcs/ImplRepo_Service/Activator_Options.h
+        * orbsvcs/ImplRepo_Service/ImR_Activator.cpp
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.h
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp
+        * orbsvcs/LoadBalancer/LoadManager.cpp
+        * orbsvcs/LoadBalancer/LoadMonitor.cpp
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.cpp
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.h
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp
+        * orbsvcs/Time_Service/Clerk_i.cpp
+        * orbsvcs/Time_Service/Server_i.cpp
+          ACE_TCHAR fixes
+
 Thu Oct  9 19:10:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Simulator/Event_Supplier/DualEC_Sup.cpp
