@@ -194,7 +194,7 @@ MultiTypes::init (int argc,
 }
 
 int
-MultiTypes::parse_args(int, char **)
+MultiTypes::parse_args(int, ACE_TCHAR **)
 {
   // Doesn't accept any arguments
   return 0;

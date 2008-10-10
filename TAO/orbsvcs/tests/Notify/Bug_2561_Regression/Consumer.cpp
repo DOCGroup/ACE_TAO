@@ -100,7 +100,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     {
       Consumer_Client client;
       ACE_Argv_Type_Converter argcon (argc, argv);
-      status = client.init (argcon.get_argc (), argcon.get_ASCII_argv ());
+      status = client.init (argcon.get_argc (), argcon.get_TCHAR_argv ());
 
       if (status == 0)
         {

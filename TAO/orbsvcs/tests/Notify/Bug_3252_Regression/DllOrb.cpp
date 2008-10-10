@@ -45,7 +45,7 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
 
     // Initialize the ORB
     ACE_Argv_Type_Converter argcon (argc, argv);
-    mv_orb_ = CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv ());
+    mv_orb_ = CORBA::ORB_init (argcon.get_argc (), argcon.get_TCHAR_argv ());
     if (CORBA::is_nil (mv_orb_.in ()))
     {
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("nil ORB\n")));
@@ -102,6 +102,9 @@ DllOrb::fini (void)
     // attempt to protect against sporadic BAD_INV_ORDER exceptions
     ACE_OS::sleep (ACE_Time_Value (0, 500));
 
+      mv_rootPOA_->destroy (1, 1);
+
+      mv_rootPOA_ = PortableServer::POA::_nil ();
     mv_orb_->shutdown (1);
 
     ACE_DEBUG ((LM_ERROR, ACE_TEXT ("wait() ...\n")));
