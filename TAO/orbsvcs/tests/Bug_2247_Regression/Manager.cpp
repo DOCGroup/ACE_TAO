@@ -327,8 +327,8 @@ int run_remote_test (Simple_Server_ptr server, const ACE_TCHAR* execute_key)
   if (ACE_OS::strcmp (expected, received))
   {
       ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("... FAIL\n"
-                    "CLIENT>          received: '%s'\n"),
+              ACE_TEXT ("... FAIL\n")
+              ACE_TEXT ("CLIENT>          received: '%s'\n"),
               ACE_TEXT_CHAR_TO_TCHAR (received)));
       return -1;
   }
@@ -384,8 +384,8 @@ int run_abort_test (Simple_Server_ptr server,
   if (ACE_OS::strcmp (expected, received))
     {
       ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("... FAIL\n"
-                    "CLIENT>          received: '%s'\n"),
+              ACE_TEXT ("... FAIL\n")
+              ACE_TEXT ("CLIENT>          received: '%s'\n"),
               ACE_TEXT_CHAR_TO_TCHAR (received)));
       return -1;
     }
@@ -433,8 +433,8 @@ int run_shutdown_test (Simple_Server_ptr server,
   if (ACE_OS::strcmp (expected, received))
     {
       ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("... FAIL\n"
-                    "CLIENT>          received: '%s'\n"),
+              ACE_TEXT ("... FAIL\n")
+              ACE_TEXT ("CLIENT>          received: '%s'\n"),
               ACE_TEXT_CHAR_TO_TCHAR (received)));
       return -1;
     }
