@@ -19,7 +19,7 @@
 
 static TAO_Notify_Tests_StructuredPushSupplier* supplier_1 = 0;
 static int max_events = 10;
-static const char* ior_output_file = "supplier.ior";
+static const ACE_TCHAR* ior_output_file = ACE_TEXT("supplier.ior");
 
 // ******************************************************************
 // Subroutine Section
