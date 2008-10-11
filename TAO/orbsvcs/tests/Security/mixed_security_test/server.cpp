@@ -63,7 +63,7 @@ rir(CORBA::ORB_ptr orb, const char* token)
 
 void
 init_and_setup (int& argc,
-                char* argv[],
+                ACE_TCHAR* argv[],
                 CORBA::ORB_var& orb,
                 PortableServer::POA_var& rootpoa,
                 PortableServer::POAManager_var& poamgr,
@@ -101,7 +101,7 @@ struct IORPublicationException
 };
 
 void
-publish_ior (CORBA::ORB_ptr orb, CORBA::Object_ptr o, const char* filename)
+publish_ior (CORBA::ORB_ptr orb, CORBA::Object_ptr o, const ACE_TCHAR* filename)
 {
   if (filename == 0 || CORBA::is_nil (orb) || CORBA::is_nil (o))
     throw IORPublicationException (IORPublicationException::BAD_PARAM);
@@ -127,13 +127,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // Necessary nonsense to make up for deficencies doing this
   // in run_test.pl on Windows platforms.
-  ACE_TString env ("SSL_CERT_FILE=");
+  ACE_CString env ("SSL_CERT_FILE=");
   env += TAO_Mixed_Security_Test::cert_file;
   ACE_OS::putenv (env.c_str ());
 
   CORBA::ORB_var orb;
-  Foo_i *server1;
-  Foo_i *server2;
+  Foo_i *server1 = 0;
+  Foo_i *server2 = 0;
 
   try
     {
