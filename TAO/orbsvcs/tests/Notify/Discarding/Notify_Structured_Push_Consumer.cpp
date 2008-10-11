@@ -65,8 +65,8 @@ Notify_Structured_Push_Consumer::push_structured_event (
   {
     this->client_.consumer_done (this);
     ACE_ERROR ((LM_ERROR,
-      ACE_TEXT ("Structured Consumer (%P|%t): ERROR: too "
-      "many events received (%d).\n"), this->count_));
+      ACE_TEXT ("Structured Consumer (%P|%t): ERROR: too ")
+      ACE_TEXT ("many events received (%d).\n"), this->count_));
   }
 
   ACE_ASSERT(ACE_OS::strcmp(event.header.variable_header[0].name.in(), "Id") == 0);
