@@ -18,15 +18,15 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   for (int c = 1; c < argc; c++) {
-    if (ACE_OS::strcasecmp(argv[c],"-o") == 0)
+    if (ACE_OS::strcasecmp(argv[c],ACE_TEXT("-o")) == 0)
       {
         ior_file = argv[++c];
       }
-    else if (ACE_OS::strcasecmp(argv[c],"-p") == 0)
+    else if (ACE_OS::strcasecmp(argv[c],ACE_TEXT("-p")) == 0)
       {
         endpoint_port = ACE_OS::atoi (argv[++c]);
       }
-    else if (ACE_OS::strstr(argv[c],"-ORB") == argv[c])
+    else if (ACE_OS::strstr(argv[c],ACE_TEXT("-ORB")) == argv[c])
       {
         c++;
         continue;
