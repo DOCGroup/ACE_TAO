@@ -232,7 +232,7 @@ TAO_MonitorManager::ORBTask::svc (void)
               {
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("(%P|%t) TAO_MonitorManager: "
-                                   "Unable to write to %s\n"),
+                                   ACE_TEXT ("Unable to write to %s\n")),
                                    this->ior_output_.c_str ()),
                                   1);
               }
