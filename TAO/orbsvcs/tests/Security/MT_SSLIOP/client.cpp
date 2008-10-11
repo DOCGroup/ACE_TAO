@@ -5,7 +5,7 @@
 
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-char *another_ior = 0;
+ACE_TCHAR *another_ior = 0;
 
 int niterations = 5;
 int do_shutdown = 0;
@@ -65,7 +65,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       int len = ACE_OS::strlen(ior) + 1;
-      another_ior = new char[len + 1];
+      another_ior = new ACE_TCHAR[len + 1];
       ACE_OS::strcpy(another_ior, ior);
       another_ior[len-1] = '1';
       another_ior[len] = '\0';
