@@ -16,20 +16,20 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   for (int c = 1; c < argc; c++) {
-    if (ACE_OS::strcasecmp(argv[c],"-o") == 0)
+    if (ACE_OS::strcasecmp(argv[c], ACE_TEXT("-o")) == 0)
       {
         ior_file = argv[++c];
       }
-    else if (ACE_OS::strcasecmp(argv[c],"-k") == 0)
+    else if (ACE_OS::strcasecmp(argv[c], ACE_TEXT("-k")) == 0)
       {
         as_server = false;
         iorstr = argv[++c];
       }
-    else if (ACE_OS::strcasecmp(argv[c],"-p") == 0)
+    else if (ACE_OS::strcasecmp(argv[c], ACE_TEXT("-p")) == 0)
       {
         endpoint_port = ACE_OS::atoi (argv[++c]);
       }
-    else if (ACE_OS::strstr(argv[c],"-ORB") == argv[c])
+    else if (ACE_OS::strstr(argv[c], ACE_TEXT("-ORB"))o == argv[c])
       {
         c++;
         continue;
@@ -55,7 +55,7 @@ gen_objref (int argc, ACE_TCHAR *argv[])
   CORBA::Object_var obj;
   PortableServer::POA_var root_poa;
 
-  char **largv = new char *[argc+4];
+  ACE_TCHAR **largv = new ACE_TCHAR *[argc+4];
   char *extra[4];
   int i = 0;
   for (i = 0; i < argc; i++)
