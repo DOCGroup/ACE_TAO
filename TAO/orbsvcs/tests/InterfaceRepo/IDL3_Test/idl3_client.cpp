@@ -5,6 +5,7 @@
 #include "tao/ORB.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
+#include "ace/ace_wchar.h"
 
 ACE_RCSID (Application_Test,
            ifr_dii_client,
