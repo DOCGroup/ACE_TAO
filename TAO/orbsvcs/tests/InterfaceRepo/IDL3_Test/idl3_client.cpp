@@ -5,7 +5,6 @@
 #include "tao/ORB.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
-#include "ace/ace_wchar.h"
 
 ACE_RCSID (Application_Test,
            ifr_dii_client,
@@ -346,7 +345,7 @@ IDL3_Client::parse_args (int argc,
                            "usage: %s"
                            " [-d]"
                            "\n",
-                           ACE_TEXT_CHAR_TO_TCHAR argv [0]),
+                           argv [0],
                           -1);
       }
 
