@@ -164,7 +164,8 @@ int TAO::FT_FaultConsumer::fini (void)
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-      ACE_TEXT ("TAO::FT_FaultConsumer::fini: ""Error disconnecting from notifier (ignored).\n"));
+      ACE_TEXT ("TAO::FT_FaultConsumer::fini: ")
+      ACE_TEXT ("Error disconnecting from notifier (ignored).\n"));
   }
 
   if (TAO_debug_level > 1)
