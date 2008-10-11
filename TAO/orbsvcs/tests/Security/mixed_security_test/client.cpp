@@ -27,7 +27,7 @@ public:
       : secure(sec), non_secure(nsec), successful(false) { }
   };
 
-  ClientTest (CORBA::ORB_ptr orb, const char* ior);
+  ClientTest (CORBA::ORB_ptr orb, const ACE_TCHAR* ior);
 
   /*!
    * Creates a Security::QOPPolicy with the Quality-of-Protection set
@@ -45,7 +45,7 @@ private:
   Foo::Bar_var obj_;
 };
 
-ClientTest::ClientTest (CORBA::ORB_ptr orb, const char* ior)
+ClientTest::ClientTest (CORBA::ORB_ptr orb, const ACE_TCHAR* ior)
   : orb_(CORBA::ORB::_duplicate (orb))
 {
   CORBA::Object_var o = this->orb_->string_to_object (ior);
