@@ -72,8 +72,8 @@ Notify_Structured_Push_Consumer::push_structured_event (
   if (this->count_ > this->expected_)
   {
     ACE_ERROR ((LM_ERROR,
-      ACE_TEXT ("Structured Consumer (%P|%t): ERROR: too "
-      "many events received.\n")));
+      ACE_TEXT ("Structured Consumer (%P|%t): ERROR: too ")
+      ACE_TEXT ("many events received.\n")));
   }
 
   if (this->count_ >= this->expected_)
