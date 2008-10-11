@@ -141,7 +141,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
         }
 
-      ACE_CString env (ACE_TEXT("SSL_CERT_FILE="));
+      ACE_CString env ("SSL_CERT_FILE=");
       env += cert_file;
       if (set_cert_file)
         {
