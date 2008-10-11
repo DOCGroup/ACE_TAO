@@ -6,7 +6,7 @@
 #include "Server_Worker.h"
 
 const ACE_TCHAR *ior_output_file = 0;
-char *another_output_file = 0;
+ACE_TCHAR *another_output_file = 0;
 const char *ior_table_name = 0;
 char *another_table_name = 0;
 int nthreads = 4;
@@ -22,7 +22,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'i':
         {
-          ior_table_name = get_opts.opt_arg ();
+          ior_table_name = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
           int len = ACE_OS::strlen(ior_table_name) + 1;
           another_table_name = new char[len + 1];
           ACE_OS::strcpy(another_table_name, ior_table_name);
@@ -34,7 +34,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         {
           ior_output_file = get_opts.opt_arg ();
           int len = ACE_OS::strlen(ior_output_file) + 1;
-          another_output_file = new char[len + 1];
+          another_output_file = new ACE_TCHAR[len + 1];
           ACE_OS::strcpy(another_output_file, ior_output_file);
           another_output_file[len-1] = '1';
           another_output_file[len] = '\0';
