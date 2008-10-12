@@ -79,7 +79,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%C> is nil.\n",
+                             "Object reference <%s> is nil.\n",
                              iorFile),
                             1);
         }
@@ -88,7 +88,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Client: orb->object_to_string:\n%s\n",
+                  "Client: orb->object_to_string: <%C>\n",
                   string.in ()));
 
       Client client (server.in (), niter);

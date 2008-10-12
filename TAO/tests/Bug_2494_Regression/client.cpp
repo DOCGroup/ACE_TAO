@@ -86,8 +86,8 @@ struct Worker : ACE_Task_Base
         catch (CORBA::Exception& ex)
           {
             ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) Exception caught: \n%s\n"),
-                        ACE_TEXT_CHAR_TO_TCHAR (ex._info ().c_str ())));
+                        ACE_TEXT ("(%P|%t) Exception caught: \n%C\n"),
+                        ex._info ().c_str ()));
             return 1;
           }
       }
@@ -113,7 +113,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%C> is nil.\n",
+                             "Object reference <%s> is nil.\n",
                              ior), 1);
         }
 
@@ -130,8 +130,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (CORBA::Exception& ex)
     {
-      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("(%P|%t) ERROR: Exception caught: \n%s\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (ex._info ().c_str ())));
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("(%P|%t) ERROR: Exception caught: \n%C\n"),
+                  ex._info ().c_str ()));
       return 1;
     }
 

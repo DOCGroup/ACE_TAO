@@ -63,7 +63,7 @@ do_primary_test (CORBA::Object_var &server,
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR ((LM_ERROR,
-                      "Object reference <%C> is nil.\n",
+                      "Object reference <%s> is nil.\n",
                       ior));
           return;
         }
@@ -77,7 +77,7 @@ do_primary_test (CORBA::Object_var &server,
   catch (CORBA::Exception &ex)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Client caught exception: %s\n",ex._name()));
+                  "Client caught exception: %C\n",ex._name()));
     }
 }
 

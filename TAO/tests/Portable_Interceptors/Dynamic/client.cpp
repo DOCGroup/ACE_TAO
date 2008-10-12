@@ -61,7 +61,7 @@ run_test (Test_Interceptors::Visual_ptr server)
   ACE_DEBUG ((LM_DEBUG,
               "the_structure() result is:\n"
               "  flag    = %d\n"
-              "  message = %s\n",
+              "  message = %C\n",
               v->flag,
               v->message.in ()));
 
@@ -117,7 +117,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%C> is nil.\n",
+                             "Object reference <%s> is nil.\n",
                              ior),
                             1);
         }

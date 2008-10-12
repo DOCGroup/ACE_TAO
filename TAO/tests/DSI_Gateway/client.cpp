@@ -82,7 +82,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%C> is nil.\n",
+                             "Object reference <%s> is nil.\n",
                              ior),
                             1);
         }
@@ -170,7 +170,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "error code: %d\n"
-                  "error info: %s\n"
+                  "error info: %C\n"
                   "status: %C\n",
                   ex.error_code,
                   ex.error_message.in (),
