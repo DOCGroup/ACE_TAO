@@ -68,7 +68,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       for (CORBA::ULong i = 0; i<seq->length(); i++)
         {
           CORBA::String_var the_string = CORBA::string_dup ((*seq)[i]);
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                       the_string.in ()));
         }
 
@@ -80,7 +80,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       for (CORBA::ULong i = 0; i<seq2->length(); i++)
         {
           CORBA::String_var the_string = seq2.in()[i].in();
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                       the_string.in ()));
         }
 
@@ -95,7 +95,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       for (CORBA::ULong i = 0; i<seq->length(); i++)
         {
           CORBA::String_var the_string = CORBA::string_dup ((*seq)[i]);
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                       the_string.in ()));
         }
 
@@ -124,7 +124,7 @@ void get_stringList2(Test::Hello_var hello)
       for (CORBA::ULong i = 0; i<seq2->length(); i++)
         {
           CORBA::String_var the_string = seq2.in()[i].in ();
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                       the_string.in ()));
         }
     }

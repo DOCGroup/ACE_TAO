@@ -80,7 +80,7 @@ test_i::method (void)
         PortableServer::ObjectId_to_string (id.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%s method() invoked for %s servant in thread %t\n",
+                  "%C method() invoked for %C servant in thread %t\n",
                   upcall,
                   id_string.in ()));
     }

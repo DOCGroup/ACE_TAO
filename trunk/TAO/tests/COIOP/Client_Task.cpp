@@ -42,7 +42,7 @@ Client_Task::svc (void)
         hello->get_string ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) - string returned <%s>\n",
+                  "(%P|%t) - string returned <%C>\n",
                   the_string.in ()));
 
       if (!this->result_)
