@@ -82,8 +82,8 @@ public:
   bool allow_duplicate_typedefs () const;
   void allow_duplicate_typedefs (bool val);
 
-  ACE_TString orb_args (void) const;
-  void orb_args (const ACE_TString& args);
+  ACE_CString orb_args (void) const;
+  void orb_args (const ACE_CString& args);
 
   ACE_CString spawn_options (void);
   // Command line passed to ACE_Process::spawn. Different
@@ -136,8 +136,8 @@ private:
   bool allow_duplicate_typedefs_;
   // Option to enable duplicate typedefs in parsed IDL.
 
-  ACE_TString orb_args_;
-  //Holder for -ORB args saved and passed to DRV_fork.
+  ACE_CString orb_args_;
+  // Holder for -ORB args saved and passed to DRV_fork.
 };
 
 #endif /* TAO_IFR_BE_GLOBAL_H */
