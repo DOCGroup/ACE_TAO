@@ -92,7 +92,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (obj.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "test servant: <%s>\n",
+                  "test servant: <%C>\n",
                   ior.in ()));
 
       // Write IOR to a file.
@@ -100,7 +100,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file <%s> for writing "
-                           "IOR: %s",
+                           "IOR: %C",
+                           ior_file,
                            ior.in ()),
                           1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());

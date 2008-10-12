@@ -63,7 +63,7 @@ do_primary_test (CORBA::Object_var &server,
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR ((LM_ERROR,
-                      "Object reference <%s> is nil\n",
+                      "Object reference <%C> is nil.\n",
                       ior));
           return;
         }
