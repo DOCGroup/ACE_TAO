@@ -29,7 +29,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage:  %s "
+                           "Usage: %s "
                            "-k IOR\n",
                            argv[0]),
                           -1);
@@ -58,7 +58,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
+                             "Object reference <%C> is nil.\n",
                              ior),
                             1);
         }

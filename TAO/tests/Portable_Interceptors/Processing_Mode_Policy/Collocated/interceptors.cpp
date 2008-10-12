@@ -64,7 +64,7 @@ Echo_Client_Request_Interceptor::send_request (
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::send_request from "
-              "\"%s\"\n",
+              "\"%C\"\n",
               op.in ()));
 
   if (ACE_OS::strcmp (op.in (), "normal") == 0)
@@ -97,7 +97,7 @@ Echo_Client_Request_Interceptor::receive_other (
     }
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_other "
-              "from \"%s\"\n",
+              "from \"%C\"\n",
               op.in ()));
 }
 
@@ -116,7 +116,7 @@ Echo_Client_Request_Interceptor::receive_reply (
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_reply "
-              "from \"%s\"\n",
+              "from \"%C\"\n",
               op.in ()));
 
   if (ACE_OS::strcmp (op.in (), "normal") == 0)
@@ -171,11 +171,11 @@ Echo_Client_Request_Interceptor::receive_exception (
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::received_exception "
-              "from \"%s\"\n",
+              "from \"%C\"\n",
               op.in ()));
 
   ACE_DEBUG ((LM_DEBUG,
-              "Exception ID = %s\n",
+              "Exception ID = %C\n",
               exception_id.in ()));
 }
 
@@ -222,7 +222,7 @@ Echo_Server_Request_Interceptor::receive_request (
     ri->object_id ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Server_Request_Interceptor::receive_request from \"%s\"\n",
+              "Echo_Server_Request_Interceptor::receive_request from \"%C\"\n",
               op.in ()));
 
   if (ACE_OS::strcmp (op.in (), "normal") == 0)
@@ -245,7 +245,7 @@ Echo_Server_Request_Interceptor::receive_request (
     ri->target_most_derived_interface ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "Target most derived interface: %s\n",
+              "Target most derived interface: %C\n",
               tmdi.in ()));
 }
 
@@ -263,7 +263,7 @@ Echo_Server_Request_Interceptor::send_reply (
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Server_Request_Interceptor::send_reply from \"%s\"\n",
+              "Echo_Server_Request_Interceptor::send_reply from \"%C\"\n",
               op.in ()));
 
   if (ACE_OS::strcmp (op.in (), "normal") == 0)
@@ -318,7 +318,7 @@ Echo_Server_Request_Interceptor::send_exception (
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_exception "
-              "from \"%s\"\n",
+              "from \"%C\"\n",
               op.in ()));
 
 
@@ -330,7 +330,7 @@ Echo_Server_Request_Interceptor::send_exception (
   const char *exception_id = type->id ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "Exception ID = %s\n",
+              "Exception ID = %C\n",
               exception_id));
 }
 

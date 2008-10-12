@@ -51,7 +51,7 @@ Visual_i::normal (CORBA::Long arg)
   }
   else
   {
-    ACE_DEBUG ((LM_DEBUG, "Visual_i::normal : extracted %s data from CORBA::Any\n",str));
+    ACE_DEBUG ((LM_DEBUG, "Visual_i::normal : extracted %C data from CORBA::Any\n",str));
   }
 }
 

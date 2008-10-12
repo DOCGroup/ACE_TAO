@@ -60,7 +60,7 @@ Server_Task::svc (void)
       CORBA::String_var ior =
         this->sorb_->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Test_Interceptors::Visual: <%s>\n", ACE_TEXT_CHAR_TO_TCHAR (ior.in ())));
+      ACE_DEBUG ((LM_DEBUG, "Test_Interceptors::Visual: <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
       if (output_ != 0)
@@ -68,9 +68,9 @@ Server_Task::svc (void)
           FILE *output_file= ACE_OS::fopen (this->output_, "w");
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file %s for writing IOR: %s",
+                               "Cannot open output file %s for writing IOR: %C",
                                this->output_,
-                               ACE_TEXT_CHAR_TO_TCHAR (ior.in ())),
+                               ior.in ()),
                               1);
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);

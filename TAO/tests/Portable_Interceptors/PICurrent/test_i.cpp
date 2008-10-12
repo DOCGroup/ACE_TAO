@@ -121,7 +121,7 @@ test_i::invoke_me (void)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) String \"%s\" inserted into TSC.\n",
+              "(%P|%t) String \"%C\" inserted into TSC.\n",
               str));
 }
 
@@ -160,7 +160,7 @@ test_i::invoke_we (void)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) String \"%s\" inserted into TSC.\n",
+              "(%P|%t) String \"%C\" inserted into TSC.\n",
               str));
 }
 
