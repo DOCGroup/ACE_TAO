@@ -234,7 +234,7 @@ Server::svc (void)
       CORBA::String_var ior =
         orb->object_to_string (obj.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // Get the file name to store the ior.
       char file_name[100];

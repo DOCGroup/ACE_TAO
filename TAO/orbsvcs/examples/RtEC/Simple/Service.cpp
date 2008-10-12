@@ -66,7 +66,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Example code: How to write ior to file
       CORBA::String_var ior =
         orb->object_to_string (event_channel.in ());
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
         {
