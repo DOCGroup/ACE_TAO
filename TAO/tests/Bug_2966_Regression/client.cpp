@@ -58,7 +58,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       req->invoke ();
       req->return_value () >>= the_string;
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                   the_string));
 
       ACE_DEBUG ((LM_INFO, "(%P|%t) - #### Deferred twoway DII (using get_response())\n"));
@@ -71,7 +71,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       req->get_response ();
       req->return_value () >>= the_string;
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                   the_string));
 
       ACE_DEBUG ((LM_INFO, "(%P|%t) - #### Deferred twoway DII (using poll_response())\n"));
@@ -86,7 +86,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       } while (!req->poll_response ());
       req->return_value () >>= the_string;
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                   the_string));
 
       ACE_DEBUG ((LM_INFO, "(%P|%t) - #### Oneway shutdown DII\n"));
