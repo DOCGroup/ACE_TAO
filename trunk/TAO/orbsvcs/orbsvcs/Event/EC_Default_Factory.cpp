@@ -109,13 +109,13 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               // need to parse the flags...ugh
               ACE_TCHAR* opt = ACE_OS::strdup (s);
 
-              ACE_TCHAR* aux;
-              ACE_TCHAR* flags = ACE_OS::strtok_r (opt, ACE_TEXT_CHAR_TO_TCHAR(":"), &aux);
+              ACE_TCHAR* aux = 0;
+              ACE_TCHAR* flags = ACE_OS::strtok_r (opt, ACE_TEXT (":"), &aux);
 
               TAO_EC_Thread_Flags tf(ACE_TEXT_ALWAYS_CHAR (flags)); // parse and set up
               this->dispatching_threads_flags_ = tf.flags ();
 
-              ACE_TCHAR* arg = ACE_OS::strtok_r (0, ACE_TEXT_CHAR_TO_TCHAR(":"), &aux);
+              ACE_TCHAR* arg = ACE_OS::strtok_r (0, ACE_TEXT(":"), &aux);
               if (arg)
                 {
                   long prio = ACE_OS::strtol (arg, 0, 0);

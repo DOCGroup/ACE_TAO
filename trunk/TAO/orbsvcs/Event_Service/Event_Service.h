@@ -66,10 +66,10 @@ private:
   ACE_CString service_name_;
 
   /// The name of the file were we output the Event_Service IOR.
-  ACE_CString ior_file_name_;
+  ACE_TString ior_file_name_;
 
   /// The name of a file where the process stores its pid
-  ACE_CString pid_file_name_;
+  ACE_TString pid_file_name_;
 
   /// The name of the servant we use when we use persistent IORs
   ACE_CString object_id_;

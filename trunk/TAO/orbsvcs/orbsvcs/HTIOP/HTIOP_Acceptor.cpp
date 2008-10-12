@@ -545,8 +545,8 @@ TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) TAO::HTIOP::Acceptor::open_i - ")
-                      ACE_TEXT ("listening on: <%s:%u>\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(this->hosts_[i]),
+                      ACE_TEXT ("listening on: <%C:%u>\n"),
+                      this->hosts_[i],
                       this->addrs_[i].get_port_number ()));
         }
     }

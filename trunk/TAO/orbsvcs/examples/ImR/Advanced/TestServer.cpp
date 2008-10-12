@@ -312,8 +312,8 @@ bool TestServer::verifyEnvironment() const
   string currentDir = getWorkingPath();
   if (expectedDir_.empty() == false && currentDir != expectedDir_)
   {
-    ACE_DEBUG((LM_DEBUG, "Error: directory paths (%s,%s) do not match.\n",
-               ACE_TEXT_CHAR_TO_TCHAR (currentDir.c_str()), ACE_TEXT_CHAR_TO_TCHAR (expectedDir_.c_str())));
+    ACE_DEBUG((LM_DEBUG, "Error: directory paths (%C,%C) do not match.\n",
+               currentDir.c_str(), expectedDir_.c_str()));
     err |= true;
   }
 
@@ -323,14 +323,14 @@ bool TestServer::verifyEnvironment() const
     const char* realValue = ACE_OS::getenv(expectedEnv_[i].first.c_str()) ;
     if (realValue == 0)
     {
-      ACE_DEBUG((LM_DEBUG, "Error, env variable '%s' not found\n",
-                 ACE_TEXT_CHAR_TO_TCHAR (expectedEnv_[i].first.c_str())));
+      ACE_DEBUG((LM_DEBUG, "Error, env variable '%C' not found\n",
+                 expectedEnv_[i].first.c_str()));
       err |= true;
     }
     else if (expectedEnv_[i].second != realValue)
     {
-      ACE_DEBUG((LM_DEBUG, "Error, env variable '%s' values (%s,%s) do not match.\n",
-                 ACE_TEXT_CHAR_TO_TCHAR (expectedEnv_[i].first.c_str()), ACE_TEXT_CHAR_TO_TCHAR (realValue), ACE_TEXT_CHAR_TO_TCHAR (expectedEnv_[i].second.c_str())));
+      ACE_DEBUG((LM_DEBUG, "Error, env variable '%C' values (%C,%C) do not match.\n",
+                 expectedEnv_[i].first.c_str(), realValue, expectedEnv_[i].second.c_str()));
       err |= true;
     }
   }
