@@ -27,7 +27,7 @@ Loader::create_object (CORBA::ORB_ptr orb,
 
       mgr->activate ();
 
-      Test_i *test;
+      Test_i *test = 0;
       ACE_NEW_RETURN (test, Test_i (poa.in ()),
                       CORBA::Object::_nil ());
 
