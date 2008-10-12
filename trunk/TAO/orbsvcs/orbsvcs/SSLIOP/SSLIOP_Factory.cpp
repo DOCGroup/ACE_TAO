@@ -219,7 +219,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           curarg++;
           if (curarg < argc)
             {
-              certificate_type = parse_x509_file (argv[curarg], &certificate_path);
+              certificate_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), &certificate_path);
             }
         }
 
@@ -229,7 +229,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           curarg++;
           if (curarg < argc)
             {
-              private_key_type = parse_x509_file (argv[curarg], &private_key_path);
+              private_key_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), &private_key_path);
             }
         }
 
@@ -296,7 +296,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           curarg++;
           if (curarg < argc)
             {
-              dhparams_type = parse_x509_file (argv[curarg], &dhparams_path);
+              dhparams_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), &dhparams_path);
             }
         }
 
@@ -306,7 +306,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           curarg++;
           if (curarg < argc)
             {
-              (void) parse_x509_file (argv[curarg], &ca_file);
+              (void) parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), &ca_file);
             }
         }
 
@@ -316,7 +316,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           curarg++;
           if (curarg < argc)
             {
-              ca_dir = argv[curarg];
+              ca_dir = ACE_TEXT_ALWAYS_CHAR(argv[curarg]);
             }
         }
 
@@ -326,7 +326,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           curarg++;
           if (curarg < argc)
             {
-              rand_path = argv[curarg];
+              rand_path = ACE_TEXT_ALWAYS_CHAR(argv[curarg]);
             }
         }
     }
