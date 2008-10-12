@@ -83,7 +83,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           1);
       table->bind ("Simple_Server", ior.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
