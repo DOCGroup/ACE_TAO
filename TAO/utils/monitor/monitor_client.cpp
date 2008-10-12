@@ -40,7 +40,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
           monitor_point->length (monitor_point->length () + 1);
           (*monitor_point)[monitor_point->length () - 1] =
-            CORBA::string_dup (get_opts.opt_arg ());
+            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
           break;
         }
       case 'c':
