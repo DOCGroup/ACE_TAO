@@ -290,7 +290,7 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
         "Initialized POA Policy\n"));
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "creating POA %s\n", POA_name_.c_str ()));
+    ACE_DEBUG ((LM_DEBUG, "creating POA %C\n", POA_name_.c_str ()));
 
   // Get the POA Manager.
   PortableServer::POAManager_var poa_manager =

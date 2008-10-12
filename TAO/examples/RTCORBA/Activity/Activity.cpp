@@ -143,7 +143,7 @@ Activity::activate_job_list (void)
       job = list[i];
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Activating job:%s\n", job->name ().c_str ()));
+        ACE_DEBUG ((LM_DEBUG, "Activating job:%C\n", job->name ().c_str ()));
 
       // find your poa
       PortableServer::POA_var host_poa =
@@ -171,7 +171,7 @@ Activity::activate_job_list (void)
                              server.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Registered %s with the naming service\n",
+                  "Registered %C with the naming service\n",
                   job_name.c_str ()));
 
       active_job_count_++;
@@ -227,10 +227,10 @@ Activity::activate_schedule (void)
 
               if (priority_model == RTCORBA::CLIENT_PROPAGATED)
                 ACE_DEBUG ((LM_DEBUG,
-                            "%s priority_model = RTCORBA::CLIENT_PROPAGATED\n", task->job ()));
+                            "%C priority_model = RTCORBA::CLIENT_PROPAGATED\n", task->job ()));
               else
                 ACE_DEBUG ((LM_DEBUG,
-                            "%s priority_model = RTCORBA::SERVER_DECLARED\n", task->job ()));
+                            "%C priority_model = RTCORBA::SERVER_DECLARED\n", task->job ()));
             }
         } /*  if (TAO_debug_level > 0) */
 
@@ -238,7 +238,7 @@ Activity::activate_schedule (void)
       task->activate_task (this->barrier_, this->priority_mapping_);
       active_task_count_++;
 
-      ACE_DEBUG ((LM_DEBUG, "Job %s scheduled\n", task->job ()));
+      ACE_DEBUG ((LM_DEBUG, "Job %C scheduled\n", task->job ()));
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%P,%t) Waiting for tasks to synch...\n"));

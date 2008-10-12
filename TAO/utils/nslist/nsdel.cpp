@@ -272,17 +272,17 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
           for (index= 0u; index < the_name.length()-1u; ++index)
             {
               if (the_name[index].kind && the_name[index].kind[0])
-                ACE_DEBUG ((LM_DEBUG, "Found ID: %s  (Kind: %s)\n",
+                ACE_DEBUG ((LM_DEBUG, "Found ID: %C  (Kind: %C)\n",
                            the_name[index].id.in(),
                            the_name[index].kind.in()));
               else
-                ACE_DEBUG ((LM_DEBUG, "Found ID: %s\n",
+                ACE_DEBUG ((LM_DEBUG, "Found ID: %C\n",
                            the_name[index].id.in()));
             }
-          ACE_DEBUG ((LM_DEBUG, "UnBound ID: %s",
+          ACE_DEBUG ((LM_DEBUG, "UnBound ID: %C",
                      the_name[index].id.in()));
           if (the_name[index].kind && the_name[index].kind[0])
-            ACE_DEBUG ((LM_DEBUG, "  (Kind: %s)\n",
+            ACE_DEBUG ((LM_DEBUG, "  (Kind: %C)\n",
                        the_name[index].kind.in()));
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
@@ -306,7 +306,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                   CORBA::String_var str =
                     orb->object_to_string (obj.in ());
                   ACE_DEBUG ((LM_DEBUG,
-                    "\n*** Possiably Orphaned Naming Context ***\n%s\n\n", str.in()));
+                    "\n*** Possiably Orphaned Naming Context ***\n%C\n\n", str.in()));
                 }
             }
           else if (destroy && !quiet)
@@ -350,11 +350,11 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       for (index= 0u; index < limit; ++index)
         {
           if (the_name[index].kind && the_name[index].kind[0])
-             ACE_DEBUG ((LM_DEBUG, "ID: %s  (Kind: %s)\n",
+             ACE_DEBUG ((LM_DEBUG, "ID: %C  (Kind: %C)\n",
                the_name[index].id.in(),
                the_name[index].kind.in()));
           else
-             ACE_DEBUG ((LM_DEBUG, "ID: %s\n",
+             ACE_DEBUG ((LM_DEBUG, "ID: %C\n",
                the_name[index].id.in()));
         }
       const char *why= "Unknown reason";
@@ -374,11 +374,11 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       for (index= 0u; index < nf.rest_of_name.length(); ++index)
         {
           if (nf.rest_of_name[index].kind && nf.rest_of_name[index].kind[0])
-             ACE_DEBUG ((LM_DEBUG, "ID: %s  (Kind: %s)\n",
+             ACE_DEBUG ((LM_DEBUG, "ID: %C  (Kind: %C)\n",
                nf.rest_of_name[index].id.in(),
                nf.rest_of_name[index].kind.in()));
           else
-             ACE_DEBUG ((LM_DEBUG, "ID: %s\n",
+             ACE_DEBUG ((LM_DEBUG, "ID: %C\n",
                nf.rest_of_name[index].id.in()));
         }
       orb->destroy ();

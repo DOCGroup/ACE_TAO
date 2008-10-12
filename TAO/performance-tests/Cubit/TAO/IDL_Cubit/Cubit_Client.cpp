@@ -1124,7 +1124,7 @@ Cubit_Client::print_stats (const char *call_name,
                            ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%s:\n",
+              "%C:\n",
               call_name));
 
   if (this->quiet_)
