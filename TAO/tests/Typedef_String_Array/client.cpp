@@ -63,7 +63,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       for(size_t i = 0; i < 15; i++)
         {
-          ACE_DEBUG ((LM_DEBUG, "%s\n", the_strings[i].in ()));
+          ACE_DEBUG ((LM_DEBUG, "%C\n", the_strings[i].in ()));
         }
 
       orb->destroy ();
