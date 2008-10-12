@@ -127,9 +127,9 @@ write_iors_to_file (CORBA::Object_ptr object,
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "%s: %s\n",
-                ACE_TEXT_CHAR_TO_TCHAR (filename),
-                ACE_TEXT_CHAR_TO_TCHAR (ior.in ())));
+                "%C: %C\n",
+                filename,
+                ior.in ()));
 
   u_int result = 0;
   result =

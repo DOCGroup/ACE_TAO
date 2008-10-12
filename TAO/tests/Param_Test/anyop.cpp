@@ -173,9 +173,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 char bufferi[32];
                 char buffero[32];
                 ACE_DEBUG ((LM_DEBUG,
-                            "Failure for CORBA::ULongLong (%s,%s)\n",
-                            ACE_TEXT_CHAR_TO_TCHAR (i.as_string (bufferi)),
-                            ACE_TEXT_CHAR_TO_TCHAR (o.as_string (buffero))));
+                            "Failure for CORBA::ULongLong (%C,%C)\n",
+                            i.as_string (bufferi),
+                            o.as_string (buffero)));
 #else
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for CORBA::ULongLong (%Q,%Q)\n",
@@ -244,9 +244,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 || ACE_OS::strcmp (i, o) != 0)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                            "Failure for char* (%s,%s)\n",
-                            ACE_TEXT_CHAR_TO_TCHAR (i),
-                            ACE_TEXT_CHAR_TO_TCHAR (o)));
+                            "Failure for char* (%C,%C)\n",
+                            i,
+                            o));
               }
           }
 

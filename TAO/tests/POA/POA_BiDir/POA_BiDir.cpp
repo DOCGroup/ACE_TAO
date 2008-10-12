@@ -40,8 +40,8 @@ print_poa (PortableServer::POA_ptr poa)
     poa->id ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "POA name = %s\n",
-              ACE_TEXT_CHAR_TO_TCHAR (poa_name.in ())));
+              "POA name = %C\n",
+              poa_name.in ()));
 
   ACE_DEBUG ((LM_DEBUG,
               "POA id = "));
@@ -162,11 +162,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         third_poa->the_name ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%s\n%s\n%s\n%s\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (root_poa_name.in ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (first_poa_name.in ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (second_poa_name.in ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (third_poa_name.in ())));
+                  "%C\n%C\n%C\n%C\n",
+                  root_poa_name.in (),
+                  first_poa_name.in (),
+                  second_poa_name.in (),
+                  third_poa_name.in ()));
 
       print_poa (root_poa.in ());
 

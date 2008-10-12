@@ -321,9 +321,9 @@ Server_i::run (void)
 
       // Print the ior's of first_test and second_test.
 
-      ACE_DEBUG ((LM_DEBUG,"%s\n%s\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (first_test_ior.in ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (second_test_ior.in ())));
+      ACE_DEBUG ((LM_DEBUG,"%C\n%C\n",
+                  first_test_ior.in (),
+                  second_test_ior.in ()));
 
       int write_result =
         this->write_iors_to_file (first_test_ior.in (),

@@ -82,7 +82,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
                               1);
-      ACE_OS::fprintf (output_file, "%s", ACE_TEXT_CHAR_TO_TCHAR (ior.in ()));
+      ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
       poa_manager->activate ();

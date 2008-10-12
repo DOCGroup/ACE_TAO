@@ -597,7 +597,7 @@ public:
         break;
 
       case 2:
-        ACE_DEBUG( (LM_INFO, "String %s", ACE_TEXT_CHAR_TO_TCHAR (vU->valString())) );
+        ACE_DEBUG( (LM_INFO, "String %C", vU->valString()));
         break;
 
       default:
@@ -648,7 +648,7 @@ public:
     else if (arg >>= CORBA::Any::to_object(obj))
     {
       ACE_DEBUG( (LM_INFO, "CORBA::Object (") );
-    } 
+    }
     else
       ACE_DEBUG( (LM_INFO, "Unknown (") );
     ACE_DEBUG( (LM_INFO, ") parameter\n") );

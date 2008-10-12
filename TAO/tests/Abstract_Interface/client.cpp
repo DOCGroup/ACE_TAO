@@ -75,9 +75,9 @@ dump_node (BaseNode* bn, int indent)
     {
       if (sn != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %s\n",
+          ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %C\n",
                      bn,
-                     ACE_TEXT_CHAR_TO_TCHAR (sn->name ())));
+                     sn->name ()));
         }
       else
         {
@@ -130,8 +130,8 @@ test_operation (base_ptr abs)
   if (debug)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (retval.in ())));
+                  "%C\n",
+                  retval.in ()));
     }
 
   CORBA::Object_var obj = abs->_to_object ();
@@ -143,8 +143,8 @@ test_operation (base_ptr abs)
   if (debug)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (retval.in ())));
+                  "%C\n",
+                  retval.in ()));
     }
 
   retval = concrete->base_op ("base_op");
@@ -152,8 +152,8 @@ test_operation (base_ptr abs)
   if (debug)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (retval.in ())));
+                  "%C\n",
+                  retval.in ()));
     }
 }
 
@@ -167,8 +167,8 @@ test_exception (base_ptr abs)
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%s\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (retval.in ())));
+                      "%C\n",
+                      retval.in ()));
         }
     }
   catch (const BadInput& ex)
@@ -176,8 +176,8 @@ test_exception (base_ptr abs)
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%s\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (ex.message.in ())));
+                      "%C\n",
+                      ex.message.in ()));
         }
     }
 }

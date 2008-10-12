@@ -104,9 +104,9 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[])
   FILE *output_file= ACE_OS::fopen (ior_file_.c_str (), "w");
   if (output_file == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Cannot open output file %s for writing IOR: %s"),
+                       ACE_TEXT ("(%P|%t) Cannot open output file %s for writing IOR: %C"),
                        ior_file_.c_str (),
-                       ACE_TEXT_CHAR_TO_TCHAR (ior.in ())),
+                       ior.in ()),
                       1);
   ACE_OS::fprintf (output_file, "%s", ior.in ());
   ACE_OS::fclose (output_file);
