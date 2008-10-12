@@ -72,7 +72,7 @@ Server_i::add_IOR_to_table (CORBA::String_var ior)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "Adding (KEY:IOR) %s:%s\n",
+                    "Adding (KEY:IOR) %C:%C\n",
                     this->ins_,
                     ior.in ()));
 
@@ -130,7 +130,7 @@ Server_i::init (int argc,
                                                      &this->servant_);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "The IOR is: <%s>\n",
+                  "The IOR is: <%C>\n",
                   str.in ()));
 
       if (this->ins_)
