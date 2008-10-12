@@ -11,7 +11,7 @@ ACE_RCSID (Bug_1107_Regression,
            "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-const ACE_TCHAR *cert_file = ACE_TEXT("cacert.pem");
+const char *cert_file = "cacert.pem";
 
 void
 insecure_invocation_test (CORBA::ORB_ptr orb,
