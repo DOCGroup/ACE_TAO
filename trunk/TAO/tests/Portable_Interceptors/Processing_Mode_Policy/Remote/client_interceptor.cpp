@@ -57,7 +57,7 @@ Echo_Client_Request_Interceptor::send_request (
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::send_request from "
-              "\"%s\"\n",
+              "\"%C\"\n",
               op.in ()));
 
   if (ACE_OS::strcmp (op.in (), "normal") == 0)
@@ -86,7 +86,7 @@ Echo_Client_Request_Interceptor::receive_other (
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_other "
-              "from \"%s\"\n",
+              "from \"%C\"\n",
               op.in ()));
 }
 
@@ -100,7 +100,7 @@ Echo_Client_Request_Interceptor::receive_reply (
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_reply "
-              "from \"%s\"\n",
+              "from \"%C\"\n",
               op.in ()));
 
   if (ACE_OS::strcmp (op.in (), "normal") == 0)
@@ -150,11 +150,11 @@ Echo_Client_Request_Interceptor::receive_exception (
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::received_exception "
-              "from \"%s\"\n",
+              "from \"%C\"\n",
               op.in ()));
 
   ACE_DEBUG ((LM_DEBUG,
-              "Exception ID = %s\n",
+              "Exception ID = %C\n",
               exception_id.in ()));
 }
 

@@ -60,7 +60,7 @@ Server_Task::svc (void)
       CORBA::String_var ior =
         this->sorb_->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Test_Interceptors::Visual: <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Test_Interceptors::Visual: <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
       if (output_ != 0)

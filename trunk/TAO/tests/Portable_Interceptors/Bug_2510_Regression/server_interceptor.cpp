@@ -38,8 +38,8 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   CORBA::String_var operation = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s.receive_request_service_contexts from "
-              "\"%s\"\n",
+              "%C.receive_request_service_contexts from "
+              "\"%C\"\n",
               this->myname_,
               operation.in ()));
 
@@ -55,14 +55,14 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   const char *buf =
     reinterpret_cast<const char *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
-              "  Received service context: %s\n",
+              "  Received service context: %C\n",
               buf));
 
   if (ACE_OS::strcmp (buf, request_msg) != 0)
   {
     ACE_ERROR ((LM_ERROR,
                 "ERROR: Echo_Server_Request_Interceptor::receive_request_service_contexts: "
-                "Expected request service context to be: %s\n",
+                "Expected request service context to be: %C\n",
                 request_msg ));
   }
   else

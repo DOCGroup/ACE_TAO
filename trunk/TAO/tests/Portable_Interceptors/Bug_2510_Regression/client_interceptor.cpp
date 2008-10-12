@@ -51,7 +51,7 @@ Echo_Client_Request_Interceptor::send_request (
   CORBA::Object_var target =
     ri->target ();
 
-  ACE_DEBUG ((LM_DEBUG,"%s.send_request from %s\n", this->myname_, operation.in ()));
+  ACE_DEBUG ((LM_DEBUG,"%C.send_request from %C\n", this->myname_, operation.in ()));
 
   // Make the context to send to the target
   IOP::ServiceContext sc;
@@ -77,7 +77,7 @@ Echo_Client_Request_Interceptor::receive_reply (
   CORBA::Object_var target =
     ri->target ();
 
-  ACE_DEBUG ((LM_DEBUG,"%s.receive_reply from %s\n", this->myname_, operation.in ()));
+  ACE_DEBUG ((LM_DEBUG,"%C.receive_reply from %C\n", this->myname_, operation.in ()));
 }
 
 void
@@ -88,7 +88,7 @@ Echo_Client_Request_Interceptor::receive_other (
 
   CORBA::Object_var target = ri->target ();
 
-  ACE_DEBUG ((LM_DEBUG,"%s.receive_other from %s\n", this->myname_, operation.in ()));
+  ACE_DEBUG ((LM_DEBUG,"%C.receive_other from %C\n", this->myname_, operation.in ()));
 }
 
 void
@@ -99,6 +99,6 @@ Echo_Client_Request_Interceptor::receive_exception (
 
   CORBA::Object_var target = ri->target ();
 
-  ACE_DEBUG ((LM_DEBUG,"%s.receive_exception from %s\n", this->myname_, operation.in ()));
+  ACE_DEBUG ((LM_DEBUG,"%C.receive_exception from %C\n", this->myname_, operation.in ()));
 }
 

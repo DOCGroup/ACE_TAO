@@ -98,7 +98,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil.\n",
+                             "Object reference <%C> is nil.\n",
                              ior),
                             1);
         }
@@ -138,7 +138,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (new_data.in () >>= str)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) Retrieved \"%s\" from the TSC.\n",
+                      "(%P|%t) Retrieved \"%C\" from the TSC.\n",
                       str));
         }
       else
