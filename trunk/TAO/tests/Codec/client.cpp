@@ -45,13 +45,13 @@ verify_data (Foo::Bar *original, Foo::Bar *extracted)
               "%d\n"
               "%d\n"
 //              "%Lu\n"
-              "%s\n\n"
+              "%C\n\n"
               "Extracted\n"
               "---------\n"
               "%d\n"
               "%d\n"
 //              "%Lu\n"
-              "%s\n\n",
+              "%C\n\n",
               original->A,
               original->B,
 //              original->C,
