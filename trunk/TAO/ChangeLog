@@ -1,3 +1,208 @@
+Sun Oct 12 19:04:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp
+        * orbsvcs/Notify_Service/Notify_Service.cpp
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp
+        * orbsvcs/IFR_Service/be_global.h
+        * orbsvcs/tests/Simple_Naming/client.cpp
+        * orbsvcs/tests/Bug_2248_Regression/server.cpp
+        * orbsvcs/tests/Bug_2248_Regression/client.cpp
+        * orbsvcs/tests/Bug_2925_Regression/server.cpp
+        * orbsvcs/tests/Security/Crash_Test/server.cpp
+        * orbsvcs/tests/Security/Crash_Test/client.cpp
+        * orbsvcs/tests/Security/InsecureReferences/test.cpp
+        * orbsvcs/tests/Security/Secure_Invocation/server.cpp
+        * orbsvcs/tests/Security/Secure_Invocation/client.cpp
+        * orbsvcs/tests/Security/EndpointPolicy/test.cpp
+        * orbsvcs/tests/Security/MT_IIOP_SSL/server.cpp
+        * orbsvcs/tests/Security/Bug_1107_Regression/server.cpp
+        * orbsvcs/tests/Security/Bug_1107_Regression/client.cpp
+        * orbsvcs/tests/Security/Big_Request/server.cpp
+        * orbsvcs/tests/Security/Big_Request/client.cpp
+        * orbsvcs/tests/Security/MT_SSLIOP/server.cpp
+        * orbsvcs/tests/Security/MT_SSLIOP/client.cpp
+        * orbsvcs/tests/Security/mixed_security_test/server.cpp
+        * orbsvcs/tests/Security/mixed_security_test/client.cpp
+        * orbsvcs/tests/HTIOP/AMI/server.cpp
+        * orbsvcs/tests/HTIOP/AMI/ami_test_i.cpp
+        * orbsvcs/tests/HTIOP/BiDirectional/server.cpp
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp
+        * orbsvcs/tests/Bug_2247_Regression/server.cpp
+        * orbsvcs/tests/Bug_2247_Regression/Manager.cpp
+        * orbsvcs/tests/FaultTolerance/IOGR/server.cpp
+        * orbsvcs/tests/Notify/Timeout/Notify_Structured_Push_Consumer.cpp
+        * orbsvcs/tests/Notify/Timeout/Structured_Supplier.cpp
+        * orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp
+        * orbsvcs/tests/Notify/Bug_1385_Regression/Notify_Structured_Push_Consumer.cpp
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp
+        * orbsvcs/tests/Notify/MC/Notify_Structured_Push_Consumer.cpp
+        * orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp
+        * orbsvcs/examples/Security/Send_File/server.cpp
+        * orbsvcs/examples/CosEC/Simple/Service.cpp
+        * orbsvcs/examples/RtEC/Simple/Service.cpp
+        * tao/ORB.cpp
+        * utils/monitor/monitor_client.cpp
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp
+        * tests/DII_AMI_Forward/client.cpp
+        * tests/DII_AMI_Forward/server_interceptor.cpp
+        * tests/MT_BiDir/server.cpp
+        * tests/MT_BiDir/client.cpp
+        * tests/Faults/middle.cpp
+        * tests/Faults/pong.cpp
+        * tests/Faults/server.cpp
+        * tests/Faults/client.cpp
+        * tests/Faults/ping.cpp
+        * tests/Bug_2909_Regression/client.cpp
+        * tests/Muxed_GIOP_Versions/client.cpp
+        * tests/Muxed_GIOP_Versions/server.cpp
+        * tests/Object_Loader/Loader.cpp
+        * tests/DSI_Gateway/client.cpp
+        * tests/DSI_Gateway/gateway.cpp
+        * tests/DSI_Gateway/server.cpp
+        * tests/QtTests/server.cpp
+        * tests/Timed_Buffered_Oneways/server.cpp
+        * tests/Nested_Event_Loop/server.cpp
+        * tests/DLL_ORB/Test_Server_Module.cpp
+        * tests/MProfile/client.cpp
+        * tests/MProfile/server.cpp
+        * tests/Timeout/client.cpp
+        * tests/Timeout/server.cpp
+        * tests/ORB_init/ORB_init.cpp
+        * tests/MT_Client/server.cpp
+        * tests/MT_Client/orb_creation.cpp
+        * tests/MT_Client/client.cpp
+        * tests/Typedef_String_Array/client.cpp
+        * tests/Typedef_String_Array/server.cpp
+        * tests/Big_AMI/client.cpp
+        * tests/Big_AMI/server.cpp
+        * tests/OctetSeq/server.cpp
+        * tests/OctetSeq/client.cpp
+        * tests/Bug_2734_Regression/client.cpp
+        * tests/Bug_2734_Regression/server.cpp
+        * tests/BiDirectional_DelayedUpcall/client.cpp
+        * tests/BiDirectional_DelayedUpcall/server.cpp
+        * tests/MT_Server/client.cpp
+        * tests/MT_Server/server.cpp
+        * tests/BiDirectional/client.cpp
+        * tests/BiDirectional/server.cpp
+        * tests/Strategies/client.cpp
+        * tests/Strategies/server.cpp
+        * tests/Bug_2494_Regression/client.cpp
+        * tests/Bug_2494_Regression/server.cpp
+        * tests/AMI_Timeouts/client.cpp
+        * tests/AMI_Timeouts/server.cpp
+        * tests/FL_Cube/server.cpp
+        * tests/MProfile_Forwarding/server.cpp
+        * tests/Portable_Interceptors/Dynamic/client.cpp
+        * tests/Portable_Interceptors/Bug_2510_Regression/server.cpp
+        * tests/Portable_Interceptors/Bug_2510_Regression/client.cpp
+        * tests/Portable_Interceptors/Bug_2510_Regression/server_interceptor.cpp
+        * tests/Portable_Interceptors/Bug_2510_Regression/test_i.cpp
+        * tests/Portable_Interceptors/Bug_2510_Regression/client_interceptor.cpp
+        * tests/Portable_Interceptors/Service_Context_Manipulation/client.cpp
+        * tests/Portable_Interceptors/Bug_2133/ClientRequest_Interceptor.cpp
+        * tests/Portable_Interceptors/Bug_3080/client.cpp
+        * tests/Portable_Interceptors/Benchmark/client.cpp
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/client.cpp
+        * tests/Portable_Interceptors/Bug_3079/client.cpp
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Client_Task.cpp
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/interceptors.cpp
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Server_Task.cpp
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/server_interceptor.cpp
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Server_Task.cpp
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/client_interceptor.cpp
+        * tests/Portable_Interceptors/Bug_1559/client.cpp
+        * tests/Portable_Interceptors/Redirection/client.cpp
+        * tests/Portable_Interceptors/IORInterceptor/client.cpp
+        * tests/Portable_Interceptors/Collocated/Dynamic/Client_Task.cpp
+        * tests/Portable_Interceptors/Collocated/Dynamic/interceptors.cpp
+        * tests/Portable_Interceptors/Collocated/Dynamic/Server_Task.cpp
+        * tests/Portable_Interceptors/AdvSlotDblCpy/server.cpp
+        * tests/Portable_Interceptors/PICurrent/client.cpp
+        * tests/Portable_Interceptors/PICurrent/test_i.cpp
+        * tests/Portable_Interceptors/ForwardRequest/client.cpp
+        * tests/Portable_Interceptors/ORB_Shutdown/client.cpp
+        * tests/Portable_Interceptors/ORB_Shutdown/server.cpp
+        * tests/No_Server_MT_Connect_Test/client.cpp
+        * tests/No_Server_MT_Connect_Test/server.cpp
+        * tests/Codec/client.cpp
+        * tests/Bug_2174_Regression/client.cpp
+        * tests/Bug_2174_Regression/server.cpp
+        * tests/Bug_2356_Regression/client.cpp
+        * tests/Bug_2356_Regression/server.cpp
+        * tests/AMI/server.cpp
+        * tests/AMI/client.cpp
+        * tests/AMI/simple_client.cpp
+        * tests/POA/Bug_1592_Regression/client.cpp
+        * tests/InterOp-Naming/Server_i.cpp
+        * tests/Xt_Stopwatch/server.cpp
+        * tests/Leader_Followers/server.cpp
+        * tests/DIOP/client.cpp
+        * tests/DIOP/server.cpp
+        * tests/Multiple/server.cpp
+        * tests/CSD_Collocation/Collocation_Tester.cpp
+        * tests/MProfile_Connection_Timeout/client.cpp
+        * tests/MProfile_Connection_Timeout/server.cpp
+        * tests/CodeSets/simple/server.cpp
+        * tests/DSI_AMI_Gateway/gateway.cpp
+        * tests/DSI_AMI_Gateway/server.cpp
+        * tests/DSI_AMI_Gateway/client.cpp
+        * tests/Native_Exceptions/client.cpp
+        * tests/Native_Exceptions/server.cpp
+        * tests/Bug_2805_Regression/client.cpp
+        * tests/Smart_Proxies/client.cpp
+        * tests/Smart_Proxies/On_Demand/client.cpp
+        * tests/Smart_Proxies/dtor/client.cpp
+        * tests/Smart_Proxies/Benchmark/client.cpp
+        * tests/TransportCurrent/IIOP/server.cpp
+        * tests/TransportCurrent/Framework/server.cpp
+        * tests/Forwarding/client.cpp
+        * tests/Forwarding/server.cpp
+        * tests/ORT/ServerRequestInterceptor.cpp
+        * tests/ORT/client.cpp
+        * tests/ORT/ORT_test_IORInterceptor.cpp
+        * tests/BiDirectional_NestedUpcall/client.cpp
+        * tests/BiDirectional_NestedUpcall/server.cpp
+        * tests/Single_Read/server.cpp
+        * examples/Kokyu_dsrt_schedulers/fp_example/client.cpp
+        * examples/Kokyu_dsrt_schedulers/fp_example/server.cpp
+        * examples/Kokyu_dsrt_schedulers/mif_example/client.cpp
+        * examples/Kokyu_dsrt_schedulers/mif_example/server.cpp
+        * examples/Kokyu_dsrt_schedulers/muf_example/client.cpp
+        * examples/Kokyu_dsrt_schedulers/muf_example/server.cpp
+        * examples/Quoter/Factory_Finder.cpp
+        * examples/Quoter/Generic_Factory.cpp
+        * examples/Quoter/Factory_Finder_i.cpp
+        * examples/Quoter/server.cpp
+        * examples/Quoter/client.cpp
+        * examples/Quoter/Quoter_i.cpp
+        * examples/OBV/Typed_Events/Server_i.cpp
+        * examples/OBV/Typed_Events/Event_Types_impl.cpp
+        * examples/OBV/Typed_Events/server.cpp
+        * examples/Buffered_Oneways/server.cpp
+        * examples/Simple/time-date/Time_Date_Client_i.cpp
+        * examples/Simple/time-date/Time_Date.cpp
+        * examples/Simple/time/Time_i.cpp
+        * examples/AMI/FL_Callback/progress.cpp
+        * examples/Buffered_AMI/server.cpp
+        * examples/PluggableUDP/tests/Performance/client.cpp
+        * examples/PluggableUDP/tests/Performance/server.cpp
+        * examples/PluggableUDP/tests/SimplePerformance/client.cpp
+        * examples/PluggableUDP/tests/SimplePerformance/server.cpp
+        * examples/Load_Balancing/Load_Balancer_i.cpp
+        * examples/Load_Balancing/Identity_Client.cpp
+        * examples/Load_Balancing/Load_Balancing_Service.cpp
+          ACE_TCHAR fixes
+
 Fri Oct 10 15:08:48 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * tests/Bug_2953_Regression/server.cpp:
@@ -5,7 +210,7 @@ Fri Oct 10 15:08:48 UTC 2008  Simon McQueen  <sm@prismtech.com>
           Now an error to access RTCurrent::the_priority () in a thread where
           it hasn't been set. Should fix spurious test fail.
 
-Fri Oct 11 14:09:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Oct 10 14:09:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_init.cpp
         * TAO_IDL/be_include/be_extern.h
@@ -13,7 +218,7 @@ Fri Oct 11 14:09:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * TAO_IDL/tao_idl.cpp
           ACE_TCHAR fixes
 
-Fri Oct 11 13:49:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Oct 10 13:49:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2926_Regression/DllORB.cpp
         * orbsvcs/tests/ImplRepo/Bug_689_Regression/client.cpp
@@ -32,7 +237,7 @@ Fri Oct 11 13:49:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/tests/Notify/RT_lib/RT_POA_Command.cpp
           ACE_TCHAR fixes
 
-Fri Oct 11 12:42:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Oct 10 12:42:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Sequence_Latency/AMI/client.cpp
         * performance-tests/Sequence_Latency/Deferred/client.cpp
@@ -44,7 +249,7 @@ Fri Oct 11 12:42:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * performance-tests/Sequence_Latency/Thread_Per_Connection/Client_Task.h
           ACE_TCHAR fixes
 
-Fri Oct 11 11:39:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Oct 10 11:39:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/lib/Activation_Manager.cpp
         * orbsvcs/tests/Notify/lib/Activation_Manager.h
@@ -67,7 +272,7 @@ Fri Oct 11 11:39:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/tests/Notify/lib/SupplierAdmin_Command.cpp
           ACE_TCHAR fixes
 
-Fri Oct 11 08:51:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Oct 10 08:51:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Concurrency_Service/Concurrency_Service.cpp
         * orbsvcs/Dump_Schedule/Dump_Schedule.cpp
