@@ -419,7 +419,7 @@ Cubit_i::cube_any_struct (const CORBA::Any & any)
 void Cubit_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%s\n",
+              "%C\n",
               "Cubit_i is shutting down"));
 
   this->orb_->shutdown ();

@@ -115,7 +115,7 @@ print_params (void)
         payload_style = "Work based";
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\nTesting oneway requests: %s : %s\n",
+                  "\nTesting oneway requests: %C : %C\n",
                   one_way_style,
                   payload_style));
 

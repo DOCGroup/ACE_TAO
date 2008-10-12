@@ -89,7 +89,7 @@ Cubit_Server::init (int argc,
                                                  this->factory_impl_);
 
   ACE_DEBUG ((LM_DEBUG,
-              "The IOR is: <%s>\n",
+              "The IOR is: <%C>\n",
               this->factory_id_.in ()));
 
   if (this->ior_output_file_)

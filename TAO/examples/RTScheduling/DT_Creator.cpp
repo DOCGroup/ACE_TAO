@@ -222,7 +222,7 @@ DT_Creator::register_synch_obj (void)
     CORBA::string_dup (synch_name.c_str ());
 
   ACE_DEBUG ((LM_DEBUG,
-        "Synch Name %s\n",
+        "Synch Name %C\n",
         synch_name.c_str ()));
 
   ACE_NEW (synch_,
@@ -301,7 +301,7 @@ DT_Creator::activate_job_list (void)
       job = job_list_[i];
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Activating job:%s\n", job->name ().c_str ()));
+        ACE_DEBUG ((LM_DEBUG, "Activating job:%C\n", job->name ().c_str ()));
 
       // find your poa
       PortableServer::POA_var host_poa =
@@ -382,10 +382,10 @@ DT_Creator::activate_schedule (void)
 
       if (priority_model == RTCORBA::CLIENT_PROPAGATED)
         ACE_DEBUG ((LM_DEBUG,
-        "%s priority_model = RTCORBA::CLIENT_PROPAGATED\n", task->job ()));
+        "%C priority_model = RTCORBA::CLIENT_PROPAGATED\n", task->job ()));
       else
         ACE_DEBUG ((LM_DEBUG,
-        "%s priority_model = RTCORBA::SERVER_DECLARED\n", task->job ()));
+        "%C priority_model = RTCORBA::SERVER_DECLARED\n", task->job ()));
       */
     }
         //} /*  if (TAO_debug_level > 0) */
