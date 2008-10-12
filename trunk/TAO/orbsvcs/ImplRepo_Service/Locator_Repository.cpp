@@ -11,17 +11,17 @@
 
 ACE_RCSID (ImplRepo_Service, Locator_Repository, "$Id$")
 
-static const char* STARTUP_COMMAND = "StartupCommand";
-static const char* WORKING_DIR = "WorkingDir";
-static const char* ENVIRONMENT = "Environment";
-static const char* ACTIVATION = "Activation";
-static const char* PARTIAL_IOR = "Location";
-static const char* IOR = "IOR";
-static const char* START_LIMIT = "StartLimit";
-static const char* ACTIVATOR = "Activator";
+static const ACE_TCHAR* STARTUP_COMMAND = ACE_TEXT("StartupCommand");
+static const ACE_TCHAR* WORKING_DIR = ACE_TEXT("WorkingDir");
+static const ACE_TCHAR* ENVIRONMENT = ACE_TEXT("Environment");
+static const ACE_TCHAR* ACTIVATION = ACE_TEXT("Activation");
+static const ACE_TCHAR* PARTIAL_IOR = ACE_TEXT("Location");
+static const ACE_TCHAR* IOR = ACE_TEXT("IOR");
+static const ACE_TCHAR* START_LIMIT = ACE_TEXT("StartLimit");
+static const ACE_TCHAR* ACTIVATOR = ACE_TEXT("Activator");
 static const ACE_TCHAR* SERVERS_ROOT_KEY = ACE_TEXT("Servers");
 static const ACE_TCHAR* ACTIVATORS_ROOT_KEY = ACE_TEXT("Activators");
-static const char* TOKEN = "Token";
+static const ACE_TCHAR* TOKEN = ACE_TEXT("Token");
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 static const char* WIN32_REG_KEY = "Software\\TAO\\ImplementationRepository";
@@ -72,7 +72,7 @@ static void loadServersAsBinary(ACE_Configuration& config, Locator_Repository::S
   if (err == 0)
     {
       int index = 0;
-      ACE_CString name;
+      ACE_TString name;
       while (config.enumerate_sections (root, index, name) == 0)
         {
           ACE_CString cmdline, dir, envstr, partial_ior, ior, aname;
