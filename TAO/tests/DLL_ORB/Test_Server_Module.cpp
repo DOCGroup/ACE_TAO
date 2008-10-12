@@ -127,7 +127,7 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
         this->orb_->object_to_string (obj.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Servant:\n<%s>\n",
+                  "Servant:\n<%C>\n",
                   ior.in ()));
 
       // Write IOR to a file.
