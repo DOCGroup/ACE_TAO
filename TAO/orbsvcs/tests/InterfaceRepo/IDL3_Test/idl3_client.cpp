@@ -345,7 +345,7 @@ IDL3_Client::parse_args (int argc,
                            "usage: %s"
                            " [-d]"
                            "\n",
-                           argv [0],
+                           argv [0]),
                           -1);
       }
 
