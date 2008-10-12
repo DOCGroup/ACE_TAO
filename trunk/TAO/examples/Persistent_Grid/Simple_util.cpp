@@ -111,8 +111,8 @@ Server<Servant>::init (const char *servant_name,
                                                      &this->servant_);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "The IOR is: <%s>\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
+                  "The IOR is: <%C>\n",
+                  str.in ()));
 
       if (this->ior_output_file_)
         {
@@ -253,11 +253,10 @@ Client<InterfaceObj, Var>::init (const char * /*name*/,
           CORBA::Object_var server_object =
             this->orb_->string_to_object (this->ior_);
 
-
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "invalid ior <%s>\n",
-                               ACE_TEXT_CHAR_TO_TCHAR (this->ior_)),
+                               "invalid ior <%C>\n",
+                               this->ior_),
                               -1);
           this->server_ = InterfaceObj::_narrow (server_object.in ());
         }
