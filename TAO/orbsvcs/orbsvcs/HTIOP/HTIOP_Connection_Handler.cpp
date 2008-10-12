@@ -263,10 +263,10 @@ TAO::HTIOP::Connection_Handler::process_listen_point_list
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("(%P|%t) Listening port [%d] on [%s],[%s]\n"),
+                      ACE_TEXT("(%P|%t) Listening port [%d] on [%C],[%C]\n"),
                       listen_point.port,
-                      ACE_TEXT_CHAR_TO_TCHAR(listen_point.host.in ()),
-                      ACE_TEXT_CHAR_TO_TCHAR(listen_point.htid.in())));
+                      listen_point.host.in (),
+                      listen_point.htid.in()));
         }
 
       // Construct an  TAO::HTIOP::Endpoint object
