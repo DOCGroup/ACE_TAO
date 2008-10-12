@@ -61,8 +61,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var str =
          orb->object_to_string (typed_consumer.in ());
 
-      const char* ior_file_name = "Consumer.ior";
-      FILE *output_file= ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(ior_file_name),
+      const ACE_TCHAR* ior_file_name = ACE_TEXT("Consumer.ior");
+      FILE *output_file= ACE_OS::fopen (ior_file_name,
                                         ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,

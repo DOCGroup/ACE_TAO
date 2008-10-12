@@ -110,8 +110,8 @@ Concurrency_Service::init (int argc,
   CORBA::String_var str =
     this->orb_manager_.activate (this->my_concurrency_server_.GetLockSetFactory ());
   ACE_DEBUG ((LM_DEBUG,
-              "The IOR is: <%s>\n",
-              ACE_TEXT_CHAR_TO_TCHAR(str.in ())));
+              "The IOR is: <%C>\n",
+              str.in ()));
 
   if (this->ior_file_name_ != 0)
     {

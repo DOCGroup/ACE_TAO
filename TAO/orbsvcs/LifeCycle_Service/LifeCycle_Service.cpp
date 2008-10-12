@@ -79,7 +79,7 @@ Life_Cycle_Service_Server::init (int argc,
     this->orb_manager_.activate (this->life_Cycle_Service_i_ptr_);
 
   if (this->debug_level_ >= 2)
-    ACE_DEBUG ((LM_DEBUG, "LifeCycle_Service: IOR is: <%s>\n", ACE_TEXT_CHAR_TO_TCHAR(str.in ())));
+    ACE_DEBUG ((LM_DEBUG, "LifeCycle_Service: IOR is: <%C>\n", str.in ()));
 
   // Register the LifeCycle Service with the Naming Service.
   try
