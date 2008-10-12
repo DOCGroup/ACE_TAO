@@ -36,7 +36,7 @@ make_wstring (const char *str)
   size_t len = ACE_OS::strlen (str) + 1;
   wchar_t *wstr = new wchar_t[len];
   ACE_DEBUG ((LM_DEBUG,
-              "make_wstring: str = %s\n", ACE_TEXT_CHAR_TO_TCHAR (str)));
+              "make_wstring: str = %C\n", str));
   for (size_t i = 0; i < len; i++)
     {
       char *t = const_cast<char *> (str);
@@ -94,7 +94,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       outarg >>= any_reply;
 
       ACE_DEBUG ((LM_DEBUG,
-                 "Client sent %s, got %s\n", ACE_TEXT_CHAR_TO_TCHAR (bare_string), ACE_TEXT_CHAR_TO_TCHAR (reply.in ()) ));
+                 "Client sent %C, got %C\n", bare_string, reply.in ()) );
 
       if (ACE_OS::strcmp (bare_string, reply.in ()) != 0)
         {
@@ -102,7 +102,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                 "Client sent %s, got %s\n", ACE_TEXT_CHAR_TO_TCHAR (any_string), ACE_TEXT_CHAR_TO_TCHAR (any_reply) ));
+                 "Client sent %C, got %C\n", any_string, any_reply) );
 
       if (ACE_OS::strcmp (any_string, any_reply) != 0)
         {

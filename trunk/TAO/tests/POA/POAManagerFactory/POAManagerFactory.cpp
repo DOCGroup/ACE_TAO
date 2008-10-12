@@ -178,8 +178,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           = poa_manager_2->get_id ();
         if (verbose)
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("Implicitly created POAManager's ID: [%s]\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(poa_manager_2_name.in())));
+                      ACE_TEXT("Implicitly created POAManager's ID: [%C]\n"),
+                      poa_manager_2_name.in()));
 
         if (ACE_OS::strlen(poa_manager_2_name.in()) == 0)
           return 1;
@@ -204,8 +204,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           CORBA::String_var name = managers[i]->get_id ();
           if (verbose)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT("Validate listed POAManager [%s]: "),
-                        ACE_TEXT_CHAR_TO_TCHAR(name.in())));
+                        ACE_TEXT("Validate listed POAManager [%C]: "),
+                        name.in()));
           pretest = fail;
 
           const PortableServer::POAManager_ptr tmp_pm = managers[i];

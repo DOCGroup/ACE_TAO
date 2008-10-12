@@ -62,11 +62,11 @@ test_transport_current (CORBA::ORB_ptr orb)
   ::TAO::CounterT rr = tc->messages_received ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Tester (%P|%t) Transport [%q] [%s:%d -> %s:%d] ")
+              ACE_TEXT ("Tester (%P|%t) Transport [%q] [%C:%d -> %C:%d] ")
               ACE_TEXT ("Sent/Received [bytes=%q/%q, messages=%q/%q]\n"),
               (ACE_UINT64)id,
-              ACE_TEXT_CHAR_TO_TCHAR (rhost.in ()), tc->remote_port (),
-              ACE_TEXT_CHAR_TO_TCHAR (lhost.in ()), tc->local_port (),
+              rhost.in (), tc->remote_port (),
+              lhost.in (), tc->local_port (),
               (ACE_UINT64)bs,
               (ACE_UINT64)br,
               (ACE_UINT64)rs,

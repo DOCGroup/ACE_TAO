@@ -130,8 +130,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       char *result = (char *) &data_received[0];
 
       // print the read message
-      ACE_DEBUG((LM_DEBUG, "%s\n",
-                 ACE_TEXT_CHAR_TO_TCHAR (result)));
+      ACE_DEBUG((LM_DEBUG, "%C\n",
+                 result));
 
       // close the file
       fd->destroy ();

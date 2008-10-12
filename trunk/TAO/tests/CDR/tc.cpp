@@ -129,13 +129,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 if (TAO_debug_level > 0)
                   {
                     ACE_DEBUG ((LM_DEBUG,
-                                "ID = '%s'\n"
-                                "%{%{ NAME = %s%$"
+                                "ID = '%C'\n"
+                                "%{%{ NAME = %C%$"
                                 " KIND = %d%$"
                                 " LENGTH = %d"
                                 "%}%}\n",
-                                ACE_TEXT_CHAR_TO_TCHAR ((id?id:"empty ID")),
-                                ACE_TEXT_CHAR_TO_TCHAR ((name?name:"empty name")),
+                                (id?id:"empty ID"),
+                                (name?name:"empty name"),
                                 k,
                                 length));
                   }
