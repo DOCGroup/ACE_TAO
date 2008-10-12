@@ -114,7 +114,7 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
     PortableServer::ObjectId_to_string (oid);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) Starting Servant_Locator::preinvoke for %s servant\n",
+              "(%t) Starting Servant_Locator::preinvoke for %C servant\n",
               name.in ()));
 
   if (ACE_OS::strcmp (name.in (), "first") == 0)
@@ -129,7 +129,7 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) Ending Servant_Locator::preinvoke for %s servant\n",
+              "(%t) Ending Servant_Locator::preinvoke for %C servant\n",
               name.in ()));
 
   return &this->servant_;
@@ -146,7 +146,7 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
     PortableServer::ObjectId_to_string (oid);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) Starting Servant_Locator::postinvoke for %s servant\n",
+              "(%t) Starting Servant_Locator::postinvoke for %C servant\n",
               name.in ()));
 
   if (ACE_OS::strcmp (name.in (), "first") == 0)
@@ -161,7 +161,7 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) Ending Servant_Locator::postinvoke for %s servant\n",
+              "(%t) Ending Servant_Locator::postinvoke for %C servant\n",
               name.in ()));
 }
 

@@ -170,7 +170,7 @@ DatabaseImpl::Agent::create_entry (const char *key,
                                new_employee);
 
   ACE_DEBUG ((LM_DEBUG,
-              "New employee created with name = %s and id = %d\n",
+              "New employee created with name = %C and id = %d\n",
               name,
               id));
 
@@ -206,7 +206,7 @@ DatabaseImpl::Agent::find_entry (const char *key,
       Employee *employee =
         reinterpret_cast<Employee *> (temp);
       ACE_DEBUG ((LM_DEBUG,
-                  "Employee with key = %s found: name = %s and id = %d\n",
+                  "Employee with key = %C found: name = %C and id = %d\n",
                   key,
                   employee->name (),
                   employee->id ()));
@@ -227,7 +227,7 @@ DatabaseImpl::Agent::find_entry (const char *key,
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Employee with key = %s not found\n",
+                  "Employee with key = %C not found\n",
                   key));
 
       throw Database::Not_Found ();
@@ -249,8 +249,8 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
       Employee *employee =
         reinterpret_cast<Employee *> (temp);
       ACE_DEBUG ((LM_DEBUG,
-                  "Employee with key = %s will be removed from the database: "
-                  "name = %s and id = %d \n",
+                  "Employee with key = %C will be removed from the database: "
+                  "name = %C and id = %d \n",
                   key,
                   employee->name (),
                   employee->id ()));
@@ -260,7 +260,7 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Employee with key = %s not found\n",
+                  "Employee with key = %C not found\n",
                   key));
 
       throw Database::Unknown_Key ();

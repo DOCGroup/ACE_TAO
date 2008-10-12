@@ -75,9 +75,9 @@ Server_i::write_iors_to_file (const char *first_ior,
   if (output_file_1 == 0
       || output_file_2 == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open output files for writing IORs: %s, %s\n",
-                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_1),
-                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_2)),
+                       "Cannot open output files for writing IORs: %C, %C\n",
+                       ior_output_file_1,
+                       ior_output_file_2),
                       -1);
 
   int result = ACE_OS::fprintf (output_file_1,
@@ -86,9 +86,9 @@ Server_i::write_iors_to_file (const char *first_ior,
   if (result <= 0
       || static_cast<size_t> (result) != ACE_OS::strlen (first_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %s to %s\n",
-                       ACE_TEXT_CHAR_TO_TCHAR (first_ior),
-                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_1)),
+                       "ACE_OS::fprintf failed while writing %C to %C\n",
+                       first_ior,
+                       ior_output_file_1),
                       -1);
 
   result = ACE_OS::fprintf (output_file_2,
@@ -97,9 +97,9 @@ Server_i::write_iors_to_file (const char *first_ior,
   if (result <= 0
       || static_cast<size_t> (result) != ACE_OS::strlen (second_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %s to %s\n",
-                       ACE_TEXT_CHAR_TO_TCHAR (second_ior),
-                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_2)),
+                       "ACE_OS::fprintf failed while writing %C to %C\n",
+                       second_ior,
+                       ior_output_file_2),
                       -1);
   ACE_OS::fclose (output_file_1);
   ACE_OS::fclose (output_file_2);
@@ -329,9 +329,9 @@ Server_i::run (void)
 
       // Print the ior's of first_test and second_test.
 
-      ACE_DEBUG ((LM_DEBUG,"%s\n%s\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (first_test_ior.in ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (second_test_ior.in ())));
+      ACE_DEBUG ((LM_DEBUG,"%C\n%C\n",
+                  first_test_ior.in (),
+                  second_test_ior.in ()));
 
       int write_result =
         this->write_iors_to_file (first_test_ior.in (),

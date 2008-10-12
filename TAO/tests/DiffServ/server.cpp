@@ -109,7 +109,7 @@ create_object (PortableServer::POA_ptr poa,
   CORBA::String_var ior =
     orb->object_to_string (object.in ());
 
-  ACE_DEBUG ((LM_DEBUG, "<%s>\n\n", ior.in ()));
+  ACE_DEBUG ((LM_DEBUG, "<%C>\n\n", ior.in ()));
 
   FILE *output_file= ACE_OS::fopen (filename, "w");
   ACE_OS::fprintf (output_file, "%s", ior.in ());
