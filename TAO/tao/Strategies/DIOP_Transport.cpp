@@ -82,9 +82,9 @@ TAO_DIOP_Transport::recv (char *buf,
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - DIOP_Transport::recv, received %d bytes from %s:%d %d\n",
+                  "TAO (%P|%t) - DIOP_Transport::recv, received %d bytes from %C:%d %d\n",
                   n,
-                  ACE_TEXT_CHAR_TO_TCHAR (from_addr.get_host_name ()),
+                  from_addr.get_host_name (),
                   from_addr.get_port_number (),
                   errno));
     }

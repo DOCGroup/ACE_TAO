@@ -186,8 +186,8 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "Received Exception %s\n",
-                    ACE_TEXT_CHAR_TO_TCHAR (id)));
+                    "Received Exception %C\n",
+                    id));
 
       // If the remote host threw a THREAD_CANCELLED
       // exception, make sure to take the appropriate

@@ -183,8 +183,8 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       if (TAO_debug_level > 3)
         ACE_DEBUG ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - DIOP_Connector::make_connection, ")
-                    ACE_TEXT ("connection to <%s:%u> failed (%p)\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (diop_endpoint->host ()),
+                    ACE_TEXT ("connection to <%C:%u> failed (%p)\n"),
+                    diop_endpoint->host (),
                     diop_endpoint->port (),
                     ACE_TEXT ("errno")));
 
