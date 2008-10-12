@@ -40,8 +40,7 @@ void
 Time_i::shutdown ( )
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%s\n",
-              "Time_i is shutting down"));
+              "Time_i is shutting down\n"));
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();

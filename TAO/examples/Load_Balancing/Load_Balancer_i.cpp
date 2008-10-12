@@ -90,7 +90,7 @@ Object_Group_Factory_i::make_group (int random,
 
           ACE_DEBUG ((LM_DEBUG,
                       "Load_Balancer: Created new Random Group"
-                      " with id <%s>\n", id));
+                      " with id <%C>\n", id));
         }
       else
         {
@@ -98,7 +98,7 @@ Object_Group_Factory_i::make_group (int random,
             throw CORBA::INTERNAL ();
           ACE_DEBUG ((LM_DEBUG,
                       "Load_Balancer: Created new Round Robin Group"
-                      " with id <%s>\n", id));
+                      " with id <%C>\n", id));
         }
       // Return.
       return group._retn ();
@@ -221,7 +221,7 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
   // hosed anyways ...
 
   ACE_DEBUG ((LM_DEBUG,
-              "Load_Balancer: Added member <%s> to <%s> Group\n",
+              "Load_Balancer: Added member <%C> to <%C> Group\n",
               member_id.c_str (),
               id_.c_str ()));
 }
@@ -249,8 +249,8 @@ Object_Group_i::unbind (const char * id)
   iter.remove ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "Load_Balancer: Removed member with id <%s>"
-              "from <%s> object group\n", id, id_.c_str ()));
+              "Load_Balancer: Removed member with id <%C>"
+              "from <%C> object group\n", id, id_.c_str ()));
 }
 
 CORBA::Object_ptr
@@ -306,7 +306,7 @@ Object_Group_i::destroy (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "Load_Balancer: Destroyed object group"
-              "with id <%s>\n", id_.c_str ()));
+              "with id <%C>\n", id_.c_str ()));
 }
 
 Random_Object_Group::Random_Object_Group (const char *id,
@@ -347,7 +347,7 @@ Random_Object_Group::resolve (void)
   ACE_CString *id = 0;
   member_id_list_.get (id, member);
 
-  ACE_DEBUG ((LM_DEBUG, "Load_Balancer: In <%s> Group resolved to <%s>\n",
+  ACE_DEBUG ((LM_DEBUG, "Load_Balancer: In <%C> Group resolved to <%C>\n",
               id_.c_str (),
               id->c_str()));
 
@@ -390,7 +390,7 @@ RR_Object_Group::resolve (void)
   ACE_CString *id = 0;
   member_id_list_.get (id, next_);
 
-  ACE_DEBUG ((LM_DEBUG, "Load_Balancer: In <%s> Group resolved to <%s>\n",
+  ACE_DEBUG ((LM_DEBUG, "Load_Balancer: In <%C> Group resolved to <%C>\n",
               id_.c_str (),
               id->c_str ()));
 
@@ -436,7 +436,7 @@ RR_Object_Group::unbind (const char *id)
     next_ = next_ % (members_.current_size ());
 
   ACE_DEBUG ((LM_DEBUG,
-              "Load_Balancer: Removed member with id <%s>"
-              "from <%s> object group\n", id, id_.c_str ()));
+              "Load_Balancer: Removed member with id <%C>"
+              "from <%C> object group\n", id, id_.c_str ()));
 }
 

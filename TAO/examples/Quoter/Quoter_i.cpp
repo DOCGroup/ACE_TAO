@@ -138,7 +138,7 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
 {
   const char *exception_message = "Null message";
   CosLifeCycle::LifeCycleObject_ptr lifeCycleObject_ptr =
-CosLifeCycle::LifeCycleObject::_nil ();
+    CosLifeCycle::LifeCycleObject::_nil ();
   try
     {
       // The name of the Generic Factory
@@ -230,7 +230,7 @@ CosLifeCycle::LifeCycleObject::_nil ();
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_ERROR ((LM_ERROR, "Quoter_i::copy - %s\n", exception_message));
+      ACE_ERROR ((LM_ERROR, "Quoter_i::copy - %C\n", exception_message));
       ex._tao_print_exception ("Exception");
 
       // Report a NoFactory exception back to the caller

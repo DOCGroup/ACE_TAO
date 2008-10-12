@@ -133,7 +133,7 @@ Quoter_Client::run (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_ERROR ((LM_ERROR, "Quoter_Client::run - %s\n", exception_message));
+      ACE_ERROR ((LM_ERROR, "Quoter_Client::run - %C\n", exception_message));
       ex._tao_print_exception ("Quoter_Client::run");
       return -1;
     }
@@ -195,7 +195,7 @@ Quoter_Client::init_naming_service (void)
 
       if (CORBA::is_nil (factory_Finder_var_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve quoter factory in Naming service <%s>\n"),
+                           " could not resolve quoter factory in Naming service\n"),
                           -1);
 
       if (this->debug_level_ >= 2)
@@ -264,13 +264,13 @@ Quoter_Client::init_naming_service (void)
     }
   catch (const CosLifeCycle::NoFactory& excpt)
     {
-      ACE_ERROR ((LM_ERROR, "Quoter_Client::run - %s\n", exception_message));
+      ACE_ERROR ((LM_ERROR, "Quoter_Client::run - %C\n", exception_message));
       excpt._tao_print_exception (
         "Quoter::init_naming_service: No Factory available!");
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_ERROR ((LM_ERROR, "Quoter_Client::init_naming_service - %s\n", exception_message));
+      ACE_ERROR ((LM_ERROR, "Quoter_Client::init_naming_service - %C\n", exception_message));
       ex._tao_print_exception ("Quoter::init_naming_service");
       return -1;
     }

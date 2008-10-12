@@ -96,7 +96,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key)
   }
   catch (const CORBA::Exception&)
     {
-      ACE_ERROR ((LM_ERROR, "Quoter_Factory_Finder::find_factories - %s\n", exception_message));
+      ACE_ERROR ((LM_ERROR, "Quoter_Factory_Finder::find_factories - %C\n", exception_message));
       throw CosLifeCycle::NoFactory (factory_key);
     }
 

@@ -90,7 +90,7 @@ Load_Balancing_Service::init (int argc,
         return -1;
       else if (TAO_debug_level > 1)
         ACE_DEBUG ((LM_DEBUG,
-                    "Load_Balancer: Object Group Factory ior is %s\n",
+                    "Load_Balancer: Object Group Factory ior is %C\n",
                     ior.in ()));
     }
   catch (const CORBA::Exception& ex)

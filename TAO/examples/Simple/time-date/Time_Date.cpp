@@ -179,7 +179,7 @@ Time_Date_Servant::init (int argc, ACE_TCHAR *argv[])
 
       if (orb == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "can't find %s in the Service Repository\n",
+                           "can't find %C in the Service Repository\n",
                            this->orb_),
                           -1);
 

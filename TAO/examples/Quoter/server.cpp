@@ -130,11 +130,11 @@ Quoter_Server::init (int argc,
 
       // Print the IOR.
       if (this->debug_level_ >= 2)
-        ACE_DEBUG ((LM_DEBUG, "Quoter Server: IOR is: <%s>\n", quoter_Factory_ior.in ()));
+        ACE_DEBUG ((LM_DEBUG, "Quoter Server: IOR is: <%C>\n", quoter_Factory_ior.in ()));
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_ERROR ((LM_ERROR, "Quote_Server::init - %s\n", exception_message));
+      ACE_ERROR ((LM_ERROR, "Quote_Server::init - %C\n", exception_message));
       ex._tao_print_exception ("Exception");
       throw;
     }
@@ -189,7 +189,7 @@ Quoter_Server::init_naming_service (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_ERROR ((LM_ERROR, "Quote_Server::init_naming_service - %s", exception_message));
+      ACE_ERROR ((LM_ERROR, "Quote_Server::init_naming_service - %C", exception_message));
       ex._tao_print_exception ("Exception");
       return -1;
     }
