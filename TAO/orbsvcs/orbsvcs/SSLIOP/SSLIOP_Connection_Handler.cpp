@@ -175,9 +175,9 @@ TAO::SSLIOP::Connection_Handler::open (void *)
           ACE_TCHAR local_as_string[MAXHOSTNAMELEN + 16];
 
           (void) remote_addr.addr_to_string (remote_as_string,
-                                             sizeof (remote_as_string));
+                                             sizeof (remote_as_string) / sizeof (ACE_TCHAR));
           (void) local_addr.addr_to_string (local_as_string,
-                                            sizeof (local_as_string));
+                                            sizeof (local_as_string) / sizeof (ACE_TCHAR));
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO(%P|%t) - TAO::SSLIOP::Connection_Handler::open, ")
                       ACE_TEXT("Holy Cow! The remote addr and ")
@@ -190,11 +190,11 @@ TAO::SSLIOP::Connection_Handler::open (void *)
 
   if (TAO_debug_level > 0)
     {
-      char client[MAXHOSTNAMELEN + 16];
+      ACE_TCHAR client[MAXHOSTNAMELEN + 16];
 
       // Verify that we can resolve the peer hostname.
       if (remote_addr.addr_to_string (client,
-                                      sizeof (client)) == -1)
+                                      sizeof (client) / sizeof (ACE_TCHAR)) == -1)
       {
         ACE_OS::strcpy (client, "*unable to obtain*");
       }
@@ -207,7 +207,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
 
       // Verify that we can resolve our hostname.
       if (local_addr.addr_to_string (client,
-                                      sizeof (client)) == -1)
+                                      sizeof (client) / sizeof (ACE_TCHAR)) == -1)
       {
         ACE_OS::strcpy (client, "*unable to obtain*");
       }
