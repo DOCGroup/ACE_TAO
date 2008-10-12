@@ -375,14 +375,14 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) Unable to load ")
-                        ACE_TEXT ("CA certs from %s%s%s\n"),
-                        ((ca_file != 0) ? ca_file : ACE_TEXT ("a file pointed to by ")
-                                                    ACE_TEXT (ACE_SSL_CERT_FILE_ENV)
-                                                    ACE_TEXT (" env var (if any)")),
+                        ACE_TEXT ("CA certs from %C%C%C\n"),
+                        ((ca_file != 0) ? ca_file : "a file pointed to by "
+                                                    ACE_SSL_CERT_FILE_ENV
+                                                    " env var (if any)"),
                         ACE_TEXT (" and "),
-                        ((ca_dir != 0) ? ca_dir : ACE_TEXT ("a directory pointed to by ")
-                                                  ACE_TEXT (ACE_SSL_CERT_DIR_ENV)
-                                                  ACE_TEXT (" env var (if any)"))));
+                        ((ca_dir != 0) ? ca_dir : "a directory pointed to by "
+                                                  ACE_SSL_CERT_DIR_ENV
+                                                  " env var (if any)")));
 
           return -1;
         }
@@ -391,14 +391,14 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_INFO,
                         ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
-                        ACE_TEXT ("Trusted Certificates from %s%s%s\n"),
-                        ((ca_file != 0) ? ca_file : ACE_TEXT ("a file pointed to by ")
-                                                    ACE_TEXT (ACE_SSL_CERT_FILE_ENV)
-                                                    ACE_TEXT (" env var (if any)")),
+                        ACE_TEXT ("Trusted Certificates from %C%C%C\n"),
+                        ((ca_file != 0) ? ca_file : "a file pointed to by "
+                                                    ACE_SSL_CERT_FILE_ENV
+                                                    " env var (if any)"),
                         ACE_TEXT (" and "),
-                        ((ca_dir != 0) ? ca_dir : ACE_TEXT ("a directory pointed to by ")
-                                                  ACE_TEXT (ACE_SSL_CERT_DIR_ENV)
-                                                  ACE_TEXT (" env var (if any)"))));
+                        ((ca_dir != 0) ? ca_dir : "a directory pointed to by "
+                                                  ACE_SSL_CERT_DIR_ENV
+                                                  " env var (if any)")));
         }
     }
 
