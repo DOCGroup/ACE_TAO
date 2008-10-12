@@ -184,8 +184,8 @@ CORBA::Environment::print_exception (const char *info,
       const char *id = this->exception_->_rep_id ();
 
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO: (%P|%t) EXCEPTION, %s\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (info)));
+                  ACE_TEXT ("TAO: (%P|%t) EXCEPTION, %C\n"),
+                  info));
 
       CORBA::SystemException *x2 =
         CORBA::SystemException::_downcast (this->exception_);
@@ -197,12 +197,12 @@ CORBA::Environment::print_exception (const char *info,
         // held within it ...
 
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO: (%P|%t) user exception, ID '%s'\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (id)));
+                    ACE_TEXT ("TAO: (%P|%t) user exception, ID '%C'\n"),
+                    id));
     }
   else
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("TAO: (%P|%t) no exception, %s\n"), ACE_TEXT_CHAR_TO_TCHAR (info)));
+                ACE_TEXT ("TAO: (%P|%t) no exception, %C\n"), info));
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

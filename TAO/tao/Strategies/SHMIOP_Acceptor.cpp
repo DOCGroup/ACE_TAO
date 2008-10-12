@@ -330,8 +330,8 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, ")
-                  ACE_TEXT ("listening on : <%s:%u>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(this->host_.c_str ()),
+                  ACE_TEXT ("listening on : <%C:%u>\n"),
+                  this->host_.c_str (),
                   this->address_.get_port_number ()));
     }
 
@@ -468,9 +468,9 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
           if (slot == len - 1
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) SHMIOP option <%s> is ")
+                               ACE_TEXT ("TAO (%P|%t) SHMIOP option <%C> is ")
                                ACE_TEXT ("missing a value.\n"),
-                               ACE_TEXT_CHAR_TO_TCHAR(opt.c_str ())),
+                               opt.c_str ()),
                               -1);
 
           ACE_CString name = opt.substring (0, slot);
@@ -493,8 +493,8 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP option: <%s>\n"),
-                               ACE_TEXT_CHAR_TO_TCHAR(name.c_str ())),
+                               ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP option: <%C>\n"),
+                               name.c_str ()),
                               -1);
         }
       else

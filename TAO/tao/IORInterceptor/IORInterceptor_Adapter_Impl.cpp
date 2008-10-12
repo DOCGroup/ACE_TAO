@@ -90,8 +90,8 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA* poa)
                 {
                   ACE_DEBUG ((LM_WARNING,
                               "(%P|%t) Exception thrown while processing "
-                              "IORInterceptor \"%s\">\n",
-                              ACE_TEXT_CHAR_TO_TCHAR (name.in ())));
+                              "IORInterceptor \"%C\">\n",
+                              name.in ()));
                 }
 
               ex._tao_print_exception (

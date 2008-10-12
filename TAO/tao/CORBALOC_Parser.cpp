@@ -166,8 +166,8 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
         if (TAO_debug_level)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
-                      ACE_TEXT("could not parse from %s"),
-                      ACE_TEXT_CHAR_TO_TCHAR(ior)));
+                      ACE_TEXT("could not parse from %C"),
+                      ior));
         throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
       }
     if (*ior == ',') // more endpoints follow
@@ -196,8 +196,8 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
     if (TAO_debug_level)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
-                  ACE_TEXT("could not parse from %s"),
-                  ACE_TEXT_CHAR_TO_TCHAR(ior)));
+                  ACE_TEXT("could not parse from %C"),
+                  ior));
     throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
   } // end of while
 
