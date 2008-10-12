@@ -73,8 +73,8 @@ test_i::method (void)
     poa->the_name ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "Method invoked on servant in POA = %s\n",
-              ACE_TEXT_CHAR_TO_TCHAR (poa_name.in ())));
+              "Method invoked on servant in POA = %C\n",
+              poa_name.in ()));
 }
 
 void
@@ -198,8 +198,8 @@ write_ior_to_file (const char *ior)
                             ior);
   if (result != ACE_OS::strlen (ior))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %s to %s\n",
-                       ACE_TEXT_CHAR_TO_TCHAR (ior),
+                       "ACE_OS::fprintf failed while writing %C to %s\n",
+                       ior,
                        ior_file),
                       -1);
 

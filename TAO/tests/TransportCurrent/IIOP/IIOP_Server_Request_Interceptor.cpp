@@ -68,16 +68,16 @@ namespace Test {
 
         if (TAO_debug_level > 1)
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%s (%P|%t) ")
+                      ACE_TEXT ("%C (%P|%t) ")
                       ACE_TEXT ("push_request_info: %d ...\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (name.in ()),
+                      name.in (),
                       requestID));
       }
     else
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%s (%P|%t) ")
+                  ACE_TEXT ("%C (%P|%t) ")
                   ACE_TEXT ("push_request_info: Can't track that many requests %d\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (name.in ()),
+                  name.in (),
                   requestID));
 
   }
@@ -90,17 +90,17 @@ namespace Test {
 
     if (TAO_debug_level > 1)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%s (%P|%t) ")
+                  ACE_TEXT ("%C (%P|%t) ")
                   ACE_TEXT ("pop_request_info: %d ...\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (name.in ()),
+                  name.in (),
                   requestID));
 
     if (requestID >= sizeof (this->endPoints_) / sizeof (*this->endPoints_))
       {
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%s (%P|%t) ")
+                    ACE_TEXT ("%C (%P|%t) ")
                     ACE_TEXT ("pop_request_info: Can't track that many requests %d\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (name.in ()),
+                    name.in (),
                     requestID));
         return;
       }
@@ -116,9 +116,9 @@ namespace Test {
         if (ep != endPoints_[requestID])
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%s (%P|%t) ")
+                        ACE_TEXT ("%C (%P|%t) ")
                         ACE_TEXT ("pop_request_info: The expected host and port don't match for request %d\n"),
-                        ACE_TEXT_CHAR_TO_TCHAR (name.in ()),
+                        name.in (),
                         requestID));
             return;
           }
@@ -150,9 +150,9 @@ namespace Test {
           {
             has_remaining_endpoints = true;
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%s (%P|%t) Endpoint at ")
+                        ACE_TEXT ("%C (%P|%t) Endpoint at ")
                         ACE_TEXT ("index=%d has not been removed yet\n"),
-                        ACE_TEXT_CHAR_TO_TCHAR (name.in ()),
+                        name.in (),
                         count));
           }
       }
@@ -172,8 +172,8 @@ namespace Test {
 
     if (TAO_debug_level >=1)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("%s (%P|%t) Intercepted operation %s ()\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (name.in ()),
+                  ACE_TEXT("%C (%P|%t) Intercepted operation %s ()\n"),
+                  name.in (),
                   op.in ()));
 
     try
@@ -192,11 +192,11 @@ namespace Test {
     catch (const CORBA::Exception&)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s (%P|%t) Service context")
+                    ACE_TEXT ("%C (%P|%t) Service context")
                     ACE_TEXT (" is unavailable when invoking %s (). ")
                     ACE_TEXT ("A colocated invocation would have ")
                     ACE_TEXT ("no service context.\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (name.in ()),
+                    name.in (),
                     op.in ()));
       }
 
@@ -232,9 +232,9 @@ namespace Test {
       {
         CORBA::String_var name (this->name ());
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT("%s (%P|%t) Inbound_process_context failed in  ")
+                    ACE_TEXT("%C (%P|%t) Inbound_process_context failed in  ")
                     ACE_TEXT(" receive_request_service_contexts.\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (name.in ())));
+                    name.in ()));
       }
 
     Server_Request_Interceptor::receive_request_service_contexts (ri);
@@ -254,9 +254,9 @@ namespace Test {
       {
         CORBA::String_var name (this->name ());
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT("%s (%P|%t) Outbound_process_context failed in  ")
+                    ACE_TEXT("%C (%P|%t) Outbound_process_context failed in  ")
                     ACE_TEXT("send_reply.\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (name.in ())));
+                    name.in ()));
       }
 
     Server_Request_Interceptor::send_reply (ri);
@@ -276,9 +276,9 @@ namespace Test {
       {
         CORBA::String_var name (this->name ());
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT("%s (%P|%t) Outbound_process_context failed in  ")
+                    ACE_TEXT("%C (%P|%t) Outbound_process_context failed in  ")
                     ACE_TEXT("send_exception.\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (name.in ())));
+                    name.in ()));
 
       }
 
@@ -296,9 +296,9 @@ namespace Test {
       {
         CORBA::String_var name (this->name ());
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT("%s (%P|%t) Outbound_process_context failed in  ")
+                    ACE_TEXT("%C (%P|%t) Outbound_process_context failed in  ")
                     ACE_TEXT("send_other.\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (name.in ())));
+                    name.in ()));
       }
 
     Server_Request_Interceptor::send_other (ri);

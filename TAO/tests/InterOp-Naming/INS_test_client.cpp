@@ -45,9 +45,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   for (CORBA::ULong n = 0; n < length; ++n)
                     {
                       ACE_DEBUG ((LM_DEBUG,
-                                  "  Reference %u: %s\n",
+                                  "  Reference %u: %C\n",
                                   n,
-                                  ACE_TEXT_CHAR_TO_TCHAR (static_cast<char const*>(list[n]))));
+                                  static_cast<char const*>(list[n])));
                     }
                 }
               else
@@ -76,16 +76,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               CORBA::String_var iorstr =
                 orb->object_to_string (server.in ());
               ACE_DEBUG ((LM_DEBUG,
-                          "Resolved IOR for %s : %s\n",
+                          "Resolved IOR for %s : %C\n",
                           argv[i],
-                          ACE_TEXT_CHAR_TO_TCHAR (iorstr.in())));
+                          iorstr.in()));
 
               CORBA::String_var test_ins_result =
                 server->test_ins ();
 
               ACE_DEBUG ((LM_DEBUG,
-                          "\nResult of Remote Call : %s\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (test_ins_result.in ())));
+                          "\nResult of Remote Call : %C\n",
+                          test_ins_result.in ()));
             }
         }
     }

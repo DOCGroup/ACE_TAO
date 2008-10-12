@@ -1,3 +1,45 @@
+Sun Oct 12 23:06:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Abstract_Interface/client.cpp
+        * tests/Bug_1254_Regression/server.cpp
+        * tests/Bug_2134_Regression/Hello.cpp
+        * tests/Bug_2234_Regression/client.cpp
+        * tests/Bug_2234_Regression/server.cpp
+        * tests/Bug_3276_Regression/Manager.cpp
+        * tests/CDR/octet_sequence.cpp
+        * tests/CDR/tc.cpp
+        * tests/CodeSets/simple/client.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/server.cpp
+        * tests/HandleExhaustion/server.cpp
+        * tests/InterOp-Naming/INS_test_client.cpp
+        * tests/NestedUpcall/Simple/server.cpp
+        * tests/OBV/Truncatable/client.cpp
+        * tests/ORB_Local_Config/Two_DLL_ORB/client.cpp
+        * tests/ORB_Local_Config/Two_DLL_ORB/server.cpp
+        * tests/ORT/server.cpp
+        * tests/Param_Test/anyop.cpp
+        * tests/POA/Adapter_Activator/server.cpp
+        * tests/POA/Default_Servant2/client.cpp
+        * tests/POA/Default_Servant2/server.cpp
+        * tests/POA/Explicit_Activation/server.cpp
+        * tests/POA/Generic_Servant/client.cpp
+        * tests/POA/NewPOA/NewPOA.cpp
+        * tests/POA/On_Demand_Loading/Server_Manager.cpp
+        * tests/POA/Persistent_ID/server.cpp
+        * tests/POA/POA_BiDir/POA_BiDir.cpp
+        * tests/POA/POAManagerFactory/POAManagerFactory.cpp
+        * tests/RTCORBA/Linear_Priority/client.cpp
+        * tests/RTCORBA/Linear_Priority/server.cpp
+        * tests/RTCORBA/Persistent_IOR/server.cpp
+        * tests/RTCORBA/Policy_Combinations/client.cpp
+        * tests/RTCORBA/Policy_Combinations/server.cpp
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/server.cpp
+        * tests/Smart_Proxies/dtor/server.cpp
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.cpp
+        * tests/TransportCurrent/IIOP/IIOP_Tester.cpp
+          ACE_TCHAR fixes
+
 Sun Oct 12 20:53:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Acceptor_Registry.cpp

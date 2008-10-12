@@ -131,8 +131,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->object_to_string (test.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\nConnecting to: %s\n\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (ior.in ())));
+                  "\nConnecting to: %C\n\n",
+                  ior.in ()));
 
       ACE_Profile_Timer timer;
       ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;

@@ -91,8 +91,8 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
         hello->get_string ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) String returned from the server <%s>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (the_string.in ())));
+                  ACE_TEXT ("(%P|%t) String returned from the server <%C>\n"),
+                  the_string.in ()));
 
       hello->shutdown ();
 
