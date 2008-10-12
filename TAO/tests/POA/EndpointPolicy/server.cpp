@@ -100,7 +100,7 @@ make_ior (CORBA::ORB_ptr orb,
           const ACE_TCHAR *ior_file)
 {
   CORBA::String_var poa_name = poa->the_name();
-  ACE_DEBUG ((LM_DEBUG, "Creating IOR from %s\n", ACE_TEXT_CHAR_TO_TCHAR (poa_name.in())));
+  ACE_DEBUG ((LM_DEBUG, "Creating IOR from %C\n", poa_name.in()));
 
   PortableServer::ObjectId_var oid = poa->activate_object (servant);
   CORBA::Object_var o = poa->id_to_reference (oid.in ());
@@ -117,7 +117,7 @@ make_ior (CORBA::ORB_ptr orb,
       FILE *output_file= ACE_OS::fopen (ior_file, "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file %s for writing IOR: %s",
+                           "Cannot open output file %s for writing IOR: %C",
                            ior_file,
                            ior.in ()),
                           1);

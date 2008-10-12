@@ -94,8 +94,8 @@ write_iors_to_file (const char *ior)
                             ior);
   if (result != ACE_OS::strlen (ior))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %s to %s\n",
-                       ACE_TEXT_CHAR_TO_TCHAR (ior),
+                       "ACE_OS::fprintf failed while writing %C to %s\n",
+                       ior,
                        ior_output_file),
                       -1);
 
@@ -147,8 +147,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior = orb->object_to_string (test.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%s\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (ior.in ())));
+                  "%C\n",
+                  ior.in ()));
 
       int write_result = write_iors_to_file (ior.in ());
       if (write_result != 0)

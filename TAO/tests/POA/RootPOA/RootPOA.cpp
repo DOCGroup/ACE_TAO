@@ -52,7 +52,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->the_name ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "The RootPOA is : %s\n",
+                  "The RootPOA is : %C\n",
                   poa_name.in ()));
 
       orb->destroy ();

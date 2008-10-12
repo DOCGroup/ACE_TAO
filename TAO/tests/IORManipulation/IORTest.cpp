@@ -57,11 +57,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::String_var name1_ior =
         orb_->object_to_string (name1.in ());
-      ACE_DEBUG ((LM_DEBUG, "\tFirst made up IOR = %s\n", name1_ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "\tFirst made up IOR = %C\n", name1_ior.in ()));
 
       CORBA::String_var name2_ior =
         orb_->object_to_string (name2.in ());
-      ACE_DEBUG ((LM_DEBUG, "\tSecond made up IOR = %s\n", name2_ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "\tSecond made up IOR = %C\n", name2_ior.in ()));
 
       // **********************************************************************
 
@@ -87,7 +87,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     "**ERROR (merge_profiles): "
                     "Merged profile count incorrect!\n"));
 
-      ACE_DEBUG ((LM_DEBUG, "\tMerged IOR(%d) = %s\n",
+      ACE_DEBUG ((LM_DEBUG, "\tMerged IOR(%d) = %C\n",
                   count,
                   merged_ior.in ()));
 
@@ -129,7 +129,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     "removing last IOR after a merge_iors ()\n"));
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\tJust 1 IOR(%d) = %s\n",
+                  "\tJust 1 IOR(%d) = %C\n",
                   count,
                   just1_ior.in ()));
 
@@ -157,7 +157,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb_->object_to_string (merged2.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\tAdding 2 back in IOR(%d) = %s\n",
+                  "\tAdding 2 back in IOR(%d) = %C\n",
                   count,
                   merged2_ior.in ()));
 
@@ -192,7 +192,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_DEBUG ((LM_ERROR,
                     "ERROR removing last IOR after a merge_iors ()\n"));
 
-      ACE_DEBUG ((LM_DEBUG, "\tJust 2 IOR(%d) = %s\n",
+      ACE_DEBUG ((LM_DEBUG, "\tJust 2 IOR(%d) = %C\n",
                   count,
                   just2_ior.in ()));
 

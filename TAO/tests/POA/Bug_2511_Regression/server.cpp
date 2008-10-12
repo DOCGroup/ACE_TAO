@@ -100,7 +100,7 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
     PortableServer::ObjectId_to_string (oid);
 
   ACE_DEBUG ((LM_DEBUG,
-              "Servant_Locator::preinvoke for %s.%s ",
+              "Servant_Locator::preinvoke for %C.%C ",
               name.in (), op ));
 
   if (ACE_OS::strcmp (op, "normal") == 0)
@@ -138,7 +138,7 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
   }
 
   ACE_DEBUG ((LM_DEBUG,
-              "Servant_Locator::postinvoke for %s.%s\n",
+              "Servant_Locator::postinvoke for %C.%C\n",
               name.in (), op ));
 
 }
