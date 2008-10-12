@@ -1,3 +1,30 @@
+Sun Oct 12 20:01:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI/ami_test_i.cpp
+        * tests/Bug_1676_Regression/client.cpp
+        * tests/Bug_2084_Regression/EventNode.cpp
+        * tests/Bug_2183_Regression/client.cpp
+        * tests/Bug_2328_Regression/client.cpp
+        * tests/Bug_2593_Regression/client.cpp
+        * tests/Bug_2966_Regression/client.cpp
+        * tests/Bug_3299_Regression/client.cpp
+        * tests/Cache_Growth_Test/client.cpp
+        * tests/COIOP/Client_Task.cpp
+        * tests/COIOP/COIOP_Simple_Test.cpp
+        * tests/Collocation_Exception_Test/Client_Task.cpp
+        * tests/Collocation_Oneway_Tests/Client_Task.cpp
+        * tests/Collocation_Opportunities/Collocation_Opportunities.cpp
+        * tests/Collocation_Tests/Client_Task.cpp
+        * tests/Connect_Strategy_Test/client.cpp
+        * tests/Connection_Timeout/client.cpp
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/client.cpp
+        * tests/Hello/client.cpp
+        * tests/ICMG_Any_Bug/client.cpp
+        * tests/IPV6/client.cpp
+        * tests/Ondemand_Write/client.cpp
+        * tests/Optimized_Connection/oc_client.cpp
+        * tests/ZIOP/client.cpp
+
 Sun Oct 12 19:33:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DiffServ/server.cpp

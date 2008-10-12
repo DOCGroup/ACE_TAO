@@ -64,7 +64,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var the_string =
         hello->get_string (A.in (), B.in (), C.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                   the_string.in ()));
 
       hello->shutdown ();

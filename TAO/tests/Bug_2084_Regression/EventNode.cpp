@@ -50,7 +50,7 @@ void EventNode::registerHello ( ::Test::Hello_ptr h )
   CORBA::String_var str = h->get_string(
     ACE_thread_t_to_integer< ::Test::ThreadId> (ACE_Thread::self ()));
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) - EventNode: string returned <%s>\n",
+              "(%P|%t) - EventNode: string returned <%C>\n",
               str.in ()));
 }
 
