@@ -1,4 +1,4 @@
-1// -*- C++ -*-
+// -*- C++ -*-
 
 #include "ace/Get_Opt.h"
 
