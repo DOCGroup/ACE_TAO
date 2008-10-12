@@ -352,7 +352,7 @@ Filter_StructuredPushConsumer::push_structured_event
 
 
     ACE_DEBUG ((LM_DEBUG,
-                "%s received event, %d\n", my_name_.fast_rep (), val));
+                "%C received event, %d\n", my_name_.fast_rep (), val));
 
     ACE_DEBUG ((LM_DEBUG,"event count %d\n", g_result_count.value ()));
 
@@ -423,7 +423,7 @@ Filter_StructuredPushSupplier::send_event
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s is sending an event \n", my_name_.fast_rep ()));
+              "%C is sending an event \n", my_name_.fast_rep ()));
 
   proxy_consumer_->push_structured_event (event);
 }
