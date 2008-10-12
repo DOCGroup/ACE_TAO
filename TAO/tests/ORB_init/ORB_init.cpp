@@ -57,7 +57,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_INFO,
                       "\n"
-                      "The ORB <%s> was successfully returned from a second\n"
+                      "The ORB <%C> was successfully returned from a second\n"
                       "call to CORBA::ORB_init() after it was released in\n"
                       "a previous scope.\n"
                         "\n",
@@ -67,7 +67,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "\n"
-                             "ORB <%s> was not successfully returned from a\n"
+                             "ORB <%C> was not successfully returned from a\n"
                              "second call to CORBA::ORB_init() despite the\n"
                              "fact it wasn't explicitly destroyed.\n"
                              "\n",
@@ -93,7 +93,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_INFO,
                       "\n"
-                      "A new ORB with ORBid <%s> was successfully returned\n"
+                      "A new ORB with ORBid <%C> was successfully returned\n"
                       "from a second call to CORBA::ORB_init() after the\n"
                       "first ORB with the same ORBid was destroyed.\n"
                       "\n",
@@ -103,7 +103,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR ((LM_ERROR,
                       "\n"
-                      "ORB <%s> was not successfully destroyed.\n"
+                      "ORB <%C> was not successfully destroyed.\n"
                       "\n",
                       orbid));
 
@@ -148,7 +148,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "\n"
                   "CORBA::OBJECT_NOT_EXIST() exception was not thrown\n"
                   "during attempt to perform an ORB operation using\n"
-                  "destroyed ORB <%s>\n"
+                  "destroyed ORB <%C>\n"
                   "The CORBA::OBJECT_NOT_EXIST() exception should have\n"
                   "been thrown!\n"
                   "\n",
@@ -165,7 +165,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "\n"
                   "Successfully caught CORBA system exception after the\n"
                   "last ORB was released with the following repository ID:\n"
-                  "  %s\n"
+                  "  %C\n"
                   "This exception was expected.  It is safe to ignore it.\n",
                   exc._rep_id ()));
     }
