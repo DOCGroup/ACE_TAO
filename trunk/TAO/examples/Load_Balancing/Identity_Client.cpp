@@ -111,7 +111,7 @@ Identity_Client::run (void)
                        "Identity_Client: problems using the factory ior\n"),
                       -1);
 
-  const char *group_name;
+  const char *group_name = 0;
   if (this->use_random_)
     group_name = "Identity, Random";
   else
@@ -119,7 +119,7 @@ Identity_Client::run (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "Identity_Client: Requesting Object Group "
-              "with id <%s>\n", group_name));
+              "with id <%C>\n", group_name));
   Load_Balancer::Object_Group_var object_group =
     factory->resolve (group_name);
 
@@ -134,7 +134,7 @@ Identity_Client::run (void)
 
   // List all <Object_Group>s members.
   ACE_DEBUG ((LM_DEBUG,
-              "Identity_Client: Requesting member list of <%s> Object Group\n",
+              "Identity_Client: Requesting member list of <%C> Object Group\n",
               group_name));
 
   Load_Balancer::Member_ID_List_var id_list =
@@ -144,7 +144,7 @@ Identity_Client::run (void)
               "Identity_Client: The Group contains %d members:\n",
               id_list->length ()));
   for (CORBA::ULong i = 0; i < id_list->length (); ++i)
-    ACE_DEBUG ((LM_DEBUG, "                 <%s>\n",
+    ACE_DEBUG ((LM_DEBUG, "                 <%C>\n",
                 static_cast<char const*>((id_list[i]))));
 
   // Perform <number_of_invocations_> method calls on <Identity>
@@ -156,7 +156,7 @@ Identity_Client::run (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "Identity_Client: Performing %d invocation(s), "
-              "consulting the <%s> Group\n"
+              "consulting the <%C> Group\n"
               "                 for Identity object "
               "to use before each invocation\n",
               this->number_of_invocations_,

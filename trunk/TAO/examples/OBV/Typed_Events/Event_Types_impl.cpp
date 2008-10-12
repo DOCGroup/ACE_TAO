@@ -172,11 +172,11 @@ Log_Msg_impl::do_print (void)
 
   if (this->urgency () > 0)
     {
-      ACE_DEBUG((LM_DEBUG, "**** %s ****\n", this->message () ));
+      ACE_DEBUG((LM_DEBUG, "**** %C ****\n", this->message () ));
     }
   else
     {
-      ACE_DEBUG((LM_DEBUG, "%s\n", this->message () ));
+      ACE_DEBUG((LM_DEBUG, "%C\n", this->message () ));
     }
 }
 

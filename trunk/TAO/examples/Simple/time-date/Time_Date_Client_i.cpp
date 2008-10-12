@@ -54,7 +54,7 @@ Time_Date_Client_i::run (const char *name,
       client_->str_date (str_var.out());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) String time_date = %s\n",
+                  "(%P|%t) String time_date = %C\n",
                   str_var.in()));
 
       client_.shutdown ();
