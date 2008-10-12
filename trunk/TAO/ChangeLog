@@ -1,3 +1,40 @@
+Sun Oct 12 20:53:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Acceptor_Registry.cpp
+        * tao/AnyTypeCode/NVList.cpp
+        * tao/Connector_Registry.cpp
+        * tao/CORBALOC_Parser.cpp
+        * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp
+        * tao/default_resource.cpp
+        * tao/Environment.cpp
+        * tao/Exception.cpp
+        * tao/IIOP_Acceptor.cpp
+        * tao/IIOP_Connector.cpp
+        * tao/ImR_Client/ImR_Client.cpp
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp
+        * tao/Object_Ref_Table.cpp
+        * tao/ORB_Core.cpp
+        * tao/PortableServer/Operation_Table_Perfect_Hash.cpp
+        * tao/PortableServer/Root_POA.cpp
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp
+        * tao/RTScheduling/Request_Interceptor.cpp
+        * tao/Strategies/advanced_resource.cpp
+        * tao/Strategies/COIOP_Acceptor.cpp
+        * tao/Strategies/DIOP_Acceptor.cpp
+        * tao/Strategies/DIOP_Connection_Handler.cpp
+        * tao/Strategies/DIOP_Connector.cpp
+        * tao/Strategies/DIOP_Transport.cpp
+        * tao/Strategies/SCIOP_Acceptor.cpp
+        * tao/Strategies/SCIOP_Connection_Handler.cpp
+        * tao/Strategies/SCIOP_Connector.cpp
+        * tao/Strategies/SHMIOP_Acceptor.cpp
+        * tao/Strategies/SHMIOP_Connector.cpp
+        * tao/Synch_Invocation.cpp
+        * tao/SystemException.cpp
+        * tao/Transport.cpp
+        * tao/Transport_Connector.cpp
+          ACE_TCHAR fixes
+
 Sun Oct 12 20:52:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Persistent_Grid/Simple_util.cpp

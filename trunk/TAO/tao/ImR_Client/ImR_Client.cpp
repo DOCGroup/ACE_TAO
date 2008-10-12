@@ -113,8 +113,8 @@ namespace TAO
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "Informing IMR that we are running at: %s\n",
-                    ACE_TEXT_CHAR_TO_TCHAR (partial_ior.c_str())));
+                    "Informing IMR that we are running at: %C\n",
+                    partial_ior.c_str()));
 
       try
         {

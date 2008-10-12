@@ -81,8 +81,8 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
              ACE_ERROR_RETURN ((LM_ERROR,
                                 ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry")
                                 ACE_TEXT ("::open: unable to open connector for ")
-                                ACE_TEXT ("<%s>.\n"),
-                                ACE_TEXT_CHAR_TO_TCHAR((*factory)->protocol_name ().c_str ())),
+                                ACE_TEXT ("<%C>.\n"),
+                                (*factory)->protocol_name ().c_str ()),
                                -1);
            }
 

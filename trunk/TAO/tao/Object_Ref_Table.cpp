@@ -53,9 +53,9 @@ TAO_Object_Ref_Table::bind (const char *id, CORBA::Object_ptr obj)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) Object_Ref_Table::")
                       ACE_TEXT ("bind:")
-                      ACE_TEXT ("  Could not register duplicate object <%s> ")
+                      ACE_TEXT ("  Could not register duplicate object <%C> ")
                       ACE_TEXT ("with the ORB\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (id)));
+                      id));
         }
 
       return -1;

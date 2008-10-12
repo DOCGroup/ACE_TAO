@@ -733,8 +733,8 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("TAO (%P|%t) Unable to load ")
-                             ACE_TEXT ("protocol <%s>, %p\n"),
-                             ACE_TEXT_CHAR_TO_TCHAR(name.c_str ()),
+                             ACE_TEXT ("protocol <%C>, %p\n"),
+                             name.c_str (),
                              ACE_TEXT ("")),
                             -1);
         }
@@ -742,8 +742,8 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) Loaded protocol <%s>\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(name.c_str ())));
+                      ACE_TEXT ("TAO (%P|%t) Loaded protocol <%C>\n"),
+                      name.c_str ()));
         }
     }
 

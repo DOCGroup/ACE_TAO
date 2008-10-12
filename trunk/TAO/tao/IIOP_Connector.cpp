@@ -207,8 +207,8 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) IIOP_Connector::make_connection, ")
-                      ACE_TEXT("connection to <%s:%d> failed (%p)\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (iiop_endpoint->host ()),
+                      ACE_TEXT("connection to <%C:%d> failed (%p)\n"),
+                      iiop_endpoint->host (),
                       iiop_endpoint->port (),
                       ACE_TEXT("errno")));
         }
@@ -343,8 +343,8 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::begin_connection, ")
-                ACE_TEXT ("to <%s:%d> which should %s\n"),
-                ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host()),
+                ACE_TEXT ("to <%C:%d> which should %s\n"),
+                iiop_endpoint->host(),
                 iiop_endpoint->port(),
                 r->blocked_connect () ? ACE_TEXT("block") : ACE_TEXT("nonblock")));
 
@@ -527,8 +527,8 @@ TAO_IIOP_Connector::complete_connection (int result,
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::complete_connection,")
-                          ACE_TEXT (" connection to <%s:%d> failed (%p)\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (ep_list[i]->host ()),
+                          ACE_TEXT (" connection to <%C:%d> failed (%p)\n"),
+                          ep_list[i]->host (),
                           ep_list[i]->port (),
                           ACE_TEXT("errno")));
             }
@@ -566,10 +566,10 @@ TAO_IIOP_Connector::complete_connection (int result,
     {
     ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::make_connection, ")
-                  ACE_TEXT ("new %s connection to <%s:%d> on Transport[%d]\n"),
+                  ACE_TEXT ("new %s connection to <%C:%d> on Transport[%d]\n"),
                   transport->is_connected() ?
                   ACE_TEXT("connected") : ACE_TEXT("not connected"),
-                  ACE_TEXT_CHAR_TO_TCHAR (iiop_endpoint->host ()),
+                  iiop_endpoint->host (),
                 iiop_endpoint->port (),
                 svc_handler->peer ().get_handle ()));
     }

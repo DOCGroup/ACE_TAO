@@ -1380,8 +1380,8 @@ TAO_ORB_Core::fini (void)
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Destroying ORB <%s>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (this->orbid_)));
+                  ACE_TEXT ("Destroying ORB <%C>\n"),
+                  this->orbid_));
     }
 
   // Finalize lane resources.
@@ -2637,8 +2637,8 @@ TAO_ORB_Core::set_endpoint_helper (const ACE_CString &lane,
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t)\n")
-                  ACE_TEXT ("Invalid endpoint(s) specified:\n%s\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(endpoints.c_str ())));
+                  ACE_TEXT ("Invalid endpoint(s) specified:\n%C\n"),
+                  endpoints.c_str ()));
       throw ::CORBA::BAD_PARAM (
         CORBA::SystemException::_tao_minor_code (
           TAO_ORB_CORE_INIT_LOCATION_CODE,

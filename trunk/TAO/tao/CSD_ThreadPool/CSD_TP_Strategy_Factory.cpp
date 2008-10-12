@@ -86,8 +86,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
                                      arg_remainder.substr (pos + 1, arg.length () - pos);
 
                     // Case-insensitive string comparison.
-                    if (ACE_OS::strcasecmp (ACE_TEXT_CHAR_TO_TCHAR (off_str.c_str()),
-                                            ACE_TEXT("OFF")) == 0)
+                    if (ACE_OS::strcasecmp (off_str.c_str(), "OFF") == 0)
                       {
                         serialize_servants = false;
                       }

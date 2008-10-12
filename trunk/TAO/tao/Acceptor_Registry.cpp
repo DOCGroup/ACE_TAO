@@ -160,8 +160,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) Invalid endpoint ")
-                          ACE_TEXT ("specification: <%s>.\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (iop.c_str ())));
+                          ACE_TEXT ("specification: <%C>.\n"),
+                          iop.c_str ()));
             }
 
           throw ::CORBA::BAD_PARAM (
@@ -247,8 +247,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) Invalid endpoint ")
-                          ACE_TEXT ("specification: <%s>.\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (iop.c_str ())));
+                          ACE_TEXT ("specification: <%C>.\n"),
+                          iop.c_str ()));
             }
 
           throw ::CORBA::BAD_PARAM (
@@ -382,9 +382,8 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                       ACE_ERROR ((
                           LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) unable to create ")
-                          ACE_TEXT ("an acceptor for <%s>\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR ((*i)->
-                            protocol_name ().c_str ())
+                          ACE_TEXT ("an acceptor for <%C>\n"),
+                          (*i)->protocol_name ().c_str ()
                         ));
                     }
 
@@ -396,7 +395,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                   // Open first acceptor on IPv4 ANY
                   ACE_INET_Addr addr(static_cast<unsigned short> (0));
 
-                  TAO_IIOP_Acceptor* iiop_acceptor = 
+                  TAO_IIOP_Acceptor* iiop_acceptor =
                     dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
 
                   if (!iiop_acceptor)
@@ -416,7 +415,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                     }
 
                   // record the port chosen for the IPv4 acceptor
-                  u_short port = 
+                  u_short port =
                     iiop_acceptor->default_address ().get_port_number ();
 
                   // Create second acceptor for IPV6 traffic
@@ -430,19 +429,18 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                           ACE_ERROR ((
                               LM_ERROR,
                               ACE_TEXT ("TAO (%P|%t) unable to create ")
-                              ACE_TEXT ("an acceptor for <%s>\n"),
-                              ACE_TEXT_CHAR_TO_TCHAR ((*i)->
-                                protocol_name ().c_str ())
+                              ACE_TEXT ("an acceptor for <%C>\n"),
+                              (*i)->protocol_name ().c_str ()
                             ));
                         }
 
                       return -1;
                     }
 
-                  if (ACE::ipv6_enabled() && 
+                  if (ACE::ipv6_enabled() &&
                       addr.set (port, ACE_IPV6_ANY, 1, AF_INET6) == 0)
                     {
-                      iiop_acceptor = 
+                      iiop_acceptor =
                         dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
 
                       if (!iiop_acceptor)
@@ -566,8 +564,8 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
           ACE_ERROR ((
               LM_ERROR,
               ACE_TEXT ("TAO (%P|%t) unable to create ")
-              ACE_TEXT ("an acceptor for <%s>\n"),
-              ACE_TEXT_CHAR_TO_TCHAR ((*factory)->protocol_name ().c_str ())
+              ACE_TEXT ("an acceptor for <%C>\n"),
+              (*factory)->protocol_name ().c_str ()
             ));
         }
 
@@ -759,8 +757,8 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                               ACE_ERROR ((
                                   LM_ERROR,
                                   ACE_TEXT ("TAO (%P|%t) unable to create ")
-                                  ACE_TEXT ("an acceptor for <%s>\n"),
-                                  ACE_TEXT_CHAR_TO_TCHAR ((*factory)->protocol_name ().c_str ())
+                                  ACE_TEXT ("an acceptor for <%C>\n"),
+                                  (*factory)->protocol_name ().c_str ()
                                 ));
                             }
 
@@ -853,8 +851,8 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                   ACE_ERROR ((LM_ERROR,
                               ACE_TEXT ("TAO (%P|%t) ")
                               ACE_TEXT ("unable to open acceptor ")
-                              ACE_TEXT ("for <%s>%p\n"),
-                              ACE_TEXT_CHAR_TO_TCHAR (address.c_str ()),
+                              ACE_TEXT ("for <%C>%p\n"),
+                              address.c_str (),
                               ACE_TEXT ("")));
                 }
 
@@ -874,8 +872,8 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) unable to create ")
-                          ACE_TEXT ("an acceptor for <%s>.\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (address.c_str ())));
+                          ACE_TEXT ("an acceptor for <%C>.\n"),
+                          address.c_str ()));
             }
 
           throw ::CORBA::NO_MEMORY (
