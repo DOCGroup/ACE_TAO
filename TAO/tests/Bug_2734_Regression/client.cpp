@@ -104,7 +104,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%C> is nil.\n",
+                             "Object reference <%s> is nil.\n",
                              ior),
                             1);
         }
@@ -235,9 +235,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (int i = 0; i < 4; i++) {
         timeout_count_total += timeout_count[i];
         in_time_count_total += in_time_count[i];
-        ACE_DEBUG ((LM_DEBUG, "in_time_count[%s]= %d timeout_count[%s]= %d\n",
-                    ACE_TEXT_CHAR_TO_TCHAR (to_type_names[i]), in_time_count[i],
-                    ACE_TEXT_CHAR_TO_TCHAR (to_type_names[i]), timeout_count[i]));
+        ACE_DEBUG ((LM_DEBUG, "in_time_count[%C]= %d timeout_count[%C]= %d\n",
+                    to_type_names[i], in_time_count[i],
+                    to_type_names[i], timeout_count[i]));
       }
 
       if (timeout_count_total == 0)

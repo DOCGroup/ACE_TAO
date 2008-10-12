@@ -160,7 +160,7 @@ Worker::run_test (void)
   if (CORBA::is_nil (server.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  "Object reference <%C> is nil.\n",
+                  "Object reference <%s> is nil.\n",
                   ior));
       return;
     }
