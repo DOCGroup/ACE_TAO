@@ -920,7 +920,7 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
                            "CosNaming::list does not function properly\n"),
                           -1);
       ACE_DEBUG ((LM_DEBUG,
-                  "First binding: %s\n",
+                  "First binding: %C\n",
                   bindings_list[0u].binding_name[0u].id.in ()));
 
       // Invoke operations on the iterator.
@@ -931,7 +931,7 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
                            "CosNaming::next_one does not function properly\n"),
                           -1);
       ACE_DEBUG ((LM_DEBUG,
-                  "Second binding: %s\n",
+                  "Second binding: %C\n",
                   binding->binding_name[0].id.in ()));
 
       iter->next_n (2, bindings_list.out ());
@@ -942,8 +942,8 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
                            "CosNaming::BindingIterator does not function properly\n"),
                           -1);
       ACE_DEBUG ((LM_DEBUG,
-                  "Third binding: %s\n"
-                  "Fourth binding: %s\n",
+                  "Third binding: %C\n"
+                  "Fourth binding: %C\n",
                   bindings_list[0u].binding_name[0].id.in (),
                   bindings_list[1u].binding_name[0].id.in ()));
 
