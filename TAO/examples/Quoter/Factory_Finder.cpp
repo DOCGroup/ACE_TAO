@@ -88,7 +88,7 @@ Quoter_Factory_Finder_Server::init (int argc,
 
       // Print the IOR.
       if (this->debug_level_ >= 2)
-        ACE_DEBUG ((LM_DEBUG, "Factory Finder: IOR is: <%s>\n", str.in ()));
+        ACE_DEBUG ((LM_DEBUG, "Factory Finder: IOR is: <%C>\n", str.in ()));
 
       // Register the Quoter Factory Finder with the Naming Service
       if (this->debug_level_ >= 2)
@@ -144,7 +144,7 @@ Quoter_Factory_Finder_Server::init (int argc,
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_ERROR ((LM_ERROR, "Quoter_Factor_Finder_Server::init - %s\n", exception_message));
+      ACE_ERROR ((LM_ERROR, "Quoter_Factor_Finder_Server::init - %C\n", exception_message));
       ex._tao_print_exception ("SYS_EX");
       return -1;
     }
