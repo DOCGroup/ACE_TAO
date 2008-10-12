@@ -41,7 +41,7 @@
 
 
     ACE_DEBUG ((LM_DEBUG,
-               "TAO_FT (%P|%t): ClientRequest_Interceptor::send_poll called for operation: %s \n",
+               "TAO_FT (%P|%t): ClientRequest_Interceptor::send_poll called for operation: %C\n",
                     op.in ()));
   }
 
@@ -55,7 +55,7 @@
 
 
     ACE_DEBUG ((LM_DEBUG,
-               "ClientRequest_Interceptor::send_request called for operation: %s - things are going well...\n",
+               "ClientRequest_Interceptor::send_request called for operation: %C - things are going well...\n",
                     op.in ()));
   }
 
@@ -83,7 +83,7 @@
 
 
     ACE_DEBUG ((LM_DEBUG,
-               "ClientRequest_Interceptor::receive_exception called for operation: %s - test has succeeded...\n",
+               "ClientRequest_Interceptor::receive_exception called for operation: %C - test has succeeded...\n",
                 op.in ()));
     success_flag_ = 1;
   }
