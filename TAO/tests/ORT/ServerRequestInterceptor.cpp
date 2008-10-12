@@ -90,7 +90,7 @@ ServerRequestInterceptor::receive_request (
         ACE_DEBUG ((LM_INFO, "\t"));
 
       ACE_DEBUG ((LM_INFO,
-                  "%s\n",
+                  "%C\n",
                   static_cast<char const*>(name[i])));
     }
 
