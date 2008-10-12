@@ -19,8 +19,8 @@ static const char* PARTIAL_IOR = "Location";
 static const char* IOR = "IOR";
 static const char* START_LIMIT = "StartLimit";
 static const char* ACTIVATOR = "Activator";
-static const char* SERVERS_ROOT_KEY = "Servers";
-static const char* ACTIVATORS_ROOT_KEY = "Activators";
+static const ACE_TCHAR* SERVERS_ROOT_KEY = ACE_TEXT("Servers");
+static const ACE_TCHAR* ACTIVATORS_ROOT_KEY = ACE_TEXT("Activators");
 static const char* TOKEN = "Token";
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
@@ -44,7 +44,7 @@ static void loadActivatorsAsBinary (ACE_Configuration& config, Locator_Repositor
   if (err == 0)
     {
       int index = 0;
-      ACE_CString name;
+      ACE_TString name;
       while (config.enumerate_sections (root, index, name) == 0)
         {
           ACE_CString ior;
