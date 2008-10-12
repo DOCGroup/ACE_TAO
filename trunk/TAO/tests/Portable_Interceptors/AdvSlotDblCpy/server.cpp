@@ -39,7 +39,7 @@ namespace
     {
       CORBA::Any_var data;
 
-      ACE_DEBUG ((LM_DEBUG, "SERVER %s -> get_slot(TSC) -> is ", location));
+      ACE_DEBUG ((LM_DEBUG, "SERVER %C -> get_slot(TSC) -> is ", location));
       data= pi_current->get_slot( slot_id );
       CORBA::TypeCode_var
         tc= data->type();
@@ -69,7 +69,7 @@ namespace
         throw INTERNAL ();
       }
 
-      ACE_DEBUG ((LM_DEBUG, "SERVER %s -> get_slot(RSC) -> is ", location));
+      ACE_DEBUG ((LM_DEBUG, "SERVER %C -> get_slot(RSC) -> is ", location));
       data= ri->get_slot( slot_id );
 
       tc= data->type();
@@ -130,7 +130,7 @@ namespace
       CORBA::Any data;
       data <<= number;
 
-      ACE_DEBUG ((LM_DEBUG, "SERVER %s -> set_slot(RSC)", location));
+      ACE_DEBUG ((LM_DEBUG, "SERVER %C -> set_slot(RSC)", location));
       ri->set_slot( slot_id, data );
 
       ACE_DEBUG ((LM_DEBUG, " -> long (%d)\n", number));
@@ -304,7 +304,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open output file <%s> for writing "
-                       "IOR: %s",
+                       "IOR: %C",
+                       output_file,
                        ior.in ()),
                       1);
   }
@@ -312,7 +313,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_OS::fprintf (output_file, "%s", ior.in ());
   ACE_OS::fclose (output_file);
 
-  ACE_DEBUG ((LM_DEBUG, "Server is ready, IOR is in 'server.ior'\n"));
+  ACE_DEBUG ((LM_DEBUG, "Server is ready, IOR is in '%C'\n", output_file));
 
 
   // Run the ORB event loop.
