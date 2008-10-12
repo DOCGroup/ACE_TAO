@@ -355,7 +355,7 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
   poa_policy_list[act_index] = activation_policy;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "creating POA %s\n", POA_name_.c_str ()));
+    ACE_DEBUG ((LM_DEBUG, "creating POA %C\n", POA_name_.c_str ()));
 
   // Get the POA Manager.
   PortableServer::POAManager_var poa_manager =

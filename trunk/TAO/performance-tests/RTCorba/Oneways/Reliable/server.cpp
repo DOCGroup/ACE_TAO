@@ -123,7 +123,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Activated as <%s>\n",
+                  "Activated as <%C>\n",
                   ior.in ()));
 
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");

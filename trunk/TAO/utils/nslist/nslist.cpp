@@ -163,21 +163,21 @@ namespace
     ACE_DEBUG ((LM_DEBUG, "\n"));
     int count;
     for (count= 0; count < level; ++count)
-      ACE_DEBUG ((LM_DEBUG, "%s ", myTree));
+      ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
     for (count= 0; count < sizeMyNode; ++count)
       ACE_DEBUG ((LM_DEBUG, " "));
-    ACE_DEBUG ((LM_DEBUG, " Protocol: %s\n",
+    ACE_DEBUG ((LM_DEBUG, " Protocol: %C\n",
                tag_name.c_str()));
 
     // Display Endpoint
     for (count= 0; count < level; ++count)
-      ACE_DEBUG ((LM_DEBUG, "%s ", myTree));
+      ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
     for (count= 0; count < sizeMyNode; ++count)
       ACE_DEBUG ((LM_DEBUG, " "));
     char buf[256]= {'\0'};
     if (endpoint->addr_to_string (buf, sizeof(buf)-1u) < 0)
       ACE_OS::strcpy( buf, "{Endpoint too long}" );
-    ACE_DEBUG ((LM_DEBUG, " Endpoint: %s\n", buf));
+    ACE_DEBUG ((LM_DEBUG, " Endpoint: %C\n", buf));
   }
 
   //==========================================================================
@@ -193,13 +193,13 @@ namespace
       {
         int count;
         for (count= 0; count < level-1; ++count)
-          ACE_DEBUG ((LM_DEBUG, "%s ", myTree));
-        ACE_DEBUG ((LM_DEBUG, "%s %s", myNode,
+          ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
+        ACE_DEBUG ((LM_DEBUG, "%C %C", myNode,
                    bl[i].binding_name[0].id.in ()));
 
         if (bl[i].binding_name[0].kind[0])
           ACE_DEBUG ((LM_DEBUG,
-                     " (Kind: %s)",
+                     " (Kind: %C)",
                      bl[i].binding_name[0].kind.in ()));
 
         CosNaming::Name Name;
@@ -246,7 +246,7 @@ namespace
                   {
                     int count;
                     for (count= 0; count < (level - backwards); ++count)
-                      ACE_DEBUG ((LM_DEBUG, "%s ", myTree));
+                      ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
                     ACE_DEBUG ((LM_DEBUG, "^"));
                     int chars;
                     while (++count < level)
@@ -263,7 +263,7 @@ namespace
                   {
                     CORBA::String_var str =
                       orb->object_to_string (obj.in ());
-                    ACE_DEBUG ((LM_DEBUG, ": %s", str.in ()));
+                    ACE_DEBUG ((LM_DEBUG, ": %C", str.in ()));
                   }
 
                 if (maxDepth != level)
@@ -289,7 +289,7 @@ namespace
               {
                 CORBA::String_var str =
                   orb->object_to_string (obj.in ());
-                ACE_DEBUG ((LM_DEBUG, ": %s\n", str.in ()));
+                ACE_DEBUG ((LM_DEBUG, ": %C\n", str.in ()));
               }
             else if (CORBA::is_nil (obj.in ()))
               ACE_DEBUG ((LM_DEBUG, "\n"));
@@ -607,7 +607,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       failed = true;
                     }
                   else
-                     maxDepth= ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR (*argv));
+                     maxDepth= ACE_OS::atoi (*argv);
                 }
               else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--rtt")))
                 {
@@ -624,12 +624,12 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       failed = true;
                     }
                  else
-                   rtt.set(ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR (*argv)), 0);
+                   rtt.set(ACE_OS::atoi (*argv), 0);
                 }
               else
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                             "Unknown option %s\n", ACE_TEXT_ALWAYS_CHAR (*argv)));
+                             "Unknown option %s\n", *argv));
                   failed = true;
                 }
             }
@@ -704,7 +704,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
           if (CORBA::is_nil (root_nc.in ()))
             {
               ACE_DEBUG ((LM_DEBUG,
-                         "Error: Can't find naming context\n    %s\n", name));
+                         "Error: Can't find naming context\n    %C\n", name));
               orb->destroy ();
               return 1;
             }
@@ -716,12 +716,12 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       if (showNSonly)
         {
           ACE_DEBUG ((LM_DEBUG,
-                     "The NameService is located via:\n%s\n", str.in ()));
+                     "The NameService is located via:\n%C\n", str.in ()));
         }
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                     "Naming Service: %s\n---------------\n",
+                     "Naming Service: %C\n---------------\n",
                      ((showCtxIOR)? str.in () : "")));
           list_context (root_nc.in (), 1);
         }

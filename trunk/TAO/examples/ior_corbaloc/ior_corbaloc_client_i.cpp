@@ -89,10 +89,8 @@ int
 IOR_corbaloc_Client_i::init (int& argc,
                              ACE_TCHAR *argv[])
 {
-
   try
     {
-
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);

@@ -92,7 +92,7 @@ Starter::add_to_synchs (CosNaming::BindingList &binding_list)
         binding_list [i].binding_name [0].id.in ();
 
       ACE_DEBUG ((LM_DEBUG,
-      "Synch Name %s\n",
+      "Synch Name %C\n",
       synch_name.c_str ()));
 
       CosNaming::Name name (1);
