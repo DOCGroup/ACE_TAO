@@ -163,8 +163,8 @@ CORBA::ORB::destroy (void)
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("CORBA::ORB::destroy() called on ORB <%s>.\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (this->orb_core ()->orbid ())));
+                  ACE_TEXT ("CORBA::ORB::destroy() called on ORB <%C>.\n"),
+                  this->orb_core ()->orbid ()));
     }
 
   this->orb_core ()->destroy ();
@@ -1156,7 +1156,7 @@ namespace TAO
 
           if (TAO_debug_level > 0)
               ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("ERROR: Unable to find ORB: %s. Invalid shared ")
+              ACE_TEXT ("ERROR: Unable to find ORB: %C. Invalid shared ")
               ACE_TEXT ("configuration argument \"%s\"\n"),
                 orbid.c_str (), arg));
 
@@ -1171,7 +1171,7 @@ namespace TAO
       // Unknown value
       if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("ERROR: -ORBGestalt unknown value <%s>\n"),
+                        ACE_TEXT ("ERROR: -ORBGestalt unknown value <%C>\n"),
                         orbconfig_string.c_str()));
 
       throw ::CORBA::BAD_PARAM
@@ -1353,8 +1353,8 @@ CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) created new ORB <%s>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (orbid_string.c_str ())));
+                  ACE_TEXT("TAO (%P|%t) created new ORB <%C>\n"),
+                  orbid_string.c_str ()));
     }
 
   // Before returning remember to store the ORB into the table...
