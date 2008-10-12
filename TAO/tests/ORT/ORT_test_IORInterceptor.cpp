@@ -76,7 +76,7 @@ ORT_test_IORInterceptor::adapter_manager_state_changed (
     PortableInterceptor::AdapterState)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "The AdapterManager [id=%s] state has changed.\n", id));
+              "The AdapterManager [id=%C] state has changed.\n", id));
 }
 
 void
