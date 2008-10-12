@@ -1,3 +1,9 @@
+Sun Oct 12 20:52:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Persistent_Grid/Simple_util.cpp
+        * examples/Simple/Simple_util.cpp
+          ACE_TCHAR fixes
+
 Sun Oct 12 20:01:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI/ami_test_i.cpp
@@ -24,6 +30,7 @@ Sun Oct 12 20:01:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/Ondemand_Write/client.cpp
         * tests/Optimized_Connection/oc_client.cpp
         * tests/ZIOP/client.cpp
+          ACE_TCHAR fixes
 
 Sun Oct 12 19:33:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
