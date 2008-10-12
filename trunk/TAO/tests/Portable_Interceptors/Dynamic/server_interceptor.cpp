@@ -169,7 +169,7 @@ Echo_Server_Request_Interceptor::send_exception (
   const char *exception_id = type->id ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "Exception ID = %s\n",
+              "Exception ID = %C\n",
               exception_id));
 }
 

@@ -247,7 +247,7 @@ Echo_Client_Request_Interceptor::receive_exception (
     ri->received_exception_id ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "Exception ID = %s\n",
+              "Exception ID = %C\n",
               exception_id.in ()));
 }
 
