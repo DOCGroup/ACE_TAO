@@ -38,7 +38,7 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
 
   //if (TAO_debug_level > 0)
   ACE_DEBUG ((LM_DEBUG,
-              "%N:%l:(%P:%t):AMI_Test_i::foo:  %d %s\n",
+              "%N:%l:(%P:%t):AMI_Test_i::foo:  %d %C\n",
               in_l,
               in_str));
 
