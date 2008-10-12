@@ -265,7 +265,7 @@ Client::svc (void)
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
+                             "Object reference <%C> is nil.\n",
                              ior),
                             1);
         }
