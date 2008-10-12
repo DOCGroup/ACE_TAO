@@ -457,7 +457,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
     if (!identified)
     {
       this->identity_ = ACE_TEXT("name:");
-      this->identity_ += this->ns_name_;
+      this->identity_ += ACE_TEXT_CHAR_TO_TCHAR(this->ns_name_);
     }
 
     CORBA::Object_var naming_obj =
