@@ -122,7 +122,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
               for (CORBA::ULong index = 0; index < data->length (); ++index)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "MP <%s>:\n", ACE_TEXT_CHAR_TO_TCHAR (data[index].itemname.in ())));
+                  ACE_DEBUG ((LM_DEBUG, "MP <%C>:\n", data[index].itemname.in ()));
                   Monitor::Data dlist = data[index];
 
                   if (dlist.data_union._d() == Monitor::DATA_TEXT)
@@ -146,7 +146,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           for (CORBA::ULong index = 0; index < list->length (); ++index)
             {
-              ACE_DEBUG ((LM_DEBUG, "MP: <%s>\n", ACE_TEXT_CHAR_TO_TCHAR (list[index].in ())));
+              ACE_DEBUG ((LM_DEBUG, "MP: <%C>\n", list[index].in ()));
             }
         }
 

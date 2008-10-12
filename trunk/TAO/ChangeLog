@@ -1,3 +1,9 @@
+Sun Oct 12 23:10:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/catior/catior.cpp
+        * utils/monitor/monitor_client.cpp
+          ACE_TCHAR fixes
+
 Sun Oct 12 23:06:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Abstract_Interface/client.cpp
