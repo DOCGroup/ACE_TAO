@@ -278,7 +278,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               float timeout = 0;
 
-              if (sscanf (argv[curarg], "%f", &timeout) != 1
+              if (sscanf (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), "%f", &timeout) != 1
                   || timeout < 0)
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    "ERROR: Invalid -SSLAcceptTimeout "
