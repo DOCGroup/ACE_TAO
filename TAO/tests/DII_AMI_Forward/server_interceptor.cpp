@@ -50,12 +50,11 @@ void
 ForwardTest_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var operation = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s.receive_request_service_contexts from "
-              "\"%s\"\n",
+              "%C.receive_request_service_contexts from "
+              "\"%C\"\n",
               this->myname_,
               operation.in ()));
 
@@ -85,23 +84,18 @@ void
 ForwardTest_Request_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
-  // Do nothing
 }
 
 void
 ForwardTest_Request_Interceptor::send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr ri)
+    PortableInterceptor::ServerRequestInfo_ptr)
 {
-    // No op
-     ACE_UNUSED_ARG (ri);
 }
 
 void
 ForwardTest_Request_Interceptor::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr ri)
+    PortableInterceptor::ServerRequestInfo_ptr)
 {
-    // No Op
-     ACE_UNUSED_ARG (ri);
 }
 
 void
