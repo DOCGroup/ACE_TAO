@@ -41,11 +41,11 @@ public:
               CORBA::Any_out outany)
   {
     ACE_DEBUG ((LM_DEBUG,
-                "Server: bare string: %s\n", ACE_TEXT_CHAR_TO_TCHAR (name)));
+                "Server: bare string: %C\n", name));
     const char *any_str;
     inany >>= any_str;
     ACE_DEBUG ((LM_DEBUG,
-                "Server: inserted string: %s\n\n", ACE_TEXT_CHAR_TO_TCHAR (any_str)));
+                "Server: inserted string: %C\n\n", any_str));
 
     CORBA::Any *out_ptr = 0;
     ACE_NEW_RETURN (out_ptr,
