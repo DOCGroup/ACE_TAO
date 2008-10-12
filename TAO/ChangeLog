@@ -1,3 +1,21 @@
+Sun Oct 12 19:33:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DiffServ/server.cpp
+        * tests/IORManipulation/IORTest.cpp
+        * tests/POA/Bug_2511_Regression/server.cpp
+        * tests/POA/DSI/Database_i.cpp
+        * tests/POA/DSI/server.cpp
+        * tests/POA/EndpointPolicy/server.cpp
+        * tests/POA/Etherealization/Etherealization.cpp
+        * tests/POA/FindPOA/FindPOA.cpp
+        * tests/POA/Identity/Identity.cpp
+        * tests/POA/Loader/Server_Manager.cpp
+        * tests/POA/MT_Servant_Locator/MT_Servant_Locator.cpp
+        * tests/POA/On_Demand_Activation/server.cpp
+        * tests/POA/Reference_Counted_Servant/server.cpp
+        * tests/POA/RootPOA/RootPOA.cpp
+          ACE_TCHAR fixes
+
 Sun Oct 12 19:04:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.cpp
