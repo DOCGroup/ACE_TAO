@@ -69,7 +69,7 @@ Servant_Activator::incarnate (const PortableServer::ObjectId &id,
     PortableServer::ObjectId_to_string (id);
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nIncarnate called with id = \"%s\"\n",
+              "\nIncarnate called with id = \"%C\"\n",
               object_name.in ()));
 
   if (ACE_OS::strcmp (object_name.in (),
@@ -91,7 +91,7 @@ Servant_Activator::etherealize (const PortableServer::ObjectId &id,
     PortableServer::ObjectId_to_string (id);
 
   ACE_DEBUG ((LM_DEBUG,
-              "Etherealize called with id = \"%s\"\n",
+              "Etherealize called with id = \"%C\"\n",
               object_name.in ()));
 
   if (ACE_OS::strcmp (object_name.in (),

@@ -118,7 +118,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         second_poa->the_name ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%s\n%s\n%s\n",
+                  "%C\n%C\n%C\n",
                   root_poa_name.in (),
                   first_poa_name.in (),
                   second_poa_name.in ()));

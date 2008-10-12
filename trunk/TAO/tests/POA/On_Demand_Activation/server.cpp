@@ -66,7 +66,7 @@ write_iors_to_file (const char *first_ior,
 
   if (output_file_1 == 0 ||
       output_file_2 == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s, %s\n",
+    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %C, %C\n",
                        ior_output_file_1,
                        ior_output_file_2),
                       -1);
@@ -77,7 +77,7 @@ write_iors_to_file (const char *first_ior,
   if (result <= 0
       || static_cast<size_t> (result) != ACE_OS::strlen (first_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %s to %s\n",
+                       "ACE_OS::fprintf failed while writing %C to %s\n",
                        first_ior,
                        ior_output_file_1),
                       -1);
@@ -88,7 +88,7 @@ write_iors_to_file (const char *first_ior,
   if (result <= 0
       || static_cast<size_t> (result) != ACE_OS::strlen (second_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %s to %s\n",
+                       "ACE_OS::fprintf failed while writing %C to %s\n",
                        second_ior,
                        ior_output_file_2),
                       -1);
@@ -247,7 +247,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Print the ior's of first_test and second_test.
 
-      ACE_DEBUG((LM_DEBUG,"%s\n%s\n",
+      ACE_DEBUG((LM_DEBUG,"Cs\n%C\n",
                  first_test_ior.in (),
                  second_test_ior.in ()));
 
