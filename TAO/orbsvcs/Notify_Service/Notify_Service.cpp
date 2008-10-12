@@ -77,7 +77,7 @@ TAO_Notify_Service_Driver::init_dispatching_ORB (int& argc, ACE_TCHAR *argv [])
   ACE_Argv_Type_Converter command_line(argc, argv);
 
   this->dispatching_orb_ = CORBA::ORB_init (command_line.get_argc(),
-                                command_line.get_ASCII_argv(),
+                                command_line.get_TCHAR_argv(),
                                 "dispatcher");
 
   this->apply_timeout (this->dispatching_orb_.in ());
@@ -222,7 +222,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
                              this->notify_factory_.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Registered with the naming service as: %s\n",
+                  "Registered with the naming service as: %C\n",
                   this->notify_factory_name_.c_str()));
 
       if (this->register_event_channel_)
@@ -256,7 +256,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
                                  ec.in ());
 
           ACE_DEBUG ((LM_DEBUG,
-                      "Registered an Event Channel with the naming service as: %s\n",
+                      "Registered an Event Channel with the naming service as: %C\n",
                       this->notify_channel_name_.c_str()));
 
         }
@@ -276,7 +276,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
   else if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "The Notification Event Channel Factory IOR is <%s>\n",
+                  "The Notification Event Channel Factory IOR is <%C>\n",
                   str.in ()));
     }
 
