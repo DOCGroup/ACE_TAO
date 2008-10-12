@@ -651,7 +651,7 @@ Client::get_cubit (CORBA::ORB_ptr orb)
     orb->object_to_string (this->cubit_);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) CUBIT OBJECT connected to <%s>\n",
+              "(%t) CUBIT OBJECT connected to <%C>\n",
               str.in ()));
 
   return 0;
