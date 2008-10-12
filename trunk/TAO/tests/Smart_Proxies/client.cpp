@@ -86,7 +86,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Object reference <%C> is nil.\n",
+                           "Object reference <%s> is nil.\n",
                            ior),
                           1);
 
@@ -97,8 +97,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               status = 1;
               ACE_ERROR ((LM_ERROR,
-                          "ERROR: The Smart Proxy IOR is:\n%s\n"
-                          "but should have been: %s\n",
+                          "ERROR: The Smart Proxy IOR is:\n%C\n"
+                          "but should have been: %C\n",
                           sm_ior.in (),
                           Smart_Test_Proxy::fake_ior ().c_str ()));
             }

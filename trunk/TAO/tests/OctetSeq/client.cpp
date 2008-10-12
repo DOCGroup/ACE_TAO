@@ -75,7 +75,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%C> is nil.\n",
+                             "Object reference <%s> is nil.\n",
                              ior),
                             1);
         }
@@ -87,7 +87,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (ACE_OS::strcmp (repository_id.in (), "IDL:Test/Database:1.0") != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Repository id is wrong <%s>\n",
+                             "Repository id is wrong <%C>\n",
                              repository_id.in ()),
                             1);
         }

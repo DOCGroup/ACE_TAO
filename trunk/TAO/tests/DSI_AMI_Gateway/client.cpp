@@ -82,7 +82,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%C> is nil.\n",
+                             "Object reference <%s> is nil.\n",
                              ior),
                             1);
         }
@@ -138,7 +138,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               "    x = %d\n"
                               "    i = %d\n"
                               "    length = %d\n"
-                              "    name = <%s>\n",
+                              "    name = <%C>\n",
                               r,
                               the_out_structure->i,
                               the_out_structure->seq.length (),
@@ -163,15 +163,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       if (test_user_exception == 1)
         ACE_DEBUG ((LM_DEBUG,
-                    "Client: caught expected user exception: %s\n",
+                    "Client: caught expected user exception: %C\n",
                     ex._name()));
       else
         ex._tao_print_exception ("Client: exception caught - ");
 
       ACE_DEBUG ((LM_DEBUG,
                   "error code: %d\n"
-                  "error info: %s\n"
-                  "status: %s\n",
+                  "error info: %C\n"
+                  "status: %C\n",
                   ex.error_code,
                   ex.error_message.in (),
                   ex.status_message.in ()));
@@ -182,7 +182,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       if (test_system_exception == 1)
         ACE_DEBUG ((LM_DEBUG,
-                    "Client: caught expected system exception: %s\n",
+                    "Client: caught expected system exception: %C\n",
                     ex._name()));
       else
         ex._tao_print_exception ("Client: exception caught - ");
