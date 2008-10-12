@@ -586,9 +586,9 @@ TAO_IMR_Op_Register::addenv (ACE_TCHAR *opt)
   int index = tokens.find (ACE_TEXT("="));
   // Insert at position length since that is our new element
   this->environment_vars_ [length].name =
-    CORBA::string_dup (tokens.substr (0, index).c_str ());
+    CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(tokens.substr (0, index).c_str ()));
   this->environment_vars_ [length].value =
-    CORBA::string_dup (tokens.substr (index + 1).c_str ());
+    CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(tokens.substr (index + 1).c_str ()));
 }
 
 void
@@ -633,7 +633,7 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
       {
       case 'c':  // Command line arguments
         this->set_command_line_ = true;
-        this->command_line_ = get_opts.opt_arg ();
+        this->command_line_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
       case 'e':  // set environment variables
         this->set_environment_vars_ = true;
@@ -645,13 +645,13 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
         break;
       case 'a':  // Activation Mode
         this->set_activation_ = true;
-        if (ACE_OS::strcasecmp (get_opts.opt_arg (), "NORMAL") == 0)
+        if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("NORMAL")) == 0)
           this->activation_ = ImplementationRepository::NORMAL;
-        else if (ACE_OS::strcasecmp (get_opts.opt_arg (), "MANUAL") == 0)
+        else if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("MANUAL")) == 0)
           this->activation_ = ImplementationRepository::MANUAL;
-        else if (ACE_OS::strcasecmp (get_opts.opt_arg (), "PER_CLIENT") == 0)
+        else if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("PER_CLIENT")) == 0)
           this->activation_ = ImplementationRepository::PER_CLIENT;
-        else if (ACE_OS::strcasecmp (get_opts.opt_arg (), "AUTO_START") == 0)
+        else if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("AUTO_START")) == 0)
           this->activation_ = ImplementationRepository::AUTO_START;
         else
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -669,7 +669,7 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
         }
         break;
       case 'l': /// hostname of the activator
-        this->activator_ = get_opts.optarg;
+        this->activator_ = ACE_TEXT_ALWAYS_CHAR(get_opts.optarg);
         this->set_activator_ = true;
         break;
       case 'h':  // display help
