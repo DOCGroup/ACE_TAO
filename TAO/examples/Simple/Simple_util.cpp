@@ -86,9 +86,9 @@ Server<Servant>::test_for_ins (CORBA::String_var ior)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "Adding (KEY:IOR) %s:%s\n",
-                ACE_TEXT_CHAR_TO_TCHAR (this->ins_),
-                ACE_TEXT_CHAR_TO_TCHAR (ior.in ())));
+                "Adding (KEY:IOR) %C:%C\n",
+                this->ins_,
+                ior.in ()));
 
 
   try
@@ -167,8 +167,8 @@ Server<Servant>::init (const char *servant_name,
                                                      &this->servant_);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "The IOR is: <%s>\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
+                  "The IOR is: <%C>\n",
+                  str.in ()));
 
       if (this->ins_)
         if (this->test_for_ins (str) != 0)
@@ -247,8 +247,8 @@ Server<Servant>::register_name (void)
   catch (const CosNaming::NamingContext::AlreadyBound&)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to bind %s \n",
-                         ACE_TEXT_CHAR_TO_TCHAR (name)),
+                         "Unable to bind %C\n",
+                         name),
                         -1);
     }
 
@@ -378,8 +378,8 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
 
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "invalid ior <%s>\n",
-                               ACE_TEXT_CHAR_TO_TCHAR (this->ior_)),
+                               "invalid ior <%C>\n",
+                               this->ior_),
                               -1);
           this->server_ = INTERFACE_OBJECT::_narrow (server_object.in ());
         }
