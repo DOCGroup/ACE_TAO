@@ -110,6 +110,8 @@ TAO_DIOP_Connection_Handler::open (void*)
     this->orb_core ()->orb_params ()->sock_sndbuf_size ();
   protocol_properties.recv_buffer_size_ =
     this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
+  protocol_properties.hop_limit_ =
+    this->orb_core ()->orb_params ()->ip_hoplimit ();
 
   TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
@@ -138,6 +140,54 @@ TAO_DIOP_Connection_Handler::open (void*)
                                protocol_properties.send_buffer_size_,
                                protocol_properties.recv_buffer_size_) == -1)
     return -1;
+
+  if (protocol_properties.hop_limit_ >= 0)
+    {
+      int result = 0;
+#if defined (ACE_HAS_IPV6)
+      if (this->local_addr_.get_type () == AF_INET6)
+        {
+#if defined (ACE_WIN32)
+          DWORD hop_limit =
+            static_cast<DWORD> (protocol_properties.hop_limit_);
+#else
+          int hop_limit =
+            static_cast<int> (protocol_properties.hop_limit_);
+#endif
+          result = this->peer ().set_option (
+            IPPROTO_IPV6,
+            IPV6_UNICAST_HOPS,
+            (void *) &hop_limit,
+            sizeof (hop_limit));
+        }
+      else
+#endif /* ACE_HAS_IPV6 */
+        {
+#if defined (ACE_WIN32)
+          DWORD hop_limit =
+            static_cast<DWORD> (protocol_properties.hop_limit_);
+#else
+          int hop_limit =
+            static_cast<int> (protocol_properties.hop_limit_);
+#endif
+          result = this->peer ().set_option (
+            IPPROTO_IP,
+            IP_TTL,
+            (void *) &hop_limit,
+            sizeof (hop_limit));
+        }
+
+      if (result != 0)
+        {
+          if (TAO_debug_level)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT("TAO (%P|%t) - DIOP_Connection_Handler::open, ")
+                          ACE_TEXT("couldn't set hop limit\n\n")));
+            }
+          return -1;
+        }
+    }
 
   if (TAO_debug_level > 5)
   {

@@ -383,6 +383,12 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   // Use SO_DONTROUTE (default 0)
   int so_dontroute = 0;
 
+  // Number of hops for a datagram sent through socket.
+  int ip_hoplimit = -1;
+
+  // Use IP_MILTICAST_LOOP (default 1).
+  int ip_multicastloop = 1;
+
   // Use dotted decimal addresses
   // @@ This option will be treated as a suggestion to each loaded
   //    protocol to use a character representation for the numeric
@@ -506,6 +512,24 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
         {
           // Use SO_DONTROUTE or not.
           so_dontroute =
+            ACE_OS::atoi (current_arg);
+
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBIPHopLimit"))))
+        {
+          // Number of IP hops.
+          ip_hoplimit =
+            ACE_OS::atoi (current_arg);
+
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBIPMulticastLoop"))))
+        {
+          // Use IP_MULTICAST_LOOP or not.
+          ip_multicastloop =
             ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
@@ -1255,6 +1279,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   this->orb_params ()->nodelay (nodelay);
   this->orb_params ()->sock_keepalive (so_keepalive);
   this->orb_params ()->sock_dontroute (so_dontroute);
+  this->orb_params ()->ip_hoplimit (ip_hoplimit);
+  this->orb_params ()->ip_multicastloop (ip_multicastloop);
   if (rcv_sock_size >= 0)
     this->orb_params ()->sock_rcvbuf_size (rcv_sock_size);
   if (snd_sock_size >= 0)
