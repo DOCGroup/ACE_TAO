@@ -161,7 +161,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-write_ior_to_file (const char *ior_file,
+write_ior_to_file (const ACE_TCHAR *ior_file,
                    CORBA::ORB_ptr orb,
                    CORBA::Object_ptr object)
 {
