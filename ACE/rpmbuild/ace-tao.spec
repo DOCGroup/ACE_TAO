@@ -1,7 +1,7 @@
 # Set the version number here.
-%define ACEVER  5.6.6
-%define TAOVER  1.6.6
-%define CIAOVER 0.6.6
+%define ACEVER  5.6.7
+%define TAOVER  1.6.7
+%define CIAOVER 0.6.7
 # Set is_major_ver if the version is X.Y instead X.Y.Z
 
 # Conditional build
@@ -673,7 +673,6 @@ awk 'BEGIN { FLG = 1 }; /ace\/post/ { FLG = 0 }; { if (FLG==1) print }' \
 $ACE_ROOT/ace/config.h >> $ACE_ROOT/ace/config.h.tmp
 cat >> $ACE_ROOT/ace/config.h.tmp <<"EOF"
 #define ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS 1  // Ken Sedgwick 2007-05-05
-#define ACE_HAS_ICMP_SUPPORT 1 // Ken Sedgwick 2006-09-05
 EOF
 awk 'BEGIN { FLG = 0 }; /ace\/post/ { FLG = 1 }; { if (FLG==1) print }' \
 $ACE_ROOT/ace/config.h >> $ACE_ROOT/ace/config.h.tmp
