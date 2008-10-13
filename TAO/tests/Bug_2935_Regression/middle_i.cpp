@@ -112,9 +112,7 @@ Middle_i::shutdown ()
 {
   ACE_DEBUG((LM_DEBUG, "Middle (%P|%t) shutdown.\n"));
   target_->shutdown();
-  ACE_DEBUG ((LM_DEBUG,
-              "%s\n",
-              "Middle_i is shutting down"));
+  ACE_DEBUG ((LM_DEBUG, "Middle_i is shutting down"));
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown (false);
