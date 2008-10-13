@@ -118,31 +118,31 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       D_var d = D::_narrow (c.in ());
 
       string = a->method1 ();
-      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+      ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
       string = b->method1 ();
-      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+      ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
       string = b->method2 ();
-      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+      ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
       string = c->method1 ();
-      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+      ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
       string = c->method3 ();
-      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+      ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
       string = d->method1 ();
-      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+      ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
       string = d->method2 ();
-      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+      ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
       string = d->method3 ();
-      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+      ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
       string = d->method4 ();
-      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+      ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
     }
   catch (const CORBA::Exception& ex)
     {
