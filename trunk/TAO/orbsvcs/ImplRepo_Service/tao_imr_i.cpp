@@ -641,7 +641,7 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
         break;
       case 'w':  // Working Directory
         this->set_working_dir_ = true;
-        this->working_dir_ = get_opts.opt_arg ();
+        this->working_dir_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
       case 'a':  // Activation Mode
         this->set_activation_ = true;
