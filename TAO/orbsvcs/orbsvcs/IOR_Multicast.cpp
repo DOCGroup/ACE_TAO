@@ -126,7 +126,7 @@ TAO_IOR_Multicast::common_init (const char *ior,
       if (this->mcast_dgram_.join (this->mcast_addr_,
                                    1,
                                    ACE_TEXT_CHAR_TO_TCHAR(this->mcast_nic_.c_str())) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::common_init() %p\n", "subscribe"),-1);
+      ACE_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::common_init() %p\n", "join"),-1);
     }
   else
     {

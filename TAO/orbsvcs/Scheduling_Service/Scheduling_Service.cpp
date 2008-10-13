@@ -110,8 +110,8 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
       CORBA::String_var scheduler_ior_string =
         orb->object_to_string (scheduler.in ());
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("The scheduler IOR is <%s>\n"),
-                            ACE_TEXT_CHAR_TO_TCHAR(scheduler_ior_string.in ())));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("The scheduler IOR is <%C>\n"),
+                            scheduler_ior_string.in ()));
 
       // Register the servant with the Naming Context....
       CosNaming::Name schedule_name (1);
@@ -125,8 +125,8 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
           if (iorf != 0)
             {
               ACE_OS::fprintf (iorf,
-                               ACE_TEXT("%s\n"),
-                               ACE_TEXT_CHAR_TO_TCHAR(scheduler_ior_string.in ()));
+                               "%s\n",
+                               scheduler_ior_string.in ());
               ACE_OS::fclose (iorf);
             }
         }
