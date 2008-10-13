@@ -213,7 +213,7 @@ rt_poa (CORBA::ORB_ptr orb,
 
   int result =
     get_priority_bands ("server",
-                        ACE_TEXT_ALWAYS_CHAR (bands_file),
+                        bands_file,
                         rt_orb,
                         policies,
                         debug);
@@ -227,7 +227,7 @@ rt_poa (CORBA::ORB_ptr orb,
 
   result =
     get_priority_lanes ("server",
-                        ACE_TEXT_ALWAYS_CHAR (lanes_file),
+                        lanes_file,
                         rt_orb,
                         stacksize,
                         static_threads,
