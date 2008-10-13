@@ -1,3 +1,21 @@
+Mon Oct 13 17:21:28 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/fuzz.pl:
+
+          Add strtoll and strtoull to $OS_NS_stdlib_symbols regex in
+          check_for_lack_ACE_OS fuzz check.  Thanks to Abdullah Sowayan
+          <abdullah dot sowayan at lmco dot com> for pointing this out.
+
+        * ace/OS_NS_stdlib.cpp:
+        * ace/OS_NS_stdlib.h:
+        * ace/OS_NS_stdlib.inl:
+
+          Add strtoll() wrapper.  Fixes bugzilla issue #3456.
+
+          Add wcstol(), wcstoul(), wcstoll(), and wcstoull() emulations
+          for systems with wide characters, but without these functions.
+          Fixes bugzilla issue #3457.
+
 Mon Oct 13 14:23:06 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * ace/config-linux-common.h:
