@@ -58,8 +58,8 @@ write_iors_to_file (const char *first_ior,
   char ior_output_file_1[BUFSIZ];
   char ior_output_file_2[BUFSIZ];
 
-  ACE_OS::sprintf (ior_output_file_1, "%s_1", ior_output_file);
-  ACE_OS::sprintf (ior_output_file_2, "%s_2", ior_output_file);
+  ACE_OS::sprintf (ior_output_file_1, "%s_1", ACE_TEXT_ALWAYS_CHAR(ior_output_file));
+  ACE_OS::sprintf (ior_output_file_2, "%s_2", ACE_TEXT_ALWAYS_CHAR(ior_output_file));
 
   FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1, "w");
   FILE *output_file_2 = ACE_OS::fopen (ior_output_file_2, "w");
