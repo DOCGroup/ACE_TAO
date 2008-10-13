@@ -204,13 +204,12 @@ Receiver::init (int argc,
 
   // Open file to read.
   this->input_file_ =
-    ACE_OS::fopen (this->filename_.c_str (),
-                   "r");
+    ACE_OS::fopen (this->filename_.c_str (), "r");
 
   if (this->input_file_ == 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
-                       "Cannot open input file %s\n",
-                       ACE_TEXT_CHAR_TO_TCHAR (this->filename_.c_str ())),
+                       "Cannot open input file %C\n",
+                       this->filename_.c_str ()),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,

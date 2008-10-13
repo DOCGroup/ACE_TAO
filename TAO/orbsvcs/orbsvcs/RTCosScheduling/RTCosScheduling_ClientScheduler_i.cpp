@@ -181,8 +181,8 @@ RTCosScheduling_ClientScheduler_i::tasks (
     {
       /// Error return of we cannot open the file.
       ACE_ERROR_RETURN ((LM_ERROR,
-                        "Could not find the config file %s, aborting\n",
-                        ACE_TEXT_CHAR_TO_TCHAR (file_name)),
+                        "Could not find the config file %C, aborting\n",
+                        file_name),
                         0);
     }
 
