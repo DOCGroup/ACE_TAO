@@ -54,8 +54,8 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
                                                        address_family);
       if (ret) {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Invalid INET addr (%s:%u) will be ignored\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (secondary_host_names[i]), port_number));
+                    ACE_TEXT ("Invalid INET addr (%C:%u) will be ignored\n"),
+                    secondary_host_names[i], port_number));
         this->secondaries_.size(this->secondaries_.size() - 1);
       }
       else

@@ -71,11 +71,11 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   if (!this->address_.same_host (remote_sap))
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) MEM_Connector can't connect ")
-                       ACE_TEXT ("to %s:%d which is not a local endpoint ")
-                       ACE_TEXT ("(local address is %s:%d)\n"),
-                       ACE_TEXT_CHAR_TO_TCHAR (remote_sap.get_host_name ()),
+                       ACE_TEXT ("to %C:%d which is not a local endpoint ")
+                       ACE_TEXT ("(local address is %C:%d)\n"),
+                       remote_sap.get_host_name (),
                        remote_sap.get_port_number (),
-                       ACE_TEXT_CHAR_TO_TCHAR (this->address_.get_host_name ()),
+                       this->address_.get_host_name (),
                        this->address_.get_port_number ()),
                       -1);
   else
