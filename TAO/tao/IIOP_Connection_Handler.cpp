@@ -1,3 +1,4 @@
+
 #include "tao/IIOP_Connection_Handler.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -133,6 +134,8 @@ TAO_IIOP_Connection_Handler::open (void*)
     this->orb_core ()->orb_params ()->sock_keepalive ();
   protocol_properties.dont_route_ =
    this->orb_core ()->orb_params ()->sock_dontroute ();
+  protocol_properties.hop_limit_ =
+   this->orb_core ()->orb_params ()->ip_hoplimit ();
 
   TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
@@ -197,6 +200,59 @@ TAO_IIOP_Connection_Handler::open (void*)
         }
     }
 #endif /* ! ACE_LACKS_SO_DONTROUTE */
+
+  if (protocol_properties.hop_limit_ >= 0)
+    {
+      int result = 0;
+#if defined (ACE_HAS_IPV6)
+      ACE_INET_Addr local_addr;
+      if (this->peer ().get_local_addr (local_addr) == -1)
+        {
+          result = -1;
+        }
+      else if (local_addr.get_type () == AF_INET6)
+        {
+#if defined (ACE_WIN32)
+          DWORD hop_limit =
+            static_cast<DWORD> (protocol_properties.hop_limit_);
+#else
+          int hop_limit =
+            static_cast<int> (protocol_properties.hop_limit_);
+#endif
+          result = this->peer ().set_option (
+            IPPROTO_IPV6,
+            IPV6_UNICAST_HOPS,
+            (void *) &hop_limit,
+            sizeof (hop_limit));
+        }
+      else
+#endif /* ACE_HAS_IPV6 */
+        {
+#if defined (ACE_WIN32)
+          DWORD hop_limit =
+            static_cast<DWORD> (protocol_properties.hop_limit_);
+#else
+          int hop_limit =
+            static_cast<int> (protocol_properties.hop_limit_);
+#endif
+          result = this->peer ().set_option (
+            IPPROTO_IP,
+            IP_TTL,
+            (void *) &hop_limit,
+            sizeof (hop_limit));
+        }
+
+      if (result != 0)
+        {
+          if (TAO_debug_level)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::open, ")
+                          ACE_TEXT("couldn't set hop limit\n\n")));
+            }
+          return -1;
+        }
+    }
 
   if (this->transport ()->wait_strategy ()->non_blocking ()
       || this->transport ()->opened_as () == TAO::TAO_SERVER_ROLE)

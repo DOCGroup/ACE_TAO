@@ -606,6 +606,23 @@ is <code>0</code>. This option is disabled (<code>0</code>) by default.</td>
         </td>
       </tr>
       <tr>
+        <td><code>-ORBIPHopLimit</code> <em>hops</em></td>
+        <td><a name="-ORBIPHopLimit"></a>This option allows users to
+        specify the TTL (IPv4) or hop limit (IPv6) value used when datagrams are
+        sent over a socket. The default is the one selected by the Operating System.
+        The <code>hops</code> value can be in the range of zero to the
+        maximum signed integer value for the particular platform on which
+        TAO is running. Currently this feature works in IIOP, DIOP, SCIOP, and MIOP.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBIPMulticastLoop</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBIPMulticastLoop"></a>This option allows users to
+        specify that the IP_MULTICAST_LOOP / IPV6_MULTICAST_LOOP option is set on
+        multicast sockets. The default is <code>1</code> (true).
+        </td>
+      </tr>
+      <tr>
         <td><code>-ORBListenEndpoints</code> <em>endpoint</em></td>
         <td><a name="-ORBListenEndpoints"></a> This option was
         introduced with the CORBA <a

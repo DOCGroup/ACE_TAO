@@ -93,6 +93,14 @@ public:
   int sock_dontroute (void);
   void sock_dontroute (int);
 
+  /// Set/Get the number of hops to be used for datagrams sent through socket.
+  int ip_hoplimit (void);
+  void ip_hoplimit (int);
+
+  /// Set/Get whether we should set IP_MULTICAST_LOOP on the socket or not.
+  bool ip_multicastloop (void);
+  void ip_multicastloop (bool);
+
   /**
    * Octet sequences are marshalled without doing any copies, we
    * simply append a block to the CDR message block chain. When the
@@ -291,6 +299,12 @@ private:
 
   /// 1 if we're using SO_DONTROUTE and 0 otherwise (default 0).
   int sock_dontroute_;
+
+  /// Number of hops to be used for datagrams sent through socket.
+  int ip_hoplimit_;
+
+  /// 1 if we're using IP_MULTICAST_LOOP and 0 otherwise.
+  bool ip_multicastloop_;
 
   /// Control the strategy for copying vs. appeding octet sequences in
   /// CDR streams.

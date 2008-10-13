@@ -188,6 +188,30 @@ TAO_ORB_Parameters::sock_dontroute (int x)
 }
 
 ACE_INLINE int
+TAO_ORB_Parameters::ip_hoplimit (void)
+{
+  return this->ip_hoplimit_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::ip_hoplimit (int x)
+{
+  this->ip_hoplimit_ = x;
+}
+
+ACE_INLINE bool
+TAO_ORB_Parameters::ip_multicastloop (void)
+{
+  return this->ip_multicastloop_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::ip_multicastloop (bool x)
+{
+  this->ip_multicastloop_ = x;
+}
+
+ACE_INLINE int
 TAO_ORB_Parameters::ace_sched_policy (void) const
 {
   return this->ace_sched_policy_;

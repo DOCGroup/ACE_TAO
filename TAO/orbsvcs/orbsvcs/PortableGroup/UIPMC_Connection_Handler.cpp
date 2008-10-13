@@ -108,6 +108,32 @@ TAO_UIPMC_Connection_Handler::open_handler (void *v)
 int
 TAO_UIPMC_Connection_Handler::open (void*)
 {
+  // Since only client can send data over MIOP
+  // then ttl is only applicable to client socket.
+
+  TAO_DIOP_Protocol_Properties protocol_properties;
+
+  // Initialize values from ORB params.
+  protocol_properties.hop_limit_ =
+    this->orb_core ()->orb_params ()->ip_hoplimit ();
+  protocol_properties.enable_multicast_loop_ =
+    this->orb_core ()->orb_params ()->ip_multicastloop ();
+
+  TAO_Protocols_Hooks *tph =
+    this->orb_core ()->get_protocols_hooks ();
+
+  if (tph != 0)
+    {
+      try
+        {
+          tph->client_protocol_properties_at_orb_level (protocol_properties);
+        }
+      catch (const ::CORBA::Exception&)
+        {
+          return -1;
+        }
+    }
+
   this->peer ().open (this->local_addr_);
 
   if (TAO_debug_level > 5)
@@ -118,6 +144,110 @@ TAO_UIPMC_Connection_Handler::open (void*)
                  this->local_addr_.get_host_addr (),
                  this->local_addr_.get_port_number ()));
   }
+
+  if (protocol_properties.hop_limit_ >= 0)
+    {
+      int result = 0;
+#if defined (ACE_HAS_IPV6)
+      if (this->local_addr_.get_type () == AF_INET6)
+        {
+#if defined (ACE_WIN32)
+          DWORD hop_limit =
+            static_cast<DWORD> (protocol_properties.hop_limit_);
+#else
+          int hop_limit =
+            static_cast<int> (protocol_properties.hop_limit_);
+#endif
+          result = this->peer ().set_option (
+            IPPROTO_IPV6,
+            IPV6_MULTICAST_HOPS,
+            (void *) &hop_limit,
+            sizeof (hop_limit));
+        }
+      else
+#endif /* ACE_HAS_IPV6 */
+        {
+#if defined (ACE_WIN32)
+          DWORD hop_limit =
+            static_cast<DWORD> (protocol_properties.hop_limit_);
+#elif defined (ACE_HAS_IP_MULTICAST_TTL_AS_INT)
+          int hop_limit =
+            static_cast<int> (protocol_properties.hop_limit_);
+#else
+          unsigned char hop_limit =
+            static_cast<unsigned char> (protocol_properties.hop_limit_);
+#endif
+          result = this->peer ().set_option (
+            IPPROTO_IP,
+            IP_MULTICAST_TTL,
+            (void *) &hop_limit,
+            sizeof (hop_limit));
+        }
+
+      if (result != 0)
+        {
+          if (TAO_debug_level)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT("TAO (%P|%t) - UIPMC_Connection_Handler::open, ")
+                          ACE_TEXT("couldn't set hop limit\n\n")));
+            }
+          return -1;
+        }
+    }
+
+  int result = 0;
+#if defined (ACE_HAS_IPV6)
+  if (this->local_addr_.get_type () == AF_INET6)
+    {
+#if defined (ACE_WIN32)
+      DWORD enable_loop =
+        static_cast<DWORD> (protocol_properties.enable_multicast_loop_);
+#elif defined (ACE_HAS_IPV6_MULTICAST_LOOP_AS_BOOL)
+      bool enable_loop =
+        static_cast<bool> (protocol_properties.enable_multicast_loop_);
+#else
+      unsigned int enable_loop =
+        static_cast<unsigned int> (protocol_properties.enable_multicast_loop_);
+#endif
+      result = this->peer ().set_option (
+        IPPROTO_IPV6,
+        IPV6_MULTICAST_LOOP,
+        (void *) &enable_loop,
+        sizeof (enable_loop));
+    }
+  else
+#endif /* ACE_HAS_IPV6 */
+    {
+#if defined (ACE_WIN32)
+      DWORD enable_loop =
+        static_cast<DWORD> (protocol_properties.enable_multicast_loop_);
+#elif defined (ACE_HAS_IP_MULTICAST_LOOP_AS_INT)
+      int enable_loop =
+        static_cast<int> (protocol_properties.enable_multicast_loop_);
+#else
+      unsigned char enable_loop =
+        static_cast<unsigned char> (protocol_properties.enable_multicast_loop_);
+#endif
+      result = this->peer ().set_option (
+        IPPROTO_IP,
+        IP_MULTICAST_LOOP,
+        (void *) &enable_loop,
+        sizeof (enable_loop));
+    }
+
+  if (result != 0)
+    {
+      if (TAO_debug_level)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT("TAO (%P|%t) - UIPMC_Connection_Handler::open, ")
+                      ACE_TEXT("couldn't %s multicast packets looping\n\n"),
+                      protocol_properties.enable_multicast_loop_ ?
+                      ACE_TEXT("enable") : ACE_TEXT("disable")));
+        }
+      return -1;
+    }
 
   // Set that the transport is now connected, if fails we return -1
   // Use C-style cast b/c otherwise we get warnings on lots of
