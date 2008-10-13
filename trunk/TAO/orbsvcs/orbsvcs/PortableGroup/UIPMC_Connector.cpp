@@ -177,8 +177,8 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       if (TAO_debug_level > 3)
           ACE_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - UIPMC_Connector::make_connection, "
-                      "connection to <%s:%u> failed (%p)\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (uipmc_endpoint->host ()),
+                      "connection to <%C:%u> failed (%p)\n",
+                      uipmc_endpoint->host (),
                       uipmc_endpoint->port (),
                       ACE_TEXT ("errno")));
 

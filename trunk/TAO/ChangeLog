@@ -1,3 +1,13 @@
+Mon Oct 13 07:22:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp
+        * orbsvcs/cheduling_Service/Scheduling_Service.cpp
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/receiver.cpp
+          ACE_TCHAR fixes
+
 Sun Oct 12 23:11:45 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Concurrency_Service/Concurrency_Service.cpp
