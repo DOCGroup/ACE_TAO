@@ -207,7 +207,7 @@ Task::svc (void)
       ULong_Array priorities;
       int result =
         get_values ("client",
-                    ACE_TEXT_ALWAYS_CHAR (invocation_priorities_file),
+                    invocation_priorities_file,
                     "invocation priorities",
                     priorities,
                     debug);
@@ -218,7 +218,7 @@ Task::svc (void)
 
       result =
         get_priority_bands ("client",
-                            ACE_TEXT_ALWAYS_CHAR (bands_file),
+                            bands_file,
                             rt_orb.in (),
                             policies,
                             debug);
