@@ -56,7 +56,7 @@ gen_objref (int argc, ACE_TCHAR *argv[])
   PortableServer::POA_var root_poa;
 
   ACE_TCHAR **largv = new ACE_TCHAR *[argc+4];
-  char *extra[4];
+  ACE_TCHAR *extra[4];
   int i = 0;
   for (i = 0; i < argc; i++)
     largv[i] = argv[i];
