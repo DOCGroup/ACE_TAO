@@ -75,8 +75,8 @@ static CORBA::ULong number_of_lanes = 0;
 static RTCORBA::Priority default_thread_priority = 0;
 static RTCORBA::Priority pool_priority = ACE_INT16_MIN;
 
-static const char *bands_file = "empty-file";
-static const char *lanes_file = "empty-file";
+static const ACE_TCHAR *bands_file = ACE_TEXT("empty-file");
+static const ACE_TCHAR *lanes_file = ACE_TEXT("empty-file");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -259,7 +259,7 @@ Task::svc (void)
                                              policies,
                                              1);
         }
-      else if (ACE_OS::strcmp (lanes_file, "empty-file") != 0)
+      else if (ACE_OS::strcmp (lanes_file, ACE_TEXT("empty-file")) != 0)
         {
           result =
             get_priority_lanes ("server",
@@ -307,7 +307,7 @@ Task::svc (void)
           policies[policies.length () - 1] =
             rt_orb->create_threadpool_policy (threadpool_id);
 
-          if (ACE_OS::strcmp (bands_file, "empty-file") != 0)
+          if (ACE_OS::strcmp (bands_file, ACE_TEXT("empty-file")) != 0)
             {
               result =
                 get_priority_bands ("server",
