@@ -196,7 +196,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
       if (remote_addr.addr_to_string (client,
                                       sizeof (client) / sizeof (ACE_TCHAR)) == -1)
       {
-        ACE_OS::strcpy (client, "*unable to obtain*");
+        ACE_OS::strcpy (client, ACE_TEXT("*unable to obtain*"));
       }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -209,7 +209,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
       if (local_addr.addr_to_string (client,
                                       sizeof (client) / sizeof (ACE_TCHAR)) == -1)
       {
-        ACE_OS::strcpy (client, "*unable to obtain*");
+        ACE_OS::strcpy (client, ACE_TEXT("*unable to obtain*"));
       }
 
       ACE_DEBUG ((LM_DEBUG,
