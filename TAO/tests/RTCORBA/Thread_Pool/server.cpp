@@ -112,8 +112,7 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
 
   // Priority Model policy.
   policies[2] =
-    rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                          0);
+    rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED, 0);
 
   // Create the POA under the RootPOA.
   PortableServer::POA_var poa =
@@ -142,12 +141,9 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
 
   CORBA::Object_var object = poa->id_to_reference (id.in ());
 
-  test_var test =
-    test::_narrow (object.in ());
+  test_var test = test::_narrow (object.in ());
 
-  int result =
-    write_ior_to_file (orb,
-                       test.in ());
+  int const result = write_ior_to_file (orb, test.in ());
 
   return result;
 }
@@ -295,9 +291,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       int result =
         parse_args (argc, argv);
