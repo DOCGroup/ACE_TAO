@@ -1,3 +1,9 @@
+Mon Oct 13 13:57:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+
+          ACE_ERROR_RETURN macro requires a non-multi-compile-line string.
+
 Mon Oct 13 11:23:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/client.cpp:
