@@ -99,7 +99,7 @@ RTCORBA::RTORB_ptr getRTORB(CORBA::ORB_ptr orb, const char *id)
   if ( CORBA::is_nil(rtorb))
     {
       ACE_ERROR ((LM_ERROR,
-                  "Failed getting RTORB for orb <%s>\n",
+                  "Failed getting RTORB for orb <%C>\n",
                   id));
     }
   return RTCORBA::RTORB::_duplicate (rtorb);
@@ -112,7 +112,7 @@ PortableServer::POA_ptr getRootPoa(CORBA::ORB_ptr orb, const char *id)
   if ( CORBA::is_nil(poa) )
     {
       ACE_ERROR ((LM_ERROR,
-                  "Failed getting RootPOA for orb <%s>\n",
+                  "Failed getting RootPOA for orb <%C>\n",
                   id));
     }
   return PortableServer::POA::_duplicate (poa);
@@ -171,16 +171,16 @@ void shutdownORB(CORBA::ORB_ptr orb, const char * orbid)
 {
   orb->shutdown(true);
   ACE_DEBUG ((LM_DEBUG,
-              "ORB <%s> is shutdown\n",
+              "ORB <%C> is shutdown\n",
               orbid));
 
   orb->destroy();
   ACE_DEBUG ((LM_DEBUG,
-              "ORB <%s> is destoyed\n",
+              "ORB <%C> is destoyed\n",
               orbid));
 }
 
-int write_iorfile (const char* ior_output_file, const char* ior)
+int write_iorfile (const ACE_TCHAR* ior_output_file, const char* ior)
 {
   FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
   if (output_file == 0)
@@ -229,10 +229,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     const char* iorA = addServant(orbA.in (), rtorbA.in (), rootPoaA.in (), implA, tpidA, 3);
     const char* iorB = addServant(orbB.in (), rtorbB.in (), rootPoaB.in (), implB, tpidB, 3);
 
-    if (write_iorfile("iorA.ior", iorA) == 1)
+    if (write_iorfile(ACE_TEXT("iorA.ior"), iorA) == 1)
       return 1;
 
-    if (write_iorfile("iorB.ior", iorB) == 1)
+    if (write_iorfile(ACE_TEXT("iorB.ior"), iorB) == 1)
       return 1;
 
     // colocated calls work fine
