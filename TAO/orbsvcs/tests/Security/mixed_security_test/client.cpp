@@ -156,7 +156,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Accomodate deficiencies on Windows that preclude doing this in
   // run_test.pl
-  ACE_CString env (ACE_TEXT("SSL_CERT_FILE="));
+  ACE_CString env ("SSL_CERT_FILE=");
   env += TAO_Mixed_Security_Test::cert_file;
   ACE_OS::putenv (env.c_str ());
 
