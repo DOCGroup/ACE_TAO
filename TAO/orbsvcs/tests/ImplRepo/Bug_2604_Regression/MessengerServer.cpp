@@ -77,8 +77,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Windows with "server shutdown too quickly so the
       // client cannot get the reply" issue.
       ACE_OS::sleep(1);
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Messenger server shutting "
-                                      "down.\n")));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) Messenger server shutting down.\n")));
       root_poa->destroy (1, 1);
       orb->destroy ();
       return 0;
@@ -86,8 +86,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception &ex)
     {
       ACE_CString str = ex._info ();
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Server main() caught: %s\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (str.c_str ())));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Server main() caught: %C\n"),
+                  str.c_str ()));
     }
   return -1;
 }
