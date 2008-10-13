@@ -246,26 +246,26 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   long strtol (const char *s, char **ptr, int base);
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOL)
-  /// Converts a string to a long value (wchar_t version).
-  ACE_NAMESPACE_INLINE_FUNCTION
-  long strtol (const wchar_t *s, wchar_t **ptr, int base);
-#endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOL */
-
 #if defined (ACE_LACKS_STRTOL)
   extern ACE_Export
   long strtol_emulation (const char *nptr, char **endptr, int base);
 #endif /* ACE_LACKS_STRTOL */
 
+#if defined (ACE_HAS_WCHAR)
+  /// Converts a string to a long value (wchar_t version).
+  ACE_NAMESPACE_INLINE_FUNCTION
+  long strtol (const wchar_t *s, wchar_t **ptr, int base);
+	
+#if defined (ACE_LACKS_WCSTOL)
+  extern ACE_Export
+  long wcstol_emulation (const wchar_t *nptr, wchar_t **endptr, int base);
+#endif /* ACE_LACKS_WCSTOL */
+
+#endif /* ACE_HAS_WCHAR */
+
   /// Converts a string to an unsigned long value (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   unsigned long strtoul (const char *s, char **ptr, int base);
-
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOUL)
-  /// Converts a string to an unsigned long value (wchar_t version).
-  ACE_NAMESPACE_INLINE_FUNCTION
-  unsigned long strtoul (const wchar_t *s, wchar_t **ptr, int base);
-#endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOUL */
 
 #if defined (ACE_LACKS_STRTOUL)
   extern ACE_Export
@@ -274,15 +274,48 @@ namespace ACE_OS {
                                    int base);
 #endif /* ACE_LACKS_STRTOUL */
 
-  /// Converts a string to a 64 bit int value (char version).
+#if defined (ACE_HAS_WCHAR)
+  /// Converts a string to an unsigned long value (wchar_t version).
+  ACE_NAMESPACE_INLINE_FUNCTION
+  unsigned long strtoul (const wchar_t *s, wchar_t **ptr, int base);
+	
+#if defined (ACE_LACKS_WCSTOUL)
+  extern ACE_Export
+  unsigned long wcstoul_emulation (const wchar_t *nptr,
+                                   wchar_t **endptr,
+                                   int base);
+#endif /* ACE_LACKS_WCSTOUL */
+
+#endif /* ACE_HAS_WCHAR */
+
+  /// Converts a string to a signed 64 bit int value (char version).
+  ACE_NAMESPACE_INLINE_FUNCTION
+  ACE_INT64 strtoll (const char *s, char **ptr, int base);
+
+#if defined (ACE_LACKS_STRTOLL)
+  extern ACE_Export
+  ACE_INT64 strtoll_emulation (const char *nptr,
+			       char **endptr,
+			       int base);
+#endif /* ACE_LACKS_STRTOLL */
+
+#if defined (ACE_HAS_WCHAR)
+  /// Converts a string to a signed 64 bit int value (wchar_t version).
+  ACE_NAMESPACE_INLINE_FUNCTION
+  ACE_INT64 strtoll (const wchar_t *s, wchar_t **ptr, int base);
+	
+#if defined (ACE_LACKS_WCSTOLL)
+  extern ACE_Export
+  ACE_INT64 wcstoll_emulation (const wchar_t *nptr,
+			       wchar_t **endptr,
+			       int base);
+#endif /* ACE_LACKS_WCSTOLL */
+
+#endif /* ACE_HAS_WCHAR */
+
+  /// Converts a string to a unsigned 64 bit int value (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_UINT64 strtoull (const char *s, char **ptr, int base);
-
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOULL)
-  /// Converts a string to a 64 bit int value (wchar_t version).
-  ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_UINT64 strtoull (const wchar_t *s, wchar_t **ptr, int base);
-#endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOUL */
 
 #if defined (ACE_LACKS_STRTOULL)
   extern ACE_Export
@@ -290,6 +323,20 @@ namespace ACE_OS {
                                  char **endptr,
                                  int base);
 #endif /* ACE_LACKS_STRTOULL */
+
+#if defined (ACE_HAS_WCHAR)
+  /// Converts a string to a unsigned 64 bit int value (wchar_t version).
+  ACE_NAMESPACE_INLINE_FUNCTION
+  ACE_UINT64 strtoull (const wchar_t *s, wchar_t **ptr, int base);
+	
+#if defined (ACE_LACKS_WCSTOULL)
+  extern ACE_Export
+  ACE_UINT64 wcstoull_emulation (const wchar_t *nptr,
+				 wchar_t **endptr,
+				 int base);
+#endif /* ACE_LACKS_WCSTOULL */
+
+#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int system (const ACE_TCHAR *s);

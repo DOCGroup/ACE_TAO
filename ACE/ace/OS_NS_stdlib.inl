@@ -467,13 +467,17 @@ ACE_OS::strtol (const char *s, char **ptr, int base)
 #endif /* ACE_LACKS_STRTOL */
 }
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOL)
+#if defined (ACE_HAS_WCHAR)
 ACE_INLINE long
 ACE_OS::strtol (const wchar_t *s, wchar_t **ptr, int base)
 {
+#if defined (ACE_LACKS_WCSTOL)
+  return ACE_OS::wcstol_emulation (s, ptr, base);
+#else
   return ACE_WCHAR_STD_NAMESPACE::wcstol (s, ptr, base);
+#endif /* ACE_LACKS_WCSTOL */
 }
-#endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOL */
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE unsigned long
 ACE_OS::strtoul (const char *s, char **ptr, int base)
@@ -485,13 +489,43 @@ ACE_OS::strtoul (const char *s, char **ptr, int base)
 #endif /* ACE_LACKS_STRTOUL */
 }
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOUL)
+#if defined (ACE_HAS_WCHAR) 
 ACE_INLINE unsigned long
 ACE_OS::strtoul (const wchar_t *s, wchar_t **ptr, int base)
 {
+#if defined (ACE_LACKS_WCSTOUL)
+  return ACE_OS::wcstoul_emulation (s, ptr, base);
+#else
   return ACE_WCHAR_STD_NAMESPACE::wcstoul (s, ptr, base);
+#endif /* ACE_LACKS_WCSTOUL */
 }
-#endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOUL */
+#endif /* ACE_HAS_WCHAR */
+
+ACE_INLINE ACE_INT64
+ACE_OS::strtoll (const char *s, char **ptr, int base)
+{
+#if defined (ACE_LACKS_STRTOLL)
+  return ACE_OS::strtoll_emulation (s, ptr, base);
+#elif defined (ACE_STRTOLL_EQUIVALENT)
+  return ACE_STRTOLL_EQUIVALENT (s, ptr, base);
+#else
+  return ::strtoll (s, ptr, base);
+#endif /* ACE_LACKS_STRTOLL */
+}
+
+#if defined (ACE_HAS_WCHAR) 
+ACE_INLINE ACE_INT64
+ACE_OS::strtoll (const wchar_t *s, wchar_t **ptr, int base)
+{
+#if defined (ACE_LACKS_WCSTOLL)
+  return ACE_OS::wcstoll_emulation (s, ptr, base);
+#elif defined (ACE_WCSTOLL_EQUIVALENT)
+  return ACE_WCSTOLL_EQUIVALENT (s, ptr, base);
+#else
+  return ACE_WCHAR_STD_NAMESPACE::wcstoll (s, ptr, base);
+#endif /* ACE_LACKS_WCSTOLL */
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE ACE_UINT64
 ACE_OS::strtoull (const char *s, char **ptr, int base)
@@ -505,17 +539,19 @@ ACE_OS::strtoull (const char *s, char **ptr, int base)
 #endif /* ACE_LACKS_STRTOULL */
 }
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOULL)
+#if defined (ACE_HAS_WCHAR)
 ACE_INLINE ACE_UINT64
 ACE_OS::strtoull (const wchar_t *s, wchar_t **ptr, int base)
 {
-#if defined (ACE_WCSTOOULL_EQUIVALENT)
-  return ACE_WCSTOOULL_EQUIVALENT (s, ptr, base);
+#if defined (ACE_LACKS_WCSTOULL)
+  return ACE_OS::wcstoull_emulation (s, ptr, base);
+#elif defined (ACE_WCSTOULL_EQUIVALENT)
+  return ACE_WCSTOULL_EQUIVALENT (s, ptr, base);
 #else
   return ACE_WCHAR_STD_NAMESPACE::wcstoull (s, ptr, base);
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_WCSTOULL */
 }
-#endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOULL */
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::system (const ACE_TCHAR *s)
