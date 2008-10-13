@@ -217,8 +217,7 @@ NContextExt_Client_i::run (void)
       CORBA::String_var obj_name = get_name ();
 
       CORBA::String_var url_string =
-        this->naming_context_->to_url (address.in (),
-                                       obj_name.in());
+        this->naming_context_->to_url (address.in (), obj_name.in());
 
       if (this->view_ == 0)
         {
@@ -300,34 +299,34 @@ NContextExt_Client_i::print_values (CosNaming::Name name,
                                     CORBA::String_var url_string)
 {
 
-  ACE_DEBUG((LM_DEBUG, ACE_TEXT ("The first component id is %s,"
-             "The first component kind is %s,"
-             "The second component id is %s,"
-             "The second component kind is %s\n\n"),
-             ACE_TEXT_CHAR_TO_TCHAR (name[0].id.in ()),
-             ACE_TEXT_CHAR_TO_TCHAR (name[0].kind.in ()),
-             ACE_TEXT_CHAR_TO_TCHAR (name[1].id.in ()),
-             ACE_TEXT_CHAR_TO_TCHAR (name[1].kind.in ())));
+  ACE_DEBUG((LM_DEBUG, ACE_TEXT ("The first component id is %C,")
+             ACE_TEXT ("The first component kind is %C,")
+             ACE_TEXT ("The second component id is %C,")
+             ACE_TEXT ("The second component kind is %C\n\n"),
+             name[0].id.in (),
+             name[0].kind.in (),
+             name[1].id.in (),
+             name[1].kind.in ()));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The string form of the input name is: \n%s\n\n"),
-              ACE_TEXT_CHAR_TO_TCHAR (str_name.in ())));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The string form of the input name is: \n%C\n\n"),
+              str_name.in ()));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The unstringified version of the name components are:,"
-              "The first component id is %s,"
-              "The first component kind is %s,"
-              "The second component id is %s,"
-              "The second component kind is %s\n\n"),
-              ACE_TEXT_CHAR_TO_TCHAR (nm[0].id.in ()),
-              ACE_TEXT_CHAR_TO_TCHAR (nm[0].kind.in ()),
-              ACE_TEXT_CHAR_TO_TCHAR (nm[1].id.in ()),
-              ACE_TEXT_CHAR_TO_TCHAR (nm[1].kind.in ())));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The unstringified version of the name components are:,")
+              ACE_TEXT ("The first component id is %C,")
+              ACE_TEXT ("The first component kind is %C,")
+              ACE_TEXT ("The second component id is %C,")
+              ACE_TEXT ("The second component kind is %C\n\n"),
+              nm[0].id.in (),
+              nm[0].kind.in (),
+              nm[1].id.in (),
+              nm[1].kind.in ()));
 
- ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("When the address of the NamingContext is:"
-             "myhost.555xyz.com:9999"
-             "and the Object name is \n%s\n"),
-             ACE_TEXT_CHAR_TO_TCHAR (obj_name.in ())));
+ ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("When the address of the NamingContext is:")
+             ACE_TEXT ("myhost.555xyz.com:9999")
+             ACE_TEXT ("and the Object name is \n%C\n"),
+             obj_name.in ()));
 
- ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("The URL form of the string is \n %s\n"),
-             ACE_TEXT_CHAR_TO_TCHAR (url_string.in ())));
+ ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("The URL form of the string is \n %C\n"),
+             url_string.in ()));
 
 }
