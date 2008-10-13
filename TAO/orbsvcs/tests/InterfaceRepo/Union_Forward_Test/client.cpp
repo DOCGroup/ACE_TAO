@@ -24,7 +24,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG, "Got IFR_Client ref.\n"));
 
   CORBA::InterfaceDef_var intDef =
-    ifr_client->get_interface (orb, "IDL:IFR_Test/test_if:1.0");
+    ifr_client->get_interface (orb.in (), "IDL:IFR_Test/test_if:1.0");
 
   if (CORBA::is_nil (intDef.in ()))
     {
