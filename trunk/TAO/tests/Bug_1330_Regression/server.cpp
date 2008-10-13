@@ -85,14 +85,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (output_file == 0)
          ACE_ERROR_RETURN ((LM_ERROR,
                                "SERVER (%P): Cannot open output file "
-                               "for writing IOR: %s",
+                               "for writing IOR: %C",
                                "server.ior"),
                               1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
       ACE_DEBUG ((LM_DEBUG,
-                      "SERVER (%P): Activated as file://%s\n",
+                      "SERVER (%P): Activated as file://%C\n",
                       "server.ior"));
 
       poa_manager->activate();
