@@ -15,7 +15,8 @@ TAO_IIOP_Protocol_Properties::TAO_IIOP_Protocol_Properties (void)
     keep_alive_ (0),
     dont_route_ (0),
     no_delay_ (0),
-    enable_network_priority_ (0)
+    enable_network_priority_ (0),
+    hop_limit_ (-1)
 {
 }
 
@@ -40,7 +41,9 @@ TAO_SHMIOP_Protocol_Properties::TAO_SHMIOP_Protocol_Properties (void)
 TAO_DIOP_Protocol_Properties::TAO_DIOP_Protocol_Properties (void)
   : send_buffer_size_ (0),
     recv_buffer_size_ (0),
-    enable_network_priority_ (0)
+    enable_network_priority_ (0),
+    hop_limit_ (-1),
+    enable_multicast_loop_ (1)
 {
 }
 
@@ -50,7 +53,8 @@ TAO_SCIOP_Protocol_Properties::TAO_SCIOP_Protocol_Properties (void)
     keep_alive_ (0),
     dont_route_ (0),
     no_delay_ (0),
-    enable_network_priority_ (0)
+    enable_network_priority_ (0),
+    hop_limit_ (-1)
 {
 }
 

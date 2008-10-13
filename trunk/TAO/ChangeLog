@@ -1,3 +1,37 @@
+Mon Oct 13 14:12:09 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * orbsvcs/tests/Bug_3444_Regression/client.cpp:
+        * orbsvcs/tests/Bug_3444_Regression/Test_impl.cpp:
+        * orbsvcs/tests/Bug_3444_Regression/run_test_ipv6.pl:
+        * orbsvcs/tests/Bug_3444_Regression/miop_svc.conf:
+        * orbsvcs/tests/Bug_3444_Regression/Test.idl:
+        * orbsvcs/tests/Bug_3444_Regression/Test_impl.h:
+        * orbsvcs/tests/Bug_3444_Regression/server.cpp:
+        * orbsvcs/tests/Bug_3444_Regression/Bug_3444_Regression.mpc:
+        * orbsvcs/tests/Bug_3444_Regression/diop_svc.conf:
+        * orbsvcs/tests/Bug_3444_Regression/sciop_svc.conf:
+        * orbsvcs/tests/Bug_3444_Regression/README:
+        * orbsvcs/tests/Bug_3444_Regression/run_test.pl:
+
+          Added a test for Bug#3444.
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/params.h:
+        * tao/params.cpp:
+        * tao/Protocols_Hooks.h:
+        * tao/params.inl:
+        * tao/Protocols_Hooks.cpp:
+        * docs/Options.html:
+
+          Added -ORBIPHopLimit orb parameter for setting TTL of IP
+          packets in IIOP, DIOP, SCIOP and MIOP. Also added specific to
+          MIOP orb parameter -ORBIPMulticastLoop. Updated documentation
+          with respect to these new features. This fixes Bug#3444.
+
 Mon Oct 13 13:57:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
