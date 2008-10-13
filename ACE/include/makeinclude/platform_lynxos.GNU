@@ -101,8 +101,7 @@ endif
 
 ifeq ($(shared_libs),1)
   CPPFLAGS += -DACE_HAS_SVR4_DYNAMIC_LINKING
-  CFLAGS   += -mshared
-  SOFLAGS  += -mshared
+  LDFLAGS  += -mshared
   LIBS     += -ldl
 else
   LIBS     += -lnetinet -lnsl
