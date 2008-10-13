@@ -342,9 +342,7 @@ IDL3_Client::parse_args (int argc,
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage: %s"
-                           " [-d]"
-                           "\n",
+                           "usage: %s [-d]\n",
                            argv [0]),
                           -1);
       }
