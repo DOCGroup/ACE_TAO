@@ -53,7 +53,7 @@ TAO_Offer_Importer::perform_directed_queries (void)
     {
       if (this->verbose_)
         {
-          ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
+          ACE_DEBUG ((LM_DEBUG, "Getting link information for %C\n",
                       static_cast<const char*> (link_name_seq[0u])));
         }
 
@@ -80,7 +80,7 @@ TAO_Offer_Importer::perform_directed_queries (void)
               CosTrading::LinkName* trader_name =
                 CosTrading::TraderName::allocbuf (2);
 
-              ACE_DEBUG ((LM_DEBUG, "*** Query through %s to destination %s.\n",
+              ACE_DEBUG ((LM_DEBUG, "*** Query through %C to destination %C.\n",
                           static_cast<const char*> (link_name_seq[0u]),
                           static_cast<const char*> (link_name_seq2[i])));
 
@@ -129,9 +129,9 @@ TAO_Offer_Importer::perform_queries_with_policies (
       for (int i = 0; i < TT_Info::NUM_QUERIES; i++)
         {
           ACE_DEBUG ((LM_DEBUG, "\n"));
-          ACE_DEBUG ((LM_DEBUG, "*** Performing query for %s.\n", TT_Info::QUERIES[i][0]));
-          ACE_DEBUG ((LM_DEBUG, "*** Query: %s\n", TT_Info::QUERIES[i][1]));
-          ACE_DEBUG ((LM_DEBUG, "*** Preferences: %s\n", TT_Info::QUERIES[i][2]));
+          ACE_DEBUG ((LM_DEBUG, "*** Performing query for %C.\n", TT_Info::QUERIES[i][0]));
+          ACE_DEBUG ((LM_DEBUG, "*** Query: %C\n", TT_Info::QUERIES[i][1]));
+          ACE_DEBUG ((LM_DEBUG, "*** Preferences: %C\n", TT_Info::QUERIES[i][2]));
           CosTrading::OfferSeq *offer_seq_ptr = 0;
           CosTrading::OfferIterator_ptr offer_iterator_ptr = 0;
           CosTrading::PolicyNameSeq *limits_applied_ptr = 0;
@@ -176,7 +176,7 @@ TAO_Offer_Importer::perform_queries_with_policies (
               for (int length = limits_applied_out->length (), j = 0; j < length; j++)
                 {
                   const char *policy_name = (*limits_applied_ptr)[j];
-                  ACE_DEBUG ((LM_DEBUG, "%s\n",
+                  ACE_DEBUG ((LM_DEBUG, "%C\n",
                               static_cast<const char*> (policy_name)));
                 }
             }

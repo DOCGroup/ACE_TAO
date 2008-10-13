@@ -184,7 +184,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
           (*value) >>= str_seq;
 
           for (seq_length = str_seq->length (), i = 0; i < seq_length; i++)
-            ACE_DEBUG ((LM_DEBUG, "%s ", (const char *) (*str_seq)[i]));
+            ACE_DEBUG ((LM_DEBUG, "%C ", (const char *) (*str_seq)[i]));
 
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
@@ -226,7 +226,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
                 }
               else if ((*value) >>= CORBA::Any::to_boolean (boolean_val))
                 {
-                  ACE_DEBUG ((LM_DEBUG, "%s\n",
+                  ACE_DEBUG ((LM_DEBUG, "%C\n",
                               boolean_val?"TRUE":"FALSE"));
                 }
               else if ((*value) >>= short_val)
@@ -255,7 +255,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
                 }
               else if ((*value) >>= string_val)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "%s\n", string_val));
+                  ACE_DEBUG ((LM_DEBUG, "%C\n", string_val));
                 }
             }
         }

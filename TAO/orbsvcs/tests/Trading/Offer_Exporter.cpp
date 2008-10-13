@@ -60,7 +60,7 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg)
 
           if (this->verbose_)
             {
-              ACE_DEBUG ((LM_DEBUG, "Registered offer id: %s.\n", offer_id.in ()));
+              ACE_DEBUG ((LM_DEBUG, "Registered offer id: %C.\n", offer_id.in ()));
             }
 
           offer_obj = this->printer_[i]._this ();
@@ -71,7 +71,7 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg)
 
           if (this->verbose_)
             {
-              ACE_DEBUG ((LM_DEBUG, "Registered offer id: %s.\n", offer_id.in ()));
+              ACE_DEBUG ((LM_DEBUG, "Registered offer id: %C.\n", offer_id.in ()));
             }
 
           offer_obj = this->fs_[i]._this ();
@@ -82,7 +82,7 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg)
 
           if (this->verbose_)
             {
-              ACE_DEBUG ((LM_DEBUG, "Registered offer id: %s.\n", offer_id.in ()));
+              ACE_DEBUG ((LM_DEBUG, "Registered offer id: %C.\n", offer_id.in ()));
             }
         }
     }
@@ -126,7 +126,7 @@ TAO_Offer_Exporter::export_offers_to_all (void)
         {
           if (this->verbose_)
             {
-              ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
+              ACE_DEBUG ((LM_DEBUG, "Getting link information for %C\n",
                           static_cast<const char*> (link_name_seq[i])));
             }
 
@@ -142,7 +142,7 @@ TAO_Offer_Exporter::export_offers_to_all (void)
 
           if (this->verbose_)
             {
-              ACE_DEBUG ((LM_DEBUG, "Exporting offers to %s\n",
+              ACE_DEBUG ((LM_DEBUG, "Exporting offers to %C\n",
                           static_cast<const char*> (link_name_seq[i])));
             }
 
@@ -208,8 +208,8 @@ TAO_Offer_Exporter::describe_offers (void)
 
               if (this->verbose_)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "Offer Id: %s\n", (const char *) offer_id_seq[i]));
-                  ACE_DEBUG ((LM_DEBUG, "Service Type: %s\n", offer_info->type.in ()));
+                  ACE_DEBUG ((LM_DEBUG, "Offer Id: %C\n", (const char *) offer_id_seq[i]));
+                  ACE_DEBUG ((LM_DEBUG, "Service Type: %C\n", offer_info->type.in ()));
                   TT_Info::dump_properties (offer_info->properties, 0);
                   ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
                 }
@@ -273,7 +273,7 @@ withdraw_offers_using_constraints (void)
     "(not exist Description) and (Location == 'MODIFIED') and (exist Name)";
 
   if (this->verbose_)
-    ACE_DEBUG ((LM_DEBUG, "Constraint: %s\n", constraint));
+    ACE_DEBUG ((LM_DEBUG, "Constraint: %C\n", constraint));
 
   try
     {
@@ -343,7 +343,7 @@ TAO_Offer_Exporter::grab_offerids (void)
         {
           ACE_DEBUG ((LM_DEBUG, "The following offer ids are registered:\n"));
           for (int len = offer_id_seq->length (), j = 0; j < len; j++)
-            ACE_DEBUG ((LM_DEBUG, "Offer Id: %s\n", (const char *)(*offer_id_seq)[j]));
+            ACE_DEBUG ((LM_DEBUG, "Offer Id: %C\n", (const char *)(*offer_id_seq)[j]));
         }
     }
   catch (const CORBA::Exception& ex)
