@@ -14,8 +14,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Messenger_var messenger = Messenger::_narrow (obj.in ());
       if (CORBA::is_nil (messenger.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to get a Messenger "
-                                                 "reference.\n")), -1);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("Unable to get a Messenger reference.\n")),
+                            -1);
         }
 
       CORBA::String_var message = CORBA::string_dup("Hello!");
@@ -32,9 +33,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           catch (CORBA::Exception &ex)
             {
               ACE_CString str = ex._info ();
-              ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Client send_message () "
-                                                     "caught: %s\n"),
-                                 ACE_TEXT_CHAR_TO_TCHAR (str.c_str ())), -1);
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                ACE_TEXT ("Client send_message () caught: %C\n"),
+                                 str.c_str ()), -1);
             }
         }
       return 0;
@@ -42,8 +43,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception &ex)
     {
       ACE_CString str = ex._info ();
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Client main() caught: %s\n"),
-                         ACE_TEXT_CHAR_TO_TCHAR (str.c_str ())), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Client main() caught: %C\n"),
+                         str.c_str ()), -1);
     }
   return -1;
 }
