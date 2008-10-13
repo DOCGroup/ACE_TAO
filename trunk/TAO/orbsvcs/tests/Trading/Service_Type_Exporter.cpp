@@ -37,7 +37,7 @@ TAO_Service_Type_Exporter::remove_all_types (void)
           if (this->verbose_)
             {
               if (excp.type.in () != 0)
-                ACE_DEBUG ((LM_DEBUG, "Service type not yet registered: %s\n", excp.type.in ()));
+                ACE_DEBUG ((LM_DEBUG, "Service type not yet registered: %C\n", excp.type.in ()));
             }
 
         }
@@ -78,12 +78,12 @@ TAO_Service_Type_Exporter::add_all_types_to_all (void)
       CosTradingRepos::ServiceTypeRepository_ptr str = 0;
       try
         {
-          ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
+          ACE_DEBUG ((LM_DEBUG, "Getting link information for %C\n",
                       static_cast<const char*> (link_name_seq[i])));
           CosTrading::Link::LinkInfo_var link_info =
             link_if->describe_link (link_name_seq[i]);
 
-          ACE_DEBUG ((LM_DEBUG, "Adding service types to %s\n",
+          ACE_DEBUG ((LM_DEBUG, "Adding service types to %C\n",
                       static_cast<const char*> (link_name_seq[i])));
 
           CosTrading::TypeRepository_var remote_repos =
@@ -123,7 +123,7 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
             "TAO_Service_Type_Exporter::add_all_types");
 
           if (ste.name.in () != 0)
-            ACE_DEBUG ((LM_DEBUG, "Invalid name: %s\n", ste.name.in ()));
+            ACE_DEBUG ((LM_DEBUG, "Invalid name: %C\n", ste.name.in ()));
         }
       catch (const CosTrading::IllegalPropertyName& excp)
         {
@@ -131,7 +131,7 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
             "TAO_Service_Type_Exporter::add_all_types");
 
           if (excp.name.in () != 0)
-            ACE_DEBUG ((LM_DEBUG, "Invalid name: %s\n", excp.name.in ()));
+            ACE_DEBUG ((LM_DEBUG, "Invalid name: %C\n", excp.name.in ()));
         }
       catch (
         const CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition& vtr)
@@ -140,9 +140,9 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
             "TAO_Service_Type_Exporter::add_all_types");
 
           if (vtr.type_1.in () != 0)
-            ACE_DEBUG ((LM_DEBUG, "Type One: %s\n", vtr.type_2.in ()));
+            ACE_DEBUG ((LM_DEBUG, "Type One: %C\n", vtr.type_2.in ()));
           if (vtr.type_2.in () != 0)
-            ACE_DEBUG ((LM_DEBUG, "Type Two: %s\n", vtr.type_2.in ()));
+            ACE_DEBUG ((LM_DEBUG, "Type Two: %C\n", vtr.type_2.in ()));
         }
       catch (const CORBA::Exception& ex)
         {
@@ -172,7 +172,7 @@ TAO_Service_Type_Exporter::list_all_types (void)
           CORBA::ULong index = l - 1 - i;
           if (this->verbose_)
             {
-              ACE_DEBUG ((LM_DEBUG, "type name: %s\n",
+              ACE_DEBUG ((LM_DEBUG, "type name: %C\n",
                           static_cast<const char *> (type_names[index])));
             }
         }
@@ -253,19 +253,19 @@ dump_typestruct (const char* type_name,
       "Mandatory and Readonly"
     };
 
-  ACE_DEBUG ((LM_DEBUG, "Type Name: %s\n", type_name));
-  ACE_DEBUG ((LM_DEBUG, "Interface Name: %s\n", type_struct.if_name.in ()));
+  ACE_DEBUG ((LM_DEBUG, "Type Name: %C\n", type_name));
+  ACE_DEBUG ((LM_DEBUG, "Interface Name: %C\n", type_struct.if_name.in ()));
 
   int i = 0;
   for (i = type_struct.super_types.length () - 1; i >= 0; i--)
     {
-      ACE_DEBUG ((LM_DEBUG, "Super Type: %s\n",
+      ACE_DEBUG ((LM_DEBUG, "Super Type: %C\n",
                   (const char *) type_struct.super_types[i]));
     }
 
   for (i = type_struct.props.length () - 1; i >= 0; i--)
     {
-      ACE_DEBUG ((LM_DEBUG, "Property: %-20s  Mode: %-24s\n",
+      ACE_DEBUG ((LM_DEBUG, "Property: %-20C  Mode: %-24C\n",
                   type_struct.props[i].name.in (),
                   mode_str[type_struct.props[i].mode]));
     }
