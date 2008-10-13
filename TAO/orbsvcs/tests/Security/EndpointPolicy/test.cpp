@@ -56,7 +56,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   if (parse_args (argc, argv) != 0)
     return 1;
-  char *extra[4];
+  ACE_TCHAR *extra[4];
   extra[0] = CORBA::string_dup("-ORBEndpoint");
   extra[1] = CORBA::string_alloc(100);
   ACE_OS::sprintf (extra[1],
@@ -68,7 +68,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                    "iiop://localhost:%d/ssl_port=%d",
                    endpoint_port+10, endpoint_port+11);
 
-  char **largv = new char *[argc+4];
+  char **largv = new ACE_TCHAR *[argc+4];
   int i = 0;
   for (i = 0; i < argc; i++)
     largv[i] = argv[i];
