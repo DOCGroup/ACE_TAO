@@ -124,7 +124,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   char *dhparams_path = 0;
   char *ca_file = 0;
   char *ca_dir = 0;
-  char *rand_path = 0;
+  ACE_TCHAR *rand_path = 0;
 
   int certificate_type = -1;
   int private_key_type = -1;
@@ -326,7 +326,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           curarg++;
           if (curarg < argc)
             {
-              rand_path = ACE_TEXT_ALWAYS_CHAR(argv[curarg]);
+              rand_path = argv[curarg];
             }
         }
     }
@@ -336,13 +336,13 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   if (rand_path != 0)
   {
     short errors = 0;
-    char *file_name = 0;
-    const char *path = ACE_OS::strtok_r (rand_path,
-                                         TAO_PATH_SEPARATOR_STRING,
-                                         &file_name);
+    ACE_TCHAR *file_name = 0;
+    const ACE_TCHAR *path = ACE_OS::strtok_r (rand_path,
+                                              TAO_PATH_SEPARATOR_STRING,
+                                              &file_name);
     while ( path != 0)
     {
-      if( -1 == ssl_ctx->seed_file (path, -1))
+      if( -1 == ssl_ctx->seed_file (ACE_TEXT_ALWAYS_CHAR(path), -1))
       {
         ++errors;
 
