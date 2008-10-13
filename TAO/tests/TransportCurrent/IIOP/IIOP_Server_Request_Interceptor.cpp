@@ -172,7 +172,7 @@ namespace Test {
 
     if (TAO_debug_level >=1)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("%C (%P|%t) Intercepted operation %s ()\n"),
+                  ACE_TEXT("%C (%P|%t) Intercepted operation %C ()\n"),
                   name.in (),
                   op.in ()));
 
@@ -193,7 +193,7 @@ namespace Test {
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%C (%P|%t) Service context")
-                    ACE_TEXT (" is unavailable when invoking %s (). ")
+                    ACE_TEXT (" is unavailable when invoking %C (). ")
                     ACE_TEXT ("A colocated invocation would have ")
                     ACE_TEXT ("no service context.\n"),
                     name.in (),
