@@ -85,9 +85,8 @@ int TAO_FT_ReplicationManagerController::init (int &argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (this->replication_manager_.in()))
       {
         ACE_ERROR ((LM_ERROR,
-          ACE_TEXT (
-            "TAO_FT_ReplicationManagerController::init: "
-            "Could not get Replication Manager's IOR.\n")
+          ACE_TEXT ("TAO_FT_ReplicationManagerController::init: ")
+          ACE_TEXT ("Could not get Replication Manager's IOR.\n")
         ));
         result = -1;
       }
@@ -167,8 +166,7 @@ int TAO_FT_ReplicationManagerController::run ()
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-      ACE_TEXT (
-        "TAO_FT_ReplicationManagerController::run: \n"));
+      ACE_TEXT ("TAO_FT_ReplicationManagerController::run: \n"));
     result = -1;
   }
 
