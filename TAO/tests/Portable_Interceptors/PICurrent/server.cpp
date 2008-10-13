@@ -139,7 +139,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_INFO, "PICurrentTest::test: <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_INFO, "PICurrentTest::test: <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the IOR to it.
       if (ior_output_file != 0)
