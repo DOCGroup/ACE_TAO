@@ -242,7 +242,7 @@ Client::priority_invocations (int debug)
   ULong_Array priorities;
   int result =
     get_values ("client",
-                ACE_TEXT_ALWAYS_CHAR (invocation_priorities_file),
+                invocation_priorities_file,
                 "invocation priorities",
                 priorities,
                 debug);
@@ -309,7 +309,7 @@ Client::set_client_protocols_policies (int debug)
 
   int result =
     get_protocols ("client",
-                   ACE_TEXT_ALWAYS_CHAR (protocols_file),
+                   protocols_file,
                    this->rt_orb_.in (),
                    policies,
                    debug);
@@ -332,7 +332,7 @@ Client::set_priority_bands (int debug)
 
   int result =
     get_priority_bands ("client",
-                        ACE_TEXT_ALWAYS_CHAR (bands_file),
+                        bands_file,
                         this->rt_orb_.in (),
                         policies,
                         debug);
@@ -416,7 +416,7 @@ Task::svc (void)
       current->the_priority (0);
 
       object =
-        this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
+        this->orb_->string_to_object (ior);
 
       test_var test =
         test::_narrow (object.in ());
