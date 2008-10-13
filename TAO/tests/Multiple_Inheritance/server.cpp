@@ -63,7 +63,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb_manager.activate_under_child_poa ("my_object",
                                               &servant);
 
-      ACE_DEBUG ((LM_DEBUG, "%s\n",
+      ACE_DEBUG ((LM_DEBUG, "%C\n",
                   ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
