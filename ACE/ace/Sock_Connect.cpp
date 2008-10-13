@@ -425,8 +425,8 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
    if (ACE::debug())
      ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
-                 ACE_TEXT ("canonical host name is %s\n"),
-                 ACE_TEXT_CHAR_TO_TCHAR (hp->h_name)));
+                 ACE_TEXT ("canonical host name is %C\n"),
+                 hp->h_name));
 
    // check if the canonical name is the FQDN
    if (!ACE_OS::strchr(hp->h_name, '.'))
@@ -458,8 +458,8 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
                    if (ACE::debug ())
                      ACE_DEBUG ((LM_DEBUG,
                                  ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
-                                 ACE_TEXT ("found fqdn within alias as %s\n"),
-                                 ACE_TEXT_CHAR_TO_TCHAR(*q)));
+                                 ACE_TEXT ("found fqdn within alias as %C\n"),
+                                 *q));
                    ACE_OS::strcpy (hostname, *q);
 
                    return 0;

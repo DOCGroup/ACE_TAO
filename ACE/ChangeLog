@@ -1,3 +1,11 @@
+Mon Oct 13 07:21:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Local_Name_Space_T.cpp:
+        * ace/MEM_Connector.cpp:
+        * ace/Multihomed_INET_Addr.cpp:
+        * ace/Sock_Connect.cpp:
+          ACE_TCHAR fixes
+
 Fri Oct 10 08:57:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * ace/Stack_Trace.cpp:
