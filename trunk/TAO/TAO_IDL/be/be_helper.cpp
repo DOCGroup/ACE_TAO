@@ -360,15 +360,12 @@ TAO_OutStream::operator<< (const ACE_CDR::Long num)
 
   return *this;
 }
-// (JP) 2008-10-02 - let's try depending on the ACE_CDR basic
-// types to make the two operators below unambiguous and portable.
-//#if defined (ACE_WIN64) || ! (! defined (ACE_HAS_UINT64_T) && ACE_SIZEOF_LONG == 8)
 
 TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::ULongLong num)
 {
   ACE_OS::fprintf (this->fp_,
-                   ACE_UINT64_FORMAT_SPECIFIER,
+                   ACE_TEXT_ALWAYS_CHAR (ACE_UINT64_FORMAT_SPECIFIER),
                    num);
 
   return *this;
@@ -378,13 +375,11 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::LongLong num)
 {
   ACE_OS::fprintf (this->fp_,
-                   ACE_INT64_FORMAT_SPECIFIER,
+                   ACE_TEXT_ALWAYS_CHAR (ACE_INT64_FORMAT_SPECIFIER),
                    num);
 
   return *this;
 }
-
-//#endif
 
 TAO_OutStream &
 TAO_OutStream::operator<< (const TAO_NL&)
