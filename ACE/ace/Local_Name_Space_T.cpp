@@ -813,8 +813,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i (void) const
       const char *type = map_entry->int_id_.type ();
 #endif /* ! ACE_NLOGGING */
 
-      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("key=%s\nvalue=%s\ntype=%s\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (key), ACE_TEXT_CHAR_TO_TCHAR (value), ACE_TEXT_CHAR_TO_TCHAR (type)));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("key=%C\nvalue=%C\ntype=%C\n"),
+                  key, value, type));
       // We need to delete key and value since char_rep allocates
       // memory for them
       delete [] key;
