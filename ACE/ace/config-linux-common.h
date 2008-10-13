@@ -398,6 +398,13 @@
 
 #define ACE_HAS_ICMP_SUPPORT 1
 
+// According to man pages Linux uses different (compared to UNIX systems) types
+// for setting IP_MULTICAST_TTL and IPV6_MULTICAST_LOOP / IP_MULTICAST_LOOP
+// in setsockopt/getsockopt.
+#define ACE_HAS_IP_MULTICAST_TTL_AS_INT 1
+#define ACE_HAS_IPV6_MULTICAST_LOOP_AS_BOOL 1
+#define ACE_HAS_IP_MULTICAST_LOOP_AS_INT 1
+
 #if defined (ACE_LACKS_NETWORKING)
 # include "ace/config-posix-nonetworking.h"
 #else

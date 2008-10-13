@@ -1,3 +1,12 @@
+Mon Oct 13 14:23:06 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * ace/config-linux-common.h:
+        * bin/tao_other_tests.lst:
+
+          Added 3 defines to reflect a difference of Linux in setting
+          IP_MULTICAST_TTL and IP(V6)_MULTICAST_LOOP. This is required by
+          Bug#3444. Added a test for Bug#3444.
+
 Mon Oct 13 13:21:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-ciao.txt:
