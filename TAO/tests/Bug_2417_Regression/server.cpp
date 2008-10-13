@@ -40,7 +40,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Publisher_var publisher_var = Publisher::_narrow (object.in ());
 
       CORBA::String_var ior = orb->object_to_string(publisher_var.in());
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in()));
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in()));
 
       // output the ior
       FILE *output_file= ACE_OS::fopen ("ior.out", "w");
