@@ -28,8 +28,7 @@ TestEventConsumer_i::ORB_task::svc ()
   try
     {
       this->orb_->run ();
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TestEventConsumer_i ORB_task "
-                                      "exiting\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TestEventConsumer_i ORB_task exiting\n")));
     }
   catch (CORBA::SystemException &e)
     {
@@ -48,13 +47,13 @@ TestEventConsumer_i::push (const CORBA::Any & data)
   const char *eventData;
   if (data >>= eventData)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TestEventConsumer_i::push(): Received "
-                                      "event containing %d bytes.\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TestEventConsumer_i::push(): Received ")
+                            ACE_TEXT ("event containing %d bytes.\n"),
                                       ACE_OS::strlen (eventData)));
       if (this->hang_ && ++this->count_ == 10)
         {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TestEventConsumer_i::push(): "
-                                          "Simulating hung consumer\n")));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TestEventConsumer_i::push(): ")
+                                ACE_TEXT ("Simulating hung consumer\n")));
           {
             ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mtx_);
             while (!this->shutdown_)
