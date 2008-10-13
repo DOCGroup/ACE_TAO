@@ -49,7 +49,7 @@ public:
         catch (CORBA::Exception &ex)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) caught an exception - %s\n",ex._name()));
+                        "(%P|%t) caught an exception - %C\n",ex._name()));
             keep_going = false;
           }
       }
