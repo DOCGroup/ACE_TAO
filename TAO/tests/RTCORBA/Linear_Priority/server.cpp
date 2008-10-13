@@ -176,7 +176,7 @@ Task::svc (void)
 
       int result =
         get_priority_bands ("server",
-                            ACE_TEXT_ALWAYS_CHAR (bands_file),
+                            bands_file,
                             rt_orb.in (),
                             policies,
                             debug);
@@ -185,7 +185,7 @@ Task::svc (void)
 
       result =
         get_priority_lanes ("server",
-                            ACE_TEXT_ALWAYS_CHAR (lanes_file),
+                            lanes_file,
                             rt_orb.in (),
                             stacksize,
                             static_threads,
