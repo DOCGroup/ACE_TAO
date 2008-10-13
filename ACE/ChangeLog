@@ -1,3 +1,8 @@
+Mon Oct 13 11:10:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Problems with Lynxos5.0 due to -mshared being passed to compiler (inaddition to linker)
+
 Mon Oct 13 07:21:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Local_Name_Space_T.cpp:
