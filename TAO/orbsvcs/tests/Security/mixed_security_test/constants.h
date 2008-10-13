@@ -17,7 +17,7 @@
 
 namespace TAO_Mixed_Security_Test
 {
-  const ACE_TCHAR *cert_file = ACE_TEXT("cacert.pem");
+  const char *cert_file = "cacert.pem";
 
   const ACE_TCHAR *permitted_ior_file = ACE_TEXT("permitted.ior");
   const ACE_TCHAR *permitted_ior = ACE_TEXT("file://permitted.ior");
