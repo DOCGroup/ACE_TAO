@@ -1068,7 +1068,7 @@ namespace TAO
   bool
   parse_orb_opt (ACE_Argv_Type_Converter& command_line,
                  const ACE_TCHAR* orb_opt,
-                 ACE_CString& opt_arg)
+                 ACE_TString& opt_arg)
   {
 
     if (opt_arg.length () > 0)
@@ -1091,8 +1091,7 @@ namespace TAO
             arg_shifter.consume_arg ();
             if (arg_shifter.is_parameter_next ())
               {
-                opt_arg =
-                  ACE_TEXT_ALWAYS_CHAR (arg_shifter.get_current ());
+                opt_arg = arg_shifter.get_current ();
                 arg_shifter.consume_arg ();
               }
           }
@@ -1103,10 +1102,9 @@ namespace TAO
             // The rest of the argument is the ORB id...
             // but we should skip an optional space...
             if (current_arg[opt_len] == ' ')
-              opt_arg =
-                ACE_TEXT_ALWAYS_CHAR (current_arg + opt_len + 1);
+              opt_arg = current_arg + opt_len + 1;
             else
-              opt_arg = ACE_TEXT_ALWAYS_CHAR (current_arg + opt_len);
+              opt_arg = current_arg + opt_len;
           }
         else
           arg_shifter.ignore_arg ();
@@ -1115,9 +1113,9 @@ namespace TAO
   }
 
   ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt>
-  find_orb_context (const ACE_CString& orbconfig_string)
+  find_orb_context (const ACE_TString& orbconfig_string)
     {
-      const ACE_TCHAR *arg = ACE_TEXT_CHAR_TO_TCHAR(orbconfig_string.c_str ());
+      const ACE_TCHAR *arg = orbconfig_string.c_str ();
 
       // Need a local repo? Make one which typically should not be as
       // big as the default repository
@@ -1144,19 +1142,20 @@ namespace TAO
 
       // Someone else's context?
       const ACE_TCHAR *shared = ACE_TEXT("ORB:");
-      size_t shared_len = ACE_OS::strlen(shared);
+      size_t const shared_len = ACE_OS::strlen(shared);
       if (ACE_OS::strncmp (arg, shared, shared_len) == 0)
         {
-          ACE_CString orbid (orbconfig_string.substr (shared_len));
+          ACE_TString orbid (orbconfig_string.substr (shared_len));
 
           // Get ORB Core
-          TAO_ORB_Core_Auto_Ptr oc (TAO::ORB_Table::instance ()->find (orbid.c_str ()));
+          TAO_ORB_Core_Auto_Ptr oc (TAO::ORB_Table::instance ()->find (
+            ACE_TEXT_ALWAYS_CHAR(orbid.c_str ())));
           if (oc.get () != 0)
               return oc->configuration ();
 
           if (TAO_debug_level > 0)
               ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("ERROR: Unable to find ORB: %C. Invalid shared ")
+              ACE_TEXT ("ERROR: Unable to find ORB: %s. Invalid shared ")
               ACE_TEXT ("configuration argument \"%s\"\n"),
                 orbid.c_str (), arg));
 
@@ -1171,7 +1170,7 @@ namespace TAO
       // Unknown value
       if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("ERROR: -ORBGestalt unknown value <%C>\n"),
+                        ACE_TEXT ("ERROR: -ORBGestalt unknown value <%s>\n"),
                         orbconfig_string.c_str()));
 
       throw ::CORBA::BAD_PARAM
@@ -1206,9 +1205,7 @@ CORBA::ORB_init (int &argc,
                  wchar_t *argv[],
                  const wchar_t *orbid)
 {
-  return CORBA::ORB_init (argc,
-                          argv,
-                          ACE_TEXT_ALWAYS_CHAR (orbid));
+  return CORBA::ORB_init (argc, argv, ACE_TEXT_ALWAYS_CHAR (orbid));
 }
 #endif
 
@@ -1252,11 +1249,12 @@ CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
   // initialization since we need to have exceptions initialized.
 
   // Use this string variable to hold the orbid
-  ACE_CString orbid_string (orbid);
+  ACE_TString orbid_string (ACE_TEXT_CHAR_TO_TCHAR(orbid));
   TAO::parse_orb_opt (command_line, ACE_TEXT("-ORBid"), orbid_string);
 
   // Get ORB Core
-  TAO_ORB_Core_Auto_Ptr oc (TAO::ORB_Table::instance ()->find (orbid_string.c_str ()));
+  TAO_ORB_Core_Auto_Ptr oc (TAO::ORB_Table::instance ()->find (
+    ACE_TEXT_ALWAYS_CHAR(orbid_string.c_str ())));
 
     // The ORB was already initialized.  Just return that one.
   if (oc.get () != 0)
@@ -1268,7 +1266,7 @@ CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
   // are: (a) the legacy (global); (b) its own, local, or (c) share somebody
   // else's configuration. By default use the process-wide (global) context
     // Use this string variable to hold the configuration identity key
-  ACE_CString orbconfig_string;
+  ACE_TString orbconfig_string;
   TAO::parse_orb_opt (command_line, ACE_TEXT("-ORBGestalt"), orbconfig_string);
   ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> gestalt = TAO::find_orb_context (orbconfig_string);
 
@@ -1276,7 +1274,8 @@ CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
   // a new one.
   TAO_ORB_Core * tmp = 0;
   ACE_NEW_THROW_EX (tmp,
-                    TAO_ORB_Core (orbid_string.c_str (), gestalt),
+                    TAO_ORB_Core (ACE_TEXT_ALWAYS_CHAR(orbid_string.c_str ()),
+                      gestalt),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (0,
                                                                ENOMEM),
@@ -1358,7 +1357,7 @@ CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
     }
 
   // Before returning remember to store the ORB into the table...
-  if (TAO::ORB_Table::instance ()->bind (orbid_string.c_str (),
+  if (TAO::ORB_Table::instance ()->bind (ACE_TEXT_ALWAYS_CHAR(orbid_string.c_str ()),
                                          oc.get ()) != 0)
     throw ::CORBA::INTERNAL (0, CORBA::COMPLETED_NO);
 
