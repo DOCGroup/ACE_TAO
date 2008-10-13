@@ -106,7 +106,7 @@ Server<Servant>::init (const char *servant_name,
                                                      &this->servant_);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "The IOR is: <%s>\n",
+                  "The IOR is: <%C>\n",
                   str.in ()));
 
       if (this->ior_output_file_)
@@ -245,8 +245,6 @@ Client<InterfaceObj, Var>::init (const char *name,
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
         return -1;
-
-
 
       if(this->ior_ != 0)
         {
