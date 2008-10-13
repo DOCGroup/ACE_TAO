@@ -107,7 +107,7 @@ get_priority_bands (const char *test_type,
 
 int
 get_values (const char *test_type,
-            const ACE_THAR *file_name,
+            const ACE_TCHAR *file_name,
             const char *name,
             ULong_Array &values,
             int debug)
