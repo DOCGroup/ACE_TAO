@@ -41,7 +41,7 @@ Messenger_i::send_message (const CORBA::OctetSeq & user_name)
 
       const char * name = 0;
       user_name_as_any >>= name;
-      ACE_DEBUG ((LM_DEBUG,  "User's name: %s\n", name));
+      ACE_DEBUG ((LM_DEBUG,  "User's name: %C\n", name));
     }
   catch (CORBA::SystemException &ex)
     {
