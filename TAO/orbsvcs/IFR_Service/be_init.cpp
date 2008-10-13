@@ -57,7 +57,7 @@ BE_save_orb_args (int &argc, ACE_TCHAR *argv[])
         }
     }
 
-  be_global->orb_args (holder);
+  be_global->orb_args (ACE_TEXT_ALWAYS_CHAR(holder.c_str()));
 
   return 0;
 }
