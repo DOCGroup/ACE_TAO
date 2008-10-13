@@ -59,8 +59,8 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   CORBA::String_var operation = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s.receive_request_service_contexts from "
-              "\"%s\"\n",
+              "%C.receive_request_service_contexts from "
+              "\"%C\"\n",
               this->myname_,
               operation.in ()));
 
