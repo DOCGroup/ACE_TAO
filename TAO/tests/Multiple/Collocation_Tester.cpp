@@ -28,13 +28,13 @@ Collocation_Tester::match_answer (const char *actual_answer,
   if (ACE_OS::strcmp (actual_answer, right_answer))
     {
       ACE_ERROR ((LM_DEBUG,
-                  ACE_TEXT ("Call to <%s> returned the wrong value!\n"), method_name));
+                  ACE_TEXT ("Call to <%C> returned the wrong value!\n"), method_name));
       return 1;
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Call to <%s> returned with success: %s \n"), method_name, actual_answer));
+                  ACE_TEXT ("Call to <%C> returned with success: %C \n"), method_name, actual_answer));
       return 0;
     }
 }
