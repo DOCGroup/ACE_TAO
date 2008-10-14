@@ -67,7 +67,7 @@ Echo_Client_Request_Interceptor::send_request (
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::send_request from "
-              "\"%s\"\n",
+              "\"%C\"\n",
               op.in ()));
 
   // For the "normal" operation, get the argument list.
@@ -125,7 +125,7 @@ Echo_Client_Request_Interceptor::receive_other (
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_other "
-              "from \"%s\"\n",
+              "from \"%C\"\n",
               op.in ()));
 }
 
@@ -137,7 +137,7 @@ Echo_Client_Request_Interceptor::receive_reply (
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_reply "
-              "from \"%s\"\n",
+              "from \"%C\"\n",
               op.in ()));
 
     // For the "normal" operation, get the argument list.
@@ -224,7 +224,7 @@ Echo_Client_Request_Interceptor::receive_reply (
       ACE_DEBUG ((LM_DEBUG,
                   "The result of the_structure() is:\n"
                   "  flag    = %d\n"
-                  "  message = %s\n",
+                  "  message = %C\n",
                   v->flag,
                   v->message.in ()));
     }
@@ -239,7 +239,7 @@ Echo_Client_Request_Interceptor::receive_exception (
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::received_exception "
-              "from \"%s\"\n",
+              "from \"%C\"\n",
               op.in ()));
 
 
