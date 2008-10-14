@@ -127,8 +127,10 @@
 #define ACE_INT64_FORMAT_SPECIFIER ACE_TEXT ("%I64d")
 #define ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT ("%I64u")
 
+#define ACE_STRTOLL_EQUIVALENT ::_strtoi64
+#define ACE_WCSTOLL_EQUIVALENT ::_wcstoi64
 #define ACE_STRTOULL_EQUIVALENT ::_strtoui64
-#define ACE_WCSTOOULL_EQUIVALENT ::_wcstoui64
+#define ACE_WCSTOULL_EQUIVALENT ::_wcstoui64
 
 // Turn off warnings for /W4
 // To resume any of these warning: #pragma warning(default: 4xxx)
