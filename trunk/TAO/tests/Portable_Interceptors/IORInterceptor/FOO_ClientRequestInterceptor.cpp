@@ -77,7 +77,7 @@ FOO_ClientRequestInterceptor::send_request (
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) String extracted from tagged component "
-              "data: %s\n",
+              "data: %C\n",
               name));
 }
 
