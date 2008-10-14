@@ -64,7 +64,7 @@ FOO_IORInterceptor::establish_components (
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Added tagged component containing the\n"
-              "(%P|%t)   string \"%s\" to all profiles.\n",
+              "(%P|%t)   string \"%C\" to all profiles.\n",
               name.in ()));
 
 
@@ -74,7 +74,7 @@ FOO_IORInterceptor::establish_components (
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Added tagged component containing the\n"
-              "(%P|%t)   string \"%s\" to all IIOP profiles.\n",
+              "(%P|%t)   string \"%C\" to all IIOP profiles.\n",
               name.in ()));
 
 
