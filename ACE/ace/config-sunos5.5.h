@@ -399,6 +399,7 @@
 #define ACE_LACKS_INET_ATON
 
 // Solaris doesn't have wcstoull
+#define ACE_LACKS_WCSTOLL
 #define ACE_LACKS_WCSTOULL
 
 #if defined (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64)
