@@ -149,7 +149,7 @@ ServantManager_i::create_dll_object_id (const char *libname,
   format_string += factory_function;
 
   ACE_DEBUG ((LM_DEBUG,
-              "format-string is %s\n",
+              "format-string is %C\n",
               format_string.c_str ()));
   // The object ID is created.
   PortableServer::ObjectId_var oid =
