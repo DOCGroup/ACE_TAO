@@ -1,3 +1,9 @@
+Tue Oct 14 12:44:28 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/config-hpux-11.00.h:
+
+          Define ACE_LACKS_STRTOLL and ACE_LACKS_WCSTOLL.
+
 Tue Oct 14 09:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * ace/OS_NS_stdlib.cpp:
