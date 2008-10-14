@@ -64,7 +64,7 @@ Echo_Server_Request_Interceptor::receive_request (
   CORBA::String_var op = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Server_Request_Interceptor::receive_request from \"%s\"\n",
+              "Echo_Server_Request_Interceptor::receive_request from \"%C\"\n",
               op.in ()));
 
   if (ACE_OS::strcmp (op.in (), "normal") == 0)
@@ -96,7 +96,7 @@ Echo_Server_Request_Interceptor::receive_request (
     ri->target_most_derived_interface ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "Target most derived interface: %s\n",
+              "Target most derived interface: %C\n",
               tmdi.in ()));
 }
 
@@ -108,7 +108,7 @@ Echo_Server_Request_Interceptor::send_reply (
   CORBA::String_var op = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Server_Request_Interceptor::send_reply from \"%s\"\n",
+              "Echo_Server_Request_Interceptor::send_reply from \"%C\"\n",
               op.in ()));
 
   if (ACE_OS::strcmp (op.in (), "normal") == 0)
@@ -157,7 +157,7 @@ Echo_Server_Request_Interceptor::send_exception (
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_exception "
-              "from \"%s\"\n",
+              "from \"%C\"\n",
               op.in ()));
 
 
