@@ -63,7 +63,7 @@ Test_DynEnum::run_test (void)
                                debug_);
       {
         ACE_DEBUG ((LM_DEBUG,
-                  "\t*=*=*=*= %s =*=*=*=*\n",
+                  "\t*=*=*=*= %C =*=*=*=*\n",
                   data.labels[18]));
         ACE_DEBUG ((LM_DEBUG,
                   "testing: constructor(Any)/set_as_string/get_as_ulong\n"));
@@ -178,7 +178,7 @@ Test_DynEnum::run_test (void)
       }
       {
         ACE_DEBUG ((LM_DEBUG,
-                  "\t*=*=*=*= %s =*=*=*=*\n",
+                  "\t*=*=*=*= %C =*=*=*=*\n",
                   data.labels[19]));
         ACE_DEBUG ((LM_DEBUG,
                   "testing: set_as_string/get_as_ulong\n"));
