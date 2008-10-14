@@ -114,7 +114,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (obj1.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "ForwardRequestTest::test servant 1: <%s>\n",
+                  "ForwardRequestTest::test servant 1: <%C>\n",
                   ior1.in ()));
 
       // Servant 2
@@ -135,7 +135,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (obj2.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "ForwardRequestTest::test servant 2: <%s>\n",
+                  "ForwardRequestTest::test servant 2: <%C>\n",
                   ior2.in ()));
 
       poa_manager->activate ();
