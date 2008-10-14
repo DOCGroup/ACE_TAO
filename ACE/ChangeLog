@@ -1,3 +1,10 @@
+Tue Oct 14 09:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/OS_NS_stdlib.cpp:
+        * ace/OS_NS_stdlib.h:
+
+          Un-tabify commit of J.T. Conklin.
+
 Mon Oct 13 17:21:28 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/fuzz.pl:
