@@ -599,8 +599,8 @@ ACE_OS::strtol_emulation (const char *nptr, char **endptr, int base)
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOL) 
 long
 ACE_OS::wcstol_emulation (const wchar_t *nptr,
-			  wchar_t **endptr,
-			  int base)
+        wchar_t **endptr,
+        int base)
 {
   register const wchar_t *s = nptr;
   register unsigned long acc;
@@ -737,8 +737,8 @@ ACE_OS::strtoul_emulation (const char *nptr,
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOUL) 
 unsigned long
 ACE_OS::wcstoul_emulation (const wchar_t *nptr,
-			   wchar_t **endptr,
-			   int base)
+         wchar_t **endptr,
+         int base)
 {
   register const wchar_t *s = nptr;
   register unsigned long acc;
@@ -806,8 +806,8 @@ ACE_OS::wcstoul_emulation (const wchar_t *nptr,
 #if defined (ACE_LACKS_STRTOLL)
 ACE_INT64
 ACE_OS::strtoll_emulation (const char *nptr,
-			   char **endptr,
-			   register int base)
+         char **endptr,
+         register int base)
 {
   register const char *s = nptr;
   register ACE_UINT64 acc;
@@ -874,8 +874,8 @@ ACE_OS::strtoll_emulation (const char *nptr,
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOLL) 
 ACE_INT64
 ACE_OS::wcstoll_emulation (const wchar_t *nptr,
-			   wchar_t **endptr,
-			   int base)
+         wchar_t **endptr,
+         int base)
 {
   register const wchar_t *s = nptr;
   register ACE_UINT64 acc;
@@ -1013,8 +1013,8 @@ ACE_OS::strtoull_emulation (const char *nptr,
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOULL) 
 ACE_UINT64
 ACE_OS::wcstoull_emulation (const wchar_t *nptr,
-			    wchar_t **endptr,
-			    int base)
+          wchar_t **endptr,
+          int base)
 {
   register const wchar_t *s = nptr;
   register ACE_UINT64 acc;
