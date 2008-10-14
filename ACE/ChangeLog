@@ -1,3 +1,9 @@
+Tue Oct 14 22:27:30 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
+
+        * ace/Ping_Socket.cpp:
+        
+          Removed tabs accidentally added in previous modification.
+
 Tue Oct 14 19:38:45 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
 
         * ace/Ping_Socket.cpp:
