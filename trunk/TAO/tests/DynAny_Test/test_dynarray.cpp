@@ -48,7 +48,7 @@ Test_DynArray::run_test (void)
   try
     {
       ACE_DEBUG ((LM_DEBUG,
-                 "\t*=*=*=*= %s =*=*=*=*\n",
+                 "\t*=*=*=*= %C =*=*=*=*\n",
                  data.labels[4]));
 
       ACE_DEBUG ((LM_DEBUG,

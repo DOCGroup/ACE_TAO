@@ -40,7 +40,7 @@ Test_Wrapper<T>::run_test (void)
   const char* test_name = this->test_object_->test_name ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "********************* %s *******************\n\n",
+              "********************* %C *******************\n\n",
               test_name));
 
   return this->test_object_->run_test ();

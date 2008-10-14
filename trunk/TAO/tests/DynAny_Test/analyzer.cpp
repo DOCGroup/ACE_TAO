@@ -127,7 +127,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
                 if (debug_)
                   {
                     ACE_DEBUG ((LM_DEBUG,
-                              "Member = %s\n", fn.in ()));
+                              "Member = %C\n", fn.in ()));
                   }
 
                 if (!CORBA::is_nil (cc.in ()))
@@ -271,7 +271,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
 
         if (debug_)
           {
-            ACE_DEBUG ((LM_DEBUG, "  Value (enum) = %s\n", s.in()));
+            ACE_DEBUG ((LM_DEBUG, "  Value (enum) = %C\n", s.in()));
           }
       }
       break;
@@ -295,7 +295,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
 
         if (debug_)
           {
-            ACE_DEBUG ((LM_DEBUG, "  Value (string) = %s\n", b.in ()));
+            ACE_DEBUG ((LM_DEBUG, "  Value (string) = %C\n", b.in ()));
           }
       }
       break;
