@@ -249,7 +249,7 @@ ACE_Ping_Socket::process_incoming_dgram (char * ptr, ssize_t len)
           ACE_TEXT ("(%P|%t) ACE_Ping_Socket::process_incoming_dgram")
           ACE_TEXT (" - ICMP_ECHOREPLY received.\n")));
 
-	  if (icmp->icmp_id != (ACE_OS::getpid () & 0xFFFF))
+      if (icmp->icmp_id != (ACE_OS::getpid () & 0xFFFF))
         {
           ACE_ERROR_RETURN
             ((LM_ERROR,
@@ -257,7 +257,7 @@ ACE_Ping_Socket::process_incoming_dgram (char * ptr, ssize_t len)
               ACE_TEXT ("process_incoming_dgram ")
               ACE_TEXT ("- The ICMP header received is a reply to request ")
               ACE_TEXT ("of another process (%d; expected %d).\n"),
-			  icmp->icmp_id, ACE_OS::getpid()),
+              icmp->icmp_id, ACE_OS::getpid()),
              -1);
         }
       if (icmplen < 16)
