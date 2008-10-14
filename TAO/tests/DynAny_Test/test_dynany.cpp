@@ -63,7 +63,7 @@ Test_DynAny::run_test (void)
                                debug_);
       {
         ACE_DEBUG ((LM_DEBUG,
-                  "\t*=*=*=*= %s =*=*=*=*\n",
+                  "\t*=*=*=*= %C =*=*=*=*\n",
                   data.labels[8]));
 
         ACE_DEBUG ((LM_DEBUG,
@@ -118,7 +118,7 @@ Test_DynAny::run_test (void)
 
       {
         ACE_DEBUG ((LM_DEBUG,
-          "\t*=*=*=*= %s =*=*=*=*\n",
+          "\t*=*=*=*= %C =*=*=*=*\n",
           data.labels[17]));
 
         ACE_DEBUG ((LM_DEBUG,
@@ -155,7 +155,7 @@ Test_DynAny::run_test (void)
         ftc1->from_any (in_any1);
 
         analyzer.analyze(ftc1.in());
-        
+
         CORBA::Any_var out_any1 = ftc1->to_any ();
 
         out_any1.in() >>= d_out;
@@ -176,7 +176,7 @@ Test_DynAny::run_test (void)
 
 
       ACE_DEBUG ((LM_DEBUG,
-                 "\t*=*=*=*= %s =*=*=*=*\n",
+                 "\t*=*=*=*= %C =*=*=*=*\n",
                  data.labels[12]));
 
       ACE_DEBUG ((LM_DEBUG,
@@ -231,7 +231,7 @@ Test_DynAny::run_test (void)
       ftc2->destroy ();
 
       ACE_DEBUG ((LM_DEBUG,
-                 "\t*=*=*=*= %s =*=*=*=*\n",
+                 "\t*=*=*=*= %C =*=*=*=*\n",
                  data.labels[16]));
 
       ACE_DEBUG ((LM_DEBUG,

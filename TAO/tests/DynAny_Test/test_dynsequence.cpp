@@ -30,7 +30,7 @@ compare_string_sequence_elements(
 {
     CORBA::String_var lhs_string = lhs[i]->get_string ();
 
-    ACE_DEBUG ((LM_DEBUG, "elem[%d] = %s\n", i, lhs_string.in()));
+    ACE_DEBUG ((LM_DEBUG, "elem[%d] = %C\n", i, lhs_string.in()));
 
     CORBA::Boolean match =
         lhs[i]->equal (rhs[i]);
@@ -41,7 +41,7 @@ compare_string_sequence_elements(
             rhs[i]->get_string();
 
         ACE_DEBUG ((LM_DEBUG,
-                    "  mismatch with elements[%d] = %s\n", i,
+                    "  mismatch with elements[%d] = %C\n", i,
                     rhs_string.in() ));
     }
 
@@ -79,7 +79,7 @@ Test_DynSequence::run_test (void)
     try
     {
       ACE_DEBUG ((LM_DEBUG,
-                 "\t*=*=*=*= %s =*=*=*=*\n",
+                 "\t*=*=*=*= %C =*=*=*=*\n",
                  data.labels[11]));
 
       ACE_DEBUG ((LM_DEBUG,
@@ -224,7 +224,7 @@ Test_DynSequence::run_test (void)
           {
               ACE_DEBUG((LM_DEBUG,
                          "  Mismatch after replacing through in/out.\n"
-                         "  expected = %s, got = %s\n",
+                         "  expected = %C, got = %C\n",
                          replacement, new_str.in()));
               this->error_count_++;
           }
