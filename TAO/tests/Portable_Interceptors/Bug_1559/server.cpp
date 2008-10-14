@@ -110,7 +110,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Test_Interceptors::Visual: <%s>\n",
+                  "Test_Interceptors::Visual: <%C>\n",
                   ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
