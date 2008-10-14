@@ -64,8 +64,8 @@ Echo_Client_Request_Interceptor::send_request (
     this->orb_->object_to_string (target.in ());
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s.send_request "
-              "from \"%s\"\n",
+              "%C.send_request "
+              "from \"%C\"\n",
               this->myname_,
               operation.in ()));
 
@@ -96,8 +96,8 @@ Echo_Client_Request_Interceptor::send_request (
   if (ACE_OS::strcmp (buf2, request_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
-                    "ERROR: Expected request service context to be: %s.\n"
-                    "  Got: %s\n",
+                    "ERROR: Expected request service context to be: %C.\n"
+                    "  Got: %C\n",
                     request_msg,
                     buf2));
     }
@@ -126,8 +126,8 @@ Echo_Client_Request_Interceptor::receive_reply (
     this->orb_->object_to_string (target.in ());
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s.receive_reply from "
-              "\"%s\"\n",
+              "%C.receive_reply from "
+              "\"%C\"\n",
               this->myname_,
               operation.in ()));
 
@@ -141,13 +141,13 @@ Echo_Client_Request_Interceptor::receive_reply (
       const char *buf =
         reinterpret_cast<const char *> (sc->context_data.get_buffer ());
       ACE_DEBUG ((LM_DEBUG,
-                  "Received reply service context: %s\n",
+                  "Received reply service context: %C\n",
                   buf));
 
       if (ACE_OS::strcmp (buf, reply_msg) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "ERROR: Expected reply service context to be: %s\n",
+                      "ERROR: Expected reply service context to be: %C\n",
                       reply_msg));
         }
 
@@ -161,8 +161,8 @@ Echo_Client_Request_Interceptor::receive_reply (
       if (ACE_OS::strcmp (buf2, request_msg) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "ERROR: Expected request service context to be: %s.\n"
-                      "  Got: %s\n",
+                      "ERROR: Expected request service context to be: %C.\n"
+                      "  Got: %C\n",
                       request_msg,
                       buf2));
         }
@@ -179,7 +179,7 @@ Echo_Client_Request_Interceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%s.receive_other\n",
+              "%C.receive_other\n",
               this->myname_));
 }
 
@@ -203,8 +203,8 @@ Echo_Client_Request_Interceptor::receive_exception (
     this->orb_->object_to_string (target.in ());
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s.received_exception "
-              "from \"%s\"\n",
+              "%C.received_exception "
+              "from \"%C\"\n",
               this->myname_,
               operation.in ()));
 
@@ -218,13 +218,13 @@ Echo_Client_Request_Interceptor::receive_exception (
       const char *buf =
         reinterpret_cast<const char *> (sc->context_data.get_buffer ());
       ACE_DEBUG ((LM_DEBUG,
-                  "Received reply service context: %s\n",
+                  "Received reply service context: %C\n",
                   buf));
 
       if (ACE_OS::strcmp (buf, reply_msg) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "ERROR: Expected reply service context to be: %s\n",
+                      "ERROR: Expected reply service context to be: %C\n",
                       reply_msg));
         }
 
@@ -238,8 +238,8 @@ Echo_Client_Request_Interceptor::receive_exception (
       if (ACE_OS::strcmp (buf2, request_msg) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "ERROR: Expected request service context to be: %s.\n"
-                      "  Got: %s\n",
+                      "ERROR: Expected request service context to be: %C.\n"
+                      "  Got: %C\n",
                       request_msg,
                       buf2));
         }
@@ -279,8 +279,8 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   CORBA::String_var operation = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t)%s.receive_request_service_contexts from "
-              "\"%s\"\n",
+              "(%P|%t)%C.receive_request_service_contexts from "
+              "\"%C\"\n",
               this->myname_,
               operation.in ()));
 
@@ -291,14 +291,14 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   const char *buf =
     reinterpret_cast<const char *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t)  Received service context: %s\n",
+              "(%P|%t)  Received service context: %C\n",
               buf));
 
   if (ACE_OS::strcmp (buf, request_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Echo_Server_Request_Interceptor::receive_request_service_contexts: "
-                    "Expected request service context to be: %s\n",
+                    "Expected request service context to be: %C\n",
                     request_msg));
     }
 
@@ -334,7 +334,7 @@ Echo_Server_Request_Interceptor::send_reply (
   CORBA::String_var operation = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t)%s.send_reply from \"%s\"\n",
+              "(%P|%t)%C.send_reply from \"%C\"\n",
               this->myname_,
               operation.in ()));
 
@@ -344,14 +344,14 @@ Echo_Server_Request_Interceptor::send_reply (
 
   const char *buf = reinterpret_cast<const char *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t)  Reply service context: %s\n",
+              "(%P|%t)  Reply service context: %C\n",
               buf));
 
   if (ACE_OS::strcmp (buf, reply_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Echo_Server_Request_Interceptor::send_reply: "
-                    "Expected reply service context to be: %s\n",
+                    "Expected reply service context to be: %C\n",
                     reply_msg));
     }
 
@@ -365,8 +365,8 @@ Echo_Server_Request_Interceptor::send_reply (
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Echo_Server_Request_Interceptor::send_reply: "
-                    "Expected request service context to be: %s.\n"
-                    "  Got: %s\n",
+                    "Expected request service context to be: %C.\n"
+                    "  Got: %C\n",
                     request_msg,
                     buf2));
     }
@@ -380,7 +380,7 @@ Echo_Server_Request_Interceptor::send_exception (
   CORBA::String_var operation = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t)%s.send_exception from \"%s\"\n",
+              "(%P|%t)%C.send_exception from \"%C\"\n",
               this->myname_,
               operation.in ()));
 
@@ -390,14 +390,14 @@ Echo_Server_Request_Interceptor::send_exception (
 
   const char *buf = reinterpret_cast<const char *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t)  Reply service context: %s\n",
+              "(%P|%t)  Reply service context: %C\n",
               buf));
 
   if (ACE_OS::strcmp (buf, reply_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Echo_Server_Request_Interceptor::send_exception: "
-                    "Expected reply service context to be: %s\n",
+                    "Expected reply service context to be: %C\n",
                     reply_msg));
     }
 
@@ -411,8 +411,8 @@ Echo_Server_Request_Interceptor::send_exception (
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Echo_Server_Request_Interceptor::send_exception: "
-                    "Expected request service context to be: %s.\n"
-                    "  Got: %s\n",
+                    "Expected request service context to be: %C.\n"
+                    "  Got: %C\n",
                     request_msg,
                     buf2));
     }
