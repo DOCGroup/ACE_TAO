@@ -1,3 +1,13 @@
+Tue Oct 14 13:09:35 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/config-sunos5.10.h:
+
+          Undefine ACE_LACKS_WCSTOLL.
+
+        * ace/config-sunos5.5.h:
+
+          Define ACE_LACKS_WCSTOLL.
+
 Tue Oct 14 12:56:42 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/config-win32-msvc.h:
