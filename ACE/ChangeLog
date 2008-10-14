@@ -1,3 +1,9 @@
+Tue Oct 14 19:38:45 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
+
+        * ace/Ping_Socket.cpp:
+        
+          Fixed WinCE 5 build error associated with call to getpid.
+
 Tue Oct 14 13:09:35 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/config-sunos5.10.h:
