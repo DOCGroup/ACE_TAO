@@ -28,14 +28,14 @@ DII_ReplyHandler::handle_response (TAO_InputCDR &incoming)
   try
     {
       if (incoming >> result.inout())
-        ACE_DEBUG ((LM_DEBUG,"Got response: %s\n",result.in()));
+        ACE_DEBUG ((LM_DEBUG,"Got response: %C\n",result.in()));
       else
         ACE_ERROR ((LM_ERROR,"ERROR: Response is not a string!\n"));
     }
   catch (CORBA::SystemException &ex)
     {
       ACE_ERROR ((LM_ERROR,
-                  "ERROR: DII_ReplyHandler::handle_response caught %s\n",
+                  "ERROR: DII_ReplyHandler::handle_response caught %C\n",
                   ex._name()));
     }
   catch (...)
@@ -62,7 +62,7 @@ DII_ReplyHandler::handle_excep (TAO_InputCDR &incoming,
   if (reply_status == TAO_AMI_REPLY_USER_EXCEPTION)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "DII_ReplyHandler::handle_excep got user ex = %s\n",
+                  "DII_ReplyHandler::handle_excep got user ex = %C\n",
                   id.in()));
     }
   else if (reply_status == TAO_AMI_REPLY_SYSTEM_EXCEPTION)
@@ -80,7 +80,7 @@ DII_ReplyHandler::handle_excep (TAO_InputCDR &incoming,
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Got system exception: %s, minor = %d, completed = %d\n",
+                      "Got system exception: %C, minor = %d, completed = %d\n",
                       id.in(), minor, completion));
         }
 
@@ -113,7 +113,7 @@ DII_ReplyHandler::handle_location_forward (TAO_InputCDR &incoming,
   bool is_perm = reply_status == TAO_AMI_REPLY_LOCATION_FORWARD_PERM;
   ACE_DEBUG ((LM_DEBUG,
               "DII_ReplyHandler::handle_location_forward"
-              " got %s, is_perm = %b\n",
+              " got %C, is_perm = %b\n",
               iorstr.in() ,is_perm));
 
   CORBA::Request_var req = fwd->_request ("do_forward");
