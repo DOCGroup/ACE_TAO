@@ -148,6 +148,8 @@
 
 #if (__BORLANDC__ < 0x610)
 # define ACE_HAS_NONCONST_TEMPNAM
+# define ACE_LACKS_STRTOLL
+# define ACE_LACKS_WCSTOLL
 # define ACE_LACKS_STRTOULL
 # define ACE_LACKS_WCSTOULL
 #endif
