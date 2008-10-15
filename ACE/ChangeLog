@@ -1,13 +1,18 @@
+Wed Oct 15 09:45:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_mpc_auto_compile.pl:
+          Add the -vc9 option to the usage message
+
 Tue Oct 14 22:27:30 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
 
         * ace/Ping_Socket.cpp:
-        
+
           Removed tabs accidentally added in previous modification.
 
 Tue Oct 14 19:38:45 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
 
         * ace/Ping_Socket.cpp:
-        
+
           Fixed WinCE 5 build error associated with call to getpid.
 
 Tue Oct 14 13:09:35 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
