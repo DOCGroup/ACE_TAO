@@ -17,7 +17,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       foo.length (1);
       foo[0] = "Hello World";
       const CORBA::StringSeq & bar = foo;
-      ACE_DEBUG ((LM_DEBUG, "String: %s\n", bar[0].in ()));
+      ACE_DEBUG ((LM_DEBUG, "String: %C\n", bar[0].in ()));
       CORBA::String_var mystring = bar[0].in ();
     }
   catch (const CORBA::Exception &ex)
