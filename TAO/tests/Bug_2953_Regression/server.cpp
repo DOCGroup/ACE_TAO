@@ -244,7 +244,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     Test::Hello_var helloB(Test::Hello::_narrow(objB.in ()));
     CORBA::String_var resB = helloB->get_string();
 
-    ACE_DEBUG ((LM_DEBUG, "server got resA: %s and resB: %s\n", resA.in (), resB.in ()));
+    ACE_DEBUG ((LM_DEBUG, "server got resA: %C and resB: %C\n", resA.in (), resB.in ()));
 
     if (client_taskA.activate (THR_NEW_LWP | THR_JOINABLE, 1) == -1)
       {
