@@ -26,7 +26,7 @@ UDP_i::invoke (const char * client_name,
   try
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "UDP_i::invoke: name = %s request id = %d.\n",
+                  "UDP_i::invoke: name = %C request id = %d.\n",
                   client_name,
                   request_id));
 
@@ -36,7 +36,7 @@ UDP_i::invoke (const char * client_name,
         {
           if (last_request_id + 1 != request_id)
             ACE_ERROR ((LM_ERROR,
-                        "UDP_i::invoke: failure on %s expected id = %d, got %d\n",
+                        "UDP_i::invoke: failure on %C expected id = %d, got %d\n",
                         client_name,
                         last_request_id+1,
                         request_id));
@@ -66,8 +66,7 @@ void
 UDP_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%s\n",
-              "UDP_i is shutting down"));
+              "UDP_i is shutting down\n"));
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
