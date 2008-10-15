@@ -32,7 +32,7 @@ Request_Interceptor::destroy (void)
   if (s_count == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P) ERROR: Interceptor %d \"%s\"\n"
+                  "(%P) ERROR: Interceptor %d \"%C\"\n"
                   "(%P) The number of starting interception point calls "
                   "is zero\n", s_count,
                   this->name_.in ()));
@@ -43,7 +43,7 @@ Request_Interceptor::destroy (void)
   if (e_count == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P) ERROR: Interceptor %d \"%s\"\n"
+                  "(%P) ERROR: Interceptor %d \"%C\"\n"
                   "(%P) The number of ending interception point calls"
                   "is zero\n",
                   e_count, this->name_.in ()));
@@ -54,7 +54,7 @@ Request_Interceptor::destroy (void)
   if (s_count != e_count)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P) ERROR: Interceptor \"%s\"\n"
+                  "(%P) ERROR: Interceptor \"%C\"\n"
                   "(%P) The number of starting interception point "
                   "calls (%u)\n"
                   "(%P) did not equal the number of ending "
