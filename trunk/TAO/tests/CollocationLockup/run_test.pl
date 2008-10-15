@@ -62,7 +62,7 @@ if ($client != 0) {
   $status = 1;
 }
 
-$NS->Kill ();
+$NS->TerminateWaitKill (5);
 
 unlink $iorfile;
 
