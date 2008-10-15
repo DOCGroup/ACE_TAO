@@ -1,3 +1,32 @@
+Tue Oct 14 16:22:32 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * tests/Cached_Accept_Conn_Test.cpp:
+        * tests/Cached_Accept_Conn_Test.h:
+
+          Fixed a warning.
+
+        * bin/PerlACE/Process_Win32.pm:
+
+          Changed value of iflags in Win32::Process::Create (this flag
+          directs a spawned process to inherit handles from calling
+          process). It doesn't hurt if a new process is neither in
+          CREATE_NEW_CONSOLE nor in DETACHED_PROCESS state but it does
+          help if it's needed to hanle input from stdin supplied in
+          calling process.
+
+        * tests/SSL/Bug_2912_Regression_Test.cpp:
+
+          Fixed a warning on Solaris compilers.
+
+        * bin/tao_orb_tests.lst:
+
+          Adjusted configurations in which test Bug_1459 must run.
+
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.h:
+        * examples/APG/ThreadManagement/Async_Cancel.cpp:
+
+          Fixed a warning on HP-UX compilers.
+
 Wed Oct 15 09:45:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_mpc_auto_compile.pl:
