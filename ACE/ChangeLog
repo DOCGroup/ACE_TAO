@@ -1,3 +1,8 @@
+Wed Oct 15 19:31:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_signal.h:
+          Define SIGABRT to 0 when it is not defined
+
 Wed Oct 15 15:15:42 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * bin/tao_other_tests.lst:
