@@ -1,3 +1,12 @@
+Wed Oct 15 12:27:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_main.{h,cpp}:
+          Added ACE_DOESNT_DEFINE_MAIN which disabled the redefinition
+          of main when it is set. This is usefull for projects who have
+          methods with the name main which they can't change. Be aware
+          that users then have to call ACE::init()/fini() themselves.
+          This fixes bugzilla 3361/RT2331.
+
 Tue Oct 14 16:22:32 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * tests/Cached_Accept_Conn_Test.cpp:
