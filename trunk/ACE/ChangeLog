@@ -1,3 +1,10 @@
+Wed Oct 15 15:15:42 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+
+          Since the test for bug 3444 uses TAO_PortableGroup it must
+          avoid MINIMUM and CORBA_E_COMACT configurations.
+
 Wed Oct 15 12:27:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_main.{h,cpp}:
