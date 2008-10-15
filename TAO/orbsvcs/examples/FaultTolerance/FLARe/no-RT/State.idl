@@ -1,0 +1,14 @@
+// $Id$
+
+#ifndef _FLARE_STATE_IDL_
+#define _FLARE_STATE_IDL_
+
+struct State
+{
+  unsigned long id;
+  long value;
+};
+
+#pragma keylist State
+
+#endif // _FLARE_STATE_IDL_
