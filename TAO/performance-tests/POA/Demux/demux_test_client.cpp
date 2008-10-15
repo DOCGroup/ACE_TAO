@@ -28,6 +28,7 @@ Demux_Test_Client::Demux_Test_Client (void)
     // default number of child POAs is 1 and each one will always have 1 object
     num_objs_ (1),
     num_ops_ (1),
+    demux_test_ (TAO_DEMUX_TEST_MAX_POAS * TAO_DEMUX_TEST_MAX_OBJS),
     loop_count_ (1),
     ior_fp_ (0),
     result_fp_ (0),
@@ -38,8 +39,6 @@ Demux_Test_Client::Demux_Test_Client (void)
 // destructor
 Demux_Test_Client::~Demux_Test_Client (void)
 {
-  ACE_OS::fclose (this->ior_fp_);
-  ACE_OS::fclose (this->result_fp_);
 }
 
 //
@@ -103,10 +102,10 @@ Demux_Test_Client::init (int argc, ACE_TCHAR *argv [])
 
             // now narrow to Demux_Test object
 
-            this->demux_test_[i][j] = Demux_Test::_narrow (objref.in ());
+            this->demux_test_[i * j] = Demux_Test::_narrow (objref.in ());
 
 
-            if (CORBA::is_nil (this->demux_test_[i][j].in ()))
+            if (CORBA::is_nil (this->demux_test_[i * j].in ()))
               {
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    "ObjRef for IOR %s (POA %d, OBJ %d) is NULL\n",
@@ -281,11 +280,12 @@ Demux_Test_Client::run (void)
     }
 
   ACE_OS::fclose (this->result_fp_);
+  this->result_fp_ = 0;
 
   try
     {
       // call the shutdown method one the first object
-      this->demux_test_[0][0]->shutdown ();
+      this->demux_test_[0]->shutdown ();
     }
   catch (const CORBA::Exception& ex)
     {
@@ -322,7 +322,7 @@ Demux_Test_Client::run_linear_test (void)
             start = ACE_OS::gethrtime ();
 
             // invoke the method
-            this->op_db_[l].op_ (this->demux_test_[j][k].in ());
+            this->op_db_[l].op_ (this->demux_test_[j * k].in ());
 
             end = ACE_OS::gethrtime ();
 

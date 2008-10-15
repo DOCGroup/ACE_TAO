@@ -571,7 +571,7 @@ DRV_parse_args (long ac, char **av)
             }
         }
 
-      idl_global->temp_dir (ACE::strnew (ACE_TEXT_ALWAYS_CHAR (tmpdir)));
+      idl_global->temp_dir (ACE_TEXT_ALWAYS_CHAR (tmpdir));
     }
 
   DRV_cpp_post_init ();
