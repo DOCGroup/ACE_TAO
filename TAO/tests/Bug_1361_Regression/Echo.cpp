@@ -22,7 +22,7 @@ Echo::Echo(CORBA::ORB_ptr orb,
 void
 Echo::echo_payload(Test::Payload const &)
 {
-  this->abort_counter_--;
+  --this->abort_counter_;
 
   if (this->abort_counter_ == 0)
     {
@@ -41,7 +41,7 @@ Echo::echo_payload_out (
   data->length(j);
   ACE_OS::memset(data->get_buffer(), data->length(), 0);
 
-  this->abort_counter_--;
+  --this->abort_counter_;
 
   if (this->abort_counter_ == 0)
     {
