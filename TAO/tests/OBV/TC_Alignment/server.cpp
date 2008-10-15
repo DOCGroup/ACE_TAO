@@ -48,27 +48,27 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Activated as <%s>\n",
+                  "Activated as <%C>\n",
                   ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
-              {
-                FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+        {
+          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
 
-                if (output_file == 0)
+          if (output_file == 0)
             {
-                    ACE_ERROR_RETURN ((LM_ERROR,
-                                                   "Can't open output file for writing IOR: %s",
-                                                   ior_output_file),
-                                                  1);
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Can't open output file for writing IOR: %s",
+                                 ior_output_file),
+                                 1);
             }
 
-                ACE_OS::fprintf (output_file,
+          ACE_OS::fprintf (output_file,
                            "%s",
                            ior.in ());
-                ACE_OS::fclose (output_file);
-              }
+          ACE_OS::fclose (output_file);
+        }
 
       poa_manager->activate ();
 
