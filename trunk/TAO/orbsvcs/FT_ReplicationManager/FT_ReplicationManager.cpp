@@ -198,8 +198,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
     {
       ACE_ERROR_RETURN ( (LM_ERROR,
         ACE_TEXT (
-          "%T %n (%P|%t) - "
-          "Could not resolve notifier IOR.\n")),
+          "%T %n (%P|%t) - Could not resolve notifier IOR.\n")),
           -1);
     }
   }
@@ -368,8 +367,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
   {
     ACE_ERROR ( (LM_ERROR,
       ACE_TEXT (
-        "%T %n (%P|%t) - "
-        "Bad Fault Notifier object reference provided.\n")
+        "%T %n (%P|%t) - Bad Fault Notifier object reference provided.\n")
     ));
     throw CORBA::BAD_PARAM (
       CORBA::SystemException::_tao_minor_code (
@@ -401,8 +399,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
     {
       ACE_ERROR ( (LM_ERROR,
         ACE_TEXT (
-          "%T %n (%P|%t) - "
-          "Error creating FaultAnalyzer.\n"
+          "%T %n (%P|%t) - Error creating FaultAnalyzer.\n"
           )
       ));
       result = -1;
@@ -427,8 +424,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
   {
     ACE_ERROR ( (LM_ERROR,
       ACE_TEXT (
-        "%T %n (%P|%t) -  "
-        "Could not re-initialize FT_FaultConsumer.\n")
+        "%T %n (%P|%t) - Could not re-initialize FT_FaultConsumer.\n")
     ));
 
     throw CORBA::INTERNAL (
