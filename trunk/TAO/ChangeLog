@@ -1,3 +1,49 @@
+Wed Oct 15 10:29:36 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.h:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/run_test.pl:
+
+          Made log of the pl script a bit more verbose. Changed ACE_ASSERT
+          to real checks.
+
+        * orbsvcs/tests/Bug_3215_Regression/server.cpp:
+        * orbsvcs/tests/Bug_2287_Regression/server.cpp:
+
+          Fixed a problem with permanent forward on win32 if
+          orbsvcs/FaultTolerance/FT_ClientService_Activate.h is not
+          included. Fixed memory leaks.
+
+        * orbsvcs/tests/Bug_2285_Regression/client2.cpp:
+        * orbsvcs/tests/Bug_2285_Regression/server.cpp:
+        * orbsvcs/tests/Bug_2285_Regression/server2.cpp:
+
+          Fixed memory leaks in this test.
+
+        * orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+
+          Fixed a warning on HP-UX compilers.
+
+        * TAO_IDL/driver/drv_args.cpp:
+
+          Fixed a memory leak.
+
+        * performance-tests/POA/Demux/demux_test_server.cpp:
+        * performance-tests/POA/Demux/demux_test_client.cpp:
+        * performance-tests/POA/Demux/demux_test_client.h:
+
+          Fixed a code that crashed gcc on Solaris. This was happening
+          because the test used a huge 2-dimensional array as a class
+          member. Also fixed other problems that I encountered when I
+          tried to run that test manually.
+
+        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
+        * tests/ORB_Local_Config/Bug_1459/d.conf:
+
+          Changed the test a bit so that it tests what it's expected
+          to test. Not UIOP which is not present on Win32 and not SSLIOP
+          which has a problem described in bug#3418.
+
 Mon Oct 13 18:24:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.cpp:
