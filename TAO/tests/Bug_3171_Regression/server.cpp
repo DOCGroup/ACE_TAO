@@ -76,7 +76,7 @@ public:
   pre_init( PortableInterceptor::ORBInitInfo_ptr )
   {
     ACE_DEBUG ((LM_DEBUG,
-                "MyORBinitializer::pre_init() called for ORB \"%s\"\n",
+                "MyORBinitializer::pre_init() called for ORB \"%C\"\n",
                 orbID_.c_str()));
   };
 
@@ -85,7 +85,7 @@ public:
   post_init( PortableInterceptor::ORBInitInfo_ptr )
   {
     ACE_DEBUG ((LM_DEBUG,
-                "MyORBinitializer::post_init() called for ORB \"%s\"\n",
+                "MyORBinitializer::post_init() called for ORB \"%C\"\n",
                 orbID_.c_str()));
   };
 
@@ -156,7 +156,7 @@ initORB(int threadID)
     char ORBid[10];
     ACE_OS::sprintf (ORBid, "ORB_%d", threadID);
 
-    ACE_DEBUG ((LM_DEBUG, "Initializing ORB \"%s\"\n", ORBid));
+    ACE_DEBUG ((LM_DEBUG, "Initializing ORB \"%C\"\n", ORBid));
 
     if ( g_registerORBinitializer )
     {
@@ -171,16 +171,16 @@ initORB(int threadID)
 
     if ( -1 == pORBmgr->init( g_argc, g_argv, ORBid ) )
     {
-      ACE_DEBUG ((LM_DEBUG, "Failed to initialize ORB \"%s\"\n", ORBid));
+      ACE_DEBUG ((LM_DEBUG, "Failed to initialize ORB \"%C\"\n", ORBid));
       throw CORBA::INTERNAL();
     }
 
-    ACE_DEBUG ((LM_DEBUG, "ORB \"%s\" initialized\n", ORBid));
+    ACE_DEBUG ((LM_DEBUG, "ORB \"%C\" initialized\n", ORBid));
 
     if ( g_setTimeout )
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Setting connection timeout policy for ORB \"%s\"\n",
+                  "Setting connection timeout policy for ORB \"%C\"\n",
                   ORBid));
 
       CORBA::PolicyList policyList;
@@ -198,7 +198,7 @@ initORB(int threadID)
         TAO::CONNECTION_TIMEOUT_POLICY_TYPE,
         any );
 
-      ACE_DEBUG ((LM_DEBUG, "Connection timeout policy set for ORB \"%s\"\n",
+      ACE_DEBUG ((LM_DEBUG, "Connection timeout policy set for ORB \"%C\"\n",
                   ORBid));
     }
 
@@ -208,7 +208,7 @@ initORB(int threadID)
   }
   catch (const CORBA::Exception& ex)
   {
-    ACE_ERROR ((LM_ERROR, "Caught exception: %s\n", ex._info().c_str()));
+    ACE_ERROR ((LM_ERROR, "Caught exception: %C\n", ex._info().c_str()));
     return 1;
   }
 
