@@ -302,7 +302,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "\nActivated as <%s>\n\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "\nActivated as <%C>\n\n", ior.in ()));
 
       if (ior_output_file != 0)
         {
