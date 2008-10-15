@@ -18,7 +18,7 @@ Connection_Manager::load_ep_addr (const char* file_name)
   if (addr_file == 0)
     {
       ACE_ERROR ((LM_DEBUG,
-                  "Cannot open addr file %s\n",
+                  "Cannot open addr file %C\n",
                   file_name));
       return;
     }
@@ -51,7 +51,7 @@ Connection_Manager::load_ep_addr (const char* file_name)
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "%s\n",
+                    "%C\n",
                     buf));
 
       Endpoint_Addresses* addr;
@@ -115,16 +115,16 @@ Connection_Manager::load_ep_addr (const char* file_name)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "Flowname %s Bound Successfully\n",
+                        "Flowname %C Bound Successfully\n",
                         flowname.c_str ()));
         }
       else if (result == 1)
         ACE_DEBUG ((LM_DEBUG,
-                    "Flowname %s already exists\n",
+                    "Flowname %C already exists\n",
                     flowname.c_str ()));
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "Flowname %s Bound Failed\n",
+                    "Flowname %C Bound Failed\n",
                     flowname.c_str ()));
     }
 }
@@ -305,13 +305,13 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender)
           sender_addr_str = addr->sender_addr;
           receiver_addr_str = addr->receiver_addr;
           ACE_DEBUG ((LM_DEBUG,
-                      "Address Strings %s %s\n",
+                      "Address Strings %C %C\n",
                       sender_addr_str.c_str (),
                       receiver_addr_str.c_str ()));
         }
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "No endpoint address for flowname %s\n",
+                    "No endpoint address for flowname %C\n",
                     flowname.c_str ()));
 
       ACE_INET_Addr receiver_addr (receiver_addr_str.c_str ());
@@ -336,7 +336,7 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender)
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "Connection_Manager::connect_to_receivers Flow Spec Entry %s\n",
+                    "Connection_Manager::connect_to_receivers Flow Spec Entry %C\n",
                     sender_entry.entry_to_string ()));
 
       // Create the stream control for this stream.
@@ -489,7 +489,7 @@ Connection_Manager::connect_to_sender (void)
       receiver_addr_str = addr->receiver_addr;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Address Strings %s %s\n",
+                  "Address Strings %C %C\n",
                   sender_addr_str.c_str (),
                   receiver_addr_str.c_str ()));
     }
@@ -517,7 +517,7 @@ Connection_Manager::connect_to_sender (void)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "Connection_Manager::connect_to_sender Flow Spec Entry %s\n",
+                "Connection_Manager::connect_to_sender Flow Spec Entry %C\n",
                 sender_entry.entry_to_string ()));
 
   // Create the stream control for this stream
