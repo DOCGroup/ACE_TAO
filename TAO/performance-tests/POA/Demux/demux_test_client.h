@@ -21,8 +21,10 @@
 // FUZZ: disable check_for_math_include
 
 #include "ace/Get_Opt.h"
+#include "ace/Vector_T.h"
 #include "demux_testC.h"
 #include "demux_test_macros.h"
+#include "tao/Intrusive_Ref_Count_Handle_T.h"
 
 class Demux_Test_Client
 {
@@ -100,7 +102,9 @@ private:
   CORBA::ULong num_ops_;
   // number of operations
 
-  Demux_Test_var demux_test_[TAO_DEMUX_TEST_MAX_POAS][TAO_DEMUX_TEST_MAX_OBJS];
+  typedef TAO_Intrusive_Ref_Count_Handle<Demux_Test> Demux_Test_Var;
+  typedef ACE_Vector<Demux_Test_Var> Demux_Test_Container;
+  Demux_Test_Container demux_test_;
   // object references to the Demux_Test objects
 
   CORBA::ULong loop_count_;
