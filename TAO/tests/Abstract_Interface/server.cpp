@@ -25,9 +25,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                                             "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT("usage:  %s ")
+                           ACE_TEXT("-o <iorfile>")
+                           ACE_TEXT("\n"),
                            argv [0]),
                           -1);
       }
@@ -107,7 +107,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Activated as <%s>\n",
+                  "Activated as <%C>\n",
                   ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
