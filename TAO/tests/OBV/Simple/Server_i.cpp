@@ -56,8 +56,7 @@ void
 Checkpoint_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\n%s\n",
-              "The Checkpoint server is shutting down"));
+              "\nThe Checkpoint server is shutting down\n"));
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
