@@ -71,7 +71,7 @@ Collocation_Test::init (int argc, ACE_TCHAR *argv[])
   CORBA::String_var str =
     this->orb_->object_to_string (this->diamond_obj_.in ());
 
-  ACE_DEBUG ((LM_DEBUG, "Diamond Servant activated:\n %s\n",
+  ACE_DEBUG ((LM_DEBUG, "Diamond Servant activated:\n %C\n",
               str.in()));
 
   return 0;
@@ -102,16 +102,16 @@ Collocation_Test::test_narrow (void)
     Diamond::Buttom::_narrow (this->diamond_obj_.in ());
 
   CORBA::String_var str = top->shape ();
-  ACE_DEBUG ((LM_DEBUG, "Calling top->shape: %s\n", str.in ()));
+  ACE_DEBUG ((LM_DEBUG, "Calling top->shape: %C\n", str.in ()));
 
   str = left->shape ();
-  ACE_DEBUG ((LM_DEBUG, "Calling left->shape: %s\n", str.in ()));
+  ACE_DEBUG ((LM_DEBUG, "Calling left->shape: %C\n", str.in ()));
 
   str = right->shape ();
-  ACE_DEBUG ((LM_DEBUG, "Calling right->shape: %s\n", str.in ()));
+  ACE_DEBUG ((LM_DEBUG, "Calling right->shape: %C\n", str.in ()));
 
   str = buttom->shape ();
-  ACE_DEBUG ((LM_DEBUG, "Calling buttom->shape: %s\n", str.in ()));
+  ACE_DEBUG ((LM_DEBUG, "Calling buttom->shape: %C\n", str.in ()));
 
   return 0;
 }
