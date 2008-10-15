@@ -301,7 +301,7 @@ sub Spawn ()
     my $status = Win32::Process::Create ($self->{PROCESS},
                                          $executable,
                                          $cmdline,
-                                         0,
+                                         ($state == 0 ? 1 : 0),
                                          $state,
                                          '.');
 

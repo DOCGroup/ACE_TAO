@@ -113,7 +113,7 @@ public:
   // Constructor.
 
   int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-            int restart = 0);
+            bool restart = false);
   // Initialize the <peer_acceptor_> with <local_addr>.  If the
   // process runs out of descriptors, the unsed svc_handlers from the
   // CONNECTION CACHE are removed.
