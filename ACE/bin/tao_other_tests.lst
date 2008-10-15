@@ -179,10 +179,10 @@ TAO/orbsvcs/examples/Notify/Subscribe/run_test.pl: !ST !NO_MESSAGING !MINIMUM !C
 TAO/orbsvcs/tests/Bug_2925_Regression/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Bug_2925_Regression/run_test_ipv6.pl: IPV6 !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Bug_2377_Regression/run_test_ipv6.pl: IPV6 !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !VxWorks !VxWorks_RTP
-TAO/orbsvcs/tests/Bug_3444_Regression/run_test.pl: !NO_DIOP !CORBA_E_MICRO !STATIC !VxWorks !VxWorks_RTP
-TAO/orbsvcs/tests/Bug_3444_Regression/run_test.pl --sciop: SCTP !CORBA_E_MICRO !STATIC !VxWorks !VxWorks_RTP
-TAO/orbsvcs/tests/Bug_3444_Regression/run_test_ipv6.pl: IPV6 !NO_DIOP !CORBA_E_MICRO !STATIC !VxWorks !VxWorks_RTP
-TAO/orbsvcs/tests/Bug_3444_Regression/run_test_ipv6.pl --sciop: IPV6 SCTP !CORBA_E_MICRO !STATIC !VxWorks !VxWorks_RTP
+TAO/orbsvcs/tests/Bug_3444_Regression/run_test.pl: !NO_DIOP !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !VxWorks !VxWorks_RTP
+TAO/orbsvcs/tests/Bug_3444_Regression/run_test.pl --sciop: SCTP !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !VxWorks !VxWorks_RTP
+TAO/orbsvcs/tests/Bug_3444_Regression/run_test_ipv6.pl: IPV6 !NO_DIOP !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !VxWorks !VxWorks_RTP
+TAO/orbsvcs/tests/Bug_3444_Regression/run_test_ipv6.pl --sciop: IPV6 SCTP !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !VxWorks !VxWorks_RTP
 TAO/examples/PluggableUDP/tests/SimplePerformance/run_test_ipv6.pl: IPV6 !QNX !NO_DIOP !ACE_FOR_TAO
 TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl: !QNX !NO_DIOP !ACE_FOR_TAO
 TAO/examples/PluggableUDP/tests/Performance/run_test.pl: !QNX !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_COMPACT !CORBA_E_MICRO
