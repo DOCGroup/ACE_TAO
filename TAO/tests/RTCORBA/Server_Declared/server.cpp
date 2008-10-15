@@ -142,7 +142,7 @@ check_for_nil (CORBA::Object_ptr obj, const char *msg)
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: Object reference <%s> is nil\n",
+                       "ERROR: Object reference <%C> is nil\n",
                        msg),
                       -1);
   else
@@ -173,7 +173,7 @@ create_object (RTPortableServer::POA_ptr poa,
   CORBA::String_var ior =
     orb->object_to_string (server.in ());
 
-  ACE_DEBUG ((LM_DEBUG, "<%s>\n\n", ior.in ()));
+  ACE_DEBUG ((LM_DEBUG, "<%C>\n\n", ior.in ()));
 
   // Print ior to the file.
   if (filename != 0)
