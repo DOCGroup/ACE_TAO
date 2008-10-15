@@ -1,0 +1,15 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  lit_libs    += ddsdatabase dcpsccpp
+  libpaths    += $(OSPL_HOME)/lib
+  includes    += $(OSPL_HOME)/include \
+                 $(OSPL_HOME)/include/sys \
+                 $(OSPL_HOME)/include/dcps/C++/CCPP \
+                 $(OSPL_HOME)/include/dcps/C++/CCPP/$(SPLICE_ORB)
+                 
+  specific(nmake, vc71, vc8) {
+    DisableSpecificWarnings += 4101
+  }
+}

@@ -1,0 +1,4 @@
+workspace {
+  cmdline += -include MPC/config -include $OSPL_HOME/
+  LWFT.mpc
+}

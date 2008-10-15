@@ -1,0 +1,3 @@
+project : taoidldefaults {
+  idlflags += -I $(OSPL_HOME)/include/dcps/C++/CCPP
+}

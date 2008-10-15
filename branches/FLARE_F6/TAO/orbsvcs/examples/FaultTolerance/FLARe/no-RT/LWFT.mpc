@@ -1,0 +1,166 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  idlflags    += -Wb,export_macro=TAO_LWFT_Export -Wb,export_include=lwft_export.h
+  libout       = .
+
+  IDL_Files {
+    StateSynchronizationAgent.idl
+    ReplicatedApplication.idl
+    LWFTDataStructures.idl
+    LWFT.idl
+    monitor.idl
+  }
+  
+  IDL_Files {
+    idlflags += -SS
+    ObjectReferenceFactory.idl
+  }
+  
+  custom_only = 1
+}
+
+project(*Common) : rtportableserver, pi_server, interceptors, iorinterceptor {
+  after += *idl
+  sharedname = LWFT_Common
+  dynamicflags = TAO_LWFT_BUILD_DLL
+  libout       = .
+  
+  IDL_Files {
+  }
+  
+  Source_Files {
+    AppOptions.cpp
+    ArgPair.cpp
+    AppSideMonitor_Thread.cpp
+    AppSideMonitor_Handler.cpp
+    AppSideReg.cpp
+    Hello.cpp
+    IOR_Interceptor.cpp
+    LWFTDataStructuresC.cpp
+    LWFTC.cpp
+    LWFTS.cpp
+    monitorC.cpp
+    monitorS.cpp
+    ObjectReferenceFactory.cpp
+    ObjectReferenceFactoryC.cpp
+    ServerORBInitializer.cpp
+    Timer.cpp
+    StateSynchronizationAgentC.cpp
+    StateSynchronizationAgentS.cpp
+    ReplicatedApplicationC.cpp
+    ReplicatedApplicationS.cpp
+  }
+}
+
+
+project(*server): rt_server, pi_server, interceptors, iorinterceptor, splice_ts_defaults {
+  after += *Common *StateSyncAgent *StateTopic
+  libs += LWFT_Common LWFT_StateSyncAgent LWFT_StateTopic
+  exename = server 
+  
+  IDL_Files {
+  }
+  
+  Source_Files {
+    ServerTask.cpp
+    test_i.cpp
+    server.cpp
+  }
+  
+  Header_Files {
+  }
+}
+
+project(*StateSyncAgent) : portableserver, splice_ts_defaults {
+  after += *Common *StateTopic
+  macros += SSA_EXPORT_BUILD_DLL
+  libs += LWFT_Common LWFT_StateTopic
+  libpaths += $(FLARE_ROOT)
+  libout = .
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    StateSynchronizationAgent_i.cpp
+    StatefulObject.cpp
+    CorbaStateUpdate.cpp
+    StateSyncAgentTask.cpp
+  }
+
+}
+
+project(*StateTopic) : splicelib_with_idl, portableserver {
+
+  libout = .
+
+  idlflags += -Wb,export_macro=State_TS_Export -Wb,export_include=state_ts_export.h
+  dynamicflags = STATE_TS_BUILD_DLL
+  macros += DDS_API=State_TS_Export
+
+  SpliceTypeSupport_Files {
+    State.idl
+  }
+
+  Source_Files {
+    StateC.cpp
+    StateDcpsC.cpp
+    StateDcps_impl.cpp
+    StateSplDcps.cpp
+  }
+
+//  custom_only = 1
+}
+
+project(*client): rt_client, pi_server, interceptors {
+  after += *Common
+  libs += LWFT_Common
+  exename = client
+  
+  IDL_Files {
+  }
+  
+  Source_Files {
+    Agent.cpp
+    client.cpp
+    Client_ORBInitializer.cpp
+    Client_Request_Interceptor.cpp
+  }
+}
+
+project(*HostMonitor): taoserver, naming {
+  after += *Common
+  libs += LWFT_Common
+  exename = host_monitor
+  
+  IDL_Files {
+  }
+  
+  Source_Files {
+    Failure_Handler.cpp
+    HMOptions.cpp
+    host_monitor.cpp
+    HostMonitorImpl.cpp
+    LinuxCPULoadCalculator.cpp
+    Monitor_Thread.cpp
+    RM_Proxy.cpp
+    Utilization_Monitor.cpp
+  }
+}
+
+project(*ReplicationManager): taoserver, naming {
+  after += *Common
+  libs += LWFT_Common
+  exename = ReplicationManager
+  
+  IDL_Files {
+  }
+  
+  Source_Files {
+    ReplicationManager.cpp
+    ReplicationManager_process.cpp
+    RMOptions.cpp
+  }
+}
