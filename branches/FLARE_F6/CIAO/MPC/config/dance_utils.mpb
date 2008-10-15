@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : ciao_deployment_stub {
+  after   += DAnCE_Utils
+  libs    += DAnCE_Utils
+}

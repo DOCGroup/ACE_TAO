@@ -1,0 +1,8 @@
+# Dynamically configure the Timer_Service into the application process
+# and pass in up to 4 arguments.  The final 3 arguments are retrieved
+# from environment variables, so they can be set by changing your
+# environment before running the main program.  If you don't have
+# these variables set they are ignored.
+dynamic Timer_Service_3 Service_Object *
+  Timer:_make_Timer_Service_3()
+  "timer $INTERVAL $MAX_TIMEOUTS $TRACE"

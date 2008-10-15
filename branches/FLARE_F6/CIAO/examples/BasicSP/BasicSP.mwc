@@ -1,0 +1,9 @@
+// $Id$
+
+workspace {
+   BasicSP.mpc
+   BMClosedED/BMClosedED.mpc
+   BMDevice/BMDevice.mpc
+   BMDisplay/BMDisplay.mpc
+   EC/EC.mpc
+}

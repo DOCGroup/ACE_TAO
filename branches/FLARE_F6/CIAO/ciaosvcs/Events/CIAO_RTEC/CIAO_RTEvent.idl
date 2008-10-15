@@ -1,0 +1,54 @@
+// $Id$
+
+/**
+ * @file CIAO_RTEvent.idl
+ *
+ * @author Gan Deng <dengg@dre.vanderbilt.edu>
+ * @author George Edwards
+ *
+ * @brief Interfaces for configuring CIAO's RT event channel.
+ */
+
+#include <ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl>
+#include <orbsvcs/orbsvcs/RtecEventChannelAdmin.idl>
+
+module CIAO
+{
+  interface RTEvent_Consumer_Config :
+    Consumer_Config
+  {
+    //void start_logical_and_group (in long size);
+
+    //void start_negation ();
+
+    //void insert_bitmasked_value (in long source_mask,
+    //                             in long type_mask,
+    //                             in long source_value,
+    //                             in long type_value);
+
+    readonly attribute RtecEventChannelAdmin::ConsumerQOS rt_event_qos;
+  };
+
+  interface RTEvent_Supplier_Config :
+    Supplier_Config
+  {
+    readonly attribute RtecEventChannelAdmin::SupplierQOS rt_event_qos;
+  };
+
+  interface CIAO_RT_Event_Service :
+    CIAO_Event_Service
+  {
+    boolean create_addr_serv (in string name,
+                              in unsigned short port,
+                              in string address);
+
+    boolean create_sender (in string addr_serv_id);
+
+    boolean create_receiver (in string addr_serv_id,
+                             in boolean is_multicast,
+                             in unsigned short listen_port);
+
+    RtecEventChannelAdmin::EventChannel tao_rt_event_channel ();
+  };
+
+};

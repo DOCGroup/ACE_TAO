@@ -1,0 +1,21 @@
+// $Id$
+
+#include <Components.idl>
+#include "../common/Protocols.idl"
+
+module Protocols
+{
+  interface Receiver_Controller
+  {
+    void shutdown ();
+  };
+
+  component Receiver supports Receiver_Controller
+  {
+    provides test writer;
+  };
+
+  home ReceiverHome manages Receiver
+  {
+  };
+};

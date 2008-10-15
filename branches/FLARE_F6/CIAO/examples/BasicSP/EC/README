@@ -1,0 +1,9 @@
+/**
+
+@page EC README File
+
+      The EC component. This shouldnt be needed if we had a way to
+integrate EC sugly into CIAO. We dont at the time of writing this
+example on May 12, 2003. Hence this holy hack!
+
+*/
