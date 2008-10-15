@@ -11,7 +11,8 @@
 #include "testC.h"
 #include "Client_ORBInitializer.h"
 #include "tid_to_int.h"
-
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_stat.h"
 
 Client_Task::Client_Task (const ACE_TCHAR *input,
                           CORBA::ORB_ptr corb,
@@ -27,6 +28,20 @@ Client_Task::svc (void)
 {
   try
     {
+      // The test was designed so that we have to wait here.
+      ACE_stat st;
+      int timeout = 10;
+      while (--timeout)
+        {
+          if (ACE_OS::stat (this->input_, &st) == 0 &&
+              st.st_size != 0)
+            {
+              break;
+            }
+
+          ACE_OS::sleep (1);
+        }
+
       CORBA::Object_var object =
         this->corb_->string_to_object (this->input_);
 

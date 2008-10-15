@@ -16,10 +16,10 @@ unlink $thrserverfile;
 $status = 0;
 
 if (PerlACE::is_vxworks_test()) {
-    $CL = new PerlACE::ProcessVX ("client");
+    $CL = new PerlACE::ProcessVX ("client", "-o thr_server.ior -i file://test.ior");
 }
 else {
-    $CL = new PerlACE::Process ("client");
+    $CL = new PerlACE::Process ("client", "-o $thrserverfile -i file://$inputfile");
 }
 $SV = new PerlACE::Process ("server", "-o $inputfile -i file://$thrserverfile");
 

@@ -97,6 +97,8 @@ Server_Task::svc (void)
                    "Event loop finished for the thread server.\n"));
 
       root_poa->destroy (1, 1);
+
+      sorb_->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

@@ -10,7 +10,7 @@ project(*IDL): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoserver, imr_client, avoids_corba_e_micro {
+project(*Server): taoserver, imr_client, avoids_corba_e_micro, svc_utils {
   after += *IDL
 
   Source_Files {

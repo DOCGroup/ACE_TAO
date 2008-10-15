@@ -1,3 +1,23 @@
+Wed Oct 15 12:08:01 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * orbsvcs/tests/Bug_3216_Regression/server.cpp:
+        * orbsvcs/tests/Bug_1395_Regression/server.cpp:
+        * orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.mpc:
+        * orbsvcs/tests/Bug_2316_Regression/server.cpp:
+        * orbsvcs/tests/Bug_2615_Regression/server.cpp:
+        * tests/CollocationLockup/CollocationLockup.cpp:
+        * tests/CollocationLockup/SimpleNamingService.cpp:
+        * tests/CollocationLockup/run_test.pl:
+        * tests/Collocation_Tests/Hello.cpp:
+        * tests/Bug_1495_Regression/Client_Task.cpp:
+        * tests/Bug_1495_Regression/client_interceptor.h:
+        * tests/Bug_1495_Regression/Threaded_Server.cpp:
+        * tests/Bug_1495_Regression/Server_Task.cpp:
+        * tests/Bug_1495_Regression/server_interceptor.h:
+        * tests/Bug_1495_Regression/run_test.pl:
+
+          Fixed memory leaks in all those tests.
+
 Wed Oct 15 10:29:36 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
