@@ -49,7 +49,7 @@ dump_node (BaseNode *bn, int indent)
   StringNode *sn = StringNode::_downcast (bn);
   if (sn != 0)
   {
-    ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %s\n",
+    ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %C\n",
                bn,
                sn->name ()));
   }
