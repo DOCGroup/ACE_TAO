@@ -34,7 +34,7 @@ TestEventConsumer_i::ORB_task::svc ()
     {
       e._tao_print_exception (
         ACE_TEXT (
-          "TestEventConsumer_i ORB_task: ""Caught CORBA::Exception:"));
+          "TestEventConsumer_i ORB_task: Caught CORBA::Exception:"));
     }
   return 0;
 }
