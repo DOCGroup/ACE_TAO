@@ -183,13 +183,13 @@ write_iors_to_file (const char *first_ior,
                     const char *second_ior,
                     const char *third_ior)
 {
-  ACE_TCHAR ior_output_file_1[BUFSIZ];
-  ACE_TCHAR ior_output_file_2[BUFSIZ];
-  ACE_TCHAR ior_output_file_3[BUFSIZ];
+  char ior_output_file_1[BUFSIZ];
+  char ior_output_file_2[BUFSIZ];
+  char ior_output_file_3[BUFSIZ];
 
-  ACE_OS::sprintf (ior_output_file_1, ACE_TEXT("%s_1"), ior_output_file);
-  ACE_OS::sprintf (ior_output_file_2, ACE_TEXT("%s_2"), ior_output_file);
-  ACE_OS::sprintf (ior_output_file_3, ACE_TEXT("%s_3"), ior_output_file);
+  ACE_OS::sprintf (ior_output_file_1, "%s_1", ACE_TEXT_ALWAYS_CHAR(ior_output_file));
+  ACE_OS::sprintf (ior_output_file_2, "%s_2", ACE_TEXT_ALWAYS_CHAR(ior_output_file));
+  ACE_OS::sprintf (ior_output_file_3, "%s_3", ACE_TEXT_ALWAYS_CHAR(ior_output_file));
 
   FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1, ACE_TEXT("w"));
   FILE *output_file_2 = ACE_OS::fopen (ior_output_file_2, ACE_TEXT("w"));
@@ -198,7 +198,7 @@ write_iors_to_file (const char *first_ior,
   if (output_file_1 == 0 ||
       output_file_2 == 0 ||
       output_file_3 == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s, %s %s\n",
+    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %C, %C %C\n",
                        ior_output_file_1,
                        ior_output_file_2,
                        ior_output_file_3),
