@@ -1,3 +1,12 @@
+Wed Oct 15 15:35:50 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/constants.idl:
+        * tests/IDL_Test/main.cpp:
+        
+          Added code to check that a signed long integer constant
+          rhs value gets generated as such and not as an unsigned
+          literal, which would precipitate compile a warning.
+
 Wed Oct 15 12:08:01 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * orbsvcs/tests/Bug_3216_Regression/server.cpp:
