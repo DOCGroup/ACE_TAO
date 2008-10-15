@@ -134,6 +134,10 @@ extern "C"
 #  define SIGALRM 0
 #endif /* SIGALRM */
 
+#if !defined (SIGABRT)
+#  define SIGABRT 0
+#endif /* SIGABRT */
+
 #if !defined (SIG_DFL)
 #  define SIG_DFL ((__sighandler_t) 0)
 #endif /* SIG_DFL */
