@@ -19,6 +19,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         poa_manager->activate ();
 
         Server_impl* server_obj = new Server_impl(orb.in());
+        PortableServer::ServantBase_var owner (server_obj);
         server_var server = server_obj->_this();
         CORBA::String_var ior = orb->object_to_string (server.in ());
 
