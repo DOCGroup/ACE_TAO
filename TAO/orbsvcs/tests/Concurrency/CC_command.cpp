@@ -121,11 +121,11 @@ int CC_Start_Cmd::execute(void)
 
   ACE_Process new_process;
   ACE_Process_Options options;
-  options.command_line(cmd_line);
+  options.command_line(ACE_TEXT_CHAR_TO_TCHAR(cmd_line));
 
   if(new_process.spawn(options) == -1)
     {
-      ACE_ERROR_RETURN((LM_ERROR, "Creation of process failed: %s\n",
+      ACE_ERROR_RETURN((LM_ERROR, "Creation of process failed: %C\n",
                         cmd_line), 0);
     }
   return 1; // CC_SUCCESS
@@ -304,12 +304,12 @@ int CC_TryLock_Cmd::execute(void)
       if (lock_not_held)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%s lock not held\n",
+                      "%C lock not held\n",
                       CC_TestUtils::get_lock_mode_name (mode_)));
         }
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "%s lock held\n",
+                    "%C lock held\n",
                     CC_TestUtils::get_lock_mode_name (mode_)));
     }
   catch (const CORBA::Exception& ex)
