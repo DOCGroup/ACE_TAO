@@ -1,3 +1,10 @@
+Thu Oct 16 20:58:52 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tao/ORB_Core.cpp (list_initial_references): This method should
+          return the registered service name, not the object reference.
+          Thanks to Alexandre Skrzyniarz <alexandre dot skrzyniarz at fr
+          dot thalesgroup dot com> for providing this fix.
+
 Thu Oct 16 14:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/Notify_Service/NT_Notifiy_Server.cpp:
