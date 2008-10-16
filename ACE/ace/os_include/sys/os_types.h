@@ -30,9 +30,9 @@
 #  include /**/ <sys/types.h>
 #endif /* !ACE_LACKS_SYS_TYPES_H */
 
-#if defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_TYPES_H)
 #  include /**/ <types.h>
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_HAS_TYPES_H */
 
 # if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
              (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
@@ -55,22 +55,9 @@ typedef double ACE_timer_t;
 #  endif /* CLOCK_REALTIME */
 #endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T_ */
 
-#if defined (ACE_HAS_WINCE)
-
-// CE's add-on for c-style fstat/stat functionalities.  This struct is
-// by no mean complete compared to what you usually find in UNIX
-// platforms.  Only members that have direct conversion using Win32's
-// BY_HANDLE_FILE_INFORMATION are defined so that users can discover
-// non-supported members at compile time.  Time values are of type
-// ACE_Time_Value for easy comparison.
-
-// Since CE does not have _stat by default as NT/2000 does, the 'stat'
-// struct defined here will be used.  Also note that CE file system
-// struct is only for the CE 3.0 or later.
-// Refer to the WCHAR.H from Visual C++ and WIBASE.H from eVC 3.0.
-
+#if defined (ACE_LACKS_DEV_T)
    typedef unsigned int dev_t;
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_LACKS_DEV_T */
 
 #if defined(ACE_WIN32) && defined(_FILE_OFFSET_BITS) && (_FILE_OFFSET_BITS==64)
   typedef __int64 ACE_OFF_T;

@@ -384,7 +384,6 @@ namespace ACE
   extern ACE_Export int max_handles (void);
 
   // = String functions
-#if !defined (ACE_HAS_WINCE)
   /**
    * Return a dynamically allocated duplicate of @a str, substituting
    * the environment variable if @c str[0] @c == @c '$'.  Note that
@@ -392,7 +391,6 @@ namespace ACE
    * by @c ACE_OS::free.
    */
   extern ACE_Export ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
-#endif /* ACE_HAS_WINCE */
 
   /// Returns a pointer to the "end" of the string, i.e., the character
   /// past the '\0'.

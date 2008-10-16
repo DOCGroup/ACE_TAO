@@ -31,10 +31,13 @@
 #  include "ace/os_include/os_fcntl.h"
 #endif /* __BORLANDC */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_PROCESS_H)
 #  include /**/ <process.h>
+#endif /* ACE_HAS_PROCESS_H */
+
+#if defined (ACE_HAS_IO_H)
 #  include /**/ <io.h>
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_HAS_IO_H */
 
 #if defined (ACE_HAS_SYS_SYSTEMINFO_H)
 #  include /**/ <sys/systeminfo.h>

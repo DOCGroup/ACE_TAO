@@ -194,6 +194,12 @@
 # define ACE_HAS_P_READ_WRITE
 #endif /* ! ACE_HAS_WINCE */
 
+#if !defined (ACE_HAS_WINCE)
+# define ACE_HAS_DIRECT_H
+# define ACE_HAS_PROCESS_H
+# define ACE_HAS_IO_H
+#endif /* ! ACE_HAS_WINCE */
+
 #if !defined (__MINGW32__)
 # define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
 #endif /* __MINGW32__ */

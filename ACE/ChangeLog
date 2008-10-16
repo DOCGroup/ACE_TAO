@@ -1,3 +1,31 @@
+Thu Oct 16 18:13:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.{h,cpp}:
+          Always deliver strenvdup
+
+        * ace/config-win32-common.h:
+          Added new ACE_HAS_DIRECT_H, ACE_HAS_PROCESS_H, ACE_HAS_IO_H
+
+        * ace/config-WinCE.h:
+          Added new ACE_HAS_TYPES_H and ACE_LACKS_DEV_T
+
+        * ace/Log_Record.h:
+          Doxygen changes
+
+        * ace/os_include/os_unistd.h:
+          Use new ACE_HAS_PROCESS_H and ACE_HAS_IO_H
+
+        * ace/os_include/sys/os_stat.h:
+          Use new ACE_HAS_DIRECT_H and updated wince stat struct to match
+          other platforms to get TAO compiling.
+
+        * ace/os_include/sys/os_types.h:
+          Use ACE_HAS_TYPES_H and ACE_LACKS_DEV_T
+
+        * ace/OS_NS_sys_stat.inl:
+          Update setting of stat struct on ce and also set the
+          creation stamp
+
 Thu Oct 16 11:22:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-openvms.h:
