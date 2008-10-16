@@ -1,3 +1,9 @@
+Thu Oct 16 09:51:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Misc/test_demuxing.cpp:
+          Fixed compile error because SIGTERM is now always defined to 0
+          when it is not set by the system (like on CE)
+
 Thu Oct 16 09:47:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_signal.h:
