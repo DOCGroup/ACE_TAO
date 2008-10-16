@@ -5,7 +5,7 @@
 
 struct State
 {
-  unsigned long id;
+  string id;
   long value;
 };
 
