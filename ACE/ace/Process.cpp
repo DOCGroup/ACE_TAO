@@ -915,24 +915,6 @@ ACE_Process_Options::env_argv (void)
 
 #endif /* ACE_WIN32 */
 
-void
-ACE_Process_Options::enable_unicode_environment (void)
-{
-  this->use_unicode_environment_ = true;
-}
-
-void
-ACE_Process_Options::disable_unicode_environment (void)
-{
-  this->use_unicode_environment_ = false;
-}
-
-bool
-ACE_Process_Options::use_unicode_environment (void) const
-{
-  return this->use_unicode_environment_;
-}
-
 int
 ACE_Process_Options::setenv (ACE_TCHAR *envp[])
 {

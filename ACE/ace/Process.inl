@@ -10,6 +10,24 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+ACE_INLINE void
+ACE_Process_Options::enable_unicode_environment (void)
+{
+  this->use_unicode_environment_ = true;
+}
+
+ACE_INLINE void
+ACE_Process_Options::disable_unicode_environment (void)
+{
+  this->use_unicode_environment_ = false;
+}
+
+ACE_INLINE bool
+ACE_Process_Options::use_unicode_environment (void) const
+{
+  return this->use_unicode_environment_;
+}
+
 #if defined (ACE_WIN32)
 
 ACE_INLINE PROCESS_INFORMATION

@@ -171,7 +171,7 @@ ACE_OS_Exit_Info::call_hooks (void)
   // Call all registered cleanup hooks, in reverse order of
   // registration.
   for (ACE_Cleanup_Info_Node *iter = registered_objects_;
-       iter  &&  iter->next_ != 0;
+       iter && iter->next_ != 0;
        iter = iter->next_)
     {
       ACE_Cleanup_Info &info = iter->cleanup_info_;
