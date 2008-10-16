@@ -113,7 +113,7 @@ public:
    * Set a single environment variable, @a variable_name.  Since
    * different platforms separate each environment variable
    * differently, you must call this method once for each variable.
-   * <format> can be any printf format string.  So options->setenv
+   * @a format can be any printf format string.  So options->setenv
    * ("FOO","one + two = %s", "three") will result in "FOO=one + two =
    * three".
    */
@@ -439,7 +439,7 @@ protected:
   ACE_TCHAR process_name_[MAXPATHLEN + 1];
 
   /// Indicate if a Unicode environment should be used
-  bool use_unicode_environment_;  
+  bool use_unicode_environment_;
 };
 
 //class ACE_Process_Manager;
