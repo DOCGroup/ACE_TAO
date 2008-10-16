@@ -183,11 +183,6 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
                       ACE_Get_Opt::RETURN_IN_ORDER);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  // Keep a list of all unknown arguments, begin with the
-  // executable's name
-  ACE_ARGV superargv;
-  superargv.add (argv[0]);
-
   //FUZZ: disable check_for_lack_ACE_OS
   for (int c; (c = getopt ()) != -1; )
   //FUZZ: enable check_for_lack_ACE_OS
@@ -216,19 +211,11 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_LACKS_UNIX_SIGNALS */
           break;
         }
-      default:
-        superargv.add (argv[getopt.opt_ind () - 1], true);
+      default:; // unknown arguments are benign
+
       }
 
-  // Collect any argumets that were left
-  for (int c = getopt.opt_ind (); c < argc; ++c)
-    superargv.add (argv[c-1], true);
-
-  bool ignore_default_svc_conf_file = false;
-  return instance_->parse_args_i (superargv.argc (),
-                                  superargv.argv (),
-                                  ignore_default_svc_conf_file);
-
+  return 0;
 } /* parse_args_i () */
 
 
