@@ -33,9 +33,9 @@ public:
 
   /// ctor
   DDSStateReader_T (const std::string & topic_name,
-		  const std::string & id,
-		  DDS::DomainParticipant_ptr participant,
-		  ReplicatedApplication_ptr application);
+		    const std::string & id,
+		    DDS::DomainParticipant_ptr participant,
+		    ReplicatedApplication_ptr application);
 
   /// dtor
   virtual ~DDSStateReader_T ();

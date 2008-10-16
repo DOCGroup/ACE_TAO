@@ -197,7 +197,7 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
 
 void 
 StateSynchronizationAgent_i::register_application (const char * object_id,
-					  ReplicatedApplication_ptr app)
+						   ReplicatedApplication_ptr app)
 {
   ACE_DEBUG ((LM_TRACE, "SSA::register_application (%s) called.\n", object_id));
 
@@ -218,7 +218,9 @@ StateSynchronizationAgent_i::register_application (const char * object_id,
       new DDSStateReader_T <State,
 	                    StateTypeSupport,
                             StateDataReader,
-                            CORBA::Long> (this->get_unique_id (object_id),
+                            CORBA::Long> (object_id,
+					  this->get_unique_id (object_id),
+					  domain_participant_.in (),
 					  app);
     }
 }
