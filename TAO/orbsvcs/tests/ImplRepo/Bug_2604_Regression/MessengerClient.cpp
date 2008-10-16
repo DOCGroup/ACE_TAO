@@ -26,8 +26,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             {
               messenger->send_message("TAO User", "TAO Test",
                                       message.inout ());
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Message was sent\n"
-                                             "Client got reply: %s\n"),
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Message was sent\n")
+                                    ACE_TEXT("Client got reply: %C\n"),
                           message.in()));
             }
           catch (CORBA::Exception &ex)
