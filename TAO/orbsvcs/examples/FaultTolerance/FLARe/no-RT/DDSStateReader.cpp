@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    DDSStateReader.cpp
+ *  @file    DDSStateReader_T.cpp
  *
  *  $Id$
  *
@@ -10,19 +10,19 @@
  */
 //=============================================================================
 
-#ifndef _DDS_STATE_READER_CPP_
-#define _DDS_STATE_READER_CPP_
+#ifndef _DDS_STATE_READER_T_CPP_
+#define _DDS_STATE_READER_T_CPP_
 
-#include "DDSStateReaderListener.h"
+#include "DDSStateReaderListener_T.h"
 
 template <typename TOPIC_TYPE, 
 	  typename TOPIC_TYPE_SUPPORT,
 	  typename TOPIC_DATA_READER, 
 	  typename STATE_TYPE>
-DDSStateReader<TOPIC_TYPE, 
-               TOPIC_TYPE_SUPPORT, 
-               TOPIC_DATA_READER, 
-               STATE_TYPE>::DDSStateReader (
+DDSStateReader_T<TOPIC_TYPE, 
+		 TOPIC_TYPE_SUPPORT, 
+		 TOPIC_DATA_READER, 
+		 STATE_TYPE>::DDSStateReader_T (
     const std::string & topic_name,
     const std::string & id,
     DDS::DomainParticipant_ptr participant,
@@ -32,9 +32,9 @@ DDSStateReader<TOPIC_TYPE,
     sub_ (DDS::Subscriber::_nil ()),
     topic_ (DDS::Topic::_nil ()),
     datareader_ (TOPIC_DATA_READER::_nil ()),
-    listener_ (new DDSStateReaderListener <TOPIC_TYPE,
-	                                   TOPIC_DATA_READER,
-                                           STATE_TYPE> (id, application))
+    listener_ (new DDSStateReaderListener_T <TOPIC_TYPE,
+	                                     TOPIC_DATA_READER,
+	                                     STATE_TYPE> (id, application))
 {
   this->init ();
 }
@@ -43,10 +43,10 @@ template <typename TOPIC_TYPE,
 	  typename TOPIC_TYPE_SUPPORT,
 	  typename TOPIC_DATA_READER, 
 	  typename STATE_TYPE>
-DDSStateReader<TOPIC_TYPE, 
-               TOPIC_TYPE_SUPPORT, 
-               TOPIC_DATA_READER, 
-               STATE_TYPE>::~DDSStateReader ()
+DDSStateReader_T<TOPIC_TYPE, 
+		 TOPIC_TYPE_SUPPORT, 
+		 TOPIC_DATA_READER, 
+		 STATE_TYPE>::~DDSStateReader_T ()
 {
   this->fini ();
 }
@@ -56,7 +56,7 @@ template <typename TOPIC_TYPE,
 	  typename TOPIC_DATA_READER, 
 	  typename STATE_TYPE>
 bool
-DDSStateReader<TOPIC_TYPE, 
+DDSStateReader_T<TOPIC_TYPE, 
                TOPIC_TYPE_SUPPORT, 
                TOPIC_DATA_READER, 
                STATE_TYPE>::init ()
@@ -71,10 +71,10 @@ template <typename TOPIC_TYPE,
 	  typename TOPIC_DATA_READER, 
 	  typename STATE_TYPE>
 bool
-DDSStateReader<TOPIC_TYPE, 
-               TOPIC_TYPE_SUPPORT, 
-               TOPIC_DATA_READER, 
-               STATE_TYPE>::fini ()
+DDSStateReader_T<TOPIC_TYPE, 
+		 TOPIC_TYPE_SUPPORT, 
+		 TOPIC_DATA_READER, 
+		 STATE_TYPE>::fini ()
 {
   DDS::ReturnCode_t status =
     this->sub_->delete_datareader (this->datareader_.in ());
@@ -99,10 +99,10 @@ template <typename TOPIC_TYPE,
 	  typename TOPIC_DATA_READER, 
 	  typename STATE_TYPE>
 bool
-DDSStateReader<TOPIC_TYPE, 
-               TOPIC_TYPE_SUPPORT, 
-               TOPIC_DATA_READER, 
-               STATE_TYPE>::create_topic ()
+DDSStateReader_T<TOPIC_TYPE, 
+		 TOPIC_TYPE_SUPPORT, 
+		 TOPIC_DATA_READER, 
+		 STATE_TYPE>::create_topic ()
 {
   DDS::TypeSupport_var svnt = new TOPIC_TYPE_SUPPORT;
   CORBA::String_var data_type_name = svnt->get_type_name ();
@@ -143,10 +143,10 @@ template <typename TOPIC_TYPE,
 	  typename TOPIC_DATA_READER, 
 	  typename STATE_TYPE>
 bool
-DDSStateReader<TOPIC_TYPE, 
-               TOPIC_TYPE_SUPPORT, 
-               TOPIC_DATA_READER, 
-               STATE_TYPE>::create_datareader ()
+DDSStateReader_T<TOPIC_TYPE, 
+		 TOPIC_TYPE_SUPPORT, 
+		 TOPIC_DATA_READER, 
+		 STATE_TYPE>::create_datareader ()
 {
   DDS::DataReaderQos dr_qos;
   DDS::ReturnCode_t status =
@@ -178,4 +178,4 @@ DDSStateReader<TOPIC_TYPE,
   return true;
 }
 
-#endif /* _DDS_STATE_READER_CPP_ */
+#endif /* _DDS_STATE_READER_T_CPP_ */
