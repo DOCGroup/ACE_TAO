@@ -29,7 +29,7 @@ private:
   bool  useIORTable_;
   bool  writeIORFile_;
   bool  retryQuery_;
-  char  pauseType_;
+  ACE_TCHAR  pauseType_;
   int   startupPause_;
   int   objActivatePause_;
   int   activatePause_;

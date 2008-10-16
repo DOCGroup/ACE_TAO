@@ -1,3 +1,9 @@
+Thu Oct 16 14:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/examples/Imr/Advanced/TestServer.h:
+
+          WCHAR changes.
+
 Thu Oct 16 14:10:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/Security/EndpointPolicy/test.cpp:
