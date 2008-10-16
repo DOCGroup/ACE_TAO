@@ -26,11 +26,16 @@ DDSStateUpdate<TOPIC_TYPE,
 	       STATE_TYPE>::DDSStateUpdate (
     const std::string & topic_name,
     const std::string & id,
-    DDS::DomainParticipant_ptr participant)
+    DDS::DomainParticipant_ptr participant,
+    DDS::Publisher_ptr publisher)
   : topic_name_ (topic_name),
     id_ (id),
-    participant_ (DDS::DomainParticipant::_duplicate (participant))
+    participant_ (DDS::DomainParticipant::_duplicate (participant)),
+    pub_ (DDS::Publisher::_duplicate (publisher)),
+    topic_ (DDS::Topic::_nil ()),
+    datawriter_ (TOPIC_DATA_WRITER::_nil ())
 {
+  state_.id = id.c_str ();
 }
 
 template <class TOPIC_TYPE,
@@ -54,8 +59,7 @@ DDSStateUpdate<TOPIC_TYPE,
 	       TOPIC_DATA_WRITER,
 	       STATE_TYPE>::init ()
 {
-  return this->create_publisher ()
-    && this->create_topic ()
+  return this->create_topic ()
     && this->create_datawriter ();
 }
 
@@ -77,13 +81,6 @@ DDSStateUpdate<TOPIC_TYPE,
       return false;
     }
 
-  status = this->participant_->delete_publisher (this->pub_.in ());
-    
-  if (status != DDS::RETCODE_OK)
-    {
-      return false;
-    }
-    
   status = this->participant_->delete_topic (this->topic_.in ());
 
   if (status != DDS::RETCODE_OK)
@@ -123,29 +120,6 @@ DDSStateUpdate<TOPIC_TYPE,
           ACE_TEXT ("StateUpdate::publish_update: write returned %d.\n"),
           ret));
     }
-}
-
-template <class TOPIC_TYPE,
-	  class TOPIC_TYPE_SUPPORT,
-	  class TOPIC_DATA_WRITER,
-	  class STATE_TYPE>
-bool
-DDSStateUpdate<TOPIC_TYPE,
-	       TOPIC_TYPE_SUPPORT,
-	       TOPIC_DATA_WRITER,
-	       STATE_TYPE>::create_publisher ()
-{
-  this->pub_ =
-    this->participant_->create_publisher (PUBLISHER_QOS_DEFAULT,
-                                          DDS::PublisherListener::_nil (),
-                                          DDS::ANY_STATUS);
-
-  if (CORBA::is_nil (this->pub_.in ()))
-    {
-      return false;
-    }    
-
-  return true;
 }
 
 template <class TOPIC_TYPE,
@@ -204,7 +178,7 @@ DDSStateUpdate<TOPIC_TYPE,
 {
   DDS::DataWriterQos dw_qos;
   DDS::ReturnCode_t status =
-    this->pub_->get_default_datawriter_qos (dw_qos);
+    pub_->get_default_datawriter_qos (dw_qos);
 
   if (status != DDS::RETCODE_OK)
     {
@@ -212,26 +186,26 @@ DDSStateUpdate<TOPIC_TYPE,
     }
 
   DDS::DataWriter_var datawriter_base = 
-    this->pub_->create_datawriter (this->topic_.in (),
-                                   dw_qos,
-                                   DDS::DataWriterListener::_nil (),
-                                   DDS::ANY_STATUS);
+    pub_->create_datawriter (this->topic_.in (),
+			     dw_qos,
+			     DDS::DataWriterListener::_nil (),
+			     DDS::ANY_STATUS);
                        
   if (CORBA::is_nil (datawriter_base.in ()))
     {
       return false;
     }
-    
-  this->datawriter_ = TOPIC_DATA_WRITER::_narrow (datawriter_base.in ());
   
-  if (CORBA::is_nil (this->datawriter_.in ()))
+  datawriter_ = TOPIC_DATA_WRITER::_narrow (datawriter_base.in ());
+  
+  if (CORBA::is_nil (datawriter_.in ()))
     {
       return false;
     }
     
   // Since there is no key, we need only one instance handle for all writes.  
-  this->instance_handle_ =
-    this->datawriter_->register_instance (this->state_);
+  instance_handle_ =
+    datawriter_->register_instance (state_);
 
   return true;
 }

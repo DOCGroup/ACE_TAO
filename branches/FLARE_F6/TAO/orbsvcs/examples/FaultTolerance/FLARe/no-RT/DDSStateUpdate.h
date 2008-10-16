@@ -34,7 +34,8 @@ public:
   /// ctor
   DDSStateUpdate (const std::string & topic_name,
 		  const std::string & id,
-		  DDS::DomainParticipant_ptr participant);
+		  DDS::DomainParticipant_ptr participant,
+		  DDS::Publisher_ptr publisher);
 
 
   /// dtor
@@ -51,7 +52,6 @@ protected:
 
 private:
   // helper methods for DDS initialization
-  bool create_publisher ();
   bool create_topic ();
   bool create_datawriter ();
 
@@ -61,9 +61,6 @@ private:
 
   /// this id is part of every topic to check where the data comes from
   std::string id_;
-
-  /// domain id of the used domain
-  DDS::DomainId_t domain_id_;
 
   // DDS entities needed for data dissemination
   DDS::DomainParticipant_var participant_;

@@ -13,9 +13,16 @@
 #include "StateSynchronizationAgent_i.h"
 #include "CorbaStateUpdate.h"
 #include "DDSStateUpdate.h"
+#include "DDSStateReader.h"
 #include "StateDcps_impl.h"
 
+
 const char * DOMAIN_ID = "111";
+
+template class DDSStateReader <State,
+			       StateTypeSupport,
+			       StateDataReader,
+			       CORBA::Long>;
 
 StateSynchronizationAgent_i::StateSynchronizationAgent_i (
     CORBA::ORB_ptr orb,
@@ -25,12 +32,33 @@ StateSynchronizationAgent_i::StateSynchronizationAgent_i (
     host_id_ (host_id),
     process_id_ (process_id),
     domain_participant_ (DDS::DomainParticipant::_nil ()),
+    publisher_ (DDS::Publisher::_nil ()),
+    subscriber_ (DDS::Subscriber::_nil ()),
     use_corba_ (true)
 {
+  if (!use_corba_)
+    {
+      if (this->create_participant ())
+	{
+	  if (this->create_publisher ())
+	    {
+	      if (!this->create_subscriber ())
+		std::cerr << "SSA could not create DDS subscriber" 
+			  << std::endl;
+	    }
+	  else
+	    std::cerr << "SSA could not create DDS publisher" << std::endl;
+	}
+      else
+	std::cerr << "SSA could not create DDS publisher" << std::endl;
+    }
 }
 
 StateSynchronizationAgent_i::~StateSynchronizationAgent_i ()
 {
+  this->delete_subscriber ();
+  this->delete_publisher ();
+  this->delete_participant ();
 }
 
 void 
@@ -163,7 +191,8 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
                                 CORBA::Long> (
 	      oid.c_str (),
 	      this->get_unique_id (oid.c_str ()),
-	      domain_participant_.in ())));
+	      domain_participant_.in (),
+	      publisher_.in ())));
 
       }
     
@@ -189,7 +218,7 @@ StateSynchronizationAgent_i::register_application (const char * object_id,
     }  
 }
 
-void
+bool
 StateSynchronizationAgent_i::create_participant ()
 {
   DDS::DomainParticipantFactory_var dpf
@@ -199,20 +228,107 @@ StateSynchronizationAgent_i::create_participant ()
     {
       std::cerr << "StateSynchronizationAgent_i::create_participant () error."
 		<< std::endl;
-      return;
+     return false;
     }
 
-  this->domain_participant_ =
+  domain_participant_ =
     dpf->create_participant (DOMAIN_ID,
 			     PARTICIPANT_QOS_DEFAULT,
 			     DDS::DomainParticipantListener::_nil (),
 			     DDS::ANY_STATUS);
 
-  if (CORBA::is_nil (this->domain_participant_.in ()))
+  if (CORBA::is_nil (domain_participant_.in ()))
     {
       std::cerr << "StateSynchronizationAgent_i::create_participant () failed."
 		<< std::endl;
+      return false;
     }
+
+  return true;
+}
+
+bool
+StateSynchronizationAgent_i::delete_participant ()
+{
+  DDS::DomainParticipantFactory_var dpf
+    = DDS::DomainParticipantFactory::get_instance ();
+    
+  if (CORBA::is_nil (dpf.in ()))
+    {
+      std::cerr << "StateSynchronizationAgent_i::delete_participant () error."
+		<< std::endl;
+     return false;
+    }
+
+  DDS::ReturnCode_t status = 
+    dpf->delete_participant (domain_participant_.in ());
+  
+  if (status != DDS::RETCODE_OK)
+    {
+      return false;
+    }
+    
+  return true;
+}
+
+bool
+StateSynchronizationAgent_i::create_publisher ()
+{
+  publisher_ =
+    domain_participant_->create_publisher (PUBLISHER_QOS_DEFAULT,
+					   DDS::PublisherListener::_nil (),
+					   DDS::ANY_STATUS);
+
+  if (CORBA::is_nil (publisher_.in ()))
+    {
+      return false;
+    }    
+
+  return true;
+}
+
+bool
+StateSynchronizationAgent_i::delete_publisher ()
+{
+  DDS::ReturnCode_t status = 
+    domain_participant_->delete_publisher (publisher_.in ());
+
+  if (status != DDS::RETCODE_OK)
+    {
+      return false;
+    }
+    
+  return true;  
+}
+
+bool
+StateSynchronizationAgent_i::create_subscriber ()
+{
+  subscriber_ =
+    domain_participant_->create_subscriber (SUBSCRIBER_QOS_DEFAULT,
+					    DDS::SubscriberListener::_nil (),
+					    DDS::ANY_STATUS);
+
+  if (CORBA::is_nil (subscriber_.in ()))
+    {
+      return false;
+    }    
+
+  return true;
+}
+
+bool
+StateSynchronizationAgent_i::delete_subscriber ()
+{
+  DDS::ReturnCode_t status = 
+    domain_participant_->delete_subscriber (subscriber_.in ());
+
+  if (status != DDS::RETCODE_OK)
+    {
+      return false;
+    }
+    
+  return true;  
 }
 
 std::string

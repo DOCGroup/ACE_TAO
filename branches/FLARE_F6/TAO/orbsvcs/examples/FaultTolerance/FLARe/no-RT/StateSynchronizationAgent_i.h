@@ -65,7 +65,12 @@ class SSA_Export StateSynchronizationAgent_i : public POA_StateSynchronizationAg
     ACE_Null_Mutex> OBJECTID_APPLICATION_MAP;
 
  private:
-  void create_participant ();
+  bool create_participant ();
+  bool delete_participant ();
+  bool create_publisher ();
+  bool delete_publisher ();
+  bool create_subscriber ();
+  bool delete_subscriber ();
 
   std::string get_unique_id (const std::string & app_name);
 
@@ -90,6 +95,12 @@ class SSA_Export StateSynchronizationAgent_i : public POA_StateSynchronizationAg
 
   /// DDS Domain Participant
   DDS::DomainParticipant_var domain_participant_;
+
+  /// DDS Publisher for this Domain
+  DDS::Publisher_var publisher_;
+
+  /// DDS Subscriber for this Domain
+  DDS::Subscriber_var subscriber_;
 
   /// decides whether replicas should be updated through corba or dds
   bool use_corba_;
