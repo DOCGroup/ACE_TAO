@@ -8,6 +8,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
+#include "ace/OS_NS_signal.h"
 
 ACE_RCSID(Bug_1270_Regression, client, "$Id$")
 
@@ -36,7 +37,7 @@ public:
   int handle_timeout (ACE_Time_Value const & , void const *)
   {
     // kill the application
-    raise (SIGABRT);
+    ACE_OS::raise (SIGABRT);
     this->reactor ()->cancel_timer (this);
     return 0;
   }
