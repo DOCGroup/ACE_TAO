@@ -388,7 +388,8 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
     // simply "unregistering"?
     result = this->fault_consumer_.fini ();
 
-    // Note if the fini failed, we ignore it.  It may not have been registered in the first place.
+    // Note if the fini failed, we ignore it.  It may not have been registered
+    // in the first place.
 
     // Create a fault analyzer.
     TAO::FT_FaultAnalyzer * analyzer = 0;
@@ -415,8 +416,8 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-      ACE_TEXT (
-        "TAO::FT_ReplicationManager::register_fault_notifier_i: ""Error reinitializing FT_FaultConsumer.\n"));
+      ACE_TEXT ("TAO::FT_ReplicationManager::register_fault_notifier_i: ")
+      ACE_TEXT ("Error reinitializing FT_FaultConsumer.\n"));
     result = -1;
   }
 
