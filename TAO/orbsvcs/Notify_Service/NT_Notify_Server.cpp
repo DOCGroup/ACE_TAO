@@ -150,7 +150,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       default:
         // -i can also be given without a value - if so, it defaults
         // to defined value.
-        if (ACE_OS::strcmp (get_opt.argv_[get_opt.optind-1], "-i") == 0)
+        if (ACE_OS::strcmp (get_opt.argv_[get_opt.optind-1], ACE_TEXT ("-i")) == 0)
           {
             opt_install = 1;
             opt_startup = DEFAULT_SERVICE_INIT_STARTUP;
@@ -177,8 +177,8 @@ ACE_NT_SERVICE_DEFINE (service,
 int
 Options::run (int argc, ACE_TCHAR* argv[])
 {
-  SERVICE::instance ()->name ("TAO_NT_Notify_Service",
-                              "TAO NT Notify Service");
+  SERVICE::instance ()->name (ACE_TEXT ("TAO_NT_Notify_Service"),
+                              ACE_TEXT ("TAO NT Notify Service"));
 
   this->parse_args (argc, argv);
 
