@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    DDSStateUpdate.h
+ *  @file    DDSStateUpdate_T.h
  *
  *  $Id$
  *
@@ -10,36 +10,38 @@
  */
 //=============================================================================
 
-#ifndef _DDS_STATE_UPDATE_H_
-#define _DDS_STATE_UPDATE_H_
+#ifndef _DDS_STATE_UPDATE_T_H_
+#define _DDS_STATE_UPDATE_T_H_
 
-#include "StatefulObject.h"
-#include "ccpp.h"
 #include <string>
+#include "ccpp.h"
+#include "StatefulObject.h"
+#include "ReplicatedApplicationC.h"
 
 /**
- * @class DDSStateUpdate
+ * @class DDSStateUpdate_T
  *
  * @brief Implementation of the StatefulObject interface that uses
  *        DDS to disseminate state information to replicas
  */
-template <class TOPIC_TYPE, 
-	  class TOPIC_TYPE_SUPPORT,
-	  class TOPIC_DATA_WRITER, 
-	  class STATE_TYPE>
-class DDSStateUpdate : public StatefulObject
+template <typename STATE_TYPE,
+	  typename TOPIC_TYPE, 
+	  typename TOPIC_TYPE_SUPPORT,
+	  typename TOPIC_DATA_WRITER,
+          typename TOPIC_DATA_READER>
+class DDSStateUpdate_T : public StatefulObject
 {
 public:
-
   /// ctor
-  DDSStateUpdate (const std::string & topic_name,
-		  const std::string & id,
-		  DDS::DomainParticipant_ptr participant,
-		  DDS::Publisher_ptr publisher);
-
+  DDSStateUpdate_T (const std::string & topic_name,
+		    const std::string & id,
+		    DDS::DomainParticipant_ptr participant,
+		    DDS::Publisher_ptr publisher,
+		    DDS::Subscriber_ptr subscriber,
+		    ReplicatedApplication_ptr application);
 
   /// dtor
-  virtual ~DDSStateUpdate ();
+  virtual ~DDSStateUpdate_T ();
 
   bool init ();
   bool fini ();
@@ -54,6 +56,7 @@ private:
   // helper methods for DDS initialization
   bool create_topic ();
   bool create_datawriter ();
+  bool create_datareader ();
 
 private:
   /// name of the topic to be registered
@@ -65,12 +68,14 @@ private:
   // DDS entities needed for data dissemination
   DDS::DomainParticipant_var participant_;
   DDS::Publisher_var pub_;
+  DDS::Subscriber_var sub_;
   DDS::Topic_var topic_;
   DDS::InstanceHandle_t instance_handle_;
   typename TOPIC_DATA_WRITER::_var_type datawriter_;
-
+  typename TOPIC_DATA_READER::_var_type datareader_;
+  DDS::DataReaderListener_var listener_;
 };
 
-#include "DDSStateUpdate.cpp"
+#include "DDSStateUpdate_T.cpp"
 
-#endif /* _DDS_STATE_UPDATE_H_ */
+#endif /* _DDS_STATE_UPDATE_T_H_ */

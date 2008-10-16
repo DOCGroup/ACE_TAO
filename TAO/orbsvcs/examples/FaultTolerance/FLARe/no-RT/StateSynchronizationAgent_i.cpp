@@ -12,8 +12,7 @@
 
 #include "StateSynchronizationAgent_i.h"
 #include "CorbaStateUpdate.h"
-#include "DDSStateUpdate.h"
-#include "DDSStateReader_T.h"
+#include "DDSStateUpdate_T.h"
 #include "StateDcps_impl.h"
 
 const char * DOMAIN_ID = "111";
@@ -126,73 +125,57 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
 void 
 StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
 {
-  // protect operations on the map
-  ACE_Guard <ACE_Thread_Mutex> guard (replica_map_mutex_);
+  if (use_corba_)
+    {
+      // protect operations on the map
+      ACE_Guard <ACE_Thread_Mutex> guard (replica_map_mutex_);
 
-  // reset content of the internal map
-  replica_map_.close();
-  replica_map_.open();
+      // reset content of the internal map
+      replica_map_.close();
+      replica_map_.open();
 
-  ACE_DEBUG ((LM_TRACE, "SSA::update_rank_list with:\n"));
+      ACE_DEBUG ((LM_TRACE, "SSA::update_rank_list with:\n"));
 
-  // for each replication group in the replica group list
-  for (size_t i = 0; i < rank_list.length (); ++i)
-  {
-    ACE_DEBUG ((LM_TRACE, "\toid = %s (%d entries)\n", 
-		rank_list[i].object_id.in (),
-		rank_list.length ()));
+      // for each replication group in the replica group list
+      for (size_t i = 0; i < rank_list.length (); ++i)
+	{
+	  ACE_DEBUG ((LM_TRACE, "\toid = %s (%d entries)\n", 
+		      rank_list[i].object_id.in (),
+		      rank_list.length ()));
 
-    // use the application id as a key for the map
-    ACE_CString oid (rank_list[i].object_id);
+	  // use the application id as a key for the map
+	  ACE_CString oid (rank_list[i].object_id);
 
-    // create a new list for every replication group
-    REPLICA_OBJECT_LIST replica_object_list;
+	  // create a new list for every replication group
+	  REPLICA_OBJECT_LIST replica_object_list;
 
-    if (use_corba_)
-      {
-	// for each entry of a replica group
-	for (size_t j = 0; j < rank_list[i].ior_list.length (); ++j)
-	  {
-	    try
-	      {
-		// it is assumed that the strings identifying rank_list are
-		// stringified object references and can be resolved
-		// and used to contact the corresponding StateSynchronizationAgent
-		replica_object_list.push_back (
-                  STATEFUL_OBJECT_PTR (
-                    new CorbaStateUpdate (
-                      ReplicatedApplication::_narrow (rank_list[i].ior_list[j]))));
-	      }
-	    catch (const CORBA::SystemException& ex)
-	      {
-		ACE_DEBUG ((LM_WARNING, 
-			    "(%P|%t) SSA::"
-			    "update_replica_groups could not resolve stringified "
-			    "object reference %s\n",
-			    rank_list[i].ior_list[j].in ()));
-	      }
-	  }
-      } // end if (use_corba_)
-    else
-      {
-	// each application needs only one DDS topic being registered,
-	// which is named by the application name
-        replica_object_list.push_back (
-          STATEFUL_OBJECT_PTR (
-            new DDSStateUpdate <State,
-                                StateTypeSupport,
-                                StateDataWriter,
-                                CORBA::Long> (
-	      oid.c_str (),
-	      this->get_unique_id (oid.c_str ()),
-	      domain_participant_.in (),
-	      publisher_.in ())));
+	  // for each entry of a replica group
+	  for (size_t j = 0; j < rank_list[i].ior_list.length (); ++j)
+	    {
+	      try
+		{
+		  // it is assumed that the strings identifying rank_list are
+		  // stringified object references and can be resolved
+		  // and used to contact the corresponding StateSynchronizationAgent
+		  replica_object_list.push_back (
+                    STATEFUL_OBJECT_PTR (
+		      new CorbaStateUpdate (
+                        ReplicatedApplication::_narrow (rank_list[i].ior_list[j]))));
+		}
+	      catch (const CORBA::SystemException& ex)
+		{
+		  ACE_DEBUG ((LM_WARNING, 
+			      "(%P|%t) SSA::"
+			      "update_replica_groups could not resolve stringified "
+			      "object reference %s\n",
+			      rank_list[i].ior_list[j].in ()));
+		}
+	    }
 
-      }
-    
-    // add one replication group to the map
-    replica_map_.bind (oid, replica_object_list);
-  }
+	  // add one replication group to the map
+	  replica_map_.bind (oid, replica_object_list);
+	}
+    } // end if (use_corba_)
 }
 
 void 
@@ -214,14 +197,35 @@ StateSynchronizationAgent_i::register_application (const char * object_id,
   // if we use DDS for communication
   if (!use_corba_)
     {
-      // register a data reader for this object
-      new DDSStateReader_T <State,
-	                    StateTypeSupport,
-                            StateDataReader,
-                            CORBA::Long> (object_id,
-					  this->get_unique_id (object_id),
-					  domain_participant_.in (),
-					  app);
+      // protect operations on the map
+      ACE_Guard <ACE_Thread_Mutex> guard (replica_map_mutex_);
+
+      ACE_DEBUG ((LM_TRACE, "SSA::register_application add DDS participant"
+		  " for application %s\n", object_id));
+
+      // create a new list which will have only one entry for DDS
+      REPLICA_OBJECT_LIST replica_object_list;
+
+      // register a DDS participant for this application
+      replica_object_list.push_back (
+          STATEFUL_OBJECT_PTR (
+            new DDSStateUpdate_T <CORBA::Long,
+                                  State,
+                                  StateTypeSupport,
+                                  StateDataWriter,
+                                  StateDataReader> (
+	      oid.c_str (),
+	      this->get_unique_id (oid.c_str ()),
+	      domain_participant_.in (),
+	      publisher_.in (),
+	      subscriber_.in (),
+              app)));
+
+      ACE_CString oid (object_id);
+
+      // this should work without doing a rebind, since there is only
+      // one application of the same type per process
+      replica_map_.bind (oid, replica_object_list);
     }
 }
 
