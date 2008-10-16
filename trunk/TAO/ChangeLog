@@ -1,3 +1,10 @@
+Thu Oct 16 14:10:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/Security/EndpointPolicy/test.cpp:
+        * orbsvcs/tests/Security/InsecureReferences/test.cpp:
+
+          WCHAR changes.
+
 Thu Oct 16 10:41:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1361_Regression/client.cpp:

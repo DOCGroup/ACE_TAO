@@ -61,16 +61,28 @@ gen_objref (int argc, ACE_TCHAR *argv[])
   for (i = 0; i < argc; i++)
     largv[i] = argv[i];
 
-  extra[0] = CORBA::string_dup("-ORBEndpoint");
-  extra[1] = CORBA::string_alloc(100);
+#ifdef ACE_USES_WCHAR
+  extra[0] = CORBA::wstring_dup (ACE_TEXT ("-ORBEndpoint"));
+  extra[1] =CORBA::wstring_alloc (100);
+#else
+  extra[0] = CORBA::string_dup ("-ORBEndpoint");
+  extra[1] = CORBA::string_alloc (100);
+#endif
   ACE_OS::sprintf (extra[1],
-                   "iiop://localhost:%d",
+                   ACE_TEXT ("iiop://localhost:%d"),
                    endpoint_port);
-  extra[2] = CORBA::string_dup("-ORBEndpoint");
-  extra[3] = CORBA::string_alloc(100);
+
+#ifdef ACE_USES_WCHAR
+  extra[2] = CORBA::wstring_dup (ACE_TEXT ("-ORBEndpoint"));
+  extra[3] = CORBA::wstring_alloc (100);
+#else
+  extra[2] = CORBA::string_dup ("-ORBEndpoint");
+  extra[3] = CORBA::string_alloc (100);
+#endif
   ACE_OS::sprintf (extra[3],
-                   "iiop://localhost:%d",
+                   ACE_TEXT ("iiop://localhost:%d"),
                    endpoint_port+10);
+
   for (i = 0; i < 4; i++)
     largv[argc++] = extra[i];
 
@@ -98,7 +110,11 @@ gen_objref (int argc, ACE_TCHAR *argv[])
     }
 
   for (i = 0; i < 4; i++)
-    delete[] extra[i];
+#ifdef ACE_USES_WCHAR
+    CORBA::wstring_free (extra[i]);
+#else
+    CORBA::string_free (extra[i]);
+#endif
 
   delete [] largv;
 
