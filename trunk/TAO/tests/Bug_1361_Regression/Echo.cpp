@@ -9,6 +9,7 @@
 #include "Echo.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_signal.h"
 
 ACE_RCSID(Bug_1270_Regression, Echo, "$Id$")
 
@@ -28,7 +29,7 @@ Echo::echo_payload(Test::Payload const &)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Echo::echo_payload, aborting\n"));
       // Kill the app
-      raise(SIGABRT);
+      ACE_OS::raise(SIGABRT);
     }
 }
 
@@ -47,7 +48,7 @@ Echo::echo_payload_out (
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Echo::echo_payload_out, aborting\n"));
       // Kill the app
-      raise(SIGABRT);
+      ACE_OS::raise(SIGABRT);
     }
 
 }
