@@ -1,3 +1,8 @@
+Thu Oct 16 18:39:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Network_Adapters_Test.cpp:
+          Use ACE_OS::raise
+
 Thu Oct 16 18:13:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE.{h,cpp}:

@@ -32,14 +32,13 @@
 #include "ace/Reactor.h"
 #include "ace/Timer_Queue.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_signal.h"
 
 #include "Network_Adapters_Test.h"
-
 
 ACE_RCSID (tests,
            Network_Adapters_Test,
            "$Id$")
-
 
 /**
  * There are two major uses of the functionality:
@@ -821,7 +820,7 @@ Repeats_Handler::handle_timeout (ACE_Time_Value const &,
   this->counter_++ ;
   if (one_button_test && this->counter_ > 3)
     {
-      ::raise (SIGINT);
+      ACE_OS::raise (SIGINT);
     }
   if (this->check_handler_)
     {
@@ -858,7 +857,7 @@ BOOL CtrlHandler(DWORD fdwCtrlType)
     case CTRL_SHUTDOWN_EVENT:
     case CTRL_CLOSE_EVENT:
     case CTRL_LOGOFF_EVENT:
-      ::raise (SIGINT);
+      ACE_OS::raise (SIGINT);
       return TRUE;
 
       // Pass other signals to the next handler.
