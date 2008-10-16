@@ -1,3 +1,12 @@
+Thu Oct 16 14:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/Notify_Service/NT_Notifiy_Server.cpp:
+        * orbsvcs/Notify_Service/NT_Notifiy_Service.cpp:
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+        * orbsvcs/Naming_Service/NT_Naming_Service.cpp:
+
+          WCHAR changes.
+
 Thu Oct 16 14:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/examples/Imr/Advanced/TestServer.h:
