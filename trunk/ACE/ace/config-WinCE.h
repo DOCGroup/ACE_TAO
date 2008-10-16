@@ -88,6 +88,8 @@
 
 #define ACE_LACKS_MSG_WFMO
 #define ACE_LACKS_UMASK
+#define ACE_HAS_TYPES_H
+#define ACE_LACKS_DEV_T
 
 // WinCE only supports the UNICODE API
 #if !defined (ACE_USES_WCHAR)

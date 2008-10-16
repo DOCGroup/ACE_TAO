@@ -72,7 +72,7 @@ public:
 
 
   /// Write the contents of the logging record to the appropriate
-  /// <FILE> iff the corresponding type is enabled.
+  /// <FILE> if the corresponding type is enabled.
   int print (const ACE_TCHAR host_name[],
              u_long verbose_flag,
 #if !defined (ACE_HAS_WINCE)
@@ -83,7 +83,7 @@ public:
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   /// Write the contents of the logging record to the appropriate
-  /// <ostream> iff the corresponding type is enabled.
+  /// <ostream> if the corresponding type is enabled.
   int print (const ACE_TCHAR host_name[],
              u_long verbose_flag,
              ACE_OSTREAM_TYPE &stream);
@@ -95,23 +95,23 @@ public:
 
   /**
    * Returns a character array with the string form of the
-   * <ACE_Log_Priority> parameter.  This is used for the verbose
+   * ACE_Log_Priority parameter.  This is used for the verbose
    * printing format.
    */
   static const ACE_TCHAR *priority_name (ACE_Log_Priority p);
 
-  // IMPORTANT: @a name must be a statically allocated const ACE_TCHAR*
+  /// IMPORTANT: @a name must be a statically allocated const ACE_TCHAR*
   static void priority_name (ACE_Log_Priority p,
                              const ACE_TCHAR *name);
 
   // = Marshall/demarshall
-  /// Encode the <Log_Record> for transmission on the network.
+  /// Encode the @c Log_Record for transmission on the network.
   /// @deprecated The encode() and decode() metods are deprecated; please use
   /// the CDR insertion and extraction operators to properly encode and decode
   /// ACE_Log_Record objects.
   void encode (void);
 
-  /// Decode the <Log_Record> received from the network.
+  /// Decode the @c Log_Record received from the network.
   /// @deprecated The encode() and decode() metods are deprecated; please use
   /// the CDR insertion and extraction operators to properly encode and decode
   /// ACE_Log_Record objects.
@@ -198,7 +198,9 @@ private:
 
   /// Logging record data
   ACE_TCHAR *msg_data_;   // Heap-allocated text message area
-  size_t msg_data_size_;  // Allocated size of msg_data_ in ACE_TCHARs
+
+  /// Allocated size of msg_data_ in ACE_TCHARs
+  size_t msg_data_size_;
 
   /// disallow copying...
   ACE_Log_Record (const ACE_Log_Record& rhs);

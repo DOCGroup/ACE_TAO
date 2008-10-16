@@ -373,7 +373,6 @@ ACE::hash_pjw (const wchar_t *str)
 }
 #endif /* ACE_HAS_WCHAR */
 
-#if !defined (ACE_HAS_WINCE)
 ACE_TCHAR *
 ACE::strenvdup (const ACE_TCHAR *str)
 {
@@ -381,7 +380,6 @@ ACE::strenvdup (const ACE_TCHAR *str)
 
   return ACE_OS::strenvdup (str);
 }
-#endif /* ACE_HAS_WINCE */
 
 /*
 
