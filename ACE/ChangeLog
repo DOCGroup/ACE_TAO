@@ -1,3 +1,32 @@
+Thu Oct 16 19:03:02 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Config.inl:
+        * ace/Service_Config.cpp:
+        
+          Fix for Bug #3386. The argument parsing for the service
+          configurator was separated into those that affect individual
+          gestalts, and some process wide arguments. The process wide
+          arguments were then placed in a new SC::parse_args_i() method,
+          but that was never called. Second, it appears that when
+          parse_args_i() was created it was anticipating calling the
+          associated gestalt's parse_args_i() but I believe that is not
+          correct, as the gestalt's open() gets a copy of the arguments
+          for parsing anyway. The service configurator's open() has a
+          guard against being evaluated more than once, so there should be
+          no side effects of calling the SC::parse_args_i() more than
+          once.
+        
+          Thanks to Jack Lavender for reporting this problem.
+
+        * examples/Service_Configurator/Misc/main.cpp:
+        
+          Modified this test so that command line arguments passed in to
+          main() are all added to the list supplied to
+          service_config::open().
+        
+        * THANKS:
+          Updating contributors list.
+
 Thu Oct 16 18:39:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Network_Adapters_Test.cpp:
