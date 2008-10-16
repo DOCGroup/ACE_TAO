@@ -566,7 +566,12 @@ ACE_SSL_Context::report_error (unsigned long error_code)
 
   char error_string[256];
 
+// OpenSSL < 0.9.6a doesn't have ERR_error_string_n() function.
+#if OPENSSL_VERSION_NUMBER >= 0x0090601fL
+  (void) ::ERR_error_string_n (error_code, error_string, sizeof error_string);
+#else /* OPENSSL_VERSION_NUMBER >= 0x0090601fL */
   (void) ::ERR_error_string (error_code, error_string);
+#endif /* OPENSSL_VERSION_NUMBER >= 0x0090601fL */
 
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACE_SSL (%P|%t) error code: %u - %C\n"),

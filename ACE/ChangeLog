@@ -1,3 +1,10 @@
+Wed Oct 15 19:57:38 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/SSL/SSL_Context.cpp (report_error): Updated the code to use
+          ::ERR_error_string_n() rather than ::ERR_error_string() when
+          it's available.  Thanks to Paul Daugherty <paul@nextalk.com>
+          for this patch.  This fixes bugid 3461.
+
 Thu Oct 16 19:03:02 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Service_Config.inl:
