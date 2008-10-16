@@ -13,16 +13,10 @@
 #include "StateSynchronizationAgent_i.h"
 #include "CorbaStateUpdate.h"
 #include "DDSStateUpdate.h"
-#include "DDSStateReader.h"
+#include "DDSStateReader_T.h"
 #include "StateDcps_impl.h"
 
-
 const char * DOMAIN_ID = "111";
-
-template class DDSStateReader <State,
-			       StateTypeSupport,
-			       StateDataReader,
-			       CORBA::Long>;
 
 StateSynchronizationAgent_i::StateSynchronizationAgent_i (
     CORBA::ORB_ptr orb,
@@ -216,6 +210,17 @@ StateSynchronizationAgent_i::register_application (const char * object_id,
 		  "could not bind application %s to the map successfully\n",
 		  object_id));
     }  
+
+  // if we use DDS for communication
+  if (!use_corba_)
+    {
+      // register a data reader for this object
+      new DDSStateReader_T <State,
+	                    StateTypeSupport,
+                            StateDataReader,
+                            CORBA::Long> (this->get_unique_id (object_id),
+					  app);
+    }
 }
 
 bool

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    DDSStateReaderListener.h
+ *  @file    DDSStateReaderListener_T.h
  *
  *  $Id$
  *
@@ -10,14 +10,14 @@
  */
 //=============================================================================
 
-#ifndef _DDS_STATE_READER_LISTENER_H_
-#define _DDS_STATE_READER_LISTENER_H_
+#ifndef _DDS_STATE_READER_LISTENER_T_H_
+#define _DDS_STATE_READER_LISTENER_T_H_
 
 #include "ccpp.h"
 #include "ReplicatedApplicationC.h"
 
 /**
- * @class DDSStateReaderListener
+ * @class DDSStateReaderListener_T
  *
  * @brief this listener receives data from DDS and posts it to the replicated
  *        application.
@@ -25,16 +25,16 @@
 template <typename TOPIC_TYPE, 
 	  typename TOPIC_DATA_READER, 
 	  typename STATE_TYPE>
-class DDSStateReaderListener : public DDS::DataReaderListener
+class DDSStateReaderListener_T : public DDS::DataReaderListener
 {
 public:
 
   /// ctor
-  DDSStateReaderListener (const std::string & id,
+  DDSStateReaderListener_T (const std::string & id,
 			  ReplicatedApplication_ptr application);
 
   /// dtor
-  virtual ~DDSStateReaderListener ();
+  virtual ~DDSStateReaderListener_T ();
 
   virtual void
   on_requested_deadline_missed (
@@ -79,6 +79,6 @@ private:
   ReplicatedApplication_var application_;
 };
 
-#include "DDSStateReaderListener.cpp"
+#include "DDSStateReaderListener_T.cpp"
 
-#endif /* _DDS_STATE_READER_LISTENER_H_ */
+#endif /* _DDS_STATE_READER_LISTENER_T_H_ */

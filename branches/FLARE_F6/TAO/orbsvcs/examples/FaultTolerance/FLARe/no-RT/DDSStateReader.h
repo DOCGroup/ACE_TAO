@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    DDSStateReader.h
+ *  @file    DDSStateReader_T.h
  *
  *  $Id$
  *
@@ -10,15 +10,15 @@
  */
 //=============================================================================
 
-#ifndef _DDS_STATE_READER_H_
-#define _DDS_STATE_READER_H_
+#ifndef _DDS_STATE_READER_T_H_
+#define _DDS_STATE_READER_T_H_
 
 #include "ccpp.h"
 #include <string>
 #include "ReplicatedApplicationC.h"
 
 /**
- * @typename DDSStateReader
+ * @typename DDSStateReader_T
  *
  * @brief This typename receives state information and passes it on to the
  *        replicated application.
@@ -27,18 +27,18 @@ template <typename TOPIC_TYPE,
 	  typename TOPIC_TYPE_SUPPORT,
 	  typename TOPIC_DATA_READER, 
 	  typename STATE_TYPE>
-class DDSStateReader
+class DDSStateReader_T
 {
 public:
 
   /// ctor
-  DDSStateReader (const std::string & topic_name,
+  DDSStateReader_T (const std::string & topic_name,
 		  const std::string & id,
 		  DDS::DomainParticipant_ptr participant,
 		  ReplicatedApplication_ptr application);
 
   /// dtor
-  virtual ~DDSStateReader ();
+  virtual ~DDSStateReader_T ();
 
   bool init ();
   bool fini ();
@@ -61,6 +61,6 @@ private:
   DDS::DataReaderListener_var listener_;
 };
 
-#include "DDSStateReader.cpp"
+#include "DDSStateReader_T.cpp"
 
-#endif /* _DDS_STATE_READER_H_ */
+#endif /* _DDS_STATE_READER_T_H_ */
