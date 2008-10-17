@@ -169,7 +169,7 @@ ConsoleHandler (DWORD /* ctrlType */)
 
 ACE_NT_SERVICE_DEFINE (service,
                        TAO_NT_Naming_Service,
-                       "TAO NT Naming Service");
+                       ACE_TEXT ("TAO NT Naming Service"));
 
 int
 Options::run (int argc, ACE_TCHAR* argv[])

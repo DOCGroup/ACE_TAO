@@ -48,7 +48,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   CORBA::ORB_var orb;
   CORBA::Object_var obj;
   PortableServer::POA_var root_poa;
@@ -79,7 +78,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                    ACE_TEXT ("iiop://localhost:%d/ssl_port=%d"),
                    endpoint_port+10, endpoint_port+11);
 
-  char **largv = new ACE_TCHAR *[argc+4];
+  ACE_TCHAR **largv = new ACE_TCHAR *[argc+4];
   int i = 0;
   for (i = 0; i < argc; i++)
     largv[i] = argv[i];
