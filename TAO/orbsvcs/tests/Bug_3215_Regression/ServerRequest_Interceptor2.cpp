@@ -21,9 +21,6 @@ ACE_RCSID (FaultTolerance,
            TAO249_ServerRequest_Interceptor2,
            "$Id$")
 
-CORBA::Object_var
-TAO249_ServerRequest_Interceptor2::server_iogr_ = CORBA::Object::_nil ();
-
 TAO249_ServerRequest_Interceptor2::TAO249_ServerRequest_Interceptor2 (void)
 : orb_ (0),
   expired_ (0)
@@ -81,8 +78,8 @@ TAO249_ServerRequest_Interceptor2::receive_request (
 
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     {
-      throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                           CORBA::COMPLETED_NO);
+      throw (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
+                           CORBA::COMPLETED_NO));
     }
 
 
@@ -91,8 +88,8 @@ TAO249_ServerRequest_Interceptor2::receive_request (
   FT::FTRequestServiceContext ftrsc;
 
   if ((cdr >> ftrsc) == 0)
-    throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                             CORBA::COMPLETED_NO);
+    throw (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
+                             CORBA::COMPLETED_NO));
 
 
   TimeBase::TimeT now = get_now ();
@@ -103,7 +100,7 @@ TAO249_ServerRequest_Interceptor2::receive_request (
       if (expired_)
         {
           // The client has retried more than once after the expiration time. This is a regression
-          ACE_DEBUG ((LM_ERROR, "Test Failed - REGRESSION !!! Client ORB is still retrying LOCATION_FORWARDs / TRANSIENTS after the expiration time as re-invocation # %d has been received!!\n", invocation_count + 1));
+          ACE_DEBUG ((LM_ERROR, "Test Failed - REGRESSION !!! Client ORB is still retrying LOCATION_FORWARDs / TRANSIENTS after the expiration time on invocation # %d !!\n", invocation_count + 1));
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Expiration time  : %Q\n"), ftrsc.expiration_time));
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Time now         : %Q\n"), now));
 
@@ -125,22 +122,23 @@ TAO249_ServerRequest_Interceptor2::receive_request (
   if (invocation_count == 0)
     {
       ++invocation_count;
-
-      ACE_DEBUG ((LM_DEBUG, "On [re-]invocation #%d throwing a ForwardRequest back to the client\n", invocation_count));
-
+      if (expired_)
+        {
+          ACE_DEBUG ((LM_DEBUG, "On invocation #%d throwing a ForwardRequest back to the client\n", invocation_count));
+        }
       // Throw a forward back to ourselves on the first try
       // This means that we are testing the exception handling after a forward perm...
-      throw PortableInterceptor::ForwardRequest (server_iogr_.in ());
+      throw (PortableInterceptor::ForwardRequest (server_iogr_.in ()));
     }
   else
     {
       ++invocation_count;
-      if (expired_ || invocation_count % 1000 == 0)
+      if (expired_)
         {
-          ACE_DEBUG ((LM_DEBUG, "On re-invocation #%d throwing a TRANSIENT back to the client\n", invocation_count));
+          ACE_DEBUG ((LM_DEBUG, "On invocation #%d throwing a TRANSIENT back to the client\n", invocation_count));
         }
       // Thaen throw a transient on all subsequent invocations
-      throw CORBA::TRANSIENT (0, CORBA::COMPLETED_NO);
+      throw (CORBA::TRANSIENT (0, CORBA::COMPLETED_NO));
     }
 }
 
@@ -180,4 +178,3 @@ TAO249_ServerRequest_Interceptor2::send_other (
   )
 {
 }
-

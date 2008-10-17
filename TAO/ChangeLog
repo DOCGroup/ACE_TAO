@@ -1,3 +1,13 @@
+Fri Oct 17 12:33:42 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/Bug_3215_Regression/ServerORBInitializer2.h:
+        * orbsvcs/tests/Bug_3215_Regression/ServerORBInitializer2.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/ServerRequest_Interceptor2.h:
+        * orbsvcs/tests/Bug_3215_Regression/ServerRequest_Interceptor2.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/server.cpp:
+
+          Fix windows access violations.
+
 Fri Oct 17 10:35:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/orsvcs/Naming/Naming_Context_Interface.cpp:
