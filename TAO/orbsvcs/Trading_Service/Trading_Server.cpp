@@ -12,8 +12,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
   try
     {
-      int check =
-        trader.init (argc, argv);
+      int check = trader.init (argc, argv);
 
       if (check != -1)
         {
