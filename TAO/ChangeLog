@@ -1,3 +1,28 @@
+Fri Oct 17 13:55:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Alias_TypeCode.h
+        * tao/AnyTypeCode/Alias_TypeCode.inl
+        * tao/AnyTypeCode/PolicyA.h
+        * tao/AnyTypeCode/Recursive_Type_TypeCode.h
+        * tao/AnyTypeCode/Recursive_Type_TypeCode.inl
+        * tao/AnyTypeCode/Sequence_TypeCode.h
+        * tao/AnyTypeCode/Sequence_TypeCode.inl
+        * tao/AnyTypeCode/Union_TypeCode.h
+        * tao/AnyTypeCode/Union_TypeCode.inl
+        * tao/AnyTypeCode/Value_TypeCode.h
+        * tao/AnyTypeCode/Value_TypeCode.inl
+        * tao/AnyTypeCode/WrongTransactionA.h
+        * tao/Object_KeyC.cpp
+        * tao/Object_KeyC.h
+        * tao/PI/ORBInitInfo.h
+        * tao/PolicyC.h
+        * tao/PortableServer/PolicyS.h
+        * tao/Typecode_typesC.cpp
+        * tao/Typecode_typesC.h
+        * tao/WrongTransactionC.cpp
+        * tao/WrongTransactionC.h
+          Removed BCB6/BCB2006 workarounds
+
 Fri Oct 17 13:03:29 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/Bug_2287_Regression/ServerORBInitializer2.h:

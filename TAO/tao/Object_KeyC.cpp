@@ -33,10 +33,6 @@
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
-
 #include "ace/ACE.h"
 #include "ace/Truncate.h"
 #include "ace/OS_NS_string.h"
@@ -172,7 +168,7 @@ TAO::ObjectKey::decode_string_to_sequence (
   // 64-bit MS Windows builds.
   CORBA::ULong const len =
     ACE_Utils::truncate_cast<CORBA::ULong> (str_len);
-  
+
   char const * const eos = str + str_len;
   char const *       cp  = str;
 
