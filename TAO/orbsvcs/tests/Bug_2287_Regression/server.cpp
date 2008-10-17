@@ -193,7 +193,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::fprintf (output_file, "%s", iorgr_string.in ());
       ACE_OS::fclose (output_file);
 
-      TAO249_ServerRequest_Interceptor2::server_iogr_ = CORBA::Object::_duplicate (iogr.in ());
+      temp_initializer->set_server_iogr (iogr.in ());
 
       poa_manager->activate ();
 
