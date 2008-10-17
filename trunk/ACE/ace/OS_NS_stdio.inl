@@ -511,15 +511,11 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 
   if (crt_handle != -1)
     {
-#   if defined(ACE_HAS_NONCONST_FDOPEN) && !defined (ACE_USES_WCHAR)
-      file = ::_fdopen (crt_handle, const_cast<ACE_TCHAR *> (mode));
-#   elif defined (ACE_HAS_NONCONST_FDOPEN) && defined (ACE_USES_WCHAR)
-      file = ::_wfdopen (crt_handle, const_cast<ACE_TCHAR *> (mode));
-#   elif defined (ACE_USES_WCHAR)
+#   if defined (ACE_USES_WCHAR)
       file = ::_wfdopen (crt_handle, mode);
 #   else
       file = ::_fdopen (crt_handle, mode);
-#   endif /* ACE_HAS_NONCONST_FDOPEN */
+#   endif /* ACE_USES_WCHAR */
 
       if (!file)
         {
@@ -910,7 +906,7 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
   ACE_OSCALL_RETURN (::_wtempnam (const_cast <wchar_t*> (dir), const_cast <wchar_t*> (pfx)), wchar_t *, 0);
 #  else
   ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *, 0);
-#  endif /* __BORLANDC__ */
+#  endif /* ACE_HAS_NONCONST_TEMPNAM */
 #else /* ACE_LACKS_TEMPNAM */
   // No native wide-char support; convert to narrow and call the char* variant.
   char *ndir = ACE_Wide_To_Ascii (dir).char_rep ();
