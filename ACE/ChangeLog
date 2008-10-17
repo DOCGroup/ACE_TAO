@@ -1,3 +1,14 @@
+Fri Oct 17 18:57:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests.OrdMultiSet_Test.cpp:
+          Use ACE_TEST_ASSERT instead of ACE_ASSERT
+
+        * tests/Vector_Test.cpp:
+          Removed BCB6/BCB2006 support
+
+        * tests/SOCK_Connector_Test.cpp:
+          Const change and initailise pointer with 0
+
 Fri Oct 17 12:14:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux-common.h:
