@@ -55,7 +55,7 @@ host_is_up (ACE_TCHAR hostname[])
 
   ACE_INET_Addr another_host ((u_short) 7, test_host);
   ACE_Time_Value timeout_value (5);
-  const int status = con.connect (sock,
+  int const status = con.connect (sock,
                                   another_host,
                                   &timeout_value);
   sock.close ();
@@ -82,7 +82,7 @@ find_another_host (ACE_TCHAR other_host[])
 
 #if !defined (ACE_LACKS_GETHOSTENT)
       // These gethost-type things don't work everywhere.
-      struct hostent *h;
+      struct hostent *h = 0;
       ACE_utsname un;
 
       ACE_OS::uname (&un);
