@@ -640,13 +640,6 @@ TAO_PSDL_Scope::header_initialization (TAO_PSDL_Stream *ps_sh)
 
   ps_sh->nl ();
 
-  *ps_sh << "#if defined (__BORLANDC__)";
-  ps_sh->nl ();
-  *ps_sh << "#pragma option push -w-rvl -w-rch -w-ccc -w-inl";
-  ps_sh->nl ();
-  *ps_sh << "#endif /* __BORLANDC__ */";
-  ps_sh->nl ();
-
   ps_sh->nl ();
 
 }
@@ -675,13 +668,6 @@ TAO_PSDL_Scope::stub_initialization (TAO_PSDL_Stream *ps_si)
   *ps_si << "#endif  /* TAO_HAS_INTERCEPTORS == 1 */";
   ps_si->nl ();
 
-  ps_si->nl ();
-
-  *ps_si << "#if defined (__BORLANDC__)";
-  ps_si->nl ();
-  *ps_si << "#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig";
-  ps_si->nl ();
-  *ps_si << "#endif /* __BORLANDC__ */";
   ps_si->nl ();
 
   ps_si->nl ();

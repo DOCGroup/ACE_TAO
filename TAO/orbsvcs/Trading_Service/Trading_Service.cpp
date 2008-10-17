@@ -25,13 +25,10 @@ Trading_Shutdown::Trading_Shutdown (Trading_Service& trader)
 }
 
 int
-Trading_Shutdown::handle_signal (int signum,
-                                 siginfo_t *sinfo,
-                                 ucontext_t *ucon)
+Trading_Shutdown::handle_signal (int,
+                                 siginfo_t *,
+                                 ucontext_t *)
 {
-  ACE_UNUSED_ARG (signum);
-  ACE_UNUSED_ARG (sinfo);
-  ACE_UNUSED_ARG (ucon);
   this->trader_.~Trading_Service ();
   ACE_OS::exit (0);
   return 0;
@@ -48,11 +45,9 @@ Trading_Service::~Trading_Service (void)
 }
 
 int
-Trading_Service::init (int argc,
-                       ACE_TCHAR *argv[])
+Trading_Service::init (int argc, ACE_TCHAR *argv[])
 {
-  int result_trader =
-    this->trading_loader_.init (argc, argv);
+  int const result_trader = this->trading_loader_.init (argc, argv);
 
   if (result_trader == -1)
     return -1;
@@ -65,18 +60,14 @@ Trading_Service::run (void)
 {
   Trading_Shutdown trading_shutdown (*this);
 
-  int return_value =
-    this->trading_loader_.run ();
-
-  return return_value;
+  return this->trading_loader_.run ();
 }
 
 int
 Trading_Service::shutdown (void)
 {
   // Invoke TAO_Trading_Loader::fini ()
-  int shutdown_result =
-        this->trading_loader_.fini ();
+  int const shutdown_result = this->trading_loader_.fini ();
 
   if (shutdown_result == -1)
     return -1;

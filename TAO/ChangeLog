@@ -1,3 +1,17 @@
+Fri Oct 17 17:55:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp
+        * orbsvcs/orbsvcs/Trader/Trader.h
+        * orbsvcs/PSS/PSDL_Node.cpp
+        * orbsvcs/PSS/PSDL_Scope.cpp
+          Removed BCB6/BCB2006 workarounds
+
+        * orbsvcs/Trading_Service/Trading_Server.cpp
+        * orbsvcs/Trading_Service/Trading_Service.cpp
+          Layout changes
+
 Fri Oct 17 15:42:38 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * tests/ORB_Local_Config/Bug_1459/Test.cpp:
