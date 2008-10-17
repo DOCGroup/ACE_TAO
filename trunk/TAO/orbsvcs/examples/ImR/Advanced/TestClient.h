@@ -25,7 +25,7 @@ private:
   CORBA::ORB_var     orb_;
   std::vector<ACE_TString> iors_;
 
-  char               pauseType_;
+  ACE_TCHAR          pauseType_;
   int                startupPause_;
   int                threadCount_;
   int                instance_;
