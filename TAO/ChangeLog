@@ -1,3 +1,13 @@
+Fri Oct 17 13:03:29 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/Bug_2287_Regression/ServerORBInitializer2.h:
+        * orbsvcs/tests/Bug_2287_Regression/ServerORBInitializer2.cpp:
+        * orbsvcs/tests/Bug_2287_Regression/ServerRequest_Interceptor2.h:
+        * orbsvcs/tests/Bug_2287_Regression/ServerRequest_Interceptor2.cpp:
+        * orbsvcs/tests/Bug_2287_Regression/server.cpp:
+
+          This test was also producing access violations on windows.
+
 Fri Oct 17 12:33:42 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/Bug_3215_Regression/ServerORBInitializer2.h:
