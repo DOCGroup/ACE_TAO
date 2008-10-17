@@ -18,9 +18,9 @@ ACE_RCSID (tests, server, "$Id$")
 
 #include "Service_Configuration_Per_ORB.h"
 
-const char argA[] = "AAA -ORBGestalt LOCAL -ORBId ORB-A";
-const char argB[] = "BBB -ORBGestalt LOCAL -ORBId ORB-B -ORBSvcConf a.conf";
-const char argC[] = "BBB -ORBGestalt ORB:ORB-B -ORBId ORB-C";
+const ACE_TCHAR argA[] = ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBId ORB-A");
+const ACE_TCHAR argB[] = ACE_TEXT ("BBB -ORBGestalt LOCAL -ORBId ORB-B -ORBSvcConf a.conf");
+const ACE_TCHAR argC[] = ACE_TEXT ("BBB -ORBGestalt ORB:ORB-B -ORBId ORB-C");
 
 int
 testBug3049 (int , ACE_TCHAR *[])
