@@ -1,3 +1,10 @@
+Fri Oct 17 15:42:38 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
+        * tests/ORB_Local_Config/Bug_3049/Test.cpp:
+
+          Fixed these tests on wchar builds.
+
 Fri Oct 17 13:55:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Alias_TypeCode.h
