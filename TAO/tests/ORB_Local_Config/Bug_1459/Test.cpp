@@ -22,22 +22,22 @@ ACE_RCSID (tests, server, "$Id$")
 //#define DO_1459_SSLIOP_TEST 1
 
 // UIOP
-const char argStrA[] = "AAA -ORBGestalt LOCAL -ORBId ORB-A -ORBSvcConf a.conf";
+const ACE_TCHAR argStrA[] = ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBId ORB-A -ORBSvcConf a.conf");
 
 // SSLIOP
-const char argStrB[] = "BBB -ORBGestalt LOCAL -ORBId ORB-B -ORBSvcConf b.conf";
+const ACE_TCHAR argStrB[] = ACE_TEXT ("BBB -ORBGestalt LOCAL -ORBId ORB-B -ORBSvcConf b.conf");
 
 // UIPMC
-const char argStrC[] = "CCC -ORBGestalt LOCAL -ORBId ORB-C -ORBSvcConf m1.conf";
+const ACE_TCHAR argStrC[] = ACE_TEXT ("CCC -ORBGestalt LOCAL -ORBId ORB-C -ORBSvcConf m1.conf");
 
 // DIOP
-const char argStrD[] = "DDD -ORBGestalt LOCAL -ORBId ORB-D -ORBSvcConf d.conf";
+const ACE_TCHAR argStrD[] = ACE_TEXT ("DDD -ORBGestalt LOCAL -ORBId ORB-D -ORBSvcConf d.conf");
 
 // empty file
-const char argStrM[] = "MMM -ORBGestalt LOCAL -ORBId ORB-M -ORBSvcConf m.conf";
+const ACE_TCHAR argStrM[] = ACE_TEXT ("MMM -ORBGestalt LOCAL -ORBId ORB-M -ORBSvcConf m.conf");
 
 int
-testBug1459 (int , ACE_TCHAR *[])
+testBug1459 (int, ACE_TCHAR *[])
 {
   ACE_TRACE ("testBug1459");
 
