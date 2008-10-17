@@ -172,7 +172,7 @@ ConsoleHandler (DWORD /* ctrlType */)
 
 ACE_NT_SERVICE_DEFINE (service,
                        TAO_NT_Notify_Service,
-                       "TAO NT Notify Service");
+                       ACE_TEXT ("TAO NT Notify Service"));
 
 int
 Options::run (int argc, ACE_TCHAR* argv[])
