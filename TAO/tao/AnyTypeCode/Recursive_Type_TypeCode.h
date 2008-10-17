@@ -59,14 +59,7 @@ namespace TAO
       /// Recursive @c union constructor.
       Recursive_Type (char const * id,
                       char const * name,
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
-                      // Borland C++ currently can't handle a
-                      // reference to const pointer to const
-                      // CORBA::TypeCode_ptr.
-                      TypeCodeType discriminant_type,
-#else
                       TypeCodeType const & discriminant_type,
-#endif
                       MemberArrayType const & cases,
                       CORBA::ULong ncases,
                       CORBA::Long default_index);
@@ -76,14 +69,7 @@ namespace TAO
                       char const * id,
                       char const * name,
                       CORBA::ValueModifier modifier,
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
-                      // Borland C++ currently can't handle a
-                      // reference to const pointer to const
-                      // CORBA::TypeCode_ptr.
-                      TypeCodeType concrete_base,
-#else
                       TypeCodeType const & concrete_base,
-#endif
                       MemberArrayType const & fields,
                       CORBA::ULong nfields);
 
@@ -135,14 +121,7 @@ namespace TAO
       /// Set @c union @c TypeCode parameters.
       void union_parameters (
                              char const * name,
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
-                             // Borland C++ currently can't handle a
-                             // reference to const pointer to const
-                             // CORBA::TypeCode_ptr.
-                             TypeCodeType discriminant_type,
-#else
                              TypeCodeType const & discriminant_type,
-#endif
                              MemberArrayType const & cases,
                              CORBA::ULong ncases,
                              CORBA::Long default_index);
@@ -150,14 +129,7 @@ namespace TAO
       /// Set @c valuetype or @c eventtype @c TypeCode parameters.
       void valuetype_parameters (char const * name,
                                  CORBA::ValueModifier modifier,
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
-                                 // Borland C++ currently can't handle a
-                                 // reference to const pointer to const
-                                 // CORBA::TypeCode_ptr.
-                                 TypeCodeType concrete_base,
-#else
                                  TypeCodeType const & concrete_base,
-#endif
                                  MemberArrayType const & fields,
                                  CORBA::ULong nfields);
 

@@ -14,13 +14,7 @@ TAO::TypeCode::Alias<StringType,
   CORBA::TCKind kind,
   char const * id,
   char const * name,
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
-  // Borland C++ currently can't handle a reference to
-  // const pointer to const CORBA::TypeCode_ptr
-  TypeCodeType tc)
-#else
   TypeCodeType const & tc)
-#endif
   : ::CORBA::TypeCode (kind)
   , RefCountPolicy ()
   , attributes_ (id, name)

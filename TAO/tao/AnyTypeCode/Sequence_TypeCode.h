@@ -49,13 +49,7 @@ namespace TAO
 
       /// Constructor.
       Sequence (CORBA::TCKind kind,
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
-                // Borland C++ currently can't handle a reference to
-                // const pointer to const CORBA::TypeCode_ptr
-                TypeCodeType content_type,
-#else
                 TypeCodeType const & content_type,
-#endif
                 CORBA::ULong length);
 
       /**
