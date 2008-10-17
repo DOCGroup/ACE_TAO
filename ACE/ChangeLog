@@ -1,3 +1,8 @@
+Fri Oct 17 19:33:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+          Set lzo2 to 0 as default
+
 Fri Oct 17 19:25:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_stat.inl:
