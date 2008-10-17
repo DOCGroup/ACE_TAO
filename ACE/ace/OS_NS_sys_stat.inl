@@ -253,10 +253,11 @@ namespace ACE_OS
       }
     else
       {
-        stp->st_mode = static_cast<unsigned short>(fdata.dwFileAttributes);
+        stp->st_mode = static_cast<mode_t>(fdata.dwFileAttributes);
         stp->st_size = fdata.nFileSizeLow;
-        stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime);
-        stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime);
+        stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime).sec ();
+        stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
+        stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
       }
     return 0;
 #elif defined (__BORLANDC__) \
