@@ -19,9 +19,6 @@ ACE_RCSID (FaultTolerance,
            TAO249_ServerRequest_Interceptor2,
            "$Id$")
 
-CORBA::Object_var
-TAO249_ServerRequest_Interceptor2::server_iogr_ = CORBA::Object::_nil ();
-
 TAO249_ServerRequest_Interceptor2::TAO249_ServerRequest_Interceptor2 (void)
 : orb_ (0),
   expired_ (0)
