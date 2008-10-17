@@ -24,11 +24,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set)
 #  define ACE_MSB_MASK (~((fd_mask) 1 << (NFDBITS - 1)))
 #endif /* ! ACE_WIN32 */
 
-#if defined (__BORLANDC__) && !defined (ACE_WIN32)
-// The Borland C++ compiler on Linux also doesn't have fds_bits, but has __fds_bits.
-#define fds_bits __fds_bits
-#endif
-
 #if defined (linux) && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1 && !defined (_XOPEN_SOURCE)
   // XPG4.2 requires the fds_bits member name, so it is not enabled by
   // default on Linux/glibc-2.1.x systems.  Instead use "__fds_bits."

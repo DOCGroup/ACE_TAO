@@ -27,10 +27,6 @@
 #include "ace/os_include/sys/os_types.h"
 #include "ace/os_include/os_inttypes.h"
 
-#if defined (__BORLANDC__)
-#  include "ace/os_include/os_fcntl.h"
-#endif /* __BORLANDC */
-
 #if defined (ACE_HAS_PROCESS_H)
 #  include /**/ <process.h>
 #endif /* ACE_HAS_PROCESS_H */
@@ -167,12 +163,6 @@ extern "C"
 #endif  /* _LARGEFILE64_SOURCE */
 
 #if defined (__BORLANDC__)
-#  if (__BORLANDC__ <= 0x540)
-#    define _getcwd getcwd
-#    define _chdir chdir
-#    undef _access
-#    define _access access
-#  endif
 #  define _isatty isatty
 #endif /* __BORLANDC__ */
 

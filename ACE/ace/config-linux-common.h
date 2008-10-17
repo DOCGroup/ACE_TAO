@@ -174,12 +174,6 @@
 #elif defined (__DECCXX)
 # define ACE_CONFIG_INCLUDE_CXX_COMMON
 # include "ace/config-cxx-common.h"
-#elif defined (__BORLANDC__)
-# undef ACE_HAS_LLSEEK
-# undef ACE_HAS_LSEEK64
-# undef ACE_LACKS_LLSEEK_PROTOTYPE
-# undef ACE_LACKS_LSEEK64_PROTOTYPE
-# include "ace/config-borland-common.h"
 #elif defined (__SUNCC_PRO)
 # include "ace/config-suncc-common.h"
 #elif defined (__PGI)
@@ -199,7 +193,7 @@
  * (TAO/orbsvcs/orbsvcs/SSLIOP/params_dup.{h,c}) that may indirectly
  * include this
  */
-#else  /* ! __GNUG__ && !__DECCXX && !__INTEL_COMPILER && !__BORLANDC__ && !__PGI */
+#else  /* ! __GNUG__ && !__DECCXX && !__INTEL_COMPILER && && !__PGI */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler in ace/config-linux-common.h
 #  endif  /* __cplusplus */

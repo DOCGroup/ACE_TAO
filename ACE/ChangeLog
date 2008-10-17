@@ -1,3 +1,17 @@
+Fri Oct 17 12:14:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+        * ace/config-win32-borland.h:
+        * ace/Guard_T.h:
+        * ace/Handle_Set.cpp:
+        * ace/Monitor_Control_Types.h:
+        * ace/os_include/os_string.h:
+        * ace/os_include/os_unistd.h:
+        * ace/os_include/sys/os_timeb.h:
+        * ace/OS_NS_stdio.inl:
+        * ace/Truncate.h:
+          Removed BCB6/BCB2006 support
+
 Wed Oct 15 19:57:38 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/SSL/SSL_Context.cpp (report_error): Updated the code to use
@@ -9,7 +23,7 @@ Thu Oct 16 19:03:02 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Service_Config.inl:
         * ace/Service_Config.cpp:
-        
+
           Fix for Bug #3386. The argument parsing for the service
           configurator was separated into those that affect individual
           gestalts, and some process wide arguments. The process wide
@@ -22,15 +36,15 @@ Thu Oct 16 19:03:02 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
           guard against being evaluated more than once, so there should be
           no side effects of calling the SC::parse_args_i() more than
           once.
-        
+
           Thanks to Jack Lavender for reporting this problem.
 
         * examples/Service_Configurator/Misc/main.cpp:
-        
+
           Modified this test so that command line arguments passed in to
           main() are all added to the list supplied to
           service_config::open().
-        
+
         * THANKS:
           Updating contributors list.
 

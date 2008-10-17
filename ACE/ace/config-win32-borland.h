@@ -136,16 +136,6 @@
 # endif /* !_MT && !ACE_HAS_WINCE */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
-#if (__BORLANDC__ < 0x580)
-# define ACE_LACKS_INTPTR_T
-# define ACE_HAS_NONCONST_SWAB
-# define ACE_HAS_NONCONST_FDOPEN
-#endif
-
-# if (__BORLANDC__ < 0x590)
-#   define ACE_LACKS_PLACEMENT_OPERATOR_DELETE 1
-# endif
-
 #if (__BORLANDC__ < 0x610)
 # define ACE_HAS_NONCONST_TEMPNAM
 # define ACE_LACKS_STRTOLL
