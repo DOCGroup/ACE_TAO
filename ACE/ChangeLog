@@ -1,3 +1,8 @@
+Sun Oct 19 06:57:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Network_Adapters_Test.cpp:
+          WinCE doesn't have control handler
+
 Sun Oct 19 06:54:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Service_Config_Test.cpp:
