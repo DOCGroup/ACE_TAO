@@ -1,3 +1,8 @@
+Sun Oct 19 06:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Logging_Strategy_Test.cpp:
+          Removed WinCE specific code which is not needed anymore
+
 Fri Oct 17 19:33:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/global.features:
