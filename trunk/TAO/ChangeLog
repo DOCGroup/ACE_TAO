@@ -1,3 +1,8 @@
+Sun Oct 19 05:51:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+          Removed WinCE workaround
+
 Fri Oct 17 17:55:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp
