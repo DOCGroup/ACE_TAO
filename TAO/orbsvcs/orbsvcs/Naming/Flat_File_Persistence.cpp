@@ -138,11 +138,7 @@ TAO_NS_FlatFileStream::last_changed(void)
   ACE_TRACE("TAO_NS_FlatFileStream::last_changed");
   ACE_stat st;
   ACE_OS::fstat(filelock_.handle_, &st);
-#if !defined (ACE_HAS_WINCE)
   return st.st_mtime;
-#else
-  return st.st_mtime.sec ();
-#endif /* ACE_HAS_WINCE */
 }
 
 TAO_Storable_Base &
