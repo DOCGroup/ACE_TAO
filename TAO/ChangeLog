@@ -1,3 +1,9 @@
+Mon Oct 20 13:23:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/File_IO/File_i.cpp:
+        * tests/POA/Default_Servant2/File_i.cpp:
+          Use ACE_OS::atol
+
 Mon Oct 20 13:09:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/LoadBalancing/server.cpp
