@@ -67,6 +67,42 @@ ACE_OS::atoi (const wchar_t *s)
 }
 #endif /* ACE_HAS_WCHAR */
 
+ACE_INLINE long
+ACE_OS::atol (const char *s)
+{
+  ACE_OSCALL_RETURN (::atol (s), long, -1);
+}
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE long
+ACE_OS::atol (const wchar_t *s)
+{
+#if defined (ACE_WIN32)
+  ACE_OSCALL_RETURN (::_wtol (s), long, -1);
+#else /* ACE_WIN32 */
+  return ACE_OS::atol (ACE_Wide_To_Ascii (s).char_rep ());
+#endif /* ACE_WIN32 */
+}
+#endif /* ACE_HAS_WCHAR */
+
+ACE_INLINE double
+ACE_OS::atof (const char *s)
+{
+  ACE_OSCALL_RETURN (::atof (s), double, -1);
+}
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE double
+ACE_OS::atof (const wchar_t *s)
+{
+#if defined (ACE_WIN32)
+  ACE_OSCALL_RETURN (::_wtof (s), double, -1);
+#else /* ACE_WIN32 */
+  return ACE_OS::atof (ACE_Wide_To_Ascii (s).char_rep ());
+#endif /* ACE_WIN32 */
+}
+#endif /* ACE_HAS_WCHAR */
+
 #if defined (atop)
 #  undef atop
 #endif /* atop */
