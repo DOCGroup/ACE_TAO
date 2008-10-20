@@ -8,6 +8,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_stdlib.h"
 
 #include "tao/Strategies/advanced_resource.h"
 
@@ -38,17 +39,17 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       case 'r':
         reject_threshold =
-          static_cast<CORBA::Float> (::atof (get_opts.opt_arg ()));
+          static_cast<CORBA::Float> (ACE_OS::atof (get_opts.opt_arg ()));
         break;
 
       case 'c':
         critical_threshold =
-          static_cast<CORBA::Float> (::atof (get_opts.opt_arg ()));
+          static_cast<CORBA::Float> (ACE_OS::atof (get_opts.opt_arg ()));
         break;
 
       case 'd':
         dampening =
-          static_cast<CORBA::Float> (::atof (get_opts.opt_arg ()));
+          static_cast<CORBA::Float> (ACE_OS::atof (get_opts.opt_arg ()));
         break;
 
       case '?':

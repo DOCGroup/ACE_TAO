@@ -1,3 +1,11 @@
+Mon Oct 20 13:09:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/LoadBalancing/server.cpp
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/server.cpp
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/server.cpp
+        * orbsvcs/tests/FtRtEvent/supplier.cpp
+          Use ACE_OS::atof
+
 Mon Oct 20 12:25:45 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * TAO_IDL/be/be_visitor_component/component_ch.cpp:
