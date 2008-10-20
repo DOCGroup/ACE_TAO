@@ -1,3 +1,13 @@
+Mon Oct 20 14:06:52 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * tao/Bounded_Sequence_CDR_T.h:
+        * tao/Unbounded_Sequence_CDR_T.h:
+
+          Add back missing long long marshal and demarshal ops to restore
+          performance for these types.
+
+          This fixes bug #3465.
+
 Mon Oct 20 13:50:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TransportCurrent/Current_Impl.cpp:
