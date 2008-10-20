@@ -235,6 +235,26 @@ namespace TAO {
   }
 
   template <typename stream>
+  bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::LongLong> & target) {
+    typedef TAO::unbounded_value_sequence <CORBA::LongLong> sequence;
+    ::CORBA::ULong new_length = 0;
+    if (!(strm >> new_length)) {
+      return false;
+    }
+    if (new_length > strm.length()) {
+      return false;
+    }
+    sequence tmp(new_length);
+    tmp.length(new_length);
+    typename sequence::value_type * buffer = tmp.get_buffer();
+    if (!strm.read_longlong_array (buffer, new_length)) {
+      return false;
+    }
+    tmp.swap(target);
+    return true;
+  }
+
+  template <typename stream>
   bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::ULongLong> & target) {
     typedef TAO::unbounded_value_sequence <CORBA::ULongLong> sequence;
     ::CORBA::ULong new_length = 0;
@@ -461,6 +481,15 @@ namespace TAO {
       return false;
     }
     return strm.write_double_array (source.get_buffer (), length);
+  }
+
+  template <typename stream>
+  bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::LongLong> & source) {
+    ::CORBA::ULong const length = source.length ();
+    if (!(strm << length)) {
+      return false;
+    }
+    return strm.write_longlong_array (source.get_buffer (), length);
   }
 
   template <typename stream>
