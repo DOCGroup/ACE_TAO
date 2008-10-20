@@ -47,6 +47,6 @@ interface Grid_Factory
   Grid make_grid (in short height, in short width);
   // Returns a new <Grid> instance.  
 
-  void shutdown ();
+  oneway void shutdown ();
   // Shutdown the application.
 };

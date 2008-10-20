@@ -154,8 +154,7 @@ Broadcaster_i::broadcast (const char *text)
         }
       catch (const CORBA::Exception& ex)
         {
-          ex._tao_print_exception (
-            "Failed to send a message\n");
+          ex._tao_print_exception ("Failed to send a message\n");
         }
     }
 }

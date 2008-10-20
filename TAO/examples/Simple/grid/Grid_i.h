@@ -20,6 +20,7 @@
 #define GRID_I_H
 
 #include "GridS.h"
+#include <ace/Vector_T.h>
 
 class Grid_i: public POA_Grid
 {
@@ -38,7 +39,7 @@ public:
           CORBA::Short);
   // Constructor.
 
-  ~Grid_i (void);
+  virtual ~Grid_i (void);
   // Destructor
 
   virtual CORBA::Short width (void);
@@ -63,18 +64,24 @@ public:
   // Gets the grid value.
 
   virtual void destroy (void);
-
   // Destroy the grid.
 
 private:
+  static CORBA::Long *allocate_array (CORBA::Short x, CORBA::Short y);
+  // Allocates array
+
   CORBA::Short width_;
   // Width of the grid.
 
   CORBA::Short height_;
   // Height of the grid.
 
-  CORBA::Long **array_;
+  typedef ACE_Auto_Array_Ptr<CORBA::Long> GridArray;
+  GridArray array_;
   // Pointer to the matrix.  This is organized as an "array of arrays."
+
+  static CORBA::UShort min (CORBA::UShort, CORBA::UShort);
+  // Solaris and some Windows compilers don't have min in std namespaces
 };
 
 class Grid_Factory_i : public POA_Grid_Factory
@@ -86,7 +93,7 @@ public:
   Grid_Factory_i (void);
   // Constructor.
 
-  ~Grid_Factory_i (void);
+  virtual ~Grid_Factory_i (void);
   // Destructor.
 
   virtual Grid_ptr make_grid (CORBA::Short,
@@ -100,8 +107,9 @@ public:
   // Set the ORB pointer.
 
 private:
-  Grid_i *grid_;
-  // This pointer is here only for proper clean up.
+  typedef ACE_Vector<PortableServer::ServantBase_var> GridsHolder;
+  GridsHolder grids_holder_;
+  // This container is here only for proper clean up.
 
   CORBA::ORB_var orb_;
   // ORB pointer.
