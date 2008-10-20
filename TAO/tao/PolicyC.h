@@ -328,7 +328,7 @@ namespace CORBA
     // Concrete non-local interface only.
     Policy (
         IOP::IOR *ior,
-        TAO_ORB_Core *orb_core = 0
+        TAO_ORB_Core *orb_core
       );
 
     // Non-local interface only.

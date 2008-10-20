@@ -1,3 +1,15 @@
+Mon Oct 20 12:25:45 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * tao/Object.h:
+        * tao/PolicyC.h:
+
+          Remove unsafe default of TAO_ORB_Core pointer from the CORBA::Object
+          constructor that takes an IOP::IOR as primary argument. The pointer
+          was defaulted to 0 but the first thing the constructor does is use
+          it. Very little good is likely to come of that sort of thing.
+
 Mon Oct 20 11:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/orsvcs/Naming/Naming_Context_Interface.cpp:
