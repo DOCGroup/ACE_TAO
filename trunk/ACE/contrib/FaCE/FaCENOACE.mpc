@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project {
+project: vc_warnings {
   exename   = FaCENOACE
   requires += wince
   macros   += NO_ACE
