@@ -37,7 +37,7 @@ public:
   Echo_i (void);
   // Constructor.
 
-  ~Echo_i (void);
+  virtual ~Echo_i (void);
   // Destructor.
 
   virtual Echo::List *echo_list (const char *mesg);
@@ -46,7 +46,7 @@ public:
   virtual char *echo_string (const char *mesg);
   // Return the mesg string back from the server.
 
- virtual void shutdown (void);
+  virtual void shutdown (void);
   // Shutdown the server.
 
   void orb (CORBA::ORB_ptr o);

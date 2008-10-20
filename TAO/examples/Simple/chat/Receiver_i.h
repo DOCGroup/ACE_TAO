@@ -34,7 +34,7 @@ public:
   Receiver_i (void);
   // Constructor.
 
-  ~Receiver_i (void);
+  virtual ~Receiver_i (void);
   // Destructor.
 
   virtual void message (const char *msg);

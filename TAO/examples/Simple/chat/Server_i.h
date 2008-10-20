@@ -23,6 +23,7 @@
 
 #include "Broadcaster_i.h"
 #include "tao/Utils/ORB_Manager.h"
+#include "tao/Intrusive_Ref_Count_Handle_T.h"
 
 class Server_i
 {
@@ -32,18 +33,18 @@ class Server_i
 
 public:
   // = Initialization and termination methods.
- Server_i (void);
- // Constructor.
+  Server_i (void);
+  // Constructor.
 
- ~Server_i (void);
- // Destructor.
+  ~Server_i (void);
+  // Destructor.
 
- int init (int argc,
+  int init (int argc,
             ACE_TCHAR *argv[]);
- // Initialize the server.
+  // Initialize the server.
 
- int run (void);
- // Run the ORB.
+  int run (void);
+  // Run the ORB.
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -59,7 +60,8 @@ private:
   TAO_ORB_Manager orb_manager_;
   // The tao orb manager object.
 
-  Broadcaster_i broadcaster_i_;
+  typedef TAO_Intrusive_Ref_Count_Handle<Broadcaster_i> Broadcaster_i_var;
+  Broadcaster_i_var broadcaster_i_;
   // The servant object registered with the orb.
 };
 

@@ -1,3 +1,60 @@
+Mon Oct 20 09:42:14 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * tao/HTTP_Parser.cpp:
+
+          Fixed incorrect use of ACE_TEXT_CHAR_TO_TCHAR.
+
+        * examples/Simple/chat/Broadcaster_i.cpp:
+        * examples/Simple/chat/server.cpp:
+        * examples/Simple/chat/Broadcaster_i.h:
+        * examples/Simple/chat/Receiver_i.cpp:
+        * examples/Simple/chat/Server_i.cpp:
+        * examples/Simple/chat/Receiver_i.h:
+        * examples/Simple/chat/Server_i.h:
+        * examples/Simple/chat/Client_i.cpp:
+        * examples/Simple/chat/Client_i.h:
+        * examples/Simple/grid/client.cpp:
+        * examples/Simple/grid/Grid_Client_i.h:
+        * examples/Simple/grid/Grid_i.h:
+        * examples/Simple/grid/server.cpp:
+        * examples/Simple/grid/Grid.idl:
+        * examples/Simple/grid/Grid_Client_i.cpp:
+        * examples/Simple/grid/Grid_i.cpp:
+        * examples/Simple/Simple_util.cpp:
+        * examples/Simple/time-date/Time_Date.h:
+        * examples/Simple/time-date/Time_Date_Client_i.cpp:
+        * examples/Simple/time-date/Time_Date_i.cpp:
+        * examples/Simple/time-date/Time_Date_Client_i.h:
+        * examples/Simple/time-date/Time_Date_i.h:
+        * examples/Simple/time-date/client.cpp:
+        * examples/Simple/time-date/Time_Date.idl:
+        * examples/Simple/time-date/Time_Date.cpp:
+        * examples/Simple/time-date/run_test.pl:
+        * examples/Simple/bank/client.cpp:
+        * examples/Simple/bank/AccountManager_i.cpp:
+        * examples/Simple/bank/Bank_Client_i.cpp:
+        * examples/Simple/bank/AccountManager_i.h:
+        * examples/Simple/bank/Account_i.cpp:
+        * examples/Simple/bank/Bank_Client_i.h:
+        * examples/Simple/bank/server.cpp:
+        * examples/Simple/bank/Account_i.h:
+        * examples/Simple/Simple_util.h:
+        * examples/Simple/echo/client.cpp:
+        * examples/Simple/echo/Echo_Client_i.cpp:
+        * examples/Simple/echo/Echo_i.cpp:
+        * examples/Simple/echo/server.cpp:
+        * examples/Simple/echo/Echo_Client_i.h:
+        * examples/Simple/echo/Echo_i.h:
+        * examples/Simple/time/client.cpp:
+        * examples/Simple/time/Time_Client_i.cpp:
+        * examples/Simple/time/Time_i.cpp:
+        * examples/Simple/time/server.cpp:
+        * examples/Simple/time/Time_Client_i.h:
+        * examples/Simple/time/Time_i.h:
+
+          Fixed bugs and memory leaks in these examples. Refactored some
+          of the code to make it more readable and more in TAO spirit.
+
 Sun Oct 19 05:51:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:

@@ -10,8 +10,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   Server<Time_i> server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\tTime and Date server\n\n"));
-
+              ACE_TEXT ("\n\tTime and Date server\n\n")));
 
   try
     {
@@ -34,6 +33,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       sysex._tao_print_exception ("System Exception in main");
       return -1;
     }
+
   return 0;
 }
-

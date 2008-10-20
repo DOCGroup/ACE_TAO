@@ -46,7 +46,7 @@ public:
   // Parses the command line arguments.
 
 private:
-  Client<Time_Date, Time_Date_var> client_;
+  Client<Time_Date> client_;
   // Instantiate the client object.
 };
 
