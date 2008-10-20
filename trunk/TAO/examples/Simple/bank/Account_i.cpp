@@ -5,7 +5,6 @@
 ACE_RCSID(Bank, Account_i, "$Id$")
 
 // Constructor
-
 Account_i::Account_i (void)
 {
   // no-op
@@ -13,20 +12,17 @@ Account_i::Account_i (void)
 
 Account_i::Account_i (const char *name,
                       CORBA::Float balance)
-
   : balance_ (balance),
     name_ (CORBA::string_dup (name))
 {
 }
 
 // Destructor
-
 Account_i::~Account_i (void)
 {
 }
 
 // Set the ORB pointer.
-
 void
 Account_i::orb (CORBA::ORB_ptr o)
 {
@@ -34,7 +30,6 @@ Account_i::orb (CORBA::ORB_ptr o)
 }
 
 // Return the current balance on the server.
-
 CORBA::Float
 Account_i::balance (void)
 {

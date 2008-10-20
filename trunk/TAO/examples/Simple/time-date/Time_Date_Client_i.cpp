@@ -37,7 +37,6 @@ Time_Date_Client_i::run (const char *name,
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-
   try
     {
       CORBA::Long l;
@@ -46,7 +45,7 @@ Time_Date_Client_i::run (const char *name,
       client_->bin_date (l);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Binary time_date = %d\n",
+                  ACE_TEXT ("(%P|%t) Binary time_date = %d\n"),
                   l));
 
       // Get the time & date in string format.
@@ -54,10 +53,11 @@ Time_Date_Client_i::run (const char *name,
       client_->str_date (str_var.out());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) String time_date = %C\n",
+                  ACE_TEXT ("(%P|%t) String time_date = %C\n"),
                   str_var.in()));
 
-      client_.shutdown ();
+      if (client_.do_shutdown () == 1)
+        client_->shutdown ();
     }
   catch (const CORBA::UserException& range_ex)
     {
@@ -72,4 +72,3 @@ Time_Date_Client_i::run (const char *name,
 
   return 0;
 }
-

@@ -23,7 +23,7 @@ if (PerlACE::is_vxworks_test()) {
 else {
   $SV = new PerlACE::Process ("server");
 }
-$CL = new PerlACE::Process ("client", "-f $iorfile -ORBSvcConf $conf");
+$CL = new PerlACE::Process ("client", "-f $iorfile -x -ORBSvcConf $conf");
 
 $SV->Spawn ();
 
@@ -40,7 +40,12 @@ if ($client != 0) {
     $status = 1;
 }
 
-$SV->Kill ();
+$server = $SV->WaitKill ($PerlACE::wait_interval_for_process_shutdown);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+}
 
 unlink $iorfile;
 

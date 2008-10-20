@@ -37,16 +37,13 @@ public:
   Bank_Client_i (void);
   // Constructor
 
-  virtual ~Bank_Client_i (void);
+  ~Bank_Client_i (void);
   // Destructor
 
-  virtual int run (const char *, int, ACE_TCHAR *[]);
+  int run (const char *, int, ACE_TCHAR *[]);
   // Execute the methods.
 
 private:
-  Client<Bank::AccountManager, Bank::AccountManager_var> client;
-  // Instantiate the client object.
-
   int check_accounts (void);
   // Method that calls all the test functions
 
@@ -61,6 +58,9 @@ private:
   void test_for_overdraft (void);
   // Tests for the Overdraft Exception when the client tries to
   // withdraw more money than the current balance.
+
+  Client<Bank::AccountManager> client_;
+  // Instantiate the client object.
 };
 
 #endif /* TIME_CLIENT_I_H */

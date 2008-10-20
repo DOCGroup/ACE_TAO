@@ -3,14 +3,13 @@
 #include "AccountManager_i.h"
 
 // This is the main driver program for the time and date server.
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Server<AccountManager_i> server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\tBank server\n\n"));
+              ACE_TEXT ("\n\tBank server\n\n")));
 
   try
     {
@@ -34,7 +33,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return -1;
     }
 
-
   return 0;
 }
-
