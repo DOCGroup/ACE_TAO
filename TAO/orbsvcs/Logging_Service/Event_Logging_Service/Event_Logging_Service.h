@@ -78,7 +78,7 @@ protected:
   CosNaming::NamingContext_var naming_;
   // A naming context.
 
-  const char* service_name_;
+  ACE_CString service_name_;
   // The name we use to bind with the NameService
 
   const ACE_TCHAR* ior_file_name_;

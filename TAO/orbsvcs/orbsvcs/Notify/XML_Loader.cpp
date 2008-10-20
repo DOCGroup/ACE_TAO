@@ -32,14 +32,14 @@ namespace {
     CORBA::Long id = 0;
     for (size_t i = 0; i < attrs->getLength (); ++i)
     {
-      const char * name = ACE_TEXT_ALWAYS_CHAR(attrs->getQName (i));
-      const char * value = ACE_TEXT_ALWAYS_CHAR(attrs->getValue (i));
-      if (ACE_OS::strcmp (name,
+      ACE_CString name = ACE_TEXT_ALWAYS_CHAR(attrs->getQName (i));
+      ACE_CString value = ACE_TEXT_ALWAYS_CHAR(attrs->getValue (i));
+      if (ACE_OS::strcmp (name.c_str (),
                           TAO_VERSIONED_NAMESPACE_NAME::TAO_Notify::TOPOLOGY_ID_NAME) == 0)
       {
-        id = ACE_OS::atoi (value);
+        id = ACE_OS::atoi (value.c_str ());
       }
-      nvp.push_back (NVP (name, value));
+      nvp.push_back (NVP (name.c_str (), value.c_str ()));
     }
     return id;
   }

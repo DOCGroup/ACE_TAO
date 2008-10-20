@@ -75,7 +75,7 @@ TAO::FT_ReplicationManager::FT_ReplicationManager ()
   : orb_ (CORBA::ORB::_nil ())
   , poa_ (PortableServer::POA::_nil ())
   , ior_output_file_ (0)
-  , ns_name_ (0)
+  , ns_name_ ("")
   , naming_context_ (CosNaming::NamingContext::_nil ())
   , replication_manager_ref_ (FT::ReplicationManager::_nil ())
   , fault_notifier_ (FT::FaultNotifier::_nil ())
@@ -237,7 +237,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
     result = this->write_ior ();
   }
 
-  if (result == 0 && this->ns_name_ != 0)
+  if (result == 0 && this->ns_name_.length () != 0)
   {
     this->identity_ = "name:";
     this->identity_ += this->ns_name_;
@@ -257,7 +257,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
     }
 
     this->this_name_.length (1);
-    this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
+    this->this_name_[0].id = CORBA::string_dup (this->ns_name_.c_str ());
 
     this->naming_context_->rebind (
       this->this_name_,
@@ -341,10 +341,10 @@ int TAO::FT_ReplicationManager::fini (void)
     ACE_OS::unlink (this->ior_output_file_);
     this->ior_output_file_ = 0;
   }
-  if (this->ns_name_ != 0)
+  if (this->ns_name_.length () != 0)
   {
     this->naming_context_->unbind (this->this_name_);
-    this->ns_name_ = 0;
+    this->ns_name_.clear ();
   }
 
   return result;
