@@ -3,14 +3,19 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . RPM packaging as part of the release process by the doc_group (Remedy and user community)
 
-. Remove BCB6, BCB2006 support after the release of x.6.6
-
 USER VISIBLE CHANGES BETWEEN ACE-5.6.6 and ACE-5.6.7
 ====================================================
 
 . Removed borland MPC template, use the bmake template from now
 
-. Added Windows Mobile 6 support
+. Added Windows Mobile 6 support and improved the WinCE port
+
+. Removed BCB6 and BCB2006 support
+
+. Added BCB2009 MPC template
+
+. Updated stat struct on Windows CE to match the stat struct on other
+  platforms so that application code can be written portable
 
 USER VISIBLE CHANGES BETWEEN ACE-5.6.5 and ACE-5.6.6
 ====================================================
