@@ -1,3 +1,12 @@
+Mon Oct 20 03:30:20 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/config-cygwin32.h (ACE_HAS_CUSTOM_EXPORT_MACROS): Changed this 
+          macro definition to 
+          
+          #define ACE_HAS_CUSTOM_EXPORT_MACROS 1
+          
+          Thanks to E Vahala <erkki.vahala@pp.inet.fi>
+
 Sun Oct 19 06:57:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Network_Adapters_Test.cpp:
