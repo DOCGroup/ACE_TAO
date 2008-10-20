@@ -218,7 +218,7 @@ namespace TAO
     /**
      * A name to be used to register the factory with the name service.
      */
-    const char * ns_name_;
+    ACE_CString ns_name_;
 
     CosNaming::NamingContext_var naming_context_;
 
