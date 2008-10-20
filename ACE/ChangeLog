@@ -1,3 +1,8 @@
+Mon Oct 20 12:01:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdlib.{h,inl}:
+          Added atof and atol wrappers
+
 Mon Oct 20 07:23:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * contrib/FaCE/FaCENOACE.mpc:
