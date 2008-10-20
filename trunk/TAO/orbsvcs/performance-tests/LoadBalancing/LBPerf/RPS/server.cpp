@@ -42,17 +42,17 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       case 'r':
         reject_threshold =
-          static_cast<CORBA::Float> (::atof (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ())));
+          static_cast<CORBA::Float> (ACE_OS::atof (get_opts.opt_arg ()));
         break;
 
       case 'c':
         critical_threshold =
-          static_cast<CORBA::Float> (::atof (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ())));
+          static_cast<CORBA::Float> (ACE_OS::atof (get_opts.opt_arg ()));
         break;
 
       case 'd':
         dampening =
-          static_cast<CORBA::Float> (::atof (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ())));
+          static_cast<CORBA::Float> (ACE_OS::atof (get_opts.opt_arg ()));
         break;
 
       case '?':
