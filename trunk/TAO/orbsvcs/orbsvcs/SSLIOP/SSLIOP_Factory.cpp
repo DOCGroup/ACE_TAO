@@ -123,7 +123,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   char *private_key_path = 0;
   char *dhparams_path = 0;
   char *ca_file = 0;
-  char *ca_dir = 0;
+  ACE_CString ca_dir = "";
   ACE_TCHAR *rand_path = 0;
 
   int certificate_type = -1;
@@ -368,9 +368,9 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
 
   // Load any trusted certificates explicitely rather than relying on
   // previously set SSL_CERT_FILE and/or SSL_CERT_PATH environment variable
-  if (ca_file != 0 || ca_dir != 0)
+  if (ca_file != 0 || ca_dir.length () != 0)
     {
-      if (ssl_ctx->load_trusted_ca (ca_file, ca_dir) != 0)
+      if (ssl_ctx->load_trusted_ca (ca_file, ca_dir.c_str ()) != 0)
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
@@ -380,9 +380,10 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
                                                     ACE_SSL_CERT_FILE_ENV
                                                     " env var (if any)"),
                         ACE_TEXT (" and "),
-                        ((ca_dir != 0) ? ca_dir : "a directory pointed to by "
-                                                  ACE_SSL_CERT_DIR_ENV
-                                                  " env var (if any)")));
+                        ((ca_dir.length () != 0) ?
+                            ca_dir.c_str () : "a directory pointed to by "
+                                              ACE_SSL_CERT_DIR_ENV
+                                              " env var (if any)")));
 
           return -1;
         }
@@ -396,9 +397,10 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
                                                     ACE_SSL_CERT_FILE_ENV
                                                     " env var (if any)"),
                         ACE_TEXT (" and "),
-                        ((ca_dir != 0) ? ca_dir : "a directory pointed to by "
-                                                  ACE_SSL_CERT_DIR_ENV
-                                                  " env var (if any)")));
+                        ((ca_dir.length () != 0) ?
+                            ca_dir.c_str () : "a directory pointed to by "
+                                              ACE_SSL_CERT_DIR_ENV
+                                              " env var (if any)")));
         }
     }
 
