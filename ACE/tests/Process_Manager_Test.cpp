@@ -121,7 +121,9 @@ public:
       mgr_ (mgr),
       sleep_time_ (sleep_time) { }
 
+      // FUZZ: disable check_for_lack_ACE_OS
   int open (void*)
+      // FUZZ: enable check_for_lack_ACE_OS
   {
     char tmp[10];
     order += ACE_OS::itoa (sleep_time_, tmp, 10);
@@ -159,7 +161,9 @@ public:
     return 0;
   }
 
+      // FUZZ: disable check_for_lack_ACE_OS
   int close (u_long)
+      // FUZZ: enable check_for_lack_ACE_OS
   {
     running_tasks--;
     return 0;

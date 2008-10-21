@@ -872,7 +872,7 @@ int advance_addr (ACE_INET_Addr &addr)
   int a, b, c, d;
   if (addr.get_type () == AF_INET)
     {
-      ::sscanf (addr.get_host_addr (), "%d.%d.%d.%d", &a, &b, &c, &d);
+      ACE_OS::sscanf (addr.get_host_addr (), "%d.%d.%d.%d", &a, &b, &c, &d);
       if (d < 255)
         ++d;
       else if (c < 255)
