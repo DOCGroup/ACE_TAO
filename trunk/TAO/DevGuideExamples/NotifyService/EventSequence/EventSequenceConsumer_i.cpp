@@ -13,7 +13,6 @@ void
 EventSequenceConsumer_i::push_structured_events (
   const CosNotification::EventBatch& events 
   )
-  throw (CORBA::SystemException, CosEventComm::Disconnected)
 {
   
   std::cout << "events received " << std::endl;
@@ -30,7 +29,6 @@ EventSequenceConsumer_i::push_structured_events (
 
 void 
 EventSequenceConsumer_i::disconnect_sequence_push_consumer ()
-throw(CORBA::SystemException)
 {
   
   CORBA::Object_var obj = orb_->resolve_initial_references ("POACurrent");
@@ -47,6 +45,5 @@ EventSequenceConsumer_i::offer_change (
    const CosNotification::EventTypeSeq &,
    const CosNotification::EventTypeSeq &
    )
-   throw (CORBA::SystemException, CosNotifyComm::InvalidEventType)
 {
 }

@@ -22,7 +22,6 @@ EchoEventConsumer_i::EchoEventConsumer_i(
 
 // Implement the push() operation.
 void EchoEventConsumer_i::push(const RtecEventComm::EventSet& events)
- throw(CORBA::SystemException)
 {
   // Loop through the events, looking for shutdown events.
   for (u_int i = 0; i < events.length (); ++i) {
@@ -47,7 +46,6 @@ void EchoEventConsumer_i::push(const RtecEventComm::EventSet& events)
 
 // Implement the disconnect_push_consumer() operation.
 void EchoEventConsumer_i::disconnect_push_consumer()
- throw(CORBA::SystemException)
 {
   // Deactivate this object.
   CORBA::Object_var obj = orb_->resolve_initial_references("POACurrent");

@@ -1,3 +1,106 @@
+Tue Oct 21 23:33:19 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DevGuideExamples/EventServices/OMG_TypedEC/Consumer_i.h:
+        * DevGuideExamples/EventServices/OMG_TypedEC/Consumer_i.cpp:
+        * DevGuideExamples/EventServices/OMG_TypedEC/Messenger_i.h:
+        * DevGuideExamples/EventServices/OMG_TypedEC/Messenger_i.cpp:
+        * DevGuideExamples/EventServices/RTEC_Basic/EchoEventConsumer_i.h:
+        * DevGuideExamples/EventServices/RTEC_Basic/EchoEventConsumer_i.cpp:
+        * DevGuideExamples/EventServices/RTEC_Basic/EchoEventSupplier_i.h:
+        * DevGuideExamples/EventServices/RTEC_Basic/EchoEventSupplier_i.cpp:
+        * DevGuideExamples/EventServices/RTEC_Federated/EchoEventConsumer_i.h:
+        * DevGuideExamples/EventServices/RTEC_Federated/EchoEventConsumer_i.cpp:
+        * DevGuideExamples/EventServices/RTEC_Federated/EchoEventSupplier_i.h:
+        * DevGuideExamples/EventServices/RTEC_Federated/EchoEventSupplier_i.cpp:
+        * DevGuideExamples/EventServices/RTEC_Filter/EchoEventConsumer_i.h:
+        * DevGuideExamples/EventServices/RTEC_Filter/EchoEventConsumer_i.cpp:
+        * DevGuideExamples/EventServices/RTEC_Filter/EchoEventSupplier_i.h:
+        * DevGuideExamples/EventServices/RTEC_Filter/EchoEventSupplier_i.cpp:
+        * DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.h:
+        * DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventSupplier_i.h:
+        * DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventSupplier_i.cpp:
+        * DevGuideExamples/EventServices/RTEC_MCast_Federated/SimpleAddressServer.h:
+        * DevGuideExamples/EventServices/RTEC_MCast_Federated/SimpleAddressServer.cpp:
+        * DevGuideExamples/ImplRepo/IORTable/Messenger_i.cpp:
+        * DevGuideExamples/LocalObjects/Messenger/Messenger_i.h:
+        * DevGuideExamples/LocalObjects/Messenger/Messenger_i.cpp:
+        * DevGuideExamples/LocalObjects/ServantLocator/MessengerLocator_i.h:
+        * DevGuideExamples/LocalObjects/ServantLocator/MessengerLocator_i.cpp:
+        * DevGuideExamples/Messaging/AMIcallback/MessengerHandler.h:
+        * DevGuideExamples/Messaging/AMIcallback/MessengerHandler.cpp:
+        * DevGuideExamples/Messaging/AMIcallback/Messenger_i.h:
+        * DevGuideExamples/Messaging/AMIcallback/Messenger_i.cpp:
+        * DevGuideExamples/Messaging/RelativeRoundtripTimeout/Messenger_i.h:
+        * DevGuideExamples/Multithreading/GracefulShutdown/Messenger_i.h:
+        * DevGuideExamples/Multithreading/GracefulShutdown/Messenger_i.cpp:
+        * DevGuideExamples/Multithreading/Reactive/Messenger_i.h:
+        * DevGuideExamples/Multithreading/Reactive/Messenger_i.cpp:
+        * DevGuideExamples/Multithreading/ThreadPerConnection/Messenger_i.h:
+        * DevGuideExamples/Multithreading/ThreadPerConnection/Messenger_i.cpp:
+        * DevGuideExamples/Multithreading/ThreadPool/Messenger_i.h:
+        * DevGuideExamples/Multithreading/ThreadPool/Messenger_i.cpp:
+        * DevGuideExamples/NamingService/Naming_Context_Ext/Messenger_i.h:
+        * DevGuideExamples/NamingService/Naming_Context_Ext/Messenger_i.cpp:
+        * DevGuideExamples/NamingService/Naming_Server/Messenger_i.h:
+        * DevGuideExamples/NamingService/Naming_Server/Messenger_i.cpp:
+        * DevGuideExamples/NotifyService/EventSequence/EventSequenceConsumer_i.h:
+        * DevGuideExamples/NotifyService/EventSequence/EventSequenceConsumer_i.cpp:
+        * DevGuideExamples/NotifyService/EventSequence/EventSequenceSupplier_i.h:
+        * DevGuideExamples/NotifyService/EventSequence/EventSequenceSupplier_i.cpp:
+        * DevGuideExamples/NotifyService/EventSequence/Messenger_i.h:
+        * DevGuideExamples/NotifyService/EventSequence/Messenger_i.cpp:
+        * DevGuideExamples/NotifyService/Filtering/Messenger_i.h:
+        * DevGuideExamples/NotifyService/Filtering/Messenger_i.cpp:
+        * DevGuideExamples/NotifyService/Filtering/StructuredEventConsumer_i.h:
+        * DevGuideExamples/NotifyService/Filtering/StructuredEventConsumer_i.cpp:
+        * DevGuideExamples/NotifyService/Filtering/StructuredEventSupplier_i.h:
+        * DevGuideExamples/NotifyService/Filtering/StructuredEventSupplier_i.cpp:
+        * DevGuideExamples/NotifyService/Messenger/Messenger_i.h:
+        * DevGuideExamples/NotifyService/Messenger/Messenger_i.cpp:
+        * DevGuideExamples/NotifyService/Messenger/StructuredEventConsumer_i.h:
+        * DevGuideExamples/NotifyService/Messenger/StructuredEventConsumer_i.cpp:
+        * DevGuideExamples/NotifyService/Messenger/StructuredEventSupplier_i.h:
+        * DevGuideExamples/NotifyService/Messenger/StructuredEventSupplier_i.cpp:
+        * DevGuideExamples/NotifyService/OfferSubscriptions/Messenger_i.h:
+        * DevGuideExamples/NotifyService/OfferSubscriptions/Messenger_i.cpp:
+        * DevGuideExamples/NotifyService/OfferSubscriptions/StructuredEventConsumer_i.h:
+        * DevGuideExamples/NotifyService/OfferSubscriptions/StructuredEventConsumer_i.cpp:
+        * DevGuideExamples/NotifyService/OfferSubscriptions/StructuredEventSupplier_i.h:
+        * DevGuideExamples/NotifyService/OfferSubscriptions/StructuredEventSupplier_i.cpp:
+        * DevGuideExamples/NotifyService/QoSProperties/Messenger_i.h:
+        * DevGuideExamples/NotifyService/QoSProperties/Messenger_i.cpp:
+        * DevGuideExamples/NotifyService/QoSProperties/StructuredEventConsumer_i.h:
+        * DevGuideExamples/NotifyService/QoSProperties/StructuredEventConsumer_i.cpp:
+        * DevGuideExamples/NotifyService/QoSProperties/StructuredEventSupplier_i.h:
+        * DevGuideExamples/NotifyService/QoSProperties/StructuredEventSupplier_i.cpp:
+        * DevGuideExamples/NotifyService/RTNotify/Messenger_i.h:
+        * DevGuideExamples/NotifyService/RTNotify/Messenger_i.cpp:
+        * DevGuideExamples/NotifyService/RTNotify/StructuredEventConsumer_i.h:
+        * DevGuideExamples/NotifyService/RTNotify/StructuredEventConsumer_i.cpp:
+        * DevGuideExamples/NotifyService/RTNotify/StructuredEventSupplier_i.h:
+        * DevGuideExamples/NotifyService/RTNotify/StructuredEventSupplier_i.cpp:
+        * DevGuideExamples/NotifyService/SupplierSideNC/Messenger_i.h:
+        * DevGuideExamples/NotifyService/SupplierSideNC/Messenger_i.cpp:
+        * DevGuideExamples/NotifyService/SupplierSideNC/StructuredEventConsumer_i.h:
+        * DevGuideExamples/NotifyService/SupplierSideNC/StructuredEventConsumer_i.cpp:
+        * DevGuideExamples/NotifyService/SupplierSideNC/StructuredEventSupplier_i.h:
+        * DevGuideExamples/NotifyService/SupplierSideNC/StructuredEventSupplier_i.cpp:
+        * DevGuideExamples/Security/ParticipatingApp/Messenger_i.h:
+        * DevGuideExamples/Security/ParticipatingApp/Messenger_i.cpp:
+        * DevGuideExamples/Security/PolicyControllingApp/Messenger_i.h:
+        * DevGuideExamples/Security/PolicyControllingApp/Messenger_i.cpp:
+        * DevGuideExamples/Security/SecurityUnawareApp/Messenger_i.h:
+        * DevGuideExamples/Security/SecurityUnawareApp/Messenger_i.cpp:
+        * DevGuideExamples/SmartProxies/Smart_Messenger_Proxy.h:
+        * DevGuideExamples/SmartProxies/Smart_Messenger_Proxy.cpp:
+        * DevGuideExamples/ValueTypes/Messenger/Messenger_i.h:
+        * DevGuideExamples/ValueTypes/Messenger/Messenger_i.cpp:
+        * DevGuideExamples/ValueTypes/Notify/consumer.cpp:
+        * DevGuideExamples/ValueTypes/Notify/supplier.cpp:
+
+          Fixed fuzz errors by removing exception specifications.
+
 Tue Oct 21 22:50:24 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DevGuideExamples/AMH/AMH.mpc:
@@ -425,7 +528,7 @@ Tue Oct 21 22:50:24 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * DevGuideExamples/ValueTypes/Notify/run_test.pl:
         * DevGuideExamples/ValueTypes/Notify/supplier.cpp:
 
-          Add "// $Id$" to the top of each file to address fuzz errors.
+          Add "// $Id $" to the top of each file to address fuzz errors.
 
 Tue Oct 21 20:59:59 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 

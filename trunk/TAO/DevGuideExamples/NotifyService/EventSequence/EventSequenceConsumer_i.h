@@ -12,17 +12,14 @@ public:
   
   virtual void push_structured_events (
     const CosNotification::EventBatch & events 
-    )
-    throw (CORBA::SystemException, CosEventComm::Disconnected);
+    );
   
   virtual void offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed 
-    )
-    throw (CORBA::SystemException, CosNotifyComm::InvalidEventType);     
+    );
   
-  virtual void disconnect_sequence_push_consumer ()
-    throw(CORBA::SystemException);           
+  virtual void disconnect_sequence_push_consumer ();
 private:
   CORBA::ORB_var orb_;
 };

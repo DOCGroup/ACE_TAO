@@ -8,7 +8,6 @@
 
   
 CORBA::Boolean Messenger_i::send_message (Message*& msg)
-  throw (CORBA::SystemException)
 {
   msg->print();
 

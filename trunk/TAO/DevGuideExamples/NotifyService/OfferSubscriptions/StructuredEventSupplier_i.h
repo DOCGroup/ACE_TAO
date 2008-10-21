@@ -10,14 +10,11 @@ class StructuredEventSupplier_i : public POA_CosNotifyComm::StructuredPushSuppli
 public:
     // Constructor
     StructuredEventSupplier_i(CORBA::ORB_ptr orb);
-    virtual void disconnect_structured_push_supplier ()
-    throw (CORBA::SystemException);        
+    virtual void disconnect_structured_push_supplier ();        
     
     virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-    )
-    throw(CORBA::SystemException, CosNotifyComm::InvalidEventType);       
+        const CosNotification::EventTypeSeq & removed);
 private:
     CORBA::ORB_var orb_;
 };

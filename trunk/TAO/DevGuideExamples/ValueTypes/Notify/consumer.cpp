@@ -85,13 +85,11 @@ public:
   }
 
   virtual void disconnect_push_consumer()
-    throw (CORBA::SystemException)
   {
     std::cout << "disconnect_push_consumer()." << std::endl;
   }
 
   virtual void push(const CORBA::Any& a)
-    throw (CORBA::SystemException, CosEventComm::Disconnected)
   {
     MyEvent* vt;
     a >>= vt;

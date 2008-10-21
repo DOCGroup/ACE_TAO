@@ -25,8 +25,6 @@ CORBA::Boolean Messenger_i::send_message (
     const char * subject,
     char *& message
   )
-  throw(CORBA::SystemException)
-
 {
   std::cout << "Message from: " << user_name << std::endl;
   std::cout << "Subject:      " << subject << std::endl;
@@ -37,7 +35,6 @@ CORBA::Boolean Messenger_i::send_message (
 }
 
 void Messenger_i::shutdown ()
-  throw(CORBA::SystemException)
 {
   orb_->shutdown(0);
 }

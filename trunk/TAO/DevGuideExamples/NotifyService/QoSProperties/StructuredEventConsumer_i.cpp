@@ -13,11 +13,6 @@ void
 StructuredEventConsumer_i::push_structured_event(
        const CosNotification::StructuredEvent &event
       )
-      throw (
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-       )
-
 {
 
   std::cout << "event received " << std::endl;
@@ -33,9 +28,6 @@ StructuredEventConsumer_i::push_structured_event(
 
 void 
 StructuredEventConsumer_i::disconnect_structured_push_consumer()
-      throw (
-        CORBA::SystemException
-      )
 {
 
    CORBA::Object_var obj = orb_->resolve_initial_references ("POACurrent");
@@ -51,10 +43,6 @@ void
 StructuredEventConsumer_i::offer_change(
         const CosNotification::EventTypeSeq &,
         const CosNotification::EventTypeSeq &
-      )
-      throw (
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
       )
 {
 } 

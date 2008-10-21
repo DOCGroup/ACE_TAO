@@ -15,9 +15,7 @@ public:
  CORBA::Boolean send_message (
     const char * user_name,
     const char * subject,
-    char *& message)
-
-  throw (CORBA::SystemException);
+    char *& message);
 
 private:
    CORBA::ORB_var orb_;

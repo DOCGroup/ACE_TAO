@@ -120,10 +120,7 @@ Messenger_i::~Messenger_i (void)
 CORBA::Boolean Messenger_i::send_message (
     const char * user_name,
     const char * subject,
-    char *& message)
-
-  throw (CORBA::SystemException)
-  
+    char *& message)  
 {
   
   std::cout << "Message from: " << user_name << std::endl;
@@ -162,4 +159,3 @@ CORBA::Boolean Messenger_i::send_message (
   return 1;
 
 }
-

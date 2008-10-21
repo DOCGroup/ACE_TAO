@@ -30,11 +30,9 @@ public:
     const char * user_name,
     const char * subject,
     char *& message
-  )
-  throw(CORBA::SystemException);
+  );
 
-  virtual void shutdown ()
-    throw(CORBA::SystemException);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

@@ -15,7 +15,6 @@ EchoEventSupplier_i::EchoEventSupplier_i(CORBA::ORB_ptr orb)
 
 // Override the disconnect_push_Supplier() operation.
 void EchoEventSupplier_i::disconnect_push_supplier()
-     throw(CORBA::SystemException)
 {
  
   // Deactivate this object.
