@@ -1,3 +1,8 @@
+Tue Oct 21 11:25:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Changed ACE_OS test to level 5
+
 Tue Oct 21 09:30:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h
