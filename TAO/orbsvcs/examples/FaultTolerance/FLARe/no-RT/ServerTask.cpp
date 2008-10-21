@@ -23,8 +23,6 @@ std::vector<std::string> object_ids;
 std::vector<size_t> object_roles;
 std::vector<double> object_loads;
 
-const char *rm_ior_file = "file://rm.ior";
-
 ServerTask::ServerTask (ServerOptions & options,
 			CORBA::ORB_ptr orb,
 			StateSynchronizationAgent_ptr agent)
@@ -54,7 +52,9 @@ ServerTask::svc (void)
       this->read_object_info (AppOptions::instance ()->object_info_file (),
 			      options_.number_of_servants);
 
-      CORBA::Object_var tmp = this->orb_->string_to_object (rm_ior_file);
+      CORBA::Object_var tmp = 
+	this->orb_->string_to_object (options_.rm_ior_file);
+
       ReplicationManager_var rm =
         ReplicationManager::_narrow (tmp.in ());
 
@@ -110,7 +110,7 @@ ServerTask::svc (void)
 	  agent_->register_application (object_ids[i].c_str (),
 					test.in ());
 
-	  ACE_DEBUG ((LM_DEBUG, "activated servant %s:%d.\n", 
+	  ACE_DEBUG ((LM_DEBUG, "ServerTask::svc() activated servant %s:%d.\n", 
 		      object_ids[i].c_str (), 
 		      object_roles[i]));
 

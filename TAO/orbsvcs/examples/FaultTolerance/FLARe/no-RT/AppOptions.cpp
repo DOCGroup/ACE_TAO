@@ -63,12 +63,7 @@ AppOptions::parse_args (int argc, char **argv)
               host_monitor_ior_ = std::string (get_opts.opt_arg ());
               break;
             }
-/*          case 'd':
-            {
-              host_id_ = std::string (get_opts.opt_arg ());
-              break;
-            }
-*/          case 'i':
+	  case 'i':
             {
               object_info_file_ = std::string (get_opts.opt_arg ());
               break;

@@ -1,5 +1,7 @@
 // $Id$
 
+#include <sstream>
+#include <memory>
 #include "ace/Get_Opt.h"
 #include "ace/Stats.h"
 #include "ace/Task.h"
@@ -14,7 +16,6 @@
 #include "ServerORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "ace/OS_NS_stdio.h"
-#include <sstream>
 #include "StateSynchronizationAgent_i.h"
 #include "StateSyncAgentTask.h"
 #include "test_i.h"
@@ -22,11 +23,13 @@
 
 ACE_RCSID(FLARe, server, "$Id$")
 
+bool use_corba = true;
+
 int
 parse_args (int argc, char *argv[], ServerOptions & options)
 {
   ACE_Get_Opt get_opts (argc, argv,
-                        "b:f:hl:n:s:a:c:" // server options
+                        "b:c:df:hl:n:s:a:r:" // server options
 			"i:k:p:z:"        // options from the rtcorba example
                         );
   int c;
@@ -62,6 +65,14 @@ parse_args (int argc, char *argv[], ServerOptions & options)
 	options.number_of_servants = ACE_OS::atoi (get_opts.opt_arg ());
 	break;
 
+      case 'd':
+        use_corba = false;
+	break;
+
+      case 'r':
+	options.rm_ior_file = get_opts.opt_arg ();
+	break;
+
       case 'i':
       case 'k':
       case 'p':
@@ -75,6 +86,7 @@ parse_args (int argc, char *argv[], ServerOptions & options)
                            "usage:  %s\n"
                            "\t-b <bands file> (defaults to %s)\n"
 			   "\t-c <number of servants> (defaults to %d)\n"
+                           "\t-d use dds for state synchronization\n"
                            "\t-f <pool priority> (defaults to 0)\n"
                            "\t-h <help: shows options menu>\n"
                            "\t-i <object info file>\n"
@@ -82,6 +94,7 @@ parse_args (int argc, char *argv[], ServerOptions & options)
                            "\t-l <lanes file> (defaults to %s)\n"
                            "\t-n <number of lanes> (defaults to %d)\n"
                            "\t-p <process id>\n"
+			   "\t-r <RM ior> (defaults to %s)\n"
                            "\t-s <static threads> (defaults to %d)\n"
                            "\t-z <port>\n"
                            "\n",
@@ -90,6 +103,7 @@ parse_args (int argc, char *argv[], ServerOptions & options)
 			   options.number_of_servants,
                            options.lanes_file,
                            options.number_of_lanes,
+			   options.rm_ior_file,
                            options.static_threads),
                           -1);
 	break;
@@ -120,12 +134,13 @@ main (int argc, char *argv[])
                          argv,
                          "");
 
-      StateSynchronizationAgent_i *ssa_servant =
-	new StateSynchronizationAgent_i (orb.in (),
-					 AppOptions::instance ()->host_id (),
-					 AppOptions::instance ()->process_id ());
+      if (CORBA::is_nil (orb.in ()))
+	{
+	  ACE_ERROR ((LM_ERROR, ACE_TEXT ("ORB could not be initialized.\n")));
+	  return -1;
+	}
 
-      PortableServer::ServantBase_var owner_transfer (ssa_servant);      
+      ACE_DEBUG ((LM_TRACE, ACE_TEXT ("ORB initialized.\n")));
 
       ACE_Barrier thread_barrier (2);
       AppSideReg proc_reg (&thread_barrier, orb.in());
@@ -133,10 +148,11 @@ main (int argc, char *argv[])
       int result = proc_reg.activate ();
       if (result != 0)
 	{
-	  ACE_DEBUG ((LM_ERROR, "AppSideReg::activate () returned %d\n", result));
+	  ACE_ERROR ((LM_ERROR, "AppSideReg::activate () returned %d\n", result));
 	  return -1;
 	}
    
+      //      ACE_DEBUG ((LM_TRACE, ACE_TEXT ("AppSideReg activated.\n")));
       thread_barrier.wait();
 
       ServerOptions server_options;
@@ -146,6 +162,15 @@ main (int argc, char *argv[])
 
       if (result != 0)
         return result;
+
+      StateSynchronizationAgent_i* ssa_servant =
+	new StateSynchronizationAgent_i (orb.in (),
+					 AppOptions::instance ()->host_id (),
+					 AppOptions::instance ()->process_id (),
+					 use_corba);
+
+      PortableServer::ServantBase_var owner_transfer (ssa_servant);
+      //      ACE_DEBUG ((LM_TRACE, ACE_TEXT ("StateSynchronizationAgent created.\n")));
 
       // Make sure we can support multiple priorities that are required
       // for this test.
@@ -159,7 +184,7 @@ main (int argc, char *argv[])
       result = sync_agent_thread.activate ();
       if (result != 0)
 	{
-	  ACE_DEBUG ((LM_ERROR, "StateSyncAgentTask::activate () returned %d"
+	  ACE_ERROR ((LM_ERROR, "StateSyncAgentTask::activate () returned %d"
 		                ", errno = %d\n", 
 		                result, 
 		                errno));
@@ -194,6 +219,11 @@ main (int argc, char *argv[])
       // Wait for task to exit.
       result = ACE_Thread_Manager::instance ()->wait ();
       ACE_ASSERT (result != -1);
+    }
+  catch (const DDSFailure & failure)
+    {
+      std::cerr << "DDS communication failed: " << failure.description () 
+		<< std::endl;
     }
   catch (const CORBA::Exception& ex)
     {
