@@ -2,21 +2,18 @@
 #include <iostream>
 char *
 ServerIORInterceptor::name ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("ServerIORInterceptor");
 }
 
 void
 ServerIORInterceptor::destroy ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ServerIORInterceptor::establish_components (
                                             PortableInterceptor::IORInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   const char * permission = "ServerRequiresAuth";

@@ -11,37 +11,27 @@ class ClientInterceptor:
   public virtual PortableInterceptor::ClientRequestInterceptor,
   public virtual TAO_Local_RefCounted_Object
 {
-  
+
  public:
-  ClientInterceptor (Messenger_var theMessage, 
+  ClientInterceptor (Messenger_var theMessage,
                      PortableInterceptor::Current_ptr thePic,
                      PortableInterceptor::SlotId theSlot);
-  
-  virtual ~ClientInterceptor ();  
 
-  virtual char * name ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual ~ClientInterceptor ();
 
-  virtual void destroy ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri);
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri);
+
+  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
 
  private:
   const char *myname_;

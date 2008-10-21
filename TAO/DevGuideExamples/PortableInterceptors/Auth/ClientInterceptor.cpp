@@ -19,7 +19,6 @@ ClientInterceptor::~ClientInterceptor (void)
 
 char *
 ClientInterceptor::name ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   std::cout << "Calling ClientInterceptor name() method" << std::endl;
   return CORBA::string_dup (this->myname_);
@@ -27,14 +26,12 @@ ClientInterceptor::name ()
 
 void
 ClientInterceptor::destroy ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ClientInterceptor::send_poll (
                               PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   std::cout << "Calling send_poll()." << std::endl;
 }
@@ -43,8 +40,6 @@ ClientInterceptor::send_poll (
 void
 ClientInterceptor::send_request (
                                  PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   std::cout << "Calling send_request()." << std::endl;
 
@@ -70,7 +65,6 @@ ClientInterceptor::send_request (
 void
 ClientInterceptor::receive_reply (
                                   PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(ri);
   std::cout << "Calling receive_reply()." << std::endl;
@@ -79,8 +73,6 @@ ClientInterceptor::receive_reply (
 void
 ClientInterceptor::receive_other (
                                   PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   std::cout << "Calling receive_other()." << std::endl;
 }
@@ -88,8 +80,6 @@ ClientInterceptor::receive_other (
 void
 ClientInterceptor::receive_exception (
                                       PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   ACE_UNUSED_ARG(ri);
   std::cout << "Calling receive_exception()." << std::endl;

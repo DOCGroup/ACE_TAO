@@ -50,9 +50,6 @@ namespace CIDL_Administrator_Impl
   void
   Administrator_exec_i::set_session_context (
   ::Components::SessionContext_ptr ctx)
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     this->context_ =
     Administrator_Context::_narrow (
@@ -66,9 +63,6 @@ namespace CIDL_Administrator_Impl
 
   void
   Administrator_exec_i::ccm_activate ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
 
@@ -81,9 +75,6 @@ namespace CIDL_Administrator_Impl
 
   void
   Administrator_exec_i::ccm_passivate ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
 
@@ -93,9 +84,6 @@ namespace CIDL_Administrator_Impl
 
   void
   Administrator_exec_i::ccm_remove ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
     ACE_DEBUG((LM_INFO, ACE_TEXT("ccm_remove\n")));
@@ -103,9 +91,6 @@ namespace CIDL_Administrator_Impl
 
   void
   Administrator_exec_i::ciao_preactivate ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
     ACE_DEBUG((LM_INFO, ACE_TEXT("ciao_preactivate\n")));
@@ -113,9 +98,6 @@ namespace CIDL_Administrator_Impl
 
   void
   Administrator_exec_i::ciao_postactivate ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
     ACE_DEBUG((LM_INFO, ACE_TEXT("ciao_postactivate\n")));
@@ -246,9 +228,6 @@ namespace CIDL_Administrator_Impl
 
   ::Components::EnterpriseComponent_ptr
   AdministratorHome_exec_i::create ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     ::Components::EnterpriseComponent_ptr retval =
     ::Components::EnterpriseComponent::_nil ();

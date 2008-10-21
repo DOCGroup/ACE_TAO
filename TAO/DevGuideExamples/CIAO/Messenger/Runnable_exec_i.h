@@ -48,12 +48,10 @@ namespace CIDL_Messenger_Impl
     // Operations from ::Runnable
 
     virtual void
-    start ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    start ();
 
     virtual void
-    stop ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    stop ();
 
     // MY CODE
 

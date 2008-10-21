@@ -11,7 +11,7 @@ ServerInterceptor::ServerInterceptor (IOP::CodecFactory_var cf)
   : myname_ ("Server_Authentication_Interceptor")
 {
   std::cout << "Calling ServerInterceptor constructor." << std::endl;
-  
+
   // Set up a structure that contains information necessary to
   // create a GIOP 1.2 CDR encapsulation Codec.
   IOP::Encoding encoding;
@@ -30,7 +30,6 @@ ServerInterceptor::~ServerInterceptor ()
 
 char *
 ServerInterceptor::name ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   std::cout << "Calling ServerInterceptor name() method" << std::endl;
   return CORBA::string_dup (this->myname_);
@@ -38,7 +37,6 @@ ServerInterceptor::name ()
 
 void
 ServerInterceptor::destroy ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   std::cout << "Calling destroy()." << std::endl;
 }
@@ -46,8 +44,6 @@ ServerInterceptor::destroy ()
 void
 ServerInterceptor::receive_request_service_contexts (
                                                      PortableInterceptor::ServerRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   std::cout << "Calling receive_request_service_contexts()." << std::endl;
 }
@@ -55,12 +51,10 @@ ServerInterceptor::receive_request_service_contexts (
 void
 ServerInterceptor::receive_request (
                                     PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   bool permission_granted = false;
   std::cout << "Calling receive_request()." << std::endl;
-  
+
   if (ri->target_is_a(restricted_interfaces[0])){
     IOP::ServiceId id = service_id;
     // Check that the request service context can be retrieved.
@@ -72,10 +66,10 @@ ServerInterceptor::receive_request (
                                             sc->context_data.length(),
                                             sc->context_data.get_buffer(),
                                             0);
-     
+
     CORBA::Any gid_as_any;
     gid_as_any = *codec->decode(ocSeq);
- 
+
     CORBA::Long gid;
     gid_as_any >>= gid;
     for (int i=0; i<3; ++i) {
@@ -85,20 +79,18 @@ ServerInterceptor::receive_request (
 	}
     }
   }
-  
+
   if (permission_granted == true) {
     std::cout << "Permission Granted " << std::endl;
   }
   else {
-    std::cout << "Permission Denied " << std::endl;
-    ACE_THROW_SPEC (CORBA::NO_PERMISSION());
+    std::cout << "Permission Denied " << std::endl;;
   }
 }
 
 void
 ServerInterceptor::send_reply (
                                PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(ri);
   std::cout << "Calling send_reply()." << std::endl;
@@ -107,8 +99,6 @@ ServerInterceptor::send_reply (
 void
 ServerInterceptor::send_exception (
                                    PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   ACE_UNUSED_ARG(ri);
   std::cout << "Calling send_exception()." << std::endl;
@@ -117,8 +107,6 @@ ServerInterceptor::send_exception (
 void
 ServerInterceptor::send_other (
                                PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   ACE_UNUSED_ARG(ri);
   std::cout << "Calling send_other()." << std::endl;

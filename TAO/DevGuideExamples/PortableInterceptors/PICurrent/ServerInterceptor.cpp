@@ -70,8 +70,7 @@ ServerInterceptor::receive_request (
     std::cout << "Permission Granted " << std::endl;
   }
   else {
-    std::cout << "Permission Denied " << std::endl;
-    ACE_THROW_SPEC (CORBA::NO_PERMISSION());
+    std::cout << "Permission Denied " << std::endl;;
   }
 }
 

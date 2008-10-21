@@ -57,64 +57,41 @@ namespace CIDL_Messenger_Impl
 
     // Attribute operations.
 
-    virtual char * subject ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual char * subject ();
 
-    virtual void subject (const char* subject)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void subject (const char* subject);
 
     // Port operations.
 
     virtual ::CCM_Publication_ptr
-    get_content ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    get_content ();
 
     virtual ::CCM_Runnable_ptr
-    get_control ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    get_control ();
 
     virtual ::CCM_History_ptr
-    get_message_history ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    get_message_history ();
 
     // Operations from Components::SessionComponent
 
     virtual void
     set_session_context (
-    ::Components::SessionContext_ptr ctx)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ::Components::SessionContext_ptr ctx);
 
     virtual void
-    ciao_preactivate ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ciao_preactivate ();
 
     virtual void
-    ciao_postactivate ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ciao_postactivate ();
 
     virtual void
-    ccm_activate ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ccm_activate ();
 
     virtual void
-    ccm_passivate ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ccm_passivate ();
 
     virtual void
-    ccm_remove ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ccm_remove ();
 
     // MY CODE
     virtual int svc();
@@ -151,10 +128,7 @@ namespace CIDL_Messenger_Impl
     // Implicit operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    create ();
   };
 
   extern "C" MESSENGER_EXEC_Export ::Components::HomeExecutorBase_ptr

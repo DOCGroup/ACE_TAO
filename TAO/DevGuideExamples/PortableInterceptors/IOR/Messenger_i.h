@@ -11,17 +11,14 @@
 class  Messenger_i : public virtual POA_Messenger
 {
  public:
-  //Constructor 
+  //Constructor
   Messenger_i (void);
-  
-  //Destructor 
+
+  //Destructor
   virtual ~Messenger_i (void);
 
 
-  virtual void send_message (const CORBA::OctetSeq & user_name)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void send_message (const CORBA::OctetSeq & user_name);
 
 };
 
