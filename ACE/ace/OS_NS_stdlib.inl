@@ -95,11 +95,13 @@ ACE_OS::atof (const char *s)
 ACE_INLINE double
 ACE_OS::atof (const wchar_t *s)
 {
-#if defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (::_wtof (s), double, -1);
-#else /* ACE_WIN32 */
+#if !defined (ACE_HAS_WTOF)
   return ACE_OS::atof (ACE_Wide_To_Ascii (s).char_rep ());
-#endif /* ACE_WIN32 */
+#elif defined (ACE_WTOF_EQUIVALENT)
+  ACE_OSCALL_RETURN (ACE_WTOF_EQUIVALENT (s), double, -1);
+#else /* ACE_HAS__WTOF */
+  ACE_OSCALL_RETURN (::wtof (s), double, -1);
+#endif /* ACE_HAS_WTOF */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -525,7 +527,7 @@ ACE_OS::strtoul (const char *s, char **ptr, int base)
 #endif /* ACE_LACKS_STRTOUL */
 }
 
-#if defined (ACE_HAS_WCHAR) 
+#if defined (ACE_HAS_WCHAR)
 ACE_INLINE unsigned long
 ACE_OS::strtoul (const wchar_t *s, wchar_t **ptr, int base)
 {
@@ -549,7 +551,7 @@ ACE_OS::strtoll (const char *s, char **ptr, int base)
 #endif /* ACE_LACKS_STRTOLL */
 }
 
-#if defined (ACE_HAS_WCHAR) 
+#if defined (ACE_HAS_WCHAR)
 ACE_INLINE ACE_INT64
 ACE_OS::strtoll (const wchar_t *s, wchar_t **ptr, int base)
 {
