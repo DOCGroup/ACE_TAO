@@ -1,3 +1,15 @@
+Tue Oct 21 10:32:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTPortableServer/RT_Acceptor_Filters.cpp:
+        * tao/Policy_Set.cpp:
+         Const change
+
+        * tao/RTPortableServer/RT_POA.h:
+          Layout change
+
+        * tao/IIOP_Acceptor.cpp:
+          Wchar changes
+
 Tue Oct 21 09:10:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Acceptor_Impl.h:
