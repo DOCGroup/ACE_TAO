@@ -61,9 +61,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'p':
-        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()),
-                           "%u",
-                           &protocol_type);
+        result = ACE_OS::sscanf (get_opts.opt_arg (),
+                                 ACE_TEXT("%u"),
+                                 &protocol_type);
         if (result == 0 || result == EOF)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to process <-p> option"),
@@ -118,7 +118,7 @@ check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
 
   for (CORBA::ULong i = 0; i < protocols->length (); ++i)
     {
-      CORBA::ULong protocol_type = protocols[i].protocol_type;
+      CORBA::ULong const protocol_type = protocols[i].protocol_type;
       ACE_DEBUG ((LM_DEBUG,
                   "  Protocol %u: IOP::ProfileId = %u\n",
                   i, protocol_type));

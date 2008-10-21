@@ -38,17 +38,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       // Initialize and obtain reference to the Test object.
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return -1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      CORBA::Object_var object = orb->string_to_object (ior);
 
-      Test_var server =
-        Test::_narrow (object.in ());
+      Test_var server = Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {

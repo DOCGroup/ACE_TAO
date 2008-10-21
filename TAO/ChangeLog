@@ -1,3 +1,15 @@
+Tue Oct 21 13:22:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Banded_Connections/server.cpp
+        * tests/RTCORBA/Client_Protocol/client.cpp
+        * tests/RTCORBA/Client_Protocol/server.cpp
+        * tests/RTCORBA/common_args.cpp
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp
+        * tests/RTCORBA/Server_Declared/server.cpp
+        * tests/RTCORBA/Server_Protocol/client.cpp
+        * tests/RTCORBA/Server_Protocol/server.cpp
+          Use ACE_OS::sscanf wrapper
+
 Tue Oct 21 12:47:24 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/server.cpp:
