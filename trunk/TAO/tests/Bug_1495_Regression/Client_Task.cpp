@@ -42,8 +42,10 @@ Client_Task::svc (void)
           ACE_OS::sleep (1);
         }
 
+      ACE_TString infile = ACE_TString (ACE_TEXT("file://")) + this->input_;
+
       CORBA::Object_var object =
-        this->corb_->string_to_object (this->input_);
+        this->corb_->string_to_object (infile.c_str ());
 
       Bug1495_Regression::Bug1495_var server =
         Bug1495_Regression::Bug1495::_narrow (object.in ());
@@ -68,7 +70,7 @@ Client_Task::svc (void)
           server->get_thread_id (remote_thread_id);
 
           ACE_DEBUG ((LM_INFO,
-                      ACE_TEXT ("Remote thread ID was")
+                      ACE_TEXT ("Remote thread ID was ")
                       ACE_INT64_FORMAT_SPECIFIER
                       ACE_TEXT ("\n"),
                       remote_thread_id));
@@ -80,9 +82,9 @@ Client_Task::svc (void)
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("ERROR:  Failed Bug_1495_Regression test. ")
-                          ACE_TEXT ("Expected thread id was")
+                          ACE_TEXT ("Expected thread id was ")
                           ACE_INT64_FORMAT_SPECIFIER
-                          ACE_TEXT (", received")
+                          ACE_TEXT (", received ")
                           ACE_INT64_FORMAT_SPECIFIER
                           ACE_TEXT (".\n"),
                           mythread_id,
