@@ -7,7 +7,7 @@ project(CCM_stub) : taolib_with_idl, tao_output, valuetype, ifr_client {
   idlflags  += -Wb,skel_export_macro=CCM_Stub_Export
   idlflags  += -I$(CIAO_ROOT)/ciao
   // This is necessary for MPC to pull in rules.ciao.GNU
-  includes += $(CIAO_ROOT)/ciao
+  includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)
 
   dynamicflags = CCM_STUB_BUILD_DLL
 
@@ -91,7 +91,7 @@ project(CCM_svnt) : orbsvcslib, orbsvcs_output \
   idlflags   += -Wb,export_macro=CCM_Svnt_Export
   dynamicflags = CCM_SVNT_BUILD_DLL
 
-  
+
   IDL_Files {
     idlflags += -SS -Sci \
                 -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
