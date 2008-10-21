@@ -193,7 +193,7 @@ int FTAPP::FT_Creator::run (void)
 
       char iogr_filename[1000];
       ACE_OS::snprintf (iogr_filename, sizeof(iogr_filename), "%s%s_%d.iogr",
-        this->prefix_,
+        this->prefix_.c_str (),
         role,
         this->iogr_seq_);
       FILE * iogr_file = ACE_OS::fopen (iogr_filename, "w");
@@ -214,7 +214,7 @@ int FTAPP::FT_Creator::run (void)
     {
       char iogr_name[1000];
       ACE_OS::snprintf (iogr_name, sizeof(iogr_name), "%s_%s_%d",
-        this->prefix_,
+        this->prefix_.c_str (),
         role,
         this->iogr_seq_);
 

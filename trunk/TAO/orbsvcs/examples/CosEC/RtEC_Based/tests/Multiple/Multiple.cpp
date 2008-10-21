@@ -4,7 +4,7 @@
 
 Multiple::Multiple (void)
   : cos_ec_ (CosEventChannelAdmin::EventChannel::_nil ()),
-    service_name ("CosEventService"),
+    service_name_ (ACE_TEXT ("CosEventService")),
     orb_ (CORBA::ORB::_nil ())
 {
   // No-Op.
@@ -83,7 +83,7 @@ Multiple::init_CosEC (void)
       CosNaming::Name ec_ref_name (1);
       ec_ref_name.length (1);
       ec_ref_name[0].id =
-        CORBA::string_dup (this->service_name);
+        CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(this->service_name_));
 
       CORBA::Object_var EC_obj =
         this->naming_client_->resolve (ec_ref_name);

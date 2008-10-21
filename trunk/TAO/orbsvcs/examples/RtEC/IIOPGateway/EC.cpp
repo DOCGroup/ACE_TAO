@@ -13,7 +13,7 @@ ACE_RCSID (EC_Examples,
            Supplier,
            "$Id$")
 
-static const char* ecname = 0;
+static const ACE_TCHAR *ecname = 0;
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -79,7 +79,8 @@ EC::run (int argc, ACE_TCHAR* argv[])
       TAO_EC_Event_Channel ec_impl (attributes);
       ec_impl.activate ();
 
-      PortableServer::ObjectId_var ecId = PortableServer::string_to_ObjectId(ecname);
+      PortableServer::ObjectId_var ecId =
+        PortableServer::string_to_ObjectId(ACE_TEXT_ALWAYS_CHAR(ecname));
 
       child_poa_->activate_object_with_id(ecId.in(), &ec_impl);
 
@@ -97,7 +98,7 @@ EC::run (int argc, ACE_TCHAR* argv[])
       // Create a name.
       CosNaming::Name name;
       name.length (1);
-      name[0].id = CORBA::string_dup (ecname);
+      name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(ecname));
       name[0].kind = CORBA::string_dup ("");
 
       // Register with the name server
@@ -129,7 +130,7 @@ EC::parse_args (int argc, ACE_TCHAR *argv[])
       if (ACE_OS::strcmp (arg, ACE_TEXT("-e")) == 0)
         {
           arg_shifter.consume_arg ();
-          ecname = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
+          ecname = arg_shifter.get_current ();
         }
 
       arg_shifter.ignore_arg ();

@@ -39,7 +39,7 @@ class FactoryDriver
   //
  public:
   // = Initialization and termination code.
-  FactoryDriver (const char* factory = "CosEC_Factory");
+  FactoryDriver (const ACE_TCHAR* factory = ACE_TEXT("CosEC_Factory"));
   // Constructor.
 
   ~FactoryDriver (void);
@@ -55,7 +55,7 @@ class FactoryDriver
   int parse_args (int argc, ACE_TCHAR *argv []);
   // Parse the command-line arguments and set options.
 
-  const char* factoryName_;
+  const ACE_TCHAR *factoryName_;
   // The name of the factory registered with the naming service.
 
   const char* child_poa_name_;

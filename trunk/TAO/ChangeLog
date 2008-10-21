@@ -1,3 +1,64 @@
+Tue Oct 21 12:47:24 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/server.cpp:
+        * orbsvcs/tests/Event/Basic/Control.cpp:
+        * orbsvcs/tests/Event/Basic/BCast.h:
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.cpp:
+        * orbsvcs/tests/Event/Basic/BCast.cpp:
+        * orbsvcs/tests/Event/lib/Driver.h:
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+        * orbsvcs/tests/Event/UDP/receiver.cpp:
+        * orbsvcs/tests/Event/UDP/sender.cpp:
+        * orbsvcs/tests/Event/UDP/Consumer.cpp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
+        * orbsvcs/tests/Bug_2248_Regression/server.cpp:
+        * orbsvcs/tests/Bug_2248_Regression/test_i.cpp:
+        * orbsvcs/tests/Bug_2925_Regression/server.cpp:
+        * orbsvcs/tests/Bug_2377_Regression/uipmc_test.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.h:
+        * orbsvcs/tests/Security/MT_SSLIOP/server.cpp:
+        * orbsvcs/tests/Bug_2247_Regression/server.cpp:
+        * orbsvcs/tests/Bug_2247_Regression/test_i.cpp:
+        * orbsvcs/tests/Bug_2247_Regression/Manager.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
+        * orbsvcs/tests/FT_App/FT_Creator.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.h:
+        * orbsvcs/tests/FT_App/FT_Creator.h:
+        * orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
+        * orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/client.cpp:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+        * orbsvcs/examples/CosEC/Factory/FactoryDriver.cpp:
+        * orbsvcs/examples/CosEC/Factory/FactoryDriver.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Multiple.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Supplier.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Consumer.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Multiple.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.h:
+        * orbsvcs/examples/RtEC/IIOPGateway/Gateway.cpp:
+        * orbsvcs/examples/RtEC/IIOPGateway/Supplier.cpp:
+        * orbsvcs/examples/RtEC/IIOPGateway/EC.cpp:
+        * orbsvcs/examples/RtEC/IIOPGateway/Consumer.cpp:
+        * orbsvcs/examples/RtEC/MCast/MCast.cpp:
+        * orbsvcs/examples/LoadBalancing/server.cpp:
+        * utils/nslist/nsdel.cpp:
+        * utils/nslist/nsadd.cpp:
+        * utils/nslist/nslist.cpp:
+        * performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+        * tests/Bug_2735_Regression/server.cpp:
+        * examples/Callback_Quoter/Consumer_Input_Handler.cpp:
+        * examples/Callback_Quoter/Consumer_Handler.cpp:
+        * examples/Callback_Quoter/Consumer_Handler.h:
+        * examples/Content_Server/SMI_Iterator/client.cpp:
+
+          Fixed incorrect use of ACE_TEXT_* conversion macros.
+
 Tue Oct 21 10:32:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTPortableServer/RT_Acceptor_Filters.cpp:
@@ -99,7 +160,7 @@ Mon Oct 20 11:36:06 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
         * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
         * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
 
-          Fixed incorrect use of ACE_TEXT_* macroses.
+          Fixed incorrect use of ACE_TEXT_* macros.
 
         * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
 

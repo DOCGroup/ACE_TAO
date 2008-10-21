@@ -15,7 +15,7 @@ ACE_RCSID (Sched_Conf,
            Sched_Conf,
            "$Id$")
 
-const char* service_name = "ScheduleService";
+const ACE_TCHAR *service_name = ACE_TEXT("ScheduleService");
 
 const char* format_string = " {%-12s, %d, %d, %d, %d, %8d, "
   " static_cast<RtecScheduler::Criticality_t> (%d), "
@@ -34,7 +34,7 @@ parse_args (int argc, ACE_TCHAR *argv [])
       switch (opt)
         {
         case 'n':
-          service_name = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          service_name = get_opt.opt_arg ();
           break;
         case '?':
         default:
@@ -370,7 +370,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         my_name_client.get_context ();
 
       if (ACE_Scheduler_Factory::use_config (context.in (),
-                                             service_name) < 0)
+                                             ACE_TEXT_ALWAYS_CHAR(service_name)) < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to bind to the scheduling service.\n"),
                           1);

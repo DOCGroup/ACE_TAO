@@ -118,9 +118,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Find which space craft we are.
     //
     ACE_INET_Addr space_craft_addr;
-    char const* space_craft_name = 0;
-
-    space_craft_name = ACE_TEXT_ALWAYS_CHAR(argv[1]);
+    const ACE_TCHAR *space_craft_name = argv[1];
 
     // Do a quick mapping to mcast addresses.
     //

@@ -5,8 +5,8 @@
 #include "ace/Get_Opt.h"
 
 RtEC_Based_CosEC::RtEC_Based_CosEC (void)
-  : service_name ("CosEventService"),
-    rt_service_name ("EventService"),
+  : service_name (ACE_TEXT("CosEventService")),
+    rt_service_name (ACE_TEXT("EventService")),
     remote_rtec_ (0)
 {
   // No-Op.
@@ -45,11 +45,11 @@ RtEC_Based_CosEC::parse_args (int argc, ACE_TCHAR *argv [])
       switch (opt)
         {
         case 'n':
-          this->service_name = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->service_name = get_opt.opt_arg ();
           break;
 
         case 't':
-          this->rt_service_name = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->rt_service_name = get_opt.opt_arg ();
           break;
 
         case 'r':
@@ -57,15 +57,15 @@ RtEC_Based_CosEC::parse_args (int argc, ACE_TCHAR *argv [])
           break;
 
         case 'e':
-          this->eventTypeIds_ =  ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->eventTypeIds_ = get_opt.opt_arg ();
           break;
 
         case 'o':
-          this->eventSourceIds_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->eventSourceIds_ = get_opt.opt_arg ();
           break;
 
         case 'p':
-          this->source_type_pairs_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->source_type_pairs_ = get_opt.opt_arg ();
           break;
 
         case '?':
@@ -123,7 +123,7 @@ RtEC_Based_CosEC::startup (int argc, ACE_TCHAR *argv[])
 
   CosNaming::Name name (1);
   name.length (1);
-  name[0].id = CORBA::string_dup (this->service_name);
+  name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(this->service_name));
 
   this->naming_->rebind (name,
                          obj.in ());
@@ -179,7 +179,7 @@ RtEC_Based_CosEC::locate_rtec (void)
   CosNaming::Name ref_name (1);
   ref_name.length (1);
   ref_name[0].id =
-    CORBA::string_dup (this->rt_service_name);
+    CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(this->rt_service_name));
 
   CORBA::Object_var obj =
     this->naming_->resolve (ref_name);
@@ -227,7 +227,7 @@ RtEC_Based_CosEC::shutdown (void)
   // Unbind from the naming service.
   CosNaming::Name name (1);
   name.length (1);
-  name[0].id = CORBA::string_dup (this->service_name);
+  name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(this->service_name));
 
   this->naming_->unbind (name);
 

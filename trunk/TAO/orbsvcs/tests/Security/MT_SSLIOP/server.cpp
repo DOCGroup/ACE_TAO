@@ -7,7 +7,7 @@
 
 const ACE_TCHAR *ior_output_file = 0;
 ACE_TCHAR *another_output_file = 0;
-const char *ior_table_name = 0;
+ACE_CString ior_table_name = "";
 char *another_table_name = 0;
 int nthreads = 4;
 
@@ -23,9 +23,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'i':
         {
           ior_table_name = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
-          int len = ACE_OS::strlen(ior_table_name) + 1;
+          int len = ACE_OS::strlen(ior_table_name.c_str ()) + 1;
           another_table_name = new char[len + 1];
-          ACE_OS::strcpy(another_table_name, ior_table_name);
+          ACE_OS::strcpy(another_table_name, ior_table_name.c_str ());
           another_table_name[len-1] = '1';
           another_table_name[len] = '\0';
           break;
@@ -105,7 +105,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Activated another one as <%s>\n", another_ior.in ()));
 
-      if (ior_table_name != 0)
+      if (ior_table_name.length () != 0)
         {
           CORBA::Object_var table_object =
              orb->resolve_initial_references ("IORTable");
@@ -119,7 +119,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               return -1;
             }
 
-          adapter->bind ( ior_table_name, ior.in ());
+          adapter->bind ( ior_table_name.c_str (), ior.in ());
           adapter->bind ( another_table_name, another_ior.in());
         }
 

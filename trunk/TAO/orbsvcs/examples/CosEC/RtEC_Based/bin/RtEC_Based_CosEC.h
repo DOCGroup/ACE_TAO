@@ -77,10 +77,10 @@ protected:
   // Locate a rtec.
 
   // = Data members
-  const char* service_name;
+  const ACE_TCHAR *service_name;
   // The name we use to register with the Naming Service.
 
-  const char* rt_service_name;
+  const ACE_TCHAR *rt_service_name;
   // The name of the Real Time Event Service.
 
   CORBA::ORB_var orb_;

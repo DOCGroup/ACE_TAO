@@ -21,7 +21,7 @@ Consumer::parse_args (int argc, ACE_TCHAR *argv [])
       switch (opt)
         {
         case 'n':
-          this->service_name = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->service_name_ = get_opt.opt_arg ();
           break;
 
         case 'c':

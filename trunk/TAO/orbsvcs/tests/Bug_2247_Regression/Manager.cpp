@@ -522,7 +522,8 @@ Client_i::init (void)
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR ((LM_ERROR,
-                "Unable to open %s for writing: %p\n",
+                ACE_TEXT("Unable to open %s for writing (%p)\n"),
+                ACE_TEXT("open"),
                 ior_output_file));
 
   ACE_Read_Buffer ior_buffer (f_handle);

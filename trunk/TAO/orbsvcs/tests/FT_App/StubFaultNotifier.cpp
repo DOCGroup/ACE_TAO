@@ -12,7 +12,7 @@
 StubFaultNotifier::StubFaultNotifier ()
   : ior_output_file_(0)
   , detector_ior_(0)
-  , ns_name_(0)
+  , ns_name_("")
 {
 }
 
@@ -109,7 +109,7 @@ int StubFaultNotifier::parse_args (int argc, ACE_TCHAR * argv[])
  */
 int StubFaultNotifier::fini (void)
 {
-  if(this->ns_name_ != 0)
+  if(this->ns_name_.length () != 0)
   {
     CORBA::Object_var naming_obj =
       this->orb_->resolve_initial_references ("NameService");
@@ -125,7 +125,7 @@ int StubFaultNotifier::fini (void)
 
     CosNaming::Name this_name (1);
     this_name.length (1);
-    this_name[0].id = CORBA::string_dup (this->ns_name_);
+    this_name[0].id = CORBA::string_dup (this->ns_name_.c_str ());
 
     naming_context->unbind (this_name);
   }
@@ -275,10 +275,10 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
       this->ns_name_ = "FT_FaultNotifier";
     }
 
-    if(this->ns_name_ != 0)
+    if(this->ns_name_.length () != 0)
     {
       this->identity_ = ACE_TEXT("name:");
-      this->identity_ += ACE_TEXT_CHAR_TO_TCHAR(this->ns_name_);
+      this->identity_ += ACE_TEXT_CHAR_TO_TCHAR(this->ns_name_.c_str ());
 
       CORBA::Object_var naming_obj =
         this->orb_->resolve_initial_references ("NameService");
@@ -294,7 +294,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
 
       CosNaming::Name this_name (1);
       this_name.length (1);
-      this_name[0].id = CORBA::string_dup (this->ns_name_);
+      this_name[0].id = CORBA::string_dup (this->ns_name_.c_str ());
 
       naming_context->rebind (this_name, this_obj.in());
     }

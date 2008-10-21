@@ -228,7 +228,7 @@ private:
   /**
    * A name to be used to register the factory with the name service.
    */
-  const char * ns_name_;
+  ACE_CString ns_name_;
 
   CosNaming::NamingContext_var naming_context_;
 
@@ -241,7 +241,7 @@ private:
   /**
    * the PortableGroup::Location within the domain
    */
-  const char * location_;
+  ACE_CString location_;
 
   /**
    * bool: quit on idle flag.

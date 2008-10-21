@@ -9,7 +9,7 @@
 
 #define HELLO_CALL_NUMBER       100
 
-const char *uipmc_url = 0;
+const ACE_TCHAR *uipmc_url = 0;
 const ACE_TCHAR *ior_output_file = 0;
 
 int
@@ -37,7 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       switch (c)
         {
         case 'u':
-          uipmc_url = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+          uipmc_url = get_opts.opt_arg ();
           success |= 0x01;
           break;
         case 'o':
@@ -88,7 +88,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // create UIPMC reference
       CORBA::String_var multicast_url =
-        CORBA::string_dup (uipmc_url);
+        CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(uipmc_url));
       CORBA::Object_var miop_ref =
         orb->string_to_object (multicast_url.in ());
 
