@@ -1,3 +1,5 @@
+// $Id$
+
 #include "StructuredEventConsumer_i.h"
 #include <tao/PortableServer/PS_CurrentC.h>
 #include <iostream>

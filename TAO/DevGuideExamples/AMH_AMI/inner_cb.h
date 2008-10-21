@@ -1,3 +1,5 @@
+// $Id$
+
 // -*- C++ -*-
 #ifndef INNER_CB_H
 #define INNER_CB_H

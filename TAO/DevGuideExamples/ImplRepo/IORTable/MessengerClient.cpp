@@ -1,3 +1,5 @@
+// $Id$
+
 #include "MessengerC.h"
 #include <ace/SString.h>
 #include <iostream>

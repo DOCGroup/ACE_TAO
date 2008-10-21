@@ -1,3 +1,5 @@
+// $Id$
+
 // Main program for a PushSupplier of Echo events.
 
 #include <orbsvcs/CosEventCommC.h>

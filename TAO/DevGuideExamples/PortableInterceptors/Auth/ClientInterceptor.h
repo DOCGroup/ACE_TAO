@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef CLIENTINTERCEPTOR_H
 #define CLIENTINTERCEPTOR_H
 

@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef MESSENGERHANDLER_H
 #define MESSENGERHANDLER_H
 

@@ -1,3 +1,5 @@
+// $Id$
+
 // EchoEventSupplierMain.cpp
 // Main program for a PushSupplier of Echo events.
 

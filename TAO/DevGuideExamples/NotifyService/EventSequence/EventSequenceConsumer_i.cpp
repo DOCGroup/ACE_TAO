@@ -1,3 +1,5 @@
+// $Id$
+
 #include "EventSequenceConsumer_i.h"
 #include <tao/PortableServer/PS_CurrentC.h>
 #include <iostream>

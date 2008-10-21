@@ -1,3 +1,5 @@
+// $Id$
+
 interface Callback
 {
   // A safe way to shutdown the client, using either clean shutdowns

@@ -1,3 +1,4 @@
+// $Id$
 
 #include "MessengerC.h"
 #include "Smart_Messenger_Proxy.h"

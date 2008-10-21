@@ -1,3 +1,5 @@
+// $Id$
+
 // Main program for a PushConsumer of Echo events.
 
 #include "EchoEventConsumer_i.h"

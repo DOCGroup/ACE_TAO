@@ -1,6 +1,9 @@
+// $Id$
+
 #include <orbsvcs/CosNamingC.h>
 #include "MessengerC.h"
 #include <iostream>
+
 int ACE_TMAIN(int argc, ACE_TCHAR * argv[])
 {
   try

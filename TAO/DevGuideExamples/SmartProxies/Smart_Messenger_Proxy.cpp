@@ -1,3 +1,5 @@
+// $Id$
+
 // Smart_Messenger_Proxy.cpp
 
 #include "Smart_Messenger_Proxy.h"
