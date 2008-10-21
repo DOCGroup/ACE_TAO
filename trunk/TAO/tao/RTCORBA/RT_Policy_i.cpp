@@ -1203,8 +1203,8 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       int send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
       int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
       int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
-      CORBA::Boolean keep_alive = true;
-      CORBA::Boolean dont_route = false;
+      CORBA::Boolean keep_alive = orb_core ? orb_core->orb_params ()->sock_keepalive () : true;
+      CORBA::Boolean dont_route = orb_core ? orb_core->orb_params ()->sock_dontroute () : false;
       CORBA::Boolean enable_network_priority = false;
 
       ACE_NEW_RETURN (property,

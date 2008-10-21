@@ -328,11 +328,10 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
                                 TAO_Acceptor_Filter *filter,
                                 TAO_PriorityBandedConnectionPolicy *priority_bands)
 {
-  int error = 0;
+  bool error = false;
 
   // Count the number of endpoints.
-  size_t profile_count =
-    this->endpoint_count ();
+  size_t const profile_count = this->endpoint_count ();
 
   // Create a profile container and have acceptor registries populate
   // it with profiles as appropriate.
@@ -344,7 +343,7 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
   int result =
     mprofile.set (static_cast <CORBA::ULong> (profile_count));
   if (result == -1)
-    error = 1;
+    error = true;
 
   TAO_Thread_Lane **lanes =
     this->thread_pool_->lanes ();
@@ -369,7 +368,7 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
                                   acceptor_registry.end (),
                                   lanes[i]->lane_priority ());
           if (result == -1)
-            error = 1;
+            error = true;
         }
     }
 

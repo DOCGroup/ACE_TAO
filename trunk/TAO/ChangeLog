@@ -1,3 +1,21 @@
+Tue Oct 21 09:10:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Acceptor_Impl.h:
+          Doxygen change
+
+        * tao/Acceptor_Registry.{h,cpp}:
+        * tao/RTPortableServer/RT_POA.cpp
+          Bool/const changes
+
+        * tao/RTCORBA/RT_Policy_i.cpp:
+          Get keep_alive/dont_rout from orb params
+
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
+          Bool changes
+
+        * tao/Transport_Acceptor.h:
+          Layout changes
+
 Tue Oct 21 07:32:43 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * examples/Simple/grid/Grid_i.h:

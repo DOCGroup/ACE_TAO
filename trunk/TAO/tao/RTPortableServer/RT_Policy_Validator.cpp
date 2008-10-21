@@ -90,8 +90,8 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
 
   for (CORBA::ULong j = 0; j < protocols.length (); ++j)
     {
-      int found = 0;
-      CORBA::ULong protocol_type = protocols[j].protocol_type;
+      bool found = false;
+      CORBA::ULong const protocol_type = protocols[j].protocol_type;
 
       if (this->thread_pool_)
         {
@@ -114,7 +114,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
                 {
                   if ((*a)->tag () == protocol_type)
                     {
-                      found = 1;
+                      found = true;
                       break;
                     }
                 }
@@ -137,7 +137,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
             {
               if ((*a)->tag () == protocol_type)
                 {
-                  found = 1;
+                  found = true;
                   break;
                 }
             }

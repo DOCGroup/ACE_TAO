@@ -169,7 +169,7 @@ private:
   //@@ TAO_ACCEPTOR_SPL_DATA_MEMBERS_ADD_HOOK
 };
 
-/// This is a drop-in replacement class for the ACE_Strategy_Acceptor. 
+/// This is a drop-in replacement class for the ACE_Strategy_Acceptor.
 /// It provides all of the same functionality and the additional
 /// functionality of handling accept() errors with some sort of
 /// configured action.  All of the actual code is in the TAO_Acceptor
@@ -188,12 +188,14 @@ public:
    : acceptor_ (acceptor) {
   }
 
-  virtual int handle_accept_error (void) {
+  virtual int handle_accept_error (void)
+  {
     return this->acceptor_->handle_accept_error (this);
   }
 
   virtual int handle_timeout (const ACE_Time_Value&,
-                              const void*) {
+                              const void*)
+  {
     return this->acceptor_->handle_expiration (this);
   }
 
