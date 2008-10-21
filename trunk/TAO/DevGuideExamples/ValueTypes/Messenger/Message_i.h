@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef MESSAGE_I_H
 #define MESSAGE_I_H
 

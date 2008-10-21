@@ -1,3 +1,5 @@
+// $Id$
+
 project(*Server): portableserver, orbsvcsexe, notification_skel, naming {
   Source_Files {
     EventSequenceSupplier_i.cpp

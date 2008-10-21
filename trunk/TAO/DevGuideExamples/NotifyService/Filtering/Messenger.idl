@@ -1,3 +1,6 @@
+// $Id$
+
+
 // messenger.idl
 
 interface Messenger

@@ -1,5 +1,7 @@
+// $Id$
 
 DevGuideExamples/NamingService/corbaloc_Messenger/README
+// $Id$
 
 The example in this directory extends the example in GettingStartedUNIX 
 (or GettingStartedVC) to use the Naming_Service 

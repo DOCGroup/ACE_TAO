@@ -1,3 +1,5 @@
+// $Id$
+
 #include "bidir_giop_pch.h"
 
 #include "callback_i.h"

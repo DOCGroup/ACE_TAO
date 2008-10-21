@@ -1,3 +1,5 @@
+// $Id$
+
 // The server doesn't use Smart Proxies, but since the client
 // shares the idl generated source files, it needs to have the
 // -Gsp option added to the tao_idl flags.
