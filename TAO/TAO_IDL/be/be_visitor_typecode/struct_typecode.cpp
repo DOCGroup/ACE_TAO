@@ -92,7 +92,7 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
                         -1);
     }
 
-  static ACE_CString const tao_fields ("_tao_fields_");
+  ACE_CString const tao_fields ("_tao_fields_");
   ACE_CString const fields_name (tao_fields
                                  + node->flat_name ());
 

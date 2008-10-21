@@ -34,7 +34,7 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
     this->queue_lookup (this->tc_queue_, node);
 
   ACE_Unbounded_Queue<AST_Type *> recursion_queue;
-  
+
   if (qnode
       && node->in_recursion (recursion_queue))
     {
@@ -170,7 +170,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
   be_type * const discriminant_type =
     be_type::narrow_from_decl (node->disc_type ());
 
-  static ACE_CString tao_cases ("_tao_cases_");
+  ACE_CString tao_cases ("_tao_cases_");
   ACE_CString const fields_name (tao_cases
                                  + node->flat_name ());
   const char *fields_name_str = fields_name.c_str ();
