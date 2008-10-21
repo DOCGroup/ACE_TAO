@@ -62,7 +62,7 @@ FT_ReplicaFactory_i::FT_ReplicaFactory_i ()
   , factory_registry_ (0)
   , registered_(0)
   , test_output_file_(0)
-  , ns_name_(0)
+  , ns_name_("")
   , naming_context_ (CosNaming::NamingContext::_nil ())
   , this_name_ ()
   , roles_ ()
@@ -233,7 +233,7 @@ int FT_ReplicaFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
 
 const char * FT_ReplicaFactory_i::location () const
 {
-  return this->location_;
+  return this->location_.c_str ();
 }
 
 const ACE_TCHAR * FT_ReplicaFactory_i::identity () const
@@ -395,16 +395,16 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
       PortableGroup::FactoryInfo info;
       info.the_factory = ::PortableGroup::GenericFactory::_narrow(this_obj.in ());
       info.the_location.length(1);
-      info.the_location[0].id = CORBA::string_dup(this->location_);
+      info.the_location[0].id = CORBA::string_dup(this->location_.c_str ());
       info.the_criteria.length(1);
       info.the_criteria[0].nam.length(1);
       info.the_criteria[0].nam[0].id = CORBA::string_dup(PortableGroup::role_criterion);
       info.the_criteria[0].val <<= CORBA::string_dup(roleName);
 
       ACE_ERROR (( LM_INFO,
-         "Factory: %s@%s registering with factory registry\n",
+         "Factory: %s@%C registering with factory registry\n",
          roleName,
-         location_
+         location_.c_str ()
          ));
 
       char const * replica_repository_id =
@@ -423,10 +423,10 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
   if (this->roles_.size() > 0)
   {
     this->identity_ = ACE_TEXT("Factory");
-    if (this->location_ != 0)
+    if (this->location_.length () != 0)
     {
       this->identity_ += ACE_TEXT("@");
-      this->identity_ += ACE_TEXT_CHAR_TO_TCHAR(this->location_);
+      this->identity_ += ACE_TEXT_CHAR_TO_TCHAR(this->location_.c_str ());
     }
     identified = 1;
   }
@@ -452,12 +452,12 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
     }
   }
 
-  if (this->ns_name_ != 0)
+  if (this->ns_name_.length () != 0)
   {
     if (!identified)
     {
       this->identity_ = ACE_TEXT("name:");
-      this->identity_ += ACE_TEXT_CHAR_TO_TCHAR(this->ns_name_);
+      this->identity_ += ACE_TEXT_CHAR_TO_TCHAR(this->ns_name_.c_str ());
     }
 
     CORBA::Object_var naming_obj =
@@ -473,7 +473,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
       CosNaming::NamingContext::_narrow (naming_obj.in ());
 
     this->this_name_.length (1);
-    this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
+    this->this_name_[0].id = CORBA::string_dup (this->ns_name_.c_str ());
 
     this->naming_context_->rebind (this->this_name_, this_obj.in()  // CORBA::Object::_duplicate(this_obj)
                             );
@@ -502,10 +502,10 @@ int FT_ReplicaFactory_i::fini (void)
     ACE_OS::unlink (this->ior_output_file_);
     this->ior_output_file_ = 0;
   }
-  if (this->ns_name_ != 0)
+  if (this->ns_name_.length () != 0)
   {
     this->naming_context_->unbind (this_name_);
-    this->ns_name_ = 0;
+    this->ns_name_.clear ();
   }
 
   if (registered_)
@@ -515,14 +515,14 @@ int FT_ReplicaFactory_i::fini (void)
     if (this->unregister_by_location_)
     {
       ACE_ERROR (( LM_INFO,
-         "%s: unregistering all factories at %s\n",
+         "%s: unregistering all factories at %C\n",
          identity(),
-         location_
+         location_.c_str ()
          ));
 
       PortableGroup::Location location(1);
       location.length(1);
-      location[0].id = CORBA::string_dup(location_);
+      location[0].id = CORBA::string_dup(location_.c_str ());
       this->factory_registry_->unregister_factory_by_location (
               location);
     }
@@ -533,14 +533,14 @@ int FT_ReplicaFactory_i::fini (void)
       {
         const char * roleName = this->roles_[nRole].c_str();
         ACE_ERROR (( LM_INFO,
-           "Factory for: %s@%s unregistering from factory registry\n",
+           "Factory for: %s@%C unregistering from factory registry\n",
            roleName,
-           location_
+           location_.c_str ()
            ));
 
         PortableGroup::Location location(1);
         location.length(1);
-        location[0].id = CORBA::string_dup(location_);
+        location[0].id = CORBA::string_dup(location_.c_str ());
         this->factory_registry_->unregister_factory (
                 roleName,
                 location);
@@ -645,7 +645,7 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
   (*factory_creation_id) <<= factory_id;
 
   ACE_ERROR ((LM_INFO,
-    "Created %s@%s#%d.\n", role, this->location_, static_cast<int> (factory_id)
+    "Created %s@%C#%d.\n", role, this->location_.c_str (), static_cast<int> (factory_id)
     ));
 
 

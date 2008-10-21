@@ -14,8 +14,8 @@
 #define CLIENT_THREAD_NUMBER    32
 #define HELLO_CALL_NUMBER       100
 
-const char *uipmc_url = 0;
-const char *client_uipmc_url = 0;
+const ACE_TCHAR *uipmc_url = 0;
+const ACE_TCHAR *client_uipmc_url = 0;
 
 void
 test_sleep (int microsec)
@@ -50,11 +50,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
       switch (c)
         {
         case 'u':
-          uipmc_url = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+          uipmc_url = get_opts.opt_arg ();
           success |= 0x01;
           break;
         case 'c':
-          client_uipmc_url = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+          client_uipmc_url = get_opts.opt_arg ();
           success |= 0x02;
           break;
         }
@@ -188,13 +188,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // create UIPMC reference
       CORBA::String_var multicast_url =
-        CORBA::string_dup (uipmc_url);
+        CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(uipmc_url));
       CORBA::Object_var miop_ref =
         orb->string_to_object (multicast_url.in ());
 
       // create UIPMC reference for client access
       CORBA::String_var client_multicast_url =
-        CORBA::string_dup (client_uipmc_url);
+        CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(client_uipmc_url));
       CORBA::Object_var client_miop_ref =
         orb->string_to_object (client_multicast_url.in ());
 

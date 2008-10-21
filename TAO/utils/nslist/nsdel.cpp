@@ -83,13 +83,11 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         argc = argcon.get_argc ();
       ACE_TCHAR
         **argv = argcon.get_TCHAR_argv ();
-      const char
-        *const pname = ACE_TEXT_ALWAYS_CHAR (argv[0]),
-        *nameService = 0;
-      char
-        kindsep = '.',
-        ctxsep[] = "/",
-        *name = 0;
+      ACE_CString pname = ACE_TEXT_ALWAYS_CHAR (argv[0]);
+      ACE_CString nameService = "";
+      char kindsep = '.';
+      ACE_CString ctxsep = "/";
+      ACE_CString name = "";
       ACE_Time_Value
         rtt = ACE_Time_Value::zero;
 
@@ -109,7 +107,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                   else
                     {
                       ++argv;
-                      if (nameService)
+                      if (nameService.length ())
                         {
                           ACE_DEBUG ((LM_DEBUG,
                                      "Error: more than one --ns.\n"));
@@ -125,7 +123,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--name")))
                 {
-                  if (name)
+                  if (name.length ())
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: more than one --name\n"));
@@ -204,10 +202,10 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
             }
         }
 
-      if (!name || failed)
+      if (!name.length () || failed)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "\nUsage:\n  %s --name <name>\n"
+                      "\nUsage:\n  %C --name <name>\n"
                       "optional:\n"
                       "  --ns <ior>\n"
                       "  --ctxsep  <character>\n"
@@ -222,15 +220,15 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       "will orphan them. Connects to default NameService\n"
                       "unless --ns is given. Displays all ID/Kinds found\n"
                       "on path unless --quiet is given.\n",
-                      pname));
+                      pname.c_str ()));
           orb->destroy ();
           return 1;
         }
 
       // Contact the name service
       CORBA::Object_var nc_obj;
-      if (nameService)
-        nc_obj = orb->string_to_object (nameService);
+      if (nameService.length ())
+        nc_obj = orb->string_to_object (nameService.c_str ());
       else
         nc_obj = orb->resolve_initial_references ("NameService");
 
@@ -248,7 +246,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
       // Assemble the name from the user string given
       char *cp;
-      while (0 != (cp = ACE_OS::strtok (name, ctxsep)))
+      while (0 != (cp = ACE_OS::strtok (const_cast<char*> (name.c_str ()), ctxsep.c_str ())))
         {
           const int index= the_name.length();
           the_name.length (index+1);
@@ -259,7 +257,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
               the_name[index].kind= CORBA::string_dup (++kind);
             }
           the_name[index].id = CORBA::string_dup (cp);
-          name = 0; // way strtok works
+          name.clear (); // way strtok works
         }
 
       // Attempt to locate the object and destroy/unbind it

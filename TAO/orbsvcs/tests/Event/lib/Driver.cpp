@@ -48,7 +48,7 @@ EC_Driver::EC_Driver (void)
      verbose_ (0),
      thr_create_flags_ (THR_NEW_LWP|THR_BOUND|THR_SCHED_FIFO),
      use_remote_ec_ (0),
-     event_service_name_ ("EventService"),
+     event_service_name_ (ACE_TEXT("EventService")),
      ec_impl_ (0)
 {
   TAO_EC_Default_Factory::init_svcs ();
@@ -690,7 +690,7 @@ EC_Driver::parse_args (int &argc, ACE_TCHAR *argv [])
           this->use_remote_ec_ = 1;
           if (arg_shifter.is_parameter_next ())
             {
-              this->event_service_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
+              this->event_service_name_ = arg_shifter.get_current ();
               arg_shifter.consume_arg ();
             }
         }

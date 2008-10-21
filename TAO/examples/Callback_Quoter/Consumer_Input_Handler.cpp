@@ -108,7 +108,7 @@ Consumer_Input_Handler::register_consumer ()
     {
 
       // Register with the server.
-      this->consumer_handler_->server_->register_callback (this->consumer_handler_->stock_name_,
+      this->consumer_handler_->server_->register_callback (this->consumer_handler_->stock_name_.c_str (),
                                                            this->consumer_handler_->threshold_value_,
                                                            this->consumer_handler_->consumer_var_.in ());
 

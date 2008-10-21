@@ -20,8 +20,8 @@ ACE_RCSID (EC_MT_Mcast,
            MCast,
            "$Id$")
 
-const char *udp_mcast_address =
-    ACE_DEFAULT_MULTICAST_ADDR ":10001";
+const ACE_TCHAR *udp_mcast_address =
+    ACE_DEFAULT_MULTICAST_ADDR ACE_TEXT(":10001");
 
 static CORBA::ORB_var orb = CORBA::ORB::_nil ();
 static bool terminate_threads = false;
@@ -151,7 +151,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // First we convert the string into an INET address, then we
       // convert that into the right IDL structure:
-      ACE_INET_Addr udp_addr (udp_mcast_address);
+      ACE_INET_Addr udp_addr (ACE_TEXT_ALWAYS_CHAR(udp_mcast_address));
       ACE_DEBUG ((LM_DEBUG,
                   "Multicast address is: %s\n",
                   udp_mcast_address));
@@ -362,7 +362,7 @@ int parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'm':
-        udp_mcast_address = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+        udp_mcast_address = get_opts.opt_arg ();
         break;
 
       case '?':

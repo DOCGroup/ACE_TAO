@@ -105,7 +105,7 @@ namespace FTAPP
     /**
      * prefix for names
      */
-    const char * prefix_;
+    ACE_CString prefix_;
 
 
   };
