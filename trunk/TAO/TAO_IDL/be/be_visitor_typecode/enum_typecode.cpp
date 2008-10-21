@@ -30,7 +30,7 @@ TAO::be_visitor_enum_typecode::visit_enum (be_enum * node)
      << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
-  static ACE_CString const tao_enumerators ("_tao_enumerators_");
+  ACE_CString const tao_enumerators ("_tao_enumerators_");
   ACE_CString const enumerators_name (tao_enumerators
                                       + node->flat_name ());
 
