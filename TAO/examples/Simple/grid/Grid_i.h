@@ -80,7 +80,7 @@ private:
   GridArray array_;
   // Pointer to the matrix.  This is organized as an "array of arrays."
 
-  static CORBA::UShort min (CORBA::UShort, CORBA::UShort);
+  static CORBA::UShort ushort_min (CORBA::UShort, CORBA::UShort);
   // Solaris and some Windows compilers don't have min in std namespaces
 };
 

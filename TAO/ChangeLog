@@ -1,3 +1,10 @@
+Tue Oct 21 07:32:43 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * examples/Simple/grid/Grid_i.h:
+        * examples/Simple/grid/Grid_i.cpp:
+
+          Fixed a 'min' name clash on Windows.
+
 Mon Oct 20 14:06:52 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * tao/Bounded_Sequence_CDR_T.h:

@@ -5,8 +5,9 @@
 #include "ace/Auto_Ptr.h"
 
 // Solaris and some Windows compilers don't have min in std namespaces
+// moreover on Windows 'min' is a macro, so we have to avoid using it literally.
 CORBA::UShort
-Grid_i::min (CORBA::UShort a, CORBA::UShort b)
+Grid_i::ushort_min (CORBA::UShort a, CORBA::UShort b)
 {
   return a > b ? b : a;
 }
@@ -93,7 +94,7 @@ Grid_i::width (CORBA::Short x)
       for (CORBA::Short ctr = 0; ctr < this->height_; ++ctr)
         {
           ACE_OS::memcpy (array.get () + x * ctr, this->array_.get () + this->width_ * ctr,
-                          Grid_i::min (this->width_, x) * sizeof (CORBA::Long));
+                          Grid_i::ushort_min (this->width_, x) * sizeof (CORBA::Long));
         }
       this->array_ = array;
       array.release ();
@@ -107,7 +108,7 @@ Grid_i::height (CORBA::Short y)
   if (y > 0 && y != this->height_)
     {
       GridArray array (allocate_array (this->width_, y));
-      for (CORBA::Short ctr = 0; ctr < Grid_i::min (this->height_, y); ++ctr)
+      for (CORBA::Short ctr = 0; ctr < Grid_i::ushort_min (this->height_, y); ++ctr)
         {
           ACE_OS::memcpy (array.get () + this->width_ * ctr, this->array_.get () + this->width_ * ctr,
                           this->width_ * sizeof (CORBA::Long));
