@@ -17,6 +17,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.6 and ACE-5.6.7
 . Updated stat struct on Windows CE to match the stat struct on other
   platforms so that application code can be written portable
 
+. Added new ACE_OS wrappers: raise, atof, atol, scanf, sscanf
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.5 and ACE-5.6.6
 ====================================================
 
