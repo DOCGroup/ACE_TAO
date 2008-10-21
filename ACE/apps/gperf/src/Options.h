@@ -25,6 +25,7 @@
 #define OPTIONS_H
 
 #include "ace/Log_Msg.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -155,22 +156,22 @@ private:
   static ACE_TCHAR **argv_;
   // Stores a pointer to command-line vector.
 
-  static const char *function_name_;
+  static ACE_CString function_name_;
   // Names used for generated lookup function.
 
-  static const char  *fill_default_;
+  static ACE_CString fill_default_;
   // Expression used to assign default values in keyword table.
 
-  static const char *key_name_;
+  static ACE_CString key_name_;
   // Name used for keyword key.
 
-  static const char *class_name_;
+  static ACE_CString class_name_;
   // Name used for generated C++ class.
 
-  static const char *hash_name_;
+  static ACE_CString hash_name_;
   // Name used for generated hash function.
 
-  static const char *delimiters_;
+  static ACE_CString delimiters_;
   // Separates keywords from other attributes.
 
   static char key_positions_[MAX_KEY_POS];

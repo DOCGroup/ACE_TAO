@@ -412,10 +412,10 @@ ACEXML_HttpCharStream::read (ACEXML_Char *str,
   if (this->stream_ == 0)
     return -1;
   len = len * sizeof (ACEXML_Char);
-  char* temp = const_cast<char*> (this->stream_->recv (len));
-  str = ACE_TEXT_CHAR_TO_TCHAR (temp);
-  if (str == 0)
+  const char* temp = this->stream_->recv (len);
+  if (temp == 0)
     return -1;
+  ACE_OS::strncpy (str, ACE_TEXT_CHAR_TO_TCHAR (temp), len);
   return static_cast<int> (len);
 }
 
