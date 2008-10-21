@@ -433,6 +433,14 @@ namespace ACE_OS {
   int printf (const wchar_t *format, ...);
 #endif
 
+  extern ACE_Export
+  int scanf (const char *format, ...);
+
+#if defined (ACE_HAS_WCHAR)
+  extern ACE_Export
+  int scanf (const wchar_t *format, ...);
+#endif
+
   ACE_NAMESPACE_INLINE_FUNCTION
   int puts (const char *s);
 
@@ -470,6 +478,14 @@ namespace ACE_OS {
 # if defined (ACE_HAS_WCHAR)
   extern ACE_Export
   int sprintf (wchar_t *buf, const wchar_t *format, ...);
+# endif /* ACE_HAS_WCHAR */
+
+  extern ACE_Export
+  int sscanf (char *buf, const char *format, ...);
+
+# if defined (ACE_HAS_WCHAR)
+  extern ACE_Export
+  int sscanf (wchar_t *buf, const wchar_t *format, ...);
 # endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -516,7 +532,7 @@ namespace ACE_OS {
 
 #if !defined (ACE_HAS_VASPRINTF)
   extern ACE_Export
-  int vasprintf_emulation (char **bufp, const char *format, va_list argptr); 
+  int vasprintf_emulation (char **bufp, const char *format, va_list argptr);
 #endif /* !ACE_HAS_VASPRINTF */
 
 #if defined (ACE_HAS_WCHAR)

@@ -1,3 +1,11 @@
+Tue Oct 21 07:15:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.{h,cpp}:
+          Added wrappers for sscanf/scanf
+
+        * bin/fuzz.pl:
+          Extended ACE_OS check with scanf/sscanf
+
 Tue Oct 21 00:04:26 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_UDP_Test.cpp: Attempt to avoid lock-ups on non-Windows

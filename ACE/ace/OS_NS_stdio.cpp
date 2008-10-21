@@ -459,4 +459,63 @@ ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argp
 #endif /* !ACE_HAS_VASWPRINTF */
 #endif /* ACE_HAS_WCHAR */
 
+int
+ACE_OS::scanf (const char *format, ...)
+{
+  int result;
+  va_list ap;
+  va_start (ap, format);
+  ACE_OSCALL (::scanf (format, ap), int, -1, result);
+  va_end (ap);
+  return result;
+}
+
+#if defined (ACE_HAS_WCHAR)
+int
+ACE_OS::scanf (const wchar_t *format, ...)
+{
+#if defined (ACE_LACKS_WSCANF)
+  ACE_UNUSED_ARG (format);
+  ACE_NOTSUP_RETURN (-1);
+#else
+  int result;
+  va_list ap;
+  va_start (ap, format);
+  ACE_OSCALL (::wscanf (format, ap), int, -1, result);
+  va_end (ap);
+  return result;
+#endif
+}
+#endif /* ACE_HAS_WCHAR */
+
+int
+ACE_OS::sscanf (char *buf, const char *format, ...)
+{
+  int result;
+  va_list ap;
+  va_start (ap, format);
+  ACE_OSCALL (::sscanf (buf, format, ap), int, -1, result);
+  va_end (ap);
+  return result;
+}
+
+#if defined (ACE_HAS_WCHAR)
+int
+ACE_OS::sscanf (wchar_t *buf, const wchar_t *format, ...)
+{
+#if defined (ACE_LACKS_SWSCANF)
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (format);
+  ACE_NOTSUP_RETURN (-1);
+#else
+  int result;
+  va_list ap;
+  va_start (ap, format);
+  ACE_OSCALL (::swscanf (buf, format, ap), int, -1, result);
+  va_end (ap);
+  return result;
+#endif
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_END_VERSIONED_NAMESPACE_DECL
