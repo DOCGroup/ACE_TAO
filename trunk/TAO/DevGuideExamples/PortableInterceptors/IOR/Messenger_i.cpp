@@ -8,17 +8,14 @@
 Messenger_i::Messenger_i (void)
 {
 }
-  
+
 // Implementation skeleton destructor
 Messenger_i::~Messenger_i (void)
 {
 }
-  
+
 
 void Messenger_i::send_message (const CORBA::OctetSeq & user_name)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   try
     {
@@ -56,16 +53,16 @@ void Messenger_i::send_message (const CORBA::OctetSeq & user_name)
       // Obtain the CDR encapsulation Codec.
       IOP::Codec_var codec =
         codec_factory->create_codec (encoding);
-    
-      CORBA::Any uid_as_any; 
+
+      CORBA::Any uid_as_any;
       uid_as_any = *(codec->decode(user_name));
-    
+
       CORBA::Long uid;
       uid_as_any >>= uid;
       std::cout << "UID: " << uid << std::endl;
 
     }
-  
+
   catch(...)
     {
       std::cerr << "exception received" << std::endl;

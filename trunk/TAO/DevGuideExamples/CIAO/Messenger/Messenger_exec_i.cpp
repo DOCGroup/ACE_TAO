@@ -96,14 +96,12 @@ namespace CIDL_Messenger_Impl
 
   char*
   Messenger_exec_i::subject ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::string_dup( this->subject_.c_str() );
   }
 
   void
   Messenger_exec_i::subject ( const char* subject)
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     this->subject_ = CORBA::string_dup( subject );
   }
@@ -112,7 +110,6 @@ namespace CIDL_Messenger_Impl
 
   ::CCM_Publication_ptr
   Messenger_exec_i::get_content ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
 
@@ -125,7 +122,6 @@ namespace CIDL_Messenger_Impl
 
   ::CCM_Runnable_ptr
   Messenger_exec_i::get_control ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
 
@@ -138,7 +134,6 @@ namespace CIDL_Messenger_Impl
 
   ::CCM_History_ptr
   Messenger_exec_i::get_message_history ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
 
@@ -154,9 +149,6 @@ namespace CIDL_Messenger_Impl
   void
   Messenger_exec_i::set_session_context (
   ::Components::SessionContext_ptr ctx)
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     this->context_ =
     Messenger_Context::_narrow (
@@ -170,27 +162,18 @@ namespace CIDL_Messenger_Impl
 
   void
   Messenger_exec_i::ciao_preactivate ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
   }
 
   void
   Messenger_exec_i::ciao_postactivate ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
   }
 
   void
   Messenger_exec_i::ccm_activate ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
     ACE_DEBUG((LM_INFO, ACE_TEXT("Messenger_exec_i::ccm_activate\n")));
@@ -199,9 +182,6 @@ namespace CIDL_Messenger_Impl
 
   void
   Messenger_exec_i::ccm_passivate ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
     ACE_DEBUG((LM_INFO, ACE_TEXT("Messenger_exec_i::ccm_passivate\n")));
@@ -209,9 +189,6 @@ namespace CIDL_Messenger_Impl
 
   void
   Messenger_exec_i::ccm_remove ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
     ACE_DEBUG((LM_INFO, ACE_TEXT("Messenger_exec_i::ccm_remove\n")));
@@ -241,9 +218,6 @@ namespace CIDL_Messenger_Impl
 
   ::Components::EnterpriseComponent_ptr
   MessengerHome_exec_i::create ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     ::Components::EnterpriseComponent_ptr retval =
     ::Components::EnterpriseComponent::_nil ();

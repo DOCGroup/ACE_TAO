@@ -50,20 +50,16 @@ namespace CIDL_Messenger_Impl
     // Operations from ::Publication
 
     virtual char*
-    text ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    text ();
 
     virtual void
-    text ( const char* text)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    text ( const char* text);
 
     virtual CORBA::UShort
-    period ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    period ();
 
     virtual void
-    period ( CORBA::UShort period)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    period ( CORBA::UShort period);
 
   private:
     std::string text_;

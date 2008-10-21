@@ -39,8 +39,6 @@ namespace CIDL_Messenger_Impl
 
   ::Messages *
   History_exec_i::get_all ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException))
   {
     // Your code here.
 
@@ -68,8 +66,6 @@ namespace CIDL_Messenger_Impl
 
   ::Message *
   History_exec_i::get_latest ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException))
   {
     // Your code here.
 

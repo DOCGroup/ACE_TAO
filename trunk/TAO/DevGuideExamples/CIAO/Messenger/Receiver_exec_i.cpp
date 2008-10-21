@@ -44,7 +44,6 @@ namespace CIDL_Receiver_Impl
   void
   Receiver_exec_i::push_message_consumer (
   ::Message * ev)
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
 
@@ -76,9 +75,6 @@ namespace CIDL_Receiver_Impl
   void
   Receiver_exec_i::set_session_context (
   ::Components::SessionContext_ptr ctx)
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     this->context_ =
     Receiver_Context::_narrow (
@@ -92,9 +88,6 @@ namespace CIDL_Receiver_Impl
 
   void
   Receiver_exec_i::ccm_activate ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
     ACE_DEBUG((LM_INFO, ACE_TEXT("Receiver_exec_i::ccm_activate\n")));
@@ -102,9 +95,6 @@ namespace CIDL_Receiver_Impl
 
   void
   Receiver_exec_i::ccm_passivate ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
     ACE_DEBUG((LM_INFO, ACE_TEXT("Receiver_exec_i::ccm_passivate\n")));
@@ -112,9 +102,6 @@ namespace CIDL_Receiver_Impl
 
   void
   Receiver_exec_i::ccm_remove ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
     ACE_DEBUG((LM_INFO, ACE_TEXT("Receiver_exec_i::ccm_remove\n")));
@@ -122,9 +109,6 @@ namespace CIDL_Receiver_Impl
 
   void
   Receiver_exec_i::ciao_preactivate ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
     ACE_DEBUG((LM_INFO, ACE_TEXT("Receiver_exec_i::ciao_preactivate\n")));
@@ -132,9 +116,6 @@ namespace CIDL_Receiver_Impl
 
   void
   Receiver_exec_i::ciao_postactivate ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
     ACE_DEBUG((LM_INFO, ACE_TEXT("Receiver_exec_i::ciao_postactivate\n")));
@@ -164,9 +145,6 @@ namespace CIDL_Receiver_Impl
 
   ::Components::EnterpriseComponent_ptr
   ReceiverHome_exec_i::create ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     ::Components::EnterpriseComponent_ptr retval =
     ::Components::EnterpriseComponent::_nil ();

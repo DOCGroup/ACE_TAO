@@ -19,30 +19,21 @@ Simple_i::Simple_i (CORBA::ORB_ptr orb, int callback_count)
 Simple_i::~Simple_i (void)
 {
 }
-  
+
 CORBA::Long Simple_i::test_method (CORBA::Boolean do_callback)
-ACE_THROW_SPEC ((
-  CORBA::SystemException
-))
 {
   if (do_callback) {
     ready_for_callback_ = 1;
   }
   return 0;
 }
-  
+
 void Simple_i::callback_object (Callback_ptr cb)
-ACE_THROW_SPEC ((
-  CORBA::SystemException
-))
 {
   callback_ = Callback::_duplicate(cb);
 }
-  
+
 void Simple_i::shutdown ()
-ACE_THROW_SPEC ((
-  CORBA::SystemException
-))
 {
   const int wait = 0;
   orb_->shutdown(wait);
@@ -66,12 +57,12 @@ Simple_i::call_client()
         ACE_OS::abort(); // Should probably define and throw a UserException
       }
     }
-    
+
     callback_->shutdown();
-    
+
     return 1;
   }
-  
+
   return 0;
 }
 

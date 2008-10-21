@@ -49,14 +49,10 @@ namespace CIDL_Messenger_Impl
     // Operations from ::History
 
     virtual ::Messages *
-    get_all ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException));
+    get_all ();
 
     virtual ::Message *
-    get_latest ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException));
+    get_latest ();
 
     // MY CODE
 

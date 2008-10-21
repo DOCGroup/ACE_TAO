@@ -19,20 +19,17 @@
 Messenger_i::Messenger_i (void)
   {
   }
-  
+
 // Implementation skeleton destructor
 Messenger_i::~Messenger_i (void)
   {
   }
-  
+
 CORBA::Boolean Messenger_i::send_message (
     const char * user_name,
     const char * subject,
     char *& message
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 
   {
     //Add your implementation here
@@ -41,21 +38,18 @@ CORBA::Boolean Messenger_i::send_message (
     std::cerr << "Message:      " << message << std::endl;
     return 1;
   }
-  
+
 char * Messenger_i::get_time (
 
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 
 {
   time_t thetime;
   struct tm * timeinfo;
- 
+
   ACE_OS::time(&thetime);
   timeinfo = ACE_OS::localtime(&thetime);
   char *timestring = CORBA::string_dup(ACE_OS::asctime(timeinfo));
-  
+
   return timestring;
 }

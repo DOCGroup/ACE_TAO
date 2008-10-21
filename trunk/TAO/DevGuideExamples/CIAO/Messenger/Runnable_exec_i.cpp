@@ -42,14 +42,12 @@ namespace CIDL_Messenger_Impl
 
   void
   Runnable_exec_i::start ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     this->run_lock_.release();
   }
 
   void
   Runnable_exec_i::stop ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     this->run_lock_.acquire();
   }

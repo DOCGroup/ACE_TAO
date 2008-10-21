@@ -9,34 +9,23 @@ class ServerInterceptor
 {
  public:
   ServerInterceptor (void);
-  
+
   ~ServerInterceptor ();
-  
-  virtual char * name ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+  virtual void destroy ();
+
+  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void receive_request_service_contexts (
-                                                 PortableInterceptor::ServerRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+                                                 PortableInterceptor::ServerRequestInfo_ptr ri);
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri);
 
  private:
   const char *myname_;

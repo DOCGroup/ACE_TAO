@@ -1,3 +1,65 @@
+Tue Oct 21 20:59:59 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DevGuideExamples/BiDirectionalGIOP/simple_i.h:
+        * DevGuideExamples/BiDirectionalGIOP/simple_i.cpp:
+        * DevGuideExamples/CIAO/Messenger/Administrator_exec_i.h:
+        * DevGuideExamples/CIAO/Messenger/Administrator_exec_i.cpp:
+        * DevGuideExamples/CIAO/Messenger/History_exec_i.h:
+        * DevGuideExamples/CIAO/Messenger/History_exec_i.cpp:
+        * DevGuideExamples/CIAO/Messenger/Messenger_exec_i.h:
+        * DevGuideExamples/CIAO/Messenger/Messenger_exec_i.cpp:
+        * DevGuideExamples/CIAO/Messenger/Publication_exec_i.h:
+        * DevGuideExamples/CIAO/Messenger/Publication_exec_i.cpp:
+        * DevGuideExamples/CIAO/Messenger/Receiver_exec_i.h:
+        * DevGuideExamples/CIAO/Messenger/Receiver_exec_i.cpp:
+        * DevGuideExamples/CIAO/Messenger/Runnable_exec_i.h:
+        * DevGuideExamples/CIAO/Messenger/Runnable_exec_i.cpp:
+        * DevGuideExamples/CIAO/Messenger/StaticDAnCE/StaticDAnCEApp.cpp:
+        * DevGuideExamples/ImplRepo/IORTable/Messenger_i.h:
+        * DevGuideExamples/PortableInterceptors/Auth/ClientInterceptor.h:
+        * DevGuideExamples/PortableInterceptors/Auth/ClientInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/Auth/Messenger_i.h:
+        * DevGuideExamples/PortableInterceptors/Auth/Messenger_i.cpp:
+        * DevGuideExamples/PortableInterceptors/Auth/ServerInitializer.h:
+        * DevGuideExamples/PortableInterceptors/Auth/ServerInitializer.cpp:
+        * DevGuideExamples/PortableInterceptors/Auth/ServerInterceptor.h:
+        * DevGuideExamples/PortableInterceptors/Auth/ServerInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/IOR/ClientInitializer.h:
+        * DevGuideExamples/PortableInterceptors/IOR/ClientInitializer.cpp:
+        * DevGuideExamples/PortableInterceptors/IOR/ClientInterceptor.h:
+        * DevGuideExamples/PortableInterceptors/IOR/ClientInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/IOR/Messenger_i.h:
+        * DevGuideExamples/PortableInterceptors/IOR/Messenger_i.cpp:
+        * DevGuideExamples/PortableInterceptors/IOR/ServerIORInterceptor.h:
+        * DevGuideExamples/PortableInterceptors/IOR/ServerIORInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/IOR/ServerInitializer.h:
+        * DevGuideExamples/PortableInterceptors/IOR/ServerInitializer.cpp:
+        * DevGuideExamples/PortableInterceptors/IOR/ServerInterceptor.h:
+        * DevGuideExamples/PortableInterceptors/IOR/ServerInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/PICurrent/ServerInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/PICurrent_NameService/ClientInterceptor.h:
+        * DevGuideExamples/PortableInterceptors/PICurrent_NameService/ClientInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/PICurrent_NameService/Messenger_i.h:
+        * DevGuideExamples/PortableInterceptors/PICurrent_NameService/Messenger_i.cpp:
+        * DevGuideExamples/PortableInterceptors/PICurrent_NameService/ServerInitializer.h:
+        * DevGuideExamples/PortableInterceptors/PICurrent_NameService/ServerInitializer.cpp:
+        * DevGuideExamples/PortableInterceptors/PICurrent_NameService/ServerInterceptor.h:
+        * DevGuideExamples/PortableInterceptors/PICurrent_NameService/ServerInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/ClientInitializer.h:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/ClientInitializer.cpp:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/ClientInterceptor.h:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/ClientInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/Messenger_i.h:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/ServerInitializer.h:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/ServerInitializer.cpp:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/ServerInterceptor.h:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/ServerInterceptor.cpp:
+        * DevGuideExamples/Security/SecurityUnawareApp/MessengerI.cpp:
+        * DevGuideExamples/ValueTypes/Bank/server.cpp:
+
+          Remove exception specifications from the code. It has fallen out of favor.
+
 Tue Oct 21 19:10:21 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DevGuideExamples:

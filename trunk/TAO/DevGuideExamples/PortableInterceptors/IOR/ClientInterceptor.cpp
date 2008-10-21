@@ -12,14 +12,14 @@ ClientInterceptor (IOP::CodecFactory_var cf)
   : myname_ ("Client_Authentication_Interceptor")
 {
   std::cout << "Calling ClientInterceptor constructor." << std::endl;
-  
+
   // Set up a structure that contains information necessary to
   // create a GIOP 1.2 CDR encapsulation Codec.
   IOP::Encoding encoding;
   encoding.format = IOP::ENCODING_CDR_ENCAPS;
   encoding.major_version = 1;
   encoding.minor_version = 2;
- 
+
   // Obtain the CDR encapsulation Codec.
   this->codec = cf->create_codec (encoding);
 }
@@ -30,7 +30,6 @@ ClientInterceptor::~ClientInterceptor (void)
 
 char *
 ClientInterceptor::name ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   std::cout << "Calling ClientInterceptor name() method" << std::endl;
   return CORBA::string_dup (this->myname_);
@@ -38,14 +37,12 @@ ClientInterceptor::name ()
 
 void
 ClientInterceptor::destroy ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ClientInterceptor::send_poll (
                               PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(ri);
   std::cout << "Calling send_poll()." << std::endl;
@@ -55,26 +52,24 @@ ClientInterceptor::send_poll (
 void
 ClientInterceptor::send_request (
                                  PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   std::cout << "Calling send_request()." << std::endl;
-  
+
   const CORBA::ULong tagID = 9654;
 
-  try  
+  try
     {
       IOP::TaggedComponent_var myTag = ri->get_effective_component(tagID);
       char *tag =
         reinterpret_cast<char*> (myTag->component_data.get_buffer());
-  
+
       std::cout << "IOR Tag is : " << tag << std::endl;
     }
   catch(...)
-    { 
+    {
       std::cerr << "Tagged Component not found" << std::endl;
     }
-   
+
   IOP::ServiceContext sc;
   sc.context_id = service_ctx_id;
 
@@ -87,7 +82,7 @@ ClientInterceptor::send_request (
 
   sc.context_data = reinterpret_cast<CORBA::OctetSeq&>(
                                          *codec->encode(gid_as_any));
-  
+
   // Add this context to the service context list.
   ri->add_request_service_context (sc, 0);
 
@@ -96,7 +91,6 @@ ClientInterceptor::send_request (
 void
 ClientInterceptor::receive_reply (
                                   PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(ri);
   std::cout << "Calling receive_reply()." << std::endl;
@@ -105,8 +99,6 @@ ClientInterceptor::receive_reply (
 void
 ClientInterceptor::receive_other (
                                   PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   ACE_UNUSED_ARG(ri);
   std::cout << "Calling receive_other()." << std::endl;
@@ -115,8 +107,6 @@ ClientInterceptor::receive_other (
 void
 ClientInterceptor::receive_exception (
                                       PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   ACE_UNUSED_ARG(ri);
   std::cout << "Calling receive_exception()." << std::endl;
