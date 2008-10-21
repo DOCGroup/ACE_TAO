@@ -40,15 +40,15 @@ namespace DAnCE
     {
     public:
 //    typedef ACE_Vector<Deployment::NodeApplication_var> TApplications;
-      typedef ACE_Map_Manager < Deployment::NodeApplicationManager_var, 
-        Deployment::NodeManager_var, 
+      typedef ACE_Map_Manager < Deployment::NodeApplicationManager_var,
+        Deployment::NodeManager_var,
         ACE_Null_Mutex > TNam2Nm;
-      typedef ACE_Map_Manager < Deployment::Application_var, 
-        Deployment::NodeApplicationManager_var, 
+      typedef ACE_Map_Manager < Deployment::Application_var,
+        Deployment::NodeApplicationManager_var,
         ACE_Null_Mutex > TApp2Mgr;
 
-      DomainApplication_Impl (TNam2Nm& nams, 
-                              const Deployment::Properties & configProperty, 
+      DomainApplication_Impl (TNam2Nm& nams,
+                              const Deployment::Properties & configProperty,
                               Deployment::Connections& conn);
       ~DomainApplication_Impl();
 
@@ -75,6 +75,8 @@ namespace DAnCE
       void startLaunch (const Deployment::Properties & configProperty);
     };
 }; // DAnCE
+
+#include /**/ "ace/post.h"
 #endif // DOMAIN_APPLICATION_H
 
 
