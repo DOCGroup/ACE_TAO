@@ -28,8 +28,6 @@ CORBA::Boolean Messenger_i::send_message (
     const char* /*subject*/,
     char *& message
   )
-  throw(CORBA::SystemException)
-
 {
   CORBA::string_free(message);
 

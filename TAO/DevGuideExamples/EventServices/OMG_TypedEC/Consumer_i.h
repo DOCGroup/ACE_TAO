@@ -17,14 +17,11 @@ class Consumer_i
                CORBA::Object_ptr obj);
 
     // Override operations from TypedPushConsumer interface.
-    virtual CORBA::Object_ptr get_typed_consumer ()
-      throw (CORBA::SystemException);
+    virtual CORBA::Object_ptr get_typed_consumer ();
 
-    virtual void push(const CORBA::Any & data) 
-     throw(CORBA::SystemException);
+    virtual void push(const CORBA::Any & data) ;
 
-    virtual void disconnect_push_consumer()
-     throw(CORBA::SystemException);
+    virtual void disconnect_push_consumer();
 
   private:
     CORBA::ORB_var orb_;

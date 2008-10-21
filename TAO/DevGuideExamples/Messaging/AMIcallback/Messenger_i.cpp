@@ -30,7 +30,6 @@ CORBA::Boolean Messenger_i::send_message (
   char *& message,
   CORBA::Long_out time_sent
   )
-  throw (CORBA::SystemException, MessengerUnableToSendMessage)
 {
   if (throw_exception_)
   {

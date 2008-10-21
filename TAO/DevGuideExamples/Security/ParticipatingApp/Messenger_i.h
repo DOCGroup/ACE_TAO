@@ -24,13 +24,11 @@ public:
      const char * user_name,
      const char * subject,
      char *& message
-    )
-    throw(CORBA::SystemException);
+    );
 
   virtual void shutdown (
         const char * user_name
-    )
-    throw(CORBA::SystemException);
+    );
 
 protected:
   CORBA::ORB_var orb_;

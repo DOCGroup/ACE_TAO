@@ -87,7 +87,7 @@ public:
     reactor_->schedule_timer(this, 0, tv, ACE_Time_Value::zero);
   }
 
-  virtual void disconnect_push_supplier() throw (CORBA::SystemException) {
+  virtual void disconnect_push_supplier() {
     // this should never be called. The notify service uses this to allow its
     // clients to disconnect gracefully.
     std::cout << "disconnect_push_supplier()." << std::endl;

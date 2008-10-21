@@ -32,8 +32,7 @@ virtual CORBA::Boolean send_message (
     const char * subject,
     char *& message,
     CORBA::Long_out time_sent
-  )
-  throw (CORBA::SystemException, MessengerUnableToSendMessage);
+  );
 
 private:
   // Specify an amount of time to wait inside

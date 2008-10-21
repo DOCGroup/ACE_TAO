@@ -86,7 +86,6 @@ CORBA::Boolean Messenger_i::send_message (
     const char * user_name,
     const char * subject,
     char *& message)
-  throw (CORBA::SystemException)
 {
   
   ACE_OS::printf("Message from: %s\nSubject:      %s\nMessage:      %s\n",
@@ -126,4 +125,3 @@ CORBA::Boolean Messenger_i::send_message (
   return 1;
 
 }
-

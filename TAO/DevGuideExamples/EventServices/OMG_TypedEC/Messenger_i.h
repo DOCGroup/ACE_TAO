@@ -32,8 +32,7 @@ public:
   
   virtual void send_message (const char * user_name,
                              const char * subject,
-                             const char * message)
-    throw (CORBA::SystemException);
+                             const char * message);
 
 private:
   CORBA::ORB_var orb_;

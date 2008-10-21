@@ -21,8 +21,7 @@ class  Messenger_i : public POA_Messenger
       const char * user_name,
       const char * subject,
       char *& message 
-    )
-    throw(CORBA::SystemException);
+    );
 
  private:
   CORBA::ORB_var orb_;
