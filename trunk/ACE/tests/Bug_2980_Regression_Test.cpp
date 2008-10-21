@@ -43,7 +43,7 @@ namespace {
 #if defined (__BORLANDC__)
 #  define PRINTF std::printf
 #else
-#  define PRINTF printf
+#  define PRINTF ACE_OS::printf
 #endif
 
 
@@ -64,34 +64,34 @@ void* loadDll(void*)
   PRINTF ("loadDll - entered\n");
 
 #if defined (CAN_RUN_TEST)
-  dllHandle = dlopen(DllTestName, RTLD_NOW);
+  dllHandle = ACE_OS::dlopen(DllTestName, RTLD_NOW);
   if (dllHandle == 0)
   {
-    PRINTF ("unable to load library: %s\n", dlerror());
+    PRINTF ("unable to load library: %s\n", ACE_OS::dlerror());
     assert(dllHandle != 0);
   }
 
-  void* temp = dlsym (dllHandle, "capi_init");
-  memcpy (&capi_init, &temp, sizeof (temp));
+  void* temp = ACE_OS::dlsym (dllHandle, "capi_init");
+  ACE_OS::memcpy (&capi_init, &temp, sizeof (temp));
   if (capi_init == 0)
   {
-    PRINTF ("unable to resolve symbol capi_init: %s\n", dlerror());
+    PRINTF ("unable to resolve symbol capi_init: %s\n", ACE_OS::dlerror());
     assert(capi_init != 0);
   }
 
-  temp = dlsym (dllHandle, "capi_fini");
-  memcpy (&capi_fini, &temp, sizeof (temp));
+  temp = ACE_OS::dlsym (dllHandle, "capi_fini");
+  ACE_OS::memcpy (&capi_fini, &temp, sizeof (temp));
   if (capi_fini == 0)
   {
-    PRINTF ("unable to resolve symbol capi_fini: %s\n", dlerror());
+    PRINTF ("unable to resolve symbol capi_fini: %s\n", ACE_OS::dlerror());
     assert(capi_fini != 0);
   }
 
-  temp = dlsym (dllHandle, "capi_dosomething");
-  memcpy (&capi_dosomething, &temp, sizeof (temp));
+  temp = ACE_OS::dlsym (dllHandle, "capi_dosomething");
+  ACE_OS::memcpy (&capi_dosomething, &temp, sizeof (temp));
   if (capi_dosomething == 0)
   {
-    PRINTF ("unable to resolve symbol capi_dosomething: %s\n", dlerror());
+    PRINTF ("unable to resolve symbol capi_dosomething: %s\n", ACE_OS::dlerror());
     assert(capi_dosomething != 0);
   }
   capi_init();
@@ -109,7 +109,7 @@ void* unloadDll(void*)
 
 #if defined (CAN_RUN_TEST)
   capi_fini();
-  dlclose(dllHandle);
+  ACE_OS::dlclose(dllHandle);
 #endif /* defined (CAN_RUN_TEST) */
 
   PRINTF ("unloadDll - leaving\n");
