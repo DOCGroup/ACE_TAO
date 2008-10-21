@@ -457,7 +457,9 @@ public:
 private:
   int initiate_read (void);
   int initiate_write (void);
+      // FUZZ: disable check_for_lack_ACE_OS
   void close (void);
+      // FUZZ: enable check_for_lack_ACE_OS
 
   TestData *tester_;
   int id_;
