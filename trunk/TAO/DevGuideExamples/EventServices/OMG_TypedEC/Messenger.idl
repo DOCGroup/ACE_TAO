@@ -1,0 +1,10 @@
+// Messenger.idl
+
+interface Messenger
+{
+  // Modified to make message an in parameter and
+  // remove the return value.
+  void send_message(in string user_name,
+                    in string subject,
+                    in string message);
+};

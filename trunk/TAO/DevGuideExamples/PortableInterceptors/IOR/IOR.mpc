@@ -1,0 +1,18 @@
+project(*Server): taoexe, portableserver, pi_server, avoids_minimum_corba, iorinterceptor {
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+    ServerInitializer.cpp
+    ServerInterceptor.cpp
+    ServerIORInterceptor.cpp
+  }
+}
+
+project(*Client): taoexe, pi, avoids_minimum_corba, interceptors {
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+    ClientInitializer.cpp
+    ClientInterceptor.cpp
+  }
+}

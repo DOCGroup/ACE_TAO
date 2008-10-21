@@ -1,0 +1,17 @@
+project(*Server): taoexe, portableserver, pi_server, namingexe {
+  Source_Files {
+    Messenger_i.cpp
+    ServerInitializer.cpp
+    ServerInterceptor.cpp
+    MessengerServer.cpp
+  }
+}
+
+project(*Client): taoexe, pi, namingexe, interceptors {
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+    ClientInitializer.cpp
+    ClientInterceptor.cpp
+  }
+}

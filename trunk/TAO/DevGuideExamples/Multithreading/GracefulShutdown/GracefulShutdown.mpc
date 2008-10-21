@@ -1,0 +1,16 @@
+project(Multithreading*Server): taoexe, portableserver {
+  exename = MessengerServer
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+    MessengerShutdownTimer.cpp
+  }
+}
+
+project(Multithreading*Client): taoexe {
+  exename = MessengerClient
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+}

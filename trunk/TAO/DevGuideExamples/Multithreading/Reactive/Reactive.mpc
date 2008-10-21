@@ -1,0 +1,13 @@
+project(Multithreading*Server): taoexe, portableserver, avoids_minimum_corba {
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+  }
+}
+
+project(Multithreading*Client): taoexe, avoids_minimum_corba {
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+}

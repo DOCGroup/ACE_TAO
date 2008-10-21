@@ -1,0 +1,42 @@
+// The server doesn't use Smart Proxies, but since the client
+// shares the idl generated source files, it needs to have the
+// -Gsp option added to the tao_idl flags.
+project(*Server): messaging, taoexe, portableserver, smart_proxies {
+  IDL_Files {
+    Messenger.idl
+  }
+
+  Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
+    Messenger_i.cpp
+    MessengerServer.cpp
+  }
+}
+
+project(*Client): taoexe, messaging, smart_proxies {
+  after += *Server *Logger
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    LoggerC.cpp
+    MessengerC.cpp
+    MessengerClient.cpp
+    Smart_Messenger_Proxy.cpp
+  }
+}
+
+project(*Logger): taoexe, portableserver {
+  IDL_Files {
+    Logger.idl
+  }
+
+  Source_Files {
+    LoggerC.cpp
+    LoggerS.cpp
+    Logger_i.cpp
+    LoggerServer.cpp
+  }
+}

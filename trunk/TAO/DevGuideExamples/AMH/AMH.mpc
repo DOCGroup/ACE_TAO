@@ -1,0 +1,20 @@
+project(*Server): taoexe, portableserver, amh {
+  idlflags += -Wb,pch_include=amh_pch.h
+
+  Source_Files {
+    AMH_Messenger_i.cpp
+    MessengerServer.cpp
+  }
+}
+
+// This project doesn't really require AMH, but since they
+// are in the same directory and share the generated idl code
+// it has to be there.
+project(*Client): taoexe, amh {
+  idlflags += -Wb,pch_include=amh_pch.h
+
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+}

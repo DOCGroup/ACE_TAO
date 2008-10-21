@@ -1,0 +1,13 @@
+valuetype Person {
+
+  public string name;
+  public long   balance;
+
+  factory create(in string name);
+
+  void debit(in long amt);
+};
+
+interface Transaction {
+  long update(in Person p);
+};
