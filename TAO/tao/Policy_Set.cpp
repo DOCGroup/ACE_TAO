@@ -218,7 +218,7 @@ TAO_Policy_Set::set_policy (const CORBA::Policy_ptr policy)
 
   while (j != length)
     {
-      CORBA::ULong current =
+      CORBA::ULong const current =
         this->policy_list_[j]->policy_type ();
 
       if (current == policy_type)
