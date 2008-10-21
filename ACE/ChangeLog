@@ -1,3 +1,12 @@
+Tue Oct 21 14:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Process_Manual_Event_Test.cpp:
+        * tests/Process_Env_Test.cpp:
+        * tests/Multicast_Test.cpp:
+        * tests/Proactor_UDP_Test.cpp:
+
+          Fixed fuzz errors (lack of ACE_OS::).
+
 Tue Oct 21 13:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-netbsd.h:

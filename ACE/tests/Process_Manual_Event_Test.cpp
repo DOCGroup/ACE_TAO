@@ -195,6 +195,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       // On AIX, this is done by removing the shared memory objects before
       // trying to run.
 #  if defined (AIX)
+      // FUZZ: disable check_for_lack_ACE_OS
       if (::shm_unlink (event_ping_name) != 0 && errno != ENOENT)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P) event_ping %p\n"),
@@ -203,6 +204,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P) event_pong %p\n"),
                     ACE_TEXT ("shm_unlink")));
+      // FUZZ: enable check_for_lack_ACE_OS
 #  endif /* AIX */
 
 #if defined (ACE_WIN32)
