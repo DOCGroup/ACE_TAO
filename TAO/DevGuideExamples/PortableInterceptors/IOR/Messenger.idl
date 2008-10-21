@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orb.idl"
 
 interface Messenger

@@ -1,3 +1,5 @@
+// $Id$
+
 project(*supplier) : taoexe, portableserver, valuetype, notify, portableserver, event_skel {
   exename = supplier
   source_files {

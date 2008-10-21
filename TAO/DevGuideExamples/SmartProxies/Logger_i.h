@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef LOGGERI_H_
 #define LOGGERI_H_
 

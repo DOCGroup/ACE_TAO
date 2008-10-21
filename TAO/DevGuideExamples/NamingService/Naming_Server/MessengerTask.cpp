@@ -1,3 +1,5 @@
+// $Id$
+
 #include "MessengerTask.h"
 #include "Messenger_i.h"
 #include <orbsvcs/CosNamingC.h>

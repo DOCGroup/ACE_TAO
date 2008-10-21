@@ -1,3 +1,5 @@
+// $Id$
+
 #include <orbsvcs/CosNamingC.h>
 #include "Messenger_i.h"
 #include <iostream>

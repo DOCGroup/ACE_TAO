@@ -1,3 +1,5 @@
+// $Id$
+
 #include <tao/CodecFactory/CodecFactory.h>
 #include <ace/OS_NS_string.h>
 #include <iostream>

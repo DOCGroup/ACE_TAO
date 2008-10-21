@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef CLIENTINITIALIZER_H
 #define CLIENTINITIALIZER_H
 

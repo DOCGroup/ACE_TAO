@@ -1,3 +1,5 @@
+// $Id$
+
 #include "common.h"
 
 CORBA::ULong

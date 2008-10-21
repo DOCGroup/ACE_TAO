@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef BIDIR_GIOP_PCH_H
 #define BIDIR_GIOP_PCH_H
 

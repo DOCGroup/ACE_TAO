@@ -1,3 +1,5 @@
+// $Id$
+
 // LoggerServer.cpp
 
 #include "Logger_i.h"

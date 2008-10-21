@@ -1,3 +1,5 @@
+// $Id$
+
 #include "MessengerC.h"
 #include "ClientInitializer.h"
 #include <tao/ORBInitializer_Registry.h>
