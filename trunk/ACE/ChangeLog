@@ -1,3 +1,11 @@
+Tue Oct 21 12:41:09 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * apps/gperf/src/Options.h:
+        * apps/gperf/src/Options.cpp:
+        * ACEXML/common/HttpCharStream.cpp:
+
+          Fixed incorrect use of ACE_TEXT_* conversion macros.
+
 Tue Oct 21 11:25:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
