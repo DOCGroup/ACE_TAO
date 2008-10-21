@@ -227,7 +227,6 @@ protected:
                      TAO_PriorityBandedConnectionPolicy *priority_bands);
 
   TAO_Thread_Pool *thread_pool_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

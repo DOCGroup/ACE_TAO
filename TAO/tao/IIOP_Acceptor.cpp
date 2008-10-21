@@ -281,7 +281,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ")
-                  ACE_TEXT ("IIOP_Acceptor::open, address==%s, options=%s\n"),
+                  ACE_TEXT ("IIOP_Acceptor::open, address==%C, options=%C\n"),
                   address, options));
     }
 
@@ -355,7 +355,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ")
-                  ACE_TEXT ("IIOP_Acceptor::open, specified host=%s:%d\n"),
+                  ACE_TEXT ("IIOP_Acceptor::open, specified host=%C:%d\n"),
                   (specified_hostname.length() == 0 ? "<null>" : specified_hostname.c_str()),
                   addr.get_port_number ()));
     }
@@ -612,7 +612,7 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
       if (TAO_debug_level >= 5)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor - ")
-                      ACE_TEXT ("Overriding the hostname with <%s>\n"),
+                      ACE_TEXT ("Overriding the hostname with <%C>\n"),
                       this->hostname_in_ior_));
 
       host = CORBA::string_dup (this->hostname_in_ior_);
@@ -1186,7 +1186,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
                   argc));
       for (int i = 0; i < argc; i++)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT("\t%s\n"),
+                    ACE_TEXT("\t%C\n"),
                     argv[i]->c_str()));
       result = -1;
     }
@@ -1228,7 +1228,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
           if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint ")
-                               ACE_TEXT ("portspan: <%s>\n")
+                               ACE_TEXT ("portspan: <%C>\n")
                                ACE_TEXT ("Valid range 1 -- %d\n"),
                                value.c_str (), ACE_MAX_DEFAULT_PORT),
                               -1);
