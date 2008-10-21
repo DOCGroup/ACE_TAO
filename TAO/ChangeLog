@@ -1,3 +1,14 @@
+Tue Oct 21 15:59:59 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * tests/Bug_1495_Regression/Client_Task.cpp:
+        * tests/Bug_1495_Regression/Threaded_Server.cpp:
+        * tests/Bug_1495_Regression/Threaded_Client.cpp:
+        * tests/Bug_1495_Regression/server_interceptor.cpp:
+        * tests/Bug_1495_Regression/run_test.pl:
+
+          In my previous commit to this test I introduced a bug
+          that only exhibited on NetBSD. Now I fixed it.
+
 Tue Oct 21 14:38:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_typecode/enum_typecode.cpp:
