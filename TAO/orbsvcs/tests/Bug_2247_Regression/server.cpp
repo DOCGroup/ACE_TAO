@@ -4,7 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 const ACE_TCHAR *ior_output_file = 0;
-const char *key = 0;
+const ACE_TCHAR *key = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -19,7 +19,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior_output_file = get_opts.opt_arg ();
         break;
       case 'k':
-        key = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+        key = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -79,7 +79,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Instantiate the LCD_Display implementation class
-      Simple_Server_i display_impl (orb.in (), key);
+      Simple_Server_i display_impl (orb.in (), ACE_TEXT_ALWAYS_CHAR(key));
       PortableServer::ObjectId_var id =
           PortableServer::string_to_ObjectId ("IOGR_OID");
 

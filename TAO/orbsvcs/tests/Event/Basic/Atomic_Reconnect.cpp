@@ -223,14 +223,14 @@ Consumer::dump_results (int base_count,
   if (diff > tolerance || diff < -tolerance)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "ERROR - %s unexpected number of base events  <%d>\n",
+                  "ERROR - %C unexpected number of base events  <%d>\n",
                   this->name_,
                   this->event_base_count));
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s - number of base events <%d> within margins\n",
+                  "%C - number of base events <%d> within margins\n",
                   this->name_,
                   this->event_base_count));
     }
@@ -239,7 +239,7 @@ Consumer::dump_results (int base_count,
       || this->event_count >= CORBA::ULong(base_count + extra_count))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "ERROR - %s unexpected number of events  <%d,%d,%d>\n",
+                  "ERROR - %C unexpected number of events  <%d,%d,%d>\n",
                   this->name_,
                   base_count,
                   this->event_count,
@@ -248,7 +248,7 @@ Consumer::dump_results (int base_count,
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s number of events "
+                  "%C number of events "
                   "<%d,%d,%d> within margins\n",
                   this->name_,
                   base_count,
@@ -263,7 +263,7 @@ Consumer::push (const RtecEventComm::EventSet& events)
   if (events.length () == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s (%P|%t) no events\n", this->name_));
+                  "%C (%P|%t) no events\n", this->name_));
       return;
     }
 
@@ -271,7 +271,7 @@ Consumer::push (const RtecEventComm::EventSet& events)
   this->event_count++;
 
   // ACE_DEBUG ((LM_DEBUG,
-  //               "Consumer %s has received %d events\n",
+  //               "Consumer %C has received %d events\n",
   //               this->name_, this->event_count));
 
   if (events[0].header.type == this->event_base_type_)

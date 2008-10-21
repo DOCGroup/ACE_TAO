@@ -16,7 +16,7 @@ ACE_RCSID (EC_Examples,
 const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
 const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
-static const char* ecname = 0;
+static const ACE_TCHAR *ecname = 0;
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -69,7 +69,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (ecname);
+      name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(ecname));
 
       CORBA::Object_var ec_obj =
         naming_context->resolve (name);
@@ -159,7 +159,7 @@ Supplier::parse_args (int argc, ACE_TCHAR *argv[])
       if (ACE_OS::strcmp (arg, ACE_TEXT("-e")) == 0)
         {
           arg_shifter.consume_arg ();
-          ecname = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
+          ecname = arg_shifter.get_current ();
         }
 
       arg_shifter.ignore_arg ();

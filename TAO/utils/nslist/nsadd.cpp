@@ -53,12 +53,10 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         **argv = argcon.get_TCHAR_argv ();
       const ACE_TCHAR
         *const pname = argv[0];
-      const char
-        *nameService = 0;
-      char
-        kindsep= '.',
-        ctxsep[]= "/",
-        *name = 0;
+      ACE_CString nameService = "";
+      char kindsep = '.';
+      ACE_CString ctxsep = "/";
+      ACE_CString name = "";
 
       if (0 < argc)
         {
@@ -76,7 +74,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                   else
                     {
                       ++argv;
-                      if (nameService)
+                      if (nameService.length ())
                         {
                           ACE_DEBUG ((LM_DEBUG,
                                      "Error: more than one --ns.\n"));
@@ -92,7 +90,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--name")))
                 {
-                  if (name)
+                  if (name.c_str ())
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: more than one --name\n"));
@@ -176,7 +174,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
             }
         }
 
-      if (failed || !name || (!ior && !context))
+      if (failed || !name.length () || (!ior && !context))
         {
           ACE_DEBUG ((LM_DEBUG,
             "\nUsage:\n"
@@ -207,8 +205,8 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
       // Contact the name service
       CORBA::Object_var nc_obj;
-      if (nameService)
-        nc_obj = orb->string_to_object (nameService);
+      if (nameService.length ())
+        nc_obj = orb->string_to_object (nameService.c_str ());
       else
         nc_obj = orb->resolve_initial_references ("NameService");
 
@@ -231,7 +229,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
       // Assemble the name from the user string given
       char *cp;
-      while (0 != (cp = ACE_OS::strtok (name, ctxsep)))
+      while (0 != (cp = ACE_OS::strtok (const_cast<char*> (name.c_str ()), ctxsep.c_str ())))
         {
           const int index= the_name.length();
           the_name.length (index+1);
@@ -242,7 +240,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
               the_name[index].kind= CORBA::string_dup (++kind);
             }
           the_name[index].id = CORBA::string_dup (cp);
-          name = 0; // way strtok works
+          name.clear (); // way strtok works
         }
 
       // Now attempt the (re)bind

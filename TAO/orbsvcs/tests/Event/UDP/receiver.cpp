@@ -18,8 +18,8 @@ ACE_RCSID (EC_Examples,
            MCast,
            "$Id$")
 
-const char *udp_mcast_address =
-    ACE_DEFAULT_MULTICAST_ADDR ":10001";
+const ACE_TCHAR *udp_mcast_address =
+    ACE_DEFAULT_MULTICAST_ADDR ACE_TEXT(":10001");
 bool valuetype = false;
 
 int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -309,7 +309,7 @@ int parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'm':
-        udp_mcast_address = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+        udp_mcast_address = get_opts.opt_arg ();
         break;
 
       case 'v':

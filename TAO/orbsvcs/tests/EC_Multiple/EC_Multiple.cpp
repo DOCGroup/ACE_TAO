@@ -33,7 +33,7 @@ ACE_RCSID (EC_Multiple,
 
 Test_ECG::Test_ECG (void)
   : lcl_name_ ("Test_ECG"),
-    rmt_name_ (0),
+    rmt_name_ (""),
     scheduling_type_ (Test_ECG::ss_runtime),
     consumer_disconnects_ (0),
     supplier_disconnects_ (0),
@@ -75,7 +75,7 @@ print_priority_info (const char *const name)
                                        &param)) == 0) {
 #   ifdef sun
     ACE_DEBUG ((LM_DEBUG,
-                "%s (%lu|%u); policy is %d, priority is %d\n",
+                "%C (%lu|%u); policy is %d, priority is %d\n",
                 name,
                 ACE_OS::getpid (),
                 _lwp_self (),
@@ -83,7 +83,7 @@ print_priority_info (const char *const name)
                 policy, param.sched_priority));
 #   else  /* ! sun */
     ACE_DEBUG ((LM_DEBUG,
-                "%s (%lu|%u); policy is %d, priority is %d\n",
+                "%C (%lu|%u); policy is %d, priority is %d\n",
                 name,
                 ACE_OS::getpid (),
                 0,
@@ -157,8 +157,8 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "Execution parameters:\n"
-                  "  lcl name = <%s>\n"
-                  "  rmt name = <%s>\n"
+                  "  lcl name = <%C>\n"
+                  "  rmt name = <%C>\n"
                   "  scheduler type = <%d>\n"
                   "  consumer disconnects = <%d>\n"
                   "  supplier disconnects = <%d>\n"
@@ -183,8 +183,8 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                   "  LP consumer Event B = <%d>\n"
                   "  schedule_file = <%s>\n"
                   "  pid file name = <%s>\n",
-                  this->lcl_name_?this->lcl_name_:"nil",
-                  this->rmt_name_?this->rmt_name_:"nil",
+                  this->lcl_name_.length () ? this->lcl_name_.c_str () : "nil",
+                  this->rmt_name_.length () ? this->rmt_name_.c_str () : "nil",
                   this->scheduling_type_,
                   this->consumer_disconnects_,
                   this->supplier_disconnects_,
@@ -284,7 +284,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
           break;
 
         case Test_ECG::ss_runtime:
-          if (ACE_OS::strcmp (this->lcl_name_, "ECM1") == 0)
+          if (ACE_OS::strcmp (this->lcl_name_.c_str (), "ECM1") == 0)
             {
               // This setups Scheduler_Factory to use the runtime version
               ACE_Scheduler_Factory::use_runtime (
@@ -304,7 +304,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                 return -1;
               scheduler = scheduler_impl->_this ();
             }
-          else if (ACE_OS::strcmp (this->lcl_name_, "ECM2") == 0)
+          else if (ACE_OS::strcmp (this->lcl_name_.c_str (), "ECM2") == 0)
             {
               // This setups Scheduler_Factory to use the runtime version
               ACE_Scheduler_Factory::use_runtime (
@@ -324,7 +324,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                 return -1;
               scheduler = scheduler_impl->_this ();
             }
-          else if (ACE_OS::strcmp (this->lcl_name_, "ECM3") == 0)
+          else if (ACE_OS::strcmp (this->lcl_name_.c_str (), "ECM3") == 0)
             {
               // This setups Scheduler_Factory to use the runtime version
               ACE_Scheduler_Factory::use_runtime (
@@ -347,8 +347,8 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
           else
             {
               ACE_ERROR ((LM_WARNING,
-                          "Unknown name <%s> defaulting to "
-                          "config scheduler\n", this->lcl_name_));
+                          "Unknown name <%C> defaulting to "
+                          "config scheduler\n", this->lcl_name_.c_str ()));
 
               auto_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl (new ACE_Config_Scheduler);
               scheduler_impl = auto_scheduler_impl;
@@ -378,11 +378,11 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
           {
             CORBA::String_var str =
               orb->object_to_string (scheduler.in ());
-            ACE_DEBUG ((LM_DEBUG, "The (local) scheduler IOR is <%s>\n",
+            ACE_DEBUG ((LM_DEBUG, "The (local) scheduler IOR is <%C>\n",
                         str.in ()));
 
             ACE_OS::strcpy (buf, "ScheduleService@");
-            ACE_OS::strcat (buf, this->lcl_name_);
+            ACE_OS::strcat (buf, this->lcl_name_.c_str ());
 
             // Register the servant with the Naming Context....
             CosNaming::Name schedule_name (1);
@@ -411,10 +411,10 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
         orb->object_to_string (ec.in ());
 
       ACE_OS::sleep (5);
-      ACE_DEBUG ((LM_DEBUG, "The (local) EC IOR is <%s>\n", str.in ()));
+      ACE_DEBUG ((LM_DEBUG, "The (local) EC IOR is <%C>\n", str.in ()));
 
       ACE_OS::strcpy (buf, "EventChannel@");
-      ACE_OS::strcat (buf, this->lcl_name_);
+      ACE_OS::strcat (buf, this->lcl_name_.c_str ());
 
       CosNaming::Name channel_name (1);
       channel_name.length (1);
@@ -425,7 +425,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
       ACE_Time_Value tv (15, 0);
 
-      if (this->rmt_name_ != 0)
+      if (this->rmt_name_.length () != 0)
         {
           orb->run (&tv);
         }
@@ -434,7 +434,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
       RtecEventChannelAdmin::EventChannel_var local_ec =
         this->get_ec (naming_context.in (),
-                      this->lcl_name_);
+                      this->lcl_name_.c_str ());
 
       ACE_DEBUG ((LM_DEBUG, "located local EC\n"));
 
@@ -451,14 +451,14 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
       ACE_DEBUG ((LM_DEBUG, "connected supplier\n"));
 
       RtecEventChannelAdmin::Observer_Handle observer_handle = 0;
-      if (this->rmt_name_ != 0)
+      if (this->rmt_name_.length () != 0)
         {
           tv.set (5, 0);
           orb->run (&tv);
 
           RtecEventChannelAdmin::EventChannel_var remote_ec =
             this->get_ec (naming_context.in (),
-                          this->rmt_name_);
+                          this->rmt_name_.c_str ());
           ACE_DEBUG ((LM_DEBUG, "located remote EC\n"));
 
           CosNaming::Name rsch_name (1);
@@ -467,7 +467,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
           if (this->scheduling_type_ != Test_ECG::ss_global)
             {
               ACE_OS::strcat (buf, "@");
-              ACE_OS::strcat (buf, this->rmt_name_);
+              ACE_OS::strcat (buf, this->rmt_name_.c_str ());
             }
           rsch_name[0].id = CORBA::string_dup (buf);
           CORBA::Object_var tmpobj =
@@ -517,7 +517,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "activate the  EC\n"));
 
-      if (this->rmt_name_ != 0)
+      if (this->rmt_name_.length () != 0)
         {
           ec_impl.remove_observer (observer_handle);
         }
@@ -559,7 +559,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
       naming_context->unbind (channel_name);
 
-      if (this->rmt_name_ != 0)
+      if (this->rmt_name_.length () != 0)
         {
           this->ecg_.close ();
           this->ecg_.shutdown ();
@@ -625,7 +625,7 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
         mc = 1;
 
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "hp_supplier_%02d@%s", i, this->lcl_name_);
+      ACE_OS::sprintf (buf, "hp_supplier_%02d@%C", i, this->lcl_name_.c_str ());
 
       ACE_NEW (this->suppliers_[i],
                Test_Supplier (this, this->suppliers_ + i));
@@ -646,8 +646,8 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
         mc = 1;
 
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "lp_supplier_%02d@%s",
-                       i - this->hp_suppliers_, this->lcl_name_);
+      ACE_OS::sprintf (buf, "lp_supplier_%02d@%C",
+                       i - this->hp_suppliers_, this->lcl_name_.c_str ());
 
       ACE_NEW (this->suppliers_[i],
                Test_Supplier (this, this->suppliers_ + i));
@@ -684,7 +684,7 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
             mc = 1;
 
           char buf[BUFSIZ];
-          ACE_OS::sprintf (buf, "hp_supplier_%02d@%s", i, this->lcl_name_);
+          ACE_OS::sprintf (buf, "hp_supplier_%02d@%C", i, this->lcl_name_.c_str ());
 
           this->suppliers_[i]->activate (buf,
                                          this->hp_interval_ * 10,
@@ -699,8 +699,8 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
             mc = 1;
 
           char buf[BUFSIZ];
-          ACE_OS::sprintf (buf, "lp_supplier_%02d@%s",
-                           i - this->hp_suppliers_, this->lcl_name_);
+          ACE_OS::sprintf (buf, "lp_supplier_%02d@%C",
+                           i - this->hp_suppliers_, this->lcl_name_.c_str ());
 
           this->suppliers_[i]->activate (buf,
                                          this->lp_interval_ * 10,
@@ -720,7 +720,7 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
   for (i = 0; i < this->hp_consumers_; ++i)
     {
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "hp_consumer_%02d@%s", i, this->lcl_name_);
+      ACE_OS::sprintf (buf, "hp_consumer_%02d@%C", i, this->lcl_name_.c_str ());
 
       ACE_NEW (this->consumers_[i],
                Test_Consumer (this, this->consumers_ + i));
@@ -737,8 +737,8 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
   for (; i < this->hp_consumers_ + this->lp_consumers_; ++i)
     {
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "lp_consumer_%02d@%s",
-                       i - this->hp_consumers_, this->lcl_name_);
+      ACE_OS::sprintf (buf, "lp_consumer_%02d@%C",
+                       i - this->hp_consumers_, this->lcl_name_.c_str ());
 
       ACE_NEW (this->consumers_[i],
                Test_Consumer (this, this->consumers_ + i));
@@ -766,21 +766,21 @@ Test_ECG::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
   const int bufsize = 512;
   char ecg_name[bufsize];
   ACE_OS::strcpy (ecg_name, "ecg_");
-  ACE_OS::strcat (ecg_name, this->lcl_name_);
+  ACE_OS::strcat (ecg_name, this->lcl_name_.c_str ());
 
   // We could use the same name on the local and remote scheduler,
   // but that fails when using a global scheduler.
   char rmt[BUFSIZ];
   ACE_OS::strcpy (rmt, ecg_name);
   ACE_OS::strcat (rmt, "@");
-  ACE_OS::strcat (rmt, this->rmt_name_);
+  ACE_OS::strcat (rmt, this->rmt_name_.c_str ());
 
   // We could use the same name on the local and remote scheduler,
   // but that fails when using a global scheduler.
   char lcl[bufsize];
   ACE_OS::strcpy (lcl, ecg_name);
   ACE_OS::strcat (lcl, "@");
-  ACE_OS::strcat (lcl, this->lcl_name_);
+  ACE_OS::strcat (lcl, this->lcl_name_.c_str ());
 
   this->ecg_.init (remote_ec, local_ec, remote_sch, local_sch,
                    rmt, lcl);
@@ -957,7 +957,7 @@ Test_ECG::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG, "Shutting down the multiple EC test\n"));
 
-  if (this->rmt_name_ != 0)
+  if (this->rmt_name_.length () != 0)
     {
       this->ecg_.shutdown ();
     }
@@ -1229,7 +1229,7 @@ Test_Supplier::open (const char* name,
   ACE_Time_Value tv (0, 2000);
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-  ACE_DEBUG ((LM_DEBUG, "register supplier \"%s\"\n", name));
+  ACE_DEBUG ((LM_DEBUG, "register supplier \"%C\"\n", name));
   server->set (rt_info,
                RtecScheduler::VERY_HIGH_CRITICALITY,
                time, time, time,
@@ -1240,7 +1240,7 @@ Test_Supplier::open (const char* name,
                    RtecScheduler::OPERATION);
 
   this->supplier_id_ = ACE::crc32 (name);
-  ACE_DEBUG ((LM_DEBUG, "ID for <%s> is %04.4x\n", name,
+  ACE_DEBUG ((LM_DEBUG, "ID for <%C> is %04.4x\n", name,
               this->supplier_id_));
 
   ACE_SupplierQOS_Factory qos;
@@ -1299,7 +1299,7 @@ Test_Supplier::activate (const char* name,
   ACE_Time_Value tv (0, 2000);
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-  ACE_DEBUG ((LM_DEBUG, "activate \"%s\"\n", buf));
+  ACE_DEBUG ((LM_DEBUG, "activate \"%C\"\n", buf));
   server->set (rt_info,
                RtecScheduler::VERY_HIGH_CRITICALITY,
                time, time, time,
@@ -1436,7 +1436,7 @@ Test_Consumer::open (const char* name,
   ACE_Time_Value tv (0, 2000);
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-  ACE_DEBUG ((LM_DEBUG, "register consumer \"%s\"\n", name));
+  ACE_DEBUG ((LM_DEBUG, "register consumer \"%C\"\n", name));
   server->set (rt_info,
                RtecScheduler::VERY_HIGH_CRITICALITY,
                time, time, time,

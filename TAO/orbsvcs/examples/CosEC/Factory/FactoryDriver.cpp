@@ -5,7 +5,7 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 
-FactoryDriver::FactoryDriver (const char* name)
+FactoryDriver::FactoryDriver (const ACE_TCHAR* name)
   :factoryName_ (name),
    child_poa_name_ ("CosEC_ChildPOA"),
    factory_servant_ (0)
@@ -32,7 +32,7 @@ FactoryDriver::parse_args (int argc, ACE_TCHAR *argv [])
         break;
 
       case 'r':
-        factoryName_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+        factoryName_ = get_opts.opt_arg ();
         break;
 
       case '?':  // display help for use of the server.
@@ -115,7 +115,7 @@ FactoryDriver::start (int argc, ACE_TCHAR *argv [])
 
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (factoryName_);
+      name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(factoryName_));
       naming_client_->rebind (name,
                               factory_.in ());
 

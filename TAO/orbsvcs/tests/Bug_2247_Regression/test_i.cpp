@@ -20,12 +20,12 @@ Simple_Server_i::Simple_Server_i (void)
 char*
 Simple_Server_i::remote_call (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "SERVER(%s)> executing remote_call()\n", _key.in()));
+  ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> executing remote_call()\n", _key.in()));
 
   char buf[256];
   ACE_OS::sprintf (buf, "remote_call() completed by %s", _key.in());
 
-  ACE_DEBUG ((LM_DEBUG, "SERVER(%s)> returning '%s'\n", _key.in(), buf));
+  ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> returning '%C'\n", _key.in(), buf));
   return CORBA::string_dup (buf);
 }
 
@@ -34,7 +34,7 @@ char*
 Simple_Server_i::shutdown (const char* key)
 {
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_DEBUG ((LM_DEBUG, "SERVER(%s)> executing shutdown()\n", _key.in()));
+  ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> executing shutdown()\n", _key.in()));
   //FUZZ: enable check_for_lack_ACE_OS
 
   int still_alive = 1;
@@ -47,7 +47,7 @@ Simple_Server_i::shutdown (const char* key)
   char buf[256];
   ACE_OS::sprintf (buf, "shutdown() completed by %s, still_alive=%d",
            _key.in(), still_alive);
-  ACE_DEBUG ((LM_DEBUG, "SERVER(%s)> returning '%s'\n", _key.in(), buf));
+  ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> returning '%C'\n", _key.in(), buf));
   return CORBA::string_dup (buf);
 }
 
@@ -55,7 +55,7 @@ char*
 Simple_Server_i::abort (const char* key)
 {
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_DEBUG ((LM_DEBUG, "SERVER(%s)> executing abort()\n", _key.in()));
+  ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> executing abort()\n", _key.in()));
   //FUZZ: enable check_for_lack_ACE_OS
 
   int still_alive = 1;
@@ -68,6 +68,6 @@ Simple_Server_i::abort (const char* key)
   char buf[256];
   ACE_OS::sprintf (buf, "abort() completed by %s, still_alive=%d",
            _key.in(), still_alive);
-  ACE_DEBUG ((LM_DEBUG, "SERVER(%s)> returning '%s'\n", _key.in(), buf));
+  ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> returning '%C'\n", _key.in(), buf));
   return CORBA::string_dup (buf);
 }

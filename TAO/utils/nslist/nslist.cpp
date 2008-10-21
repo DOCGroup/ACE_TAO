@@ -375,13 +375,11 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         argc = argcon.get_argc ();
       ACE_TCHAR
         **argv = argcon.get_TCHAR_argv ();
-      char
-        kindsep= '.',
-        ctxsep[]= "/",
-        *name = 0;
-      const char
-        *const pname = ACE_TEXT_ALWAYS_CHAR (argv[0]),
-        *nameService = 0;
+      char kindsep = '.';
+      ACE_CString ctxsep = "/";
+      ACE_CString name = "";
+      ACE_CString pname = ACE_TEXT_ALWAYS_CHAR (argv[0]);
+      ACE_CString nameService = "";
 
       if (0 < argc)
         {
@@ -399,7 +397,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                   else
                     {
                       ++argv;
-                      if (nameService)
+                      if (nameService.length ())
                         {
                           ACE_DEBUG ((LM_DEBUG,
                                      "Error: more than one --ns.\n"));
@@ -419,7 +417,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--nsior")))
                 {
                   if (showIOR || showCtxIOR || noLoops
-                      || nameService || name || maxDepth)
+                      || nameService.length () || name.length () || maxDepth)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --nsior given "
@@ -511,7 +509,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--name")))
                 {
-                  if (name)
+                  if (name.length ())
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: more than one --name\n"));
@@ -637,7 +635,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
       if (failed)
         {
-          ACE_DEBUG ((LM_DEBUG, "\n%s options:\n"
+          ACE_DEBUG ((LM_DEBUG, "\n%C options:\n"
             "  --nsior               {Display the naming service IOR and exit}\n"
             "or:\n"
             "  --ns <ior>            {Defaults to standard NameService}\n"
@@ -651,7 +649,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
             "  --kindsep <character> {<name> ID/Kind separation character, default .}\n"
             "  --max <number>        {If given, limits displayed sub-context depth}\n",
             "  --rtt <seconds>       {If given, sets the relative round trip timeout policy}\n",
-            pname));
+            pname.c_str ()));
           orb->destroy ();
           return 1;
         }
@@ -662,8 +660,8 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
       // Contact the name service
       CORBA::Object_var obj;
-      if (nameService)
-        obj = orb->string_to_object (nameService);
+      if (nameService.length ())
+        obj = orb->string_to_object (nameService.c_str ());
       else
         obj = orb->resolve_initial_references ("NameService");
 
@@ -678,12 +676,12 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
           orb->destroy ();
           return 1;
         }
-      if (name)
+      if (name.length ())
         {
           // Assemble the name from the user string given
           CosNaming::Name the_name (0);
           char *cp;
-          while (0 != (cp = ACE_OS::strtok (name, ctxsep)))
+          while (0 != (cp = ACE_OS::strtok (const_cast<char*> (name.c_str ()), ctxsep.c_str ())))
             {
               const int index= the_name.length();
               the_name.length (index+1);
@@ -694,7 +692,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                   the_name[index].kind= CORBA::string_dup (++kind);
                 }
               the_name[index].id = CORBA::string_dup (cp);
-              name = 0; // way strtok works
+              name.clear (); // way strtok works
             }
 
           // Now find this sub-context and replace the root with it.
@@ -704,7 +702,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
           if (CORBA::is_nil (root_nc.in ()))
             {
               ACE_DEBUG ((LM_DEBUG,
-                         "Error: Can't find naming context\n    %C\n", name));
+                         "Error: Can't find naming context\n    %C\n", name.c_str ()));
               orb->destroy ();
               return 1;
             }

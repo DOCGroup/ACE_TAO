@@ -133,7 +133,7 @@ private:
   CORBA::ULong error_count_;
   // # of errors incurred in the lifetime of the application.
 
-  char *factory_IOR_;
+  ACE_CString factory_IOR_;
   // IOR of the factory used to make a Cubit object.
 
   FILE *cubit_factory_ior_file_;
@@ -152,7 +152,7 @@ DII_Cubit_Client::DII_Cubit_Client (void)
     obj_var_ (CORBA::Object::_nil ()),
     call_count_ (0),
     error_count_ (0),
-    factory_IOR_ (CORBA::string_dup (DEFAULT_FACTORY_IOR))
+    factory_IOR_ (DEFAULT_FACTORY_IOR)
 {
   // Initialize the array of pointers-to-member-functions.
   this->op_array_[0] = &DII_Cubit_Client::cube_short_dii;
@@ -170,7 +170,6 @@ DII_Cubit_Client::DII_Cubit_Client (void)
 // Destructor
 DII_Cubit_Client::~DII_Cubit_Client (void)
 {
-  CORBA::string_free (this->factory_IOR_);
 }
 
 // An array of messages to pass to print_stats, so we can step through
@@ -212,7 +211,7 @@ DII_Cubit_Client::init (int argc, ACE_TCHAR **argv)
 
       // Get a factory object reference from the factory IOR.
       this->factory_var_ =
-        this->orb_var_->string_to_object (this->factory_IOR_);
+        this->orb_var_->string_to_object (this->factory_IOR_.c_str ());
 
       // Get a Cubit object with a DII request on the Cubit factory.
       CORBA::Request_var mc_req (this->factory_var_->_request ("make_cubit"));
@@ -312,9 +311,10 @@ DII_Cubit_Client::read_ior (ACE_TCHAR *filename)
 
   this->factory_IOR_ = ior_buffer.read ();
 
-  if (this->factory_IOR_ == 0)
+  if (this->factory_IOR_.length () == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to allocate memory to read ior: %p\n"),
+                       ACE_TEXT ("Unable to allocate memory to read ior (%p)\n"),
+                       ACE_TEXT ("read")),
                       -1);
   return 0;
 }

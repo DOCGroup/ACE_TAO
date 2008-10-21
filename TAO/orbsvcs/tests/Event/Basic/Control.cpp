@@ -163,7 +163,7 @@ Consumer::push (const RtecEventComm::EventSet& events)
   if (events.length () == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s (%P|%t) no events\n", this->name_));
+                  "%C (%P|%t) no events\n", this->name_));
       return;
     }
 
