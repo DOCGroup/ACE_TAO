@@ -1,3 +1,8 @@
+Tue Oct 21 17:33:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.{h,cpp}:
+          Buf argument of sscanf should be const
+
 Tue Oct 21 14:35:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Bug_2980_Regression_Test.cpp:

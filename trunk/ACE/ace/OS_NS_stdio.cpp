@@ -489,7 +489,7 @@ ACE_OS::scanf (const wchar_t *format, ...)
 #endif /* ACE_HAS_WCHAR */
 
 int
-ACE_OS::sscanf (char *buf, const char *format, ...)
+ACE_OS::sscanf (const char *buf, const char *format, ...)
 {
   int result;
   va_list ap;
@@ -501,7 +501,7 @@ ACE_OS::sscanf (char *buf, const char *format, ...)
 
 #if defined (ACE_HAS_WCHAR)
 int
-ACE_OS::sscanf (wchar_t *buf, const wchar_t *format, ...)
+ACE_OS::sscanf (const wchar_t *buf, const wchar_t *format, ...)
 {
 #if defined (ACE_LACKS_SWSCANF)
   ACE_UNUSED_ARG (buf);

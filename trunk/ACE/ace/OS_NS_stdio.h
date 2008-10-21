@@ -481,11 +481,11 @@ namespace ACE_OS {
 # endif /* ACE_HAS_WCHAR */
 
   extern ACE_Export
-  int sscanf (char *buf, const char *format, ...);
+  int sscanf (const char *buf, const char *format, ...);
 
 # if defined (ACE_HAS_WCHAR)
   extern ACE_Export
-  int sscanf (wchar_t *buf, const wchar_t *format, ...);
+  int sscanf (const wchar_t *buf, const wchar_t *format, ...);
 # endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
