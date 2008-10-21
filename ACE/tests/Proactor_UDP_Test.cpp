@@ -746,11 +746,18 @@ struct Session_Data
 // Master is the server-side receiver of session establishment requests.
 // For each "start" dgram received, instantiates a new Server object,
 // indicating the addressing info for the client.
-// When the Master is destroyed, it stops establishing sessions.
+// Master is initialized with a count of the number of expected sessions. After
+// this number are set up, Master will stop listening for session requests.
+// This is a bit fragile but is necessary because on HP-UX, AIX, et al., it
+// is impossible to close/cancel a socket with an outstanding UDP recieve
+// (on AIX the process is so wedged the machine needs to be rebooted to
+// clear it!). So, this bit of messiness is necessary for portability.
+// When the Master is destroyed, it will try to stop establishing sessions
+// but this will only work on Windows.
 class Master : public ACE_Handler
 {
 public:
-  Master (TestData *tester, const ACE_INET_Addr &recv_addr);
+  Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected);
   ~Master (void);
 
   // Called when dgram receive operation completes.
@@ -764,11 +771,17 @@ private:
   ACE_SOCK_Dgram sock_;
   ACE_Asynch_Read_Dgram rd_;
   ACE_Message_Block *mb_;
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> sessions_expected_;
+  volatile bool recv_in_progress_;
 };
 
 // *************************************************************
-Master::Master (TestData *tester, const ACE_INET_Addr &recv_addr)
-  : tester_ (tester), recv_addr_ (recv_addr), mb_ (0)
+Master::Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected)
+  : tester_ (tester),
+    recv_addr_ (recv_addr),
+    mb_ (0),
+    sessions_expected_ (expected),
+    recv_in_progress_ (false)
 {
   if (this->sock_.open (recv_addr) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Master socket %p\n"), ACE_TEXT ("open")));
@@ -785,8 +798,10 @@ Master::Master (TestData *tester, const ACE_INET_Addr &recv_addr)
 
 Master::~Master (void)
 {
-  this->rd_.cancel ();
+  if (this->recv_in_progress_)
+    this->rd_.cancel ();
   this->sock_.close ();
+
   if (this->mb_ != 0)
     {
       this->mb_->release ();
@@ -797,6 +812,8 @@ Master::~Master (void)
 void
 Master::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
 {
+  bool restart_recv = true;
+
   // We should only receive Start datagrams with valid addresses to reply to.
   if (result.success ())
     {
@@ -861,6 +878,12 @@ Master::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
                       server->go (sock.get_handle (), client_addr);
                     }
                 }
+              if (--this->sessions_expected_ == 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("All expected sessions are up\n")));
+                  restart_recv = false;
+                }
             }
           else
             {
@@ -904,6 +927,8 @@ Master::start_recv (void)
   this->mb_->reset ();
   if (this->rd_.recv (this->mb_, unused, 0) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) Master %p\n"), ACE_TEXT ("recv")));
+  else
+    this->recv_in_progress_ = true;
 }
 
 // ***************************************************
@@ -2126,7 +2151,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       // on IPv6 as well as IPv4, you need to do some work on passing the
       // Session_Data address differently.
       ACE_INET_Addr addr (port, ACE_LOCALHOST, AF_INET);
-      Master master (&test, addr);
+      Master master (&test, addr, clients);
       Connector connector (&test);
       int rc = 0;
 

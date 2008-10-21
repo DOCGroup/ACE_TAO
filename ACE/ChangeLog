@@ -1,3 +1,10 @@
+Tue Oct 21 00:04:26 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/Proactor_UDP_Test.cpp: Attempt to avoid lock-ups on non-Windows
+          targets. HP-UX, AIX, et al., can't cancel an in-progress UDP recv()
+          so stop the Master from trying more receives when all the expected
+          sessions are up.
+
 Mon Oct 20 13:09:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
