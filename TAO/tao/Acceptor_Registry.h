@@ -55,9 +55,8 @@ typedef TAO_Acceptor** TAO_AcceptorSetIterator;
  * All loaded ESIOP or GIOP acceptor bridges must register with
  * this object.
  *
- * This class maintains a list os acceptor factories
- * for all loaded ORB protocols.
- * There is one Acceptor_Registry per ORB_Core.
+ * This class maintains a list os acceptor factories for all loaded ORB
+ * protocols. There is one Acceptor_Registry per ORB_Core.
  */
 class TAO_Export TAO_Acceptor_Registry
 {
@@ -83,7 +82,7 @@ public:
 
   /// Check if there is at least one profile in @a mprofile that
   /// corresponds to a collocated object.
-  int is_collocated (const TAO_MProfile& mprofile);
+  bool is_collocated (const TAO_MProfile& mprofile);
 
   /// Return the acceptor bridges
   TAO_Acceptor *get_acceptor (CORBA::ULong tag);
