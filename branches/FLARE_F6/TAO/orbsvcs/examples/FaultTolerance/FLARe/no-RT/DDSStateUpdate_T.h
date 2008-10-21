@@ -28,7 +28,8 @@ template <typename STATE_TYPE,
 	  typename TOPIC_TYPE, 
 	  typename TOPIC_TYPE_SUPPORT,
 	  typename TOPIC_DATA_WRITER,
-          typename TOPIC_DATA_READER>
+          typename TOPIC_DATA_READER,
+	  typename TOPIC_SEQUENCE>
 class DDSStateUpdate_T : public StatefulObject
 {
 public:

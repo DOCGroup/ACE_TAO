@@ -15,43 +15,41 @@
 #include "DDSStateUpdate_T.h"
 #include "StateDcps_impl.h"
 
-const char * DOMAIN_ID = "111";
-
 StateSynchronizationAgent_i::StateSynchronizationAgent_i (
     CORBA::ORB_ptr orb,
     const std::string & host_id,
-    const std::string & process_id)
+    const std::string & process_id,
+    bool use_corba)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     host_id_ (host_id),
     process_id_ (process_id),
+    domain_id_ (0),
     domain_participant_ (DDS::DomainParticipant::_nil ()),
     publisher_ (DDS::Publisher::_nil ()),
     subscriber_ (DDS::Subscriber::_nil ()),
-    use_corba_ (true)
+    use_corba_ (use_corba)
 {
   if (!use_corba_)
     {
-      if (this->create_participant ())
-	{
-	  if (this->create_publisher ())
-	    {
-	      if (!this->create_subscriber ())
-		std::cerr << "SSA could not create DDS subscriber" 
-			  << std::endl;
-	    }
-	  else
-	    std::cerr << "SSA could not create DDS publisher" << std::endl;
-	}
-      else
-	std::cerr << "SSA could not create DDS publisher" << std::endl;
+      if (!this->create_participant ())
+	throw DDSFailure ("SSA could not create DDS participant\n");
+
+      if (!this->create_publisher ())
+	throw DDSFailure ("SSA could not create DDS publisher\n");
+
+      if (!this->create_subscriber ())
+	throw DDSFailure ("SSA could not create DDS subscriber\n");
     }
 }
 
 StateSynchronizationAgent_i::~StateSynchronizationAgent_i ()
 {
-  this->delete_subscriber ();
-  this->delete_publisher ();
-  this->delete_participant ();
+  if (!use_corba_)
+    {
+      this->delete_subscriber ();
+      this->delete_publisher ();
+      this->delete_participant ();
+    }
 }
 
 void 
@@ -197,35 +195,45 @@ StateSynchronizationAgent_i::register_application (const char * object_id,
   // if we use DDS for communication
   if (!use_corba_)
     {
-      // protect operations on the map
-      ACE_Guard <ACE_Thread_Mutex> guard (replica_map_mutex_);
+      try
+	{
+	  // protect operations on the map
+	  ACE_Guard <ACE_Thread_Mutex> guard (replica_map_mutex_);
+	  
+	  ACE_DEBUG ((LM_TRACE, "SSA::register_application add DDS participant"
+		      " for application %s\n", object_id));
 
-      ACE_DEBUG ((LM_TRACE, "SSA::register_application add DDS participant"
-		  " for application %s\n", object_id));
+	  // create a new list which will have only one entry for DDS
+	  REPLICA_OBJECT_LIST replica_object_list;
 
-      // create a new list which will have only one entry for DDS
-      REPLICA_OBJECT_LIST replica_object_list;
+	  // register a DDS participant for this application
+	  replica_object_list.push_back (
+            STATEFUL_OBJECT_PTR (
+              new DDSStateUpdate_T <CORBA::Long,
+                                    State,
+                                    StateTypeSupport,
+                                    StateDataWriter,
+	                            StateDataReader,
+                                    StateSeq> (
+	        oid.c_str (),
+	        this->get_unique_id (oid.c_str ()),
+	        domain_participant_.in (),
+	        publisher_.in (),
+	        subscriber_.in (),
+                app)));
 
-      // register a DDS participant for this application
-      replica_object_list.push_back (
-          STATEFUL_OBJECT_PTR (
-            new DDSStateUpdate_T <CORBA::Long,
-                                  State,
-                                  StateTypeSupport,
-                                  StateDataWriter,
-                                  StateDataReader> (
-	      oid.c_str (),
-	      this->get_unique_id (oid.c_str ()),
-	      domain_participant_.in (),
-	      publisher_.in (),
-	      subscriber_.in (),
-              app)));
+	  ACE_CString oid (object_id);
 
-      ACE_CString oid (object_id);
-
-      // this should work without doing a rebind, since there is only
-      // one application of the same type per process
-      replica_map_.bind (oid, replica_object_list);
+	  // this should work without doing a rebind, since there is only
+	  // one application of the same type per process
+	  replica_map_.bind (oid, replica_object_list);
+	}
+      catch (const DDSFailure & ex)
+	{
+	  std::cerr << "SSA::register_application () DDS problem : "
+		    << ex.description ()
+		    << std::endl;
+	}
     }
 }
 
@@ -237,21 +245,17 @@ StateSynchronizationAgent_i::create_participant ()
     
   if (CORBA::is_nil (dpf.in ()))
     {
-      std::cerr << "StateSynchronizationAgent_i::create_participant () error."
-		<< std::endl;
-     return false;
+      return false;
     }
 
   domain_participant_ =
-    dpf->create_participant (DOMAIN_ID,
+    dpf->create_participant (domain_id_,
 			     PARTICIPANT_QOS_DEFAULT,
 			     DDS::DomainParticipantListener::_nil (),
 			     DDS::ANY_STATUS);
 
   if (CORBA::is_nil (domain_participant_.in ()))
     {
-      std::cerr << "StateSynchronizationAgent_i::create_participant () failed."
-		<< std::endl;
       return false;
     }
 
@@ -266,9 +270,7 @@ StateSynchronizationAgent_i::delete_participant ()
     
   if (CORBA::is_nil (dpf.in ()))
     {
-      std::cerr << "StateSynchronizationAgent_i::delete_participant () error."
-		<< std::endl;
-     return false;
+      return false;
     }
 
   DDS::ReturnCode_t status = 
@@ -285,8 +287,11 @@ StateSynchronizationAgent_i::delete_participant ()
 bool
 StateSynchronizationAgent_i::create_publisher ()
 {
+  DDS::PublisherQos pub_qos;
+  domain_participant_->get_default_publisher_qos (pub_qos);
+
   publisher_ =
-    domain_participant_->create_publisher (PUBLISHER_QOS_DEFAULT,
+    domain_participant_->create_publisher (pub_qos,
 					   DDS::PublisherListener::_nil (),
 					   DDS::ANY_STATUS);
 

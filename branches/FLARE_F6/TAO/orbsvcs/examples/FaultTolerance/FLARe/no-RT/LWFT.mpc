@@ -56,6 +56,7 @@ project(*Common) : rtportableserver, pi_server, interceptors, iorinterceptor {
 
 
 project(*server): rt_server, pi_server, interceptors, iorinterceptor, splice_ts_defaults {
+
   after += *Common *StateSyncAgent *StateTopic
   libs += LWFT_Common LWFT_StateSyncAgent LWFT_StateTopic
   exename = server 
@@ -74,6 +75,7 @@ project(*server): rt_server, pi_server, interceptors, iorinterceptor, splice_ts_
 }
 
 project(*StateSyncAgent) : portableserver, splice_ts_defaults {
+
   after += *Common *StateTopic
   macros += SSA_EXPORT_BUILD_DLL
   libs += LWFT_Common LWFT_StateTopic
@@ -84,6 +86,7 @@ project(*StateSyncAgent) : portableserver, splice_ts_defaults {
   }
 
   Source_Files {
+    DDSFailure.cpp
     StateSynchronizationAgent_i.cpp
     StatefulObject.cpp
     CorbaStateUpdate.cpp
@@ -94,10 +97,14 @@ project(*StateSyncAgent) : portableserver, splice_ts_defaults {
 
 project(*StateTopic) : splicelib_with_idl, portableserver {
 
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  } 
+
   libout = .
 
   idlflags += -Wb,export_macro=State_TS_Export -Wb,export_include=state_ts_export.h
-  dynamicflags = STATE_TS_BUILD_DLL
+  dynamicflags += STATE_TS_BUILD_DLL
   macros += DDS_API=State_TS_Export
 
   SpliceTypeSupport_Files {
@@ -110,8 +117,6 @@ project(*StateTopic) : splicelib_with_idl, portableserver {
     StateDcps_impl.cpp
     StateSplDcps.cpp
   }
-
-//  custom_only = 1
 }
 
 project(*client): rt_client, pi_server, interceptors {

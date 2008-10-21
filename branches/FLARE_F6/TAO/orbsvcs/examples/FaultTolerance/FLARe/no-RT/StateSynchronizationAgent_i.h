@@ -20,7 +20,7 @@
 #include "LWFTC.h"
 #include "StateSynchronizationAgentS.h"
 #include "StatefulObject.h"
-#include "ssa_export.h"
+#include "DDSFailure.h"
 
 class SSA_Export StateSynchronizationAgent_i : public POA_StateSynchronizationAgent
 {
@@ -30,7 +30,8 @@ class SSA_Export StateSynchronizationAgent_i : public POA_StateSynchronizationAg
   ///        the state of the application
   StateSynchronizationAgent_i (CORBA::ORB_ptr orb,
 			       const std::string & host_id,
-			       const std::string & process_id);
+			       const std::string & process_id,
+                               bool use_corba = true);
 
   /// dtor
   ~StateSynchronizationAgent_i ();
@@ -92,6 +93,9 @@ class SSA_Export StateSynchronizationAgent_i : public POA_StateSynchronizationAg
 
   /// mutex for multithreaded access of the replica map
   ACE_Thread_Mutex replica_map_mutex_;
+
+  /// id of the DDS domain
+  DDS::DomainId_t domain_id_;
 
   /// DDS Domain Participant
   DDS::DomainParticipant_var domain_participant_;
