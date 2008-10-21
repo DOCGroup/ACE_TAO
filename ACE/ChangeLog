@@ -1,4 +1,10 @@
+Tue Oct 21 14:35:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
+        * tests/Bug_2980_Regression_Test.cpp:
+
+          Fixed fuzz errors (lack of ACE_OS::).
+
+Tue Oct 21 14:21:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Process_Manager_Test.cpp:
         * tests/Multicast_Test_IPV6.cpp:
