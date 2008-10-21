@@ -1,0 +1,13 @@
+project(Multithreading*Server): taoexe, portableserver {
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+  }
+}
+
+project(Multithreading*Client): taoexe, anytypecode {
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+}

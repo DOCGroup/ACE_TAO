@@ -1,0 +1,13 @@
+project(*Server): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_micro {
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+  }
+}
+
+project(*Client): taoexe, anytypecode, avoids_minimum_corba {
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+}

@@ -1,0 +1,13 @@
+project(*Server): taoexe, portableserver {
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+  }
+}
+
+project(*Client): taoexe, portableserver, messaging {
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+}

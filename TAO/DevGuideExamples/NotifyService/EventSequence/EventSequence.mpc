@@ -1,0 +1,24 @@
+project(*Server): portableserver, orbsvcsexe, notification_skel, naming {
+  Source_Files {
+    EventSequenceSupplier_i.cpp
+    MessengerServer.cpp
+    Messenger_i.cpp
+  }
+}
+
+project(*Client): orbsvcsexe, notification, naming {
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+}
+
+project(*Consumer): portableserver, orbsvcsexe, notification_skel, naming {
+  IDL_Files {
+  }
+  Source_Files {
+    MessengerConsumer.cpp
+    EventSequenceConsumer_i.cpp
+  }
+}
+

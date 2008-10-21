@@ -1,0 +1,6 @@
+// file: middle.idl
+
+interface Middle
+{
+   string get_the_answer (in string question);
+};

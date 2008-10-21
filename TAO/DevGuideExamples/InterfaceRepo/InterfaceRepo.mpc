@@ -1,0 +1,3 @@
+project(*Browser): taoexe, portableserver, ifr_client {
+  exename = IFRBrowser
+}

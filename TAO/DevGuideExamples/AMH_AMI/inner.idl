@@ -1,0 +1,7 @@
+// file: inner.idl
+
+
+interface Inner
+{
+  string answer (in string question);
+};
