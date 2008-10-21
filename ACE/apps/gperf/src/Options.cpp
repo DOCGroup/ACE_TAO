@@ -35,6 +35,16 @@ ACE_RCSID(src, Options, "$Id$")
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 
+// These need to appear before the global class instantiation, since
+// they are static members with a default constructor that initializes
+// an ACE_Allocator needed in the Options class constructor.
+ACE_CString Options::function_name_;
+ACE_CString Options::fill_default_;
+ACE_CString Options::key_name_;
+ACE_CString Options::class_name_;
+ACE_CString Options::hash_name_;
+ACE_CString Options::delimiters_;
+
 // Global option coordinator for the entire program.
 Options option;
 
@@ -72,12 +82,6 @@ int Options::initial_asso_value_;
 int Options::argc_;
 ACE_TCHAR **Options::argv_;
 int Options::iterations_;
-ACE_CString Options::function_name_;
-ACE_CString Options::fill_default_;
-ACE_CString Options::key_name_;
-ACE_CString Options::class_name_;
-ACE_CString Options::hash_name_;
-ACE_CString Options::delimiters_;
 char Options::key_positions_[MAX_KEY_POS];
 
 // Prints program usage to standard error stream.
