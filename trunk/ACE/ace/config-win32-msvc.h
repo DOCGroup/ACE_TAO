@@ -131,6 +131,7 @@
 #define ACE_WCSTOLL_EQUIVALENT ::_wcstoi64
 #define ACE_STRTOULL_EQUIVALENT ::_strtoui64
 #define ACE_WCSTOULL_EQUIVALENT ::_wcstoui64
+#define ACE_WTOF_EQUIVALENT ::_wtof
 
 // Turn off warnings for /W4
 // To resume any of these warning: #pragma warning(default: 4xxx)

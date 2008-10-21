@@ -192,6 +192,7 @@
 #if !defined (ACE_HAS_WINCE)
 // Platform supports pread() and pwrite()
 # define ACE_HAS_P_READ_WRITE
+# define ACE_HAS_WTOF
 #endif /* ! ACE_HAS_WINCE */
 
 #if !defined (ACE_HAS_WINCE)

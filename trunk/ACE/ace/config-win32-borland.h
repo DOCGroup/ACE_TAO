@@ -156,6 +156,7 @@
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 #define ACE_STRCASECMP_EQUIVALENT ::stricmp
 #define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
+#define ACE_WTOF_EQUIVALENT ::_wtof
 #define ACE_HAS_ITOA 1
 
 #include /**/ "ace/post.h"
