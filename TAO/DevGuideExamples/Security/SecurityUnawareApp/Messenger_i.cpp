@@ -24,12 +24,9 @@ CORBA::Boolean Messenger_i::send_message (
     const char * subject,
     char *& message
   )
-  throw(CORBA::SystemException)
-
   {
     std::cout << "Message from: " << user_name << std::endl;
     std::cout << "Subject:      " << subject << std::endl;
     std::cout << "Message:      " << message << std::endl;
     return 1;
   }
-  

@@ -49,7 +49,6 @@ Smart_Messenger_Proxy::send_message (
   const char * user_name,
   const char * subject,
   char *& message)
-    throw (CORBA::SystemException)
 {
   logger_->log_message("Before send_message()");
   CORBA::Boolean ret_val = 

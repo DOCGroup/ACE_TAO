@@ -22,8 +22,6 @@ CORBA::Boolean Messenger_i::send_message (
     const char * subject,
     char *& message
   )
-  throw(CORBA::SystemException)
-
   {
     if (ssliop_current_->no_context())
       std::cout << "Message from:        " << user_name << std::endl;
@@ -40,7 +38,6 @@ CORBA::Boolean Messenger_i::send_message (
 void Messenger_i::shutdown (
       const char * user_name
     )
-    throw(CORBA::SystemException)
 {
   if ( ! (ssliop_current_->no_context()) )
   {
@@ -152,5 +149,3 @@ void Messenger_i::shutdown (
       std::cout << std::endl;
   }
 }
-
-

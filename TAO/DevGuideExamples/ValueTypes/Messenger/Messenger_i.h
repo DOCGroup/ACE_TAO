@@ -8,8 +8,7 @@
 class  Messenger_i : public virtual POA_Messenger
 {
 public:
-  virtual CORBA::Boolean send_message(Message*& msg)
-    throw (CORBA::SystemException);
+  virtual CORBA::Boolean send_message(Message*& msg);
 };
 
 #endif

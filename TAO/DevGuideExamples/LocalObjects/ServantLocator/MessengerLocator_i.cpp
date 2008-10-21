@@ -15,7 +15,6 @@ Messenger_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
                                            PortableServer::POA_ptr,
                                            const char *,
                                            void * & cookie )
-  throw (CORBA::SystemException, PortableServer::ForwardRequest)
 {
   // Get the ObjectId in string format.
   CORBA::String_var oid_str = PortableServer::ObjectId_to_string (oid);
@@ -44,7 +43,6 @@ Messenger_Locator_i::postinvoke (const PortableServer::ObjectId &,
                                             const char *,
                                             void * cookie,
                                             PortableServer::Servant servant)
-  throw (CORBA::SystemException)
 {
 
   std::cout << "postinvoke called..." << std::endl;

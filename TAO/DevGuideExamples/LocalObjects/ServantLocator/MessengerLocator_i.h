@@ -17,16 +17,14 @@ class Messenger_Locator_i : public PortableServer::ServantLocator,
   virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
                                              PortableServer::POA_ptr poa,
                                              const char * operation,
-                                             void * & cookie)
-    throw (CORBA::SystemException, PortableServer::ForwardRequest);
+                                             void * & cookie);
 
   // Postinvoke function
   virtual void postinvoke (const PortableServer::ObjectId & oid,
                            PortableServer::POA_ptr poa,
                            const char * operation,
                            void * cookie,
-                           PortableServer::Servant servant)
-    throw (CORBA::SystemException);
+                           PortableServer::Servant servant);
 
 };
 

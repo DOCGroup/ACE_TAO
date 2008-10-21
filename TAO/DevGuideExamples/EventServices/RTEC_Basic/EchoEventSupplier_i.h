@@ -14,8 +14,7 @@ class EchoEventSupplier_i : public virtual POA_RtecEventComm::PushSupplier
     // Constructor
     EchoEventSupplier_i(CORBA::ORB_ptr orb);
 
-    virtual void disconnect_push_supplier()
-     throw(CORBA::SystemException);
+    virtual void disconnect_push_supplier();
 
   private:
     CORBA::ORB_var orb_;

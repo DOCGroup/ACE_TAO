@@ -15,12 +15,10 @@ class SimpleAddressServer : public POA_RtecUDPAdmin::AddrServer {
 public:
   SimpleAddressServer (const ACE_INET_Addr& address);
   virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr& address)
-    throw (CORBA::SystemException);
+                         RtecUDPAdmin::UDP_Addr& address);
 
   virtual void get_address(const RtecEventComm::EventHeader& header,
-                           RtecUDPAdmin::UDP_Address& address)
-    throw (CORBA::SystemException);
+                           RtecUDPAdmin::UDP_Address& address);
 
 private:
   RtecUDPAdmin::UDP_Address address_;

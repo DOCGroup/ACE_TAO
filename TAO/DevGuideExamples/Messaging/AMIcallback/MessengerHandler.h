@@ -18,13 +18,11 @@ virtual void send_message (
     CORBA::Boolean ami_return_val,
     const char * message,
     CORBA::Long time
-  )
-  throw(CORBA::SystemException);
+  );
 
 virtual void send_message_excep (
     Messaging::ExceptionHolder * excep_holder
-  )
-  throw(CORBA::SystemException);
+  );
 
 
   int message_was_sent()
