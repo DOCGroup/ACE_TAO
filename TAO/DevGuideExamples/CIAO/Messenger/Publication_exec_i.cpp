@@ -43,7 +43,6 @@ namespace CIDL_Messenger_Impl
 
   char*
   Publication_exec_i::text ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_Guard<ACE_Mutex> guard(this->lock_);
 
@@ -53,7 +52,6 @@ namespace CIDL_Messenger_Impl
   void
   Publication_exec_i::text (
   const char* text)
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_Guard<ACE_Mutex> guard(this->lock_);
 
@@ -63,7 +61,6 @@ namespace CIDL_Messenger_Impl
 
   CORBA::UShort
   Publication_exec_i::period ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_Guard<ACE_Mutex> guard(this->lock_);
 
@@ -73,7 +70,6 @@ namespace CIDL_Messenger_Impl
   void
   Publication_exec_i::period (
   CORBA::UShort period)
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_Guard<ACE_Mutex> guard( this->lock_ );
 

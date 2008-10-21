@@ -10,8 +10,7 @@ public:
     const char * user_name,
     const char * subject,
     char *& message
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException));
+  );
 };
 
 #endif

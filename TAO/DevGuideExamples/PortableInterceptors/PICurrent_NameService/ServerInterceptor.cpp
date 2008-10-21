@@ -21,7 +21,6 @@ ServerInterceptor::~ServerInterceptor ()
 
 char *
 ServerInterceptor::name ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   std::cout << "Calling ServerInterceptor name() method" << std::endl;
   return CORBA::string_dup (this->myname_);
@@ -29,7 +28,6 @@ ServerInterceptor::name ()
 
 void
 ServerInterceptor::destroy ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   std::cout << "Calling destroy()." << std::endl;
 }
@@ -37,8 +35,6 @@ ServerInterceptor::destroy ()
 void
 ServerInterceptor::receive_request_service_contexts (
                                                      PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   ACE_UNUSED_ARG(ri);
   std::cout << "Calling receive_request_service_contexts()." << std::endl;
@@ -47,12 +43,10 @@ ServerInterceptor::receive_request_service_contexts (
 void
 ServerInterceptor::receive_request (
                                     PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   bool permission_granted = false;
   std::cout << "Calling receive_request()." << std::endl;
-  
+
   if (ri->target_is_a(restricted_interfaces[0])){
     IOP::ServiceId id = service_id;
     // Check that the request service context can be retrieved.
@@ -63,7 +57,7 @@ ServerInterceptor::receive_request (
 
     const char * buf =
       reinterpret_cast<const char *> (ocSeq.get_buffer ());
-  
+
     for (unsigned int i=0; i<num_allowed_users; ++i) {
       if (ACE_OS::strcmp (buf, allowed_users[i]) == 0)
         {
@@ -71,20 +65,18 @@ ServerInterceptor::receive_request (
         }
     }
   }
-  
+
   if (permission_granted == true) {
     std::cout << "Permission Granted " << std::endl;
   }
   else {
-    std::cout << "Permission Denied " << std::endl;
-    ACE_THROW_SPEC (CORBA::NO_PERMISSION());
+    std::cout << "Permission Denied " << std::endl;;
   }
 }
 
 void
 ServerInterceptor::send_reply (
                                PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(ri);
   std::cout << "Calling send_reply()." << std::endl;
@@ -93,8 +85,6 @@ ServerInterceptor::send_reply (
 void
 ServerInterceptor::send_exception (
                                    PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   ACE_UNUSED_ARG(ri);
   std::cout << "Calling send_exception()." << std::endl;
@@ -103,8 +93,6 @@ ServerInterceptor::send_exception (
 void
 ServerInterceptor::send_other (
                                PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   ACE_UNUSED_ARG(ri);
   std::cout << "Calling send_other()." << std::endl;

@@ -28,7 +28,6 @@ class PersonFactory
   : public virtual Person_init
 {
   Person* create(const char* name)
-    ACE_THROW_SPEC((CORBA::SystemException))
   {
     Person_i* p = new Person_i;
     p->name(name);
@@ -48,7 +47,6 @@ class Transaction_i
 {
 public:
   CORBA::Long update(Person* p)
-    ACE_THROW_SPEC((CORBA::SystemException))
   {
     ACE_DEBUG((LM_DEBUG,
       "Server: Subtracting $1.50 from person:%s starting balance:$%.2f\n",
