@@ -71,26 +71,26 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior = get_opts.opt_arg ();
         break;
       case 'a':
-        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()),
-                           "%hd",
-                           &priority1);
+        result = ACE_OS::sscanf (get_opts.opt_arg (),
+                                 ACE_TEXT("%hd"),
+                                 &priority1);
         if (result == 0 || result == EOF)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to process <-a> option"),
                             -1);
         break;
       case 'b':
-        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()),
-                           "%hd",
-                           &priority2);
+        result = ACE_OS::sscanf (get_opts.opt_arg (),
+                                 ACE_TEXT("%hd"),
+                                 &priority2);
         if (result == 0 || result == EOF)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to process <-b> option"),
                             -1);
         break;
       case 'e':
-        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()),
-                           "%u",
+        result = ACE_OS::sscanf (get_opts.opt_arg (),
+                           ACE_TEXT("%u"),
                            &protocol1);
         if (result == 0 || result == EOF)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -98,8 +98,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
                             -1);
         break;
       case 'f':
-        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()),
-                           "%u",
+        result = ACE_OS::sscanf (get_opts.opt_arg (),
+                           ACE_TEXT("%u"),
                            &protocol2);
         if (result == 0 || result == EOF)
           ACE_ERROR_RETURN ((LM_ERROR,
