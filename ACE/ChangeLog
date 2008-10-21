@@ -1,3 +1,8 @@
+Tue Oct 21 13:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-netbsd.h:
+          NetBSD lacks wscanf and swscanf
+
 Tue Oct 21 12:41:09 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * apps/gperf/src/Options.h:
