@@ -1,0 +1,23 @@
+project(*Server): taoexe, portableserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
+  exename = server
+  idlflags += -Wb,pch_include=bidir_giop_pch.h
+  Source_Files {
+    callbackC.cpp
+    simpleC.cpp
+    simpleS.cpp
+    simple_i.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoexe, portableserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
+  exename = client
+  idlflags += -Wb,pch_include=bidir_giop_pch.h
+  Source_Files {
+    simpleC.cpp
+    callbackC.cpp
+    callbackS.cpp
+    callback_i.cpp
+    client.cpp
+  }
+}

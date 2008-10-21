@@ -1,0 +1,10 @@
+interface Callback
+{
+  // A safe way to shutdown the client, using either clean shutdowns
+  // or "catastrophic failures".
+  oneway void shutdown();
+
+  // A simple remote call
+  void callback_method();
+};
+
