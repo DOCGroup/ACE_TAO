@@ -1,3 +1,11 @@
+Wed Oct 22 16:45:07 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ValueTypes/Notify/Event.idl:
+
+          Fixed fuzz errors. When including files from ACE/TAO/CIAO, use "" instead of <>.
+
+          Example: #include <ace/OS.h> was changed to "ace/OS.h"
+
 Wed Oct 22 16:17:58 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * EventServices/OMG_Basic/EchoEventConsumerMain.cpp:
