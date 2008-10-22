@@ -1,3 +1,22 @@
+Wed Oct 22 10:54:58 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * tao/Object.cpp:
+
+          Fix traits marshal op to not seg fault on a nil reference. This fixes
+          bug #3471.
+
+        * tests/Bug_3471_Regression:
+        * tests/Bug_3471_Regression/Hello.h:
+        * tests/Bug_3471_Regression/Hello.mpc:
+        * tests/Bug_3471_Regression/Hello.cpp:
+        * tests/Bug_3471_Regression/README:
+        * tests/Bug_3471_Regression/Test.idl:
+        * tests/Bug_3471_Regression/client.cpp:
+        * tests/Bug_3471_Regression/run_test.pl:
+        * tests/Bug_3471_Regression/server.cpp:
+
+          Regression test for the above fix.
+
 Wed Oct 22 09:00:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/AMH_AMI/inner_cb.h

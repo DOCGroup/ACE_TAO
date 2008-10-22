@@ -310,7 +310,7 @@ CORBA::Object::_is_equivalent (CORBA::Object_ptr other_obj)
     {
       return false;
     }
-  
+
   if (other_obj == this)
     {
       return true;
@@ -981,7 +981,7 @@ namespace TAO
   Objref_Traits<CORBA::Object>::marshal (const CORBA::Object_ptr p,
                                          TAO_OutputCDR & cdr)
   {
-    return p->marshal (cdr);
+    return ::CORBA::Object::marshal (p, cdr);
   }
 } // close TAO namespace
 
