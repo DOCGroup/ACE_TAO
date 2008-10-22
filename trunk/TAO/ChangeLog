@@ -1,3 +1,12 @@
+Wed Oct 22 12:01:09 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * utils/nslist/nsdel.cpp:
+        * utils/nslist/nsadd.cpp:
+        * utils/nslist/nslist.cpp:
+
+          My fix for incorrect usage of ACE_TEXT_ALWAYS_CHAR had some
+          flaws in nslist. Now I fixed it.
+
 Wed Oct 22 11:18:32 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * tests/Bug_3471_Regression/Bug_3471_Regression.mpc:
