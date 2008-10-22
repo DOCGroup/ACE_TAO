@@ -12,7 +12,7 @@
 
 //Class Messenger_i
 class  Messenger_i : public virtual Messenger,
-		     public virtual TAO_Local_RefCounted_Object
+         public virtual TAO_Local_RefCounted_Object
 {
 public:
   //Constructor 
@@ -28,6 +28,5 @@ virtual CORBA::Boolean send_message (
   );
 
 };
-
 
 #endif /* MESSENGERI_H_  */

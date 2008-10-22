@@ -1,3 +1,22 @@
+Wed Oct 22 13:01:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * DevGuideExamples/PortableInterceptors/IOR/MessengerClient.cpp:
+        * DevGuideExamples/PortableInterceptors/IOR/ServerInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/MessengerClient.cpp:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/ServerInterceptor.cpp:
+        * DevGuideExamples/LocalObjects/Messenger/Messenger_i.h:
+        * DevGuideExamples/LocalObjects/ServantLocator/MessengerLocator_i.h:
+        * DevGuideExamples/NotifyService/Filtering/Messenger_i.h:
+        * DevGuideExamples/NotifyService/OfferSubscriptions/Messenger_i.h:
+        * DevGuideExamples/NotifyService/SupplierSideNC/Messenger_i.h:
+        * DevGuideExamples/PortableInterceptors/Auth/ClientInitializer.h:
+        * DevGuideExamples/LocalObjects/Messenger/Messenger.idl:
+        * DevGuideExamples/LocalObjects/ServantLocator/Messenger.idl:
+        * DevGuideExamples/Security/ParticipatingApp/Messenger.idl:
+
+          Fixed tabs found fuzz errors.
+
 Wed Oct 22 12:52:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * DevGuideExamples/NotifyService/Filtering/MessengerServer.cpp:

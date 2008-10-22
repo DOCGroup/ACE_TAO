@@ -78,7 +78,7 @@ ServerInterceptor::receive_request (
       if ( gid == allowed_gid[i] )
         {
           permission_granted = true;
-	}
+  }
     }
   }
 
