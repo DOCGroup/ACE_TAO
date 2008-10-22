@@ -1,5 +1,0 @@
-Deployment has changed in CIAO 0.5a (part of TAO 1.5a), now we use the plan
-launcher, which reads a single XML file called a flattened deployment plan.
-In our example, that file is Application-flattened.cdp.  All the other XML
-files in this directory are here for reference and to correspond to the 1.4a
-TAO Developer's Guide, but they are not actually used.
