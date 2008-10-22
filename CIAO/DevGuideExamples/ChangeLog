@@ -1,3 +1,16 @@
+Wed Oct 22 16:24:21 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * Messenger/Administrator_exec_i.h:
+        * Messenger/History_exec_i.h:
+        * Messenger/Messenger_exec_i.h:
+        * Messenger/Messenger_exec_i.cpp:
+        * Messenger/Publication_exec_i.h:
+        * Messenger/Runnable_exec_i.h:
+
+          Fixed fuzz errors. When including files from ACE/TAO/CIAO, use "" instead of <>.
+
+          Example: #include <ace/OS.h> was changed to "ace/OS.h"
+
 Wed Oct 22 14:50:02 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * CIAO.mwc:
