@@ -16,7 +16,7 @@ MessengerTask::MessengerTask()
 void MessengerTask::end()
 {
   orb_->shutdown(0);
-  wait();
+  this->wait();
 }
 
 int MessengerTask::svc()

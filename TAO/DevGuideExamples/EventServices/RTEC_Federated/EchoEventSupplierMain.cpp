@@ -44,7 +44,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     const char* remote_ecname = 0;
     const char* iorfile = 0;
     for (int i = 0; argv[i] != 0; i++) {
-      if (strcmp(argv[i], "-ecname") == 0) {
+      if (ACE_OS::strcmp(argv[i], "-ecname") == 0) {
         if (argv[i+1] != 0) {
           i++;
           ecname = argv[i];
@@ -52,7 +52,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           std::cerr << "Missing Event channel name" << std::endl;
         }
       }
-      if (strcmp(argv[i], "-gateway") == 0) {
+      if (ACE_OS::strcmp(argv[i], "-gateway") == 0) {
         if (argv[i+1] != 0) {
           i++;
           remote_ecname = argv[i];
@@ -60,7 +60,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           std::cerr << "Missing Event channel name" << std::endl;
         }
       }
-      if (strcmp(argv[i], "-iorfile") == 0) {
+      if (ACE_OS::strcmp(argv[i], "-iorfile") == 0) {
         if (argv[i+1] != 0) {
           i++;
           iorfile = argv[i];

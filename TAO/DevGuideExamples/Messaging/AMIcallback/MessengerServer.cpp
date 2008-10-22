@@ -27,7 +27,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       }
       else
       {
-        seconds_to_wait = atoi(argv[1]);
+        seconds_to_wait = ACE_OS::atoi(argv[1]);
         std::cout << "Messenger_i::send_message() will wait "
           << seconds_to_wait << " seconds" << std::endl;
       }

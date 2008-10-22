@@ -46,7 +46,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     if (CORBA::is_nil(peer.in()))
       {
         std::cerr << "Could not initialize peer object reference" << std::endl;
-        exit (1);
+        ACE_OS::exit (1);
       }
 
     // create either a synchronous or AMH_based servant depending on command
