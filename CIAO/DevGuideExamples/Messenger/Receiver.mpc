@@ -1,0 +1,96 @@
+//
+//  @file Receiver.mpc
+//
+//  @author Don Busch <busch_d@ociweb.com>
+//
+
+project(Receiver_idl): ciao_client_dnc {
+  custom_only = 1
+  requires += cidl
+
+  idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export
+  idlflags += -Wb,stub_export_include=Receiver_stub_export.h
+  idlflags += -Wb,skel_export_macro=RECEIVER_SVNT_Export
+  idlflags += -Wb,skel_export_include=Receiver_svnt_export.h
+
+  IDL_Files {
+    Receiver.idl
+  }
+}
+
+project(Receiver_stub): ciao_client_dnc {
+  requires += cidl
+
+  after += Messenger_stub Receiver_idl
+  sharedname  = Receiver_stub
+  libs += Messenger_stub
+  dynamicflags = RECEIVER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReceiverC.cpp
+  }
+}
+
+project(Receiver_cidl): ciao_servant_dnc {
+  custom_only = 1
+  requires += cidl
+
+  idlflags += -Wb,export_macro=RECEIVER_SVNT_Export
+  idlflags += -Wb,export_include=Receiver_svnt_export.h
+
+  // cidlc does NOT automatically add the current directory to
+  // the include path.  This is a worksround to add it.  We have
+  // to insert it before the "--" that is at the end of the
+  // default cidlflags.
+  cidlflags -= --
+  cidlflags += -I. --
+
+  // project must be a ciao_servant or ciao_server to use CIDL files
+  CIDL_Files {
+    Receiver.cidl
+  }
+
+  IDL_Files {
+    ReceiverE.idl
+  }
+}
+
+project(Receiver_svnt): ciao_servant_dnc {
+  requires += cidl
+
+  after += Receiver_cidl Messenger_svnt Receiver_stub
+  sharedname  = Receiver_svnt
+  libs += Receiver_stub Messenger_stub Messenger_svnt
+  dynamicflags = RECEIVER_SVNT_BUILD_DLL
+
+  Source_Files {
+    ReceiverS.cpp
+    ReceiverEC.cpp
+    Receiver_svnt.cpp
+  }
+
+  CIDL_Files {
+  }
+  IDL_Files {
+  }
+}
+
+project(Receiver_exec): ciao_component_dnc {
+  requires += cidl
+
+  after += Receiver_svnt
+  sharedname  = Receiver_exec
+  libs += Receiver_stub Receiver_svnt Messenger_stub
+  dynamicflags = RECEIVER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReceiverES.cpp
+    Receiver_exec_i.cpp
+  }
+}
