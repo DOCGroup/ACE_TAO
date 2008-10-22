@@ -34,7 +34,7 @@
 
 // MY CODE
 #include <string>
-#include <ace/Synch.h>
+#include "ace/Synch.h"
 
 namespace CIDL_Messenger_Impl
 {
