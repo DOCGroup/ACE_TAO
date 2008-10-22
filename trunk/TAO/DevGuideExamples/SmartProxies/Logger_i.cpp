@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Logger_i.h"
-#include <ace/OS_NS_time.h>
+#include "ace/OS_NS_time.h"
 #include <iostream>
 
 Logger_i::Logger_i (void)

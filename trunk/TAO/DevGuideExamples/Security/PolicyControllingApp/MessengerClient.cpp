@@ -1,7 +1,7 @@
 /* -*- C++ -*- $Id$ */
 
-#include <ace/OS.h>
-#include <ace/Get_Opt.h>
+#include "ace/OS.h"
+#include "ace/Get_Opt.h"
 
 #include "MessengerC.h"
 #include "orbsvcs/SecurityC.h"

@@ -1,7 +1,7 @@
 // $Id$
 
 #include <tao/CodecFactory/CodecFactory.h>
-#include <ace/OS_NS_string.h>
+#include "ace/OS_NS_string.h"
 #include <iostream>
 #include "Messenger_i.h"
 

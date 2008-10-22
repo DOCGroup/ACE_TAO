@@ -2,7 +2,7 @@
 
 #include "ServerInterceptor.h"
 #include <tao/PI_Server/ServerRequestInfoA.h>
-#include <ace/OS_NS_string.h>
+#include "ace/OS_NS_string.h"
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY == 1)
 #include <iostream>
 #else

@@ -14,7 +14,7 @@
 #include <orbsvcs/Event/EC_Gateway_IIOP.h>
 #include <orbsvcs/Event/EC_Default_Factory.h>
 
-#include <ace/Thread_Manager.h>
+#include "ace/Thread_Manager.h"
 #include <iostream>
 #include <fstream>
 

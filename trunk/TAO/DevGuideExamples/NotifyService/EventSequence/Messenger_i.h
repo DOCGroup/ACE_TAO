@@ -6,7 +6,7 @@
 #include "MessengerS.h"
 
 #include <orbsvcs/CosNotifyChannelAdminC.h>
-#include <ace/Auto_Ptr.h>
+#include "ace/Auto_Ptr.h"
 
 class EventSequenceSupplier_i;
 
@@ -14,13 +14,13 @@ class  Messenger_i : public POA_Messenger
 {
  public:
   Messenger_i (CORBA::ORB_ptr orb);
-  
+
   virtual ~Messenger_i (void);
 
   CORBA::Boolean send_message (
       const char * user_name,
       const char * subject,
-      char *& message 
+      char *& message
     );
 
  private:
@@ -29,7 +29,7 @@ class  Messenger_i : public POA_Messenger
   auto_ptr<EventSequenceSupplier_i> supplier_;
 };
 
-#endif 
+#endif
 
 
 

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "MessengerHandler.h"
-#include <ace/OS_NS_time.h>
+#include "ace/OS_NS_time.h"
 #include <iostream>
 
 // Implementation skeleton constructor
@@ -20,7 +20,7 @@ void MessengerHandler::send_message (
    CORBA::Boolean ami_return_val,
    const char * message,
    CORBA::Long time
-   )                                     
+   )
 {
   if (ami_return_val)
   {

@@ -4,7 +4,7 @@
 #include <orbsvcs/CosNotifyCommC.h>
 #include <orbsvcs/CosNamingC.h>
 #include "orbsvcs/NotifyExtC.h"
-#include <ace/OS_NS_stdio.h>
+#include "ace/OS_NS_stdio.h"
 
 #include "Messenger_i.h"
 #include "StructuredEventSupplier_i.h"

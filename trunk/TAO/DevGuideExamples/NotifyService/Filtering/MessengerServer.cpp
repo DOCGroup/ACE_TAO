@@ -2,8 +2,8 @@
 
 #include <orbsvcs/CosNamingC.h>
 #include "Messenger_i.h"
-#include <ace/Argv_Type_Converter.h>
-#include <ace/Get_Opt.h>
+#include "ace/Argv_Type_Converter.h"
+#include "ace/Get_Opt.h"
 #include <iostream>
 #include <fstream>
 

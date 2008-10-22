@@ -5,7 +5,7 @@
 
 #include "EchoEventConsumer_i.h"
 #include <tao/PortableServer/PS_CurrentC.h>
-#include <ace/OS_NS_stdio.h>
+#include "ace/OS_NS_stdio.h"
 #include <sstream>
 
 // Constructor duplicates the ORB reference.
@@ -36,7 +36,7 @@ void EchoEventConsumer_i::push(const RtecEventComm::EventSet& events)
       out << "  text: "   << eventData;
     }
 
-    ACE_OS::printf("%s\n", out.str().c_str()); // printf is synchronized 
+    ACE_OS::printf("%s\n", out.str().c_str()); // printf is synchronized
   }
   if (--event_limit_ <= 0) {
     supplier_->disconnect_push_supplier();
