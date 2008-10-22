@@ -1,10 +1,16 @@
+Wed Oct 22 14:06:39 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DevGuideExamples/readme.txt:
+          
+          Added a readme file.
+
 Wed Oct 22 13:11:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * DevGuideExamples/Messenger/Messenger.idl:
         * DevGuideExamples/Messenger/StaticDAnCE/plan.h:
 
           Fixed tabs found fuzz errors.
-          
+
         * DevGuideExamples/Messenger/Administrator_Client.cpp:
         * DevGuideExamples/Messenger/StaticDAnCE/StaticDAnCEApp.cpp:
 
