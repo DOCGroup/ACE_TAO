@@ -1,3 +1,17 @@
+Wed Oct 22 15:03:31 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Process.h (ACE_Process_Options): Fixed the duplicate
+          handle_inheritance_ member. 
+
+Wed Oct 22 13:30:54 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Process.{h,cpp}: Added support for enabling/disabling handle
+          inheritance on Linux.  Thanks to Christian Fromme <christian at
+          ast.dfs dot de> for this fix.
+  
+        * ace/Process.{h,cpp}: Fixed the misspelling of
+          "handle_inheritence" to "handle_inheritance".
+
 Tue Oct 21 18:31:52 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * apps/gperf/src/Options.cpp:
