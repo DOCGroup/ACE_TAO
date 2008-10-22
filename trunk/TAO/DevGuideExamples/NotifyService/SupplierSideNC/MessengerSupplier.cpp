@@ -1,7 +1,7 @@
 // $Id$
 
-#include <orbsvcs/Notify/Notify_EventChannelFactory_i.h>
-#include <orbsvcs/CosNamingC.h>
+#include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
+#include "orbsvcs/CosNamingC.h"
 #include "ace/Profile_Timer.h"
 #include "StructuredEventSupplier_i.h"
 #include <iostream>

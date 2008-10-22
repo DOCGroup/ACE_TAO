@@ -1,8 +1,8 @@
 // $Id$
 
-#include <orbsvcs/CosNotifyChannelAdminC.h>
-#include <orbsvcs/CosNotifyCommC.h>
-#include <orbsvcs/CosNamingC.h>
+#include "orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/NotifyExtC.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
@@ -10,47 +10,47 @@
 #include "Priorities.h"
 #include <iostream>
 
-int 
+int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
-           
+
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService");
-     
+
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow(naming_obj.in());
-     
+
       CosNaming::Name name;
       name.length (1);
       name[0].id = CORBA::string_dup("MyEventChannel");
       CORBA::Object_var ecObj = naming_context->resolve(name);
-           
-      CosNotifyChannelAdmin::EventChannel_var ec = 
+
+      CosNotifyChannelAdmin::EventChannel_var ec =
         CosNotifyChannelAdmin::EventChannel::_narrow(ecObj.in());
-     
+
       CosNotifyChannelAdmin::AdminID adminid;
       CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
         CosNotifyChannelAdmin::OR_OP;
-      
-      CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin = 
-        ec->new_for_consumers(ifgop, 
+
+      CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin =
+        ec->new_for_consumers(ifgop,
             adminid);
-      
+
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
-                  
-      PortableServer::POA_var poa = 
+
+      PortableServer::POA_var poa =
         PortableServer::POA::_narrow (poa_object.in());
-      
+
       CORBA::Object_var rtorb_obj = orb->resolve_initial_references ("RTORB");
       RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (rtorb_obj.in ());
 
       // Create an RT POA with a lane at the given priority.
       CORBA::Policy_var priority_model_policy =
-        rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED, 
+        rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
                 DEFAULT_PRIORITY);
 
       RTCORBA::ThreadpoolLanes lanes (2);
@@ -81,7 +81,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 max_request_buffer_size);
 
       // Create a thread-pool policy.
-      CORBA::Policy_var lanes_policy = 
+      CORBA::Policy_var lanes_policy =
         rt_orb->create_threadpool_policy (threadpool_id);
 
       CORBA::PolicyList poa_policy_list(2);
@@ -97,15 +97,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       StructuredEventConsumer_i  servant (orb.in());
 
-      PortableServer::ObjectId_var objectId = 
+      PortableServer::ObjectId_var objectId =
         rt_poa->activate_object (&servant);
-      
-      CORBA::Object_var consumer_obj = 
+
+      CORBA::Object_var consumer_obj =
         rt_poa->id_to_reference (objectId.in ());
 
-      CosNotifyComm::StructuredPushConsumer_var consumer = 
+      CosNotifyComm::StructuredPushConsumer_var consumer =
         CosNotifyComm::StructuredPushConsumer::_narrow (consumer_obj.in ());
-      
+
       NotifyExt::ThreadPoolLanesParams tpl_params;
 
       tpl_params.priority_model = NotifyExt::CLIENT_PROPAGATED;
@@ -128,15 +128,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       qos[0].value <<= tpl_params;
 
       consumer_admin->set_qos(qos);
-      CORBA::Object_var current_obj = 
+      CORBA::Object_var current_obj =
         orb->resolve_initial_references ("RTCurrent");
 
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (current_obj.in ());
       current->the_priority(HIGH_PRIORITY);
-  
-      CosNotifyChannelAdmin::ProxyID consumeradmin_proxy_id; 
-      
+
+      CosNotifyChannelAdmin::ProxyID consumeradmin_proxy_id;
+
       CosNotifyChannelAdmin::ProxySupplier_var proxy_supplier =
         consumer_admin->obtain_notification_push_supplier(
           CosNotifyChannelAdmin::STRUCTURED_EVENT,
@@ -145,7 +145,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CosNotifyChannelAdmin::StructuredProxyPushSupplier_var supplier_proxy;
       supplier_proxy = CosNotifyChannelAdmin::StructuredProxyPushSupplier::
         _narrow(proxy_supplier.in());
-      
+
       supplier_proxy->connect_structured_push_consumer(consumer.in());
 
       CosNotification::EventTypeSeq added (1);
@@ -162,7 +162,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       supplier_proxy->subscription_change(added, removed);
 
       poa_manager->activate();
-        
+
       orb->run();
     }
   catch(const CORBA::Exception& ex)

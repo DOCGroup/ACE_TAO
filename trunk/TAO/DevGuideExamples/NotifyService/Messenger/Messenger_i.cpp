@@ -1,8 +1,8 @@
 // $Id$
 
-#include <orbsvcs/CosNotifyChannelAdminC.h>
-#include <orbsvcs/CosNotifyCommC.h>
-#include <orbsvcs/CosNamingC.h>
+#include "orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "ace/OS_NS_stdio.h"
 
 #include "Messenger_i.h"

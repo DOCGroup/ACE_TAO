@@ -6,14 +6,14 @@
 #ifndef _Consumer_i_h_
 #define _Consumer_i_h_
 
-#include <orbsvcs/CosTypedEventCommS.h> // for POA_CosTypedEventComm::TypedPushConsumer
+#include "orbsvcs/CosTypedEventCommS.h"// for POA_CosTypedEventComm::TypedPushConsumer
 
-class Consumer_i 
+class Consumer_i
 : public virtual POA_CosTypedEventComm::TypedPushConsumer
 {
   public:
     // Constructor
-    Consumer_i(CORBA::ORB_ptr orb, 
+    Consumer_i(CORBA::ORB_ptr orb,
                CORBA::Object_ptr obj);
 
     // Override operations from TypedPushConsumer interface.

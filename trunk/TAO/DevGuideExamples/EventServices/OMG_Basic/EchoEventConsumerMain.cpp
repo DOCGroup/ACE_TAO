@@ -6,9 +6,9 @@
 
 #include "EchoEventConsumer_i.h"
 
-#include <orbsvcs/CosEventCommC.h>
-#include <orbsvcs/CosEventChannelAdminC.h>
-#include <orbsvcs/CosNamingC.h>
+#include "orbsvcs/CosEventCommC.h"
+#include "orbsvcs/CosEventChannelAdminC.h"
+#include "orbsvcs/CosNamingC.h"
 
 #include <iostream>
 
