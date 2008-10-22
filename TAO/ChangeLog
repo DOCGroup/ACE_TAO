@@ -1,3 +1,13 @@
+Wed Oct 22 11:18:32 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Bug_3471_Regression/Bug_3471_Regression.mpc:
+
+          Rename mpc file.
+
+        * tests/Bug_3471_Regression/Hello.mpc:
+
+          Removed this file.
+
 Wed Oct 22 10:54:58 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * tao/Object.cpp:
