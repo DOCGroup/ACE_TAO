@@ -1,6 +1,6 @@
 // $Id$
 
-#include <ace/Get_Opt.h>
+#include "ace/Get_Opt.h"
 
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNotifyCommC.h"

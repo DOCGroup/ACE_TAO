@@ -3,8 +3,8 @@
 // SimpleAddressServer.cpp
 
 #include "SimpleAddressServer.h"
-#include <ace/INET_Addr.h>
-#include <ace/OS_NS_string.h>
+#include "ace/INET_Addr.h"
+#include "ace/OS_NS_string.h"
 
 SimpleAddressServer::SimpleAddressServer (const ACE_INET_Addr& address) {
 #if defined (ACE_HAS_IPV6)

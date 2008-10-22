@@ -3,7 +3,7 @@
 #include "MessengerLocator_i.h"
 #include "Messenger_i.h"
 
-#include <ace/SString.h>
+#include "ace/SString.h"
 #include <iostream>
 
 Messenger_Locator_i::Messenger_Locator_i()

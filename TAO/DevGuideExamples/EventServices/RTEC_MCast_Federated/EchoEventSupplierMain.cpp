@@ -21,7 +21,7 @@
 
 #include <tao/ORB_Core.h>
 
-#include <ace/Auto_Ptr.h>
+#include "ace/Auto_Ptr.h"
 #include <iostream>
 #include <fstream>
 

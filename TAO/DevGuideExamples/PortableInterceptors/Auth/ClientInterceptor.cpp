@@ -3,7 +3,7 @@
 #include "ClientInterceptor.h"
 #include <tao/OctetSeqC.h>
 #include <tao/PI/ClientRequestInfo.h>
-#include <ace/OS_NS_string.h>
+#include "ace/OS_NS_string.h"
 #include <iostream>
 
 const CORBA::ULong service_ctx_id = 0xdeed;

@@ -2,7 +2,7 @@
 
 #include "NamingTask.h"
 #include "MessengerTask.h"
-#include <ace/OS.h>
+#include "ace/OS.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -16,7 +16,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   MessengerTask messenger;
   messenger.activate();
 
-  // Wait the Messenger task finish. 
+  // Wait the Messenger task finish.
   messenger.wait();
   // Shutdown the Naming Service.
   namingService.end();

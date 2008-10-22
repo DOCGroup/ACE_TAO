@@ -9,7 +9,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "inner_i.h"
-#include <ace/OS.h>
+#include "ace/OS.h"
 
 Inner_i::Inner_i (int d)
   : divisor_ (d)

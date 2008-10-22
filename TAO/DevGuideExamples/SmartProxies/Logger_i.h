@@ -4,7 +4,7 @@
 #define LOGGERI_H_
 
 #include "LoggerS.h"
-#include <ace/String_Base.h>
+#include "ace/String_Base.h"
 #include <fstream>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

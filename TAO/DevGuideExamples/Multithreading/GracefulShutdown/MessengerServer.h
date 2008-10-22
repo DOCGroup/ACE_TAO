@@ -4,17 +4,17 @@
 #define MESSENGERSERVER_H_
 
 #include "MessengerS.h"
-#include <ace/Task.h>
+#include "ace/Task.h"
 #include <iostream>
 
 //Class MessengerServer
 class MessengerServer
 {
 public:
-  //Constructor 
+  //Constructor
   MessengerServer (CORBA::ORB_ptr orb);
-  
-  //Destructor 
+
+  //Destructor
   virtual ~MessengerServer (void);
 
   // parse arguments
