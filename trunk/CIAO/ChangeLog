@@ -1,7 +1,34 @@
+Wed Oct 22 14:15:02 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DevGuideExamples/Messenger/Administrator.cidl:
+        * DevGuideExamples/Messenger/Administrator.idl:
+        * DevGuideExamples/Messenger/Administrator.mpc:
+        * DevGuideExamples/Messenger/Administrator_Client.cpp:
+        * DevGuideExamples/Messenger/Administrator_Client_IDL2.cpp:
+        * DevGuideExamples/Messenger/Administrator_Client_IDL2.mpc:
+        * DevGuideExamples/Messenger/Administrator_Client_IDL3.cpp:
+        * DevGuideExamples/Messenger/Administrator_Client_IDL3.mpc:
+        * DevGuideExamples/Messenger/History.idl:
+        * DevGuideExamples/Messenger/Message.idl:
+        * DevGuideExamples/Messenger/Messenger.cidl:
+        * DevGuideExamples/Messenger/Messenger.idl:
+        * DevGuideExamples/Messenger/Messenger.mpc:
+        * DevGuideExamples/Messenger/Publication.idl:
+        * DevGuideExamples/Messenger/Receiver.cidl:
+        * DevGuideExamples/Messenger/Receiver.idl:
+        * DevGuideExamples/Messenger/Receiver.mpc:
+        * DevGuideExamples/Messenger/Runnable.idl:
+        * DevGuideExamples/Messenger/StaticDAnCE/README.txt:
+        * DevGuideExamples/Messenger/StaticDAnCE/plan.h:
+        * DevGuideExamples/Messenger/StaticDAnCE/run_test.pl:
+        * DevGuideExamples/Messenger/descriptors/run_test.pl:
+
+          Fixed fuzz errors by adding "// $Id $" to the top of each file.
+
 Wed Oct 22 14:06:39 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DevGuideExamples/readme.txt:
-          
+
           Added a readme file.
 
 Wed Oct 22 13:11:00 UTC 2008  Simon Massey  <sma at prismtech dot com>

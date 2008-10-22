@@ -1,3 +1,5 @@
+// $Id$
+
 project(Administrator_Client_IDL2_Compile): taoidl3toidl2defaults {
   requires += cidl
   // ensures that only idl3-to-idl2 processing is performed

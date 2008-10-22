@@ -1,3 +1,5 @@
+// $Id$
+
 extern "C" ::Components::HomeExecutorBase_ptr create_MessengerHome_Impl (void);
 extern "C" ::PortableServer::Servant create_MessengerHome_Servant 
     (::Components::HomeExecutorBase_ptr p,
