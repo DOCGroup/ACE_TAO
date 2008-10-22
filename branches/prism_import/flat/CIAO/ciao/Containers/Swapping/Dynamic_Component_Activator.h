@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ciao/CIAO_Server_Export.h"
+#include "ciao/Containers/Swapping/Swapping_Container_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -46,7 +46,7 @@ namespace CIAO
    * consumer servants.
    *
    */
-  class CIAO_SERVER_Export Dynamic_Component_Activator
+  class CIAO_Swapping_Container_Export Dynamic_Component_Activator
     : public virtual PortableServer::ServantActivator,
       public virtual TAO_Local_RefCounted_Object
   {

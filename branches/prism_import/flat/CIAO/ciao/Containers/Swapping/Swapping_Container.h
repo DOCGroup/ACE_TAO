@@ -18,23 +18,23 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ciao/CIAO_Server_Export.h"
+#include "ciao/Containers/Swapping/Swapping_Container_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/Session_Container.h"
+#include "ciao/Containers/Session/Session_Container.h"
 
 namespace CIAO
 {
   class Dynamic_Component_Servant_Base;
   class Dynamic_Component_Activator;
 
-  class CIAO_SERVER_Export Swapping_Container : public Session_Container
+  class CIAO_Swapping_Container_Export Swapping_Container : public Session_Container
   {
   public:
-    Swapping_Container (CORBA::ORB_ptr o, Container_Impl *container_impl);
+    Swapping_Container (CORBA::ORB_ptr o, Deployment::CIAO_Container_i *container_impl);
 
     virtual ~Swapping_Container (void);
 
@@ -71,7 +71,7 @@ namespace CIAO
                                   PortableServer::POA_ptr root);
 
     void create_connections_POA (PortableServer::POA_ptr root);
-    
+
   protected:
     unsigned long number_;
 

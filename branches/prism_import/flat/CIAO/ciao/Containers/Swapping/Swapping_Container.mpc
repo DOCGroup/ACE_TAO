@@ -1,0 +1,16 @@
+// $Id$
+
+project(CIAO_Swapping_Container) : ciao_lib, ciao_container_base, utils, \
+                                  ccm_componentserver_stub, ciao_servant_activator {
+  dynamicflags = SWAPPING_CONTAINER_BUILD_DLL
+
+  Source_Files {
+    Swapping_Container.cpp
+  }
+  Inline_Files {
+    Swapping_Container.inl
+  }
+  Header_Files {
+    Swapping_Container.h
+  }
+}
