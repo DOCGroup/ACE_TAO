@@ -1,13 +1,13 @@
 // $Id$
 
-project(Multithreading*Server): taoexe, portableserver {
+project(Multi*Server): taoexe, portableserver {
   Source_Files {
     Messenger_i.cpp
     MessengerServer.cpp
   }
 }
 
-project(Multithreading*Client): taoexe, anytypecode {
+project(Multi*Client): taoexe, anytypecode {
   Source_Files {
     MessengerC.cpp
     MessengerClient.cpp
