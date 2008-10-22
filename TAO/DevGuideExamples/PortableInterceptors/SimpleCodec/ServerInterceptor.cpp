@@ -78,7 +78,7 @@ ServerInterceptor::receive_request (
       if ( gid == allowed_gid[i] )
         {
           permission_granted = true;
-	}
+  }
     }
   }
 
@@ -113,4 +113,3 @@ ServerInterceptor::send_other (
   ACE_UNUSED_ARG(ri);
   std::cout << "Calling send_other()." << std::endl;
 }
-

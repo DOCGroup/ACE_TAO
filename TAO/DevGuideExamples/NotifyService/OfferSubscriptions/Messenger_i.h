@@ -9,7 +9,7 @@
 class  Messenger_i : public POA_Messenger
 {
 public:
-	Messenger_i (CORBA::ORB_ptr orb);
+  Messenger_i (CORBA::ORB_ptr orb);
   virtual ~Messenger_i (void);
 
  CORBA::Boolean send_message (
@@ -23,8 +23,3 @@ private:
 };
 
 #endif 
-
-
-
-
-

@@ -8,7 +8,7 @@
 #include "tao/PortableServer/ServantLocatorC.h"
 
 class Messenger_Locator_i : public PortableServer::ServantLocator,
-			    public CORBA::LocalObject
+          public CORBA::LocalObject
 {
  public:
   Messenger_Locator_i();
@@ -25,7 +25,6 @@ class Messenger_Locator_i : public PortableServer::ServantLocator,
                            const char * operation,
                            void * cookie,
                            PortableServer::Servant servant);
-
 };
 
 #endif 
