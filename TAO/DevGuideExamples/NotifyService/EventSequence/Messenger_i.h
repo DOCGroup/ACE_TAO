@@ -5,7 +5,7 @@
 
 #include "MessengerS.h"
 
-#include <orbsvcs/CosNotifyChannelAdminC.h>
+#include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "ace/Auto_Ptr.h"
 
 class EventSequenceSupplier_i;

@@ -1,8 +1,8 @@
 // $Id$
 
 #include "MessengerC.h"
-#include <orbsvcs/CosNamingC.h>
-#include <orbsvcs/Naming/Naming_Client.h>
+#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/Naming/Naming_Client.h"
 #include <iostream>
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

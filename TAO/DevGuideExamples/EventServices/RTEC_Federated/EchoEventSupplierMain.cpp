@@ -5,14 +5,14 @@
 
 #include "EchoEventSupplier_i.h"
 
-#include <orbsvcs/RtecEventCommC.h>
-#include <orbsvcs/RtecEventChannelAdminC.h>
-#include <orbsvcs/Time_Utilities.h>
-#include <orbsvcs/Event_Utilities.h>
-#include <orbsvcs/CosNamingC.h>
-#include <orbsvcs/Event/EC_Event_Channel.h>
-#include <orbsvcs/Event/EC_Gateway_IIOP.h>
-#include <orbsvcs/Event/EC_Default_Factory.h>
+#include "orbsvcs/RtecEventCommC.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Gateway_IIOP.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 
 #include "ace/Thread_Manager.h"
 #include <iostream>

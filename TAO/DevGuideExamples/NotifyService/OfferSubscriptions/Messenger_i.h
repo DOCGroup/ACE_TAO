@@ -3,7 +3,7 @@
 #ifndef MESSENGER_H_
 #define MESSENGER_H_
 
-#include <orbsvcs/CosNotifyChannelAdminC.h>
+#include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "MessengerS.h"
 
 class  Messenger_i : public POA_Messenger
@@ -22,4 +22,4 @@ private:
    CosNotifyChannelAdmin::StructuredProxyPushConsumer_var s_proxy_consumer_;
 };
 
-#endif 
+#endif

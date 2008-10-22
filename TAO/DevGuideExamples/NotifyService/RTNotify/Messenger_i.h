@@ -3,7 +3,7 @@
 #ifndef MESSENGER_H_
 #define MESSENGER_H_
 
-#include <orbsvcs/CosNotifyChannelAdminC.h>
+#include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "MessengerS.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
@@ -11,7 +11,7 @@ class  Messenger_i : public POA_Messenger
 {
  public:
   Messenger_i (CORBA::ORB_ptr orb);
-  
+
   virtual ~Messenger_i (void);
 
   CORBA::Boolean send_message (const char * user_name,
@@ -24,4 +24,4 @@ class  Messenger_i : public POA_Messenger
   RTCORBA::Current_var current_;
 };
 
-#endif 
+#endif

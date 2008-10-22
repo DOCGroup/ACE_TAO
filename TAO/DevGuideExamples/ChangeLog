@@ -1,3 +1,107 @@
+Wed Oct 22 16:17:58 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * EventServices/OMG_Basic/EchoEventConsumerMain.cpp:
+        * EventServices/OMG_Basic/EchoEventConsumer_i.h:
+        * EventServices/OMG_Basic/EchoEventSupplierMain.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumerMain.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumer_i.h:
+        * EventServices/OMG_SupplierSideEC/EchoEventSupplierMain.cpp:
+        * EventServices/OMG_TypedEC/ConsumerMain.cpp:
+        * EventServices/OMG_TypedEC/Consumer_i.h:
+        * EventServices/OMG_TypedEC/Messenger_i.h:
+        * EventServices/OMG_TypedEC/SupplierMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Basic/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventSupplier_i.h:
+        * EventServices/RTEC_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplier_i.h:
+        * EventServices/RTEC_Filter/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Filter/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Filter/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Filter/EchoEventSupplier_i.h:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.h:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplier_i.h:
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.h:
+        * NamingService/Messenger/MessengerClient.cpp:
+        * NamingService/Messenger/MessengerServer.cpp:
+        * NamingService/Naming_Client/MessengerClient.cpp:
+        * NamingService/Naming_Client/MessengerServer.cpp:
+        * NamingService/Naming_Context_Ext/MessengerClient.cpp:
+        * NamingService/Naming_Context_Ext/MessengerServer.cpp:
+        * NamingService/Naming_Server/MessengerTask.cpp:
+        * NamingService/Naming_Server/NamingTask.cpp:
+        * NamingService/corbaloc_Messenger/MessengerClient.cpp:
+        * NamingService/corbaloc_Messenger/MessengerServer.cpp:
+        * NamingService/corbaname_Messenger/MessengerClient.cpp:
+        * NamingService/corbaname_Messenger/MessengerServer.cpp:
+        * NotifyService/EventSequence/EventSequenceConsumer_i.h:
+        * NotifyService/EventSequence/EventSequenceSupplier_i.h:
+        * NotifyService/EventSequence/MessengerClient.cpp:
+        * NotifyService/EventSequence/MessengerConsumer.cpp:
+        * NotifyService/EventSequence/MessengerServer.cpp:
+        * NotifyService/EventSequence/Messenger_i.h:
+        * NotifyService/EventSequence/Messenger_i.cpp:
+        * NotifyService/Filtering/MessengerClient.cpp:
+        * NotifyService/Filtering/MessengerServer.cpp:
+        * NotifyService/Filtering/Messenger_i.h:
+        * NotifyService/Filtering/Messenger_i.cpp:
+        * NotifyService/Filtering/StructuredEventConsumer_i.h:
+        * NotifyService/Filtering/StructuredEventSupplier_i.h:
+        * NotifyService/Messenger/MessengerClient.cpp:
+        * NotifyService/Messenger/MessengerConsumer.cpp:
+        * NotifyService/Messenger/MessengerServer.cpp:
+        * NotifyService/Messenger/Messenger_i.h:
+        * NotifyService/Messenger/Messenger_i.cpp:
+        * NotifyService/Messenger/StructuredEventConsumer_i.h:
+        * NotifyService/Messenger/StructuredEventSupplier_i.h:
+        * NotifyService/OfferSubscriptions/MessengerClient.cpp:
+        * NotifyService/OfferSubscriptions/MessengerConsumer.cpp:
+        * NotifyService/OfferSubscriptions/MessengerServer.cpp:
+        * NotifyService/OfferSubscriptions/Messenger_i.h:
+        * NotifyService/OfferSubscriptions/Messenger_i.cpp:
+        * NotifyService/OfferSubscriptions/StructuredEventConsumer_i.h:
+        * NotifyService/OfferSubscriptions/StructuredEventSupplier_i.h:
+        * NotifyService/QoSProperties/MessengerClient.cpp:
+        * NotifyService/QoSProperties/MessengerConsumer.cpp:
+        * NotifyService/QoSProperties/MessengerServer.cpp:
+        * NotifyService/QoSProperties/Messenger_i.h:
+        * NotifyService/QoSProperties/Messenger_i.cpp:
+        * NotifyService/QoSProperties/StructuredEventConsumer_i.h:
+        * NotifyService/QoSProperties/StructuredEventSupplier_i.h:
+        * NotifyService/RTNotify/MessengerClient.cpp:
+        * NotifyService/RTNotify/MessengerConsumer.cpp:
+        * NotifyService/RTNotify/MessengerServer.cpp:
+        * NotifyService/RTNotify/Messenger_i.h:
+        * NotifyService/RTNotify/Messenger_i.cpp:
+        * NotifyService/RTNotify/StructuredEventConsumer_i.h:
+        * NotifyService/RTNotify/StructuredEventSupplier_i.h:
+        * NotifyService/SupplierSideNC/MessengerClient.cpp:
+        * NotifyService/SupplierSideNC/MessengerServer.cpp:
+        * NotifyService/SupplierSideNC/MessengerSupplier.cpp:
+        * NotifyService/SupplierSideNC/Messenger_i.h:
+        * NotifyService/SupplierSideNC/Messenger_i.cpp:
+        * NotifyService/SupplierSideNC/StructuredEventConsumer_i.h:
+        * NotifyService/SupplierSideNC/StructuredEventSupplier_i.h:
+        * PortableInterceptors/Auth/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent/ClientInitializer.cpp:
+        * PortableInterceptors/PICurrent/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent/MessengerServer.cpp:
+        * PortableInterceptors/PICurrent_NameService/ClientInitializer.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerServer.cpp:
+        * Security/ParticipatingApp/Messenger_i.h:
+        * ValueTypes/Notify/consumer.cpp:
+        * ValueTypes/Notify/supplier.cpp:
+
+          Fixed fuzz errors. When including files from ACE/TAO/CIAO, use "" instead of <>.
+
+          Example: #include <ace/OS.h> was changed to "ace/OS.h"
+
 Wed Oct 22 15:56:27 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * AMH/amh_pch.h:

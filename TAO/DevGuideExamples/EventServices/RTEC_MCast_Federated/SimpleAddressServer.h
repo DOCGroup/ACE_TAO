@@ -5,7 +5,7 @@
 #ifndef SIMPLEADDRESSSERVER_H
 #define SIMPLEADDRESSSERVER_H
 
-#include <orbsvcs/RtecUDPAdminS.h>
+#include "orbsvcs/RtecUDPAdminS.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_INET_Addr;

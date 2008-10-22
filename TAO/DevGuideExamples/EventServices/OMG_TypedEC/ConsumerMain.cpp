@@ -7,9 +7,9 @@
 #include "Messenger_i.h"
 #include "Consumer_i.h"
 
-#include <orbsvcs/CosTypedEventCommC.h>
-#include <orbsvcs/CosTypedEventChannelAdminC.h>
-#include <orbsvcs/CosNamingC.h>
+#include "orbsvcs/CosTypedEventCommC.h"
+#include "orbsvcs/CosTypedEventChannelAdminC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "ace/OS_NS_stdio.h"
 #include <iostream>

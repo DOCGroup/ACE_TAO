@@ -16,20 +16,20 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <orbsvcs/CosTypedEventChannelAdminC.h>
+#include "orbsvcs/CosTypedEventChannelAdminC.h"
 
 //Class Messenger_i
 class  Messenger_i : public virtual POA_Messenger
 {
 public:
-  //Constructor 
+  //Constructor
   Messenger_i (CORBA::ORB_ptr orb,
                CosEventChannelAdmin::ProxyPushSupplier_ptr supplier,
                int event_limit);
-  
-  //Destructor 
+
+  //Destructor
   virtual ~Messenger_i (void);
-  
+
   virtual void send_message (const char * user_name,
                              const char * subject,
                              const char * message);

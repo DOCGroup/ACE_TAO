@@ -3,9 +3,9 @@
 #ifndef _EVENTSUPPLIER_I_H_
 #define _EVENTSUPPLIER_I_H_
 
-#include <orbsvcs/CosNotifyChannelAdminS.h>
+#include "orbsvcs/CosNotifyChannelAdminS.h"
 
-class StructuredEventSupplier_i : 
+class StructuredEventSupplier_i :
   public virtual POA_CosNotifyComm::StructuredPushSupplier
 {
 public:
@@ -23,4 +23,4 @@ private:
     CORBA::ORB_var orb_;
 };
 
-#endif 
+#endif
