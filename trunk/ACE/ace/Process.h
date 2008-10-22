@@ -351,9 +351,6 @@ protected:
 
   ACE_TEXT_STARTUPINFO startup_info_;
 
-  /// Default TRUE.
-  BOOL handle_inheritance_;
-
   /// Pointer to security_buf1_.
   LPSECURITY_ATTRIBUTES process_attributes_;
 
@@ -371,9 +368,6 @@ protected:
   ACE_HANDLE stdout_;
   ACE_HANDLE stderr_;
 
-  /// Default true.
-  bool handle_inheritance_;
-
   // = Real & effective user & group id's.
   //   These should be set to -1 to leave unchanged (default).
   uid_t ruid_;
@@ -381,6 +375,9 @@ protected:
   uid_t rgid_;
   uid_t egid_;
 #endif /* ACE_WIN32 */
+
+  /// Default TRUE.
+  BOOL handle_inheritance_;
 
 #if !defined (ACE_HAS_WINCE)
   /// Is 1 if stdhandles was called.
