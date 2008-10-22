@@ -339,7 +339,6 @@ namespace TAO {
   template <typename stream, typename charT>
   bool demarshal_sequence(stream & strm, TAO::unbounded_basic_string_sequence <charT> & target) {
     typedef TAO::unbounded_basic_string_sequence <charT> sequence;
-    typedef typename sequence::element_traits::string_var string_var;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -350,12 +349,8 @@ namespace TAO {
     sequence tmp(new_length);
     tmp.length(new_length);
     for(CORBA::ULong i = 0; i < new_length; ++i) {
-      string_var string;
-      if (!(strm >> string.inout ())) {
+      if (!(strm >> tmp[i].out ())) {
         return false;
-      }
-      else {
-        tmp[i] = string._retn ();
       }
     }
     tmp.swap(target);
