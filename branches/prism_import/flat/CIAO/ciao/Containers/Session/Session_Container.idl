@@ -5,12 +5,12 @@
  * Extends the basic container interface for session capabilities.
  */
 
-#include "ciao/Containers/Containter_Base.idl"
+#include "ciao/Containers/Container_Base.idl"
 
 module CIAO
 {
   local interface Session_Container : Container
   {
-    
+
   };
 };
