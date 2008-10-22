@@ -33,7 +33,7 @@
 #include "tao/LocalObject.h"
 
 // MY CODE
-#include <ace/Synch.h>
+#include "ace/Synch.h"
 
 namespace CIDL_Messenger_Impl
 {
