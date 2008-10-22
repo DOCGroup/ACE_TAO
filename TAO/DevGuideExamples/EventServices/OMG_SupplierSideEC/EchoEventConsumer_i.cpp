@@ -3,7 +3,7 @@
 // Implements a PushConsumer.
 
 #include "EchoEventConsumer_i.h"
-#include <tao/PortableServer/PS_CurrentC.h>
+#include "tao/PortableServer/PS_CurrentC.h"
 #include <iostream>
 
 EchoEventConsumer_i::EchoEventConsumer_i(

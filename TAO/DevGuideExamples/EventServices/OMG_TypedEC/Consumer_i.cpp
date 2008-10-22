@@ -3,7 +3,7 @@
 // Implements a PushConsumer.
 
 #include "Consumer_i.h"
-#include <tao/PortableServer/PS_CurrentC.h>
+#include "tao/PortableServer/PS_CurrentC.h"
 #include <iostream>
 
 Consumer_i::Consumer_i(CORBA::ORB_ptr orb,

@@ -1,8 +1,8 @@
 // $Id$
 
 #include "ClientInterceptor.h"
-#include <tao/OctetSeqC.h>
-#include <tao/PI/ClientRequestInfo.h>
+#include "tao/OctetSeqC.h"
+#include "tao/PI/ClientRequestInfo.h"
 #include "ace/OS_NS_string.h"
 #include <iostream>
 

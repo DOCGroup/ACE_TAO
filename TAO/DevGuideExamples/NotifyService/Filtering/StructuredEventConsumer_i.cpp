@@ -1,7 +1,7 @@
 // $Id$
 
 #include "StructuredEventConsumer_i.h"
-#include <tao/PortableServer/PS_CurrentC.h>
+#include "tao/PortableServer/PS_CurrentC.h"
 #include <iostream>
 
 StructuredEventConsumer_i::StructuredEventConsumer_i(CORBA::ORB_ptr orb)
@@ -9,23 +9,23 @@ StructuredEventConsumer_i::StructuredEventConsumer_i(CORBA::ORB_ptr orb)
 {
 }
 
-void 
+void
 StructuredEventConsumer_i::push_structured_event(
        const CosNotification::StructuredEvent &event
       )
 {
 
-   const char *value;       
+   const char *value;
 
-   for (unsigned int i=0; i<event.filterable_data.length(); i++) { 
+   for (unsigned int i=0; i<event.filterable_data.length(); i++) {
      event.filterable_data[i].value >>= value;
       std::cout << event.filterable_data[i].name << "\t" <<value<<  std::endl;
-  }                          
+  }
 
-    std::cerr << "MessengerConsumer: success" <<  std::endl; 
+    std::cerr << "MessengerConsumer: success" <<  std::endl;
 }
 
-void 
+void
 StructuredEventConsumer_i::disconnect_structured_push_consumer(
       )
 {
@@ -36,14 +36,14 @@ StructuredEventConsumer_i::disconnect_structured_push_consumer(
    PortableServer::POA_var poa = current->get_POA ();
    PortableServer::ObjectId_var objectId = current->get_object_id ();
    poa->deactivate_object (objectId.in());
-                                           
+
 }
 
 void
 StructuredEventConsumer_i::offer_change(
-        const CosNotification::EventTypeSeq &, 
+        const CosNotification::EventTypeSeq &,
         const CosNotification::EventTypeSeq &
       )
 {
   //Noop
-} 
+}
