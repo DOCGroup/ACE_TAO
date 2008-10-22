@@ -1,3 +1,9 @@
+Wed Oct 22 15:05:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * Multithreading/ThreadPerConnection/ThreadPerConnection.mpc:
+
+          Fixed project name length fuzz warnings.
+
 Wed Oct 22 14:39:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * NamingService/Naming_Client/Messenger_i.cpp:
