@@ -13,7 +13,7 @@
 // Implementation skeleton constructor
 Messenger_i::Messenger_i (void)
 {
-	std::cout << "Hello";
+  std::cout << "Hello";
 }
 
 // Implementation skeleton destructor
