@@ -26,6 +26,7 @@ CONTROLLED_FILES = \
 	TAO/VERSION \
         TAO/bin \
 	TAO/configure.ac \
+        TAO/DevGuideExamples \
 	TAO/docs \
 	TAO/examples \
 	TAO/interop-tests \
