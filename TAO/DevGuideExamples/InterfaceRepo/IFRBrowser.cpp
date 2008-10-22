@@ -1,4 +1,4 @@
-// $Id$ 
+// $Id$
 
 //
 // IFRBrowser.cpp
@@ -9,7 +9,7 @@
 
 #include <tao/IFR_Client/IFR_BasicC.h>
 #include <tao/ORB.h>
-#include <ace/Log_Msg.h>
+#include "ace/Log_Msg.h"
 
 #include <iostream>
 

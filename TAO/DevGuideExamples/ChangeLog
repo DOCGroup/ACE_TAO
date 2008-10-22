@@ -1,3 +1,60 @@
+Wed Oct 22 15:42:56 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * AMH_AMI/inner_i.cpp:
+        * AMH_AMI/middle_server.cpp:
+        * BiDirectionalGIOP/client.cpp:
+        * BiDirectionalGIOP/server.cpp:
+        * EventServices/OMG_TypedEC/ConsumerMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Filter/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.cpp:
+        * ImplRepo/IORTable/MessengerClient.cpp:
+        * InterfaceRepo/IFRBrowser.cpp:
+        * LocalObjects/ServantLocator/MessengerLocator_i.cpp:
+        * Messaging/AMIcallback/MessengerClient.cpp:
+        * Messaging/AMIcallback/MessengerHandler.cpp:
+        * Messaging/AMIcallback/Messenger_i.cpp:
+        * Messaging/RelativeRoundtripTimeout/Messenger_i.cpp:
+        * Multithreading/GracefulShutdown/MessengerClient.cpp:
+        * Multithreading/GracefulShutdown/MessengerServer.h:
+        * Multithreading/GracefulShutdown/MessengerServer.cpp:
+        * Multithreading/GracefulShutdown/MessengerShutdownTimer.h:
+        * Multithreading/ThreadPerConnection/Messenger_i.cpp:
+        * Multithreading/ThreadPool/MessengerServer.cpp:
+        * Multithreading/ThreadPool/Messenger_i.cpp:
+        * NamingService/Naming_Server/MessengerTask.h:
+        * NamingService/Naming_Server/NamingMessenger.cpp:
+        * NamingService/Naming_Server/NamingTask.h:
+        * NamingService/Naming_Server/NamingTask.cpp:
+        * NotifyService/EventSequence/Messenger_i.h:
+        * NotifyService/Filtering/MessengerConsumer.cpp:
+        * NotifyService/Filtering/MessengerServer.cpp:
+        * NotifyService/Messenger/Messenger_i.cpp:
+        * NotifyService/RTNotify/Messenger_i.cpp:
+        * NotifyService/SupplierSideNC/MessengerConsumer.cpp:
+        * NotifyService/SupplierSideNC/MessengerSupplier.cpp:
+        * PortableInterceptors/Auth/ClientInterceptor.cpp:
+        * PortableInterceptors/Auth/ServerInterceptor.cpp:
+        * PortableInterceptors/IOR/Messenger_i.cpp:
+        * PortableInterceptors/PICurrent/Messenger_i.cpp:
+        * PortableInterceptors/PICurrent_NameService/Messenger_i.cpp:
+        * PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+        * RTCORBA/Messenger_i.cpp:
+        * Security/ParticipatingApp/Messenger_i.cpp:
+        * Security/PolicyControllingApp/MessengerClient.cpp:
+        * SmartProxies/Logger_i.h:
+        * SmartProxies/Logger_i.cpp:
+        * ValueTypes/Bank/server.cpp:
+        * ValueTypes/Notify/supplier.cpp:
+
+          Fixed fuzz errors. When including files from ACE/TAO/CIAO, use "" instead of <>.
+
+          Example: #include <ace/OS.h> was changed to "ace/OS.h"
+
 Wed Oct 22 15:25:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * NotifyService/Messenger/Messenger.mpc:

@@ -8,8 +8,8 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "Messenger_i.h"
-#include <ace/OS_NS_unistd.h>
-#include <ace/OS_NS_sys_time.h>
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_time.h"
 #include <iostream>
 // Implementation skeleton constructor
 Messenger_i::Messenger_i (unsigned int seconds_to_wait,
@@ -36,22 +36,22 @@ CORBA::Boolean Messenger_i::send_message (
     std::cout << "Throwing MessengerUnableToSendMessage exception." << std::endl;
     throw MessengerUnableToSendMessage();
   }
-  
+
   std::cout << "Write a letter to " << user_name << " as follows:" << std::endl;
   std::cout << "Subject: " << subject << std::endl;
   std::cout << "Dear " << user_name << ',' << std::endl;
   std::cout << message << std::endl;
-  
+
   if (seconds_to_wait_ > 0)
   {
     std::cout << "Waiting for " << seconds_to_wait_ << " seconds..." << std::flush;
     ACE_OS::sleep(seconds_to_wait_);
     std::cout << " Done waiting" << std::endl;
   }
-  
-  // Record the time the message was sent    
+
+  // Record the time the message was sent
   time_sent = static_cast<CORBA::Long> (ACE_OS::gettimeofday().sec());
-  
+
   // We will assume the message has been sent, so return true
   return 1;
 }

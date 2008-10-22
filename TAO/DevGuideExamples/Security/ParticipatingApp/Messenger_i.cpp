@@ -1,7 +1,7 @@
 /* -*- C++ -*- $Id$ */
 
 #include "Messenger_i.h"
-#include <ace/OS_NS_string.h>
+#include "ace/OS_NS_string.h"
 #include <iostream>
 
 Messenger_i::Messenger_i (
@@ -12,11 +12,11 @@ Messenger_i::Messenger_i (
   ssliop_current_(SSLIOP::Current::_duplicate(ssliop_current))
   {
   }
-  
+
 Messenger_i::~Messenger_i (void)
   {
   }
-  
+
 CORBA::Boolean Messenger_i::send_message (
     const char * user_name,
     const char * subject,
@@ -33,7 +33,7 @@ CORBA::Boolean Messenger_i::send_message (
     std::cout << std::endl;
     return 1;
   }
-  
+
 
 void Messenger_i::shutdown (
       const char * user_name
@@ -53,7 +53,7 @@ void Messenger_i::shutdown (
 #if 0
     char name_buf[BUFSIZ];
 
-    // 
+    //
     // Populate an attribute type list
     // to request the initiating principal's
     // AccessId.
@@ -62,7 +62,7 @@ void Messenger_i::shutdown (
     requested_attributes.length(0);
     Security::AttributeType desired_attribute;
     desired_attribute.attribute_family.family_definer = 0;  // OMG
-    desired_attribute.attribute_family.family = 1;          // Privilege 
+    desired_attribute.attribute_family.family = 1;          // Privilege
                                                             // Attributes
     desired_attribute.attribute_type = Security::AccessId;
     requested_attributes.length(1);
@@ -70,9 +70,9 @@ void Messenger_i::shutdown (
     //
     // Request the attribtue
     //
-    Security::AttributeList_var attrib_list = 
+    Security::AttributeList_var attrib_list =
       this->current_->get_attributes(requested_attributes);
-    
+
     if(attrib_list->length() > 0)
     {
       //
@@ -82,15 +82,15 @@ void Messenger_i::shutdown (
 
       attribute_returned.defining_authority =
          (attrib_list.in())[0].defining_authority ;
-      attribute_returned.value = 
+      attribute_returned.value =
          (attrib_list.in())[0].value;
 
-      // Certificates are returned in 
+      // Certificates are returned in
       // X.509 format
       //
       const char x509[] = "x509";
       //
-      // Setup a Security::OID (sequence<octet>) 
+      // Setup a Security::OID (sequence<octet>)
       // to hold the attribute's defining authority.
       //
       Security::OID x509_defining_authority;
@@ -98,30 +98,30 @@ void Messenger_i::shutdown (
       //
       // Populate the defining authority value.
       //
-      CORBA::Octet *buf = 
+      CORBA::Octet *buf =
         x509_defining_authority.get_buffer();
       ACE_OS_String::memcpy( buf, x509, sizeof(x509));
       //
       // Confirm the defining authority is "x509".
       //
-      if(attribute_returned.defining_authority == 
+      if(attribute_returned.defining_authority ==
          x509_defining_authority)
       {
         //
-        // Get the buffer holding the certificate 
+        // Get the buffer holding the certificate
         //
-        CORBA::Octet *der_cert = 
+        CORBA::Octet *der_cert =
           attribute_returned.value.get_buffer();
         //
-        // Convert the DER encoded certificate into 
+        // Convert the DER encoded certificate into
         // OpenSSL's internal format.
         //
-        X509 *peer = ::d2i_X509 (0, 
-                                 &der_cert, 
+        X509 *peer = ::d2i_X509 (0,
+                                 &der_cert,
                                  attribute_returned.value.length());
 
-        ::X509_NAME_oneline(::X509_get_subject_name (peer), 
-                            name_buf, 
+        ::X509_NAME_oneline(::X509_get_subject_name (peer),
+                            name_buf,
                             BUFSIZ);
 
         ::X509_free(peer);
