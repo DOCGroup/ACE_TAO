@@ -1,3 +1,11 @@
+Wed Oct 22 15:25:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * NotifyService/Messenger/Messenger.mpc:
+
+          Renamed to avoid name clash.
+
+        * NotifyService/Messenger/NotifyService_Messenger.mpc:
+
 Wed Oct 22 15:05:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * Multithreading/ThreadPerConnection/ThreadPerConnection.mpc:
