@@ -1,3 +1,11 @@
+Wed Oct 22 17:37:26 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * tao/Bounded_Sequence_CDR_T.h:
+        * tao/Unbounded_Sequence_CDR_T.h:
+
+          Remove some sort of template var thing that is killing performance.
+          This fixes bug #3472.
+
 Wed Oct 22 12:49:03 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
