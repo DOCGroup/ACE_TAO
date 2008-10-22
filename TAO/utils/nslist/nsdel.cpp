@@ -83,11 +83,11 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         argc = argcon.get_argc ();
       ACE_TCHAR
         **argv = argcon.get_TCHAR_argv ();
-      ACE_CString pname = ACE_TEXT_ALWAYS_CHAR (argv[0]);
-      ACE_CString nameService = "";
-      char kindsep = '.';
-      ACE_CString ctxsep = "/";
-      ACE_CString name = "";
+      const ACE_TCHAR *const pname = argv[0];
+      const ACE_TCHAR *nameService = 0;
+      ACE_TCHAR kindsep = ACE_TEXT('.');
+      ACE_TCHAR ctxsep[] = ACE_TEXT("/");
+      ACE_TCHAR *name = 0;
       ACE_Time_Value
         rtt = ACE_Time_Value::zero;
 
@@ -107,7 +107,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                   else
                     {
                       ++argv;
-                      if (nameService.length ())
+                      if (nameService)
                         {
                           ACE_DEBUG ((LM_DEBUG,
                                      "Error: more than one --ns.\n"));
@@ -123,7 +123,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--name")))
                 {
-                  if (name.length ())
+                  if (name)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: more than one --name\n"));
@@ -136,7 +136,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       failed = true;
                     }
                   else
-                    name = ACE_TEXT_ALWAYS_CHAR (*(++argv));
+                    name = *(++argv);
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ctxsep")))
                 {
@@ -153,7 +153,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       failed = true;
                     }
                   else
-                    ctxsep[0] = ACE_TEXT_ALWAYS_CHAR (*argv)[0];
+                    ctxsep[0] = (*argv)[0];
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--kindsep")))
                 {
@@ -170,7 +170,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       failed = true;
                     }
                   else
-                    kindsep = ACE_TEXT_ALWAYS_CHAR (*argv)[0];
+                    kindsep = (*argv)[0];
                 }
               else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--rtt")))
                 {
@@ -202,10 +202,10 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
             }
         }
 
-      if (!name.length () || failed)
+      if (!name || failed)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "\nUsage:\n  %C --name <name>\n"
+                      "\nUsage:\n  %s --name <name>\n"
                       "optional:\n"
                       "  --ns <ior>\n"
                       "  --ctxsep  <character>\n"
@@ -220,15 +220,15 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       "will orphan them. Connects to default NameService\n"
                       "unless --ns is given. Displays all ID/Kinds found\n"
                       "on path unless --quiet is given.\n",
-                      pname.c_str ()));
+                      pname));
           orb->destroy ();
           return 1;
         }
 
       // Contact the name service
       CORBA::Object_var nc_obj;
-      if (nameService.length ())
-        nc_obj = orb->string_to_object (nameService.c_str ());
+      if (nameService)
+        nc_obj = orb->string_to_object (nameService);
       else
         nc_obj = orb->resolve_initial_references ("NameService");
 
@@ -245,19 +245,19 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         }
 
       // Assemble the name from the user string given
-      char *cp;
-      while (0 != (cp = ACE_OS::strtok (const_cast<char*> (name.c_str ()), ctxsep.c_str ())))
+      ACE_TCHAR *cp;
+      while (0 != (cp = ACE_OS::strtok (name, ctxsep)))
         {
           const int index= the_name.length();
           the_name.length (index+1);
-          char *kind = (char *)ACE_OS::strchr (cp, kindsep);
+          ACE_TCHAR *kind = const_cast<ACE_TCHAR*> (ACE_OS::strchr (cp, kindsep));
           if (kind)
             {
               *kind = '\0';
               the_name[index].kind= CORBA::string_dup (++kind);
             }
           the_name[index].id = CORBA::string_dup (cp);
-          name.clear (); // way strtok works
+          name = 0; // way strtok works
         }
 
       // Attempt to locate the object and destroy/unbind it
