@@ -26,7 +26,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     const char* ecname = "EventService";
     for (int i = 0; argv[i] != 0; i++) {
-      if (strcmp(argv[i], "-ecname") == 0) {
+      if (ACE_OS::strcmp(argv[i], "-ecname") == 0) {
         if (argv[i+1] != 0) {
           ecname = argv[i+1];
         } else {

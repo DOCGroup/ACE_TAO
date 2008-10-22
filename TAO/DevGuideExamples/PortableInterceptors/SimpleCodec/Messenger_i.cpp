@@ -22,7 +22,7 @@ void Messenger_i::send_message (const CORBA::OctetSeq & user_name)
       int argc = 1;
       char **argv = new char *[argc];
       argv[0] = new char[ACE_OS::strlen ("MessengerServer")];
-      strcpy (argv[0], "MessengerServer");
+      ACE_OS::strcpy (argv[0], "MessengerServer");
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
