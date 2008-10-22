@@ -8,7 +8,7 @@
 #include <iostream>
 
 int
-main(int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
@@ -104,7 +104,6 @@ main(int argc, char *argv[])
     supplier_proxy->subscription_change(added, removed);
  
     orb->run();
- 
    }
    catch(const CORBA::Exception& ex)
     {
@@ -114,5 +113,3 @@ main(int argc, char *argv[])
    std::cerr << "MessengerConsumer: success" << std::endl;
    return 0;
 }
-
-

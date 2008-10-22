@@ -1,3 +1,20 @@
+Wed Oct 22 13:24:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * DevGuideExamples/NotifyService/QoSProperties/MessengerConsumer.cpp:
+        * DevGuideExamples/NotifyService/OfferSubscriptions/MessengerConsumer.cpp:
+        * DevGuideExamples/NotifyService/Messenger/MessengerConsumer.cpp:
+        * DevGuideExamples/NotifyService/RTNotify/MessengerConsumer.cpp:
+        * DevGuideExamples/NotifyService/EventSequence/MessengerConsumer.cpp:
+        * DevGuideExamples/NamingService/Naming_Server/NamingMessenger.cpp:
+        * DevGuideExamples/PortableInterceptors/Auth/MessengerServer.cpp:
+        * DevGuideExamples/PortableInterceptors/Auth/MessengerClient.cpp:
+        * DevGuideExamples/PortableInterceptors/PICurrent/MessengerServer.cpp:
+        * DevGuideExamples/PortableInterceptors/PICurrent/MessengerClient.cpp:
+        * DevGuideExamples/PortableInterceptors/PICurrent_NameService/MessengerServer.cpp:
+        * DevGuideExamples/PortableInterceptors/PICurrent_NameService/MessengerClient.cpp:
+
+          Fixed Lack of ACE_TMAIN fuzz errors.
+
 Wed Oct 22 13:01:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * DevGuideExamples/PortableInterceptors/IOR/MessengerClient.cpp:
