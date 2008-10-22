@@ -10,8 +10,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class  Asynch_Middle_i : public virtual POA_AMH_Middle,
-                         public virtual PortableServer::RefCountServantBase
+class  Asynch_Middle_i : public virtual POA_AMH_Middle
 {
 public:
   //Constructor
@@ -28,8 +27,7 @@ private:
 // This version of the implementation does not use AMH, It is supplied for
 // comparison. Either this or the asynch version may be used to serve
 // "Middle" objects.
-class  Middle_i : public virtual POA_Middle,
-                  public virtual PortableServer::RefCountServantBase
+class  Middle_i : public virtual POA_Middle
 {
 public:
   //Constructor
