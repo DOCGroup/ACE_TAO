@@ -11,7 +11,7 @@
 #include "ace/Get_Opt.h"
 #include <iostream>
 
-const char* ior = "file://Messenger.ior";
+const ACE_TCHAR* ior = ACE_TEXT ("file://Messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -90,16 +90,14 @@ svc( Runnable_ptr runnable, Publication_ptr publication )
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   if (parse_args (argc, argv) != 0) {
     return 1;
   }
 
   try {
-
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "");
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     // get Messenger object
     CORBA::Object_var obj = orb->string_to_object(ior);
@@ -118,4 +116,3 @@ main (int argc, char *argv[])
 
   return 1;
 }
-
