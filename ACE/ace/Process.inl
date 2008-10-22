@@ -147,24 +147,24 @@ ACE_Process_Options::setgroup (pid_t pgrp)
 }
 
 ACE_INLINE int
-ACE_Process_Options::handle_inheritence (void)
+ACE_Process_Options::handle_inheritance (void)
 {
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-  return handle_inheritence_;
+#if !defined (ACE_HAS_WINCE) && !defined (ACE_VXWORKS) && !defined(ACE_OPENVMS)
+  return handle_inheritance_;
 #else
-  ACE_NOTSUP_RETURN (0);  // This is a benign error.
-#endif /* ACE_WIN32 && ! ACE_HAS_WINCE */
+    ACE_NOTSUP_RETURN (0);  // This is a benign error.
+#endif /* ! ACE_HAS_WINCE && !ACE_VXWORKS && !ACE_OPENVMS */
 }
 
 ACE_INLINE void
-ACE_Process_Options::handle_inheritence (int hi)
+ACE_Process_Options::handle_inheritance (int hi)
 {
-#if defined (ACE_WIN32) &&  !defined (ACE_HAS_WINCE)
-  handle_inheritence_ = hi;
+#if !defined (ACE_HAS_WINCE) && !defined (ACE_VXWORKS) && !defined(ACE_OPENVMS)
+  handle_inheritance_ = hi;
 #else
   ACE_UNUSED_ARG (hi);
   ACE_NOTSUP;
-#endif /* !ACE_HAS_WINCE */
+#endif /* !ACE_HAS_WINCE && !ACE_VXWORKS && !ACE_OPENVMS */
 }
 
 ACE_INLINE int
