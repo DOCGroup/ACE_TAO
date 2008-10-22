@@ -7,14 +7,14 @@
 #include <fstream>
 
 int
-main(int argc, char * argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
       CORBA::Object_var rootObj = orb->resolve_initial_references("NameService");
-      CosNaming::NamingContext_var rootNC = 
+      CosNaming::NamingContext_var rootNC =
 		  CosNaming::NamingContext::_narrow(rootObj.in());
 
       CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");

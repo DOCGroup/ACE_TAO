@@ -1,3 +1,20 @@
+Wed Oct 22 08:57:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/LocalObjects/Messenger/MessengerServer.cpp
+        * DevGuideExamples/LocalObjects/ServantLocator/MessengerClient.cpp
+        * DevGuideExamples/LocalObjects/ServantLocator/MessengerServer.cpp
+        * DevGuideExamples/Messaging/AMIcallback/MessengerClient.cpp
+        * DevGuideExamples/Messaging/AMIcallback/MessengerServer.cpp
+        * DevGuideExamples/Messaging/RelativeRoundtripTimeout/MessengerServer.cpp
+        * DevGuideExamples/NotifyService/EventSequence/MessengerServer.cpp
+        * DevGuideExamples/NotifyService/Messenger/MessengerServer.cpp
+        * DevGuideExamples/NotifyService/OfferSubscriptions/MessengerServer.cpp
+        * DevGuideExamples/NotifyService/QoSProperties/MessengerServer.cpp
+        * DevGuideExamples/NotifyService/RTNotify/MessengerServer.cpp
+        * DevGuideExamples/NotifyService/SupplierSideNC/MessengerServer.cpp
+        * DevGuideExamples/SmartProxies/LoggerServer.cpp
+          ACE_TMAIN changes
+
 Wed Oct 22 08:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/CIAO:
