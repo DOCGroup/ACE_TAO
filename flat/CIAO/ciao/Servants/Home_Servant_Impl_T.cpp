@@ -81,8 +81,6 @@ namespace CIAO
 
     _ciao_comp->remove ();
     
-    _ciao_comp->_remove_ref ();
-
     CIAO_DEBUG ((LM_INFO, CLINFO "Home_Servant_Impl<>::remove_component - Removed the component\n"));
   }
 

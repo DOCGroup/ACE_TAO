@@ -1,14 +1,20 @@
+Wed Oct 22 13:07:28 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+        
+          Removed debug change that caused segfault. 
+        
 Wed Oct 22 12:48:37 UTC 2008  William R. Otte  <wotte@william-r-ottes-macbook-pro.local>
 
         * DAnCE/Starter/Starter.cpp:
         * DAnCE/Starter/Starter.mpc:
         * tests/CIAO_ComponentServer/Activator/client.cpp:
         * tests/CIAO_ComponentServer/SimpleComponent/client.cpp:
-        
-          Compilation fixes. 
+
+          Compilation fixes.
 
         * DAnCE/NodeApplication/NodeApplication_Impl.h:
-        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:        
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
         * DAnCE/tests/CIAO/NodeManager-Deployments/SimpleComponentExplicitHome.cdp:
         * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
         * ciao/ComponentServer/CIAO_ComponentServer.idl:
@@ -26,12 +32,12 @@ Wed Oct 22 12:48:37 UTC 2008  William R. Otte  <wotte@william-r-ottes-macbook-pr
 
           Fixes to have the container properly manage the lifecycle of
           components during the teardown phase, so that the
-          SimpleComponentExplicitHome plan properly teardown. 
-        
+          SimpleComponentExplicitHome plan properly teardown.
+
         * ciao/Logger/Log_Macros.h:
-        
-          Removed non-interpreted flags from CIAO_TRACE macros. 
-        
+
+          Removed non-interpreted flags from CIAO_TRACE macros.
+
 Tue Oct 21 19:23:20 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DomainApplication/Domain_Application_Impl.h:
