@@ -1,3 +1,15 @@
+Wed Oct 22 13:11:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * DevGuideExamples/Messenger/Messenger.idl:
+        * DevGuideExamples/Messenger/StaticDAnCE/plan.h:
+
+          Fixed tabs found fuzz errors.
+          
+        * DevGuideExamples/Messenger/Administrator_Client.cpp:
+        * DevGuideExamples/Messenger/StaticDAnCE/StaticDAnCEApp.cpp:
+
+          Lack of ACE_TMAIN and specified ORB_init default parameters.
+
 Wed Oct 22 08:52:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/*:
