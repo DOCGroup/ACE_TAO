@@ -10,7 +10,7 @@
 #include <orbsvcs/CosTypedEventCommC.h>
 #include <orbsvcs/CosTypedEventChannelAdminC.h>
 #include <orbsvcs/CosNamingC.h>
-#include <tao/AnyTypeCode/TypeCode.h>
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "ace/OS_NS_stdio.h"
 #include <iostream>
 

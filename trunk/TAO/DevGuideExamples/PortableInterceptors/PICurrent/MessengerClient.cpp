@@ -3,9 +3,9 @@
 #include "MessengerC.h"
 #include "ClientInitializer.h"
 
-#include <tao/ORBInitializer_Registry.h>
-// Ensure that the PI library is linked in when building statically 
-#include <tao/PI/PI.h>                            
+#include "tao/ORBInitializer_Registry.h"
+// Ensure that the PI library is linked in when building statically
+#include "tao/PI/PI.h"
 #include <orbsvcs/CosNamingC.h>
 #include <iostream>
 
@@ -18,7 +18,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
-    
+
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "Client ORB");
@@ -43,12 +43,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var message = CORBA::string_dup( "Hello!" );
       messenger->send_message( "TAO User", "TAO Test", message.inout() );
     }
-  
+
   catch(const CORBA::Exception& ex)
     {
       std::cerr << "client Caught CORBA exception: " << ex << std::endl;
       return 1;
     }
-  
+
   return 0;
 }

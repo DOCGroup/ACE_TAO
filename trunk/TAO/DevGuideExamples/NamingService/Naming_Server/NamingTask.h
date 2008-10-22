@@ -3,7 +3,7 @@
 #ifndef NAMINGTASK_H
 #define NAMINGTASK_H
 
-#include <tao/corba.h>
+#include "tao/corba.h"
 #include "ace/Task.h"
 
 class NamingTask : public ACE_Task<ACE_MT_SYNCH>

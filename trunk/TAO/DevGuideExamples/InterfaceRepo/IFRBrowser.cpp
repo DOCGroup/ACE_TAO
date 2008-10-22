@@ -7,8 +7,8 @@
 // browser, very rudimentary
 //
 
-#include <tao/IFR_Client/IFR_BasicC.h>
-#include <tao/ORB.h>
+#include "tao/IFR_Client/IFR_BasicC.h"
+#include "tao/ORB.h"
 #include "ace/Log_Msg.h"
 
 #include <iostream>

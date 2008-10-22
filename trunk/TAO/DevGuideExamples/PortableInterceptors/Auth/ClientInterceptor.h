@@ -3,9 +3,9 @@
 #ifndef CLIENTINTERCEPTOR_H
 #define CLIENTINTERCEPTOR_H
 
-#include <tao/PortableInterceptorC.h>
-#include <tao/LocalObject.h>
-#include <tao/PI/PI.h>
+#include "tao/PortableInterceptorC.h"
+#include "tao/LocalObject.h"
+#include "tao/PI/PI.h"
 
 class ClientInterceptor
 : public virtual PortableInterceptor::ClientRequestInterceptor,

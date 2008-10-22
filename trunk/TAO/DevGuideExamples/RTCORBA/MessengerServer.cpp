@@ -5,7 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <fstream>
-#include <tao/RTCORBA/RTCORBA.h>
+#include "tao/RTCORBA/RTCORBA.h"
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

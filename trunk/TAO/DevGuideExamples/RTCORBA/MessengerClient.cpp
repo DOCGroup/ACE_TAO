@@ -3,7 +3,7 @@
 #include "MessengerC.h"
 #include "common.h"
 #include <iostream>
-#include <tao/RTCORBA/RTCORBA.h>
+#include "tao/RTCORBA/RTCORBA.h"
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

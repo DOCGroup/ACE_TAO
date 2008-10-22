@@ -5,7 +5,7 @@
 
 #include "MessengerC.h"
 
-#include <tao/Valuetype/ValueFactory.h>
+#include "tao/Valuetype/ValueFactory.h"
 
 class MessageImpl : public virtual OBV_Message,
                     public virtual CORBA::DefaultValueRefCountBase
@@ -22,13 +22,13 @@ public:
 
   virtual ::Message::AddrList* getAddresses();
   virtual void addAddress(const char*);
- 
+
   virtual char* user();
   virtual void user(const char*);
- 
+
   virtual char* subject();
   virtual void subject(const char*);
- 
+
   virtual char* text();
   virtual void text(const char*);
 

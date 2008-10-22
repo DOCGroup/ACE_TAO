@@ -4,7 +4,7 @@
 #include "Message_i.h"
 #include "MessengerC.h"
 
-#include <tao/AnyTypeCode/TypeCode.h>
+#include "tao/AnyTypeCode/TypeCode.h"
 
 #include <iostream>
 
@@ -64,7 +64,7 @@ void MessageImpl::text(const char* s) {
 void MessageImpl::print() {
 
   std::cout << "Message from : " << user_() << std::endl;
- 
+
   AddrList& addrs = addrs_();
   if (addrs.length() > 0) {
     std::cout << "\tTo : ";

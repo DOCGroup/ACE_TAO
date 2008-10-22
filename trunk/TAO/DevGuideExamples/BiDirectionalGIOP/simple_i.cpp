@@ -4,9 +4,9 @@
 
 #include "simple_i.h"
 
-#include <tao/ORB_Core.h>
-#include <tao/Transport_Cache_Manager.h>
-#include <tao/Thread_Lane_Resources.h>
+#include "tao/ORB_Core.h"
+#include "tao/Transport_Cache_Manager.h"
+#include "tao/Thread_Lane_Resources.h"
 
 #include <iostream>
 

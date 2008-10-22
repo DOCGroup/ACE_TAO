@@ -11,8 +11,8 @@ const char* notify_ior = "corbaloc::localhost:8888/NotifyEventChannelFactory";
 
 #include <orbsvcs/CosNotifyChannelAdminC.h>
 
-#include <tao/corba.h>
-#include <tao/ORB_Core.h>
+#include "tao/corba.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"

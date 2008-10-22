@@ -2,9 +2,9 @@
 
 #include "MessengerC.h"
 #include "ClientInitializer.h"
-#include <tao/ORBInitializer_Registry.h>
+#include "tao/ORBInitializer_Registry.h"
 // Ensure that the PI library is linked in when building statically
-#include <tao/PI/PI.h>
+#include "tao/PI/PI.h"
 #include <iostream>
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

@@ -6,7 +6,7 @@
 #include "EventS.h"
 
 #include <iostream>
-#include <tao/Valuetype/ValueFactory.h>
+#include "tao/Valuetype/ValueFactory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -33,12 +33,12 @@ public:
     }
     ACE_DEBUG((LM_DEBUG, "\n"));
   }
- 
+
   virtual CORBA::Long size ()
   {
     return payload().length();
   }
- 
+
   virtual void add_long (CORBA::Long n)
   {
     CORBA::LongSeq& pl = payload();

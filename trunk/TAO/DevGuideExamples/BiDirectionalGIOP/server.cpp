@@ -7,7 +7,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
-#include <tao/BiDir_GIOP/BiDirGIOP.h>
+#include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include <iostream>
 #include <fstream>
 

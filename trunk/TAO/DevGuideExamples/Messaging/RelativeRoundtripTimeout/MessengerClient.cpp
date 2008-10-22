@@ -1,7 +1,7 @@
 // $Id$
 
 #include "MessengerC.h"
-#include <tao/TimeBaseC.h>
+#include "tao/TimeBaseC.h"
 #include "tao/Messaging/Messaging.h"
 #include <iostream>
 int ACE_TMAIN(int argc, ACE_TCHAR * argv[])
