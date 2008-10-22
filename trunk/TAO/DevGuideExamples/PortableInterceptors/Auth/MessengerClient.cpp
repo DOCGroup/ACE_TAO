@@ -7,8 +7,9 @@
 #include <tao/PI/PI.h>                            
 #include <orbsvcs/CosNamingC.h>
 #include <iostream>
+
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -49,4 +50,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-
