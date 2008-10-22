@@ -90,7 +90,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'e':
         which = ACE_OS::atoi(get_opts.optarg);
-	  if(which < 1 || 2 < which)
+    if(which < 1 || 2 < which)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Usage:  %s "
                                "-e [12]"
@@ -153,10 +153,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     trust      <<= establish_trust;
 
     CORBA::Policy_var policy =
-	  orb->create_policy (Security::SecQOPPolicy, protection);
+    orb->create_policy (Security::SecQOPPolicy, protection);
 
     CORBA::Policy_var policy2 =
-	  orb->create_policy (Security::SecEstablishTrustPolicy, trust);
+    orb->create_policy (Security::SecEstablishTrustPolicy, trust);
 
     policy_list.length (1);
     policy_list[0] = CORBA::Policy::_duplicate (policy.in ());
@@ -184,4 +184,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-

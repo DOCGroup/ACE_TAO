@@ -9,9 +9,8 @@
 #include <iostream>
 
 Messenger_i::Messenger_i (CORBA::ORB_ptr orb) 
-						  : orb_(CORBA::ORB::_duplicate(orb))
+              : orb_(CORBA::ORB::_duplicate(orb))
 {
-  
   CORBA::Object_var poa_object = 
     orb_->resolve_initial_references("RootPOA");
   
@@ -23,7 +22,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
     orb_->resolve_initial_references ("NameService");
   
   if (CORBA::is_nil(naming_obj.in())) {
-	std::cerr << "Unable to find naming service" << std::endl;
+  std::cerr << "Unable to find naming service" << std::endl;
   } 
       
   CosNaming::NamingContext_var naming_context =
@@ -48,8 +47,8 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
   
   CosNotifyChannelAdmin::EventChannel_var ec =
     notify_factory->create_channel (initial_qos,
-				    initial_admin,
-				    id);
+            initial_admin,
+            id);
   
   if (CORBA::is_nil (ec.in())) {
     std::cerr << "Unable to crete event channel" << std::endl;
@@ -75,8 +74,8 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
   
   CosNotifyChannelAdmin::ProxyConsumer_var proxy_consumer =
     supplier_admin->obtain_notification_push_consumer(
-				 CosNotifyChannelAdmin::STRUCTURED_EVENT,
-				 supplieradmin_proxy_id);
+         CosNotifyChannelAdmin::STRUCTURED_EVENT,
+         supplieradmin_proxy_id);
   
   StructuredEventSupplier_i *servant = 
     new StructuredEventSupplier_i(orb_.in());
@@ -85,11 +84,11 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
     servant->_this();
   
   s_proxy_consumer_ = 
-	CosNotifyChannelAdmin::StructuredProxyPushConsumer::
+  CosNotifyChannelAdmin::StructuredProxyPushConsumer::
     _narrow(proxy_consumer.in());
   
   if (CORBA::is_nil (s_proxy_consumer_.in())) {
-	std::cerr << "Unable to find structured proxy push consumer" << std::endl;
+    std::cerr << "Unable to find structured proxy push consumer" << std::endl;
   }    
   
   s_proxy_consumer_->
@@ -107,15 +106,11 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
   removed[0].type_name = CORBA::string_dup ("*");
 
   s_proxy_consumer_->offer_change(added, removed);
-	
 }
-
-
 
 Messenger_i::~Messenger_i (void)
 {
 }
-
 
 CORBA::Boolean Messenger_i::send_message (
     const char * user_name,
@@ -157,5 +152,4 @@ CORBA::Boolean Messenger_i::send_message (
   s_proxy_consumer_->push_structured_event(event);
 
   return 1;
-
 }
