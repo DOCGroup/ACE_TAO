@@ -1,3 +1,20 @@
+Wed Oct 22 12:52:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * DevGuideExamples/NotifyService/Filtering/MessengerServer.cpp:
+        * DevGuideExamples/NotifyService/QoSProperties/MessengerConsumer.cpp:
+        * DevGuideExamples/NotifyService/QoSProperties/MessengerServer.cpp:
+        * DevGuideExamples/NotifyService/QoSProperties/Messenger_i.cpp:
+        * DevGuideExamples/NotifyService/OfferSubscriptions/Messenger_i.cpp:
+        * DevGuideExamples/NotifyService/Messenger/MessengerConsumer.cpp:
+        * DevGuideExamples/NotifyService/Messenger/Messenger_i.cpp:
+        * DevGuideExamples/NotifyService/RTNotify/MessengerConsumer.cpp:
+        * DevGuideExamples/NotifyService/RTNotify/Messenger_i.cpp:
+        * DevGuideExamples/NamingService/Naming_Client/Messenger_i.cpp:
+        * DevGuideExamples/Security/PolicyControllingApp/MessengerClient.cpp:
+        * DevGuideExamples/PortableInterceptors/IOR/Messenger_i.cpp:
+
+          Fixed tabs found fuzz errors.
+
 Wed Oct 22 12:49:03 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:

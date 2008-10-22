@@ -34,8 +34,8 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
   
   CosNotifyChannelAdmin::EventChannel_var ec =
     notify_factory->create_channel (initial_qos,
-				    initial_admin,
-				    id);
+            initial_admin,
+            id);
 
   name[0].id = CORBA::string_dup ("MyEventChannel");
   
@@ -52,8 +52,8 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
   
   CosNotifyChannelAdmin::ProxyConsumer_var proxy_consumer =
     supplier_admin->obtain_notification_push_consumer(
-				 CosNotifyChannelAdmin::STRUCTURED_EVENT,
-				 supplieradmin_proxy_id);
+         CosNotifyChannelAdmin::STRUCTURED_EVENT,
+         supplieradmin_proxy_id);
   
   StructuredEventSupplier_i *servant = 
     new StructuredEventSupplier_i(orb_.in());
@@ -77,7 +77,6 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
     connect_structured_push_supplier (supplier.in());
 }
 
-
 Messenger_i::~Messenger_i (void)
 {
 }
@@ -87,7 +86,6 @@ CORBA::Boolean Messenger_i::send_message (
     const char * subject,
     char *& message)
 {
-  
   ACE_OS::printf("Message from: %s\nSubject:      %s\nMessage:      %s\n",
                  user_name, subject, message);
   //cout << "Message from: " << user_name << endl;
@@ -123,5 +121,4 @@ CORBA::Boolean Messenger_i::send_message (
   consumer_proxy_->push_structured_event(event);
 
   return 1;
-
 }
