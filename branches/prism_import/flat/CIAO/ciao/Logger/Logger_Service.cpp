@@ -3,7 +3,7 @@
 #include "Log_Macros.h"
 #include "ace/Get_Opt.h"
 #include "ace/CORBA_macros.h"
-#include "ace/Env_Value_T.h" 
+#include "ace/Env_Value_T.h"
 #include "tao/SystemException.h"
 
 namespace CIAO
@@ -14,7 +14,7 @@ namespace CIAO
       log_level_ (5)
   {
   }
-  
+
   int
   Logger_Service::init (int argc, ACE_TCHAR * argv[])
   {
@@ -22,31 +22,31 @@ namespace CIAO
     // command line can override
     ACE_Env_Value<int> log ("CIAO_LOG_LEVEL", this->log_level_);
     this->log_level_ = log;
-    
+
     ACE_Env_Value<int> trace ("CIAO_TRACE_ENABLE", this->trace_);
     this->trace_ = trace;
-    
+
     ACE_Env_Value<const char *> filename ("CIAO_LOG_FILE", this->filename_.c_str ());
     this->filename_ = filename;
 
     this->parse_args (argc, argv);
     this->set_levels ();
-    
+
     return 0;
   }
-  
+
   void
-  Logger_Service::parse_args (int argc, char **argv)
+  Logger_Service::parse_args (int argc, ACE_TCHAR **argv)
   {
-    const ACE_TCHAR *shortl = "-l";
-    const ACE_TCHAR *longl = "--log-level";
-    const ACE_TCHAR *tracel = "--trace";
-    const ACE_TCHAR *traces = "-t";
-    const ACE_TCHAR *lfl = "--log-file";
-    const ACE_TCHAR *lfs = "-f";    
-      
+    const ACE_TCHAR *shortl = ACE_TEXT("-l");
+    const ACE_TCHAR *longl = ACE_TEXT("--log-level");
+    const ACE_TCHAR *tracel = ACE_TEXT("--trace");
+    const ACE_TCHAR *traces = ACE_TEXT("-t");
+    const ACE_TCHAR *lfl = ACE_TEXT("--log-file");
+    const ACE_TCHAR *lfs = ACE_TEXT("-f");
+
     // We need to actually FIND the -l option, as the get_opt won't ignore
-    // the ORB options and such. 
+    // the ORB options and such.
     for (int i = 0; i < argc; ++i)
       {
         if (ACE_OS::strncmp (argv[i], traces, 2) == 0 ||
@@ -55,19 +55,19 @@ namespace CIAO
             this->trace_ = true;
             continue;
           }
-        
+
         if (ACE_OS::strncmp (argv[i], shortl, 2) == 0 ||
             ACE_OS::strncmp (argv[i], longl,11 ) == 0)
           {
             if ((i + 1) < argc && *argv[i + 1] != '-')
               {
                 int level = ACE_OS::atoi (argv[i + 1]);
-                
+
                 if (level != 0)
                   this->log_level_ = level;
               }
           }
-        
+
         if (ACE_OS::strncmp (argv[i], lfs, 2) == 0 ||
             ACE_OS::strncmp (argv[i], lfl, 10 ) == 0)
           {
@@ -76,9 +76,9 @@ namespace CIAO
                 this->filename_ = argv[i+1];
               }
           }
-      }    
+      }
   }
-  
+
   void
   Logger_Service::set_levels (void)
   {
@@ -91,9 +91,9 @@ namespace CIAO
       {
         CIAO_DISABLE_TRACE ();
       }
-    
+
     u_long new_mask = 0;
-    
+
     if (this->log_level_ >= 9)
       {
         new_mask |= LM_TRACE;
@@ -133,7 +133,7 @@ namespace CIAO
     ACE_Log_Msg::instance()->priority_mask(new_mask, ACE_Log_Msg::PROCESS);
     CIAO_DEBUG ( (LM_TRACE, CLINFO "Logging level is set to %i\n", this->log_level_));
   }
-  
+
   ACE_Log_Msg_Backend *
   Logger_Service::get_logger_backend (CORBA::ORB_ptr)
   {
