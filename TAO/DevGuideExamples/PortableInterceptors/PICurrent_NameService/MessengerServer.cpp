@@ -4,9 +4,9 @@
 #include "MessengerS.h"
 #include "ServerInitializer.h"
 
-#include <tao/ORBInitializer_Registry.h>
+#include "tao/ORBInitializer_Registry.h"
 // Ensure that the PI_Server library is linked in when building statically
-#include <tao/PI_Server/PI_Server.h>
+#include "tao/PI_Server/PI_Server.h"
 #include <orbsvcs/CosNamingC.h>
 #include <iostream>
 
@@ -51,25 +51,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CosNaming::Name name;
       name.length( 1 );
       name[0].id = CORBA::string_dup( "Messenger" );
-    
-      PortableServer::ObjectId_var oid = 
+
+      PortableServer::ObjectId_var oid =
         poa->activate_object( &messenger_servant );
       CORBA::Object_var messenger_obj = poa->id_to_reference( oid.in() );
-      
+
       root->rebind(name, messenger_obj.in());
-      
+
       std::cout << "Messenger bound in Naming Service" << std::endl;
 
       // Accept requests
       orb->run();
       orb->destroy();
     }
- 
+
   catch(const CORBA::Exception& ex)
     {
       std::cerr << "Caught CORBA exception: " << ex << std::endl;
       return 1;
     }
-  
+
   return 0;
 }

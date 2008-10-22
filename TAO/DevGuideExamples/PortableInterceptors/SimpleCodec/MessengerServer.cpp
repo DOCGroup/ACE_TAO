@@ -3,9 +3,9 @@
 #include "Messenger_i.h"
 #include "MessengerC.h"
 #include "ServerInitializer.h"
-#include <tao/ORBInitializer_Registry.h>
+#include "tao/ORBInitializer_Registry.h"
 // Ensure that the PI_Server library is linked in when building statically
-#include <tao/PI_Server/PI_Server.h>
+#include "tao/PI_Server/PI_Server.h"
 #include <iostream>
 #include <fstream>
 

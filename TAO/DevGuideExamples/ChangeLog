@@ -1,3 +1,83 @@
+Wed Oct 22 15:56:27 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * AMH/amh_pch.h:
+        * AMH_AMI/amh_ami_pch.h:
+        * BiDirectionalGIOP/client.cpp:
+        * BiDirectionalGIOP/server.cpp:
+        * BiDirectionalGIOP/simple_i.cpp:
+        * EventServices/OMG_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumer_i.cpp:
+        * EventServices/OMG_TypedEC/ConsumerMain.cpp:
+        * EventServices/OMG_TypedEC/Consumer_i.cpp:
+        * EventServices/OMG_TypedEC/SupplierMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Basic/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_Filter/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Filter/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplier_i.cpp:
+        * GettingStarted/started_pch.h:
+        * ImplRepo/IORTable/MessengerServer.cpp:
+        * ImplRepo/MessengerServer.cpp:
+        * InterfaceRepo/IFRBrowser.cpp:
+        * LocalObjects/Messenger/Messenger_i.h:
+        * LocalObjects/ServantLocator/MessengerServer.cpp:
+        * Messaging/RelativeRoundtripTimeout/MessengerClient.cpp:
+        * Multithreading/GracefulShutdown/MessengerServer.cpp:
+        * Multithreading/GracefulShutdown/MessengerShutdownTimer.h:
+        * NamingService/Naming_Server/MessengerTask.h:
+        * NamingService/Naming_Server/NamingTask.h:
+        * NotifyService/EventSequence/EventSequenceConsumer_i.cpp:
+        * NotifyService/EventSequence/EventSequenceSupplier_i.cpp:
+        * NotifyService/Filtering/StructuredEventConsumer_i.cpp:
+        * NotifyService/Filtering/StructuredEventSupplier_i.cpp:
+        * NotifyService/Messenger/StructuredEventConsumer_i.cpp:
+        * NotifyService/Messenger/StructuredEventSupplier_i.cpp:
+        * NotifyService/OfferSubscriptions/StructuredEventConsumer_i.cpp:
+        * NotifyService/OfferSubscriptions/StructuredEventSupplier_i.cpp:
+        * NotifyService/QoSProperties/StructuredEventConsumer_i.cpp:
+        * NotifyService/QoSProperties/StructuredEventSupplier_i.cpp:
+        * NotifyService/RTNotify/StructuredEventConsumer_i.cpp:
+        * NotifyService/RTNotify/StructuredEventSupplier_i.cpp:
+        * NotifyService/SupplierSideNC/StructuredEventConsumer_i.cpp:
+        * NotifyService/SupplierSideNC/StructuredEventSupplier_i.cpp:
+        * PortableInterceptors/Auth/ClientInterceptor.h:
+        * PortableInterceptors/Auth/ClientInterceptor.cpp:
+        * PortableInterceptors/Auth/MessengerClient.cpp:
+        * PortableInterceptors/Auth/MessengerServer.cpp:
+        * PortableInterceptors/Auth/ServerInterceptor.cpp:
+        * PortableInterceptors/IOR/MessengerClient.cpp:
+        * PortableInterceptors/IOR/MessengerServer.cpp:
+        * PortableInterceptors/IOR/Messenger_i.cpp:
+        * PortableInterceptors/IOR/ServerInterceptor.cpp:
+        * PortableInterceptors/PICurrent/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent/MessengerServer.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerServer.cpp:
+        * PortableInterceptors/SimpleCodec/MessengerClient.cpp:
+        * PortableInterceptors/SimpleCodec/MessengerServer.cpp:
+        * PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+        * PortableInterceptors/SimpleCodec/ServerInterceptor.cpp:
+        * RTCORBA/MessengerClient.cpp:
+        * RTCORBA/MessengerServer.cpp:
+        * RTCORBA/Messenger_i.h:
+        * RTCORBA/common.h:
+        * ValueTypes/Bank/_pch.h:
+        * ValueTypes/Bank/server.cpp:
+        * ValueTypes/Messenger/Message_i.h:
+        * ValueTypes/Messenger/Message_i.cpp:
+        * ValueTypes/Messenger/_pch.h:
+        * ValueTypes/Notify/Event_i.h:
+        * ValueTypes/Notify/consumer.cpp:
+        * ValueTypes/Notify/supplier.cpp:
+
+          Fixed fuzz errors. When including files from ACE/TAO/CIAO, use "" instead of <>.
+
+          Example: #include <ace/OS.h> was changed to "ace/OS.h"
+
 Wed Oct 22 15:42:56 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * AMH_AMI/inner_i.cpp:

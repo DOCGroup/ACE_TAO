@@ -16,7 +16,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <tao/RTCORBA/RTCORBA.h>
+#include "tao/RTCORBA/RTCORBA.h"
 
 //Class Messenger_i
 class  Messenger_i : public virtual POA_Messenger

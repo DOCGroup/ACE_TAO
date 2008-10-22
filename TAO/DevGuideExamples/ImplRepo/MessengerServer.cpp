@@ -4,8 +4,8 @@
 // This version uses the Implementation Repository.
 
 #include "Messenger_i.h"
-#include <tao/IORTable/IORTable.h>
-#include <tao/PortableServer/Root_POA.h>
+#include "tao/IORTable/IORTable.h"
+#include "tao/PortableServer/Root_POA.h"
 #include <iostream>
 
 PortableServer::POA_ptr

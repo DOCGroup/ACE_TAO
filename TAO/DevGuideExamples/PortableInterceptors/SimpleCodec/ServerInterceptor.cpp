@@ -1,8 +1,8 @@
 // $Id$
 
 #include "ServerInterceptor.h"
-#include <tao/PI_Server/ServerRequestInfoA.h>
-#include <tao/OctetSeqC.h>
+#include "tao/PI_Server/ServerRequestInfoA.h"
+#include "tao/OctetSeqC.h"
 #include <iostream>
 
 const IOP::ServiceId service_id = 0xdeed;

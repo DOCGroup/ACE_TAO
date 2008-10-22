@@ -1,7 +1,7 @@
 // $Id$
 
 #include "StructuredEventConsumer_i.h"
-#include <tao/PortableServer/PS_CurrentC.h>
+#include "tao/PortableServer/PS_CurrentC.h"
 #include <iostream>
 
 StructuredEventConsumer_i::StructuredEventConsumer_i(CORBA::ORB_ptr orb)
@@ -9,7 +9,7 @@ StructuredEventConsumer_i::StructuredEventConsumer_i(CORBA::ORB_ptr orb)
 {
 }
 
-void 
+void
 StructuredEventConsumer_i::push_structured_event(
        const CosNotification::StructuredEvent &event
       )
@@ -18,15 +18,15 @@ StructuredEventConsumer_i::push_structured_event(
   std::cout << "event received " << std::endl;
 
   const char *value;
-  
+
   for (unsigned int i=0; i<event.filterable_data.length(); i++) {
     event.filterable_data[i].value >>= value;
-    std::cout << event.filterable_data[i].name.in() << "\t" << value << std::endl; 
+    std::cout << event.filterable_data[i].name.in() << "\t" << value << std::endl;
   }
 
 }
 
-void 
+void
 StructuredEventConsumer_i::disconnect_structured_push_consumer()
 {
 
@@ -45,4 +45,4 @@ StructuredEventConsumer_i::offer_change(
         const CosNotification::EventTypeSeq &
       )
 {
-} 
+}

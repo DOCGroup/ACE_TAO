@@ -4,7 +4,7 @@
 // Implements a PushSupplier.
 
 #include "EchoEventSupplier_i.h"
-#include <tao/PortableServer/PS_CurrentC.h>
+#include "tao/PortableServer/PS_CurrentC.h"
 
 // Constructor duplicates the ORB reference.
 EchoEventSupplier_i::EchoEventSupplier_i(CORBA::ORB_ptr orb)

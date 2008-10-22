@@ -19,7 +19,7 @@
 #include <orbsvcs/Event/ECG_UDP_Out_Endpoint.h>
 #include <orbsvcs/Event/ECG_UDP_EH.h>
 
-#include <tao/ORB_Core.h>
+#include "tao/ORB_Core.h"
 
 #include "ace/Auto_Ptr.h"
 #include <iostream>

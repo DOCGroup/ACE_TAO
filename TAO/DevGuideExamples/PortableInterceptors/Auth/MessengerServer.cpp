@@ -3,19 +3,19 @@
 #include "Messenger_i.h"
 #include "MessengerS.h"
 #include "ServerInitializer.h"
-#include <tao/ORBInitializer_Registry.h>
+#include "tao/ORBInitializer_Registry.h"
 // Ensure that the PI_Server library is linked in when building statically
-#include <tao/PI_Server/PI_Server.h>
+#include "tao/PI_Server/PI_Server.h"
 #include <iostream>
 #include <fstream>
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  try 
+  try
     {
       ServerInitializer *temp_initializer = 0;
-    
+
       temp_initializer = new ServerInitializer;
 
       PortableInterceptor::ORBInitializer_var orb_initializer =
@@ -37,21 +37,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Create an object
       Messenger_i messenger_servant;
 
-      PortableServer::ObjectId_var oid = 
+      PortableServer::ObjectId_var oid =
         poa->activate_object( &messenger_servant );
       CORBA::Object_var messenger_obj = poa->id_to_reference( oid.in() );
-    
+
       CORBA::String_var str = orb->object_to_string( messenger_obj.in() );
       std::ofstream iorFile ( "Messenger.ior" );
       iorFile << str.in() << std::endl;
       iorFile.close();
-      std::cout << std::endl << "IOR written to file Messenger.ior" << std::endl;   
+      std::cout << std::endl << "IOR written to file Messenger.ior" << std::endl;
 
       // Accept requests
       orb->run();
       orb->destroy();
     }
-  
+
   catch(const CORBA::Exception& ex)
     {
       std::cerr << "Caught CORBA exception: " << ex << std::endl;

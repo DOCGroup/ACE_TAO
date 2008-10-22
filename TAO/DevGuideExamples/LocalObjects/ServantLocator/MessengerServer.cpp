@@ -3,7 +3,7 @@
 #include "MessengerLocator_i.h"
 #include "MessengerC.h"
 
-#include <tao/AnyTypeCode/TypeCode.h>
+#include "tao/AnyTypeCode/TypeCode.h"
 #include <iostream>
 #include <fstream>
 int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
