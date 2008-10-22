@@ -6,12 +6,12 @@
 #include <fstream>
 
 int
-main(int argc, char * argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   try {
     // Initialize orb
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
-    
+
     // Set a wait time to an integer if it has been passed as a
     // command line argument. Otherwise, have
     // Messenger_i::send_message() throw an exception if e
@@ -32,18 +32,18 @@ main(int argc, char * argv[])
           << seconds_to_wait << " seconds" << std::endl;
       }
     }
-    
+
     // Get reference to Root POA.
     CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
     PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
-    
+
     // Activate POA manager
     PortableServer::POAManager_var mgr = poa->the_POAManager();
     mgr->activate();
-    
+
     // Create an object
     Messenger_i servant(seconds_to_wait, servant_throws_exception);
-    
+
     // Write its stringified reference to stdout
     PortableServer::ObjectId_var oid =  poa->activate_object(&servant);
     obj = poa->id_to_reference(oid.in());
@@ -53,7 +53,7 @@ main(int argc, char * argv[])
     fout << str.in() << std::endl;
     fout.close();
     std::cout << "IOR written to file MessengerServer.ior" << std::endl;
-    
+
     // Accept requests
     orb->run();
     orb->destroy();

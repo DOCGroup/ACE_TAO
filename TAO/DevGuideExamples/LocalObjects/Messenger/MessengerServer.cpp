@@ -2,7 +2,7 @@
 
 #include "Messenger_i.h"
 #include <iostream>
-int main (int, char **)
+int ACE_TMAIN (int, ACE_TCHAR **)
 {
   try {
     // Construct a Messenger object and use it "as if" it's a corba object.

@@ -6,7 +6,7 @@
 #include <tao/AnyTypeCode/TypeCode.h>
 #include <iostream>
 #include <fstream>
-int main (int argc, char * argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   try {
     // Initialize the ORB
@@ -46,7 +46,7 @@ int main (int argc, char * argv[])
     PortableServer::ObjectId_var child_oid = PortableServer::string_to_ObjectId("Messenger");
 
     // Create the object without creating a servant.
-    CORBA::Object_var messenger_obj = 
+    CORBA::Object_var messenger_obj =
       childPOA->create_reference_with_id(child_oid.in(), ::_tc_Messenger->id());
 
     // Put the object reference into an IOR string
