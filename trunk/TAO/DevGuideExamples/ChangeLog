@@ -1,3 +1,18 @@
+Wed Oct 22 17:47:54 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * AMH_AMI/middle_server.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * Messaging/AMIcallback/MessengerServer.cpp:
+        * NamingService/Naming_Server/MessengerTask.cpp:
+        * NamingService/Naming_Server/NamingTask.cpp:
+        * PortableInterceptors/IOR/Messenger_i.cpp:
+        * PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+
+          Fix fuzz errors by using ACE_OS:: functions instead of the naked/raw ones.
+
 Wed Oct 22 16:45:07 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ValueTypes/Notify/Event.idl:

@@ -48,40 +48,40 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     int mcast = 1;
 
     for (int i = 0; argv[i] != 0; i++) {
-      if (strcmp(argv[i], "-ecname") == 0) {
+      if (ACE_OS::strcmp(argv[i], "-ecname") == 0) {
         if (argv[i+1] != 0) {
           i++;
           ecname = argv[i];
         } else {
           std::cerr << "Missing Event channel name" << std::endl;
         }
-      } else if (strcmp(argv[i], "-address") == 0) {
+      } else if (ACE_OS::strcmp(argv[i], "-address") == 0) {
         if (argv[i+1] != 0) {
           i++;
           address = argv[i];
         } else {
           std::cerr << "Missing address" << std::endl;
         }
-      } else if (strcmp(argv[i], "-port") == 0) {
+      } else if (ACE_OS::strcmp(argv[i], "-port") == 0) {
         if (argv[i+1] != 0) {
           i++;
           port = ACE_OS::atoi(argv[i]);
         } else {
           std::cerr << "Missing port" << std::endl;
         }
-      } else if (strcmp(argv[i], "-listenport") == 0) {
+      } else if (ACE_OS::strcmp(argv[i], "-listenport") == 0) {
         if (argv[i+1] != 0) {
           i++;
           listenport = ACE_OS::atoi(argv[i]);
         } else {
           std::cerr << "Missing port" << std::endl;
         }
-      } else if (strcmp(argv[i], "-iorfile") == 0) {
+      } else if (ACE_OS::strcmp(argv[i], "-iorfile") == 0) {
         if (argv[i+1] != 0) {
           i++;
           iorfile = argv[i];
         }
-      } else if (strcmp(argv[i], "-udp") == 0) {
+      } else if (ACE_OS::strcmp(argv[i], "-udp") == 0) {
         mcast = 0;
       }
     }
