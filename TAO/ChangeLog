@@ -1,3 +1,8 @@
+Wed Oct 22 07:08:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_3387_Regression/Messenger.mpc:
+          Renamed to Bug_3387_Regression.mpc
+
 Tue Oct 21 23:33:19 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DevGuideExamples/EventServices/OMG_TypedEC/Consumer_i.h:
