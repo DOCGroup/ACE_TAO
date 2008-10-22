@@ -220,9 +220,9 @@ public:
   /// ACE_Process_Manager to manage groups of processes.
   pid_t setgroup (pid_t pgrp);
 
-  /// Allows disabling of handle inheritence, default is TRUE.
-  int handle_inheritence (void);
-  void handle_inheritence (int);
+  /// Allows disabling of handle inheritance, default is TRUE.
+  int handle_inheritance (void);
+  void handle_inheritance (int);
 
   /// Cause the specified handle to be passed to a child process
   /// when it runs a new program image.
@@ -352,7 +352,7 @@ protected:
   ACE_TEXT_STARTUPINFO startup_info_;
 
   /// Default TRUE.
-  BOOL handle_inheritence_;
+  BOOL handle_inheritance_;
 
   /// Pointer to security_buf1_.
   LPSECURITY_ATTRIBUTES process_attributes_;
@@ -370,6 +370,9 @@ protected:
   ACE_HANDLE stdin_;
   ACE_HANDLE stdout_;
   ACE_HANDLE stderr_;
+
+  /// Default true.
+  bool handle_inheritance_;
 
   // = Real & effective user & group id's.
   //   These should be set to -1 to leave unchanged (default).

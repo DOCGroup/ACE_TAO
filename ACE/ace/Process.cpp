@@ -143,7 +143,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
                             options.command_line_buf(),
                             options.get_process_attributes(),  // must be NULL in CE
                             options.get_thread_attributes(),   // must be NULL in CE
-                            options.handle_inheritence(),      // must be false in CE
+                            options.handle_inheritance(),      // must be false in CE
                             options.creation_flags(),          // must be NULL in CE
                             options.env_buf(),                 // environment variables, must be NULL in CE
                             options.working_directory(),       // must be NULL in CE
@@ -175,7 +175,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
                             options.command_line_buf (),
                             options.get_process_attributes (),
                             options.get_thread_attributes (),
-                            options.handle_inheritence (),
+                            options.handle_inheritance (),
                             flags,
                             env_buf, // environment variables
                             options.working_directory (),
@@ -358,6 +358,14 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
   return this->child_id_;
 #else /* ACE_WIN32 */
+  if (!options.handle_inheritance()) {
+    // Set close-on-exec for all FDs except standard handles
+    for (int i = ACE::max_handles () - 1; i >= 0; i--) {
+      if ((i == ACE_STDIN) || (i == ACE_STDOUT) || (i == ACE_STDERR))
+          continue;
+      ACE_OS::fcntl (i, F_SETFD, FD_CLOEXEC);
+    }
+  }
   // Fork the new process.
   this->child_id_ = ACE::fork (options.process_name (),
                                options.avoid_zombies ());
@@ -795,13 +803,14 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
 #if !defined (ACE_HAS_WINCE)
 #if defined (ACE_WIN32)
     environment_inherited_ (0),
-    handle_inheritence_ (TRUE),
+    handle_inheritance_ (TRUE),
     process_attributes_ (0),
     thread_attributes_ (0),
 #else /* ACE_WIN32 */
     stdin_ (ACE_INVALID_HANDLE),
     stdout_ (ACE_INVALID_HANDLE),
     stderr_ (ACE_INVALID_HANDLE),
+    handle_inheritance_ (true),
     ruid_ ((uid_t) -1),
     euid_ ((uid_t) -1),
     rgid_ ((uid_t) -1),
