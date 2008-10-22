@@ -29,6 +29,10 @@ namespace CIAO
             typename CONTEXT>
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::~Servant_Impl (void)
   {
+    CIAO_DEBUG ((LM_INFO, "Servant_Impl_T::~Servant_Impl - "
+                 "Executor object reference  count is %u\n",
+                 this->executor_->_refcount_value ()));
+    
   // **********************************************************************
   /*
             try
@@ -140,9 +144,22 @@ namespace CIAO
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::activate_component (
     )
   {
-    if (this->is_activated () == 0)
+    if (this->configuration_completed_ == 1)
       {
         this->ciao_activate ();
+      }
+  }
+
+  template <typename BASE_SKEL,
+            typename EXEC,
+            typename CONTEXT>
+  void
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::passivate_component (
+    )
+  {
+    if (this->activated_ == 1)
+      {
+        this->ciao_passivate ();
       }
   }
 
@@ -196,7 +213,7 @@ namespace CIAO
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::is_activated (
     )
   {
-    return this->pre_activated_;
+    return this->activated_;
   }
 
   template <typename BASE_SKEL,

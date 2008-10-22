@@ -21,8 +21,12 @@ module CIAO
       oneway void shutdown ();
     };
 
-    typedef sequence<::Components::CCMObject> CCMObjects;
-      
+    typedef sequence< ::Components::CCMObject> CCMObjects;
+    
+    exception InvalidComponent 
+    {
+    };
+    
     /**
      * @interface CIAO_Container
      * @brief CIAO specific extensions to the component server interface.
@@ -38,7 +42,18 @@ module CIAO
                 ::Components::Deployment::ImplEntryPointNotFound,
                 ::Components::Deployment::InstallationFailure,
                 ::Components::Deployment::InvalidConfiguration);
-	
+      
+      
+      /// Activate component with specified ID, if no ID provided, 
+      /// activates all components. 
+      void activate_component (in ::Components::CCMObject comp)
+        raises (InvalidComponent);
+      
+      /// Passivate component with specified ID, if no ID provided, 
+      /// passivates all components. 
+      void passivate_component (in ::Components::CCMObject comp)
+        raises (InvalidComponent);
+
       /// Instruct the container to remove a component installed
       /// without an explicit home.  If the component was installed
       /// with an explicit home, this operation will fail.

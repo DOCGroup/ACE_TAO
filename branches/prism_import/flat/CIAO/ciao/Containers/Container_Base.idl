@@ -21,6 +21,10 @@ module CIAO
     };
   };
   
+  exception InvalidComponent
+  {  
+  };
+  
   /**
    * @interface Container
    * @brief Internal container interfaces. 
@@ -48,12 +52,16 @@ module CIAO
                                              in string servant_entrypoint,
                                              in string name);
     
+    void activate_component (in Components::CCMObject name);
+    
+    void passivate_component (in Components::CCMObject name);
+    
     void uninstall_component (in Components::CCMObject compptr);
     
     // *** Methods used by component specific container portions
     Object install_servant (in PortableServer::Servant svnt, 
-                                           in Container_Types::OA_Type type,
-                                           out PortableServer::ObjectId oid);
+                            in Container_Types::OA_Type type,
+                            out PortableServer::ObjectId oid);
     
     void uninstall_servant (in PortableServer::Servant compptr, 
                             in Container_Types::OA_Type type,

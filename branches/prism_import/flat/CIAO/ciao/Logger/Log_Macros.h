@@ -30,7 +30,7 @@
 #  if !defined (ACE_HAS_TRACE)
 #    define ACE_HAS_TRACE
 #  endif /* ACE_HAS_TRACE */
-#  define CIAO_TRACE(X) ACE_TRACE_IMPL(CLINFO X)
+#  define CIAO_TRACE(X) ACE_TRACE_IMPL(X)
 #  define CIAO_ENABLE_TRACE() ACE_Trace::start_tracing ()
 #  define CIAO_DISABLE_TRACE() ACE_Trace::stop_tracing ()
 #  undef CLINFO // Make log messages indent with tracing.

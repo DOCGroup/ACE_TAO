@@ -1,3 +1,37 @@
+Wed Oct 22 12:48:37 UTC 2008  William R. Otte  <wotte@william-r-ottes-macbook-pro.local>
+
+        * DAnCE/Starter/Starter.cpp:
+        * DAnCE/Starter/Starter.mpc:
+        * tests/CIAO_ComponentServer/Activator/client.cpp:
+        * tests/CIAO_ComponentServer/SimpleComponent/client.cpp:
+        
+          Compilation fixes. 
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:        
+        * DAnCE/tests/CIAO/NodeManager-Deployments/SimpleComponentExplicitHome.cdp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
+        * ciao/ComponentServer/CIAO_ComponentServer.idl:
+        * ciao/ComponentServer/CIAO_Container_Impl.h:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/Containers/Container_Base.idl:
+        * ciao/Containers/Containers.mpc:
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Servants/Home_Servant_Impl_Base.cpp:
+        * ciao/Servants/Servant_Impl_Base.h:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+        * ciao/Servants/Servant_Impl_T.h:
+        * ciao/Servants/Servant_Impl_T.cpp:
+
+          Fixes to have the container properly manage the lifecycle of
+          components during the teardown phase, so that the
+          SimpleComponentExplicitHome plan properly teardown. 
+        
+        * ciao/Logger/Log_Macros.h:
+        
+          Removed non-interpreted flags from CIAO_TRACE macros. 
+        
 Tue Oct 21 19:23:20 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DomainApplication/Domain_Application_Impl.h:

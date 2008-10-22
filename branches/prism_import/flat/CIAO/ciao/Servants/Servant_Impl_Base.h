@@ -52,11 +52,12 @@ namespace CIAO
   class CIAO_Servant_Impl_Export Servant_Impl_Base
     : public virtual POA_Components::CCMObject
   {
-  public:
+  protected:
     Servant_Impl_Base (Components::CCMHome_ptr home,
                        Home_Servant_Impl_Base *home_servant,
                        Container_ptr  c);
-
+    
+  public:
     virtual ~Servant_Impl_Base (void);
 
     /// Operations for CCMObject interface.
@@ -64,11 +65,17 @@ namespace CIAO
     virtual ::Components::PrimaryKeyBase * get_primary_key (void);
 
     virtual CORBA::IRObject_ptr get_component_def (void);
-
-    virtual Components::SessionComponent_ptr get_executor (void) = 0;
+    
+    virtual Components::SessionComponent_ptr get_executor (void);
 
     virtual void configuration_complete (void);
-
+    
+    virtual void activate_component (void);
+    
+    virtual void passivate_component (void);
+    
+    virtual ::Components::CCMHome_ptr get_ccm_home (void);
+    
     virtual void remove (void);
 
     virtual ::Components::ConnectionDescriptions *
@@ -104,7 +111,7 @@ namespace CIAO
     get_named_publishers (const ::Components::NameList & names);
 
     /// Operation to set attributes on the component.
-    virtual void set_attributes (const Components::ConfigValues &descr) = 0;
+    virtual void set_attributes (const Components::ConfigValues &descr);
 
     // Creates and returns the StandardConfigurator for the component.
     virtual ::Components::StandardConfigurator_ptr
@@ -115,6 +122,30 @@ namespace CIAO
     /// to that POA when _this() is called.
     virtual PortableServer::POA_ptr _default_POA (void);
 
+    virtual ::Components::Cookie * subscribe (const char * publisher_name,
+                                              ::Components::EventConsumerBase_ptr subscriber);
+    
+    virtual ::Components::EventConsumerBase_ptr unsubscribe (const char * publisher_name,
+                                                             ::Components::Cookie * ck);
+    
+    virtual void connect_consumer (const char * emitter_name,
+                                   ::Components::EventConsumerBase_ptr consumer);
+    
+    virtual ::Components::EventConsumerBase_ptr disconnect_consumer (const char * source_name);
+    
+    virtual ::Components::EmitterDescriptions * get_all_emitters (void);
+    
+    virtual ::Components::PublisherDescriptions * get_all_publishers (void);
+    
+    virtual ::CORBA::Boolean same_component (::CORBA::Object_ptr object_ref);
+    
+    virtual ::Components::Cookie * connect (const char * name,
+                                            ::CORBA::Object_ptr connection);
+    
+    virtual ::CORBA::Object_ptr disconnect (const char * name,
+                                            ::Components::Cookie * ck);
+
+    
   protected:
     void add_facet (const char *port_name,
                     ::CORBA::Object_ptr port_ref);
