@@ -16,8 +16,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class  Inner_i : public virtual POA_Inner,
-                 public virtual PortableServer::RefCountServantBase
+class  Inner_i : public virtual POA_Inner
 {
 public:
   // ctor takes a 1 to delay and return string, a 0 to crash

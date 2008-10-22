@@ -7,8 +7,7 @@
 #include "innerS.h"
 #include "middleC.h"
 
-class  Inner_callback_i : public virtual POA_AMI_InnerHandler,
-                          public virtual PortableServer::RefCountServantBase
+class  Inner_callback_i : public virtual POA_AMI_InnerHandler
 {
 public:
   //Constructor

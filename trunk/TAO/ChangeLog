@@ -1,3 +1,10 @@
+Wed Oct 22 09:00:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/AMH_AMI/inner_cb.h
+        * DevGuideExamples/AMH_AMI/inner_i.h
+        * DevGuideExamples/AMH_AMI/middle_i.h
+          Removed deprecated PortableServer::RefCountServantBase
+
 Wed Oct 22 08:57:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/LocalObjects/Messenger/MessengerServer.cpp
