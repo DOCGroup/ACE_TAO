@@ -15,7 +15,6 @@ Messenger_i::~Messenger_i (void)
 {
 }
 
-
 void Messenger_i::send_message (const CORBA::OctetSeq & user_name)
 {
   try
@@ -29,7 +28,7 @@ void Messenger_i::send_message (const CORBA::OctetSeq & user_name)
 
       // Obtain a reference to the CodecFactory.
       CORBA::Object_var obj =
-    	orb->resolve_initial_references ("CodecFactory");
+      orb->resolve_initial_references ("CodecFactory");
 
       IOP::CodecFactory_var codec_factory;
 
@@ -68,6 +67,4 @@ void Messenger_i::send_message (const CORBA::OctetSeq & user_name)
       std::cerr << "exception received" << std::endl;
       ACE_OS::exit(1);
     }
-
 }
-

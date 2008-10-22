@@ -3,11 +3,10 @@
 // messenger.idl
 
 interface Messenger
-    {
-        boolean send_message ( in    string user_name,
-                               in    string subject,
-                               inout string message );
+{
+  boolean send_message ( in    string user_name,
+                          in    string subject,
+                          inout string message );
 
-		void shutdown ( in string user_name );
-    };
-
+  void shutdown ( in string user_name );
+};

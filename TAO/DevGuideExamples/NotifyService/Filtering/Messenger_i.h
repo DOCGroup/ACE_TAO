@@ -14,7 +14,7 @@ class  Messenger_i : public virtual POA_Messenger
 {
 public:
   //Constructor 
-	Messenger_i (CORBA::ORB_ptr orb);
+  Messenger_i (CORBA::ORB_ptr orb);
   
   //Destructor 
   virtual ~Messenger_i (void);
@@ -30,6 +30,5 @@ private:
    CosNotifyChannelAdmin::StructuredProxyPushConsumer_var consumer_proxy_;
 
 };
-
 
 #endif /* MESSENGERI_H_  */
