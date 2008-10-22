@@ -6,7 +6,7 @@
 #ifndef _EchoEventSupplier_i_h_
 #define _EchoEventSupplier_i_h_
 
-#include <orbsvcs/RtecEventCommS.h>    // for POA_CosEventComm::PushSupplier
+#include "orbsvcs/RtecEventCommS.h"// for POA_CosEventComm::PushSupplier
 
 class EchoEventSupplier_i : public virtual POA_RtecEventComm::PushSupplier
 {

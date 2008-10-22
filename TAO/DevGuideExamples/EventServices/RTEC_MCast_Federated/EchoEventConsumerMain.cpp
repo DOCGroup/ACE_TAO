@@ -5,11 +5,11 @@
 
 #include "EchoEventConsumer_i.h"
 
-#include <orbsvcs/RtecEventCommC.h>
-#include <orbsvcs/RtecEventChannelAdminC.h>
-#include <orbsvcs/Time_Utilities.h>
-#include <orbsvcs/Event_Utilities.h>
-#include <orbsvcs/CosNamingC.h>
+#include "orbsvcs/RtecEventCommC.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/CosNamingC.h"
 
 #include <iostream>
 const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;

@@ -2,9 +2,9 @@
 
 // Main program for a TypedPushSupplier of Messenger objects.
 
-#include <orbsvcs/CosTypedEventCommC.h>
-#include <orbsvcs/CosTypedEventChannelAdminC.h>
-#include <orbsvcs/CosNamingC.h>
+#include "orbsvcs/CosTypedEventCommC.h"
+#include "orbsvcs/CosTypedEventChannelAdminC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 
 #include <iostream>

@@ -6,8 +6,8 @@
 #ifndef _EchoEventConsumer_i_h_
 #define _EchoEventConsumer_i_h_
 
-#include <orbsvcs/RtecEventCommS.h>    // for POA_CosEventComm::PushConsumer
-#include <orbsvcs/RtecEventChannelAdminC.h>
+#include "orbsvcs/RtecEventCommS.h"// for POA_CosEventComm::PushConsumer
+#include "orbsvcs/RtecEventChannelAdminC.h"
 
 class EchoEventConsumer_i : public virtual POA_RtecEventComm::PushConsumer
 {

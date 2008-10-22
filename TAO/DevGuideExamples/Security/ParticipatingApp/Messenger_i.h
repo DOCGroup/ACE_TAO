@@ -5,8 +5,8 @@
 
 #include <openssl/ssl.h>
 #include <openssl/x509.h>
-#include <orbsvcs/SecurityC.h>
-#include <orbsvcs/SSLIOPC.h>
+#include "orbsvcs/SecurityC.h"
+#include "orbsvcs/SSLIOPC.h"
 
 #include "MessengerS.h"
 
@@ -17,9 +17,9 @@ public:
       CORBA::ORB_ptr orb,
       SSLIOP::Current_ptr ssliop_current
     );
-  
+
   virtual ~Messenger_i (void);
-  
+
    virtual CORBA::Boolean send_message (
      const char * user_name,
      const char * subject,

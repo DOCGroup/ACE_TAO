@@ -3,9 +3,9 @@
 #ifndef _EVENTCONSUMER_I_H_
 #define _EVENTCONSUMER_I_H_
 
-#include <orbsvcs/CosNotifyChannelAdminS.h>
+#include "orbsvcs/CosNotifyChannelAdminS.h"
 
-class StructuredEventConsumer_i : 
+class StructuredEventConsumer_i :
   public virtual POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
@@ -27,4 +27,4 @@ private:
     CORBA::ORB_var orb_;
 };
 
-#endif 
+#endif

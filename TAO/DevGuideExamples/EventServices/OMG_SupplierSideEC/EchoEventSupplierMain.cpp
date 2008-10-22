@@ -2,11 +2,11 @@
 
 // Main program for a PushSupplier of Echo events.
 
-#include <orbsvcs/CosEventCommC.h>
-#include <orbsvcs/CosEventChannelAdminC.h>
-#include <orbsvcs/CosNamingC.h>
-#include <orbsvcs/CosEvent/CEC_EventChannel.h>
-#include <orbsvcs/CosEvent/CEC_Default_Factory.h>
+#include "orbsvcs/CosEventCommC.h"
+#include "orbsvcs/CosEventChannelAdminC.h"
+#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 
 #include <iostream>
 const int EVENT_DELAY_MS = 10;
