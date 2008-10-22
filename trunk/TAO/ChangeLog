@@ -1,3 +1,8 @@
+Wed Oct 22 07:11:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Release:
+          Package new DevGuideExamples directory
+
 Wed Oct 22 07:08:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_3387_Regression/Messenger.mpc:
