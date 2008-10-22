@@ -1,3 +1,9 @@
+Wed Oct 22 14:39:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * DevGuideExamples/NamingService/Naming_Client/Messenger_i.cpp:
+
+          Fixed tabs found fuzz errors.
+
 Wed Oct 22 14:00:46 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DevGuideExamples/DevGuideExamples.mwc:
