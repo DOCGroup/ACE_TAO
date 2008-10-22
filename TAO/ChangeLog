@@ -1,3 +1,10 @@
+Wed Oct 22 12:49:03 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+
+          %C can only be used in ACE_ERROR/ACE_DEBUG, not sprintf.
+          I fixed that.
+
 Wed Oct 22 12:01:09 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * utils/nslist/nsdel.cpp:

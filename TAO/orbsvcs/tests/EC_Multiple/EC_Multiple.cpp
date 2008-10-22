@@ -625,7 +625,7 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
         mc = 1;
 
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "hp_supplier_%02d@%C", i, this->lcl_name_.c_str ());
+      ACE_OS::sprintf (buf, "hp_supplier_%02d@%s", i, this->lcl_name_.c_str ());
 
       ACE_NEW (this->suppliers_[i],
                Test_Supplier (this, this->suppliers_ + i));
@@ -646,7 +646,7 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
         mc = 1;
 
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "lp_supplier_%02d@%C",
+      ACE_OS::sprintf (buf, "lp_supplier_%02d@%s",
                        i - this->hp_suppliers_, this->lcl_name_.c_str ());
 
       ACE_NEW (this->suppliers_[i],
@@ -684,7 +684,7 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
             mc = 1;
 
           char buf[BUFSIZ];
-          ACE_OS::sprintf (buf, "hp_supplier_%02d@%C", i, this->lcl_name_.c_str ());
+          ACE_OS::sprintf (buf, "hp_supplier_%02d@%s", i, this->lcl_name_.c_str ());
 
           this->suppliers_[i]->activate (buf,
                                          this->hp_interval_ * 10,
@@ -699,7 +699,7 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
             mc = 1;
 
           char buf[BUFSIZ];
-          ACE_OS::sprintf (buf, "lp_supplier_%02d@%C",
+          ACE_OS::sprintf (buf, "lp_supplier_%02d@%s",
                            i - this->hp_suppliers_, this->lcl_name_.c_str ());
 
           this->suppliers_[i]->activate (buf,
@@ -720,7 +720,7 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
   for (i = 0; i < this->hp_consumers_; ++i)
     {
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "hp_consumer_%02d@%C", i, this->lcl_name_.c_str ());
+      ACE_OS::sprintf (buf, "hp_consumer_%02d@%s", i, this->lcl_name_.c_str ());
 
       ACE_NEW (this->consumers_[i],
                Test_Consumer (this, this->consumers_ + i));
@@ -737,7 +737,7 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
   for (; i < this->hp_consumers_ + this->lp_consumers_; ++i)
     {
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "lp_consumer_%02d@%C",
+      ACE_OS::sprintf (buf, "lp_consumer_%02d@%s",
                        i - this->hp_consumers_, this->lcl_name_.c_str ());
 
       ACE_NEW (this->consumers_[i],
