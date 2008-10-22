@@ -377,7 +377,7 @@ protected:
 #endif /* ACE_WIN32 */
 
   /// Default TRUE.
-  BOOL handle_inheritance_;
+  bool handle_inheritance_;
 
 #if !defined (ACE_HAS_WINCE)
   /// Is 1 if stdhandles was called.
