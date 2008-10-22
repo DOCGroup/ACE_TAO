@@ -15,7 +15,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
       CORBA::Object_var rootObj = orb->resolve_initial_references("NameService");
       CosNaming::NamingContext_var rootNC =
-		  CosNaming::NamingContext::_narrow(rootObj.in());
+      CosNaming::NamingContext::_narrow(rootObj.in());
 
       CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
       PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
@@ -43,6 +43,4 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   }
 
   return 0;
-
 }
-

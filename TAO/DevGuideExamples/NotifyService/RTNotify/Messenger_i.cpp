@@ -14,7 +14,6 @@
 Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
-
   CORBA::Object_var naming_obj =
     orb_->resolve_initial_references ("NameService");
 
@@ -36,8 +35,8 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 
   CosNotifyChannelAdmin::EventChannel_var ec =
     notify_factory->create_channel (initial_qos,
-				    initial_admin,
-				    id);
+            initial_admin,
+            id);
 
   name[0].id = CORBA::string_dup ("MyEventChannel");
 
@@ -82,8 +81,8 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 
   CosNotifyChannelAdmin::ProxyConsumer_var proxy_consumer =
     supplier_admin->obtain_notification_push_consumer(
-				 CosNotifyChannelAdmin::STRUCTURED_EVENT,
-				 supplieradmin_proxy_id);
+         CosNotifyChannelAdmin::STRUCTURED_EVENT,
+         supplieradmin_proxy_id);
 
   StructuredEventSupplier_i *servant =
     new StructuredEventSupplier_i(orb_.in());
@@ -123,7 +122,6 @@ CORBA::Boolean Messenger_i::send_message (
   //cout << "Subject:      " << subject << endl;
   //cout << "Message:      " << message << endl;
 
-
   // Event Definition
   CosNotification::StructuredEvent event;
 
@@ -153,6 +151,4 @@ CORBA::Boolean Messenger_i::send_message (
   consumer_proxy_->push_structured_event(event);
 
   return 1;
-
 }
-

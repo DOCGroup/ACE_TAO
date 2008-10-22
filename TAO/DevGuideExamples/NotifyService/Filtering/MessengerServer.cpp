@@ -17,17 +17,17 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
   while ((c = get_opts ()) != -1)
     switch (c)
-  {
-      case 'o':
-        ior_output_file = get_opts.optarg;
-        break;
+      {
+        case 'o':
+          ior_output_file = get_opts.optarg;
+          break;
 
-      case '?':
-      default:
-        std::cerr << "usage: " << argv[0] << " -o <ior>" << std::endl;
-        return -1;
-        break;
-  }
+        case '?':
+        default:
+          std::cerr << "usage: " << argv[0] << " -o <ior>" << std::endl;
+          return -1;
+          break;
+      }
   return 0;
 }
 
@@ -48,7 +48,7 @@ ACE_TMAIN(int argc, ACE_TCHAR* argv[])
        // Find the Naming Service.
        CORBA::Object_var rootObj =  orb->resolve_initial_references("NameService");
        CosNaming::NamingContext_var rootNC =
-	        CosNaming::NamingContext::_narrow(rootObj.in());
+          CosNaming::NamingContext::_narrow(rootObj.in());
 
        // Get the  Root POA.
        CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
@@ -85,12 +85,10 @@ ACE_TMAIN(int argc, ACE_TCHAR* argv[])
        orb->destroy();
 
      }
-  catch(const CORBA::Exception& ex) {
-    std::cerr << ex << std::endl;
-    return 1;
-  }
+  catch(const CORBA::Exception& ex)
+    {
+      std::cerr << ex << std::endl;
+      return 1;
+    }
   return 0;
-
 }
-
-
