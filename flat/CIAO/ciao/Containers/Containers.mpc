@@ -31,7 +31,8 @@ project(CIAO_Servant_Activator_stub) : ciao_lib, portableserver, taoidldefaults,
 }
 
 project(CIAO_Session_Container) : ciao_lib, ciao_container_base, utils, \
-				ccm_componentserver_stub, ciao_servant_activator {
+				ccm_componentserver_stub, ciao_servant_activator, \
+                                ciao_servant {
   dynamicflags = SESSION_CONTAINER_BUILD_DLL
 
   IDL_Files {

@@ -63,6 +63,8 @@ namespace DAnCE
     //TODO Exception specification should be customized
     void init_components();
     
+    void configuration_complete_components ();
+    
     void passivate_components ();
     
     void remove_components ();

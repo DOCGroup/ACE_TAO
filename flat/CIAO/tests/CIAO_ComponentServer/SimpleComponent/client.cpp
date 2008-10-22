@@ -70,10 +70,11 @@ ACE_TMAIN (int argc,  char **argv)
   ACE_DEBUG ((LM_DEBUG, "foo\n"));
 
       CIAO_ServerActivator_i *sa_tmp = new CIAO_ServerActivator_i (spawn_delay,
-                                                                cs_path,
-                                                                false,
-                                                                orb.in (),
-                                                                root_poa.in ());
+                                                                   cs_path,
+                                                                   0,
+                                                                   false,
+                                                                   orb.in (),
+                                                                   root_poa.in ());
   ACE_DEBUG ((LM_DEBUG, "bar\n"));
       
       PortableServer::ServantBase_var safe = sa_tmp;

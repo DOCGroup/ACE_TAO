@@ -29,7 +29,7 @@ using namespace DAnCE;
 
 #ifdef DANCE_BUILD_STARTER_EXE
 
-int main(int argc, ACE_TCHAR * argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   try
     {

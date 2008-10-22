@@ -64,10 +64,11 @@ ACE_TMAIN (int argc,  char **argv)
       poa_manager->activate ();
 
       CIAO_ServerActivator_i *sa_tmp = new CIAO_ServerActivator_i (spawn_delay,
-                                                                cs_path,
-                                                                false,
-                                                                orb.in (),
-                                                                root_poa.in ());
+                                                                   cs_path,
+                                                                   0,
+                                                                   false,
+                                                                   orb.in (),
+                                                                   root_poa.in ());
       
       PortableServer::ServantBase_var safe = sa_tmp;
       

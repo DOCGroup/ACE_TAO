@@ -333,6 +333,24 @@ namespace CIAO
       //this->container_->_remove_ref ();
     }
     
+    void
+    CIAO_Container_i::activate_component (::Components::CCMObject_ptr comp)
+    {
+      CIAO_TRACE ("CIAO_Container_i::activate_component");
+      
+      this->container_->activate_component (comp);
+    }
+    
+    
+    void
+    CIAO_Container_i::passivate_component (::Components::CCMObject_ptr comp)
+    {
+      CIAO_TRACE ("CIAO_Container_i::passivate_component");
+
+      this->container_->passivate_component (comp);
+    }
+    
+
     PortableServer::POA_ptr 
     CIAO_Container_i::_default_POA (void)
     {

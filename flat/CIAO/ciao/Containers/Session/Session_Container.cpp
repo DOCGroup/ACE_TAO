@@ -6,6 +6,8 @@
 #include "ciao/CIAO_common.h"
 #include "ciao/Containers/Servant_Activator.h"
 #include "ccm/ComponentServer/ComponentServer_BaseC.h"
+#include "ciao/ComponentServer/CIAO_ComponentServerC.h"
+#include "ciao/Servants/Servant_Impl_Base.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Session_Container.inl"
@@ -657,6 +659,101 @@ namespace CIAO
   }
   
   void 
+  Session_Container::activate_component (Components::CCMObject_ptr compref)
+  {
+    CIAO_TRACE("Session_Container::activate_component");
+    
+    try
+      {
+        
+        PortableServer::Servant svt;
+        
+        try
+          {
+            svt = this->component_poa_->reference_to_servant (compref);
+          }
+        catch (...)
+          {
+            throw InvalidComponent ();
+          }
+        
+        CIAO::Servant_Impl_Base *sess = dynamic_cast<CIAO::Servant_Impl_Base *> (svt);
+        
+        if (sess == 0)
+          throw CIAO::InvalidComponent  ();
+        
+        CIAO_TRACE ((LM_TRACE, CLINFO "Session_Container::activate_component - "
+                     "Invoking CCM activate on provided component object reference."));
+        sess->activate_component ();
+      }
+    catch (CIAO::InvalidComponent &ex)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::activate_component - "
+                     "Failed to retrieve servant and/or cast to servant pointer.\n"));
+        throw;
+      }
+    catch (CORBA::Exception &ex)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::activate_component - "
+                     "Caught CORBA exception while activating a component: %s\n",
+                     ex._info ().c_str ()));
+        throw;
+      }
+    catch (...)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::activate_component - "
+                     "Caught unknown C++ eception while activating a component.\n"));
+        throw;
+      }
+  }
+  
+  void
+  Session_Container::passivate_component (Components::CCMObject_ptr compref)
+  {
+    CIAO_TRACE ("Session_Container::passivate_component");
+    
+    try
+      {
+        PortableServer::Servant svt;
+        
+        try
+          {
+            svt = this->component_poa_->reference_to_servant (compref);
+          }
+        catch (...)
+          {
+            throw InvalidComponent ();
+          }
+        
+        CIAO::Servant_Impl_Base *sess = dynamic_cast<CIAO::Servant_Impl_Base *> (svt);
+        
+        if (sess == 0)
+          throw CIAO::InvalidComponent  ();
+        
+        CIAO_TRACE ((LM_TRACE, CLINFO "Session_Container::passivate_component - "
+                     "Invoking CCM activate on provided component object reference."));
+        sess->passivate_component ();
+      }
+    catch (CIAO::InvalidComponent &ex)
+      {
+        throw;
+      }
+    catch (CORBA::Exception &ex)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::passivate_component - "
+                     "Caught CORBA exception while passivating a component: %s\n",
+                     ex._info ().c_str ()));
+        throw;
+      }
+    catch (...)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::passivate_component - "
+                     "Caught unknown C++ eception while passivating a component.\n"));
+        throw;
+      }
+  }
+  
+  void 
   Session_Container::uninstall (CORBA::Object_ptr objref, Container_Types::OA_Type y)
   {
     CIAO_TRACE ("Session_Container::uninstall");
@@ -716,7 +813,7 @@ namespace CIAO
                      "Removing facet or consumer servant\n"));
         tmp = this->facet_cons_poa_.in ();
       }
-
+    
     try
       {
         PortableServer::ObjectId_var tmp_id;
@@ -725,7 +822,8 @@ namespace CIAO
         svnt->_remove_ref ();
         
         CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::uninstall_servant - "
-                     "Servant successfully removed\n"));
+                     "Servant successfully removed, reference count is %u\n",
+                     svnt->_refcount_value ()));
         
         oid = tmp_id._retn ();
       }

@@ -131,6 +131,10 @@ namespace CIAO
                                                          const char *servant_entrypoint,
                                                          const char *name);
     
+    virtual void activate_component (Components::CCMObject_ptr compref);
+    
+    virtual void passivate_component (Components::CCMObject_ptr compref);
+    
     virtual void uninstall_component (Components::CCMObject_ptr compref);
 
 

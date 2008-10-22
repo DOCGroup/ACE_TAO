@@ -134,6 +134,46 @@ namespace
 
     return false;
   }
+
+  template<>
+  bool get_property_value (const char *name, const Deployment::Properties &properties, const char * &val)
+  {
+    DANCE_TRACE ("NodeApplicion::<anonymous>::get_property_value<const char *>");
+    
+    DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
+                  "Finding property value for name '%s'\n",
+                  name));
+    
+    for (CORBA::ULong i = 0; i < properties.length (); ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "******** %s vs %s\n",
+                    name, properties[i].name.in ()));
+        
+        if (ACE_OS::strcmp (properties[i].name.in (), name) == 0)
+          {
+            DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
+                          "Found property '%s'\n", name));
+            if (properties[i].value >>= CORBA::Any::to_string (val, 0))
+              {
+                DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
+                              "Value is %s\n", val));
+                return true;
+              }
+            else
+              {
+                DANCE_ERROR ((LM_WARNING, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
+                              "Failed to extract property value for %s\n", name));
+                return false;
+              }
+          }
+      }
+    
+    
+    DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
+                  "Unable to find property named %s\n", name));
+
+    return false;
+  }
   
   /// Tests flag, if false, sets it to true and replaces the name and
   /// reason flags of the exception.
@@ -304,6 +344,89 @@ NodeApplication_Impl::init()
 }
 
 void
+NodeApplication_Impl::configuration_complete_components ()
+{
+  DANCE_TRACE( "NodeApplication_Impl::configuration_complete_components");
+  
+  bool error (false);
+  Deployment::StartError exception;
+  
+  for (size_t k = 0; k < this->instances_.size (); ++k)
+    {
+      if (this->instances_[k]->type == eHome)
+        {
+          continue;
+        }
+      
+      DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::configuration_complete_components - "
+                    "Invoking configuration_complete on component instance %s on node %s\n",
+                    this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
+                    this->node_name_.c_str ()));
+
+      try
+        {
+          Components::CCMObject_var ccmobj = 
+            Components::CCMObject::_narrow (this->instances_[k]->ref.in ());
+          if (CORBA::is_nil (this->instances_[k]->ref))
+            {
+              DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::configuration_complete_components - "
+                            "Failed to narrow object reference for component instance %s\n",
+                            this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
+              continue;
+            }
+          
+          if (this->instances_[k]->state == eInstalled)
+            {
+              ccmobj->configuration_complete ();
+              this->instances_[k]->state = eConfigured;
+            }
+          else
+            {
+              if (!error)
+                {
+                  error = true;
+                  exception.name = this->plan_.instance[this->instances_[k]->idd_idx].name.in ();
+                  exception.reason = "Attempting to activate component that has already passed the configure stage.\n";
+                  continue;
+                }
+            }
+          
+          DANCE_DEBUG ((LM_INFO, DLINFO "NodeApplication_Impl::configuration_complete_components - "
+                        "Component %s successfully configured.\n",
+                        this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
+        }
+      catch (CORBA::Exception &ex)
+        {
+          DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::configuration_complete_components - "
+                        "Caught CORBA exception from ccm_actovate on component %s: %s\n",
+                        this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
+                        ex._info ().c_str ()));
+          if (!error)
+            {
+              error = true;
+              exception.name = this->plan_.instance[this->instances_[k]->idd_idx].name.in ();
+              exception.reason = ex._info ().c_str ();
+            }
+        }
+      catch (...)
+        {
+          DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::configuration_complete_components - "
+                        "Caught unknown C++ exception from ccm_activate on component %s\n",
+                        this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
+          if (!error)
+            {
+              error = true;
+              exception.name = this->plan_.instance[this->instances_[k]->idd_idx].name.in ();
+              exception.reason = "Unknown C++ exception";
+            }
+        }
+    }
+  
+  if (error)
+    throw exception;
+}
+
+void
 NodeApplication_Impl::start ()
 {
   DANCE_TRACE( "NodeApplication_Impl::start");
@@ -325,19 +448,28 @@ NodeApplication_Impl::start ()
 
       try
         {
-          Components::SessionComponent_var sess = 
-            Components::SessionComponent::_narrow (this->instances_[k]->ref.in ());
-          if (CORBA::is_nil (this->instances_[k]->ref))
+          CIAO::Deployment::Container_var cont = 
+            CIAO::Deployment::Container::_narrow (this->instances_[k]->container->ref.in());
+          
+          if (CORBA::is_nil (this->instances_[k]->container->ref.in ()))
             {
               DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::start - "
-                            "Failed to narrow object reference for component instance %s\n",
+                            "Failed to narrow object reference for container managing "
+                            "component instance %s to a CIAO container reference\n",
                             this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
+              test_and_set_exception (error, exception,
+                                      this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
+                                      "Failed to narrow managing container to CIAO container type");
               continue;
             }
           
           if (this->instances_[k]->state == eConfigured ||
               this->instances_[k]->state == ePassive)
-            sess->ccm_activate ();
+            {
+              Components::CCMObject_var comp (Components::CCMObject::_narrow (this->instances_[k]->ref));
+              cont->activate_component (comp.in ());
+              this->instances_[k]->state = eActive;
+            }
           else
             {
               if (!error)
@@ -349,7 +481,7 @@ NodeApplication_Impl::start ()
             }
           
           DANCE_DEBUG ((LM_INFO, DLINFO "NodeApplication_Impl::start - "
-                        "Component %s successfully passivated.\n",
+                        "Component %s successfully activated.\n",
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
         }
       catch (CORBA::Exception &ex)
@@ -508,9 +640,14 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
   const char *home_id = 0;
   get_property_value (DAnCE::EXPLICIT_HOME, idd.configProperty, home_id);
   
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::install_homed_component - "
+                "Property %s has value %s\n",
+                DAnCE::EXPLICIT_HOME, home_id));
+  
+
   if (home_id == 0)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::install_homed_component - "
+      DANCE_ERROR ((LM_ERROR, DLINFO "Nodeapplication_Impl::install_homed_component - "
                     "Apparent homed component %s lacks a %s configProperty, aborting installation\n",
                     idd.name.in (), DAnCE::EXPLICIT_HOME));
       throw ::Deployment::PlanError (idd.name.in (),
@@ -522,7 +659,7 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
                 home_id,
                 idd.name.in ()));
   
-    Instance *home_inst (0);
+  Instance *home_inst (0);
   
   for (size_t i = 0; i < cont.homes.size (); ++i)
     {
@@ -686,9 +823,17 @@ NodeApplication_Impl::create_container (size_t server, size_t cont_idx)
   // Configure components
   for (size_t i = 0; i < container.components.size (); ++i)
     {
-      if (container.components[i].type == eComponent)
-        this->install_component (container, container.components[i]);
-      else this->install_homed_component (container, container.components[i]);
+      switch (container.components[i].type)
+        {
+        case eComponent:
+          this->install_component (container, container.components[i]);
+          break;
+        case eHomedComponent:
+          this->install_homed_component (container, container.components[i]);
+          break;
+        default:
+          break;
+        }
     }
 }
 
@@ -768,12 +913,16 @@ NodeApplication_Impl::init_components()
           EInstanceType type =
             this->get_instance_type (this->plan_.implementation[impl].execParameter);
           if (type == eInvalid)
-            this->get_instance_type (this->plan_.instance[i].configProperty);
+            type = this->get_instance_type (this->plan_.instance[i].configProperty);
           
           switch (type)
             {
             case eHome:
               {
+                DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_impl::init_components - "
+                              "Allocating instance %s as a home\n",
+                              this->plan_.instance[i].name.in ()));
+                
                 size_t pos = this->servers_[0].containers[0].homes.size ();
                 this->servers_[0].containers[0].homes.size (pos + 1);
                 this->servers_[0].containers[0].homes[pos] = Instance (eHome,
@@ -785,6 +934,9 @@ NodeApplication_Impl::init_components()
               }
             case eComponent:
               {
+                DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_impl::init_components - "
+                              "Allocating instance %s as a standalone component\n",
+                              this->plan_.instance[i].name.in ()));
                 size_t pos = this->servers_[0].containers[0].homes.size ();
                 this->servers_[0].containers[0].components.size (pos + 1);
                 this->servers_[0].containers[0].components[pos] = Instance (eComponent,
@@ -796,6 +948,9 @@ NodeApplication_Impl::init_components()
               }
             case eHomedComponent:
               {
+                DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_impl::init_components - "
+                              "Allocating instance %s as a home managed component\n",
+                              this->plan_.instance[i].name.in ()));
                 size_t pos = this->servers_[0].containers[0].homes.size ();
                 this->servers_[0].containers[0].components.size (pos + 1);
                 this->servers_[0].containers[0].components[pos] = Instance (eHomedComponent,
@@ -808,7 +963,7 @@ NodeApplication_Impl::init_components()
             default:
               {
                 DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::init_components - "
-                             "get_instance_type function returned incorrect instance type\n"));
+                             "get_instance_type function returned invalid instance type\n"));
                 throw ::Deployment::InvalidProperty (this->plan_.instance[i].name.in (),
                                                      "Unable to affirmatively determine instance type");
               }
@@ -850,17 +1005,38 @@ NodeApplication_Impl::passivate_components()
       
       try
         {
-          Components::SessionComponent_var sess = 
-            Components::SessionComponent::_narrow (this->instances_[k]->ref.in ());
-          if (CORBA::is_nil (this->instances_[k]->ref))
+          CIAO::Deployment::Container_var cont = 
+            CIAO::Deployment::Container::_narrow (this->instances_[k]->container->ref.in());
+          
+          if (CORBA::is_nil (this->instances_[k]->container->ref.in ()))
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::passivate_components - "
-                            "Failed to narrow object reference for component instance %s\n",
+              DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::start - "
+                            "Failed to narrow object reference for container managing "
+                            "component instance %s to a CIAO container reference\n",
                             this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
+              test_and_set_exception (error, exception,
+                                      this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
+                                      "Failed to narrow managing container to CIAO container type");
               continue;
             }
           
-          sess->ccm_passivate ();
+          if (this->instances_[k]->state == eActive)
+            {
+              Components::CCMObject_var comp (Components::CCMObject::_narrow (this->instances_[k]->ref));
+              cont->passivate_component (comp.in ());
+              this->instances_[k]->state = ePassive;
+            }
+          else
+            {
+              DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::start - "
+                            "Attempting to passivate non-active component %s\n",
+                            this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
+              test_and_set_exception (error, exception, 
+                                      this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
+                                      "Attempting to passivate non-active component.");
+              continue;
+            }
+          
           DANCE_DEBUG ((LM_INFO, DLINFO "NodeApplication_Impl::passivate_components - "
                         "Component %s successfully passivated.\n",
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
@@ -916,29 +1092,7 @@ NodeApplication_Impl::remove_components()
           if (this->instances_[k]->state != ePassive)
             DANCE_DEBUG ((LM_WARNING, DLINFO "NodeApplication_Impl::remove_components - "
                           "Attempting to remove component that is not passive.\n"));
-                  
-          Components::SessionComponent_var sess = 
-            Components::SessionComponent::_narrow (this->instances_[k]->ref.in ());
-          if (CORBA::is_nil (this->instances_[k]->ref))
-            {
-              DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::remove_components - "
-                            "Failed to narrow object reference for component instance %s\n",
-                            this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
-              continue;
-            }
-                  
-          DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::remove_components - "
-                        "Invoking ccm_remove on component instance %s on node %s\n",
-                        this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
-                        this->node_name_.c_str ()));
 
-          sess->ccm_remove ();
-                  
-          DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::remove_components - "
-                        "Invoking remove_component for component instance %s on node %s\n",
-                        this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
-                        this->node_name_.c_str ()));
-                  
           if (this->instances_[k]->type == eComponent)
             {
               if (this->instances_[k]->container == 0)
@@ -1110,7 +1264,7 @@ NodeApplication_Impl::get_instance_type (const Deployment::Properties& prop) con
           return eComponent;
         }
       if (ACE_OS::strcmp (prop[i].name.in (),
-                          DAnCE::EXPLICIT_HOME))
+                          DAnCE::EXPLICIT_HOME) == 0)
         {
           DANCE_DEBUG ((LM_TRACE, DLINFO  "NodeApplication_Impl::get_instance_type - "
                         "Found explicit home component type.\n"));
@@ -1435,7 +1589,8 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
         }//for ( unsigned int i = 0; i < providedReference.length(); ++i )
     }//for ( unsigned int j = 0; j < this->plan_.connection.length(); ++j )
 
-
+  this->configuration_complete_components ();
+  
   if (start)
     {
       this->start();

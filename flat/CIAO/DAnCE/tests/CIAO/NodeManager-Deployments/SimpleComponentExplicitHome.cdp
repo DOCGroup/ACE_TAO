@@ -10,11 +10,11 @@
 
   <!-- Server Dance implementation-->
   <!-- Home implementation -->
-  <implementation xmi:id="SimpleComponentHomeImplementation">
-    <name>SimpleComponentHomeImplementation</name>
+  <implementation xmi:id="SimpleNullHomeImplementation">
+    <name>SimpleNullHomeImplementation</name>
     <source/>
-    <artifact xmi:idref="SimpleComponent_ExecArtifact" />
-    <artifact xmi:idref="SimpleComponent_SvntArtifact" />
+    <artifact xmi:idref="SimpleNull_ExecArtifact" />
+    <artifact xmi:idref="SimpleNull_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see §10.6.1) -->
       <name>home factory</name>
@@ -23,91 +23,91 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Foo_SimpleHome_Impl</string>
+          <string>create_Simple_SimpleNullHome_Impl</string>
         </value>
       </value>
     </execParameter>
     <execParameter>
-      <name>edu.vanderbilt.dre.ServantEntrypoint</name>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Foo_SimpleHome_Servant</string>
+          <string>create_Simple_SimpleNullHome_Servant</string>
         </value>
       </value>
     </execParameter>
     <execParameter>
-      <name>edu.vanderbilt.dre.ServantArtifact</name>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>SimpleComponent_svnt</string>
+          <string>SimpleNull_svnt</string>
         </value>
       </value>
     </execParameter>
     <execParameter>
-      <name>edu.vanderbilt.dre.ExecutorArtifact</name>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>SimpleComponent_exec</string>
+          <string>SimpleNull_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="SimpleComponentImplementation">
-    <name>SimpleComponentImplementation</name>
+  <implementation xmi:id="SimpleNullComponentImplementation">
+    <name>SimpleNullComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="SimpleComponent_ExecArtifact" />
-    <artifact xmi:idref="SimpleComponent_SvntArtifact" />
+    <artifact xmi:idref="SimpleNull_ExecArtifact" />
+    <artifact xmi:idref="SimpleNull_SvntArtifact" />
   </implementation>
 
-  <instance xmi:id="SimpleComponentHomeInstance">
-    <name>SimpleComponentHome</name>
+  <instance xmi:id="SimpleNullHomeInstance">
+    <name>SimpleNullHome</name>
     <node>Node</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="SimpleComponentHomeImplementation" />
+    <implementation xmi:idref="SimpleNullHomeImplementation" />
   </instance>
 
-  <instance xmi:id="SimpleComponentImplementation">
-    <name>SimpleComponentInstance</name>
+  <instance xmi:id="SimpleNullComponentInstance">
+    <name>SimpleNullComponent</name>
     <node>Node</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="SimpleComponentHomeImplementation" />
+    <implementation xmi:idref="SimpleNullComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.ExplicitHome</name>
+      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>SimpleComponentHome</string>
+          <string>SimpleNullHome</string>
         </value>
       </value>
     </configProperty>
   </instance>
 
   <!-- Artifacts declarations -->
-  <artifact xmi:id="SimpleComponent_ExecArtifact">
-    <name>SimpleComponent_exec</name>
+  <artifact xmi:id="SimpleNull_ExecArtifact">
+    <name>SimpleNull_exec</name>
     <source/>
     <node/>
-    <location>SimpleComponent_exec</location>
+    <location>SimpleNull_exec</location>
   </artifact>
-  <artifact xmi:id="SimpleComponent_SvntArtifact">
-    <name>SimpleComponent_svnt</name>
+  <artifact xmi:id="SimpleNull_SvntArtifact">
+    <name>SimpleNull_svnt</name>
     <source/>
     <node/>
-    <location>SimpleComponent_svnt</location>
+    <location>SimpleNull_svnt</location>
   </artifact>
 
   </Deployment:DeploymentPlan>

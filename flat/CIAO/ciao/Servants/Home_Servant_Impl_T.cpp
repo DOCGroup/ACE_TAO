@@ -80,6 +80,8 @@ namespace CIAO
       }
 
     _ciao_comp->remove ();
+    
+    _ciao_comp->_remove_ref ();
 
     CIAO_DEBUG ((LM_INFO, CLINFO "Home_Servant_Impl<>::remove_component - Removed the component\n"));
   }
@@ -93,12 +95,13 @@ namespace CIAO
                     COMP_SVNT>::update_component_map (
       PortableServer::ObjectId &oid)
   {
-    CIAO_TRACE ("update_component_map");
+    CIAO_TRACE ("Home_Servant_Impl<>::update_component_map");
 
     Components::CCMObject_var ccm_obj_ptr;
     if (objref_map_.unbind (oid, ccm_obj_ptr) != 0)
       {
-        CIAO_ERROR ((LM_ERROR, CLINFO "Home_Servant_Impl<>::update_component_map - Invalid component object reference\n"));
+        CIAO_ERROR ((LM_ERROR, CLINFO "Home_Servant_Impl<>::update_component_map - "
+                     "Invalid component object reference\n"));
         return;
       }
 
@@ -175,18 +178,18 @@ namespace CIAO
 				 this,
 				 this->container_),
 		      CORBA::NO_MEMORY ());
-
+    
     PortableServer::ServantBase_var safe (svt);
     PortableServer::ObjectId_var oid;
-
+    
     CORBA::Object_var objref =
       this->container_->install_servant (svt, 
                                          Container_Types::COMPONENT_t,
                                          oid.out ());
-
+    
     typedef typename COMP_SVNT::_stub_type stub_type;
     typename COMP_SVNT::_stub_var_type ho = stub_type::_narrow (objref.in ());
-
+    
     Components::CCMObject_var ccmobjref =
       Components::CCMObject::_narrow (objref.in ());
 

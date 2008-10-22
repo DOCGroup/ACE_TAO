@@ -81,9 +81,12 @@ namespace CIAO
     CORBA::Boolean
     is_activated ();
 
-    void
+    virtual void
     activate_component ();
-
+    
+    virtual void
+    passivate_component ();
+    
   protected:
 
     CORBA::Boolean activated_;

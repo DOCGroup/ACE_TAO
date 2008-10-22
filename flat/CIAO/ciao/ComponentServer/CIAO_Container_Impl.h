@@ -69,6 +69,10 @@ namespace CIAO
       virtual
 	void remove (void);
       
+      virtual void activate_component (::Components::CCMObject_ptr comp);
+
+      virtual void passivate_component (::Components::CCMObject_ptr comp);
+
       virtual PortableServer::POA_ptr _default_POA (void);
 
     private:

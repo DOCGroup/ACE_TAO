@@ -113,6 +113,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ex.name.in (), ex.reason.in ()));
       return -1;
     }
+  catch (Deployment::StartError &ex)
+    {
+      ACE_ERROR ((LM_ERROR, "*** Caught StartError exception with name %s and reason %s\n",
+                  ex.name.in (), ex.reason.in ()));
+      return -1;
+    }
   catch (CORBA::Exception &ex)
     {
       ACE_ERROR ((LM_ERROR, "*** Caught CORBA exception: %s\n",

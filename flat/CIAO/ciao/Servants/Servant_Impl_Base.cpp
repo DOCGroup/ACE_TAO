@@ -636,12 +636,118 @@ namespace CIAO
     return configurator._retn ();
   }
 
+  void
+  Servant_Impl_Base::activate_component (void)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::activate_component");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+  
+  
+  void
+  Servant_Impl_Base::passivate_component (void)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::passivate_component");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+  
+  Components::SessionComponent_ptr
+  Servant_Impl_Base::get_executor (void)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::get_executor");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+
+  void 
+  Servant_Impl_Base::set_attributes (const Components::ConfigValues &descr)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::set_attributes");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+  
+  ::Components::CCMHome_ptr 
+  Servant_Impl_Base::get_ccm_home (void)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::get_ccm_home");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+  
   PortableServer::POA_ptr
   Servant_Impl_Base::_default_POA (void)
   {
     CIAO_TRACE("Servant_Impl_Base::_default_POA (void)");
     return
       PortableServer::POA::_duplicate (container_->the_POA ());
+  }
+  
+  ::Components::Cookie * 
+  Servant_Impl_Base::subscribe (const char * publisher_name,
+                                ::Components::EventConsumerBase_ptr subscriber)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::subscribe");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+  
+  
+   ::Components::EventConsumerBase_ptr
+   Servant_Impl_Base::unsubscribe (const char * publisher_name,
+                                   ::Components::Cookie * ck)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::unsubscribe");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+  
+   void
+   Servant_Impl_Base::connect_consumer (const char * emitter_name,
+                                        ::Components::EventConsumerBase_ptr consumer)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::connect_consumer");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+  
+  ::Components::EventConsumerBase_ptr
+  Servant_Impl_Base::disconnect_consumer (const char * source_name)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::disconnect_consumer");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+  
+  ::Components::EmitterDescriptions * 
+  Servant_Impl_Base::get_all_emitters (void)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::get_all_emitters");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+  
+  ::Components::PublisherDescriptions * 
+  Servant_Impl_Base::get_all_publishers (void)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::get_all_publishers");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+  
+  ::CORBA::Boolean 
+  Servant_Impl_Base::same_component (::CORBA::Object_ptr object_ref)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::same_component");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+  
+  
+  ::Components::Cookie * 
+  Servant_Impl_Base::connect (const char * name,
+                              ::CORBA::Object_ptr connection)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::connect");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+  
+  ::CORBA::Object_ptr
+  Servant_Impl_Base::disconnect (const char * name,
+                                 ::Components::Cookie * ck)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::disconnect");
+    throw CORBA::NO_IMPLEMENT ();
   }
 }
 
