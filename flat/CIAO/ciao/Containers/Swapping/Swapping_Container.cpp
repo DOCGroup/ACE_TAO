@@ -17,7 +17,7 @@ namespace CIAO
   Swapping_Container::serial_number_ (0);
 
   Swapping_Container::Swapping_Container (CORBA::ORB_ptr o,
-                                          Container_Impl *container_impl)
+                                          Deployment::CIAO_Container_i *container_impl)
   : Session_Container (o, container_impl),
     number_ (0)
   {
