@@ -25,6 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ciao/Containers/Session/Session_Container.h"
+#include "tao/PortableServer/Servant_Base.h"
+#include "ciao/Containers/Container_Base.h"
 
 namespace CIAO
 {
@@ -39,11 +41,13 @@ namespace CIAO
     virtual ~Swapping_Container (void);
 
     /// Initialize the container with a name.
-    virtual int init (const char *name = 0,
-                      const CORBA::PolicyList *more_policies = 0);
+    virtual void init (const char *name = 0,
+                       const CORBA::PolicyList *more_policies = 0);
 
+    /// Install a servant for component or home.
     virtual CORBA::Object_ptr install_servant (PortableServer::Servant p,
-                                               Container::OA_Type t);
+                                               Container_Types::OA_Type type,
+                                               PortableServer::ObjectId_out oid);
 
     virtual CORBA::Object_ptr get_objref (PortableServer::Servant p);
 

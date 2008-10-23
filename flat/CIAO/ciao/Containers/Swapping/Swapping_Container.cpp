@@ -1,8 +1,9 @@
 // $Id$
 
 #include "Swapping_Container.h"
-#include "ciao/Servant_Activator.h"
-#include "ciao/Dynamic_Component_Activator.h"
+#include "ciao/Containers/Servant_Activator.h"
+#include "ciao/Containers/Swapping/Dynamic_Component_Activator.h"
+#include "ciao/Logger/Log_Macros.h"
 
 #include "tao/Utils/PolicyList_Destroyer.h"
 
@@ -42,10 +43,11 @@ namespace CIAO
   void
   Swapping_Container::deactivate_facet (const PortableServer::ObjectId &oid)
   {
-    this->the_facet_cons_POA ()->deactivate_object (oid);
+    // @todo
+    //    this->the_facet_cons_POA ()->deactivate_object (oid);
   }
 
-  int
+  void
   Swapping_Container::init (const char *name,
                             const CORBA::PolicyList *more_policies)
   {
@@ -65,9 +67,8 @@ namespace CIAO
 
     if (CORBA::is_nil (poa_object.in ()))
       {
-        CIAO_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          -1);
+        CIAO_ERROR ((LM_ERROR, CLINFO
+        "CIAO::Swapping_Container: Unable to initialize the POA.\n"));
       }
 
     PortableServer::POA_var root_poa =
@@ -84,8 +85,6 @@ namespace CIAO
     PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
     poa_manager->activate ();
-
-    return 0;
   }
 
   void
@@ -147,7 +146,7 @@ namespace CIAO
       root->create_POA ("facet_consumer_poa", poa_manager.in (), policies);
 
     ACE_NEW_THROW_EX (this->sa_,
-                      Servant_Activator (this->orb_.in ()),
+                      Servant_Activator_i (this->orb_.in ()),
                       CORBA::NO_MEMORY ());
 
     this->facet_cons_poa_->set_servant_manager (this->sa_);
@@ -208,7 +207,8 @@ namespace CIAO
 
   CORBA::Object_ptr
   Swapping_Container::install_servant (PortableServer::Servant p,
-                                       Container::OA_Type t)
+                                       Container::OA_Type t,
+                                       PortableServer::ObjectId_out oid)
   {
     PortableServer::POA_ptr tmp = 0;
 
@@ -221,7 +221,7 @@ namespace CIAO
         tmp = this->facet_cons_poa_.in ();
       }
 
-    PortableServer::ObjectId_var oid = tmp->activate_object (p);
+    oid = tmp->activate_object (p);
 
     CORBA::Object_var objref = tmp->id_to_reference (oid.in ());
 
