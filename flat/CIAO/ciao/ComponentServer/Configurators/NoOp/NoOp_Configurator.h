@@ -16,7 +16,7 @@
 
 #include <ccm/CCM_StandardConfiguratorC.h>
 
-#include "Server_Configurator.h"
+#include "ciao/ComponentServer/Configurators/Server_Configurator.h"
 #include "NoOp_Configurator_export.h"
 
 namespace CIAO
@@ -51,13 +51,13 @@ namespace CIAO
        * it receives an "install" commands.
        */
       virtual int
-	init_resource_manager (const ::Components::ConfigValues &properties);
+      init_resource_manager (const ::Components::ConfigValues &properties);
 
       /**
        * @brief get a policyset by its name.
        */
       virtual CORBA::PolicyList *
-	find_container_policies (const ::Components::ConfigValues &properties);
+      find_container_policies (const ::Components::ConfigValues &properties);
     };
   }
 }

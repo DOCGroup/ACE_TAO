@@ -30,7 +30,7 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "ciao/ComponentServer/CIAO_ServerResourcesC.h"
 
-#include "Config_Manager.h"
+#include "ciao/ComponentServer/Configurators/Config_Manager.h"
 #include "RTNA_Configurator_Export.h"
 
 namespace CIAO
