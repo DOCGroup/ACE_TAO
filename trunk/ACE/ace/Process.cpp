@@ -17,6 +17,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_fcntl.h"
 #include "ace/OS_Memory.h"
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
