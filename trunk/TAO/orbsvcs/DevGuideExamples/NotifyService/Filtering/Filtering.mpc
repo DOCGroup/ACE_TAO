@@ -1,0 +1,29 @@
+// $Id$
+
+project(*Server): portableserver, orbsvcsexe, notification_skel, naming {
+  exename = MessengerServer
+  Source_Files {
+    StructuredEventSupplier_i.cpp
+    MessengerServer.cpp
+    Messenger_i.cpp
+  }
+}
+
+project(*Client): orbsvcsexe, notification, naming {
+  exename = MessengerClient
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+}
+
+project(*Consumer): portableserver, orbsvcsexe, notification_skel, naming {
+  exename = MessengerConsumer
+  IDL_Files {
+  }
+  Source_Files {
+    MessengerConsumer.cpp
+    StructuredEventConsumer_i.cpp
+  }
+}
+
