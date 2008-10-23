@@ -36,7 +36,7 @@ namespace CIDL_SimpleProvider_Impl
 {
   class SIMPLEPROVIDER_EXEC_Export Trigger_exec_i
     : public virtual ::Simple::CCM_Trigger,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     Trigger_exec_i (void);
@@ -51,7 +51,7 @@ namespace CIDL_SimpleProvider_Impl
 
   class SIMPLEPROVIDER_EXEC_Export SimpleProvider_exec_i
     : public virtual SimpleProvider_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     SimpleProvider_exec_i (void);
@@ -86,7 +86,7 @@ namespace CIDL_SimpleProvider_Impl
 
   class SIMPLEPROVIDER_EXEC_Export SimpleProviderHome_exec_i
     : public virtual SimpleProviderHome_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     SimpleProviderHome_exec_i (void);

@@ -41,7 +41,7 @@ namespace CIDL_Receiver_Impl
    */
   class RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
 
   public:
@@ -59,7 +59,7 @@ namespace CIDL_Receiver_Impl
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete ();
-    
+
     virtual void ccm_activate ();
     virtual void ccm_passivate ();
     virtual void ccm_remove ();
@@ -79,7 +79,7 @@ namespace CIDL_Receiver_Impl
    */
   class RECEIVER_EXEC_Export ReceiverHome_exec_i
     : public virtual ReceiverHome_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     ReceiverHome_exec_i (void);

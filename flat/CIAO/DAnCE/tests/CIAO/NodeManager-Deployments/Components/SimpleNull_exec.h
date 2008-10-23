@@ -36,7 +36,7 @@ namespace CIDL_SimpleNull_Impl
 {
   class SIMPLENULL_EXEC_Export SimpleNull_exec_i
     : public virtual SimpleProvider_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     SimpleNull_exec_i (void);
@@ -68,7 +68,7 @@ namespace CIDL_SimpleNull_Impl
 
   class SIMPLENULL_EXEC_Export SimpleNullHome_exec_i
     : public virtual SimpleNullHome_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     SimpleNullHome_exec_i (void);

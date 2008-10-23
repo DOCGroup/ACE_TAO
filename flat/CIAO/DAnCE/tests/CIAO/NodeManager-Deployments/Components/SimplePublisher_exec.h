@@ -36,7 +36,7 @@ namespace CIDL_SimplePublisher_Impl
 {
   class SIMPLEPUBLISHER_EXEC_Export SimplePublisher_exec_i
     : public virtual SimplePublisher_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     SimplePublisher_exec_i (void);
@@ -68,7 +68,7 @@ namespace CIDL_SimplePublisher_Impl
 
   class SIMPLEPUBLISHER_EXEC_Export SimplePublisherHome_exec_i
     : public virtual SimplePublisherHome_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     SimplePublisherHome_exec_i (void);

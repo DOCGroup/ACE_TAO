@@ -11,7 +11,7 @@ namespace CIDL_ReceiverImpl
 {
   class RECEIVER_EXEC_Export ReceiverExec_i :
     public virtual ReceiverExec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
 
@@ -41,7 +41,7 @@ namespace CIDL_ReceiverImpl
 
   class RECEIVER_EXEC_Export test_i :
     public virtual Protocols::CCM_test,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
 
@@ -82,7 +82,7 @@ namespace CIDL_ReceiverImpl
 
   class RECEIVER_EXEC_Export ReceiverHomeExec_i :
     public virtual ReceiverHomeExec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
 

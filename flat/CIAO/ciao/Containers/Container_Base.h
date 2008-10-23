@@ -34,7 +34,7 @@
 namespace CIAO
 {
   class Dynamic_Component_Servant_Base;
-  
+
   namespace Deployment
   {
     class CIAO_Container_i;
@@ -57,9 +57,9 @@ namespace CIAO
    * Perhaps we can use local interface to define these interfaces as
    * we will also get reference counting automatically.
    */
-  class Container_Base_Export Container_i : 
+  class Container_Base_Export Container_i :
     public virtual Container,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     Container_i (CORBA::ORB_ptr o);
@@ -91,7 +91,7 @@ namespace CIAO
 
     // Uninstall a servant for component or home.
     virtual void uninstall_home (Components::CCMHome_ptr homeref) = 0;
-    
+
     virtual Components::CCMObject_ptr install_component (const char *primary_artifact,
                                                          const char *entry_point,
                                                          const char *servant_artifact,
@@ -101,11 +101,11 @@ namespace CIAO
     virtual void uninstall_component (Components::CCMObject_ptr compref) = 0;
 
     virtual CORBA::Object_ptr get_objref (PortableServer::Servant p) = 0;
-    
+
     virtual CORBA::Object_ptr install_servant (PortableServer::Servant objref,
                                                Container_Types::OA_Type type,
                                                PortableServer::ObjectId_out oid) = 0;
-    
+
     // Uninstall a servant for component.
     virtual void uninstall_servant (PortableServer::Servant objref,
                                     Container_Types::OA_Type type,
@@ -143,7 +143,7 @@ namespace CIAO
     Deployment::CIAO_Container_i *container_impl_;
 
     ::CIAO::REC_POL_MAP rec_pol_map_;
-    
+
   private:
     /// Not allowed to be used
     Container_i (void);
