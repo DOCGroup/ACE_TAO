@@ -29,11 +29,9 @@ namespace CIAO
       // Destructor
       virtual ~CIAO_ComponentServer_i (void);
 
-      virtual
-      void shutdown (void);
+      virtual void shutdown (void);
 
-      virtual
-      ::Components::ConfigValues * configuration (void);
+      virtual ::Components::ConfigValues * configuration (void);
 
       virtual
       ::Components::Deployment::ServerActivator_ptr get_server_activator (void);

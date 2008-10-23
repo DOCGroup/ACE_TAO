@@ -36,9 +36,9 @@ namespace CIAO
      *
      * @brief This class defines and implements the default
      * ComponentServer_Configurator base class that's needed for configuring the
-     * ComponentServerlication process.
+     * ComponentServer application process.
      **/
-    class ComponentServer_Configurator_Export ComponentServer_Configurator 
+    class ComponentServer_Configurator_Export ComponentServer_Configurator
     {
     public:
 
@@ -77,7 +77,7 @@ namespace CIAO
       /// and the one after that.
 
       bool rt_support (void);
-      
+
       void set_rt_support (void);
 
       virtual bool create_config_managers (void);
