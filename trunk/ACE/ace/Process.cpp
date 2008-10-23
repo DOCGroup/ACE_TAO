@@ -804,7 +804,6 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
 #if !defined (ACE_HAS_WINCE)
 #if defined (ACE_WIN32)
     environment_inherited_ (0),
-    handle_inheritance_ (TRUE),
     process_attributes_ (0),
     thread_attributes_ (0),
 #else /* ACE_WIN32 */

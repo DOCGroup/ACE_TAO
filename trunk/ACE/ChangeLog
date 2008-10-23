@@ -1,3 +1,8 @@
+Thu Oct 23 11:14:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Process.cpp:
+          Fixed duplicat initialisation
+
 Thu Oct 23 09:09:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Process.cpp:
