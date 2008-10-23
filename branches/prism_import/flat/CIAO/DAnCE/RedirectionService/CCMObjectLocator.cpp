@@ -1,3 +1,4 @@
+// $Id$
 
 #include "CCMObjectLocator.h"
 #include "ace/String_Base.h"
@@ -36,6 +37,17 @@ namespace DAnCE
 
   CCMObjectLocator::~CCMObjectLocator()
   {}
+
+  void
+  CCMObjectLocator::postinvoke (
+                             const ::PortableServer::ObjectId & /*oid*/,
+                             ::PortableServer::POA_ptr /*adapter*/,
+                             const char * /*operation*/,
+                             ::PortableServer::ServantLocator::Cookie /*the_cookie*/,
+                             ::PortableServer::Servant /*the_servant*/
+                             )
+  {
+  }
 
   ::PortableServer::Servant
   CCMObjectLocator::preinvoke (

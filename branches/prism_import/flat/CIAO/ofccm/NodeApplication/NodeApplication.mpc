@@ -1,11 +1,11 @@
 // -*- MPC -*-
 // $Id$
 
-project(OFCCM_NodeApplication): dance_lib, dynamicinterface, naming, dance_component_server_svnt, dance_deployment_stub, dance_deployment_svnt, dance_redirection_service, dance_cdmw_idl, dance_logger, iortable, naming_serv {
+project(OFCCM_NodeApplication): dance_lib, dynamicinterface, naming, dance_component_server_svnt, dance_deployment_stub, dance_deployment_svnt, dance_redirection_service, dance_cdmw_idl, dance_logger, iortable, naming {
   requires += ofccm
   sharedname   = DAnCE_NodeApplication
   dynamicflags = NODEAPPLICATION_BUILD_DLL
-    
+
   Source_Files {
     ComponentInstallation_Impl.cpp
     ServerActivator_Impl.cpp
@@ -16,9 +16,9 @@ project(OFCCM_NodeApplication): dance_lib, dynamicinterface, naming, dance_compo
     ComponentInstallation_Impl.h
     ServerActivator_Impl.h
     NodeApplication_Impl.h
-    ComponentAttributesSetter.h  
+    ComponentAttributesSetter.h
   }
 }
 
-    
+
 

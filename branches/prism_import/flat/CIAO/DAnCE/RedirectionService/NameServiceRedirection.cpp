@@ -1,3 +1,5 @@
+// $Id$
+
 #include "NameServiceRedirection.h"
 #include "DAnCE/Logger/Log_Macros.h"
 

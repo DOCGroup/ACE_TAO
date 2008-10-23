@@ -1,13 +1,12 @@
 // $Id$
 #include "NodeApplication_Impl.h"
 
-
 #include "ace/OS_Memory.h"
 #include "ace/Log_Msg.h"
 #include "ace/streams.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/Object.h"
-#include "tao/ORB.h" 
+#include "tao/ORB.h"
 #include "ccm/CCM_ObjectC.h"
 #include "ccm/CCM_SessionComponentC.h"
 #include "ciao/Valuetype_Factories/ConfigValue.h"
@@ -30,11 +29,11 @@ namespace
   {
     DANCE_TRACE ("NodeApplicion::<anonymous>::get_property_value<T>");
     CORBA::Any any;
-    
+
     DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
                   "Finding property value for name '%s'\n",
                   name));
-    
+
     if (properties.find (name, any) == 0)
       if (any >>= val)
         return true;
@@ -43,7 +42,7 @@ namespace
           DANCE_ERROR ((LM_WARNING, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
                         "Failed to extract property value for %s\n", name));
           return false;
-        }    
+        }
     DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
                   "Property value for name '%s' has no value\n", name));
 
@@ -55,7 +54,7 @@ namespace
   {
     DANCE_TRACE ("NodeApplicion::<anonymous>::get_property_value<bool>");
     CORBA::Any any;
-    
+
     DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<bool> - "
                   "Finding property value for name '%s'\n",
                   name));
@@ -75,13 +74,13 @@ namespace
 
     return false;
   }
-  
+
   template<>
   bool get_property_value (const char *name, PROPERTY_MAP &properties, const char * &val)
   {
     DANCE_TRACE ("NodeApplicion::<anonymous>::get_property_value<const char *>");
     CORBA::Any any;
-    
+
     DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<bool> - "
                   "Finding property value for name '%s'\n",
                   name));
@@ -106,11 +105,11 @@ namespace
   bool get_property_value (const char *name, const Deployment::Properties &properties, T &val)
   {
     DANCE_TRACE ("NodeApplicion::<anonymous>::get_property_value<T>");
-    
+
     DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
                   "Finding property value for name '%s'\n",
                   name));
-    
+
     for (CORBA::ULong i = 0; i < properties.length (); ++i)
       {
         if (ACE_OS::strcmp (properties[i].name.in (), name) == 0)
@@ -127,8 +126,8 @@ namespace
               }
           }
       }
-    
-    
+
+
     DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
                   "Property value for name '%s' has no value\n", name));
 
@@ -139,16 +138,16 @@ namespace
   bool get_property_value (const char *name, const Deployment::Properties &properties, const char * &val)
   {
     DANCE_TRACE ("NodeApplicion::<anonymous>::get_property_value<const char *>");
-    
+
     DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
                   "Finding property value for name '%s'\n",
                   name));
-    
+
     for (CORBA::ULong i = 0; i < properties.length (); ++i)
       {
         ACE_DEBUG ((LM_DEBUG, "******** %s vs %s\n",
                     name, properties[i].name.in ()));
-        
+
         if (ACE_OS::strcmp (properties[i].name.in (), name) == 0)
           {
             DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
@@ -167,14 +166,14 @@ namespace
               }
           }
       }
-    
-    
+
+
     DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
                   "Unable to find property named %s\n", name));
 
     return false;
   }
-  
+
   /// Tests flag, if false, sets it to true and replaces the name and
   /// reason flags of the exception.
   template <typename EXCEPTION>
@@ -191,16 +190,16 @@ namespace
 }
 
 
-NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb, 
-                                            PortableServer::POA_ptr poa, 
-                                            const Deployment::DeploymentPlan& plan, 
-                                            RedirectionService & redirection, 
+NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
+                                            PortableServer::POA_ptr poa,
+                                            const Deployment::DeploymentPlan& plan,
+                                            RedirectionService & redirection,
                                             const ACE_CString& node_name,
                                             const PROPERTY_MAP &properties)
-  : orb_ (CORBA::ORB::_duplicate (orb)), 
-    poa_ (PortableServer::POA::_duplicate (poa)), 
-    plan_ (plan), 
-    redirection_ (redirection), 
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    plan_ (plan),
+    redirection_ (redirection),
     node_name_ (node_name),
     properties_ (),
     instances_ (plan.instance.length ())
@@ -238,16 +237,16 @@ NodeApplication_Impl::~NodeApplication_Impl()
       for (size_t i = 0; i < this->servers_.size (); ++i)
         {
           ComponentServer &server = this->servers_[i];
-              
+
           DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::~NodeApplication_Impl - "
                         "In ComponentServer %u, deactivating %u containers\n", i, server.containers.size ()));
           for (size_t j = 0; j < server.containers.size (); ++j)
             {
               Container &container = server.containers[j];
-                  
+
               DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::~NodeApplication_Impl - "
                             "In container %u hosted in server %u\n", j, i));
-                  
+
               try
                 {
                   server.ref->remove_container (container.ref.in ());
@@ -264,9 +263,9 @@ NodeApplication_Impl::~NodeApplication_Impl()
                   DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::~NodeApplication_Impl - "
                                 "Caught unknown C++ exception while removing container %u on server %u.\n",
                                 j, i));
-                }                  
+                }
             }
-              
+
           DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::~NodeApplication_Impl - "
                         "Removing component server %u\n", i));
 
@@ -286,7 +285,7 @@ NodeApplication_Impl::~NodeApplication_Impl()
                             "Caught unknown C++ exception while removing server %u.\n",
                             i));
             }
-              
+
           DANCE_DEBUG ((LM_INFO, DLINFO "NodeApplication_Impl::~NodeApplication_Impl - "
                         "Successfully removed container %u on node %s.\n",
                         i, this->node_name_.c_str ()));
@@ -298,7 +297,7 @@ void
 NodeApplication_Impl::init()
 {
   DANCE_TRACE( "NodeApplication_Impl::init()");
-  
+
   /* TODO:  Lets move this stuff to the constructor, shall we?!? */
   /* TODO:  Might be nice to use a component configurator here to load the proper versions
      of the serveractivator.  */
@@ -321,20 +320,20 @@ NodeApplication_Impl::init()
   get_property_value (CIAO::Deployment::SERVER_MULTITHREAD, this->properties_, multithread);
   DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::init - "
                 "Threading: %s\n",  multithread ? "Multi" : "Single"));
-  
+
   DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::init - "
                 "Spawning server activator\n"));
-  
+
   CIAO::Deployment::CIAO_ServerActivator_i *tmp_act;
   ACE_NEW_THROW_EX (tmp_act,
-                    CIAO::Deployment::CIAO_ServerActivator_i (spawn, 
+                    CIAO::Deployment::CIAO_ServerActivator_i (spawn,
                                                               cs_path,
                                                               cs_args,
                                                               multithread,
                                                               this->orb_.in(),
                                                               this->poa_.in()),
                     CORBA::NO_MEMORY ());
-  
+
   this->activator_.reset (tmp_act);
 
   PortableServer::ObjectId_var sa_id =
@@ -347,17 +346,17 @@ void
 NodeApplication_Impl::configuration_complete_components ()
 {
   DANCE_TRACE( "NodeApplication_Impl::configuration_complete_components");
-  
+
   bool error (false);
   Deployment::StartError exception;
-  
+
   for (size_t k = 0; k < this->instances_.size (); ++k)
     {
       if (this->instances_[k]->type == eHome)
         {
           continue;
         }
-      
+
       DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::configuration_complete_components - "
                     "Invoking configuration_complete on component instance %s on node %s\n",
                     this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
@@ -365,7 +364,7 @@ NodeApplication_Impl::configuration_complete_components ()
 
       try
         {
-          Components::CCMObject_var ccmobj = 
+          Components::CCMObject_var ccmobj =
             Components::CCMObject::_narrow (this->instances_[k]->ref.in ());
           if (CORBA::is_nil (this->instances_[k]->ref))
             {
@@ -374,7 +373,7 @@ NodeApplication_Impl::configuration_complete_components ()
                             this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
               continue;
             }
-          
+
           if (this->instances_[k]->state == eInstalled)
             {
               ccmobj->configuration_complete ();
@@ -390,7 +389,7 @@ NodeApplication_Impl::configuration_complete_components ()
                   continue;
                 }
             }
-          
+
           DANCE_DEBUG ((LM_INFO, DLINFO "NodeApplication_Impl::configuration_complete_components - "
                         "Component %s successfully configured.\n",
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
@@ -421,7 +420,7 @@ NodeApplication_Impl::configuration_complete_components ()
             }
         }
     }
-  
+
   if (error)
     throw exception;
 }
@@ -430,17 +429,17 @@ void
 NodeApplication_Impl::start ()
 {
   DANCE_TRACE( "NodeApplication_Impl::start");
-  
+
   bool error (false);
   Deployment::StartError exception;
-  
+
   for (size_t k = 0; k < this->instances_.size (); ++k)
     {
       if (this->instances_[k]->type == eHome)
         {
           continue;
         }
-      
+
       DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::start - "
                     "Invoking start on component instance %s on node %s\n",
                     this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
@@ -448,9 +447,9 @@ NodeApplication_Impl::start ()
 
       try
         {
-          CIAO::Deployment::Container_var cont = 
+          CIAO::Deployment::Container_var cont =
             CIAO::Deployment::Container::_narrow (this->instances_[k]->container->ref.in());
-          
+
           if (CORBA::is_nil (this->instances_[k]->container->ref.in ()))
             {
               DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::start - "
@@ -462,7 +461,7 @@ NodeApplication_Impl::start ()
                                       "Failed to narrow managing container to CIAO container type");
               continue;
             }
-          
+
           if (this->instances_[k]->state == eConfigured ||
               this->instances_[k]->state == ePassive)
             {
@@ -479,7 +478,7 @@ NodeApplication_Impl::start ()
                   exception.reason = "Attempting to activate component that is not configured or passive.\n";
                 }
             }
-          
+
           DANCE_DEBUG ((LM_INFO, DLINFO "NodeApplication_Impl::start - "
                         "Component %s successfully activated.\n",
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
@@ -510,7 +509,7 @@ NodeApplication_Impl::start ()
             }
         }
     }
-  
+
   if (error)
     throw exception;
 }
@@ -522,15 +521,15 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
 
   const ::Deployment::MonolithicDeploymentDescription &mdd = this->plan_.implementation[inst.mdd_idx];
   const ::Deployment::InstanceDeploymentDescription &idd = this->plan_.instance[inst.idd_idx];
-  
+
   DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::install_home - "
                 "Starting installation of home %s on node %s\n",
                 idd.name.in (), idd.node.in ()));
-  
+
   // need to get significant property values
   const char *entrypt = 0;
   get_property_value (DAnCE::HOME_FACTORY, mdd.execParameter, entrypt);
-  
+
   if (entrypt == 0)
     {
       DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::install_home - "
@@ -539,7 +538,7 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
       throw ::Deployment::InvalidComponentExecParameter (mdd.name.in (),
                                                          "No 'home factory' property present on MDD\n");
     }
-  
+
   // @@TODO: Perhaps need better way to do this.
   Components::ConfigValues config;
   config.length (mdd.execParameter.length () + idd.configProperty.length ());
@@ -560,14 +559,14 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
       config[pos++] =  new CIAO::ConfigValue_impl (idd.configProperty[i].name.in (),
                                                    idd.configProperty[i].value);
     }
-  
+
   try
     {
       DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::install_home - "
                     "Calling install_home on container.  Home id '%s', entrypt '%s', "
                     "length of config values is %u\n",
                     idd.name.in (), entrypt, config.length ()));
-      
+
       ::Components::CCMHome_var home = cont.ref->install_home (idd.name.in (),
                                                                entrypt,
                                                                config);
@@ -581,7 +580,7 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
           throw ::Deployment::PlanError (idd.name.in (),
                                          "Nil object reference returned from conainer");
         }
-      
+
       DANCE_DEBUG ((LM_INFO, DLINFO  "NodeApplication_Impl::install_home - "
                     "Home '%s' on node '%s' successfully installed\n",
                     idd.name.in (), idd.node.in ()));
@@ -621,7 +620,6 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
 {
   DANCE_TRACE( "NodeApplication_Impl::install_component (unsigned int index)");
 
-  
 }
 
 void
@@ -636,14 +634,14 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
                 "Starting installation of homed component %s on node %s\n",
                 idd.name.in (),
                 idd.node.in ()));
-  
+
   const char *home_id = 0;
   get_property_value (DAnCE::EXPLICIT_HOME, idd.configProperty, home_id);
-  
+
   DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::install_homed_component - "
                 "Property %s has value %s\n",
                 DAnCE::EXPLICIT_HOME, home_id));
-  
+
 
   if (home_id == 0)
     {
@@ -653,14 +651,14 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
       throw ::Deployment::PlanError (idd.name.in (),
                                      "No explicit home  property on component requiring explicit home.");
     }
-  
+
   DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::install_homed_component - "
                 "Found explicit home property '%s' for component '%s'\n",
                 home_id,
                 idd.name.in ()));
-  
+
   Instance *home_inst (0);
-  
+
   for (size_t i = 0; i < cont.homes.size (); ++i)
     {
       if (ACE_OS::strcmp (home_id,
@@ -673,7 +671,7 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
           break;
         }
     }
-  
+
   if (home_inst == 0)
     {
       DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::install_homed_component - "
@@ -683,8 +681,8 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
       throw Deployment::InvalidProperty (idd.name.in (),
                                          "Unable to find valid home allocated to same container.");
     }
-  
-  Components::KeylessCCMHome_var home = 
+
+  Components::KeylessCCMHome_var home =
     Components::KeylessCCMHome::_narrow (home_inst->ref.in ());
 
   if (CORBA::is_nil (home.in ()))
@@ -696,7 +694,7 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
       throw Deployment::PlanError (idd.name.in (),
                                    "Installed home for explicitly homed component has nil object reference\n");
     }
-  
+
   try
     {
       inst.home = home_inst;
@@ -704,11 +702,11 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
                     "Invoking create_component on home %s for component %s\n",
                     home_id,
                     idd.name.in ()));
-      
+
       Components::CCMObject_var ccm_obj = home->create_component ();
       inst.ref = CORBA::Object::_narrow (ccm_obj.in ());
       inst.state = eInstalled;
-      
+
       DANCE_DEBUG ((LM_INFO, DLINFO  "NodeApplication_Impl::install_homed_component - "
                     "Component %s successfully installed in home %s\n",
                     idd.name.in (),
@@ -748,9 +746,9 @@ void
 NodeApplication_Impl::create_component_server (size_t index)
 {
   DANCE_TRACE ("NodeApplication_Impl::create_component_server");
-  
+
   ComponentServer &server = this->servers_[index];
-  
+
     try
     {
       DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::create_component_Server - "
@@ -774,7 +772,7 @@ NodeApplication_Impl::create_component_server (size_t index)
                    "returned ::Components::Deployment::InvalidConfiguration exception\n"));
       throw ::Deployment::InvalidProperty();
     }
-    
+
     try
       {
         for (size_t i = 0; i < server.containers.size (); ++i)
@@ -794,27 +792,27 @@ void
 NodeApplication_Impl::create_container (size_t server, size_t cont_idx)
 {
   DANCE_TRACE ("NodeApplication_impl::create_container - started");
-  
+
   Container &container = this->servers_[server].containers[cont_idx];
-  
+
   DANCE_DEBUG ((LM_TRACE, "NodeApplication_impl::create_container - "
                 "Creating container\n"));
   // TODO: Need to create configvalues
   Components::ConfigValues cvs;
-  
+
   container.ref = this->servers_[server].ref->create_container (cvs);
-  
+
   DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_impl::create_container - "
                 "Configuring %u homes on container %u on server %u\n",
                 container.homes.size (),
                 server, cont_idx));
-  
+
   // Configure homes first
   for (size_t i = 0; i < container.homes.size (); ++i)
     {
       this->install_home (container, container.homes[i]);
     }
-  
+
   DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_impl::create_container - "
                 "Configuring %u components on container %u on server %u\n",
                 container.components.size (),
@@ -891,10 +889,10 @@ NodeApplication_Impl::init_components()
 
   Components::ConfigValues config_values;
   DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::init_components - "
-               "Configuring %u component/home instances\n", 
+               "Configuring %u component/home instances\n",
                this->plan_.instance.length()));
-  
-  // @@TODO:  For the moment, we are only going to support a single component server and container. 
+
+  // @@TODO:  For the moment, we are only going to support a single component server and container.
   // in the future, we will need to determine how many component servers we need.
   if (this->plan_.instance.length () > 0)
     {
@@ -903,7 +901,7 @@ NodeApplication_Impl::init_components()
       this->servers_.size (1);
       this->servers_[0] = server;
     }
-  
+
   for (unsigned int i = 0; i < this->plan_.instance.length(); i++)
     {
       try
@@ -914,7 +912,7 @@ NodeApplication_Impl::init_components()
             this->get_instance_type (this->plan_.implementation[impl].execParameter);
           if (type == eInvalid)
             type = this->get_instance_type (this->plan_.instance[i].configProperty);
-          
+
           switch (type)
             {
             case eHome:
@@ -922,7 +920,7 @@ NodeApplication_Impl::init_components()
                 DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_impl::init_components - "
                               "Allocating instance %s as a home\n",
                               this->plan_.instance[i].name.in ()));
-                
+
                 size_t pos = this->servers_[0].containers[0].homes.size ();
                 this->servers_[0].containers[0].homes.size (pos + 1);
                 this->servers_[0].containers[0].homes[pos] = Instance (eHome,
@@ -974,7 +972,7 @@ NodeApplication_Impl::init_components()
           throw;
         }
     }
-  
+
   DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_impl::init_components - "
                 "Creating component servers and installing components.\n"));
   for (size_t i = 0; i < this->servers_.size (); ++i)
@@ -983,8 +981,8 @@ NodeApplication_Impl::init_components()
                     "Creating component server with index %u\n", i));
       this->create_component_server (i);
     }
-  
-  
+
+
   DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::init_components - finished\n"));
 }
 
@@ -992,22 +990,22 @@ void
 NodeApplication_Impl::passivate_components()
 {
   DANCE_TRACE ("NodeApplication_Impl::passivate_components()");
-  
+
   bool error (false);
   Deployment::StopError exception ("unfilled", "unfilled passivate components");
-  
+
   for (size_t k = 0; k < this->instances_.size (); ++k)
     {
       if (this->instances_[k]->type == eHome ||
           this->instances_[k]->type == eInvalid)
         continue;
-      
-      
+
+
       try
         {
-          CIAO::Deployment::Container_var cont = 
+          CIAO::Deployment::Container_var cont =
             CIAO::Deployment::Container::_narrow (this->instances_[k]->container->ref.in());
-          
+
           if (CORBA::is_nil (this->instances_[k]->container->ref.in ()))
             {
               DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::start - "
@@ -1019,7 +1017,7 @@ NodeApplication_Impl::passivate_components()
                                       "Failed to narrow managing container to CIAO container type");
               continue;
             }
-          
+
           if (this->instances_[k]->state == eActive)
             {
               Components::CCMObject_var comp (Components::CCMObject::_narrow (this->instances_[k]->ref));
@@ -1031,12 +1029,12 @@ NodeApplication_Impl::passivate_components()
               DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::start - "
                             "Attempting to passivate non-active component %s\n",
                             this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
-              test_and_set_exception (error, exception, 
+              test_and_set_exception (error, exception,
                                       this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
                                       "Attempting to passivate non-active component.");
               continue;
             }
-          
+
           DANCE_DEBUG ((LM_INFO, DLINFO "NodeApplication_Impl::passivate_components - "
                         "Component %s successfully passivated.\n",
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in ()));
@@ -1067,7 +1065,7 @@ NodeApplication_Impl::passivate_components()
             }
         }
     }
-  
+
   if (error)
     throw exception;
 }
@@ -1076,11 +1074,11 @@ void
 NodeApplication_Impl::remove_components()
 {
   DANCE_TRACE ("NodeApplication_Impl::remove_components()");
-  
+
   bool error (false);
   Deployment::StopError exception ("unfilled", "unfilled remove_components");
-  
-  // Removing components first. 
+
+  // Removing components first.
   for (size_t k = 0; k < this->instances_.size (); ++k)
     {
       try
@@ -1088,7 +1086,7 @@ NodeApplication_Impl::remove_components()
           if (this->instances_[k]->type == eInvalid ||
               this->instances_[k]->type == eHome)
             continue;
-          
+
           if (this->instances_[k]->state != ePassive)
             DANCE_DEBUG ((LM_WARNING, DLINFO "NodeApplication_Impl::remove_components - "
                           "Attempting to remove component that is not passive.\n"));
@@ -1101,7 +1099,7 @@ NodeApplication_Impl::remove_components()
                                 "Container element in component data structure for '%s' is nill\n",
                                 this->plan_.instance[this->instances_[k]->idd_idx].name.in ()
                                 ));
-                          
+
                   test_and_set_exception (error,
                                           exception,
                                           this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
@@ -1109,15 +1107,15 @@ NodeApplication_Impl::remove_components()
                   this->instances_[k]->state = eInvalidState;
                   continue;
                 }
-              
+
               CIAO::Deployment::Container_var ciao_container =
                 CIAO::Deployment::Container::_narrow (this->instances_[k]->container->ref.in ());
-                      
+
               if (CORBA::is_nil (ciao_container.in ()))
                 {
                   DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::remove_components - "
                                 "Attempted to remove un-homed component from unsupported container\n"));
-                  
+
                   test_and_set_exception (error, exception,
                                           this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
                                           "Attempted to remove un-homed component from unsupported container\n");

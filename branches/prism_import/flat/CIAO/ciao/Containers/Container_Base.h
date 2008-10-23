@@ -57,7 +57,7 @@ namespace CIAO
    * Perhaps we can use local interface to define these interfaces as
    * we will also get reference counting automatically.
    */
-  class Container_Base_Export Container_i :
+  class CIAO_Container_Base_Export Container_i :
     public virtual Container,
     public virtual ::CORBA::LocalObject
   {

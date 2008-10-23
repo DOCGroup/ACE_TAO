@@ -11,6 +11,5 @@ module CIAO
 {
   local interface Session_Container : Container
   {
-
   };
 };
