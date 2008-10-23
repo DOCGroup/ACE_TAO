@@ -1,3 +1,8 @@
+Thu Oct 23 09:14:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+          Fixed compile error
+
 Thu Oct 23 07:54:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/EventServices
