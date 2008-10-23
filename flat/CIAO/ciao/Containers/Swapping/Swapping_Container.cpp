@@ -207,12 +207,12 @@ namespace CIAO
 
   CORBA::Object_ptr
   Swapping_Container::install_servant (PortableServer::Servant p,
-                                       Container::OA_Type t,
+                                       Container_Types::OA_Type t,
                                        PortableServer::ObjectId_out oid)
   {
     PortableServer::POA_ptr tmp = 0;
 
-    if (t == Container::Component)
+    if (t == Container_Types::COMPONENT_t)
       {
         tmp = this->home_servant_poa_.in ();
       }
@@ -221,9 +221,9 @@ namespace CIAO
         tmp = this->facet_cons_poa_.in ();
       }
 
-    oid = tmp->activate_object (p);
+    PortableServer::ObjectId_var oid_var = tmp->activate_object (p);
 
-    CORBA::Object_var objref = tmp->id_to_reference (oid.in ());
+    CORBA::Object_var objref = tmp->id_to_reference (oid_var.in ());
 
     return objref._retn ();
   }

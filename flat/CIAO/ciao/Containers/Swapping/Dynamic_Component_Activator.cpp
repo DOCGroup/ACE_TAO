@@ -1,5 +1,6 @@
-#include "ciao/Dynamic_Component_Activator.h"
-#include "ciao/Dynamic_Component_Servant_Base.h"
+#include "ciao/Containers/Swapping/Dynamic_Component_Activator.h"
+#include "ciao/Servants/Swapping/Dynamic_Component_Servant_Base.h"
+#include "ciao/Logger/Log_Macros.h"
 
 ACE_RCSID (ciao,
            Dynamic_Component_Activator,
