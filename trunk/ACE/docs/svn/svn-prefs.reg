@@ -35,6 +35,7 @@ REGEDIT4
 
 [HKEY_CURRENT_USER\Software\Tigris.org\Subversion\Config\auto-props]
 "*.aspx"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
+"*.conf"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.cpp"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.cxx"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.cc"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
@@ -52,6 +53,7 @@ REGEDIT4
 "*.pidl"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.cidl"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.html"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
+"*.pem"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.sh"="svn:eol-style=native;svn:keywords=Author Date Id Revision;svn:executable"
 "*.py"="svn:eol-style=native;svn:keywords=Author Date Id Revision;svn:executable"
 "*.pl"="svn:eol-style=native;svn:keywords=Author Date Id Revision;svn:executable"
