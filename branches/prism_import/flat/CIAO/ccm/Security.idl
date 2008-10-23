@@ -1,5 +1,5 @@
 /**
- * @@ This is just a temporary file. CIAO doesn't sue the security
+ * @@ This is just a temporary file. CIAO doesn't use the security
  * service in its implementation but just using this local
  * interface below from the real security service pulls in
  * 250Kb of footprint

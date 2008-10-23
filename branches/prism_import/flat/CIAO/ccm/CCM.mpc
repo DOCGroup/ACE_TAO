@@ -11,8 +11,6 @@ project(CCM_stub) : taolib_with_idl, tao_output, valuetype, ifr_client {
 
   dynamicflags = CCM_STUB_BUILD_DLL
 
-
-
   IDL_Files {
     idlflags += -SS -Sci
     CCM_Base.idl
