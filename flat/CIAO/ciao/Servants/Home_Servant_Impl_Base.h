@@ -54,12 +54,11 @@ namespace CIAO
 
     virtual ::CORBA::IRObject_ptr get_home_def (void);
 
-    virtual void
-    update_component_map (PortableServer::ObjectId &oid) = 0;
+    virtual void update_component_map (PortableServer::ObjectId &oid) = 0;
 
   protected:
     Container_var container_;
-    
+
   private:
     /// Not to be used
     Home_Servant_Impl_Base (void);

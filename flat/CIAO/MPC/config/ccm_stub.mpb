@@ -2,8 +2,8 @@
 // $Id$
 
 project : ifr_client, valuetype, pi, codecfactory, ciao_vcwarnings, tao_output, ccm {
-  after += CCM_stub
-  includes   += $(CIAO_ROOT)
+  includes += $(CIAO_ROOT)
   idlflags += -I$(CIAO_ROOT)
-  libs     += CCM_stub
+  after += CCM_stub
+  libs  += CCM_stub
 }

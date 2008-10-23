@@ -80,7 +80,7 @@ namespace CIAO
       }
 
     _ciao_comp->remove ();
-    
+
     CIAO_DEBUG ((LM_INFO, CLINFO "Home_Servant_Impl<>::remove_component - Removed the component\n"));
   }
 
@@ -135,7 +135,7 @@ namespace CIAO
 
     if (this->executor_.in () == 0)
       {
-	CIAO_ERROR ((LM_ERROR, CLINFO "Home_Servant_Impl<>:create - nil executor reference\n"));
+        CIAO_ERROR ((LM_ERROR, CLINFO "Home_Servant_Impl<>:create - nil executor reference\n"));
         throw CORBA::INTERNAL ();
       }
 
@@ -176,18 +176,18 @@ namespace CIAO
 				 this,
 				 this->container_),
 		      CORBA::NO_MEMORY ());
-    
+
     PortableServer::ServantBase_var safe (svt);
     PortableServer::ObjectId_var oid;
-    
+
     CORBA::Object_var objref =
-      this->container_->install_servant (svt, 
+      this->container_->install_servant (svt,
                                          Container_Types::COMPONENT_t,
                                          oid.out ());
-    
+
     typedef typename COMP_SVNT::_stub_type stub_type;
     typename COMP_SVNT::_stub_var_type ho = stub_type::_narrow (objref.in ());
-    
+
     Components::CCMObject_var ccmobjref =
       Components::CCMObject::_narrow (objref.in ());
 

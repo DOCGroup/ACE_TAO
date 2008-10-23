@@ -1,7 +1,7 @@
 // $Id$
 
 project(CIAO_Container_Base) : ciao_lib, ccm_svnt, ciao_servant_activator, ciao_port_activator_stub  {
-  dynamicflags += CONTAINER_BASE_BUILD_DLL
+  dynamicflags += CIAO_CONTAINER_BASE_BUILD_DLL
   idlflags  += -Wb,export_include=Container_Base_export.h
   idlflags  += -Wb,export_macro=CIAO_Container_Base_Export
 

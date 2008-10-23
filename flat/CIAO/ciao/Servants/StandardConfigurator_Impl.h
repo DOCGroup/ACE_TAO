@@ -63,7 +63,7 @@ namespace CIAO
   private:
     /// The component whose attributes are going to be configured via
     /// set_attributes
-    Servant_Impl_Base* component_;
+    Servant_Impl_Base* const component_;
   };
 
 }
