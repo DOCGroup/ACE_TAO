@@ -1,3 +1,7 @@
+Thu Oct 23 20:06:02 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Process.cpp: Fixed a typo.
+
 Thu Oct 23 15:15:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
