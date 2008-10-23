@@ -1,7 +1,14 @@
+Thu Oct 23 15:39:07 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * tao/Bounded_Sequence_CDR_T.h:
+        * tao/Unbounded_Sequence_CDR_T.h:
+
+          Hopefully fix a Borland compilation error.
+
 Thu Oct 23 14:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
-        
+
         Match the rename of ace/Process.h/cpp:
         Wed Oct 22 13:30:54 UTC 2008  Douglas C. Schmidt
 
