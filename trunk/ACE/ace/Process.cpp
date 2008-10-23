@@ -359,14 +359,6 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
   return this->child_id_;
 #else /* ACE_WIN32 */
-  if (!options.handle_inheritance()) {
-    // Set close-on-exec for all FDs except standard handles
-    for (int i = ACE::max_handles () - 1; i >= 0; i--) {
-      if ((i == ACE_STDIN) || (i == ACE_STDOUT) || (i == ACE_STDERR))
-          continue;
-      ACE_OS::fcntl (i, F_SETFD, FD_CLOEXEC);
-    }
-  }
   // Fork the new process.
   this->child_id_ = ACE::fork (options.process_name (),
                                options.avoid_zombies ());
@@ -463,6 +455,14 @@ ACE_Process::spawn (ACE_Process_Options &options)
         ACE_OS::close (options.get_stdin ());
         ACE_OS::close (options.get_stdout ());
         ACE_OS::close (options.get_stderr ());
+        if (!options.handle_inheritence()) {
+          // Set close-on-exec for all FDs except standard handles
+          for (int i = ACE::max_handles () - 1; i >= 0; i--) {
+            if ((i == ACE_STDIN) || (i == ACE_STDOUT) || (i == ACE_STDERR))
+              continue;
+            ACE_OS::fcntl (i, F_SETFD, FD_CLOEXEC);
+          }
+        }
 
         // If we must, set the working directory for the child
         // process.
