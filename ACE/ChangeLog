@@ -1,3 +1,9 @@
+Thu Oct 23 12:52:21 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Process.cpp: Enhanced the support for enabling/disabling
+          handle inheritance on Linux.  Thanks to Christian Fromme
+          <christian at ast.dfs dot de> for this fix.
+
 Thu Oct 23 11:14:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Process.cpp:
