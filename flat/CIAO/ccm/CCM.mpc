@@ -1,15 +1,11 @@
 // $Id$
 
-project(CCM_stub) : taolib_with_idl, tao_output, valuetype, ifr_client {
+project(CCM_idl) : taolib_with_idl, valuetype {
   idlflags  += -Wb,stub_export_include=CCM_Stub_Export.h
   idlflags  += -Wb,stub_export_macro=CCM_Stub_Export
   idlflags  += -Wb,skel_export_include=CCM_Svnt_Export.h
   idlflags  += -Wb,skel_export_macro=CCM_Stub_Export
-  idlflags  += -I$(CIAO_ROOT)/ciao
-  // This is necessary for MPC to pull in rules.ciao.GNU
-  includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)
-
-  dynamicflags = CCM_STUB_BUILD_DLL
+  custom_only=1
 
   IDL_Files {
     idlflags += -SS -Sci
@@ -52,6 +48,53 @@ project(CCM_stub) : taolib_with_idl, tao_output, valuetype, ifr_client {
     CCM_EventConsumerBase.idl
   }
 
+  IDL_Files {
+    idlflags += -SS -Sci
+    CCM_Context.idl
+    CCM_CCMException.idl
+    CCM_EntityComponent.idl
+    CCM_EntityContext.idl
+  }
+
+  IDL_Files {
+    idlflags += -SS
+    CCM_CCM2Context.idl
+    CCM_ProxyHomeRegistration.idl
+    CCM_Session2Context.idl
+    CCM_Transaction.idl
+    CosPersistentState.idl
+    CCM_Container.idl
+    CCM_SessionContext.idl
+    CCM_SessionComponent.idl
+    CCM_Container_Ex.idl
+    CCM_StateIdFactory.idl
+    CCM_Entity2Context.idl
+    CCM_ComponentId.idl
+    CCM_ExecutorLocator.idl
+    CCM_EnterpriseComponent.idl
+    CCM_SessionSynchronization.idl
+    CCM_HomeRegistration.idl
+    CCM_HomeExecutorBase.idl
+  }
+
+  IDL_Files {
+    idlflags += -SS -Sci \
+                -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
+                -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL
+    Security.idl
+  }
+}
+
+
+project(CCM_stub) : taolib_with_idl, tao_output, valuetype, ifr_client {
+  dynamicflags += CCM_STUB_BUILD_DLL
+  after += CCM_idl
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)
+
+  IDL_Files {
+  }
+
   Source_Files {
     CCM_BaseC.cpp
     CCM_EventsC.cpp
@@ -85,45 +128,12 @@ project(CCM_svnt) : orbsvcslib, orbsvcs_output \
                            , avoids_corba_e_compact \
                            , avoids_corba_e_micro \
 {
-  idlflags   += -Wb,export_include=CCM_Svnt_Export.h
-  idlflags   += -Wb,export_macro=CCM_Svnt_Export
-  dynamicflags = CCM_SVNT_BUILD_DLL
-
-
-  IDL_Files {
-    idlflags += -SS -Sci \
-                -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
-                -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL
-    Security.idl
-  }
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)
+  dynamicflags += CCM_SVNT_BUILD_DLL
+  after += CCM_idl
 
   IDL_Files {
-    idlflags += -SS -Sci
-    CCM_Context.idl
-    CCM_CCMException.idl
-    CCM_EntityComponent.idl
-    CCM_EntityContext.idl
-  }
-
-  IDL_Files {
-    idlflags += -SS
-    CCM_CCM2Context.idl
-    CCM_ProxyHomeRegistration.idl
-    CCM_Session2Context.idl
-    CCM_Transaction.idl
-    CosPersistentState.idl
-    CCM_Container.idl
-    CCM_SessionContext.idl
-    CCM_SessionComponent.idl
-    CCM_Container_Ex.idl
-    CCM_StateIdFactory.idl
-    CCM_Entity2Context.idl
-    CCM_ComponentId.idl
-    CCM_ExecutorLocator.idl
-    CCM_EnterpriseComponent.idl
-    CCM_SessionSynchronization.idl
-    CCM_HomeRegistration.idl
-    CCM_HomeExecutorBase.idl
   }
 
   Source_Files {
