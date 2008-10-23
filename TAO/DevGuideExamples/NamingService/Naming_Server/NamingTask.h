@@ -9,14 +9,14 @@
 class NamingTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  NamingTask (int argc, char** argv);
+  NamingTask (int argc, ACE_TCHAR** argv);
   virtual int svc();
   void waitInit ();
   void end();
 
 private:
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
   CORBA::ORB_var orb_;
   bool initialized_;
 };
