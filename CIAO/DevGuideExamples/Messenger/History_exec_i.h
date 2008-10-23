@@ -40,7 +40,7 @@ namespace CIDL_Messenger_Impl
 {
   class MESSENGER_EXEC_Export History_exec_i
   : public virtual ::CCM_History,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     History_exec_i (void);

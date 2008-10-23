@@ -39,7 +39,7 @@ namespace CIDL_Messenger_Impl
 {
   class MESSENGER_EXEC_Export Runnable_exec_i
   : public virtual ::CCM_Runnable,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
   {
   public:
     Runnable_exec_i ();
