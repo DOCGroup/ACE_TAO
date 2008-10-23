@@ -1,0 +1,15 @@
+// $Id$
+
+project(*Server): namingexe, naming_skel {
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+  }
+}
+
+project(*Client): namingexe {
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+}
