@@ -12,7 +12,7 @@
 
 //Class Messenger_i
 class  Messenger_i : public virtual Messenger,
-         public virtual TAO_Local_RefCounted_Object
+         public virtual ::CORBA::LocalObject
 {
 public:
   //Constructor

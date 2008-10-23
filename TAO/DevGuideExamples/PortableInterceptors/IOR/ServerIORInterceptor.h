@@ -7,7 +7,7 @@
 
 class ServerIORInterceptor :
 public virtual PortableInterceptor::IORInterceptor,
-public virtual TAO_Local_RefCounted_Object
+public virtual ::CORBA::LocalObject
 {
  public:
   virtual char * name ();
