@@ -1,3 +1,9 @@
+Thu Oct 23 15:15:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Changed ACE_OS test to level 6 to temporarily get rid of this
+          check
+
 Thu Oct 23 12:52:21 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Process.cpp: Enhanced the support for enabling/disabling
