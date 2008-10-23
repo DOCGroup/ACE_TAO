@@ -1,16 +1,5 @@
 // $Id$
 
-/**
- * @@ Compile this file with:
- *
- *     tao_idl -Gv -I ../..  \
- *          -Wb,export_macro=CIAO_Export \
- *          -Wb,export_include=CIAO_export.h \
- *          -Wb,pre_include="ace/pre.h" \
- *          -Wb,post_include="ace/post.h" \
- *          CCM_Deployment.idl
- */
-
 #if !defined (COMPONENTSERVER_IDL)
 #define COMPONENTSERVER_IDL
 
@@ -31,15 +20,15 @@ module Components
       readonly attribute ConfigValues configuration;
 
       ServerActivator get_server_activator();
-      
+
       Container create_container(in ConfigValues config)
-	raises (::Components::CreateFailure, 
+	raises (::Components::CreateFailure,
 		::Components::Deployment::InvalidConfiguration);
-      
+
       void remove_container(in Container cref) raises (::Components::RemoveFailure);
 
       Containers get_containers();
-      
+
       void remove() raises (::Components::RemoveFailure);
     };
 
@@ -56,7 +45,7 @@ module Components
 		::Components::Deployment::ImplEntryPointNotFound,
 		::Components::Deployment::InstallationFailure,
 		::Components::Deployment::InvalidConfiguration);
-      
+
       void remove_home(in CCMHome href) raises (::Components::RemoveFailure);
 
       CCMHomes get_homes();

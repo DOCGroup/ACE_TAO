@@ -4,9 +4,6 @@
  * @@ This is just a temporary file.  Since TAO does not have
  *    CosPersistentState at all, we use this file to define
  *    types necessary to get ComponentBase.idl to compile.
- *
- *    Compile with
- *     tao_idl -Gv CosPersistentState.idl
  */
 
 #if !defined (CIAO_COSPERSISTENTSTATE_PIDL)
