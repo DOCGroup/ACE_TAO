@@ -152,6 +152,8 @@ module CIAO
      * @brief PolicyType supported by DAnCE extension.  Again, we are
      * redefining these value to avoid dependencies to various ORB
      * modules such as RTCORBA and DiffServ policy libraries.
+     * @JW This is a bad thing to redefine. Maybe we have to make a seperate
+     * IDL lib for these libraries, but redefinition is really a bad thing
      */
     const CORBA::PolicyType PRIORITY_MODEL_POLICY_TYPE = 40;
     const CORBA::PolicyType THREADPOOL_POLICY_TYPE = 41;
@@ -220,11 +222,11 @@ module CIAO
 
     union PolicyDef switch (CORBA::PolicyType)
     {
-    case 40: PriorityModelPolicyDef PriorityModelDef;
-    case 41: ThreadpoolPolicyDef    ThreadpoolDef;
-    case 45: PriorityBandedConnectionPolicyDef PriorityBandedConnectionDef;
-    case 86: CNWPriorityModelPolicyDef CNWPriorityModelDef;
-    case 87: NWPriorityModelPolicyDef NWPriorityModelDef;
+    case PRIORITY_MODEL_POLICY_TYPE: PriorityModelPolicyDef PriorityModelDef;
+    case THREADPOOL_POLICY_TYPE: ThreadpoolPolicyDef    ThreadpoolDef;
+    case PRIORITY_BANDED_CONNECTION_POLICY_TYPE: PriorityBandedConnectionPolicyDef PriorityBandedConnectionDef;
+    case CLIENT_NETWORK_PRIORITY_TYPE: CNWPriorityModelPolicyDef CNWPriorityModelDef;
+    case NETWORK_PRIORITY_TYPE: NWPriorityModelPolicyDef NWPriorityModelDef;
     };
 
     /**

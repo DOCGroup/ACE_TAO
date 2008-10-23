@@ -1,5 +1,4 @@
 project(CIAO_Basic_Configurator) : ccm_stub, ciao_componentserver_stub, ciao_lib {
-
   Source_Files {
     Server_Configurator.cpp
   }
@@ -24,27 +23,22 @@ project(CIAO_NoOp_Configurator) : ccm_stub, ciao_componentserver_stub, ciao_lib 
 
 project(CIAO_Basic_Config_Manager) : ciao_lib, ciao_config_manager, ciao_componentserver_stub, \
       diffservpolicy {
-
-  dynamicflags += BASIC_CONFIG_MANAGER_BUILD_DLL 
+  dynamicflags += BASIC_CONFIG_MANAGER_BUILD_DLL
   Source_Files {
     Basic_Config_Manager.cpp
   }
-  
   Header_Files {
     Basic_Config_Manager.h
-    Config_Manager.h
   }
 }
 
 project(CIAO_RT_Config_Manager) : ciao_lib, diffservpolicy, ciao_config_manager, \
-				negotiate_codesets, rtportableserver, rtcorba {
-  after += CIAO_ComponentServer_IDL
+                                negotiate_codesets, rtportableserver, rtcorba, ciao_componentserver_stub {
   dynamicflags += CIAO_RTNA_CONFIGURATOR_BUILD_DLL
-  Source_Files { 
+  Source_Files {
     RTConfig_Manager.cpp
   }
   Header_Files {
     RTConfig_Manager.h
-    Config_Manager.h
   }
 }
