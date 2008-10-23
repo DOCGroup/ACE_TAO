@@ -1,3 +1,14 @@
+Thu Oct 23 07:54:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/EventServices
+        * DevGuideExamples/ImplRepo
+        * DevGuideExamples/InterfaceRepo
+        * DevGuideExamples/NamingService
+        * DevGuideExamples/NotifyService
+        * DevGuideExamples/Security
+          Moved these directories to orbsvcs/DevGuideExamples, that makes
+          it much easier to just build the core examples
+
 Thu Oct 23 06:43:14 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * utils/nslist/nsdel.cpp:
