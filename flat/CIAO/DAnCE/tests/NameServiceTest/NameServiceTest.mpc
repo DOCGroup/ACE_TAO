@@ -1,5 +1,5 @@
 
-project (*NameServiceTestServer): dance, taoserver, iortable, naming_serv, dance_logger {
+project (*NameServiceTestServer): dance, taoserver, iortable, naming, dance_logger {
 	exename = NameServiceTestServer
 
 	IDL_Files {

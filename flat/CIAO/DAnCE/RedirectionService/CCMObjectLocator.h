@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef CCMOBJECTLOCATOR_H_
 #define CCMOBJECTLOCATOR_H_
 
@@ -18,7 +20,7 @@ namespace DAnCE
 
   class RedirectionService_Export CCMObjectLocator
     : public PortableServer::ServantLocator
-    , public CORBA::LocalObject
+    , public ::CORBA::LocalObject
   {
   public:
     class TreeNode;
@@ -69,8 +71,7 @@ namespace DAnCE
                              const char * /*operation*/,
                              ::PortableServer::ServantLocator::Cookie /*the_cookie*/,
                              ::PortableServer::Servant /*the_servant*/
-                             )
-    {};
+                             );
 
     void start_register (const ACE_CString& plan);
 

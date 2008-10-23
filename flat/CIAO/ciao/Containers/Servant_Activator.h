@@ -24,8 +24,6 @@
 #include "ace/Array_Base.h"
 #include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/LocalObject.h"
-
-
 #include "ciao/Containers/CIAO_Servant_ActivatorC.h"
 
 #if defined(_MSC_VER)
@@ -59,9 +57,11 @@ namespace CIAO
 
     virtual ~Servant_Activator_i (void);
 
-    virtual ::CORBA::Boolean  update_port_activator (const PortableServer::ObjectId &oid);
+    virtual ::CORBA::Boolean update_port_activator (
+      const PortableServer::ObjectId &oid);
 
-    virtual ::CORBA::Boolean  register_port_activator (::CIAO::Port_Activator_ptr pa);
+    virtual ::CORBA::Boolean register_port_activator (
+      ::CIAO::Port_Activator_ptr pa);
 
     /// Template methods overridden to get callbacks.
     /**
@@ -69,8 +69,9 @@ namespace CIAO
      * methods, please PortableServer documentation. This is probably
      * not the place to document what these mean.
      */
-    virtual PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
-					       PortableServer::POA_ptr poa);
+    virtual PortableServer::Servant incarnate (
+      const PortableServer::ObjectId &oid,
+      PortableServer::POA_ptr poa);
 
     virtual void etherealize (const PortableServer::ObjectId &oid,
 			      PortableServer::POA_ptr adapter,

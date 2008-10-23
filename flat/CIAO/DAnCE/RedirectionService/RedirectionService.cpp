@@ -1,3 +1,5 @@
+// $Id$
+
 #include "RedirectionService.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
@@ -43,7 +45,7 @@ RedirectionService::add_node (const ACE_CString& node)
   DANCE_TRACE ("RedirectionService::add_node");
   if (this->sl_)
     {
-      CCMObjectLocator* locator;
+      CCMObjectLocator* locator = 0;
       if (0 != this->locators_.find (node, locator))
         {
           locator = new CCMObjectLocator (this->orb_.in(), this->poa_.in(), node.c_str());
@@ -63,7 +65,7 @@ RedirectionService::registration_start (const ACE_CString& node, const ACE_CStri
   DANCE_TRACE ("RedirectionService::registration_start");
   if (this->sl_)
     {
-      CCMObjectLocator* locator;
+      CCMObjectLocator* locator = 0;
       if (0 != this->locators_.find (node, locator))
         {
           locator = new CCMObjectLocator (this->orb_.in(), this->poa_.in(), node.c_str());
@@ -90,7 +92,7 @@ RedirectionService::registration (const ACE_CString& node, const ACE_CString& pl
   CORBA::Object_var ns_obj = CORBA::Object::_duplicate (obj);
   if (this->sl_)
     {
-      CCMObjectLocator* locator;
+      CCMObjectLocator* locator = 0;
       if (0 != this->locators_.find (node, locator))
         {
           locator = new CCMObjectLocator (this->orb_.in(), this->poa_.in(), node.c_str());

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : dance, naming_serv, messaging {
+project : dance, naming, messaging {
   after += RedirectionService
   libs += DAnCE_RedirectionService
 }

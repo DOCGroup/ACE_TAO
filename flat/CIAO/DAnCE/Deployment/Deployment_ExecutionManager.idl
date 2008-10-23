@@ -9,8 +9,8 @@
 module Deployment {
 	//@! in DOCGroup this interface has significant extensions
 	interface ExecutionManager {
-		DomainApplicationManager preparePlan (	in DeploymentPlan plan, 
-												in ResourceCommitmentManager resourceCommitment)
+                DomainApplicationManager preparePlan (in DeploymentPlan plan,
+                                                      in ResourceCommitmentManager resourceCommitment)
 			raises (ResourceNotAvailable, PlanError, StartError);
 		DomainApplicationManagers getManagers ();
 		void destroyManager (in DomainApplicationManager manager)

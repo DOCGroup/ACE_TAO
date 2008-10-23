@@ -53,10 +53,10 @@ namespace DAnCE
       // Removes all records for specified plan
       void unregister (const ACE_CString& node, const ACE_CString& plan);
     private:
-      // Orb variable
+      /// Orb variable
       CORBA::ORB_var orb_;
 
-      // Root POA variable
+      /// Root POA variable
       PortableServer::POA_var   poa_;
 
       NameServiceRedirection naming_;
@@ -65,7 +65,7 @@ namespace DAnCE
 
       bool sl_;
 
-      // Map of servant locators (node name is a key)
+      /// Map of servant locators (node name is a key)
       typedef ACE_Map_Manager<ACE_CString, DAnCE::CCMObjectLocator*,  ACE_Null_Mutex> TLocators;
       TLocators locators_;
     };
