@@ -36,7 +36,7 @@ namespace CIDL_SimpleComponent_Impl
 {
   class SIMPLECOMPONENT_EXEC_Export SimpleComponent_exec_i
     : public virtual Simple_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     SimpleComponent_exec_i (const char *CreateType);
@@ -71,14 +71,14 @@ namespace CIDL_SimpleComponent_Impl
 
     private:
     ::Foo::CCM_SimpleComponent_Context_var context_;
-    
+
     CORBA::String_var type_;
-    
+
   };
 
   class SIMPLECOMPONENT_EXEC_Export SimpleHome_exec_i
     : public virtual SimpleComponent_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     SimpleHome_exec_i (void);

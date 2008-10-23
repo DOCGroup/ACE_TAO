@@ -48,7 +48,7 @@ namespace CIAO
    */
   class CIAO_Swapping_Container_Export Dynamic_Component_Activator
     : public virtual PortableServer::ServantActivator,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
   public:
     Dynamic_Component_Activator (CORBA::ORB_ptr o);

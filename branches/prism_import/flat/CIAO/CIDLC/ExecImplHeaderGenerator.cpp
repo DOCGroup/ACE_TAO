@@ -44,7 +44,7 @@ namespace
          << i.name () << "_exec_i" << endl
          << "  : public virtual " << i.scoped_name ().scope_name ()
          << "::CCM_" << i.name () << "," << endl
-         << "    public virtual TAO_Local_RefCounted_Object" << endl
+         << "    public virtual ::CORBA::LocalObject" << endl
          << "{"
          << "public:" << endl
          << i.name () << "_exec_i (void);"
@@ -196,7 +196,7 @@ namespace
       os << "class " << ctx.export_macro () << " "
          << t.name () << "_exec_i" << endl
          << "  : public virtual " << exec_.name () << "," << endl
-         << "    public virtual TAO_Local_RefCounted_Object" << endl
+         << "    public virtual ::CORBA::LocalObject" << endl
          << "{"
          << "public:" << endl
          << t.name () << "_exec_i (void);"
@@ -364,7 +364,7 @@ namespace
       os << "class " << ctx.export_macro () << " "
          << t.name () << "_exec_i" << endl
          << "  : public virtual " << exec_.name () << "," << endl
-         << "    public virtual TAO_Local_RefCounted_Object" << endl
+         << "    public virtual ::CORBA::LocalObject" << endl
          << "{"
          << "public:" << endl
          << t.name () << "_exec_i (void);"

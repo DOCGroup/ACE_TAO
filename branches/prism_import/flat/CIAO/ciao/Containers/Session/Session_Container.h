@@ -32,7 +32,7 @@ namespace CIAO
   class Session_Container;
   class Servant_Activator;
   class Home_Servant_Impl_Base;
-  
+
   namespace Deployment
   {
     class CIAO_Container_i;
@@ -76,7 +76,7 @@ namespace CIAO
                                   ACE_Null_Mutex>
   COMPONENTSERVANTCREATOR_FUNCPTR_MAP;
 
-    
+
   struct Session_Container_Export Static_Config_EntryPoints_Maps
   {
     /// Map of home creator entry point name and func ptr
@@ -122,15 +122,15 @@ namespace CIAO
                                                   const char *servant_artifact,
                                                   const char *servant_entrypoint,
                                                   const char *name);
-    
+
     virtual void uninstall_home (Components::CCMHome_ptr homeref);
-    
+
     virtual Components::CCMObject_ptr install_component (const char *primary_artifact,
                                                          const char *entry_point,
                                                          const char *servant_artifact,
                                                          const char *servant_entrypoint,
                                                          const char *name);
-    
+
     virtual void activate_component (Components::CCMObject_ptr compref);
     
     virtual void passivate_component (Components::CCMObject_ptr compref);
@@ -138,7 +138,7 @@ namespace CIAO
     virtual void uninstall_component (Components::CCMObject_ptr compref);
 
 
-    /// Uninstall a servant 
+    /// Uninstall a servant
     virtual void uninstall_servant (PortableServer::Servant objref,
                                     Container_Types::OA_Type type,
                                     PortableServer::ObjectId_out oid);
@@ -186,10 +186,10 @@ namespace CIAO
     ::CIAO::Servant_Activator_ptr ports_servant_activator (void);
 
   private:
-    
+
     /// Initialize the container with a name.
     virtual void init (const char *name = 0,
-                      const CORBA::PolicyList *more_policies = 0);
+                       const CORBA::PolicyList *more_policies = 0);
 
     /// Create POA for the component.
     /**

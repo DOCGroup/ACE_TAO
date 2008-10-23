@@ -36,7 +36,7 @@ namespace CIDL_SimpleConsumer_Impl
 {
   class SIMPLECONSUMER_EXEC_Export SimpleConsumer_exec_i
     : public virtual SimpleConsumer_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     SimpleConsumer_exec_i (void);
@@ -72,7 +72,7 @@ namespace CIDL_SimpleConsumer_Impl
 
   class SIMPLECONSUMER_EXEC_Export SimpleConsumerHome_exec_i
     : public virtual SimpleConsumerHome_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     SimpleConsumerHome_exec_i (void);

@@ -36,7 +36,7 @@ namespace CIDL_SimpleEmitter_Impl
 {
   class SIMPLEEMITTER_EXEC_Export SimpleEmitter_exec_i
     : public virtual SimpleEmitter_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     SimpleEmitter_exec_i (void);
@@ -68,7 +68,7 @@ namespace CIDL_SimpleEmitter_Impl
 
   class SIMPLEEMITTER_EXEC_Export SimpleEmitterHome_exec_i
     : public virtual SimpleEmitterHome_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     SimpleEmitterHome_exec_i (void);

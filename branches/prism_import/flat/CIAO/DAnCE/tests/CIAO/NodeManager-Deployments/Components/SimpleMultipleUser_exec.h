@@ -36,7 +36,7 @@ namespace CIDL_SimpleMultipleUser_Impl
 {
   class SIMPLEMULTIPLEUSER_EXEC_Export SimpleMultipleUser_exec_i
     : public virtual SimpleMultipleUser_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     SimpleMultipleUser_exec_i (void);
@@ -68,7 +68,7 @@ namespace CIDL_SimpleMultipleUser_Impl
 
   class SIMPLEMULTIPLEUSER_EXEC_Export SimpleMultipleUserHome_exec_i
     : public virtual SimpleMultipleUserHome_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     SimpleMultipleUserHome_exec_i (void);
