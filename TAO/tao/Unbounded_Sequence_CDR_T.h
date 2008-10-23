@@ -349,7 +349,7 @@ namespace TAO {
     sequence tmp(new_length);
     tmp.length(new_length);
     for(CORBA::ULong i = 0; i < new_length; ++i) {
-      if (!(strm >> tmp[i].out ())) {
+      if (!(strm >> static_cast<charT *&> (tmp[i].out ()))) {
         return false;
       }
     }
