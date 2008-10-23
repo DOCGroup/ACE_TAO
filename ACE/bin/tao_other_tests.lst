@@ -195,3 +195,27 @@ TAO/orbsvcs/tests/unit/Notify/MC/Statistic_Registry/run_test.pl: !VxWorks !VxWor
 TAO/orbsvcs/tests/unit/Notify/MC/Statistic/run_test.pl: !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Notify/MC/run_test.pl: !ST !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Simple_Naming/run_test_ipv6.pl: IPV6 !ST !SUNCC5_1 !NO_MESSAGING !ACE_FOR_TAO !LynxOS !CORBA_E_MICRO !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/EventServices/OMG_Basic/run_test.pl: !MINIMUM !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/EventServices/OMG_SupplierSideEC/run_test.pl: !MINIMUM !NO_MESSAGING !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/EventServices/OMG_TypedEC/run_test.pl: !MINIMUM !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/EventServices/RTEC_Basic/run_test.pl: !NO_MESSAGING !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/EventServices/RTEC_Federated/run_test.pl: !ST !NO_MESSAGING !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/EventServices/RTEC_Filter/run_test.pl: !NO_MESSAGING !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/EventServices/RTEC_MCast_Federated/run_test.pl: !NO_MCAST !NO_MESSAGING !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/ImplRepo/run_test.pl: !MINIMUM !STATIC !CORBA_E_MICRO !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/NotifyService/EventSequence/run_test.pl: !ST !MINIMUM !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/NotifyService/Filtering/run_test.pl: !ST !MINIMUM !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/NotifyService/Messenger/run_test.pl: !ST !MINIMUM !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/NotifyService/OfferSubscriptions/run_test.pl: !ST !MINIMUM !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/NotifyService/QoSProperties/run_test.pl: !ST !MINIMUM !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/NotifyService/SupplierSideNC/run_test.pl: !MINIMUM !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/NotifyService/RTNotify/run_test.pl: !ST !MINIMUM !STATIC !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/Security/ParticipatingApp/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/Security/PolicyControllingApp/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/Security/SecurityUnawareApp/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/NamingService/Messenger/run_test.pl: !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/NamingService/Naming_Client/run_test.pl: !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/NamingService/Naming_Context_Ext/run_test.pl: !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/NamingService/Naming_Server/run_test.pl: !ST !NO_MCAST !NO_MESSAGING !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/NamingService/corbaloc_Messenger/run_test.pl: !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/NamingService/corbaname_Messenger/run_test.pl: !VxWorks !VxWorks_RTP
