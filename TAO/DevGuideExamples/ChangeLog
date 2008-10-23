@@ -1,3 +1,8 @@
+Thu Oct 23 06:47:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * devguide_examples.lst:
+          Removed, merged this file into the main test lists
+
 Thu Oct 23 06:39:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * AMH_AMI/middle_server.cpp
