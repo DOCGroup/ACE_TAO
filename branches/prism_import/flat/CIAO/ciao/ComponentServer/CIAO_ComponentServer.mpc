@@ -31,6 +31,8 @@ project(CIAO_ComponentServer_stub) : ccm_componentserver_stub, taolib_with_idl, 
   after += CIAO_ComponentServer_IDL CIAO_CS_Client_IDL
   dynamicflags = CIAO_COMPONENTSERVER_STUB_BUILD_DLL
 
+  IDL_Files {
+  }
   Source_Files {
     CIAO_ComponentServerC.cpp
     CIAO_CS_ClientC.cpp
@@ -43,6 +45,8 @@ project(CIAO_CS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_componen
     ciao_client, ciao_lib {
   dynamicflags = CIAO_CS_CLIENT_SVNT_BUILD_DLL
   after += CIAO_CS_Client_IDL
+  IDL_Files {
+  }
   Source_Files {
     CIAO_ServerActivator_Impl.cpp
     CIAO_CS_ClientS.cpp
@@ -53,13 +57,15 @@ project(CIAO_CS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_componen
   }
 }
 
-project(CIAO_ComponentServer_svnt) : ccm_componentserver_svnt, ciao_componentserver_stub, portableserver, \
+project(CIAO_ComponentServer_svnt) : ccm_componentserver_svnt, ciao_componentserver_stub, portableserver, ciao_componentserver_configurator, \
                                      ciao_session_container, naming, ciao_server {
 
-  dynamicflags =   CIAO_COMPONENTSERVER_SVNT_BUILD_DLL
+  dynamicflags = CIAO_COMPONENTSERVER_SVNT_BUILD_DLL
   after += CIAO_Basic_Configurator
   libs += CIAO_Basic_Configurator
 
+  IDL_Files {
+  }
   Source_Files {
      CIAO_ComponentServer_Impl.cpp
      CIAO_ComponentServerS.cpp
@@ -79,7 +85,6 @@ project(CIAO_ComponentServer_exe) : ccm_componentserver_svnt, portableserver, ci
   Source_Files {
     CIAO_ComponentServer.cpp
   }
-
   IDL_Files {
   }
 }

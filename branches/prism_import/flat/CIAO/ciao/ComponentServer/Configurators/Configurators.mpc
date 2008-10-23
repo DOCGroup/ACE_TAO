@@ -1,4 +1,5 @@
 project(CIAO_Basic_Configurator) : ccm_stub, ciao_componentserver_stub, ciao_lib {
+  dynamicflags += COMPONENTSERVER_CONFIGURATOR_BUILD_DLL
   Source_Files {
     Server_Configurator.cpp
   }
