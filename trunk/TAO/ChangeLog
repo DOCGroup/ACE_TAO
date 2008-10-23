@@ -1,3 +1,10 @@
+Thu Oct 23 10:28:43 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Bug_3471_Regression/client.cpp:
+        * tests/Bug_3471_Regression/server.cpp:
+
+          Wchar nonesense.
+
 Thu Oct 23 09:14:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
