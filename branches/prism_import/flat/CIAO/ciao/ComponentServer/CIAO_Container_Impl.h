@@ -22,53 +22,53 @@ namespace CIAO
   {
     /**
      * @class CIAO_Container
-     * @brief Implements external interface for CIAO container. 
+     * @brief Implements external interface for CIAO container.
      */
-    class CIAO_ComponentServer_svnt_Export  CIAO_Container_i
+    class CIAO_ComponentServer_svnt_Export CIAO_Container_i
       : public virtual POA_CIAO::Deployment::Container
     {
     public:
-      // Constructor 
+      // Constructor
       CIAO_Container_i (const Components::ConfigValues &config,
 			const Static_Config_EntryPoints_Maps *,
 			const char *,
 			const CORBA::PolicyList *,
 			CORBA::ORB_ptr,
 			PortableServer::POA_ptr);
-      // Destructor 
+      // Destructor
       virtual ~CIAO_Container_i (void);
-  
+
       virtual
 	::Components::CCMObject_ptr install_component (const char * id,
 						       const char * entrypt,
 						       const ::Components::ConfigValues & config);
-  
+
       virtual
 	void remove_component (::Components::CCMObject_ptr cref);
-  
+
       virtual
 	::CIAO::Deployment::CCMObjects * get_components (void);
-  
+
       virtual
 	::Components::ConfigValues * configuration (void);
-  
+
       virtual
 	::Components::Deployment::ComponentServer_ptr get_component_server (void);
-  
+
       virtual
 	::Components::CCMHome_ptr install_home (const char * id,
 						const char * entrypt,
 						const ::Components::ConfigValues & config);
-  
+
       virtual
 	void remove_home (::Components::CCMHome_ptr href);
-  
+
       virtual
 	::Components::CCMHomes * get_homes (void);
-  
+
       virtual
 	void remove (void);
-      
+
       virtual void activate_component (::Components::CCMObject_ptr comp);
 
       virtual void passivate_component (::Components::CCMObject_ptr comp);
@@ -80,13 +80,13 @@ namespace CIAO
       CORBA::ORB_var orb_;
 
       PortableServer::POA_var poa_;
-      
+
       CIAO::Container_var container_;
 
       Components::ConfigValues config_;
-      
+
       const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
-      
+
       /// To store all created CCMHome object
       typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
 	Components::CCMHome_var,
@@ -95,7 +95,7 @@ namespace CIAO
 	ACE_Null_Mutex> CCMHome_Map;
       typedef CCMHome_Map::iterator Home_Iterator;
       CCMHome_Map home_map_;
-      
+
       /// To store all created Component object.
       // @@Gan, see how this caching is duplicated..
       typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
@@ -105,14 +105,14 @@ namespace CIAO
 	ACE_Null_Mutex> CCMComponent_Map;
       typedef CCMComponent_Map::iterator Component_Iterator;
       CCMComponent_Map component_map_;
-  
+
       typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
 				      ACE_CString,
 				      ACE_Hash<ACE_CString>,
 				      ACE_Equal_To<ACE_CString>,
 				      ACE_Null_Mutex> CCMNaming_Map;
       CCMNaming_Map naming_map_;
-  
+
     };
   }
 }
