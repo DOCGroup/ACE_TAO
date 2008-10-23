@@ -1,3 +1,8 @@
+Thu Oct 23 08:06:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Updated because of move of DevGuide orbsvcs examples
+
 Thu Oct 23 06:46:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
