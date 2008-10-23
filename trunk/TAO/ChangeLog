@@ -1,8 +1,23 @@
+Thu Oct 23 11:50:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/LocalObjects/Messenger/Messenger_i.h
+        * DevGuideExamples/PortableInterceptors/Auth/ClientInitializer.h
+        * DevGuideExamples/PortableInterceptors/Auth/ClientInterceptor.h
+        * DevGuideExamples/PortableInterceptors/IOR/ClientInitializer.h
+        * DevGuideExamples/PortableInterceptors/IOR/ClientInterceptor.h
+        * DevGuideExamples/PortableInterceptors/IOR/ServerIORInterceptor.h
+        * DevGuideExamples/PortableInterceptors/PICurrent/ClientInitializer.h
+        * DevGuideExamples/PortableInterceptors/PICurrent/ClientInterceptor.h
+        * DevGuideExamples/PortableInterceptors/PICurrent_NameService/ClientInitializer.h
+        * DevGuideExamples/PortableInterceptors/PICurrent_NameService/ClientInterceptor.h
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/ClientInitializer.h
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/ClientInterceptor.h
+          Don't use deprecated TAO_Local_RefCounted_Object
+
 Thu Oct 23 10:28:43 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * tests/Bug_3471_Regression/client.cpp:
         * tests/Bug_3471_Regression/server.cpp:
-
           Wchar nonesense.
 
 Thu Oct 23 09:14:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
