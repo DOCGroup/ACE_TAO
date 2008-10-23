@@ -14,3 +14,4 @@ TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test_simple.pl: !STATIC !MINIMUM !C
 TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !ST
 TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test_ex.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !ST
 TAO/CIAO/tests/IDL3/Events/Any/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !ST
+TAO/CIAO/DevGuideExamples/CIAO/Messenger/descriptors/run_test.pl:

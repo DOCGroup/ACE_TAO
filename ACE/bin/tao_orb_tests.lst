@@ -363,3 +363,25 @@ TAO/tests/DII_Collocation_Tests/twoway/run_test.pl: !ST !MINIMUM !CORBA_E_COMPAC
 TAO/tests/Compression/run_test.pl: ZLIB !LabVIEW_RT
 TAO/tests/Collocated_Forwarding/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LabVIEW_RT
 TAO/tests/ZIOP/run_test.pl: ZIOP ZLIB !LabVIEW_RT
+TAO/DevGuideExamples/BiDirectionalGIOP/run_test.pl: !MINIMUM !CORBA_E_MICRO
+TAO/DevGuideExamples/GettingStarted/run_test.pl:
+TAO/DevGuideExamples/InterfaceRepo/run_test.pl: !MINIMUM !NO_IFR
+TAO/DevGuideExamples/LocalObjects/Messenger/run_test.pl:
+TAO/DevGuideExamples/LocalObjects/ServantLocator/run_test.pl: !MINIMUM
+TAO/DevGuideExamples/Messaging/AMIcallback/run_test.pl: !NO_MESSAGING
+TAO/DevGuideExamples/Messaging/RelativeRoundtripTimeout/run_test.pl: !NO_MESSAGING
+TAO/DevGuideExamples/PortableInterceptors/Auth/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/DevGuideExamples/PortableInterceptors/IOR/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/DevGuideExamples/PortableInterceptors/PICurrent/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/DevGuideExamples/PortableInterceptors/PICurrent_NameService/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/DevGuideExamples/PortableInterceptors/SimpleCodec/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/DevGuideExamples/RTCORBA/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !STATIC
+TAO/DevGuideExamples/SmartProxies/run_test.pl: !NO_SMARTPROXIES !NO_MESSAGING
+TAO/DevGuideExamples/Multithreading/Reactive/run_test.pl: !STATIC !MINIMUM
+TAO/DevGuideExamples/Multithreading/ThreadPerConnection/run_test.pl: !ST
+TAO/DevGuideExamples/Multithreading/ThreadPool/run_test.pl: !ST !MINIMUM
+TAO/DevGuideExamples/ValueTypes/Messenger/run_test.pl: !MINIMUM
+TAO/DevGuideExamples/ValueTypes/Notify/run_test.pl: !ST !MINIMUM
+TAO/DevGuideExamples/ValueTypes/Bank/run_test.pl: !MINIMUM
+TAO/DevGuideExamples/AMH/run_test.pl: !NO_MESSAGING
+TAO/DevGuideExamples/AMH_AMI/run_test.pl: !NO_MESSAGING
