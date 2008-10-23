@@ -1,3 +1,9 @@
+Thu Oct 23 08:19:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/svn/config:
+        * docs/svn/svn-prefs.reg:
+          Added conf/pem extensions
+
 Thu Oct 23 08:06:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
