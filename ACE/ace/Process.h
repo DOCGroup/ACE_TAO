@@ -376,7 +376,7 @@ protected:
   uid_t egid_;
 #endif /* ACE_WIN32 */
 
-  /// Default TRUE.
+  /// Default true.
   bool handle_inheritance_;
 
 #if !defined (ACE_HAS_WINCE)
