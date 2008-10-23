@@ -15,7 +15,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c = 0;
   while (c < argc)
     {
-      if (ACE_OS::strcasecmp (argv[c], "-no_AMH") == 0)
+      if (ACE_OS::strcasecmp (argv[c], ACE_TEXT("-no_AMH")) == 0)
         use_synch = 1;
       c++;
     }

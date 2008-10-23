@@ -5,7 +5,7 @@
 #include "ace/OS_NS_unistd.h"
 #include <iostream>
 
-NamingTask::NamingTask (int argc, char** argv)
+NamingTask::NamingTask (int argc, ACE_TCHAR** argv)
 : argc_ (argc),
   argv_ (argv),
   initialized_(false)
