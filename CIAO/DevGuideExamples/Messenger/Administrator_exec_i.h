@@ -38,7 +38,7 @@ namespace CIDL_Administrator_Impl
   class ADMINISTRATOR_EXEC_Export Administrator_exec_i
   : public virtual Administrator_Exec,
   public virtual ACE_Task_Base,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
   {
     public:
     Administrator_exec_i (void);
@@ -87,7 +87,7 @@ namespace CIDL_Administrator_Impl
 
   class ADMINISTRATOR_EXEC_Export AdministratorHome_exec_i
   : public virtual AdministratorHome_Exec,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
   {
     public:
     AdministratorHome_exec_i (void);
