@@ -5,15 +5,15 @@ project(CIAO_Session_Container) : ciao_lib, ciao_container_base, utils, \
   dynamicflags = SESSION_CONTAINER_BUILD_DLL
 
   IDL_Files {
-//    Session/Session_Container.idl
+//    Session_Container.idl
   }
   Source_Files {
-    Session/Session_Container.cpp
+    Session_Container.cpp
   }
   Inline_Files {
-    Session/Session_Container.inl
+    Session_Container.inl
   }
   Header_Files {
-    Session/Session_Container.h
+    Session_Container.h
   }
 }
