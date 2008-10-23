@@ -114,7 +114,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                           failed= true;
                         }
                       else
-                        nameService = ACE_TEXT_ALWAYS_CHAR (*argv);
+                        nameService = *argv;
                     }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--quiet")))
@@ -254,9 +254,9 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
           if (kind)
             {
               *kind = '\0';
-              the_name[index].kind= CORBA::string_dup (++kind);
+              the_name[index].kind= CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(++kind));
             }
-          the_name[index].id = CORBA::string_dup (cp);
+          the_name[index].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(cp));
           name = 0; // way strtok works
         }
 
