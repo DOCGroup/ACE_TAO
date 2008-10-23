@@ -40,7 +40,7 @@ namespace CIDL_Messenger_Impl
 {
   class MESSENGER_EXEC_Export Publication_exec_i
   : public virtual ::CCM_Publication,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
   {
   public:
     Publication_exec_i ( const char* text,

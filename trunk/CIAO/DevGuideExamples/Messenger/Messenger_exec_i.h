@@ -44,7 +44,7 @@ namespace CIDL_Messenger_Impl
 
   class MESSENGER_EXEC_Export Messenger_exec_i
   : public virtual Messenger_Exec,
-    public virtual TAO_Local_RefCounted_Object,
+    public virtual ::CORBA::LocalObject,
     public virtual ACE_Task_Base
   {
     public:
@@ -111,7 +111,7 @@ namespace CIDL_Messenger_Impl
 
   class MESSENGER_EXEC_Export MessengerHome_exec_i
   : public virtual MessengerHome_Exec,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
   {
     public:
     MessengerHome_exec_i (void);
