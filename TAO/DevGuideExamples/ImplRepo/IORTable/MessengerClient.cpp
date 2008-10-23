@@ -11,7 +11,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
       std::cerr << "Error: Must specify the name of an IOR file." << std::endl;
       return 1;
     }
-    ACE_CString ior = "file://";
+    ACE_TString ior = ACE_TEXT("file://");
     ior += argv[1];
 
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);

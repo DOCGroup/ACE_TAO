@@ -10,7 +10,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Initialize orb
     CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
 
-    const char* url = "corbaloc:rir:/NameService"; // default URL to InitRef
+    const ACE_TCHAR* url = ACE_TEXT("corbaloc:rir:/NameService"); // default URL to InitRef
     if ( argc < 2 ) {
       std::cout << "Defaulting URL to " << url << std::endl;
       std::cout << "Usage: " << argv[0]

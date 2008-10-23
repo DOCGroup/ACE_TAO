@@ -1,3 +1,17 @@
+Thu Oct 23 06:39:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * AMH_AMI/middle_server.cpp
+        * EventServices/RTEC_Federated/EchoEventConsumerMain.cpp
+        * EventServices/RTEC_Federated/EchoEventSupplierMain.cpp
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumerMain.cpp
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp
+        * ImplRepo/IORTable/MessengerClient.cpp
+        * NamingService/corbaloc_Messenger/MessengerClient.cpp
+        * NamingService/corbaname_Messenger/MessengerClient.cpp
+        * NamingService/Naming_Server/NamingTask.cpp
+        * NamingService/Naming_Server/NamingTask.h
+          wchar fixes
+
 Wed Oct 22 17:47:54 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * AMH_AMI/middle_server.cpp:
