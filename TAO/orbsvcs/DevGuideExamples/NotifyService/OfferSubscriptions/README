@@ -1,0 +1,68 @@
+// $Id$
+
+Event Notification Service
+
+
+File: examples/NotifyService/OfferSubscriptions/README
+
+
+This example extends the NotifyService/Messenger example by incorporating
+"offers" and "subscriptions" into the utilization of the Notification
+channel.
+
+The publication of "offers" by a supplier, informs consumers of the
+Notification channel about the types of events it will be producing.  This
+is accomplished via the 'offer_change()' operation.
+
+Moreover, the example demonstrates how consumers can inform Notification
+channel suppliers about the types of events in which they are interested.
+The set of events in which a consumer is interested is called a "subscription"
+and can be communicated via the 'subscription_change()' operation.
+
+
+
+The Client code is stored in:
+
+examples/NotifyService/OfferSubscriptions/MessengerClient.cpp
+
+The Server code is stored in:
+
+examples/NotifyService/OfferSubscriptions/MessengerServer.cpp
+
+The Consumer code is stored in:
+
+examples/NotifyService/OfferSubscriptions/MessengerConsumer.cpp
+
+
+How to Run
+----------
+
+To start the Naming Service:
+----------------------------
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o ns.ior&
+
+To start the Notification Service:
+---------------------------------
+$TAO_ROOT/orbsvcs/Notify_Service/Notify_Service -ORBInitRef NameService=file://ns.ior&
+
+To start the server/supplier
+----------------------------
+./MessengerServer -ORBInitRef NameService=file://ns.ior
+
+To start the consumer
+---------------------
+./MessengerConsumer -ORBInitRef NameService=file://ns.ior
+
+To start the client
+-------------------
+./MessengerClient -ORBInitRef NameService=file://ns.ior
+
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl
