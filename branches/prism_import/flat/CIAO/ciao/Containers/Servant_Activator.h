@@ -58,7 +58,7 @@ namespace CIAO
     virtual ~Servant_Activator_i (void);
 
     virtual ::CORBA::Boolean update_port_activator (
-      const PortableServer::ObjectId &oid);
+      const ::PortableServer::ObjectId &oid);
 
     virtual ::CORBA::Boolean register_port_activator (
       ::CIAO::Port_Activator_ptr pa);

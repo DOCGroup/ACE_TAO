@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/CCM_ContainerC.h"
+#include "ccm/CCM_ContainerC.h"
 
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/LocalObject.h"
