@@ -19,7 +19,8 @@ ACE_RCSID (EC_Examples,
            "$Id$")
 
 const ACE_TCHAR *udp_mcast_address =
-    ACE_DEFAULT_MULTICAST_ADDR ACE_TEXT(":10001");
+    ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT(":10001");
+
 bool valuetype = false;
 
 int parse_args (int argc, ACE_TCHAR *argv[]);

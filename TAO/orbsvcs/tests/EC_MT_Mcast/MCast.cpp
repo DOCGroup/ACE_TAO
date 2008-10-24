@@ -21,7 +21,7 @@ ACE_RCSID (EC_MT_Mcast,
            "$Id$")
 
 const ACE_TCHAR *udp_mcast_address =
-    ACE_DEFAULT_MULTICAST_ADDR ACE_TEXT(":10001");
+    ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT(":10001");
 
 static CORBA::ORB_var orb = CORBA::ORB::_nil ();
 static bool terminate_threads = false;
