@@ -30,6 +30,8 @@
 #include "PCVisitorBase.h"
 #include "PCVisitor.h"
 
+#include "ace/OS.h"
+
 //Constructor
 PCVisitor::PCVisitor (Deployment::DeploymentPlan &plan,
                       Deployment::PackageConfiguration &pc,
@@ -64,8 +66,7 @@ void PCVisitor::Visit (Deployment::PackageConfiguration &pc)
     Accept (*this, pc.basePackage);
   }
   else
-    ACE_DEBUG ((LM_WARNING,
-    "[PCVisitor - PackageConfiguration] We currently "
+    DANCE_WARN(("[PCVisitor - PackageConfiguration] We currently "
     "do NOT support package references, specializedConfigs",
     "or imports!\n"));
 }
@@ -119,8 +120,7 @@ void PCVisitor::Visit (Deployment::SubcomponentInstantiationDescription &sid)
     Accept (*this, sid.basePackage);
   }
   else
-    ACE_DEBUG ((LM_WARNING,
-    "[PCVisitor - SubcomponentInstantiationDescription] ",
+    DANCE_WARN(("[PCVisitor - SubcomponentInstantiationDescription] ",
     "We currently do NOT support package references, ",
     "specializedConfigs or imports!\n"));
 }

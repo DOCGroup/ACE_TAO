@@ -31,7 +31,7 @@ project(BasicSP_lem_gen) : ciaocidldefaults, taoidldefaults {
   }
 }
 
-project(BasicSP_stub): ciao_client_dnc {
+project(BasicSP_stub): ccm_stub {
   after += BasicSP_stub_gen
   sharedname = BasicSP_stub
   dynamicflags = BASICSP_STUB_BUILD_DLL
@@ -54,7 +54,7 @@ project(BasicSP_stub): ciao_client_dnc {
 
 }
 
-project(BasicSP_exec) : ciao_component_dnc {
+project(BasicSP_exec) : ciao_executor {
   after += BasicSP_stub BasicSP_lem_gen
   sharedname = BasicSP_exec
   libs += BasicSP_stub
@@ -80,7 +80,7 @@ project(BasicSP_exec) : ciao_component_dnc {
   }
 }
 
-project(BasicSP_svnt) : ciao_servant_dnc {
+project(BasicSP_svnt) : ciao_servant {
   after +=  BasicSP_exec
   sharedname = BasicSP_svnt
   libs    += BasicSP_stub BasicSP_exec

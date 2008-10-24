@@ -28,42 +28,42 @@ namespace Deployment
 
 namespace CIAO
 {
+
   namespace Config_Handlers
-  {
-    class PlanConnectionDescription;
-    class ExternalReferenceEndpoint;
+    {
+      class PlanConnectionDescription;
+      class ExternalReferenceEndpoint;
 
-    /*
-     * @class ERE_Handler
-     *
-     * @brief Handler class for <ExternalReferenceEndpoint> types.
-     *
-     * This class defines handler methods to map values from
-     * XSC ExternalReferenceEndpoint objects, parsed from
-     * the descriptor files, to the corresponding CORBA IDL type.
-     */
+      /*
+       * @class ERE_Handler
+       *
+       * @brief Handler class for <ExternalReferenceEndpoint> types.
+       *
+       * This class defines handler methods to map values from
+       * XSC ExternalReferenceEndpoint objects, parsed from
+       * the descriptor files, to the corresponding CORBA IDL type.
+       *
+       */
 
-      class Config_Handlers_Common_Export ERE_Handler
-      {
-      public:
-        static void external_ref_endpoints (
-            const PlanConnectionDescription &src,
-            ::Deployment::ExternalReferenceEndpoints &dest);
+  class Config_Handlers_Common_Export ERE_Handler
+    {
+    public:
+      static void external_ref_endpoints (const PlanConnectionDescription &src,
+                          ::Deployment::ExternalReferenceEndpoints &dest);
 
-        static ExternalReferenceEndpoint external_ref_endpoint (
-            const Deployment::ExternalReferenceEndpoint& src);
+      static ExternalReferenceEndpoint external_ref_endpoint (
+                                  const Deployment::ExternalReferenceEndpoint& src);
 
-        static void handle_external_ref_endpoint (
-            const ExternalReferenceEndpoint &src,
-            Deployment::ExternalReferenceEndpoint &dest);
+      static void handle_external_ref_endpoint (const ExternalReferenceEndpoint &src,
+                         Deployment::ExternalReferenceEndpoint &dest);
     };
 
-    typedef Sequence_Handler < ExternalReferenceEndpoint,
-                               ::Deployment::ExternalReferenceEndpoints,
-                               ::Deployment::ExternalReferenceEndpoint,
-                               ERE_Handler::handle_external_ref_endpoint >
-      ERE_Functor;
-  }
+      typedef Sequence_Handler < ExternalReferenceEndpoint,
+    ::Deployment::ExternalReferenceEndpoints,
+    ::Deployment::ExternalReferenceEndpoint,
+    ERE_Handler::handle_external_ref_endpoint > ERE_Functor;
+
+    }
 }
 
 #include /**/ "ace/post.h"

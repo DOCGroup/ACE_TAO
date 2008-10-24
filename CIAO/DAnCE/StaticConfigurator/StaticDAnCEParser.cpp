@@ -22,12 +22,14 @@
 #include "ace/Get_Opt.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/CDR.h"
-#include "Config_Handlers/XML_File_Intf.h"
+//CHANGE(vt){
+//#include "Config_Handlers/XML_File_Intf.h"
+//}
 
 static void
 usage (const ACE_TCHAR* program)
 {
-  ACE_ERROR ((LM_ERROR,
+  DANCE_ERROR((LM_ERROR, 
               ACE_TEXT ("Usage: %s -p <package URI>\n"),
               program));
 }
@@ -41,7 +43,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Initialize the ORB so that CORBA::Any will work
   //
   CORBA::ORB_var orb =
-    CORBA::ORB_init (argc, argv);
+    CORBA::ORB_init (argc,
+                     argv,
+                     "");
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"));
   int c;
@@ -65,11 +69,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     return -1;
   }
 
-  CIAO::Config_Handlers::XML_File_Intf intf (package_url);
+//CHANGE(vt){
+  DANCE_ERROR_RETURN ((LM_ERROR,
+                  "DAnCE (%P|%t) StaticParser -"
+                  "Failed to parse package file (no xml parser)\n"), 1);
+  //CIAO::Config_Handlers::XML_File_Intf intf (package_url);
 
-  ::Deployment::DeploymentPlan_var plan =
-      intf.get_plan ();
-
+  //::Deployment::DeploymentPlan_var plan = intf.get_plan ();
+/*
   ::Deployment::ComponentPlans dummy;
   dummy.length (0);
 
@@ -79,7 +86,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (node_impl_info.ptr() == 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      DANCE_ERROR_RETURN ((LM_ERROR,
                   "DAnCE (%P|%t) StaticParser -"
                   "Failed to create Node Implementation Infos!\n"), 1);
 
@@ -96,7 +103,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       num_components = impl_infos[i].impl_infos.length ();
       for (j = 0; j < num_components; ++j)
         {
-          ACE_DEBUG ((LM_DEBUG, "The info for installation: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
+          DANCE_DEBUG((LM_DEBUG, "[%M] The info for installation: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
                       impl_infos[i].impl_infos[j].component_instance_name.in (),
                       impl_infos[i].impl_infos[j].executor_dll.in (),
                       impl_infos[i].impl_infos[j].executor_entrypt.in (),
@@ -154,4 +161,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::fclose (fp);
 
   return 0;
+*/
+//}
 }

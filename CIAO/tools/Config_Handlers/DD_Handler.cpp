@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Utils/XML_Helper.h"
+#include "XML_Typedefs.h"
 #include "SatisfierProperty_Handler.h"
 #include "DD_Handler.h"
 #include "Any_Handler.h"
@@ -20,21 +20,9 @@ namespace CIAO
       retval_ (false)
     {
       CIAO_TRACE("DP_PCD_Handler::constructor");
-      XML_Helper helper;
-
-      if (CIAO::debug_level () > 9)
-        {
-          ACE_DEBUG ((LM_DEBUG , "inside DD_Handler"));
-        }
-
-
+      
       XERCES_CPP_NAMESPACE::DOMDocument *dom =
-        helper.create_dom (file);
-
-      if (CIAO::debug_level () > 9)
-        {
-          ACE_DEBUG ((LM_DEBUG , "after create dom"));
-        }
+        XML_Helper::XML_HELPER.create_dom (file);
 
       if (!dom)
         throw DD_Handler::NoDomain ();
@@ -44,18 +32,7 @@ namespace CIAO
 
       //      Domain d = domain (dom);
 
-      if (CIAO::debug_level () > 9)
-        {
-          ACE_DEBUG ((LM_DEBUG , "dom"));
-        }
-
-
       this->domain_.reset (dm);
-
-      if (CIAO::debug_level () > 9)
-        {
-          ACE_DEBUG ((LM_DEBUG , "after reset"));
-        }
 
       if (!this->build_domain ())
         throw NoDomain ();
@@ -102,11 +79,6 @@ namespace CIAO
 
       CORBA::ULong len = domain_->count_node ();
       this->idl_domain_->node.length (len);
-
-      if (CIAO::debug_level () > 9)
-        {
-          ACE_DEBUG ((LM_DEBUG , "The node length is [%d]\n",len));
-        }
 
       //Resource _resource;
       int i =0;
@@ -198,6 +170,7 @@ namespace CIAO
 
     ::Deployment::Domain const *
     DD_Handler::domain_idl () const
+      throw (DD_Handler::NoDomain)
     {
       if(!this->idl_domain_.get())
         throw NoDomain ();
@@ -208,6 +181,7 @@ namespace CIAO
 
     ::Deployment::Domain *
     DD_Handler::domain_idl ()
+      throw (DD_Handler::NoDomain)
     {
       if(!this->idl_domain_.get())
         throw NoDomain();
@@ -218,6 +192,7 @@ namespace CIAO
 
     Domain const *
     DD_Handler::domain_xsc () const
+      throw (DD_Handler::NoDomain)
     {
       if(!this->domain_.get())
         throw NoDomain ();
@@ -228,6 +203,7 @@ namespace CIAO
 
     Domain *
     DD_Handler::domain_xsc ()
+      throw (DD_Handler::NoDomain)
     {
       if(!this->domain_.get())
         throw NoDomain ();

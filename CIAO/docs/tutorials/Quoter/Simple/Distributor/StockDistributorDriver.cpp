@@ -10,14 +10,14 @@
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *distributor_ior = ACE_TEXT ("file://StockDistributor.ior");
+const char *distributor_ior = "file://StockDistributor.ior";
 int rate = 2;
 int turn_on = 1;
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:r:of"));
+  ACE_Get_Opt get_opts (argc, argv, "k:r:of");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -58,13 +58,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 
-int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+int main (int argc, char* argv[])
 {
   try
   {
     // initialize the ORB
     CORBA::ORB_var orb =
-      CORBA::ORB_init (argc, argv);
+      CORBA::ORB_init (argc, argv,"");
 
     if (parse_args (argc, argv) != 0)
     {
@@ -73,7 +73,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     // create the factory object reference,
     CORBA::Object_var distributor_obj =
-      orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (distributor_ior));
+      orb->string_to_object (distributor_ior);
 
     // downcast the object reference to the appropriate type
     Stock::StockDistributor_var distributor =

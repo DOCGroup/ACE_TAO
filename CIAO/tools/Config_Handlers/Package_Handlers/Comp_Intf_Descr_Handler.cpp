@@ -1,7 +1,7 @@
 // $Id$
 #include "Comp_Intf_Descr_Handler.h"
 
-#include "Utils/XML_Helper.h"
+#include "XML_Typedefs.h"
 #include "Utils/Exceptions.h"
 #include "Utils/Functors.h"
 #include "DataType_Handler.h"
@@ -94,9 +94,9 @@ namespace CIAO
                        CIAO::Config_Handlers::CPD_Functor (toconfig.port));
 
         toconfig.property.length (cid->count_property ());
-        SEQ_HAND_GCC_BUG_WORKAROUND (Comp_Prop_Handler::handle_cpd,
-                                     cid->begin_property (),
-                                     toconfig.property);
+    SEQ_HAND_GCC_BUG_WORKAROUND (Comp_Prop_Handler::handle_cpd,
+                     cid->begin_property (),
+                     toconfig.property);
         std::for_each (cid->begin_property (),
                        cid->end_property (),
                        Comp_Prop_Functor (toconfig.property));
@@ -148,7 +148,7 @@ namespace CIAO
       {
         CIAO_TRACE ("Comp_Intf_Descr_Handler::resolve_cid");
 
-        xercesc::DOMDocument *dom = XML_HELPER->create_dom (uri);
+        xercesc::DOMDocument *dom = XML_Helper::XML_HELPER.create_dom (uri);
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for Component Interface Description.");

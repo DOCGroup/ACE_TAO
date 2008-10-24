@@ -51,13 +51,13 @@ namespace CIAO
       }
     }
 
-    ::CIAO::Config_Handlers::DeploymentPlan
-    deploymentPlan (xercesc::DOMDocument const* d)
+    ::CIAO::Config_Handlers::deploymentPlan
+    DeploymentPlan (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == "deploymentPlan")
+      if (e.name () == "DeploymentPlan")
       {
-        ::CIAO::Config_Handlers::DeploymentPlan r (e);
+        ::CIAO::Config_Handlers::deploymentPlan r (e);
         return r;
       }
 
@@ -229,12 +229,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ValueType,
       virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
       virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AliasType,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::DataValue,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::float_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::double_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedByte, ACE_TCHAR >,
@@ -256,15 +257,15 @@ namespace CIAO
     }
 
     void
-    deploymentPlan (::CIAO::Config_Handlers::DeploymentPlan const& s, xercesc::DOMDocument* d)
+    DeploymentPlan (::CIAO::Config_Handlers::deploymentPlan const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != "deploymentPlan")
+      if (e.name () != "DeploymentPlan")
       {
         throw 1;
       }
 
-      struct W : virtual ::CIAO::Config_Handlers::Writer::DeploymentPlan,
+      struct W : virtual ::CIAO::Config_Handlers::Writer::deploymentPlan,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::ComponentInterfaceDescription,
       virtual ::CIAO::Config_Handlers::Writer::Property,
@@ -277,12 +278,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ValueType,
       virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
       virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AliasType,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::DataValue,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::float_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::double_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
@@ -294,6 +296,7 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::CCMComponentPortKind,
       virtual ::CIAO::Config_Handlers::Writer::ComponentPropertyDescription,
       virtual ::CIAO::Config_Handlers::Writer::MonolithicDeploymentDescription,
+      virtual ::CIAO::Config_Handlers::Writer::IdRef,
       virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
       virtual ::CIAO::Config_Handlers::Writer::Requirement,
       virtual ::CIAO::Config_Handlers::Writer::InstanceDeploymentDescription,
@@ -307,6 +310,8 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ImplementationDependency,
       virtual ::CIAO::Config_Handlers::Writer::ArtifactDeploymentDescription,
       virtual ::CIAO::Config_Handlers::Writer::ResourceDeploymentDescription,
+      virtual ::CIAO::Config_Handlers::Writer::PlanLocality,
+      virtual ::CIAO::Config_Handlers::Writer::PlanLocalityKind,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         W (::XSCRT::XML::Element< ACE_TCHAR >& e)
@@ -341,12 +346,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ValueType,
       virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
       virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AliasType,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::DataValue,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::float_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::double_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
@@ -388,12 +394,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ValueType,
       virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
       virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AliasType,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::DataValue,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::float_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::double_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
@@ -438,12 +445,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ValueType,
       virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
       virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AliasType,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::DataValue,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::float_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::double_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
@@ -464,6 +472,7 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::Requirement,
       virtual ::CIAO::Config_Handlers::Writer::AssemblyConnectionDescription,
       virtual ::CIAO::Config_Handlers::Writer::SubcomponentPortEndpoint,
+      virtual ::CIAO::Config_Handlers::Writer::IdRef,
       virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
       virtual ::CIAO::Config_Handlers::Writer::ComponentExternalPortEndpoint,
       virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,
@@ -512,12 +521,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ValueType,
       virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
       virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AliasType,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::DataValue,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::float_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::double_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
@@ -538,6 +548,7 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::Requirement,
       virtual ::CIAO::Config_Handlers::Writer::AssemblyConnectionDescription,
       virtual ::CIAO::Config_Handlers::Writer::SubcomponentPortEndpoint,
+      virtual ::CIAO::Config_Handlers::Writer::IdRef,
       virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
       virtual ::CIAO::Config_Handlers::Writer::ComponentExternalPortEndpoint,
       virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,
@@ -587,12 +598,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ValueType,
       virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
       virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AliasType,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::DataValue,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::float_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::double_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
@@ -612,6 +624,7 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ComponentPackageImport,
       virtual ::CIAO::Config_Handlers::Writer::AssemblyConnectionDescription,
       virtual ::CIAO::Config_Handlers::Writer::SubcomponentPortEndpoint,
+      virtual ::CIAO::Config_Handlers::Writer::IdRef,
       virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
       virtual ::CIAO::Config_Handlers::Writer::ComponentExternalPortEndpoint,
       virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,
@@ -662,12 +675,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ValueType,
       virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
       virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AliasType,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::DataValue,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::float_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::double_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
@@ -687,6 +701,7 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ComponentPackageImport,
       virtual ::CIAO::Config_Handlers::Writer::AssemblyConnectionDescription,
       virtual ::CIAO::Config_Handlers::Writer::SubcomponentPortEndpoint,
+      virtual ::CIAO::Config_Handlers::Writer::IdRef,
       virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
       virtual ::CIAO::Config_Handlers::Writer::ComponentExternalPortEndpoint,
       virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,

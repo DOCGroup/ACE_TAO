@@ -9,10 +9,6 @@
 
 #include "ace/config-all.h"
 
-#if defined (ACE_AS_STATIC_LIBS) && !defined (NODEMANAGER_STUB_HAS_DLL)
-#  define NODEMANAGER_STUB_HAS_DLL 0
-#endif /* ACE_AS_STATIC_LIBS && NODEMANAGER_STUB_HAS_DLL */
-
 #if !defined (NODEMANAGER_STUB_HAS_DLL)
 #  define NODEMANAGER_STUB_HAS_DLL 1
 #endif /* ! NODEMANAGER_STUB_HAS_DLL */

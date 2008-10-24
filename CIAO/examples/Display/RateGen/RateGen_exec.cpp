@@ -1,7 +1,7 @@
 // $Id$
 
 #include "RateGen_exec.h"
-#include "CIAO_common.h"
+#include "ciao/CIAO_common.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
 
@@ -35,10 +35,7 @@ MyImpl::Pulse_Handler::close_h ()
   this->done_ = 1;
   this->reactor ()->notify ();
 
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Waiting\n"));
-    }
+  ACE_DEBUG ((LM_DEBUG, "Waiting\n"));
 
   return this->wait ();
 }
@@ -86,14 +83,12 @@ int
 MyImpl::Pulse_Handler::handle_close (ACE_HANDLE handle,
                                      ACE_Reactor_Mask close_mask)
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),
-                  this,
-                  handle,
-                  close_mask));
-    }
+  
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),
+              this,
+              handle,
+              close_mask));
 
   return 0;
 }
@@ -196,11 +191,8 @@ MyImpl::RateGen_exec_i::set_session_context (
     Components::SessionContext_ptr ctx
   )
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::RateGen_exec_i::set_session_context\n"));
-    }
+  ACE_DEBUG ((LM_DEBUG,
+              "MyImpl::RateGen_exec_i::set_session_context\n"));
 
   this->context_ =
     HUDisplay::CCM_RateGen_Context::_narrow (ctx);
@@ -214,35 +206,24 @@ MyImpl::RateGen_exec_i::set_session_context (
 }
 
 void
-MyImpl::RateGen_exec_i::ciao_preactivate ()
+MyImpl::RateGen_exec_i::configuration_complete ()
 {
 }
 
 void
 MyImpl::RateGen_exec_i::ccm_activate ()
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::RateGen_exec_i::ccm_activate\n"));
-    }
+  ACE_DEBUG ((LM_DEBUG,
+              "MyImpl::RateGen_exec_i::ccm_activate\n"));
 
   this->pulser_.open_h ();
 }
 
 void
-MyImpl::RateGen_exec_i::ciao_postactivate ()
-{
-}
-
-void
 MyImpl::RateGen_exec_i::ccm_passivate ()
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::RateGen_exec_i::ccm_passivate\n"));
-    }
+  ACE_DEBUG ((LM_DEBUG,
+              "MyImpl::RateGen_exec_i::ccm_passivate\n"));
 
   this->pulser_.close_h ();
 }
@@ -250,11 +231,8 @@ MyImpl::RateGen_exec_i::ccm_passivate ()
 void
 MyImpl::RateGen_exec_i::ccm_remove ()
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::RateGen_exec_i::ccm_remove\n"));
-    }
+  ACE_DEBUG ((LM_DEBUG,
+              "MyImpl::RateGen_exec_i::ccm_remove\n"));
 }
 
 void

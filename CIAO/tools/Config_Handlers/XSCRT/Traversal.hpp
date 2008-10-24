@@ -64,7 +64,7 @@ namespace XSCRT
       map (TypeId id, TraverserBase<B>& t)
       {
         //wcerr << "map for " << id.name () << " to " << &t
-        //      << " in " << &traversal_map_ << endl;
+    //      << " in " << &traversal_map_ << endl;
 
         //@@ VC6
         Traversers& traversers = traversal_map_[id];

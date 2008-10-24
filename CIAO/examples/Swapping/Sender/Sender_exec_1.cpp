@@ -60,10 +60,10 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_1_i::ciao_preactivate ()
+  Sender_exec_1_i::configuration_complete ()
   {
     ACE_DEBUG ((LM_DEBUG,
-                "Sender_exec_1_i::ciao_preactivate\n"));
+                "Sender_exec_1_i::configuration_complete\n"));
   }
 
   void
@@ -74,13 +74,6 @@ namespace CIDL_Sender_Impl
 
     CORBA::Object_var o =
       this->context_->get_CCM_object ();
-  }
-
-  void
-  Sender_exec_1_i::ciao_postactivate ()
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                "Sender_exec_1_i::ciao_postactivate\n"));
   }
 
   void

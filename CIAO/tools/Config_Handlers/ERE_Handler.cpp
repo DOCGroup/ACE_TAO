@@ -37,6 +37,18 @@ namespace CIAO
       CIAO_TRACE("ERE_Handler::external_ref_endpoint");
       dest.location =
         src.location ().c_str ();
+      
+      dest.provider = 
+        src.provider ();
+      
+      dest.portName = 
+        src.portName ().c_str ();
+      
+      dest.supportedType.length (src.count_supportedType ());
+      std::for_each (src.begin_supportedType (),
+                     src.end_supportedType (),
+                     String_Seq_Functor (dest.supportedType));
+
     }
 
     ExternalReferenceEndpoint
@@ -45,7 +57,10 @@ namespace CIAO
     {
       CIAO_TRACE("ERE_Handler::external_ref_endpoint - reverse");
       XMLSchema::string< char > loc ((src.location));
-      ExternalReferenceEndpoint erp (loc);
+      //      XMLSchema::string< char > provider ((src.provider));
+      XMLSchema::string< char > pn ((src.portName));
+      //      XMLSchema::string< char > st ((src.supportedType));
+      ExternalReferenceEndpoint erp (loc, src.provider);
       return erp;
     }
   }

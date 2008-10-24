@@ -41,7 +41,8 @@ namespace CIAO
 
       class No_Resource {};
 
-      static ORBResources orb_resources (const ::CIAO::DAnCE::ORBResources &src);
+      static ORBResources orb_resources (const ::CIAO::DAnCE::ORBResources &src)
+        throw (No_Resource);
 
 
     };

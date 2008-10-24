@@ -7,7 +7,6 @@ workspace {
   $(ACE_ROOT)/ACEXML/common
   $(ACE_ROOT)/ACEXML/parser/parser
   $(ACE_ROOT)/ACEXML/apps/svcconf
-  $(ACE_ROOT)/contrib
   $(TAO_ROOT)/tao
   $(TAO_ROOT)/TAO_IDL
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent.mpc
@@ -21,8 +20,6 @@ workspace {
   $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Serv.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Skel.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent.mpc
-  CCF
-  CIDLC
   DAnCE
   ciao
   ciaosvcs

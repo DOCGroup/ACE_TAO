@@ -51,7 +51,7 @@ namespace CIAO
 
       CORBA::ULong tmp = 0;
 
-      IDD_Handler::IDREF.find_ref (ACE_CString (src.instance ().id ().c_str ()),
+      IDD_Handler::IDREF.find_ref (ACE_CString (src.instance ().idref ().id ().c_str ()),
                                    tmp);
 
       dest.instanceRef = tmp;
@@ -102,10 +102,13 @@ namespace CIAO
 
       if (src.provider)
         prov = tval;
+      
+      IdRef idr;
+      idr.idref (idref);
 
       PlanSubcomponentPortEndpoint pspe (pname,
                                          CCMComponentPortKind::Facet,
-                                         idref);
+                                         idr);
       pspe.provider (prov);
 
       switch (src.kind)

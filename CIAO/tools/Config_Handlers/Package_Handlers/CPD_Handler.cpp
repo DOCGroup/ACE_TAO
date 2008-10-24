@@ -17,37 +17,34 @@ namespace CIAO
     {
       struct Packaging_Handlers_Export PCI_Handler
       {
-        static void handle_pci (
-            const PackagedComponentImplementation &desc,
-            ::Deployment::PackagedComponentImplementation &toconfig)
-        {
-          CIAO_TRACE ("PCI_Handler::get_pci");
-          toconfig.name = desc.name ().c_str ();
+    static void handle_pci (const PackagedComponentImplementation &desc,
+                ::Deployment::PackagedComponentImplementation &toconfig)
+    {
+      CIAO_TRACE ("PCI_Handler::get_pci");
+      toconfig.name = desc.name ().c_str ();
 
-          CID_Handler::component_impl_descr (desc.referencedImplementation (),
-                                             toconfig.referencedImplementation);
-        }
+      CID_Handler::component_impl_descr (desc.referencedImplementation (),
+                         toconfig.referencedImplementation);
+    }
 
-        static PackagedComponentImplementation
-        get_pci (const ::Deployment::PackagedComponentImplementation &src)
-        {
-          CIAO_TRACE ("PCI_Handler::get_pci - reverse");
-          return PackagedComponentImplementation (
-                    src.name.in (),
-                    CID_Handler::component_impl_descr (src.referencedImplementation));
-        }
+    static PackagedComponentImplementation
+    get_pci (const ::Deployment::PackagedComponentImplementation &src)
+    {
+      CIAO_TRACE ("PCI_Handler::get_pci - reverse");
+      return PackagedComponentImplementation (src.name.in (),
+                          CID_Handler::component_impl_descr (src.referencedImplementation));
+    }
       };
 
-      typedef Sequence_Handler <
-        PackagedComponentImplementation,
-        ::Deployment::PackagedComponentImplementations,
-        ::Deployment::PackagedComponentImplementation,
-        PCI_Handler::handle_pci > PCI_Functor;
+      typedef Sequence_Handler < PackagedComponentImplementation,
+                 ::Deployment::PackagedComponentImplementations,
+                 ::Deployment::PackagedComponentImplementation,
+                 PCI_Handler::handle_pci > PCI_Functor;
+     
 
       void
-      CPD_Handler::handle_component_package_descr (
-          const ComponentPackageDescription &desc,
-          ::Deployment::ComponentPackageDescription &toconfig)
+      CPD_Handler::handle_component_package_descr (const ComponentPackageDescription &desc,
+                           ::Deployment::ComponentPackageDescription &toconfig)
       {
         CIAO_TRACE ("CPD_Handler::component_package_descr");
 
@@ -84,9 +81,9 @@ namespace CIAO
 
         // Packaged Component Implementations
         toconfig.implementation.length ( cpd->count_implementation ());
-        SEQ_HAND_GCC_BUG_WORKAROUND (PCI_Handler::handle_pci,
-                                     cpd->begin_implementation (),
-                                     toconfig.implementation);
+    SEQ_HAND_GCC_BUG_WORKAROUND (PCI_Handler::handle_pci,
+                     cpd->begin_implementation (),
+                     toconfig.implementation);
         std::for_each (cpd->begin_implementation (),
                        cpd->end_implementation (),
                        PCI_Functor (toconfig.implementation));
@@ -118,19 +115,19 @@ namespace CIAO
         for (size_t i = 0; i < src.configProperty.length (); ++i)
           {
             toconfig.add_configProperty (
-              Property_Handler::get_property (src.configProperty[i]));
+                     Property_Handler::get_property (src.configProperty[i]));
           }
 
         { // Packaged Component Implementations
           for (size_t i = 0; i < src.implementation.length (); ++i)
             toconfig.add_implementation (
-              PCI_Handler::get_pci (src.implementation[i]));
+                     PCI_Handler::get_pci (src.implementation[i]));
         }
 
         for (size_t i = 0; i < src.infoProperty.length (); ++i)
           {
             toconfig.add_infoProperty (
-              Property_Handler::get_property (src.infoProperty[i]));
+                       Property_Handler::get_property (src.infoProperty[i]));
           }
 
         return toconfig;
@@ -139,25 +136,25 @@ namespace CIAO
       ComponentPackageDescription * CPD_Handler::resolve_cpd (const char *uri)
       {
         CIAO_TRACE ("CPD_Handler::resolve_cpd");
-        if (!XML_HELPER->is_initialized ())
+        if (!XML_Helper::XML_HELPER.is_initialized ())
           return 0;
 
         xercesc::DOMDocument* dom =
-          XML_HELPER->create_dom (uri);
+          XML_Helper::XML_HELPER.create_dom (uri);
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for component package description");
 
-        try
-        {
+        try {
           //ACE_ERROR ((LM_ERROR, "Creating new CPD XSC Object\n"));
           return new ComponentPackageDescription (componentPackageDescription (dom));
         }
-        catch (...)
-        {
+        catch (...) {
           throw Parse_Error ("Unable to create XSC structure for CID");
         }
       }
     }
+
+
   }
 }

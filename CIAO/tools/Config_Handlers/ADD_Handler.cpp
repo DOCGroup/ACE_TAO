@@ -16,16 +16,15 @@ namespace CIAO
     IDREF_Base<CORBA::ULong> ADD_Handler::IDREF;
 
       void
-      ADD_Handler::artifact_deployment_descrs (
-                                               const DeploymentPlan &src,
+      ADD_Handler::artifact_deployment_descrs (const deploymentPlan &src,
                                                ::Deployment::ArtifactDeploymentDescriptions &dest)
       {
         CIAO_TRACE("ADD_Handler::atrifact_deployment_descrs");
-        DeploymentPlan::artifact_const_iterator aci_e =
+        deploymentPlan::artifact_const_iterator aci_e =
           src.end_artifact ();
         dest.length (src.count_artifact ());
         CORBA::ULong pos = 0;
-        for (DeploymentPlan::artifact_const_iterator aci_b =
+        for (deploymentPlan::artifact_const_iterator aci_b =
                src.begin_artifact ();
              aci_e != aci_b;
              ++aci_b)
@@ -85,12 +84,12 @@ namespace CIAO
              ++adcb)
           {
             Property_Handler::handle_property ((*adcb),
-                                               dest.execParameter[len++]);
+                           dest.execParameter[len++]);
           }
 
-        if (src.id_p ())
+        if (src.xmi_id_p ())
           {
-            ACE_CString cstr (src.id ().c_str ());
+            ACE_CString cstr (src.xmi_id ().c_str ());
 
             ADD_Handler::IDREF.bind_ref (cstr,pos);
           }
@@ -170,7 +169,7 @@ namespace CIAO
         // Bind the ref and set it in the IDD
         ADD_Handler::IDREF.bind_next_available (add_id);
 
-        add.id (xml_id);
+        add.xmi_id (xml_id);
 
         return add;
       }

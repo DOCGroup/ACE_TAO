@@ -8,8 +8,9 @@
 #include "orbsvcs/CosNamingC.h"
 #include "PCVisitor.h"
 #include "PCVisitorBase.h"
+#include "ace/OS.h"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Plan_Generator
   {
@@ -61,8 +62,7 @@ namespace CIAO
 
       if (CORBA::is_nil (this->rm_.in ()))
         {
-          ACE_ERROR ((LM_ERROR,
-            "(%P|%t) CIAO_PlanGenerator: nil Repository "
+          DANCE_ERROR((LM_ERROR, "[%M] (%P|%t) CIAO_PlanGenerator: nil Repository "
             "Manager reference, narrow failed\n"));
           return false;
         }
@@ -77,8 +77,7 @@ namespace CIAO
     {
       if (CORBA::is_nil (rm_.in ()))
         {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) CIAO_Repoman: nil Execution\n"));
+          DANCE_ERROR((LM_ERROR, "[%M] (%P|%t) CIAO_Repoman: nil Execution\n"));
           return false;
         }
 
@@ -128,8 +127,7 @@ namespace CIAO
     {
       if (CORBA::is_nil (rm_.in ()))
         {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) CIAO_Repoman: nil Execution\n"));
+          DANCE_ERROR((LM_ERROR, "[%M] (%P|%t) CIAO_Repoman: nil Execution\n"));
           return false;
         }
 

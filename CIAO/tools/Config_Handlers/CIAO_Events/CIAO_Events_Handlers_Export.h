@@ -2,16 +2,12 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl CIAO_Events_Handlers
+// This file is generated automatically by generate_export_file.pl -n CIAO_Events_Handlers
 // ------------------------------
 #ifndef CIAO_EVENTS_HANDLERS_EXPORT_H
 #define CIAO_EVENTS_HANDLERS_EXPORT_H
 
 #include "ace/config-all.h"
-
-#if defined (ACE_AS_STATIC_LIBS) && !defined (CIAO_EVENTS_HANDLERS_HAS_DLL)
-#  define CIAO_EVENTS_HANDLERS_HAS_DLL 0
-#endif /* ACE_AS_STATIC_LIBS && CIAO_EVENTS_HANDLERS_HAS_DLL */
 
 #if !defined (CIAO_EVENTS_HANDLERS_HAS_DLL)
 #  define CIAO_EVENTS_HANDLERS_HAS_DLL 1

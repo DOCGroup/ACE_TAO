@@ -1120,20 +1120,20 @@ basic_visitor::can_skip_module (AST_Module *m)
             break;
         }
     }
-    
+
   return true;
 }
 
 bool
 basic_visitor::match_excluded_file (const char *raw_filename)
 {
-  ACE_CString::size_type p = 0;
+  size_t p = 0;
 
   // If this included IDL file matches one of the 'excluded' files,
   // generate the include without tacking on the suffix.
-  while (p != ACE_CString::npos)
+  while (p != static_cast<size_t> (ACE_CString::npos))
     {
-      ACE_CString::size_type cursor = p;
+      size_t cursor = p;
       p = be_global->excluded_filenames ().find (' ', cursor);
       
       ACE_CString one_filename =
@@ -1145,7 +1145,7 @@ basic_visitor::match_excluded_file (const char *raw_filename)
         }
         
       // Skip the whitespace.  
-      if (p != ACE_CString::npos)
+      if (p != static_cast<size_t> (ACE_CString::npos))
         {
           while (be_global->excluded_filenames ()[p] == ' ')
             {

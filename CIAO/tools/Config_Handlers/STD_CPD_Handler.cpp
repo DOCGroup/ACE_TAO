@@ -4,6 +4,7 @@
 #include "Basic_Deployment_Data.hpp"
 #include "DAnCE/Deployment/Deployment_DataC.h"
 #include "Deployment.hpp"
+#include "Utils/XML_Typedefs.h"
 
 namespace CIAO
 {
@@ -25,13 +26,14 @@ namespace CIAO
       idl_pci.name =
         pci.name ().c_str ();
 
-      if (!this->xml_helper_->is_initialized ())
+      if (XML_Helper::XML_HELPER.is_initialized ())
         return false;
 
       // parse the .cid (ComponentImplementationDescription) file
       // that <referencedImplementation> links to
       xercesc::DOMDocument* dom =
-        this->xml_helper_->create_dom ((pci.referencedImplementation ()).href ().c_str ()); // here location indicates .pcd file
+        XML_Helper::XML_HELPER.create_dom 
+        ((pci.referencedImplementation ()).href ().c_str ()); // here location indicates .pcd file
 
       if (!dom)
         return false;
@@ -41,7 +43,7 @@ namespace CIAO
 
       Deployment::ComponentImplementationDescription idl_cid;
 
-      STD_CID_Handler cid_handler (this->xml_helper_);
+      STD_CID_Handler cid_handler;
 
       cid_handler.component_impl_descr (cid,
                                         idl_cid);

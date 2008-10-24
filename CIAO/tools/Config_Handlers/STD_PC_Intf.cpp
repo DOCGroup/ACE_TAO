@@ -1,7 +1,7 @@
 // $Id$
 
 #include "STD_PC_Intf.h"
-#include "Utils/XML_Helper.h"
+#include "Utils/XML_Typedefs.h"
 #include "Deployment.hpp"
 #include "STD_PCD_Handler.h"
 #include "ciao/Packaging_DataC.h"
@@ -22,14 +22,10 @@ namespace CIAO
     {
       CIAO_TRACE("STD_PC_Intf::prepare_PC");
 
-      ACE_Auto_Ptr<XML_Helper> helper (new XML_Helper);
-
-      if (!helper->is_initialized ())
-        return false;
 
       // parse the .pcd (PackageConfigurationDescription) file
       xercesc::DOMDocument *dom =
-        helper->create_dom (file);
+        XML_Helper::XML_HELPER.create_dom (file);
 
       if (!dom)
         return false;
@@ -42,7 +38,7 @@ namespace CIAO
       Deployment::PackageConfiguration idl_pc;
 
 
-      STD_PCD_Handler pcd_handler (helper.get ());
+      STD_PCD_Handler pcd_handler;
 
       pcd_handler.package_config (pc,
                                   idl_pc);

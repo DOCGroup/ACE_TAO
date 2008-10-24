@@ -189,17 +189,10 @@ namespace CIDL_TargetManager_i
   }
 
   void
-  TargetManagerImpl_exec_i::ciao_preactivate ()
+  TargetManagerImpl_exec_i::configuration_complete ()
   {
     // Your code here.
   }
-
-  void
-  TargetManagerImpl_exec_i::ciao_postactivate ()
-  {
-    // Your code here.
-  }
-
 
   void
   TargetManagerImpl_exec_i::ccm_activate ()

@@ -13,6 +13,7 @@ namespace CIAO
     ESD_Handler::es_deployment_descrs (
         const DeploymentPlan &src,
         Deployment::EventServiceDeploymentDescriptions& dest)
+      throw (Config_Error)
     {
       CIAO_TRACE("ESD_Handler::instance_deployment_descrs");
       DeploymentPlan::es_const_iterator esd_e = src.end_instance ();
@@ -36,6 +37,7 @@ namespace CIAO
         const EventServiceDeploymentDescription& src,
         Deployment::EventServiceDeploymentDescription& dest,
         CORBA::ULong pos)
+      throw (Config_Error)
     {
       CIAO_TRACE("IDD_Handler::es_deployment_descr");
       try
@@ -79,6 +81,7 @@ namespace CIAO
     EventServiceDeploymentDescription
     ESD_Handler::es_deployment_descr (
         const Deployment::EventServiceDeploymentDescription& src)
+      throw (Config_Error)
     {
       CIAO_TRACE("ESD_Handler::es_deployment_descr - reverse");
       //Get all the string

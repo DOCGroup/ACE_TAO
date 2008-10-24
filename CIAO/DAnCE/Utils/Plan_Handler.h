@@ -15,7 +15,7 @@
 #include "DAnCE_Utils_Export.h"
 #include "Deployment/DeploymentC.h"
 
-namespace CIAO
+namespace DAnCE
 {
   class ImplementationNotFound {};
   class InstanceNotFound {};
@@ -46,33 +46,26 @@ namespace CIAO
         const char *instance_name, 
         const char *node_name, 
         const char *impl_name, 
-        const char *ns_name = 0);
-
-    /// Add a certain number of instances
-    /// The name of the instances will be "instance_name_X" where
-    /// <X> is a positive integer number starting from 1 to <num>.
-    static void add_instances (
-        int num,
-        ::Deployment::DeploymentPlan &deployment_plan, 
-        const char *instance_name, 
-        const char *node_name, 
-        const char *impl_name, 
-        const char *ns_name = 0);
+        const char *ns_name = 0)
+      throw (ImplementationNotFound);
 
     static void add_connection (
         ::Deployment::DeploymentPlan &deployment_plan, 
         const char *connection_name, 
         const char *port_name, 
         const char *facet_instance, 
-        const char *receptacle_instance);
+        const char *receptacle_instance)
+      throw (InstanceNotFound);
 
     static void remove_instance (
         ::Deployment::DeploymentPlan &deployment_plan, 
-        const char *instance_name);
+        const char *instance_name)
+      throw (InstanceNotFound);
 
     static void remove_connection (
         ::Deployment::DeploymentPlan &deployment_plan, 
-        const char *connection_name);
+        const char *connection_name)
+      throw (ConnectionNotFound);
 
     static void print_instances (
       const ::Deployment::DeploymentPlan &deployment_plan);

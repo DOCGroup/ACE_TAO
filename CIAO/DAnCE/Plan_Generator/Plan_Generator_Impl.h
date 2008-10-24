@@ -13,7 +13,7 @@
 #include "DAnCE/Deployment/Deployment_RepositoryManagerC.h"
 #include "Plan_Generator_Impl_Export.h"
 
-namespace CIAO
+namespace DAnCE
 {
   namespace Plan_Generator
   {

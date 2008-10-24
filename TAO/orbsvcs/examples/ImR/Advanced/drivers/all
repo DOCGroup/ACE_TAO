@@ -1,6 +1,0 @@
-# All Tests
-run invocation
-run environment
-run persistence
-run retry
-

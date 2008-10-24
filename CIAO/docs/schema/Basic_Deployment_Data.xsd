@@ -2,7 +2,15 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://www.w3.org/2001/XMLSchema XMLSchema.xsd"
             xmlns:Deployment="http://www.omg.org/Deployment"
+            xmlns:xmi="http://www.omg.org/XMI"
             targetNamespace="http://www.omg.org/Deployment">
+
+  <xsd:import namespace="http://www.omg.org/XMI"
+              schemaLocation="XMI.xsd" />
+  
+  <xsd:complexType name="IdRef">
+    <xsd:attributeGroup ref="xmi:LinkAttribs" />
+  </xsd:complexType>
 
   <xsd:simpleType name="TCKind">
     <xsd:restriction base="xsd:NCName">
@@ -54,6 +62,7 @@
         <xsd:element name="struct" type="Deployment:StructType"/>
         <xsd:element name="value" type="Deployment:ValueType"/>
         <xsd:element name="sequence" type="Deployment:SequenceType"/>
+        <xsd:element name="alias" type="Deployment:AliasType"/>
        </xsd:choice>
 
 <!--
@@ -63,11 +72,11 @@
       <xsd:element name="boundedString" type="Deployment:BoundedStringType"/>
       <xsd:element name="fixed" type="Deployment:FixedType"/>
       <xsd:element name="array" type="Deployment:ArrayType"/>
-      <xsd:element name="alias" type="Deployment:AliasType"/>
+
       <xsd:element name="union" type="Deployment:UnionType"/>
 -->
     </xsd:sequence>
-    <xsd:attribute name="id" type="xsd:ID"/>
+    <xsd:attribute ref="xmi:id" />
   </xsd:complexType>
 
   <xsd:complexType name="DataValue">
@@ -90,12 +99,20 @@
       <!-- <xsd:element name="fixed" type="xsd:string"/> -->
       <!-- <xsd:element name="any" type="Deployment:Any"/> -->
       <!-- <xsd:element name="typecode" type="Deployment:DataType"/> -->
-      <!-- <xsd:element name="element" type="Deployment:DataValue"/> -->
+      <xsd:element name="element" type="Deployment:DataValue"/>
       <!-- <xsd:element name="discriminator" type="Deployment:DataValue"/> -->
       <!-- <xsd:element name="value" type="Deployment:DataValue"/> -->
       <!-- <xsd:element name="boxedValue" type="Deployment:DataValue"/> -->
       <xsd:element name="member" type="Deployment:NamedValue"/>
     </xsd:choice>
+  </xsd:complexType>
+
+  <xsd:complexType name="AliasType">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="typeId" type="xsd:string"/>
+      <xsd:element name="elementType" type="Deployment:DataType"/>
+    </xsd:sequence>
   </xsd:complexType>
 
   <xsd:complexType name="EnumType">
@@ -148,7 +165,7 @@
 
   <xsd:complexType name="SequenceType">
     <xsd:sequence>
-      <xsd:element name="bound" type="xsd:string" minOccurs="0" />
+      <xsd:element name="bound" type="xsd:unsignedInt" minOccurs="0" />
       <xsd:element name="elementType" type="Deployment:DataType"/>
     </xsd:sequence>
   </xsd:complexType>
@@ -225,18 +242,18 @@
       <xsd:element name="deployRequirement" type="Deployment:Requirement" minOccurs="0" maxOccurs="unbounded"/>
       <xsd:element name="deployedResource" type="Deployment:ResourceDeploymentDescription" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
-    <xsd:attribute name="id" type="xsd:ID"/>
+    <xsd:attribute ref="xmi:id" />
   </xsd:complexType>
 
   <xsd:complexType name="MonolithicDeploymentDescription">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="source" type="xsd:string" maxOccurs="unbounded"/>
-      <xsd:element name="artifact" type="xsd:IDREF" maxOccurs="unbounded"/> <!-- ArtifactDeploymentDescription -->
+      <xsd:element name="artifact" type="Deployment:IdRef" maxOccurs="unbounded"/> <!-- ArtifactDeploymentDescription -->
       <xsd:element name="execParameter" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded"/>
       <xsd:element name="deployRequirement" type="Deployment:Requirement" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
-    <xsd:attribute name="id" type="xsd:ID"/>
+    <xsd:attribute ref="xmi:id" />
   </xsd:complexType>
 
   <xsd:simpleType name="ResourceUsageKind">
@@ -263,12 +280,12 @@
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="node" type="xsd:string"/>
       <xsd:element name="source" type="xsd:string"/>
-      <xsd:element name="implementation" type="xsd:IDREF"/> <!-- MonolithicDeploymentDescription -->
+      <xsd:element name="implementation" type="Deployment:IdRef"/> <!-- MonolithicDeploymentDescription -->
       <xsd:element name="configProperty" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded"/>
       <xsd:element name="deployedResource" type="Deployment:InstanceResourceDeploymentDescription" minOccurs="0" maxOccurs="unbounded"/>
       <xsd:element name="deployedSharedResource" type="Deployment:InstanceResourceDeploymentDescription" minOccurs="0"/>
     </xsd:sequence>
-    <xsd:attribute name="id" type="xsd:ID"/>
+    <xsd:attribute ref="xmi:id" />
   </xsd:complexType>
 
   <xsd:simpleType name="CCMComponentPortKind">
@@ -314,13 +331,16 @@
       <xsd:element name="portName" type="xsd:string"/>
       <xsd:element name="provider" type="xsd:string" minOccurs="0"/>
       <xsd:element name="kind" type="Deployment:CCMComponentPortKind"/>
-      <xsd:element name="instance" type="xsd:IDREF"/> <!-- InstanceDeploymentDescription -->
+      <xsd:element name="instance" type="Deployment:IdRef"/> <!-- InstanceDeploymentDescription -->
     </xsd:sequence>
   </xsd:complexType>
 
   <xsd:complexType name="ExternalReferenceEndpoint">
     <xsd:sequence>
       <xsd:element name="location" type="xsd:string"/>
+      <xsd:element name="provider" type="xsd:boolean"/>
+      <xsd:element name="portName" type="xsd:string" minOccurs="0" />
+      <xsd:element name="supportedType" type="xsd:string" maxOccurs="unbounded" />
     </xsd:sequence>
   </xsd:complexType>
 
@@ -372,18 +392,10 @@
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:complexType name="ComponentPackageReference">
-    <xsd:sequence>
-      <xsd:element name="requiredUUID" type="xsd:string" minOccurs="0" />
-      <xsd:element name="requiredName" type="xsd:string" minOccurs="0" />
-      <xsd:element name="requiredType" type="xsd:string"/>
-    </xsd:sequence>
-  </xsd:complexType>
-
   <xsd:complexType name="SubcomponentPortEndpoint">
     <xsd:sequence>
       <xsd:element name="portName" type="xsd:string"/>
-      <xsd:element name="instance" type="xsd:IDREF"/> <!-- SubcomponentInstantiationDescription -->
+      <xsd:element name="instance" type="Deployment:IdRef"/> <!-- SubcomponentInstantiationDescription -->
     </xsd:sequence>
   </xsd:complexType>
 
@@ -394,6 +406,21 @@
       <xsd:element name="internalEndpoint" type="Deployment:SubcomponentPortEndpoint" minOccurs="0" maxOccurs="unbounded"/>
       <xsd:element name="externalEndpoint" type="Deployment:ComponentExternalPortEndpoint" minOccurs="0" maxOccurs="unbounded"/>
       <xsd:element name="externalReference" type="Deployment:ExternalReferenceEndpoint" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:simpleType name="PlanLocalityKind">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="SameProcess"/>
+      <xsd:enumeration value="DifferentProcess"/>
+      <xsd:enumeration value="NoConstraint"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="PlanLocality">
+    <xsd:sequence>
+      <xsd:element name="constraint" type="Deployment:PlanLocalityKind"/>
+      <xsd:element name="constrainedInstance" type="Deployment:IdRef"/> <!-- InstanceDeploymentDescription -->
     </xsd:sequence>
   </xsd:complexType>
 

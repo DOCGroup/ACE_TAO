@@ -19,12 +19,12 @@
 #include "DAnCE/Deployment/Deployment_ResourceCommitmentManagerC.h"
 
 /**
- * @namespace CIAO
+ * @namespace DAnCE
  *
  * @brief The main CIAO namespace
  *
  */
-namespace CIAO
+namespace DAnCE
 {
   /**
    * @class DomainDataManager

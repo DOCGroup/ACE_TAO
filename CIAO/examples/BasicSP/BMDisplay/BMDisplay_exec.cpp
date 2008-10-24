@@ -22,15 +22,11 @@ MyImpl::BMDisplay_exec_i::push_data_ready (
 {
   ACE_UNUSED_ARG (ev);
 
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "BMDisplay - Doing computations \n"));
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "BMDisplay - Doing data fetch \n"));
-    }
-
+  ACE_DEBUG ((LM_DEBUG,
+              "BMDisplay - Doing computations \n"));
+  
+  ACE_DEBUG ((LM_DEBUG,
+              "BMDisplay - Doing data fetch \n"));
   // Refresh position
   BasicSP::ReadData_var dat
     = this->context_->get_connection_comp_data ();
@@ -53,12 +49,8 @@ MyImpl::BMDisplay_exec_i::set_session_context (
     Components::SessionContext_ptr ctx
   )
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::BMDisplay_exec_i::set_session_context\n"));
-    }
-
+  ACE_DEBUG ((LM_DEBUG,
+              "MyImpl::BMDisplay_exec_i::set_session_context\n"));
   this->context_ =
     BasicSP::CCM_BMDisplay_Context::_narrow (ctx);
 
@@ -68,7 +60,7 @@ MyImpl::BMDisplay_exec_i::set_session_context (
 }
 
 void
-MyImpl::BMDisplay_exec_i::ciao_preactivate (
+MyImpl::BMDisplay_exec_i::configuration_complete (
   )
 {
 }
@@ -76,39 +68,23 @@ MyImpl::BMDisplay_exec_i::ciao_preactivate (
 void
 MyImpl::BMDisplay_exec_i::ccm_activate ()
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::BMDisplay_exec_i::ccm_activate\n"));
-    }
-
-}
-
-void
-MyImpl::BMDisplay_exec_i::ciao_postactivate (
-  )
-{
+  ACE_DEBUG ((LM_DEBUG,
+              "MyImpl::BMDisplay_exec_i::ccm_activate\n"));
 }
 
 void
 MyImpl::BMDisplay_exec_i::ccm_passivate (
   )
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::BMDisplay_exec_i::ccm_passivate\n"));
-    }
+  ACE_DEBUG ((LM_DEBUG,
+              "MyImpl::BMDisplay_exec_i::ccm_passivate\n"));
 }
 
 void
 MyImpl::BMDisplay_exec_i::ccm_remove ()
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::BMDisplay_exec_i::ccm_remove\n"));
-    }
+  ACE_DEBUG ((LM_DEBUG,
+              "MyImpl::BMDisplay_exec_i::ccm_remove\n"));
 }
 
 /// Default ctor.

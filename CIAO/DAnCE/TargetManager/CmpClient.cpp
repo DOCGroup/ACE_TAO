@@ -12,12 +12,15 @@
 #include "DAnCE/Deployment/Deployment_DataC.h"
 #include "DAnCE/Deployment/Deployment_ResourceCommitmentManagerC.h"
 #include "DAnCE/TargetManager/TargetManagerImplC.h"
+#include "ace/OS.h"
 #include "ace/streams.h"
 #include "ace/FILE_IO.h"
 #include "ace/FILE_Connector.h"
 #include "ace/FILE_Addr.h"
 #include "ace/Get_Opt.h"
-#include "Config_Handlers/DnC_Dump.h"
+//CHANGE(vt){
+//#include "Config_Handlers/DnC_Dump.h"
+//}
 
 /**
  * TM_Tester contains the code to test the TM Component
@@ -30,7 +33,7 @@ namespace TM_Tester
   void write_to_file (::Deployment::Domain domain);
 
   /// variable contains IOR of the TM
-  const ACE_TCHAR * stringified_TM_IOR;
+  const char * stringified_TM_IOR;
 
   /// if add or delete from domain
   bool add_to_domain = true;
@@ -39,12 +42,12 @@ namespace TM_Tester
   bool call_update = false;
 
   /// contains the host name
-  const ACE_TCHAR* host_name;
+  const char * host_name;
 
     /// parses the arguments and extracts the params
-  bool parse_args (int argc, ACE_TCHAR *argv[])
+  bool parse_args (int argc, char *argv[])
   {
-    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:u:d"));
+    ACE_Get_Opt get_opts (argc, argv, "t:u:d");
     int c;
     while ((c = get_opts ()) != -1)
       switch (c)
@@ -61,7 +64,7 @@ namespace TM_Tester
           break;
         case '?':  // display help for use of the server.
         default:
-          ACE_ERROR_RETURN ((LM_ERROR,
+          DANCE_ERROR_RETURN ((LM_ERROR,
                 "usage:  %s\n"
                 "-t <TM_IOR>\n"
                 "-u <host_name in update>\n"
@@ -76,12 +79,13 @@ namespace TM_Tester
 }
 
   /// The main function
-  int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+  int main (int argc, char* argv[])
   {
     try {
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv,
+            "" /* the ORB name, it can be anything! */);
 
       if (!TM_Tester::parse_args (argc, argv))
         return -1;
@@ -90,11 +94,11 @@ namespace TM_Tester
       // in real applications we use the naming service, but let's do
       // the easy part first!
       CORBA::Object_var factory_object =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (TM_Tester::stringified_TM_IOR));
+        orb->string_to_object (TM_Tester::stringified_TM_IOR);
 
       // Now downcast the object reference to the appropriate type
-      CIAO::TargetManagerImpl_var targetCmp =
-        CIAO::TargetManagerImpl::_narrow (factory_object.in ());
+      DAnCE::TargetManagerImpl_var targetCmp =
+        DAnCE::TargetManagerImpl::_narrow (factory_object.in ());
 
       // Now get the facet reference from the target Manager Component
       Deployment::TargetManager_ptr targetI = targetCmp->provide_targetMgr ();
@@ -104,16 +108,18 @@ namespace TM_Tester
       try
       {
         Deployment::Domain_var domainV = targetI->getAllResources ();
-        ::Deployment::DnC_Dump::dump (domainV);
+//CHANGE(vt){
+        //::Deployment::DnC_Dump::dump (domainV);
+//}
       }
       catch(CORBA::NO_IMPLEMENT &)
       {
-        ACE_ERROR ((LM_ERROR ,"Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+        DANCE_ERROR((LM_ERROR, "[%M] Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
       }
       catch(CORBA::Exception &)
       {
-        ACE_ERROR ((LM_ERROR ,"Error:TargetManager:CORBA Generic Exception \n"));
-        ACE_ERROR ((LM_ERROR ,"Error:TargetManager:Exception in TargetManager call\n"));
+        DANCE_ERROR((LM_ERROR, "[%M] Error:TargetManager:CORBA Generic Exception \n"));
+        DANCE_ERROR((LM_ERROR, "[%M] Error:TargetManager:Exception in TargetManager call\n"));
       }
 
 
@@ -136,37 +142,36 @@ namespace TM_Tester
       CORBA::Long d = 20;
       resource_seq[0].property[0].value <<= d;
 
-      ::Deployment::ResourceCommitmentManager_ptr manager =
+      ::Deployment::ResourceCommitmentManager_ptr manager = 
         ::Deployment::ResourceCommitmentManager::_nil ();
 
       try
       {
-        manager = targetI->createResourceCommitment (resource_seq);
+        //manager = targetI->createResourceCommitment (resource_seq);
 
         manager->commitResources (resource_seq);
 
       }
       catch(CORBA::NO_IMPLEMENT &)
       {
-        ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+        DANCE_ERROR((LM_ERROR,  "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
       }
       catch (::Deployment::ResourceCommitmentFailure& e)
       {
         resource_available = 0;
-        ACE_ERROR ((LM_ERROR, "TargetManager commitResources ResourceCommitmentFailure Exception\n"));
+        DANCE_ERROR((LM_ERROR,  "TargetManager commitResources ResourceCommitmentFailure Exception\n"));
 
-        ACE_ERROR ((LM_ERROR ,
-              "ResourceCommitmentFailure\n reason=[%s]\n elementName=[%s]\n resourceName=[%s]\n propertyName=[%s]\n",
-              ACE_TEXT_CHAR_TO_TCHAR (e.reason.in ()),
-              ACE_TEXT_CHAR_TO_TCHAR (resource_seq[e.index].elementName.in ()),
-              ACE_TEXT_CHAR_TO_TCHAR (resource_seq[e.index].resourceName.in ()),
-              ACE_TEXT_CHAR_TO_TCHAR (e.propertyName.in ())));
+        DANCE_ERROR((LM_ERROR, "[%M] ResourceCommitmentFailure\n reason=[%s]\n elementName=[%s]\n resourceName=[%s]\n propertyName=[%s]\n",
+              e.reason.in (),
+              resource_seq[e.index].elementName.in (),
+              resource_seq[e.index].resourceName.in (),
+              e.propertyName.in ()));
       }
       catch(const CORBA::Exception &)
       {
-        ACE_ERROR ((LM_ERROR, "Error:TargetManager:commitResources Exception\n"));
-        ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
-        ACE_ERROR ((LM_ERROR, "Error:TargetManager:Exception in TargetManager call"));
+        DANCE_ERROR((LM_ERROR,  "Error:TargetManager:commitResources Exception\n"));
+        DANCE_ERROR((LM_ERROR,  "Error:TargetManager:CORBA Generic Exception\n"));
+        DANCE_ERROR((LM_ERROR,  "Error:TargetManager:Exception in TargetManager call"));
       }
 
       // Make a call to release resources , if resource < 0
@@ -180,24 +185,24 @@ namespace TM_Tester
       }
       catch(const CORBA::NO_IMPLEMENT &)
       {
-        ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+        DANCE_ERROR((LM_ERROR,  "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
       }
       catch (const Deployment::ResourceCommitmentFailure&)
       {
-        ACE_ERROR ((LM_ERROR, "Error:TargetManager releaseResources ResourceNotAvailable Exception\n"));
+        DANCE_ERROR((LM_ERROR,  "Error:TargetManager releaseResources ResourceNotAvailable Exception\n"));
       }
       catch(const CORBA::Exception &)
       {
-        ACE_ERROR ((LM_ERROR, "Error:TargetManager:releaseResources Exception\n"));
-        ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
-        ACE_ERROR ((LM_ERROR, "Error:TargetManager:Exception in TargetManager call"));
+        DANCE_ERROR((LM_ERROR,  "Error:TargetManager:releaseResources Exception\n"));
+        DANCE_ERROR((LM_ERROR,  "Error:TargetManager:CORBA Generic Exception\n"));
+        DANCE_ERROR((LM_ERROR,  "Error:TargetManager:Exception in TargetManager call"));
       }
 
       // Here make a call on the TM with update domain and node deletion
 
       ::Deployment::Domain updated;
       updated.node.length (1);
-      updated.node[0].name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (TM_Tester::host_name));
+      updated.node[0].name = CORBA::string_dup (TM_Tester::host_name);
 
       ::CORBA::StringSeq elements;
       elements.length (0);
@@ -213,12 +218,12 @@ namespace TM_Tester
           }
           catch(CORBA::NO_IMPLEMENT &)
           {
-            ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+            DANCE_ERROR((LM_ERROR,  "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
           }
           catch(CORBA::Exception &)
           {
-            ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
-            ACE_ERROR ((LM_ERROR, "Error:TargetManager:Exception in UpdateDomain call"));
+            DANCE_ERROR((LM_ERROR,  "Error:TargetManager:CORBA Generic Exception\n"));
+            DANCE_ERROR((LM_ERROR,  "Error:TargetManager:Exception in UpdateDomain call"));
           }
         }
         else
@@ -229,12 +234,12 @@ namespace TM_Tester
           }
           catch(CORBA::NO_IMPLEMENT &)
           {
-            ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+            DANCE_ERROR((LM_ERROR,  "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
           }
           catch(CORBA::Exception &)
           {
-            ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
-            ACE_ERROR ((LM_ERROR, "Error:TargetManager:Exception in UpdateDomain call"));
+            DANCE_ERROR((LM_ERROR,  "Error:TargetManager:CORBA Generic Exception\n"));
+            DANCE_ERROR((LM_ERROR,  "Error:TargetManager:Exception in UpdateDomain call"));
           }
         }
       }
@@ -247,16 +252,18 @@ namespace TM_Tester
         // here write things to file ...
         TM_Tester::write_to_file (domainV.in());
 
-        ::Deployment::DnC_Dump::dump (domainV);
+//CHANGE(vt){
+        //::Deployment::DnC_Dump::dump (domainV);
+//}
       }
       catch(CORBA::NO_IMPLEMENT &)
       {
-        ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
+        DANCE_ERROR((LM_ERROR,  "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
       }
       catch(CORBA::Exception &)
       {
-        ACE_ERROR ((LM_ERROR ,"Error:TargetManager:CORBA Generic Exception\n"));
-        ACE_ERROR ((LM_ERROR,  "Error:TargetManager:Exception in TargetManager call\n"));
+        DANCE_ERROR((LM_ERROR, "[%M] Error:TargetManager:CORBA Generic Exception\n"));
+        DANCE_ERROR((LM_ERROR,   "Error:TargetManager:Exception in TargetManager call\n"));
       }
 
       // Finally destroy the ORB
@@ -264,7 +271,7 @@ namespace TM_Tester
     }
     catch (CORBA::Exception &)
     {
-      ACE_ERROR ((LM_ERROR,  "Error:TargetManager:CORBA exception raised!\n"));
+      DANCE_ERROR((LM_ERROR,   "Error:TargetManager:CORBA exception raised!\n"));
     }
     return 0;
   }
@@ -275,29 +282,29 @@ namespace TM_Tester
   {
     for (size_t i = 0;i < domain.node.length ();i++)
     {
-      std::ofstream out (domain.node[i].name.in ());
+      ofstream out (domain.node[i].name.in ());
 
 
       // write in the node usage ...
       for (size_t j = 0;j < domain.node[i].resource.length ();j++)
       {
 
-        if (!ACE_OS::strcmp (domain.node[i].resource[j].name.in (), "Processor"))
+        if (!strcmp (domain.node[i].resource[j].name.in (), "Processor"))
         {
           CORBA::Double node_cpu;
           domain.node[i].resource[j].property[0].value >>= node_cpu;
-          out << node_cpu << std::endl;
+          out << node_cpu << endl;
         }
-        if (!ACE_OS::strcmp (domain.node[i].resource[j].name.in (), "NA_Monitor"))
+        if (!strcmp (domain.node[i].resource[j].name.in (), "NA_Monitor"))
         {
-          std::string file_name = "NA_";
+          ACE_CString file_name = "NA_";
           file_name += domain.node[i].name.in ();
           ACE_FILE_IO file_io;
           ACE_FILE_Connector (file_io, ACE_FILE_Addr (file_name.c_str ()));
           CORBA::Double na_node_cpu;
           domain.node[i].resource[j].property[0].value >>= na_node_cpu;
           char buf[BUFSIZ];
-          ACE_OS::memset (buf , 0 , BUFSIZ);
+          memset (buf , 0 , BUFSIZ);
           ACE_OS::sprintf (buf , "%f", na_node_cpu);
           file_io.send (buf, ACE_OS::strlen (buf));
         }

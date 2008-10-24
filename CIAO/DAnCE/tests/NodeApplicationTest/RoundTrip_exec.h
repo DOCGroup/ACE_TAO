@@ -64,9 +64,7 @@ namespace CIDL_RoundTrip_Impl
     void pulse (void);
 
     // CIAO defined methods
-    virtual void ciao_preactivate ();
-
-    virtual void ciao_postactivate ();
+    virtual void configuration_complete ();
 
   protected:
 

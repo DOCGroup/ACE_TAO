@@ -17,16 +17,17 @@ namespace CIAO
     IDREF_Base<CORBA::ULong> IDD_Handler::IDREF;
 
     void
-    IDD_Handler::instance_deployment_descrs (const DeploymentPlan &src,
+    IDD_Handler::instance_deployment_descrs (const deploymentPlan &src,
                                              Deployment::InstanceDeploymentDescriptions& dest)
+      throw (Config_Error)
     {
       CIAO_TRACE("IDD_Handler::instance_deployment_descrs");
-      DeploymentPlan::instance_const_iterator idd_e =
+      deploymentPlan::instance_const_iterator idd_e =
         src.end_instance ();
 
       CORBA::ULong pos = 0;
       dest.length (src.count_instance ());
-      for (DeploymentPlan::instance_const_iterator idd_b =
+      for (deploymentPlan::instance_const_iterator idd_b =
              src.begin_instance ();
            idd_b != idd_e;
            ++idd_b)
@@ -38,9 +39,11 @@ namespace CIAO
     }
 
     void
-    IDD_Handler::instance_deployment_descr (const InstanceDeploymentDescription& src,
+    IDD_Handler::instance_deployment_descr (
+                                            const InstanceDeploymentDescription& src,
                                             Deployment::InstanceDeploymentDescription& dest,
                                             CORBA::ULong pos)
+      throw (Config_Error)
     {
       CIAO_TRACE("IDD_Handler::instance_deployment_descr");
       try
@@ -48,9 +51,9 @@ namespace CIAO
           dest.name = src.name ().c_str ();
           dest.node = src.node ().c_str ();
 
-          if (src.id_p ())
+          if (src.xmi_id_p ())
             {
-              ACE_CString cstr (src.id ().c_str ());
+              ACE_CString cstr (src.xmi_id ().c_str ());
               IDD_Handler::IDREF.bind_ref (cstr, pos);
             }
           else
@@ -67,15 +70,15 @@ namespace CIAO
 
           CORBA::ULong tmp = 0;
           MDD_Handler::IDREF.find_ref
-            (ACE_CString (src.implementation ().id ().c_str ()), tmp);
+            (ACE_CString (src.implementation ().idref ().id ().c_str ()), tmp);
 
           dest.implementationRef = tmp;
-
+          
           dest.configProperty.length (src.count_configProperty ());
           std::for_each (src.begin_configProperty (),
                          src.end_configProperty (),
                          Property_Functor (dest.configProperty));
-
+          
           dest.deployedResource.length (src.count_deployedResource ());
           std::for_each (src.begin_deployedResource (),
                          src.end_deployedResource (),
@@ -94,11 +97,20 @@ namespace CIAO
           ex.name_ = src.name ()  + ":" + ex.name_;
           throw ex;
         }
+      catch (...)
+        {
+          ACE_ERROR ((LM_ERROR, "Unknown exception at IDD:%s",
+                      src.name ().c_str ()));
+          throw Config_Error (src.name (), "Unknown exception");
+        }
+            
       // Done!
     }
 
     InstanceDeploymentDescription
-    IDD_Handler::instance_deployment_descr (const Deployment::InstanceDeploymentDescription& src)
+    IDD_Handler::instance_deployment_descr (
+                                            const Deployment::InstanceDeploymentDescription& src)
+      throw (Config_Error)
     {
       CIAO_TRACE("IDD_Handler::instance_deployment_descr - reverse");
       //Get all the string/IDREFs
@@ -115,13 +127,17 @@ namespace CIAO
       XMLSchema::IDREF< ACE_TCHAR > implementation ((temp.c_str()));
 
       // Instantiate the IDD
-      InstanceDeploymentDescription idd (name, node, source, implementation);
+      IdRef xid;
+      xid.idref (implementation);
+      InstanceDeploymentDescription idd (name, node, source, xid);
 
       //Get and store the configProperty(s)
       size_t total = src.configProperty.length();
       for(size_t j = 0; j < total; j++)
         {
-          idd.add_configProperty(Property_Handler::get_property (src.configProperty[j]));
+          idd.add_configProperty(
+                                 Property_Handler::get_property (
+                                                                 src.configProperty[j]));
         }
 
       // Get and store the deployedResource(s)
@@ -146,9 +162,10 @@ namespace CIAO
       // Bind the ref and set it in the IDD
       IDD_Handler::IDREF.bind_next_available (idd_id);
 
-      idd.id (xml_id);
+      idd.xmi_id (xml_id);
 
       return idd;
     }
+
   }
 }

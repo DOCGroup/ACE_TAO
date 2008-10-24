@@ -19,6 +19,7 @@ namespace CIAO
       template <typename T>
       void
       IDREF_Base<T>::bind_ref (ACE_CString& id, T value)
+        throw (Config_Error)
       {
         CIAO_TRACE("IDREF_Base<T>::bind_ref");
 
@@ -58,6 +59,7 @@ namespace CIAO
       template <typename T>
       void
       IDREF_Base<T>::find_ref (const ACE_CString& id, T& val)
+        throw (Config_Error)
       {
         CIAO_TRACE("IDREF_Base<T>::find_ref(C_String, T)");
 
@@ -72,6 +74,7 @@ namespace CIAO
       template <typename T>
       void
       IDREF_Base<T>::find_ref (const T& value, ACE_CString& id)
+        throw (Config_Error)
       {
         CIAO_TRACE("IDREF_Base<T>::find_ref (T, CString)");
 

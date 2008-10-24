@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (CIAO_Events_Base) : orbsvcslib, orbsvcs_output, ciao_client_dnc, ciao_container_dnc {
+project (CIAO_Events_Base) : orbsvcslib, orbsvcs_output, ccm_svnt {
   sharedname  = CIAO_Events_Base
   idlflags  += -Wb,export_include=CIAO_Events_Export.h \
                -Wb,export_macro=CIAO_EVENTS_Export

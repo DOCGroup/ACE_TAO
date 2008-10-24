@@ -582,7 +582,9 @@ CIDL_SenderImpl::SenderExec_i::start (
   char **argv = 0;
 
   this->orb_ =
-    CORBA::ORB_init (argc, argv);
+    CORBA::ORB_init (argc,
+                     argv,
+                     "");
 
   CORBA::Object_var object =
     this->orb_->resolve_initial_references ("RTORB");
@@ -677,15 +679,9 @@ CIDL_SenderImpl::SenderExec_i::ccm_remove (void)
 
 
 void
-CIDL_SenderImpl::SenderExec_i::ciao_preactivate (void)
+CIDL_SenderImpl::SenderExec_i::configuration_complete (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::ccm_preactivate\n"));
-}
-
-void
-CIDL_SenderImpl::SenderExec_i::ciao_postactivate (void)
-{
-  ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::ccm_postactivate\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::configuration_complete\n"));
 }
 
 ::Components::EnterpriseComponent_ptr

@@ -5,6 +5,7 @@
 #include "DAnCE/Deployment/DeploymentC.h"
 #include "Package_Handlers/CPD_Handler.h"
 #include "Package_Handlers/PCD_Handler.h"
+#include "Package_Handlers/Comp_Intf_Descr_Handler.h"
 #include "Req_Handler.h"
 #include "Property_Handler.h"
 
@@ -57,9 +58,10 @@ namespace CIAO
             if (desc.referencedPackage ().requiredName_p ())
               toconfig.referencedPackage[0].requiredName =
                 desc.referencedPackage ().requiredName ().c_str ();
-
-            toconfig.referencedPackage[0].requiredType =
-              desc.referencedPackage ().requiredType ().c_str ();
+            
+            Comp_Intf_Descr_Handler::comp_intf_descr (desc.referencedPackage ().requiredType (),
+                                                      toconfig.referencedPackage[0].requiredType);
+            
           }
 
         toconfig.selectRequirement.length (desc.count_selectRequirement ());
@@ -106,7 +108,7 @@ namespace CIAO
           }
         else if (src.referencedPackage.length () == 1)
           {
-            ComponentPackageReference cpr (src.referencedPackage[0].requiredType.in ());
+            ComponentPackageReference cpr (Comp_Intf_Descr_Handler::comp_intf_descr (src.referencedPackage[0].requiredType));
             cpr.requiredUUID (src.referencedPackage[0].requiredUUID.in ());
             cpr.requiredName (src.referencedPackage[0].requiredName.in ());
 

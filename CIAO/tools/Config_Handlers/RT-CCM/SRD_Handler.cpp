@@ -1,5 +1,5 @@
 // $Id$
-#include "Utils/XML_Helper.h"
+#include "Utils/XML_Typedefs.h"
 #include "SRD_Handler.h"
 #include "CIAOServerResources.hpp"
 #include "CLA_Handler.h"
@@ -14,10 +14,8 @@ namespace CIAO
       srd_ (0),
       retval_ (false)
     {
-      XML_Helper helper;
-
       XERCES_CPP_NAMESPACE::DOMDocument *dom =
-        helper.create_dom (file);
+        XML_HELPER.create_dom (file);
 
       if (!dom)
         throw SRD_Handler::NoSRD ();
@@ -115,6 +113,7 @@ namespace CIAO
 
     ::CIAO::DAnCE::ServerResource const *
     SRD_Handler::srd_idl () const
+      throw (SRD_Handler::NoSRD)
     {
       if(!this->idl_srd_.get())
         throw NoSRD ();
@@ -125,6 +124,7 @@ namespace CIAO
 
     ::CIAO::DAnCE::ServerResource *
     SRD_Handler::srd_idl ()
+      throw (SRD_Handler::NoSRD)
     {
       if(!this->idl_srd_.get())
         throw NoSRD();
@@ -135,6 +135,7 @@ namespace CIAO
 
     ServerResourcesDef const *
     SRD_Handler::srd_xsc () const
+      throw (SRD_Handler::NoSRD)
     {
       if(!this->srd_.get())
         throw NoSRD ();
@@ -145,6 +146,7 @@ namespace CIAO
 
     ServerResourcesDef *
     SRD_Handler::srd_xsc ()
+      throw (SRD_Handler::NoSRD)
     {
       if(!this->srd_.get())
         throw NoSRD ();
@@ -154,3 +156,5 @@ namespace CIAO
     }
   }
 }
+
+

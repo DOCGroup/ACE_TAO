@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project {
-  specific(nmake) {
-    addcompile -= /Wp64
-  }
-}
-

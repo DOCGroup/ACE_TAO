@@ -22,7 +22,7 @@ namespace CIAO
       CIAO_TRACE("DP_PCD_Handler::plan_connection_descrs");
       DeploymentPlan::connection_const_iterator cci_e =
         src.end_connection ();
-
+      
       CORBA::ULong pos = 0;
       dest.length (src.count_connection ());
       for (DeploymentPlan::connection_const_iterator cci_b =
@@ -34,10 +34,10 @@ namespace CIAO
                                                  dest[pos++]);
         }
     }
-
+    
     PlanConnectionDescription
     DP_PCD_Handler::plan_connection_descr (
-      const Deployment::PlanConnectionDescription &src)
+    const Deployment::PlanConnectionDescription &src)
     {
       CIAO_TRACE("DP_PCD_Handler::plan_connection_descr");
       PlanConnectionDescription pcd = PCD_Handler::get_PlanConnectionDescription(src);

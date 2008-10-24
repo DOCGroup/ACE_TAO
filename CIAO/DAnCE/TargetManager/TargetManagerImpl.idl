@@ -15,7 +15,7 @@
 #include "DAnCE/TargetManager/TargetManagerExt.idl"
 #include "DAnCE/TargetManager/DomainEvents.idl"
 
-module CIAO
+module DAnCE
 {
   component TargetManagerImpl
   {

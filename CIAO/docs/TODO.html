@@ -90,19 +90,6 @@ accomplishment) :
   to inform the components that the configuration is infact
   complete. (ETA - 2004/09)</li><p>
 
- <li> We have now two proprietary methods in the <CODE>
- SessionComponent </CODE> interface called <CODE> ciao_preactivate ()
- </CODE> and <CODE> ciao_postactivate () </CODE> which has to be
- overridden by the executor code irrespective of whether the executor
- implements them or not. These were added to help components to know
- activation status of other components in the assembly. This could
- create problems for interoperability of the executor code. A better
- to way is to have the CIDL generate C++ code instead of executor IDL.
- The generated C++ code from the CIDL could provide default
- implementations which could be overridden by the executor code if so
- desired. This would make the executor code more portable. Obviously
- we also should retain executor IDL generation using some command line
- options. (ETA - 2004/09). </li> <p>
 
 <li> Need to develop tools that would allow components to be added
   dynamically to an existing assembly and remove components

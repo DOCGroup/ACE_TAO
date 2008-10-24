@@ -2,8 +2,8 @@
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "ciao/CIAO_common.h"
 #include "DAnCE/Deployment/Deployment_Packaging_DataC.h"
-#include "Utils/XML_Helper.h"
-#include "Utils/XercesString.h"
+#include "XML_Typedefs.h"
+#include "XML/XercesString.h"
 #include "Utils/Exceptions.h"
 #include "Package_Handlers/PCD_Handler.h"
 #include "Package_Handlers/CPD_Handler.h"
@@ -13,6 +13,8 @@
 #include "Req_Handler.h"
 
 #include <memory>
+
+using CIAO::XML::XStr;
 
 namespace CIAO
 {
@@ -24,7 +26,7 @@ namespace CIAO
       PCD_Handler::package_config (const ACE_TCHAR *uri,
                                    ::Deployment::PackageConfiguration &toconfig)
       {
-        XERCES_CPP_NAMESPACE::DOMDocument *dom = XML_HELPER->create_dom (uri);
+        XERCES_CPP_NAMESPACE::DOMDocument *dom = XML_Helper::XML_HELPER.create_dom (uri);
 
         if (dom == 0)
           {
@@ -38,8 +40,8 @@ namespace CIAO
         if (root == XStr ("Deployment:topLevelPackageDescription"))
           {
             TopLevelPackageDescription tpd;
-
-            tpd = topLevelPackageDescription (dom);
+        
+        tpd = topLevelPackageDescription (dom);
 
             PCD_Handler::package_config (*tpd.begin_basePackage (),
                                          toconfig);
@@ -143,7 +145,7 @@ namespace CIAO
       PackageConfiguration * PCD_Handler::resolve_package_config (const char *uri)
       {
         xercesc::DOMDocument* dom =
-          XML_HELPER->create_dom (uri);
+          XML_Helper::XML_HELPER.create_dom (uri);
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for PackageConfiguration");

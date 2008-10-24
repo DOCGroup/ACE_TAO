@@ -19,7 +19,7 @@ composition session TargetManager_i
 {
   home executor TargetManagerHome_Exec
   {
-    implements CIAO::TargetManagerHome;
+    implements DAnCE::TargetManagerHome;
     manages  TargetManagerImpl_Exec;
   };
 };

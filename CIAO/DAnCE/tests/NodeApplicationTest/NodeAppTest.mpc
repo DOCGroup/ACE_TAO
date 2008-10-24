@@ -1,9 +1,10 @@
 // $Id$
 
-project(NodeAppTest_RoundTrip_stub): ciao_client_dnc {
+project(NodeAppTest_RoundTrip_stub): ccm_stub {
   sharedname = NodeAppTest_RoundTrip_stub
   after += CIAO_DnC_Server
-
+  requires += dummy_label
+  
   idlflags += -Wb,stub_export_macro=NODEAPPTEST_ROUNDTRIP_STUB_Export \
               -Wb,stub_export_include=RoundTrip_stub_export.h \
               -Wb,skel_export_macro=NODEAPPTEST_ROUNDTRIP_SVNT_Export \
@@ -27,70 +28,71 @@ project(NodeAppTest_RoundTrip_stub): ciao_client_dnc {
   }
 }
 
-project(NodeAppTest_RoundTrip_svnt) : ciao_servant_dnc {
-  after += NodeAppTest_RoundTrip_stub
-  sharedname  = NodeAppTest_RoundTrip_svnt
+//project(NodeAppTest_RoundTrip_svnt) : ciao_servant {
+//  after += NodeAppTest_RoundTrip_stub
+//  sharedname  = NodeAppTest_RoundTrip_svnt
 
-  libs    += NodeAppTest_RoundTrip_stub
-  idlflags  +=  -Wb,export_macro=NODEAPPTEST_ROUNDTRIP_SVNT_Export \
-                -Wb,export_include=RoundTrip_svnt_export.h
-  dynamicflags = NODEAPPTEST_ROUNDTRIP_SVNT_BUILD_DLL
+//  libs    += NodeAppTest_RoundTrip_stub
+//  idlflags  +=  -Wb,export_macro=NODEAPPTEST_ROUNDTRIP_SVNT_Export \
+//                -Wb,export_include=RoundTrip_svnt_export.h
+//  dynamicflags = NODEAPPTEST_ROUNDTRIP_SVNT_BUILD_DLL
 
-  CIDL_Files {
-    NodeAppTest_RoundTrip.cidl
-  }
+//  CIDL_Files {
+//    NodeAppTest_RoundTrip.cidl
+//  }
 
-  IDL_Files {
-    NodeAppTest_RoundTripE.idl
-  }
+//  IDL_Files {
+//    NodeAppTest_RoundTripE.idl
+//  }
 
-  Source_Files {
-    NodeAppTest_RoundTripEC.cpp
-    NodeAppTest_RoundTripS.cpp
-    NodeAppTest_RoundTrip_svnt.cpp
-  }
+//  Source_Files {
+//    NodeAppTest_RoundTripEC.cpp
+//    NodeAppTest_RoundTripS.cpp
+//    NodeAppTest_RoundTrip_svnt.cpp
+//  }
 
-  Header_Files {
-    NodeAppTest_RoundTripEC.h
-    NodeAppTest_RoundTripS.h
-    NodeAppTest_RoundTrip_svnt.h
-  }
+//  Header_Files {
+//    NodeAppTest_RoundTripEC.h
+//    NodeAppTest_RoundTripS.h
+//    NodeAppTest_RoundTrip_svnt.h
+//  }
 
-  Inline_Files {
-    NodeAppTest_RoundTripEC.inl
-    NodeAppTest_RoundTripS.inl
-  }
-}
+//  Inline_Files {
+//    NodeAppTest_RoundTripEC.inl
+//    NodeAppTest_RoundTripS.inl
+//  }
+//}
 
-project(NodeAppTest_RoundTrip_exec) : ciao_component_dnc, ciao_events_dnc, ciao_server_dnc {
-  after += NodeAppTest_RoundTrip_stub NodeAppTest_RoundTrip_svnt
+//project(NodeAppTest_RoundTrip_exec) : ciao_executor, ciao_events_dnc, ccm_svnt {
+//  after += NodeAppTest_RoundTrip_stub NodeAppTest_RoundTrip_svnt
 
-  sharedname = NodeAppTest_RoundTrip_exec
-  libs      += NodeAppTest_RoundTrip_stub NodeAppTest_RoundTrip_svnt
-  idlflags  +=  -Wb,export_macro=NODEAPPTEST_ROUNDTRIP_EXEC_Export \
-                -Wb,export_include=RoundTrip_exec_export.h
-  dynamicflags   = NODEAPPTEST_ROUNDTRIP_EXEC_BUILD_DLL
+//  sharedname = NodeAppTest_RoundTrip_exec
+//  libs      += NodeAppTest_RoundTrip_stub NodeAppTest_RoundTrip_svnt
+//  idlflags  +=  -Wb,export_macro=NODEAPPTEST_ROUNDTRIP_EXEC_Export \
+//                -Wb,export_include=RoundTrip_exec_export.h
+//  dynamicflags   = NODEAPPTEST_ROUNDTRIP_EXEC_BUILD_DLL
 
-  IDL_Files {
-  }
+//  IDL_Files {
+//  }
 
-  Source_Files {
-    RoundTrip_exec.cpp
-  }
+//  Source_Files {
+//    RoundTrip_exec.cpp
+//  }
 
-  Header_Files {
-    RoundTrip_exec.h
-  }
+//  Header_Files {
+//    RoundTrip_exec.h
+//  }
 
-  Inline_Files {
-  }
-}
+//  Inline_Files {
+//  }
+//}
 
-project (NodeAppTest_client_simple) : ciao_deployment_stub {
+project (NodeAppTest_client_simple) : dance_deployment_stub {
  after += NodeAppTest_RoundTrip_stub
  libs += NodeAppTest_RoundTrip_stub
  exename += client_simple
-
+ requires += dummy_label
+ 
  IDL_Files {
  }
 
@@ -105,11 +107,12 @@ project (NodeAppTest_client_simple) : ciao_deployment_stub {
  }
 }
 
-project (NodeAppTest_client) : ciao_deployment_stub {
+project (NodeAppTest_client) : dance_deployment_stub {
  after += NodeAppTest_RoundTrip_stub
  libs += NodeAppTest_RoundTrip_stub
  exename += client
-
+ requires += dummy_label
+ 
  IDL_Files {
  }
 
@@ -124,11 +127,12 @@ project (NodeAppTest_client) : ciao_deployment_stub {
  }
 }
 
-project (NodeAppTest_client_ex) : ciao_deployment_stub {
+project (NodeAppTest_client_ex) : dance_deployment_stub {
  after += NodeAppTest_RoundTrip_stub
  libs += NodeAppTest_RoundTrip_stub
  exename += client_ex
-
+ requires += dummy_label
+ 
  IDL_Files {
  }
 
@@ -143,11 +147,12 @@ project (NodeAppTest_client_ex) : ciao_deployment_stub {
  }
 }
 
-project (NodeAppTest_client_dynamic) : ciao_deployment_stub {
+project (NodeAppTest_client_dynamic) : dance_deployment_stub {
  after += NodeAppTest_RoundTrip_stub
  libs += NodeAppTest_RoundTrip_stub
  exename += client_dynamic
-
+ requires += dummy_label
+ 
  IDL_Files {
  }
 
@@ -161,3 +166,4 @@ project (NodeAppTest_client_dynamic) : ciao_deployment_stub {
  Inline_Files {
  }
 }
+

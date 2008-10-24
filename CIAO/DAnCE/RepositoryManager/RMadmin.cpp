@@ -18,15 +18,15 @@
 #include "ace/OS_NS_unistd.h"        //for close
 #include "ace/OS_NS_sys_stat.h"        //for filesize and fstat and mkdir
 #include "ace/streams.h"
-
-#include "Config_Handlers/DnC_Dump.h"
-
+//CHANGE(vt){
+//#include "Config_Handlers/DnC_Dump.h"
+//}
 #include "RM_Helper.h"          //to be able to externalize/internalize a PackageConfiguration
 #include "tao/CDR.h"          //for TAO CDR classes
 #include "ace/Message_Block.h"      //for ACE_Message_Block
-
-#include "Package_Handlers/PCD_Handler.h"
-
+//CHANGE(vt){
+//#include "Package_Handlers/PCD_Handler.h"
+//}
 #include "orbsvcs/CosNamingC.h"
 
 
@@ -42,7 +42,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv,
+                      "");
 
 
       Options* options = TheOptions::instance ();
@@ -80,12 +81,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
 
-    CIAO::RepositoryManagerDaemon_var rm =
-      CIAO::RepositoryManagerDaemon::_narrow (obj.in ());
+    DAnCE::RepositoryManagerDaemon_var rm =
+      DAnCE::RepositoryManagerDaemon::_narrow (obj.in ());
 
       if (CORBA::is_nil (rm.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          DANCE_ERROR_RETURN ((LM_ERROR,
                              "Unable to acquire RepositoryManagerDaemon's objref\n"),
                             -1);
         }
@@ -186,13 +187,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         // Parse the PCD to make sure that there are no package errors.
         try
         {
-          CIAO::Config_Handlers::Packaging::PCD_Handler::package_config ("default.pcd", *pc);
+//CHANGE(vt){
+          //CIAO::Config_Handlers::Packaging::PCD_Handler::package_config ("default.pcd", *pc);
+            throw (int)1;
+//}
         }
         catch (...)
         {
-          ACE_ERROR ((
-            LM_ERROR,
-            "(%P|%t) [RM::retrieve_PC_from_descriptors] Error parsing the PCD\n"));
+          DANCE_ERROR((LM_ERROR, "[%M] (%P|%t) [RM::retrieve_PC_from_descriptors] Error parsing the PCD\n"));
 
           throw Deployment::PackageError ();
         }

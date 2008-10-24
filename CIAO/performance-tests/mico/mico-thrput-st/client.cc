@@ -30,7 +30,7 @@ int do_dump_history = 0;
 int niterations = 1000;
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, char *argv[])
 {
   //parse arguments
   ACE_Get_Opt get_opts (argc, argv, "hxi:");
@@ -81,7 +81,7 @@ set_priority ()
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+main (int argc, char *argv[])
 {
 
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);

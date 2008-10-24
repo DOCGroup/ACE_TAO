@@ -21,9 +21,9 @@
       <dynamic>true</dynamic>
       <value>
         <type>
-	  <kind>tk_long</kind>
-	</type>
-	<value><long>99</long></value>
+      <kind>tk_long</kind>
+    </type>
+    <value><long>99</long></value>
       </value>
     </property>
   </resource>
@@ -40,9 +40,9 @@
       <dynamic>true</dynamic>
       <value>
         <type>
-	  <kind>tk_long</kind>
-	</type>
-	<value><long>99</long></value>
+      <kind>tk_long</kind>
+    </type>
+    <value><long>99</long></value>
       </value>
     </property>
   </resource>
@@ -62,8 +62,8 @@
         <dynamic>true</dynamic>
         <value>
           <type>
-	    <kind>tk_long</kind>
-	  </type>
+        <kind>tk_long</kind>
+      </type>
           <value><long>99</long></value>
         </value>
       </property>
@@ -87,9 +87,9 @@
           <dynamic>true</dynamic>
           <value>
             <type>
-	      <kind>tk_long</kind>
-	    </type>
-	    <value><long>99</long></value>
+          <kind>tk_long</kind>
+        </type>
+        <value><long>99</long></value>
           </value>
         </property>
       </resource>

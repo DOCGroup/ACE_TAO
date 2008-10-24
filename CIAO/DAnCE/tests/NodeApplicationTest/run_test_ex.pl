@@ -33,13 +33,13 @@ $CL = new PerlACE::Process ("client_ex",
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill ();
     exit 1;
 }
 
-$CL->SpawnWaitKill (30);
+$CL->SpawnWaitKill (10);
 $status = $SV->Kill (); $SV->TimedWait (1);
 
 unlink $iorfile;

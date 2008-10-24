@@ -7,18 +7,17 @@
 #include "Client_init.h"
 #include "NodeAppTest_RoundTripC.h"
 #include "ace/Get_Opt.h"
-#include <sstream>
-#include <vector>
 #include <stdlib.h>
 #include "assert.h"
+#include "ace/Vector_T.h"
 
 const char *ior = "file://test.ior";
 int comp_number = 4;
 int counter = 0;
 
-int parse_args (int argc, ACE_TCHAR *argv[])
+int parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:"));
+  ACE_Get_Opt get_opts (argc, argv, "k:n:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -34,7 +33,7 @@ int parse_args (int argc, ACE_TCHAR *argv[])
 
       case '?':
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
+        DANCE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s \n"
                            "-k <NodeApplication ior> \n"
                            "-n <The number of component instances> \n"
@@ -47,18 +46,17 @@ int parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+main (int argc, char *argv[])
 {
-  std::vector<NodeAppTest::NodeAppTest_RoundTrip_var> comp_list;
-  //std::vector<NodeAppTest::NodeAppTest_RoundTrip_var>::const_iterator iter;
-
+  ACE_Vector<NodeAppTest::NodeAppTest_RoundTrip_var> comp_list;
+  
   try
     {
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::ULong comp_num (comp_number);
-      ACE_DEBUG ((LM_DEBUG, "CompNum: %d\n",comp_num));
+      DANCE_DEBUG((LM_DEBUG, "[%M] CompNum: %d\n",comp_num));
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
@@ -73,7 +71,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (node_app.in ()))
         {
-          ACE_ERROR_RETURN ((LM_DEBUG,
+          DANCE_ERROR_RETURN ((LM_DEBUG,
                              "Nil nodeapplication reference <%s>\n", ior),
                             1);
         }
@@ -86,17 +84,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       container_info_1.impl_infos.length (CORBA::ULong (length_1));
 
       CORBA::ULong i;
+      char buf[256];
       for (i = 0; i < length_1; ++i)
         {
           Deployment::ComponentImplementationInfo info;
 
-          std::stringstream tmp;
-          tmp << "NodeAppTest_RoundTrip:" << counter;
+          sprintf(buf, "NodeAppTest_RoundTrip:%i", counter);
+          ACE_CString tmp = buf;
           counter = counter + 1;
 
           // Add the names and entry points of each of the DLLs
-          info.component_instance_name =
-            CORBA::string_dup (tmp.str ().c_str ());
+          info.component_instance_name = CORBA::string_dup (tmp.c_str ());
           info.executor_dll = CORBA::string_dup ("NodeAppTest_RoundTrip_exec");
           info.executor_entrypt =
             CORBA::string_dup ("createRoundTripHome_Impl");
@@ -114,12 +112,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // For debug purpose.
       for (i = 0; i < comp_num/2; ++i)
         {
-          std::stringstream tmp;
-          tmp << "NodeAppTest_RoundTrip:" << i;
-
+          sprintf(buf, "NodeAppTest_RoundTrip:%i", i);
+          ACE_CString tmp = buf;
+          
           // Add the names and entry points of each of the DLLs
-          ACE_DEBUG ((LM_DEBUG,
-            "The info I will send out: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
+          DANCE_DEBUG((LM_DEBUG, "[%M] The info I will send out: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
             container_info_1.impl_infos[i].component_instance_name.in (),
             container_info_1.impl_infos[i].executor_dll.in (),
             container_info_1.impl_infos[i].executor_entrypt.in (),
@@ -138,13 +135,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           Deployment::ComponentImplementationInfo info;
 
-          std::stringstream tmp;
-          tmp << "NodeAppTest_RoundTrip:" << counter;
+          sprintf(buf, "NodeAppTest_RoundTrip:%i", counter);
+          ACE_CString tmp = buf;
           counter = counter + 1;
 
           // Add the names and entry points of each of the DLLs
           info.component_instance_name =
-            CORBA::string_dup (tmp.str ().c_str ());
+            CORBA::string_dup (tmp.c_str ());
           info.executor_dll = CORBA::string_dup ("NodeAppTest_RoundTrip_exec");
           info.executor_entrypt =
             CORBA::string_dup ("createRoundTripHome_Impl");
@@ -162,12 +159,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // For debug purpose.
       for (i = 0; i < length_2; ++i)
         {
-          std::stringstream tmp;
-          tmp << "NodeAppTest_RoundTrip:" << i;
-
+          sprintf(buf, "NodeAppTest_RoundTrip:%i", i);
+          ACE_CString tmp = "NodeAppTest_RoundTrip:";
+          
           // Add the names and entry points of each of the DLLs
-          ACE_DEBUG ((LM_DEBUG,
-            "The info I will send out: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
+          DANCE_DEBUG((LM_DEBUG, "[%M] The info I will send out: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
             container_info_2.impl_infos[i].component_instance_name.in (),
             container_info_2.impl_infos[i].executor_dll.in (),
             container_info_2.impl_infos[i].executor_entrypt.in (),
@@ -177,7 +173,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // container_info.container_config is not set for now
 
-      ACE_DEBUG ((LM_DEBUG, "Try installing Homes and Components\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Try installing Homes and Components\n"));
 
       // Create a NodeImplementationInfo sequence
       Deployment::NodeImplementationInfo node_info;
@@ -197,20 +193,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           if (CORBA::is_nil (comp_list[i].in ()))
             {
-              ACE_ERROR_RETURN ((LM_DEBUG,
+              DANCE_ERROR_RETURN ((LM_DEBUG,
                                  "Nil RoundTripHome reference: %s \n",
                                  comp_info[i].component_instance_name.in ()),
                                 1);
             }
         }
 
-      ACE_DEBUG ((LM_DEBUG, "Installation finished successfully.\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Installation finished successfully.\n"));
 
       // Before we can start we have to start.
       node_app->start ();
 
       // Invoke Operation on the components
-      ACE_DEBUG ((LM_DEBUG, "Try cube_long operation on the Interface \n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Try cube_long operation on the Interface \n"));
 
       for (i = 0; i < comp_num; ++i)
         {
@@ -222,27 +218,25 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           if (input*input*input == output)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Return values matched!! on Component: %d \n",
+              DANCE_DEBUG((LM_DEBUG, "[%M] Return values matched!! on Component: %d \n",
                           i));
             }
           else
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Return values did not match: on Component: %d \n",
+              DANCE_DEBUG((LM_DEBUG, "[%M] Return values did not match: on Component: %d \n",
                           i));
               ACE_OS::exit (1);
             }
         }
 
-      ACE_DEBUG ((LM_DEBUG, "Try removing everything\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Try removing everything\n"));
       node_app->remove ();
 
-      ACE_DEBUG ((LM_DEBUG, "Homes and components removed successfully\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Homes and components removed successfully\n"));
 
       orb->destroy ();
 
-      ACE_DEBUG ((LM_DEBUG, "Test success!!\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Test success!!\n"));
     }
   catch (const CORBA::Exception& ex)
     {

@@ -16,17 +16,16 @@ namespace CIAO
     IDREF_Base<CORBA::ULong> MDD_Handler::IDREF;
 
     void
-    MDD_Handler::mono_deployment_descriptions (
-                                               const DeploymentPlan& src,
+    MDD_Handler::mono_deployment_descriptions (const deploymentPlan& src,
                                                Deployment::MonolithicDeploymentDescriptions& dest)
     {
       CIAO_TRACE("MDD_Handler::mono_deployment_descriptions");
 
-      DeploymentPlan::implementation_const_iterator imp_e =
+      deploymentPlan::implementation_const_iterator imp_e =
         src.end_implementation ();
       CORBA::ULong pos = 0;
       dest.length (src.count_implementation ());
-      for (DeploymentPlan::implementation_const_iterator imp_b =
+      for (deploymentPlan::implementation_const_iterator imp_b =
              src.begin_implementation ();
            imp_b != imp_e;
            ++imp_b)
@@ -39,8 +38,7 @@ namespace CIAO
     }
 
     void
-    MDD_Handler::mono_deployment_description (
-                                              const MonolithicDeploymentDescription& desc,
+    MDD_Handler::mono_deployment_description (const MonolithicDeploymentDescription& desc,
                                               Deployment::MonolithicDeploymentDescription& toconfig,
                                               CORBA::ULong pos)
     {
@@ -72,7 +70,7 @@ namespace CIAO
         {
           CORBA::ULong tmp = 0;
 
-          ADD_Handler::IDREF.find_ref (ACE_CString (ab->id ().c_str ()),
+          ADD_Handler::IDREF.find_ref (ACE_CString (ab->idref ().id ().c_str ()),
                                        tmp);
 
           toconfig.artifactRef[len++] = tmp;
@@ -97,9 +95,9 @@ namespace CIAO
                      Requirement_Functor (toconfig.deployRequirement));
 
       // Handle the idref
-      if (desc.id_p ())
+      if (desc.xmi_id_p ())
         {
-          ACE_CString cstr (desc.id ().c_str ());
+          ACE_CString cstr (desc.xmi_id ().c_str ());
 
           MDD_Handler::IDREF.bind_ref (cstr, pos);
         }
@@ -136,8 +134,9 @@ namespace CIAO
         {
           ACE_CString tmp;
           ADD_Handler::IDREF.find_ref(src.artifactRef[j], tmp);
-          XMLSchema::IDREF< ACE_TCHAR > curr(tmp.c_str());
-          mdd.add_artifact (curr);
+          IdRef idref;
+          idref.idref (tmp.c_str ());
+          mdd.add_artifact (idref);
         }
 
       //Get the execParameter(s) from the IDL and store them
@@ -167,7 +166,7 @@ namespace CIAO
       // Bind the ref and set it in the IDD
       MDD_Handler::IDREF.bind_next_available (mdd_id);
 
-      mdd.id (xml_id);
+      mdd.xmi_id (xml_id);
 
       return mdd;
     }

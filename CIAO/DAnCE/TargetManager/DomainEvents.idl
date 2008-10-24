@@ -13,7 +13,7 @@
 #include "DAnCE/Deployment/Deployment_TargetManager.idl"
 #include "ciao/CCM_Events.idl"
 
-module CIAO
+module DAnCE
 {
     eventtype Domain_Changed_Event
     {

@@ -110,7 +110,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 /// we don't exit abruptly
 void Options::usage (void)
 {
-  ACE_DEBUG ((LM_INFO, "OPTIONS: \n\
+  DANCE_INFO (("OPTIONS: \n\
   -o <using ior file> \n\
   -v <: name of naming service> \n\
   -s <shutdown> \n\

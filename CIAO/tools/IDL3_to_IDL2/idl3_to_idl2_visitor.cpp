@@ -314,7 +314,10 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
   *os << be_uidt_nl
       << "};" << be_nl << be_nl;
 
-  xplicit.destroy ();
+  // (@@@ JP) A hack for now, eventually some redesign will be
+  // necessary to take into account the fact that other visitors
+  // may execute after this one.
+  // xplicit.destroy ();
   sn->destroy ();
   delete sn;
   sn = 0;
@@ -401,21 +404,24 @@ idl3_to_idl2_visitor::visit_root (AST_Root *node)
     }
 
   ACE_CString filename;
+  
+  *os << be_nl << be_nl
+      << "#include \"Components.idl\"";
 
   for (size_t i = 0; i < idl_global->n_included_idl_files (); ++i)
     {
-      if (i == 0)
+      ACE_CString raw_filename = idl_global->included_idl_files ()[i];
+      
+      if (raw_filename == "Components.idl")
         {
-          *os << be_nl;
+          continue;
         }
-
-      ACE_CString raw_filename = idl_global->included_idl_files ()[i];    
+      
       bool excluded_file_found =
         this->match_excluded_file (raw_filename.c_str ());
 
       if (raw_filename.find (".pidl") != ACE_CString::npos
           || raw_filename == "orb.idl"
-          || raw_filename == "Components.idl"
           || excluded_file_found)
         {
           filename = raw_filename;

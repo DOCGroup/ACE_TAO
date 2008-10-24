@@ -9,7 +9,7 @@
 #include "DAnCE/Deployment/Deployment_NodeManager.idl"
 #include "DAnCE/Deployment/Deployment_NodeApplicationManager.idl"
 
-module CIAO
+module DAnCE
 {
   /**
    * @brief CIAO daemon process control program.
@@ -28,8 +28,8 @@ module CIAO
 
     /// RACE specific extension.
     /// Modify the priority of a node application process.
-    long set_priority (in string plan_id,
-                       in string cid,
-                       in ::Deployment::Sched_Params nm_params);
+//    long set_priority (in string plan_id,
+//                       in string cid,
+//                       in ::Deployment::Sched_Params nm_params);
   };
 };

@@ -12,34 +12,29 @@
 
 module Deployment {
 
-  /// @todo, UpdateAvailable is not in the spec, must be UpdateDynamic
-  enum DomainUpdateKind {
-    Add,
-    Delete,
-    UpdateAll,
-    // @@changed
-    UpdateDynamic
-  };
-  
-  interface TargetManager {
-    Domain getAllResources ();
-    Domain getAvailableResources ();
+	enum DomainUpdateKind {
+		Add,
+		Delete,
+		UpdateAll,
+		UpdateDynamic
+	};
 
-    // @@changed
-    ResourceCommitmentManager createResourceCommitment (in ResourceAllocations resources)
-      raises (ResourceCommitmentFailure);
-    
-    // @@added
-    void destroyResourceCommitment (in ResourceCommitmentManager manager);
+	interface TargetManager {
 
-    /// @todo This is not part of 06-04-01
-    // @@delete:
-    //void releaseResources (in DeploymentPlan argname);
+		Domain getAllResources ();
 
-    void updateDomain (in ::CORBA::StringSeq elements,
-                       in Domain domainSubset,
-                       in DomainUpdateKind updateKind);
-  };
+		Domain getAvailableResources ();
+
+		//@! in DOCGroup renamed to createResourceCommitment
+		ResourceCommitmentManager commitResources (in ResourceAllocations resources)
+			raises (ResourceCommitmentFailure);
+			
+		void destroyResourceCommitment (in ResourceCommitmentManager manager);
+		
+		void updateDomain (	in ::CORBA::StringSeq elements, 
+							in Domain domainSubset, 
+							in DomainUpdateKind updateKind);
+	};
 };
 
 #endif /* TARGETMANAGER_IDL */

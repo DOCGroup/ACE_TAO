@@ -1,6 +1,6 @@
 // $Id$
 
-project(LookupTest_stub): ciao_client_dnc {
+project(LookupTest_stub): ccm_stub {
 
   sharedname = LookupTest_stub
 

@@ -71,9 +71,7 @@ namespace CIDL_Null_Component_Impl
     set_session_context (
       ::Components::SessionContext_ptr ctx);
 
-    virtual void ciao_preactivate ();
-
-    virtual void ciao_postactivate ();
+    virtual void configuration_complete ();
 
     virtual void ccm_activate ();
 

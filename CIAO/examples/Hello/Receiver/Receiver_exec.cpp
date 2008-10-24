@@ -68,23 +68,16 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ciao_preactivate ()
+  Receiver_exec_i::configuration_complete ()
   {
     ACE_DEBUG ((LM_DEBUG,
-                "Receiver_exec_i::ciao_preactivate\n"));
+                "Receiver_exec_i::configuration_complete\n"));
   }
 
   void
   Receiver_exec_i::ccm_activate ()
   {
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_activate\n"));
-  }
-
-  void
-  Receiver_exec_i::ciao_postactivate ()
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                "Receiver_exec_i::ciao_postactivate\n"));
   }
 
   void

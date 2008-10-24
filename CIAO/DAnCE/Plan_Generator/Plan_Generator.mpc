@@ -1,10 +1,11 @@
 // -*- MPC -*-
 //$Id$
 
-project (Plan_Generator): ciao_component_dnc, ace_output {
+project (Plan_Generator): dance_lib, ciao_executor {
   sharedname = Plan_Generator
   after += RepositoryManager
-
+  requires += dummy_label
+  
   dynamicflags = PLAN_GENERATOR_IMPL_BUILD_DLL
 
   Source_Files {

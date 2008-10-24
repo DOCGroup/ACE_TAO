@@ -13,7 +13,7 @@
 
 #include "RoundTrip_impl.h"
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+main (int argc, char *argv[])
 {
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "mico-local-orb");
 

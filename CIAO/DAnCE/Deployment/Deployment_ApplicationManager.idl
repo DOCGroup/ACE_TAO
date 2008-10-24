@@ -6,25 +6,28 @@
 #include "DAnCE/Deployment/Deployment.idl"
 
 module Deployment {
-  exception ResourceNotAvailable {
-    string name;
-    string resourceType;
-    string propertyName;
-    string elementName;
-    string resourceName;
-  };
 
-  interface ApplicationManager {
-    /// @todo Spec mentions another few exceptions in the raises cluase
-    // @@changed
-    Application startLaunch (in Properties configProperty,
-                             out Connections providedReference,
-                             in boolean start)
-      raises (ResourceNotAvailable, StartError, InvalidProperty,
-              InvalidNodeExecParameter, InvalidComponentExecParameter);
-    void destroyApplication (in Application app)
-      raises (StopError);
-  };
+	exception ResourceNotAvailable {
+		string name;
+		string resourceType;
+		string propertyName;
+		string elementName;
+		string resourceName;
+	};
+
+	interface ApplicationManager {
+		//@! in DOCGroup has additional parameter
+		Application startLaunch (	in Properties configProperty, 
+									out Connections providedReference)
+			raises (ResourceNotAvailable, 
+					StartError, 
+					InvalidProperty, 
+					InvalidNodeExecParameter, 
+					InvalidComponentExecParameter);
+			
+		void destroyApplication (in Application app)
+			raises (StopError);
+	};
 };
 
 #endif /* DEPLOYMENT_APPLICATIONMANAGER_IDL */

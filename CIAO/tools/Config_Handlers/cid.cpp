@@ -21,6 +21,121 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
+    // ComponentPackageReference
+    // 
+
+    ComponentPackageReference::
+    ComponentPackageReference (::CIAO::Config_Handlers::ComponentInterfaceDescription const& requiredType__)
+    : 
+    ::XSCRT::Type (), 
+    requiredType_ (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (requiredType__)),
+    regulator__ ()
+    {
+      requiredType_->container (this);
+    }
+
+    ComponentPackageReference::
+    ComponentPackageReference (::CIAO::Config_Handlers::ComponentPackageReference const& s)
+    :
+    ::XSCRT::Type (),
+    requiredUUID_ (s.requiredUUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.requiredUUID_) : 0),
+    requiredName_ (s.requiredName_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.requiredName_) : 0),
+    requiredType_ (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.requiredType_)),
+    regulator__ ()
+    {
+      if (requiredUUID_.get ()) requiredUUID_->container (this);
+      if (requiredName_.get ()) requiredName_->container (this);
+      requiredType_->container (this);
+    }
+
+    ::CIAO::Config_Handlers::ComponentPackageReference& ComponentPackageReference::
+    operator= (::CIAO::Config_Handlers::ComponentPackageReference const& s)
+    {
+      if (s.requiredUUID_.get ()) requiredUUID (*(s.requiredUUID_));
+      else requiredUUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+
+      if (s.requiredName_.get ()) requiredName (*(s.requiredName_));
+      else requiredName_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+
+      requiredType (s.requiredType ());
+
+      return *this;
+    }
+
+
+    // ComponentPackageReference
+    // 
+    bool ComponentPackageReference::
+    requiredUUID_p () const
+    {
+      return requiredUUID_.get () != 0;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR > const& ComponentPackageReference::
+    requiredUUID () const
+    {
+      return *requiredUUID_;
+    }
+
+    void ComponentPackageReference::
+    requiredUUID (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      if (requiredUUID_.get ())
+      {
+        *requiredUUID_ = e;
+      }
+
+      else
+      {
+        requiredUUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+        requiredUUID_->container (this);
+      }
+    }
+
+    // ComponentPackageReference
+    // 
+    bool ComponentPackageReference::
+    requiredName_p () const
+    {
+      return requiredName_.get () != 0;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR > const& ComponentPackageReference::
+    requiredName () const
+    {
+      return *requiredName_;
+    }
+
+    void ComponentPackageReference::
+    requiredName (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      if (requiredName_.get ())
+      {
+        *requiredName_ = e;
+      }
+
+      else
+      {
+        requiredName_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+        requiredName_->container (this);
+      }
+    }
+
+    // ComponentPackageReference
+    // 
+    ::CIAO::Config_Handlers::ComponentInterfaceDescription const& ComponentPackageReference::
+    requiredType () const
+    {
+      return *requiredType_;
+    }
+
+    void ComponentPackageReference::
+    requiredType (::CIAO::Config_Handlers::ComponentInterfaceDescription const& e)
+    {
+      *requiredType_ = e;
+    }
+
+
     // SubcomponentInstantiationDescription
     // 
 
@@ -343,11 +458,11 @@ namespace CIAO
 
     SubcomponentPropertyReference::
     SubcomponentPropertyReference (::XMLSchema::string< ACE_TCHAR > const& propertyName__,
-                                   ::XMLSchema::IDREF< ACE_TCHAR > const& instance__)
+                                   ::CIAO::Config_Handlers::IdRef const& instance__)
     : 
     ::XSCRT::Type (), 
     propertyName_ (new ::XMLSchema::string< ACE_TCHAR > (propertyName__)),
-    instance_ (new ::XMLSchema::IDREF< ACE_TCHAR > (instance__)),
+    instance_ (new ::CIAO::Config_Handlers::IdRef (instance__)),
     regulator__ ()
     {
       propertyName_->container (this);
@@ -359,7 +474,7 @@ namespace CIAO
     :
     ::XSCRT::Type (),
     propertyName_ (new ::XMLSchema::string< ACE_TCHAR > (*s.propertyName_)),
-    instance_ (new ::XMLSchema::IDREF< ACE_TCHAR > (*s.instance_)),
+    instance_ (new ::CIAO::Config_Handlers::IdRef (*s.instance_)),
     regulator__ ()
     {
       propertyName_->container (this);
@@ -393,14 +508,14 @@ namespace CIAO
 
     // SubcomponentPropertyReference
     // 
-    ::XMLSchema::IDREF< ACE_TCHAR > const& SubcomponentPropertyReference::
+    ::CIAO::Config_Handlers::IdRef const& SubcomponentPropertyReference::
     instance () const
     {
       return *instance_;
     }
 
     void SubcomponentPropertyReference::
-    instance (::XMLSchema::IDREF< ACE_TCHAR > const& e)
+    instance (::CIAO::Config_Handlers::IdRef const& e)
     {
       *instance_ = e;
     }
@@ -1365,6 +1480,45 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
+    // ComponentPackageReference
+    //
+
+    ComponentPackageReference::
+    ComponentPackageReference (::XSCRT::XML::Element< ACE_TCHAR > const& e)
+    :Base (e), regulator__ ()
+    {
+
+      ::XSCRT::Parser< ACE_TCHAR > p (e);
+
+      while (p.more_elements ())
+      {
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+        if (n == "requiredUUID")
+        {
+          ::XMLSchema::string< ACE_TCHAR > t (e);
+          requiredUUID (t);
+        }
+
+        else if (n == "requiredName")
+        {
+          ::XMLSchema::string< ACE_TCHAR > t (e);
+          requiredName (t);
+        }
+
+        else if (n == "requiredType")
+        {
+          requiredType_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (e));
+          requiredType_->container (this);
+        }
+
+        else 
+        {
+        }
+      }
+    }
+
     // SubcomponentInstantiationDescription
     //
 
@@ -1466,7 +1620,7 @@ namespace CIAO
 
         else if (n == "instance")
         {
-          instance_ = ::std::auto_ptr< ::XMLSchema::IDREF< ACE_TCHAR > > (new ::XMLSchema::IDREF< ACE_TCHAR > (e));
+          instance_ = ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > (new ::CIAO::Config_Handlers::IdRef (e));
           instance_->container (this);
         }
 
@@ -1714,6 +1868,20 @@ namespace CIAO
     {
       ::XMLSchema::TypeInfoInitializer < ACE_TCHAR > XMLSchemaTypeInfoInitializer_ (::XSCRT::extended_type_info_map ());
 
+      struct ComponentPackageReferenceTypeInfoInitializer
+      {
+        ComponentPackageReferenceTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ComponentPackageReference));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ComponentPackageReferenceTypeInfoInitializer ComponentPackageReferenceTypeInfoInitializer_;
+
       struct SubcomponentInstantiationDescriptionTypeInfoInitializer
       {
         SubcomponentInstantiationDescriptionTypeInfoInitializer ()
@@ -1807,6 +1975,110 @@ namespace CIAO
   {
     namespace Traversal
     {
+      // ComponentPackageReference
+      //
+      //
+
+      void ComponentPackageReference::
+      traverse (Type& o)
+      {
+        pre (o);
+        if (o.requiredUUID_p ()) requiredUUID (o);
+        else requiredUUID_none (o);
+        if (o.requiredName_p ()) requiredName (o);
+        else requiredName_none (o);
+        requiredType (o);
+        post (o);
+      }
+
+      void ComponentPackageReference::
+      traverse (Type const& o)
+      {
+        pre (o);
+        if (o.requiredUUID_p ()) requiredUUID (o);
+        else requiredUUID_none (o);
+        if (o.requiredName_p ()) requiredName (o);
+        else requiredName_none (o);
+        requiredType (o);
+        post (o);
+      }
+
+      void ComponentPackageReference::
+      pre (Type&)
+      {
+      }
+
+      void ComponentPackageReference::
+      pre (Type const&)
+      {
+      }
+
+      void ComponentPackageReference::
+      requiredUUID (Type& o)
+      {
+        dispatch (o.requiredUUID ());
+      }
+
+      void ComponentPackageReference::
+      requiredUUID (Type const& o)
+      {
+        dispatch (o.requiredUUID ());
+      }
+
+      void ComponentPackageReference::
+      requiredUUID_none (Type&)
+      {
+      }
+
+      void ComponentPackageReference::
+      requiredUUID_none (Type const&)
+      {
+      }
+
+      void ComponentPackageReference::
+      requiredName (Type& o)
+      {
+        dispatch (o.requiredName ());
+      }
+
+      void ComponentPackageReference::
+      requiredName (Type const& o)
+      {
+        dispatch (o.requiredName ());
+      }
+
+      void ComponentPackageReference::
+      requiredName_none (Type&)
+      {
+      }
+
+      void ComponentPackageReference::
+      requiredName_none (Type const&)
+      {
+      }
+
+      void ComponentPackageReference::
+      requiredType (Type& o)
+      {
+        dispatch (o.requiredType ());
+      }
+
+      void ComponentPackageReference::
+      requiredType (Type const& o)
+      {
+        dispatch (o.requiredType ());
+      }
+
+      void ComponentPackageReference::
+      post (Type&)
+      {
+      }
+
+      void ComponentPackageReference::
+      post (Type const&)
+      {
+      }
+
       // SubcomponentInstantiationDescription
       //
       //
@@ -3588,6 +3860,51 @@ namespace CIAO
   {
     namespace Writer
     {
+      // ComponentPackageReference
+      //
+      //
+
+      ComponentPackageReference::
+      ComponentPackageReference (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      ComponentPackageReference::
+      ComponentPackageReference ()
+      {
+      }
+
+      void ComponentPackageReference::
+      traverse (Type const& o)
+      {
+        Traversal::ComponentPackageReference::traverse (o);
+      }
+
+      void ComponentPackageReference::
+      requiredUUID (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("requiredUUID", top_ ()));
+        Traversal::ComponentPackageReference::requiredUUID (o);
+        pop_ ();
+      }
+
+      void ComponentPackageReference::
+      requiredName (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("requiredName", top_ ()));
+        Traversal::ComponentPackageReference::requiredName (o);
+        pop_ ();
+      }
+
+      void ComponentPackageReference::
+      requiredType (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("requiredType", top_ ()));
+        Traversal::ComponentPackageReference::requiredType (o);
+        pop_ ();
+      }
+
       // SubcomponentInstantiationDescription
       //
       //

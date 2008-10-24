@@ -12,8 +12,8 @@
 #if !defined (CIAO_EVENTS_IDL)
 #define CIAO_EVENTS_IDL
 
-#include "ciao/CCM_EventConsumerBase.idl"
-#include "ciao/CCM_Base.idl"
+#include "ccm/CCM_EventConsumerBase.idl"
+#include "ccm/CCM_Base.idl"
 
 module CIAO
 {

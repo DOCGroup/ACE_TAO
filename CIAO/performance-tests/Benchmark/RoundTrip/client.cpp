@@ -27,12 +27,11 @@ int niterations = 100;
 int do_dump_history = 0;
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, char *argv[])
 {
-  // Parse arguments.
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hxk:i:"));
-  int c;
-  
+  //parse arguments
+  ACE_Get_Opt get_opts (argc, argv, "hxk:i:");
+  char c;
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -53,7 +52,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
         /* Could be any other parameter like -ORBSvcConf file so ignore */
        break;
       }
-      
   // Indicates sucessful parsing of the command line
   return 0;
 }
@@ -85,7 +83,7 @@ set_priority ()
 
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -93,7 +91,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       set_priority();
 
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            "");
 
       if (parse_args(argc, argv) == -1)
         {

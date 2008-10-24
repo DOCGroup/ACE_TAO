@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project: unicode {
-  macros += ACE_USES_WCHAR=1
-}

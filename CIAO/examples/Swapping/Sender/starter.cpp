@@ -9,9 +9,9 @@ const char * message = "starters message";
 
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:m"));
+  ACE_Get_Opt get_opts (argc, argv, "k:m");
   int c = 0;
 
   while ((c = get_opts ()) != -1)
@@ -48,12 +48,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv,
+                                            "");
 
       if (parse_args (argc, argv) != 0)
         {

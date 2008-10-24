@@ -6,7 +6,7 @@
 #include "Req_Handler.h"
 #include "Utils/Functors.h"
 #include "Utils/Exceptions.h"
-#include "Utils/XML_Helper.h"
+#include "XML_Typedefs.h"
 
 #include "Deployment.hpp"
 #include "ciao/CIAO_common.h"
@@ -48,9 +48,9 @@ namespace CIAO
                        String_Seq_Functor (toconfig.location));
 
         toconfig.dependsOn.length (iad->count_dependsOn ());
-        SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
-                                     desc.begin_dependsOn (),
-                                     toconfig.dependsOn);
+    SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
+                     desc.begin_dependsOn (),
+                     toconfig.dependsOn);
         std::for_each (iad->begin_dependsOn (),
                        iad->end_dependsOn (),
                        NIA_Functor (toconfig.dependsOn));
@@ -105,7 +105,7 @@ namespace CIAO
       {
         CIAO_TRACE ("IAD_Handler::resolve_iad");
 
-        xercesc::DOMDocument *dom = XML_HELPER->create_dom (uri);
+        xercesc::DOMDocument *dom = XML_Helper::XML_HELPER.create_dom (uri);
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for IAD");

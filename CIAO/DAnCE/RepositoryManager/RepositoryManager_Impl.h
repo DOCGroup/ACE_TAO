@@ -49,7 +49,7 @@ namespace
 }
 
 class  CIAO_RepositoryManagerDaemon_i :
-  public virtual POA_CIAO::RepositoryManagerDaemon
+  public virtual POA_DAnCE::RepositoryManagerDaemon
 {
 public:
   /// Constructor

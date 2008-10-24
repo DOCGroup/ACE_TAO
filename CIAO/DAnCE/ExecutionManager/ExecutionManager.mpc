@@ -1,16 +1,13 @@
 // -*- MPC -*-
 // $Id$
 
-project(ExecutionManager): ciao_server_dnc, dance_extension_stub, ciao_domainapplicationmanager_dnc, ciao_executionmanager_stub, rtcorba, rtportableserver, rt_server, ciaoexe, rtcorba, strategies {
-  exename = Execution_Manager
-  
-  IDL_Files {
-  }
-
+project(ExecutionManager): dance_lib, taolib, tao_output, utils, strategies, naming, dance_executionmanager_stub, dance_node_manager, dance_domain_application_manager, dance_deployment_svnt  {
+  sharedname = DAnCE_ExecutionManager
+  dynamicflags = EXECUTIONMANAGER_BUILD_DLL DANCE_EXECUTIONMANAGER_MODULE_BUILD_DLL
+    
   Source_Files {
-    ../Interfaces/ExecutionManagerDaemonS.cpp
-    Execution_Manager.cpp
-    Execution_Manager_Impl.cpp
-    DAM_Map.cpp
+    $(CIAO_ROOT)/DAnCE/Interfaces/ExecutionManagerDaemonS.cpp
+    ExecutionManager_Impl.cpp
+    ExecutionManager_Module.cpp
   }
 }

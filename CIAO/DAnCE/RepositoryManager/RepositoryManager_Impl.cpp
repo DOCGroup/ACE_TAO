@@ -33,7 +33,9 @@
 //for the PackageConfiguration parsing
 #include "DAnCE/Deployment/Deployment_DataC.h"
 #include "DAnCE/Deployment/Deployment_Packaging_DataC.h"
-#include "Package_Handlers/PCD_Handler.h"
+//CHANGE(vt){
+//#include "Package_Handlers/PCD_Handler.h"
+//}
 
 #include "RM_Helper.h"            //to be able to externalize/internalize a PackageConfiguration
 #include "ace/Message_Block.h"    //for ACE_Message_Block
@@ -134,7 +136,7 @@ CIAO_RepositoryManagerDaemon_i::CIAO_RepositoryManagerDaemon_i
     ::Deployment::PackageConfiguration_var pc = this->findPackageByName (element.ext_id_.c_str ());
 
     if(!this->add_type (pc, element.ext_id_.c_str ()))
-      ACE_ERROR ((LM_ERROR, "Failed to add the type\n"));
+      DANCE_ERROR((LM_ERROR,  "Failed to add the type\n"));
   }
 }
 
@@ -298,7 +300,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
 
   if (!updater.update (pc))
   {
-    ACE_DEBUG ((LM_ERROR, "[RM] problem updating the PackageConfiguration!\n"));
+    DANCE_ERROR((LM_ERROR, "[%M] [RM] problem updating the PackageConfiguration!\n"));
 
     //clean the extracted files
     remove_extracted_package (path.c_str ());
@@ -316,7 +318,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   //insert the package into the database
   if (this->names_.bind (ACE_CString (installationName), path) == -1)
   {
-    ACE_ERROR ((LM_ERROR,
+    DANCE_ERROR((LM_ERROR, 
                  "[RM] could not bind %s.\n",
                  installationName));
 
@@ -334,7 +336,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   //ALSO NEED THE UUID here
   if (this->uuids_.bind (ACE_CString (pc->UUID), path) == -1)
   {
-     ACE_ERROR ((LM_ERROR,
+     DANCE_ERROR((LM_ERROR, 
                  "[RM] could not bind %s.\n",
                  ACE_CString (pc->UUID).c_str ()));
 
@@ -354,14 +356,13 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
 
   //now add the type interface
   if(!this->add_type (pc, installationName))
-    ACE_ERROR ((LM_ERROR, "Failed to add the type\n"));
+    DANCE_ERROR((LM_ERROR,  "Failed to add the type\n"));
 
   this->dump ();
 
   this->save ();
 
-  ACE_DEBUG ((LM_INFO,
-              "Installed PackageConfiguration \n\tname: %s \n\tuuid: %s\n",
+  DANCE_INFO (("Installed PackageConfiguration \n\tname: %s \n\tuuid: %s\n",
               installationName, ACE_CString (pc->UUID).c_str ()));
 }
 
@@ -454,7 +455,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
 
   if (!updater.update (pc))
   {
-    ACE_ERROR ((LM_ERROR, "[RM] problem updating the PackageConfiguration!\n"));
+    DANCE_ERROR((LM_ERROR,  "[RM] problem updating the PackageConfiguration!\n"));
     //clean the extracted files
     remove_extracted_package (path.c_str ());
     //remove the package
@@ -470,7 +471,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   // Insert the name of the package.
   if (this->names_.bind (ACE_CString (installationName), path) == -1)
   {
-    ACE_ERROR ((LM_ERROR,
+    DANCE_ERROR((LM_ERROR, 
                  "[RM] could not bind %s.\n",
                  installationName));
 
@@ -488,7 +489,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   // Insert the UUID of the package.
   if (this->uuids_.bind (ACE_CString (pc.UUID), path) == -1)
   {
-     ACE_ERROR ((LM_ERROR,
+     DANCE_ERROR((LM_ERROR, 
                  "[RM] could not bind %s.\n",
                  ACE_CString (pc.UUID).c_str ()));
 
@@ -509,14 +510,13 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   //now add the type interface
   //TODO: CHECK if successful
   if(!this->add_type (pc, installationName))
-    ACE_ERROR ((LM_ERROR, "Failed to add the type\n"));
+    DANCE_ERROR((LM_ERROR,  "Failed to add the type\n"));
 
   this->dump ();
 
   this->save ();
 
-  ACE_DEBUG ((LM_INFO,
-              "Created PackageConfiguration \n  directory: %s \n  name: %s \n  uuid: %s\n",
+  DANCE_INFO(("Created PackageConfiguration \n  directory: %s \n  name: %s \n  uuid: %s\n",
               path.c_str (), installationName, ACE_CString (pc.UUID).c_str ()));
 }
 
@@ -551,7 +551,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByName (const char * name)
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
     throw CORBA::INTERNAL ();
 
-  ACE_DEBUG ((LM_INFO, "Successfully looked up \'%s\'.\n", name));
+  DANCE_INFO(("Successfully looked up \'%s\'.\n", name));
 
   return pc._retn ();
 }
@@ -587,7 +587,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
     throw CORBA::INTERNAL ();
 
-  ACE_DEBUG ((LM_INFO, "Successfully looked up %s.\n", UUID));
+  DANCE_INFO(("Successfully looked up %s.\n", UUID));
 
   return pc._retn ();
 }
@@ -676,7 +676,7 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
     seq[index] = CORBA::string_dup (element.ext_id_.c_str ());
   }
 
-  ACE_DEBUG ((LM_INFO, "The number of packages %d\n", seq->length ()));
+  DANCE_INFO(("The number of packages %d\n", seq->length ()));
 
   return seq._retn ();    //release the underlying CORBA::StringSeq
 }
@@ -721,7 +721,7 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
     seq[index] = CORBA::string_dup (element.ext_id_.c_str ());
   }
 
-  ACE_DEBUG ((LM_DEBUG, "The number of types: %d\n", num_entries));
+  DANCE_DEBUG((LM_DEBUG, "[%M] The number of types: %d\n", num_entries));
 
   return seq._retn ();    //release the underlying CORBA::StringSeq
 }
@@ -749,7 +749,7 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
   //remove the name association
   if (this->names_.unbind (installationName) == -1)
   {
-    ACE_ERROR ((LM_ERROR,
+    DANCE_ERROR((LM_ERROR, 
                 "Unable to unbind %s.\n",
                 installationName));
     internal_err = true;
@@ -771,20 +771,20 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
 
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
   {
-    ACE_ERROR ((LM_ERROR, "Could not reincarnate PC\n"));
+    DANCE_ERROR((LM_ERROR,  "Could not reincarnate PC\n"));
       internal_err = true;
   }
 
   if (this->uuids_.unbind (ACE_CString (pc->UUID)) == -1)
   {
-    ACE_ERROR ((LM_ERROR, "Could not remove UUID\n"));
+    DANCE_ERROR((LM_ERROR,  "Could not remove UUID\n"));
     internal_err = true;
   }
 
   //remove the type from the interface map
   if (!this->remove_type (pc, installationName))
   {
-    ACE_ERROR ((LM_ERROR, "Could not remove type\n"));
+    DANCE_ERROR((LM_ERROR,  "Could not remove type\n"));
     internal_err = true;
   }
 
@@ -804,7 +804,7 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
   if (internal_err)
     throw CORBA::INTERNAL ();
   else
-    ACE_DEBUG ((LM_INFO, "Successfully deleted \'%s\'\n", installationName));
+    DANCE_INFO(("Successfully deleted \'%s\'\n", installationName));
 
 }
 
@@ -831,7 +831,7 @@ CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_package (char* package)
                                 pcd_name) < 0)
     {
       ACE_OS::chdir (this->cwd_);
-      ACE_ERROR ((LM_ERROR,
+      DANCE_ERROR((LM_ERROR, 
                   "(%P|%t) RepositoryManager: error extracting necessary files\n"));
       throw CORBA::INTERNAL ();
     }
@@ -845,7 +845,7 @@ CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_package (char* package)
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR,
+      DANCE_ERROR((LM_ERROR, 
                   "(%P|%t) RepositoryManager: Error parsing the PCD\n"));
 
       //change back the the old working dir
@@ -917,11 +917,14 @@ CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_descriptors (const char* pc_nam
   //parse the PCD to make sure that there are no package errors
   try
     {
-       CIAO::Config_Handlers::Packaging::PCD_Handler::package_config (pc_name, *pc);
+//CHANGE(vt){
+       //CIAO::Config_Handlers::Packaging::PCD_Handler::package_config (pc_name, *pc);
+       throw (int)1;
+//}
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR,
+      DANCE_ERROR((LM_ERROR, 
                   "(%P|%t) [RM::retrieve_PC_from_descriptors] Error parsing the PCD\n"));
 
       //change back the the old working dir
@@ -999,7 +1002,7 @@ int CIAO_RepositoryManagerDaemon_i::extract_descriptor_files (char* package, ACE
                                      const_cast<char*> (inf->name_.c_str ()),
                                      *file))
             {
-              ACE_ERROR ((LM_ERROR,
+              DANCE_ERROR((LM_ERROR, 
                           "[RM::extract_descriptor_files] Unable to retrieve file!\n"));
               //release the message block chain
               file->release ();
@@ -1010,7 +1013,7 @@ int CIAO_RepositoryManagerDaemon_i::extract_descriptor_files (char* package, ACE
           //write the file to disk
           if(!RM_Helper::write_to_disk (inf->name_.c_str () + skip_len, *file))
             {
-              ACE_ERROR ((LM_ERROR,
+              DANCE_ERROR((LM_ERROR, 
                           "[RM::extract_descriptor_files] Unable to write out descriptor to disk!\n"));
               //release the message block chain
               file->release ();
@@ -1050,7 +1053,7 @@ int CIAO_RepositoryManagerDaemon_i::remove_descriptor_files (char* package)
           //delete disk
           if(remove (inf->name_.c_str () + skip_len))
             {
-              ACE_ERROR ((LM_ERROR,
+              DANCE_ERROR((LM_ERROR, 
                           "[RM::remove_descriptor_files] Unable to remove file from disk!\n"));
               return_code = 0;
             }
@@ -1161,7 +1164,7 @@ int CIAO_RepositoryManagerDaemon_i::remove_type (Deployment::PackageConfiguratio
       for (CORBA::ULong i = 0; i < len; ++i)
       {
         if (this->types_.unbind (ACE_CString (supportedTypes[i]), ACE_CString (name)) != 0)
-          ACE_DEBUG ((LM_DEBUG, "Could not find type %s with package name %s!\n",
+          DANCE_DEBUG((LM_DEBUG, "[%M] Could not find type %s with package name %s!\n",
                       ACE_CString (supportedTypes[i]).c_str (),
                       name));
       }
@@ -1181,11 +1184,11 @@ void CIAO_RepositoryManagerDaemon_i::dump (void)
 {
 #if defined (ACE_HAS_DUMP)
 
-  ACE_DEBUG(LM_DEBUG, "NAMES:\n");
+  DANCE_DEBUG((LM_DEBUG, "[%M] NAMES:\n"));
   this->names_.dump ();
-  ACE_DEBUG(LM_DEBUG, "UUIDs:\n");
+  DANCE_DEBUG((LM_DEBUG, "[%M] UUIDs:\n"));
   this->uuids_.dump ();
-  ACE_DEBUG (LM_DEBUG, "Component Interface Types:\n");
+  DANCE_DEBUG((LM_DEBUG, "[%M] Component Interface Types:\n"));
   this->types_.dump ();
 
 #endif /* ACE_HAS_DUMP */

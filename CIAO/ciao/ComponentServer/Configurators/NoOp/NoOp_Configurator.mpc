@@ -1,0 +1,14 @@
+project(CIAO_NoOp_Configurator) : ccm_stub, ciao_componentserver_stub, ciao_lib  {
+  after += CIAO_Basic_Configurator
+  libs += CIAO_Basic_Configurator
+
+  Source_Files {
+    NoOp_Configurator.cpp
+  }
+
+  Header_Files {
+    NoOp_Configurator.h
+  }
+}
+
+

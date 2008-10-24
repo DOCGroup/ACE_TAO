@@ -25,6 +25,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
+    class ComponentPackageReference;
     class SubcomponentInstantiationDescription;
     class SubcomponentPropertyReference;
     class AssemblyPropertyMapping;
@@ -50,6 +51,53 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
+    class XSC_XML_Handlers_Export ComponentPackageReference : public ::XSCRT::Type
+    {
+      typedef ::XSCRT::Type Base;
+
+      // requiredUUID
+      // 
+      public:
+      bool requiredUUID_p () const;
+      ::XMLSchema::string< ACE_TCHAR > const& requiredUUID () const;
+      void requiredUUID (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > requiredUUID_;
+
+      // requiredName
+      // 
+      public:
+      bool requiredName_p () const;
+      ::XMLSchema::string< ACE_TCHAR > const& requiredName () const;
+      void requiredName (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > requiredName_;
+
+      // requiredType
+      // 
+      public:
+      ::CIAO::Config_Handlers::ComponentInterfaceDescription const& requiredType () const;
+      void requiredType (::CIAO::Config_Handlers::ComponentInterfaceDescription const& );
+
+      protected:
+      ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > requiredType_;
+
+      public:
+      ComponentPackageReference (::CIAO::Config_Handlers::ComponentInterfaceDescription const& requiredType__);
+
+      ComponentPackageReference (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      ComponentPackageReference (ComponentPackageReference const& s);
+
+      ComponentPackageReference&
+      operator= (ComponentPackageReference const& s);
+
+      private:
+      char regulator__;
+    };
+
+
     class XSC_XML_Handlers_Export SubcomponentInstantiationDescription : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
@@ -174,15 +222,15 @@ namespace CIAO
       // instance
       // 
       public:
-      ::XMLSchema::IDREF< ACE_TCHAR > const& instance () const;
-      void instance (::XMLSchema::IDREF< ACE_TCHAR > const& );
+      ::CIAO::Config_Handlers::IdRef const& instance () const;
+      void instance (::CIAO::Config_Handlers::IdRef const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::IDREF< ACE_TCHAR > > instance_;
+      ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > instance_;
 
       public:
       SubcomponentPropertyReference (::XMLSchema::string< ACE_TCHAR > const& propertyName__,
-                                     ::XMLSchema::IDREF< ACE_TCHAR > const& instance__);
+                                     ::CIAO::Config_Handlers::IdRef const& instance__);
 
       SubcomponentPropertyReference (::XSCRT::XML::Element< ACE_TCHAR > const&);
       SubcomponentPropertyReference (SubcomponentPropertyReference const& s);
@@ -553,6 +601,57 @@ namespace CIAO
   {
     namespace Traversal
     {
+      struct XSC_XML_Handlers_Export ComponentPackageReference : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ComponentPackageReference >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        requiredUUID (Type&);
+
+        virtual void
+        requiredUUID (Type const&);
+
+        virtual void
+        requiredUUID_none (Type&);
+
+        virtual void
+        requiredUUID_none (Type const&);
+
+        virtual void
+        requiredName (Type&);
+
+        virtual void
+        requiredName (Type const&);
+
+        virtual void
+        requiredName_none (Type&);
+
+        virtual void
+        requiredName_none (Type const&);
+
+        virtual void
+        requiredType (Type&);
+
+        virtual void
+        requiredType (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
       struct XSC_XML_Handlers_Export SubcomponentInstantiationDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription >
       {
         virtual void
@@ -1266,6 +1365,60 @@ namespace CIAO
   {
     namespace Writer
     {
+      struct ComponentPackageReference : Traversal::ComponentPackageReference, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::ComponentPackageReference Type;
+        ComponentPackageReference (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        requiredUUID (Type &o)
+        {
+
+          this->requiredUUID (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        requiredUUID (Type const&);
+
+        virtual void 
+        requiredName (Type &o)
+        {
+
+          this->requiredName (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        requiredName (Type const&);
+
+        virtual void 
+        requiredType (Type &o)
+        {
+
+          this->requiredType (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        requiredType (Type const&);
+
+        protected:
+        ComponentPackageReference ();
+      };
+
       struct SubcomponentInstantiationDescription : Traversal::SubcomponentInstantiationDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
