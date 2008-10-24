@@ -1,3 +1,12 @@
+Fri Oct 24 07:58:27 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * orbsvcs/tests/Event/UDP/receiver.cpp:
+        * orbsvcs/tests/Event/UDP/sender.cpp:
+        * orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
+        * orbsvcs/examples/RtEC/MCast/MCast.cpp:
+
+          Put ACE_DEFAULT_MULTICAST_ADDR in ACE_TEXT().
+
 Thu Oct 23 15:39:07 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * tao/Bounded_Sequence_CDR_T.h:
