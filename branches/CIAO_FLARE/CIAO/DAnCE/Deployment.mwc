@@ -1,0 +1,11 @@
+// $Id$
+
+workspace {
+    $(CIAO_ROOT)/ciao/CCM_Client.mpc
+    $(CIAO_ROOT)/tools/.
+    ./.
+    exclude {
+      ./Mocks
+      ./tests/MocksTest
+    }
+}

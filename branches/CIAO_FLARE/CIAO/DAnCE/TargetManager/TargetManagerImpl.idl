@@ -1,0 +1,32 @@
+// $Id$
+
+/**
+ * @file TargetManagerImpl.idl
+ * @brief TargetManager interface defintion
+ *
+ * @author Nilabja R <nilabjar@dre.vanderbilt.edu>
+ */
+
+#ifndef TARGETMGR_IDL
+#define TARGETMGR_IDL
+
+#include "ciao/Components.idl"
+#include "DAnCE/Deployment/Deployment_PlanError.idl"
+#include "DAnCE/TargetManager/TargetManagerExt.idl"
+#include "DAnCE/TargetManager/DomainEvents.idl"
+
+module DAnCE
+{
+  component TargetManagerImpl
+  {
+    provides ::Deployment::TargetManager targetMgr;
+
+    publishes Domain_Changed_Event changes;
+  };
+
+  home TargetManagerHome manages TargetManagerImpl
+  {
+  };
+};
+
+#endif

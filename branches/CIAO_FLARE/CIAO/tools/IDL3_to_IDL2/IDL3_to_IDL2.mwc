@@ -1,0 +1,6 @@
+// $Id$
+workspace {
+    $(ACE_ROOT)/ace
+    $(TAO_ROOT)/TAO_IDL/tao_idl_fe.mpc
+    $(CIAO_ROOT)/tools/IDL3_to_IDL2
+}

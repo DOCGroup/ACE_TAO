@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+project (DAnCE_Utils): dance_lib, dance_deployment_svnt, naming  {
+  sharedname = DAnCE_Utils
+  requires += dummy_label
+  dynamicflags = DANCE_UTILS_BUILD_DLL
+
+  Source_Files {
+    Plan_Handler.cpp
+  }
+
+  Header_Files {
+    Plan_Handler.h
+  }
+}
+

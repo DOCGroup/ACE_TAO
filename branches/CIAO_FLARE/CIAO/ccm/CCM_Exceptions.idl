@@ -1,0 +1,25 @@
+// $Id$
+
+#if !defined (CCM_EXCEPTIONS_IDL)
+#define CCM_EXCEPTIONS_IDL
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  typedef unsigned long FailureReason;
+
+  exception CreateFailure {
+    FailureReason reason;
+  };
+  exception FinderFailure
+  {
+    FailureReason reason;
+  };
+  exception RemoveFailure
+  {
+    FailureReason reason;
+  };
+};
+
+#endif

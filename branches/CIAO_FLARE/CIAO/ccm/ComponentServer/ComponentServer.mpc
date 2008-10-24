@@ -1,0 +1,53 @@
+// -*- MPC -*-
+// $Id$
+
+project(CCM_ComponentServer_IDL) : taoidldefaults, anytypecode {
+  idlflags     += -Wb,stub_export_macro=DAnCE_ComponentServer_stub_Export
+  idlflags     += -Wb,stub_export_include=DAnCE_ComponentServer_stub_export.h
+  idlflags     += -Wb,skel_export_macro=DAnCE_ComponentServer_svnt_Export
+  idlflags     += -Wb,skel_export_include=DAnCE_ComponentServer_svnt_export.h
+
+  custom_only = 1
+
+  IDL_Files {
+    ComponentServer.idl
+    ComponentServer_Base.idl
+    ComponentServer_Client.idl
+  }
+}
+
+project(CCM_ComponentServer_stub) : taolib_with_idl, tao_output, messaging, ccm_stub,  anytypecode, ciao_lib  {
+  dynamicflags = DANCE_COMPONENTSERVER_STUB_BUILD_DLL
+  after += CCM_ComponentServer_IDL
+
+  Header_Files {
+    DAnCE_ComponentServer_stub_export.h
+    ComponentServerC.h
+    ComponentServer_ClientC.h
+    ComponentServer_BaseC.h
+  }
+
+  Source_Files {
+    ComponentServerC.cpp
+    ComponentServer_ClientC.cpp
+    ComponentServer_BaseC.cpp
+  }
+}
+
+project(CCM_ComponentServer_svnt) : taolib_with_idl, tao_output, messaging, ccm_componentserver_stub,  anytypecode, ciao_lib  {
+  dynamicflags = DANCE_COMPONENTSERVER_SVNT_BUILD_DLL
+
+  Header_Files {
+    DAnCE_ComponentServer_svnt_export.h
+    ComponentServerS.h
+    ComponentServer_ClientS.h
+    ComponentServer_BaseS.h
+  }
+
+  Source_Files {
+    ComponentServerS.cpp
+    ComponentServer_ClientS.cpp
+    ComponentServer_BaseS.cpp
+  }
+}
+

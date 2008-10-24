@@ -1,0 +1,50 @@
+// $Id$
+
+/**
+ * @@ Compile this file with:
+ *
+ *     tao_idl -Gv -I ../..  \
+ *          -Wb,export_macro=CIAO_Export \
+ *          -Wb,export_include=CIAO_export.h \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          CCM_Deployment.idl
+ */
+
+#if !defined (CDMW_IDL)
+#define CDMW_IDL
+
+#include "ccm/CCM_Home.idl"
+#include "ccm/CCM_KeylessCCMHome.idl"
+#include "ccm/CCM_Navigation.idl"
+#include "ccm/CCM_StandardConfigurator.idl"
+
+#include "ccm/ComponentServer/ComponentServer_Client.idl"
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+/* Cdmw stuff, should be moved */
+
+  const unsigned long CDMW_VID = 0x5448000;
+
+  const FeatureName PROCESS_DESTINATION    = "ProcessDestination";
+  const FeatureName COMPONENT_KIND         = "ComponentKind";
+  const FeatureName SERVANT_LIFETIME       = "ServantLifeTime";
+  const FeatureName THREADING_POLICY       = "ThreadingPolicy";
+  const FeatureName HOME_REPOSITORY_ID     = "HomeRepositoryId";
+  const FeatureName HOME_SERVANT_CLASSNAME = "HomeServantClassName";
+  const FeatureName COMPONENT_NAME         = "ComponentName";
+  const FeatureName USES_PORT_TIMEOUTS     = "UsesPortTimeouts";
+  const FeatureName VALUETYPE_FACTORY_DEPENDENCIES = "ValuetypeFactoryDependencies";
+  const FeatureName FAULT_TOLERANCE_REPLICATION_STYLE = "FaultToleranceReplicationStyle";
+  const FeatureName FAULT_TOLERANCE_GROUP_NAME     = "FaultToleranceGroupName";
+  const FailureReason CREATE_FAILURE_BASE = CDMW_VID | 0x400;
+
+  const FailureReason COMPONENT_SERVER_NOT_FOUND       = CREATE_FAILURE_BASE | 26;
+  const FailureReason COMPONENT_SERVER_ALREADY_CREATED = CREATE_FAILURE_BASE | 27;
+  const FailureReason UNKNOWN_COMPONENT_SERVER         = CREATE_FAILURE_BASE | 29;
+};
+
+#endif /* CDMW_IDL */

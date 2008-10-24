@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : ciao_vcwarnings, tao_output {
+  after    += CIAO_Client
+  libs     += CIAO_Client
+}

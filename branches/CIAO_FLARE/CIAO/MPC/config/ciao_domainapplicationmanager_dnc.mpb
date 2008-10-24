@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project : dance_deployment_svnt {
+  includes += $(CIAO_ROOT)/DomainApplicationManager
+  libs     += DomainApplicationManager
+  after    += DomainApplicationManager
+}

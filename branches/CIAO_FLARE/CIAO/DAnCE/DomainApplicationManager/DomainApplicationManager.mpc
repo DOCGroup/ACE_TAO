@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+project : dance_lib, taolib, tao_output, dance_domain_application  {
+  sharedname   = DAnCE_DomainApplicationManager
+  dynamicflags = DOMAINAPPLICATIONMANAGER_BUILD_DLL
+
+  Source_Files {
+    DomainApplicationManager_Impl.cpp
+  }
+
+  Header_Files {
+    DomainApplicationManager_Impl.h
+    DomainApplicationManager_Export.h
+  }
+}
+

@@ -1,0 +1,11 @@
+// $Id$
+#include "SimpleComponent.idl"
+
+composition session SimpleComponent_Impl
+{
+  home executor SimpleComponent_Exec
+  {
+    implements Foo::SimpleHome;
+    manages Simple_Exec;
+  };
+};
