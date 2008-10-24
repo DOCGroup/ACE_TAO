@@ -1,3 +1,12 @@
+Fri Oct 24 10:40:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/DevGuideExamples/EventServices/EchoEventConsumerMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/EchoEventSupplierMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+
+          ACE_TCHAR problems.
+
 Fri Oct 24 07:58:27 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * orbsvcs/tests/Event/UDP/receiver.cpp:

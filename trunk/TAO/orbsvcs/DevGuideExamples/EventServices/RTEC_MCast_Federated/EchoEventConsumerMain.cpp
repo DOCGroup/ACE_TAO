@@ -24,7 +24,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Initialize the ORB.
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
-    const char* ecname = "EventService";
+    const ACE_TCHAR* ecname = ACE_TEXT ("EventService");
     for (int i = 0; argv[i] != 0; i++) {
       if (ACE_OS::strcmp(argv[i], ACE_TEXT("-ecname")) == 0) {
         if (argv[i+1] != 0) {
