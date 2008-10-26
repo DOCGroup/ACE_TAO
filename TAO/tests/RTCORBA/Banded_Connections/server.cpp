@@ -182,18 +182,18 @@ get_priority_bands (RTCORBA::PriorityBands &bands)
   char* working_string = string;
   for (CORBA::ULong i = 0; i < bands_length; ++i)
     {
-      result = ACE_OS::sscanf (working_string,
-                               "%hd",
-                               &bands[i].low);
+      result = ::sscanf (working_string,
+                         "%hd",
+                         &bands[i].low);
       if (result == 0 || result == EOF)
         break;
 
       working_string += ACE_OS::strlen (working_string);
       working_string += 1;
 
-      result = ACE_OS::sscanf (working_string,
-                               "%hd",
-                               &bands[i].high);
+      result = ::sscanf (working_string,
+                         "%hd",
+                         &bands[i].high);
       if (result == 0 || result == EOF)
         break;
 
