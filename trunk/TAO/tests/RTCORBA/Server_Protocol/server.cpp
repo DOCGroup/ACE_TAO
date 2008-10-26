@@ -61,9 +61,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'p':
-        result = ACE_OS::sscanf (get_opts.opt_arg (),
-                                 ACE_TEXT("%u"),
-                                 &protocol_type);
+        result = ::sscanf (get_opts.opt_arg (),
+                           ACE_TEXT("%u"),
+                           &protocol_type);
         if (result == 0 || result == EOF)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to process <-p> option"),
