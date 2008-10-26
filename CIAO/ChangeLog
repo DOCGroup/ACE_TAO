@@ -1,3 +1,8 @@
+Sun Oct 26 20:00:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/Messenger/StaticDAnCE/plan.h  
+          Added missing include
+
 Thu Oct 23 11:49:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/Messenger/Administrator_exec_i.h
