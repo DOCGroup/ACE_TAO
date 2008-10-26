@@ -465,7 +465,7 @@ ACE_OS::scanf (const char *format, ...)
   int result;
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (::scanf (format, ap), int, -1, result);
+  ACE_OSCALL (::vscanf (format, ap), int, -1, result);
   va_end (ap);
   return result;
 }
@@ -474,14 +474,14 @@ ACE_OS::scanf (const char *format, ...)
 int
 ACE_OS::scanf (const wchar_t *format, ...)
 {
-#if defined (ACE_LACKS_WSCANF)
+#if defined (ACE_LACKS_VWSCANF)
   ACE_UNUSED_ARG (format);
   ACE_NOTSUP_RETURN (-1);
 #else
   int result;
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (::wscanf (format, ap), int, -1, result);
+  ACE_OSCALL (::vwscanf (format, ap), int, -1, result);
   va_end (ap);
   return result;
 #endif
@@ -494,7 +494,7 @@ ACE_OS::sscanf (const char *buf, const char *format, ...)
   int result;
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (::sscanf (buf, format, ap), int, -1, result);
+  ACE_OSCALL (::vsscanf (buf, format, ap), int, -1, result);
   va_end (ap);
   return result;
 }
@@ -503,7 +503,7 @@ ACE_OS::sscanf (const char *buf, const char *format, ...)
 int
 ACE_OS::sscanf (const wchar_t *buf, const wchar_t *format, ...)
 {
-#if defined (ACE_LACKS_SWSCANF)
+#if defined (ACE_LACKS_VSWSCANF)
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (format);
   ACE_NOTSUP_RETURN (-1);
@@ -511,11 +511,41 @@ ACE_OS::sscanf (const wchar_t *buf, const wchar_t *format, ...)
   int result;
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (::swscanf (buf, format, ap), int, -1, result);
+  ACE_OSCALL (::vswscanf (buf, format, ap), int, -1, result);
   va_end (ap);
   return result;
 #endif
 }
 #endif /* ACE_HAS_WCHAR */
+
+int
+ACE_OS::fscanf (FILE* stream, const char *format, ...)
+{
+  int result;
+  va_list ap;
+  va_start (ap, format);
+  ACE_OSCALL (::vfscanf (stream, format, ap), int, -1, result);
+  va_end (ap);
+  return result;
+}
+
+#if defined (ACE_HAS_WCHAR)
+int
+ACE_OS::fscanf (FILE* stream, const wchar_t *format, ...)
+{
+#if defined (ACE_LACKS_VFWSCANF)
+  ACE_UNUSED_ARG (format);
+  ACE_NOTSUP_RETURN (-1);
+#else
+  int result;
+  va_list ap;
+  va_start (ap, format);
+  ACE_OSCALL (::vfwscanf (stream, format, ap), int, -1, result);
+  va_end (ap);
+  return result;
+#endif
+}
+#endif /* ACE_HAS_WCHAR */
+
 
 ACE_END_VERSIONED_NAMESPACE_DECL

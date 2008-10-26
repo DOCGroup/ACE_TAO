@@ -1,3 +1,11 @@
+Sun Oct 26 08:02:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+		* ace/OS_NS_stdio.{h,cpp}:
+	      Fixed sscanf implementation and added also fscanf wrapper
+	      
+	    * bin/fuzz.pl:
+	      Added fscanf to the ACE_OS tests
+
 Thu Oct 23 20:06:02 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Process.cpp: Fixed a typo.
