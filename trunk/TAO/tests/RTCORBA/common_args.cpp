@@ -58,7 +58,7 @@ get_priority_bands (const char *test_type,
   char* working_string = string;
   for (CORBA::ULong i = 0; i < bands_length; ++i)
     {
-      result = ACE_OS::sscanf (working_string,
+      result = ::sscanf (working_string,
                          "%hd",
                          &bands[i].low);
       if (result == 0 || result == EOF)
@@ -67,7 +67,7 @@ get_priority_bands (const char *test_type,
       working_string += ACE_OS::strlen (working_string);
       working_string += 1;
 
-      result = ACE_OS::sscanf (working_string,
+      result = ::sscanf (working_string,
                          "%hd",
                          &bands[i].high);
       if (result == 0 || result == EOF)
