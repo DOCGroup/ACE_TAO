@@ -1,3 +1,26 @@
+Sun Oct 26 08:26:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/AMH/run_test.pl
+        * DevGuideExamples/AMH_AMI/run_test.pl
+        * DevGuideExamples/BiDirectionalGIOP/run_test.pl
+        * DevGuideExamples/GettingStarted/run_test.pl
+        * LocalObjects/ServantLocator/run_test.pl
+        * Messaging/AMIcallback/run_test.pl
+        * Messaging/RelativeRoundtripTimeout/run_test.pl
+        * Multithreading/GracefulShutdown/run_test.pl
+        * Multithreading/Reactive/run_test.pl
+        * Multithreading/ThreadPerConnection/run_test.pl
+        * Multithreading/ThreadPool/run_test.pl
+        * PortableInterceptors/PICurrent/run_test.pl
+        * PortableInterceptors/PICurrent_NameService/run_test.pl
+        * RTCORBA/run_test.pl
+        * SmartProxies/run_test.pl
+        * ValueTypes/Bank/run_test.pl
+        * ValueTypes/Messenger/run_test.pl
+        * ValueTypes/Notify/run_test.pl
+          Use $PerlACE::wait_interval_for_process_creation when waiting
+	      for an ior file
+
 Fri Oct 24 10:40:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/DevGuideExamples/EventServices/EchoEventConsumerMain.cpp:

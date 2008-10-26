@@ -18,7 +18,7 @@ unlink $L_ior;
 # start MessengerServer
 $S = new PerlACE::Process("MessengerServer");
 $S->Spawn();
-if (PerlACE::waitforfile_timed ($M_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($M_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file $M_ior\n";
     $S->Kill(); 
     exit 1;
@@ -27,7 +27,7 @@ if (PerlACE::waitforfile_timed ($M_ior, 5) == -1) {
 # start LoggerServer
 $L = new PerlACE::Process("LoggerServer");
 $L->Spawn();
-if (PerlACE::waitforfile_timed ($L_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($L_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file $L_ior\n";
     $L->Kill(); 
     $S->Kill();

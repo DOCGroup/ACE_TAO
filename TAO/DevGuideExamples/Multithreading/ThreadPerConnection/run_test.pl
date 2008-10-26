@@ -18,7 +18,7 @@ print STDOUT "Starting MessengerServer\n";
 $S = new PerlACE::Process("MessengerServer", "-ORBSvcConf server.conf -ORBEndpoint iiop://localhost");
 $S->Spawn();
 
-if (PerlACE::waitforfile_timed ($ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$ior>\n";
     $S->Kill(); 
     unlink $ior;

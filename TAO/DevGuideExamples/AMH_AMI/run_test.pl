@@ -18,7 +18,7 @@ unlink $middle_ior;
 $IS = new PerlACE::Process("inner_server");
 $IS->Spawn();
 
-if (PerlACE::waitforfile_timed ($inner_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($inner_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$inner_ior>\n";
     $IS->Kill();
     unlink $inner_ior;
@@ -31,7 +31,7 @@ if (PerlACE::waitforfile_timed ($inner_ior, 5) == -1) {
 $MS = new PerlACE::Process("middle_server");
 $MS->Spawn();
 
-if (PerlACE::waitforfile_timed ($middle_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($middle_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$middle_ior>\n";
     $MS->Kill();
     unlink $middle_ior;

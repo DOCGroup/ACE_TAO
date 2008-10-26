@@ -16,7 +16,7 @@ $PORT=9876;
 $NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
 $NS = new PerlACE::Process($NameService, "-o $nsiorfile -ORBEndpoint iiop://localhost:$PORT");
 $NS->Spawn();
-if (PerlACE::waitforfile_timed ($nsiorfile, 5) == -1) {
+if (PerlACE::waitforfile_timed ($nsiorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file $nsiorfile\n";
     $NS->Kill(); 
     exit 1;

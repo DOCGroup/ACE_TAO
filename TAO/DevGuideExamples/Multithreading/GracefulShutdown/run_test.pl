@@ -24,7 +24,7 @@ print STDOUT "Running MessengerServer...\n";
 $S1 = new PerlACE::Process("MessengerServer", $server_args . " -x");
 $S1->Spawn();
 
-if (PerlACE::waitforfile_timed ($ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$ior>\n";
     $S1->Kill(); 
     unlink $ior;
@@ -60,7 +60,7 @@ print STDOUT "Running MessengerServer...\n";
 $S2 = new PerlACE::Process("MessengerServer", $server_args . " -p " . $iter);
 $S2->Spawn();
 
-if (PerlACE::waitforfile_timed ($ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$ior>\n";
     $S2->Kill(); 
     unlink $ior;
@@ -97,7 +97,7 @@ print STDOUT "Running MessengerServer...\n";
 $S3 = new PerlACE::Process("MessengerServer", $server_args . " -t " . $sec);
 $S3->Spawn();
 
-if (PerlACE::waitforfile_timed ($ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$ior>\n";
     $S3->Kill(); 
     unlink $ior;
@@ -136,7 +136,7 @@ print STDOUT "Running MessengerServer...\n";
 $S4 = new PerlACE::Process("MessengerServer", $server_args . " -r " . $sec);
 $S4->Spawn();
 
-if (PerlACE::waitforfile_timed ($ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$ior>\n";
     $S4->Kill(); 
     unlink $ior;
@@ -173,7 +173,7 @@ print STDOUT "Running MessengerServer...\n";
 $S5 = new PerlACE::Process("MessengerServer", $server_args . " -c");
 $S5->Spawn();
 
-if (PerlACE::waitforfile_timed ($ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$ior>\n";
     $S5->Kill(); 
     unlink $ior;
