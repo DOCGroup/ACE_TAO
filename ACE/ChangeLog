@@ -1,3 +1,18 @@
+Sun Oct 26 20:21:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+		    * ace/OS_NS_stdio.cpp:
+		    * ace/OS_NS_stdio.h:
+		      Removed scanf/fscanf/sscanf wrappers again. Microsoft
+		      doesn't ship them with msvc so these would then be
+		      a noop making them unusable
+		      
+		    * ace/fuzz.pl:
+		      Removed scanf/sscanf/fscanf from the ACE_OS check
+		      
+		    * ace/Multicast_Test.cpp
+		    * ace/Multicast_Test_IPV6.cpp
+		      Use plain sscanf
+
 Sun Oct 26 18:47:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 		    * ace/INET_Addr.cpp:
