@@ -326,14 +326,6 @@ namespace ACE_OS {
   FILE *fopen (const wchar_t *filename, const char *mode);
 #endif /* ACE_HAS_WCHAR */
 
-  extern ACE_Export
-  int fscanf (FILE* stream, const char *format, ...);
-
-#if defined (ACE_HAS_WCHAR)
-  extern ACE_Export
-  int fscanf (FILE* stream, const wchar_t *format, ...);
-#endif
-
 #if defined (ACE_WIN32)
   /// Default Win32 Security Attributes definition.
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -478,22 +470,6 @@ namespace ACE_OS {
 # if defined (ACE_HAS_WCHAR)
   extern ACE_Export
   int sprintf (wchar_t *buf, const wchar_t *format, ...);
-# endif /* ACE_HAS_WCHAR */
-
-  extern ACE_Export
-  int scanf (const char *format, ...);
-
-#if defined (ACE_HAS_WCHAR)
-  extern ACE_Export
-  int scanf (const wchar_t *format, ...);
-#endif
-
-  extern ACE_Export
-  int sscanf (const char *buf, const char *format, ...);
-
-# if defined (ACE_HAS_WCHAR)
-  extern ACE_Export
-  int sscanf (const wchar_t *buf, const wchar_t *format, ...);
 # endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
