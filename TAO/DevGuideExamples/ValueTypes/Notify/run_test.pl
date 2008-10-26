@@ -26,7 +26,7 @@ unlink $notifyior;
 
 $TS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($notifyior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($notifyior, $PerlACE::wait_interval_for_process_creation) == -1) {
     $TS->Kill ();
     exit 1;
 }

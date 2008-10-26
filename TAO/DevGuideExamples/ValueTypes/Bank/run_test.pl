@@ -11,7 +11,7 @@ $ior = "server.ior";
 $S = new PerlACE::Process("server");
 $S->Spawn();
 
-if (PerlACE::waitforfile_timed ($ior, 10) == -1) {
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$ior>\n";
     $S->Kill(); 
     unlink $ior;
