@@ -23,6 +23,8 @@ TAO_Notify_Properties::TAO_Notify_Properties (void)
   , allow_reconnect_ (false)
   , separate_dispatching_orb_ (false)
   , updates_ (1)
+  , defaultConsumerAdminFilterOp_ (CosNotifyChannelAdmin::OR_OP)
+  , defaultSupplierAdminFilterOp_ (CosNotifyChannelAdmin::OR_OP)
 {
   // In case no conf. file is specified, the EC will default to reactive concurrency.
   NotifyExt::ThreadPoolParams tp_params =

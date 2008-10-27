@@ -172,4 +172,29 @@ TAO_Notify_Properties::default_proxy_consumer_qos_properties (const CosNotificat
   this->pc_qos_ = pc_qos;
 }
 
+ACE_INLINE CosNotifyChannelAdmin::InterFilterGroupOperator
+TAO_Notify_Properties::defaultConsumerAdminFilterOp (void)
+{
+  return this->defaultConsumerAdminFilterOp_;
+}
+
+ACE_INLINE void
+TAO_Notify_Properties::defaultConsumerAdminFilterOp (CosNotifyChannelAdmin::InterFilterGroupOperator op)
+{
+  this->defaultConsumerAdminFilterOp_ = op;
+}
+
+
+ACE_INLINE CosNotifyChannelAdmin::InterFilterGroupOperator
+TAO_Notify_Properties::defaultSupplierAdminFilterOp (void)
+{
+  return this->defaultSupplierAdminFilterOp_;
+}
+
+ACE_INLINE void
+TAO_Notify_Properties::defaultSupplierAdminFilterOp (CosNotifyChannelAdmin::InterFilterGroupOperator op)
+{
+  this->defaultSupplierAdminFilterOp_ = op;
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -276,7 +276,8 @@ TAO_Notify_EventChannel::default_consumer_admin (void)
       if (CORBA::is_nil (default_consumer_admin_.in ()))
         {
           CosNotifyChannelAdmin::AdminID id;
-          this->default_consumer_admin_ = this->new_for_consumers (CosNotifyChannelAdmin::OR_OP, id);
+          this->default_consumer_admin_ =
+            this->new_for_consumers (TAO_Notify_PROPERTIES::instance ()->defaultConsumerAdminFilterOp(), id);
           // Wish there was a better way to do this!
           PortableServer::ServantBase * admin_servant =
             this->poa()->reference_to_servant (
@@ -301,7 +302,8 @@ TAO_Notify_EventChannel::default_supplier_admin (void)
       if (CORBA::is_nil (default_supplier_admin_.in ()))
         {
           CosNotifyChannelAdmin::AdminID id;
-          this->default_supplier_admin_ = this->new_for_suppliers (CosNotifyChannelAdmin::OR_OP, id);
+          this->default_supplier_admin_ =
+            this->new_for_suppliers (TAO_Notify_PROPERTIES::instance ()->defaultSupplierAdminFilterOp(), id);
           PortableServer::ServantBase * admin_servant =
             this->poa()->poa()->reference_to_servant (
               this->default_supplier_admin_.in ());

@@ -1,3 +1,21 @@
+Mon Oct 27 19:26:59 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
+
+        * NEWS
+        * orbsvcs/Notify_Service/README
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp
+        * orbsvcs/orbsvcs/Notify/Properties.cpp
+        * orbsvcs/orbsvcs/Notify/Properties.h
+        * orbsvcs/orbsvcs/Notify/Properties.inl
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.h
+
+          Added new svc.conf arguments to set the filter op flag (DOC bug 2415).
+
+        * orbsvcs/tests/Notify/Bug_2415_Regression
+
+          Added new test for DOC bug 2415.
+          
 Mon Oct 27 17:14:04 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * tao/Bounded_Sequence_CDR_T.h:
