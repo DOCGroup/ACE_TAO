@@ -1,30 +1,36 @@
+Mon Oct 27 13:27:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Added ACE_RUN_VX_STARTUP_COMMAND
+
 Sun Oct 26 20:21:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-		    * ace/OS_NS_stdio.cpp:
-		    * ace/OS_NS_stdio.h:
-		      Removed scanf/fscanf/sscanf wrappers again. Microsoft
-		      doesn't ship them with msvc so these would then be
-		      a noop making them unusable
-		      
-		    * ace/fuzz.pl:
-		      Removed scanf/sscanf/fscanf from the ACE_OS check
-		      
-		    * ace/Multicast_Test.cpp
-		    * ace/Multicast_Test_IPV6.cpp
-		      Use plain sscanf
+        * ace/OS_NS_stdio.cpp:
+        * ace/OS_NS_stdio.h:
+          Removed scanf/fscanf/sscanf wrappers again. Microsoft
+          doesn't ship them with msvc so these would then be
+          a noop making them unusable
+
+        * ace/fuzz.pl:
+          Removed scanf/sscanf/fscanf from the ACE_OS check
+
+        * ace/Multicast_Test.cpp
+        * ace/Multicast_Test_IPV6.cpp
+          Use plain sscanf
 
 Sun Oct 26 18:47:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-		    * ace/INET_Addr.cpp:
-		      Removed not needed wchar conversion
-		      
+        * ace/INET_Addr.cpp:
+          Removed not needed wchar conversion
+
 Sun Oct 26 08:02:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-		    * ace/OS_NS_stdio.{h,cpp}:
-	        Fixed sscanf implementation and added also fscanf wrapper
-	      
-	      * bin/fuzz.pl:
-	        Added fscanf to the ACE_OS tests
+        * ace/OS_NS_stdio.{h,cpp}:
+          Fixed sscanf implementation and added also fscanf wrapper
+
+        * bin/fuzz.pl:
+          Added fscanf to the ACE_OS tests
 
 Thu Oct 23 20:06:02 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
