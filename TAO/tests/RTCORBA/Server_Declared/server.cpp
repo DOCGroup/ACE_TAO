@@ -95,7 +95,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'a':
-        result = ACE_OS::sscanf (get_opts.opt_arg (),
+        result = ::sscanf (get_opts.opt_arg (),
                            ACE_TEXT("%hd"),
                            &poa_priority);
         if (result == 0 || result == EOF)
@@ -105,7 +105,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'b':
-        result = ACE_OS::sscanf (get_opts.opt_arg (),
+        result = ::sscanf (get_opts.opt_arg (),
                            ACE_TEXT("%hd"),
                            &object_priority);
         if (result == 0 || result == EOF)
