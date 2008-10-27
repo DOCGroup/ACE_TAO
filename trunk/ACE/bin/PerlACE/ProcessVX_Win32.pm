@@ -148,6 +148,10 @@ sub Spawn ()
             @cmds[$cmdnr++] = 'C putenv("TAO_ORB_DEBUG=' . $ENV{"ACE_RUN_TAO_ORB_DEBUG"} . '")';
         }
 
+        if (defined $ENV{'ACE_RUN_ACE_LD_SEARCH_PATH'}) {
+            @cmds[$cmdnr++] = 'C putenv("ACE_LD_SEARCH_PATH=' . $ENV{"ACE_RUN_ACE_LD_SEARCH_PATH"} . '")';
+        }
+
         if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
             @cmds[$cmdnr++] = 'C memShow()';
         }
@@ -155,7 +159,8 @@ sub Spawn ()
         $cmdline = $program . $PerlACE::ProcessVX::ExeExt . ' ' . $self->{ARGUMENTS};
         @cmds[$cmdnr++] = $cmdline;
         $prompt = '\[vxWorks \*\]\# $';
-    } else {
+    }
+    if ($PerlACE::VxWorks_Test) {
         if ( defined $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} && $PerlACE::ProcessVX::VxDefGw) {
             @cmds[$cmdnr++] = "mRouteAdd(\"0.0.0.0\", \"" . $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} . "\", 0,0,0)";
             $PerlACE::ProcessVX::VxDefGw = 0;
@@ -188,6 +193,10 @@ sub Spawn ()
 
         if (defined $ENV{'ACE_RUN_TAO_ORB_DEBUG'}) {
             @cmds[$cmdnr++] = 'putenv("TAO_ORB_DEBUG=' . $ENV{"ACE_RUN_TAO_ORB_DEBUG"} . '")';
+        }
+
+        if (defined $ENV{'ACE_RUN_ACE_LD_SEARCH_PATH'}) {
+            @cmds[$cmdnr++] = 'putenv("ACE_LD_SEARCH_PATH=' . $ENV{"ACE_RUN_ACE_LD_SEARCH_PATH"} . '")';
         }
 
         @cmds[$cmdnr++] = 'ld <'. $program . $PerlACE::ProcessVX::ExeExt;
