@@ -71,7 +71,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior = get_opts.opt_arg ();
         break;
       case 'a':
-        result = ::sscanf (get_opts.opt_arg (),
+        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
                            ACE_TEXT("%hd"),
                            &priority1);
         if (result == 0 || result == EOF)
@@ -80,7 +80,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                             -1);
         break;
       case 'b':
-        result = ::sscanf (get_opts.opt_arg (),
+        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
                            ACE_TEXT("%hd"),
                            &priority2);
         if (result == 0 || result == EOF)
@@ -89,7 +89,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                             -1);
         break;
       case 'e':
-        result = ::sscanf (get_opts.opt_arg (),
+        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
                            ACE_TEXT("%u"),
                            &protocol1);
         if (result == 0 || result == EOF)
@@ -98,7 +98,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                             -1);
         break;
       case 'f':
-        result = ::sscanf (get_opts.opt_arg (),
+        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
                            ACE_TEXT("%u"),
                            &protocol2);
         if (result == 0 || result == EOF)
