@@ -146,8 +146,6 @@ TAO::ORB_Table::not_default (char const * orb_id)
   //     generalizing it. It works if the first ORB that is registered
   //     decides to not want be the default ORB. Should generalize it
   //     to handle all cases.
-
-
   ACE_GUARD (TAO_SYNCH_MUTEX,
              guard,
              this->lock_);

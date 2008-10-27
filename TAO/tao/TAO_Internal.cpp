@@ -373,9 +373,9 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
       {
         if (TAO_debug_level > 4)
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) We are %C the default ")
+                      ACE_TEXT ("TAO (%P|%t) We are%Cthe default ")
                       ACE_TEXT ("ORB ...\n"),
-                      (service_open_count == 0) ? "" : "not "));
+                      (service_open_count == 0) ? " " : " not "));
       }
 
     ++service_open_count;
