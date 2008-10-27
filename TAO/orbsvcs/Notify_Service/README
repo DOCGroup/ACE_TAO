@@ -122,7 +122,7 @@ to obtain the object reference.
 The svc.conf options:
 ----------------------
 
-The "Notify_Default_Event_Manager_Objects_Factory" service object accepts the following options:
+The "TAO_CosNotify_Service" service object accepts the following options:
 
 "-DispatchingThreads [thread_count]" : Enables MT dispatching with the specified number
                                        of threads.
@@ -142,10 +142,14 @@ The "Notify_Default_Event_Manager_Objects_Factory" service object accepts the fo
 "-NoUpdates"                         : Globally disables subscription and
                                        publication updates.
 
+"-DefaultConsumerAdminFilterOp [op]" : Sets the default consumer admin filter operator [OR|AND].
+
+"-DefaultSupplierAdminFilterOp [op]" : Sets the default consumer admin filter operator [OR|AND].
+
 All other options are deprecated and should not be used.
 
 e.g. svc.conf
-static Notify_Default_Event_Manager_Objects_Factory "-DispatchingThreads 2"
+static TAO_CosNotify_Service "-DispatchingThreads 2"
 
 This means that we want to enable event dispatching with 2 threads.
 
