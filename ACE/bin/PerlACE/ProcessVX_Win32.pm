@@ -126,6 +126,10 @@ sub Spawn ()
       @cmds[$cmdnr++] = '< ' . $ENV{"ACE_RUN_VX_STARTUP_SCRIPT"};
     }
 
+    if (defined $ENV{"ACE_RUN_VX_STARTUP_COMMAND"}) {
+      @cmds[$cmdnr++] = $ENV{"ACE_RUN_VX_STARTUP_COMMAND"};
+    }
+
     if ($PerlACE::VxWorks_RTP_Test) {
         @cmds[$cmdnr++] = 'cmd';
         if ( defined $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} && $PerlACE::ProcessVX::VxDefGw) {
