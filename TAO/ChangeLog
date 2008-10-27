@@ -1,3 +1,11 @@
+Mon Oct 27 17:14:04 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * tao/Bounded_Sequence_CDR_T.h:
+        * tao/Unbounded_Sequence_CDR_T.h:
+
+          Revert changes to demarshal for string sequences. Improvement was due
+          to a defective sequence element out operation.
+
 Mon Oct 27 16:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/RTCORBA/Server_Declared/server.cpp:
@@ -50,7 +58,7 @@ Sun Oct 26 08:26:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ValueTypes/Messenger/run_test.pl
         * ValueTypes/Notify/run_test.pl
           Use $PerlACE::wait_interval_for_process_creation when waiting
-	      for an ior file
+              for an ior file
 
 Fri Oct 24 10:40:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
