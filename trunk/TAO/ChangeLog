@@ -1,3 +1,8 @@
+Mon Oct 27 12:31:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/TAO_Internal.cpp:
+	  Small improvement to debug message
+
 Sun Oct 26 08:26:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/AMH/run_test.pl
