@@ -140,6 +140,46 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         arg_shifter.consume_arg ();
         TAO_Notify_PROPERTIES::instance()->allow_reconnect (true);
       }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-DefaultConsumerAdminFilterOp")) == 0)
+      {
+        current_arg = arg_shifter.get_the_parameter
+                      (ACE_TEXT("-DefaultConsumerAdminFilterOp"));
+        CosNotifyChannelAdmin::InterFilterGroupOperator op = CosNotifyChannelAdmin::OR_OP;
+        if (current_arg != 0 && (ACE_OS::strcmp(ACE_TEXT ("AND"), current_arg) == 0))
+                      op = CosNotifyChannelAdmin::AND_OP;
+        else if (current_arg != 0 && (ACE_OS::strcmp(ACE_TEXT ("OR"), current_arg) == 0))
+                      op = CosNotifyChannelAdmin::OR_OP;
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
+                        ACE_TEXT ("argument (%s).  Ignoring invalid ")
+                        ACE_TEXT ("-DefaultConsumerAdminFilterOp usage.\n"),
+                        (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+          }
+        properties->defaultConsumerAdminFilterOp (op);
+        arg_shifter.consume_arg ();
+      }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-DefaultSupplierAdminFilterOp")) == 0)
+      {
+        current_arg = arg_shifter.get_the_parameter
+                      (ACE_TEXT("-DefaultSupplierAdminFilterOp"));
+        CosNotifyChannelAdmin::InterFilterGroupOperator op = CosNotifyChannelAdmin::OR_OP;
+        if (current_arg != 0 && (ACE_OS::strcmp(ACE_TEXT ("AND"), current_arg) == 0))
+                      op = CosNotifyChannelAdmin::AND_OP;
+        else if (current_arg != 0 && (ACE_OS::strcmp(ACE_TEXT ("OR"), current_arg) == 0))
+                      op = CosNotifyChannelAdmin::OR_OP;
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
+                        ACE_TEXT ("argument (%s).  Ignoring invalid ")
+                        ACE_TEXT ("-DefaultSupplierAdminFilterOp usage.\n"),
+                        (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+          }
+        properties->defaultSupplierAdminFilterOp (op);
+        arg_shifter.consume_arg ();
+      }
       else
       {
         ACE_ERROR ((LM_ERROR,

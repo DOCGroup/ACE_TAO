@@ -130,6 +130,19 @@ Notify_Test_Client::ORB_run (void)
   return 0;
 }
 
+int
+Notify_Test_Client::ORB_run (ACE_Time_Value& tv)
+{
+  orb_->run(tv);
+
+  ACE_DEBUG((LM_DEBUG, "\nWaiting for stray events...\n"));
+
+  ACE_Time_Value tv2(2,0);
+  orb_->run(tv2);
+
+  return 0;
+}
+
 void Notify_Test_Client::consumer_start (TAO_Notify_Tests_Peer*)
 {
   num_clients_++;
