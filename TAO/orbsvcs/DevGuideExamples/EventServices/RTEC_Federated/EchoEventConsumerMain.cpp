@@ -41,7 +41,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       = CosNaming::NamingContextExt::_narrow(obj.in());
 
     // Find the EchoEventChannel.
-    obj = root_context->resolve_str(ecname);
+    obj = root_context->resolve_str (ACE_TEXT_ALWAYS_CHAR (ecname));
 
     // Downcast the object reference to an EventChannel reference.
     RtecEventChannelAdmin::EventChannel_var ec =

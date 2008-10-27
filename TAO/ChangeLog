@@ -1,4 +1,18 @@
-Mon Oct 27 14:40:00 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+Mon Oct 27 16:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/RTCORBA/Server_Declared/server.cpp:
+        * tests/RTCORBA/Server_Protocol/server.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Federated/EchoEventSupplierMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Federated/EchoEventConsumerMain.cpp:
+        * tests/RTCORBA/Client_Protocol/client.cpp:
+        * tests/RTCORBA/Client_Protocol/server.cpp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
+
+          sscanf needs ACE_TEXT_ALWAYS_CHAR ()
+
+Mon Oct 27 14:40:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/DevGuideExamples/EventServices/OMG_TypedEC/ConsumerMain.cpp:
 

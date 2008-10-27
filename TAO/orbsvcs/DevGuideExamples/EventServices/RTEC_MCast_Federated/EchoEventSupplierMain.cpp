@@ -106,7 +106,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CosNaming::NamingContextExt_var root_context = CosNaming::NamingContextExt::_narrow(obj.in());
 
     // Bind the Event Channel using Naming Services
-    CosNaming::Name_var name = root_context->to_name(ecname);
+    CosNaming::Name_var name = root_context->to_name (ACE_TEXT_ALWAYS_CHAR (ecname));
     root_context->rebind(name.in(), ec.in());
 
     // Get a proxy push consumer from the EventChannel.
@@ -198,7 +198,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
     // Create an event (just a string in this case).
-    const CORBA::String_var eventData = CORBA::string_dup(ecname);
+    const CORBA::String_var eventData = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (ecname));
 
     // Create an event set for one event
     RtecEventComm::EventSet event (1);
