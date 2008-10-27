@@ -2,6 +2,12 @@ Mon Oct 27 13:27:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:
         * bin/PerlACE/ProcessVX_Win32.pm:
+          Added ACE_RUN_ACE_LD_SEARCH_PATH
+
+Mon Oct 27 13:27:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
           Added ACE_RUN_VX_STARTUP_COMMAND
 
 Sun Oct 26 20:21:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
