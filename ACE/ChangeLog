@@ -1,3 +1,9 @@
+Mon Oct 27 19:22:25 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
+
+        * bin/tao_other_tests.lst
+
+          Added new test for DOC bug 2415.
+
 Mon Oct 27 13:27:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:
