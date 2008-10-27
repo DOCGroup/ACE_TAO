@@ -1,3 +1,9 @@
+Mon Oct 27 14:40:00 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * orbsvcs/DevGuideExamples/EventServices/OMG_TypedEC/ConsumerMain.cpp:
+
+          ACE_LIB_TEXT -> ACE_TEXT.
+
 Mon Oct 27 12:40:47 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * NEWS:
@@ -6,8 +12,8 @@ Mon Oct 27 12:40:47 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
 Mon Oct 27 12:31:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/TAO_Internal.cpp:
-	  Small improvement to debug message
+        * tao/TAO_Internal.cpp:
+          Small improvement to debug message
 
 Sun Oct 26 08:26:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
