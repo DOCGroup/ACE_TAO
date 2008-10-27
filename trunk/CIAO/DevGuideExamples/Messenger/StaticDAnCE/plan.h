@@ -44,3 +44,4 @@ HomeAttributes homes_table[]=
   {"Second_Receiver_Instance", "create_ReceiverHome_Impl", create_ReceiverHome_Impl, "create_ReceiverHome_Servant", create_ReceiverHome_Servant},
   {"Administrator_Instance", "create_AdministratorHome_Impl", create_AdministratorHome_Impl, "create_AdministratorHome_Servant", create_AdministratorHome_Servant}
 };
+
