@@ -26,7 +26,7 @@
 const int PER_BATCH = 1;
 static TAO_Notify_Tests_StructuredPushSupplier* supplier = 0;
 static const ACE_TCHAR *ior_output_file = ACE_TEXT ("supplier.ior");
-static const ACE_TCHAR* domain = ACE_TEXT ("domain1");
+ACE_TCHAR* domain = ACE_TEXT ("domain1");
 
 // ******************************************************************
 // Subroutine Section
