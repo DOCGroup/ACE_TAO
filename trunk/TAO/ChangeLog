@@ -1,3 +1,9 @@
+Tue Oct 28 16:12:21 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
+
+        * orbsvcs/tests/Notify/Bug_2415_Regression/Supplier.cpp
+
+          Fixed build error (‘ACE_TCHAR*’ to ‘char*’ assignment error).
+
 Tue Oct 28 15:18:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/GettingStarted/GettingStarted.mpc
