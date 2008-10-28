@@ -1,7 +1,6 @@
 Tue Oct 28 16:31:21 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
 
         * orbsvcs/tests/Notify/Bug_2415_Regression/Supplier.cpp
-
           Correctly declared variable (made non-const).
 
 Tue Oct 28 16:20:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
