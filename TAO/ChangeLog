@@ -1,3 +1,10 @@
+Tue Oct 28 10:52:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/GettingStarted/GettingStarted.mpc:
+          Added custom idl project. This should fix the VMS link
+          problems. Let us see if this works before updating
+          all MPC files
+
 Mon Oct 27 19:26:59 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
 
         * NEWS
@@ -15,7 +22,7 @@ Mon Oct 27 19:26:59 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
         * orbsvcs/tests/Notify/Bug_2415_Regression
 
           Added new test for DOC bug 2415.
-          
+
 Mon Oct 27 17:14:04 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * tao/Bounded_Sequence_CDR_T.h:
