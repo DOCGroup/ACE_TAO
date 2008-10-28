@@ -12,24 +12,24 @@ $ior="Messenger.ior";
 unlink $ior;
 
 # start MessengerServer
-$S = new PerlACE::Process("MessengerServer");
+$S = new PerlACE::Process("server");
 $S->Spawn();
 if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file $ior\n";
-    $S->Kill(); 
+    $S->Kill();
     exit 1;
 }
 
 
 # start MessengerClient
-$C = new PerlACE::Process("MessengerClient");
+$C = new PerlACE::Process("client");
 
 if ($C->SpawnWaitKill(10) != 0) {
      $S->Kill();
      exit (1);
 }
 
-# clean-up 
+# clean-up
 $S->Kill();
 unlink $ior;
 
