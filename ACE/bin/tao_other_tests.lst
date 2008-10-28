@@ -219,4 +219,5 @@ TAO/orbsvcs/DevGuideExamples/NamingService/Naming_Client/run_test.pl: !VxWorks !
 TAO/orbsvcs/DevGuideExamples/NamingService/Naming_Context_Ext/run_test.pl: !VxWorks !VxWorks_RTP
 TAO/orbsvcs/DevGuideExamples/NamingService/Naming_Server/run_test.pl: !ST !NO_MCAST !NO_MESSAGING !VxWorks !VxWorks_RTP
 TAO/orbsvcs/DevGuideExamples/NamingService/corbaloc_Messenger/run_test.pl: !VxWorks !VxWorks_RTP
-TAO/orbsvcs/DevGuideExamples/NamingService/corbaname_Messenger/run_test.pl: !VxWorks !VxWorks_RTP
+TAO/orbsvcs/DevGuideExamples/NamingService/corbaname_Messenger/run_test.pl:
+TAO/orbsvcs/DevGuideExamples/ValueTypes/Notify/run_test.pl: !ST !MINIMUM !VxWorks !VxWorks_RTP
