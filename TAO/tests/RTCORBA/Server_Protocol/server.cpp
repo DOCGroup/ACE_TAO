@@ -62,7 +62,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       case 'p':
         result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
-                           ACE_TEXT("%u"),
+                           "%u",
                            &protocol_type);
         if (result == 0 || result == EOF)
           ACE_ERROR_RETURN ((LM_ERROR,
