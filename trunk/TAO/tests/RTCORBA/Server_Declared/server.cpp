@@ -96,7 +96,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       case 'a':
         result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
-                           ACE_TEXT("%hd"),
+                           "%hd",
                            &poa_priority);
         if (result == 0 || result == EOF)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -106,7 +106,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       case 'b':
         result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
-                           ACE_TEXT("%hd"),
+                           "%hd",
                            &object_priority);
         if (result == 0 || result == EOF)
           ACE_ERROR_RETURN ((LM_ERROR,
