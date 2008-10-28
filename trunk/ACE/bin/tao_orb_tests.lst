@@ -381,7 +381,6 @@ TAO/DevGuideExamples/Multithreading/Reactive/run_test.pl: !STATIC !MINIMUM
 TAO/DevGuideExamples/Multithreading/ThreadPerConnection/run_test.pl: !ST
 TAO/DevGuideExamples/Multithreading/ThreadPool/run_test.pl: !ST !MINIMUM
 TAO/DevGuideExamples/ValueTypes/Messenger/run_test.pl: !MINIMUM
-TAO/DevGuideExamples/ValueTypes/Notify/run_test.pl: !ST !MINIMUM
 TAO/DevGuideExamples/ValueTypes/Bank/run_test.pl: !MINIMUM
 TAO/DevGuideExamples/AMH/run_test.pl: !NO_MESSAGING
 TAO/DevGuideExamples/AMH_AMI/run_test.pl: !NO_MESSAGING
