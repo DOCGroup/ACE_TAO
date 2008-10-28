@@ -1,3 +1,9 @@
+Tue Oct 28 16:40:10 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+
+          Disabled test for bug#3444 on LynxOS.
+
 Tue Oct 28 16:23:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
