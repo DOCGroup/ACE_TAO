@@ -1,4 +1,4 @@
-// $Id$
+# $Id$
 
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
@@ -18,27 +18,27 @@ $S->Spawn();
 
 if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$ior>\n";
-    $S->Kill(); 
+    $S->Kill();
     unlink $ior;
     exit 1;
 }
 
 # start MessengerClient
 
-$C = new PerlACE::Process("MessengerClient");  
+$C = new PerlACE::Process("MessengerClient");
 $C->Spawn();
 
 $CRET = $C->WaitKill(15);
 $S->Kill();
 
-# clean-up 
+# clean-up
 
 unlink $ior;
 
 if ($CRET != 0) {
     print STDERR "ERROR: Client returned <$CRET>\n";
     exit 1 ;
-}  
+}
 
 exit 0;
 
