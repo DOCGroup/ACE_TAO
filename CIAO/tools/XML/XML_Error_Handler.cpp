@@ -8,6 +8,8 @@
 #include <xercesc/sax/SAXParseException.hpp>
 #include "XercesString.h"
 
+#include <iostream>
+
 using xercesc::SAXParseException;
 
 namespace CIAO

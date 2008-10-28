@@ -239,6 +239,9 @@ namespace CIAO
     XML_Helper<Resolver, Error>::write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc,
                                             const ACE_TCHAR *file) const
     {
+    throw 1;
+	/* @@TODO: Reimplement for xerces 3.
+
       try
         {
           bool retn;
@@ -274,6 +277,7 @@ namespace CIAO
                       e.getSrcLine ()));
           return false;
         }
+	*/
     }
   }
 }
