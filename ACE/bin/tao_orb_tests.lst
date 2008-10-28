@@ -365,7 +365,6 @@ TAO/tests/Collocated_Forwarding/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_
 TAO/tests/ZIOP/run_test.pl: ZIOP ZLIB !LabVIEW_RT
 TAO/DevGuideExamples/BiDirectionalGIOP/run_test.pl: !MINIMUM !CORBA_E_MICRO
 TAO/DevGuideExamples/GettingStarted/run_test.pl:
-TAO/DevGuideExamples/InterfaceRepo/run_test.pl: !MINIMUM !NO_IFR
 TAO/DevGuideExamples/LocalObjects/Messenger/run_test.pl:
 TAO/DevGuideExamples/LocalObjects/ServantLocator/run_test.pl: !MINIMUM
 TAO/DevGuideExamples/Messaging/AMIcallback/run_test.pl: !NO_MESSAGING
