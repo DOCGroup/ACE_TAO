@@ -1,3 +1,14 @@
+Tue Oct 28 11:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/RTCORBA/Server_Protocol/server.cpp:
+        * tests/RTCORBA/Server_Declared/server.cpp:
+        * tests/RTCORBA/Server_Protocol/server.cpp:
+        * tests/RTCORBA/Client_Protocol/client.cpp:
+        * tests/RTCORBA/Client_Protocol/server.cpp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
+
+          sscanf and of course doesn't want ACE_TEXT().
+
 Tue Oct 28 11:20:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/GettingStarted/run_test.pl:
@@ -38,7 +49,7 @@ Mon Oct 27 17:14:04 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
 Mon Oct 27 16:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
-        * orbsvcs/tests/RTCORBA/Server_Declared/server.cpp:
+        * tests/RTCORBA/Server_Declared/server.cpp:
         * tests/RTCORBA/Server_Protocol/server.cpp:
         * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
         * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
