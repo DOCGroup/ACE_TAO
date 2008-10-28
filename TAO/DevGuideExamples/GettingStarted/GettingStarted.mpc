@@ -25,7 +25,6 @@ project(*Server): taoexe, portableserver {
 project(*Client): taoexe {
   after += *idl
   Source_Files {
-    MessengerC.cpp
     MessengerClient.cpp
   }
   Source_Files {

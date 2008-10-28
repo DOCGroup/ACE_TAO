@@ -39,10 +39,10 @@ Messenger_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
 
 void
 Messenger_Locator_i::postinvoke (const PortableServer::ObjectId &,
-                                            PortableServer::POA_ptr,
-                                            const char *,
-                                            void * cookie,
-                                            PortableServer::Servant servant)
+                                 PortableServer::POA_ptr,
+                                 const char *,
+                                 void * cookie,
+                                 PortableServer::Servant servant)
 {
 
   std::cout << "postinvoke called..." << std::endl;

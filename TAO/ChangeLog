@@ -1,3 +1,13 @@
+Tue Oct 28 15:18:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/GettingStarted/GettingStarted.mpc
+        * DevGuideExamples/LocalObjects/Messenger/Messenger.mpc
+        * DevGuideExamples/LocalObjects/ServantLocator/ServantLocator.mpc
+          Use custom idl project
+
+        * DevGuideExamples/LocalObjects/ServantLocator/MessengerLocator_i.cpp
+          Layout change
+
 Tue Oct 28 11:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/RTCORBA/Server_Protocol/server.cpp:

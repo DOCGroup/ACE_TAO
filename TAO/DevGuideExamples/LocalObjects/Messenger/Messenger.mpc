@@ -1,4 +1,22 @@
 // $Id$
 
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Messenger.idl
+  }
+  custom_only = 1
+}
+
 project(LocalObject*Server): taoexe, portableserver {
+  after += *idl
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
+  }
+  IDL_Files {
+  }
 }
