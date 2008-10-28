@@ -1,3 +1,15 @@
+Tue Oct 28 19:48:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/vxtest.mpd:
+          Don't add a lib prefix and .so postfix, let the test scripts do that.
+          This way the output is also usable for WinCE testing
+
+        * bin/PerlACE/ProcessVX.pm:
+          Add lib prefix and .so postfix to the vxtest list
+
+        * bin/PerlACE/ProcessWinCE.pm:
+          Extended this test for testing
+
 Tue Oct 28 16:40:10 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * bin/tao_other_tests.lst:
