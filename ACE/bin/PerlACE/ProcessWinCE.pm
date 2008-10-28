@@ -145,7 +145,18 @@ sub Spawn ()
             @cmds[$cmdnr++] = 'set ACE_LD_SEARCH_PATH=' . $ENV{"ACE_RUN_ACE_LD_SEARCH_PATH"};
         }
 
-        $cmdline = $program . $self->{ARGUMENTS};
+        my(@load_commands);
+        my(@unload_commands);
+        my $vxtest_file = $program . '.vxtest';
+        if (handle_vxtest_file($vxtest_file, \@load_commands, \@unload_commands)) {
+            push @cmds, @load_commands;
+            $cmdnr += scalar @load_commands;
+          } else {
+            print STDERR "ERROR: Cannot find <", $vxtest_file, ">\n";
+            return -1;
+          }
+
+        $cmdline = $program . ' ' . $self->{ARGUMENTS};
         if (defined $self->{ARGUMENTS}) {
             ($arguments = $self->{ARGUMENTS})=~ s/\"/\\\"/g;
             ($arguments = $self->{ARGUMENTS})=~ s/\'/\\\'/g;
@@ -157,7 +168,9 @@ sub Spawn ()
             @cmds[$cmdnr++] = 'cd ' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel;
         }
         @cmds[$cmdnr++] = $cmdline;
-        $prompt = '\\*> $';
+        push @cmds, @unload_commands;
+        $cmdnr += scalar @unload_commands;
+        $prompt = '\> $';
 
     print $oh "require Net::Telnet;\n";
     print $oh "my \@cmds;\n";
@@ -170,7 +183,6 @@ sub Spawn ()
 
     print $oh <<'__END__';
 
-my $ok;
 my $telnet_port = $ENV{'ACE_RUN_VX_TGT_TELNET_PORT'};
 my $telnet_host = $ENV{'ACE_RUN_VX_TGT_TELNET_HOST'};
 if (!defined $telnet_host)  {
@@ -184,22 +196,16 @@ if (!defined $t) {
   die "ERROR: Telnet failed to <" . $telnet_host . ":". $telnet_port . ">";
 }
 $t->open();
-$t->print("");
 
-my $target_login = $ENV{'ACE_RUN_VX_LOGIN'};
-my $target_password = $ENV{'ACE_RUN_VX_PASSWORD'};
-
-if (defined $target_login)  {
-  $t->waitfor('/VxWorks login: $/');
-  $t->print("$target_login");
+my $ok = false;
+while ($blk = $t->get) {
+  printf $blk;
+  $buf .= $blk;
+  if ($buf =~ /$prompt/) {
+    $ok = true;
+    last;
+  }
 }
-
-if (defined $target_password)  {
-  $t->waitfor('/Password: $/');
-  $t->print("$target_password");
-}
-
-$ok = $t->waitfor('\> $/');
 if ($ok) {
   my $i = 0;
   my @lines;
@@ -316,6 +322,29 @@ sub Kill ()
     }
 
     $self->{RUNNING} = 0;
+}
+
+sub handle_vxtest_file
+{
+  my $vxtestfile = shift;
+  my $vx_ref = shift;
+  my $unld_ref = shift;
+  my $fh = new FileHandle;
+  if (open ($fh, $vxtestfile)) {
+    push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/MSVCR80D.dll .";
+    my $line1 = <$fh>;
+    chomp $line1;
+    while(<$fh>) {
+      $line1 = $_;
+      chomp $line1;
+      push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/$line1" . "d.dll .";
+      #unshift @$unld_ref, "del $line1" . "d.dll";
+    }
+    close $fh;
+  } else {
+    return 0;
+  }
+  return 1;
 }
 
 

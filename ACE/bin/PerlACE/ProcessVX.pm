@@ -365,8 +365,8 @@ sub handle_vxtest_file
     while(<$fh>) {
       $line1 = $_;
       chomp $line1;
-      push @$vx_ref, "ld < $line1";
-      unshift @$unld_ref, "unld \"$line1\"";
+      push @$vx_ref, "ld < lib$line1" . ".so";
+      unshift @$unld_ref, "unld \"lib$line1" . ".so\"";
     }
     close $fh;
   } else {
