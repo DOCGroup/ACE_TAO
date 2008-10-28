@@ -1,3 +1,8 @@
+Tue Oct 28 20:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/RTCORBA/run_test.pl
+          Corrected executable names
+
 Tue Oct 28 16:31:21 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
 
         * orbsvcs/tests/Notify/Bug_2415_Regression/Supplier.cpp
