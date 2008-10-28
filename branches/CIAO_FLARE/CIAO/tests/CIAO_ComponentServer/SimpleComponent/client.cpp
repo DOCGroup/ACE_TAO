@@ -4,6 +4,7 @@
 #include "ciao/ComponentServer/CIAO_CS_ClientS.h"
 #include "ciao/ComponentServer/CIAO_ComponentServerC.h"
 #include "ciao/ComponentServer/CIAO_ServerActivator_Impl.h"
+#include "ciao/ComponentServer/CIAO_PropertiesC.h"
 #include "ciao/Valuetype_Factories/ConfigValue.h"
 #include "ciao/Logger/Logger_Service.h"
 
@@ -108,13 +109,13 @@ ACE_TMAIN (int argc,  char **argv)
       configs.length (3);
       
       val <<= "create_Foo_SimpleHome_Servant";
-      configs[0] = new CIAO::ConfigValue_impl ("edu.vanderbilt.dre.ServantEntrypoint",
+      configs[0] = new CIAO::ConfigValue_impl (CIAO::Deployment::SVNT_ENTRYPT,
                                                val);
       val <<= "SimpleComponent_svnt";
-      configs[1] = new CIAO::ConfigValue_impl ("edu.vanderbilt.dre.ServantArtifact",
+      configs[1] = new CIAO::ConfigValue_impl (CIAO::Deployment::SVNT_ARTIFACT,
                                                val);
       val <<= "SimpleComponent_exec";
-      configs[2] = new CIAO::ConfigValue_impl ("edu.vanderbilt.dre.ExecutorArtifact",
+      configs[2] = new CIAO::ConfigValue_impl (CIAO::Deployment::EXEC_ARTIFACT,
                                                val);
 
       // Install Home
