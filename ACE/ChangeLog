@@ -1,3 +1,16 @@
+Tue Oct 28 10:48:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessWinCE.pm:
+          New file for Windows CE cross testing. We are using the
+          VxWorks support and added an environment variable
+          ACE_TEST_WINCE. When this is set we are using WinCE instead
+          of VxWorks. This script is not ready yet, a first version
+          so that we can start resolving some small issues in our
+          real test environment
+
+        * bin/PerlACE/Run_Test.pm:
+          Check for ACE_TEST_WINCE
+
 Mon Oct 27 19:22:25 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
 
         * bin/tao_other_tests.lst
