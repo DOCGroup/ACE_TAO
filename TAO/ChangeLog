@@ -1,3 +1,8 @@
+Tue Oct 28 16:20:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/ValueTypes/Notify/*:
+          Moved to orbsvcs
+
 Tue Oct 28 16:12:21 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
 
         * orbsvcs/tests/Notify/Bug_2415_Regression/Supplier.cpp
