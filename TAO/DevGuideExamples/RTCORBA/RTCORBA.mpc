@@ -1,6 +1,7 @@
 // $Id$
 
 project(*Server): rt_server {
+  exename = MessengerServer
   Source_Files {
     Messenger_i.cpp
     MessengerServer.cpp
@@ -10,6 +11,7 @@ project(*Server): rt_server {
 
 
 project(*Client): rt_client {
+  exename = MessengerClient
   Source_Files {
     MessengerC.cpp
     MessengerClient.cpp

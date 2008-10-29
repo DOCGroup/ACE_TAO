@@ -8,7 +8,8 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoexe, portableserver {
+project(*Server): taoserver {
+  exename = MessengerServer
   after += *idl
   Source_Files {
     Messenger_i.cpp
@@ -22,7 +23,8 @@ project(*Server): taoexe, portableserver {
   }
 }
 
-project(*Client): taoexe {
+project(*Client): taoclient {
+  exename = MessengerClient
   after += *idl
   Source_Files {
     MessengerClient.cpp
