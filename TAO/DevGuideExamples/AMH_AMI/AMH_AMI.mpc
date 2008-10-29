@@ -1,8 +1,16 @@
 // $Id$
 
-project(*Client): taoexe, portableserver, messaging {
-  after += *Middle_Server
+project(*idl): taoidldefaults, amh, ami {
+  idlflags += -Wb,pch_include=amh_ami_pch.h
+  IDL_Files {
+    middle.idl
+    inner.idl
+  }
+  custom_only = 1
+}
 
+project(*Client): taoclient, messaging {
+  after += *idl
   IDL_Files {
   }
 
@@ -18,12 +26,10 @@ project(*Client): taoexe, portableserver, messaging {
   }
 }
 
-project(*Middle_Server): messaging, taoexe, portableserver, amh {
-  idlflags += -Wb,pch_include=amh_ami_pch.h
-  after += *Inner_Server
-
+project(*Middle_Server): messaging, taoserver, amh {
+  after += *idl
+  exename = midle_server
   IDL_Files {
-    middle.idl
   }
 
   Source_Files {
@@ -37,13 +43,11 @@ project(*Middle_Server): messaging, taoexe, portableserver, amh {
   }
 }
 
-project(*Inner_Server): messaging, taoexe, portableserver, ami {
-  idlflags += -Wb,pch_include=amh_ami_pch.h
-
+project(*Inner_Server): messaging, taoserver, ami {
+  after += *idl
+  exename = inner_server
   IDL_Files {
-    inner.idl
   }
-
   Source_Files {
     innerS.cpp
     innerC.cpp
