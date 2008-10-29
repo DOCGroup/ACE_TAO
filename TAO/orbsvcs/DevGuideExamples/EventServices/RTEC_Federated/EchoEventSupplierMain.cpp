@@ -182,7 +182,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             std::cout << "Gateway initialized\n";
             if (iorfile != 0) {
               CORBA::String_var str = orb->object_to_string( ec.in() );
-              std::ofstream iorFile( iorfile );
+              std::ofstream iorFile( ACE_TEXT_ALWAYS_CHAR(iorfile) );
               iorFile << str.in() << std::endl;
               iorFile.close();
             }
