@@ -98,6 +98,15 @@ inline long ace_timezone()
 
 
 #if !defined (ACE_LACKS_DIFFTIME)
+# if defined (_WIN32_WCE) && (_WIN32_WCE == 0x600) && !defined (_USE_32BIT_TIME_T)
+    // The WinCE 6.0 SDK ships with a diff_time that uses __time32_t as type
+    // not time_t. This resolves in compilation warnings because time_t
+    // can be 64bit. Disable at that momemt the warning for just this method
+    // else we get two compile warnings on each source file that includes
+    // this file.
+#   pragma warning (push)
+#   pragma warning (disable: 4244)
+# endif
 /// Helper for the ACE_OS::difftime() function
 /**
  * We moved the difftime code that used to be in ACE_OS::difftime()
@@ -111,6 +120,9 @@ inline double ace_difftime(time_t t1, time_t t0)
 {
   return difftime (t1, t0);
 }
+# if defined (_WIN32_WCE) && (_WIN32_WCE == 0x600) && !defined (_USE_32BIT_TIME_T)
+#   pragma warning (pop)
+# endif
 #endif /* !ACE_LACKS_DIFFTIME */
 
 # if defined (ACE_WIN32)
