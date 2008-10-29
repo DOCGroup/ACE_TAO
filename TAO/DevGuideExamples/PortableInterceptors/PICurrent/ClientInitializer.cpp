@@ -3,7 +3,6 @@
 #include "ClientInitializer.h"
 #include "ClientInterceptor.h"
 #include "MessengerC.h"
-#include "orbsvcs/CosNamingC.h"
 #include <iostream>
 
 ClientInitializer::ClientInitializer (void)
