@@ -6,7 +6,6 @@
 #include "tao/ORBInitializer_Registry.h"
 // Ensure that the PI library is linked in when building statically
 #include "tao/PI/PI.h"
-#include "orbsvcs/CosNamingC.h"
 #include <iostream>
 
 int

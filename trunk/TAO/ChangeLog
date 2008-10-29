@@ -1,3 +1,23 @@
+Wed Oct 29 19:23:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/AMH_AMI/AMH_AMI.mpc
+        * DevGuideExamples/BiDirectionalGIOP/BiDirectionalGIOP.mpc
+        * DevGuideExamples/Multithreading/GracefulShutdown/GracefulShutdown.mpc
+        * DevGuideExamples/Multithreading/Reactive/Reactive.mpc
+        * DevGuideExamples/Multithreading/ThreadPerConnection/ThreadPerConnection.mpc
+        * DevGuideExamples/Multithreading/ThreadPool/ThreadPool.mpc
+        * DevGuideExamples/PortableInterceptors/Auth/Auth.mpc
+        * DevGuideExamples/PortableInterceptors/Auth/MessengerClient.cpp
+        * DevGuideExamples/PortableInterceptors/IOR/IOR.mpc
+        * DevGuideExamples/PortableInterceptors/PICurrent/ClientInitializer.cpp
+        * DevGuideExamples/PortableInterceptors/PICurrent/MessengerClient.cpp
+        * DevGuideExamples/PortableInterceptors/PICurrent/MessengerServer.cpp
+        * DevGuideExamples/PortableInterceptors/PICurrent/PICurrent.mpc
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/SimpleCode.mpc
+        * DevGuideExamples/ValueTypes/Bank/bank.mpc
+        * DevGuideExamples/ValueTypes/Messenger/ValueTypes.mpc
+          Improved MPC files, removed not needed includes of CosNamingC.h
+
 Wed Oct 29 15:27:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TAO_Internal.cpp:
