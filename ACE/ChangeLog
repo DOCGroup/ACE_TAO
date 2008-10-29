@@ -1,3 +1,11 @@
+Wed Oct 29 15:15:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          New file for WinCE cross platform testing. This assumes at this
+          moment some other test framework changes which can't be committed yet.
+          I am storing this new file in svn so that it doesn't get lost and
+          can be used to discuss the changes
+
 Wed Oct 29 10:14:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-WinCE.h:
