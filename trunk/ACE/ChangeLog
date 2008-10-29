@@ -1,3 +1,14 @@
+Wed Oct 29 10:14:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          Corrected WinCE version check
+
+        * ace/OS_NS_time.h:
+          The WinCE 6 SDK ships with a difftime that has __time32_t as type
+          of the arguments. ACE uses time_t which can be 64bit, that then
+          leads to conversion warnings. For WinCE 6 disable this warning
+          just for this file.
+
 Tue Oct 28 19:56:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
