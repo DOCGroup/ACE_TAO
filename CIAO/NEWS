@@ -72,7 +72,10 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 USER VISIBLE CHANGES BETWEEN CIAO-0.6.6 and CIAO-0.6.7
 ======================================================
 
-. 
+. Added the "CIAO" OCI Development Guide Examples under the directory
+  /DevGuideExamples.  NOTE this is an ongoing port of the original
+  version x.5.x examples and some are not yet 100% compatiable with the
+  current version of CIAO.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.6.5 and CIAO-0.6.6
 ======================================================
