@@ -130,7 +130,7 @@ SendEvent ()
   CosNotification::StructuredEvent event;
 
   event.header.fixed_header.event_type.domain_name =
-    CORBA::string_dup (domain);
+    CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(domain));
   event.header.fixed_header.event_type.type_name =
     CORBA::string_dup ("Sequence Notification Push Demo Event");
 
