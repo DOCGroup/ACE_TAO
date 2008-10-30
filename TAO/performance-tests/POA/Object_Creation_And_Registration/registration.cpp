@@ -228,8 +228,8 @@ public:
     this->timer_.elapsed_time (elapsed_time);
 
     // compute average time.
-    ACE_DEBUG ((LM_DEBUG, "\n%s stats...\n",
-                ACE_TEXT_CHAR_TO_TCHAR (this->test_name_)));
+    ACE_DEBUG ((LM_DEBUG, "\n%C stats...\n",
+                this->test_name_));
     print_stats (elapsed_time);
   }
 
