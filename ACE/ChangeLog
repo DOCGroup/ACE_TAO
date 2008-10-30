@@ -1,3 +1,17 @@
+Thu Oct 30 11:31:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.cpp:
+          Const change
+
+        * tests/test_config.h:
+          Set ACE_LOG_DIRECTORY_FOR_MKDIR for all platforms. Removed the
+          WinCE different test filename extension.
+
+        * tests/Test_Output.cpp:
+          Added ACE_DEFAULT_TEST_DIR which can be set in the config.h to
+          specify a different default testdir then "". This is useful
+          for WinCE which lacks the concept of a current working directory
+
 Thu Oct 30 10:30:00 UTC 2008  Simon Massey <sma at prismtech dot com>
 
         * NEWS
