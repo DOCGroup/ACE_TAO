@@ -1,3 +1,23 @@
+PLANNED CHANGES BEFORE NEXT RELEASE
+===================================
+
+This is advanced notification that the CIAO-0.6.7 release of CIAO will be
+the last release before a major refactoring is introduced into CIAO/DAnCE  
+that will remove several features, with no planned replacement in  
+their current form, such as:
+
+.  ReDaC
+.  Shared Components
+
+Some features are being temporarily removed but with planned  
+replacement in the near term:
+
+.  RTEC Integration
+.  Static Deployment
+.  TargetManager
+.  RepositoryManager
+.  Swapping container
+
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
