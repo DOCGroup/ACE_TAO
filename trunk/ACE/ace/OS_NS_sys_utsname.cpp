@@ -58,7 +58,7 @@ ACE_OS::uname (ACE_utsname *name)
       )
     {
       // Get information from the two structures
-      const char *os;
+      const char *os = 0;
       if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
         os = "Windows NT %d.%d";
       else
@@ -77,7 +77,7 @@ ACE_OS::uname (ACE_utsname *name)
       // half the space to the processor and half the space to
       // subtype.  The -1 is necessary for because of the space
       // between processor and subtype in the machine name.
-      const int bufsize = (sizeof (name->machine) / 2) - 1;
+      int const bufsize = (sizeof (name->machine) / 2) - 1;
       char processor[bufsize] = "Unknown";
       char subtype[bufsize] = "Unknown";
 

@@ -79,6 +79,15 @@ ACE_INLINE int
 ACE_OS::ace_isprint (ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
+# if defined (_WIN32_WCE) && (_WIN32_WCE <= 0x600)
+  /* WinCE 6 and earlier have the bug that for tab (\t) the
+   * iswprint returns true instead of false
+   */
+  if (c == 0x9)
+    {
+      return 0;
+    }
+# endif
   return iswprint (c);
 #else /* ACE_USES_WCHAR */
   return isprint ((unsigned char) c);

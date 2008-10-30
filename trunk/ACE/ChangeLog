@@ -1,3 +1,19 @@
+Thu Oct 30 13:25:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OS_Test.cpp:
+          Added a test for ace_isprint with a tab character. WinCE 6 and
+          earlier do have a bug that for tab they return true instead of
+          false
+
+        * ace/OS_NS_sys_utsname.cpp:
+          Initialise pointer with 0
+
+        * ace/OS_NS_ctype.inl (ace_isprint):
+          If we have WinCE 6 or earlier and get called for tab (0x9) then
+          return 0, WinCE stdlib has a bug that 1 is returned for tab.
+          This was found when investigating some TAO logs where we do
+          a hexdump of the received packets
+
 Thu Oct 30 12:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * protocols/tests/HTBP/Send_Recv_Tests/client.cpp
