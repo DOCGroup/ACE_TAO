@@ -1,3 +1,8 @@
+Thu Oct 30 07:10:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Disabled PMB test for VxWorks RTP, it hangs the test environment
+
 Wed Oct 29 15:15:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/TestTarget_WinCE.pm:
