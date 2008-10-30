@@ -39,8 +39,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (ACE_OS::strcmp (name.in(), "int"))
       {
-        ACE_DEBUG ((LM_DEBUG, "CLIENT (%P): Interface name has been munged - it is now %s\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (name.in())));
+        ACE_DEBUG ((LM_DEBUG, "CLIENT (%P): Interface name has been munged - it is now %C\n",
+                      name.in()));
         return -1;
       }
 

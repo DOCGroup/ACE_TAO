@@ -52,7 +52,7 @@ Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flows
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "In Handle Conection Requested \n"));
+                "In Handle Connection Requested \n"));
 
   for (CORBA::ULong i = 0;
        i < flowspec.length ();
@@ -62,8 +62,8 @@ Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flows
       entry.parse (flowspec[i]);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Handle Conection Requested flowname %s \n",
-                  ACE_TEXT_CHAR_TO_TCHAR (entry.flowname ())));
+                  "Handle Connection Requested flowname %C\n",
+                  entry.flowname ()));
 
       ACE_CString flowname (entry.flowname ());
 
@@ -315,8 +315,8 @@ ACE_TMAIN (int argc,
                        "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Cannot open output file %s\n",
-                           ACE_TEXT_CHAR_TO_TCHAR (receiver.output_file_name ().c_str ())),
+                           "Cannot open output file %C\n",
+                           receiver.output_file_name ().c_str ()),
                           -1);
 
       else

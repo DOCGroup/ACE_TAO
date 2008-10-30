@@ -210,8 +210,8 @@ Client::bind_to_server (const char *name)
 
       if (CORBA::is_nil (this->server_mmdevice_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve Server_Mmdevice in Naming service <%s>\n",
-                           ACE_TEXT_CHAR_TO_TCHAR (name)),
+                           " could not resolve Server_Mmdevice in Naming service <%C>\n",
+                           name),
                           -1);
     }
   catch (const CORBA::Exception& ex)
@@ -238,7 +238,7 @@ Client::init (int argc, ACE_TCHAR *argv[])
 
       this->parse_args (this->argc_, this->argv_);
 
-      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Parsed Address  %s\n", ACE_TEXT_CHAR_TO_TCHAR (this->address_)));
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Parsed Address  %C\n", this->address_));
 
       ACE_NEW_RETURN (this->fdev_,
                       FTP_Client_FDev,
@@ -287,7 +287,7 @@ Client::run (void)
       AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
       AVStreams::flowSpec flow_spec (1);
       // Bind the client and server mmdevices.
-      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Parsed Address %s\n", ACE_TEXT_CHAR_TO_TCHAR (this->address_) ));
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Parsed Address %C\n", this->address_));
       ACE_INET_Addr *addr = new ACE_INET_Addr(this->address_);
       TAO_Forward_FlowSpec_Entry entry (this->flowname_,
                                         "IN",
@@ -295,7 +295,7 @@ Client::run (void)
                                         flow_protocol_str,
                                         this->protocol_,
                                         addr);
-      ACE_DEBUG ((LM_DEBUG, "(%N,%l) flowspec: %s\n", ACE_TEXT_CHAR_TO_TCHAR (entry.entry_to_string()) ));
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) flowspec: %C\n", entry.entry_to_string() ));
       flow_spec.length (1);
       flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
 

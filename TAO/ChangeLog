@@ -1,3 +1,55 @@
+Thu Oct 30 12:51:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/ImR/Advanced/TestServer.cpp
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/sender.cpp
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.cpp
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp
+        * orbsvcs/tests/AVStreams/Full_Profile/server.cpp
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp
+        * orbsvcs/tests/AVStreams/Latency/pong.cpp
+        * orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp
+        * orbsvcs/tests/AVStreams/Multiple_Flows/receiver.cpp
+        * orbsvcs/tests/AVStreams/Multiple_Flows/sender.cpp
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/sender.cpp
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp
+        * orbsvcs/tests/Bug_1393_Regression/client.cpp
+        * orbsvcs/tests/Bug_2247_Regression/Manager.cpp
+        * orbsvcs/tests/Bug_2248_Regression/client.cpp
+        * orbsvcs/tests/Bug_2800_Regression/nsmain.cpp
+        * orbsvcs/tests/Bug_2800_Regression/server.cpp
+        * orbsvcs/tests/Event/Mcast/AddrServer/Server.cpp
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumerMain.cpp
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/client.cpp
+        * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/test_idl.cpp
+        * orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/test_idl.cpp
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.cpp
+        * orbsvcs/tests/Notify/Bug_1385_Regression/Structured_Supplier.cpp
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.cpp
+        * orbsvcs/tests/Notify/Ordering/Sequence_Supplier.cpp
+        * orbsvcs/tests/Notify/Ordering/Structured_Supplier.cpp
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.cpp
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.cpp
+        * orbsvcs/tests/Notify/Persistent_POA/Structured_Supplier.cpp
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.cpp
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.cpp
+        * orbsvcs/tests/Time/Client_i.cpp
+        * orbsvcs/Time_Service/Clerk_i.cpp
+        * orbsvcs/Time_Service/Server_i.cpp
+          Use %C to log ascii strings instead of using %s with
+          ACE_TEXT_CHAR_TO_TCHAR
+
 Thu Oct 30 12:17:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/MCAST_Parser.cpp:

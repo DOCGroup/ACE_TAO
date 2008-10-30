@@ -34,7 +34,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-    ACE_DEBUG ((LM_DEBUG, "Looking up %s", ACE_TEXT_CHAR_TO_TCHAR (member_type_id) ));
+    ACE_DEBUG ((LM_DEBUG, "Looking up %C", member_type_id ));
     CORBA::Contained_var
       dependency = ifr->lookup_id (member_type_id);
     if (CORBA::is_nil (dependency.in ()))
@@ -60,8 +60,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     const char
       *name= tc_content->content_type ()->name ();
     ACE_DEBUG ((LM_DEBUG,
-                " = %s [%u]\n",
-                ACE_TEXT_CHAR_TO_TCHAR (name),
+                " = %C [%u]\n",
+                name,
                 length ));
 
     if (2u == length)
@@ -70,7 +70,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
     else
     {
-      ACE_DEBUG ((LM_DEBUG, "Error: Should have been %s [2]\n", ACE_TEXT_CHAR_TO_TCHAR (name) ));
+      ACE_DEBUG ((LM_DEBUG, "Error: Should have been %C [2]\n", name));
       return 2;
     }
 

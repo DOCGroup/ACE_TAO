@@ -277,8 +277,8 @@ Client_i::init (void)
   if (CORBA::is_nil (server.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  "Object reference <%s> is nil\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (data)));
+                  "Object reference <%C> is nil\n",
+                  data));
     }
 
   run_test (server.in ());

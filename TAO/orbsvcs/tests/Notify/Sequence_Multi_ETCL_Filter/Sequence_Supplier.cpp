@@ -225,7 +225,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           "Cannot open output file %s for "
           "writing IOR: %s",
           ior_output_file,
-          ACE_TEXT_CHAR_TO_TCHAR (ior.in ())),
+          ior.in ()),
           1);
         ACE_OS::fprintf (output_file, "%s", ior.in ());
         ACE_OS::fclose (output_file);
