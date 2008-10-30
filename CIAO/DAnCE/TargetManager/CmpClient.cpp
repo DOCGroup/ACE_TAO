@@ -156,11 +156,11 @@ namespace TM_Tester
         ACE_ERROR ((LM_ERROR, "TargetManager commitResources ResourceCommitmentFailure Exception\n"));
 
         ACE_ERROR ((LM_ERROR ,
-              "ResourceCommitmentFailure\n reason=[%s]\n elementName=[%s]\n resourceName=[%s]\n propertyName=[%s]\n",
-              ACE_TEXT_CHAR_TO_TCHAR (e.reason.in ()),
-              ACE_TEXT_CHAR_TO_TCHAR (resource_seq[e.index].elementName.in ()),
-              ACE_TEXT_CHAR_TO_TCHAR (resource_seq[e.index].resourceName.in ()),
-              ACE_TEXT_CHAR_TO_TCHAR (e.propertyName.in ())));
+              "ResourceCommitmentFailure\n reason=[%C]\n elementName=[%C]\n resourceName=[%C]\n propertyName=[%C]\n",
+              e.reason.in (),
+              resource_seq[e.index].elementName.in (),
+              resource_seq[e.index].resourceName.in (),
+              e.propertyName.in ()));
       }
       catch(const CORBA::Exception &)
       {
