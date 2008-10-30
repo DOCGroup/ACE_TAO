@@ -24,6 +24,7 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_ctype.h"
 
 ACE_RCSID(tests, OS_Test, "$Id$")
 
@@ -990,6 +991,22 @@ pagesize_test (void)
 }
 
 int
+ace_isprint_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing ace_isprint method\n")));
+
+  int const result = ACE_OS::ace_isprint (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isprintf should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      return 1;
+    }
+  return 0;
+}
+
+int
 log2_test (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -1051,6 +1068,9 @@ run_main (int, ACE_TCHAR *[])
       status = result;
 
   if ((result = last_error_test ()) != 0)
+      status = result;
+
+  if ((result = ace_isprint_test ()) != 0)
       status = result;
 
   ACE_END_TEST;
