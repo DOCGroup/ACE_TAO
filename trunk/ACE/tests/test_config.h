@@ -45,32 +45,34 @@
 # define MAKE_PIPE_NAME(X) ACE_TEXT ("\\\\.\\pipe\\"#X)
 #elif defined (ACE_WIN32)
 # define ACE_LOG_DIRECTORY ACE_TEXT ("log\\")
+# define ACE_LOG_DIRECTORY_FOR_MKDIR ACE_TEXT ("log\\")
 # define MAKE_PIPE_NAME(X) ACE_TEXT ("\\\\.\\pipe\\"#X)
 #else
+# define ACE_LOG_DIRECTORY_FOR_MKDIR ACE_TEXT ("log/")
 # define ACE_LOG_DIRECTORY ACE_TEXT ("log/")
 # define MAKE_PIPE_NAME(X) ACE_TEXT (X)
 #endif /* ACE_WIN32 */
 
-#if defined (ACE_HAS_WINCE)
-#define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".txt")
-#else
+#if !defined (ACE_DEFAULT_TEST_DIR)
+# define ACE_DEFAULT_TEST_DIR ACE_TEXT ("");
+#endif
+
 #define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".log")
-#endif /* ACE_HAS_WINCE */
 
 #if defined (ACE_HAS_WINCE) || defined (ACE_HAS_PHARLAP)
-const size_t ACE_MAX_CLIENTS = 4;
+size_t const ACE_MAX_CLIENTS = 4;
 #else
-const size_t ACE_MAX_CLIENTS = 30;
+size_t const ACE_MAX_CLIENTS = 30;
 #endif /* ACE_HAS_WINCE */
 
-const size_t ACE_NS_MAX_ENTRIES = 1000;
-const size_t ACE_DEFAULT_USECS = 1000;
-const size_t ACE_MAX_TIMERS = 4;
-const size_t ACE_MAX_DELAY = 10;
-const size_t ACE_MAX_INTERVAL = 0;
-const size_t ACE_MAX_ITERATIONS = 10;
-const size_t ACE_MAX_PROCESSES = 10;
-const size_t ACE_MAX_THREADS = 4;
+size_t const ACE_NS_MAX_ENTRIES = 1000;
+size_t const ACE_DEFAULT_USECS = 1000;
+size_t const ACE_MAX_TIMERS = 4;
+size_t const ACE_MAX_DELAY = 10;
+size_t const ACE_MAX_INTERVAL = 0;
+size_t const ACE_MAX_ITERATIONS = 10;
+size_t const ACE_MAX_PROCESSES = 10;
+size_t const ACE_MAX_THREADS = 4;
 
 #ifndef ACE_START_TEST
 #define ACE_START_TEST(NAME) \

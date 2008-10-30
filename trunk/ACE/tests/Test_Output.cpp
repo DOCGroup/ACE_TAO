@@ -87,14 +87,15 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   // Ignore the error value since the directory may already exist.
   const ACE_TCHAR *test_dir = 0;
 
-#if !defined (ACE_HAS_WINCE)
-#  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
+#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
   test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
-#  else
+#else
   ACE_TCHAR tempenv[MAXPATHLEN + 1] = { 0 };
   char const * const test_dir_n = ACE_OS::getenv ("ACE_TEST_DIR");
   if (test_dir_n == 0)
-    test_dir = 0;
+    {
+      test_dir = 0;
+    }
   else
     {
       ACE_OS::strncpy (tempenv,
@@ -102,11 +103,10 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
                        MAXPATHLEN);
       test_dir = tempenv;
     }
-#  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 
+#endif /* ACE_WIN32 */
   if (test_dir == 0)
-#endif /* ACE_HAS_WINCE */
-    test_dir = ACE_TEXT ("");
+    test_dir = ACE_DEFAULT_TEST_DIR;
 
   // This could be done with ACE_OS::sprintf() but it requires different
   // format strings for wide-char POSIX vs. narrow-char POSIX and Windows.
@@ -135,12 +135,8 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   // directory does exist, it causes a wierd console error message
   // about "cat: input error on standard input: Is a directory".  So,
   // VxWorks users must create the directory manually.
-#   if defined (ACE_HAS_WINCE)
-      ACE_OS::mkdir (ACE_LOG_DIRECTORY_FOR_MKDIR);
-#   else
-      ACE_OS::mkdir (ACE_LOG_DIRECTORY);
-#   endif  // ACE_HAS_WINCE
-#endif /* ! ACE_VXWORKS */
+  ACE_OS::mkdir (ACE_LOG_DIRECTORY_FOR_MKDIR);
+#endif /* ACE_VXWORKS */
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   this->output_file_->open (ACE_TEXT_ALWAYS_CHAR (temp),
