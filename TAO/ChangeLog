@@ -1,3 +1,9 @@
+Thu Oct 30 06:46:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/ValueTypes/Bank/bank.mpc
+        * DevGuideExamples/ValueTypes/Messenger/ValueTypes.mpc
+          Made IDL projects unique
+
 Wed Oct 29 19:23:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/AMH_AMI/AMH_AMI.mpc
