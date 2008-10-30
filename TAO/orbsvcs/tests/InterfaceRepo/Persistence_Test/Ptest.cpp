@@ -218,9 +218,9 @@ Ptest::query (void)
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("StructDef::members[%d]::name: %s\n"),
+                      ACE_TEXT ("StructDef::members[%d]::name: %C\n"),
                       i,
-                      ACE_TEXT_CHAR_TO_TCHAR (out_members[i].name.in ())));
+                      out_members[i].name.in ()));
         }
 
       if (i == length - 1)

@@ -198,8 +198,8 @@ Client::bind_to_server (const char *name)
 
       if (CORBA::is_nil (this->server_mmdevice_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve Server_Mmdevice in Naming service <%s>\n",
-                           ACE_TEXT_CHAR_TO_TCHAR (name)),
+                           " could not resolve Server_Mmdevice in Naming service <%C>\n",
+                           name),
                           -1);
     }
   catch (const CORBA::Exception& ex)
@@ -238,8 +238,8 @@ Client::init (int argc, ACE_TCHAR *argv[])
     }
   else
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "ERROR: file %s could not be opened\n",
-                                   ACE_TEXT_CHAR_TO_TCHAR (this->filename_)), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, "ERROR: file %C could not be opened\n",
+                                   this->filename_), -1);
     }
 
   return 0;
@@ -273,7 +273,7 @@ Client::run (void)
                                         &addr);
       flow_spec.length (1);
       flow_spec [0] = entry.entry_to_string ();
-      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Flowspec: %s\n", ACE_TEXT_CHAR_TO_TCHAR (entry.entry_to_string()) ));
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Flowspec: %C\n", entry.entry_to_string() ));
 
       AVStreams::MMDevice_var client_mmdevice
         = this->client_mmdevice_._this ();

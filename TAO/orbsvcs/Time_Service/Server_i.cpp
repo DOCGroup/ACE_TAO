@@ -113,8 +113,8 @@ Server_i::create_server (void)
       // Print the server IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t) The Time Service ")
-                  ACE_TEXT("SERVER IOR: <%s>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(objref_server.in ())));
+                  ACE_TEXT("SERVER IOR: <%C>\n"),
+                  objref_server.in ()));
 
       // Print the IOR to a file.
 
@@ -177,8 +177,8 @@ Server_i::register_server (void)
                                     this->time_service_server_.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("Binding ServerContext -> %s\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(server_name[1].id.in ())));
+                  ACE_TEXT("Binding ServerContext -> %C\n"),
+                  server_name[1].id.in ()));
     }
   catch (const CORBA::Exception& ex)
     {

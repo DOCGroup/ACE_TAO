@@ -485,7 +485,7 @@ void TestServer::buildObjects()
       poaName = poaStream.str();
     }
 
-    ACE_DEBUG((LM_DEBUG, "* Creating POA: %s\n", ACE_TEXT_CHAR_TO_TCHAR (poaName.c_str())));
+    ACE_DEBUG((LM_DEBUG, "* Creating POA: %C\n", poaName.c_str()));
 
     PortableServer::POA_var sub_poa = root_->create_POA(poaName.c_str(), mgr_.in(), policies);
 
@@ -500,7 +500,7 @@ void TestServer::buildObjects()
         objStream << "OBJ_" << serverID_ << "_" << (i + 1) << "_" << (j + 1);
         objName = objStream.str();
       }
-      ACE_DEBUG((LM_DEBUG, "* Activating Obj: %s\n", ACE_TEXT_CHAR_TO_TCHAR (objName.c_str())));
+      ACE_DEBUG((LM_DEBUG, "* Activating Obj: %C\n", objName.c_str()));
 
       PortableServer::ObjectId_var oid = PortableServer::string_to_ObjectId(objName.c_str());
       sub_poa->activate_object_with_id(oid.in(), servant_.get());

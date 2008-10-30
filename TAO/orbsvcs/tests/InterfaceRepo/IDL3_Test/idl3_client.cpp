@@ -603,8 +603,8 @@ IDL3_Client::valuetype_test (const char *repo_id,
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_test: lookup by id failed\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (prefix)));
+                      "%Ctype_test: lookup by id failed\n",
+                      prefix));
         }
 
       return -1;
@@ -618,8 +618,8 @@ IDL3_Client::valuetype_test (const char *repo_id,
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_test: narrow to ExtValueDef failed\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (prefix)));
+                      "%Ctype_test: narrow to ExtValueDef failed\n",
+                      prefix));
         }
 
       return -1;
@@ -1034,8 +1034,8 @@ IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &eds,
         {
           ACE_DEBUG ((LM_DEBUG,
                       "event_port_test: "
-                      "wrong number of event %s ports\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (port_type)));
+                      "wrong number of event %C ports\n",
+                      port_type));
         }
 
       return -1;
@@ -1053,8 +1053,8 @@ IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &eds,
             {
               ACE_DEBUG ((LM_DEBUG,
                           "event_port_test: "
-                          "wrong local name for %s port #%d\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (port_type),
+                          "wrong local name for %C port #%d\n",
+                          port_type,
                           i + 1));
             }
 
@@ -1069,8 +1069,8 @@ IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &eds,
             {
               ACE_DEBUG ((LM_DEBUG,
                           "event_port_test: "
-                          "wrong base event type id for %s port #%d\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (port_type),
+                          "wrong base event type id for %C port #%d\n",
+                          port_type,
                           i + 1));
             }
 
@@ -1092,9 +1092,9 @@ IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var &vd,
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_inheritance_test: "
+                      "%Ctype_inheritance_test: "
                       "base valuetype is null\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (prefix)));
+                      prefix));
         }
 
       return -1;
@@ -1107,9 +1107,9 @@ IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var &vd,
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_inheritance_test: "
+                      "%Ctype_inheritance_test: "
                       "wrong repo id for base valuetype\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (prefix)));
+                      prefix));
         }
 
       return -1;
@@ -1125,9 +1125,9 @@ IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var &vd,
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_inheritance_test: "
+                      "%Ctype_inheritance_test: "
                       "wrong number of supported interfaces\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (prefix)));
+                      prefix));
         }
 
       return -1;
@@ -1143,9 +1143,9 @@ IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var &vd,
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_inheritance_test: "
+                          "%Ctype_inheritance_test: "
                           "bad id on supported interface #%d\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (prefix),
+                          prefix,
                           i + 1));
             }
 
@@ -1167,8 +1167,8 @@ IDL3_Client::valuetype_attribute_test (
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_attribute_test: wrong number of attrs\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (prefix)));
+                      "%Ctype_attribute_test: wrong number of attrs\n",
+                      prefix));
         }
 
       return -1;
@@ -1185,9 +1185,9 @@ IDL3_Client::valuetype_attribute_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_attribute_test: "
+                          "%Ctype_attribute_test: "
                           "wrong local name for attribute #%d\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (prefix),
+                          prefix,
                           i + 1));
             }
 
@@ -1202,9 +1202,9 @@ IDL3_Client::valuetype_attribute_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_attribute_test: "
+                          "%Ctype_attribute_test: "
                           "wrong TCKind for attribute #%d\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (prefix),
+                          prefix,
                           i + 1));
             }
 
@@ -1216,10 +1216,10 @@ IDL3_Client::valuetype_attribute_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_attribute_test: "
+                          "%Ctype_attribute_test: "
                           "wrong number of get-exceptions"
                           " for attribute #%d\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (prefix),
+                          prefix,
                           i + 1));
             }
 
@@ -1231,10 +1231,10 @@ IDL3_Client::valuetype_attribute_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_attribute_test: "
+                          "%Ctype_attribute_test: "
                           "wrong number of put-exceptions"
                           " for attribute #%d\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (prefix),
+                          prefix,
                           i + 1));
             }
 
@@ -1258,9 +1258,9 @@ IDL3_Client::valuetype_operation_test (
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_operation_test: "
+                      "%Ctype_operation_test: "
                       "wrong number of operations\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (prefix)));
+                      prefix));
         }
 
       return -1;
@@ -1279,9 +1279,9 @@ IDL3_Client::valuetype_operation_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_operation_test: "
+                          "%Ctype_operation_test: "
                           "wrong name for operation #%d\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (prefix),
+                          prefix,
                           i + 1));
             }
 
@@ -1296,9 +1296,9 @@ IDL3_Client::valuetype_operation_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_operation_test: "
+                          "%Ctype_operation_test: "
                           "wrong return type\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (prefix)));
+                          prefix));
             }
 
           return -1;
@@ -1311,9 +1311,9 @@ IDL3_Client::valuetype_operation_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_operation_test: "
+                          "%Ctype_operation_test: "
                           "wrong number of parameters in operation #%d\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (prefix),
+                          prefix,
                           i + 1));
             }
 
@@ -1329,10 +1329,10 @@ IDL3_Client::valuetype_operation_test (
               if (this->debug_)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "%stype_operation_test: "
+                              "%Ctype_operation_test: "
                               "wrong name for operation #%d,"
                               "parameter #%d\n",
-                              ACE_TEXT_CHAR_TO_TCHAR (prefix),
+                              prefix,
                               i + 1,
                               j + 1));
                 }
@@ -1348,9 +1348,9 @@ IDL3_Client::valuetype_operation_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_operation_test: "
+                          "%Ctype_operation_test: "
                           "wrong number of exceptions in operation #%d\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (prefix),
+                          prefix,
                           i + 1));
             }
 
@@ -1374,9 +1374,9 @@ IDL3_Client::valuetype_member_test (
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_member_test: "
+                      "%Ctype_member_test: "
                       "wrong number of members\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (prefix)));
+                      prefix));
         }
 
       return -1;
@@ -1391,9 +1391,9 @@ IDL3_Client::valuetype_member_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_member_test: "
+                          "%Ctype_member_test: "
                           "wrong access value in member #%d\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (prefix),
+                          prefix,
                           i + 1));
             }
 
@@ -1407,9 +1407,9 @@ IDL3_Client::valuetype_member_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_member_test: "
+                          "%Ctype_member_test: "
                           "wrong repo id for member #%d\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (prefix),
+                          prefix,
                           i + 1));
             }
 
@@ -1433,9 +1433,9 @@ IDL3_Client::valuetype_factory_test (
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_factory_test: "
+                      "%Ctype_factory_test: "
                       "wrong number of factories\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (prefix)));
+                      prefix));
         }
 
       return -1;
@@ -1453,9 +1453,9 @@ IDL3_Client::valuetype_factory_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_factory_test: "
+                          "%Ctype_factory_test: "
                           "wrong number of params in factory #%d\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (prefix),
+                          prefix,
                           i + 1));
             }
 
@@ -1474,9 +1474,9 @@ IDL3_Client::valuetype_factory_test (
               if (this->debug_)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "%stype_factory_test: "
+                              "%Ctype_factory_test: "
                               "wrong name for arg #%d in factory #%d\n",
-                              ACE_TEXT_CHAR_TO_TCHAR (prefix),
+                              prefix,
                               j + 1,
                               i + 1));
                 }
@@ -1492,9 +1492,9 @@ IDL3_Client::valuetype_factory_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_factory_test: "
+                          "%Ctype_factory_test: "
                           "wrong number of exceptions in factory #%d\n",
-                          ACE_TEXT_CHAR_TO_TCHAR (prefix),
+                          prefix,
                           i + 1));
             }
 
@@ -1511,9 +1511,9 @@ IDL3_Client::valuetype_factory_test (
               if (this->debug_)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "%stype_factory_test: "
+                              "%Ctype_factory_test: "
                               "wrong name for exception #%d in factory #%d\n",
-                              ACE_TEXT_CHAR_TO_TCHAR (prefix),
+                              prefix,
                               j + 1,
                               i + 1));
                 }
