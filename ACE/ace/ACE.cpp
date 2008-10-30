@@ -2328,7 +2328,7 @@ ACE::format_hexdump (const char *buffer,
 
   size_t i;
 
-  size_t lines = size / 16;
+  size_t const lines = size / 16;
   for (i = 0; i < lines; i++)
     {
       size_t j;
