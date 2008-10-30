@@ -1,3 +1,9 @@
+Thu Oct 30 15:10:48 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
+
+        * ACE_wrappers/TAO/orbsvcs/tests/Notify/Bug_2415_Regression/Supplier.cpp
+
+          Fixed ACE_TCHAR* casting error.
+
 Thu Oct 30 12:57:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
