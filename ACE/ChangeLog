@@ -1,3 +1,10 @@
+Thu Oct 30 12:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/tests/HTBP/Send_Recv_Tests/client.cpp
+        * protocols/tests/HTBP/Send_Recv_Tests/server.cpp
+          Use %C to log ascii strings instead of using %s with
+          ACE_TEXT_CHAR_TO_TCHAR
+
 Thu Oct 30 12:16:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/ARGV_Test.cpp
