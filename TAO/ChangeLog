@@ -1,3 +1,20 @@
+Thu Oct 30 16:26:28 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * tao/String_Sequence_Element_T.h:
+
+          Change ::out method to release the previous value.
+
+        * tests/Bug_3479_Regression/Bug_3479_Regression.mpc:
+        * tests/Bug_3479_Regression/Hello.h:
+        * tests/Bug_3479_Regression/Hello.cpp:
+        * tests/Bug_3479_Regression/README:
+        * tests/Bug_3479_Regression/Test.idl:
+        * tests/Bug_3479_Regression/client.cpp:
+        * tests/Bug_3479_Regression/run_test.pl:
+        * tests/Bug_3479_Regression/server.cpp:
+
+          Regression test for the above.
+
 Thu Oct 30 15:45:00 UTC 2008  Simon Massey <sma at prismtech dot com>
 
         * DevGuideExamples/LocalObjects/Messenger/Messenger.mpc
@@ -147,7 +164,7 @@ Tue Oct 28 16:12:21 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
 
         * orbsvcs/tests/Notify/Bug_2415_Regression/Supplier.cpp
 
-          Fixed build error (‘ACE_TCHAR*’ to ‘char*’ assignment error).
+          Fixed build error (ï¿½ACE_TCHAR*ï¿½ to ï¿½char*ï¿½ assignment error).
 
 Tue Oct 28 15:18:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 

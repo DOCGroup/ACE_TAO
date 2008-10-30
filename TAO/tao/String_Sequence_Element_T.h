@@ -105,6 +105,12 @@ public:
   }
 
   inline string_out out (void) const {
+
+    if (release())
+      {
+        traits::release(*element_);
+      }
+
     return *this->element_;
   }
 
