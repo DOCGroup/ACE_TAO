@@ -19,6 +19,11 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.6 and ACE-5.6.7
 
 . Added new ACE_OS wrappers: raise, atof, atol
 
+. Added ACE_OS wrapper for narrow-char version of strtoll.
+
+. ACE_OS wrappers for wide-char versions of strtol, strtoul,
+  strtoll, and strtoll.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.5 and ACE-5.6.6
 ====================================================
 
