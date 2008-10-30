@@ -1,3 +1,9 @@
+Thu Oct 30 12:56:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/TargetManager/CmpClient.cpp:
+          Use %C to log ascii strings instead of using %s with
+          ACE_TEXT_CHAR_TO_TCHAR
+
 Thu Oct 30 10:30:00 UTC 2008  Simon Massey <sma at prismtech dot com>
 
         * NEWS
@@ -7,7 +13,7 @@ Wed Oct 29 14:25:00 UTC 2008  Simon Massey <sma at prismtech dot com>
 
         * DevGuideExamples/Messenger/StaticDAnCE/Messenger_StaticDAnCE.mpc
           change libpath to libpaths
-          
+
         * DevGuideExamples/ChangeLog:
           Incorperated into this file.
 
@@ -23,7 +29,7 @@ Tue Oct 28 11:04:00 UTC 2008  Simon Massey <sma at prismtech dot com>
 
 Sun Oct 26 20:00:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * DevGuideExamples/Messenger/StaticDAnCE/plan.h  
+        * DevGuideExamples/Messenger/StaticDAnCE/plan.h
           Added missing include
 
 Thu Oct 23 11:49:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
