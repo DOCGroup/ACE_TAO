@@ -264,9 +264,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception& exc)
   {
     ACE_ERROR ((LM_ERROR,
-    "Caught CORBA::Exception\n%s (%s)\n",
-    ACE_TEXT_CHAR_TO_TCHAR (exc._name ()),
-    ACE_TEXT_CHAR_TO_TCHAR (exc._rep_id ()) ));
+    "Caught CORBA::Exception\n%C (%C)\n",
+    exc._name (),
+    exc._rep_id () ));
   }
   return 1;
 }

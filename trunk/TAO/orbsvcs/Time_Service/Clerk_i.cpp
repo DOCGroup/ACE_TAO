@@ -66,8 +66,8 @@ Clerk_i::read_ior (const ACE_TCHAR* filename)
            str = ACE_OS::strtok (0, "\n"))
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("iors -> |%s|\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(str)));
+                      ACE_TEXT("iors -> |%C|\n"),
+                      str));
 
           CORBA::Object_var objref =
             this->orb_->string_to_object (str);
@@ -258,8 +258,8 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
             {
 
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT("Getting IOR of the server: %s\n\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR(binding->binding_name[0].id.in ())));
+                          ACE_TEXT("Getting IOR of the server: %C\n\n"),
+                          binding->binding_name[0].id.in ()));
 
               CosNaming::Name server_name;
               server_name.length (1);
@@ -322,8 +322,8 @@ Clerk_i::create_clerk (void)
 
       // Print the clerk IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t) The Time Service CLERK IOR is: <%s>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(objref_clerk.in ())));
+                  ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t) The Time Service CLERK IOR is: <%C>\n"),
+                  objref_clerk.in ()));
 
       // Print the Time Service clerk IOR to a file.
       if (this->ior_output_file_)

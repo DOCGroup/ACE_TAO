@@ -321,15 +321,15 @@ int run_remote_test (Simple_Server_ptr server, const ACE_TCHAR* execute_key)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT("CLIENT> REMOTE   expected: '%s'"),
-               ACE_TEXT_CHAR_TO_TCHAR (expected)));
+               ACE_TEXT("CLIENT> REMOTE   expected: '%C'"),
+               expected));
 
   if (ACE_OS::strcmp (expected, received))
   {
       ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("... FAIL\n")
-              ACE_TEXT ("CLIENT>          received: '%s'\n"),
-              ACE_TEXT_CHAR_TO_TCHAR (received)));
+              ACE_TEXT ("CLIENT>          received: '%C'\n"),
+              received));
       return -1;
   }
 
@@ -379,14 +379,14 @@ int run_abort_test (Simple_Server_ptr server,
     }
 
   ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT("CLIENT> ABORT    expected: '%s'"),
-               ACE_TEXT_CHAR_TO_TCHAR (expected)));
+          ACE_TEXT("CLIENT> ABORT    expected: '%C'"),
+               expected));
   if (ACE_OS::strcmp (expected, received))
     {
       ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("... FAIL\n")
-              ACE_TEXT ("CLIENT>          received: '%s'\n"),
-              ACE_TEXT_CHAR_TO_TCHAR (received)));
+              ACE_TEXT ("CLIENT>          received: '%C'\n"),
+              received));
       return -1;
     }
 
@@ -428,14 +428,14 @@ int run_shutdown_test (Simple_Server_ptr server,
     }
 
   ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT("CLIENT> SHUTDOWN expected: '%s'"),
-               ACE_TEXT_CHAR_TO_TCHAR (expected)));
+          ACE_TEXT("CLIENT> SHUTDOWN expected: '%C'"),
+               expected));
   if (ACE_OS::strcmp (expected, received))
     {
       ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("... FAIL\n")
-              ACE_TEXT ("CLIENT>          received: '%s'\n"),
-              ACE_TEXT_CHAR_TO_TCHAR (received)));
+              ACE_TEXT ("CLIENT>          received: '%C'\n"),
+              received));
       return -1;
     }
 
@@ -549,8 +549,8 @@ Client_i::init (void)
   if (CORBA::is_nil (server.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  "Object reference <%s> is nil\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (data)));
+                  "Object reference <%C> is nil\n",
+                  data));
     }
 
   int rv;

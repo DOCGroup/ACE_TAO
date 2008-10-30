@@ -205,8 +205,8 @@ RTCosScheduling_ClientScheduler_i::tasks (
   if (ACE_OS::last_error () == EOF)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                        "Node %s not found in config file\n",
-                        ACE_TEXT_CHAR_TO_TCHAR (node_name)),
+                        "Node %C not found in config file\n",
+                        node_name),
                         0);
           break;
         }
@@ -227,8 +227,8 @@ RTCosScheduling_ClientScheduler_i::tasks (
       if (ACE_OS::last_error () == EOF)
         {
           ACE_ERROR_RETURN((LM_ERROR,
-                            "Task list not found for node %s\n",
-                            ACE_TEXT_CHAR_TO_TCHAR (node_name)),
+                            "Task list not found for node %C\n",
+                            node_name),
                             0);
               break;
         }
@@ -250,8 +250,8 @@ RTCosScheduling_ClientScheduler_i::tasks (
       if (ACE_OS::last_error () == EOF)
         {
           ACE_ERROR_RETURN((LM_ERROR,
-                            "Task list not found for node %s\n",
-                            ACE_TEXT_CHAR_TO_TCHAR (node_name)),
+                            "Task list not found for node %C\n",
+                            node_name),
                             0);
           break;
         }
@@ -273,8 +273,8 @@ RTCosScheduling_ClientScheduler_i::tasks (
           else
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                "Error in reading activities from %s",
-                                ACE_TEXT_CHAR_TO_TCHAR (file_name)),
+                                "Error in reading activities from %C",
+                                file_name),
                                 0);
             }
         }

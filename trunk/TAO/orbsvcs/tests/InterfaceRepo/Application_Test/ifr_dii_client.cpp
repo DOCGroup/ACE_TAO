@@ -345,14 +345,14 @@ IFR_DII_Client::invoke_and_display (void)
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%s:\t%s\n")
-                      ACE_TEXT ("%s:\t%s\n")
-                      ACE_TEXT ("%s:\t$%2.2f\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (args->item (0)->name ()),
-                      ACE_TEXT_CHAR_TO_TCHAR (artist),
-                      ACE_TEXT_CHAR_TO_TCHAR (args->item (1)->name ()),
-                      ACE_TEXT_CHAR_TO_TCHAR (title),
-                      ACE_TEXT_CHAR_TO_TCHAR (args->item (2)->name ()),
+                      ACE_TEXT ("%C:\t%C\n")
+                      ACE_TEXT ("%C:\t%C\n")
+                      ACE_TEXT ("%C:\t$%2.2f\n"),
+                      args->item (0)->name (),
+                      artist,
+                      args->item (1)->name (),
+                      title,
+                      args->item (2)->name (),
                       price));
         }
 

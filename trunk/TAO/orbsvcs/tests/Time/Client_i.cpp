@@ -334,8 +334,8 @@ Client_i::obtain_initial_references (void)
       clerk_name[1].id = CORBA::string_dup (name);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%s|\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (name)));
+                  "%C|\n",
+                  name));
 
       CORBA::Object_var temp_object =
         my_name_client_->resolve (clerk_name);
@@ -386,8 +386,8 @@ Client_i::init (int argc, ACE_TCHAR **argv)
 
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "invalid ior <%s>\n",
-                               ACE_TEXT_CHAR_TO_TCHAR (this->ior_)),
+                               "invalid ior <%C>\n",
+                               this->ior_),
                               -1);
           this->clerk_ =
             CosTime::TimeService::_narrow (server_object.in ());
