@@ -131,7 +131,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     for (ssize_t n_bytes; (n_bytes = file_io.recv (buf, ACE_MAXLOGMSGLEN)) > 0; )
       {
         buf[n_bytes] = '\0';
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT("%s"), ACE_TEXT_CHAR_TO_TCHAR(buf)));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT("%C"), buf));
       }
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\n")));

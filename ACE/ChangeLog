@@ -1,3 +1,18 @@
+Thu Oct 30 12:16:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ARGV_Test.cpp
+        * tests/Bound_Ptr_Test.cpp
+        * tests/Enum_Interfaces_Test.cpp
+        * tests/IOStream_Test.cpp
+        * tests/Sendfile_Test.cpp
+        * tests/SOCK_Send_Recv_Test.cpp
+        * tests/SOCK_Send_Recv_Test_IPV6.cpp
+        * tests/SOCK_Test.cpp
+        * tests/SOCK_Test_IPv6.cpp
+        * tests/Svc_Handler_Test.cpp
+          Use %C to log wchar strings instead of using %s with
+          ACE_TEXT_CHAR_TO_TCHAR
+
 Thu Oct 30 11:31:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE.cpp:
