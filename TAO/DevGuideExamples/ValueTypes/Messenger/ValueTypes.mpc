@@ -1,6 +1,6 @@
 // $Id$
 
-project(*Dev_Guide_idl): taoidldefaults, valuetype {
+project(*DevGuideIDL): taoidldefaults, valuetype {
   idlflags += -Wb,pch_include=_pch.h
   IDL_Files {
     Messenger.idl
@@ -8,9 +8,9 @@ project(*Dev_Guide_idl): taoidldefaults, valuetype {
   custom_only = 1
 }
 
-project(*Dev_Guide_idl): taoserver, valuetype, avoids_minimum_corba {
+project(*DevGuideMsgServer): taoserver, valuetype, avoids_minimum_corba {
   exename = MessengerServer
-  after += *idl
+  after += *DevGuideIDL
   Source_Files {
     Messenger_i.cpp
     Message_i.cpp
@@ -24,9 +24,9 @@ project(*Dev_Guide_idl): taoserver, valuetype, avoids_minimum_corba {
   }
 }
 
-project(*Dev_Guide_idl): taoclient, valuetype, avoids_minimum_corba {
+project(*DevGuideMsgClient): taoclient, valuetype, avoids_minimum_corba {
   exename = MessengerClient
-  after += *idl
+  after += *DevGuideIDL
   Source_Files {
     Message_i.cpp
     MessengerClient.cpp
