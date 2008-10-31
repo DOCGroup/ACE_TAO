@@ -1,3 +1,21 @@
+Fri Oct 31 12:11:56 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+
+          Changed TAO_Log_i::remove_old_records() to acquire the write
+          lock from the underlying log record store.
+
+          Changed TAO_Hash_LogRecordStore::remove_old_records() to simply
+          compare the value of the purge time with the time field of each
+          LogEntry in the map instead of creating a ETCL expression to do
+          the same and evaluating that for each record.  This not only
+          fixes a bug where a static buffer was used to construct the ETCL
+          expression, it should have much less overhead -- important for a
+          method that does a full table scan.
+
+          Fixes bugzilla issue #3476.
+
 Thu Oct 30 16:26:28 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * tao/String_Sequence_Element_T.h:
