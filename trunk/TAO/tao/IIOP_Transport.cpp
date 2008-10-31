@@ -411,25 +411,25 @@ TAO_IIOP_Transport::get_listen_point (
 
       // Get the hostname for the local address
       if (iiop_acceptor->hostname (this->orb_core_,
-				   endpoint_addr[index],
-				   interface_name.out ()) == -1)
-	{
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")
-			     ACE_TEXT ("could not resolve local host name\n")),
-			    -1);
-	}
+                                   endpoint_addr[index],
+                                   interface_name.out ()) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")
+                             ACE_TEXT ("could not resolve local host name\n")),
+                            -1);
+        }
 
 #if defined (ACE_HAS_IPV6)
       // If this is an IPv6 decimal linklocal address containing a scopeid than
       // remove the scopeid from the information being sent.
       const char *cp_scope = 0;
       if (endpoint_addr[index].get_type () == PF_INET6 &&
-	  (cp_scope = ACE_OS::strchr (interface_name.in (), '%')) != 0)
-	{
-	  CORBA::ULong len = cp_scope - interface_name.in ();
-	  interface_name[len] = '\0';
-	}
+          (cp_scope = ACE_OS::strchr (interface_name.in (), '%')) != 0)
+        {
+          CORBA::ULong len = cp_scope - interface_name.in ();
+          interface_name[len] = '\0';
+        }
 #endif /* ACE_HAS_IPV6 */
 
       // Get the count of the number of elements
@@ -445,13 +445,13 @@ TAO_IIOP_Transport::get_listen_point (
       point.port = endpoint_addr[index].get_port_number ();
   
       if (TAO_debug_level >= 5)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      ACE_TEXT("TAO (%P|%t) - Listen_Point_List[%d] = <%s:%d>\n"),
-		      len,
-		      point.host.in (),
-		      point.port));
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("TAO (%P|%t) - Listen_Point_List[%d] = <%s:%d>\n"),
+                      len,
+                      point.host.in (),
+                      point.port));
+        }
     }
   return 1;
 }

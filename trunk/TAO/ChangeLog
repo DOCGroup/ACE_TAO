@@ -1,3 +1,9 @@
+Fri Oct 31 14:36:38 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Transport.cpp:
+        
+          untabify
+
 Fri Oct 31 14:11:35 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Acceptor.h:
@@ -9,7 +15,7 @@ Fri Oct 31 14:11:35 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
           const. This way users of the hostname method tath want to pass
           an endpoint retrieved from the acceptor's endpoints() method can
           do so with using const_cast.
-        
+
         * tao/IIOP_Connection_Handler.cpp:
         * tao/IIOP_Transport.cpp:
 
@@ -24,10 +30,10 @@ Fri Oct 31 14:11:35 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
           -DTAO_USE_BROKEN_BIDIR. If need be, an ORB_init option could be
           defined to mkae this behavior selectable, but I'm expecting it
           to not be an issue.
-        
+
         * tests/BiDirectional/README:
         * tests/BiDirectional/run_test_bug3282.pl:
-        
+
           The test for bug 3282 does not need any new executables, it
           merely needs to run the existing bidir test with the server
           explicitly listening on localhost while the client opens an
