@@ -1055,6 +1055,11 @@ TAO_Log_i::copy_attributes (DsLogAdmin::Log_ptr log)
 void
 TAO_Log_i::remove_old_records (void)
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                            guard,
+                            this->recordstore_->lock (),
+                            CORBA::INTERNAL ());
+
   const CORBA::ULong count =
     this->recordstore_->remove_old_records ();
 
