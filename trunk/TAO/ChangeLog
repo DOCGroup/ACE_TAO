@@ -1,3 +1,40 @@
+Fri Oct 31 14:11:35 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Acceptor.cpp:
+
+          Fix const correctness in a couple of methods. The hostname and
+          dotted_decimal_address methods take an ACE_INET_Addr &, and
+          since these values are not modified the parameter should be
+          const. This way users of the hostname method tath want to pass
+          an endpoint retrieved from the acceptor's endpoints() method can
+          do so with using const_cast.
+        
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Transport.cpp:
+
+          Fix for Bug 3282. Since the solution spans both the sending and
+          receiving of a BiDir IIOP context, I've left in code to support
+          the old behavior on the sending side, which is to limit the
+          listen points listed to those matching the interface on which
+          the connection was established. The reason for this change is
+          that the new behavior may produce a list with more than one
+          listen point, and that may have an impact on receivers. To
+          revert to the old behavior, build TAO with
+          -DTAO_USE_BROKEN_BIDIR. If need be, an ORB_init option could be
+          defined to mkae this behavior selectable, but I'm expecting it
+          to not be an issue.
+        
+        * tests/BiDirectional/README:
+        * tests/BiDirectional/run_test_bug3282.pl:
+        
+          The test for bug 3282 does not need any new executables, it
+          merely needs to run the existing bidir test with the server
+          explicitly listening on localhost while the client opens an
+          implicit listener on the default interface. Without the fix,
+          this scenario fails because the eth0 addr is filtered out of the
+          list.
+
 Fri Oct 31 12:11:56 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Log_i.cpp:

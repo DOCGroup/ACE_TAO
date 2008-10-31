@@ -603,7 +603,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
 
 int
 TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
-                             ACE_INET_Addr &addr,
+                             const ACE_INET_Addr &addr,
                              char *&host,
                              const char *specified_hostname)
 {
@@ -797,7 +797,7 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
 
 
 int
-TAO_IIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
+TAO_IIOP_Acceptor::dotted_decimal_address (const ACE_INET_Addr &addr,
                                            char *&host)
 {
   int result = 0;

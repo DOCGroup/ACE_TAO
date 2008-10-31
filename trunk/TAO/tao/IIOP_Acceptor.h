@@ -125,7 +125,7 @@ public:
    *   hostname or the IP if no reverse mapping exists.
    */
   virtual int hostname (TAO_ORB_Core *orb_core,
-                        ACE_INET_Addr &addr,
+                        const ACE_INET_Addr &addr,
                         char *&host,
                         const char *specified_hostname = 0);
 
@@ -150,7 +150,7 @@ protected:
    * Set the host name for the given address using the dotted decimal
    * format.
    */
-  int dotted_decimal_address (ACE_INET_Addr &addr,
+  int dotted_decimal_address (const ACE_INET_Addr &addr,
                               char *&host);
 
   /**
