@@ -1476,7 +1476,7 @@ Admin_Client::union_test (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("UnionDef::type::member_label[%d]: %C\n"),
                       i,
-                      i == (CORBA::ULong) slot ? "default" : tmp)))
+                      i == (CORBA::ULong) slot ? "default" : tmp));
         }
 
       // Labels are not in order.
