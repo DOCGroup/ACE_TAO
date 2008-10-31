@@ -480,7 +480,7 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
     IIOP::ListenPointList &listen_list)
 {
   // Get the size of the list
-  CORBA::ULong const len = listen_list.length ();
+  CORBA::ULong len = listen_list.length ();
 
   if (TAO_debug_level > 0 && len == 0)
     {
@@ -490,6 +490,24 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
                   ACE_TEXT("Received list of size 0, check client config.\n")));
     }
 
+  // @@ We can only handle a single endpoint for now because the
+  // transport is recached for each endpoint, loosing older
+  // information. This means that when more than one listen_point is
+  // sent, the cache will end up only being associated with the last
+  // address.  This poses a problem at invocation time because the
+  // default endpoint selector steps through the profiles/endpoints
+  // sequentially and will try and possibly succeed in connecting to
+  // one of the earlier endpoints.  My assumption is that when this
+  // method is called, it is before the first attempt to connect to
+  // any object in the target process, thus the first listen point in
+  // the list will correspond with the first profile and thus that
+  // should match the cache.
+  //
+  // Probably what needs to be done to make this model work well is to
+  // allow the transport cache to have multiple keys reference the
+  // same transport so that rather than recaching, we simply add a
+  // key.
+  len = 1;
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       IIOP::ListenPoint listen_point = listen_list[i];
