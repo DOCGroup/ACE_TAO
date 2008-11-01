@@ -133,8 +133,7 @@ TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec)
   // ACE emulation of U Long Long (for platforms that don't have one)
   // does not define postfix operators
   rec.id = ++maxid_;
-
-  ORBSVCS_Time::Time_Value_to_TimeT(rec.time,ACE_OS::gettimeofday());
+  rec.time = ORBSVCS_Time::to_Absolute_TimeT (ACE_OS::gettimeofday ());
 
   // First, bind the id to the LogRecord in the hash_map
   if (this->rec_map_.bind (rec.id, rec) != 0)
@@ -569,9 +568,7 @@ TAO_Hash_LogRecordStore::remove_old_records (void)
     return 0;
   }
 
-  TimeBase::TimeT purge_time;
-  ORBSVCS_Time::Time_Value_to_TimeT (purge_time,
-                                     (ACE_OS::gettimeofday() - ACE_Time_Value(this->max_record_life_)));
+  TimeBase::TimeT purge_time (ORBSVCS_Time::to_Absolute_TimeT ((ACE_OS::gettimeofday () - ACE_Time_Value(this->max_record_life_))));
 
   // As there is no separate timestamp index, we must iterate through
   // the entire map.  We can't be tempted to think timestamps will be
