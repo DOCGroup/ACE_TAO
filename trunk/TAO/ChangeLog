@@ -1,3 +1,11 @@
+Sat Nov  1 12:43:06 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+
+          Changed to set the LogEntry's time field to be relative to
+          the CORBA TimeBase::TimeT epoch instead of the POSIX epoch.
+          Fixes bugzilla issue #3474.
+
 Fri Oct 31 15:00:00 UTC 2008  Simon Massey <sma at prismtech dot com>
 
         * DevGuideExamples/ValueTypes/Messenger/ValueTypes.mpc:
@@ -6,7 +14,7 @@ Fri Oct 31 15:00:00 UTC 2008  Simon Massey <sma at prismtech dot com>
 Fri Oct 31 14:36:38 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Transport.cpp:
-        
+
           untabify
 
 Fri Oct 31 14:11:35 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
