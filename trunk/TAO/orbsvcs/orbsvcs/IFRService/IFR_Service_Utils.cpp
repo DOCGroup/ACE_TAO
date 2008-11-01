@@ -77,6 +77,7 @@ TAO_IFR_Server::init_with_orb (int argc,
         }
       PortableServer::POA_var rp =
         PortableServer::POA::_narrow (poa_object.in ());
+      return this->init_with_poa (argc, argv, orb, rp.in(), use_multicast_server);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -84,8 +85,7 @@ TAO_IFR_Server::init_with_orb (int argc,
 
       throw;
     }
-  return this->init_with_poa (argc, argv, orb, rp.in(), use_multicast_server);
-
+  return 0;
 }
 
 int
