@@ -44,17 +44,24 @@ class TAO_IFRService_Export TAO_IFR_Server
 public:
   TAO_IFR_Server (void);
 
-  //// Initialize the IFR Service with the command line arguments and
-  //// the ORB.
+  /// Initialize the IFR Service with the command line arguments and
+  /// the ORB.
   int init_with_orb (int argc,
                      ACE_TCHAR *argv [],
                      CORBA::ORB_ptr orb,
                      int use_multicast_server = 0);
 
-  //// Destroy the child POA created in <init_with_orb>.
+  /// Initialize with a provided poa to serve as the alternate root POA.
+  int init_with_poa (int argc,
+                     ACE_TCHAR *argv [],
+                     CORBA::ORB_ptr orb,
+                     PortableServer::POA_ptr rp,
+                     int use_multicast_server = 0);
+
+  /// Destroy the child POA created in <init_with_poa>.
   int fini (void);
 
-  //// Destructor.
+  /// Destructor.
   ~TAO_IFR_Server (void);
 
 protected:
