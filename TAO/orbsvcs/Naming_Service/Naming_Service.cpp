@@ -26,8 +26,6 @@ TAO_Naming_Service::TAO_Naming_Service (int argc, ACE_TCHAR* argv[])
 int
 TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
 {
-  int result;
-
   try
     {
       // Initialize the ORB
@@ -40,9 +38,9 @@ TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
 
       // This function call initializes the naming service and returns
       // '-1' in case of an exception.
-      result = this->my_naming_server_.init_with_orb (argc,
-                                                      argv,
-                                                      this->orb_.in ());
+      int result = this->my_naming_server_.init_with_orb (argc,
+                                                          argv,
+                                                          this->orb_.in ());
 
       if (result == -1)
         return result;

@@ -480,6 +480,9 @@ namespace CORBA
 #if !defined(CORBA_E_MICRO)
     /// Register an object reference with the ORB.
     void register_initial_reference (const char * id, CORBA::Object_ptr obj);
+
+    /// Unregister an object reference with the ORB.
+    CORBA::Object_ptr unregister_initial_reference (const char * id);
 #endif
 
     /// Returns a sequence of ObjectIds that lists which objects have

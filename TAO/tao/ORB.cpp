@@ -1017,6 +1017,21 @@ CORBA::ORB::register_initial_reference (const char * id, CORBA::Object_ptr obj)
   if (table.register_initial_reference (id, obj) == -1)
     throw ::CORBA::ORB::InvalidName ();
 }
+
+CORBA::Object_ptr
+CORBA::ORB::unregister_initial_reference (const char * id)
+{
+  if (id == 0 || ACE_OS::strlen (id) == 0)
+    throw ::CORBA::ORB::InvalidName ();
+
+  TAO_Object_Ref_Table &table = this->orb_core_->object_ref_table ();
+  CORBA::Object_ptr obj = table.unregister_initial_reference (id);
+
+  if (CORBA::is_nil (obj))
+    throw ::CORBA::ORB::InvalidName ();
+
+  return obj;
+}
 #endif
 
 CORBA::ORB::ObjectIdList_ptr
@@ -1024,8 +1039,7 @@ CORBA::ORB::list_initial_services (void)
 {
   this->check_shutdown ();
 
-  return
-    this->orb_core ()->list_initial_references ();
+  return this->orb_core ()->list_initial_references ();
 }
 
 void
