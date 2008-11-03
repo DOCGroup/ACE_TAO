@@ -1,3 +1,8 @@
+Mon Nov  3 14:35:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Disabled several tests with CORBA/e compact/micro
+
 Mon Nov  3 13:17:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks5.x.h:
