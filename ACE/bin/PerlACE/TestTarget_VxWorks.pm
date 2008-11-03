@@ -50,5 +50,12 @@ sub RebootNow ($)
     reboot ();
 }
 
+sub WaitForFileTimed ($)
+{
+    my $self = shift;
+    my $file = shift;
+    my $timeout = shift;
+    return 0;
+}
 
 1;

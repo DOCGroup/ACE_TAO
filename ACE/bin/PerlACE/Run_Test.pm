@@ -40,6 +40,11 @@ if ($PerlACE::LabVIEW_RT_Test) {
     require PerlACE::ProcessLVRT;
 }
 
+$PerlACE::WinCE_Test = $config->check_config("WINCE");
+if ($PerlACE::WinCE_Test) {
+    require PerlACE::ProcessWinCE;
+}
+
 # Figure out the svc.conf extension
 $svcconf_ext = $ENV{"ACE_RUNTEST_SVCCONF_EXT"};
 if (!defined $svcconf_ext) {
