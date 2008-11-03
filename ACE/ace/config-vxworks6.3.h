@@ -252,6 +252,7 @@
   #endif /* ! ACE_MAIN */
   #define ACE_LACKS_TZSET
   #define ACE_LACKS_ISWCTYPE
+  #define ACE_LACKS_ISBLANK
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
