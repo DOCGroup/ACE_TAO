@@ -1,3 +1,8 @@
+Mon Nov  3 10:28:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_3486_Regression/*:
+          New file for bugzilla 3486
+
 Mon Nov  3 10:24:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object_Ref_Table.cpp:
@@ -17,7 +22,8 @@ Mon Nov  3 10:24:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
         * orbsvcs/orbsvcs/Naming/Naming_Server.h:
           Const/bool changes. Also unregister the NamingService from the
-          ORB rir table.
+          ORB rir table. This makes it possible to load and unload the
+          naming service multiple times as services, fixes bugzilla 3486
 
         * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
           Use the tchar argv array
