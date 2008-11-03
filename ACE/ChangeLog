@@ -1,3 +1,10 @@
+Mon Nov  3 10:51:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Use CeGetThreadPriority/CeSetThreadPriority when building
+          for Windows CE. This fixes bugzilla 3487. Thanks to Danial Lang
+          <danial dot lang at alphagate dot at> for reporting this.
+
 Mon Nov  3 10:30:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
