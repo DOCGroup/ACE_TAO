@@ -1,3 +1,8 @@
+Mon Nov  3 17:15:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-lynxos.h:
+          Added ACE_LACKS_ISBLANK/ACE_LACKS_ISCTYPE
+
 Mon Nov  3 14:35:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
