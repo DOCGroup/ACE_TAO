@@ -23,7 +23,7 @@ LzoCompressor::compress (
     ::Compression::Buffer & target
   )
 {
-  wrkmem = (lzo_bytep) lzo_malloc(LZO1X_1_MEM_COMPRESS);
+  void* wrkmem = (lzo_bytep) lzo_malloc(LZO1X_1_MEM_COMPRESS);
   unsigned int max_length = static_cast <unsigned int> (source.length () * 1.1) + 12;
   target.length (static_cast <CORBA::ULong> (max_length));
 
