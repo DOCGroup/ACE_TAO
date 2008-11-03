@@ -1,3 +1,16 @@
+Mon Nov  3 15:25:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression/lzo/LzoCompressor.cpp:
+        * tao/Compression/lzo/LzoCompressor.h:
+        * tao/Compression/lzo/LzoCompressor_export.h:
+        * tao/Compression/lzo/LzoCompressor_Factory.cpp:
+        * tao/Compression/lzo/LzoCompressor_Factory.h:
+        * tao/Compression/lzo/TAO_LzoCompressor.pc.in:
+        * tao/Compression/lzo/TAO_LzoCompressor.rc:
+        * tao/LzoCompressor.mpc:
+          Added lzo compressor. Need to be tested in all its detail, but
+          lzo is disabled by default so we can safely added it to the repo
+
 Mon Nov 03 14:13:12 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
 
         * ACE_wrappers/TAO/orbsvcs/tests/Notify/Bug_2415_Regression/Supplier.cpp
