@@ -4,6 +4,7 @@
 project(Messenger_StaticDAnCE): ciao_static_dnc_app {
   requires += cidl
   exename   = Messenger_StaticDAnCE
+  requires += dummy_label
 
   libs     += Receiver_stub Administrator_stub Messenger_stub
   libs     += Receiver_svnt Administrator_svnt Messenger_svnt
