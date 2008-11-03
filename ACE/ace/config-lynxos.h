@@ -99,6 +99,8 @@
 #define ACE_PAGE_SIZE 4096
 #define ACE_POSIX_SIG_PROACTOR
 #define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
+#define ACE_LACKS_ISBLANK
+#define ACE_LACKS_ISCTYPE
 
 // LynxOS has poll.h but it is unusable since implementation is not provided
 #define ACE_LACKS_POLL_H
