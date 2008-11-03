@@ -1,3 +1,12 @@
+Mon Nov  3 09:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Run_Test.pm:
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/TestTarget_LVRT.pm:
+        * bin/PerlACE/TestTarget_VxWorks.pm:
+          Convert the filename to a local file in the TestTarget and
+          not in the main script. Fixes bugzilla 3477
+
 Mon Nov  3 09:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-all.h:

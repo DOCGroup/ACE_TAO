@@ -53,6 +53,11 @@ sub create_target
         $target = new PerlACE::TestTarget_VxWorks ($config_name);
         last SWITCH;
       }
+      if ($config_os =~ /WinCE/i) {
+        require PerlACE::TestTarget_WinCE;
+        $target = new PerlACE::TestTarget_WinCE ($config_name);
+        last SWITCH;
+      }
       print STDERR "$config_os is an unknown OS type!\n";
     }
     return $target;
@@ -181,14 +186,18 @@ sub LocalFile ($)
     my $self = shift;
     my $file = shift;
     my $newfile = PerlACE::LocalFile($file);
-    print STDERR "LocalFile for $file is $newfile\n";
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+      print STDERR "LocalFile for $file is $newfile\n";
+    }
     return $newfile;
 }
 
 sub DeleteFile ($)
 {
     my $self = shift;
-    unlink (@_);
+    my $file = shift;
+    my $newfile = PerlACE::LocalFile($file);
+    unlink ($newfile);
 }
 
 sub GetFile ($)
@@ -205,10 +214,11 @@ sub PutFile ($)
 {
     my $self = shift;
     my $src = shift;
-    my $dest = shift;
+    my $dest = $self->LocalFile ($src);
     if ($src != $dest) {
         copy ($src, $dest);
     }
+    return 0;
 }
 
 sub WaitForFileTimed ($)
@@ -216,7 +226,8 @@ sub WaitForFileTimed ($)
     my $self = shift;
     my $file = shift;
     my $timeout = shift;
-    return PerlACE::waitforfile_timed ($file, $timeout);
+    my $newfile = $self->LocalFile($file);
+    return PerlACE::waitforfile_timed ($newfile, $timeout);
 }
 
 sub CreateProcess ($)
