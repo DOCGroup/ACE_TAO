@@ -1,3 +1,13 @@
+Mon Nov  3 09:07:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget.pm:
+          Use PerlACE::Run_Test here, that way it is not needed in the
+          real scripts and we can use that to check if the script
+          is converted
+
+        * bin/tao_orb_tests.lst:
+          Enabled some test for labview, converted them to the new framework
+
 Mon Nov  3 09:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/Run_Test.pm:

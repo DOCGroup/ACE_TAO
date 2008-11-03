@@ -10,6 +10,7 @@ use strict;
 use English;
 use POSIX qw(:time_h);
 use File::Copy;
+use PerlACE::Run_Test;
 
 ###############################################################################
 
