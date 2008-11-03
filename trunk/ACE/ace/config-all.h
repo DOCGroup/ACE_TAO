@@ -23,6 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS_NS_errno.h"
+
 // This is used to indicate that a platform doesn't support a
 // particular feature.
 #if defined ACE_HAS_VERBOSE_NOTSUP

@@ -1,3 +1,31 @@
+Mon Nov  3 09:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-all.h:
+          Include OS_NS_errno.h to get ENOTSUP
+
+        * ace/config-win32-borland.h:
+          CB lacks isblank/iswblank/icctype/iswctype
+
+        * ace/config-win32-msvc.h:
+        * ace/config-WinCE.h
+          Lacks isblank/iswblank
+
+        * ace/os_include/os_ctype.h:
+          Added typedef for ctype_t
+
+        * ace/OS_NS_ctype.h:
+        * ace/OS_NS_ctype.inl:
+          Added isblank/isascii/isctype/iswctype wrappers
+
+        * ace/OS_NS_time.h:
+          No need to include OS_NS_errno.h here
+
+        * bin/fuzz.pl:
+          Added isblank/isascii/isctype/iswctype to ACE_OS check
+
+        * tests/OS_Test.cpp:
+          Extended ctype tests
+
 Thu Oct 30 13:25:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OS_Test.cpp:

@@ -2,11 +2,6 @@
 //
 // $Id$
 
-#include "ace/os_include/os_ctype.h"
-#if defined ACE_HAS_WCHAR
-# include "ace/os_include/os_wctype.h"
-#endif /* ACE_HAS_WCHAR */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
@@ -16,12 +11,46 @@ ACE_OS::ace_isalnum (ACE_TCHAR c)
 # if defined (_MSC_VER) && (_MSC_VER >= 1300)
   // For MSVC 7.x, we need to prevent "illegal" character getting into
   // isalnum, otherwise, it will crash the program.
-  return c > 0 && c < 256 && iswalnum (c);
+  return c > 0 && c < 0xFF && iswalnum (c);
 # else
   return iswalnum (c);
 # endif /* _MSC_VER && _MSC_VER >= 1300 */
 #else /* ACE_USES_WCHAR */
   return isalnum ((unsigned char) c);
+#endif /* ACE_USES_WCHAR */
+}
+
+ACE_INLINE int
+ACE_OS::ace_isascii (ACE_TCHAR c)
+{
+#if defined (ACE_USES_WCHAR)
+  return iswascii (c);
+#else /* ACE_USES_WCHAR */
+  return isascii ((unsigned char) c);
+#endif /* ACE_USES_WCHAR */
+}
+
+ACE_INLINE int
+ACE_OS::ace_isblank (ACE_TCHAR c)
+{
+#if defined (ACE_USES_WCHAR)
+# if defined (ACE_LACKS_ISWBLANK)
+#  if !defined (ACE_LACKS_ISWCTYPE)
+  return ace_iswctype (c, _BLANK);
+#  else
+  return (c == 0x9) || (c == 0x40);
+#  endif
+#else
+  return iswblank (c);
+#endif
+#elif defined (ACE_LACKS_ISBLANK)
+#  if !defined (ACE_LACKS_ISCTYPE)
+  return ace_isctype (c, _BLANK);
+#  else
+  return (c == 0x9) || (c == 0x40);
+#  endif
+#else /* ACE_USES_WCHAR */
+  return isblank ((unsigned char) c);
 #endif /* ACE_USES_WCHAR */
 }
 
@@ -168,5 +197,33 @@ ACE_OS::ace_towupper (wint_t c)
   return towupper (c);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_TOWUPPER */
+
+ACE_INLINE int
+ACE_OS::ace_isctype(int c, ctype_t desc)
+{
+#if defined (ACE_ISCTYPE_EQUIVALENT)
+  return ACE_ISCTYPE_EQUIVALENT (c, desc);
+#elif !defined (ACE_LACKS_ISCTYPE)
+  return isctype (c, desc);
+#else
+  ACE_UNUSED_ARG (c);
+  ACE_UNUSED_ARG (desc);
+  ACE_NOTSUP_RETURN (-1);
+#endif
+}
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::ace_iswctype(wint_t c, wctype_t desc)
+{
+#if !defined (ACE_LACKS_ISWCTYPE)
+  return iswctype (c, desc);
+#else
+  ACE_UNUSED_ARG (c);
+  ACE_UNUSED_ARG (desc);
+  ACE_NOTSUP_RETURN (-1);
+#endif
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
