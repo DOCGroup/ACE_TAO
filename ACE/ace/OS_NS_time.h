@@ -25,7 +25,6 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_NS_errno.h"
 #include "ace/Basic_Types.h"
 #include "ace/os_include/os_time.h"
 #include /**/ "ace/ACE_export.h"
