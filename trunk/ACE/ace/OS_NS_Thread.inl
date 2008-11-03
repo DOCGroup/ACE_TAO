@@ -2674,10 +2674,13 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
 # elif defined (ACE_HAS_STHREADS)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (ht_id, &priority), result), int, -1);
-# elif defined (ACE_HAS_WTHREADS) && !defined (ACE_HAS_WINCE)
+# elif defined (ACE_HAS_WTHREADS)
   ACE_Errno_Guard error (errno);
-
+#   if !defined (ACE_HAS_WINCE)
   priority = ::GetThreadPriority (ht_id);
+#   else   
+  priority = ::CeGetThreadPriority (ht_id);
+#   endif
 
 #   if defined (ACE_HAS_PHARLAP)
 #     if defined (ACE_PHARLAP_LABVIEW_RT)
@@ -2686,7 +2689,7 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
   DWORD timeslice = ::EtsGetTimeSlice ();
   policy = timeslice == 0 ? ACE_SCHED_OTHER : ACE_SCHED_FIFO;
 #     endif /* ACE_PHARLAP_LABVIEW_RT */
-#   else
+#   elif !defined (ACE_HAS_WINCE)
   DWORD priority_class = ::GetPriorityClass (::GetCurrentProcess ());
   if (priority_class == 0 && (error = ::GetLastError ()) != NO_ERROR)
     ACE_FAIL_RETURN (-1);
@@ -3104,9 +3107,15 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
                                        result),
                      int, -1);
 # elif defined (ACE_HAS_WTHREADS)
+#  if !defined (ACE_HAS_WINCE)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (ht_id, priority),
                                           ace_result_),
                         int, -1);
+#  else                        
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CeSetThreadPriority (ht_id, priority),
+                                          ace_result_),
+                        int, -1);
+#  endif /* ACE_HAS_WINCE */
 # elif defined (ACE_HAS_VXTHREADS)
   ACE_OSCALL_RETURN (::taskPrioritySet (ht_id, priority), int, -1);
 # else
