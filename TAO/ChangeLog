@@ -1,3 +1,8 @@
+Mon Nov  3 15:45:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression/lzo/LzoCompressor.cpp:
+          Fixed compile errors when compiling it with the latest lzo library
+
 Mon Nov  3 15:25:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Compression/lzo/LzoCompressor.cpp:
