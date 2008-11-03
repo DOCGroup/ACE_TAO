@@ -17,7 +17,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.6 and ACE-5.6.7
 . Updated stat struct on Windows CE to match the stat struct on other
   platforms so that application code can be written portable
 
-. Added new ACE_OS wrappers: raise, atof, atol
+. Added new ACE_OS wrappers: raise, atof, atol, isblank, isascii,
+  isctype, and iswctype
 
 . Added ACE_OS wrapper for narrow-char version of strtoll.
 
