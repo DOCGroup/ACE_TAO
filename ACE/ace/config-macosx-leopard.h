@@ -24,6 +24,8 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
+#define ACE_ISCTYPE_EQUIVALENT __isctype
+
 #ifndef ACE_HAS_NONCONST_FD_ISSET
 #define ACE_HAS_NONCONST_FD_ISSET
 #endif
