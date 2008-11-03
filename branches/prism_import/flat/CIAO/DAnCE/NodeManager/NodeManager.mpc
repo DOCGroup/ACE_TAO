@@ -11,7 +11,7 @@ project(Node_Manager_Module) : dance_lib, naming_serv, dance_node_application_ma
   }
 }
 
-project(Node_Manager_Exec) : dance_exe, dance_node_manager {
+project(Node_Manager_Exec) : dance_exe, dance_node_manager, naming_serv {
   exename = dance_node_manager
   after += Node_Manager_Module
   libs += DAnCE_NodeManager
