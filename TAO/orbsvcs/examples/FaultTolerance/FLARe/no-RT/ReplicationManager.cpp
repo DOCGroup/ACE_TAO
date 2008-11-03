@@ -299,6 +299,9 @@ process_proc_failure (ACE_CString const & process_id)
 {
   if (static_mode_)
     {
+      // give the client time to failover
+      ACE_OS::sleep (1);
+
       ACE_DEBUG ((LM_TRACE, "removing failed app ior from rank list.\n"));
       ACE_Guard <ACE_Thread_Mutex> protect (pid_object_mutex_);
 
