@@ -1,3 +1,11 @@
+Mon Nov  3 13:01:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          Added ACE_LACKS_ISCTYPE/ACE_LACKS_ISWCTYPE
+
 Mon Nov  3 12:35:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-all.h

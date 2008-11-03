@@ -200,6 +200,7 @@
 
 #define ACE_HAS_CHARPTR_SOCKOPT
 #define ACE_LACKS_SYMLINKS
+#define ACE_LACKS_ISCTYPE
 
 #if defined __RTP__
   // We are building for RTP mode
@@ -260,6 +261,7 @@
   #define ACE_LACKS_FGETWC
   #define ACE_LACKS_FGETWS
   #define ACE_LACKS_FPUTWS
+  #define ACE_LACKS_ISWCTYPE
   #if !defined (ACE_MAIN)
   #  define ACE_MAIN ace_main
   #endif /* ! ACE_MAIN */
