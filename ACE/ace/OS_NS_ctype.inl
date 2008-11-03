@@ -24,7 +24,12 @@ ACE_INLINE int
 ACE_OS::ace_isascii (ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
+# if defined (ACE_LACKS_ISWASCII)
+  ACE_UNUSED_ARG (c);
+  ACE_NOTSUP_RETURN (-1);
+# else
   return iswascii (c);
+# endif
 #else /* ACE_USES_WCHAR */
   return isascii ((unsigned char) c);
 #endif /* ACE_USES_WCHAR */
