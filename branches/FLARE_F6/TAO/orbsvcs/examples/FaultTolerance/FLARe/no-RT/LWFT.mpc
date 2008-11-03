@@ -3,7 +3,6 @@
 
 project(*idl): taoidldefaults {
   idlflags    += -Wb,export_macro=TAO_LWFT_Export -Wb,export_include=lwft_export.h
-  libout       = .
 
   IDL_Files {
     StateSynchronizationAgent.idl
@@ -25,7 +24,6 @@ project(*Common) : rtportableserver, pi_server, interceptors, iorinterceptor {
   after += *idl
   sharedname = LWFT_Common
   dynamicflags = TAO_LWFT_BUILD_DLL
-  libout       = .
   
   IDL_Files {
   }
@@ -55,10 +53,10 @@ project(*Common) : rtportableserver, pi_server, interceptors, iorinterceptor {
 }
 
 
-project(*server): rt_server, pi_server, interceptors, iorinterceptor, splice_ts_defaults {
+project(*server): rt_server, pi_server, interceptors, iorinterceptor {
 
-  after += *Common *StateSyncAgent *StateTopic
-  libs += LWFT_Common LWFT_StateSyncAgent LWFT_StateTopic
+  after += *Common *StateSyncAgent
+  libs += LWFT_Common LWFT_StateSyncAgent
   exename = server 
   
   IDL_Files {
@@ -74,49 +72,26 @@ project(*server): rt_server, pi_server, interceptors, iorinterceptor, splice_ts_
   }
 }
 
-project(*StateSyncAgent) : portableserver, splice_ts_defaults {
+// add ssa_dds as a base project to include DDS functionality here
+project(*StateSyncAgent) : portableserver { 
 
-  after += *Common *StateTopic
+  after += *Common 
   macros += SSA_EXPORT_BUILD_DLL
-  libs += LWFT_Common LWFT_StateTopic
+  libs += LWFT_Common 
   libpaths += $(FLARE_ROOT)
-  libout = .
 
+  // the IDL_Files block has to be removed for
+  // DDS integration
   IDL_Files {
   }
 
   Source_Files {
-    DDSFailure.cpp
     StateSynchronizationAgent_i.cpp
     StatefulObject.cpp
     CorbaStateUpdate.cpp
     StateSyncAgentTask.cpp
   }
 
-}
-
-project(*StateTopic) : splicelib_with_idl, portableserver {
-
-  verbatim(gnuace, macros) {
-    override no_hidden_visibility = 1
-  } 
-
-  libout = .
-
-  idlflags += -Wb,export_macro=State_TS_Export -Wb,export_include=state_ts_export.h
-  dynamicflags += STATE_TS_BUILD_DLL
-  macros += DDS_API=State_TS_Export
-
-  SpliceTypeSupport_Files {
-    State.idl
-  }
-
-  Source_Files {
-    StateC.cpp
-    StateDcpsC.cpp
-    StateDcps_impl.cpp
-    StateSplDcps.cpp
-  }
 }
 
 project(*client): rt_client, pi_server, interceptors {

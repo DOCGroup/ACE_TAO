@@ -14,8 +14,8 @@
 #define _DDS_STATE_UPDATE_T_CPP_
 
 #include "ccpp_dds_dcps.h"
-
 #include "DDSStateReaderListener_T.h"
+#include "DDSFailure.h"
 
 template <typename STATE_TYPE,
 	  typename TOPIC_TYPE, 

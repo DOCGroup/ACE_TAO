@@ -220,11 +220,13 @@ main (int argc, char *argv[])
       result = ACE_Thread_Manager::instance ()->wait ();
       ACE_ASSERT (result != -1);
     }
+#ifdef FLARE_USES_DDS
   catch (const DDSFailure & failure)
     {
       std::cerr << "DDS communication failed: " << failure.description () 
 		<< std::endl;
     }
+#endif /* FLARE_USES_DDS */
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught:");

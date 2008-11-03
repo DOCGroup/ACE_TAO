@@ -16,11 +16,16 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Refcounted_Auto_Ptr.h"
-#include <ccpp_dds_dcps.h>
 #include "LWFTC.h"
 #include "StateSynchronizationAgentS.h"
 #include "StatefulObject.h"
-#include "DDSFailure.h"
+#include "ssa_export.h"
+
+#if defined (FLARE_USES_DDS)
+# include "state_ts_export.h"
+# include <ccpp_dds_dcps.h>
+# include "DDSFailure.h"
+#endif 
 
 class SSA_Export StateSynchronizationAgent_i : public POA_StateSynchronizationAgent
 {
@@ -66,12 +71,17 @@ class SSA_Export StateSynchronizationAgent_i : public POA_StateSynchronizationAg
     ACE_Null_Mutex> OBJECTID_APPLICATION_MAP;
 
  private:
+
+#ifdef FLARE_USES_DDS
+
   bool create_participant ();
   bool delete_participant ();
   bool create_publisher ();
   bool delete_publisher ();
   bool create_subscriber ();
   bool delete_subscriber ();
+
+#endif /* FLARE_USES_DDS */
 
   std::string get_unique_id (const std::string & app_name);
 
@@ -94,6 +104,8 @@ class SSA_Export StateSynchronizationAgent_i : public POA_StateSynchronizationAg
   /// mutex for multithreaded access of the replica map
   ACE_Thread_Mutex replica_map_mutex_;
 
+#ifdef FLARE_USES_DDS
+
   /// id of the DDS domain
   DDS::DomainId_t domain_id_;
 
@@ -105,6 +117,8 @@ class SSA_Export StateSynchronizationAgent_i : public POA_StateSynchronizationAg
 
   /// DDS Subscriber for this Domain
   DDS::Subscriber_var subscriber_;
+
+#endif /* FLARE_USES_DDS */
 
   /// decides whether replicas should be updated through corba or dds
   bool use_corba_;

@@ -90,7 +90,8 @@ class ReplicationManager_i : public virtual POA_ReplicationManager,
 public:
   
   ReplicationManager_i (CORBA::ORB_ptr orb, double hertz, 
-                        bool proactive = true, AlgoMode mode = PROCESS_LEVEL);
+                        bool proactive = true, bool static_mode = false,
+			AlgoMode mode = PROCESS_LEVEL);
 
   ~ReplicationManager_i (void);
 
@@ -154,6 +155,13 @@ public:
     ACE_Equal_To<ACE_CString>,
     ACE_Null_Mutex> OBJECTID_RANKED_IOR_MAP;
 
+  typedef ACE_Hash_Map_Manager_Ex<
+    ACE_CString,
+    CORBA::Object_var,
+    ACE_Hash<ACE_CString>,
+    ACE_Equal_To<ACE_CString>,
+    ACE_Null_Mutex> STRING_OBJECT_MAP;
+
   typedef ACE_Unbounded_Set<CORBA::Object_var> AGENT_LIST;
 
   typedef ACE_Unbounded_Set<StateSynchronizationAgent_var> 
@@ -167,6 +175,8 @@ private:
   Algorithm * algo_thread_;
   bool proactive_;
   AlgoMode mode_; 
+  bool static_mode_; /// this flag disables the usage of host load calculations and
+                     /// therefore enables single host scenarios
     
   ACE_DLList <MonitorUpdate> update_list_;
   ACE_Thread_Mutex update_mutex_;
@@ -183,6 +193,9 @@ private:
   STRING_TO_STRING_LIST_MAP processid_backup_map_;
   STRING_TO_STRING_LIST_MAP processid_primary_map_;
   STRING_TO_STRING_LIST_MAP hostid_process_map_;
+
+  STRING_OBJECT_MAP pid_object_map_;
+  ACE_Thread_Mutex pid_object_mutex_;
 
   RankList rank_list_;
   AGENT_LIST agent_list_;
