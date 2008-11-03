@@ -17,6 +17,7 @@ ACE_Thread_Mutex RMOptions::lock_;
 RMOptions::RMOptions (void)
   : hertz_ (0.2),
     proactive_ (true),
+    static_mode_ (false),
     arg_pair_ (0,0)
 {
 }
@@ -43,7 +44,7 @@ RMOptions::parse_args (int argc, char **argv)
   bool retval = true;
   this->arg_pair_ = ArgPair (argc, argv);
     
-  ACE_Get_Opt get_opts (argc, argv, "h:p:");
+  ACE_Get_Opt get_opts (argc, argv, "h:p:s:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -65,6 +66,15 @@ RMOptions::parse_args (int argc, char **argv)
               proactive_ = val? true : false;
               break;
             }
+          case 's' :
+	    {
+              std::istringstream istr (get_opts.opt_arg ());
+              int val;
+              if (!(istr >> val))
+                  return false;
+	      static_mode_ = val ? true : false;
+	      break;
+	    }
         }
   return retval;
 };
@@ -78,4 +88,9 @@ bool RMOptions::proactive () const
 double RMOptions::hertz () const
 {
   return hertz_;
+}
+
+bool RMOptions::static_mode () const
+{
+  return static_mode_;
 }

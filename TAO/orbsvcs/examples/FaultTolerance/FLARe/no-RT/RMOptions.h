@@ -35,6 +35,7 @@ public:
   bool parse_args (int argc, char **argv);
   bool proactive (void) const;
   double hertz (void) const;
+  bool static_mode (void) const;
 
 protected:
 
@@ -43,6 +44,7 @@ protected:
 
   double hertz_;
   bool proactive_;
+  bool static_mode_;
   ArgPair arg_pair_;
 
   /// Singleton instance.

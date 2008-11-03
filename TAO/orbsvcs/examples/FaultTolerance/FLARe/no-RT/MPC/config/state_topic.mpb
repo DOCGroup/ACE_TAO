@@ -1,0 +1,21 @@
+project : splicelib_with_idl, portableserver {
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  } 
+
+  idlflags += -Wb,export_macro=State_TS_Export -Wb,export_include=state_ts_export.h
+  dynamicflags += STATE_TS_BUILD_DLL
+  macros += DDS_API=State_TS_Export
+
+  SpliceTypeSupport_Files {
+    State.idl
+  }
+
+  Source_Files {
+    StateC.cpp
+    StateDcpsC.cpp
+    StateDcps_impl.cpp
+    StateSplDcps.cpp
+  }
+}

@@ -12,8 +12,11 @@
 
 #include "StateSynchronizationAgent_i.h"
 #include "CorbaStateUpdate.h"
-#include "DDSStateUpdate_T.h"
-#include "StateDcps_impl.h"
+
+#ifdef FLARE_USES_DDS
+# include "DDSStateUpdate_T.h"
+# include "StateDcps_impl.h"
+#endif
 
 StateSynchronizationAgent_i::StateSynchronizationAgent_i (
     CORBA::ORB_ptr orb,
@@ -23,12 +26,15 @@ StateSynchronizationAgent_i::StateSynchronizationAgent_i (
   : orb_ (CORBA::ORB::_duplicate (orb)),
     host_id_ (host_id),
     process_id_ (process_id),
+#ifdef FLARE_USES_DDS
     domain_id_ (0),
     domain_participant_ (DDS::DomainParticipant::_nil ()),
     publisher_ (DDS::Publisher::_nil ()),
     subscriber_ (DDS::Subscriber::_nil ()),
+#endif /* FLARE_USES_DDS */
     use_corba_ (use_corba)
 {
+#ifdef FLARE_USES_DDS
   if (!use_corba_)
     {
       if (!this->create_participant ())
@@ -40,16 +46,19 @@ StateSynchronizationAgent_i::StateSynchronizationAgent_i (
       if (!this->create_subscriber ())
 	throw DDSFailure ("SSA could not create DDS subscriber\n");
     }
+#endif /* FLARE_USES_DDS */
 }
 
 StateSynchronizationAgent_i::~StateSynchronizationAgent_i ()
 {
+#ifdef FLARE_USES_DDS
   if (!use_corba_)
     {
       this->delete_subscriber ();
       this->delete_publisher ();
       this->delete_participant ();
     }
+#endif /* FLARE_USES_DDS */
 }
 
 void 
@@ -123,8 +132,10 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
 void 
 StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
 {
+#ifdef FLARE_USES_DDS
   if (use_corba_)
     {
+#endif
       // protect operations on the map
       ACE_Guard <ACE_Thread_Mutex> guard (replica_map_mutex_);
 
@@ -139,7 +150,7 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
 	{
 	  ACE_DEBUG ((LM_TRACE, "\toid = %s (%d entries)\n", 
 		      rank_list[i].object_id.in (),
-		      rank_list.length ()));
+		      rank_list[i].ior_list.length ()));
 
 	  // use the application id as a key for the map
 	  ACE_CString oid (rank_list[i].object_id);
@@ -165,15 +176,18 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
 		  ACE_DEBUG ((LM_WARNING, 
 			      "(%P|%t) SSA::"
 			      "update_replica_groups could not resolve stringified "
-			      "object reference %s\n",
-			      rank_list[i].ior_list[j].in ()));
+			      "object reference for %s : %s\n",
+			      oid.c_str (),
+			      ex._info ().c_str ()));
 		}
 	    }
 
 	  // add one replication group to the map
 	  replica_map_.bind (oid, replica_object_list);
 	}
+#ifdef FLARE_USES_DDS
     } // end if (use_corba_)
+#endif
 }
 
 void 
@@ -191,6 +205,8 @@ StateSynchronizationAgent_i::register_application (const char * object_id,
 		  "could not bind application %s to the map successfully\n",
 		  object_id));
     }  
+
+#ifdef FLARE_USES_DDS
 
   // if we use DDS for communication
   if (!use_corba_)
@@ -235,7 +251,11 @@ StateSynchronizationAgent_i::register_application (const char * object_id,
 		    << std::endl;
 	}
     }
+
+#endif /* FLARE_USES_DDS */
 }
+
+#ifdef FLARE_USES_DDS
 
 bool
 StateSynchronizationAgent_i::create_participant ()
@@ -346,6 +366,8 @@ StateSynchronizationAgent_i::delete_subscriber ()
     
   return true;  
 }
+
+#endif /* FLARE_USES_DDS */
 
 std::string
 StateSynchronizationAgent_i::get_unique_id (const std::string & app_name)

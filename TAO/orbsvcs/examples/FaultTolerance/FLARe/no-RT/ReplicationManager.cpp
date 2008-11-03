@@ -126,11 +126,13 @@ int Algorithm::svc (void)
 /* ******************************************************************* */
 
 ReplicationManager_i::ReplicationManager_i (CORBA::ORB_ptr orb, double hertz, 
-                                            bool proactive, AlgoMode mode)
+                                            bool proactive, bool static_mode,
+					    AlgoMode mode)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     algo_thread_(0),
     proactive_(proactive),
     mode_(mode),
+    static_mode_ (static_mode),
     update_available_(update_mutex_),
     update_list_full_(update_mutex_)
 {
@@ -295,30 +297,91 @@ process_updates(ACE_DLList<MonitorUpdate> & update_list)
 void ReplicationManager_i::
 process_proc_failure (ACE_CString const & process_id)
 {
-  ACE_CString host;
-  if(this->processid_host_map_.find(process_id, host) == 0) // if present
-  {
-    replace_primary_tags(process_id, host);
-    replace_backup_tags(process_id, host);
-    this->processid_host_map_.unbind(process_id);
-    
-    STRING_LIST proc_list;
-    if (this->hostid_process_map_.find(host,proc_list) == 0) // if present
+  if (static_mode_)
     {
-      proc_list.remove(process_id);
-      this->hostid_process_map_.rebind(host, proc_list);
+      ACE_DEBUG ((LM_TRACE, "removing failed app ior from rank list.\n"));
+      ACE_Guard <ACE_Thread_Mutex> protect (pid_object_mutex_);
+
+      // find object id for the process id
+      CORBA::Object_var app;
+      if (pid_object_map_.find (process_id, app) == 0)
+	{
+	  pid_object_map_.unbind (process_id);
+
+	  // copy each object ior list and leave out the removed application
+	  for (size_t i = 0; i < rank_list_.length (); ++i)
+	    {
+	      try
+		{
+		  // index of the element that should be removed from 
+		  // the ior list. This is either the failed replica
+		  // or if the primary failed, the first entry in the list
+		  size_t rm_index = 0; 
+
+		  for (size_t j = 0; j < rank_list_[i].ior_list.length (); ++j)
+		    {
+		      if (app->_is_equivalent (
+			    rank_list_[i].ior_list[j].in ()))
+			{
+			  rm_index = j;
+			  break;
+			}
+		    }
+
+		  // now remove the correct element from the list
+		  for (size_t k = rm_index; 
+		       k < rank_list_[i].ior_list.length () - 1; 
+		       ++k)
+		    {
+		      // move each following element one position 
+		      // forward
+		      rank_list_[i].ior_list[k] = 
+			rank_list_[i].ior_list[k+1];
+		    }
+		  
+		  // correct the length value
+		  rank_list_[i].ior_list.length (
+		    rank_list_[i].ior_list.length () - 1);
+		}
+	      catch (const CORBA::SystemException & ex)
+		{
+		  // just make sure to keep on going for the other entries 
+		  // here
+		  ACE_DEBUG ((LM_ERROR, 
+			      "in process_proc_update: %d\n", 
+			      ex._info ().c_str ()));
+		}
+	    }
+	}
+      
     }
-    else
-    {
-      ACE_DEBUG((LM_ERROR,"Can't find host=%s in hostid_process_map. \
-          Data structure invariant broken.\n",host.c_str()));
-    }
-  }
   else
-  {
-    ACE_DEBUG((LM_ERROR,"Can't find process_id=%s in proc_host_map. \
+    {
+      ACE_CString host;
+      if(this->processid_host_map_.find(process_id, host) == 0) // if present
+	{
+	  replace_primary_tags(process_id, host);
+	  replace_backup_tags(process_id, host);
+	  this->processid_host_map_.unbind(process_id);
+    
+	  STRING_LIST proc_list;
+	  if (this->hostid_process_map_.find(host,proc_list) == 0) // if present
+	    {
+	      proc_list.remove(process_id);
+	      this->hostid_process_map_.rebind(host, proc_list);
+	    }
+	  else
+	    {
+	      ACE_DEBUG((LM_ERROR,"Can't find host=%s in hostid_process_map. \
+          Data structure invariant broken.\n",host.c_str()));
+	    }
+	}
+      else
+	{
+	  ACE_DEBUG((LM_ERROR,"Can't find process_id=%s in proc_host_map. \
         Data structure invariant broken.\n",process_id.c_str()));
-  }
+	}
+    }
 }
 
 void ReplicationManager_i::
@@ -487,7 +550,8 @@ replica_selection_algo ()
       }
     }
     
-    build_rank_list ();
+    if (!static_mode_)
+      build_rank_list (); // this is only necessary for several hosts
   }
   send_rank_list ();
   send_state_synchronization_rank_list ();
@@ -552,32 +616,60 @@ app_reg (APP_INFO & app)
   const char * process_id = app.process_id.c_str();
   Role role = app.role;
 
-  update_map (host_name, process_id, this->hostid_process_map_);
-  update_proc_host_map (process_id, host_name, this->processid_host_map_);
-  update_util_map (object_id, load, this->objectid_load_map_);
+  if (!static_mode_)
+    {
+      update_map (host_name, process_id, this->hostid_process_map_);
+      update_proc_host_map (process_id, host_name, this->processid_host_map_);
+      update_util_map (object_id, load, this->objectid_load_map_);
   
-  ACE_Guard <ACE_Recursive_Thread_Mutex> guard (this->appset_lock_);
-  update_appset_map (object_id, app, this->objectid_appset_map_);
+      ACE_Guard <ACE_Recursive_Thread_Mutex> guard (this->appset_lock_);
+      update_appset_map (object_id, app, this->objectid_appset_map_);
 
-  switch (role)
-  {
-    case PRIMARY:
-      {
-        update_map (process_id, object_id, processid_primary_map_);
-        break;
-      }
-    case BACKUP:
-      {
-        update_map (process_id, object_id, processid_backup_map_);
-        static_ranklist_update(object_id, app.ior, role);
-        break;
-      }
-    default:
-      ACE_DEBUG((LM_ERROR,"Unknown Role!!\n"));
-  }
+      switch (role)
+	{
+	case PRIMARY:
+	  {
+	    update_map (process_id, object_id, processid_primary_map_);
+	    break;
+	  }
+	case BACKUP:
+	  {
+	    update_map (process_id, object_id, processid_backup_map_);
+	    static_ranklist_update(object_id, app.ior, role);
+	    break;
+	  }
+	default:
+	  ACE_DEBUG((LM_ERROR,"Unknown Role!!\n"));
+	}
 
-  ACE_DEBUG((LM_DEBUG,"Registered successfully %s:%s:%s:%d with Replication manager.\n",
-        host_name, process_id, object_id, role));
+      ACE_DEBUG((LM_DEBUG,"Registered successfully %s:%s:%s:%d with Replication manager.\n",
+		 host_name, process_id, object_id, role));
+    }
+  else // if in static_mode_
+    {
+      switch (role)
+	{
+	case PRIMARY: break;
+	case BACKUP:
+	  {
+	    // only update the rank list and ignore the other maps
+	    static_ranklist_update(object_id, app.ior, role);	  
+	    
+	    ACE_DEBUG((LM_DEBUG,"Registered %s:%s:%s:%d with Replication manager in static mode.\n",
+		       host_name, process_id, object_id, role));
+	    break;
+	  }
+	default:
+	  ACE_DEBUG((LM_ERROR,"Unknown Role!!\n"));
+	}
+
+      // add entry to the processid map
+      {
+	ACE_Guard <ACE_Thread_Mutex> protect (pid_object_mutex_);
+
+	pid_object_map_.bind (process_id, app.ior);
+      }
+    }
 }
 
 void ReplicationManager_i::
@@ -589,7 +681,7 @@ static_ranklist_update (const char * object_id,
   bool found = false;
   size_t i = 0;
   for (i = 0; i < rank_list_.length(); ++i)
-    if (rank_list_[i].object_id == object_id)
+    if (ACE_OS::strcmp (rank_list_[i].object_id, object_id) == 0)
     {
       found = true;
       break;

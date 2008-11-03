@@ -58,8 +58,9 @@ main (int argc, char *argv[])
       ACE_NEW_RETURN (rm_i, 
                       ReplicationManager_i (orb.in (), 
                                             RMOptions::instance()->hertz(), 
-                                            RMOptions::instance()->proactive()),
-                      1);
+                                            RMOptions::instance()->proactive(),
+					    RMOptions::instance()->static_mode ()),
+					    1);
       PortableServer::ServantBase_var owner_transfer (rm_i);
       PortableServer::ObjectId_var id =
         poa->activate_object (rm_i);
