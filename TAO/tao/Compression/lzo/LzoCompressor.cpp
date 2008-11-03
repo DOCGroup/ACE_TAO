@@ -5,6 +5,7 @@ ACE_RCSID (LZO,
            "$Id$")
 
 #include <lzo/lzo1x.h>
+#include <lzo/lzoutil.h>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,7 +29,7 @@ LzoCompressor::compress (
   target.length (static_cast <CORBA::ULong> (max_length));
 
   int const retval = ::lzo1x_1_compress (
-            reinterpret_cast <char*>(const_cast<CORBA::Octet*>(source.get_buffer ())),
+            reinterpret_cast <const char*>(source.get_buffer ()),
             source.length (),
             reinterpret_cast <char*>(target.get_buffer ()),
             max_length,
