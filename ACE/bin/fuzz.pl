@@ -287,7 +287,7 @@ sub check_for_noncvs_files ()
     }
 }
 
-# This test checks for the use of ACE_SYNCH_MUTEX in TAO/CIAO, 
+# This test checks for the use of ACE_SYNCH_MUTEX in TAO/CIAO,
 # TAO_SYNCH_MUTEX should used instead.
 
 sub check_for_ACE_SYNCH_MUTEX ()
@@ -313,12 +313,12 @@ sub check_for_ACE_SYNCH_MUTEX ()
                       next ITERATION;
                     }
 
-                    # Disable the check in the ESF directory for the 
+                    # Disable the check in the ESF directory for the
                     # time being until we fix the issues there.
                     if(($file =~ /.*TAO\/orbsvcs\/orbsvcs\/ESF.*/)) {
                       next ITERATION;
                     }
-                    
+
                     print_error ("$file:$.: found ACE_SYNCH_MUTEX, use TAO_SYNCH_MUTEX instead");
                 }
             }
@@ -330,7 +330,7 @@ sub check_for_ACE_SYNCH_MUTEX ()
     }
 }
 
-# This test checks for the use of ACE_Thread_Mutex in TAO/CIAO, 
+# This test checks for the use of ACE_Thread_Mutex in TAO/CIAO,
 # TAO_SYNCH_MUTEX should used instead to make the code build
 # in single-threaded builds.
 
@@ -356,7 +356,7 @@ sub check_for_ACE_Thread_Mutex ()
                     if (($file !~ /.*TAO.*/)) {
                       next ITERATION;
                     }
-                    
+
                     print_error ("$file:$.: found ACE_Thread_Mutex, use TAO_SYNCH_MUTEX instead to allow the code to work in single-threaded builds");
                 }
             }
@@ -400,7 +400,7 @@ sub check_for_lack_ACE_OS ()
 {
     $OS_NS_arpa_inet_symbols = "inet_addr|inet_aton|inet_ntoa|inet_ntop|inet_pton";
 
-    $OS_NS_ctype_symbols = "isalnum|isalpha|iscntrl|isdigit|isgraph|islower|isprint|ispunct|isspace|isupper|isxdigit|tolower|toupper";
+    $OS_NS_ctype_symbols = "isalnum|isalpha|iscntrl|isdigit|isgraph|islower|isprint|ispunct|isspace|isupper|isxdigit|tolower|toupper|isblank|isascii|isctype|iswctype";
 
     $OS_NS_dirent_symbols = "closedir|opendir|readdir|readdir_r|rewinddir|scandir|alphasort|seekdir|telldir|opendir_emulation|scandir_emulation|closedir_emulation|readdir_emulation";
 

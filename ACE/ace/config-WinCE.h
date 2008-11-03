@@ -91,6 +91,8 @@
 #define ACE_HAS_TYPES_H
 #define ACE_LACKS_DEV_T
 
+#define ACE_ISCTYPE_EQUIVALENT ::_isctype
+
 // WinCE only supports the UNICODE API
 #if !defined (ACE_USES_WCHAR)
 # define ACE_USES_WCHAR

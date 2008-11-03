@@ -991,18 +991,104 @@ pagesize_test (void)
 }
 
 int
-ace_isprint_test (void)
+ace_ctype_test (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Testing ace_isprint method\n")));
+              ACE_TEXT ("Testing ace ctype methods\n")));
 
-  int const result = ACE_OS::ace_isprint (ACE_TEXT('\t'));
+  int retval = 0;
+  int result = ACE_OS::ace_isprint (ACE_TEXT('\t'));
   if (result != 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isprintf should return 0 for tab ")
                             ACE_TEXT ("but it returned %d\n"), result));
-      return 1;
+      ++retval;
     }
+  result = ACE_OS::ace_isblank (ACE_TEXT('\t'));
+  if (result == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isblank should return != 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isalpha (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isalpha should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isupper (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isupper should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_islower (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_islower should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isdigit (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isdigit should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isxdigit (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isxdigit should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isspace (ACE_TEXT('\t'));
+  if (result == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isspace should return != 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_ispunct (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_ispunct should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isalnum (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isalnum should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isgraph (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isgraph should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_iscntrl (ACE_TEXT('\t'));
+  if (result == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_iscntrl should return != 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isascii (ACE_TEXT('\t'));
+  if (result == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isascii should return != 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+
   return 0;
 }
 
@@ -1070,7 +1156,7 @@ run_main (int, ACE_TCHAR *[])
   if ((result = last_error_test ()) != 0)
       status = result;
 
-  if ((result = ace_isprint_test ()) != 0)
+  if ((result = ace_ctype_test ()) != 0)
       status = result;
 
   ACE_END_TEST;

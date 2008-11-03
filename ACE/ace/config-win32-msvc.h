@@ -133,6 +133,10 @@
 #define ACE_WCSTOULL_EQUIVALENT ::_wcstoui64
 #define ACE_WTOF_EQUIVALENT ::_wtof
 
+#define ACE_LACKS_ISBLANK
+#define ACE_LACKS_ISWBLANK
+#define ACE_ISCTYPE_EQUIVALENT ::_isctype
+
 // Turn off warnings for /W4
 // To resume any of these warning: #pragma warning(default: 4xxx)
 // which should be placed after these defines
