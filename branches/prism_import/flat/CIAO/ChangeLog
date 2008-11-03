@@ -1,3 +1,14 @@
+Mon Nov  3 18:32:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
+        * DAnCE/NodeManager/Node_Manager_Module.cpp
+        * DAnCE/NodeManager/NodeManager.mpc
+        * DAnCE/Starter/Starter.h
+        * MPC/config/cidlc.mpb
+        * MPC/config/dance_node_manager.mpb
+        * tools/XML/XML.mpc
+          Fixed various compile/link problems
+
 Mon Nov  3 17:13:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/NodeApplication.mpc:
