@@ -174,6 +174,7 @@
 
 #define ACE_HAS_CHARPTR_SOCKOPT
 #define ACE_LACKS_SYMLINKS
+#define ACE_LACKS_ISCTYPE
 
 #if defined __RTP__
   // We are building for RTP mode
