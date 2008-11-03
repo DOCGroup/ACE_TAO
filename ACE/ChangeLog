@@ -1,3 +1,10 @@
+Mon Nov  3 10:27:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/svn/config:
+        * docs/svn/svn-prefs.reg:
+          bmak files shouldn't be in the repo so added them to the global
+          ignore list
+
 Mon Nov  3 09:32:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_ctype.inl:
