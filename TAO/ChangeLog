@@ -1,3 +1,30 @@
+Mon Nov  3 10:24:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object_Ref_Table.cpp:
+        * tao/Object_Ref_Table.h:
+        * tao/Object_Ref_Table.inl:
+        * tao/ORB.cpp:
+        * tao/ORB.h:
+          Added ORB::unregister_initial_reference to unregister a rir
+          from the ORB. Usefull when we load and unload services on demand.
+          Reported an enhancement request to the OMG. Also reworked the
+          ORT a little bit to make sure we atomically update the table
+
+        * orbsvcs/orbsvcs/Naming/Naming_Service_Container.h:
+        * orbscvs/Naming_Service/Naming_Service.h:
+          Layout change
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.h:
+          Const/bool changes. Also unregister the NamingService from the
+          ORB rir table.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
+          Use the tchar argv array
+
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+          result is only used within the try/catch block
+
 Mon Nov  3 09:08:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Abstract_Interface/run_test.pl
