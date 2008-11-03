@@ -105,7 +105,7 @@ TAO_Object_Ref_Table::bind_i (const char *id, CORBA::Object_ptr obj)
   return 0;
 }
 
-ACE_INLINE CORBA::Object_ptr
+CORBA::Object_ptr
 TAO_Object_Ref_Table::resolve_initial_reference (const char * id)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
