@@ -9,16 +9,11 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
-my $target = PerlACE::TestTarget::create_target (1);
+my $target = PerlACE::TestTarget::create_target(1) || die "Create target 1 failed\n";
 
 print STDERR "\n\n==== Running Codec test\n";
 
-if (PerlACE::is_vxworks_test()) {
-    $T = new PerlACE::ProcessVX ("client");
-}
-else {
-    $T = $target->CreateProcess ("client");
-}
+$T = $target->CreateProcess ("client");
 
 $test = $T->SpawnWaitKill ($target->ProcessStartWaitInterval());
 

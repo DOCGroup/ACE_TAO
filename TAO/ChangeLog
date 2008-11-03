@@ -1,3 +1,17 @@
+Mon Nov  3 09:08:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Abstract_Interface/run_test.pl
+        * tests/AMH_Exceptions/run_test.pl
+        * tests/Bug_2702_Regression/run_test.pl
+        * tests/CallbackTest/run_test.pl
+        * tests/Codec/run_test.pl
+        * tests/Collocation/run_test.pl
+        * tests/Hello/run_test.pl
+        * tests/Param_Test/run_test.pl
+        * tests/Portable_Interceptors/AdvSlot/run_test.pl
+        * tests/Portable_Interceptors/AdvSlotDblCpy/run_test.pl
+          Updated these file to match the TestTarget changes
+
 Sat Nov  1 13:39:29 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
@@ -5,11 +19,11 @@ Sat Nov  1 13:39:29 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
           Added method to allow applications collocating the IFR service
           to provide an alternate POA for it to use as root rather than
-          having the IFR service use the ORB's root POA. This was found 
-          to be necessary when an application linking the IFR service 
+          having the IFR service use the ORB's root POA. This was found
+          to be necessary when an application linking the IFR service
           needed to have it use a POA with an endpoint policy applied to
           enforce access restrictions on the IFR.
-        
+
 Sat Nov  1 12:43:06 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
