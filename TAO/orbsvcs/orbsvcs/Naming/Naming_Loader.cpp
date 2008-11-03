@@ -43,7 +43,7 @@ TAO_Naming_Loader::init (int argc, ACE_TCHAR *argv[])
       // Initialize the ORB
       CORBA::ORB_var orb =
         CORBA::ORB_init (command_line.get_argc(),
-						 command_line.get_TCHAR_argv());
+                         command_line.get_TCHAR_argv());
 
       // This function call initializes the Naming Service
       CORBA::Object_var object =
