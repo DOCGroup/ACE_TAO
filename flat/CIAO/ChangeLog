@@ -1,3 +1,14 @@
+Mon Nov  3 19:56:29 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/NodeManager.mpc:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleConsumer.idl:
+        * ciao/Containers/Session/Session_Container.mpc:
+        * tests/CIAO_ComponentServer/SimpleComponent/client.cpp:
+        * tools/XML/XML_Error_Handler.cpp:
+        * tools/XML/XML_Helper.tpp:
+
+          Compile/link fixes on linux.
+        
 Mon Nov  3 18:32:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
