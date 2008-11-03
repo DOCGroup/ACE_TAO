@@ -233,6 +233,7 @@
 #define ACE_LACKS_ITOW
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
+#define ACE_LACKS_ISWASCII
 
 #if __GLIBC__ >= 2
 # define ACE_HAS_3_PARAM_WCSTOK
