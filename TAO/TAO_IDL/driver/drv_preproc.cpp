@@ -523,12 +523,14 @@ DRV_cpp_post_init (void)
     {
       DRV_add_include_path (include_path4, CIAO_ROOT, 0);
       DRV_add_include_path (include_path5, CIAO_ROOT, "/ciao");
+      DRV_add_include_path (include_path5, CIAO_ROOT, "/ccm");
     }
   else if (TAO_ROOT != 0)
     {
       // If CIAO_ROOT hasn't been set, maybe it's nested under TAO_ROOT.
       DRV_add_include_path (include_path4, TAO_ROOT, "/CIAO");
       DRV_add_include_path (include_path5, TAO_ROOT, "/CIAO/ciao");
+      DRV_add_include_path (include_path5, TAO_ROOT, "/CIAO/ccm");
     }
   else
     {
@@ -539,6 +541,7 @@ DRV_cpp_post_init (void)
         {
           DRV_add_include_path (include_path4, ACE_ROOT, "/TAO/CIAO");
           DRV_add_include_path (include_path5, ACE_ROOT, "/TAO/CIAO/ciao");
+          DRV_add_include_path (include_path5, ACE_ROOT, "/TAO/CIAO/ccm");
         }
       else
         {
