@@ -1,3 +1,9 @@
+Mon Nov 03 14:13:12 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
+
+        * ACE_wrappers/TAO/orbsvcs/tests/Notify/Bug_2415_Regression/Supplier.cpp
+
+          Fixed compiler warning.
+
 Mon Nov  3 10:28:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_3486_Regression/*:
