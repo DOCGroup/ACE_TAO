@@ -69,6 +69,7 @@ TAO/orbsvcs/tests/Bug_2777_Regression/run_test.pl: !MINIMUM !CORBA_E_MICRO !ACE_
 TAO/orbsvcs/tests/Bug_2926_Regression/run_test.pl: !ST !NO_MESSAGING !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !LynxOS !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Bug_3215_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Bug_3216_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !VxWorks !VxWorks_RTP
+TAO/orbsvcs/tests/Bug_3486_Regression/run_test.pl: !NO_MESSAGING !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !LynxOS !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/CosEvent/Basic/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/HTIOP/Hello/run_test.pl: !NO_UUID !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/HTIOP/AMI/run_test.pl: !NO_UUID !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP
