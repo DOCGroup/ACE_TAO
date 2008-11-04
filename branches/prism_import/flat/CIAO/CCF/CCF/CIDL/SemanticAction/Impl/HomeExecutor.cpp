@@ -17,8 +17,6 @@ namespace CCF
     {
       namespace Impl
       {
-        using namespace SemanticGraph;
-
         HomeExecutor::
         HomeExecutor (Context& c)
             : Base (c)
@@ -40,8 +38,8 @@ namespace CCF
         {
           if (ctx.trace ()) cerr << "implements " << id << endl;
 
-          Name name (id->lexeme ());
-          ScopedName from (ctx.scope ().scoped_name ());
+          SemanticGraph::Name name (id->lexeme ());
+          SemanticGraph::ScopedName from (ctx.scope ().scoped_name ());
 
           c_ = 0;
 
@@ -55,7 +53,7 @@ namespace CCF
               c_ = &dynamic_cast<SemanticGraph::Component&> (
                 h.manages ().managee ());
 
-              ctx.tu ().new_edge<Implements> (*he_, h);
+              ctx.tu ().new_edge<SemanticGraph::Implements> (*he_, h);
             }
             catch (Resolve const&)
             {
@@ -98,12 +96,12 @@ namespace CCF
               ctx.tu ().new_node<SemanticGraph::ComponentExecutor> (
                 ctx.file (), id->line ()));
 
-            ctx.tu ().new_edge<Implements> (ce, *c_);
+            ctx.tu ().new_edge<SemanticGraph::Implements> (ce, *c_);
 
-            ctx.tu ().new_edge<Defines> (ctx.scope (), ce, id->lexeme ());
-            ctx.tu ().new_edge<Defines> (ctx.scope (), *he_, id_->lexeme ());
+            ctx.tu ().new_edge<SemanticGraph::Defines> (ctx.scope (), ce, id->lexeme ());
+            ctx.tu ().new_edge<SemanticGraph::Defines> (ctx.scope (), *he_, id_->lexeme ());
 
-            ctx.tu ().new_edge<Manages> (*he_, ce);
+            ctx.tu ().new_edge<SemanticGraph::Manages> (*he_, ce);
           }
         }
 
