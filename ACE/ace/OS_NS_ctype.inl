@@ -37,7 +37,11 @@ ACE_OS::ace_isascii (ACE_TCHAR c)
   return iswascii (c);
 # endif
 #else /* ACE_USES_WCHAR */
+# if defined (ACE_LACKS_ISASCII)
+  return (c <= 0x7F);
+#else
   return isascii ((unsigned char) c);
+#endif /* ACE_LACKS_ISASCII */
 #endif /* ACE_USES_WCHAR */
 }
 

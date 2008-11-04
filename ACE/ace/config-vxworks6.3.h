@@ -199,6 +199,7 @@
     #define ACE_IOV_MAX 16
   #endif
   #define ACE_HAS_TIMEZONE
+  #define ACE_LACKS_ISASCII
 #else
   // We are building for kernel mode
   #define ACE_LACKS_SUSECONDS_T
