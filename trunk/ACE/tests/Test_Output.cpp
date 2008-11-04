@@ -180,7 +180,7 @@ ACE_Test_Output::close (void)
   // have closed the output_file_
 }
 
-ACE_Test_Output*
+ACE_Test_Output *
 ACE_Test_Output::instance ()
 {
   if (ACE_Test_Output::instance_ == 0)
