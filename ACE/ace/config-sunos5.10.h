@@ -27,6 +27,11 @@
 #  undef ACE_LACKS_LOG2
 #endif
 
+// Solaris 10 offers a useable isblank() unlike previous Solaris versions.
+#if defined (ACE_LACKS_ISBLANK)
+#  undef ACE_LACKS_ISBLANK
+#endif
+
 // Solaris 10 delivers pthread_attr_setstack
 #if defined (ACE_LACKS_PTHREAD_ATTR_SETSTACK)
 #  undef ACE_LACKS_PTHREAD_ATTR_SETSTACK
