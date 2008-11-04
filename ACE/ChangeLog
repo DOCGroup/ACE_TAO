@@ -1,3 +1,11 @@
+Tue Nov  4 07:45:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.5.h:
+          Added ACE_LACKS_ISCTYPE/ACE_LACKS_ISBLANK
+
+        * ace/config-sunos5.10.h:
+          SunOS 10 has isblank
+
 Tue Nov  4 07:09:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
