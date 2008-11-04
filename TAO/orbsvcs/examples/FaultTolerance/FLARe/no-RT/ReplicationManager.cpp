@@ -4,6 +4,8 @@
 
 #include <string>
 
+#include "ace/OS_NS_unistd.h"
+
 #include "LWFTC.h"
 
 template <class T>

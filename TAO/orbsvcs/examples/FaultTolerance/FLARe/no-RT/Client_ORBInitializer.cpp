@@ -10,7 +10,7 @@ ACE_RCSID (Hello,
 
 #include "Client_Request_Interceptor.h"
 
-#include "tao/StringSeqC.h"
+//#include "tao/StringSeqC.h"
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_string.h"
 

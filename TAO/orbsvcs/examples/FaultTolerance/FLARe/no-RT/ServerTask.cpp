@@ -11,7 +11,7 @@
 //=============================================================================
 
 #include "ServerTask.h"
-#include "tao/RTPortableServer/RTPortableServer.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "AppOptions.h"
 #include "LWFTC.h"
 #include "test_i.h"

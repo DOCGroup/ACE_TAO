@@ -13,6 +13,8 @@
 #include "StateSynchronizationAgent_i.h"
 #include "CorbaStateUpdate.h"
 
+#include <string>
+
 #ifdef FLARE_USES_DDS
 # include "DDSStateUpdate_T.h"
 # include "StateDcps_impl.h"
