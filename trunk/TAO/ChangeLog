@@ -1,11 +1,18 @@
+Tue Nov  4 08:16:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3108_Regression/run_test.pl
+        * tests/Bug_3299_Regression/run_test.pl
+        * tests/Portable_Interceptors/Bug_2133/run_test.pl
+          Updated for test framework changes
+
 Mon Nov  3 20:11:55 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/driver/drv_mcpp_preproc.cpp:
         * TAO_IDL/driver/drv_preproc.cpp:
 
           Added CIAO_ROOT/ccm to include paths, this is present in the forthcoming
-          CIAO version. 
-        
+          CIAO version.
+
 Mon Nov  3 15:45:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Compression/lzo/LzoCompressor.cpp:
