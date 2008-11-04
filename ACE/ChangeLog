@@ -1,3 +1,10 @@
+Tue Nov  4 13:39:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabled a few tests for labview and add !WinCE to all
+          !LabVIEW_RT marked tests so that we can start testing
+          for wince
+
 Tue Nov  4 08:52:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_ctype.inl:
