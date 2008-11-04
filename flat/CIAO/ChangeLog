@@ -1,3 +1,12 @@
+Tue Nov  4 10:10:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CCF/CCF/CIDL/SemanticAction/Impl/Composition.cpp:
+        * CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.cpp:
+          Fixed ambiguity problems with CodeGear C++ Builder 2009
+
+        * CCF/CCF/CIDL/CIDL.mpc
+          Set /P flag for the archiver with bmake
+
 Mon Nov  3 19:56:29 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/NodeManager.mpc:
@@ -8,7 +17,7 @@ Mon Nov  3 19:56:29 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/XML/XML_Helper.tpp:
 
           Compile/link fixes on linux.
-        
+
 Mon Nov  3 18:32:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc

@@ -17,8 +17,6 @@ namespace CCF
     {
       namespace Impl
       {
-        using namespace SemanticGraph;
-
         Composition::
         Composition (Context& c)
             : ScopeBase<SemanticGraph::Composition> (c)
@@ -32,26 +30,26 @@ namespace CCF
 
           if(c == Category::entity)
           {
-            now (ctx.tu ().new_node<EntityComposition> (
+            now (ctx.tu ().new_node<SemanticGraph::EntityComposition> (
                    ctx.file (), id->line ()));
           }
           else if (c == Category::process)
           {
-            now (ctx.tu ().new_node<ProcessComposition> (
+            now (ctx.tu ().new_node<SemanticGraph::ProcessComposition> (
                    ctx.file (), id->line ()));
           }
           else if (c == Category::service)
           {
-            now (ctx.tu ().new_node<ServiceComposition> (
+            now (ctx.tu ().new_node<SemanticGraph::ServiceComposition> (
                    ctx.file (), id->line ()));
           }
           else
           {
-            now (ctx.tu ().new_node<SessionComposition> (
+            now (ctx.tu ().new_node<SemanticGraph::SessionComposition> (
                    ctx.file (), id->line ()));
           }
 
-          ctx.tu ().new_edge<Defines> (ctx.scope (), now (), id->lexeme ());
+          ctx.tu ().new_edge<SemanticGraph::Defines> (ctx.scope (), now (), id->lexeme ());
         }
 
         void Composition::
