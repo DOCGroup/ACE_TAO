@@ -1,11 +1,11 @@
 // -*- MPC -*-
 // $Id$
 
-project {
+project : taoidldefaults {
   Define_Custom(SpliceTypeSupport) {
     automatic             = 1
-    command               = $(OSPL_HOME)/bin/idlpp
-    dependent             = $(OSPL_HOME)/bin/idlpp
+    command               = <%quote%>$(OSPL_HOME)/bin/idlpp<%quote%>
+    dependent             = <%quote%>$(OSPL_HOME)/bin/idlpp<%quote%>
     source_pre_extension  = , Dcps, SplDcps, Dcps_impl
     source_outputext      = .cpp
     header_pre_extension  = , Dcps, SplDcps, Dcps_impl
@@ -17,9 +17,8 @@ project {
   }
 
   splice_ts_flags += \
-    -I $(OSPL_HOME)/include/dcps/C++/CCPP \
-    -l cpp -C
+    -I <%quote%>$(OSPL_HOME)/include/dcps/C++/CCPP/$(SPLICE_ORB)<%quote%> \
+    -l cpp -C -b CCPP/$(SPLICE_ORB)
 
-  includes += $(OSPL_HOME)/include/dcps/C++/CCPP/$(SPLICE_ORB)
-  includes += $(OSPL_HOME)/include/dcps/C++/CCPP
+  idlflags += -I <%quote%>$(OSPL_HOME)/custom_lib/ccpp<%quote%>
 }

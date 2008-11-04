@@ -12,6 +12,7 @@
 
 #ifndef _REPLICATION_AGENT_I_H_
 #define _REPLICATION_AGENT_I_H_
+
 #include <list>
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Thread_Mutex.h"
@@ -27,7 +28,8 @@
 # include "DDSFailure.h"
 #endif 
 
-class SSA_Export StateSynchronizationAgent_i : public POA_StateSynchronizationAgent
+class SSA_Export StateSynchronizationAgent_i
+  : public POA_StateSynchronizationAgent
 {
  public:
   /// ctor
@@ -39,7 +41,7 @@ class SSA_Export StateSynchronizationAgent_i : public POA_StateSynchronizationAg
                                bool use_corba = true);
 
   /// dtor
-  ~StateSynchronizationAgent_i ();
+  ~StateSynchronizationAgent_i (void);
 
   /// implementation of the StateSynchronizationAgent interface
   virtual void state_changed (const char * object_id);
@@ -69,8 +71,6 @@ class SSA_Export StateSynchronizationAgent_i : public POA_StateSynchronizationAg
     ACE_Hash<ACE_CString>,
     ACE_Equal_To<ACE_CString>,
     ACE_Null_Mutex> OBJECTID_APPLICATION_MAP;
-
- private:
 
 #ifdef FLARE_USES_DDS
 

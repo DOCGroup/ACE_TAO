@@ -14,7 +14,8 @@
 #define _STATEFUL_OBJECT_H_
 
 // forward declaration
-namespace CORBA {
+namespace CORBA
+{
   class Any;
 };
 

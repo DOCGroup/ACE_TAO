@@ -15,7 +15,7 @@
 
 #include "ace/Task.h"
 #include "StateSynchronizationAgentC.h"
-#include "tao/RTCORBA/RTCORBA.h"
+//#include "tao/RTCORBA/RTCORBA.h"
 #include "tao/PortableServer/POAC.h"
 
 struct ServerOptions
@@ -24,7 +24,7 @@ struct ServerOptions
     : bands_file ("empty-file"),
       lanes_file ("empty-file"),
       rm_ior_file ("file://rm.ior"),
-      pool_priority (ACE_INT16_MIN),      
+//      pool_priority (ACE_INT16_MIN),      
       static_threads (1),
       number_of_lanes (0),
       stop (0),
@@ -33,7 +33,7 @@ struct ServerOptions
   const char *bands_file;
   const char *lanes_file;
   const char *rm_ior_file;
-  RTCORBA::Priority pool_priority;
+//  RTCORBA::Priority pool_priority;
   CORBA::ULong static_threads;
   CORBA::ULong number_of_lanes;
   int stop;

@@ -1,3 +1,23 @@
+Tue Nov  4 16:12:20 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/StateSynchronizationAgent_i.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/StateSynchronizationAgent_i.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/MPC/config/splicelib.mpb:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/MPC/config/splicelib_with_idl.mpb:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/MPC/config/splice_ts_defaults.mpb:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/LWFT.idl:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/LWFT.mpc:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/StatefulObject.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Client_ORBInitializer.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ssa_export.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/server.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ReplicationManager.cpp:
+
+          Changes to get a successful build with Visual Studio, and to
+          remove the RT stuff left in the no-RT directory.
+
 Mon Oct 13 18:24:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.cpp:

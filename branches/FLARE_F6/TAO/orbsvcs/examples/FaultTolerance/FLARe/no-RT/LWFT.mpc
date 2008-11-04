@@ -2,7 +2,8 @@
 // $Id$
 
 project(*idl): taoidldefaults {
-  idlflags    += -Wb,export_macro=TAO_LWFT_Export -Wb,export_include=lwft_export.h
+  idlflags    += -Wb,export_macro=TAO_LWFT_Export \
+                 -Wb,export_include=lwft_export.h
 
   IDL_Files {
     StateSynchronizationAgent.idl
@@ -20,10 +21,16 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Common) : rtportableserver, pi_server, interceptors, iorinterceptor {
+project(*Common) : pi_server, interceptors, iorinterceptor {
   after += *idl
   sharedname = LWFT_Common
   dynamicflags = TAO_LWFT_BUILD_DLL
+  
+  // This feature is mysteriously turned off in vc_warnings.mpb,
+  // but we seem to need it here, for ArgPair.cpp
+  specific(vc8, vc9, nmake) {
+    macros += _SCL_SECURE_NO_WARNINGS
+  }
   
   IDL_Files {
   }
@@ -37,6 +44,7 @@ project(*Common) : rtportableserver, pi_server, interceptors, iorinterceptor {
     Hello.cpp
     IOR_Interceptor.cpp
     LWFTDataStructuresC.cpp
+    LWFTDataStructuresS.cpp
     LWFTC.cpp
     LWFTS.cpp
     monitorC.cpp
@@ -53,11 +61,12 @@ project(*Common) : rtportableserver, pi_server, interceptors, iorinterceptor {
 }
 
 
-project(*server): rt_server, pi_server, interceptors, iorinterceptor {
+project(*server): pi_server, interceptors, iorinterceptor, splicelib {
 
   after += *Common *StateSyncAgent
   libs += LWFT_Common LWFT_StateSyncAgent
   exename = server 
+  includes += $(TAO_ROOT)/tao
   
   IDL_Files {
   }
@@ -70,18 +79,21 @@ project(*server): rt_server, pi_server, interceptors, iorinterceptor {
   
   Header_Files {
   }
+  
+  Inline_Files {
+  }
+  
+  Template_Files {
+  }
 }
 
-// add ssa_dds as a base project to include DDS functionality here
-project(*StateSyncAgent) : portableserver { 
-
+project(*StateSyncAgent) : portableserver, splicelib {
   after += *Common 
-  macros += SSA_EXPORT_BUILD_DLL
+  dynamicflags = SSA_BUILD_DLL
   libs += LWFT_Common 
-  libpaths += $(FLARE_ROOT)
-
-  // the IDL_Files block has to be removed for
-  // DDS integration
+  sharedname = LWFT_StateSyncAgent
+  includes += $(TAO_ROOT)/tao
+  
   IDL_Files {
   }
 
@@ -92,9 +104,59 @@ project(*StateSyncAgent) : portableserver {
     StateSyncAgentTask.cpp
   }
 
+  Header_Files {
+    ssa_export.h
+  }
+  
+  Inline_Files {
+  }
+  
+  Template_Files {
+    DDSStateReaderListener_T.cpp
+    DDSStateUpdate_T.cpp
+  }
 }
 
-project(*client): rt_client, pi_server, interceptors {
+project(*StateTopic) : portableserver, splicelib_with_idl {
+  idlflags += -Wb,export_macro=State_TS_Export \
+              -Wb,export_include=state_ts_export.h
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  } 
+
+  dynamicflags += STATE_TS_BUILD_DLL
+  macros += DDS_API=State_TS_Export
+  sharedname = LWFT_StateTopic
+  idlflags += -SS
+  includes += $(TAO_ROOT)/tao
+
+  SpliceTypeSupport_Files {
+    State.idl >> StateDcps.idl StateDcps_impl.cpp StateSplDcps.cpp
+  }
+  
+  IDL_Files {
+    State.idl
+    StateDcps.idl
+  }
+
+  Source_Files {
+    StateC.cpp
+    StateDcpsC.cpp
+    StateDcps_impl.cpp
+    StateSplDcps.cpp
+  }
+  
+  Inline_Files {
+    StateC.inl
+    StateDcpsC.inl
+  }
+  
+  Template_Files {
+  }
+}
+
+project(*client): pi_server, interceptors {
   after += *Common
   libs += LWFT_Common
   exename = client
@@ -107,6 +169,12 @@ project(*client): rt_client, pi_server, interceptors {
     client.cpp
     Client_ORBInitializer.cpp
     Client_Request_Interceptor.cpp
+  }
+  
+  Inline_Files {
+  }
+  
+  Template_Files {
   }
 }
 
@@ -128,6 +196,12 @@ project(*HostMonitor): taoserver, naming {
     RM_Proxy.cpp
     Utilization_Monitor.cpp
   }
+  
+  Inline_Files {
+  }
+  
+  Template_Files {
+  }
 }
 
 project(*ReplicationManager): taoserver, naming {
@@ -142,5 +216,11 @@ project(*ReplicationManager): taoserver, naming {
     ReplicationManager.cpp
     ReplicationManager_process.cpp
     RMOptions.cpp
+  }
+  
+  Inline_Files {
+  }
+  
+  Template_Files {
   }
 }

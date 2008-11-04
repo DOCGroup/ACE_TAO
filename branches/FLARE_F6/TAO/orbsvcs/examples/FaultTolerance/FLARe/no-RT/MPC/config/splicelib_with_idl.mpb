@@ -1,5 +1,5 @@
 // -*- MPC -*-
 // $Id$
 
-project : splicelib, splice_ts_defaults, ddswithtaoidl {
+project : splicelib, splice_ts_defaults {//, ddswithtaoidl {
 }

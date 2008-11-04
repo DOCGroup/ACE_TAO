@@ -7,7 +7,7 @@
 #include "ace/Task.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "tests/RTCORBA/check_supported_priorities.cpp"
+//#include "tests/RTCORBA/check_supported_priorities.cpp"
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
 #include "AppSideReg.h"
@@ -29,7 +29,7 @@ int
 parse_args (int argc, char *argv[], ServerOptions & options)
 {
   ACE_Get_Opt get_opts (argc, argv,
-                        "b:c:df:hl:n:s:a:r:" // server options
+                        "b:hl:n:s:a:c:" // server options
 			"i:k:p:z:"        // options from the rtcorba example
                         );
   int c;
@@ -41,9 +41,9 @@ parse_args (int argc, char *argv[], ServerOptions & options)
         options.bands_file = get_opts.opt_arg ();
         break;
 
-      case 'f':
-        options.pool_priority = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+//      case 'f':
+//        options.pool_priority = ACE_OS::atoi (get_opts.opt_arg ());
+//        break;
 
       case 'l':
         options.lanes_file = get_opts.opt_arg ();
