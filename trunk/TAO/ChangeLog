@@ -1,3 +1,18 @@
+Tue Nov  4 13:37:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Hello/run_test.pl
+        * tests/Portable_Interceptors/Bug_2133/run_test.pl
+        * tests/Portable_Interceptors/Bug_2510_Regression/run_test.pl
+        * tests/Portable_Interceptors/Bug_3080/run_test.pl
+        * tests/Portable_Interceptors/Dynamic/run_test.pl
+        * tests/Portable_Interceptors/IORInterceptor/run_test.pl
+        * tests/Portable_Interceptors/ORB_Shutdown/run_test.pl
+        * tests/Portable_Interceptors/PICurrent/run_test.pl
+          Updated to the new test framework
+
+        * tests/Portable_Interceptors/PICurrent/server.cpp
+          parse the args after initailizing the orb
+
 Tue Nov  4 10:45:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_3486_Regression/server.cpp:

@@ -18,7 +18,7 @@ foreach $i (@ARGV) {
 }
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create targer 2 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 my $iorbase = "server.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
@@ -26,13 +26,8 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-ORBDebuglevel $debug_level -o $iorbase");
-}
-else {
-    $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
-}
-$CL = $client->CreateProcess ("client", "-k file://server.ior");
+$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
+$CL = $client->CreateProcess ("client", "-k file://$client_iorfile");
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
@@ -58,7 +53,7 @@ if ($client->PutFile ($iorbase) == -1) {
     exit 1;
 }
 
-$client_status = $CL->SpawnWaitKill (300);
+$client_status = $CL->SpawnWaitKill (60);
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
