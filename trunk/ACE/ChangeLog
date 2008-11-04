@@ -1,8 +1,13 @@
+Tue Nov  4 07:05:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-aix-5.x.h:
+          Added ACE_HAS_CTYPE_T
+
 Mon Nov  3 20:05:10 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/config-macosx-leopard.h:
-          Added ACE_ISCTYPE_EQUIVALENT.  
-        
+          Added ACE_ISCTYPE_EQUIVALENT.
+
 Mon Nov  3 17:15:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-lynxos.h:
