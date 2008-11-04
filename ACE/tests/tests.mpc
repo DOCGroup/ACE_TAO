@@ -874,6 +874,14 @@ project(Priority Reactor Test) : acetest {
   }
 }
 
+project(Process Test) : acetest {
+  avoids += ace_for_tao
+  exename = Process_Test
+  Source_Files {
+    Process_Test.cpp
+  }
+}
+
 project(Process Manager Test) : acetest {
   avoids += ace_for_tao
   exename = Process_Manager_Test

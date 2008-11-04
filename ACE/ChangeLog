@@ -1,3 +1,17 @@
+
+Tue Nov  4 15:18:17 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Process_Test.cpp: Added a new test that exercises the new
+          handle inheritance mechanisms of ACE_Process.  Thanks to
+          Christian Fromme <kaner at strace dot org> for contributing this
+          test.
+
+Tue Nov  4 14:15:07 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/tests.mpc: 
+        * tests/run_test.lst (Process_Test): Added the new test for the
+          ACE_Process class. 
+
 Tue Nov  4 13:59:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OS_Test.cpp:
