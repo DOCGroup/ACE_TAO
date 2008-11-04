@@ -28,7 +28,7 @@ project(*Client): taoclient, messaging {
 
 project(*Middle_Server): messaging, taoserver, amh {
   after += *idl
-  exename = midle_server
+  exename = middle_server
   IDL_Files {
   }
 
