@@ -1,3 +1,8 @@
+Tue Nov  4 07:09:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Added ACE_LACKS_ISCTYPE
+
 Tue Nov  4 07:05:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-aix-5.x.h:
