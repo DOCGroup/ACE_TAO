@@ -1011,6 +1011,13 @@ ace_ctype_test (void)
                             ACE_TEXT ("but it returned %d\n"), result));
       ++retval;
     }
+  result = ACE_OS::ace_isblank (ACE_TEXT(' '));
+  if (result == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isblank should return != 0 for space ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
   result = ACE_OS::ace_isalpha (ACE_TEXT('\t'));
   if (result != 0)
     {

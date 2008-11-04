@@ -53,7 +53,7 @@ ACE_OS::ace_isblank (ACE_TCHAR c)
 #  if !defined (ACE_LACKS_ISWCTYPE)
   return ace_iswctype (c, _BLANK);
 #  else
-  return (c == 0x9) || (c == 0x40);
+  return (c == 0x9) || (c == 0x20);
 #  endif
 #else
   return iswblank (c);
@@ -62,7 +62,7 @@ ACE_OS::ace_isblank (ACE_TCHAR c)
 #  if !defined (ACE_LACKS_ISCTYPE)
   return ace_isctype (c, _BLANK);
 #  else
-  return (c == 0x9) || (c == 0x40);
+  return (c == 0x9) || (c == 0x20);
 #  endif
 #else /* ACE_USES_WCHAR */
   return isblank ((unsigned char) c);
