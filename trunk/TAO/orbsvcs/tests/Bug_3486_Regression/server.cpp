@@ -73,6 +73,8 @@ void loadunloadcycle()
   TAO_Naming_Loader * p_NamingService =
     ACE_Dynamic_Service<TAO_Naming_Loader>::instance("testNamingService");
 
+  ACE_UNUSED_ARG (p_NamingService);
+
   ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - unloading\n")

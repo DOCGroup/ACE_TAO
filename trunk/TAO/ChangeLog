@@ -1,3 +1,8 @@
+Tue Nov  4 10:45:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_3486_Regression/server.cpp:
+          Fixed unused variable warning
+
 Tue Nov  4 08:16:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3108_Regression/run_test.pl
