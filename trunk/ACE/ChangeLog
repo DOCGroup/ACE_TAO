@@ -1,3 +1,11 @@
+Tue Nov  4 13:59:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OS_Test.cpp:
+          Added isblank test for space
+
+        * ace/OS_NS_ctype.inl:
+          Fixed bug in isblank for space
+
 Tue Nov  4 13:39:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
