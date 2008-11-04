@@ -216,6 +216,7 @@
   #define ACE_HAS_VFWPRINTF
   #define ACE_SIZEOF_WCHAR 2
   #define ACE_HAS_TIMEZONE
+  #define ACE_LACKS_ISASCII
 #else
   // We are building for kernel mode
   #define ACE_LACKS_INTPTR_T
