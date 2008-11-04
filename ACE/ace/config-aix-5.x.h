@@ -247,6 +247,8 @@
 
 #define ACE_HAS_UTIME
 
+#define ACE_HAS_CTYPE_T
+
 // Platform has XPG4 wide character type and functions. However, the size
 // of wchar_t changes for 32- vs. 64-bit builds (unsigned short vs. unsigned
 // int, respectively).
