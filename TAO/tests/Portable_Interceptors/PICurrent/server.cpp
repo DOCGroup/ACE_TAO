@@ -77,9 +77,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      if (parse_args (argc, argv) != 0)
-        return -1;
-
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
 
@@ -94,6 +91,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             "test_orb");
+
+      if (parse_args (argc, argv) != 0)
+        return -1;
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
