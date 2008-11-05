@@ -96,7 +96,11 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
   int err = 0;
   size_t len = 0;
 
+#ifndef ACE_USES_SOLARIS_SCTP
   err = sctp_getladdrs(this->get_handle(), 0, &laddrs);
+#else
+  err = sctp_getladdrs(this->get_handle(), 0, reinterpret_cast<void**>(&laddrs));
+#endif /* ACE_USES_SOLARIS_SCTP */
   if (err > 0)
   {
     len = err;
@@ -230,7 +234,12 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
   int err = 0;
   size_t len = 0;
 
+#ifndef ACE_USES_SOLARIS_SCTP
   err = sctp_getpaddrs(this->get_handle(), 0, &paddrs);
+#else
+  err = sctp_getpaddrs(this->get_handle(), 0, reinterpret_cast<void**>(&paddrs));
+#endif /* ACE_USES_SOLARIS_SCTP */
+
   if (err > 0)
   {
     len = err;
