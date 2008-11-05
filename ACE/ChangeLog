@@ -1,3 +1,9 @@
+Wed Nov  5 15:54:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_ctype.inl:
+          Don't emulate isblank with isctype(_ISBLANK), isctype only checks
+          for space, isblank should check space and tab
+
 Wed Nov  5 13:20:00 UTC 2008  Simon Massey <sma at prismtech dot com>
 
         * tests/Process_Test.cpp:
