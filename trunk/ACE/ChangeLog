@@ -1,3 +1,8 @@
+Wed Nov  5 09:36:00 UTC 2008  Simon Massey <sma at prismtech dot com>
+
+        * tests/Process_Test.cpp:
+          Removed Fuzz errors.
+
 Wed Nov  5 08:49:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-lynxos.h:

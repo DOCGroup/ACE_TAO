@@ -34,7 +34,7 @@ static const char *proc_self_fd = "/proc/self/fd/";
 int
 check_temp_file (const ACE_CString &tmpfilename)
 {
-  ACE_DIRENT *dir = NULL;
+  ACE_DIRENT *dir = 0;
   ACE_Dirent entr;
   ACE_stat stat;
   char filename[MAXPATHLEN + 1];
