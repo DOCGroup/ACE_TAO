@@ -43,7 +43,7 @@ namespace CCF
         Type::ArgumentsIterator
           b (a.arguments_begin ()), e (a.arguments_end ());
 
-        ++b; // Bounds start afterthe type.
+        ++b; // Bounds start after the type.
 
         iterate_and_traverse (b,
                               e,
