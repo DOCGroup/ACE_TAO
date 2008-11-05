@@ -1,3 +1,8 @@
+Wed Nov  5 13:20:00 UTC 2008  Simon Massey <sma at prismtech dot com>
+
+        * tests/Process_Test.cpp:
+          Attempt to correct for wide character ACE_TCHAR versions.
+
 Wed Nov  5 09:36:00 UTC 2008  Simon Massey <sma at prismtech dot com>
 
         * tests/Process_Test.cpp:

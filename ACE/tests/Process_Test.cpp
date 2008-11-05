@@ -29,10 +29,10 @@
 ACE_RCSID(tests, Process_Test, "Process_Test.cpp,v 4.11 1999/09/02 04:36:30 schmidt Exp")
 
 // This will only work on UNIX-like with /proc filesys.
-static const char *proc_self_fd = "/proc/self/fd/";
+static const ACE_TCHAR *proc_self_fd = ACE_TEXT ("/proc/self/fd/");
 
 int
-check_temp_file (const ACE_CString &tmpfilename)
+check_temp_file (const ACE_TString &tmpfilename)
 {
   ACE_DIRENT *dir = 0;
   ACE_Dirent entr;
@@ -51,8 +51,8 @@ check_temp_file (const ACE_CString &tmpfilename)
 
   while ((dir = entr.read ())) 
     {
-      ACE_CString fullp = ACE_CString (proc_self_fd) 
-        + ACE_CString (dir->d_name);
+      ACE_TString fullp = ACE_TString (proc_self_fd) 
+        + ACE_TString (dir->d_name);
 
       if ((ACE_OS::lstat (fullp.c_str (), &stat)) == -1) 
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -71,7 +71,7 @@ check_temp_file (const ACE_CString &tmpfilename)
                                fullp.c_str ()),
                               -1);
           filename[size] = '\0';
-          if (tmpfilename == ACE_CString (filename))
+          if (tmpfilename == ACE_TString (filename))
             return 1;
         }
     }
@@ -82,7 +82,7 @@ check_temp_file (const ACE_CString &tmpfilename)
 int
 run_parent (bool inherit_files)
 {
-  ACE_TCHAR t[] = "ace_testXXXXXX";
+  ACE_TCHAR t[] = ACE_TEXT ("ace_testXXXXXX");
 
   // Create tempfile. This will be tested for inheritance.
   ACE_TCHAR tempfile[MAXPATHLEN + 1];
@@ -153,12 +153,11 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("This test is not supported on this platform\n")));
   ACE_END_TEST;
 #else
-
   int c = 0;
   int handle_inherit = 0; /* Disable inheritance by default */
   bool ischild = false;
   ACE_Vector<ACE_CString> ofiles;
-  ACE_CString temp_file_name;
+  ACE_TString temp_file_name;
 
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("ch:f:"));
 
@@ -216,9 +215,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_END_TEST;
     } 
-
 #endif /* ! ACE_LACKS_FORK */
 
   return 0;
 }
-
