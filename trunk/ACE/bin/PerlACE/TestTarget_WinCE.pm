@@ -83,11 +83,8 @@ sub new
     if (!defined $telnet_port)  {
       $telnet_port = 23;
     }
-    $self->{TELNET} = new Net::Telnet(Timeout => 10, Errmode => 'return', Host => $telnet_host, Port => $telnet_port);
-    if (!defined $self->{TELNET}) {
-      die "ERROR: Telnet failed to <" . $telnet_host . ":". $telnet_port . ">";
-    }
-    $self->{TELNET}->open();
+
+    $PerlACE::ProcessVX::ExeExt = '.exe';
 
     return $self;
 }
@@ -107,7 +104,8 @@ sub LocalFile {
 
 sub CreateProcess {
   my $self = shift;
-  return new PerlACE::ProcessVX(@_);
+  my $process = new PerlACE::ProcessVX ($self, @_);
+  return $process;
 }
 
 # Need a reboot when this target is destroyed.

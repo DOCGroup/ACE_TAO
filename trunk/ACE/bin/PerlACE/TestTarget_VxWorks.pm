@@ -31,7 +31,8 @@ sub LocalFile {
 
 sub CreateProcess {
   my $self = shift;
-  return new PerlACE::ProcessVX(@_);
+  my $process = new PerlACE::ProcessVX ($self, @_);
+  return $process;
 }
 
 # Need a reboot when this target is destroyed.
