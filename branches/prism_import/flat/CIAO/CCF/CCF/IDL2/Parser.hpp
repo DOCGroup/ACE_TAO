@@ -20,9 +20,18 @@
 //
 #ifdef CONST
 #undef CONST
+#endif
+#ifdef FACTORY
 #undef FACTORY
+#endif
+#ifdef IN
 #undef IN
+#endif
+#ifdef OUT
 #undef OUT
+#endif
+#ifdef interface
+#undef interface
 #endif
 
 
