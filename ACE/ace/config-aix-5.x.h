@@ -332,5 +332,6 @@
 #define ACE_SCANDIR_SEL_LACKS_CONST
 #define ACE_HAS_SIGSUSPEND
 #define ACE_HAS_TIMEZONE  /* Call tzset() to set timezone */
+#define ACE_LACKS_ISCTYPE
 
 #endif /* ACE_CONFIG_AIX_5_X_H */
