@@ -1,3 +1,14 @@
+Wed Nov  5 04:04:57 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * May the next president of the USA have the strength and courage
+          to lead the USA wisely and help it to achieve its promise as a
+          advocate for freedom and democracy.
+
+Tue Nov  4 22:45:20 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/SOCK_SEQPACK_Association.cpp: Added #ifdefs for
+          ACE_USES_SOLARIS_SCTP.  Thanks to Steven Xie <steven dot xie at
+          mpathix dot com> for contributing this.
 
 Tue Nov  4 15:18:17 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
