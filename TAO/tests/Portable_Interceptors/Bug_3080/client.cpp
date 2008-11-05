@@ -20,13 +20,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
                        "Wrong number of arguments.\n"),
                       -1);
 
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:s:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:s:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'p':
+      case 'f':
         ior1 = get_opts.opt_arg ();
         break;
       default:
