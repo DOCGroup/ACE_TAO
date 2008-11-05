@@ -39,16 +39,6 @@ sub new
         return undef;
     }
 
-    $env_name = $config_name.'_CTLPORT';
-    if (exists $ENV{$env_name}) {
-        $self->{CTLPORT} = $ENV{$env_name};
-    }
-    else {
-        print STDERR "Warning: no $env_name variable; falling back to ",
-                     "port 8888\n";
-        $self->{CTLPORT} = 8888;
-    }
-
     $env_name = $config_name.'_FSROOT';
     my $fsroot = '\network\temp\ACE\wince6';
     if (exists $ENV{$env_name}) {
