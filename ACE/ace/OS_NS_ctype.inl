@@ -38,7 +38,7 @@ ACE_OS::ace_isascii (ACE_TCHAR c)
 # endif
 #else /* ACE_USES_WCHAR */
 # if defined (ACE_LACKS_ISASCII)
-  return (c <= 0x7F);
+  return (static_cast<unsigned char>(c) <= 0x7F);
 #else
   return isascii ((unsigned char) c);
 #endif /* ACE_LACKS_ISASCII */
@@ -54,16 +54,12 @@ ACE_OS::ace_isblank (ACE_TCHAR c)
   return ace_iswctype (c, _BLANK);
 #  else
   return (c == 0x9) || (c == 0x20);
-#  endif
-#else
-  return iswblank (c);
-#endif
+#  endif /* !ACE_LACKS_ISWCTYPE */
+# else
+   return iswblank (c);
+# endif /* ACE_LACKS_ISWBLANK */
 #elif defined (ACE_LACKS_ISBLANK)
-#  if !defined (ACE_LACKS_ISCTYPE)
-  return ace_isctype (c, _BLANK);
-#  else
   return (c == 0x9) || (c == 0x20);
-#  endif
 #else /* ACE_USES_WCHAR */
   return isblank ((unsigned char) c);
 #endif /* ACE_USES_WCHAR */
