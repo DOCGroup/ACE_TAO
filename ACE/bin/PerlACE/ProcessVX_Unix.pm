@@ -51,6 +51,7 @@ sub new
     $self->{RUNNING} = 0;
     $self->{IGNOREEXESUBDIR} = 1;
     $self->{PROCESS} = undef;
+    $self->{TARGET} = shift;
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
     if (!defined $PerlACE::ProcessVX::WAIT_DELAY_FACTOR) {

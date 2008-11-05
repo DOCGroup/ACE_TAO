@@ -1,3 +1,13 @@
+Wed Nov  5 19:23:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+        * bin/PerlACE/ProcessWinCE.pm:
+        * bin/PerlACE/TestTarget_VxWorks.pm:
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          Store a reference to the target in the process and set the
+          executable extension correct for windows ce
+
 Wed Nov  5 15:54:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_ctype.inl:
