@@ -39,7 +39,7 @@ sub new
         return undef;
     }
 
-    $env_name = $config_name.'_FSROOT';
+    $env_name = $config_name.'_FS_ROOT';
     my $fsroot = '\network\temp\ACE\wince6';
     if (exists $ENV{$env_name}) {
         $fsroot = $ENV{$env_name};
