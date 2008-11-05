@@ -1,3 +1,11 @@
+Wed Nov  5 08:49:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-lynxos.h:
+          LynxOS5 has isblank
+
+        * ace/config-aix-5.x.h:
+          AIX lacks isctype
+
 Wed Nov  5 04:04:57 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * May the next president of the USA have the strength and courage
@@ -19,9 +27,9 @@ Tue Nov  4 15:18:17 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
 Tue Nov  4 14:15:07 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * tests/tests.mpc: 
+        * tests/tests.mpc:
         * tests/run_test.lst (Process_Test): Added the new test for the
-          ACE_Process class. 
+          ACE_Process class.
 
 Tue Nov  4 13:59:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
