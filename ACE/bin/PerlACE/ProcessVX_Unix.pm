@@ -73,6 +73,11 @@ sub DESTROY
                      "> still running upon object destruction\n";
         $self->Kill ();
     }
+
+    if (defined $ENV{'ACE_RUN_VX_IBOOT'} && !defined $ENV{'ACE_RUN_VX_NO_SHUTDOWN'}) {
+      # Shutdown the target to save power
+      $self->iboot_cycle_power(1);
+    }
 }
 
 ###############################################################################

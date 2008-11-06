@@ -1,3 +1,12 @@
+Thu Nov  6 13:12:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX.pm:
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+        * bin/PerlACE/ProcessWinCE.pm:
+          Poweroff the target at the end of the run. If you want to keep
+          it on power, set ACE_RUN_VX_NO_SHUTDOWN as environment variable
+
 Thu Nov  6 13:08:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Buffer_Stream_Test.cpp:
