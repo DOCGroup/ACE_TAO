@@ -4,7 +4,7 @@
 #define SIMPLE_CONSUMER_IDL
 
 #include "SimpleCommon.idl"
-#include "<Components.idl>"
+#include <Components.idl>
 
 module Simple
 {
