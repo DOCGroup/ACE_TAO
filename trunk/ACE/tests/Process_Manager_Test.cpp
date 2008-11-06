@@ -57,7 +57,7 @@ public:
   virtual int handle_exit (ACE_Process *proc)
   {
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) Exit_Handler(%s) got %d: %d\n"),
+                ACE_TEXT ("(%P) Exit_Handler(%C) got %d: %d\n"),
                 msg_,
                 int (proc->getpid ()),
                 int (proc->exit_code ()) ));
@@ -436,14 +436,14 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P) still running tasks\n")));
     }
 
-  ACE_DEBUG ((LM_DEBUG, 
-              ACE_TEXT ("(%P) result: '%s'\n"), 
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P) result: '%C'\n"),
               order.c_str ()));
 
   if (order != "321123")
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P) wrong order of spawns ('%s', should be '321123')\n"),
+                  ACE_TEXT ("(%P) wrong order of spawns ('%C', should be '321123')\n"),
                   order.c_str ()));
       test_status = 1;
     }
