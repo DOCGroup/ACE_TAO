@@ -1,3 +1,14 @@
+Thu Nov  6 09:48:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget.pm
+        * bin/PerlACE/README:
+          Added PROCESS_START_WAIT_INTERVAL and PROCESS_STOP_WAIT_INTERVAL
+          as environment variables so that we can configure a longer wait
+          time.
+
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          Removed ProcessStartWaitInterval method, not needed
+
 Thu Nov  6 08:22:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3432_Regression_Test.cpp:

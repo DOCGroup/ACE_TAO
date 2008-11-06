@@ -123,17 +123,6 @@ print STDERR "wait for $file time $timeout\n";
     return PerlACE::waitforfile_timed ("\\\\thor\\temp\\ACE\\wince6\\$file", $timeout);
 }
 
-sub ProcessStartWaitInterval ($)
-{
-    my $self = shift;
-    my $new_val = shift;
-return 45;
-    if (defined $new_val) {
-        $self->{PROCESS_START_WAIT_INTERVAL} = $new_val;
-    }
-    return $self->{PROCESS_START_WAIT_INTERVAL};
-}
-
 sub GetFile ($)
 {
     my $self = shift;
