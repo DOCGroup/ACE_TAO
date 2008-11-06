@@ -368,7 +368,6 @@ project(CDR File Test) : acetest {
   exename = CDR_File_Test
   Source_Files {
     CDR_File_Test.cpp
-    CE_fostream.cpp
   }
 }
 
