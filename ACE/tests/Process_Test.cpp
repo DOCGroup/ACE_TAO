@@ -50,8 +50,8 @@ check_temp_file (const ACE_TString &tmpfilename)
 
   while ((dir = entr.read ())) 
     {
-      ACE_TString fullp = ACE_TString (proc_self_fd) 
-        + ACE_TString (dir->d_name);
+      ACE_TString fullp = proc_self_fd;
+      fullp += dir->d_name;
 
       if ((ACE_OS::lstat (fullp.c_str (), &stat)) == -1) 
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -109,14 +109,18 @@ run_parent (bool inherit_files)
   ACE_Process child;
 
   result = child.spawn (options);
-  ACE_ASSERT (result != -1);
-  ACE_DEBUG ((LM_DEBUG,
+  if (result != -1)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Parent could NOT spawn child process\n")));
+  else
+    ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Parent spawned child process with pid = %d.\n"),
               child.getpid ()));
 
   ACE_exitcode child_status;
-  ACE_ASSERT (child.wait (&child_status) != -1);
-  if (child_status == 0) 
+  result = child.wait (&child_status);
+  if (result != -1)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could NOT wait on child process\n")));
+  else if (child_status == 0) 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Child %d finished ok\n"),
                 child.getpid ()));
