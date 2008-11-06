@@ -91,8 +91,8 @@ run_parent (bool inherit_files)
 
   ACE_OS::strcat (tempfile, t);
 
-  int result = ACE_OS::mkstemp (tempfile);
-  if (result == -1) 
+  ACE_HANDLE file_handle = ACE_OS::mkstemp (tempfile);
+  if (file_handle == ACE_INVALID_HANDLE) 
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could not get temp filename\n")));
 
   // Build child options
@@ -108,7 +108,7 @@ run_parent (bool inherit_files)
   // Spawn child
   ACE_Process child;
 
-  result = child.spawn (options);
+  pid_t result = child.spawn (options);
   if (result != -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Parent could NOT spawn child process\n")));
   else
