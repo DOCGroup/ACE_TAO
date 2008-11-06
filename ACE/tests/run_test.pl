@@ -131,7 +131,7 @@ sub run_program ($@)
     unlink <log/$program*.log>;
     unlink "core";
 
-    my $P = $target->CreateProcess($program,$arguments);
+    my $P = $target->CreateProcess($program, $arguments);
 
     if ($config_list->check_config ('Valgrind')) {
       $P->IgnoreExeSubDir(1);
@@ -148,18 +148,18 @@ sub run_program ($@)
     }
 
     my $start_time = time();
-    $status = $P->SpawnWaitKill (400);
+    $status = $P->SpawnWaitKill (400 + $target->ProcessStartWaitInterval());
     my $time = time() - $start_time;
 
     ### Check for problems
 
     if ($status == -1) {
-        print STDERR "Error: $program FAILED (time out)\n";
+        print STDERR "Error: $program FAILED (time out after Time:$time"."s)\n";
         $P->Kill ();
         $P->TimedWait (1);
     }
     elsif ($status != 0) {
-        print STDERR "Error: $program $arguments FAILED with exit status $status\n";
+        print STDERR "Error: $program $arguments FAILED with exit status $status after Time:$time"."s\n";
     }
 
     print "\nauto_run_tests_finished: tests/$program $arguments Time:$time"."s Result:$status\n";

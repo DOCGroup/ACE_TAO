@@ -43,7 +43,7 @@ strptime_test (void)
 
   if (ACE_OS::strcmp (lBuffer, original_time) != 0)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%s != %s\n"),lBuffer, original_time));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C != %C\n"),lBuffer, original_time));
       ++error_count;
     }
   else

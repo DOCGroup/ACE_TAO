@@ -441,7 +441,7 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("ACE (%P|%t) SR::insert - repo=%@ [%d] (%d),")
-                ACE_TEXT (" name=%s (%s) (type=%@, object=%@, active=%d)\n"),
+                ACE_TEXT (" name=%s (%C) (type=%@, object=%@, active=%d)\n"),
                 this,
                 i,
                 this->total_size_,
