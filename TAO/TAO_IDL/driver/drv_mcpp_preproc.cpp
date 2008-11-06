@@ -506,6 +506,8 @@ DRV_cpp_post_init (void)
   // Add include paths for CIAO_ROOT and CIAO_ROOT/ciao and ccm.
   char* CIAO_ROOT = ACE_OS::getenv ("CIAO_ROOT");
 
+  // When adding new dirs here don't forget to update
+  // IDL_GlobalData::validate_orb_include accordingly.
   if (CIAO_ROOT != 0)
     {
       DRV_add_include_path (include_path4, CIAO_ROOT, 0);
