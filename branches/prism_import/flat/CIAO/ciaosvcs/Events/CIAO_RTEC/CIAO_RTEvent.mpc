@@ -2,6 +2,7 @@
 // $Id$
 
 project (CIAO_RTEvent) : naming, rtevent_serv, ciao_events_base_dnc, ace_output  {
+  requires += dummy_label
   sharedname  = CIAO_RTEvent
   idlflags  += -Wb,export_include=CIAO_RTEVENT_Export.h \
                -Wb,export_macro=CIAO_RTEVENT_Export

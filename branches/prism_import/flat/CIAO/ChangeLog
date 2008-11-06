@@ -1,3 +1,21 @@
+Thu Nov  6 16:35:22 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.mpc:
+        
+          Disabled this build. 
+        
+        * tests/CIAO_ComponentServer/SimpleComponent/run_test.pl:
+        
+          Minor fixes. 
+        
+        * tools/Config_Handlers/IRDD_Handler.h:
+        * tools/Config_Handlers/IRDD_Handler.cpp:
+        * tools/Config_Handlers/XML_Typedefs.h:
+        * tools/Config_Handlers/XML_Typedefs.cpp:
+        * tools/XML/XML_Helper.tpp:
+        
+          Compilation fixes. 
+        
 Thu Nov  6 15:28:10 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleConsumer.idl:
@@ -6,10 +24,11 @@ Thu Nov  6 15:28:10 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/Containers/Swapping/Dynamic_Component_Activator.h:
 
           Compilation fixes.
-        
+
         * tests/CIAO_ComponentServer/SimpleComponent/run_test.pl:
 
-          Added a run_test script. 
+          Added a run_test script.
+
 Wed Nov  5 20:08:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
