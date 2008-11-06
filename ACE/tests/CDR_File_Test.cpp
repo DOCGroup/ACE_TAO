@@ -34,7 +34,7 @@
 
 ACE_RCSID(tests, CDR_File_Test, "$Id$")
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY) | defined (ACE_HAS_WINCE)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY) || defined (ACE_HAS_WINCE)
 
 #if defined (ACE_HAS_WINCE)
 #include "CE_fostream.h"

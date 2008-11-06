@@ -1000,7 +1000,7 @@ ace_ctype_test (void)
   int result = ACE_OS::ace_isprint (ACE_TEXT('\t'));
   if (result != 0)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isprintf should return 0 for tab ")
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isprint should return 0 for tab ")
                             ACE_TEXT ("but it returned %d\n"), result));
       ++retval;
     }

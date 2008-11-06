@@ -842,7 +842,7 @@ prio_test (void)
   mq.dequeue_prio (mb1p);
   mq.dequeue_prio (mb2p);
 
-  ACE_DEBUG ((LM_DEBUG, "message 1 = %s\nmessage 2 = %s\n",
+  ACE_DEBUG ((LM_DEBUG, "message 1 = %C\nmessage 2 = %C\n",
               mb1p->rd_ptr (),
               mb2p->rd_ptr ()));
 
