@@ -21,10 +21,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_sys_stat.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Dirent.h"
-#include "ace/Vector_T.h"
 #include "ace/SString.h"
-#include "ace/Process_Semaphore.h"
 
 ACE_RCSID(tests, Process_Test, "Process_Test.cpp,v 4.11 1999/09/02 04:36:30 schmidt Exp")
 
@@ -79,7 +78,7 @@ check_temp_file (const ACE_TString &tmpfilename)
   return 0;
 }
 
-int
+void
 run_parent (bool inherit_files)
 {
   ACE_TCHAR t[] = ACE_TEXT ("ace_testXXXXXX");
@@ -88,26 +87,13 @@ run_parent (bool inherit_files)
   ACE_TCHAR tempfile[MAXPATHLEN + 1];
 
   if (ACE::get_temp_dir (tempfile, MAXPATHLEN - sizeof (t)) == -1) 
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       ACE_TEXT ("Could not get temp dir\n")), 
-                      -1);
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could not get temp dir\n")));
 
   ACE_OS::strcat (tempfile, t);
 
   int result = ACE_OS::mkstemp (tempfile);
   if (result == -1) 
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       ACE_TEXT ("Could not get temp filename\n")), 
-                      -1);
-
-  ACE_HANDLE file_handle = ACE_OS::open (tempfile, 
-                                         O_RDONLY|O_CREAT, 
-                                         ACE_DEFAULT_FILE_PERMS);
-  if (file_handle == ACE_INVALID_HANDLE) 
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Could not open temp file: %s\n"),
-                       ACE_OS::strerror (ACE_OS::last_error ())),
-                      -1);
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could not get temp filename\n")));
 
   // Build child options
   ACE_Process_Options options;
@@ -138,13 +124,12 @@ run_parent (bool inherit_files)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Child %d finished with status %d\n"),
                 child.getpid (), child_status));
-  return child_status;
 }
 
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-#if defined (ACE_LACKS_FORK) 
+#if defined (ACE_LACKS_FORK) || defined (ACE_LACKS_READLINK)
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
@@ -156,7 +141,6 @@ run_main (int argc, ACE_TCHAR *argv[])
   int c = 0;
   int handle_inherit = 0; /* Disable inheritance by default */
   bool ischild = false;
-  ACE_Vector<ACE_CString> ofiles;
   ACE_TString temp_file_name;
 
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("ch:f:"));
