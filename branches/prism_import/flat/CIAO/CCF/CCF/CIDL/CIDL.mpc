@@ -8,6 +8,7 @@ project(CIDL): cidlc {
     libflags += /P64
   }
   Source_Files {
+    .
     SemanticGraph
     Traversal
     SemanticAction
