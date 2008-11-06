@@ -11,6 +11,10 @@
 #error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
+#if (__BORLANDC__ < 0x593)
+#error This version of CodeGear C++ is not supported.
+#endif
+
 #define ACE_HAS_CUSTOM_EXPORT_MACROS
 #define ACE_Proper_Export_Flag __declspec (dllexport)
 #define ACE_Proper_Import_Flag __declspec (dllimport)

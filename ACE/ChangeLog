@@ -1,3 +1,8 @@
+Thu Nov  6 13:19:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Add a check if people are using a supported compiler
+
 Thu Nov  6 13:12:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX.pm:
