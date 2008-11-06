@@ -1,3 +1,14 @@
+Thu Nov  6 18:08:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-openvms.h:
+          Added ACE_LACKS_ISBLANK/ACE_LACKS_ISCTYPE
+
+        * ace/config-qnx-rtp-62x.h:
+          Added ACE_LACKS_ISCTYPE
+
+        * ace/OS_NS_unistd.h:
+          Doxygen changes
+
 Wed Nov  5 15:11:17 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/SOCK_SEQPACK_Association.cpp (get_remote_addrs): Changed

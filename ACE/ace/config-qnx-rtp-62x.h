@@ -101,6 +101,7 @@
 #define ACE_LACKS_ALPHASORT
 #define ACE_LACKS_FD_MASK
 #define ACE_LACKS_NFDBITS
+#define ACE_LACKS_ISCTYPE
 
 #define ACE_LACKS_RLIMIT         // QNX rlimit syscalls don't work properly with ACE.
 
