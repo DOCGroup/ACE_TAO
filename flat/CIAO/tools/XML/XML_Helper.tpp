@@ -264,7 +264,7 @@ namespace CIAO
                       e.getSrcFile (),
                       e.getSrcLine ()));
           return false;
-          }
           }*/
+    }
   }
 }
