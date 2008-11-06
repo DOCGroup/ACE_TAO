@@ -1,0 +1,16 @@
+project(*) : pi_server, interceptors, ciao_lib {
+  dynamicflags = CI_BUILD_DLL
+  idlflags    += -Wb,export_macro=CI_Export -Wb,export_include=ci_export.h
+  idlflags    += -I../CommonIDL
+  includes    += ../CommonIDL
+  libs        += FTCommonIdl
+
+  IDL_Files {
+  }
+  
+  Source_Files {
+    Agent.cpp
+    Client_ORBInitializer.cpp
+    Client_Request_Interceptor.cpp
+  }
+}

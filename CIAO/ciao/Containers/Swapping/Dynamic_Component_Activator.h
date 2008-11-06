@@ -27,7 +27,7 @@
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/LocalObject.h"
 #include "tao/PortableServer/ServantActivatorC.h"
-
+#include "ciao/CIAO_common.h"
 #include "ace/Hash_Map_Manager_T.h"
 
 #if defined(_MSC_VER)

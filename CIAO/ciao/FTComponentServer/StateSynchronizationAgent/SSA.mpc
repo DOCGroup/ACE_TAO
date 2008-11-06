@@ -1,0 +1,16 @@
+project(*Agent) : portableserver, ciao_lib {
+
+  after    += FTCommonIdl
+  macros   += SSA_EXPORT_BUILD_DLL
+  libs     += FTCommonIdl
+  includes += ../CommonIDL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    StatefulObject.cpp
+    CorbaStateUpdate.cpp
+    StateSynchronizationAgent_i.cpp
+  }
+}

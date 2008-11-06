@@ -1,0 +1,12 @@
+// $Id$
+
+#include "SimpleFT.idl"
+
+composition session SimpleFT_Impl
+{
+  home executor SimpleFTHome_Exec
+  {
+    implements Simple::SimpleFTHome;
+    manages SimpleProvider_Exec;
+  };
+};
