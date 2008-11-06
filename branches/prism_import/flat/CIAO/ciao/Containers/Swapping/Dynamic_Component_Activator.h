@@ -22,13 +22,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ccm/CCM_ContainerC.h"
-
+#include "ace/Hash_Map_Manager_T.h"
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/LocalObject.h"
 #include "tao/PortableServer/ServantActivatorC.h"
-
-#include "ace/Hash_Map_Manager_T.h"
+#include "ccm/CCM_ContainerC.h"
+#include "ciao/Logger/Log_Macros.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
