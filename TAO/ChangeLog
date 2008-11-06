@@ -1,3 +1,23 @@
+Thu Nov  6 16:37:30 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * docs/compiler.html:
+        * TAO_IDL/be/be_global.cpp:
+
+          Added CIAO_ROOT/ccm to TAO specific directories in tao_idl
+          help.
+
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          Added more comments in the code about the need to update
+          IDL_GlobalData::validate_orb_include when new folders are
+          added.
+
+        * TAO_IDL/util/utl_global.cpp:
+
+          Fixed the issue introduced in the commit on
+          'Mon Nov  3 20:11:55 UTC 2008'.
+
 Wed Nov  5 09:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Bug_2510_Regression/run_test.pl:
