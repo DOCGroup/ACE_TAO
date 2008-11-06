@@ -1,3 +1,8 @@
+Thu Nov  6 12:00:00 UTC 2008  Simon Massey <sma at prismtech dot com>
+
+        * tests/Process_Test.cpp:
+          Apply modified patch to correct for problems on scoreboard.
+
 Thu Nov  6 09:48:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/TestTarget.pm
