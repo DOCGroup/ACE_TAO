@@ -1,3 +1,10 @@
+Thu Nov  6 19:25:22 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/XSCRT/XML.hpp:
+        * tools/XML/XML_Schema_Resolver.cpp:
+
+          Added support for xerces versions < 3.0.
+        
 Thu Nov  6 18:47:56 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Logger/Log_Macros.h:
@@ -8,8 +15,8 @@ Thu Nov  6 18:47:56 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/Containers/Session/Session_Container.cpp:
         * ciao/Servants/Servant_Impl_Base.cpp:
 
-          Warning fixes for Linux. 
-        
+          Warning fixes for Linux.
+
 Thu Nov  6 16:35:22 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.mpc:
