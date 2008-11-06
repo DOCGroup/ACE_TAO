@@ -60,7 +60,6 @@ ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
 
 // If we don't have winsock2 we can't use WFMO_Reactor.
 #if defined (ACE_WIN32) \
-    && !defined (ACE_HAS_WINCE) \
     && defined (ACE_HAS_WINSOCK2) \
     && ACE_HAS_WINSOCK2 != 0
 # define TEST_CAN_USE_WFMO_REACTOR
@@ -435,11 +434,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       reset_handler (NUMBER_OF_REACTIVE_CONNECTIONS);
 
-#if defined (ACE_HAS_WINCE)
-      test_reactive (ACE_TEXT("\\Windows\\Start Menu\\MEM_Stream_Test_WinCE.exe"), server_addr);
-#else
       test_reactive (ACE_TEXT ("MEM_Stream_Test"), server_addr);
-#endif  // ACE_HAS_WINCE
 
       ACE_Reactor::instance ()->reset_reactor_event_loop ();
 
@@ -449,11 +444,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 #endif /* !ACE_WIN32 && _ACE_USE_SV_SEM */
       reset_handler (NUMBER_OF_MT_CONNECTIONS);
 
-#if defined (ACE_HAS_WINCE)
-      test_concurrent (ACE_TEXT("\\Windows\\Start Menu\\MEM_Stream_Test_WinCE.exe"), server_addr);
-#else
       test_concurrent (ACE_TEXT ("MEM_Stream_Test"), server_addr);
-#endif  // ACE_HAS_WINCE
 
       ACE_END_TEST;
       return 0;
