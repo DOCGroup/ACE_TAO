@@ -43,6 +43,11 @@ To redirect execution of a test's component, you must do three things:
          <configuration-name>_IPNAME: The machine's IP hostname or address
          <configuration-name>_ACE_ROOT: ACE_ROOT for the configuration's files
          <configuration-name>_TAO_ROOT: TAO_ROOT for the configuration's files
+         <configuration-name>_EXE_SUBDIR: Subdirectory for the executable
+         <configuration-name>_PROCESS_START_WAIT_INTERVAL: Time waited for the
+                                  process to start. Default 15 seconds.
+         <configuration-name>_PROCESS_STOP_WAIT_INTERVAL: Time waited for the
+                                  process to stop. Default 10 seconds.
 
 If there is no DOC_TEST_<component-number> environment variable when the
 component runs, that component is executed on the local machine. This is

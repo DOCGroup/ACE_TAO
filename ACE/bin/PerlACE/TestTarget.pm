@@ -128,8 +128,18 @@ sub GetConfigSettings ($)
             $self->{EXE_SUBDIR} = $PerlACE::Process::ExeSubDir;
         }
     }
-    $self->{PROCESS_START_WAIT_INTERVAL} = 15;
-    $self->{PROCESS_STOP_WAIT_INTERVAL} = 10;
+    $env_name = $env_prefix.'PROCESS_START_WAIT_INTERVAL';
+    if (exists $ENV{$env_name}) {
+        $self->{PROCESS_START_WAIT_INTERVAL} = $ENV{$env_name};
+    } else {
+        $self->{PROCESS_START_WAIT_INTERVAL} = 15;
+    }
+    $env_name = $env_prefix.'PROCESS_STOP_WAIT_INTERVAL';
+    if (exists $ENV{$env_name}) {
+        $self->{PROCESS_STOP_WAIT_INTERVAL} = $ENV{$env_name};
+    } else {
+        $self->{PROCESS_STOP_WAIT_INTERVAL} = 10;
+    }
 }
 
 ##################################################################
