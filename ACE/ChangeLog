@@ -1,3 +1,19 @@
+Thu Nov  6 13:08:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Buffer_Stream_Test.cpp:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/MM_Shared_Memory_Test.cpp
+        * tests/Priority_Task_Test.cpp
+          Removed WinCE specific code
+
+        * tests/Bug_3432_Regression_Test.cpp:
+          This test needs strftime, if is not there, just print a message
+          and exit
+
+        * tests/Notify_Performance_Test.cpp:
+        * tests/Reactor_Performance_Test.cpp
+          WFMO_Reactor is dependent on winsock2
+
 Thu Nov  6 12:00:00 UTC 2008  Simon Massey <sma at prismtech dot com>
 
         * tests/Process_Test.cpp:

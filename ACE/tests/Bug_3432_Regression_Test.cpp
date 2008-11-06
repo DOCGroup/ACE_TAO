@@ -39,11 +39,13 @@ strptime_test (void)
   time_t time = lValue.sec();
   struct tm tm_time;
   ACE_OS::gmtime_r (&time, &tm_time);
-  ACE_OS::strftime(lBuffer, 128, "%Y-%m-%d %H:%M", &tm_time);
-
-  if (ACE_OS::strcmp (lBuffer, original_time) != 0)
+  if (ACE_OS::strftime(lBuffer, 128, "%Y-%m-%d %H:%M", &tm_time) == 0 && errno == ENOTSUP)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C != %C\n"),lBuffer, original_time));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("strftime is not supported on this platform\n")));
+    }
+  else if (ACE_OS::strcmp (lBuffer, original_time) != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C != %C\n"), lBuffer, original_time));
       ++error_count;
     }
   else
