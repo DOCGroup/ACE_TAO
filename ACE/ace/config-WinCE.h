@@ -241,6 +241,11 @@ typedef long off_t;
 #define ACE_HAS_TSS_EMULATION
 #endif  // WinCE version < 6.0
 
+// CE doesn't support FILE_SHARE_DELETE like regular windows
+#if !defined (ACE_DEFAULT_FILE_PERMS)
+#define ACE_DEFAULT_FILE_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE)
+#endif
+
 // This is still true up thru VC8...
 #define ACE_LACKS_ERRNO_H
 #define ACE_LACKS_SIGNAL_H

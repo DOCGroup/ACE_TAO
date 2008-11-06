@@ -1,3 +1,21 @@
+Thu Nov  6 19:26:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          CE doesn't have FILE_SHARE_DELETE like regular windows as default
+          file permissions
+
+        * tests/CDR_File_Test.cpp:
+          WinCE does have ostream, so removed CE_fostream and also removed the
+          code that tries to unlink the file directly after it has been created.
+          It really depends also on the file system whether this works or not.
+
+        * tests/CE_fostream.cpp:
+        * tests/CE_fostream.h:
+          Removed
+
+        * tests/tests.mpc:
+          Removed CE_fostream
+
 Thu Nov  6 18:08:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-openvms.h:
