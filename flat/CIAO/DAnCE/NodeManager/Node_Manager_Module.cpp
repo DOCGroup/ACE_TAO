@@ -408,7 +408,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
       //Creating redirection object
       if (this->redirection_ == 0)
         {
-          DANCE_TRACE ((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_object - "
+          DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_object - "
                         "Creating redirection service object\n"));
           this->redirection_ = new DAnCE::RedirectionService (orb,
                                                               this->root_poa_.in (),

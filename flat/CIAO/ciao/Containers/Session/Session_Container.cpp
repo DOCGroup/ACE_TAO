@@ -682,7 +682,7 @@ namespace CIAO
         if (sess == 0)
           throw CIAO::InvalidComponent  ();
 
-        CIAO_TRACE ((LM_TRACE, CLINFO "Session_Container::activate_component - "
+        CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::activate_component - "
                      "Invoking CCM activate on provided component object reference."));
         sess->activate_component ();
       }
@@ -730,7 +730,7 @@ namespace CIAO
         if (sess == 0)
           throw CIAO::InvalidComponent  ();
 
-        CIAO_TRACE ((LM_TRACE, CLINFO "Session_Container::passivate_component - "
+        CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::passivate_component - "
                      "Invoking CCM activate on provided component object reference."));
         sess->passivate_component ();
       }

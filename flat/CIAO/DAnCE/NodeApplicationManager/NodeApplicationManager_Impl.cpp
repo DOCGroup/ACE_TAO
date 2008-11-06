@@ -124,7 +124,7 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
     if (this->properties_.find (DAnCE::STANDALONE_NM,
                                 val) == 0)
       {
-        DANCE_TRACE ((LM_TRACE, DLINFO "NodeApplicationManager_Impl::destroyApplication - "
+        DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicationManager_Impl::destroyApplication - "
                       "Found STANDALONE_NM property\n"));
         
         CORBA::Boolean standalone (false);
