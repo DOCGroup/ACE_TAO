@@ -5,6 +5,9 @@ project(IDL3): cidlc {
   staticname = IDL3
   libout = ..
 
+  specific (bmake) {
+    libflags += /P64
+  }
   Source_Files {
         .
 	./SemanticGraph
