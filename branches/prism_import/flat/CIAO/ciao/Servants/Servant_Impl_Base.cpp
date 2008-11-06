@@ -659,7 +659,7 @@ namespace CIAO
   }
 
   void 
-  Servant_Impl_Base::set_attributes (const Components::ConfigValues &descr)
+  Servant_Impl_Base::set_attributes (const Components::ConfigValues &/*descr*/)
   {
     CIAO_TRACE ("Servant_Impl_Base::set_attributes");
     throw CORBA::NO_IMPLEMENT ();
@@ -681,8 +681,8 @@ namespace CIAO
   }
   
   ::Components::Cookie * 
-  Servant_Impl_Base::subscribe (const char * publisher_name,
-                                ::Components::EventConsumerBase_ptr subscriber)
+  Servant_Impl_Base::subscribe (const char *,
+                                ::Components::EventConsumerBase_ptr)
   {
     CIAO_TRACE ("Servant_Impl_Base::subscribe");
     throw CORBA::NO_IMPLEMENT ();
@@ -690,23 +690,23 @@ namespace CIAO
   
   
    ::Components::EventConsumerBase_ptr
-   Servant_Impl_Base::unsubscribe (const char * publisher_name,
-                                   ::Components::Cookie * ck)
+   Servant_Impl_Base::unsubscribe (const char *,
+                                   ::Components::Cookie *)
   {
     CIAO_TRACE ("Servant_Impl_Base::unsubscribe");
     throw CORBA::NO_IMPLEMENT ();
   }
   
    void
-   Servant_Impl_Base::connect_consumer (const char * emitter_name,
-                                        ::Components::EventConsumerBase_ptr consumer)
+   Servant_Impl_Base::connect_consumer (const char *,
+                                        ::Components::EventConsumerBase_ptr)
   {
     CIAO_TRACE ("Servant_Impl_Base::connect_consumer");
     throw CORBA::NO_IMPLEMENT ();
   }
   
   ::Components::EventConsumerBase_ptr
-  Servant_Impl_Base::disconnect_consumer (const char * source_name)
+  Servant_Impl_Base::disconnect_consumer (const char *)
   {
     CIAO_TRACE ("Servant_Impl_Base::disconnect_consumer");
     throw CORBA::NO_IMPLEMENT ();
@@ -727,7 +727,7 @@ namespace CIAO
   }
   
   ::CORBA::Boolean 
-  Servant_Impl_Base::same_component (::CORBA::Object_ptr object_ref)
+  Servant_Impl_Base::same_component (::CORBA::Object_ptr)
   {
     CIAO_TRACE ("Servant_Impl_Base::same_component");
     throw CORBA::NO_IMPLEMENT ();
@@ -735,16 +735,16 @@ namespace CIAO
   
   
   ::Components::Cookie * 
-  Servant_Impl_Base::connect (const char * name,
-                              ::CORBA::Object_ptr connection)
+  Servant_Impl_Base::connect (const char *,
+                              ::CORBA::Object_ptr)
   {
     CIAO_TRACE ("Servant_Impl_Base::connect");
     throw CORBA::NO_IMPLEMENT ();
   }
   
   ::CORBA::Object_ptr
-  Servant_Impl_Base::disconnect (const char * name,
-                                 ::Components::Cookie * ck)
+  Servant_Impl_Base::disconnect (const char *,
+                                 ::Components::Cookie *)
   {
     CIAO_TRACE ("Servant_Impl_Base::disconnect");
     throw CORBA::NO_IMPLEMENT ();

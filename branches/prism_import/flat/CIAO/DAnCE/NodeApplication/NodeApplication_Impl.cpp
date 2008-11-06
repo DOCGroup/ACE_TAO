@@ -616,10 +616,10 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
 }
 
 void
-NodeApplication_Impl::install_component (Container &cont, Instance &inst)
+NodeApplication_Impl::install_component (Container &/*cont*/, Instance &/*inst*/)
 {
   DANCE_TRACE( "NodeApplication_Impl::install_component (unsigned int index)");
-
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
@@ -627,8 +627,8 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
 {
   DANCE_TRACE("NodeApplication_Impl::install_homed_component (unsigned int index)");
 
-  const ::Deployment::MonolithicDeploymentDescription &mdd = this->plan_.implementation[inst.mdd_idx];
-  const ::Deployment::InstanceDeploymentDescription &idd = this->plan_.instance[inst.idd_idx];
+  // const ::Deployment::MonolithicDeploymentDescription &mdd = this->plan_.implementation[inst.mdd_idx];
+  // const ::Deployment::InstanceDeploymentDescription &idd = this->plan_.instance[inst.idd_idx];
 
   DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::install_homed_component - "
                 "Starting installation of homed component %s on node %s\n",
@@ -698,7 +698,7 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
   try
     {
       inst.home = home_inst;
-      DANCE_TRACE ((LM_TRACE, DLINFO "NodeApplication_Impl::install_homed_component - "
+      DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::install_homed_component - "
                     "Invoking create_component on home %s for component %s\n",
                     home_id,
                     idd.name.in ()));
@@ -1276,13 +1276,13 @@ NodeApplication_Impl::get_instance_type (const Deployment::Properties& prop) con
 }
 
 void
-NodeApplication_Impl::create_config_values (const Deployment::Properties& prop,
+NodeApplication_Impl::create_config_values (const Deployment::Properties& /*prop*/,
                                             const ERequestType request,
-                                            Components::ConfigValues& cfg) const
+                                            Components::ConfigValues& /*cfg*/) const
 {
   DANCE_TRACE ("NodeApplication_Impl::create_config_values");
 
-  unsigned int ind = 0;
+  //unsigned int ind = 0;
   CORBA::Any_var feature_any;
   switch (request)
     {

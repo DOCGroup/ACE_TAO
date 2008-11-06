@@ -1,21 +1,33 @@
+Thu Nov  6 18:47:56 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Logger/Log_Macros.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+
+          Warning fixes for Linux. 
+        
 Thu Nov  6 16:35:22 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.mpc:
-        
-          Disabled this build. 
-        
+
+          Disabled this build.
+
         * tests/CIAO_ComponentServer/SimpleComponent/run_test.pl:
-        
-          Minor fixes. 
-        
+
+          Minor fixes.
+
         * tools/Config_Handlers/IRDD_Handler.h:
         * tools/Config_Handlers/IRDD_Handler.cpp:
         * tools/Config_Handlers/XML_Typedefs.h:
         * tools/Config_Handlers/XML_Typedefs.cpp:
         * tools/XML/XML_Helper.tpp:
-        
-          Compilation fixes. 
-        
+
+          Compilation fixes.
+
 Thu Nov  6 15:28:10 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleConsumer.idl:
