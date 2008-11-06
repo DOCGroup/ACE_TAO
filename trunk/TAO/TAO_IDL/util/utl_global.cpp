@@ -1945,7 +1945,8 @@ IDL_GlobalData::validate_orb_include (UTL_String * idl_file_name)
   //      option (include_counter >= env_includes + orb_includes &&
   //      include_counter < all_includes - svcs_includes). If idl_file_name
   //      is found here then check for existence of the same path in group 4.
-  //   4) $TAO_ROOT/orbsvcs, $TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao
+  //   4) $TAO_ROOT/orbsvcs, $TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao,
+  //      $TAO_ROOT/CIAO/ccm
   //      (include_counter >= all_includes - svcs_includes && include_counter
   //      < all_includes). Return true if nothing was found in groups
   //      1 or 3 and idl_file_name is found here OR idl_file_name
@@ -1953,7 +1954,7 @@ IDL_GlobalData::validate_orb_include (UTL_String * idl_file_name)
   // Return false if idl_file_name was found neither in groups 2 nor 4.
 
   const size_t orb_includes = 2;
-  const size_t svcs_includes = 3;
+  const size_t svcs_includes = 4;
   const size_t all_includes =
     this->include_paths_.size () + 1; // 1 for current folder
 
