@@ -8,6 +8,7 @@ project(SimpleCommon_SimpleConsumer_idl_gen) : taoidldefaults, anytypecode {
               -Wb,stub_export_include=SimpleConsumer_stub_export.h \
               -Wb,skel_export_macro=SIMPLECONSUMER_SVNT_Export \
               -Wb,skel_export_include=SimpleConsumer_svnt_export.h
+  idlflags += -I$(CIAO_ROOT)/ccm
 
   IDL_Files {
     SimpleConsumer.idl

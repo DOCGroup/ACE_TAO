@@ -147,16 +147,24 @@ ACE_TMAIN (int argc,  char **argv)
         }
       
       sc->trigger ();
+
+      ACE_DEBUG ((LM_TRACE, "called sc->trigger ()\n"));
       
       cont1a->remove_home (home.in ());
+
+      ACE_DEBUG ((LM_TRACE, "called remove home ()\n"));
       
       server1->remove_container (cont1a.in ());
-      
-            //ACE_DEBUG ((LM_DEBUG, "Removing component server\n"));
+
+      ACE_DEBUG ((LM_DEBUG, "called remove_container ()\n"));
+
       sa->remove_component_server (server1.in ());
-            //ACE_DEBUG ((LM_DEBUG, "Componentserver removed\n"));
+      
+      ACE_DEBUG ((LM_DEBUG, "Componentserver removed\n"));
 
       orb->destroy ();
+
+      ACE_DEBUG ((LM_TRACE, "ORB detroyed\n"));
     }
   catch (::Components::CreateFailure &e)
     {
@@ -165,6 +173,10 @@ ACE_TMAIN (int argc,  char **argv)
   catch (::Components::RemoveFailure &e)
     {
       ACE_ERROR ((LM_ERROR, "Error: Caught RemoveFailure exception.\n"));
+    }
+  catch (::CORBA::Exception &e)
+    {
+      ACE_ERROR ((LM_ERROR, "Error: Caught %s\n", e._info ().c_str ()));
     }
   catch (...)
     {

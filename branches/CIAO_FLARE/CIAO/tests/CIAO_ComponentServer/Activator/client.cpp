@@ -175,6 +175,10 @@ ACE_TMAIN (int argc,  char **argv)
     {
       ACE_ERROR ((LM_ERROR, "Error: Caught RemoveFailure exception.\n"));
     }
+  catch (::CORBA::Exception &e)
+    {
+      ACE_ERROR ((LM_ERROR, "Error: Caught %s.\n", e._info ().c_str ()));
+    }
   catch (...)
     {
       ACE_ERROR ((LM_ERROR, "Error: Caught unknown exception\n"));

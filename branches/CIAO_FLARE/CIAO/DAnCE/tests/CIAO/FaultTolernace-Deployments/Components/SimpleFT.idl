@@ -1,0 +1,15 @@
+// $Id$
+
+#include <Components.idl>
+#include "Test.idl"
+
+module Simple
+{
+  component SimpleFT supports test
+  {
+  };
+
+  home SimpleFTHome manages SimpleFT
+  {
+  };
+};

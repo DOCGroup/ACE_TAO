@@ -1,0 +1,1 @@
+$CIAO_ROOT/bin/ciao_ft_componentserver -ORBInitRef NameService=file://./ns.ior -u Upsi
