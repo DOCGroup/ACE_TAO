@@ -28,7 +28,7 @@
 ACE_RCSID(tests, Process_Test, "Process_Test.cpp,v 4.11 1999/09/02 04:36:30 schmidt Exp")
 
 // This will only work on UNIX-like with /proc filesys.
-static const ACE_TCHAR *proc_self_fd = ACE_TEXT ("/proc/self/fd/");
+static const char *proc_self_fd = "/proc/self/fd/";
 
 int
 check_temp_file (const ACE_TString &tmpfilename)
@@ -44,18 +44,18 @@ check_temp_file (const ACE_TString &tmpfilename)
   // Loop through /proc/self/fs/
   if (entr.open (proc_self_fd) == -1) 
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Could not open dir %s\n"),
+                         ACE_TEXT ("Could not open dir %C\n"),
                          proc_self_fd),
                          -1);
 
   while ((dir = entr.read ())) 
     {
-      ACE_TString fullp = proc_self_fd;
+      ACE_CString fullp = proc_self_fd;
       fullp += dir->d_name;
 
-      if ((ACE_OS::lstat (fullp.c_str (), &stat)) == -1) 
+      if ((ACE_OS::lstat (ACE_TEXT_CHAR_TO_TCHAR (fullp.c_str ()), &stat)) == -1) 
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Stat failed for %s\n"),
+                           ACE_TEXT ("Stat failed for %C\n"),
                            fullp.c_str ()),
                           -1);
 
@@ -66,11 +66,11 @@ check_temp_file (const ACE_TString &tmpfilename)
                                        filename, 
                                        MAXPATHLEN + 1)) == -1) 
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Readlink failed for %s\n"),
+                               ACE_TEXT ("Readlink failed for %C\n"),
                                fullp.c_str ()),
                               -1);
           filename[size] = '\0';
-          if (tmpfilename == ACE_TString (filename))
+          if (tmpfilename == ACE_TString (ACE_TEXT_CHAR_TO_TCHAR (filename)))
             return 1;
         }
     }
@@ -109,7 +109,7 @@ run_parent (bool inherit_files)
   ACE_Process child;
 
   pid_t result = child.spawn (options);
-  if (result != -1)
+  if (result == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Parent could NOT spawn child process\n")));
   else
     ACE_DEBUG ((LM_DEBUG,
@@ -118,7 +118,7 @@ run_parent (bool inherit_files)
 
   ACE_exitcode child_status;
   result = child.wait (&child_status);
-  if (result != -1)
+  if (result == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could NOT wait on child process\n")));
   else if (child_status == 0) 
     ACE_DEBUG ((LM_DEBUG,
