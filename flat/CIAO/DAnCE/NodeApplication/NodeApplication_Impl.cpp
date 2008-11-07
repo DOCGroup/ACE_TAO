@@ -1344,6 +1344,11 @@ NodeApplication_Impl::getAllConnections()
               ACE_CString inst_name = 
                 this->plan_.instance[this->plan_.connection[i].internalEndpoint[j].instanceRef].name.in();
               
+              DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::getAllConnections() - "
+                            "Found provider '%s' for connection '%s'\n",
+                            this->plan_.connection[i].name.in (),
+                            inst_name.c_str ()));
+              
               Components::CCMObject_var obj = 
                 Components::CCMObject::
                 _narrow (this->instances_[this->plan_.connection[i].internalEndpoint[j].instanceRef]->ref.in ());
@@ -1446,15 +1451,36 @@ void
 NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedReference,
                                     ::CORBA::Boolean start)
 {
-  DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - started for connection \n"));
+  DANCE_TRACE ("NodeApplication_Impl::finishLaunch");
+  
   DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - "
-               "started for connections sequence with length: %d\n", providedReference.length()));
+               "started for connections sequence with length: %d\n", 
+               providedReference.length()));
 
   for (unsigned int j = 0; j < this->plan_.connection.length(); ++j)
     {
+      CORBA::ULong inst (this->plan_.connection[j].internalEndpoint[0].instanceRef);
+      
+      DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_impl::finishLaunch - "
+                    "Connection %s, instance %u\n",
+                    this->plan_.connection[j].name.in (),
+                    inst));
+      
+      DANCE_DEBUG ((LM_EMERGENCY, "inst %u, instances_[inst] %u, ref %u\n",
+                    inst, this->instances_[inst], this->instances_[inst]->ref.in ()));
+      
       Components::CCMObject_var obj = 
         Components::CCMObject::
-        _narrow (this->instances_[this->plan_.connection[j].internalEndpoint[0].instanceRef]->ref.in ());
+        _narrow (this->instances_[inst]->ref.in ());
+
+      if (CORBA::is_nil (obj.in ()))
+        {
+          DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_impl::finishLaunch - "
+                        "Unable to narrow apparent component instance reference to CCMObject for instance '%s'\n",
+                        this->plan_.instance[inst].name.in ()));
+          throw Deployment::InvalidConnection (this->plan_.instance[inst].name.in (),
+                                               "Unable to narrow apparent component instance reference to CCMObject\n");
+        }
 
       for (unsigned int i = 0; i < providedReference.length(); ++i)
         {
