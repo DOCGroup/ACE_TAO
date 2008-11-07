@@ -244,7 +244,7 @@ if (!defined $telnet_host)  {
 if (!defined $telnet_port)  {
   $telnet_port = 23;
 }
-my $t = new Net::Telnet(Timeout => 400, Errmode => 'return', Host => $telnet_host, Port => $telnet_port);
+my $t = new Net::Telnet(Timeout => 600, Errmode => 'return', Host => $telnet_host, Port => $telnet_port);
 if (!defined $t) {
   die "ERROR: Telnet failed to <" . $telnet_host . ":". $telnet_port . ">";
 }
