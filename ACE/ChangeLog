@@ -1,3 +1,11 @@
+Fri Nov  7 19:11:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+        * bin/PerlACE/ProcessWinCE.pm:
+          Increased timeout so that we don't kill the ACE tests before
+          they had the change to finish
+
 Fri Nov  7 18:05:00 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * bin/tao_orb_tests.lst:
