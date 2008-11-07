@@ -1740,6 +1740,19 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->client_header_
     );
 
+  if (be_global->gen_dcps_type_support ())
+    {
+      this->gen_standard_include (this->client_header_, "dds/Version.h");
+      *this->client_header_ <<
+        "\n#if DDS_MAJOR_VERSION > 1 || (DDS_MAJOR_VERSION == 1 && "
+        "(DDS_MINOR_VERSION > 2 || (DDS_MINOR_VERSION == 2 && "
+        "DDS_MICRO_VERSION >= 1)))\n"
+        "#define DDS_USE_QUERY_CONDITION_COMPARATOR";
+      this->gen_standard_include (this->client_header_,
+                                  "dds/DCPS/Comparator_T.h");
+      *this->client_header_ << "\n#endif\n";
+    }
+
   // DDS/DCPS zero-copy read sequence type support.
   if (idl_global->dcps_support_zero_copy_read ())
     {
