@@ -1,3 +1,9 @@
+Fri Nov  7 17:57:34 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_3481_Regression:
+
+          Added a test for this bug.
+
 Thu Nov  6 19:52:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3108_Regression/run_test.pl
