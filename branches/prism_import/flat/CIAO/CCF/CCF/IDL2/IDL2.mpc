@@ -4,9 +4,6 @@ project(IDL2): cidlc {
   sharedname =
   staticname = IDL2
   libout = ..
-  specific (bmake) {
-    libflags += /P64
-  }
 
   Source_Files {
     .

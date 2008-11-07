@@ -4,14 +4,12 @@ project(CIDL): cidlc {
   sharedname =
   staticname = CIDL
   libout = ..
-  specific (bmake) {
-    libflags += /P64
-  }
+
   Source_Files {
-    .
-    SemanticGraph
-    Traversal
-    SemanticAction
-    SemanticAction/Impl
+ 	.
+	./SemanticGraph
+	./Traversal
+        ./SemanticAction
+        ./SemanticAction/Impl
   }
 }

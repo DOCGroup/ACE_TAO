@@ -2,7 +2,7 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
-// This file has no dependency on ACE, thus we turn
+// This file has no dependency on ACE, thus we turn 
 // all ACE_OS checks off
 // FUZZ: disable check_for_lack_ACE_OS
 
@@ -21,44 +21,6 @@ namespace CCF
 {
   namespace IDL2
   {
-    struct LexicalAnalyzer::IdentifierTreeNode::PrefixMap: std::map<std::string, IdentifierTreeNode>
-    {
-    };
-
-    LexicalAnalyzer::IdentifierTreeNode::
-    IdentifierTreeNode ()
-        : pmap_ (new PrefixMap), map_ (*pmap_)
-    {
-    }
-
-    LexicalAnalyzer::IdentifierTreeNode::
-    ~IdentifierTreeNode ()
-    {
-      delete pmap_;
-    }
-
-    LexicalAnalyzer::IdentifierTreeNode& LexicalAnalyzer::IdentifierTreeNode::
-    operator[] (char const* key)
-    {
-      return map_[key];
-    }
-
-    LexicalAnalyzer::IdentifierTreeNode::
-    IdentifierTreeNode (const IdentifierTreeNode& node)
-        : pmap_ (new PrefixMap), map_ (*node.pmap_)
-    {
-    }
-
-    LexicalAnalyzer::IdentifierTreeNode& LexicalAnalyzer::IdentifierTreeNode::
-    operator= (const IdentifierTreeNode& node)
-    {
-      if (this != &node)
-        {
-          map_ = node.map_;
-        }
-       return *this;
-    }
-
     LexicalAnalyzer::
     LexicalAnalyzer (CompilerElements::TokenStream<Char>& is)
         : loc_ ("C"), is_ (is)
