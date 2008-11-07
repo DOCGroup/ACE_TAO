@@ -145,9 +145,6 @@ namespace
 
     for (CORBA::ULong i = 0; i < properties.length (); ++i)
       {
-        ACE_DEBUG ((LM_DEBUG, "******** %s vs %s\n",
-                    name, properties[i].name.in ()));
-
         if (ACE_OS::strcmp (properties[i].name.in (), name) == 0)
           {
             DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
@@ -525,6 +522,8 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
   DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::install_home - "
                 "Starting installation of home %s on node %s\n",
                 idd.name.in (), idd.node.in ()));
+  
+  this->instances_[inst.idd_idx] = &inst;
 
   // need to get significant property values
   const char *entrypt = 0;
@@ -627,8 +626,9 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
 {
   DANCE_TRACE("NodeApplication_Impl::install_homed_component (unsigned int index)");
 
-  // const ::Deployment::MonolithicDeploymentDescription &mdd = this->plan_.implementation[inst.mdd_idx];
-  // const ::Deployment::InstanceDeploymentDescription &idd = this->plan_.instance[inst.idd_idx];
+  //const ::Deployment::MonolithicDeploymentDescription &mdd = this->plan_.implementation[inst.mdd_idx];
+  const ::Deployment::InstanceDeploymentDescription &idd = this->plan_.instance[inst.idd_idx];
+  this->instances_[inst.idd_idx] = &inst;
 
   DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::install_homed_component - "
                 "Starting installation of homed component %s on node %s\n",
@@ -704,9 +704,20 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
                     idd.name.in ()));
 
       Components::CCMObject_var ccm_obj = home->create_component ();
+      
+      if (CORBA::is_nil (ccm_obj))
+	{
+	  DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::install_homed_component - "
+			"Received nil component reference from create_component on home %s "
+			" while creating component %s\n",
+			home_id, idd.name.in ()));
+	  throw Deployment::StartError (idd.name.in (),
+					"Home for explicitly homed component returned nil");
+	}
+
       inst.ref = CORBA::Object::_narrow (ccm_obj.in ());
       inst.state = eInstalled;
-
+      
       DANCE_DEBUG ((LM_INFO, DLINFO  "NodeApplication_Impl::install_homed_component - "
                     "Component %s successfully installed in home %s\n",
                     idd.name.in (),
@@ -927,7 +938,7 @@ NodeApplication_Impl::init_components()
                                                                        &this->servers_[0].containers[0],
                                                                        i,
                                                                        this->plan_.instance[i].implementationRef);
-                this->instances_[i] = &this->servers_[0].containers[0].homes[pos];
+                //this->instances_[i] = &this->servers_[0].containers[0].homes[pos];
                 break;
               }
             case eComponent:
@@ -941,7 +952,7 @@ NodeApplication_Impl::init_components()
                                                                             &this->servers_[0].containers[0],
                                                                             i,
                                                                             this->plan_.instance[i].implementationRef);
-                this->instances_[i] = &this->servers_[0].containers[0].components[pos];
+                //this->instances_[i] = &this->servers_[0].containers[0].components[pos];
                 break;
               }
             case eHomedComponent:
@@ -949,13 +960,13 @@ NodeApplication_Impl::init_components()
                 DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_impl::init_components - "
                               "Allocating instance %s as a home managed component\n",
                               this->plan_.instance[i].name.in ()));
-                size_t pos = this->servers_[0].containers[0].homes.size ();
+                size_t pos = this->servers_[0].containers[0].components.size ();
                 this->servers_[0].containers[0].components.size (pos + 1);
                 this->servers_[0].containers[0].components[pos] = Instance (eHomedComponent,
                                                                             &this->servers_[0].containers[0],
                                                                             i,
                                                                             this->plan_.instance[i].implementationRef);
-                this->instances_[i] = &this->servers_[0].containers[0].components[pos];
+                //this->instances_[i] = &this->servers_[0].containers[0].components[pos];
                 break;
               }
             default:
@@ -1239,7 +1250,7 @@ if (error)
 NodeApplication_Impl::EInstanceType
 NodeApplication_Impl::get_instance_type (const Deployment::Properties& prop) const
 {
-  DANCE_TRACE (DLINFO "NodeApplication_Impl::get_instance_type");
+  DANCE_TRACE ("NodeApplication_Impl::get_instance_type");
   
   for (CORBA::ULong i = 0; i < prop.length (); ++i)
     {
@@ -1460,16 +1471,14 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
   for (unsigned int j = 0; j < this->plan_.connection.length(); ++j)
     {
       CORBA::ULong inst (this->plan_.connection[j].internalEndpoint[0].instanceRef);
-      
+
       DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_impl::finishLaunch - "
                     "Connection %s, instance %u\n",
                     this->plan_.connection[j].name.in (),
                     inst));
-      
-      DANCE_DEBUG ((LM_EMERGENCY, "inst %u, instances_[inst] %u, ref %u\n",
-                    inst, this->instances_[inst], this->instances_[inst]->ref.in ()));
-      
-      Components::CCMObject_var obj = 
+
+      Components::CCMObject_var obj =
+
         Components::CCMObject::
         _narrow (this->instances_[inst]->ref.in ());
 
@@ -1769,13 +1778,22 @@ NodeApplication_Impl::connect_publisher (Components::CCMObject_ptr inst,
                                          const ACE_CString& port_name,
                                          CORBA::Object_ptr consumer)
 {
+  DANCE_TRACE ("NodeApplication_Impl::connect_publisher");
+  
+  if (CORBA::is_nil (inst))
+    {
+      DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::connect_publisher - "
+		    "Provided a nil CCMObject reference while connecting port %s\n",
+		    port_name.c_str ()));
+      throw ::Deployment::InvalidConnection ();
+    }
   Components::Cookie* res = 0;
   Components::EventConsumerBase_var event = Components::EventConsumerBase::_unchecked_narrow (consumer);
   try
     {
-      DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - subscribe for %s started\n", port_name.c_str()));
       res = inst->subscribe (port_name.c_str(), event);
-      DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - subscribe finished\n"));
+      DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - successfully subscribed %s\n",
+		   port_name.c_str ()));
     }
   catch (::Components::InvalidName& )
     {
