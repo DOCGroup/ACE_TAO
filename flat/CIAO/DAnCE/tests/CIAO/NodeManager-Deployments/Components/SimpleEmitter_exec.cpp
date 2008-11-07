@@ -74,7 +74,7 @@ namespace CIDL_SimpleEmitter_Impl
     
     ::Simple::Hello_var hello = new OBV_Simple::Hello ("Test successful, hello from SimpleEmitter_exec_i");
     
-    this->context_->push_hello (hello.in ());
+    this->context_->push_hello (hello._retn ());
   }
 
   void

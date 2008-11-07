@@ -52,7 +52,7 @@ namespace CIDL_SimpleConsumer_Impl
     
     ::Simple::Hello_var hello (ev);
     
-    CIAO_DEBUG ((LM_NOTICE, CLINFO "SimpleConsumer_exec_i::push_hello_ - "
+    CIAO_DEBUG ((LM_EMERGENCY, CLINFO "SimpleConsumer_exec_i::push_hello_ - "
                  "Received hell event, value is %s\n", ev->hello_ ()));
   }
 
