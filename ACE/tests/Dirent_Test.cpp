@@ -32,11 +32,9 @@
 #include "ace/OS_String.h"
 #include "ace/SString.h"
 
-
 ACE_RCSID (tests,
            Dirent_Test,
            "$Id Dirent_Test.cpp,v 4.10 2003/05/18 19:17:34 dhinton Exp$")
-
 
 #if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
 #  define TEST_DIR "log"
@@ -81,14 +79,13 @@ comparator (const ACE_DIRENT **d1, const ACE_DIRENT **d2)
 static int
 dirent_selector_test (void)
 {
-  int status;
   int n;
   int error = 0;
   const ACE_TCHAR *test_dir = TestDir.c_str ();
   ACE_Dirent_Selector sds;
 
   // Pass in functions that'll specify the selection criteria.
-  status = sds.open (test_dir, selector, comparator);
+  int status = sds.open (test_dir, selector, comparator);
   if (status == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%s, %p\n"),
@@ -165,7 +162,11 @@ dirent_selector_test (void)
 static int
 dirent_test (void)
 {
-  ACE_Dirent dir (TestDir.c_str ());
+  ACE_Dirent dir;
+
+   if (dir.open (TestDir.c_str ()) == -1)
+      ACE_ERROR_RETURN
+        ((LM_ERROR, ACE_TEXT ("open of dir %s failed\n"), TestDir.c_str()), -1);
 
   for (ACE_DIRENT *directory;
        (directory = dir.read ()) != 0;
@@ -228,12 +229,15 @@ dirent_count (const ACE_TCHAR *dir_path,
 # endif
 #endif /* !ACE_LACKS_CHDIR */
 
-  ACE_Dirent dir (ACE_TEXT ("."));
+  ACE_Dirent dir;
+   if (dir.open (ACE_TEXT (".")) == -1)
+      ACE_ERROR_RETURN
+        ((LM_ERROR, ACE_TEXT ("open of dir . failed\n")), -1);
 
   // Since the dir struct d_name type changes depending on the setting
   // of ACE_LACKS_STRUCT_DIR, copy each name into a neutral format
   // array to work on it.
-  const size_t maxnamlen = MAXNAMLEN;
+  size_t const maxnamlen = MAXNAMLEN;
   ACE_TCHAR tname[maxnamlen + 1];
 
   int entry_count = 0;
@@ -324,7 +328,7 @@ dirent_count (const ACE_TCHAR *dir_path,
           break;
 
         default: // Must be some other type of file (PIPE/FIFO/device)
-          file_count++;
+          ++file_count;
           break;
         }
     }
@@ -371,6 +375,8 @@ run_main (int, ACE_TCHAR *[])
   //   ../test: Last-chance try to hit the right place
 #if defined (TEST_DIR)
   TestDir = TEST_DIR;
+#elif defined (ACE_DEFAULT_TEST_DIR)
+  TestDir = ACE_DEFAULT_TEST_DIR;
 #else
   const char *root = ACE_OS::getenv ("top_srcdir");
   if (root == 0)
