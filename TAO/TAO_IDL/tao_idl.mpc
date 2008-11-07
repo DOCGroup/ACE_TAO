@@ -4,7 +4,7 @@
 project(TAO_IDL_EXE) : aceexe, install, tao_output, crosscompile, mcpp, tao_idl_mcpp {
   exename      = tao_idl
   libs        += TAO_IDL_BE TAO_IDL_FE
-  install      = $(ACE_ROOT)/bin
+  exeout       = $(ACE_ROOT)/bin
   after       += TAO_IDL_BE TAO_IDL_FE gperf
 
   specific (automake) {

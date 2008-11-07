@@ -133,8 +133,21 @@ be_visitor_structure_serializer_op_ch::visit_structure (be_structure *node)
       << " &);" << be_nl;
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator>> (TAO::DCPS::Serializer &, "
-      << node->name () << " &);";
+      << node->name () << " &);" << be_nl;
 
+  //FUTURE: This can be excluded if the OpenDDS is excluding the DDS
+  //        content-subscription profile at compile-time.
+  *os << be_nl << "#ifdef DDS_USE_QUERY_CONDITION_COMPARATOR" << be_nl
+      << "namespace OpenDDS" << be_nl
+      << "{" << be_idt_nl
+      << "namespace DCPS" << be_nl
+      << "{" << be_idt_nl
+      << be_global->stub_export_macro () << be_nl
+      << "ComparatorBase::Ptr create_qc_comparator (" << node->name ()
+      << " *, const char *field, ComparatorBase::Ptr next);" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}" << be_nl
+      << "#endif" << be_nl;
 
   // Set the substate as generating code for the types defined in our scope.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_SCOPE);

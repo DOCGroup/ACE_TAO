@@ -1,3 +1,15 @@
+Fri Nov  7 22:28:08 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_structure/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/serializer_op_cs.cpp:
+
+          Added a new generated function to the DDS support (-Gdcps).
+
+        * TAO_IDL/tao_idl.mpc:
+
+          "install" is a deprecated MPC keyword, changed it to "exeout".
+
 Fri Nov  7 17:57:34 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Bug_3481_Regression:
