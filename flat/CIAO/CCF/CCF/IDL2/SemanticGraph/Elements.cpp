@@ -6,7 +6,7 @@
 
 #include <ostream>
 
-// This file has no dependency on ACE, thus we turn
+// This file has no dependency on ACE, thus we turn 
 // all ACE_OS checks off
 // FUZZ: disable check_for_lack_ACE_OS
 
@@ -69,7 +69,7 @@ namespace CCF
       Node::
       Node ()
       {
-        // This ctor should never be called.
+        abort (); // This ctor should never be called.
       }
 
       namespace

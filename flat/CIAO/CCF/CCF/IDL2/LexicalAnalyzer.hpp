@@ -155,18 +155,17 @@ namespace CCF
 
       struct IdentifierTreeNode
       {
-        IdentifierTreeNode ();
-        ~IdentifierTreeNode ();
+        typedef
+        std::map<std::string, IdentifierTreeNode>
+        PrefixMap;
 
         IdentifierTreeNode&
-        operator[] (char const* key);
+        operator[] (char const* key)
+        {
+          return map_[key];
+        }
 
-        struct PrefixMap;
-        PrefixMap* pmap_;
-        PrefixMap& map_;
-
-        IdentifierTreeNode (const IdentifierTreeNode&);
-        IdentifierTreeNode& operator= (const IdentifierTreeNode&);
+        PrefixMap map_;
       };
 
       typedef
