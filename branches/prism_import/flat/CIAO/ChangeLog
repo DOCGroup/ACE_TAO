@@ -1,10 +1,18 @@
+Fri Nov  7 18:46:09 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleConsumer_exec.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleEmitter_exec.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/EmitsConnectionExplicitHome.cdp:
+
+          Fiexes for enabling connection of a standard emits/sub connection.
+        
 Fri Nov  7 18:28:14 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
         * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimplePublisher_exec.cpp:
 
-          Fixes for enabling connection of a standard pub/sub connection. 
-        
+          Fixes for enabling connection of a standard pub/sub connection.
+
 Fri Nov  7 15:10:58 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CCF/CCF/CIDL/CIDL.mpc:
