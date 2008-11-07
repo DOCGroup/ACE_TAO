@@ -1,3 +1,9 @@
+Fri Nov  7 09:47:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_main.cpp:
+          Use ACE_TEXT_GetModuleFileName to get the executable name
+          on Windows CE
+
 Fri Nov  7 09:11:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Makefile.am:
