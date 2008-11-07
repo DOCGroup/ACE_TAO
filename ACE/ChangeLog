@@ -1,3 +1,10 @@
+Fri Nov  7 20:10:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Dirent_Test.cpp:
+          Use the open method of ACE_Dirent instead of the constructor
+          so that we can check the return value and also use ACE_DEFAULT_TEST_DIR
+          when it is defined
+
 Fri Nov  7 19:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
