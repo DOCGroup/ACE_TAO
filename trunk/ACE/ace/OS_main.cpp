@@ -113,7 +113,15 @@ int ACE_Main_Base::run (HINSTANCE,
                         int)
 {
   ACE_TCHAR cmdline[1024];
-  ACE_OS::strcpy (cmdline, ACE_TEXT ("program "));
+  ACE_TCHAR msg_file [MAXPATHLEN];
+  if (ACE_TEXT_GetModuleFileName (0, msg_file, MAXPATHLEN))
+    {
+      ACE_OS::strcpy (cmdline, msg_file);
+    }
+  else
+    {
+      ACE_OS::strcpy (cmdline, ACE_TEXT ("program "));
+    }
   ACE_OS::strcat (cmdline, ACE_TEXT_WCHAR_TO_TCHAR (lpCmdLine));
   ACE_ARGV ce_argv (cmdline);
   ACE::init ();
