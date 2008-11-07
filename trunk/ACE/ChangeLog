@@ -1,3 +1,9 @@
+Fri Nov  7 12:02:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.pl:
+          Removed all specific VxWorks support, we are using the generic test
+          framework now
+
 Fri Nov  7 09:47:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_main.cpp:
