@@ -1,0 +1,3 @@
+local interface Foo {
+};
+typedef sequence<Foo> FooSeq;
