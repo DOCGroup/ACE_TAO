@@ -199,12 +199,12 @@ TAO/orbsvcs/tests/Notify/MC/run_test.pl: !ST !STATIC !MINIMUM !CORBA_E_COMPACT !
 TAO/orbsvcs/tests/Simple_Naming/run_test_ipv6.pl: IPV6 !ST !SUNCC5_1 !NO_MESSAGING !ACE_FOR_TAO !LynxOS !CORBA_E_MICRO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/DevGuideExamples/EventServices/OMG_Basic/run_test.pl: !MINIMUM !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/orbsvcs/DevGuideExamples/EventServices/OMG_SupplierSideEC/run_test.pl: !MINIMUM !NO_MESSAGING !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO
-TAO/orbsvcs/DevGuideExamples/EventServices/OMG_TypedEC/run_test.pl: !MINIMUM !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO
-TAO/orbsvcs/DevGuideExamples/EventServices/RTEC_Basic/run_test.pl: !NO_MESSAGING !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO
-TAO/orbsvcs/DevGuideExamples/EventServices/RTEC_Federated/run_test.pl: !ST !NO_MESSAGING !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO
-TAO/orbsvcs/DevGuideExamples/EventServices/RTEC_Filter/run_test.pl: !NO_MESSAGING !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO
-TAO/orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/run_test.pl: !NO_MCAST !NO_MESSAGING !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO
-TAO/orbsvcs/DevGuideExamples/ImplRepo/run_test.pl: !MINIMUM !STATIC !CORBA_E_MICRO !VxWorks !VxWorks_RTP
+TAO/orbsvcs/DevGuideExamples/EventServices/OMG_TypedEC/run_test.pl: !MINIMUM !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
+TAO/orbsvcs/DevGuideExamples/EventServices/RTEC_Basic/run_test.pl: !NO_MESSAGING !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
+TAO/orbsvcs/DevGuideExamples/EventServices/RTEC_Federated/run_test.pl: !ST !NO_MESSAGING !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
+TAO/orbsvcs/DevGuideExamples/EventServices/RTEC_Filter/run_test.pl: !NO_MESSAGING !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
+TAO/orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/run_test.pl: !NO_MCAST !NO_MESSAGING !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
+TAO/orbsvcs/DevGuideExamples/ImplRepo/run_test.pl: !MINIMUM !STATIC !CORBA_E_MICRO !VxWorks !VxWorks_RTP !ACE_FOR_TAO
 TAO/orbsvcs/DevGuideExamples/NotifyService/EventSequence/run_test.pl: !ST !MINIMUM !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/orbsvcs/DevGuideExamples/NotifyService/Filtering/run_test.pl: !ST !MINIMUM !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/orbsvcs/DevGuideExamples/NotifyService/Messenger/run_test.pl: !ST !MINIMUM !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO
@@ -222,4 +222,4 @@ TAO/orbsvcs/DevGuideExamples/NamingService/Naming_Server/run_test.pl: !ST !NO_MC
 TAO/orbsvcs/DevGuideExamples/NamingService/corbaloc_Messenger/run_test.pl: !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/orbsvcs/DevGuideExamples/NamingService/corbaname_Messenger/run_test.pl: !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/orbsvcs/DevGuideExamples/ValueTypes/Notify/run_test.pl: !ST !MINIMUM !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO
-TAO/orbsvcs/DevGuideExamples/InterfaceRepo/run_test.pl: !MINIMUM !NO_IFR !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/orbsvcs/DevGuideExamples/InterfaceRepo/run_test.pl: !MINIMUM !NO_IFR !VxWorks !VxWorks_RTP !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO

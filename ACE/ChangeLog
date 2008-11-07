@@ -1,3 +1,8 @@
+Fri Nov  7 19:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Disabled several DevGuidExamples in the ACE_FOR_TAO configuration
+
 Fri Nov  7 19:11:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:
