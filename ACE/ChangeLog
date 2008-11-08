@@ -1,3 +1,8 @@
+Sat Nov  8 07:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/WFMO_Reactor/run_test.pl:
+          Convert to use the new test framework
+
 Fri Nov  7 20:10:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Dirent_Test.cpp:
