@@ -434,7 +434,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       reset_handler (NUMBER_OF_REACTIVE_CONNECTIONS);
 
-      test_reactive (ACE_TEXT ("MEM_Stream_Test"), server_addr);
+      test_reactive (argv[0], server_addr);
 
       ACE_Reactor::instance ()->reset_reactor_event_loop ();
 
