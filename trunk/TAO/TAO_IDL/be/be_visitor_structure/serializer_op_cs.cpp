@@ -299,6 +299,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
               << be_uidt_nl
               << "}" << be_uidt_nl;
           break;
+        default: ;
         }
     }
 
