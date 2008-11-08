@@ -1,3 +1,11 @@
+Sat Nov  8 07:11:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/MEM_Stream_Test.cpp:
+          use argv[0]
+
+        * tests/Malloc_Test.cpp:
+          Removed WinCE code
+
 Sat Nov  8 07:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/WFMO_Reactor/run_test.pl:
