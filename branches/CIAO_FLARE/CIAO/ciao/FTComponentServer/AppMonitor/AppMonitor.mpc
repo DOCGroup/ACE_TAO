@@ -1,0 +1,17 @@
+project (AppMonitor) : taolib, taoidldefaults, ciao_lib, naming {
+
+  idlflags += -Wb,export_macro=AppMonitor_Export -Wb,export_include=appmonitor_export.h
+  macros   += APPMONITOR_BUILD_DLL
+  includes += ..
+
+  IDL_Files {
+    monitor.idl
+  }
+
+  Source_Files {
+    monitorC.cpp
+    AppSideMonitor_Handler.cpp
+    AppSideMonitor_Thread.cpp
+    AppSideReg.cpp
+  }
+}
