@@ -64,7 +64,8 @@ StateSynchronizationAgent_i::~StateSynchronizationAgent_i ()
 void 
 StateSynchronizationAgent_i::state_changed (const char * object_id)
 {
-  std::cout << "SSA::state_changed (%s) called." << std::endl;
+  std::cout << "SSA::state_changed (" << object_id 
+	    << ") called." << std::endl;
 
   // get application reference
   ReplicatedApplication_var app;
