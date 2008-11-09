@@ -92,10 +92,17 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       
       ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: calling start\n"));
       na->start ();
-      
+
+#if 0      
       ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: start finished, sleeping 20 seconds.\n"));
       ACE_OS::sleep (20);
       ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: waking up from sleep, calling destroyApplication\n"));
+#else
+      ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: start finished, press key to shut down.\n"));      
+      char c;
+      std::cin >> c;
+      ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: calling destroyApplication\n"));
+#endif
       
       nam->destroyApplication (na.in ());
       
