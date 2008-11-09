@@ -126,7 +126,7 @@ int ACE_Main_Base::run (HINSTANCE,
   ACE_ARGV ce_argv (cmdline);
   ACE::init ();
   ACE_MAIN_OBJECT_MANAGER
-  int i = this->run_i (ce_argv.argc (), ce_argv.argv ());
+  int const i = this->run_i (ce_argv.argc (), ce_argv.argv ());
   ACE::fini ();
   return i;
 }
