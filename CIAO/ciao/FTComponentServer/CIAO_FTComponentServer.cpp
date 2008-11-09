@@ -25,13 +25,15 @@
 #include "ciao/Logger/Log_Macros.h"
 #include "ciao/Server_init.h"
 
-
+#include "Name_Helper_T.h"
 #include "CIAO_FTComponentServer_Impl.h"
 #include "CIAO_CS_ClientC.h"
 #include "Configurator_Factory.h"
 #include "Configurators/Server_Configurator.h"
 #include "StateSynchronizationAgent/StateSynchronizationAgent_i.h"
 #include "ServerInterceptor/ServerORBInitializer.h"
+#include "AppMonitor/AppSideReg.h"
+#include "ReplicationManagerC.h"
 
 #ifdef CIAO_BUILD_COMPONENTSERVER_EXE
 
@@ -163,6 +165,20 @@ namespace CIAO
 	  poa_manager->activate ();
 
 	  CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
+		       "Activating AppMonitor_Thread.\n"));
+
+	  ACE_Barrier thread_barrier (2);
+	  AppSideReg proc_reg (&thread_barrier, orb_.in());
+
+	  if (proc_reg.activate () != 0)
+	    {
+	      CIAO_ERROR ((LM_ERROR, "AppSideReg::activate () failed.\n"));
+	    }
+   
+	  //      ACE_DEBUG ((LM_TRACE, ACE_TEXT ("AppSideReg activated.\n")));
+	  thread_barrier.wait();
+
+	  CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
 		       "Creating state synchronization servant\n"));
 
 	  // start up SSA
@@ -184,8 +200,18 @@ namespace CIAO
 	  // activate servant here
 	  StateSynchronizationAgent_var ssa (ssa_servant->_this ());
 
-	  this->bind_obj ("StateSynchronizationAgent", ssa.in ());
-	  
+	  Name_Helper_T <StateSynchronizationAgent> nsh (orb_, true);
+	  nsh.bind (this->get_obj_path () + "/StateSynchronizationAgent", ssa.in ());
+
+	  // register ssa with the replication manager
+	  Name_Helper_T <ReplicationManager> rmh (orb_.in (), true);
+
+	  ReplicationManager_var rm = rmh.resolve ("FLARe/ReplicationManager");
+
+	  rm->register_state_synchronization_agent (this->get_hostname ().c_str (),
+						    this->get_process_id ().c_str (),
+						    ssa);
+
 	  CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
 		       "Creating server implementation object\n"));
 	  CIAO::Deployment::CIAO_ComponentServer_i *ci_srv = 0;
@@ -284,8 +310,6 @@ namespace CIAO
 	  CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
 		       "ORB Event loop completed.\n"));
 
-	  
-	  
 	  root_poa->destroy (1, 1);
       
 	  this->orb_->destroy ();
@@ -296,6 +320,12 @@ namespace CIAO
 	  CIAO_ERROR ((LM_ERROR, CLINFO "ComponentServer_Task::svc - "
 		       "caught: %s.\n", ex._info ().c_str ()));	  
 	}
+      catch (Name_Helper_Exception & ex)
+	{
+	  CIAO_ERROR ((LM_ERROR, CLINFO "ComponentServer_Task::svc - "
+		       "Name helper exception: %s", ex.what ()));
+	}
+
       return -1;
     }
     
@@ -557,132 +587,7 @@ namespace CIAO
 
       return path;
     }
-
-    void 
-    ComponentServer_Task::bind_obj (std::string obj_name, CORBA::Object_ptr obj)
-    {
-      CIAO_TRACE ("ComponentServer_Task::bind_obj ()");
-
-#ifdef DOES_NOT_WORK_SINCE_NO_PARAMETERS_CAN_BE_PASSED_TO_COMPONENTSERVER
-      // register StateSynchronization Agent in the NameService
-      CORBA::Object_var ns_obj = orb_->resolve_initial_references ("NameService");
-#else
-      std::string ns_ior = ACE_Env_Value<std::string> ("NameServiceIOR", 
-						       std::string ());
-
-      if (ns_ior.empty ())
-	{
-	  CIAO_ERROR ((LM_WARNING, "Could not find environment variable "
-		       "NameServiceIOR. FTComponentServer is not able to"
-		       "bind the StateSynchronziationAgent entry\n"));
-	  return;
-	}
-
-      CORBA::Object_var ns_obj = orb_->string_to_object (ns_ior.c_str ());
-#endif
-
-      if (CORBA::is_nil (ns_obj.in ()))
-	{
-	  CIAO_ERROR ((LM_WARNING, "ComponentServer_Task::svc - "
-		       "Could not resolve NameService\n"));
-	}
-      else
-	{
-	  CosNaming::NamingContextExt_var ns = 
-	    CosNaming::NamingContextExt::_narrow (ns_obj.in ());
-	  
-	  if (CORBA::is_nil (ns.in ()))
-	    {
-	      CIAO_ERROR ((LM_ERROR, "ComponentServer_Task::svc - "
-			   "Narrowing NameService failed.\n"));
-	      throw Error ("Narrowing NameService failed.");
-	    }
-
-	  std::string path = get_obj_path ();
-
-	  CosNaming::NamingContext_var nc = 
-	    CosNaming::NamingContext::_narrow (ns.in ());
-	  CosNaming::Name_var name = ns->to_name (path.c_str ());
-	  CosNaming::Name entry;
-	  entry.length (1);
-
-	  for (size_t i = 0;
-	       i < name->length ();
-	       ++i)
-	    {
-	      entry[0] = CosNaming::NameComponent (name[i]);
-	      try
-		{
-		  nc = nc->bind_new_context (entry);
-		}
-	      catch (CosNaming::NamingContext::AlreadyBound & ex)
-		{
-		  // if the entry is already there just go on
-		  nc = CosNaming::NamingContext::_narrow (nc->resolve (entry));
-		}
-	    }
-	  
-	  name = ns->to_name (obj_name.c_str ());
-	  nc->bind (name, obj);
-	}
-    }
-
-    void 
-    ComponentServer_Task::unbind_obj (std::string obj_name)
-    {
-      CIAO_TRACE ("ComponentServer_Task::unbind_obj ()");
-
-#ifdef DOES_NOT_WORK_SINCE_NO_PARAMETERS_CAN_BE_PASSED_TO_COMPONENTSERVER
-      // register StateSynchronization Agent in the NameService
-      CORBA::Object_var ns_obj = orb_->resolve_initial_references ("NameService");
-#else
-      std::string ns_ior = ACE_Env_Value<std::string> ("NameServiceIOR",
-						       std::string ());
-      if (ns_ior.empty ())
-	{
-	  CIAO_ERROR ((LM_WARNING, "Could not find environment variable "
-		       "NameServiceIOR. FTComponentServer is not able to"
-		       "bind the StateSynchronziationAgent entry\n"));
-	  return;
-	}
-
-      CORBA::Object_var ns_obj = orb_->string_to_object (ns_ior.c_str ());
-#endif
-
-      if (CORBA::is_nil (ns_obj.in ()))
-	{
-	  CIAO_ERROR ((LM_WARNING, "ComponentServer_Task::svc - "
-		       "Could not resolve NameService\n"));
-	}
-      else
-	{
-	  CosNaming::NamingContextExt_var ns = 
-	    CosNaming::NamingContextExt::_narrow (ns_obj.in ());
-	  
-	  if (CORBA::is_nil (ns.in ()))
-	    {
-	      CIAO_ERROR ((LM_ERROR, "ComponentServer_Task::svc - "
-			   "Narrowing NameService failed.\n"));
-	      throw Error ("Narrowing NameService failed.");
-	    }
-
-	  std::string path = get_obj_path ();
-
-	  std::string obj_path = path + obj_name;
-	  CosNaming::Name_var path_name = ns->to_name (path.c_str ());
-	  CosNaming::Name_var name = ns->to_name (obj_path.c_str ());	  
-
-	  try
-	    {
-	      ns->unbind (name);
-	      ns->unbind (path_name);
-	    }
-	  catch (CosNaming::NamingContext::AlreadyBound & ex)
-	    {
-	    }
-	}
-    }
-
+    
   }
 }
 

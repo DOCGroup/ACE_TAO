@@ -13,6 +13,9 @@
 #include "ace/Task.h"
 #include "tao/ORB.h"
 #include "ciao/Logger/Logger_Service.h"
+#include "orbsvcs/CosNamingC.h"
+
+class StateSynchronizationAgent;
 
 namespace CIAO
 {
@@ -52,15 +55,12 @@ namespace CIAO
       
       void check_supported_priorities (void);
 
+      /// helper functions for naming service operations
       std::string get_hostname ();
 
       std::string get_process_id ();
 
       std::string get_obj_path ();
-
-      void bind_obj (std::string obj_name, CORBA::Object_ptr obj);
-
-      void unbind_obj (std::string obj_name);
       
       CORBA::ORB_var orb_;
       

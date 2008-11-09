@@ -64,9 +64,7 @@ StateSynchronizationAgent_i::~StateSynchronizationAgent_i ()
 void 
 StateSynchronizationAgent_i::state_changed (const char * object_id)
 {
-  ACE_DEBUG ((LM_TRACE, 
-	      "SSA::state_changed (%s) called.\n", 
-	      object_id));
+  std::cout << "SSA::state_changed (%s) called." << std::endl;
 
   // get application reference
   ReplicatedApplication_var app;
@@ -141,14 +139,15 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
       replica_map_.close();
       replica_map_.open();
 
-      ACE_DEBUG ((LM_TRACE, "SSA::update_rank_list with:\n"));
+      std::cout << "SSA::update_rank_list with:" 
+		<< std::endl;
 
       // for each replication group in the replica group list
       for (size_t i = 0; i < rank_list.length (); ++i)
 	{
-	  ACE_DEBUG ((LM_TRACE, "\toid = %s (%d entries)\n", 
-		      rank_list[i].object_id.in (),
-		      rank_list.length ()));
+	  std::cout << "\toid = "<< rank_list[i].object_id.in ()
+		    << " (" << rank_list.length () << " entries)"
+		    << std::endl;
 
 	  // use the application id as a key for the map
 	  ACE_CString oid (rank_list[i].object_id);
@@ -189,7 +188,7 @@ void
 StateSynchronizationAgent_i::register_application (const char * object_id,
 						   ReplicatedApplication_ptr app)
 {
-  ACE_DEBUG ((LM_TRACE, "SSA::register_application (%s) called.\n", object_id));
+  std::cout << "SSA::register_application (" << object_id << ") called." << std::endl;
 
   ACE_CString oid (object_id);
 
