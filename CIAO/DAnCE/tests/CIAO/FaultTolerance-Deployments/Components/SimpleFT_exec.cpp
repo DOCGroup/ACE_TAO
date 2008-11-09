@@ -20,11 +20,12 @@
 
 #include "SimpleFT_exec.h"
 #include <ace/Env_Value_T.h>
+#include <ace/Throughput_Stats.h>
 #include <orbsvcs/CosNamingC.h>
 #include "ciao/CIAO_common.h"
 #include "ciao/Containers/Container_Base.h"
 #include "ciao/Contexts/Context_Impl_Base.h"
-
+#include "ciao/FTComponentServer/Name_Helper_T.h"
 
 namespace CIDL_SimpleFT_Impl
 {
@@ -33,9 +34,36 @@ namespace CIDL_SimpleFT_Impl
   //==================================================================
 
   SimpleFT_exec_i::SimpleFT_exec_i (void)
+    : app_name_ ("APPLICATION_NAME"),
+      orb_ (CORBA::ORB::_nil ()),
+      agent_ (StateSynchronizationAgent::_nil ()),
+      history_ (50),
+      state_ (0)
   {
     CIAO_TRACE ("SimpleFT_exec_i::SimpleFT_exec_i (void)");
     CIAO_DEBUG ((LM_EMERGENCY, "SimpleFT - Test - Lifecycle event - SimpleFT_exec_i::SimpleFT_exec_i (void)\n"));
+
+    CIAO::Context_Impl_Base * base_context = dynamic_cast <CIAO::Context_Impl_Base*> (context_.in ());
+
+    if (base_context == 0)
+      {
+	CIAO_ERROR ((LM_ERROR, "could not cast to Context_Impl_Base\n"));
+      }
+    else
+      {
+	CIAO::Container_var container = base_context->_ciao_the_Container ();
+
+	CIAO::Container_i * container_i = dynamic_cast <CIAO::Container_i*> (container.in ());
+	
+	if (container_i == 0)
+	  {
+	    CIAO_ERROR ((LM_ERROR, "could not cast to Container_i\n"));
+	  }
+	else
+	  {
+	    orb_ = container_i->the_ORB ();
+	  }
+      }
   }
 
   SimpleFT_exec_i::~SimpleFT_exec_i (void)
@@ -80,27 +108,39 @@ namespace CIDL_SimpleFT_Impl
   {
     CIAO_TRACE ("SimpleFT_exec_i::ccm_activate");
     CIAO_DEBUG ((LM_EMERGENCY, "SimpleFT - Test - Lifecycle event - SimpleFT_exec_i::ccm_activate\n"));
+    
+    Name_Helper_T <StateSynchronizationAgent> nh (orb_.in (), true);
 
-    CIAO_DEBUG ((LM_DEBUG, "resolving name service reference\n"));
-#ifdef RESOLVE_INITIAL_REFERENCE_IS_IMPLEMENTED
-    CORBA::Object_var ns_obj = context_->resolve_service_reference ("NameService");
-#else
-    std::string ns_ior = ACE_Env_Value <std::string> ("NameServiceIOR", std::string ());
+    CIAO_DEBUG ((LM_DEBUG, "resolving the StateSynchronizationAgent in the NamingService.\n"));
 
-    if (ns_ior.empty ())
+    try
       {
-	CIAO_ERROR ((LM_WARNING, "SimpleFT_exec_i::ccm_activate - could find NameServiceIOR env variable.\n"));
-	return;
-      }
-#endif
-#if 0    
-    CIAO::Context_Impl_Base * base_context = 
-      dynamic_cast <CIAO::Context_Impl_Base*> (context_.in ());
-    CORBA::Object_var ns_obj = base_context->_ciao_the_Container ()->the_ORB ()->string_to_object (ns_ior.c_str ());
+	agent_ = nh.resolve ("FLARe/" +
+			     this->get_hostname () +
+			     "/StateSynchronizationAgent");
 
-    CIAO_DEBUG ((LM_DEBUG, "narrowing name servic\n"));
-    CosNaming::NamingContextExt_var ns = CosNaming::NamingContextExt::_narrow (ns_obj.in ());
-#endif
+	if (CORBA::is_nil (agent_.in ()))
+	  {
+	    CIAO_ERROR ((LM_WARNING, "SimpleFT_exec_i::ccm_activate - could not find agent.\n"));
+	    return;
+	  }
+
+	CIAO_DEBUG ((LM_DEBUG, "registering the application with the agent.\n"));
+
+	ReplicatedApplication_var myself = ReplicatedApplication::_narrow (this);
+
+	if (CORBA::is_nil (myself.in ()))
+	  {
+	    CIAO_ERROR ((LM_WARNING, "SimpleFT_exec_i::ccm_activate - could not get reference to itself.\n"));
+	    return;
+	  }
+
+	agent_->register_application (app_name_.c_str (), myself.in ());
+      }
+    catch (CORBA::Exception &ex)
+      {
+	CIAO_ERROR ((LM_ERROR, "SimpleFT_exec_i::ccm_activate - cuaght: %s", ex._info ().c_str ()));
+      }
   }
 
   void
@@ -133,6 +173,23 @@ namespace CIDL_SimpleFT_Impl
   {
     CIAO_TRACE ("SimpleFTHome_exec_i::~SimpleFTHome_exec_i");
     CIAO_DEBUG ((LM_EMERGENCY, "SimpleFT - Test - Lifecycle event - SimpleFTHome_exec_i::~SimpleFTHome_exec_i\n"));
+  }
+
+  // Attribute operations
+
+  char *
+  SimpleFT_exec_i::app_name (void)
+  {
+    char * name = new char[app_name_.length ()];
+    ACE_OS::strcpy (name, app_name_.c_str ());    
+
+    return name;
+  }
+
+  void 
+  SimpleFT_exec_i::app_name (const char * app_name)
+  {
+    app_name_ = app_name;
   }
 
   // Supported or inherited operations.
@@ -176,44 +233,40 @@ namespace CIDL_SimpleFT_Impl
   SimpleFT_exec_i::method (CORBA::ULong test_start, CORBA::ULong test_end,
 			   CORBA::ULong work,
 			   CORBA::ULong prime_number,
-			   CORBA::ULong kill)
+			   CORBA::ULong)
   {
-#ifdef JUST_COPIED
-    static int i = 0;
-    ACE_DEBUG ((LM_DEBUG, "%d\n",i++));
-    
-    if (kill && stop_)
-      ACE_OS::exit (1);
-    if (test_start == 1)
-      {
-	this->start_ = ACE_OS::gethrtime ();
-      }
-    ACE_hrtime_t start = ACE_OS::gethrtime ();
+  static int i = 0;
+  CIAO_DEBUG ((LM_DEBUG, "%d\n",i++));
+
+  if (test_start == 1)
+    {
+      this->start_ = ACE_OS::gethrtime ();
+    }
+
+  ACE_hrtime_t start = ACE_OS::gethrtime ();
   
-    for (; work != 0; work--)
-      ACE::is_prime (prime_number,
-		     2,
-		     prime_number / 2);
-    ACE_hrtime_t end = ACE_OS::gethrtime ();
+  for (; work != 0; work--)
+    ACE::is_prime (prime_number,
+                   2,
+                   prime_number / 2);
+  ACE_hrtime_t end = ACE_OS::gethrtime ();
 
-    ++state_;
+  ++state_;
 
-    if (!CORBA::is_nil (agent_.in ()))
-      agent_->state_changed (object_id_.c_str ());
+  if (!CORBA::is_nil (agent_.in ()))
+    agent_->state_changed (app_name_.c_str ());
 
-    // ACE_DEBUG ((LM_DEBUG, "Time taken = %d\n", end - start));
-    this->history_.sample (end - start);
-    if (test_end == 1)
-      {
-	this->end_ = ACE_OS::gethrtime ();
-      }
-#endif
+  this->history_.sample (end - start);
+  
+  if (test_end == 1)
+    {
+      this->end_ = ACE_OS::gethrtime ();
+    }
   }
 
   void
   SimpleFT_exec_i::dump (void)
   {
-#ifdef JUST_COPIED
     ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
     ACE_Basic_Stats stats;
     this->history_.collect_basic_stats (stats);
@@ -221,16 +274,23 @@ namespace CIDL_SimpleFT_Impl
     ACE_Throughput_Stats::dump_throughput ("Total", gsf,
 					   this->end_ - this->start_,
 					   stats.samples_count ());
-#endif
   }
   
   void
   SimpleFT_exec_i::shutdown (void)
   {
-#ifdef JUST_COPIED
-    this->orb_->shutdown (0);
-#endif
+    // not implemented
   }
+
+  std::string
+  SimpleFT_exec_i::get_hostname ()
+  {
+    char hn_str [100];
+    gethostname (hn_str, sizeof (hn_str));
+    
+    return std::string (hn_str);
+  }
+
 
   // Home operations.
 

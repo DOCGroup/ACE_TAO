@@ -32,6 +32,8 @@
 #include "SimpleFT_exec_export.h"
 #include "tao/LocalObject.h"
 #include "StateSynchronizationAgentC.h"
+#include "ace/Sample_History.h"
+#include "ace/High_Res_Timer.h"
 
 namespace CIDL_SimpleFT_Impl
 {
@@ -58,6 +60,10 @@ namespace CIDL_SimpleFT_Impl
 
     // Attribute operations.
 
+    virtual char * app_name (void);
+    
+    virtual void app_name (const char * app_name);
+
     // Port operations.
 
     // Operations from Components::SessionComponent
@@ -75,9 +81,21 @@ namespace CIDL_SimpleFT_Impl
     virtual void ccm_remove ();
 
     private:
+    std::string get_hostname ();
+
     ::Simple::CCM_SimpleFT_Context_var context_;
 
+    std::string app_name_;
+
+    CORBA::ORB_var orb_;
+
     StateSynchronizationAgent_var agent_;
+
+    ACE_Sample_History history_;
+
+    ACE_hrtime_t start_;
+
+    ACE_hrtime_t end_;
 
     long state_;
   };
