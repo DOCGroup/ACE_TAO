@@ -375,8 +375,6 @@ run_main (int, ACE_TCHAR *[])
   //   ../test: Last-chance try to hit the right place
 #if defined (TEST_DIR)
   TestDir = TEST_DIR;
-#elif defined (ACE_DEFAULT_TEST_DIR)
-  TestDir = ACE_DEFAULT_TEST_DIR;
 #else
   const char *root = ACE_OS::getenv ("top_srcdir");
   if (root == 0)
