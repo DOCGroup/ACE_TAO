@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -exclude DDS -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -19,6 +19,7 @@ bin_PROGRAMS =
 
 if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
+if !BUILD_USES_WCHAR
 
 bin_PROGRAMS += IFR_Service
 
@@ -50,6 +51,7 @@ IFR_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_USES_WCHAR
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 
@@ -107,7 +109,6 @@ tao_ifr_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs/IFR_Service \
   -I$(TAO_ROOT)/TAO_IDL/include \
   -I$(TAO_ROOT)/TAO_IDL/fe \
-  -I$TAO_ROOT \
   -DTAO_IDL_INCLUDE_DIR="\"$(includedir)/tao\""
 
 tao_ifr_SOURCES = \

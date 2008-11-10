@@ -1,3 +1,19 @@
+Mon Nov 10 23:21:57 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/IFR_Service/Makefile.am:
+        * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression:
+        * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/Bug_3495_Regression.mpc:
+        * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/Makefile.am:
+        * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/server.cpp:
+        * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/Test.idl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/TestImpl.cpp:
+        * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/TestImpl.h:
+        * orbsvcs/tests/InterfaceRepo/Makefile.am:
+
+          Added regression test for bug 3495.
+
 Mon Nov 10 20:14:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1693_Test/run_test.pl:
