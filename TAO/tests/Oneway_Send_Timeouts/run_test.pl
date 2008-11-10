@@ -43,12 +43,7 @@ my $test_opts = "-s \'-ORBEndpoint iiop://localhost:$test_port -ORBEndpoint " .
     "-ORBCollocation no -1 -ORBSvcConf $client_conf -f $flush_strategy " .
     "-ORBGestalt LOCAL\'";
 
-if (PerlACE::is_vxworks_test()) {
-    $TV = new PerlACE::ProcessVX ("oneway_test", "$test_opts");
-}
-else {
-    $TV = $target->CreateProcess ("oneway_test", "$test_opts");
-}
+$TV = $target->CreateProcess ("oneway_test", "$test_opts");
 
 $test = $TV->Spawn ();
 
@@ -57,7 +52,7 @@ if ($test != 0) {
     exit 1;
 }
 
-$test = $TV->WaitKill (20);
+$test = $TV->WaitKill ($target->ProcessStartWaitInterval());
 
 if ($test != 0) {
     print STDERR "ERROR 2: test returned $test\n";
