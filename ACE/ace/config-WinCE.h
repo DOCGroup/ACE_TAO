@@ -189,6 +189,10 @@
 //    Need to find out what it is. (Used in MapViewOfFile ().)
 #define FILE_MAP_COPY 0
 
+#if (_WIN32_WCE >= 0x400)
+# define ACE_HAS_INTERLOCKED_EXCHANGEADD
+#endif
+
 #define ACE_LACKS_ACCESS
 #define ACE_LACKS__WACCESS
 #define ACE_HAS_ACCESS_EMULATION
