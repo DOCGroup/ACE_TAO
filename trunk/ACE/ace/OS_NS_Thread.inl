@@ -1642,11 +1642,11 @@ ACE_OS::sema_init (ACE_sema_t *s,
   // its maximum value initialized to <max>.
   SECURITY_ATTRIBUTES sa_buffer;
   SECURITY_DESCRIPTOR sd_buffer;
-  *s = ::CreateSemaphoreA
+  *s = ACE_TEXT_CreateSemaphore
     (ACE_OS::default_win32_security_attributes_r (sa, &sa_buffer, &sd_buffer),
      count,
      max,
-     name);
+     ACE_TEXT_CHAR_TO_TCHAR (name));
 
   if (*s == 0)
     ACE_FAIL_RETURN (-1);

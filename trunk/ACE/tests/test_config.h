@@ -54,7 +54,7 @@
 #endif /* ACE_WIN32 */
 
 #if !defined (ACE_DEFAULT_TEST_DIR)
-# define ACE_DEFAULT_TEST_DIR ACE_TEXT ("");
+# define ACE_DEFAULT_TEST_DIR ACE_TEXT ("")
 #endif
 
 #define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".log")

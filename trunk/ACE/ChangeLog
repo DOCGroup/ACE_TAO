@@ -1,3 +1,22 @@
+Mon Nov 10 19:16:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          Enabling bsearch results in a linker error
+
+        * ace/OS_NS_Thread.inl:
+          Use ACE_TEXT_CreateSemaphe
+
+        * ace/Config_Test.cpp:
+          Use TEST_DIR as directory of the import file when it is defined.
+          Windows CE doesn't have a current directory but TEST_DIR is set
+          when building on CE
+
+        * ace/Dirent_Test.cpp:
+          Use different logging macros when ACE_HAS_TCHAR_DIRENT is defined
+
+        * ace/test_config.h:
+          Removed not needed semi colon
+
 Mon Nov 10 18:40:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:
