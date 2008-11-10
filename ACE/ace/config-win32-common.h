@@ -191,9 +191,10 @@
 
 #if !defined (ACE_HAS_WINCE)
 // Platform supports pread() and pwrite()
-# define ACE_HAS_P_READ_WRITE
 # define ACE_HAS_WTOF
 #endif /* ! ACE_HAS_WINCE */
+
+#define ACE_HAS_P_READ_WRITE
 
 #if !defined (ACE_HAS_WINCE)
 # define ACE_HAS_DIRECT_H
@@ -537,8 +538,8 @@
 # define ACE_HAS_IP_MULTICAST
 #endif /* ACE_HAS_WINSOCK2 */
 
-#if !defined (ACE_HAS_WINCE) || defined (PPC)   /* CE only on some CPUs */
-#  define ACE_HAS_INTERLOCKED_EXCHANGEADD
+#if !defined (ACE_HAS_WINCE)
+# define ACE_HAS_INTERLOCKED_EXCHANGEADD
 #endif
 #define ACE_HAS_WIN32_TRYLOCK
 
