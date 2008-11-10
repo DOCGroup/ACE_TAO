@@ -1,0 +1,24 @@
+//
+// $Id$
+//
+
+module Test {
+  typedef long ErrorType;
+
+  const ErrorType ErrorOne = 0;
+  const ErrorType ErrorTwo = 10;
+
+  struct structOne
+  {
+    boolean first;
+    union ErrorInfo switch (ErrorType)
+    {
+      case ErrorOne: string errorstring;
+      case ErrorTwo: long errornumber;
+    } second;
+  };
+
+  interface interfaceOne {
+    void getstruct (out structOne tester);
+  };
+};
