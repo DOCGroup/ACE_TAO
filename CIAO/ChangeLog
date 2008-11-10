@@ -2,10 +2,10 @@ Mon Nov 10 23:00:09 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * MPC/config/ciaocidldefaults.mpb:
 
-          . Updated the CIDL custom define to append the '_Impl.ccd'
-            extension on the *documentation_outputext* attribute if
-            --gen-desc-file flag is specified on the command-line for
-            the CIDL compiler.
+          Updated the CIDL custom define to append the '_Impl.ccd'
+          extension on the *documentation_outputext* attribute if
+          --gen-desc-file flag is specified on the command-line for
+          the CIDL compiler.
 
 Mon Nov 10 22:37:23 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
