@@ -119,7 +119,7 @@ test (ACE_Configuration *config,
   }
 
   u_char * the_data = static_cast<u_char *> (data_out);
-  
+
   // compare em
   for (size_t j = 0; j < data_len; ++j)
     if (the_data[j] != data[j])
@@ -353,13 +353,20 @@ run_tests (void)
                   status));
     ACE_Ini_ImpExp import (cf);
     // This one should work...
-    status = import.import_config (ACE_TEXT ("Config_Test_Import_1.ini"));
+    ACE_TCHAR import_file_name [MAXPATHLEN];
+#if defined (TEST_DIR)
+    ACE_OS::strcpy (import_file_name, TEST_DIR);
+#endif
+    ACE_OS::strcat (import_file_name, ACE_TEXT ("Config_Test_Import_1.ini"));
+
+    status = import.import_config (import_file_name);
     if (status != 0) {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                  ACE_TEXT ("Config_Test_Import_1.ini failed")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p: %s\n"),
+                  ACE_TEXT ("Config_Test_Import_1.ini failed"),
+                  import_file_name));
     }
     else {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Config_Test_Import_1.ini imported\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s imported\n"), import_file_name));
 
       // Imported clean; verify content.  See ini file for expected content.
       // Verify the expected sections are there, but no others. Verify the
