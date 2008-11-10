@@ -268,6 +268,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
       << "{" << be_idt_nl;
 
   size_t nfields = node->nfields ();
+  bool used_args (false);
   for (size_t i = 0; i < nfields; ++i)
     {
       AST_Field **f;
@@ -281,6 +282,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
         case AST_Decl::NT_pre_defined:
         case AST_Decl::NT_string:
         case AST_Decl::NT_enum:
+          used_args = true;
           *os << "if (ACE_OS::strcmp(\"" << fname << "\", field) == 0)"
               << be_idt_nl
               << "{" << be_idt_nl
@@ -289,6 +291,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
               << "}" << be_uidt_nl;
           break;
         case AST_Decl::NT_struct:
+          used_args = true;
           *os << "if (ACE_OS::strncmp(\"" << fname << ".\", field, "
               << fname_len << ") == 0)"
               << be_idt_nl
@@ -301,6 +304,12 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
           break;
         default: ;
         }
+    }
+
+  if (!used_args)
+    {
+      *os << "ACE_UNUSED_ARG (field);" << be_nl
+          << "ACE_UNUSED_ARG (next);" << be_nl;
     }
 
   *os << "return 0;" << be_uidt_nl
