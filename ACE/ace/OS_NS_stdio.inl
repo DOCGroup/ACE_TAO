@@ -135,11 +135,11 @@ ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock,
   DWORD low_len = ACE_LOW_PART (len);
   DWORD high_len = ACE_HIGH_PART (len);
   ACE_WIN32CALL_RETURN (
-    ACE_ADAPT_RETVAL (::UnlockFile (lock->handle_,
-                                    lock->overlapped_.Offset,
-                                    lock->overlapped_.OffsetHigh,
-                                    low_len,
-                                    high_len),
+    ACE_ADAPT_RETVAL (::UnlockFileEx (lock->handle_,
+                                      0,
+                                      low_len,
+                                      high_len,
+                                      &lock->overlapped_),
                       ace_result_), int, -1);
 #else
   lock->lock_.l_whence = whence;
