@@ -101,6 +101,7 @@ TAO/orbsvcs/tests/InterfaceRepo/Union_Forward_Test/run_test.pl:  !MINIMUM !CORBA
 TAO/orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/run_test.pl:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/run_test.pl:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/run_test.pl:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO !VxWorks !VxWorks_RTP
+TAO/orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/run_test.pl:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/ImplRepo/run_test.pl both_ir: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/ImplRepo/run_test.pl nestea_ir: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/ImplRepo/run_test.pl airplane_ir: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP
