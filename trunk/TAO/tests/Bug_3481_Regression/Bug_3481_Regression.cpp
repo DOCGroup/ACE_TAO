@@ -1,3 +1,5 @@
+// $Id$
+
 #include "FooC.h"
 
 struct Foo_i : Foo
