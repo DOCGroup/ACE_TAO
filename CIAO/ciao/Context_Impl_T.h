@@ -72,6 +72,18 @@ namespace CIAO
                        public virtual ::CORBA::LocalObject
   {
   public:
+    /// Type definition of the context type.
+    typedef BASE_CTX context_type;
+
+    /// Type definition of the var type for the context.
+    typedef typename context_type::_var_type _var_type;
+
+    /// Type definition of the servant type.
+    typedef SVNT servant_type;
+
+    /// Type definition of the component type.
+    typedef COMP component_type;
+
     Context_Impl (Components::CCMHome_ptr the_home,
                   Session_Container *c,
                   SVNT *sv);

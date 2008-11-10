@@ -21,6 +21,7 @@
 
 using std::endl;
 using std::string;
+using std::ostringstream;
 
 using namespace StringLiterals;
 using namespace CCF::CIDL;
@@ -413,21 +414,30 @@ namespace
       string swap_option = cl_.get_value ("custom-container", "");
       bool swapping = (swap_option == "upgradeable");
 
+      ostringstream base_type;
+      base_type << "CIAO::" << (swapping ? "Upgradeable_" : "")
+                << "Context_Impl <" << t.scoped_name ().scope_name ()
+                << "::CCM_" << t.name () << "_Context, " << t.name () << "_Servant, "
+                << t.scoped_name () << ">";
+
       os << "class " << ctx.export_macro () << " " << t.name ()
          << "_Context" << endl
-         << "  : public virtual CIAO::"
-         << (swapping ? "Upgradeable_" : "") << "Context_Impl<" << endl
-         << "      " << t.scoped_name ().scope_name () << "::CCM_"
-         << t.name () << "_Context," << endl
-         << "      " << t.name () << "_Servant," << endl
-         << "      " << t.scoped_name () << endl
-         << "    >" << endl
+         << "  : public virtual " << base_type.str () << endl
          << "{"
          << "public:" << endl;
 
       os << "// We will allow the servant glue code we generate to "
          << "access our state." << endl
          << "friend class " << t.name () << "_Servant;" << endl;
+
+      os << "// Type definition of the base type" << endl
+         << "typedef " << base_type.str () << " base_type;" << endl
+         << "// Type definition of the CCM context type" << endl
+         << "typedef base_type::context_type context_type;" << endl
+         << "// Type definition of the servant type" << endl
+         << "typedef base_type::servant_type servant_type;" << endl
+         << "// Type definition of the component type" << endl
+         << "typedef base_type::component_type component_type;" << endl;
 
       os << t.name () << "_Context (" << endl
          << "::Components::CCMHome_ptr h," << endl
