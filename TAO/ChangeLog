@@ -1,3 +1,9 @@
+Mon Nov 10 15:22:30 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_structure/serializer_op_cs.cpp:
+
+          Fixed compile errors on Mac OS X and warnings on some others.
+
 Mon Nov 10 14:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Bug_3481_Regression:

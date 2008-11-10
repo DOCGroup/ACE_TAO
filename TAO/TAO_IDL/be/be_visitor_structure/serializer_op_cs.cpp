@@ -273,7 +273,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
       AST_Field **f;
       node->field (f, i);
       char *fname = (*f)->local_name ()->get_string ();
-      size_t fname_len = ACE_OS::strlen (fname);
+      ACE_UINT32 fname_len = ACE_OS::strlen (fname) + 1;
       AST_Type *ftype = (*f)->field_type ();
       UTL_ScopedName *ftype_name = ftype->name ();
       switch (ftype->node_type ())
@@ -290,12 +290,12 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
           break;
         case AST_Decl::NT_struct:
           *os << "if (ACE_OS::strncmp(\"" << fname << ".\", field, "
-              << (fname_len + 1) << ") == 0)"
+              << fname_len << ") == 0)"
               << be_idt_nl
               << "{" << be_idt_nl
               << "return make_struct_cmp(&" << node->name () << "::" << fname
               << ", create_qc_comparator(static_cast<" << ftype_name
-              << " *>(0), field + " << (fname_len + 1) << ", 0), next);"
+              << " *>(0), field + " << fname_len << ", 0), next);"
               << be_uidt_nl
               << "}" << be_uidt_nl;
           break;
