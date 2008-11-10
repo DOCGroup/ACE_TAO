@@ -6,40 +6,31 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
-use Sys::Hostname;
+use PerlACE::TestTarget;
 
 $status = 0;
 
-$host = hostname();
 $port = PerlACE::random_port();
 $synchbase = "ready";
-$synchfile = PerlACE::LocalFile ("$synchbase");
+my $target1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $target2 = PerlACE::TestTarget::create_target (1) || die "Create target 2 failed\n";
+$synchfile = $target1->LocalFile ("$synchbase");
+my $host = $target1->HostName();
 
-if (PerlACE::is_vxworks_test()) {
-    $host =  $ENV{'ACE_RUN_VX_TGTHOST'};
-    $SV = new PerlACE::ProcessVX ("server", "-p $port -o $synchbase");
-}
-else {
-    $SV = new PerlACE::Process ("server", "-p $port -o $synchfile");
-}
+my $SV = $target1->CreateProcess("server", "-p $port -o $synchfile");
+my $CL = $target2->CreateProcess ("client", " -h $host -p $port");
 
-# The client code should later be modified to get the hostname
-# using ACE_OS::hostname so the same script can be run on all
-# hosts without having to reset the host where it has to be run.
-$CL = new PerlACE::Process ("client", "-h $host -p $port");
-
-unlink $synchfile;
+$target1->DeleteFile ($synchbase);
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($synchfile,
-                                $PerlACE::wait_interval_for_process_creation) == -1) {
+if ($target1->WaitForFileTimed ($synchbase,
+                                $target1->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$synchfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
-unlink $synchfile;
+$target1->DeleteFile ($synchbase);
 
 $client = $CL->SpawnWaitKill (300);
 
@@ -55,5 +46,7 @@ if ($server != 0) {
     $status = 1;
 }
 
+$target1->GetStderrLog();
+$target2->GetStderrLog();
 
 exit $status;
