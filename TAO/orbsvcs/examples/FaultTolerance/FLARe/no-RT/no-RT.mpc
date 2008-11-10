@@ -1,0 +1,105 @@
+// -*- MPC -*-
+// $Id$
+
+project(test_state_topic) : portableserver, splicelib_with_idl {
+  idlflags += -Wb,export_macro=State_TS_Export \
+              -Wb,export_include=state_ts_export.h
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  } 
+
+  dynamicflags += STATE_TS_BUILD_DLL
+  macros += DDS_API=State_TS_Export
+  sharedname = test_state_topic
+  idlflags += -SS
+
+  SpliceTypeSupport_Files {
+    State.idl >> StateDcps.idl StateDcps_impl.cpp StateSplDcps.cpp
+  }
+  
+  IDL_Files {
+    State.idl
+    StateDcps.idl
+  }
+
+  Source_Files {
+    StateC.cpp
+    StateDcps_impl.cpp
+    StateDcpsC.cpp
+    StateSplDcps.cpp
+  }
+  
+  Header_Files {
+    ccpp_State.h
+    StateC.h
+    StateDcps_impl.h
+    StateDcpsC.h
+    StateDcpsS.h
+    StateS.h
+    StateSplDcps.h
+  }
+  
+  Inline_Files {
+    StateC.inl
+    StateDcpsC.inl
+  }
+  
+  Template_Files {
+  }
+}
+
+project(test_client) : lwft_client {
+  exename = client
+  
+  IDL_Files {
+    test.idl
+  }
+  
+  Source_Files {
+    client.cpp
+    testC.cpp
+  }
+  
+  Header_Files {
+    testC.h
+  }
+  
+  Inline_Files {
+    testC.inl
+  }
+  
+  Template_Files {
+  }
+}
+
+project(test_server) : lwft_server {
+  after += test_client
+  exename = server 
+  
+  IDL_Files {
+  }
+  
+  Source_Files {
+    server.cpp
+    ServerTask.cpp
+    test_i.cpp
+    testC.cpp
+    testS.cpp
+  }
+  
+  Header_Files {
+    test_i.h
+    testC.h
+    testS.h
+  }
+  
+  Inline_Files {
+    testC.inl
+    testS.inl
+  }
+  
+  Template_Files {
+  }
+}
+

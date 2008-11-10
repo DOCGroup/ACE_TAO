@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : pi, portableserver {
+  libs    += LWFT_Common LWFT_ReplicationManager LWFT_Client
+  after   += LWFT_Client
+}

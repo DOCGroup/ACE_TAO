@@ -13,10 +13,12 @@
 #ifndef _FLARE_TEST_H_
 #define _FLARE_TEST_H_
 
-#include "LWFTS.h"
-#include "StateSynchronizationAgentC.h"
 #include "ace/Sample_History.h"
 #include "ace/High_Res_Timer.h"
+
+#include "testS.h"
+
+#include "orbsvcs/orbsvcs/LWFT/StateSynchronizationAgentC.h"
 
 class test_i :  public POA_test
 {

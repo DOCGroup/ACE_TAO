@@ -1,7 +1,0 @@
-project : state_topic {
-  macros += FLARE_USES_DDS
-
-  Source_Files {
-    DDSFailure.cpp
-  }
-}

@@ -1,0 +1,12 @@
+//
+// $Id$
+//
+
+#include "LWFTDataStructures.idl"
+
+interface ForwardingAgent
+{
+  Object next_member (in string m);
+  void update_rank_list (in RankList rank_list);
+};
+
