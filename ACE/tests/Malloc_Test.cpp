@@ -334,7 +334,7 @@ get_base_addrs (void)
 #endif /* defined (ACE_WIN32) */
 
 int
-run_main (int argc, ACE_TCHAR *[]argv)
+run_main (int argc, ACE_TCHAR *argv[])
 {
 #if defined (ACE_WIN32)
   get_base_addrs();
