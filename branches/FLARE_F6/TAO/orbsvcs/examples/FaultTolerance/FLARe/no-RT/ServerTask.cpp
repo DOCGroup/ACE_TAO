@@ -10,22 +10,25 @@
  */
 //=============================================================================
 
-#include "ServerTask.h"
-#include "tao/PortableServer/PortableServer.h"
-#include "AppOptions.h"
-#include "LWFTC.h"
-#include "test_i.h"
 #include <fstream>
 #include <sstream>
 #include <vector>
+
+#include "tao/PortableServer/PortableServer.h"
+
+#include "orbsvcs/orbsvcs/LWFT/AppOptions.h"
+#include "orbsvcs/orbsvcs/LWFT/ReplicationManagerC.h"
+
+#include "ServerTask.h"
+#include "test_i.h"
 
 std::vector<std::string> object_ids;
 std::vector<size_t> object_roles;
 std::vector<double> object_loads;
 
 ServerTask::ServerTask (ServerOptions & options,
-			CORBA::ORB_ptr orb,
-			StateSynchronizationAgent_ptr agent)
+			                  CORBA::ORB_ptr orb,
+			                  StateSynchronizationAgent_ptr agent)
   : options_ (options),
     orb_ (CORBA::ORB::_duplicate (orb)),
     agent_ (StateSynchronizationAgent::_duplicate (agent))
@@ -40,20 +43,21 @@ ServerTask::svc (void)
       PortableServer::POA_var poa = this->create_rt_poa ();
 
       if (CORBA::is_nil (poa.in ()))
-	{
-	  ACE_DEBUG ((LM_ERROR, "(%t) ServerTask::create_rt_poa () "
-		                "did not succeed.\n"));
-	  return 1;
-	}
+	      {
+	        ACE_ERROR_RETURN ((LM_ERROR,
+	                           "(%t) ServerTask::create_rt_poa () "
+		                         "did not succeed.\n"),
+		                        1);
+	      }
 
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
 
       this->read_object_info (AppOptions::instance ()->object_info_file (),
-			      options_.number_of_servants);
+			                        options_.number_of_servants);
 
       CORBA::Object_var tmp = 
-	this->orb_->string_to_object (options_.rm_ior_file);
+	      this->orb_->string_to_object (options_.rm_ior_file);
 
       ReplicationManager_var rm =
         ReplicationManager::_narrow (tmp.in ());
@@ -64,59 +68,62 @@ ServerTask::svc (void)
       rm->register_state_synchronization_agent (
         AppOptions::instance ()->host_id ().c_str (),
         AppOptions::instance ()->process_id ().c_str (),
-	agent_.in ());
+	      agent_.in ());
 
       // ***************************************************
       // activate as many servants as required
 
       for (int i = 0; i < options_.number_of_servants; ++i)
-	{
-	  test_i *servant =
-	    new test_i (this->orb_.in (),
-			poa.in (),
-			object_ids[i].c_str (),
-			agent_.in (),
-			options_.stop);
+	      {
+	        test_i *servant =
+	          new test_i (this->orb_.in (),
+			                  poa.in (),
+			                  object_ids[i].c_str (),
+			                  agent_.in (),
+			                  options_.stop);
 
-	  PortableServer::ServantBase_var safe_servant (servant);
-	  ACE_UNUSED_ARG (safe_servant);
+	        PortableServer::ServantBase_var safe_servant (servant);
+	        ACE_UNUSED_ARG (safe_servant);
 
-	  PortableServer::ObjectId_var oid =
-	    PortableServer::string_to_ObjectId (object_ids[i].c_str ());
+	        PortableServer::ObjectId_var oid =
+	          PortableServer::string_to_ObjectId (object_ids[i].c_str ());
 
-	  poa->activate_object_with_id (oid.in (), servant);
+	        poa->activate_object_with_id (oid.in (), servant);
 
-	  CORBA::Object_var servant_object =
-	    poa->id_to_reference (oid.in ());
+	        CORBA::Object_var servant_object =
+	          poa->id_to_reference (oid.in ());
 
-	  test_var test = test::_narrow (servant_object.in ());
+	        test_var test = test::_narrow (servant_object.in ());
 
-	  std::ostringstream ostr;
-	  ostr << object_ids[i] << object_roles[i] << ".ior";
+	        std::ostringstream ostr;
+	        ostr << object_ids[i] << object_roles[i] << ".ior";
 
-	  int result =
-	    this->write_ior_to_file (ostr.str().c_str(),
-				     this->orb_.in (),
-				     test.in ());
+	        int result =
+	          this->write_ior_to_file (ostr.str ().c_str (),
+				                             this->orb_.in (),
+				                             test.in ());
 
-	  rm->register_application (object_ids[i].c_str (), 
-				    object_loads[i],
-				    AppOptions::instance ()->host_id ().c_str (),
-				    AppOptions::instance ()->process_id ().c_str (),
-				    object_roles[i],
-				    test.in ());
+	        rm->register_application (
+	          object_ids[i].c_str (), 
+	          object_loads[i],
+	          AppOptions::instance ()->host_id ().c_str (),
+	          AppOptions::instance ()->process_id ().c_str (),
+	          object_roles[i],
+	          test.in ());
 
+	        agent_->register_application (object_ids[i].c_str (),
+					                              test.in ());
 
-	  agent_->register_application (object_ids[i].c_str (),
-					test.in ());
+	        ACE_DEBUG ((LM_DEBUG,
+	                    "ServerTask::svc() activated servant %s:%d.\n", 
+		                  object_ids[i].c_str (), 
+		                  object_roles[i]));
 
-	  ACE_DEBUG ((LM_DEBUG, "ServerTask::svc() activated servant %s:%d.\n", 
-		      object_ids[i].c_str (), 
-		      object_roles[i]));
-
-	  if (result != 0)
-	    return result;
-	}
+	        if (result != 0)
+	          {
+	            return result;
+	          }
+	      }
 
       this->orb_->run ();
 
@@ -132,32 +139,32 @@ ServerTask::svc (void)
 }
 
 PortableServer::POA_ptr
-ServerTask::create_rt_poa ()
+ServerTask::create_rt_poa (void)
 {
   try 
     {
       CORBA::Object_var object =
-	this->orb_->resolve_initial_references ("RootPOA");
+	      this->orb_->resolve_initial_references ("RootPOA");
   
       PortableServer::POA_var root_poa =
-	PortableServer::POA::_narrow (object.in ());
+	      PortableServer::POA::_narrow (object.in ());
 
       PortableServer::POAManager_var poa_manager =
-	root_poa->the_POAManager ();
+	      root_poa->the_POAManager ();
 
       CORBA::PolicyList policies;
 
       policies.length (policies.length () + 1);
       policies[policies.length () - 1] =
-	root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
+	      root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
   
       policies.length (policies.length () + 1);
       policies[policies.length () - 1] =
-	root_poa->create_id_assignment_policy (PortableServer::USER_ID);
+	      root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
       return root_poa->create_POA ("Servant POA",
-				   poa_manager.in (),
-				   policies);
+				                           poa_manager.in (),
+				                           policies);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -191,21 +198,21 @@ ServerTask::read_object_info (std::string file_name, int count)
 
 int
 ServerTask::write_ior_to_file (const char *ior_file,
-			       CORBA::ORB_ptr orb,
-			       CORBA::Object_ptr object)
+			                         CORBA::ORB_ptr orb,
+			                         CORBA::Object_ptr object)
 {
   CORBA::String_var ior =
     orb->object_to_string (object);
   
-  FILE *output_file =
-    ACE_OS::fopen (ior_file,
-                   "w");
+  FILE *output_file = ACE_OS::fopen (ior_file, "w");
   
   if (output_file == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open output file for writing IOR: %s",
-                       ior_file),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open output file for writing IOR: %s",
+                         ior_file),
+                        -1);
+    }
 
   ACE_OS::fprintf (output_file,
                    "%s",

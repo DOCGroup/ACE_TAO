@@ -1,4 +1,9 @@
+// -*- C++ -*-
 // $Id$
+
+#include <vector>
+#include <fstream>
+#include <algorithm>
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
@@ -9,19 +14,17 @@
 #include "ace/Array_Base.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Barrier.h"
+#include "ace/Event.h"
+
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "LWFTC.h"
-#include "ace/Event.h"
-#include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
-#include "Agent.h"
-#include "ace/Barrier.h"
-#include <vector>
-#include <fstream>
-#include <algorithm>
 
-ACE_RCSID(Thread_Pool, client, "$Id$")
+#include "orbsvcs/orbsvcs/LWFT/ForwardingAgent.h"
+#include "orbsvcs/orbsvcs/LWFT/Client_ORBInitializer.h"
+
+#include "testC.h"
 
 static const char *ior = "file://s1.ior";
 static const char *rates_file = "rates";
@@ -136,19 +139,22 @@ get_values (const char *test_type,
 class Agent_Thread : public ACE_Task_Base
 {
 public:
-  Agent_Thread (CORBA::ORB_ptr orb, Agent_i *agent, ACE_Barrier *barrier);
+  Agent_Thread (CORBA::ORB_ptr orb,
+                ForwardingAgent_i *agent,
+                ACE_Barrier *barrier);
 
   virtual int svc (void);
 
 private:
   CORBA::ORB_ptr orb_;
 
-  Agent_i *agent_;
+  ForwardingAgent_i *agent_;
 
   ACE_Barrier *synchronizer_;
 };
 
-Agent_Thread::Agent_Thread (CORBA::ORB_ptr orb, Agent_i *agent,
+Agent_Thread::Agent_Thread (CORBA::ORB_ptr orb,
+                            ForwardingAgent_i *agent,
                             ACE_Barrier *thread_barrier)
   : orb_ (orb), 
     agent_ (agent), 
@@ -1047,9 +1053,10 @@ main (int argc, char *argv[])
   try
     {
       
-      Agent_i *agent;
+      ForwardingAgent_i *agent;
       ACE_NEW_RETURN (agent,
-                      Agent_i (), 1);
+                      ForwardingAgent_i (),
+                      1);
       PortableServer::ServantBase_var owner_transfer (agent);
 
       // ******************************************************

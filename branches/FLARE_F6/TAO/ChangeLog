@@ -1,3 +1,125 @@
+Thu Nov  6 20:20:37 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/lwft_client.mpb::
+        * MPC/config/lwft_server.mpb::
+
+          New files, convenient MPC base projects for LWFT applications.
+
+        * orbsvcs/orbsvcs/LWFT/*.*:
+
+          New directory, containing files to build the various LWFT
+          libraries.
+
+        * orbsvcs/LWFT_Service/*.*:
+
+          New directory, containing files to build the LWFT HostMonitor
+          and ReplicationManager executables.
+
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/MPC/*.*:
+
+          Moved the MPC base project files for OpenSplice applications
+          to $MPC_ROOT/config. The remaining .mpb files were just
+          removed since they aren't needed.
+
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/LWFT.idl:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Hello.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Hello.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/LWFT.mwc:
+
+          Removed these files/directory from the repository completely,
+          because they aren't used or no longer needed.
+
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/StateSynchronizationAgent_i.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Agent.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/DDSStateUpdate_T.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ReplicationManager.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/IOR_Interceptor.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/StatefulObject.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/LinuxCPULoadCalculator.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/AppSideMonitor_Thread.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/HMOptions.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ReplicatedApplication.idl:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/AppSideReg.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/StateSynchronizationAgent_i.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/CorbaStateUpdate.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/DDSStateReaderListener_T.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/RMOptions.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/LWFTDataStructures.idl:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Agent.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/IOR_Interceptor.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/LWFT.mpc:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Timer.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerORBInitializer.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Utilization_Monitor.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/AppSideReg.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/StatefulObject.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Client_ORBInitializer.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/host_monitor.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/DDSStateReaderListener_T.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/AppSideMonitor_Thread.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/AppSideMonitor_Handler.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/AppOptions.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ssa_export.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/CorbaStateUpdate.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Client_Request_Interceptor.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/HostMonitorImpl.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerORBInitializer.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/monitor.idl:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Monitor_Thread.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/DDSFailure.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ObjectReferenceFactory.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/lwft_export.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/StateSyncAgentTask.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/RM_Proxy.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Failure_Handler.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Timer.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Utilization_Monitor.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Client_ORBInitializer.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ArgPair.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/AppSideMonitor_Handler.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/AppOptions.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ReplicationManager_process.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ObjectReferenceFactory.idl:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ReplicationManager.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/CPULoadCalculator.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/DDSStateUpdate_T.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/StateSynchronizationAgent.idl:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/HostMonitorImpl.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Client_Request_Interceptor.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ObjectReferenceFactory.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/StateSyncAgentTask.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/RM_Proxy.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/HMOptions.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Monitor_Thread.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ArgPair.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/LinuxCPULoadCalculator.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/DDSFailure.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Failure_Handler.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/RMOptions.cpp:
+
+          Moved these files to $TAO_ROOT/orbsvcs/orbsvcs/LWFT/ or to
+          $TAO_ROOT/orbsvcs/LWFT_Service/ (see items at the top of this
+          entry).
+
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/State.idl:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/client.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/server.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/test_i.h:
+
+          Modified these files to reflect the path changes due to the
+          relocation described above, added SVN $id strings, or made
+          cosmetic changes.
+
+
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/no-RT.mpc:
+
+          New file containing the MPC projects for the example in this
+          directory, renamed since it contains only the example-specific
+          projects, while the LWFT-related projects have been moved as
+          described above.
+
 Tue Nov  4 16:12:20 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/examples/FaultTolerance/FLARe/no-RT/StateSynchronizationAgent_i.h:
