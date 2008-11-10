@@ -127,8 +127,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
         {
-          ifr_adding_visitor_structure visitor (node, true);
-
+          ifr_adding_visitor_structure visitor (node);
           int retval = visitor.visit_structure (node);
 
           if (retval == 0)
@@ -376,8 +375,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
         {
-          ifr_adding_visitor_union visitor (node, true);
-
+          ifr_adding_visitor_union visitor (node);
           int retval = visitor.visit_union (node);
 
           if (retval == 0)

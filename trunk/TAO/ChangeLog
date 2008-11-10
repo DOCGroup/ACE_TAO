@@ -1,3 +1,28 @@
+Mon Nov 10 19:54:27 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/be_global.cpp:
+        * orbsvcs/IFR_Service/be_produce.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/be_global.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        
+          Legacy code for creating IFR entries for structs, unions
+          and exceptions (that created members that were also
+          declared in the same scope in a 'holding area' until
+          the containing struct, union or exception entry was
+          completed, then moved the decls in) was interfering with the
+          newer method of simply creating an entry with no
+          members, then visiting the scope to create and/or
+          add referencing members as needed. The legacy mechanism
+          is no longer needed and has been completely removed
+          in this fix, which closes [BUGID:3495]. Thanks to
+          Trevor Fields <fields_t@ociweb.com> for reporting the
+          problem.
+
 Mon Nov 10 15:22:30 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * TAO_IDL/be/be_visitor_structure/serializer_op_cs.cpp:
