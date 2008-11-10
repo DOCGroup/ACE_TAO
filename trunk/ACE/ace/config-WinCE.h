@@ -102,6 +102,10 @@
 
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER 1
 
+#if ! defined(ACE_DEFAULT_THREAD_KEYS)
+# define ACE_DEFAULT_THREAD_KEYS TLS_MINIMUM_AVAILABLE
+#endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
+
 // FILE stuff isn't always defined in CE
 #if (_MSC_VER < 1400) && !defined (_FILE_DEFINED)
   typedef void FILE;

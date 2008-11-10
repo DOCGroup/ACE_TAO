@@ -1,3 +1,10 @@
+Mon Nov 10 09:50:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          Set ACE_DEFAULT_THREAD_KEYS to TLS_MINIMUM_AVAILABLE when it is
+          not defined yet. This is the minimum number of TLS indexes always
+          available to a process
+
 Mon Nov 10 09:35:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release.py:
