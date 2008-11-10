@@ -515,6 +515,12 @@ void
 DescriptorGenerator::options (CL::Description& d)
 {
   d.add_option (CL::OptionDescription (
+                  "gen-desc-file",
+                  "Generate the component descriptor file.",
+                  CL::OptionType::flag,
+                  1));
+
+  d.add_option (CL::OptionDescription (
                   "desc-file-suffix",
                   "suffix",
                   "Use provided suffix instead of default \'.ccd\' "

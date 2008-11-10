@@ -1,3 +1,23 @@
+Mon Nov 10 22:37:23 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * CIDLC/cidlc.cpp:
+        * CIDLC/DescriptorGenerator.cpp:
+
+          Added a new command-line options --gen-desc-file for specifying the
+          filename of the component descriptor (.ccd) file.
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+
+          Updated the servant header generator to produce type definitions
+          that map to traits in its context implementation subclass.
+
+        * ciao/Context_Impl_T.h:
+        * ciao/Upgradeable_Context_Impl_T.h:
+
+          Added type definitions for the different parameter types of the
+          template class. This will increase support for using such classes
+          in generative programming applications.
+
 Mon Nov  3 12:37:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuidExamplesMessenger/StaticDAnCE/Messenger_StaticDAnCE.mpc:
