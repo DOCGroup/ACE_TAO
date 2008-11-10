@@ -1,3 +1,9 @@
+Mon Nov 10 18:40:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+        * ace/config-WinCE.h:
+          Enable a few more methods for WinCE
+
 Mon Nov 10 15:29:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Malloc_Test.cpp:
