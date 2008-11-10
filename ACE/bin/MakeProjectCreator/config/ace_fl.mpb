@@ -12,7 +12,7 @@ project : ace_x11, ace_gl {
     LDFLAGS += $(PLATFORM_FL_LDFLAGS) $(PLATFORM_GL_LDFLAGS)
     LDFLAGS += $(PLATFORM_GL_LDFLAGS)
   }
-  specific(vc9,vc8,vc71,vc7,vc6) {
+  specific(vc10,vc9,vc8,vc71) {
      libs += fltkdll
   }
 
