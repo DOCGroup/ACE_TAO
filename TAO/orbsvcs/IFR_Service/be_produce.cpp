@@ -98,33 +98,6 @@ BE_abort (void)
   throw Bailout ();
 }
 
-void
-BE_create_holding_scope (void)
-{
-  CORBA::ModuleDef_ptr scope = CORBA::ModuleDef::_nil ();
-
-  // If we are multi-threaded, it may already be created.
-  CORBA::Contained_var result =
-    be_global->repository ()->lookup_id (be_global->holding_scope_name ());
-
-  // Will live until the repository goes away for good.
-  if (CORBA::is_nil (result.in ()))
-    {
-      scope =
-        be_global->repository ()->create_module (
-                                      be_global->holding_scope_name (),
-                                      be_global->holding_scope_name (),
-                                      "1.0"
-                                    );
-    }
-  else
-    {
-      scope = CORBA::ModuleDef::_narrow (result.in ());
-    }
-
-  be_global->holding_scope (scope);
-}
-
 int
 BE_ifr_repo_init (void)
 {
@@ -180,8 +153,6 @@ BE_produce (void)
         {
           return;
         }
-
-      BE_create_holding_scope ();
 
       // Get the root node.
       AST_Decl *d = idl_global->root ();

@@ -37,8 +37,7 @@ class ifr_adding_visitor_union : public ifr_adding_visitor
   //    for the case when a union node is seen in the AST.
   //
 public:
-  ifr_adding_visitor_union (AST_Decl *scope,
-                            bool is_nested);
+  ifr_adding_visitor_union (AST_Decl *scope);
 
   virtual ~ifr_adding_visitor_union (void);
 
@@ -56,10 +55,6 @@ private:
   // or filling out a forward declaration.
 
 private:
-  bool is_nested_;
-  // Is this visitor visiting a union that was defined inside
-  // a union, an exception, or a struct?
-
   CORBA::UnionMemberSeq members_;
   // Holder for the member list passed to create_struct() or
   // create_exception().
@@ -68,10 +63,6 @@ private:
   // Holds the typecode of the discriminator (used only if the
   // discriminator is an enum type, so we can insert the label
   // values into Anys for UnionMemberSeq[i].label).
-
-  ACE_Unbounded_Queue<CORBA::Contained_ptr> move_queue_;
-  // IR objects that must be moved into the scope (struct or
-  // exception) where they were declared in the IDL file.
 };
 
 #endif /* TAO_IFR_ADDING_VISITOR_UNION_H */

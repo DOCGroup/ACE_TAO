@@ -60,11 +60,6 @@ public:
   CORBA::Repository_ptr repository (void) const;
   void repository (CORBA::Repository_ptr repo);
 
-  CORBA::ModuleDef_ptr holding_scope (void) const;
-  void holding_scope (CORBA::ModuleDef_ptr scope);
-
-  const char *holding_scope_name (void) const;
-
   ACE_Unbounded_Stack<CORBA::Container_ptr> &ifr_scopes (void);
 
   void destroy (void);
@@ -113,10 +108,6 @@ private:
 
   CORBA::Repository_var repository_;
   // Reference to the interface repository.
-
-  CORBA::ModuleDef_var holding_scope_;
-  // Used to hold struct/union/exception member defns until
-  // they are moved into their permanent scope.
 
   CORBA::String_var holding_scope_name_;
   // Must be something unlikely to clash.
