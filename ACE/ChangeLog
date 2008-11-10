@@ -1,3 +1,8 @@
+Mon Nov 10 19:23:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OS_Test.cpp:
+          Also use TEST_DIR when it is defined
+
 Mon Nov 10 19:16:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-WinCE.h:

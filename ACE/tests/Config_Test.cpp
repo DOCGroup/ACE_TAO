@@ -356,6 +356,7 @@ run_tests (void)
     ACE_TCHAR import_file_name [MAXPATHLEN];
 #if defined (TEST_DIR)
     ACE_OS::strcpy (import_file_name, TEST_DIR);
+    ACE_OS::strcat (import_file_name, ACE_DIRECTORY_SEPARATOR_STR);
 #endif
     ACE_OS::strcat (import_file_name, ACE_TEXT ("Config_Test_Import_1.ini"));
 
