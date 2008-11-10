@@ -334,7 +334,7 @@ get_base_addrs (void)
 #endif /* defined (ACE_WIN32) */
 
 int
-run_main (int argc, ACE_TCHAR *argv[])
+run_main (int argc, ACE_TCHAR *[])
 {
 #if defined (ACE_WIN32)
   get_base_addrs();
@@ -356,7 +356,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_Process_Options options (1);
 
       options.command_line (EXE_LOCATION
-                            argv[0]
+                            ACE_TEXT ("Malloc_Test")
                             ACE_PLATFORM_EXE_SUFFIX
                             ACE_TEXT (" run_as_test"));
 
