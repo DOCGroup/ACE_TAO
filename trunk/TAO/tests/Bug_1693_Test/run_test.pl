@@ -2,25 +2,20 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# -*- perl -*-
 # $Id$
+# -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-print STDERR "\n\n==== Running Bug_1693_Test test\n";
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-if (PerlACE::is_vxworks_test()) {
-    $T = new PerlACE::ProcessVX ("client");
-}
-else {
-    $T = new PerlACE::Process ("client");
-}
+$SV = $server->CreateProcess ("client");
 
-$test = $T->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
+$test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($test != 0) {
-    print STDERR "ERROR: Bug 1693 test returned $test\n";
+    print STDERR "ERROR: test returned $test\n";
     exit 1;
 }
 
