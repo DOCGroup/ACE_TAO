@@ -1,3 +1,8 @@
+Mon Nov 10 14:28:00 UTC 2008  Simon Massey <sma at prismtech dot com>
+
+        * tests/Process_Test.cpp:
+          Another wchar issue.
+
 Mon Nov 10 11:48:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Malloc_Test.cpp:
