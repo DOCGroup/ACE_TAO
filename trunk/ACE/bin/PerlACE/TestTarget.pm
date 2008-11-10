@@ -11,6 +11,7 @@ use English;
 use POSIX qw(:time_h);
 use File::Copy;
 use PerlACE::Run_Test;
+use Sys::Hostname;
 
 ###############################################################################
 
@@ -140,6 +141,44 @@ sub GetConfigSettings ($)
     } else {
         $self->{PROCESS_STOP_WAIT_INTERVAL} = 10;
     }
+    $env_name = $env_prefix.'HOSTNAME';
+    if (exists $ENV{$env_name}) {
+        $self->{HOSTNAME} = $ENV{$env_name};
+    } else {
+        $self->{HOSTNAME} = hostname();
+    }
+    $env_name = $env_prefix.'IBOOT';
+    if (exists $ENV{$env_name}) {
+        $self->{IBOOT} = $ENV{$env_name};
+    }
+    $env_name = $env_prefix.'REBOOT_TIME';
+    if (exists $ENV{$env_name}) {
+        $self->{REBOOT_TIME} = $ENV{$env_name};
+    } else {
+        $self->{REBOOT_TIME} = 0;
+    }
+    $env_name = $env_prefix.'REBOOT';
+    if (exists $ENV{$env_name}) {
+        $self->{REBOOT} = $ENV{$env_name};
+    } else {
+        $self->{REBOOT} = 0;
+    }
+    $env_name = $env_prefix.'STARTUP_COMMAND';
+    if (exists $ENV{$env_name}) {
+        $self->{STARTUP_COMMAND} = $ENV{$env_name};
+    }
+    $env_name = $env_prefix.'TELNET_HOST';
+    if (exists $ENV{$env_name}) {
+        $self->{TELNET_HOST} = $ENV{$env_name};
+    } else {
+        $self->{TELNET_HOST} = $self->{HOSTNAME};
+    }
+    $env_name = $env_prefix.'TELNET_PORT';
+    if (exists $ENV{$env_name}) {
+        $self->{TELNET_PORT} = $ENV{$env_name};
+    } else {
+        $self->{TELNET_PORT} = 23;
+    }
 }
 
 ##################################################################
@@ -160,6 +199,12 @@ sub CIAO_ROOT ($)
 {
     my $self = shift;
     return $self->{ciao_root};
+}
+
+sub HostName ($)
+{
+    my $self = shift;
+    return $self->{HOSTNAME};
 }
 
 sub ExeSubDir ($)

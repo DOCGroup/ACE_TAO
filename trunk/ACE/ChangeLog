@@ -1,3 +1,23 @@
+Mon Nov 10 09:35:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release.py:
+          Added Windows Mobile 6 projects
+
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/README:
+          Added HostName and added a few variables that are needed for
+          VxWorks in the near future. This fixes bugzilla 3496
+
+        * protocols/tests/HTBP/ping/run_test.pl:
+        * protocols/tests/HTBP/Reactor_Tests/run_test.pl:
+        * protocols/tests/HTBP/Send_Large_Msg/run_test.pl:
+        * protocols/tests/HTBP/Send_Recv_Tests/run_test.pl:
+        * protocols/tests/RMCast/run_test.pl:
+          Updated to the new test framework
+
+        * protocols/tests/HTBP/README:
+          Location of the HTBP lib was old
+
 Sun Nov  9 11:45:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sched_Params.cpp:
