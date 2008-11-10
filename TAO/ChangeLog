@@ -1,3 +1,46 @@
+Mon Nov 10 20:14:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1693_Test/run_test.pl:
+        * tests/Bug_2085_Regression/run_test.pl:
+        * tests/Bug_2809_Regression/run_test.pl:
+        * tests/Bug_3042_Regression/run_test.pl:
+        * tests/Bug_3315_Regression/run_test.pl:
+        * tests/Bug_3321_Regression/run_test.pl:
+        * tests/Collocation_Opportunities/run_test.pl:
+        * tests/IORManipulation/run_test.pl:
+        * tests/Oneway_Send_Timeouts/run_test.pl:
+        * tests/ORB_destroy/run_test.pl:
+        * tests/ORB_init/run_test.pl:
+        * tests/Permanent_Forward/run_test.pl:
+        * tests/POA/Adapter_Activator/run_test.pl:
+        * tests/POA/Bug_1592_Regression/run_test.pl:
+        * tests/POA/Bug_2511_Regression/run_test.pl:
+        * tests/POA/Current/run_test.pl:
+        * tests/POA/Deactivate_Object/run_test.pl:
+        * tests/POA/Default_Servant/run_test.pl:
+        * tests/POA/Etherealization/run_test.pl:
+        * tests/POA/Excessive_Object_Deactivations/run_test.pl:
+        * tests/POA/FindPOA/run_test.pl:
+        * tests/POA/Identity/run_test.pl:
+        * tests/POA/MT_Servant_Locator/run_test.pl:
+        * tests/POA/Nested_Non_Servant_Upcalls/run_test.pl:
+        * tests/POA/NewPOA/run_test.pl:
+        * tests/POA/Non_Servant_Upcalls/run_test.pl:
+        * tests/POA/Object_Reactivation/run_test.pl:
+        * tests/POA/POA_BiDir/run_test.pl:
+        * tests/POA/POA_Destruction/run_test.pl:
+        * tests/POA/POAManagerFactory/run_test.pl:
+        * tests/POA/Policies/run_test.pl:
+        * tests/POA/RootPOA/run_test.pl:
+        * tests/POA/Single_Threaded_POA/run_test.pl:
+        * tests/POA/wait_for_completion/run_test.pl:
+        * tests/Queued_Message_Test/run_test.pl:
+        * tests/RTCORBA/Activate_Object_Multiple_ORBs/run_test.pl:
+          Converted to the new test framework
+
+        * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
+          Added vc10
+
 Mon Nov 10 19:54:27 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/be_global.cpp:
@@ -9,7 +52,7 @@ Mon Nov 10 19:54:27 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
         * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
         * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
-        
+
           Legacy code for creating IFR entries for structs, unions
           and exceptions (that created members that were also
           declared in the same scope in a 'holding area' until
