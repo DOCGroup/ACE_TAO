@@ -428,7 +428,6 @@ ACE_OS::rand_r (ACE_RANDR_TYPE& seed)
 
 #endif /* !ACE_WIN32 */
 
-#if !defined (ACE_HAS_WINCE)
 #  if !defined (ACE_LACKS_REALPATH)
 ACE_INLINE char *
 ACE_OS::realpath (const char *file_name,
@@ -440,7 +439,6 @@ ACE_OS::realpath (const char *file_name,
   return ::realpath (file_name, resolved_name);
 #    endif /* ! ACE_WIN32 */
 }
-#  endif /* !ACE_LACKS_REALPATH */
 
 #  if defined (ACE_HAS_WCHAR)
 ACE_INLINE wchar_t *

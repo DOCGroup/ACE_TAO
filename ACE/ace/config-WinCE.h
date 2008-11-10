@@ -98,7 +98,9 @@
 # define ACE_USES_WCHAR
 #endif /* ACE_USES_WCHAR */
 
+#if (_WIN32_WCE < 0x600)
 #define ACE_USES_WINCE_SEMA_SIMULATION
+#endif
 
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER 1
 
@@ -187,9 +189,6 @@
 //    Need to find out what it is. (Used in MapViewOfFile ().)
 #define FILE_MAP_COPY 0
 
-
-#define ACE_LACKS_STRCASECMP    // WinCE doesn't support _stricmp
-#define ACE_LACKS_GETSERVBYNAME
 #define ACE_LACKS_ACCESS
 #define ACE_LACKS__WACCESS
 #define ACE_HAS_ACCESS_EMULATION
@@ -198,25 +197,16 @@
 #endif
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_MKTEMP
-#define ACE_LACKS_STRRCHR
-#define ACE_LACKS_BSEARCH
-#define ACE_LACKS_SOCKET_BUFSIZ
 #define ACE_LACKS_ISATTY
 #define ACE_LACKS_STRERROR
 #define ACE_LACKS_SYSTEM
-#define ACE_LACKS_SIGACTION
 #define ACE_LACKS_PIPE
 
-//#define ACE_LACKS_CUSERID
 #define ACE_LACKS_CHDIR
 #define ACE_LACKS_ENV
-#define ACE_LACKS_HOSTNAME
 #define ACE_LACKS_REALPATH
-#define ACE_LACKS_READLINK
 #define ACE_LACKS_SWAB
 #define ACE_LACKS_TEMPNAM
-#define ACE_LACKS_GETPROTOBYNUMBER
-#define ACE_LACKS_GETPROTOBYNAME
 
 #if defined (_WIN32_WCE_EMULATION)
 // @@ For some reason, qsort isn't defined correctly (_stdcall vs _cdecl)
@@ -237,6 +227,10 @@ typedef long off_t;
 
 #define ACE_HAS_STRDUP_EMULATION
 
+#if !defined (MAXSYMLINKS)
+#define MAXSYMLINKS 0
+#endif
+
 // WinCE can't do fixed addresses for memory-mapped files.
 #if defined (ACE_DEFAULT_BASE_ADDR)
 #  undef ACE_DEFAULT_BASE_ADDR
@@ -252,8 +246,6 @@ typedef long off_t;
 #define ACE_DEFAULT_FILE_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE)
 #endif
 
-// This is still true up thru VC8...
-#define ACE_LACKS_ERRNO_H
 #define ACE_LACKS_SIGNAL_H
 #define ACE_LACKS_SYS_STAT_H
 
