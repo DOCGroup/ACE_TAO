@@ -1,3 +1,9 @@
+Mon Nov 10 23:28:36 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Added regression test for bug 3495.
+
 Mon Nov 10 20:16:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
