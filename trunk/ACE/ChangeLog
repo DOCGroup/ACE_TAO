@@ -1,7 +1,29 @@
+Mon Nov 10 15:28:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          Removed a lot of defines that are really not needed
+
+        * ace/OS_NS_stdlib.{h,cpp,inl}:
+          Removed ACE_HAS_WINCE checks with realpath
+
+        * ace/config-win32-common.h:
+          Latest wince versions do have missing defines
+
 Mon Nov 10 14:28:00 UTC 2008  Simon Massey <sma at prismtech dot com>
 
         * tests/Process_Test.cpp:
           Another wchar issue.
+
+Mon Nov 10 12:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          WinCE 5 and newer do have filelocks
+
+        * ace/OS_NS_stdio.inl (flock_unlock):
+          Use UnlockFileEx because this is also available on WinCE
+
+        * tests/Naming_Test.cpp:
+          Use ACE::get_temp_dir to get the real temp dir
 
 Mon Nov 10 11:48:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
