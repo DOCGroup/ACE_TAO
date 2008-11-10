@@ -1,3 +1,19 @@
+Mon Nov 10 10:46:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc
+        * ace/config-win32-msvc-10.h
+        * ace/config-win32-msvc.h
+        * ace/Monitor_Control/Monitor_Control.mpc
+        * ace/QoS/qos.mpc
+        * bin/MakeProjectCreator/config/ace_fl.mpb
+        * bin/MakeProjectCreator/config/ace_gl.mpb
+        * bin/MakeProjectCreator/config/ace_qt.mpb
+        * bin/MakeProjectCreator/config/ace_x11.mpb
+        * bin/MakeProjectCreator/config/crosscompile.mpb
+        * bin/MakeProjectCreator/config/ipv6.mpb
+        * bin/MakeProjectCreator/config/vc_warnings.mpb
+          Added Visual Studio 2010 (vc10) support
+
 Mon Nov 10 09:50:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-WinCE.h:

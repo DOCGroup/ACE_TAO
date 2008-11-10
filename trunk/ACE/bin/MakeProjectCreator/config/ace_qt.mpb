@@ -21,7 +21,7 @@ project: qt {
     pure_libs += $(ACE_QT_LIBS)
   }
 
-  specific(vc6, vc7, vc71, vc8, vc9, nmake) {
+  specific(vc71, vc8, vc9, vc10, nmake) {
     lit_libs -= qt-mt$(QT_VERSION)
     pure_libs += $(PLATFORM_QT_LIBS)
   }
