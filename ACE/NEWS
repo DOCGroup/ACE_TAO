@@ -25,6 +25,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.6 and ACE-5.6.7
 . ACE_OS wrappers for wide-char versions of strtol, strtoul,
   strtoll, and strtoll.
 
+. Added Visual Studio 2010 (vc10) support
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.5 and ACE-5.6.6
 ====================================================
 
