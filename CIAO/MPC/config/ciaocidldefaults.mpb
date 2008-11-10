@@ -24,7 +24,10 @@ project {
     source_outputext  = _svnt.cpp
     header_outputext  = _svnt.h
     generic_outputext = E.idl
-    documentation_outputext = _Impl.ccd
     keyword cidlflags = commandflags
+
+    optional (documentation_outputext) {
+          commandflags (--gen-desc-file) = _Impl.ccd
+    }
   }
 }
