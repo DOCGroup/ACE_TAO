@@ -42,7 +42,7 @@ check_temp_file (const ACE_TString &tmpfilename)
   ACE_OS::memset (&entr, 0, sizeof (entr));
 
   // Loop through /proc/self/fs/
-  if (entr.open (proc_self_fd) == -1) 
+  if (entr.open (ACE_TEXT_CHAR_TO_TCHAR (proc_self_fd)) == -1) 
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Could not open dir %C\n"),
                          proc_self_fd),
