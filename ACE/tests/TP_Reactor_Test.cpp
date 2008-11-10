@@ -348,8 +348,8 @@ Acceptor::start (const ACE_INET_Addr &addr)
                                                       ACE_Reactor::instance (),
                                                       ACE_NONBLOCK) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "Acceptor::start () - open failed"),
+                       ACE_TEXT("%p\n"),
+                       ACE_TEXT("Acceptor::start () - open failed")),
                        0);
   return 1;
 }
@@ -709,8 +709,8 @@ Connector::start (const ACE_INET_Addr & addr, int num)
                                                       ACE_NONBLOCK) < 0)
     ACE_ERROR_RETURN
       ((LM_ERROR,
-        "%p\n",
-        "Connector::start () - open failed"),
+        ACE_TEXT("%p\n"),
+        ACE_TEXT("Connector::start () - open failed")),
        0);
 
   int rc = 0;
@@ -722,8 +722,8 @@ Connector::start (const ACE_INET_Addr & addr, int num)
       if (ACE_Connector<Sender,ACE_SOCK_CONNECTOR>::connect (sender, addr) < 0)
         ACE_ERROR_RETURN
           ((LM_ERROR,
-            "%p\n",
-            "Connector::start () - connect failed"),
+            ACE_TEXT("%p\n"),
+            ACE_TEXT("Connector::start () - connect failed")),
            rc);
     }
 
@@ -1122,8 +1122,8 @@ disable_signal (int sigmin, int sigmax)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
-                "Error: (%P | %t):%p\n",
-                "sigemptyset failed"));
+                ACE_TEXT("Error: (%P | %t):%p\n"),
+                ACE_TEXT("sigemptyset failed")));
 
   for (int i = sigmin; i <= sigmax; i++)
     ACE_OS::sigaddset (&signal_set, i);
@@ -1131,8 +1131,8 @@ disable_signal (int sigmin, int sigmax)
   //  Put the <signal_set>.
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
     ACE_ERROR ((LM_ERROR,
-                "Error: (%P | %t):%p\n",
-                "pthread_sigmask failed"));
+                ACE_TEXT("Error: (%P | %t):%p\n"),
+                ACE_TEXT("pthread_sigmask failed")));
 #else
   ACE_UNUSED_ARG(sigmin);
   ACE_UNUSED_ARG(sigmax);

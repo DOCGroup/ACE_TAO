@@ -1,3 +1,11 @@
+Mon Nov 10 11:48:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Malloc_Test.cpp:
+          Use argv[0]
+
+        * tests/TP_Reactor_Test.cpp:
+          Use ACE_TEXT
+
 Mon Nov 10 10:46:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace_for_tao.mpc
