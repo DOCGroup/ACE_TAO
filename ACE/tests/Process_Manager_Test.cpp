@@ -95,7 +95,7 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
                      debug_test ? ACE_TEXT ("-d") : ACE_TEXT (""),
                      sleep_time);
 
-  pid_t  result = mgr.spawn (opts);
+  pid_t result = mgr.spawn (opts);
 
   if (result != ACE_INVALID_PID)
     ACE_DEBUG ((LM_DEBUG,

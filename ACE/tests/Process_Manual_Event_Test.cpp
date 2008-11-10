@@ -224,11 +224,14 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
       ACE_Process child;
 
       // Spawn the child process.
-      int result = child.spawn (options);
-      ACE_ASSERT (result != -1);
-      ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Parent spawned child process with pid = %d.\n"),
-                child.getpid ()));
+      pid_t result = child.spawn (options);
+      if (result != ACE_INVALID_PID)
+        ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Parent spawned child process with pid = %d.\n"),
+                  child.getpid ()));
+      else
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                                     ACE_TEXT ("spawn failed")), 1);
 
       // start test
       acquire_release ();
