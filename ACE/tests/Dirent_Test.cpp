@@ -143,10 +143,19 @@ dirent_selector_test (void)
     }
 
   for (n = 0; n < ds.length (); ++n)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Entry %d: %C\n"),
-                n,
-                ds[n]->d_name));
+    {
+#if defined (ACE_HAS_TCHAR_DIRENT)
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Entry %d: %s\n"),
+                  n,
+                  ds[n]->d_name));
+#else
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Entry %d: %C\n"),
+                  n,
+                  ds[n]->d_name));
+#endif
+    }
 
   if (ds.close () == -1)
     {
@@ -171,10 +180,20 @@ dirent_test (void)
   for (ACE_DIRENT *directory;
        (directory = dir.read ()) != 0;
        entrycount++)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Entry %d: %C\n"),
-                entrycount,
-                directory->d_name));
+    {
+#if defined (ACE_HAS_TCHAR_DIRENT)
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Entry %d: %s\n"),
+                  entrycount,
+                  directory->d_name));
+#else
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Entry %d: %C\n"),
+                  entrycount,
+                  directory->d_name));
+#endif
+    }
+
   switch (entrycount)
     {
     case 0:
