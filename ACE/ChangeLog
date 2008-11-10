@@ -1,3 +1,9 @@
+Mon Nov 10 20:16:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabled several TAO tests for Labview and WinCE, these are converted
+          to the new test framework
+
 Mon Nov 10 19:30:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Process_Manager_Test.cpp:
