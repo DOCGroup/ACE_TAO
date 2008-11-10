@@ -27,7 +27,7 @@ project {
     keyword cidlflags = commandflags
 
     optional (documentation_outputext) {
-          commandflags (--gen-desc-file) = _Impl.ccd
+      commandflags (--gen-desc-file) = _Impl.ccd
     }
   }
 }
