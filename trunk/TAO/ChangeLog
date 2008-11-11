@@ -1,3 +1,13 @@
+Tue Nov 11 19:42:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Hello/run_test.pl:
+          Small improvement
+
+        * tests/Two_Objects/run_test.pl
+        * tests/Typedef_String_Array/run_test.pl
+        * tests/UNKNOWN_Exception/run_test.pl
+          Updated to the new test framework
+
 Tue Nov 11 19:01:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/PortableInterceptors/PICurrent_NameService/PICurrent_NameService.mpc:
