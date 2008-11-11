@@ -1,3 +1,9 @@
+Tue Nov 11 08:02:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2319_Regression/run_test.pl:
+        * tests/Bug_2345_Regression/run_test.pl:
+          Converted to the new test framework
+
 Mon Nov 10 23:21:57 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/IFR_Service/Makefile.am:
