@@ -1,3 +1,9 @@
+Tue Nov 11 19:01:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/PortableInterceptors/PICurrent_NameService/PICurrent_NameService.mpc:
+        * DevGuideExamples/RTCORBA/RTCORBA.mpc:
+          Use seperate project for idl files
+
 Tue Nov 11 17:33:34 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/Bug_3495_Regression.mpc:
