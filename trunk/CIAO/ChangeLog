@@ -1,3 +1,11 @@
+Tue Nov 11 16:07:06 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+
+          Apparently, some compilers didn't like my updates below. The
+          problem was caused by not adding a space between the '<' and
+          '::' for a template class.
+
 Mon Nov 10 23:03:45 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * MPC/config/ciaocidldefaults.mpb:
