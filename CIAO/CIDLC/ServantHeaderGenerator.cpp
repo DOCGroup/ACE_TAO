@@ -415,8 +415,8 @@ namespace
       bool swapping = (swap_option == "upgradeable");
 
       ostringstream base_type;
-      base_type << "CIAO::" << (swapping ? "Upgradeable_" : "")
-                << "Context_Impl <" << t.scoped_name ().scope_name ()
+      base_type << "::CIAO::" << (swapping ? "Upgradeable_" : "")
+                << "Context_Impl < " << t.scoped_name ().scope_name ()
                 << "::CCM_" << t.name () << "_Context, " << t.name () << "_Servant, "
                 << t.scoped_name () << ">";
 
