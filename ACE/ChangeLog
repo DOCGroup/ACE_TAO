@@ -1,3 +1,11 @@
+Tue Nov 11 22:22:04 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_sys_mman.inl (mmap): Added a fix for a problem where
+          ACE_OS::mmap() failed when called with
+          file_handle=ACE_INVALID_HANDLE and file_mapping=0.  Thanks to
+          Bill Rizzi <rizzi at softserv dot com> for this fix.  This fixes
+          bugid 3500.
+
 Tue Nov 11 14:24:00 UTC 2008  Simon Massey<sma at prismtech dot com>
 
         * tests/Process_Test.cpp:
