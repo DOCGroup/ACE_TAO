@@ -1,3 +1,16 @@
+Tue Nov 11 14:47:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1535_Regression/run_test.pl:
+        * tests/Bug_1639_Regression/run_test.pl:
+        * tests/Bug_2201_Regression/run_test.pl:
+        * tests/Bug_2243_Regression/run_test.pl:
+        * tests/Bug_2543_Regression/run_test.pl:
+        * tests/Policies/run_test.pl
+          Converted to the new test framework
+
+        * tests/Bug_2126_Regression/test.cpp:
+          No need for ACE_UNUSED_ARG
+
 Tue Nov 11 12:02:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/client.cpp:
