@@ -44,7 +44,6 @@ Test_interfaceOne_i::~Test_interfaceOne_i (void)
 void Test_interfaceOne_i::getstruct (
     ::Test::structOne_out tester
   )
-  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   ::Test::structOne_var holder (new ::Test::structOne);
   tester = holder._retn();
