@@ -1,3 +1,9 @@
+Tue Nov 11 15:02:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Bug_3481_Regression/Bug_3481_Regression.cpp:
+
+          Removed unused parameter names.
+
 Tue Nov 11 14:47:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1535_Regression/run_test.pl:
