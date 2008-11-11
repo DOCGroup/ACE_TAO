@@ -1,3 +1,11 @@
+Tue Nov 11 10:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget_VxWorks.pm:
+          Just use the WaitForFileTimed from the base
+
+        * bin/tao_orb_tests.lst:
+          Enabled some tests for Labview/WinCE
+
 Mon Nov 10 23:28:36 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
 
         * bin/tao_other_tests.lst:
