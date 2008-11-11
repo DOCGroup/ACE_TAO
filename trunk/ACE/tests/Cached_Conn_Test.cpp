@@ -274,7 +274,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
   for (int i = 1; i <= iterations; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("iteration %d\n"),
+                  ACE_TEXT ("'%T iteration %d\n"),
                   i));
 
       // If <listen_once> is false, one Acceptor is used for every
@@ -426,8 +426,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 #if defined (ACE_WIN32)
   // Somehow, on Win32, the <listen once> option allows us to create
   // more handles.
-  if (!user_has_specified_iterations &&
-      listen_once)
+  if (!user_has_specified_iterations && listen_once)
     iterations *= 2;
 #endif /* ACE_WIN32 */
 
