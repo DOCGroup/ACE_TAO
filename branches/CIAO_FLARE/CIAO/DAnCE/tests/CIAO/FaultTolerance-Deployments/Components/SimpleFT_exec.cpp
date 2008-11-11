@@ -19,13 +19,16 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "SimpleFT_exec.h"
+
+#include <sstream>
 #include <ace/Env_Value_T.h>
 #include <ace/Throughput_Stats.h>
 #include <orbsvcs/CosNamingC.h>
 #include "ciao/CIAO_common.h"
-#include "ciao/Containers/Container_Base.h"
-#include "ciao/Contexts/Context_Impl_Base.h"
 #include "ciao/FTComponentServer/Name_Helper_T.h"
+#include "ciao/FTComponentServer/CommonIDL/ReplicationManagerC.h"
+#include "ciao/Containers/Container_Base.h"
+#include "SimpleFT_svnt.h"
 
 namespace CIDL_SimpleFT_Impl
 {
@@ -34,7 +37,9 @@ namespace CIDL_SimpleFT_Impl
   //==================================================================
 
   SimpleFT_exec_i::SimpleFT_exec_i (void)
-    : app_name_ ("APPLICATION_NAME"),
+    : app_name_ ("SimpleFT_Application"),
+      load_ (0.4),
+      primary_ (true),
       orb_ (CORBA::ORB::_nil ()),
       agent_ (StateSynchronizationAgent::_nil ()),
       history_ (50),
@@ -42,28 +47,6 @@ namespace CIDL_SimpleFT_Impl
   {
     CIAO_TRACE ("SimpleFT_exec_i::SimpleFT_exec_i (void)");
     CIAO_DEBUG ((LM_EMERGENCY, "SimpleFT - Test - Lifecycle event - SimpleFT_exec_i::SimpleFT_exec_i (void)\n"));
-
-    CIAO::Context_Impl_Base * base_context = dynamic_cast <CIAO::Context_Impl_Base*> (context_.in ());
-
-    if (base_context == 0)
-      {
-	CIAO_ERROR ((LM_ERROR, "could not cast to Context_Impl_Base\n"));
-      }
-    else
-      {
-	CIAO::Container_var container = base_context->_ciao_the_Container ();
-
-	CIAO::Container_i * container_i = dynamic_cast <CIAO::Container_i*> (container.in ());
-	
-	if (container_i == 0)
-	  {
-	    CIAO_ERROR ((LM_ERROR, "could not cast to Container_i\n"));
-	  }
-	else
-	  {
-	    orb_ = container_i->the_ORB ();
-	  }
-      }
   }
 
   SimpleFT_exec_i::~SimpleFT_exec_i (void)
@@ -93,6 +76,27 @@ namespace CIDL_SimpleFT_Impl
     {
       throw ::CORBA::INTERNAL ();
     }
+
+    CIDL_SimpleFT_Impl::SimpleFT_Context * ft_context = 
+      CIDL_SimpleFT_Impl::SimpleFT_Context::_narrow (context_.in ());
+
+    if (0 == ft_context)
+      {
+	CIAO_ERROR ((LM_ERROR, "could not narrow to SimpleFT_Context\n"));
+	return;
+      }
+
+    CIAO::Container_var container = ft_context->_ciao_the_Container ();
+
+    CIAO::Container_i * ci = dynamic_cast <CIAO::Container_i*> (container.in ());
+
+    if (ci == 0)
+      {
+	CIAO_ERROR ((LM_WARNING, "could not cast to Container_i\n"));
+	return;
+      }
+
+    orb_ = ci->the_ORB ();
   }
 
   void
@@ -108,25 +112,35 @@ namespace CIDL_SimpleFT_Impl
   {
     CIAO_TRACE ("SimpleFT_exec_i::ccm_activate");
     CIAO_DEBUG ((LM_EMERGENCY, "SimpleFT - Test - Lifecycle event - SimpleFT_exec_i::ccm_activate\n"));
-    
-    Name_Helper_T <StateSynchronizationAgent> nh (orb_.in (), true);
 
-    CIAO_DEBUG ((LM_DEBUG, "resolving the StateSynchronizationAgent in the NamingService.\n"));
-
-    try
+    try 
       {
-	agent_ = nh.resolve ("FLARe/" +
-			     this->get_hostname () +
-			     "/StateSynchronizationAgent");
+	if (CORBA::is_nil (orb_.in ()))
+	  {
+	    CIAO_ERROR ((LM_WARNING, "SimpleFT_exec_i::ccm_activate - orb_ member is nil.\n"));
+	    return;
+	  }
+
+	// register application with StateSynchronizationAgent
+	Name_Helper_T <StateSynchronizationAgent> nh (orb_.in (), true);
+
+	CIAO_DEBUG ((LM_DEBUG, "resolving the StateSynchronizationAgent in the NamingService.\n"));
+
+	std::string ssa_path = "FLARe/" + nh.escape_dots (this->get_hostname ()) + "/" + 
+	                       this->get_process_id () + "/StateSynchronizationAgent";
+
+	CIAO_DEBUG ((LM_DEBUG, "\tpath = %s\n", ssa_path.c_str ()));
+
+	agent_ = nh.resolve (ssa_path);
 
 	if (CORBA::is_nil (agent_.in ()))
 	  {
 	    CIAO_ERROR ((LM_WARNING, "SimpleFT_exec_i::ccm_activate - could not find agent.\n"));
 	    return;
 	  }
-
+	
 	CIAO_DEBUG ((LM_DEBUG, "registering the application with the agent.\n"));
-
+	    
 	ReplicatedApplication_var myself = ReplicatedApplication::_narrow (this);
 
 	if (CORBA::is_nil (myself.in ()))
@@ -136,10 +150,37 @@ namespace CIDL_SimpleFT_Impl
 	  }
 
 	agent_->register_application (app_name_.c_str (), myself.in ());
+
+	// register application with ReplicationManager
+
+	CIAO_DEBUG ((LM_DEBUG, "resolving the ReplicationManager in the NamingService.\n"));
+
+	Name_Helper_T <ReplicationManager> rmh (orb_.in (), true);
+
+	ReplicationManager_var rm = rmh.resolve ("FLARe/ReplicationManager");
+
+	std::string hn = this->get_hostname ();
+	std::string pid = this->get_process_id ();
+
+	CORBA::Object_var self_obj = CORBA::Object::_narrow (this);
+
+	rm->register_application (app_name_.c_str (),
+				  load_,
+				  hn.c_str (),
+				  pid.c_str (),
+				  (primary_ ? 1 : 2),
+				  self_obj.in ());
+      }
+    catch (Name_Helper_Exception & ex)
+      {
+	CIAO_ERROR ((LM_ERROR, 
+		     "SimpleFT_exec_i::ccm_activate - "
+		     "caught Name_Helper_Exception: %s", 
+		     ex.what ()));
       }
     catch (CORBA::Exception &ex)
       {
-	CIAO_ERROR ((LM_ERROR, "SimpleFT_exec_i::ccm_activate - cuaght: %s", ex._info ().c_str ()));
+	CIAO_ERROR ((LM_ERROR, "SimpleFT_exec_i::ccm_activate - caught: %s", ex._info ().c_str ()));
       }
   }
 
@@ -178,7 +219,7 @@ namespace CIDL_SimpleFT_Impl
   // Attribute operations
 
   char *
-  SimpleFT_exec_i::app_name (void)
+  SimpleFT_exec_i::object_id (void)
   {
     char * name = new char[app_name_.length ()];
     ACE_OS::strcpy (name, app_name_.c_str ());    
@@ -187,9 +228,36 @@ namespace CIDL_SimpleFT_Impl
   }
 
   void 
-  SimpleFT_exec_i::app_name (const char * app_name)
+  SimpleFT_exec_i::object_id (const char * object_id)
   {
-    app_name_ = app_name;
+    app_name_ = object_id;
+  }
+
+  CORBA::Double
+  SimpleFT_exec_i::load ()
+  {
+    return load_;
+  }
+    
+  void
+  SimpleFT_exec_i::load (CORBA::Double load)
+  {
+    load_ = load;
+  }
+    
+  CORBA::Short
+  SimpleFT_exec_i::role ()
+  {
+    if (primary_)
+      return 1;
+    else
+      return 2;
+  }
+    
+  void
+  SimpleFT_exec_i::role (CORBA::Short role)
+  {
+    primary_ = (role == 1);
   }
 
   // Supported or inherited operations.
@@ -291,6 +359,16 @@ namespace CIDL_SimpleFT_Impl
     return std::string (hn_str);
   }
 
+
+  std::string
+  SimpleFT_exec_i::get_process_id ()
+  {
+    pid_t pid = ACE_OS::getpid ();
+    std::stringstream ss;
+    ss << pid;
+    
+    return ss.str ();
+  }
 
   // Home operations.
 
