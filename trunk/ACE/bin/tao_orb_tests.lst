@@ -81,9 +81,9 @@ TAO/tests/Bug_2201_Regression/run_test.pl: !LabVIEW_RT !WinCE
 TAO/tests/Bug_2234_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !LabVIEW_RT !WinCE
 TAO/tests/Bug_2243_Regression/run_test.pl: !LabVIEW_RT !WinCE
 TAO/tests/Bug_2289_Regression/run_test.pl: !LabVIEW_RT !WinCE
-TAO/tests/Bug_2319_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT !WinCE !FIXED_BUGS_ONLY
+TAO/tests/Bug_2319_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !FIXED_BUGS_ONLY
 TAO/tests/Bug_2328_Regression/run_test.pl: !LabVIEW_RT !WinCE
-TAO/tests/Bug_2345_Regression/run_test.pl: !CORBA_E_MICRO !LabVIEW_RT !WinCE
+TAO/tests/Bug_2345_Regression/run_test.pl: !CORBA_E_MICRO
 TAO/tests/Bug_2349_Regression/run_test.pl: !LabVIEW_RT !WinCE
 TAO/tests/Bug_2356_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT !WinCE
 TAO/tests/Bug_2417_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !LabVIEW_RT !WinCE
