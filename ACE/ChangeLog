@@ -1,3 +1,8 @@
+Tue Nov 11 14:24:00 UTC 2008  Simon Massey<sma at prismtech dot com>
+
+        * tests/Process_Test.cpp:
+          Another wchar issue.
+
 Tue Nov 11 13:52:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * ace/config-lynxos.h:
