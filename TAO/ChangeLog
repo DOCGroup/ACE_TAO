@@ -1,7 +1,23 @@
+Tue Nov 11 22:23:31 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * tests/Bug_3499_Regression:
+        * tests/Bug_3499_Regression/DLL_Service.h:
+        * tests/Bug_3499_Regression/DLL_Service.cpp:
+        * tests/Bug_3499_Regression/DLL_Service.mpc:
+        * tests/Bug_3499_Regression/DLL_Service_Host.cpp:
+        * tests/Bug_3499_Regression/DLL_Service_export.h:
+        * tests/Bug_3499_Regression/DLL_TAO_Service.h:
+        * tests/Bug_3499_Regression/DLL_TAO_Service.cpp:
+        * tests/Bug_3499_Regression/DLL_TAO_Service_export.h:
+        * tests/Bug_3499_Regression/README:
+        * tests/Bug_3499_Regression/run_test.pl:
+
+          First version of the regression test for Bugzilla 3499.
+
 Tue Nov 11 19:50:36 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/run_test.pl:
-        
+
           Changes to make the script more portable.
 
 Tue Nov 11 19:42:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
