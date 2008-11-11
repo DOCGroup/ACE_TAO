@@ -1,3 +1,20 @@
+Tue Nov 11 13:26:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Check the return value of thr_setprio
+
+        * ace/Process.cpp:
+          Always initialize process_name_
+
+        * ace/Process_Manager.cpp:
+          Use this->
+
+        * tests/OS_Test.cpp:
+          WinCE can't rename when the target already exists
+
+        * tests/Reactor_Dispatch_Order_Test.cpp:
+          Const change
+
 Tue Nov 11 10:43:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.inl:
