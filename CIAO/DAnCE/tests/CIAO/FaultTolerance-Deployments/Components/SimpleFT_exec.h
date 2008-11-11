@@ -60,9 +60,17 @@ namespace CIDL_SimpleFT_Impl
 
     // Attribute operations.
 
-    virtual char * app_name (void);
+    virtual char * object_id (void);
     
-    virtual void app_name (const char * app_name);
+    virtual void object_id (const char * object_id);
+
+    virtual CORBA::Double load ();
+    
+    virtual void load (CORBA::Double load);
+    
+    virtual CORBA::Short role ();
+    
+    virtual void role (CORBA::Short role);
 
     // Port operations.
 
@@ -83,9 +91,19 @@ namespace CIDL_SimpleFT_Impl
     private:
     std::string get_hostname ();
 
+    std::string get_process_id ();
+
     ::Simple::CCM_SimpleFT_Context_var context_;
 
+    // members representing config properties
+    
     std::string app_name_;
+
+    CORBA::Double load_;
+
+    bool primary_;
+
+    // members needed for component functionality
 
     CORBA::ORB_var orb_;
 

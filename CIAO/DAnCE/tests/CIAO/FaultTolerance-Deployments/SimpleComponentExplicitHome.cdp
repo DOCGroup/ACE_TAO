@@ -60,17 +60,6 @@
         </value>
       </value>
     </execParameter>
-    <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ServerTimeout</name>
-      <value>
-        <type>
-          <kind>tk_ulong</kind>
-        </type>
-        <value>
-          <string>10</string>
-        </value>
-      </value>
-    </execParameter>
   </implementation>
 
   <implementation xmi:id="SimpleFTComponentImplementation">

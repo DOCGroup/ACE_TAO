@@ -7,7 +7,9 @@ module Simple
 {
   component SimpleFT supports test
   {
-    attribute string app_name;
+    attribute string object_id;
+    attribute double load;
+    attribute short  role;
   };
 
   home SimpleFTHome manages SimpleFT
