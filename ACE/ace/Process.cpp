@@ -455,10 +455,10 @@ ACE_Process::spawn (ACE_Process_Options &options)
         ACE_OS::close (options.get_stdin ());
         ACE_OS::close (options.get_stdout ());
         ACE_OS::close (options.get_stderr ());
-        if (!options.handle_inheritance ()) 
+        if (!options.handle_inheritance ())
           {
             // Set close-on-exec for all FDs except standard handles
-            for (int i = ACE::max_handles () - 1; i >= 0; i--) 
+            for (int i = ACE::max_handles () - 1; i >= 0; i--)
               {
                 if (i == ACE_STDIN || i == ACE_STDOUT || i == ACE_STDERR)
                   continue;
@@ -836,6 +836,7 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
   ACE_NEW (command_line_buf_,
            ACE_TCHAR[command_line_buf_len]);
   command_line_buf_[0] = '\0';
+  process_name_[0] = '\0';
 
 #if !defined (ACE_HAS_WINCE)
   working_directory_[0] = '\0';
@@ -845,7 +846,6 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
            ACE_TCHAR *[max_env_args]);
   environment_buf_[0] = '\0';
   environment_argv_[0] = 0;
-  process_name_[0] = '\0';
 #if defined (ACE_WIN32)
   ACE_OS::memset ((void *) &this->startup_info_,
                   0,
