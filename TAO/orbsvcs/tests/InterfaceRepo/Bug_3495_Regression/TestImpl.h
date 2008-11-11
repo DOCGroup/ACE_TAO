@@ -23,8 +23,7 @@ public:
   // Destructor 
   virtual ~Test_interfaceOne_i (void);
   
-  virtual void getstruct (::Test::structOne_out tester)
-    ACE_THROW_SPEC ((::CORBA::SystemException));
+  virtual void getstruct (::Test::structOne_out tester);
 };
 
 
