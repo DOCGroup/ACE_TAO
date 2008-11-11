@@ -23,7 +23,7 @@ private:
 
 size_t Foo_i::s_count_ = 0;
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int , ACE_TCHAR *[])
 {
   {
     Foo_var f1 = new Foo_i;
