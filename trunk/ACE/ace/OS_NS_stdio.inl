@@ -807,8 +807,8 @@ ACE_OS::rename (const char *old_name,
 # elif defined (ACE_HAS_WINCE)
   // Win CE is always wide-char.
   ACE_UNUSED_ARG (flags);
-  if (0 != MoveFile (ACE_TEXT_CHAR_TO_TCHAR (old_name),
-                     ACE_TEXT_CHAR_TO_TCHAR (new_name)))
+  if (0 == ::MoveFile (ACE_TEXT_CHAR_TO_TCHAR (old_name),
+                       ACE_TEXT_CHAR_TO_TCHAR (new_name)))
     ACE_FAIL_RETURN (-1);
   return 0;
 # elif defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_MOVEFILEEX)
@@ -840,7 +840,7 @@ ACE_OS::rename (const wchar_t *old_name,
   ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (flags);
-  if (MoveFileW (old_name, new_name) != 0)
+  if (::MoveFileW (old_name, new_name) == 0)
     ACE_FAIL_RETURN (-1);
   return 0;
 # elif defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_MOVEFILEEX)

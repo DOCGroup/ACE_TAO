@@ -1,3 +1,8 @@
+Tue Nov 11 10:43:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.inl:
+          Fixed rename on WinCE
+
 Tue Nov 11 10:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/TestTarget_VxWorks.pm:
