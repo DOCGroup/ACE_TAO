@@ -1,3 +1,9 @@
+Tue Nov 11 19:50:36 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/run_test.pl:
+        
+          Changes to make the script more portable.
+
 Tue Nov 11 19:42:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Hello/run_test.pl:
