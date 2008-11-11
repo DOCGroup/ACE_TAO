@@ -1,3 +1,8 @@
+Tue Nov 11 13:52:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/config-lynxos.h:
+          Missed removal of ACE_HAS_SYSV_IPC for LynxOS5.0.
+
 Tue Nov 11 13:34:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Cached_Conn_Test.cpp:
