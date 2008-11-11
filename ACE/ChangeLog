@@ -1,3 +1,8 @@
+Tue Nov 11 13:34:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Cached_Conn_Test.cpp:
+          Print a timestamp with each iteration
+
 Tue Nov 11 13:26:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
