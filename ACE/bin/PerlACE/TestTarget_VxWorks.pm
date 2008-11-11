@@ -25,7 +25,9 @@ our @ISA = qw(PerlACE::TestTarget);
 
 sub LocalFile {
   my($self, $file) = @_;
-  print STDERR "LocalFile for $file is $file\n";
+ if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+    print STDERR "LocalFile is $file\n";
+  }
   return $file;
 }
 
@@ -49,14 +51,6 @@ sub RebootNow ($)
     $self->{REBOOT_NEEDED} = undef;
     print STDERR "Attempting to reboot target...\n";
     reboot ();
-}
-
-sub WaitForFileTimed ($)
-{
-    my $self = shift;
-    my $file = shift;
-    my $timeout = shift;
-    return 0;
 }
 
 1;
