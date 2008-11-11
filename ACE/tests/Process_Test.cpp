@@ -51,7 +51,7 @@ check_temp_file (const ACE_TString &tmpfilename)
   while ((dir = entr.read ())) 
     {
       ACE_CString fullp = proc_self_fd;
-      fullp += dir->d_name;
+      fullp += ACE_TEXT_CHAR_TO_TCHAR (dir->d_name);
 
       if ((ACE_OS::lstat (ACE_TEXT_CHAR_TO_TCHAR (fullp.c_str ()), &stat)) == -1) 
         ACE_ERROR_RETURN ((LM_ERROR,
