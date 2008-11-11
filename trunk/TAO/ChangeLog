@@ -1,3 +1,9 @@
+Tue Nov 11 17:33:34 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/Bug_3495_Regression.mpc:
+
+          Corrected building on minimum systems.
+
 Tue Nov 11 15:02:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Bug_3481_Regression/Bug_3481_Regression.cpp:
