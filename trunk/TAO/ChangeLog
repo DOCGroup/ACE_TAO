@@ -1,3 +1,8 @@
+Wed Nov 12 16:02:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+          Fixed compile error with CORBA/e micro
+
 Wed Nov 12 13:10:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Bug_3499_Regression/DLL_Service.h:
