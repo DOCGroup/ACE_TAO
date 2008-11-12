@@ -2,9 +2,7 @@
 
 project (Bug_3499_Regression) : aceexe {
   exename = Bug_3499_Regression
-
   install = .
-
   Source_Files {
     DLL_Service_Host.cpp
   }
@@ -12,20 +10,15 @@ project (Bug_3499_Regression) : aceexe {
 
 project (Bug_3499_Regression_ACE_DLL_Service) : acelib {
   sharedname = Bug_3499_Regression_ACE_DLL_Service
-
   dynamicflags += ACE_DLL_SERVICE_BUILD_DLL
-
   dllout = .
   libout = .
-
   Source_Files {
     DLL_Service.cpp
   }
-
   Header_Files {
     DLL_Service_export.h
   }
-
   Inline_Files {
 
   }
