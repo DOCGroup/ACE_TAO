@@ -1,3 +1,13 @@
+Wed Nov 12 08:27:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Process_Win32.pm:
+          Removed duplicate basename
+
+        * bin/fuzz.pl:
+          Extended the run_test.pl check and enabled it. Ignore TAO and
+          CIAO for the moment, we first need to update the existing
+          scripts to the new test framework
+
 Wed Nov 12 08:19:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/TestTarget_WinCE.pm:
