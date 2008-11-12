@@ -34,7 +34,6 @@ project(*Client): taoclient, namingexe, pi, avoids_minimum_corba, interceptors {
   }
   Source_Files {
     MessengerC.cpp
-    MessengerS.cpp
   }
   IDL_Files {
   }
