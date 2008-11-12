@@ -1,3 +1,11 @@
+Wed Nov 12 09:35:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/tests/HTBP/ping/run_test.pl:
+        * protocols/tests/HTBP/Reactor_Tests/run_test.pl:
+        * protocols/tests/HTBP/Send_Large_Msg/run_test.pl:
+        * protocols/tests/HTBP/Send_Recv_Tests/run_test.pl:
+          Use 2 targets
+
 Wed Nov 12 09:31:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/Process.pm:
