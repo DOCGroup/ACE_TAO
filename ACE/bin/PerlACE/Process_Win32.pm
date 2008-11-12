@@ -246,7 +246,6 @@ sub Spawn ()
                 "/InUseAtExit ".
                 "/LeaksAtExit ";
         }
-        my $basename = basename ($self->{EXECUTABLE});
         $cmdline =
             "purify " .
             "$PurifyOptions ".
