@@ -1,4 +1,10 @@
-Tue Nov 12 13:24:00 UTC 2008  Simon Massey<sma at prismtech dot com>
+Wed Nov 12 14:10:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.7.h:
+        * include/makeinclude/platform_vxworks6.7.GNU:
+          Initial files for VxWorks 6.7 which we expect soon
+
+Wed Nov 12 13:24:00 UTC 2008  Simon Massey<sma at prismtech dot com>
 
         * tests/Process_Test.cpp:
           Wrong macro used.
