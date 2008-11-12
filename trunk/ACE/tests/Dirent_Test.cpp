@@ -104,10 +104,19 @@ dirent_selector_test (void)
     }
 
   for (n = 0; n < sds.length (); ++n)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Sorted: %d: %C\n"),
-                n,
-                sds[n]->d_name));
+    {
+#if defined (ACE_HAS_TCHAR_DIRENT)
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Sorted: %d: %s\n"),
+                  n,
+                  sds[n]->d_name));
+#else
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Sorted: %d: %C\n"),
+                  n,
+                  sds[n]->d_name));
+#endif
+    }
 
   status = sds.close ();
   if (status == -1)
