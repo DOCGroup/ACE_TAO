@@ -1,11 +1,17 @@
+Wed Nov 12 19:35:47 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:
+        
+          Improved exception handling. 
+        
 Wed Nov 12 19:30:30 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/ComponentAttributesSetter.h:
         * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
-           
-          Changes  necessary to support attribiute initialization. 
-        
+
+          Changes  necessary to support attribiute initialization.
+
         * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute.cidl:
         * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute.idl:
         * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute.mpc:
@@ -17,8 +23,8 @@ Wed Nov 12 19:30:30 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/tests/CIAO/NodeManager-Deployments/SimpleAttributeExplicitHome.cdp:
 
           Test that excercises the setting of attributes on homes and components
-          during deployment. 
-        
+          during deployment.
+
 Wed Nov 12 18:06:10 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/DAnCE_Properties.idl:
