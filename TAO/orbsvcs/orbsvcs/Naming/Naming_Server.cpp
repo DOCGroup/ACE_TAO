@@ -733,8 +733,10 @@ TAO_Naming_Server::fini (void)
           adapter->unbind ("NameService");
         }
 
+#if !defined (CORBA_E_MICRO)
       CORBA::Object_var svc =
         this->orb_->unregister_initial_reference ("NameService");
+#endif /* CORBA_E_MICRO */
     }
   catch (const CORBA::Exception&)
     {
