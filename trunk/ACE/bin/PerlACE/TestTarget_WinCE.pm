@@ -17,6 +17,7 @@ use strict;
 use PerlACE::TestTarget;
 use PerlACE::ProcessVX;
 use File::Copy;
+use Cwd;
 
 our @ISA = qw(PerlACE::TestTarget);
 
@@ -87,8 +88,18 @@ sub new
 sub LocalFile {
     my $self = shift;
     my $file = shift;
-    my $newfile = $self->{FSROOT} . '\\' . $file;
-    print STDERR "WinCE LocalFile for $file is $newfile\n";
+    my $cwdrel = $file;
+    my $prjroot = defined $ENV{"ACE_RUN_VX_PRJ_ROOT"} ? $ENV{"ACE_RUN_VX_PRJ_ROOT"}  : $ENV{"ACE_ROOT"};
+    if (length ($cwdrel) > 0) {
+        $cwdrel = File::Spec->abs2rel( cwd(), $prjroot );
+    }
+    else {
+        $cwdrel = File::Spec->abs2rel( $cwdrel, $prjroot );
+    }
+    my $newfile = $self->{FSROOT} . "/" . $cwdrel . "/" . $file;
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+      print STDERR "WinCE LocalFile for $file is $newfile\n";
+    }
     return $newfile;
 }
 
@@ -119,19 +130,17 @@ sub WaitForFileTimed ($)
     my $self = shift;
     my $file = shift;
     my $timeout = shift;
-print STDERR "wait for $file time $timeout\n";
-    return PerlACE::waitforfile_timed ("\\\\thor\\temp\\ACE\\wince6\\$file", $timeout);
+    my $newfile = $self->LocalFile($file);
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+      print STDERR "wait for $newfile time $timeout\n";
+    }
+    return PerlACE::waitforfile_timed ($newfile, $timeout);
 }
 
 sub GetFile ($)
 {
     my $self = shift;
     my $file = shift;
-    my $remote_file = "\\\\thor\\temp\\ACE\\wince6\\$file";
-#    if ($remote_file != $file) {
-        copy ($remote_file, "c:\\ace\\latest\\ace_wrappers\\tao\\tests\\hello\\server.ior");
-print STDERR "copy $remote_file $file\n";
-#    }
     return 0;
 }
 
@@ -140,16 +149,18 @@ sub PutFile ($)
 {
     my $self = shift;
     my $src = shift;
-print STDERR "put $src\n";
     return 0;
 }
-
 
 sub DeleteFile ($)
 {
     my $self = shift;
     my $file = shift;
-    unlink ("\\\\thor\\temp\\ACE\\wince6\\$file");
+    my $newfile = $self->LocalFile($file);
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+      print STDERR "delete $newfile\n";
+    }
+    unlink ("$newfile");
 }
 
 1;
