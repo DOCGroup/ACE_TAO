@@ -1,3 +1,40 @@
+Wed Nov 12 17:25:21 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Client.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Client.cpp:
+        
+          Made the init() method and the destructor virtual,
+          for easier subclassing.
+        
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.cpp:
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.h:
+        
+          New files, encapsulating the creation of a forwarding
+          agent, the passing of this agent to an interceptor and
+          the registration of this interceptor with the ORB, and
+          the management of the forwarding agent thread. This code
+          was moved here from the client executable build in the
+          FLARe example.
+        
+        * orbsvcs/LWFT_Service/RMOptions.h:
+        * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
+        * orbsvcs/LWFT_Service/host_monitor.cpp:
+        * orbsvcs/LWFT_Service/RMOptions.cpp:
+        * orbsvcs/LWFT_Service/LWFT_Serfvice.mpc:
+        
+          New files in a new directory, defining builds for the
+          LWFT executables, namely the replication manager and
+          the host monitor.
+        
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
+        
+          Updated with the new forwarding agent thread files added.
+        
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/client.cpp:
+        
+          Moved forwarding agent thread-related code to the LWFT
+          library, as described above.
+
 Thu Nov  6 20:20:37 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MPC/config/lwft_client.mpb::

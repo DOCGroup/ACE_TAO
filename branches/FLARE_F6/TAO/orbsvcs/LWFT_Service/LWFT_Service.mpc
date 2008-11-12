@@ -1,0 +1,52 @@
+// -*- MPC -*-
+// $Id$
+
+project(ReplicationManager) : taoserver, naming {
+  after += LWFT_ReplicationManagerImpl
+  libs += LWFT_Common \
+          LWFT_ReplicationManager \
+          LWFT_ReplicationManagerImpl
+  exename = ReplicationManager
+  
+  IDL_Files {
+  }
+  
+  Source_Files {
+    ReplicationManager_process.cpp
+    RMOptions.cpp
+  }
+  
+  Header_Files {
+    RMOptions.h
+  }
+  
+  Inline_Files {
+  }
+  
+  Template_Files {
+  }
+}
+
+project(HostMonitor) : taoserver, portableserver {
+  after += LWFT_HostMonitor
+  libs += LWFT_Server \
+          LWFT_HostMonitor
+  exename = HostMonitor
+  
+  IDL_Files {
+  }
+  
+  Source_Files {
+    host_monitor.cpp
+  }
+  
+  Header_Files {
+  }
+  
+  Inline_Files {
+  }
+  
+  Template_Files {
+  }
+}
+

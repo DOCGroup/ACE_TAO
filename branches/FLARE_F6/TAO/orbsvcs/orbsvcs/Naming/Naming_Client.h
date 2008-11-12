@@ -51,10 +51,10 @@ public:
    * @c resolve_initial_references.  Return 0 if Naming Service is
    * successfully located, and -1 on failure.
    */
-  int init (CORBA::ORB_ptr orb, ACE_Time_Value *timeout = 0);
+  virtual int init (CORBA::ORB_ptr orb, ACE_Time_Value *timeout = 0);
 
   /// Destructor.
-  ~TAO_Naming_Client (void);
+  virtual ~TAO_Naming_Client (void);
 
   /// Returns a pointer to the root Naming Context.
   CosNaming::NamingContext_ptr operator-> (void) const;

@@ -52,6 +52,7 @@ project(*Client) : pi_server, interceptors, orbsvcs_output {
     Client_ORBInitializer.cpp
     Client_Request_Interceptor.cpp
     ForwardingAgent.cpp
+    ForwardingAgent_Thread.cpp
     ForwardingAgentC.cpp
     ForwardingAgentS.cpp
   }
@@ -60,6 +61,7 @@ project(*Client) : pi_server, interceptors, orbsvcs_output {
     Client_ORBInitializer.h
     Client_Request_Interceptor.h
     ForwardingAgent.h
+    ForwardingAgent_Thread.h
     ForwardingAgentC.h
     ForwardingAgentS.h
     lwft_client_export.h
