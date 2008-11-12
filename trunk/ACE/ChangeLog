@@ -1,3 +1,8 @@
+Wed Nov 12 09:01:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          And more path tweaks
+
 Wed Nov 12 08:48:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:

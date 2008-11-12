@@ -99,7 +99,7 @@ sub LocalFile {
     else {
         $cwdrel = File::Spec->abs2rel( $cwdrel, $prjroot );
     }
-    my $newfile = $self->{HOST_ROOT} . "/" . $cwdrel . "/" . $file;
+    my $newfile = $self->{FSROOT} . "/" . $cwdrel . "/" . $file;
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print STDERR "WinCE LocalFile for $file is $newfile\n";
     }
@@ -133,9 +133,17 @@ sub WaitForFileTimed ($)
     my $self = shift;
     my $file = shift;
     my $timeout = shift;
-    my $newfile = $self->LocalFile($file);
+    my $cwdrel = $file;
+    my $prjroot = defined $ENV{"ACE_RUN_VX_PRJ_ROOT"} ? $ENV{"ACE_RUN_VX_PRJ_ROOT"}  : $ENV{"ACE_ROOT"};
+    if (length ($cwdrel) > 0) {
+        $cwdrel = File::Spec->abs2rel( cwd(), $prjroot );
+    }
+    else {
+        $cwdrel = File::Spec->abs2rel( $cwdrel, $prjroot );
+    }
+    my $newfile = $self->{HOST_ROOT} . "/" . $cwdrel . "/" . $file;
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-      print STDERR "wait for $newfile time $timeout\n";
+      print STDERR "WinCE waits for $newfile\n";
     }
     return PerlACE::waitforfile_timed ($newfile, $timeout);
 }
