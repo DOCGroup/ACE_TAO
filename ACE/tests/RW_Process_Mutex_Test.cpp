@@ -97,7 +97,7 @@ public:
 private:
   enum { Max_Ranges = 5 };
   int range_count_;
-  Time_Range ranges_[Max_Ranges];  
+  Time_Range ranges_[Max_Ranges];
 };
 
 void
@@ -468,7 +468,7 @@ run_main (int argc, ACE_TCHAR *argv[])
           Child *child = (i == 0 ? &writer : &readers[i-1]);
           ACE_Process_Options options;
           options.command_line (format,
-                                argv[0],
+                                argc > 0 ? argv[0] : ACE_TEXT ("RW_Process_Mutex_Test"),
                                 i,
                                 (unsigned int)me.get_port_number (),
                                 mutex_name.c_str ());

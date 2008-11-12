@@ -434,7 +434,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       reset_handler (NUMBER_OF_REACTIVE_CONNECTIONS);
 
-      test_reactive (argv[0], server_addr);
+      test_reactive (argc > 0 ? argv[0] : ACE_TEXT ("MEM_Stream_Test"), server_addr);
 
       ACE_Reactor::instance ()->reset_reactor_event_loop ();
 
@@ -444,7 +444,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 #endif /* !ACE_WIN32 && _ACE_USE_SV_SEM */
       reset_handler (NUMBER_OF_MT_CONNECTIONS);
 
-      test_concurrent (argv[0], server_addr);
+      test_concurrent (argc > 0 ? argv[0] : ACE_TEXT ("MEM_Stream_Test"), server_addr);
 
       ACE_END_TEST;
       return 0;
