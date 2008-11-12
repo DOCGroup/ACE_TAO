@@ -3,6 +3,8 @@
 
 #include "ace/Get_Opt.h"
 
+#include "orbsvcs/orbsvcs/Naming/Naming_Client.h"
+
 #include "orbsvcs/orbsvcs/LWFT/ForwardingAgent.h"
 #include "orbsvcs/orbsvcs/LWFT/ReplicationManager.h"
 
@@ -69,6 +71,20 @@ main (int argc, char *argv[])
             
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);
+        }
+        
+      if (RMOptions::instance ()->use_naming_service ())
+        {
+          TAO_Naming_Client naming_client;
+          naming_client.init (orb.in ());
+          CosNaming::NamingContext_var root_context =
+            naming_client.get_context ();
+            
+          CosNaming::Name rm_name;
+          rm_name.length (1UL);
+          rm_name[0UL].id = "ReplicationManager";
+          
+          root_context->bind (rm_name, rm_object.in ());
         }
 
       orb->run ();

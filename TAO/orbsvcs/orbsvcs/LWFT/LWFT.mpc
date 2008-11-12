@@ -35,7 +35,7 @@ project(*Common) : pi_server, interceptors, iorinterceptor, orbsvcs_output {
   }
 }
 
-project(*Client) : pi_server, interceptors, orbsvcs_output {
+project(*Client) : pi_server, interceptors, naming, orbsvcs_output {
   after += *ReplicationManagerLib
   libs += LWFT_Common LWFT_ReplicationManager
   idlflags += -St \

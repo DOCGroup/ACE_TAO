@@ -3,6 +3,8 @@
 
 #include "tao/ORBInitializer_Registry.h"
 
+#include "orbsvcs/orbsvcs/Naming/Naming_Client.h"
+
 #include "ForwardingAgent_Thread.h"
 #include "ForwardingAgent.h"
 #include "Client_ORBInitializer.h"
@@ -57,9 +59,17 @@ ForwardingAgent_Thread::svc (void)
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
       poa_manager->activate ();
-const char *rm_ior = "rm.ior";
-      CORBA::Object_var tmp =
-        this->orb_->string_to_object (rm_ior);
+
+      TAO_Naming_Client naming_client;
+      naming_client.init (this->orb_);
+      CosNaming::NamingContext_var root_context =
+        naming_client.get_context ();
+        
+      CosNaming::Name rm_name;
+      rm_name.length (1UL);
+      rm_name[0UL].id = "ReplicationManager";
+      
+      CORBA::Object_var tmp = root_context->resolve (rm_name);
       ReplicationManager_var rm =
         ReplicationManager::_narrow (tmp.in ());
 
