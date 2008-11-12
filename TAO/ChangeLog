@@ -1,3 +1,8 @@
+Wed Nov 12 07:38:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/RTCORBA/RTCORBA.mpc:
+          Fixed bug in this file
+
 Tue Nov 11 22:23:31 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * tests/Bug_3499_Regression:

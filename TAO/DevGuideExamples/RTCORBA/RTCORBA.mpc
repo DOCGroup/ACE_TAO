@@ -33,7 +33,6 @@ project(*Client): rt_client {
   }
   Source_Files {
     MessengerC.cpp
-    MessengerS.cpp
   }
   IDL_Files {
   }
