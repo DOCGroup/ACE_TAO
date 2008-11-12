@@ -1,3 +1,22 @@
+Wed Nov 12 10:49:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/AMH/MessengerClient.cpp:
+        * DevGuideExamples/AMH/MessengerServer.cpp:
+          Pass IOR filename through the commandline
+
+        * DevGuideExamples/BiDirectionalGIOP/client.cpp:
+        * DevGuideExamples/BiDirectionalGIOP/server.cpp:
+        * DevGuideExamples/Multithreading/GracefulShutdown/MessengerClient.cpp:
+        * DevGuideExamples/Multithreading/GracefulShutdown/MessengerServer.cpp:
+          No need to use an argv converter
+
+        * DevGuideExamples/AMH/run_test.pl:
+        * DevGuideExamples/BiDirectionalGIOP/run_test.pl:
+          Converted to new test framework
+
+        * DevGuideExamples/AMH_AMI/run_test.pl:
+          Extended timeout
+
 Wed Nov 12 07:58:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/PortableInterceptors/PICurrent_NameService/PICurrent_NameService.mpc:

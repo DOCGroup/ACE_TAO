@@ -4,11 +4,11 @@
 #include "Messenger_i.h"
 #include "MessengerShutdownTimer.h"
 #include "ace/Get_Opt.h"
-#include "ace/Argv_Type_Converter.h"
 #include "ace/Reactor.h"
 #include "tao/ORB_Core.h"
 #include <iostream>
 #include <fstream>
+ACE_TString ior_output_file;
 
 // By default, shutdown when client calls Messenger::shutdown().
 MessengerServer::ShutdownMethod s_method = MessengerServer::s_client_call;
@@ -95,7 +95,7 @@ void MessengerServer::shutdown_on_console_input ()
 // parse arguments
 int MessengerServer::parse_args (int argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xp:t:cr:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xp:t:cr:o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -116,6 +116,9 @@ int MessengerServer::parse_args (int argc, ACE_TCHAR* argv[])
       case 'c':
         s_method = MessengerServer::s_console_input;
         break;
+      case 'o':
+        ior_output_file = get_opts.optarg;
+        break;
       case 'r':
         s_method = MessengerServer::s_run_time_value;
         timeout = ACE_OS::atoi(get_opts.opt_arg());
@@ -127,6 +130,7 @@ int MessengerServer::parse_args (int argc, ACE_TCHAR* argv[])
                            "-x (default) - shutdown on client invocation\n"
                            "-p <n> - use polling loop for <n> iterations\n"
                            "-t <n> - schedule timer for <n> seconds\n"
+                           "-o <iorfile>\n"
                            "-c     - shutdown on console input\n"
                            "-r <n> - run ORB for <n> seconds\n",
                            argv[0]),
@@ -146,9 +150,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
     // Initialize the ORB.
-    ACE_Argv_Type_Converter conv(argc, argv);
-    CORBA::ORB_var orb = CORBA::ORB_init(conv.get_argc(),
-                                         conv.get_TCHAR_argv());
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
     //Get reference to the RootPOA.
     CORBA::Object_var obj = orb->resolve_initial_references( "RootPOA" );

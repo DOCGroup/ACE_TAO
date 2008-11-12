@@ -6,7 +6,6 @@
 #include "simpleC.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Argv_Type_Converter.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 
 #include <iostream>
@@ -39,14 +38,12 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
-  if (parse_args (argc, argv) != 0) {
-    return 1;
-  }
-
   try {
-    ACE_Argv_Type_Converter conv(argc, argv);
-    CORBA::ORB_var orb = CORBA::ORB_init(conv.get_argc(),
-                                         conv.get_TCHAR_argv (), "");
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+
+    if (parse_args (argc, argv) != 0) {
+      return 1;
+    }
 
     // Create a bidirectional POA
     CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
@@ -70,7 +67,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     poa_manager->activate ();
 
     // get server object
-    obj = orb->string_to_object(ACE_TEXT_ALWAYS_CHAR(ior.c_str()));
+    obj = orb->string_to_object(ior.c_str());
     Simple_var server = Simple::_narrow (obj.in());
 
     Callback_i callback_svt(orb.in());
