@@ -1,3 +1,8 @@
+Wed Nov 12 10:52:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabled a few tests for WinCE/Labview
+
 Wed Nov 12 09:35:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * protocols/tests/HTBP/ping/run_test.pl:

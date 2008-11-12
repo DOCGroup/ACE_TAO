@@ -313,17 +313,17 @@ TAO/tests/Portable_Interceptors/Bug_3080/run_test.pl: !MINIMUM !CORBA_E_COMPACT 
 TAO/tests/Portable_Interceptors/Bug_2133/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
 TAO/tests/ORT/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !LabVIEW_RT !WinCE
 TAO/tests/Object_Loader/run_test.pl: !STATIC !LabVIEW_RT !WinCE
-TAO/tests/Two_Objects/run_test.pl: !ST !LabVIEW_RT !WinCE
+TAO/tests/Two_Objects/run_test.pl: !ST
 TAO/tests/TransportCurrent/Framework/run_test.pl -dynamic: !DISABLE_TRANSPORT_CURRENT !STATIC !DISABLE_INTERCEPTORS !MINIMUM !LabVIEW_RT !WinCE
 TAO/tests/TransportCurrent/Framework/run_test.pl -static: !DISABLE_TRANSPORT_CURRENT STATIC !DISABLE_INTERCEPTORS !MINIMUM !LabVIEW_RT !WinCE
 TAO/tests/TransportCurrent/IIOP/run_test.pl -dynamic: !DISABLE_TRANSPORT_CURRENT !STATIC !DISABLE_INTERCEPTORS !MINIMUM !LabVIEW_RT !WinCE
 TAO/tests/TransportCurrent/IIOP/run_test.pl -static: !DISABLE_TRANSPORT_CURRENT STATIC !DISABLE_INTERCEPTORS !MINIMUM !LabVIEW_RT !WinCE
-TAO/tests/UNKNOWN_Exception/run_test.pl: !LabVIEW_RT !WinCE
+TAO/tests/UNKNOWN_Exception/run_test.pl:
 TAO/tests/Native_Exceptions/run_test.pl: !LabVIEW_RT !WinCE
 TAO/tests/Servant_To_Reference_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !LabVIEW_RT !WinCE
 TAO/tests/Sequence_Unit_Tests/run_test.pl -noboost: !LabVIEW_RT !WinCE
 TAO/tests/Sequence_Unit_Tests/run_test.pl -boost: BOOST !LabVIEW_RT !WinCE
-TAO/tests/Typedef_String_Array/run_test.pl: !LabVIEW_RT !WinCE
+TAO/tests/Typedef_String_Array/run_test.pl:
 TAO/tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl: !CORBA_E_MICRO !LabVIEW_RT !WinCE !VxWorks_RTP
 TAO/tests/CodeSets/simple/run_test.pl: !GIOP10 !STATIC !LabVIEW_RT !WinCE
 TAO/tests/Hang_Shutdown/run_test.pl: !ST !ACE_FOR_TAO !LabVIEW_RT !WinCE
@@ -364,7 +364,7 @@ TAO/tests/DII_Collocation_Tests/twoway/run_test.pl: !ST !MINIMUM !CORBA_E_COMPAC
 TAO/tests/Compression/run_test.pl: ZLIB !LabVIEW_RT !WinCE
 TAO/tests/Collocated_Forwarding/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LabVIEW_RT !WinCE
 TAO/tests/ZIOP/run_test.pl: ZIOP ZLIB !LabVIEW_RT !WinCE
-TAO/DevGuideExamples/BiDirectionalGIOP/run_test.pl: !MINIMUM !CORBA_E_MICRO !LabVIEW_RT !WinCE
+TAO/DevGuideExamples/BiDirectionalGIOP/run_test.pl: !MINIMUM !CORBA_E_MICRO
 TAO/DevGuideExamples/GettingStarted/run_test.pl: !LabVIEW_RT !WinCE
 TAO/DevGuideExamples/LocalObjects/Messenger/run_test.pl: !LabVIEW_RT !WinCE
 TAO/DevGuideExamples/LocalObjects/ServantLocator/run_test.pl: !MINIMUM !LabVIEW_RT !WinCE
@@ -382,5 +382,5 @@ TAO/DevGuideExamples/Multithreading/ThreadPerConnection/run_test.pl: !ST !LabVIE
 TAO/DevGuideExamples/Multithreading/ThreadPool/run_test.pl: !ST !MINIMUM !LabVIEW_RT !WinCE
 TAO/DevGuideExamples/ValueTypes/Messenger/run_test.pl: !MINIMUM !LabVIEW_RT !WinCE
 TAO/DevGuideExamples/ValueTypes/Bank/run_test.pl: !MINIMUM !LabVIEW_RT !WinCE
-TAO/DevGuideExamples/AMH/run_test.pl: !NO_MESSAGING !LabVIEW_RT !WinCE
+TAO/DevGuideExamples/AMH/run_test.pl: !NO_MESSAGING
 TAO/DevGuideExamples/AMH_AMI/run_test.pl: !NO_MESSAGING !LabVIEW_RT !WinCE
