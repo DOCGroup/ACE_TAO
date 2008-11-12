@@ -1,3 +1,8 @@
+Wed Nov 12 07:58:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DevGuideExamples/PortableInterceptors/PICurrent_NameService/PICurrent_NameService.mpc:
+          Fixed bug in this file
+
 Wed Nov 12 07:38:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/RTCORBA/RTCORBA.mpc:
