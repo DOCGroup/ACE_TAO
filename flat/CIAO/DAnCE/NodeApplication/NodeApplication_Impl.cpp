@@ -394,7 +394,7 @@ NodeApplication_Impl::configuration_complete_components ()
       catch (CORBA::Exception &ex)
         {
           DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::configuration_complete_components - "
-                        "Caught CORBA exception from ccm_actovate on component %s: %s\n",
+                        "Caught CORBA exception from ccm_activate on component %s: %s\n",
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
                         ex._info ().c_str ()));
           if (!error)
@@ -483,7 +483,7 @@ NodeApplication_Impl::start ()
       catch (CORBA::Exception &ex)
         {
           DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::start - "
-                        "Caught CORBA exception from ccm_actovate on component %s: %s\n",
+                        "Caught CORBA exception from ccm_activate on component %s: %s\n",
                         this->plan_.instance[this->instances_[k]->idd_idx].name.in (),
                         ex._info ().c_str ()));
           if (!error)
