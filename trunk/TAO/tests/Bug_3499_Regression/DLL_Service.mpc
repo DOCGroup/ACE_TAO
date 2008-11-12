@@ -24,7 +24,7 @@ project (Bug_3499_Regression_ACE_DLL_Service) : acelib {
   }
 }
 
-project (Bug_3499_Regression_ACE_DLL_TAO_Service) : portableserver, taolib {
+project (Bug3499Reg_ACE_DLL_TAO_Service) : portableserver, taolib {
   sharedname = Bug_3499_Regression_ACE_DLL_TAO_Service
 
   dynamicflags += ACE_DLL_TAO_SERVICE_BUILD_DLL
