@@ -1,3 +1,8 @@
+Wed Nov 12 20:14:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Policies/run_test.pl:
+          Fixed bug in this file
+
 Wed Nov 12 16:12:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Bug_3499_Regression/DLL_Service.mpc:
