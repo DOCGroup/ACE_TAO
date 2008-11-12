@@ -1,3 +1,9 @@
+Wed Nov 12 09:31:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Process.pm:
+          If ACE_RUNTEST_DELAY is not set, default the wait delay factor
+          to 1
+
 Wed Nov 12 09:01:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/TestTarget_WinCE.pm:
