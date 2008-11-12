@@ -217,7 +217,7 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
 
       ACE_Process_Options options;
       options.command_line (cmdline_format,
-                            argv[0],
+                            argc > 0 ? argv[0] : ACE_TEXT ("Process_Manual_Event_Test"),
                             iterations);
       // Spawn a child process that will contend for the
       // lock.
