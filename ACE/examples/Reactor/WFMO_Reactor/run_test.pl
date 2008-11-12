@@ -37,7 +37,7 @@ if ($^O ne "MSWin32")
      "Window_Messages",
      );
 
-my $target = PerlACE::TestTarget::create_target (1);
+my $target = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";;
 $test_timeout = 60 + $target->ProcessStartWaitInterval();
 
 for $test (@tests)
