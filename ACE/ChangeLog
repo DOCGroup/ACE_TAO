@@ -1,3 +1,14 @@
+Wed Nov 12 19:06:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget.pm:
+          Added RandomPort
+
+        * protocols/tests/HTBP/ping/run_test.pl:
+        * protocols/tests/HTBP/Reactor_Tests/run_test.pl:
+        * protocols/tests/HTBP/Send_Large_Msg/run_test.pl:
+        * protocols/tests/HTBP/Send_Recv_Tests/run_test.pl:
+          Use TestTarget->RandomPort
+
 Wed Nov 12 19:00:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dirent_Test.cpp:

@@ -221,6 +221,12 @@ sub ExeSubDir ($)
     return $self->{EXE_SUBDIR};
 }
 
+sub RandomPort ($)
+{
+    my $self = shift;
+    return (int(rand($$)) % 22766) + 10002;
+}
+
 sub ProcessStartWaitInterval ($)
 {
     my $self = shift;
