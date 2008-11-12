@@ -1342,6 +1342,17 @@ sub check_for_bad_run_test ()
             print "Looking at file $file\n" if $opt_d;
 
             while (<FILE>) {
+                # The following directories are not updated yet to the
+                # new test framework
+                if (($file =~ /(TAO)*.*tests/i)             ||
+                    ($file =~ /(TAO)*.*DevGuideExamples/i)  ||
+                    ($file =~ /(TAO)*.*examples/i)          ||
+                    ($file =~ /(TAO)*.*tools/i)             ||
+                    ($file =~ /(TAO)*.*performance-tests/i) ||
+                    ($file =~ /(CIAO)*.*/i)                 ||
+                    ($file =~ /(TAO)*.*examples/i)) {
+                   next ITERATION;
+                }
 
                 if (m/PerlACE/ || m/ACEutils/) {
                     $is_run_test = 1;
@@ -1364,6 +1375,22 @@ sub check_for_bad_run_test ()
                         print_error ("$file:$.: using \$EXE_EXT");
                     }
 
+                    if (m/\$PerlACE::wait_interval_for_process_creation/) {
+                        print_error ("$file:$.: using \$PerlACE::wait_interval_for_process_creation");
+                    }
+
+                    if (m/\$PerlACE::waitforfile_timed/) {
+                        print_error ("$file:$.: using \$PerlACE::waitforfile_timed");
+                    }
+
+                    if (m/PerlACE::Process/) {
+                        print_error ("$file:$.: using PerlACE::Process");
+                    }
+
+                    if (m/unlink/) {
+                        print_error ("$file:$.: using unlink");
+                    }
+
                     if (m/\$DIR_SEPARATOR/) {
                         print_error ("$file:$.: using \$DIR_SEPARATOR");
                     }
@@ -1377,10 +1404,6 @@ sub check_for_bad_run_test ()
 
                     if (m/Process\:\:Create/) {
                         print_error ("$file:$.: using Process::Create");
-                    }
-
-                    if ((m/\.ior/ || m/\.conf/) && !m/LocalFile/) {
-                        print_error ("$file:$.: Not using PerlACE::LocalFile");
                     }
 
                     if (m/^  [^ ]/) {
@@ -1963,7 +1986,7 @@ check_for_pre_and_post () if ($opt_l >= 4);
 check_for_push_and_pop () if ($opt_l >= 4);
 check_for_versioned_namespace_begin_end () if ($opt_l >= 4);
 check_for_mismatched_filename () if ($opt_l >= 2);
-check_for_bad_run_test () if ($opt_l >= 6);
+check_for_bad_run_test () if ($opt_l >= 5);
 check_for_absolute_ace_wrappers () if ($opt_l >= 3);
 check_for_bad_ace_trace () if ($opt_l >= 4);
 check_for_changelog_errors () if ($opt_l >= 4);
