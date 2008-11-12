@@ -43,7 +43,7 @@ if (PerlACE::waitforfile_timed ($middle_ior, $PerlACE::wait_interval_for_process
 $C = new PerlACE::Process("client");
 $C->Spawn();
 
-$CRET = $C->WaitKill(25);
+$CRET = $C->WaitKill(45);
 $IS->Kill();
 $MS->Kill();
 

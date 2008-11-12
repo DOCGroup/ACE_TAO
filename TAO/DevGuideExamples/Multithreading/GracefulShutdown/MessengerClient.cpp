@@ -2,7 +2,6 @@
 
 #include "MessengerC.h"
 #include "ace/Get_Opt.h"
-#include "ace/Argv_Type_Converter.h"
 #include <iostream>
 
 int call_shutdown = 0;
@@ -36,9 +35,7 @@ int ACE_TMAIN( int argc, ACE_TCHAR* argv[] )
 {
   try {
     // Initialize the ORB.
-    ACE_Argv_Type_Converter conv(argc, argv);
-    CORBA::ORB_var orb = CORBA::ORB_init(conv.get_argc(),
-                                         conv.get_TCHAR_argv());
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
     // Parse arguments.
     if (parse_args (argc, argv) != 0)

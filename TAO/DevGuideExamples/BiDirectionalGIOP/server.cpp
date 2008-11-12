@@ -6,7 +6,6 @@
 #include "callbackC.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Argv_Type_Converter.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include <iostream>
 #include <fstream>
@@ -42,15 +41,13 @@ parse_args(int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args(argc, argv) != 0) {
-    return 1;
-  }
-
   try
   {
-    ACE_Argv_Type_Converter conv(argc, argv);
-    CORBA::ORB_var orb = CORBA::ORB_init(conv.get_argc(),
-                                         conv.get_TCHAR_argv(), "");
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+
+    if (parse_args(argc, argv) != 0) {
+      return 1;
+    }
 
     // Create a bidirectional POA
     CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
