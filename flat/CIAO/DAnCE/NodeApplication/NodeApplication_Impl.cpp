@@ -583,8 +583,19 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
       DANCE_DEBUG ((LM_INFO, DLINFO  "NodeApplication_Impl::install_home - "
                     "Home '%s' on node '%s' successfully installed\n",
                     idd.name.in (), idd.node.in ()));
-
+      
       inst.ref = CORBA::Object::_narrow (home);
+
+      DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::install_home - "
+                    "Populating attributes for home %s\n",
+                    idd.name.in ()));
+      
+                                                        
+      ComponentAttributesSetter::SetComponentAttributes (idd.name.in (),
+                                                         inst.ref.in (),
+                                                         idd.configProperty,
+                                                         this->orb_.in ());
+      
       inst.state = eInstalled;
     }
   catch (Components::InvalidConfiguration &)
@@ -716,12 +727,19 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
 	}
 
       inst.ref = CORBA::Object::_narrow (ccm_obj.in ());
-      inst.state = eInstalled;
-      
       DANCE_DEBUG ((LM_INFO, DLINFO  "NodeApplication_Impl::install_homed_component - "
                     "Component %s successfully installed in home %s\n",
                     idd.name.in (),
                     home_id));
+      
+      DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::install_home - "
+                    "Populating attributes for component %s\n",
+                    idd.name.in ()));
+      ComponentAttributesSetter::SetComponentAttributes (idd.name.in (),
+                                                        inst.ref.in (),
+                                                        idd.configProperty,
+                                                        this->orb_.in ());
+      inst.state = eInstalled;      
     }
   catch (Components::CreateFailure &)
     {
