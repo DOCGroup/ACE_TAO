@@ -12,7 +12,7 @@ public:
 
   virtual ~ACE_DLL_TAO_Service (void);
 
-  virtual int init (int argc, char * argv []);
+  virtual int init (int argc, ACE_TCHAR * argv []);
 
   virtual int fini (void);
 

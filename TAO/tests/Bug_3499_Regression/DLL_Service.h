@@ -10,7 +10,7 @@ public:
 
   virtual ~ACE_DLL_Service (void);
 
-  virtual int init (int argc, char * argv []);
+  virtual int init (int , ACE_TCHAR * []);
 
   virtual int fini (void);
 
