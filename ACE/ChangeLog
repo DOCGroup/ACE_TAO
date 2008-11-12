@@ -1,3 +1,25 @@
+Wed Nov 12 15:57:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_main.cpp:
+          Make sure there is a space between the executable name and
+          the original arguments with WinCE
+
+Wed Nov 12 15:38:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Cached_Accept_Conn_Test.cpp:
+          Added %T to the iteration debug message
+
+        * tests/MEM_Stream_Test.cpp:
+        * tests/Pipe_Test.cpp:
+        * tests/Process_Manager_Test.cpp:
+        * tests/Process_Manual_Event_Test.cpp:
+        * tests/Process_Mutex_Test.cpp:
+        * tests/RW_Process_Mutex_Test.cpp:
+        * tests/SOCK_Dgram_Bcast_Test.cpp:
+          If argc > 0 use argv[0] as program name, else use a hardcoded
+          string. This way this test runs on any platform including WinCE
+          (where argv[0] has a full path) and VxWorks (where argc = 0)
+
 Wed Nov 12 15:21:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/MEM_Stream_Test.cpp:
