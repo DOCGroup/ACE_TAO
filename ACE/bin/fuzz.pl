@@ -1334,7 +1334,7 @@ sub check_for_mismatched_filename ()
 sub check_for_bad_run_test ()
 {
     print "Running run_test.pl test\n";
-    foreach $file (@files_pl) {
+    ITERATION: foreach $file (@files_pl) {
         if (open (FILE, $file)) {
             my $is_run_test = 0;
             my $sub = 0;
