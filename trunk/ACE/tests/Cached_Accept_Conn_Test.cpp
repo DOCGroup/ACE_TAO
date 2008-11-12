@@ -295,7 +295,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
   for (int i = 1; i <= iterations; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("iteration %d\n"),
+                  ACE_TEXT ("%T iteration %d\n"),
                   i));
 
       // Connect strategy is required by the <out_of_sockets_handler>.
