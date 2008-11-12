@@ -1,3 +1,8 @@
+Wed Nov 12 19:00:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dirent_Test.cpp:
+          Unicode fix
+
 Wed Nov 12 18:40:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-WinCE.h:
