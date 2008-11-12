@@ -444,7 +444,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 #endif /* !ACE_WIN32 && _ACE_USE_SV_SEM */
       reset_handler (NUMBER_OF_MT_CONNECTIONS);
 
-      test_concurrent (ACE_TEXT ("MEM_Stream_Test"), server_addr);
+      test_concurrent (argv[0], server_addr);
 
       ACE_END_TEST;
       return 0;
