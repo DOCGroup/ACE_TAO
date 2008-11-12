@@ -1,3 +1,20 @@
+Wed Nov 12 18:40:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          Added ACE_LACKS_REGNOTIFYCHANGEKEYVALUE
+
+        * examples/Reactor/WFMO_Reactor/WFMO_Reactor.mpc:
+          Build all these examples with Windows CE
+
+        * examples/Reactor/WFMO_Reactor/run_test.pl:
+          Check if target got created
+
+        * examples/Reactor/WFMO_Reactor/APC.cpp:
+        * examples/Reactor/WFMO_Reactor/Registry_Changes.cpp:
+          Made these compiling with Windows CE. It are nothing more then
+          empty tests at that moment, but that way we don't get false
+          negatives
+
 Wed Nov 12 16:04:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * config-WinCE.h:
