@@ -179,6 +179,10 @@ sub GetConfigSettings ($)
     } else {
         $self->{TELNET_PORT} = 23;
     }
+    $env_name = $env_prefix.'HOST_ROOT';
+    if (exists $ENV{$env_name}) {
+        $self->{HOST_ROOT} = $ENV{$env_name};
+    }
 }
 
 ##################################################################
