@@ -10,6 +10,8 @@ use PerlACE::TestTarget;
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
+$threads = '10';
+
 $SV = $server->CreateProcess ("Manipulation", "-n $threads");
 
 $test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
