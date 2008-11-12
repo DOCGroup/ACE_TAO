@@ -143,7 +143,7 @@ sub WaitForFileTimed ($)
     }
     my $newfile = $self->{HOST_ROOT} . "/" . $cwdrel . "/" . $file;
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-      print STDERR "WinCE waits for $newfile\n";
+      print STDERR "WinCE waits for $newfile timeout $timeout\n";
     }
     return PerlACE::waitforfile_timed ($newfile, $timeout);
 }
