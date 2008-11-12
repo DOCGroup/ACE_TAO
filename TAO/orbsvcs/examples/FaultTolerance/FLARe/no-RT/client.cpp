@@ -14,15 +14,9 @@
 #include "ace/Array_Base.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/Barrier.h"
 #include "ace/Event.h"
 
-#include "tao/ORB_Core.h"
-#include "tao/debug.h"
-#include "tao/ORBInitializer_Registry.h"
-
-#include "orbsvcs/orbsvcs/LWFT/ForwardingAgent.h"
-#include "orbsvcs/orbsvcs/LWFT/Client_ORBInitializer.h"
+#include "orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.h"
 
 #include "testC.h"
 
@@ -43,7 +37,6 @@ static ACE_hrtime_t test_start;
 static CORBA::ULong prime_number = 9619;
 static int count_missed_end_deadlines = 0;
 const char *agent_ior_file = "agent.ior";
-const char *rm_ior = "file://rm.ior";
 std::vector <int> sample_vector (3100);
 size_t count = 0;
 const char *dummy_file_name = "temp1";
@@ -107,10 +100,10 @@ get_values (const char *test_type,
       values[i] = ACE_OS::strtoul (working_string, &endptr, 10);
 
       if (endptr != working_string && endptr != 0 && *endptr != '\0')
-	{
-	  result = 0;
+	      {
+	        result = 0;
           break;
-	}
+	      }
 
       working_string += ACE_OS::strlen (working_string);
       working_string += 1;
@@ -136,70 +129,6 @@ get_values (const char *test_type,
   return 0;
 }
 
-class Agent_Thread : public ACE_Task_Base
-{
-public:
-  Agent_Thread (CORBA::ORB_ptr orb,
-                ForwardingAgent_i *agent,
-                ACE_Barrier *barrier);
-
-  virtual int svc (void);
-
-private:
-  CORBA::ORB_ptr orb_;
-
-  ForwardingAgent_i *agent_;
-
-  ACE_Barrier *synchronizer_;
-};
-
-Agent_Thread::Agent_Thread (CORBA::ORB_ptr orb,
-                            ForwardingAgent_i *agent,
-                            ACE_Barrier *thread_barrier)
-  : orb_ (orb), 
-    agent_ (agent), 
-    synchronizer_ (thread_barrier)
-{
-}
-
-int
-Agent_Thread::svc (void)
-{
-  try
-    {
-      CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references ("RootPOA");
-
-      if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
-
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ());
-
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager ();
-      poa_manager->activate ();
-
-      CORBA::Object_var tmp = this->orb_->string_to_object(rm_ior);
-      ReplicationManager_var rm =
-        ReplicationManager::_narrow (tmp.in ());
-
-      agent_->initialize (rm.in ());
-
-      this->synchronizer_->wait ();
-    }
-  catch (const CORBA::Exception& ex)
-    {
-      ex._tao_print_exception ("Exception caught:");
-      return 1;
-    }
-    
-  return 0;
-}
-
-
 struct Synchronizers
 {
   Synchronizers (void)
@@ -220,7 +149,7 @@ int
 parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv,
-                      "c:e:g:hi:k:m:q:r:t:v:w:x:z:a:" //client options
+                        "c:e:g:hi:k:m:q:r:t:v:w:x:z:a:" //client options
                         "b:f:hl:n:o:s:" // server options
                         );
   int c;
@@ -513,8 +442,7 @@ max_throughput (test_ptr test,
   return 0;
 }
 
-class Paced_Worker :
-  public ACE_Task_Base
+class Paced_Worker : public ACE_Task_Base
 {
 public:
   Paced_Worker (ACE_Thread_Manager &thread_manager,
@@ -778,8 +706,7 @@ Paced_Worker::svc (void)
   return 0;
 }
 
-class Continuous_Worker :
-  public ACE_Task_Base
+class Continuous_Worker : public ACE_Task_Base
 {
 public:
   Continuous_Worker (ACE_Thread_Manager &thread_manager,
@@ -932,14 +859,12 @@ Continuous_Worker::svc (void)
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
   int svc (void);
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
@@ -971,8 +896,11 @@ Task::svc (void)
                     "rates",
                     rates,
                     1);
+                    
       if (result != 0)
-        return result;
+        {
+          return result;
+        }
 
       synchronizers.number_of_workers_ =
         rates.size ();// + continuous_workers;
@@ -1007,17 +935,17 @@ Task::svc (void)
         THR_JOINABLE |
         this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
 
-      for (i = 0;
-           i < rates.size ();
-           ++i)
+      for (i = 0; i < rates.size (); ++i)
         {
-	  result =
-	    paced_workers[i]->activate (flags);
-	  
-	  if (result != 0)
-	    ACE_ERROR_RETURN ((LM_ERROR,
-			       "Paced_Worker::activate failed\n"),
-			      result);
+	        result =
+	          paced_workers[i]->activate (flags);
+      	  
+	        if (result != 0)
+	          {
+	            ACE_ERROR_RETURN ((LM_ERROR,
+			                           "Paced_Worker::activate failed\n"),
+			                           result);
+			      }
         }
 
       if (rates.size () != 0)
@@ -1025,12 +953,11 @@ Task::svc (void)
           paced_workers_manager.wait ();
         }
 
-      for (i = 0;
-           i < rates.size ();
-           ++i)
+      for (i = 0; i < rates.size (); ++i)
         {
           delete paced_workers[i];
         }
+        
       delete[] paced_workers;
 
       if (shutdown_server)
@@ -1040,7 +967,7 @@ Task::svc (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception caught:");
+      ex._tao_print_exception ("Task::svc - exception caught:");
       return -1;
     }
 
@@ -1051,50 +978,23 @@ int
 main (int argc, char *argv[])
 {
   try
-    {
+    {  
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+
+      int result = parse_args (argc, argv);
       
-      ForwardingAgent_i *agent;
-      ACE_NEW_RETURN (agent,
-                      ForwardingAgent_i (),
-                      1);
-      PortableServer::ServantBase_var owner_transfer (agent);
-
-      // ******************************************************
-
-      // ******************************************************
-      // register request interceptor
-
-      
-      PortableInterceptor::ORBInitializer_ptr temp_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
-
-      ACE_NEW_RETURN (temp_initializer,
-                      Client_ORBInitializer (agent),
-                      -1);  // No exceptions yet!
-      PortableInterceptor::ORBInitializer_var orb_initializer =
-        temp_initializer;
-
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
-      
-
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
-
-      int result =
-        parse_args (argc, argv);
       if (result != 0)
-        return result;
+        {
+          return result;
+        }
 
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;
 
-      ACE_Barrier thread_barrier (2);
-
-      Agent_Thread agent_thread (orb.in (), agent, &thread_barrier);
+      ForwardingAgent_Thread agent_thread (orb.in ());
 
       // Create task.
-      Task task (thread_manager,
-                 orb.in ());
+      Task task (thread_manager, orb.in ());
 
       // Task activation flags.
       long flags =
@@ -1105,24 +1005,23 @@ main (int argc, char *argv[])
       if (agent_thread.activate (flags, 1, 0, 0) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                            "Cannot activate agent thread\n"), -1);
+                             "Cannot activate agent thread\n"),
+                            -1);
         }
 
       // Activate task.
-      result =
-        task.activate (flags);
+      result = task.activate (flags);
                        
       ACE_ASSERT (result != -1);
       ACE_UNUSED_ARG (result);
 
       // Wait for task to exit.
-      result =
-        thread_manager.wait ();
+      result = thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception caught:");
+      ex._tao_print_exception ("client - exception caught:");
       return -1;
     }
 
