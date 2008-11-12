@@ -95,7 +95,8 @@ namespace DAnCE
       eRemoved,
       eInvalidState
     };
-
+    
+      
   protected:
     //TODO Add throw specification
     void init();

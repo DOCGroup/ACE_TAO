@@ -13,5 +13,7 @@ module DAnCE
   const string COMPONENT_FACTORY = "component factory";
   const string EXPLICIT_HOME = "edu.vanderbilt.dre.DAnCE.ExplicitHome";
   const string STANDALONE_NM = "edu.vanderbilt.dre.DAnCE.StandaloneNM";
+  const string REGISTER_NAMING = "edu.vanderbilt.dre.DAnCE.RegisterNaming";
+  const string REGISTER_PORT_NAMING = "edu.vanderbilt.dre.DAnCE.RegisterPortNaming";
 };
 

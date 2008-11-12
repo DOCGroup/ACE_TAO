@@ -181,6 +181,25 @@
     </configProperty>
   </instance>
   
+  <instance xmi:id="SimpleUserComponentInstanceReverse">
+    <name>SimpleUserComponentReverse</name>
+    <node>Node</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SimpleUserComponentImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleUserHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  
   <connection>
     <name>TestConnection</name>
     <internalEndpoint>
@@ -194,6 +213,22 @@
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="SimpleUserComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>TestConnectionReverse</name>
+    <internalEndpoint>
+      <portName>trig</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SimpleUserComponentInstanceReverse" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>trig</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SimpleProviderComponentInstance" />
     </internalEndpoint>
   </connection>
 
