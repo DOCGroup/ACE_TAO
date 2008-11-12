@@ -21,7 +21,7 @@
 
 #include "ace/OS_main.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
 #include "ace/Reactor.h"
 #include "ace/Auto_Event.h"
