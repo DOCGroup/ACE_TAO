@@ -1,3 +1,10 @@
+Wed Nov 12 13:10:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Bug_3499_Regression/DLL_Service.h:
+        * tests/Bug_3499_Regression/DLL_TAO_Service.h:
+
+          Fixed the Fuzz errors.
+
 Wed Nov 12 11:11:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.cpp:
