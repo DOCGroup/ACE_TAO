@@ -70,14 +70,8 @@ rename_test (void)
 #else
   ACE_TCHAR old_file[MAXPATHLEN];
   ACE_TCHAR new_file[MAXPATHLEN];
-#if defined (TEST_DIR)
-  ACE_OS::strcpy (old_file, TEST_DIR);
-  ACE_OS::strcat (old_file, ACE_DIRECTORY_SEPARATOR_STR);
-  ACE_OS::strcpy (new_file, TEST_DIR);
-  ACE_OS::strcat (new_file, ACE_DIRECTORY_SEPARATOR_STR);
-#endif
-  ACE_OS::strcat (old_file, ACE_TEXT ("rename_test_old"));
-  ACE_OS::strcat (new_file, ACE_TEXT ("rename_test_new"));
+  ACE_OS::strcpy (old_file, ACE_TEXT ("rename_test_old"));
+  ACE_OS::strcpy (new_file, ACE_TEXT ("rename_test_new"));
 
   // Test 1. Rename old to new when new already exists.
   // To set up, create two files, old and new. Both get opened and truncated
