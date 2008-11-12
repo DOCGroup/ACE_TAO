@@ -1,20 +1,41 @@
+Wed Nov 12 19:30:30 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/ComponentAttributesSetter.h:
+        * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+           
+          Changes  necessary to support attribiute initialization. 
+        
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute.cidl:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute.idl:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute.mpc:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute_exec.h:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute_exec.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute_exec_export.h:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute_stub_export.h:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute_svnt_export.h:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/SimpleAttributeExplicitHome.cdp:
+
+          Test that excercises the setting of attributes on homes and components
+          during deployment. 
+        
 Wed Nov 12 18:06:10 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/DAnCE_Properties.idl:
-        
-          Added naming service integration properties. 
-        
+
+          Added naming service integration properties.
+
         * DAnCE/NodeApplication/NodeApplication_Impl.h:
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
         * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleUser_exec.cpp:
         * DAnCE/tests/CIAO/NodeManager-Deployments/SimplexConnectionExplicitHome.cdp:
-        
-          Changes necessary to get simplex facet/receptacle connections working. 
-        
+
+          Changes necessary to get simplex facet/receptacle connections working.
+
         * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
-        
-          Removed some extra output. 
-        
+
+          Removed some extra output.
+
 Wed Nov 12 17:14:28 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
