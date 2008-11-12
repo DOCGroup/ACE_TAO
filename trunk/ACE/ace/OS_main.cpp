@@ -117,6 +117,7 @@ int ACE_Main_Base::run (HINSTANCE,
   if (ACE_TEXT_GetModuleFileName (0, msg_file, MAXPATHLEN))
     {
       ACE_OS::strcpy (cmdline, msg_file);
+      ACE_OS::strcpy (cmdline, ACE_TEXT (" "));
     }
   else
     {
