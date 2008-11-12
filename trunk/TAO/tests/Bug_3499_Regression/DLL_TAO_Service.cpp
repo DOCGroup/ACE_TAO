@@ -14,9 +14,9 @@ ACE_DLL_TAO_Service::~ACE_DLL_TAO_Service (void)
   ACE_DLL_TAO_SERVICE_TRACE (ACE_TEXT ("ACE_DLL_TAO_Service::~ACE_DLL_TAO_Service (void)"));
 }
 
-int ACE_DLL_TAO_Service::init (int argc, char * argv [])
+int ACE_DLL_TAO_Service::init (int argc, ACE_TCHAR * argv [])
 {
-  ACE_DLL_TAO_SERVICE_TRACE (ACE_TEXT ("ACE_DLL_TAO_Service::init (int, char * [])"));
+  ACE_DLL_TAO_SERVICE_TRACE (ACE_TEXT ("ACE_DLL_TAO_Service::init (int, ACE_TCHAR * [])"));
 
   try
   {

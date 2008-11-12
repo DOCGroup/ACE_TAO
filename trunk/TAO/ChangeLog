@@ -1,3 +1,21 @@
+Wed Nov 12 11:11:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.cpp:
+          Added support for -ORBGestalt CURRENT. This fixes bugzilla 3499,
+          thanks to James Hill for reporting this
+
+        * tao/Strategies/SCIOP_Endpoint.cpp:
+          Unicode fix
+
+        * tests/Bug_3499_Regression/DLL_Service.mpc:
+          Layout change
+
+        * tests/Bug_3499_Regression/DLL_Service.cpp:
+        * tests/Bug_3499_Regression/DLL_Service.h:
+        * tests/Bug_3499_Regression/DLL_TAO_Service.cpp:
+        * tests/Bug_3499_Regression/DLL_TAO_Service.h:
+          Use ACE_TCHAR
+
 Wed Nov 12 10:49:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/AMH/MessengerClient.cpp:

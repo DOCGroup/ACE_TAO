@@ -12,7 +12,7 @@ ACE_DLL_Service::~ACE_DLL_Service (void)
 
 }
 
-int ACE_DLL_Service::init (int argc, char * argv [])
+int ACE_DLL_Service::init (int, ACE_TCHAR *[])
 {
   return 0;
 }
