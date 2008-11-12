@@ -23,7 +23,7 @@ DomainApplicationManager_Impl::DomainApplicationManager_Impl (CORBA::ORB_ptr orb
 
 DomainApplicationManager_Impl::~DomainApplicationManager_Impl()
 {
-  DANCE_TRACE(DLINFO "DomainApplicationManager_Impl::~DomainApplicationManager_Impl()");
+  DANCE_TRACE( "DomainApplicationManager_Impl::~DomainApplicationManager_Impl()");
 
   DANCE_DEBUG ((LM_DEBUG, DLINFO "DomainApplicationManager_Impl::~DomainApplicationManager_Impl - "
                 "Destroying %u applications\n", this->running_app_.size()));
@@ -57,7 +57,7 @@ Deployment::Application_ptr
 DomainApplicationManager_Impl::startLaunch (const Deployment::Properties & configProperty,
                                             Deployment::Connections_out providedReference)
 {
-  DANCE_TRACE(DLINFO "DomainApplicationManager_impl::startLaunch");
+  DANCE_TRACE( "DomainApplicationManager_impl::startLaunch");
 
   ::Deployment::Connections_var connections;
   ACE_NEW_THROW_EX (connections,
@@ -424,7 +424,7 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
 void
 DomainApplicationManager_Impl::preparePlan()
 {
-  DANCE_TRACE (DLINFO "DomainApplicationManager_Impl::preparePlan()");
+  DANCE_TRACE ("DomainApplicationManager_Impl::preparePlan()");
   
   try
     {

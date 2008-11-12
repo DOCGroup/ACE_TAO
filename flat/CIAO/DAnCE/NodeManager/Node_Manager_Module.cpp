@@ -549,7 +549,7 @@ DAnCE_NodeManager_Module::create_poas (void)
   try
     {
       DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_poas - "
-                    "DAnCE_NodeManager_Module::create_object - "
+                    "DAnCE_NodeManager_Module::create_poas - "
                     "Creating the \"Managers\" POA.\n"));
 
       policies[0] = this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID);
