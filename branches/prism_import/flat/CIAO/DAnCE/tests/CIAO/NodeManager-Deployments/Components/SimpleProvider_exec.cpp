@@ -45,7 +45,7 @@ namespace CIDL_SimpleProvider_Impl
   {
     CIAO_TRACE ("Trigger_exec_i::hello ()");
     // Your code here.
-    CIAO_DEBUG ((LM_NOTICE, CLINFO "Trigger_exec_i::hello - "
+    CIAO_DEBUG ((LM_EMERGENCY, CLINFO "Trigger_exec_i::hello - "
                  "Got the following intofrmation from trig port: %s\n",
                  hello));
   }
