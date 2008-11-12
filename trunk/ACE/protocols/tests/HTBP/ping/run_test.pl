@@ -9,11 +9,11 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
 $status = 0;
-$port = PerlACE::random_port();
 $synchbase = "ready";
 my $target1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $target2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 $synchfile = $target1->LocalFile ("$synchbase");
+my $port = $target1->RandomPort ();
 my $host = $target1->HostName();
 
 print "port = $port\n";
