@@ -43,7 +43,7 @@ void
 ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/,
                                                    ::CORBA::Object_ptr obj,
                                                    const Deployment::Properties& prop,
-                                                   CORBA::ORB_ptr orb)
+                                                   CORBA::ORB_ptr )
 {
   DANCE_TRACE ("ComponentAttributesSetter::SetComponentAttributes");
   
@@ -71,6 +71,13 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
           req->invoke();
           CORBA::release (req);
         }
+      catch (const CORBA::BAD_OPERATION &e)
+        {
+          DANCE_ERROR ((LM_WARNING, DLINFO
+                        "ComponentAttributesSetter::SetComponentAttributes - "
+                        "Caught BAD_OPERATION while trying to set attribute %s\n",
+                        name.c_str ()));
+        }
       catch (const CORBA::Exception &e)
         {
           CORBA::release (req);
@@ -79,5 +86,4 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
         }
       //Question - How exceptions will be processed, rised by invoked method
     }
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] ComponentAttributesSetter::SetComponentAttributes - finished\n"));
 }
