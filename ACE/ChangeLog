@@ -1,3 +1,9 @@
+Wed Nov 12 08:47:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          Added HOST_ROOT and more WinCE path tweaks
+
 Wed Nov 12 08:27:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/Process_Win32.pm:

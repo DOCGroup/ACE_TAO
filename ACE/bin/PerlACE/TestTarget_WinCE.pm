@@ -74,6 +74,9 @@ sub new
     if (!defined $telnet_port)  {
       $telnet_port = 23;
     }
+    if (!defined $self->{HOST_ROOT})  {
+      $self->{HOST_ROOT} = $self->{FSROOT};
+    }
 
     $PerlACE::ProcessVX::ExeExt = '.exe';
 
@@ -96,7 +99,7 @@ sub LocalFile {
     else {
         $cwdrel = File::Spec->abs2rel( $cwdrel, $prjroot );
     }
-    my $newfile = $self->{FSROOT} . "/" . $cwdrel . "/" . $file;
+    my $newfile = $self->{HOST_ROOT} . "/" . $cwdrel . "/" . $file;
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print STDERR "WinCE LocalFile for $file is $newfile\n";
     }
