@@ -1,3 +1,8 @@
+Wed Nov 12 07:47:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/README:
+          Updated
+
 Tue Nov 11 22:22:04 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_NS_sys_mman.inl (mmap): Added a fix for a problem where

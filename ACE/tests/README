@@ -21,20 +21,13 @@ $ACE_ROOT/tests:
 
 2.  Add new project entry to the tests.mpc file.
 
-3.  Add test to Makefile. *
+3.  Add test to run_test.lst.
 
-4.  Add a new MS project file, e.g., <test>.dsp, then add and entry for 
-    it to the tests.dsw file. *
-
-5.  Add test to run_test.lst.
-
-* Steps 3 and 4 will go away once the mpc architecture is fully integrated,
-  since the Makefile and project files can be created on-the-fly by mpc.
 ________________________________________
 
 
 The tests have been run on a wide range of platforms (e.g., UNIX,
-pSOS, VxWorks, LynxOS, Windows NT/2000/95/98/etc.) and they all work
+VxWorks, LynxOS, Windows NT/2000/95/98/etc.) and they all work
 with the following exceptions:
 
 1. UPIPE_Test and SPIPE_Test on Windows 95: these tests don't run on
@@ -50,9 +43,6 @@ with the following exceptions:
    These are being debugged and will either be corrected or, if there
    are unsupported features in these tests, removed from the test suite for
    pSOSim.
-
-4. The set of tests for pSOSim will be expanded to include those that require
-   multiple threads, with the release of the multi-threaded port to pSOSim.
 
 Notes:
 
@@ -79,4 +69,4 @@ Notes:
    and Win32clerk.conf).
 
 If you have any questions/suggestions, please send email to
-ace-users@cs.wustl.edu.
+ace-users@list.isis.vanderbilt.edu.
