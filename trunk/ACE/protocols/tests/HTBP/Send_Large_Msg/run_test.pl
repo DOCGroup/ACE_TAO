@@ -13,7 +13,7 @@ $status = 0;
 $port = PerlACE::random_port();
 $synchbase = "ready";
 my $target1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $target2 = PerlACE::TestTarget::create_target (1) || die "Create target 2 failed\n";
+my $target2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 $synchfile = $target1->LocalFile ("$synchbase");
 my $host = $target1->HostName();
 
@@ -21,6 +21,8 @@ my $SV = $target1->CreateProcess("server", "-p $port -o $synchfile");
 my $CL = $target2->CreateProcess ("client", " -h $host -p $port");
 
 $target1->DeleteFile ($synchbase);
+$target2->DeleteFile ($synchbase);
+
 $SV->Spawn ();
 
 if ($target1->WaitForFileTimed ($synchbase,
@@ -48,5 +50,8 @@ if ($server != 0) {
 
 $target1->GetStderrLog();
 $target2->GetStderrLog();
+
+$target1->DeleteFile ($synchbase);
+$target2->DeleteFile ($synchbase);
 
 exit $status;
