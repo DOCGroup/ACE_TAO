@@ -29,7 +29,6 @@ class RMOptions
 ///   Singleton class for the program options.
 {
 public:
-
   /// Singleton access method.
   static RMOptions *instance (void);
 
@@ -39,15 +38,16 @@ public:
   bool proactive (void) const;
   double hertz (void) const;
   bool static_mode (void) const;
+  bool use_naming_service (void) const;
 
 protected:
-
   /// Constructor is protected to ensure Singleton access.
   RMOptions (void);
 
   double hertz_;
   bool proactive_;
   bool static_mode_;
+  bool use_naming_service_;
   ArgPair arg_pair_;
 
   /// Singleton instance.
@@ -55,6 +55,5 @@ protected:
   static ACE_Auto_Ptr<RMOptions> deleter_;
   static ACE_Thread_Mutex lock_;
 };
-
 
 #endif /* _RMOPTIONS_H */

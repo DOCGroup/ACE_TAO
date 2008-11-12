@@ -1,3 +1,15 @@
+Wed Nov 12 21:18:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.cpp:
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
+        * orbsvcs/LWFT_Service/RMOptions.h:
+        * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
+        * orbsvcs/LWFT_Service/RMOptions.cpp:
+        
+          Changes to allow the ReplicationManager to register
+          itself with the Naming Service, and to enable the
+          forwarding agent to resolve it the same way.
+
 Wed Nov 12 17:25:21 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Naming/Naming_Client.h:
