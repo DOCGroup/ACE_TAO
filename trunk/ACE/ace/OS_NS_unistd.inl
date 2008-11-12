@@ -195,7 +195,10 @@ ACE_INLINE ACE_HANDLE
 ACE_OS::dup (ACE_HANDLE handle)
 {
   ACE_OS_TRACE ("ACE_OS::dup");
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_LACKS_DUP)
+  ACE_UNUSED_ARG (handle);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
   ACE_HANDLE new_fd;
   if (::DuplicateHandle(::GetCurrentProcess (),
                         handle,
@@ -208,12 +211,6 @@ ACE_OS::dup (ACE_HANDLE handle)
   else
     ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
   /* NOTREACHED */
-#elif defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (handle);
-  ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_LACKS_DUP)
-  ACE_UNUSED_ARG (handle);
-  ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::dup (handle), ACE_HANDLE, ACE_INVALID_HANDLE);
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */

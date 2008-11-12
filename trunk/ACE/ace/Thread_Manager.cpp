@@ -628,9 +628,9 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   // @@ How are thread handles implemented on AIX?  Do they
   // also need to be duplicated?
   if (t_handle != 0)
-# if defined (ACE_HAS_WINCE)
+# if defined (ACE_LACKS_DUPLICATEHANDLE)
     *t_handle = thr_handle;
-# else  /* ! ACE_HAS_WINCE */
+# else  /* ! ACE_LACKS_DUP */
   (void) ::DuplicateHandle (::GetCurrentProcess (),
                             thr_handle,
                             ::GetCurrentProcess (),
@@ -638,7 +638,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                             0,
                             TRUE,
                             DUPLICATE_SAME_ACCESS);
-# endif /* ! ACE_HAS_WINCE */
+# endif /* ! ACE_LACKS_DUP */
 #else  /* ! ACE_HAS_WTHREADS */
   if (t_handle != 0)
     *t_handle = thr_handle;

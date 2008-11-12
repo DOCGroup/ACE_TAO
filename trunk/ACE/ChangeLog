@@ -1,3 +1,16 @@
+Wed Nov 12 19:25:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          WinCE 5 and earlier DuplicateHandle
+
+        * ace/OS_NS_unistd.inl (dup):
+          Use ACE_LACKS_DUP so that we don't have a special codeblock for
+          Windows CE
+
+        * ace/Thread_Manager.cpp:
+          Use ACE_LACKS_DUPLICATEHANDLE whether we can use DupliceHandle or
+          not
+
 Wed Nov 12 19:06:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/TestTarget.pm:
