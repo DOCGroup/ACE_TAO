@@ -24,6 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Config.h"
+#include "ace/Vector_T.h"
 #include "tao/Object_Loader.h"
 
 namespace DAnCE
@@ -43,6 +44,32 @@ class DAnCE_ExecutionManager_Module_Export DAnCE_ExecutionManager_Module
       : public TAO_Object_Loader
   {
   public:
+    struct SOptions
+      {
+        const char* exec_mgr_file_;
+        bool process_ns_;
+        const char* process_ns_file_;
+        bool create_plan_ns_;
+        const char* create_plan_ns_ior_;
+        bool rebind_plan_ns_;
+        const char* rebind_plan_ns_ior_;
+        bool port_indirection_;
+        ACE_Vector<ACE_CString> node_managers_;
+        bool ignore_failure_;
+
+        SOptions()
+            : exec_mgr_file_ (0)
+            , process_ns_ (false)
+            , process_ns_file_ (0)
+            , create_plan_ns_ (false)
+            , create_plan_ns_ior_ (0)
+            , rebind_plan_ns_ (false)
+            , rebind_plan_ns_ior_ (0)
+            , ignore_failure_ (false)
+        {
+        }
+    };
+
     /// Constructor.
     DAnCE_ExecutionManager_Module (void);
 
@@ -54,7 +81,11 @@ class DAnCE_ExecutionManager_Module_Export DAnCE_ExecutionManager_Module
     virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                              int argc,
                                              ACE_TCHAR *argv []);
-
+    
+    virtual bool parse_args (int argc,
+                             ACE_TCHAR *argv []);
+    
+    SOptions options_;
   private:
     /// Storage for ExecutionManager servant.
     DAnCE::ExecutionManager_Impl * em_impl_;

@@ -10,6 +10,8 @@
 #define DANCE_MODULE_MAIN_H_
 
 #include "ace/Auto_Ptr.h"
+#include "ace/Dynamic_Service.h"
+#include "tao/Object.h"
 #include "DAnCE/Logger/Log_Macros.h"
 #include "DAnCE/Logger/Logger_Service.h"
 
@@ -38,10 +40,12 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
         * dlf = ACE_Dynamic_Service<Logger_Service>::instance ("DAnCE_Logger_Backend_Factory");  
       
       if (!dlf)
-        dlf = new Logger_Service;
+        {
+          dlf = new Logger_Service;
+          logger.reset (dlf);
+        }
       
-      logger.reset (dlf);
-      logger->init (argc, argv);
+      dlf->init (argc, argv);
 
       DANCE_DEBUG ((LM_TRACE, DLINFO
                     "Module_main.h - initializing ORB\n"));
@@ -69,6 +73,9 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       
       if (!CORBA::is_nil (obj.in ()))
         orb->run ();
+      else
+        DANCE_ERROR ((LM_ERROR, DLINFO "Module_Main.h - "
+                      "Got nil object reference from Module\n"));
       
       DANCE_DEBUG ((LM_TRACE, DLINFO
                     "Module_Main.h - ORB event loop finished, exiting.\n"));

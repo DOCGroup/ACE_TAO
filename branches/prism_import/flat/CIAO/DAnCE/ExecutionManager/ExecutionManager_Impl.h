@@ -51,8 +51,7 @@ namespace DAnCE
 
       // This one derived from ExecutionManagerDaemon interface
       // for shutdowning DAnCE agent
-      virtual void shutdown (
-      )
+      virtual void shutdown ()
       {
         this->orb_->shutdown();
       };
