@@ -1,3 +1,8 @@
+Wed Nov 12 08:19:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          Extended path handling for WinCE
+
 Wed Nov 12 07:47:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/README:
