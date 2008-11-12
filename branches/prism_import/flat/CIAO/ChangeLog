@@ -1,9 +1,16 @@
+Wed Nov 12 21:26:14 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        
+          Log message fixes. 
+        
 Wed Nov 12 21:22:43 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Module_Main.h:
-        
-          Fix to prevent a segmentation fault. 
-        
+
+          Fix to prevent a segmentation fault.
+
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
         * DAnCE/ExecutionManager/ExecutionManager.mpc:
         * DAnCE/ExecutionManager/ExecutionManager_Impl.h:
@@ -11,20 +18,20 @@ Wed Nov 12 21:22:43 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/ExecutionManager/ExecutionManager_Module.h:
         * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
         * DAnCE/ExecutionManager/Execution_Manager_Exec.cpp:
-        
+
           Fixes to enable running EM as a standalone executable and enable
           EM driven deployments.
-        
+
         * DAnCE/NodeManager/Node_Manager_Module.cpp:
 
-          Minor log message fix. 
-        
+          Minor log message fix.
+
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimpleComponentExplicitHome.cdp:
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/em_launcher.mpc:
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp:
 
-          Text excercising EM controlled deployment of a single component to single node. 
-        
+          Text excercising EM controlled deployment of a single component to single node.
+
 Wed Nov 12 19:53:23 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/ExecutionManager-Deployments:
