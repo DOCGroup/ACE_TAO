@@ -274,7 +274,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
   for (int i = 1; i <= iterations; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("'%T iteration %d\n"),
+                  ACE_TEXT ("%T iteration %d\n"),
                   i));
 
       // If <listen_once> is false, one Acceptor is used for every

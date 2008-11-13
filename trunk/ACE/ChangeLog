@@ -1,3 +1,8 @@
+Thu Nov 13 08:07:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Cached_Conn_Test.cpp:
+          Layout change in debug statement
+
 Thu Nov 13 08:06:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/acetest.mpb:
