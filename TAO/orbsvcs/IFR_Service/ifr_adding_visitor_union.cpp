@@ -358,9 +358,21 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
                 node->local_name ()->get_string (),
                 node->version (),
                 this->ir_current_.in (),
-                this->members_
+                dummyMembers
               );
-         
+
+          if (be_global->ifr_scopes ().push (union_def.in ()) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
+                  ACE_TEXT ("visit_union -")
+                  ACE_TEXT (" scope push failed\n")
+                ),
+                -1
+              );
+            }
+
           // Then add the real union members (which corrupts ir_current_).
           if (this->add_members (node, union_def.in ()) == -1)
             {
@@ -370,8 +382,24 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
                 ACE_TEXT (" visit_scope failed\n")),
                -1);
             }
-           
+
           this->ir_current_ = CORBA::IDLType::_narrow (union_def.in ());
+
+          CORBA::Container_ptr used_scope =
+            CORBA::Container::_nil ();
+
+          // Pop the new IR object back off the scope stack.
+          if (be_global->ifr_scopes ().pop (used_scope) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
+                  ACE_TEXT ("visit_union -")
+                  ACE_TEXT (" scope pop failed\n")
+                ),
+                -1
+              );
+            }
         } // if (CORBA::is_nil (...))
       else
         {
@@ -382,6 +410,18 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
           union_def = CORBA::UnionDef::_narrow (prev_def.in ());
           union_def->discriminator_type_def (this->ir_current_.in ());
       
+          if (be_global->ifr_scopes ().push (union_def.in ()) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
+                  ACE_TEXT ("visit_union -")
+                  ACE_TEXT (" scope push failed\n")
+                ),
+                -1
+              );
+            }
+
           if (this->add_members (node, union_def.in ()) == -1)
             {
               ACE_ERROR_RETURN ((
@@ -393,6 +433,22 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
             }
            
           this->ir_current_ = CORBA::IDLType::_narrow (prev_def.in ());
+
+          CORBA::Container_ptr used_scope =
+            CORBA::Container::_nil ();
+
+          // Pop the new IR object back off the scope stack.
+          if (be_global->ifr_scopes ().pop (used_scope) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
+                  ACE_TEXT ("visit_union -")
+                  ACE_TEXT (" scope pop failed\n")
+                ),
+                -1
+              );
+            }
         }
     }
   catch (const CORBA::Exception& ex)

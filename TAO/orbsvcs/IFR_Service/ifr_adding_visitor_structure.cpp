@@ -160,6 +160,18 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
                 dummyMembers
               );
 
+          if (be_global->ifr_scopes ().push (struct_def.in ()) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
+                  ACE_TEXT ("visit_structure -")
+                  ACE_TEXT (" scope push failed\n")
+                ),
+                -1
+              );
+            }
+
           // Then add the real structure members (which corrupts ir_current_).
           if (this->add_members (node, struct_def.in ()) == -1)
             {
@@ -170,8 +182,24 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
                 ACE_TEXT (" visit_scope failed\n")),
                -1);
             }
-           
+
           this->ir_current_ = CORBA::IDLType::_narrow (struct_def.in ());
+
+          CORBA::Container_ptr used_scope =
+            CORBA::Container::_nil ();
+
+          // Pop the new IR object back off the scope stack.
+          if (be_global->ifr_scopes ().pop (used_scope) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
+                  ACE_TEXT ("visit_structure -")
+                  ACE_TEXT (" scope pop failed\n")
+                ),
+                -1
+              );
+            }
         } // if (CORBA::is_nil (...))
       else
         {
@@ -181,6 +209,18 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
           // Also we know node->ifr_fwd_added_ is true.
           struct_def = CORBA::StructDef::_narrow (prev_def.in ());
       
+          if (be_global->ifr_scopes ().push (struct_def.in ()) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
+                  ACE_TEXT ("visit_structure -")
+                  ACE_TEXT (" scope push failed\n")
+                ),
+                -1
+              );
+            }
+
           if (this->add_members (node, struct_def.in ()) == -1)
             {
               ACE_ERROR_RETURN ((
@@ -192,6 +232,22 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
             }
            
           this->ir_current_ = CORBA::IDLType::_narrow (prev_def.in ());
+
+          CORBA::Container_ptr used_scope =
+            CORBA::Container::_nil ();
+
+          // Pop the new IR object back off the scope stack.
+          if (be_global->ifr_scopes ().pop (used_scope) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
+                  ACE_TEXT ("visit_structure -")
+                  ACE_TEXT (" scope pop failed\n")
+                ),
+                -1
+              );
+            }
         }
     }
   catch (const CORBA::Exception& ex)
