@@ -82,6 +82,7 @@ Intrusive_Auto_Ptr_Test
 Lazy_Map_Manager_Test
 Log_Msg_Test: !ACE_FOR_TAO
 Log_Msg_Backend_Test: !ACE_FOR_TAO
+Log_Thread_Inheritance_Test: !ST
 Logging_Strategy_Test: !LynxOS !STATIC !ST
 Manual_Event_Test
 MEM_Stream_Test: !VxWorks !nsk !ACE_FOR_TAO !PHARLAP

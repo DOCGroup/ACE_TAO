@@ -650,11 +650,11 @@ ACE_Log_Msg::ACE_Log_Msg (void)
     msg_ (0),
     restart_ (1),  // Restart by default...
     ostream_ (0),
+    ostream_refcount_ (0),
     msg_callback_ (0),
     trace_depth_ (0),
     trace_active_ (false),
     tracing_enabled_ (true), // On by default?
-    delete_ostream_(false),
     thr_desc_ (0),
     priority_mask_ (default_priority_mask_),
     timestamp_ (0)
@@ -743,22 +743,28 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
         }
     }
 
-  //
-  // do we need to close and clean up?
-  //
-  if (this->delete_ostream_)
-#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-    {
-      ACE_OS::fclose (this->ostream_);
-    }
-#else
-    {
-      delete ostream_;
-      ostream_ = 0;
-    }
-#endif
+  this->cleanup_ostream ();
 
   delete[] this->msg_;
+}
+
+void
+ACE_Log_Msg::cleanup_ostream ()
+{
+  if (this->ostream_refcount_)
+    {
+      if (--*this->ostream_refcount_ == 0)
+        {
+          delete this->ostream_refcount_;
+#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+          ACE_OS::fclose (this->ostream_);
+#else
+          delete this->ostream_;
+          this->ostream_ = 0;
+#endif
+        }
+      this->ostream_refcount_ = 0;
+    }
 }
 
 // Open the sender-side of the message queue.
@@ -2412,18 +2418,32 @@ void
 ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m, bool delete_ostream)
 {
   if (this->ostream_ == m)
-    return;
-
-  if (this->delete_ostream_)
     {
-#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-      ACE_OS::fclose (this->ostream_);
-#else
-      delete this->ostream_;
-#endif
+      // Same stream, allow user to change the delete_ostream "flag"
+      if (delete_ostream && !this->ostream_refcount_)
+        {
+          ACE_NEW (this->ostream_refcount_, Atomic_ULong (1));
+        }
+      else if (!delete_ostream && this->ostream_refcount_)
+        {
+          if (--*this->ostream_refcount_ == 0)
+            {
+              delete this->ostream_refcount_;
+            }
+          this->ostream_refcount_ = 0;
+        }
+      // The other two cases are no-ops, the user has requested the same
+      // state that's already present.
+      return;
     }
 
-  this->delete_ostream_ = delete_ostream;
+  this->cleanup_ostream ();
+
+  if (delete_ostream)
+    {
+      ACE_NEW (this->ostream_refcount_, Atomic_ULong (1));
+    }
+
   this->ostream_ = m;
 }
 
@@ -2477,6 +2497,15 @@ ACE_Log_Msg::init_hook (ACE_OS_Log_Msg_Attributes &attributes
     {
       ACE_Log_Msg *inherit_log = ACE_LOG_MSG;
       attributes.ostream_ = inherit_log->msg_ostream ();
+      if (attributes.ostream_ && inherit_log->ostream_refcount_)
+        {
+          ++*inherit_log->ostream_refcount_;
+          attributes.ostream_refcount_ = inherit_log->ostream_refcount_;
+        }
+      else
+        {
+          attributes.ostream_refcount_ = 0;
+        }
       attributes.priority_mask_ = inherit_log->priority_mask ();
       attributes.tracing_enabled_ = inherit_log->tracing_enabled ();
       attributes.restart_ = inherit_log->restart ();
@@ -2501,7 +2530,10 @@ ACE_Log_Msg::inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
 
   if (attributes.ostream_)
     {
-      new_log->msg_ostream (attributes.ostream_);
+      new_log->ostream_ = attributes.ostream_;
+      new_log->ostream_refcount_ =
+        static_cast<Atomic_ULong *> (attributes.ostream_refcount_);
+
       new_log->priority_mask (attributes.priority_mask_);
 
       if (attributes.tracing_enabled_)
