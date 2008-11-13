@@ -1,3 +1,15 @@
+Thu Nov 13 08:33:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMH_Exceptions/run_test.pl:
+        * tests/Bug_2702_Regression/run_test.pl:
+        * tests/Bug_3299_Regression/run_test.pl:
+        * tests/Oneway_Send_Timeouts/run_test.pl:
+        * tests/Param_Test/run_test.pl:
+        * tests/POA/Adapter_Activator/run_test.pl:
+        * tests/Portable_Interceptors/AdvSlot/run_test.pl:
+        * tests/Portable_Interceptors/AdvSlotDblCpy/run_test.pl:
+          Fixed fuzz errors
+
 Thu Nov 13 07:09:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Recursive_ORBInitializer/run_test.pl

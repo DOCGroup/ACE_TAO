@@ -28,7 +28,7 @@ $SV->Spawn ();
 
 if ($server->WaitForFileTimed ($iorbase,
                                $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$file>\n";
+    print STDERR "ERROR: cannot find file <$iorbase>\n";
     $SV->Kill ();
     exit 1;
 }

@@ -83,9 +83,7 @@ foreach $type (@types) {
     if ($server_status != 0) {
         print STDERR "ERROR: server returned $server_status\n";
         $status = 1;
-    }
-    else
-    {
+    } else {
         if ($server->WaitForFileTimed ($iorbase,
                                        $server->ProcessStartWaitInterval()) == -1) {
             print STDERR "ERROR: cannot find file <$server_iorfile>\n";
