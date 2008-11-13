@@ -63,7 +63,7 @@ dnl Add maintainer mode option to the option list.
 dnl AM_MAINTAINER_MODE
 
 dnl The maintainer of this configure script.
-ACE_CONFIGURE_MAINTAINER='ace-users@cs.wustl.edu'
+ACE_CONFIGURE_MAINTAINER='ace-users@list.isis.vanderbilt.edu'
 
 
 dnl Until autoconf support in ACE is complete, prevent this script
