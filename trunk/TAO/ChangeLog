@@ -1,3 +1,15 @@
+Thu Nov 13 22:22:40 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/DevGuideExamples/NotifyService/Messenger/NotifyServiceMessenger.mpc:
+
+        * orbsvcs/DevGuideExamples/NotifyService/OfferSubscriptions/OfferSubscriptions.mpc:
+
+        * orbsvcs/DevGuideExamples/NotifyService/QoSProperties/QoSProperties.mpc:
+
+        * orbsvcs/DevGuideExamples/NotifyService/SupplierSideNC/SupplierSideNC.mpc:
+        
+          Fixed up errant include of MessengerS.cpp in client sources.
+
 Thu Nov 13 21:48:14 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
@@ -10,7 +22,7 @@ Thu Nov 13 21:48:14 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
         * orbsvcs/orbsvcs/IFRService/StructDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
 
-          Fix for nested name scoping issue introduced in 
+          Fix for nested name scoping issue introduced in
           Mon Nov 10 19:54:27 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
           and fix of bug 3495 for unions, structs, and exceptions.
 
