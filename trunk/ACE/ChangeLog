@@ -1,3 +1,11 @@
+Thu Nov 13 15:25:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Service_Config_Test.cpp:
+          Just not give arguments a name if you don't need them
+
+        * tests/Logging_Strategy_Test.cpp:
+          Use ACE_DEFAULT_TEST_DIR to get a full path on Windows CE
+
 Thu Nov 13 14:56:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
