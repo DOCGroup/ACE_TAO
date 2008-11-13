@@ -1,3 +1,15 @@
+Thu Nov 13 09:27:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/DevGuideExamples/ImplRepo/Basic/ImplRepo_Basic.mpc:
+        * orbsvcs/DevGuideExamples/ImplRepo/ImplRepo.mpc:
+        * orbsvcs/DevGuideExamples/ImplRepo/IORTable/ImplRepo_IORTable.mpc:
+        * orbsvcs/DevGuideExamples/NamingService/corbaloc_Messenger/corbaloc_Messenger.mpc:
+        * orbsvcs/DevGuideExamples/NamingService/corbaname_Messenger/corbaname_Messenger.mpc:
+        * orbsvcs/DevGuideExamples/NamingService/Messenger/Messenger.mpc:
+        * orbsvcs/DevGuideExamples/NamingService/Naming_Client/Naming_Client.mpc:
+        * orbsvcs/DevGuideExamples/NamingService/Naming_Context_Ext/Naming_Context_Ext.mpc:
+          Added custom idl project
+
 Thu Nov 13 08:33:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMH_Exceptions/run_test.pl:
