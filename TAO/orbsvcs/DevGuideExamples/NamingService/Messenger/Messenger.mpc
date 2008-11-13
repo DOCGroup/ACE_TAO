@@ -9,7 +9,7 @@ project(NamingService*idl): taoidldefaults {
 
 project(NamingService*Server): namingexe, naming_skel {
   exename = MessengerServer
-  after += *idl
+  after += NamingService*idl
   Source_Files {
     Messenger_i.cpp
     MessengerServer.cpp
@@ -24,7 +24,7 @@ project(NamingService*Server): namingexe, naming_skel {
 
 project(NamingService*Client): namingexe {
   exename = MessengerClient
-  after += *idl
+  after += NamingService*idl
   Source_Files {
     MessengerClient.cpp
   }

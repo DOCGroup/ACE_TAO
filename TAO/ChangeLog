@@ -1,3 +1,8 @@
+Thu Nov 13 18:36:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/DevGuideExamples/NamingService/Messenger/Messenger.mpc:
+          Fixed invalid after
+
 Thu Nov 13 14:56:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2595_Regression/run_test.pl:
