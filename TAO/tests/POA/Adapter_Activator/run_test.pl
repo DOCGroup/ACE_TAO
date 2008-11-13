@@ -40,7 +40,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
         $i++;
     }
     elsif ($ARGV[$i] eq "-f") {
-        $iorfile = $ARGV[$i + 1];
+        $iorbase = $ARGV[$i + 1];
         $i++;
     }
     else {

@@ -45,7 +45,7 @@ if ($client->PutFile ($iorfile, $client_iorfile) == -1) {
     exit 1;
 }
 
-$client_status = $CL->SpawnWaitKill (60);
+$CL->SpawnWaitKill (60);
 
 # We expect to have to kill both client and server.
 
@@ -54,7 +54,7 @@ $client_status = $CL->SpawnWaitKill (60);
 #    $status = 1;
 #}
 
-$server = $SV->WaitKill (10);
+$SV->WaitKill (10);
 
 #if ($server != 0) {
 #    print STDERR "ERROR: server returned $server\n";
@@ -63,12 +63,12 @@ $server = $SV->WaitKill (10);
 
 open (LOG, "client.log") or die "Couldn't open client log file client.log: $!\n";
 while (<LOG>) {
-  $ccmsgfound = 1 if (/process_parsed_messages, received CloseConnection message/);
+    $ccmsgfound = 1 if (/process_parsed_messages, received CloseConnection message/);
 }
 close (LOG);
 if (not $ccmsgfound) {
-  print STDERR "ERROR: didn't find CloseConnection debug message in client log.\n";
-  $status = 1;
+    print STDERR "ERROR: didn't find CloseConnection debug message in client log.\n";
+    $status = 1;
 }
 
 exit $status;

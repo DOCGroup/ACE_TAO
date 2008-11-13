@@ -23,16 +23,16 @@ foreach $i (@ARGV) {
         $debug_level = '10';
     }
     elsif ($i eq '-blocking') {
-	$client_conf = "block_flush.conf";
-	$flush_strategy = "BLOCKING";
+        $client_conf = "block_flush.conf";
+        $flush_strategy = "BLOCKING";
     }
     elsif ($i eq '-reactive') {
         $client_conf = "reactive_flush.conf";
         $flush_strategy = "REACTIVE";
     }
     else {
-	print STDERR "ERROR: Unknown option: $i\n";
-	exit 1;
+        print STDERR "ERROR: Unknown option: $i\n";
+        exit 1;
     }
 }
 
