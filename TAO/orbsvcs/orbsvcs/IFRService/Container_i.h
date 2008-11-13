@@ -62,6 +62,12 @@ public:
   virtual void destroy_i (
     );
 
+  virtual void destroy_references_i (
+    );
+
+  virtual void destroy_defintions_i (
+    );
+
   virtual CORBA::Contained_ptr lookup (
       const char *search_name
     );

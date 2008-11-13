@@ -221,6 +221,9 @@ TAO_ExceptionDef_i::members_i (void)
   ACE_Configuration_Section_Key member_key;
   TAO_IDLType_i *impl = 0;
 
+  // Store to replace below.
+  ACE_Configuration_Section_Key key_holder = this->section_key_;
+
   for (CORBA::ULong k = 0; k < size; ++k)
     {
       name_queue.dequeue_head (name);
@@ -245,6 +248,11 @@ TAO_ExceptionDef_i::members_i (void)
                                                      this->repo_);
 
       retval[k].type = impl->type_i ();
+
+      // If this struct contains a nested struct (of another type) at
+      // some level, the above code will have changed the section key
+      // so we have to replace it with the value we stored above.
+      this->section_key (key_holder);
     }
 
   return retval._retn ();
@@ -263,8 +271,8 @@ TAO_ExceptionDef_i::members (const CORBA::StructMemberSeq &members)
 void
 TAO_ExceptionDef_i::members_i (const CORBA::StructMemberSeq &members)
 {
-  // Destroy our old members, both refs and defns.
-  TAO_Container_i::destroy_i ();
+  // Destroy our old refs.
+  TAO_Container_i::destroy_references_i ();
 
   CORBA::ULong count = members.length ();
 

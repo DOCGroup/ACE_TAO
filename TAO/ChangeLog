@@ -1,3 +1,25 @@
+Thu Nov 13 21:48:14 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExceptionDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/StructDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
+
+          Fix for nested name scoping issue introduced in 
+          Mon Nov 10 19:54:27 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+          and fix of bug 3495 for unions, structs, and exceptions.
+
+        * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/Test.idl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/TestImpl.h:
+
+          Increase test cases covered by the idl.
+
 Thu Nov 13 18:36:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/DevGuideExamples/NamingService/Messenger/Messenger.mpc:
