@@ -1601,3 +1601,10 @@ project(Process_Env_Test) : acetest {
     Process_Env_Test.cpp
   }
 }
+
+project(Log_Thread_Inheritance_Test) : acetest {
+  exename = Log_Thread_Inheritance_Test
+  Source_Files {
+    Log_Thread_Inheritance_Test.cpp
+  }
+}
