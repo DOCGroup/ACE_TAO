@@ -5,6 +5,35 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
+const ACE_TCHAR *ior = ACE_TEXT ("file://ior.out");
+
+int
+parse_args (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'k':
+        ior = get_opts.opt_arg ();
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-k <ior> "
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
+
+
 class ThreadPool : public ACE_Task_Base
 {
 public:
@@ -20,6 +49,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+
+      if (parse_args (argc, argv) != 0)
+        return 1;
+
       CORBA::Object_var poa_object = orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -40,7 +73,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Subscriber_var subscriber_var = Subscriber::_narrow (object.in ());
 
-      object = orb->string_to_object("file://ior.out");
+      object = orb->string_to_object(ior);
       Publisher_var publisher = Publisher::_narrow(object.in());
 
       publisher->subscribe(subscriber_var.in());

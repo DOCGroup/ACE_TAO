@@ -1,3 +1,24 @@
+Thu Nov 13 14:45:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1636_Regression/run_test.pl:
+        * tests/Bug_1670_Regression/run_test.pl:
+        * tests/Bug_1676_Regression/run_test.pl:
+        * tests/Bug_2134_Regression/run_test.pl:
+        * tests/Bug_2188_Regression/run_test.pl:
+        * tests/Bug_2328_Regression/run_test.pl:
+        * tests/Bug_2349_Regression/run_test.pl:
+        * tests/Bug_2356_Regression/run_test.pl:
+        * tests/Bug_2417_Regression/run_test.pl:
+        * tests/Bug_2429_Regression/run_test.pl:
+        * tests/Bug_2503_Regression/run_test.pl:
+          Converted to the new test framework
+
+        * tests/Bug_2417_Regression/server.cpp:
+        * tests/Bug_2349_Regression/client.cpp:
+        * tests/Bug_2349_Regression/server.cpp:
+        * tests/Bug_2417_Regression/client.cpp:
+          Added support to pass ior filename from the commandline
+
 Thu Nov 13 10:49:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/DevGuideExamples/NotifyService/EventSequence/EventSequence.mpc:

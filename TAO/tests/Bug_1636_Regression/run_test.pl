@@ -5,21 +5,18 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-# This is a Perl script that runs the federated Name Service timeout test.
-# It starts all the servers and clients as necessary.
-
 use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 
-use PerlACE::Run_Test;
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-$status = 0;
+$SV = $server->CreateProcess ("client");
 
-$CLIENT = new PerlACE::Process ("client");
+$test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
-$client = $CLIENT->SpawnWaitKill (30);
-
-if ($client !=0 ) {
-    print STDERR "ERROR: client returned $client\n";
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    exit 1;
 }
 
-exit $status;
+exit 0;
