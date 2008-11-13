@@ -6,10 +6,16 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #   Fuzz is a script whose purpose is to check through ACE/TAO/CIAO files for
 #   easy to spot (by a perl script, at least) problems.
 
+use lib "$ENV{ACE_ROOT}/bin";
+if (defined $ENV{srcdir}) {
+  use lib "$ENV{srcdir}/bin";
+}
+
 use Cwd;
 use File::Find;
 use File::Basename;
 use Getopt::Std;
+use PerlACE::Run_Test;
 
 ###### TODO
 #
@@ -41,6 +47,8 @@ use Getopt::Std;
 @files_mpc = ();
 @files_bor = ();
 @files_noncvs = ();
+@files_sln = ();
+@files_vcproj = ();
 
 # To keep track of errors and warnings
 $errors = 0;
@@ -113,6 +121,12 @@ sub store_file ($)
     }
     elsif ($name =~ /\.pl$/i) {
         push @files_pl, ($name);
+    }
+    elsif ($name =~ /\.vcproj$/i) {
+        push @files_vcproj, ($name);
+    }
+    elsif ($name =~ /\.sln$/i) {
+        push @files_sln, ($name);
     }
     elsif ($name =~ /ChangeLog/i && -f $name) {
         push @files_changelog, ($name);
@@ -282,7 +296,7 @@ sub check_for_newline ()
 sub check_for_noncvs_files ()
 {
     print "Running non svn files check\n";
-    foreach $file (@files_noncvs, @files_dsp, @files_dsw, @files_makefile, @files_bor) {
+    foreach $file (@files_noncvs, @files_dsp, @files_dsw, @files_makefile, @files_bor, @files_sln) {
         print_error ("File $file should not be in svn!");
     }
 }
@@ -1334,7 +1348,17 @@ sub check_for_mismatched_filename ()
 sub check_for_bad_run_test ()
 {
     print "Running run_test.pl test\n";
-    ITERATION: foreach $file (@files_pl) {
+    # Add the know ACE files
+    push @files_lst, $ENV{"ACE_ROOT"} . "/bin/tao_orb_tests.lst";
+    push @files_lst, $ENV{"ACE_ROOT"} . "/bin/tao_other_tests.lst";
+    push @files_lst, $ENV{"ACE_ROOT"} . "/bin/ciao_tests.lst";
+    $config_list = new PerlACE::ConfigList;
+    foreach $file (@files_lst) {
+      $config_list->load ($file);
+    }
+    $config_list->add_one_config ("FUZZ");
+    @valid_files = $config_list->valid_entries ();
+    foreach $file (@valid_files) {
         if (open (FILE, $file)) {
             my $is_run_test = 0;
             my $sub = 0;
@@ -1342,18 +1366,6 @@ sub check_for_bad_run_test ()
             print "Looking at file $file\n" if $opt_d;
 
             while (<FILE>) {
-                # The following directories are not updated yet to the
-                # new test framework
-                if (($file =~ /(TAO)*.*tests/i)             ||
-                    ($file =~ /(TAO)*.*DevGuideExamples/i)  ||
-                    ($file =~ /(TAO)*.*examples/i)          ||
-                    ($file =~ /(TAO)*.*tools/i)             ||
-                    ($file =~ /(TAO)*.*performance-tests/i) ||
-                    ($file =~ /(CIAO)*.*/i)                 ||
-                    ($file =~ /(TAO)*.*examples/i)) {
-                   next ITERATION;
-                }
-
                 if (m/PerlACE/ || m/ACEutils/) {
                     $is_run_test = 1;
                 }
@@ -1381,6 +1393,10 @@ sub check_for_bad_run_test ()
 
                     if (m/\$PerlACE::waitforfile_timed/) {
                         print_error ("$file:$.: using \$PerlACE::waitforfile_timed");
+                    }
+
+                    if (m/PerlACE::random_port/) {
+                        print_error ("$file:$.: using PerlACE::random_port");
                     }
 
                     if (m/PerlACE::Process/) {
@@ -1446,9 +1462,6 @@ sub check_for_bad_run_test ()
                     }
                 }
             }
-        }
-        else {
-            print STDERR "Error: Could not open $file\n";
         }
     }
 }
@@ -1958,6 +1971,7 @@ if ($opt_t) {
 print "--------------------Configuration: Fuzz - Level ",$opt_l,
       "--------------------\n";
 
+check_for_bad_run_test () if ($opt_l >= 5);
 check_for_deprecated_macros () if ($opt_l > 1 );
 check_for_refcountservantbase () if ($opt_l > 1 );
 check_for_msc_ver_string () if ($opt_l >= 3);
@@ -1986,7 +2000,6 @@ check_for_pre_and_post () if ($opt_l >= 4);
 check_for_push_and_pop () if ($opt_l >= 4);
 check_for_versioned_namespace_begin_end () if ($opt_l >= 4);
 check_for_mismatched_filename () if ($opt_l >= 2);
-check_for_bad_run_test () if ($opt_l >= 5);
 check_for_absolute_ace_wrappers () if ($opt_l >= 3);
 check_for_bad_ace_trace () if ($opt_l >= 4);
 check_for_changelog_errors () if ($opt_l >= 4);

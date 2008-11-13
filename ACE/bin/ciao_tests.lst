@@ -7,11 +7,11 @@
 #
 # Example: TAO\examples\foo\run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 #
-TAO/CIAO/examples/Hello/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/examples/Hello/descriptors/run_test_without_ns.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/examples/Hello/descriptors_RTCCM/rt_run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO RT_CAPABLE !ST
-TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test_simple.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !ST
-TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !ST
-TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test_ex.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !ST
-TAO/CIAO/tests/IDL3/Events/Any/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !ST
-TAO/CIAO/DevGuideExamples/CIAO/Messenger/descriptors/run_test.pl:
+TAO/CIAO/examples/Hello/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !FUZZ
+TAO/CIAO/examples/Hello/descriptors/run_test_without_ns.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !FUZZ
+TAO/CIAO/examples/Hello/descriptors_RTCCM/rt_run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO RT_CAPABLE !ST !LabVIEW_RT !WinCE !FUZZ
+TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test_simple.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !FUZZ
+TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !FUZZ
+TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test_ex.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !FUZZ
+TAO/CIAO/tests/IDL3/Events/Any/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !FUZZ
+TAO/CIAO/DevGuideExamples/CIAO/Messenger/descriptors/run_test.pl: !LabVIEW_RT !WinCE !FUZZ
