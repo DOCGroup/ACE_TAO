@@ -29,7 +29,7 @@ $AMH->Spawn ();
 if ($target->WaitForFileTimed ($iorbase,
                                $target->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: File containing AMH Server ior,".
-        " <$server_iorfile>, cannot be found\n";
+        " <$iorbase>, cannot be found\n";
     $AMH->Kill ();
     exit 1;
 }
@@ -47,6 +47,11 @@ if ($host->PutFile ($iorbase) == -1) {
 
 # Run client.
 $client_status = $CL->SpawnWaitKill (30);
+
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
+    $status = 1;
+}
 
 # Clean up.
 $amhserver= $AMH->WaitKill (15);

@@ -36,7 +36,7 @@ if ($server != 0) {
 }
 
 if ($target->WaitForFileTimed ($iorbase,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
+                               $target->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
