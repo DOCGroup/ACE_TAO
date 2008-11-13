@@ -1,3 +1,10 @@
+Thu Nov 13 08:01:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+        * bin/PerlACE/TestTarget_VxWorks.pm:
+          Fixed test scripts when the old test framework is use
+
 Thu Nov 13 07:05:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_main.cpp:
