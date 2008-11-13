@@ -33,7 +33,7 @@ sub LocalFile {
 
 sub CreateProcess {
   my $self = shift;
-  my $process = new PerlACE::ProcessVX ($self, @_);
+  my $process = new PerlACE::ProcessVX (@_, $self, );
   return $process;
 }
 
