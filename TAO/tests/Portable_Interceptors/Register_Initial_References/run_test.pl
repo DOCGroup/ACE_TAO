@@ -6,21 +6,17 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server");
-}
-else {
-    $SV = new PerlACE::Process ("server");
-}
-print STDERR "\n==== Running Register_Initial_References test ====\n";
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-$server = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
+$SV = $server->CreateProcess ("server");
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
+$test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
+
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    exit 1;
 }
 
-exit $status;
+exit 0;
