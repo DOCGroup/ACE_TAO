@@ -1,3 +1,14 @@
+Thu Nov 13 08:32:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          The lst files below are now parsed and all the perl files that are not
+          marked with !FUZZ are checked
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+        * bin/ciao_tests.lst:
+          Mark a lot of test with !FUZZ, these have to be updated
+
 Thu Nov 13 08:07:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Cached_Conn_Test.cpp:
