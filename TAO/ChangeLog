@@ -1,3 +1,9 @@
+Thu Nov 13 04:03:55 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * tests/Bug_3499_Regression/DLL_Service_Host.cpp:
+
+          Fixed compilation errors on GCC 3.4
+
 Wed Nov 12 20:14:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Policies/run_test.pl:
