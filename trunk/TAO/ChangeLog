@@ -1,3 +1,10 @@
+Thu Nov 13 07:09:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Recursive_ORBInitializer/run_test.pl
+        * tests/Portable_Interceptors/Register_Initial_References/run_test.pl
+        * tests/Portable_Interceptors/Slot/run_test.pl
+          Converted to new test framework
+
 Thu Nov 13 04:03:55 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * tests/Bug_3499_Regression/DLL_Service_Host.cpp:
