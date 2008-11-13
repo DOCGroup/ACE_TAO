@@ -1,3 +1,11 @@
+Thu Nov 13 14:56:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2595_Regression/run_test.pl:
+        * tests/Bug_2654_Regression/run_test.pl:
+        * tests/Bug_2669_Regression/run_test.pl:
+        * tests/Bug_2677_Regression/run_test.pl:
+          Converted to the new test framework
+
 Thu Nov 13 14:45:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1636_Regression/run_test.pl:
