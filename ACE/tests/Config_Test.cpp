@@ -357,8 +357,10 @@ run_tests (void)
 #if defined (TEST_DIR)
     ACE_OS::strcpy (import_file_name, TEST_DIR);
     ACE_OS::strcat (import_file_name, ACE_DIRECTORY_SEPARATOR_STR);
-#endif
     ACE_OS::strcat (import_file_name, ACE_TEXT ("Config_Test_Import_1.ini"));
+#else
+    ACE_OS::strcpy (import_file_name, ACE_TEXT ("Config_Test_Import_1.ini"));
+#endif
 
     status = import.import_config (import_file_name);
     if (status != 0) {
