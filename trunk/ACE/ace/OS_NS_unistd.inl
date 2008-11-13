@@ -197,7 +197,7 @@ ACE_OS::dup (ACE_HANDLE handle)
   ACE_OS_TRACE ("ACE_OS::dup");
 #if defined (ACE_LACKS_DUP)
   ACE_UNUSED_ARG (handle);
-  ACE_NOTSUP_RETURN (-1);
+  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
 #elif defined (ACE_WIN32)
   ACE_HANDLE new_fd;
   if (::DuplicateHandle(::GetCurrentProcess (),
