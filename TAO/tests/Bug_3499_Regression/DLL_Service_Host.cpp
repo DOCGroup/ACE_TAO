@@ -44,7 +44,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv [])
     }
 
     typedef ACE_DLL_Service * (*factory_type) (void);
-    factory_type f = reinterpret_cast <factory_type> (symbol);
+    ptrdiff_t tmp_ptr = reinterpret_cast <ptrdiff_t> (symbol);
+    factory_type f = reinterpret_cast <factory_type> (tmp_ptr);
 
     ACE_DLL_Service * svc = (*f) ();
 
