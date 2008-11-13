@@ -23,6 +23,7 @@
 #include "Deployment/Deployment_NodeApplicationManagerC.h"
 #include "DomainApplication/Domain_Application_Impl.h"
 #include "Deployment/Deployment_NodeManagerC.h"
+#include "DomainApplicationManager/Node_Locator.h"
 
 namespace DAnCE
   {
@@ -33,12 +34,10 @@ namespace DAnCE
       typedef ACE_Map_Manager<ACE_CString, Deployment::DeploymentPlan, ACE_Null_Mutex> TNodePlans;
 
     public:
-      typedef ACE_Map_Manager<ACE_CString, Deployment::NodeManager_var, ACE_Null_Mutex> TNodeManagers;
-
       DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
                                      PortableServer::POA_ptr poa,
                                      const Deployment::DeploymentPlan& plan,
-                                     TNodeManagers & nodes);
+                                     Node_Locator &nodes);
 
       virtual ~DomainApplicationManager_Impl();
 
@@ -61,8 +60,7 @@ namespace DAnCE
       PortableServer::POA_var poa_;
       const Deployment::DeploymentPlan plan_;
       DomainApplication_Impl::TNam2Nm sub_app_mgr_;
-      TNodeManagers & nodes_;
-
+      Node_Locator &nodes_;
       typedef ACE_Vector<DomainApplication_Impl*> TApplications;
       TApplications running_app_;
 

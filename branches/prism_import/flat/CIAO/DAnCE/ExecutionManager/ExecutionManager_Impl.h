@@ -17,10 +17,12 @@
 
 #include "ace/Map_Manager.h"
 #include "ace/SStringfwd.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "ExecutionManager_Export.h"
 #include "Interfaces/ExecutionManagerDaemonS.h"
 #include "Deployment/Deployment_NodeManagerC.h"
 #include "DomainApplicationManager/DomainApplicationManager_Impl.h"
+#include "DomainApplicationManager/Node_Locator.h"
 
 namespace DAnCE
   {
@@ -33,7 +35,8 @@ namespace DAnCE
     public:
 
       ExecutionManager_Impl (CORBA::ORB_ptr orb,
-                             PortableServer::POA_ptr poa);
+                             PortableServer::POA_ptr poa,
+                             CosNaming::NamingContext_ptr);
 
       virtual ~ExecutionManager_Impl();
 
@@ -51,22 +54,17 @@ namespace DAnCE
 
       // This one derived from ExecutionManagerDaemon interface
       // for shutdowning DAnCE agent
-      virtual void shutdown ()
-      {
-        this->orb_->shutdown();
-      };
+      virtual void shutdown ();
+      
+      void add_node_manager (const ACE_TCHAR *name, const ACE_TCHAR *ior);
 
-      void add_node_manager (const ACE_CString & name, Deployment::NodeManager_ptr obj)
-      {
-        this->nodes_.rebind (name, Deployment::NodeManager::_duplicate (obj));
-      };
-
+      void load_node_map (const ACE_TCHAR *filename);
+      
     private:
       CORBA::ORB_var orb_;
       PortableServer::POA_var poa_;
-      DomainApplicationManager_Impl::TNodeManagers nodes_;
       TDomainManagers managers_;
-
+      Node_Locator locator_;
     };
 };//DAnCE
 

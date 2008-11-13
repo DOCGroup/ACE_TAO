@@ -56,16 +56,18 @@ class DAnCE_ExecutionManager_Module_Export DAnCE_ExecutionManager_Module
         bool port_indirection_;
         ACE_Vector<ACE_CString> node_managers_;
         bool ignore_failure_;
-
+        const char *node_map_;
+        
         SOptions()
-            : exec_mgr_file_ (0)
-            , process_ns_ (false)
-            , process_ns_file_ (0)
-            , create_plan_ns_ (false)
-            , create_plan_ns_ior_ (0)
-            , rebind_plan_ns_ (false)
-            , rebind_plan_ns_ior_ (0)
-            , ignore_failure_ (false)
+            : exec_mgr_file_ (0),
+              process_ns_ (false),
+              process_ns_file_ (0),
+              create_plan_ns_ (false),
+              create_plan_ns_ior_ (0),
+              rebind_plan_ns_ (false),
+              rebind_plan_ns_ior_ (0),
+              ignore_failure_ (false),
+              node_map_(0)
         {
         }
     };
