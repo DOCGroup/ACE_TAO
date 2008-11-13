@@ -1,3 +1,22 @@
+Thu Nov 13 15:26:17 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+        * ace/OS_Log_Msg_Attributes.h:
+
+          Fix for bug 3480.  If the user passes "true" as the 2nd arg of
+          msg_ostream(), ACE takes ownership of the output stream.  Since this
+          stream can be shared between multiple ACE_Log_Msg instances
+          (in multiple threads), we will now keep a reference count on the
+          output stream and only delete it when the last ACE_Log_Msg instance
+          is destroyed.
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+        * tests/Log_Thread_Inheritance_Test.cpp:
+
+          Added a test for this change.
+
 Thu Nov 13 15:25:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Service_Config_Test.cpp:
@@ -168,7 +187,7 @@ Wed Nov 12 14:10:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * include/makeinclude/platform_vxworks6.7.GNU:
           Initial files for VxWorks 6.7 which we expect soon
 
-Wed Nov 12 13:24:00 UTC 2008  Simon Massey<sma at prismtech dot com>
+Wed Nov 12 13:24:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Process_Test.cpp:
           Wrong macro used.
@@ -608,12 +627,12 @@ Wed Nov  5 15:54:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           Don't emulate isblank with isctype(_ISBLANK), isctype only checks
           for space, isblank should check space and tab
 
-Wed Nov  5 13:20:00 UTC 2008  Simon Massey <sma at prismtech dot com>
+Wed Nov  5 13:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Process_Test.cpp:
           Attempt to correct for wide character ACE_TCHAR versions.
 
-Wed Nov  5 09:36:00 UTC 2008  Simon Massey <sma at prismtech dot com>
+Wed Nov  5 09:36:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Process_Test.cpp:
           Removed Fuzz errors.
@@ -1045,7 +1064,7 @@ Wed Oct 22 13:30:54 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
         * ace/Process.{h,cpp}: Fixed the misspelling of
           "handle_inheritence" to "handle_inheritance".
 
-Tue Oct 21 18:31:52 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+Tue Oct 21 18:31:52 UTC 2008  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * apps/gperf/src/Options.cpp:
 
