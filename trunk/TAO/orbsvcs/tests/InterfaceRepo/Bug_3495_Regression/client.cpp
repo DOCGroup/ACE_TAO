@@ -59,18 +59,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::InterfaceDef::FullInterfaceDescription *id = ifd->describe_interface();
 
         CORBA::TypeCode_var paramType (id->operations[0].parameters[0].type.in());
-
-        CORBA::ULong const member_count = paramType->member_count ();
-
         if (paramType->member_count () != 2)
         {
           ACE_ERROR_RETURN((LM_ERROR,
-                            ACE_TEXT("ERROR Incorrect member count %d expected 2.\n"),
+                            ACE_TEXT("ERROR Incorrect parameter member count %d expected 2.\n"),
                             paramType->member_count ()),
                             1);
-
         }
-
+        CORBA::TypeCode_var exceptionType (id->operations[0].exceptions[0].type.in());
+        if (exceptionType->member_count () != 1)
+        {
+          ACE_ERROR_RETURN((LM_ERROR,
+                            ACE_TEXT("ERROR Incorrect exception member count %d expected 1.\n"),
+                            exceptionType->member_count ()),
+                            1);
+        }
       }
       else
       {

@@ -7,6 +7,7 @@ module Test {
 
   const ErrorType ErrorOne = 0;
   const ErrorType ErrorTwo = 10;
+  const ErrorType ErrorThree = 100;
 
   struct structOne
   {
@@ -18,7 +19,23 @@ module Test {
     } second;
   };
 
+  struct structTwo
+  {
+    union ErrorInfo switch (ErrorType)
+    {
+      case ErrorThree: string failstring;
+    } thisonly;
+  };
+
+  exception exceptionOne 
+  {
+    union ExceptionUnion switch (ErrorType)
+    {
+      case ErrorThree: string failstring;
+    } exceptiononly;
+  };
+
   interface interfaceOne {
-    void getstruct (out structOne tester);
+    void getstruct (out structOne tester) raises(exceptionOne);
   };
 };
