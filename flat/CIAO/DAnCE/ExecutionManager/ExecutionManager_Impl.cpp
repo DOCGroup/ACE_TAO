@@ -10,9 +10,11 @@
 using namespace DAnCE;
 
 ExecutionManager_Impl::ExecutionManager_Impl (CORBA::ORB_ptr orb,
-                                              PortableServer::POA_ptr poa)
-    : orb_ (CORBA::ORB::_duplicate (orb))
-    , poa_ (PortableServer::POA::_duplicate (poa))
+                                              PortableServer::POA_ptr poa,
+                                              CosNaming::NamingContext_ptr nc)
+    : orb_ (CORBA::ORB::_duplicate (orb)), 
+      poa_ (PortableServer::POA::_duplicate (poa)),
+      locator_ (orb, nc)
 {
   DANCE_TRACE ( "ExecutionManager_Impl::ExecutionManager_Impl");
 }
@@ -62,7 +64,7 @@ ExecutionManager_Impl::preparePlan (const ::Deployment::DeploymentPlan & plan,
                     DAnCE::DomainApplicationManager_Impl (this->orb_.in (),
                                                           this->poa_.in (),
                                                           plan,
-                                                          this->nodes_),
+                                                          this->locator_),
                     CORBA::NO_MEMORY ());
   this->managers_.rebind (plan.UUID.in(), dam_servant);
   DANCE_DEBUG((LM_TRACE, DLINFO "ExecutionManager_Impl::preparePlan - "
@@ -130,4 +132,27 @@ ExecutionManager_Impl::destroyManager (::Deployment::DomainApplicationManager_pt
   throw ::Deployment::StopError();
 }
 
+// This one derived from ExecutionManagerDaemon interface
+// for shutdowning DAnCE agent
+void 
+ExecutionManager_Impl::shutdown ()
+{
+  DANCE_TRACE ("ExecutionManager_Impl::shutdown");
+  this->orb_->shutdown();
+}
 
+
+void 
+ExecutionManager_Impl::add_node_manager (const ACE_TCHAR *name, 
+                                         const ACE_TCHAR *ior)
+{
+  DANCE_TRACE ("ExecutionManager_Impl::add_node_manager");
+  this->locator_.store_ior (name, ior);
+}
+
+void 
+ExecutionManager_Impl::load_node_map (const ACE_TCHAR *filename)
+{
+  DANCE_TRACE ("ExecutionManager_Impl::add_node_manager");
+  this->locator_.process_node_map (filename);
+}

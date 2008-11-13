@@ -82,6 +82,8 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, char *argv[])
   get_opts.long_option ("port-indirection", 'i', ACE_Get_Opt::NO_ARG);
   get_opts.long_option ("ignore-failure", 'f', ACE_Get_Opt::NO_ARG);
   get_opts.long_option ("help", 'h', ACE_Get_Opt::NO_ARG);
+  get_opts.long_option ("node-map", ACE_Get_Opt::ARG_REQUIRED);
+  
   //get_opts.long_option ("help", '?');
 
   char c;
@@ -134,18 +136,30 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, char *argv[])
           this->options_.ignore_failure_ = true;
           break;
 
+        case 0:
+          if (ACE_OS::strcmp (get_opts.long_option (),
+                              "node-map") == 0)
+            {
+              DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
+                            "Found Node map filename %s.\n",
+                            get_opts.opt_arg ()));
+              this->options_.node_map_ = get_opts.opt_arg ();
+              break;
+
+            }
         case 'h':
           //case '?': // Display help for use of the server.
           //default:
           DANCE_ERROR_RETURN ((LM_ERROR,
                                "usage:  %s\n"
-                               "-e [execution manager ior file name]\n"
-                               "-n <node name> [=node manager ior file name]\n"
-                               "-p [file name] create process name service and store its ior to file name\n"
-                               "-c [NC] create plan objects (components and ports) representation in name context with ior NC\n"
-                               "-r [NC] bind plan representation name context to NC\n"
-                               "-i enable plan objects indirection via servant locator\n",
-                               argv [0]),
+                               "\t--exec-mgr,-e [execution manager ior file name]\n"
+                               "\t--node-mgr,-n <node name>[=node manager ior file name]\n"
+                               "\t--node-map <file name> \t\tFile containing a node manager map\n"
+                               //"--process-ns,-p [file name] \t\tcreate process name service and store its ior to file name\n"
+                               //"--create-plan-ns,-c [NC] \t\tcreate plan objects (components and ports) representation in name context with ior NC\n"
+                               //"--rebind-plan-ns,-r [NC] \t\tbind plan representation name context to NC\n"
+                               //"-i \t\t\t\tenable plan objects indirection via servant locator\n",
+                               ,argv [0]),
                               false);
           break;
         }
@@ -255,7 +269,8 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
       DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_ExecutionManager_Module::create_object - before creating EM servant.\n"));
       ACE_NEW_RETURN (this->em_impl_,
                       DAnCE::ExecutionManager_Impl (orb,
-                                                    poa.in ()),
+                                                    poa.in (),
+                                                    domain_nc.in ()),
                       CORBA::Object::_nil ());
 
       // Explicit activation through the persistent POA
@@ -308,7 +323,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
 
           node_name = this->options_.node_managers_[i].substring (0, pos);
           nm_ior = this->options_.node_managers_[i].substring (pos + 1);
-
+          /*
           CORBA::Object_var obj = orb->string_to_object (nm_ior.c_str ());
           Deployment::NodeManager_var nm_obj =
             Deployment::NodeManager::_narrow (obj.in ());
@@ -320,10 +335,19 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
                              this->options_.node_managers_[i].c_str()));
               continue;
             }
-
-          DANCE_ERROR ((LM_TRACE, DLINFO "Placing node \"%s\" to EM's map.\n", node_name.c_str()));
-          this->em_impl_->add_node_manager (node_name.c_str(), nm_obj.in());
+          */
+          DANCE_DEBUG ((LM_TRACE, DLINFO "Placing node \"%s\" to EM's map.\n", node_name.c_str()));
+          this->em_impl_->add_node_manager (node_name.c_str(), nm_ior.c_str ());
         }
+      
+      if (this->options_.node_map_ != 0)
+        {
+          DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_ExecutionManager_Module::create_object - "
+                        "Parsing node map %s\n",
+                        this->options_.node_map_));
+          this->em_impl_->load_node_map (this->options_.node_map_);
+        }
+      
 
       mgr->activate ();
 

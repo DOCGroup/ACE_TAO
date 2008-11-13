@@ -9,7 +9,7 @@ using namespace DAnCE;
 DomainApplicationManager_Impl::DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
                                                               PortableServer::POA_ptr poa,
                                                               const Deployment::DeploymentPlan& plan,
-                                                              TNodeManagers & nodes)
+                                                              Node_Locator & nodes)
   : orb_ (CORBA::ORB::_duplicate (orb))
   , poa_ (PortableServer::POA::_duplicate (poa))
   , plan_ (plan)
@@ -439,9 +439,9 @@ DomainApplicationManager_Impl::preparePlan()
            ++iter_plans)
         {
           // Finding correspondent NodeManager
-          Deployment::NodeManager_var nm;
+          Deployment::NodeManager_var nm = this->nodes_.locate_node ((*iter_plans).ext_id_.c_str ());;
           // If NodeManager not found throw StartError exception
-          if (0 != this->nodes_.find ( (*iter_plans).ext_id_, nm))
+          if (CORBA::is_nil (nm.in ()))
             {
               DANCE_ERROR ((LM_ERROR, DLINFO "DomainApplicationManager_Impl::preparePlan - "
                             "Deployment::StartError exception. NodeManager %s cannot be found\n",

@@ -1,10 +1,31 @@
+Thu Nov 13 22:58:42 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/DomainApplicationManager/Node_Locator.h:
+        * DAnCE/DomainApplicationManager/Node_Locator.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.h:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Module.h:
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
+
+          Refactored support for finding IORs of NodeManagers
+          to support Node Maps and NameService. 
+        
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Exec.cpp:
+        * DAnCE/Deployment/Module_Main.h:
+
+          dance_plan_launcher executable. 
+        
 Wed Nov 12 21:26:14 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
-        
-          Log message fixes. 
-        
+
+          Log message fixes.
+
 Wed Nov 12 21:22:43 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Module_Main.h:

@@ -70,7 +70,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       CORBA::Object_var obj = module_instance.create_object (orb.in (),
                                                              argc, 
                                                              argv);
-      
+#ifndef DANCE_MODULE_MAIN_SKIP_ORB_RUN      
       if (!CORBA::is_nil (obj.in ()))
         orb->run ();
       else
@@ -81,6 +81,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
                     "Module_Main.h - ORB event loop finished, exiting.\n"));
       
       orb->destroy ();
+#endif
     }
   catch (...)
     {
