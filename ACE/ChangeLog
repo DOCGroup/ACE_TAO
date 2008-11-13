@@ -1,3 +1,11 @@
+Thu Nov 13 12:13:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+          WinCE 5 seems to lack a lot of defines, so updated version check
+
+        * ace/OS_NS_unistd.inl (dup):
+          Return ACE_INVALID_HANDLE instead of -1
+
 Thu Nov 13 11:08:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * configure.ac:
