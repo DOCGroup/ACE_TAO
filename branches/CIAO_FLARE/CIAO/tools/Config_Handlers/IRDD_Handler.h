@@ -55,11 +55,11 @@ namespace CIAO
 
     static void handle_irdd (const InstanceResourceDeploymentDescription& desc,
                             Deployment::InstanceResourceDeploymentDescription& toconfig)
-      throw (Config_Error);
+      /*throw (Config_Error)*/;
 
     static InstanceResourceDeploymentDescription
       instance_resource_deployment_descr (const Deployment::InstanceResourceDeploymentDescription& src)
-      throw (Config_Error);
+      /*throw (Config_Error)*/;
       };
 
       typedef Sequence_Handler < InstanceResourceDeploymentDescription,

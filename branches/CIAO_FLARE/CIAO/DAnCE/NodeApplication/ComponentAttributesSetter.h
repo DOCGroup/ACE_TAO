@@ -27,7 +27,7 @@ class NodeApplication_Export ComponentAttributesSetter
     ~ComponentAttributesSetter();
 
     static void SetComponentAttributes (ACE_CString componentName,
-                                        Components::CCMObject_ptr,
+                                        CORBA::Object_ptr,
                                         const Deployment::Properties& prop,
                                         CORBA::ORB_ptr orb);
   };

@@ -29,11 +29,11 @@ namespace DAnCE
         };
 
       auto_ptr<DAnCE::Logger_Service> logger_;
-      
+
       CORBA::ORB_var orb_;
       int optLogLevel_;
-      int & argc_;
-      ACE_TCHAR** & argv_;
+      int argc_;
+      ACE_TCHAR** argv_;
       bool optNS_;
       ACE_CString optNSFile_;
       ACE_CString optNSOptions_;
@@ -63,7 +63,7 @@ namespace DAnCE
       void argCopyForPL (int & c, char **& v);
       void releaseArgs (int c, char ** v);
       static bool isPossibleOption(const char* opt);
-      
+
       void configure_logging_backend (void);
     };
 

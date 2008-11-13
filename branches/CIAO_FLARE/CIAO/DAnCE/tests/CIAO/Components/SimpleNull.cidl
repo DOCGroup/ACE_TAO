@@ -1,0 +1,12 @@
+// $Id$
+
+#include "SimpleNull.idl"
+
+composition session SimpleNull_Impl
+{
+  home executor SimpleNullHome_Exec
+  {
+    implements Simple::SimpleNullHome;
+    manages SimpleProvider_Exec;
+  };
+};

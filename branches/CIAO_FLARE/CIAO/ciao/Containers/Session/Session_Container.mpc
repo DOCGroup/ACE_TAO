@@ -8,7 +8,6 @@ project(CIAO_Session_Container) : ccm_svnt, ciao_lib, ciao_container_base, utils
   idlflags   += -Wb,export_macro=Session_Container_Export
 
   IDL_Files {
-//    Session_Container.idl
   }
   Source_Files {
     Session_Container.cpp

@@ -17,7 +17,7 @@
 #  else
 #    define DANCE_NTRACE ACE_NTRACE
 #  endif
-#endif /* DANCE_NTRACE 
+#endif DANCE_NTRACE 
 */
 #define DLINFO "(%P|%t) [%M] - %T - "
 

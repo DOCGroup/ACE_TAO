@@ -19,10 +19,10 @@ namespace CIAO
     class XSC_XML_Handlers_Export XML_Helper
     {
     public:
-      typedef CIAO::XML::Environment_Resolver PATH_RESOLVER;
-      typedef CIAO::XML::XML_Schema_Resolver< CIAO::XML::Environment_Resolver > XML_RESOLVER;
-      typedef CIAO::XML::XML_Error_Handler ERROR_HANDLER;
-      typedef CIAO::XML::XML_Helper< XML_RESOLVER, ERROR_HANDLER > HELPER;
+      typedef ::CIAO::XML::Environment_Resolver PATH_RESOLVER;
+      typedef ::CIAO::XML::XML_Schema_Resolver< ::CIAO::XML::Environment_Resolver > XML_RESOLVER;
+      typedef ::CIAO::XML::XML_Error_Handler ERROR_HANDLER;
+      typedef ::CIAO::XML::XML_Helper< XML_RESOLVER, ERROR_HANDLER > HELPER;
       
       static PATH_RESOLVER _path_resolver;
       static XML_RESOLVER _xml_resolver;
@@ -33,5 +33,6 @@ namespace CIAO
     };
   }
 }
+
 
 #endif /* XML_TYPEDEFS_H */
