@@ -31,7 +31,6 @@ project(*Client): taoclient, namingexe, notification {
   }
   Source_Files {
     MessengerC.cpp
-    MessengerS.cpp
   }
   IDL_Files {
   }
