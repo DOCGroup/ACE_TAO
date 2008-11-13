@@ -1,3 +1,14 @@
+Thu Nov 13 10:49:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/DevGuideExamples/NotifyService/EventSequence/EventSequence.mpc:
+        * orbsvcs/DevGuideExamples/NotifyService/Filtering/Filtering.mpc:
+        * orbsvcs/DevGuideExamples/NotifyService/Messenger/NotifyServiceMessenger.mpc:
+        * orbsvcs/DevGuideExamples/NotifyService/OfferSubscriptions/OfferSubscriptions.mpc:
+        * orbsvcs/DevGuideExamples/NotifyService/QoSProperties/QoSProperties.mpc:
+        * orbsvcs/DevGuideExamples/NotifyService/RTNotify/RTNotify.mpc:
+        * orbsvcs/DevGuideExamples/NotifyService/SupplierSideNC/SupplierSideNC.mpc:
+          Added custom idl project
+
 Thu Nov 13 09:27:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/DevGuideExamples/ImplRepo/Basic/ImplRepo_Basic.mpc:
