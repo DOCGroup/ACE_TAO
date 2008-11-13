@@ -296,7 +296,7 @@ sub check_for_newline ()
 sub check_for_noncvs_files ()
 {
     print "Running non svn files check\n";
-    foreach $file (@files_noncvs, @files_dsp, @files_dsw, @files_makefile, @files_bor, @files_sln) {
+    foreach $file (@files_noncvs, @files_dsp, @files_dsw, @files_makefile, @files_bor) {
         print_error ("File $file should not be in svn!");
     }
 }
