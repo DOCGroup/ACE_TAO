@@ -1,3 +1,9 @@
+Thu Nov 13 14:47:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added some missing tests and enabled some tests for FUZZ/Labview/
+          WinCE
+
 Thu Nov 13 12:13:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:
