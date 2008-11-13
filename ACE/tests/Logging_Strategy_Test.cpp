@@ -200,10 +200,9 @@ static time_t
 get_statistics (ACE_TCHAR *f_name)
 {
   ACE_stat buf;
-  int result;
-
+  
   // Get data associated with "file_name":
-  result = ACE_OS::stat (f_name, &buf);
+  int result = ACE_OS::stat (f_name, &buf);
 
   // Check if statistics are valid:
   if (result != 0)
@@ -300,19 +299,17 @@ remove_files (void)
               ACE_TEXT ("-> removing existent files...\n")));
 
   int error = 0;
-  int test;
   int i = 0;
-  ACE_TCHAR backup[MAXPATHLEN+1];
 
   do
     {
-      i++;
+      ++i;
+      ACE_TCHAR backup[MAXPATHLEN+1];
       ACE_OS::sprintf (backup,
                        ACE_TEXT ("%s.%d"),
                        file_name,
                        i);
-      test = ACE_OS::unlink (backup);
-      if (test != 0)
+      if (ACE_OS::unlink (backup) != 0)
         error = 1;
     }
   while (error != 1);
@@ -416,7 +413,9 @@ int run_main (int argc, ACE_TCHAR *argv [])
     {
       l_argv[0] = (ACE_TCHAR *)ACE_TEXT ("Logging_Strategy_Test");
       l_argv[1] =
-        (ACE_TCHAR *) ACE_TEXT ("-slog/Logging_Strategy_Test")
+        (ACE_TCHAR *) ACE_TEXT ("-s")
+                      ACE_DEFAULT_TEST_DIR
+                      ACE_TEXT ("log/Logging_Strategy_Test")
                       ACE_LOG_FILE_EXT_NAME;
       l_argv[2] = (ACE_TCHAR *) ACE_TEXT ("-o");
       l_argv[3] = 0;
