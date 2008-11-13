@@ -14,12 +14,12 @@ ExecutionManager_Impl::ExecutionManager_Impl (CORBA::ORB_ptr orb,
     : orb_ (CORBA::ORB::_duplicate (orb))
     , poa_ (PortableServer::POA::_duplicate (poa))
 {
-  DANCE_TRACE (DLINFO "ExecutionManager_Impl::ExecutionManager_Impl");
+  DANCE_TRACE ( "ExecutionManager_Impl::ExecutionManager_Impl");
 }
 
 ExecutionManager_Impl::~ExecutionManager_Impl()
 {
-  DANCE_TRACE (DLINFO "ExecutionManager_Impl::~ExecutionManager_Impl");
+  DANCE_TRACE ( "ExecutionManager_Impl::~ExecutionManager_Impl");
   for (TDomainManagers::iterator iter = this->managers_.begin();
        iter != this->managers_.end();
        ++iter)
@@ -42,7 +42,7 @@ ExecutionManager_Impl::~ExecutionManager_Impl()
 ExecutionManager_Impl::preparePlan (const ::Deployment::DeploymentPlan & plan,
                                     ::Deployment::ResourceCommitmentManager_ptr /*resourceCommitment*/)
 {
-  DANCE_TRACE (DLINFO "ExecutionManager_Impl::preparePlan");
+  DANCE_TRACE ( "ExecutionManager_Impl::preparePlan");
 
   // Check if plan is already deployed. 
   DomainApplicationManager_Impl * dam = 0;
@@ -79,7 +79,7 @@ ExecutionManager_Impl::preparePlan (const ::Deployment::DeploymentPlan & plan,
 ::Deployment::DomainApplicationManagers *
 ExecutionManager_Impl::getManagers ()
 {
-  DANCE_TRACE (DLINFO "ExecutionManager_Impl::getManagers ()");
+  DANCE_TRACE ( "ExecutionManager_Impl::getManagers ()");
   
   ::Deployment::DomainApplicationManagers * managers;
   ACE_NEW_THROW_EX (managers,

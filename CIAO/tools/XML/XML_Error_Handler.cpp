@@ -7,6 +7,7 @@
 #include <xercesc/dom/DOMLocator.hpp>
 #include <xercesc/sax/SAXParseException.hpp>
 #include "XercesString.h"
+#include <iostream>
 
 #include <iostream>
 

@@ -23,8 +23,7 @@ namespace CIAO
 
     void
     IRDD_Handler::handle_irdd (const InstanceResourceDeploymentDescription& desc,
-                   Deployment::InstanceResourceDeploymentDescription& toconfig)
-      throw (Config_Error)
+                               Deployment::InstanceResourceDeploymentDescription& toconfig)
     {
       CIAO_TRACE("IRDD_Handler::instance_resource_deployment_descr");
       
@@ -67,9 +66,7 @@ namespace CIAO
     }
 
     InstanceResourceDeploymentDescription
-    IRDD_Handler::instance_resource_deployment_descr (
-                                                      const Deployment::InstanceResourceDeploymentDescription& src)
-      throw (Config_Error)
+    IRDD_Handler::instance_resource_deployment_descr (const Deployment::InstanceResourceDeploymentDescription& src)
     {
       CIAO_TRACE("IRDD_Handler::instance_resource_deployment_descr - reverse");
 

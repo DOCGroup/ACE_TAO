@@ -1,0 +1,6 @@
+project(simple_em_launcher) : ciao_config_handlers, dance_nodemanager_stub {
+  libs += CIAO_Logger
+  Source_Files {
+    simple_em_launcher.cpp
+  }
+}

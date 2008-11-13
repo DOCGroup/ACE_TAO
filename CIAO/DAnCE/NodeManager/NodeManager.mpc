@@ -1,10 +1,10 @@
 // -*- MPC -*-
 // $Id$
 
-project(Node_Manager_Module) : dance_lib, naming, dance_node_application_manager, dance_node_application, dance_deployment_svnt, dance_deployment_stub, dynamicinterface, utils {
+project(Node_Manager_Module) : dance_lib, naming_serv, dance_node_application_manager, dance_node_application, dance_deployment_svnt, dance_deployment_stub, dynamicinterface, utils {
   sharedname   = DAnCE_NodeManager
   dynamicflags = NODEMANAGER_BUILD_DLL DANCE_NODEMANAGER_MODULE_BUILD_DLL
-    
+
   Source_Files {
     NodeManager_Impl.cpp
     Node_Manager_Module.cpp
@@ -12,7 +12,7 @@ project(Node_Manager_Module) : dance_lib, naming, dance_node_application_manager
 }
 
 project(Node_Manager_Exec) : dance_exe, dance_node_manager, naming_serv {
-  exename =  dance_node_manager
+  exename = dance_node_manager
   after += Node_Manager_Module
   libs += DAnCE_NodeManager
 

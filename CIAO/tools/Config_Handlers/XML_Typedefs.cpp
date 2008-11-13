@@ -12,4 +12,3 @@ namespace CIAO
     XML_Helper::HELPER XML_Helper::XML_HELPER (XML_Helper::_xml_resolver, XML_Helper::_xml_error_handler);
   }
 }
-      

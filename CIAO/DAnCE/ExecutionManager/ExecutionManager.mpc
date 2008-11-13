@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(ExecutionManager): dance_lib, taolib, tao_output, utils, strategies, naming, dance_executionmanager_stub, dance_node_manager, dance_domain_application_manager, dance_deployment_svnt  {
+project(ExecutionManager_Module): dance_lib, taolib, tao_output, utils, strategies, naming, dance_executionmanager_stub, dance_node_manager, dance_domain_application_manager, dance_deployment_svnt  {
   sharedname = DAnCE_ExecutionManager
   dynamicflags = EXECUTIONMANAGER_BUILD_DLL DANCE_EXECUTIONMANAGER_MODULE_BUILD_DLL
     
@@ -9,5 +9,15 @@ project(ExecutionManager): dance_lib, taolib, tao_output, utils, strategies, nam
     $(CIAO_ROOT)/DAnCE/Interfaces/ExecutionManagerDaemonS.cpp
     ExecutionManager_Impl.cpp
     ExecutionManager_Module.cpp
+  }
+}
+
+project(Execution_Manager_Exec) : dance_exe, dance_domain_application_manager, naming_serv {
+  exename = dance_execution_manager
+  after += ExecutionManager_Module
+  libs += DAnCE_ExecutionManager
+
+  Source_Files {
+    Execution_Manager_Exec.cpp
   }
 }

@@ -1,3 +1,249 @@
+Wed Nov 12 21:26:14 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        
+          Log message fixes. 
+        
+Wed Nov 12 21:22:43 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/Module_Main.h:
+
+          Fix to prevent a segmentation fault.
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.h:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Module.h:
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
+        * DAnCE/ExecutionManager/Execution_Manager_Exec.cpp:
+
+          Fixes to enable running EM as a standalone executable and enable
+          EM driven deployments.
+
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+
+          Minor log message fix.
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimpleComponentExplicitHome.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/em_launcher.mpc:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp:
+
+          Text excercising EM controlled deployment of a single component to single node.
+
+Wed Nov 12 19:53:23 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments:
+
+          Destination for EM included tests.
+
+        * DAnCE/tests/CIAO/NodeManager-Deployments/MultiplexConnectionExplicitHome.cdp:
+
+          Test verifying multiplex facet connections.
+
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components:
+        * DAnCE/tests/CIAO/Components:
+
+           Moved components directory up one level.
+
+Wed Nov 12 19:35:47 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:
+
+          Improved exception handling.
+
+Wed Nov 12 19:30:30 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/ComponentAttributesSetter.h:
+        * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+          Changes  necessary to support attribiute initialization.
+
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute.cidl:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute.idl:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute.mpc:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute_exec.h:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute_exec.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute_exec_export.h:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute_stub_export.h:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleAttribute_svnt_export.h:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/SimpleAttributeExplicitHome.cdp:
+
+          Test that excercises the setting of attributes on homes and components
+          during deployment.
+
+Wed Nov 12 18:06:10 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/DAnCE_Properties.idl:
+
+          Added naming service integration properties.
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleUser_exec.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/SimplexConnectionExplicitHome.cdp:
+
+          Changes necessary to get simplex facet/receptacle connections working.
+
+        * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
+
+          Removed some extra output.
+
+Wed Nov 12 17:14:28 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleProvider_exec.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleUser_exec.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/SimplexConnectionExplicitHome.cdp:
+          Changes for facet/receptacle connections, not finished yet -
+          moving to different machine.
+
+Fri Nov  7 18:46:09 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleConsumer_exec.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleEmitter_exec.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/EmitsConnectionExplicitHome.cdp:
+
+          Fiexes for enabling connection of a standard emits/sub connection.
+
+Fri Nov  7 18:28:14 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimplePublisher_exec.cpp:
+
+          Fixes for enabling connection of a standard pub/sub connection.
+
+Fri Nov  7 15:10:58 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CCF/CCF/CIDL/CIDL.mpc:
+        * CCF/CCF/CIDL/SemanticAction/Impl/Composition.cpp:
+        * CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.cpp:
+        * CCF/CCF/IDL2/IDL2.mpc:
+        * CCF/CCF/IDL2/LexicalAnalyzer.hpp:
+        * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
+        * CCF/CCF/IDL2/Traversal/Array.cpp:
+        * CCF/CCF/IDL3/IDL3.mpc:
+        * CIDLC/CIDLC.mwc:
+
+          Reverted to revision 80830, as changes proposed in bug #3849
+          caused a segmentation fault in Linux.
+
+Fri Nov  7 14:57:53 UTC 2008  William R. Otte  <wotte@william-r-ottes-macbook-pro.local>
+
+        * DAnCE/tests/CIAO/NodeManager-Deployments/PublishConnectionExplicitHome.cdp:
+        Test plan that will excercise a publish/subscribe connection.
+
+Thu Nov  6 20:55:19 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CCF/CCF/CIDL/CIDL.mpc:
+
+          Added reference to '.' in Source_Files accidentally (?) removed
+          by Tue Nov  4 10:10:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>.
+
+Thu Nov  6 20:25:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CCF/CCF/IDL2/IDL2.mpc
+        * CCF/CCF/IDL3/IDL3.mpc
+          Set /P flag for the archiver with bmake
+
+Thu Nov  6 19:25:22 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/XSCRT/XML.hpp:
+        * tools/XML/XML_Schema_Resolver.cpp:
+
+          Added support for xerces versions < 3.0.
+
+Thu Nov  6 18:47:56 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Logger/Log_Macros.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+
+          Warning fixes for Linux.
+
+Thu Nov  6 16:35:22 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.mpc:
+
+          Disabled this build.
+
+        * tests/CIAO_ComponentServer/SimpleComponent/run_test.pl:
+
+          Minor fixes.
+
+        * tools/Config_Handlers/IRDD_Handler.h:
+        * tools/Config_Handlers/IRDD_Handler.cpp:
+        * tools/Config_Handlers/XML_Typedefs.h:
+        * tools/Config_Handlers/XML_Typedefs.cpp:
+        * tools/XML/XML_Helper.tpp:
+
+          Compilation fixes.
+
+Thu Nov  6 15:28:10 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleConsumer.idl:
+                * DAnCE/tests/NameServiceTest/NameServiceTest.mpc:
+        * DAnCE/tests/RedirectionServiceTest/RedirectionServiceTest.mpc:
+        * ciao/Containers/Swapping/Dynamic_Component_Activator.h:
+
+          Compilation fixes.
+
+        * tests/CIAO_ComponentServer/SimpleComponent/run_test.pl:
+
+          Added a run_test script.
+
+Wed Nov  5 20:08:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/LexicalAnalyzer.hpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
+          Various changes for CB2009 support
+
+Tue Nov  4 10:10:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CCF/CCF/CIDL/SemanticAction/Impl/Composition.cpp:
+        * CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.cpp:
+          Fixed ambiguity problems with CodeGear C++ Builder 2009
+
+        * CCF/CCF/CIDL/CIDL.mpc
+          Set /P flag for the archiver with bmake
+
+Mon Nov  3 19:56:29 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/NodeManager.mpc:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/Components/SimpleConsumer.idl:
+        * ciao/Containers/Session/Session_Container.mpc:
+        * tests/CIAO_ComponentServer/SimpleComponent/client.cpp:
+        * tools/XML/XML_Error_Handler.cpp:
+        * tools/XML/XML_Helper.tpp:
+
+          Compile/link fixes on linux.
+
+Mon Nov  3 18:32:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
+        * DAnCE/NodeManager/Node_Manager_Module.cpp
+        * DAnCE/NodeManager/NodeManager.mpc
+        * DAnCE/Starter/Starter.h
+        * MPC/config/cidlc.mpb
+        * MPC/config/dance_node_manager.mpb
+        * tools/XML/XML.mpc
+          Fixed various compile/link problems
+
+Mon Nov  3 17:13:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+          Added missing base project
+
 Thu Oct 23 09:25:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Container_Base.h

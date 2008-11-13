@@ -239,22 +239,10 @@ namespace CIAO
     XML_Helper<Resolver, Error>::write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc,
                                             const ACE_TCHAR *file) const
     {
-    throw 1;
-	/* @@TODO: Reimplement for xerces 3.
-
-      try
-        {
-          bool retn;
-          std::auto_ptr <XERCES_CPP_NAMESPACE::DOMWriter> writer (impl_->createDOMWriter());
-          
-          if (writer->canSetFeature (XMLUni::fgDOMWRTFormatPrettyPrint,
-                                     true))
-            writer->setFeature (XMLUni::fgDOMWRTFormatPrettyPrint, true);
-          
-          std::auto_ptr <xercesc::XMLFormatTarget> ft (new xercesc::LocalFileFormatTarget(file));
-          retn = writer->writeNode(ft.get (), *doc);
-          
-          return retn;
+      /*try
+        {*/
+        throw 1;
+    	/* @@TODO: Reimplement for xerces 3. 
         }
       catch (const xercesc::XMLException &e)
         {
@@ -276,8 +264,7 @@ namespace CIAO
                       e.getSrcFile (),
                       e.getSrcLine ()));
           return false;
-        }
-	*/
+          }*/
     }
   }
 }
