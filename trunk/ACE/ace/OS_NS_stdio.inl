@@ -768,7 +768,7 @@ ACE_OS::perror (const wchar_t *s)
 #else
   ACE_Wide_To_Ascii n_s (s);
   ::perror (n_s.char_rep ());
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_LACKS_PERROR */
 }
 #endif /* ACE_HAS_WCHAR */
 

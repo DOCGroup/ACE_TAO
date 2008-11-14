@@ -89,7 +89,7 @@ public:
    * @param use_select Affects behavior when called back by the reactor
    *                   when a connection can be accepted.  If non-zero,
    *                   this object will accept all pending connections,
-   *                   intead of just the one that triggered the reactor
+   *                   instead of just the one that triggered the reactor
    *                   callback.  Uses ACE_OS::select() internally to
    *                   detect any remaining acceptable connections.
    *                   The default is 1.
@@ -128,7 +128,7 @@ public:
    * @param use_select Affects behavior when called back by the reactor
    *                   when a connection can be accepted.  If non-zero,
    *                   this object will accept all pending connections,
-   *                   intead of just the one that triggered the reactor
+   *                   instead of just the one that triggered the reactor
    *                   callback.  Uses ACE_OS::select() internally to
    *                   detect any remaining acceptable connections.
    *                   The default is 1.
@@ -341,7 +341,7 @@ public:
    * @param use_select   Affects behavior when called back by the reactor
    *                     when a connection can be accepted.  If non-zero,
    *                     this object will accept all pending connections,
-   *                     intead of just the one that triggered the reactor
+   *                     instead of just the one that triggered the reactor
    *                     callback.  Uses ACE_OS::select() internally to
    *                     detect any remaining acceptable connections.
    *                     The default is 1.

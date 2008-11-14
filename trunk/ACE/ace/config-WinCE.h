@@ -103,6 +103,7 @@
 # define ACE_USES_WINCE_SEMA_SIMULATION
 # define ACE_LACKS_ERRNO_H
 # define ACE_LACKS_DUP
+# define ACE_LACKS_GETSYSTEMTIMEASFILETIME
 #endif
 
 #define ACE_LACKS_REGNOTIFYCHANGEKEYVALUE
@@ -226,9 +227,6 @@
 #if !defined (BUFSIZ)
 #  define BUFSIZ 1024
 #endif
-
-typedef void (__cdecl * __sighandler_t)(int); // keep Signal compilation happy
-typedef long off_t;
 
 #define ACE_LACKS_MALLOC_H      // We do have malloc.h, but don't use it.
 

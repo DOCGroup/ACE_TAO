@@ -59,6 +59,10 @@ typedef double ACE_timer_t;
    typedef unsigned int dev_t;
 #endif /* ACE_LACKS_DEV_T */
 
+#if defined (ACE_HAS_WINCE)
+  typedef long off_t;
+#endif
+
 #if defined(ACE_WIN32) && defined(_FILE_OFFSET_BITS) && (_FILE_OFFSET_BITS==64)
   typedef __int64 ACE_OFF_T;
 #else

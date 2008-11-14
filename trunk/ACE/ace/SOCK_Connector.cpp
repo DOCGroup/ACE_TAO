@@ -119,8 +119,7 @@ ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
       if (error == EINPROGRESS || error == EWOULDBLOCK)
         {
           // This expression checks if we were polling.
-          if (timeout->sec () == 0
-              && timeout->usec () == 0)
+          if (*timeout == ACE_Time_Value::zero)
             {
 #if defined(ACE_WIN32)
               // In order to detect when the socket that has been
