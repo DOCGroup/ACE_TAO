@@ -99,14 +99,14 @@ ACE_RCSID (Config_Handlers,
         if (xsc_dp.label_p ())
           {
             this->idl_dp_->label =
-              CORBA::string_dup (xsc_dp.label ().c_str ());
+              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (xsc_dp.label ().c_str ()));
           }
 
         // Read in the UUID, if present
         if (xsc_dp.UUID_p ())
           {
             this->idl_dp_->UUID =
-              CORBA::string_dup (xsc_dp.UUID ().c_str ());
+              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (xsc_dp.UUID ().c_str ()));
           }
 
         // Similar thing for dependsOn
@@ -131,7 +131,7 @@ ACE_RCSID (Config_Handlers,
 
             this->idl_dp_->infoProperty.length (len + 1);
 
-            if (pstart->name () == "CIAOServerResources")
+            if (pstart->name () == ACE_TEXT ("CIAOServerResources"))
               {
                 /*
                  * Hook for RT-CCM
@@ -145,10 +145,10 @@ ACE_RCSID (Config_Handlers,
                 SRD_Handler srd_handler (pstart->value ().value ().begin_string ()->c_str ());
 
                 // Populate the property
-                this->idl_dp_->infoProperty [len].name = pstart->name ().c_str ();
+                this->idl_dp_->infoProperty [len].name = ACE_TEXT_ALWAYS_CHAR (pstart->name ().c_str ());
                 this->idl_dp_->infoProperty [len].value <<= *(srd_handler.srd_idl ());
               }
-            else if (pstart->name () == "CIAOEvents")
+            else if (pstart->name () == ACE_TEXT ("CIAOEvents"))
               {
                 /*
                 * Hook for EVENTS
@@ -161,7 +161,7 @@ ACE_RCSID (Config_Handlers,
                 CIAOEvents_Handler event_handler (pstart->value ().value ().begin_string ()->c_str ());
 
                 // Populate the property
-                this->idl_dp_->infoProperty [len].name = pstart->name ().c_str ();
+                this->idl_dp_->infoProperty [len].name = ACE_TEXT_ALWAYS_CHAR (pstart->name ().c_str ());
                 this->idl_dp_->infoProperty [len].value <<= *(event_handler.esd_idl ());
               }
             else
@@ -217,14 +217,14 @@ ACE_RCSID (Config_Handlers,
         // Read in the label, if present, since minoccurs = 0
         if (plan.label != 0)
           {
-            XMLSchema::string< char > i((plan.label));
+            XMLSchema::string< ACE_TCHAR > i(ACE_TEXT_CHAR_TO_TCHAR (plan.label.in ()));
             this->xsc_dp_->label(i);
           }
 
         // Read in the UUID, if present
         if (plan.UUID != 0)
           {
-            XMLSchema::string< char > j((plan.UUID));
+            XMLSchema::string< ACE_TCHAR > j(ACE_TEXT_CHAR_TO_TCHAR (plan.UUID.in ()));
             this->xsc_dp_->UUID(j);
           }
 

@@ -45,12 +45,12 @@ namespace CIAO
       CIAO_TRACE("IDD_Handler::instance_deployment_descr");
       try
         {
-          dest.name = src.name ().c_str ();
-          dest.node = src.node ().c_str ();
+          dest.name = ACE_TEXT_ALWAYS_CHAR (src.name ().c_str ());
+          dest.node = ACE_TEXT_ALWAYS_CHAR (src.node ().c_str ());
 
           if (src.id_p ())
             {
-              ACE_CString cstr (src.id ().c_str ());
+              ACE_CString cstr (ACE_TEXT_ALWAYS_CHAR (src.id ().c_str ()));
               IDD_Handler::IDREF.bind_ref (cstr, pos);
             }
           else
@@ -63,11 +63,12 @@ namespace CIAO
           // We know there should be only one element
           dest.source.length (1);
           dest.source [0] =
-            src.source ().c_str ();
+            ACE_TEXT_ALWAYS_CHAR (src.source ().c_str ());
 
           CORBA::ULong tmp = 0;
-          MDD_Handler::IDREF.find_ref
-            (ACE_CString (src.implementation ().id ().c_str ()), tmp);
+          MDD_Handler::IDREF.find_ref (
+            ACE_CString (ACE_TEXT_ALWAYS_CHAR (src.implementation ().id ().c_str ())),
+            tmp);
 
           dest.implementationRef = tmp;
 
@@ -91,7 +92,7 @@ namespace CIAO
         }
       catch (Config_Error &ex)
         {
-          ex.name_ = src.name ()  + ":" + ex.name_;
+          ex.name_ = ACE_TEXT_ALWAYS_CHAR (src.name ().c_str ())  + std::string (":") + ex.name_;
           throw ex;
         }
       // Done!
@@ -102,17 +103,17 @@ namespace CIAO
     {
       CIAO_TRACE("IDD_Handler::instance_deployment_descr - reverse");
       //Get all the string/IDREFs
-      XMLSchema::string < ACE_TCHAR > name ((src.name));
-      XMLSchema::string < ACE_TCHAR > node ((src.node));
-      XMLSchema::string < ACE_TCHAR > source ("");
+      XMLSchema::string < ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
+      XMLSchema::string < ACE_TCHAR > node (ACE_TEXT_CHAR_TO_TCHAR (src.node.in ()));
+      XMLSchema::string < ACE_TCHAR > source (ACE_TEXT (""));
       if (src.source.length () > 0)
         {
-          XMLSchema::string < ACE_TCHAR > source_detail (src.source[0]);
+          XMLSchema::string < ACE_TCHAR > source_detail (ACE_TEXT_CHAR_TO_TCHAR (src.source[0].in ()));
           source = source_detail;
         }
       ACE_CString temp;
       MDD_Handler::IDREF.find_ref(src.implementationRef, temp);
-      XMLSchema::IDREF< ACE_TCHAR > implementation ((temp.c_str()));
+      XMLSchema::IDREF< ACE_TCHAR > implementation (ACE_TEXT_CHAR_TO_TCHAR (temp.c_str()));
 
       // Instantiate the IDD
       InstanceDeploymentDescription idd (name, node, source, implementation);
@@ -141,7 +142,7 @@ namespace CIAO
       ACE_CString idd_id ("_");
       idd_id += *uuid.to_string ();
 
-      XMLSchema::ID< ACE_TCHAR > xml_id (idd_id.c_str ());
+      XMLSchema::ID< ACE_TCHAR > xml_id (ACE_TEXT_CHAR_TO_TCHAR (idd_id.c_str ()));
 
       // Bind the ref and set it in the IDD
       IDD_Handler::IDREF.bind_next_available (idd_id);

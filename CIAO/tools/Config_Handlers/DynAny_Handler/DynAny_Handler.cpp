@@ -105,7 +105,7 @@ namespace CIAO
 
         case TCKind::tk_string_l:
           retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_string);
-          retval->insert_string (value.begin_string ()->c_str ());
+          retval->insert_string (ACE_TEXT_ALWAYS_CHAR (value.begin_string ()->c_str ()));
           break;
 
         case TCKind::tk_longlong_l:
@@ -201,7 +201,7 @@ namespace CIAO
           return Any (TCKind::tk_octet, val);
 
         case CORBA::tk_string:
-          val.add_string (dyn->get_string ());
+          val.add_string (ACE_TEXT_CHAR_TO_TCHAR (dyn->get_string ()));
           return Any (TCKind::tk_string, val);
 
         case CORBA::tk_longlong:

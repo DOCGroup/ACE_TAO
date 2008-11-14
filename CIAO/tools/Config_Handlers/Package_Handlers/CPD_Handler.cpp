@@ -22,7 +22,7 @@ namespace CIAO
             ::Deployment::PackagedComponentImplementation &toconfig)
         {
           CIAO_TRACE ("PCI_Handler::get_pci");
-          toconfig.name = desc.name ().c_str ();
+          toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
 
           CID_Handler::component_impl_descr (desc.referencedImplementation (),
                                              toconfig.referencedImplementation);
@@ -33,7 +33,7 @@ namespace CIAO
         {
           CIAO_TRACE ("PCI_Handler::get_pci - reverse");
           return PackagedComponentImplementation (
-                    src.name.in (),
+                    ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
                     CID_Handler::component_impl_descr (src.referencedImplementation));
         }
       };
@@ -56,17 +56,17 @@ namespace CIAO
 
         if (desc.href_p ())
           {
-            xsc_cpd.reset (CPD_Handler::resolve_cpd (desc.href ().c_str ()));
+            xsc_cpd.reset (CPD_Handler::resolve_cpd (ACE_TEXT_ALWAYS_CHAR (desc.href ().c_str ())));
             cpd = xsc_cpd.get ();
           }
         else
           cpd = &desc;
 
         if (cpd->label_p ())
-          toconfig.label = cpd->label ().c_str ();
+          toconfig.label = ACE_TEXT_ALWAYS_CHAR (cpd->label ().c_str ());
 
         if (cpd->UUID_p ())
-          toconfig.UUID = cpd->UUID ().c_str ();
+          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (cpd->UUID ().c_str ());
 
         // CID
         if (cpd->realizes_p ())
@@ -105,10 +105,10 @@ namespace CIAO
         ComponentPackageDescription toconfig;
 
         if (src.label.in () != 0)
-          toconfig.label (src.label.in ());
+          toconfig.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
 
         if (src.UUID.in () != 0)
-          toconfig.UUID (src.UUID.in ());
+          toconfig.UUID (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
 
         {
           toconfig.realizes
@@ -143,7 +143,7 @@ namespace CIAO
           return 0;
 
         xercesc::DOMDocument* dom =
-          XML_HELPER->create_dom (uri);
+          XML_HELPER->create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for component package description");

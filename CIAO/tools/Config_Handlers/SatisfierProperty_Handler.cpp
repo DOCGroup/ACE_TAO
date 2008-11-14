@@ -26,7 +26,7 @@ namespace CIAO
     {
       CIAO_TRACE("SatisfierProperty_Handler::get_sat_property");
 
-      toconfig.name = desc.name ().c_str ();
+      toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
 
       switch (desc.kind ().integral ())
         {
@@ -72,7 +72,7 @@ namespace CIAO
     {
       CIAO_TRACE("SatisfierProperty_Handler::get_sat_property - reverse");
 
-      ::XMLSchema::string< ACE_TCHAR > name ((src.name));
+      ::XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
       SatisfierPropertyKind::Value kind;
 
       const SatisfierPropertyKind *spk = 0;

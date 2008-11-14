@@ -14,7 +14,7 @@ namespace CIAO
                                                                           ::Deployment::ComponentPropertyDescription& toconfig)
     {
       CIAO_TRACE("ComponentPropertyDescription_Handler::component_property_description");
-      toconfig.name = CORBA::string_dup (desc.name ().c_str ());
+      toconfig.name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ()));
 
       // Delegate the DataType to the
       // DataType_Handler.
@@ -31,7 +31,7 @@ namespace CIAO
                                                                           const ::Deployment::ComponentPropertyDescription &src)
     {
       CIAO_TRACE("ComponentPropertyDescription_Handler::component_property_description - reverse");
-      XMLSchema::string< char > name ((src.name));
+      XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
       DataType dt (DataType_Handler::data_type (src.type));
       ComponentPropertyDescription cpd (name,dt);
       return cpd;

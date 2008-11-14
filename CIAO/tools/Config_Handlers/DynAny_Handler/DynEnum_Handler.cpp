@@ -33,7 +33,7 @@ namespace CIAO
            i != type.enum_ ().end_member ();
            ++i)
         {
-          members[index++] = CORBA::string_dup (i->c_str ());
+          members[index++] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (i->c_str ()));
         }
 
       // Grab pointer to the DynAny_Handler to use the orb and any factory.
@@ -41,9 +41,10 @@ namespace CIAO
 
       // @@ Leak this guy onto the heap to avoid a compile problem.
       CORBA::TypeCode_ptr tc =
-        DYNANY_HANDLER->orb ()->create_enum_tc (type.enum_ ().typeId ().c_str (),
-                                     type.enum_ ().name ().c_str (),
-                                     members);
+        DYNANY_HANDLER->orb ()->create_enum_tc (
+          ACE_TEXT_ALWAYS_CHAR (type.enum_ ().typeId ().c_str ()),
+          ACE_TEXT_ALWAYS_CHAR (type.enum_ ().name ().c_str ()),
+          members);
 
       ACE_ERROR ((LM_ERROR, "Type: %s \nName: %s\nvalue: %s\n",
                   type.enum_ ().typeId ().c_str (),
@@ -55,7 +56,7 @@ namespace CIAO
         DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
       DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow (temp.in ());
 
-      retval->set_as_string (value.begin_enum ()->c_str ());
+      retval->set_as_string (ACE_TEXT_ALWAYS_CHAR (value.begin_enum ()->c_str ()));
 
       return retval._retn ();
     }

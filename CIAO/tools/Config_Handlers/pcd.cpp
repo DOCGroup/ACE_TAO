@@ -473,7 +473,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "location")
+        if (n == ACE_TEXT ("location"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           add_location (t);
@@ -500,55 +500,55 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "label")
+        if (n == ACE_TEXT ("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "UUID")
+        else if (n == ACE_TEXT ("UUID"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           UUID (t);
         }
 
-        else if (n == "basePackage")
+        else if (n == ACE_TEXT ("basePackage"))
         {
           ::CIAO::Config_Handlers::ComponentPackageDescription t (e);
           basePackage (t);
         }
 
-        else if (n == "specializedConfig")
+        else if (n == ACE_TEXT ("specializedConfig"))
         {
           ::CIAO::Config_Handlers::PackageConfiguration t (e);
           specializedConfig (t);
         }
 
-        else if (n == "importedPackage")
+        else if (n == ACE_TEXT ("importedPackage"))
         {
           ::CIAO::Config_Handlers::ComponentPackageImport t (e);
           importedPackage (t);
         }
 
-        else if (n == "referencedPackage")
+        else if (n == ACE_TEXT ("referencedPackage"))
         {
           ::CIAO::Config_Handlers::ComponentPackageReference t (e);
           referencedPackage (t);
         }
 
-        else if (n == "selectRequirement")
+        else if (n == ACE_TEXT ("selectRequirement"))
         {
           ::CIAO::Config_Handlers::Requirement t (e);
           add_selectRequirement (t);
         }
 
-        else if (n == "configProperty")
+        else if (n == ACE_TEXT ("configProperty"))
         {
           ::CIAO::Config_Handlers::Property t (e);
           add_configProperty (t);
         }
 
-        else if (n == "contentLocation")
+        else if (n == ACE_TEXT ("contentLocation"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           contentLocation (t);
@@ -1151,7 +1151,7 @@ namespace CIAO
       void ComponentPackageImport::
       location_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("location", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("location"), top_ ()));
       }
 
       void ComponentPackageImport::
@@ -1191,7 +1191,7 @@ namespace CIAO
       void PackageConfiguration::
       label (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("label"), top_ ()));
         Traversal::PackageConfiguration::label (o);
         pop_ ();
       }
@@ -1199,7 +1199,7 @@ namespace CIAO
       void PackageConfiguration::
       UUID (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("UUID", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("UUID"), top_ ()));
         Traversal::PackageConfiguration::UUID (o);
         pop_ ();
       }
@@ -1207,7 +1207,7 @@ namespace CIAO
       void PackageConfiguration::
       basePackage (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("basePackage", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("basePackage"), top_ ()));
         Traversal::PackageConfiguration::basePackage (o);
         pop_ ();
       }
@@ -1215,7 +1215,7 @@ namespace CIAO
       void PackageConfiguration::
       specializedConfig (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("specializedConfig", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("specializedConfig"), top_ ()));
         Traversal::PackageConfiguration::specializedConfig (o);
         pop_ ();
       }
@@ -1223,7 +1223,7 @@ namespace CIAO
       void PackageConfiguration::
       importedPackage (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("importedPackage", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("importedPackage"), top_ ()));
         Traversal::PackageConfiguration::importedPackage (o);
         pop_ ();
       }
@@ -1231,7 +1231,7 @@ namespace CIAO
       void PackageConfiguration::
       referencedPackage (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("referencedPackage", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("referencedPackage"), top_ ()));
         Traversal::PackageConfiguration::referencedPackage (o);
         pop_ ();
       }
@@ -1239,7 +1239,7 @@ namespace CIAO
       void PackageConfiguration::
       selectRequirement_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("selectRequirement", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("selectRequirement"), top_ ()));
       }
 
       void PackageConfiguration::
@@ -1258,7 +1258,7 @@ namespace CIAO
       void PackageConfiguration::
       configProperty_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("configProperty", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("configProperty"), top_ ()));
       }
 
       void PackageConfiguration::
@@ -1277,7 +1277,7 @@ namespace CIAO
       void PackageConfiguration::
       contentLocation (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("contentLocation", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("contentLocation"), top_ ()));
         Traversal::PackageConfiguration::contentLocation (o);
         pop_ ();
       }

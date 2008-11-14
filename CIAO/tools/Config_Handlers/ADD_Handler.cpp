@@ -44,10 +44,10 @@ namespace CIAO
                                               CORBA::ULong pos)
       {
         CIAO_TRACE("ADD_Handler::atrifact_deployment_descr");
-        dest.name = src.name ().c_str ();
+        dest.name = ACE_TEXT_ALWAYS_CHAR (src.name ().c_str ());
 
 
-        dest.node = src.node ().c_str ();
+        dest.node = ACE_TEXT_ALWAYS_CHAR (src.node ().c_str ());
 
         ArtifactDeploymentDescription::location_const_iterator end =
           src.end_location ();
@@ -59,7 +59,7 @@ namespace CIAO
              start != end;
              ++start)
           {
-            dest.location[len++] = start->c_str ();
+            dest.location[len++] = ACE_TEXT_ALWAYS_CHAR (start->c_str ());
           }
 
         ArtifactDeploymentDescription::source_const_iterator sce =
@@ -71,7 +71,7 @@ namespace CIAO
              scb != sce;
              ++scb)
           {
-            dest.source[len++] = scb->c_str ();
+            dest.source[len++] = ACE_TEXT_ALWAYS_CHAR (scb->c_str ());
           }
 
         // @@TODO: See this loop is repeated
@@ -90,7 +90,7 @@ namespace CIAO
 
         if (src.id_p ())
           {
-            ACE_CString cstr (src.id ().c_str ());
+            ACE_CString cstr (ACE_TEXT_ALWAYS_CHAR (src.id ().c_str ()));
 
             ADD_Handler::IDREF.bind_ref (cstr,pos);
           }
@@ -131,8 +131,8 @@ namespace CIAO
       {
         CIAO_TRACE("ADD_Handler::atrifact_deployment_descr - reverse");
         //Get the name and node and store them in the add
-        XMLSchema::string< char > name ((src.name));
-        XMLSchema::string< char > node ((src.node));
+        XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
+        XMLSchema::string< ACE_TCHAR > node (ACE_TEXT_CHAR_TO_TCHAR (src.node.in ()));
 
         ArtifactDeploymentDescription add (name,node);
 
@@ -140,7 +140,7 @@ namespace CIAO
         size_t total = src.location.length ();
         for (size_t i = 0; i < total; ++i)
           {
-            XMLSchema::string< char > curr ((src.location[i]));
+            XMLSchema::string< ACE_TCHAR > curr (ACE_TEXT_CHAR_TO_TCHAR (src.location[i].in ()));
             add.add_location (curr);
           }
 
@@ -148,7 +148,7 @@ namespace CIAO
         total = src.source.length ();
         for (size_t j = 0; j < total; ++j)
           {
-            XMLSchema::string< char > curr ((src.source[j]));
+            XMLSchema::string< ACE_TCHAR > curr (ACE_TEXT_CHAR_TO_TCHAR (src.source[j].in ()));
             add.add_source (curr);
           }
 
@@ -165,7 +165,7 @@ namespace CIAO
         ACE_CString add_id ("_");
         add_id += *uuid.to_string ();
 
-        XMLSchema::ID< ACE_TCHAR > xml_id (add_id.c_str ());
+        XMLSchema::ID< ACE_TCHAR > xml_id (ACE_TEXT_CHAR_TO_TCHAR (add_id.c_str ()));
 
         // Bind the ref and set it in the IDD
         ADD_Handler::IDREF.bind_next_available (add_id);

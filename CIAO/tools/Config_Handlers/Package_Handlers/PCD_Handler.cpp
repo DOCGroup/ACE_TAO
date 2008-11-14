@@ -29,7 +29,7 @@ namespace CIAO
         if (dom == 0)
           {
             std::string error ("Unable to open file: ");
-            error += uri;
+            error += ACE_TEXT_ALWAYS_CHAR (uri);
             throw Parse_Error (error);
           }
 
@@ -76,7 +76,8 @@ namespace CIAO
         if (desc.contentLocation_p ())
           {
             // Take ownership of the resolved pcd
-            xsc_pcd.reset (PCD_Handler:: resolve_package_config (desc.contentLocation ().c_str ()));
+            xsc_pcd.reset (PCD_Handler:: resolve_package_config (
+              ACE_TEXT_ALWAYS_CHAR (desc.contentLocation ().c_str ())));
             pcd = xsc_pcd.get ();
           }
         else
@@ -84,11 +85,11 @@ namespace CIAO
 
         if (pcd->label_p ())
           toconfig.label =
-            pcd->label ().c_str ();
+            ACE_TEXT_ALWAYS_CHAR (pcd->label ().c_str ());
 
         if (pcd->UUID_p ())
           toconfig.UUID =
-            pcd->UUID ().c_str ();
+            ACE_TEXT_ALWAYS_CHAR (pcd->UUID ().c_str ());
 
         if (pcd->basePackage_p ())
           {
@@ -118,10 +119,10 @@ namespace CIAO
         PackageConfiguration pcd = PackageConfiguration ();
 
         if (src.label.in () != 0)
-          pcd.label (src.label.in ());
+          pcd.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
 
         if (src.UUID.in () != 0)
-          pcd.UUID (src.UUID.in ());
+          pcd.UUID (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
 
         if (src.basePackage.length () > 0)
           {
@@ -143,7 +144,7 @@ namespace CIAO
       PackageConfiguration * PCD_Handler::resolve_package_config (const char *uri)
       {
         xercesc::DOMDocument* dom =
-          XML_HELPER->create_dom (uri);
+          XML_HELPER->create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for PackageConfiguration");

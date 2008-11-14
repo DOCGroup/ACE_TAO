@@ -38,11 +38,11 @@ namespace CIAO
     {
       CIAO_TRACE("PSPE_Handler::sub_component_port_endpoint");
       dest.portName =
-        src.portName ().c_str ();
+        ACE_TEXT_ALWAYS_CHAR (src.portName ().c_str ());
 
       if (src.provider_p ())
         {
-          dest.provider = src.provider () == "true";
+          dest.provider = src.provider () == ACE_TEXT ("true");
         }
       else
         {
@@ -51,8 +51,9 @@ namespace CIAO
 
       CORBA::ULong tmp = 0;
 
-      IDD_Handler::IDREF.find_ref (ACE_CString (src.instance ().id ().c_str ()),
-                                   tmp);
+      IDD_Handler::IDREF.find_ref (
+        ACE_CString (ACE_TEXT_ALWAYS_CHAR (src.instance ().id ().c_str ())),
+        tmp);
 
       dest.instanceRef = tmp;
 
@@ -93,12 +94,12 @@ namespace CIAO
                                                const Deployment::PlanSubcomponentPortEndpoint &src)
     { // @@MAJO
       CIAO_TRACE("PSPE_Handler::sub_component_port_endpoint - reverse");
-      XMLSchema::string< char > pname ((src.portName));
-      XMLSchema::string< char > tval  ("true");
-      XMLSchema::string< char > prov  ("");
+      XMLSchema::string< ACE_TCHAR > pname (ACE_TEXT_CHAR_TO_TCHAR (src.portName.in ()));
+      XMLSchema::string< ACE_TCHAR > tval  (ACE_TEXT ("true"));
+      XMLSchema::string< ACE_TCHAR > prov  (ACE_TEXT (""));
       ACE_CString id;
       IDD_Handler::IDREF.find_ref(src.instanceRef, id);
-      XMLSchema::IDREF < ACE_TCHAR > idref(id.c_str());
+      XMLSchema::IDREF < ACE_TCHAR > idref(ACE_TEXT_CHAR_TO_TCHAR (id.c_str()));
 
       if (src.provider)
         prov = tval;

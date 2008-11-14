@@ -15,7 +15,7 @@ namespace CIAO
                             ::CIAO::DAnCE::PolicySet &dest)
     {
       if (src.id_p ())
-        dest.Id = CORBA::string_dup (src.id ().c_str ());
+        dest.Id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (src.id ().c_str ()));
 
       // Make room for all of the policies
       CORBA::ULong len (dest.policies.length ());
@@ -67,7 +67,7 @@ namespace CIAO
         {
           ::CIAO::DAnCE::ThreadpoolPolicyDef tpd;
 
-          tpd.Id = CORBA::string_dup (i->id ().c_str ());
+          tpd.Id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (i->id ().c_str ()));
 
           dest.policies[len++].ThreadpoolDef (tpd);
         }
@@ -79,7 +79,7 @@ namespace CIAO
         {
           ::CIAO::DAnCE::PriorityBandedConnectionPolicyDef pbc;
 
-          pbc.Id = CORBA::string_dup (i->id ().c_str ());
+          pbc.Id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (i->id ().c_str ()));
 
           dest.policies[len++].PriorityBandedConnectionDef (pbc);
         }
@@ -92,7 +92,7 @@ namespace CIAO
       PolicySet ps;
 
       if (src.Id.in ())
-        ps.id (src.Id.in ());
+        ps.id (ACE_TEXT_CHAR_TO_TCHAR (src.Id.in ()));
 
       for (CORBA::ULong i = 0;
            i < src.policies.length ();
@@ -123,12 +123,12 @@ namespace CIAO
               break;
 
             case ::CIAO::DAnCE::THREADPOOL_POLICY_TYPE:
-              ps.add_threadpool  (src.policies[i].ThreadpoolDef ().Id.in ());
+              ps.add_threadpool (ACE_TEXT_CHAR_TO_TCHAR (src.policies[i].ThreadpoolDef ().Id.in ()));
               break;
 
             case ::CIAO::DAnCE::PRIORITY_BANDED_CONNECTION_POLICY_TYPE:
               ps.add_priorityBandedConnection (
-                src.policies[i].PriorityBandedConnectionDef ().Id.in ());
+                ACE_TEXT_CHAR_TO_TCHAR (src.policies[i].PriorityBandedConnectionDef ().Id.in ()));
               break;
 
             case 0:
