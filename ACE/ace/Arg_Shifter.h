@@ -118,7 +118,7 @@ public:
   const CHAR_TYPE *get_the_parameter (const CHAR_TYPE* flag);
 
   /**
-   * Check if the current argument matches (case insensitive) <flag>
+   * Check if the current argument matches (case insensitive) @a flag
    *
    * ------------------------------------------------------------
    *
