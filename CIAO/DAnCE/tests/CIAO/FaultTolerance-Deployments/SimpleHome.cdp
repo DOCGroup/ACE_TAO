@@ -69,6 +69,50 @@
     <name>SimpleNullHome</name>
     <node>Node</node>
     <!-- hostname -->
+    <configProperty>
+      <name>COMPONENT_REFERENCE</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>0</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>object_id</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleFT</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>load</name>
+      <value>
+        <type>
+          <kind>tk_double</kind>
+        </type>
+        <value>
+          <double>40.0</double>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>role</name>
+      <value>
+        <type>
+          <kind>tk_short</kind>
+        </type>
+        <value>
+          <short>1</short>
+        </value>
+      </value>
+    </configProperty>
     <source/>
     <implementation xmi:idref="SimpleNullHomeImplementation" />
   </instance>

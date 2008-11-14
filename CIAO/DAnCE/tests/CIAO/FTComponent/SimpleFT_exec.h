@@ -60,6 +60,10 @@ namespace CIDL_SimpleFT_Impl
 
     // Attribute operations.
 
+    virtual CORBA::Object_ptr COMPONENT_REFERENCE (void);
+    
+    virtual void COMPONENT_REFERENCE (const CORBA::Object_ptr COMPONENT_REFERENCE);
+
     virtual char * object_id (void);
     
     virtual void object_id (const char * object_id);
@@ -106,6 +110,8 @@ namespace CIDL_SimpleFT_Impl
     // members needed for component functionality
 
     CORBA::ORB_var orb_;
+
+    CORBA::Object_var myself_;
 
     StateSynchronizationAgent_var agent_;
 

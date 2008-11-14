@@ -7,6 +7,7 @@ module Simple
 {
   component SimpleFT supports test
   {
+    attribute Object COMPONENT_REFERENCE;
     attribute string object_id;
     attribute double load;
     attribute short  role;
