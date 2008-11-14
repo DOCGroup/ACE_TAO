@@ -2266,6 +2266,7 @@ Alexandre Skrzyniarz <alexandre dot skrzyniarz at fr dot thalesgroup dot com>
 E Vahala <erkki dot vahala at pp dot inet dot fi>
 Christian Fromme <kaner dot strace dot org>
 Daniel Lang <danial dot lang at alphagate dot at>
+Greg Bothe <ace at netrats dot net>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

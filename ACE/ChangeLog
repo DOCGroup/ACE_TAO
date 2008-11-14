@@ -1,3 +1,15 @@
+Fri Nov 14 11:38:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2772_Regression_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added an ACE-ified version of the regression test for bugzilla
+          2772. This hangs on my Vista development system. Marked the
+          bug as not fixed to not pollute the test stats for the bczar.
+          Let the scoreboard now show whether this works or not. Thanks
+          to Greg Bothe <ace at netrats dot net> for creating the
+          original test
+
 Fri Nov 14 10:59:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Log_Thread_Inheritance_Test.cpp:
