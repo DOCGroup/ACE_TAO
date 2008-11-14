@@ -48,7 +48,7 @@ public:
 
 private:
   /// The IP address used to broadcast
-  const char* bcast_address_;
+  const ACE_TCHAR *bcast_address_;
 
   /// The port used to send and receive bcast messages...
   u_short bcast_port_;

@@ -23,6 +23,7 @@
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "tao/Intrusive_Ref_Count_Handle_T.h"
 
 template <class Servant>
 class Server
@@ -51,26 +52,24 @@ public:
   // Initialize the Server state - parsing arguments and waiting.
   // interface_name is the name used to register the Servant.
 
-  int register_name (void);
+  int register_name (const char *name);
   // After calling <init>, this method will register the server with
-  // the TAO Naming Service using the servant_name passed to <init>.
+  // the TAO Naming Service using the name passed to this method.
 
   int run (void);
   // Run the orb.
 
-  int test_for_ins (CORBA::String_var ior);
+  int test_for_ins (const char *ior);
   // Ignore this method if you are not testing the InterOperable
   // Naming Service.
 
-protected:
-  Servant servant_;
-  // Servant class
-
-  const char *name;
-  // name of the servant to be used for TAO Naming Service
-
+private:
   int parse_args (void);
   // Parses the commandline arguments.
+
+  typedef TAO_Intrusive_Ref_Count_Handle<Servant> Servant_var;
+  Servant_var servant_;
+  // A holder of the servant that does ref counting for him.
 
   TAO_ORB_Manager orb_manager_;
   // The ORB manager - a helper class for accessing the POA and
@@ -79,13 +78,13 @@ protected:
   TAO_Naming_Client naming_client_;
   // helper class for getting access to Naming Service.
 
-  FILE *ior_output_file_;
+  ACE_TCHAR *ior_output_file_;
   // File where the IOR of the server object is stored.
 
   int naming_;
   // Flag to indicate whether naming service could be used
 
-  char *ins_;
+  ACE_TCHAR *ins_;
   // Used test the INS.
 
   int argc_;
@@ -95,7 +94,7 @@ protected:
   // The command line arguments.
 };
 
-template <class INTERFACE_OBJECT, class Var>
+template <class ServerInterface>
 class Client
 {
   // = TITLE
@@ -114,31 +113,35 @@ public:
   ~Client (void);
   // Destructor.
 
-  int init (const char *name,int argc, ACE_TCHAR *argv[]);
+  int init (const char *name, int argc, ACE_TCHAR *argv[]);
   // Initialize the client communication endpoint with server.
 
-  INTERFACE_OBJECT *operator-> () { return server_.in ();};
+  ServerInterface *operator-> () { return server_.in (); }
   // Return the interface object pointer.
 
-  int shutdown (void );
+  int do_shutdown (void);
   // Returns the shutdown flag.
 
-  void shutdown (int);
+  void do_shutdown (int);
   // Fills in the shutdwon flag.
 
-  int obtain_initial_references (void);
+  int obtain_initial_references (const char *name);
   // Initialize naming service
 
-  CORBA::ORB_ptr orb (void) {return this->orb_.in ();}
-protected:
-  CORBA::ORB_var orb_;
-  // Remember our orb.
+  CORBA::ORB_ptr orb (void)
+    {
+      return CORBA::ORB::_duplicate (this->orb_.in ());
+    }
 
+private:
   int read_ior (ACE_TCHAR *filename);
   // Function to read the server IOR from a file.
 
   int parse_args (void);
   // Parses the arguments passed on the command line.
+
+  CORBA::ORB_var orb_;
+  // Remember our orb.
 
   TAO_Naming_Client naming_client_;
   // helper class for getting access to Naming Service.
@@ -149,19 +152,17 @@ protected:
   ACE_TCHAR **argv_;
   // arguments from command line.
 
-  char *ior_;
+  ACE_CString ior_;
   // IOR of the obj ref of the server.
 
-  char *name_;
-  // Name to be usred for the naming service
-
-  Var server_;
+  typedef TAO_Intrusive_Ref_Count_Handle<ServerInterface> ServerInterface_var;
+  ServerInterface_var server_;
   // Server object
 
   int naming_;
   // Flag to use the naming service
 
-  int shutdown_;
+  int do_shutdown_;
   // Flag for shutting down the server
 };
 

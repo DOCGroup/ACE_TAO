@@ -61,7 +61,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'p':
-        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()),
+        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
                            "%u",
                            &protocol_type);
         if (result == 0 || result == EOF)
@@ -118,7 +118,7 @@ check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
 
   for (CORBA::ULong i = 0; i < protocols->length (); ++i)
     {
-      CORBA::ULong protocol_type = protocols[i].protocol_type;
+      CORBA::ULong const protocol_type = protocols[i].protocol_type;
       ACE_DEBUG ((LM_DEBUG,
                   "  Protocol %u: IOP::ProfileId = %u\n",
                   i, protocol_type));
@@ -302,7 +302,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "\nActivated as <%s>\n\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "\nActivated as <%C>\n\n", ior.in ()));
 
       if (ior_output_file != 0)
         {

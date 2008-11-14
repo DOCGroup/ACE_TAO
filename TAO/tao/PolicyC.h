@@ -60,10 +60,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
@@ -332,7 +328,7 @@ namespace CORBA
     // Concrete non-local interface only.
     Policy (
         IOP::IOR *ior,
-        TAO_ORB_Core *orb_core = 0
+        TAO_ORB_Core *orb_core
       );
 
     // Non-local interface only.
@@ -429,10 +425,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
 

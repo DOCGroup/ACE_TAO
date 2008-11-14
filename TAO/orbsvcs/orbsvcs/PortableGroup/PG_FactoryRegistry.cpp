@@ -48,7 +48,7 @@ TAO::PG_FactoryRegistry::PG_FactoryRegistry (const char * name)
   , object_id_ (0)
   , this_obj_ (0)
   , ior_output_file_(0)
-  , ns_name_(0)
+  , ns_name_("")
   , naming_context_(0)
   , this_name_(1)
   , quit_on_idle_(0)
@@ -143,10 +143,10 @@ int TAO::PG_FactoryRegistry::fini (void)
     ACE_OS::unlink (this->ior_output_file_);
     this->ior_output_file_ = 0;
   }
-  if (this->ns_name_ != 0)
+  if (this->ns_name_.length () != 0)
   {
     this->naming_context_->unbind (this_name_);
-    this->ns_name_ = 0;
+    this->ns_name_ = "";
   }
   return 0;
 }
@@ -224,7 +224,7 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
                              this->ior_.in ());
   }
 
-  if (this->ns_name_ != 0)
+  if (this->ns_name_.length () != 0)
   {
     this->identity_ = "name:";
     this->identity_ += this->ns_name_;
@@ -242,7 +242,7 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
       CosNaming::NamingContext::_narrow (naming_obj.in ());
 
     this->this_name_.length (1);
-    this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
+    this->this_name_[0].id = CORBA::string_dup (this->ns_name_.c_str ());
 
     this->naming_context_->rebind (this->this_name_, this->this_obj_.in()  //CORBA::Object::_duplicate(this_obj)
                             );

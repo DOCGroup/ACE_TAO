@@ -58,13 +58,7 @@ namespace TAO
       /// Constructor.
       Union (char const * id,
              char const * name,
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
-             // Borland C++ currently can't handle a reference to
-             // const pointer to const CORBA::TypeCode_ptr
-             TypeCodeType discriminant_type,
-#else
              TypeCodeType const & discriminant_type,
-#endif
              CaseArrayType const & cases,
              CORBA::ULong ncases,
              CORBA::Long default_index);

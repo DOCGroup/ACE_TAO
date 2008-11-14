@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //   Balachandran Natarajan <bala@cs.wustl.edu>
-//
+//    
 // ============================================================================
 
 #ifndef TIME_CLIENT_I_H
@@ -36,16 +36,15 @@ public:
   Time_Client_i (void);
   // Constructor
 
-  virtual ~Time_Client_i (void);
+  ~Time_Client_i (void);
   // Destructor
 
-  virtual int run (const char *,int, ACE_TCHAR** );
+  int run (const char *, int, ACE_TCHAR**);
   // Execute the methods
 
 private:
-  Client<Time, Time_var> client;
+  Client<Time> client_;
   // Instantiate the client object.
 };
-
 
 #endif /* TIME_CLIENT_I_H */

@@ -71,6 +71,11 @@ public:
                                   CORBA::Object_ptr obj,
                                   bool rebind = false);
 
+  /**
+   * Unregister an object reference with the table
+   */
+  CORBA::Object_ptr unregister_initial_reference (const char * id);
+
   /// Return the object reference associated with the given ID.
   /// A duplicate is returned.
   CORBA::Object_ptr resolve_initial_reference (const char * id);
@@ -95,9 +100,9 @@ private:
    * @name The canonical ACE_Map methods
    */
   //@{
-  int bind (const char *orb_id, CORBA::Object_ptr obj);
-  CORBA::Object_ptr find (const char *orb_id); // Returns a duplicate.
-  int unbind (const char *orb_id);
+  int bind_i (const char *orb_id, CORBA::Object_ptr obj);
+  CORBA::Object_ptr find_i (const char *orb_id); // Returns a duplicate.
+  int unbind_i (const char *orb_id);
   //@}
 
 private:

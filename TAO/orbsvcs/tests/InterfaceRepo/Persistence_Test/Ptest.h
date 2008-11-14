@@ -51,7 +51,7 @@ public:
 
 private:
   void populate (void);
-  void query (void);
+  int query (void);
   // The two IFR tests.
 
   int parse_args (int argc,

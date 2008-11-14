@@ -132,7 +132,7 @@ private:
 class TAO_Trading_Serv_Export TAO_Lockable
 #else
 class TAO_Lockable
-#endif  /* __BORLANDC__ <= 0x593 */
+#endif  /* __BORLANDC__ <= 0x610 */
 {
 public:
   virtual ~TAO_Lockable (void);

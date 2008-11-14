@@ -28,10 +28,6 @@ namespace
   const size_t N_THREADS = 20;
 #endif
   const size_t N_ITERATIONS = 100;
-
-  CORBA::ORB_var g_pOrb;
-  PortableServer::POA_var g_pPoa;
-  SimpleNamingService_var g_pNameService;
 }
 
 class A_i : public virtual POA_A
@@ -41,14 +37,21 @@ class A_i : public virtual POA_A
 class B_i : public virtual POA_C
 {
 public:
+  B_i (PortableServer::POA_ptr poa)
+    : poa_ (PortableServer::POA::_duplicate (poa))
+  {}
+
   virtual A_ptr
   makeA ()
   {
     PortableServer::ServantBase_var servant = new A_i;
-    g_pPoa->activate_object (servant.in());
-    CORBA::Object_var obj = g_pPoa->servant_to_reference (servant.in());
+    PortableServer::ObjectId_var tmp = this->poa_->activate_object (servant.in());
+    CORBA::Object_var obj = this->poa_->servant_to_reference (servant.in());
     return A::_narrow (obj.in ());
   }
+
+private:
+  PortableServer::POA_var poa_;
 };
 
 // Thread for ORB->run()
@@ -62,43 +65,47 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      ACE_Thread_Manager threads;
-
       // Normal corba init
-      g_pOrb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var Orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var pPoaObj =
-        g_pOrb->resolve_initial_references ("RootPOA");
-      g_pPoa = PortableServer::POA::_narrow (pPoaObj.in ());
-      PortableServer::POAManager_var pMgr = g_pPoa->the_POAManager ();
+        Orb->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var Poa = PortableServer::POA::_narrow (pPoaObj.in ());
+      PortableServer::POAManager_var pMgr = Poa->the_POAManager ();
       pMgr->activate ();
 
       CORBA::Object_var pNSObj =
-        g_pOrb->resolve_initial_references ("SimpleNamingService");
-      g_pNameService = SimpleNamingService::_narrow (pNSObj.in ());
+        Orb->resolve_initial_references ("SimpleNamingService");
+      SimpleNamingService_var NameService =
+        SimpleNamingService::_narrow (pNSObj.in ());
 
-      if (CORBA::is_nil (g_pNameService.in ()))
+      if (CORBA::is_nil (NameService.in ()))
         {
           ACE_DEBUG ((LM_ERROR,
                       "ERROR: Could not locate the Simple Naming Service\n"));
           return 1;
         }
 
-      ACE_Thread::spawn (OrbRunThread, 0, THR_NEW_LWP | THR_DETACHED);
+      ACE_Thread_Manager orb_thread;
+      orb_thread.spawn (OrbRunThread, Orb.in (), THR_NEW_LWP | THR_DETACHED);
 
       // Setup
-      PortableServer::ServantBase_var servant = new B_i;
-      g_pPoa->activate_object (servant.in());
-      CORBA::Object_var b = g_pPoa->servant_to_reference (servant.in());
+      PortableServer::ServantBase_var servant = new B_i (Poa.in ());
+      PortableServer::ObjectId_var tmp = Poa->activate_object (servant.in());
+      CORBA::Object_var b = Poa->servant_to_reference (servant.in());
 
-      g_pNameService->bind (b.in ());
+      NameService->bind (b.in ());
 
       //Start threads
-      threads.spawn_n (N_THREADS, TestThread);
+      ACE_Thread_Manager threads;
+      threads.spawn_n (N_THREADS, TestThread, NameService.in ());
       ACE_DEBUG ((LM_INFO, "All threads spawned.\n"));
 
       threads.wait ();
 
+      Orb->shutdown (0);
+      orb_thread.wait();
+      Orb->destroy ();
     } //destructor of ACE_Thread_Manager = implicit join
   catch (CORBA::Exception& ex)
     {
@@ -106,18 +113,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  g_pOrb->shutdown (0);
-  g_pOrb->destroy ();
-
   return 0;
 }
 
 ACE_THR_FUNC_RETURN
-OrbRunThread (void*)
+OrbRunThread (void *arg)
 {
+  CORBA::ORB_var Orb =
+    CORBA::ORB::_duplicate (reinterpret_cast<CORBA::ORB_ptr> (arg));
+
   try
     {
-      g_pOrb->run ();
+      Orb->run ();
     }
   catch (CORBA::Exception& ex)
     {
@@ -129,15 +136,18 @@ OrbRunThread (void*)
 }
 
 ACE_THR_FUNC_RETURN
-TestThread (void*)
+TestThread (void *arg)
 {
+  SimpleNamingService_var NameService =
+    SimpleNamingService::_duplicate (reinterpret_cast<SimpleNamingService_ptr> (arg));
+
   try
     {
       for (size_t i (0); i < N_ITERATIONS; ++i)
         {
-          CORBA::Object_var obj = g_pNameService->resolve ();
+          CORBA::Object_var obj = NameService->resolve ();
           C_var b = C::_narrow (obj.in ());
-          b->makeA ();
+          A_var tmp = b->makeA ();
           if (i % 50 == 0)
             ACE_DEBUG ((LM_INFO, "(%t) collocated call returned\n"));
         }

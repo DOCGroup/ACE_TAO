@@ -285,13 +285,13 @@ ImR_Activator_i::start_server(const char* name,
                         1,
                         ACE_Process_Options::DEFAULT_COMMAND_LINE_BUF_LEN,
                         this->env_buf_len_, this->max_env_vars_);
-  proc_opts.command_line (cmdline);
+  proc_opts.command_line (ACE_TEXT_CHAR_TO_TCHAR(cmdline));
   proc_opts.working_directory (dir);
   // Win32 does not support the CLOSE_ON_EXEC semantics for sockets
   // the way unix does, so in order to avoid having the child process
   // hold the listen socket open, we force the child to inherit no
   // handles. This includes stdin, stdout, logs, etc.
-  proc_opts.handle_inheritence (0);
+  proc_opts.handle_inheritance (0);
 
   // We always enable the unicode environmet buffer on Windows.  This works
   // around a 32kb environment buffer limitation.  This must come before any of

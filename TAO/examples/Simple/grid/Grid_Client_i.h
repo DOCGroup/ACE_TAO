@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //   Balachandran Natarajan <bala@cs.wustl.edu>
-//
+//    
 // ============================================================================
 
 #ifndef GRID_CLIENT_I_H
@@ -36,17 +36,17 @@ public:
   Grid_Client_i (void);
   // Constructor
 
-  virtual ~Grid_Client_i (void);
+  ~Grid_Client_i (void);
   // Destructor
 
-  virtual int run (const char *, int, ACE_TCHAR *[]);
+  int run (const char *, int, ACE_TCHAR *[]);
   // Execute the methods.
 
-  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parses the command line arguments.
 
 private:
-  Client<Grid_Factory, Grid_Factory_var> client;
+  Client<Grid_Factory> client_;
   // Instantiate the client object.
 
   CORBA::Short height_;

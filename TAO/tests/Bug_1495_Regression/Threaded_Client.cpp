@@ -23,7 +23,7 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Manual_Event.h"
 
-const ACE_TCHAR *ior_input_file = ACE_TEXT("file://test.ior");
+const ACE_TCHAR *ior_input_file = ACE_TEXT("test.ior");
 const ACE_TCHAR *ior_output_file = ACE_TEXT("thr_server.ior");
 
 int

@@ -30,7 +30,6 @@ TAO_IFR_BE_Export BE_GlobalData *be_global = 0;
 
 BE_GlobalData::BE_GlobalData (void)
   : removing_ (false),
-    holding_scope_name_ (CORBA::string_dup ("TAO_IFR_holding_scope_module")),
     filename_ (0),
     enable_locking_ (false),
     do_included_files_ (true),
@@ -79,24 +78,6 @@ void
 BE_GlobalData::repository (CORBA::Repository_ptr repo)
 {
   this->repository_ = repo;
-}
-
-CORBA::ModuleDef_ptr
-BE_GlobalData::holding_scope (void) const
-{
-  return this->holding_scope_.in ();
-}
-
-void
-BE_GlobalData::holding_scope (CORBA::ModuleDef_ptr scope)
-{
-  this->holding_scope_ = scope;
-}
-
-const char *
-BE_GlobalData::holding_scope_name (void) const
-{
-  return this->holding_scope_name_.in ();
 }
 
 ACE_Unbounded_Stack<CORBA::Container_ptr> &

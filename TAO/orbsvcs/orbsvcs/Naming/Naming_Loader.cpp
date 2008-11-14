@@ -43,8 +43,7 @@ TAO_Naming_Loader::init (int argc, ACE_TCHAR *argv[])
       // Initialize the ORB
       CORBA::ORB_var orb =
         CORBA::ORB_init (command_line.get_argc(),
-                         command_line.get_ASCII_argv(),
-                         0);
+                         command_line.get_TCHAR_argv());
 
       // This function call initializes the Naming Service
       CORBA::Object_var object =
@@ -74,13 +73,11 @@ TAO_Naming_Loader::create_object (CORBA::ORB_ptr orb,
 {
   // Initializes the Naming Service. Returns -1
   // on an error.
-  int result = this->naming_server_.init_with_orb (argc,
-                                                   argv,
-                                                   orb);
+  int result = this->naming_server_.init_with_orb (argc, argv, orb);
   if (result == -1)
     return CORBA::Object::_nil ();
 
-  return 0;
+  return CORBA::Object::_nil ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

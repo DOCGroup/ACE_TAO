@@ -9,9 +9,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Echo_Client_i client;
 
-
   ACE_DEBUG ((LM_DEBUG,
-              "\nEcho client\n\n"));
+              ACE_TEXT ("\nEcho client\n\n")));
 
   if (client.run ("Echo",
                   argc,
@@ -19,7 +18,4 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     return -1;
   else
     return 0;
-
 }
-
-

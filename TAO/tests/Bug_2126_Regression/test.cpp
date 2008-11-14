@@ -6,10 +6,7 @@
 
 #include "TestC.h"
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-   ACE_UNUSED_ARG (argc);
-   ACE_UNUSED_ARG (argv);
-
    return 0;
 }

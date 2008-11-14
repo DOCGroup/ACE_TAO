@@ -314,8 +314,8 @@ TAO_UnionDef_i::members (const CORBA::UnionMemberSeq &members)
 void
 TAO_UnionDef_i::members_i (const CORBA::UnionMemberSeq &members)
 {
-  // Destroy our old members, both refs and defns.
-  TAO_Container_i::destroy_i ();
+  // Destroy our old refs.
+  TAO_Container_i::destroy_references_i ();
 
   ACE_TString section_name;
   ACE_Configuration_Section_Key refs_key;

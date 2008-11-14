@@ -149,11 +149,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (server_interceptor->forward_location_done() == false)
         {
-          ACE_ERROR ((LM_ERROR, "ERRROR: Forward location has not occured!"));
+          ACE_ERROR ((LM_ERROR, "ERROR: Forward location has not occured!\n"));
         }
 
       ACE_DEBUG ((LM_DEBUG, "Threaded Server event loop finished \n"));
       root_poa->destroy (1, 1);
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

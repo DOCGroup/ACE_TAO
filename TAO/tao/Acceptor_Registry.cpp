@@ -48,7 +48,7 @@ TAO_Acceptor_Registry::~TAO_Acceptor_Registry (void)
 size_t
 TAO_Acceptor_Registry::endpoint_count (void)
 {
-  int count = 0;
+  size_t count = 0;
   const TAO_AcceptorSetIterator end = this->end ();
 
   for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
@@ -59,12 +59,11 @@ TAO_Acceptor_Registry::endpoint_count (void)
   return count;
 }
 
-int
+bool
 TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
 {
-  const TAO_AcceptorSetIterator end = this->end ();
-
-  const CORBA::ULong count = mprofile.profile_count ();
+  TAO_AcceptorSetIterator const end = this->end ();
+  CORBA::ULong const count = mprofile.profile_count ();
 
   // If at least one endpoint in one of the profiles matches one of
   // the acceptors, we are collocated.
@@ -91,20 +90,20 @@ TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
                 {
                   if ((*i)->is_collocated (endp))
                     {
-                      return 1;
+                      return true;
                     }
                 }
             }
         }
     }
 
-  return 0;
+  return false;
 }
 
 TAO_Acceptor*
 TAO_Acceptor_Registry::get_acceptor (CORBA::ULong tag)
 {
-  TAO_AcceptorSetIterator end = this->end ();
+  TAO_AcceptorSetIterator const end = this->end ();
   TAO_AcceptorSetIterator acceptor = this->begin ();
 
   for (; acceptor != end; ++acceptor)

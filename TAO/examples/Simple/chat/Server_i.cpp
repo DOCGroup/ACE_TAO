@@ -22,9 +22,13 @@
 #include "ace/OS_NS_stdio.h"
 
 Server_i::Server_i ()
-  : ior_file_name_ (ACE_TEXT("chat.ior"))
+  : ior_file_name_ (ACE_TEXT ("chat.ior"))
 {
-  // No Op.
+  Broadcaster_i *tmp = 0;
+  ACE_NEW_THROW_EX (tmp,
+                    Broadcaster_i (),
+                    CORBA::NO_MEMORY ());
+  this->broadcaster_i_ = tmp;
 }
 
 Server_i::~Server_i (void)
@@ -35,22 +39,22 @@ Server_i::~Server_i (void)
 int
 Server_i::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':  // get the file name to write to
-       this->ior_file_name_ = get_opts.opt_arg ();
-      break;
+        this->ior_file_name_ = get_opts.opt_arg ();
+        break;
 
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-o] <ior_output_file>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s")
+                           ACE_TEXT (" [-o] <ior_output_file>")
+                           ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
       }
@@ -63,21 +67,21 @@ Server_i::init (int argc,
                 ACE_TCHAR *argv[])
 {
   // Parse the command line options.
-  if (this-> parse_args(argc, argv) == -1)
+  if (this->parse_args(argc, argv) == -1)
     return -1;
 
   if (this->orb_manager_.init (argc,
                                argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "orb manager init failed\n"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("orb manager init failed")),
                       -1);
 
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
   // Activate the servant.
   CORBA::String_var str =
-    this->orb_manager_.activate (&this->broadcaster_i_);
+    this->orb_manager_.activate (this->broadcaster_i_.in ());
 
   // Write the IOR to a file.
   this->write_IOR (str.in ());
@@ -88,19 +92,19 @@ int
 Server_i::run (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Running chat server...\n"));
+              ACE_TEXT ("Running chat server...\n")));
 
   // Run the main event loop for the ORB.
   int ret = this->orb_manager_.run ();
   if (ret == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Server_i::run"),
+                       ACE_TEXT ("Server_i::run")),
                       -1);
   return 0;
 }
 
 int
-Server_i::write_IOR(const char* ior)
+Server_i::write_IOR (const char* ior)
 {
   FILE* ior_output_file_ =
     ACE_OS::fopen (this->ior_file_name_, "w");
@@ -108,7 +112,7 @@ Server_i::write_IOR(const char* ior)
   if (ior_output_file_)
     {
       ACE_OS::fprintf (ior_output_file_,
-                       "%s",
+                       ACE_TEXT ("%s"),
                        ior);
       ACE_OS::fclose (ior_output_file_);
     }

@@ -11,9 +11,9 @@
 #include "ace/Reactor.h"
 
 #define REGISTRY_KEY_ROOT HKEY_LOCAL_MACHINE
-#define TAO_REGISTRY_SUBKEY "SOFTWARE\\ACE\\TAO"
-#define TAO_NOTIFY_SERVICE_OPTS_NAME "TaoNotifyServiceOptions"
-#define TAO_SERVICE_PARAM_COUNT "TaoServiceParameterCount"
+#define TAO_REGISTRY_SUBKEY ACE_TEXT ("SOFTWARE\\ACE\\TAO")
+#define TAO_NOTIFY_SERVICE_OPTS_NAME ACE_TEXT ("TaoNotifyServiceOptions")
+#define TAO_SERVICE_PARAM_COUNT ACE_TEXT ("TaoServiceParameterCount")
 
 TAO_NT_Notify_Service::TAO_NT_Notify_Service (void)
   : argc_ (0),
@@ -99,7 +99,7 @@ TAO_NT_Notify_Service::init (int argc,
       // case we use a 'destructive' args list processor - this way we
       // maintain the correct argv and argc for memory freeing
       // operations in the destructor.
-      argv_save_ = (char **) ACE_OS::malloc (sizeof (char *) * (argc + args.argc ()));
+      argv_save_ = (ACE_TCHAR **) ACE_OS::malloc (sizeof (ACE_TCHAR *) * (argc + args.argc ()));
 
       // Copy the values into the internal args buffer.
       int i;

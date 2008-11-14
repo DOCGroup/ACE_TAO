@@ -64,24 +64,43 @@ TAO_IFR_Server::init_with_orb (int argc,
 {
   try
     {
-      // Duplicate the ORB.
-      this->orb_ = CORBA::ORB::_duplicate (orb);
-
       // Get the POA from the ORB.
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("(%P|%t) Unable to initialize the POA.\n")
-            ),
-            -1
-          );
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) IFR_Service::init_with_orb ")
+                             ACE_TEXT ("Unable to initialize the POA.\n")),
+                            -1);
         }
-      this->root_poa_ =
+      PortableServer::POA_var rp =
         PortableServer::POA::_narrow (poa_object.in ());
+      return this->init_with_poa (argc, argv, orb, rp.in(), use_multicast_server);
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("IFR_Service::init_with_orb");
+
+      throw;
+    }
+  return 0;
+}
+
+int
+TAO_IFR_Server::init_with_poa (int argc,
+                               ACE_TCHAR *argv [],
+                               CORBA::ORB_ptr orb,
+                               PortableServer::POA_ptr rp,
+                               int use_multicast_server)
+{
+  try
+    {
+      // Duplicate the ORB.
+      this->orb_ = CORBA::ORB::_duplicate (orb);
+      // Duplicate the provided poa as the new root.
+      this->root_poa_ = PortableServer::POA::_duplicate (rp);
 
       int retval = OPTIONS::instance ()->parse_args (argc,
                                                     argv);

@@ -697,19 +697,19 @@ TAO_IMR_Op_Activate::run (void)
     {
       this->imr_->activate_server (this->server_name_.c_str ());
       ACE_DEBUG ((LM_DEBUG,
-        "Successfully Activated server <%s>\n",
+        "Successfully Activated server <%C>\n",
         this->server_name_.c_str ()));
     }
   catch (const ImplementationRepository::CannotActivate& ex)
     {
-      ACE_ERROR ((LM_ERROR, "Cannot activate server <%s>, reason: <%s>\n",
+      ACE_ERROR ((LM_ERROR, "Cannot activate server <%C>, reason: <%s>\n",
         this->server_name_.c_str (),
         ex.reason.in ()));
       return TAO_IMR_Op::CANNOT_ACTIVATE;
     }
   catch (const ImplementationRepository::NotFound&)
     {
-      ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n", this->server_name_.c_str ()));
+      ACE_ERROR ((LM_ERROR, "Could not find server <%C>.\n", this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
   catch (const PortableServer::ForwardRequest&)
@@ -887,7 +887,7 @@ TAO_IMR_Op_List::run (void)
     }
   catch (const ImplementationRepository::NotFound&)
     {
-      ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n", this->server_name_.c_str ()));
+      ACE_ERROR ((LM_ERROR, "Could not find server <%C>.\n", this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
   catch (const CORBA::Exception& ex)
@@ -908,12 +908,12 @@ TAO_IMR_Op_Remove::run (void)
     {
       this->imr_->remove_server (this->server_name_.c_str ());
 
-      ACE_DEBUG ((LM_DEBUG, "Successfully removed server <%s>\n",
+      ACE_DEBUG ((LM_DEBUG, "Successfully removed server <%C>\n",
         this->server_name_.c_str ()));
     }
   catch (const ImplementationRepository::NotFound&)
     {
-      ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n",
+      ACE_ERROR ((LM_ERROR, "Could not find server <%C>.\n",
         this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
@@ -940,17 +940,17 @@ TAO_IMR_Op_Shutdown::run (void)
     {
       this->imr_->shutdown_server (this->server_name_.c_str ());
 
-      ACE_DEBUG ((LM_DEBUG, "Successfully shut down server <%s>\n",
+      ACE_DEBUG ((LM_DEBUG, "Successfully shut down server <%C>\n",
         this->server_name_.c_str ()));
     }
   catch (const ImplementationRepository::NotFound&)
     {
-      ACE_ERROR ((LM_ERROR, "Server <%s> already shut down.\n", this->server_name_.c_str ()));
+      ACE_ERROR ((LM_ERROR, "Server <%C> already shut down.\n", this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
   catch (const CORBA::TIMEOUT&)
     {
-      ACE_DEBUG ((LM_DEBUG, "Timeout waiting for <%s> to shutdown.\n",
+      ACE_DEBUG ((LM_DEBUG, "Timeout waiting for <%C> to shutdown.\n",
         this->server_name_.c_str ()));
     }
   catch (const CORBA::Exception& ex)
@@ -1005,7 +1005,7 @@ TAO_IMR_Op_Register::run (void)
         {
           if (is_add_)
             {
-              ACE_DEBUG((LM_DEBUG, "Server <%s> already registered.\n", this->server_name_.c_str ()));
+              ACE_DEBUG((LM_DEBUG, "Server <%C> already registered.\n", this->server_name_.c_str ()));
               return ALREADY_REGISTERED;
             }
           options = &server_information->startup;
@@ -1014,7 +1014,7 @@ TAO_IMR_Op_Register::run (void)
         {
           if (!is_add_)
           {
-            ACE_DEBUG((LM_DEBUG, "Adding Server <%s> on update command.\n", this->server_name_.c_str ()));
+            ACE_DEBUG((LM_DEBUG, "Adding Server <%C> on update command.\n", this->server_name_.c_str ()));
             is_add_ = true;
           }
           options = &local;
@@ -1044,13 +1044,13 @@ TAO_IMR_Op_Register::run (void)
           char host_name[MAXHOSTNAMELEN + 1];
           ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
           options->activator = CORBA::string_dup (host_name);
-          ACE_DEBUG ((LM_DEBUG, "Updating Server <%s> with default activator of <%s>.\n",
+          ACE_DEBUG ((LM_DEBUG, "Updating Server <%C> with default activator of <%s>.\n",
             this->server_name_.c_str (), options->activator.in ()));
         }
 
       this->imr_->add_or_update_server (this->server_name_.c_str (), *options);
 
-      ACE_DEBUG((LM_DEBUG, "Successfully registered <%s>.\n", this->server_name_.c_str ()));
+      ACE_DEBUG((LM_DEBUG, "Successfully registered <%C>.\n", this->server_name_.c_str ()));
     }
   catch (const CORBA::NO_PERMISSION&)
     {

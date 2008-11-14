@@ -314,8 +314,8 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                                         ACE_TEXT ("error reading ior")));
                           else if (TAO_debug_level > 0)
                             ACE_DEBUG ((LM_DEBUG,
-                                        ACE_TEXT ("%N: service resolved to IOR <%s>\n"),
-                                        ACE_TEXT_CHAR_TO_TCHAR (buf)));
+                                        ACE_TEXT ("%N: service resolved to IOR <%C>\n"),
+                                        buf));
                         }
                     }
                 }
@@ -324,8 +324,8 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
         if (result == -1)
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT("\nmulticast discovery of %s failed.\n"),
-                        ACE_TEXT_CHAR_TO_TCHAR (service_name)));
+                        ACE_TEXT("\nmulticast discovery of %C failed.\n"),
+                        service_name));
 
             if (ACE_OS::strcasecmp (service_name,
                                     "NameService") == 0)

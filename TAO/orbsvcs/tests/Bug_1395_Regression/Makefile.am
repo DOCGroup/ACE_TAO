@@ -80,7 +80,9 @@ server_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 server_SOURCES = \
   TestC.cpp \
@@ -90,6 +92,7 @@ server_SOURCES = \
   Test_i.h
 
 server_LDADD = \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_ImR_Client.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \

@@ -28,11 +28,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               MemberArrayType>::Recursive_Type (
   char const * id,
   char const * name,
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
-  TypeCodeType discriminant_type,
-#else
   TypeCodeType const & discriminant_type,
-#endif
   MemberArrayType const & cases,
   CORBA::ULong ncases,
   CORBA::Long default_index)
@@ -56,11 +52,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
   char const * id,
   char const * name,
   CORBA::ValueModifier modifier,
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
-  TypeCodeType concrete_base,
-#else
   TypeCodeType const & concrete_base,
-#endif
   MemberArrayType const & fields,
   CORBA::ULong nfields)
   : TypeCodeBase (kind,
@@ -112,11 +104,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
                               MemberArrayType>::union_parameters (
   char const * name,
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
-  TypeCodeType discriminant_type,
-#else
   TypeCodeType const & discriminant_type,
-#endif
   MemberArrayType const & cases,
   CORBA::ULong ncases,
   CORBA::Long default_index)
@@ -135,11 +123,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               MemberArrayType>::valuetype_parameters (
   char const * name,
   CORBA::ValueModifier modifier,
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
-  TypeCodeType concrete_base,
-#else
   TypeCodeType const & concrete_base,
-#endif
   MemberArrayType const & fields,
   CORBA::ULong nfields)
 {

@@ -75,7 +75,7 @@ TAO::FT_ReplicationManager::FT_ReplicationManager ()
   : orb_ (CORBA::ORB::_nil ())
   , poa_ (PortableServer::POA::_nil ())
   , ior_output_file_ (0)
-  , ns_name_ (0)
+  , ns_name_ ("")
   , naming_context_ (CosNaming::NamingContext::_nil ())
   , replication_manager_ref_ (FT::ReplicationManager::_nil ())
   , fault_notifier_ (FT::FaultNotifier::_nil ())
@@ -198,8 +198,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
     {
       ACE_ERROR_RETURN ( (LM_ERROR,
         ACE_TEXT (
-          "%T %n (%P|%t) - "
-          "Could not resolve notifier IOR.\n")),
+          "%T %n (%P|%t) - Could not resolve notifier IOR.\n")),
           -1);
     }
   }
@@ -238,7 +237,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
     result = this->write_ior ();
   }
 
-  if (result == 0 && this->ns_name_ != 0)
+  if (result == 0 && this->ns_name_.length () != 0)
   {
     this->identity_ = "name:";
     this->identity_ += this->ns_name_;
@@ -258,7 +257,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
     }
 
     this->this_name_.length (1);
-    this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
+    this->this_name_[0].id = CORBA::string_dup (this->ns_name_.c_str ());
 
     this->naming_context_->rebind (
       this->this_name_,
@@ -342,10 +341,10 @@ int TAO::FT_ReplicationManager::fini (void)
     ACE_OS::unlink (this->ior_output_file_);
     this->ior_output_file_ = 0;
   }
-  if (this->ns_name_ != 0)
+  if (this->ns_name_.length () != 0)
   {
     this->naming_context_->unbind (this->this_name_);
-    this->ns_name_ = 0;
+    this->ns_name_.clear ();
   }
 
   return result;
@@ -368,8 +367,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
   {
     ACE_ERROR ( (LM_ERROR,
       ACE_TEXT (
-        "%T %n (%P|%t) - "
-        "Bad Fault Notifier object reference provided.\n")
+        "%T %n (%P|%t) - Bad Fault Notifier object reference provided.\n")
     ));
     throw CORBA::BAD_PARAM (
       CORBA::SystemException::_tao_minor_code (
@@ -390,7 +388,8 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
     // simply "unregistering"?
     result = this->fault_consumer_.fini ();
 
-    // Note if the fini failed, we ignore it.  It may not have been registered in the first place.
+    // Note if the fini failed, we ignore it.  It may not have been registered
+    // in the first place.
 
     // Create a fault analyzer.
     TAO::FT_FaultAnalyzer * analyzer = 0;
@@ -401,8 +400,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
     {
       ACE_ERROR ( (LM_ERROR,
         ACE_TEXT (
-          "%T %n (%P|%t) - "
-          "Error creating FaultAnalyzer.\n"
+          "%T %n (%P|%t) - Error creating FaultAnalyzer.\n"
           )
       ));
       result = -1;
@@ -418,8 +416,8 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-      ACE_TEXT (
-        "TAO::FT_ReplicationManager::register_fault_notifier_i: ""Error reinitializing FT_FaultConsumer.\n"));
+      ACE_TEXT ("TAO::FT_ReplicationManager::register_fault_notifier_i: ")
+      ACE_TEXT ("Error reinitializing FT_FaultConsumer.\n"));
     result = -1;
   }
 
@@ -427,8 +425,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
   {
     ACE_ERROR ( (LM_ERROR,
       ACE_TEXT (
-        "%T %n (%P|%t) -  "
-        "Could not re-initialize FT_FaultConsumer.\n")
+        "%T %n (%P|%t) - Could not re-initialize FT_FaultConsumer.\n")
     ));
 
     throw CORBA::INTERNAL (

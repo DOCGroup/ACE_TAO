@@ -18,6 +18,8 @@
 //
 // ============================================================================
 
+#include "utl_identifier.h"
+
 ACE_RCSID (be_visitor_structure, 
            serializer_op_cs, 
            "$Id$")
@@ -252,6 +254,69 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
     }
 
   *os << be_uidt_nl << "}";
+
+
+  // QueryCondition support
+
+  *os << be_nl << be_nl << "#ifdef DDS_USE_QUERY_CONDITION_COMPARATOR" << be_nl
+      << "namespace OpenDDS" << be_nl
+      << "{" << be_idt_nl
+      << "namespace DCPS" << be_nl
+      << "{" << be_idt_nl
+      << "ComparatorBase::Ptr create_qc_comparator (" << node->name ()
+      << " *, const char *field, ComparatorBase::Ptr next)" << be_nl
+      << "{" << be_idt_nl;
+
+  size_t nfields = node->nfields ();
+  bool used_args (false);
+  for (size_t i = 0; i < nfields; ++i)
+    {
+      AST_Field **f;
+      node->field (f, i);
+      char *fname = (*f)->local_name ()->get_string ();
+      ACE_UINT32 fname_len = ACE_OS::strlen (fname) + 1;
+      AST_Type *ftype = (*f)->field_type ();
+      UTL_ScopedName *ftype_name = ftype->name ();
+      switch (ftype->node_type ())
+        {
+        case AST_Decl::NT_pre_defined:
+        case AST_Decl::NT_string:
+        case AST_Decl::NT_enum:
+          used_args = true;
+          *os << "if (ACE_OS::strcmp(\"" << fname << "\", field) == 0)"
+              << be_idt_nl
+              << "{" << be_idt_nl
+              << "return make_field_cmp(&" << node->name () << "::" << fname
+              << ", next);" << be_uidt_nl
+              << "}" << be_uidt_nl;
+          break;
+        case AST_Decl::NT_struct:
+          used_args = true;
+          *os << "if (ACE_OS::strncmp(\"" << fname << ".\", field, "
+              << fname_len << ") == 0)"
+              << be_idt_nl
+              << "{" << be_idt_nl
+              << "return make_struct_cmp(&" << node->name () << "::" << fname
+              << ", create_qc_comparator(static_cast<" << ftype_name
+              << " *>(0), field + " << fname_len << ", 0), next);"
+              << be_uidt_nl
+              << "}" << be_uidt_nl;
+          break;
+        default: ;
+        }
+    }
+
+  if (!used_args)
+    {
+      *os << "ACE_UNUSED_ARG (field);" << be_nl
+          << "ACE_UNUSED_ARG (next);" << be_nl;
+    }
+
+  *os << "return 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}" << be_nl
+      << "#endif" << be_nl;
 
   node->cli_stub_serializer_op_gen (true);
   return 0;

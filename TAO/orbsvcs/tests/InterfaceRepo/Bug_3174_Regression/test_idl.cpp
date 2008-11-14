@@ -99,7 +99,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var c2_name= c2_def->absolute_name ();
       CORBA::TypeCode_var c2_tc = c2_def->type ();
       CORBA::String_var c2_id = c2_tc->id ();
-      ACE_DEBUG (( LM_DEBUG, "constant \"%s\" is type \"%s\"", ACE_TEXT_CHAR_TO_TCHAR (c2_name.in ()), ACE_TEXT_CHAR_TO_TCHAR (c2_id.in ()) ));
+      ACE_DEBUG (( LM_DEBUG, "constant \"%C\" is type \"%C\"", c2_name.in (), c2_id.in () ));
       CORBA::TCKind c2_tckind = c2_tc->kind ();
       ACE_DEBUG (( LM_DEBUG, ", tkkind %d", c2_tckind ));
       if (CORBA::tk_enum == c2_tckind)
@@ -114,8 +114,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           CORBA::String_var the_strValue = denum->get_as_string ();
           CORBA::ULong the_intValue = denum->get_as_ulong ();
 
-          ACE_DEBUG ((LM_DEBUG, "Whose value is \"%s\" which has an integer value of %d\n",
-                     ACE_TEXT_CHAR_TO_TCHAR (the_strValue.in ()), the_intValue ));
+          ACE_DEBUG ((LM_DEBUG, "Whose value is \"%C\" which has an integer value of %d\n",
+                     the_strValue.in (), the_intValue ));
 
           if (0 == ACE_OS::strcmp( "e1_2", the_strValue.in () ))
             {

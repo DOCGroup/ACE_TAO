@@ -60,13 +60,13 @@ Receiver_Callback::flowname (const char* flow_name)
                                       "w");
   if (this->output_file_ == 0)
     ACE_ERROR ((LM_DEBUG,
-                "Cannot open output file %s\n",
-                ACE_TEXT_CHAR_TO_TCHAR (this->flowname_.c_str ())));
+                "Cannot open output file %C\n",
+                this->flowname_.c_str ()));
 
   else
     ACE_DEBUG ((LM_DEBUG,
-                "%s File Opened Successfully\n",
-                ACE_TEXT_CHAR_TO_TCHAR (this->flowname_.c_str ())));
+                "%C File Opened Successfully\n",
+                this->flowname_.c_str ()));
 
 
 }
@@ -81,9 +81,9 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   // the sender.
   //
   ACE_DEBUG ((LM_DEBUG,
-              "Receiver_Callback::receive_frame for frame %d for flow %s\n",
+              "Receiver_Callback::receive_frame for frame %d for flow %C\n",
               this->frame_count_++,
-              ACE_TEXT_CHAR_TO_TCHAR (this->flowname_.c_str ())));
+              this->flowname_.c_str ()));
 
   while (frame != 0)
     {

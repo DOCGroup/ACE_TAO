@@ -6,21 +6,17 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$status = 0;
-$type = "";
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-print STDERR "\nDynamic Any struct and union alias tests\n";
+$SV = $server->CreateProcess ("client");
 
-$CL = new PerlACE::Process ("client");
+$test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
-$client = $CL->SpawnWaitKill (30);
-
-if ($client != 0) 
-{
-    print STDERR "ERROR: client returned $client\n";
-    $status = 1;
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    exit 1;
 }
 
-exit $status;
+exit 0;

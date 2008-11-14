@@ -32,6 +32,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Utils/ORB_Manager.h"
+#include "tao/Intrusive_Ref_Count_Handle_T.h"
 
 class Client_i : public ACE_Event_Handler
 {
@@ -47,9 +48,6 @@ public:
   Client_i (void);
   // Constructor.
 
-  ~Client_i (void);
-  // Destructor.
-
   int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the client communication with the server.
 
@@ -59,7 +57,7 @@ public:
   virtual int handle_input (ACE_HANDLE);
   // Handle the user input.
 
- private:
+private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the command line arguments.
   // Returns 0 on success, -1 on error.
@@ -67,13 +65,13 @@ public:
   int read_ior (const ACE_TCHAR *filename);
   // Function to read the server ior from a file.
 
-  char *ior_;
+  ACE_CString ior_;
   // IOR of the obj ref of the server.
 
   const ACE_TCHAR* ior_file_name_;
   // The filename that stores the ior of the server
 
-  const char* nickname_;
+  ACE_CString nickname_;
   // Nickname of the user chatting.
 
   TAO_ORB_Manager orb_manager_;
@@ -82,7 +80,8 @@ public:
   Broadcaster_var server_;
   // Server object ptr.
 
-  Receiver_i receiver_i_;
+  typedef TAO_Intrusive_Ref_Count_Handle<Receiver_i> Receiver_i_var;
+  Receiver_i_var receiver_i_;
   // The receiver object.
 
   Receiver_var receiver_var_;

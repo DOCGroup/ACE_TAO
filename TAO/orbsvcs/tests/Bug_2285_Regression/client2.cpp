@@ -7,6 +7,7 @@
 #include "tao/PI/PI.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID(Hello, client, "$Id$")
 
@@ -42,7 +43,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 CORBA::Object_ptr
-make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_version, Test::Hello_ptr* refs)
+make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_version, Test::Hello_var *refs)
 {
   FT::TagFTGroupTaggedComponent ft_tag_component;
   // Create the list
@@ -50,7 +51,7 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
   iors.length(number_of_servers);
   for (CORBA::ULong i = 0; i < number_of_servers; ++i)
     {
-      iors [i] = CORBA::Object::_duplicate (refs[i]);
+      iors [i] = CORBA::Object::_duplicate (refs[i].in ());
     }
 
   CORBA::Object_var new_ref =
@@ -84,7 +85,7 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
   if (retval != 0)
     {
       retval = iorm->set_primary (&iogr_prop,
-                                  refs[0],
+                                  refs[0].in (),
                                   new_ref.in ());
     }
 
@@ -112,7 +113,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       iorm =
         TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in());
 
-      Test::Hello_ptr *servers = new Test::Hello_ptr [number_of_servers];
+      Test::Hello_var *servers = 0;
+      ACE_NEW_RETURN (servers,
+                      Test::Hello_var [number_of_servers],
+                      -1);
+      ACE_Auto_Array_Ptr<Test::Hello_var> owner (servers);
 
       for (CORBA::ULong i = 0; i < number_of_servers; ++ i)
         {
@@ -127,7 +132,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           servers[i] =
             Test::Hello::_narrow(tmp.in ());
 
-          if (CORBA::is_nil (servers[i]))
+          if (CORBA::is_nil (servers[i].in ()))
             {
               ACE_ERROR_RETURN ((LM_DEBUG,
                                   "Test failed - Not regression - Unexpected Nil Test::Hello reference <%s>\n",
@@ -168,16 +173,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               // Well we tried...
             }
-
-          CORBA::release (servers [j]);
         }
-
-      for (CORBA::ULong k = 0; k < last_server; ++k)
-        {
-          CORBA::release (servers [k]);
-        }
-
-      delete [] servers;
 
       orb->destroy ();
     }

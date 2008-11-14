@@ -56,8 +56,8 @@ class Multiple
   CosEventChannelAdmin::EventChannel_ptr cos_ec_;
   // Reference to a running Event Service.
 
-  const char* service_name;
-// The name with which to locate the Event Service.
+  const ACE_TCHAR *service_name_;
+  // The name with which to locate the Event Service.
 
  private:
   int init_ORB (int argc, ACE_TCHAR *argv[]);

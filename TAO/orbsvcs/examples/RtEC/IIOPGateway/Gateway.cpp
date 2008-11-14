@@ -13,8 +13,8 @@ ACE_RCSID (EC_Examples,
            Supplier,
            "$Id$")
 
-static const char* supplierec = 0;
-static const char* consumerec = 0;
+static const ACE_TCHAR *supplierec = 0;
+static const ACE_TCHAR *consumerec = 0;
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -69,14 +69,14 @@ Gateway::run (int argc, ACE_TCHAR* argv[])
 
       CosNaming::Name supplierecname (1);
       supplierecname.length (1);
-      supplierecname[0].id = CORBA::string_dup (supplierec);
+      supplierecname[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(supplierec));
 
       CORBA::Object_var supplierec_obj =
         naming_context->resolve (supplierecname);
 
       CosNaming::Name consumerecname (1);
       consumerecname.length (1);
-      consumerecname[0].id = CORBA::string_dup (consumerec);
+      consumerecname[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(consumerec));
 
       CORBA::Object_var consumerec_obj =
         naming_context->resolve (consumerecname);
@@ -145,12 +145,12 @@ Gateway::parse_args (int argc, ACE_TCHAR *argv[])
       if (ACE_OS::strcmp (arg, ACE_TEXT("-s")) == 0)
         {
           arg_shifter.consume_arg ();
-          supplierec = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
+          supplierec = arg_shifter.get_current ();
         }
       if (ACE_OS::strcmp (arg, ACE_TEXT("-c")) == 0)
         {
           arg_shifter.consume_arg ();
-          consumerec = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
+          consumerec = arg_shifter.get_current ();
         }
 
       arg_shifter.ignore_arg ();

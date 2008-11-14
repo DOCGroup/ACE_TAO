@@ -49,7 +49,7 @@ module Compression
     const CompressorId COMPRESSORID_BZIP2 = 3;
     const CompressorId COMPRESSORID_ZLIB = 4;
     const CompressorId COMPRESSORID_LZMA = 5;
-    const CompressorId COMPRESSORID_LZOP = 6;
+    const CompressorId COMPRESSORID_LZO = 6;
     const CompressorId COMPRESSORID_RZIP = 7;
     const CompressorId COMPRESSORID_7X = 8;
     const CompressorId COMPRESSORID_XAR = 9;

@@ -72,7 +72,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'p':
-        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()),
+        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
                            "%u",
                            &protocol_type);
         if (result == 0 || result == EOF)
@@ -101,7 +101,7 @@ check_for_nil (CORBA::Object_ptr obj, const char *msg)
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: Object reference <%s> is nil\n",
+                       "ERROR: Object reference <%C> is nil\n",
                        msg),
                       -1);
   else
@@ -125,7 +125,7 @@ create_object (PortableServer::POA_ptr poa,
   CORBA::String_var ior =
     orb->object_to_string (server.in ());
 
-  ACE_DEBUG ((LM_DEBUG, "<%s>\n\n", ior.in ()));
+  ACE_DEBUG ((LM_DEBUG, "<%C>\n\n", ior.in ()));
 
   // Print ior to the file.
   if (filename != 0)

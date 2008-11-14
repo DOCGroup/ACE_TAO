@@ -8,26 +8,17 @@
 ACE_RCSID(AccountManager, AccountManager_i, "$Id$")
 
 // Constructor
-
 AccountManager_i::AccountManager_i (void)
 {
   // no-op
 }
 
 // Destructor
-
 AccountManager_i::~AccountManager_i (void)
 {
-  for (MAP_MANAGER_TYPE::ITERATOR iter = this->hash_map_.begin ();
-       iter != this->hash_map_.end ();
-       ++iter)
-    {
-      delete (*iter).int_id_;
-    }
 }
 
 // Set the ORB pointer
-
 void
 AccountManager_i::orb (CORBA::ORB_ptr o)
 {
@@ -37,7 +28,7 @@ AccountManager_i::orb (CORBA::ORB_ptr o)
 void
 AccountManager_i::poa (PortableServer::POA_ptr poa)
 {
-  this->poa_ = poa;
+  this->poa_ = PortableServer::POA::_duplicate (poa);
 }
 
 void
@@ -52,22 +43,22 @@ Bank::Account_ptr
 AccountManager_i::open (const char *name,
                         CORBA::Float initial_balance)
 {
-  Account_i *result = 0;
-
   // If name is already in the map, <find> will assign <result> to the
   // appropriate value.
-
+  Account_i_var result;
   if (hash_map_.find (name, result) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "[SERVER] Process/Thread Id : (%P/%t) Opening Account (%s,%8.2f)\n",
+                  ACE_TEXT ("[SERVER] Process/Thread Id : (%P/%t) Opening Account (%C,%8.2f)\n"),
                   name,
                   initial_balance));
 
-      ACE_NEW_THROW_EX (result,
+      Account_i *tmp = 0;
+      ACE_NEW_THROW_EX (tmp,
                         Account_i (name,
                                    initial_balance),
                         CORBA::NO_MEMORY ());
+      result = tmp;
 
       // Enter the new Account in the hash map. If the <bind> fails
       // throw an UNKNOWN exception. <result> may be valid but since
@@ -76,13 +67,13 @@ AccountManager_i::open (const char *name,
 
       if (hash_map_.bind (name, result) == -1)
         {
-          delete result;
           throw CORBA::UNKNOWN ();
         }
     }
-  else if (TAO_debug_level > 0)
+
+  if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "[SERVER] Process/Thread Id : (%P/%t) Account already exists for %s\n",
+                ACE_TEXT ("[SERVER] Process/Thread Id : (%P/%t) Account already exists for %C\n"),
                 name));
   // Generate an IOR for the result object and register it with the
   // POA.  In case the object already exists then the previously
@@ -92,7 +83,6 @@ AccountManager_i::open (const char *name,
 }
 
 // Shutdown.
-
 void
 AccountManager_i::close (Bank::Account_ptr account)
 {
@@ -101,26 +91,24 @@ AccountManager_i::close (Bank::Account_ptr account)
       CORBA::String_var name = account->name ();
 
       ACE_DEBUG((LM_DEBUG,
-                 "[SERVER] Process/Thread Id : (%P/%t) Closing Account for %s\n",
+                 ACE_TEXT ("[SERVER] Process/Thread Id : (%P/%t) Closing Account for %C\n"),
                  name.in ()));
 
-      Account_i *account = 0;
+      Account_i_var account;
       if (hash_map_.unbind (name.in (), account) == -1)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG((LM_DEBUG,
-                       "Unable to close account\n"));
+                       ACE_TEXT ("Unable to close account\n")));
         }
 
-      if (account)
+      if (account.is_nil ())
         {
           PortableServer::POA_var poa = account->_default_POA ();
 
-          PortableServer::ObjectId_var id = poa->servant_to_id (account);
+          PortableServer::ObjectId_var id = poa->servant_to_id (account.in ());
 
           poa->deactivate_object (id.in ());
-
-          delete account;
         }
     }
   catch (const CORBA::Exception& ex)
@@ -133,10 +121,8 @@ void
 AccountManager_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\n[SERVER] Process/Thread Id : (%P/%t) %s\n",
-              "AccountManager_i is shutting down"));
+              ACE_TEXT ("\n[SERVER] Process/Thread Id : (%P/%t) AccountManager_i is shutting down\n")));
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
 }
-

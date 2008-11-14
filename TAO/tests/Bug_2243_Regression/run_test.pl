@@ -6,30 +6,22 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-if (PerlACE::is_vxworks_test()) {
-    $T = new PerlACE::ProcessVX ("ORB_object_to_string", "-ORBObjRefStyle IOR");
-}
-else {
-    $T = new PerlACE::Process ("ORB_object_to_string", "-ORBObjRefStyle IOR");
-}
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-$test = $T->SpawnWaitKill (60);
+$SV = $server->CreateProcess ("ORB_object_to_string", "-ORBObjRefStyle IOR");
+
+$test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($test != 0) {
     print STDERR "ERROR: test returned $test\n";
     exit 1;
 }
 
-if (PerlACE::is_vxworks_test()) {
-    $T = new PerlACE::ProcessVX ("ORB_object_to_string", "-ORBObjRefStyle URL");
-}
-else {
-    $T = new PerlACE::Process ("ORB_object_to_string", "-ORBObjRefStyle URL");
-}
+$SV = $server->CreateProcess ("ORB_object_to_string", "-ORBObjRefStyle URL");
 
-$test = $T->SpawnWaitKill (60);
+$test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($test != 0) {
     print STDERR "ERROR: test returned $test\n";

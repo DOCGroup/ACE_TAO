@@ -86,7 +86,7 @@ public:
   /// Constructor.
   TAO_Accept_Strategy (TAO_ORB_Core *orb_core);
 
-  /// Initialize the <peer_acceptor_> with <local_addr>.  If the
+  /// Initialize the <peer_acceptor_> with @a local_addr.  If the
   /// process runs out of handles, purge some "old" connections.
   int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
             bool restart = false);

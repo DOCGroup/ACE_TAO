@@ -39,11 +39,10 @@ public:
   Account_i (const char *, CORBA::Float);
   // Constructor.
 
-  ~Account_i (void);
+  virtual ~Account_i (void);
   // Destructor.
 
   virtual CORBA::Float balance (void);
-
   // Get the current balance in the account.
 
   virtual char *name (void);

@@ -99,7 +99,7 @@ Thread_Task::svc (void)
         for (unsigned int i = 0; i < name_list->length ();++i)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "Scheduling Segment Name - %s\n",
+                        "Scheduling Segment Name - %C\n",
                         (*name_list) [i].in ()));
           }
       }

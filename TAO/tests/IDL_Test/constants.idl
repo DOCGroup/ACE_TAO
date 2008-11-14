@@ -132,3 +132,11 @@ module CoercionBug
 
   const CellFlags VALUE_LOCK = (EXPLICIT_VALUE_LOCK | EDIT_VALUE_LOCK);
 };
+
+module SignedGen
+{
+  // On some platforms, the rhs of a typedef'd long constant is
+  // getting generated as an unsigned literal.
+  typedef long LongType;
+  const LongType val = -3;
+};

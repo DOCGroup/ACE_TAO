@@ -303,7 +303,7 @@ protected:
   int use_remote_ec_;
 
   /// The name of the remote event service
-  const char* event_service_name_;
+  const ACE_TCHAR *event_service_name_;
 
   /// The event channel implementation
   POA_RtecEventChannelAdmin::EventChannel *ec_impl_;

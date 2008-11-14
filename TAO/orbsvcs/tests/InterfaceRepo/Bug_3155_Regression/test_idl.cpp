@@ -118,8 +118,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     const CORBA::ValueMember& current_member =
       the_value_members [ct];
     ACE_DEBUG ((LM_DEBUG,
-                "value type member '%s'\n",
-                ACE_TEXT_CHAR_TO_TCHAR (current_member.name.in ())));
+                "value type member '%C'\n",
+                current_member.name.in ()));
   }
 
   return 0;

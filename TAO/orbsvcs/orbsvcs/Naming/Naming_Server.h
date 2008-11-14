@@ -41,7 +41,7 @@ class TAO_Storable_Naming_Context_Activator;
  *
  * This class either finds an existing Naming Service (if the
  * <resolve_for_existing_naming_service> flag is set) or creates
- * one (if <resolve_for_existing_naming_service> flag isn't set or
+ * one (if @a resolve_for_existing_naming_service flag isn't set or
  * Naming Service was not found).  This class also defines the
  * operator-> so that  <NamingContext> functions like <bind>,
  * <unbind> .. can be called directly on a <TAO_Naming_Server>
@@ -69,8 +69,8 @@ public:
 
   /**
    * Constructor.  Attempts to find an existing Naming Service if
-   * <resolve_for_existing_naming_service> is set to true.  If it is
-   * false, or no Naming Service was found during a <timeout> period,
+   * @a resolve_for_existing_naming_service is set to true.  If it is
+   * false, or no Naming Service was found during a @a timeout period,
    * create the Naming Service in this process.  If creating the
    * Naming Service locally, make the root context of size
    * <context_size>, register it under the <poa>, and make the Naming
@@ -85,7 +85,7 @@ public:
                      PortableServer::POA_ptr poa,
                      size_t context_size = ACE_DEFAULT_MAP_SIZE,
                      ACE_Time_Value *timeout = 0,
-                     int resolve_for_existing_naming_service = 1,
+                     bool resolve_for_existing_naming_service = true,
                      const ACE_TCHAR *persistence_location = 0,
                      void *base_addr = TAO_NAMING_BASE_ADDR,
                      int enable_multicast = 1,
@@ -95,7 +95,7 @@ public:
 
   /**
    * Initializer.  Attempts to find an existing Naming Service if
-   * <resolve_for_existing_naming_service> is set to true.  If it is
+   * @a resolve_for_existing_naming_service is set to true.  If it is
    * false, or no Naming Service was found during a <timeout> period,
    * create the Naming Service in this process.  If creating the
    * Naming Service locally, make the root context of size
@@ -111,7 +111,7 @@ public:
             PortableServer::POA_ptr poa,
             size_t context_size = ACE_DEFAULT_MAP_SIZE,
             ACE_Time_Value *timeout = 0,
-            int resolve_for_existing_naming_service = 1,
+            bool resolve_for_existing_naming_service = true,
             const ACE_TCHAR *persistence_location = 0,
             void *base_addr = TAO_NAMING_BASE_ADDR,
             int enable_multicast = 1,
@@ -123,7 +123,7 @@ public:
   /// the ORB.
   int init_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
 
-  /// Destroy the child POA created in <init_with_orb>
+  /// Destroy the child POA created in @c init_with_orb
   int fini (void);
 
   /// Destructor.
@@ -229,8 +229,8 @@ protected:
    * If not zero support redundant naming servers.
    */
   int use_redundancy_;
-  
-  // If not zero use round trip timeout policy set to value specified
+
+  /// If not zero use round trip timeout policy set to value specified
   int round_trip_timeout_;
   int use_round_trip_timeout_;
 };

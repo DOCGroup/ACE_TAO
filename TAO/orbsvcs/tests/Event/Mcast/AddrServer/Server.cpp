@@ -55,9 +55,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       FILE *output_file= ACE_OS::fopen (ior_file_name, "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file %s for writing IOR: %s\n",
+                           "Cannot open output file %s for writing IOR: %C\n",
                            ior_file_name,
-                           ACE_TEXT_CHAR_TO_TCHAR (ior.in ())),
+                           ior.in ()),
                           1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
@@ -70,9 +70,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception& exc)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Caught CORBA::Exception\n%s (%s)\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (exc._name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (exc._rep_id ()) ));
+                  "Caught CORBA::Exception\n%C (%C)\n",
+                  exc._name (),
+                  exc._rep_id ()) );
     }
 #else
   ACE_UNUSED_ARG (argc);

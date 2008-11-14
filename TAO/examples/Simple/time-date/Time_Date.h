@@ -23,10 +23,8 @@ class Alt_Resource_Factory_Export My_Resource_Factory
   : public TAO_Default_Resource_Factory
 {
 public:
-
   /// Return the @c ACE_Reactor that will be utilized by the ORB.
   virtual ACE_Reactor *get_reactor (void);
-
 };
 
 ACE_FACTORY_DECLARE (Alt_Resource_Factory, My_Resource_Factory)
@@ -40,7 +38,6 @@ ACE_FACTORY_DECLARE (Alt_Resource_Factory, My_Resource_Factory)
 class ACE_Svc_Export DLL_ORB : public ACE_Task_Base
 {
 public:
-
   /// Initialize the @c TAO_ORB_Manager.
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
@@ -51,7 +48,6 @@ public:
   virtual int svc (void);
 
 public:
-
   /// ORB pseudo-reference.
   CORBA::ORB_var orb_;
 
@@ -60,7 +56,6 @@ public:
 
   /// Reference to the POA Manager.
   PortableServer::POAManager_var poa_manager_;
-
 };
 
 /**
@@ -73,6 +68,8 @@ public:
 class ACE_Svc_Export Time_Date_Servant : public ACE_Service_Object
 {
 public:
+  /// Constructor.
+  Time_Date_Servant (void);
 
   /// Initialize the @c Time_Date servant.
   virtual int init (int argc, ACE_TCHAR *argv[]);
@@ -81,16 +78,14 @@ public:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
-
   /// Servant for the @c Time_Date object.
   Time_Date_i * servant_;
 
   /// File where the IOR of the server object is stored.
-  FILE *ior_output_file_;
+  const ACE_TCHAR *ior_output_file_;
 
   /// Name of the ORB we're linking dynamically.
-  const char *orb_;
-
+  ACE_CString orb_;
 };
 
 // The following Factory is used by the <ACE_Service_Config> and

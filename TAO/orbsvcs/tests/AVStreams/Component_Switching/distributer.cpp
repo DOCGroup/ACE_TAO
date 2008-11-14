@@ -107,8 +107,8 @@ Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flo
 
       //if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "Handle Conection Requested flowname %s \n",
-                    ACE_TEXT_CHAR_TO_TCHAR (entry.flowname ())));
+                    "Handle Connection Requested flowname %C\n",
+                    entry.flowname ()));
 
       ACE_CString flowname (entry.flowname ());
 

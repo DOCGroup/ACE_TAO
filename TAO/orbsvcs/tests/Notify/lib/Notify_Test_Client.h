@@ -44,6 +44,7 @@ public:
   // Allow the user to override this empty method
 
   int ORB_run (void);
+  int ORB_run (ACE_Time_Value& tv);
   // Call ORB::run to accept requests.
 
   void consumer_start (TAO_Notify_Tests_Peer*);

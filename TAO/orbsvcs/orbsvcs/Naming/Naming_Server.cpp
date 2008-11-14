@@ -61,7 +61,7 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                                       PortableServer::POA_ptr poa,
                                       size_t context_size,
                                       ACE_Time_Value *timeout,
-                                      int resolve_for_existing_naming_service,
+                                      bool resolve_for_existing_naming_service,
                                       const ACE_TCHAR *persistence_location,
                                       void *base_addr,
                                       int enable_multicast,
@@ -109,7 +109,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa,
                          size_t context_size,
                          ACE_Time_Value *timeout,
-                         int resolve_for_existing_naming_service,
+                         bool resolve_for_existing_naming_service,
                          const ACE_TCHAR *persistence_location,
                          void *base_addr,
                          int enable_multicast,
@@ -732,6 +732,11 @@ TAO_Naming_Server::fini (void)
         {
           adapter->unbind ("NameService");
         }
+
+#if !defined (CORBA_E_MICRO)
+      CORBA::Object_var svc =
+        this->orb_->unregister_initial_reference ("NameService");
+#endif /* CORBA_E_MICRO */
     }
   catch (const CORBA::Exception&)
     {

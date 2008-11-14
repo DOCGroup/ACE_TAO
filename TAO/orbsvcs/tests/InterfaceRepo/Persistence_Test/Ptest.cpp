@@ -154,7 +154,7 @@ Ptest::populate (void)
                                                     def_members);
 }
 
-void
+int
 Ptest::query (void)
 {
   if (this->debug_)
@@ -178,53 +178,68 @@ Ptest::query (void)
 
   CORBA::ULong length = contents->length ();
 
-  if (this->debug_)
+  if (length != 1)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Repository::contents::length: %d\n"),
-                  length));
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ERROR: Repository::contents::length: %d")
+                         ACE_TEXT (" while it's expected to be 1\n"),
+                         length),
+                        -1);
     }
-
-  ACE_ASSERT (length == 1);
 
   CORBA::ULong i = 0;
 
   CORBA::StructDef_var svar =
     CORBA::StructDef::_narrow (contents[i]);
 
-  ACE_ASSERT (!CORBA::is_nil (svar.in ()));
+  if (CORBA::is_nil (svar.in ()))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ERROR: Struct from repo is nil\n")),
+                        -1);
+    }
 
   CORBA::StructMemberSeq_var out_members =
     svar->members ();
 
   length = out_members->length ();
 
-  if (this->debug_)
+  if (length != 3)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nStructDef::members::length: %d\n"),
-                  length));
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ERROR: StructDef::members::length: %d")
+                         ACE_TEXT (" while it's expected to be 3\n"),
+                         length),
+                        -1);
     }
-
-  ACE_ASSERT (length == 3);
 
   for (i = 0; i < length; ++i)
     {
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("StructDef::members[%d]::name: %s\n"),
+                      ACE_TEXT ("StructDef::members[%d]::name: %C\n"),
                       i,
-                      ACE_TEXT_CHAR_TO_TCHAR (out_members[i].name.in ())));
+                      out_members[i].name.in ()));
         }
 
       if (i == length - 1)
         {
-          ACE_ASSERT (ACE_OS::strcmp (out_members[i].name, "my_enum") == 0);
+          if (ACE_OS::strcmp (out_members[i].name, "my_enum") != 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("ERROR: Incorrect struct member\n")),
+                                -1);
+            }
         }
       else
         {
-          ACE_ASSERT (ACE_OS::strcmp (out_members[i].name, members[i]) == 0);
+          if (ACE_OS::strcmp (out_members[i].name, members[i]) != 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("ERROR: Incorrect struct member\n")),
+                                -1);
+            }
         }
     }
 
@@ -234,4 +249,6 @@ Ptest::query (void)
 #endif /* ACE_NDEBUG */
 
   svar->destroy ();
+
+  return 0;
 }

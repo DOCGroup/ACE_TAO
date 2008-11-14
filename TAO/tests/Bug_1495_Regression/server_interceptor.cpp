@@ -76,8 +76,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 
   ACE_DEBUG ((LM_DEBUG, "Sending LOCATION_FORWARD, current thread %i\n", ACE_Thread::self ()));
 
-  throw PortableInterceptor::ForwardRequest (this->forward_location_);
-
+  throw PortableInterceptor::ForwardRequest (this->forward_location_.in ());
 }
 
 
