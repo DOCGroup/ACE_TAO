@@ -25,7 +25,7 @@ namespace CIAO
       CIAO_TRACE("ID_Handler::get_ImplementationDependency");
       
       toconfig.requiredType=
-        CORBA::string_dup (desc.requiredType ().c_str ());
+        CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.requiredType ().c_str ()));
     }
 
     ImplementationDependency
@@ -33,7 +33,7 @@ namespace CIAO
                                  const ::Deployment::ImplementationDependency& src)
     {
       CIAO_TRACE("ID_Handler::get_ImplementationDependency - reverse");
-      XMLSchema::string< char > reqtype ((src.requiredType));
+      XMLSchema::string< ACE_TCHAR > reqtype (ACE_TEXT_CHAR_TO_TCHAR (src.requiredType.in ()));
 
       ImplementationDependency id (reqtype);
 

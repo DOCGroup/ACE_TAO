@@ -513,13 +513,13 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT ("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "referencedArtifact")
+        else if (n == ACE_TEXT ("referencedArtifact"))
         {
           referencedArtifact_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ImplementationArtifactDescription > (new ::CIAO::Config_Handlers::ImplementationArtifactDescription (e));
           referencedArtifact_->container (this);
@@ -546,49 +546,49 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "label")
+        if (n == ACE_TEXT ("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "UUID")
+        else if (n == ACE_TEXT ("UUID"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           UUID (t);
         }
 
-        else if (n == "location")
+        else if (n == ACE_TEXT ("location"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           add_location (t);
         }
 
-        else if (n == "dependsOn")
+        else if (n == ACE_TEXT ("dependsOn"))
         {
           ::CIAO::Config_Handlers::NamedImplementationArtifact t (e);
           add_dependsOn (t);
         }
 
-        else if (n == "execParameter")
+        else if (n == ACE_TEXT ("execParameter"))
         {
           ::CIAO::Config_Handlers::Property t (e);
           add_execParameter (t);
         }
 
-        else if (n == "infoProperty")
+        else if (n == ACE_TEXT ("infoProperty"))
         {
           ::CIAO::Config_Handlers::Property t (e);
           add_infoProperty (t);
         }
 
-        else if (n == "deployRequirement")
+        else if (n == ACE_TEXT ("deployRequirement"))
         {
           ::CIAO::Config_Handlers::Requirement t (e);
           add_deployRequirement (t);
         }
 
-        else if (n == "contentLocation")
+        else if (n == ACE_TEXT ("contentLocation"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           contentLocation (t);
@@ -603,7 +603,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "href")
+        if (n == ACE_TEXT ("href"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (a);
           href (t);
@@ -1342,7 +1342,7 @@ namespace CIAO
       void NamedImplementationArtifact::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
         Traversal::NamedImplementationArtifact::name (o);
         pop_ ();
       }
@@ -1350,7 +1350,7 @@ namespace CIAO
       void NamedImplementationArtifact::
       referencedArtifact (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("referencedArtifact", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("referencedArtifact"), top_ ()));
         Traversal::NamedImplementationArtifact::referencedArtifact (o);
         pop_ ();
       }
@@ -1379,7 +1379,7 @@ namespace CIAO
       void ImplementationArtifactDescription::
       label (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("label"), top_ ()));
         Traversal::ImplementationArtifactDescription::label (o);
         pop_ ();
       }
@@ -1387,7 +1387,7 @@ namespace CIAO
       void ImplementationArtifactDescription::
       UUID (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("UUID", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("UUID"), top_ ()));
         Traversal::ImplementationArtifactDescription::UUID (o);
         pop_ ();
       }
@@ -1395,7 +1395,7 @@ namespace CIAO
       void ImplementationArtifactDescription::
       location_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("location", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("location"), top_ ()));
       }
 
       void ImplementationArtifactDescription::
@@ -1414,7 +1414,7 @@ namespace CIAO
       void ImplementationArtifactDescription::
       dependsOn_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("dependsOn", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("dependsOn"), top_ ()));
       }
 
       void ImplementationArtifactDescription::
@@ -1433,7 +1433,7 @@ namespace CIAO
       void ImplementationArtifactDescription::
       execParameter_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("execParameter", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("execParameter"), top_ ()));
       }
 
       void ImplementationArtifactDescription::
@@ -1452,7 +1452,7 @@ namespace CIAO
       void ImplementationArtifactDescription::
       infoProperty_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("infoProperty", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("infoProperty"), top_ ()));
       }
 
       void ImplementationArtifactDescription::
@@ -1471,7 +1471,7 @@ namespace CIAO
       void ImplementationArtifactDescription::
       deployRequirement_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("deployRequirement", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("deployRequirement"), top_ ()));
       }
 
       void ImplementationArtifactDescription::
@@ -1490,7 +1490,7 @@ namespace CIAO
       void ImplementationArtifactDescription::
       contentLocation (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("contentLocation", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("contentLocation"), top_ ()));
         Traversal::ImplementationArtifactDescription::contentLocation (o);
         pop_ ();
       }
@@ -1498,7 +1498,7 @@ namespace CIAO
       void ImplementationArtifactDescription::
       href (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("href", "", top_ ());
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (ACE_TEXT ("href"), ACE_TEXT (""), top_ ());
         attr_ (&a);
         Traversal::ImplementationArtifactDescription::href (o);
         attr_ (0);

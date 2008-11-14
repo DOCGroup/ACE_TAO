@@ -23,7 +23,7 @@ namespace CIAO
                                          ::Deployment::SubcomponentInstantiationDescription &toconfig)
       {
         CIAO_TRACE ("SID_Handler::sub_comp_inst_descr");
-        toconfig.name = desc.name ().c_str ();
+        toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
 
         if (desc.basePackage_p ())
           {
@@ -52,14 +52,14 @@ namespace CIAO
 
             if (desc.referencedPackage ().requiredUUID_p ())
               toconfig.referencedPackage[0].requiredUUID =
-                desc.referencedPackage ().requiredUUID ().c_str ();
+                ACE_TEXT_ALWAYS_CHAR (desc.referencedPackage ().requiredUUID ().c_str ());
 
             if (desc.referencedPackage ().requiredName_p ())
               toconfig.referencedPackage[0].requiredName =
-                desc.referencedPackage ().requiredName ().c_str ();
+                ACE_TEXT_ALWAYS_CHAR (desc.referencedPackage ().requiredName ().c_str ());
 
             toconfig.referencedPackage[0].requiredType =
-              desc.referencedPackage ().requiredType ().c_str ();
+              ACE_TEXT_ALWAYS_CHAR (desc.referencedPackage ().requiredType ().c_str ());
           }
 
         toconfig.selectRequirement.length (desc.count_selectRequirement ());
@@ -74,7 +74,7 @@ namespace CIAO
 
         if (desc.id_p ())
           {
-            ACE_CString str (desc.id ().c_str ());
+            ACE_CString str (ACE_TEXT_ALWAYS_CHAR (desc.id ().c_str ()));
             SID_Handler::IDREF.bind_next_available (str);
           }
         else
@@ -87,7 +87,7 @@ namespace CIAO
       SID_Handler::sub_comp_inst_descr (const Deployment::SubcomponentInstantiationDescription &src)
       {
         CIAO_TRACE ("SID_Handler::sub_comp_inst_descr - reverse");
-        SubcomponentInstantiationDescription retval (src.name.in ());
+        SubcomponentInstantiationDescription retval (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
 
         if (src.basePackage.length () == 1)
           retval.basePackage
@@ -100,15 +100,15 @@ namespace CIAO
             ComponentPackageImport ci;
 
             for (CORBA::ULong i = 0; i < src.importedPackage[0].location.length (); ++i)
-              ci.add_location (src.importedPackage[0].location[i].in ());
+              ci.add_location (ACE_TEXT_CHAR_TO_TCHAR (src.importedPackage[0].location[i].in ()));
 
             retval.importedPackage (ci);
           }
         else if (src.referencedPackage.length () == 1)
           {
-            ComponentPackageReference cpr (src.referencedPackage[0].requiredType.in ());
-            cpr.requiredUUID (src.referencedPackage[0].requiredUUID.in ());
-            cpr.requiredName (src.referencedPackage[0].requiredName.in ());
+            ComponentPackageReference cpr (ACE_TEXT_CHAR_TO_TCHAR (src.referencedPackage[0].requiredType.in ()));
+            cpr.requiredUUID (ACE_TEXT_CHAR_TO_TCHAR (src.referencedPackage[0].requiredUUID.in ()));
+            cpr.requiredName (ACE_TEXT_CHAR_TO_TCHAR (src.referencedPackage[0].requiredName.in ()));
 
             retval.referencedPackage (cpr);
           }

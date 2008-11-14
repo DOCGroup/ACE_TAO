@@ -56,8 +56,8 @@ namespace CIAO
       {
            CIAO::DAnCE::EventServiceDeploymentDescription a_esd;
 
-           a_esd.name = CORBA::string_dup (i->name ().c_str ());
-           a_esd.node = CORBA::string_dup (i->node ().c_str ());
+           a_esd.name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (i->name ().c_str ()));
+           a_esd.node = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (i->node ().c_str ()));
 
            switch (i->type ().integral ())
            {
@@ -79,7 +79,7 @@ namespace CIAO
              return false;
            }
 
-           a_esd.svc_cfg_file = CORBA::string_dup  (i->svc_cfg_file ().c_str ());
+           a_esd.svc_cfg_file = CORBA::string_dup  (ACE_TEXT_ALWAYS_CHAR (i->svc_cfg_file ().c_str ()));
 
 
            // Populate filtering information for this event channel
@@ -89,7 +89,7 @@ namespace CIAO
                 j != i->end_filter ();
                 j++)
            {
-              a_esd.filters[pos_j].name = CORBA::string_dup (j->name ().c_str ());
+              a_esd.filters[pos_j].name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (j->name ().c_str ()));
               switch (j->type ().integral ())
               {
                   case ::CIAO::Config_Handlers::FilterType::CONJUNCTION_l:
@@ -116,7 +116,7 @@ namespace CIAO
                     k != j->end_source ();
                     k++)
                {
-                 a_esd.filters[pos_j].sources[pos_k] = CORBA::string_dup (k->c_str ());
+                 a_esd.filters[pos_j].sources[pos_k] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (k->c_str ()));
                  pos_k++;
 
                }
@@ -130,9 +130,9 @@ namespace CIAO
                 j != i->end_addr_serv ();
                 j++)
            {
-              a_esd.addr_servs[pos_j].name = CORBA::string_dup (j->name ().c_str ());
+              a_esd.addr_servs[pos_j].name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (j->name ().c_str ()));
               a_esd.addr_servs[pos_j].port = j->port ();
-              a_esd.addr_servs[pos_j].address = CORBA::string_dup (j->address ().c_str ());
+              a_esd.addr_servs[pos_j].address = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (j->address ().c_str ()));
               pos_j++;
             }
 
@@ -143,9 +143,9 @@ namespace CIAO
                 j != i->end_udp_sender ();
                 j++)
            {
-              a_esd.senders[pos_j].name = CORBA::string_dup (j->name ().c_str ());
+              a_esd.senders[pos_j].name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (j->name ().c_str ()));
               a_esd.senders[pos_j].addr_serv_id = 
-                CORBA::string_dup (j->addr_serv_id ().c_str ());
+                CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (j->addr_serv_id ().c_str ()));
               pos_j++;
             }
 
@@ -156,9 +156,9 @@ namespace CIAO
                 j != i->end_udp_receiver ();
                 j++)
            {
-              a_esd.receivers[pos_j].name = CORBA::string_dup (j->name ().c_str ());
+              a_esd.receivers[pos_j].name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (j->name ().c_str ()));
               a_esd.receivers[pos_j].addr_serv_id = 
-                CORBA::string_dup (j->addr_serv_id ().c_str ());
+                CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (j->addr_serv_id ().c_str ()));
               a_esd.receivers[pos_j].is_multicast = j->is_multicast ();
               a_esd.receivers[pos_j].listen_port = j->listen_port ();
               pos_j++;

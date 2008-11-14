@@ -91,8 +91,8 @@ namespace CIAO
       if (root == 0 || ns == 0)
         return 0;
 
-      return this->impl_->createDocument (XStr (ns),
-                                          XStr (root),
+      return this->impl_->createDocument (XStr (ACE_TEXT_ALWAYS_CHAR (ns)),
+                                          XStr (ACE_TEXT_ALWAYS_CHAR (root)),
                                           0);
     }
 
@@ -156,7 +156,7 @@ namespace CIAO
 
           parser->setEntityResolver (&resolver);
 
-          DOMDocument* doc = parser->parseURI (url);
+          DOMDocument* doc = parser->parseURI (ACE_TEXT_ALWAYS_CHAR (url));
 
           if (handler.getErrors ())
             throw 0;
@@ -224,7 +224,7 @@ namespace CIAO
                                  true))
         writer->setFeature (XMLUni::fgDOMWRTFormatPrettyPrint, true);
 
-      xercesc::XMLFormatTarget* ft (new xercesc::LocalFileFormatTarget(file));
+      xercesc::XMLFormatTarget* ft (new xercesc::LocalFileFormatTarget(ACE_TEXT_ALWAYS_CHAR (file)));
       retn = writer->writeNode(ft, *doc);
       delete writer;
       delete ft;

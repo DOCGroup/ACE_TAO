@@ -6,7 +6,7 @@
 #include "ace/Get_Opt.h"
 #include "assert.h"
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

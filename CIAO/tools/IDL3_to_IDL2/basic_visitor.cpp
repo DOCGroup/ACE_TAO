@@ -1057,7 +1057,7 @@ basic_visitor::gen_label_value (AST_UnionLabel *node)
       case AST_Expression::EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
         *os << "ACE_UINT64_LITERAL (";
-        this->os->print (ACE_UINT64_FORMAT_SPECIFIER, ev->u.ullval);
+        this->os->print (ACE_TEXT_ALWAYS_CHAR (ACE_UINT64_FORMAT_SPECIFIER), ev->u.ullval);
         *os << ")";
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         break;

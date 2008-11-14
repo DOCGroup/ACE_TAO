@@ -46,9 +46,9 @@ namespace CIAO
     std::string
     CIAO_Schema_Resolver::resolve_from_environment (void)
     {
-      ACE_Env_Value <const char *> path ("CIAO_ROOT", "");
+      ACE_Env_Value <const ACE_TCHAR *> path (ACE_TEXT ("CIAO_ROOT"), ACE_TEXT (""));
 
-      std::string retval (path);
+      std::string retval (ACE_TEXT_ALWAYS_CHAR (path));
       return retval += "/docs/schema/";
     }
   }

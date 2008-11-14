@@ -94,11 +94,11 @@ namespace CIAO
       // Check if the label is there or not
       if (domain_->label_p ())
         this->idl_domain_->label =
-          CORBA::string_dup (domain_->label ().c_str ());
+          CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (domain_->label ().c_str ()));
 
       if (domain_->UUID_p ())
         this->idl_domain_->UUID =
-          CORBA::string_dup (domain_->UUID ().c_str ());
+          CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (domain_->UUID ().c_str ()));
 
       CORBA::ULong len = domain_->count_node ();
       this->idl_domain_->node.length (len);
@@ -117,11 +117,11 @@ namespace CIAO
         {
           // Node* thisNode = (Node*)iter;
           this->idl_domain_->node[i].name =
-            CORBA::string_dup (iter->name ().c_str ());
+            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (iter->name ().c_str ()));
 
           if (iter->label_p ())
             this->idl_domain_->node[i].label =
-              CORBA::string_dup (iter->label ().c_str ());
+              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (iter->label ().c_str ()));
 
           // length is hard-coded for now ...
           // here iterate over the resources ...
@@ -136,7 +136,7 @@ namespace CIAO
             {
 
               this->idl_domain_->node[i].resource[res_id].name =
-                CORBA::string_dup (res_iter->name ().c_str ());
+                CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (res_iter->name ().c_str ()));
 
               CORBA::ULong resource_type_len = res_iter->count_resourceType ();
               this->idl_domain_->node[i].resource[res_id].resourceType.length (resource_type_len);
@@ -150,7 +150,7 @@ namespace CIAO
                    res_type_iter++, res_type_id++)
                 {
                   this->idl_domain_->node[i].resource[res_id].resourceType[res_type_id] =
-                    CORBA::string_dup (res_type_iter->c_str ());
+                    CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (res_type_iter->c_str ()));
                 }
 
               CORBA::ULong property_len = res_iter->count_property ();

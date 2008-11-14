@@ -20,7 +20,7 @@ namespace CIAO
 
           dest.length(len+1);
 
-          dest[len] = CORBA::string_dup (loc->c_str ());
+          dest[len] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (loc->c_str ()));
         }
 
       return true;
@@ -35,7 +35,7 @@ namespace CIAO
             i < src.length ();
             ++i)
         {
-          co.add_arg (src[i].in ());
+          co.add_arg (ACE_TEXT_CHAR_TO_TCHAR (src[i].in ()));
         }
 
       return co;

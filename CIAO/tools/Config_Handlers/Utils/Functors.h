@@ -70,7 +70,7 @@ namespace CIAO
 
       void operator() (const ::XMLSchema::string<ACE_TCHAR>  &src)
       {
-        dest_[pos_++] = src.c_str ();
+        dest_[pos_++] = ACE_TEXT_ALWAYS_CHAR (src.c_str ());
       }
 
     private:

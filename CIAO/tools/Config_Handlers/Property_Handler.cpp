@@ -26,7 +26,7 @@ namespace CIAO
       CIAO_TRACE("Property_Handler::get_property");
 
       toconfig.name =
-        CORBA::string_dup (desc.name ().c_str ());
+        CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ()));
 
       Any_Handler::extract_into_any (desc.value (),
                                      toconfig.value);
@@ -39,7 +39,7 @@ namespace CIAO
     {
       CIAO_TRACE("Property_Handler::get_property - reverse");
 
-      ::XMLSchema::string< char > name ((src.name));
+      ::XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
       Any value (Any_Handler::get_any (src.value));
 
       Property prop (name,value);

@@ -29,9 +29,9 @@ namespace CIAO
     {
       CIAO_TRACE("CRDD_Handler::get_ConnectionResourceDD");
 
-      toconfig.targetName = desc.targetName ().c_str ();
-      toconfig.requirementName = desc.requirementName ().c_str ();
-      toconfig.resourceName = desc.resourceName ().c_str ();
+      toconfig.targetName = ACE_TEXT_ALWAYS_CHAR (desc.targetName ().c_str ());
+      toconfig.requirementName = ACE_TEXT_ALWAYS_CHAR (desc.requirementName ().c_str ());
+      toconfig.resourceName = ACE_TEXT_ALWAYS_CHAR (desc.resourceName ().c_str ());
 
       std::for_each (desc.begin_property (),
                      desc.end_property (),
@@ -43,9 +43,9 @@ namespace CIAO
                                                  const ::Deployment::ConnectionResourceDeploymentDescription& src)
     {
       CIAO_TRACE("CRDD_Handler::get_ConnectionResourceDeploymentDescription- reverse");
-      XMLSchema::string< ACE_TCHAR > tname ((src.targetName));
-      XMLSchema::string< ACE_TCHAR > reqname ((src.requirementName));
-      XMLSchema::string <ACE_TCHAR> resname ((src.resourceName));
+      XMLSchema::string< ACE_TCHAR > tname (ACE_TEXT_CHAR_TO_TCHAR (src.targetName.in ()));
+      XMLSchema::string< ACE_TCHAR > reqname (ACE_TEXT_CHAR_TO_TCHAR (src.requirementName.in ()));
+      XMLSchema::string <ACE_TCHAR> resname (ACE_TEXT_CHAR_TO_TCHAR (src.resourceName.in ()));
 
       ConnectionResourceDeploymentDescription crdd (tname,
                                                     reqname,

@@ -14,7 +14,7 @@ namespace CIAO
     {
       if (src.id_p ())
         {
-          dest.Id = CORBA::string_dup (src.id().c_str ());
+          dest.Id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (src.id().c_str ()));
         }
 
       for (ThreadpoolWithLanesDef::threadpoolLane_const_iterator loc =
@@ -62,7 +62,7 @@ namespace CIAO
                                   );
 
       //XMLSchema::ID <ACE_TCHAR> id = ((src.Id));
-      tpl.id (src.Id.in ());
+      tpl.id (ACE_TEXT_CHAR_TO_TCHAR (src.Id.in ()));
 
       size_t len = src.threadpool_lanes.length ();
       for (size_t i = 0; i < len; i++)

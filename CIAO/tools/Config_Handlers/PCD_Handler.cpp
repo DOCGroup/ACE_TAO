@@ -31,7 +31,7 @@ namespace CIAO
     {
       CIAO_TRACE("PCD_Handler::get_PlanConnectionDescription");
 
-      toconfig.name = CORBA::string_dup (desc.name ().c_str ());
+      toconfig.name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ()));
 
       //Source is mapped to a string in the schema and a sequence
       //in the IDL. We just assign the source string from the xml
@@ -42,7 +42,7 @@ namespace CIAO
         {
           // Only one.....
           toconfig.source.length (1);
-          toconfig.source[0] = desc.source ().c_str ();
+          toconfig.source[0] = ACE_TEXT_ALWAYS_CHAR (desc.source ().c_str ());
         }
 
       toconfig.deployRequirement.length (desc.count_deployRequirement ());
@@ -83,14 +83,14 @@ namespace CIAO
     {
       CIAO_TRACE("PCD_Handler::get_PlanConnectionDescription");
 
-      XMLSchema::string< char > name ((src.name));
+      XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
 
       PlanConnectionDescription pcd(name);
 
       //Get the source if it exists
       if(src.source.length() != 0)
         {
-          XMLSchema::string< char > source((src.source[0]));
+          XMLSchema::string< ACE_TCHAR > source(ACE_TEXT_CHAR_TO_TCHAR (src.source[0].in ()));
           pcd.source(source);
         }
 

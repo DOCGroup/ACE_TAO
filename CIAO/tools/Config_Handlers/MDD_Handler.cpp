@@ -45,7 +45,7 @@ namespace CIAO
                                               CORBA::ULong pos)
     {
       toconfig.name =
-        CORBA::string_dup (desc.name ().c_str ());
+        CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ()));
 
       MonolithicDeploymentDescription::source_const_iterator me =
         desc.end_source ();
@@ -58,7 +58,7 @@ namespace CIAO
            ++se)
         {
           toconfig.source[len++] =
-            CORBA::string_dup ((*se).c_str ());
+            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ((*se).c_str ()));
         }
 
       MonolithicDeploymentDescription::artifact_const_iterator ae =
@@ -72,8 +72,9 @@ namespace CIAO
         {
           CORBA::ULong tmp = 0;
 
-          ADD_Handler::IDREF.find_ref (ACE_CString (ab->id ().c_str ()),
-                                       tmp);
+          ADD_Handler::IDREF.find_ref (
+            ACE_CString (ACE_TEXT_ALWAYS_CHAR (ab->id ().c_str ())),
+            tmp);
 
           toconfig.artifactRef[len++] = tmp;
         }
@@ -99,7 +100,7 @@ namespace CIAO
       // Handle the idref
       if (desc.id_p ())
         {
-          ACE_CString cstr (desc.id ().c_str ());
+          ACE_CString cstr (ACE_TEXT_ALWAYS_CHAR (desc.id ().c_str ()));
 
           MDD_Handler::IDREF.bind_ref (cstr, pos);
         }
@@ -119,14 +120,14 @@ namespace CIAO
       CIAO_TRACE("mono_deployment_description - reverse");
 
       //Get the name and instantiate the mdd
-      XMLSchema::string < char > name ((src.name));
+      XMLSchema::string < ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
       MonolithicDeploymentDescription mdd (name);
 
       //Get the source(s) from the IDL and store them
       size_t total = src.source.length();
       for(size_t i = 0; i < total; i++)
         {
-          XMLSchema::string< char > curr ((src.source[i]));
+          XMLSchema::string< ACE_TCHAR > curr (ACE_TEXT_CHAR_TO_TCHAR (src.source[i].in ()));
           mdd.add_source(curr);
         }
 
@@ -136,7 +137,7 @@ namespace CIAO
         {
           ACE_CString tmp;
           ADD_Handler::IDREF.find_ref(src.artifactRef[j], tmp);
-          XMLSchema::IDREF< ACE_TCHAR > curr(tmp.c_str());
+          XMLSchema::IDREF< ACE_TCHAR > curr(ACE_TEXT_CHAR_TO_TCHAR (tmp.c_str()));
           mdd.add_artifact (curr);
         }
 
@@ -162,7 +163,7 @@ namespace CIAO
       ACE_CString mdd_id ("_");
       mdd_id += *uuid.to_string ();
 
-      XMLSchema::ID< ACE_TCHAR > xml_id (mdd_id.c_str ());
+      XMLSchema::ID< ACE_TCHAR > xml_id (ACE_TEXT_CHAR_TO_TCHAR (mdd_id.c_str ()));
 
       // Bind the ref and set it in the IDD
       MDD_Handler::IDREF.bind_next_available (mdd_id);

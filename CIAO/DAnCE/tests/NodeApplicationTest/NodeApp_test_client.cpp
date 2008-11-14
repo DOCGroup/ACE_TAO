@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include "assert.h"
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 int comp_number = 4;
 int counter = 0;
 

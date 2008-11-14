@@ -114,7 +114,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "basePackage")
+        if (n == ACE_TEXT ("basePackage"))
         {
           ::CIAO::Config_Handlers::PackageConfiguration t (e);
           add_basePackage (t);
@@ -311,7 +311,7 @@ namespace CIAO
       void TopLevelPackageDescription::
       basePackage_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("basePackage", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("basePackage"), top_ ()));
       }
 
       void TopLevelPackageDescription::

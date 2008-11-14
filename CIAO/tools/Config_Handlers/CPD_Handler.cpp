@@ -16,11 +16,11 @@ namespace CIAO
     {
       CIAO_TRACE("CPD_Handler::component_port_description");
       toconfig.name =
-        desc.name ().c_str ();
+        ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
 
       if (desc.specificType_p ())
         toconfig.specificType =
-          desc.specificType ().c_str ();
+          ACE_TEXT_ALWAYS_CHAR (desc.specificType ().c_str ());
 
       toconfig.supportedType.length (desc.count_supportedType ());
       std::for_each (desc.begin_supportedType (),
@@ -72,13 +72,13 @@ namespace CIAO
                                              const Deployment::ComponentPortDescription& src)
     {
       CIAO_TRACE("CPD_Handler::component_port_description - reverse");
-      ::XMLSchema::string< char > name ((src.name));
-      ::XMLSchema::string< char > stype ((src.specificType));
+      ::XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
+      ::XMLSchema::string< char > stype (src.specificType);
 
       ::XMLSchema::string< char > tval ("true");
       ::XMLSchema::string< char > fval ("false");
       XMLSchema::boolean provider;
-      XMLSchema::boolean  exclusiveProvider;
+      XMLSchema::boolean exclusiveProvider;
       XMLSchema::boolean exclusiveUser;
       XMLSchema::boolean optional;
 
@@ -141,7 +141,8 @@ namespace CIAO
         }
 
       for (CORBA::ULong i = 0; i < src.supportedType.length (); ++i)
-        cpd.add_supportedType (XMLSchema::string< char > ((src.supportedType[i])));
+        cpd.add_supportedType (
+          XMLSchema::string< ACE_TCHAR > (ACE_TEXT_CHAR_TO_TCHAR (src.supportedType[i].in ())));
 
       return cpd;
     }
