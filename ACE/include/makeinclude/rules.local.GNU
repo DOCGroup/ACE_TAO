@@ -49,7 +49,7 @@ makefile_name.local:
 else
 makefile_name.local:
 	@echo
-	@echo GNUmakefile: $(call PWD)/$(MAKEFILE)
+	@echo GNUmakefile: $(call PWD)/$(MAKEFILE) MAKEFLAGS=$(MAKEFLAGS)
 	@echo
 endif
 
@@ -103,35 +103,39 @@ define mk_obj_out_dir
 endef
 endif
 
-$(VDIR)%.o: %.c
+nullstring :=
+CC_OUTPUT_FLAG_SEP ?= $(nullstring) #space
+
+$(VDIR)%.$(OBJEXT): %.c
 	$(mk_obj_out_dir)
-	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.c) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.C
+$(VDIR)%.$(OBJEXT): %.C
 	$(mk_obj_out_dir)
-	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.c) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.cpp
+$(VDIR)%.$(OBJEXT): %.cpp
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.cc) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.cc
+$(VDIR)%.$(OBJEXT): %.cc
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.cc) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.cxx
+$(VDIR)%.$(OBJEXT): %.cxx
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.cc) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 	${MVCMD}
 
+RC_OUTPUT_FLAG ?=
   ifneq (,$(COMPILE.rc))
 $(VDIR)%.rc.o: %.rc
 	$(mk_obj_out_dir)
-	$(COMPILE.rc) $< $@
+	$(COMPILE.rc) $(RC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
   endif # COMPILE.rc
 
@@ -142,11 +146,11 @@ $(VDIR)%.rc.o: %.rc
 ifndef SOLINK
 $(VSHDIR)%.$(OBJEXT): %.c
 	$(mk_obj_out_dir)
-	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 
 $(VSHDIR)%.$(OBJEXT): %.C
 	$(mk_obj_out_dir)
-	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 
 # I added the "Executable Shared Object (ESO)" define to separate between
 # normal shared object files and executable shared object files (the kind
@@ -164,7 +168,7 @@ $(VSHDIR)%.$(SOEXT): %.cpp
 
 $(VSHDIR)%.$(OBJEXT): %.cc
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 
   ifeq ($(split), 1)
 $(VSHDIR)%.$(OBJEXT): %.cpp
@@ -175,18 +179,18 @@ $(VSHDIR)%.$(OBJEXT): %.cpp
 
 $(VSHDIR)%.$(OBJEXT): %.cpp
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 
   endif # split
 
 $(VSHDIR)%.$(OBJEXT): %.cxx
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 
   ifneq (,$(COMPILE.rc))
 $(VSHDIR)%.rc.$(OBJEXT): %.rc
 	$(mk_obj_out_dir)
-	$(COMPILE.rc) $< $@
+	$(COMPILE.rc) $(RC_OUTPUT_FLAG) $@ $<
   endif # COMPILE.rc
 
 $(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT)

@@ -196,7 +196,7 @@
 ARCH        ?=
 ARCH_BIN     = $(BIN)
 ARCH_BIN2    = $(BIN2)
-ARCH_LIB     = $(LIB)
+ARCH_LIB     = $(LIB_CHECKED)
 ARCH_LIB2    = $(LIB2)
 ARCH_SHLIB   = $(SHLIB)
 ARCH_SHLIB2  = $(SHLIB2)
@@ -210,8 +210,8 @@ endif
 ifdef BIN2
   ARCH_BIN2 = $(ARCH)/$(BIN2)
 endif
-ifdef LIB
-  ARCH_LIB = $(ARCH)/$(LIB)
+ifdef LIB_CHECKED
+  ARCH_LIB = $(ARCH)/$(LIB_CHECKED)
 endif
 ifdef LIB2
   ARCH_LIB2 = $(ARCH)/$(LIB2)
@@ -254,9 +254,9 @@ endif # !BIN_UNCHECKED
 
 LIB_UNCHECKED ?=
 CLEANUP_LIB ?=
-ifdef LIB
+ifdef LIB_CHECKED
   CLEANUP_LIB = $(ARCH_LIB)
-endif # !LIB
+endif # !LIB_CHECKED
 ifdef LIB2
   CLEANUP_LIB += $(ARCH_LIB2)
 endif # !LIB2
