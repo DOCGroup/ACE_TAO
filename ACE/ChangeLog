@@ -1,3 +1,14 @@
+Fri Nov 14 19:03:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Parse_Node.cpp:
+          Only print the debug message when ACE::debug() is enabled. This
+          prevent a lot of messages on the WinCE console. Fixes bugzilla
+          3505
+
+        * ace/Service_Gestalt.cpp:
+          Renamed getopt to get_opt so that we can remove all the fuzz
+          disable/enable lines
+
 Fri Nov 14 18:54:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3505_Regression_Test.cpp:
