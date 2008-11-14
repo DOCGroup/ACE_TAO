@@ -1,3 +1,9 @@
+Fri Nov 14 23:11:35 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * rules.ciao.GNU:
+
+          Translate \ to / in $(CIAO_ROOT).
+
 Fri Nov 14 13:53:49 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * tools/Config_Handlers/cid.cpp:
