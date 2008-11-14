@@ -35,6 +35,7 @@ endif # versioned_so
 # The following targets arrange to build both unshared and shared libraries
 #----------------------------------------------------------------------------
 
+LIB_PREFIX ?= lib
 LIB ?=
 VLIB = $(ARCH_LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 CLEANUP_VLIB = $(CLEANUP_LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
@@ -159,8 +160,12 @@ $(VLIB): $(VLOBJS)
   ifeq (1,$(ACE_OPENVMS))
 	find $(TMPINCDIR:%=%) -name "*.o" -or -name "*.obj" | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
   else
+    ifneq (,$(AR.cc.override))
+	$(AR.cc.override)
+    else
 	([ "`echo $(TMPINCDIR:%=%/*.o)`" != "$(TMPINCDIR:%=%/*.o)" ] && echo $(TMPINCDIR:%=%/*.o); \
 	echo $(filter %.o, $?)) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
+    endif
   endif
   ifdef ibmcxx_build
 # This is required to get AIX IBM C/C++ to instantiate and compile the needed
@@ -236,7 +241,11 @@ $(VSHLIB): $(VSHOBJS)
           ifeq ($(split),1)
 	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHDIR)/*.$(OBJEXT) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
           else # ! split
+            ifneq ($(SOLINK.cc.override),)
+	$(SOLINK.cc.override)
+            else
 	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $^ $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
+            endif #override
           endif  # split
       endif  # ibmcxx_build
     endif  # SHLIBBUILD

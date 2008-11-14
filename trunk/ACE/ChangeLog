@@ -1,3 +1,35 @@
+Fri Nov 14 22:35:43 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/platform_win32_msvc.GNU:
+
+          New file for building with GNU make and the Visual C++
+          compiler/linker on Win32 platforms.  See the header comments
+          in this file for details.
+
+        * ace/Monitor_Control/Monitor_Control.mpc:
+
+          Add support for linking pdh.lib (from Win32) with -type gnuace.
+
+        * ace/config-win32-msvc-9.h:
+
+          If ACE_HAS_EXCEPTIONS is defined, avoid re-defining it.
+
+        * bin/MakeProjectCreator/config/ace_mc.mpb:
+
+          Add the section for linking pdh.lib (from Monitor_Control.mpc)
+          so that dependent projects inherit this setting (needed for static).
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+
+          A new macro $(LIB_PREFIX) is used in place of a hardcoded "lib".
+          The macro $(LIB) has been renamed to $(LIB_CHECKED) to avoid
+          conflicts.
+          Other changes to make the command lines and file names a
+          little more flexible.
+
 Fri Nov 14 22:25:34 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/wrapper_macros.GNU:
