@@ -47,7 +47,7 @@ test_i::set_state (const ::CORBA::Any & state_value)
 }
 
 ::CORBA::Any *
-test_i::get_state ()
+test_i::get_state (void)
 {
   // create new any object
   CORBA::Any_var state (new CORBA::Any);

@@ -19,7 +19,9 @@ class LWFT_Client_Export ForwardingAgent_Thread
   : public ACE_Task_Base
 {
 public:
-  ForwardingAgent_Thread (CORBA::ORB_ptr orb);
+  ForwardingAgent_Thread (CORBA::ORB_ptr orb,
+                          ForwardingAgent_i *agent,
+                          ACE_Barrier &barrier);
 
   virtual int svc (void);
 
@@ -28,7 +30,7 @@ private:
 
   ForwardingAgent_i *agent_;
 
-  ACE_Barrier synchronizer_;
+  ACE_Barrier &synchronizer_;
 };
 
 #include /**/ "ace/post.h"

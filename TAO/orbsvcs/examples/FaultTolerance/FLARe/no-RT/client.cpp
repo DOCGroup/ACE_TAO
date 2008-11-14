@@ -15,8 +15,14 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Event.h"
+#include "ace/Barrier.h"
 
+#include "tao/PortableServer/Servant_Base.h"
+#include "tao/ORBInitializer_Registry.h"
+
+#include "orbsvcs/orbsvcs/LWFT/ForwardingAgent.h"
 #include "orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.h"
+#include "orbsvcs/orbsvcs/LWFT/Client_ORBInitializer.h"
 
 #include "testC.h"
 
@@ -978,7 +984,29 @@ int
 main (int argc, char *argv[])
 {
   try
-    {  
+    {
+      ForwardingAgent_i *forwarding_agent = 0;
+      ACE_NEW_RETURN (forwarding_agent,
+                      ForwardingAgent_i,
+                      1);
+      PortableServer::ServantBase_var owner_transfer (forwarding_agent);
+
+      // ******************************************************
+
+      // ******************************************************
+      // register request interceptor
+      
+      PortableInterceptor::ORBInitializer_ptr temp_initializer =
+        PortableInterceptor::ORBInitializer::_nil ();
+
+      ACE_NEW_RETURN (temp_initializer,
+                      Client_ORBInitializer (forwarding_agent),
+                      -1);  // No exceptions yet!
+      PortableInterceptor::ORBInitializer_var orb_initializer =
+        temp_initializer;
+
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
+      
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       int result = parse_args (argc, argv);
@@ -987,27 +1015,32 @@ main (int argc, char *argv[])
         {
           return result;
         }
+        
+      ACE_Barrier fa_barrier (2);
+      ForwardingAgent_Thread fa_thread (orb.in (),
+                                        forwarding_agent,
+                                        fa_barrier);
+
+      // Task activation flags.
+      long flags =
+        THR_NEW_LWP
+        | THR_JOINABLE
+        | orb->orb_core ()->orb_params ()->thread_creation_flags ();
+
+      if (fa_thread.activate (flags, 1, 0, 0) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate forwarding agent thread\n"),
+                            -1);
+        }
+        
+      fa_barrier.wait ();
 
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;
 
-      ForwardingAgent_Thread agent_thread (orb.in ());
-
       // Create task.
       Task task (thread_manager, orb.in ());
-
-      // Task activation flags.
-      long flags =
-        THR_NEW_LWP |
-        THR_JOINABLE |
-        orb->orb_core ()->orb_params ()->thread_creation_flags ();
-
-      if (agent_thread.activate (flags, 1, 0, 0) != 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot activate agent thread\n"),
-                            -1);
-        }
 
       // Activate task.
       result = task.activate (flags);

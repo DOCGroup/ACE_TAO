@@ -26,18 +26,19 @@ AppOptions::AppOptions (void)
   ACE_DEBUG((LM_DEBUG,"Hostname is %s.\n",hostname));
 }
 
-AppOptions *AppOptions::instance (void)
+AppOptions *
+AppOptions::instance (void)
 {
   if (! instance_)
-  {
-    ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
-    
-    if (! instance_)
     {
-      instance_ = new AppOptions ();
-      deleter_.reset (instance_);
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
+      
+      if (! instance_)
+        {
+          instance_ = new AppOptions ();
+          deleter_.reset (instance_);
+        }
     }
-  }
   
   return instance_;
 }
@@ -52,13 +53,18 @@ AppOptions::parse_args (int argc, char **argv)
   int c;
 
   while ((c = get_opts ()) != -1)
+    {
       switch (c)
         {
           case 'z':
             {
               std::istringstream istr (get_opts.opt_arg ());
+              
               if (!(istr >> port_))
-                return false;
+                {
+                  return false;
+                }
+                
               break;
             }
           case 'k':
@@ -66,7 +72,7 @@ AppOptions::parse_args (int argc, char **argv)
               host_monitor_ior_ = std::string (get_opts.opt_arg ());
               break;
             }
-	  case 'i':
+	        case 'i':
             {
               object_info_file_ = std::string (get_opts.opt_arg ());
               break;
@@ -77,39 +83,49 @@ AppOptions::parse_args (int argc, char **argv)
               break;
             }
         }
+    }
+        
   return retval;
 }
 
-ArgPair AppOptions::arg_pair () const
+ArgPair
+AppOptions::arg_pair (void) const
 {
   return this->arg_pair_;
 }
-std::string AppOptions::ior_output_file () const
+
+std::string
+AppOptions::ior_output_file (void) const
 {
   return ior_output_file_;
 }
 
-std::string AppOptions::object_info_file () const
+std::string
+AppOptions::object_info_file (void) const
 {
   return object_info_file_;
 }
 
-std::string AppOptions::process_id () const
+std::string
+AppOptions::process_id (void) const
 {
   return process_id_;
 }
 
-std::string AppOptions::host_monitor_ior () const
+std::string
+AppOptions::host_monitor_ior (void) const
 {
   return host_monitor_ior_;
 }
 
-u_short AppOptions::get_port () const
+u_short
+AppOptions::get_port (void) const
 {
   return port_;
 }
 
-std::string AppOptions::host_id () const
+std::string
+AppOptions::host_id (void) const
 {
   return host_id_;
 }

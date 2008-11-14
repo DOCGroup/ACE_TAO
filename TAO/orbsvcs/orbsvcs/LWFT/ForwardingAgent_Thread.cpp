@@ -10,10 +10,12 @@
 #include "Client_ORBInitializer.h"
 
 ForwardingAgent_Thread::ForwardingAgent_Thread (
-  CORBA::ORB_ptr orb)
+  CORBA::ORB_ptr orb,
+  ForwardingAgent_i *agent,
+  ACE_Barrier &barrier)
   : orb_ (orb), 
-    agent_ (0),
-    synchronizer_ (2)
+    agent_ (agent),
+    synchronizer_ (barrier)
 {
 }
 
@@ -22,27 +24,6 @@ ForwardingAgent_Thread::svc (void)
 {
   try
     {
-      ACE_NEW_RETURN (this->agent_,
-                      ForwardingAgent_i,
-                      1);
-      PortableServer::ServantBase_var owner_transfer (this->agent_);
-
-      // ******************************************************
-
-      // ******************************************************
-      // register request interceptor
-      
-      PortableInterceptor::ORBInitializer_ptr temp_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
-
-      ACE_NEW_RETURN (temp_initializer,
-                      Client_ORBInitializer (this->agent_),
-                      -1);  // No exceptions yet!
-      PortableInterceptor::ORBInitializer_var orb_initializer =
-        temp_initializer;
-
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
-      
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references ("RootPOA");
 
