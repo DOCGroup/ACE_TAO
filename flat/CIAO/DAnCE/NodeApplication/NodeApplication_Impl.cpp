@@ -20,6 +20,10 @@
 #include "ComponentAttributesSetter.h"
 //#include "ComponentInstallation_Impl.h"
 
+#ifdef GEN_OSTREAM_OPS
+#include <iostream>
+#endif /* GEN_OSTREAM_OPS */
+
 using namespace DAnCE;
 
 namespace
@@ -1485,7 +1489,11 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
   DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - "
                "started for connections sequence with length: %d\n", 
                providedReference.length()));
-
+  
+#ifdef GEN_OSTREAM_OPS  
+  std::cerr << providedReference << std::endl;
+#endif /* GEN_OSTREAM_OPS */
+  
   for (unsigned int j = 0; j < this->plan_.connection.length(); ++j)
     {
       CORBA::ULong inst (this->plan_.connection[j].internalEndpoint[0].instanceRef);
@@ -1494,6 +1502,10 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                     "Connection %s, instance %u\n",
                     this->plan_.connection[j].name.in (),
                     inst));
+
+#ifdef GEN_OSTREAM_OPS      
+      std::cerr << this->plan_.connection[j];
+#endif /* GEN_OSTREAM_OPS  */
 
       Components::CCMObject_var obj =
         Components::CCMObject::
@@ -1539,15 +1551,16 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                                 this->connect_receptacle (obj.in (),
                                                           conn.internalEndpoint[1].portName.in(),
                                                           providedReference[i].endpoint[0].in());
-                                break;
                               }
-                            
+                            /*
                             DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_impl::finishLaunch - "
                                           "Unsupported facet connection; lacks either external reference or "
                                           "multiple internalEndpoints.\n"));
                             throw ::Deployment::StartError (name.c_str (),
                                                             "Unsupported facet connection; lacks either external reference "
                                                             "or multiple internalEndpoints.\n");
+                            */
+                            break;
                           }
                         CORBA::Object_var tmp = 
                           this->orb_->string_to_object (conn.externalReference[0].location.in());
