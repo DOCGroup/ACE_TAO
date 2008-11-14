@@ -18,10 +18,10 @@ BIN_UNCHECKED    = <%exename%>
 <%endif%>
 <%if(staticname)%>
 
-## LIB may be set to empty later on in this file
-LIB_UNCHECKED    = lib<%libname_prefix%><%staticname%>.a
-LIB              = $(LIB_UNCHECKED)
-LIB_NAME         = lib<%libname_prefix%><%staticname%>
+## LIB_CHECKED may be set to empty later on in this file
+LIB_UNCHECKED    = $(LIB_PREFIX)<%libname_prefix%><%staticname%>.$(LIBEXT)
+LIB_CHECKED      = $(LIB_UNCHECKED)
+LIB_NAME         = $(LIB_PREFIX)<%libname_prefix%><%staticname%>
 <%if(!sharedname)%>
 static_libs_only = 1
 <%endif%>
@@ -29,7 +29,7 @@ static_libs_only = 1
 <%if(sharedname)%>
 
 ## SHLIB may be set to empty later on in this file
-SHLIB_UNCHECKED  = lib<%libname_prefix%><%sharedname%>.$(SOEXT)
+SHLIB_UNCHECKED  = $(LIB_PREFIX)<%libname_prefix%><%sharedname%>.$(SOEXT)
 SHLIB            = $(SHLIB_UNCHECKED)
 <%endif%>
 <%if(tao || ciao)%>
@@ -188,9 +188,10 @@ RESOURCES += \
 <%endfor%>
 <%if(includes)%>
 
+RC_INCLUDE_FLAG ?= --include-dir=
 RCFLAGS = \
 <%foreach(includes)%>
-        --include-dir=<%include%><%fornotlast(" \\")%>
+        $(RC_INCLUDE_FLAG)<%include%><%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>
 endif
@@ -241,7 +242,7 @@ ifneq ($(<%avoid%>),1)
 <%endfor%>
 ifneq ($(LIBCHECK), 1)
 <%if(staticname)%>
-  LIB   =
+  LIB_CHECKED   =
 <%endif%>
 <%if(sharedname)%>
   SHLIB =
@@ -251,7 +252,7 @@ endif
 <%foreach(avoids)%>
 else
 <%if(staticname)%>
-  LIB   =
+  LIB_CHECKED   =
 <%endif%>
 <%if(sharedname)%>
   SHLIB =
@@ -262,7 +263,7 @@ endif
 <%foreach(requires)%>
 else
 <%if(staticname)%>
-  LIB   =
+  LIB_CHECKED   =
 <%endif%>
 <%if(sharedname)%>
   SHLIB =
@@ -283,7 +284,7 @@ ifneq ($(<%avoid%>),1)
 <%foreach(avoids)%>
 else
 <%if(staticname)%>
-  LIB   =
+  LIB_CHECKED   =
 <%endif%>
 <%if(sharedname)%>
   SHLIB =
@@ -294,7 +295,7 @@ endif
 <%foreach(requires)%>
 else
 <%if(staticname)%>
-  LIB   =
+  LIB_CHECKED   =
 <%endif%>
 <%if(sharedname)%>
   SHLIB =
@@ -315,20 +316,20 @@ ifneq ($(<%avoid%>),1)
 <%endfor%>
 <%foreach(tagchecks)%>
   else
-    LIB   =
+    LIB_CHECKED   =
     SHLIB =
   endif
 <%endfor%>
 <%foreach(avoids)%>
 else
-  LIB   =
+  LIB_CHECKED   =
   SHLIB =
   all: avoid_warning
 endif
 <%endfor%>
 <%foreach(requires)%>
 else
-  LIB   =
+  LIB_CHECKED   =
   SHLIB =
   all: require_warning
 endif
@@ -408,13 +409,13 @@ endif
 <%if(flag_overrides(source_file, buildflags))%>
 $(VDIR)<%noextension(source_file)%>.$(OBJEXT): <%source_file%>
 	@$(MKDIR) $(VDIR)<%dirname(source_file)%>
-	<%if(ends_with(source_file, \.c))%>$(COMPILE.c)<%else%>$(COMPILE.cc)<%endif%> <%flag_overrides(source_file, buildflags)%> $(ACE_USE_PCH_OPT) $(CC_OUTPUT_FLAG) $@ $<
+	<%if(ends_with(source_file, \.c))%>$(COMPILE.c)<%else%>$(COMPILE.cc)<%endif%> <%flag_overrides(source_file, buildflags)%> $(ACE_USE_PCH_OPT) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 	${MVCMD}
 
 ifneq ($(VSHDIR), $(VDIR))
 $(VSHDIR)<%noextension(source_file)%>.$(OBJEXT): <%source_file%>
 	@$(MKDIR) $(VSHDIR)<%dirname(source_file)%>
-	<%if(ends_with(source_file, \.c))%>$(COMPILE.c)<%else%>$(COMPILE.cc)<%endif%> <%flag_overrides(source_file, buildflags)%> $(ACE_USE_PCH_OPT) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+	<%if(ends_with(source_file, \.c))%>$(COMPILE.c)<%else%>$(COMPILE.cc)<%endif%> <%flag_overrides(source_file, buildflags)%> $(ACE_USE_PCH_OPT) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 endif
 
 <%else%>
@@ -422,13 +423,13 @@ endif
 <%if(starts_with(source_file, \$) || !ends_with(source_file, \.cpp))%>
 $(VDIR)<%noextension(source_file)%>.$(OBJEXT): <%source_file%>
 	@$(MKDIR) $(VDIR)<%dirname(source_file)%>
-	<%if(ends_with(source_file, \.c))%>$(COMPILE.c)<%else%>$(COMPILE.cc)<%endif%> <%if(flag_overrides(source_file, buildflags))%><%flag_overrides(source_file, buildflags)%> <%endif%>$(ACE_USE_PCH_OPT) $(CC_OUTPUT_FLAG) $@ $<
+	<%if(ends_with(source_file, \.c))%>$(COMPILE.c)<%else%>$(COMPILE.cc)<%endif%> <%if(flag_overrides(source_file, buildflags))%><%flag_overrides(source_file, buildflags)%> <%endif%>$(ACE_USE_PCH_OPT) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 	${MVCMD}
 
 ifneq ($(VSHDIR), $(VDIR))
 $(VSHDIR)<%noextension(source_file)%>.$(OBJEXT): <%source_file%>
 	@$(MKDIR) $(VSHDIR)<%dirname(source_file)%>
-	<%if(ends_with(source_file, \.c))%>$(COMPILE.c)<%else%>$(COMPILE.cc)<%endif%> <%if(flag_overrides(source_file, buildflags))%><%flag_overrides(source_file, buildflags)%> <%endif%>$(ACE_USE_PCH_OPT) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+	<%if(ends_with(source_file, \.c))%>$(COMPILE.c)<%else%>$(COMPILE.cc)<%endif%> <%if(flag_overrides(source_file, buildflags))%><%flag_overrides(source_file, buildflags)%> <%endif%>$(ACE_USE_PCH_OPT) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 endif
 
 <%endif%>
@@ -653,7 +654,11 @@ endif
 
 <%endif%>
 $(BIN): $(addprefix $(VDIR), $(OBJS)) $(DEPLIBS)
+  ifneq (,$(LINK.cc.override))
+	$(LINK.cc.override)
+  else
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $(filter-out %.a,$^) $(VLDLIBS) $(POSTLINK)
+  endif
 endif
 <%endif%>
 
