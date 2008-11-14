@@ -30,9 +30,13 @@ struct MyThread : ACE_Task_Base
     if (openfile_)
       {
         ACE_LOG_MSG->msg_ostream (
-          new std::ofstream (ACE_LOG_DIRECTORY
-                             ACE_TEXT ("Log_Thread_Inheritance_Ostream")
-                             ACE_LOG_FILE_EXT_NAME), true);
+          new std::ofstream (
+            ACE_TEXT_ALWAYS_CHAR (
+              ACE_LOG_DIRECTORY
+              ACE_TEXT ("Log_Thread_Inheritance_Ostream")
+              ACE_LOG_FILE_EXT_NAME
+            )
+          ), true);
         ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
         ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
         MyThread ends_first_thread;
@@ -40,7 +44,7 @@ struct MyThread : ACE_Task_Base
         ends_first_thread.wait ();
         childthread_.activate (THREAD_DEFAULTS, 10);
       }
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) - in svc() openfile_ is %s\n",
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) - in svc() openfile_ is %C\n",
                 (openfile_ ? "true" : "false")));
     if (!openfile_)
       {
