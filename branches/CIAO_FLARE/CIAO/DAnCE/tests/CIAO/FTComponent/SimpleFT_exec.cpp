@@ -41,6 +41,7 @@ namespace CIDL_SimpleFT_Impl
       load_ (0.4),
       primary_ (true),
       orb_ (CORBA::ORB::_nil ()),
+      myself_ (CORBA::Object::_nil ()),
       agent_ (StateSynchronizationAgent::_nil ()),
       history_ (50),
       state_ (0)
@@ -104,20 +105,12 @@ namespace CIDL_SimpleFT_Impl
   {
     CIAO_TRACE ("SimpleFT_exec_i::configuration_complete\n");
     CIAO_DEBUG ((LM_EMERGENCY, "SimpleFT - Test - Lifecycle event - SimpleFT_exec_i::configuration_complete\n"));
-    // Your code here.
-  }
 
-  void
-  SimpleFT_exec_i::ccm_activate ()
-  {
-    CIAO_TRACE ("SimpleFT_exec_i::ccm_activate");
-    CIAO_DEBUG ((LM_EMERGENCY, "SimpleFT - Test - Lifecycle event - SimpleFT_exec_i::ccm_activate\n"));
-
-    try 
+    try
       {
 	if (CORBA::is_nil (orb_.in ()))
 	  {
-	    CIAO_ERROR ((LM_WARNING, "SimpleFT_exec_i::ccm_activate - orb_ member is nil.\n"));
+	    CIAO_ERROR ((LM_WARNING, "SimpleFT_exec_i::configuration_complete - orb_ member is nil.\n"));
 	    return;
 	  }
 
@@ -135,21 +128,49 @@ namespace CIDL_SimpleFT_Impl
 
 	if (CORBA::is_nil (agent_.in ()))
 	  {
-	    CIAO_ERROR ((LM_WARNING, "SimpleFT_exec_i::ccm_activate - could not find agent.\n"));
+	    CIAO_ERROR ((LM_WARNING, "SimpleFT_exec_i::configuration_complete - could not find agent.\n"));
 	    return;
 	  }
 	
 	CIAO_DEBUG ((LM_DEBUG, "registering the application with the agent.\n"));
 	    
-	ReplicatedApplication_var myself = ReplicatedApplication::_narrow (this);
+	ReplicatedApplication_var myself = ReplicatedApplication::_narrow (myself_.in ());
 
 	if (CORBA::is_nil (myself.in ()))
 	  {
-	    CIAO_ERROR ((LM_WARNING, "SimpleFT_exec_i::ccm_activate - could not get reference to itself.\n"));
+	    CIAO_ERROR ((LM_WARNING, "SimpleFT_exec_i::configuration_complete - could not get reference to itself.\n"));
 	    return;
 	  }
 
 	agent_->register_application (app_name_.c_str (), myself.in ());
+      }
+    catch (Name_Helper_Exception & ex)
+      {
+	CIAO_ERROR ((LM_ERROR, 
+		     "SimpleFT_exec_i::configuration_complete - "
+		     "caught Name_Helper_Exception: %s", 
+		     ex.what ()));
+      }
+    catch (CORBA::Exception &ex)
+      {
+	CIAO_ERROR ((LM_ERROR, "SimpleFT_exec_i::configuration_complete - caught: %s", ex._info ().c_str ()));
+      }
+
+  }
+
+  void
+  SimpleFT_exec_i::ccm_activate ()
+  {
+    CIAO_TRACE ("SimpleFT_exec_i::ccm_activate");
+    CIAO_DEBUG ((LM_EMERGENCY, "SimpleFT - Test - Lifecycle event - SimpleFT_exec_i::ccm_activate\n"));
+
+    try 
+      {
+	if (CORBA::is_nil (orb_.in ()))
+	  {
+	    CIAO_ERROR ((LM_WARNING, "SimpleFT_exec_i::ccm_activate - orb_ member is nil.\n"));
+	    return;
+	  }
 
 	// register application with ReplicationManager
 
@@ -162,14 +183,25 @@ namespace CIDL_SimpleFT_Impl
 	std::string hn = this->get_hostname ();
 	std::string pid = this->get_process_id ();
 
-	CORBA::Object_var self_obj = CORBA::Object::_narrow (this);
 
 	rm->register_application (app_name_.c_str (),
 				  load_,
 				  hn.c_str (),
 				  pid.c_str (),
 				  (primary_ ? 1 : 2),
-				  self_obj.in ());
+				  myself_.in ());
+
+	// publish application in NameService for the client
+	if (primary_)
+	  {
+	    Name_Helper_T <test> tnh (orb_.in (), true);
+
+	    test_var t_ref = test::_narrow (myself_.in ());
+
+	    tnh.bind ("FLARe/" + tnh.escape_dots (this->get_hostname ()) + "/" + 
+		      this->get_process_id () + "/test",
+		      t_ref.in ());
+	  }
       }
     catch (Name_Helper_Exception & ex)
       {
@@ -218,6 +250,20 @@ namespace CIDL_SimpleFT_Impl
 
   // Attribute operations
 
+  CORBA::Object_ptr
+  SimpleFT_exec_i::COMPONENT_REFERENCE (void)
+  {
+    return CORBA::Object::_duplicate (myself_.in ());
+  }
+    
+  void
+  SimpleFT_exec_i::COMPONENT_REFERENCE (const CORBA::Object_ptr COMPONENT_REFERENCE)
+  {
+    CIAO_TRACE ("SimpleFTHome_exec_i::COMPONENT_REFERENCE ()");
+    CIAO_DEBUG ((LM_EMERGENCY, "SimpleFT - Test - Lifecycle event - SimpleFTHome_exec_i::COMPONENT_REFERENCE setter method\n"));
+    myself_ = CORBA::Object::_duplicate (COMPONENT_REFERENCE);
+  }
+
   char *
   SimpleFT_exec_i::object_id (void)
   {
@@ -230,6 +276,7 @@ namespace CIDL_SimpleFT_Impl
   void 
   SimpleFT_exec_i::object_id (const char * object_id)
   {
+    CIAO_DEBUG ((LM_EMERGENCY, "SimpleFT - Test - Lifecycle event - SimpleFTHome_exec_i::object_id(%s)\n", object_id));
     app_name_ = object_id;
   }
 
@@ -242,6 +289,7 @@ namespace CIDL_SimpleFT_Impl
   void
   SimpleFT_exec_i::load (CORBA::Double load)
   {
+    CIAO_DEBUG ((LM_EMERGENCY, "SimpleFT - Test - Lifecycle event - SimpleFTHome_exec_i::load (%d)\n", load));
     load_ = load;
   }
     
@@ -257,7 +305,11 @@ namespace CIDL_SimpleFT_Impl
   void
   SimpleFT_exec_i::role (CORBA::Short role)
   {
-    primary_ = (role == 1);
+    CIAO_DEBUG ((LM_EMERGENCY, "SimpleFT - Test - Lifecycle event - SimpleFTHome_exec_i::role (%d)\n", role));
+    if (role == 1)
+      primary_ = true;
+    else
+      primary_ = false;
   }
 
   // Supported or inherited operations.
