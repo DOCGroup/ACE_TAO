@@ -60,7 +60,11 @@ project(TAO_IFR_EXE) : aceexe, install, ifr_client, crosscompile, avoids_minimum
     ifeq ($(TAO_IDL_PREPROCESSOR),)
       CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(strip $(CXX))\\\"
     else
-      CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(subst \\,\\,$(TAO_IDL_PREPROCESSOR))\\\"
+      ifdef COMSPEC
+        CPPFLAGS += \"-DTAO_IDL_PREPROCESSOR=\\\"$(subst \\,\\,$(TAO_IDL_PREPROCESSOR))\\\"\"
+      else
+        CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(subst \\,\\,$(TAO_IDL_PREPROCESSOR))\\\"
+      endif
     endif
   }
 
