@@ -16,14 +16,14 @@ ACE_Auto_Ptr<AppOptions> AppOptions::deleter_;
 ACE_Thread_Mutex AppOptions::lock_;
 
 AppOptions::AppOptions (void)
-  : host_monitor_ior_ ("file://HostMonitor.ior"),
+  : host_monitor_ior_ ("file://hm.ior"),
     port_ (5000),
     arg_pair_ (0,0)
 {
   char hostname [100];
   gethostname (hostname, sizeof (hostname));
   host_id_ = hostname;
-  ACE_DEBUG((LM_DEBUG,"Hostname is %s.\n",hostname));
+  ACE_DEBUG ((LM_DEBUG, "Hostname is %s.\n", hostname));
 }
 
 AppOptions *

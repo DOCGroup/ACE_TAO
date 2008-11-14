@@ -15,20 +15,9 @@ char *ior_output_file = "rm.ior";
 int
 main (int argc, char *argv[])
 {
-  int status = 0;
-
   try
     {
-      if (! RMOptions::instance ()->parse_args (argc, argv))
-        {  
-          ACE_DEBUG ((LM_DEBUG,
-                      "Replication Manager options are incorrect.\n"));
-          return -1;
-        }
-        
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "Client ORB");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA");
@@ -38,6 +27,14 @@ main (int argc, char *argv[])
         poa->the_POAManager ();
       poa_manager->activate ();
 
+      if (! RMOptions::instance ()->parse_args (argc, argv))
+        {  
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Replication Manager options "
+                             "are incorrect.\n"),
+                            -1);
+        }
+        
       ReplicationManager_i *rm_i = 0;
       ACE_NEW_RETURN (rm_i, 
                       ReplicationManager_i (orb.in (), 
@@ -77,14 +74,14 @@ main (int argc, char *argv[])
         {
           TAO_Naming_Client naming_client;
           naming_client.init (orb.in ());
-          CosNaming::NamingContext_var root_context =
-            naming_client.get_context ();
             
           CosNaming::Name rm_name;
           rm_name.length (1UL);
           rm_name[0UL].id = "ReplicationManager";
           
-          root_context->bind (rm_name, rm_object.in ());
+          naming_client->bind (rm_name, rm.in ());
+          ACE_DEBUG ((LM_INFO,
+                      "ReplicationManager registered with Naming Service\n"));
         }
 
       orb->run ();
@@ -101,5 +98,5 @@ main (int argc, char *argv[])
       return -1;
     }
 
-  return status;
+  return 0;
 }

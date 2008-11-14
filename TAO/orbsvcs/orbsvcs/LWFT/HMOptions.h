@@ -31,7 +31,6 @@ class HostMonitor_Export HMOptions
 ///   Singleton class for the program options.
 {
 public:
-
   /// Singleton access method.
   static HMOptions *instance (void);
 
@@ -45,11 +44,10 @@ public:
   int load_monitor_freq (void) const;
   std::string util_file (void) const;
   ArgPair arg_pair (void); 
-  std::pair <char, std::string> ior_access () const;
-
+  std::pair <char, std::string> ior_access (void) const;
+  bool use_naming_service (void) const;
 
 protected:
-
   /// Constructor is protected to ensure Singleton access.
   HMOptions (void);
 
@@ -67,6 +65,5 @@ protected:
   static ACE_Auto_Ptr<HMOptions> deleter_;
   static ACE_Thread_Mutex lock_;
 };
-
 
 #endif /* _HMOPTIONS_H */

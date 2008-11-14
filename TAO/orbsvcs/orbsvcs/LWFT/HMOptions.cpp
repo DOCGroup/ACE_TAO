@@ -19,6 +19,7 @@ ACE_Thread_Mutex HMOptions::lock_;
 
 HMOptions::HMOptions (void)
   : RM_ior_ ("file://rm.ior"),
+    HM_ior_file_ ("file://hm.ior"),
     arg_pair_ (0,0),
     RM_update_freq_ (1),
     load_monitor_freq_(2)
@@ -26,20 +27,23 @@ HMOptions::HMOptions (void)
   char hostname [100];
   gethostname (hostname, sizeof (hostname));
   host_id_ = hostname;
-  ACE_DEBUG((LM_DEBUG,"Hostname is %s.\n",hostname));
+  ACE_DEBUG ((LM_DEBUG, "Hostname is %s.\n", hostname));
 }
 
-HMOptions *HMOptions::instance (void)
+HMOptions *
+HMOptions::instance (void)
 {
   if (! instance_)
-  {
-    ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
-    if (! instance_)
     {
-      instance_ = new HMOptions ();
-      deleter_.reset (instance_);
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
+      
+      if (! instance_)
+        {
+          instance_ = new HMOptions ();
+          deleter_.reset (instance_);
+        }
     }
-  }
+    
   return instance_;
 }
 
@@ -53,16 +57,17 @@ HMOptions::parse_args (int argc, char **argv)
   int c;
 
   while ((c = get_opts ()) != -1)
+    {
       switch (c)
         {
           case 'u':
             {
-              util_file_ = std::string (get_opts.opt_arg());
+              util_file_ = std::string (get_opts.opt_arg ());
               break;
             }
           case 'o':
             {
-              HM_ior_file_ = std::string (get_opts.opt_arg());
+              HM_ior_file_ = std::string (get_opts.opt_arg ());
               break;
             }
           case 'i':
@@ -79,15 +84,23 @@ HMOptions::parse_args (int argc, char **argv)
           case 'r':
             {
               std::istringstream istr (get_opts.opt_arg ());
+              
               if (!(istr >> RM_update_freq_))
-                return false;
+                {
+                  return false;
+                }
+                
               break;
             }
           case 'l':
             {
               std::istringstream istr (get_opts.opt_arg ());
+              
               if (!(istr >> load_monitor_freq_))
-                return false;
+                {
+                  return false;
+                }
+                
               break;
             }
           case 'n':
@@ -97,45 +110,56 @@ HMOptions::parse_args (int argc, char **argv)
               break;
             }
         }
+    }
+        
   return retval;
 };
 
-std::string HMOptions::HM_ior_file () const
+std::string
+HMOptions::HM_ior_file (void) const
 {
   return HM_ior_file_;
 }
 
-std::string HMOptions::RM_ior () const
+std::string
+HMOptions::RM_ior (void) const
 {
   return RM_ior_;
 }
 
-ArgPair HMOptions::arg_pair ()
+ArgPair
+HMOptions::arg_pair (void)
 {
   return arg_pair_;
 }
 
-std::string HMOptions::host_id () const
+std::string
+HMOptions::host_id (void) const
 {
   return host_id_;
 }
 
-int HMOptions::RM_update_freq () const
+int
+HMOptions::RM_update_freq (void) const
 {
   return RM_update_freq_;
 }
 
-std::string HMOptions::util_file () const
+std::string
+HMOptions::util_file (void) const
 {
   return util_file_;
 }
 
-int HMOptions::load_monitor_freq () const
+int
+HMOptions::load_monitor_freq (void) const
 {
   return load_monitor_freq_;
 }
 
-std::pair <char, std::string> HMOptions::ior_access () const
+std::pair<char, std::string>
+HMOptions::ior_access (void) const
 {
   return ior_access_;
 }
+

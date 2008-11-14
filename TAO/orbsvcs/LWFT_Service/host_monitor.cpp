@@ -15,11 +15,9 @@ int main (int argc, char* argv[])
 {
   try 
     {
-      HMOptions::instance ()->parse_args (argc, argv);
-      
       /// First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "ORB");
+        CORBA::ORB_init (argc, argv);
 
       /// Initilize RootPOA.
       CORBA::Object_var poa_object =
@@ -34,6 +32,14 @@ int main (int argc, char* argv[])
         poa->the_POAManager ();
       poa_manager->activate ();
 
+      if (! HMOptions::instance ()->parse_args (argc, argv))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Host Monitor options "
+                             "are incorrect.\n"),
+                            -1);
+        }
+      
       Monitor_Thread monitor_thread;
       
       /// Initilize the timedate object on heap.
