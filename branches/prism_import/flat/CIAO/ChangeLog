@@ -1,3 +1,23 @@
+Fri Nov 14 22:18:16 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/DAnCE_Core.mpc:
+        * DAnCE/NodeManager/NodeManager.mpc:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+
+          Support for dumping deployment plan at deployment time based on presence
+          of the gen_ostream MPC feature. 
+        
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        
+          Logging improvements. 
+        
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * examples/Hello/descriptors/DeploymentPlan.cdp:
+        * examples/Hello/descriptors/NodeManagerMap.dat:
+
+          Porting of the basic Hello example to the new CIAO/DAnCE. 
+        
 Fri Nov 14 18:51:35 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc:
@@ -14,8 +34,8 @@ Fri Nov 14 18:51:35 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
         * ciao/Containers/Swapping/Swapping_Container.cpp:
 
-          Warning fixes on Linux. 
-        
+          Warning fixes on Linux.
+
 Thu Nov 13 22:58:42 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:

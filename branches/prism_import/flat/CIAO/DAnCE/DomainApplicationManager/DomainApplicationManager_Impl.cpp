@@ -274,12 +274,12 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
 
       sub_plans.bind (node, tmp_plan);
      
-      DANCE_DEBUG ((LM_TRACE, "DomainApplicationManager_Impl::split_plan - "
+      DANCE_DEBUG ((LM_TRACE, DLINFO "DomainApplicationManager_Impl::split_plan - "
                     "Created sub-plan for node %s with UUID %s\n",
                     node.c_str (), child_uuid.c_str ()));
     }
   
-  DANCE_DEBUG ((LM_DEBUG, "DomainApplicationManager_Impl::split_plan - "
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "DomainApplicationManager_Impl::split_plan - "
                 "First phase produced %u child plans, proceeding to second\n"));
   
   // (1) Iterate over the <instance> field of the global DeploymentPlan
@@ -288,7 +288,7 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
   //     plans one by one.
   for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
     {
-      DANCE_DEBUG ((LM_TRACE, "DomainApplicationManager_Impl::split_plan - "
+      DANCE_DEBUG ((LM_TRACE, DLINFO "DomainApplicationManager_Impl::split_plan - "
                     "Processing instance : %s\n", plan.instance[i].name.in()));
       // @@TODO Fill in the child deployment plan in the map.
       // If the component instance already exists in the child plan,

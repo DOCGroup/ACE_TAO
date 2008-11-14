@@ -1,12 +1,12 @@
 // -*- MPC -*-
 // $Id$
 
-project(Deployment_IDL) : taolib_with_idl, tao_output, valuetype {
+project(Deployment_IDL) : taolib_with_idl, tao_output, valuetype, gen_ostream {
   custom_only = 1
   idlflags     += -Wb,stub_export_macro=Deployment_stub_Export
   idlflags     += -Wb,stub_export_include=Deployment_stub_export.h
   idlflags     += -Wb,skel_export_macro=Deployment_svnt_Export
-  idlflags     += -Wb,skel_export_include=Deployment_svnt_export.h
+  idlflags     += -Wb,skel_export_include=Deployment_svnt_export.h -Gos
   idlflags += -I$(CIAO_ROOT)
 
   IDL_Files {
@@ -50,7 +50,7 @@ project(Deployment_IDL) : taolib_with_idl, tao_output, valuetype {
 // Valuetype library must be linked for this project.
 // Please don't remove.
 //project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_base_dnc, ccm_stub, messaging, ciao_lib {
-project(Deployment_stub) : taolib_with_idl, tao_output, valuetype, ifr_client, messaging, dance_lib, dance_logger {
+project(Deployment_stub) : taolib_with_idl, tao_output, valuetype, ifr_client, messaging, dance_lib, dance_logger, gen_ostream {
   sharedname   =  DAnCE_Deployment_stub
   after += Deployment_IDL
 
@@ -89,7 +89,7 @@ project(Deployment_stub) : taolib_with_idl, tao_output, valuetype, ifr_client, m
 
 // CIAO_DnC_Client library must be linked for this project.
 // Please don't remove. dance_deployment_stub,
-project(Deployment_svnt) : dance_deployment_stub, tao_output, taolib_with_idl, portableserver, valuetype, ifr_client, naming, dance_lib, dance_logger, messaging {
+project(Deployment_svnt) : dance_deployment_stub, tao_output, taolib_with_idl, portableserver, valuetype, ifr_client, naming, dance_lib, dance_logger, messaging, gen_ostream {
   sharedname   =  DAnCE_Deployment_svnt
   dynamicflags =  DEPLOYMENT_SVNT_BUILD_DLL
   after += Deployment_IDL

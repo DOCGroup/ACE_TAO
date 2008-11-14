@@ -9,6 +9,10 @@
 
 #include "ace/OS_Memory.h"
 
+#ifdef GEN_OSTREAM_OPS
+#include <iostream>
+#endif /* GEN_OSTREAM_OPS */
+
 namespace DAnCE
 {
   NodeManager_Impl::NodeManager_Impl(CORBA::ORB_ptr orb, 
@@ -94,6 +98,11 @@ namespace DAnCE
     
     DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeManager_impl::preparePlan - "
                   "started for node %s and plan %s\n", this->name_.c_str(), plan.UUID.in()));
+    
+#ifdef GEN_OSTREAM_OPS
+    std::cerr << plan << std::endl;
+#endif /* GEN_OSTREAM_OPS */
+
     // resourceCommitment will be used on next development stage
     if (0 == this->managers_.find (plan.UUID.in()))
       {
