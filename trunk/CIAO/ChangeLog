@@ -1,3 +1,69 @@
+Fri Nov 14 13:53:49 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * tools/Config_Handlers/cid.cpp:
+        * tools/Config_Handlers/DP_Handler.cpp:
+        * tools/Config_Handlers/MDD_Handler.cpp:
+        * tools/Config_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/pcd.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp:
+        * tools/Config_Handlers/Property_Handler.cpp:
+        * tools/Config_Handlers/ID_Handler.cpp:
+        * tools/Config_Handlers/toplevel.cpp:
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/NIA_Handler.h:
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp:
+        * tools/Config_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/CRDD_Handler.cpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.cpp:
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents_Handler.cpp:
+        * tools/Config_Handlers/Req_Handler.cpp:
+        * tools/Config_Handlers/ccd.cpp:
+        * tools/Config_Handlers/RDD_Handler.cpp:
+        * tools/Config_Handlers/ERE_Handler.cpp:
+        * tools/Config_Handlers/Utils/XML_Helper.cpp:
+        * tools/Config_Handlers/Utils/XML_Schema_Resolver.cpp:
+        * tools/Config_Handlers/Utils/Functors.h:
+        * tools/Config_Handlers/XML_File_Intf.cpp:
+        * tools/Config_Handlers/Deployment.cpp:
+        * tools/Config_Handlers/CCD_Handler.cpp:
+        * tools/Config_Handlers/cdd.cpp:
+        * tools/Config_Handlers/SatisfierProperty_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/PS_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/TP_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/CB_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/SRD_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/CLA_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/TPL_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp:
+        * tools/Config_Handlers/PSPE_Handler.cpp:
+        * tools/Config_Handlers/cdp.cpp:
+        * tools/Config_Handlers/cpd.cpp:
+        * tools/Config_Handlers/ComponentPropertyDescription_Handler.cpp:
+        * tools/Config_Handlers/CEPE_Handler.cpp:
+        * tools/Config_Handlers/IRDD_Handler.cpp:
+        * tools/Config_Handlers/DD_Handler.cpp:
+        * tools/Config_Handlers/ADD_Handler.cpp:
+        * tools/Config_Handlers/IDD_Handler.cpp:
+        * tools/Config_Handlers/iad.cpp:
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/be_sunsoft.cpp:
+        * tools/IDL3_to_IDL2/be_init.cpp:
+        * tools/IDL3_to_IDL2/be_extern.h:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+        * ciao/Client_init.cpp:
+
+          Made wchar related changes.
+
 Tue Nov 11 16:07:06 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:

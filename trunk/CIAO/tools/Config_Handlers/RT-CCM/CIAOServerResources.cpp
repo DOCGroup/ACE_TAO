@@ -1906,19 +1906,19 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "cmdline")
+        if (n == ACE_TEXT ("cmdline"))
         {
           ::CIAO::Config_Handlers::ServerCmdlineOptions t (e);
           cmdline (t);
         }
 
-        else if (n == "svcconf")
+        else if (n == ACE_TEXT ("svcconf"))
         {
           ::CIAO::Config_Handlers::ACESvcConf t (e);
           svcconf (t);
         }
 
-        else if (n == "orbConfigs")
+        else if (n == ACE_TEXT ("orbConfigs"))
         {
           orbConfigs_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ORBConfigs > (new ::CIAO::Config_Handlers::ORBConfigs (e));
           orbConfigs_->container (this);
@@ -1933,7 +1933,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "id")
+        if (n == ACE_TEXT ("id"))
         {
           ::XMLSchema::ID< ACE_TCHAR > t (a);
           id (t);
@@ -1960,7 +1960,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "arg")
+        if (n == ACE_TEXT ("arg"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           add_arg (t);
@@ -1987,7 +1987,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "uri")
+        if (n == ACE_TEXT ("uri"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           uri (t);
@@ -2014,13 +2014,13 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "resources")
+        if (n == ACE_TEXT ("resources"))
         {
           ::CIAO::Config_Handlers::ORBResources t (e);
           resources (t);
         }
 
-        else if (n == "policySet")
+        else if (n == ACE_TEXT ("policySet"))
         {
           ::CIAO::Config_Handlers::PolicySet t (e);
           add_policySet (t);
@@ -2047,19 +2047,19 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "threadpool")
+        if (n == ACE_TEXT ("threadpool"))
         {
           ::CIAO::Config_Handlers::ThreadpoolDef t (e);
           add_threadpool (t);
         }
 
-        else if (n == "threadpoolWithLanes")
+        else if (n == ACE_TEXT ("threadpoolWithLanes"))
         {
           ::CIAO::Config_Handlers::ThreadpoolWithLanesDef t (e);
           add_threadpoolWithLanes (t);
         }
 
-        else if (n == "connectionBands")
+        else if (n == ACE_TEXT ("connectionBands"))
         {
           ::CIAO::Config_Handlers::ConnectionBandsDef t (e);
           add_connectionBands (t);
@@ -2086,43 +2086,43 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "stacksize")
+        if (n == ACE_TEXT ("stacksize"))
         {
           stacksize_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
           stacksize_->container (this);
         }
 
-        else if (n == "static_threads")
+        else if (n == ACE_TEXT ("static_threads"))
         {
           static_threads_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
           static_threads_->container (this);
         }
 
-        else if (n == "dynamic_threads")
+        else if (n == ACE_TEXT ("dynamic_threads"))
         {
           dynamic_threads_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
           dynamic_threads_->container (this);
         }
 
-        else if (n == "default_priority")
+        else if (n == ACE_TEXT ("default_priority"))
         {
           default_priority_ = ::std::auto_ptr< ::XMLSchema::int_ > (new ::XMLSchema::int_ (e));
           default_priority_->container (this);
         }
 
-        else if (n == "allow_request_buffering")
+        else if (n == ACE_TEXT ("allow_request_buffering"))
         {
           allow_request_buffering_ = ::std::auto_ptr< ::XMLSchema::boolean > (new ::XMLSchema::boolean (e));
           allow_request_buffering_->container (this);
         }
 
-        else if (n == "max_buffered_requests")
+        else if (n == ACE_TEXT ("max_buffered_requests"))
         {
           max_buffered_requests_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
           max_buffered_requests_->container (this);
         }
 
-        else if (n == "max_request_buffered_size")
+        else if (n == ACE_TEXT ("max_request_buffered_size"))
         {
           max_request_buffered_size_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
           max_request_buffered_size_->container (this);
@@ -2137,7 +2137,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "id")
+        if (n == ACE_TEXT ("id"))
         {
           ::XMLSchema::ID< ACE_TCHAR > t (a);
           id (t);
@@ -2164,37 +2164,37 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "threadpoolLane")
+        if (n == ACE_TEXT ("threadpoolLane"))
         {
           ::CIAO::Config_Handlers::ThreadpoolLaneDef t (e);
           add_threadpoolLane (t);
         }
 
-        else if (n == "stacksize")
+        else if (n == ACE_TEXT ("stacksize"))
         {
           stacksize_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
           stacksize_->container (this);
         }
 
-        else if (n == "allow_borrowing")
+        else if (n == ACE_TEXT ("allow_borrowing"))
         {
           allow_borrowing_ = ::std::auto_ptr< ::XMLSchema::boolean > (new ::XMLSchema::boolean (e));
           allow_borrowing_->container (this);
         }
 
-        else if (n == "allow_request_buffering")
+        else if (n == ACE_TEXT ("allow_request_buffering"))
         {
           allow_request_buffering_ = ::std::auto_ptr< ::XMLSchema::boolean > (new ::XMLSchema::boolean (e));
           allow_request_buffering_->container (this);
         }
 
-        else if (n == "max_buffered_requests")
+        else if (n == ACE_TEXT ("max_buffered_requests"))
         {
           max_buffered_requests_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
           max_buffered_requests_->container (this);
         }
 
-        else if (n == "max_request_buffered_size")
+        else if (n == ACE_TEXT ("max_request_buffered_size"))
         {
           max_request_buffered_size_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
           max_request_buffered_size_->container (this);
@@ -2209,7 +2209,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "id")
+        if (n == ACE_TEXT ("id"))
         {
           ::XMLSchema::ID< ACE_TCHAR > t (a);
           id (t);
@@ -2236,19 +2236,19 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "static_threads")
+        if (n == ACE_TEXT ("static_threads"))
         {
           static_threads_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
           static_threads_->container (this);
         }
 
-        else if (n == "dynamic_threads")
+        else if (n == ACE_TEXT ("dynamic_threads"))
         {
           dynamic_threads_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
           dynamic_threads_->container (this);
         }
 
-        else if (n == "priority")
+        else if (n == ACE_TEXT ("priority"))
         {
           priority_ = ::std::auto_ptr< ::XMLSchema::int_ > (new ::XMLSchema::int_ (e));
           priority_->container (this);
@@ -2275,7 +2275,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "band")
+        if (n == ACE_TEXT ("band"))
         {
           ::CIAO::Config_Handlers::PriorityBandDef t (e);
           add_band (t);
@@ -2290,7 +2290,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "id")
+        if (n == ACE_TEXT ("id"))
         {
           ::XMLSchema::ID< ACE_TCHAR > t (a);
           id (t);
@@ -2317,13 +2317,13 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "low")
+        if (n == ACE_TEXT ("low"))
         {
           low_ = ::std::auto_ptr< ::XMLSchema::int_ > (new ::XMLSchema::int_ (e));
           low_->container (this);
         }
 
-        else if (n == "high")
+        else if (n == ACE_TEXT ("high"))
         {
           high_ = ::std::auto_ptr< ::XMLSchema::int_ > (new ::XMLSchema::int_ (e));
           high_->container (this);
@@ -2350,31 +2350,31 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "priorityModel")
+        if (n == ACE_TEXT ("priorityModel"))
         {
           ::CIAO::Config_Handlers::PriorityModelPolicyDef t (e);
           add_priorityModel (t);
         }
 
-        else if (n == "nwpriorityModel")
+        else if (n == ACE_TEXT ("nwpriorityModel"))
         {
           ::CIAO::Config_Handlers::NWPriorityModelPolicyDef t (e);
           add_nwpriorityModel (t);
         }
 
-        else if (n == "cnwpriorityModel")
+        else if (n == ACE_TEXT ("cnwpriorityModel"))
         {
           ::CIAO::Config_Handlers::CNWPriorityModelPolicyDef t (e);
           add_cnwpriorityModel (t);
         }
 
-        else if (n == "threadpool")
+        else if (n == ACE_TEXT ("threadpool"))
         {
           ::XMLSchema::IDREF< ACE_TCHAR > t (e);
           add_threadpool (t);
         }
 
-        else if (n == "priorityBandedConnection")
+        else if (n == ACE_TEXT ("priorityBandedConnection"))
         {
           ::XMLSchema::IDREF< ACE_TCHAR > t (e);
           add_priorityBandedConnection (t);
@@ -2389,7 +2389,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "id")
+        if (n == ACE_TEXT ("id"))
         {
           ::XMLSchema::ID< ACE_TCHAR > t (a);
           id (t);
@@ -2410,8 +2410,8 @@ namespace CIAO
     {
       ::std::basic_string< ACE_TCHAR > v (e.value ());
 
-      if (v == "SERVER_DECLARED") v_ = SERVER_DECLARED_l;
-      else if (v == "CLIENT_PROPAGATED") v_ = CLIENT_PROPAGATED_l;
+      if (v == ACE_TEXT ("SERVER_DECLARED")) v_ = SERVER_DECLARED_l;
+      else if (v == ACE_TEXT ("CLIENT_PROPAGATED")) v_ = CLIENT_PROPAGATED_l;
       else 
       {
       }
@@ -2423,8 +2423,8 @@ namespace CIAO
     {
       ::std::basic_string< ACE_TCHAR > v (a.value ());
 
-      if (v == "SERVER_DECLARED") v_ = SERVER_DECLARED_l;
-      else if (v == "CLIENT_PROPAGATED") v_ = CLIENT_PROPAGATED_l;
+      if (v == ACE_TEXT ("SERVER_DECLARED")) v_ = SERVER_DECLARED_l;
+      else if (v == ACE_TEXT ("CLIENT_PROPAGATED")) v_ = CLIENT_PROPAGATED_l;
       else 
       {
       }
@@ -2442,8 +2442,8 @@ namespace CIAO
     {
       ::std::basic_string< ACE_TCHAR > v (e.value ());
 
-      if (v == "SERVER_DECLARED_NWPRIORITY") v_ = SERVER_DECLARED_NWPRIORITY_l;
-      else if (v == "CLIENT_PROPAGATED_NWPRIORITY") v_ = CLIENT_PROPAGATED_NWPRIORITY_l;
+      if (v == ACE_TEXT ("SERVER_DECLARED_NWPRIORITY")) v_ = SERVER_DECLARED_NWPRIORITY_l;
+      else if (v == ACE_TEXT ("CLIENT_PROPAGATED_NWPRIORITY")) v_ = CLIENT_PROPAGATED_NWPRIORITY_l;
       else 
       {
       }
@@ -2455,8 +2455,8 @@ namespace CIAO
     {
       ::std::basic_string< ACE_TCHAR > v (a.value ());
 
-      if (v == "SERVER_DECLARED_NWPRIORITY") v_ = SERVER_DECLARED_NWPRIORITY_l;
-      else if (v == "CLIENT_PROPAGATED_NWPRIORITY") v_ = CLIENT_PROPAGATED_NWPRIORITY_l;
+      if (v == ACE_TEXT ("SERVER_DECLARED_NWPRIORITY")) v_ = SERVER_DECLARED_NWPRIORITY_l;
+      else if (v == ACE_TEXT ("CLIENT_PROPAGATED_NWPRIORITY")) v_ = CLIENT_PROPAGATED_NWPRIORITY_l;
       else 
       {
       }
@@ -2480,7 +2480,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "priority_model")
+        if (n == ACE_TEXT ("priority_model"))
         {
           priority_model_ = ::std::auto_ptr< ::CIAO::Config_Handlers::PriorityModel > (new ::CIAO::Config_Handlers::PriorityModel (e));
           priority_model_->container (this);
@@ -2495,7 +2495,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "server_priority")
+        if (n == ACE_TEXT ("server_priority"))
         {
           ::XMLSchema::int_ t (a);
           server_priority (t);
@@ -2522,19 +2522,19 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "nw_priority_model")
+        if (n == ACE_TEXT ("nw_priority_model"))
         {
           nw_priority_model_ = ::std::auto_ptr< ::CIAO::Config_Handlers::NWPriorityModel > (new ::CIAO::Config_Handlers::NWPriorityModel (e));
           nw_priority_model_->container (this);
         }
 
-        else if (n == "request_dscp")
+        else if (n == ACE_TEXT ("request_dscp"))
         {
           request_dscp_ = ::std::auto_ptr< ::XMLSchema::long_ > (new ::XMLSchema::long_ (e));
           request_dscp_->container (this);
         }
 
-        else if (n == "reply_dscp")
+        else if (n == ACE_TEXT ("reply_dscp"))
         {
           reply_dscp_ = ::std::auto_ptr< ::XMLSchema::long_ > (new ::XMLSchema::long_ (e));
           reply_dscp_->container (this);
@@ -2561,13 +2561,13 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "request_dscp")
+        if (n == ACE_TEXT ("request_dscp"))
         {
           request_dscp_ = ::std::auto_ptr< ::XMLSchema::long_ > (new ::XMLSchema::long_ (e));
           request_dscp_->container (this);
         }
 
-        else if (n == "reply_dscp")
+        else if (n == ACE_TEXT ("reply_dscp"))
         {
           reply_dscp_ = ::std::auto_ptr< ::XMLSchema::long_ > (new ::XMLSchema::long_ (e));
           reply_dscp_->container (this);
@@ -2589,7 +2589,7 @@ namespace CIAO
     ServerResources (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == "ServerResources")
+      if (e.name () == ACE_TEXT ("ServerResources"))
       {
         ::CIAO::Config_Handlers::ServerResourcesDef r (e);
         return r;
@@ -4985,7 +4985,7 @@ namespace CIAO
       void ServerResourcesDef::
       cmdline (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("cmdline", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("cmdline"), top_ ()));
         Traversal::ServerResourcesDef::cmdline (o);
         pop_ ();
       }
@@ -4993,7 +4993,7 @@ namespace CIAO
       void ServerResourcesDef::
       svcconf (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("svcconf", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("svcconf"), top_ ()));
         Traversal::ServerResourcesDef::svcconf (o);
         pop_ ();
       }
@@ -5001,7 +5001,7 @@ namespace CIAO
       void ServerResourcesDef::
       orbConfigs (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("orbConfigs", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("orbConfigs"), top_ ()));
         Traversal::ServerResourcesDef::orbConfigs (o);
         pop_ ();
       }
@@ -5009,7 +5009,7 @@ namespace CIAO
       void ServerResourcesDef::
       id (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (ACE_TEXT ("id"), ACE_TEXT (""), top_ ());
         attr_ (&a);
         Traversal::ServerResourcesDef::id (o);
         attr_ (0);
@@ -5039,7 +5039,7 @@ namespace CIAO
       void ServerCmdlineOptions::
       arg_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("arg", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("arg"), top_ ()));
       }
 
       void ServerCmdlineOptions::
@@ -5079,7 +5079,7 @@ namespace CIAO
       void ACESvcConf::
       uri (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("uri", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("uri"), top_ ()));
         Traversal::ACESvcConf::uri (o);
         pop_ ();
       }
@@ -5108,7 +5108,7 @@ namespace CIAO
       void ORBConfigs::
       resources (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("resources", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("resources"), top_ ()));
         Traversal::ORBConfigs::resources (o);
         pop_ ();
       }
@@ -5116,7 +5116,7 @@ namespace CIAO
       void ORBConfigs::
       policySet_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("policySet", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("policySet"), top_ ()));
       }
 
       void ORBConfigs::
@@ -5156,7 +5156,7 @@ namespace CIAO
       void ORBResources::
       threadpool_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("threadpool", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("threadpool"), top_ ()));
       }
 
       void ORBResources::
@@ -5175,7 +5175,7 @@ namespace CIAO
       void ORBResources::
       threadpoolWithLanes_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("threadpoolWithLanes", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("threadpoolWithLanes"), top_ ()));
       }
 
       void ORBResources::
@@ -5194,7 +5194,7 @@ namespace CIAO
       void ORBResources::
       connectionBands_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connectionBands", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("connectionBands"), top_ ()));
       }
 
       void ORBResources::
@@ -5234,7 +5234,7 @@ namespace CIAO
       void ThreadpoolDef::
       stacksize (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("stacksize", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("stacksize"), top_ ()));
         Traversal::ThreadpoolDef::stacksize (o);
         pop_ ();
       }
@@ -5242,7 +5242,7 @@ namespace CIAO
       void ThreadpoolDef::
       static_threads (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("static_threads", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("static_threads"), top_ ()));
         Traversal::ThreadpoolDef::static_threads (o);
         pop_ ();
       }
@@ -5250,7 +5250,7 @@ namespace CIAO
       void ThreadpoolDef::
       dynamic_threads (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("dynamic_threads", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("dynamic_threads"), top_ ()));
         Traversal::ThreadpoolDef::dynamic_threads (o);
         pop_ ();
       }
@@ -5258,7 +5258,7 @@ namespace CIAO
       void ThreadpoolDef::
       default_priority (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("default_priority", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("default_priority"), top_ ()));
         Traversal::ThreadpoolDef::default_priority (o);
         pop_ ();
       }
@@ -5266,7 +5266,7 @@ namespace CIAO
       void ThreadpoolDef::
       allow_request_buffering (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("allow_request_buffering", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("allow_request_buffering"), top_ ()));
         Traversal::ThreadpoolDef::allow_request_buffering (o);
         pop_ ();
       }
@@ -5274,7 +5274,7 @@ namespace CIAO
       void ThreadpoolDef::
       max_buffered_requests (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("max_buffered_requests", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("max_buffered_requests"), top_ ()));
         Traversal::ThreadpoolDef::max_buffered_requests (o);
         pop_ ();
       }
@@ -5282,7 +5282,7 @@ namespace CIAO
       void ThreadpoolDef::
       max_request_buffered_size (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("max_request_buffered_size", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("max_request_buffered_size"), top_ ()));
         Traversal::ThreadpoolDef::max_request_buffered_size (o);
         pop_ ();
       }
@@ -5290,7 +5290,7 @@ namespace CIAO
       void ThreadpoolDef::
       id (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (ACE_TEXT ("id"), ACE_TEXT (""), top_ ());
         attr_ (&a);
         Traversal::ThreadpoolDef::id (o);
         attr_ (0);
@@ -5320,7 +5320,7 @@ namespace CIAO
       void ThreadpoolWithLanesDef::
       threadpoolLane_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("threadpoolLane", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("threadpoolLane"), top_ ()));
       }
 
       void ThreadpoolWithLanesDef::
@@ -5339,7 +5339,7 @@ namespace CIAO
       void ThreadpoolWithLanesDef::
       stacksize (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("stacksize", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("stacksize"), top_ ()));
         Traversal::ThreadpoolWithLanesDef::stacksize (o);
         pop_ ();
       }
@@ -5347,7 +5347,7 @@ namespace CIAO
       void ThreadpoolWithLanesDef::
       allow_borrowing (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("allow_borrowing", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("allow_borrowing"), top_ ()));
         Traversal::ThreadpoolWithLanesDef::allow_borrowing (o);
         pop_ ();
       }
@@ -5355,7 +5355,7 @@ namespace CIAO
       void ThreadpoolWithLanesDef::
       allow_request_buffering (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("allow_request_buffering", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("allow_request_buffering"), top_ ()));
         Traversal::ThreadpoolWithLanesDef::allow_request_buffering (o);
         pop_ ();
       }
@@ -5363,7 +5363,7 @@ namespace CIAO
       void ThreadpoolWithLanesDef::
       max_buffered_requests (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("max_buffered_requests", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("max_buffered_requests"), top_ ()));
         Traversal::ThreadpoolWithLanesDef::max_buffered_requests (o);
         pop_ ();
       }
@@ -5371,7 +5371,7 @@ namespace CIAO
       void ThreadpoolWithLanesDef::
       max_request_buffered_size (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("max_request_buffered_size", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("max_request_buffered_size"), top_ ()));
         Traversal::ThreadpoolWithLanesDef::max_request_buffered_size (o);
         pop_ ();
       }
@@ -5379,7 +5379,7 @@ namespace CIAO
       void ThreadpoolWithLanesDef::
       id (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (ACE_TEXT ("id"), ACE_TEXT (""), top_ ());
         attr_ (&a);
         Traversal::ThreadpoolWithLanesDef::id (o);
         attr_ (0);
@@ -5409,7 +5409,7 @@ namespace CIAO
       void ThreadpoolLaneDef::
       static_threads (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("static_threads", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("static_threads"), top_ ()));
         Traversal::ThreadpoolLaneDef::static_threads (o);
         pop_ ();
       }
@@ -5417,7 +5417,7 @@ namespace CIAO
       void ThreadpoolLaneDef::
       dynamic_threads (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("dynamic_threads", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("dynamic_threads"), top_ ()));
         Traversal::ThreadpoolLaneDef::dynamic_threads (o);
         pop_ ();
       }
@@ -5425,7 +5425,7 @@ namespace CIAO
       void ThreadpoolLaneDef::
       priority (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("priority", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("priority"), top_ ()));
         Traversal::ThreadpoolLaneDef::priority (o);
         pop_ ();
       }
@@ -5454,7 +5454,7 @@ namespace CIAO
       void ConnectionBandsDef::
       band_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("band", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("band"), top_ ()));
       }
 
       void ConnectionBandsDef::
@@ -5473,7 +5473,7 @@ namespace CIAO
       void ConnectionBandsDef::
       id (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (ACE_TEXT ("id"), ACE_TEXT (""), top_ ());
         attr_ (&a);
         Traversal::ConnectionBandsDef::id (o);
         attr_ (0);
@@ -5503,7 +5503,7 @@ namespace CIAO
       void PriorityBandDef::
       low (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("low", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("low"), top_ ()));
         Traversal::PriorityBandDef::low (o);
         pop_ ();
       }
@@ -5511,7 +5511,7 @@ namespace CIAO
       void PriorityBandDef::
       high (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("high", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("high"), top_ ()));
         Traversal::PriorityBandDef::high (o);
         pop_ ();
       }
@@ -5540,7 +5540,7 @@ namespace CIAO
       void PolicySet::
       priorityModel_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("priorityModel", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("priorityModel"), top_ ()));
       }
 
       void PolicySet::
@@ -5559,7 +5559,7 @@ namespace CIAO
       void PolicySet::
       nwpriorityModel_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("nwpriorityModel", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("nwpriorityModel"), top_ ()));
       }
 
       void PolicySet::
@@ -5578,7 +5578,7 @@ namespace CIAO
       void PolicySet::
       cnwpriorityModel_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("cnwpriorityModel", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("cnwpriorityModel"), top_ ()));
       }
 
       void PolicySet::
@@ -5597,7 +5597,7 @@ namespace CIAO
       void PolicySet::
       threadpool_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("threadpool", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("threadpool"), top_ ()));
       }
 
       void PolicySet::
@@ -5616,7 +5616,7 @@ namespace CIAO
       void PolicySet::
       priorityBandedConnection_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("priorityBandedConnection", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("priorityBandedConnection"), top_ ()));
       }
 
       void PolicySet::
@@ -5635,7 +5635,7 @@ namespace CIAO
       void PolicySet::
       id (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (ACE_TEXT ("id"), ACE_TEXT (""), top_ ());
         attr_ (&a);
         Traversal::PolicySet::id (o);
         attr_ (0);
@@ -5661,8 +5661,8 @@ namespace CIAO
       {
         ::std::basic_string< ACE_TCHAR > s;
 
-        if (o == ::CIAO::Config_Handlers::PriorityModel::SERVER_DECLARED) s = "SERVER_DECLARED";
-        else if (o == ::CIAO::Config_Handlers::PriorityModel::CLIENT_PROPAGATED) s = "CLIENT_PROPAGATED";
+        if (o == ::CIAO::Config_Handlers::PriorityModel::SERVER_DECLARED) s = ACE_TEXT ("SERVER_DECLARED");
+        else if (o == ::CIAO::Config_Handlers::PriorityModel::CLIENT_PROPAGATED) s = ACE_TEXT ("CLIENT_PROPAGATED");
         else 
         {
         }
@@ -5698,8 +5698,8 @@ namespace CIAO
       {
         ::std::basic_string< ACE_TCHAR > s;
 
-        if (o == ::CIAO::Config_Handlers::NWPriorityModel::SERVER_DECLARED_NWPRIORITY) s = "SERVER_DECLARED_NWPRIORITY";
-        else if (o == ::CIAO::Config_Handlers::NWPriorityModel::CLIENT_PROPAGATED_NWPRIORITY) s = "CLIENT_PROPAGATED_NWPRIORITY";
+        if (o == ::CIAO::Config_Handlers::NWPriorityModel::SERVER_DECLARED_NWPRIORITY) s = ACE_TEXT ("SERVER_DECLARED_NWPRIORITY");
+        else if (o == ::CIAO::Config_Handlers::NWPriorityModel::CLIENT_PROPAGATED_NWPRIORITY) s = ACE_TEXT ("CLIENT_PROPAGATED_NWPRIORITY");
         else 
         {
         }
@@ -5739,7 +5739,7 @@ namespace CIAO
       void PriorityModelPolicyDef::
       priority_model (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("priority_model", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("priority_model"), top_ ()));
         Traversal::PriorityModelPolicyDef::priority_model (o);
         pop_ ();
       }
@@ -5747,7 +5747,7 @@ namespace CIAO
       void PriorityModelPolicyDef::
       server_priority (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("server_priority", "", top_ ());
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (ACE_TEXT ("server_priority"), ACE_TEXT (""), top_ ());
         attr_ (&a);
         Traversal::PriorityModelPolicyDef::server_priority (o);
         attr_ (0);
@@ -5777,7 +5777,7 @@ namespace CIAO
       void NWPriorityModelPolicyDef::
       nw_priority_model (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("nw_priority_model", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("nw_priority_model"), top_ ()));
         Traversal::NWPriorityModelPolicyDef::nw_priority_model (o);
         pop_ ();
       }
@@ -5785,7 +5785,7 @@ namespace CIAO
       void NWPriorityModelPolicyDef::
       request_dscp (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("request_dscp", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("request_dscp"), top_ ()));
         Traversal::NWPriorityModelPolicyDef::request_dscp (o);
         pop_ ();
       }
@@ -5793,7 +5793,7 @@ namespace CIAO
       void NWPriorityModelPolicyDef::
       reply_dscp (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("reply_dscp", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("reply_dscp"), top_ ()));
         Traversal::NWPriorityModelPolicyDef::reply_dscp (o);
         pop_ ();
       }
@@ -5822,7 +5822,7 @@ namespace CIAO
       void CNWPriorityModelPolicyDef::
       request_dscp (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("request_dscp", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("request_dscp"), top_ ()));
         Traversal::CNWPriorityModelPolicyDef::request_dscp (o);
         pop_ ();
       }
@@ -5830,7 +5830,7 @@ namespace CIAO
       void CNWPriorityModelPolicyDef::
       reply_dscp (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("reply_dscp", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("reply_dscp"), top_ ()));
         Traversal::CNWPriorityModelPolicyDef::reply_dscp (o);
         pop_ ();
       }
@@ -5846,7 +5846,7 @@ namespace CIAO
     ServerResources (::CIAO::Config_Handlers::ServerResourcesDef const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != "ServerResources")
+      if (e.name () != ACE_TEXT ("ServerResources"))
       {
         throw 1;
       }

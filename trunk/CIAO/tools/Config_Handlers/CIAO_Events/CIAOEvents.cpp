@@ -976,10 +976,10 @@ namespace CIAO
     {
       ::std::basic_string< ACE_TCHAR > v (e.value ());
 
-      if (v == "EC") v_ = EC_l;
-      else if (v == "RTEC") v_ = RTEC_l;
-      else if (v == "NOTIFY") v_ = NOTIFY_l;
-      else if (v == "RTNOTIFY") v_ = RTNOTIFY_l;
+      if (v == ACE_TEXT ("EC")) v_ = EC_l;
+      else if (v == ACE_TEXT ("RTEC")) v_ = RTEC_l;
+      else if (v == ACE_TEXT ("NOTIFY")) v_ = NOTIFY_l;
+      else if (v == ACE_TEXT ("RTNOTIFY")) v_ = RTNOTIFY_l;
       else 
       {
       }
@@ -991,10 +991,10 @@ namespace CIAO
     {
       ::std::basic_string< ACE_TCHAR > v (a.value ());
 
-      if (v == "EC") v_ = EC_l;
-      else if (v == "RTEC") v_ = RTEC_l;
-      else if (v == "NOTIFY") v_ = NOTIFY_l;
-      else if (v == "RTNOTIFY") v_ = RTNOTIFY_l;
+      if (v == ACE_TEXT ("EC")) v_ = EC_l;
+      else if (v == ACE_TEXT ("RTEC")) v_ = RTEC_l;
+      else if (v == ACE_TEXT ("NOTIFY")) v_ = NOTIFY_l;
+      else if (v == ACE_TEXT ("RTNOTIFY")) v_ = RTNOTIFY_l;
       else 
       {
       }
@@ -1020,7 +1020,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "eventServiceConfiguration")
+        if (n == ACE_TEXT ("eventServiceConfiguration"))
         {
           ::CIAO::Config_Handlers::EventServiceDescription t (e);
           add_eventServiceConfiguration (t);
@@ -1035,7 +1035,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "id")
+        if (n == ACE_TEXT ("id"))
         {
           ::XMLSchema::ID< ACE_TCHAR > t (a);
           id (t);
@@ -1062,49 +1062,49 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT ("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "node")
+        else if (n == ACE_TEXT ("node"))
         {
           node_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           node_->container (this);
         }
 
-        else if (n == "type")
+        else if (n == ACE_TEXT ("type"))
         {
           type_ = ::std::auto_ptr< ::CIAO::Config_Handlers::EventServiceType > (new ::CIAO::Config_Handlers::EventServiceType (e));
           type_->container (this);
         }
 
-        else if (n == "svc_cfg_file")
+        else if (n == ACE_TEXT ("svc_cfg_file"))
         {
           svc_cfg_file_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           svc_cfg_file_->container (this);
         }
 
-        else if (n == "filter")
+        else if (n == ACE_TEXT ("filter"))
         {
           ::CIAO::Config_Handlers::Filter t (e);
           add_filter (t);
         }
 
-        else if (n == "addr_serv")
+        else if (n == ACE_TEXT ("addr_serv"))
         {
           ::CIAO::Config_Handlers::AddressServerDescription t (e);
           add_addr_serv (t);
         }
 
-        else if (n == "udp_sender")
+        else if (n == ACE_TEXT ("udp_sender"))
         {
           ::CIAO::Config_Handlers::UDPSenderDescription t (e);
           add_udp_sender (t);
         }
 
-        else if (n == "udp_receiver")
+        else if (n == ACE_TEXT ("udp_receiver"))
         {
           ::CIAO::Config_Handlers::UDPReceiverDescription t (e);
           add_udp_receiver (t);
@@ -1119,7 +1119,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "id")
+        if (n == ACE_TEXT ("id"))
         {
           ::XMLSchema::ID< ACE_TCHAR > t (a);
           id (t);
@@ -1140,10 +1140,10 @@ namespace CIAO
     {
       ::std::basic_string< ACE_TCHAR > v (e.value ());
 
-      if (v == "CONJUNCTION") v_ = CONJUNCTION_l;
-      else if (v == "DISJUNCTION") v_ = DISJUNCTION_l;
-      else if (v == "LOGICAL_AND") v_ = LOGICAL_AND_l;
-      else if (v == "NEGATE") v_ = NEGATE_l;
+      if (v == ACE_TEXT ("CONJUNCTION")) v_ = CONJUNCTION_l;
+      else if (v == ACE_TEXT ("DISJUNCTION")) v_ = DISJUNCTION_l;
+      else if (v == ACE_TEXT ("LOGICAL_AND")) v_ = LOGICAL_AND_l;
+      else if (v == ACE_TEXT ("NEGATE")) v_ = NEGATE_l;
       else 
       {
       }
@@ -1155,10 +1155,10 @@ namespace CIAO
     {
       ::std::basic_string< ACE_TCHAR > v (a.value ());
 
-      if (v == "CONJUNCTION") v_ = CONJUNCTION_l;
-      else if (v == "DISJUNCTION") v_ = DISJUNCTION_l;
-      else if (v == "LOGICAL_AND") v_ = LOGICAL_AND_l;
-      else if (v == "NEGATE") v_ = NEGATE_l;
+      if (v == ACE_TEXT ("CONJUNCTION")) v_ = CONJUNCTION_l;
+      else if (v == ACE_TEXT ("DISJUNCTION")) v_ = DISJUNCTION_l;
+      else if (v == ACE_TEXT ("LOGICAL_AND")) v_ = LOGICAL_AND_l;
+      else if (v == ACE_TEXT ("NEGATE")) v_ = NEGATE_l;
       else 
       {
       }
@@ -1184,19 +1184,19 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT ("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "type")
+        else if (n == ACE_TEXT ("type"))
         {
           type_ = ::std::auto_ptr< ::CIAO::Config_Handlers::FilterType > (new ::CIAO::Config_Handlers::FilterType (e));
           type_->container (this);
         }
 
-        else if (n == "source")
+        else if (n == ACE_TEXT ("source"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           add_source (t);
@@ -1211,7 +1211,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "id")
+        if (n == ACE_TEXT ("id"))
         {
           ::XMLSchema::ID< ACE_TCHAR > t (a);
           id (t);
@@ -1238,19 +1238,19 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT ("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "port")
+        else if (n == ACE_TEXT ("port"))
         {
           port_ = ::std::auto_ptr< ::XMLSchema::unsignedShort > (new ::XMLSchema::unsignedShort (e));
           port_->container (this);
         }
 
-        else if (n == "address")
+        else if (n == ACE_TEXT ("address"))
         {
           address_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           address_->container (this);
@@ -1277,13 +1277,13 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT ("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "addr_serv_id")
+        else if (n == ACE_TEXT ("addr_serv_id"))
         {
           addr_serv_id_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           addr_serv_id_->container (this);
@@ -1310,25 +1310,25 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT ("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "addr_serv_id")
+        else if (n == ACE_TEXT ("addr_serv_id"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           addr_serv_id (t);
         }
 
-        else if (n == "is_multicast")
+        else if (n == ACE_TEXT ("is_multicast"))
         {
           is_multicast_ = ::std::auto_ptr< ::XMLSchema::boolean > (new ::XMLSchema::boolean (e));
           is_multicast_->container (this);
         }
 
-        else if (n == "listen_port")
+        else if (n == ACE_TEXT ("listen_port"))
         {
           listen_port_ = ::std::auto_ptr< ::XMLSchema::unsignedShort > (new ::XMLSchema::unsignedShort (e));
           listen_port_->container (this);
@@ -1350,7 +1350,7 @@ namespace CIAO
     CIAOEvents (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == "CIAOEvents")
+      if (e.name () == ACE_TEXT ("CIAOEvents"))
       {
         ::CIAO::Config_Handlers::CIAOEventsDef r (e);
         return r;
@@ -2542,10 +2542,10 @@ namespace CIAO
       {
         ::std::basic_string< ACE_TCHAR > s;
 
-        if (o == ::CIAO::Config_Handlers::EventServiceType::EC) s = "EC";
-        else if (o == ::CIAO::Config_Handlers::EventServiceType::RTEC) s = "RTEC";
-        else if (o == ::CIAO::Config_Handlers::EventServiceType::NOTIFY) s = "NOTIFY";
-        else if (o == ::CIAO::Config_Handlers::EventServiceType::RTNOTIFY) s = "RTNOTIFY";
+        if (o == ::CIAO::Config_Handlers::EventServiceType::EC) s = ACE_TEXT ("EC");
+        else if (o == ::CIAO::Config_Handlers::EventServiceType::RTEC) s = ACE_TEXT ("RTEC");
+        else if (o == ::CIAO::Config_Handlers::EventServiceType::NOTIFY) s = ACE_TEXT ("NOTIFY");
+        else if (o == ::CIAO::Config_Handlers::EventServiceType::RTNOTIFY) s = ACE_TEXT ("RTNOTIFY");
         else 
         {
         }
@@ -2585,7 +2585,7 @@ namespace CIAO
       void CIAOEventsDef::
       eventServiceConfiguration_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("eventServiceConfiguration", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("eventServiceConfiguration"), top_ ()));
       }
 
       void CIAOEventsDef::
@@ -2604,7 +2604,7 @@ namespace CIAO
       void CIAOEventsDef::
       id (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (ACE_TEXT ("id"), ACE_TEXT (""), top_ ());
         attr_ (&a);
         Traversal::CIAOEventsDef::id (o);
         attr_ (0);
@@ -2634,7 +2634,7 @@ namespace CIAO
       void EventServiceDescription::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
         Traversal::EventServiceDescription::name (o);
         pop_ ();
       }
@@ -2642,7 +2642,7 @@ namespace CIAO
       void EventServiceDescription::
       node (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("node", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("node"), top_ ()));
         Traversal::EventServiceDescription::node (o);
         pop_ ();
       }
@@ -2650,7 +2650,7 @@ namespace CIAO
       void EventServiceDescription::
       type (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("type", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("type"), top_ ()));
         Traversal::EventServiceDescription::type (o);
         pop_ ();
       }
@@ -2658,7 +2658,7 @@ namespace CIAO
       void EventServiceDescription::
       svc_cfg_file (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("svc_cfg_file", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("svc_cfg_file"), top_ ()));
         Traversal::EventServiceDescription::svc_cfg_file (o);
         pop_ ();
       }
@@ -2666,7 +2666,7 @@ namespace CIAO
       void EventServiceDescription::
       filter_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("filter", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("filter"), top_ ()));
       }
 
       void EventServiceDescription::
@@ -2685,7 +2685,7 @@ namespace CIAO
       void EventServiceDescription::
       addr_serv_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("addr_serv", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("addr_serv"), top_ ()));
       }
 
       void EventServiceDescription::
@@ -2704,7 +2704,7 @@ namespace CIAO
       void EventServiceDescription::
       udp_sender_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("udp_sender", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("udp_sender"), top_ ()));
       }
 
       void EventServiceDescription::
@@ -2723,7 +2723,7 @@ namespace CIAO
       void EventServiceDescription::
       udp_receiver_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("udp_receiver", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("udp_receiver"), top_ ()));
       }
 
       void EventServiceDescription::
@@ -2742,7 +2742,7 @@ namespace CIAO
       void EventServiceDescription::
       id (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (ACE_TEXT ("id"), ACE_TEXT (""), top_ ());
         attr_ (&a);
         Traversal::EventServiceDescription::id (o);
         attr_ (0);
@@ -2768,10 +2768,10 @@ namespace CIAO
       {
         ::std::basic_string< ACE_TCHAR > s;
 
-        if (o == ::CIAO::Config_Handlers::FilterType::CONJUNCTION) s = "CONJUNCTION";
-        else if (o == ::CIAO::Config_Handlers::FilterType::DISJUNCTION) s = "DISJUNCTION";
-        else if (o == ::CIAO::Config_Handlers::FilterType::LOGICAL_AND) s = "LOGICAL_AND";
-        else if (o == ::CIAO::Config_Handlers::FilterType::NEGATE) s = "NEGATE";
+        if (o == ::CIAO::Config_Handlers::FilterType::CONJUNCTION) s = ACE_TEXT ("CONJUNCTION");
+        else if (o == ::CIAO::Config_Handlers::FilterType::DISJUNCTION) s = ACE_TEXT ("DISJUNCTION");
+        else if (o == ::CIAO::Config_Handlers::FilterType::LOGICAL_AND) s = ACE_TEXT ("LOGICAL_AND");
+        else if (o == ::CIAO::Config_Handlers::FilterType::NEGATE) s = ACE_TEXT ("NEGATE");
         else 
         {
         }
@@ -2811,7 +2811,7 @@ namespace CIAO
       void Filter::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
         Traversal::Filter::name (o);
         pop_ ();
       }
@@ -2819,7 +2819,7 @@ namespace CIAO
       void Filter::
       type (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("type", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("type"), top_ ()));
         Traversal::Filter::type (o);
         pop_ ();
       }
@@ -2827,7 +2827,7 @@ namespace CIAO
       void Filter::
       source_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("source", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("source"), top_ ()));
       }
 
       void Filter::
@@ -2846,7 +2846,7 @@ namespace CIAO
       void Filter::
       id (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (ACE_TEXT ("id"), ACE_TEXT (""), top_ ());
         attr_ (&a);
         Traversal::Filter::id (o);
         attr_ (0);
@@ -2876,7 +2876,7 @@ namespace CIAO
       void AddressServerDescription::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
         Traversal::AddressServerDescription::name (o);
         pop_ ();
       }
@@ -2884,7 +2884,7 @@ namespace CIAO
       void AddressServerDescription::
       port (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("port", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("port"), top_ ()));
         Traversal::AddressServerDescription::port (o);
         pop_ ();
       }
@@ -2892,7 +2892,7 @@ namespace CIAO
       void AddressServerDescription::
       address (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("address", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("address"), top_ ()));
         Traversal::AddressServerDescription::address (o);
         pop_ ();
       }
@@ -2921,7 +2921,7 @@ namespace CIAO
       void UDPSenderDescription::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
         Traversal::UDPSenderDescription::name (o);
         pop_ ();
       }
@@ -2929,7 +2929,7 @@ namespace CIAO
       void UDPSenderDescription::
       addr_serv_id (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("addr_serv_id", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("addr_serv_id"), top_ ()));
         Traversal::UDPSenderDescription::addr_serv_id (o);
         pop_ ();
       }
@@ -2958,7 +2958,7 @@ namespace CIAO
       void UDPReceiverDescription::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
         Traversal::UDPReceiverDescription::name (o);
         pop_ ();
       }
@@ -2966,7 +2966,7 @@ namespace CIAO
       void UDPReceiverDescription::
       addr_serv_id (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("addr_serv_id", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("addr_serv_id"), top_ ()));
         Traversal::UDPReceiverDescription::addr_serv_id (o);
         pop_ ();
       }
@@ -2974,7 +2974,7 @@ namespace CIAO
       void UDPReceiverDescription::
       is_multicast (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("is_multicast", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("is_multicast"), top_ ()));
         Traversal::UDPReceiverDescription::is_multicast (o);
         pop_ ();
       }
@@ -2982,7 +2982,7 @@ namespace CIAO
       void UDPReceiverDescription::
       listen_port (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("listen_port", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("listen_port"), top_ ()));
         Traversal::UDPReceiverDescription::listen_port (o);
         pop_ ();
       }
@@ -2998,7 +2998,7 @@ namespace CIAO
     CIAOEvents (::CIAO::Config_Handlers::CIAOEventsDef const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != "CIAOEvents")
+      if (e.name () != ACE_TEXT ("CIAOEvents"))
       {
         throw 1;
       }

@@ -451,55 +451,55 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "label")
+        if (n == ACE_TEXT ("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "UUID")
+        else if (n == ACE_TEXT ("UUID"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           UUID (t);
         }
 
-        else if (n == "realizes")
+        else if (n == ACE_TEXT ("realizes"))
         {
           ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
           realizes (t);
         }
 
-        else if (n == "implementation")
+        else if (n == ACE_TEXT ("implementation"))
         {
           ::CIAO::Config_Handlers::MonolithicDeploymentDescription t (e);
           add_implementation (t);
         }
 
-        else if (n == "instance")
+        else if (n == ACE_TEXT ("instance"))
         {
           ::CIAO::Config_Handlers::InstanceDeploymentDescription t (e);
           add_instance (t);
         }
 
-        else if (n == "connection")
+        else if (n == ACE_TEXT ("connection"))
         {
           ::CIAO::Config_Handlers::PlanConnectionDescription t (e);
           add_connection (t);
         }
 
-        else if (n == "dependsOn")
+        else if (n == ACE_TEXT ("dependsOn"))
         {
           ::CIAO::Config_Handlers::ImplementationDependency t (e);
           add_dependsOn (t);
         }
 
-        else if (n == "artifact")
+        else if (n == ACE_TEXT ("artifact"))
         {
           ::CIAO::Config_Handlers::ArtifactDeploymentDescription t (e);
           add_artifact (t);
         }
 
-        else if (n == "infoProperty")
+        else if (n == ACE_TEXT ("infoProperty"))
         {
           ::CIAO::Config_Handlers::Property t (e);
           add_infoProperty (t);
@@ -1204,7 +1204,7 @@ namespace CIAO
       void DeploymentPlan::
       label (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("label"), top_ ()));
         Traversal::DeploymentPlan::label (o);
         pop_ ();
       }
@@ -1212,7 +1212,7 @@ namespace CIAO
       void DeploymentPlan::
       UUID (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("UUID", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("UUID"), top_ ()));
         Traversal::DeploymentPlan::UUID (o);
         pop_ ();
       }
@@ -1220,7 +1220,7 @@ namespace CIAO
       void DeploymentPlan::
       realizes (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("realizes", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("realizes"), top_ ()));
         Traversal::DeploymentPlan::realizes (o);
         pop_ ();
       }
@@ -1228,7 +1228,7 @@ namespace CIAO
       void DeploymentPlan::
       implementation_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("implementation", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("implementation"), top_ ()));
       }
 
       void DeploymentPlan::
@@ -1247,7 +1247,7 @@ namespace CIAO
       void DeploymentPlan::
       instance_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("instance", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("instance"), top_ ()));
       }
 
       void DeploymentPlan::
@@ -1266,7 +1266,7 @@ namespace CIAO
       void DeploymentPlan::
       connection_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connection", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("connection"), top_ ()));
       }
 
       void DeploymentPlan::
@@ -1285,7 +1285,7 @@ namespace CIAO
       void DeploymentPlan::
       dependsOn_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("dependsOn", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("dependsOn"), top_ ()));
       }
 
       void DeploymentPlan::
@@ -1304,7 +1304,7 @@ namespace CIAO
       void DeploymentPlan::
       artifact_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("artifact", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("artifact"), top_ ()));
       }
 
       void DeploymentPlan::
@@ -1323,7 +1323,7 @@ namespace CIAO
       void DeploymentPlan::
       infoProperty_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("infoProperty", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("infoProperty"), top_ ()));
       }
 
       void DeploymentPlan::

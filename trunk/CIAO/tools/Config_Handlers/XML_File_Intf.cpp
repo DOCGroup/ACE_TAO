@@ -29,7 +29,7 @@ namespace CIAO
         return false;
 
       XERCES_CPP_NAMESPACE::DOMDocument *dom =
-        helper.create_dom (file);
+        helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (file));
 
       if (!dom)
         return false;

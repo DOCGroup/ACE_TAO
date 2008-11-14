@@ -37,7 +37,7 @@ namespace CIAO
         static void handle_nia (const NamedImplementationArtifact &desc,
                              ::Deployment::NamedImplementationArtifact &toconfig)
         {
-          toconfig.name = desc.name ().c_str ();
+          toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
           IAD_Handler::impl_artifact_descr (desc.referencedArtifact (),
                                             toconfig.referencedArtifact);
         }
@@ -46,7 +46,7 @@ namespace CIAO
         static NamedImplementationArtifact
         get_nia (const ::Deployment::NamedImplementationArtifact &src)
         {
-          return NamedImplementationArtifact (src.name.in (),
+          return NamedImplementationArtifact (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
                                               IAD_Handler::impl_artifact_descr (src.referencedArtifact));
         }
 

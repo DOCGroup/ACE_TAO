@@ -10,7 +10,7 @@ namespace CIAO
     bool TP_Handler::thread_pool (const ThreadpoolDef &src,
                                   ::CIAO::DAnCE::ORS_Threadpool &dest)
     {
-      dest.Id = CORBA::String_var (src.id ().c_str ());
+      dest.Id = CORBA::String_var (ACE_TEXT_ALWAYS_CHAR (src.id ().c_str ()));
 
       dest.stacksize =
         static_cast <ACE_UINT32> (src.stacksize ());
@@ -48,7 +48,7 @@ namespace CIAO
 
       if (src.Id.in () == 0)
         {
-          tp.id (src.Id.in ());
+          tp.id (ACE_TEXT_CHAR_TO_TCHAR (src.Id.in ()));
         }
 
       return tp;

@@ -39,7 +39,7 @@ namespace CIAO
     domain (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == "domain")
+      if (e.name () == ACE_TEXT ("domain"))
       {
         ::CIAO::Config_Handlers::Domain r (e);
         return r;
@@ -55,7 +55,7 @@ namespace CIAO
     deploymentPlan (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == "deploymentPlan")
+      if (e.name () == ACE_TEXT ("deploymentPlan"))
       {
         ::CIAO::Config_Handlers::DeploymentPlan r (e);
         return r;
@@ -71,7 +71,7 @@ namespace CIAO
     implementationArtifactDescription (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == "implementationArtifactDescription")
+      if (e.name () == ACE_TEXT ("implementationArtifactDescription"))
       {
         ::CIAO::Config_Handlers::ImplementationArtifactDescription r (e);
         return r;
@@ -87,7 +87,7 @@ namespace CIAO
     componentInterfaceDescription (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == "componentInterfaceDescription")
+      if (e.name () == ACE_TEXT ("componentInterfaceDescription"))
       {
         ::CIAO::Config_Handlers::ComponentInterfaceDescription r (e);
         return r;
@@ -103,7 +103,7 @@ namespace CIAO
     componentImplementationDescription (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == "componentImplementationDescription")
+      if (e.name () == ACE_TEXT ("componentImplementationDescription"))
       {
         ::CIAO::Config_Handlers::ComponentImplementationDescription r (e);
         return r;
@@ -119,7 +119,7 @@ namespace CIAO
     componentPackageDescription (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == "componentPackageDescription")
+      if (e.name () == ACE_TEXT ("componentPackageDescription"))
       {
         ::CIAO::Config_Handlers::ComponentPackageDescription r (e);
         return r;
@@ -135,7 +135,7 @@ namespace CIAO
     packageConfiguration (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == "packageConfiguration")
+      if (e.name () == ACE_TEXT ("packageConfiguration"))
       {
         ::CIAO::Config_Handlers::PackageConfiguration r (e);
         return r;
@@ -151,7 +151,7 @@ namespace CIAO
     topLevelPackageDescription (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == "topLevelPackageDescription")
+      if (e.name () == ACE_TEXT ("topLevelPackageDescription"))
       {
         ::CIAO::Config_Handlers::TopLevelPackageDescription r (e);
         return r;
@@ -206,7 +206,7 @@ namespace CIAO
     domain (::CIAO::Config_Handlers::Domain const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != "domain")
+      if (e.name () != ACE_TEXT ("domain"))
       {
         throw 1;
       }
@@ -259,7 +259,7 @@ namespace CIAO
     deploymentPlan (::CIAO::Config_Handlers::DeploymentPlan const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != "deploymentPlan")
+      if (e.name () != ACE_TEXT ("deploymentPlan"))
       {
         throw 1;
       }
@@ -323,7 +323,7 @@ namespace CIAO
     implementationArtifactDescription (::CIAO::Config_Handlers::ImplementationArtifactDescription const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != "implementationArtifactDescription")
+      if (e.name () != ACE_TEXT ("implementationArtifactDescription"))
       {
         throw 1;
       }
@@ -371,7 +371,7 @@ namespace CIAO
     componentInterfaceDescription (::CIAO::Config_Handlers::ComponentInterfaceDescription const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != "componentInterfaceDescription")
+      if (e.name () != ACE_TEXT ("componentInterfaceDescription"))
       {
         throw 1;
       }
@@ -420,7 +420,7 @@ namespace CIAO
     componentImplementationDescription (::CIAO::Config_Handlers::ComponentImplementationDescription const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != "componentImplementationDescription")
+      if (e.name () != ACE_TEXT ("componentImplementationDescription"))
       {
         throw 1;
       }
@@ -494,7 +494,7 @@ namespace CIAO
     componentPackageDescription (::CIAO::Config_Handlers::ComponentPackageDescription const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != "componentPackageDescription")
+      if (e.name () != ACE_TEXT ("componentPackageDescription"))
       {
         throw 1;
       }
@@ -568,7 +568,7 @@ namespace CIAO
     packageConfiguration (::CIAO::Config_Handlers::PackageConfiguration const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != "packageConfiguration")
+      if (e.name () != ACE_TEXT ("packageConfiguration"))
       {
         throw 1;
       }
@@ -642,7 +642,7 @@ namespace CIAO
     topLevelPackageDescription (::CIAO::Config_Handlers::TopLevelPackageDescription const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != "topLevelPackageDescription")
+      if (e.name () != ACE_TEXT ("topLevelPackageDescription"))
       {
         throw 1;
       }

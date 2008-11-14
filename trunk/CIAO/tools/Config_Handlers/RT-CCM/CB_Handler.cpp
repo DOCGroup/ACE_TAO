@@ -34,7 +34,7 @@ namespace CIAO
           if (!IDD_Handler::IDREF.bind_ref (cstr, dest))
             return false;
           */
-          dest.Id = CORBA::string_dup (src.id ().c_str ());
+          dest.Id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (src.id ().c_str ()));
         }
 
       return true;
@@ -61,7 +61,7 @@ namespace CIAO
       */
 
       if (src.Id.in () != 0)
-        cb.id (src.Id.in ());
+        cb.id (ACE_TEXT_CHAR_TO_TCHAR (src.Id.in ()));
 
       return cb;
     }

@@ -49,7 +49,7 @@ CIAO::debug_level (void)
   if (ciao_anonymous_namespace::debug_level == -1)
     {
       // Initialize the thing.
-      ACE_Env_Value<int> envar ("CIAO_DEBUG_LEVEL", 1);
+      ACE_Env_Value<int> envar (ACE_TEXT ("CIAO_DEBUG_LEVEL"), 1);
       ciao_anonymous_namespace::debug_level = envar;
     }
 

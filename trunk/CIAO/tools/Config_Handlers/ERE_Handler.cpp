@@ -36,7 +36,7 @@ namespace CIAO
     {
       CIAO_TRACE("ERE_Handler::external_ref_endpoint");
       dest.location =
-        src.location ().c_str ();
+        ACE_TEXT_ALWAYS_CHAR (src.location ().c_str ());
     }
 
     ExternalReferenceEndpoint
@@ -44,7 +44,7 @@ namespace CIAO
                                         const Deployment::ExternalReferenceEndpoint& src)
     {
       CIAO_TRACE("ERE_Handler::external_ref_endpoint - reverse");
-      XMLSchema::string< char > loc ((src.location));
+      XMLSchema::string< ACE_TCHAR > loc (ACE_TEXT_CHAR_TO_TCHAR (src.location.in ()));
       ExternalReferenceEndpoint erp (loc);
       return erp;
     }

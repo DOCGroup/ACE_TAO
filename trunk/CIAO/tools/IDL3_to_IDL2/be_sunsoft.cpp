@@ -63,7 +63,7 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
         case AST_Expression::EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
           this->TAO_OutStream::print ("ACE_UINT64_LITERAL (");
-          this->TAO_OutStream::print (ACE_UINT64_FORMAT_SPECIFIER,
+          this->TAO_OutStream::print (ACE_TEXT_ALWAYS_CHAR (ACE_UINT64_FORMAT_SPECIFIER),
                                       ev->u.ullval);
           this->TAO_OutStream::print (")");
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */

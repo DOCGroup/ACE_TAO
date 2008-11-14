@@ -14,7 +14,7 @@ BE_version (void)
 }
 
 TAO_IDL3_TO_IDL2_BE_Export int
-BE_init (int & /* argc */, char * /*argv */ [])
+BE_init (int & /* argc */, ACE_TCHAR * /*argv */ [])
 {
   // Initialize BE global data object.
   ACE_NEW_RETURN (be_global,
