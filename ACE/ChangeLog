@@ -1,3 +1,20 @@
+Fri Nov 14 18:39:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.cpp:
+        * ace/Arg_Shifter.cpp:
+          Layout change
+
+        * ace/Arg_Shifter.h:
+          Doxygen change
+
+        * tests/ACE_Test.cpp:
+          Added test for ACE_DEBUG environment variable
+
+        * tests/Arg_Shifter_Test.cpp:
+          Added another test, on WinCE we see that ACE::debug() is enabled
+          when running TAO, one of the reasons could be a problem in the
+          commandline handling
+
 Fri Nov 14 13:06:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.inl:
