@@ -41,7 +41,7 @@ namespace CIAO
   }
 
   void
-  Swapping_Container::deactivate_facet (const PortableServer::ObjectId &oid)
+  Swapping_Container::deactivate_facet (const PortableServer::ObjectId &)
   {
     // @todo
     //    this->the_facet_cons_POA ()->deactivate_object (oid);
@@ -208,7 +208,7 @@ namespace CIAO
   CORBA::Object_ptr
   Swapping_Container::install_servant (PortableServer::Servant p,
                                        Container_Types::OA_Type t,
-                                       PortableServer::ObjectId_out oid)
+                                       PortableServer::ObjectId_out )
   {
     PortableServer::POA_ptr tmp = 0;
 

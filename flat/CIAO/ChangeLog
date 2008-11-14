@@ -1,3 +1,21 @@
+Fri Nov 14 18:51:35 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+        * DAnCE/Starter/Starter.cpp:
+        * DAnCE/tests/DeploymentTest1/test.cpp:
+        * DAnCE/tests/NameServiceTest/srv_main.cpp:
+        * DAnCE/tests/NodeApplicationManager-NodeApplication/test.cpp:
+        * DAnCE/tests/NodeManager-NodeApplicationManager/test.cpp:
+        * DAnCE/tests/ObjectLocatorTest/ObjectLocatorTest.mpc:
+        * DAnCE/tests/ObjectLocatorTest/srv_main.cpp:
+        * DAnCE/tests/RedirectionServiceTest/srv_main.cpp:
+        * MPC/config/ciao_componentserver_svnt.mpb:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
+        * ciao/Containers/Swapping/Swapping_Container.cpp:
+
+          Warning fixes on Linux. 
+        
 Thu Nov 13 22:58:42 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
@@ -11,14 +29,14 @@ Thu Nov 13 22:58:42 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
 
           Refactored support for finding IORs of NodeManagers
-          to support Node Maps and NameService. 
-        
+          to support Node Maps and NameService.
+
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
         * DAnCE/Plan_Launcher/Plan_Launcher_Exec.cpp:
         * DAnCE/Deployment/Module_Main.h:
 
-          dance_plan_launcher executable. 
-        
+          dance_plan_launcher executable.
+
 Wed Nov 12 21:26:14 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplication/Domain_Application_Impl.cpp:

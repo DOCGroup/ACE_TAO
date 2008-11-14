@@ -7,7 +7,7 @@ int main (int argc, char * argv[])
     {
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-      char * ior = "file://node_manager.ior";
+      const char * ior = "file://node_manager.ior";
       CORBA::Object_var obj = orb->string_to_object (ior);
       if (CORBA::is_nil (obj))
         {

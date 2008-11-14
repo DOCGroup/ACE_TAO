@@ -11,10 +11,6 @@ namespace CIAO
 {
   namespace Deployment
   {
-    namespace
-    {
-      const char *register_naming = "edu.dre.vanderbilt.RegisterNaming";
-    }
     // Constructor 
     CIAO_Container_i::CIAO_Container_i (const Components::ConfigValues &config,
 					const Static_Config_EntryPoints_Maps *static_entrypts,

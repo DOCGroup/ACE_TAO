@@ -20,10 +20,12 @@ int main (int argc, char * argv[])
       {
         argvm[i] = argv[i];
       }
-    argvm[argcm-2] = "-ORBListenEndpoints";
-    char buf[32];
-    ACE_OS::sprintf (buf, "iiop://:12345");
-    argvm[argcm-1] = buf;
+    char buf1[32];
+    ACE_OS::sprintf (buf1, "-ORBListenEndpoints");
+    argvm[argcm-2] = buf1;
+    char buf2[32];
+    ACE_OS::sprintf (buf2, "iiop://:12345");
+    argvm[argcm-1] = buf2;
     argvm[argcm] = 0;
 
     CORBA::ORB_var orb = CORBA::ORB_init (argcm, argvm);
