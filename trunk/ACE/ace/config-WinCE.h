@@ -190,7 +190,6 @@
 // @@ NSIG value.  This is definitely not correct.
 #define NSIG 23
 
-
 // @@ For some reason, WinCE forgot to define this.
 //    Need to find out what it is. (Used in MapViewOfFile ().)
 #define FILE_MAP_COPY 0
