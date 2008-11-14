@@ -1446,7 +1446,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   ACE_Errno_Guard error (errno, 0);
   int msec_timeout;
 
-  if (timeout->sec () == 0 && timeout->usec () == 0)
+  if (*timeout == ACE_Time_Value::zero)
     msec_timeout = 0; // Do a "poll."
   else
     {
@@ -1609,7 +1609,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   int error = 0;
   int msec_timeout;
 
-  if (timeout->sec () == 0 && timeout->usec () == 0)
+  if (*timeout == ACE_Time_Value::zero)
     msec_timeout = 0; // Do a "poll."
   else
     {
@@ -2968,7 +2968,7 @@ ACE_OS::event_timedwait (ACE_event_t *event,
 #if defined (ACE_WIN32)
   DWORD result;
 
-  if (timeout->sec () == 0 && timeout->usec () == 0)
+  if (*timeout == ACE_Time_Value::zero)
     // Do a "poll".
     result = ::WaitForSingleObject (*event, 0);
   else

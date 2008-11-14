@@ -213,7 +213,7 @@ ACE_OS::dup (ACE_HANDLE handle)
   /* NOTREACHED */
 #else
   ACE_OSCALL_RETURN (::dup (handle), ACE_HANDLE, ACE_INVALID_HANDLE);
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_LACKS_DUP */
 }
 
 ACE_INLINE int
