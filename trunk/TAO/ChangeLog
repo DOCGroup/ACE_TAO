@@ -1,3 +1,8 @@
+Fri Nov 14 12:29:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3499_Regression/run_test.pl:
+          Fixed this script
+
 Fri Nov 14 10:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/TestImpl.h:
@@ -14,7 +19,7 @@ Thu Nov 13 22:22:40 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
         * orbsvcs/DevGuideExamples/NotifyService/QoSProperties/QoSProperties.mpc:
 
         * orbsvcs/DevGuideExamples/NotifyService/SupplierSideNC/SupplierSideNC.mpc:
-        
+
           Fixed up errant include of MessengerS.cpp in client sources.
 
 Thu Nov 13 21:48:14 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
