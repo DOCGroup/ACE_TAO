@@ -1,3 +1,21 @@
+Fri Nov 14 19:17:35 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/ACE.h:
+        * ace/ACE.cpp:
+
+          Enhanced the ACE::wild_match() algorithm to support escaped wildcards
+          and character classes.  See the doxygen comment for details.
+
+        * tests/Wild_Match_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+          Added a new test for ACE::wild_match().
+
+        * tests/Log_Thread_Inheritance_Test.cpp:
+
+          Removed the ; after ACE_RCSID.  Apparantly it has its own ;.
+
 Fri Nov 14 19:03:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Parse_Node.cpp:

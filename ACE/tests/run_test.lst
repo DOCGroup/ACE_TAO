@@ -205,6 +205,7 @@ Process_Strategy_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
 Recursive_Condition_Bug_Test: !ST
 UnloadLibACE: !STATIC !WinCE !LabVIEW_RT
 UUID_Test: !NO_UUID !ACE_FOR_TAO
+Wild_Match_Test
 SSL/Bug_2912_Regression_Test: SSL !ACE_FOR_TAO !BAD_AIO
 SSL/SSL_Asynch_Stream_Test: SSL !ACE_FOR_TAO !BAD_AIO
 SSL/Thread_Pool_Reactor_SSL_Test: SSL

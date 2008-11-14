@@ -1621,3 +1621,10 @@ project(Log_Thread_Inheritance_Test) : acetest {
     Log_Thread_Inheritance_Test.cpp
   }
 }
+
+project(Wild_Match_Test) : acetest {
+  exename = Wild_Match_Test
+  Source_Files {
+    Wild_Match_Test.cpp
+  }
+}
