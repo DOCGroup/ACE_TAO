@@ -1,3 +1,10 @@
+Fri Nov 14 13:03:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+        * docs/CE-status.txt:
+        * docs/wchar.txt:
+          Windows CE updates
+
 Fri Nov 14 12:47:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
