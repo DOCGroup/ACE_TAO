@@ -1,3 +1,8 @@
+Fri Nov 14 13:06:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Compare with ACE_Time_Value::zero
+
 Fri Nov 14 13:03:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:

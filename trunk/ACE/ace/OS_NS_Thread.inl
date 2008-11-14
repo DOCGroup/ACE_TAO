@@ -2259,7 +2259,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 #     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   int msec_timeout;
 
-  if (tv.sec () == 0 && tv.usec () == 0)
+  if (tv == ACE_Time_Value::zero)
     msec_timeout = 0; // Do a "poll."
   else
     {
@@ -2678,7 +2678,7 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
   ACE_Errno_Guard error (errno);
 #   if !defined (ACE_HAS_WINCE)
   priority = ::GetThreadPriority (ht_id);
-#   else   
+#   else
   priority = ::CeGetThreadPriority (ht_id);
 #   endif
 
