@@ -1,3 +1,9 @@
+Fri Nov 14 13:23:30 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+          Always report fatal errors during init.
+
 Fri Nov 14 12:29:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3499_Regression/run_test.pl:
