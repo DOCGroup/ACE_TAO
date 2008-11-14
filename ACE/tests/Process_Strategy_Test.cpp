@@ -120,7 +120,7 @@ Process_Strategy::activate_svc_handler (Counting_Service *svc_handler,
                                         void *arg)
 {
   // Call down to the base class
-  int result =
+  int const result =
     ACE_Process_Strategy<Counting_Service>::activate_svc_handler (svc_handler,
                                                                   arg);
   // Connection is now complete
@@ -163,7 +163,6 @@ Options::Options (void)
 Options::~Options (void)
 {
   delete this->concurrency_strategy_;
-  this->concurrency_strategy_ = 0;
 }
 
 int
@@ -496,7 +495,7 @@ client (void *arg)
   ACE_SOCK_Connector connector;
 
   char buf[BUFSIZ];
-  const char *command;
+  const char *command = 0;
   size_t command_len;
   size_t i;
 
@@ -537,9 +536,9 @@ client (void *arg)
                            ACE_TEXT ("recv")),
                           0);
 
-      //      ACE_DEBUG ((LM_DEBUG,
-      //                  ACE_TEXT ("(%P|%t) client iteration %d, buf = %s\n"),
-      //                  i, buf));
+      // ACE_DEBUG ((LM_DEBUG,
+      //             ACE_TEXT ("(%P|%t) client iteration %d, buf = %C\n"),
+      //             i, buf));
 
       if (stream.close () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -582,7 +581,13 @@ client (void *arg)
                   ACE_TEXT ("(%P|%t) count = %d\n"),
                   count));
       // Make sure that the count is correct.
-      ACE_ASSERT (count == ACE_MAX_ITERATIONS);
+      if (count != ACE_MAX_ITERATIONS) 
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Error: Count invalid, has %d expected %d\n"),
+                             count, ACE_MAX_ITERATIONS),
+                            0);
+        }
     }
 
   if (stream.close () == -1)
