@@ -5,7 +5,7 @@
 #include "ace/Task.h"
 #include <fstream>
 
-ACE_RCSID (tests, Log_Thread_Inheritance_Test, "$Id$");
+ACE_RCSID (tests, Log_Thread_Inheritance_Test, "$Id$")
 
 #if !defined (ACE_HAS_THREADS) || defined (ACE_LACKS_IOSTREAM_TOTALLY)
 int run_main (int, ACE_TCHAR *[])

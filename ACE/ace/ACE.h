@@ -90,7 +90,13 @@ namespace ACE
 
   /// Simple wildcard matching function supporting '*' and '?'
   /// return true if string s matches pattern.
-  extern ACE_Export bool wild_match(const char* s, const char* pattern, bool case_sensitive = true);
+  /// If character_classes is true, '[' is treated as a wildcard character
+  /// as described in the fnmatch() POSIX API.  The following POSIX "bracket
+  /// expression" features are not implemented: collating symbols, equivalence
+  /// class expressions, and character class expressions.  The POSIX locale is
+  /// assumed.
+  extern ACE_Export bool wild_match(const char* s, const char* pattern,
+    bool case_sensitive = true, bool character_classes = false);
 
   /**
    * @name I/O operations
