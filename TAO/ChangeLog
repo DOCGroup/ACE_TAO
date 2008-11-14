@@ -1,3 +1,21 @@
+Fri Nov 14 23:05:47 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/tao_idl_mcpp.mpb:
+
+          This isn't used by clients of TAO_IDL so it can live here.
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+
+          Adapted the "verbatim(gnuace)" section for use on Windows.
+
+        * rules.tao.GNU:
+
+          Translate \ to / in $(TAO_ROOT).
+
+        * MPC/config/tao_idl_mcpp.mpb:
+
+          Removed this file.  Moved it to $TAO_ROOT/TAO_IDL.
+
 Fri Nov 14 14:30:30 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Bug_3499_Regression/DLL_TAO_Service.cpp:

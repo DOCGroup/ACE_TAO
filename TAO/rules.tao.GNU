@@ -12,6 +12,13 @@
 #### Required macros for TAO.
 ####
 TAO_ROOT ?= $(ACE_ROOT)/TAO
+TAO_ROOT := $(subst \,/,$(TAO_ROOT))
+
+#This logically belongs in rules.dds.GNU but there are a few projects
+#which reference $DDS_ROOT but do not include rules.dds.GNU
+ifdef DDS_ROOT
+  DDS_ROOT := $(subst \,/,$(DDS_ROOT))
+endif
 
 ifeq ($(exceptions),0)
   default:
