@@ -12,7 +12,7 @@ project(ExecutionManager_Module): dance_lib, taolib, tao_output, utils, strategi
   }
 }
 
-project(Execution_Manager_Exec) : dance_exe, dance_domain_application_manager, naming_serv {
+project(Execution_Manager_Exec) : dance_exe, dance_domain_application_manager, naming_serv, dance_executionmanager_stub {
   exename = dance_execution_manager
   after += ExecutionManager_Module
   libs += DAnCE_ExecutionManager

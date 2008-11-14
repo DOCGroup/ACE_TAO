@@ -21,7 +21,7 @@ int main (int argc, char * argv[])
       DANCE_DEBUG((LM_DEBUG, "[%M] Test starts.\n"));
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-      char * ior = "file://execution_manager.ior";
+      const char * ior = "file://execution_manager.ior";
 
       CORBA::Object_var obj = orb->string_to_object (ior);
       if (CORBA::is_nil (obj))

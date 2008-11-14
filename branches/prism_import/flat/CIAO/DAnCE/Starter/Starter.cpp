@@ -687,7 +687,7 @@ Starter::argCopyForNaming (int & c, char **& v)
 void
 Starter::argCopyForNode (const char * node, int & c, char **& v)
   {
-    char * validOptions[] =
+    const char * validOptions[] =
       { //"--node-mgr", "-n"
         "--process-ns", "-p"
         , "--create-plan-ns", "-c"
@@ -754,7 +754,7 @@ Starter::argCopyForNode (const char * node, int & c, char **& v)
 void
 Starter::argCopyForEM (int & c, char **& v)
   {
-    char * validOptions[] =
+    const char * validOptions[] =
       {
         //"--node-mgr", "-n"
         "--exec-mgr", "-e"
@@ -822,7 +822,7 @@ Starter::argCopyForEM (int & c, char **& v)
 void
 Starter::argCopyForPL (int & c, char **& v)
   {
-    char * validOptions[] =
+    const char * validOptions[] =
       { "--em-ior", "-k"
         , "--read-plan", "-x"
         , "--read-cdr-plan", "-d"
@@ -876,7 +876,7 @@ Starter::releaseArgs (int c, char ** v)
 bool 
 Starter::isPossibleOption(const char* opt)
 {
-  char * validOptions[] =
+  const char * validOptions[] =
         { "node-mgr", "n"
           , "exec-mgr", "e"
           , "process-ns", "p"

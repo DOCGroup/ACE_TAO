@@ -26,8 +26,8 @@ namespace CIAO
 {
   namespace Deployment
   {
-    namespace
-    {
+    //namespace
+    //{
       /**
        * @class Child_Handler
        * @brief The signal handler class for the SIGCHLD
@@ -54,7 +54,7 @@ namespace CIAO
           return 0;
         }
       };
-    }
+      //    }
   
   
     /**

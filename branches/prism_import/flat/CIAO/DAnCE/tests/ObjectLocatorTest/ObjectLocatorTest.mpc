@@ -22,5 +22,6 @@ project (ObjectLocatorTestClient): dance, taoclient, anytypecode, dance_logger {
 	Source_Files {
 		clt_main.cpp
 		DummyC.cpp
+   		DummyS.cpp
    	}
 }
