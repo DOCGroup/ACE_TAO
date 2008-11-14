@@ -27,6 +27,12 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.6 and ACE-5.6.7
 
 . Added Visual Studio 2010 (vc10) support
 
+. Added a new feature for the "Traditional Make" build facility to allow
+  building for multiple architectures out of a single source directory.
+  To use this facility, set the ARCH make variable. The ARCH value will be
+  used to add a subdirectory layer below the source directory where the
+  traditional .shobj, .obj, etc. directories will be placed.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.5 and ACE-5.6.6
 ====================================================
 
