@@ -153,7 +153,7 @@ Basic_Logging_Service::init (int argc, ACE_TCHAR *argv[])
 
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (this->service_name_);
+      name[0].id = CORBA::string_dup (this->service_name_.c_str ());
 
       this->naming_->rebind (name,
                              obj.in ());
@@ -215,7 +215,7 @@ Basic_Logging_Service::shutdown (void)
     {
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (this->service_name_);
+      name[0].id = CORBA::string_dup (this->service_name_.c_str ());
 
       this->naming_->unbind (name);
     }

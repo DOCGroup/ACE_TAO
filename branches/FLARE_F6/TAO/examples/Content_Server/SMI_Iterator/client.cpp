@@ -84,10 +84,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Get a Content_Iterator
-      const char *pathname = ACE_TEXT_ALWAYS_CHAR(argv[1]);
       Web_Server::Content_Iterator_var contents;
       Web_Server::Metadata_Type_var metadata;
-      factory->get_iterator (pathname,
+      factory->get_iterator (ACE_TEXT_ALWAYS_CHAR(argv[1]),
                              contents,
                              metadata);
 

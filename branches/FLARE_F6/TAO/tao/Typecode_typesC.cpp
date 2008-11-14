@@ -32,10 +32,6 @@
 #include "tao/Typecode_typesC.h"
 #include "tao/CDR.h"
 
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
 
@@ -59,12 +55,12 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, CORBA::TCKind & _tao_enumerator)
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<CORBA::TCKind> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 

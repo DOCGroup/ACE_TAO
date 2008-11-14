@@ -93,7 +93,7 @@ Consumer::push (const RtecEventComm::EventSet& events)
           Hello::ValueTypeData * test_data = 0;
           if (events[i].data.any_value >>= test_data)
             {
-              ACE_DEBUG ((LM_DEBUG, "Consumer (%P|%t): Received message <%d>: %s\n",
+              ACE_DEBUG ((LM_DEBUG, "Consumer (%P|%t): Received message <%d>: %C\n",
                           events[i].header.source, test_data->data ()));
               if (ACE_OS::strcmp (test_data->data (), "ACE/TAO/CIAO") != 0)
                 {
@@ -110,7 +110,7 @@ Consumer::push (const RtecEventComm::EventSet& events)
           const char* mystring = 0;
           if (events[i].data.any_value >>= mystring)
             {
-              ACE_DEBUG ((LM_DEBUG, "Consumer (%P|%t): Received message <%d>: %s\n",
+              ACE_DEBUG ((LM_DEBUG, "Consumer (%P|%t): Received message <%d>: %C\n",
                                     events[i].header.source, mystring));
               if (ACE_OS::strcmp (mystring, "ACE/TAO/CIAO") != 0)
                 {

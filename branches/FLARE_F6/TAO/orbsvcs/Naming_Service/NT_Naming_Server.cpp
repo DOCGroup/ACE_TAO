@@ -147,7 +147,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       default:
         // -i can also be given without a value - if so, it defaults
         // to defined value.
-        if (ACE_OS::strcmp (get_opt.argv ()[get_opt.opt_ind () - 1], "-i") == 0)
+        if (ACE_OS::strcmp (get_opt.argv ()[get_opt.opt_ind () - 1], ACE_TEXT ("-i")) == 0)
           {
             opt_install = 1;
             opt_startup = DEFAULT_SERVICE_INIT_STARTUP;
@@ -169,13 +169,13 @@ ConsoleHandler (DWORD /* ctrlType */)
 
 ACE_NT_SERVICE_DEFINE (service,
                        TAO_NT_Naming_Service,
-                       "TAO NT Naming Service");
+                       ACE_TEXT ("TAO NT Naming Service"));
 
 int
 Options::run (int argc, ACE_TCHAR* argv[])
 {
-  SERVICE::instance ()->name ("TAO_NT_Naming_Service",
-                              "TAO NT Naming Service");
+  SERVICE::instance ()->name (ACE_TEXT ("TAO_NT_Naming_Service"),
+                              ACE_TEXT ("TAO NT Naming Service"));
 
   this->parse_args (argc, argv);
 

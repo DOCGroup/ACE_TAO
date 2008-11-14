@@ -1,25 +1,22 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-## Avoid code duplication by determining the process type and
-## storing it as a string for use later.
-my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
-                                          'PerlACE::Process');
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-## First test that the -ORBSvcConfDirective works with good options.
-my $SV = $class->new('server');
-$SV->Spawn ();
-my $server = $SV->WaitKill(20);
-if ($server != 0) {
-  print STDERR "ERROR: server returned $server\n";
-  exit(1);
+$SV = $server->CreateProcess ("server");
+
+$test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
+
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    exit 1;
 }
 
-exit(0);
+exit 0;

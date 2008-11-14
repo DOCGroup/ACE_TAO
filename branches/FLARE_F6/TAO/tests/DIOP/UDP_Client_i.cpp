@@ -54,7 +54,7 @@ UDP_Client_i::svc (void)
                         i);
 
           ACE_DEBUG ((LM_DEBUG,
-                      "invoked %s %d, going to wait %d ms\n",
+                      "invoked %C %d, going to wait %d ms\n",
                       corba_client_name.in (),
                       i,
                       delay_));

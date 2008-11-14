@@ -36,14 +36,13 @@ public:
   Time_i (void);
   // Constructor
 
-  ~Time_i (void);
+  virtual ~Time_i (void);
   // Destructor
 
   virtual CORBA::Long current_time (void);
   // Return the current time/date on the server
 
   virtual void shutdown (void);
-
   // Shutdown the server.
 
   void orb (CORBA::ORB_ptr o);

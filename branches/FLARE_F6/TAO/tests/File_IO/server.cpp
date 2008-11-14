@@ -152,7 +152,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var file_system_ior =
         orb->object_to_string (file_system.in ());
 
-      ACE_DEBUG ((LM_DEBUG,"%s\n",
+      ACE_DEBUG ((LM_DEBUG,"%C\n",
                   file_system_ior.in ()));
 
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");

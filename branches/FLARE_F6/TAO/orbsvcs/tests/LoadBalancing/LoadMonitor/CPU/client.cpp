@@ -9,7 +9,7 @@ ACE_RCSID (CPU,
            client,
            "$Id$")
 
-const char * location = "MyLocation";
+const ACE_TCHAR *location = ACE_TEXT("MyLocation");
 
 const int MAX_RETRIES = 10;
 const CosLoadBalancing::LoadId LOAD_ID = CosLoadBalancing::LoadAverage;
@@ -25,7 +25,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'l':
-        location = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+        location = get_opts.opt_arg ();
         break;
 
       default:
@@ -77,7 +77,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CosLoadBalancing::Location the_location (1);
       the_location.length (1);
 
-      the_location[0].id = CORBA::string_dup (location);
+      the_location[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(location));
 
       // Attempt to get loads from the LoadManager.
       ACE_DEBUG ((LM_INFO,

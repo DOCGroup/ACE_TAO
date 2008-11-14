@@ -32,8 +32,8 @@ TAO_HTTP_Parser::~TAO_HTTP_Parser (void)
 bool
 TAO_HTTP_Parser::match_prefix (const char *nior_string) const
 {
-  const ACE_TCHAR *ior_string = ACE_TEXT_CHAR_TO_TCHAR (nior_string);
-  return (ACE_OS::strncmp (ior_string,
+  ACE_TString ior_string = ACE_TEXT_CHAR_TO_TCHAR (nior_string);
+  return (ACE_OS::strncmp (ior_string.c_str (),
                            ::file_prefix,
                            sizeof (::file_prefix) - 1) == 0);
 }
@@ -44,9 +44,9 @@ TAO_HTTP_Parser::parse_string (const char *nior,
 {
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.
-  const ACE_TCHAR *ior = ACE_TEXT_CHAR_TO_TCHAR (nior);
+  ACE_TString ior = ACE_TEXT_CHAR_TO_TCHAR (nior);
   const ACE_TCHAR *http_url =
-    ior + sizeof (::file_prefix) + 1;
+    ior.c_str () + sizeof (::file_prefix) + 1;
 
   ACE_TCHAR *hostname = 0;
   ACE_TCHAR *filename = 0;

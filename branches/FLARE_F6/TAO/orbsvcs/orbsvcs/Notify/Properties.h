@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotificationC.h"
+#include "orbsvcs/CosNotifyChannelAdminC.h"
 
 #include "tao/PortableServer/PortableServer.h"
 
@@ -108,6 +109,12 @@ public:
   // Set the default PC QoS Property.
   void default_proxy_consumer_qos_properties (const CosNotification::QoSProperties &pc_qos);
 
+  CosNotifyChannelAdmin::InterFilterGroupOperator defaultConsumerAdminFilterOp (void);
+  void defaultConsumerAdminFilterOp (CosNotifyChannelAdmin::InterFilterGroupOperator op);
+
+  CosNotifyChannelAdmin::InterFilterGroupOperator defaultSupplierAdminFilterOp (void);
+  void defaultSupplierAdminFilterOp (CosNotifyChannelAdmin::InterFilterGroupOperator op);
+
 protected:
   /// Object Factory
   TAO_Notify_Factory* factory_;
@@ -153,6 +160,12 @@ protected:
 
   /// The default PC QoS Properties.
   CosNotification::QoSProperties pc_qos_;
+  
+  /// The default consumer admin filter operator.
+  CosNotifyChannelAdmin::InterFilterGroupOperator defaultConsumerAdminFilterOp_;
+  
+  /// The default supplier admin filter operator.
+  CosNotifyChannelAdmin::InterFilterGroupOperator defaultSupplierAdminFilterOp_;
 };
 
 /**

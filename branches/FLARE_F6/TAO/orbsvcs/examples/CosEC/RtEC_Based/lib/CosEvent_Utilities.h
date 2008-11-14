@@ -48,9 +48,9 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
 
   virtual void init (PortableServer::POA_ptr thispoa,
                      PortableServer::POA_ptr poa,
-                     char *eventTypeIds,
-                     char *eventSourceIds,
-                     char *source_type_pairs);
+                     ACE_TCHAR *eventTypeIds,
+                     ACE_TCHAR *eventSourceIds,
+                     ACE_TCHAR *source_type_pairs);
   // This method creates a local scheduler, rtec and cosec.
   // The POA <poa> specified here is used when <activate> is called to
   // activate the contained servants.
@@ -99,14 +99,14 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
 
   void init_SupplierQOS (RtecBase::handle_t supp_handle,
                          ACE_SupplierQOS_Factory &supplier_qos,
-                         char *source_type_pairs);
+                         ACE_TCHAR *source_type_pairs);
   // Initialize the SupplierQOS Factory.
 
 
   void init_ConsumerQOS (RtecBase::handle_t cons_handle,
                          ACE_ConsumerQOS_Factory &consumer_qos,
-                         char *eventTypeIds,
-                         char *eventSourceIds);
+                         ACE_TCHAR *eventTypeIds,
+                         ACE_TCHAR *eventSourceIds);
   // Initialize the ConsumerQOS Factory.
 
   // = Protected Data members.
@@ -135,15 +135,15 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   ACE_SupplierQOS_Factory supplier_qos_;
   // The Supplier QOS.
 
-  char *eventTypeIds_;
+  ACE_TCHAR *eventTypeIds_;
   // The list of EventTypeIDs (for ConsumerQOS) seperated by spaces.
   // e.g. "1 2 3 4"
 
-  char *eventSourceIds_;
+  ACE_TCHAR *eventSourceIds_;
   // The list of EventSourceIDs (for ConsumerQOS) seperated by spaces.
   // e.g. "1 2 3 4"
 
-  char *source_type_pairs_;
+  ACE_TCHAR *source_type_pairs_;
   // The pairs of Source and EventType Ids (for the SupplierQOS).
   // e.g "1 4 2 5 3 6" where (1,4) (2,5) and (3,6) from source id,
   // event id pairs.

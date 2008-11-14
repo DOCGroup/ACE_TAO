@@ -2784,7 +2784,7 @@ TAO_ORB_Core::list_initial_references (void)
   for (InitRefMap::iterator j = this-> init_ref_map_.begin ();
        j != end;
        ++j, ++index)
-    list[index] = (*j).second.c_str ();
+    list[index] = (*j).first.c_str ();
 
   return list._retn ();
 }

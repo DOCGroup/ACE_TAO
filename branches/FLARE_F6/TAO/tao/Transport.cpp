@@ -952,7 +952,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[], ACE_Time_Value *max
         {
           ACE_DEBUG ((LM_DEBUG,
              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_helper, ")
-             ACE_TEXT ("error during send (errno: %d) - %m\n"),
+             ACE_TEXT ("error during send() (errno: %d) - %m\n"),
              this->id (), errno));
         }
 

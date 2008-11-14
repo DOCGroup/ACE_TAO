@@ -22,7 +22,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 // ****************************************************************
 
 EC_BCast::EC_BCast (void)
-  : bcast_address_ ("255.255.255.255"),
+  : bcast_address_ (ACE_TEXT("255.255.255.255")),
     bcast_port_ (12345)
 {
 }
@@ -48,7 +48,7 @@ EC_BCast::parse_args (int& argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strcmp (arg, ACE_TEXT("-address")) == 0)
         {
           arg_shifter.consume_arg ();
-          this->bcast_address_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
+          this->bcast_address_ = arg_shifter.get_current ();
         }
 
       arg_shifter.ignore_arg ();

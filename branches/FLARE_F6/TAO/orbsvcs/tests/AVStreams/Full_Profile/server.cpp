@@ -127,7 +127,7 @@ Server::init (int argc,
 
       CORBA::String_var s1 = sep_b_->add_fep( fep_b_obj_.in() );
 
-     ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %s\n", ACE_TEXT_CHAR_TO_TCHAR (s1.in()) ));
+     ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %C\n", s1.in() ));
 
 
       // Register the mmdevice with the naming service.

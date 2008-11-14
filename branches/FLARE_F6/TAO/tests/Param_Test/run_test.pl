@@ -9,14 +9,14 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
-$server = PerlACE::TestTarget::create_target(1) || die "Create server target failed\n";
-$client = PerlACE::TestTarget::create_target(2) || die "Create client target failed\n";
+my $server = PerlACE::TestTarget::create_target(1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target(2) || die "Create target 2 failed\n";
 
 $iorbase = "server.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
 my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($server_iorfile);
-$client->DeleteFile($client_iorfile);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 $invocation = "sii";
 $num = 5;
@@ -69,17 +69,12 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
 }
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "$debug -o server.ior");
-}
-else {
-    $SV = $server->CreateProcess ("server", "$debug -o $server_iorfile");
-}
+$SV = $server->CreateProcess ("server", "$debug -o $server_iorfile");
 $CL = $client->CreateProcess ("client");
 
 foreach $type (@types) {
-    $server->DeleteFile($server_iorfile); # Ignore errors
-    $client->DeleteFile($client_iorfile);
+    $server->DeleteFile($iorbase); # Ignore errors
+    $client->DeleteFile($iorbase);
 
     print STDERR "==== Testing $type === wait....\n";
 
@@ -88,22 +83,20 @@ foreach $type (@types) {
     if ($server_status != 0) {
         print STDERR "ERROR: server returned $server_status\n";
         $status = 1;
-    }
-    else
-    {
-        if ($server->WaitForFileTimed ($server_iorfile,
+    } else {
+        if ($server->WaitForFileTimed ($iorbase,
                                        $server->ProcessStartWaitInterval()) == -1) {
             print STDERR "ERROR: cannot find file <$server_iorfile>\n";
             $SV->Kill ();
             exit 1;
         }
 
-        if ($server->GetFile ($server_iorfile, $iorbase) == -1) {
+        if ($server->GetFile ($iorbase) == -1) {
             print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
             $SV->Kill (); $SV->TimedWait (1);
             exit 1;
         }
-        if ($client->PutFile ($iorbase, $client_iorfile) == -1) {
+        if ($client->PutFile ($iorbase) == -1) {
             print STDERR "ERROR: cannot set file <$client_iorfile>\n";
             $SV->Kill (); $SV->TimedWait (1);
             exit 1;
@@ -127,12 +120,12 @@ foreach $type (@types) {
         $server->GetStderrLog();
     }
 
-    $server->DeleteFile($server_iorfile);
-    $client->DeleteFile($client_iorfile);
+    $server->DeleteFile($iorbase);
+    $client->DeleteFile($iorbase);
 
     print STDERR "==== Test for $type finished ===\n";
 }
 
-$server->DeleteFile($server_iorfile);
+$server->DeleteFile($iorbase);
 
 exit $status;

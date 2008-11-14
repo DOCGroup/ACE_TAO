@@ -31,7 +31,7 @@ void
 Receiver_i::message (const char *msg)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ": %s\n",
+              ACE_TEXT (": %C\n"),
               msg));
 }
 

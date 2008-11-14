@@ -47,6 +47,13 @@ TAO_Container_i::destroy (void)
 void
 TAO_Container_i::destroy_i (void)
 {
+  this->destroy_references_i();
+  this->destroy_defintions_i();
+}
+
+void
+TAO_Container_i::destroy_references_i (void)
+{
   int index = 0;
   int status;
   ACE_TString section_name;
@@ -118,8 +125,14 @@ TAO_Container_i::destroy_i (void)
                                               "refs",
                                               1);
     }
+}
 
-  // Destroy definitions.
+void
+TAO_Container_i::destroy_defintions_i (void)
+{
+  int index = 0;
+  int status;
+  ACE_TString section_name;
 
   ACE_Configuration_Section_Key defns_key;
   status =

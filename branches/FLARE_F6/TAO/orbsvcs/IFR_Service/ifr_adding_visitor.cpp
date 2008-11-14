@@ -1544,7 +1544,7 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
 
       if (CORBA::is_nil (prev_def.in ()))
         {
-          ifr_adding_visitor_structure visitor (node, false);
+          ifr_adding_visitor_structure visitor (node);
           int retval = visitor.visit_structure (node);
 
           if (retval == 0)
@@ -1570,7 +1570,7 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
               // declaration - just visit the scope to populate
               // the IFR entry while keeping the same section key
               // so as not to invalidate existing references.
-              ifr_adding_visitor_structure visitor (node, false);
+              ifr_adding_visitor_structure visitor (node);
               int retval = visitor.visit_structure (node);
 
               if (retval == 0)
@@ -1913,7 +1913,7 @@ ifr_adding_visitor::visit_union (AST_Union *node)
 
       if (CORBA::is_nil (prev_def.in ()))
         {
-          ifr_adding_visitor_union visitor (node, 0);
+          ifr_adding_visitor_union visitor (node);
           int retval = visitor.visit_union (node);
 
           if (retval == 0)
@@ -1939,7 +1939,7 @@ ifr_adding_visitor::visit_union (AST_Union *node)
               // declaration - just visit the scope to populate
               // the IFR entry while keeping the same section key
               // so as not to invalidate existing references.
-              ifr_adding_visitor_union visitor (node, false);
+              ifr_adding_visitor_union visitor (node);
               int retval = visitor.visit_union (node);
 
               if (retval == 0)

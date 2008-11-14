@@ -12,14 +12,12 @@ Time_i::Time_i (void)
 }
 
 // Destructor
-
 Time_i::~Time_i (void)
 {
   // no-op
 }
 
 // Set the ORB pointer.
-
 void
 Time_i::orb (CORBA::ORB_ptr o)
 {
@@ -27,7 +25,6 @@ Time_i::orb (CORBA::ORB_ptr o)
 }
 
 // Return the current date/time on the server.
-
 CORBA::Long
 Time_i::current_time (void)
 {
@@ -35,14 +32,12 @@ Time_i::current_time (void)
 }
 
 // Shutdown.
-
 void
-Time_i::shutdown ( )
+Time_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Time_i is shutting down\n"));
+              ACE_TEXT ("Time_i is shutting down\n")));
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
 }
-

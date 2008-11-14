@@ -30,57 +30,57 @@ class TAO249_ServerRequest_Interceptor2
 {
 public:
 
-/// Constructor.
-TAO249_ServerRequest_Interceptor2 (void);
+  /// Constructor.
+  TAO249_ServerRequest_Interceptor2 (void);
 
-/// Destructor.
-~TAO249_ServerRequest_Interceptor2 (void);
+  /// Destructor.
+  ~TAO249_ServerRequest_Interceptor2 (void);
 
-/**
- * @name Methods Required by the Server Request Interceptor
- * Interface
- *
- * These are methods that must be implemented since they are pure
- * virtual in the abstract base class.  They are the canonical
- * methods required for all server request interceptors.
- */
-//@{
-/// Return the name of this ServerRequestinterceptor.
-virtual char * name ();
+  /**
+   * @name Methods Required by the Server Request Interceptor
+   * Interface
+   *
+   * These are methods that must be implemented since they are pure
+   * virtual in the abstract base class.  They are the canonical
+   * methods required for all server request interceptors.
+   */
+  //@{
+  /// Return the name of this ServerRequestinterceptor.
+  virtual char * name ();
 
-virtual void destroy ();
+  virtual void destroy ();
 
-virtual void receive_request_service_contexts (
-  PortableInterceptor::ServerRequestInfo_ptr ri
-  );
-
-virtual void receive_request (
+  virtual void receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr ri
     );
 
-virtual void send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    );
+  virtual void receive_request (
+      PortableInterceptor::ServerRequestInfo_ptr ri
+      );
 
-virtual void send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    );
+  virtual void send_reply (
+      PortableInterceptor::ServerRequestInfo_ptr ri
+      );
 
-virtual void send_other (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    );
-//@}
+  virtual void send_exception (
+      PortableInterceptor::ServerRequestInfo_ptr ri
+      );
 
-static CORBA::Object_var server_iogr_;
+  virtual void send_other (
+      PortableInterceptor::ServerRequestInfo_ptr ri
+      );
+  //@}
+
+  CORBA::Object_var server_iogr_;
 
 protected:
   TimeBase::TimeT get_now (void);
 
 private:
 
-CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_;
 
-CORBA::Boolean expired_;
+  CORBA::Boolean expired_;
 };
 
 #endif  /* TAO249_SERVER_REQUEST_INTERCEPTOR2_H */

@@ -133,8 +133,7 @@ TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec)
   // ACE emulation of U Long Long (for platforms that don't have one)
   // does not define postfix operators
   rec.id = ++maxid_;
-
-  ORBSVCS_Time::Time_Value_to_TimeT(rec.time,ACE_OS::gettimeofday());
+  rec.time = ORBSVCS_Time::to_Absolute_TimeT (ACE_OS::gettimeofday ());
 
   // First, bind the id to the LogRecord in the hash_map
   if (this->rec_map_.bind (rec.id, rec) != 0)
@@ -569,21 +568,11 @@ TAO_Hash_LogRecordStore::remove_old_records (void)
     return 0;
   }
 
-  TimeBase::TimeT purge_time;
-  ORBSVCS_Time::Time_Value_to_TimeT (purge_time,
-                                     (ACE_OS::gettimeofday() - ACE_Time_Value(this->max_record_life_)));
+  TimeBase::TimeT purge_time (ORBSVCS_Time::to_Absolute_TimeT ((ACE_OS::gettimeofday () - ACE_Time_Value(this->max_record_life_))));
 
-  CORBA::ULongLong p_time = (CORBA::ULongLong) purge_time;
-
-  static char out[256] = "";
-
-  double temp1 =
-    static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER (p_time));
-
-  ACE_OS::sprintf (out, "time < %.0f", temp1);
-
-  // Use an Interpreter to build an expression tree.
-  TAO_Log_Constraint_Interpreter interpreter (out);
+  // As there is no separate timestamp index, we must iterate through
+  // the entire map.  We can't be tempted to think timestamps will be
+  // monotonically increasing with record id.
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
@@ -593,11 +582,8 @@ TAO_Hash_LogRecordStore::remove_old_records (void)
 
   while (iter != iter_end)
     {
-      // Use an evaluator.
-      TAO_Log_Constraint_Visitor evaluator (iter->item ());
-
       // Does it match the constraint?
-      if (interpreter.evaluate (evaluator) == 1)
+      if (iter->item().time < purge_time)
         {
           this->remove_i (iter++);
           ++count;

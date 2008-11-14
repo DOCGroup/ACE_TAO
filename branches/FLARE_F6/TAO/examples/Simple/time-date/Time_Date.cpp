@@ -36,23 +36,19 @@ int
 DLL_ORB::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\n\trunning ORB event loop (%t)\n\n"));
+              ACE_TEXT ("\n\tRunning ORB event loop (%t)\n\n")));
 
   try
     {
       // Run the ORB event loop in its own thread.
       this->orb_->run ();
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (const CORBA::Exception& ex)
     {
-      sysex._tao_print_exception ("System Exception");
+      ex._tao_print_exception ("Exception in DLL_ORB::svc");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
-    {
-      userex._tao_print_exception ("User Exception");
-      return -1;
-    }
+
   return 0;
 }
 
@@ -62,21 +58,20 @@ DLL_ORB::init (int argc, ACE_TCHAR *argv[])
   // Prevent TAO from registering with the ACE_Object_Manager so
   // that it can be dynamically unloaded successfully.
 
-   int register_with_object_manager = 0;
-   if (TAO_Singleton_Manager::instance ()->init (register_with_object_manager) == -1)
-     {
-//        ACE_ERROR_RETURN ((LM_ERROR,
-//                          "%p\n",
-//                          "Unable to pre-initialize ORB"),
+  int register_with_object_manager = 0;
+  if (TAO_Singleton_Manager::instance ()->init (register_with_object_manager) == -1)
+    {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          ACE_TEXT ("%p\n"),
+//                          ACE_TEXT ("Unable to pre-initialize ORB")),
 //                         -1);
-     }
+    }
 
   try
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\n\tInitialize ORB (%t)\n\n"));
+                  ACE_TEXT ("\n\tInitialize ORB (%t)\n\n")));
 
-      // Initialize the ORB.
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
@@ -90,7 +85,7 @@ DLL_ORB::init (int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           1);
 
       this->poa_ =
@@ -120,14 +115,23 @@ DLL_ORB::init (int argc, ACE_TCHAR *argv[])
 int
 DLL_ORB::fini (void)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("\n\tFinalizing the service (%t)\n\n")));
   return TAO_Singleton_Manager::instance ()->fini ();
   // return 0;
+}
+
+Time_Date_Servant::Time_Date_Servant (void)
+  : servant_ (0)
+  , ior_output_file_ (0)
+  , orb_ ("")
+{
 }
 
 int
 Time_Date_Servant::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dn:o:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("dn:o:"));
   int c = 0;
 
   this->orb_ = "ORB";
@@ -139,11 +143,7 @@ Time_Date_Servant::parse_args (int argc, ACE_TCHAR *argv[])
         TAO_debug_level++;
         break;
       case 'o':  // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
-        if (this->ior_output_file_ == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()), -1);
+        this->ior_output_file_ = get_opts.opt_arg ();
         break;
         // Find the ORB in the Service Repository.
       case 'n':
@@ -152,10 +152,10 @@ Time_Date_Servant::parse_args (int argc, ACE_TCHAR *argv[])
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-d]"
-                           " [-o] <ior_output_file>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s")
+                           ACE_TEXT (" [-d]")
+                           ACE_TEXT (" [-o] <ior_output_file>")
+                           ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
       }
@@ -170,21 +170,25 @@ Time_Date_Servant::init (int argc, ACE_TCHAR *argv[])
   try
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\n\tTime_Date servant\n\n"));
+                  ACE_TEXT ("\n\tTime_Date servant\n\n")));
 
       this->parse_args (argc, argv);
 
       DLL_ORB *orb =
-        ACE_Dynamic_Service<DLL_ORB>::instance (this->orb_);
+        ACE_Dynamic_Service<DLL_ORB>::instance (this->orb_.c_str ());
 
       if (orb == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "can't find %C in the Service Repository\n",
-                           this->orb_),
+                           ACE_TEXT ("can't find %C in the Service Repository\n"),
+                           this->orb_.c_str ()),
                           -1);
 
-      Time_Date_i * servant = new Time_Date_i;
-      PortableServer::ServantBase_var safe_servant = servant;
+      Time_Date_i * servant = 0;
+      ACE_NEW_THROW_EX (servant,
+                        Time_Date_i,
+                        CORBA::NO_MEMORY ());
+      PortableServer::ServantBase_var safe_servant (servant);
+      servant->orb (orb->orb_.in ());
 
       CORBA::Object_var poa_object =
         orb->orb_->resolve_initial_references("RootPOA");
@@ -205,12 +209,18 @@ Time_Date_Servant::init (int argc, ACE_TCHAR *argv[])
 
       if (this->ior_output_file_)
         {
-          ACE_OS::fprintf (this->ior_output_file_,
+          FILE *output_file = ACE_OS::fopen (this->ior_output_file_, "w");
+          if (output_file == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Unable to open %s for writing (%p)\n"),
+                               this->ior_output_file_,
+                               ACE_TEXT ("fopen")),
+                              -1);
+          ACE_OS::fprintf (output_file,
                            "%s",
                            str.in ());
-          ACE_OS::fclose (this->ior_output_file_);
+          ACE_OS::fclose (output_file);
         }
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -225,4 +235,3 @@ Time_Date_Servant::init (int argc, ACE_TCHAR *argv[])
 // Time_Date service.
 ACE_SVC_FACTORY_DEFINE (DLL_ORB)
 ACE_SVC_FACTORY_DEFINE (Time_Date_Servant)
-

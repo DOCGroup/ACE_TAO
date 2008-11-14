@@ -25,9 +25,8 @@ Echo_Client_i::run (const char *name,
                     ACE_TCHAR *argv[])
 {
   // Initialize the client.
-  if (client.init (name,argc, argv) == -1)
+  if (client_.init (name, argc, argv) == -1)
     return -1;
-
 
   try
     {
@@ -37,22 +36,20 @@ Echo_Client_i::run (const char *name,
 
           // Get the input message which has to be displayed.
           ACE_DEBUG ((LM_DEBUG,
-                      "ECHO? "));
+                      ACE_TEXT ("ECHO? ")));
 
-          if (ACE_OS::fgets (buf,sizeof buf, stdin) == 0)
+          if (ACE_OS::fgets (buf, sizeof buf, stdin) == 0)
             break;
 
-          CORBA::String_var s = client->echo_string (buf);
+          CORBA::String_var s = client_->echo_string (buf);
 
           ACE_DEBUG ((LM_DEBUG,
-                      "\nString echoed by client \n%s\n",
+                      ACE_TEXT ("\nString echoed by client \n%C\n"),
                       s.in ()));
         }
 
-      if (client.shutdown () == 1)
-        client->shutdown ();
-
-
+      if (client_.do_shutdown () == 1)
+        client_->shutdown ();
     }
   catch (const CORBA::Exception& ex)
     {
@@ -62,4 +59,3 @@ Echo_Client_i::run (const char *name,
 
   return 0;
 }
-

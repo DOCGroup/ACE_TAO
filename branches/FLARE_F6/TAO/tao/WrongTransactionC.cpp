@@ -37,10 +37,6 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
 

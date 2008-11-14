@@ -21,7 +21,7 @@ const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 CORBA::Float reject_threshold = 0;
 CORBA::Float critical_threshold = 0;
 CORBA::Float dampening = 0;
-const char * strategy = "Random";
+const ACE_TCHAR *strategy = ACE_TEXT("Random");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -37,22 +37,22 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 's':
-        strategy = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+        strategy = get_opts.opt_arg ();
         break;
 
       case 'r':
         reject_threshold =
-          static_cast<CORBA::Float> (::atof (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ())));
+          static_cast<CORBA::Float> (ACE_OS::atof (get_opts.opt_arg ()));
         break;
 
       case 'c':
         critical_threshold =
-          static_cast<CORBA::Float> (::atof (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ())));
+          static_cast<CORBA::Float> (ACE_OS::atof (get_opts.opt_arg ()));
         break;
 
       case 'd':
         dampening =
-          static_cast<CORBA::Float> (::atof (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ())));
+          static_cast<CORBA::Float> (ACE_OS::atof (get_opts.opt_arg ()));
         break;
 
       case '?':
@@ -132,9 +132,9 @@ join_object_group (CORBA::ORB_ptr orb,
 
           CosLoadBalancing::StrategyInfo strategy_info;
 
-          strategy_info.name = CORBA::string_dup (strategy);
+          strategy_info.name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(strategy));
 
-          if (ACE_OS::strcasecmp (strategy, "LeastLoaded") == 0
+          if (ACE_OS::strcasecmp (strategy, ACE_TEXT("LeastLoaded")) == 0
               && (reject_threshold != 0
                   || critical_threshold != 0
                   || dampening != 0))

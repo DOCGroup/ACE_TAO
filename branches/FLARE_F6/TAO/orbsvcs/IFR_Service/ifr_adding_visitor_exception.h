@@ -63,13 +63,15 @@ public:
   // Lets the visitor one level above acess this value.
 
 private:
+  int add_members (AST_Exception *node, CORBA::ExceptionDef_ptr except_def);
+  // Common code called whether we are creating a new exception
+  // or filling out a forward declaration.
+
+private:
   CORBA::StructMemberSeq members_;
   // Holder for the member list passed to create_struct() or
   // create_exception().
 
-  ACE_Unbounded_Queue<CORBA::Contained_ptr> move_queue_;
-  // IR objects that must be moved into the scope (struct or
-  // exception) where they were declared in the IDL file.
 };
 
 #endif /* TAO_IFR_ADDING_VISITOR_EXCEPTION_H */

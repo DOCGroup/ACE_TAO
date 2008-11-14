@@ -278,7 +278,7 @@ namespace CORBA
             TAO_Abstract_ServantBase *servant = 0,
             TAO_ORB_Core *orb_core = 0);
 
-    Object (IOP::IOR *ior, TAO_ORB_Core *orb_core = 0);
+    Object (IOP::IOR *ior, TAO_ORB_Core *orb_core);
 
     /// Get the underlying stub object.
     virtual TAO_Stub *_stubobj (void) const;

@@ -4,6 +4,7 @@
 #include "PushSupplier.h"
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_stdlib.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
 
@@ -43,7 +44,7 @@ get_event_channel(int argc, ACE_TCHAR** argv)
         use_gateway = 0;
         break;
       case 't':
-        timer_interval.set(atof(ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ())));
+        timer_interval.set(ACE_OS::atof(get_opt.opt_arg ()));
       case 'h':
       case '?':
         ACE_DEBUG((LM_DEBUG,

@@ -437,8 +437,8 @@ TAO_Naming_Context::to_url (const char * addr,
       *dest = '%'; ++dest;
 
       // Append the hexadecimal representation of the character.
-      *dest = ACE::nibble2hex ((*i) >> 4); ++dest;
-      *dest = ACE::nibble2hex (*i); ++dest;
+      *dest = static_cast<char> (ACE::nibble2hex ((*i) >> 4)); ++dest;
+      *dest = static_cast<char> (ACE::nibble2hex (*i)); ++dest;
     }
 
   // Terminate the string

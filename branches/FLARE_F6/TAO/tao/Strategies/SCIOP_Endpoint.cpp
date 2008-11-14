@@ -313,8 +313,8 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
 
       if (TAO_debug_level > 3)
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Adding path [%s] "
-                    " as preferred path for [%s] \n",
+                    "(%P|%t) Adding path [%C] "
+                    " as preferred path for [%C] \n",
                     path.c_str (), this->host_.in ()));
 
       pos = tmp.find (latest->host_.in (),

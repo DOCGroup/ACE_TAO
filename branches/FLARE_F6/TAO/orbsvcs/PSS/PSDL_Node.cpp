@@ -138,10 +138,6 @@ TAO_PSDL_Specification::accept (TAO_PSDL_Node_Visitor *visitor)
   *ps_sh << "#pragma warning(pop)"; ps_sh->nl ();
   *ps_sh << "#endif /* _MSC_VER */"; ps_sh->nl ();
 
-  *ps_sh << "#if defined (__BORLANDC__)"; ps_sh->nl ();
-  *ps_sh << "#pragma option pop"; ps_sh->nl ();
-  *ps_sh << "#endif /* __BORLANDC__ */"; ps_sh->nl ();
-
   ps_sh->nl ();
 
   *ps_sh << "#endif /* ifndef */"; ps_sh->nl ();

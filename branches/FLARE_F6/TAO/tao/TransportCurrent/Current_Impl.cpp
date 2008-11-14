@@ -52,6 +52,8 @@ namespace TAO
       return topguard->get ();
     }
 
+    static const TAO::Transport::Stats dummy_transport_stats;
+
     /// Obtains the current transport's stats
     const TAO::Transport::Stats*
     Current_Impl::transport_stats (void) const
@@ -60,7 +62,7 @@ namespace TAO
 
       const TAO_Transport* t = this->transport ();
 
-      return (t==0 || t->stats () == 0) ? &dummy : t->stats ();
+      return (t==0 || t->stats () == 0) ? &dummy_transport_stats : t->stats ();
     }
 
     CORBA::Long Current_Impl::id (void)

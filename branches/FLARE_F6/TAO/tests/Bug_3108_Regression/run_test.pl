@@ -6,7 +6,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
 $status = 0;
@@ -19,22 +18,20 @@ foreach $i (@ARGV) {
         $debug_level = '10';
         $debug_opts_sv = '-ORBLogFile server.log';
         $debug_opts_cl = '-ORBLogFile client.log';
-    } 
+    }
 }
 
-my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
+my $target1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $target2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 $iorbase = "server.ior";
-$iorfile = $target->LocalFile ("$iorbase");
-$target->DeleteFile($iorfile);
+$iorfile1 = $target1->LocalFile ("$iorbase");
+$iorfile2 = $target2->LocalFile ("$iorbase");
+$target1->DeleteFile($iorfile);
+$target2->DeleteFile($iorfile);
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-ORBDebuglevel $debug_level -o $iorbase");
-}
-else {
-    $SV = $target->CreateProcess ("server", "$debug_opts_sv -ORBdebuglevel $debug_level -o $iorfile");
-}
-$CL = $target->CreateProcess ("client", "$debug_opts_cl -ORBDebugLevel $debug_level -k file://$iorfile");
+$SV = $target1->CreateProcess ("server", "$debug_opts_sv -ORBdebuglevel $debug_level -o $iorfile1");
+$CL = $target2->CreateProcess ("client", "$debug_opts_cl -ORBDebugLevel $debug_level -k file://$iorfile2");
 
 $server = $SV->Spawn ();
 
@@ -43,12 +40,12 @@ if ($server != 0) {
     exit 1;
 }
 
-if ($target->WaitForFileTimed ($iorfile,
+if ($target1->WaitForFileTimed ($iorbase,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-} 
+}
 
 $client = $CL->SpawnWaitKill (300);
 
@@ -64,9 +61,10 @@ if ($server != 0) {
     $status = 1;
 }
 
-$target->GetStderrLog();
+$target1->GetStderrLog();
+$target2->GetStderrLog();
 
-#unlink $iorfile;
-$target->DeleteFile($iorfile);
+$target1->DeleteFile($iorfile);
+$target2->DeleteFile($iorfile);
 
 exit $status;

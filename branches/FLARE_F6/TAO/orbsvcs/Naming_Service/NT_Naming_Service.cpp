@@ -11,8 +11,8 @@
 #include "ace/ARGV.h"
 
 #define REGISTRY_KEY_ROOT HKEY_LOCAL_MACHINE
-#define TAO_REGISTRY_SUBKEY "SOFTWARE\\ACE\\TAO"
-#define TAO_NAMING_SERVICE_OPTS_NAME "TaoNamingServiceOptions"
+#define TAO_REGISTRY_SUBKEY ACE_TEXT ("SOFTWARE\\ACE\\TAO")
+#define TAO_NAMING_SERVICE_OPTS_NAME ACE_TEXT ("TaoNamingServiceOptions")
 #define TAO_SERVICE_PARAM_COUNT "TaoServiceParameterCount"
 
 AutoFinalizer::AutoFinalizer (TAO_NT_Naming_Service &service)
@@ -131,7 +131,7 @@ TAO_NT_Naming_Service::init (int argc,
       // case we use a 'destructive' args list processor - this way we
       // maintain the correct argv and argc for memory freeing
       // operations in the destructor.
-      argv_save_ = (char **) ACE_OS::malloc (sizeof (char *) * (argc + args.argc ()));
+      argv_save_ = (ACE_TCHAR **) ACE_OS::malloc (sizeof (ACE_TCHAR *) * (argc + args.argc ()));
 
       // Copy the values into the internal args buffer.
       int i;

@@ -53,12 +53,10 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         **argv = argcon.get_TCHAR_argv ();
       const ACE_TCHAR
         *const pname = argv[0];
-      const char
-        *nameService = 0;
-      char
-        kindsep= '.',
-        ctxsep[]= "/",
-        *name = 0;
+      const ACE_TCHAR *nameService = 0;
+      ACE_TCHAR kindsep = ACE_TEXT('.');
+      ACE_TCHAR ctxsep[] = ACE_TEXT("/");
+      ACE_TCHAR *name = 0;
 
       if (0 < argc)
         {
@@ -83,7 +81,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                           failed= true;
                         }
                       else
-                        nameService = ACE_TEXT_ALWAYS_CHAR (*argv);
+                        nameService = *argv;
                     }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT("--quiet")))
@@ -105,7 +103,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       failed = true;
                     }
                   else
-                    name = ACE_TEXT_ALWAYS_CHAR (*++argv);
+                    name = *++argv;
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ctxsep")))
                 {
@@ -122,7 +120,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       failed = true;
                     }
                   else
-                    ctxsep[0] = ACE_TEXT_ALWAYS_CHAR (*argv)[0];
+                    ctxsep[0] = (*argv)[0];
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--kindsep")))
                 {
@@ -139,7 +137,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       failed = true;
                     }
                   else
-                    kindsep = ACE_TEXT_ALWAYS_CHAR (*argv)[0];
+                    kindsep = (*argv)[0];
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ior")))
                 {
@@ -230,18 +228,18 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         }
 
       // Assemble the name from the user string given
-      char *cp;
+      ACE_TCHAR *cp;
       while (0 != (cp = ACE_OS::strtok (name, ctxsep)))
         {
           const int index= the_name.length();
           the_name.length (index+1);
-          char *kind = (char *)ACE_OS::strchr (cp, kindsep);
+          ACE_TCHAR *kind = const_cast<ACE_TCHAR*> (ACE_OS::strchr (cp, kindsep));
           if (kind)
             {
               *kind = '\0';
-              the_name[index].kind= CORBA::string_dup (++kind);
+              the_name[index].kind= CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(++kind));
             }
-          the_name[index].id = CORBA::string_dup (cp);
+          the_name[index].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(cp));
           name = 0; // way strtok works
         }
 

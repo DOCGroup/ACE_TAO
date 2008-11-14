@@ -127,8 +127,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
         {
-          ifr_adding_visitor_structure visitor (node, true);
-
+          ifr_adding_visitor_structure visitor (node);
           int retval = visitor.visit_structure (node);
 
           if (retval == 0)
@@ -136,15 +135,6 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
               // Get the result of the visit.
               this->ir_current_ =
                 CORBA::IDLType::_duplicate (visitor.ir_current ());
-
-              CORBA::Contained_ptr tmp =
-                CORBA::Contained::_narrow (visitor.ir_current ());
-
-              // Since the enclosing ExceptionDef hasn't been created
-              // yet, we don't have a scope, so this nested StructDef
-              // (which was created at global scope) goes on the
-              // queue to be moved later.
-              this->move_queue_.enqueue_tail (tmp);
             }
 
           return retval;
@@ -184,98 +174,117 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
 {
   try
     {
+      CORBA::ExceptionDef_var new_def;
       CORBA::Contained_var prev_def =
         be_global->repository ()->lookup_id (node->repoID ());
 
-      if (!CORBA::is_nil (prev_def.in ()))
+      if (CORBA::is_nil (prev_def.in ()))
         {
-          // If we and our enclosing module are both already in the
-          // repository, we are probably processing the same IDL file
-          // a second time. If it is just a name clash, there is no
-          // way to detect it.
-          if (this->in_reopened_)
+          CORBA::StructMemberSeq dummyMembers;
+          dummyMembers.length (0);
+          CORBA::Container_ptr current_scope =
+            CORBA::Container::_nil ();
+
+          if (be_global->ifr_scopes ().top (current_scope) != 0)
             {
-              return 0;
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
+                  ACE_TEXT ("visit_exception -")
+                  ACE_TEXT (" scope stack is empty\n")
+                ),
+                -1
+              );
             }
 
-          // If the line below is true, we are clobbering a previous
-          // entry (from another IDL file) of another type. In that
-          // case we do what other ORB vendors do, and destroy the
-          // original entry, create the new one, and let the user beware.
-          if (!node->ifr_added ())
-            {
-              prev_def->destroy ();
+          new_def =
+            current_scope->create_exception (node->repoID (),
+                                            node->local_name ()->get_string (),
+                                            node->version (),
+                                            dummyMembers);
 
-              // This call will create a new ExceptionDef entry.
-              return this->visit_exception (node);
+          if (be_global->ifr_scopes ().push (new_def.in ()) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
+                  ACE_TEXT ("visit_exception -")
+                  ACE_TEXT (" scope push failed\n")
+                ),
+                -1
+              );
             }
-          else
+
+          // Then add the real exception members.
+          if (this->add_members (node, new_def.in ()) == -1)
             {
-              // The node is being referenced in an operation, no action.
-              return 0;
+              ACE_ERROR_RETURN ((
+                LM_ERROR,
+                ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
+                ACE_TEXT ("visit_exception -")
+                ACE_TEXT (" visit_scope failed\n")),
+                -1);
             }
-        }
 
-      if (this->visit_scope (node) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
-              ACE_TEXT ("visit_exception -")
-              ACE_TEXT (" visit_scope failed\n")
-            ),
-            -1
-          );
-        }
+          CORBA::Container_ptr used_scope =
+            CORBA::Container::_nil ();
 
-      CORBA::Container_ptr current_scope =
-        CORBA::Container::_nil ();
-
-      if (be_global->ifr_scopes ().top (current_scope) != 0)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
-              ACE_TEXT ("visit_exception -")
-              ACE_TEXT (" scope stack is empty\n")
-            ),
-            -1
-          );
-        }
-
-      CORBA::ExceptionDef_var new_def =
-        current_scope->create_exception (node->repoID (),
-                                         node->local_name ()->get_string (),
-                                         node->version (),
-                                         this->members_);
-
-
-      size_t size = this->move_queue_.size ();
-
-      if (size > 0)
-        {
-          CORBA::Contained_var traveller;
-
-          CORBA::Container_var new_container =
-            CORBA::Container::_narrow (new_def.in ());
-
-          for (size_t i = 0; i < size; ++i)
+          // Pop the new IR object back off the scope stack.
+          if (be_global->ifr_scopes ().pop (used_scope) != 0)
             {
-              this->move_queue_.dequeue_head (traveller);
-
-              CORBA::String_var name =
-                traveller->name ();
-
-              CORBA::String_var version =
-                traveller->version ();
-
-              traveller->move (new_container.in (),
-                               name.in (),
-                               version.in ());
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
+                  ACE_TEXT ("visit_exception -")
+                  ACE_TEXT (" scope pop failed\n")
+                ),
+                -1
+              );
             }
         }
+      else
+      {
+          new_def = CORBA::ExceptionDef::_narrow (prev_def.in ());
 
-      node->ifr_added (true);
+          if (be_global->ifr_scopes ().push (new_def.in ()) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
+                  ACE_TEXT ("visit_exception -")
+                  ACE_TEXT (" scope push failed\n")
+                ),
+                -1
+              );
+            }
+
+          // Then add the real exception members.
+          if (this->add_members (node, new_def.in ()) == -1)
+            {
+              ACE_ERROR_RETURN ((
+                LM_ERROR,
+                ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
+                ACE_TEXT ("visit_exception -")
+                ACE_TEXT (" visit_scope failed\n")),
+                -1);
+            }
+
+          CORBA::Container_ptr used_scope =
+            CORBA::Container::_nil ();
+
+          // Pop the new IR object back off the scope stack.
+          if (be_global->ifr_scopes ().pop (used_scope) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
+                  ACE_TEXT ("visit_exception -")
+                  ACE_TEXT (" scope pop failed\n")
+                ),
+                -1
+              );
+            }
+        }
     }
   catch (const CORBA::Exception& ex)
     {
@@ -327,11 +336,6 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
                                           members
                                         );
 
-          CORBA::Contained_ptr tmp =
-            CORBA::Contained::_narrow (this->ir_current_.in ());
-
-          this->move_queue_.enqueue_tail (tmp);
-
           node->ifr_added (true);
         }
       else
@@ -376,8 +380,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
         {
-          ifr_adding_visitor_union visitor (node, true);
-
+          ifr_adding_visitor_union visitor (node);
           int retval = visitor.visit_union (node);
 
           if (retval == 0)
@@ -385,15 +388,6 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
               // Get the result of the visit.
               this->ir_current_ =
                 CORBA::IDLType::_duplicate (visitor.ir_current ());
-
-              CORBA::Contained_ptr tmp =
-                CORBA::Contained::_narrow (visitor.ir_current ());
-
-              // Since the enclosing ExceptionDef hasn't been created
-              // yet, we don't have a scope, so this nested UnionDef
-              // (which was created at global scope) goes on the
-              // queue to be moved later.
-              this->move_queue_.enqueue_tail (tmp);
             }
 
           return retval;
@@ -432,4 +426,26 @@ CORBA::IDLType_ptr
 ifr_adding_visitor_exception::ir_current (void) const
 {
   return this->ir_current_.in ();
+}
+
+int
+ifr_adding_visitor_exception::add_members (AST_Exception *node,
+                                           CORBA::ExceptionDef_ptr except_def)
+{
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
+          ACE_TEXT ("visit_exception -")
+          ACE_TEXT (" visit_scope failed\n")
+        ),
+        -1
+      );
+    }
+
+  except_def->members (this->members_);
+
+  node->ifr_added (true);
+  return 0;
 }

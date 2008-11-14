@@ -41,7 +41,7 @@ public:
   Broadcaster_i (void);
   // Constructor.
 
-  ~Broadcaster_i (void);
+  virtual ~Broadcaster_i (void);
   // Destructor.
 
   virtual void add (Receiver_ptr receiver,
@@ -78,7 +78,7 @@ public:
 
     ACE_CString nickname_;
     // Stores the client nickname.
-    };
+  };
 
   typedef ACE_Unbounded_Set<Receiver_Data>
           RECEIVER_SET;

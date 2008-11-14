@@ -376,83 +376,83 @@ TAO_IIOP_Transport::get_listen_point (
   // Get the array of endpoints serviced by TAO_IIOP_Acceptor
   const ACE_INET_Addr *endpoint_addr =
     iiop_acceptor->endpoints ();
+  size_t count = iiop_acceptor->endpoint_count ();
 
-  // Get the endpoint count
-  size_t const count =
-    iiop_acceptor->endpoint_count ();
+#if defined (TAO_USE_BROKEN_BIDIR)
 
-  // Get the local address of the connection
+  // Note: Looks like there is no point in sending the list of
+  // endpoints on interfaces on which this connection has not
+  // been established. If this is wrong, please correct me.
+
   ACE_INET_Addr local_addr;
-
-  if (this->connection_handler_->peer ().get_local_addr (local_addr) == -1)
+  if (this->connection_handler_->peer ().get_local_addr (local_addr)
+      == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")
                          ACE_TEXT ("could not resolve local host address\n")),
                         -1);
     }
+#endif /* TAO_USE_BROKEN_BIDIR */
 
-  // Note: Looks like there is no point in sending the list of
-  // endpoints on interfaces on which this connection has not
-  // been established. If this is wrong, please correct me.
-  CORBA::String_var local_interface;
-
-  // Get the hostname for the local address
-  if (iiop_acceptor->hostname (this->orb_core_,
-                               local_addr,
-                               local_interface.out ()) == -1)
+  for (size_t index = 0; index < count; index++)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")
-                         ACE_TEXT ("could not resolve local host name\n")),
-                        -1);
-    }
-#if defined (ACE_HAS_IPV6)
-  // If this is an IPv6 decimal linklocal address containing a scopeid than
-  // remove the scopeid from the information being sent.
-  const char *cp_scope = 0;
-  if (local_addr.get_type () == PF_INET6 &&
-        (cp_scope = ACE_OS::strchr (local_interface.in (), '%')) != 0)
-    {
-      CORBA::ULong len = cp_scope - local_interface.in ();
-      local_interface[len] = '\0';
-    }
-#endif /* ACE_HAS_IPV6 */
-
-  for (size_t index = 0;
-       index < count;
-       ++index)
-    {
+#if defined (TAO_USE_BROKEN_BIDIR)
       // Make sure port numbers are equal so the following comparison
       // only concerns the IP(v4/v6) address.
       local_addr.set_port_number (endpoint_addr[index].get_port_number ());
 
-      if (local_addr == endpoint_addr[index])
+      if (local_addr != endpoint_addr[index])
+        continue;
+#endif /* TAO_USE_BROKEN_BIDIR */
+
+      // Get the local address of the connection
+      CORBA::String_var interface_name;
+
+      // Get the hostname for the local address
+      if (iiop_acceptor->hostname (this->orb_core_,
+                                   endpoint_addr[index],
+                                   interface_name.out ()) == -1)
         {
-          // Get the count of the number of elements
-          const CORBA::ULong len = listen_point_list.length ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")
+                             ACE_TEXT ("could not resolve local host name\n")),
+                            -1);
+        }
 
-          // Increase the length by 1
-          listen_point_list.length (len + 1);
+#if defined (ACE_HAS_IPV6)
+      // If this is an IPv6 decimal linklocal address containing a scopeid than
+      // remove the scopeid from the information being sent.
+      const char *cp_scope = 0;
+      if (endpoint_addr[index].get_type () == PF_INET6 &&
+          (cp_scope = ACE_OS::strchr (interface_name.in (), '%')) != 0)
+        {
+          CORBA::ULong len = cp_scope - interface_name.in ();
+          interface_name[len] = '\0';
+        }
+#endif /* ACE_HAS_IPV6 */
 
-          // We have the connection and the acceptor endpoint on the
-          // same interface
-          IIOP::ListenPoint & point = listen_point_list[len];
-          point.host = CORBA::string_dup (local_interface.in ());
-          point.port = endpoint_addr[index].get_port_number ();
-
-          if (TAO_debug_level >= 5)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT("TAO (%P|%t) - Listen_Point_List[%d] = <%s:%d>\n"),
-                        len,
-                        point.host.in (),
-                        point.port));
-          }
-
+      // Get the count of the number of elements
+      const CORBA::ULong len = listen_point_list.length ();
+  
+      // Increase the length by 1
+      listen_point_list.length (len + 1);
+  
+      // We have the connection and the acceptor endpoint on the
+      // same interface
+      IIOP::ListenPoint & point = listen_point_list[len];
+      point.host = CORBA::string_dup (interface_name.in ());
+      point.port = endpoint_addr[index].get_port_number ();
+  
+      if (TAO_debug_level >= 5)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("TAO (%P|%t) - Listen_Point_List[%d] = <%s:%d>\n"),
+                      len,
+                      point.host.in (),
+                      point.port));
         }
     }
-
   return 1;
 }
 //@@ TAO_TRANSPORT_SPL_COPY_HOOK_END

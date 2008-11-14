@@ -63,7 +63,7 @@ public:
   int run (void);
   // Start the ORB object.
 
-  const char *stock_name_;
+  ACE_CString stock_name_;
   // the name of the stock the consumer is interested in.
 
   int threshold_value_;
@@ -125,10 +125,10 @@ private:
   // This variable denotes whether the naming service
   // is used or not.
 
- Consumer_Input_Handler *consumer_input_handler_;
+  Consumer_Input_Handler *consumer_input_handler_;
   // Reference to the input_event_handler.
 
- Consumer_Signal_Handler *consumer_signal_handler_;
+  Consumer_Signal_Handler *consumer_signal_handler_;
   // Reference to the signal_event_handler.
 
   int interactive_;

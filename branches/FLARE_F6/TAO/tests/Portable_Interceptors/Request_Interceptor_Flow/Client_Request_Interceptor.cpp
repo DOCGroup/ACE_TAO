@@ -27,7 +27,7 @@ Client_Request_Interceptor::send_request (
     return;  // Don't continue if the server side is being tested.
 
   ACE_DEBUG ((LM_INFO,
-              "%s.send_request",
+              "%C.send_request",
               this->name_.in ()));
 
   if (ACE_OS::strcmp ("CLIENT B", this->name_.in ()) == 0)
@@ -82,7 +82,7 @@ Client_Request_Interceptor::send_poll (
     return;  // Don't continue if the server side is being tested.
 
   ACE_DEBUG ((LM_INFO,
-              "%s.send_poll\n",
+              "%C.send_poll\n",
               this->name_.in ()));
 
   this->starting_interception_point_count_++;
@@ -102,7 +102,7 @@ Client_Request_Interceptor::receive_reply (
   this->ending_interception_point_count_++;
 
   ACE_DEBUG ((LM_INFO,
-              "%s.receive_reply",
+              "%C.receive_reply",
               this->name_.in ()));
 
   if (ACE_OS::strcmp ("CLIENT B", this->name_.in ()) == 0)
@@ -157,7 +157,7 @@ Client_Request_Interceptor::receive_exception (
   this->ending_interception_point_count_++;
 
   ACE_DEBUG ((LM_INFO,
-              "%s.receive_exception",
+              "%C.receive_exception",
               this->name_.in ()));
 
   if (ACE_OS::strcmp ("CLIENT B", this->name_.in ()) == 0)
@@ -234,7 +234,7 @@ Client_Request_Interceptor::receive_other (
   this->ending_interception_point_count_++;
 
   ACE_DEBUG ((LM_INFO,
-              "%s.receive_other\n",
+              "%C.receive_other\n",
               this->name_.in ()));
 }
 

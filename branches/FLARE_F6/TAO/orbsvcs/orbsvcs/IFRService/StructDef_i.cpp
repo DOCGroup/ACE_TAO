@@ -245,8 +245,8 @@ TAO_StructDef_i::members (const CORBA::StructMemberSeq &members)
 void
 TAO_StructDef_i::members_i (const CORBA::StructMemberSeq &members)
 {
-  // Destroy our old members, both refs and defns.
-  TAO_Container_i::destroy_i ();
+  // Destroy our old refs.
+  TAO_Container_i::destroy_references_i ();
 
   CORBA::ULong count = members.length ();
 

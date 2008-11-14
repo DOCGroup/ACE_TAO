@@ -38,7 +38,6 @@ Demux_Test_Server::Demux_Test_Server (void)
 Demux_Test_Server::~Demux_Test_Server (void)
 {
   ACE_OS::fclose (this->poa_fp_);
-  ACE_OS::fclose (this->ior_fp_);
 }
 
 
@@ -223,10 +222,12 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
               // activate the object
               try
                 {
-                  Demux_Test_i * demux_test_i_ptr;
+                  Demux_Test_i * demux_test_i_ptr = 0;
                   ACE_NEW_RETURN (demux_test_i_ptr,
                                   Demux_Test_i,
                                   -1);
+                  // POA will hold the servant
+                  PortableServer::ServantBase_var owner (demux_test_i_ptr);
 
                   //id = this->child_poa_[i]->activate_object (&this->demux_test_[j],
                   id = this->child_poa_[i]->activate_object (demux_test_i_ptr);
@@ -307,6 +308,7 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
     } // i loop
 
   ACE_OS::fclose (this->ior_fp_);
+  this->ior_fp_ = 0;
   ACE_OS::fclose (this->servant_fp_);
 
   // now activate the POAs

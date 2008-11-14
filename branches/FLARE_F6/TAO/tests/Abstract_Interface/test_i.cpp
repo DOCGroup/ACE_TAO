@@ -8,7 +8,6 @@ ACE_RCSID (Abstract_Interface,
            test_i,
            "$Id$")
 
-
 char *
 foo_i::foo_op (const char * inarg)
 {

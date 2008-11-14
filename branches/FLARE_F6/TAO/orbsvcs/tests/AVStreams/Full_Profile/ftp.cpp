@@ -238,7 +238,7 @@ Client::init (int argc, ACE_TCHAR *argv[])
 
       CORBA::String_var s1 = sep_a_->add_fep( fep_a_obj_.in());
 
-      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %s\n", ACE_TEXT_CHAR_TO_TCHAR (s1.in()) ));
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %C\n", s1.in() ));
 
       this->fp_ = ACE_OS::fopen (this->filename_,"r");
 
@@ -248,8 +248,8 @@ Client::init (int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          ACE_ERROR_RETURN ((LM_ERROR, "ERROR: file %s could not be opened\n",
-                                       ACE_TEXT_CHAR_TO_TCHAR (this->filename_)), -1);
+          ACE_ERROR_RETURN ((LM_ERROR, "ERROR: file %C could not be opened\n",
+                                       this->filename_), -1);
         }
     }
   catch (const CORBA::Exception& ex)

@@ -43,7 +43,7 @@ check_supported_priorities (CORBA::ORB_ptr orb)
   if (max_priority == min_priority)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Not enough priority levels with the %s scheduling policy\n"
+                  "Not enough priority levels with the %C scheduling policy\n"
                   "on this platform to run the test, terminating program....\n"
                   "Check svc.conf options\n",
                   sched_policy_name (sched_policy)));

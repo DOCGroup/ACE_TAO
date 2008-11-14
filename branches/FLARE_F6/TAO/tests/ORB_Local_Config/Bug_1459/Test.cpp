@@ -6,155 +6,202 @@
 // bugzilla 1459) and the different scenarios minus the creation of
 // the servant the service manager or threads even without the servant
 // to demonstrate that the server is capable of responding (which in
-// some cases it isnt) problems can allready be seen in the multiple
-// orb scenarios AB b isnt prompted for a new certificate password, MA
-// ssliop isnt loaded at all etc
+// some cases it isnt) problems can already be seen in the multiple
+// orb scenarios
 
 
 #include "tao/corba.h"
 #include "ace/ARGV.h"
 #include "ace/Dynamic_Service.h"
-
-/// The combination of orb instances and their configurations to test
-#define MORB_MA
+#include "Service_Configuration_Per_ORB.h"
 
 ACE_RCSID (tests, server, "$Id$")
 
+// Currently there is no way to test SSLIOP in this test due to a problem
+// described in bug 3418.
+//#define DO_1459_SSLIOP_TEST 1
 
-#include "Service_Configuration_Per_ORB.h"
+// UIOP
+const ACE_TCHAR argStrA[] = ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBId ORB-A -ORBSvcConf a.conf");
 
-const char argA[] = "AAA -ORBGestalt LOCAL -ORBId ORB-A -ORBSvcConf a.conf";
+// SSLIOP
+const ACE_TCHAR argStrB[] = ACE_TEXT ("BBB -ORBGestalt LOCAL -ORBId ORB-B -ORBSvcConf b.conf");
 
-// dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() "-SSLAuthenticate SERVER_AND_CLIENT -SSLPrivateKey PEM:server_key.pem -SSLCertificate PEM:server_cert.pem";
-// static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
+// UIPMC
+const ACE_TCHAR argStrC[] = ACE_TEXT ("CCC -ORBGestalt LOCAL -ORBId ORB-C -ORBSvcConf m1.conf");
 
-const char argB[] = "BBB -ORBGestalt LOCAL -ORBId ORB-A -ORBSvcConf b.conf";
+// DIOP
+const ACE_TCHAR argStrD[] = ACE_TEXT ("DDD -ORBGestalt LOCAL -ORBId ORB-D -ORBSvcConf d.conf");
 
-// dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() "-SSLAuthenticate SERVER_AND_CLIENT -SSLPrivateKey PEM:client_key.pem -SSLCertificate PEM:client_cert.pem"
-// static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
-
-const char argM[] = "MMM -ORBGestalt LOCAL -ORBId ORB-M -ORBSvcConf m.conf";
-
-// dynamic UIPMC_Factory Service_Object * TAO_PortableGroup:_make_TAO_UIPMC_Protocol_Factory() ""
-// static Resource_Factory "-ORBProtocolFactory IIOP_Factory -ORBProtocolFactory UIPMC_Factory"
-// #static PortableGroup_Loader ""
-// dynamic PortableGroup_Loader Service_Object * TAO_PortableGroup:_make_TAO_PortableGroup_Loader() ""
+// empty file
+const ACE_TCHAR argStrM[] = ACE_TEXT ("MMM -ORBGestalt LOCAL -ORBId ORB-M -ORBSvcConf m.conf");
 
 int
-testBug1459 (int , ACE_TCHAR *[])
+testBug1459 (int, ACE_TCHAR *[])
 {
   ACE_TRACE ("testBug1459");
 
   try
-  {
+    {
+      int n, error = 0;
 
-#ifdef MORB_AB
-    ACE_ARGV arg0(argA);
-    int n = arg0.argc();
-    CORBA::ORB_var ORBA = CORBA::ORB_init(n,arg0.argv());
+      ACE_ARGV argM (argStrM);
+      n = argM.argc ();
+      CORBA::ORB_var ORBM =
+        CORBA::ORB_init (n, argM.argv ());
 
-    ACE_ARGV arg1(argB);
-    n = arg1.argc();
-    CORBA::ORB_var ORBB = CORBA::ORB_init(n,arg1.argv());
-#else
-    ACE_UNUSED_ARG (argA);
-    ACE_UNUSED_ARG (argB);
-#endif /* MORB_AB */
+      if (CORBA::is_nil (ORBM.in ()))
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           ACE_TEXT("Expected to get an ORB\n")),
+                          -1);
 
+#if TAO_HAS_UIOP == 1
+      // UIOP
+      ACE_ARGV argA (argStrA);
+      n = argA.argc ();
+      CORBA::ORB_var ORBA =
+        CORBA::ORB_init (n, argA.argv ());
 
+      if (CORBA::is_nil (ORBA.in ()))
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           ACE_TEXT("Expected to get an ORB\n")),
+                          -1);
+#endif /* TAO_HAS_UIOP */
 
-#ifdef MORB_AM
-    ACE_ARGV arg0(argA);
-    int n = arg0.argc();
-    CORBA::ORB_var ORBA = CORBA::ORB_init(n,arg0.argv());
+#if defined (DO_1459_SSLIOP_TEST)
+      // SSLIOP
+      ACE_ARGV argB (argStrB);
+      n = argB.argc ();
+      CORBA::ORB_var ORBB =
+        CORBA::ORB_init (n, argB.argv ());
 
-    ACE_ARGV arg1(argM);
-    n = arg1.argc();
-    CORBA::ORB_var ORBB = CORBA::ORB_init(n,arg1.argv());
-#else
-    ACE_UNUSED_ARG (argA);
-    ACE_UNUSED_ARG (argM);
-#endif /* MORB_AM */
+      if (CORBA::is_nil (ORBB.in ()))
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           ACE_TEXT("Expected to get an ORB\n")),
+                          -1);
+#endif
 
-#ifdef MORB_MB
-    int n = 0;
-    ACE_ARGV arg0(argM);
-    n = arg0.argc();
-    CORBA::ORB_var ORBA = CORBA::ORB_init(n, arg0.argv());
-    if (ORBA.in () == 0)
-      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected to get an ORB\n")), -1);
+      // MIOP
+      ACE_ARGV argC (argStrC);
+      n = argC.argc ();
+      CORBA::ORB_var ORBC =
+        CORBA::ORB_init (n, argC.argv ());
 
-    ACE_ARGV arg1(argB);
-    n = arg1.argc();
-    CORBA::ORB_var ORBB = CORBA::ORB_init(n, arg1.argv());
-#else
-    ACE_UNUSED_ARG (argB);
-    ACE_UNUSED_ARG (argM);
-#endif /* MORB_MB */
+      if (CORBA::is_nil (ORBC.in ()))
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           ACE_TEXT("Expected to get an ORB\n")),
+                          -1);
 
-#ifdef MORB_MA
-    int n = 0;
-    ACE_ARGV arg0(argM);
-    n = arg0.argc();
-    CORBA::ORB_var ORBA = CORBA::ORB_init(n, arg0.argv());
-    if (ORBA.in () == 0)
-      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected to get an ORB\n")), -1);
+      // DIOP
+      ACE_ARGV argD (argStrD);
+      n = argD.argc ();
+      CORBA::ORB_var ORBD =
+        CORBA::ORB_init (n, argD.argv ());
 
-    ACE_ARGV arg1(argA);
-    n = arg1.argc();
-    CORBA::ORB_var ORBB = CORBA::ORB_init(n, arg1.argv());
-#else
-    ACE_UNUSED_ARG (argA);
-    ACE_UNUSED_ARG (argM);
-#endif /* MORB_MA */
+      if (CORBA::is_nil (ORBD.in ()))
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           ACE_TEXT("Expected to get an ORB\n")),
+                          -1);
 
-    if (ORBB.in () == 0)
-      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected to get a second ORB\n")), -1);
+      if (
+// SSLIOP
+#if defined (DO_1459_SSLIOP_TEST)
+          ORBM.in () == ORBB.in () ||
+#if TAO_HAS_UIOP == 1
+          ORBA.in () == ORBB.in () ||
+#endif
+          ORBC.in () == ORBB.in () ||
+          ORBD.in () == ORBB.in () ||
+#endif
+// UIOP
+#if TAO_HAS_UIOP
+          ORBM.in () == ORBA.in () ||
+          ORBC.in () == ORBA.in () ||
+          ORBD.in () == ORBA.in () ||
+#endif
+// MIOP
+          ORBM.in () == ORBC.in () ||
+          ORBD.in () == ORBC.in () ||
+// DIOP
+          ORBM.in () == ORBD.in ()
+         )
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           ACE_TEXT("Unexpected to find the two ORBs are the same\n")),
+                          -1);
 
-    if (ORBA.in () == ORBB.in ())
-      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Unexpected to find the two ORBs the same\n")), -1);
+      // Since each svc conf file causes the ORB to load the services in
+      // its own service space no services are reachable through the
+      // global service repo
 
-    // Look ma!! No ... services?!
+#if TAO_HAS_UIOP == 1
+      // UIOP
+      ACE_Service_Object *uiop_so =
+        ACE_Dynamic_Service<ACE_Service_Object>::instance ("UIOP_Factory");
+      if (uiop_so != 0)
+        {
+          ++error;
+          ACE_ERROR ((LM_DEBUG,
+                      ACE_TEXT("Unexpected to find ")
+                      ACE_TEXT("UIOP_Factory globally\n")));
+        }
+#endif /* TAO_HAS_UIOP */
 
-    ACE_Service_Object *so = 0;
-    int error = 0;
-    so = ACE_Dynamic_Service<ACE_Service_Object>::instance ("SSLIOP_Factory");
-    if (so != 0)
-      {
-        error++;
-        ACE_ERROR ((LM_DEBUG,
-                    ACE_TEXT("Unexpected to find SSLIOP_Factory globally\n")));
-      }
+#if defined (DO_1459_SSLIOP_TEST)
+      // SSLIOP
+      ACE_Service_Object *ssliop_so =
+        ACE_Dynamic_Service<ACE_Service_Object>::instance ("SSLIOP_Factory");
+      if (ssliop_so != 0)
+        {
+          ++error;
+          ACE_ERROR ((LM_DEBUG,
+                      ACE_TEXT("Unexpected to find ")
+                      ACE_TEXT("SSLIOP_Factory globally\n")));
+        }
+#endif
 
-    so = ACE_Dynamic_Service<ACE_Service_Object>::instance ("UIPMC_Factory");
-    if (so != 0)
-      {
-        error++;
-        ACE_ERROR ((LM_DEBUG,
-                    ACE_TEXT("Unexpected to find ")
-                    ACE_TEXT("UIPMC_Factory globally\n")));
-      }
+      // MIOP
+      ACE_Service_Object *uipmc_so =
+        ACE_Dynamic_Service<ACE_Service_Object>::instance ("UIPMC_Factory");
+      if (uipmc_so != 0)
+        {
+          ++error;
+          ACE_ERROR ((LM_DEBUG,
+                      ACE_TEXT("Unexpected to find ")
+                      ACE_TEXT("UIPMC_Factory globally\n")));
+        }
 
-    // Since each svc conf file causes the ORB to load the services in
-    // its own service space no services are reachable through the
-    // global service repo
+      // DIOP
+      ACE_Service_Object *diop_so =
+        ACE_Dynamic_Service<ACE_Service_Object>::instance ("DIOP_Factory");
+      if (diop_so != 0)
+        {
+          ++error;
+          ACE_ERROR ((LM_DEBUG,
+                      ACE_TEXT("Unexpected to find ")
+                      ACE_TEXT("DIOP_Factory globally\n")));
+        }
 
-    ORBA->destroy();
+      ORBM->destroy();
 
-    ORBB->destroy();
+#if TAO_HAS_UIOP == 1
+      ORBA->destroy();
+#endif /* TAO_HAS_UIOP */
 
-    if (error > 0)
-      return -1;
+#if defined (DO_1459_SSLIOP_TEST)
+      ORBB->destroy();
+#endif
 
-  }
+      ORBC->destroy();
+
+      ORBD->destroy();
+
+      if (error > 0)
+        return -1;
+    }
   catch(const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Unhandled exception caught");
       return -1;
-    }
-  catch(...)
-    {
-      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Unexpected exception\n")), -1);
     }
 
   return 0;

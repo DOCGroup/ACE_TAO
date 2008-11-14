@@ -3,8 +3,28 @@
 #include "ace/Get_Opt.h"
 #include "Test_i.h"
 #include "ace/OS_NS_stdio.h"
+#include "orbsvcs/Shutdown_Utilities.h"
 
 const ACE_TCHAR *ior_output_file = 0;
+
+class Service_Shutdown_Functor : public Shutdown_Functor
+{
+public:
+  Service_Shutdown_Functor (CORBA::ORB_ptr orb)
+    : orb_(CORBA::ORB::_duplicate (orb))
+  {
+  }
+
+  void operator() (int which_signal)
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                "shutting down on signal %d\n", which_signal));
+    (void) this->orb_->shutdown ();
+  }
+
+private:
+  CORBA::ORB_var orb_;
+};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -40,6 +60,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
+      Service_Shutdown_Functor killer (orb.in ());
+      Service_Shutdown kill_contractor (killer);
+
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
 
@@ -59,7 +82,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Test_i server_impl (orb.in ());
 
-      root_poa->activate_object (&server_impl);
+      PortableServer::ObjectId_var tmp =
+        root_poa->activate_object (&server_impl);
 
 
       CORBA::Object_var server = server_impl._this();

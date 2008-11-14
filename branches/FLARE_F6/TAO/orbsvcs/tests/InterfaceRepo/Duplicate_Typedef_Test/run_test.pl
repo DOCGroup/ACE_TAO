@@ -18,10 +18,11 @@ $nice = "";
 
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("../../../IFR_Service/IFR_Service", " $nice " . " -o $iorfile" . " $locking");
-$CL1 = new PerlACE::Process ("../../../IFR_Service/tao_ifr",
+$SV = new PerlACE::Process ("../../../IFR_Service/IFR_Service",
+                            " $nice " . " -o $iorfile" . " $locking");
+$CL1 = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/tao_ifr",
                              "-ORBInitRef InterfaceRepository=file://$iorfile -T test1.idl");
-$CL2 = new PerlACE::Process ("../../../IFR_Service/tao_ifr",
+$CL2 = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/tao_ifr",
                              "-ORBInitRef InterfaceRepository=file://$iorfile -T test2.idl");
 
 $SV->Spawn ();

@@ -240,10 +240,10 @@ private:
   // One of the consumers has completed its work.
 
 private:
-  const char* lcl_name_;
+  ACE_CString lcl_name_;
   // The name of the "local" EC.
 
-  const char* rmt_name_;
+  ACE_CString rmt_name_;
   // The name of the "remote" EC.
 
   TAO_EC_Gateway_Sched ecg_;

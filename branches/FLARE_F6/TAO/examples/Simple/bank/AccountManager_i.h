@@ -33,6 +33,7 @@
 #include "ace/ACE.h"
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
+#include "tao/Intrusive_Ref_Count_Handle_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ORB_Manager;
@@ -52,7 +53,7 @@ public:
   AccountManager_i (void);
   // Constructor.
 
-  ~AccountManager_i (void);
+  virtual ~AccountManager_i (void);
   // Destructor.
 
   virtual Bank::Account_ptr open (const char *name,
@@ -82,11 +83,12 @@ private:
   CORBA::ORB_var orb_;
   // ORB pointer.
 
-  PortableServer::POA_ptr poa_;
+  PortableServer::POA_var poa_;
   // POA pointer.
 
+  typedef TAO_Intrusive_Ref_Count_Handle<Account_i> Account_i_var;
   typedef ACE_Hash_Map_Manager<ACE_CString,
-                               Account_i *,
+                               Account_i_var,
                                ACE_Null_Mutex> MAP_MANAGER_TYPE;
 
   MAP_MANAGER_TYPE hash_map_;

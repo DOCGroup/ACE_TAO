@@ -162,7 +162,7 @@ private:
   /**
    * A name to be used to register with the name service.
    */
-  const char * ns_name_;
+  ACE_CString ns_name_;
 
   /**
    * A human-readable string to distinguish this from other Notifiers.

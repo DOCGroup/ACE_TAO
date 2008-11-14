@@ -123,7 +123,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   char *private_key_path = 0;
   char *dhparams_path = 0;
   char *ca_file = 0;
-  char *ca_dir = 0;
+  ACE_CString ca_dir = "";
   ACE_TCHAR *rand_path = 0;
 
   int certificate_type = -1;
@@ -190,11 +190,10 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           if (::SSL_CTX_set_cipher_list (ssl_ctx->context (),
                                          "DEFAULT:eNULL") == 0)
             {
-              if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_ERROR,
-                            ACE_TEXT ("TAO (%P|%t) Unable to set eNULL ")
-                            ACE_TEXT ("SSL cipher in SSLIOP ")
-                            ACE_TEXT ("factory.\n")));
+              ACE_DEBUG ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) Unable to set eNULL ")
+                          ACE_TEXT ("SSL cipher in SSLIOP ")
+                          ACE_TEXT ("factory.\n")));
 
               return -1;
             }
@@ -345,11 +344,9 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       if( -1 == ssl_ctx->seed_file (ACE_TEXT_ALWAYS_CHAR(path), -1))
       {
         ++errors;
-
-        if (TAO_debug_level > 0)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) Failed to load ")
-                      ACE_TEXT ("more entropy from <%s>: %m\n"), path));
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) Failed to load ")
+                    ACE_TEXT ("more entropy from <%s>: %m\n"), path));
       }
       else
       {
@@ -368,21 +365,21 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
 
   // Load any trusted certificates explicitely rather than relying on
   // previously set SSL_CERT_FILE and/or SSL_CERT_PATH environment variable
-  if (ca_file != 0 || ca_dir != 0)
+  if (ca_file != 0 || ca_dir.length () != 0)
     {
-      if (ssl_ctx->load_trusted_ca (ca_file, ca_dir) != 0)
+      if (ssl_ctx->load_trusted_ca (ca_file, ca_dir.c_str ()) != 0)
         {
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) Unable to load ")
-                        ACE_TEXT ("CA certs from %C%C%C\n"),
-                        ((ca_file != 0) ? ca_file : "a file pointed to by "
-                                                    ACE_SSL_CERT_FILE_ENV
-                                                    " env var (if any)"),
-                        ACE_TEXT (" and "),
-                        ((ca_dir != 0) ? ca_dir : "a directory pointed to by "
-                                                  ACE_SSL_CERT_DIR_ENV
-                                                  " env var (if any)")));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) Unable to load ")
+                      ACE_TEXT ("CA certs from %C%C%C\n"),
+                      ((ca_file != 0) ? ca_file : "a file pointed to by "
+                                                  ACE_SSL_CERT_FILE_ENV
+                                                  " env var (if any)"),
+                      ACE_TEXT (" and "),
+                      ((ca_dir.length () != 0) ?
+                          ca_dir.c_str () : "a directory pointed to by "
+                                            ACE_SSL_CERT_DIR_ENV
+                                            " env var (if any)")));
 
           return -1;
         }
@@ -396,9 +393,10 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
                                                     ACE_SSL_CERT_FILE_ENV
                                                     " env var (if any)"),
                         ACE_TEXT (" and "),
-                        ((ca_dir != 0) ? ca_dir : "a directory pointed to by "
-                                                  ACE_SSL_CERT_DIR_ENV
-                                                  " env var (if any)")));
+                        ((ca_dir.length () != 0) ?
+                            ca_dir.c_str () : "a directory pointed to by "
+                                              ACE_SSL_CERT_DIR_ENV
+                                              " env var (if any)")));
         }
     }
 
@@ -425,12 +423,11 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
               // We only want to fail catastrophically if the user specified
               // a dh parameter file and we were unable to actually find it
               // and load from it.
-              if (TAO_debug_level > 0)
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
-                            ACE_TEXT ("unable to set ")
-                            ACE_TEXT ("DH parameters <%s>\n"),
-                            dhparams_path));
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
+                          ACE_TEXT ("unable to set ")
+                          ACE_TEXT ("DH parameters <%s>\n"),
+                          dhparams_path));
               return -1;
             }
           else
@@ -465,12 +462,11 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       if (ssl_ctx->certificate (certificate_path,
                                 certificate_type) != 0)
         {
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) Unable to set ")
-                        ACE_TEXT ("SSL certificate <%s> ")
-                        ACE_TEXT ("in SSLIOP factory.\n"),
-                        certificate_path));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) Unable to set ")
+                      ACE_TEXT ("SSL certificate <%s> ")
+                      ACE_TEXT ("in SSLIOP factory.\n"),
+                      certificate_path));
 
           return -1;
         }
@@ -489,14 +485,12 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
     {
       if (ssl_ctx->private_key (private_key_path, private_key_type) != 0)
         {
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TAO (%P|%t) Unable to set ")
-                          ACE_TEXT ("SSL private key ")
-                          ACE_TEXT ("<%s> in SSLIOP factory.\n"),
-                          private_key_path));
-            }
+
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) Unable to set ")
+                      ACE_TEXT ("SSL private key ")
+                      ACE_TEXT ("<%s> in SSLIOP factory.\n"),
+                      private_key_path));
 
           return -1;
         }

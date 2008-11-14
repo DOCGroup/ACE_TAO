@@ -8,7 +8,6 @@
  *    This class implements the functionality of a Naming_Service in
  *    a stand-alone process.
  *
- *
  *  @author Nagarajan Surendran (naga@cs.wustl.edu) Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================

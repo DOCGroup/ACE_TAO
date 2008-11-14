@@ -11,7 +11,7 @@ use PerlACE::TestTarget;
 
 # Usually the primary component to run on targets (if any) is the server;
 # this time it's the client.
-$client = PerlACE::TestTarget::create_target(1) || die "Create target failed\n";
+my $client = PerlACE::TestTarget::create_target(1) || die "Create target 1 failed\n";
 
 $iorbase = "server_on_localhost_1192.ior";
 $iorfile = PerlACE::LocalFile ($iorbase);
@@ -25,12 +25,7 @@ $perl =~ s/\.exe$//i;
 $perl =~ s/000000\///g if ($^O eq 'VMS');
 
 $SV = new PerlACE::Process ($perl, "fakeserver2.pl");
-if (PerlACE::is_vxworks_test()) {
-$CL = new PerlACE::ProcessVX ("client", " -k file://$iorbase -ORBdebuglevel 1 -ORBlogfile client.log");
-}
-else {
 $CL = $client->CreateProcess ("client", " -k file://$client_iorfile -ORBdebuglevel 1 -ORBlogfile client.log");
-}
 $client->DeleteFile("client.log");
 
 $SV->IgnoreExeSubDir(1);
@@ -48,9 +43,9 @@ if ($client->PutFile ($iorfile, $client_iorfile) == -1) {
     print STDERR "ERROR: cannot set file <$client_iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-} 
+}
 
-$client_status = $CL->SpawnWaitKill (60);
+$CL->SpawnWaitKill (60);
 
 # We expect to have to kill both client and server.
 
@@ -59,7 +54,7 @@ $client_status = $CL->SpawnWaitKill (60);
 #    $status = 1;
 #}
 
-$server = $SV->WaitKill (10);
+$SV->WaitKill (10);
 
 #if ($server != 0) {
 #    print STDERR "ERROR: server returned $server\n";
@@ -68,12 +63,12 @@ $server = $SV->WaitKill (10);
 
 open (LOG, "client.log") or die "Couldn't open client log file client.log: $!\n";
 while (<LOG>) {
-  $ccmsgfound = 1 if (/process_parsed_messages, received CloseConnection message/);
+    $ccmsgfound = 1 if (/process_parsed_messages, received CloseConnection message/);
 }
 close (LOG);
 if (not $ccmsgfound) {
-  print STDERR "ERROR: didn't find CloseConnection debug message in client log.\n";
-  $status = 1;
+    print STDERR "ERROR: didn't find CloseConnection debug message in client log.\n";
+    $status = 1;
 }
 
 exit $status;

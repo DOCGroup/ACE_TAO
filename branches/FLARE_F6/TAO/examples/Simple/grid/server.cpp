@@ -10,8 +10,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   Server<Grid_Factory_i> server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\tGrid server\n\n"));
-
+              ACE_TEXT ("\n\tGrid server\n\n")));
 
   try
     {
@@ -39,4 +38,3 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-

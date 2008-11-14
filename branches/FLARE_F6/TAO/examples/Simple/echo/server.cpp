@@ -10,8 +10,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   Server<Echo_i> server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\tEcho server\n\n"));
-
+              ACE_TEXT ("\n\tEcho server\n\n")));
 
   try
     {
@@ -35,7 +34,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return -1;
     }
 
-
   return 0;
 }
-

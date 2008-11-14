@@ -11,27 +11,16 @@ TAO_Object_Ref_Table::TAO_Object_Ref_Table (void)
 {
 }
 
-ACE_INLINE int
-TAO_Object_Ref_Table::register_initial_reference (
-  const char *id,
-  CORBA::Object_ptr obj,
-  bool rebind)
-{
-  if (rebind)
-    {
-      if (this->unbind (id) == -1)
-        return -1;
-      else
-        return this->bind (id, obj);
-    }
-  else
-    return this->bind (id, obj);
-}
-
 ACE_INLINE CORBA::Object_ptr
-TAO_Object_Ref_Table::resolve_initial_reference (const char * id)
+TAO_Object_Ref_Table::find_i (const char *id)
 {
-  return this->find (id);  // Returns a duplicate.
+  iterator const found =
+    this->table_.find (CORBA::String_var (id));
+
+  if (found == this->table_.end ())
+    return CORBA::Object::_nil ();
+
+  return CORBA::Object::_duplicate ((*found).second.in ());
 }
 
 ACE_INLINE void
@@ -65,7 +54,7 @@ TAO_Object_Ref_Table::current_size (void) const
 }
 
 ACE_INLINE int
-TAO_Object_Ref_Table::unbind (const char *id)
+TAO_Object_Ref_Table::unbind_i (const char *id)
 {
   return
     (this->table_.erase (CORBA::String_var (id)) == 0 ? -1 : 0);

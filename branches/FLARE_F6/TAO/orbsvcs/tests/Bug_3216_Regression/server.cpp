@@ -162,10 +162,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Hello *hello_impl;
+      Hello *hello_impl = 0;
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in ()),
                       1);
+      PortableServer::ServantBase_var owner (hello_impl);
 
       PortableServer::ObjectId_var server_id =
         PortableServer::string_to_ObjectId ("server_id");
@@ -194,8 +195,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       iorm =
         TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in() );
 
+      CORBA::Object_var server = orb->string_to_object (ior.in ());
 
-      CORBA::Object_var iogr = make_iogr ("Domain_1", 1, 1, orb->string_to_object (ior.in ())  );
+      CORBA::Object_var iogr = make_iogr ("Domain_1", 1, 1, server.in ());
 
 
       CORBA::String_var iorgr_string =

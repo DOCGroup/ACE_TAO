@@ -48,7 +48,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   CORBA::ORB_var orb;
   CORBA::Object_var obj;
   PortableServer::POA_var root_poa;
@@ -57,18 +56,29 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (parse_args (argc, argv) != 0)
     return 1;
   ACE_TCHAR *extra[4];
-  extra[0] = CORBA::string_dup("-ORBEndpoint");
-  extra[1] = CORBA::string_alloc(100);
+#ifdef ACE_USES_WCHAR
+  extra[0] = CORBA::wstring_dup (ACE_TEXT ("-ORBEndpoint"));
+  extra[1] =CORBA::wstring_alloc (100);
+#else
+  extra[0] = CORBA::string_dup ("-ORBEndpoint");
+  extra[1] = CORBA::string_alloc (100);
+#endif
   ACE_OS::sprintf (extra[1],
-                   "iiop://localhost:%d/ssl_port=%d",
+                   ACE_TEXT ("iiop://localhost:%d/ssl_port=%d"),
                    endpoint_port, endpoint_port+1);
-  extra[2] = CORBA::string_dup("-ORBEndpoint");
-  extra[3] = CORBA::string_alloc(100);
+
+#ifdef ACE_USES_WCHAR
+  extra[2] = CORBA::wstring_dup (ACE_TEXT ("-ORBEndpoint"));
+  extra[3] = CORBA::wstring_alloc (100);
+#else
+  extra[2] = CORBA::string_dup ("-ORBEndpoint");
+  extra[3] = CORBA::string_alloc (100);
+#endif
   ACE_OS::sprintf (extra[3],
-                   "iiop://localhost:%d/ssl_port=%d",
+                   ACE_TEXT ("iiop://localhost:%d/ssl_port=%d"),
                    endpoint_port+10, endpoint_port+11);
 
-  char **largv = new ACE_TCHAR *[argc+4];
+  ACE_TCHAR **largv = new ACE_TCHAR *[argc+4];
   int i = 0;
   for (i = 0; i < argc; i++)
     largv[i] = argv[i];
@@ -102,7 +112,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
   for (i = 0; i < 4; i++)
-    delete[] extra[i];
+#ifdef ACE_USES_WCHAR
+    CORBA::wstring_free (extra[i]);
+#else
+    CORBA::string_free (extra[i]);
+#endif
 
   delete [] largv;
 
