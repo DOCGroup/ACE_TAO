@@ -36,7 +36,7 @@ endif # versioned_so
 #----------------------------------------------------------------------------
 
 LIB ?=
-VLIB = $(LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
+VLIB = $(ARCH_LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 CLEANUP_VLIB = $(CLEANUP_LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 
 # Add VLIB to VLIBS if building static_libs.
@@ -46,13 +46,13 @@ endif
 
 SHLIB ?=
 # Setup shared library variables, including versions.
-VSHLIB_NO_VER = $(SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
+VSHLIB_NO_VER = $(ARCH_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 CLEANUP_VSHLIB_NO_VER = $(CLEANUP_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 VSHLIB = $(VSHLIB_NO_VER:%=%$(SOVERSION))
 CLEANUP_VSHLIB = $(CLEANUP_VSHLIB_NO_VER:%=%$(SOVERSION))
 
 SHLIBA ?=
-VSHLIBA = $(SHLIBA:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
+VSHLIBA = $(ARCH_SHLIBA:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 
 # Add VSHLIB if we're building shared_libs.
 ifdef shared_libs

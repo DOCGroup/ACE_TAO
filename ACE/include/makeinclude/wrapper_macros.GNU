@@ -192,6 +192,44 @@
 #      (link to the appropriate platform-specific config file).
 #----------------------------------------------------------------------------
 
+# default to not using an architecture specific output directory
+ARCH        ?=
+ARCH_BIN     = $(BIN)
+ARCH_BIN2    = $(BIN2)
+ARCH_LIB     = $(LIB)
+ARCH_LIB2    = $(LIB2)
+ARCH_SHLIB   = $(SHLIB)
+ARCH_SHLIB2  = $(SHLIB2)
+ARCH_SHLIBA  = $(SHLIBA)
+ARCH_SHLIBA2 = $(SHLIBA2)
+
+ifdef ARCH
+ifdef BIN
+  ARCH_BIN = $(ARCH)/$(BIN)
+endif
+ifdef BIN2
+  ARCH_BIN2 = $(ARCH)/$(BIN2)
+endif
+ifdef LIB
+  ARCH_LIB = $(ARCH)/$(LIB)
+endif
+ifdef LIB2
+  ARCH_LIB2 = $(ARCH)/$(LIB2)
+endif
+ifdef SHLIB
+  ARCH_SHLIB = $(ARCH)/$(SHLIB)
+endif
+ifdef SHLIB2
+  ARCH_SHLIB2 = $(ARCH)/$(SHLIB2)
+endif
+ifdef SHLIBA
+  ARCH_SHLIBA = $(ARCH)/$(SHLIBA)
+endif
+ifdef SHLIBA2
+  ARCH_HLIBA2 = $(ARCH)/$(SHLIBA2)
+endif
+endif
+
 # Set the cleanup targets.  These targets are used by realclean even if
 # the component isn't being built, i.e., the decision to build it was based
 # on components built in another makefile and written a file (that might no
@@ -205,10 +243,10 @@
 BIN_UNCHECKED ?=
 CLEANUP_BIN ?=
 ifdef BIN
-  CLEANUP_BIN = $(BIN)
+  CLEANUP_BIN = $(ARCH_BIN)
 endif # !BIN
 ifdef BIN2
-  CLEANUP_BIN += $(BIN2)
+  CLEANUP_BIN += $(ARCH_BIN2)
 endif # !BIN2
 ifneq ($(BIN_UNCHECKED),)
   CLEANUP_BIN += $(BIN_UNCHECKED)
@@ -217,10 +255,10 @@ endif # !BIN_UNCHECKED
 LIB_UNCHECKED ?=
 CLEANUP_LIB ?=
 ifdef LIB
-  CLEANUP_LIB = $(LIB)
+  CLEANUP_LIB = $(ARCH_LIB)
 endif # !LIB
 ifdef LIB2
-  CLEANUP_LIB += $(LIB2)
+  CLEANUP_LIB += $(ARCH_LIB2)
 endif # !LIB2
 ifneq ($(LIB_UNCHECKED),)
   CLEANUP_LIB = $(LIB_UNCHECKED)
@@ -229,10 +267,10 @@ endif # !LIB_UNCHECKED
 SHLIB_UNCHECKED ?=
 CLEANUP_SHLIB ?=
 ifdef SHLIB
-  CLEANUP_SHLIB = $(SHLIB)
+  CLEANUP_SHLIB = $(ARCH_SHLIB)
 endif # !SHLIB
 ifdef SHLIB2
-  CLEANUP_SHLIB += $(SHLIB2)
+  CLEANUP_SHLIB += $(ARCH_SHLIB2)
 endif # SHLIB2
 ifneq ($(SHLIB_UNCHECKED),)
   CLEANUP_SHLIB += $(SHLIB_UNCHECKED)
@@ -241,10 +279,10 @@ endif # ! SHLIB_UNCHECKED
 SHLIBA_UNCHECKED ?=
 CLEANUP_SHLIBA ?=
 ifdef SHLIBA
-  CLEANUP_SHLIBA = $(SHLIBA)
+  CLEANUP_SHLIBA = $(ARCH_SHLIBA)
 endif # SHLIBA
 ifdef SHLIBA2
-  CLEANUP_SHLIBA = $(SHLIBA2)
+  CLEANUP_SHLIBA = $(ARCH_SHLIBA2)
 endif # SHLIB2A
 ifneq ($(SHLIBA_UNCHECKED),)
   CLEANUP_SHLIBA = $(SHLIBA_UNCHECKED)
@@ -379,8 +417,13 @@ PCCFLAGS        += #### set in platform_macros.GNU file, e.g., -p
 VAR             =
 
 # Let users override the default VDIR directories
+ifdef ARCH
+VDIR          ?= $(ARCH)/.obj/
+VSHDIR        ?= $(ARCH)/.shobj/
+else
 VDIR          ?= .obj/
 VSHDIR        ?= .shobj/
+endif
 
 # NOTE: VLDLIBS is defined below, in case it is overridden for static-
 #       or shared-only builds.

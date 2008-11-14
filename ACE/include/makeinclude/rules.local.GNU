@@ -64,7 +64,7 @@ IDL_SRC ?=
 VLIBS ?=
 BUILD ?=
 BIN ?=
-VBIN ?= $(BIN:%=%$(VAR))
+VBIN ?= $(ARCH_BIN:%=%$(VAR))
 ifneq ($(VBIN),)
   $(VBIN): $(VLIBS)
 endif
@@ -255,6 +255,14 @@ ifndef LN_S
   endif # ! WIN32
 endif # ! LN_S
 
+# Don't call shell/call directly below since we may need to 
+# add the architecture specific suffix to the directory
+ifneq ($(mingw32),1)
+ARCH_SOURCE_DIR := $(patsubst /,,$(shell pwd)/$(ARCH))
+else
+ARCH_SOURCE_DIR := $(patsubst /,,$(call PWD)/$(ARCH))
+endif
+
 $(INSBIN)/%$(VAR)$(EXEEXT) \
 $(INSINC)/ace% \
 $(INSLIB)/% \
@@ -272,57 +280,57 @@ ifeq ($(vxworks_ntbuild),1)
 	@if exist $@ echo "$(@F) already installed"
 	@if not exist $@ echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) to $(@D)" && \
 		$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
-		$(LN_S) $(shell pwd)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
+		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
 		echo "Installing $(@F) to $(@D)" && \
 		$(RM) $@ && \
-		$(LN_S) $(shell pwd)/$(@F) $@
+		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@
 else #not vxworks_ntbuild
   ifeq ($(mingw32),1)
     #If we're actually copying instead of linking, pay attention to timestamps to know when to install
     ifeq ($(firstword $(LN_S)),cp)
       ifneq ($(SOVERSION),)
-	@if test $(call PWD) != $(@D) ; then \
+	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
 		if test $(@F) -ot $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) ; then \
 			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
 			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-			$(LN_S) $(call PWD)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 		fi ; \
 	fi
       endif #SOVERSION
-	@if test $(call PWD) != $(@D) ; then \
+	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
 		if test $@ -nt $(@F) ; then \
 			echo "$(@F) already installed" ; \
 		else \
 			echo "Installing $(@F) -> $(@D)" ; \
 			$(RM) $@; \
-			$(LN_S) $(call PWD)/$(@F) $@; \
+			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
 		fi ; \
 	fi
     else #firstword of LN_S is not cp, so we're using real symlinks
-	@if test $(call PWD) != $(@D) -o -n "$(SOVERSION)" ; then \
+	@if test $(ARCH_SOURCE_DIR) != $(@D) -o -n "$(SOVERSION)" ; then \
 		if test -s $@ ; then \
 			echo "$(@F) already installed" ; \
 		else \
 			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
 			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-			$(LN_S) $(call PWD)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 			echo "Installing $(@F) -> $(@D)" ; \
 			$(RM) $@; \
-			$(LN_S) $(call PWD)/$(@F) $@; \
+			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
 		fi ; \
 	fi
     endif #firstword
   else #not mingw32
-	@if test $(shell pwd) != $(@D) -o -n "$(SOVERSION)" ; then \
+	@if test $(ARCH_SOURCE_DIR) != $(@D) -o -n "$(SOVERSION)" ; then \
 		if test -s $@ ; then \
 			echo "$(@F) already installed" ; \
 		else \
 			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
 			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-			$(LN_S) $(shell pwd)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 			echo "Installing $(@F) -> $(@D)" ; \
 			$(RM) $@; \
-			$(LN_S) $(shell pwd)/$(@F) $@; \
+			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
 		fi ; \
 	fi
   endif #mingw32
@@ -335,7 +343,7 @@ ifdef MVSLIB
 			echo "$(@F:.$(SOEXT)=.x) already installed" ; \
 		else \
 			echo "Installing $(@F:.$(SOEXT)=.x) -> $(@D)" ; \
-			$(RM) $(@); $(LN_S) $(shell pwd)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
+			$(RM) $(@); $(LN_S) $(ARCH_SOURCE_DIR)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
 		fi \
 	fi
 endif
@@ -386,7 +394,7 @@ ifdef OBJS
   CLEANUP_OBJS += $(addprefix $(VDIR), $(OBJS))
 endif # OBJS
 ifneq ($(CLEANUP_BIN),)
-  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(CLEANUP_BIN)))) $(VOBJS)
+  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(CLEANUP_BIN:$(ARCH)/%=%)))) $(VOBJS)
 endif # CLEANUP_BIN
 ifdef VSHOBJS
   CLEANUP_OBJS += $(VSHOBJS)
@@ -521,8 +529,8 @@ SPLIT:
 	@echo "done."
 
 svnignore.local:
-	if [ "n$(BIN)" != "n" ]; then \
-	  (svn propget svn:ignore .; echo $(BIN)) | sort | uniq | sed '/^$$/d' >SvNiGnOrE; \
+	if [ "n$(ARCH_BIN)" != "n" ]; then \
+	  (svn propget svn:ignore .; echo $(ARCH_BIN)) | sort | uniq | sed '/^$$/d' >SvNiGnOrE; \
 	  svn propset svn:ignore -F SvNiGnOrE .; \
 	  rm SvNiGnOrE; \
 	fi

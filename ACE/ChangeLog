@@ -1,3 +1,13 @@
+Fri Nov 14 22:25:34 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/wrapper_macros.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.bin.GNU:
+        * NEWS:
+          Add a new feature to enable users to build for multiple architectures
+          out of a single directory. See Bugzilla #3507.
+
 Fri Nov 14 19:17:35 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * ace/ACE.h:
