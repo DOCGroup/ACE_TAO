@@ -193,7 +193,7 @@ ACE_High_Res_Timer::global_scale_factor (void)
 #if (defined (ACE_WIN32) || defined (ACE_HAS_POWERPC_TIMER) || \
      defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_ALPHA_TIMER)) && \
     !defined (ACE_HAS_HI_RES_TIMER) && \
-    ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
+    (defined (ACE_WIN32) || \
      defined (ghs) || defined (__GNUG__) || \
      defined (__INTEL_COMPILER))
   // Check if the global scale factor needs to be set, and do if so.
@@ -422,7 +422,6 @@ ACE_High_Res_Timer::elapsed_time_incr (ACE_hrtime_t &nanoseconds) const
   nanoseconds = nanoseconds >> 10;
 }
 
-#if !defined (ACE_HAS_WINCE)
 void
 ACE_High_Res_Timer::print_ave (const ACE_TCHAR *str,
                                const int count,
@@ -507,12 +506,10 @@ ACE_High_Res_Timer::print_total (const ACE_TCHAR *str,
                  buf,
                  ACE_OS::strlen (buf));
 }
-#endif /* !ACE_HAS_WINCE */
 
 int
 ACE_High_Res_Timer::get_env_global_scale_factor (const ACE_TCHAR *env)
 {
-#if !defined (ACE_HAS_WINCE)
   if (env != 0)
     {
       const char *env_value = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (env));
@@ -526,9 +523,7 @@ ACE_High_Res_Timer::get_env_global_scale_factor (const ACE_TCHAR *env)
             }
         }
     }
-#else
-  ACE_UNUSED_ARG (env);
-#endif /* !ACE_HAS_WINCE */
+
   return -1;
 }
 

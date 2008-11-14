@@ -1,3 +1,67 @@
+Thu Nov 13 09:41:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Acceptor.h:
+          Fixed some typos in the doxygen documentation
+
+        * ace/ACE.cpp:
+        * ace/OS_NS_Thread.cpp:
+        * ace/SOCK_Connector.cpp:
+        * ace/SOCK_SEQPACK_Connector.cpp:
+        * ace/TLI_Connector.cpp:
+        * ace/Token.cpp:
+          Compare with ACE_Time_Value::zero
+
+        * ace/config-WinCE.h:
+          Windows CE 6 has GetSystemTimeAsFileTime. Also moved
+          some typedefs out of this file
+
+        * ace/Event_Handler.cpp:
+          Removed some commented out defines
+
+        * ace/Filecache.cpp:
+          Also call difftime on Windows CE, we have an emulation
+          for this method
+
+        * ace/High_Res_Timer.cpp:
+        * ace/High_Res_Timer.h:
+          Enable this for WinCE
+
+        * ace/Metrics_Cache_T.inl:
+          Layout change
+
+        * ace/os_include/os_signal.h:
+        * ace/os_include/sys/os_types.h:
+          Added typedefs for Windows CE
+
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_unistd.inl:
+          Updated comment
+
+        * ace/OS_NS_sys_time.inl:
+          Windows CE 6 has GetSystemTimeAsFileTime
+
+        * ace/OS_NS_sys_wait.h:
+          Doxygen change
+
+        * ace/OS_NS_unistd.cpp:
+          Reworked pread/pwrite on Windows so that both methods are
+          more equal and do check all return values and set errno
+
+        * ace/SString.cpp:
+          Removed commented out WinCE include
+
+        * ace/Stats.cpp:
+          Just call strerror on CE
+
+        * ace/UTF16_Encoding_Converter.cpp:
+          Initialse pointer with 0
+
+        * ace/WFMO_Reactor.cpp:
+          The wait method on Windows can work with a relative time. When
+          just doing a ping check on WinCE, just pass in ACE_Time_Value::zero
+          instead of first getting the current time, call wait where then
+          current time is converted back to relative time
+
 Thu Nov 13 15:26:17 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Log_Msg.h:

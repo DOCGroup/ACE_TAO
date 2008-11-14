@@ -2731,9 +2731,7 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
             return -1;
           /* NOTREACHED */
         case 0:
-          if (timeout != 0
-              && timeout->sec () == 0
-              && timeout->usec () == 0)
+          if (timeout != 0 && *timeout == ACE_Time_Value::zero)
             errno = EWOULDBLOCK;
           else
             errno = ETIMEDOUT;
