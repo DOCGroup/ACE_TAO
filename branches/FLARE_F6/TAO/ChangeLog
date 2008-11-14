@@ -1,3 +1,17 @@
+Fri Nov 14 22:40:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/HMOptions.h:
+        * orbsvcs/orbsvcs/LWFT/AppOptions.cpp:
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp:
+        * orbsvcs/orbsvcs/LWFT/RM_Proxy.cpp:
+        * orbsvcs/orbsvcs/LWFT/HMOptions.cpp:
+        * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
+        * orbsvcs/LWFT_Service/host_monitor.cpp:
+        
+          Added capability for the Replication Manager
+          to register itself with the Naming Service. Also
+          made minor changes to other files.
+
 Fri Nov 14 19:21:26 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/LWFT.mpc:

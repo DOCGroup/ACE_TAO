@@ -19,9 +19,9 @@
 
 
 HostMonitorImpl::HostMonitorImpl (CORBA::ORB_ptr orb, Monitor_Thread *mt)
-: monitor_thread_ (mt),
-  connector_ (monitor_thread_->get_reactor ()),
-  orb_ (CORBA::ORB::_duplicate(orb))
+  : monitor_thread_ (mt),
+    connector_ (monitor_thread_->get_reactor ()),
+    orb_ (CORBA::ORB::_duplicate (orb))
 {
   this->create_rm_proxy ();
 }
@@ -35,27 +35,38 @@ throw (CORBA::SystemException)
 
 
 ::CORBA::Boolean
-HostMonitorImpl::register_process (const char *process_id, const char * hostname, CORBA::Long port)
+HostMonitorImpl::register_process (const char *process_id,
+                                   const char * hostname,
+                                   CORBA::Long port)
 throw (CORBA::SystemException)
 {
   //ACE_DEBUG ((LM_DEBUG, "Entering register process\n"));
   Failure_Handler *handler = 0;
   ACE_SOCK_Connector::PEER_ADDR serv_addr;
   serv_addr.set (port, hostname);
-  ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT, ACE_Time_Value (1));
+  ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT,
+                             ACE_Time_Value (1));
 
   if (connector_.connect (handler, serv_addr, options) < 0)
-  {
-    ACE_ERROR_RETURN((LM_ERROR,"Failed to open an connector socket.\n"), 1);
-  }
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Failed to open an connector socket.\n"), 1);
+    }
 
   //ACE_DEBUG ((LM_DEBUG, "Entering register process\n"));
 
   handler->set_host_monitor (this);
-  handler->watch_process (handler->get_handle(), process_id, hostname, port);
+  handler->watch_process (handler->get_handle (),
+                          process_id,
+                          hostname,
+                          port);
   process_map_.bind (process_id, handler);
-  //this->create_rm_proxy ();
-  ACE_DEBUG ((LM_DEBUG,"HostMonitorImpl::register_process process_id = %s, port = %d.\n",process_id, port));
+
+  ACE_DEBUG ((LM_DEBUG,
+              "HostMonitorImpl::register_process "
+              "process_id = %s, port = %d.\n",
+              process_id,
+              port));
 
   return true;
 }
