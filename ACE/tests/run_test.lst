@@ -45,6 +45,7 @@ Bug_2980_Regression_Test: !STATIC !Win32 !VxWorks !WCHAR
 Bug_3102_Regression_Test
 Bug_3319_Regression_Test
 Bug_3432_Regression_Test
+Bug_3505_Regression_Test
 CDR_Array_Test: !ACE_FOR_TAO
 CDR_File_Test: !ACE_FOR_TAO
 CDR_Test
