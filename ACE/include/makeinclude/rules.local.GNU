@@ -416,7 +416,7 @@ endif # DO_CLEANUP
 
 realclean.local: clean.local deinstall.local clean_idl_stubs.local
 ifdef DO_CLEANUP
-	-$(RM) -r $(REALCLEAN_FILES) $(sort $(CLEANUP_OBJDIRS))
+	-$(RM) -r $(REALCLEAN_FILES) $(sort $(CLEANUP_OBJDIRS)) $(ARCH)
 endif # DO_CLEANUP
 
 
