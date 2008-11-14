@@ -1,3 +1,9 @@
+Fri Nov 14 14:30:30 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Bug_3499_Regression/DLL_TAO_Service.cpp:
+
+          Remove extranious ;
+
 Fri Nov 14 13:23:30 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
