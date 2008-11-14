@@ -23,8 +23,8 @@ class SSA_Export StateSyncAgentTask : public ACE_Task_Base
 public:
 
   StateSyncAgentTask (CORBA::ORB_ptr orb,
-		      StateSynchronizationAgent_i * agent,
-		      ACE_Barrier * sync);
+		                  StateSynchronizationAgent_i * agent,
+		                  ACE_Barrier * sync);
 
   int svc (void);
 

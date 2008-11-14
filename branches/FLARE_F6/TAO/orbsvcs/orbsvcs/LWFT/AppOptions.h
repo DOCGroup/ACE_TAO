@@ -31,7 +31,6 @@ class LWFT_Server_Export AppOptions
 ///   Singleton class for the program options.
 {
 public:
-
   /// Singleton access method.
   static AppOptions *instance (void);
 
@@ -46,9 +45,7 @@ public:
   std::string process_id (void) const;
   ArgPair arg_pair (void) const;
 
-
 protected:
-
   /// Constructor is protected to ensure Singleton access.
   AppOptions (void);
 
@@ -65,6 +62,5 @@ protected:
   static ACE_Auto_Ptr<AppOptions> deleter_;
   static ACE_Thread_Mutex lock_;
 };
-
 
 #endif /* _APPOPTIONS_H */

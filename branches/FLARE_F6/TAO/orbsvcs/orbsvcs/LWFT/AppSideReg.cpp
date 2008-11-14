@@ -26,7 +26,6 @@ AppSideReg::AppSideReg (ACE_Barrier *ext_barrier, CORBA::ORB_ptr orb)
 {
 }
 
-
 AppSideReg::~AppSideReg (void)
 {
   monitor_->stop ();

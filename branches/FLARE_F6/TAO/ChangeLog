@@ -1,3 +1,18 @@
+Fri Nov 14 16:52:38 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.h:
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppOptions.cpp:
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.h:
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.h:
+        * orbsvcs/orbsvcs/LWFT/AppOptions.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/client.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/server.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/test_i.cpp:
+        
+          Minor changes to FLARe library and example code.
+
 Wed Nov 12 21:18:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.cpp:

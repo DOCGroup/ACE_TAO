@@ -29,19 +29,19 @@ class ACE_Barrier;
 class LWFT_Server_Export AppSideReg : public ACE_Task_Base
 {
 public:
-    AppSideReg (ACE_Barrier *ext_b, CORBA::ORB_ptr);
+  AppSideReg (ACE_Barrier *ext_b, CORBA::ORB_ptr);
 
-    ~AppSideReg (void);
+  ~AppSideReg (void);
 
-    virtual int svc (void);
-    void unregister_process (void);
+  virtual int svc (void);
+  void unregister_process (void);
 
 private:
-    std::string HM_ior_;
-    std::auto_ptr <AppSideMonitor_Thread> monitor_;
-    HostMonitor_var hmvar_;
-    CORBA::ORB_var orb_;
-    ACE_Barrier *external_barrier_;
+  std::string HM_ior_;
+  std::auto_ptr <AppSideMonitor_Thread> monitor_;
+  HostMonitor_var hmvar_;
+  CORBA::ORB_var orb_;
+  ACE_Barrier *external_barrier_;
 };
 
 

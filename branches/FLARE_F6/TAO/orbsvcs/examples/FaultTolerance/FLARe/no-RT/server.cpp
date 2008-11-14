@@ -18,7 +18,6 @@
 #include "orbsvcs/orbsvcs/LWFT/AppSideReg.h"
 #include "orbsvcs/orbsvcs/LWFT/AppOptions.h"
 #include "orbsvcs/orbsvcs/LWFT/ServerORBInitializer.h"
-#include "orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h"
 #include "orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.h"
 
 #include "test_i.h"
@@ -29,7 +28,7 @@ bool use_corba = true;
 int
 parse_args (int argc, char *argv[], ServerOptions & options)
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:hl:n:s:a:c:");
+  ACE_Get_Opt get_opts (argc, argv, "b:hl:n:s:a:c:d");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -137,7 +136,7 @@ main (int argc, char *argv[])
 	      }
    
       // ACE_DEBUG ((LM_TRACE, ACE_TEXT ("AppSideReg activated.\n")));
-      thread_barrier.wait();
+      thread_barrier.wait ();
 
       ServerOptions server_options;
 
