@@ -1,3 +1,12 @@
+Fri Nov 14 18:54:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3505_Regression_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          ACE_Service_Gestalt is another one that could enable ACE::debug,
+          added a test to see if that is the reason why ACE::debug is enabled
+          on WinCE
+
 Fri Nov 14 18:39:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE.cpp:
