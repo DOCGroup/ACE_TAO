@@ -3382,27 +3382,82 @@ ACE::strnew (const wchar_t *s)
 }
 #endif /* ACE_HAS_WCHAR */
 
-inline static bool equal_char(char a, char b, bool case_sensitive)
+// helper functions for ACE::wild_match()
+namespace
 {
-  if (case_sensitive)
-    return a == b;
-  return ACE_OS::ace_tolower(a) == ACE_OS::ace_tolower(b);
+
+  inline bool equal_char (char a, char b, bool case_sensitive)
+  {
+    if (case_sensitive)
+      return a == b;
+    return ACE_OS::ace_tolower (a) == ACE_OS::ace_tolower (b);
+  }
+
+  // precond:  *p == '[' start of char class
+  // postcond: *p == ']' end of the char class
+  inline bool equal_class (char s, const char *&p, bool case_sensitive)
+  {
+    ++p;
+    bool negate = false;
+    if (*p == '!')
+      {
+        negate = true;
+        ++p;
+      }
+    // ] and - are regular in 1st position
+    for (bool first = true; *p && (first || *p != ']'); ++p)
+      {
+        if (!first && *p == '-' && p[1] != ']')
+          {
+            if (!p[1] || p[1] <= p[-1]) // invalid range
+              {
+                continue;
+              }
+            // Since we are in the POSIX locale, only the basic ASCII
+            // characters are allowed as the range endpoints.  These characters
+            // are the same values in both signed and unsigned chars so we
+            // don't have to account for any "pathological cases."
+            for (char range = p[-1] + 1; range <= p[1]; ++range)
+              {
+                if (equal_char (s, range, case_sensitive))
+                  {
+                    while (*++p != ']') {}
+                    return !negate;
+                  }
+              }
+            ++p; // consume the character 1 past the -
+          }
+        else if (equal_char (s, *p, case_sensitive))
+          {
+            while (*++p != ']') {}
+            return !negate;
+          }
+        first = false;
+      }
+    return negate;
+  }
 }
 
 bool
-ACE::wild_match(const char* str, const char* pat, bool case_sensitive)
+ACE::wild_match(const char *str, const char *pat, bool case_sensitive,
+                bool character_classes)
 {
   if (str == pat)
     return true;
   if (pat == 0 || str == 0)
     return false;
 
-  bool star = false;
-  const char* s = str;
-  const char* p = pat;
+  bool star = false, escape = false;
+  const char *s = str;
+  const char *p = pat;
   while (*s != '\0')
     {
-      if (*p == '*')
+      if (!escape && *p == '\\')
+        {
+          ++p;
+          escape = true;
+        }
+      else if (!escape && *p == '*')
         {
           star = true;
           pat = p;
@@ -3412,22 +3467,38 @@ ACE::wild_match(const char* str, const char* pat, bool case_sensitive)
             return true;
           p = pat;
         }
-      else if (*p == '?')
+      else if (!escape && *p == '?')
         {
           ++s;
           ++p;
         }
-      else if (! equal_char(*s, *p, case_sensitive))
+      else if (!escape && character_classes && *p == '[')
+        {
+          if (equal_class (*s, p, case_sensitive))
+            {
+              ++p;
+            }
+           else
+            {
+              if (!star)
+                return false;
+              p = pat;
+            }
+          ++s;
+        }
+      else if (!equal_char (*s, *p, case_sensitive))
         {
           if (!star)
             return false;
-          s = ++str;
+          ++s;
           p = pat;
+          escape = false;
         }
       else
         {
           ++s;
           ++p;
+          escape = false;
         }
     }
   if (*p == '*')
