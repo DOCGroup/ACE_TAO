@@ -334,7 +334,7 @@ get_base_addrs (void)
 #endif /* defined (ACE_WIN32) */
 
 int
-run_main (int argc, ACE_TCHAR *[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
 #if defined (ACE_WIN32)
   get_base_addrs();
@@ -355,9 +355,13 @@ run_main (int argc, ACE_TCHAR *[])
       // No arguments means we're the parent process.
       ACE_Process_Options options (1);
 
-      options.command_line (EXE_LOCATION
-                            ACE_TEXT ("Malloc_Test")
-                            ACE_PLATFORM_EXE_SUFFIX
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+      static const ACE_TCHAR* format = ACE_TEXT ("%ls%ls%ls");
+#else
+      static const ACE_TCHAR* format = ACE_TEXT ("%s%s%s");
+#endif /* !ACE_WIN32 && ACE_USES_WCHAR */
+      options.command_line (format, EXE_LOCATION,
+                            argc > 0 ? argv[0] : ACE_TEXT ("Malloc_Test"),
                             ACE_TEXT (" run_as_test"));
 
       MALLOC *myalloc = myallocator (PARENT_BASE_ADDR);
