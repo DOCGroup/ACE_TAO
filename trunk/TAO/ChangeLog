@@ -1,3 +1,10 @@
+Fri Nov 14 10:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/TestImpl.h:
+
+          ReFixed the Reintroduced Fuzz error with
+          Thu Nov 13 21:48:14 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
+
 Thu Nov 13 22:22:40 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/DevGuideExamples/NotifyService/Messenger/NotifyServiceMessenger.mpc:
