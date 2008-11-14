@@ -36,7 +36,7 @@ project(*Common) : pi_server, interceptors, iorinterceptor, orbsvcs_output {
 }
 
 project(*Client) : pi_server, interceptors, naming, orbsvcs_output {
-  after += *ReplicationManagerLib
+  after += *ReplicationManager
   libs += LWFT_Common LWFT_ReplicationManager
   idlflags += -St \
               -Wb,export_macro=LWFT_Client_Export \
@@ -216,7 +216,7 @@ project(*ReplicationManagerImpl) : portableserver, orbsvcs_output {
 }
 
 project(*HostMonitor) : portableserver, naming, orbsvcs_output {
-  after += *ReplicationManagerLib *Server
+  after += *ReplicationManager *Server
   libs += LWFT_Common \
           LWFT_Server \
           LWFT_ReplicationManager
