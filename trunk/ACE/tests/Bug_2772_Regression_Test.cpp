@@ -43,7 +43,7 @@ ThreadTest::ThreadTest() :
    m_startedCondition(m_mutex),
    m_stopCondition(m_mutex),
    m_workerThreadId(-1),
-   m_workerThreadHandle(0),
+   m_workerThreadHandle(ACE_OS::NULL_hthread),
    m_workerRunning(false),
    m_doubleLock(false)
 {
