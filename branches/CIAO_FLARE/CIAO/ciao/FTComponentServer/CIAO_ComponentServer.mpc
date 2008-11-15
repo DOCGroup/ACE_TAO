@@ -77,11 +77,10 @@ project(CIAO_FTComponentServer_svnt) : ccm_componentserver_svnt, ciao_ft_compone
 
 project(CIAO_FTComponentServer_exe) : ccm_componentserver_svnt, portableserver, ciao_ft_componentserver_svnt, messaging, anytypecode, ciao_server, ciaoexe, ciao_session_container, ciao_ft_componentserver_configurator {
   exename = ciao_ft_componentserver
-  libs += CIAO_Logger SSA_Agent ServerInterceptor AppMonitor
-  after += SSA_Agent AppMonitor
+  libs += CIAO_Logger AppMonitor LWFT_StateSyncAgent LWFT_ReplicationManager LWFT_Client LWFT_Server
+  after += AppMonitor
   macros += CIAO_BUILD_COMPONENTSERVER_EXE
-  includes += CommonIDL
-  includes += .. $(TAO_ROOT)/orbsvcs/examples/FaultTolerance/FLARe/no-RT
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
 
   Source_Files {
     CIAO_FTComponentServer.cpp

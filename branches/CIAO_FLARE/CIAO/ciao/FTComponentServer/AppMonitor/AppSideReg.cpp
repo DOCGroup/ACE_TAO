@@ -42,7 +42,7 @@ int AppSideReg::svc(void)
 			  hmh.escape_dots (this->get_hostname ()) + 
 			  "/HostMonitor");
 
-    u_short port = hmvar_->heartbeat_port (this->get_process_id ().c_str ());
+    u_short port = hmvar_->heartbeat_port ();
     
     ACE_Barrier internal_thread_barrier (2);
     monitor_ = std::auto_ptr <AppSideMonitor_Thread> 

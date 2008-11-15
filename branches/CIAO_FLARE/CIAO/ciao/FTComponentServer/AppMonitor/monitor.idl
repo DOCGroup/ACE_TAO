@@ -5,9 +5,8 @@ interface HostMonitor
 {
   boolean register_process (in string process_id, in string hostname, in long port);
   boolean unregister_process (in string process_id);
-  short heartbeat_port (in string process_id);
+  short heartbeat_port ();
   void dump ();
 };
 
 #endif // MONITOR_IDL
-

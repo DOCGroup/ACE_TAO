@@ -26,7 +26,7 @@
 #include <orbsvcs/CosNamingC.h>
 #include "ciao/CIAO_common.h"
 #include "ciao/FTComponentServer/Name_Helper_T.h"
-#include "ciao/FTComponentServer/CommonIDL/ReplicationManagerC.h"
+#include "ReplicationManagerC.h"
 #include "ciao/Containers/Container_Base.h"
 #include "SimpleFT_svnt.h"
 
