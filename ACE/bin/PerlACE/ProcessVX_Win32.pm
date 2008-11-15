@@ -206,7 +206,6 @@ sub Spawn ()
         }
 
         @cmds[$cmdnr++] = 'ld <'. $program . $PerlACE::ProcessVX::ExeExt;
-        $cmdline = $program . $PerlACE::ProcessVX::ExeExt . ' ' . $self->{ARGUMENTS};
         if (defined $self->{ARGUMENTS}) {
             ($arguments = $self->{ARGUMENTS})=~ s/\"/\\\"/g;
             ($arguments = $self->{ARGUMENTS})=~ s/\'/\\\'/g;

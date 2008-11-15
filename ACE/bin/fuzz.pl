@@ -1403,6 +1403,10 @@ sub check_for_bad_run_test ()
                         print_error ("$file:$.: using PerlACE::Process");
                     }
 
+                    if (m/PerlACE::TestConfig/) {
+                        print_error ("$file:$.: using PerlACE::TestConfig");
+                    }
+
                     if (m/unlink/) {
                         print_error ("$file:$.: using unlink");
                     }
