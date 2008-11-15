@@ -1,3 +1,27 @@
+Sat Nov 15 19:23:26 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * MPC/config/tao_idl_mcpp.mpb:
+
+          Restored this file which is used by CIAO but not TAO.
+
+        * TAO_IDL/tao_idl.mpc:
+        * TAO_IDL/tao_idl_mcpp_local.mpb:
+
+          Created a "local" version of tao_idl_mcpp that uses relative paths.
+
+        * TAO_IDL/tao_idl_mcpp.mpb:
+
+          Removed this file.
+
+        * tests/Bug_3499_Regression/DLL_Service.mpc:
+
+          Removed "install = ." -- this is the default behavior and explicitly
+          writing it causes problems with parallel make creating a bad link.
+
+        * tests/Bug_3499_Regression/DLL_TAO_Service.cpp:
+
+          Wchar fix: resolve_initial_references always takes a narrow string.
+
 Sat Nov 15 18:52:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * testst/Bug_3299_Regression/run_test.pl:
