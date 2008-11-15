@@ -1,3 +1,8 @@
+Sat Nov 15 18:52:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * testst/Bug_3299_Regression/run_test.pl:
+          Updated to the new test framework
+
 Fri Nov 14 23:05:47 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * TAO_IDL/tao_idl_mcpp.mpb:
