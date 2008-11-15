@@ -2,7 +2,6 @@
 
 project (Bug_3499_Regression) : aceexe {
   exename = Bug_3499_Regression
-  install = .
   Source_Files {
     DLL_Service_Host.cpp
   }

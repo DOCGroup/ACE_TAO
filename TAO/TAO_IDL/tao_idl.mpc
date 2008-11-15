@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(TAO_IDL_EXE) : aceexe, install, tao_output, crosscompile, mcpp, tao_idl_mcpp {
+project(TAO_IDL_EXE) : aceexe, install, tao_output, crosscompile, mcpp, tao_idl_mcpp_local {
   exename      = tao_idl
   libs        += TAO_IDL_BE TAO_IDL_FE
   exeout       = $(ACE_ROOT)/bin
