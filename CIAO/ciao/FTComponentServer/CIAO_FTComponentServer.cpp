@@ -30,8 +30,8 @@
 #include "CIAO_CS_ClientC.h"
 #include "Configurator_Factory.h"
 #include "Configurators/Server_Configurator.h"
-#include "StateSynchronizationAgent/StateSynchronizationAgent_i.h"
-#include "ServerInterceptor/ServerORBInitializer.h"
+#include "StateSynchronizationAgent_i.h"
+#include "ServerORBInitializer.h"
 #include "AppMonitor/AppSideReg.h"
 #include "ReplicationManagerC.h"
 

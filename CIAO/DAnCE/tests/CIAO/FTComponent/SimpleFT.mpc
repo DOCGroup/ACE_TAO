@@ -8,8 +8,7 @@ project(SimpleFT_idl_gen) : taoidldefaults, anytypecode {
               -Wb,stub_export_include=SimpleFT_stub_export.h \
               -Wb,skel_export_macro=SIMPLEFT_SVNT_Export \
               -Wb,skel_export_include=SimpleFT_svnt_export.h  
-  idlflags += -I$(CIAO_ROOT)/ccm
-  idlflags += -I$(CIAO_ROOT)/ciao/FTComponentServer/CommonIDL
+  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
 
   IDL_Files {
     SimpleFT.idl
@@ -25,10 +24,9 @@ project(SimpleFT_cidl_gen) : ciaocidldefaults, taoidldefaults {
   idlflags += -Wb,export_macro=SIMPLEFT_EXEC_Export \
               -Wb,export_include=SimpleFT_exec_export.h \
               -SS
-  idlflags += -I$(CIAO_ROOT)/ccm
 
-  cidlflags += -I$(CIAO_ROOT)/ciao/FTComponentServer/CommonIDL
-  idlflags += -I$(CIAO_ROOT)/ciao/FTComponentServer/CommonIDL
+  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+  cidlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
               
   CIDL_Files {
     SimpleFT.cidl
@@ -42,9 +40,8 @@ project(SimpleFT_cidl_gen) : ciaocidldefaults, taoidldefaults {
 project(SimpleFT_stub) : ccm_stub {
   avoids += ace_for_tao
   after += SimpleFT_idl_gen 
-  libs  += FTCommonIdl
   
-  includes += $(CIAO_ROOT)/ciao/FTComponentServer/CommonIDL
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
 
   sharedname = SimpleFT_stub
   dynamicflags   = SIMPLEFT_STUB_BUILD_DLL
@@ -72,9 +69,7 @@ project(SimpleFT_exec) : ciao_executor, orbsvcslib {
   after   += SimpleFT_cidl_gen SimpleFT_stub
   sharedname = SimpleFT_exec
   libs += SimpleFT_stub
-  
-  includes += $(CIAO_ROOT)/ciao/FTComponentServer/CommonIDL
-
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
   dynamicflags   = SIMPLEFT_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -103,8 +98,8 @@ project(SimpleFT_svnt) : ciao_servant {
   sharedname  = SimpleFT_svnt
   libs       += SimpleFT_exec \
                 SimpleFT_stub 
-  includes += $(CIAO_ROOT)/ciao/FTComponentServer/CommonIDL  
 
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
   dynamicflags = SIMPLEFT_SVNT_BUILD_DLL
   
   CIDL_Files {

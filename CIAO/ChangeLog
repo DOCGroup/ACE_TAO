@@ -1,3 +1,22 @@
+Sat Nov 15 05:07:51 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/FTComponent/SimpleFT.mpc
+        * DAnCE/tests/CIAO/FTComponent/SimpleFT_exec.cpp
+        * ciao/FTComponentServer/AppMonitor/AppSideReg.cpp
+        * ciao/FTComponentServer/AppMonitor/monitor.idl
+        * ciao/FTComponentServer/CIAO_FTComponentServer.cpp
+        * ciao/FTComponentServer/CIAO_ComponentServer.mpc:
+        
+        Changed the FTComponentServer to use the restructured orbsvcs/LWFT
+        libraries.
+
+        * ciao/FTComponentServer/StateSynchronizationAgent/
+        * ciao/FTComponentServer/CommonIDL/
+        * ciao/FTComponentServer/ServerInterceptor/
+        * ciao/FTComponentServer/ClientInterceptor/ :
+        
+        Removed theses libraries.        
+        
 Wed Nov 12 21:26:14 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
