@@ -2,8 +2,6 @@
 
 # TODO:
 # - per-source-file flag_overrides (gnu.mpd)
-# - pre-compiled headers (OpenDDS uses them)
-# - OpenDDS rules.dds.GNU
 
 # Include this file from platform_macros.GNU to build with sh and GNU make
 # and the Visual C++ compiler and linker.
