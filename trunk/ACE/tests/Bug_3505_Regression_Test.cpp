@@ -24,7 +24,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Bug_3505_Regression_Test"));
   const int test_argc_size2 = 5;
   int arg2 = test_argc_size2;
-  ACE_TCHAR *args2[test_argc_size2] = {
+  const ACE_TCHAR *args2[test_argc_size2] = {
     ACE_TEXT ("\\network\\temp\\ACE\\wince6\\ACE_wrappers\\TAO\\tests\\Hello\\server"),
     ACE_TEXT ("-ORBDebugLevel"),
     ACE_TEXT ("-0"),
@@ -36,7 +36,7 @@ run_main (int, ACE_TCHAR *[])
   ACE::debug (false);
 
   ACE_Service_Gestalt gestalt;
-  gestalt.parse_args (arg2, args2);
+  gestalt.parse_args (arg2, const_cast<ACE_TCHAR**>(args2));
 
   if (ACE::debug ())
     {

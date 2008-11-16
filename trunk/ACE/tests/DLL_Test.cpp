@@ -27,7 +27,7 @@ ACE_RCSID(tests, DLL_Test, "$Id$")
 
 #if defined (ACE_WIN32) && defined (_MSC_VER) && defined (_DEBUG)
 # define OBJ_SUFFIX ACE_TEXT ("d") ACE_DLL_SUFFIX
-#elif defined (ACE_WIN32) && defined (__BORLANDC__)
+#elif defined (ACE_LD_DECORATOR_STR)
 # define OBJ_SUFFIX ACE_LD_DECORATOR_STR ACE_DLL_SUFFIX
 #else
 # define OBJ_SUFFIX ACE_DLL_SUFFIX
