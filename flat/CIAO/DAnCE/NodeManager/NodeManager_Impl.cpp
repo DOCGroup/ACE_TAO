@@ -26,7 +26,7 @@ namespace DAnCE
       redirection_ (redirection),
       properties_ (properties.current_size ())
   {
-    DANCE_TRACE (DLINFO "NodeManager_Impl::NodeManager_Impl");
+    DANCE_TRACE ( "NodeManager_Impl::NodeManager_Impl");
     redirection.add_node (name);
     DANCE_DEBUG ((LM_INFO, DLINFO "NodeManager_impl::NodeManager_impl has been created\n"));
     
@@ -42,7 +42,7 @@ namespace DAnCE
 
   NodeManager_Impl::~NodeManager_Impl()
   {
-    DANCE_TRACE (DLINFO "NodeManager_Impl::~NodeManager_Impl()");
+    DANCE_TRACE ( "NodeManager_Impl::~NodeManager_Impl()");
     for (TManagers::iterator iter = this->managers_.begin();
          iter != this->managers_.end();
          ++iter)
@@ -75,7 +75,7 @@ namespace DAnCE
                                 ::Deployment::Logger_ptr /*log*/,
                                 ::CORBA::Long /*updateInterval*/)
   {
-    DANCE_TRACE (DLINFO "NodeManager_Impl::joinDomain");
+    DANCE_TRACE ( "NodeManager_Impl::joinDomain");
     ACE_DEBUG ((LM_ERROR, DLINFO "NodeManager_Impl::joinDomain - "
                 "joinDomain not implemented\n"));
     throw CORBA::NO_IMPLEMENT ();
@@ -84,7 +84,7 @@ namespace DAnCE
   void
   NodeManager_Impl::leaveDomain ()
   {
-    DANCE_TRACE (DLINFO "NodeManager_Impl::leaveDomain");
+    DANCE_TRACE ( "NodeManager_Impl::leaveDomain");
     ACE_DEBUG ((LM_ERROR, DLINFO "NodeManager_Impl::leaveDomain - "
                 "leave not implemented\n"));
     throw CORBA::NO_IMPLEMENT ();
@@ -94,7 +94,7 @@ namespace DAnCE
   NodeManager_Impl::preparePlan (const ::Deployment::DeploymentPlan & plan,
                                  ::Deployment::ResourceCommitmentManager_ptr /*resourceCommitment*/)
   {
-    DANCE_TRACE (DLINFO "NodeManager_Impl::preparePlan");
+    DANCE_TRACE ( "NodeManager_Impl::preparePlan");
     
     DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeManager_impl::preparePlan - "
                   "started for node %s and plan %s\n", this->name_.c_str(), plan.UUID.in()));
@@ -140,7 +140,7 @@ namespace DAnCE
   void
   NodeManager_Impl::destroyManager (::Deployment::NodeApplicationManager_ptr appManager)
   {
-    DANCE_TRACE (DLINFO "NodeManager_Impl::destroyManager");
+    DANCE_TRACE ( "NodeManager_Impl::destroyManager");
 
     for (TManagers::iterator iter = this->managers_.begin();
          iter != this->managers_.end();
@@ -167,7 +167,7 @@ namespace DAnCE
   ::Deployment::Resources *
   NodeManager_Impl::getDynamicResources ()
   {
-    DANCE_TRACE (DLINFO "NodeManager_Impl::getDynamicResources ()");
+    DANCE_TRACE ( "NodeManager_Impl::getDynamicResources ()");
     ACE_DEBUG ((LM_ERROR, DLINFO "NodeManager_Impl::getDynamicResources - "
                 "getDynamicResources not implemented\n"));
       throw CORBA::NO_IMPLEMENT ();
