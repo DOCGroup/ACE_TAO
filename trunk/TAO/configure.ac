@@ -478,6 +478,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/Makefile
     orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/Makefile
     orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/Makefile
+    orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/Makefile
     orbsvcs/tests/InterfaceRepo/IDL3_Test/Makefile
     orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/Makefile
     orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile
