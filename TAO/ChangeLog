@@ -1,3 +1,9 @@
+Sun Nov 16 08:11:12 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
+
+        * configure.ac:
+
+          Updated for orbsvcs/tests/InterfaceRepo/Bug_3495_Regression
+
 Sat Nov 15 19:23:26 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * MPC/config/tao_idl_mcpp.mpb:
