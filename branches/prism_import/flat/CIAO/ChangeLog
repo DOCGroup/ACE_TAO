@@ -1,3 +1,14 @@
+Sun Nov 16 22:12:23 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/DAnCE_Properties.idl:
+        
+          Added naming service and component IOR properties. 
+        
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/RedirectionService/NameServiceRedirection.cpp:
+
+          Logging/layout changes. 
+        
 Fri Nov 14 22:18:16 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/DAnCE_Core.mpc:
@@ -5,19 +16,19 @@ Fri Nov 14 22:18:16 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/NodeManager/NodeManager_Impl.cpp:
 
           Support for dumping deployment plan at deployment time based on presence
-          of the gen_ostream MPC feature. 
-        
+          of the gen_ostream MPC feature.
+
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
-        
-          Logging improvements. 
-        
+
+          Logging improvements.
+
         * DAnCE/NodeApplication/NodeApplication.mpc:
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
         * examples/Hello/descriptors/DeploymentPlan.cdp:
         * examples/Hello/descriptors/NodeManagerMap.dat:
 
-          Porting of the basic Hello example to the new CIAO/DAnCE. 
-        
+          Porting of the basic Hello example to the new CIAO/DAnCE.
+
 Fri Nov 14 18:51:35 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc:

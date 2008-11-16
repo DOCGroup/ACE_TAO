@@ -7,8 +7,8 @@ using namespace DAnCE;
 
 NameServiceRedirection::NameServiceRedirection (CosNaming::NamingContext_ptr naming,
                                                 CosNaming::NamingContext_ptr domain)
-    : naming_ (CosNaming::NamingContext::_duplicate (naming))
-    , domain_ (CosNaming::NamingContext::_duplicate (domain))
+  : naming_ (CosNaming::NamingContext::_duplicate (naming)), 
+    domain_ (CosNaming::NamingContext::_duplicate (domain))
 {
 }
 
@@ -19,9 +19,9 @@ NameServiceRedirection::~NameServiceRedirection()
 void
 NameServiceRedirection::start_binding (const ACE_CString& node, const ACE_CString& plan)
 {
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] NameServiceRedirection::start_binding for node %s plan %s.\n",
-               node.c_str(),
-               plan.c_str()));
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "NameServiceRedirection::start_binding for node %s plan %s.\n",
+                 node.c_str(),
+                 plan.c_str()));
   ACE_CString key = node + plan;
   TRecords* records = 0;
   if (0 != this->transactions_.find (key, records))
@@ -38,11 +38,11 @@ NameServiceRedirection::start_binding (const ACE_CString& node, const ACE_CStrin
 void
 NameServiceRedirection::bind (const ACE_CString& node, const ACE_CString& plan, const ACE_CString& component, const ACE_CString& port, CORBA::Object_ptr obj)
 {
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] NameServiceRedirection::bind for node %s plan %s component %s and port %s is started.\n",
-               node.c_str(),
-               plan.c_str(),
-               component.c_str(),
-               port.c_str()));
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "NameServiceRedirection::bind for node %s plan %s component %s and port %s is started.\n",
+                 node.c_str(),
+                 plan.c_str(),
+                 component.c_str(),
+                 port.c_str()));
   SRecord record;
   record.name.length (4);
 
@@ -68,30 +68,30 @@ NameServiceRedirection::bind (const ACE_CString& node, const ACE_CString& plan, 
   TRecords* records = 0;
   if (0 != this->transactions_.find (key, records))
     {
-      DANCE_ERROR ( (LM_ERROR, "[%M] NameServiceRedirection::bind - Cann't find record %C for closing transaction.\n", key.c_str()));
+      DANCE_ERROR ((LM_ERROR, DLINFO "NameServiceRedirection::bind - Cann't find record %C for closing transaction.\n", key.c_str()));
       return;
     }
 
   record.obj = CORBA::Object::_duplicate (obj);
   records->push_back (record);
 
-//    try{
-//        component_context->bind(name, obj);
-//    }
-//    catch(CosNaming::NamingContext::AlreadyBound&)
-//    {
-//        component_context->rebind(name, obj);
-//    }
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] NameServiceRedirection::bind has finished.\n"));
+  //    try{
+  //        component_context->bind(name, obj);
+  //    }
+  //    catch(CosNaming::NamingContext::AlreadyBound&)
+  //    {
+  //        component_context->rebind(name, obj);
+  //    }
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "NameServiceRedirection::bind has finished.\n"));
 }
 
 void
 NameServiceRedirection::bind (const ACE_CString& node, const ACE_CString& plan, const ACE_CString& component, CORBA::Object_ptr obj)
 {
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] NameServiceRedirection::bind for node %s plan %s and component %s  is started.\n",
-               node.c_str(),
-               plan.c_str(),
-               component.c_str()));
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "NameServiceRedirection::bind for node %s plan %s and component %s  is started.\n",
+                 node.c_str(),
+                 plan.c_str(),
+                 component.c_str()));
   SRecord record;
   record.name.length (3);
 
@@ -111,7 +111,7 @@ NameServiceRedirection::bind (const ACE_CString& node, const ACE_CString& plan, 
   TRecords* records = 0;
   if (0 != this->transactions_.find (key, records))
     {
-      DANCE_ERROR ( (LM_ERROR, "[%M] NameServiceRedirection::bind - Cann't find record %s for closing transaction.\n", key.c_str()));
+      DANCE_ERROR ((LM_ERROR, DLINFO "NameServiceRedirection::bind - Cann't find record %s for closing transaction.\n", key.c_str()));
       return;
     }
 
@@ -121,26 +121,26 @@ NameServiceRedirection::bind (const ACE_CString& node, const ACE_CString& plan, 
   record.obj = CORBA::Object::_duplicate (obj);
 
   records->push_back (record);
-//    try{
-//        plan_context->bind(name, obj);
-//    }
-//    catch(CosNaming::NamingContext::AlreadyBound&)
-//    {
-//        DANCE_DEBUG((LM_DEBUG, "[%M] NameServiceRedirection::bind - Already bound exception was thrown. Rebinding\n"));
-//        plan_context->rebind(name, obj);
-//    }
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] NameServiceRedirection::bind has finished.\n"));
+  //    try{
+  //        plan_context->bind(name, obj);
+  //    }
+  //    catch(CosNaming::NamingContext::AlreadyBound&)
+  //    {
+  //        DANCE_DEBUG((LM_DEBUG, "[%M] NameServiceRedirection::bind - Already bound exception was thrown. Rebinding\n"));
+  //        plan_context->rebind(name, obj);
+  //    }
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "NameServiceRedirection::bind has finished.\n"));
 }
 
 void
 NameServiceRedirection::finish_binding (const ACE_CString& node, const ACE_CString& plan)
 {
   ACE_CString key = node + plan;
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] NameServiceRedirection::finish_binding started for %s.\n", key.c_str()));
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "NameServiceRedirection::finish_binding started for %s.\n", key.c_str()));
   TRecords* records = 0;
   if (0 != this->transactions_.find (key, records))
     {
-      DANCE_ERROR ( (LM_ERROR, "[%M] NameServiceRedirection::finish_binding - Cann't find record %s for closing transaction.\n", key.c_str()));
+      DANCE_ERROR ((LM_ERROR, DLINFO "NameServiceRedirection::finish_binding - Cann't find record %s for closing transaction.\n", key.c_str()));
       return;
     }
   for (unsigned int i = 0; i < records->size(); i++)
@@ -152,7 +152,7 @@ NameServiceRedirection::finish_binding (const ACE_CString& node, const ACE_CStri
         }
       catch (CosNaming::NamingContext::AlreadyBound&)
         {
-          DANCE_DEBUG ( (LM_DEBUG, "[%M] NameServiceRedirection::finish_bind - Already bound exception was thrown. Rebinding\n"));
+          DANCE_DEBUG ((LM_DEBUG, DLINFO "NameServiceRedirection::finish_bind - Already bound exception was thrown. Rebinding\n"));
           this->naming_->rebind ( (*records) [i].name, (*records) [i].obj.in());
         }
 
@@ -174,7 +174,7 @@ NameServiceRedirection::finish_binding (const ACE_CString& node, const ACE_CStri
           this->domain_->rebind_context (name, context.in());
         }
     }
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] NameServiceRedirection::finish_bind has finished.\n"));
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "NameServiceRedirection::finish_bind has finished.\n"));
 }
 
 void
@@ -192,7 +192,7 @@ NameServiceRedirection::unbind_context (const ACE_CString& node, const ACE_CStri
   name[0].id = CORBA::string_dup (plan.c_str());
   name[0].kind = CORBA::string_dup (kind.c_str());
   DANCE_DEBUG ( (LM_TRACE, "[%M] NameServiceRedirection::unbind_context before unbinding %s.%s\n"
-      , name[0].id.in(), name[0].kind.in()));
+                 , name[0].id.in(), name[0].kind.in()));
   node_context->unbind (name);
   DANCE_DEBUG ( (LM_TRACE, "[%M] NameServiceRedirection::unbind_context before destroying plan context.\n"));
   plan_context->destroy();
@@ -202,10 +202,10 @@ NameServiceRedirection::unbind_context (const ACE_CString& node, const ACE_CStri
 CosNaming::NamingContext_ptr
 NameServiceRedirection::resolve_context (const ACE_CString& context_name, const ACE_CString& context_kind, CosNaming::NamingContext_ptr naming)
 {
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] NameServiceRedirection::resolve_context is started for context %s.%s\n", context_name.c_str(), context_kind.c_str()));
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "NameServiceRedirection::resolve_context is started for context %s.%s\n", context_name.c_str(), context_kind.c_str()));
   if (CORBA::is_nil (naming))
     {
-      DANCE_DEBUG ( (LM_DEBUG, "[%M] NameServiceRedirection::resolve_context source context is nil!.\n"));
+      DANCE_DEBUG ((LM_DEBUG, DLINFO "NameServiceRedirection::resolve_context source context is nil!.\n"));
       return CosNaming::NamingContext::_nil ();
     }
   CORBA::Object_var obj;
@@ -221,7 +221,7 @@ NameServiceRedirection::resolve_context (const ACE_CString& context_name, const 
     {
       obj = naming->bind_new_context (name);
     }
-  DANCE_DEBUG ( (LM_DEBUG, "[%M] NameServiceRedirection::resolve_context has finished.\n"));
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "NameServiceRedirection::resolve_context has finished.\n"));
   return CosNaming::NamingContext::_narrow (obj._retn());
 }
 
