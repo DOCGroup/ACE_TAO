@@ -1,3 +1,9 @@
+Sun Nov 16 17:30:06 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+
+          Set RC_OUTPUT_FLAG for use the with the "windres" tool.
+
 Sun Nov 16 06:52:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3505_Regression_Test.cpp:
