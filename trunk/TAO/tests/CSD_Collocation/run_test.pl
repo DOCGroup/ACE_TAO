@@ -1,27 +1,22 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$status = 0;
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("Collocation",  "-ORBSvcConf svc.conf.csd");
-}
-else {
-    $SV = new PerlACE::Process ("Collocation", "-ORBSvcConf svc.conf.csd");
-}
+$SV = $server->CreateProcess ("Collocation",  "-ORBSvcConf svc.conf.csd");
 
-$server = $SV->SpawnWaitKill (60);
+$test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
-if ($server != 0) {
-    print STDERR "ERROR: CSD Collocation test returned $server \n";
-    $status = 1;
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    exit 1;
 }
 
-exit $status;
+exit 0;

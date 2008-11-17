@@ -1,3 +1,24 @@
+Mon Nov 17 10:35:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2542_Regression/run_test.pl
+        * tests/Bug_2791_Regression/run_test.pl
+        * tests/Bug_2792_Regression/run_test.pl
+        * tests/Bug_2795_Regression/run_test.pl
+        * tests/Bug_2805_Regression/run_test.pl
+        * tests/Bug_2826_Regression/run_test.pl
+        * tests/Bug_2909_Regression/run_test.pl
+        * tests/Bug_3171_Regression/run_test.pl
+        * tests/Bug_3198_Regression/run_test.pl
+        * tests/Bug_3251_Regression/run_test.pl
+        * tests/Compression/run_test.pl
+        * tests/Connection_Timeout/run_test.pl
+        * tests/CORBA_e_Implicit_Activation/run_test.pl
+        * tests/CSD_Collocation/run_test.pl
+        * tests/DynUnion_Test/run_test.pl
+        * tests/ORB_shutdown/run_test.pl
+        * tests/Portable_Interceptors/Bug_2088/run_test.pl
+          Converted to the new test framework
+
 Mon Nov 17 10:13:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/SCIOP_Endpoint.cpp:
