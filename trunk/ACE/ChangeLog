@@ -1,3 +1,8 @@
+Mon Nov 17 13:47:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabled a test for Labview/WinCE/FUZZ
+
 Mon Nov 17 13:34:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/run_test.txt:
