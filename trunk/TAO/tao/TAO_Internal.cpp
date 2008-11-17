@@ -304,7 +304,7 @@ TAO::ORB::open_global_services (int argc,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) Failed to open process-")
                       ACE_TEXT ("wide service configuration context\n")));
         }
@@ -440,7 +440,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
 
   if (status < 0 && TAO_debug_level > 0)
     {
-      ACE_ERROR_RETURN ((LM_DEBUG,
+      ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) Failed to ")
                          ACE_TEXT ("open orb service configuration\n")),
                         -1);
@@ -906,8 +906,7 @@ namespace
 
             arg_shifter.consume_arg ();
           }
-        else if (0 == arg_shifter.cur_arg_strncasecmp
-                 (ACE_TEXT ("-ORBDaemon")))
+        else if (0 == arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBDaemon")))
           {
             // Be a daemon.
             if (apply_values)

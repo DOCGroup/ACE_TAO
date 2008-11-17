@@ -212,14 +212,14 @@ namespace TAO
     void mark_invalid_i (HASH_MAP_ENTRY *entry);
 
   private:
-  /**
-   * Tries to find if the <int_id_> in entry is available for use.
-   */
+    /**
+     * Tries to find if the <int_id_> in entry is available for use.
+     */
     bool is_entry_available (const HASH_MAP_ENTRY &entry);
 
-  /**
-   * Tries to find if the <int_id_> in entry is connect pending
-   */
+    /**
+     * Tries to find if the <int_id_> in entry is connect pending
+     */
     bool is_entry_connecting (const HASH_MAP_ENTRY &entry);
 
 #if !defined(ACE_LACKS_QSORT)
