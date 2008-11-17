@@ -1,3 +1,8 @@
+Mon Nov 17 09:20:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Added missing defines
+
 Mon Nov 17 09:12:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:
