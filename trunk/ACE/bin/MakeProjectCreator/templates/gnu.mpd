@@ -16,6 +16,10 @@ DEPENDENCY_FILE  = .depend.<%project_name%>
 <%if(exename)%>
 BIN_UNCHECKED    = <%exename%>
 <%endif%>
+<%if(staticname || sharedname)%>
+
+LIB_PREFIX      ?= lib
+<%endif%>
 <%if(staticname)%>
 
 ## LIB_CHECKED may be set to empty later on in this file
