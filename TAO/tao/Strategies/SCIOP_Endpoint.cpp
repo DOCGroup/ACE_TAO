@@ -5,6 +5,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
 
+#include "ace/os_include/os_netdb.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/OS_NS_string.h"

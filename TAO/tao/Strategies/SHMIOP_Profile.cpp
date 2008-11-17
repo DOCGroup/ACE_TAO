@@ -11,6 +11,7 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID (Strategies,
            SHMIOP_Profile,
