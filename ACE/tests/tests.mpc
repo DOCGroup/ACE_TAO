@@ -247,7 +247,7 @@ project(Bug_2653_Regression_Test) : acetest {
   }
 }
 
-project(Bug_2772_Regression_Test) : acetest {
+project(Bug_2772_Regression_Test) : acetest, threads {
   exename = Bug_2772_Regression_Test
   Source_Files {
     Bug_2772_Regression_Test.cpp
