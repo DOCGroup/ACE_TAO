@@ -17,7 +17,7 @@ namespace CIAO
   {
   }
 
-  Container_i::Container_i (CORBA::ORB_ptr o, 
+  Container_i::Container_i (CORBA::ORB_ptr o,
                             Deployment::CIAO_Container_i *container_impl)
     : orb_ (CORBA::ORB::_duplicate (o)),
       container_impl_ (container_impl)
@@ -32,20 +32,20 @@ namespace CIAO
   Container_i::get_receptacle_policy (const char* name)
   {
     CORBA::PolicyList_var policy_list;
-    
+
     ACE_NEW_THROW_EX (policy_list,
                       CORBA::PolicyList (),
                       CORBA::NO_MEMORY ());
-    
+
     if (this->rec_pol_map_.find (name, policy_list) != 0)
       {
         CIAO_ERROR ((LM_WARNING, CLINFO
                     "Container_i::Ger_receptacle_policy - Unable to find policies "
-                    "for the receptacle %s\n",
+                    "for the receptacle %C\n",
                     name));
         policy_list->length (0);
       }
-      
+
     return policy_list._retn ();
   }
 }

@@ -46,11 +46,11 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
                                                    CORBA::ORB_ptr )
 {
   DANCE_TRACE ("ComponentAttributesSetter::SetComponentAttributes");
-  
+
   for (unsigned int i = 0; i < prop.length(); i++)
     {
       ACE_CString name = prop[i].name.in();
-      // Ignore configuration properties, since attributes can't have . in them, this seems like a good method. 
+      // Ignore configuration properties, since attributes can't have . in them, this seems like a good method.
       if (name.find (".") != ACE_CString::npos)
         {
           continue;
@@ -62,12 +62,12 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
       method += prop[i].name.in();
 
       CORBA::Request_ptr req (0);
-      
+
       try
         {
           req = obj->_request (method.c_str ());
           req->add_in_arg ("x") = prop[i].value;
-          
+
           req->invoke();
           CORBA::release (req);
         }
@@ -75,7 +75,7 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
         {
           DANCE_ERROR ((LM_WARNING, DLINFO
                         "ComponentAttributesSetter::SetComponentAttributes - "
-                        "Caught BAD_OPERATION while trying to set attribute %s\n",
+                        "Caught BAD_OPERATION while trying to set attribute %C\n",
                         name.c_str ()));
         }
       catch (const CORBA::Exception &e)

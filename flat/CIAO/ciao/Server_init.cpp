@@ -37,11 +37,11 @@ namespace CIAO
 
       return -1;
     }
-    
+
     // --------------------------------------------------------------
     //             Implementation of NameUtility class
     // --------------------------------------------------------------
-    bool NameUtility::bind_name (const char *namestr, 
+    bool NameUtility::bind_name (const char *namestr,
 				 CORBA::Object_ptr obj,
 				 CosNaming::NamingContextExt_var &root)
     {
@@ -55,7 +55,7 @@ namespace CIAO
 
       CosNaming::Name name;
       NameUtility::create_name (namestr, name);
-      
+
       if (name.length () > 1)
 	{
 	  // This name has contexts, create them.
@@ -63,18 +63,18 @@ namespace CIAO
 	  Utility::NameUtility::create_context_path (root.in (), name);
 	  name.length (name.length () + 1);
 	}
-      
+
       return NameUtility::bind_object_path (root.in (), name, obj);
     }
 
-    void 
+    void
     NameUtility::create_name (const char *namestr, CosNaming::Name &name)
     {
       ACE_Auto_Basic_Array_Ptr<char> namebfr (ACE::strnew (namestr));
       ACE_Tokenizer tok (namebfr.get ());
-      
+
       tok.delimiter ('/');
-      
+
       for (char *p = tok.next (); p; p=tok.next ())
 	{
 	  CORBA::ULong pos = name.length ();
@@ -82,7 +82,7 @@ namespace CIAO
 	  name[pos].id = CORBA::string_dup (p);
 	}
     }
-    
+
     void NameUtility::create_context_path (const CosNaming::NamingContextExt_ptr nc,
                                            const CosNaming::Name& name)
     {
@@ -113,7 +113,7 @@ namespace CIAO
 
       if (lengthMissing == name.length ())
         {
-          CIAO_ERROR ((LM_ERROR, CLINFO 
+          CIAO_ERROR ((LM_ERROR, CLINFO
 		      "NameUtility::CreateContextPath - Null name length.\n\n"));
         }
 
@@ -124,19 +124,19 @@ namespace CIAO
                 ++l)
               {
                 tmpName.length (l + 1);
-                
+
                 for (CORBA::ULong i = 0; i <= l; ++i)
                   {
                     tmpName[i] = name[i];
 
                     CORBA::String_var newSCName = nc->to_string (tmpName);
                     CIAO_DEBUG ((LM_TRACE, CLINFO
-                                "NameUtility::CreateContextPath - What's left of the name:%s\n",
+                                "NameUtility::CreateContextPath - What's left of the name:%C\n",
                                 newSCName.in ()));
                   }
 
                 tmpCtxVar = nc->bind_new_context (tmpName);
-                CIAO_DEBUG ((LM_TRACE, CLINFO 
+                CIAO_DEBUG ((LM_TRACE, CLINFO
 			    "NameUtility::CreateContextPath - Bound New Context.\n"));
               }
           }
@@ -149,8 +149,8 @@ namespace CIAO
     {
       CosNaming::Name tmpName;
       CORBA::String_var newSCName = nc->to_string (name);
-      CIAO_DEBUG ((LM_TRACE, CLINFO 
-		  "NameUtility::BindObjectPath - The name is: %s\n", newSCName.in ()));
+      CIAO_DEBUG ((LM_TRACE, CLINFO
+      "NameUtility::BindObjectPath - The name is: %C\n", newSCName.in ()));
 
       try
         {
@@ -159,7 +159,7 @@ namespace CIAO
 
       catch (const CosNaming::NamingContext::NotFound&)
         {
-          CIAO_DEBUG ((LM_TRACE, CLINFO 
+          CIAO_DEBUG ((LM_TRACE, CLINFO
 		      "NameUtility::BindObjectPath - Name not found, doing new bind.\n"));
           nc->bind (name, obj);
         }
@@ -193,7 +193,7 @@ namespace CIAO
           objV = nc->resolve (name);
           tmpContextV = CosNaming::NamingContext::_narrow (objV.in ());
         }
-        
+
       if (CORBA::is_nil (tmpContextV.in ()))
         {
           CIAO_ERROR ((LM_ERROR, CLINFO
@@ -217,7 +217,7 @@ namespace CIAO
               // Append 'tmpListV' to 'basicListV'
               CORBA::ULong basicListLen = basicListV->length ();
               basicListV->length (basicListLen+tmpListV->length ());
-              
+
               for (CORBA::ULong i = 0; i < tmpListV->length (); ++i)
                 {
                   (*basicListV)[i+basicListLen] = (*tmpListV)[i];
@@ -226,7 +226,7 @@ namespace CIAO
               // Re-calculate 'max_remaining'
               max_remaining = max_list_size - basicListV->length();
             }
-            
+
           bIterV->destroy ();
         }
 
@@ -243,7 +243,7 @@ namespace CIAO
 
       objV = nc->resolve(name);
       tmpContextV = CosNaming::NamingContext::_narrow (objV.in ());
-      
+
       if (CORBA::is_nil (tmpContextV.in ()))
         {
           CIAO_ERROR ((LM_ERROR, CLINFO
@@ -272,7 +272,7 @@ namespace CIAO
               NameUtility::recursive_unbind (tmpContextV.in (), tmpName);
             }
         }
-        
+
       nc->unbind (name);
       tmpContextV->destroy ();
     }

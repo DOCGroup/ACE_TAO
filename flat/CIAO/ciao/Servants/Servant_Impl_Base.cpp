@@ -55,7 +55,7 @@ namespace CIAO
       Components::FacetDescriptions_var facets = this->get_all_facets ();
 
       CORBA::ULong const facet_len = facets->length ();
-      
+
       for (CORBA::ULong i = 0; i < facet_len; ++i)
       {
         PortableServer::ObjectId_var facet_id =
@@ -78,7 +78,7 @@ namespace CIAO
         this->get_all_consumers ();
 
       CORBA::ULong const consumer_len = consumers->length ();
-      
+
       for (CORBA::ULong j = 0; j < consumer_len; ++j)
       {
         PortableServer::ObjectId_var cons_id =
@@ -458,7 +458,7 @@ namespace CIAO
   {
     CIAO_TRACE("Servant_Impl_Base::add_receptacle");
     CIAO_DEBUG ((LM_INFO, CLINFO
-                "Servant_Impl_Base::add_receptacle - attempting to add new connection to receptacle (%s)\n",
+                "Servant_Impl_Base::add_receptacle - attempting to add new connection to receptacle (%C)\n",
                 receptacle_name));
 
     ::Components::ReceptacleDescription_var safe;
@@ -468,7 +468,7 @@ namespace CIAO
                                       safe) == -1)
     {
       CIAO_DEBUG ((LM_DEBUG, CLINFO
-                  "Servant_Impl_Base::add_receptacle - Found no receptacle named (%s), creating it...\n",
+                  "Servant_Impl_Base::add_receptacle - Found no receptacle named (%C), creating it...\n",
                   receptacle_name));
 
       ACE_NEW_THROW_EX (rd,
@@ -497,7 +497,7 @@ namespace CIAO
     else
     {
       CIAO_DEBUG ((LM_DEBUG, CLINFO
-                  "Servant_Impl_Base::add_receptacle - Found a receptacle named (%s)\n",
+                  "Servant_Impl_Base::add_receptacle - Found a receptacle named (%C)\n",
                   receptacle_name));
       rd = safe.inout ();
 
@@ -514,14 +514,14 @@ namespace CIAO
 
       CIAO_DEBUG ((LM_DEBUG, CLINFO
                   "Servant_Impl_Base::add_receptacle - Added new connection to "
-		  "existing receptacle named  (%s)\n",
+      "existing receptacle named  (%C)\n",
                   receptacle_name));
     }
 
     if (this->receptacle_table_.bind (receptacle_name, safe) == 0)
       {
         CIAO_DEBUG ((LM_INFO, CLINFO
-                    "Servant_Impl_Base::add_receptacle - Successfully added new receptacle named (%s)\n",
+                    "Servant_Impl_Base::add_receptacle - Successfully added new receptacle named (%C)\n",
                     receptacle_name));
       }
   }
@@ -533,7 +533,7 @@ namespace CIAO
     CIAO_TRACE("Servant_Impl_Base::add_consumer");
     if (0 == port_name || ::CORBA::is_nil (port_ref))
       {
-	CIAO_ERROR ((LM_ERROR, CLINFO "Servant_Impl_Base::add_consumer - Bad port name [%s] or bad objref\n",
+  CIAO_ERROR ((LM_ERROR, CLINFO "Servant_Impl_Base::add_consumer - Bad port name [%C] or bad objref\n",
 		    port_name));
         throw ::CORBA::BAD_PARAM ();
         return;
@@ -642,15 +642,15 @@ namespace CIAO
     CIAO_TRACE ("Servant_Impl_Base::activate_component");
     throw CORBA::NO_IMPLEMENT ();
   }
-  
-  
+
+
   void
   Servant_Impl_Base::passivate_component (void)
   {
     CIAO_TRACE ("Servant_Impl_Base::passivate_component");
     throw CORBA::NO_IMPLEMENT ();
   }
-  
+
   Components::SessionComponent_ptr
   Servant_Impl_Base::get_executor (void)
   {
@@ -658,20 +658,20 @@ namespace CIAO
     throw CORBA::NO_IMPLEMENT ();
   }
 
-  void 
+  void
   Servant_Impl_Base::set_attributes (const Components::ConfigValues &/*descr*/)
   {
     CIAO_TRACE ("Servant_Impl_Base::set_attributes");
     throw CORBA::NO_IMPLEMENT ();
   }
-  
-  ::Components::CCMHome_ptr 
+
+  ::Components::CCMHome_ptr
   Servant_Impl_Base::get_ccm_home (void)
   {
     CIAO_TRACE ("Servant_Impl_Base::get_ccm_home");
     throw CORBA::NO_IMPLEMENT ();
   }
-  
+
   PortableServer::POA_ptr
   Servant_Impl_Base::_default_POA (void)
   {
@@ -679,16 +679,16 @@ namespace CIAO
     return
       PortableServer::POA::_duplicate (container_->the_POA ());
   }
-  
-  ::Components::Cookie * 
+
+  ::Components::Cookie *
   Servant_Impl_Base::subscribe (const char *,
                                 ::Components::EventConsumerBase_ptr)
   {
     CIAO_TRACE ("Servant_Impl_Base::subscribe");
     throw CORBA::NO_IMPLEMENT ();
   }
-  
-  
+
+
    ::Components::EventConsumerBase_ptr
    Servant_Impl_Base::unsubscribe (const char *,
                                    ::Components::Cookie *)
@@ -696,7 +696,7 @@ namespace CIAO
     CIAO_TRACE ("Servant_Impl_Base::unsubscribe");
     throw CORBA::NO_IMPLEMENT ();
   }
-  
+
    void
    Servant_Impl_Base::connect_consumer (const char *,
                                         ::Components::EventConsumerBase_ptr)
@@ -704,44 +704,44 @@ namespace CIAO
     CIAO_TRACE ("Servant_Impl_Base::connect_consumer");
     throw CORBA::NO_IMPLEMENT ();
   }
-  
+
   ::Components::EventConsumerBase_ptr
   Servant_Impl_Base::disconnect_consumer (const char *)
   {
     CIAO_TRACE ("Servant_Impl_Base::disconnect_consumer");
     throw CORBA::NO_IMPLEMENT ();
   }
-  
-  ::Components::EmitterDescriptions * 
+
+  ::Components::EmitterDescriptions *
   Servant_Impl_Base::get_all_emitters (void)
   {
     CIAO_TRACE ("Servant_Impl_Base::get_all_emitters");
     throw CORBA::NO_IMPLEMENT ();
   }
-  
-  ::Components::PublisherDescriptions * 
+
+  ::Components::PublisherDescriptions *
   Servant_Impl_Base::get_all_publishers (void)
   {
     CIAO_TRACE ("Servant_Impl_Base::get_all_publishers");
     throw CORBA::NO_IMPLEMENT ();
   }
-  
-  ::CORBA::Boolean 
+
+  ::CORBA::Boolean
   Servant_Impl_Base::same_component (::CORBA::Object_ptr)
   {
     CIAO_TRACE ("Servant_Impl_Base::same_component");
     throw CORBA::NO_IMPLEMENT ();
   }
-  
-  
-  ::Components::Cookie * 
+
+
+  ::Components::Cookie *
   Servant_Impl_Base::connect (const char *,
                               ::CORBA::Object_ptr)
   {
     CIAO_TRACE ("Servant_Impl_Base::connect");
     throw CORBA::NO_IMPLEMENT ();
   }
-  
+
   ::CORBA::Object_ptr
   Servant_Impl_Base::disconnect (const char *,
                                  ::Components::Cookie *)

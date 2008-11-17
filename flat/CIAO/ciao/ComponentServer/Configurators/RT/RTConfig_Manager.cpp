@@ -41,12 +41,12 @@ CIAO::Deployment::RTResource_Config_Manager::print_resources
   for (i = 0; i < orb_resource.threadpool_list.length (); ++i)
     {
       CIAO_DEBUG ((LM_DEBUG,
-                  "-RTResource_Config_Manager::print_resource threadpool: %s\n"
+                  "-RTResource_Config_Manager::print_resource threadpool: %C\n"
                   "\tStack size: %d\n"
                   "\tStatic: %d\n"
                   "\tDynamic %d\n"
                   "\tDefault Prio: %d\n"
-                  "\tBuffering %s\n"
+                  "\tBuffering %C\n"
                   "\tMax Buffered: %d\n"
                   "\tBuffer Size %d\n",
                   orb_resource.threadpool_list[i].Id.in (),
@@ -62,7 +62,7 @@ CIAO::Deployment::RTResource_Config_Manager::print_resources
   for (i = 0; i < orb_resource.threadpool_with_lanes_list.length (); ++i)
     {
       CIAO_DEBUG ((LM_DEBUG,
-                  "-RTResource_Config_Manager::print_resource threadpool_with %d, lanes: %s\n",
+                  "-RTResource_Config_Manager::print_resource threadpool_with %d, lanes: %C\n",
                   orb_resource.threadpool_with_lanes_list[i].threadpool_lanes.length (),
                   orb_resource.threadpool_with_lanes_list[i].Id.in ()));
 
@@ -82,8 +82,8 @@ CIAO::Deployment::RTResource_Config_Manager::print_resources
                       }
           CIAO_DEBUG ((LM_DEBUG,
                   "\tStack size: %d\n"
-                  "\tBorrowing: %s\n"
-                  "\tBuffering %s\n"
+                  "\tBorrowing: %C\n"
+                  "\tBuffering %C\n"
                   "\tMax Buffered: %d\n"
                   "\tBuffer Size %d\n",
                   orb_resource.threadpool_with_lanes_list[i].stacksize,
@@ -96,7 +96,7 @@ CIAO::Deployment::RTResource_Config_Manager::print_resources
   for (i = 0; i < orb_resource.connection_bands_list.length (); ++i)
     {
       CIAO_DEBUG ((LM_DEBUG,
-                  "-RTResource_Config_Manager::print_resource connection %d bands: %s\n",
+                  "-RTResource_Config_Manager::print_resource connection %d bands: %C\n",
                   orb_resource.connection_bands_list[i].bands.length (),
                   orb_resource.connection_bands_list[i].Id.in ()));
 
@@ -139,7 +139,7 @@ CIAO::Deployment::RTResource_Config_Manager::init_resources
   for (i = 0; i < orb_resource.threadpool_list.length (); ++i)
     {
       CIAO_DEBUG ((LM_DEBUG,
-                  "RTResource_Config_Manager::init_resource threadpool: %s\n",
+                  "RTResource_Config_Manager::init_resource threadpool: %C\n",
                   orb_resource.threadpool_list[i].Id.in ()));
       RTCORBA::ThreadpoolId thr_id =
         this->rtorb_->create_threadpool
@@ -156,13 +156,13 @@ CIAO::Deployment::RTResource_Config_Manager::init_resources
       if (this->threadpool_map_.bind (orb_resource.threadpool_list[i].Id.in (),
                                       thr_id) != 0)
         {
-          CIAO_ERROR ((LM_ERROR, "Error binding thread pool Id: %s to map when initializing RTNodeApplication resources.\n", orb_resource.threadpool_list[i].Id.in ()));
+          CIAO_ERROR ((LM_ERROR, "Error binding thread pool Id: %C to map when initializing RTNodeApplication resources.\n", orb_resource.threadpool_list[i].Id.in ()));
           throw CORBA::INTERNAL ();
         }
       else
         {
           CIAO_DEBUG ((LM_DEBUG,
-                      "RTResource_Config_Manager::init_resource added thread pool: %s\n",
+                      "RTResource_Config_Manager::init_resource added thread pool: %C\n",
                       orb_resource.threadpool_list[i].Id.in ()));
         }
     }
@@ -170,7 +170,7 @@ CIAO::Deployment::RTResource_Config_Manager::init_resources
   for (i = 0; i < orb_resource.threadpool_with_lanes_list.length (); ++i)
     {
       CIAO_DEBUG ((LM_DEBUG,
-                  "RTResource_Config_Manager::init_resource threadpool_with %d, lanes: %s\n",
+                  "RTResource_Config_Manager::init_resource threadpool_with %d, lanes: %C\n",
                   orb_resource.threadpool_with_lanes_list[i].threadpool_lanes.length (),
                   orb_resource.threadpool_with_lanes_list[i].Id.in ()));
 
@@ -207,7 +207,7 @@ CIAO::Deployment::RTResource_Config_Manager::init_resources
                                       thr_id) != 0)
         {
           CIAO_ERROR ((LM_ERROR,
-                      "Error binding thread pool name: %s to map when "
+                      "Error binding thread pool name: %C to map when "
                       "initializing RTNodeApplication resources.\n",
                       orb_resource.threadpool_with_lanes_list[i].Id.in ()));
           throw CORBA::INTERNAL ();
@@ -216,7 +216,7 @@ CIAO::Deployment::RTResource_Config_Manager::init_resources
       else
         {
           CIAO_DEBUG ((LM_DEBUG,
-                      "RTResource_Config_Manager::init_resource added thread pool with lanes: %s\n",
+                      "RTResource_Config_Manager::init_resource added thread pool with lanes: %C\n",
                       orb_resource.threadpool_with_lanes_list[i].Id.in ()));
         }
     }
@@ -239,7 +239,7 @@ CIAO::Deployment::RTResource_Config_Manager::init_resources
                                           safebands) != 0)
         {
           CIAO_ERROR ((LM_ERROR,
-                      "Error binding priority bands name: %s to map "
+                      "Error binding priority bands name: %C to map "
                       "when initializing RTNodeApplication resources.\n",
                       orb_resource.connection_bands_list[i].Id.in ()));
           throw CORBA::INTERNAL ();
@@ -247,7 +247,7 @@ CIAO::Deployment::RTResource_Config_Manager::init_resources
       else
         {
           CIAO_DEBUG ((LM_DEBUG,
-                      "RTResource_Config_Manager::init_resource added connection bands: %s\n",
+                      "RTResource_Config_Manager::init_resource added connection bands: %C\n",
                       orb_resource.connection_bands_list[i].Id.in ()));
         }
     }
@@ -292,7 +292,7 @@ CIAO::Deployment::RTResource_Config_Manager::init_resources
                                       policy_list._retn ()) != 0)
             {
               CIAO_ERROR ((LM_ERROR,
-                          "Error binding Policy_Set with name: %s\n",
+                          "Error binding Policy_Set with name: %C\n",
                           sets[i].Id.in ()));
               throw CORBA::INTERNAL ();
             }
@@ -300,7 +300,7 @@ CIAO::Deployment::RTResource_Config_Manager::init_resources
             {
               CIAO_DEBUG ((LM_DEBUG,
                           "RTResource_Config_Manager::init_resource "
-                          "added policy set: %s with %d policies\n",
+                          "added policy set: %C with %d policies\n",
                           sets[i].Id.in (), array_index));
             }
         }
@@ -308,7 +308,7 @@ CIAO::Deployment::RTResource_Config_Manager::init_resources
         {
           CIAO_DEBUG ((LM_DEBUG,
                       "RTResource_Config_Manager::init_resource "
-                      "added policy set: %s with %d policies\n",
+                      "added policy set: %C with %d policies\n",
                       sets[i].Id.in (), array_index));
         }
     }
@@ -343,7 +343,7 @@ CIAO::Deployment::RTResource_Config_Manager::find_threadpool_by_name (const char
   if (this->threadpool_map_.find (name, ret_id) != 0)
     {
       CIAO_ERROR ((LM_ERROR,
-                  "Unable to find a threadpool named %s\n",
+                  "Unable to find a threadpool named %C\n",
                   name));
       throw CORBA::INTERNAL ();
     }
@@ -366,7 +366,7 @@ CIAO::Deployment::RTResource_Config_Manager::find_priority_bands_by_name (const 
   if (this->priority_bands_map_.find (name, entry) != 0)
     {
       CIAO_ERROR ((LM_ERROR,
-                  "Unable to find a connection bands named %s\n",
+                  "Unable to find a connection bands named %C\n",
                   name));
       throw CORBA::INTERNAL ();
     }
@@ -408,7 +408,7 @@ CIAO::Deployment::RTResource_Config_Manager::find_policies_by_name (const char *
     }
 
 
-  CIAO_DEBUG ((LM_DEBUG, "RTResource_Config_Manager::find_policies_by_name: %s\n",
+  CIAO_DEBUG ((LM_DEBUG, "RTResource_Config_Manager::find_policies_by_name: %C\n",
               name));
 
   POLICY_MAP::ENTRY *entry = 0;
@@ -416,7 +416,7 @@ CIAO::Deployment::RTResource_Config_Manager::find_policies_by_name (const char *
   if (this->policy_map_.find (name, entry) != 0)
     {
       CIAO_ERROR ((LM_ERROR,
-                  "Unable to find a PolicyList named %s\n",
+                  "Unable to find a PolicyList named %C\n",
                   name));
       throw CORBA::INTERNAL ();
     }
@@ -467,7 +467,7 @@ CIAO::Deployment::RTResource_Config_Manager::create_single_policy
 
         if (! CORBA::is_nil (retv.in ()))
           CIAO_DEBUG ((LM_DEBUG,
-                      "Create Threadpool policy: %s, TPid: %d\n",
+                      "Create Threadpool policy: %C, TPid: %d\n",
                       policy_def.ThreadpoolDef().Id.in (), tpid));
       }
       break;
@@ -483,7 +483,7 @@ CIAO::Deployment::RTResource_Config_Manager::create_single_policy
         if (! CORBA::is_nil (retv.in ()))
           {
             CIAO_DEBUG ((LM_DEBUG,
-                        "Created Banded Connection policy: %s\n",
+                        "Created Banded Connection policy: %C\n",
                         policy_def.PriorityBandedConnectionDef().Id.in ()));
           }
       }
