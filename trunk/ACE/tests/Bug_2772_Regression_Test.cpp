@@ -33,7 +33,6 @@ class ThreadTest
     ACE_Recursive_Thread_Mutex m_mutex;
     ACE_Condition_Recursive_Thread_Mutex m_startedCondition;
     ACE_Condition_Recursive_Thread_Mutex m_stopCondition;
-    ACE_thread_t m_workerThreadId;
     bool m_workerRunning;
     bool m_doubleLock;
 };
@@ -41,7 +40,6 @@ class ThreadTest
 ThreadTest::ThreadTest() :
    m_startedCondition(m_mutex),
    m_stopCondition(m_mutex),
-   m_workerThreadId(-1),
    m_workerRunning(false),
    m_doubleLock(false)
 {
@@ -55,7 +53,7 @@ int
 ThreadTest::run(bool doubleLock)
 {
   ACE_hthread_t m_workerThreadHandle;
-  m_workerThreadId = -1;
+  ACE_thread_t m_workerThreadId;
   m_workerRunning = false;
   m_doubleLock = doubleLock;
 
