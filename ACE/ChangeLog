@@ -1,3 +1,8 @@
+Mon Nov 17 13:34:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/run_test.txt:
+          First step to update this to the new testframework
+
 Mon Nov 17 12:54:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
