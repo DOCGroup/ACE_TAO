@@ -165,7 +165,6 @@ sub Spawn ()
         if (defined $self->{ARGUMENTS}) {
             ($arguments = $self->{ARGUMENTS})=~ s/\"/\\\"/g;
             ($arguments = $self->{ARGUMENTS})=~ s/\'/\\\'/g;
-            $arguments = ",\"" . $arguments . "\"";
         }
         $cmdline = $program . ' ' . $arguments;
         if (defined $ENV{'ACE_RUN_VX_TGTSRV_WORKINGDIR'}) {
