@@ -29,6 +29,8 @@ $client->DeleteFile($iorbase);
 $SV = $server->CreateProcess ("server", "-ORBObjRefStyle URL -ORBdebuglevel $debug_level -o $server_iorfile");
 $CL = $client->CreateProcess ("client", "-k file://$client_iorfile");
 
+$server_status = $SV->Spawn ();
+
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     exit 1;
