@@ -11,6 +11,7 @@
 #include "Monitor_Thread.h"
 
 #include "ace/TP_Reactor.h"
+#include "tao/Exception.h"
 
 Monitor_Thread::Monitor_Thread (void)
   : reactor_ (new ACE_TP_Reactor())
@@ -19,11 +20,19 @@ Monitor_Thread::Monitor_Thread (void)
 
 int Monitor_Thread::svc (void)
 {
-  if (reactor_.run_reactor_event_loop() == -1)
+  try
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Monitor_Thread: run_reactor_event_loop failed\n"),
-                        -1);
+      if (reactor_.run_reactor_event_loop() == -1)
+	{
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "Monitor_Thread: run_reactor_event_loop failed\n"),
+			    -1);
+	}
+    }
+  catch (CORBA::Exception & ex)
+    {
+      ACE_DEBUG ((LM_ERROR, "Monitor_Thread::svc - caught %s", ex._info ().c_str ()));
+      return -1;
     }
 
   return 0;
