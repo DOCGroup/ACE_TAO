@@ -1,3 +1,11 @@
+Mon Nov 17 13:46:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * testst/Bug_3299_Regression/run_test.pl:
+          Fixed bug in this file which I introduced by mistake
+
+        * tests/Portable_Interceptors/Collocated/Dynamic/run_test.pl
+          Converted to the new test framework
+
 Mon Nov 17 13:11:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/PortableInterceptors/PICurrent_NameService:
