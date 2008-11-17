@@ -18,6 +18,7 @@
 
 #include "orbsvcs/orbsvcs/LWFT/AppOptions.h"
 #include "orbsvcs/orbsvcs/LWFT/ReplicationManagerC.h"
+#include "orbsvcs/Naming/Naming_Client.h"
 
 #include "ServerTask.h"
 #include "test_i.h"
@@ -54,56 +55,89 @@ ServerTask::svc (void)
         poa->the_POAManager ();
 
       this->read_object_info (AppOptions::instance ()->object_info_file (),
-			                        options_.number_of_servants);
+			      options_.number_of_servants);
 
-      CORBA::Object_var tmp = 
-	      this->orb_->string_to_object (options_.rm_ior_file);
+      ReplicationManager_var rm;
 
-      ReplicationManager_var rm =
-        ReplicationManager::_narrow (tmp.in ());
+      if (options_.use_ns)
+	{
+	  TAO_Naming_Client naming_client;
+	  naming_client.init (orb_.in ());
+      
+	  CosNaming::NamingContextExt_var ns =
+	    CosNaming::NamingContextExt::_narrow (naming_client.get_context ());
 
-      // ***************************************************
-      // register replication agent with the replication manager
+	  CORBA::Object_var rm_obj =  ns->resolve_str ("ReplicationManager");
 
-      rm->register_state_synchronization_agent (
-        AppOptions::instance ()->host_id ().c_str (),
-        AppOptions::instance ()->process_id ().c_str (),
-	      agent_.in ());
+	  if (CORBA::is_nil (rm_obj.in ()))
+	    {
+	      ACE_ERROR ((LM_ERROR,
+			  "RM_Proxy: Null RM objref from Naming Service\n"));
+	    }
+          else
+	    {
+	      rm = ReplicationManager::_narrow (rm_obj.in ());
 
-      // ***************************************************
-      // activate as many servants as required
+	      ACE_DEBUG ((LM_TRACE,
+			  "RM_Proxy: RM resolved from Naming Service\n"));
+	    }
+	}
+      else
+	{
+	  CORBA::Object_var tmp = 
+	    this->orb_->string_to_object (options_.rm_ior_file);
 
-      for (int i = 0; i < options_.number_of_servants; ++i)
-	      {
-	        test_i *servant =
-	          new test_i (this->orb_.in (),
-			                  poa.in (),
-			                  object_ids[i].c_str (),
-			                  agent_.in (),
-			                  options_.stop);
+	  rm = ReplicationManager::_narrow (tmp.in ());
+	}
 
-	        PortableServer::ServantBase_var safe_servant (servant);
-	        ACE_UNUSED_ARG (safe_servant);
+      if (CORBA::is_nil (rm.in ()))
+	{
+	  ACE_DEBUG ((LM_ERROR, "RM_proxy could not narrow RM reference."));
+	}
+      else
+	{
+	  // ***************************************************
+	  // register replication agent with the replication manager
 
-	        PortableServer::ObjectId_var oid =
-	          PortableServer::string_to_ObjectId (object_ids[i].c_str ());
+	  rm->register_state_synchronization_agent (
+            AppOptions::instance ()->host_id ().c_str (),
+            AppOptions::instance ()->process_id ().c_str (),
+              agent_.in ());
 
-	        poa->activate_object_with_id (oid.in (), servant);
+	  // ***************************************************
+	  // activate as many servants as required
 
-	        CORBA::Object_var servant_object =
-	          poa->id_to_reference (oid.in ());
+	  for (int i = 0; i < options_.number_of_servants; ++i)
+	    {
+	      test_i *servant =
+		new test_i (this->orb_.in (),
+			    poa.in (),
+			    object_ids[i].c_str (),
+			    agent_.in (),
+			    options_.stop);
 
-	        test_var test = test::_narrow (servant_object.in ());
+	      PortableServer::ServantBase_var safe_servant (servant);
+	      ACE_UNUSED_ARG (safe_servant);
 
-	        std::ostringstream ostr;
-	        ostr << object_ids[i] << object_roles[i] << ".ior";
+	      PortableServer::ObjectId_var oid =
+		PortableServer::string_to_ObjectId (object_ids[i].c_str ());
 
-	        int result =
-	          this->write_ior_to_file (ostr.str ().c_str (),
-				                             this->orb_.in (),
-				                             test.in ());
+	      poa->activate_object_with_id (oid.in (), servant);
 
-	        rm->register_application (
+	      CORBA::Object_var servant_object =
+		poa->id_to_reference (oid.in ());
+
+	      test_var test = test::_narrow (servant_object.in ());
+
+	      std::ostringstream ostr;
+	      ostr << object_ids[i] << object_roles[i] << ".ior";
+
+	      int result =
+		this->write_ior_to_file (ostr.str ().c_str (),
+					 this->orb_.in (),
+					 test.in ());
+
+	      rm->register_application (
 	          object_ids[i].c_str (), 
 	          object_loads[i],
 	          AppOptions::instance ()->host_id ().c_str (),
@@ -111,19 +145,20 @@ ServerTask::svc (void)
 	          object_roles[i],
 	          test.in ());
 
-	        agent_->register_application (object_ids[i].c_str (),
-					                              test.in ());
+	      agent_->register_application (object_ids[i].c_str (),
+					    test.in ());
 
-	        ACE_DEBUG ((LM_DEBUG,
-	                    "ServerTask::svc() activated servant %s:%d.\n", 
-		                  object_ids[i].c_str (), 
-		                  object_roles[i]));
-
-	        if (result != 0)
-	          {
-	            return result;
-	          }
-	      }
+	      ACE_DEBUG ((LM_DEBUG,
+			  "ServerTask::svc() activated servant %s:%d.\n", 
+			  object_ids[i].c_str (), 
+			  object_roles[i]));
+	      
+	      if (result != 0)
+		{
+		  return result;
+		}
+	    }
+	}
 
       this->orb_->run ();
 

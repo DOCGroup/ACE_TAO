@@ -20,6 +20,7 @@
 
 HostMonitorImpl::HostMonitorImpl (CORBA::ORB_ptr orb, Monitor_Thread *mt)
   : monitor_thread_ (mt),
+    port_counter_ (7000),
     connector_ (monitor_thread_->get_reactor ()),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -91,6 +92,12 @@ throw (CORBA::SystemException)
     ACE_DEBUG ((LM_DEBUG,"HostMonitorImpl::unregister_process Invalid process_id = %s.\n", process_id));
 
   return true;
+}
+
+::CORBA::Short
+HostMonitorImpl::heartbeat_port ()
+{
+  return port_counter_++;
 }
 
 int HostMonitorImpl::drop_process (const std::string &process_id)

@@ -50,7 +50,9 @@ void
 Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  ACE_DEBUG ((LM_DEBUG, "Catching exception\n"));
+  ACE_DEBUG ((LM_DEBUG, "Client_Request_Interceptor::receive_exception - "
+	      "catching exception\n"));
+
   const CORBA::ULong tagID = 9654;
   char *tag = 0;
   try
@@ -63,7 +65,8 @@ Client_Request_Interceptor::receive_exception (
     }
   catch (CORBA::BAD_PARAM&)
     {
-      ACE_DEBUG ((LM_DEBUG, "Tagged Component not found\n"));
+      ACE_DEBUG ((LM_DEBUG, "Client_Request_Interceptor::receive_exception - "
+		  "Tagged Component not found\n"));
     }
 }
 

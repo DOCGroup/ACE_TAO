@@ -28,7 +28,8 @@ struct ServerOptions
       static_threads (1),
       number_of_lanes (0),
       stop (0),
-      number_of_servants (1) {}
+      number_of_servants (1),
+      use_ns (false) {}
 
   const char *bands_file;
   const char *lanes_file;
@@ -37,6 +38,7 @@ struct ServerOptions
   CORBA::ULong number_of_lanes;
   int stop;
   int number_of_servants;
+  bool use_ns;
 };
 
 class ServerTask : public ACE_Task_Base
