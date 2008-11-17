@@ -28,17 +28,16 @@
 class AppSideMonitor_Thread : public ACE_Task_Base
 {
 public:
-
   AppSideMonitor_Thread (ACE_Barrier *thread_barrier);
 
-  void stop ();
+  void stop (void);
   virtual int svc (void);
 
 private:
   u_short port_;
   ACE_SOCK_Acceptor::PEER_ADDR serv_addr_;
   ACE_Reactor reactor_;
-  ACE_Acceptor <AppSideMonitor_Handler, ACE_SOCK_Acceptor> acceptor_;
+  ACE_Acceptor<AppSideMonitor_Handler, ACE_SOCK_Acceptor> acceptor_;
   ACE_Barrier *synchronizer_;
 };
 

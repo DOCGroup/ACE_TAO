@@ -383,14 +383,14 @@ ReplicationManager_i::process_proc_failure (
 	          {
 	            try
 		            {
-		              // index of the element that should be removed from 
+		              // Index of the element that should be removed from 
 		              // the ior list. This is either the failed replica
 		              // or if the primary failed, the first entry in the list
-		              size_t rm_index = 0; 
+		              size_t rm_index = 0;
+		              
+		              size_t len_i = rank_list_[i].ior_list.length ();
 
-		              for (size_t j = 0;
-		                   j < rank_list_[i].ior_list.length ();
-		                   ++j)
+		              for (size_t j = 0; j < len_i; ++j)
 		                {
 		                  if (app->_is_equivalent (
 			                      rank_list_[i].ior_list[j].in ()))
@@ -399,11 +399,18 @@ ReplicationManager_i::process_proc_failure (
 			                    break;
 			                  }
 		                }
+		              
+		              // We're using len_i - 1 below, and it *must*
+		              // be an unsigned type, so we check for 0 here
+		              // to avoid unexpected behavior caused by an
+		              // overflow in the FOR loop condition below.
+		              if (len_i == 0)
+		                {
+		                  continue;
+		                }
 
-		              // now remove the correct element from the list
-		              for (size_t k = rm_index; 
-		                   k < rank_list_[i].ior_list.length () - 1; 
-		                   ++k)
+		              // Now remove the correct element from the list
+		              for (size_t k = rm_index; k < len_i - 1; ++k)
 		                {
 		                  // Move each following element one position 
 		                  // forward.
@@ -642,67 +649,67 @@ ReplicationManager_i::replica_selection_algo (void)
       objectid_rankedior_map_.close ();
       objectid_rankedior_map_.open ();
 
-      for (STRING_TO_STRING_LIST_MAP::iterator hp_iter =
-             hostid_process_map_.begin ();
-           hp_iter != hostid_process_map_.end ();
-           ++hp_iter)
-        {  
-          STRING_TO_DOUBLE_MAP processor_level_host_util_map;
-          
-          copy_map (this->hostid_util_map_,
-                    processor_level_host_util_map);
-                    
-          STRING_LIST & process_list = (*hp_iter).item ();
-          
-          for (STRING_LIST::iterator pl_iter =
-                 process_list.begin ();
-               pl_iter != process_list.end ();
-               ++pl_iter)
-            {
-              STRING_TO_DOUBLE_MAP process_level_host_util_map;
+      if (!static_mode_)
+        {
+          for (STRING_TO_STRING_LIST_MAP::iterator hp_iter =
+                 hostid_process_map_.begin ();
+               hp_iter != hostid_process_map_.end ();
+               ++hp_iter)
+            {  
+              STRING_TO_DOUBLE_MAP processor_level_host_util_map;
               
               copy_map (this->hostid_util_map_,
-                        process_level_host_util_map);
+                        processor_level_host_util_map);
                         
-              STRING_TO_DOUBLE_MAP & host_util_map = 
-                (this->mode_ == PROCESS_LEVEL)
-                  ? process_level_host_util_map
-                  : processor_level_host_util_map;
-                  
-              STRING_LIST primary_object_list;
+              STRING_LIST & process_list = (*hp_iter).item ();
               
-              if (processid_primary_map_.find (*pl_iter,
-                                               primary_object_list) == 0) // If present
+              for (STRING_LIST::iterator pl_iter =
+                     process_list.begin ();
+                   pl_iter != process_list.end ();
+                   ++pl_iter)
                 {
-                  for (STRING_LIST::iterator po_iter =
-                         primary_object_list.begin ();
-                       po_iter != primary_object_list.end ();
-                       ++po_iter)
-                    {
-                      STRING_LIST host_list =
-                        non_primary_host_list (*po_iter);
+                  STRING_TO_DOUBLE_MAP process_level_host_util_map;
+                  
+                  copy_map (this->hostid_util_map_,
+                            process_level_host_util_map);
+                            
+                  STRING_TO_DOUBLE_MAP & host_util_map = 
+                    (this->mode_ == PROCESS_LEVEL)
+                      ? process_level_host_util_map
+                      : processor_level_host_util_map;
                       
-                      // If the object has backups...
-                      if (host_list.size () >= 1)
+                  STRING_LIST primary_object_list;
+                  
+                  if (processid_primary_map_.find (*pl_iter,
+                                                   primary_object_list) == 0) // If present
+                    {
+                      for (STRING_LIST::iterator po_iter =
+                             primary_object_list.begin ();
+                           po_iter != primary_object_list.end ();
+                           ++po_iter)
                         {
-                          std::priority_queue<UtilRank> util_ranked_queue = 
-                            util_sorted_host_list(*po_iter, host_list, host_util_map);
+                          STRING_LIST host_list =
+                            non_primary_host_list (*po_iter);
                           
-                          UtilRank ur (util_ranked_queue.top ());
-                          
-                          host_util_map.rebind (ur.host_id.c_str (),
-                                                ur.util);
-                          
-                          update_ior_map (*po_iter,
-                                          util_ranked_queue);
+                          // If the object has backups...
+                          if (host_list.size () >= 1)
+                            {
+                              std::priority_queue<UtilRank> util_ranked_queue = 
+                                util_sorted_host_list(*po_iter, host_list, host_util_map);
+                              
+                              UtilRank ur (util_ranked_queue.top ());
+                              
+                              host_util_map.rebind (ur.host_id.c_str (),
+                                                    ur.util);
+                              
+                              update_ior_map (*po_iter,
+                                              util_ranked_queue);
+                            }
                         }
                     }
                 }
             }
-        }
-      
-      if (!static_mode_)
-        {
+          
           // this is only necessary for several hosts.
           build_rank_list ();
         }
@@ -1058,24 +1065,38 @@ ReplicationManager_i::send_state_synchronization_rank_list (void)
 
   ACE_Guard <ACE_Thread_Mutex> guard (
     rank_list_state_sync_agent_list_combined_mutex_);
-
+    
+  // Helpers for removing dead agents from the list.
+  StateSynchronizationAgent_var remove_holder;
+  StateSynchronizationAgent_var &remove_holder_ref = remove_holder;
+  bool dirty = false;
+    
   for (STATE_SYNC_AGENT_LIST::iterator al_iter = 
-	         state_synchronization_agent_list_.begin ();
+	       state_synchronization_agent_list_.begin ();
        al_iter != state_synchronization_agent_list_.end ();
-       ++ al_iter)
-  {
-    StateSynchronizationAgent_var agent = *al_iter;
+       al_iter.advance ())
+    {
+      StateSynchronizationAgent_var agent = *al_iter;
 
-    try 
-    {
-      agent->update_rank_list (this->rank_list_);
+      try 
+        {
+          agent->update_rank_list (this->rank_list_);
+        }
+      catch (CORBA::SystemException &)
+        {
+          dirty = true;
+          remove_holder_ref = *al_iter;
+          ACE_DEBUG ((LM_DEBUG,
+                      "RM: A state synchronization agent died.\n"));
+        }
     }
-    catch (CORBA::SystemException &)
+ 
+  // This approach will remove at most one dead agent per list
+  // traversal, but it's better than none. 
+  if (dirty)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "A state synchronization agent died.\n"));
+      (void) state_synchronization_agent_list_.remove (remove_holder_ref);
     }
-  }
 }
 
 void

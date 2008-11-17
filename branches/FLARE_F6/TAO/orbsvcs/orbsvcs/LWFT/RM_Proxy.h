@@ -28,7 +28,7 @@ public:
   virtual int pulse (void);
 
 protected:
-  CORBA::Object_var obtain_RM_ior (CORBA::ORB_ptr orb);
+  CORBA::Object_ptr obtain_RM_ior (CORBA::ORB_ptr orb);
 
 private:
   CPULoadCalculator *load_calc_;

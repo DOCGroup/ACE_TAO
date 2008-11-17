@@ -1,3 +1,36 @@
+Mon Nov 17 01:17:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h:
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.h:
+        * orbsvcs/orbsvcs/LWFT/DDSFailure.cpp:
+        * orbsvcs/orbsvcs/LWFT/RM_Proxy.h:
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.h:
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        * orbsvcs/orbsvcs/LWFT/RM_Proxy.cpp:
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.cpp:
+        * orbsvcs/orbsvcs/LWFT/HMOptions.cpp:
+        * orbsvcs/orbsvcs/LWFT/DDSFailure.h:
+        
+          - Put more code in the Replication Manager algorithm
+            inside a block to keep it from executing if the
+            RM is managing all local processes.
+            
+          - Fixed the state synchronization agent list to remove
+            object references when they die.
+            
+          - Fixed an overflow bug in a loop index used in
+            rank list maintenance when the length is 0.
+            
+          - Other minor and cosmetic changes.
+            
+        * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
+        
+          Removed the display of the IOR upon activation.
+
 Fri Nov 14 22:40:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/HMOptions.h:

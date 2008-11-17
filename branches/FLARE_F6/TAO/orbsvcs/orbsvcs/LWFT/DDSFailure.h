@@ -13,6 +13,8 @@
 #ifndef _DDS_FAILURE_H_
 #define _DDS_FAILURE_H_
 
+#if defined (FLARE_USES_DDS)
+
 #include <string>
 #include "ssa_export.h"
 
@@ -28,5 +30,7 @@ class SSA_Export DDSFailure
   /// description what DDS problem occured
   std::string description_;
 };
+
+#endif // FLARE_USES_DDS
 
 #endif /* _DDS_FAILURE_H_ */

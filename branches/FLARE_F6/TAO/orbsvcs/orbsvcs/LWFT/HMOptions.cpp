@@ -19,7 +19,7 @@ ACE_Thread_Mutex HMOptions::lock_;
 
 HMOptions::HMOptions (void)
   : RM_ior_ ("file://rm.ior"),
-    HM_ior_file_ ("file://hm.ior"),
+    HM_ior_file_ ("hm.ior"),
     arg_pair_ (0,0),
     RM_update_freq_ (1),
     load_monitor_freq_(2)

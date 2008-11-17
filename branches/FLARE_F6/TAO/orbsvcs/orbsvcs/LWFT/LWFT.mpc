@@ -135,6 +135,7 @@ project(*StateSyncAgent) : portableserver, splicelib, orbsvcs_output {
 
   Source_Files {
     CorbaStateUpdate.cpp
+    DDSFailure.cpp
     StatefulObject.cpp
     StateSyncAgentTask.cpp
     StateSynchronizationAgentC.cpp
