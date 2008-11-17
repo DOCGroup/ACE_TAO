@@ -1,3 +1,11 @@
+Mon Nov 17 11:07:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macros.h:
+          Use ACE_TEXT for ACE_LD_DECORATOR_STR
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Also with bmake use MPC_LIB_MODIFIER
+
 Mon Nov 17 10:38:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
