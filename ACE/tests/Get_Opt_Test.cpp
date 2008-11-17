@@ -32,7 +32,7 @@ ACE_RCSID(tests, Get_Opt_Test, "$Id$")
  * total error count.
  */
 
-static const ACE_TString empty (ACE_TEXT (""));
+static const ACE_TString empty_string (ACE_TEXT (""));
 
 static int
 parse_args (int test_number,
@@ -40,7 +40,7 @@ parse_args (int test_number,
             const ACE_TCHAR *test_args,
             int skip_argv = 1,
             int report_errors = 1,
-            const ACE_TString &opt_prefix = empty)
+            const ACE_TString &opt_prefix = empty_string)
 {
   ACE_TString test;
   ACE_TString optstring (opt_prefix);
