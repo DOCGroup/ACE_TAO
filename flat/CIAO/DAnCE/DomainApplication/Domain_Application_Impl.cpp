@@ -42,7 +42,7 @@ namespace DAnCE
       }
     catch(...)
       {
-	DANCE_ERROR((LM_ERROR, DLINFO "DomainApplication_Impl::~DomainApplication_Impl - "
+        DANCE_ERROR((LM_ERROR, DLINFO "DomainApplication_Impl::~DomainApplication_Impl - "
                      "caught an unknown exception.\n"));
       }
   }

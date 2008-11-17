@@ -31,7 +31,7 @@ namespace DAnCE
     write_IOR (const ACE_TCHAR * ior_file_name, const char* ior)
     {
       FILE* ior_output_file_ =
-        ACE_OS::fopen (ior_file_name, "w");
+        ACE_OS::fopen (ior_file_name, ACE_TEXT("w"));
 
       if (ior_output_file_)
         {
@@ -90,23 +90,23 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc,
                         argv,
-                        "e:n:p::c::r::ifs:t:h",
+                        ACE_TEXT("e:n:p::c::r::ifs:t:h"),
                         0,
                         0,
                         ACE_Get_Opt::RETURN_IN_ORDER);
 
-  get_opts.long_option ("exec-mgr", 'e', ACE_Get_Opt::ARG_REQUIRED);
-  get_opts.long_option ("node-mgr", 'n', ACE_Get_Opt::ARG_REQUIRED);
-  get_opts.long_option ("process-ns", 'p', ACE_Get_Opt::ARG_OPTIONAL);
-  get_opts.long_option ("create-plan-ns", 'c', ACE_Get_Opt::ARG_OPTIONAL);
-  get_opts.long_option ("rebind-plan-ns", 'r', ACE_Get_Opt::ARG_OPTIONAL);
-  get_opts.long_option ("port-indirection", 'i', ACE_Get_Opt::NO_ARG);
-  get_opts.long_option ("ignore-failure", 'f', ACE_Get_Opt::NO_ARG);
-  get_opts.long_option ("server-executable", 's', ACE_Get_Opt::ARG_REQUIRED);
-  get_opts.long_option ("server-args", ACE_Get_Opt::ARG_REQUIRED);
-  get_opts.long_option ("standalone-nm", ACE_Get_Opt::NO_ARG);
-  get_opts.long_option ("timeout", 't', ACE_Get_Opt::ARG_REQUIRED);
-  get_opts.long_option ("help", 'h', ACE_Get_Opt::NO_ARG);
+  get_opts.long_option (ACE_TEXT("exec-mgr"), 'e', ACE_Get_Opt::ARG_REQUIRED);
+  get_opts.long_option (ACE_TEXT("node-mgr"), 'n', ACE_Get_Opt::ARG_REQUIRED);
+  get_opts.long_option (ACE_TEXT("process-ns"), 'p', ACE_Get_Opt::ARG_OPTIONAL);
+  get_opts.long_option (ACE_TEXT("create-plan-ns"), 'c', ACE_Get_Opt::ARG_OPTIONAL);
+  get_opts.long_option (ACE_TEXT("rebind-plan-ns"), 'r', ACE_Get_Opt::ARG_OPTIONAL);
+  get_opts.long_option (ACE_TEXT("port-indirection"), 'i', ACE_Get_Opt::NO_ARG);
+  get_opts.long_option (ACE_TEXT("ignore-failure"), 'f', ACE_Get_Opt::NO_ARG);
+  get_opts.long_option (ACE_TEXT("server-executable"), 's', ACE_Get_Opt::ARG_REQUIRED);
+  get_opts.long_option (ACE_TEXT("server-args"), ACE_Get_Opt::ARG_REQUIRED);
+  get_opts.long_option (ACE_TEXT("standalone-nm"), ACE_Get_Opt::NO_ARG);
+  get_opts.long_option (ACE_TEXT("timeout"), 't', ACE_Get_Opt::ARG_REQUIRED);
+  get_opts.long_option (ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
   //get_opts.long_option ("help", '?');
 
   char c;
@@ -177,8 +177,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
           break;
 
         case 0:
-          if (ACE_OS::strcmp (get_opts.long_option (),
-                              "standalone-nm") == 0)
+          if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("standalone-nm")) == 0)
             {
               DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
                             "Found option directing NodeManager to run as standalone entity.\n"));
