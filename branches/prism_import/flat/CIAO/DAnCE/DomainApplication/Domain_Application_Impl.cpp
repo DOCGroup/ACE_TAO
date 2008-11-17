@@ -8,10 +8,11 @@
 namespace DAnCE
 {
 
-  DomainApplication_Impl::DomainApplication_Impl (TNam2Nm & nams,
-                                                  const Deployment::Properties & configProperty,
-                                                  Deployment::Connections& conn)
-    : nams_ (nams)
+  DomainApplication_Impl::DomainApplication_Impl (
+    TNam2Nm & nams,
+    const Deployment::Properties & configProperty,
+    Deployment::Connections& conn)
+      : nams_ (nams)
   {
     DANCE_TRACE("DomainApplication_Impl::DomainApplication_Impl");
     this->startLaunch (configProperty);
@@ -24,23 +25,24 @@ namespace DAnCE
 
     try
       {
-	for (TApp2Mgr::iterator iter = this->node_applications_.begin();
-	     iter != this->node_applications_.end();
-	     ++iter)
-	  {
-	    (*iter).int_id_->destroyApplication ( (*iter).ext_id_.in());
-	  }
-	this->node_applications_.unbind_all();
+        for (TApp2Mgr::iterator iter = this->node_applications_.begin();
+             iter != this->node_applications_.end();
+             ++iter)
+          {
+            (*iter).int_id_->destroyApplication ( (*iter).ext_id_.in());
+          }
+        this->node_applications_.unbind_all();
       }
     catch (CORBA::Exception &e)
       {
-	DANCE_ERROR((LM_ERROR, DLINFO "DomainApplication_Impl::~DomainApplication_Impl - "
-                     "caught  a CORBA exception %s(%s) \"%s\"\n", 
-                     e._name(), e._rep_id(), e._info().c_str()));
+        DANCE_ERROR((LM_ERROR, DLINFO
+                    "DomainApplication_Impl::~DomainApplication_Impl - "
+                    "caught a CORBA exception %C(%C) \"%C\"\n",
+                    e._name(), e._rep_id(), e._info().c_str()));
       }
     catch(...)
       {
-	DANCE_ERROR((LM_ERROR, DLINFO "DomainApplication_Impl::~DomainApplication_Impl - " 
+	DANCE_ERROR((LM_ERROR, DLINFO "DomainApplication_Impl::~DomainApplication_Impl - "
                      "caught an unknown exception.\n"));
       }
   }
@@ -76,7 +78,7 @@ namespace DAnCE
   DomainApplication_Impl::startLaunch (const Deployment::Properties & configProperty)
   {
     DANCE_TRACE ("DomainApplication_Impl::startLaunch");
-    
+
     for (TNam2Nm::iterator iter = this->nams_.begin();
          iter != this->nams_.end();
          ++iter)
@@ -88,7 +90,7 @@ namespace DAnCE
         //Deployment::NodeApplication_ptr na = Deployment::NodeApplication::_narrow (a);
         if (CORBA::is_nil (na))
           {
-            DANCE_ERROR ((LM_ERROR, DLINFO 
+            DANCE_ERROR ((LM_ERROR, DLINFO
                          "DomainApplication_Impl::startLaunch -"
                          "Received nil object reference from  startLaunch on node managers.\n"));
             throw Deployment::StartError();
@@ -106,7 +108,7 @@ namespace DAnCE
             this->connections_[before+i] = (*conn) [i];
           }
       }
-    
+
     DANCE_DEBUG ((LM_DEBUG, DLINFO "DomainApplication_Impl::startLaunch - "
                   "Received %u connections from applications\n",
                   this->connections_.length ()));

@@ -861,7 +861,7 @@ namespace
         os << "if (! result.second)" << endl
            << "{"
            << "ACE_ERROR_RETURN ((LM_ERROR," << endl
-           << "\"subscribe on %s failed\\n\"," << endl
+           << "\"subscribe on %C failed\\n\"," << endl
            << "\"" << p.name () << "\")," << endl
            << "0);"
            << "}";
@@ -911,7 +911,7 @@ namespace
         os << "if (! result.second)" << endl
            << "{"
            << "ACE_ERROR_RETURN ((LM_ERROR," << endl
-           << "\"generic subscribe on %s failed\\n\"," << endl
+           << "\"generic subscribe on %C failed\\n\"," << endl
            << "\"" << p.name () << "\")," << endl
            << "0);"
            << "}";
@@ -1957,7 +1957,7 @@ namespace
            << "this)," << endl
            << "::CORBA::NO_MEMORY ());" << endl
            << "::CIAO::Port_Activator_var pa = tmp;" << endl;
-        
+
         os << "::CIAO::Servant_Activator_var sa = " << endl
            << "this->container_->ports_servant_activator ();" << endl
            << "if (!sa->register_port_activator (pa._retn ()))" << endl

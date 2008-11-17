@@ -76,7 +76,7 @@ namespace CIAO
       }
 
     CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::init - "
-                 "Initializing a container with name %s\n",
+                 "Initializing a container with name %C\n",
                  name));
 
     CORBA::Object_var poa_object =
@@ -232,15 +232,15 @@ namespace CIAO
       {
         CIAO_DEBUG ((LM_DEBUG, CLINFO
                     "Session_Container::install_home - "
-                    "Loading home [%s] from shared libraries\n",
+                    "Loading home [%C] from shared libraries\n",
                     name));
         CIAO_DEBUG ((LM_DEBUG, CLINFO
                     "Session_Container::install_home - "
-                    "Executor library [%s] with entrypoint [%s]\n",
+                    "Executor library [%C] with entrypoint [%C]\n",
                     primary_artifact, entry_point));
         CIAO_DEBUG ((LM_DEBUG, CLINFO
                     "Session_Container::install_home - "
-                    "Servant library [%s] with entrypoint [%s]\n",
+                    "Servant library [%C] with entrypoint [%C]\n",
                     servant_artifact, servant_entrypoint));
 
         ACE_DLL executor_dll, servant_dll;
@@ -262,7 +262,7 @@ namespace CIAO
             CIAO_ERROR ((LM_ERROR, CLINFO
                         "Session_Container.cpp -"
                         "Session_Container::ciao_install_home -"
-                        "ERROR: %s\n",
+                        "ERROR: %C\n",
                         exception.c_str ()));
 
             throw Components::Deployment::UnknownImplId ();
@@ -278,7 +278,7 @@ namespace CIAO
             CIAO_ERROR ((LM_ERROR, CLINFO
                         "Session_Container.cpp -"
                         "Session_Container::ciao_install_home -"
-                        "ERROR in opening the executor DLL [%s] \n",
+                        "ERROR in opening the executor DLL [%C] \n",
                         primary_artifact));
 
             throw Components::Deployment::UnknownImplId ();
@@ -297,7 +297,7 @@ namespace CIAO
             CIAO_ERROR ((LM_ERROR, CLINFO
                         "Session_Container.cpp -"
                         "Session_Container::ciao_install_home -"
-                        "ERROR in opening the servant DLL [%s] \n",
+                        "ERROR in opening the servant DLL [%C] \n",
                         servant_artifact));
 
             throw Components::Deployment::UnknownImplId ();
@@ -316,7 +316,7 @@ namespace CIAO
                             "Session_Container.cpp -"
                             "Session_Container::ciao_install_home -"
                             "ERROR in opening the executor entry point "
-                            "for executor DLL [%s] \n",
+                            "for executor DLL [%C] \n",
                             primary_artifact));
                 error += primary_artifact;
               }
@@ -326,7 +326,7 @@ namespace CIAO
                             "Session_Container.cpp -"
                             "Session_Container::ciao_install_home -"
                             "ERROR in opening the servant entry point "
-                            "for servant DLL [%s] \n",
+                            "for servant DLL [%C] \n",
                             servant_artifact));
                 error += servant_artifact;
               }
@@ -348,7 +348,7 @@ namespace CIAO
     else
       {
         CIAO_DEBUG ((LM_DEBUG, CLINFO
-                    "Session_Container::install_home - Loading statically linked home [%s]\n",
+                    "Session_Container::install_home - Loading statically linked home [%C]\n",
                     name));
 
         if (static_entrypts_maps_ == 0
@@ -388,7 +388,7 @@ namespace CIAO
           }
 
 	CIAO_ERROR ((LM_ERROR, CLINFO
-		    "Session_Container::ciao_install_home - Error:%s\n",
+        "Session_Container::ciao_install_home - Error:%C\n",
 		    error.c_str ()));
 
         throw Components::Deployment::ImplEntryPointNotFound ();
@@ -453,15 +453,15 @@ namespace CIAO
       {
         CIAO_DEBUG ((LM_DEBUG, CLINFO
                     "Session_Container::install_component - "
-                    "Loading component [%s] from shared libraries\n",
+                    "Loading component [%C] from shared libraries\n",
                     name));
         CIAO_DEBUG ((LM_DEBUG, CLINFO
                     "Session_Container::install_component - "
-                    "Executor library [%s] with entrypoint [%s]\n",
+                    "Executor library [%C] with entrypoint [%C]\n",
                     primary_artifact, entry_point));
         CIAO_DEBUG ((LM_DEBUG, CLINFO
                     "Session_Container::install_component - "
-                    "Servant library [%s] with entrypoint [%s]\n",
+                    "Servant library [%C] with entrypoint [%C]\n",
                     servant_artifact, servant_entrypoint));
 
         ACE_DLL executor_dll, servant_dll;
@@ -483,7 +483,7 @@ namespace CIAO
             CIAO_ERROR ((LM_ERROR, CLINFO
                         "Session_Container.cpp -"
                         "Session_Container::ciao_install_component -"
-                        "ERROR: %s\n",
+                        "ERROR: %C\n",
                         exception.c_str ()));
 
             throw Components::Deployment::UnknownImplId ();
@@ -499,7 +499,7 @@ namespace CIAO
             CIAO_ERROR ((LM_ERROR, CLINFO
                         "Session_Container.cpp -"
                         "Session_Container::ciao_install_component -"
-                        "ERROR in opening the executor DLL [%s] \n",
+                        "ERROR in opening the executor DLL [%C] \n",
                         primary_artifact));
 
             throw Components::Deployment::UnknownImplId ();
@@ -518,7 +518,7 @@ namespace CIAO
             CIAO_ERROR ((LM_ERROR, CLINFO
                         "Session_Container.cpp -"
                         "Session_Container::ciao_install_component -"
-                        "ERROR in opening the servant DLL [%s] \n",
+                        "ERROR in opening the servant DLL [%C] \n",
                         servant_artifact));
 
             throw Components::Deployment::UnknownImplId ();
@@ -537,7 +537,7 @@ namespace CIAO
                             "Session_Container.cpp -"
                             "Session_Container::ciao_install_component -"
                             "ERROR in opening the executor entry point "
-                            "for executor DLL [%s] \n",
+                            "for executor DLL [%C] \n",
                             primary_artifact));
                 error += primary_artifact;
               }
@@ -547,7 +547,7 @@ namespace CIAO
                             "Session_Container.cpp -"
                             "Session_Container::ciao_install_component -"
                             "ERROR in opening the servant entry point "
-                            "for servant DLL [%s] \n",
+                            "for servant DLL [%C] \n",
                             servant_artifact));
                 error += servant_artifact;
               }
@@ -569,7 +569,7 @@ namespace CIAO
     else
       {
         CIAO_DEBUG ((LM_DEBUG, CLINFO
-                    "Session_Container::install_component - Loading statically linked component [%s]\n",
+                    "Session_Container::install_component - Loading statically linked component [%C]\n",
                     name));
 
         if (static_entrypts_maps_ == 0
@@ -609,7 +609,7 @@ namespace CIAO
           }
 
 	CIAO_ERROR ((LM_ERROR, CLINFO
-		    "Session_Container::ciao_install_component - Error:%s\n",
+        "Session_Container::ciao_install_component - Error:%C\n",
 		    error.c_str ()));
 
         throw Components::Deployment::ImplEntryPointNotFound ();
@@ -695,7 +695,7 @@ namespace CIAO
     catch (CORBA::Exception &ex)
       {
         CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::activate_component - "
-                     "Caught CORBA exception while activating a component: %s\n",
+                     "Caught CORBA exception while activating a component: %C\n",
                      ex._info ().c_str ()));
         throw;
       }
@@ -741,7 +741,7 @@ namespace CIAO
     catch (CORBA::Exception &ex)
       {
         CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::passivate_component - "
-                     "Caught CORBA exception while passivating a component: %s\n",
+                     "Caught CORBA exception while passivating a component: %C\n",
                      ex._info ().c_str ()));
         throw;
       }
@@ -830,7 +830,7 @@ namespace CIAO
     catch (CORBA::Exception &ex)
       {
         CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::uninstall_servant - "
-                     "Caught CORBA exception while uninstalling servant: %s\n",
+                     "Caught CORBA exception while uninstalling servant: %C\n",
                      ex._info ().c_str ()));
         throw Components::RemoveFailure ();
       }

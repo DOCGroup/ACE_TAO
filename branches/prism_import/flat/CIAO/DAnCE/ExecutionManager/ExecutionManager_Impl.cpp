@@ -12,7 +12,7 @@ using namespace DAnCE;
 ExecutionManager_Impl::ExecutionManager_Impl (CORBA::ORB_ptr orb,
                                               PortableServer::POA_ptr poa,
                                               CosNaming::NamingContext_ptr nc)
-    : orb_ (CORBA::ORB::_duplicate (orb)), 
+    : orb_ (CORBA::ORB::_duplicate (orb)),
       poa_ (PortableServer::POA::_duplicate (poa)),
       locator_ (orb, nc)
 {
@@ -27,7 +27,7 @@ ExecutionManager_Impl::~ExecutionManager_Impl()
        ++iter)
     {
       DANCE_DEBUG ((LM_TRACE, DLINFO "ExecutionManager_Impl::~ExecutionManager_Impl - "
-                    "deactivating DAM \"%s\"\n", (*iter).ext_id_.c_str()));
+                    "deactivating DAM \"%C\"\n", (*iter).ext_id_.c_str()));
       PortableServer::ObjectId_var id = this->poa_->servant_to_id ( (*iter).int_id_);
       DANCE_DEBUG ((LM_TRACE, DLINFO "ExecutionManager_Impl::~ExecutionManager_Impl - "
                     "before deactivate_object...\n"));
@@ -46,7 +46,7 @@ ExecutionManager_Impl::preparePlan (const ::Deployment::DeploymentPlan & plan,
 {
   DANCE_TRACE ( "ExecutionManager_Impl::preparePlan");
 
-  // Check if plan is already deployed. 
+  // Check if plan is already deployed.
   DomainApplicationManager_Impl * dam = 0;
   if (0 == this->managers_.find (plan.UUID.in(), dam))
     {
@@ -73,7 +73,7 @@ ExecutionManager_Impl::preparePlan (const ::Deployment::DeploymentPlan & plan,
   PortableServer::ObjectId_var id = this->poa_->activate_object (dam_servant);
 
   DANCE_DEBUG((LM_NOTICE, DLINFO "ExecutionManager_Impl::preparePlan - "
-               "Plan with UUID %s was successfully prepared.\n"));
+               "Plan with UUID %C was successfully prepared.\n"));
   CORBA::Object_var ref = this->poa_->id_to_reference (id.in());
   return Deployment::DomainApplicationManager::_narrow (ref.in ());
 }
@@ -82,7 +82,7 @@ ExecutionManager_Impl::preparePlan (const ::Deployment::DeploymentPlan & plan,
 ExecutionManager_Impl::getManagers ()
 {
   DANCE_TRACE ( "ExecutionManager_Impl::getManagers ()");
-  
+
   ::Deployment::DomainApplicationManagers * managers;
   ACE_NEW_THROW_EX (managers,
                     ::Deployment::DomainApplicationManagers(),
@@ -134,7 +134,7 @@ ExecutionManager_Impl::destroyManager (::Deployment::DomainApplicationManager_pt
 
 // This one derived from ExecutionManagerDaemon interface
 // for shutdowning DAnCE agent
-void 
+void
 ExecutionManager_Impl::shutdown ()
 {
   DANCE_TRACE ("ExecutionManager_Impl::shutdown");
@@ -142,15 +142,15 @@ ExecutionManager_Impl::shutdown ()
 }
 
 
-void 
-ExecutionManager_Impl::add_node_manager (const ACE_TCHAR *name, 
+void
+ExecutionManager_Impl::add_node_manager (const ACE_TCHAR *name,
                                          const ACE_TCHAR *ior)
 {
   DANCE_TRACE ("ExecutionManager_Impl::add_node_manager");
   this->locator_.store_ior (name, ior);
 }
 
-void 
+void
 ExecutionManager_Impl::load_node_map (const ACE_TCHAR *filename)
 {
   DANCE_TRACE ("ExecutionManager_Impl::add_node_manager");

@@ -46,7 +46,7 @@ CIAO::RTNodeApp_Configurator::init_resource_manager
   for (CORBA::ULong i = 0; i < properties.length (); ++i)
     {
       //      if (CIAO::debug_level () > 9)
-      CIAO_DEBUG ((LM_DEBUG, "RTNodeApp_Configurator::init_resource_manager processing property: %s\n",
+      CIAO_DEBUG ((LM_DEBUG, "RTNodeApp_Configurator::init_resource_manager processing property: %C\n",
                   properties[i].name.in ()));
 
       if (ACE_OS::strcmp ("CIAOServerResources", properties[i].name.in ()) == 0)
@@ -77,7 +77,7 @@ CIAO::RTNodeApp_Configurator::find_container_policies
 
   for (CORBA::ULong i = 0; i < properties.length (); ++i)
     {
-      CIAO_DEBUG ((LM_DEBUG, "RTNodeApp_Configurator::find_container_policies processing property: %s\n",
+      CIAO_DEBUG ((LM_DEBUG, "RTNodeApp_Configurator::find_container_policies processing property: %C\n",
                   properties[i].name.in ()));
 
       if (ACE_OS::strcmp ("ContainerPolicySet", properties[i].name) == 0)

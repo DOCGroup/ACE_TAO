@@ -1,3 +1,27 @@
+Mon Nov 17 14:34:23 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ciao/Client_init.cpp
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp
+        * ciao/ComponentServer/Configurators/Basic_Config_Manager.cpp
+        * ciao/ComponentServer/Configurators/RT/RTConfig_Manager.cpp
+        * ciao/ComponentServer/Configurators/RTNodeApp_Configurator.cpp
+        * ciao/Containers/Container_Base.cpp
+        * ciao/Containers/Servant_Activator.cpp
+        * ciao/Containers/Session/Session_Container.cpp
+        * ciao/Servants/Servant_Impl_Base.cpp
+        * ciao/Server_init.cpp
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp
+        * CIDLC/ServantSourceGenerator.cpp
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/Node_Locator.cpp
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp
+        * DAnCE/NodeApplication/ComponentAttributesSetter.cpp
+          Layout, %s->%C changes
+
 Mon Nov 17 14:17:23 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * DAnCE/Deployment/DAnCE_Core.mpc:

@@ -117,7 +117,7 @@ namespace CIAO
   RTEventService::connect_event_consumer (
     Consumer_Config_ptr consumer_config)
   {
-    ACE_DEBUG ((LM_TRACE, CLINFO 
+    ACE_DEBUG ((LM_TRACE, CLINFO
                 "CIAO::RTEventService::connect_event_consumer\n"));
 
     RTEvent_Consumer_Config_ptr rt_config =
@@ -238,7 +238,7 @@ namespace CIAO
     events[0].data.any_value.replace (unk);
 
     ACE_DEBUG ((LM_DEBUG,
-                "******* push event for source string: %s\n",
+                "******* push event for source string: %C\n",
                 source_id));
     ACE_DEBUG ((LM_DEBUG,
                 "******* push event for source id: %i\n",
@@ -309,7 +309,7 @@ namespace CIAO
   RTEventService::create_sender (const char * addr_serv_id)
   {
     ACE_DEBUG ((LM_DEBUG,
-                "Create a Sender object with addr_serv_id: %s\n",
+                "Create a Sender object with addr_serv_id: %C\n",
                 addr_serv_id ));
 
     // We need a local socket to send the data, open it and check
@@ -355,7 +355,7 @@ namespace CIAO
                                    ::CORBA::UShort listen_port)
   {
     ACE_DEBUG ((LM_DEBUG,
-                "Create a receiver object with addr_serv_id: %s\n",
+                "Create a receiver object with addr_serv_id: %C\n",
                 addr_serv_id ));
 
     // Create and initialize the receiver
@@ -554,7 +554,7 @@ namespace CIAO
   RTEvent_Supplier_Config_impl::supplier_id (const char * supplier_id)
   {
     ACE_DEBUG ((LM_DEBUG, CLINFO
-                "RTEvent_Supplier_Config_impl::supplier_id::supplier's id: %s\n", supplier_id));
+                "RTEvent_Supplier_Config_impl::supplier_id::supplier's id: %C\n", supplier_id));
 
     this->supplier_id_ = supplier_id;
 
@@ -649,7 +649,7 @@ namespace CIAO
     ACE_Hash<ACE_CString> hasher;
     RtecEventComm::EventSourceID int_source_id = hasher (source_id);
 
-    ACE_DEBUG ((LM_DEBUG, "******* the source string is: %s\n", source_id));
+    ACE_DEBUG ((LM_DEBUG, "******* the source string is: %C\n", source_id));
     ACE_DEBUG ((LM_DEBUG, "******* the source id is: %i\n", int_source_id));
 
     this->qos_.insert_source (int_source_id, 0);
@@ -672,7 +672,7 @@ namespace CIAO
   RTEvent_Consumer_Config_impl::consumer_id (const char * consumer_id)
   {
     ACE_DEBUG ((LM_DEBUG, CLINFO
-                "RTEvent_Consumer_Config_impl::set_consumer_id:%s\n",
+                "RTEvent_Consumer_Config_impl::set_consumer_id:%C\n",
                 consumer_id));
 
     this->consumer_id_ = consumer_id;

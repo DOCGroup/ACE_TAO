@@ -52,18 +52,18 @@ namespace CIAO
 			  this->mutex_,
 			  CORBA::NO_RESOURCES ());
       size_t const sz = this->slot_index_;
-      
+
       for (size_t t = 0; t != sz; ++t)
         {
           Port_Activator_var tmp = this->pa_[t];
-          
+
           if (ACE_OS::strcmp (tmp->oid (), str.in ()) == 0)
             {
               tmp->oid ("dummy");
             }
         }
     }
-    
+
     return true;
   }
 
@@ -78,7 +78,7 @@ namespace CIAO
 
     CIAO_DEBUG ((LM_INFO, CLINFO
 		"Servant_Activator_i::incarnate, "
-		"Attempting to activate port name [%s] \n",
+    "Attempting to activate port name [%C] \n",
 		str.in ()));
 
     {
@@ -104,7 +104,7 @@ namespace CIAO
                             " value from the array is null \n"));
               continue;
             }
-            
+
           if (ACE_OS::strcmp (tmp->oid (),
                               str.in ()) == 0)
             {
@@ -112,14 +112,14 @@ namespace CIAO
               // lock held. Oh well, let us get some sense of sanity in
               // CIAO to do think about these.
 	      CIAO_DEBUG ((LM_INFO, CLINFO
-			  "Servant_Activator_i::incarnate - Activating Port %s\n",
+        "Servant_Activator_i::incarnate - Activating Port %C\n",
 			  str.in ()));
-	      
+
               return this->pa_[t]->activate (oid);
             }
         }
     }
-    
+
     throw CORBA::OBJECT_NOT_EXIST ();
   }
 
@@ -152,12 +152,12 @@ namespace CIAO
 			"Servant_Activator_i::etherealize - Port Activator is NULL\n"));
             continue;
           }
-          
+
         if (ACE_OS::strcmp (tmp->oid (),
                             str.in ()) == 0)
           {
             CIAO_DEBUG ((LM_INFO, CLINFO
-                        "Servant_Activator_i::etherealize - Deactivating Port %s\n",
+                        "Servant_Activator_i::etherealize - Deactivating Port %C\n",
                         str.in ()));
             this->pa_[t]->deactivate (servant);
           }
@@ -186,7 +186,7 @@ namespace CIAO
 	CIAO_DEBUG ((LM_INFO, CLINFO
 		    "Servant_Activator_i::"
 		    "register_port_activator"
-		    " with port name [%s],"
+        " with port name [%C],"
 		    " the slot_index_ is [%d] \n",
 		    pa->name (),
 		    this->slot_index_));
