@@ -31,12 +31,6 @@
 #define ACE_CC_MINOR_VERSION (_MSC_VER % 100)
 #define ACE_CC_BETA_VERSION (0)
 
-#if !defined (ACE_LD_DECORATOR_STR)
-# if defined (_DEBUG)
-#  define ACE_LD_DECORATOR_STR ACE_TEXT ("d")
-# endif  /* _DEBUG */
-#endif  /* ACE_LD_DECORATOR_STR */
-
 #if !defined(_NATIVE_WCHAR_T_DEFINED)
   #define ACE_LACKS_NATIVE_WCHAR_T
 #endif
