@@ -1395,6 +1395,10 @@ sub check_for_bad_run_test ()
                         print_error ("$file:$.: using \$PerlACE::waitforfile_timed");
                     }
 
+                    if (m/\$PerlACE::add_lib_path/) {
+                        print_error ("$file:$.: using \$PerlACE::add_lib_path");
+                    }
+
                     if (m/PerlACE::random_port/) {
                         print_error ("$file:$.: using PerlACE::random_port");
                     }
