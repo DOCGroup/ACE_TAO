@@ -29,8 +29,7 @@ namespace CIAO
       ComponentServer_Configurator * operator () (int &argc, ACE_TCHAR **argv);
 
     private:
-      void parse_args (int &argc, ACE_TCHAR **argv);
-      bool rt_;
+      bool parse_args (int &argc, ACE_TCHAR **argv);
     };
   }
 }

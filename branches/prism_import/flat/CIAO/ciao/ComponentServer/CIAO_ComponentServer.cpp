@@ -60,7 +60,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 #endif /* CIAO_BUILD_COMPONENTSERVER_EXE */
 
 bool
-write_IOR (const char * ior_file_name, const char* ior)
+write_IOR (const ACE_TCHAR * ior_file_name, const char* ior)
 {
   FILE* ior_output_file_ =
     ACE_OS::fopen (ior_file_name, "w");
@@ -162,7 +162,7 @@ namespace CIAO
 
       ComponentServer_var cs (ci_srv->_this ());
 
-      if (this->output_file_ != "")
+      if (this->output_file_ != ACE_TEXT(""))
         {
           CORBA::String_var ior = this->orb_->object_to_string (cs.in ());
           write_IOR (this->output_file_.c_str (), ior.in ());
@@ -184,7 +184,7 @@ namespace CIAO
 
           Components::ConfigValues_var config;
           {
-            Components::ConfigValues *cf;
+            Components::ConfigValues *cf = 0;
             ACE_NEW_NORETURN (cf, Components::ConfigValues (0));
 
             if  (cf == 0)
@@ -192,7 +192,10 @@ namespace CIAO
                 CIAO_ERROR ((LM_CRITICAL, "ComponentServer_Task::run - "
                              "Out of memory error while allocating config values."));
               }
-            else config = cf;
+            else
+              {
+                config = cf;
+              }
           }
 
           // Make callback.
@@ -221,7 +224,7 @@ namespace CIAO
 
               sa->configuration_complete (this->uuid_.c_str ());
             }
-          catch (CORBA::BAD_PARAM &)
+          catch (const CORBA::BAD_PARAM &)
             {
               CIAO_ERROR ((LM_ERROR, CLINFO "ComponentServer_Task::svc - "
                            "The Callback IOR provided pointed to the wrong ServerActivator\n"));
@@ -272,8 +275,7 @@ namespace CIAO
             this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
 
           // Activate task.
-          int result =
-            this->activate (flags);
+          int result = this->activate (flags);
           if (result == -1)
             {
               if (errno == EPERM)
@@ -290,8 +292,7 @@ namespace CIAO
             }
 
           // Wait for task to exit.
-          result =
-            this->wait ();
+          result = this->wait ();
 
           if (result != -1)
             throw Error ("Unknown error waiting for ORB thread to complete");
@@ -316,12 +317,12 @@ namespace CIAO
 
       ACE_Get_Opt opts (argc, argv, ACE_TEXT("hu:c:"), 1, 0,
                         ACE_Get_Opt::RETURN_IN_ORDER);
-      opts.long_option ("uuid", 'u', ACE_Get_Opt::ARG_REQUIRED);
-      opts.long_option ("callback-ior", 'c', ACE_Get_Opt::ARG_REQUIRED);
-      opts.long_option ("help", 'h');
-      opts.long_option ("log-level",'l', ACE_Get_Opt::ARG_REQUIRED);
-      opts.long_option ("trace",'t', ACE_Get_Opt::NO_ARG);
-      opts.long_option ("output-ior",'o', ACE_Get_Opt::ARG_REQUIRED);
+      opts.long_option (ACE_TEXT("uuid"), 'u', ACE_Get_Opt::ARG_REQUIRED);
+      opts.long_option (ACE_TEXT("callback-ior"), 'c', ACE_Get_Opt::ARG_REQUIRED);
+      opts.long_option (ACE_TEXT("help"), 'h');
+      opts.long_option (ACE_TEXT("log-level"),'l', ACE_Get_Opt::ARG_REQUIRED);
+      opts.long_option (ACE_TEXT("trace"),'t', ACE_Get_Opt::NO_ARG);
+      opts.long_option (ACE_TEXT("output-ior"),'o', ACE_Get_Opt::ARG_REQUIRED);
 
       //int j;
       char c;
@@ -372,7 +373,7 @@ namespace CIAO
               CIAO_ERROR ((LM_ERROR, CLINFO " Unknown option: %s\n",
                           opts.last_option ()));
               this->usage ();
-              ACE_CString err ("Unknown option ");
+              ACE_TString err (ACE_TEXT("Unknown option "));
               err += opts.last_option ();
               throw Error (err);
             }
@@ -434,10 +435,8 @@ namespace CIAO
 
       // Check that we have sufficient priority range to run,
       // i.e., more than 1 priority level.
-      int const max_priority =
-        ACE_Sched_Params::priority_max (sched_policy);
-      int const min_priority =
-        ACE_Sched_Params::priority_min (sched_policy);
+      int const max_priority = ACE_Sched_Params::priority_max (sched_policy);
+      int const min_priority = ACE_Sched_Params::priority_min (sched_policy);
 
       if (max_priority == min_priority)
         {

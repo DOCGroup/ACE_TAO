@@ -29,20 +29,16 @@ namespace CIAO
     //namespace
     //{
       /**
-       * @class Child_Handler
-       * @brief The signal handler class for the SIGCHLD
-       * handling to avoid zombies
-       *
+       * @brief The signal handler class for the SIGCHLD handling to avoid
+       * zombies
        */
       class Child_Handler : public virtual ACE_Event_Handler
       {
       public:
-        virtual int handle_signal (int sig,
+        virtual int handle_signal (int,
                                    siginfo_t *,
                                    ucontext_t *)
         {
-          ACE_UNUSED_ARG (sig);
-
           // @@ Note that this code is not portable to all OS platforms
           // since it uses print statements within signal handler context.
           ACE_exitcode status;
@@ -50,15 +46,14 @@ namespace CIAO
           // -1 to wait for any child process
           // and WNOHANG so that it retuurns immediately
           ACE_OS::waitpid (-1 ,&status, WNOHANG, 0);
-          
+
           return 0;
         }
       };
       //    }
-  
-  
+
+
     /**
-     * @class CIAO_ServerActivator_i
      * @author William R. Otte <wotte@dre.vanderbilt.edu>
      * @brief Default server activator for CIAO component servers.
      *
@@ -72,7 +67,7 @@ namespace CIAO
       : public virtual POA_CIAO::Deployment::ServerActivator
     {
     public:
-      // Constructor 
+      // Constructor
       CIAO_ServerActivator_i (CORBA::ULong def_spawn_delay,
                               const char * default_cs_path,
                               const char * cs_args,
@@ -80,39 +75,40 @@ namespace CIAO
                               CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa_);
 
-      
-      // Destructor 
+      // Destructor
       virtual ~CIAO_ServerActivator_i (void);
-      
+
       virtual
-      void component_server_callback (::Components::Deployment::ComponentServer_ptr serverref,
-                                      const char * server_UUID,
-                                      ::Components::ConfigValues_out config);
-      
+      void component_server_callback (
+        ::Components::Deployment::ComponentServer_ptr serverref,
+        const char * server_UUID,
+        ::Components::ConfigValues_out config);
+
       virtual void configuration_complete (const char *server_UUID);
-      
+
       virtual
-      ::Components::Deployment::ComponentServer_ptr 
+      ::Components::Deployment::ComponentServer_ptr
       create_component_server (const ::Components::ConfigValues & config);
-      
+
       virtual
-      void remove_component_server (::Components::Deployment::ComponentServer_ptr server);
-      
+      void remove_component_server (
+        ::Components::Deployment::ComponentServer_ptr server);
+
       virtual
       ::Components::Deployment::ComponentServers * get_component_servers (void);
-      
+
     private:
       struct Server_Info;
-      
-      /// Builds command line options based on configuration information.  
-      /// May modify the uuid of the component server. 
+
+      /// Builds command line options based on configuration information.
+      /// May modify the uuid of the component server.
       ACE_CString construct_command_line (Server_Info &si);
 
       /// Spawns the component server process, but does not wait for it
-      /// to call back. 
+      /// to call back.
       pid_t spawn_component_server (const Server_Info &si,
                                     const ACE_CString &cmd_line);
-      
+
       /// This method is only applicable when our program is configured as
       /// singled threaded . Internally it uses a <perform_work> blocking
       /// call to wait for NA object to call back
@@ -121,34 +117,34 @@ namespace CIAO
 
       /// This method is only applicable when our program is configured as
       /// multiple threaded. Internally it waits on a conditional variable
-      /// that could be modified by the callback servant which runs in 
+      /// that could be modified by the callback servant which runs in
       /// another thread
       void multi_threaded_wait_for_callback (const Server_Info &si,
                                              ACE_Time_Value &timeout);
-      
+
       void create_component_server_config_values (const Server_Info &info,
                                                   Components::ConfigValues_out &config);
-      
+
       struct Server_Info
       {
         Server_Info (size_t cmap_size_hint = 128)
-          : cmap_ (new CIAO::Utility::CONFIGVALUE_MAP (cmap_size_hint)), 
+          : cmap_ (new CIAO::Utility::CONFIGVALUE_MAP (cmap_size_hint)),
             ref_ (Components::Deployment::ComponentServer::_nil ()),
             pid_ (ACE_INVALID_PID),
             activated_ (false) {}
 
         typedef ACE_Refcounted_Auto_Ptr <CIAO::Utility::CONFIGVALUE_MAP,
                                          ACE_Null_Mutex> CONFIGVALUE_MAP_PTR;
-        
+
         ACE_CString uuid_;
         CONFIGVALUE_MAP_PTR cmap_;
         Components::Deployment::ComponentServer_var ref_;
         pid_t pid_;
         bool activated_;
       };
-      
+
       typedef ACE_Refcounted_Auto_Ptr<Server_Info, ACE_Null_Mutex> Safe_Server_Info;
-              
+
       struct _server_info
       {
         bool operator() (const Safe_Server_Info &a, const Safe_Server_Info &b) const
@@ -156,37 +152,37 @@ namespace CIAO
           return a->uuid_ == b->uuid_;
         }
       };
-      
+
       // Presumably, there won't be too many component servers per node application
       typedef ACE_Unbounded_Set_Ex <Safe_Server_Info, _server_info> SERVER_INFOS;
 
       /// Default args to pass to all componentservers.
       ACE_CString default_args_;
-      
+
       SERVER_INFOS server_infos_;
-      
+
       ACE_Process_Manager process_manager_;
-      
+
       Child_Handler child_handler_;
-      
+
       CORBA::ULong spawn_delay_;
-      
+
       /////*******NEW
       bool multithreaded_;
-      
+
       CORBA::ORB_var orb_;
-      
+
       PortableServer::POA_var poa_;
-      
+
       ACE_CString cs_path_;
-      
+
       ACE_CString cs_args_;
-      
+
       ACE_Thread_Mutex mutex_;
-      
+
       ACE_Condition<ACE_Thread_Mutex> condition_;
     };
-  
+
 
   }
 }

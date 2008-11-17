@@ -78,7 +78,6 @@ namespace CIAO
 			      PortableServer::Servant servant,
 			      CORBA::Boolean cleanup_in_progress,
 			      CORBA::Boolean remaining_activations);
-
     /// Local helper methods
 
   private:
@@ -86,7 +85,7 @@ namespace CIAO
     CORBA::ORB_var orb_;
 
     /// @@ This should be changed at some point of time so that we
-    /// don't  land up with a linear algorithm
+    /// don't land up with a linear algorithm
     typedef ACE_Array_Base<Port_Activator_var> Port_Activators;
 
     /// Array of port activators

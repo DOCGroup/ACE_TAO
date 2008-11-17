@@ -300,8 +300,7 @@ namespace CIAO
 
           // If service configuration file is specified through RTCCM
           // descriptors, then we should honor it as well.
-          if (ACE_OS::strcmp (sr->svcconf.in (),
-                              "") != 0)
+          if (ACE_OS::strcmp (sr->svcconf.in (), "") != 0)
             {
               CIAO_DEBUG ((LM_TRACE, CLINFO
                            "CIAO_ServerActivator_i::construct_command_line - Using SvcConf file %C\n ",
@@ -335,8 +334,11 @@ namespace CIAO
           CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ServerActivator_i::spawn_component_server - "
                        "Using provided component server executable:%C\n", path));
         }
-      else CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ServerActivator_i::spawn_component_server - "
-                        "Using default component server execuable\n"));
+      else
+        {
+          CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ServerActivator_i::spawn_component_server - "
+          "Using default component server execuable\n"));
+        }
 
       options.command_line ("%s %s -c %s",
                             path,
@@ -349,8 +351,8 @@ namespace CIAO
                    "CIAO_ServerActivator_i::spawn_component_server - Spawning process, command line is %s\n",
                    options.command_line_buf ()));
 
-      pid_t pid = this->process_manager_.spawn (options,
-                                                &this->child_handler_);
+      pid_t const pid = this->process_manager_.spawn (options,
+                                                      &this->child_handler_);
 
       if (pid == ACE_INVALID_PID)
         {
@@ -500,30 +502,27 @@ namespace CIAO
       ::Components::Deployment::ComponentServers_var retval = new
           Components::Deployment::ComponentServers (this->server_infos_.size ());
 
-      if (retval->length () == 0)
-        return retval;
-
-
       CORBA::ULong pos = 0;
 
       for (SERVER_INFOS::ITERATOR i (this->server_infos_);
            !i.done (); ++i)
         {
-          retval[pos++] = ::Components::Deployment::ComponentServer::_duplicate ((*i)->ref_);
+          retval[pos++] =
+            ::Components::Deployment::ComponentServer::_duplicate ((*i)->ref_);
         }
 
       return retval._retn ();
     }
 
     void
-    CIAO_ServerActivator_i::create_component_server_config_values (const Server_Info &,
-                                                                   Components::ConfigValues_out &config)
+    CIAO_ServerActivator_i::create_component_server_config_values (
+      const Server_Info &,
+      Components::ConfigValues_out &config)
     {
       ACE_NEW_THROW_EX (config,
                         Components::ConfigValues (0),
                         CORBA::NO_MEMORY ());
     }
-
   }
 }
 

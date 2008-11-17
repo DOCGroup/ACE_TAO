@@ -206,8 +206,8 @@ module CIAO
      */
     struct ThreadpoolPolicyDef
     {
-      string Id;                // Threadpool name defined in
-                                // ORBResource
+      /// Threadpool name defined in ORBResource
+      string Id;
     };
 
     /**
@@ -216,8 +216,8 @@ module CIAO
      */
     struct PriorityBandedConnectionPolicyDef
     {
-      string Id;                // PriorityBands name defined in
-                                // ORBResource
+      /// PriorityBands name defined in ORBResource
+      string Id;
     };
 
     union PolicyDef switch (CORBA::PolicyType)
@@ -239,7 +239,8 @@ module CIAO
      */
     struct PolicySet
     {
-      string Id;                // Name of this policy set
+      /// Name of this policy set
+      string Id;
       PolicyDefs policies;
     };
 
