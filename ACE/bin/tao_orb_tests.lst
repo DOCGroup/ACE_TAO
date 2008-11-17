@@ -292,7 +292,7 @@ TAO/tests/Multiple/run_test.pl: !SUNCC5_1 !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Exposed_Policies/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Portable_Interceptors/Bug_1559/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Portable_Interceptors/Bug_2510_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ST !LabVIEW_RT !WinCE !FUZZ
-TAO/tests/Portable_Interceptors/Collocated/Dynamic/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ST !LabVIEW_RT !WinCE !FUZZ
+TAO/tests/Portable_Interceptors/Collocated/Dynamic/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ST
 TAO/tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ST !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Portable_Interceptors/Processing_Mode_Policy/Remote/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ST !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ST !LabVIEW_RT !WinCE !FUZZ
