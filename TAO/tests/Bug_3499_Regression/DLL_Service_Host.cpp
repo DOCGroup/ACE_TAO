@@ -82,5 +82,5 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv [])
                 ACE_TEXT ("(%t) %T - %M - caught unknown exception\n")));
   }
 
-  return -1;
+  return 0;
 }
