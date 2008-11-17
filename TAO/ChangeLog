@@ -1,3 +1,16 @@
+Mon Nov 17 08:39:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3470_Regression/*:
+          New test for bugzilla 3470 which has been fixed already. Thanks
+          to Skrzyniarz Alexandre <alexandre dot skrzyniarz at fr dot thalesgroup dot com>
+          for creating this test.
+
+        * tests/Bug_3499_Regression/DLL_Service_Host.cpp:
+          Fixed return value
+
+        * tests/Portable_Interceptors/Bug_2133/server.cpp:
+          Removed commented out line
+
 Sun Nov 16 08:11:12 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
 
         * configure.ac:
