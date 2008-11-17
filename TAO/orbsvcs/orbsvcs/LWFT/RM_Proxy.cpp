@@ -123,6 +123,13 @@ RM_Proxy::proc_failure (const std::string & process_id)
 {
   try
     {
+      if (CORBA::is_nil (RM_var_.in ()))
+	{
+	  ACE_DEBUG ((LM_ERROR, "RM_Proxy::proc_failure - "
+		      "RM reference is nil.\n"));
+	  return;
+	}
+
       RM_var_->proc_failure (process_id.c_str());
     }
   catch (const CORBA::Exception& ex)
@@ -140,4 +147,3 @@ RM_Proxy::pulse (void)
                         load_calc_->percent_load());
   return 0;
 }
-

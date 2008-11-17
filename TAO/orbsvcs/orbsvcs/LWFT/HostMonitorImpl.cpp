@@ -27,6 +27,11 @@ HostMonitorImpl::HostMonitorImpl (CORBA::ORB_ptr orb, Monitor_Thread *mt)
   this->create_rm_proxy ();
 }
 
+HostMonitorImpl::~HostMonitorImpl ()
+{
+  this->remove_rm_proxy ();
+}
+
 void
 HostMonitorImpl::dump (void)
 throw (CORBA::SystemException)
@@ -153,7 +158,6 @@ int HostMonitorImpl::remove_process (std::string const &process_id)
 {
   if (process_map_.unbind (process_id) == 0)
   {
-    remove_rm_proxy ();
     return 0;
   }
   return -1;

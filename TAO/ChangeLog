@@ -1,3 +1,12 @@
+Mon Nov 17 16:31:03 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.h
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp
+        * orbsvcs/orbsvcs/LWFT/RM_Proxy.cpp:
+        
+          Fixed a bug that caused a crash whenever a server failed and
+          the HostMonitor tries to access the ReplicationManager afterwards.
+
 Mon Nov 17 15:55:17 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h
