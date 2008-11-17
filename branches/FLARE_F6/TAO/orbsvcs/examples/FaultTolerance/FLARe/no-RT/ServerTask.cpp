@@ -18,7 +18,6 @@
 
 #include "orbsvcs/orbsvcs/LWFT/AppOptions.h"
 #include "orbsvcs/orbsvcs/LWFT/ReplicationManagerC.h"
-#include "orbsvcs/Naming/Naming_Client.h"
 
 #include "ServerTask.h"
 #include "test_i.h"
@@ -28,8 +27,8 @@ std::vector<size_t> object_roles;
 std::vector<double> object_loads;
 
 ServerTask::ServerTask (ServerOptions & options,
-			                  CORBA::ORB_ptr orb,
-			                  StateSynchronizationAgent_ptr agent)
+			CORBA::ORB_ptr orb,
+			StateSynchronizationAgent_ptr agent)
   : options_ (options),
     orb_ (CORBA::ORB::_duplicate (orb)),
     agent_ (StateSynchronizationAgent::_duplicate (agent))
@@ -55,89 +54,56 @@ ServerTask::svc (void)
         poa->the_POAManager ();
 
       this->read_object_info (AppOptions::instance ()->object_info_file (),
-			      options_.number_of_servants);
+			                        options_.number_of_servants);
 
-      ReplicationManager_var rm;
+      CORBA::Object_var tmp = 
+	      this->orb_->string_to_object (options_.rm_ior_file);
 
-      if (options_.use_ns)
-	{
-	  TAO_Naming_Client naming_client;
-	  naming_client.init (orb_.in ());
-      
-	  CosNaming::NamingContextExt_var ns =
-	    CosNaming::NamingContextExt::_narrow (naming_client.get_context ());
+      ReplicationManager_var rm =
+        ReplicationManager::_narrow (tmp.in ());
 
-	  CORBA::Object_var rm_obj =  ns->resolve_str ("ReplicationManager");
+      // ***************************************************
+      // register replication agent with the replication manager
 
-	  if (CORBA::is_nil (rm_obj.in ()))
-	    {
-	      ACE_ERROR ((LM_ERROR,
-			  "RM_Proxy: Null RM objref from Naming Service\n"));
-	    }
-          else
-	    {
-	      rm = ReplicationManager::_narrow (rm_obj.in ());
+      rm->register_state_synchronization_agent (
+        AppOptions::instance ()->host_id ().c_str (),
+        AppOptions::instance ()->process_id ().c_str (),
+	      agent_.in ());
 
-	      ACE_DEBUG ((LM_TRACE,
-			  "RM_Proxy: RM resolved from Naming Service\n"));
-	    }
-	}
-      else
-	{
-	  CORBA::Object_var tmp = 
-	    this->orb_->string_to_object (options_.rm_ior_file);
+      // ***************************************************
+      // activate as many servants as required
 
-	  rm = ReplicationManager::_narrow (tmp.in ());
-	}
+      for (int i = 0; i < options_.number_of_servants; ++i)
+	      {
+	        test_i *servant =
+	          new test_i (this->orb_.in (),
+			                  poa.in (),
+			                  object_ids[i].c_str (),
+			                  agent_.in (),
+			                  options_.stop);
 
-      if (CORBA::is_nil (rm.in ()))
-	{
-	  ACE_DEBUG ((LM_ERROR, "RM_proxy could not narrow RM reference."));
-	}
-      else
-	{
-	  // ***************************************************
-	  // register replication agent with the replication manager
+	        PortableServer::ServantBase_var safe_servant (servant);
+	        ACE_UNUSED_ARG (safe_servant);
 
-	  rm->register_state_synchronization_agent (
-            AppOptions::instance ()->host_id ().c_str (),
-            AppOptions::instance ()->process_id ().c_str (),
-              agent_.in ());
+	        PortableServer::ObjectId_var oid =
+	          PortableServer::string_to_ObjectId (object_ids[i].c_str ());
 
-	  // ***************************************************
-	  // activate as many servants as required
+	        poa->activate_object_with_id (oid.in (), servant);
 
-	  for (int i = 0; i < options_.number_of_servants; ++i)
-	    {
-	      test_i *servant =
-		new test_i (this->orb_.in (),
-			    poa.in (),
-			    object_ids[i].c_str (),
-			    agent_.in (),
-			    options_.stop);
+	        CORBA::Object_var servant_object =
+	          poa->id_to_reference (oid.in ());
 
-	      PortableServer::ServantBase_var safe_servant (servant);
-	      ACE_UNUSED_ARG (safe_servant);
+	        test_var test = test::_narrow (servant_object.in ());
 
-	      PortableServer::ObjectId_var oid =
-		PortableServer::string_to_ObjectId (object_ids[i].c_str ());
+	        std::ostringstream ostr;
+	        ostr << object_ids[i] << object_roles[i] << ".ior";
 
-	      poa->activate_object_with_id (oid.in (), servant);
+	        int result =
+	          this->write_ior_to_file (ostr.str ().c_str (),
+				                             this->orb_.in (),
+				                             test.in ());
 
-	      CORBA::Object_var servant_object =
-		poa->id_to_reference (oid.in ());
-
-	      test_var test = test::_narrow (servant_object.in ());
-
-	      std::ostringstream ostr;
-	      ostr << object_ids[i] << object_roles[i] << ".ior";
-
-	      int result =
-		this->write_ior_to_file (ostr.str ().c_str (),
-					 this->orb_.in (),
-					 test.in ());
-
-	      rm->register_application (
+	        rm->register_application (
 	          object_ids[i].c_str (), 
 	          object_loads[i],
 	          AppOptions::instance ()->host_id ().c_str (),
@@ -145,20 +111,19 @@ ServerTask::svc (void)
 	          object_roles[i],
 	          test.in ());
 
-	      agent_->register_application (object_ids[i].c_str (),
-					    test.in ());
+	        agent_->register_application (object_ids[i].c_str (),
+					                              test.in ());
 
-	      ACE_DEBUG ((LM_DEBUG,
-			  "ServerTask::svc() activated servant %s:%d.\n", 
-			  object_ids[i].c_str (), 
-			  object_roles[i]));
-	      
-	      if (result != 0)
-		{
-		  return result;
-		}
-	    }
-	}
+	        ACE_DEBUG ((LM_DEBUG,
+	                    "ServerTask::svc() activated servant %s:%d.\n", 
+		                  object_ids[i].c_str (), 
+		                  object_roles[i]));
+
+	        if (result != 0)
+	          {
+	            return result;
+	          }
+	      }
 
       this->orb_->run ();
 
@@ -221,7 +186,13 @@ ServerTask::read_object_info (std::string file_name, int count)
 
   for (int i = 0; i < count; ++i)
     {
-      input_file >> oid;
+      if (! (input_file >> oid))
+	{
+	  ACE_DEBUG ((LM_ERROR, "ServerTask could not read from %s.\n", 
+		      file_name.c_str ()));
+	  return;
+	}
+
       input_file >> role;
       input_file >> load;
 

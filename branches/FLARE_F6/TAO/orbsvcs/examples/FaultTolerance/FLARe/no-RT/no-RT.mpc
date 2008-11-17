@@ -1,6 +1,54 @@
 // -*- MPC -*-
 // $Id$
 
+project(test_state_topic) : portableserver, splicelib_with_idl {
+  idlflags += -Wb,export_macro=State_TS_Export \
+              -Wb,export_include=state_ts_export.h
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  } 
+
+  dynamicflags += STATE_TS_BUILD_DLL
+  macros += DDS_API=State_TS_Export
+  sharedname = test_state_topic
+  idlflags += -SS
+
+  SpliceTypeSupport_Files {
+    State.idl >> StateDcps.idl StateDcps_impl.cpp StateSplDcps.cpp
+  }
+  
+  IDL_Files {
+    State.idl
+    StateDcps.idl
+  }
+
+  Source_Files {
+    StateC.cpp
+    StateDcps_impl.cpp
+    StateDcpsC.cpp
+    StateSplDcps.cpp
+  }
+  
+  Header_Files {
+    ccpp_State.h
+    StateC.h
+    StateDcps_impl.h
+    StateDcpsC.h
+    StateDcpsS.h
+    StateS.h
+    StateSplDcps.h
+  }
+  
+  Inline_Files {
+    StateC.inl
+    StateDcpsC.inl
+  }
+  
+  Template_Files {
+  }
+}
+
 project(test_client) : lwft_client {
   exename = client
   
@@ -25,7 +73,7 @@ project(test_client) : lwft_client {
   }
 }
 
-project(test_server) : lwft_server, naming {
+project(test_server) : lwft_server {
   after += test_client
   exename = server 
   
@@ -54,3 +102,4 @@ project(test_server) : lwft_server, naming {
   Template_Files {
   }
 }
+
