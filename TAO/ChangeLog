@@ -1,3 +1,9 @@
+Mon Nov 17 14:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Bug_3499_Regression/DLL_Service_Host.cpp:
+          Use ACE_throw_bad_alloc instead of manually calling
+          ACE_bad_alloc () as MFC builds redefine the call appropriatly.
+
 Mon Nov 17 13:46:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * testst/Bug_3299_Regression/run_test.pl:
