@@ -28,7 +28,7 @@ bool use_corba = true;
 int
 parse_args (int argc, char *argv[], ServerOptions & options)
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:hl:n:s:a:c:d");
+  ACE_Get_Opt get_opts (argc, argv, "b:hf:l:s:a:c:r:dk:z:i:p:n");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -38,10 +38,10 @@ parse_args (int argc, char *argv[], ServerOptions & options)
         case 'b':
           options.bands_file = get_opts.opt_arg ();
           break;
-        case 'l':
+        case 'f':
           options.lanes_file = get_opts.opt_arg ();
           break;
-        case 'n':
+        case 'l':
           options.number_of_lanes =
             ACE_OS::atoi (get_opts.opt_arg ());
           break;
@@ -54,15 +54,24 @@ parse_args (int argc, char *argv[], ServerOptions & options)
             ACE_OS::atoi (get_opts.opt_arg());
           break;
         case 'c':
-	        options.number_of_servants =
-	          ACE_OS::atoi (get_opts.opt_arg ());
-	        break;
+	  options.number_of_servants =
+	    ACE_OS::atoi (get_opts.opt_arg ());
+	  break;
         case 'd':
           use_corba = false;
-	        break;
+	  break;
         case 'r':
-	        options.rm_ior_file = get_opts.opt_arg ();
-	        break;
+	  options.rm_ior_file = get_opts.opt_arg ();
+	  break;
+	case 'n':
+	  options.use_ns = true;
+	  break;
+
+        case 'k':
+	case 'z':
+        case 'i':
+        case 'p':
+                break;
 
         case 'h':
         case '?':
@@ -71,20 +80,21 @@ parse_args (int argc, char *argv[], ServerOptions & options)
                              "usage:  %s\n"
                              "\t-a stop"
                              "\t-b <bands file> (defaults to %s)\n"
-			                       "\t-c <number of servants> (defaults to %d)\n"
+			     "\t-c <number of servants> (defaults to %d)\n"
                              "\t-d use dds for state synchronization\n"
                              "\t-h <help: shows options menu>\n"
-                             "\t-l <lanes file> (defaults to %s)\n"
-                             "\t-n <number of lanes> (defaults to %d)\n"
-			                       "\t-r <RM ior> (defaults to %s)\n"
+                             "\t-f <lanes file> (defaults to %s)\n"
+                             "\t-l <number of lanes> (defaults to %d)\n"
+			     "\t-r <RM ior> (defaults to %s)\n"
                              "\t-s <static threads> (defaults to %d)\n"
+			     "\t-n resolve RM ior from Naming_Service\n"
                              "\n",
                              argv [0],
                              options.bands_file,
-			                       options.number_of_servants,
+			     options.number_of_servants,
                              options.lanes_file,
                              options.number_of_lanes,
-			                       options.rm_ior_file,
+			     options.rm_ior_file,
                              options.static_threads),
                             -1);
 	        break;
@@ -114,11 +124,11 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
 
       if (CORBA::is_nil (orb.in ()))
-	      {
-	        ACE_ERROR_RETURN ((LM_ERROR,
-	                           ACE_TEXT ("ORB could not be initialized.\n")),
-	                          -1);
-	      }
+	{
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     ACE_TEXT ("ORB could not be initialized.\n")),
+			    -1);
+	}
 
       ACE_DEBUG ((LM_TRACE, ACE_TEXT ("ORB initialized.\n")));
 

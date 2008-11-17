@@ -37,6 +37,8 @@ public:
   unregister_process (const char *process_id)
   throw (CORBA::SystemException);
 
+  virtual ::CORBA::Short heartbeat_port (void);
+
   void dump (void)
   throw (CORBA::SystemException);
 
@@ -47,6 +49,7 @@ protected:
 
 private:
   Monitor_Thread *monitor_thread_;
+  CORBA::Short port_counter_;
   std::auto_ptr <RM_Proxy> rm_proxy_;
   std::auto_ptr <Utilization_Monitor> util_mon_;
   ProcessHandlerMap process_map_;
@@ -56,4 +59,3 @@ private:
 
 
 #endif
-

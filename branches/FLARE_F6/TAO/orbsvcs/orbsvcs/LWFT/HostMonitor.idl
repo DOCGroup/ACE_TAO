@@ -10,6 +10,12 @@ interface HostMonitor
                             in string hostname,
                             in long port);
   boolean unregister_process (in string process_id);
+
+  // returns a different port number every time on which the
+  // client shall then listen for heartbeats. This will be passed
+  // in by the client in the register_process call.
+  short heartbeat_port ();
+
   void dump ();
 };
 

@@ -1,3 +1,30 @@
+Mon Nov 17 15:55:17 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h
+        
+          Removed deprectated DDS include statement.
+        
+        * orbsvcs/orbsvcs/LWFT/Client_Request_Interceptor.cpp        
+
+          Made log message in raise_exception more detailed.
+        
+        * orbsvcs/orbsvcs/LWFT/HostMonitor.idl
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.h
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp
+        
+          Added a heartbeat_port method to the idl.
+        
+        * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
+        
+          RM now rebinds when a bind to the NS fails with AlreadyBound.
+        
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.h
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/server.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/no-RT.mpc:
+        
+          Added an option for NameService usage.
+
 Mon Nov 17 01:17:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h:

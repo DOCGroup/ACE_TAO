@@ -22,7 +22,6 @@
 #include "ssa_export.h"
 
 #if defined (FLARE_USES_DDS)
-//# include "state_ts_export.h"
 # include <ccpp_dds_dcps.h>
 # include "DDSFailure.h"
 #endif 

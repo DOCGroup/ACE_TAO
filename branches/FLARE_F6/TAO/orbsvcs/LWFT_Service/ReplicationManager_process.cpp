@@ -79,7 +79,15 @@ main (int argc, char *argv[])
           rm_name.length (1UL);
           rm_name[0UL].id = "ReplicationManager";
           
-          naming_client->bind (rm_name, rm.in ());
+	  try
+	    {
+	      naming_client->bind (rm_name, rm.in ());
+	    }
+	  catch (CosNaming::NamingContext::AlreadyBound &ex)
+	    {
+	      naming_client->rebind (rm_name, rm.in ());
+	    }
+
           ACE_DEBUG ((LM_INFO,
                       "ReplicationManager registered with Naming Service\n"));
         }
