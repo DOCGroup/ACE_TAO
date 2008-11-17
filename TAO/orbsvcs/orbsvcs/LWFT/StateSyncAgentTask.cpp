@@ -1,13 +1,15 @@
 // -*- C++ -*-
-// $Id$
+// $Id: StateSyncAgentTask.cpp 83637 2008-11-10 16:59:13Z parsons $
+
+#include "tao/PortableServer/POAC.h"
 
 #include "StateSyncAgentTask.h"
 #include "StateSynchronizationAgent_i.h"
-#include <tao/PortableServer/POAC.h>
 
-StateSyncAgentTask::StateSyncAgentTask (CORBA::ORB_ptr orb,
-					StateSynchronizationAgent_i * agent,
-					ACE_Barrier * sync)
+StateSyncAgentTask::StateSyncAgentTask (
+  CORBA::ORB_ptr orb,
+	StateSynchronizationAgent_i * agent,
+	ACE_Barrier * sync)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     agent_ (agent),
     sync_ (sync),
@@ -33,18 +35,18 @@ StateSyncAgentTask::svc (void)
       // activate state synchronzation agent
 
       PortableServer::ObjectId_var ssa_oid =
-	root_poa->activate_object (agent_);
+	      root_poa->activate_object (agent_);
  
       CORBA::Object_var ssa_object =
         root_poa->id_to_reference (ssa_oid.in ());
 
       agent_ref_ =
-	StateSynchronizationAgent::_narrow (ssa_object.in ());
+	      StateSynchronizationAgent::_narrow (ssa_object.in ());
 
       poa_manager->activate ();
 
-      // main loop has to wait until the agent servant is registered
-      // within the root poa
+      // Main loop has to wait until the agent servant is registered
+      // within the root POA.
       sync_->wait ();
 
       this->orb_->run ();
@@ -53,7 +55,7 @@ StateSyncAgentTask::svc (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception caught:");
+      ex._tao_print_exception ("SSA task thread: exception caught:");
       return 1;
     }
 
@@ -61,7 +63,7 @@ StateSyncAgentTask::svc (void)
 }
 
 StateSynchronizationAgent_ptr
-StateSyncAgentTask::agent_ref ()
+StateSyncAgentTask::agent_ref (void)
 {
   return agent_ref_.in ();
 }

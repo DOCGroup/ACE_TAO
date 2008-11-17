@@ -10,14 +10,14 @@
  */
 //=============================================================================
 
+#include <string>
+
 #include "StateSynchronizationAgent_i.h"
 #include "CorbaStateUpdate.h"
 
-#include <string>
-
 #ifdef FLARE_USES_DDS
 # include "DDSStateUpdate_T.h"
-# include "StateDcps_impl.h"
+//# include "StateDcps_impl.h"
 #endif
 
 StateSynchronizationAgent_i::StateSynchronizationAgent_i (
@@ -142,61 +142,70 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
       ACE_Guard <ACE_Thread_Mutex> guard (replica_map_mutex_);
 
       // reset content of the internal map
-      replica_map_.close();
-      replica_map_.open();
+      replica_map_.close ();
+      replica_map_.open ();
 
-      ACE_DEBUG ((LM_TRACE, "SSA::update_rank_list with:\n"));
+      ACE_DEBUG ((LM_TRACE,
+                  "SSA::update_rank_list with:\n"));
 
       // for each replication group in the replica group list
       for (size_t i = 0; i < rank_list.length (); ++i)
-	{
-	  ACE_DEBUG ((LM_TRACE, "\toid = %s (%d entries)\n", 
-		      rank_list[i].object_id.in (),
-		      rank_list[i].ior_list.length ()));
+	      {
+	        ACE_DEBUG ((LM_TRACE,
+	                    "\toid = %s (%d entries)\n", 
+		                  rank_list[i].object_id.in (),
+		                  rank_list[i].ior_list.length ()));
 
-	  // use the application id as a key for the map
-	  ACE_CString oid (rank_list[i].object_id);
+	        // use the application id as a key for the map
+	        ACE_CString oid (rank_list[i].object_id);
 
-	  // create a new list for every replication group
-	  REPLICA_OBJECT_LIST replica_object_list;
+	        // create a new list for every replication group
+	        REPLICA_OBJECT_LIST replica_object_list;
 
-	  // for each entry of a replica group
-	  for (size_t j = 0; j < rank_list[i].ior_list.length (); ++j)
-	    {
-	      try
-		{
-		  // it is assumed that the strings identifying rank_list are
-		  // stringified object references and can be resolved
-		  // and used to contact the corresponding StateSynchronizationAgent
-		  replica_object_list.push_back (
+	        // for each entry of a replica group
+	        for (size_t j = 0;
+	             j < rank_list[i].ior_list.length ();
+	             ++j)
+	          {
+	            try
+		            {
+		              // it is assumed that the strings identifying rank_list
+		              // are stringified object references and can be
+		              // resolved and used to contact the corresponding
+		              // StateSynchronizationAgent.
+		              replica_object_list.push_back (
                     STATEFUL_OBJECT_PTR (
-		      new CorbaStateUpdate (
-                        ReplicatedApplication::_narrow (rank_list[i].ior_list[j]))));
-		}
-	      catch (const CORBA::SystemException& ex)
-		{
-		  ACE_DEBUG ((LM_WARNING, 
-			      "(%P|%t) SSA::"
-			      "update_replica_groups could not resolve stringified "
-			      "object reference for %s : %s\n",
-			      oid.c_str (),
-			      ex._info ().c_str ()));
-		}
-	    }
+		                  new CorbaStateUpdate (
+                        ReplicatedApplication::_narrow (
+                          rank_list[i].ior_list[j]))));
+		            }
+	            catch (const CORBA::SystemException& ex)
+		            {
+		              ACE_DEBUG ((
+		                LM_WARNING, 
+	                  "(%P|%t) SSA::"
+	                  "update_replica_groups could not resolve stringified "
+	                  "object reference for %s : %s\n",
+	                  oid.c_str (),
+	                  ex._info ().c_str ()));
+		            }
+	          }
 
-	  // add one replication group to the map
-	  replica_map_.bind (oid, replica_object_list);
-	}
+	        // add one replication group to the map
+	        replica_map_.bind (oid, replica_object_list);
+	      }
 #ifdef FLARE_USES_DDS
     } // end if (use_corba_)
 #endif
 }
 
 void 
-StateSynchronizationAgent_i::register_application (const char * object_id,
-						   ReplicatedApplication_ptr app)
+StateSynchronizationAgent_i::register_application (
+  const char * object_id,
+  ReplicatedApplication_ptr app)
 {
-  ACE_DEBUG ((LM_TRACE, "SSA::register_application (%s) called.\n", object_id));
+  ACE_DEBUG ((LM_TRACE,
+              "SSA::register_application (%s) called.\n", object_id));
 
   ACE_CString oid (object_id);
 
@@ -214,44 +223,46 @@ StateSynchronizationAgent_i::register_application (const char * object_id,
   if (!use_corba_)
     {
       try
-	{
-	  // protect operations on the map
-	  ACE_Guard <ACE_Thread_Mutex> guard (replica_map_mutex_);
-	  
-	  ACE_DEBUG ((LM_TRACE, "SSA::register_application add DDS participant"
-		      " for application %s\n", object_id));
+	      {
+	        // protect operations on the map
+	        ACE_Guard <ACE_Thread_Mutex> guard (replica_map_mutex_);
+      	  
+	        ACE_DEBUG ((LM_TRACE,
+	                    "SSA::register_application add DDS participant"
+		                  " for application %s\n",
+		                  object_id));
 
-	  // create a new list which will have only one entry for DDS
-	  REPLICA_OBJECT_LIST replica_object_list;
+	        // create a new list which will have only one entry for DDS
+	        REPLICA_OBJECT_LIST replica_object_list;
 
-	  // register a DDS participant for this application
-	  replica_object_list.push_back (
+	        // register a DDS participant for this application
+	        replica_object_list.push_back (
             STATEFUL_OBJECT_PTR (
               new DDSStateUpdate_T <CORBA::Long,
                                     State,
                                     StateTypeSupport,
                                     StateDataWriter,
-	                                  StateDataReader,
+                                    StateDataReader,
                                     StateSeq> (
-	              oid.c_str (),
-	              this->get_unique_id (oid.c_str ()),
-	              domain_participant_.in (),
-	              publisher_.in (),
-	              subscriber_.in (),
+                oid.c_str (),
+                this->get_unique_id (oid.c_str ()),
+                domain_participant_.in (),
+                publisher_.in (),
+                subscriber_.in (),
                 app)));
 
-	  ACE_CString oid (object_id);
+	        ACE_CString oid (object_id);
 
-	  // this should work without doing a rebind, since there is only
-	  // one application of the same type per process
-	  replica_map_.bind (oid, replica_object_list);
-	}
+	        // this should work without doing a rebind, since there is only
+	        // one application of the same type per process
+	        replica_map_.bind (oid, replica_object_list);
+	      }
       catch (const DDSFailure & ex)
-	{
-	  std::cerr << "SSA::register_application () DDS problem : "
-		    << ex.description ()
-		    << std::endl;
-	}
+	      {
+	        ACE_ERROR ((LM_ERROR,
+	                    "SSA::register_application () DDS problem : %s\n",
+		                  ex.description ()));
+	      }
     }
 
 #endif /* FLARE_USES_DDS */
@@ -260,7 +271,7 @@ StateSynchronizationAgent_i::register_application (const char * object_id,
 #ifdef FLARE_USES_DDS
 
 bool
-StateSynchronizationAgent_i::create_participant ()
+StateSynchronizationAgent_i::create_participant (void)
 {
   DDS::DomainParticipantFactory_var dpf
     = DDS::DomainParticipantFactory::get_instance ();
@@ -271,10 +282,11 @@ StateSynchronizationAgent_i::create_participant ()
     }
 
   domain_participant_ =
-    dpf->create_participant (domain_id_,
-			     PARTICIPANT_QOS_DEFAULT,
-			     DDS::DomainParticipantListener::_nil (),
-			     DDS::ANY_STATUS);
+    dpf->create_participant (
+      domain_id_,
+      PARTICIPANT_QOS_DEFAULT,
+      DDS::DomainParticipantListener::_nil (),
+      DDS::ANY_STATUS);
 
   if (CORBA::is_nil (domain_participant_.in ()))
     {
@@ -285,7 +297,7 @@ StateSynchronizationAgent_i::create_participant ()
 }
 
 bool
-StateSynchronizationAgent_i::delete_participant ()
+StateSynchronizationAgent_i::delete_participant (void)
 {
   DDS::DomainParticipantFactory_var dpf
     = DDS::DomainParticipantFactory::get_instance ();
@@ -307,15 +319,16 @@ StateSynchronizationAgent_i::delete_participant ()
 }
 
 bool
-StateSynchronizationAgent_i::create_publisher ()
+StateSynchronizationAgent_i::create_publisher (void)
 {
   DDS::PublisherQos pub_qos;
   domain_participant_->get_default_publisher_qos (pub_qos);
 
   publisher_ =
-    domain_participant_->create_publisher (pub_qos,
-					   DDS::PublisherListener::_nil (),
-					   DDS::ANY_STATUS);
+    domain_participant_->create_publisher (
+      pub_qos,
+	    DDS::PublisherListener::_nil (),
+	    DDS::ANY_STATUS);
 
   if (CORBA::is_nil (publisher_.in ()))
     {
@@ -326,7 +339,7 @@ StateSynchronizationAgent_i::create_publisher ()
 }
 
 bool
-StateSynchronizationAgent_i::delete_publisher ()
+StateSynchronizationAgent_i::delete_publisher (void)
 {
   DDS::ReturnCode_t status = 
     domain_participant_->delete_publisher (publisher_.in ());
@@ -340,12 +353,13 @@ StateSynchronizationAgent_i::delete_publisher ()
 }
 
 bool
-StateSynchronizationAgent_i::create_subscriber ()
+StateSynchronizationAgent_i::create_subscriber (void)
 {
   subscriber_ =
-    domain_participant_->create_subscriber (SUBSCRIBER_QOS_DEFAULT,
-					    DDS::SubscriberListener::_nil (),
-					    DDS::ANY_STATUS);
+    domain_participant_->create_subscriber (
+      SUBSCRIBER_QOS_DEFAULT,
+	    DDS::SubscriberListener::_nil (),
+	    DDS::ANY_STATUS);
 
   if (CORBA::is_nil (subscriber_.in ()))
     {
@@ -356,7 +370,7 @@ StateSynchronizationAgent_i::create_subscriber ()
 }
 
 bool
-StateSynchronizationAgent_i::delete_subscriber ()
+StateSynchronizationAgent_i::delete_subscriber (void)
 {
   DDS::ReturnCode_t status = 
     domain_participant_->delete_subscriber (subscriber_.in ());
@@ -372,7 +386,8 @@ StateSynchronizationAgent_i::delete_subscriber ()
 #endif /* FLARE_USES_DDS */
 
 std::string
-StateSynchronizationAgent_i::get_unique_id (const std::string & app_name)
+StateSynchronizationAgent_i::get_unique_id (
+  const std::string & app_name)
 {
   std::string unique_id (app_name);
 

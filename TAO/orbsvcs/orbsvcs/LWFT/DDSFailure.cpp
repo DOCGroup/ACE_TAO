@@ -12,6 +12,8 @@
 
 #include "DDSFailure.h"
 
+#if defined (FLARE_USES_DDS)
+
 DDSFailure::DDSFailure (const std::string & description)
   : description_ (description)
 {
@@ -22,3 +24,5 @@ DDSFailure::description () const
 {
   return description_;
 }
+
+#endif // FLARE_USES_DDS

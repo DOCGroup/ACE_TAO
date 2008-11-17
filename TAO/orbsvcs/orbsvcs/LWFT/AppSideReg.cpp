@@ -55,19 +55,20 @@ int AppSideReg::svc (void)
       
       if (CORBA::is_nil (hmvar_))
         {
-          ACE_DEBUG ((LM_ERROR,
-                      "Argument is not a HostMonitor reference.\n"));
-          return 1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Argument is not a HostMonitor reference.\n"),
+                            1);
         }
 
-      //ACE_DEBUG ((LM_DEBUG, "Creating the monitor\n"));
+      //ACE_DEBUG ((LM_DEBUG, "Creating the host monitor\n"));
 
       ACE_Barrier internal_thread_barrier (2);
-      monitor_ = std::auto_ptr <AppSideMonitor_Thread> 
-        (new AppSideMonitor_Thread (&internal_thread_barrier));
+      monitor_ =
+        std::auto_ptr<AppSideMonitor_Thread> (
+          new AppSideMonitor_Thread (&internal_thread_barrier));
       monitor_->activate ();
 
-      //ACE_DEBUG ((LM_DEBUG, "Monitor activated\n"));
+      //ACE_DEBUG ((LM_DEBUG, "Host monitor activated\n"));
 
       internal_thread_barrier.wait ();
       

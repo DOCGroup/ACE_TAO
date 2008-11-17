@@ -51,7 +51,7 @@ main (int argc, char *argv[])
       CORBA::String_var ior =
         orb->object_to_string (rm.in ());
       
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+//      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
       
       if (ior_output_file != 0)
         {
