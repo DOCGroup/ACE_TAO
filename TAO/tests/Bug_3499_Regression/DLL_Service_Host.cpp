@@ -18,7 +18,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv [])
     ACE_Service_Gestalt * gestalt = 0;
     ACE_NEW_THROW_EX (gestalt,
                       ACE_Service_Gestalt (),
-                      ACE_bad_alloc ());
+                      ACE_throw_bad_alloc);
 
     ACE_Intrusive_Auto_Ptr <ACE_Service_Gestalt> auto_clean (gestalt);
 
