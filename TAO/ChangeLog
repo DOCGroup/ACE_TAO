@@ -1,3 +1,17 @@
+Mon Nov 17 10:13:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/SCIOP_Endpoint.cpp:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+          Added missing include for compilation of sctp on solaris.
+          Thanks to Milan Cvetkovic <milan dot cvetkovic at mpathix dot com>
+          for providing this change. This is part of bugzilla 3492
+
+        * tao/TAO_Internal.cpp:
+          Use LM_ERROR with ACE_ERROR
+
+        * tao/Transport_Cache_Manager.h:
+          Layout change
+
 Mon Nov 17 08:39:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3470_Regression/*:
