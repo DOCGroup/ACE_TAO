@@ -53,7 +53,7 @@
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 
 #ifndef ACE_HAS_EXCEPTIONS
-#define ACE_HAS_EXCEPTIONS
+# define ACE_HAS_EXCEPTIONS
 #endif
 
 // Windows Mobile 5 doesn't do sig_atomic_t, but maybe future versions will.

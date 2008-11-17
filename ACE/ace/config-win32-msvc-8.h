@@ -54,10 +54,12 @@
 #define ACE_STRNCASECMP_EQUIVALENT ::_strnicmp
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 
-#define ACE_HAS_EXCEPTIONS
+#ifndef ACE_HAS_EXCEPTIONS
+# define ACE_HAS_EXCEPTIONS
+#endif
 
 // Windows Mobile 6 doesn't do sig_atomic_t, but maybe future versions will.
-// This has been true up thrugh the versions. We don't have any indication 
+// This has been true up thrugh the versions. We don't have any indication
 // that this might be supported in the future, but it is an easy enough fix
 // to bump the wince revision number when a new version is released.
 #  if !defined (_WIN32_WCE) || (_WIN32_WCE > 0x601)
