@@ -1,14 +1,20 @@
+Mon Nov 17 14:17:23 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * DAnCE/Deployment/DAnCE_Core.mpc:
+          Removed -Gos, this has to be enabled in the default.features
+          file through gen_ostream=1
+
 Sun Nov 16 22:12:23 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/DAnCE_Properties.idl:
-        
-          Added naming service and component IOR properties. 
-        
+
+          Added naming service and component IOR properties.
+
         * DAnCE/NodeManager/NodeManager_Impl.cpp:
         * DAnCE/RedirectionService/NameServiceRedirection.cpp:
 
-          Logging/layout changes. 
-        
+          Logging/layout changes.
+
 Fri Nov 14 22:18:16 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/DAnCE_Core.mpc:
