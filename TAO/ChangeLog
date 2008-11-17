@@ -1,3 +1,10 @@
+Mon Nov 17 11:16:56 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+          Changed ca_dir from ACE_CString to CORBA::String_var. The later is
+          more appropriate.
+
 Mon Nov 17 10:35:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2542_Regression/run_test.pl
