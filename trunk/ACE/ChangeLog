@@ -1,3 +1,9 @@
+Mon Nov 17 10:04:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc-8.h:
+        * ace/config-win32-msvc-10.h:
+          If ACE_HAS_EXCEPTIONS is defined, avoid re-defining it.
+
 Mon Nov 17 09:20:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-mingw.h:
