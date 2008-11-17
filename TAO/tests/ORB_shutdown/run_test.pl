@@ -1,29 +1,22 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-unlink $iorfile;
-$status = 0;
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server");
+$SV = $server->CreateProcess ("server");
+
+$test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
+
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    exit 1;
 }
-else {
-    $SV = new PerlACE::Process ("server");
-}
 
-$SV->Spawn ();
-
-$server = $SV->WaitKill (45);
-
-if ($server != 0) {
-    print STDERR "ERROR: a deadlock occured in server  and returned $server\n";
-    $status = 1;
-}
-exit $status;
+exit 0;
