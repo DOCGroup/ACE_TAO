@@ -19,10 +19,14 @@ namespace DAnCE
   {
     ACE_CString ior;
 
-    if (this->nodes_.find (name,
-                           ior) == 0)
-      return this->resolve_ior (name, ior.c_str ());
-    else return this->ns_lookup (name);
+    if (this->nodes_.find (name, ior) == 0)
+      {
+        return this->resolve_ior (name, ior.c_str ());
+      }
+    else
+      {
+        return this->ns_lookup (name);
+      }
   }
 
   bool
@@ -37,7 +41,7 @@ namespace DAnCE
         return false;
       }
 
-    FILE *inf = ACE_OS::fopen (filename, "r");
+    FILE *inf = ACE_OS::fopen (filename, ACE_TEXT("r"));
 
     if (inf == 0)
       {
@@ -149,7 +153,7 @@ namespace DAnCE
 
         return nm._retn ();
       }
-    catch (CORBA::Exception &e)
+    catch (const CORBA::Exception &e)
       {
         DANCE_ERROR ((LM_ERROR, DLINFO "Node_Locator::ns_lookup - "
                       "Caught CORBA exception while looking up name %s:%C\n",
@@ -157,7 +161,6 @@ namespace DAnCE
       }
     catch (...)
       {
-
       }
 
     return ::Deployment::NodeManager::_nil ();

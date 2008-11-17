@@ -28,7 +28,7 @@
 #include "tao/Object_Loader.h"
 
 namespace DAnCE
-  {
+{
   class ExecutionManager_Impl;
 }
 
@@ -57,7 +57,7 @@ class DAnCE_ExecutionManager_Module_Export DAnCE_ExecutionManager_Module
         ACE_Vector<ACE_CString> node_managers_;
         bool ignore_failure_;
         const char *node_map_;
-        
+
         SOptions()
             : exec_mgr_file_ (0),
               process_ns_ (false),
@@ -83,10 +83,9 @@ class DAnCE_ExecutionManager_Module_Export DAnCE_ExecutionManager_Module
     virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                              int argc,
                                              ACE_TCHAR *argv []);
-    
-    virtual bool parse_args (int argc,
-                             ACE_TCHAR *argv []);
-    
+
+    virtual bool parse_args (int argc, ACE_TCHAR *argv []);
+
     SOptions options_;
   private:
     /// Storage for ExecutionManager servant.

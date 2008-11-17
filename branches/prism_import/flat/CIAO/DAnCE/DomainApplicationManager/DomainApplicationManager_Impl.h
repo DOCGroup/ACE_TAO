@@ -47,11 +47,9 @@ namespace DAnCE
 
       virtual void destroyApplication (Deployment::Application_ptr);
 
-      virtual ::Deployment::Applications * getApplications (
-      );
+      virtual ::Deployment::Applications * getApplications (void);
 
-      virtual ::Deployment::DeploymentPlan * getPlan (
-      );
+      virtual ::Deployment::DeploymentPlan * getPlan (void);
 
       void dump_connections (const ::Deployment::Connections & connections) const;
 

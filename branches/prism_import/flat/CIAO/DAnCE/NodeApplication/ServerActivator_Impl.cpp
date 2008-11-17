@@ -9,7 +9,6 @@ const char* COMPONENT_SERVER_NAME = "ComponentServer";
 bool read_config_value (const ACE_CString & name,
                         const Components::ConfigValues & config,
                         CORBA::Any_out value)
-throw()
 {
   bool found = false;
   CORBA::ULong len = config.length();
@@ -37,8 +36,8 @@ ServerActivator_Impl::ServerActivator_Impl (CORBA::ORB_ptr orb,
 {
   DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::ServerActivator_Impl - started\n"));
 
-  CORBA::Object_var obj;
-  obj = this->orb_->resolve_initial_references ("ProcessDestinationNC");
+  CORBA::Object_var obj =
+    this->orb_->resolve_initial_references ("ProcessDestinationNC");
   if (CORBA::is_nil(obj))
     {
       DANCE_ERROR((LM_ERROR, "[%M] ServerActivator_Impl::ServerActivator_Impl - Failed to retrieve the \"ProcessDestinationNC\" object.\n"));
@@ -86,7 +85,7 @@ ServerActivator_Impl::create_component_server (const ::Components::ConfigValues 
 
     if (read_config_value (Components::PROCESS_DESTINATION, config, processDestAny))
       {
-        const char* szProcessDest;
+        const char* szProcessDest = 0;
         processDestAny.in() >>= szProcessDest;
         processDest = szProcessDest;
       }
@@ -113,31 +112,31 @@ ServerActivator_Impl::create_component_server (const ::Components::ConfigValues 
     {
       obj = this->naming_->resolve (name);
     }
-  catch (CosNaming::NamingContext::NotFound& )
+  catch (const CosNaming::NamingContext::NotFound& )
     {
       DANCE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::create_component_server - NotFound exception rised."
-                   "(Name : CDMW/SERVICES/ASSEMBLYANDDEPLOYMENT/%s)\n"
+                   "(Name : CDMW/SERVICES/ASSEMBLYANDDEPLOYMENT/%C)\n"
                    , processDest.c_str()));
       throw ::Components::CreateFailure();
     }
-  catch (CosNaming::NamingContext::CannotProceed& )
+  catch (const CosNaming::NamingContext::CannotProceed& )
     {
       DANCE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::create_component_server - NotFound exception rised."
-                   "(Name : CDMW/SERVICES/ASSEMBLYANDDEPLOYMENT/%s)\n"
+                   "(Name : CDMW/SERVICES/ASSEMBLYANDDEPLOYMENT/%C)\n"
                    , processDest.c_str()));
       throw ::Components::CreateFailure();
     }
-  catch (CosNaming::NamingContext::InvalidName& )
+  catch (const CosNaming::NamingContext::InvalidName& )
     {
       DANCE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::create_component_server - NotFound exception rised."
-                   "(Name : CDMW/SERVICES/ASSEMBLYANDDEPLOYMENT/%s)\n"
+                   "(Name : CDMW/SERVICES/ASSEMBLYANDDEPLOYMENT/%C)\n"
                    , processDest.c_str()));
       throw ::Components::CreateFailure();
     }
   DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::create_component_server - ComponentServer object resolved\n"));
   //Casting founded object
-  ::Components::Deployment::ComponentServer_var server;
-  server = ::Components::Deployment::ComponentServer::_narrow (obj);
+  ::Components::Deployment::ComponentServer_var server
+    = ::Components::Deployment::ComponentServer::_narrow (obj);
   DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::create_component_server - ComponentServer object narrowed\n"));
   if (CORBA::is_nil (server))
     {
@@ -171,6 +170,7 @@ ServerActivator_Impl::remove_component_server (::Components::Deployment::Compone
       DANCE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::remove_component_server - Wrong input parameter\n"));
       throw CORBA::BAD_PARAM();
     }
+
   // find equivalent server in servers list
   bool bFound = false;
   for (TCompServers::iterator iter = this->servers_.begin();
@@ -201,7 +201,7 @@ ServerActivator_Impl::get_component_servers ()
 {
   DANCE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::get_component_servers - started\n"));
 
-  ::Components::Deployment::ComponentServers* pServers;
+  ::Components::Deployment::ComponentServers* pServers = 0;
   ACE_NEW_THROW_EX (pServers,
                     ::Components::Deployment::ComponentServers (this->servers_.current_size()),
                     CORBA::NO_MEMORY());
@@ -227,7 +227,7 @@ ServerActivator_Impl::initializeComponentServer (::Components::Deployment::Compo
   Components::Deployment::ComponentServer_var cdmwServer =
     Components::Deployment::ComponentServer::_narrow (server);
 
-  if (CORBA::is_nil (cdmwServer))
+  if (CORBA::is_nil (cdmwServer.in ())
     {
       // Component server is not Cdmw ComponentServer
       DANCE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::initializeComponentServer - ComponentServer is not CdmwComponentServer\n"));

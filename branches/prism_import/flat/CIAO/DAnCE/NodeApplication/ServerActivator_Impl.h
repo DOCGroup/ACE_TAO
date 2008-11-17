@@ -76,9 +76,6 @@ namespace DAnCE
       virtual ::Components::Deployment::ComponentServers * get_component_servers (
       );
 
-
-
-
     private:
       typedef ACE_Map_Manager<ACE_CString, ::Components::Deployment::ComponentServer_var, ACE_Null_Mutex > TCompServers;
       TCompServers servers_;
@@ -88,12 +85,9 @@ namespace DAnCE
       CosNaming::NamingContext_var naming_;
       Components::Deployment::ComponentInstallation_var compInst_;
 
-
     private:
       void initializeComponentServer (::Components::Deployment::ComponentServer_ptr server);
-
     };
-
 };
 
 #endif /*SERVERACTIVATOR_IMPL_H_*/

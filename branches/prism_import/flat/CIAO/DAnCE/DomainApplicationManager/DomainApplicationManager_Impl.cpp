@@ -63,7 +63,7 @@ DomainApplicationManager_Impl::startLaunch (const Deployment::Properties & confi
   ACE_NEW_THROW_EX (connections,
                     Deployment::Connections (),
                     CORBA::NO_MEMORY ());
-  DomainApplication_Impl* app;
+  DomainApplication_Impl* app = 0;
   ACE_NEW_THROW_EX (app,
                     DomainApplication_Impl (this->sub_app_mgr_,
                                             configProperty,
@@ -75,14 +75,14 @@ DomainApplicationManager_Impl::startLaunch (const Deployment::Properties & confi
   PortableServer::ObjectId_var id = this->poa_->activate_object (app);
   this->running_app_.push_back(app);
 
-  CORBA::Object_var ref = this->poa_->id_to_reference (id);
-  return Deployment::DomainApplication::_narrow (ref.in ());
-
   DANCE_DEBUG ((LM_TRACE, "DomainApplicationManager_Impl::startLaunch - "
                 "Successfully created DomainApplication\n"));
   DANCE_DEBUG ((LM_TRACE, "DomainApplicationManager_Impl::startLaunch - "
                 "Created %u provided references\n",
                 providedReference->length ()));
+
+  CORBA::Object_var ref = this->poa_->id_to_reference (id);
+  return Deployment::DomainApplication::_narrow (ref.in ());
 }
 
 void
@@ -115,7 +115,7 @@ DomainApplicationManager_Impl::destroyApplication (Deployment::Application_ptr a
             }
         }
     }
-  catch (Deployment::StopError &e)
+  catch (const Deployment::StopError &e)
     {
       ACE_ERROR ((LM_ERROR, DLINFO "DomainApplicationManager_impl::destroyApplication - "
                   "Propagating a received StopError exception\n"));
@@ -138,7 +138,7 @@ DomainApplicationManager_Impl::getApplications ()
 {
   DANCE_TRACE ( "DomainApplicationManager_Impl::getApplications ()");
 
-  Deployment::Applications* running_app;
+  Deployment::Applications* running_app = 0;
   ACE_NEW_THROW_EX (running_app,
                     Deployment::Applications(),
                     CORBA::NO_MEMORY());
@@ -162,7 +162,7 @@ DomainApplicationManager_Impl::getPlan ()
 {
   DANCE_TRACE ( DLINFO "DomainApplicationManager_Impl::getPlan ()");
 
-  Deployment::DeploymentPlan* plan;
+  Deployment::DeploymentPlan* plan = 0;
 
   ACE_NEW_THROW_EX (plan,
                     Deployment::DeploymentPlan (this->plan_),

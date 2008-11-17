@@ -68,9 +68,9 @@ class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
         unsigned int timeout_;
         CORBA::Boolean standalone_;
         const char * server_args_;
-        
+
         SOptions()
-            : process_ns_ (false), 
+            : process_ns_ (false),
               process_ns_file_ (0),
               create_plan_ns_ (false),
               create_plan_ns_ior_ (0),
@@ -90,27 +90,26 @@ class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
 
   /// Destructor.
   ~DAnCE_NodeManager_Module (void);
-    
+
   /// Overload the base class method to create a new instance
   /// of a DAnCE_NodeManager_Module object.
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
                                            ACE_TCHAR *argv []);
-  
+
   virtual const char * usage (void);
-  
-  virtual bool parse_args (int argc,
-                           ACE_TCHAR *argv []);
+
+  virtual bool parse_args (int argc, ACE_TCHAR *argv []);
 
  private:
   void register_value_factories (void);
   void create_poas (void);
   void create_nm_properties (DAnCE::PROPERTY_MAP &props);
-  
+
   /// Here we store the servants.
   typedef ACE_Map_Manager < ACE_CString,
-    DAnCE::NodeManager_Impl *,
-    ACE_Null_Mutex > Servant_Map;
+                            DAnCE::NodeManager_Impl *,
+                            ACE_Null_Mutex > Servant_Map;
   Servant_Map nm_map_;
   CORBA::ORB_var orb_;
   CosNaming::NamingContext_var domain_nc_;
@@ -118,7 +117,7 @@ class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
   /// Single redirection service for all NMs.
   DAnCE::RedirectionService * redirection_;
   SOptions options_;
-  
+
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var nm_poa_;
 };

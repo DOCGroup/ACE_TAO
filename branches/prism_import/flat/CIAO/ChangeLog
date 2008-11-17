@@ -1,3 +1,23 @@
+Mon Nov 17 16:08:23 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * CCF/CCF/IDL2/Parser.hpp:
+          Undef interface when it is defined
+
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp
+        * DAnCE/DomainApplication/Domain_Application_Impl.h
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
+        * DAnCE/DomainApplicationManager/Node_Locator.cpp
+        * DAnCE/DomainApplicationManager/Node_Locator.h
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp
+        * DAnCE/ExecutionManager/ExecutionManager_Module.h
+        * DAnCE/NodeApplication/ServerActivator_Impl.cpp
+        * DAnCE/NodeApplication/ServerActivator_Impl.h
+        * DAnCE/NodeManager/Node_Manager_Exec.cpp
+        * DAnCE/NodeManager/Node_Manager_Module.cpp
+        * DAnCE/NodeManager/Node_Manager_Module.h
+          Various cleanup/layout changes
+
 Mon Nov 17 15:03:23 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentServer.cpp

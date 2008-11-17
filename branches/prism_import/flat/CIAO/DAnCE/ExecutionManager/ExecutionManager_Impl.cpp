@@ -12,9 +12,9 @@ using namespace DAnCE;
 ExecutionManager_Impl::ExecutionManager_Impl (CORBA::ORB_ptr orb,
                                               PortableServer::POA_ptr poa,
                                               CosNaming::NamingContext_ptr nc)
-    : orb_ (CORBA::ORB::_duplicate (orb)),
-      poa_ (PortableServer::POA::_duplicate (poa)),
-      locator_ (orb, nc)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    locator_ (orb, nc)
 {
   DANCE_TRACE ( "ExecutionManager_Impl::ExecutionManager_Impl");
 }
@@ -58,8 +58,7 @@ ExecutionManager_Impl::preparePlan (const ::Deployment::DeploymentPlan & plan,
       return Deployment::DomainApplicationManager::_narrow (ref.in ());
     }
 
-
-  DomainApplicationManager_Impl* dam_servant;
+  DomainApplicationManager_Impl* dam_servant = 0;
   ACE_NEW_THROW_EX (dam_servant,
                     DAnCE::DomainApplicationManager_Impl (this->orb_.in (),
                                                           this->poa_.in (),
@@ -83,7 +82,7 @@ ExecutionManager_Impl::getManagers ()
 {
   DANCE_TRACE ( "ExecutionManager_Impl::getManagers ()");
 
-  ::Deployment::DomainApplicationManagers * managers;
+  ::Deployment::DomainApplicationManagers * managers = 0;
   ACE_NEW_THROW_EX (managers,
                     ::Deployment::DomainApplicationManagers(),
                     CORBA::NO_MEMORY());
@@ -97,7 +96,7 @@ ExecutionManager_Impl::getManagers ()
       CORBA::Object_var ref = this->poa_->servant_to_reference ( (*iter).int_id_);
       (*managers) [index]
       = Deployment::DomainApplicationManager::_narrow (ref.in ());
-      index++;
+      ++index;
     }
 
   return managers;

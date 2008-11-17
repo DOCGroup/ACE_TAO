@@ -19,7 +19,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Deployment/Deployment_DomainApplicationS.h"
-#include "ace/Vector_T.h"
 #include "ace/Map_Manager.h"
 #include "Deployment/Deployment_NodeApplicationC.h"
 #include "Deployment/Deployment_NodeApplicationManagerC.h"
@@ -39,7 +38,6 @@ namespace DAnCE
         : public virtual POA_Deployment::DomainApplication
     {
     public:
-//    typedef ACE_Vector<Deployment::NodeApplication_var> TApplications;
       typedef ACE_Map_Manager < Deployment::NodeApplicationManager_var,
         Deployment::NodeManager_var,
         ACE_Null_Mutex > TNam2Nm;
