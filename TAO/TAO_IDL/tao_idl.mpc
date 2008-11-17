@@ -112,7 +112,7 @@ project(TAO_IDL_FE) : acelib, conv_lib, tao_output, crosscompile, fe_mcpp {
     "	echo '#include \"fe_private.h\"' >> $@"
     "	echo '#include \"ace/OS_NS_string.h\"' >> $@"
     "	echo '' >> $@"
-    "	$(ACE_ROOT)/bin/gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$$ $^ | \\"
+    "	$(ACE_ROOT)/bin/ace_gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$$ $^ | \\"
     "	sed -e 's/,}/,0}/g' \\"
     "	    -e 's/\\*str == \\*s && !strncmp/len == static_cast<unsigned int> (ACE_OS::strlen (s)) \\&\\& *str == *s \\&\\& !ACE_OS::strncmp/g' \\"
     "	>> $@"
