@@ -1,3 +1,14 @@
+Mon Nov 17 12:49:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Buffered_AMI/run_test.pl
+        * examples/OBV/Typed_Events/run_test.pl
+        * examples/Simple/bank/run_test.pl
+        * examples/Simple/echo/run_test.pl
+        * examples/Simple/grid/run_test.pl
+        * examples/Simple/time/run_test.pl
+        * examples/TypeCode_Creation/run_test.pl
+          Converted to the new test framework
+
 Mon Nov 17 12:07:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3481_Regression/run_test.pl:
