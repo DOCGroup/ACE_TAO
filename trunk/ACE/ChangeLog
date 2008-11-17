@@ -1,3 +1,9 @@
+Mon Nov 17 12:02:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+          Moved PICurrent_NameService to the other list
+
 Mon Nov 17 11:56:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
