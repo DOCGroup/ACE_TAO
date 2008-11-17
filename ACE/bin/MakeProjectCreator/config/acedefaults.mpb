@@ -18,4 +18,8 @@ project: ipv6, vc_warnings, build_files, test_files {
     includes += $(ACE_BUILDDIR)
     libpaths -= $(ACE_ROOT)/lib
   }
+
+  specific(vc7,vc8,vc9,vc10,nmake) {
+    macro_for_lib_modifier=1
+  }
 }

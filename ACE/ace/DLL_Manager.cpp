@@ -437,7 +437,7 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
   try_names.size (0);
   if ((try_names.max_size () - try_names.size ()) < 5)
     try_names.max_size (try_names.max_size () + 5);
-#if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
+#if defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
   ACE_TString decorator (ACE_LD_DECORATOR_STR);
 #endif
   ACE_TString suffix (ACE_DLL_SUFFIX);
@@ -455,7 +455,7 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
         case 3:        // Prefix + name + suffix
           if (
               base_suffix.length () > 0
-#if !(defined(ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK))
+#if !(defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK))
               || (i == 1 || i == 3)    // No decorator desired; skip
 #endif
               )
@@ -468,7 +468,7 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
             try_this += base_suffix;
           else
             {
-#if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
+#if defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
               try_this += decorator;
 #endif
               try_this += suffix;
