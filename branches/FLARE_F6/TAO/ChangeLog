@@ -1,3 +1,9 @@
+Mon Nov 17 18:20:56 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/Monitor_Thread.cpp:
+        
+          Cosmetic changes.
+
 Mon Nov 17 16:31:03 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.h
