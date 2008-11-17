@@ -36,7 +36,6 @@ endif # versioned_so
 #----------------------------------------------------------------------------
 
 LIB_PREFIX ?= lib
-LIB ?=
 VLIB = $(ARCH_LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 CLEANUP_VLIB = $(CLEANUP_LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 
