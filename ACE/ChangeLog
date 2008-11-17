@@ -1,3 +1,8 @@
+Mon Nov 17 08:46:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessWinCE.pm:
+          Removed VxWorks specific commandline code
+
 Mon Nov 17 08:38:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
