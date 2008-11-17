@@ -69,7 +69,7 @@ namespace CIAO
 
     /// Initialize the container with a name.
     virtual void init (const char *name = 0,
-		       const CORBA::PolicyList *more_policies = 0) = 0;
+                       const CORBA::PolicyList *more_policies = 0) = 0;
 
     /// Get component's POA.
     /**

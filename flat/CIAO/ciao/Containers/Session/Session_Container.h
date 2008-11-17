@@ -61,7 +61,6 @@ namespace CIAO
                                   ACE_Null_Mutex>
   HOMESERVANTCREATOR_FUNCPTR_MAP;
 
-
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                   ComponentFactory,
                                   ACE_Hash<ACE_CString>,
@@ -99,8 +98,8 @@ namespace CIAO
                        Deployment::CIAO_Container_i *container_impl,
                        bool static_config_flag = false,
                        const Static_Config_EntryPoints_Maps* static_entrypts_maps =0,
-		       const char *name = 0,
-		       const CORBA::PolicyList *more_policies = 0);
+                       const char *name = 0,
+                       const CORBA::PolicyList *more_policies = 0);
 
     virtual ~Session_Container (void);
 
@@ -132,9 +131,9 @@ namespace CIAO
                                                          const char *name);
 
     virtual void activate_component (Components::CCMObject_ptr compref);
-    
+
     virtual void passivate_component (Components::CCMObject_ptr compref);
-    
+
     virtual void uninstall_component (Components::CCMObject_ptr compref);
 
 

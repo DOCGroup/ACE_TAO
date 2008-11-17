@@ -14,7 +14,7 @@ namespace CIAO
 						    PortableServer::POA_ptr poa)
       : uuid_ (uuid),
         orb_ (CORBA::ORB::_duplicate (orb)),
-	poa_ (PortableServer::POA::_duplicate (poa)),
+        poa_ (PortableServer::POA::_duplicate (poa)),
         containers_ ()
     {
       CIAO_TRACE("CIAO_ComponentServer_i::CIAO_ComponentServer_i");
@@ -25,7 +25,6 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_ComponentServer_i::~CIAO_ComponentServer_i");
     }
-
 
     void
     CIAO_ComponentServer_i::shutdown (void)
@@ -58,7 +57,6 @@ namespace CIAO
       return this->serv_act_.in ();
     }
 
-
     ::Components::Deployment::Container_ptr
     CIAO_ComponentServer_i::create_container (const ::Components::ConfigValues & config)
     {
@@ -69,13 +67,13 @@ namespace CIAO
           CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_ComponentServer_i::create_container - Request received with %u config values\n",
                        config.length ()));
 
-	  CORBA::PolicyList policies;
-	  const char *name = 0;
-
+          CORBA::PolicyList policies;
+          const char *name = 0;
           CIAO_Container_i *cont = 0;
           ACE_NEW_THROW_EX (cont,
-			    CIAO_Container_i (config, 0, name, &policies, this->orb_.in (), this->poa_.in ()),
-			    CORBA::NO_MEMORY ());
+                            CIAO_Container_i (config, 0, name, &policies,
+                              this->orb_.in (), this->poa_.in ()),
+                            CORBA::NO_MEMORY ());
 
           CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ComponentServer_i::create_container - "
                        "Container servant successfully allocated.\n"));
@@ -91,7 +89,7 @@ namespace CIAO
 
           return cont_var._retn ();
         }
-      catch (CORBA::NO_MEMORY &)
+      catch (const CORBA::NO_MEMORY &)
         {
           CIAO_ERROR ((LM_CRITICAL, CLINFO "CIAO_ComponentServer_Impl: Out of memory exception whilst creating container.\n"));
           throw;
@@ -121,7 +119,6 @@ namespace CIAO
           throw Components::RemoveFailure ();
         }
 
-
       if (this->containers_.is_empty ())
         {
           CIAO_ERROR ((LM_ERROR, CLINFO
@@ -129,7 +126,6 @@ namespace CIAO
                        "Error: I don't manage any containers!\n"));
           throw Components::RemoveFailure ();
         }
-
 
       try
         {
@@ -162,13 +158,12 @@ namespace CIAO
                 }
             }
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_ComponentServer_i::remove_container - "
                        "Caught CORBA exception whilst removing container: %C\n",
                        ex._info ().c_str ()));
         }
-
       catch (...)
         {
           CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_ComponentServer_i::remove_container - Error: Unknown exception caught while removing a container.\n"));
@@ -182,8 +177,7 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_ComponentServer_i::get_containers");
 
-      ::Components::Deployment::Containers *tmp(0);
-      //      tmp = new ::Components::Deployment::Containers ();
+      ::Components::Deployment::Containers *tmp = 0;
       ACE_NEW_THROW_EX (tmp,
                         ::Components::Deployment::Containers (this->containers_.size ()),
                         CORBA::NO_MEMORY ());
@@ -216,7 +210,7 @@ namespace CIAO
             {
               (*i)->remove ();
             }
-          catch (CORBA::Exception &ex)
+          catch (const CORBA::Exception &ex)
             {
               successful = false;
               CIAO_ERROR ((LM_ERROR, CLINFO
@@ -240,8 +234,9 @@ namespace CIAO
     }
 
     void
-    CIAO_ComponentServer_i::init (::Components::Deployment::ServerActivator_ptr sa,
-                                  Components::ConfigValues *cvs)
+    CIAO_ComponentServer_i::init (
+      ::Components::Deployment::ServerActivator_ptr sa,
+      Components::ConfigValues *cvs)
     {
       this->serv_act_ = ::Components::Deployment::ServerActivator::_duplicate(sa);
       this->config_values_ = cvs;

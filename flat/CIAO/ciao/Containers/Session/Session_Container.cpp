@@ -131,9 +131,7 @@ namespace CIAO
       root->the_POAManager ();
 
     this->component_poa_ =
-      root->create_POA (name,
-                        poa_manager.in (),
-                        policies);
+      root->create_POA (name, poa_manager.in (), policies);
   }
 
   void
@@ -634,7 +632,7 @@ namespace CIAO
 
     if (component_servant == 0)
       {
-	CIAO_ERROR ((LM_ERROR, CLINFO
+      CIAO_ERROR ((LM_ERROR, CLINFO
 		    "Session_Container::ciao_install_component - Component servant factory failed.\n"));
         throw Components::Deployment::InstallationFailure ();
       }

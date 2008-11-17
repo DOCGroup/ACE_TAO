@@ -1,3 +1,24 @@
+Mon Nov 17 15:03:23 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp
+        * ciao/ComponentServer/CIAO_ComponentServer.h
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp
+        * ciao/ComponentServer/CIAO_Container_Impl.h
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.h
+        * ciao/ComponentServer/CIAO_ServerResources.idl
+        * ciao/Containers/Container_Base.cpp
+        * ciao/Containers/Container_Base.h
+        * ciao/Containers/Servant_Activator.cpp
+        * ciao/Containers/Servant_Activator.h
+        * ciao/Containers/Session/Session_Container.cpp
+        * ciao/Containers/Session/Session_Container.h
+          Layout changes
+
+        * ciao/ComponentServer/Configurator_Factory.cpp
+        * ciao/ComponentServer/Configurator_Factory.h
+          No need to have a member variable
+
 Mon Nov 17 14:34:23 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ciao/Client_init.cpp

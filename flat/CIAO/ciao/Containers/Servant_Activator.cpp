@@ -77,9 +77,9 @@ namespace CIAO
       PortableServer::ObjectId_to_string (oid);
 
     CIAO_DEBUG ((LM_INFO, CLINFO
-		"Servant_Activator_i::incarnate, "
-    "Attempting to activate port name [%C] \n",
-		str.in ()));
+                "Servant_Activator_i::incarnate, "
+                "Attempting to activate port name [%C] \n",
+                str.in ()));
 
     {
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
@@ -111,9 +111,9 @@ namespace CIAO
               // We should try avoiding making outbound calls with the
               // lock held. Oh well, let us get some sense of sanity in
               // CIAO to do think about these.
-	      CIAO_DEBUG ((LM_INFO, CLINFO
-        "Servant_Activator_i::incarnate - Activating Port %C\n",
-			  str.in ()));
+              CIAO_DEBUG ((LM_INFO, CLINFO
+                      "Servant_Activator_i::incarnate - Activating Port %C\n",
+                      str.in ()));
 
               return this->pa_[t]->activate (oid);
             }
@@ -142,14 +142,14 @@ namespace CIAO
         if (this->pa_.get (pa, t) == -1)
           {
             CIAO_ERROR ((LM_ERROR, CLINFO
-			"Servant_Activator_i::etherealize - Could not get Port Activator\n"));
+              "Servant_Activator_i::etherealize - Could not get Port Activator\n"));
             continue;
           }
 
         if (tmp == 0)
           {
             CIAO_ERROR ((LM_ERROR, CLINFO
-			"Servant_Activator_i::etherealize - Port Activator is NULL\n"));
+              "Servant_Activator_i::etherealize - Port Activator is NULL\n"));
             continue;
           }
 
