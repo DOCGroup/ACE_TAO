@@ -29,14 +29,15 @@ TAO/performance-tests/Throughput/run_test.pl: !Win32 !ACE_FOR_TAO !OpenVMS !VxWo
 TAO/performance-tests/POA/Object_Creation_And_Registration/run_test.pl: !Win32 !ACE_FOR_TAO !OpenVMS !CORBA_E_MICRO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
 TAO/performance-tests/RTCorba/Oneways/Reliable/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !OpenVMS !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
 TAO/performance-tests/Protocols/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !Win32 !ACE_FOR_TAO !OpenVMS !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
-TAO/examples/Simple/bank/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO !LabVIEW_RT !WinCE !FUZZ
-TAO/examples/Simple/grid/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO !LabVIEW_RT !WinCE !FUZZ
+TAO/examples/Simple/bank/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
+TAO/examples/Simple/grid/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
+TAO/examples/Simple/time/run_test.pl: !NO_MESSAGING !Win32 !CORBA_E_MICRO
 TAO/examples/Simple/time-date/run_test.pl: !ST !STATIC !NO_MESSAGING !Win32 !LabVIEW_RT !WinCE !FUZZ
-TAO/examples/Simple/time/run_test.pl: !NO_MESSAGING !Win32 !CORBA_E_MICRO !LabVIEW_RT !WinCE !FUZZ
 TAO/examples/Quoter/run_test.pl: !DISABLE_ToFix_LynxOS_PPC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
 TAO/examples/Load_Balancing/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !SUNCC5_1 !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ
 TAO/examples/AMH/Sink_Server/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !LynxOS !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ
-TAO/examples/OBV/Typed_Events/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT !WinCE !FUZZ
+TAO/examples/OBV/Typed_Events/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/examples/Buffered_AMI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p TCP,UDP,RTP_UDP: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p SCTP_SEQ: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO SCTP !LynxOS !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
 TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !LynxOS !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
