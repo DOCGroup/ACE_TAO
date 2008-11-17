@@ -1,3 +1,21 @@
+Mon Nov 17 11:52:38 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/Security/Secure_Invocation/client.conf:
+        * orbsvcs/tests/Security/Secure_Invocation/client.cpp:
+        * orbsvcs/tests/Security/Secure_Invocation/client_nopasswd.conf:
+        * orbsvcs/tests/Security/Secure_Invocation/server.conf:
+        * orbsvcs/tests/Security/Secure_Invocation/server.cpp:
+        * orbsvcs/tests/Security/Secure_Invocation/server_none.conf:
+        * orbsvcs/tests/Security/Secure_Invocation/server_nopasswd.conf:
+
+          In common with all our other SSL tests this test specifies the CA
+          certificate by means of an environment value. This means that we have
+          no coverage for the service configurator directive arguments
+          -SSLCAfile and -SSLCApath. This one test has now been modified to use
+          the former argument. This will expose a regression and also probably
+          errors in the wide character support revision 83118 to
+          TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp.
+
 Mon Nov 17 12:01:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DevGuideExamples/PortableInterceptors/PICurrent_NameService:
