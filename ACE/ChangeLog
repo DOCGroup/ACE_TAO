@@ -1,3 +1,12 @@
+Mon Nov 17 10:11:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_sunos5_common.GNU:
+          On Solaris 10 we have sctp, enable this by adding the following line
+          in your platform_macros.GNU file.
+          sctp = lksctp
+          Thanks to Milan Cvetkovic <milan dot cvetkovic at mpathix dot com>
+          for providing this change. This is part of bugzilla 3492
+
 Mon Nov 17 10:04:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-msvc-8.h:
