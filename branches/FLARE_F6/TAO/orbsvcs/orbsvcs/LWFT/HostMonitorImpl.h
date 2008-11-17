@@ -29,6 +29,8 @@ public:
   explicit HostMonitorImpl (CORBA::ORB_ptr, Monitor_Thread *);
   int drop_process (const std::string &process_id);
 
+  virtual ~HostMonitorImpl ();
+
   ::CORBA::Boolean
   register_process (const char *process_id, const char * hostname, CORBA::Long port)
   throw (CORBA::SystemException);
