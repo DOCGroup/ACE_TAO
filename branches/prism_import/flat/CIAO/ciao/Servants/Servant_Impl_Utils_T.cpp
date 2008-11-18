@@ -160,8 +160,7 @@ namespace CIAO
       const char *port_type_repo_id,
       T_var &consumer_ref,
       ::Components::EmitterDescriptions_var &descriptions,
-      CORBA::ULong slot
-    )
+      CORBA::ULong slot)
   {
     CIAO_TRACE ("Servant_Impl_Base::describe_emit_event_source");
     ::Components::EmitterDescription *elem = 0;
