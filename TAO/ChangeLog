@@ -1,3 +1,9 @@
+Tue Nov 18 16:08:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Bug_3499_Regression/DLL_Service_Host.cpp:
+          ACE_throw_bad_alloc is actually defined as including the throw
+          command itself so it can't be used with ACE_NEW_THROW_EX.
+
 Tue Nov 18 12:07:33 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3108_Regression/run_test.pl:
