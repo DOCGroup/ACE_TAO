@@ -5,5 +5,5 @@ project : dance_deployment_stub {
   includes += $(CIAO_ROOT)/DAnCE/Interfaces
   includes += $(CIAO_ROOT)/DAnCE/NodeManager
   libs     += DAnCE_NodeManager_stub
-  after    += NodeManager_stub
+  after    += DAnCE_NodeManager_stub
 }

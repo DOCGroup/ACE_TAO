@@ -11,13 +11,12 @@
 #include "DAnCE/Deployment/Deployment_ResourceCommitmentManager.idl"
 
 module Deployment {
-
-	enum DomainUpdateKind {
-		Add,
-		Delete,
-		UpdateAll,
-		UpdateDynamic
-	};
+  enum DomainUpdateKind {
+    Add,
+    Delete,
+    UpdateAll,
+    UpdateDynamic
+  };
 
 	interface TargetManager {
 
@@ -28,11 +27,11 @@ module Deployment {
 		//@! in DOCGroup renamed to createResourceCommitment
 		ResourceCommitmentManager commitResources (in ResourceAllocations resources)
 			raises (ResourceCommitmentFailure);
-			
+
 		void destroyResourceCommitment (in ResourceCommitmentManager manager);
-		
-		void updateDomain (	in ::CORBA::StringSeq elements, 
-							in Domain domainSubset, 
+
+		void updateDomain (	in ::CORBA::StringSeq elements,
+							in Domain domainSubset,
 							in DomainUpdateKind updateKind);
 	};
 };

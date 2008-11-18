@@ -1,3 +1,27 @@
+Tue Nov 18 15:15:23 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Servant_Impl_Base.h:
+        * DAnCE/Deployment/Deployment_TargetManager.idl:
+        * DAnCE/TargetManager/DomainDataManager.h:
+          Layout changes
+
+        * DAnCE/TargetManager/CmpClient.cpp:
+          wchar changes
+
+        * DAnCE/TargetManager/DomainEvents.idl:
+          Updated includes
+
+        * DAnCE/TargetManager/TargetManager.mpc:
+        * DAnCE/TargetManager/TargetManagerImpl.idl
+          Updated for all refactoring
+
+        * MPC/config/ciao_nodemanager_stub.mpb:
+        * MPC/config/ciao_targetmanager_stub.mpb:
+        * MPC/config/ciao_targetmanager_svnt.mpb:
+        * MPC/config/dance_nodemanager_stub.mpb:
+        * MPC/config/dance_nodemanager_svnt.mpb:
+          Updated these with unique lib names and correct aftes
+
 Tue Nov 18 14:55:23 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * DAnCE/Interfaces/Interfaces.mpc:

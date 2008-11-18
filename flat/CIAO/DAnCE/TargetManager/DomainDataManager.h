@@ -49,8 +49,7 @@ namespace DAnCE
          */
         int update_domain (const ::CORBA::StringSeq & elements,
                            const ::Deployment::Domain & domainSubset,
-                           ::Deployment::DomainUpdateKind updateKind
-                           );
+                           ::Deployment::DomainUpdateKind updateKind);
       /**
        * @brief        This function is called from the Executor code
        *               to get the Original Domain data.
@@ -75,17 +74,16 @@ namespace DAnCE
        *
        */
       static DomainDataManager * create (CORBA::ORB_ptr orb,
-                                  ::Deployment::TargetManager_ptr target
-                                  );
+                                  ::Deployment::TargetManager_ptr target);
 
       /**
        * @brief Returns the static pointer to the
        *        data manager.
        * @return DomainDataManager*
-       * The staic get_data_manger function returning
+       * The static get_data_manger function returning
        *              the data_manager pointer
        */
-      static DomainDataManager* get_data_manager ();
+      static DomainDataManager* get_data_manager (void);
 
       /**
        * @brief deletes the data manager
@@ -253,7 +251,6 @@ namespace DAnCE
       int commit_release_RA (
           const ::Deployment::ResourceAllocations& resources);
 
-
       /// The ORB pointer
       CORBA::ORB_var orb_;
 
@@ -264,10 +261,10 @@ namespace DAnCE
       /// at total capacity
       ::Deployment::Domain initial_domain_;
 
-      /// The staic data member , replacing a global variable
-      static DomainDataManager* global_data_manager_; 
-      /// The Current Domain - contains resources
-      /// at current capacity
+      /// The static data member, replacing a global variable
+      static DomainDataManager* global_data_manager_;
+
+      /// The Current Domain - contains resources at current capacity
       ::Deployment::Domain current_domain_;
 
       /// The Target Manager Context
@@ -278,7 +275,7 @@ namespace DAnCE
        */
       ::Deployment::Domain provisioned_data_;
 
-      /// temporary domain used in commit/release to
+      /// Temporary domain used in commit/release to
       /// guard against exceptions
       ::Deployment::Domain temp_provisioned_data_;
 
