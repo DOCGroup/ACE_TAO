@@ -1,3 +1,9 @@
+Tue Nov 18 15:22:23 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * DAnCE/Utils/DAnCE_Utils.mpc:
+        * DAnCE/Utils/Plan_Handler.cpp:
+          Fixed compilation
+
 Tue Nov 18 15:15:23 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.h:
