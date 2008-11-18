@@ -76,7 +76,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::String_var ior = orb->object_to_string (hello.in ());
 
-
       CORBA::Object_var tmp = orb->resolve_initial_references("IORTable");
       IORTable::Table_var iorTable = IORTable::Table::_narrow(tmp.in ());
       if (CORBA::is_nil(iorTable.in ()))
