@@ -1,3 +1,8 @@
+Tue Nov 18 07:32:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Fixed compile problem
+
 Mon Nov 17 16:09:06 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
