@@ -1,3 +1,21 @@
+Tue Nov 18 17:27:40 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        
+          Changed behavior so that the rank_list for the clients always
+          contain the current primary as well as the backup replicas.
+        
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent.cpp:
+        
+          Bugfix for possible crash scenario and adding of additional output.
+
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/server.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/no-RT.mpc:
+        
+          Undid accidential changes from previous commit.
+
 Mon Nov 17 18:25:53 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/Monitor_Thread.cpp

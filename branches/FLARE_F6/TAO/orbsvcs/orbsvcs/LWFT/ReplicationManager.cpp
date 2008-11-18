@@ -340,6 +340,7 @@ ReplicationManager_i::process_updates (
             {
               //ACE_DEBUG((LM_DEBUG,"PROC_FAIL_UPDATE\n"));
               process_proc_failure (up->process_id);
+
               major_update = true;
               break;
             }
@@ -375,95 +376,143 @@ ReplicationManager_i::process_proc_failure (
       CORBA::Object_var app;
       
       if (pid_object_map_.find (process_id, app) == 0)
-	      {
-	        pid_object_map_.unbind (process_id);
+        {
+          pid_object_map_.unbind (process_id);
 
-	        // copy each object ior list and leave out the removed application
-	        for (size_t i = 0; i < rank_list_.length (); ++i)
-	          {
-	            try
-		            {
-		              // Index of the element that should be removed from 
-		              // the ior list. This is either the failed replica
-		              // or if the primary failed, the first entry in the list
-		              size_t rm_index = 0;
-		              
-		              size_t len_i = rank_list_[i].ior_list.length ();
+          // copy each object ior list and leave out the removed application
+          for (size_t i = 0; i < rank_list_.length (); ++i)
+            {
+              try
+                {
+                  // Index of the element that should be removed from 
+                  // the ior list. This is either the failed replica
+                  // or if the primary failed, the first entry in the list
+                  size_t rm_index = 0;
+                  
+                  size_t len_i = rank_list_[i].ior_list.length ();
 
-		              for (size_t j = 0; j < len_i; ++j)
-		                {
-		                  if (app->_is_equivalent (
-			                      rank_list_[i].ior_list[j].in ()))
-			                  {
-			                    rm_index = j;
-			                    break;
-			                  }
-		                }
-		              
-		              // We're using len_i - 1 below, and it *must*
-		              // be an unsigned type, so we check for 0 here
-		              // to avoid unexpected behavior caused by an
-		              // overflow in the FOR loop condition below.
-		              if (len_i == 0)
-		                {
-		                  continue;
-		                }
+                  for (size_t j = 0; j < len_i; ++j)
+                    {
+                      if (app->_is_equivalent (
+                            rank_list_[i].ior_list[j].in ()))
+                        {
+                          rm_index = j;
+                          break;
+                        }
+                    }
+                  
+                  // We're using len_i - 1 below, and it *must*
+                  // be an unsigned type, so we check for 0 here
+                  // to avoid unexpected behavior caused by an
+                  // overflow in the FOR loop condition below.
+                  if (len_i == 0)
+                    {
+                      continue;
+                    }
 
-		              // Now remove the correct element from the list
-		              for (size_t k = rm_index; k < len_i - 1; ++k)
-		                {
-		                  // Move each following element one position 
-		                  // forward.
-		                  rank_list_[i].ior_list[k] = 
-			                rank_list_[i].ior_list[k+1];
-		                }
-            		  
-		              // correct the length value
-		              rank_list_[i].ior_list.length (
-		                rank_list_[i].ior_list.length () - 1);
-		            }
-	            catch (const CORBA::SystemException & ex)
-		            {
-		              // Just make sure to keep on going for the other 
-		              // entries here.
-		              ACE_DEBUG ((LM_ERROR, 
-			                        "in process_proc_update: %d\n", 
-			                        ex._info ().c_str ()));
-		            }
-	          }
-	      }
+                  // Now remove the correct element from the list
+                  for (size_t k = rm_index; k < len_i - 1; ++k)
+                    {
+                      // Move each following element one position 
+                      // forward.
+                      rank_list_[i].ior_list[k] = 
+                      rank_list_[i].ior_list[k+1];
+                    }
+                  
+                  // correct the length value
+                  rank_list_[i].ior_list.length (
+                    rank_list_[i].ior_list.length () - 1);
+
+		  // remove the entry from the app_set
+		  APP_SET as;
+		  if (objectid_appset_map_.find (rank_list_[i].object_id.in (),
+						 as) == 0)
+		    {
+		      APP_INFO info = *(as.begin ());
+		      info.object_id = rank_list_[i].object_id.in ();
+		      info.process_id = process_id;
+		      info.role = BACKUP;
+
+		      if (as.remove (info) != 0)
+			{
+			  info.role = PRIMARY;
+
+			  if (as.remove (info) != 0)
+			    {
+			      ACE_DEBUG ((LM_ERROR, "RM::process_proc_failure could not find "
+					  "element to remove from app_set.\n"));
+			    }
+			  else
+			    {
+			      // select the new primary
+			      for (APP_SET::iterator it = as.begin ();
+				   it != as.end ();
+				   ++it)
+				{
+				  // compare the object id to the
+				  // first element in the rank list
+				  // and mark it as primary.
+				  
+				  if (rank_list_[i].ior_list[0]->_is_equivalent (
+                                        (*it).ior.in ()))
+				    {
+				      (*it).role = PRIMARY;
+				      break;
+				    }
+				}
+			    }
+			}
+
+		      ACE_DEBUG ((LM_DEBUG, "RM::process_proc_failure processed %s-%d@%s.\n",
+				  info.object_id.c_str (),
+				  info.role,
+				  info.process_id.c_str ()));			  
+		    }
+                }
+              catch (const CORBA::SystemException & ex)
+                {
+                  // Just make sure to keep on going for the other 
+                  // entries here.
+                  ACE_DEBUG ((LM_ERROR, 
+                              "in process_proc_update: %d\n", 
+                              ex._info ().c_str ()));
+                }
+            } // end for loop
+
+	  this->update_enhanced_ranklist ();
+        } // end find
     }
-  else
+  else // not in static_mode_
     {
       ACE_CString host;
           
       // If present...
       if (this->processid_host_map_.find (process_id, host) == 0)
-	      {
-	        replace_primary_tags (process_id, host);
-	        replace_backup_tags (process_id, host);
-	        this->processid_host_map_.unbind (process_id);
+        {
+          replace_primary_tags (process_id, host);
+          replace_backup_tags (process_id, host);
+          this->processid_host_map_.unbind (process_id);
           
-	        STRING_LIST proc_list;
-	        
-	        if (this->hostid_process_map_.find (host,proc_list) == 0) // if present
-	          {
-	            proc_list.remove (process_id);
-	            this->hostid_process_map_.rebind (host, proc_list);
-	          }
-	        else
-	          {
-	            ACE_DEBUG((LM_ERROR,"Can't find host=%s in hostid_process_map. \
+          STRING_LIST proc_list;
+          
+          if (this->hostid_process_map_.find (host,proc_list) == 0) // if present
+            {
+              proc_list.remove (process_id);
+              this->hostid_process_map_.rebind (host, proc_list);
+            }
+          else
+            {
+              ACE_DEBUG((LM_ERROR,"Can't find host=%s in hostid_process_map. \
                 Data structure invariant broken.\n",host.c_str()));
-	          }
-	      }
+            }
+        }
       else
-	      {
-	        ACE_DEBUG ((LM_ERROR,
-	                    "Can't find process_id=%s in proc_host_map."
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "Can't find process_id=%s in proc_host_map."
                       " Data structure invariant broken.\n",
                       process_id.c_str ()));
-	      }
+        }
     }
 }
 
@@ -710,8 +759,8 @@ ReplicationManager_i::replica_selection_algo (void)
                 }
             }
           
-          // this is only necessary for several hosts.
           build_rank_list ();
+      update_enhanced_ranklist ();
         }
     }
   
@@ -817,68 +866,77 @@ ReplicationManager_i::app_reg (APP_INFO & app)
                          this->objectid_appset_map_);
 
       switch (role)
-	      {
-	        case PRIMARY:
-	          {
-	            update_map (process_id,
-	                        object_id,
-	                        processid_primary_map_);
-	            break;
-	          }
-	        case BACKUP:
-	          {
-	            update_map (process_id,
-	                        object_id,
-	                        processid_backup_map_);
-	                        
-	            static_ranklist_update (object_id,
-	                                    app.ior,
-	                                    role);
-	            break;
-	          }
-	        default:
-	          ACE_DEBUG((LM_ERROR,"Unknown Role!!\n"));
-	      }
+        {
+          case PRIMARY:
+            {
+              update_map (process_id,
+                          object_id,
+                          processid_primary_map_);
+              break;
+            }
+          case BACKUP:
+            {
+              update_map (process_id,
+                          object_id,
+                          processid_backup_map_);
+                          
+              static_ranklist_update (object_id,
+                                      app.ior,
+                                      role);
+              break;
+            }
+          default:
+            ACE_DEBUG((LM_ERROR,"Unknown Role!!\n"));
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "Registered successfully %s:%s:%s:%d "
                   "with Replication manager.\n",
-		              host_name,
-		              process_id,
-		              object_id,
-		              role));
+                  host_name,
+                  process_id,
+                  object_id,
+                  role));
     }
   else // If in static_mode_
     {
+      ACE_Guard <ACE_Recursive_Thread_Mutex> guard (
+        this->appset_lock_);
+      
+      update_appset_map (object_id,
+       app,
+       this->objectid_appset_map_);
+
       switch (role)
-	      {
-	        case PRIMARY:
-	          break;
-	        case BACKUP:
-	          {
-	            // Update only the rank list - ignore the other maps.
-	            static_ranklist_update (object_id,
-	                                    app.ior,
-	                                    role);	  
-        	    
-	            ACE_DEBUG ((LM_DEBUG,
-	                        "Registered %s:%s:%s:%d with "
-	                        "Replication manager in static mode.\n",
-		                      host_name,
-		                      process_id,
-		                      object_id,
-		                      role));
-	            break;
-	          }
-	        default:
-	          ACE_DEBUG ((LM_ERROR,"Unknown Role!!\n"));
-	      }
+        {
+          case PRIMARY:
+      break;
+          case BACKUP:
+            {
+              // Update only the rank list - ignore the other maps.
+              static_ranklist_update (object_id,
+                                      app.ior,
+                                      role);    
+              
+	      this->update_enhanced_ranklist ();
+
+              ACE_DEBUG ((LM_DEBUG,
+                          "Registered %s:%s:%s:%d with "
+                          "Replication manager in static mode.\n",
+                          host_name,
+                          process_id,
+                          object_id,
+                          role));
+              break;
+            }
+          default:
+          ACE_DEBUG ((LM_ERROR,"Unknown Role!!\n"));
+        }
 
       // add entry to the processid map
       {
-	      ACE_Guard <ACE_Thread_Mutex> protect (pid_object_mutex_);
+        ACE_Guard <ACE_Thread_Mutex> protect (pid_object_mutex_);
 
-	      pid_object_map_.bind (process_id, app.ior);
+        pid_object_map_.bind (process_id, app.ior);
       }
     }
 }
@@ -889,8 +947,9 @@ ReplicationManager_i::static_ranklist_update (
   CORBA::Object_ptr ior,
   Role role)
 {
-  ACE_Guard <ACE_Thread_Mutex> guard (
-    rank_list_agent_list_combined_mutex_);
+  ACE_Write_Guard <ACE_RW_Thread_Mutex> guard (
+    rank_list_mutex_);
+
   bool found = false;
   size_t i = 0;
   
@@ -987,8 +1046,13 @@ ReplicationManager_i::util_sorted_host_list (
 void
 ReplicationManager_i::build_rank_list (void)
 {
-  ACE_Guard <ACE_Thread_Mutex> guard (
-    rank_list_agent_list_combined_mutex_);
+  // this is only necessary for several hosts.
+  ACE_Write_Guard <ACE_RW_Thread_Mutex> guard (
+    rank_list_mutex_);
+
+  //  this has now to be called outside of the method
+  //  ACE_Guard <ACE_Thread_Mutex> guard (
+  //  rank_list_agent_list_combined_mutex_);
     
   this->rank_list_.length (0);
   
@@ -1026,31 +1090,99 @@ ReplicationManager_i::build_rank_list (void)
 }
 
 void
+ReplicationManager_i::update_enhanced_ranklist (void)
+{
+  ACE_Guard <ACE_Thread_Mutex> enhanced_list_guard (
+    enhanced_rank_list_agent_list_combined_mutex_);
+
+  ACE_Read_Guard <ACE_RW_Thread_Mutex> guard (
+    rank_list_mutex_);
+
+  // create a copy of the rank list here
+  enhanced_rank_list_.length (rank_list_.length ());
+
+  std::string object_id;
+  APP_SET as;
+  
+  // add the primary for each ior_list
+  for (size_t i = 0; i < rank_list_.length (); ++i)
+    {
+      object_id = rank_list_[i].object_id.in ();
+      enhanced_rank_list_[i].object_id = object_id.c_str ();
+      enhanced_rank_list_[i].now = rank_list_[i].now;
+
+      // create a new list that is one element larger than the old one
+      size_t old_length = rank_list_[i].ior_list.length ();
+      ObjectList_var list_with_primary (new ObjectList (old_length + 1));
+      list_with_primary->length (old_length + 1);
+      
+      // get app set and search for the contained primary
+      if (objectid_appset_map_.find (object_id.c_str (),
+             as) == 0)
+  {
+    // go through the appset to find the primary
+    for (APP_SET::iterator it = as.begin ();
+         it != as.end ();
+         ++it)
+      {
+        if ((*it).role == PRIMARY)
+    {
+      // add the primary as first entry
+      (*list_with_primary)[0] =
+        CORBA::Object::_duplicate ((*it).ior.in ());
+
+      break;
+    }
+      }
+
+    // add all the other entries behind it
+    for (size_t j = 0; j < old_length; ++j)
+      (*list_with_primary)[j+1] =
+        CORBA::Object::_duplicate (rank_list_[i].ior_list[j].in ());
+  }
+      else
+  {
+          ACE_DEBUG ((LM_DEBUG,
+                      "RM::send_rank_list - could not find %s in appset_map.\n",
+          object_id.c_str ()));
+
+    list_with_primary->length (0);
+  }
+
+      // put the new list into the rank list instead of the old one
+      enhanced_rank_list_[i].ior_list = list_with_primary;
+    } // end for
+}
+
+void
 ReplicationManager_i::send_rank_list (void)
 {
   if (! proactive_)
     {
       return;
     }
-    
-  //ACE_DEBUG((LM_DEBUG,"Sending rank list.\n"));
 
-  ACE_Guard<ACE_Thread_Mutex> guard (
-    rank_list_agent_list_combined_mutex_);
-  
+  ACE_Guard <ACE_Thread_Mutex> guard (enhanced_rank_list_agent_list_combined_mutex_);
+    
   for (AGENT_LIST::iterator al_iter = agent_list_.begin ();
-       al_iter != agent_list_.end ();
-       ++al_iter)
+       al_iter != agent_list_.end (); )
     {
       ForwardingAgent_var agent = ForwardingAgent::_narrow (*al_iter);
-      
+
       try 
         {
-          agent->update_rank_list(this->rank_list_);
+          agent->update_rank_list(enhanced_rank_list_);
+          ++al_iter;
         }
       catch (CORBA::SystemException &)
         {
           ACE_DEBUG ((LM_DEBUG, "A client agent agent died.\n"));
+    
+          // make sure to remove the failed agent from the list
+          AGENT_LIST::iterator tmp_it = al_iter;
+          ++tmp_it;
+          agent_list_.remove (*al_iter);
+          al_iter = tmp_it;
         }
     }
 }
@@ -1063,8 +1195,11 @@ ReplicationManager_i::send_state_synchronization_rank_list (void)
       return;
     }
 
-  ACE_Guard <ACE_Thread_Mutex> guard (
-    rank_list_state_sync_agent_list_combined_mutex_);
+  ACE_Read_Guard <ACE_RW_Thread_Mutex> guard (
+    rank_list_mutex_);
+
+  ACE_Guard <ACE_Thread_Mutex> state_sync_guard (
+    state_sync_agent_list_mutex_);
     
   // Helpers for removing dead agents from the list.
   StateSynchronizationAgent_var remove_holder;
@@ -1072,7 +1207,7 @@ ReplicationManager_i::send_state_synchronization_rank_list (void)
   bool dirty = false;
     
   for (STATE_SYNC_AGENT_LIST::iterator al_iter = 
-	       state_synchronization_agent_list_.begin ();
+         state_synchronization_agent_list_.begin ();
        al_iter != state_synchronization_agent_list_.end ();
        al_iter.advance ())
     {
@@ -1238,9 +1373,12 @@ ReplicationManager_i::register_agent (
   ACE_DEBUG ((LM_DEBUG, "register_agent called\n"));
   ForwardingAgent_var agent = ForwardingAgent::_narrow (agent_reference);
  
-  ACE_Guard <ACE_Thread_Mutex> guard (rank_list_agent_list_combined_mutex_);
+  ACE_Guard <ACE_Thread_Mutex> agent_list_guard (
+    enhanced_rank_list_agent_list_combined_mutex_);
+
   this->agent_list_.insert_tail (CORBA::Object::_duplicate (agent.in ()));
-  return new RankList (rank_list_);
+
+  return new RankList (enhanced_rank_list_);
 }
 
 RankList *
@@ -1251,11 +1389,13 @@ ReplicationManager_i::register_state_synchronization_agent (
 {
   ACE_DEBUG ((LM_DEBUG, "register_state_synchronization_agent called\n"));
  
-  ACE_Guard <ACE_Thread_Mutex> guard (
-    rank_list_state_sync_agent_list_combined_mutex_);
+  ACE_Guard <ACE_Thread_Mutex> agent_guard (
+    state_sync_agent_list_mutex_);
 
   this->state_synchronization_agent_list_.insert_tail (
     StateSynchronizationAgent::_duplicate (agent));
+
+  ACE_Read_Guard <ACE_RW_Thread_Mutex> rl_guard (rank_list_mutex_);
 
   return new RankList (rank_list_);
 }
