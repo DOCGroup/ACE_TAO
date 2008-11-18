@@ -364,12 +364,6 @@ ReplicationManager_i::process_proc_failure (
 {
   if (static_mode_)
     {
-      // give the client time to failover
-      ACE_OS::sleep (1);
-
-      ACE_DEBUG ((LM_TRACE,
-                  "removing failed app ior from rank list.\n"));
-                  
       ACE_Guard <ACE_Thread_Mutex> protect (pid_object_mutex_);
 
       // Find object id for the process id.
@@ -432,7 +426,7 @@ ReplicationManager_i::process_proc_failure (
 		      info.object_id = rank_list_[i].object_id.in ();
 		      info.process_id = process_id;
 		      info.role = BACKUP;
-
+	
 		      if (as.remove (info) != 0)
 			{
 			  info.role = PRIMARY;
@@ -453,28 +447,36 @@ ReplicationManager_i::process_proc_failure (
 				  // first element in the rank list
 				  // and mark it as primary.
 				  
-				  if (rank_list_[i].ior_list[0]->_is_equivalent (
-                                        (*it).ior.in ()))
+				  if (rank_list_[i].ior_list[0]->
+				        _is_equivalent ((*it).ior.in ()))
 				    {
 				      (*it).role = PRIMARY;
 				      break;
 				    }
-				}
-			    }
-			}
+				} // end for
 
-		      ACE_DEBUG ((LM_DEBUG, "RM::process_proc_failure processed %s-%d@%s.\n",
-				  info.object_id.c_str (),
-				  info.role,
-				  info.process_id.c_str ()));			  
-		    }
-                }
+			      // change global appset to reflect the
+			      // changes
+			      objectid_appset_map_.rebind (
+				 rank_list_[i].object_id.in (),
+				 as);
+			    } // end else
+			} // end if
+		      else
+			  // change global appset to reflect the
+			  // changes
+			  objectid_appset_map_.rebind (
+                            rank_list_[i].object_id.in (),
+			    as);
+				 
+		    } // end if objectid_appset_map.find () ...
+		}
               catch (const CORBA::SystemException & ex)
                 {
                   // Just make sure to keep on going for the other 
                   // entries here.
                   ACE_DEBUG ((LM_ERROR, 
-                              "in process_proc_update: %d\n", 
+                              "RM: in process_proc_failure: %d\n", 
                               ex._info ().c_str ()));
                 }
             } // end for loop
@@ -562,7 +564,7 @@ ReplicationManager_i::remove_from_appset (
       this->objectid_appset_map_.rebind(tag,app_set);
       
       ACE_DEBUG ((LM_DEBUG,
-                  "Removed application %s:%s:%s:%d.\n",
+                  "RM: Removed application %s:%s:%s:%d.\n",
                   host.c_str (),
                   pid.c_str (),
                   tag.c_str (),
@@ -571,7 +573,7 @@ ReplicationManager_i::remove_from_appset (
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Can't find appset for tag=%s.\n"
+                  "RM: Can't find appset for tag=%s.\n"
                   "Data structure invariant broken.",
                   tag.c_str ()));
     }
@@ -588,13 +590,13 @@ ReplicationManager_i::elevate_backup_to_primary (
     {
       failover_host = ranked_ior_list.host_list.front();
       ACE_DEBUG ((LM_DEBUG,
-                  "Failover host = %s.\n",
+                  "RM: Failover host = %s.\n",
                   failover_host.c_str ()));
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Can't find failover host for tag=%s.\n",
+                  "RM: Can't find failover host for tag=%s.\n",
                   tag.c_str ()));
     }
   
@@ -760,7 +762,7 @@ ReplicationManager_i::replica_selection_algo (void)
             }
           
           build_rank_list ();
-      update_enhanced_ranklist ();
+          update_enhanced_ranklist ();
         }
     }
   
@@ -890,7 +892,7 @@ ReplicationManager_i::app_reg (APP_INFO & app)
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Registered successfully %s:%s:%s:%d "
+                  "RM: Registered successfully %s:%s:%s:%d "
                   "with Replication manager.\n",
                   host_name,
                   process_id,
@@ -920,7 +922,7 @@ ReplicationManager_i::app_reg (APP_INFO & app)
 	      this->update_enhanced_ranklist ();
 
               ACE_DEBUG ((LM_DEBUG,
-                          "Registered %s:%s:%s:%d with "
+                          "RM: Registered %s:%s:%s:%d with "
                           "Replication manager in static mode.\n",
                           host_name,
                           process_id,
@@ -929,7 +931,7 @@ ReplicationManager_i::app_reg (APP_INFO & app)
               break;
             }
           default:
-          ACE_DEBUG ((LM_ERROR,"Unknown Role!!\n"));
+          ACE_DEBUG ((LM_ERROR,"RM: in app_reg () - Unknown Role!!\n"));
         }
 
       // add entry to the processid map
@@ -1022,7 +1024,7 @@ ReplicationManager_i::util_sorted_host_list (
           else
             {
               ACE_DEBUG ((LM_ERROR,
-                          "Can't find utilization "
+                          "RM: Can't find utilization "
                           "of host_id=%s\n",
                           (*hl_iter).c_str ()));
               ACE_DEBUG ((LM_ERROR,
@@ -1035,7 +1037,7 @@ ReplicationManager_i::util_sorted_host_list (
   else
     {
       ACE_DEBUG ((LM_ERROR,
-                  "Can't find load of object_id=%s\n",
+                  "RM: Can't find load of object_id=%s\n",
                   oid.c_str ()));
     }
 
@@ -1050,10 +1052,6 @@ ReplicationManager_i::build_rank_list (void)
   ACE_Write_Guard <ACE_RW_Thread_Mutex> guard (
     rank_list_mutex_);
 
-  //  this has now to be called outside of the method
-  //  ACE_Guard <ACE_Thread_Mutex> guard (
-  //  rank_list_agent_list_combined_mutex_);
-    
   this->rank_list_.length (0);
   
   for(OBJECTID_RANKED_IOR_MAP::iterator or_iter = 
@@ -1119,35 +1117,35 @@ ReplicationManager_i::update_enhanced_ranklist (void)
       // get app set and search for the contained primary
       if (objectid_appset_map_.find (object_id.c_str (),
              as) == 0)
-  {
-    // go through the appset to find the primary
-    for (APP_SET::iterator it = as.begin ();
-         it != as.end ();
-         ++it)
-      {
-        if ((*it).role == PRIMARY)
-    {
-      // add the primary as first entry
-      (*list_with_primary)[0] =
-        CORBA::Object::_duplicate ((*it).ior.in ());
+        {
+          // go through the appset to find the primary
+          for (APP_SET::iterator it = as.begin ();
+               it != as.end ();
+               ++it)
+	    {
+              if ((*it).role == PRIMARY)
+                {
+                  // add the primary as first entry
+                  (*list_with_primary)[0] =
+                    CORBA::Object::_duplicate ((*it).ior.in ());
 
-      break;
-    }
-      }
+                  break;
+	        }
+            }
 
-    // add all the other entries behind it
-    for (size_t j = 0; j < old_length; ++j)
-      (*list_with_primary)[j+1] =
-        CORBA::Object::_duplicate (rank_list_[i].ior_list[j].in ());
-  }
+          // add all the other entries behind it
+          for (size_t j = 0; j < old_length; ++j)
+            (*list_with_primary)[j+1] =
+              CORBA::Object::_duplicate (rank_list_[i].ior_list[j].in ());
+        }
       else
-  {
+	{
           ACE_DEBUG ((LM_DEBUG,
                       "RM::send_rank_list - could not find %s in appset_map.\n",
           object_id.c_str ()));
 
-    list_with_primary->length (0);
-  }
+          list_with_primary->length (0);
+	}
 
       // put the new list into the rank list instead of the old one
       enhanced_rank_list_[i].ior_list = list_with_primary;
@@ -1176,7 +1174,7 @@ ReplicationManager_i::send_rank_list (void)
         }
       catch (CORBA::SystemException &)
         {
-          ACE_DEBUG ((LM_DEBUG, "A client agent agent died.\n"));
+          ACE_DEBUG ((LM_DEBUG, "RM: A client agent agent died.\n"));
     
           // make sure to remove the failed agent from the list
           AGENT_LIST::iterator tmp_it = al_iter;
@@ -1303,7 +1301,7 @@ ReplicationManager_i::proc_failure (const char *process_id)
       if (update_list_full_.wait (update_mutex_, &wait_time) == -1)  // timeout
         {
           ACE_DEBUG ((LM_ERROR,
-                      "proc_failure CORBA upcall waited "
+                      "RM: proc_failure CORBA upcall waited "
                       "too long. Skipping proc_failure "
                       "update. process_id=%s\n",
                       process_id));
@@ -1328,7 +1326,7 @@ ReplicationManager_i::util_update (const char *host_id,
       if (update_list_full_.wait (update_mutex_, &wait_time) == -1)  // timeout
         {
           ACE_DEBUG ((LM_ERROR,
-                      "util_update CORBA upcall "
+                      "RM: util_update CORBA upcall "
                       "waited too long. Skipping "
                       "util_update. host_id=%s,util=%l\n",
                       host_id,
@@ -1353,7 +1351,7 @@ ReplicationManager_i::pulse (void)
       if (update_list_full_.wait (update_mutex_, &wait_time) == -1)  // timeout
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "pulse waited too long. "
+                             "RM: pulse waited too long. "
                              "Skipping pulse.\n"),
                             0);
         }
@@ -1370,7 +1368,7 @@ RankList *
 ReplicationManager_i::register_agent (
   CORBA::Object_ptr agent_reference)
 {
-  ACE_DEBUG ((LM_DEBUG, "register_agent called\n"));
+  ACE_DEBUG ((LM_DEBUG, "RM: register_agent () called\n"));
   ForwardingAgent_var agent = ForwardingAgent::_narrow (agent_reference);
  
   ACE_Guard <ACE_Thread_Mutex> agent_list_guard (
@@ -1387,7 +1385,7 @@ ReplicationManager_i::register_state_synchronization_agent (
   const char * /* process_id */,
   StateSynchronizationAgent_ptr agent)
 {
-  ACE_DEBUG ((LM_DEBUG, "register_state_synchronization_agent called\n"));
+  ACE_DEBUG ((LM_DEBUG, "RM: register_state_synchronization_agent () called\n"));
  
   ACE_Guard <ACE_Thread_Mutex> agent_guard (
     state_sync_agent_list_mutex_);

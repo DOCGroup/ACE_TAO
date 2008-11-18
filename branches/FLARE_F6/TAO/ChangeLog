@@ -1,3 +1,17 @@
+Tue Nov 18 22:17:48 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent.cpp:
+        
+          Changed output message format.
+
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        
+          Fixed bug in for rank_list creation in static mode.
+
+        * orbsvcs/orbsvcs/LWFT/DDSFailure.cpp:
+        
+          Added newline at the end of the file.        
+        
 Tue Nov 18 17:27:40 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
