@@ -33,21 +33,19 @@ ForwardingAgent_i::next_member (const char *ior_string)
     this->objectid_rankedior_map_.find (ACE_CString (ior_string),
                                         ranked_ior_list);
   
-  if (result == 0)
+  if ((result == 0) && (ranked_ior_list.ior_list.size () > 0))
     {
       CORBA::Object_var ior (ranked_ior_list.ior_list.front ());
       ranked_ior_list.ior_list.pop_front ();
       this->objectid_rankedior_map_.rebind (ACE_CString (ior_string),
-                                            ranked_ior_list);
+					    ranked_ior_list);
       return CORBA::Object::_duplicate (ior.in ());
     }
-  else
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "No ior list for tag=%s!!!\n",
-                         ior_string),
-                         0);
-    }
+
+  ACE_ERROR_RETURN ((LM_ERROR,
+		     "No ior list entry for tag=%s!!!\n",
+		     ior_string),
+		    0);
 }
 
 void
@@ -57,10 +55,15 @@ ForwardingAgent_i::update_rank_list (const RankList & rank_list)
   objectid_rankedior_map_.close ();
   objectid_rankedior_map_.open ();
  
-  // ACE_DEBUG((LM_DEBUG,"Received rank_list length = %d.\n", rank_list.length()));
+  //ACE_DEBUG((LM_DEBUG,"ForwardingAgent - "
+  //           "Received rank_list length = %d.\n", rank_list.length()));
   
   for (size_t i = 0; i < rank_list.length(); ++i)
     {
+      //ACE_DEBUG ((LM_DEBUG, "\toid(%s) = %d entries\n", 
+      //	  rank_list[i].object_id.in (), 
+      //	  rank_list[i].ior_list.length ()));
+
       AGENT_RANKED_IOR_LIST ranked_ior_list;
       ranked_ior_list.now = rank_list[i].now;
       

@@ -73,7 +73,7 @@ project(test_client) : lwft_client {
   }
 }
 
-project(test_server) : lwft_server {
+project(test_server) : lwft_server, naming {
   after += test_client
   exename = server 
   

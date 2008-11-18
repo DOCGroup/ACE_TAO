@@ -215,10 +215,14 @@ private:
   ACE_Thread_Mutex pid_object_mutex_;
 
   RankList rank_list_;
+  RankList enhanced_rank_list_;
   AGENT_LIST agent_list_;
-  ACE_Thread_Mutex rank_list_agent_list_combined_mutex_;
+  ACE_RW_Thread_Mutex rank_list_mutex_;
+  ACE_Thread_Mutex enhanced_rank_list_agent_list_combined_mutex_;
   STATE_SYNC_AGENT_LIST state_synchronization_agent_list_;
-  ACE_Thread_Mutex rank_list_state_sync_agent_list_combined_mutex_;
+  ACE_Thread_Mutex state_sync_agent_list_mutex_;
+
+  void update_enhanced_ranklist (void);
     
   void update_map (const char * key_str, 
                    const char * value_str,

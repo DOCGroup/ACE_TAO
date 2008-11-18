@@ -109,8 +109,6 @@ main (int argc, char *argv[])
 {
   try
     {
-      AppOptions::instance ()->parse_args (argc, argv);
-      
       PortableInterceptor::ORBInitializer_ptr tmp;
 
       ACE_NEW_RETURN (tmp,
@@ -121,7 +119,7 @@ main (int argc, char *argv[])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (CORBA::is_nil (orb.in ()))
 	{
@@ -131,6 +129,8 @@ main (int argc, char *argv[])
 	}
 
       ACE_DEBUG ((LM_TRACE, ACE_TEXT ("ORB initialized.\n")));
+
+      AppOptions::instance ()->parse_args (argc, argv);
 
       ACE_Barrier thread_barrier (2);
       AppSideReg proc_reg (&thread_barrier, orb.in ());
@@ -160,9 +160,9 @@ main (int argc, char *argv[])
       StateSynchronizationAgent_i* ssa_servant =
 	      new StateSynchronizationAgent_i (
 	        orb.in (),
-          AppOptions::instance ()->host_id (),
-          AppOptions::instance ()->process_id (),
-          use_corba);
+		AppOptions::instance ()->host_id (),
+		AppOptions::instance ()->process_id (),
+		use_corba);
 
       PortableServer::ServantBase_var owner_transfer (ssa_servant);
       // ACE_DEBUG ((LM_TRACE, ACE_TEXT ("StateSynchronizationAgent created.\n")));
@@ -173,8 +173,8 @@ main (int argc, char *argv[])
 
       // create task for state synchronization agent
       StateSyncAgentTask sync_agent_thread (orb.in (),
-					                                  ssa_servant,
-					                                  &sync_barrier);
+					    ssa_servant,
+					    &sync_barrier);
 
       result = sync_agent_thread.activate ();
       
@@ -182,10 +182,10 @@ main (int argc, char *argv[])
 	      {
 	        ACE_ERROR_RETURN ((LM_ERROR,
 	                           "StateSyncAgentTask::activate () "
-		                         "returned %d, errno = %d\n", 
-		                         result, 
-		                         errno),
-		                        -1);
+				   "returned %d, errno = %d\n", 
+				   result, 
+				   errno),
+				  -1);
 	      }
 
       // Wait util state synchronization agent is activated before starting the
