@@ -1,3 +1,8 @@
+Tue Nov 18 07:49:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Enable macro_for_lib_modifier for vc71
+
 Tue Nov 18 07:32:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-mingw.h:
