@@ -26,8 +26,8 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
-$CL = $client->CreateProcess ("client", "-k file://$client_iorfile MSFT");
+$SV = $server->CreateProcess ("server", "-o $server_iorfile -ORBdebuglevel $debug_level");
+$CL = $client->CreateProcess ("client", "file://$client_iorfile MSFT");
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
@@ -65,7 +65,7 @@ sleep (2);
 print STDERR "Killing client\n";
 $CL->Kill (3);
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 15);
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";

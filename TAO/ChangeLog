@@ -1,3 +1,14 @@
+Tue Nov 18 10:20:33 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2560_Regression/client.cpp:
+          No need to convert for string_to_object
+
+        * tests/Bug_2560_Regression/run_test.pl:
+          Corrected client argument and increased server timeout
+
+        * tests/Bug_2560_Regression/server.cpp:
+          Parse the commandline arguments
+
 Tue Nov 18 09:52:33 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3299_Regression/server.cpp:
