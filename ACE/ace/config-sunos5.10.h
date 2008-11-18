@@ -56,4 +56,9 @@
 #  undef ACE_LACKS_WCSTOULL
 #endif /* ACE_LACKS_WCSTOULL */
 
+#if defined (ACE_HAS_SCTP) && defined (ACE_HAS_LKSCTP)
+# define ACE_HAS_VOID_PTR_SCTP_GETLADDRS
+# define ACE_HAS_VOID_PTR_SCTP_GETPADDRS
+#endif
+
 #endif /* ACE_CONFIG_H */
