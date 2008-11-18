@@ -56,7 +56,7 @@ namespace CIAO
     Servant_Impl_Base (Components::CCMHome_ptr home,
                        Home_Servant_Impl_Base *home_servant,
                        Container_ptr  c);
-    
+
   public:
     virtual ~Servant_Impl_Base (void);
 
@@ -65,17 +65,17 @@ namespace CIAO
     virtual ::Components::PrimaryKeyBase * get_primary_key (void);
 
     virtual CORBA::IRObject_ptr get_component_def (void);
-    
+
     virtual Components::SessionComponent_ptr get_executor (void);
 
     virtual void configuration_complete (void);
-    
+
     virtual void activate_component (void);
-    
+
     virtual void passivate_component (void);
-    
+
     virtual ::Components::CCMHome_ptr get_ccm_home (void);
-    
+
     virtual void remove (void);
 
     virtual ::Components::ConnectionDescriptions *
@@ -124,28 +124,28 @@ namespace CIAO
 
     virtual ::Components::Cookie * subscribe (const char * publisher_name,
                                               ::Components::EventConsumerBase_ptr subscriber);
-    
+
     virtual ::Components::EventConsumerBase_ptr unsubscribe (const char * publisher_name,
                                                              ::Components::Cookie * ck);
-    
+
     virtual void connect_consumer (const char * emitter_name,
                                    ::Components::EventConsumerBase_ptr consumer);
-    
+
     virtual ::Components::EventConsumerBase_ptr disconnect_consumer (const char * source_name);
-    
+
     virtual ::Components::EmitterDescriptions * get_all_emitters (void);
-    
+
     virtual ::Components::PublisherDescriptions * get_all_publishers (void);
-    
+
     virtual ::CORBA::Boolean same_component (::CORBA::Object_ptr object_ref);
-    
+
     virtual ::Components::Cookie * connect (const char * name,
                                             ::CORBA::Object_ptr connection);
-    
+
     virtual ::CORBA::Object_ptr disconnect (const char * name,
                                             ::Components::Cookie * ck);
 
-    
+
   protected:
     void add_facet (const char *port_name,
                     ::CORBA::Object_ptr port_ref);
@@ -177,8 +177,7 @@ namespace CIAO
         const char *port_type_repo_id,
         T_var &connection,
         ::Components::ReceptacleDescriptions_var &descriptions,
-        CORBA::ULong slot
-      );
+        CORBA::ULong slot);
 
     template<typename T_var>
     static void describe_multiplex_receptacle (
@@ -186,8 +185,7 @@ namespace CIAO
         const char *port_type_repo_id,
         ACE_Array_Map<ptrdiff_t, T_var> &objrefs,
         ::Components::ReceptacleDescriptions_var &descriptions,
-        CORBA::ULong slot
-      );
+        CORBA::ULong slot);
 
     template<typename T_var>
     static void describe_pub_event_source (
@@ -195,8 +193,7 @@ namespace CIAO
         const char *port_type_repo_id,
         ACE_Array_Map<ptrdiff_t, T_var> &consumers,
         ::Components::PublisherDescriptions_var &descriptions,
-        CORBA::ULong slot
-      );
+        CORBA::ULong slot);
 
     template<typename T_var>
     static void describe_emit_event_source (
@@ -204,8 +201,7 @@ namespace CIAO
         const char *port_type_repo_id,
         T_var &consumer_ref,
         ::Components::EmitterDescriptions_var &descriptions,
-        CORBA::ULong slot
-      );
+        CORBA::ULong slot);
 
   protected:
     typedef ACE_Array_Map<ACE_CString,

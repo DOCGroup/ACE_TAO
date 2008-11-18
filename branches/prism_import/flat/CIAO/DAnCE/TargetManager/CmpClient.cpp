@@ -33,7 +33,7 @@ namespace TM_Tester
   void write_to_file (::Deployment::Domain domain);
 
   /// variable contains IOR of the TM
-  const char * stringified_TM_IOR;
+  const ACE_TCHAR * stringified_TM_IOR;
 
   /// if add or delete from domain
   bool add_to_domain = true;
@@ -45,9 +45,9 @@ namespace TM_Tester
   const char * host_name;
 
     /// parses the arguments and extracts the params
-  bool parse_args (int argc, char *argv[])
+  bool parse_args (int argc, ACE_TCHAR *argv[])
   {
-    ACE_Get_Opt get_opts (argc, argv, "t:u:d");
+    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:u:d"));
     int c;
     while ((c = get_opts ()) != -1)
       switch (c)
@@ -79,13 +79,11 @@ namespace TM_Tester
 }
 
   /// The main function
-  int main (int argc, char* argv[])
+  int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   {
     try {
       // First initialize the ORB, that will remove some arguments...
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv,
-            "" /* the ORB name, it can be anything! */);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (!TM_Tester::parse_args (argc, argv))
         return -1;
@@ -142,7 +140,7 @@ namespace TM_Tester
       CORBA::Long d = 20;
       resource_seq[0].property[0].value <<= d;
 
-      ::Deployment::ResourceCommitmentManager_ptr manager = 
+      ::Deployment::ResourceCommitmentManager_ptr manager =
         ::Deployment::ResourceCommitmentManager::_nil ();
 
       try
