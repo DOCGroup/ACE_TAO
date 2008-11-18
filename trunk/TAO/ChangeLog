@@ -1,3 +1,8 @@
+Tue Nov 18 12:07:33 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3108_Regression/run_test.pl:
+          Use the correct perl variable to delete the file
+
 Tue Nov 18 10:39:33 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_helper.cpp:
