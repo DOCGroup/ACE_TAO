@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (DAnCE_ExecutionManager_idl): taoidldefaults{
+project (DAnCE_ExecutionManager_idl): taoidldefaults, anytypecode {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ExecutionManager_stub_Export
   idlflags += -Wb,stub_export_include=ExecutionManager_stub_export.h
@@ -24,7 +24,7 @@ project (ExecutionManager_stub): dance_lib, messaging, dance_deployment_stub {
   }
 }
 
-project (DAnCE_NodeManager_idl): taoidldefaults{
+project (DAnCE_NodeManager_idl): taoidldefaults, anytypecode {
   custom_only = 1
   idlflags     += -Wb,stub_export_macro=NodeManager_stub_Export
   idlflags     += -Wb,stub_export_include=NodeManager_stub_export.h
