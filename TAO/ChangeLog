@@ -1,3 +1,12 @@
+Tue Nov 18 09:52:33 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3299_Regression/server.cpp:
+          Layout change
+
+        * tests/Bug_933_Regression/MessengerClient.cpp:
+        * tests/Bug_933_Regression/MessengerServer.cpp:
+          Add support for commandline arguments to specify the IOR files
+
 Mon Nov 17 21:26:33 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * TAO_IDL/tao_idl.mpc:
