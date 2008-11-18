@@ -22,7 +22,7 @@ CORBA::Object_ptr
 ForwardingAgent_i::next_member (const char *ior_string)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "NEXT MEMBER CALLED for ior_string = %s.\n",
+              "FA: NEXT MEMBER CALLED for ior_string = %s.\n",
               
               ior_string));
   ACE_Guard <ACE_Thread_Mutex> guard (ior_map_mutex_);
@@ -43,7 +43,7 @@ ForwardingAgent_i::next_member (const char *ior_string)
     }
 
   ACE_ERROR_RETURN ((LM_ERROR,
-		     "No ior list entry for tag=%s!!!\n",
+		     "FA: No ior list entry for tag=%s!!!\n",
 		     ior_string),
 		    0);
 }
@@ -56,13 +56,13 @@ ForwardingAgent_i::update_rank_list (const RankList & rank_list)
   objectid_rankedior_map_.open ();
  
   //ACE_DEBUG((LM_DEBUG,"ForwardingAgent - "
-  //           "Received rank_list length = %d.\n", rank_list.length()));
+  //           "FA: Received rank_list length = %d.\n", rank_list.length()));
   
   for (size_t i = 0; i < rank_list.length(); ++i)
     {
       //ACE_DEBUG ((LM_DEBUG, "\toid(%s) = %d entries\n", 
-      //	  rank_list[i].object_id.in (), 
-      //	  rank_list[i].ior_list.length ()));
+      //             rank_list[i].object_id.in (), 
+      //             rank_list[i].ior_list.length ()));
 
       AGENT_RANKED_IOR_LIST ranked_ior_list;
       ranked_ior_list.now = rank_list[i].now;
@@ -84,7 +84,7 @@ ForwardingAgent_i::initialize (CORBA::Object_ptr rm_ior)
   this->RM_var_ = ReplicationManager::_narrow (rm_ior); 
   ForwardingAgent_var temp = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   
-  ACE_DEBUG ((LM_DEBUG, "calling register agent\n"));
+  ACE_DEBUG ((LM_DEBUG, "FA: calling register agent\n"));
   RankList *rank_list = this->RM_var_->register_agent (temp.in ());
   update_rank_list (*rank_list);
 }
