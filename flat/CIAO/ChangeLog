@@ -1,3 +1,17 @@
+Tue Nov 18 14:16:23 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ciao/Contexts/Context.mpc:
+          Added missing dynamicflags
+
+        * ciao/Servants/Servant_Impl_Utils_T.cpp:
+          Layout change
+
+        * MPC/config/ciao_context_impl.mpb:
+          New base project
+
+        * MPC/config/ciao_servant.mpb:
+          Use ciao_context_impl
+
 Mon Nov 17 16:08:23 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * CCF/CCF/IDL2/Parser.hpp:
