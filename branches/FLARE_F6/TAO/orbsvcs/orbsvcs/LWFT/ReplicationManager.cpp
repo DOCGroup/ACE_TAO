@@ -183,7 +183,7 @@ ReplicationManager_i::register_application (
       if(update_list_full_.wait (update_mutex_, &wait_time) == -1)  // timeout
         {
           ACE_DEBUG ((LM_ERROR,
-                      "register_application CORBA upcall "
+                      "RM: register_application CORBA upcall "
                       "waited too long. Skipping"
                       "register_application. %s:%s:%s:%d.\n",
                       host_id,
@@ -221,7 +221,7 @@ ReplicationManager_i::update_proc_host_map (
   else 
     {
       ACE_DEBUG ((LM_ERROR,
-                  "Duplicate process_id=%s. Skipping it.\n",
+                  "RM: Duplicate process_id=%s. Skipping it.\n",
                   pid));
     }
 }
@@ -504,14 +504,14 @@ ReplicationManager_i::process_proc_failure (
             }
           else
             {
-              ACE_DEBUG((LM_ERROR,"Can't find host=%s in hostid_process_map. \
+              ACE_DEBUG((LM_ERROR,"RM: Can't find host=%s in hostid_process_map. \
                 Data structure invariant broken.\n",host.c_str()));
             }
         }
       else
         {
           ACE_DEBUG ((LM_ERROR,
-                      "Can't find process_id=%s in proc_host_map."
+                      "RM: Can't find process_id=%s in proc_host_map."
                       " Data structure invariant broken.\n",
                       process_id.c_str ()));
         }
@@ -648,7 +648,7 @@ ReplicationManager_i::elevate_backup_to_primary (
               else
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "Can't find backups for "
+                              "RM: Can't find backups for "
                               "tag=%s in process=%s.\n"
                               "Data structure invariant broken\n",
                               tag.c_str (),
@@ -664,7 +664,7 @@ ReplicationManager_i::elevate_backup_to_primary (
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "No process found hosting tag=%s.\n",
+                  "RM: No process found hosting tag=%s.\n",
                   tag.c_str ()));
     }
 }
@@ -761,8 +761,8 @@ ReplicationManager_i::replica_selection_algo (void)
                 }
             }
           
-          build_rank_list ();
-          update_enhanced_ranklist ();
+          this->build_rank_list ();
+          this->update_enhanced_ranklist ();
         }
     }
   
@@ -830,7 +830,7 @@ ReplicationManager_i::non_primary_host_list (
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "No processes for tag = %s.\n",
+                  "RM: No processes for tag = %s.\n",
                   primary_object_id.c_str ()));
     }
   
@@ -885,10 +885,11 @@ ReplicationManager_i::app_reg (APP_INFO & app)
               static_ranklist_update (object_id,
                                       app.ior,
                                       role);
+
               break;
             }
           default:
-            ACE_DEBUG((LM_ERROR,"Unknown Role!!\n"));
+            ACE_DEBUG((LM_ERROR,"RM: in app_reg () - Unknown Role!!\n"));
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -1096,14 +1097,47 @@ ReplicationManager_i::update_enhanced_ranklist (void)
   ACE_Read_Guard <ACE_RW_Thread_Mutex> guard (
     rank_list_mutex_);
 
-  // create a copy of the rank list here
-  enhanced_rank_list_.length (rank_list_.length ());
+  // get all existing primaries from the appset map
+  // for some reason this creates a trace output
+  // "ACE_Hash_Map_Manager_Ex" on stdout.
+  OBJECTID_APPINFO_MAP primaries;
+
+  for (OBJECTID_APPSET_MAP::iterator it = 
+	 objectid_appset_map_.begin ();
+       it != objectid_appset_map_.end ();
+       ++it)
+    {
+      // for every object_id appset
+      APP_SET & as = (*it).item ();
+
+      // find the primary
+      for (APP_SET::iterator s_it = as.begin ();
+	   s_it != as.end ();
+	   ++s_it)
+	{
+	  APP_INFO & ai = *s_it;
+
+	  // by looking at its role member
+	  if (ai.role == PRIMARY)
+	    {
+	      primaries.bind ((*it).key (), ai);
+
+	      // if the primary has been found we can abort this loop
+	      break;
+	    }
+	}
+    }
+
+  // the new list will have as many entries as there
+  // are primaries
+  enhanced_rank_list_.length (primaries.current_size ());
 
   std::string object_id;
-  APP_SET as;
+  APP_INFO ai;
   
-  // add the primary for each ior_list
-  for (size_t i = 0; i < rank_list_.length (); ++i)
+  // add the primary for each ior_list that is already in the rank_list
+  size_t i = 0;
+  for (; i < rank_list_.length (); ++i)
     {
       object_id = rank_list_[i].object_id.in ();
       enhanced_rank_list_[i].object_id = object_id.c_str ();
@@ -1113,25 +1147,14 @@ ReplicationManager_i::update_enhanced_ranklist (void)
       size_t old_length = rank_list_[i].ior_list.length ();
       ObjectList_var list_with_primary (new ObjectList (old_length + 1));
       list_with_primary->length (old_length + 1);
-      
-      // get app set and search for the contained primary
-      if (objectid_appset_map_.find (object_id.c_str (),
-             as) == 0)
-        {
-          // go through the appset to find the primary
-          for (APP_SET::iterator it = as.begin ();
-               it != as.end ();
-               ++it)
-	    {
-              if ((*it).role == PRIMARY)
-                {
-                  // add the primary as first entry
-                  (*list_with_primary)[0] =
-                    CORBA::Object::_duplicate ((*it).ior.in ());
 
-                  break;
-	        }
-            }
+      // get primary from the map
+      if (primaries.find (object_id.c_str (), ai) == 0)
+	{
+	  (*list_with_primary)[0] =
+	    CORBA::Object::_duplicate (ai.ior.in ());
+      
+	  primaries.unbind (ai.object_id);
 
           // add all the other entries behind it
           for (size_t j = 0; j < old_length; ++j)
@@ -1141,8 +1164,8 @@ ReplicationManager_i::update_enhanced_ranklist (void)
       else
 	{
           ACE_DEBUG ((LM_DEBUG,
-                      "RM::send_rank_list - could not find %s in appset_map.\n",
-          object_id.c_str ()));
+                      "RM::send_rank_list - could not find primary for %s.\n",
+		      object_id.c_str ()));
 
           list_with_primary->length (0);
 	}
@@ -1150,6 +1173,26 @@ ReplicationManager_i::update_enhanced_ranklist (void)
       // put the new list into the rank list instead of the old one
       enhanced_rank_list_[i].ior_list = list_with_primary;
     } // end for
+
+  // add primaries for applications that have no entries in the
+  // rank_list yet.
+  for (OBJECTID_APPINFO_MAP::iterator pit = primaries.begin ();
+       !pit.done ();
+       ++pit)
+    {
+      ObjectList_var iorlist (new ObjectList (1));
+      iorlist->length (1);
+
+      //add object reference of primary to the list
+      (*iorlist)[0] = 
+        CORBA::Object::_duplicate ((*pit).item ().ior.in ());
+
+      enhanced_rank_list_[i].object_id = (*pit).key ().c_str ();
+      enhanced_rank_list_[i].now = false;
+      enhanced_rank_list_[i].ior_list = iorlist;
+
+      ++i;
+    }
 }
 
 void
@@ -1285,7 +1328,7 @@ ReplicationManager_i::update_ior_map (
   else
     {
       ACE_DEBUG ((LM_ERROR,
-                  "Objectid=%s not present in APP_SET\n",
+                  "RM: Objectid=%s not present in APP_SET\n",
                   oid.c_str ()));
     }
 }
