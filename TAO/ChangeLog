@@ -1,3 +1,10 @@
+Wed Nov 19 10:59:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/be/be_helper.cpp:
+          Reverted Reversion of Nov 18 for change of Oct 13 to convert
+          format specifiers to plain ascii. This change was not the
+          introducer of the 64bit compile warnings problem.
+
 Wed Nov 19 09:53:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tao/orbsvcs/orbsvcs/av/SCTP_SEQ.cpp:
