@@ -1,3 +1,15 @@
+Wed Nov 19 06:18:15 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        
+          Reimplemented process_proc_failure to fix bug that
+          sends a non-empty ranklist, when the last primary crashes.
+        
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent.cpp:
+          
+          enabled more detailed debugging output.
+
 Wed Nov 19 01:33:02 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.h

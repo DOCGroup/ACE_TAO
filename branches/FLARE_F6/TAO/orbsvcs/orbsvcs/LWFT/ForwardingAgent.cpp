@@ -55,14 +55,14 @@ ForwardingAgent_i::update_rank_list (const RankList & rank_list)
   objectid_rankedior_map_.close ();
   objectid_rankedior_map_.open ();
  
-  //ACE_DEBUG((LM_DEBUG,"ForwardingAgent - "
-  //           "FA: Received rank_list length = %d.\n", rank_list.length()));
+  ACE_DEBUG((LM_DEBUG,"ForwardingAgent - "
+             "FA: Received rank_list length = %d.\n", rank_list.length()));
   
   for (size_t i = 0; i < rank_list.length(); ++i)
     {
-      //ACE_DEBUG ((LM_DEBUG, "\toid(%s) = %d entries\n", 
-      //             rank_list[i].object_id.in (), 
-      //             rank_list[i].ior_list.length ()));
+      ACE_DEBUG ((LM_DEBUG, "\toid(%s) = %d entries\n", 
+                   rank_list[i].object_id.in (), 
+                   rank_list[i].ior_list.length ()));
 
       AGENT_RANKED_IOR_LIST ranked_ior_list;
       ranked_ior_list.now = rank_list[i].now;
