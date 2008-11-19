@@ -1,9 +1,9 @@
 Wed Nov 19 09:53:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
-        * tao/strategies/SCTP_SEQ.cpp:
-        * tao/orbsvcs/orbsvcs/av/SCIOP_Acceptor.cpp:
-        * tao/orbsvcs/orbsvcs/av/SCIOP_Connection_Handle.cpp:
-        * tao/orbsvcs/orbsvcs/av/SCIOP_Profile.cpp:
+        * tao/orbsvcs/orbsvcs/av/SCTP_SEQ.cpp:
+        * tao/strategies/SCIOP_Acceptor.cpp:
+        * tao/strategies/SCIOP_Connection_Handle.cpp:
+        * tao/strategies/SCIOP_Profile.cpp:
           added missing #include "ace/os_include/os_netdb.h".
 
 Tue Nov 18 16:08:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
