@@ -450,7 +450,7 @@
 #  include /**/ <winsock2.h>
 // WinCE 4 doesn't define the Exxx values without the WSA prefix, so do that
 // here. This is all lifted from the #if 0'd out part of winsock2.h.
-#  if defined (_WIN32_WCE) && (_WIN32_WCE < 600)
+#  if defined (_WIN32_WCE) && (_WIN32_WCE < 0x600)
 #    define EWOULDBLOCK             WSAEWOULDBLOCK
 #    define EINPROGRESS             WSAEINPROGRESS
 #    define EALREADY                WSAEALREADY
