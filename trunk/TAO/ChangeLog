@@ -1,3 +1,8 @@
+Wed Nov 19 15:14:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/be/be_sunsoft.cpp:
+          Attempted fix of the 64bit compile warnings problem.
+
 Wed Nov 19 10:59:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO_IDL/be/be_helper.cpp:
