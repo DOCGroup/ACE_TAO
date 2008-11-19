@@ -1,51 +1,44 @@
 // -*- MPC -*-
 // $Id$
 
-project(test_state_topic) : portableserver, splicelib_with_idl {
-  idlflags += -Wb,export_macro=State_TS_Export \
-              -Wb,export_include=state_ts_export.h
-
-  verbatim(gnuace, macros) {
-    override no_hidden_visibility = 1
-  } 
-
-  dynamicflags += STATE_TS_BUILD_DLL
-  macros += DDS_API=State_TS_Export
-  sharedname = test_state_topic
-  idlflags += -SS
-
-  SpliceTypeSupport_Files {
-    State.idl >> StateDcps.idl StateDcps_impl.cpp StateSplDcps.cpp
-  }
-  
+project(test_trigger_idl): taoidldefaults {
+  idlflags += -Sp
   IDL_Files {
-    State.idl
-    StateDcps.idl
+    Trigger.idl
   }
+  custom_only = 1
+}
+
+project(test_passive_client): taoserver, lwft_client {
+  after += test_trigger_idl test_server
+
+  exename = passive_client
 
   Source_Files {
-    StateC.cpp
-    StateDcps_impl.cpp
-    StateDcpsC.cpp
-    StateSplDcps.cpp
+    Trigger_i.cpp
+    passive_client.cpp
   }
-  
-  Header_Files {
-    ccpp_State.h
-    StateC.h
-    StateDcps_impl.h
-    StateDcpsC.h
-    StateDcpsS.h
-    StateS.h
-    StateSplDcps.h
+  Source_Files {
+    testC.cpp
+    TriggerC.cpp
+    TriggerS.cpp
   }
-  
-  Inline_Files {
-    StateC.inl
-    StateDcpsC.inl
+  IDL_Files {
   }
-  
-  Template_Files {
+}
+
+project(test_trigger): taoclient {
+  after += test_trigger_idl
+
+  exename = trigger
+
+  Source_Files {
+    trigger.cpp
+  }
+  Source_Files {
+    TriggerC.cpp
+  }
+  IDL_Files {
   }
 }
 
@@ -103,3 +96,50 @@ project(test_server) : lwft_server, naming {
   }
 }
 
+project(test_state_topic) : portableserver, splicelib_with_idl {
+  idlflags += -Wb,export_macro=State_TS_Export \
+              -Wb,export_include=state_ts_export.h
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  } 
+
+  dynamicflags += STATE_TS_BUILD_DLL
+  macros += DDS_API=State_TS_Export
+  sharedname = test_state_topic
+  idlflags += -SS
+
+  SpliceTypeSupport_Files {
+    State.idl >> StateDcps.idl StateDcps_impl.cpp StateSplDcps.cpp
+  }
+  
+  IDL_Files {
+    State.idl
+    StateDcps.idl
+  }
+
+  Source_Files {
+    StateC.cpp
+    StateDcps_impl.cpp
+    StateDcpsC.cpp
+    StateSplDcps.cpp
+  }
+  
+  Header_Files {
+    ccpp_State.h
+    StateC.h
+    StateDcps_impl.h
+    StateDcpsC.h
+    StateDcpsS.h
+    StateS.h
+    StateSplDcps.h
+  }
+  
+  Inline_Files {
+    StateC.inl
+    StateDcpsC.inl
+  }
+  
+  Template_Files {
+  }
+}

@@ -1,3 +1,19 @@
+Wed Nov 19 14:57:43 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        
+          Added check in process_proc_faile.
+        
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/trigger.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/passive_client.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Trigger_i.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Trigger_i.h
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Trigger.idl
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/no-RT.mpc:
+        
+          Added two new test executables that allow the user to make a call
+          on the replicated server through a CORBA interface.
+
 Wed Nov 19 13:59:11 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:

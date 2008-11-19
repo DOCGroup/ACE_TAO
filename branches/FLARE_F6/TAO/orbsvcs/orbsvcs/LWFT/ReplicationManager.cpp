@@ -419,19 +419,29 @@ ReplicationManager_i::process_proc_failure (
 	    {
 	      // find the right rank list
 	      size_t r = 0;
+	      bool found_ranklist = false;
 	      for (; r < rank_list_.length (); ++r)
 		{
 		  if ((*fit).object_id == rank_list_[r].object_id)
 		    {
+		      found_ranklist = true;
 		      break;
 		    }
+		}
+
+	      if (!found_ranklist)
+		{
+		  ACE_DEBUG ((LM_DEBUG, 
+			      "RM::ppf found no rank_list for object_id=%s",
+			      (*fit).object_id.c_str ()));
+		  break;
 		}
 
 	      ACE_DEBUG ((LM_DEBUG, "RM::ppf rank_list index found is %d.\n", r));
 	      
 	      // remove application from the rank_list
 	      if (rank_list_[r].ior_list.length () == 0)
-		ACE_DEBUG ((LM_DEBUG, "RM::ppf empty ior list.\n", r));
+		ACE_DEBUG ((LM_DEBUG, "RM::ppf empty ior list.\n"));
 	      else 
 		{
 		  new_primary = CORBA::Object::_duplicate (rank_list_[r].ior_list[0]);
@@ -962,8 +972,6 @@ ReplicationManager_i::app_reg (APP_INFO & app)
               static_ranklist_update (object_id,
                                       app.ior,
                                       role);    
-              
-	      this->update_enhanced_ranklist ();
 
               ACE_DEBUG ((LM_DEBUG,
                           "RM: Registered %s:%s:%s:%d with "
@@ -977,6 +985,8 @@ ReplicationManager_i::app_reg (APP_INFO & app)
           default:
           ACE_DEBUG ((LM_ERROR,"RM: in app_reg () - Unknown Role!!\n"));
         }
+
+      this->update_enhanced_ranklist ();
     }
 }
 
