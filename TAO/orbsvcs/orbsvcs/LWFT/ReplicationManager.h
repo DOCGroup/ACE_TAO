@@ -218,9 +218,6 @@ private:
   STRING_TO_STRING_LIST_MAP processid_primary_map_;
   STRING_TO_STRING_LIST_MAP hostid_process_map_;
 
-  STRING_OBJECT_MAP pid_object_map_;
-  ACE_Thread_Mutex pid_object_mutex_;
-
   RankList rank_list_;
   RankList enhanced_rank_list_;
   AGENT_LIST agent_list_;
