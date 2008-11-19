@@ -1,0 +1,11 @@
+//
+// $Id$
+//
+module Test
+{
+  interface Trigger
+  {
+    void start ();
+    oneway void shutdown ();
+  };
+};
