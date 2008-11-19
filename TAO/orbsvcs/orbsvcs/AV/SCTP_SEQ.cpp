@@ -8,6 +8,7 @@
 #include "ace/Multihomed_INET_Addr.h"
 #include "tao/debug.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID (AV,
            SCTP_SEQ,
