@@ -364,45 +364,59 @@ ReplicationManager_i::process_proc_failure (
 {
   if (static_mode_)
     {
-      // we don't have to care about a rank_list that is already empty
-      if (rank_list_.length () != 0)
+      // collect the app_info of all failed applications
+      // of a process
+      std::vector <APP_INFO> failed;
+      for (OBJECTID_APPSET_MAP::iterator it = 
+	     objectid_appset_map_.begin ();
+	   it != objectid_appset_map_.end ();
+	   ++it)
 	{
-	  // collect the app_info of all failed applications
-	  // of a process
-	  std::vector <APP_INFO> failed;
-	  for (OBJECTID_APPSET_MAP::iterator it = 
-		 objectid_appset_map_.begin ();
-	       it != objectid_appset_map_.end ();
-	       ++it)
+	  // for every object_id appset
+	  APP_SET & as = (*it).item ();
+	  
+	  // find the primary
+	  for (APP_SET::iterator s_it = as.begin ();
+	       s_it != as.end ();
+	       ++s_it)
 	    {
-	      // for every object_id appset
-	      APP_SET & as = (*it).item ();
-
-	      // find the primary
-	      for (APP_SET::iterator s_it = as.begin ();
-		   s_it != as.end ();
-		   ++s_it)
+	      APP_INFO & ai = *s_it;
+	      
+	      // by looking at its role member
+	      if (ai.process_id == process_id)
 		{
-		  APP_INFO & ai = *s_it;
-		  
-		  // by looking at its role member
-		  if (ai.process_id == process_id)
-		    {
-		      failed.push_back (ai);
-		    }
+		  failed.push_back (ai);
 		}
 	    }
+	}
 
-	  ACE_DEBUG ((LM_DEBUG, "RM::ppf found %d failed applications\n", failed.size ()));
+      ACE_DEBUG ((LM_DEBUG, "RM::ppf found %d failed applications\n", failed.size ()));
 
-	  CORBA::Object_var new_primary;
-	  // for each failed application in this process
-	  for (std::vector <APP_INFO>::iterator fit = failed.begin ();
-	       fit != failed.end ();
-	       ++fit)
+      CORBA::Object_var new_primary;
+      // for each failed application in this process
+      for (std::vector <APP_INFO>::iterator fit = failed.begin ();
+	   fit != failed.end ();
+	   ++fit)
+	{
+	  ACE_DEBUG ((LM_DEBUG, "RM::ppf dealing with failed app for %s\n", (*fit).object_id.c_str ()));
+
+	  // remove entry from the appset
+	  APP_SET as;
+	  if (objectid_appset_map_.find ((*fit).object_id,
+					 as) == 0)
 	    {
-	      ACE_DEBUG ((LM_DEBUG, "RM::ppf dealing with failed app for %s\n", (*fit).object_id.c_str ()));
+	      ACE_DEBUG ((LM_DEBUG, "RM::ppf remove APP_INFO from APP_SET\n"));
+	      
+	      // remove appinfo from the appset
+	      as.remove (*fit);
+	      
+	      objectid_appset_map_.rebind ((*fit).object_id, 
+					   as);
+	    } // end if find
 
+	  // we don't have to care about a rank_list that is already empty
+	  if (rank_list_.length () != 0)
+	    {
 	      // find the right rank list
 	      size_t r = 0;
 	      for (; r < rank_list_.length (); ++r)
@@ -482,45 +496,34 @@ ReplicationManager_i::process_proc_failure (
 		    } // end else
 		} // end else
 
-	      APP_SET as;
-	      if (objectid_appset_map_.find ((*fit).object_id,
-					     as) == 0)
+	       // elevate new primary if necessary
+	      if ((*fit).role == PRIMARY)
 		{
-		  // elevate new primary if necessary
-		  if ((*fit).role == PRIMARY)
+		  ACE_DEBUG ((LM_DEBUG, "RM::ppf select new primary in APP_SET (%d)\n", as.size ()));
+		  
+		  for (APP_SET::iterator it = as.begin ();
+		       it != as.end ();
+		       ++it)
 		    {
-		      ACE_DEBUG ((LM_DEBUG, "RM::ppf select new primary in APP_SET (%d)\n", as.size ()));
-
-		      for (APP_SET::iterator it = as.begin ();
-			   it != as.end ();
-			   ++it)
-			{
-			  // compare the object id to the
-			  // first element in the rank list
-			  // and mark it as primary.
+		      // compare the object id to the first element in
+		      // the rank list and mark it as primary.
 		      
-			  if (new_primary->
-			      _is_equivalent ((*it).ior.in ()))
-			    {
-			      (*it).role = PRIMARY;
+		      if (new_primary->
+			  _is_equivalent ((*it).ior.in ()))
+			{
+			  (*it).role = PRIMARY;
+			  
+			  ACE_DEBUG ((LM_DEBUG, "RM::ppf found a new primary\n"));
+			  
+			  break;
+			}
+		    } // end for
 
-			      ACE_DEBUG ((LM_DEBUG, "RM::ppf found a new primary\n"));
-
-			      break;
-			    }
-			} // end for
-		    }
-
-		  ACE_DEBUG ((LM_DEBUG, "RM::ppf remove APP_INFO from APP_SET\n"));
-		  
-		  // remove appinfo from the appset
-		  as.remove (*fit);
-		  
 		  objectid_appset_map_.rebind ((*fit).object_id, 
 					       as);
-		} // end if find
-	    } // end for every failed application
-	} // end if rank_list is not empty
+		}
+	    } // end if rank_list is not empty
+	} // end for every failed application
 
       this->update_enhanced_ranklist ();
     }
