@@ -12,6 +12,7 @@
 #include "tao/debug.h"
 #include "tao/StringSeqC.h"
 #include "tao/Strategies/sciop_endpointsC.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID(Strategies,
           SCIOP_Profile,
