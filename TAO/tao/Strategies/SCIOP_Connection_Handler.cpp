@@ -27,6 +27,7 @@
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Wait_Strategy.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID (tao,
            SCIOP_Connection_Handler,

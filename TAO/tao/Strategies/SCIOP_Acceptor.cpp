@@ -9,6 +9,7 @@
 #include "tao/Codeset_Manager.h"
 #include "tao/Transport.h"
 #include "tao/CDR.h"
+#include "ace/os_include/os_netdb.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Strategies/SCIOP_Acceptor.inl"
@@ -17,7 +18,6 @@
 ACE_RCSID(tao,
           SCIOP_Acceptor,
           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
