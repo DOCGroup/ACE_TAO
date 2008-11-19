@@ -1,3 +1,12 @@
+Wed Nov 19 01:33:02 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        
+          Changed the way the enhanced_rank_list_ is generated, so that
+          it contains primaries even for applications that have no
+          backups deployed.
+
 Tue Nov 18 22:17:48 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ForwardingAgent.cpp:

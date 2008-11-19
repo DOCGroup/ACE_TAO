@@ -165,6 +165,13 @@ public:
 
   typedef ACE_Hash_Map_Manager_Ex<
     ACE_CString,
+    APP_INFO,
+    ACE_Hash<ACE_CString>,
+    ACE_Equal_To<ACE_CString>,
+    ACE_Null_Mutex> OBJECTID_APPINFO_MAP;
+
+  typedef ACE_Hash_Map_Manager_Ex<
+    ACE_CString,
     RANKED_IOR_LIST,
     ACE_Hash<ACE_CString>,
     ACE_Equal_To<ACE_CString>,
