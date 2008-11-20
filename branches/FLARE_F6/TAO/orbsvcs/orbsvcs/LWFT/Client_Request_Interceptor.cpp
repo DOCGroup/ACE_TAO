@@ -18,7 +18,7 @@ Client_Request_Interceptor::Client_Request_Interceptor (
 }
 
 char *
-Client_Request_Interceptor::name ()
+Client_Request_Interceptor::name (void)
 {
   return CORBA::string_dup ("Client_Request_Interceptor");
 }
@@ -50,8 +50,10 @@ void
 Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  ACE_DEBUG ((LM_DEBUG, "Client_Request_Interceptor::receive_exception - "
-	      "catching exception\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "Client_Request_Interceptor::receive_exception - "
+	            "caught %s\n",
+	            ri->received_exception_id ()));
 
   const CORBA::ULong tagID = 9654;
   char *tag = 0;

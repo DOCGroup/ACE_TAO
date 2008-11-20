@@ -19,10 +19,10 @@
 #include "AppSideReg.h"
 #include "AppOptions.h"
 
-AppSideReg::AppSideReg (ACE_Barrier *ext_barrier, CORBA::ORB_ptr orb)
+AppSideReg::AppSideReg (CORBA::ORB_ptr orb)
   : HM_ior_ (AppOptions::instance ()->host_monitor_ior ()),
     orb_ (CORBA::ORB::_duplicate (orb)),
-    external_barrier_ (ext_barrier)
+    outer_barrier_ (2)
 {
 }
 
@@ -32,13 +32,8 @@ AppSideReg::~AppSideReg (void)
   orb_->destroy ();
 }
 
-void AppSideReg::unregister_process (void)
-{
-  hmvar_->unregister_process (
-    AppOptions::instance ()->process_id ().c_str ());
-}
-
-int AppSideReg::svc (void)
+int
+AppSideReg::svc (void)
 {
   try
     {
@@ -127,7 +122,35 @@ int AppSideReg::svc (void)
 
   //ACE_DEBUG ((LM_DEBUG, "AppSideReg::svc waiting on barrier.\n"));
 
-  external_barrier_->wait ();
+  outer_barrier_.wait ();
   return 0;
+}
+
+int
+AppSideReg::activate (long /* flags */,
+                      int /* n_threads */,
+                      int /* force_active */,
+                      long /* priority */,
+                      int /* grp_id */,
+                      ACE_Task_Base* /* task */,
+                      ACE_hthread_t /* thread_handles */ [],
+                      void* /* stack */ [],
+                      size_t /* stack_size */ [],
+                      ACE_thread_t /* thread_ids */ [],
+                      const char* /* thr_name */ [])
+{
+  // This will end up back in our overridden svc() method. We
+  // want to wait for it to execute the statements in its body
+  // before returning control to the calling application.
+  int retval = this->ACE_Task_Base::activate ();
+  outer_barrier_.wait ();
+  return retval;
+}
+
+void
+AppSideReg::unregister_process (void)
+{
+  hmvar_->unregister_process (
+    AppOptions::instance ()->process_id ().c_str ());
 }
 
