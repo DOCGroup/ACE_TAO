@@ -32,6 +32,11 @@ ForwardingAgent_i::next_member (const char *ior_string)
   int result =
     this->objectid_rankedior_map_.find (ACE_CString (ior_string),
                                         ranked_ior_list);
+                                        
+  size_t siz = ranked_ior_list.ior_list.size ();
+  ACE_DEBUG ((LM_DEBUG,
+              "next_member: IOR list size = %u\n",
+              siz));
   
   if ((result == 0) && (ranked_ior_list.ior_list.size () > 0))
     {
@@ -55,19 +60,22 @@ ForwardingAgent_i::update_rank_list (const RankList & rank_list)
   objectid_rankedior_map_.close ();
   objectid_rankedior_map_.open ();
  
-  ACE_DEBUG((LM_DEBUG,"ForwardingAgent - "
-             "FA: Received rank_list length = %d.\n", rank_list.length()));
+  ACE_DEBUG((LM_DEBUG,
+             "ForwardingAgent - "
+             "Received rank_list length = %d.\n",
+             rank_list.length ()));
   
-  for (size_t i = 0; i < rank_list.length(); ++i)
+  for (size_t i = 0; i < rank_list.length (); ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "\toid(%s) = %d entries\n", 
-                   rank_list[i].object_id.in (), 
-                   rank_list[i].ior_list.length ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  "\toid(%s) = %d entries\n", 
+                  rank_list[i].object_id.in (), 
+                  rank_list[i].ior_list.length ()));
 
       AGENT_RANKED_IOR_LIST ranked_ior_list;
       ranked_ior_list.now = rank_list[i].now;
       
-      for (size_t j = 0; j < rank_list[i].ior_list.length(); ++j)
+      for (size_t j = 0; j < rank_list[i].ior_list.length (); ++j)
         {
           ranked_ior_list.ior_list.push_back (
             CORBA::Object::_duplicate (rank_list[i].ior_list[j]));

@@ -1,3 +1,23 @@
+Thu Nov 20 14:38:02 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.h:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
+        * orbsvcs/orbsvcs/LWFT/Client_Request_Interceptor.cpp:
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.h:
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent.cpp:
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.h:
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.cpp:
+        * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
+        
+          In classes that inherit from ACE_Task_Base, overrode the
+          activate() method to call the base class activate()
+          then call wait on the ACE_Barrier, which is now
+          created in the class instead of being passed in.
+          Also cosmetic changes.
+
 Thu Nov 20 03:48:25 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/examples/FaultTolerance/FLARe/no-RT/passive_client.cpp:

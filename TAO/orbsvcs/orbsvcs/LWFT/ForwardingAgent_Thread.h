@@ -20,17 +20,29 @@ class LWFT_Client_Export ForwardingAgent_Thread
 {
 public:
   ForwardingAgent_Thread (CORBA::ORB_ptr orb,
-                          ForwardingAgent_i *agent,
-                          ACE_Barrier &barrier);
+                          ForwardingAgent_i *agent);
 
   virtual int svc (void);
+
+  // Override, calls base class activate(), then wait() on barrier.
+  virtual int activate (long flags = THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
+                        int n_threads = 1,
+                        int force_active = 0,
+                        long priority = ACE_DEFAULT_THREAD_PRIORITY,
+                        int grp_id = -1,
+                        ACE_Task_Base *task = 0,
+                        ACE_hthread_t thread_handles[] = 0,
+                        void *stack[] = 0,
+                        size_t stack_size[] = 0,
+                        ACE_thread_t thread_ids[] = 0,
+                        const char* thr_name[] = 0);
 
 private:
   CORBA::ORB_ptr orb_;
 
   ForwardingAgent_i *agent_;
 
-  ACE_Barrier &synchronizer_;
+  ACE_Barrier synchronizer_;
 };
 
 #include /**/ "ace/post.h"

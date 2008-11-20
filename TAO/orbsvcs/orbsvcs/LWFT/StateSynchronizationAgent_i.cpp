@@ -93,7 +93,7 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
     {
       ACE_DEBUG ((LM_ERROR, 
 		  "(%P|%t) SSA::state_changed () "
-		  "exception whil calling the get_state method for application %s:\n"
+		  "exception while calling the get_state method for application %s:\n"
 		  "%s",
 		  object_id, ex._info ().c_str ()));
       return;

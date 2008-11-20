@@ -8,11 +8,10 @@
 
 StateSyncAgentTask::StateSyncAgentTask (
   CORBA::ORB_ptr orb,
-	StateSynchronizationAgent_i * agent,
-	ACE_Barrier * sync)
+	StateSynchronizationAgent_i * agent)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     agent_ (agent),
-    sync_ (sync),
+    sync_ (2),
     agent_ref_ (StateSynchronizationAgent::_nil ())
 {
 }
@@ -47,7 +46,7 @@ StateSyncAgentTask::svc (void)
 
       // Main loop has to wait until the agent servant is registered
       // within the root POA.
-      sync_->wait ();
+      sync_.wait ();
 
       this->orb_->run ();
 
@@ -60,6 +59,27 @@ StateSyncAgentTask::svc (void)
     }
 
   return 0;
+}
+
+int
+StateSyncAgentTask::activate (long /* flags */,
+                              int /* n_threads */,
+                              int /* force_active */,
+                              long /* priority */,
+                              int /* grp_id */,
+                              ACE_Task_Base* /* task */,
+                              ACE_hthread_t /* thread_handles */ [],
+                              void* /* stack */ [],
+                              size_t /* stack_size */ [],
+                              ACE_thread_t /* thread_ids */ [],
+                              const char* /* thr_name */ [])
+{
+  // This will end up back in our overridden svc() method. We
+  // want to wait for it to execute the statements in its body
+  // before returning control to the calling application.
+  int retval = this->ACE_Task_Base::activate ();
+  sync_.wait ();
+  return retval;
 }
 
 StateSynchronizationAgent_ptr

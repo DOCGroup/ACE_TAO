@@ -11,11 +11,10 @@
 
 ForwardingAgent_Thread::ForwardingAgent_Thread (
   CORBA::ORB_ptr orb,
-  ForwardingAgent_i *agent,
-  ACE_Barrier &barrier)
+  ForwardingAgent_i *agent)
   : orb_ (orb), 
     agent_ (agent),
-    synchronizer_ (barrier)
+    synchronizer_ (2)
 {
 }
 
@@ -54,8 +53,8 @@ ForwardingAgent_Thread::svc (void)
       ReplicationManager_var rm =
         ReplicationManager::_narrow (tmp.in ());
 
-      this->agent_->initialize (rm.in ());
-      this->synchronizer_.wait ();
+      agent_->initialize (rm.in ());
+      synchronizer_.wait ();
     }
   catch (const CORBA::Exception& ex)
     {
@@ -65,3 +64,33 @@ ForwardingAgent_Thread::svc (void)
     
   return 0;
 }
+
+int
+ForwardingAgent_Thread::activate (long /* flags */,
+                                  int /* n_threads */,
+                                  int /* force_active */,
+                                  long /* priority */,
+                                  int /* grp_id */,
+                                  ACE_Task_Base* /* task */,
+                                  ACE_hthread_t /* thread_handles */ [],
+                                  void* /* stack */ [],
+                                  size_t /* stack_size */ [],
+                                  ACE_thread_t /* thread_ids */ [],
+                                  const char* /* thr_name */ [])
+{
+  // Task activation flags. If we are using RTCORBA, we want to
+  // eliminate the default THR_INHERIT_SCHED flag and also use
+  // whatever flags may be set in the ORB.
+  long flags =
+    THR_NEW_LWP
+    | THR_JOINABLE
+    | orb_->orb_core ()->orb_params ()->thread_creation_flags ();
+
+  // This will end up back in our overridden svc() method. We
+  // want to wait for it to execute the statements in its body
+  // before returning control to the calling client.
+  int retval = this->ACE_Task_Base::activate (flags, 1, 0, 0);
+  synchronizer_.wait ();
+  return retval;
+}
+
