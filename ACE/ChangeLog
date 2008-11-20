@@ -1,3 +1,8 @@
+Thu Nov 20 13:09:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/OS_Memory.h:
+          Replaced define ACE_throw_bad_alloc with correct version.
+
 Wed Nov 19 15:58:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:
