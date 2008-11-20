@@ -1,3 +1,9 @@
+Thu Nov 20 03:48:25 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/passive_client.cpp:
+        
+          Fixed include statement.
+
 Wed Nov 19 14:57:43 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
