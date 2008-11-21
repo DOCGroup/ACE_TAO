@@ -15,12 +15,10 @@
 
 template <typename TOPIC_TYPE, 
 	  typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE,
-	  typename STATE_TYPE>
+          typename TOPIC_SEQUENCE>
 DDSStateReaderListener_T<TOPIC_TYPE, 
 			 TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE,
-			 STATE_TYPE>::DDSStateReaderListener_T (
+                         TOPIC_SEQUENCE>::DDSStateReaderListener_T (
     const std::string & id,							    
     ReplicatedApplication_ptr application)
  : id_ (id),
@@ -30,25 +28,21 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 
 template <typename TOPIC_TYPE, 
 	  typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE,
-	  typename STATE_TYPE>
+          typename TOPIC_SEQUENCE>
 DDSStateReaderListener_T<TOPIC_TYPE, 
 			 TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE,
-			 STATE_TYPE>::~DDSStateReaderListener_T ()
+                         TOPIC_SEQUENCE>::~DDSStateReaderListener_T ()
 {
 }
 
 
 template <typename TOPIC_TYPE, 
 	  typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE,
-	  typename STATE_TYPE>
+          typename TOPIC_SEQUENCE>
 void
 DDSStateReaderListener_T<TOPIC_TYPE, 
 			 TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE,
-			 STATE_TYPE>::on_requested_deadline_missed (
+                         TOPIC_SEQUENCE>::on_requested_deadline_missed (
     DDS::DataReader_ptr,
     const DDS::RequestedDeadlineMissedStatus &)
   throw (CORBA::SystemException)
@@ -59,13 +53,11 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 
 template <typename TOPIC_TYPE, 
 	  typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE,
-	  typename STATE_TYPE>
+          typename TOPIC_SEQUENCE>
 void
 DDSStateReaderListener_T<TOPIC_TYPE, 
 			 TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE,
-			 STATE_TYPE>::on_requested_incompatible_qos (
+                         TOPIC_SEQUENCE>::on_requested_incompatible_qos (
     DDS::DataReader_ptr,
     const DDS::RequestedIncompatibleQosStatus &status)
   throw (CORBA::SystemException)
@@ -79,13 +71,11 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 
 template <typename TOPIC_TYPE, 
 	  typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE,
-	  typename STATE_TYPE>
+          typename TOPIC_SEQUENCE>
 void
 DDSStateReaderListener_T<TOPIC_TYPE, 
 			 TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE,
-			 STATE_TYPE>::on_liveliness_changed (
+                         TOPIC_SEQUENCE>::on_liveliness_changed (
     DDS::DataReader_ptr,
     const DDS::LivelinessChangedStatus &)
   throw (CORBA::SystemException)
@@ -94,13 +84,11 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 
 template <typename TOPIC_TYPE, 
 	  typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE,
-	  typename STATE_TYPE>
+          typename TOPIC_SEQUENCE>
 void
 DDSStateReaderListener_T<TOPIC_TYPE, 
 			 TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE,
-			 STATE_TYPE>::on_subscription_matched (
+                         TOPIC_SEQUENCE>::on_subscription_matched (
     DDS::DataReader_ptr,
     const DDS::SubscriptionMatchedStatus &)
   throw (CORBA::SystemException)
@@ -109,13 +97,11 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 
 template <typename TOPIC_TYPE, 
 	  typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE,
-	  typename STATE_TYPE>
+          typename TOPIC_SEQUENCE>
 void
 DDSStateReaderListener_T<TOPIC_TYPE, 
 			 TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE,
-			 STATE_TYPE>::on_sample_rejected (
+                         TOPIC_SEQUENCE>::on_sample_rejected (
     DDS::DataReader_ptr,
     const DDS::SampleRejectedStatus &)
   throw (CORBA::SystemException)
@@ -126,13 +112,11 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 
 template <typename TOPIC_TYPE, 
 	  typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE,
-	  typename STATE_TYPE>
+          typename TOPIC_SEQUENCE>
 void
 DDSStateReaderListener_T<TOPIC_TYPE, 
 			 TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE,
-			 STATE_TYPE>::on_data_available (
+                         TOPIC_SEQUENCE>::on_data_available (
     DDS::DataReader_ptr reader)
   throw (CORBA::SystemException)
 {
@@ -170,11 +154,8 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 	  // put state information into an any and send it to the application
 	  CORBA::Any_var state (new CORBA::Any);
 
-	  // get state value from topic sample
-	  STATE_TYPE value = state_sample.value;
-
 	  // insert state value into the any
-	  *state <<= value;
+	  *state <<= state_sample;
 
 	  try
 	    {
@@ -202,13 +183,11 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 
 template <typename TOPIC_TYPE, 
 	  typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE,
-	  typename STATE_TYPE>
+          typename TOPIC_SEQUENCE>
 void
 DDSStateReaderListener_T<TOPIC_TYPE, 
 		         TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE,
-		         STATE_TYPE>::on_sample_lost (
+                         TOPIC_SEQUENCE>::on_sample_lost (
     DDS::DataReader_ptr,
     const DDS::SampleLostStatus &)
   throw (CORBA::SystemException)

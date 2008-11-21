@@ -24,8 +24,7 @@
  */
 template <typename TOPIC_TYPE, 
 	  typename TOPIC_DATA_READER,
-	  typename TOPIC_SEQUENCE,
-	  typename STATE_TYPE>
+	  typename TOPIC_SEQUENCE>
 class DDSStateReaderListener_T : public DDS::DataReaderListener
 {
 public:

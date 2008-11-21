@@ -20,6 +20,10 @@
 
 #include "orbsvcs/orbsvcs/LWFT/StateSynchronizationAgentC.h"
 
+#ifdef FLARE_USES_DDS
+#  include "ccpp_State.h"
+#endif
+
 class test_i :  public POA_test
 {
 public:
@@ -50,7 +54,7 @@ private:
   ACE_hrtime_t end_;
   std::string object_id_;
   StateSynchronizationAgent_var agent_;
-  long state_;
+  State state_;
   int & stop_;
 };
 

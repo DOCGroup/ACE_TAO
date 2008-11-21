@@ -24,9 +24,9 @@ test_i::test_i (CORBA::ORB_ptr orb,
     history_ (50),
     object_id_ (object_id),
     agent_ (StateSynchronizationAgent::_duplicate (agent)),
-    state_ (1),
     stop_ (stop)
 {
+  state_.value = 1;
 }
 
 void
@@ -37,7 +37,7 @@ test_i::set_state (const ::CORBA::Any & state_value)
   CORBA::Long value;
 
   if (state_value >>= value)
-    state_ = value;
+    state_.value = value;
   else
     ACE_DEBUG ((LM_ERROR,
 		"ReplicatedApplication_i::set_state () "
@@ -53,7 +53,7 @@ test_i::get_state (void)
   CORBA::Any_var state (new CORBA::Any);
 
   // create intermediate object with the value
-  CORBA::Long value = state_;
+  CORBA::Long value = state_.value;
 
   ACE_DEBUG ((LM_DEBUG, "test_i::get_state returns %d.\n", value));
 
@@ -83,7 +83,7 @@ test_i::method (CORBA::ULong test_start, CORBA::ULong test_end,
                    prime_number / 2);
   ACE_hrtime_t end = ACE_OS::gethrtime ();
 
-  ++state_;
+  ++(state_.value);
 
   if (!CORBA::is_nil (agent_.in ()))
     agent_->state_changed (object_id_.c_str ());

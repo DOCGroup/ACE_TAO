@@ -97,7 +97,7 @@ project(test_server) : lwft_server, naming, lwft_dds {
   }
 }
 
-project(test_state_topic) : portableserver, splicelib_with_idl {
+project(test_state_topic) : portableserver, splicelib_with_idl, anytypecode {
   idlflags += -Wb,export_macro=State_TS_Export \
               -Wb,export_include=state_ts_export.h
 
