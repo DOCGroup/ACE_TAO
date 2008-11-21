@@ -148,20 +148,29 @@ DDSStateUpdate_T<STATE_TYPE,
   if (state_value >>= value)
     state_.value = value;
 
-  ACE_DEBUG ((LM_TRACE, ACE_TEXT ("DDSStateUpdate_T::set_state writes sample " 
-				  "with id %s\n"), state_.id.in ()));
+  //  ACE_DEBUG ((LM_TRACE, ACE_TEXT ("DDSStateUpdate_T::set_state writes sample " 
+  //                                  "with id %s\n"), state_.id.in ()));
   
   // publish value
   DDS::ReturnCode_t ret =
     this->datawriter_->write (this->state_, this->instance_handle_);
-          
-  if (ret != DDS::RETCODE_OK)
+
+  if (ret == DDS::RETCODE_ALREADY_DELETED)
     {
       ACE_DEBUG ((
           LM_ERROR,
-          ACE_TEXT ("StateUpdate::publish_update: write returned %d.\n"),
+          ACE_TEXT ("DDSStateUpdate_T::set_state () : write returned "
+                    "RETCODE_ALREADY_DELETED.\n"),
           ret));
     }
+  else if (ret != DDS::RETCODE_OK)
+    {
+      ACE_DEBUG ((
+          LM_ERROR,
+          ACE_TEXT ("DDSStateUpdate_T::set_state () : write returned %d.\n"),
+          ret));
+    }
+
 }
 
 template <typename STATE_TYPE,

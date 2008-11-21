@@ -90,8 +90,6 @@ DDSStateReaderListener_T<TOPIC_TYPE,
     const DDS::LivelinessChangedStatus &)
   throw (CORBA::SystemException)
 {
-  ACE_DEBUG ((LM_TRACE, ACE_TEXT ("DDSStateReaderListener_T::")
-	      ACE_TEXT ("on_liveliness_changed ()\n")));
 }
 
 template <typename TOPIC_TYPE, 
@@ -107,8 +105,6 @@ DDSStateReaderListener_T<TOPIC_TYPE,
     const DDS::SubscriptionMatchedStatus &)
   throw (CORBA::SystemException)
 {
-  ACE_DEBUG ((LM_TRACE, ACE_TEXT ("DDSStateReaderListener_T::")
-	      ACE_TEXT ("on_subscription_matched ()\n")));
 }
 
 template <typename TOPIC_TYPE, 
@@ -165,8 +161,8 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 
   if (status == DDS::RETCODE_OK)
     {
-      ACE_DEBUG ((LM_TRACE, ACE_TEXT ("DDSStateReaderListener_T ")
-		  ACE_TEXT ("sample-id %s\n"), state_sample.id.in ()));
+      //      ACE_DEBUG ((LM_TRACE, ACE_TEXT ("DDSStateReaderListener_T ")
+      //		  ACE_TEXT ("sample-id %s\n"), state_sample.id.in ()));
 
       // only update the state if it is not sent from within the same process
       if (id_.compare (state_sample.id) != 0)

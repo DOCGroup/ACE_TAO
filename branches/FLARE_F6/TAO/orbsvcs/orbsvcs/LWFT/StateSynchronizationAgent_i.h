@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef _REPLICATION_AGENT_I_H_
-#define _REPLICATION_AGENT_I_H_
+#ifndef STATE_SYNCHRONIZATION_AGENT_I_H_
+#define STATE_SYNCHRONIZATION_AGENT_I_H_
 
 #include <list>
 #include "ace/Hash_Map_Manager_T.h"
@@ -47,21 +47,39 @@ class SSA_Export StateSynchronizationAgent_i
   /// implementation of the StateSynchronizationAgent interface
   virtual void update_rank_list (const RankList & rank_list);
 
-  /// implementation of the StateSynchronizationAgent interface
+  /// registers application for statesynchronization with CORBA
   virtual void register_application (const char * object_id,
 				     ReplicatedApplication_ptr app);
 
-  typedef ACE_Refcounted_Auto_Ptr <StatefulObject, 
+#ifdef FLARE_USES_DDS
+  /// registers application for state synchronization with DDS
+  template <typename STATE_TYPE,
+            typename TOPIC_TYPE, 
+            typename TOPIC_TYPE_SUPPORT,
+            typename TOPIC_DATA_WRITER,
+            typename TOPIC_DATA_READER,
+            typename TOPIC_SEQUENCE>
+  void register_application_with_dds (const char * object_id,
+                                      ReplicatedApplication_ptr app);
+#endif /* FLARE_USES_DDS */
+
+  typedef ACE_Refcounted_Auto_Ptr <StatefulObject,
 				   ACE_Null_Mutex> STATEFUL_OBJECT_PTR;
 
   typedef std::list<STATEFUL_OBJECT_PTR> REPLICA_OBJECT_LIST;
 
+  struct ReplicaGroup 
+  {
+    REPLICA_OBJECT_LIST replicas;
+    bool use_dds;
+  };
+
   typedef ACE_Hash_Map_Manager_Ex<
     ACE_CString,
-    REPLICA_OBJECT_LIST,
+    ReplicaGroup,
     ACE_Hash<ACE_CString>,
     ACE_Equal_To<ACE_CString>,
-    ACE_Null_Mutex> OBJECTID_REPLICA_MAP;
+    ACE_Thread_Mutex> OBJECTID_REPLICA_MAP;
 
   typedef ACE_Hash_Map_Manager_Ex<
     ACE_CString,
@@ -99,9 +117,6 @@ class SSA_Export StateSynchronizationAgent_i
   /// keeps references to all applications running in this process
   OBJECTID_APPLICATION_MAP application_map_;
 
-  /// mutex for multithreaded access of the replica map
-  ACE_Thread_Mutex replica_map_mutex_;
-
 #ifdef FLARE_USES_DDS
 
   /// id of the DDS domain
@@ -122,4 +137,6 @@ class SSA_Export StateSynchronizationAgent_i
   bool use_corba_;
 };
 
-#endif /* _REPLICATED_APPLICATION_H_ */
+#include "StateSynchronizationAgent_i_T.cpp"
+
+#endif /* STATE_SYNCHRONIZATION_AGENT_I_H_ */

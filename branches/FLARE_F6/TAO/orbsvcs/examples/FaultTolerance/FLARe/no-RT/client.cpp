@@ -1016,10 +1016,8 @@ main (int argc, char *argv[])
           return result;
         }
         
-      ACE_Barrier fa_barrier (2);
       ForwardingAgent_Thread fa_thread (orb.in (),
-                                        forwarding_agent,
-                                        fa_barrier);
+                                        forwarding_agent);
 
       // Task activation flags.
       long flags =
@@ -1034,8 +1032,6 @@ main (int argc, char *argv[])
                             -1);
         }
         
-      fa_barrier.wait ();
-
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;
 

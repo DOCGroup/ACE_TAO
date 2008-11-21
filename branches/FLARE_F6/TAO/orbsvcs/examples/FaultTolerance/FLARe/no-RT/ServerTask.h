@@ -16,8 +16,7 @@
 #include "ace/Task.h"
 
 #include "tao/PortableServer/POAC.h"
-
-#include "orbsvcs/orbsvcs/LWFT/StateSynchronizationAgentC.h"
+#include "orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h"
 
 struct ServerOptions
 {
@@ -29,7 +28,8 @@ struct ServerOptions
       number_of_lanes (0),
       stop (0),
       number_of_servants (1),
-      use_ns (false) {}
+      use_ns (false),
+      use_corba (true) {}
 
   const char *bands_file;
   const char *lanes_file;
@@ -39,24 +39,25 @@ struct ServerOptions
   int stop;
   int number_of_servants;
   bool use_ns;
+  bool use_corba;
 };
 
 class ServerTask : public ACE_Task_Base
 {
 public:
   ServerTask (ServerOptions & options,
-	            CORBA::ORB_ptr orb,
-	            StateSynchronizationAgent_ptr agent);
+              CORBA::ORB_ptr orb,
+              StateSynchronizationAgent_i * agent);
 
   int svc (void);
 
 private:
   void read_object_info (std::string file_name,
-			                   int count);
+                         int count);
 
   int write_ior_to_file (const char *ior_file,
-			                   CORBA::ORB_ptr orb,
-			                   CORBA::Object_ptr object);
+                         CORBA::ORB_ptr orb,
+                         CORBA::Object_ptr object);
 
   PortableServer::POA_ptr create_rt_poa (void);
 
@@ -64,7 +65,7 @@ private:
 
   CORBA::ORB_var orb_;
 
-  StateSynchronizationAgent_var agent_;
+  StateSynchronizationAgent_i * agent_;
 };
 
 #endif /* _FLARE_SERVER_TASK_H_ */
