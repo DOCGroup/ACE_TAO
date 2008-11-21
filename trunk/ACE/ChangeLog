@@ -1,3 +1,10 @@
+Fri Nov 21 11:00:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/OS_Memory.h:
+          Ensure ACE_bad_alloc is defined as a class for throwing if
+          new doesn't throw themselves. Internally this isn't used but
+          some tests try and throw this on a zero pointer.
+
 Fri Nov 21 09:52:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/tao_orb_tests.lst:
@@ -7,11 +14,6 @@ Fri Nov 21 09:52:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
         * configure.ac:
           Add missing "isblank iswblank isctype iswctype" to the list of
           ACE_CHECKS_LACKS_FUNCS. This should fix the autoconfigure builds.
-
-Thu Nov 20 13:09:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
-
-        * ace/OS_Memory.h:
-          Replaced define ACE_throw_bad_alloc with correct version.
 
 Wed Nov 19 15:58:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 

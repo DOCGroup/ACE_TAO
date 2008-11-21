@@ -231,10 +231,14 @@ ACE_END_VERSIONED_NAMESPACE_DECL
      if (POINTER == 0) { errno = ENOMEM; } \
    } while (0)
 
+# if !defined (ACE_bad_alloc)
+    class ACE_bad_alloc_class {};
+#   define ACE_bad_alloc  ACE_bad_alloc_class
+# endif
 # if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
-#   define ACE_throw_bad_alloc AfxThrowMemoryException ()
+#   define ACE_throw_bad_alloc  AfxThrowMemoryException ()
 # else
-#   define ACE_throw_bad_alloc throw ACE_bad_alloc ()
+#   define ACE_throw_bad_alloc  throw ACE_bad_alloc ()
 # endif
 
 #endif /* ACE_NEW_THROWS_EXCEPTIONS */
