@@ -20,7 +20,7 @@ DDSFailure::DDSFailure (const std::string & description)
 }
 
 std::string
-DDSFailure::description () const
+DDSFailure::description (void) const
 {
   return description_;
 }
