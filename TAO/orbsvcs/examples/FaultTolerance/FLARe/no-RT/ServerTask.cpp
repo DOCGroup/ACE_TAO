@@ -21,10 +21,6 @@
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "ServerTask.h"
 #include "test_i.h"
-#ifdef FLARE_USES_DDS
-#  include "ccpp_State.h"
-#endif
-
 
 std::vector<std::string> object_ids;
 std::vector<size_t> object_roles;
@@ -166,13 +162,14 @@ ServerTask::svc (void)
 	          object_roles[i],
 	          test.in ());
 
+#ifdef FLARE_USES_DDS
               if (options_.use_corba)
+#endif
                 agent->register_application (object_ids[i].c_str (),
                                              test.in ());
 #ifdef FLARE_USES_DDS
               else
                 agent_->register_application_with_dds <
-                  CORBA::Long,
                   State,
                   StateTypeSupport,
                   StateDataWriter,

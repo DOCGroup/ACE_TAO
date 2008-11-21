@@ -17,8 +17,7 @@
 
 #include "DDSStateUpdate_T.h"
 
-template <typename STATE_TYPE,
-	  typename TOPIC_TYPE, 
+template <typename TOPIC_TYPE, 
 	  typename TOPIC_TYPE_SUPPORT,
 	  typename TOPIC_DATA_WRITER,
           typename TOPIC_DATA_READER,
@@ -57,8 +56,7 @@ StateSynchronizationAgent_i::register_application_with_dds (
           // register a DDS participant for this application
           replica_group.replicas.push_back (
             typename StateSynchronizationAgent_i::STATEFUL_OBJECT_PTR (
-               new DDSStateUpdate_T <STATE_TYPE,
-                                     TOPIC_TYPE,
+               new DDSStateUpdate_T <TOPIC_TYPE,
                                      TOPIC_TYPE_SUPPORT,
                                      TOPIC_DATA_WRITER,
                                      TOPIC_DATA_READER,

@@ -24,8 +24,7 @@
  * @brief Implementation of the StatefulObject interface that uses
  *        DDS to disseminate state information to replicas
  */
-template <typename STATE_TYPE,
-	  typename TOPIC_TYPE, 
+template <typename TOPIC_TYPE, 
 	  typename TOPIC_TYPE_SUPPORT,
 	  typename TOPIC_DATA_WRITER,
           typename TOPIC_DATA_READER,
@@ -51,6 +50,7 @@ public:
   virtual void set_state (const CORBA::Any & state_value);  
 
 protected:
+  /// contains the value sent most recently
   TOPIC_TYPE state_;
 
 private:

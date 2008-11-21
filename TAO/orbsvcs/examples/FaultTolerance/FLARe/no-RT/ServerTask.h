@@ -15,6 +15,10 @@
 
 #include "ace/Task.h"
 
+#ifdef FLARE_USES_DDS
+#  include "ccpp_State.h"
+#endif
+
 #include "tao/PortableServer/POAC.h"
 #include "orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h"
 

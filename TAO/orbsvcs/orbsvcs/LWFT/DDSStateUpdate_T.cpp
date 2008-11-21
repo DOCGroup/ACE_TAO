@@ -17,14 +17,12 @@
 #include "DDSStateReaderListener_T.h"
 #include "DDSFailure.h"
 
-template <typename STATE_TYPE,
-	  typename TOPIC_TYPE, 
+template <typename TOPIC_TYPE, 
 	  typename TOPIC_TYPE_SUPPORT,
 	  typename TOPIC_DATA_WRITER,
           typename TOPIC_DATA_READER,
           typename TOPIC_SEQUENCE>
-DDSStateUpdate_T<STATE_TYPE,
-                 TOPIC_TYPE,
+DDSStateUpdate_T<TOPIC_TYPE,
 		 TOPIC_TYPE_SUPPORT,
 		 TOPIC_DATA_WRITER,
 		 TOPIC_DATA_READER,
@@ -45,21 +43,18 @@ DDSStateUpdate_T<STATE_TYPE,
     datareader_ (TOPIC_DATA_READER::_nil ()),
     listener_ (new DDSStateReaderListener_T <TOPIC_TYPE,
 	                                     TOPIC_DATA_READER,
-                                             TOPIC_SEQUENCE,
-	                                     STATE_TYPE> (id, application))    
+                                             TOPIC_SEQUENCE> (id, application))    
 {
   state_.id = id.c_str ();
   this->init ();
 }
 
-template <typename STATE_TYPE,
-	  typename TOPIC_TYPE, 
+template <typename TOPIC_TYPE, 
 	  typename TOPIC_TYPE_SUPPORT,
 	  typename TOPIC_DATA_WRITER,
           typename TOPIC_DATA_READER,
           typename TOPIC_SEQUENCE>
-DDSStateUpdate_T<STATE_TYPE,
-                 TOPIC_TYPE,
+DDSStateUpdate_T<TOPIC_TYPE,
 		 TOPIC_TYPE_SUPPORT,
 		 TOPIC_DATA_WRITER,
 		 TOPIC_DATA_READER,
@@ -68,15 +63,13 @@ DDSStateUpdate_T<STATE_TYPE,
   this->fini ();
 }
 
-template <typename STATE_TYPE,
-	  typename TOPIC_TYPE, 
+template <typename TOPIC_TYPE, 
 	  typename TOPIC_TYPE_SUPPORT,
 	  typename TOPIC_DATA_WRITER,
           typename TOPIC_DATA_READER,
           typename TOPIC_SEQUENCE>
 bool
-DDSStateUpdate_T<STATE_TYPE,
-                 TOPIC_TYPE,
+DDSStateUpdate_T<TOPIC_TYPE,
 		 TOPIC_TYPE_SUPPORT,
 		 TOPIC_DATA_WRITER,
 		 TOPIC_DATA_READER,
@@ -94,15 +87,13 @@ DDSStateUpdate_T<STATE_TYPE,
   return true;
 }
 
-template <typename STATE_TYPE,
-	  typename TOPIC_TYPE, 
+template <typename TOPIC_TYPE, 
 	  typename TOPIC_TYPE_SUPPORT,
 	  typename TOPIC_DATA_WRITER,
           typename TOPIC_DATA_READER,
           typename TOPIC_SEQUENCE>
 bool
-DDSStateUpdate_T<STATE_TYPE,
-                 TOPIC_TYPE,
+DDSStateUpdate_T<TOPIC_TYPE,
 		 TOPIC_TYPE_SUPPORT,
 		 TOPIC_DATA_WRITER,
 		 TOPIC_DATA_READER,
@@ -126,15 +117,13 @@ DDSStateUpdate_T<STATE_TYPE,
   return true;
 }
 
-template <typename STATE_TYPE,
-	  typename TOPIC_TYPE, 
+template <typename TOPIC_TYPE, 
 	  typename TOPIC_TYPE_SUPPORT,
 	  typename TOPIC_DATA_WRITER,
           typename TOPIC_DATA_READER,
           typename TOPIC_SEQUENCE>
 void
-DDSStateUpdate_T<STATE_TYPE,
-                 TOPIC_TYPE,
+DDSStateUpdate_T<TOPIC_TYPE,
 		 TOPIC_TYPE_SUPPORT,
 		 TOPIC_DATA_WRITER,
 		 TOPIC_DATA_READER,
@@ -142,11 +131,11 @@ DDSStateUpdate_T<STATE_TYPE,
   const CORBA::Any & state_value)
 {
   // extract value from any
-  STATE_TYPE value;
+  const TOPIC_TYPE * value = 0;
 
   // update value on state topic sample
   if (state_value >>= value)
-    state_.value = value;
+    state_ = *value;
 
   //  ACE_DEBUG ((LM_TRACE, ACE_TEXT ("DDSStateUpdate_T::set_state writes sample " 
   //                                  "with id %s\n"), state_.id.in ()));
@@ -173,15 +162,13 @@ DDSStateUpdate_T<STATE_TYPE,
 
 }
 
-template <typename STATE_TYPE,
-	  typename TOPIC_TYPE, 
+template <typename TOPIC_TYPE, 
 	  typename TOPIC_TYPE_SUPPORT,
 	  typename TOPIC_DATA_WRITER,
           typename TOPIC_DATA_READER,
           typename TOPIC_SEQUENCE>
 bool
-DDSStateUpdate_T<STATE_TYPE,
-                 TOPIC_TYPE,
+DDSStateUpdate_T<TOPIC_TYPE,
 		 TOPIC_TYPE_SUPPORT,
 		 TOPIC_DATA_WRITER,
 		 TOPIC_DATA_READER,
@@ -221,15 +208,13 @@ DDSStateUpdate_T<STATE_TYPE,
   return true;
 }
 
-template <typename STATE_TYPE,
-	  typename TOPIC_TYPE, 
+template <typename TOPIC_TYPE, 
 	  typename TOPIC_TYPE_SUPPORT,
 	  typename TOPIC_DATA_WRITER,
           typename TOPIC_DATA_READER,
           typename TOPIC_SEQUENCE>
 bool
-DDSStateUpdate_T<STATE_TYPE,
-                 TOPIC_TYPE,
+DDSStateUpdate_T<TOPIC_TYPE,
 		 TOPIC_TYPE_SUPPORT,
 		 TOPIC_DATA_WRITER,
 		 TOPIC_DATA_READER,
@@ -272,15 +257,13 @@ DDSStateUpdate_T<STATE_TYPE,
   return true;
 }
 
-template <typename STATE_TYPE,
-	  typename TOPIC_TYPE, 
+template <typename TOPIC_TYPE, 
 	  typename TOPIC_TYPE_SUPPORT,
 	  typename TOPIC_DATA_WRITER,
           typename TOPIC_DATA_READER,
           typename TOPIC_SEQUENCE>
 bool
-DDSStateUpdate_T<STATE_TYPE,
-                 TOPIC_TYPE,
+DDSStateUpdate_T<TOPIC_TYPE,
 		 TOPIC_TYPE_SUPPORT,
 		 TOPIC_DATA_WRITER,
 		 TOPIC_DATA_READER,

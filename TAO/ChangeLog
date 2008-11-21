@@ -1,3 +1,23 @@
+Fri Nov 21 18:59:16 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h
+        * orbsvcs/orbsvcs/LWFT/DDSStateUpdate_T.cpp
+        * orbsvcs/orbsvcs/LWFT/DDSStateReaderListener_T.h
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i_T.cpp
+        * orbsvcs/orbsvcs/LWFT/DDSStateReaderListener_T.cpp
+        * orbsvcs/orbsvcs/LWFT/DDSStateUpdate_T.h
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.h
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/test_i.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/no-RT.mpc
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/test_i.h:
+        
+          Changed the way DDS state synchronization processes DDS
+          topics. Now the complete topic is seen as the state that is
+          inserted/extracted into/from the Any object passed to get_state
+          / set_state, so that the only restriction on the topic structure
+          is to contain a field "string id".
+
 Fri Nov 21 03:20:16 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * MPC/config/lwft_dds.mpb
