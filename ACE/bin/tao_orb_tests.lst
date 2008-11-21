@@ -381,7 +381,7 @@ TAO/DevGuideExamples/PortableInterceptors/PICurrent/run_test.pl: !MINIMUM !DISAB
 TAO/DevGuideExamples/PortableInterceptors/SimpleCodec/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !LabVIEW_RT !WinCE !FUZZ !VxWorks !VxWorks_RTP
 TAO/DevGuideExamples/RTCORBA/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !STATIC !LabVIEW_RT !WinCE !FUZZ !VxWorks !VxWorks_RTP
 TAO/DevGuideExamples/SmartProxies/run_test.pl: !NO_SMARTPROXIES !NO_MESSAGING !LabVIEW_RT !WinCE !FUZZ !CORBA_E_MICRO !VxWorks !VxWorks_RTP
-TAO/DevGuideExamples/Multithreading/Reactive/run_test.pl: !STATIC !MINIMUM !LabVIEW_RT !WinCE !FUZZ !VxWorks !VxWorks_RTP
+TAO/DevGuideExamples/Multithreading/Reactive/run_test.pl: !STATIC !MINIMUM !LabVIEW_RT !WinCE !FUZZ !VxWorks !VxWorks_RTP !LynxOS
 TAO/DevGuideExamples/Multithreading/ThreadPerConnection/run_test.pl: !ST !LabVIEW_RT !WinCE !FUZZ !VxWorks !VxWorks_RTP
 TAO/DevGuideExamples/Multithreading/ThreadPool/run_test.pl: !ST !MINIMUM !LabVIEW_RT !WinCE !FUZZ !VxWorks !VxWorks_RTP
 TAO/DevGuideExamples/ValueTypes/Messenger/run_test.pl: !MINIMUM !LabVIEW_RT !WinCE !FUZZ !CORBA_E_MICRO !VxWorks !VxWorks_RTP
