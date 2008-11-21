@@ -1,3 +1,12 @@
+Fri Nov 21 20:37:44 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i_T.cpp:
+        * orbsvcs/orbsvcs/LWFT/DDSFailure.cpp:
+        * orbsvcs/orbsvcs/LWFT/DDSFailure.h:
+        
+          Cosmetic changes.
+
 Fri Nov 21 18:59:16 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h

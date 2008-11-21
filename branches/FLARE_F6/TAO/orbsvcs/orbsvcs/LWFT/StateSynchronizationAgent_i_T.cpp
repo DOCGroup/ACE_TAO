@@ -18,10 +18,10 @@
 #include "DDSStateUpdate_T.h"
 
 template <typename TOPIC_TYPE, 
-	  typename TOPIC_TYPE_SUPPORT,
-	  typename TOPIC_DATA_WRITER,
+	        typename TOPIC_TYPE_SUPPORT,
+	        typename TOPIC_DATA_WRITER,
           typename TOPIC_DATA_READER,
-	  typename TOPIC_SEQUENCE>
+	        typename TOPIC_SEQUENCE>
 void
 StateSynchronizationAgent_i::register_application_with_dds (
   const char * object_id,

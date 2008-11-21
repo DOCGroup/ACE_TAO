@@ -52,7 +52,7 @@ class SSA_Export StateSynchronizationAgent_i
 				     ReplicatedApplication_ptr app);
 
 #ifdef FLARE_USES_DDS
-  /// registers application for state synchronization with DDS
+  /// Registers application for state synchronization with DDS
   template <typename TOPIC_TYPE, 
             typename TOPIC_TYPE_SUPPORT,
             typename TOPIC_DATA_WRITER,
@@ -89,12 +89,12 @@ class SSA_Export StateSynchronizationAgent_i
 
 #ifdef FLARE_USES_DDS
 
-  bool create_participant ();
-  bool delete_participant ();
-  bool create_publisher ();
-  bool delete_publisher ();
-  bool create_subscriber ();
-  bool delete_subscriber ();
+  bool create_participant (void);
+  bool delete_participant (void);
+  bool create_publisher (void);
+  bool delete_publisher (void);
+  bool create_subscriber (void);
+  bool delete_subscriber (void);
 
 #endif /* FLARE_USES_DDS */
 

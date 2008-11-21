@@ -25,7 +25,7 @@ class SSA_Export DDSFailure
   DDSFailure (const std::string & description);
 
   /// getter method
-  std::string description () const;
+  std::string description (void) const;
  private:
   /// description what DDS problem occured
   std::string description_;
