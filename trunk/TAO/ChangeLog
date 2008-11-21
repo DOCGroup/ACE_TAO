@@ -1,3 +1,8 @@
+Fri Nov 21 14:41:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_ACE.mwc:
+          Exclude orbsvcs/DevGuideExamples
+
 Wed Nov 19 15:14:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO_IDL/be/be_sunsoft.cpp:
