@@ -1,3 +1,13 @@
+Fri Nov 21 09:52:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * bin/tao_orb_tests.lst:
+        * tests/run_test.lst:
+          "Process_Test" and "Bug_3499_Regression" Marked !FIXED_BUGS_ONLY.
+
+        * configure.ac:
+          Add missing "isblank iswblank isctype iswctype" to the list of
+          ACE_CHECKS_LACKS_FUNCS. This should fix the autoconfigure builds.
+
 Thu Nov 20 13:09:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * ace/OS_Memory.h:
