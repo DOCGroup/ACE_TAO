@@ -19,9 +19,12 @@
 #include "orbsvcs/orbsvcs/LWFT/AppOptions.h"
 #include "orbsvcs/orbsvcs/LWFT/ReplicationManagerC.h"
 #include "orbsvcs/Naming/Naming_Client.h"
-
 #include "ServerTask.h"
 #include "test_i.h"
+#ifdef FLARE_USES_DDS
+#  include "ccpp_State.h"
+#endif
+
 
 std::vector<std::string> object_ids;
 std::vector<size_t> object_roles;
@@ -29,10 +32,10 @@ std::vector<double> object_loads;
 
 ServerTask::ServerTask (ServerOptions & options,
 			CORBA::ORB_ptr orb,
-			StateSynchronizationAgent_ptr agent)
+			StateSynchronizationAgent_i * agent)
   : options_ (options),
     orb_ (CORBA::ORB::_duplicate (orb)),
-    agent_ (StateSynchronizationAgent::_duplicate (agent))
+    agent_ (agent)
 {
 }
 
@@ -71,14 +74,14 @@ ServerTask::svc (void)
 	  if (CORBA::is_nil (rm_obj.in ()))
 	    {
 	      ACE_ERROR ((LM_ERROR,
-			  "RM_Proxy: Null RM objref from Naming Service\n"));
+			  "ServerTask: Null RM objref from Naming Service\n"));
 	    }
           else
 	    {
 	      rm = ReplicationManager::_narrow (rm_obj.in ());
 
 	      ACE_DEBUG ((LM_TRACE,
-			  "RM_Proxy: RM resolved from Naming Service\n"));
+			  "ServerTask: RM resolved from Naming Service\n"));
 	    }
 	}
       else
@@ -91,17 +94,36 @@ ServerTask::svc (void)
 
       if (CORBA::is_nil (rm.in ()))
 	{
-	  ACE_DEBUG ((LM_ERROR, "RM_proxy could not narrow RM reference."));
+	  ACE_DEBUG ((LM_ERROR, "ServerTask: could not narrow RM reference."));
 	}
       else
 	{
+          // get reference of the state synchronization agent
+          CORBA::Object_var obj =
+            orb_->resolve_initial_references ("RootPOA");
+
+          PortableServer::POA_var root_poa =
+            PortableServer::POA::_narrow (obj.in ());
+
+          obj = root_poa->servant_to_reference (agent_);
+
+          StateSynchronizationAgent_var agent =
+            StateSynchronizationAgent::_narrow (obj.in ());
+
+          if (CORBA::is_nil (agent.in ()))
+            {
+              ACE_DEBUG ((LM_ERROR, "ServerTask: Could not get object "
+                          "reference to StateSynchronizationAgent.\n"));
+              return 1;
+            }
+
 	  // ***************************************************
 	  // register replication agent with the replication manager
 
 	  rm->register_state_synchronization_agent (
             AppOptions::instance ()->host_id ().c_str (),
 	    AppOptions::instance ()->process_id ().c_str (),
-	    agent_.in ());
+	    agent.in ());
 
 	  // ***************************************************
 	  // activate as many servants as required
@@ -112,7 +134,7 @@ ServerTask::svc (void)
 		new test_i (this->orb_.in (),
 			    poa.in (),
 			    object_ids[i].c_str (),
-			    agent_.in (),
+			    agent.in (),
 			    options_.stop);
 
 	      PortableServer::ServantBase_var safe_servant (servant);
@@ -144,8 +166,20 @@ ServerTask::svc (void)
 	          object_roles[i],
 	          test.in ());
 
-	      agent_->register_application (object_ids[i].c_str (),
-					    test.in ());
+              if (options_.use_corba)
+                agent->register_application (object_ids[i].c_str (),
+                                             test.in ());
+#ifdef FLARE_USES_DDS
+              else
+                agent_->register_application_with_dds <
+                  CORBA::Long,
+                  State,
+                  StateTypeSupport,
+                  StateDataWriter,
+                  StateDataReader, 
+                  StateSeq> (object_ids[i].c_str (),
+                             test.in ());
+#endif
 
 	      ACE_DEBUG ((LM_DEBUG,
 			  "ServerTask::svc() activated servant %s:%d.\n", 
@@ -197,8 +231,8 @@ ServerTask::create_rt_poa (void)
 	      root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
       return root_poa->create_POA ("Servant POA",
-				                           poa_manager.in (),
-				                           policies);
+                                   poa_manager.in (),
+                                   policies);
     }
   catch (const CORBA::Exception& ex)
     {

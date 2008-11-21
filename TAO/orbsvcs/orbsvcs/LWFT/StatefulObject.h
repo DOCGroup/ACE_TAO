@@ -13,6 +13,8 @@
 #ifndef _STATEFUL_OBJECT_H_
 #define _STATEFUL_OBJECT_H_
 
+#include "ssa_export.h"
+
 // forward declaration
 namespace CORBA
 {
@@ -28,7 +30,7 @@ namespace CORBA
  * the system (e.g. either by standard CORBA calls, AMI or DDS) from
  * the state synchronization agent
  */
-class StatefulObject
+class SSA_Export StatefulObject
 {
 public:
 

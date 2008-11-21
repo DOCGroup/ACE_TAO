@@ -93,10 +93,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      ACE_Barrier fa_barrier (2);
       ForwardingAgent_Thread fa_thread (orb.in (),
-                                        forwarding_agent,
-                                        fa_barrier);
+                                        forwarding_agent);
 
       // Task activation flags.
       long flags =
@@ -111,8 +109,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             -1);
         }
         
-      fa_barrier.wait ();
-
       Trigger *trigger_impl = 0;
       ACE_NEW_RETURN (trigger_impl,
                       Trigger (orb.in (),

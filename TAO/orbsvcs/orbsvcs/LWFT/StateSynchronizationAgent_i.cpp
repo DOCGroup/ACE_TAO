@@ -100,7 +100,7 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
     }
 
   // send state to each element in the replica_map_
-  REPLICA_OBJECT_LIST replica_group;
+  ReplicaGroup replica_group;
   if (replica_map_.find (ACE_CString (object_id),
 			 replica_group) != 0)
     {
@@ -112,8 +112,8 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
     }
 
   ReplicatedApplication_var replica;
-  for (REPLICA_OBJECT_LIST::iterator it = replica_group.begin ();
-       it != replica_group.end ();
+  for (REPLICA_OBJECT_LIST::iterator it = replica_group.replicas.begin ();
+       it != replica_group.replicas.end ();
        ++it)
     {
       try
@@ -134,72 +134,82 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
 void 
 StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
 {
-#ifdef FLARE_USES_DDS
   if (use_corba_)
     {
-#endif
-      // protect operations on the map
-      ACE_Guard <ACE_Thread_Mutex> guard (replica_map_mutex_);
-
-      // reset content of the internal map
+      // if only corba is used, we can simple reset the map
       replica_map_.close ();
       replica_map_.open ();
+    }
+  else
+    {
+      // only remove entries replicated by CORBA
+      for (OBJECTID_REPLICA_MAP::iterator it = replica_map_.begin ();
+           it != replica_map_.end ();
+           ++it)
+        {
+          if (!it->item ().use_dds)
+            replica_map_.unbind (it);
+        }
+    }
 
+  ACE_DEBUG ((LM_TRACE,
+              "SSA::update_rank_list with:\n"));
+
+  // for each replication group in the replica group list
+  for (size_t i = 0; i < rank_list.length (); ++i)
+    {
       ACE_DEBUG ((LM_TRACE,
-                  "SSA::update_rank_list with:\n"));
+                  "\toid = %s (%d entries)\n", 
+                  rank_list[i].object_id.in (),
+                  rank_list[i].ior_list.length ()));
+      
+      // use the application id as a key for the map
+      ACE_CString oid (rank_list[i].object_id);
 
-      // for each replication group in the replica group list
-      for (size_t i = 0; i < rank_list.length (); ++i)
-	      {
-	        ACE_DEBUG ((LM_TRACE,
-	                    "\toid = %s (%d entries)\n", 
-		                  rank_list[i].object_id.in (),
-		                  rank_list[i].ior_list.length ()));
+      // if there is already an entry for this object_id it means that
+      // we have a registered DDS object and should not override it.
+      if (!replica_map_.find (oid))
+        {
+          // create a new list for every replication group
+          ReplicaGroup replica_group;
+          replica_group.use_dds = false;      
 
-	        // use the application id as a key for the map
-	        ACE_CString oid (rank_list[i].object_id);
-
-	        // create a new list for every replication group
-	        REPLICA_OBJECT_LIST replica_object_list;
-
-	        // for each entry of a replica group
-	        for (size_t j = 0;
-	             j < rank_list[i].ior_list.length ();
-	             ++j)
-	          {
-	            try
-		            {
-		              // it is assumed that the strings identifying rank_list
-		              // are stringified object references and can be
-		              // resolved and used to contact the corresponding
-		              // StateSynchronizationAgent.
-		              replica_object_list.push_back (
+          // for each entry of a replica group
+          for (size_t j = 0;
+               j < rank_list[i].ior_list.length ();
+               ++j)
+            {
+              try
+                {
+                  // it is assumed that the strings identifying
+                  // rank_list are stringified object references and
+                  // can be resolved and used to contact the
+                  // corresponding StateSynchronizationAgent.
+                  replica_group.replicas.push_back (
                     STATEFUL_OBJECT_PTR (
-		                  new CorbaStateUpdate (
+                      new CorbaStateUpdate (
                         ReplicatedApplication::_narrow (
                           rank_list[i].ior_list[j]))));
-		            }
-	            catch (const CORBA::SystemException& ex)
-		            {
-		              ACE_DEBUG ((
-		                LM_WARNING, 
-	                  "(%P|%t) SSA::"
-	                  "update_replica_groups could not resolve stringified "
-	                  "object reference for %s : %s\n",
-	                  oid.c_str (),
-	                  ex._info ().c_str ()));
-		            }
-	          }
+                }
+              catch (const CORBA::SystemException& ex)
+                {
+                  ACE_DEBUG ((
+                    LM_WARNING, 
+                    "(%P|%t) SSA::"
+                    "update_replica_groups could not resolve stringified "
+                    "object reference for %s : %s\n",
+                    oid.c_str (),
+                    ex._info ().c_str ()));
+                }
+            }
 
-	        // add one replication group to the map
-	        replica_map_.bind (oid, replica_object_list);
-	      }
-#ifdef FLARE_USES_DDS
-    } // end if (use_corba_)
-#endif
+          // add one replication group to the map
+          replica_map_.bind (oid, replica_group);
+        }
+    }
 }
 
-void 
+void
 StateSynchronizationAgent_i::register_application (
   const char * object_id,
   ReplicatedApplication_ptr app)
@@ -215,57 +225,7 @@ StateSynchronizationAgent_i::register_application (
 		  "(%P|%t) SSA::register_application () "
 		  "could not bind application %s to the map successfully\n",
 		  object_id));
-    }  
-
-#ifdef FLARE_USES_DDS
-
-  // if we use DDS for communication
-  if (!use_corba_)
-    {
-      try
-	      {
-	        // protect operations on the map
-	        ACE_Guard <ACE_Thread_Mutex> guard (replica_map_mutex_);
-      	  
-	        ACE_DEBUG ((LM_TRACE,
-	                    "SSA::register_application add DDS participant"
-		                  " for application %s\n",
-		                  object_id));
-
-	        // create a new list which will have only one entry for DDS
-	        REPLICA_OBJECT_LIST replica_object_list;
-
-	        // register a DDS participant for this application
-	        replica_object_list.push_back (
-            STATEFUL_OBJECT_PTR (
-              new DDSStateUpdate_T <CORBA::Long,
-                                    State,
-                                    StateTypeSupport,
-                                    StateDataWriter,
-                                    StateDataReader,
-                                    StateSeq> (
-                oid.c_str (),
-                this->get_unique_id (oid.c_str ()),
-                domain_participant_.in (),
-                publisher_.in (),
-                subscriber_.in (),
-                app)));
-
-	        ACE_CString oid (object_id);
-
-	        // this should work without doing a rebind, since there is only
-	        // one application of the same type per process
-	        replica_map_.bind (oid, replica_object_list);
-	      }
-      catch (const DDSFailure & ex)
-	      {
-	        ACE_ERROR ((LM_ERROR,
-	                    "SSA::register_application () DDS problem : %s\n",
-		                  ex.description ()));
-	      }
     }
-
-#endif /* FLARE_USES_DDS */
 }
 
 #ifdef FLARE_USES_DDS

@@ -69,9 +69,6 @@ test_i::method (CORBA::ULong test_start, CORBA::ULong test_end,
                 CORBA::ULong prime_number,
                 CORBA::ULong kill)
 {
-  static int i = 0;
-  ACE_DEBUG ((LM_DEBUG, "%d\n",i++));
-
   if (kill && stop_)
     ACE_OS::exit (1);
   if (test_start == 1)

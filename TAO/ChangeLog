@@ -1,3 +1,31 @@
+Fri Nov 21 03:20:16 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * MPC/config/lwft_dds.mpb
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h
+        * orbsvcs/orbsvcs/LWFT/DDSStateUpdate_T.cpp
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i_T.cpp
+        * orbsvcs/orbsvcs/LWFT/StatefulObject.h
+        * orbsvcs/orbsvcs/LWFT/DDSStateReaderListener_T.cpp:
+        
+        Refactored StateSynchronizationAgent so that applications can
+        register themselves for state synchronization via CORBA or DDS.
+
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/passive_client.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/client.cpp:
+
+        Updated clients to reflect changes to the LWFT threads concerning
+        barriers.
+        
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.h
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/server.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/test_i.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/no-RT.mpc:
+        
+        Enhanced server executable to support DDS state synchronization.
+
 Thu Nov 20 14:38:02 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/AppSideReg.h:

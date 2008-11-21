@@ -23,8 +23,6 @@
 #include "test_i.h"
 #include "ServerTask.h"
 
-bool use_corba = true;
-
 int
 parse_args (int argc, char *argv[], ServerOptions & options)
 {
@@ -58,7 +56,7 @@ parse_args (int argc, char *argv[], ServerOptions & options)
 	    ACE_OS::atoi (get_opts.opt_arg ());
 	  break;
         case 'd':
-          use_corba = false;
+          options.use_corba = false;
 	  break;
         case 'r':
 	  options.rm_ior_file = get_opts.opt_arg ();
@@ -132,22 +130,18 @@ main (int argc, char *argv[])
 
       AppOptions::instance ()->parse_args (argc, argv);
 
-      ACE_Barrier thread_barrier (2);
-      AppSideReg proc_reg (&thread_barrier, orb.in ());
+      AppSideReg proc_reg (orb.in ());
 
       int result = proc_reg.activate ();
       
       if (result != 0)
-	      {
-	        ACE_ERROR_RETURN ((LM_ERROR,
-	                           "AppSideReg::activate () returned %d\n",
-	                           result),
-	                          -1);
-	      }
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "AppSideReg::activate () returned %d\n",
+                             result),
+                            -1);
+        }
    
-      // ACE_DEBUG ((LM_TRACE, ACE_TEXT ("AppSideReg activated.\n")));
-      thread_barrier.wait ();
-
       ServerOptions server_options;
 
       result = parse_args (argc, argv, server_options);
@@ -162,35 +156,26 @@ main (int argc, char *argv[])
 	        orb.in (),
 		AppOptions::instance ()->host_id (),
 		AppOptions::instance ()->process_id (),
-		use_corba);
+		server_options.use_corba);
 
       PortableServer::ServantBase_var owner_transfer (ssa_servant);
       // ACE_DEBUG ((LM_TRACE, ACE_TEXT ("StateSynchronizationAgent created.\n")));
 
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      ACE_Barrier sync_barrier (2);
-
       // create task for state synchronization agent
       StateSyncAgentTask sync_agent_thread (orb.in (),
-					    ssa_servant,
-					    &sync_barrier);
+					    ssa_servant);
 
       result = sync_agent_thread.activate ();
       
       if (result != 0)
-	      {
-	        ACE_ERROR_RETURN ((LM_ERROR,
-	                           "StateSyncAgentTask::activate () "
-				   "returned %d, errno = %d\n", 
-				   result, 
-				   errno),
-				  -1);
-	      }
-
-      // Wait util state synchronization agent is activated before starting the
-      // next task.
-      sync_barrier.wait ();
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "StateSyncAgentTask::activate () "
+                             "returned %d, errno = %d\n", 
+                             result, 
+                             errno),
+                            -1);
+        }
 
 #if (SCHEDULING_TYPE_IN_SVC_CONF_HAS_BEEN_SET_CORRECTLY)
       if (!check_supported_priorities (orb.in ()))
@@ -201,8 +186,8 @@ main (int argc, char *argv[])
       
       // Create task.
       ServerTask task (server_options,
-		                   orb.in (),
-		                   sync_agent_thread.agent_ref ());
+                       orb.in (),
+                       ssa_servant);
 
       // Activate task.
       result = task.activate (THR_NEW_LWP | THR_JOINABLE);
