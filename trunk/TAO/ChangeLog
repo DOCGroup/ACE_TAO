@@ -1,3 +1,7 @@
+Mon Nov 24 12:20:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Compare SignedGen::val as numerical value
+
 Fri Nov 21 14:41:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_ACE.mwc:
