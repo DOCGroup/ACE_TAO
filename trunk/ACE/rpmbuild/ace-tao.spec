@@ -1067,10 +1067,10 @@ install ${ACE_ROOT}/bin/ace_gperf $RPM_BUILD_ROOT%{_bindir}
 install ${ACE_ROOT}/bin/tao_idl $RPM_BUILD_ROOT%{_bindir}
 install ${ACE_ROOT}/bin/tao_imr $RPM_BUILD_ROOT%{_bindir}
 install ${ACE_ROOT}/bin/tao_ifr $RPM_BUILD_ROOT%{_bindir}
-install ${ACE_ROOT}/bin/catior $RPM_BUILD_ROOT%{_bindir}/tao_catior
-install ${ACE_ROOT}/bin/nsadd $RPM_BUILD_ROOT%{_bindir}/tao_nsadd
-install ${ACE_ROOT}/bin/nsdel $RPM_BUILD_ROOT%{_bindir}/tao_nsdel
-install ${ACE_ROOT}/bin/nslist $RPM_BUILD_ROOT%{_bindir}/tao_nslist
+install ${ACE_ROOT}/bin/tao_catior $RPM_BUILD_ROOT%{_bindir}
+install ${ACE_ROOT}/bin/tao_nsadd $RPM_BUILD_ROOT%{_bindir}
+install ${ACE_ROOT}/bin/tao_nsdel $RPM_BUILD_ROOT%{_bindir}
+install ${ACE_ROOT}/bin/tao_nslist $RPM_BUILD_ROOT%{_bindir}
 
 # ================================================================
 # Config & Options
@@ -2179,6 +2179,9 @@ fi
 # ================================================================
 
 %changelog
+* Sun Nov 23 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.7-1
+- Updated for tao_ prefixed catior, nsadd, nsdel and nslist.
+
 * Thu Jul 31 2008 Johnny Willemsen  <jwillemsen@remedy.nl> - 5.6.6-2
 - Removed ace-tao-unusedarg.patch (related to bug #3270).
 

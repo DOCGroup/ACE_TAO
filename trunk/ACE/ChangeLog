@@ -1,3 +1,23 @@
+Mon Nov 24 09:32:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+                on behalf of  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        * NEWS:
+          Changed the feature test for a "usable" config to warn on
+          failure instead of exiting with an error. This change should
+          make it easier to diagnose failures, as the configure script
+          will now generate a config.h file even when the test fails.
+          This ensures that the build errors produced can be seen on
+          the scoreboard to help diagnose the actual problems.
+
+               on behalf of  Ken Sedgwick <ken+5a4@bonsai.com>
+
+        * rpmbuild/ace-tao.spec:
+          Updated for tao_ prefixed catior, nsadd, nsdel and nslist.
+
+        * rpmbuild/ace-tao-macros.patch:
+          Updated to add include into path to version.h
+
 Fri Nov 21 15:58:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/tao_orb_tests.lst:
