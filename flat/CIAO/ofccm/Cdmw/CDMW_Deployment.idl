@@ -1,18 +1,11 @@
 /**
- * @@ Compile this file with:
- *
- *     tao_idl -Gv -I ../..  \
- *          -Wb,export_macro=CIAO_Export \
- *          -Wb,export_include=CIAO_export.h \
- *          -Wb,pre_include="ace/pre.h" \
- *          -Wb,post_include="ace/post.h" \
- *          CCM_Deployment.idl
+ * 
  */
 
 #if !defined (CDMW_DEPLOYMENT_EXT)
 #define CDMW_DEPLOYMENT_EXT
 
-#include "DAnCE/Cdmw/CDMW_IDL.idl"
+#include "ofccm/Cdmw/CDMW_IDL.idl"
 #include "ccm/ComponentServer/ComponentServer.idl"
 
 #pragma prefix "thalesgroup.com"

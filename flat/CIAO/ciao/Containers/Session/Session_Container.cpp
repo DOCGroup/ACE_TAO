@@ -684,7 +684,7 @@ namespace CIAO
                      "Invoking CCM activate on provided component object reference."));
         sess->activate_component ();
       }
-    catch (CIAO::InvalidComponent &ex)
+    catch (CIAO::InvalidComponent &)
       {
         CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::activate_component - "
                      "Failed to retrieve servant and/or cast to servant pointer.\n"));
@@ -732,7 +732,7 @@ namespace CIAO
                      "Invoking CCM activate on provided component object reference."));
         sess->passivate_component ();
       }
-    catch (CIAO::InvalidComponent &ex)
+    catch (CIAO::InvalidComponent &)
       {
         throw;
       }

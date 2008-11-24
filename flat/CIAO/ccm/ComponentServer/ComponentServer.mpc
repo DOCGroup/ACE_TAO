@@ -16,7 +16,7 @@ project(CCM_ComponentServer_IDL) : taoidldefaults, anytypecode {
   }
 }
 
-project(CCM_ComponentServer_stub) : taolib_with_idl, tao_output, messaging, ccm_stub,  anytypecode, ciao_lib  {
+project(CCM_ComponentServer_stub) : taolib_with_idl, tao_output, messaging, ccm_stub, anytypecode, ciao_lib  {
   dynamicflags = DANCE_COMPONENTSERVER_STUB_BUILD_DLL
   after += CCM_ComponentServer_IDL
 

@@ -1,10 +1,50 @@
+Mon Nov 24 19:48:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/ComponentServer/ComponentServer.mpc
+          Layout change
+
+        * ciao/Containers/Session/Session_Container.cpp:
+          Catch exceptions as const
+
+        * ciao/Contexts/Context_Impl_Base.h:
+          Updated include
+
+        * ciao/Servants/Home_Servant_Impl_Base.h:
+          Include Container_BaseC.h, the forward declaration
+          gives problems with msvc8
+
+        * ciao/Servants/Port_Activator.h:
+          Corrected signature so that we match the base class
+
+        * ciao/Servants/Servant_Impl_T.h:
+          Removed not needed forward declaration
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Unicode changes
+
+        * DAnCE/NodeApplication/ServerActivator_Impl.cpp:
+          Const change
+
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+          Unicode and layout changes
+
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+          Layout changes and initialise pointer with 0
+
+        * examples/Hello/Sender/Sender_exec.cpp:
+          Unicode change
+
+        * ofccm/Cdmw/CDMW_Deployment.idl:
+        * ofccm/Cdmw/CDMW_IDL_Ext.idl:
+          Updated includes
+
 Mon Nov 24 16:06:57 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/Name_Utilities.h:
         * DAnCE/NodeApplication/Name_Utilities.cpp:
 
-          Files missing from last commit. 
-        
+          Files missing from last commit.
+
 Sun Nov 23 23:59:50 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/DAnCE_Properties.idl:
