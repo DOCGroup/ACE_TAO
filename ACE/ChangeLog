@@ -1,3 +1,15 @@
+Mon Nov 24 11:21:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessWinCE.pm:
+          Delete the copied dll's when ACE_TEST_VERBOSE is not defined
+
+        * bin/PerlACE/TestTarget_VxWorks.pm:
+          We have to wait on a file that appears on the host file system,
+          we can't wait on the real target
+
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          No need to override GetFile
+
 Mon Nov 24 10:46:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-hpux-11.00.h:

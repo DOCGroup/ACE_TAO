@@ -173,8 +173,10 @@ sub Spawn ()
             @cmds[$cmdnr++] = 'cd ' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel;
         }
         @cmds[$cmdnr++] = $cmdline;
-        push @cmds, @unload_commands;
-        $cmdnr += scalar @unload_commands;
+        if (!defined $ENV{'ACE_TEST_VERBOSE'}) {
+          push @cmds, @unload_commands;
+          $cmdnr += scalar @unload_commands;
+        }
         $prompt = '\> $';
 
     print $oh "require Net::Telnet;\n";
@@ -343,7 +345,7 @@ sub handle_vxtest_file
       $line1 = $_;
       chomp $line1;
       push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/$line1" . "d.dll .";
-      #unshift @$unld_ref, "del $line1" . "d.dll";
+      unshift @$unld_ref, "del $line1" . "d.dll";
     }
     close $fh;
   } else {

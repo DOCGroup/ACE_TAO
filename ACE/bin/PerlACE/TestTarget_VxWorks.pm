@@ -16,6 +16,7 @@ use strict;
 
 use PerlACE::TestTarget;
 use PerlACE::ProcessVX;
+use Cwd;
 
 our @ISA = qw(PerlACE::TestTarget);
 
@@ -25,7 +26,7 @@ our @ISA = qw(PerlACE::TestTarget);
 
 sub LocalFile {
   my($self, $file) = @_;
- if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+  if (defined $ENV{'ACE_TEST_VERBOSE'}) {
     print STDERR "LocalFile is $file\n";
   }
   return $file;
@@ -51,6 +52,23 @@ sub RebootNow ($)
     $self->{REBOOT_NEEDED} = undef;
     print STDERR "Attempting to reboot target...\n";
     reboot ();
+}
+
+sub WaitForFileTimed ($)
+{
+    my $self = shift;
+    my $file = shift;
+    my $timeout = shift;
+    my $cwdrel = $file;
+    my $prjroot = defined $ENV{"ACE_RUN_VX_PRJ_ROOT"} ? $ENV{"ACE_RUN_VX_PRJ_ROOT"}  : $ENV{"ACE_ROOT"};
+    if (length ($cwdrel) > 0) {
+        $cwdrel = File::Spec->abs2rel( cwd(), $prjroot );
+    }
+    else {
+        $cwdrel = File::Spec->abs2rel( $cwdrel, $prjroot );
+    }
+    my $newfile = $self->{HOST_ROOT} . "/" . $cwdrel . "/" . $file;
+    return PerlACE::waitforfile_timed ($newfile, $timeout);
 }
 
 1;
