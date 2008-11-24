@@ -1,7 +1,14 @@
+Mon Nov 24 16:06:57 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/Name_Utilities.h:
+        * DAnCE/NodeApplication/Name_Utilities.cpp:
+
+          Files missing from last commit. 
+        
 Sun Nov 23 23:59:50 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/DAnCE_Properties.idl:
-        
+
           Rearranged, organized
 
         * DAnCE/DomainApplicationManager/Node_Locator.h:
@@ -16,20 +23,20 @@ Sun Nov 23 23:59:50 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
         * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp:
-        
-          Improved NameService support. 
-        
+
+          Improved NameService support.
+
         * examples/Hello/Sender/Sender_exec.cpp:
         * examples/Hello/descriptors/DeploymentPlan.cdp:
         * examples/Hello/descriptors/run_test.pl:
-        
-          Updates to work with new DAnCE. 
-        
+
+          Updates to work with new DAnCE.
+
         * tools/Config_Handlers/XSCRT/Elements.hpp:
         * tools/XML/XML_Helper.h:
-        
+
           Compile fixes.
-        
+
         * examples/Hello/ReDaC-Usage.html:
         * examples/Hello/descriptors/Hello.cid:
         * examples/Hello/descriptors/Hello.cpd:
