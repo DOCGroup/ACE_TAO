@@ -43,7 +43,9 @@ namespace
     if (properties.find (name, any) == 0)
       {
         if (any >>= val)
-          return true;
+		  {
+            return true;
+		  }
         else
           {
             DANCE_ERROR ((LM_WARNING, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
@@ -71,7 +73,9 @@ namespace
     if (properties.find (name, any) == 0)
       {
         if (any >>= CORBA::Any::to_boolean(val))
-          return true;
+		  {	 
+            return true;
+		  }
         else
           {
             DANCE_ERROR ((LM_WARNING, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
@@ -99,7 +103,9 @@ namespace
     if (properties.find (name, any) == 0)
       {
         if (any >>= CORBA::Any::to_string(val, 0))
-          return true;
+		  {
+            return true;
+		}
         else
           {
             DANCE_ERROR ((LM_WARNING, DLINFO "NodeApplicion::<anonymous>::get_property_value<const char *> - "

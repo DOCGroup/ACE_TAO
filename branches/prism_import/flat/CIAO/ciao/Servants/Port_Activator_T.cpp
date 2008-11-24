@@ -35,7 +35,7 @@ namespace CIAO
             typename COMP_SERV>
   void
   Port_Activator_T<SERV, EXEC, CONTEXT, COMP_SERV>::deactivate (
-      const PortableServer::Servant servant)
+      PortableServer::Servant servant)
   {
     SERVANT *s = dynamic_cast<SERVANT *> (servant);
     s->_remove_ref ();

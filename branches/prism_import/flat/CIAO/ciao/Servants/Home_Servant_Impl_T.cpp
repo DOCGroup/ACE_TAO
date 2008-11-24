@@ -209,8 +209,7 @@ namespace CIAO
   {
     CIAO_TRACE ("Home_Servant_Impl<>::_ciao_passivate_component");
 
-    PortableServer::ObjectId_var oid;
-    this->container_->uninstall_component (comp, oid.out ());
+    this->container_->uninstall_component (comp);
   }
 }
 

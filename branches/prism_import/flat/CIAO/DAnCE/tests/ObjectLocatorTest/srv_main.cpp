@@ -14,8 +14,7 @@ int main (int argc, char * argv[])
 {
   try
     {
-      int argcm = argc + 2;
-      char * argvm[argcm+1];
+      char * argvm[argc+3];
       for (int i = 0; i < argc; ++i)
         {
           argvm[i] = argv[i];

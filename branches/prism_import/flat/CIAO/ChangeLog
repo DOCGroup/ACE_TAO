@@ -1,3 +1,31 @@
+Mon Nov 24 20:08:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+          Fixed compile error
+
+        * ciao/Servants/Port_Activator_T.cpp:
+        * ciao/Servants/Port_Activator_T.h:
+          Fixed signature deactivate
+
+        * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:
+          Datatype/const changs
+
+        * DAnCE/NodeApplication/Name_Utilities.cpp:
+        * DAnCE/NodeApplication/Name_Utilities.h:
+          Unicode changes
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Layout changes
+
+        * DAnCE/RedirectionService/CCMObjectLocator.cpp:
+          Datatype changes
+
+        * DAnCE/tests/ObjectLocatorTest/srv_main.cpp:
+          Fixed compile error
+
+        * examples/Swapping/Sender/Sender_exec.h:
+          Fixed include
+
 Mon Nov 24 19:48:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/ComponentServer/ComponentServer.mpc
