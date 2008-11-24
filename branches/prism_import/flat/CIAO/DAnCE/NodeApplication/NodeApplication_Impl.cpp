@@ -18,6 +18,8 @@
 #include "Deployment/Deployment_common.h"
 #include "Deployment/DAnCE_PropertiesC.h"
 #include "ComponentAttributesSetter.h"
+#include "Name_Utilities.h"
+
 //#include "ComponentInstallation_Impl.h"
 
 #ifdef GEN_OSTREAM_OPS
@@ -39,14 +41,17 @@ namespace
                   name));
 
     if (properties.find (name, any) == 0)
-      if (any >>= val)
-        return true;
-      else
-        {
-          DANCE_ERROR ((LM_WARNING, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
-                        "Failed to extract property value for %s\n", name));
-          return false;
-        }
+      {
+        if (any >>= val)
+          return true;
+        else
+          {
+            DANCE_ERROR ((LM_WARNING, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
+                          "Failed to extract property value for %s\n", name));
+            return false;
+          }
+      }
+    
     DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
                   "Property value for name '%s' has no value\n", name));
 
@@ -64,15 +69,17 @@ namespace
                   name));
 
     if (properties.find (name, any) == 0)
-      if (any >>= CORBA::Any::to_boolean(val))
-        return true;
-      else
-        {
-          DANCE_ERROR ((LM_WARNING, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
-                        "Failed to extract property value for %s\n", name));
-          return false;
-        }
-
+      {
+        if (any >>= CORBA::Any::to_boolean(val))
+          return true;
+        else
+          {
+            DANCE_ERROR ((LM_WARNING, DLINFO "NodeApplicion::<anonymous>::get_property_value<T> - "
+                          "Failed to extract property value for %s\n", name));
+            return false;
+          }
+      }
+    
     DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<bool> - "
                   "Property value for name '%s' has no value\n", name));
 
@@ -90,14 +97,16 @@ namespace
                   name));
 
     if (properties.find (name, any) == 0)
-      if (any >>= CORBA::Any::to_string(val, 0))
-        return true;
-      else
-        {
-          DANCE_ERROR ((LM_WARNING, DLINFO "NodeApplicion::<anonymous>::get_property_value<const char *> - "
-                        "Failed to extract property value for %s\n", name));
-          return false;
-        }
+      {
+        if (any >>= CORBA::Any::to_string(val, 0))
+          return true;
+        else
+          {
+            DANCE_ERROR ((LM_WARNING, DLINFO "NodeApplicion::<anonymous>::get_property_value<const char *> - "
+                          "Failed to extract property value for %s\n", name));
+            return false;
+          }
+      }
 
     DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicion::<anonymous>::get_property_value<bool> - "
                   "Property value for name '%s' has no value\n", name));
@@ -321,7 +330,7 @@ NodeApplication_Impl::init()
   get_property_value (CIAO::Deployment::SERVER_MULTITHREAD, this->properties_, multithread);
   DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::init - "
                 "Threading: %s\n",  multithread ? "Multi" : "Single"));
-
+  
   DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::init - "
                 "Spawning server activator\n"));
 
@@ -341,6 +350,28 @@ NodeApplication_Impl::init()
     this->poa_->activate_object (this->activator_.get ());
 
   DANCE_DEBUG((LM_TRACE, DLINFO "NodeApplication_impl::init - ServerActivator object created\n"));
+  
+  const ACE_TCHAR *ior;
+  
+  if (get_property_value (DAnCE::INSTANCE_NC, this->properties_, ior) ||
+      get_property_value (DAnCE::DOMAIN_NC, this->properties_, ior))
+    {
+      try
+        {
+          CORBA::Object_var obj = this->orb_->string_to_object (ior);
+          this->instance_nc_ = CosNaming::NamingContext::_narrow (obj);
+        }
+      catch (CORBA::Exception &e)
+        {
+          DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_impl::init - "
+                        "Unable to resolve the instance naming context:%C\n",
+                        e._info ().c_str ()));
+        }
+      DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_impl::init - "
+                    "Successfully resolved the instance naming context.\n"));
+    }
+  else DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_impl::init - "
+                     "No instance NC was provided\n"));
 }
 
 void
@@ -821,10 +852,38 @@ NodeApplication_Impl::create_component_server (size_t index)
       }
 }
 
+void 
+NodeApplication_Impl::store_instance_ior (Instance &inst)
+{
+  DANCE_TRACE ("NodeApplication_impl::store_instance_ior");
+  
+  const char *name = 0;
+  
+  if (get_property_value (DAnCE::REGISTER_NAMING,
+                          this->plan_.instance[inst.idd_idx].configProperty,
+                          name))
+    {
+      DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_impl::store_instance_ior - "
+                    "Storing instance '%C' object reference in Naming Service as %C",
+                    this->plan_.instance[inst.idd_idx].name.in (),
+                    name));
+      
+      Name_Utilities::bind_object (name, inst.ref.in (), this->instance_nc_.in ());
+    }
+  
+  if (get_property_value (DAnCE::INSTANCE_IOR_FILE,
+                          this->plan_.instance[inst.idd_idx].configProperty,
+                          name))
+    {
+      CORBA::String_var ior = this->orb_->object_to_string (inst.ref.in ());
+      Name_Utilities::write_ior (name, ior.in ());
+    }
+}
+
 void
 NodeApplication_Impl::create_container (size_t server, size_t cont_idx)
 {
-  DANCE_TRACE ("NodeApplication_impl::create_container - started");
+  DANCE_TRACE ("NodeApplication_impl::create_container");
 
   Container &container = this->servers_[server].containers[cont_idx];
 
@@ -844,6 +903,7 @@ NodeApplication_Impl::create_container (size_t server, size_t cont_idx)
   for (size_t i = 0; i < container.homes.size (); ++i)
     {
       this->install_home (container, container.homes[i]);
+      this->store_instance_ior (container.homes[i]);
     }
 
   DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_impl::create_container - "
@@ -865,6 +925,7 @@ NodeApplication_Impl::create_container (size_t server, size_t cont_idx)
         default:
           break;
         }
+      this->store_instance_ior (container.components[i]);
     }
 }
 

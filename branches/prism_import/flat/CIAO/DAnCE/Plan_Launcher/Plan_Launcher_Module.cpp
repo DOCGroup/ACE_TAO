@@ -25,21 +25,27 @@ DAnCE_Plan_Launcher_Module::create_object (CORBA::ORB_ptr orb,
 {
   try
     {
-      DANCE_ERROR ( (LM_TRACE, "[%M] Plan_Launcher_Module init starting.\n"));
+      DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_Plan_Launcher_Module::create_object - "
+                    "Creating Plan Launcher object."));
+                    
       Plan_Launcher_Impl pl (orb, argc, argv);
       pl.execute();
     }
   catch (const Plan_Launcher_Base_Impl::Deployment_Failure& e)
     {
-      DANCE_ERROR ( (LM_ERROR, "[%M] PlanLauncher error : %s.\n", e.error_.c_str()));
+      DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_Plan_Launcher_Module::create_object - "
+                     "Eerror : %s.\n", e.error_.c_str()));
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Plan_Launcher_Module.cpp::init ");
+      DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_Plan_Launcher_Module::create_object - "
+                     "Caught CORBA Exception %C",
+                     ex._info ().c_str ()));
     }
   catch (...)
     {
-      DANCE_ERROR ( (LM_ERROR, "[%M] Plan_Launcher_Module.cpp::init Unknown exception.\n"));
+      DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_Plan_Launcher_Module::create_object - "
+                    "Unknown exception.\n"));
     }
   return CORBA::Object::_nil ();
 }

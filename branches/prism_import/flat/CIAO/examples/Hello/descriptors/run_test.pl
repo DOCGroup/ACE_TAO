@@ -17,6 +17,7 @@ $ns_running = 0;
 $daemons = 2;
 @ports = ( 60001, 60002 );
 @iorfiles = ( "NodeApp1.ior", "NodeApp2.ior" );
+@nodenames = ( "SenderNode", "ReceiverNode" );
 $status = 0;
 $dat_file = "NodeManagerMap.dat";
 $cdp_file = "DeploymentPlan.cdp";
@@ -69,12 +70,12 @@ sub run_node_daemons {
   {
       $iorfile = $iorfiles[$i];
       $port = $ports[$i];
-
+      $nodename = $nodenames[$i];
       $iiop = "iiop://localhost:$port";
-      $node_app = "$CIAO_ROOT/bin/NodeApplication";
+      $node_app = "$CIAO_ROOT/bin/ciao_component_server";
 
-      $d_cmd = "$CIAO_ROOT/bin/NodeManager";
-      $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile -d 30";
+      $d_cmd = "$CIAO_ROOT/bin/dance_node_manager";
+      $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -d 30";
 
       $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
       $result = $Daemons[$i]->Spawn ();
@@ -130,12 +131,12 @@ $daemons_running = 1;
 
 # Invoke execution manager.
 print "Invoking execution manager\n";
-$EM = new PerlACE::Process ("$CIAO_ROOT/bin/Execution_Manager",
-                            "-o EM.ior -i $dat_file");
+$EM = new PerlACE::Process ("$DANCE_ROOT/bin/dance_execution_manager",
+                            "-o EM.ior --node-map $dat_file");
 $EM->Spawn ();
 
 if (PerlACE::waitforfile_timed ("EM.ior",
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
+                                $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR
       "ERROR: The ior file of execution manager could not be found\n";
     kill_open_processes ();
@@ -147,7 +148,7 @@ $em_running = 1;
 # Invoke executor - start the application -.
 print "Invoking executor - start the application -\n";
 $E =
-  new PerlACE::Process ("$CIAO_ROOT/bin/plan_launcher",
+  new PerlACE::Process ("$DANCE_ROOT/bin/dance_plan_launcher",
                         "-p DeploymentPlan.cdp -k file://EM.ior -o DAM.ior");
 
 $E->SpawnWaitKill (5000);

@@ -27,7 +27,7 @@ namespace DAnCE
   {
   public:
     Node_Locator (CORBA::ORB_ptr orb,
-                  CosNaming::NamingContext_var nc);
+                  CosNaming::NamingContext_ptr nc);
 
     ::Deployment::NodeManager_ptr locate_node (const ACE_TCHAR *name);
 

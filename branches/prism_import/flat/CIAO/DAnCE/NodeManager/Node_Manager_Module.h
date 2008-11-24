@@ -68,7 +68,9 @@ class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
         unsigned int timeout_;
         CORBA::Boolean standalone_;
         const char * server_args_;
-
+        const char * domain_nc_;
+        const char * instance_nc_;
+        
         SOptions()
             : process_ns_ (false),
               process_ns_file_ (0),
@@ -80,7 +82,9 @@ class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
               cs_path_ (0),
               timeout_ (5),
               standalone_ (false),
-              server_args_ (0)
+              server_args_ (0),
+              domain_nc_ (0),
+              instance_nc_ (0)
         {
         }
       };

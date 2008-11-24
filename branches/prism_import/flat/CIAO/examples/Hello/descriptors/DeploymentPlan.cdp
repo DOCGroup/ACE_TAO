@@ -133,6 +133,28 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Hello_ReceiverHomeImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ReceiverHome.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ReceiverHome</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="Hello_ReceiverComponentInstance">
@@ -152,6 +174,28 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="Hello_SenderHomeInstance">
@@ -160,6 +204,28 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Hello_SenderHomeImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderHome.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderHome</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="Hello_SenderComponentInstance">
@@ -176,6 +242,58 @@
         </type>
         <value>
           <string>Hello_SenderHome</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>local_message</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>hello, world!</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>color</name>
+      <value>
+        <type>
+          <kind>tk_enum</kind>
+          <enum>
+            <name>COLOR_SELECTION</name>
+            <typeId>IDL:Hello/COLOR_SELECTION:1.0</typeId>
+            <member>empty</member>
+            <member>white</member>
+            <member>red</member>
+            <member>yellow</member>
+          </enum>
+        </type>
+        <value>
+          <enum>yellow</enum>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender</string>
         </value>
       </value>
     </configProperty>

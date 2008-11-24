@@ -13,12 +13,14 @@ project(NodeApplication): dance_lib, dynamicinterface, dance_component_server_sv
 //    ServerActivator_Impl.cpp
     NodeApplication_Impl.cpp
     ComponentAttributesSetter.cpp
+    Name_Utilities.cpp
   }
   Header_Files {
 //    ComponentInstallation_Impl.h
 //    ServerActivator_Impl.h
     NodeApplication_Impl.h
     ComponentAttributesSetter.h
+    Name_Utilities.h
   }
 }
 
