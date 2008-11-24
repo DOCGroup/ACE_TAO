@@ -57,7 +57,8 @@ class DAnCE_ExecutionManager_Module_Export DAnCE_ExecutionManager_Module
         ACE_Vector<ACE_CString> node_managers_;
         bool ignore_failure_;
         const char *node_map_;
-
+        const char *domain_nc_;
+        
         SOptions()
             : exec_mgr_file_ (0),
               process_ns_ (false),
@@ -67,7 +68,8 @@ class DAnCE_ExecutionManager_Module_Export DAnCE_ExecutionManager_Module
               rebind_plan_ns_ (false),
               rebind_plan_ns_ior_ (0),
               ignore_failure_ (false),
-              node_map_(0)
+              node_map_(0),
+              domain_nc_ (0)
         {
         }
     };

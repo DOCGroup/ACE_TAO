@@ -1,3 +1,100 @@
+Sun Nov 23 23:59:50 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/DAnCE_Properties.idl:
+        
+          Rearranged, organized
+
+        * DAnCE/DomainApplicationManager/Node_Locator.h:
+        * DAnCE/DomainApplicationManager/Node_Locator.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Module.h:
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp:
+        
+          Improved NameService support. 
+        
+        * examples/Hello/Sender/Sender_exec.cpp:
+        * examples/Hello/descriptors/DeploymentPlan.cdp:
+        * examples/Hello/descriptors/run_test.pl:
+        
+          Updates to work with new DAnCE. 
+        
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+        * tools/XML/XML_Helper.h:
+        
+          Compile fixes.
+        
+        * examples/Hello/ReDaC-Usage.html:
+        * examples/Hello/descriptors/Hello.cid:
+        * examples/Hello/descriptors/Hello.cpd:
+        * examples/Hello/descriptors/Libraries.iad:
+        * examples/Hello/descriptors/Receiver.ccd:
+        * examples/Hello/descriptors/Receiver.cid:
+        * examples/Hello/descriptors/Receiver.cpd:
+        * examples/Hello/descriptors/Receiver_Exec.iad:
+        * examples/Hello/descriptors/Receiver_Stub.iad:
+        * examples/Hello/descriptors/Receiver_Svnt.iad:
+        * examples/Hello/descriptors/Sender.ccd:
+        * examples/Hello/descriptors/Sender.cid:
+        * examples/Hello/descriptors/Sender.cpd:
+        * examples/Hello/descriptors/Sender_Exec.iad:
+        * examples/Hello/descriptors/Sender_Stub.iad:
+        * examples/Hello/descriptors/Sender_Svnt.iad:
+        * examples/Hello/descriptors_ReDaC:
+        * examples/Hello/descriptors_events:
+        * examples/Hello/descriptors_shared_components:
+
+          Removed these files.
+
+Fri Nov 21 16:58:00 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/Node_Locator.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Module.h:
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp:
+
+          Better support for the naming service.
+
+        * examples/Hello/descriptors/DeploymentPlan.cdp:
+        * examples/Hello/descriptors/run_test.pl:
+
+          ported to new DAnCE.
+
+        * examples/Hello/descriptors/Hello.cid:
+        * examples/Hello/descriptors/Hello.cpd:
+        * examples/Hello/descriptors/Libraries.iad:
+        * examples/Hello/descriptors/Receiver.ccd:
+        * examples/Hello/descriptors/Receiver.cid:
+        * examples/Hello/descriptors/Receiver.cpd:
+        * examples/Hello/descriptors/Receiver_Exec.iad:
+        * examples/Hello/descriptors/Receiver_Stub.iad:
+        * examples/Hello/descriptors/Receiver_Svnt.iad:
+        * examples/Hello/descriptors/Sender.ccd:
+        * examples/Hello/descriptors/Sender.cid:
+        * examples/Hello/descriptors/Sender.cpd:
+        * examples/Hello/descriptors/Sender_Exec.iad:
+        * examples/Hello/descriptors/Sender_Stub.iad:
+        * examples/Hello/descriptors/Sender_Svnt.iad:
+
+          Removed superfluous files.
+
+        * examples/Hello/descriptors_ReDaC:
+        * examples/Hello/descriptors_events:
+        * examples/Hello/descriptors_shared_components:
+        * examples/Hello/ReDaC-Usage.html:
+
+          Removed these files, as these features are no longer supported.
+
 Tue Nov 18 15:40:23 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * CIDLC/Literals.cpp:

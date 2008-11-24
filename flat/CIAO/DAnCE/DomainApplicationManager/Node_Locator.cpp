@@ -8,7 +8,7 @@
 namespace DAnCE
 {
   Node_Locator::Node_Locator (CORBA::ORB_ptr orb,
-                              CosNaming::NamingContext_var nc)
+                              CosNaming::NamingContext_ptr nc)
     : orb_ (CORBA::ORB::_duplicate (orb)),
       nc_ (CosNaming::NamingContext::_duplicate (nc))
   {
@@ -139,7 +139,8 @@ namespace DAnCE
         name.length (1);
 
         name[0].id = nodename;
-
+        name[0].kind = ACE_TEXT("NodeManager");
+        
         CORBA::Object_var obj = this->nc_->resolve (name);
         ::Deployment::NodeManager_var nm = ::Deployment::NodeManager::_narrow (obj.in ());
 

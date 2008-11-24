@@ -8,6 +8,7 @@
 #include <map>
 #include <string>
 #include <sstream>
+#include <memory>
 // #include <iostream> //@@ tmp
 
 #include "XSCRT/Parser.hpp"

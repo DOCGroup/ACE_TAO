@@ -26,7 +26,7 @@ namespace CIDL_Sender_Impl
   char*
   Message_Impl::get_message ()
   {
-    ACE_DEBUG ((LM_DEBUG, "Sender sending out message: [%s]\n", component_.message_.in ()));
+    ACE_DEBUG ((LM_EMERGENCY, "Sender sending out message: [%s]\n", component_.message_.in ()));
     return CORBA::string_dup (component_.message_.in ());
   }
 
@@ -50,7 +50,7 @@ namespace CIDL_Sender_Impl
   Sender_exec_i::hertz (CORBA::Long hertz)
   {
     this->hertz_ = hertz;
-    ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::Hertz:%d\n", this->hertz_));
+    ACE_DEBUG ((LM_EMERGENCY, "Sender_exec_i::Hertz:%d\n", this->hertz_));
   }
 
   CORBA::Long
@@ -75,7 +75,7 @@ namespace CIDL_Sender_Impl
   Hello::CCM_ReadMessage_ptr
   Sender_exec_i::get_push_message ()
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ACE_DEBUG ((LM_EMERGENCY,
                 "Sender_exec.i::get_push_message called\n "));
     return ( new Message_Impl (*this) );
   }
@@ -85,31 +85,31 @@ namespace CIDL_Sender_Impl
   {
     Hello::TimeOut_var event = new OBV_Hello::TimeOut;
     event->data ("ACE/TAO/CIAO");
-    ACE_DEBUG ((LM_DEBUG, "Sender initiates the process.\n"));
+    ACE_DEBUG ((LM_EMERGENCY, "Sender initiates the process.\n"));
     this->context_->push_click_out (event.in ());
 
-    ACE_DEBUG ((LM_DEBUG, "My current color is:"));
+    ACE_DEBUG ((LM_EMERGENCY, "My current color is:"));
 
     switch (this->color_)
       {
       case ::Hello::empty:
-        ACE_DEBUG ((LM_DEBUG, "ERROR: Enum attribute initialization failed.\n"));
+        ACE_DEBUG ((LM_EMERGENCY, "ERROR: Enum attribute initialization failed.\n"));
         break;
 
       case ::Hello::white:
-        ACE_DEBUG ((LM_DEBUG, "white\n"));
+        ACE_DEBUG ((LM_EMERGENCY, "white\n"));
         break;
 
       case ::Hello::red:
-        ACE_DEBUG ((LM_DEBUG, "red\n"));
+        ACE_DEBUG ((LM_EMERGENCY, "red\n"));
         break;
 
       case ::Hello::yellow:
-        ACE_DEBUG ((LM_DEBUG, "yellow\n"));
+        ACE_DEBUG ((LM_EMERGENCY, "yellow\n"));
         break;
 
       default:
-        ACE_DEBUG ((LM_DEBUG, "Unknown color!\n"));
+        ACE_DEBUG ((LM_EMERGENCY, "Unknown color!\n"));
 
       }
   }
@@ -117,7 +117,7 @@ namespace CIDL_Sender_Impl
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
-    ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::set_session_context\n"));
+    ACE_DEBUG ((LM_EMERGENCY, "Sender_exec_i::set_session_context\n"));
 
     this->context_ =
       ::Hello::CCM_Sender_Context::_narrow (ctx);
@@ -131,27 +131,27 @@ namespace CIDL_Sender_Impl
   void
   Sender_exec_i::configuration_complete ()
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ACE_DEBUG ((LM_EMERGENCY,
                 "Sender_exec_i::configuration_complete\n"));
   }
 
   void
   Sender_exec_i::ccm_activate ()
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ACE_DEBUG ((LM_EMERGENCY,
                 "Sender_exec_i::ccm_activate\n"));
   }
 
   void
   Sender_exec_i::ccm_passivate ()
   {
-    ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::ccm_passivate\n"));
+    ACE_DEBUG ((LM_EMERGENCY, "Sender_exec_i::ccm_passivate\n"));
   }
 
   void
   Sender_exec_i::ccm_remove ()
   {
-    ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::ccm_remove\n"));
+    ACE_DEBUG ((LM_EMERGENCY, "Sender_exec_i::ccm_remove\n"));
   }
 
   SenderHome_exec_i::SenderHome_exec_i ()
@@ -165,7 +165,7 @@ namespace CIDL_Sender_Impl
   ::Components::EnterpriseComponent_ptr
   SenderHome_exec_i::create ()
   {
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) creating SenderHome \n"));
+    ACE_DEBUG ((LM_EMERGENCY, "(%P|%t) creating SenderHome \n"));
 
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();

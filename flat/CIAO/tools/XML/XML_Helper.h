@@ -23,6 +23,8 @@
 #include "xercesc/util/XercesDefs.hpp"
 #include "xercesc/parsers/XercesDOMParser.hpp"
 
+#include <memory>
+
 namespace XERCES_CPP_NAMESPACE
 {
   class DOMDocument;

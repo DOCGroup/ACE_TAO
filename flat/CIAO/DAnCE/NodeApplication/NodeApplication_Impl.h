@@ -164,7 +164,9 @@ namespace DAnCE
     void install_component (Container &cont, Instance &inst);
 
     void install_homed_component (Container &cont, Instance &inst);
-
+    
+    void store_instance_ior (Instance &inst);
+    
     Components::Cookie* connect_receptacle (Components::CCMObject_ptr inst,
                                            const ACE_CString& port_name,
                                            CORBA::Object_ptr facet);
@@ -203,6 +205,8 @@ namespace DAnCE
     COMPONENTSERVERS servers_;
     
     INSTANCE_PTRS instances_;
+    
+    CosNaming::NamingContext_var instance_nc_;
   };
 };
 #endif /*NODEAPPLICATION_IMPL_H_*/
