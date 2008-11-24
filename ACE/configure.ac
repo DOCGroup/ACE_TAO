@@ -7253,13 +7253,13 @@ ACE_CACHE_CHECK([if generated ACE configuration is usable],
    dnl there would be no chance that the rest of ACE would compile.
   ],
   [
-   AC_MSG_ERROR(
+   AC_MSG_WARN(
      [
 The generated configuration appears to be unusable.  Please verify
 that your system path and environment variables are correct.  If they
 appear to be correct then please send the maintainer of this configure
-script $ACE_CONFIGURE_MAINTAINER the *COMPRESSED* 'config.log' file
-and the following information:
+script $ACE_CONFIGURE_MAINTAINER the *COMPRESSED* 'config.log' file,
+the generated ace/config.h file and the following information:
 
   ACE 'configure' Script Information
   ==================================
