@@ -1,3 +1,10 @@
+Mon Nov 24 17:51:44 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/DDSStateReaderListener_T.cpp:
+        
+          Add a check for empty result sequence from DataReader::take ()
+          in the listener.
+
 Fri Nov 21 20:37:44 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h:
