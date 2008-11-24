@@ -15,21 +15,21 @@
 
 namespace DAnCE
 {
-  NodeManager_Impl::NodeManager_Impl(CORBA::ORB_ptr orb, 
-                                     PortableServer::POA_ptr poa, 
-                                     const char* name, 
+  NodeManager_Impl::NodeManager_Impl(CORBA::ORB_ptr orb,
+                                     PortableServer::POA_ptr poa,
+                                     const char* name,
                                      RedirectionService& redirection,
                                      const PROPERTY_MAP &properties)
-    : orb_ (CORBA::ORB::_duplicate (orb)), 
-      poa_ (PortableServer::POA::_duplicate (poa)), 
-      name_ (name), 
+    : orb_ (CORBA::ORB::_duplicate (orb)),
+      poa_ (PortableServer::POA::_duplicate (poa)),
+      name_ (name),
       redirection_ (redirection),
       properties_ (properties.current_size ())
   {
     DANCE_TRACE ( "NodeManager_Impl::NodeManager_Impl");
     redirection.add_node (name);
     DANCE_DEBUG ((LM_INFO, DLINFO "NodeManager_impl::NodeManager_impl has been created\n"));
-    
+
     PROPERTY_MAP::const_iterator i = properties.begin ();
     while (!i.done ())
       {
@@ -65,7 +65,7 @@ namespace DAnCE
             DANCE_ERROR ((LM_WARNING, DLINFO
                           "NodeManager_impl::~NodeManager_impl - Caught exception while removing "
                           "NodeApplicationManager %s\n", (*iter).ext_id_.c_str ()));
-          }        
+          }
       }
   }
 
@@ -95,10 +95,10 @@ namespace DAnCE
                                  ::Deployment::ResourceCommitmentManager_ptr /*resourceCommitment*/)
   {
     DANCE_TRACE ( "NodeManager_Impl::preparePlan");
-    
+
     DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeManager_impl::preparePlan - "
                   "started for node %s and plan %s\n", this->name_.c_str(), plan.UUID.in()));
-    
+
 #ifdef GEN_OSTREAM_OPS
     std::cerr << plan << std::endl;
 #endif /* GEN_OSTREAM_OPS */
@@ -116,7 +116,7 @@ namespace DAnCE
       }
     ACE_DEBUG ((LM_DEBUG, "*** size of properties_:%u\n", properties_.current_size ()));
     DANCE_DEBUG ((LM_TRACE, DLINFO "NodeManager_impl::preparePlan - creating NodeApplicationManager...\n"));
-    NodeApplicationManager_Impl* manager;
+    NodeApplicationManager_Impl* manager = 0;
     ACE_NEW_THROW_EX (manager,
                       NodeApplicationManager_Impl (this->orb_.in(),
                                                    this->poa_.in(),

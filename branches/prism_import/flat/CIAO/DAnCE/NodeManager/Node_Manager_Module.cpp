@@ -196,7 +196,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
               this->options_.standalone_ = true;
             }
           else if (ACE_OS::strcmp (get_opts.long_option (),
-                                   "server-args") == 0)
+                                   ACE_TEXT("server-args")) == 0)
             {
               DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
                             "Using provided compoent server arguments: '%C'\n",
@@ -611,14 +611,12 @@ DAnCE_NodeManager_Module::create_nm_properties (DAnCE::PROPERTY_MAP &props)
   {
     CORBA::Any val;
     val <<= this->options_.timeout_;
-    props.bind (CIAO::Deployment::SERVER_TIMEOUT,
-                val);
+    props.bind (CIAO::Deployment::SERVER_TIMEOUT, val);
   }
   {
     CORBA::Any val;
     val <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.cs_path_),0);
-    props.bind (CIAO::Deployment::SERVER_EXECUTABLE,
-                val);
+    props.bind (CIAO::Deployment::SERVER_EXECUTABLE, val);
   }
   {
     CORBA::Any val;

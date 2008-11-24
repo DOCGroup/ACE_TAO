@@ -25,13 +25,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <ccm/CCM_HomeS.h>
+#include <ciao/Containers/Container_BaseC.h>
 
 namespace CIAO
 {
-  class Container;
-  typedef Container *Container_ptr;
-  typedef TAO_Objref_Var_T<Container> Container_var;
-
   /**
    * @class Home_Servant_Impl_Base
    *

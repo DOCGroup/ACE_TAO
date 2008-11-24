@@ -28,8 +28,6 @@
 
 namespace CIAO
 {
-  class Session_Container;
-
   /**
    * @class Servant_Impl
    *

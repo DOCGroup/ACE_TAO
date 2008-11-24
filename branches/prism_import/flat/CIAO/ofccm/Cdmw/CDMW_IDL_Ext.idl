@@ -14,7 +14,7 @@
 #if !defined (CDMW_IDL_EXT)
 #define CDMW_IDL_EXT
 
-#include "DAnCE/Cdmw/CDMW_IDL.idl"
+#include "ofccm/Cdmw/CDMW_IDL.idl"
 #include "ccm/CCM_KeylessCCMHome.idl"
 #include "ccm/ComponentServer/ComponentServer.idl"
 

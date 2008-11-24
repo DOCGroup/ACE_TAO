@@ -26,7 +26,7 @@ namespace CIDL_Sender_Impl
   char*
   Message_Impl::get_message ()
   {
-    ACE_DEBUG ((LM_EMERGENCY, "Sender sending out message: [%s]\n", component_.message_.in ()));
+    ACE_DEBUG ((LM_EMERGENCY, "Sender sending out message: [%C]\n", component_.message_.in ()));
     return CORBA::string_dup (component_.message_.in ());
   }
 

@@ -11,7 +11,7 @@ bool read_config_value (const ACE_CString & name,
                         CORBA::Any_out value)
 {
   bool found = false;
-  CORBA::ULong len = config.length();
+  CORBA::ULong const len = config.length();
   for (CORBA::ULong count = 0; count < len; ++count)
     {
       if (name.compare (config[count]->name()) == 0)

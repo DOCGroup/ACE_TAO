@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ccm/CCM_ContainerC.h"
+#include "ccm/CCM_ContextC.h"
 
 namespace Components
 {
