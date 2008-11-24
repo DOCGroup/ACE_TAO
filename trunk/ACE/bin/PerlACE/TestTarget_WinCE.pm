@@ -83,7 +83,6 @@ sub new
     return $self;
 }
 
-
 # ******************************************************************
 # Subroutine Section
 # ******************************************************************
@@ -146,13 +145,6 @@ sub WaitForFileTimed ($)
       print STDERR "WinCE waits for $newfile timeout $timeout\n";
     }
     return PerlACE::waitforfile_timed ($newfile, $timeout);
-}
-
-sub GetFile ($)
-{
-    my $self = shift;
-    my $file = shift;
-    return 0;
 }
 
 # Put file from a to b
