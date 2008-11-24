@@ -24,7 +24,7 @@ namespace DAnCE
                                            , mgr.in()
                                            , policies);
     DANCE_DEBUG ( (LM_DEBUG, "[%M] CCMObjectLocator::CCMObjectLocator - after create_POA\n"));
-    for (size_t i = 0; i < policies.length(); ++i)
+	for (CORBA::ULong i = 0; i < policies.length(); ++i)
       {
         policies[i]->destroy();
       }

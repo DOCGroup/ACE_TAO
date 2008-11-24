@@ -10,7 +10,7 @@ namespace DAnCE
 {
   bool
   Name_Utilities::write_ior (const ACE_TCHAR *file,
-                             const ACE_TCHAR *ior)
+                             const char *ior)
   {
     FILE* ior_output_file_ = ACE_OS::fopen (file, "w");
     if (ior_output_file_)
@@ -25,7 +25,7 @@ namespace DAnCE
   }
   
   bool
-  Name_Utilities::bind_object (const ACE_TCHAR *name,
+  Name_Utilities::bind_object (const char *name,
                                CORBA::Object_ptr obj,
                                CosNaming::NamingContext_ptr ctx)
   {
@@ -50,7 +50,7 @@ namespace DAnCE
           {
             ctx->bind (nm, obj);
           }
-        catch (CosNaming::NamingContext::AlreadyBound &ex)
+        catch (const CosNaming::NamingContext::AlreadyBound &ex)
           {
             DANCE_ERROR ((LM_WARNING, DLINFO "Name_Utilities::bind_object - "
                           "Name %C already bound, rebinding....\n",
@@ -58,7 +58,7 @@ namespace DAnCE
             ctx->rebind (nm, obj);
           }
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         DANCE_ERROR ((LM_ERROR, DLINFO "Name_Utilities::bind_object - "
                       "Caught CORBA exception while attempting to bind name %C: %C\n",
@@ -105,7 +105,7 @@ namespace DAnCE
   }
   
   bool
-  Name_Utilities::unbind_object (const ACE_TCHAR *name, 
+  Name_Utilities::unbind_object (const char *name, 
                                  CosNaming::NamingContext_ptr ctx)
   {
     DANCE_TRACE ("Name_Utilities::unbind_object");
@@ -128,12 +128,12 @@ namespace DAnCE
   }
   
   void
-  Name_Utilities::build_name (const ACE_TCHAR *name,
+  Name_Utilities::build_name (const char *name,
                               CosNaming::Name &nm)
   {
     DANCE_TRACE ("Name_Utilities::build_name");
     
-    /*ACE_Auto_Basic_Array_Ptr<ACE_TCHAR>*/  ACE_TCHAR *safe_array (new ACE_TCHAR[ACE_OS::strlen (name)]);
+    /*ACE_Auto_Basic_Array_Ptr<ACE_TCHAR>*/  ACE_TCHAR *safe_array (new char[ACE_OS::strlen (name)]);
     
     ACE_Tokenizer parser (ACE_OS::strcpy (safe_array/*.get ()*/, name));
     parser.delimiter ('/');

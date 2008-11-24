@@ -47,7 +47,7 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
 {
   DANCE_TRACE ("ComponentAttributesSetter::SetComponentAttributes");
 
-  for (unsigned int i = 0; i < prop.length(); i++)
+  for (CORBA::ULong i = 0; i < prop.length(); i++)
     {
       ACE_CString name = prop[i].name.in();
       // Ignore configuration properties, since attributes can't have . in them, this seems like a good method.
@@ -71,7 +71,7 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
           req->invoke();
           CORBA::release (req);
         }
-      catch (const CORBA::BAD_OPERATION &e)
+      catch (const CORBA::BAD_OPERATION &)
         {
           DANCE_ERROR ((LM_WARNING, DLINFO
                         "ComponentAttributesSetter::SetComponentAttributes - "
