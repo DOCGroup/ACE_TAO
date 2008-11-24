@@ -139,46 +139,49 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 					     DDS::NOT_READ_SAMPLE_STATE,
 					     DDS::ANY_VIEW_STATE,
 					     DDS::ANY_INSTANCE_STATE);
-    
-  TOPIC_TYPE state_sample = state_samples[0];
-  DDS::SampleInfo si = sis[0];
 
   if (status == DDS::RETCODE_OK)
     {
-      //      ACE_DEBUG ((LM_TRACE, ACE_TEXT ("DDSStateReaderListener_T ")
-      //		  ACE_TEXT ("sample-id %s\n"), state_sample.id.in ()));
+      if (state_samples.length () > 0)
+        {
+          TOPIC_TYPE state_sample = state_samples[0];
+          DDS::SampleInfo si = sis[0];
 
-      // only update the state if it is not sent from within the same process
-      if (id_.compare (state_sample.id) != 0)
-	{
-	  // put state information into an any and send it to the application
-	  CORBA::Any_var state (new CORBA::Any);
+          //      ACE_DEBUG ((LM_TRACE, ACE_TEXT ("DDSStateReaderListener_T ")
+          //		  ACE_TEXT ("sample-id %s\n"), state_sample.id.in ()));
 
-	  // insert state value into the any
-	  *state <<= state_sample;
+          // only update the state if it is not sent from within the same process
+          if (id_.compare (state_sample.id) != 0)
+            {
+              // put state information into an any and send it to the application
+              CORBA::Any_var state (new CORBA::Any);
 
-	  try
-	    {
-	      application_->set_state (state.in ());
-	    }
-	  catch (CORBA::SystemException & ex)
-	    {
-	      ACE_ERROR ((LM_ERROR,
-			  ACE_TEXT ("on_data_available(): ")
-			  ACE_TEXT ("could not send state information ")
-			  ACE_TEXT ("to application: %s"), 
-			  ex._info ().c_str ()));
-	    }
-	}
+              // insert state value into the any
+              *state <<= state_sample;
+
+              try
+                {
+                  application_->set_state (state.in ());
+                }
+              catch (CORBA::SystemException & ex)
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("on_data_available(): ")
+                              ACE_TEXT ("could not send state information ")
+                              ACE_TEXT ("to application: %s"), 
+                              ex._info ().c_str ()));
+                }
+            }
+        }
     }
   else if (status == DDS::RETCODE_NO_DATA)
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("on_data_available(): ")
-                  ACE_TEXT ("reader received DDS::RETCODE_NO_DATA.\n")));
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("on_data_available(): ")
+                ACE_TEXT ("reader received DDS::RETCODE_NO_DATA.\n")));
   else
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("on_data_available(): ")
-                  ACE_TEXT ("reader error: %d.\n"), status));
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("on_data_available(): ")
+                ACE_TEXT ("reader error: %d.\n"), status));
 }
 
 template <typename TOPIC_TYPE, 
