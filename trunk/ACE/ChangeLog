@@ -1,3 +1,16 @@
+Tue Nov 25 09:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+                on behalf of  Adam Mitz     <mitza@ociweb.com>
+
+        * ACE-INSTALL.html:
+        * NEWS:
+          Update the installation instructions and NEWs.
+
+                on behalf of  Yan Dai       <dai_y@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+          Disabled all ImplRepo tests on WCHAR builds and disabled
+          DevGuideExample ImplRepo test on CORBA_E_COMPACT builds.
+
 Mon Nov 24 11:21:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessWinCE.pm:
