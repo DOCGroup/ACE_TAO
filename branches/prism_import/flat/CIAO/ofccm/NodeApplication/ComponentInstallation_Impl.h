@@ -18,7 +18,7 @@
 #include "ace/Map_Manager.h"
 #include "ccm/CCM_ComponentC.h"
 
-#include "Cdmw/CDMW_DeploymentS.h"
+#include "ofccm/Cdmw/CDMW_DeploymentS.h"
 #include "tao/ORB.h"
 #include "NodeApplication_Export.h"
 

@@ -1,3 +1,23 @@
+Tue Nov 25 08:30:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Swapping/CIAO_SwapExec.idl:
+        * ciao/Servants/Swapping/Dynamic_Component_Servant_Base.cpp
+        * ciao/Servants/Swapping/Dynamic_Component_Servant_Base.h
+        * ciao/Servants/Swapping/Swapping_Servant_Home_Impl_Base.h
+        * examples/Swapping/Receiver/Receiver_exec.h
+        * examples/Swapping/Sender/Sender_exec_1.h
+        * examples/Swapping/Sender/Sender_exec_2.h
+        * ofccm/NodeApplication/ComponentInstallation_Impl.h
+        * ofccm/NodeApplication/NodeApplication_Impl.cpp
+        * ofccm/NodeApplication/NodeApplication_Impl.h
+        * ofccm/NodeApplication/ServerActivator_Impl.cpp
+        * ofccm/NodeApplication/ServerActivator_Impl.h
+          Updated includes
+
+        * ciao/Servants/Swapping/Swapping_Servants.mpc
+        * ciao/Servants/Swapping/CIAO_Swapping_Servant_export.h
+          New files
+
 Mon Nov 24 20:08:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Home_Servant_Impl_T.cpp:

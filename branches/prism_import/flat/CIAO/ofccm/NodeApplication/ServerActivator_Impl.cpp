@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ServerActivator_Impl.h"
-#include "Cdmw/CDMW_IDL_ExtC.h"
+#include "ofccm/Cdmw/CDMW_IDL_ExtC.h"
 
 const char* COMPONENT_SERVER_NAME = "ComponentServer";
 

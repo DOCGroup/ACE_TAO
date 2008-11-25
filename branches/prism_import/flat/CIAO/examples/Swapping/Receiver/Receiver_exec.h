@@ -10,7 +10,7 @@
 #ifndef RECEIVER_EXEC_H
 #define RECEIVER_EXEC_H
 
-#include "ciao/CIAO_SwapExecC.h"
+#include "ciao/Servants/Swapping/CIAO_SwapExecC.h"
 #include "ReceiverEC.h"
 #include "Receiver_exec_export.h"
 #include "tao/LocalObject.h"

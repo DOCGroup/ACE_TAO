@@ -19,7 +19,7 @@
 #include "tao/ORB.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 
-#include "Cdmw/CDMW_IDLS.h"
+#include "ofccm/Cdmw/CDMW_IDLS.h"
 #include "ComponentServer/ComponentServerS.h"
 #include "NodeApplication_Export.h"
 

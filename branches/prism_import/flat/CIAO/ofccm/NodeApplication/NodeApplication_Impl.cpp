@@ -7,7 +7,7 @@
 
 #include "ciao/Valuetype_Factories/ConfigValue.h"
 #include "ccm/CCM_ObjectC.h"
-#include "Cdmw/CDMW_IDL_ExtC.h"
+#include "ofccm/Cdmw/CDMW_IDL_ExtC.h"
 #include "Deployment/Deployment_BaseC.h"
 #include "Deployment/Deployment_ApplicationC.h"
 

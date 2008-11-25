@@ -10,7 +10,7 @@
 #ifndef SENDER_EXEC_1_H
 #define SENDER_EXEC_1_H
 
-#include "ciao/CIAO_SwapExecC.h"
+#include "ciao/Servants/Swapping/CIAO_SwapExecC.h"
 #include "SenderEC.h"
 #include "Sender_exec_1_export.h"
 #include "tao/LocalObject.h"
