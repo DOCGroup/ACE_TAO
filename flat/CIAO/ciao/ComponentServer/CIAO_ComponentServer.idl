@@ -10,7 +10,7 @@
 #define CIAO_COMPONENTSERVER_IDL_
 
 #include <ccm/CCM_Object.idl>
-#include <ccm/ComponentServer/ComponentServer.idl>
+#include <ccm/ComponentServer/CCM_ComponentServer.idl>
 
 module CIAO
 {
@@ -21,8 +21,6 @@ module CIAO
       oneway void shutdown ();
     };
 
-    typedef sequence< ::Components::CCMObject> CCMObjects;
-    
     exception InvalidComponent 
     {
     };
@@ -61,7 +59,7 @@ module CIAO
         raises (::Components::RemoveFailure);
 	
       /// Returns a sequence of all homeless components.
-      CCMObjects get_components ();
+	  ::Components::CCMObjectSeq get_components ();
     };
   };
 };

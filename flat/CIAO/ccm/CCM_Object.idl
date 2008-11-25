@@ -50,5 +50,6 @@ module Components
       raises (RemoveFailure);
     ComponentPortDescription get_all_ports ();
   };
+  typedef sequence<CCMObject> CCMObjectSeq;
 };
 #endif /* CCM_OBJECT_IDL */

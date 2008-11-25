@@ -1,3 +1,38 @@
+Tue Nov 25 15:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/ComponentServer/CCM_ComponentServer.idl:
+        * ccm/ComponentServer/CCM_ComponentServer.mpc:
+        * ccm/ComponentServer/CCM_ComponentServer_Base.idl:
+        * ccm/ComponentServer/CCM_ComponentServer_Client.idl:
+        * ccm/ComponentServer/ComponentServer.idl:
+        * ccm/ComponentServer/ComponentServer.mpc:
+        * ccm/ComponentServer/ComponentServer_Base.idl:
+        * ccm/ComponentServer/ComponentServer_Client.idl:
+          Renamed with CCM prefix
+
+        * ccm/CCM_Enumeration.idl:
+        * ccm/CCM_Object.idl:
+          Moved sequence<CCMObject> CCMObjectSeq to CCM_Object
+
+        * ciao/ComponentServer/CIAO_ComponentServer.idl:
+          Use CCMObjectSeq
+
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/ComponentServer/CIAO_Container_Impl.h:
+          Use CCMObjectSeq
+
+        * ciao/ComponentServer/CIAO_CS_Client.idl:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * ofccm/Cdmw/CDMW_IDL.idl
+          Updated include
+
+        * examples/Swapping/Sender/Sender.mpc:
+          Disabled these projects
+
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+          Explicitly list export header files
+
 Tue Nov 25 14:30:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/ComponentServer/ComponentServer.mpc:

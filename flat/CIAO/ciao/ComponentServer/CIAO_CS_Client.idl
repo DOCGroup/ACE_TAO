@@ -9,7 +9,7 @@
 #ifndef CIAO_COMPONENTSERVER_IDL_
 #define CIAO_COMPONENTSERVER_IDL_
 
-#include <ccm/ComponentServer/ComponentServer_Client.idl>
+#include <ccm/ComponentServer/CCM_ComponentServer_Client.idl>
 
 module CIAO
 {

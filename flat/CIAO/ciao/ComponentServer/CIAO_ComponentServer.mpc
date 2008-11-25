@@ -39,6 +39,9 @@ project(CIAO_ComponentServer_stub) : ccm_componentserver_stub, taolib_with_idl, 
     CIAO_ServerResourcesC.cpp
     CIAO_PropertiesC.cpp
   }
+  Header_Files {
+    CIAO_ComponentServer_stub_export.h
+  }
 }
 
 project(CIAO_CS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_componentserver_stub, portableserver, \
@@ -54,6 +57,7 @@ project(CIAO_CS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_componen
   Header_Files {
     CIAO_ServerActivator_Impl.h
     CIAO_CS_ClientS.h
+    CIAO_CS_Client_svnt_export.h
   }
 }
 
@@ -72,6 +76,9 @@ project(CIAO_ComponentServer_svnt) : ccm_componentserver_svnt, ciao_componentser
      CIAO_ServerResourcesS.cpp
      CIAO_Container_Impl.cpp
      Configurator_Factory.cpp
+  }
+  Header_Files {
+    CIAO_ComponentServer_svnt_export.h
   }
 }
 

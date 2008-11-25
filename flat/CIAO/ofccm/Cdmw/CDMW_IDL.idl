@@ -19,7 +19,7 @@
 #include "ccm/CCM_Navigation.idl"
 #include "ccm/CCM_StandardConfigurator.idl"
 
-#include "ccm/ComponentServer/ComponentServer_Client.idl"
+#include "ccm/ComponentServer/CCM_ComponentServer_Client.idl"
 
 module Components
 {

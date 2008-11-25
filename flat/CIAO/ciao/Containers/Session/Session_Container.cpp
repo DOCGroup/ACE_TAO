@@ -5,7 +5,7 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ciao/CIAO_common.h"
 #include "ciao/Containers/Servant_Activator.h"
-#include "ccm/ComponentServer/ComponentServer_BaseC.h"
+#include "ccm/ComponentServer/CCM_ComponentServer_BaseC.h"
 #include "ciao/ComponentServer/CIAO_ComponentServerC.h"
 #include "ciao/Servants/Servant_Impl_Base.h"
 
