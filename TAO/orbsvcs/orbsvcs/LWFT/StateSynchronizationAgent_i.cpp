@@ -21,14 +21,14 @@
 #endif
 
 StateSynchronizationAgent_i::StateSynchronizationAgent_i (
-    CORBA::ORB_ptr orb,
-    const std::string & host_id,
-    const std::string & process_id,
-    bool use_corba)
+  CORBA::ORB_ptr orb,
+  const std::string & host_id,
+  const std::string & process_id,
+  bool use_corba)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     host_id_ (host_id),
     process_id_ (process_id),
-#ifdef FLARE_USES_DDS
+#if defined (FLARE_USES_DDS)
     domain_id_ (0),
     domain_participant_ (DDS::DomainParticipant::_nil ()),
     publisher_ (DDS::Publisher::_nil ()),
@@ -36,7 +36,7 @@ StateSynchronizationAgent_i::StateSynchronizationAgent_i (
 #endif /* FLARE_USES_DDS */
     use_corba_ (use_corba)
 {
-#ifdef FLARE_USES_DDS
+#if defined (FLARE_USES_DDS)
   if (!use_corba_)
     {
       if (!this->create_participant ())
@@ -67,24 +67,25 @@ void
 StateSynchronizationAgent_i::state_changed (const char * object_id)
 {
   ACE_DEBUG ((LM_TRACE, 
-	      "SSA::state_changed (%s) called.\n", 
-	      object_id));
+	            "SSA::state_changed (%s) called.\n", 
+	            object_id));
 
   // get application reference
   ReplicatedApplication_var app;
 
   if (application_map_.find (ACE_CString (object_id),
-			     app) != 0)
+			                       app) != 0)
     {
-      ACE_DEBUG ((LM_ERROR, 
-		  "(%P|%t) SSA::state_changed () "
-		  "could not find application for object id %s\n",
-		  object_id));
+      ACE_ERROR ((LM_ERROR, 
+		              "(%P|%t) SSA::state_changed () "
+		              "could not find application for object id %s\n",
+		              object_id));
       return;
     }
 
-  // get state from the application
+  // Get state from the application.
   CORBA::Any_var state;
+  
   try 
     {
       state = app->get_state ();
@@ -92,42 +93,48 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
    catch (const CORBA::SystemException& ex)
     {
       ACE_DEBUG ((LM_ERROR, 
-		  "(%P|%t) SSA::state_changed () "
-		  "exception while calling the get_state method for application %s:\n"
-		  "%s",
-		  object_id, ex._info ().c_str ()));
+		              "(%P|%t) SSA::state_changed () "
+		              "exception while calling the "
+		              "get_state method for application "
+		              "%s:\n"
+		              "%s",
+		              object_id,
+		              ex._info ().c_str ()));
       return;
     }
 
-  // send state to each element in the replica_map_
+  // Send state to each element in the replica_map_.
   ReplicaGroup replica_group;
+  
   if (replica_map_.find (ACE_CString (object_id),
-			 replica_group) != 0)
+			                   replica_group) != 0)
     {
-      ACE_DEBUG ((LM_ERROR, 
-		  "(%P|%t) SSA::state_changed () "
-		  "could not find replicas for the application %s\n",
-		  object_id));
+      ACE_ERROR ((LM_ERROR, 
+		              "(%P|%t) SSA::state_changed () "
+		              "could not find replicas for the application %s\n",
+		              object_id));
       return;
     }
 
   ReplicatedApplication_var replica;
+  
   for (REPLICA_OBJECT_LIST::iterator it = replica_group.replicas.begin ();
        it != replica_group.replicas.end ();
        ++it)
     {
       try
-	{
-	  // set the state on this replica
-	  (*it)->set_state (state.in ());
-	}
+	      {
+	        // Set the state on this replica.
+	        (*it)->set_state (state.in ());
+	      }
       catch (const CORBA::SystemException& ex)
-	{
-	  ACE_DEBUG ((LM_WARNING, 
-		      "(%P|%t) SSA::state_changed () "
-		      "exception while contacting a server replica for %s.\n",
-		      object_id));
-	}
+	      {
+	        ACE_DEBUG ((LM_WARNING, 
+		                  "(%P|%t) SSA::state_changed () "
+		                  "exception while contacting a "
+		                  "server replica for %s.\n",
+		                  object_id));
+	      }
     }
 }
 
@@ -148,7 +155,9 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
            ++it)
         {
           if (!it->item ().use_dds)
-            replica_map_.unbind (it);
+            {
+              replica_map_.unbind (it);
+            }
         }
     }
 
@@ -222,9 +231,10 @@ StateSynchronizationAgent_i::register_application (
   if (application_map_.bind (oid, ReplicatedApplication::_duplicate (app)) < 0)
     {
       ACE_DEBUG ((LM_WARNING, 
-		  "(%P|%t) SSA::register_application () "
-		  "could not bind application %s to the map successfully\n",
-		  object_id));
+		              "(%P|%t) SSA::register_application () "
+		              "could not bind application %s to "
+		              "the map successfully\n",
+		              object_id));
     }
 }
 
@@ -351,7 +361,7 @@ StateSynchronizationAgent_i::get_unique_id (
 {
   std::string unique_id (app_name);
 
-  // make name unique by adding host and process id
+  // Make name unique by adding host and process id.
   unique_id += "_" + host_id_ + "_" + process_id_;
 
   return unique_id;
