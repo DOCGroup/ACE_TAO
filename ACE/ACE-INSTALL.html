@@ -594,6 +594,14 @@ can be built with the compiler and linker included in the <a href="http://www.mi
     </td>
   </tr>
 </tbody></table>
+
+<p>The VC++ compiler and linker can now be invoked from GNU make just like
+most UNIX builds.  Follow the instructions in the <a href="#unix_traditional">
+ACE/GNU Configuration</a> sections and see the additional information in the
+comments of
+<a href="include/makeinclude/platform_win32_msvc.GNU">platform_win32_msvc.GNU</a>.
+</p>
+
 <p>If you happen to open a VC7.1 file from within VC8, it will offer to convert
 the file to the newer format for you. With the stock VC8, do not do this;
 Visual Studio will crash while attempting to convert the large
@@ -636,14 +644,6 @@ https://msdn.microsoft.com/visualc/downloads/default.aspx</a> for information.
   make sure you include ACE_ROOT\lib in your PATH whenever you run
   programs that uses ACE.  Otherwise you may experience problems
   finding ace.dll or aced.dll.<br>
-      <br>
-  </li><li>If you want to use the standard C++ headers (iostream, cstdio, ...
-      as defined by the C++ Standard Draft 2) that comes with MSVC,
-      then add the line: <br>
-      <br>
-      <code>#define ACE_HAS_STANDARD_CPP_LIBRARY 1</code><br>
-      <br>
-      before the #include statement in ACE_ROOT\ace\config.h.<br>
       <br>
   </li><li>To use ACE with MFC libraries, also add the following to
       your <code>config.h</code> file.  Notice that if you want to
