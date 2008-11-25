@@ -40,6 +40,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.6 and ACE-5.6.7
 
 . Added support for HP-UX 11iv3 on Integrity using aC++
 
+. ACE (and TAO) can now be built using GNU make and the Microsoft Visual C++
+  compiler and linker.  See include/makeinclude/platform_win32_msvc.GNU for
+  more details.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.5 and ACE-5.6.6
 ====================================================
 
