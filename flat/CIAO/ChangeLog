@@ -1,3 +1,17 @@
+Tue Nov 25 14:30:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/ComponentServer/ComponentServer.mpc:
+          Only compile the IDL files as part of one project
+
+        * ciao/Servants/Servants.mpc:
+          Move template files to seperate group
+
+        * DAnCE/NodeApplication/Name_Utilities.cpp:
+          Fixed warning
+
+        * ofccm/NodeApplication/NodeApplication_Impl.cpp:
+          Initialise pointers with 0
+
 Tue Nov 25 08:30:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Swapping/CIAO_SwapExec.idl:

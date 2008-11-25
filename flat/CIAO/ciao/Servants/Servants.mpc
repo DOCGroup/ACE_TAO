@@ -25,10 +25,13 @@ project(CIAO_Servant_Impl) : ciao_servant_activator, ciao_port_activator_stub, c
      Home_Servant_Impl_T.cpp
      Servant_Impl_Base.cpp
      Servant_Impl_T.cpp
-     Servant_Impl_Utils_T.cpp
      StandardConfigurator_Impl.cpp
      Port_Activator.cpp
      Port_Activator_T.cpp
+   }
+
+   Template_Files {
+     Servant_Impl_Utils_T.cpp
    }
 
    Header_Files {
