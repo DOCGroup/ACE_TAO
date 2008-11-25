@@ -14,10 +14,10 @@
 #define _DDS_STATE_READER_LISTENER_T_CPP_
 
 template <typename TOPIC_TYPE, 
-	  typename TOPIC_DATA_READER, 
+	        typename TOPIC_DATA_READER, 
           typename TOPIC_SEQUENCE>
 DDSStateReaderListener_T<TOPIC_TYPE, 
-			 TOPIC_DATA_READER, 
+			                   TOPIC_DATA_READER, 
                          TOPIC_SEQUENCE>::DDSStateReaderListener_T (
     const std::string & id,							    
     ReplicatedApplication_ptr application)
@@ -27,21 +27,20 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 }
 
 template <typename TOPIC_TYPE, 
-	  typename TOPIC_DATA_READER, 
+	        typename TOPIC_DATA_READER, 
           typename TOPIC_SEQUENCE>
 DDSStateReaderListener_T<TOPIC_TYPE, 
-			 TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE>::~DDSStateReaderListener_T ()
+			                   TOPIC_DATA_READER, 
+                         TOPIC_SEQUENCE>::~DDSStateReaderListener_T (void)
 {
 }
 
-
 template <typename TOPIC_TYPE, 
-	  typename TOPIC_DATA_READER, 
+	        typename TOPIC_DATA_READER, 
           typename TOPIC_SEQUENCE>
 void
 DDSStateReaderListener_T<TOPIC_TYPE, 
-			 TOPIC_DATA_READER, 
+			                   TOPIC_DATA_READER, 
                          TOPIC_SEQUENCE>::on_requested_deadline_missed (
     DDS::DataReader_ptr,
     const DDS::RequestedDeadlineMissedStatus &)
@@ -52,11 +51,11 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 }
 
 template <typename TOPIC_TYPE, 
-	  typename TOPIC_DATA_READER, 
+	        typename TOPIC_DATA_READER, 
           typename TOPIC_SEQUENCE>
 void
 DDSStateReaderListener_T<TOPIC_TYPE, 
-			 TOPIC_DATA_READER, 
+			                   TOPIC_DATA_READER, 
                          TOPIC_SEQUENCE>::on_requested_incompatible_qos (
     DDS::DataReader_ptr,
     const DDS::RequestedIncompatibleQosStatus &status)
@@ -70,11 +69,11 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 }
 
 template <typename TOPIC_TYPE, 
-	  typename TOPIC_DATA_READER, 
+	        typename TOPIC_DATA_READER, 
           typename TOPIC_SEQUENCE>
 void
 DDSStateReaderListener_T<TOPIC_TYPE, 
-			 TOPIC_DATA_READER, 
+			                   TOPIC_DATA_READER, 
                          TOPIC_SEQUENCE>::on_liveliness_changed (
     DDS::DataReader_ptr,
     const DDS::LivelinessChangedStatus &)
@@ -83,11 +82,11 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 }
 
 template <typename TOPIC_TYPE, 
-	  typename TOPIC_DATA_READER, 
+	        typename TOPIC_DATA_READER, 
           typename TOPIC_SEQUENCE>
 void
 DDSStateReaderListener_T<TOPIC_TYPE, 
-			 TOPIC_DATA_READER, 
+			                   TOPIC_DATA_READER, 
                          TOPIC_SEQUENCE>::on_subscription_matched (
     DDS::DataReader_ptr,
     const DDS::SubscriptionMatchedStatus &)
@@ -96,11 +95,11 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 }
 
 template <typename TOPIC_TYPE, 
-	  typename TOPIC_DATA_READER, 
+	        typename TOPIC_DATA_READER, 
           typename TOPIC_SEQUENCE>
 void
 DDSStateReaderListener_T<TOPIC_TYPE, 
-			 TOPIC_DATA_READER, 
+			                   TOPIC_DATA_READER, 
                          TOPIC_SEQUENCE>::on_sample_rejected (
     DDS::DataReader_ptr,
     const DDS::SampleRejectedStatus &)
@@ -111,11 +110,11 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 }
 
 template <typename TOPIC_TYPE, 
-	  typename TOPIC_DATA_READER, 
+	        typename TOPIC_DATA_READER, 
           typename TOPIC_SEQUENCE>
 void
 DDSStateReaderListener_T<TOPIC_TYPE, 
-			 TOPIC_DATA_READER, 
+			                   TOPIC_DATA_READER, 
                          TOPIC_SEQUENCE>::on_data_available (
     DDS::DataReader_ptr reader)
   throw (CORBA::SystemException)
@@ -133,12 +132,13 @@ DDSStateReaderListener_T<TOPIC_TYPE,
   TOPIC_SEQUENCE state_samples;
   DDS::SampleInfoSeq sis;
   
-  DDS::ReturnCode_t status = state_dr->take (state_samples, 
-					     sis, 
-					     1,
-					     DDS::NOT_READ_SAMPLE_STATE,
-					     DDS::ANY_VIEW_STATE,
-					     DDS::ANY_INSTANCE_STATE);
+  DDS::ReturnCode_t status =
+    state_dr->take (state_samples, 
+				            sis, 
+				            1,
+				            DDS::NOT_READ_SAMPLE_STATE,
+				            DDS::ANY_VIEW_STATE,
+				            DDS::ANY_INSTANCE_STATE);
 
   if (status == DDS::RETCODE_OK)
     {
@@ -146,17 +146,21 @@ DDSStateReaderListener_T<TOPIC_TYPE,
         {
           TOPIC_TYPE state_sample = state_samples[0];
           DDS::SampleInfo si = sis[0];
-
-          //      ACE_DEBUG ((LM_TRACE, ACE_TEXT ("DDSStateReaderListener_T ")
-          //		  ACE_TEXT ("sample-id %s\n"), state_sample.id.in ()));
-
-          // only update the state if it is not sent from within the same process
+/*
+          ACE_DEBUG ((LM_TRACE,
+                      ACE_TEXT ("DDSStateReaderListener_T ")
+    		              ACE_TEXT ("sample-id %s\n"),
+    		              state_sample.id.in ()));
+*/
+          // Update the state only if it is not
+          // sent from within the same process.
           if (id_.compare (state_sample.id) != 0)
             {
-              // put state information into an any and send it to the application
+              // Put state information into an any
+              // and send it to the application.
               CORBA::Any_var state (new CORBA::Any);
 
-              // insert state value into the any
+              // Insert state value into the any.
               *state <<= state_sample;
 
               try
@@ -175,13 +179,17 @@ DDSStateReaderListener_T<TOPIC_TYPE,
         }
     }
   else if (status == DDS::RETCODE_NO_DATA)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("on_data_available(): ")
-                ACE_TEXT ("reader received DDS::RETCODE_NO_DATA.\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("on_data_available(): ")
+                  ACE_TEXT ("reader received DDS::RETCODE_NO_DATA.\n")));
+    }
   else
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("on_data_available(): ")
-                ACE_TEXT ("reader error: %d.\n"), status));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("on_data_available(): ")
+                  ACE_TEXT ("reader error: %d.\n"), status));
+    }
 }
 
 template <typename TOPIC_TYPE, 

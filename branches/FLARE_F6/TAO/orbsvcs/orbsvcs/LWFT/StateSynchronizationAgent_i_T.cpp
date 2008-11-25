@@ -28,16 +28,19 @@ StateSynchronizationAgent_i::register_application_with_dds (
   ReplicatedApplication_ptr app)
 {
   ACE_DEBUG ((LM_TRACE,
-              "SSA::register_application_with_dds (%s) called.\n", object_id));
+              "SSA::register_application_with_dds (%s) called.\n",
+              object_id));
 
   ACE_CString oid (object_id);
 
-  if (application_map_.bind (oid, ReplicatedApplication::_duplicate (app)) < 0)
+  if (application_map_.bind (oid,
+                             ReplicatedApplication::_duplicate (app)) != 0)
     {
       ACE_DEBUG ((LM_WARNING, 
-		  "(%P|%t) SSA::register_application_with_dds () "
-		  "could not bind application %s to the map successfully\n",
-		  object_id));
+		              "(%P|%t) SSA::register_application_with_dds () "
+		              "could not bind application %s to "
+		              "the map successfully\n",
+		              object_id));
     }
 
   if (!use_corba_)

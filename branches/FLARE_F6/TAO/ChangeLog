@@ -1,3 +1,16 @@
+Tue Nov 25 000:36:40 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/LWFT/orbsvcs/LWFT/DDSStateUpdate_T.cpp:
+        * orbsvcs/LWFT/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:
+        * orbsvcs/LWFT/orbsvcs/LWFT/StateSynchronizationAgent_i_T.cpp:
+        * orbsvcs/LWFT/orbsvcs/LWFT/DDSStateReaderListener_T.cpp:
+        * orbsvcs/LWFT/orbsvcs/LWFT/DDSStateUpdate_T.h:
+        
+          Added code to set the 'id' member of the state struct before
+          calling set_state() on the replicas, since it doesn't get
+          set in the server code because the id values are assigned
+          by the SSA. Also cosmetic changes to this and other files.
+
 Mon Nov 24 17:51:44 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/DDSStateReaderListener_T.cpp:

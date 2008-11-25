@@ -25,10 +25,10 @@
  *        DDS to disseminate state information to replicas
  */
 template <typename TOPIC_TYPE, 
-	  typename TOPIC_TYPE_SUPPORT,
-	  typename TOPIC_DATA_WRITER,
+	        typename TOPIC_TYPE_SUPPORT,
+	        typename TOPIC_DATA_WRITER,
           typename TOPIC_DATA_READER,
-	  typename TOPIC_SEQUENCE>
+	        typename TOPIC_SEQUENCE>
 class DDSStateUpdate_T : public StatefulObject
 {
 public:
@@ -54,19 +54,19 @@ protected:
   TOPIC_TYPE state_;
 
 private:
-  // helper methods for DDS initialization
-  bool create_topic ();
-  bool create_datawriter ();
-  bool create_datareader ();
+  // Helper methods for DDS initialization.
+  bool create_topic (void);
+  bool create_datawriter (void);
+  bool create_datareader (void);
 
 private:
-  /// name of the topic to be registered
+  /// Name of the topic to be registered.
   std::string topic_name_;
 
-  /// this id is part of every topic to check where the data comes from
+  /// This id is part of every topic to check where the data comes from.
   std::string id_;
 
-  // DDS entities needed for data dissemination
+  // DDS entities needed for data dissemination.
   DDS::DomainParticipant_var participant_;
   DDS::Publisher_var pub_;
   DDS::Subscriber_var sub_;
