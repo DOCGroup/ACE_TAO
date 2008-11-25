@@ -46,7 +46,7 @@ namespace CIAO
 
       virtual void remove_component (::Components::CCMObject_ptr cref);
 
-      virtual ::CIAO::Deployment::CCMObjects * get_components (void);
+      virtual ::Components::CCMObjectSeq * get_components (void);
 
       virtual ::Components::ConfigValues * configuration (void);
 

@@ -29,7 +29,7 @@
 #include "ciao/ComponentServer/CIAO_ServerActivator_Impl.h"
 //#include "Cdmw/CDMW_IDLC.h"
 
-#include "ComponentServer/ComponentServerC.h"
+#include "ccm/ComponentServer/CCM_ComponentServerC.h"
 #include "Deployment/Deployment_NodeApplicationS.h"
 #include "Deployment/Deployment_DeploymentPlanC.h"
 #include "Deployment/DeploymentC.h"

@@ -3,7 +3,7 @@
 #if !defined (COMPONENTSERVER_IDL)
 #define COMPONENTSERVER_IDL
 
-#include "ComponentServer_Base.idl"
+#include "ccm/ComponentServer/CCM_ComponentServer_Base.idl"
 
 module Components
 {
@@ -31,6 +31,8 @@ module Components
 
       void remove() raises (::Components::RemoveFailure);
     };
+
+    typedef sequence<ComponentServer> ComponentServers;
 
     interface Container
     {

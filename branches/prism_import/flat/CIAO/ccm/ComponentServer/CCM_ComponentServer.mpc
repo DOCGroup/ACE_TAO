@@ -10,9 +10,9 @@ project(CCM_ComponentServer_IDL) : taoidldefaults, anytypecode {
   custom_only = 1
 
   IDL_Files {
-    ComponentServer.idl
-    ComponentServer_Base.idl
-    ComponentServer_Client.idl
+    CCM_ComponentServer.idl
+    CCM_ComponentServer_Base.idl
+    CCM_ComponentServer_Client.idl
   }
 }
 
@@ -22,15 +22,15 @@ project(CCM_ComponentServer_stub) : taolib_with_idl, tao_output, messaging, ccm_
 
   Header_Files {
     DAnCE_ComponentServer_stub_export.h
-    ComponentServerC.h
-    ComponentServer_ClientC.h
-    ComponentServer_BaseC.h
+    CCM_ComponentServerC.h
+    CCM_ComponentServer_ClientC.h
+    CCM_ComponentServer_BaseC.h
   }
 
   Source_Files {
-    ComponentServerC.cpp
-    ComponentServer_ClientC.cpp
-    ComponentServer_BaseC.cpp
+    CCM_ComponentServerC.cpp
+    CCM_ComponentServer_ClientC.cpp
+    CCM_ComponentServer_BaseC.cpp
   }
   IDL_Files {
   }
@@ -41,15 +41,15 @@ project(CCM_ComponentServer_svnt) : taolib_with_idl, tao_output, messaging, ccm_
 
   Header_Files {
     DAnCE_ComponentServer_svnt_export.h
-    ComponentServerS.h
-    ComponentServer_ClientS.h
-    ComponentServer_BaseS.h
+    CCM_ComponentServerS.h
+    CCM_ComponentServer_ClientS.h
+    CCM_ComponentServer_BaseS.h
   }
 
   Source_Files {
-    ComponentServerS.cpp
-    ComponentServer_ClientS.cpp
-    ComponentServer_BaseS.cpp
+    CCM_ComponentServerS.cpp
+    CCM_ComponentServer_ClientS.cpp
+    CCM_ComponentServer_BaseS.cpp
   }
   IDL_Files {
   }

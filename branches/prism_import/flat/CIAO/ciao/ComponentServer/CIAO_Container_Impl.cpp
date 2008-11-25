@@ -78,7 +78,7 @@ namespace CIAO
       throw CORBA::NO_IMPLEMENT ();
     }
 
-    ::CIAO::Deployment::CCMObjects *
+    ::Components::CCMObjectSeq *
     CIAO_Container_i::get_components (void)
     {
       CIAO_TRACE("CIAO_Container_i::get_components");

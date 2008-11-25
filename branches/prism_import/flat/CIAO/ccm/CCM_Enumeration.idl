@@ -17,8 +17,6 @@ module Components
     CCMObject next_element();
   };
 
-  typedef sequence<CCMObject> CCMObjectSeq;
-
   valuetype DefaultEnumeration : Enumeration
   {
     private CCMObjectSeq objects;

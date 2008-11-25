@@ -2,6 +2,7 @@
 // This file is generated with "generate_component_mpc_extra.pl -p Hello_Base Sender"
 
 project(Swapping_Hello_Sender_idl_gen) : taoidldefaults, anytypecode {
+  requires += dummy_label              
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
@@ -35,6 +36,7 @@ project(Swapping_Hello_Sender_cidl_gen) : ciaocidldefaults, taoidldefaults {
 }
 
 project(Swapping_Hello_Sender_stub): ccm_stub {
+  requires += dummy_label              
   avoids += ace_for_tao
   after += Swapping_Hello_Base_stub \
            Swapping_Hello_Sender_idl_gen
@@ -60,6 +62,7 @@ project(Swapping_Hello_Sender_stub): ccm_stub {
 }
 
 project(Swapping_Hello_Sender_svnt) : ciao_servant {
+  requires += dummy_label              
   avoids += ace_for_tao
   after += Swapping_Hello_Base_skel \
            Swapping_Hello_Sender_stub \
@@ -97,6 +100,7 @@ project(Swapping_Hello_Sender_svnt) : ciao_servant {
 }
 
 project(Swapping_Hello_Sender_exec) : ciao_executor {
+  requires += dummy_label              
   avoids += ace_for_tao
   after   += Swapping_Hello_Sender_svnt
   sharedname = Swapping_Sender_exec
@@ -121,6 +125,7 @@ project(Swapping_Hello_Sender_exec) : ciao_executor {
 }
 
 project(Swapping_Hello_Sender_exec_1) : ciao_executor {
+  requires += dummy_label              
   avoids += ace_for_tao
   after   += Swapping_Hello_Sender_exec
   sharedname = Swapping_Sender_exec_1
@@ -146,6 +151,7 @@ project(Swapping_Hello_Sender_exec_1) : ciao_executor {
 }
 
 project(Swapping_Hello_Sender_exec_2) : ciao_executor {
+  requires += dummy_label              
   avoids += ace_for_tao
   after   += Swapping_Hello_Sender_exec
   sharedname = Swapping_Sender_exec_2
@@ -174,6 +180,7 @@ project(Swapping_Hello_Sender_exec_2) : ciao_executor {
 }
 
 project (Swapping_Hello_Starter) : ccm_stub, valuetype {
+  requires += dummy_label              
   avoids += ace_for_tao
   exename = Upgradeable_starter
   after += Swapping_Hello_Sender_stub
