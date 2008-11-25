@@ -1,3 +1,8 @@
+Tue Nov 25 15:55:00 UTC 2008  Simon Massey <sma at prismtech dot com>
+
+        * DevGuideExamples/Messenger/Receiver.mpc
+          Windows DLL import/export issue with CIDL generated bits.
+
 Mon Nov 17 15:58:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CCF/CCF/IDL2/Parser.hpp:

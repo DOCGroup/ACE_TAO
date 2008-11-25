@@ -40,14 +40,16 @@ project(Receiver_cidl): ciao_servant_dnc {
   custom_only = 1
   requires += cidl
 
-  idlflags += -Wb,export_macro=RECEIVER_SVNT_Export
-  idlflags += -Wb,export_include=Receiver_svnt_export.h
+  idlflags += -Wb,export_macro=RECEIVER_EXEC_Export
+  idlflags += -Wb,export_include=Receiver_exec_export.h
 
   // cidlc does NOT automatically add the current directory to
   // the include path.  This is a worksround to add it.  We have
   // to insert it before the "--" that is at the end of the
   // default cidlflags.
   cidlflags -= --
+  cidlflags += --svnt-export-macro RECEIVER_SVNT_Export
+  cidlflags += --svnt-export-include Receiver_svnt_export.h
   cidlflags += -I. --
 
   // project must be a ciao_servant or ciao_server to use CIDL files
