@@ -32,6 +32,8 @@ project(CCM_ComponentServer_stub) : taolib_with_idl, tao_output, messaging, ccm_
     ComponentServer_ClientC.cpp
     ComponentServer_BaseC.cpp
   }
+  IDL_Files {
+  }
 }
 
 project(CCM_ComponentServer_svnt) : taolib_with_idl, tao_output, messaging, ccm_componentserver_stub,  anytypecode, ciao_lib  {
@@ -48,6 +50,8 @@ project(CCM_ComponentServer_svnt) : taolib_with_idl, tao_output, messaging, ccm_
     ComponentServerS.cpp
     ComponentServer_ClientS.cpp
     ComponentServer_BaseS.cpp
+  }
+  IDL_Files {
   }
 }
 

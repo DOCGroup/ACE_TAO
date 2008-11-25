@@ -50,7 +50,7 @@ namespace DAnCE
           {
             ctx->bind (nm, obj);
           }
-        catch (const CosNaming::NamingContext::AlreadyBound &ex)
+        catch (const CosNaming::NamingContext::AlreadyBound &)
           {
             DANCE_ERROR ((LM_WARNING, DLINFO "Name_Utilities::bind_object - "
                           "Name %C already bound, rebinding....\n",

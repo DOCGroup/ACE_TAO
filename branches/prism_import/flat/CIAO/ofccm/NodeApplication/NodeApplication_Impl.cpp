@@ -409,7 +409,7 @@ NodeApplication_Impl::createContainer (unsigned int index)
                          this->plan_.instance[index].configProperty,
                          feature_any))
     {
-      const char * tmp;
+      const char * tmp = 0;
       feature_any >>= tmp;
       processDest = tmp;
     }
@@ -478,7 +478,7 @@ NodeApplication_Impl::createComponent (unsigned int index)
                          this->plan_.instance[index].configProperty,
                          feature_any))
     {
-      const char* tmp;
+      const char* tmp = 0;
       feature_any >>= tmp;
       homeName = tmp;
     }
@@ -626,7 +626,7 @@ NodeApplication_Impl::createConfigValues (const Deployment::Properties& prop,
           ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::createConfigValues PROCESS_DESTINATION variable has been added for CreateComponentServer operation\n"));
           cfg[ind] = new CIAO::ConfigValue_impl (Components::PROCESS_DESTINATION,
                                                  feature_any.in());
-          ind++;
+          ++ind;
         }
       else
         {
@@ -643,7 +643,7 @@ NodeApplication_Impl::createConfigValues (const Deployment::Properties& prop,
           ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::createConfigValues COMPONENT_KIND variable has been added for CreateContainer operation\n"));
           cfg[ind] = new CIAO::ConfigValue_impl (Components::COMPONENT_KIND,
                                                  feature_any.in());
-          ind++;
+          ++ind;
         }
       else
         {
@@ -661,7 +661,7 @@ NodeApplication_Impl::createConfigValues (const Deployment::Properties& prop,
           cfg.length (ind + 1);
           cfg[ind] = new CIAO::ConfigValue_impl (Components::COMPONENT_KIND,
                                                  feature_any.in());
-          ind++;
+          ++ind;
         }
       else
         {
@@ -674,7 +674,7 @@ NodeApplication_Impl::createConfigValues (const Deployment::Properties& prop,
           cfg.length (ind + 1);
           cfg[ind] = new CIAO::ConfigValue_impl (Components::SERVANT_LIFETIME,
                                                  feature_any.in());
-          ind++;
+          ++ind;
         }
       //TODO Clarify is this parameter is compulsory
 //            else {
@@ -687,7 +687,7 @@ NodeApplication_Impl::createConfigValues (const Deployment::Properties& prop,
           cfg.length (ind + 1);
           cfg[ind] = new CIAO::ConfigValue_impl (Components::THREADING_POLICY,
                                                  feature_any.in());
-          ind++;
+          ++ind;
         }
       else
         {
@@ -700,7 +700,7 @@ NodeApplication_Impl::createConfigValues (const Deployment::Properties& prop,
           cfg.length (ind + 1);
           cfg[ind] = new CIAO::ConfigValue_impl (Components::HOME_REPOSITORY_ID,
                                                  feature_any.in());
-          ind++;
+          ++ind;
         }
       else
         {
@@ -713,7 +713,7 @@ NodeApplication_Impl::createConfigValues (const Deployment::Properties& prop,
           cfg.length (ind + 1);
           cfg[ind] = new CIAO::ConfigValue_impl (Components::HOME_SERVANT_CLASSNAME,
                                                  feature_any.in());
-          ind++;
+          ++ind;
         }
       else
         {
@@ -726,7 +726,7 @@ NodeApplication_Impl::createConfigValues (const Deployment::Properties& prop,
           cfg.length (ind + 1);
           cfg[ind] = new CIAO::ConfigValue_impl (Components::VALUETYPE_FACTORY_DEPENDENCIES,
                                                  feature_any.in());
-          ind++;
+          ++ind;
         }
       //TODO Clarify is this parameter is compulsory
 //            else {
@@ -739,7 +739,7 @@ NodeApplication_Impl::createConfigValues (const Deployment::Properties& prop,
           cfg.length (ind + 1);
           cfg[ind] = new CIAO::ConfigValue_impl (Components::FAULT_TOLERANCE_REPLICATION_STYLE,
                                                  feature_any.in());
-          ind++;
+          ++ind;
         }
       //TODO Clarify is this parameter is compulsory
 //            else {
@@ -757,7 +757,7 @@ NodeApplication_Impl::createConfigValues (const Deployment::Properties& prop,
           cfg.length (ind + 1);
           cfg[ind] = new CIAO::ConfigValue_impl (Components::COMPONENT_NAME,
                                                  feature_any.in());
-          ind++;
+          ++ind;
         }
       else
         {
@@ -770,7 +770,7 @@ NodeApplication_Impl::createConfigValues (const Deployment::Properties& prop,
           cfg.length (ind + 1);
           cfg[ind] = new CIAO::ConfigValue_impl (Components::USES_PORT_TIMEOUTS,
                                                  feature_any.in());
-          ind++;
+          ++ind;
         }
       if (read_config_value (Components::FAULT_TOLERANCE_GROUP_NAME, prop, feature_any))
         {
@@ -778,7 +778,7 @@ NodeApplication_Impl::createConfigValues (const Deployment::Properties& prop,
           cfg.length (ind + 1);
           cfg[ind] = new CIAO::ConfigValue_impl (Components::FAULT_TOLERANCE_GROUP_NAME,
                                                  feature_any.in());
-          ind++;
+          ++ind;
         }
 
       //TODO Clarify is this parameter is compulsory
