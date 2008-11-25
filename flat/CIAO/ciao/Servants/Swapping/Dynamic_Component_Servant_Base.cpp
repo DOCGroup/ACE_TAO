@@ -1,4 +1,4 @@
-#include "ciao/Dynamic_Component_Servant_Base.h"
+#include "ciao/Servants/Swapping/Dynamic_Component_Servant_Base.h"
 
 ACE_RCSID (ciao,
            Dynamic_Component_Servant_Base,

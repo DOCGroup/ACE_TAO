@@ -20,7 +20,7 @@
 
 #include "ccm/CCM_KeylessCCMHomeC.h"
 #include "ccm/ComponentsC.h"
-#include "Cdmw/CDMW_IDLC.h"
+#include "ofccm/Cdmw/CDMW_IDLC.h"
 #include "ComponentServer/ComponentServerC.h"
 #include "Deployment/Deployment_NodeApplicationS.h"
 #include "Deployment/Deployment_DeploymentPlanC.h"
@@ -115,11 +115,9 @@ namespace DAnCE
 
       virtual void finishLaunch (
         const Deployment::Connections & providedReference,
-        ::CORBA::Boolean start
-      );
+        ::CORBA::Boolean start);
 
-      virtual void start (
-      );
+      virtual void start (void);
 
       Deployment::Connections * getAllConnections()
       ;

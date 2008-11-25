@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ciao/CIAO_Server_Export.h"
+#include "ciao/Servants/Swapping/CIAO_Swapping_Servant_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,8 +25,8 @@
 namespace CIAO
 {
   class Session_Container;
-  
-  class CIAO_SERVER_Export Dynamic_Component_Servant_Base
+
+  class CIAO_Swapping_Servant_Export Dynamic_Component_Servant_Base
   {
   public:
     /// @todo Not to be used, no idea why this should be public, have to check this

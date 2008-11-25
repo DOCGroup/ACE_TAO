@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ciao/CIAO_Server_Export.h"
+#include "ciao/Servants/Swapping/CIAO_Swapping_Servant_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +36,7 @@ namespace CIAO
   // This is a home implementation and that is why inheriting from
   // "home".
   //
-  class CIAO_SERVER_Export Swapping_Home_Servant_Impl_Base
+  class CIAO_Swapping_Servant_Export Swapping_Home_Servant_Impl_Base
     : public virtual POA_Components::CCMHome
   {
   public:
@@ -51,7 +51,7 @@ namespace CIAO
 
   protected:
     Swapping_Container *container_;
-    
+
   private:
     /// Not to be used
     Swapping_Home_Servant_Impl_Base (void);
