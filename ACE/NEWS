@@ -44,6 +44,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.6 and ACE-5.6.7
   compiler and linker.  See include/makeinclude/platform_win32_msvc.GNU for
   more details.
 
+. Added support for FC10
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.5 and ACE-5.6.6
 ====================================================
 
