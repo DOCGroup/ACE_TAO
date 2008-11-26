@@ -16,7 +16,7 @@
 
 #include "ofccm/Cdmw/CDMW_IDL.idl"
 #include "ccm/CCM_KeylessCCMHome.idl"
-#include "ccm/ComponentServer/ComponentServer.idl"
+#include "ccm/ComponentServer/CCM_ComponentServer.idl"
 
 #pragma prefix "thalesgroup.com"
 

@@ -20,7 +20,7 @@
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 
 #include "ofccm/Cdmw/CDMW_IDLS.h"
-#include "ComponentServer/ComponentServerS.h"
+#include "ccm/ComponentServer/CCM_ComponentServerS.h"
 #include "NodeApplication_Export.h"
 
 namespace DAnCE

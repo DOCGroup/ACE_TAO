@@ -3,5 +3,5 @@
 
 project : dance {
   libs     += DAnCE_Cdmw_IDL
-  after    += CDMW_IDL
+  after    += Cdmw_IDL
 }
