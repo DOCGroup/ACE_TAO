@@ -14,8 +14,6 @@
 
 #include "ace/Barrier.h"
 
-#include "ArgPair.h"
-
 #include "AppSideReg.h"
 #include "AppOptions.h"
 
@@ -87,7 +85,7 @@ AppSideReg::svc (void)
           if (hmvar_->register_process (
                 AppOptions::instance ()->process_id ().c_str (),
                 AppOptions::instance ()->host_id ().c_str (),
-                AppOptions::instance ()->get_port ()))
+                AppOptions::instance ()->port ()))
             {
               //ACE_DEBUG ((LM_DEBUG,
               //            "Registered successfully %s with host monitor.\n",

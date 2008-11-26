@@ -22,8 +22,6 @@
  *  @brief Declares RMOptions singleton to hold the command line options.
  */
 
-#include "orbsvcs/orbsvcs/LWFT/ArgPair.h"
-
 class RMOptions
 /// TITLE
 ///   Singleton class for the program options.
@@ -32,9 +30,9 @@ public:
   /// Singleton access method.
   static RMOptions *instance (void);
 
-  /// Parse command-line arguments and set the appropriate values as
-  /// follows:
-  bool parse_args (int argc, char **argv);
+  bool parse_args (int &argc, char **argv);
+  
+  /// Member accessors.
   bool proactive (void) const;
   double hertz (void) const;
   bool static_mode (void) const;
@@ -48,9 +46,8 @@ protected:
   bool proactive_;
   bool static_mode_;
   bool use_naming_service_;
-  ArgPair arg_pair_;
 
-  /// Singleton instance.
+  /// Singleton-related stuff.
   static RMOptions * volatile instance_;
   static ACE_Auto_Ptr<RMOptions> deleter_;
   static ACE_Thread_Mutex lock_;

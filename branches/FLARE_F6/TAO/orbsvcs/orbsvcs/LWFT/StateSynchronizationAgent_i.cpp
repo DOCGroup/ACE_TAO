@@ -17,7 +17,6 @@
 
 #ifdef FLARE_USES_DDS
 # include "DDSStateUpdate_T.h"
-//# include "StateDcps_impl.h"
 #endif
 
 StateSynchronizationAgent_i::StateSynchronizationAgent_i (
@@ -40,13 +39,19 @@ StateSynchronizationAgent_i::StateSynchronizationAgent_i (
   if (!use_corba_)
     {
       if (!this->create_participant ())
-	throw DDSFailure ("SSA could not create DDS participant\n");
+        {
+	        throw DDSFailure ("SSA could not create DDS participant\n");
+	      }
 
       if (!this->create_publisher ())
-	throw DDSFailure ("SSA could not create DDS publisher\n");
+        {
+	        throw DDSFailure ("SSA could not create DDS publisher\n");
+	      }
 
       if (!this->create_subscriber ())
-	throw DDSFailure ("SSA could not create DDS subscriber\n");
+        {
+	        throw DDSFailure ("SSA could not create DDS subscriber\n");
+	      }
     }
 #endif /* FLARE_USES_DDS */
 }

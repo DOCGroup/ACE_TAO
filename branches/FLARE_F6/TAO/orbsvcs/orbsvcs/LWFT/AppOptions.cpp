@@ -8,7 +8,7 @@
 #include "ace/Global_Macros.h"
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
-#include "ace/Get_Opt.h"
+#include "ace/Arg_Shifter.h"
 
 /// Initialize the static data member.
 AppOptions * volatile AppOptions::instance_ = 0;
@@ -18,7 +18,9 @@ ACE_Thread_Mutex AppOptions::lock_;
 AppOptions::AppOptions (void)
   : host_monitor_ior_ ("file://hm.ior"),
     port_ (5000),
-    arg_pair_ (0,0)
+    role_ (2),
+    load_ (40.0),
+    use_dds_ (false)
 {
   char hostname [100];
   gethostname (hostname, sizeof (hostname));
@@ -29,11 +31,11 @@ AppOptions::AppOptions (void)
 AppOptions *
 AppOptions::instance (void)
 {
-  if (! instance_)
+  if (instance_ == 0)
     {
       ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
       
-      if (! instance_)
+      if (instance_ == 0)
         {
           instance_ = new AppOptions ();
           deleter_.reset (instance_);
@@ -44,11 +46,78 @@ AppOptions::instance (void)
 }
 
 bool
-AppOptions::parse_args (int argc, char **argv)
+AppOptions::parse_args (int &argc, char **argv)
 {
-  bool retval = true;
-  this->arg_pair_ = ArgPair (argc, argv);
+  ACE_Arg_Shifter as (argc, argv);
 
+  while (as.is_anything_left ())
+    {
+      const ACE_TCHAR *arg = 0;
+
+      if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-hm_port"))))
+        {
+          std::istringstream istr (arg);
+          
+          if (!(istr >> port_))
+            {
+              return false;
+            }
+            
+          as.consume_arg ();
+        }
+      else if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-hm_ior"))))
+        {
+          host_monitor_ior_ = arg;        
+          as.consume_arg ();
+        }
+      else if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-proc_id"))))
+        {
+          process_id_ = arg;        
+          as.consume_arg ();
+        }
+      else if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-info_file"))))
+        {
+          object_info_file_ = arg;        
+          as.consume_arg ();
+        }
+      else if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-app_id"))))
+        {
+          app_id_ = arg;        
+          as.consume_arg ();
+        }
+      else if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-role"))))
+        {
+          std::istringstream istr (arg);
+          
+          if (!(istr >> role_))
+            {
+              return false;
+            }
+            
+          as.consume_arg ();
+        }
+      else if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-load"))))
+        {
+          std::istringstream istr (arg);
+          
+          if (!(istr >> load_))
+            {
+              return false;
+            }
+            
+          as.consume_arg ();
+        }
+      else if (as.cur_arg_strncasecmp (ACE_TEXT ("-use_dds")) == 0)
+        {
+          use_dds_ = true;
+          as.consume_arg ();
+        }
+      else
+        {
+          as.ignore_arg ();
+        }
+    }
+/*    
   ACE_Get_Opt get_opts (argc, argv, "-k:z:i:p:");
   int c;
 
@@ -84,20 +153,26 @@ AppOptions::parse_args (int argc, char **argv)
             }
         }
     }
-        
-  return retval;
-}
-
-ArgPair
-AppOptions::arg_pair (void) const
-{
-  return this->arg_pair_;
+*/        
+  return true;
 }
 
 std::string
-AppOptions::ior_output_file (void) const
+AppOptions::host_id (void) const
 {
-  return ior_output_file_;
+  return host_id_;
+}
+
+std::string
+AppOptions::host_monitor_ior (void) const
+{
+  return host_monitor_ior_;
+}
+
+u_short
+AppOptions::port (void) const
+{
+  return port_;
 }
 
 std::string
@@ -113,19 +188,29 @@ AppOptions::process_id (void) const
 }
 
 std::string
-AppOptions::host_monitor_ior (void) const
+AppOptions::app_id (void) const
 {
-  return host_monitor_ior_;
+  return app_id_;
 }
 
-u_short
-AppOptions::get_port (void) const
+size_t
+AppOptions::role (void) const
 {
-  return port_;
+  return role_;
 }
 
-std::string
-AppOptions::host_id (void) const
+double
+AppOptions::load (void) const
 {
-  return host_id_;
+  return load_;
 }
+
+bool
+AppOptions::use_dds (void) const
+{
+  return use_dds_;
+}
+
+
+
+

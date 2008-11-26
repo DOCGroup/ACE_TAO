@@ -1,3 +1,25 @@
+Wed Nov 26 18:45:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp:
+        * orbsvcs/orbsvcs/LWFT/HMOptions.h:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppOptions.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppOptions.h:
+        * orbsvcs/orbsvcs/LWFT/RM_Proxy.cpp:
+        * orbsvcs/orbsvcs/LWFT/HMOptions.cpp:
+        * orbsvcs/LWFT_Service/RMOptions.h:
+        * orbsvcs/LWFT_Service/RMOptions.cpp:
+        
+          Changed all options parsing to use ACE_Arg_Shifter instead
+          of ACE_Get_Opts. Also changed options from single letters
+          to strings whose semantics I hope will be self-evident.
+
+        * orbsvcs/orbsvcs/LWFT/ArgPair.cpp:
+        * orbsvcs/orbsvcs/LWFT/ArgPair.h:
+        
+          Removed these files, the class they define isn't used.
+          
 Tue Nov 25 000:36:40 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/LWFT/orbsvcs/LWFT/DDSStateUpdate_T.cpp:

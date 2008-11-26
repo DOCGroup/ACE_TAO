@@ -6,7 +6,7 @@
 #include "ace/Global_Macros.h"
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
-#include "ace/Get_Opt.h"
+#include "ace/Arg_Shifter.h"
 
 #include "RMOptions.h"
 
@@ -19,34 +19,68 @@ RMOptions::RMOptions (void)
   : hertz_ (0.2),
     proactive_ (true),
     static_mode_ (false),
-    use_naming_service_ (false),
-    arg_pair_ (0, 0)
+    use_naming_service_ (false)
 {
 }
 
 RMOptions *
 RMOptions::instance (void)
 {
-  if (! instance_)
-  {
-    ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
-    
-    if (! instance_)
+  if (instance_ == 0)
     {
-      instance_ = new RMOptions;
-      deleter_.reset (instance_);
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
+      
+      if (instance_ == 0)
+        {
+          instance_ = new RMOptions;
+          deleter_.reset (instance_);
+        }
     }
-  }
   
   return instance_;
 }
 
 bool
-RMOptions::parse_args (int argc, char **argv)
+RMOptions::parse_args (int &argc, char **argv)
 {
-  bool retval = true;
-  this->arg_pair_ = ArgPair (argc, argv);
-    
+  ACE_Arg_Shifter as (argc, argv);
+
+  while (as.is_anything_left ())
+    {
+      const ACE_TCHAR *arg = 0;
+
+      if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-hertz"))))
+        {
+          std::istringstream istr (arg);
+          
+          if (!(istr >> hertz_))
+            {
+              return false;
+            }
+            
+          as.consume_arg ();
+        }
+      else if (as.cur_arg_strncasecmp (ACE_TEXT ("-proactive")) == 0)
+        {
+          proactive_ = true;
+          as.consume_arg ();
+        }
+      else if (as.cur_arg_strncasecmp (ACE_TEXT ("-static")) == 0)
+        {
+          static_mode_ = true;
+          as.consume_arg ();
+        }
+      else if (as.cur_arg_strncasecmp (ACE_TEXT ("-use_ns")) == 0)
+        {
+          use_naming_service_ = true;
+          as.consume_arg ();
+        }
+      else
+        {
+          as.ignore_arg ();
+        }
+    }
+/*
   ACE_Get_Opt get_opts (argc, argv, "h:p:s:n");
   int c;
 
@@ -96,8 +130,8 @@ RMOptions::parse_args (int argc, char **argv)
 	          break;
         }
     }
-    
-  return retval;
+*/    
+  return true;
 };
 
 
