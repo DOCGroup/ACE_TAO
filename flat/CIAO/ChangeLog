@@ -1,3 +1,15 @@
+Wed Nov 26 16:17:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+          Layout changes
+
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+          Layout changes to the help message
+
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+        * examples/Hello/Sender/starter.cpp:
+          Unicode changes
+
 Wed Nov 26 15:04:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/Configurators/NoOp/NoOp_Configurator.mpc:

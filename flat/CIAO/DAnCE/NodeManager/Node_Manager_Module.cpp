@@ -71,20 +71,20 @@ DAnCE_NodeManager_Module::usage (void)
 {
   DANCE_TRACE ("DAnCE_NodeManager_Module::usage");
   return "Node Manager Options:\n"
-    "\t-e,--exec-mgr\t\t\t [execution manager ior file name]\n"
-    "\t-n,--node-mgr\t\t\t <node name> [=node manager ior file name]\n"
+    "\t-e,--exec-mgr\t\t [execution manager ior file name]\n"
+    "\t-n,--node-mgr\t\t <node name> [=node manager ior file name]\n"
     //    "\t-p,--process-ns\t\t\t [file name] create process name service and store its ior to file name\n"
-    "\t-c,--create-plan-ns [NC]\t\t create plan objects (components and ports) representation in name context with ior NC\n"
-    "\t-r,--rebind-plan-ns [NC]\t\t bind plan representation name context to NC\n"
-    "\t-i,--port-indirection\t\t enable plan objects indirection via servant locator\n"
+    "\t-c,--create-plan-ns [NC] create plan objects (components and ports) representation in name context with ior NC\n"
+    "\t-r,--rebind-plan-ns [NC] bind plan representation name context to NC\n"
+    "\t-i,--port-indirection\t enable plan objects indirection via servant locator\n"
     //"\t-f,--ignore-failure\t\t ignore deployment failures\n"
-    "\t-s,--server-executable\t\t default component server executable\n"
+    "\t-s,--server-executable\t default component server executable\n"
     "\t--server-args\t\t additional arguments to supply to the component server\n"
     "\t--standalone-nm\t\t Indicates that this NodeManager is not managed by an ExecutionManager\n"
-    "\t-t,--timeout\t\t\t default timeout in seconds to wait for component server spawn\n"
-    "\t-d,--domain-nc [NC]\t\t\t Default naming context for domain objects.\n"
-    "\t--instance-nc [NC]\t\t\t Default naming context for instance registration directives. No argument indicates Domain NC.\n"
-    "\t-h,help\t\t\t\t print this help message\n";
+    "\t-t,--timeout\t\t default timeout in seconds to wait for component server spawn\n"
+    "\t-d,--domain-nc [NC]\t Default naming context for domain objects.\n"
+    "\t--instance-nc [NC]\t Default naming context for instance registration directives. No argument indicates Domain NC.\n"
+    "\t-h,help\t\t\t print this help message\n";
 }
 
 bool
@@ -111,7 +111,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
   get_opts.long_option (ACE_TEXT("domain-nc"), 'd', ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
   get_opts.long_option (ACE_TEXT("instance-nc"), ACE_Get_Opt::ARG_OPTIONAL);
-  
+
   //get_opts.long_option ("help", '?');
 
   char c;
@@ -171,14 +171,14 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
                         get_opts.opt_arg ()));
           this->options_.timeout_ = ACE_OS::atoi (get_opts.opt_arg ());
           break;
-          
+
         case 'd':
           DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
                         "Binding to provided Domain Naming Context: '%C'\n",
                         get_opts.opt_arg ()));
           this->options_.domain_nc_ = get_opts.opt_arg ();
           break;
-          
+
         case 'h':
           //case '?': // Display help for use of the server.
           //default:
@@ -232,7 +232,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
                             "ERROR: unknown long option %C\n",
                             get_opts.long_option ()));
             }
-          
+
           break;
 
         default:
