@@ -11,20 +11,24 @@ project(BasicSP_stub_gen): taoidldefaults, anytypecode {
   IDL_Files {
     BasicSP.idl
   }
-
 }
 
-project(BasicSP_lem_gen) : ciaocidldefaults, taoidldefaults {
+project(BasicSP_lem_gen) : ciaocidldefaults {
   custom_only = 1
-  idlflags  += -Wb,stub_export_macro=BASICSP_EXEC_Export \
-               -Wb,stub_export_include=BasicSP_exec_export.h \
-               -SS
   cidlflags -= --
   cidlflags += --lem-force-all --
 
   CIDL_Files {
     BasicSP.idl
   }
+}
+
+project(BasicSP_lem_gen_idl) : taoidldefaults {
+  custom_only = 1
+  after += BasicSP_lem_gen
+  idlflags  += -Wb,stub_export_macro=BASICSP_EXEC_Export \
+               -Wb,stub_export_include=BasicSP_exec_export.h \
+               -SS
 
   IDL_Files {
     BasicSPE.idl
@@ -39,23 +43,18 @@ project(BasicSP_stub): ccm_stub {
 
   IDL_Files {
   }
-
   Header_Files {
     BasicSPC.h
   }
-
   Source_Files {
     BasicSPC.cpp
   }
-
   Inline_Files {
-
   }
-
 }
 
 project(BasicSP_exec) : ciao_executor {
-  after += BasicSP_stub BasicSP_lem_gen
+  after += BasicSP_stub BasicSP_lem_gen_idl
   sharedname = BasicSP_exec
   libs += BasicSP_stub
   dynamicflags = BASICSP_EXEC_BUILD_DLL
@@ -63,20 +62,16 @@ project(BasicSP_exec) : ciao_executor {
 
   IDL_Files {
   }
-
   Header_Files {
     BasicSP_exec.h
     BasicSP_exec_export.h
     BasicSPEC.h
   }
-
   Source_Files {
     BasicSP_exec.cpp
     BasicSPEC.cpp
   }
-
   Inline_Files {
-
   }
 }
 
@@ -88,24 +83,17 @@ project(BasicSP_svnt) : ciao_servant {
   dynamicflags = BASICSP_SVNT_BUILD_DLL
 
   IDL_Files {
-
   }
-
   CIDL_Files {
-
   }
-
   Header_Files {
     BasicSPS.h
     BasicSP_svnt.h
   }
-
   Source_Files {
     BasicSPS.cpp
     BasicSP_svnt.cpp
   }
-
   Inline_Files {
-
   }
 }

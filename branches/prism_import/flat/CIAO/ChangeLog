@@ -1,3 +1,33 @@
+Wed Nov 26 14:22:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/TargetManager/TargetManager.mpc:
+          Disabled a few projects
+
+        * DAnCE/tests/MocksTest/MocksTest.cpp:
+          Unicode change
+
+        * DAnCE/tests/NameServiceTest/srv_main.cpp:
+        * DAnCE/tests/ObjectLocatorTest/srv_main.cpp:
+        * DAnCE/tests/RedirectionServiceTest/srv_main.cpp:
+          Fixed compile errors with msvc
+
+        * examples/BasicSP/BasicSP.mpc:
+          Refactored this file a little bit. With msvc I do see that cidl
+          is each time executed even when nothing changes. This has to be fixed
+
+        * MPC/config/dance_cdmw_idl.mpb:
+          Fixed after
+
+        * ofccm/Cdmw/CDMW_Deployment.idl:
+        * ofccm/Cdmw/CDMW_IDL_Ext.idl:
+          Updated includes
+
+        * ofccm/Cdmw/CDMW_IDL.mpc:
+          Use seperate idl project
+
+        * ofccm/NodeApplication/ServerActivator_Impl.h:
+          Updated include
+
 Tue Nov 25 15:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/ComponentServer/CCM_ComponentServer.idl:

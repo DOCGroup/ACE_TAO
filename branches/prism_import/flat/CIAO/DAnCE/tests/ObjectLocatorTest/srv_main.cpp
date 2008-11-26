@@ -10,20 +10,21 @@
 using namespace ObjectLocatorTest;
 
 
-int main (int argc, char * argv[])
+int main (int argc, ACE_TCHAR * argv[])
 {
   try
     {
-      char * argvm[argc+3];
+      int argcm = argc + 2;
+      char ** argvm = new ACE_TCHAR* [argcm+1];
       for (int i = 0; i < argc; ++i)
         {
           argvm[i] = argv[i];
         }
-      char buf1[32];
-      ACE_OS::sprintf (buf1, "-ORBListenEndpoints");
+      ACE_TCHAR buf1[32];
+      ACE_OS::sprintf (buf1, ACE_TEXT("-ORBListenEndpoints"));
       argvm[argcm-2] = buf1;
       char buf2[32];
-      ACE_OS::sprintf (buf2, "iiop://:12345");
+      ACE_OS::sprintf (buf2, ACE_TEXT("iiop://:12345"));
       argvm[argcm-1] = buf2;
       argvm[argcm] = 0;
       CORBA::ORB_var orb = CORBA::ORB_init (argcm, argvm);
@@ -49,5 +50,6 @@ int main (int argc, char * argv[])
     {
       DANCE_ERROR((LM_ERROR, "[%M] An error has occured."));
     }
+  return 0;
 }
 

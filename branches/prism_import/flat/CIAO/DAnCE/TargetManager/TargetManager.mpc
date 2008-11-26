@@ -57,7 +57,7 @@ project(CIAO_TargetManager_svnt) : ciao_servant, ciao_targetmanager_stub, dance_
 
 project(CIAO_TargetManager_exec) : ciao_executor, ciao_domainapplicationmanager_dnc, ciao_targetmanager_svnt {
   sharedname = TargetManager_exec
-
+   requires += dummy_label
   dynamicflags   = TARGETMANAGER_EXEC_BUILD_DLL
 
   Source_Files {
