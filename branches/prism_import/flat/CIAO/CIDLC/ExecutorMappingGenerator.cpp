@@ -1940,7 +1940,7 @@ generate (CommandLine const& cl,
 
     if (swapping)
     {
-      os << "#include <CIAO_UpgradeableContext.idl>" << endl;
+      os << "#include <ciao/Contexts/Swapping/CIAO_UpgradeableContext.idl>" << endl;
     }
 
     Traversal::TranslationUnit unit;

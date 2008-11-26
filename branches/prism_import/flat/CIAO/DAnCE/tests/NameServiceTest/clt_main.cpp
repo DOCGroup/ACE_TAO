@@ -8,7 +8,7 @@
 using namespace NameServiceTest;
 
 
-int main (int argc, char * argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   try
     {
@@ -66,11 +66,11 @@ int main (int argc, char * argv[])
         }
       DANCE_DEBUG((LM_DEBUG, "[%M] object -> dummy : ok.\n"));
 
-      DANCE_DEBUG((LM_DEBUG, "[%M] Dummy object returned : %s.", dummy_obj->sayHello()));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Dummy object returned : %C.", dummy_obj->sayHello()));
       DANCE_DEBUG((LM_DEBUG, "[%M] The test succeeded."));
       return 0;
     }
-  catch (CORBA::Exception & e)
+  catch (const CORBA::Exception & e)
     {
       DANCE_ERROR((LM_ERROR, "[%M] A CORBA exception \"%s\" (%s) was thrown. The test failed."
                    , e._name(), e._info().c_str()));

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ciao/CCM_Container.idl"
+#include "ccm/CCM_Container.idl"
 #include "tao/PortableServer/PortableServer_include.pidl"
 
 module CIAO

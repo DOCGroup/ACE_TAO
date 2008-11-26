@@ -1,3 +1,35 @@
+Wed Nov 26 15:04:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/Configurators/NoOp/NoOp_Configurator.mpc:
+          Added dynamic flags
+
+        * ciao/Contexts/Swapping/CIAO_UpgradeableContext.idl:
+          Updated include
+
+        * CIDLC/ExecutorMappingGenerator.cpp:
+          Update the include being generated
+
+        * DAnCE/tests/NameServiceTest/clt_main.cpp:
+        * DAnCE/tests/NameServiceTest/Dummy.idl:
+        * DAnCE/tests/NameServiceTest/NameServiceTest.mpc:
+        * DAnCE/tests/NameServiceTest/run_test.pl:
+          Cleanup and wchar
+
+        * DAnCE/tests/RedirectionServiceTest/srv_main.cpp:
+          Fixed warning
+
+        * examples/Swapping/Receiver/Receiver.mpc:
+          Disabled some projects
+
+        * ofccm/NodeApplication/NodeApplication_Impl.h:
+          Updated include
+
+        * tests/CIAO_ComponentServer/Basic/client.cpp:
+          Unicode changes
+
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.mpc:
+          Updated
+
 Wed Nov 26 14:22:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/TargetManager/TargetManager.mpc:

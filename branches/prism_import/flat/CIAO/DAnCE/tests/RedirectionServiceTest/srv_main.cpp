@@ -62,5 +62,6 @@ int main (int argc, char * argv[])
 //    {
 //        DANCE_ERROR((LM_ERROR, "[%M] An error has occured."));
 //    }
+  return 0;
 }
 
