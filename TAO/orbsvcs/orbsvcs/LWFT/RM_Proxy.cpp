@@ -19,9 +19,6 @@ RM_Proxy::RM_Proxy (CORBA::ORB_ptr orb)
   : load_calc_ (0),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
-  /// Initilize the ORB.
-  ArgPair arg_pair = HMOptions::instance ()->arg_pair ();
-  
   CORBA::Object_var obj = obtain_RM_ior (orb_.in ());
 
   if (CORBA::is_nil (obj))

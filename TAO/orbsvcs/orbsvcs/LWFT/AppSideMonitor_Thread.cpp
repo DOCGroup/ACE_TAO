@@ -15,7 +15,7 @@
 
 AppSideMonitor_Thread::AppSideMonitor_Thread (
   ACE_Barrier *thread_barrier)
-  : port_ (AppOptions::instance ()->get_port ()),
+  : port_ (AppOptions::instance ()->port ()),
     reactor_ (new ACE_TP_Reactor),
     acceptor_ (serv_addr_, &reactor_),
     synchronizer_ (thread_barrier)
