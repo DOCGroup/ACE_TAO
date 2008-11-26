@@ -23,11 +23,10 @@ project(Swapping_Hello_Receiver_cidl_gen) : ciaocidldefaults, taoidldefaults {
   idlflags += -Wb,export_macro=RECEIVER_SVNT_Export \
               -Wb,export_include=Receiver_svnt_export.h \
               -SS
-  requires += dummy_label              
   CIDL_Files {
     Receiver.cidl
   }
-  
+
   IDL_Files {
     ReceiverE.idl
   }
@@ -47,7 +46,7 @@ project(Swapping_Hello_Receiver_stub): ccm_stub {
   Source_Files {
     ReceiverC.cpp
   }
-  
+
   Header_Files {
     ReceiverC.h
     Receiver_stub_export.h
@@ -68,7 +67,8 @@ project(Swapping_Hello_Receiver_svnt) : ciao_servant {
              Swapping_Hello_Base_skel \
              Swapping_Hello_Base_stub
   dynamicflags = RECEIVER_SVNT_BUILD_DLL
-  
+  requires += dummy_label
+
   CIDL_Files {
   }
 
@@ -80,14 +80,14 @@ project(Swapping_Hello_Receiver_svnt) : ciao_servant {
     ReceiverS.cpp
     Receiver_svnt.cpp
   }
-  
+
   Header_Files {
     ReceiverEC.h
     SenderS.h
     Sender_svnt.h
     Sender_svnt_export.h
   }
-  
+
   Inline_Files {
     ReceiverEC.inl
     ReceiverS.inl
@@ -103,7 +103,8 @@ project(Swapping_Hello_Receiver_exec) : ciao_executor {
                Swapping_Receiver_svnt \
                Swapping_Hello_Base_skel \
                Swapping_Hello_Base_stub
-  
+
+  requires += dummy_label
   dynamicflags   = RECEIVER_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -112,12 +113,12 @@ project(Swapping_Hello_Receiver_exec) : ciao_executor {
   Source_Files {
     Receiver_exec.cpp
   }
-  
+
   Header_Files {
     Receiver_exec.h
     Receiver_exec_export.h
   }
-  
+
   Inline_Files {
   }
 }
