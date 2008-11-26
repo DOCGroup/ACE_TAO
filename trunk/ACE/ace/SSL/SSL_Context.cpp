@@ -315,7 +315,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
     {
       // Use the default environment settings.
       ca_dir = ACE_OS::getenv (ACE_SSL_CERT_DIR_ENV);
-#ifdef ACE_DEFAULT_SSL_CERT_DIR;
+#ifdef ACE_DEFAULT_SSL_CERT_DIR
       if (ca_dir == 0)
         ca_dir = ACE_DEFAULT_SSL_CERT_DIR;
 #endif

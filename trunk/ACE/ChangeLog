@@ -1,3 +1,9 @@
+Wed Nov 26 16:15:50 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/SSL/SSL_Context.cpp:
+
+          Remove unintentional ;
+
 Wed Nov 26 13:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * NEWS:
