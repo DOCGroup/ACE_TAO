@@ -4,13 +4,13 @@
 #include "ace/Get_Opt.h"
 
 // IOR file of the Sender
-const char * ior = 0;
+const ACE_TCHAR * ior = 0;
 const char * message = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:m:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:m:"));
   int c = 0;
 
   while ((c = get_opts ()) != -1)
@@ -39,7 +39,7 @@ parse_args (int argc, char *argv[])
 
   if (ior  == 0)
     {
-      ior = "file://Sender.ior";
+      ior = ACE_TEXT("file://Sender.ior");
     }
 
   return 0;
@@ -51,8 +51,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv,
-                                            "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         {
