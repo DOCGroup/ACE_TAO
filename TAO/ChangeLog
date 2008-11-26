@@ -1,3 +1,8 @@
+Wed Nov 26 13:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/DevGuideExamples/DevGuideExamples.mwc:
+          Empty work file for recursion.
+
 Mon Nov 24 12:20:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           Compare SignedGen::val as numerical value
