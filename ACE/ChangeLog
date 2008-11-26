@@ -1,3 +1,11 @@
+Wed Nov 26 10:43:50 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * ace/SSL/SSL_Context.cpp:
+        * ace/SSL/sslconf.h:
+
+          Remove unconditional platform defaults for SSL cert file and
+          directory. This fixes bug #3511.
+
 Tue Nov 25 09:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
                 on behalf of  Adam Mitz     <mitza@ociweb.com>
 
