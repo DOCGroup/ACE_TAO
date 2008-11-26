@@ -1,3 +1,8 @@
+Wed Nov 26 13:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * NEWS:
+          Note about added support for FC10.
+
 Wed Nov 26 10:43:50 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * ace/SSL/SSL_Context.cpp:
