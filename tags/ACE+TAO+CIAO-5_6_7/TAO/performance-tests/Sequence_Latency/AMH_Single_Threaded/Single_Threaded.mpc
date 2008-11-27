@@ -1,0 +1,32 @@
+// -*- MPC -*-
+// $Id$
+
+project(*AMH_sequence_idl): taoidldefaults, amh {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*AMH sequence server): taoserver, strategies, valuetype, amh {
+  after += *AMH_sequence_idl
+  Source_Files {
+    Roundtrip.cpp
+    TestS.cpp
+    TestC.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*AMH sequence client): taoclient, strategies, valuetype, amh {
+  after += *AMH_sequence_idl
+  avoids += ace_for_tao
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}

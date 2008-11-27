@@ -1,0 +1,37 @@
+This directory contains ACE- and TAO-specific extensions of MPC.  All
+the base projects in the config directory are ACE- and TAO-specific,
+along with the perl modules for the gnuace and vxtest types and the
+templates that go along with those implementations.
+
+GNUACE-specific aspects of project keywords
+-------------------------------------------
+
+requires        Specifies which features should be enabled in order to
+                generate the project file.  Under the GNUACE type, it also
+                specifies which tao macros should be set to build the
+                target.
+
+avoids          Specifies which features should be disabled in order to
+                generate the project file.  Under the GNUACE type, it also
+                specifies which tao macros should not be set to build the
+                target.
+
+The following keywords are GNUACE only:
+
+tagname         Specifies the make macro to check before building the target
+tagchecks       Specifies the values for tagname to check
+
+NOTE: Within the GNUACE project type, setting sharedname to empty and
+setting staticname to the static library name will result in a project
+that will generate only static libraries.
+
+The default generation mode for the GNUACE project type is named targets.
+The environment variable MPC_GNUACE_DIRECTORY_DEPS can be set to get the
+directory based build that was used up until April of 2006.
+
+For more information about MPC, see the README and USAGE files in the
+MPC docs directory.
+
+You can anonymously check-out MPC using Subversion:
+
+svn co svn://svn.dre.vanderbilt.edu/DOC/MPC/trunk MPC

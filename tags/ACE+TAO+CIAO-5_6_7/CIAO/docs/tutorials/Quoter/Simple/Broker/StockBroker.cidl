@@ -1,0 +1,22 @@
+//$Id$
+
+//StockBroker.cidl,v 1.0
+/**
+ * @file StockBroker.cidl
+ *
+ * @author ming xiong <xiongm@isis.vanderbilt.edu>
+ */
+
+#ifndef STOCKBROKER_CIDL
+#define STOCKBROKER_CIDL
+
+#include "StockBroker.idl"
+
+composition session StockBroker_Impl {
+  home executor StockBrokerHome_Exec  {
+    implements Stock::StockBrokerHome;
+    manages StockBroker_Exec;
+  };
+};
+
+#endif /* STOCKBROKER_CIDL */

@@ -1,0 +1,10 @@
+// $Id:
+workspace {
+  cmdline += -static
+  ../CCF/CCF/CIDL
+  ../CCF/CCF/IDL2
+  ../CCF/CCF/CodeGenerationKit
+  ../CCF/CCF/CompilerElements
+  ../CCF/CCF/IDL3
+  CIDLC.mpc
+}

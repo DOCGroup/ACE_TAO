@@ -1,0 +1,15 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server) : aceexe {
+  avoids += ace_for_tao
+  exename = UPIPE_Event_Server
+  Source_Files {
+    Consumer_Router.cpp
+    Event_Analyzer.cpp
+    Options.cpp
+    Peer_Router.cpp
+    Supplier_Router.cpp
+    event_server.cpp
+  }
+}

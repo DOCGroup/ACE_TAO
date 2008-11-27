@@ -1,0 +1,15 @@
+//
+// $Id$
+//
+
+interface Simple_Server
+{
+  long test_method (in long x);
+
+  oneway void shutdown ();
+};
+
+interface Another_One
+{
+  long test_method (in long x);
+};

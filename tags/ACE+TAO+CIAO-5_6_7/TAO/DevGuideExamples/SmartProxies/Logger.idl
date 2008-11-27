@@ -1,0 +1,8 @@
+// $Id$ 
+
+// Logger.idl
+
+interface Logger
+{
+  boolean log_message(in string message);
+};

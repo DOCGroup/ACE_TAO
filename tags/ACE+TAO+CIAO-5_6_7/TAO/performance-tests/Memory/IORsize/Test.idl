@@ -1,0 +1,29 @@
+//
+// $Id$
+//
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  /// A very simple interface, sequences of which will be transferred
+  /// from the client to the server.
+  interface Foo
+    {
+    };
+
+  typedef sequence<Foo> PayLoad;
+
+  /// A very simple interface for testing
+  interface Memory_Growth
+  {
+    /// A simple call which we will use to send BIG sequences to the
+    /// server
+    void send_objref (in Test::PayLoad p);
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+  };
+};

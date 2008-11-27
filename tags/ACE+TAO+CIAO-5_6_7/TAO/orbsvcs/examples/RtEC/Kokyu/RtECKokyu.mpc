@@ -1,0 +1,4 @@
+// $Id$
+project: orbsvcsexe, rtkokyuevent, rtevent_serv {
+  exename = Service
+}

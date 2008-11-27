@@ -1,0 +1,2 @@
+TargetManagerNode_1    corbaloc:iiop:localhost:40000/NodeManager
+TargetManagerNode_2    corbaloc:iiop:localhost:30000/NodeManager

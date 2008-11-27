@@ -1,0 +1,21 @@
+// $Id$
+
+#if !defined (CCM_CONTAINERPORTABLEINTERCEPTOR_IDL)
+#define CCM_CONTAINERPORTABLEINTERCEPTOR_IDL
+
+#include "tao/PI_Forward.pidl"
+
+module Components {
+
+  module ContainerPortableInterceptor {
+
+    local interface ContainerInterceptor
+    {
+      readonly attribute string name;
+      void destroy ();
+      void set_slot_id(in PortableInterceptor::SlotId slot_id);
+    };
+  };
+};
+
+#endif /* CCM_CONTAINERPORTABLEINTERCEPTOR_IDL */
