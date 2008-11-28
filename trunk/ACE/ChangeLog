@@ -1,3 +1,13 @@
+Fri Nov 28 16:36:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_Asynch_Stream.cpp:
+        * ace/SSL/SSL_Asynch_Stream.h:
+          Added post handshake completed hook. See header file for all
+          the details.
+
+          This fixes bugzilla 3502, thanks to Paul Daugherty
+          <paul at nextalk dot com> for providing the patches
+
 Fri Nov 28 16:32:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SSL/SSL_Asynch_Stream.cpp:
