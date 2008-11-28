@@ -19,7 +19,6 @@ project(*Common) : pi_server, interceptors, iorinterceptor, orbsvcs_output {
   }
   
   Source_Files {
-    ArgPair.cpp
     LWFTDataStructuresC.cpp
     LWFTDataStructuresS.cpp
     Timer.cpp
@@ -55,6 +54,7 @@ project(*Client) : pi_server, interceptors, naming, orbsvcs_output {
     ForwardingAgent_Thread.cpp
     ForwardingAgentC.cpp
     ForwardingAgentS.cpp
+    LWFT_Client_Init.cpp
   }
   
   Header_Files {
@@ -65,6 +65,7 @@ project(*Client) : pi_server, interceptors, naming, orbsvcs_output {
     ForwardingAgentC.h
     ForwardingAgentS.h
     lwft_client_export.h
+    LWFT_Client_Init.h
   }
   
   Inline_Files {
