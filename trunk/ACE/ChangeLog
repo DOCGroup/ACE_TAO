@@ -1,3 +1,9 @@
+Fri Nov 28 11:07:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/ace/HTBP/HTBP_Session.cpp:
+        * tests/Basic_Types_Test.cpp:
+          Layout change
+
 Fri Nov 28 11:05:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/ASX/Event_Server/Event_Server/Options.cpp
