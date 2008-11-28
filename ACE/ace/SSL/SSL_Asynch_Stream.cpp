@@ -791,7 +791,7 @@ ACE_SSL_Asynch_Stream::print_error (int err_ssl,
                                     const ACE_TCHAR * pText)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "SSL-error:%d %s\n" ,
+              ACE_TEXT("SSL-error:%d %s\n"),
               err_ssl,
               pText));
 
@@ -804,7 +804,7 @@ ACE_SSL_Asynch_Stream::print_error (int err_ssl,
     {
       ERR_error_string_n (lerr, buf, sizeof buf);
 
-      ACE_DEBUG ((LM_DEBUG, "%s\n", buf));
+      ACE_DEBUG ((LM_DEBUG, "%C\n", buf));
     }
 #endif  /* OPENSSL_VERSION_NUMBER */
 }
