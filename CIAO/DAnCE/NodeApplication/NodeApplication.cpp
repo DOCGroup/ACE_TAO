@@ -7,7 +7,7 @@
 
 #include <orbsvcs/Event/EC_Default_Factory.h>
 
-void print_arg (int argc, char *argv[])
+void print_arg (int argc, ACE_TCHAR *argv[])
 {
   for (int i = 0; i < argc; ++i)
     ACE_DEBUG ((LM_DEBUG, "NodeApplication ARGV[%d] = %s\n", i, argv [i]));

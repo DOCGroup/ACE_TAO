@@ -37,8 +37,8 @@ namespace CIDL_Administrator_Impl
 {
   class ADMINISTRATOR_EXEC_Export Administrator_exec_i
   : public virtual Administrator_Exec,
-  public virtual ACE_Task_Base,
-  public virtual ::CORBA::LocalObject
+    public virtual ACE_Task_Base,
+    public virtual ::CORBA::LocalObject
   {
     public:
     Administrator_exec_i (void);
