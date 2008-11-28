@@ -30,12 +30,16 @@ $SV2 = new PerlACE::Process ("server", "-o $iorfile2 -f file://$iorfile1");
 $SV3 = new PerlACE::Process ("server", "-o $iorfile3 -f file://$iorfile2");
 $CL  = new PerlACE::Process ("client", "-s 3 -k file://$iorfile3");
 
+$server_status = $SV1->Spawn ();
 
-$SV1->Spawn ();
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($iorfile1, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile1>\n";
-    $SV1->Kill (); 
+    $SV1->Kill ();
     exit 1;
 }
 
@@ -43,7 +47,7 @@ $SV2->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile2, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile2>\n";
-    $SV1->Kill (); 
+    $SV1->Kill ();
     $SV2->Kill ();
     exit 1;
 }
@@ -52,37 +56,37 @@ $SV3->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile3, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <server3>\n";
-    $SV1->Kill (); 
+    $SV1->Kill ();
     $SV2->Kill ();
     $SV3->Kill ();
     exit 1;
 }
-    
+
 $client  = $CL->SpawnWaitKill (60);
 $server1 = $SV1->WaitKill (15);
 $server2 = $SV2->WaitKill (15);
 $server3 = $SV3->WaitKill (15);
 
 unlink $iorfile1, $iorfile2, $iorfile3;
-    
+
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
     $status = 1;
-} 
+}
 
 if ($server1 != 0) {
     print STDERR "ERROR: server 1 returned $server\n";
     $status = 1;
-} 
+}
 
 if ($server2 != 0) {
     print STDERR "ERROR: server 2 returned $server\n";
     $status = 1;
-} 
+}
 
 if ($server3 != 0) {
     print STDERR "ERROR: server 3 returned $server\n";
     $status = 1;
-} 
+}
 
 exit $status;

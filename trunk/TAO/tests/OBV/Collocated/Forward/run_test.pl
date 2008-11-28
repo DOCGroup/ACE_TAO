@@ -18,14 +18,19 @@ else {
     $CO = new PerlACE::Process ("collocated");
 }
 
-$CO->Spawn ();
+$server_status = $CO->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-} 
+}
 
 $result = $CO->WaitKill (10);
 

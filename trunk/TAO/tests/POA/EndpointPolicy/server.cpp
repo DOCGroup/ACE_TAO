@@ -108,11 +108,8 @@ make_ior (CORBA::ORB_ptr orb,
 
   if (host_form == from_hostname || host_form == use_localhost)
     {
-
       CORBA::String_var ior =
         orb->object_to_string (o.in ());
-
-
 
       FILE *output_file= ACE_OS::fopen (ior_file, "w");
       if (output_file == 0)
@@ -147,7 +144,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   switch (host_form)
     {
     case from_hostname:
-      ACE_OS::hostname (hostname, sizeof(hostname));
+      ACE_OS::hostname (hostname, sizeof(hostname) / sizeof (ACE_TCHAR));
       break;
 
     case use_localhost:
@@ -168,7 +165,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   size_t hostname_len = ACE_OS::strlen (hostname);
   size_t e1_len = ACE_OS::strlen (e1_format) + 5; // 5 for the port#
   size_t e2_len = ACE_OS::strlen (e2_format) + 5;
-  ACE_TCHAR **extra;
+  ACE_TCHAR **extra = 0;
   ACE_NEW_RETURN (extra, ACE_TCHAR *[num_extra], -1);
 
   extra[0] = ACE::strnew (ACE_TEXT ("-ORBEndpoint"));

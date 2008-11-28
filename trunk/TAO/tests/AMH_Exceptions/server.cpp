@@ -3,6 +3,7 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
+#include "ace/Get_Opt.h"
 #include "TestS.h"
 #include "tao/ORB_Core.h"
 
@@ -37,7 +38,7 @@ ST_AMH_Servant::ST_AMH_Servant (CORBA::ORB_ptr orb)
 
 void
 ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                             Test::Timestamp send_time)
+                             Test::Timestamp)
 {
   // Throw an overload exception
 
@@ -51,9 +52,8 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
       _tao_rh->test_method_excep (&holder);
     }
   catch (...)
-    {}
-
-  ACE_UNUSED_ARG (send_time);
+    {
+    }
 }
 
 void
@@ -71,7 +71,7 @@ ST_AMH_Servant::shutdown (Test::AMH_RoundtripResponseHandler_ptr /*_tao_rh*/)
 class ST_AMH_Server
 {
 public:
-  ST_AMH_Server (int *argc, ACE_TCHAR **argv);
+  ST_AMH_Server (int argc, ACE_TCHAR **argv);
   virtual ~ST_AMH_Server ();
 
   /// ORB inititalisation stuff
@@ -88,9 +88,9 @@ public:
   CORBA::ORB_ptr orb () { return this->orb_.in (); }
 
 protected:
-  int *argc_;
+  int argc_;
   ACE_TCHAR **argv_;
-  char *ior_output_file_;
+  const ACE_TCHAR *ior_output_file_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
 
@@ -103,11 +103,21 @@ private:
 
 /*** Server Declaration ***/
 
-ST_AMH_Server::ST_AMH_Server (int* argc, ACE_TCHAR **argv)
+ST_AMH_Server::ST_AMH_Server (int argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
 {
-  this->ior_output_file_ = const_cast<char*> ("test.ior");
+  this->ior_output_file_ = ACE_TEXT ("test.ior");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'o':
+        this->ior_output_file_ = get_opts.opt_arg ();
+        break;
+      }
 }
 
 ST_AMH_Server::~ST_AMH_Server ()
@@ -130,9 +140,7 @@ ST_AMH_Server::start_orb_and_poa (void)
 {
   try
     {
-      this->orb_ = CORBA::ORB_init (*(this->argc_),
-                                    this->argv_,
-                                    "");
+      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references("RootPOA");
@@ -226,7 +234,7 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ST_AMH_Server amh_server (&argc, argv);
+  ST_AMH_Server amh_server (argc, argv);
 
   amh_server.start_orb_and_poa ();
 
