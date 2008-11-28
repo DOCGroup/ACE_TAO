@@ -1,7 +1,7 @@
 # Set the version number here.
-%define ACEVER  5.6.7
-%define TAOVER  1.6.7
-%define CIAOVER 0.6.7
+%define ACEVER  5.6.8
+%define TAOVER  1.6.8
+%define CIAOVER 0.6.8
 # Set is_major_ver if the version is X.Y instead X.Y.Z
 
 # Conditional build
