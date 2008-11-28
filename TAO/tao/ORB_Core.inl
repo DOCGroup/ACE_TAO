@@ -20,9 +20,15 @@ TAO_ORB_Core::_incr_refcnt (void)
 }
 
 ACE_INLINE unsigned long
+TAO_ORB_Core::_refcnt (void) const
+{
+  return this->refcount_;
+}
+
+ACE_INLINE unsigned long
 TAO_ORB_Core::_decr_refcnt (void)
 {
-  unsigned long count = --this->refcount_;
+  unsigned long const count = --this->refcount_;
   if (count != 0)
     return count;
 

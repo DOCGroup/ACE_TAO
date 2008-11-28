@@ -223,7 +223,6 @@ TAO::ORB::open_global_services (int argc,
     // Prevent multiple initializations.
     if (++orb_init_count > 1)
       return 0;
-
   }
 
   // Prevent any other thread from going through ORB initialization before the
