@@ -32,17 +32,16 @@ int ACE_DLL_TAO_Service::init (int argc, ACE_TCHAR * argv [])
     CORBA::Object_var obj =
       this->orb_->resolve_initial_references ("RootPOA");
     this->root_poa_ = PortableServer::POA::_narrow (obj.in ());
-
-    return 0;
   }
   catch (const CORBA::Exception & ex)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%t) %T - %M - %s\n"),
                 ex._info ().c_str ()));
+    return -1;
   }
 
-  return -1;
+  return 0;
 }
 
 int ACE_DLL_TAO_Service::fini (void)
@@ -55,14 +54,14 @@ int ACE_DLL_TAO_Service::fini (void)
 
     this->root_poa_->destroy (1, 1);
     this->orb_->destroy ();
-    return 0;
   }
   catch (const CORBA::Exception & ex)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%t) %T - %M - %s\n"),
                 ex._info ().c_str ()));
+    return -1;
   }
 
-  return -1;
+  return 0;
 }

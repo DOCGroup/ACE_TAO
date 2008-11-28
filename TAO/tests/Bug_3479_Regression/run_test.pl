@@ -29,8 +29,8 @@ if (!defined $server || !defined $client) {
 my $iorbase = "server.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
 my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($server_iorfile);
-$client->DeleteFile($client_iorfile);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-ORBDebuglevel $debug_level -o $iorbase");
@@ -82,7 +82,7 @@ if ($server_status != 0) {
 $server->GetStderrLog();
 $client->GetStderrLog();
 
-$server->DeleteFile($server_iorfile);
-$client->DeleteFile($client_iorfile);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 exit $status;

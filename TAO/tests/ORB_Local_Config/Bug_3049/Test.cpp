@@ -29,7 +29,6 @@ testBug3049 (int , ACE_TCHAR *[])
 
   try
   {
-
     ACE_ARGV arg0(argA);
     int n = arg0.argc();
     CORBA::ORB_var ORBA = CORBA::ORB_init(n,arg0.argv());
@@ -54,7 +53,6 @@ testBug3049 (int , ACE_TCHAR *[])
         ACE_ERROR ((LM_DEBUG,
                     ACE_TEXT("Unexpected to find SHMIOP_Factory globally\n")));
       }
-
 
     so = ACE_Dynamic_Service<ACE_Service_Object>::instance
       (ORBC->orb_core()->configuration(), "SHMIOP_Factory");

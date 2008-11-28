@@ -41,7 +41,12 @@ $badCL = new PerlACE::Process ("client", " -b -k file://$badiorfile");
 
 print "Starting server using shared profiles\n";
 
-$sharedSV->Spawn ();
+$server_status = $sharedSV->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($goodiorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {

@@ -1,3 +1,97 @@
+Fri Nov 28 11:27:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Abstract_Interface/run_test.pl
+        * tests/AMH_Exceptions/client.cpp
+        * tests/AMH_Exceptions/run_test.pl
+        * tests/AMH_Exceptions/server.cpp
+        * tests/Any/Recursive/run_test.pl
+        * tests/Bug_1020_Regression/run_test.pl
+        * tests/Bug_1254_Regression/run_test.pl
+        * tests/Bug_1670_Regression/run_test.pl
+        * tests/Bug_1676_Regression/run_test.pl
+        * tests/Bug_2188_Regression/run_test.pl
+        * tests/Bug_2319_Regression/run_test.pl
+        * tests/Bug_2319_Regression/server.cpp
+        * tests/Bug_2328_Regression/run_test.pl
+        * tests/Bug_2349_Regression/run_test.pl
+        * tests/Bug_2356_Regression/run_test.pl
+        * tests/Bug_2417_Regression/run_test.pl
+        * tests/Bug_2429_Regression/run_test.pl
+        * tests/Bug_2503_Regression/run_test.pl
+        * tests/Bug_2560_Regression/run_test.pl
+        * tests/Bug_2595_Regression/run_test.pl
+        * tests/Bug_2654_Regression/run_test.pl
+        * tests/Bug_2702_Regression/run_test.pl
+        * tests/Bug_2804_Regression/run_test.pl
+        * tests/Bug_2966_Regression/run_test.pl
+        * tests/Bug_3000_Regression/run_test.pl
+        * tests/Bug_3068_Regression/run_test.pl
+        * tests/Bug_3163_Regression/run_test.pl
+        * tests/Bug_3299_Regression/run_test.pl
+        * tests/Bug_3471_Regression/run_test.pl
+        * tests/Bug_3479_Regression/run_test.pl
+        * tests/Bug_3499_Regression/DLL_TAO_Service.cpp
+        * tests/Bug_3499_Regression/run_test.pl
+        * tests/Bug_933_Regression/run_test.pl
+        * tests/Collocation_Exception_Test/run_test.pl
+        * tests/Collocation_Oneway_Tests/run_test.pl
+        * tests/Collocation_Tests/run_test.pl
+        * tests/Connect_Strategy_Test/run_test.pl
+        * tests/DynAny_Test/run_test.pl
+        * tests/Explicit_Event_Loop/run_test.pl
+        * tests/Faults/run_test.pl
+        * tests/Hello/run_test.pl
+        * tests/ICMG_Any_Bug/run_test.pl
+        * tests/IDL_Test/constants.idl
+        * tests/IDL_Test/run_test.pl
+        * tests/LongDouble/run_test.pl
+        * tests/Multiple_Inheritance/run_test.pl
+        * tests/Native_Exceptions/run_test.pl
+        * tests/Nested_Event_Loop/run_test.pl
+        * tests/NestedUpcall/Simple/run_test.pl
+        * tests/NestedUpcall/Triangle_Test/run_test.pl
+        * tests/Objref_Sequence_Test/run_test.pl
+        * tests/OBV/Any/run_test.pl
+        * tests/OBV/Collocated/Forward/run_test.pl
+        * tests/OBV/Factory/run_test.pl
+        * tests/OBV/Forward/run_test.pl
+        * tests/OBV/Simple/run_test.pl
+        * tests/OBV/Truncatable/run_test.pl
+        * tests/OBV/ValueBox/run_test.pl
+        * tests/Ondemand_Write/run_test.pl
+        * tests/ORB_Local_Config/Bug_3049/Test.cpp
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp
+        * tests/ORT/run_test.pl
+        * tests/Param_Test/run_test.pl
+        * tests/POA/Bug_1592_Regression/run_test.pl
+        * tests/POA/EndpointPolicy/run_test.pl
+        * tests/POA/EndpointPolicy/server.cpp
+        * tests/POA/Forwarding/run_test.pl
+        * tests/Portable_Interceptors/AdvSlotDblCpy/server.cpp
+        * tests/Portable_Interceptors/Bug_2133/run_test.pl
+        * tests/Portable_Interceptors/Bug_2510_Regression/run_test.pl
+        * tests/Portable_Interceptors/Bug_3080/run_test.pl
+        * tests/Portable_Interceptors/Dynamic/run_test.pl
+        * tests/Portable_Interceptors/IORInterceptor/run_test.pl
+        * tests/Portable_Interceptors/ORB_Shutdown/run_test.pl
+        * tests/Portable_Interceptors/PICurrent/run_test.pl
+        * tests/RTScheduling/Current/run_test.pl
+        * tests/RTScheduling/DT_Spawn/run_test.pl
+        * tests/RTScheduling/Thread_Cancel/run_test.pl
+        * tests/RTScheduling/VoidData/run_test.pl
+        * tests/Servant_To_Reference_Test/run_test.pl
+        * tests/Server_Port_Zero/run_test.pl
+        * tests/Smart_Proxies/run_test.pl
+        * tests/Stack_Recursion/run_test.pl
+        * tests/Two_Objects/run_test.pl
+        * tests/Typedef_String_Array/run_test.pl
+        * tests/UNKNOWN_Exception/run_test.pl
+        * tests/ZIOP/run_test.pl
+          Updates for the new test framework. Reworked scripts, extended
+          test programs so that the IOR file can be specified from the
+          commandline. Also check return values of spawn so that things
+          run faster when nothing has been build
+
 Fri Nov 28 11:14:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_sunsoft.cpp

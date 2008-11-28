@@ -67,7 +67,7 @@ testOpenDynamicServices (int , ACE_TCHAR *[])
                 && new_argv.add (ACE_TEXT ("-f")) != -1
                 && new_argv.add (file_Service_Config_Test ()) != -1))
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Failed to build an argv\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Failed to build an argv\n")));
       return -1;
     }
 
@@ -78,7 +78,7 @@ testOpenDynamicServices (int , ACE_TCHAR *[])
   if (daemon.open (new_argv.argc (),
                    new_argv.argv ()) == -1 && errno == ENOENT)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to open service config\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Unable to open service config\n")));
       return -1;
     }
 
@@ -88,7 +88,7 @@ testOpenDynamicServices (int , ACE_TCHAR *[])
 
   if (5 != daemon.services_count ())
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected %d service, but found %d instead\n"), 5, daemon.services_count ()));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Expected %d service, but found %d instead\n"), 5, daemon.services_count ()));
       return -1;
     }
 
@@ -242,7 +242,7 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
   if (0 == ACE_Dynamic_Service <ACE_Service_Object>::instance
       (one.get (), "CodecFactory_Loader"))
     ACE_ERROR_RETURN((LM_ERROR,
-                      ACE_TEXT ("Expected to find CodecFactory_Loader locally\n")),
+                      ACE_TEXT ("Error: Expected to find CodecFactory_Loader locally\n")),
                      -1);
 
 
@@ -260,7 +260,7 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
   if (0 == ACE_Dynamic_Service <ACE_Service_Object>::instance
       (one.get (), "PolicyFactory_Loader"))
     ACE_ERROR_RETURN((LM_ERROR,
-                      ACE_TEXT ("Expected to find PolicyFactory_Loader locally\n")),
+                      ACE_TEXT ("Error: Expected to find PolicyFactory_Loader locally\n")),
                      -1);
 
 

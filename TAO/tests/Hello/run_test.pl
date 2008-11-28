@@ -67,10 +67,7 @@ if ($server_status != 0) {
     $status = 1;
 }
 
-$server->GetStderrLog();
-$client->GetStderrLog();
-
-$server->DeleteFile($server_iorfile);
-$client->DeleteFile($client_iorfile);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 exit $status;

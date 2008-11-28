@@ -17,11 +17,13 @@ my $host = PerlACE::TestTarget::create_target(2) || die "Create targer 2 failed\
 # File used to pass AMH server ior to its clients.
 # This file name is hard-coded in the server.cpp and client.cpp files
 $iorbase = "test.ior";
+my $server_iorfile = $target->LocalFile ($iorbase);
+my $client_iorfile = $host->LocalFile ($iorbase);
 $target->DeleteFile($iorbase);
 $host->DeleteFile($iorbase);
 
-$AMH = $target->CreateProcess ("server");
-$CL = $host->CreateProcess ("client");
+$AMH = $target->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
+$CL = $host->CreateProcess ("client", "-k file://$client_iorfile");
 
 # Run the AMH server.
 $AMH->Spawn ();
