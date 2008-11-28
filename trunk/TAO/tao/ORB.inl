@@ -29,7 +29,7 @@ CORBA::ORB::_incr_refcnt (void)
 ACE_INLINE unsigned long
 CORBA::ORB::_refcnt (void) const
 {
-  return this->refcount_;
+  return this->refcount_.value ();
 }
 
 ACE_INLINE unsigned long
