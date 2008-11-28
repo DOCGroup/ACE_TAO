@@ -1,3 +1,21 @@
+Fri Nov 28 16:32:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_Asynch_Stream.cpp:
+        * ace/SSL/SSL_Asynch_Stream.h:
+        * ace/SSL/SSL_Asynch_Stream.inl:
+          Added accessor for SSL structure.
+
+        * ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_Context.h:
+        * ace/SSL/SSL_Context.inl:
+          Added possibility to set verify callback
+
+        * ace/SSL/Makefile.am:
+          Added new SSL_Asynch_Stream.inl
+
+          This fixes bugzilla 3494, thanks to Paul Daugherty
+          <paul at nextalk dot com> for providing the patches
+
 Fri Nov 28 15:25:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
