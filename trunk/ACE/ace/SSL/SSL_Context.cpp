@@ -112,6 +112,7 @@ ACE_SSL_Context::ACE_SSL_Context (void)
   : context_ (0),
     mode_ (-1),
     default_verify_mode_ (SSL_VERIFY_NONE),
+    default_verify_callback_ (0),
     have_ca_ (0)
 {
   ACE_SSL_Context::ssl_library_init ();

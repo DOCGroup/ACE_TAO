@@ -185,6 +185,9 @@ public:
 
   int close (void);
 
+  /// Return a pointer to the underlying SSL structure.
+  SSL *ssl (void) const;
+
   /**
    * Initializes the factory with information which will be used with
    * each asynchronous call.
@@ -416,6 +419,10 @@ protected:
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined(__ACE_INLINE__)
+#include "SSL_Asynch_Stream.inl"
+#endif /* __ACE_INLINE__ */
 
 #endif  /* OPENSSL_VERSION_NUMBER > 0x0090581fL && (ACE_WIN32 ||
            ACE_HAS_AIO_CALLS) */

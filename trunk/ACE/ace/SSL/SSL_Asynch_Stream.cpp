@@ -17,6 +17,10 @@ ACE_RCSID (ACE_SSL,
 #include "ace/Proactor.h"
 #include "ace/Truncate.h"
 
+#if !defined(__ACE_INLINE__)
+#include "SSL_Asynch_Stream.inl"
+#endif /* __ACE_INLINE__ */
+
 #include <openssl/err.h>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
