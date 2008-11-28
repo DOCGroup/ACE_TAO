@@ -2,14 +2,14 @@ PLANNED CHANGES BEFORE NEXT RELEASE
 ===================================
 
 This is advanced notification that the CIAO-0.6.7 release of CIAO will be
-the last release before a major refactoring is introduced into CIAO/DAnCE  
-that will remove several features, with no planned replacement in  
+the last release before a major refactoring is introduced into CIAO/DAnCE
+that will remove several features, with no planned replacement in
 their current form, such as:
 
 .  ReDaC
 .  Shared Components
 
-Some features are being temporarily removed but with planned  
+Some features are being temporarily removed but with planned
 replacement in the near term:
 
 .  RTEC Integration
@@ -88,6 +88,9 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Start update of IDL/semantics to conform to 06-04-01 specification.
   This will immediately break most CIAO specific extensions, such as shared
   components and ReDaC.
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.6.7 and CIAO-0.6.8
+======================================================
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.6.6 and CIAO-0.6.7
 ======================================================
