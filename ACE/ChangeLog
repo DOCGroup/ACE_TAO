@@ -1,3 +1,12 @@
+Fri Nov 28 19:58:02 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Improve feature tests for strtoll(), strtoull(), wcstoll(), and
+          wcstoull(), adding support for ACE_STRTOLL_EQUIVALENT,
+          ACE_STRTOULL_EQUIVALENT, ACE_WCSTOLL_EQUIVALENT, and
+          ACE_WCSTOULL_EQUIVALENT.
+
 Fri Nov 28 16:43:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SSL/SSL_Asynch_Stream.cpp:
