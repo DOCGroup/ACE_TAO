@@ -1399,6 +1399,10 @@ sub check_for_bad_run_test ()
                         print_error ("$file:$.: using \$PerlACE::add_lib_path");
                     }
 
+                    if (m/\$PerlACE::Run_Test/) {
+                        print_error ("$file:$.: using \$PerlACE::Run_Test");
+                    }
+
                     if (m/PerlACE::random_port/) {
                         print_error ("$file:$.: using PerlACE::random_port");
                     }
@@ -1413,6 +1417,10 @@ sub check_for_bad_run_test ()
 
                     if (m/unlink/) {
                         print_error ("$file:$.: using unlink");
+                    }
+
+                    if (m/PerlACE::LocalFile/) {
+                        print_error ("$file:$.: using PerlACE::LocalFile");
                     }
 
                     if (m/\$DIR_SEPARATOR/) {
