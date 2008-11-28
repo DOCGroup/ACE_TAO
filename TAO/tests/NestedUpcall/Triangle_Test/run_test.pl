@@ -26,8 +26,19 @@ else {
 $SV2 = new PerlACE::Process ("server_B", "-o $ior2file");
 $CL = new PerlACE::Process ("initiator", "-f $ior1file -g $ior2file");
 
-$SV1->Spawn ();
-$SV2->Spawn ();
+$server_status = $SV1->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
+
+$server_status = $SV2->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($ior1file, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$ior1file>\n";

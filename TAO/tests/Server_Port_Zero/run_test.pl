@@ -6,24 +6,31 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$iorfile = PerlACE::LocalFile ("server.ior");
-unlink $iorfile;
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $iorbase = "server.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
 $status = 0;
 
-$SV = new PerlACE::Process ("server", "-o $iorfile");
+$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
 
-$SV->Spawn ();
+$server_status = $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
+
+if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-} 
+}
 
-$server = $SV->WaitKill (10);
+$server = $SV->WaitKill ($iorbase);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";

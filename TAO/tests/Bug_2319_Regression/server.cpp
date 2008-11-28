@@ -18,8 +18,6 @@ int calls_received = 0;
 const ACE_TCHAR *ior      = ACE_TEXT("file://test.ior");
 const ACE_TCHAR *ior_file = ACE_TEXT("test.ior");
 
-
-
 /***************************/
 /*** Servant Declaration ***/
 /***************************/
@@ -47,7 +45,7 @@ protected:
 class ST_AMH_Server
 {
 public:
-  ST_AMH_Server (int *argc, ACE_TCHAR **argv);
+  ST_AMH_Server (void);
   virtual ~ST_AMH_Server ();
 
   /// ORB inititalisation stuff
@@ -62,9 +60,6 @@ public:
 public:
 
 protected:
-  int *argc_;
-  ACE_TCHAR **argv_;
-  ACE_TCHAR *ior_output_file_;
   CORBA::ORB_ptr orb_;
   PortableServer::POA_var root_poa_;
 
@@ -81,7 +76,7 @@ private:
 //
 int parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("n:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("n:o:k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -89,6 +84,12 @@ int parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'n':
         num_calls = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+      case 'o':
+        ior_file = get_opts.opt_arg ();
+        break;
+      case 'k':
+        ior = get_opts.opt_arg ();
         break;
       default:
         break;
@@ -110,15 +111,12 @@ ST_AMH_Servant::ST_AMH_Servant (CORBA::ORB_ptr orb)
 // ------------------------------------------------------------------------
 //
 void
-ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                             Test::Timestamp send_time)
+ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr,
+                             Test::Timestamp)
 {
   ACE_OS::printf("Recieved Timestamp # %d \n", calls_received);
   ACE_OS::sleep(1);
-  calls_received++;
-
-  ACE_UNUSED_ARG (send_time);
-  ACE_UNUSED_ARG (_tao_rh);
+  ++calls_received;
 
   // When _tao_rh destructor is called, it shouldn't send anything to
   // the client as well
@@ -128,10 +126,8 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 
 // ------------------------------------------------------------------------
 //
-ST_AMH_Server::ST_AMH_Server (int* argc, ACE_TCHAR **argv)
-  : argc_ (argc), argv_ (argv)
+ST_AMH_Server::ST_AMH_Server (void)
 {
-  this->ior_output_file_ = const_cast<ACE_TCHAR*>(ior_file);
 }
 
 // ------------------------------------------------------------------------
@@ -236,12 +232,12 @@ int
 ST_AMH_Server::write_ior_to_file (CORBA::String_var iorstr)
 {
   // If the ior_output_file exists, output the ior to it
-  FILE *output_file= ACE_OS::fopen (ST_AMH_Server::ior_output_file_, "w");
+  FILE *output_file= ACE_OS::fopen (ior_file, "w");
   if (output_file == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "Cannot open output file for writing IOR: %s",
-                  ST_AMH_Server::ior_output_file_));
+                  ior_file));
       return -1;
     }
 
@@ -288,9 +284,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (parse_args (argc, argv) != 0)
     return 1;
 
-  ST_AMH_Server amh_server (&argc, argv);
+  ST_AMH_Server amh_server;
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-
 
   amh_server.start_orb_and_poa(orb);
 

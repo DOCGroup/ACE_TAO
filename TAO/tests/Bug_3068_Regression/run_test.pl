@@ -45,7 +45,12 @@ print STDERR "Executing, client options=$conf_client -k file://$iorfile\n";
 $CL = new PerlACE::Process ("client",
                             "$conf_client -k file://$iorfile");
 
-$SV->Spawn ();
+$server_status = $SV->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
