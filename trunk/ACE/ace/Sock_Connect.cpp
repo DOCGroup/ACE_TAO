@@ -57,14 +57,16 @@ const struct in6_addr in6addr_linklocal_allnodes = IN6ADDR_LINKLOCAL_ALLNODES_IN
 const struct in6_addr in6addr_linklocal_allrouters = IN6ADDR_LINKLOCAL_ALLROUTERS_INIT;
 #endif /* ACE_VXWORKS == 0x630 && __RTP__ && ACE_HAS_IPV6 */
 
-#if defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_IPV6) && defined (ACE_HAS_WINCE)
 #include /**/ <Iphlpapi.h>
+# if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 // The following code is suggested by microsoft as a workaround to the fact
 // that on Windows CE, these constants are exported as function addresses
 // rather than simply values.
 #  include /**/ <ws2tcpip.h>
 const struct in6_addr in6addr_any = IN6ADDR_ANY_INIT;
 const struct in6_addr in6addr_loopback = IN6ADDR_LOOPBACK_INIT;
+# endif
 #endif  // ACE_HAS_WINCE
 
 #if defined (ACE_WIN32) && defined (ACE_HAS_PHARLAP)
@@ -491,7 +493,7 @@ static int
 get_ip_interfaces_win32 (size_t &count,
                          ACE_INET_Addr *&addrs)
 {
-# if defined (ACE_HAS_WINCE)
+# if defined (ACE_HAS_WINCE) && defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   // moved the ACE_HAS_WINCE impl ahaid of ACE_HAS_WINSOCK2 because
   // WINCE in fact has winsock2, but doesn't properly support the
   // WSAIoctl for obtaining IPv6 address info.
@@ -603,7 +605,7 @@ get_ip_interfaces_win32 (size_t &count,
   // kernel says there are no more of that type.
   const size_t ACE_MAX_ETS_DEVICES = 64;  // Arbitrary, but should be enough.
   DEVHANDLE ip_dev[ACE_MAX_ETS_DEVICES];
-  EK_TCPIPCFG *devp;
+  EK_TCPIPCFG *devp = 0;
   size_t i, j;
   ACE_TCHAR dev_name[16];
 

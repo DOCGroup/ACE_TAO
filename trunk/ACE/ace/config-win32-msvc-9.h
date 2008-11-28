@@ -56,10 +56,10 @@
 # define ACE_HAS_EXCEPTIONS
 #endif
 
-// Windows Mobile 5 doesn't do sig_atomic_t, but maybe future versions will.
-#  if !defined (_WIN32_WCE) || (_WIN32_WCE > 0x501)
+// Windows Mobile 6 doesn't do sig_atomic_t, but maybe future versions will.
+#  if !defined (_WIN32_WCE) || (_WIN32_WCE > 0x601)
 #    define ACE_HAS_SIG_ATOMIC_T
-#  endif /* !Win CE 5.0 or less */
+#  endif /* !Win CE 6.0 or less */
 
 #define ACE_HAS_STRERROR
 #define ACE_LACKS_STRPTIME

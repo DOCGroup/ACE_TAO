@@ -128,12 +128,6 @@ namespace ACE_OS {
   /// Tests @a c for the property specified by the @a desc argument
   ACE_NAMESPACE_INLINE_FUNCTION
   int ace_isctype (int c, ctype_t desc);
-  
-#if defined (ACE_HAS_WCHAR)
-  /// Tests @a c for the property specified by the @a desc argument
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_iswctype(wint_t c, wctype_t desc);
-#endif /* ACE_HAS_WCHAR */
   //@}
 
 } /* namespace ACE_OS */
