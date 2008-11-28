@@ -2005,6 +2005,7 @@ fi
 %{_libdir}/libACE_RMCast.so
 %{_libdir}/libACE_TMCast.so
 %{_libdir}/libACE_SSL.so
+%dir %{_datadir}/ace
 %{_datadir}/ace/include
 %{_datadir}/ace/include/makeinclude
 %{_datadir}/ace/bin

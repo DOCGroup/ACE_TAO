@@ -1,3 +1,8 @@
+Fri Nov 28 14:38:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.txt:
+          Improvement for OpenSuSE Factory
+
 Fri Nov 28 12:38:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
