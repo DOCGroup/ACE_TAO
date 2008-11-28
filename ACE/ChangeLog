@@ -1,3 +1,8 @@
+Fri Nov 28 11:04:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * contribs/FaCE/CE_ARGV.H:
+          Doxygen change
+
 Fri Nov 28 11:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * appsJAWS/clients/Blobby/Blob_Handler.cpp:
