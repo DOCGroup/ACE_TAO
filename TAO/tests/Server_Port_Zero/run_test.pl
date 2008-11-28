@@ -8,6 +8,14 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
+$debug_level = '0';
+
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
+
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $iorbase = "server.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
@@ -37,6 +45,6 @@ if ($server != 0) {
     $status = 1;
 }
 
-unlink $iorfile;
+$server->DeleteFile($iorbase);
 
 exit $status;
