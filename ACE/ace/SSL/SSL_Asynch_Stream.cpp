@@ -104,6 +104,7 @@ ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream (
     ext_write_result_(0),
     flags_        (0),
     ssl_          (0),
+    handshake_complete_(false),
     bio_          (0),
     bio_istream_  (),
     bio_inp_msg_  (),
@@ -495,7 +496,18 @@ int
 ACE_SSL_Asynch_Stream::do_SSL_handshake (void)
 {
   if (SSL_is_init_finished (this->ssl_))
-    return 1;
+    {
+      if (!handshake_complete_)
+        {
+          handshake_complete_ = true;
+
+          if (!post_handshake_check ())
+            {
+              return -1;
+            }
+        }
+      return 1;  
+    }
 
   if (this->flags_ & SF_REQ_SHUTDOWN)
     return -1;
@@ -543,6 +555,13 @@ ACE_SSL_Asynch_Stream::do_SSL_handshake (void)
     }
 
   return 1;
+}
+
+
+bool
+ACE_SSL_Asynch_Stream::post_handshake_check (void)
+{
+  return true;
 }
 
 // ************************************************************
