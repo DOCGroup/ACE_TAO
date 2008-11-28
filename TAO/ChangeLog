@@ -1,3 +1,12 @@
+Fri Nov 28 12:39:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocation_Tests/run_test.pl:
+        * tests/Native_Exceptions/run_test.pl:
+        * tests/Servant_To_Reference_Test/run_test.pl:
+        * tests/Server_Port_Zero/run_test.pl:
+        * tests/AMH_Exceptions/run_test.pl:
+          Fixed fuzz errors/warnings
+
 Fri Nov 28 11:27:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Abstract_Interface/run_test.pl
