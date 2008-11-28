@@ -354,7 +354,7 @@ private:
   /// Cache the mode so we can answer fast
   int mode_;
 
-  /// The private key, certificate, and Diffie-Hellman paramters files
+  /// The private key, certificate, and Diffie-Hellman parameters files
   ACE_SSL_Data_File private_key_;
   ACE_SSL_Data_File certificate_;
   ACE_SSL_Data_File dh_params_;

@@ -1,18 +1,96 @@
-Fri Nov 29 10:25:00 UTC 2008  Simon Massey  <sma@prismtech.com>
+Fri Nov 28 10:59:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	      * docs/bczar/bczar.html:
-	        Annoying little bits and pieces....
+        * ace/Arg_Shifter.h:
+        * ace/Argv_Type_Converter.h:
+        * ace/Event_Handler_T.h:
+        * ace/OS_Errno.h:
+        * ace/OS_NS_stropts.h:
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/SSL/SSL_Context.h:
+          Doxygen fix
 
-Fri Nov 29 09:00:00 UTC 2008  Simon Massey  <sma@prismtech.com>
+        * ace/Basic_Types.h:
+        * ace/config-linux-common.h:
+        * ace/config-macosx-leopard.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
+        * ace/config-netbsd.h:
+        * ace/config-sunos5.10.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+        * ace/config-win32-borland.h:
+        * ace/config-win32-ghs.h:
+        * ace/config-win32-mingw.h:
+        * ace/config-win32-msvc.h:
+          Added _ASCII versions of all existing format specifiers.
+          The existing ones are then defined using these ASCII ones.
+          When using the format specifiers we can now select if we
+          want to use the ascii or wchar_t ones and don't have to
+          convert wchar_t to ascii
 
-	      * docs/Download.html:
-	      * etc/index.html:
-	      * bin/diff-builds-and-group-fixed-tests-only.sh
-	        update latest micro version links and date.
+        * ace/Cleanup.cpp:
+        * ace/Cleanup.h:
+          Extended ACE_Cleanup_Info with a constructor that initializes
+          all members. At the end of ACE_OS_Exit_Info::call_hooks delete
+          all the hooks, they are invalid at this moment
+
+        * ace/config-cray.h:
+        * ace/config-sco-5.0.0.h:
+          Cleanup
+
+        * ace/config-win32-msvc-10.h:
+        * ace/config-win32-msvc-9.h:
+          Update for Windows Mobile 6
+
+        * ace/DLL_Manager.cpp:
+          Const change
+
+        * ace/os_include/os_errno.h:
+          Simplified a check
+
+        * ace/OS_NS_ctype.h:
+        * ace/OS_NS_ctype.inl:
+        * ace/OS_NS_wctype.cpp
+        * ace/OS_NS_wctype.h
+        * ace/OS_NS_wctype.inl
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+        * ace/Makefile.am:
+          Moved ace_iswctype to OS_NS_wctype.{h,cpp,inl}. According to the
+          opengroup spec this method has to be in that file
+
+        * ace/OS_NS_unistd.inl:
+          Small layout change
+
+        * ace/Sample_History.cpp:
+          Const change
+
+        * ace/Service_Repository.cpp:
+          Use ACE prefix in all debug statements
+
+        * ace/Sock_Connect.cpp:
+          Make it possible to build with WinCE without winsock2
+
+        * ace/SOCK_Connector.cpp:
+          Layout changes and check the result value of setting the
+          stream in non blocking mode
+
+Fri Nov 28 10:25:00 UTC 2008  Simon Massey  <sma@prismtech.com>
+
+        * docs/bczar/bczar.html:
+          Annoying little bits and pieces....
+
+Fri Nov 28 09:00:00 UTC 2008  Simon Massey  <sma@prismtech.com>
+
+        * docs/Download.html:
+        * etc/index.html:
+        * bin/diff-builds-and-group-fixed-tests-only.sh
+          update latest micro version links and date.
 
 Thu Nov 27 04:09:39 CST 2008  Simon Massey  <sma@prismtech.com>
 
-	      * ACE version 5.6.7 released.
+       * ACE version 5.6.7 released.
 
 Wed Nov 26 16:15:50 UTC 2008  Simon Massey  <sma at prismtech dot com>
 

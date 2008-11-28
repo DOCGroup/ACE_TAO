@@ -555,11 +555,10 @@ ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
 #else /* ACE_WIN32 && !ACE_HAS_WINCE */
   // Emulate using the char version
   char *char_name = 0;
-  int result = 0;
 
   ACE_NEW_RETURN (char_name, char[maxnamelen], -1);
 
-  result = ACE_OS::hostname(char_name, maxnamelen);
+  int result = ACE_OS::hostname(char_name, maxnamelen);
   ACE_OS::strcpy (name, ACE_Ascii_To_Wide (char_name).wchar_rep ());
 
   delete [] char_name;

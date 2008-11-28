@@ -20,7 +20,6 @@ ACE_Cleanup::cleanup (void *)
   delete this;
 }
 
-
 ACE_Cleanup::~ACE_Cleanup (void)
 {
 }
@@ -39,6 +38,15 @@ ACE_Cleanup_Info::ACE_Cleanup_Info (void)
   : object_ (0),
     cleanup_hook_ (0),
     param_ (0)
+{
+}
+
+ACE_Cleanup_Info::ACE_Cleanup_Info (void *object,
+                                    ACE_CLEANUP_FUNC cleanup_hook,
+                                    void *param)
+  : object_ (object),
+    cleanup_hook_ (cleanup_hook),
+    param_ (param)
 {
 }
 
@@ -120,7 +128,6 @@ ACE_OS_Exit_Info::ACE_OS_Exit_Info (void)
 ACE_OS_Exit_Info::~ACE_OS_Exit_Info (void)
 {
   delete registered_objects_;
-  registered_objects_ = 0;
 }
 
 int
@@ -128,10 +135,7 @@ ACE_OS_Exit_Info::at_exit_i (void *object,
                              ACE_CLEANUP_FUNC cleanup_hook,
                              void *param)
 {
-  ACE_Cleanup_Info new_info;
-  new_info.object_ = object;
-  new_info.cleanup_hook_ = cleanup_hook;
-  new_info.param_ = param;
+  ACE_Cleanup_Info new_info (object, cleanup_hook, param);
 
   // Return -1 and sets errno if unable to allocate storage.  Enqueue
   // at the head and dequeue from the head to get LIFO ordering.
@@ -147,10 +151,10 @@ ACE_OS_Exit_Info::at_exit_i (void *object,
     }
 }
 
-int
+bool
 ACE_OS_Exit_Info::find (void *object)
 {
-  // Check for already in queue, and return 1 if so.
+  // Check for already in queue, and return true if so.
   for (ACE_Cleanup_Info_Node *iter = registered_objects_;
        iter  &&  iter->next_ != 0;
        iter = iter->next_)
@@ -158,11 +162,11 @@ ACE_OS_Exit_Info::find (void *object)
       if (iter->cleanup_info_.object_ == object)
         {
           // The object has already been registered.
-          return 1;
+          return true;
         }
     }
 
-  return 0;
+  return false;
 }
 
 void
@@ -177,16 +181,27 @@ ACE_OS_Exit_Info::call_hooks (void)
       ACE_Cleanup_Info &info = iter->cleanup_info_;
       if (info.cleanup_hook_ == reinterpret_cast<ACE_CLEANUP_FUNC> (
             ACE_CLEANUP_DESTROYER_NAME))
-        // The object is an ACE_Cleanup.
-        ACE_CLEANUP_DESTROYER_NAME (
-          reinterpret_cast<ACE_Cleanup *> (info.object_),
-          info.param_);
+        {
+          // The object is an ACE_Cleanup.
+          ACE_CLEANUP_DESTROYER_NAME (
+            reinterpret_cast<ACE_Cleanup *> (info.object_),
+            info.param_);
+        }
       else if (info.object_ == &ace_exit_hook_marker)
-        // The hook is an ACE_EXIT_HOOK.
-        (* reinterpret_cast<ACE_EXIT_HOOK> (info.cleanup_hook_)) ();
+        {
+          // The hook is an ACE_EXIT_HOOK.
+          (* reinterpret_cast<ACE_EXIT_HOOK> (info.cleanup_hook_)) ();
+        }
       else
-        (*info.cleanup_hook_) (info.object_, info.param_);
+        {
+          (*info.cleanup_hook_) (info.object_, info.param_);
+        }
     }
+
+  // Delete now the list of cleanup hooks, all are called and we don't want
+  // to call them again
+  delete registered_objects_;
+  registered_objects_ = 0;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

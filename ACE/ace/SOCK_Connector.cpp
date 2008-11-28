@@ -97,8 +97,7 @@ ACE_SOCK_Connector::shared_connect_start (ACE_SOCK_Stream &new_stream,
     }
 
   // Enable non-blocking, if required.
-  if (timeout != 0
-      && new_stream.enable (ACE_NONBLOCK) == -1)
+  if (timeout != 0 && new_stream.enable (ACE_NONBLOCK) == -1)
     return -1;
   else
     return 0;
@@ -163,10 +162,18 @@ ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
   // EISCONN is treated specially since this routine may be used to
   // check if we are already connected.
   if (result != -1 || error == EISCONN)
-    // Start out with non-blocking disabled on the <new_stream>.
-    new_stream.disable (ACE_NONBLOCK);
+    {
+      // Start out with non-blocking disabled on the new_stream.
+      result = new_stream.disable (ACE_NONBLOCK);
+      if (result == -1)
+        {
+          new_stream.close ();
+        }
+    }
   else if (!(error == EWOULDBLOCK || error == ETIMEDOUT))
-    new_stream.close ();
+    {
+      new_stream.close ();
+    }
 
   return result;
 }

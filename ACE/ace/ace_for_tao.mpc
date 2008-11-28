@@ -135,6 +135,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     OS_NS_time.cpp
     OS_NS_unistd.cpp
     OS_NS_wchar.cpp
+    OS_NS_wctype.cpp
     OS_QoS.cpp
     OS_Thread_Adapter.cpp
     OS_TLI.cpp

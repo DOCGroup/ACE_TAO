@@ -198,7 +198,7 @@ ACE_Service_Repository::close (void)
 #ifndef ACE_NLOGGING
   if(ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) SR::close - repo=%@, size=%d\n"),
+                ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@, size=%d\n"),
                 this,
                 this->current_size_));
 #endif
@@ -216,12 +216,12 @@ ACE_Service_Repository::close (void)
         {
           if (s == 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) SR::close - repo=%@ [%d] -> 0\n"),
+                        ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@ [%d] -> 0\n"),
                         this,
                         i));
           else
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) SR::close - repo=%@ [%d], name=%s, object=%@\n"),
+                        ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@ [%d], name=%s, object=%@\n"),
                         this,
                         i,
                         s->name (),
@@ -244,7 +244,7 @@ ACE_Service_Repository::~ACE_Service_Repository (void)
   ACE_TRACE ("ACE_Service_Repository::~ACE_Service_Repository");
 #ifndef ACE_NLOGGING
   if(ACE::debug ())
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) SR::<dtor>, this=%@\n", this));
+    ACE_DEBUG ((LM_DEBUG, "ACE (%P|%t) SR::<dtor>, this=%@\n", this));
 #endif
   this->close ();
 }

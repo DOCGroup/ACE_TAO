@@ -203,7 +203,6 @@
 /* #define ACE_HAS_TLI */
 /* #define ACE_HAS_TIUSER_H */
 /* #define ACE_HAS_TLI_PROTOTYPES */
-/* #define ACE_LACKS_T_ERRNO */
 
 /* #define ACE_LACKS_NAMED_POSIX_SEM */
 

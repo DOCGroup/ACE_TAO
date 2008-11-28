@@ -106,7 +106,7 @@ public:
    *     If the current argument does not match flag
    *     If there is no parameter found after a 'matched' flag
    *
-   * If the flag is matched and the flag and paramter DO NOT RUN
+   * If the flag is matched and the flag and parameter DO NOT RUN
    * together, the flag is consumed, the parameter is returned,
    * and the new current argument is the parameter value.
    * ie '-foobarflag  VALUE' leaves the new cur arg == "VALUE"

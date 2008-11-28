@@ -32,7 +32,7 @@
 
 #define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 
-#define ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT ("%lu")
+#define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
 
 #if !defined (__i386__)
 # if defined (ACE_HAS_PENTIUM)
@@ -54,7 +54,7 @@
 #define ACE_LACKS_STROPTS_H
 
 // Platform provides <execinfo.h> header.
-#define ACE_HAS_EXECINFO_H               
+#define ACE_HAS_EXECINFO_H
 
 // Wcharness....
 #define ACE_HAS_WCHAR
