@@ -1,3 +1,12 @@
+Fri Nov 28 11:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.txt:
+          Updated for next micro release and corrected links for the
+          nslist/nsdel/nsadd/catior
+
+        * rpmbuild/ace-tao.spec:
+          Updated for next micro release
+
 Fri Nov 28 10:59:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Arg_Shifter.h:

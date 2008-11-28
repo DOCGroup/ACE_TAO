@@ -1,7 +1,7 @@
 # Set the version number here.
-%define ACEVER  5.6.7
-%define TAOVER  1.6.7
-%define CIAOVER 0.6.7
+%define ACEVER  5.6.8
+%define TAOVER  1.6.8
+%define CIAOVER 0.6.8
 # Set is_major_ver if the version is X.Y instead X.Y.Z
 
 # TODO
@@ -1295,10 +1295,10 @@ install ${ACE_ROOT}/bin/ace_gperf %{buildroot}%{_bindir}
 install ${ACE_ROOT}/bin/tao_idl %{buildroot}%{_bindir}
 install ${ACE_ROOT}/bin/tao_imr %{buildroot}%{_bindir}
 install ${ACE_ROOT}/bin/tao_ifr %{buildroot}%{_bindir}
-install ${ACE_ROOT}/bin/catior %{buildroot}%{_bindir}/tao_catior
-install ${ACE_ROOT}/bin/nsadd %{buildroot}%{_bindir}/tao_nsadd
-install ${ACE_ROOT}/bin/nsdel %{buildroot}%{_bindir}/tao_nsdel
-install ${ACE_ROOT}/bin/nslist %{buildroot}%{_bindir}/tao_nslist
+install ${ACE_ROOT}/bin/tao_catior %{buildroot}%{_bindir}/tao_catior
+install ${ACE_ROOT}/bin/tao_nsadd %{buildroot}%{_bindir}/tao_nsadd
+install ${ACE_ROOT}/bin/tao_nsdel %{buildroot}%{_bindir}/tao_nsdel
+install ${ACE_ROOT}/bin/tao_nslist %{buildroot}%{_bindir}/tao_nslist
 
 # ================================================================
 # Config & Options
