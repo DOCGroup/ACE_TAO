@@ -1,6 +1,13 @@
+Fri Nov 29 09:00:00 UTC 2008  Simon Massey  <sma@prismtech.com>
+
+	      * docs/Download.html:
+	      * etc/index.html:
+	      * bin/diff-builds-and-group-fixed-tests-only.sh
+	        update latest micro version links and date.
+
 Thu Nov 27 04:09:39 CST 2008  Simon Massey  <sma@prismtech.com>
 
-	* ACE version 5.6.7 released.
+	      * ACE version 5.6.7 released.
 
 Wed Nov 26 16:15:50 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
