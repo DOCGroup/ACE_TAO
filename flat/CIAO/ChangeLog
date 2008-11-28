@@ -1,3 +1,8 @@
+Fri Nov 28 16:05:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
+          Added missing include
+
 Wed Nov 26 16:17:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/NodeApplication.mpc:

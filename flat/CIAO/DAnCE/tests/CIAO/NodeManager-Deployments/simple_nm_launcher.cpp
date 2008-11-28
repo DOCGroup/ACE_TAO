@@ -6,6 +6,7 @@
  */
 
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_unistd.h"
 #include "tao/ORB.h"
 #include "ciao/Logger/Logger_Service.h"
 #include "ciao/Logger/Log_Macros.h"
