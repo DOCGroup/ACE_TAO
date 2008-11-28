@@ -80,31 +80,29 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
       switch (ev->et)
         {
         case AST_Expression::EV_short:
-          this->TAO_OutStream::print (ACE_TEXT_ALWAYS_CHAR (ACE_INT32_FORMAT_SPECIFIER), ev->u.sval);
+          this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII, ev->u.sval);
           break;
         case AST_Expression::EV_ushort:
-          this->TAO_OutStream::print (ACE_TEXT_ALWAYS_CHAR (ACE_INT32_FORMAT_SPECIFIER ACE_TEXT("%c")), ev->u.usval, 'U');
+          this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII "%c", ev->u.usval, 'U');
           break;
         case AST_Expression::EV_long:
-          this->TAO_OutStream::print (ACE_TEXT_ALWAYS_CHAR (ACE_INT32_FORMAT_SPECIFIER), ev->u.lval);
+          this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII, ev->u.lval);
           break;
         case AST_Expression::EV_ulong:
-          this->TAO_OutStream::print (ACE_TEXT_ALWAYS_CHAR (ACE_UINT32_FORMAT_SPECIFIER ACE_TEXT("%c")), ev->u.ulval, 'U');
+          this->TAO_OutStream::print (ACE_UINT32_FORMAT_SPECIFIER_ASCII "%c", ev->u.ulval, 'U');
           break;
         // The ACE_LACKS_LONGLONG_T guards have been removed around
         // the next 2 cases since the macros now used should work
         // whether native 64-bit integers are defined or not.
         case AST_Expression::EV_longlong:
           this->TAO_OutStream::print ("ACE_INT64_LITERAL (");
-          this->TAO_OutStream::print (ACE_TEXT_ALWAYS_CHAR (
-                                        ACE_INT64_FORMAT_SPECIFIER),
+          this->TAO_OutStream::print (ACE_INT64_FORMAT_SPECIFIER_ASCII,
                                       ev->u.llval);
           this->TAO_OutStream::print (")");
           break;
         case AST_Expression::EV_ulonglong:
           this->TAO_OutStream::print ("ACE_UINT64_LITERAL (");
-          this->TAO_OutStream::print (ACE_TEXT_ALWAYS_CHAR (
-                                        ACE_UINT64_FORMAT_SPECIFIER),
+          this->TAO_OutStream::print (ACE_UINT64_FORMAT_SPECIFIER_ASCII,
                                       ev->u.ullval);
           this->TAO_OutStream::print (")");
           break;
