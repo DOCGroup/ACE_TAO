@@ -1399,8 +1399,8 @@ sub check_for_bad_run_test ()
                         print_error ("$file:$.: using \$PerlACE::add_lib_path");
                     }
 
-                    if (m/\$PerlACE::Run_Test/) {
-                        print_error ("$file:$.: using \$PerlACE::Run_Test");
+                    if (m/\PerlACE::Run_Test/) {
+                        print_error ("$file:$.: using PerlACE::Run_Test");
                     }
 
                     if (m/PerlACE::random_port/) {
