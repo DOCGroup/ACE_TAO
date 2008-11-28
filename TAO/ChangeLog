@@ -1,3 +1,10 @@
+Fri Nov 28 15:24:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3506_Regression/*:
+          New reproducer for a problem with Any/TypeCodes. This existed in
+          an older version but already got fixed. Just adding the regression
+          test to make sure we don't break this usage
+
 Fri Nov 28 14:34:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.inl:
