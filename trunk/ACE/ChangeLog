@@ -1,3 +1,15 @@
+Fri Nov 28 11:33:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Extended tests for run_test.pl files
+
+        * bin/PerlACE/TestTarget.pm:
+          Added some new variables that we will use for the iBoot
+
+        * bin/tao_orb_tests.lst:
+          Enabled several tests for Labview/CE/Fuzz and also added a few
+          TAO tests that where missing from this file
+
 Fri Nov 28 11:07:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * protocols/ace/HTBP/HTBP_Session.cpp:

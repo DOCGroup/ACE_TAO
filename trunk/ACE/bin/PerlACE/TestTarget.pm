@@ -151,6 +151,22 @@ sub GetConfigSettings ($)
     if (exists $ENV{$env_name}) {
         $self->{IBOOT} = $ENV{$env_name};
     }
+    $env_name = $env_prefix.'IBOOT_PASSWD';
+    if (exists $ENV{$env_name}) {
+        $self->{IBOOT_PASSWD} = $ENV{$env_name};
+    }
+    $env_name = $env_prefix.'IBOOT_OUTLET';
+    if (exists $ENV{$env_name}) {
+        $self->{IBOOT_OUTLET} = $ENV{$env_name};
+    }
+    $env_name = $env_prefix.'IBOOT_USER';
+    if (exists $ENV{$env_name}) {
+        $self->{IBOOT_USER} = $ENV{$env_name};
+    }
+    $env_name = $env_prefix.'IBOOT_PASSWD';
+    if (exists $ENV{$env_name}) {
+        $self->{IBOOT_PASSWD} = $ENV{$env_name};
+    }
     $env_name = $env_prefix.'REBOOT_TIME';
     if (exists $ENV{$env_name}) {
         $self->{REBOOT_TIME} = $ENV{$env_name};
