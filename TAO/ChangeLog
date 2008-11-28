@@ -1,3 +1,15 @@
+Fri Nov 28 11:12:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+          Doxygen change
+
+        * orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp:
+          No need to use some intermediate variables
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/tests/Notify/lib/common.cpp:
+          Use ascii format specifiers
+
 Fri Nov 28 11:11:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/AMH/Sink_Server/MT_AMH_Server.h:

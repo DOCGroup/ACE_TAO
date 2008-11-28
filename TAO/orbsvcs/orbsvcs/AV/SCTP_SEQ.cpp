@@ -197,16 +197,14 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
                   entry->num_local_sec_addrs ());
 
   char buf[BUFSIZ];
-  multi_addr.addr_to_string (buf,
-                             BUFSIZ);
+  multi_addr.addr_to_string (buf, BUFSIZ);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_AV_SCTP_SEQ_Base_Acceptor::open: %s",
                 buf));
 
-  int result = this->open (multi_addr,reactor);
-  if (result < 0)
+  if (this->open (multi_addr,reactor) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Base_Acceptor::open failed\n"),-1);
 
   return 0;
@@ -215,8 +213,7 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
 int
 TAO_AV_SCTP_SEQ_Base_Acceptor::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler)
 {
-  int result = this->acceptor_->make_svc_handler (handler);
-  if (result < 0)
+  if (this->acceptor_->make_svc_handler (handler) < 0)
     return result;
   handler->reactor (this->reactor_);
   this->entry_->handler (handler);
@@ -286,8 +283,7 @@ TAO_AV_SCTP_SEQ_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   ACE_INET_Addr *inet_addr = (ACE_INET_Addr *) address;
 
   char buf[BUFSIZ];
-  inet_addr->addr_to_string (buf,
-                             BUFSIZ);
+  inet_addr->addr_to_string (buf, BUFSIZ);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -378,8 +374,7 @@ TAO_AV_SCTP_SEQ_Base_Connector::connector_open (TAO_AV_SCTP_SEQ_Connector *conne
   this->connector_ = connector;
   this->reactor_ = reactor;
 
-  int result = this->open (reactor);
-  if (result < 0)
+  if (this->open (reactor) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Base_Connector::open failed\n"),-1);
   return 0;
 }
@@ -627,8 +622,7 @@ TAO_AV_SCTP_SEQ_Factory::make_connector (void)
 
 
 int
-TAO_AV_SCTP_SEQ_Factory::init (int,
-                               char *[])
+TAO_AV_SCTP_SEQ_Factory::init (int, ACE_TCHAR *[])
 {
 
   return 0;
@@ -868,7 +862,7 @@ TAO_AV_SCTP_SEQ_Flow_Factory::~TAO_AV_SCTP_SEQ_Flow_Factory (void)
 
 int
 TAO_AV_SCTP_SEQ_Flow_Factory::init (int /* argc */,
-                                    char * /* argv */ [])
+                                    ACE_TCHAR * /* argv */ [])
 {
   return 0;
 }
