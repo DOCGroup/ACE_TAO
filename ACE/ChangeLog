@@ -1,5 +1,10 @@
 Fri Nov 28 11:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * appsJAWS/clients/Blobby/Blob_Handler.cpp:
+          Use new ascii format specifier
+
+Fri Nov 28 11:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * rpmbuild/ace-tao-ciao.txt:
           Updated for next micro release and corrected links for the
           nslist/nsdel/nsadd/catior
