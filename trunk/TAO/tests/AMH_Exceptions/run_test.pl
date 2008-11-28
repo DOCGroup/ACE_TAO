@@ -8,8 +8,15 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # This is a Perl script that tests AMH exceptions
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
 use PerlACE::TestTarget;
+
+$debug_level = '0';
+
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
 
 my $target = PerlACE::TestTarget::create_target(1) || die "Create target 1 failed\n";
 my $host = PerlACE::TestTarget::create_target(2) || die "Create targer 2 failed\n";

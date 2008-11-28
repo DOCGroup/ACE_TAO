@@ -66,7 +66,7 @@ if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
     $status = 1;
 }
-unlink $iorfile;
+$server->DeleteFile($iorbase);
 
 print STDERR "======== Running in no collocation mode and two ORBS \n";
 $SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -n -ORBCollocation no");
