@@ -213,6 +213,7 @@ libACE_la_SOURCES = \
   OS_NS_time.cpp \
   OS_NS_unistd.cpp \
   OS_NS_wchar.cpp \
+  OS_NS_wctype.cpp \
   OS_QoS.cpp \
   OS_TLI.cpp \
   OS_Thread_Adapter.cpp \
@@ -808,6 +809,8 @@ nobase_include_HEADERS += \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_wchar.h \
+  OS_NS_wctype.h \
+  OS_NS_wctype.inl \
   OS_NS_wchar.inl \
   OS_QoS.h \
   OS_String.h \

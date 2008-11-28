@@ -66,8 +66,13 @@ void ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *, void *param = 0);
 class ACE_Export ACE_Cleanup_Info
 {
 public:
-  /// Default constructor.
+  /// Constructor
   ACE_Cleanup_Info (void);
+
+  /// Constructor.
+  ACE_Cleanup_Info (void *object,
+                    ACE_CLEANUP_FUNC cleanup_hook,
+                    void *param);
 
   /// Equality operator.
   bool operator== (const ACE_Cleanup_Info &o) const;
@@ -92,6 +97,8 @@ class ACE_Cleanup_Info_Node;
  *
  * @brief Hold Object Manager cleanup (exit) information.
  *
+ * @internal
+ *
  * For internal use by the ACE library, only.
  */
 class ACE_Export ACE_OS_Exit_Info
@@ -106,9 +113,9 @@ public:
   /// Use to register a cleanup hook.
   int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
 
-  /// Look for a registered cleanup hook object.  Returns 1 if already
-  /// registered, 0 if not.
-  int find (void *object);
+  /// Look for a registered cleanup hook object.  Returns true if already
+  /// registered, false if not.
+  bool find (void *object);
 
   /// Call all registered cleanup hooks, in reverse order of
   /// registration.

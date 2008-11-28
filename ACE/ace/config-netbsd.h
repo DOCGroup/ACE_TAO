@@ -141,8 +141,8 @@
 typedef unsigned long ACE_UINT64;
 typedef   signed long ACE_INT64;
 
-#define ACE_SSIZE_T_FORMAT_SPECIFIER  ACE_TEXT ("%ld")
-#define ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT ("%lu")
+#define ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII  "%ld"
+#define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
 
 #elif defined(__i386__)
 

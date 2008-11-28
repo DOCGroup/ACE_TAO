@@ -446,7 +446,7 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
   for (size_t i = 0; i < 5 && try_names.size () < try_names.max_size (); ++i)
     {
       ACE_TString try_this;
-      size_t j = try_names.size ();
+      size_t const j = try_names.size ();
       switch (i)
         {
         case 0:        // Name + decorator + suffix
