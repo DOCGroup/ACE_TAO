@@ -1,4 +1,4 @@
-if test -z $1; then olddate=2008_09_15; else olddate=$1; fi
+if test -z $1; then olddate=2008_11_28; else olddate=$1; fi
 if test -z $2; then prefix=`date -u +%Y%m%d%a`; else prefix=$2; fi
 if test -z $ACE_ROOT; then ACE_ROOT=..; fi
 #
