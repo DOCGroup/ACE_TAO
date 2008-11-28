@@ -172,7 +172,7 @@ ACE::HTBP::Session::reconnect_i (ACE::HTBP::Channel *s)
   if (conn.connect (s->ace_stream(),*this->proxy_addr_) == -1)
     {
       ACE_TCHAR buffer[128];
-      this->proxy_addr_->addr_to_string(buffer,128, 0);
+      this->proxy_addr_->addr_to_string(buffer, 128, 0);
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT("(%P|%t) ACE::HTBP::Session::reconnect")
                   ACE_TEXT(" failed to %s, %p\n"),
