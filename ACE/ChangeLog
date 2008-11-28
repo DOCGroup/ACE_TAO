@@ -1,3 +1,8 @@
+Fri Nov 28 15:25:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added bug_3506
+
 Fri Nov 28 14:38:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-ciao.txt:
