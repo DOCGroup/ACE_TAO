@@ -690,6 +690,7 @@ public:
   /// Reference counting...
   unsigned long _incr_refcnt (void);
   unsigned long _decr_refcnt (void);
+  unsigned long _refcnt (void) const;
 
   /// Register the handle of an open connection with the ORB Core
   /// handle set.  This handle set will be used to explicitly remove
