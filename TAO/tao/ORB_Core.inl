@@ -22,7 +22,7 @@ TAO_ORB_Core::_incr_refcnt (void)
 ACE_INLINE unsigned long
 TAO_ORB_Core::_refcnt (void) const
 {
-  return this->refcount_;
+  return this->refcount_.value ();
 }
 
 ACE_INLINE unsigned long
