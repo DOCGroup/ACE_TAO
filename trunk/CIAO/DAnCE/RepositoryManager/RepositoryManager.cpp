@@ -100,9 +100,11 @@ bool
 register_with_ns (CORBA::ORB_ptr orb,
                   CIAO::RepositoryManagerDaemon_ptr obj)
 {
-  if (CIAO::RepositoryManager::repoman_name_ != "")
-    CIAO::RepositoryManager::RMname_service =
-      CIAO::RepositoryManager::repoman_name_;
+  if (ACE_OS::strlen (CIAO::RepositoryManager::repoman_name_) > 0)
+    {
+      CIAO::RepositoryManager::RMname_service =
+        CIAO::RepositoryManager::repoman_name_;
+    }
 
   // Naming Service related operations
   CORBA::Object_var naming_context_object =

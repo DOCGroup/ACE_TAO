@@ -398,7 +398,7 @@ basic_visitor::visit_enum (AST_Enum *node)
       *os << be_nl;
 
       AST_EnumVal *ev = AST_EnumVal::narrow_from_decl (i.item ());
-      
+
       *os << IdentifierHelper::try_escape (ev->original_local_name ()).c_str ();
 
       // Advance here so the check below will work.
@@ -506,7 +506,7 @@ basic_visitor::visit_union (AST_Union *node)
       << "union "
       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
       << " switch (";
-      
+
   *os << this->type_name (node->disc_type ())
       << ")" << be_nl
       << "{" << be_idt;
@@ -1021,12 +1021,12 @@ basic_visitor::gen_label_value (AST_UnionLabel *node)
         {
           *os << IdentifierHelper::orig_sn (ScopeAsDecl (s)->name ()).c_str ()
               << "::";
-              
+
           Identifier *id =
             IdentifierHelper::original_local_name (val->n ()->last_component ());
 
           *os << IdentifierHelper::try_escape (id).c_str ();
-          
+
           id->destroy ();
           delete id;
           id = 0;
@@ -1057,7 +1057,7 @@ basic_visitor::gen_label_value (AST_UnionLabel *node)
       case AST_Expression::EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
         *os << "ACE_UINT64_LITERAL (";
-        this->os->print (ACE_TEXT_ALWAYS_CHAR (ACE_UINT64_FORMAT_SPECIFIER), ev->u.ullval);
+        this->os->print (ACE_UINT64_FORMAT_SPECIFIER_ASCII, ev->u.ullval);
         *os << ")";
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         break;
@@ -1093,7 +1093,7 @@ basic_visitor::can_skip_module (AST_Module *m)
     {
       AST_Decl *d = si.item ();
       AST_Decl::NodeType nt = d->node_type ();
-      
+
       switch (nt)
         {
           case AST_Decl::NT_interface:
@@ -1107,20 +1107,20 @@ basic_visitor::can_skip_module (AST_Module *m)
               {
                 break;
               }
-              
+
             return false;
           case AST_Decl::NT_module:
             if (!this->can_skip_module (AST_Module::narrow_from_decl (d)))
               {
                 return false;
               }
-              
+
             break;
           default:
             break;
         }
     }
-    
+
   return true;
 }
 
@@ -1135,16 +1135,16 @@ basic_visitor::match_excluded_file (const char *raw_filename)
     {
       ACE_CString::size_type cursor = p;
       p = be_global->excluded_filenames ().find (' ', cursor);
-      
+
       ACE_CString one_filename =
         be_global->excluded_filenames ().substr (cursor, p - cursor);
-        
+
       if (one_filename == raw_filename)
         {
           return true;
         }
-        
-      // Skip the whitespace.  
+
+      // Skip the whitespace.
       if (p != ACE_CString::npos)
         {
           while (be_global->excluded_filenames ()[p] == ' ')
@@ -1153,6 +1153,6 @@ basic_visitor::match_excluded_file (const char *raw_filename)
             }
         }
     }
-    
+
   return false;
 }

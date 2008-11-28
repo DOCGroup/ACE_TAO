@@ -1,3 +1,21 @@
+Fri Nov 28 11:36:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication.cpp:
+          Unicode changes
+
+        * DAnCE/RepositoryManager/RepositoryManager.cpp:
+          Corrected string test
+
+        * DevGuideExamples/Messenger/Administrator_exec_i.h:
+          layout change
+
+        * MPC/config/ciao_vcwarnings.mpb:
+          Added vc10
+
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/be_sunsoft.cpp:
+          Use ascii format specifiers
+
 Thu Nov 27 04:09:39 CST 2008  Simon Massey  <sma@prismtech.com>
 
 	* CIAO version 0.6.7 released.
