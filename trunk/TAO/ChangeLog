@@ -1,3 +1,17 @@
+Fri Nov 28 11:09:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Codeset/UTF8_Latin1_Translator.cpp:
+          Use true/false
+
+        * tao/ORB.h:
+        * tao/ORB.inl:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+          Added _refcnt() method to retrieve the current refcount
+
+        * tao/TAO_Internal.cpp:
+          Layout change
+
 Thu Nov 27 04:09:39 CST 2008  Simon Massey  <sma@prismtech.com>
 
 	* TAO version 1.6.7 released.

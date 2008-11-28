@@ -27,9 +27,15 @@ CORBA::ORB::_incr_refcnt (void)
 }
 
 ACE_INLINE unsigned long
+CORBA::ORB::_refcnt (void) const
+{
+  return this->refcount_;
+}
+
+ACE_INLINE unsigned long
 CORBA::ORB::_decr_refcnt (void)
 {
-  unsigned long count = --this->refcount_;
+  unsigned long const count = --this->refcount_;
 
   if (count != 0)
     {
