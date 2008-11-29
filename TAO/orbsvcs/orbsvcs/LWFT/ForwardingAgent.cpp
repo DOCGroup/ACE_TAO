@@ -90,7 +90,7 @@ void
 ForwardingAgent_i::initialize (CORBA::Object_ptr rm_ior)
 {
   this->RM_var_ = ReplicationManager::_narrow (rm_ior); 
-  ForwardingAgent_var temp = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ForwardingAgent_var temp = this->_this ();
   
   ACE_DEBUG ((LM_DEBUG, "FA: calling register agent\n"));
   RankList *rank_list = this->RM_var_->register_agent (temp.in ());
