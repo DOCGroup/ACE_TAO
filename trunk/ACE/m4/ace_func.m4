@@ -35,8 +35,8 @@ fi
 ])
 
 # ACE_FUNC_STRNCASECMP
-# + Defines ACE_LACKS_STRCASECMP to 1 if platform lacks strcasecmp()
-# + Defines ACE_STRCASECMP_EQUIVALENT to identifier name if platform
+# + Defines ACE_LACKS_STRNCASECMP to 1 if platform lacks strncasecmp()
+# + Defines ACE_STRNCASECMP_EQUIVALENT to identifier name if platform
 #   has a equivalent function that differs in name only.
 # + Defines ACE_LACKS_STRNCASECMP_PROTOTYPE to 1 if platform lacks
 #   declaration for strncasecmp().
@@ -87,9 +87,53 @@ if test "$ac_cv_func_strdup" = no; then
 fi
 ])
 
+# ACE_FUNC_STRTOLL
+# + Defines ACE_LACKS_STRTOLL to 1 if platform lacks strtoll()
+# + Defines ACE_STRTOLL_EQUIVALENT to identifier name if platform
+#   has a equivalent function that differs in name only.
+AC_DEFUN([ACE_FUNC_STRTOLL],
+[ACE_CHECK_LACKS_FUNCS(strtoll)
+if test $ac_cv_func_strtoll = "no"; then
+    AC_CHECK_FUNC(__strtoll)
+    if test $ac_cv_func___strtoll = "yes"; then
+        AC_DEFINE([ACE_STRTOLL_EQUIVALENT], [::__strtoll], 
+                  [Define to function that is equivalent to strtoll()])
+    else
+        AC_CHECK_FUNC(_strtoi64)
+        if test $ac_cv_func__strtoi64 = "yes"; then
+	    AC_DEFINE([ACE_STRTOLL_EQUIVALENT], [::_strtoi64])
+        fi
+    fi 
+else
+    AC_CHECK_DECL(strtoll, [], [], [#include <stdlib.h>])
+fi
+])
+
+# ACE_FUNC_STRTOULL
+# + Defines ACE_LACKS_STRTOULL to 1 if platform lacks strtoull()
+# + Defines ACE_STRTOULL_EQUIVALENT to identifier name if platform
+#   has a equivalent function that differs in name only.
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_FUNC_STRTOULL],
+[ACE_CHECK_LACKS_FUNCS(strtoull)
+if test $ac_cv_func_strtoull = "no"; then
+    AC_CHECK_FUNC(__strtoull)
+    if test $ac_cv_func___strtoull = "yes"; then
+        AC_DEFINE([ACE_STRTOULL_EQUIVALENT], [::__strtoull], 
+                  [Define to function that is equivalent to strtoull()])
+    else
+        AC_CHECK_FUNC(_strtoui64)
+        if test $ac_cv_func__strtoui64 = "yes"; then
+	    AC_DEFINE([ACE_STRTOULL_EQUIVALENT], [::_strtoui64])
+        fi
+    fi
+else
+    AC_CHECK_DECL(strtoull, [], [], [#include <stdlib.h>])
+fi
+])
 
 # ACE_FUNC_WCSCASECMP
-# + Defines ACE_LACKS_WCSCASECMP to 1 if platform lacks strcasecmp()
+# + Defines ACE_LACKS_WCSCASECMP to 1 if platform lacks wcscasecmp()
 # + Defines ACE_WCSCASECMP_EQUIVALENT to identifier name if platform
 #   has a equivalent function that differs in name only.
 #---------------------------------------------------------------------------
@@ -110,7 +154,7 @@ fi
 ])
 
 # ACE_FUNC_WCSNCASECMP
-# + Defines ACE_LACKS_WCSNCASECMP to 1 if platform lacks strcasecmp()
+# + Defines ACE_LACKS_WCSNCASECMP to 1 if platform lacks wcsncasecmp()
 # + Defines ACE_WCSNCASECMP_EQUIVALENT to identifier name if platform
 #   has a equivalent function that differs in name only.
 #---------------------------------------------------------------------------
@@ -147,6 +191,41 @@ if test "$ac_cv_func_wcsdup" = no; then
 fi
 ])
 
+# ACE_FUNC_WCSTOLL
+# + Defines ACE_LACKS_WCSTOLL to 1 if platform lacks wcstoll()
+# + Defines ACE_WCSTOLL_EQUIVALENT to identifier name if platform
+#   has a equivalent function that differs in name only.
+AC_DEFUN([ACE_FUNC_WCSTOLL],
+[ACE_CHECK_LACKS_FUNCS(wcstoll)
+if test $ac_cv_func_wcstoll = "no"; then
+    AC_CHECK_FUNC(_wcstoi64)
+    if test $ac_cv_func__wcstoi64 = "yes"; then
+	AC_DEFINE([ACE_WCSTOLL_EQUIVALENT], [::_wcstoi64],
+                  [Define to function that is equivalent to wcstoll()])
+    fi
+else
+    AC_CHECK_DECL(wcstoll, [], [], [#include <stdlib.h>
+#include <wchar.h>])
+fi
+])
+
+# ACE_FUNC_WCSTOULL
+# + Defines ACE_LACKS_WCSTOULL to 1 if platform lacks wcstoull()
+# + Defines ACE_WCSTOULL_EQUIVALENT to identifier name if platform
+#   has a equivalent function that differs in name only.
+AC_DEFUN([ACE_FUNC_WCSTOULL],
+[ACE_CHECK_LACKS_FUNCS(wcstoull)
+if test $ac_cv_func_wcstoull = "no"; then
+    AC_CHECK_FUNC(_wcstoui64)
+    if test $ac_cv_func__wcstoui64 = "yes"; then
+	AC_DEFINE([ACE_WCSTOULL_EQUIVALENT], [::_wcstoui64],
+                  [Define to function that is equivalent to wcstoull()])
+    fi
+else
+    AC_CHECK_DECL(wcstoull, [], [], [#include <stdlib.h>
+#include <wchar.h>])
+fi
+])
 
 # ACE_CHECK_SYSINFO
 #

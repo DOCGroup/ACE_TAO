@@ -6,7 +6,7 @@
 #include "ace/OS_NS_errno.h"
 #endif
 
-#if defined (ACE_USES_WCHAR) && defined (ACE_LACKS_ISWBLANK) && !defined (ACE_LACKS_ISWCTYPE
+#if defined (ACE_USES_WCHAR) && defined (ACE_LACKS_ISWBLANK) && !defined (ACE_LACKS_ISWCTYPE)
 #include "ace/OS_NS_wctype.h"
 #endif
 
