@@ -38,10 +38,10 @@ if ($server->WaitForFileTimed ($iorbase,
     exit 1;
 }
 
-$server = $SV->WaitKill ($iorbase);
+$server_status = $SV->WaitKill ($server->ProcessStartWaitInterval());
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 

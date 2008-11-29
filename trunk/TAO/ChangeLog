@@ -1,3 +1,13 @@
+Sat Nov 29 08:00:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Explicit_Event_Loop/run_test.pl
+        * tests/Objref_Sequence_Test/run_test.pl
+        * tests/Objref_Sequence_Test/server.cpp
+        * tests/Portable_Interceptors/AdvSlotDblCpy/run_test.pl
+        * tests/Server_Port_Zero/run_test.pl
+        * tests/Server_Port_Zero/server.cpp
+          Fixed test failures
+
 Fri Nov 28 15:24:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3506_Regression/*:
