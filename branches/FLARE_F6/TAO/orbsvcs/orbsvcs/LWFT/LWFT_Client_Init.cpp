@@ -28,6 +28,24 @@ LWFT_Client_Init::init (int &argc, char *argv[])
 
       the_orb = CORBA::ORB_init (argc, argv);
       fa_thread_.orb (the_orb.in ());
+      
+      //====================================================
+      // Must do this so we can create the Forwarding Agent
+      // object reference. If the calling application also
+      // does it, the second set of steps is idempotent.
+      
+      CORBA::Object_var obj =
+        the_orb->resolve_initial_references ("RootPOA");
+        
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (obj.in ());
+        
+      PortableServer::POAManager_var poa_manager =
+        root_poa->the_POAManager ();
+        
+      poa_manager->activate ();
+      
+      //====================================================
 
       int result = fa_thread_.activate ();
 

@@ -1,3 +1,13 @@
+Sat Nov 29 22:43:22 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.cpp(init):
+        
+          Added the usual steps to call POAManager::activate().
+          We need to make sure this is done so we can create
+          the Forwarding Agent object reference. If the application
+          happens to do it as well, the second set of steps is just
+          idempotent.
+
 Sat Nov 29 21:44:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.cpp:
