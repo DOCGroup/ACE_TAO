@@ -57,7 +57,7 @@ const struct in6_addr in6addr_linklocal_allnodes = IN6ADDR_LINKLOCAL_ALLNODES_IN
 const struct in6_addr in6addr_linklocal_allrouters = IN6ADDR_LINKLOCAL_ALLROUTERS_INIT;
 #endif /* ACE_VXWORKS == 0x630 && __RTP__ && ACE_HAS_IPV6 */
 
-#if defined (ACE_HAS_IPV6) && defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINCE)
 #include /**/ <Iphlpapi.h>
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 // The following code is suggested by microsoft as a workaround to the fact

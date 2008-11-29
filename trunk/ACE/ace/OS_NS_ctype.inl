@@ -6,6 +6,10 @@
 #include "ace/OS_NS_errno.h"
 #endif
 
+#if defined (ACE_USES_WCHAR) && defined (ACE_LACKS_ISWBLANK) && !defined (ACE_LACKS_ISWCTYPE
+#include "ace/OS_NS_wctype.h"
+#endif
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
