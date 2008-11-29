@@ -1,3 +1,16 @@
+Sat Nov 29 15:30:21 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_ctype.inl:
+
+          Fix typo in preprocessor conditional.
+
+        * configure.ac:
+        * m4/ace_func.m4:
+
+          Move feature tests for strtoll(), strtoull(), wcstoll(), and
+          wcstoull() to new autoconf macros ACE_FUNC_STRTOLL,
+          ACE_FUNC_STRTOULL, ACE_FUNC_WCSTOLL, and ACE_FUNC_WCSTOULL.
+
 Sat Nov 29 07:47:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sock_Connect.cpp:
