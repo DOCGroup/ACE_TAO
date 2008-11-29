@@ -5,16 +5,19 @@
 
 #include "orbsvcs/orbsvcs/Naming/Naming_Client.h"
 
+#include "tao/PortableServer/Servant_Base.h"
+#include "tao/ORBInitializer_Registry.h"
+
 #include "ForwardingAgent_Thread.h"
 #include "ForwardingAgent.h"
 #include "Client_ORBInitializer.h"
 
-ForwardingAgent_Thread::ForwardingAgent_Thread (
-  CORBA::ORB_ptr orb,
-  ForwardingAgent_i *agent)
-  : orb_ (orb), 
-    agent_ (agent),
-    synchronizer_ (2)
+ForwardingAgent_Thread::ForwardingAgent_Thread (void)
+  : synchronizer_ (2)
+{
+}
+
+ForwardingAgent_Thread::~ForwardingAgent_Thread (void)
 {
 }
 
@@ -23,25 +26,9 @@ ForwardingAgent_Thread::svc (void)
 {
   try
     {
-      CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references ("RootPOA");
-
-      if (CORBA::is_nil (poa_object.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             " (%P|%t) Unable to initialize the POA.\n"),
-                            1);
-        }
-
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ());
-
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager ();
-      poa_manager->activate ();
-
+      // Resolve the Naming Service and get the objref of the RM.
       TAO_Naming_Client naming_client;
-      naming_client.init (this->orb_);
+      naming_client.init (orb_);
       CosNaming::NamingContext_var root_context =
         naming_client.get_context ();
         
@@ -53,7 +40,14 @@ ForwardingAgent_Thread::svc (void)
       ReplicationManager_var rm =
         ReplicationManager::_narrow (tmp.in ());
 
+      // Give ownership to the POA in this thread.
+      PortableServer::ServantBase_var owner_transfer (agent_);
+      
+      // Create the object reference and register it with the RM.
       agent_->initialize (rm.in ());
+      
+      // Make sure the steps above finish before returning from
+      // activate() to the calling LWFT client.
       synchronizer_.wait ();
     }
   catch (const CORBA::Exception& ex)
@@ -92,5 +86,26 @@ ForwardingAgent_Thread::activate (long /* flags */,
   int retval = this->ACE_Task_Base::activate (flags, 1, 0, 0);
   synchronizer_.wait ();
   return retval;
+}
+
+void
+ForwardingAgent_Thread::register_orb_initializer (void)
+{
+  // Create the forwarding agent - ownership will be given to
+  // the POA in svc().
+  agent_ = new ForwardingAgent_i;
+
+  // Create an ORB initializer and register it.
+  PortableInterceptor::ORBInitializer_var orb_initializer =
+    new Client_ORBInitializer (agent_);
+
+  PortableInterceptor::register_orb_initializer (
+    orb_initializer.in ());
+}
+
+void
+ForwardingAgent_Thread::orb (CORBA::ORB_ptr the_orb)
+{
+  orb_ = the_orb;
 }
 
