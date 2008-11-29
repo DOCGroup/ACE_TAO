@@ -3385,39 +3385,9 @@ ACE_CHECK_LACKS_FUNCS(strtod)
 
 ACE_CHECK_LACKS_FUNCS(strtol)
 
-ACE_CHECK_LACKS_FUNCS(strtoll)
-if test $ac_cv_func_strtoll = "no"; then
-    AC_CHECK_FUNC(__strtoll)
-    if test $ac_cv_func___strtoll = "yes"; then
-        AC_DEFINE([ACE_STRTOLL_EQUIVALENT], [::__strtoll], 
-                  [Define to function that is equivalent to strtoll()])
-    else
-        AC_CHECK_FUNC(_strtoi64)
-        if test $ac_cv_func__strtoi64 = "yes"; then
-	    AC_DEFINE([ACE_STRTOLL_EQUIVALENT], [::_strtoi64])
-        fi
-    fi 
-else
-    AC_CHECK_DECL(strtoll, [], [], [#include <stdlib.h>])
-fi
+ACE_FUNC_STRTOLL
 
 ACE_CHECK_LACKS_FUNCS(strtoul)
-
-ACE_CHECK_LACKS_FUNCS(strtoull)
-if test $ac_cv_func_strtoull = "no"; then
-    AC_CHECK_FUNC(__strtoull)
-    if test $ac_cv_func___strtoull = "yes"; then
-        AC_DEFINE([ACE_STRTOULL_EQUIVALENT], [::__strtoull], 
-                  [Define to function that is equivalent to strtoull()])
-    else
-        AC_CHECK_FUNC(_strtoui64)
-        if test $ac_cv_func__strtoui64 = "yes"; then
-	    AC_DEFINE([ACE_STRTOULL_EQUIVALENT], [::_strtoui64])
-        fi
-    fi
-else
-    AC_CHECK_DECL(strtoull, [], [], [#include <stdlib.h>])
-fi
 
 # swab() comes in a number of forms:
 #   swab (const void*, void*, size_t) is POSIX, XPG4, SUS, SUSv2 standard.
@@ -3741,32 +3711,11 @@ fi dnl test "$ac_cv_func_wcstok" = yes
 
 ACE_CHECK_LACKS_FUNCS(wcstol)
 
-ACE_CHECK_LACKS_FUNCS(wcstoll)
-if test $ac_cv_func_wcstoll = "no"; then
-    AC_CHECK_FUNC(_wcstoi64)
-    if test $ac_cv_func__wcstoi64 = "yes"; then
-	AC_DEFINE([ACE_WCSTOLL_EQUIVALENT], [::_wcstoi64],
-                  [Define to function that is equivalent to wcstoll()])
-    fi
-else
-    AC_CHECK_DECL(wcstoll, [], [], [#include <stdlib.h>
-#include <wchar.h>])
-fi
+ACE_FUNC_WCSTOLL
 
 ACE_CHECK_LACKS_FUNCS(wcstoul)
 
-ACE_CHECK_LACKS_FUNCS(wcstoull)
-if test $ac_cv_func_wcstoull = "no"; then
-    AC_CHECK_FUNC(_wcstoui64)
-    if test $ac_cv_func__wcstoui64 = "yes"; then
-	AC_DEFINE([ACE_WCSTOULL_EQUIVALENT], [::_wcstoui64],
-                  [Define to function that is equivalent to wcstoull()])
-    fi
-else
-    AC_CHECK_DECL(wcstoull, [], [], [#include <stdlib.h>
-#include <wchar.h>])
-fi
-
+ACE_FUNC_WCSTOULL
 
 dnl Check for SYSV IPC functions
 dnl
