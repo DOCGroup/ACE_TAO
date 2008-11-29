@@ -1,3 +1,26 @@
+Sat Nov 29 21:44:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.cpp:
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.h:
+        
+          Moved application code that creates the Forwarding
+          Agent, passes it to the constructor of an LWFT
+          Client_ORBInitializer, and registers the ORB
+          initializer to a new method called register_orb_initializer().
+          
+        * orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.cpp:
+        * orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.h:
+        
+          New class with a single method init(). Now all the
+          LWFT client application does is instantiate this
+          class and call the init() method, which initializes
+          and returns an ORB, along with seamlessly handling
+          the Forwarding Agent details.
+          
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
+        
+          Added the new files above to the LWFT_Client build.
+          
 Sat Nov 29 16:08:25 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ForwardingAgent.cpp:

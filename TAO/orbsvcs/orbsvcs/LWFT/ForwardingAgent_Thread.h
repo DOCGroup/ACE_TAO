@@ -19,8 +19,8 @@ class LWFT_Client_Export ForwardingAgent_Thread
   : public ACE_Task_Base
 {
 public:
-  ForwardingAgent_Thread (CORBA::ORB_ptr orb,
-                          ForwardingAgent_i *agent);
+  ForwardingAgent_Thread (void);
+  ~ForwardingAgent_Thread (void);
 
   virtual int svc (void);
 
@@ -36,6 +36,9 @@ public:
                         size_t stack_size[] = 0,
                         ACE_thread_t thread_ids[] = 0,
                         const char* thr_name[] = 0);
+                        
+  void register_orb_initializer (void);
+  void orb (CORBA::ORB_ptr the_orb);
 
 private:
   CORBA::ORB_ptr orb_;
