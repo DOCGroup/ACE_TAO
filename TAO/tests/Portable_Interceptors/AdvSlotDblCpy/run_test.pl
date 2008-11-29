@@ -19,7 +19,7 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server");
+$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
 $CL = $client->CreateProcess ("client", "file://$client_iorfile");
 
 print STDERR "\n\n==== Running advanced slot double copy test\n";

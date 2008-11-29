@@ -140,16 +140,13 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 {
-
-  if (parse_args (argc, argv) == -1)
-    return -1;
-
   try
     {
       // Initialize the broker
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+
+      if (parse_args (argc, argv) == -1)
+        return -1;
 
       CORBA::Object_var vRootPOABase =
         orb->resolve_initial_references ("RootPOA");
