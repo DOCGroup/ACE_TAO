@@ -129,9 +129,6 @@ Main_C::Create (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int ret = -1;
-  bool CORBA_success = true;
-
   m_ORB_p = CORBA::ORB_init (argc, argv);
 
   Main_C main_cs;
