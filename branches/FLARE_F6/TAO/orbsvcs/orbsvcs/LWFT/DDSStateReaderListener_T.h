@@ -23,18 +23,17 @@
  *        application.
  */
 template <typename TOPIC_TYPE, 
-	  typename TOPIC_DATA_READER,
-	  typename TOPIC_SEQUENCE>
+	        typename TOPIC_DATA_READER,
+	        typename TOPIC_SEQUENCE>
 class DDSStateReaderListener_T : public DDS::DataReaderListener
 {
 public:
-
   /// ctor
   DDSStateReaderListener_T (const std::string & id,
-			  ReplicatedApplication_ptr application);
+			                      ReplicatedApplication_ptr application);
 
   /// dtor
-  virtual ~DDSStateReaderListener_T ();
+  virtual ~DDSStateReaderListener_T (void);
 
   virtual void
   on_requested_deadline_missed (
@@ -72,10 +71,10 @@ public:
     throw (CORBA::SystemException);
 
 private:
-  /// this id is part of every topic to check where the data comes from
+  /// This id is part of every topic to check where the data comes from.
   std::string id_;
 
-  /// reference of the application receiving the state information
+  /// Reference of the application receiving the state information.
   ReplicatedApplication_var application_;
 };
 

@@ -19,10 +19,10 @@ template <typename TOPIC_TYPE,
 DDSStateReaderListener_T<TOPIC_TYPE, 
 			                   TOPIC_DATA_READER, 
                          TOPIC_SEQUENCE>::DDSStateReaderListener_T (
-    const std::string & id,							    
-    ReplicatedApplication_ptr application)
- : id_ (id),
-   application_ (ReplicatedApplication::_duplicate (application))
+  const std::string & id,							    
+  ReplicatedApplication_ptr application)
+  : id_ (id),
+    application_ (ReplicatedApplication::_duplicate (application))
 {
 }
 
@@ -46,8 +46,9 @@ DDSStateReaderListener_T<TOPIC_TYPE,
     const DDS::RequestedDeadlineMissedStatus &)
   throw (CORBA::SystemException)
 {
-  ACE_DEBUG ((LM_TRACE, ACE_TEXT ("DDSStateReaderListener_T::")
-	      ACE_TEXT ("on_requested_deadline_missed ()\n")));
+  ACE_DEBUG ((LM_TRACE,
+              ACE_TEXT ("DDSStateReaderListener_T::")
+	            ACE_TEXT ("on_requested_deadline_missed ()\n")));
 }
 
 template <typename TOPIC_TYPE, 
@@ -61,11 +62,12 @@ DDSStateReaderListener_T<TOPIC_TYPE,
     const DDS::RequestedIncompatibleQosStatus &status)
   throw (CORBA::SystemException)
 {
-  ACE_DEBUG ((LM_TRACE, ACE_TEXT ("DDSStateReaderListener_T::")
-	      ACE_TEXT ("on_requested_incompatible_qos ()")
-	      ACE_TEXT ("count=%d id=%d\n"), 
-	      status.total_count_change,
-	      status.last_policy_id));
+  ACE_DEBUG ((LM_TRACE,
+              ACE_TEXT ("DDSStateReaderListener_T::")
+	            ACE_TEXT ("on_requested_incompatible_qos ()")
+	            ACE_TEXT ("count=%d id=%d\n"), 
+	            status.total_count_change,
+	            status.last_policy_id));
 }
 
 template <typename TOPIC_TYPE, 
@@ -105,8 +107,9 @@ DDSStateReaderListener_T<TOPIC_TYPE,
     const DDS::SampleRejectedStatus &)
   throw (CORBA::SystemException)
 {
-  ACE_DEBUG ((LM_TRACE, ACE_TEXT ("DDSStateReaderListener_T::")
-	      ACE_TEXT ("on_sample_rejected ()\n")));
+  ACE_DEBUG ((LM_TRACE,
+              ACE_TEXT ("DDSStateReaderListener_T::")
+	            ACE_TEXT ("on_sample_rejected ()\n")));
 }
 
 template <typename TOPIC_TYPE, 
@@ -193,18 +196,19 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 }
 
 template <typename TOPIC_TYPE, 
-	  typename TOPIC_DATA_READER, 
+	        typename TOPIC_DATA_READER, 
           typename TOPIC_SEQUENCE>
 void
 DDSStateReaderListener_T<TOPIC_TYPE, 
-		         TOPIC_DATA_READER, 
+		                     TOPIC_DATA_READER, 
                          TOPIC_SEQUENCE>::on_sample_lost (
     DDS::DataReader_ptr,
     const DDS::SampleLostStatus &)
   throw (CORBA::SystemException)
 {
-  ACE_DEBUG ((LM_TRACE, ACE_TEXT ("DDSStateReaderListener_T::")
-	      ACE_TEXT ("on_sample_lost ()\n")));
+  ACE_DEBUG ((LM_TRACE,
+              ACE_TEXT ("DDSStateReaderListener_T::")
+	            ACE_TEXT ("on_sample_lost ()\n")));
 }
 
 #endif /* _DDS_STATE_READER_LISTENER_T_CPP_ */

@@ -145,6 +145,8 @@ project(*StateSyncAgent) : portableserver, splicelib, orbsvcs_output, lwft_dds {
   }
 
   Header_Files {
+    DDSStateReaderListener_T.h
+    DDSStateUpdate_T.h
     ssa_export.h
   }
   

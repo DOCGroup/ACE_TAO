@@ -58,7 +58,7 @@ DDSStateUpdate_T<TOPIC_TYPE,
 		             TOPIC_TYPE_SUPPORT,
 		             TOPIC_DATA_WRITER,
 		             TOPIC_DATA_READER,
-                 TOPIC_SEQUENCE>::~DDSStateUpdate_T ()
+                 TOPIC_SEQUENCE>::~DDSStateUpdate_T (void)
 {
   this->fini ();
 }
@@ -73,16 +73,22 @@ DDSStateUpdate_T<TOPIC_TYPE,
 		             TOPIC_TYPE_SUPPORT,
 		             TOPIC_DATA_WRITER,
 		             TOPIC_DATA_READER,
-                 TOPIC_SEQUENCE>::init ()
+                 TOPIC_SEQUENCE>::init (void)
 {
   if (!this->create_topic ())
-    throw (DDSFailure ("Could not create topic\n"));
+    {
+      throw (DDSFailure ("Could not create topic\n"));
+    }
 
   if (!this->create_datawriter ())
-    throw (DDSFailure ("Could not create datawriter\n"));
+    {
+      throw (DDSFailure ("Could not create datawriter\n"));
+    }
 
   if (!this->create_datareader ())
-    throw (DDSFailure ("Could not create datareader\n"));
+    {
+      throw (DDSFailure ("Could not create datareader\n"));
+    }
  
   return true;
 }
@@ -94,9 +100,9 @@ template <typename TOPIC_TYPE,
           typename TOPIC_SEQUENCE>
 bool
 DDSStateUpdate_T<TOPIC_TYPE,
-		 TOPIC_TYPE_SUPPORT,
-		 TOPIC_DATA_WRITER,
-		 TOPIC_DATA_READER,
+		             TOPIC_TYPE_SUPPORT,
+		             TOPIC_DATA_WRITER,
+		             TOPIC_DATA_READER,
                  TOPIC_SEQUENCE>::fini ()
 {
   DDS::ReturnCode_t status =
@@ -154,18 +160,18 @@ DDSStateUpdate_T<TOPIC_TYPE,
 
   if (ret == DDS::RETCODE_ALREADY_DELETED)
     {
-      ACE_DEBUG ((
-        LM_ERROR,
-        ACE_TEXT ("DDSStateUpdate_T::set_state () : write returned "
-                  "RETCODE_ALREADY_DELETED.\n"),
-        ret));
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("DDSStateUpdate_T::set_state () "
+                            ": write returned "
+                            "RETCODE_ALREADY_DELETED.\n"),
+                  ret));
     }
   else if (ret != DDS::RETCODE_OK)
     {
-      ACE_DEBUG ((
-        LM_ERROR,
-        ACE_TEXT ("DDSStateUpdate_T::set_state () : write returned %d.\n"),
-        ret));
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("DDSStateUpdate_T::set_state () "
+                            ": write returned %d.\n"),
+                  ret));
     }
 
 }
