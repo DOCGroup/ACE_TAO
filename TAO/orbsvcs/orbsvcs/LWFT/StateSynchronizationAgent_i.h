@@ -34,20 +34,20 @@ class SSA_Export StateSynchronizationAgent_i
   /// @param reference to a simple long value representing
   ///        the state of the application
   StateSynchronizationAgent_i (CORBA::ORB_ptr orb,
-			       const std::string & host_id,
-			       const std::string & process_id,
+			                         const std::string & host_id,
+			                         const std::string & process_id,
                                bool use_corba = true);
 
   /// dtor
   ~StateSynchronizationAgent_i (void);
 
-  /// implementation of the StateSynchronizationAgent interface
+  /// Implementation of the StateSynchronizationAgent interface.
   virtual void state_changed (const char * object_id);
 
-  /// implementation of the StateSynchronizationAgent interface
+  /// Implementation of the StateSynchronizationAgent interface.
   virtual void update_rank_list (const RankList & rank_list);
 
-  /// registers application for statesynchronization with CORBA
+  /// Registers application for statesynchronization with CORBA.
   virtual void register_application (const char * object_id,
 				     ReplicatedApplication_ptr app);
 
@@ -62,8 +62,10 @@ class SSA_Export StateSynchronizationAgent_i
                                       ReplicatedApplication_ptr app);
 #endif /* FLARE_USES_DDS */
 
-  typedef ACE_Refcounted_Auto_Ptr <StatefulObject,
-				   ACE_Null_Mutex> STATEFUL_OBJECT_PTR;
+  typedef
+  ACE_Refcounted_Auto_Ptr <StatefulObject,
+				                   ACE_Null_Mutex>
+    STATEFUL_OBJECT_PTR;
 
   typedef std::list<STATEFUL_OBJECT_PTR> REPLICA_OBJECT_LIST;
 

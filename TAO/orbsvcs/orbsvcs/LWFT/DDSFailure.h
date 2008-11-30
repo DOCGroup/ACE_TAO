@@ -21,13 +21,13 @@
 class SSA_Export DDSFailure 
 {
  public:
-  /// ctor
   DDSFailure (const std::string & description);
 
-  /// getter method
+  /// Getter method.
   std::string description (void) const;
+  
  private:
-  /// description what DDS problem occured
+  /// Description of what DDS problem occurred.
   std::string description_;
 };
 

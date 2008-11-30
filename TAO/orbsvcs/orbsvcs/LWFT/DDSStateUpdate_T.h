@@ -34,17 +34,17 @@ class DDSStateUpdate_T : public StatefulObject
 public:
   /// ctor
   DDSStateUpdate_T (const std::string & topic_name,
-		    const std::string & id,
-		    DDS::DomainParticipant_ptr participant,
-		    DDS::Publisher_ptr publisher,
-		    DDS::Subscriber_ptr subscriber,
-		    ReplicatedApplication_ptr application);
+		                const std::string & id,
+		                DDS::DomainParticipant_ptr participant,
+		                DDS::Publisher_ptr publisher,
+		                DDS::Subscriber_ptr subscriber,
+		                ReplicatedApplication_ptr application);
 
   /// dtor
-  virtual ~DDSStateUpdate_T ();
+  virtual ~DDSStateUpdate_T (void);
 
-  bool init ();
-  bool fini ();
+  bool init (void);
+  bool fini (void);
 
   /// triggers state dissemination using DDS
   virtual void set_state (const CORBA::Any & state_value);  

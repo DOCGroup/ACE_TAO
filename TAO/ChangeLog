@@ -1,3 +1,19 @@
+Sun Nov 30 13:55:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
+          
+          Added template header files to Header_Files block
+          so they will show up in IDE development tools.
+          
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h:
+        * orbsvcs/orbsvcs/LWFT/DDSStateUpdate_T.cpp:
+        * orbsvcs/orbsvcs/LWFT/DDSStateReaderListener_T.h:
+        * orbsvcs/orbsvcs/LWFT/DDSStateReaderListener_T.cpp:
+        * orbsvcs/orbsvcs/LWFT/DDSStateUpdate_T.h:
+        * orbsvcs/orbsvcs/LWFT/DDSFailure.h:
+        
+          Cosmetic changes.
+
 Sat Nov 29 22:43:22 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.cpp(init):
