@@ -1,3 +1,8 @@
+Mon Dec  1 11:01:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.txt:
+          Improved OpenSuSE Factory support
+
 Mon Dec  1 10:44:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
