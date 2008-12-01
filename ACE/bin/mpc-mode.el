@@ -25,18 +25,41 @@
 ;;
 ;; Derived from autoconf-mode.el by Martin Buchholz (martin@xemacs.org)
 
-;;; Your should add the following to your Emacs configuration file:
 
+;; Many thanks to the follwing kind people for extensions, bugfixes and
+;; other contributions:
+;;
+;;   * William R. Otte <wotte@dre.vanderbilt.edu>
+;;       Indentation and syntax table.
+;; 
+
+;; Your should add the following to your Emacs configuration file:
+;;
 ;; (autoload 'mpc-mode "mpc-mode"
 ;;   "Major mode for editing MPC files." t)
-;; (setq auto-mode-alist (cons '("\\.mwb$" . mpc-mode) auto-mode-alist))
-;; (setq auto-mode-alist (cons '("\\.mwc$" . mpc-mode) auto-mode-alist))
-;; (setq auto-mode-alist (cons '("\\.mpb$" . mpc-mode) auto-mode-alist))
-;; (setq auto-mode-alist (cons '("\\.mpc$" . mpc-mode) auto-mode-alist))
+;;
+;; You may also add something like this to the top of your MPC files
+;; to force a specific indentation mode:
+;;
+;; // -*- Mode: MPC; tab-width: 2; indent-tabs-mode: t; -*-
 
 ;;; Code:
 
 (require 'font-lock)
+
+(defvar mpc-mode-hook nil)
+
+(defvar mpc-mode-map
+  (let ((mpc-mode-map (make-sparse-keymap)))
+    (define-key mpc-mode-map '[(control c) (control c)] 'comment-region)
+    (define-key mpc-mode-map '[(control j)]             'newline-and-indent)
+    mpc-mode-map)
+  "Keymap for MPC major mode")
+
+(add-to-list 'auto-mode-alist '("\\.mwb\\'" . mpc-mode))
+(add-to-list 'auto-mode-alist '("\\.mwc\\'" . mpc-mode))
+(add-to-list 'auto-mode-alist '("\\.mpb\\'" . mpc-mode))
+(add-to-list 'auto-mode-alist '("\\.mpc\\'" . mpc-mode))
 
 (defvar mpc-font-lock-keywords
   `(
@@ -79,26 +102,50 @@
     ("\\(//\\)"                   1 font-lock-comment-face t)
     ("\\//\\(.*\\)"               1 font-lock-comment-face t)
     "default font-lock-keywords")
-)
+  )
 
+;; Indenting logic
+(defun mpc-indent-line ()
+  "Indent current line as MPC directives"
+  (interactive)
+  (beginning-of-line)
+
+  (if (bobp)
+      (indent-line-to 0) ; if we are at start of file, zero indent
+    (let ((not-found-hint t) cur-indent (close-brace nil))
+      (save-excursion ; otherwise, we are not looking at a }, so we need to go back to find the
+        (if (looking-at ".*}")
+            (setq close-brace t))
+        (while not-found-hint ; nearest indentation hint
+          (forward-line -1)
+          (if (looking-at ".*{")
+              (progn
+                (setq cur-indent (+ (current-indentation) tab-width))
+                (setq not-found-hint nil))
+            (if (looking-at ".*}")
+                (progn
+                  (setq cur-indent (current-indentation))
+                  (if (< cur-indent 0)
+                      (setq cur-indent 0))
+                  (setq not-found-hint nil))
+              (if (bobp)
+                  (setq not-found-hint nil))))))
+      (if close-brace
+          (setq cur-indent (- cur-indent tab-width)))
+      (if cur-indent
+          (indent-line-to cur-indent)
+        (indent-line-to 0))))
+  )
+
+;; Create a syntax table.  Derived from fundamental mode, it will automatically
+;; highlight strings, and behave correctly on most words.
 (defvar mpc-mode-syntax-table nil
   "syntax table used in mpc mode")
 (setq mpc-mode-syntax-table (make-syntax-table))
-;;(modify-syntax-entry ?\" "\""  mpc-mode-syntax-table)
-;;(modify-syntax-entry ?\' "\""  mpc-mode-syntax-table)
-;;(modify-syntax-entry ?#  "<\n" mpc-mode-syntax-table)
-;;(modify-syntax-entry ?\n ">#"  mpc-mode-syntax-table)
-;;(modify-syntax-entry ?\( "()"   mpc-mode-syntax-table)
-;;(modify-syntax-entry ?\) ")("   mpc-mode-syntax-table)
-;;(modify-syntax-entry ?\[ "(]"  mpc-mode-syntax-table)
-;;(modify-syntax-entry ?\] ")["  mpc-mode-syntax-table)
-;;(modify-syntax-entry ?*  "."   mpc-mode-syntax-table)
-;;(modify-syntax-entry ?_  "_"   mpc-mode-syntax-table)
-
-(defvar mpc-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map '[(control c) (control c)] 'comment-region)
-    map))
+(modify-syntax-entry ?_ "w" mpc-mode-syntax-table)     ; underscore is a valid part of a word
+(modify-syntax-entry ?- "w" mpc-mode-syntax-table)     ; hyphen is a valid part of a word
+(modify-syntax-entry ?/ ". 12b" mpc-mode-syntax-table) ; c++-style comments
+(modify-syntax-entry ?\n "> b" mpc-mode-syntax-table)  ; c++-style comments
 
 ;;;###autoload
 (defun mpc-mode ()
@@ -114,15 +161,19 @@
   (make-local-variable 'parse-sexp-ignore-comments)
   (setq parse-sexp-ignore-comments t)
 
-  (make-local-variable	'font-lock-defaults)
+  (make-local-variable 'tab-width)
+  (make-local-variable 'font-lock-defaults)
+  (make-local-variable 'indent-line-function)
+
   (setq major-mode 'mpc-mode)
   (setq mode-name "MPC")
 
   (setq font-lock-defaults `(mpc-font-lock-keywords nil t))
-  
+  (setq indent-line-function 'mpc-indent-line) 
+
   (set-syntax-table mpc-mode-syntax-table)
   (run-hooks 'mpc-mode-hook)
-)
+  )
 
 (provide 'mpc-mode)
 
