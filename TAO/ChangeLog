@@ -1,3 +1,21 @@
+Mon Dec 01 19:47:02 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
+
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+          Fixed reference counting of extracted type codes.  Direct
+          references were being taken instead of duplicate().
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test/GoodDay.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test/GoodDay.h:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test/IFR_Self_Reursive_IDL.mpc:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test/Makefile.am:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test/README:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test/server.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test/Test.idl:
+          Added test.
+
 Mon Dec  1 10:44:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_3418_Regression/*:
