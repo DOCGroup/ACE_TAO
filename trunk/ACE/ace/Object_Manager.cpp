@@ -531,7 +531,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
 
           if (lock == 0)
             {
-              ACE_Cleanup_Adapter<ACE_Thread_Mutex> *lock_adapter;
+              ACE_Cleanup_Adapter<ACE_Thread_Mutex> *lock_adapter = 0;
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_Thread_Mutex>,
                               -1);
@@ -579,7 +579,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Mutex *&lock)
 
           if (lock == 0)
             {
-              ACE_Cleanup_Adapter<ACE_Mutex> *lock_adapter;
+              ACE_Cleanup_Adapter<ACE_Mutex> *lock_adapter = 0;
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_Mutex>,
                               -1);
@@ -663,7 +663,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
 
           if (lock == 0)
             {
-              ACE_Cleanup_Adapter<ACE_RW_Thread_Mutex> *lock_adapter;
+              ACE_Cleanup_Adapter<ACE_RW_Thread_Mutex> *lock_adapter = 0;
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_RW_Thread_Mutex>,
                               -1);

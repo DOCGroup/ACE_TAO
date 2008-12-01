@@ -1,3 +1,26 @@
+Mon Dec  1 13:46:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Object_Manager.cpp:
+          Initialise pointers with 0
+
+        * ace/RW_Mutex.cpp:
+        * ace/RW_Mutex.h:
+        * ace/RW_Mutex.inl:
+          Make removed_ flag a real bool
+
+        * ace/Singleton.h:
+          Doxygen change
+
+        * ace/SSL/SSL_Context.cpp:
+          Manage ourselves the life cycle of the SSL_Context singleton. Previously
+          the SSL library registered a singleton with the ACE library. When
+          the SSL library is unloaded expliclity before the ACE library the
+          cleanup in ACE did crash because the SSL code wasn't there. Now when we
+          cleanup the SSL library we also close our singleton
+
+        * ace/Thread_Mutex.inl:
+          Use operator !
+
 Mon Dec  1 11:15:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/mpc-mode.el:
