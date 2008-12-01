@@ -1,3 +1,15 @@
+Mon Dec  1 17:55:00 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (handle_timed_complete): Correct the situations under
+          which a non-blocking connect() will complete. Previously VxWorks and
+          AIX did a secondary check for connect success/fail when the socket
+          selected writeable. All other non-Windows platforms selected for
+          both readable and writeable, with readable=fail, writeable=success.
+          This produced false success since BSD sockets always select
+          writeable, not readable; a secondary check for status is then
+          required. This fix corrects behavior on non-AIX BSD systems,
+          particularly HP-UX and Solaris.
+
 Tue Nov 18 19:06:27 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/README: Updated the explanation of how to build/run the
@@ -30,11 +42,12 @@ Mon Dec  1 13:46:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           Doxygen change
 
         * ace/SSL/SSL_Context.cpp:
-          Manage ourselves the life cycle of the SSL_Context singleton. Previously
-          the SSL library registered a singleton with the ACE library. When
-          the SSL library is unloaded expliclity before the ACE library the
-          cleanup in ACE did crash because the SSL code wasn't there. Now when we
-          cleanup the SSL library we also close our singleton
+          Manage ourselves the life cycle of the SSL_Context singleton.
+          Previously the SSL library registered a singleton with the ACE
+          library. When the SSL library is unloaded expliclity before the
+          ACE library the cleanup in ACE did crash because the SSL code
+          wasn't there. Now when we cleanup the SSL library we also close
+          our singleton
 
         * ace/Thread_Mutex.inl:
           Use operator !
