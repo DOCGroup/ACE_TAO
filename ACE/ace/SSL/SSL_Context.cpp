@@ -132,7 +132,7 @@ ACE_SSL_Context::~ACE_SSL_Context (void)
 ACE_SSL_Context *
 ACE_SSL_Context::instance (void)
 {
-  return ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::instance ();
+  return ACE_Unmanaged_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::instance ();
 }
 
 void
@@ -182,15 +182,15 @@ ACE_SSL_Context::ssl_library_init (void)
         (void) this->egd_file (egd_socket_file);
 #endif  /* OPENSSL_VERSION_NUMBER */
 
-      const char *rand_file =
-        ACE_OS::getenv (ACE_SSL_RAND_FILE_ENV);
+      const char *rand_file = ACE_OS::getenv (ACE_SSL_RAND_FILE_ENV);
 
       if (rand_file != 0)
-        (void) this->seed_file (rand_file);
+        {
+          (void) this->seed_file (rand_file);
+        }
 
       // Initialize the mutexes that will be used by the SSL and
       // crypto library.
-
     }
 
   ++ssl_library_init_count;
@@ -206,6 +206,9 @@ ACE_SSL_Context::ssl_library_fini (void)
   --ssl_library_init_count;
   if (ssl_library_init_count == 0)
     {
+      // Explicitly close the singleton
+      ACE_Unmanaged_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::close();
+
       ::ERR_free_strings ();
       ::EVP_cleanup ();
 
