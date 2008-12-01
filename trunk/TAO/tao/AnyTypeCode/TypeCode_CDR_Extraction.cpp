@@ -466,7 +466,7 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
           rtc->struct_parameters (name.in (), fields, nfields);
         }
 
-      tc = recursive_tc[0].type;
+      tc = CORBA::TypeCode::_duplicate(recursive_tc[0].type);
     }
   else
     {
