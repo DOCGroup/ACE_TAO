@@ -120,15 +120,20 @@ BuildRequires:  perl
 # Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_fltk:1}%{!?_with_fltk:0}
 BuildRequires:  fltk-devel
+%define fltk_pac ace-flreactor
 %endif
 
 %if %{?_with_tk:1}%{!?_with_tk:0}
 BuildRequires:  tcl-devel
 BuildRequires:  tk-devel
 BuildRequires:  tk
+%define tk_pac ace-tkreactor
+%define tao_tk_pac tao-tkresource
 %endif
 
 %if %{?_with_qt:1}%{!?_with_qt:0}
+%define qt_pack ace-qtreactor
+%define tao_qt_pac tao-qtresource
 
 # qt3 has a name change in F9
 %if 0%{?fedora_version} > 8
@@ -148,6 +153,7 @@ BuildRequires:  %{qtpacname}-devel
 %if 0%{?suse_version} == 1020
 BuildRequires: fox16-devel
 %endif
+%define fox_pac ace_foxreactor
 %endif
 
 %if %{?_with_xt:1}%{!?_with_xt:0}
@@ -156,6 +162,23 @@ BuildRequires: fox16-devel
 # new -> BuildRequires: libX11-devel
 # BuildRequires: %{_libdir}/libX11.so
 # BuildRequires: %{_libdir}/libXt.so
+%define xt_pac ace-xtreactor
+%define tao_xt_pac tao-xtresource
+%endif
+
+%if %{?_with_fl:1}%{!?_with_fl:0}
+%define tao_fl_pac tao-flresource
+%endif
+
+
+%if 0%{?suse_version}
+
+%define ace_packages ace ace-xml ace-gperf ace-kokyu 
+%define tao_packages tao tao-utils tao tao-cosnaming tao-cosevent tao-cosnotification tao-costrading tao-rtevent tao-cosconcurrency 
+%define all_ace_packages %{?ace_packages} %{?fltk_pac} %{?tk_pac} %{?qt_pac} %{?fox_pac} %{?xt_pac}
+%define all_tao_packages %{?tao_packages} %{?tao_fl_pac} %{?tao_qt_pac} %{?tao_xt_pac} %{?tao_tk_pac} 
+
+%define debug_package_requires %{all_ace_packages} %{all_tao_packages}
 %endif
 
 %if %make_nosrc
