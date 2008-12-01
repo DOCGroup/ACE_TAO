@@ -40,20 +40,19 @@
 
 (defvar mpc-font-lock-keywords
   `(
-    ("\\$[0-9*#@]"                . font-lock-variable-name-face)
-    ("\\(//\\)"                   1 font-lock-comment-face t)
-    ("\\//\\(.*\\)"               1 font-lock-comment-face t)
     ("\\(project\\)"              1 font-lock-warning-face t)
     ("\\(workspace\\)"            1 font-lock-warning-face t)
     ("(\\([^()]*\\))"             1 font-lock-constant-face t)
-    ("\\(IDL_Files\\)"            1 font-lock-keyword-face t)
+    ("\\(IDL_Files\\)"            1 font-lock-keyword-face t) 
     ("\\(Source_Files\\)"         1 font-lock-keyword-face t)
     ("\\(Header_Files\\)"         1 font-lock-keyword-face t)
     ("\\(Inline_Files\\)"         1 font-lock-keyword-face t)
     ("\\(Template_Files\\)"       1 font-lock-keyword-face t)
     ("\\(Resource_Files\\)"       1 font-lock-keyword-face t)
     ("\\(Pkgconfig_Files\\)"      1 font-lock-keyword-face t)
+    ("\\(exclude\\)"              1 font-lock-type-face t)
     ("\\(custom_only\\)"          1 font-lock-type-face t)
+    ("\\(cmdline\\)"              1 font-lock-type-face t)
     ("\\(avoids\\)"               1 font-lock-type-face t)
     ("\\(exename\\)"              1 font-lock-type-face t)
     ("\\(install =\\)"            1 font-lock-type-face t)
@@ -77,6 +76,8 @@
     ("\\( = \\)"                  1 font-lock-builtin-face t)
     ("\\(+=\\)"                   1 font-lock-builtin-face t)
     ("\\(-=\\)"                   1 font-lock-builtin-face t)
+    ("\\(//\\)"                   1 font-lock-comment-face t)
+    ("\\//\\(.*\\)"               1 font-lock-comment-face t)
     "default font-lock-keywords")
 )
 
@@ -118,7 +119,7 @@
   (setq mode-name "MPC")
 
   (setq font-lock-defaults `(mpc-font-lock-keywords nil t))
-
+  
   (set-syntax-table mpc-mode-syntax-table)
   (run-hooks 'mpc-mode-hook)
 )
