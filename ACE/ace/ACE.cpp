@@ -2536,14 +2536,14 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 #else
   ACE_Handle_Set rd_handles;
   ACE_Handle_Set wr_handles;
-
   rd_handles.set_bit (h);
   wr_handles.set_bit (h);
 #endif /* !ACE_WIN32 && ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 
 #if defined (ACE_WIN32)
   // Winsock is different - it sets the exception bit for failed connect,
-  // unlike other platforms, where the read bit is set.
+  // unlike other platforms, where the write bit is set for both success
+  // and fail.
   ACE_Handle_Set ex_handles;
   ex_handles.set_bit (h);
 #endif /* ACE_WIN32 */
@@ -2564,7 +2564,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 
 # else
   int n = ACE_OS::select (int (h) + 1,
-                          rd_handles,
+                          is_tli ? rd_handles : 0,
                           wr_handles,
                           0,
                           timeout);
@@ -2581,11 +2581,14 @@ ACE::handle_timed_complete (ACE_HANDLE h,
       return ACE_INVALID_HANDLE;
     }
 
-  // Usually, a ready-for-write handle is successfully connected, and
-  // ready-for-read (exception on Win32) is a failure. On fails, we
-  // need to grab the error code via getsockopt. On possible success for
-  // any platform where we can't tell just from select() (e.g. AIX),
-  // we also need to check for success/fail.
+  // On Windows, a ready-for-write handle is successfully connected, and
+  // ready-for-exception is a failure. On fails, we need to grab the error
+  // code via getsockopt.
+  // On BSD sockets using select(), the handle becomes writable on
+  // completion either success or fail, so if the select() does not time
+  // out, we need to check for success/fail.
+  // It is believed that TLI sockets use the readable=fail, writeable=success
+  // but that hasn't been as well tested.
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (is_tli);
 
@@ -2597,34 +2600,20 @@ ACE::handle_timed_complete (ACE_HANDLE h,
       need_to_check = true;
       known_failure = true;
     }
-#elif defined (ACE_VXWORKS)
-  ACE_UNUSED_ARG (is_tli);
-
-  // Force the check on VxWorks.  The read handle for "h" is not set,
-  // so "need_to_check" is false at this point.  The write handle is
-  // set, for what it's worth.
-  need_to_check = true;
 #else
   if (is_tli)
-
 # if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
     need_to_check = (fds.revents & POLLIN) && !(fds.revents & POLLOUT);
 # else
-  need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
+    need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
 # endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 
   else
-#if defined(AIX)
-    // AIX is broken... both success and failed connect will set the
-    // write handle only, so always check.
-    need_to_check = true;
-#else
 # if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
-  need_to_check = (fds.revents & POLLIN);
+    need_to_check = (fds.revents & POLLIN);
 # else
-  need_to_check = rd_handles.is_set (h);
+    need_to_check = true;
 # endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
-#endif /* AIX */
 #endif /* ACE_WIN32 */
 
   if (need_to_check)
