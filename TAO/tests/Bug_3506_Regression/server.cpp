@@ -92,18 +92,17 @@ Main_C::Create (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      PortableServer::POA_var poa = PortableServer::POA::_narrow (obj);
+      PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr = poa->the_POAManager ();
       mgr->activate ();
 
-      CORBA::Object_var reference;
       IF_Test_impl *servant = new IF_Test_impl;
 
-      reference = poa->servant_to_reference (servant);
+      CORBA::Object_var reference = poa->servant_to_reference (servant);
 
       IF_EXE_M_R::IF_ExeCtrlData_var servant_var =
-        IF_EXE_M_R::IF_ExeCtrlData::_narrow (reference);
+        IF_EXE_M_R::IF_ExeCtrlData::_narrow (reference.in ());
       CORBA::String_var str = m_ORB_p->object_to_string (servant_var);
 
       // Output the IOR to the <ior_output_file>
