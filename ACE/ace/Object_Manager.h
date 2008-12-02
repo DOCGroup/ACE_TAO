@@ -256,8 +256,8 @@ public:
    * that is called for the object or array when it to be destroyed.
    * It may perform any necessary cleanup specific for that object or
    * its class.  "param" is passed as the second parameter to the
-   * "cleanup_hook" function; the first parameter is the object (or
-   * array) to be destroyed.  "cleanup_hook", for example, may delete
+   * @a cleanup_hook function; the first parameter is the object (or
+   * array) to be destroyed.  @a cleanup_hook, for example, may delete
    * the object (or array).  For OS's that do not have processes, this
    * function is the same as <at_thread_exit>.  Returns 0 on success.
    * On failure, returns -1 and sets errno to: EAGAIN if shutting
