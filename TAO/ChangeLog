@@ -1,3 +1,11 @@
+Tue Dec 02 19:48:32 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test/IFR_Self_Recursive_IDL.mpc:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test/IFR_Self_Reursive_IDL.mpc:
+        Corrected the name of the folder.
+
 Tue Dec 02 19:11:54 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test/client.cpp:
