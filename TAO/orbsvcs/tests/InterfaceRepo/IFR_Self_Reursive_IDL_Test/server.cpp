@@ -6,13 +6,13 @@
 #include "tao/IFR_Client/IFR_BasicC.h"
 
 
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 int object_to_output = 1;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv);
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -41,7 +41,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");

@@ -1,3 +1,9 @@
+Tue Dec 02 19:11:54 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test/server.cpp:
+          Changed global char* variable to ACE_TCHAR*.
+
 Tue Dec 02 19:02:35 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test/client.cpp:
