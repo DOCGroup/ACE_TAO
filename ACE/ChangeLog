@@ -1,3 +1,9 @@
+Tue Dec  2 08:39:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Object_Manager.h:
+        * ace/Object_Manager_Base.h:
+          Doxygen changes
+
 Mon Dec  1 23:51:32 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Basic_Types.h: When defining ACE_*_FORMAT_SPECIFIER in terms
