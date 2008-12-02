@@ -1,3 +1,10 @@
+Mon Dec  1 23:51:32 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Basic_Types.h: When defining ACE_*_FORMAT_SPECIFIER in terms
+          of ACE_*_FORMAT_SPECIFIER_ASCII, use ACE_TEXT_CHAR_TO_TCHAR else
+          when used, this ends up combining narrow and wide chars, resulting
+          in build errors.
+
 Mon Dec  1 17:55:00 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (handle_timed_complete): Correct the situations under
