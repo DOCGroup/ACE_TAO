@@ -1,3 +1,9 @@
+Tue Dec 02 19:02:35 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Reursive_IDL_Test/server.cpp:
+          Changed older main to ACE_TMAIN.
+
 Mon Dec 01 19:47:02 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
 
         * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
