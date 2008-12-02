@@ -1,3 +1,9 @@
+Tue Dec  2 11:49:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/mpc-mode.el:
+          Updated MPC mode for emacs file. Thanks to Jules Colding
+          <colding at 42tools dot com> for providing this file
+
 Tue Dec  2 08:39:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Object_Manager.h:
