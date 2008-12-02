@@ -33,10 +33,11 @@
 ;;       Indentation and syntax table.
 ;; 
 
-;; Your should add the following to your Emacs configuration file:
+;; Put this file somewhere in your emacs load path and add the following
+;; to your Emacs configuration file:
 ;;
-;; (autoload 'mpc-mode "mpc-mode"
-;;   "Major mode for editing MPC files." t)
+;; (require 'mpc-mode)
+;;
 ;;
 ;; You may also add something like this to the top of your MPC files
 ;; to force a specific indentation mode:
@@ -55,11 +56,6 @@
     (define-key mpc-mode-map '[(control j)]             'newline-and-indent)
     mpc-mode-map)
   "Keymap for MPC major mode")
-
-(add-to-list 'auto-mode-alist '("\\.mwb\\'" . mpc-mode))
-(add-to-list 'auto-mode-alist '("\\.mwc\\'" . mpc-mode))
-(add-to-list 'auto-mode-alist '("\\.mpb\\'" . mpc-mode))
-(add-to-list 'auto-mode-alist '("\\.mpc\\'" . mpc-mode))
 
 (defvar mpc-font-lock-keywords
   `(
@@ -174,6 +170,12 @@
   (set-syntax-table mpc-mode-syntax-table)
   (run-hooks 'mpc-mode-hook)
   )
+
+(add-to-list 'auto-mode-alist '("\\.mwb\\'" . mpc-mode))
+(add-to-list 'auto-mode-alist '("\\.mwc\\'" . mpc-mode))
+(add-to-list 'auto-mode-alist '("\\.mpb\\'" . mpc-mode))
+(add-to-list 'auto-mode-alist '("\\.mpc\\'" . mpc-mode))
+
 
 (provide 'mpc-mode)
 
