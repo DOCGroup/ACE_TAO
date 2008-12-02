@@ -7,7 +7,7 @@
 // to dynamically load this necessary library.
 #include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -41,7 +41,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
