@@ -2563,11 +2563,19 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   int n = ACE_OS::poll (&fds, 1, timeout);
 
 # else
-  int n = ACE_OS::select (int (h) + 1,
-                          is_tli ? rd_handles : 0,
-                          wr_handles,
-                          0,
-                          timeout);
+  int n = 0;
+  if (is_tli)
+    n = ACE_OS::select (int (h) + 1,
+                        rd_handles,
+                        wr_handles,
+                        0,
+                        timeout);
+  else
+    n = ACE_OS::select (int (h) + 1,
+                        0,
+                        wr_handles,
+                        0,
+                        timeout);
 # endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 #endif /* ACE_WIN32 */
 
