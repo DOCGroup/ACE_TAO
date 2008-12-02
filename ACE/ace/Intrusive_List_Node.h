@@ -37,7 +37,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * confused using such templates, the class is provided as a helper
  * for our lucky users that only need portability to modern C++
  * compilers.
- *
  */
 template <class T>
 class ACE_Intrusive_List_Node
