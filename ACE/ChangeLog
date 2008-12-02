@@ -1,3 +1,29 @@
+Tue Dec  2 13:54:35 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/os_include/os_wchar.h:
+
+          Provide declaration for wcstoll() If ACE_LACKS_WCSTOLL is
+          defined.
+
+          Provide declaration for wcstoull() if ACE_LACKS_WCSTOULL is
+          defined.
+
+        * ace/os_include/os_stdlib.h:
+
+          Provide declaration for strtoll() If ACE_LACKS_STRTOLL is
+          defined.
+
+          Provide declaration for strtoull() if ACE_LACKS_STRTOULL is
+          defined.
+
+        * m4/ace_func.m4:
+
+          Change ACE_FUNC_STRTOLL, ACE_FUNC_STRTOULL, ACE_FUNC_WCSTOLL,
+          and ACE_FUNC_WCSTOULL autoconf macros to define
+          ACE_LACKS_STRTOLL_PROTOTYPE, ACE_LACKS_STRTOULL_PROTOTYPE,
+          ACE_LACKS_WCSTOLL_PROTOTYPE, and ACE_LACKS_WCSTOULL_PROTOTYPE
+          if cooresponding declarations are not present.
+
 Tue Dec  2 12:47:06 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (handle_timed_complete): Fix compile error resulting from
