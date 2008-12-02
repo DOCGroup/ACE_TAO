@@ -22,7 +22,7 @@ foreach $i (@ARGV) {
 }
 
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
-$server_status = $SV->Spawn ();
+$server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
@@ -37,10 +37,10 @@ if ($server->WaitForFileTimed ($iorbase,
 }
 
 ## Slower hardware can require much more time to complete.
-$server = $SV->WaitKill (90);
+$server_status = $SV->WaitKill (90);
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
