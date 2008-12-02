@@ -91,6 +91,8 @@ fi
 # + Defines ACE_LACKS_STRTOLL to 1 if platform lacks strtoll()
 # + Defines ACE_STRTOLL_EQUIVALENT to identifier name if platform
 #   has a equivalent function that differs in name only.
+# + Defines ACE_LACKS_STRTOLL_PROTOTYPE to 1 if platform lacks
+#   declaration for strtoll().
 AC_DEFUN([ACE_FUNC_STRTOLL],
 [ACE_CHECK_LACKS_FUNCS(strtoll)
 if test $ac_cv_func_strtoll = "no"; then
@@ -105,7 +107,11 @@ if test $ac_cv_func_strtoll = "no"; then
         fi
     fi 
 else
-    AC_CHECK_DECL(strtoll, [], [], [#include <stdlib.h>])
+    AC_CHECK_DECL([strtoll], 
+                  [], 
+		  [AC_DEFINE([ACE_LACKS_STRTOLL_PROTOTYPE], 1,
+			     [Define to 1 if platform lacks a declaration for strtoll()])],
+                  [#include <stdlib.h>])
 fi
 ])
 
@@ -113,6 +119,8 @@ fi
 # + Defines ACE_LACKS_STRTOULL to 1 if platform lacks strtoull()
 # + Defines ACE_STRTOULL_EQUIVALENT to identifier name if platform
 #   has a equivalent function that differs in name only.
+# + Defines ACE_LACKS_STRTOULL_PROTOTYPE to 1 if platform lacks
+#   declaration for strtoull().
 #---------------------------------------------------------------------------
 AC_DEFUN([ACE_FUNC_STRTOULL],
 [ACE_CHECK_LACKS_FUNCS(strtoull)
@@ -128,7 +136,11 @@ if test $ac_cv_func_strtoull = "no"; then
         fi
     fi
 else
-    AC_CHECK_DECL(strtoull, [], [], [#include <stdlib.h>])
+    AC_CHECK_DECL([strtoull], 
+                  [], 
+		  [AC_DEFINE([ACE_LACKS_STRTOULL_PROTOTYPE], 1,
+			     [Define to 1 if platform lacks a declaration for strtoull()])],
+                  [#include <stdlib.h>])
 fi
 ])
 
@@ -195,16 +207,28 @@ fi
 # + Defines ACE_LACKS_WCSTOLL to 1 if platform lacks wcstoll()
 # + Defines ACE_WCSTOLL_EQUIVALENT to identifier name if platform
 #   has a equivalent function that differs in name only.
+# + Defines ACE_LACKS_WCSTOLL_PROTOTYPE to 1 if platform lacks
+#   declaration for wcstoll().
 AC_DEFUN([ACE_FUNC_WCSTOLL],
 [ACE_CHECK_LACKS_FUNCS(wcstoll)
 if test $ac_cv_func_wcstoll = "no"; then
-    AC_CHECK_FUNC(_wcstoi64)
-    if test $ac_cv_func__wcstoi64 = "yes"; then
-	AC_DEFINE([ACE_WCSTOLL_EQUIVALENT], [::_wcstoi64],
+    AC_CHECK_FUNC(__wcstoll)
+    if test $ac_cv_func___wcstoll = "yes"; then
+        AC_DEFINE([ACE_WCSTOLL_EQUIVALENT], [::__wcstoll], 
                   [Define to function that is equivalent to wcstoll()])
+    else
+	AC_CHECK_FUNC(_wcstoi64)
+	if test $ac_cv_func__wcstoi64 = "yes"; then
+	    AC_DEFINE([ACE_WCSTOLL_EQUIVALENT], [::_wcstoi64],
+		      [Define to function that is equivalent to wcstoll()])
+	fi
     fi
 else
-    AC_CHECK_DECL(wcstoll, [], [], [#include <stdlib.h>
+    AC_CHECK_DECL([wcstoll], 
+	          [], 
+		  [AC_DEFINE([ACE_LACKS_WCSTOLL_PROTOTYPE], 1,
+			     [Define to 1 if platform lacks a declaration for wcstoll()])],
+                  [#include <stdlib.h>
 #include <wchar.h>])
 fi
 ])
@@ -213,16 +237,28 @@ fi
 # + Defines ACE_LACKS_WCSTOULL to 1 if platform lacks wcstoull()
 # + Defines ACE_WCSTOULL_EQUIVALENT to identifier name if platform
 #   has a equivalent function that differs in name only.
+# + Defines ACE_LACKS_WCSTOULL_PROTOTYPE to 1 if platform lacks
+#   declaration for wcstoull().
 AC_DEFUN([ACE_FUNC_WCSTOULL],
 [ACE_CHECK_LACKS_FUNCS(wcstoull)
 if test $ac_cv_func_wcstoull = "no"; then
-    AC_CHECK_FUNC(_wcstoui64)
-    if test $ac_cv_func__wcstoui64 = "yes"; then
-	AC_DEFINE([ACE_WCSTOULL_EQUIVALENT], [::_wcstoui64],
+    AC_CHECK_FUNC(__wcstoull)
+    if test $ac_cv_func___wcstoull = "yes"; then
+        AC_DEFINE([ACE_WCSTOULL_EQUIVALENT], [::__wcstoull], 
                   [Define to function that is equivalent to wcstoull()])
+    else
+	AC_CHECK_FUNC(_wcstoui64)
+	if test $ac_cv_func__wcstoui64 = "yes"; then
+	    AC_DEFINE([ACE_WCSTOULL_EQUIVALENT], [::_wcstoui64],
+		      [Define to function that is equivalent to wcstoull()])
+	fi
     fi
 else
-    AC_CHECK_DECL(wcstoull, [], [], [#include <stdlib.h>
+    AC_CHECK_DECL([wcstoull], 
+                  [], 
+		  [AC_DEFINE([ACE_LACKS_WCSTOULL_PROTOTYPE], 1,
+			     [Define to 1 if platform lacks a declaration for wcstoull()])],
+                  [#include <stdlib.h>
 #include <wchar.h>])
 fi
 ])
