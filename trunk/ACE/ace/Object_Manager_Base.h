@@ -104,7 +104,7 @@ protected:
 
   /**
    * Flag indicating whether the ACE_Object_Manager was dynamically
-   * allocated by ACE.  (If is was dynamically allocated by the
+   * allocated by ACE. (If is was dynamically allocated by the
    * application, then the application is responsible for destroying
    * it.)
    */
