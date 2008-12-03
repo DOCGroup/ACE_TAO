@@ -1,3 +1,45 @@
+Wed Dec  3 19:30:48 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.h:
+        * orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.cpp:
+        
+          New files, first cut at a server-side init
+          helper class, to encapsulate the various LWFT
+          things that intrude on a replicated application.
+        
+        * orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.h:
+        
+          Changed comment.
+          
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp:
+        
+          Added ACE_Barrier::wait() calls to error blocks
+          that return from svc().
+          
+        * orbsvcs/orbsvcs/LWFT/ReplicatedApplication.idl:
+        
+          Added SSA reference and object_string as attributes,
+          along with forward declaration of interface
+          StateSynchronizationAgent.
+          
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.cpp:
+        
+          Cleaned up #includes.
+          
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
+        
+          Added new files above to LWFT_Server project.
+          
+        * orbsvcs/orbsvcs/LWFT/ServerORBInitializer.h:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent.idl:
+          
+          Cosmetic changes.
+          
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
+        
+          Added ACE_Barrier::wait() calls to error blocks that
+          return from svc().
+          
 Sun Nov 30 13:55:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/LWFT.mpc:

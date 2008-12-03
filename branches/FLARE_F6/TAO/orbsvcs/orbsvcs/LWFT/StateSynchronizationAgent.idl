@@ -10,26 +10,26 @@
  */
 //=============================================================================
 
-#ifndef _REPLICATION_AGENT_IDL_
-#define _REPLICATION_AGENT_IDL_
+#ifndef _STATE_SYNCHRONIZATION_AGENT_IDL_
+#define _STATE_SYNCHRONIZATION_AGENT_IDL_
 
 #include "ReplicatedApplication.idl"
 #include "LWFTDataStructures.idl"
 
 interface StateSynchronizationAgent 
 {
-  /// triggers an serial update of the state information 
-  /// to all registered replicas
+  /// Triggers an serial update of the state information 
+  /// to all registered replicas.
   void state_changed (in string object_id);
 
-  /// used by the ReplicationManager to update information about
-  /// active replicas
+  /// Used by the ReplicationManager to update information about
+  /// active replicas.
   void update_rank_list (in RankList replicas);
 
-  /// informs the replication manager about applications for which
-  /// it is responsible for replication
-  void register_application (in string objec_id,
+  /// Informs the replication manager about applications for which
+  /// it is responsible for replication. 
+  void register_application (in string object_id,
 			                       in ReplicatedApplication app);
 };
 
-#endif /* _REPLICATION_AGENT_IDL_ */
+#endif /* _STATE_SYNCHRONIZATION_AGENT_IDL_ */
