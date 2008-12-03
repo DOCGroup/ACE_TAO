@@ -72,6 +72,10 @@
 
 # include "ace/ACE_export.h"
 
+# if !defined (ACE_LACKS_LONGLONG_T) &&  !defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+#  include "ace/Truncate.h"
+# endif
+
 # if !defined (ACE_LACKS_STDINT_H)
 #  include <stdint.h>
 # endif
@@ -672,13 +676,13 @@ ACE_CU64_TO_CU32 (ACE_U_LongLong const & n)
 inline ACE_UINT32
 ACE_U64_TO_U32 (ACE_UINT64 n)
 {
-  return static_cast<ACE_UINT32> (n);
+  return ACE_Utils::truncate_cast<ACE_UINT32> (n);
 }
 
 inline ACE_UINT32
 ACE_CU64_TO_CU32 (ACE_UINT64 n)
 {
-  return static_cast<ACE_UINT32> (n);
+  return ACE_Utils::truncate_cast<ACE_UINT32> (n);
 }
 # endif /* ! ACE_LACKS_LONGLONG_T */
 

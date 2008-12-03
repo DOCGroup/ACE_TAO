@@ -83,8 +83,8 @@ void *ACE_OS_Object_Manager::preallocated_object[
   ACE_OS_Object_Manager::ACE_OS_PREALLOCATED_OBJECTS] = { 0 };
 
 ACE_OS_Object_Manager::ACE_OS_Object_Manager (void)
-  // default_mask_ isn't initialized, because it's defined by <init>.
-  : thread_hook_ (0)
+  : default_mask_ (0)
+  , thread_hook_ (0)
   , exit_info_ ()
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
   , seh_except_selector_ (ACE_SEH_Default_Exception_Selector)

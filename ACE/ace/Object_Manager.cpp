@@ -465,6 +465,21 @@ ACE_Object_Manager::at_exit_i (void *object,
   return exit_info_.at_exit_i (object, cleanup_hook, param);
 }
 
+int
+ACE_Object_Manager::remove_at_exit_i (void *object)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+    *instance_->internal_lock_, -1));
+
+  if (shutting_down_i ())
+    {
+      errno = EAGAIN;
+      return -1;
+    }
+
+  return exit_info_.remove (object);
+}
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 
 int
