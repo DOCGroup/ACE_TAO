@@ -141,9 +141,6 @@ TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
                                                 const char *poa_id,
                                                 size_t context_size)
 {
-  // Store the stub we will return here.
-  CosNaming::NamingContext_var result;
-
   // Put together a servant for the new Naming Context.
 
   TAO_Transient_Naming_Context *context_impl = 0;
@@ -180,7 +177,7 @@ TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
   poa->activate_object_with_id (id.in (), context);
 #endif /* CORBA_E_MICRO */
 
-  result = context->_this ();
+  CosNaming::NamingContext_var result = context->_this ();
 
   return result._retn ();
 }
@@ -260,7 +257,7 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
   ITER_SERVANT *bind_iter = 0;
 
   // Number of bindings that will go into the BindingList <bl>.
-  CORBA::ULong n;
+  CORBA::ULong n = 0;
 
   // Calculate number of bindings that will go into <bl>.
   if (this->context_->current_size () > how_many)
@@ -317,8 +314,7 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId (poa_id);
 
-      this->poa_->activate_object_with_id (id.in (),
-                                           bind_iter);
+      this->poa_->activate_object_with_id (id.in (), bind_iter);
 #endif /* CORBA_E_MICRO */
 
       bi = bind_iter->_this ();

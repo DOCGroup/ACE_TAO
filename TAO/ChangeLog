@@ -1,3 +1,14 @@
+Wed Dec  3 09:22:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+          Set all object references to nil in the fini method
+
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
+          Layout changes
+
+        * orbsvcs/tests/Bug_1334_Regression/client.cpp:
+          Removed ACE_UNUSED_ARG usage
+
 Wed Dec  3 08:09:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connector.cpp:
