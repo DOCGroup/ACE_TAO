@@ -1,3 +1,9 @@
+Wed Dec  3 00:41:52 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add missing call to ACE_FUNC_STRTOULL autoconf macro.
+
 Tue Dec  2 20:01:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Intrusive_List.h:
