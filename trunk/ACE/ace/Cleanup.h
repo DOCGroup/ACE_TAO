@@ -27,6 +27,9 @@
 
 #include /**/ "ace/ACE_export.h"
 
+# include "ace/Intrusive_List.h"
+# include "ace/Intrusive_List_Node.h"
+
 #if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
 # include "ace/Global_Macros.h"
 # define ACE_CLEANUP_DESTROYER_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ace_cleanup_destroyer)
@@ -59,27 +62,33 @@ extern "C" ACE_Export
 void ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *, void *param = 0);
 
 /**
- * @class ACE_Cleanup_Info
+ * @class ACE_Cleanup_Info_Node
  *
- * @brief Hold cleanup information for thread/process
+ * @brief For maintaining a list of ACE_Cleanup_Info items.
+ *
+ * For internal use by ACE_Object_Manager.
  */
-class ACE_Export ACE_Cleanup_Info
+class ACE_Cleanup_Info_Node : public ACE_Intrusive_List_Node<ACE_Cleanup_Info_Node>
 {
 public:
-  /// Constructor
-  ACE_Cleanup_Info (void);
-
-  /// Constructor.
-  ACE_Cleanup_Info (void *object,
-                    ACE_CLEANUP_FUNC cleanup_hook,
-                    void *param);
+  ACE_Cleanup_Info_Node (void);
+  ACE_Cleanup_Info_Node (void *object,
+                         ACE_CLEANUP_FUNC cleanup_hook,
+                         void *param);
+  ~ACE_Cleanup_Info_Node (void);
 
   /// Equality operator.
-  bool operator== (const ACE_Cleanup_Info &o) const;
+  bool operator== (const ACE_Cleanup_Info_Node &o) const;
 
   /// Inequality operator.
-  bool operator!= (const ACE_Cleanup_Info &o) const;
+  bool operator!= (const ACE_Cleanup_Info_Node &o) const;
 
+  void* object(void);
+
+  ACE_CLEANUP_FUNC cleanup_hook (void);
+
+  void *param (void);
+private:
   /// Point to object that gets passed into the <cleanup_hook_>.
   void *object_;
 
@@ -90,7 +99,7 @@ public:
   void *param_;
 };
 
-class ACE_Cleanup_Info_Node;
+typedef ACE_Intrusive_List<ACE_Cleanup_Info_Node> ACE_Cleanup_Info_Node_List;
 
 /**
  * @class ACE_OS_Exit_Info
@@ -117,18 +126,21 @@ public:
   /// registered, false if not.
   bool find (void *object);
 
+  /// Remove a registered cleanup hook object.  Returns true if removed
+  /// false if not.
+  bool remove (void *object);
+
   /// Call all registered cleanup hooks, in reverse order of
   /// registration.
   void call_hooks ();
 
 private:
   /**
-   * Keeps track of all registered objects.  The last node is only
-   * used to terminate the list (it doesn't contain a valid
-   * ACE_Cleanup_Info).
+   * Keeps track of all registered objects.
    */
-  ACE_Cleanup_Info_Node *registered_objects_;
+  ACE_Cleanup_Info_Node_List registered_objects_;
 };
+
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

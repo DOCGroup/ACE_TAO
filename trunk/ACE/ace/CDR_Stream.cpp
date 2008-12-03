@@ -379,7 +379,7 @@ ACE_OutputCDR::write_wstring (ACE_CDR::ULong len,
             this->write_ulong (
               ACE_Utils::truncate_cast<ACE_CDR::ULong> (
                 ACE_OutputCDR::wchar_maxbytes_ * len));
-          
+
           if (good_ulong)
             {
               return this->write_wchar_array (x, len);
@@ -703,7 +703,6 @@ ACE_OutputCDR::write_boolean_array (const ACE_CDR::Boolean* x,
   return this->good_bit ();
 }
 
-
 char *
 ACE_OutputCDR::write_long_placeholder (void)
 {
@@ -715,7 +714,6 @@ ACE_OutputCDR::write_long_placeholder (void)
   return buf;
 }
 
-
 char *
 ACE_OutputCDR::write_short_placeholder (void)
 {
@@ -726,7 +724,6 @@ ACE_OutputCDR::write_short_placeholder (void)
     buf = 0;
   return buf;
 }
-
 
 ACE_CDR::Boolean
 ACE_OutputCDR::replace (ACE_CDR::Long x, char* loc)
@@ -1371,7 +1368,7 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
     }
 
   ACE_CDR::ULong len = 0;
-  
+
   if (!this->read_ulong (len))
     {
       return false;
