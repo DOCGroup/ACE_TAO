@@ -3389,6 +3389,8 @@ ACE_FUNC_STRTOLL
 
 ACE_CHECK_LACKS_FUNCS(strtoul)
 
+ACE_FUNC_STRTOULL
+
 # swab() comes in a number of forms:
 #   swab (const void*, void*, size_t) is POSIX, XPG4, SUS, SUSv2 standard.
 #   swab (const char*, char*, size_t) is SVID third edition.
