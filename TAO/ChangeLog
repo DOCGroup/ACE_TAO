@@ -1,3 +1,8 @@
+Wed Dec  3 22:20:51 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp:
+          Fix variable length array error. Replaced with ACE_Array<>.
+
 Wed Dec 03 18:11:39 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test/client.cpp:
@@ -256,7 +261,7 @@ Fri Nov 28 11:09:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Nov 27 04:09:39 CST 2008  Simon Massey  <sma@prismtech.com>
 
-	* TAO version 1.6.7 released.
+        * TAO version 1.6.7 released.
 
 Wed Nov 26 13:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
