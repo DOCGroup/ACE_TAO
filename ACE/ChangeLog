@@ -1,3 +1,10 @@
+Wed Dec  3 18:38:49 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * docs/svn/svn-prefs.reg:
+
+          Added auto-prop settings for .xme files, which are exported
+          GME files and only created on Windows platforms.
+
 Wed Dec 03 18:14:25 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
 
         * bin/tao_other_tests.lst:
