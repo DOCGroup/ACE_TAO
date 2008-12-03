@@ -1,3 +1,8 @@
+Wed Dec  3 10:45:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Types.h:
+          Use static_cast again, truncate_cast broke HPUX
+
 Wed Dec  3 07:55:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Basic_Types.h:
