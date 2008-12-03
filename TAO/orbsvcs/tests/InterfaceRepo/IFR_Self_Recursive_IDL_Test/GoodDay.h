@@ -21,14 +21,11 @@ public:
   GoodDay (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * get_string (void);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
-  virtual ::Test::GoodDay::RoughWeek * this_week (void)
-    ACE_THROW_SPEC ((::CORBA::SystemException));
+  virtual ::Test::GoodDay::RoughWeek * this_week (void);
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown
