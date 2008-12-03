@@ -1,3 +1,21 @@
+Wed Dec  3 08:09:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connector.cpp:
+          Layout changes
+
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+          Const changes
+
+        * tao/TAO_Singleton.h:
+        * tao/TAO_Singleton_Manager.h:
+          Doxygen changes
+
+        * tao/TAO_Singleton_Manager.cpp (fini):
+          When we have been registered with the ACE object manager
+          then unregister ourselves again. If we keep registered
+          and the TAO DLL gets unloaded ACE will crash when trying
+          to callback to us
+
 Wed Dec  3 06:55:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/AdvSlot/run_test.pl:

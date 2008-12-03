@@ -324,20 +324,21 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
                                       TAO_IIOP_Endpoint *iiop_endpoint,
                                       ACE_Time_Value *timeout)
 {
-  const ACE_INET_Addr &remote_address =
-    iiop_endpoint->object_addr ();
+  const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
 
   u_short port = 0;
   ACE_UINT32 const ia_any = INADDR_ANY;
   ACE_INET_Addr local_addr(port, ia_any);
 
   if (iiop_endpoint->is_preferred_network ())
-    local_addr.set (port,
-                    iiop_endpoint->preferred_network ());
+    {
+      local_addr.set (port, iiop_endpoint->preferred_network ());
+    }
 #if defined (ACE_HAS_IPV6)
   else if (remote_address.get_type () == AF_INET6)
-    local_addr.set (port,
-                    ACE_IPV6_ANY);
+    {
+      local_addr.set (port, ACE_IPV6_ANY);
+    }
 #endif /* ACE_HAS_IPV6 */
 
   if (TAO_debug_level > 2)
