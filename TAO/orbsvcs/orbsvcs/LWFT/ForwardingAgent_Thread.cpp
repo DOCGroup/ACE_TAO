@@ -1,12 +1,10 @@
 // -*- C++ -*-
 // $Id$
 
+#include "tao/PortableServer/Servant_Base.h"
 #include "tao/ORBInitializer_Registry.h"
 
 #include "orbsvcs/orbsvcs/Naming/Naming_Client.h"
-
-#include "tao/PortableServer/Servant_Base.h"
-#include "tao/ORBInitializer_Registry.h"
 
 #include "ForwardingAgent_Thread.h"
 #include "ForwardingAgent.h"

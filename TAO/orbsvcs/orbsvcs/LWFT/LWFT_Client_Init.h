@@ -6,7 +6,7 @@
  *
  * $Id$
  *
- * A concrete implementation of a service callback
+ * Encapsulates LWFT client initialization steps.
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */

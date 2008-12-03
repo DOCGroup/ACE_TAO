@@ -27,14 +27,17 @@ AppSideMonitor_Thread::svc (void)
 {
   if (serv_addr_.set (this->port_) == -1)
     {
-      ACE_DEBUG ((LM_ERROR, "Can't set port.\n"));
+      ACE_DEBUG ((LM_ERROR,
+                  "AppSideMonitor_Thread::svc: can't set port.\n"));
+      this->synchronizer_->wait ();
       return EXIT_FAILURE;
     }
     
   if (acceptor_.open (serv_addr_) == -1)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "The Acceptor can't open the socket.\n"));
+                  "AppSideMonitor_Thread::svc: can't open the socket.\n"));
+      this->synchronizer_->wait ();
       return EXIT_FAILURE;
     }
 

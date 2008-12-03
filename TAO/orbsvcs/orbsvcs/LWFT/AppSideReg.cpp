@@ -39,7 +39,9 @@ AppSideReg::svc (void)
 
       if (CORBA::is_nil (obj))
         {
-          ACE_DEBUG ((LM_ERROR, "Nil Reference\n"));
+          ACE_DEBUG ((LM_ERROR, \
+                      "AppSideReg::svc: nil HM reference\n"));
+          outer_barrier_.wait ();
           return 1;
         }
 
@@ -48,9 +50,10 @@ AppSideReg::svc (void)
       
       if (CORBA::is_nil (hmvar_))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Argument is not a HostMonitor reference.\n"),
-                            1);
+          ACE_ERROR ((LM_ERROR,
+                      "AppSideReg::svc: HostMonitor narrow failed.\n"));
+          outer_barrier_.wait ();
+          return 1;
         }
 
       //ACE_DEBUG ((LM_DEBUG, "Creating the host monitor\n"));
@@ -74,6 +77,7 @@ AppSideReg::svc (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "AppSideReg: exception from dump.\n"));
+          outer_barrier_.wait ();
           throw;
         }
 
@@ -101,6 +105,7 @@ AppSideReg::svc (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "AppSideReg: exception from register_process.\n"));
+          outer_barrier_.wait ();
           throw;
         }
 
@@ -110,11 +115,13 @@ AppSideReg::svc (void)
     {
       ACE_PRINT_EXCEPTION (ex,
                            "AppSideReg: A CORBA exception was raised:");
+      outer_barrier_.wait ();
       return -1;
     }
   catch (...)
     {
       ACE_DEBUG ((LM_ERROR, "AppSideReg: Unknown exception raised!"));
+      outer_barrier_.wait ();
       return -1;
     }
 

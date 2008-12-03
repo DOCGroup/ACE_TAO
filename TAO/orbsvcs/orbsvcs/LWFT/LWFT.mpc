@@ -14,7 +14,6 @@ project(*Common) : pi_server, interceptors, iorinterceptor, orbsvcs_output {
   }
   
   IDL_Files {
-    ReplicatedApplication.idl
     LWFTDataStructures.idl
   }
   
@@ -22,8 +21,6 @@ project(*Common) : pi_server, interceptors, iorinterceptor, orbsvcs_output {
     LWFTDataStructuresC.cpp
     LWFTDataStructuresS.cpp
     Timer.cpp
-    ReplicatedApplicationC.cpp
-    ReplicatedApplicationS.cpp
   }
   
   Header_Files {
@@ -103,6 +100,7 @@ project(*Server) : iorinterceptor, orbsvcs_output {
     AppSideReg.cpp
     HostMonitorC.cpp
     IOR_Interceptor.cpp
+    LWFT_Server_Init.cpp
     ObjectReferenceFactory.cpp
     ObjectReferenceFactoryC.cpp
     ServerORBInitializer.cpp
@@ -132,11 +130,14 @@ project(*StateSyncAgent) : portableserver, splicelib, orbsvcs_output, lwft_dds {
   
   IDL_Files {
     StateSynchronizationAgent.idl
+    ReplicatedApplication.idl
   }
 
   Source_Files {
     CorbaStateUpdate.cpp
     DDSFailure.cpp
+    ReplicatedApplicationC.cpp
+    ReplicatedApplicationS.cpp
     StatefulObject.cpp
     StateSyncAgentTask.cpp
     StateSynchronizationAgentC.cpp
@@ -151,8 +152,10 @@ project(*StateSyncAgent) : portableserver, splicelib, orbsvcs_output, lwft_dds {
   }
   
   Inline_Files {
-    StateSynchonizationAgentC.inl
-    StateSynchonizationAgentS.inl
+    ReplicatedApplicationC.inl
+    ReplicatedApplicationS.inl
+    StateSynchronizationAgentC.inl
+    StateSynchronizationAgentS.inl
   }
   
   Template_Files {
