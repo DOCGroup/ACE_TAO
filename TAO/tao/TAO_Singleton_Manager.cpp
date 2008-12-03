@@ -44,8 +44,8 @@ TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME (void *, void *)
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Singleton_Manager::TAO_Singleton_Manager (void)
-  // default_mask_ isn't initialized, because it's defined by <init>.
-  : thread_hook_ (0),
+  : default_mask_ (0),
+    thread_hook_ (0),
     exit_info_ (),
     registered_with_object_manager_ (-1)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -130,7 +130,7 @@ TAO_Singleton_Manager::init (void)
     {
       // Register the TAO_Singleton_Manager with the
       // ACE_Object_Manager.
-      int register_with_object_manager = 1;
+      int const register_with_object_manager = 1;
 
       return this->init (register_with_object_manager);
     }
@@ -177,7 +177,6 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
       // with a manager of a different type from the one it is
       // currently registered with.  This indicates a problem with the
       // caller's logic.
-
       errno = EINVAL;
       return -1;
     }
@@ -191,8 +190,7 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
                0) != 0)
         return -1;
 
-      this->registered_with_object_manager_ =
-        register_with_object_manager;
+      this->registered_with_object_manager_ = register_with_object_manager;
     }
 
   // Had already initialized.
@@ -203,14 +201,15 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
 // other than The Instance.  This can happen if a user creates one for some
 // reason.  All objects clean up their per-object information and managed
 // objects, but only The Instance cleans up the static preallocated objects.
-
 int
 TAO_Singleton_Manager::fini (void)
 {
   if (the_instance == 0  ||  this->shutting_down_i ())
-    // Too late.  Or, maybe too early.  Either fini () has already
-    // been called, or init () was never called.
-    return this->object_manager_state_ == OBJ_MAN_SHUT_DOWN  ?  1  :  -1;
+    {
+      // Too late.  Or, maybe too early.  Either fini () has already
+      // been called, or init () was never called.
+      return this->object_manager_state_ == OBJ_MAN_SHUT_DOWN  ?  1  :  -1;
+    }
 
   // No mutex here.  Only the main thread should destroy the singleton
   // TAO_Singleton_Manager instance.
@@ -231,20 +230,13 @@ TAO_Singleton_Manager::fini (void)
   // registration.
   this->exit_info_.call_hooks ();
 
-//   // Only clean up preallocated objects when the singleton Instance is being
-//   // destroyed.
-//   if (this == the_instance)
-//     {
-// #if ! defined (ACE_HAS_STATIC_PREALLOCATION)
-//       // Cleanup the dynamically preallocated objects.
-// # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-//       // @@ No MT-specific preallocated objects yet.
-// # endif  /* ACE_MT_SAFE */
-//       // @@ No preallocated objects yet.
-// #endif  /* ! ACE_HAS_STATIC_PREALLOCATION */
-//     }
+  // Remove ourselves from the ACE object manager
+  if (this->registered_with_object_manager_ == 1)
+    {
+      ACE_Object_Manager::remove_at_exit (this);
+    }
 
-  delete this-> default_mask_;
+  delete this->default_mask_;
   this->default_mask_ = 0;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
