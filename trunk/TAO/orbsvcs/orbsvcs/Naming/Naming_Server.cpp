@@ -497,8 +497,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // Now make sure this directory exists
           if (ACE_OS::access (persistence_location, W_OK|X_OK))
             {
-              ACE_ERROR ((LM_ERROR, "Invalid persistence directory\n"));
-              return -1;
+              ACE_ERROR_RETURN ((LM_ERROR, "Invalid persistence directory\n"), -1);
             }
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
@@ -737,11 +736,17 @@ TAO_Naming_Server::fini (void)
       CORBA::Object_var svc =
         this->orb_->unregister_initial_reference ("NameService");
 #endif /* CORBA_E_MICRO */
+
     }
   catch (const CORBA::Exception&)
     {
       // Ignore
     }
+
+  naming_context_ = CosNaming::NamingContext::_nil ();
+  ns_poa_ = PortableServer::POA::_nil ();
+  root_poa_ = PortableServer::POA::_nil ();
+  orb_ = CORBA::ORB::_nil ();
 
   if (this->ior_multicast_ != 0)
     {
