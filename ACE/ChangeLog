@@ -1,3 +1,28 @@
+Wed Dec  3 07:55:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Types.h:
+          Use truncate_cast instead of static_cast
+
+        * ace/CDR_Stream.cpp:
+          Layout change
+
+        * ace/Cleanup.cpp:
+        * ace/Cleanup.h:
+        * ace/Cleanup.inl:
+        * ace/Object_Manager.cpp:
+        * ace/Object_Manager.h:
+        * ace/Object_Manager.inl:
+        * ace/Object_Manager_Base.cpp:
+        * ace/Thread_Manager.cpp:
+        * ace/Thread_Manager.h:
+          Reimplemented the at_exit list as intrusive_list and also added
+          the functionality to remove a registered at_exit hook again. This
+          can be used by DLL's that register objects in the object
+          manager, but who get unloaded explicitly before the ACE dll.
+
+        * ace/Active_Map_Manager.h:
+          Doxygen change
+
 Wed Dec  3 00:41:52 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:

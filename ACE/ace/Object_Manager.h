@@ -268,6 +268,8 @@ public:
                       ACE_CLEANUP_FUNC cleanup_hook,
                       void *param);
 
+  static int remove_at_exit (void *object);
+
 #if 0 /* not implemented yet */
   /// Similar to <at_exit>, except that the cleanup_hook is called
   /// when the current thread exits instead of when the program terminates.
@@ -344,6 +346,10 @@ private:
   /// Register an object or array for deletion at program termination.
   /// See description of static version above for return values.
   int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
+
+  /// Remove an object for deletion at program termination.
+  /// See description of static version above for return values.
+  int remove_at_exit_i (void *object);
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 public:
