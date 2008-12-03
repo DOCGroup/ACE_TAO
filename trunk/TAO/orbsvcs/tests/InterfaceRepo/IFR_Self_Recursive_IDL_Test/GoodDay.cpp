@@ -6,18 +6,20 @@
 GoodDay::GoodDay (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
+  if (TAO_Requires_IFR_Client_Initializer == -1)
+  {
+    ACE_ERROR((LM_ERROR, ACE_TEXT("IFR Client failed to load\n")));
+  }
 }
 
 char *
 GoodDay::get_string (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Hello there!");
 }
 
 void
 GoodDay::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
@@ -25,7 +27,6 @@ GoodDay::shutdown (void)
 
 ::Test::GoodDay::RoughWeek *
 GoodDay::this_week (void)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   // Not actually used.
   return 0;

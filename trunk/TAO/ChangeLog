@@ -1,3 +1,16 @@
+Wed Dec 03 18:11:39 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test/GoodDay.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test/GoodDay.h:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test/server.cpp:
+        Compilation fixes.
+
+        * configure.ac:
+        * orbsvcs/tests/InterfaceRepo/Makefile.am:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test/Makefile.am:
+        Add test to be built by autoconf.
+
 Wed Dec  3 09:22:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
