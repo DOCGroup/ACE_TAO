@@ -25,9 +25,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT("usage:  %s ")
+                           ACE_TEXT("-k <ior> ")
+                           ACE_TEXT("\n"),
                            argv [0]),
                           -1);
       }
@@ -53,6 +53,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if ( ! CORBA::is_nil (ifd.in()))
       {
         CORBA::InterfaceDef::FullInterfaceDescription *id = ifd->describe_interface();
+        if ( id == 0 )
+        {
+          ACE_ERROR ((LM_ERROR,
+                             ACE_TEXT("Null interface description returned\n")));
+        }
+
       }
       Test::GoodDay_var goodday =
         Test::GoodDay::_narrow(tmp.in ());
@@ -60,7 +66,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (goodday.in ()))
         {
           ACE_ERROR ((LM_DEBUG,
-                             "Nil Test::GoodDay reference <%s>\n",
+                             ACE_TEXT("Nil Test::GoodDay reference <%s>\n"),
                              ior));
         }
       else
@@ -69,7 +75,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::String_var the_string =
           goodday->get_string ();
 
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT("(%P|%t) - string returned <%s>\n"),
                     the_string.in ()));
       }
 

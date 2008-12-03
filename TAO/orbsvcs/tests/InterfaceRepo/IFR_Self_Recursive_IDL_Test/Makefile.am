@@ -18,7 +18,7 @@ TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
 
-## Makefile.IFR_Self_Reursive_IDL_Idl.am
+## Makefile.IFR_Self_Recursive_IDL_Idl.am
 
 BUILT_SOURCES = \
   TestC.cpp \
@@ -46,7 +46,7 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Test.idl
 
-## Makefile.IFR_Self_Reursive_IDL_Server.am
+## Makefile.IFR_Self_Recursive_IDL_Server.am
 
 if BUILD_EXCEPTIONS
 
@@ -74,7 +74,7 @@ server_LDADD = \
 
 endif BUILD_EXCEPTIONS
 
-## Makefile.IFR_Self_Reursive_IDL_Client.am
+## Makefile.IFR_Self_Recursive_IDL_Client.am
 
 if BUILD_EXCEPTIONS
 
