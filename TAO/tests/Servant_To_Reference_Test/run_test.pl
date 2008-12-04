@@ -22,7 +22,7 @@ foreach $i (@ARGV) {
 }
 
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
-$server_status = $SV->Spawn ();
+$server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
