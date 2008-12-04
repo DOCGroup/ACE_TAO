@@ -177,8 +177,8 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
   this->reactor_ = reactor;
   this->entry_ = entry;
 
-  ACE_Array<ACE_UINT32> local_ip_addr (entry->num_local_sec_addrs ());
-
+  ACE_Auto_Array_Ptr<ACE_UINT32> local_ip_addr
+    (new ACE_UINT32[entry->num_local_sec_addrs ()]);
   ACE_INET_Addr ip_addr;
   char** addrs = entry->get_local_sec_addr ();
   for (int i = 0; i < entry->num_local_sec_addrs (); i++)
@@ -186,7 +186,7 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
       ACE_CString addr_str (addrs[i]);
       addr_str += ":";
       ip_addr.set (addr_str.c_str ());
-      local_ip_addr [i] = ip_addr.get_ip_address ();
+      (*local_ip_addr) [i] = ip_addr.get_ip_address ();
     }
 
 
@@ -194,7 +194,7 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
   multi_addr.set (local_addr.get_port_number (),
                   local_addr.get_ip_address (),
                   1,
-                  local_ip_addr,
+                  *local_ip_addr,
                   entry->num_local_sec_addrs ());
 
   char buf[BUFSIZ];
@@ -496,7 +496,8 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
                       -1);
     }
 
-  ACE_Array<ACE_UINT32> local_ip_addr (entry->num_peer_sec_addrs ());
+  ACE_Auto_Array_Ptr<ACE_UINT32> local_ip_addr
+    (new ACE_UINT32[entry->num_peer_sec_addrs ()]);
   ACE_INET_Addr ip_addr;
   char** addrs = entry->get_peer_sec_addr ();
   for (int i = 0; i < entry->num_peer_sec_addrs (); i++)
@@ -504,14 +505,14 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
       ACE_CString addr_str (addrs[i]);
       addr_str += ":";
       ip_addr.set (addr_str.c_str ());
-      local_ip_addr [i] = ip_addr.get_ip_address ();
+      (*local_ip_addr) [i] = ip_addr.get_ip_address ();
     }
 
   if (entry->num_peer_sec_addrs () != 0)
     local_addr.set (addr->get_port_number (),
                     addr->get_ip_address (),
                     1,
-                    local_ip_addr,
+                    *local_ip_addr,
                     entry->num_peer_sec_addrs ());
   else
     local_addr.set (addr->get_port_number (),
