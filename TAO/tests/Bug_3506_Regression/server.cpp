@@ -103,7 +103,7 @@ Main_C::Create (int argc, ACE_TCHAR *argv[])
 
       IF_EXE_M_R::IF_ExeCtrlData_var servant_var =
         IF_EXE_M_R::IF_ExeCtrlData::_narrow (reference.in ());
-      CORBA::String_var str = m_ORB_p->object_to_string (servant_var);
+      CORBA::String_var str = m_ORB_p->object_to_string (servant_var.in ());
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
