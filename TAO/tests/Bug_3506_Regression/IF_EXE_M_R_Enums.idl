@@ -7,13 +7,13 @@ module IF_EXE_M_R {
   enum FOOAMode_E {
     FOOAMODE_E_THROUG_WATER,
     FOOAMODE_E_OVER_GROUND,
-    FOOAMODE_E_NOT_SET
+    FOOAMODE_E_X_NOT_SET
   };
 
   enum FOOBMode_E {
     FOOBMODE_E_ABSOLUTE,
     FOOBMODE_E_HEIGHT_OVER_GROUND,
-    FOOBMODE_E_NOT_SET
+    FOOBMODE_E_X_NOT_SET
   };
 
   enum FOOCMode_E {
@@ -23,8 +23,8 @@ module IF_EXE_M_R {
 
   /* Keywords: selection */
   enum ENUM_Selection {
-    YES,
-    NO
+    X_YES,
+    X_NO
   };
 
   /* Keywords: FOOI names */
@@ -64,7 +64,7 @@ module IF_EXE_M_R {
 
                 enum ENUM_FOOF {
       MAXIMUM,
-      ECONOMY
+      ECOX_NOMY
     };
 
     /* Keywords: control mode */
@@ -109,7 +109,7 @@ module IF_EXE_M_R {
 
     /* Keywords: transition status (base FOOI) */
     enum ENUM_TransitionStatus {
-      NO_TRANSITION,
+      X_NO_TRANSITION,
       FOOGTRANSITION,
       ENDTRANSITION
     };
