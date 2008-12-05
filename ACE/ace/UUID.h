@@ -112,7 +112,7 @@ namespace ACE_Utils
     void pid (char*);
 
     /// Returns a string representation of the UUID
-    const ACE_CString* to_string (void);
+    const ACE_CString* to_string (void) const;
 
     /// Set the value using a string
     void from_string (const ACE_CString& uuid_string);
@@ -147,7 +147,7 @@ namespace ACE_Utils
 
     /// The string representation of the UUID. This is created and
     /// updated only on demand.
-    ACE_CString *as_string_;
+    mutable ACE_CString *as_string_;
   };
 
   /**
@@ -209,7 +209,7 @@ namespace ACE_Utils
     /// Obtain a UUID timestamp and clock sequence. Compensate for the
     /// fact that the time obtained from getSystem time has a
     /// resolution less than 100ns.
-    void get_timestamp_and_clocksequence (UUID_Time& timestamp, 
+    void get_timestamp_and_clocksequence (UUID_Time& timestamp,
                                           ACE_UINT16& clockSequence);
 
     /// Obtain the system time in UTC as a count of 100 nanosecond intervals
