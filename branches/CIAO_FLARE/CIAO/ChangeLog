@@ -1,3 +1,26 @@
+Sat Dec  6 04:36:06 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/FTClientComponent
+        * DAnCE/tests/CIAO/FTClientComponent/FTClient.idl
+        * DAnCE/tests/CIAO/FTClientComponent/FTClient_exec.h
+        * DAnCE/tests/CIAO/FTClientComponent/FTClient.cidl
+        * DAnCE/tests/CIAO/FTClientComponent/FTClient_exec_export.h
+        * DAnCE/tests/CIAO/FTClientComponent/FTClient_Timer_Handler.cpp
+        * DAnCE/tests/CIAO/FTClientComponent/Test.idl
+        * DAnCE/tests/CIAO/FTClientComponent/FTClient.mpc
+        * DAnCE/tests/CIAO/FTClientComponent/FTClient_svnt_export.h
+        * DAnCE/tests/CIAO/FTClientComponent/FTClient_Timer_Handler.h
+        * DAnCE/tests/CIAO/FTClientComponent/FTClient_stub_export.h
+        * DAnCE/tests/CIAO/FTClientComponent/FTClient_exec.cpp:
+
+          Added client component that makes invocations on the server.
+        
+        * DAnCE/tests/CIAO/FTComponent/SimpleFT.mpc
+        * DAnCE/tests/CIAO/FTComponent/Test.idl
+        * DAnCE/tests/CIAO/FTComponent/SimpleFT.idl:
+        
+          Fixed undefined symbols in stub, svnt and exec library.
+
 Sat Nov 15 05:07:51 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/FTComponent/SimpleFT.mpc

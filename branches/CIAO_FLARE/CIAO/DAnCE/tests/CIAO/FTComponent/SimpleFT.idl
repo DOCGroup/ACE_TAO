@@ -1,11 +1,12 @@
 // $Id$
 
 #include <Components.idl>
+#include <ReplicatedApplication.idl>
 #include "Test.idl"
 
 module Simple
 {
-  component SimpleFT supports test
+  component SimpleFT supports test, ReplicatedApplication
   {
     attribute Object COMPONENT_REFERENCE;
     attribute string object_id;

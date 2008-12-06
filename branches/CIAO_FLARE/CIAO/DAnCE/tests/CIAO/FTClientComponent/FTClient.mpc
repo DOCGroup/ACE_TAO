@@ -1,0 +1,128 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl FTClient"
+
+project(FTClient_idl_gen) : taoidldefaults, anytypecode {
+  avoids += ace_for_tao
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=FTCLIENT_STUB_Export \
+              -Wb,stub_export_include=FTClient_stub_export.h \
+              -Wb,skel_export_macro=FTCLIENT_SVNT_Export \
+              -Wb,skel_export_include=FTClient_svnt_export.h  
+  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+
+  IDL_Files {
+    FTClient.idl
+    Test.idl
+  }
+}
+
+project(FTClient_cidl_gen) : ciaocidldefaults, taoidldefaults {
+  avoids += ace_for_tao
+  custom_only = 1
+  cidlflags += --svnt-export-macro FTCLIENT_SVNT_Export \
+               --svnt-export-include FTClient_svnt_export.h
+  idlflags += -Wb,export_macro=FTCLIENT_EXEC_Export \
+              -Wb,export_include=FTClient_exec_export.h \
+              -SS
+
+  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+  cidlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+              
+  CIDL_Files {
+    FTClient.cidl
+  }
+  
+  IDL_Files {
+    FTClientE.idl
+  }
+}
+
+project(FTClient_stub) : ccm_stub {
+  avoids += ace_for_tao
+  after += FTClient_idl_gen 
+  
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+
+  sharedname = FTClient_stub
+  dynamicflags   = FTCLIENT_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FTClientC.cpp
+    TestC.cpp
+  }
+
+  Header_Files {
+    FTClientC.h
+    FTClient_stub_export.h
+  }
+
+  Inline_Files {
+    FTClientC.inl
+  }
+}
+
+project(FTClient_exec) : ciao_executor, ciao_container_base, orbsvcslib {
+  avoids += ace_for_tao
+  after   += FTClient_cidl_gen FTClient_stub
+  sharedname = FTClient_exec
+  libs += FTClient_stub
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+  dynamicflags   = FTCLIENT_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FTClientEC.cpp
+    FTClient_exec.cpp
+    FTClient_Timer_Handler.cpp
+  }
+  
+  Header_Files {
+    FTClientEC.h
+    FTClient_exec.h
+    FTClient_exec_export.h
+    FTClient_Timer_Handler.h
+  }
+  
+  Inline_Files {
+    FTClientEC.inl
+  }
+}
+
+
+project(FTClient_svnt) : ciao_servant {
+  avoids += ace_for_tao
+  after      +=  FTClient_exec
+  sharedname  = FTClient_svnt
+  libs       += FTClient_exec \
+                FTClient_stub 
+
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+  dynamicflags = FTCLIENT_SVNT_BUILD_DLL
+  
+  CIDL_Files {
+  }
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FTClientS.cpp
+    FTClient_svnt.cpp
+    TestS.cpp
+  }
+  
+  Header_Files {
+    FTClientS.h
+    FTClient_svnt.h
+    FTClient_svnt_export.h
+  }
+  
+  Inline_Files {
+    FTClientS.inl
+  }
+}
