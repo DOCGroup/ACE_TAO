@@ -68,20 +68,22 @@ namespace ACE_Utils
     this->clock_seq_low_ = clock_seq_low;
   }
 
-  ACE_INLINE UUID_Node*
+  ACE_INLINE const UUID_Node*
   UUID::node (void) const
   {
-    return this->node_;
+    return &this->node_;
+  }
+
+  ACE_INLINE UUID_Node*
+  UUID::node (void)
+  {
+    return &this->node_;
   }
 
   ACE_INLINE void
-  UUID::node (UUID_Node* node)
+  UUID::node (const UUID_Node* node)
   {
-    if (node_release_)
-      delete node_;
-
-    this->node_ = node;
-    node_release_ = false;
+    this->node_ = *node;
   }
 
   ACE_INLINE ACE_CString*
@@ -122,7 +124,7 @@ namespace ACE_Utils
         (this->time_hi_and_version_ != right.time_hi_and_version ()) ||
         (this->clock_seq_hi_and_reserved_ != right.clock_seq_hi_and_reserved ()) ||
         (this->clock_seq_low_ != right.clock_seq_low ()) ||
-        (*this->node_ != *right.node ()))
+        (this->node_ != *right.node ()))
       return false;
 
       return true;
