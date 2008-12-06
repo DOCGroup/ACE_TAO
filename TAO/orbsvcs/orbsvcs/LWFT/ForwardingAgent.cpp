@@ -21,10 +21,9 @@ ForwardingAgent_i::proactive (bool v)
 CORBA::Object_ptr
 ForwardingAgent_i::next_member (const char *ior_string)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "FA: NEXT MEMBER CALLED for ior_string = %s.\n",
-              
-              ior_string));
+ // ACE_DEBUG ((LM_DEBUG,
+ //             "FA: NEXT MEMBER CALLED for ior_string = %s.\n",           
+ //             ior_string));
   ACE_Guard <ACE_Thread_Mutex> guard (ior_map_mutex_);
   
   AGENT_RANKED_IOR_LIST ranked_ior_list;
@@ -34,9 +33,9 @@ ForwardingAgent_i::next_member (const char *ior_string)
                                         ranked_ior_list);
                                         
   size_t siz = ranked_ior_list.ior_list.size ();
-  ACE_DEBUG ((LM_DEBUG,
-              "next_member: IOR list size = %u\n",
-              siz));
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "next_member: IOR list size = %u\n",
+  //            siz));
   
   if ((result == 0) && (ranked_ior_list.ior_list.size () > 0))
     {
@@ -59,19 +58,20 @@ ForwardingAgent_i::update_rank_list (const RankList & rank_list)
   ACE_Guard <ACE_Thread_Mutex> guard (ior_map_mutex_);
   objectid_rankedior_map_.close ();
   objectid_rankedior_map_.open ();
- 
+ /*
   ACE_DEBUG((LM_DEBUG,
              "ForwardingAgent - "
              "Received rank_list length = %d.\n",
              rank_list.length ()));
-  
+  */
   for (size_t i = 0; i < rank_list.length (); ++i)
     {
+    /*
       ACE_DEBUG ((LM_DEBUG,
                   "\toid(%s) = %d entries\n", 
                   rank_list[i].object_id.in (), 
                   rank_list[i].ior_list.length ()));
-
+    */
       AGENT_RANKED_IOR_LIST ranked_ior_list;
       ranked_ior_list.now = rank_list[i].now;
       
@@ -92,7 +92,7 @@ ForwardingAgent_i::initialize (CORBA::Object_ptr rm_ior)
   this->RM_var_ = ReplicationManager::_narrow (rm_ior); 
   ForwardingAgent_var temp = this->_this ();
   
-  ACE_DEBUG ((LM_DEBUG, "FA: calling register agent\n"));
+  //ACE_DEBUG ((LM_DEBUG, "FA: calling register agent\n"));
   RankList *rank_list = this->RM_var_->register_agent (temp.in ());
   update_rank_list (*rank_list);
 }

@@ -31,15 +31,17 @@ int main (int argc, char* argv[])
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
+      
+      HMOptions *opts = HMOptions::instance ();
 
-      if (! HMOptions::instance ()->parse_args (argc, argv))
+      if (! opts->parse_args (argc, argv))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Host Monitor options "
                              "are incorrect.\n"),
                             -1);
         }
-      
+        
       Monitor_Thread monitor_thread;
       
       /// Initilize the timedate object on heap.
@@ -52,8 +54,8 @@ int main (int argc, char* argv[])
       CORBA::String_var hmstr = orb->object_to_string (hmvar.in ());
 
       /// Copy the IOR in the IORFILE.
-      std::ofstream outfile (
-        HMOptions::instance ()->HM_ior_file ().c_str ());
+      std::string ior_file (opts->HM_ior_file ());
+      std::ofstream outfile (ior_file.c_str ());
       outfile << hmstr;
       outfile.close ();
 

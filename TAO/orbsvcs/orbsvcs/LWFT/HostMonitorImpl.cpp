@@ -67,13 +67,13 @@ throw (CORBA::SystemException)
                           hostname,
                           port);
   process_map_.bind (process_id, handler);
-
+/*
   ACE_DEBUG ((LM_DEBUG,
               "HostMonitorImpl::register_process "
               "process_id = %s, port = %d.\n",
               process_id,
               port));
-
+*/
   return true;
 }
 
@@ -82,19 +82,35 @@ HostMonitorImpl::unregister_process (const char *process_id)
 throw (CORBA::SystemException)
 {
   Failure_Handler *handler = 0;
+  
   if (process_map_.find (process_id, handler) == 0)
-  {
-      ACE_DEBUG ((LM_DEBUG,"HostMonitorImpl::unregister_process %s.\n", process_id));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "HostMonitorImpl::unregister_process %s.\n",
+                  process_id));
+                  
       if ((handler->drop_process (handler->get_handle ()) == 0))
-      {
-        if (remove_process (process_id) == 0)
-          return true;
-      }
+        {
+          if (remove_process (process_id) == 0)
+            {
+              return true;
+            }
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,"HostMonitorImpl::unregister_process Process %s can't be dropped!\n", process_id));
-  }
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "HostMonitorImpl::unregister_process "
+                      "Process %s can't be dropped!\n",
+                      process_id));
+        }
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,"HostMonitorImpl::unregister_process Invalid process_id = %s.\n", process_id));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "HostMonitorImpl::unregister_process "
+                  "Invalid process_id = %s.\n",
+                  process_id));
+    }
 
   return true;
 }
@@ -140,6 +156,7 @@ RM_Proxy *HostMonitorImpl::create_rm_proxy (void)
     this->util_mon_ = util_mon;
     this->rm_proxy_ = rm_proxy;
   }
+  
   return rm_proxy_.get();
 }
 
@@ -157,9 +174,10 @@ void HostMonitorImpl::remove_rm_proxy (void)
 int HostMonitorImpl::remove_process (std::string const &process_id)
 {
   if (process_map_.unbind (process_id) == 0)
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
+    
   return -1;
 }
 

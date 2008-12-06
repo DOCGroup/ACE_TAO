@@ -1,3 +1,32 @@
+Sat Dec  6 23:43:53 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
+        
+          Removed the specific addition of _SCL_SECURE_NO_WARNINGS
+          macro for Visual Studio versions. The file it was needed
+          for has been removed from SVN.
+          
+        * orbsvcs/orbsvcs/LWFT/DDSStateUpdate_T.cpp:
+        * orbsvcs/orbsvcs/LWFT/StatefulObject.cpp:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:
+        * orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.cpp:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i_T.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
+        * orbsvcs/orbsvcs/LWFT/Client_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppOptions.cpp:
+        * orbsvcs/orbsvcs/LWFT/Client_Request_Interceptor.cpp:
+        * orbsvcs/orbsvcs/LWFT/Monitor_Thread.cpp:
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent.cpp:
+        * orbsvcs/orbsvcs/LWFT/Failure_Handler.cpp:
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp:
+        * orbsvcs/orbsvcs/LWFT/RM_Proxy.cpp:
+        * orbsvcs/orbsvcs/LWFT/HMOptions.cpp:
+        * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
+        * orbsvcs/LWFT_Service/host_monitor.cpp:
+        
+          Commented out debugging output.
+
 Wed Dec  3 19:30:48 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.h:

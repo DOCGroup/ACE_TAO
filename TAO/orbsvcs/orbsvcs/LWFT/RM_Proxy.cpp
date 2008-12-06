@@ -62,8 +62,8 @@ RM_Proxy::obtain_RM_ior (CORBA::ORB_ptr orb)
         }
       else
         {
-          ACE_DEBUG ((LM_TRACE,
-                      "RM_Proxy: RM resolved from IOR file\n"));
+         // ACE_DEBUG ((LM_TRACE,
+         //             "RM_Proxy: RM resolved from IOR file\n"));
         }
     }
   else if (ior_access.first == 'n')  /// Naming Service based IOR
@@ -85,8 +85,8 @@ RM_Proxy::obtain_RM_ior (CORBA::ORB_ptr orb)
         }
       else
         {
-          ACE_DEBUG ((LM_TRACE,
-                      "RM_Proxy: RM resolved from Naming Service\n"));
+          //ACE_DEBUG ((LM_TRACE,
+          //            "RM_Proxy: RM resolved from Naming Service\n"));
         }
     }
   else
@@ -101,8 +101,8 @@ RM_Proxy::obtain_RM_ior (CORBA::ORB_ptr orb)
         }
       else
         {
-          ACE_DEBUG ((LM_TRACE,
-                      "RM_Proxy: RM resolved from IOR file\n"));
+          //ACE_DEBUG ((LM_TRACE,
+          //            "RM_Proxy: RM resolved from IOR file\n"));
         }
     }
     
@@ -121,17 +121,19 @@ RM_Proxy::proc_failure (const std::string & process_id)
   try
     {
       if (CORBA::is_nil (RM_var_.in ()))
-	{
-	  ACE_DEBUG ((LM_ERROR, "RM_Proxy::proc_failure - "
-		      "RM reference is nil.\n"));
-	  return;
-	}
+	      {
+	        ACE_ERROR ((LM_ERROR,
+	                    "RM_Proxy::proc_failure - "
+		                  "RM reference is nil.\n"));
+	        return;
+	      }
 
       RM_var_->proc_failure (process_id.c_str());
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception caught:");
+      ex._tao_print_exception (
+        "RM_Proxy::proc_failure: Exception caught:");
     }
 }
 
@@ -140,7 +142,7 @@ RM_Proxy::pulse (void)
 {
   //ACE_DEBUG((LM_ERROR,"host_id=%s\n",HMOptions::instance()->host_id().c_str()));
   //ACE_DEBUG((LM_ERROR,"load=%d\n", (int)load_calc_->percent_load()));
-  RM_var_->util_update (HMOptions::instance()->host_id().c_str (), 
-                        load_calc_->percent_load());
+  RM_var_->util_update (HMOptions::instance ()->host_id ().c_str (), 
+                        load_calc_->percent_load ());
   return 0;
 }

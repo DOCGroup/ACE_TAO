@@ -18,20 +18,24 @@ Monitor_Thread::Monitor_Thread (void)
 {
 }
 
-int Monitor_Thread::svc (void)
+int
+Monitor_Thread::svc (void)
 {
   try
     {
       if (reactor_.run_reactor_event_loop() == -1)
-	{
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "Monitor_Thread: run_reactor_event_loop failed\n"),
-			    -1);
-	}
+	      {
+	        ACE_ERROR_RETURN ((LM_ERROR,
+			                       "Monitor_Thread: "
+			                       "run_reactor_event_loop failed\n"),
+			                      -1);
+	      }
     }
   catch (CORBA::Exception & ex)
     {
-      ACE_DEBUG ((LM_ERROR, "Monitor_Thread::svc - caught %s", ex._info ().c_str ()));
+      ACE_DEBUG ((LM_ERROR,
+                  "Monitor_Thread::svc - caught %s",
+                  ex._info ().c_str ()));
       return -1;
     }
 

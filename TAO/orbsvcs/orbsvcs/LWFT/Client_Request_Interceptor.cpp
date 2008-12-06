@@ -50,6 +50,14 @@ void
 Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
+  if (ACE_OS::strcmp (ri->received_exception_id (),
+                      "IDL:omg.org/CORBA/COMM_FAILURE:1.0") != 0
+      && ACE_OS::strcmp (ri->received_exception_id (),
+                      "IDL:omg.org/CORBA/TRANSIENT:1.0") != 0)
+    {
+      return;
+    }
+
   ACE_DEBUG ((LM_DEBUG,
               "Client_Request_Interceptor::receive_exception - "
 	            "caught %s\n",
@@ -57,6 +65,7 @@ Client_Request_Interceptor::receive_exception (
 
   const CORBA::ULong tagID = 9654;
   char *tag = 0;
+  
   try
     {
       IOP::TaggedComponent_var mytag = ri->get_effective_component (tagID);
@@ -67,8 +76,9 @@ Client_Request_Interceptor::receive_exception (
     }
   catch (CORBA::BAD_PARAM&)
     {
-      ACE_DEBUG ((LM_DEBUG, "Client_Request_Interceptor::receive_exception - "
-		  "Tagged Component not found\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Client_Request_Interceptor::receive_exception - "
+		              "Tagged Component not found\n"));
     }
 }
 

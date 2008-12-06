@@ -569,8 +569,10 @@ ReplicationManager_i::process_proc_failure (
             }
           else
             {
-              ACE_DEBUG((LM_ERROR,"RM: Can't find host=%s in hostid_process_map. \
-                Data structure invariant broken.\n",host.c_str()));
+              ACE_DEBUG ((LM_ERROR,
+                          "RM: Can't find host=%s in hostid_process_map. "
+                          "Data structure invariant broken.\n",
+                          host.c_str()));
             }
         }
       else
@@ -953,7 +955,7 @@ ReplicationManager_i::app_reg (APP_INFO & app)
             ACE_ERROR ((LM_ERROR,
                         "RM: in app_reg () - Unknown Role!!\n"));
         }
-
+/*
       ACE_DEBUG ((LM_DEBUG,
                   "RM: Registered successfully %s:%s:%s:%d "
                   "with Replication manager.\n",
@@ -961,6 +963,7 @@ ReplicationManager_i::app_reg (APP_INFO & app)
                   process_id,
                   object_id,
                   role));
+*/
     }
   else // If in static_mode_
     {
@@ -980,14 +983,14 @@ ReplicationManager_i::app_reg (APP_INFO & app)
             static_ranklist_update (object_id,
                                     app.ior,
                                     role);    
-
+/*
             ACE_DEBUG ((LM_DEBUG,
                         "RM: Registered %s:%s:%s:%d with "
                         "Replication manager in static mode.\n",
                         host_name,
                         process_id,
                         object_id,
-                        role));
+                        role));*/
             break;
           default:
             ACE_ERROR ((LM_ERROR,
@@ -1478,7 +1481,7 @@ RankList *
 ReplicationManager_i::register_agent (
   CORBA::Object_ptr agent_reference)
 {
-  ACE_DEBUG ((LM_DEBUG, "RM: register_agent () called\n"));
+//  ACE_DEBUG ((LM_DEBUG, "RM: register_agent () called\n"));
   ForwardingAgent_var agent =
     ForwardingAgent::_narrow (agent_reference);
 
@@ -1499,7 +1502,7 @@ ReplicationManager_i::register_state_synchronization_agent (
   const char * /* process_id */,
   StateSynchronizationAgent_ptr agent)
 {
-  ACE_DEBUG ((LM_DEBUG, "RM: register_state_synchronization_agent () called\n"));
+  // ((LM_DEBUG, "RM: register_state_synchronization_agent () called\n"));
  
   ACE_Guard <ACE_Thread_Mutex> agent_guard (
     state_sync_agent_list_mutex_);

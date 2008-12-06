@@ -7,12 +7,6 @@ project(*Common) : pi_server, interceptors, iorinterceptor, orbsvcs_output {
               -Wb,export_include=lwft_common_export.h
   dynamicflags = LWFT_COMMON_BUILD_DLL
   
-  // This feature is mysteriously turned off in vc_warnings.mpb,
-  // but we seem to need it here, for ArgPair.cpp
-  specific(vc8, vc9, nmake) {
-    macros += _SCL_SECURE_NO_WARNINGS
-  }
-  
   IDL_Files {
     LWFTDataStructures.idl
   }
