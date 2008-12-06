@@ -1,3 +1,24 @@
+Sat Dec  6 20:18:38 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ace/UUID.h:
+        * ace/UUID.inl:
+        * ace/UUID.cpp:
+
+          Implemented the operator = method for the UUID. This will enable
+          use of UUIDs in STL-like containers.
+
+          Bug fix where using the copy constructor for the UUID would result
+          in a memory leak.
+
+          Refactored code to use ACE_Auto_Ptr and ACE_Auto_Array_Ptr objects
+          to reduce code complexity, and ensure memory deallocation during
+          expected returns.
+
+        * tests/UUID_Test.cpp:
+
+          Added the assignment operator (i.e., operator =) to the UUIDs
+          test.
+
 Fri Dec  5 15:38:23 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * ace/UUID.h:
