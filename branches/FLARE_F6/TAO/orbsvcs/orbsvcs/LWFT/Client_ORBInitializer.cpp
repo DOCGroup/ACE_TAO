@@ -19,7 +19,6 @@ Client_ORBInitializer::~Client_ORBInitializer (void)
 {
 }
 
-
 void
 Client_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)

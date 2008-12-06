@@ -71,7 +71,7 @@ AppSideReg::svc (void)
       /// Waiting for the AppSideMonitor_Thread to finish its socket stuff.
       try
         {
-          hmvar_->dump ();
+         // hmvar_->dump ();
         }
       catch (CORBA::Exception &)
         {

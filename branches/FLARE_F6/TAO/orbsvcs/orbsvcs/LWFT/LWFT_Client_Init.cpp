@@ -59,10 +59,11 @@ LWFT_Client_Init::init (int &argc, char *argv[])
         }
       else
         {
+        /*
           ACE_DEBUG ((LM_TRACE,
                       ACE_TEXT ("LWFT_Client_Init::init: - ")
                       ACE_TEXT ("forwarding agent activated.\n")));
-
+         */
         }
     }
   catch (CORBA::Exception& ex)

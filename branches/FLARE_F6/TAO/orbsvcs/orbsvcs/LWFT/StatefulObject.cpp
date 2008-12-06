@@ -12,10 +12,10 @@
 
 #include "StatefulObject.h"
 
-StatefulObject::StatefulObject()
+StatefulObject::StatefulObject (void)
 {
 }
 
-StatefulObject::~StatefulObject()
+StatefulObject::~StatefulObject (void)
 {
 }

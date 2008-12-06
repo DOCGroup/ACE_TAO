@@ -317,11 +317,11 @@ DDSStateUpdate_T<TOPIC_TYPE,
     {
       return false;
     }
-
+/*
   ACE_DEBUG ((LM_TRACE,
-              ACE_TEXT ("created DR for %s\n"),
+              ACE_TEXT ("created DataReader for %s\n"),
               topic_name_.c_str ()));
-    
+*/    
   return true;
 }
 

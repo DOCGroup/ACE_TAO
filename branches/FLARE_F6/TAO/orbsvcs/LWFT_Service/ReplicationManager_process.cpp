@@ -88,16 +88,15 @@ main (int argc, char *argv[])
 	            naming_client->rebind (rm_name, rm.in ());
 	          }
 
-          ACE_DEBUG ((LM_INFO,
-                      "ReplicationManager registered with Naming Service\n"));
+     //     ACE_DEBUG ((LM_INFO,
+      //                "ReplicationManager registered with Naming Service\n"));
         }
 
       orb->run ();
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) RM - event loop finished\n"));
+    //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) RM - event loop finished\n"));
 
       poa->destroy (true, true);
-
       orb->destroy ();
     }
   catch (CORBA::Exception &ex)

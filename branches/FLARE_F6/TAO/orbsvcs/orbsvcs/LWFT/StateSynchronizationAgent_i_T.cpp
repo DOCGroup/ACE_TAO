@@ -27,10 +27,11 @@ StateSynchronizationAgent_i::register_application_with_dds (
   const char * object_id,
   ReplicatedApplication_ptr app)
 {
+/*
   ACE_DEBUG ((LM_TRACE,
               "SSA::register_application_with_dds (%s) called.\n",
               object_id));
-
+*/
   ACE_CString oid (object_id);
 
   if (application_map_.bind (oid,
@@ -47,11 +48,12 @@ StateSynchronizationAgent_i::register_application_with_dds (
     {
       try
         {
+        /*
           ACE_DEBUG ((LM_TRACE,
                       "SSA::register_application_with_dds add DDS participant"
                       " for application %s\n",
                       object_id));
-          
+        */  
           // create a new list which will have only one entry for DDS
           ReplicaGroup replica_group;
           replica_group.use_dds = true;
