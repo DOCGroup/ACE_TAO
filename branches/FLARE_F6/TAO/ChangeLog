@@ -1,3 +1,12 @@
+Sun Dec  7 16:25:19 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/DDSStateReaderListener_T.cpp:
+        
+          Commented out debugging output if RETCODE_NO_DATA is
+          received in on_data_available(). This return code is
+          received when a replica dies, and notification of
+          that event is output elsewhere.
+
 Sun Dec  7 000:01:45 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:

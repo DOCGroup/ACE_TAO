@@ -1249,7 +1249,7 @@ ReplicationManager_i::update_enhanced_ranklist (void)
       ObjectList_var iorlist (new ObjectList (1));
       iorlist->length (1);
 
-      //add object reference of primary to the list
+      // add object reference of primary to the list
       (*iorlist)[0] = 
         CORBA::Object::_duplicate ((*pit).item ().ior.in ());
 
