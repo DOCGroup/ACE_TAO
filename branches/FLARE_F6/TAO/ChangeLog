@@ -1,3 +1,13 @@
+Sun Dec  7 000:01:45 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        
+          Changed code for removal of dead State Synchronization
+          Agent from the Replication Manager's list to be similar
+          to that for the Forwarding Agent list. Thanks to
+          Friedhelm Wolf <fwolf@dre.vanderbilt.edu> for the
+          superior design.
+
 Sat Dec  6 23:43:53 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
