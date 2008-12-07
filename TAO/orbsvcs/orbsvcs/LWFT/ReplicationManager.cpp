@@ -1311,36 +1311,27 @@ ReplicationManager_i::send_state_synchronization_rank_list (void)
   ACE_Guard <ACE_Thread_Mutex> state_sync_guard (
     state_sync_agent_list_mutex_);
     
-  // Helpers for removing dead agents from the list.
-  StateSynchronizationAgent_var remove_holder;
-  StateSynchronizationAgent_var &remove_holder_ref = remove_holder;
-  bool dirty = false;
-    
   for (STATE_SYNC_AGENT_LIST::iterator al_iter = 
          state_synchronization_agent_list_.begin ();
-       al_iter != state_synchronization_agent_list_.end ();
-       al_iter.advance ())
+       al_iter != state_synchronization_agent_list_.end (); )
     {
       StateSynchronizationAgent_var agent = *al_iter;
 
       try 
         {
           agent->update_rank_list (this->rank_list_);
+          ++al_iter;
         }
       catch (CORBA::SystemException &)
         {
-          dirty = true;
-          remove_holder_ref = *al_iter;
           ACE_DEBUG ((LM_DEBUG,
                       "RM: A state synchronization agent died.\n"));
+
+          STATE_SYNC_AGENT_LIST::iterator tmp_it = al_iter;
+          ++tmp_it;
+          (void) state_synchronization_agent_list_.remove (*al_iter);
+          al_iter = tmp_it;
         }
-    }
- 
-  // This approach will remove at most one dead agent per list
-  // traversal, but it's better than none. 
-  if (dirty)
-    {
-      (void) state_synchronization_agent_list_.remove (remove_holder_ref);
     }
 }
 
