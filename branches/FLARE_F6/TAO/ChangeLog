@@ -1,3 +1,10 @@
+Sun Dec  7 22:57:28 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:
+        * orbsvcs/orbsvcs/LWFT/Client_Request_Interceptor.cpp:
+        
+          Commented out more debug messages.
+
 Sun Dec  7 22:30:57 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.h

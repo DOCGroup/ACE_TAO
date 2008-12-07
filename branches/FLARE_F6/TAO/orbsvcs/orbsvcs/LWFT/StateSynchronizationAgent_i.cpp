@@ -207,14 +207,14 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
                           rank_list[i].ior_list[j]))));
                 }
               catch (const CORBA::SystemException& ex)
-                {
+                {/*
                   ACE_DEBUG ((
                     LM_WARNING, 
                     "(%P|%t) SSA::"
                     "update_replica_groups could not resolve stringified "
                     "object reference for %s : %s\n",
                     oid.c_str (),
-                    ex._info ().c_str ()));
+                    ex._info ().c_str ())); */
                 }
             }
 
