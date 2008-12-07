@@ -183,9 +183,11 @@ DDSStateReaderListener_T<TOPIC_TYPE,
     }
   else if (status == DDS::RETCODE_NO_DATA)
     {
+    /*
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("on_data_available(): ")
                   ACE_TEXT ("reader received DDS::RETCODE_NO_DATA.\n")));
+    */
     }
   else
     {
