@@ -32,18 +32,17 @@ struct ServerOptions
       number_of_lanes (0),
       stop (0),
       number_of_servants (1),
-      use_ns (false),
-      use_corba (true) {}
+      use_ns (false)
+  {}
 
   const char *bands_file;
   const char *lanes_file;
-  const char *rm_ior_file;
+  const char * rm_ior_file;
   CORBA::ULong static_threads;
   CORBA::ULong number_of_lanes;
   int stop;
   int number_of_servants;
   bool use_ns;
-  bool use_corba;
 };
 
 class ServerTask : public ACE_Task_Base

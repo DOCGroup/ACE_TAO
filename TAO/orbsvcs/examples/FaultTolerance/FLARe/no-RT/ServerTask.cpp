@@ -53,8 +53,17 @@ ServerTask::svc (void)
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
 
-      this->read_object_info (AppOptions::instance ()->object_info_file (),
-			                        options_.number_of_servants);
+      if (AppOptions::instance ()->object_info_file ().empty ())
+        {
+          object_ids.push_back (AppOptions::instance ()->app_id ());
+          object_roles.push_back (AppOptions::instance ()->role ());
+          object_loads.push_back (AppOptions::instance ()->load ());
+        }
+      else
+        {
+          this->read_object_info (AppOptions::instance ()->object_info_file (),
+                                  options_.number_of_servants);
+        }
 
       ReplicationManager_var rm;
       if (options_.use_ns)
@@ -163,7 +172,7 @@ ServerTask::svc (void)
 	          test.in ());
 
 #ifdef FLARE_USES_DDS
-              if (options_.use_corba)
+              if (!AppOptions::instance ()->use_dds ())
 #endif
                 agent->register_application (object_ids[i].c_str (),
                                              test.in ());

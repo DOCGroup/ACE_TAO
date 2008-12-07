@@ -17,8 +17,8 @@
 
 #include "orbsvcs/orbsvcs/LWFT/AppSideReg.h"
 #include "orbsvcs/orbsvcs/LWFT/AppOptions.h"
-#include "orbsvcs/orbsvcs/LWFT/ServerORBInitializer.h"
 #include "orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.h"
+#include "orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.h"
 
 #include "test_i.h"
 #include "ServerTask.h"
@@ -26,7 +26,7 @@
 int
 parse_args (int argc, char *argv[], ServerOptions & options)
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:hf:l:s:a:c:r:dk:z:i:p:n");
+  ACE_Get_Opt get_opts (argc, argv, "b:hf:l:s:a:c:nr:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -55,21 +55,12 @@ parse_args (int argc, char *argv[], ServerOptions & options)
 	  options.number_of_servants =
 	    ACE_OS::atoi (get_opts.opt_arg ());
 	  break;
-        case 'd':
-          options.use_corba = false;
-	  break;
+        case 'n':
+          options.use_ns = true;
+          break;
         case 'r':
-	  options.rm_ior_file = get_opts.opt_arg ();
-	  break;
-	case 'n':
-	  options.use_ns = true;
-	  break;
-
-        case 'k':
-	case 'z':
-        case 'i':
-        case 'p':
-                break;
+          options.rm_ior_file = get_opts.opt_arg ();
+          break;
 
         case 'h':
         case '?':
@@ -79,21 +70,20 @@ parse_args (int argc, char *argv[], ServerOptions & options)
                              "\t-a stop"
                              "\t-b <bands file> (defaults to %s)\n"
 			     "\t-c <number of servants> (defaults to %d)\n"
-                             "\t-d use dds for state synchronization\n"
                              "\t-h <help: shows options menu>\n"
                              "\t-f <lanes file> (defaults to %s)\n"
                              "\t-l <number of lanes> (defaults to %d)\n"
-			     "\t-r <RM ior> (defaults to %s)\n"
                              "\t-s <static threads> (defaults to %d)\n"
-			     "\t-n resolve RM ior from Naming_Service\n"
+                             "\t-n use naming service to resolve ReplicationManager"
+                             "\t-r <ior file for ReplicationManager> (defaults to %d)"
                              "\n",
                              argv [0],
                              options.bands_file,
 			     options.number_of_servants,
                              options.lanes_file,
                              options.number_of_lanes,
-			     options.rm_ior_file,
-                             options.static_threads),
+                             options.static_threads,
+                             options.rm_ior_file),
                             -1);
 	        break;
         }
@@ -107,16 +97,6 @@ main (int argc, char *argv[])
 {
   try
     {
-      PortableInterceptor::ORBInitializer_ptr tmp;
-
-      ACE_NEW_RETURN (tmp,
-                      ServerORBInitializer,
-                      -1); // No CORBA exceptions yet!
-
-      PortableInterceptor::ORBInitializer_var orb_initializer = tmp;
-
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
-
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (CORBA::is_nil (orb.in ()))
@@ -156,7 +136,7 @@ main (int argc, char *argv[])
 	        orb.in (),
 		AppOptions::instance ()->host_id (),
 		AppOptions::instance ()->process_id (),
-		server_options.use_corba);
+		!(AppOptions::instance ()->use_dds ()));
 
       PortableServer::ServantBase_var owner_transfer (ssa_servant);
       // ACE_DEBUG ((LM_TRACE, ACE_TEXT ("StateSynchronizationAgent created.\n")));

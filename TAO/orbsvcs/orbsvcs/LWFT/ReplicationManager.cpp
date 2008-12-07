@@ -4,6 +4,7 @@
 #include "ReplicationManager.h"
 
 #include <string>
+#include <set>
 
 #include "ace/OS_NS_unistd.h"
 
@@ -1188,9 +1189,32 @@ ReplicationManager_i::update_enhanced_ranklist (void)
 	      }
     }
 
-  // The new list will have as many entries as there
-  // are primaries.
-  enhanced_rank_list_.length (primaries.current_size ());
+  // to determine the size of the enhanced rank_list we have to
+  // account for the union of all existing primaries (including those
+  // without backup entries in the rank_list) and for all the
+  // rank_list entries that have no primary running yet.  To achieve
+  // this we create to sets with all the application names: One for
+  // the primaries and one for the rank_list and do a union on them.
+
+  // create a set of strings for the primary names
+  std::set <std::string> primary_names;
+  for (OBJECTID_APPINFO_MAP::iterator p_it = primaries.begin ();
+       p_it != primaries.end ();
+       ++p_it)
+    primary_names.insert (p_it->key ().c_str ());
+
+  // create a set of strings for the backup names
+  std::set <std::string> backup_names;
+  for (size_t rl_i = 0; rl_i < rank_list_.length (); ++rl_i)
+    backup_names.insert (rank_list_[rl_i].object_id.in ());
+
+  std::set <std::string> name_union;
+  std::set_union (primary_names.begin (), primary_names.end (),
+                  backup_names.begin (), backup_names.end (),
+                  std::inserter (name_union,
+                                 name_union.begin ()));
+
+  enhanced_rank_list_.length (name_union.size ());
 
   std::string object_id;
   APP_INFO ai;
