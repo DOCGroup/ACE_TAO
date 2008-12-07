@@ -57,12 +57,12 @@ Client_Request_Interceptor::receive_exception (
     {
       return;
     }
-
+/*
   ACE_DEBUG ((LM_DEBUG,
               "Client_Request_Interceptor::receive_exception - "
 	            "caught %s\n",
 	            ri->received_exception_id ()));
-
+*/
   const CORBA::ULong tagID = 9654;
   char *tag = 0;
   
