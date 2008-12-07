@@ -20,9 +20,7 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/ORBInitializer_Registry.h"
 
-#include "orbsvcs/orbsvcs/LWFT/ForwardingAgent.h"
-#include "orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.h"
-#include "orbsvcs/orbsvcs/LWFT/Client_ORBInitializer.h"
+#include "orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.h"
 
 #include "testC.h"
 
@@ -985,51 +983,14 @@ main (int argc, char *argv[])
 {
   try
     {
-      ForwardingAgent_i *forwarding_agent = 0;
-      ACE_NEW_RETURN (forwarding_agent,
-                      ForwardingAgent_i,
-                      1);
-      PortableServer::ServantBase_var owner_transfer (forwarding_agent);
-
-      // ******************************************************
-
-      // ******************************************************
-      // register request interceptor
-      
-      PortableInterceptor::ORBInitializer_ptr temp_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
-
-      ACE_NEW_RETURN (temp_initializer,
-                      Client_ORBInitializer (forwarding_agent),
-                      -1);  // No exceptions yet!
-      PortableInterceptor::ORBInitializer_var orb_initializer =
-        temp_initializer;
-
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
-      
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      LWFT_Client_Init ci;
+      CORBA::ORB_var orb = ci.init (argc, argv);
 
       int result = parse_args (argc, argv);
       
       if (result != 0)
         {
           return result;
-        }
-        
-      ForwardingAgent_Thread fa_thread (orb.in (),
-                                        forwarding_agent);
-
-      // Task activation flags.
-      long flags =
-        THR_NEW_LWP
-        | THR_JOINABLE
-        | orb->orb_core ()->orb_params ()->thread_creation_flags ();
-
-      if (fa_thread.activate (flags, 1, 0, 0) != 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot activate forwarding agent thread\n"),
-                            -1);
         }
         
       // Thread Manager for managing task.
@@ -1039,7 +1000,7 @@ main (int argc, char *argv[])
       Task task (thread_manager, orb.in ());
 
       // Activate task.
-      result = task.activate (flags);
+      result = task.activate ();
                        
       ACE_ASSERT (result != -1);
       ACE_UNUSED_ARG (result);

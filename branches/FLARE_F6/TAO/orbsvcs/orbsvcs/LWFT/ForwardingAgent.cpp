@@ -32,7 +32,7 @@ ForwardingAgent_i::next_member (const char *ior_string)
     this->objectid_rankedior_map_.find (ACE_CString (ior_string),
                                         ranked_ior_list);
                                         
-  size_t siz = ranked_ior_list.ior_list.size ();
+  //size_t siz = ranked_ior_list.ior_list.size ();
   //ACE_DEBUG ((LM_DEBUG,
   //            "next_member: IOR list size = %u\n",
   //            siz));

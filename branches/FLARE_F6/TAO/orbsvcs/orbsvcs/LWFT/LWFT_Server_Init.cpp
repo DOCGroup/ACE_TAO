@@ -23,7 +23,7 @@ LWFT_Server_Init::~LWFT_Server_Init (void)
 }
 
 CORBA::ORB_ptr
-LWFT_Server_Init::pre_init (int &argc, char *argv[])
+LWFT_Server_Init::pre_init (int & /* argc */, char * /* argv */[])
 {
   CORBA::ORB_var the_orb;
 

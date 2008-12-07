@@ -1,3 +1,28 @@
+Sun Dec  7 22:30:57 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.h
+        * orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.cpp:
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent.cpp
+        
+         Cosmetic changes to eleminate compiler warnings.
+
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        
+          Fixed the update_enhanced_rank_list () method to take into
+          account that backups could start up before primaries do. This
+          only affects the static mode.
+        
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.h
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/server.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/passive_client.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/client.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/test_i.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/test_i.h:
+        
+          Adopt to changes in changes in the LWFT libraries described
+          below.
+
 Sun Dec  7 16:25:19 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/DDSStateReaderListener_T.cpp:

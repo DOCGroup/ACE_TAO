@@ -119,3 +119,27 @@ test_i::shutdown (void)
 {
   this->orb_->shutdown (0);
 }
+
+StateSynchronizationAgent_ptr 
+test_i::agent (void)
+{
+  return StateSynchronizationAgent::_duplicate (agent_);
+}
+  
+void
+test_i::agent (StateSynchronizationAgent_ptr agent)
+{
+  agent_ = agent;
+}
+  
+char * 
+test_i::object_id (void)
+{
+  return CORBA::string_dup (object_id_.c_str ());
+}
+  
+void
+test_i::object_id (const char * object_id)
+{
+  object_id_ = object_id;
+}

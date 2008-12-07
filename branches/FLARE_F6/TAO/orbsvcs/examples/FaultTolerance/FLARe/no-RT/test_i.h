@@ -37,14 +37,22 @@ public:
 
   virtual CORBA::Any *get_state ();
 
-  void method (CORBA::ULong start, CORBA::ULong end, CORBA::ULong work,
+  virtual void method (CORBA::ULong start, CORBA::ULong end, CORBA::ULong work,
                CORBA::ULong prime_number, CORBA::ULong kill);
 
-  void shutdown (void);
+  virtual void shutdown (void);
 
   PortableServer::POA_ptr _default_POA (void);
 
-  void dump (void);
+  virtual void dump (void);
+
+  virtual StateSynchronizationAgent_ptr agent (void);
+  
+  virtual void agent (StateSynchronizationAgent_ptr agent);
+  
+  virtual char * object_id (void);
+  
+  virtual void object_id (const char * object_id);
 
 private:
   CORBA::ORB_var orb_;
