@@ -19,7 +19,6 @@ ACE_RCSID (tao,
 #include "tao/ORBInitializer_Registry_Adapter.h"
 #include "tao/PolicyFactory_Registry_Adapter.h"
 #include "tao/NVList_Adapter.h"
-#include "tao/TAO_Singleton_Manager.h"
 #include "tao/Policy_Current.h"
 #include "tao/Policy_Manager.h"
 #include "tao/Valuetype_Adapter.h"
