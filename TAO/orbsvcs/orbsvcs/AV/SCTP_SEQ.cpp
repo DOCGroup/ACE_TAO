@@ -186,7 +186,7 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
       ACE_CString addr_str (addrs[i]);
       addr_str += ":";
       ip_addr.set (addr_str.c_str ());
-      (*local_ip_addr) [i] = ip_addr.get_ip_address ();
+      local_ip_addr[i] = ip_addr.get_ip_address ();
     }
 
 
@@ -194,7 +194,7 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
   multi_addr.set (local_addr.get_port_number (),
                   local_addr.get_ip_address (),
                   1,
-                  *local_ip_addr,
+                  local_ip_addr.get(),
                   entry->num_local_sec_addrs ());
 
   char buf[BUFSIZ];
@@ -505,14 +505,14 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
       ACE_CString addr_str (addrs[i]);
       addr_str += ":";
       ip_addr.set (addr_str.c_str ());
-      (*local_ip_addr) [i] = ip_addr.get_ip_address ();
+      local_ip_addr[i] = ip_addr.get_ip_address ();
     }
 
   if (entry->num_peer_sec_addrs () != 0)
     local_addr.set (addr->get_port_number (),
                     addr->get_ip_address (),
                     1,
-                    *local_ip_addr,
+                    local_ip_addr.get(),
                     entry->num_peer_sec_addrs ());
   else
     local_addr.set (addr->get_port_number (),
