@@ -98,12 +98,13 @@ template <typename T>
 class TAO_Objref_Out_T
 {
 public:
-  TAO_Objref_Out_T (T *&);
-  TAO_Objref_Out_T (TAO_Objref_Var_T<T> &);
-  TAO_Objref_Out_T (const TAO_Objref_Out_T<T> &);
+  TAO_Objref_Out_T (T *&p);
+  TAO_Objref_Out_T (TAO_Objref_Var_T<T> &p);
+  TAO_Objref_Out_T (const TAO_Objref_Out_T<T> &p);
 
-  TAO_Objref_Out_T &operator= (const TAO_Objref_Out_T<T> &);
-  TAO_Objref_Out_T &operator= (T *);
+  TAO_Objref_Out_T &operator= (T *p);
+  TAO_Objref_Out_T &operator= (const TAO_Objref_Out_T<T> &p);
+  TAO_Objref_Out_T &operator= (const TAO_Objref_Var_T<T> &p);
 
   // Cast operator.
   operator T *& ();
@@ -114,8 +115,6 @@ public:
 private:
   T *& ptr_;
 
-  /// Assignment from _var not allowed.
-  TAO_Objref_Out_T &operator= (const TAO_Objref_Var_T<T> &);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
