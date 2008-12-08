@@ -1,3 +1,9 @@
+Mon Dec  8 13:49:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3430_Regression/Hello.mpc:
+        * tests/Bug_3430_Regression/Bug_3430_Regression.mpc:
+          Renamed the MPC file to get unique project names
+
 Mon Dec  8 02:50:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3430_Regression:
