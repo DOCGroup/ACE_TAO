@@ -1,3 +1,8 @@
+Mon Dec  8 02:50:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added bug 3430 regression
+
 Sat Dec  6 20:18:38 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * ace/UUID.h:
