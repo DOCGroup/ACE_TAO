@@ -107,66 +107,7 @@ HMOptions::parse_args (int &argc, char **argv)
           as.ignore_arg ();
         }
     }
-/*
-  ACE_Get_Opt get_opts (argc, argv, "-i:h:r:l:n:o:u:");
-  int c;
 
-  while ((c = get_opts ()) != -1)
-    {
-      switch (c)
-        {
-          case 'u':
-            {
-              util_file_ = std::string (get_opts.opt_arg ());
-              break;
-            }
-          case 'o':
-            {
-              HM_ior_file_ = std::string (get_opts.opt_arg ());
-              break;
-            }
-          case 'i':
-            {
-              RM_ior_ = std::string (get_opts.opt_arg ());
-              ior_access_ = std::make_pair ('i', RM_ior_);
-              break;
-            }
-          case 'h':
-            {
-              host_id_ = std::string (get_opts.opt_arg ());
-              break;
-            }
-          case 'r':
-            {
-              std::istringstream istr (get_opts.opt_arg ());
-              
-              if (!(istr >> RM_update_freq_))
-                {
-                  return false;
-                }
-                
-              break;
-            }
-          case 'l':
-            {
-              std::istringstream istr (get_opts.opt_arg ());
-              
-              if (!(istr >> load_monitor_freq_))
-                {
-                  return false;
-                }
-                
-              break;
-            }
-          case 'n':
-            {
-              RM_ior_ = std::string (get_opts.opt_arg ());
-              ior_access_ = std::make_pair ('n', RM_ior_);
-              break;
-            }
-        }
-    }
-*/        
   return true;
 };
 

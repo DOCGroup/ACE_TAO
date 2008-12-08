@@ -6,6 +6,8 @@
 
 #include "orbsvcs/orbsvcs/Naming/Naming_Client.h"
 
+#include "Barrier_Guard.h"
+
 #include "ForwardingAgent_Thread.h"
 #include "ForwardingAgent.h"
 #include "Client_ORBInitializer.h"
@@ -22,6 +24,8 @@ ForwardingAgent_Thread::~ForwardingAgent_Thread (void)
 int
 ForwardingAgent_Thread::svc (void)
 {
+  Barrier_Guard barrier_guard (synchronizer_);
+
   try
     {
       // Resolve the Naming Service and get the objref of the RM.
@@ -46,7 +50,7 @@ ForwardingAgent_Thread::svc (void)
       
       // Make sure the steps above finish before returning from
       // activate() to the calling LWFT client.
-      synchronizer_.wait ();
+//      synchronizer_.wait ();
     }
   catch (const CORBA::Exception& ex)
     {

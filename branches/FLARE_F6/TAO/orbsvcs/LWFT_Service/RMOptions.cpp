@@ -80,57 +80,7 @@ RMOptions::parse_args (int &argc, char **argv)
           as.ignore_arg ();
         }
     }
-/*
-  ACE_Get_Opt get_opts (argc, argv, "h:p:s:n");
-  int c;
 
-  while ((c = get_opts ()) != -1)
-    {
-      switch (c)
-        {
-          case 'h':
-            {
-              std::istringstream istr (get_opts.opt_arg ());
-              
-              if (!(istr >> hertz_))
-                {
-                  return false;
-                }
-                  
-              break;
-            }
-          case 'p':
-            {
-              std::istringstream istr (get_opts.opt_arg ());
-              int val;
-              
-              if (!(istr >> val))
-                {
-                  return false;
-                }
-                  
-              proactive_ = val ? true : false;
-              break;
-            }
-          case 's' :
-	          {
-              std::istringstream istr (get_opts.opt_arg ());
-              int val;
-              
-              if (!(istr >> val))
-                {
-                  return false;
-                }
-                  
-	            static_mode_ = val ? true : false;
-	            break;
-	          }
-	        case 'n':
-	          use_naming_service_ = true;
-	          break;
-        }
-    }
-*/    
   return true;
 };
 
