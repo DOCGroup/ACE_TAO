@@ -140,7 +140,9 @@ TAO_ORB_Core_Static_Resources::instance (void)
           TAO_ORB_Core_Static_Resources* global_tocsr =
             ACE_Dynamic_Service<TAO_ORB_Core_Static_Resources>::instance
             (global,"TAO_ORB_Core_Static_Resources");
-          *tocsr = *global_tocsr;
+
+          if (global_tocsr != 0)
+            *tocsr = *global_tocsr;
         }
     }
 

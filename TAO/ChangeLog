@@ -1,3 +1,11 @@
+Mon Dec  8 13:55:43 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * tao/ORB_Core.cpp:
+
+          Added check for NULL before assigning global TAO_ORB_Core_Static_Resources
+          to the current service object. This should resolve Bug 3499 on non-Windows
+          systems.
+
 Mon Dec  8 13:49:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3430_Regression/Hello.mpc:
