@@ -117,43 +117,7 @@ AppOptions::parse_args (int &argc, char **argv)
           as.ignore_arg ();
         }
     }
-/*    
-  ACE_Get_Opt get_opts (argc, argv, "-k:z:i:p:");
-  int c;
 
-  while ((c = get_opts ()) != -1)
-    {
-      switch (c)
-        {
-          case 'z':
-            {
-              std::istringstream istr (get_opts.opt_arg ());
-              
-              if (!(istr >> port_))
-                {
-                  return false;
-                }
-                
-              break;
-            }
-          case 'k':
-            {
-              host_monitor_ior_ = std::string (get_opts.opt_arg ());
-              break;
-            }
-	        case 'i':
-            {
-              object_info_file_ = std::string (get_opts.opt_arg ());
-              break;
-            }
-          case 'p':
-            {
-              process_id_ = std::string (get_opts.opt_arg ());
-              break;
-            }
-        }
-    }
-*/        
   return true;
 }
 

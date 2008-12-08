@@ -8,13 +8,15 @@
  *
  */
 
+#include "ace/TP_Reactor.h"
+
+#include "Barrier_Guard.h"
+
 #include "AppSideMonitor_Thread.h"
 #include "AppOptions.h"
 
-#include "ace/TP_Reactor.h"
-
 AppSideMonitor_Thread::AppSideMonitor_Thread (
-  ACE_Barrier *thread_barrier)
+  ACE_Barrier &thread_barrier)
   : port_ (AppOptions::instance ()->port ()),
     reactor_ (new ACE_TP_Reactor),
     acceptor_ (serv_addr_, &reactor_),
@@ -25,11 +27,13 @@ AppSideMonitor_Thread::AppSideMonitor_Thread (
 int
 AppSideMonitor_Thread::svc (void)
 {
+  Barrier_Guard barrier_guard (synchronizer_);
+
   if (serv_addr_.set (this->port_) == -1)
     {
       ACE_DEBUG ((LM_ERROR,
                   "AppSideMonitor_Thread::svc: can't set port.\n"));
-      this->synchronizer_->wait ();
+//      this->synchronizer_->wait ();
       return EXIT_FAILURE;
     }
     
@@ -37,12 +41,12 @@ AppSideMonitor_Thread::svc (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "AppSideMonitor_Thread::svc: can't open the socket.\n"));
-      this->synchronizer_->wait ();
+//      this->synchronizer_->wait ();
       return EXIT_FAILURE;
     }
 
-  this->synchronizer_->wait ();
-  this->synchronizer_ = 0;
+//  this->synchronizer_->wait ();
+//  this->synchronizer_ = 0;
 
   //ACE_DEBUG ((LM_DEBUG, "Entering reactor event loop.\n"));
   if (reactor_.run_reactor_event_loop() == -1)

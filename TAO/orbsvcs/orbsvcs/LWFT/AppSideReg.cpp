@@ -61,7 +61,7 @@ AppSideReg::svc (void)
       ACE_Barrier internal_thread_barrier (2);
       monitor_ =
         std::auto_ptr<AppSideMonitor_Thread> (
-          new AppSideMonitor_Thread (&internal_thread_barrier));
+          new AppSideMonitor_Thread (internal_thread_barrier));
       monitor_->activate ();
 
       //ACE_DEBUG ((LM_DEBUG, "Host monitor activated\n"));

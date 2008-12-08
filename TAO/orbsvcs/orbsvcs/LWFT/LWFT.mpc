@@ -12,6 +12,7 @@ project(*Common) : pi_server, interceptors, iorinterceptor, orbsvcs_output {
   }
   
   Source_Files {
+    Barrier_Guard.cpp
     LWFTDataStructuresC.cpp
     LWFTDataStructuresS.cpp
     Timer.cpp

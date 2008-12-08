@@ -3,6 +3,8 @@
 
 #include "tao/PortableServer/POAC.h"
 
+#include "Barrier_Guard.h"
+
 #include "StateSyncAgentTask.h"
 #include "StateSynchronizationAgent_i.h"
 
@@ -21,32 +23,36 @@ StateSyncAgentTask::svc (void)
 {
   try
     {
-      CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RootPOA");
+      {
+        Barrier_Guard barrier_guard (sync_);
 
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in ());
+        CORBA::Object_var object =
+          this->orb_->resolve_initial_references ("RootPOA");
 
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager ();
+        PortableServer::POA_var root_poa =
+          PortableServer::POA::_narrow (object.in ());
 
-      // ***************************************************
-      // activate state synchronzation agent
+        PortableServer::POAManager_var poa_manager =
+          root_poa->the_POAManager ();
 
-      PortableServer::ObjectId_var ssa_oid =
-	      root_poa->activate_object (agent_);
- 
-      CORBA::Object_var ssa_object =
-        root_poa->id_to_reference (ssa_oid.in ());
+        // ***************************************************
+        // activate state synchronzation agent
 
-      agent_ref_ =
-	      StateSynchronizationAgent::_narrow (ssa_object.in ());
+        PortableServer::ObjectId_var ssa_oid =
+	        root_poa->activate_object (agent_);
+   
+        CORBA::Object_var ssa_object =
+          root_poa->id_to_reference (ssa_oid.in ());
 
-      poa_manager->activate ();
+        agent_ref_ =
+	        StateSynchronizationAgent::_narrow (ssa_object.in ());
 
-      // Main loop has to wait until the agent servant is registered
-      // within the root POA.
-      sync_.wait ();
+        poa_manager->activate ();
+
+        // Main loop has to wait until the agent servant is registered
+        // within the root POA.
+//        sync_.wait ();
+      }
 
       this->orb_->run ();
 

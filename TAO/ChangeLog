@@ -1,3 +1,32 @@
+Mon Dec  8 17:44:24 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/Barrier_Guard.cpp:
+        * orbsvcs/orbsvcs/LWFT/Barrier_Guard.h:
+        
+          New files, defining a utility class that
+          enables the calling of wait() on the ACE_Barrier
+          in various svc() method in FLARe to be error-
+          and exception-safe.
+          
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
+        
+          Added the new files above to the Common lib project.
+          
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp:
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.h:
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.cpp:
+        
+          Added use of the new Barrier_Guard class.
+          
+        * orbsvcs/orbsvcs/LWFT/AppOptions.cpp:
+        * orbsvcs/orbsvcs/LWFT/HMOptions.cpp:
+        * orbsvcs/LWFT_Service/RMOptions.cpp:
+        
+          Removed the commented-out original options parsing
+          code that was replaced by an ACE_Arg_Shifter version.
+
 Sun Dec  7 22:57:28 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:
