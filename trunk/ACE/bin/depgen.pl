@@ -19,7 +19,7 @@ use FindBin;
 use File::Spec;
 use File::Basename;
 
-my($basePath) = $FindBin::Bin;
+my($basePath) = $FindBin::RealBin;
 if ($^O eq 'VMS') {
   $basePath = File::Spec->rel2abs(dirname($0)) if ($basePath eq '');
   $basePath = VMS::Filespec::unixify($basePath);
