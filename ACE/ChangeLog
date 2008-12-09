@@ -1,3 +1,8 @@
+Tue Dec  9 4:42:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/depgen.pl:
+          Use RealBin to get the real location of the perl script
+
 Mon Dec  8 02:50:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
