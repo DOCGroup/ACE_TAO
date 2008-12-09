@@ -6,6 +6,4 @@
 15-fix-fltk-include
 34-bts386713
 50-prepatch-dummy-mark
-90-patch-mpc-basedir
-91-patch-dg-basedir
 92-default-ACE_ROOT
