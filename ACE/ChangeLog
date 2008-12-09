@@ -1,3 +1,22 @@
+Tue Dec  9 16:32:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/split-cpp:
+        * bin/split-cpp.pl:
+          Renamed to have pl extension
+
+        * debianbuild/patches/00list:
+          Updated
+
+        * debianbuild/patches/03-g++-new-throws.dpatch:
+        * debianbuild/patches/08-fix-perl-shebang.dpatch:
+        * debianbuild/patches/90-patch-mpc-basedir.dpatch:
+        * debianbuild/patches/91-patch-dg-basedir.dpatch:
+          Not needed anymore, this issues are fixed on svn head
+
+        * examples/IPC_SAP/SOCK_SAP/summarize.pl:
+        * examples/IPC_SAP/SSL_SAP/summarize.pl:
+          Added missing shebang
+
 Tue Dec  9 16:19:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debianbuild/*:
