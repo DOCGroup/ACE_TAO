@@ -1,0 +1,29 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 90-patch-mpc-basedir.dpatch by Thomas Girard <thomas.g.girard@free.fr>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description
+
+@DPATCH@
+--- ACE_wrappers.orig/bin/mwc.pl
++++ ACE_wrappers/bin/mwc.pl
+@@ -27,7 +27,7 @@
+   $basePath = File::Spec->rel2abs(dirname($0)) if ($basePath eq '');
+   $basePath = VMS::Filespec::unixify($basePath);
+ }
+-$basePath .= '/MakeProjectCreator';
++$basePath = '/usr/share/ace/bin/MakeProjectCreator';
+ 
+ my($mpcroot) = $ENV{MPC_ROOT};
+ my($mpcpath) = (defined $mpcroot ? $mpcroot :
+--- ACE_wrappers.orig/bin/mpc.pl
++++ ACE_wrappers/bin/mpc.pl
+@@ -27,7 +27,7 @@
+   $basePath = File::Spec->rel2abs(dirname($0)) if ($basePath eq '');
+   $basePath = VMS::Filespec::unixify($basePath);
+ }
+-$basePath .= '/MakeProjectCreator';
++$basePath = '/usr/share/ace/bin/MakeProjectCreator';
+ 
+ my($mpcroot) = $ENV{MPC_ROOT};
+ my($mpcpath) = (defined $mpcroot ? $mpcroot :
