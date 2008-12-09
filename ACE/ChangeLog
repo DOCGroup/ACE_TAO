@@ -1,3 +1,11 @@
+Tue Dec  9 16:19:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debianbuild/*:
+          Added all files currently used by the debian package maintainers.
+          Updated them for 1.6.7, but a lot of patches are not needed
+          anymore. The goal is to do a cleanup and then provide
+          debian/ubuntu packages through opensuse build
+
 Tue Dec  9 4:42:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/depgen.pl:
