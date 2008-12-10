@@ -179,8 +179,6 @@ install: build
 	$(INSTALL_755) -D $(ACE_ROOT)/bin/mpc.pl $(DT)/usr/bin/mpc-ace
 	$(INSTALL_755) -D $(ACE_ROOT)/bin/mwc.pl $(DT)/usr/bin/mwc-ace
 
-	rm -f $(ACE_SUBDIR)/MPC/config/.cvsignore
-
 #	Be lintian clean, fix permissions on examples
 	-chmod -x `find $(TAO_ROOT)/examples/ -perm 755 ! -type d -a ! \( -name "*.pl" -o -name "*.sh" \)`
 
