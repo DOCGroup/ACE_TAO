@@ -1,3 +1,8 @@
+Wed Dec 10 21:06:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debianbuild/rules:
+          Removed old line
+
 Tue Dec  9 16:32:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/split-cpp:
