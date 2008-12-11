@@ -1,3 +1,8 @@
+Thu Dec 11 23:08:07 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * bin/tao_other_tests.lst:
+          Disabled some IFR_Service dependent tests for uses_wchar builds.
+
 Thu Dec 11 14:34:23 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/ace_func.m4:
