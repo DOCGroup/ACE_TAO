@@ -92,6 +92,8 @@ project(CIAO_ComponentServer_exe) : ccm_componentserver_svnt, portableserver, ci
   Source_Files {
     CIAO_ComponentServer.cpp
   }
+  Inline_Files {
+  }
   IDL_Files {
   }
 }

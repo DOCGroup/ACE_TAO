@@ -46,21 +46,21 @@ namespace CIAO
 
     for (CORBA::ULong i = 0; i < config.length (); ++i)
       {
-	int retval = map.rebind (config[i]->name (), config[i]->value ());
+	    int retval = map.rebind (config[i]->name (), config[i]->value ());
 
-	if (retval == 1)
-	  {
-      CIAO_ERROR ((LM_WARNING, CLINFO "build_config_values_map: Duplicate value for %C encountered, "
-			"old value overwritten.\n",
-			config[i]->name ()));
-	  }
-	else if (retval == -1)
-	  {
-      CIAO_ERROR ((LM_WARNING, CLINFO "build_config_values_map: Error binding value for %C, ignoring.\n",
-			config[i]->name ()));
-	  }
-	CIAO_DEBUG ((LM_TRACE, CLINFO
-        "build_config_values_map: Bound value for config value %C\n",
+	    if (retval == 1)
+	      {
+              CIAO_ERROR ((LM_WARNING, CLINFO "build_config_values_map: Duplicate value for %C encountered, "        
+    			"old value overwritten.\n",
+	    		config[i]->name ()));
+	      }
+	    else if (retval == -1)
+    	  {
+          CIAO_ERROR ((LM_WARNING, CLINFO "build_config_values_map: Error binding value for %C, ignoring.\n",
+    			config[i]->name ()));
+	      }
+    	CIAO_DEBUG ((LM_TRACE, CLINFO
+            "build_config_values_map: Bound value for config value %C\n",
 		    config[i]->name ()));
       }
   }
@@ -76,13 +76,13 @@ namespace CIAO
 
       for (CONFIGVALUE_MAP::const_iterator i = map.begin ();
 	   (i.advance ()) != 0; ++pos)
-	{
-	  Components::ConfigValue_var newval;
-	  ACE_NEW_THROW_EX (newval,
-			    ConfigValue_impl (i->ext_id_.c_str (), i->int_id_),
-			    CORBA::NO_MEMORY ());
-	  config[pos] =  newval._retn ();
-	}
+	    {
+    	  Components::ConfigValue_var newval;
+	      ACE_NEW_THROW_EX (newval,
+		    	    ConfigValue_impl (i->ext_id_.c_str (), i->int_id_),
+			        CORBA::NO_MEMORY ());
+	      config[pos] =  newval._retn ();
+	    }
     }
 
     /*

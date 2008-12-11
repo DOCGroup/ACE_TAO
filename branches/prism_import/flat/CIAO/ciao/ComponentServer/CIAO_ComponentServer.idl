@@ -40,8 +40,7 @@ module CIAO
                 ::Components::Deployment::ImplEntryPointNotFound,
                 ::Components::Deployment::InstallationFailure,
                 ::Components::Deployment::InvalidConfiguration);
-      
-      
+  
       /// Activate component with specified ID, if no ID provided, 
       /// activates all components. 
       void activate_component (in ::Components::CCMObject comp)

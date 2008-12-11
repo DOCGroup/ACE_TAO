@@ -28,7 +28,7 @@ namespace DAnCE
     ::Deployment::MonolithicDeploymentDescriptions implementation =
       deployment_plan.implementation;
 
-    CORBA::ULong i;
+    CORBA::ULong i = 0;
     for (i = 0; i < implementation.length(); ++i)
       if (ACE_OS::strcmp (implementation[i].name.in(), impl_name) == 0)
         break;
