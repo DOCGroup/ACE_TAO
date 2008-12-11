@@ -10,6 +10,6 @@ project(CIAO_Context_Impl) : ccm_svnt, ciao_container_base, portableserver {
      Context_Impl_export.h
    }
    Inline_Files {
-     Context_Impl_Base.cpp
+     Context_Impl_Base.inl
    }
 }
