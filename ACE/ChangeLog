@@ -1,3 +1,13 @@
+Thu Dec 11 14:34:23 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/ace_func.m4:
+
+          Update ACE_FUNC_SYSINFO feature test to compile small programs
+          that use the two different Linux and SysV/POSIX sysinfo() APIs
+          before defining ACE_HAS_SYSV_SYSINFO or ACE_HAS_LINUX_SYSINFO.
+          This should avoid false matches with HP/UX's undocumented
+          sysinfo() syscall.
+
 Wed Dec 10 21:06:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debianbuild/rules:
