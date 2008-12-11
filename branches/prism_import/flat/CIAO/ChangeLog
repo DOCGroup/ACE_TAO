@@ -1,3 +1,16 @@
+Thu Dec 11 5:05:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_KeylessCCMHome.idl:
+          Updated include
+
+        * ccm/ComponentServer/CCM_ComponentServer.idl:
+        * ccm/ComponentServer/CCM_ComponentServer_Client.idl:
+        * ciao/Containers/Session/Session_Container.h:
+          Layout changes
+
+        * ciao/Containers/Session/Session_Container.cpp:
+          const/initialise pointer with 0
+
 Fri Nov 28 16:05:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:

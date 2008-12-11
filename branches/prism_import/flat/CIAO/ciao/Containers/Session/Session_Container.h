@@ -103,7 +103,6 @@ namespace CIAO
 
     virtual ~Session_Container (void);
 
-
     /**
      * @brief Simply installing a home executor into the component.
      *
@@ -130,12 +129,12 @@ namespace CIAO
                                                          const char *servant_entrypoint,
                                                          const char *name);
 
+	/// Activate component
     virtual void activate_component (Components::CCMObject_ptr compref);
 
     virtual void passivate_component (Components::CCMObject_ptr compref);
 
     virtual void uninstall_component (Components::CCMObject_ptr compref);
-
 
     /// Uninstall a servant
     virtual void uninstall_servant (PortableServer::Servant objref,

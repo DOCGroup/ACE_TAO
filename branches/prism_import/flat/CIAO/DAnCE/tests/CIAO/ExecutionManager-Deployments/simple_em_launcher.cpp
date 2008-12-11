@@ -6,6 +6,7 @@
  */
 
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_unistd.h"
 #include "tao/ORB.h"
 #include "ciao/Logger/Logger_Service.h"
 #include "ciao/Logger/Log_Macros.h"
@@ -98,19 +99,19 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       
       orb->destroy ();
     }
-  catch (Deployment::StopError &ex)
+  catch (const Deployment::StopError &ex)
     {
       ACE_ERROR ((LM_ERROR, "*** Caught StopError exception with name %s and reason %s\n",
                   ex.name.in (), ex.reason.in ()));
       return -1;
     }
-  catch (Deployment::StartError &ex)
+  catch (const Deployment::StartError &ex)
     {
       ACE_ERROR ((LM_ERROR, "*** Caught StartError exception with name %s and reason %s\n",
                   ex.name.in (), ex.reason.in ()));
       return -1;
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ACE_ERROR ((LM_ERROR, "*** Caught CORBA exception: %s\n",
                   ex._info ().c_str ()));
