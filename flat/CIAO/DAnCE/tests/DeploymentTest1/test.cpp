@@ -9,7 +9,7 @@
 #include "tools/Config_Handlers/DnC_Dump.h"
 #include "tools/Config_Handlers/XML_File_Intf.h"
 
-int main (int argc, char * argv[])
+int main (int argc, ACE_TCHAR * argv[])
 {
   try
     {
@@ -24,13 +24,13 @@ int main (int argc, char * argv[])
       const char * ior = "file://execution_manager.ior";
 
       CORBA::Object_var obj = orb->string_to_object (ior);
-      if (CORBA::is_nil (obj))
+      if (CORBA::is_nil (obj. in()))
         {
           throw 0;
         }
 
       Deployment::ExecutionManager_var em = Deployment::ExecutionManager::_narrow (obj);
-      if (CORBA::is_nil (em))
+      if (CORBA::is_nil (em.in ()))
         {
           throw 0;
         }
@@ -42,7 +42,7 @@ int main (int argc, char * argv[])
       Deployment::Connections_var dc;
       Deployment::Application_var na = dam->startLaunch (dp, dc.out());
       Deployment::DomainApplication_var da = Deployment::DomainApplication::_narrow (na);
-      if (CORBA::is_nil (da))
+      if (CORBA::is_nil (da.in ()))
         {
           DANCE_DEBUG((LM_DEBUG, "[%M] narrow fails\n"));
         }
