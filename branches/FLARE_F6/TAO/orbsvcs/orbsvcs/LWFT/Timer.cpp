@@ -83,14 +83,14 @@ Timer::start (void)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("[Timer::start] ")
                 ACE_TEXT ("Scheduling timer failed (%p)\n")));
-    // we should throw some exception
+    // We should throw some exception.
     return;
   }
 
-  // success
+  // Success.
 }
 
-// stopping the timer
+/// Stopping the timer.
 void
 Timer::stop (void)
 {
@@ -98,29 +98,29 @@ Timer::stop (void)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("[Timer::stop] ")
                 ACE_TEXT ("bad parameter\n")));
-    // we should throw some exception
+    // We should throw some exception.
     return;
   }
 
-  // cancel the timer
+  /// Cancel the timer.
   this->reactor ()->cancel_timer (this);
 
-  // we are no longer active
+  /// We are no longer active.
   this->active_ = 0;
 
-  // asynchronous notification to the active object thread
+  /// Asynchronous notification to the active object thread.
   this->done_ = 1;
 
-  // send an event to the reactor which will invoke the handle_close
+  /// Send an event to the reactor which will invoke handle_close().
   this->reactor ()->notify ();
 
   ///ACE_DEBUG ((LM_DEBUG, "Waiting\n"));
 
-  // wait for the active object thread to quit
+  /// Wait for the active object thread to quit.
   this->wait ();
 }
 
-// callback function from the timeout handler.
+// Callback function from the timeout handler.
 int
 Timer::pulse (void)
 {
@@ -130,10 +130,10 @@ Timer::pulse (void)
   return 0;
 }
 
-// handling the timeout
+// Handling the timeout.
 int
 Timer::handle_timeout (const ACE_Time_Value &,
-                                        const void *)
+                       const void *)
 {
   // ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("[Timer::handle_timeout] - timeout\n")));
   // timeout has occured. Time to callback. The callback function will do the
@@ -141,10 +141,10 @@ Timer::handle_timeout (const ACE_Time_Value &,
   return this->pulse ();
 }
 
-// cleanup
+// Cleanup.
 int
 Timer::handle_close (ACE_HANDLE handle,
-                                      ACE_Reactor_Mask close_mask)
+                     ACE_Reactor_Mask close_mask)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),

@@ -24,17 +24,16 @@ HostMonitorImpl::HostMonitorImpl (CORBA::ORB_ptr orb, Monitor_Thread *mt)
     connector_ (monitor_thread_->get_reactor ()),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
-  this->create_rm_proxy ();
+  this->create_RM_Proxy ();
 }
 
-HostMonitorImpl::~HostMonitorImpl ()
+HostMonitorImpl::~HostMonitorImpl (void)
 {
-  this->remove_rm_proxy ();
+  this->remove_RM_Proxy ();
 }
 
 void
 HostMonitorImpl::dump (void)
-throw (CORBA::SystemException)
 {
   //ACE_DEBUG ((LM_DEBUG, "inside dump method\n"));
 }
@@ -44,7 +43,6 @@ throw (CORBA::SystemException)
 HostMonitorImpl::register_process (const char *process_id,
                                    const char * hostname,
                                    CORBA::Long port)
-throw (CORBA::SystemException)
 {
   //ACE_DEBUG ((LM_DEBUG, "Entering register process\n"));
   Failure_Handler *handler = 0;
@@ -79,7 +77,6 @@ throw (CORBA::SystemException)
 
 ::CORBA::Boolean
 HostMonitorImpl::unregister_process (const char *process_id)
-throw (CORBA::SystemException)
 {
   Failure_Handler *handler = 0;
   
@@ -116,7 +113,7 @@ throw (CORBA::SystemException)
 }
 
 ::CORBA::Short
-HostMonitorImpl::heartbeat_port ()
+HostMonitorImpl::heartbeat_port (void)
 {
   return port_counter_++;
 }
@@ -124,51 +121,50 @@ HostMonitorImpl::heartbeat_port ()
 int HostMonitorImpl::drop_process (const std::string &process_id)
 {
   Failure_Handler *handler = 0;
+  
   if (process_map_.find (process_id, handler) == 0)
-  {
-     rm_proxy_->proc_failure (process_id);
-     return remove_process (process_id);
-  }
+    {
+      rm_proxy_->proc_failure (process_id);
+      return remove_process (process_id);
+    }
+  
   return -1;
 }
 
-RM_Proxy *HostMonitorImpl::create_rm_proxy (void)
+RM_Proxy *HostMonitorImpl::create_RM_Proxy (void)
 {
   if (rm_proxy_.get() == 0)
-  {
-    std::auto_ptr <CPULoadCalculator> linux_load_calc (new LinuxCPULoadCalculator());
-    //std::auto_ptr <CPULoadCalculator> linux_load_calc (new FCS_Monitor_Adapter ());
-    std::auto_ptr <Utilization_Monitor> util_mon (
-        new Utilization_Monitor (linux_load_calc.get()));
-    linux_load_calc.release ();
-    std::auto_ptr <RM_Proxy> rm_proxy (new RM_Proxy (orb_));
+    {
+      std::auto_ptr <Utilization_Monitor> util_mon (
+          new Utilization_Monitor);
+      std::auto_ptr <RM_Proxy> rm_proxy (new RM_Proxy (orb_));
 
-    rm_proxy->setCPULoadCalculator (util_mon.get());
-    util_mon->setRM_Proxy (rm_proxy.get());
+      rm_proxy->set_Utilization_Monitor (util_mon.get ());
+      util_mon->set_RM_Proxy (rm_proxy.get ());
 
-    rm_proxy->hertz (HMOptions::instance()->RM_update_freq());
-    util_mon->hertz (HMOptions::instance()->load_monitor_freq ());
+      rm_proxy->hertz (HMOptions::instance ()->RM_update_freq ());
+      util_mon->hertz (HMOptions::instance ()->load_monitor_freq ());
 
-    util_mon->start ();
-    rm_proxy->start ();
+      util_mon->start ();
+      rm_proxy->start ();
 
-    /// Trasnfer of ownership.
-    this->util_mon_ = util_mon;
-    this->rm_proxy_ = rm_proxy;
-  }
+      /// Trasnfer of ownership.
+      this->util_mon_ = util_mon;
+      this->rm_proxy_ = rm_proxy;
+    }
   
-  return rm_proxy_.get();
+  return rm_proxy_.get ();
 }
 
-void HostMonitorImpl::remove_rm_proxy (void)
+void HostMonitorImpl::remove_RM_Proxy (void)
 {
   if (process_map_.current_size() == 0)
-  {
-    rm_proxy_->stop ();
-    util_mon_->stop ();
-    rm_proxy_.reset (0);
-    util_mon_.reset (0);
-  }
+    {
+      rm_proxy_->stop ();
+      util_mon_->stop ();
+      rm_proxy_.reset (0);
+      util_mon_.reset (0);
+    }
 }
 
 int HostMonitorImpl::remove_process (std::string const &process_id)

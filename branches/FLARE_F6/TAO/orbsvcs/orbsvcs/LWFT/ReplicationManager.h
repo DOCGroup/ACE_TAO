@@ -44,11 +44,21 @@ struct APP_INFO
   CORBA::Object_var ior;
 
   APP_INFO (void);
+  
   APP_INFO (APP_INFO const & app_info);
-  APP_INFO (const char *oid, double l, const char *hname,
-            const char *pid, Role r, CORBA::Object_ptr ref);
-  APP_INFO (const char *oid, const char *hname,
-            const char *pid, Role r);
+  
+  APP_INFO (const char *oid,
+            double l,
+            const char *hname,
+            const char *pid, 
+            Role r,
+            CORBA::Object_ptr ref);
+            
+  APP_INFO (const char *oid,
+            const char *hname,
+            const char *pid,
+            Role r);
+            
   void swap (APP_INFO & app_info);
   APP_INFO & operator = (APP_INFO const & app_info);
 };
@@ -69,7 +79,7 @@ struct UtilRank
   double util;
   std::string host_id;
 
-  UtilRank ();
+  UtilRank (void);
   UtilRank (UtilRank const & ur);
   UtilRank (double u, const char * hid);
 };
@@ -78,24 +88,37 @@ bool operator < (UtilRank const & u1, UtilRank const & u2);
 
 struct MonitorUpdate
 {
-    typedef enum { PROC_FAIL_UPDATE, HOST_UTIL_UPDATE, RUN_NOW, APP_REG } UpdateType;
-    UpdateType type;
+  enum UpdateType
+  {
+    PROC_FAIL_UPDATE,
+    HOST_UTIL_UPDATE,
+    RUN_NOW,
+    APP_REG
+  };
+  
+  UpdateType type;
 
-    ACE_CString process_id;
-    ACE_CString host_id;
-    double value;
-    APP_INFO app_info;
+  ACE_CString process_id;
+  ACE_CString host_id;
+  double value;
+  APP_INFO app_info;
 
-    static MonitorUpdate * 
-      create_proc_fail_update(const char * pid);
-    static MonitorUpdate * 
-      create_host_util_update(const char *hid, double value);
-    static MonitorUpdate * 
-      create_run_now_update();
-    static MonitorUpdate * 
-      create_app_info_update (const char *oid, double l, 
-                              const char *hname, const char *pid, 
-                              Role r, CORBA::Object_ptr ref);
+  static MonitorUpdate * 
+  create_proc_fail_update (const char * pid);
+  
+  static MonitorUpdate * 
+  create_host_util_update (const char *hid, double value);
+  
+  static MonitorUpdate * 
+  create_run_now_update (void);
+  
+  static MonitorUpdate * 
+  create_app_info_update (const char *oid,
+                          double l, 
+                          const char *hname,
+                          const char *pid, 
+                          Role r,
+                          CORBA::Object_ptr ref);
 };
 
 class RM_Impl_Export ReplicationManager_i
@@ -103,34 +126,43 @@ class RM_Impl_Export ReplicationManager_i
     protected Timer
 {
 public:
-  
-  ReplicationManager_i (CORBA::ORB_ptr orb, double hertz, 
-                        bool proactive = true, bool static_mode = false,
-			AlgoMode mode = PROCESS_LEVEL);
+  ReplicationManager_i (CORBA::ORB_ptr orb,
+                        double hertz, 
+                        bool proactive = true,
+                        bool static_mode = false,
+			                  AlgoMode mode = PROCESS_LEVEL);
 
   ~ReplicationManager_i (void);
 
-  virtual void register_application (const char *object_id,
-                                     double load,
-                                     const char *host_name,
-                                     const char *process_id,
-                                     CORBA::Short role,
-                                     CORBA::Object_ptr server_reference);
+  virtual void
+  register_application (const char *object_id,
+                        double load,
+                        const char *host_name,
+                        const char *process_id,
+                        CORBA::Short role,
+                        CORBA::Object_ptr server_reference);
 
-  void util_update (const char *host_id, 
-                    double util);
+  void
+  util_update (const char *host_id, 
+               double util);
   
-  virtual void proc_failure (const char *process_id);
+  virtual void
+  proc_failure (const char *process_id);
   
-  virtual RankList * register_agent (CORBA::Object_ptr agent_reference);
+  virtual RankList *
+  register_agent (CORBA::Object_ptr agent_reference);
 
-  virtual RankList * register_state_synchronization_agent (const char * host_id,
-							   const char * process_id,
-							   StateSynchronizationAgent_ptr agent);
+  virtual RankList *
+  register_state_synchronization_agent (
+    const char * host_id,
+    const char * process_id,
+    StateSynchronizationAgent_ptr agent);
 
-  virtual CORBA::Object_ptr get_next (const char * object_id);
+  virtual CORBA::Object_ptr
+  get_next (const char * object_id);
 
-  bool replica_selection_algo ();
+  bool
+  replica_selection_algo (void);
 
   typedef ACE_Unbounded_Set<ACE_CString> STRING_LIST;
   typedef ACE_Unbounded_Set<APP_INFO> APP_SET;
@@ -198,10 +230,12 @@ private:
   CORBA::ORB_var orb_;
   Algorithm * algo_thread_;
   bool proactive_;
-  AlgoMode mode_; 
-  bool static_mode_; /// this flag disables the usage of host load calculations and
-                     /// therefore enables single host scenarios
-    
+  AlgoMode mode_;
+  
+  /// This flag disables the usage of host load calculations and
+  /// therefore enables single host scenarios.
+  bool static_mode_;
+  
   ACE_DLList <MonitorUpdate> update_list_;
   ACE_Thread_Mutex update_mutex_;
   ACE_Condition <ACE_Thread_Mutex> update_available_;
@@ -258,28 +292,45 @@ private:
                          ACE_DLList<MonitorUpdate> & dest);
 
   bool process_updates(ACE_DLList<MonitorUpdate> & update_list);
+  
   void remove_process(ACE_CString const & pid, 
                   STRING_TO_STRING_LIST_MAP & map,
                   ACE_CString const & host,
                   Role role);
 
   void send_rank_list (void);
-  void send_state_synchronization_rank_list ();
+  
+  void send_state_synchronization_rank_list (void);
+  
   void build_rank_list (void);
+  
   void app_reg(APP_INFO & app_info);
+  
   void static_ranklist_update (const char * object_id, 
                                CORBA::Object_ptr ior,
                                Role role);
+                               
   void process_proc_failure (ACE_CString const & process_id);
+  
   STRING_LIST non_primary_host_list (ACE_CString const & primary_object_id);
-  void replace_primary_tags (ACE_CString const & pid, ACE_CString const & host);
-  void remove_from_appset (ACE_CString const & host, ACE_CString const & pid, 
-                           ACE_CString const & tag, Role role);
+  
+  void replace_primary_tags (ACE_CString const & pid,
+                             ACE_CString const & host);
+                             
+  void remove_from_appset (ACE_CString const & host,
+                           ACE_CString const & pid, 
+                           ACE_CString const & tag,
+                           Role role);
+                           
   void elevate_backup_to_primary (ACE_CString const & tag);
-  void replace_backup_tags (ACE_CString const & pid, ACE_CString const & host);
-  void copy_map (STRING_TO_DOUBLE_MAP const & source, STRING_TO_DOUBLE_MAP & dest);
+  
+  void replace_backup_tags (ACE_CString const & pid,
+                            ACE_CString const & host);
+                            
+  void copy_map (STRING_TO_DOUBLE_MAP const & source,
+                 STRING_TO_DOUBLE_MAP & dest);
+                 
   void print_queue (std::priority_queue <UtilRank> queue);
-  // RankList * rank_list_clone ();
 };
 
 #endif  /* REPLICATION_MANAGER_H */

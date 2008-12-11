@@ -1,3 +1,38 @@
+Thu Dec 11 19:46:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/CPULoadCalculator.h:
+        * orbsvcs/orbsvcs/LWFT/LinuxCPULoadCalculator.cpp:
+        * orbsvcs/orbsvcs/LWFT/LinuxCPULoadCalculator.h:
+        
+          Removed these files, their use is replaced by the
+          use of the ACE Monitor framework CPU load monitor.
+          
+        * orbsvcs/orbsvcs/LWFT/Monitor_Manager.cpp:
+        * orbsvcs/orbsvcs/LWFT/Monitor_Manager.inl:
+        * orbsvcs/orbsvcs/LWFT/Monitor_Manager.h:
+        
+          New files, defining a memory management class for
+          ACE monitors and subclasses, similar to auto_ptr
+          or *_var. These files will eventually be moved to ACE.
+          
+        * orbsvcs/orbsvcs/LWFT/README:
+        
+          New file, documenting the preprocessor flags that
+          must be set to compile and use the LWFT service.
+          
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h:
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
+        * orbsvcs/orbsvcs/LWFT/Timer.cpp:
+        * orbsvcs/orbsvcs/LWFT/Utilization_Monitor.cpp:
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.h:
+        * orbsvcs/orbsvcs/LWFT/RM_Proxy.h:
+        * orbsvcs/orbsvcs/LWFT/Utilization_Monitor.h:
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp:
+        * orbsvcs/orbsvcs/LWFT/RM_Proxy.cpp:
+        
+          Changes required to use the new files above, and
+          cosmetic changes.
+
 Mon Dec  8 17:44:24 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/Barrier_Guard.cpp:
