@@ -22,7 +22,7 @@ module Components
       ServerActivator get_server_activator();
 
       Container create_container(in ConfigValues config)
-	raises (::Components::CreateFailure,
+        raises (::Components::CreateFailure,
 		::Components::Deployment::InvalidConfiguration);
 
       void remove_container(in Container cref) raises (::Components::RemoveFailure);
@@ -43,7 +43,7 @@ module Components
       CCMHome install_home(in UUID id,
                            in string entrypt,
                            in ConfigValues config)
-	raises (::Components::Deployment::UnknownImplId,
+	    raises (::Components::Deployment::UnknownImplId,
 		::Components::Deployment::ImplEntryPointNotFound,
 		::Components::Deployment::InstallationFailure,
 		::Components::Deployment::InvalidConfiguration);

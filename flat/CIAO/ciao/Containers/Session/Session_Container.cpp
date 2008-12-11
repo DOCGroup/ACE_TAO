@@ -173,7 +173,7 @@ namespace CIAO
                         poa_manager.in (),
                         policies);
 
-    Servant_Activator_i *sa;
+    Servant_Activator_i *sa = 0;
     ACE_NEW_THROW_EX (sa,
                       Servant_Activator_i (this->orb_.in ()),
                       CORBA::NO_MEMORY ());
@@ -241,7 +241,8 @@ namespace CIAO
                     "Servant library [%C] with entrypoint [%C]\n",
                     servant_artifact, servant_entrypoint));
 
-        ACE_DLL executor_dll, servant_dll;
+        ACE_DLL executor_dll;
+		ACE_DLL servant_dll;
 
         if (primary_artifact == 0 || servant_artifact == 0)
           {
@@ -385,8 +386,8 @@ namespace CIAO
             error += servant_artifact;
           }
 
-	CIAO_ERROR ((LM_ERROR, CLINFO
-        "Session_Container::ciao_install_home - Error:%C\n",
+	    CIAO_ERROR ((LM_ERROR, CLINFO
+          "Session_Container::ciao_install_home - Error:%C\n",
 		    error.c_str ()));
 
         throw Components::Deployment::ImplEntryPointNotFound ();
@@ -411,7 +412,7 @@ namespace CIAO
 
     if (home_servant == 0)
       {
-	CIAO_ERROR ((LM_ERROR, CLINFO
+	    CIAO_ERROR ((LM_ERROR, CLINFO
 		    "Session_Container::ciao_install_home - Home servant factory failed.\n"));
         throw Components::Deployment::InstallationFailure ();
       }
@@ -684,13 +685,13 @@ namespace CIAO
                      "Invoking CCM activate on provided component object reference."));
         sess->activate_component ();
       }
-    catch (CIAO::InvalidComponent &)
+    catch (const CIAO::InvalidComponent &)
       {
         CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::activate_component - "
                      "Failed to retrieve servant and/or cast to servant pointer.\n"));
         throw;
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::activate_component - "
                      "Caught CORBA exception while activating a component: %C\n",
@@ -732,11 +733,11 @@ namespace CIAO
                      "Invoking CCM activate on provided component object reference."));
         sess->passivate_component ();
       }
-    catch (CIAO::InvalidComponent &)
+    catch (const CIAO::InvalidComponent &)
       {
         throw;
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::passivate_component - "
                      "Caught CORBA exception while passivating a component: %C\n",
@@ -825,7 +826,7 @@ namespace CIAO
 
         oid = tmp_id._retn ();
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::uninstall_servant - "
                      "Caught CORBA exception while uninstalling servant: %C\n",
