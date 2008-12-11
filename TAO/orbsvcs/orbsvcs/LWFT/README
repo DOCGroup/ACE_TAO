@@ -1,0 +1,18 @@
+The files in this directory build several libaries comprising
+the TAO Lightweight Fault Tolerance (LWFT) service. Additional
+files to build the ReplicationManager and HostMonitor
+executables are found in $TAO_ROOT/orbsvcs/LWFT_Service.
+
+Some preprocessor flags must be set by hand to build and use
+LWFT. TAO_HAS_EXTENDED_FT_INTERCEPTORS must be defined to 1,
+either in $ACE_ROOT/ace/config.h or in $TAO_ROOT/tao/orbconf.h.
+Adding the #define in orbconf.h has the advantage of causing
+fewer libs to be rebuilt, but the disadvantage of the fact that
+orbconf.h is in the source code repository, and so care must
+be taken not to check in a modified version inadvertently.
+
+To make the CPU load monitor in the LWFT_HostMonitor library
+functional, ACE monitor must be enabled, which is done by
+#defining ACE_HAS_MONITOR_FRAMEWORK to 1 in
+$ACE_ROOT/ace/config.h. If this is not done, the load will
+always show as its default initialized value of 0.

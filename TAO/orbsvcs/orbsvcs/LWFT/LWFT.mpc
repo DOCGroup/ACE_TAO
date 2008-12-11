@@ -217,7 +217,7 @@ project(*ReplicationManagerImpl) : portableserver, orbsvcs_output {
   }
 }
 
-project(*HostMonitor) : portableserver, naming, orbsvcs_output {
+project(*HostMonitor) : ace_mc, portableserver, naming, orbsvcs_output {
   after += *ReplicationManager *Server
   libs += LWFT_Common \
           LWFT_Server \
@@ -233,7 +233,7 @@ project(*HostMonitor) : portableserver, naming, orbsvcs_output {
     HMOptions.cpp
     HostMonitorImpl.cpp
     HostMonitorS.cpp
-    LinuxCPULoadCalculator.cpp
+    Monitor_Manager.cpp
     Monitor_Thread.cpp
     RM_Proxy.cpp
     Utilization_Monitor.cpp
@@ -243,10 +243,12 @@ project(*HostMonitor) : portableserver, naming, orbsvcs_output {
     CPULoadCalculator.h
     host_monitor_export.h
     HostMonitorS.h
+    Monitor_Manager.h
   }
   
   Inline_Files {
     HostMonitorS.inl
+    Monitor_Manager.inl
   }
   
   Template_Files {

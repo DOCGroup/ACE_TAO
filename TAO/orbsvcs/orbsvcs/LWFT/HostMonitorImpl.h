@@ -24,30 +24,42 @@ class HostMonitor_Export HostMonitorImpl
 {
 public:
 
-  typedef ACE_Map_Manager <std::string, Failure_Handler *, ACE_Thread_Mutex> ProcessHandlerMap;
+  typedef ACE_Map_Manager <std::string,
+                           Failure_Handler *,
+                           ACE_Thread_Mutex>
+    ProcessHandlerMap;
 
-  explicit HostMonitorImpl (CORBA::ORB_ptr, Monitor_Thread *);
-  int drop_process (const std::string &process_id);
+  HostMonitorImpl (CORBA::ORB_ptr, Monitor_Thread *);
+  
+  int
+  drop_process (const std::string &process_id);
 
-  virtual ~HostMonitorImpl ();
+  virtual
+  ~HostMonitorImpl ();
 
   ::CORBA::Boolean
-  register_process (const char *process_id, const char * hostname, CORBA::Long port)
-  throw (CORBA::SystemException);
+  register_process (const char *process_id,
+                    const char * hostname,
+                    CORBA::Long port);
 
   ::CORBA::Boolean
-  unregister_process (const char *process_id)
-  throw (CORBA::SystemException);
+  unregister_process (const char *process_id);
 
-  virtual ::CORBA::Short heartbeat_port (void);
+  virtual ::CORBA::Short
+  heartbeat_port (void);
 
-  void dump (void)
-  throw (CORBA::SystemException);
+  void
+  dump (void);
 
 protected:
-  RM_Proxy *create_rm_proxy (void);
-  void remove_rm_proxy (void);
-  int remove_process (std::string const &process_id);
+  RM_Proxy *
+  create_RM_Proxy (void);
+  
+  void
+  remove_RM_Proxy (void);
+  
+  int
+  remove_process (std::string const &process_id);
 
 private:
   Monitor_Thread *monitor_thread_;
@@ -59,5 +71,4 @@ private:
   CORBA::ORB_var orb_;
 };
 
-
-#endif
+#endif // __HOSTMONITORIMPL_H

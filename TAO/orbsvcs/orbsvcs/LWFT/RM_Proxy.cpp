@@ -110,7 +110,7 @@ RM_Proxy::obtain_RM_ior (CORBA::ORB_ptr orb)
 }
 
 void
-RM_Proxy::setCPULoadCalculator (CPULoadCalculator *load_calc)
+RM_Proxy::set_Utilization_Monitor (Utilization_Monitor *load_calc)
 {
   this->load_calc_ = load_calc;
 }
