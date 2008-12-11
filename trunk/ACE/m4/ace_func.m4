@@ -265,8 +265,10 @@ fi
 
 # ACE_CHECK_SYSINFO
 #
-# SVR4 and Linux have completely independent implementations of the
-# sysinfo() system / library call.
+# HP/UX, SVR4/POSIX and Linux have completely independent
+# implementations of the # sysinfo() system / library call.
+#
+# The HP/UX syscall is undocumented.
 #
 # The SVR4 signature is:
 #   #include <sys/systeminfo.h>
@@ -279,6 +281,8 @@ fi
 # SVR4 (or at least Solaris) also has a sys/sysinfo.h header, so that
 # cannot be used to distinguish between the two varients. As far as I
 # know, Linux does not have a sys/systeminfo.h header, so that can.
+# To further avoid false positives, small programs that use the two
+# APIs are compiled as part of the feature tests.
 #
 # ACE uses the ACE_HAS_SYSV_SYSINFO feature test macro for the first
 # and ACE_HAS_LINUX_SYSINFO for the second.
@@ -288,11 +292,24 @@ ACE_CHECK_HAS_HEADERS(sys/sysinfo.h sys/systeminfo.h)
 AC_CHECK_FUNC(sysinfo)
 if test "$ac_cv_func_sysinfo" = yes; then
   if test "$ac_cv_header_sys_systeminfo_h" = yes; then
-     AC_DEFINE([ACE_HAS_SYSV_SYSINFO], 1,
-	       [Define to 1 if system has SysV version of sysinfo().])
+     AC_COMPILE_IFELSE(
+        [AC_LANG_PROGRAM(
+		[#include <sys/systeminfo.h>],
+		[char buf[256];
+		sysinfo (SI_SYSNAME, buf, sizeof(buf));
+		return 0;])],
+	[AC_DEFINE([ACE_HAS_SYSV_SYSINFO], 1,
+		[Define to 1 if system has SysV version of sysinfo().])])
+
   elif test "$ac_cv_header_sys_sysinfo_h" = yes; then
-     AC_DEFINE([ACE_HAS_LINUX_SYSINFO], 1,
-               [Define to 1 if system has Linux version of sysinfo().])
+     AC_COMPILE_IFELSE(
+	[AC_LANG_PROGRAM(
+		[#include <sys/sysinfo.h>],
+		[struct sysinfo s;
+		sysinfo (&s);
+		return 0;])],
+        [AC_DEFINE([ACE_HAS_LINUX_SYSINFO], 1,
+		[Define to 1 if system has Linux version of sysinfo().])])
   fi
 fi
 ])
