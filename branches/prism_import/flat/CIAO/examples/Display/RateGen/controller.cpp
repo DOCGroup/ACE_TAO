@@ -12,14 +12,14 @@
  * RateGen.
  */
 
-const char *rategen_ior_ = 0;
+const ACE_TCHAR *rategen_ior_ = 0;
 int rate = 2;
 int turn_on = 1;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:r:of");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:r:of"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -55,7 +55,7 @@ parse_args (int argc, char *argv[])
 
   if (rategen_ior_ == 0)
     {
-      rategen_ior_ = "file://RateGen.ior";
+      rategen_ior_ = ACE_TEXT("file://RateGen.ior");
     }
 
   if (rate == 0)
@@ -73,9 +73,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       // Initialize orb
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         "");
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         {
