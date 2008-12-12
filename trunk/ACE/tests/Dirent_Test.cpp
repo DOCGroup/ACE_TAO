@@ -38,17 +38,11 @@ ACE_RCSID (tests,
 
 #if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
 #  define TEST_DIR "log"
-#  define DIR_DOT "."
-#  define DIR_DOT_DOT ".."
 #  define TEST_ENTRY ".."
 #else
 #  if defined (ACE_HAS_TCHAR_DIRENT)
-#    define DIR_DOT ACE_TEXT (".")
-#    define DIR_DOT_DOT ACE_TEXT ("..")
 #    define TEST_ENTRY ACE_TEXT ("run_test.lst")
 #  else
-#    define DIR_DOT "."
-#    define DIR_DOT_DOT ".."
 #    define TEST_ENTRY "run_test.lst"
 #  endif /* ACE_HAS_TCHAR_DIRENT */
 #endif /* ACE_VXWORKS < 0x600 */
@@ -273,8 +267,7 @@ dirent_count (const ACE_TCHAR *dir_path,
   for (ACE_DIRENT *directory; (directory = dir.read ()) != 0;)
     {
       // Skip the ".." and "." files.
-      if (ACE_OS::strcmp (directory->d_name, DIR_DOT) == 0
-          || ACE_OS::strcmp (directory->d_name, DIR_DOT_DOT) == 0)
+      if (ACE::isdotdir(directory->d_name) == true)
         continue;
       ++entry_count;
 
