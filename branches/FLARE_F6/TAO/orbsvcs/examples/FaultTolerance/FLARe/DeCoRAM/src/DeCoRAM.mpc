@@ -1,0 +1,98 @@
+project (basic_ftrmff) {
+
+  exename = bftrmff
+  exeout = ../bin
+  macros += DO_DEBUG
+
+  Source_Files {
+    Algorithms.cpp
+    Schedule.cpp
+    Task_Scheduler.cpp
+    CTT_Basic.cpp
+    FTRMFF_Basic.cpp
+    basic_ftrmff.cpp
+  }
+}
+
+project (statesync_only_ftrmff) {
+
+  after += basic_ftrmff
+
+  exename = sftrmff
+  exeout = ../bin
+  macros += DO_DEBUG USE_ENHANCED_CTT
+
+  Source_Files {
+    Algorithms.cpp
+    Schedule.cpp
+    Task_Scheduler.cpp
+    CTT_Enhanced.cpp
+    FTRMFF_Basic.cpp
+    ss_ftrmff.cpp
+  }
+}
+
+project (enhanced_ftrmff) {
+
+  after += statesync_only_ftrmff
+
+  exename = eftrmff
+  exeout = ../bin
+  macros += DO_DEBUG
+
+  Source_Files {
+    Algorithms.cpp
+    Schedule.cpp
+    Multi_Failure_Scheduler.cpp
+    OptimizedWCRT.cpp
+    CTT_Enhanced.cpp
+    FTRMFF_Enhanced.cpp
+    enhanced_ftrmff.cpp
+  }
+}
+
+project (ranked_ftrmff) {
+
+  after += enhanced_ftrmff
+
+  exename = rftrmff
+  exeout = ../bin
+  macros += DO_DEBUG
+
+  Source_Files {
+    Algorithms.cpp
+    Schedule.cpp
+    OptimizedWCRT.cpp
+    RankedWCRT.cpp
+    Ranked_Scheduler.cpp
+    CTT_Enhanced.cpp
+    FTRMFF_Ranked.cpp
+    ranked_ftrmff.cpp
+  }
+}
+
+project (schedulability_check) : acelib {
+
+  exename = scheck
+  exeout = ../bin
+
+  macros += DO_DEBUG
+
+  Source_Files {
+    Algorithms.cpp
+    Schedule.cpp
+    CTT_Enhanced.cpp
+    schedulability_check.cpp
+  }
+}
+
+project (task_generator) : acelib {
+
+  exename = tgen        
+  exeout = ../bin
+
+  Source_Files {
+    Algorithms.cpp
+    task_generator.cpp
+  }
+}
