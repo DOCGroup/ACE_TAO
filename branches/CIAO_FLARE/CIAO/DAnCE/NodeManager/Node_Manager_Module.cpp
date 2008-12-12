@@ -91,7 +91,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
   ACE_Get_Opt get_opts (argc,
                         argv,
                         "e:n:p::c::r::ifs:t:h",
-                        0,
+                        1,
                         0,
                         ACE_Get_Opt::RETURN_IN_ORDER);
 

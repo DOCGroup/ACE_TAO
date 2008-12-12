@@ -1,3 +1,20 @@
+Fri Dec 12 23:31:02 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        
+          Changed ACE_Get_Opt initialization not to parse argv[0].
+        
+        * ciao/FTComponentServer/CIAO_FTComponentServer_Impl.cpp:
+        
+          Added CLIENT_PROPAGATED RT ORB policy to the configuration of
+          each container.
+        
+        * ciao/FTComponentServer/CIAO_ComponentServer.mpc
+        * ciao/FTComponentServer/AppMonitor:
+        
+          Removed AppMonitor library and use the original LWFT library instead.
+
+        
 Sat Dec  6 04:36:06 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/FTClientComponent
