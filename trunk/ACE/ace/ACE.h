@@ -431,6 +431,9 @@ namespace ACE
 
 #endif /* ACE_HAS_WCHAR */
 
+  /// Determine if a specified pathname is "dot dir" (ie. "." or "..").
+  ACE_NAMESPACE_INLINE_FUNCTION bool isdotdir (const char *s);
+
   /**
    * On Windows, determines if a specified pathname ends with ".exe"
    * (not case sensitive). If on Windows and there is no ".exe" suffix,

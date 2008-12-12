@@ -284,6 +284,13 @@ ACE::strdelete (wchar_t *s)
 }
 #endif /* ACE_HAS_WCHAR */
 
+ACE_INLINE bool
+ACE::isdotdir (const char *s)
+{
+  return (s[0] == '.' && 
+	  ((s[1] == 0) || (s[1] == '.' && s[2] == 0)));
+}
+
 ACE_INLINE void
 ACE::unique_name (const void *object,
                   ACE_TCHAR *name,
