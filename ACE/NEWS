@@ -6,6 +6,10 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 USER VISIBLE CHANGES BETWEEN ACE-5.6.7 and ACE-5.6.8
 ====================================================
 
+. Added a new function ACE::isdotdir() which determines if a specified
+  pathname is "dot dir" (ie. "." or ".."). ACE::isdotdir() is significantly
+  faster than pair of strcmp() calls.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.6 and ACE-5.6.7
 ====================================================
 
