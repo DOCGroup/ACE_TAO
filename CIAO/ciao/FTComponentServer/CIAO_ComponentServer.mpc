@@ -75,10 +75,9 @@ project(CIAO_FTComponentServer_svnt) : ccm_componentserver_svnt, ciao_ft_compone
   }
 }
 
-project(CIAO_FTComponentServer_exe) : ccm_componentserver_svnt, portableserver, ciao_ft_componentserver_svnt, messaging, anytypecode, ciao_server, ciaoexe, ciao_session_container, ciao_ft_componentserver_configurator {
+project(CIAO_FTComponentServer_exe) : ccm_componentserver_svnt, portableserver, ciao_ft_componentserver_svnt, messaging, anytypecode, ciao_server, ciaoexe, ciao_session_container, ciao_ft_componentserver_configurator, rtcorba {
   exename = ciao_ft_componentserver
-  libs += CIAO_Logger AppMonitor LWFT_StateSyncAgent LWFT_ReplicationManager LWFT_Client LWFT_Server
-  after += AppMonitor
+  libs += CIAO_Logger LWFT_StateSyncAgent LWFT_ReplicationManager LWFT_Client LWFT_Server
   macros += CIAO_BUILD_COMPONENTSERVER_EXE
   includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
 
