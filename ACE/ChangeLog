@@ -1,3 +1,11 @@
+Fri Dec 12 13:08:58 UTC 2008  Olli Savia  <ops@iki.fi>
+
+        * ace/ACE.h:
+        * ace/ACE.inl:
+          Added a new function isdotdir() which determines if a specified
+          pathname is "dot dir" (ie. "." or ".."). isdotdir() is significantly
+          faster than pair of strcmp() calls.
+
 Thu Dec 11 23:08:07 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * bin/tao_other_tests.lst:
