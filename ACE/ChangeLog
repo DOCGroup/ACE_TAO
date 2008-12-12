@@ -1,3 +1,8 @@
+Fri Dec 12 19:23219 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Disabled ICMG_Any_Bug for CORBA/e
+
 Fri Dec 12 13:26:19 UTC 2008  Olli Savia  <ops@iki.fi>
 
         * NEWS:
