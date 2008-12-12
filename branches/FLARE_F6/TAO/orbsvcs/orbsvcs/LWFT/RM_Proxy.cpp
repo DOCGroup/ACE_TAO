@@ -1,8 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-#include "RM_Proxy.h"
-
 #include <stdexcept>
 #include <iostream>
 #include <iterator>
@@ -12,8 +10,8 @@
 
 #include "orbsvcs/orbsvcs/Naming/Naming_Client.h"
 
+#include "RM_Proxy.h"
 #include "HMOptions.h"
-#include "CPULoadCalculator.h"
 
 RM_Proxy::RM_Proxy (CORBA::ORB_ptr orb)
   : load_calc_ (0),

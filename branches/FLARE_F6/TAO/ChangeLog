@@ -1,3 +1,10 @@
+Fri Dec 12 16:26:20 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp:
+        * orbsvcs/orbsvcs/LWFT/RM_Proxy.cpp:
+        
+          Removed #includes of files that no longer exist.
+
 Thu Dec 11 19:46:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/CPULoadCalculator.h:
