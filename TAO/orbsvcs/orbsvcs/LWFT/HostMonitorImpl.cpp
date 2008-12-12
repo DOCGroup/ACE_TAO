@@ -1,14 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-#include "HostMonitorImpl.h"
-#include "Failure_Handler.h"
-#include "Monitor_Thread.h"
-#include "RM_Proxy.h"
-#include "HMOptions.h"
-#include "LinuxCPULoadCalculator.h"
-#include "Utilization_Monitor.h"
-
 #include "ace/Connector.h"
 #include "ace/Service_Object.h"
 #include "ace/Reactor.h"
@@ -17,6 +9,12 @@
 #include "ace/Synch_Options.h"
 #include "ace/Thread_Mutex.h"
 
+#include "HostMonitorImpl.h"
+#include "Failure_Handler.h"
+#include "Monitor_Thread.h"
+#include "RM_Proxy.h"
+#include "HMOptions.h"
+#include "Utilization_Monitor.h"
 
 HostMonitorImpl::HostMonitorImpl (CORBA::ORB_ptr orb, Monitor_Thread *mt)
   : monitor_thread_ (mt),
