@@ -1,0 +1,128 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl FTTask"
+
+project(FTTask_idl_gen) : taoidldefaults, anytypecode {
+  avoids += ace_for_tao
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=FTTASK_STUB_Export \
+              -Wb,stub_export_include=FTTask_stub_export.h \
+              -Wb,skel_export_macro=FTTASK_SVNT_Export \
+              -Wb,skel_export_include=FTTask_svnt_export.h  
+  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+
+  IDL_Files {
+    FTTask.idl
+    Worker.idl
+  }
+}
+
+project(FTTask_cidl_gen) : ciaocidldefaults, taoidldefaults {
+  avoids += ace_for_tao
+  custom_only = 1
+  cidlflags += --svnt-export-macro FTTASK_SVNT_Export \
+               --svnt-export-include FTTask_svnt_export.h
+  idlflags += -Wb,export_macro=FTTASK_EXEC_Export \
+              -Wb,export_include=FTTask_exec_export.h \
+              -SS
+
+  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+  cidlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+              
+  CIDL_Files {
+    FTTask.cidl
+  }
+  
+  IDL_Files {
+    FTTaskE.idl
+  }
+}
+
+project(FTTask_stub) : ccm_stub {
+  avoids += ace_for_tao
+  after += FTTask_idl_gen 
+  
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+
+  sharedname = FTTask_stub
+  dynamicflags   = FTTASK_STUB_BUILD_DLL
+  libs += LWFT_Common LWFT_StateSyncAgent
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FTTaskC.cpp
+    WorkerC.cpp
+  }
+
+  Header_Files {
+    FTTaskC.h
+    FTTask_stub_export.h
+  }
+
+  Inline_Files {
+    FTTaskC.inl
+  }
+}
+
+project(FTTask_exec) : ciao_executor, ciao_container_base, naming, orbsvcslib,  {
+  avoids += ace_for_tao
+  after   += FTTask_cidl_gen FTTask_stub
+  sharedname = FTTask_exec
+  libs += FTTask_stub CUTS CUTS_CPU_Worker
+  libpaths += $(CUTS_ROOT)/lib
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT $(CUTS_ROOT) $(CUTS_ROOT)/cuts/workers
+  dynamicflags   = FTTASK_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FTTaskEC.cpp
+    FTTask_exec.cpp
+  }
+  
+  Header_Files {
+    FTTaskEC.h
+    FTTask_exec.h
+    FTTask_exec_export.h
+  }
+  
+  Inline_Files {
+    FTTaskEC.inl
+  }
+}
+
+
+project(FTTask_svnt) : ciao_servant, naming {
+  avoids += ace_for_tao
+  after      += FTTask_exec
+  sharedname  = FTTask_svnt
+  libs       += FTTask_exec \
+                FTTask_stub 
+
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+  dynamicflags = FTTASK_SVNT_BUILD_DLL
+  
+  CIDL_Files {
+  }
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FTTaskS.cpp
+    FTTask_svnt.cpp
+    WorkerS.cpp
+  }
+  
+  Header_Files {
+    FTTaskS.h
+    FTTask_svnt.h
+    FTTask_svnt_export.h
+  }
+  
+  Inline_Files {
+    FTTaskS.inl
+  }
+}
