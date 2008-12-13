@@ -63,7 +63,7 @@ dnl Add maintainer mode option to the option list.
 dnl AM_MAINTAINER_MODE
 
 dnl The maintainer of this configure script.
-ACE_CONFIGURE_MAINTAINER='ace-users@cs.wustl.edu'
+ACE_CONFIGURE_MAINTAINER='ace-users@list.isis.vanderbilt.edu'
 
 
 dnl Until autoconf support in ACE is complete, prevent this script
@@ -3385,9 +3385,11 @@ ACE_CHECK_LACKS_FUNCS(strtod)
 
 ACE_CHECK_LACKS_FUNCS(strtol)
 
+ACE_FUNC_STRTOLL
+
 ACE_CHECK_LACKS_FUNCS(strtoul)
 
-ACE_CHECK_LACKS_FUNCS(strtoull)
+ACE_FUNC_STRTOULL
 
 # swab() comes in a number of forms:
 #   swab (const void*, void*, size_t) is POSIX, XPG4, SUS, SUSv2 standard.
@@ -3683,8 +3685,9 @@ ACE_CHECK_HAS_FUNCS(vasprintf vaswprintf vfwprintf vswprintf)
 
 ACE_CHECK_HAS_FUNCS(wcsnlen)
 
-ACE_CHECK_LACKS_FUNCS(fgetws fputws itow towlower towupper wcscat wcschr wcscmp wcscpy wcscspn wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul wcstoull)
+ACE_CHECK_LACKS_FUNCS(fgetws fputws isblank iswblank isctype iswctype itow towlower towupper wcscat wcschr wcscmp wcscpy wcscspn wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod)
 
+ACE_CHECK_LACKS_FUNCS(wcstok)
 if test "$ac_cv_func_wcstok" = yes; then
 dnl The wcstok() function varies with standards. Check which one we have.
 AC_MSG_CHECKING([for 2- or 3-param wcstok])
@@ -3707,6 +3710,14 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM(
            AC_MSG_RESULT([2])
           ])
 fi dnl test "$ac_cv_func_wcstok" = yes
+
+ACE_CHECK_LACKS_FUNCS(wcstol)
+
+ACE_FUNC_WCSTOLL
+
+ACE_CHECK_LACKS_FUNCS(wcstoul)
+
+ACE_FUNC_WCSTOULL
 
 dnl Check for SYSV IPC functions
 dnl
@@ -7253,13 +7264,13 @@ ACE_CACHE_CHECK([if generated ACE configuration is usable],
    dnl there would be no chance that the rest of ACE would compile.
   ],
   [
-   AC_MSG_ERROR(
+   AC_MSG_WARN(
      [
 The generated configuration appears to be unusable.  Please verify
 that your system path and environment variables are correct.  If they
 appear to be correct then please send the maintainer of this configure
-script $ACE_CONFIGURE_MAINTAINER the *COMPRESSED* 'config.log' file
-and the following information:
+script $ACE_CONFIGURE_MAINTAINER the *COMPRESSED* 'config.log' file,
+the generated ace/config.h file and the following information:
 
   ACE 'configure' Script Information
   ==================================

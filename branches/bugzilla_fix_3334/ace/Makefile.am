@@ -1139,7 +1139,6 @@ nobase_include_HEADERS += \
   checked_iterator.h \
   config-WinCE.h \
   config-all.h \
-  config-borland-common.h \
   config-lite.h \
   config-macros.h \
   config-minimal.h \

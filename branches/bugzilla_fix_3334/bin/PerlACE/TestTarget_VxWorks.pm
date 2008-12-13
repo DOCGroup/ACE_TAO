@@ -16,6 +16,7 @@ use strict;
 
 use PerlACE::TestTarget;
 use PerlACE::ProcessVX;
+use Cwd;
 
 our @ISA = qw(PerlACE::TestTarget);
 
@@ -25,13 +26,16 @@ our @ISA = qw(PerlACE::TestTarget);
 
 sub LocalFile {
   my($self, $file) = @_;
-  print STDERR "LocalFile for $file is $file\n";
+  if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+    print STDERR "LocalFile is $file\n";
+  }
   return $file;
 }
 
 sub CreateProcess {
   my $self = shift;
-  return new PerlACE::ProcessVX(@_);
+  my $process = new PerlACE::ProcessVX (@_, $self, );
+  return $process;
 }
 
 # Need a reboot when this target is destroyed.
@@ -50,5 +54,21 @@ sub RebootNow ($)
     reboot ();
 }
 
+sub WaitForFileTimed ($)
+{
+    my $self = shift;
+    my $file = shift;
+    my $timeout = shift;
+    my $cwdrel = $file;
+    my $prjroot = defined $ENV{"ACE_RUN_VX_PRJ_ROOT"} ? $ENV{"ACE_RUN_VX_PRJ_ROOT"}  : $ENV{"ACE_ROOT"};
+    if (length ($cwdrel) > 0) {
+        $cwdrel = File::Spec->abs2rel( cwd(), $prjroot );
+    }
+    else {
+        $cwdrel = File::Spec->abs2rel( $cwdrel, $prjroot );
+    }
+    my $newfile = $self->{HOST_ROOT} . "/" . $cwdrel . "/" . $file;
+    return PerlACE::waitforfile_timed ($newfile, $timeout);
+}
 
 1;

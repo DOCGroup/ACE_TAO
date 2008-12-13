@@ -53,6 +53,7 @@ sub new
     $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
+    $self->{TARGET} = shift;
     if (!defined $PerlACE::ProcessVX::WAIT_DELAY_FACTOR) {
         $PerlACE::ProcessVX::WAIT_DELAY_FACTOR = 2;
     }
@@ -71,6 +72,11 @@ sub DESTROY
         print STDERR "ERROR: <", $self->{EXECUTABLE},
                      "> still running upon object destruction\n";
         $self->Kill ();
+    }
+
+    if (defined $ENV{'ACE_RUN_VX_IBOOT'} && !defined $ENV{'ACE_RUN_VX_NO_SHUTDOWN'}) {
+      # Shutdown the target to save power
+      $self->iboot_cycle_power(1);
     }
 }
 
@@ -132,6 +138,10 @@ sub Spawn ()
       @cmds[$cmdnr++] = '< ' . $ENV{"ACE_RUN_VX_STARTUP_SCRIPT"};
     }
 
+    if (defined $ENV{"ACE_RUN_VX_STARTUP_COMMAND"}) {
+      @cmds[$cmdnr++] = $ENV{"ACE_RUN_VX_STARTUP_COMMAND"};
+    }
+
     if ($PerlACE::VxWorks_RTP_Test) {
         @cmds[$cmdnr++] = 'cmd';
         if ( defined $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} && $self->{SET_VX_DEFGW}) {
@@ -150,6 +160,10 @@ sub Spawn ()
             @cmds[$cmdnr++] = 'C putenv("TAO_ORB_DEBUG=' . $ENV{"ACE_RUN_TAO_ORB_DEBUG"} . '")';
         }
 
+        if (defined $ENV{'ACE_RUN_ACE_LD_SEARCH_PATH'}) {
+            @cmds[$cmdnr++] = 'C putenv("ACE_LD_SEARCH_PATH=' . $ENV{"ACE_RUN_ACE_LD_SEARCH_PATH"} . '")';
+        }
+
         if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
             @cmds[$cmdnr++] = 'C memShow()';
         }
@@ -157,7 +171,8 @@ sub Spawn ()
         $cmdline = $program . $PerlACE::ProcessVX::ExeExt . ' ' . $self->{ARGUMENTS};
         @cmds[$cmdnr++] = $cmdline;
         $prompt = '\[vxWorks \*\]\# $';
-    } else {
+    }
+    if ($PerlACE::VxWorks_Test) {
         if ( defined $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} && $PerlACE::ProcessVX::VxDefGw) {
             @cmds[$cmdnr++] = "mRouteAdd(\"0.0.0.0\", \"" . $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} . "\", 0,0,0)";
             $PerlACE::ProcessVX::VxDefGw = 0;
@@ -190,6 +205,10 @@ sub Spawn ()
 
         if (defined $ENV{'ACE_RUN_TAO_ORB_DEBUG'}) {
             @cmds[$cmdnr++] = 'putenv("TAO_ORB_DEBUG=' . $ENV{"ACE_RUN_TAO_ORB_DEBUG"} . '")';
+        }
+
+        if (defined $ENV{'ACE_RUN_ACE_LD_SEARCH_PATH'}) {
+            @cmds[$cmdnr++] = 'putenv("ACE_LD_SEARCH_PATH=' . $ENV{"ACE_RUN_ACE_LD_SEARCH_PATH"} . '")';
         }
 
         @cmds[$cmdnr++] = 'ld <'. $program . $PerlACE::ProcessVX::ExeExt;
@@ -230,7 +249,7 @@ sub Spawn ()
             if (!defined $telnet_port)  {
                 $telnet_port = 23;
               }
-            my $t = new Net::Telnet(Timeout => 10, Errmode => 'return', Host => $telnet_host, Port => $telnet_port);
+            my $t = new Net::Telnet(Timeout => 600, Errmode => 'return', Host => $telnet_host, Port => $telnet_port);
             if (!defined $t) {
               die "ERROR: Telnet failed to <" . $telnet_host . ":". $telnet_port . ">";
             }

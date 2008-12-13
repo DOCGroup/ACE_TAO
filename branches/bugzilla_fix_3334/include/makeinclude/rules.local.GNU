@@ -49,7 +49,7 @@ makefile_name.local:
 else
 makefile_name.local:
 	@echo
-	@echo GNUmakefile: $(call PWD)/$(MAKEFILE)
+	@echo GNUmakefile: $(call PWD)/$(MAKEFILE) MAKEFLAGS=$(MAKEFLAGS)
 	@echo
 endif
 
@@ -64,7 +64,7 @@ IDL_SRC ?=
 VLIBS ?=
 BUILD ?=
 BIN ?=
-VBIN ?= $(BIN:%=%$(VAR))
+VBIN ?= $(ARCH_BIN:%=%$(VAR))
 ifneq ($(VBIN),)
   $(VBIN): $(VLIBS)
 endif
@@ -103,35 +103,39 @@ define mk_obj_out_dir
 endef
 endif
 
-$(VDIR)%.o: %.c
+nullstring :=
+CC_OUTPUT_FLAG_SEP ?= $(nullstring) #space
+
+$(VDIR)%.$(OBJEXT): %.c
 	$(mk_obj_out_dir)
-	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.c) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.C
+$(VDIR)%.$(OBJEXT): %.C
 	$(mk_obj_out_dir)
-	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.c) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.cpp
+$(VDIR)%.$(OBJEXT): %.cpp
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.cc) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.cc
+$(VDIR)%.$(OBJEXT): %.cc
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.cc) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.cxx
+$(VDIR)%.$(OBJEXT): %.cxx
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.cc) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 	${MVCMD}
 
+RC_OUTPUT_FLAG ?=
   ifneq (,$(COMPILE.rc))
 $(VDIR)%.rc.o: %.rc
 	$(mk_obj_out_dir)
-	$(COMPILE.rc) $< $@
+	$(COMPILE.rc) $(RC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
   endif # COMPILE.rc
 
@@ -142,11 +146,11 @@ $(VDIR)%.rc.o: %.rc
 ifndef SOLINK
 $(VSHDIR)%.$(OBJEXT): %.c
 	$(mk_obj_out_dir)
-	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 
 $(VSHDIR)%.$(OBJEXT): %.C
 	$(mk_obj_out_dir)
-	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 
 # I added the "Executable Shared Object (ESO)" define to separate between
 # normal shared object files and executable shared object files (the kind
@@ -164,7 +168,7 @@ $(VSHDIR)%.$(SOEXT): %.cpp
 
 $(VSHDIR)%.$(OBJEXT): %.cc
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 
   ifeq ($(split), 1)
 $(VSHDIR)%.$(OBJEXT): %.cpp
@@ -175,18 +179,18 @@ $(VSHDIR)%.$(OBJEXT): %.cpp
 
 $(VSHDIR)%.$(OBJEXT): %.cpp
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 
   endif # split
 
 $(VSHDIR)%.$(OBJEXT): %.cxx
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 
   ifneq (,$(COMPILE.rc))
 $(VSHDIR)%.rc.$(OBJEXT): %.rc
 	$(mk_obj_out_dir)
-	$(COMPILE.rc) $< $@
+	$(COMPILE.rc) $(RC_OUTPUT_FLAG) $@ $<
   endif # COMPILE.rc
 
 $(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT)
@@ -255,6 +259,14 @@ ifndef LN_S
   endif # ! WIN32
 endif # ! LN_S
 
+# Don't call shell/call directly below since we may need to 
+# add the architecture specific suffix to the directory
+ifneq ($(mingw32),1)
+ARCH_SOURCE_DIR := $(patsubst /,,$(shell pwd)/$(ARCH))
+else
+ARCH_SOURCE_DIR := $(patsubst /,,$(call PWD)/$(ARCH))
+endif
+
 $(INSBIN)/%$(VAR)$(EXEEXT) \
 $(INSINC)/ace% \
 $(INSLIB)/% \
@@ -272,57 +284,57 @@ ifeq ($(vxworks_ntbuild),1)
 	@if exist $@ echo "$(@F) already installed"
 	@if not exist $@ echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) to $(@D)" && \
 		$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
-		$(LN_S) $(shell pwd)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
+		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
 		echo "Installing $(@F) to $(@D)" && \
 		$(RM) $@ && \
-		$(LN_S) $(shell pwd)/$(@F) $@
+		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@
 else #not vxworks_ntbuild
   ifeq ($(mingw32),1)
     #If we're actually copying instead of linking, pay attention to timestamps to know when to install
     ifeq ($(firstword $(LN_S)),cp)
       ifneq ($(SOVERSION),)
-	@if test $(call PWD) != $(@D) ; then \
+	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
 		if test $(@F) -ot $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) ; then \
 			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
 			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-			$(LN_S) $(call PWD)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 		fi ; \
 	fi
       endif #SOVERSION
-	@if test $(call PWD) != $(@D) ; then \
+	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
 		if test $@ -nt $(@F) ; then \
 			echo "$(@F) already installed" ; \
 		else \
 			echo "Installing $(@F) -> $(@D)" ; \
 			$(RM) $@; \
-			$(LN_S) $(call PWD)/$(@F) $@; \
+			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
 		fi ; \
 	fi
     else #firstword of LN_S is not cp, so we're using real symlinks
-	@if test $(call PWD) != $(@D) -o -n "$(SOVERSION)" ; then \
+	@if test $(ARCH_SOURCE_DIR) != $(@D) -o -n "$(SOVERSION)" ; then \
 		if test -s $@ ; then \
 			echo "$(@F) already installed" ; \
 		else \
 			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
 			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-			$(LN_S) $(call PWD)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 			echo "Installing $(@F) -> $(@D)" ; \
 			$(RM) $@; \
-			$(LN_S) $(call PWD)/$(@F) $@; \
+			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
 		fi ; \
 	fi
     endif #firstword
   else #not mingw32
-	@if test $(shell pwd) != $(@D) -o -n "$(SOVERSION)" ; then \
+	@if test $(ARCH_SOURCE_DIR) != $(@D) -o -n "$(SOVERSION)" ; then \
 		if test -s $@ ; then \
 			echo "$(@F) already installed" ; \
 		else \
 			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
 			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-			$(LN_S) $(shell pwd)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 			echo "Installing $(@F) -> $(@D)" ; \
 			$(RM) $@; \
-			$(LN_S) $(shell pwd)/$(@F) $@; \
+			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
 		fi ; \
 	fi
   endif #mingw32
@@ -335,7 +347,7 @@ ifdef MVSLIB
 			echo "$(@F:.$(SOEXT)=.x) already installed" ; \
 		else \
 			echo "Installing $(@F:.$(SOEXT)=.x) -> $(@D)" ; \
-			$(RM) $(@); $(LN_S) $(shell pwd)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
+			$(RM) $(@); $(LN_S) $(ARCH_SOURCE_DIR)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
 		fi \
 	fi
 endif
@@ -386,7 +398,7 @@ ifdef OBJS
   CLEANUP_OBJS += $(addprefix $(VDIR), $(OBJS))
 endif # OBJS
 ifneq ($(CLEANUP_BIN),)
-  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(CLEANUP_BIN)))) $(VOBJS)
+  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(CLEANUP_BIN:$(ARCH)/%=%)))) $(VOBJS)
 endif # CLEANUP_BIN
 ifdef VSHOBJS
   CLEANUP_OBJS += $(VSHOBJS)
@@ -404,7 +416,7 @@ endif # DO_CLEANUP
 
 realclean.local: clean.local deinstall.local clean_idl_stubs.local
 ifdef DO_CLEANUP
-	-$(RM) -r $(REALCLEAN_FILES) $(sort $(CLEANUP_OBJDIRS))
+	-$(RM) -r $(REALCLEAN_FILES) $(sort $(CLEANUP_OBJDIRS)) $(ARCH)
 endif # DO_CLEANUP
 
 
@@ -521,8 +533,8 @@ SPLIT:
 	@echo "done."
 
 svnignore.local:
-	if [ "n$(BIN)" != "n" ]; then \
-	  (svn propget svn:ignore .; echo $(BIN)) | sort | uniq | sed '/^$$/d' >SvNiGnOrE; \
+	if [ "n$(ARCH_BIN)" != "n" ]; then \
+	  (svn propget svn:ignore .; echo $(ARCH_BIN)) | sort | uniq | sed '/^$$/d' >SvNiGnOrE; \
 	  svn propset svn:ignore -F SvNiGnOrE .; \
 	  rm SvNiGnOrE; \
 	fi

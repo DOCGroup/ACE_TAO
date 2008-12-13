@@ -247,6 +247,13 @@ project(Bug_2653_Regression_Test) : acetest {
   }
 }
 
+project(Bug_2772_Regression_Test) : acetest, threads {
+  exename = Bug_2772_Regression_Test
+  Source_Files {
+    Bug_2772_Regression_Test.cpp
+  }
+}
+
 project(Bug_2815_Regression_Test) : acetest {
   exename = Bug_2815_Regression_Test
   Source_Files {
@@ -315,6 +322,12 @@ project(Bug_3432_Regression_Test) : acetest {
   }
 }
 
+project(Bug_3505_Regression_Test) : acetest {
+  exename = Bug_3505_Regression_Test
+  Source_Files {
+    Bug_3505_Regression_Test.cpp
+  }
+}
 
 project(Cache Map Manager Test) : acetest {
   exename = Cache_Map_Manager_Test
@@ -368,7 +381,6 @@ project(CDR File Test) : acetest {
   exename = CDR_File_Test
   Source_Files {
     CDR_File_Test.cpp
-    CE_fostream.cpp
   }
 }
 
@@ -871,6 +883,14 @@ project(Priority Reactor Test) : acetest {
   exename = Priority_Reactor_Test
   Source_Files {
     Priority_Reactor_Test.cpp
+  }
+}
+
+project(Process Test) : acetest {
+  avoids += ace_for_tao
+  exename = Process_Test
+  Source_Files {
+    Process_Test.cpp
   }
 }
 
@@ -1592,5 +1612,19 @@ project(Process_Env_Test) : acetest {
   exename = Process_Env_Test
   Source_Files {
     Process_Env_Test.cpp
+  }
+}
+
+project(Log_Thread_Inheritance_Test) : acetest {
+  exename = Log_Thread_Inheritance_Test
+  Source_Files {
+    Log_Thread_Inheritance_Test.cpp
+  }
+}
+
+project(Wild_Match_Test) : acetest {
+  exename = Wild_Match_Test
+  Source_Files {
+    Wild_Match_Test.cpp
   }
 }

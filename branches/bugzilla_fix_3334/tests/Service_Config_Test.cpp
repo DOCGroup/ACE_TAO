@@ -66,10 +66,9 @@ private:
 u_short Test_Singleton::current_ = 0;
 
 extern "C" void
-test_singleton_cleanup (void *object, void *param)
+test_singleton_cleanup (void *object, void *)
 {
   // We can't reliably use ACE_Log_Msg in a cleanup hook.  Yet.
-  ACE_UNUSED_ARG (param);
   /* ACE_DEBUG ((LM_DEBUG, "cleanup %d\n", (u_short) param)); */
 
   delete (Test_Singleton *) object;
@@ -476,7 +475,7 @@ testNonACEThread ()
 
   u_int errors_before = error;
 
-#if defined (ACE_HAS_WTHREADS)
+#if defined (ACE_HAS_WTHREADS) && !defined (ACE_HAS_WINCE)
   HANDLE thr_h = (HANDLE)_beginthreadex (0,
                                          0,
                                          &nonacethreadentry,

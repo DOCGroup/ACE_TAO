@@ -34,6 +34,8 @@ CC      = gcc
 CXX     = g++
 RC      = windres
 
+RC_OUTPUT_FLAG = -o
+
 ifeq (2.9,$(findstring 2.9,$(GNUWIN32_CXX_VERSION)))
   MODEL_FLAGS += -mcpu=$(TCPU)
 else

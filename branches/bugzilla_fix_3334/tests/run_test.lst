@@ -38,12 +38,14 @@ Bug_2540_Regression_Test
 #Bug_2610_Regression_Test: !ST !ACE_FOR_TAO
 Bug_2659_Regression_Test: !ST !VxWorks64 !VxWorks65
 Bug_2653_Regression_Test: !ST
+Bug_2772_Regression_Test: !ST !FIXED_BUGS_ONLY
 Bug_2815_Regression_Test
 Bug_2820_Regression_Test
 Bug_2980_Regression_Test: !STATIC !Win32 !VxWorks !WCHAR
 Bug_3102_Regression_Test
 Bug_3319_Regression_Test
 Bug_3432_Regression_Test
+Bug_3505_Regression_Test
 CDR_Array_Test: !ACE_FOR_TAO
 CDR_File_Test: !ACE_FOR_TAO
 CDR_Test
@@ -82,6 +84,7 @@ Intrusive_Auto_Ptr_Test
 Lazy_Map_Manager_Test
 Log_Msg_Test: !ACE_FOR_TAO
 Log_Msg_Backend_Test: !ACE_FOR_TAO
+Log_Thread_Inheritance_Test: !ST
 Logging_Strategy_Test: !LynxOS !STATIC !ST
 Manual_Event_Test
 MEM_Stream_Test: !VxWorks !nsk !ACE_FOR_TAO !PHARLAP
@@ -123,6 +126,7 @@ Proactor_Test: !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
 Proactor_Timer_Test: !VxWorks !nsk !ACE_FOR_TAO
 Proactor_UDP_Test: !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
 Process_Env_Test: !VxWorks !PHARLAP
+Process_Test: !VxWorks !ACE_FOR_TAO !PHARLAP !Win32 !FIXED_BUGS_ONLY
 Process_Manager_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 Process_Manual_Event_Test: !HPUX !VxWorks !ACE_FOR_TAO !PHARLAP
 Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
@@ -201,6 +205,7 @@ Process_Strategy_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
 Recursive_Condition_Bug_Test: !ST
 UnloadLibACE: !STATIC !WinCE !LabVIEW_RT
 UUID_Test: !NO_UUID !ACE_FOR_TAO
+Wild_Match_Test
 SSL/Bug_2912_Regression_Test: SSL !ACE_FOR_TAO !BAD_AIO
 SSL/SSL_Asynch_Stream_Test: SSL !ACE_FOR_TAO !BAD_AIO
 SSL/Thread_Pool_Reactor_SSL_Test: SSL

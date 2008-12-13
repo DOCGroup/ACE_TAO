@@ -253,20 +253,6 @@ private:
   unsigned long counter_;
 };
 
-
-/*
- * TODO comment
- */
-class Fini_Guard
-{
-public:
-  // Constructor
-  Fini_Guard (void);
-
-  // Destructor - calls for fini
-  ~Fini_Guard (void);
-};
-
 #endif  /* ACE_HAS_ICMP_SUPPORT == 1 */
 
 #endif /* ACE_NETWORK_ADAPTERS_TEST_H */

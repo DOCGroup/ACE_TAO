@@ -26,7 +26,7 @@ REGEDIT4
 "#diff3-has-program-arg"=""
 
 [HKEY_CURRENT_USER\Software\Tigris.org\Subversion\Config\miscellany]
-"global-ignores"="*.o *.lo *.la #*# .*.rej *.rej .*~ *~ .#* .DS_Store *.class *C.i *C.inl *S.i *S.inl *C.h *S.h *C.cpp *S.cpp *C.hh *S.hh *S_T.i *S_T.inl *S_T.h *S_T.cpp .obj .pure .shobj config.h Templates.DB Thumbs.db ir.out *.aux *.lof *.lot *.log *.dvi *.blg *.bbl *.ior *Cli.* *Ser.* *Ser_T.* *.vcl *.vcb *.vcl *.vco *.SUP .depend.* GNUmake* [Mm]akefile *.mak *.a *.so* *.idb *.obj *.exe *_svnt.* *.user *.vcproj *.dsw *.dsp *.sln *.suo *.dep *.tlb *.pch *.ocx *.dll *.exp *.ilk *.lib *.ncb *.opt *.pdb *.plg *.bsc *.res LIB DLL Debug Release Static_Debug Static_Release *.bak *.trg *.mga *.mta ComponentLib.h *_[ip].c dlldata.c *.tds *.vxe"
+"global-ignores"="*.o *.lo *.la #*# .*.rej *.rej .*~ *~ .#* .DS_Store *.class *C.i *C.inl *S.i *S.inl *C.h *S.h *C.cpp *S.cpp *C.hh *S.hh *S_T.i *S_T.inl *S_T.h *S_T.cpp .obj .pure .shobj config.h Templates.DB Thumbs.db ir.out *.aux *.lof *.lot *.log *.dvi *.blg *.bbl *.ior *Cli.* *Ser.* *Ser_T.* *.vcl *.vcb *.vcl *.vco *.SUP .depend.* GNUmake* [Mm]akefile *.mak *.a *.so* *.idb *.obj *.exe *_svnt.* *.user *.vcproj *.dsw *.dsp *.sln *.suo *.dep *.tlb *.pch *.ocx *.dll *.exp *.ilk *.lib *.ncb *.opt *.pdb *.plg *.bsc *.res LIB DLL Debug Release Static_Debug Static_Release *.bak *.trg *.mga *.mta ComponentLib.h *_[ip].c dlldata.c *.tds *.vxe *.bmak"
 "#log-encoding"=""
 "use-commit-times"="yes"
 "#template-root"=""
@@ -35,6 +35,7 @@ REGEDIT4
 
 [HKEY_CURRENT_USER\Software\Tigris.org\Subversion\Config\auto-props]
 "*.aspx"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
+"*.conf"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.cpp"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.cxx"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.cc"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
@@ -52,6 +53,7 @@ REGEDIT4
 "*.pidl"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.cidl"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.html"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
+"*.pem"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.sh"="svn:eol-style=native;svn:keywords=Author Date Id Revision;svn:executable"
 "*.py"="svn:eol-style=native;svn:keywords=Author Date Id Revision;svn:executable"
 "*.pl"="svn:eol-style=native;svn:keywords=Author Date Id Revision;svn:executable"
@@ -94,6 +96,7 @@ REGEDIT4
 "*.rc"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.gplot"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.diff"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
+"*.xme"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "Change?og*"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "README"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "Makefile"="svn:eol-style=native;svn:keywords=Author Date Id Revision"

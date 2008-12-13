@@ -3,7 +3,6 @@
 
 project(gperf) : aceexe, install, crosscompile {
   install = $(ACE_ROOT)/bin
-  avoids += uses_wchar
   exename = ace_gperf
   Source_Files {
     gperf.cpp

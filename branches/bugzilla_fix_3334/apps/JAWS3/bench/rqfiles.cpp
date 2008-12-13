@@ -196,7 +196,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           filelist_name = options.optarg;
           break;
         case 'r':
-          request_rate = ::atof (options.optarg);
+          request_rate = ACE_OS::atof (options.optarg);
           if (request_rate == 0.0)
             request_rate = 1.0;
           break;
