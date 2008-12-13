@@ -1,3 +1,14 @@
+Sat Dec 13 02:33:20 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+       * DAnCE/tests/CIAO/FTClientComponent/Worker.idl
+       * DAnCE/tests/CIAO/FTClientComponent/FTClient_exec.h
+       * DAnCE/tests/CIAO/FTClientComponent/FTClient_Timer_Handler.cpp
+       * DAnCE/tests/CIAO/FTClientComponent/FTClient.mpc
+       * DAnCE/tests/CIAO/FTClientComponent/FTClient_exec.cpp:
+        
+         Adjusted client component to communicate with the new server
+         component.
+
 Sat Dec 13 02:08:18 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/FTTask

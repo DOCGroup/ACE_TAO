@@ -36,7 +36,7 @@ namespace CIDL_FTClient_Impl
     : period_ (0.0),
       execution_time_ (0.0),
       priority_ (0),
-      server_ (test::_nil ()),
+      server_ (DeCoRAM::Worker::_nil ()),
       orb_ (CORBA::ORB::_nil ()),
       timeout_handler_ (this)
   {
@@ -107,7 +107,7 @@ namespace CIDL_FTClient_Impl
 
     try
       {
-        server_ = test::_narrow (obj.in ());
+        server_ = DeCoRAM::Worker::_narrow (obj.in ());
       }
     catch (CORBA::SystemException & ex)
       {
@@ -117,10 +117,10 @@ namespace CIDL_FTClient_Impl
       }
   }
 
-  test_ptr 
+  DeCoRAM::Worker_ptr 
   FTClient_exec_i::server (void)
   {
-    return test::_duplicate (server_.in ());
+    return DeCoRAM::Worker::_duplicate (server_.in ());
   }
 
   // Port operations.
