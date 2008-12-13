@@ -179,6 +179,7 @@
 
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
+#define ACE_HAS_ICMP_SUPPORT 1
 #define ACE_HAS_IP_MULTICAST
 
 // Lacks perfect filtering, must bind group address.
@@ -245,6 +246,8 @@
 #define ACE_HAS_UCONTEXT_T
 
 #define ACE_HAS_UTIME
+
+#define ACE_HAS_CTYPE_T
 
 // Platform has XPG4 wide character type and functions. However, the size
 // of wchar_t changes for 32- vs. 64-bit builds (unsigned short vs. unsigned
@@ -329,5 +332,6 @@
 #define ACE_SCANDIR_SEL_LACKS_CONST
 #define ACE_HAS_SIGSUSPEND
 #define ACE_HAS_TIMEZONE  /* Call tzset() to set timezone */
+#define ACE_LACKS_ISCTYPE
 
 #endif /* ACE_CONFIG_AIX_5_X_H */

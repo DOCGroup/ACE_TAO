@@ -25,6 +25,8 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+# if !defined (ACE_DOESNT_DEFINE_MAIN)
+
 # if defined (ACE_HAS_RTEMS)
 extern char* rtems_progname;
 # endif /* ACE_HAS_RTEMS */
@@ -299,6 +301,8 @@ int ace_main_i
 
 #   endif   /* ACE_PSOSIM */
 # endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
+
+#endif /* ACE_DOESNT_DEFINE_MAIN */
 
 # include /**/ "ace/post.h"
 

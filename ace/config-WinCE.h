@@ -82,20 +82,37 @@
 #define ACE_LACKS_PDHMSG_H
 #define ACE_LACKS_TIME
 #define ACE_LACKS_TZSET
+#define ACE_LACKS_RAISE
+#define ACE_LACKS_BSEARCH
 
 #define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
 
 #define ACE_LACKS_MSG_WFMO
 #define ACE_LACKS_UMASK
+#define ACE_HAS_TYPES_H
+#define ACE_LACKS_DEV_T
+
+#define ACE_ISCTYPE_EQUIVALENT ::_isctype
 
 // WinCE only supports the UNICODE API
 #if !defined (ACE_USES_WCHAR)
 # define ACE_USES_WCHAR
 #endif /* ACE_USES_WCHAR */
 
-#define ACE_USES_WINCE_SEMA_SIMULATION
+#if (_WIN32_WCE < 0x600)
+# define ACE_USES_WINCE_SEMA_SIMULATION
+# define ACE_LACKS_ERRNO_H
+# define ACE_LACKS_DUP
+# define ACE_LACKS_GETSYSTEMTIMEASFILETIME
+#endif
+
+#define ACE_LACKS_REGNOTIFYCHANGEKEYVALUE
 
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER 1
+
+#if ! defined(ACE_DEFAULT_THREAD_KEYS)
+# define ACE_DEFAULT_THREAD_KEYS TLS_MINIMUM_AVAILABLE
+#endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
 
 // FILE stuff isn't always defined in CE
 #if (_MSC_VER < 1400) && !defined (_FILE_DEFINED)
@@ -173,39 +190,32 @@
 // @@ NSIG value.  This is definitely not correct.
 #define NSIG 23
 
-
 // @@ For some reason, WinCE forgot to define this.
 //    Need to find out what it is. (Used in MapViewOfFile ().)
 #define FILE_MAP_COPY 0
 
+#if (_WIN32_WCE >= 0x400)
+# define ACE_HAS_INTERLOCKED_EXCHANGEADD
+#endif
 
-#define ACE_LACKS_STRCASECMP    // WinCE doesn't support _stricmp
-#define ACE_LACKS_GETSERVBYNAME
 #define ACE_LACKS_ACCESS
 #define ACE_LACKS__WACCESS
 #define ACE_HAS_ACCESS_EMULATION
-#define ACE_LACKS_FILELOCKS
+#if (_WIN32_WCE < 0x500)
+# define ACE_LACKS_FILELOCKS
+#endif
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_MKTEMP
-#define ACE_LACKS_STRRCHR
-#define ACE_LACKS_BSEARCH
-#define ACE_LACKS_SOCKET_BUFSIZ
 #define ACE_LACKS_ISATTY
 #define ACE_LACKS_STRERROR
 #define ACE_LACKS_SYSTEM
-#define ACE_LACKS_SIGACTION
 #define ACE_LACKS_PIPE
 
-//#define ACE_LACKS_CUSERID
 #define ACE_LACKS_CHDIR
 #define ACE_LACKS_ENV
-#define ACE_LACKS_HOSTNAME
 #define ACE_LACKS_REALPATH
-#define ACE_LACKS_READLINK
 #define ACE_LACKS_SWAB
 #define ACE_LACKS_TEMPNAM
-#define ACE_LACKS_GETPROTOBYNUMBER
-#define ACE_LACKS_GETPROTOBYNAME
 
 #if defined (_WIN32_WCE_EMULATION)
 // @@ For some reason, qsort isn't defined correctly (_stdcall vs _cdecl)
@@ -217,14 +227,15 @@
 #  define BUFSIZ 1024
 #endif
 
-typedef void (__cdecl * __sighandler_t)(int); // keep Signal compilation happy
-typedef long off_t;
-
 #define ACE_LACKS_MALLOC_H      // We do have malloc.h, but don't use it.
 
 #define ACE_HAS_WINCE_BROKEN_ERRNO
 
 #define ACE_HAS_STRDUP_EMULATION
+
+#if !defined (MAXSYMLINKS)
+#define MAXSYMLINKS 0
+#endif
 
 // WinCE can't do fixed addresses for memory-mapped files.
 #if defined (ACE_DEFAULT_BASE_ADDR)
@@ -232,10 +243,15 @@ typedef long off_t;
 #endif
 #define ACE_DEFAULT_BASE_ADDR 0
 
+#if (_WIN32_WCE < 0x600)
 #define ACE_HAS_TSS_EMULATION
+#endif  // WinCE version < 6.0
 
-// This is still true up thru VC8...
-#define ACE_LACKS_ERRNO_H
+// CE doesn't support FILE_SHARE_DELETE like regular windows
+#if !defined (ACE_DEFAULT_FILE_PERMS)
+#define ACE_DEFAULT_FILE_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE)
+#endif
+
 #define ACE_LACKS_SIGNAL_H
 #define ACE_LACKS_SYS_STAT_H
 

@@ -28,6 +28,13 @@ ACE_Object_Manager::at_exit (void *object,
 }
 
 ACE_INLINE
+int
+ACE_Object_Manager::remove_at_exit (void *object)
+{
+  return ACE_Object_Manager::instance ()->remove_at_exit_i (object);
+}
+
+ACE_INLINE
 ACE_Sig_Set &
 ACE_Object_Manager::default_mask (void)
 {

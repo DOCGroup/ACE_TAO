@@ -191,7 +191,15 @@
 
 #if !defined (ACE_HAS_WINCE)
 // Platform supports pread() and pwrite()
-# define ACE_HAS_P_READ_WRITE
+# define ACE_HAS_WTOF
+#endif /* ! ACE_HAS_WINCE */
+
+#define ACE_HAS_P_READ_WRITE
+
+#if !defined (ACE_HAS_WINCE)
+# define ACE_HAS_DIRECT_H
+# define ACE_HAS_PROCESS_H
+# define ACE_HAS_IO_H
 #endif /* ! ACE_HAS_WINCE */
 
 #if !defined (__MINGW32__)
@@ -436,12 +444,13 @@
 
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+# define ACE_HAS_ICMP_SUPPORT 1
 # if !defined (_WINSOCK2API_)
 // will also include windows.h, if not present
 #  include /**/ <winsock2.h>
 // WinCE 4 doesn't define the Exxx values without the WSA prefix, so do that
 // here. This is all lifted from the #if 0'd out part of winsock2.h.
-#  if defined (UNDER_CE)
+#  if defined (_WIN32_WCE) && (_WIN32_WCE < 0x600)
 #    define EWOULDBLOCK             WSAEWOULDBLOCK
 #    define EINPROGRESS             WSAEINPROGRESS
 #    define EALREADY                WSAEALREADY
@@ -529,8 +538,8 @@
 # define ACE_HAS_IP_MULTICAST
 #endif /* ACE_HAS_WINSOCK2 */
 
-#if !defined (ACE_HAS_WINCE) || defined (PPC)   /* CE only on some CPUs */
-#  define ACE_HAS_INTERLOCKED_EXCHANGEADD
+#if !defined (ACE_HAS_WINCE)
+# define ACE_HAS_INTERLOCKED_EXCHANGEADD
 #endif
 #define ACE_HAS_WIN32_TRYLOCK
 

@@ -232,7 +232,7 @@ public:
    *        Please observe the difference between options '-f' that looks
    *        for a list of files and here a list of services.
    */
-   int parse_args (int, ACE_TCHAR *argv[]);
+   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /**
    * Process (or re-process) service configuration requests that are

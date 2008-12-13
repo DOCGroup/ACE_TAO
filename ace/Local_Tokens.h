@@ -223,7 +223,7 @@ public:
   /// Allows us to pass args to the construction of the TSS object.
   virtual ACE_TPQ_Entry *make_TSS_TYPE (void) const;
 
-  /// Operator overloading and inheritence don't mix.
+  /// Operator overloading and inheritance don't mix.
   operator ACE_TPQ_Entry *(void);
 
   /// Dump the state of the class.

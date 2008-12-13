@@ -193,11 +193,14 @@
 #define ACE_LACKS_WCSDUP
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
+#define ACE_LACKS_STRTOLL
+#define ACE_LACKS_WCSTOLL
 #define ACE_LACKS_STRTOULL
 #define ACE_LACKS_WCSTOULL
 
 #define ACE_HAS_CHARPTR_SOCKOPT
 #define ACE_LACKS_SYMLINKS
+#define ACE_LACKS_ISCTYPE
 
 #if defined __RTP__
   // We are building for RTP mode
@@ -213,6 +216,7 @@
   #define ACE_HAS_VFWPRINTF
   #define ACE_SIZEOF_WCHAR 2
   #define ACE_HAS_TIMEZONE
+  #define ACE_LACKS_ISASCII
 #else
   // We are building for kernel mode
   #define ACE_LACKS_INTPTR_T
@@ -258,10 +262,12 @@
   #define ACE_LACKS_FGETWC
   #define ACE_LACKS_FGETWS
   #define ACE_LACKS_FPUTWS
+  #define ACE_LACKS_ISWCTYPE
   #if !defined (ACE_MAIN)
   #  define ACE_MAIN ace_main
   #endif /* ! ACE_MAIN */
   #define ACE_LACKS_TZSET
+  #define ACE_LACKS_ISBLANK
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
