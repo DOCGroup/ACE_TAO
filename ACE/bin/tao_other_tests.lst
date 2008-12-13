@@ -77,7 +77,6 @@ TAO/orbsvcs/tests/HTIOP/Hello/run_test.pl: !NO_UUID !MINIMUM !CORBA_E_COMPACT !C
 TAO/orbsvcs/tests/HTIOP/AMI/run_test.pl: !NO_UUID !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
 TAO/orbsvcs/tests/HTIOP/BiDirectional/run_test.pl: !NO_UUID !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ !LynxOS
 TAO/orbsvcs/tests/Simple_Naming/run_test.pl: !ST !SUNCC5_1 !NO_MESSAGING !ACE_FOR_TAO !LynxOS !CORBA_E_MICRO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
-TAO/orbsvcs/tests/Simple_Naming/run_test_ssl_persist_multiLevel.pl: !ST !SUNCC5_1 !NO_MESSAGING !ACE_FOR_TAO !LynxOS !CORBA_E_MICRO !VxWorks !VxWorks_RTP SSL !LabVIEW_RT !WinCE !FUZZ
 TAO/orbsvcs/tests/Simple_Naming/run_test_ffp.pl: !ST !SUNCC5_1 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_MESSAGING !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
 TAO/orbsvcs/tests/Redundant_Naming/run_test.pl: !ST !SUNCC5_1 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
 TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !SUNCC5_1 !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
