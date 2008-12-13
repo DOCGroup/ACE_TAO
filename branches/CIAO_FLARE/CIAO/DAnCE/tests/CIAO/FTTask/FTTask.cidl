@@ -1,0 +1,12 @@
+// $Id$
+
+#include "FTTask.idl"
+
+composition session FTTask_Impl
+{
+  home executor FTTaskHome_Exec
+  {
+    implements DeCoRAM::FTTaskHome;
+    manages DeCoRAMProvider_Exec;
+  };
+};
