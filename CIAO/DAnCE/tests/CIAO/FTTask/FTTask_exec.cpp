@@ -40,7 +40,7 @@ namespace CIDL_FTTask_Impl
       context_ (DeCoRAM::CCM_FTTask_Context::_nil ()),
       myself_ (CORBA::Object::_nil ()),
       object_id_ ("Fault Tolerant Task"),
-      load_ (0.3),
+      load_ (30),
       primary_ (true),
       state_ (0)
   {
@@ -151,7 +151,7 @@ namespace CIDL_FTTask_Impl
   FTTask_exec_i::COMPONENT_REFERENCE (::CORBA::Object_ptr COMPONENT_REFERENCE)
   {
     CIAO_TRACE ("FTTask_exec_i::COMPONENT_REFERENCE () setter");
-    myself_ = COMPONENT_REFERENCE;
+    myself_ = CORBA::Object::_duplicate (COMPONENT_REFERENCE);
   }
 
   CORBA::Double
@@ -256,8 +256,14 @@ namespace CIDL_FTTask_Impl
 	    return;
 	  }
 	
-	CIAO_DEBUG ((LM_DEBUG, "registering the application with the agent.\n"));
-	    
+	CIAO_DEBUG ((LM_DEBUG, "FTTask_exec_i::configuration_complete - registering the application with the agent.\n"));
+
+        if (CORBA::is_nil (myself_.in ()))
+          {
+            CIAO_ERROR ((LM_ERROR, "FTTask_exec_i::configuration_complete - Could not resolve my own reference!\n"));
+            return;
+          }
+
 	ReplicatedApplication_var myself = ReplicatedApplication::_narrow (myself_.in ());
 
 	if (CORBA::is_nil (myself.in ()))

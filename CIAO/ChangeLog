@@ -1,3 +1,17 @@
+Sat Dec 13 06:36:48 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/FaultTolerance-Deployments/simple_nm_launcher.cpp:
+        
+          Removed debug statements.
+        
+        * DAnCE/tests/CIAO/FTTask/FTTask_exec.cpp:
+        
+          Added check for empty self-reference in component.
+        
+        * ciao/FTComponentServer/CIAO_FTComponentServer.cpp:
+        
+          Added AppSideReg for AppSideMonitor_Thread startup.
+
 Sat Dec 13 02:33:20 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
        * DAnCE/tests/CIAO/FTClientComponent/Worker.idl
