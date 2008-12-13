@@ -34,6 +34,7 @@
 #include "orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.h"
 #include "orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.h"
 #include "orbsvcs/orbsvcs/LWFT/AppOptions.h"
+#include "orbsvcs/orbsvcs/LWFT/AppSideReg.h"
 #include "orbsvcs/orbsvcs/LWFT/ReplicationManagerC.h"
 
 #ifdef CIAO_BUILD_COMPONENTSERVER_EXE
@@ -118,6 +119,7 @@ namespace CIAO
         }
 
       AppOptions::instance ()->parse_args (argc, argv);
+      AppOptions::instance ()->process_id (this->get_process_id ());
       
       this->configurator_->pre_orb_initialize ();
 
@@ -158,6 +160,21 @@ namespace CIAO
 	    root_poa->the_POAManager ();
       
 	  poa_manager->activate ();
+
+	  CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
+		       "starting AppSideMonitor thread.\n"));
+
+          AppSideReg proc_reg (orb_.in ());
+          
+          int result = proc_reg.activate ();
+      
+          if (result != 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "AppSideReg::activate () returned %d\n",
+                                 result),
+                                -1);
+            }
 
 	  CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
 		       "Creating state synchronization servant\n"));

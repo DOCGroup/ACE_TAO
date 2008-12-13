@@ -24,27 +24,18 @@ int usage ()
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  std::cerr << "1\n";
-  
   CIAO_DISABLE_TRACE ();
   
-  std::cerr << "1\n";
-
   auto_ptr<CIAO::Logger_Service> logger;
   
-  std::cerr << "1\n";
-
   CIAO::Logger_Service
     * dlf = ACE_Dynamic_Service<CIAO::Logger_Service>::instance ("CIAO_Logger_Backend_Factory");  
   
-  std::cerr << "1\n";
-
   if (!dlf)
     dlf = new CIAO::Logger_Service;
   
   logger.reset (dlf);
   logger->init (argc, argv);
-  std::cerr << "2\n";
   
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
   
