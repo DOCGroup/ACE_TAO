@@ -31,9 +31,10 @@
 #include "Configurator_Factory.h"
 #include "Configurators/Server_Configurator.h"
 #include "StateSynchronizationAgent_i.h"
-#include "ServerORBInitializer.h"
-#include "AppMonitor/AppSideReg.h"
-#include "ReplicationManagerC.h"
+#include "orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.h"
+#include "orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.h"
+#include "orbsvcs/orbsvcs/LWFT/AppOptions.h"
+#include "orbsvcs/orbsvcs/LWFT/ReplicationManagerC.h"
 
 #ifdef CIAO_BUILD_COMPONENTSERVER_EXE
 
@@ -115,22 +116,16 @@ namespace CIAO
                        "Error configuring ComponentServer configurator, exiting.\n"));
           throw Error ("Unable to load ComponentServer configurator.");
         }
+
+      AppOptions::instance ()->parse_args (argc, argv);
       
-          this->configurator_->pre_orb_initialize ();
+      this->configurator_->pre_orb_initialize ();
 
-            // register FT ORB Initializer
-      PortableInterceptor::ORBInitializer_ptr tmp;
-
-      ACE_NEW_NORETURN (tmp,
-			ServerORBInitializer); // No CORBA exceptions yet!
-
-      PortableInterceptor::ORBInitializer_var orb_initializer = tmp;
-
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
+      LWFT_Client_Init initializer;
 
       CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_Task::CIAO_ComponentServer_Task - "
                    "Creating ORB\n"));
-      this->orb_ = CORBA::ORB_init (argc, argv);
+      this->orb_ = initializer.init (argc, argv);
 
       this->configurator_->post_orb_initialize (this->orb_.in ());
 
@@ -165,20 +160,6 @@ namespace CIAO
 	  poa_manager->activate ();
 
 	  CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
-		       "Activating AppMonitor_Thread.\n"));
-
-	  ACE_Barrier thread_barrier (2);
-	  AppSideReg proc_reg (&thread_barrier, orb_.in());
-
-	  if (proc_reg.activate () != 0)
-	    {
-	      CIAO_ERROR ((LM_ERROR, "AppSideReg::activate () failed.\n"));
-	    }
-   
-	  //      ACE_DEBUG ((LM_TRACE, ACE_TEXT ("AppSideReg activated.\n")));
-	  thread_barrier.wait();
-
-	  CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
 		       "Creating state synchronization servant\n"));
 
 	  // start up SSA
@@ -200,13 +181,13 @@ namespace CIAO
 	  // activate servant here
 	  StateSynchronizationAgent_var ssa (ssa_servant->_this ());
 
-	  Name_Helper_T <StateSynchronizationAgent> nsh (orb_, true);
+	  Name_Helper_T <StateSynchronizationAgent> nsh (orb_);
 	  nsh.bind (this->get_obj_path () + "/StateSynchronizationAgent", ssa.in ());
 
 	  // register ssa with the replication manager
-	  Name_Helper_T <ReplicationManager> rmh (orb_.in (), true);
+	  Name_Helper_T <ReplicationManager> rmh (orb_.in ());
 
-	  ReplicationManager_var rm = rmh.resolve ("FLARe/ReplicationManager");
+	  ReplicationManager_var rm = rmh.resolve ("ReplicationManager");
 
 	  rm->register_state_synchronization_agent (this->get_hostname ().c_str (),
 						    this->get_process_id ().c_str (),

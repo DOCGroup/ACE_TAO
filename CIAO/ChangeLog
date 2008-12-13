@@ -1,3 +1,9 @@
+Sat Dec 13 00:01:24 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * ciao/FTComponentServer/CIAO_FTComponentServer.cpp:
+        
+          Adopted the newest LWFT capabilities.
+
 Fri Dec 12 23:31:02 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/Node_Manager_Module.cpp:
