@@ -1,3 +1,8 @@
+Sat Dec 13 18:25:15 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * bin/tao_other_tests.lst:
+          Accidently turned on a future test. Reverting the same.
+
 Fri Dec 12 19:23219 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
