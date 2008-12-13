@@ -6,10 +6,16 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #   Fuzz is a script whose purpose is to check through ACE/TAO/CIAO files for
 #   easy to spot (by a perl script, at least) problems.
 
+use lib "$ENV{ACE_ROOT}/bin";
+if (defined $ENV{srcdir}) {
+  use lib "$ENV{srcdir}/bin";
+}
+
 use Cwd;
 use File::Find;
 use File::Basename;
 use Getopt::Std;
+use PerlACE::Run_Test;
 
 ###### TODO
 #
@@ -41,6 +47,8 @@ use Getopt::Std;
 @files_mpc = ();
 @files_bor = ();
 @files_noncvs = ();
+@files_sln = ();
+@files_vcproj = ();
 
 # To keep track of errors and warnings
 $errors = 0;
@@ -113,6 +121,12 @@ sub store_file ($)
     }
     elsif ($name =~ /\.pl$/i) {
         push @files_pl, ($name);
+    }
+    elsif ($name =~ /\.vcproj$/i) {
+        push @files_vcproj, ($name);
+    }
+    elsif ($name =~ /\.sln$/i) {
+        push @files_sln, ($name);
     }
     elsif ($name =~ /ChangeLog/i && -f $name) {
         push @files_changelog, ($name);
@@ -287,7 +301,7 @@ sub check_for_noncvs_files ()
     }
 }
 
-# This test checks for the use of ACE_SYNCH_MUTEX in TAO/CIAO, 
+# This test checks for the use of ACE_SYNCH_MUTEX in TAO/CIAO,
 # TAO_SYNCH_MUTEX should used instead.
 
 sub check_for_ACE_SYNCH_MUTEX ()
@@ -313,12 +327,12 @@ sub check_for_ACE_SYNCH_MUTEX ()
                       next ITERATION;
                     }
 
-                    # Disable the check in the ESF directory for the 
+                    # Disable the check in the ESF directory for the
                     # time being until we fix the issues there.
                     if(($file =~ /.*TAO\/orbsvcs\/orbsvcs\/ESF.*/)) {
                       next ITERATION;
                     }
-                    
+
                     print_error ("$file:$.: found ACE_SYNCH_MUTEX, use TAO_SYNCH_MUTEX instead");
                 }
             }
@@ -330,7 +344,7 @@ sub check_for_ACE_SYNCH_MUTEX ()
     }
 }
 
-# This test checks for the use of ACE_Thread_Mutex in TAO/CIAO, 
+# This test checks for the use of ACE_Thread_Mutex in TAO/CIAO,
 # TAO_SYNCH_MUTEX should used instead to make the code build
 # in single-threaded builds.
 
@@ -356,7 +370,7 @@ sub check_for_ACE_Thread_Mutex ()
                     if (($file !~ /.*TAO.*/)) {
                       next ITERATION;
                     }
-                    
+
                     print_error ("$file:$.: found ACE_Thread_Mutex, use TAO_SYNCH_MUTEX instead to allow the code to work in single-threaded builds");
                 }
             }
@@ -400,7 +414,7 @@ sub check_for_lack_ACE_OS ()
 {
     $OS_NS_arpa_inet_symbols = "inet_addr|inet_aton|inet_ntoa|inet_ntop|inet_pton";
 
-    $OS_NS_ctype_symbols = "isalnum|isalpha|iscntrl|isdigit|isgraph|islower|isprint|ispunct|isspace|isupper|isxdigit|tolower|toupper";
+    $OS_NS_ctype_symbols = "isalnum|isalpha|iscntrl|isdigit|isgraph|islower|isprint|ispunct|isspace|isupper|isxdigit|tolower|toupper|isblank|isascii|isctype|iswctype";
 
     $OS_NS_dirent_symbols = "closedir|opendir|readdir|readdir_r|rewinddir|scandir|alphasort|seekdir|telldir|opendir_emulation|scandir_emulation|closedir_emulation|readdir_emulation";
 
@@ -420,11 +434,11 @@ sub check_for_lack_ACE_OS ()
 
     $OS_NS_regex_symbols = "compile|step";
 
-    $OS_NS_signal_symbols = "kill|pthread_sigmask|sigaction|sigaddset|sigdelset|sigemptyset|sigfillset|sigismember|signal|sigprocmask|sigsuspend";
+    $OS_NS_signal_symbols = "kill|pthread_sigmask|sigaction|sigaddset|sigdelset|sigemptyset|sigfillset|sigismember|signal|sigprocmask|sigsuspend|raise";
 
     $OS_NS_stdio_symbols = "checkUnicodeFormat|clearerr|cuserid|fclose|fdopen|fflush|fgetc|getc|fgetpos|fgets|flock_adjust_params|flock_init|flock_destroy|flock_rdlock|flock_tryrdlock|flock_trywrlock|flock_unlock|flock_wrlock|fopen|default_win32_security_attributes|default_win32_security_attributes_r|get_win32_versioninfo|get_win32_resource_module|set_win32_resource_module|fprintf|ungetc|fputc|putc|fputs|fread|freopen|fseek|fsetpos|ftell|fwrite|perror|printf|puts|rename|rewind|snprintf|sprintf|tempnam|vsprintf|vsnprintf|asprintf|aswprintf|vasprintf|vaswprintf";
 
-    $OS_NS_stdlib_symbols = "_exit|abort|atexit|atoi|atop|bsearch|calloc|exit|free|getenv|getenvstrings|itoa|itoa_emulation|itow_emulation|malloc|mkstemp|mkstemp_emulation|mktemp|putenv|qsort|rand|rand_r|realloc|realpath|set_exit_hook|srand|strenvdup|strtod|strtol|strtol_emulation|strtoul|strtoul_emulation|system|getprogname|setprogname";
+    $OS_NS_stdlib_symbols = "_exit|abort|atexit|atof|atol|atoi|atop|bsearch|calloc|exit|free|getenv|getenvstrings|itoa|itoa_emulation|itow_emulation|malloc|mkstemp|mkstemp_emulation|mktemp|putenv|qsort|rand|rand_r|realloc|realpath|set_exit_hook|srand|strenvdup|strtod|strtol|strtol_emulation|strtoul|strtoul_emulation|strtoll|strtoll_emulation|strtoull|strtoull_emulation|system|getprogname|setprogname";
 
     $OS_NS_string_symbols = "memchr|memchr_emulation|memcmp|memcpy|fast_memcpy|memmove|memset|strcat|strchr|strcmp|strcpy|strcspn|strdup|strdup_emulation|strecpy|strerror|strerror_emulation|strlen|strncat|strnchr|strncmp|strncpy|strnlen|strnstr|strpbrk|strrchr|strrchr_emulation|strsncpy|strspn|strstr|strtok|strtok_r|strtok_r_emulation";
 
@@ -1334,7 +1348,17 @@ sub check_for_mismatched_filename ()
 sub check_for_bad_run_test ()
 {
     print "Running run_test.pl test\n";
-    foreach $file (@files_pl) {
+    # Add the know ACE files
+    push @files_lst, $ENV{"ACE_ROOT"} . "/bin/tao_orb_tests.lst";
+    push @files_lst, $ENV{"ACE_ROOT"} . "/bin/tao_other_tests.lst";
+    push @files_lst, $ENV{"ACE_ROOT"} . "/bin/ciao_tests.lst";
+    $config_list = new PerlACE::ConfigList;
+    foreach $file (@files_lst) {
+      $config_list->load ($file);
+    }
+    $config_list->add_one_config ("FUZZ");
+    @valid_files = $config_list->valid_entries ();
+    foreach $file (@valid_files) {
         if (open (FILE, $file)) {
             my $is_run_test = 0;
             my $sub = 0;
@@ -1342,7 +1366,6 @@ sub check_for_bad_run_test ()
             print "Looking at file $file\n" if $opt_d;
 
             while (<FILE>) {
-
                 if (m/PerlACE/ || m/ACEutils/) {
                     $is_run_test = 1;
                 }
@@ -1364,6 +1387,42 @@ sub check_for_bad_run_test ()
                         print_error ("$file:$.: using \$EXE_EXT");
                     }
 
+                    if (m/\$PerlACE::wait_interval_for_process_creation/) {
+                        print_error ("$file:$.: using \$PerlACE::wait_interval_for_process_creation");
+                    }
+
+                    if (m/\$PerlACE::waitforfile_timed/) {
+                        print_error ("$file:$.: using \$PerlACE::waitforfile_timed");
+                    }
+
+                    if (m/\$PerlACE::add_lib_path/) {
+                        print_error ("$file:$.: using \$PerlACE::add_lib_path");
+                    }
+
+                    if (m/\PerlACE::Run_Test/) {
+                        print_error ("$file:$.: using PerlACE::Run_Test");
+                    }
+
+                    if (m/PerlACE::random_port/) {
+                        print_error ("$file:$.: using PerlACE::random_port");
+                    }
+
+                    if (m/PerlACE::Process/) {
+                        print_error ("$file:$.: using PerlACE::Process");
+                    }
+
+                    if (m/PerlACE::TestConfig/) {
+                        print_error ("$file:$.: using PerlACE::TestConfig");
+                    }
+
+                    if (m/unlink/) {
+                        print_error ("$file:$.: using unlink");
+                    }
+
+                    if (m/PerlACE::LocalFile/) {
+                        print_error ("$file:$.: using PerlACE::LocalFile");
+                    }
+
                     if (m/\$DIR_SEPARATOR/) {
                         print_error ("$file:$.: using \$DIR_SEPARATOR");
                     }
@@ -1377,10 +1436,6 @@ sub check_for_bad_run_test ()
 
                     if (m/Process\:\:Create/) {
                         print_error ("$file:$.: using Process::Create");
-                    }
-
-                    if ((m/\.ior/ || m/\.conf/) && !m/LocalFile/) {
-                        print_error ("$file:$.: Not using PerlACE::LocalFile");
                     }
 
                     if (m/^  [^ ]/) {
@@ -1423,9 +1478,6 @@ sub check_for_bad_run_test ()
                     }
                 }
             }
-        }
-        else {
-            print STDERR "Error: Could not open $file\n";
         }
     }
 }
@@ -1935,6 +1987,7 @@ if ($opt_t) {
 print "--------------------Configuration: Fuzz - Level ",$opt_l,
       "--------------------\n";
 
+check_for_bad_run_test () if ($opt_l >= 5);
 check_for_deprecated_macros () if ($opt_l > 1 );
 check_for_refcountservantbase () if ($opt_l > 1 );
 check_for_msc_ver_string () if ($opt_l >= 3);
@@ -1949,7 +2002,7 @@ check_for_newline () if ($opt_l >= 1);
 check_for_ACE_Thread_Mutex () if ($opt_l >= 1);
 check_for_ACE_SYNCH_MUTEX () if ($opt_l >= 1);
 check_for_tab () if ($opt_l >= 1);
-check_for_lack_ACE_OS () if ($opt_l >= 10);
+check_for_lack_ACE_OS () if ($opt_l >= 6);
 check_for_exception_spec () if ($opt_l >= 1);
 check_for_NULL () if ($opt_l >= 1);
 check_for_inline () if ($opt_l >= 2);
@@ -1963,7 +2016,6 @@ check_for_pre_and_post () if ($opt_l >= 4);
 check_for_push_and_pop () if ($opt_l >= 4);
 check_for_versioned_namespace_begin_end () if ($opt_l >= 4);
 check_for_mismatched_filename () if ($opt_l >= 2);
-check_for_bad_run_test () if ($opt_l >= 6);
 check_for_absolute_ace_wrappers () if ($opt_l >= 3);
 check_for_bad_ace_trace () if ($opt_l >= 4);
 check_for_changelog_errors () if ($opt_l >= 4);

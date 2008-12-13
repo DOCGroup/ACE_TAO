@@ -32,7 +32,7 @@ ACE_RCSID(Misc, main, "$Id$")
 ACE_STATIC_SVC_REQUIRE (Timer_Service_1)
 
 int
-ACE_TMAIN (int, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Set up an argument vector that we can add entries to!
   ACE_ARGV args;
@@ -40,7 +40,10 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
   // Manufacture a "fake" svc.conf entry to demonstrate the -S option
   // that allows us to pass these entries via the "command-line"
   // rather than the svc.conf file.
-  args.add (argv[0]);
+  
+  for (int i = 0; i < argc; i++)
+    args.add (argv[i]);
+  
   args.add (ACE_TEXT ("-y"));
   args.add (ACE_TEXT ("-d"));
   args.add (ACE_TEXT ("-S"));

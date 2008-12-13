@@ -1,3 +1,2658 @@
+Fri Dec 12 19:23219 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Disabled ICMG_Any_Bug for CORBA/e
+
+Fri Dec 12 13:26:19 UTC 2008  Olli Savia  <ops@iki.fi>
+
+        * NEWS:
+          Added a note about ACE::isdotdir().
+
+Fri Dec 12 13:17:43 UTC 2008  Olli Savia  <ops@iki.fi>
+
+        * tests/Dirent_Test.cpp:
+          Updated to use new isdotdir() funtion.
+
+Fri Dec 12 13:08:58 UTC 2008  Olli Savia  <ops@iki.fi>
+
+        * ace/ACE.h:
+        * ace/ACE.inl:
+          Added a new function isdotdir() which determines if a specified
+          pathname is "dot dir" (ie. "." or ".."). isdotdir() is significantly
+          faster than pair of strcmp() calls.
+
+Thu Dec 11 23:08:07 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * bin/tao_other_tests.lst:
+          Disabled some IFR_Service dependent tests for uses_wchar builds.
+
+Thu Dec 11 14:34:23 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/ace_func.m4:
+
+          Update ACE_FUNC_SYSINFO feature test to compile small programs
+          that use the two different Linux and SysV/POSIX sysinfo() APIs
+          before defining ACE_HAS_SYSV_SYSINFO or ACE_HAS_LINUX_SYSINFO.
+          This should avoid false matches with HP/UX's undocumented
+          sysinfo() syscall.
+
+Wed Dec 10 21:06:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debianbuild/rules:
+          Removed old line
+
+Tue Dec  9 16:32:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/split-cpp:
+        * bin/split-cpp.pl:
+          Renamed to have pl extension
+
+        * debianbuild/patches/00list:
+          Updated
+
+        * debianbuild/patches/03-g++-new-throws.dpatch:
+        * debianbuild/patches/08-fix-perl-shebang.dpatch:
+        * debianbuild/patches/90-patch-mpc-basedir.dpatch:
+        * debianbuild/patches/91-patch-dg-basedir.dpatch:
+          Not needed anymore, this issues are fixed on svn head
+
+        * examples/IPC_SAP/SOCK_SAP/summarize.pl:
+        * examples/IPC_SAP/SSL_SAP/summarize.pl:
+          Added missing shebang
+
+Tue Dec  9 16:19:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debianbuild/*:
+          Added all files currently used by the debian package maintainers.
+          Updated them for 1.6.7, but a lot of patches are not needed
+          anymore. The goal is to do a cleanup and then provide
+          debian/ubuntu packages through opensuse build
+
+Tue Dec  9 4:42:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/depgen.pl:
+          Use RealBin to get the real location of the perl script
+
+Mon Dec  8 02:50:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added bug 3430 regression
+
+Sat Dec  6 20:18:38 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ace/UUID.h:
+        * ace/UUID.inl:
+        * ace/UUID.cpp:
+
+          Implemented the operator = method for the UUID. This will enable
+          use of UUIDs in STL-like containers.
+
+          Bug fix where using the copy constructor for the UUID would result
+          in a memory leak.
+
+          Refactored code to use ACE_Auto_Ptr and ACE_Auto_Array_Ptr objects
+          to reduce code complexity, and ensure memory deallocation during
+          expected returns.
+
+        * tests/UUID_Test.cpp:
+
+          Added the assignment operator (i.e., operator =) to the UUIDs
+          test.
+
+Fri Dec  5 15:38:23 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ace/UUID.h:
+        * ace/UUID.cpp:
+
+          Made the to_string () method non-mutable, and the as_string_
+          member variable 'mutable'. This allows 'const ACE_Utils::UUID'
+          objects to use to to_string () method since that method is
+          not changing the value of the UUID.
+
+Thu Dec  4 11:07:35 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Some tests now seem to run perfect
+
+Thu Dec  4 09:45:35 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Types.h:
+          Fixed compile problems with Solaris wchar
+
+Thu Dec  4 08:11:35 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Intrusive_List.h:
+        * ace/Intrusive_List_Node.h:
+          Include config-lite instead of config-all to break circular
+          includes in Object_Manager_Base
+
+        * ace/OS_NS_errno.h:
+          Doxygen change
+
+Wed Dec  3 23:35:35 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Basic_Types.h: Reverted change from:
+          Mon Dec  1 23:51:32 UTC 2008  Steve Huston  <shuston@riverace.com>
+          It broke cases where the format specifier was used in string
+          catenation. This reintroduces a build failure on Solaris wide-char.
+
+Wed Dec  3 20:25:19 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/String_Base.cpp (compare): Fixed logic error when strings are
+          equal, introduced by
+          Wed Dec  3 16:31:11 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+Wed Dec  3 18:38:49 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * docs/svn/svn-prefs.reg:
+
+          Added auto-prop settings for .xme files, which are exported
+          GME files and only created on Windows platforms.
+
+Wed Dec 03 18:14:25 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+          Added orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test
+
+Wed Dec  3 16:31:11 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/String_Base.cpp (compare): Compare lengths directly instead of
+          subtracting; clearer and avoids 32/64-bit signed/unsigned issues.
+
+Wed Dec  3 10:45:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Types.h:
+          Use static_cast again, truncate_cast broke HPUX
+
+Wed Dec  3 07:55:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Types.h:
+          Use truncate_cast instead of static_cast
+
+        * ace/CDR_Stream.cpp:
+          Layout change
+
+        * ace/Cleanup.cpp:
+        * ace/Cleanup.h:
+        * ace/Cleanup.inl:
+        * ace/Object_Manager.cpp:
+        * ace/Object_Manager.h:
+        * ace/Object_Manager.inl:
+        * ace/Object_Manager_Base.cpp:
+        * ace/Thread_Manager.cpp:
+        * ace/Thread_Manager.h:
+          Reimplemented the at_exit list as intrusive_list and also added
+          the functionality to remove a registered at_exit hook again. This
+          can be used by DLL's that register objects in the object
+          manager, but who get unloaded explicitly before the ACE dll.
+
+        * ace/Active_Map_Manager.h:
+          Doxygen change
+
+Wed Dec  3 00:41:52 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add missing call to ACE_FUNC_STRTOULL autoconf macro.
+
+Tue Dec  2 20:01:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Intrusive_List.h:
+        * ace/Intrusive_List.inl:
+          Use bool for empty/is_empty methods
+
+        * ace/Intrusive_List_Node.h:
+          Layout change
+
+Tue Dec  2 13:54:35 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/os_include/os_wchar.h:
+
+          Provide declaration for wcstoll() If ACE_LACKS_WCSTOLL is
+          defined.
+
+          Provide declaration for wcstoull() if ACE_LACKS_WCSTOULL is
+          defined.
+
+        * ace/os_include/os_stdlib.h:
+
+          Provide declaration for strtoll() If ACE_LACKS_STRTOLL is
+          defined.
+
+          Provide declaration for strtoull() if ACE_LACKS_STRTOULL is
+          defined.
+
+        * m4/ace_func.m4:
+
+          Change ACE_FUNC_STRTOLL, ACE_FUNC_STRTOULL, ACE_FUNC_WCSTOLL,
+          and ACE_FUNC_WCSTOULL autoconf macros to define
+          ACE_LACKS_STRTOLL_PROTOTYPE, ACE_LACKS_STRTOULL_PROTOTYPE,
+          ACE_LACKS_WCSTOLL_PROTOTYPE, and ACE_LACKS_WCSTOULL_PROTOTYPE
+          if cooresponding declarations are not present.
+
+Tue Dec  2 12:47:06 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (handle_timed_complete): Fix compile error resulting from
+          Mon Dec  1 17:55:00 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+Tue Dec  2 11:49:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/mpc-mode.el:
+          Updated MPC mode for emacs file. Thanks to Jules Colding
+          <colding at 42tools dot com> for providing this file
+
+Tue Dec  2 08:39:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Object_Manager.h:
+        * ace/Object_Manager_Base.h:
+          Doxygen changes
+
+Mon Dec  1 23:51:32 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Basic_Types.h: When defining ACE_*_FORMAT_SPECIFIER in terms
+          of ACE_*_FORMAT_SPECIFIER_ASCII, use ACE_TEXT_CHAR_TO_TCHAR else
+          when used, this ends up combining narrow and wide chars, resulting
+          in build errors.
+
+Mon Dec  1 17:55:00 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (handle_timed_complete): Correct the situations under
+          which a non-blocking connect() will complete. Previously VxWorks and
+          AIX did a secondary check for connect success/fail when the socket
+          selected writeable. All other non-Windows platforms selected for
+          both readable and writeable, with readable=fail, writeable=success.
+          This produced false success since BSD sockets always select
+          writeable, not readable; a secondary check for status is then
+          required. This fix corrects behavior on non-AIX BSD systems,
+          particularly HP-UX and Solaris.
+
+Tue Nov 18 19:06:27 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/README: Updated the explanation of how to build/run the
+          one-button regression tests.  Thanks to Anand Kumar
+          <anandkumar95 at gmail dot com> for motivating this.
+
+Mon Dec  1 15:36:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/mpc-mode.el:
+          Updated MPC mode for emacs file. Thanks to Jules Colding
+          <colding at 42tools dot com> for providing this file
+
+Mon Dec  1 14:07:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/mpc-mode.el:
+          Updated MPC mode for emacs file. Thanks to Jules Colding
+          <colding at 42tools dot com> for providing this file
+
+Mon Dec  1 13:46:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Object_Manager.cpp:
+          Initialise pointers with 0
+
+        * ace/RW_Mutex.cpp:
+        * ace/RW_Mutex.h:
+        * ace/RW_Mutex.inl:
+          Make removed_ flag a real bool
+
+        * ace/Singleton.h:
+          Doxygen change
+
+        * ace/SSL/SSL_Context.cpp:
+          Manage ourselves the life cycle of the SSL_Context singleton.
+          Previously the SSL library registered a singleton with the ACE
+          library. When the SSL library is unloaded expliclity before the
+          ACE library the cleanup in ACE did crash because the SSL code
+          wasn't there. Now when we cleanup the SSL library we also close
+          our singleton
+
+        * ace/Thread_Mutex.inl:
+          Use operator !
+
+Mon Dec  1 11:15:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/mpc-mode.el:
+          Added MPC mode for emacs file. Thanks to Jules Colding
+          <colding at 42tools dot com> for providing this file
+
+Mon Dec  1 11:01:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.txt:
+          Improved OpenSuSE Factory support
+
+Mon Dec  1 10:44:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Added 3418
+
+Sat Nov 29 15:30:21 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_ctype.inl:
+
+          Fix typo in preprocessor conditional.
+
+        * configure.ac:
+        * m4/ace_func.m4:
+
+          Move feature tests for strtoll(), strtoull(), wcstoll(), and
+          wcstoull() to new autoconf macros ACE_FUNC_STRTOLL,
+          ACE_FUNC_STRTOULL, ACE_FUNC_WCSTOLL, and ACE_FUNC_WCSTOULL.
+
+Sat Nov 29 07:47:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sock_Connect.cpp:
+        * ace/OS_NS_ctype.inl:
+          Fixed compile errors with windows ce
+
+Fri Nov 28 19:58:02 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Improve feature tests for strtoll(), strtoull(), wcstoll(), and
+          wcstoull(), adding support for ACE_STRTOLL_EQUIVALENT,
+          ACE_STRTOULL_EQUIVALENT, ACE_WCSTOLL_EQUIVALENT, and
+          ACE_WCSTOULL_EQUIVALENT.
+
+Fri Nov 28 16:43:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_Asynch_Stream.cpp:
+          Unicode fix
+
+Fri Nov 28 16:36:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_Asynch_Stream.cpp:
+        * ace/SSL/SSL_Asynch_Stream.h:
+          Added post handshake completed hook. See header file for all
+          the details.
+
+          This fixes bugzilla 3502, thanks to Paul Daugherty
+          <paul at nextalk dot com> for providing the patches
+
+Fri Nov 28 16:32:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_Asynch_Stream.cpp:
+        * ace/SSL/SSL_Asynch_Stream.h:
+        * ace/SSL/SSL_Asynch_Stream.inl:
+          Added accessor for SSL structure.
+
+        * ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_Context.h:
+        * ace/SSL/SSL_Context.inl:
+          Added possibility to set verify callback
+
+        * ace/SSL/Makefile.am:
+          Added new SSL_Asynch_Stream.inl
+
+          This fixes bugzilla 3494, thanks to Paul Daugherty
+          <paul at nextalk dot com> for providing the patches
+
+Fri Nov 28 15:25:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added bug_3506
+
+Fri Nov 28 14:38:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.txt:
+          Improvement for OpenSuSE Factory
+
+Fri Nov 28 12:38:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Extended tests for run_test.pl files
+
+Fri Nov 28 11:43:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Added an item to update the NEWS files
+
+Fri Nov 28 11:33:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Extended tests for run_test.pl files
+
+        * bin/PerlACE/TestTarget.pm:
+          Added some new variables that we will use for the iBoot
+
+        * bin/tao_orb_tests.lst:
+          Enabled several tests for Labview/CE/Fuzz and also added a few
+          TAO tests that where missing from this file
+
+Fri Nov 28 11:07:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/ace/HTBP/HTBP_Session.cpp:
+        * tests/Basic_Types_Test.cpp:
+          Layout change
+
+Fri Nov 28 11:05:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/ASX/Event_Server/Event_Server/Options.cpp
+        * examples/ASX/UPIPE_Event_Server/Options.cpp
+          Use new ascii format specifier
+
+Fri Nov 28 11:04:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * contribs/FaCE/CE_ARGV.H:
+          Doxygen change
+
+Fri Nov 28 11:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * appsJAWS/clients/Blobby/Blob_Handler.cpp:
+          Use new ascii format specifier
+
+Fri Nov 28 11:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.txt:
+          Updated for next micro release and corrected links for the
+          nslist/nsdel/nsadd/catior
+
+        * rpmbuild/ace-tao.spec:
+          Updated for next micro release
+
+Fri Nov 28 10:59:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Arg_Shifter.h:
+        * ace/Argv_Type_Converter.h:
+        * ace/Event_Handler_T.h:
+        * ace/OS_Errno.h:
+        * ace/OS_NS_stropts.h:
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/SSL/SSL_Context.h:
+          Doxygen fix
+
+        * ace/Basic_Types.h:
+        * ace/config-linux-common.h:
+        * ace/config-macosx-leopard.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
+        * ace/config-netbsd.h:
+        * ace/config-sunos5.10.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+        * ace/config-win32-borland.h:
+        * ace/config-win32-ghs.h:
+        * ace/config-win32-mingw.h:
+        * ace/config-win32-msvc.h:
+          Added _ASCII versions of all existing format specifiers.
+          The existing ones are then defined using these ASCII ones.
+          When using the format specifiers we can now select if we
+          want to use the ascii or wchar_t ones and don't have to
+          convert wchar_t to ascii
+
+        * ace/Cleanup.cpp:
+        * ace/Cleanup.h:
+          Extended ACE_Cleanup_Info with a constructor that initializes
+          all members. At the end of ACE_OS_Exit_Info::call_hooks delete
+          all the hooks, they are invalid at this moment
+
+        * ace/config-cray.h:
+        * ace/config-sco-5.0.0.h:
+          Cleanup
+
+        * ace/config-win32-msvc-10.h:
+        * ace/config-win32-msvc-9.h:
+          Update for Windows Mobile 6
+
+        * ace/DLL_Manager.cpp:
+          Const change
+
+        * ace/os_include/os_errno.h:
+          Simplified a check
+
+        * ace/OS_NS_ctype.h:
+        * ace/OS_NS_ctype.inl:
+        * ace/OS_NS_wctype.cpp
+        * ace/OS_NS_wctype.h
+        * ace/OS_NS_wctype.inl
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+        * ace/Makefile.am:
+          Moved ace_iswctype to OS_NS_wctype.{h,cpp,inl}. According to the
+          opengroup spec this method has to be in that file
+
+        * ace/OS_NS_unistd.inl:
+          Small layout change
+
+        * ace/Sample_History.cpp:
+          Const change
+
+        * ace/Service_Repository.cpp:
+          Use ACE prefix in all debug statements
+
+        * ace/Sock_Connect.cpp:
+          Make it possible to build with WinCE without winsock2
+
+        * ace/SOCK_Connector.cpp:
+          Layout changes and check the result value of setting the
+          stream in non blocking mode
+
+Fri Nov 28 10:25:00 UTC 2008  Simon Massey  <sma@prismtech.com>
+
+        * docs/bczar/bczar.html:
+          Annoying little bits and pieces....
+
+Fri Nov 28 09:00:00 UTC 2008  Simon Massey  <sma@prismtech.com>
+
+        * docs/Download.html:
+        * etc/index.html:
+        * bin/diff-builds-and-group-fixed-tests-only.sh
+          update latest micro version links and date.
+
+Thu Nov 27 04:09:39 CST 2008  Simon Massey  <sma@prismtech.com>
+
+       * ACE version 5.6.7 released.
+
+Wed Nov 26 16:15:50 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/SSL/SSL_Context.cpp:
+
+          Remove unintentional ;
+
+Wed Nov 26 13:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * NEWS:
+          Note about added support for FC10.
+
+Wed Nov 26 10:43:50 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * ace/SSL/SSL_Context.cpp:
+        * ace/SSL/sslconf.h:
+
+          Remove unconditional platform defaults for SSL cert file and
+          directory. This fixes bug #3511.
+
+Tue Nov 25 09:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+                on behalf of  Adam Mitz     <mitza@ociweb.com>
+
+        * ACE-INSTALL.html:
+        * NEWS:
+          Update the installation instructions and NEWs.
+
+                on behalf of  Yan Dai       <dai_y@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+          Disabled all ImplRepo tests on WCHAR builds and disabled
+          DevGuideExample ImplRepo test on CORBA_E_COMPACT builds.
+
+Mon Nov 24 11:21:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessWinCE.pm:
+          Delete the copied dll's when ACE_TEST_VERBOSE is not defined
+
+        * bin/PerlACE/TestTarget_VxWorks.pm:
+          We have to wait on a file that appears on the host file system,
+          we can't wait on the real target
+
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          No need to override GetFile
+
+Mon Nov 24 10:46:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux-11.00.h:
+          HPUX lacks iswascii
+
+Mon Nov 24 09:32:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+                on behalf of  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        * NEWS:
+          Changed the feature test for a "usable" config to warn on
+          failure instead of exiting with an error. This change should
+          make it easier to diagnose failures, as the configure script
+          will now generate a config.h file even when the test fails.
+          This ensures that the build errors produced can be seen on
+          the scoreboard to help diagnose the actual problems.
+
+               on behalf of  Ken Sedgwick <ken+5a4@bonsai.com>
+
+        * rpmbuild/ace-tao.spec:
+          Updated for tao_ prefixed catior, nsadd, nsdel and nslist.
+
+        * rpmbuild/ace-tao-macros.patch:
+          Updated to add include into path to version.h
+
+Fri Nov 21 15:58:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+          Remove some lynxos problem tests.
+
+Fri Nov 21 11:00:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/OS_Memory.h:
+          Ensure ACE_bad_alloc is defined as a class for throwing if
+          new doesn't throw themselves. Internally this isn't used but
+          some tests try and throw this on a zero pointer.
+
+Fri Nov 21 09:52:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * bin/tao_orb_tests.lst:
+        * tests/run_test.lst:
+          "Process_Test" and "Bug_3499_Regression" Marked !FIXED_BUGS_ONLY.
+
+        * configure.ac:
+          Add missing "isblank iswblank isctype iswctype" to the list of
+          ACE_CHECKS_LACKS_FUNCS. This should fix the autoconfigure builds.
+
+Wed Nov 19 15:58:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+          Fixed WinCE version number check
+
+Wed Nov 19 09:10:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * NEWS:
+          Updated.
+
+Tue Nov 18 10:30:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.10.h
+        * ace/SOCK_SEQPACK_Association.cpp:
+          Fix compile problems when sctp is enabled
+
+Tue Nov 18 07:49:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Enable macro_for_lib_modifier for vc71
+
+Tue Nov 18 07:32:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Fixed compile problem
+
+Mon Nov 17 16:09:06 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Set LIB_PREFIX earlier on so that the VxWorks included makefiles
+          work properly (with VXWORKSLINK).
+
+        * include/makeinclude/rules.lib.GNU:
+
+          Removed reference to old "LIB" macro.
+
+Mon Nov 17 13:47:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabled a test for Labview/WinCE/FUZZ
+
+Mon Nov 17 13:34:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/run_test.txt:
+          First step to update this to the new testframework
+
+Mon Nov 17 12:54:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Enabled a set of tests for Labview/WinCE/FUZZ
+
+Mon Nov 17 12:29:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Disabled bug 1636 for corba/e and minimum corba
+
+Mon Nov 17 12:02:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+          Moved PICurrent_NameService to the other list
+
+Mon Nov 17 11:56:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabled a set of tests for Labview/WinCE/FUZZ
+
+Mon Nov 17 11:55:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget.pm:
+          Added AddLibPath
+
+        * bin/fuzz.pl:
+          Mark PerlACE::add_lib_path as error, we shuld use AddLibPath on
+          the target from now
+
+Mon Nov 17 11:28:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabled a set of tests for Labview/WinCE/FUZZ
+
+Mon Nov 17 11:13:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/tests.mpc:
+          Bug_2772_Regression needs threads
+
+Mon Nov 17 11:07:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macros.h:
+          Use ACE_TEXT for ACE_LD_DECORATOR_STR
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Also with bmake use MPC_LIB_MODIFIER
+
+Mon Nov 17 10:38:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabled a set of tests for Labview/WinCE/FUZZ
+
+Mon Nov 17 10:22:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Get_Opt_Test.cpp:
+          Renamed empty to empty_string to resolve clash with msvc header
+          files
+
+Mon Nov 17 10:11:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_sunos5_common.GNU:
+          On Solaris 10 we have sctp, enable this by adding the following line
+          in your platform_macros.GNU file.
+          sctp = lksctp
+          Thanks to Milan Cvetkovic <milan dot cvetkovic at mpathix dot com>
+          for providing this change. This is part of bugzilla 3492
+
+Mon Nov 17 10:04:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc-8.h:
+        * ace/config-win32-msvc-10.h:
+          If ACE_HAS_EXCEPTIONS is defined, avoid re-defining it.
+
+Mon Nov 17 09:20:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Added missing defines
+
+Mon Nov 17 09:12:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+          Updated version check for WinCE
+
+Mon Nov 17 08:46:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessWinCE.pm:
+          Removed VxWorks specific commandline code
+
+Mon Nov 17 08:38:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added bug_3470
+
+Mon Nov 17 08:37:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macros.h:
+          If MPC_LIB_MODIFIER is defined then set ACE_LD_DECORATOR_STR to
+          this value. This way the DLL find routines in ACE do use the MPC
+          modifier name automatically
+
+        * ace/config-win32-msvc.h:
+          No need anymore to set ACE_LD_DECORATOR_STR
+
+        * ace/DLL_Manager.cpp:
+        * ace/Lib_Find.cpp:
+        * tests/Based_Pointer_Test.cpp:
+        * tests/DLL_Test.cpp:
+          When ACE_LD_DECORATOR_STR is set, then use it on any platform
+
+        * ace/Service_Gestalt.h:
+          Doxygen change
+
+        * ace/Service_Gestalt.inl:
+          Layout change
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Enable macro_for_lib_modifier for vc7/vc8/vc9/vc10/nmake
+
+        * bin/MakeProjectCreator/templates/vxtest.mpd:
+          Added libname_prefix and lib_modifier support
+
+        * tests/Bug_2772_Regression_Test.cpp:
+          Fixed compile problem with Cygwin
+
+Sun Nov 16 17:30:06 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+
+          Set RC_OUTPUT_FLAG for use the with the "windres" tool.
+
+Sun Nov 16 06:52:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3505_Regression_Test.cpp:
+          Fixed conversion warnings
+
+        * tests/Based_Pointer_Test.cpp:
+        * tests/DLL_Test.cpp:
+          When ACE_LD_DECORATOR_STR has been defined, just use it on any
+          platform
+
+Sun Nov 16 06:30:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2772_Regression.cpp:
+          Fixed compile warning with pthread
+
+Sat Nov 15 20:08:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Disabled the DevGuideExamples for VxWorks because the test scripts
+          are not converted yet
+
+Sat Nov 15 19:53:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.inl:
+          Disable conversion warning for WinCE 6 only to get at least a warning
+          free build
+
+        * ace/OS_NS_time.h:
+          Doxygen change
+
+Sat Nov 15 19:14:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Removed not used line
+
+        * bin/PerlACE/ProcessWinCE.pm:
+          Fixed a problem that single and double quotes in the
+          commandline arguments where not escaped
+
+        * bin/fuzz.pl:
+          Added another run_test check
+
+Sat Nov 15 19:09:55 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/platform_win32_msvc.GNU:
+
+          Added dollar-Id-dollar to make fuzz.pl happy.
+
+Sat Nov 15 18:55:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2772_Regression.cpp:
+          Fixed compile problem with Cygwin
+
+Fri Nov 14 22:35:43 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/platform_win32_msvc.GNU:
+
+          New file for building with GNU make and the Visual C++
+          compiler/linker on Win32 platforms.  See the header comments
+          in this file for details.
+
+        * ace/Monitor_Control/Monitor_Control.mpc:
+
+          Add support for linking pdh.lib (from Win32) with -type gnuace.
+
+        * ace/config-win32-msvc-9.h:
+
+          If ACE_HAS_EXCEPTIONS is defined, avoid re-defining it.
+
+        * bin/MakeProjectCreator/config/ace_mc.mpb:
+
+          Add the section for linking pdh.lib (from Monitor_Control.mpc)
+          so that dependent projects inherit this setting (needed for static).
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+
+          A new macro $(LIB_PREFIX) is used in place of a hardcoded "lib".
+          The macro $(LIB) has been renamed to $(LIB_CHECKED) to avoid
+          conflicts.
+          Other changes to make the command lines and file names a
+          little more flexible.
+
+Fri Nov 14 22:25:34 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/wrapper_macros.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.bin.GNU:
+        * NEWS:
+          Add a new feature to enable users to build for multiple architectures
+          out of a single directory. See Bugzilla #3507.
+
+Fri Nov 14 19:17:35 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/ACE.h:
+        * ace/ACE.cpp:
+
+          Enhanced the ACE::wild_match() algorithm to support escaped wildcards
+          and character classes.  See the doxygen comment for details.
+
+        * tests/Wild_Match_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+          Added a new test for ACE::wild_match().
+
+        * tests/Log_Thread_Inheritance_Test.cpp:
+
+          Removed the ; after ACE_RCSID.  Apparently it has its own ;.
+
+Fri Nov 14 19:03:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Parse_Node.cpp:
+          Only print the debug message when ACE::debug() is enabled. This
+          prevent a lot of messages on the WinCE console. Fixes bugzilla
+          3505
+
+        * ace/Service_Gestalt.cpp:
+          Renamed getopt to get_opt so that we can remove all the fuzz
+          disable/enable lines
+
+Fri Nov 14 18:54:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3505_Regression_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          ACE_Service_Gestalt is another one that could enable ACE::debug,
+          added a test to see if that is the reason why ACE::debug is enabled
+          on WinCE
+
+Fri Nov 14 18:39:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.cpp:
+        * ace/Arg_Shifter.cpp:
+          Layout change
+
+        * ace/Arg_Shifter.h:
+          Doxygen change
+
+        * tests/ACE_Test.cpp:
+          Added test for ACE_DEBUG environment variable
+
+        * tests/Arg_Shifter_Test.cpp:
+          Added another test, on WinCE we see that ACE::debug() is enabled
+          when running TAO, one of the reasons could be a problem in the
+          commandline handling
+
+Fri Nov 14 13:06:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Compare with ACE_Time_Value::zero
+
+Fri Nov 14 13:03:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+        * docs/CE-status.txt:
+        * docs/wchar.txt:
+          Windows CE updates
+
+Fri Nov 14 12:47:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Disabled several tests for CORBA/e micro
+
+Fri Nov 14 12:30:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added missing 3499
+
+Fri Nov 14 11:38:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2772_Regression_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added an ACE-ified version of the regression test for bugzilla
+          2772. This hangs on my Vista development system. Marked the
+          bug as not fixed to not pollute the test stats for the bczar.
+          Let the scoreboard now show whether this works or not. Thanks
+          to Greg Bothe <ace at netrats dot net> for creating the
+          original test
+
+Fri Nov 14 10:59:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Log_Thread_Inheritance_Test.cpp:
+
+          wchar fix.
+
+Thu Nov 13 09:53:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Malloc_Test.cpp:
+          Use argv[0] as process name when it is available
+
+        * tests/Process_Strategy_Test.cpp:
+          Minor improvements and don't use ACE_ASSERT
+
+Thu Nov 13 09:41:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Acceptor.h:
+          Fixed some typos in the doxygen documentation
+
+        * ace/ACE.cpp:
+        * ace/OS_NS_Thread.cpp:
+        * ace/SOCK_Connector.cpp:
+        * ace/SOCK_SEQPACK_Connector.cpp:
+        * ace/TLI_Connector.cpp:
+        * ace/Token.cpp:
+          Compare with ACE_Time_Value::zero
+
+        * ace/config-WinCE.h:
+          Windows CE 6 has GetSystemTimeAsFileTime. Also moved
+          some typedefs out of this file
+
+        * ace/Event_Handler.cpp:
+          Removed some commented out defines
+
+        * ace/Filecache.cpp:
+          Also call difftime on Windows CE, we have an emulation
+          for this method
+
+        * ace/High_Res_Timer.cpp:
+        * ace/High_Res_Timer.h:
+          Enable this for WinCE
+
+        * ace/Metrics_Cache_T.inl:
+          Layout change
+
+        * ace/os_include/os_signal.h:
+        * ace/os_include/sys/os_types.h:
+          Added typedefs for Windows CE
+
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_unistd.inl:
+          Updated comment
+
+        * ace/OS_NS_sys_time.inl:
+          Windows CE 6 has GetSystemTimeAsFileTime
+
+        * ace/OS_NS_sys_wait.h:
+          Doxygen change
+
+        * ace/OS_NS_unistd.cpp:
+          Reworked pread/pwrite on Windows so that both methods are
+          more equal and do check all return values and set errno
+
+        * ace/SString.cpp:
+          Removed commented out WinCE include
+
+        * ace/Stats.cpp:
+          Just call strerror on CE
+
+        * ace/UTF16_Encoding_Converter.cpp:
+          Initialse pointer with 0
+
+        * ace/WFMO_Reactor.cpp:
+          The wait method on Windows can work with a relative time. When
+          just doing a ping check on WinCE, just pass in ACE_Time_Value::zero
+          instead of first getting the current time, call wait where then
+          current time is converted back to relative time
+
+Thu Nov 13 15:26:17 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+        * ace/OS_Log_Msg_Attributes.h:
+
+          Fix for bug 3480.  If the user passes "true" as the 2nd arg of
+          msg_ostream(), ACE takes ownership of the output stream.  Since this
+          stream can be shared between multiple ACE_Log_Msg instances
+          (in multiple threads), we will now keep a reference count on the
+          output stream and only delete it when the last ACE_Log_Msg instance
+          is destroyed.
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+        * tests/Log_Thread_Inheritance_Test.cpp:
+
+          Added a test for this change.
+
+Thu Nov 13 15:25:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Service_Config_Test.cpp:
+          Just not give arguments a name if you don't need them
+
+        * tests/Logging_Strategy_Test.cpp:
+          Use ACE_DEFAULT_TEST_DIR to get a full path on Windows CE
+
+Thu Nov 13 14:56:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabled some tests for FUZZ/Labview/WinCE
+
+Thu Nov 13 14:47:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added some missing tests and enabled some tests for FUZZ/Labview/
+          WinCE
+
+Thu Nov 13 12:13:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+          WinCE 5 seems to lack a lot of defines, so updated version check
+
+        * ace/OS_NS_unistd.inl (dup):
+          Return ACE_INVALID_HANDLE instead of -1
+
+Thu Nov 13 11:08:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Updated mailing list address
+
+Thu Nov 13 10:36:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Config_Test.cpp:
+          Fixed possible corruption of filename
+
+Thu Nov 13 10:05:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          sln files are allowed at this moment
+
+Thu Nov 13 09:15:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Process_Test.cpp:
+          Fixed unicode compile problems
+
+Thu Nov 13 08:32:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          The lst files below are now parsed and all the perl files that are not
+          marked with !FUZZ are checked
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+        * bin/ciao_tests.lst:
+          Mark a lot of test with !FUZZ, these have to be updated
+
+Thu Nov 13 08:07:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Cached_Conn_Test.cpp:
+          Layout change in debug statement
+
+Thu Nov 13 08:06:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/acetest.mpb:
+          Explicit list build files
+
+Thu Nov 13 08:01:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+        * bin/PerlACE/TestTarget_VxWorks.pm:
+          Fixed test scripts when the old test framework is use
+
+Thu Nov 13 07:05:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_main.cpp:
+          Fixed bug in CE commandline conversion
+
+Wed Nov 12 19:25:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          WinCE 5 and earlier DuplicateHandle
+
+        * ace/OS_NS_unistd.inl (dup):
+          Use ACE_LACKS_DUP so that we don't have a special codeblock for
+          Windows CE
+
+        * ace/Thread_Manager.cpp:
+          Use ACE_LACKS_DUPLICATEHANDLE whether we can use DupliceHandle or
+          not
+
+Wed Nov 12 19:06:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget.pm:
+          Added RandomPort
+
+        * protocols/tests/HTBP/ping/run_test.pl:
+        * protocols/tests/HTBP/Reactor_Tests/run_test.pl:
+        * protocols/tests/HTBP/Send_Large_Msg/run_test.pl:
+        * protocols/tests/HTBP/Send_Recv_Tests/run_test.pl:
+          Use TestTarget->RandomPort
+
+Wed Nov 12 19:00:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dirent_Test.cpp:
+          Unicode fix
+
+Wed Nov 12 18:40:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          Added ACE_LACKS_REGNOTIFYCHANGEKEYVALUE
+
+        * examples/Reactor/WFMO_Reactor/WFMO_Reactor.mpc:
+          Build all these examples with Windows CE
+
+        * examples/Reactor/WFMO_Reactor/run_test.pl:
+          Check if target got created
+
+        * examples/Reactor/WFMO_Reactor/APC.cpp:
+        * examples/Reactor/WFMO_Reactor/Registry_Changes.cpp:
+          Made these compiling with Windows CE. It are nothing more then
+          empty tests at that moment, but that way we don't get false
+          negatives
+
+Wed Nov 12 16:04:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * config-WinCE.h:
+          WinCE versions older then 6 don't have errno
+
+Wed Nov 12 15:57:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_main.cpp:
+          Make sure there is a space between the executable name and
+          the original arguments with WinCE
+
+Wed Nov 12 15:38:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Cached_Accept_Conn_Test.cpp:
+          Added %T to the iteration debug message
+
+        * tests/MEM_Stream_Test.cpp:
+        * tests/Pipe_Test.cpp:
+        * tests/Process_Manager_Test.cpp:
+        * tests/Process_Manual_Event_Test.cpp:
+        * tests/Process_Mutex_Test.cpp:
+        * tests/RW_Process_Mutex_Test.cpp:
+        * tests/SOCK_Dgram_Bcast_Test.cpp:
+          If argc > 0 use argv[0] as program name, else use a hardcoded
+          string. This way this test runs on any platform including WinCE
+          (where argv[0] has a full path) and VxWorks (where argc = 0)
+
+Wed Nov 12 15:21:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/MEM_Stream_Test.cpp:
+          Use argv[0]
+
+Wed Nov 12 14:52:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OS_Test.cpp:
+          No need to use TEST_DIR, the problem on WinCE was a problem in
+          ACE_OS::rename
+
+Wed Nov 12 14:10:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.7.h:
+        * include/makeinclude/platform_vxworks6.7.GNU:
+          Initial files for VxWorks 6.7 which we expect soon
+
+Wed Nov 12 13:24:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Process_Test.cpp:
+          Wrong macro used.
+
+Wed Nov 12 10:52:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabled a few tests for WinCE/Labview
+
+Wed Nov 12 09:35:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/tests/HTBP/ping/run_test.pl:
+        * protocols/tests/HTBP/Reactor_Tests/run_test.pl:
+        * protocols/tests/HTBP/Send_Large_Msg/run_test.pl:
+        * protocols/tests/HTBP/Send_Recv_Tests/run_test.pl:
+          Use 2 targets
+
+Wed Nov 12 09:31:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Process.pm:
+          If ACE_RUNTEST_DELAY is not set, default the wait delay factor
+          to 1
+
+Wed Nov 12 09:01:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          And more path tweaks
+
+Wed Nov 12 08:48:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Fixed fuzz error in the fuzz script itself
+
+Wed Nov 12 08:47:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          Added HOST_ROOT and more WinCE path tweaks
+
+Wed Nov 12 08:27:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Process_Win32.pm:
+          Removed duplicate basename
+
+        * bin/fuzz.pl:
+          Extended the run_test.pl check and enabled it. Ignore TAO and
+          CIAO for the moment, we first need to update the existing
+          scripts to the new test framework
+
+Wed Nov 12 08:19:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          Extended path handling for WinCE
+
+Wed Nov 12 07:47:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/README:
+          Updated
+
+Tue Nov 11 22:22:04 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_sys_mman.inl (mmap): Added a fix for a problem where
+          ACE_OS::mmap() failed when called with
+          file_handle=ACE_INVALID_HANDLE and file_mapping=0.  Thanks to
+          Bill Rizzi <rizzi at softserv dot com> for this fix.  This fixes
+          bugid 3500.
+
+Tue Nov 11 14:24:00 UTC 2008  Simon Massey<sma at prismtech dot com>
+
+        * tests/Process_Test.cpp:
+          Another wchar issue.
+
+Tue Nov 11 13:52:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/config-lynxos.h:
+          Missed removal of ACE_HAS_SYSV_IPC for LynxOS5.0.
+
+Tue Nov 11 13:34:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Cached_Conn_Test.cpp:
+          Print a timestamp with each iteration
+
+Tue Nov 11 13:26:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Check the return value of thr_setprio
+
+        * ace/Process.cpp:
+          Always initialize process_name_
+
+        * ace/Process_Manager.cpp:
+          Use this->
+
+        * tests/OS_Test.cpp:
+          WinCE can't rename when the target already exists
+
+        * tests/Reactor_Dispatch_Order_Test.cpp:
+          Const change
+
+Tue Nov 11 10:43:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.inl:
+          Fixed rename on WinCE
+
+Tue Nov 11 10:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget_VxWorks.pm:
+          Just use the WaitForFileTimed from the base
+
+        * bin/tao_orb_tests.lst:
+          Enabled some tests for Labview/WinCE
+
+Mon Nov 10 23:28:36 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Added regression test for bug 3495.
+
+Mon Nov 10 20:16:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabled several TAO tests for Labview and WinCE, these are converted
+          to the new test framework
+
+Mon Nov 10 19:30:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Process_Manager_Test.cpp:
+          Layout change
+
+        * tests/Process_Manual_Event_Test.cpp:
+          Use ACE_ERROR_RETURN instead of ACE_ASSERT
+
+Mon Nov 10 19:23:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OS_Test.cpp:
+          Also use TEST_DIR when it is defined
+
+Mon Nov 10 19:16:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          Enabling bsearch results in a linker error
+
+        * ace/OS_NS_Thread.inl:
+          Use ACE_TEXT_CreateSemaphe
+
+        * tests/Config_Test.cpp:
+          Use TEST_DIR as directory of the import file when it is defined.
+          Windows CE doesn't have a current directory but TEST_DIR is set
+          when building on CE
+
+        * tests/Dirent_Test.cpp:
+          Use different logging macros when ACE_HAS_TCHAR_DIRENT is defined
+
+        * tests/test_config.h:
+          Removed not needed semi colon
+
+Mon Nov 10 18:40:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+        * ace/config-WinCE.h:
+          Enable a few more methods for WinCE
+
+Mon Nov 10 15:29:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Malloc_Test.cpp:
+          Fixed compile error
+
+Mon Nov 10 15:28:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          Removed a lot of defines that are really not needed
+
+        * ace/OS_NS_stdlib.{h,cpp,inl}:
+          Removed ACE_HAS_WINCE checks with realpath
+
+        * ace/config-win32-common.h:
+          Latest wince versions do have missing defines
+
+Mon Nov 10 14:28:00 UTC 2008  Simon Massey <sma at prismtech dot com>
+
+        * tests/Process_Test.cpp:
+          Another wchar issue.
+
+Mon Nov 10 12:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          WinCE 5 and newer do have filelocks
+
+        * ace/OS_NS_stdio.inl (flock_unlock):
+          Use UnlockFileEx because this is also available on WinCE
+
+        * tests/Naming_Test.cpp:
+          Use ACE::get_temp_dir to get the real temp dir
+
+Mon Nov 10 11:48:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Malloc_Test.cpp:
+          Use argv[0]
+
+        * tests/TP_Reactor_Test.cpp:
+          Use ACE_TEXT
+
+Mon Nov 10 10:46:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc
+        * ace/config-win32-msvc-10.h
+        * ace/config-win32-msvc.h
+        * ace/Monitor_Control/Monitor_Control.mpc
+        * ace/QoS/qos.mpc
+        * bin/MakeProjectCreator/config/ace_fl.mpb
+        * bin/MakeProjectCreator/config/ace_gl.mpb
+        * bin/MakeProjectCreator/config/ace_qt.mpb
+        * bin/MakeProjectCreator/config/ace_x11.mpb
+        * bin/MakeProjectCreator/config/crosscompile.mpb
+        * bin/MakeProjectCreator/config/ipv6.mpb
+        * bin/MakeProjectCreator/config/vc_warnings.mpb
+          Added Visual Studio 2010 (vc10) support
+
+Mon Nov 10 09:50:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          Set ACE_DEFAULT_THREAD_KEYS to TLS_MINIMUM_AVAILABLE when it is
+          not defined yet. This is the minimum number of TLS indexes always
+          available to a process
+
+Mon Nov 10 09:35:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release.py:
+          Added Windows Mobile 6 projects
+
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/README:
+          Added HostName and added a few variables that are needed for
+          VxWorks in the near future. This fixes bugzilla 3496
+
+        * protocols/tests/HTBP/ping/run_test.pl:
+        * protocols/tests/HTBP/Reactor_Tests/run_test.pl:
+        * protocols/tests/HTBP/Send_Large_Msg/run_test.pl:
+        * protocols/tests/HTBP/Send_Recv_Tests/run_test.pl:
+        * protocols/tests/RMCast/run_test.pl:
+          Updated to the new test framework
+
+        * protocols/tests/HTBP/README:
+          Location of the HTBP lib was old
+
+Sun Nov  9 11:45:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sched_Params.cpp:
+          Updated for WinCE priorities
+
+        * ace/OS_main.cpp:
+          Const change
+
+Sat Nov  8 07:11:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/MEM_Stream_Test.cpp:
+          use argv[0]
+
+        * tests/Malloc_Test.cpp:
+          Removed WinCE code
+
+Sat Nov  8 07:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/WFMO_Reactor/run_test.pl:
+          Convert to use the new test framework
+
+Fri Nov  7 20:10:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Dirent_Test.cpp:
+          Use the open method of ACE_Dirent instead of the constructor
+          so that we can check the return value and also use ACE_DEFAULT_TEST_DIR
+          when it is defined
+
+Fri Nov  7 19:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Disabled several DevGuidExamples in the ACE_FOR_TAO configuration
+
+Fri Nov  7 19:11:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+        * bin/PerlACE/ProcessWinCE.pm:
+          Increased timeout so that we don't kill the ACE tests before
+          they had the change to finish
+
+Fri Nov  7 18:05:00 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Added Bug_3481_Regression.
+
+Fri Nov  7 13:30:00 UTC 2008  Simon Massey <sma at prismtech dot com>
+
+        * tests/Process_Test.cpp:
+          Like an idiot I didn't invert the original ACE_ASSERT test when
+          I converted them to if () go_and_complain;
+          Also another attempt to correct for wide character ACE_TCHAR
+          versions.
+
+Fri Nov  7 12:02:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.pl:
+          Removed all specific VxWorks support, we are using the generic test
+          framework now
+
+Fri Nov  7 09:47:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_main.cpp:
+          Use ACE_TEXT_GetModuleFileName to get the executable name
+          on Windows CE
+
+Fri Nov  7 09:11:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Makefile.am:
+          Removed references to CE_fostream
+
+Thu Nov  6 19:26:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          CE doesn't have FILE_SHARE_DELETE like regular windows as default
+          file permissions
+
+        * tests/CDR_File_Test.cpp:
+          WinCE does have ostream, so removed CE_fostream and also removed the
+          code that tries to unlink the file directly after it has been created.
+          It really depends also on the file system whether this works or not.
+
+        * tests/CE_fostream.cpp:
+        * tests/CE_fostream.h:
+          Removed
+
+        * tests/tests.mpc:
+          Removed CE_fostream
+
+Thu Nov  6 18:08:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-openvms.h:
+          Added ACE_LACKS_ISBLANK/ACE_LACKS_ISCTYPE
+
+        * ace/config-qnx-rtp-62x.h:
+          Added ACE_LACKS_ISCTYPE
+
+        * ace/OS_NS_unistd.h:
+          Doxygen changes
+
+Wed Nov  5 15:11:17 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/SOCK_SEQPACK_Association.cpp (get_remote_addrs): Changed
+          ACE_USES_SOLARIS_SCTP to ACE_HAS_VOID_PTR_SCTP_GETPADDRS.
+          Thanks to Johnny for this suggestion.
+
+Thu Nov  6 14:33:00 UTC 2008  Simon Massey <sma at prismtech dot com>
+
+        * tests/Process_Test.cpp:
+          Use pid_t, ACE_HANDLE and ACE_INVALID_HANDLE;
+
+Thu Nov  6 14:10:00 UTC 2008  Simon Massey <sma at prismtech dot com>
+
+        * tests/Process_Test.cpp:
+          Don't use ACE_ASSERT();
+
+Thu Nov  6 13:19:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Add a check if people are using a supported compiler
+
+Thu Nov  6 13:12:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX.pm:
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+        * bin/PerlACE/ProcessWinCE.pm:
+          Poweroff the target at the end of the run. If you want to keep
+          it on power, set ACE_RUN_VX_NO_SHUTDOWN as environment variable
+
+Thu Nov  6 13:08:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Buffer_Stream_Test.cpp:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/MM_Shared_Memory_Test.cpp
+        * tests/Priority_Task_Test.cpp
+          Removed WinCE specific code
+
+        * tests/Bug_3432_Regression_Test.cpp:
+          This test needs strftime, if is not there, just print a message
+          and exit
+
+        * tests/Notify_Performance_Test.cpp:
+        * tests/Reactor_Performance_Test.cpp
+          WFMO_Reactor is dependent on winsock2
+
+Thu Nov  6 12:00:00 UTC 2008  Simon Massey <sma at prismtech dot com>
+
+        * tests/Process_Test.cpp:
+          Apply modified patch to correct for problems on scoreboard.
+
+Thu Nov  6 09:48:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget.pm
+        * bin/PerlACE/README:
+          Added PROCESS_START_WAIT_INTERVAL and PROCESS_STOP_WAIT_INTERVAL
+          as environment variables so that we can configure a longer wait
+          time.
+
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          Removed ProcessStartWaitInterval method, not needed
+
+Thu Nov  6 08:22:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3432_Regression_Test.cpp:
+        * tests/CDR_File_Test.cpp:
+        * tests/Message_Queue_Test.cpp:
+        * tests/OS_Test.cpp:
+        * tests/Process_Manager_Test.cpp:
+        * ace/Service_Repository.cpp:
+        * tests/TP_Reactor_Test.cpp:
+          Fixed unicode problems
+
+        * tests/run_test.pl:
+          Add the process startup time to the test time, improves the
+          test results on slow systems
+
+Wed Nov  5 19:23:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+        * bin/PerlACE/ProcessWinCE.pm:
+        * bin/PerlACE/TestTarget_VxWorks.pm:
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          Store a reference to the target in the process and set the
+          executable extension correct for windows ce
+
+Wed Nov  5 15:54:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_ctype.inl:
+          Don't emulate isblank with isctype(_ISBLANK), isctype only checks
+          for space, isblank should check space and tab
+
+Wed Nov  5 13:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Process_Test.cpp:
+          Attempt to correct for wide character ACE_TCHAR versions.
+
+Wed Nov  5 09:36:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Process_Test.cpp:
+          Removed Fuzz errors.
+
+Wed Nov  5 08:49:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-lynxos.h:
+          LynxOS5 has isblank
+
+        * ace/config-aix-5.x.h:
+          AIX lacks isctype
+
+Wed Nov  5 04:04:57 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * May the next president of the USA have the strength and courage
+          to lead the USA wisely and help it to achieve its promise as a
+          advocate for freedom and democracy.
+
+Tue Nov  4 22:45:20 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/SOCK_SEQPACK_Association.cpp: Added #ifdefs for
+          ACE_USES_SOLARIS_SCTP.  Thanks to Steven Xie <steven dot xie at
+          mpathix dot com> for contributing this.
+
+Tue Nov  4 15:18:17 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Process_Test.cpp: Added a new test that exercises the new
+          handle inheritance mechanisms of ACE_Process.  Thanks to
+          Christian Fromme <kaner at strace dot org> for contributing this
+          test.
+
+Tue Nov  4 14:15:07 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/tests.mpc:
+        * tests/run_test.lst (Process_Test): Added the new test for the
+          ACE_Process class.
+
+Tue Nov  4 13:59:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OS_Test.cpp:
+          Added isblank test for space
+
+        * ace/OS_NS_ctype.inl:
+          Fixed bug in isblank for space
+
+Tue Nov  4 13:39:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabled a few tests for labview and add !WinCE to all
+          !LabVIEW_RT marked tests so that we can start testing
+          for wince
+
+Tue Nov  4 08:52:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_ctype.inl:
+          Added support for ACE_LACKS_ISASCII
+
+        * ace/config-vxworks6.2.h
+        * ace/config-vxworks6.3.h
+        * ace/config-vxworks6.4.h
+          Define for ACE_LACKS_ISASCII for rtp
+
+Tue Nov  4 07:45:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.5.h:
+          Added ACE_LACKS_ISCTYPE/ACE_LACKS_ISBLANK
+
+        * ace/config-sunos5.10.h:
+          SunOS 10 has isblank
+
+Tue Nov  4 07:09:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Added ACE_LACKS_ISCTYPE
+
+Tue Nov  4 07:05:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-aix-5.x.h:
+          Added ACE_HAS_CTYPE_T
+
+Mon Nov  3 20:05:10 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/config-macosx-leopard.h:
+          Added ACE_ISCTYPE_EQUIVALENT.
+
+Mon Nov  3 17:15:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-lynxos.h:
+          Added ACE_LACKS_ISBLANK/ACE_LACKS_ISCTYPE
+
+Mon Nov  3 14:35:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Disabled several tests with CORBA/e compact/micro
+
+Mon Nov  3 13:17:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          Added ACE_LACKS_ISBLANK for kernel mode
+
+Mon Nov  3 13:01:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          Added ACE_LACKS_ISCTYPE/ACE_LACKS_ISWCTYPE
+
+Mon Nov  3 12:35:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-all.h
+        * ace/OS_NS_ctype.inl
+        * ace/OS_NS_time.h
+          Including OS_NS_errno.h in config-all.h gives problems on linux
+
+Mon Nov  3 10:51:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Use CeGetThreadPriority/CeSetThreadPriority when building
+          for Windows CE. This fixes bugzilla 3487. Thanks to Danial Lang
+          <danial dot lang at alphagate dot at> for reporting this.
+
+Mon Nov  3 10:30:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Added bug 3486
+
+Mon Nov  3 10:27:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/svn/config:
+        * docs/svn/svn-prefs.reg:
+          bmak files shouldn't be in the repo so added them to the global
+          ignore list
+
+Mon Nov  3 09:32:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_ctype.inl:
+          Added support for ACE_LACKS_ISWASCII
+
+        * ace/config-linux-common.h:
+          Added ACE_LACKS_ISWASCII
+
+Mon Nov  3 09:07:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget.pm:
+          Use PerlACE::Run_Test here, that way it is not needed in the
+          real scripts and we can use that to check if the script
+          is converted
+
+        * bin/tao_orb_tests.lst:
+          Enabled some test for labview, converted them to the new framework
+
+Mon Nov  3 09:03:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Run_Test.pm:
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/TestTarget_LVRT.pm:
+        * bin/PerlACE/TestTarget_VxWorks.pm:
+          Convert the filename to a local file in the TestTarget and
+          not in the main script. Fixes bugzilla 3477
+
+Mon Nov  3 09:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-all.h:
+          Include OS_NS_errno.h to get ENOTSUP
+
+        * ace/config-win32-borland.h:
+          CB lacks isblank/iswblank/icctype/iswctype
+
+        * ace/config-win32-msvc.h:
+        * ace/config-WinCE.h
+          Lacks isblank/iswblank
+
+        * ace/os_include/os_ctype.h:
+          Added typedef for ctype_t
+
+        * ace/OS_NS_ctype.h:
+        * ace/OS_NS_ctype.inl:
+          Added isblank/isascii/isctype/iswctype wrappers
+
+        * ace/OS_NS_time.h:
+          No need to include OS_NS_errno.h here
+
+        * bin/fuzz.pl:
+          Added isblank/isascii/isctype/iswctype to ACE_OS check
+
+        * tests/OS_Test.cpp:
+          Extended ctype tests
+
+Thu Oct 30 13:25:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OS_Test.cpp:
+          Added a test for ace_isprint with a tab character. WinCE 6 and
+          earlier do have a bug that for tab they return true instead of
+          false
+
+        * ace/OS_NS_sys_utsname.cpp:
+          Initialise pointer with 0
+
+        * ace/OS_NS_ctype.inl (ace_isprint):
+          If we have WinCE 6 or earlier and get called for tab (0x9) then
+          return 0, WinCE stdlib has a bug that 1 is returned for tab.
+          This was found when investigating some TAO logs where we do
+          a hexdump of the received packets
+
+Thu Oct 30 12:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/tests/HTBP/Send_Recv_Tests/client.cpp
+        * protocols/tests/HTBP/Send_Recv_Tests/server.cpp
+          Use %C to log ascii strings instead of using %s with
+          ACE_TEXT_CHAR_TO_TCHAR
+
+Thu Oct 30 12:16:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ARGV_Test.cpp
+        * tests/Bound_Ptr_Test.cpp
+        * tests/Enum_Interfaces_Test.cpp
+        * tests/IOStream_Test.cpp
+        * tests/Sendfile_Test.cpp
+        * tests/SOCK_Send_Recv_Test.cpp
+        * tests/SOCK_Send_Recv_Test_IPV6.cpp
+        * tests/SOCK_Test.cpp
+        * tests/SOCK_Test_IPv6.cpp
+        * tests/Svc_Handler_Test.cpp
+          Use %C to log ascii strings instead of using %s with
+          ACE_TEXT_CHAR_TO_TCHAR
+
+Thu Oct 30 11:31:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.cpp:
+          Const change
+
+        * tests/test_config.h:
+          Set ACE_LOG_DIRECTORY_FOR_MKDIR for all platforms. Removed the
+          WinCE different test filename extension.
+
+        * tests/Test_Output.cpp:
+          Added ACE_DEFAULT_TEST_DIR which can be set in the config.h to
+          specify a different default testdir then "". This is useful
+          for WinCE which lacks the concept of a current working directory
+
+Thu Oct 30 10:30:00 UTC 2008  Simon Massey <sma at prismtech dot com>
+
+        * NEWS
+          Updated.
+
+Thu Oct 30 07:10:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Disabled PMB test for VxWorks RTP, it hangs the test environment
+
+Wed Oct 29 15:15:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          New file for WinCE cross platform testing. This assumes at this
+          moment some other test framework changes which can't be committed yet.
+          I am storing this new file in svn so that it doesn't get lost and
+          can be used to discuss the changes
+
+Wed Oct 29 10:14:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          Corrected WinCE version check
+
+        * ace/OS_NS_time.h:
+          The WinCE 6 SDK ships with a difftime that has __time32_t as type
+          of the arguments. ACE uses time_t which can be 64bit, that then
+          leads to conversion warnings. For WinCE 6 disable this warning
+          just for this file.
+
+Tue Oct 28 19:56:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+        * bin/tao_orb_tests.lst:
+          InterfaceRepo example should be in the other file
+
+Tue Oct 28 19:48:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/vxtest.mpd:
+          Don't add a lib prefix and .so postfix, let the test scripts do that.
+          This way the output is also usable for WinCE testing
+
+        * bin/PerlACE/ProcessVX.pm:
+          Add lib prefix and .so postfix to the vxtest list
+
+        * bin/PerlACE/ProcessWinCE.pm:
+          Extended this test for testing
+
+Tue Oct 28 16:40:10 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+
+          Disabled test for bug#3444 on LynxOS.
+
+Tue Oct 28 16:23:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+        * bin/tao_orb_tests.lst:
+          Moved Notify ValueType test to other tests
+
+Tue Oct 28 10:48:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessWinCE.pm:
+          New file for Windows CE cross testing. We are using the
+          VxWorks support and added an environment variable
+          ACE_TEST_WINCE. When this is set we are using WinCE instead
+          of VxWorks. This script is not ready yet, a first version
+          so that we can start resolving some small issues in our
+          real test environment
+
+        * bin/PerlACE/Run_Test.pm:
+          Check for ACE_TEST_WINCE
+
+Mon Oct 27 19:22:25 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
+
+        * bin/tao_other_tests.lst
+
+          Added new test for DOC bug 2415.
+
+Mon Oct 27 13:27:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Added ACE_RUN_ACE_LD_SEARCH_PATH
+
+Mon Oct 27 13:27:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Added ACE_RUN_VX_STARTUP_COMMAND
+
+Sun Oct 26 20:21:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.cpp:
+        * ace/OS_NS_stdio.h:
+          Removed scanf/fscanf/sscanf wrappers again. Microsoft
+          doesn't ship them with msvc so these would then be
+          a noop making them unusable
+
+        * ace/fuzz.pl:
+          Removed scanf/sscanf/fscanf from the ACE_OS check
+
+        * ace/Multicast_Test.cpp
+        * ace/Multicast_Test_IPV6.cpp
+          Use plain sscanf
+
+Sun Oct 26 18:47:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/INET_Addr.cpp:
+          Removed not needed wchar conversion
+
+Sun Oct 26 08:02:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.{h,cpp}:
+          Fixed sscanf implementation and added also fscanf wrapper
+
+        * bin/fuzz.pl:
+          Added fscanf to the ACE_OS tests
+
+Thu Oct 23 20:06:02 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Process.cpp: Fixed a typo.
+
+Thu Oct 23 15:15:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Changed ACE_OS test to level 6 to temporarily get rid of this
+          check
+
+Thu Oct 23 12:52:21 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Process.cpp: Enhanced the support for enabling/disabling
+          handle inheritance on Linux.  Thanks to Christian Fromme
+          <christian at ast.dfs dot de> for this fix.
+
+Thu Oct 23 11:14:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Process.cpp:
+          Fixed duplicat initialisation
+
+Thu Oct 23 09:09:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Process.cpp:
+          Added missing include
+
+Thu Oct 23 08:19:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/svn/config:
+        * docs/svn/svn-prefs.reg:
+          Added conf/pem extensions
+
+Thu Oct 23 08:06:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Updated because of move of DevGuide orbsvcs examples
+
+Thu Oct 23 06:46:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+          Added the new DevGuide examples
+
+Thu Oct 23 06:29:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Process.cpp:
+          Initialise handle_inheritance_ on the right place
+
+        * ace/Process.h:
+          Doxygen change
+
+        * ace/Process.inl:
+          Always implement the handle_inheritance method
+
+Wed Oct 22 15:03:31 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Process.h (ACE_Process_Options): Fixed the duplicate
+          handle_inheritance_ member.
+
+Wed Oct 22 13:30:54 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Process.{h,cpp}: Added support for enabling/disabling handle
+          inheritance on Linux.  Thanks to Christian Fromme <christian at
+          ast.dfs dot de> for this fix.
+
+        * ace/Process.{h,cpp}: Fixed the misspelling of
+          "handle_inheritence" to "handle_inheritance".
+
+Tue Oct 21 18:31:52 UTC 2008  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * apps/gperf/src/Options.cpp:
+
+          Moved the instantiation of the static ACE_CString
+          members to appear before the global class instantiation,
+          so that the ACE_CString default constructor can in turn
+          initialize its ACE_Allocator member, needed in the
+          Options constructor.
+
+Tue Oct 21 17:33:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.{h,cpp}:
+          Buf argument of sscanf should be const
+
+Tue Oct 21 14:35:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Bug_2980_Regression_Test.cpp:
+
+          Fixed fuzz errors (lack of ACE_OS::).
+
+Tue Oct 21 14:21:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Process_Manager_Test.cpp:
+        * tests/Multicast_Test_IPV6.cpp:
+        * tests/Bug_2980_Regression_Test.cpp:
+
+          Fixed fuzz errors (lack of ACE_OS::).
+
+Tue Oct 21 14:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Process_Manual_Event_Test.cpp:
+        * tests/Process_Env_Test.cpp:
+        * tests/Multicast_Test.cpp:
+        * tests/Proactor_UDP_Test.cpp:
+
+          Fixed fuzz errors (lack of ACE_OS::).
+
+Tue Oct 21 13:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-netbsd.h:
+          NetBSD lacks wscanf and swscanf
+
+Tue Oct 21 12:41:09 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * apps/gperf/src/Options.h:
+        * apps/gperf/src/Options.cpp:
+        * ACEXML/common/HttpCharStream.cpp:
+
+          Fixed incorrect use of ACE_TEXT_* conversion macros.
+
+Tue Oct 21 11:25:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Changed ACE_OS test to level 5
+
+Tue Oct 21 09:30:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h
+        * ace/config-win32-common.h
+        * ace/config-win32-msvc.h
+        * ace/OS_NS_stdlib.inl
+          WinCE doesn't have wtof, so reworked the defines. Set ACE_HAS_WTOF
+          when the platform has wtof, with ACE_WTOF_EQUIVALENT a different
+          method name could be used (like ::_wtof)
+
+Tue Oct 21 07:15:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.{h,cpp}:
+          Added wrappers for sscanf/scanf
+
+        * bin/fuzz.pl:
+          Extended ACE_OS check with scanf/sscanf
+
+Tue Oct 21 00:04:26 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/Proactor_UDP_Test.cpp: Attempt to avoid lock-ups on non-Windows
+          targets. HP-UX, AIX, et al., can't cancel an in-progress UDP recv()
+          so stop the Master from trying more receives when all the expected
+          sessions are up.
+
+Mon Oct 20 13:09:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Extended ACE_OS check with atof/atol/raise
+
+        * apps/JAWS3/bench/rqfiles.cpp:
+          Use ACE_OS::atof
+
+Mon Oct 20 12:01:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdlib.{h,inl}:
+          Added atof and atol wrappers
+
+Mon Oct 20 07:23:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * contrib/FaCE/FaCENOACE.mpc:
+          Derive from vc_warnings to get rid of deprecated warnings
+
+Mon Oct 20 03:30:20 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/config-cygwin32.h (ACE_HAS_CUSTOM_EXPORT_MACROS): Changed this
+          macro definition to
+
+          #define ACE_HAS_CUSTOM_EXPORT_MACROS 1
+
+          Thanks to E Vahala <erkki.vahala@pp.inet.fi>
+
+Sun Oct 19 06:57:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Network_Adapters_Test.cpp:
+          WinCE doesn't have control handler
+
+Sun Oct 19 06:54:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Service_Config_Test.cpp:
+          WinCE doesn't have _beginthreadex
+
+Sun Oct 19 06:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Logging_Strategy_Test.cpp:
+          Removed WinCE specific code which is not needed anymore
+
+Fri Oct 17 19:33:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+          Set lzo2 to 0 as default
+
+Fri Oct 17 19:25:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_stat.inl:
+          Reapplied a change from yesterday, seems the repo has an issue
+
+Fri Oct 17 18:57:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OrdMultiSet_Test.cpp:
+          Use ACE_TEST_ASSERT instead of ACE_ASSERT
+
+        * tests/Vector_Test.cpp:
+          Removed BCB6/BCB2006 support
+
+        * tests/SOCK_Connector_Test.cpp:
+          Const change and initailise pointer with 0
+
+Fri Oct 17 12:14:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+        * ace/config-win32-borland.h:
+        * ace/Guard_T.h:
+        * ace/Handle_Set.cpp:
+        * ace/Monitor_Control_Types.h:
+        * ace/os_include/os_string.h:
+        * ace/os_include/os_unistd.h:
+        * ace/os_include/sys/os_timeb.h:
+        * ace/OS_NS_stdio.inl:
+        * ace/Truncate.h:
+          Removed BCB6/BCB2006 support
+
+Wed Oct 15 19:57:38 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/SSL/SSL_Context.cpp (report_error): Updated the code to use
+          ::ERR_error_string_n() rather than ::ERR_error_string() when
+          it's available.  Thanks to Paul Daugherty <paul@nextalk.com>
+          for this patch.  This fixes bugid 3461.
+
+Thu Oct 16 19:03:02 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Config.inl:
+        * ace/Service_Config.cpp:
+
+          Fix for Bug #3386. The argument parsing for the service
+          configurator was separated into those that affect individual
+          gestalts, and some process wide arguments. The process wide
+          arguments were then placed in a new SC::parse_args_i() method,
+          but that was never called. Second, it appears that when
+          parse_args_i() was created it was anticipating calling the
+          associated gestalt's parse_args_i() but I believe that is not
+          correct, as the gestalt's open() gets a copy of the arguments
+          for parsing anyway. The service configurator's open() has a
+          guard against being evaluated more than once, so there should be
+          no side effects of calling the SC::parse_args_i() more than
+          once.
+
+          Thanks to Jack Lavender for reporting this problem.
+
+        * examples/Service_Configurator/Misc/main.cpp:
+
+          Modified this test so that command line arguments passed in to
+          main() are all added to the list supplied to
+          service_config::open().
+
+        * THANKS:
+          Updating contributors list.
+
+Thu Oct 16 18:39:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Network_Adapters_Test.cpp:
+          Use ACE_OS::raise
+
+Thu Oct 16 18:13:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.{h,cpp}:
+          Always deliver strenvdup
+
+        * ace/config-win32-common.h:
+          Added new ACE_HAS_DIRECT_H, ACE_HAS_PROCESS_H, ACE_HAS_IO_H
+
+        * ace/config-WinCE.h:
+          Added new ACE_HAS_TYPES_H and ACE_LACKS_DEV_T
+
+        * ace/Log_Record.h:
+          Doxygen changes
+
+        * ace/os_include/os_unistd.h:
+          Use new ACE_HAS_PROCESS_H and ACE_HAS_IO_H
+
+        * ace/os_include/sys/os_stat.h:
+          Use new ACE_HAS_DIRECT_H and updated wince stat struct to match
+          other platforms to get TAO compiling.
+
+        * ace/os_include/sys/os_types.h:
+          Use ACE_HAS_TYPES_H and ACE_LACKS_DEV_T
+
+        * ace/OS_NS_sys_stat.inl:
+          Update setting of stat struct on ce and also set the
+          creation stamp
+
+Thu Oct 16 11:22:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-openvms.h:
+          Define ACE_LACKS_WCSTOLL.
+
+Thu Oct 16 09:51:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Misc/test_demuxing.cpp:
+          Fixed compile error because SIGTERM is now always defined to 0
+          when it is not set by the system (like on CE)
+
+Thu Oct 16 09:47:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_signal.h:
+        * ace/OS_NS_signal.inl:
+          Added wrapper for raise, fixes bugzilla 3462
+
+        * ace/config-WinCE.h
+          WinCE lacks raise, so set ACE_LACKS_RAISE
+
+        * ace/Process.h:
+          Doxygen changes
+
+        * ace/Process.{cpp,inl}:
+          Moved some accessors to the inline file
+
+        * ace/Cleanup.cpp:
+          Layout change
+
+Wed Oct 15 19:40:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_signal.h:
+          Define SIGTERM to 0 when it is not defined
+
+Wed Oct 15 19:31:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_signal.h:
+          Define SIGABRT to 0 when it is not defined
+
+Wed Oct 15 15:15:42 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+
+          Since the test for bug 3444 uses TAO_PortableGroup it must
+          avoid MINIMUM and CORBA_E_COMACT configurations.
+
+Wed Oct 15 12:27:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_main.{h,cpp}:
+          Added ACE_DOESNT_DEFINE_MAIN which disabled the redefinition
+          of main when it is set. This is usefull for projects who have
+          methods with the name main which they can't change. Be aware
+          that users then have to call ACE::init()/fini() themselves.
+          This fixes bugzilla 3361/RT2331.
+
+Tue Oct 14 16:22:32 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * tests/Cached_Accept_Conn_Test.cpp:
+        * tests/Cached_Accept_Conn_Test.h:
+
+          Fixed a warning.
+
+        * bin/PerlACE/Process_Win32.pm:
+
+          Changed value of iflags in Win32::Process::Create (this flag
+          directs a spawned process to inherit handles from calling
+          process). It doesn't hurt if a new process is neither in
+          CREATE_NEW_CONSOLE nor in DETACHED_PROCESS state but it does
+          help if it's needed to hanle input from stdin supplied in
+          calling process.
+
+        * tests/SSL/Bug_2912_Regression_Test.cpp:
+
+          Fixed a warning on Solaris compilers.
+
+        * bin/tao_orb_tests.lst:
+
+          Adjusted configurations in which test Bug_1459 must run.
+
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.h:
+        * examples/APG/ThreadManagement/Async_Cancel.cpp:
+
+          Fixed a warning on HP-UX compilers.
+
+Wed Oct 15 09:45:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_mpc_auto_compile.pl:
+          Add the -vc9 option to the usage message
+
+Tue Oct 14 22:27:30 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
+
+        * ace/Ping_Socket.cpp:
+
+          Removed tabs accidentally added in previous modification.
+
+Tue Oct 14 19:38:45 UTC 2008  Tim Pollock  <pollockt@ociweb.com>
+
+        * ace/Ping_Socket.cpp:
+
+          Fixed WinCE 5 build error associated with call to getpid.
+
+Tue Oct 14 13:09:35 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/config-sunos5.10.h:
+
+          Undefine ACE_LACKS_WCSTOLL.
+
+        * ace/config-sunos5.5.h:
+
+          Define ACE_LACKS_WCSTOLL.
+
+Tue Oct 14 12:56:42 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/config-win32-msvc.h:
+
+          Define ACE_STRTOLL_EQUIVALENT and ACE_WCSTOLL_EQUIVALENT.
+
+Tue Oct 14 12:49:11 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+        * ace/config-win32-borland.h:
+
+          Define ACE_LACKS_STRTOLL and ACE_LACKS_WCSTOLL.
+
+Tue Oct 14 12:49:13 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+
+          Disabled IPv6 tests for bug#3444 on non-IPv6 builds. And
+          disabled the same test on static builds since it loads
+          TAO_Strategies and TAO_PortableGroup dynamically.
+
+Tue Oct 14 12:44:28 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/config-hpux-11.00.h:
+
+          Define ACE_LACKS_STRTOLL and ACE_LACKS_WCSTOLL.
+
+Tue Oct 14 09:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/OS_NS_stdlib.cpp:
+        * ace/OS_NS_stdlib.h:
+
+          Un-tabify commit of J.T. Conklin.
+
+Mon Oct 13 17:21:28 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/fuzz.pl:
+
+          Add strtoll and strtoull to $OS_NS_stdlib_symbols regex in
+          check_for_lack_ACE_OS fuzz check.  Thanks to Abdullah Sowayan
+          <abdullah dot sowayan at lmco dot com> for pointing this out.
+
+        * ace/OS_NS_stdlib.cpp:
+        * ace/OS_NS_stdlib.h:
+        * ace/OS_NS_stdlib.inl:
+
+          Add strtoll() wrapper.  Fixes bugzilla issue #3456.
+
+          Add wcstol(), wcstoul(), wcstoll(), and wcstoull() emulations
+          for systems with wide characters, but without these functions.
+          Fixes bugzilla issue #3457.
+
+Mon Oct 13 14:23:06 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * ace/config-linux-common.h:
+        * bin/tao_other_tests.lst:
+
+          Added 3 defines to reflect a difference of Linux in setting
+          IP_MULTICAST_TTL and IP(V6)_MULTICAST_LOOP. This is required by
+          Bug#3444. Added a test for Bug#3444.
+
+Mon Oct 13 13:21:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.txt:
+        * rpmbuild/ace-tao.spec:
+          Incremented already version number, release script doesn't do this
+          yet
+
+        * rpmbuild/ace-tao-ciao.txt:
+          icmp is now enabled by default on linux
+
+Mon Oct 13 11:10:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Problems with Lynxos5.0 due to -mshared being passed to compiler
+          (inaddition to linker)
+
+Mon Oct 13 07:21:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Local_Name_Space_T.cpp:
+        * ace/MEM_Connector.cpp:
+        * ace/Multihomed_INET_Addr.cpp:
+        * ace/Sock_Connect.cpp:
+          ACE_TCHAR fixes
+
+Fri Oct 10 08:57:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/Stack_Trace.cpp:
+          Disable MSVC warning 4748 "/GS can not protect parameters
+          and local variables from local buffer overrun because
+          optimizations are disabled in function"
+
+Thu Oct  9 21:52:18 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-common.h: Add ACE_HAS_ICMP_SUPPORT if Winsock 2
+          is available.
+
+        * tests/Network_Adapters_Test.{h cpp}: Removed extraneous ACE::init.
+          Compare IP addresses using ACE_INET_Addr::is_ip_equal() instead of
+          comparing get_ip_address() returns - this allows it to work with
+          either IPv4 or IPv6.
+
+Thu Oct  9 17:54:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Added more WinCE6 support by integrating some changes from OCI.
+        Mon Aug 11 15:40:37 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+        * ace/config-win32-msvc-8.h:
+        * ace/config-WinCE.h:
+          WinCE 6.0 supports TSS and still does not support sig_atomic_t.
+
+Wed Oct  8 21:06:42 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/Network_Adapters_Test.cpp: Extend the errno checks to correctly
+          sense insufficient privs on AIX (EACCESS).
+
+Wed Oct  8 20:57:24 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Ping_Socket.cpp (send_echo_check): Fixed problem introduced in
+          Tue Oct  7 23:04:50 UTC 2008  Steve Huston  <shuston@riverace.com>
+          while setting the ICMP id.
+
+        * tests/Network_Adapters_Test.cpp: If the test can't run due to
+          insufficient privs, do ACE_END_TEST and return; don't exit. Want
+          to avoid triggering a test fail in the scoreboard when the test
+          can't be run.
+
+Wed Oct  8 18:29:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/gperf/src/Options.cpp
+        * apps/gperf/src/Options.h
+          Fixed ACE_TCHAR problems
+
+        * apps/gperf/src/gperf.mpc
+        * apps/gperf/tests/gperf_test.mpb
+          Build and test gperf when uses_wchar is set
+
+Wed Oct  8 18:11:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Dirent_Test.cpp:
+          Use the new ACE_HAS_TCHAR_DIRENT. Fixes bugzilla 3130
+
+Wed Oct  8 18:08:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_dirent.h:
+          Set ACE_HAS_TCHAR_DIRENT when the dirent struct has a tchar
+          filename. This is currently with CodeGear C++ with
+          uses wchar enabled or with dirent emulation. This fixes bugzilla
+          3438
+
+Wed Oct  8 09:44:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-borland-common.h:
+          Moved the contents to config-win32-borland.h and removed
+          this file
+
+        * ace/config-win32-borland.h:
+          Added contents of config-borland-common.h
+
+Tue Oct  7 23:04:50 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-5.x.h: Added ACE_HAS_ICMP_SUPPORT
+
+        * ace/Ping_Socket.cpp: When setting or checking the ICMP id field,
+          it's 16 bits, so restrict values to that range. AIX pids are 32 bits,
+          and the ID checks failed; this fixes it.
+
+Tue Oct  7 23:01:44 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/Network_Adapters_Test.cpp: If the ping/raw socket open fails
+          because of a lack of privilege, issue a warning that the test can't
+          run, not an error.
+
 Mon Oct  6 22:27:54 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/WFMO_Reactor.inl (suspend_handlers): Never suspend the notify
@@ -14,9 +2669,9 @@ Fri Oct  3 19:05:39 UTC 2008  Yan Dai  <dai_y@ociweb.com>
         * ace/Reactor_Token_T.cpp:
 
           Made reactor notify with zero timeout and ignore timeout case in
-          sleep_hook(). This would fix bugzilla 2465 reactor deadlock 
+          sleep_hook(). This would fix bugzilla 2465 reactor deadlock
           problem.
-          
+
 Thu Oct  2 16:41:57 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Basic_Types.h: Adjust the byte order decision for Itanium

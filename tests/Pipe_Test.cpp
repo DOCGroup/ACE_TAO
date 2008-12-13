@@ -121,7 +121,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 #  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
       ACE_Process_Options options;
       options.command_line (cmdline_fmt,
-                            argv[0],
+                            argc > 0 ? argv[0] : ACE_TEXT ("Pipe_Test"),
                             close_pipe == 0 ? ACE_TEXT (" -d") : ACE_TEXT (""));
 
       ACE_exitcode status = 0;

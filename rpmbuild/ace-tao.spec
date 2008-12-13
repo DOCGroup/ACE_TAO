@@ -1,7 +1,7 @@
 # Set the version number here.
-%define ACEVER  5.6.6
-%define TAOVER  1.6.6
-%define CIAOVER 0.6.6
+%define ACEVER  5.6.8
+%define TAOVER  1.6.8
+%define CIAOVER 0.6.8
 # Set is_major_ver if the version is X.Y instead X.Y.Z
 
 # Conditional build
@@ -673,7 +673,6 @@ awk 'BEGIN { FLG = 1 }; /ace\/post/ { FLG = 0 }; { if (FLG==1) print }' \
 $ACE_ROOT/ace/config.h >> $ACE_ROOT/ace/config.h.tmp
 cat >> $ACE_ROOT/ace/config.h.tmp <<"EOF"
 #define ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS 1  // Ken Sedgwick 2007-05-05
-#define ACE_HAS_ICMP_SUPPORT 1 // Ken Sedgwick 2006-09-05
 EOF
 awk 'BEGIN { FLG = 0 }; /ace\/post/ { FLG = 1 }; { if (FLG==1) print }' \
 $ACE_ROOT/ace/config.h >> $ACE_ROOT/ace/config.h.tmp
@@ -1068,10 +1067,10 @@ install ${ACE_ROOT}/bin/ace_gperf $RPM_BUILD_ROOT%{_bindir}
 install ${ACE_ROOT}/bin/tao_idl $RPM_BUILD_ROOT%{_bindir}
 install ${ACE_ROOT}/bin/tao_imr $RPM_BUILD_ROOT%{_bindir}
 install ${ACE_ROOT}/bin/tao_ifr $RPM_BUILD_ROOT%{_bindir}
-install ${ACE_ROOT}/bin/catior $RPM_BUILD_ROOT%{_bindir}/tao_catior
-install ${ACE_ROOT}/bin/nsadd $RPM_BUILD_ROOT%{_bindir}/tao_nsadd
-install ${ACE_ROOT}/bin/nsdel $RPM_BUILD_ROOT%{_bindir}/tao_nsdel
-install ${ACE_ROOT}/bin/nslist $RPM_BUILD_ROOT%{_bindir}/tao_nslist
+install ${ACE_ROOT}/bin/tao_catior $RPM_BUILD_ROOT%{_bindir}
+install ${ACE_ROOT}/bin/tao_nsadd $RPM_BUILD_ROOT%{_bindir}
+install ${ACE_ROOT}/bin/tao_nsdel $RPM_BUILD_ROOT%{_bindir}
+install ${ACE_ROOT}/bin/tao_nslist $RPM_BUILD_ROOT%{_bindir}
 
 # ================================================================
 # Config & Options
@@ -2180,6 +2179,9 @@ fi
 # ================================================================
 
 %changelog
+* Sun Nov 23 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.7-1
+- Updated for tao_ prefixed catior, nsadd, nsdel and nslist.
+
 * Thu Jul 31 2008 Johnny Willemsen  <jwillemsen@remedy.nl> - 5.6.6-2
 - Removed ace-tao-unusedarg.patch (related to bug #3270).
 

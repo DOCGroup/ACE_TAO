@@ -156,6 +156,9 @@ sub delay_factor {
 
 sub iboot_cycle_power {
   my $self = shift;
+  my $mode = shift;
+
+  # mode 0 is reboot, mode 1 is just shutdown
 
   my ($iboot_host,
       $iboot_outlet,
@@ -242,7 +245,12 @@ sub iboot_cycle_power {
       $iboot_passwd = "PASS";
     }
 
-    my $ipal_command_series = (defined $iboot_outlet) ? ['E', 'D'] : ['f', 'n'];
+    my $ipal_command_series;
+    if (defined $iboot_outlet) {
+      $ipal_command_series = ($mode == 0 ? ['E', 'D'] : ['E']);
+    } else {
+      $ipal_command_series = ($mode == 0 ? ['f', 'n'] : ['f']);
+    }
 
     foreach my $ipal_cmd (@$ipal_command_series) {
       my $retries = 3;
@@ -317,7 +325,7 @@ sub reboot {
       }
       else {
         if (defined $ENV{'ACE_RUN_VX_IBOOT'}) {
-          $self->iboot_cycle_power();
+          $self->iboot_cycle_power(0);
         }
         else {
           if (defined $ENV{'ACE_TEST_VERBOSE'}) {
@@ -365,8 +373,8 @@ sub handle_vxtest_file
     while(<$fh>) {
       $line1 = $_;
       chomp $line1;
-      push @$vx_ref, "ld < $line1";
-      unshift @$unld_ref, "unld \"$line1\"";
+      push @$vx_ref, "ld < lib$line1" . ".so";
+      unshift @$unld_ref, "unld \"lib$line1" . ".so\"";
     }
     close $fh;
   } else {
@@ -396,11 +404,15 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
 
 $PerlACE::ProcessVX::WAIT_DELAY_FACTOR = $ENV{"ACE_RUNTEST_DELAY"};
 
+if (defined $ENV{'ACE_TEST_WINCE'}) {
+    require PerlACE::ProcessWinCE;
+} else {
 if ($OSNAME eq "MSWin32") {
     require PerlACE::ProcessVX_Win32;
 }
 else {
     require PerlACE::ProcessVX_Unix;
+}
 }
 
 1;

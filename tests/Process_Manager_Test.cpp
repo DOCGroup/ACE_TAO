@@ -57,7 +57,7 @@ public:
   virtual int handle_exit (ACE_Process *proc)
   {
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) Exit_Handler(%s) got %d: %d\n"),
+                ACE_TEXT ("(%P) Exit_Handler(%C) got %d: %d\n"),
                 msg_,
                 int (proc->getpid ()),
                 int (proc->exit_code ()) ));
@@ -95,7 +95,7 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
                      debug_test ? ACE_TEXT ("-d") : ACE_TEXT (""),
                      sleep_time);
 
-  pid_t  result = mgr.spawn (opts);
+  pid_t result = mgr.spawn (opts);
 
   if (result != ACE_INVALID_PID)
     ACE_DEBUG ((LM_DEBUG,
@@ -121,7 +121,9 @@ public:
       mgr_ (mgr),
       sleep_time_ (sleep_time) { }
 
+      // FUZZ: disable check_for_lack_ACE_OS
   int open (void*)
+      // FUZZ: enable check_for_lack_ACE_OS
   {
     char tmp[10];
     order += ACE_OS::itoa (sleep_time_, tmp, 10);
@@ -159,7 +161,9 @@ public:
     return 0;
   }
 
+      // FUZZ: disable check_for_lack_ACE_OS
   int close (u_long)
+      // FUZZ: enable check_for_lack_ACE_OS
   {
     running_tasks--;
     return 0;
@@ -249,7 +253,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // --------------------------------------------------
   // wait for a specific PID
-  pid_t child1 = spawn_child (argv[0],
+  pid_t child1 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               1);
   result = mgr.wait (child1,
@@ -273,10 +277,10 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // --------------------------------------------------
   // wait for a specific PID; another should finish first
-  pid_t child2 = spawn_child (argv[0],
+  pid_t child2 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               1);
-  pid_t child3 = spawn_child (argv[0],
+  pid_t child3 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               4);
   result = mgr.wait (child3,
@@ -322,7 +326,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Try the timed wait functions
 
   // This one shouldn't timeout:
-  pid_t child4 = spawn_child (argv[0],
+  pid_t child4 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               1);
   result = mgr.wait (0, ACE_Time_Value (4), &exitcode);
@@ -344,7 +348,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                 exitcode));
 
   // This one should timeout:
-  pid_t child5 = spawn_child (argv[0],
+  pid_t child5 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               4);
   result = mgr.wait (0, ACE_Time_Value (1), &exitcode);
@@ -381,7 +385,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                 exitcode));
 
   // Terminate a child process and make sure we can wait for it.
-  pid_t child6 = spawn_child (argv[0], mgr, 5);
+  pid_t child6 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"), mgr, 5);
   ACE_exitcode status6;
   if (-1 == mgr.terminate (child6))
     {
@@ -419,9 +423,9 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  Process_Task task1 (argv[0], mgr, 3);
-  Process_Task task2 (argv[0], mgr, 2);
-  Process_Task task3 (argv[0], mgr, 1);
+  Process_Task task1 (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"), mgr, 3);
+  Process_Task task2 (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"), mgr, 2);
+  Process_Task task3 (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"), mgr, 1);
   task1.open (0);
   task2.open (0);
   task3.open (0);
@@ -432,14 +436,14 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P) still running tasks\n")));
     }
 
-  ACE_DEBUG ((LM_DEBUG, 
-              ACE_TEXT ("(%P) result: '%s'\n"), 
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P) result: '%C'\n"),
               order.c_str ()));
 
   if (order != "321123")
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P) wrong order of spawns ('%s', should be '321123')\n"),
+                  ACE_TEXT ("(%P) wrong order of spawns ('%C', should be '321123')\n"),
                   order.c_str ()));
       test_status = 1;
     }
@@ -450,10 +454,10 @@ run_main (int argc, ACE_TCHAR *argv[])
   mgr.open (ACE_Process_Manager::DEFAULT_SIZE,
             ACE_Reactor::instance ());
 
-  pid_t child7 = spawn_child (argv[0],
+  pid_t child7 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               5);
-  /* pid_t child8 = */ spawn_child (argv[0],
+  /* pid_t child8 = */ spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                                     mgr,
                                     6);
 

@@ -24,6 +24,7 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_ctype.h"
 
 ACE_RCSID(tests, OS_Test, "$Id$")
 
@@ -99,7 +100,7 @@ rename_test (void)
     }
   ACE_OS::fclose (f);
 
-#if defined (ACE_WIN32) && defined (ACE_LACKS_WIN32_MOVEFILEEX)
+#if defined (ACE_WIN32) && defined (ACE_LACKS_WIN32_MOVEFILEEX) || defined (ACE_HAS_WINCE)
   // Can't rename if new_file exists already.
   ACE_OS::unlink (new_file);
 #endif
@@ -990,6 +991,115 @@ pagesize_test (void)
 }
 
 int
+ace_ctype_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing ace ctype methods\n")));
+
+  int retval = 0;
+  int result = ACE_OS::ace_isprint (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isprint should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isblank (ACE_TEXT('\t'));
+  if (result == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isblank should return != 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isblank (ACE_TEXT(' '));
+  if (result == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isblank should return != 0 for space ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isalpha (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isalpha should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isupper (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isupper should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_islower (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_islower should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isdigit (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isdigit should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isxdigit (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isxdigit should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isspace (ACE_TEXT('\t'));
+  if (result == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isspace should return != 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_ispunct (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_ispunct should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isalnum (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isalnum should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isgraph (ACE_TEXT('\t'));
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isgraph should return 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_iscntrl (ACE_TEXT('\t'));
+  if (result == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_iscntrl should return != 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+  result = ACE_OS::ace_isascii (ACE_TEXT('\t'));
+  if (result == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, ace_isascii should return != 0 for tab ")
+                            ACE_TEXT ("but it returned %d\n"), result));
+      ++retval;
+    }
+
+  return 0;
+}
+
+int
 log2_test (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -1051,6 +1161,9 @@ run_main (int, ACE_TCHAR *[])
       status = result;
 
   if ((result = last_error_test ()) != 0)
+      status = result;
+
+  if ((result = ace_ctype_test ()) != 0)
       status = result;
 
   ACE_END_TEST;

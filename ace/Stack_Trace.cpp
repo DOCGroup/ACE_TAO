@@ -570,6 +570,14 @@ add_frame_to_buf (struct frame_state const *fs, void *usrarg)
 
 static void emptyStack () { }
 
+#if defined (_MSC_VER)
+#  pragma warning(push)
+// Suppress warning 4748 "/GS can not protect parameters and local
+// variables from local buffer overrun because optimizations are
+// disabled in function"
+#  pragma warning(disable: 4748)
+#endif /* _MSC_VER */
+
 static int
 cs_operate(int (*func)(struct frame_state const *, void *), void *usrarg,
            size_t starting_frame, size_t num_frames)
@@ -663,6 +671,11 @@ cs_operate(int (*func)(struct frame_state const *, void *), void *usrarg,
 
   return 0;
 }
+
+#if defined (_MSC_VER)
+// Restore the warning state to what it was before entry.
+#  pragma warning(pop)
+#endif /* _MSC_VER */
 
 void
 ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,

@@ -24,15 +24,8 @@ ACE_RCSID(tests, Vector_Test, "$Id$")
 #include "ace/Vector_T.h"
 
 typedef size_t DATA;
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x570)
-// Borland C++ Builder 6 and earlier don't handle the second template
-// argument correctly. We have to pass it explicitly
-typedef ACE_Vector<DATA, ACE_VECTOR_DEFAULT_SIZE> VECTOR;
-typedef ACE_Vector<DATA, ACE_VECTOR_DEFAULT_SIZE>::Iterator ITERATOR;
-#else
 typedef ACE_Vector<DATA> VECTOR;
 typedef ACE_Vector<DATA>::Iterator ITERATOR;
-#endif
 
 const size_t TOP = 100;
 const size_t LEFT = 10;
@@ -123,10 +116,10 @@ int run_main (int, ACE_TCHAR *[])
 
   // test resize (shrink and enlarge with buffer realloc)
   VECTOR vector2;
-  
+
   // should be around 32
   size_t boundary = vector2.capacity ();
-  
+
   // we fill everything up with 1
   // 1, 1, 1, 1, 1, 1, 1, 1,
   // 1, 1, 1, 1, 1, 1, 1, 1,
@@ -134,7 +127,7 @@ int run_main (int, ACE_TCHAR *[])
   // 1, 1, 1, 1, 1, 1, 1, 1,
   for (i = 0; i < boundary; ++i)
     vector2.push_back (FILLER1);
-  
+
   // we throw almost everything away.
   vector2.resize (1, 0);
 
@@ -145,7 +138,7 @@ int run_main (int, ACE_TCHAR *[])
   // 2, 2, 2, 2, 2, 2, 2, 2,
   // 2,
   for (i = 0; i < boundary; ++i)
-    vector2.push_back (FILLER2);  
+    vector2.push_back (FILLER2);
 
   // now we check the result
   ACE_ASSERT (vector2[0] == FILLER1);

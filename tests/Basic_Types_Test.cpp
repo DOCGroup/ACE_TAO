@@ -194,7 +194,6 @@ test_ace_u_longlong (void)
 }
 #endif /* ACE_LACKS_LONGLONG_T || ACE_LACKS_UNSIGNEDLONGLONG_T */
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {

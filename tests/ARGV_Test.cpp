@@ -98,9 +98,9 @@ test_argv_type_converter (void)
   {
     for (size_t i = 0; i < 4; i++)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT (" (%d) %s\n"),
+                  ACE_TEXT (" (%d) %C\n"),
                   i,
-                  ACE_TEXT_CHAR_TO_TCHAR (argv[i])));
+                  argv[i]));
   }
 
   for (size_t i = 0; save_argv[i]; ++i)
