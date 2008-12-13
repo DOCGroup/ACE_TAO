@@ -24,7 +24,6 @@
 #include /**/ "ace/pre.h"
 
 #include "FTClientEC.h"
-#include "TestC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,6 +32,7 @@
 #include "FTClient_exec_export.h"
 #include "tao/LocalObject.h"
 #include "FTClient_Timer_Handler.h"
+#include "WorkerC.h"
 
 namespace CIDL_FTClient_Impl
 {
@@ -73,7 +73,7 @@ namespace CIDL_FTClient_Impl
     server_ior (const char * server_ior);
 
     // returns the reference to the server
-    test_ptr server (void);
+    DeCoRAM::Worker_ptr server (void);
     
     // Port operations.
 
@@ -101,7 +101,7 @@ namespace CIDL_FTClient_Impl
 
     CORBA::ULong priority_;
 
-    test_var server_;
+    DeCoRAM::Worker_var server_;
 
     CORBA::ORB_var orb_;
 

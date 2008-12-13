@@ -12,7 +12,7 @@ project(FTClient_idl_gen) : taoidldefaults, anytypecode {
 
   IDL_Files {
     FTClient.idl
-    Test.idl
+    Worker.idl
   }
 }
 
@@ -51,7 +51,7 @@ project(FTClient_stub) : ccm_stub {
 
   Source_Files {
     FTClientC.cpp
-    TestC.cpp
+    WorkerC.cpp
   }
 
   Header_Files {
@@ -113,7 +113,7 @@ project(FTClient_svnt) : ciao_servant {
   Source_Files {
     FTClientS.cpp
     FTClient_svnt.cpp
-    TestS.cpp
+    WorkerS.cpp
   }
   
   Header_Files {
