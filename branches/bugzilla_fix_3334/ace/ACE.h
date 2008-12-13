@@ -90,7 +90,13 @@ namespace ACE
 
   /// Simple wildcard matching function supporting '*' and '?'
   /// return true if string s matches pattern.
-  extern ACE_Export bool wild_match(const char* s, const char* pattern, bool case_sensitive = true);
+  /// If character_classes is true, '[' is treated as a wildcard character
+  /// as described in the fnmatch() POSIX API.  The following POSIX "bracket
+  /// expression" features are not implemented: collating symbols, equivalence
+  /// class expressions, and character class expressions.  The POSIX locale is
+  /// assumed.
+  extern ACE_Export bool wild_match(const char* s, const char* pattern,
+    bool case_sensitive = true, bool character_classes = false);
 
   /**
    * @name I/O operations
@@ -384,7 +390,6 @@ namespace ACE
   extern ACE_Export int max_handles (void);
 
   // = String functions
-#if !defined (ACE_HAS_WINCE)
   /**
    * Return a dynamically allocated duplicate of @a str, substituting
    * the environment variable if @c str[0] @c == @c '$'.  Note that
@@ -392,7 +397,6 @@ namespace ACE
    * by @c ACE_OS::free.
    */
   extern ACE_Export ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
-#endif /* ACE_HAS_WINCE */
 
   /// Returns a pointer to the "end" of the string, i.e., the character
   /// past the '\0'.
@@ -426,6 +430,9 @@ namespace ACE
   extern ACE_Export wchar_t *strnnew (const wchar_t *str, size_t n);
 
 #endif /* ACE_HAS_WCHAR */
+
+  /// Determine if a specified pathname is "dot dir" (ie. "." or "..").
+  ACE_NAMESPACE_INLINE_FUNCTION bool isdotdir (const char *s);
 
   /**
    * On Windows, determines if a specified pathname ends with ".exe"

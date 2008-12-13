@@ -368,6 +368,9 @@
 #define ACE_HAS_GPERF
 #define ACE_HAS_DIRENT
 
+#define ACE_LACKS_ISCTYPE
+#define ACE_LACKS_ISBLANK
+
 #if defined (__SUNPRO_CC)
 # define ACE_CC_NAME ACE_TEXT ("SunPro C++")
 # define ACE_CC_MAJOR_VERSION (__SUNPRO_CC >> 8)
@@ -399,6 +402,7 @@
 #define ACE_LACKS_INET_ATON
 
 // Solaris doesn't have wcstoull
+#define ACE_LACKS_WCSTOLL
 #define ACE_LACKS_WCSTOULL
 
 #if defined (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64)

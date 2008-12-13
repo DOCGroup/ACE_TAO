@@ -62,7 +62,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   long allocation_granularity (void);
 
-  // used by ARGV::argv_to_string() and ACE_OS::fork_exec()
+  /// used by ARGV::argv_to_string() and ACE_OS::fork_exec()
   extern ACE_Export
   int argv_to_string (int argc,
                       ACE_TCHAR **argv,
@@ -139,7 +139,6 @@ namespace ACE_OS
 
   extern ACE_Export
   pid_t fork_exec (ACE_TCHAR *argv[]);
-
   //@}
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -255,7 +254,7 @@ namespace ACE_OS
    * <ACE_OS::read> call, which uses the <read> system call on UNIX
    * and the <ReadFile> call on Win32). If errors occur, -1 is
    * returned.  If EOF occurs, 0 is returned.  Whatever data has been
-   * read will be returned to the caller through<bytes_transferred>.
+   * read will be returned to the caller through @a bytes_transferred.
    *
    */
   extern ACE_Export
@@ -356,7 +355,7 @@ namespace ACE_OS
    * calls, which is uses the <write> system call on UNIX and the
    * <WriteFile> call on Win32).  If errors occur, -1 is returned.  If
    * EOF occurs, 0 is returned.  Whatever data has been transmitted
-   * will be returned to the caller through <bytes_transferred>.
+   * will be returned to the caller through @a bytes_transferred.
    */
   extern ACE_Export
   ssize_t write_n (ACE_HANDLE handle,

@@ -30,8 +30,20 @@ namespace ACE_Utils
       node_ID_[i] = 0;
   }
 
-  UUID_Node::Node_ID&
+  UUID_Node::UUID_Node (const UUID_Node & node)
+  {
+    for (int i = 0; i < UUID_Node::NODE_ID_SIZE; ++i)
+      this->node_ID_[i] = node.node_ID_[i];
+  }
+
+  UUID_Node::Node_ID &
   UUID_Node::node_ID (void)
+  {
+    return node_ID_;
+  }
+
+  const UUID_Node::Node_ID &
+  UUID_Node::node_ID (void) const
   {
     return node_ID_;
   }
@@ -43,6 +55,20 @@ namespace ACE_Utils
       node_ID_[i] = node_ID[i];
   }
 
+  const UUID_Node &
+  UUID_Node::operator = (const UUID_Node & rhs)
+  {
+    // Check for self assignment.
+    if (this == &rhs)
+      return *this;
+
+    // Copy the content of the node id.
+    for (int i = 0; i < UUID_Node::NODE_ID_SIZE; ++i)
+      this->node_ID_[i] = rhs.node_ID_[i];
+
+    return *this;
+  }
+
   UUID UUID::NIL_UUID;
 
   /// Construct a nil UUID. Such a UUID has every one of it's data
@@ -52,13 +78,9 @@ namespace ACE_Utils
       time_mid_ (0),
       time_hi_and_version_ (0),
       clock_seq_hi_and_reserved_ (0),
-      clock_seq_low_ (0),
-      node_ (0),
-      node_release_ (true),
-      as_string_ (0)
+      clock_seq_low_ (0)
   {
-    ACE_NEW (node_,
-             UUID_Node);
+
   }
 
   /// Construct a UUID from a string representation of an UUID.
@@ -67,14 +89,8 @@ namespace ACE_Utils
       time_mid_ (0),
       time_hi_and_version_ (0),
       clock_seq_hi_and_reserved_ (0),
-      clock_seq_low_ (0),
-      node_ (0),
-      node_release_ (true),
-      as_string_ (0)
+      clock_seq_low_ (0)
   {
-    ACE_NEW (node_,
-             UUID_Node);
-
     this->from_string_i (uuid_string);
   }
 
@@ -84,29 +100,44 @@ namespace ACE_Utils
       time_hi_and_version_ (right.time_hi_and_version_),
       clock_seq_hi_and_reserved_ (right.clock_seq_hi_and_reserved_),
       clock_seq_low_ (right.clock_seq_low_),
-      as_string_ (0)
+      node_ (right.node_)
   {
-    ACE_NEW (node_,
-             UUID_Node (*right.node_));
+
   }
 
   UUID::~UUID (void)
   {
-    if (node_release_)
-      delete node_;
 
-    if (as_string_ != 0)
-      delete as_string_;
+  }
+
+  const UUID &
+  UUID::operator = (const UUID & rhs)
+  {
+    if (this == &rhs)
+      return *this;
+
+    // Copy the values of the UUID.
+    this->time_low_ = rhs.time_low_;
+    this->time_mid_ = rhs.time_mid_;
+    this->time_hi_and_version_ = rhs.time_hi_and_version_;
+    this->clock_seq_hi_and_reserved_ = rhs.clock_seq_hi_and_reserved_;
+    this->clock_seq_low_ = rhs.clock_seq_low_;
+    this->node_ = rhs.node_;
+
+    // Delete the string version of the UUID.
+    this->as_string_.reset (0);
+    return *this;
   }
 
   const ACE_CString*
-  UUID::to_string (void)
+  UUID::to_string (void) const
   {
     /// Only compute the string representation once.
-    if (as_string_ == 0)
+    if (this->as_string_.get () == 0)
       {
         // Get a buffer exactly the correct size. Use the nil UUID as a
         // gauge.  Don't forget the trailing nul.
+        ACE_Auto_Array_Ptr <char> auto_clean;
         size_t UUID_STRING_LENGTH = 36 + thr_id_.length () + pid_.length ();
         char *buf = 0;
 
@@ -117,6 +148,9 @@ namespace ACE_Utils
                             char[UUID_STRING_LENGTH + 1],
                             0);
 
+            // Let the auto array pointer manage the buffer.
+            auto_clean.reset (buf);
+
             ACE_OS::sprintf (buf,
                              "%8.8x-%4.4x-%4.4x-%2.2x%2.2x-%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x-%s-%s",
                              this->time_low_,
@@ -124,12 +158,12 @@ namespace ACE_Utils
                              this->time_hi_and_version_,
                              this->clock_seq_hi_and_reserved_,
                              this->clock_seq_low_,
-                             (this->node_->node_ID ()) [0],
-                             (this->node_->node_ID ()) [1],
-                             (this->node_->node_ID ()) [2],
-                             (this->node_->node_ID ()) [3],
-                             (this->node_->node_ID ()) [4],
-                             (this->node_->node_ID ()) [5],
+                             (this->node_.node_ID ()) [0],
+                             (this->node_.node_ID ()) [1],
+                             (this->node_.node_ID ()) [2],
+                             (this->node_.node_ID ()) [3],
+                             (this->node_.node_ID ()) [4],
+                             (this->node_.node_ID ()) [5],
                              thr_id_.c_str (),
                              pid_.c_str ()
                              );
@@ -140,6 +174,9 @@ namespace ACE_Utils
                             char[UUID_STRING_LENGTH + 1],
                             0);
 
+            // Let the auto array pointer manage the buffer.
+            auto_clean.reset (buf);
+
             ACE_OS::sprintf (buf,
                              "%8.8x-%4.4x-%4.4x-%2.2x%2.2x-%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x",
                              this->time_low_,
@@ -147,30 +184,26 @@ namespace ACE_Utils
                              this->time_hi_and_version_,
                              this->clock_seq_hi_and_reserved_,
                              this->clock_seq_low_,
-                             (this->node_->node_ID ()) [0],
-                             (this->node_->node_ID ()) [1],
-                             (this->node_->node_ID ()) [2],
-                             (this->node_->node_ID ()) [3],
-                             (this->node_->node_ID ()) [4],
-                             (this->node_->node_ID ()) [5]
+                             (this->node_.node_ID ()) [0],
+                             (this->node_.node_ID ()) [1],
+                             (this->node_.node_ID ()) [2],
+                             (this->node_.node_ID ()) [3],
+                             (this->node_.node_ID ()) [4],
+                             (this->node_.node_ID ()) [5]
                              );
           }
 
-        // We allocated 'buf' above dynamically, so we shouldn't use
-        // ACE_NEW_RETURN here to avoid a possible memory leak.
-        ACE_NEW_NORETURN (this->as_string_,
-                          ACE_CString (buf, UUID_STRING_LENGTH));
+        // Save the string.
+        ACE_CString * as_string = 0;
 
-        // we first free the dynamically allocated 'buf'.
-        delete [] buf;
+        ACE_NEW_RETURN (as_string,
+                        ACE_CString (buf, UUID_STRING_LENGTH),
+                        0);
 
-        // then we test that ACE_NEW succeded for 'as_string_'
-        // if not, we return 0 (NULL) to indicate failure.
-        if (this->as_string_ == 0 )
-          return 0;
+        this->as_string_.reset (as_string);
       }
 
-    return as_string_;
+    return this->as_string_.get ();
   }
 
   void
@@ -293,9 +326,9 @@ namespace ACE_Utils
 
     UUID_Node::Node_ID node_id;
     for (int i = 0; i < UUID_Node::NODE_ID_SIZE; ++i)
-      node_id [i] = static_cast<u_char> (node[i]);
+      node_id[i] = static_cast<u_char> (node[i]);
 
-    this->node_->node_ID (node_id);
+    this->node_.node_ID (node_id);
 
     // Support varient 10- only
     if ((this->clock_seq_hi_and_reserved_ & 0xc0) != 0x80 && (this->clock_seq_hi_and_reserved_ & 0xc0) != 0xc0)
@@ -336,7 +369,7 @@ namespace ACE_Utils
                       "IllegalArgument (Thread and Process Id format incorrect)\n"));
 
         this->thr_id_ = thr_pid_str.substr (0, pos);
-      this->pid_ = thr_pid_str.substr (pos+1, thr_pid_str.length ()-pos-1);
+        this->pid_ = thr_pid_str.substr (pos+1, thr_pid_str.length ()-pos-1);
       }
   }
 
@@ -461,7 +494,7 @@ namespace ACE_Utils
     // sequence.
     if (timestamp <= time_last_)
       {
-        uuid_state_.clock_sequence = static_cast<ACE_UINT16> 
+        uuid_state_.clock_sequence = static_cast<ACE_UINT16>
           ((uuid_state_.clock_sequence + 1) & ACE_UUID_CLOCK_SEQ_MASK);
       }
     // If the system time ticked since the last UUID was

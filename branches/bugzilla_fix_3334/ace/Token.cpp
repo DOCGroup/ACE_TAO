@@ -216,7 +216,7 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
     }
 
   // Do a quick check for "polling" behavior.
-  if (timeout != 0 && timeout->sec () == 0 && timeout->usec () == 0)
+  if (timeout != 0 && *timeout == ACE_Time_Value::zero)
     {
       errno = ETIME;
       return -1;

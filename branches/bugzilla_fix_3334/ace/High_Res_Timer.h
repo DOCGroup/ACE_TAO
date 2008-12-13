@@ -204,12 +204,8 @@ public:
   /// to start_incr and stop_incr.
   void elapsed_time_incr (ACE_hrtime_t &nanoseconds) const;
 
-#if !defined (ACE_HAS_WINCE)
-  // @@ WINCE These two functions are currently not supported on Windows CE.
-  //    However, we should probably use the handle and ACE_Log_Msg to
-  //    print out the result.
   /// Print total time.
-  /// @note only use <print_total> if incremental timings had been used!
+  /// @note only use @c print_total if incremental timings had been used!
   void print_total (const ACE_TCHAR *message,
                     const int iterations = 1,
                     ACE_HANDLE handle = ACE_STDOUT) const;
@@ -218,7 +214,6 @@ public:
   void print_ave (const ACE_TCHAR *message,
                   const int iterations = 1,
                   ACE_HANDLE handle = ACE_STDOUT) const;
-#endif /* !ACE_HAS_WINCE */
 
   /// Dump the state of an object.
   void dump (void) const;

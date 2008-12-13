@@ -102,7 +102,7 @@ ACE_OS::mmap (void *addr,
                                                   attr,
                                                   prot,
                                                   0,
-                                                  0,
+                                                  (file_handle == ACE_INVALID_HANDLE) ? len : 0,
                                                   file_mapping_name);
     }
 

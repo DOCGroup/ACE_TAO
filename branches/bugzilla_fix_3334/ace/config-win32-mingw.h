@@ -52,6 +52,7 @@
 #endif
 
 #undef ACE_LACKS_SIGSET
+#undef ACE_HAS_WTOF
 
 #define ACE_LACKS_SIGSET_DEFINITIONS
 #define ACE_LACKS_SYS_SHM_H
@@ -84,6 +85,7 @@
 #define ACE_LACKS_PDHMSG_H
 #define ACE_HAS_NONCONST_WCSDUP
 #define ACE_HAS_WINSOCK2_GQOS
+#define ACE_ISCTYPE_EQUIVALENT ::_isctype
 
 // We trust the user: He must have used -mpentiumpro or -mpentium
 // if that is what he wants.
@@ -91,8 +93,8 @@
 # define ACE_HAS_PENTIUM
 #endif
 
-#define ACE_INT64_FORMAT_SPECIFIER ACE_TEXT ("%I64d")
-#define ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT ("%I64u")
+#define ACE_INT64_FORMAT_SPECIFIER_ASCII "%I64d"
+#define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%I64u"
 
 #define ACE_ENDTHREADEX(STATUS)  ::_endthreadex ((DWORD) (STATUS))
 

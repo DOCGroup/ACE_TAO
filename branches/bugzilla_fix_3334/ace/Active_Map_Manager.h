@@ -78,7 +78,7 @@ public:
   // = This really should be protected but because of template
   // friends, they are not.
 
-  /// Increment the <slot_generation> number.
+  /// Increment the slot_generation number.
   void increment_slot_generation_count (void);
 
 private:

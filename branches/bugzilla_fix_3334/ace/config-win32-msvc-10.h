@@ -1,33 +1,31 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file   config-win32-msvc-8.h
+ *  @file   config-win32-msvc-10.h
  *
  *  $Id$
  *
- *  @brief  Microsoft Visual C++ 8.0 configuration file.
+ *  @brief  Microsoft Visual C++ 10.0 configuration file.
  *
- *  This file is the ACE configuration file for Microsoft Visual C++ version 8.
+ *  This file is the ACE configuration file for Microsoft Visual C++ version 10.
  *
  *  @note Do not include this file directly, include config-win32.h instead.
- *
- *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
 //=============================================================================
 
-#ifndef ACE_CONFIG_WIN32_MSVC_8_H
-#define ACE_CONFIG_WIN32_MSVC_8_H
+#ifndef ACE_CONFIG_WIN32_MSVC_10_H
+#define ACE_CONFIG_WIN32_MSVC_10_H
 #include /**/ "ace/pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
 #error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
-#ifndef ACE_WIN32_VC8
-#  define ACE_WIN32_VC8
+#ifndef ACE_WIN32_VC10
+#  define ACE_WIN32_VC10
 #endif
 
-// Visual C++ 8.0 (.NET) deprecated the old iostreams
+// Visual C++ 9.0 (.NET) deprecated the old iostreams
 #if !defined (ACE_HAS_STANDARD_CPP_LIBRARY)
 #define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #endif
@@ -37,7 +35,7 @@
 #endif
 
 // Windows' timeval is non-conformant (defined in terms of long instead of
-// time_t) and VC8 (on desktop, not CE) changed time_t to a 64-bit value
+// time_t) and VC9 (on desktop, not CE) changed time_t to a 64-bit value
 // even when compiling a 32-bit application. Therefore, ace/Time_Value
 // needs to rearrange a few things for this compiler. See Time_Value.h
 // for complete details.
@@ -59,9 +57,6 @@
 #endif
 
 // Windows Mobile 6 doesn't do sig_atomic_t, but maybe future versions will.
-// This has been true up thrugh the versions. We don't have any indication
-// that this might be supported in the future, but it is an easy enough fix
-// to bump the wince revision number when a new version is released.
 #  if !defined (_WIN32_WCE) || (_WIN32_WCE > 0x601)
 #    define ACE_HAS_SIG_ATOMIC_T
 #  endif /* !Win CE 6.0 or less */
@@ -69,10 +64,11 @@
 #define ACE_HAS_STRERROR
 #define ACE_LACKS_STRPTIME
 
-#if !defined (ACE_HAS_WINCE)
-#  define ACE_HAS_INTRIN_H
-#  define ACE_HAS_INTRINSIC_INTERLOCKED
-#endif
+// Evaluate this with a WinCE build; maybe things have improved since VC8.
+//#if !defined (ACE_HAS_WINCE)
+# define ACE_HAS_INTRIN_H
+# define ACE_HAS_INTRINSIC_INTERLOCKED
+//#endif
 
 #if !defined (_WIN32_WCE) || (_WIN32_WCE >= 0x501)
 #  define ACE_HAS_INTRINSIC_BYTESWAP
@@ -121,19 +117,12 @@
 // Disable warning of using Microsoft Extension.
 # pragma warning(disable:4231)
 
+// 'class1' : inherits 'class2::member' via dominance
+#pragma warning(disable:4250)
+
 // CE (at least thru Windows Mobile 5) doesn't have the new, secure CRT.
 #if !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_TR24731_2005_CRT)
 #  define ACE_HAS_TR24731_2005_CRT
-#endif
-
-//Detect Platform SDK 64-bit (AMD64) compiler using _MSC_FULL_VER
-#if (defined (_WIN64) || defined (WIN64)) && _MSC_FULL_VER < 140050000
-#  define ACE_AUTO_PTR_LACKS_RESET
-#  define ACE_MSVC_USES_DOUBLE_UNDERSCORE_STAT64
-#  define ACE_HAS_BROKEN_STD_REVERSE_ITERATOR
-#  define ACE_LACKS_NUMERIC_LIMITS_64_BIT_TYPES
-#  undef ACE_HAS_TR24731_2005_CRT
-#  undef ACE_HAS_INTRIN_H
 #endif
 
 // On CE w/o MFC config-WinCE.h needs to declare a placement new. This
@@ -150,4 +139,4 @@
 # define ACE_NEEDS_FUNC_DEFINITIONS
 
 #include /**/ "ace/post.h"
-#endif /* ACE_CONFIG_WIN32_MSVC_8_H */
+#endif /* ACE_CONFIG_WIN32_MSVC_10_H */

@@ -241,6 +241,9 @@
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_POLL_H
 #define ACE_LACKS_WCTYPE_H
+#define ACE_LACKS_ISCTYPE
+#define ACE_LACKS_ISWCTYPE
+#define ACE_LACKS_ISBLANK
 
 // Not sure if these should always be defined.
 #define ACE_LACKS_SYS_UN_H
@@ -269,6 +272,8 @@
 #define ACE_LACKS_WCSTOL
 #define ACE_LACKS_WCSTOUL
 #define ACE_LACKS_WCSDUP
+#define ACE_LACKS_STRTOLL
+#define ACE_LACKS_WCSTOLL
 #define ACE_LACKS_STRTOULL
 #define ACE_LACKS_WCSTOULL
 

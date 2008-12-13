@@ -256,8 +256,8 @@ public:
    * that is called for the object or array when it to be destroyed.
    * It may perform any necessary cleanup specific for that object or
    * its class.  "param" is passed as the second parameter to the
-   * "cleanup_hook" function; the first parameter is the object (or
-   * array) to be destroyed.  "cleanup_hook", for example, may delete
+   * @a cleanup_hook function; the first parameter is the object (or
+   * array) to be destroyed.  @a cleanup_hook, for example, may delete
    * the object (or array).  For OS's that do not have processes, this
    * function is the same as <at_thread_exit>.  Returns 0 on success.
    * On failure, returns -1 and sets errno to: EAGAIN if shutting
@@ -267,6 +267,8 @@ public:
   static int at_exit (void *object,
                       ACE_CLEANUP_FUNC cleanup_hook,
                       void *param);
+
+  static int remove_at_exit (void *object);
 
 #if 0 /* not implemented yet */
   /// Similar to <at_exit>, except that the cleanup_hook is called
@@ -344,6 +346,10 @@ private:
   /// Register an object or array for deletion at program termination.
   /// See description of static version above for return values.
   int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
+
+  /// Remove an object for deletion at program termination.
+  /// See description of static version above for return values.
+  int remove_at_exit_i (void *object);
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 public:

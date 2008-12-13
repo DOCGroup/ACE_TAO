@@ -195,7 +195,10 @@ ACE_INLINE ACE_HANDLE
 ACE_OS::dup (ACE_HANDLE handle)
 {
   ACE_OS_TRACE ("ACE_OS::dup");
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_LACKS_DUP)
+  ACE_UNUSED_ARG (handle);
+  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
+#elif defined (ACE_WIN32)
   ACE_HANDLE new_fd;
   if (::DuplicateHandle(::GetCurrentProcess (),
                         handle,
@@ -208,15 +211,9 @@ ACE_OS::dup (ACE_HANDLE handle)
   else
     ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
   /* NOTREACHED */
-#elif defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (handle);
-  ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_LACKS_DUP)
-  ACE_UNUSED_ARG (handle);
-  ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::dup (handle), ACE_HANDLE, ACE_INVALID_HANDLE);
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_LACKS_DUP */
 }
 
 ACE_INLINE int
@@ -558,11 +555,10 @@ ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
 #else /* ACE_WIN32 && !ACE_HAS_WINCE */
   // Emulate using the char version
   char *char_name = 0;
-  int result = 0;
 
   ACE_NEW_RETURN (char_name, char[maxnamelen], -1);
 
-  result = ACE_OS::hostname(char_name, maxnamelen);
+  int result = ACE_OS::hostname(char_name, maxnamelen);
   ACE_OS::strcpy (name, ACE_Ascii_To_Wide (char_name).wchar_rep ());
 
   delete [] char_name;

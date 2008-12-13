@@ -16,9 +16,9 @@ ACE_RW_Mutex::remove (void)
 {
 // ACE_TRACE ("ACE_RW_Mutex::remove");
   int result = 0;
-  if (this->removed_ == 0)
+  if (!this->removed_)
     {
-      this->removed_ = 1;
+      this->removed_ = true;
       result = ACE_OS::rwlock_destroy (&this->lock_);
     }
   return result;

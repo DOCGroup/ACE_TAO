@@ -1147,26 +1147,22 @@ ACE_Service_Gestalt::parse_args_i (int argc,
                                    bool &ignore_default_svc_conf_file)
 {
   ACE_TRACE ("ACE_Service_Gestalt::parse_args_i");
-  //FUZZ: disable check_for_lack_ACE_OS
-  ACE_Get_Opt getopt (argc,
-                      argv,
-                      ACE_TEXT ("df:k:nyS:"),
-                      1); // Start at argv[1].
-  //FUZZ: enable check_for_lack_ACE_OS
+  ACE_Get_Opt get_opt (argc,
+                       argv,
+                       ACE_TEXT ("df:k:nyS:"),
+                       1); // Start at argv[1].
 
   if (this->init_svc_conf_file_queue () == -1)
     return -1;
 
-  //FUZZ: disable check_for_lack_ACE_OS
-  for (int c; (argc != 0) && ((c = getopt ()) != -1); )
-  //FUZZ: enable check_for_lack_ACE_OS
+  for (int c; (argc != 0) && ((c = get_opt ()) != -1); )
     switch (c)
       {
       case 'd':
         ACE::debug (1);
         break;
       case 'f':
-        if (this->svc_conf_file_queue_->enqueue_tail (ACE_TString (getopt.opt_arg ())) == -1)
+        if (this->svc_conf_file_queue_->enqueue_tail (ACE_TString (get_opt.opt_arg ())) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("%p\n"),
                              ACE_TEXT ("enqueue_tail")),
@@ -1178,7 +1174,7 @@ ACE_Service_Gestalt::parse_args_i (int argc,
          * @TODO: Is this always a static storage? Shouldn't we copy
          * & gain ownership of the value?
          */
-        this->logger_key_ = getopt.opt_arg ();
+        this->logger_key_ = get_opt.opt_arg ();
         break;
       case 'n':
         this->no_static_svcs_ = 1;
@@ -1194,7 +1190,7 @@ ACE_Service_Gestalt::parse_args_i (int argc,
                             -1);
           }
 
-        if (this->svc_queue_->enqueue_tail (ACE_TString (getopt.opt_arg ())) == -1)
+        if (this->svc_queue_->enqueue_tail (ACE_TString (get_opt.opt_arg ())) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("%p\n"),
                              ACE_TEXT ("enqueue_tail")),

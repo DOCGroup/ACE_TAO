@@ -25,7 +25,7 @@
 #endif /* ACE_IOV_MAX */
 
 // Define custom export macros for export/import of symbols from/of dll's
-#define ACE_HAS_CUSTOM_EXPORT_MACROS
+#define ACE_HAS_CUSTOM_EXPORT_MACROS 1
 #define ACE_Proper_Export_Flag __declspec (dllexport)
 #define ACE_Proper_Import_Flag __declspec (dllimport)
 #define ACE_EXPORT_SINGLETON_DECLARATION(T) template class __declspec (dllexport) T
@@ -145,6 +145,7 @@
 #define ACE_LACKS_FPUTWS 1
 
 #define ACE_LACKS_WCSTOULL 1
+#define ACE_LACKS_ISCTYPE
 
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 

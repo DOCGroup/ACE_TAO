@@ -35,7 +35,7 @@ ACE_RW_Mutex::dump (void) const
 }
 
 ACE_RW_Mutex::ACE_RW_Mutex (int type, const ACE_TCHAR *name, void *arg)
-  : removed_ (0)
+  : removed_ (false)
 {
 // ACE_TRACE ("ACE_RW_Mutex::ACE_RW_Mutex");
   if (ACE_OS::rwlock_init (&this->lock_, type, name, arg) != 0)
