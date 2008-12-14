@@ -21,7 +21,7 @@ CTT_Enhanced::~CTT_Enhanced ()
 double
 CTT_Enhanced::operator () (const TASK_LIST & tasks)
 {
-  TRACE ("(" << tasks << ")");
+  //TRACE ("(" << tasks << ")");
 
   // copy tasks for local modifications
   TASK_LIST scheduled_tasks = tasks;

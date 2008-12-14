@@ -82,6 +82,7 @@ project (schedulability_check) : acelib {
     Algorithms.cpp
     Schedule.cpp
     CTT_Enhanced.cpp
+    CTT_Basic.cpp 
     schedulability_check.cpp
   }
 }

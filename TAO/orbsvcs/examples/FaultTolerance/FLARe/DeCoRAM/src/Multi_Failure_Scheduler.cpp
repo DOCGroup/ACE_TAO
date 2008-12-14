@@ -27,12 +27,12 @@ PrimaryFinder::PrimaryFinder (SCHEDULE & schedule)
 std::pair <Processor, Taskname> 
 PrimaryFinder::operator () (const Task & task)
 {
+  Processor processor;
   TaskNamePredicate base_name_predicate (
     task.name.substr (0, task.name.find_first_of ('_')));
 
-  Processor processor;
-  
   TASK_LIST::iterator find_result;
+
   for (SCHEDULE::iterator it = schedule_.begin ();
        it != schedule_.end ();
        ++it)
@@ -58,19 +58,19 @@ PrimaryFinder::operator () (const Task & task)
 //-----------------------------------------------------------------------------
 
 Multi_Failure_Scheduler::Multi_Failure_Scheduler (SCHEDULE & current_schedule,
-                                                  SCHEDULE & global_schedule,
+                                                  const SCHEDULE & global_schedule,
                                                   unsigned int failure_number)
   : current_schedule_ (current_schedule),
     global_schedule_ (global_schedule),
     failure_number_ (failure_number),
-    primary_finder_ (global_schedule)
+    primary_finder_ (global_schedule_)
 {
 }
 
 ScheduleResult 
 Multi_Failure_Scheduler::operator () (const Task & task)
 {
-  TRACE ("begin");
+  TRACE (" scheduling " << task << "  = " << task.role);
 
   ScheduleResult result;
   result.task = task;
@@ -91,7 +91,10 @@ Multi_Failure_Scheduler::operator () (const Task & task)
           this->calculate_relevant_failure_scenarios (processor_it->first,
                                                       task,
                                                       failure_number_), 
-          processor_it->first);
+          processor_it->first,
+          task);
+
+      // add task name itself to each failure scenario that has 
 
       local_tasks.push_back (task);
 
@@ -122,11 +125,14 @@ Multi_Failure_Scheduler::operator () (const Task & task)
           // remove this processor from the schedule so that
           // following backups are not scheduled on the same processor
           current_schedule_.erase (processor_it);
-          
+
+          // add result to local copy of the global schedule
+          global_schedule_[result.processor].push_back (result.task);
+
           break;
         }
     }
-    
+
   return result;
 }
 
@@ -236,9 +242,11 @@ struct ActiveBackupCalculator : public std::unary_function <PROCESSOR_SET,
                                                             TASKNAME_SET>
 {
   ActiveBackupCalculator (const Processor & processor,
-                          SCHEDULE & schedule)
+                          SCHEDULE & schedule,
+                          const Task & task)
     : processor_ (processor),
-      schedule_ (schedule)
+      schedule_ (schedule),
+      task_ (task)
   {
   }
 
@@ -253,6 +261,11 @@ struct ActiveBackupCalculator : public std::unary_function <PROCESSOR_SET,
     // only consider the backup tasks on this processor
     TASK_LIST backups = Multi_Failure_Scheduler::get_backups (processor_,
                                                               schedule_);
+
+    // if the currently scheduled task is a backup, we have to
+    // consider it active as well to get the worst-case scenario
+    if (task_.role == BACKUP)
+      backups.push_back (task_);
 
     BACKUP_PRIMARY_MAP backups_to_primary_processors =
       Multi_Failure_Scheduler::get_primary_processors (backups,
@@ -294,6 +307,7 @@ struct ActiveBackupCalculator : public std::unary_function <PROCESSOR_SET,
 private:
   Processor processor_;
   SCHEDULE & schedule_;
+  Task task_;
 };
 
 //-----------------------------------------------------------------------------
@@ -321,10 +335,11 @@ Multi_Failure_Scheduler::calculate_relevant_failure_scenarios (
   // if the task to schedule is a backup, we can assume that its
   // primary processor failed in any case
   unsigned int failing_backups = 0;
+  Processor primary_proc;
   if (task.role == BACKUP)
     {
       failing_backups = failure_number - 1;
-      Processor primary_proc = primary_finder_ (task).first;
+      primary_proc = primary_finder_ (task).first;
       backups_to_primary_processors.erase (primary_proc);
     }
   else
@@ -375,9 +390,14 @@ Multi_Failure_Scheduler::calculate_relevant_failure_scenarios (
                  std::inserter (set,
                                 set.begin ()));
       
+      if (task.role == BACKUP)
+        set.insert (primary_proc);
+
+      // always add a failed primary if this is a backup,
+      // since this is the worst case
       result.push_back (set);
       
-      TRACE ("CB=" << combination);
+      TRACE ("result +=" << set);
     }
   while (next_combination (relevant_processors.begin (),
                            relevant_processors.end (),
@@ -392,7 +412,8 @@ Multi_Failure_Scheduler::calculate_relevant_failure_scenarios (
 FAILOVER_SCENARIOS
 Multi_Failure_Scheduler::get_failover_scenarios (
   const FAILURE_SCENARIOS & failed_processors,
-  const Processor & processor)
+  const Processor & processor,
+  const Task & task)
 {
   TRACE ("(" << processor << ")");
 
@@ -403,7 +424,8 @@ Multi_Failure_Scheduler::get_failover_scenarios (
                   std::inserter (scenarios,
                                  scenarios.begin ()),
                   ActiveBackupCalculator (processor,
-                                          global_schedule_));
+                                          global_schedule_,
+                                          task));
 
   return scenarios;
 }
