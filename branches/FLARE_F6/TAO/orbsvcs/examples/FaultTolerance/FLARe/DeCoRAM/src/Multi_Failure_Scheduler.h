@@ -47,7 +47,7 @@ struct Multi_Failure_Scheduler : public std::unary_function <Task,
 public:
   /// default ctor
   Multi_Failure_Scheduler (SCHEDULE & current_schedule,
-                           SCHEDULE & global_schedule,
+                           const SCHEDULE & global_schedule,
                            unsigned int failure_number);
 
   // returns where the task has been placed and which WCRT it has.
@@ -80,10 +80,11 @@ private:
   /// given a certain set of failed processors
   FAILOVER_SCENARIOS get_failover_scenarios (
                  const FAILURE_SCENARIOS & failed_processors,
-                 const Processor & processor);
+                 const Processor & processor,
+                 const Task & task);
 
   SCHEDULE & current_schedule_;
-  SCHEDULE & global_schedule_;
+  SCHEDULE global_schedule_;
 
   // number of processor failures that the scheduler should provide
   // for

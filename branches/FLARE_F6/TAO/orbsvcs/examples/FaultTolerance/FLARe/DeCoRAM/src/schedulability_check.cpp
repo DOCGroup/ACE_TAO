@@ -16,16 +16,18 @@
 #include <numeric>
 #include "Schedule.h"
 #include "CTT_Enhanced.h"
+#include "CTT_Basic.h"
 #include <ace/Get_Opt.h>
 
 std::string filename = "test.sd"; // filename of task list input
 bool counting_mode = false;
 bool average_mode = false;
+bool check_overbooking = false;
 
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("acf:h"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("acf:ho"));
 
   int c;
 
@@ -40,6 +42,9 @@ parse_args (int argc, char *argv[])
       break;
     case 'a':
       average_mode = true;
+      break;
+    case 'o':
+      check_overbooking = true;
       break;
     case 'h':
     default:
@@ -118,7 +123,12 @@ int main (int argc, char *argv[])
     }
   else
     {
-      CTT_Enhanced ctt;
+      std::auto_ptr <CTT_Algorithm> ctt;
+      if (check_overbooking)
+        ctt.reset (new CTT_Basic ());
+      else
+        ctt.reset (new CTT_Enhanced ());
+
       int status = 0;
       double wcrt = 0;
       double period = 0;
@@ -128,7 +138,7 @@ int main (int argc, char *argv[])
            ++it)
         {
           std::cout << it->first << ": ";
-          wcrt = ctt (it->second);
+          wcrt = (*ctt) (it->second);
 
           if (wcrt > 0)
             {
