@@ -1,0 +1,61 @@
+project(client) : lwft_client {
+  exename = decoram_client
+  
+  IDL_Files {
+    Worker.idl
+  }
+  
+  Source_Files {
+    decoram_client.cpp
+    FTClient_Timer_Handler.cpp
+    WorkerC.cpp
+  }
+  
+  Header_Files {
+    WorkerC.h
+  }
+  
+  Inline_Files {
+    WorkerC.inl
+  }
+  
+  Template_Files {
+  }
+}
+
+project(server) : naming, rtcorba, pi_server, interceptors, iorinterceptor {
+  after  += client
+  exename = server 
+  libpaths += $(CUTS_ROOT)/lib
+  libs += CUTS CUTS_CPU_Worker
+  includes += $(CUTS_ROOT) $(CUTS_ROOT)/cuts/workers    
+
+  libs += LWFT_Common \
+          LWFT_Server \
+          LWFT_StateSyncAgent \
+          LWFT_ReplicationManager
+
+  IDL_Files {
+  }
+  
+  Source_Files {
+    decoram_server.cpp
+    Worker_i.cpp
+    WorkerC.cpp
+    WorkerS.cpp
+  }
+  
+  Header_Files {
+    Worker_i.h
+    WorkerC.h
+    WorkerS.h
+  }
+  
+  Inline_Files {
+    WorkerC.inl
+    WorkerS.inl
+  }
+  
+  Template_Files {
+  }
+}
