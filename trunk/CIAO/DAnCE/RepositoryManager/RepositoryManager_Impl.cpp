@@ -1073,8 +1073,7 @@ int CIAO_RepositoryManagerDaemon_i::remove_extracted_package (const char* path)
 
     for (ACE_DIRENT *directory; (directory = dir.read ()) != 0;)
     {
-      if (ACE_OS::strcmp (directory->d_name, ".") == 0
-          || ACE_OS::strcmp (directory->d_name, "..") == 0)
+      if (ACE::isdotdir (directory->d_name) == true)
         continue;
 
       ACE_stat stat_buf;
