@@ -40,10 +40,10 @@ TAO/tests/CollocationLockup/run_test.pl: !ST !DISABLE_ToFix_LynxOS_x86 !LabVIEW_
 TAO/tests/OctetSeq/run_test.pl: !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/OctetSeq/run_test1.pl: !STATIC !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/OctetSeq/run_test2.pl: !STATIC !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ
-TAO/tests/BiDirectional/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !GIOP10 !DISABLE_BIDIR !LynxOS !LabVIEW_RT !WinCE !FUZZ
-TAO/tests/BiDirectional/run_test_ipv6.pl: IPV6 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !GIOP10 !DISABLE_BIDIR !LabVIEW_RT !WinCE !FUZZ
-TAO/tests/BiDirectional_NestedUpcall/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !GIOP10 !DISABLE_BIDIR !DISABLE_ToFix_LynxOS_PPC !LabVIEW_RT !WinCE !FUZZ
-TAO/tests/BiDirectional_DelayedUpcall/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !GIOP10 !DISABLE_BIDIR !DISABLE_ToFix_LynxOS_PPC !LabVIEW_RT !WinCE !FUZZ
+TAO/tests/BiDirectional/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !GIOP10 !DISABLE_BIDIR !LynxOS
+TAO/tests/BiDirectional/run_test_ipv6.pl: IPV6 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !GIOP10 !DISABLE_BIDIR
+TAO/tests/BiDirectional_NestedUpcall/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !GIOP10 !DISABLE_BIDIR !DISABLE_ToFix_LynxOS_PPC
+TAO/tests/BiDirectional_DelayedUpcall/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !GIOP10 !DISABLE_BIDIR !DISABLE_ToFix_LynxOS_PPC
 TAO/tests/Leader_Followers/run_test.pl: !ST !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Leader_Followers/run_test_mt.pl: !ST !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Multiple_Inheritance/run_test.pl: !CORBA_E_MICRO
