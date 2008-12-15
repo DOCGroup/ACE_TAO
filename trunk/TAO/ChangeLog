@@ -1,3 +1,12 @@
+Mon Dec 15 13:38:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/BiDirectional/run_test.pl:
+        * tests/BiDirectional/run_test_ipv6.pl:
+        * tests/BiDirectional_DelayedUpcall/run_test.pl:
+        * tests/BiDirectional_MultipleORB/run_test.pl:
+        * tests/BiDirectional_NestedUpcall/run_test.pl:
+          Updated to the new test framework
+
 Mon Dec 15 04:55:10 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
 
         * tao/AnyTypeCode/Recursive_Type_TypeCode.h:
