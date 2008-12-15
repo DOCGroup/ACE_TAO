@@ -12,7 +12,12 @@ project(SA_POP) : xerces, acelib {
    includes += $(SAPOP_ROOT) \
                $(SAPOP_ROOT)/Standalone/XML_Utils
 
+//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+// SA_POP_HAS_CIAO macro needed even for standalone due to changes
+// in CIAO XML utilities (now used in the same manner as in CIAO,
+// even when built separately for standalone version).
    macros = SA_POP_HAS_ACE SA_POP_HAS_CIAO
+//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
 
    dynamicflags   = CIAO_XML_UTILS_BUILD_DLL \
                     SANETFILEIN_BUILD_DLL \
