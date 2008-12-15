@@ -418,6 +418,9 @@ namespace ACE
   /// @c ACE_OS::malloc to allocate the new string.
   extern ACE_Export char *strnnew (const char *str, size_t n);
 
+  /// Determine if a specified pathname is "dot dir" (ie. "." or "..").
+  ACE_NAMESPACE_INLINE_FUNCTION bool isdotdir (const char *s);
+
 #if defined (ACE_HAS_WCHAR)
   extern ACE_Export const wchar_t *strend (const wchar_t *s);
 
@@ -429,10 +432,9 @@ namespace ACE
 
   extern ACE_Export wchar_t *strnnew (const wchar_t *str, size_t n);
 
-#endif /* ACE_HAS_WCHAR */
+  ACE_NAMESPACE_INLINE_FUNCTION bool isdotdir (const wchar_t *s);
 
-  /// Determine if a specified pathname is "dot dir" (ie. "." or "..").
-  ACE_NAMESPACE_INLINE_FUNCTION bool isdotdir (const char *s);
+#endif /* ACE_HAS_WCHAR */
 
   /**
    * On Windows, determines if a specified pathname ends with ".exe"

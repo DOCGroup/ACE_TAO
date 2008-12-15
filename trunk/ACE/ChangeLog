@@ -1,3 +1,10 @@
+Mon Dec 15 09:15:54 UTC 2008  Olli Savia  <ops@iki.fi>
+
+        * ace/ACE.h:
+        * ace/ACE.inl:
+          Added wchar_t variant of ACE::isdotdir(). Thanks to Johnny
+          for pointing this out.
+
 Sat Dec 13 18:25:15 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * bin/tao_other_tests.lst:
@@ -16,13 +23,13 @@ Fri Dec 12 13:26:19 UTC 2008  Olli Savia  <ops@iki.fi>
 Fri Dec 12 13:17:43 UTC 2008  Olli Savia  <ops@iki.fi>
 
         * tests/Dirent_Test.cpp:
-          Updated to use new isdotdir() funtion.
+          Updated to use new ACE::isdotdir() function.
 
 Fri Dec 12 13:08:58 UTC 2008  Olli Savia  <ops@iki.fi>
 
         * ace/ACE.h:
         * ace/ACE.inl:
-          Added a new function isdotdir() which determines if a specified
+          Added a new function ACE::isdotdir() which determines if a specified
           pathname is "dot dir" (ie. "." or ".."). isdotdir() is significantly
           faster than pair of strcmp() calls.
 
