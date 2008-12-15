@@ -214,7 +214,8 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
 int
 TAO_AV_SCTP_SEQ_Base_Acceptor::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler)
 {
-  if (this->acceptor_->make_svc_handler (handler) < 0)
+  int const result = this->acceptor_->make_svc_handler (handler);
+  if (result < 0)
     return result;
   handler->reactor (this->reactor_);
   this->entry_->handler (handler);
