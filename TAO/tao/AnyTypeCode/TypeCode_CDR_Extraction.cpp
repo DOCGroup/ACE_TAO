@@ -453,6 +453,7 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
 
       size_t const len = recursive_tc.size ();
 
+      bool assigned_params = false;
       for (size_t i = 0; i < len; ++i)
         {
           TAO::TypeCodeFactory::TC_Info & info = recursive_tc[i];
@@ -463,10 +464,20 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
           if (!rtc)
             return false;  // Should never occur.
 
-          rtc->struct_parameters (name.in (), fields, nfields);
+          assigned_params |= rtc->struct_parameters (name.in (), fields, nfields);
         }
 
-      tc = CORBA::TypeCode::_duplicate(recursive_tc[0].type);
+      // If no parameters were assigned then the reference in the
+      // fields variable will be released when the variable is destroyed.
+      // Increment the reference count.
+      if ( !assigned_params)
+        {
+          tc = CORBA::TypeCode::_duplicate(recursive_tc[0].type);
+        }
+      else
+        {
+          tc = recursive_tc[0].type;
+        }
     }
   else
     {
@@ -632,7 +643,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
         case CORBA::tk_boolean:
           {
             CORBA::Boolean label;
-            if (!(cdr >> CORBA::Any::to_boolean (label)))
+             if (!(cdr >> CORBA::Any::to_boolean (label)))
               return false;
 
             typedef TypeCode::Case_T<CORBA::Boolean,
@@ -665,10 +676,10 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
             CORBA::ULongLong label;
             if (!(cdr >> label))
               return false;
-
+ 
             typedef TypeCode::Case_T<CORBA::ULongLong,
                                      CORBA::String_var,
-                                     CORBA::TypeCode_var> case_type;
+                                      CORBA::TypeCode_var> case_type;
 
             ACE_NEW_RETURN (the_case,
                             case_type (label),
@@ -712,6 +723,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
 
       size_t const len = recursive_tc.size ();
 
+      bool assigned_params = false;
       for (size_t i = 0; i < len; ++i)
         {
           TAO::TypeCodeFactory::TC_Info & info = recursive_tc[i];
@@ -722,14 +734,25 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           if (!rtc)
             return false;  // Should never occur.
 
-          rtc->union_parameters (name.in (),
-                                 discriminant_type,
-                                 cases,     // Will be copied.
-                                 ncases,
-                                 default_index);
+          assigned_params |= rtc->union_parameters (name.in (),
+                                                    discriminant_type,
+                                                    cases,  // Will be copied.
+                                                    ncases,
+                                                    default_index);
+
         }
 
-      tc = recursive_tc[0].type;
+      // If no parameters were assigned then the reference in the
+      // cases variable  will be released when the variable is destroyed.
+      // Increment the reference count.
+      if ( !assigned_params)
+        {
+          tc = CORBA::TypeCode::_duplicate(recursive_tc[0].type);
+        }
+      else
+        {
+          tc = recursive_tc[0].type;
+        }
     }
   else
     {
@@ -1050,6 +1073,7 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
         recursive_typecode_type;
 
       size_t const len = recursive_tc.size ();
+      bool assigned_params = false;
 
       for (size_t i = 0; i < len; ++i)
         {
@@ -1061,13 +1085,23 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
           if (!rtc)
             return false;  // Should never occur.
 
-          rtc->valuetype_parameters (name.in (),
-                                     type_modifier,
-                                     concrete_base,
-                                     fields,     // Will be copied.
-                                     nfields);
+          assigned_params |= rtc->valuetype_parameters (name.in (),
+                                                        type_modifier,
+                                                        concrete_base,
+                                                        fields, // Will be copied.
+                                                        nfields);
         }
-      tc = recursive_tc[0].type;
+      // If no parameters were assigned then the reference in the
+      // fields variable will be released when the variable is destroyed.
+      // Increment the reference count.
+      if ( !assigned_params)
+        {
+          tc = CORBA::TypeCode::_duplicate(recursive_tc[0].type);
+        }
+      else
+        {
+          tc = recursive_tc[0].type;
+        }
     }
   else
     {
