@@ -1,3 +1,19 @@
+Mon Dec 15 04:55:10 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
+
+        * tao/AnyTypeCode/Recursive_Type_TypeCode.h:
+        * tao/AnyTypeCode/Recursive_Type_TypeCode.inl:
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+        Reverted change in
+        Mon Dec 01 19:47:02 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
+        because it introduced a memory leak.
+        Changed the recursive type code to not over write previously
+        assigned members.  This can occur when a recusive typecode
+        has already been extracted and then is extracted again.
+        The extraction routine detects that recursive type code did
+        not over write the pre existing members and increments the
+        reference count on the the typecode to account for the reference
+        in the local member of the extraction method.
+
 Wed Dec 10 21:49:00 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Objref_Sequence_Test/run_test.pl:
