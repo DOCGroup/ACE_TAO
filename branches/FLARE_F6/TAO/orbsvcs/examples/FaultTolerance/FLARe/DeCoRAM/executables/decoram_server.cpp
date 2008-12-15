@@ -10,6 +10,7 @@
 #include "ace/Get_Opt.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "Worker_i.h"
+#include "Name_Helper_T.h"
 
 long priority = 1;
 
@@ -69,7 +70,7 @@ main (int argc, char *argv[])
                              result),
                             -1);
         }
-   
+#ifdef USE_STATESYNCHRONIZATION   
       StateSynchronizationAgent_i* ssa_servant =
 	      new StateSynchronizationAgent_i (
 	        orb.in (),
@@ -94,7 +95,7 @@ main (int argc, char *argv[])
                              errno),
                             -1);
         }
-
+#endif
       ReplicationManager_var rm;
       TAO_Naming_Client naming_client;
       naming_client.init (orb.in ());
@@ -129,7 +130,7 @@ main (int argc, char *argv[])
 
           PortableServer::POA_var root_poa =
             PortableServer::POA::_narrow (obj.in ());
-
+#ifdef USE_STATESYNCHRONIZATION
           obj = root_poa->servant_to_reference (ssa_servant);
 
           StateSynchronizationAgent_var agent =
@@ -149,7 +150,9 @@ main (int argc, char *argv[])
             AppOptions::instance ()->host_id ().c_str (),
 	    AppOptions::instance ()->process_id ().c_str (),
 	    agent.in ());
-
+#else
+	  StateSynchronizationAgent_var agent;
+#endif
           CORBA::PolicyList policies (1); 
           policies.length (2);
 
@@ -158,7 +161,7 @@ main (int argc, char *argv[])
           RTCORBA::RTORB_var rtorb = RTCORBA::RTORB::_narrow (rtobj.in ());
 
           policies[0] = rtorb->create_priority_model_policy (RTCORBA::SERVER_DECLARED, 
-             priority); 
+							     priority);
           policies[1] = root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
           // Create a POA with the correct policies 
@@ -186,13 +189,10 @@ main (int argc, char *argv[])
 
           DeCoRAM::Worker_var worker = DeCoRAM::Worker::_narrow (servant_object.in ());
 
-          std::ostringstream ostr;
-          ostr << AppOptions::instance ()->app_id () 
-               << AppOptions::instance ()->role () << ".ior";
-
-          std::ofstream outstr (ostr.str ().c_str ());
-          outstr << orb->object_to_string (worker.in ());
-          outstr.close ();
+	  Name_Helper_T <DeCoRAM::Worker> nh (orb.in ());
+	  
+	  nh.bind ("/FLARe/" + AppOptions::instance ()->app_id (),
+		   worker.in ());
 
           rm->register_application (
             AppOptions::instance ()->app_id ().c_str (),
@@ -202,10 +202,17 @@ main (int argc, char *argv[])
             AppOptions::instance ()->role (),
             worker.in ());
 
+#ifdef USE_STATESYNCHRONIZATION
           agent->register_application (AppOptions::instance ()->app_id ().c_str (),
-                                       worker.in ());
+                                       worker.in ());	  
+#endif
 
+	  orb->run ();
         } // end else
+    }
+  catch (Name_Helper_Exception & ex)
+    {
+      ACE_DEBUG ((LM_ERROR, "Name_Helper_Exception: %s", ex.what ()));
     }
   catch (const CORBA::Exception& ex)
     {

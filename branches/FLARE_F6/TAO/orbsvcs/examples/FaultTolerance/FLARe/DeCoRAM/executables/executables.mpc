@@ -1,4 +1,4 @@
-project(client) : lwft_client {
+project(client) : lwft_client, naming {
   exename = decoram_client
   
   IDL_Files {
@@ -25,7 +25,7 @@ project(client) : lwft_client {
 
 project(server) : naming, rtcorba, pi_server, interceptors, iorinterceptor {
   after  += client
-  exename = server 
+  exename = decoram_server 
   libpaths += $(CUTS_ROOT)/lib
   libs += CUTS CUTS_CPU_Worker
   includes += $(CUTS_ROOT) $(CUTS_ROOT)/cuts/workers    
@@ -58,4 +58,22 @@ project(server) : naming, rtcorba, pi_server, interceptors, iorinterceptor {
   
   Template_Files {
   }
+}
+
+project(task) : rt_server {
+  exename = decoram_task
+  libpaths += $(CUTS_ROOT)/lib
+  libs += CUTS CUTS_CPU_Worker
+  includes += $(CUTS_ROOT) $(CUTS_ROOT)/cuts/workers    
+  
+  IDL_Files {
+    Worker.idl
+  }
+  
+  Source_Files {
+    Worker_i.cpp	
+    decoram_task.cpp
+    FTClient_Timer_Handler.cpp
+  }
+  
 }

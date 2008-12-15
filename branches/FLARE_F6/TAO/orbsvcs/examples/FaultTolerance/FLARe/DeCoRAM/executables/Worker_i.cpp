@@ -2,12 +2,10 @@
 
 Worker_i::Worker_i (CORBA::ORB_ptr orb,
                     PortableServer::POA_ptr poa,
-                    const std::string & object_id,
-                    StateSynchronizationAgent_ptr agent)
+                    const std::string & object_id)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     object_id_ (object_id),
-    agent_ (StateSynchronizationAgent::_duplicate (agent)),
     state_ (0),
     suicidal_count_ (0)
 {
@@ -26,8 +24,9 @@ Worker_i::run_task (CORBA::Double execution_time)
                 << state_ << " invocations." << std::endl;
       ACE_OS::exit (1);
     }
-
+#ifdef USE_STATESYNCHRONIZATION
   agent_->state_changed (object_id_.c_str ());
+#endif
 }
 
 void
@@ -64,6 +63,7 @@ Worker_i::get_state ()
   return state._retn ();
 }
 
+#ifdef USE_STATESYNCHRONIZATION
 StateSynchronizationAgent_ptr
 Worker_i::agent (void)
 {
@@ -75,7 +75,8 @@ Worker_i::agent (StateSynchronizationAgent_ptr agent)
 {
   agent_ = agent;
 }
-  
+#endif
+
 char *
 Worker_i::object_id (void)
 {

@@ -12,8 +12,8 @@
 #include "FTClient_Timer_Handler.h"
 #include "ace/Sig_Handler.h"
 #include "ace/Reactor.h"
+#include "Name_Helper_T.h"
 
-std::string ior = "file://decoram_server.ior";
 std::string server_id = "server";
 double period = 100;
 double execution_time = 15;
@@ -34,9 +34,6 @@ parse_args (int argc, char *argv[])
       case 'i':
         server_id = get_opts.opt_arg ();
         break;
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
       case 'e':
         execution_time = ACE_OS::atoi(get_opts.opt_arg ());
         break;
@@ -48,10 +45,9 @@ parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "\t-i <server_id> (defaults to %s)\n"
-                           "\t-k <ior> (defaults to %s)\n",
-                           server_id.c_str (),
-                           ior.c_str ()),
-                          -1);
+                           "\t-e <execution_time>\n",
+                           server_id.c_str ()),
+			   -1);
       }
 
   return 0;
@@ -72,10 +68,9 @@ main (int argc, char *argv[])
           return result;
         }
  
-      CORBA::Object_var object = orb->string_to_object (ior.c_str ());
+      Name_Helper_T <DeCoRAM::Worker> nh (orb.in ());
 
-      DeCoRAM::Worker_var worker =
-        DeCoRAM::Worker::_narrow (object.in ());
+      DeCoRAM::Worker_var worker = nh.resolve ("/FLARe/" + server_id);
 
       timeout_handler.set_orb (orb.in ());
       timeout_handler.set_worker (worker.in ());
@@ -98,6 +93,10 @@ main (int argc, char *argv[])
       orb->orb_core ()->reactor ()->cancel_timer (&timeout_handler);
 
       timeout_handler.dump_to_file ( + "-history.txt");
+    }
+  catch (Name_Helper_Exception & ex)
+    {
+      ACE_DEBUG ((LM_ERROR, "Name_Helper_Exception: %s", ex.what ()));
     }
   catch (const CORBA::Exception& ex)
     {
