@@ -67,8 +67,7 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
                                            int snd_size,
                                            int rcv_size)
 {
-#if !defined (ACE_LACKS_SOCKET_BUFSIZ)
-
+#if !defined (ACE_LACKS_SO_SNDBUF)
   if (snd_size != 0
       && sock.set_option (SOL_SOCKET,
                           SO_SNDBUF,
@@ -78,7 +77,9 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
   {
     return -1;
   }
+#endif /* !ACE_LACKS_SO_SNDBUF */
 
+#if !defined (ACE_LACKS_SO_RCVBUF)
   if (rcv_size != 0
       && sock.set_option (SOL_SOCKET,
                           SO_RCVBUF,
@@ -88,10 +89,12 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
   {
     return -1;
   }
-#else
+#endif /* !ACE_LACKS_SO_RCVBUF */
+
+#if defined (ACE_LACKS_SO_SNDBUF) && defined (ACE_LACKS_SO_RCVBUF)
    ACE_UNUSED_ARG (snd_size);
    ACE_UNUSED_ARG (rcv_size);
-#endif /* !ACE_LACKS_SOCKET_BUFSIZ */
+#endif
 
   // Set the close-on-exec flag for that file descriptor. If the
   // operation fails we are out of luck (some platforms do not support
