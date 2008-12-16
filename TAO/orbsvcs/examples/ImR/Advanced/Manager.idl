@@ -1,9 +1,0 @@
-//$Id$
-interface Manager
-{
-  long registerServer();
-
-  void startRetry(in long count);
-
-  long endRetry(); // returns unused attempts
-};

@@ -1,6 +1,0 @@
-// $Id$
-
-interface test
-{
-  string test_op (in string in_arg);
-};

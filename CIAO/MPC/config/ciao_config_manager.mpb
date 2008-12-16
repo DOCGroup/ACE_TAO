@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ciao_deployment_stub {
-  libs  += CIAO_Config_Manager
-  after += Config_Manager
-}

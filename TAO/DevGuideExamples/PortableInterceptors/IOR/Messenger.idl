@@ -1,8 +1,0 @@
-// $Id$
-
-#include "orb.idl"
-
-interface Messenger
-{
-  void send_message(in CORBA::OctetSeq user_name);
-};

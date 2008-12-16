@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project: taoexe {
-  exename = ORB_object_to_string
-}
-
