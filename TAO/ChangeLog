@@ -1,3 +1,10 @@
+Tue Dec 16 22:50:11 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/tests/Notify/Bug_2561_Regression/run_test.pl:
+          Added a small delay between starting of the consumers
+          so the first consumer should be connected by the time
+          the second consumer signals the supplier to send events.
+
 Tue Dec 16 15:49:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connection_Handler.cpp:
