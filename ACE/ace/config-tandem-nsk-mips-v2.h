@@ -215,11 +215,8 @@ typedef enum CMA_T_SCHED_POLICY {
 // Platform supports System V IPC
 #define ACE_HAS_SYSV_IPC
 
-// Platform lacks the socketpair() call
-// [Needed due to failure of Pipe_Test.  even though nsk platform
-// has socketpair(), Pipe.cpp tries to set socket buf size but this
-// is not allowed for AF_UNIX protocol on nsk.]
-#define ACE_LACKS_SOCKET_BUFSIZ
+#define ACE_LACKS_SO_SNDBUF
+#define ACE_LACKS_SO_RCVBUF
 
 // Platform lacks the socketpair() call
 #define ACE_LACKS_SOCKETPAIR
