@@ -1,3 +1,9 @@
+Tue Dec 16 07:45:08 UTC 2008  Olli Savia  <ops@iki.fi>
+
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+          Updated to use ACE::isdotdir().
+
 Mon Dec 15 19:39:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:
