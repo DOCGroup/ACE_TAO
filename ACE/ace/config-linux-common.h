@@ -393,6 +393,8 @@
 
 #define ACE_HAS_ICMP_SUPPORT 1
 
+#define ACE_HAS_VASPRINTF
+
 // According to man pages Linux uses different (compared to UNIX systems) types
 // for setting IP_MULTICAST_TTL and IPV6_MULTICAST_LOOP / IP_MULTICAST_LOOP
 // in setsockopt/getsockopt.
