@@ -1,0 +1,12 @@
+// $Id$
+
+project (*) : aceexe, ace_mc, avoids_ace_for_tao {
+  exename = bytes_sent
+  after += MC_Test_Utilities
+  libs  += MC_Test_Utilities
+
+  source_files {
+    bytes_sent.cpp
+  }
+}
+

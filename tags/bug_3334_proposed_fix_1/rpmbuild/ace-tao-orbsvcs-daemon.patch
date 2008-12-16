@@ -1,0 +1,421 @@
+--- ACE_wrappers/TAO/orbsvcs/orbsvcs/Naming/Naming_Server.cpp~	2008-03-28 07:36:30.000000000 -0700
++++ ACE_wrappers/TAO/orbsvcs/orbsvcs/Naming/Naming_Server.cpp	2008-05-31 16:30:08.000000000 -0700
+@@ -276,6 +276,7 @@
+                            ACE_TEXT ("-m <1=enable multicast, 0=disable multicast(default) ")
+                            ACE_TEXT ("%s")
+                            ACE_TEXT ("-z <relative round trip timeout> ")
++                           ACE_TEXT ("--daemon [run in background as daemon] ")
+                            ACE_TEXT ("\n"),
+                            argv [0], reqNonMinCorba),
+                           -1);
+--- ACE_wrappers/TAO/orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp~	2008-07-05 14:39:32.000000000 -0700
++++ ACE_wrappers/TAO/orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp	2008-07-05 15:46:01.000000000 -0700
+@@ -161,6 +161,7 @@
+                           ACE_TEXT ("-b [send callBacks on disconnect] ")
+                           ACE_TEXT ("-t [enable typed event channel]")
+                           ACE_TEXT ("-d [destroy typed event channelon shutdown] ")
++                          ACE_TEXT ("--daemon [run in background as daemon] ")
+                           ACE_TEXT ("\n"),
+                           argv[0]));
+ #else
+@@ -172,6 +173,7 @@
+                           ACE_TEXT ("-x [disable naming service bind] ")
+                           ACE_TEXT ("-r [rebind, no AlreadyBound failures] ")
+                           ACE_TEXT ("-b [send callBacks on disconnect] ")
++                          ACE_TEXT ("--daemon [run in background as daemon] ")
+                           ACE_TEXT ("\n"),
+                           argv[0]));
+ #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+--- ACE_wrappers/TAO/orbsvcs/orbsvcs/Trader/Trading_Loader.cpp~	2008-06-03 09:45:24.000000000 -0700
++++ ACE_wrappers/TAO/orbsvcs/orbsvcs/Trader/Trading_Loader.cpp	2008-07-05 15:46:01.000000000 -0700
+@@ -20,6 +20,7 @@
+ #include "tao/default_ports.h"
+ #include "tao/IORTable/IORTable.h"
+ 
++#include "ace/Get_Opt.h"
+ #include "ace/Dynamic_Service.h"
+ #include "ace/Arg_Shifter.h"
+ #include "ace/Argv_Type_Converter.h"
+@@ -28,6 +29,43 @@
+ 
+ ACE_RCSID (Trader, Trading_Loader, "$Id$")
+ 
++// Check for "--daemon" option and daemonize if present.
++namespace
++{
++  void check_for_daemon (int &argc, ACE_TCHAR* argv[])
++  {
++    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("-"));
++    get_opts.long_option("daemon");
++    int c;
++
++    while ((c = get_opts ()) != -1)
++      {
++        switch (c)
++          {
++          case 0:
++            {
++              // Daemonize, parent exits, child returns here.
++              ACE::daemonize();
++
++              // Remove the option from argv []
++              // to avoid any confusion that might result.
++              for (int i = get_opts.opt_ind (); i != argc; ++i)
++                argv [i-1 ] = argv [i];
++
++              // Decrement the value of argc to reflect the removal
++              // of the option.
++              argc = argc - 1;
++              break;
++            }
++          case '?':
++          default:
++            // Don't do anything ... much more parsing elsewhere.
++            break;
++          }
++      }
++  }
++}
++
+ TAO_Trading_Loader::TAO_Trading_Loader (void)
+   : federate_ (0),
+     ior_output_file_ (0),
+@@ -85,6 +123,12 @@
+       // Copy command line parameter.
+       ACE_Argv_Type_Converter command_line(argc, argv);
+ 
++      // Instead of using -ORBDaemon we check for a "--daemon" flag
++      // explicitly.  This allows us to daemonize early, before
++      // calling ORB_init.
++      check_for_daemon (command_line.get_argc(),
++                        command_line.get_TCHAR_argv());
++
+       // Initialize the ORB Manager
+       this->orb_manager_.init (command_line.get_argc(),
+                                command_line.get_ASCII_argv());
+--- ACE_wrappers/TAO/orbsvcs/Event_Service/Event_Service.cpp~	2007-04-17 05:03:07.000000000 -0700
++++ ACE_wrappers/TAO/orbsvcs/Event_Service/Event_Service.cpp	2008-05-31 16:37:24.000000000 -0700
+@@ -22,6 +22,43 @@
+            Event_Service,
+            "$Id$")
+ 
++// Check for "--daemon" option and daemonize if present.
++namespace
++{
++  void check_for_daemon (int &argc, ACE_TCHAR* argv[])
++  {
++    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("-"));
++    get_opts.long_option("daemon");
++    int c;
++
++    while ((c = get_opts ()) != -1)
++      {
++        switch (c)
++          {
++          case 0:
++            {
++              // Daemonize, parent exits, child returns here.
++              ACE::daemonize();
++
++              // Remove the option from argv []
++              // to avoid any confusion that might result.
++              for (int i = get_opts.opt_ind (); i != argc; ++i)
++                argv [i-1 ] = argv [i];
++
++              // Decrement the value of argc to reflect the removal
++              // of the option.
++              argc = argc - 1;
++              break;
++            }
++          case '?':
++          default:
++            // Don't do anything ... much more parsing elsewhere.
++            break;
++          }
++      }
++  }
++}
++
+ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+ {
+   bool use_thread_per_consumer = false;
+@@ -69,6 +106,12 @@
+       // Make a copy of command line parameter.
+       ACE_Argv_Type_Converter command(argc, argv);
+ 
++      // Instead of using -ORBDaemon we check for a "--daemon" flag
++      // explicitly.  This allows us to daemonize early, before
++      // calling ORB_init.
++      check_for_daemon (command.get_argc(),
++                        command.get_TCHAR_argv());
++
+       // Initialize ORB.
+       this->orb_ =
+         CORBA::ORB_init (command.get_argc(), command.get_ASCII_argv(), "");
+@@ -392,6 +435,7 @@
+                       ACE_TEXT("-q ec_object_id ")
+                       ACE_TEXT("-x [disable naming service bind] ")
+                       ACE_TEXT("-b [use bidir giop] ")
++                      ACE_TEXT("--daemon [run in background as daemon] ")
+                       ACE_TEXT("\n"),
+                       argv[0]));
+           return -1;
+--- ACE_wrappers/TAO/orbsvcs/Naming_Service/Naming_Service.cpp~	2008-07-05 14:39:33.000000000 -0700
++++ ACE_wrappers/TAO/orbsvcs/Naming_Service/Naming_Service.cpp	2008-07-05 15:56:58.000000000 -0700
+@@ -7,6 +7,43 @@
+ 
+ ACE_RCSID(Naming_Service, Naming_Service, "$Id$")
+ 
++// Check for "--daemon" option and daemonize if present.
++namespace
++{
++  void check_for_daemon (int &argc, ACE_TCHAR* argv[])
++  {
++    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("-"));
++    get_opts.long_option("daemon");
++    int c;
++
++    while ((c = get_opts ()) != -1)
++      {
++        switch (c)
++          {
++          case 0:
++            {
++              // Daemonize, parent exits, child returns here.
++              ACE::daemonize();
++
++              // Remove the option from argv []
++              // to avoid any confusion that might result.
++              for (int i = get_opts.opt_ind (); i != argc; ++i)
++                argv [i-1 ] = argv [i];
++
++              // Decrement the value of argc to reflect the removal
++              // of the option.
++              argc = argc - 1;
++              break;
++            }
++          case '?':
++          default:
++            // Don't do anything ... much more parsing elsewhere.
++            break;
++          }
++      }
++  }
++}
++
+ // Default Constructor.
+ 
+ TAO_Naming_Service::TAO_Naming_Service (void)
+@@ -30,6 +67,11 @@
+ 
+   try
+     {
++      // Instead of using -ORBDaemon we check for a "--daemon" flag
++      // explicitly.  This allows us to daemonize early, before
++      // calling ORB_init.
++      check_for_daemon (argc, argv);
++
+       // Initialize the ORB
+       this->orb_ =
+         CORBA::ORB_init (argc, argv);
+--- ACE_wrappers/TAO/orbsvcs/CosEvent_Service/CosEvent_Service.cpp~	2007-01-25 10:04:11.000000000 -0800
++++ ACE_wrappers/TAO/orbsvcs/CosEvent_Service/CosEvent_Service.cpp	2008-05-31 16:07:37.000000000 -0700
+@@ -12,6 +12,43 @@
+            CosEvent_Service,
+            "$Id$")
+ 
++// Check for "--daemon" option and daemonize if present.
++namespace
++{
++  void check_for_daemon (int &argc, ACE_TCHAR* argv[])
++  {
++    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("-"));
++    get_opts.long_option("daemon");
++    int c;
++
++    while ((c = get_opts ()) != -1)
++      {
++        switch (c)
++          {
++          case 0:
++            {
++              // Daemonize, parent exits, child returns here.
++              ACE::daemonize();
++
++              // Remove the option from argv []
++              // to avoid any confusion that might result.
++              for (int i = get_opts.opt_ind (); i != argc; ++i)
++                argv [i-1 ] = argv [i];
++
++              // Decrement the value of argc to reflect the removal
++              // of the option.
++              argc = argc - 1;
++              break;
++            }
++          case '?':
++          default:
++            // Don't do anything ... much more parsing elsewhere.
++            break;
++          }
++      }
++  }
++}
++
+ int
+ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+ {
+@@ -22,6 +59,12 @@
+       // Copy command line parameter.
+       ACE_Argv_Type_Converter command_line(argc, argv);
+ 
++      // Instead of using -ORBDaemon we check for a "--daemon" flag
++      // explicitly.  This allows us to daemonize early, before
++      // calling ORB_init.
++      check_for_daemon (command_line.get_argc(),
++                        command_line.get_TCHAR_argv());
++
+       // Intialize the ORB
+       CORBA::ORB_var orb =
+         CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), 0);
+--- ACE_wrappers/TAO/orbsvcs/Concurrency_Service/Concurrency_Service.cpp~	2008-07-05 14:39:38.000000000 -0700
++++ ACE_wrappers/TAO/orbsvcs/Concurrency_Service/Concurrency_Service.cpp	2008-07-05 15:46:01.000000000 -0700
+@@ -15,6 +15,7 @@
+ 
+ #include "Concurrency_Service.h"
+ 
++#include "ace/Get_Opt.h"
+ #include "ace/Argv_Type_Converter.h"
+ #include "tao/debug.h"
+ #include "ace/OS_main.h"
+@@ -25,6 +26,43 @@
+           Concurrency_Service,
+           "$Id$")
+ 
++// Check for "--daemon" option and daemonize if present.
++namespace
++{
++  void check_for_daemon (int &argc, ACE_TCHAR* argv[])
++  {
++    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("-"));
++    get_opts.long_option("daemon");
++    int c;
++
++    while ((c = get_opts ()) != -1)
++      {
++        switch (c)
++          {
++          case 0:
++            {
++              // Daemonize, parent exits, child returns here.
++              ACE::daemonize();
++
++              // Remove the option from argv []
++              // to avoid any confusion that might result.
++              for (int i = get_opts.opt_ind (); i != argc; ++i)
++                argv [i-1 ] = argv [i];
++
++              // Decrement the value of argc to reflect the removal
++              // of the option.
++              argc = argc - 1;
++              break;
++            }
++          case '?':
++          default:
++            // Don't do anything ... much more parsing elsewhere.
++            break;
++          }
++      }
++  }
++}
++
+ // Default Constructor.
+ 
+ Concurrency_Service::Concurrency_Service (void)
+@@ -75,6 +113,7 @@
+                            ACE_TEXT("usage:  %s")
+                            ACE_TEXT(" [-d]")
+                            ACE_TEXT(" [-o] <ior_output_file>")
++                           ACE_TEXT(" [--daemon]")
+                            ACE_TEXT("\n"),
+                            argv[0]),
+                            1);
+@@ -95,6 +134,12 @@
+   // Copy command line parameter.
+   ACE_Argv_Type_Converter command_line(argc, argv);
+ 
++  // Instead of using -ORBDaemon we check for a "--daemon" flag
++  // explicitly.  This allows us to daemonize early, before
++  // calling ORB_init.
++  check_for_daemon (command_line.get_argc(),
++                    command_line.get_TCHAR_argv());
++
+   if (this->orb_manager_.init_child_poa (command_line.get_argc(),
+                                          command_line.get_ASCII_argv(),
+                                          "child_poa") == -1)
+--- ACE_wrappers/TAO/orbsvcs/Notify_Service/Notify_Service.cpp~	2008-07-05 14:39:33.000000000 -0700
++++ ACE_wrappers/TAO/orbsvcs/Notify_Service/Notify_Service.cpp	2008-07-05 15:58:45.000000000 -0700
+@@ -19,6 +19,43 @@
+ #include "ace/Synch.h"
+ #include "ace/Argv_Type_Converter.h"
+ 
++// Check for "--daemon" option and daemonize if present.
++namespace
++{
++  void check_for_daemon (int &argc, ACE_TCHAR* argv[])
++  {
++    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("-"));
++    get_opts.long_option("daemon");
++    int c;
++
++    while ((c = get_opts ()) != -1)
++      {
++        switch (c)
++          {
++          case 0:
++            {
++              // Daemonize, parent exits, child returns here.
++              ACE::daemonize();
++
++              // Remove the option from argv []
++              // to avoid any confusion that might result.
++              for (int i = get_opts.opt_ind (); i != argc; ++i)
++                argv [i-1 ] = argv [i];
++
++              // Decrement the value of argc to reflect the removal
++              // of the option.
++              argc = argc - 1;
++              break;
++            }
++          case '?':
++          default:
++            // Don't do anything ... much more parsing elsewhere.
++            break;
++          }
++      }
++  }
++}
++
+ TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
+ : notify_service_ (0)
+ , bootstrap_ (false)
+@@ -46,6 +83,12 @@
+   // Copy command line parameter.
+   ACE_Argv_Type_Converter command_line(argc, argv);
+ 
++  // Instead of using -ORBDaemon we check for a "--daemon" flag
++  // explicitly.  This allows us to daemonize early, before
++  // calling ORB_init.
++  check_for_daemon (command_line.get_argc(),
++                    command_line.get_TCHAR_argv());
++
+   this->orb_ = CORBA::ORB_init (command_line.get_argc(),
+                                 command_line.get_ASCII_argv());
+ 
+@@ -460,6 +503,7 @@
+                      "-Boot -[No]NameSvc "
+                      "-IORoutput file_name "
+                      "-Channel -ChannelName channel_name "
++                     "--daemon "
+                      "-ORBRunThreads threads "
+                      "-Timeout <msec>\n"
+                      "default: %s -Factory NotifyEventChannelFactory "
