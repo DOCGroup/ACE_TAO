@@ -1,3 +1,10 @@
+Tue Dec 16 15:49:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.cpp:
+          Reworked ACE_LACKS_SOCKET_BUFSIZ into ACE_LACKS_SO_RCVBUF
+          and ACE_LACKS_SO_SNDBUF so that each of them could be
+          independently enabled/disabled.
+
 Tue Dec 16 07:45:08 UTC 2008  Olli Savia  <ops@iki.fi>
 
         * TAO_IDL/driver/drv_mcpp_preproc.cpp:
