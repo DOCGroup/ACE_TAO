@@ -97,9 +97,10 @@ ACE_Pipe::open (int buffer_size)
     }
 # endif /* ! ACE_LACKS_TCP_NODELAY */
 
-# if defined (ACE_LACKS_SOCKET_BUFSIZ)
+# if defined (ACE_LACKS_SO_RCVBUF) && defined (ACE_LACKS_SO_SNDBUF)
     ACE_UNUSED_ARG (buffer_size);
-# else  /* ! ACE_LACKS_SOCKET_BUFSIZ */
+# endif
+# if !defined (ACE_LACKS_SO_RCVBUF)
   if (reader.set_option (SOL_SOCKET,
                          SO_RCVBUF,
                          reinterpret_cast <void *> (&buffer_size),
@@ -109,16 +110,18 @@ ACE_Pipe::open (int buffer_size)
       this->close ();
       return -1;
     }
-  else if (writer.set_option (SOL_SOCKET,
-                              SO_SNDBUF,
-                              reinterpret_cast <void *> (&buffer_size),
-                              sizeof (buffer_size)) == -1
+# endif /* !ACE_LACKS_SO_RCVBUF */
+# if !defined (ACE_LACKS_SO_SNDBUF)
+  if (writer.set_option (SOL_SOCKET,
+                         SO_SNDBUF,
+                         reinterpret_cast <void *> (&buffer_size),
+                         sizeof (buffer_size)) == -1
            && errno != ENOTSUP)
     {
       this->close ();
       return -1;
     }
-# endif /* ! ACE_LACKS_SOCKET_BUFSIZ */
+# endif /* !ACE_LACKS_SO_SNDBUF */
 
 #elif defined (ACE_HAS_STREAM_PIPES) || defined (__QNX__)
   ACE_UNUSED_ARG (buffer_size);
@@ -156,9 +159,10 @@ ACE_Pipe::open (int buffer_size)
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("socketpair")),
                       -1);
-# if defined (ACE_LACKS_SOCKET_BUFSIZ)
+# if defined (ACE_LACKS_SO_SNDBUF) && defined (ACE_LACKS_SO_RCVBUF)
   ACE_UNUSED_ARG (buffer_size);
-# else  /* ! ACE_LACKS_SOCKET_BUFSIZ */
+# endif
+# if !defined (ACE_LACKS_SO_RCVBUF)
   if (ACE_OS::setsockopt (this->handles_[0],
                           SOL_SOCKET,
                           SO_RCVBUF,
@@ -169,6 +173,8 @@ ACE_Pipe::open (int buffer_size)
       this->close ();
       return -1;
     }
+# endif
+# if !defined (ACE_LACKS_SO_SNDBUF)
   if (ACE_OS::setsockopt (this->handles_[1],
                           SOL_SOCKET,
                           SO_SNDBUF,
@@ -179,7 +185,7 @@ ACE_Pipe::open (int buffer_size)
       this->close ();
       return -1;
     }
-# endif /* ! ACE_LACKS_SOCKET_BUFSIZ */
+# endif /* ! ACE_LACKS_SO_SNDBUF */
 # if defined (ACE_OPENVMS) && !defined (ACE_LACKS_TCP_NODELAY)
   int one = 1;
   // OpenVMS implements socketpair(AF_UNIX...) by returning AF_INET sockets.
