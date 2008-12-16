@@ -67,6 +67,9 @@ if (PerlACE::waitforfile_timed($ior, $PerlACE::wait_interval_for_process_creatio
 
 $STC1->Spawn();
 
+# Give the STC1 time to start up before STC2 starts and triggers the supplier to send.
+sleep(2);
+
 my $client = $STC2->SpawnWaitKill(20);
 if ($client != 0) {
   $status = 1;
