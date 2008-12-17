@@ -150,6 +150,7 @@ bool Planner::replan (size_t sa_max_steps, SA_POP::Goal goal)
   // Run spreading activation.
   this->sanet_->update (sa_max_steps);
 
+
   // Set planning strategy goals and satisfy open conditions.
   this->plan_strat_->set_goals (goal.goal_conds);
   if (this->plan_strat_->satisfy_open_conds ()) {
@@ -526,6 +527,7 @@ TaskImplID Planner::get_impl_id (TaskInstID task_inst)
 {
   return this->working_plan_->get_impl_id(task_inst);
 
+}
   //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
   // update effect throws excepetion
   //TODO: Add Update fucntions in SANet and SANode for updating the effect link.
