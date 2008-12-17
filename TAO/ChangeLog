@@ -1,3 +1,10 @@
+Wed Dec 17 15:39:46 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/tao_idl.mpc:
+
+          Fixed the sed command used to post-process ace_gperf's output.
+          The "search" regex no longer matched what ace_gperf wrote.
+
 Tue Dec 16 22:50:11 UTC 2008  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/tests/Notify/Bug_2561_Regression/run_test.pl:
