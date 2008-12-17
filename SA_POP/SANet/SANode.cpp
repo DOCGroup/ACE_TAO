@@ -1014,9 +1014,138 @@ bool CondNode::update (void)
     }
   }
 
+        
+
+
   // Variables for current probability value.
   Probability_Info cur_prob;
   ProbabilityMap::iterator prob_iter;
+  NodeMap::iterator temp_node_iter;
+  
+
+
+  // Check for change in probability of node where current
+  // highest true probability comes from.  Update true
+  // probability if it has changed, so that newly inserted
+  // condition probabilities will be noticed even if they
+  // are lower than previous condition probability values.
+
+  if (this->true_prob_from_ != this->ID_) {
+    temp_node_iter = this->pre_nodes_.find(this->true_prob_from_);
+    if (temp_node_iter == this->pre_nodes_.end ()) {
+      throw Update_Error ();
+    }
+    cur_node = (TaskNode *) temp_node_iter->second;
+
+    // Get current link info.
+    link_iter = pre_links_.find(this->true_prob_from_);
+    if (link_iter == pre_links_.end ()) {
+      throw Update_Error ();
+    }
+    cur_weight = link_iter->second;
+
+    // Set multiplier as absolute value of link weight.
+    if (cur_weight >= 0) {
+      cur_mult = cur_weight;
+    } else {
+      cur_mult = -1 * cur_weight;
+    }
+
+    // Get current probability info.
+    try {
+      cur_prob = cur_node->get_prob (step_);
+    } catch (Invalid_Step e) {
+      std::cerr << "Error in condition node update:  Invalid step value.";
+      std::cerr << std::endl;
+      throw Update_Error ();
+    } catch (...) {
+      std::cerr << "Unexpected exception thrown in condition node update.";
+      std::cerr << std::endl;
+      throw Update_Error ();
+    }
+
+    // Update probability based on current multiplier.
+    cur_prob.probability = cur_mult * cur_prob.probability;
+
+    // Check true probability from node against current value (link weight should not be negative for true probability).
+    if (cur_weight >= 0) {
+      // Change true probability if it has changed.
+      if (true_prob_.probability != cur_prob.probability) {
+        this->true_prob_ = cur_prob;
+
+        // Update prob_changed_ flag.
+        prob_changed_ = true;
+      }
+    } else {
+      std::cerr << "Error in condition node update:  Link weight changed.";
+      std::cerr << std::endl;
+      throw Update_Error ();
+    }
+  }
+
+
+  // Check for change in probability of node where current
+  // highest false probability comes from.  Update true
+  // probability if it has changed, so that newly inserted
+  // condition probabilities will be noticed even if they
+  // are lower than previous condition probability values.
+
+  if (this->false_prob_from_ != this->ID_) {
+    temp_node_iter = this->pre_nodes_.find(this->false_prob_from_);
+    if (temp_node_iter == this->pre_nodes_.end ()) {
+      throw Update_Error ();
+    }
+    cur_node = (TaskNode *) temp_node_iter->second;
+
+    // Get current link info.
+    link_iter = pre_links_.find(this->false_prob_from_);
+    if (link_iter == pre_links_.end ()) {
+      throw Update_Error ();
+    }
+    cur_weight = link_iter->second;
+
+    // Set multiplier as absolute value of link weight.
+    if (cur_weight >= 0) {
+      cur_mult = cur_weight;
+    } else {
+      cur_mult = -1 * cur_weight;
+    }
+
+    // Get current probability info.
+    try {
+      cur_prob = cur_node->get_prob (step_);
+    } catch (Invalid_Step e) {
+      std::cerr << "Error in condition node update:  Invalid step value.";
+      std::cerr << std::endl;
+      throw Update_Error ();
+    } catch (...) {
+      std::cerr << "Unexpected exception thrown in condition node update.";
+      std::cerr << std::endl;
+      throw Update_Error ();
+    }
+
+    // Update probability based on current multiplier.
+    cur_prob.probability = cur_mult * cur_prob.probability;
+
+    // Check false probability from node against current value (link weight should not be positive for false probability).
+    if (cur_weight <= 0) {
+      // Change false probability if it has changed.
+      if (false_prob_.probability != cur_prob.probability) {
+        this->false_prob_ = cur_prob;
+
+        // Update prob_changed_ flag.
+        prob_changed_ = true;
+      }
+    } else {
+      std::cerr << "Error in condition node update:  Link weight changed.";
+      std::cerr << std::endl;
+      throw Update_Error ();
+    }
+  }
+
+
+
+
 
   // Update probability.
   for (NodeMap::iterator node_iter = pre_nodes_.begin ();
@@ -1118,6 +1247,8 @@ bool CondNode::update (void)
     }
   }
 
+//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
+  // SHOULDN'T WE DO THIS SEPARATELY FOR TRUE AND/OR FALSE PROBABILITIES????????????????????????????
   // If a loop was detected, add current probability to common probabilities.
   if (is_loop) {
     // Update common probabilities for true probability.
@@ -1130,6 +1261,24 @@ bool CondNode::update (void)
       // Update prob_changed_ flag.
       prob_changed_ = true;
     }
+  }
+//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
+
+  // Make sure conditions/links in the network have not changed to bring
+  // max true/false probabilities below actual current values for condition.
+  if (this->true_prob_.probability < this->init_true_prob_) {
+    this->true_prob_.probability = this->init_true_prob_;
+    this->true_prob_.common.clear ();
+    this->true_prob_from_ = this->ID_;
+    // Update prob_changed_ flag.
+    prob_changed_ = true;
+  }
+  if (this->false_prob_.probability < 1 - this->init_true_prob_) {
+    this->false_prob_.probability = 1 - this->init_true_prob_;
+    this->false_prob_.common.clear ();
+    this->false_prob_from_ = this->ID_;
+    // Update prob_changed_ flag.
+    prob_changed_ = true;
   }
 
   // Return boolean changed value based on change flags.
