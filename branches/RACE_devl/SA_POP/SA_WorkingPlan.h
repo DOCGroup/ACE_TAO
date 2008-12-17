@@ -321,6 +321,12 @@ namespace SA_POP {
      */
     virtual void undo (SA_AdjustMaxTimesCmd *cmd);
 
+	/// Reset a working plan
+    /**
+     * 
+     */
+	virtual void reset_plan ();
+
   protected:
     // ************************************************************************
     // State information.

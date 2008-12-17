@@ -244,6 +244,114 @@ SA_WorkingPlan::~SA_WorkingPlan (void)
   // Nothing to do.
 };
 
+//Reset Plan.
+
+void SA_WorkingPlan::reset_plan ()
+{
+	
+	next_inst_id_ =1;
+	this->task_insts_.clear ();
+	this->task_impls_.clear ();
+    this->causal_links_.clear ();
+
+  // Clear goal.
+  this->goal_.goal_id = "NULL";
+  this->goal_.name = "NULL";
+  this->goal_.abs_times.clear ();
+  this->goal_.rel_times.clear ();
+  this->goal_.goal_conds.clear ();
+  this->goal_.start_window = std::make_pair (0, 0);
+
+  // Clear plan.
+  this->plan_.causal_links.clear ();
+  this->plan_.connections.clear ();
+  this->plan_.sched_links.clear ();
+  this->plan_.task_insts.clear ();
+  this->plan_.threat_links.clear ();
+
+  this->precedence_graph_.clear();
+
+  this->init_start.clear();
+  this->init_end.clear();
+
+  PrecedenceSet temp;
+  this->precedence_graph_.insert(std::make_pair(BEFORE,temp));
+  this->precedence_graph_.insert(std::make_pair(AFTER,temp));
+  this->precedence_graph_.insert(std::make_pair(SIMUL,temp));
+  this->precedence_graph_.insert(std::make_pair(UNRANKED,temp));
+
+  
+
+this->init_start.insert(std::make_pair(1,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(1,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(2,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(2,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(3,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(3,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(4,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(4,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(5,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(5,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(6,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(6,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(7,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(7,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(8,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(8,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(9,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(9,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(10,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(10,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(11,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(11,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(12,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(12,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(13,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(13,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(14,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(14,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(15,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(15,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(16,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(16,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(17,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(17,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(17,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(17,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(18,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(18,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(19,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(19,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(20,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(20,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(21,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(21,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(22,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(22,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(23,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(23,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(24,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(24,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(25,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(25,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(26,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(26,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(27,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(27,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(28,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(28,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(29,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(29,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(30,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(30,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(31,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(31,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_start.insert(std::make_pair(32,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+this->init_end.insert(std::make_pair(32,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+
+
+}
+
 // Set goal.
 void SA_WorkingPlan::set_goal (const SA_POP::Goal &goal)
 {

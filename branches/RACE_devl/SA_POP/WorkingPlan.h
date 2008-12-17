@@ -41,6 +41,12 @@ namespace SA_POP {
     /// Destructor.
     virtual ~WorkingPlan (void) { };
 
+	/// Reset Working Plan.
+    /**	
+     * 
+     */
+    virtual void reset_plan () = 0;
+
     /// Set goal.
     /**	
      * @param goal  Goal of this working plan.
