@@ -488,6 +488,19 @@ namespace SA_POP {
      */
     virtual TaskImplID get_impl_id (TaskInstID task_inst);
 
+
+    /// (re) Set Effect Link
+    /**
+     * @param task_inst  The task id
+	 * @param task_inst  The Cond ID
+	 * @param task_inst  The LinkWeight
+	 * @param task_inst  The PortID(default is blank)
+     *
+     * @return nothing
+     */
+	virtual void update_effect (SANet::TaskID tsk, SANet::CondID cnd, SANet::LinkWeight weight);
+
+
   protected:
     /// Threshold for current probability of a condition to be satisfied.
     const Probability cond_prob_thresh_;
