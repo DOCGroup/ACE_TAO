@@ -1,3 +1,20 @@
+Wed Dec 17 22:53:31 UTC 2008  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * C2W:
+        * C2W/C2W_Demo.cpp:
+        * C2W/C2W_Demo.mpc:
+        * C2W/LogGraphOut.h:
+        * C2W/LogGraphOut.cpp:
+        * C2W/UserInput.h:
+        * C2W/UserInput.cpp:
+        * C2W/c2w.san.xml:
+        * C2W/c2w.tm.xml:
+        * C2W/readme.txt:
+        * SchemaOut.h:
+        * SchemaOut.cpp:
+
+        Added the C2w Files.
+
 Sun Sep 28 21:14:16 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * SA_POP/SANet/SANetFileIn.cpp:
@@ -7,11 +24,11 @@ Sun Sep 28 21:14:16 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * SA_POP/XML_TaskMap.hpp:
         * SA_POP/XML_TaskMap.cpp:
 
-	  Updated to latest XSC genrated code to solve borland compilation errors.
+          Updated to latest XSC genrated code to solve borland compilation errors.
         * utils/Logger.h:
 
-	  Borland compilation errors. 
-	
+          Borland compilation errors.
+
 Sat Sep 27 18:55:14 UTC 2008  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * SA_POP/Component/Planning_exec.cpp:
