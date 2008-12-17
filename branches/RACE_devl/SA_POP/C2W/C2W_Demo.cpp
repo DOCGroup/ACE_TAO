@@ -213,7 +213,7 @@ int main (int argc, char* argv[])
 			  std::cin >> curTask;
 			  std::cout << "Enter the Condition ID: ";
 			  std::cin >> curEff;
-			  planner->setEff(curTask, curEff, -1);
+			  //planner->(curTask, curEff, -1);
 			  planner->replan(100);
 
 		  }

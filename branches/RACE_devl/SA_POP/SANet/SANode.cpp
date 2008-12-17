@@ -1023,6 +1023,22 @@ bool CondNode::update (void)
   NodeMap::iterator temp_node_iter;
   
 
+  // Make sure conditions/links in the network have not changed to bring
+  // max true/false probabilities below actual current values for condition.
+  if (this->true_prob_from_ == this->ID_ && this->true_prob_.probability != this->init_true_prob_) {
+    this->true_prob_.probability = this->init_true_prob_;
+    this->true_prob_.common.clear ();
+    this->true_prob_from_ = this->ID_;
+    // Update prob_changed_ flag.
+    prob_changed_ = true;
+  }
+  if (this->false_prob_from_ == this->ID_ && this->false_prob_.probability != 1 - this->init_true_prob_) {
+    this->false_prob_.probability = 1 - this->init_true_prob_;
+    this->false_prob_.common.clear ();
+    this->false_prob_from_ = this->ID_;
+    // Update prob_changed_ flag.
+    prob_changed_ = true;
+  }
 
   // Check for change in probability of node where current
   // highest true probability comes from.  Update true
@@ -1264,8 +1280,8 @@ bool CondNode::update (void)
   }
 //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
 
-  // Make sure conditions/links in the network have not changed to bring
-  // max true/false probabilities below actual current values for condition.
+  // If max true/false probability is less than current (real-world)
+  // true/false probability, update to current value.
   if (this->true_prob_.probability < this->init_true_prob_) {
     this->true_prob_.probability = this->init_true_prob_;
     this->true_prob_.common.clear ();

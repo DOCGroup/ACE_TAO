@@ -1,7 +1,18 @@
+Wed Dec 17 23:21:30 UTC 2008  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * C2W/C2W_Demo.cpp:
+	Minor update to setting effect
+
+        * Planner.cpp:
+	Fixed typo
+
+        * SANet/SANode.cpp:
+	Check for changed condition value in CondNode::update()
+
 Wed Dec 17 22:55:40 UTC 2008  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * SAPOP_C2W.mwc:
-	Added mwc for C2W.
+        Added mwc for C2W.
 
 Wed Dec 17 22:53:31 UTC 2008  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
