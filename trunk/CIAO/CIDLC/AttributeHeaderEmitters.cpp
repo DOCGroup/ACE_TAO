@@ -137,7 +137,7 @@ AttributeHeaderEmitter::pre (SemanticGraph::ReadAttribute& a)
 void
 AttributeHeaderEmitter::name (SemanticGraph::ReadAttribute& a)
 {
-  os << a.name () << " ()" << endl;
+  os << a.name () << " ()";
 }
 
 void
