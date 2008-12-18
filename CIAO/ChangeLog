@@ -1,3 +1,11 @@
+Thu Dec 18 19:01:19 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIAO_TAO_DAnCE.mwc:
+        
+          Replaced lines 'CCF' and 'CIDLC' with 'CIDLC/CIDLC.mwc'
+          so the big build can pick up the special options needed
+          to build CIDLC.
+
 Thu Dec 18 17:48:00 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIAO_TAO_DAnCE.mwc:
