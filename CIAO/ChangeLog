@@ -1,3 +1,10 @@
+Thu Dec 18 17:48:00 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIAO_TAO_DAnCE.mwc:
+        
+          Removed the line '$ACE_ROOT/contrib/minizip/minizip.mpc'
+          since it conflicts with the line '$ACE_ROOT/contrib'.
+
 Mon Dec 15 09:36:58 UTC 2008  Olli Savia  <ops@iki.fi>
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
