@@ -18,8 +18,7 @@ workspace {
   $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Serv.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Skel.mpc
-  CCF
-  CIDLC
+  CIDLC/CIDLC.mwc
   ciao
   ciaosvcs
   DAnCE
