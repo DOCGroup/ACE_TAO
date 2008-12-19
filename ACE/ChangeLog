@@ -1,3 +1,11 @@
+Fri Dec 19 15:30:05 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * tests/UUID_Test.cpp:
+
+          Updated test to validate that setting the value of a UUID
+          to NIL via its string format works correctly based on the
+          previous ChangeLogEntry.
+
 Fri Dec 19 01:19:36 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * ace/UUID.cpp:
