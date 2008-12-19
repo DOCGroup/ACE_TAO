@@ -220,10 +220,7 @@ namespace ACE_Utils
     /// Special case for the nil UUID.
     if (uuid_string == *NIL_UUID.to_string ())
       {
-        bool copy_constructor_not_supported = false;
-        ACE_ASSERT (copy_constructor_not_supported);
-        //*this = NIL_UUID;
-        ACE_UNUSED_ARG (copy_constructor_not_supported);
+        *this = NIL_UUID;
         return;
       }
 
