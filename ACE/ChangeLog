@@ -1,3 +1,10 @@
+Fri Dec 19 01:19:36 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ace/UUID.cpp:
+
+          Bug fix where assigning a NIL UUID resulted in an execution
+          of an obselete ACE_ASSERT statement.
+
 Wed Dec 17 08:35:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
