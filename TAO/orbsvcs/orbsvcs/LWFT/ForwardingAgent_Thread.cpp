@@ -110,4 +110,3 @@ ForwardingAgent_Thread::orb (CORBA::ORB_ptr the_orb)
 {
   orb_ = the_orb;
 }
-

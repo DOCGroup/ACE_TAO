@@ -1,3 +1,59 @@
+Fri Dec 19 19:35:45 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/AppOptions.h        
+        * orbsvcs/orbsvcs/LWFT/AppOptions.cpp:
+        
+          Added explicit option for host_id and a setter method for the
+          process_id option, so that the application can pass it's own pid
+          as a value.
+        
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.h        
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp:
+        
+          Added an alternative constructor that takes a port number,
+          instead of getting it from the AppOptions class internally.
+
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.h        
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
+        
+          Changed the behavior to use the HostMonitors heartbeat_port
+          method to get the port number for being monitored on.
+        
+        * orbsvcs/orbsvcs/LWFT/HMOptions.h
+        * orbsvcs/orbsvcs/LWFT/HMOptions.cpp
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp:
+        
+          Use HMOptions port_range_begin option to determine, which port
+          range to use for the heartbeat_port method.
+        
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent.cpp
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent_Thread.cpp
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp
+        * orbsvcs/orbsvcs/LWFT/Barrier_Guard.cpp
+        * orbsvcs/orbsvcs/LWFT/Monitor_Manager.h:
+        
+          Cosmetic changes and changes in debugging output.
+        
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/LoadTest/*:
+        
+          Moved old RTCORBA example application to subdirectory LoadTest.
+        
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/SimpleTask
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/SimpleTask/client.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/SimpleTask/Worker.idl
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/SimpleTask/Client_Timer_Handler.h
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/SimpleTask/Worker_i.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/SimpleTask/server.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/SimpleTask/Worker_i.h
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/SimpleTask/server.conf
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/SimpleTask/SimpleTask.mpc
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/SimpleTask/check_supported_priorities.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/SimpleTask/Client_Timer_Handler.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/SimpleTask/run_test.pl:
+        
+          Added new example for FLARe and RTCORBA.
+
 Fri Dec 12 16:26:20 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp:

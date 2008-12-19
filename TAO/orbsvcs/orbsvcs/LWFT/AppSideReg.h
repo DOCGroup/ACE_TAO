@@ -51,6 +51,7 @@ public:
   void unregister_process (void);
 
 private:
+  u_short port_;
   std::string HM_ior_;
   std::auto_ptr <AppSideMonitor_Thread> monitor_;
   HostMonitor_var hmvar_;

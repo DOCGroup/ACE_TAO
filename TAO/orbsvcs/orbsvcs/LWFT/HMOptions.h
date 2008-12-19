@@ -38,6 +38,7 @@ public:
   std::string RM_ior (void) const;
   std::string HM_ior_file (void) const;
   std::string host_id (void) const;
+  int port_range_begin (void) const;
   int RM_update_freq (void) const;
   int load_monitor_freq (void) const;
   std::string util_file (void) const;
@@ -52,6 +53,7 @@ protected:
   std::string host_id_;
   std::string HM_ior_file_;
   std::string util_file_;
+  size_t port_range_begin_;
   size_t RM_update_freq_;
   size_t load_monitor_freq_;
   std::pair <char, std::string> ior_access_;

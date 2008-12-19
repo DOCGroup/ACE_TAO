@@ -30,6 +30,9 @@ class AppSideMonitor_Thread : public ACE_Task_Base
 public:
   AppSideMonitor_Thread (ACE_Barrier &thread_barrier);
 
+  AppSideMonitor_Thread (ACE_Barrier &thread_barrier,
+                         u_short port);
+
   void stop (void);
   virtual int svc (void);
 

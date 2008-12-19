@@ -56,15 +56,39 @@ AppSideReg::svc (void)
           return 1;
         }
 
-      //ACE_DEBUG ((LM_DEBUG, "Creating the host monitor\n"));
+      // retrieve the heartbeat port number from the HostMonitor if no
+      // port parameter has been given.
+      if (AppOptions::instance ()->port () == 0)
+	{
+	  try
+	    {
+	      port_ = hmvar_->heartbeat_port ();
+	    }
+	  catch (CORBA::SystemException & ex)
+	    {
+	      ACE_ERROR ((LM_ERROR,
+			  "AppSideReg::svc: HostMonitor "
+			  "heartbeat_port () call failed.\n"));
+	      outer_barrier_.wait ();
+	      return 1;
+	    }
+	}
+      else
+	{
+	  port_ = AppOptions::instance ()->port ();
+	}
+
+      ACE_DEBUG ((LM_TRACE, "Creating the host monitor\n"));
 
       ACE_Barrier internal_thread_barrier (2);
       monitor_ =
         std::auto_ptr<AppSideMonitor_Thread> (
-          new AppSideMonitor_Thread (internal_thread_barrier));
+          new AppSideMonitor_Thread (internal_thread_barrier,
+                                     port_));
+
       monitor_->activate ();
 
-      //ACE_DEBUG ((LM_DEBUG, "Host monitor activated\n"));
+      //ACE_DEBUG ((LM_TRACE, "Host monitor activated\n"));
 
       internal_thread_barrier.wait ();
       
@@ -75,35 +99,40 @@ AppSideReg::svc (void)
         }
       catch (CORBA::Exception &)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_DEBUG ((LM_ERROR,
                       "AppSideReg: exception from dump.\n"));
           outer_barrier_.wait ();
           throw;
         }
 
-      //ACE_DEBUG ((LM_DEBUG, "AppSideReg::svc before registering process.\n"));
+      //ACE_DEBUG ((LM_TRACE, "AppSideReg::svc before registering process.\n"));
 
-      //ACE_DEBUG ((LM_DEBUG, "Registering process\n"));
       try
         {
+          //ACE_DEBUG ((LM_TRACE, "AppSideReg::svc - got heartbeat port %d from hm.\n", port_));
+
           if (hmvar_->register_process (
                 AppOptions::instance ()->process_id ().c_str (),
                 AppOptions::instance ()->host_id ().c_str (),
-                AppOptions::instance ()->port ()))
+                port_))
             {
-              //ACE_DEBUG ((LM_DEBUG,
-              //            "Registered successfully %s with host monitor.\n",
-              //            AppOptions::instance()->process_id().c_str()));
+	      /*
+              ACE_DEBUG ((LM_TRACE,
+                          "Registered successfully %s with host monitor.\n",
+                          AppOptions::instance()->process_id().c_str())); 
+	      */
             }
           else
             {
               ACE_DEBUG ((LM_ERROR,
-                          "Registeration with the monitor failed.\n"));
+                          "Registeration with the monitor failed. Maybe the "
+                          "hostmonitor needs to be set to another "
+                          "port range.\n"));
             }
         }
       catch (CORBA::Exception &)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_DEBUG ((LM_ERROR,
                       "AppSideReg: exception from register_process.\n"));
           outer_barrier_.wait ();
           throw;

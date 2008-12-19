@@ -58,20 +58,20 @@ ForwardingAgent_i::update_rank_list (const RankList & rank_list)
   ACE_Guard <ACE_Thread_Mutex> guard (ior_map_mutex_);
   objectid_rankedior_map_.close ();
   objectid_rankedior_map_.open ();
- /*
-  ACE_DEBUG((LM_DEBUG,
+  /*
+  ACE_DEBUG((LM_TRACE,
              "ForwardingAgent - "
              "Received rank_list length = %d.\n",
              rank_list.length ()));
   */
   for (size_t i = 0; i < rank_list.length (); ++i)
     {
-    /*
-      ACE_DEBUG ((LM_DEBUG,
+      /*
+      ACE_DEBUG ((LM_TRACE,
                   "\toid(%s) = %d entries\n", 
                   rank_list[i].object_id.in (), 
                   rank_list[i].ior_list.length ()));
-    */
+      */
       AGENT_RANKED_IOR_LIST ranked_ior_list;
       ranked_ior_list.now = rank_list[i].now;
       
@@ -96,4 +96,3 @@ ForwardingAgent_i::initialize (CORBA::Object_ptr rm_ior)
   RankList *rank_list = this->RM_var_->register_agent (temp.in ());
   update_rank_list (*rank_list);
 }
-

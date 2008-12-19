@@ -40,18 +40,18 @@ StateSynchronizationAgent_i::StateSynchronizationAgent_i (
     {
       if (!this->create_participant ())
         {
-	        throw DDSFailure ("SSA could not create DDS participant\n");
-	      }
+          throw DDSFailure ("SSA could not create DDS participant\n");
+        }
 
       if (!this->create_publisher ())
         {
-	        throw DDSFailure ("SSA could not create DDS publisher\n");
-	      }
-
+          throw DDSFailure ("SSA could not create DDS publisher\n");
+        }
+      
       if (!this->create_subscriber ())
         {
-	        throw DDSFailure ("SSA could not create DDS subscriber\n");
-	      }
+          throw DDSFailure ("SSA could not create DDS subscriber\n");
+        }
     }
 #endif /* FLARE_USES_DDS */
 }
@@ -71,10 +71,11 @@ StateSynchronizationAgent_i::~StateSynchronizationAgent_i (void)
 void 
 StateSynchronizationAgent_i::state_changed (const char * object_id)
 {
+  /*
   ACE_DEBUG ((LM_TRACE, 
-	            "SSA::state_changed (%s) called.\n", 
-	            object_id));
-
+              "SSA::state_changed (%s) called.\n", 
+              object_id));
+  */
   // get application reference
   ReplicatedApplication_var app;
 
@@ -114,10 +115,12 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
   if (replica_map_.find (ACE_CString (object_id),
 			                   replica_group) != 0)
     {
-      ACE_ERROR ((LM_ERROR, 
-		              "(%P|%t) SSA::state_changed () "
-		              "could not find replicas for the application %s\n",
-		              object_id));
+      /*
+      ACE_ERROR ((LM_WARNING, 
+                  "(%P|%t) SSA::state_changed () "
+                  "could not find replicas for the application %s\n",
+		  object_id));
+      */
       return;
     }
 
@@ -128,18 +131,18 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
        ++it)
     {
       try
-	      {
-	        // Set the state on this replica.
-	        (*it)->set_state (state.in ());
-	      }
+	{
+	  // Set the state on this replica.
+	  (*it)->set_state (state.in ());
+	}
       catch (const CORBA::SystemException& ex)
-	      {
-	        ACE_DEBUG ((LM_WARNING, 
-		                  "(%P|%t) SSA::state_changed () "
-		                  "exception while contacting a "
-		                  "server replica for %s.\n",
-		                  object_id));
-	      }
+	{
+	  ACE_DEBUG ((LM_WARNING, 
+		      "(%P|%t) SSA::state_changed () "
+		      "exception while contacting a "
+		      "server replica for %s.\n",
+		      object_id));
+	}
     }
 }
 
@@ -172,12 +175,13 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
   // for each replication group in the replica group list
   for (size_t i = 0; i < rank_list.length (); ++i)
     {
-    /*
+      /*
       ACE_DEBUG ((LM_TRACE,
                   "\toid = %s (%d entries)\n", 
                   rank_list[i].object_id.in (),
                   rank_list[i].ior_list.length ()));
-    */  
+      */
+
       // use the application id as a key for the map
       ACE_CString oid (rank_list[i].object_id);
 
@@ -207,14 +211,16 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
                           rank_list[i].ior_list[j]))));
                 }
               catch (const CORBA::SystemException& ex)
-                {/*
+                {
+		  /*
                   ACE_DEBUG ((
                     LM_WARNING, 
                     "(%P|%t) SSA::"
-                    "update_replica_groups could not resolve stringified "
+                    "update_rank_list could not resolve stringified "
                     "object reference for %s : %s\n",
                     oid.c_str (),
-                    ex._info ().c_str ())); */
+                    ex._info ().c_str ()));
+		  */
                 }
             }
 
