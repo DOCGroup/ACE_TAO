@@ -45,6 +45,8 @@ public:
   double load (void) const;
   bool use_dds (void) const;
 
+  void process_id (const std::string & id);
+
 protected:
   /// Constructor is protected to ensure Singleton access.
   AppOptions (void);

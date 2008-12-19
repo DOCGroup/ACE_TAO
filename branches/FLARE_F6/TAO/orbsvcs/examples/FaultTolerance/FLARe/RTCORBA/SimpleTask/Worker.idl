@@ -1,0 +1,11 @@
+#include "orbsvcs/orbsvcs/LWFT/ReplicatedApplication.idl"
+
+module DeCoRAM
+{
+  interface Worker //: ReplicatedApplication
+  {
+    void run_task (in double execution_time);
+
+    void stop ();
+  };
+};

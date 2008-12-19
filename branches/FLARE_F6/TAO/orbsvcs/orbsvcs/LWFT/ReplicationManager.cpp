@@ -148,7 +148,7 @@ ReplicationManager_i::ReplicationManager_i (CORBA::ORB_ptr orb,
                                             double hertz, 
                                             bool proactive,
                                             bool static_mode,
-					                                  AlgoMode mode)
+                                            AlgoMode mode)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     algo_thread_(0),
     proactive_(proactive),
@@ -236,7 +236,13 @@ ReplicationManager_i::update_appset_map (
 {
   APP_SET app_set;
   ACE_CString key (key_str);
-  
+  /*
+  ACE_DEBUG ((LM_TRACE, 
+              "RM: update_appset_map - "
+              "add entry for %s, role = %d\n", 
+              key_str, 
+              app_info.role));
+  */  
   // If not present... 
   if (map.find (key, app_set) != 0)
     {
@@ -358,35 +364,37 @@ ReplicationManager_i::process_proc_failure (
 {
   if (static_mode_)
     {
+      //ACE_DEBUG ((LM_TRACE, "RM: process_proc_failure ()\n"));
+
       // Collect the app_info of all failed applications
       // of a process.
       std::vector <APP_INFO> failed;
       
       for (OBJECTID_APPSET_MAP::iterator it = 
-	           objectid_appset_map_.begin ();
-	         it != objectid_appset_map_.end ();
-	         ++it)
-	      {
-	        // For every object_id appset...
-	        APP_SET & as = (*it).item ();
+	     objectid_appset_map_.begin ();
+	   it != objectid_appset_map_.end ();
+	   ++it)
+        {
+          // For every object_id appset...
+          APP_SET & as = (*it).item ();
       	  
-	        // find the primary
-	        for (APP_SET::iterator s_it = as.begin ();
-	             s_it != as.end ();
-	             ++s_it)
-	          {
-	            APP_INFO & ai = *s_it;
+          // find the primary
+          for (APP_SET::iterator s_it = as.begin ();
+               s_it != as.end ();
+               ++s_it)
+            {
+              APP_INFO & ai = *s_it;
       	      
-	            // by looking at its role member
-	            if (ai.process_id == process_id)
-		            {
-		              failed.push_back (ai);
-		            }
-	          }
-	      }
-
+              // by looking at its role member
+              if (ai.process_id == process_id)
+                {
+                  failed.push_back (ai);
+                }
+            }
+        }
+      
       ACE_DEBUG ((LM_DEBUG,
-                  "RM::ppf found %d failed applications\n",
+                  "RM::process_proc_failure - found %d failed applications\n",
                   failed.size ()));
 
       CORBA::Object_var new_primary;
@@ -394,160 +402,173 @@ ReplicationManager_i::process_proc_failure (
       for (std::vector <APP_INFO>::iterator fit = failed.begin ();
 	         fit != failed.end ();
 	         ++fit)
-	      {
-	        ACE_DEBUG ((LM_DEBUG,
-	                    "RM::ppf dealing with failed app for %s\n",
-	                    (*fit).object_id.c_str ()));
-
-	        // rRemove entry from the appset.
-	        APP_SET as;
-	        
-	        if (objectid_appset_map_.find ((*fit).object_id,
-					       as) == 0)
-	          {
-	            ACE_DEBUG ((LM_DEBUG,
-	                        "RM::ppf remove APP_INFO from APP_SET\n"));
+        {
+	  // ACE_DEBUG ((LM_TRACE,
+          //             "RM::process_proc_failure dealing with failed app "
+	  //             "for %s\n",
+          //              (*fit).object_id.c_str ()));
+          
+          // Remove entry from the appset.
+          APP_SET as;
+	  
+          if (objectid_appset_map_.find ((*fit).object_id,
+                                         as) == 0)
+            {
+	      //ACE_DEBUG ((LM_TRACE,
+	      //            "RM::process_proc_failure remove APP_INFO from APP_SET\n"));
       	      
-	            // Remove appinfo from the appset.
-	            as.remove (*fit);
+              // Remove appinfo from the appset.
+              as.remove (*fit);
       	      
-	            objectid_appset_map_.rebind ((*fit).object_id, as);
-	          } // end if find
-
-	        // We don't have to care about a rank_list
-	        // that is already empty.
-	        if (rank_list_.length () != 0)
-	          {
-	            // Find the right rank list.
-	            size_t r = 0;
-	            bool found_ranklist = false;
-	            
-	            for (; r < rank_list_.length (); ++r)
-		            {
-		              if ((*fit).object_id == rank_list_[r].object_id)
-		                {
-		                  found_ranklist = true;
-		                  break;
-		                }
-		            }
-
-	            if (!found_ranklist)
-		            {
-		              ACE_DEBUG ((LM_DEBUG, 
-			                        "RM::ppf found no rank_list for object_id=%s",
-			                        (*fit).object_id.c_str ()));
-		              break;
-		            }
-
-	            ACE_DEBUG ((LM_DEBUG,
-	                        "RM::ppf rank_list index found is %d.\n", r));
+              objectid_appset_map_.rebind ((*fit).object_id, as);
+            } // end if find
+          
+          // We don't have to care about a rank_list
+          // that is already empty.
+          if (rank_list_.length () != 0)
+            {
+              // Find the right rank list.
+              size_t r = 0;
+              bool found_ranklist = false;
+	      
+              for (; r < rank_list_.length (); ++r)
+                {
+                  if ((*fit).object_id == rank_list_[r].object_id)
+                    {
+                      found_ranklist = true;
+                      break;
+                    }
+                }
+              
+              if (!found_ranklist)
+		{
+		  /*
+		  ACE_DEBUG ((LM_TRACE,
+			      "RM::process_proc_failure - "
+			      "found no rank_list for object_id=%s",
+			      (*fit).object_id.c_str ()));
+		  */
+		  break;
+		}
+              
+              //ACE_DEBUG ((LM_DEBUG,
+              //            "RM::process_proc_failure - "
+	      //            "rank_list index found is %d.\n", r));
       	      
-	            // Remove application from the rank_list.
-	            if (rank_list_[r].ior_list.length () == 0)
-	              {
-		              ACE_DEBUG ((LM_DEBUG, "RM::ppf empty ior list.\n"));
-		            }
-	            else 
-		            {
-		              new_primary =
-		                CORBA::Object::_duplicate (rank_list_[r].ior_list[0]);
+              // Remove application from the rank_list.
+              if (rank_list_[r].ior_list.length () == 0)
+                {
+                  //ACE_DEBUG ((LM_WARNING, "RM::process_proc_failure - "
+		  //            "empty ior list.\n"));
+                }
+              else 
+                {
+                  new_primary =
+                    CORBA::Object::_duplicate (rank_list_[r].ior_list[0]);
 
-		              if (rank_list_[r].ior_list.length () == 1)
-		                {
-		                  ACE_DEBUG ((LM_DEBUG,
-		                              "RM::ppf remove complete ranklist.\n",
-		                              r));
-      		                        
-		                  // Remove complete rank_list entry.
-		                  for (size_t k = r; k < rank_list_.length () - 1; ++k)
-			                  {
-			                    // Move each following element one position 
-			                    // forward.
-			                    rank_list_[k] = rank_list_[k+1];
-			                  }
+                  if (rank_list_[r].ior_list.length () == 1)
+                    {
+		      /*
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "RM::process_proc_failure - "
+				  "remove complete ranklist.\n",
+                                  r));
+		      */
+                      // Remove complete rank_list entry.
+                      for (size_t k = r; k < rank_list_.length () - 1; ++k)
+                        {
+                          // Move each following element one position 
+                          // forward.
+                          rank_list_[k] = rank_list_[k+1];
+                        }
+                      
+                      rank_list_.length (rank_list_.length () - 1);
+                    }
+                  else
+                    {
+                      try
+                        {
+                          // Index of the element that should be removed from 
+                          // the ior list.
+                          size_t rm_index = 0;
+                          size_t len_i = rank_list_[r].ior_list.length ();
+                          
+                          if ((*fit).role != PRIMARY)
+                            {
+                              for (size_t j = 0; j < len_i; ++j)
+                                {
+                                  if ((*fit).ior->_is_equivalent (
+                                                    rank_list_[r].ior_list[j].in ()))
+                                    {
+                                      rm_index = j;
+                                      break;
+                                    }
+                                }
+                            }
+                  			      
+                          ACE_DEBUG ((LM_TRACE,
+                                      "RM::process_proc_failure - "
+				      "remove entry %d in ior list\n",
+                                      rm_index));
+                          
+                          // Now remove the correct element from the list
+                          for (size_t k = rm_index; k < len_i - 1; ++k)
+                            {
+                              // Move each following element one position 
+                              // forward.
+                              rank_list_[r].ior_list[k] = 
+                                rank_list_[r].ior_list[k + 1];
+                            }
+                          
+                          // Adjust length of ior list.
+                          rank_list_[r].ior_list.length (
+                            rank_list_[r].ior_list.length () - 1);
+                        } // end try
+                      catch (const CORBA::SystemException & ex)
+                        {
+                          // Just make sure to keep on going for the other 
+                          // entries here.
+                          ACE_DEBUG ((LM_ERROR, 
+                                      "RM::process_proc_failure - caught %d\n",
+                                      ex._info ().c_str ()));
+                        }
+                    } // end else
+                } // end else
+              
+              // Elevate new primary if necessary.
+              if ((*fit).role == PRIMARY)
+                {
+		  /*
+                  ACE_DEBUG ((LM_TRACE,
+                              "RM::process_proc_failure - "
+			      "select new primary in APP_SET (%d)\n",
+                              as.size ()));
+		  */  
+                  for (APP_SET::iterator it = as.begin ();
+                       it != as.end ();
+                       ++it)
+                    {
+                      // Compare the object id to the first element in
+                      // the rank list and mark it as primary.
             		      
-		                  rank_list_.length (rank_list_.length () - 1);
-		                }
-		              else
-		                {
-		                  try
-			                  {
-			                    // Index of the element that should be removed from 
-			                    // the ior list.
-			                    size_t rm_index = 0;
-			                    size_t len_i = rank_list_[r].ior_list.length ();
-                  			  
-			                    if ((*fit).role != PRIMARY)
-			                      {
-			                        for (size_t j = 0; j < len_i; ++j)
-				                        {
-				                          if ((*fit).ior->_is_equivalent (
-					                              rank_list_[r].ior_list[j].in ()))
-				                            {
-				                              rm_index = j;
-				                              break;
-				                            }
-				                        }
-			                      }
-                  			      
-			                    ACE_DEBUG ((LM_DEBUG,
-			                                "RM::ppf remove entry %d in ior list\n",
-			                                rm_index));
-                  			      
-			                    // Now remove the correct element from the list
-			                    for (size_t k = rm_index; k < len_i - 1; ++k)
-			                      {
-			                        // Move each following element one position 
-			                        // forward.
-			                        rank_list_[r].ior_list[k] = 
-				                        rank_list_[r].ior_list[k + 1];
-			                      }
-                  			      
-			                    // Adjust length of ior list.
-			                    rank_list_[r].ior_list.length (
-			                      rank_list_[r].ior_list.length () - 1);
-			                  } // end try
-		                  catch (const CORBA::SystemException & ex)
-			                  {
-			                    // Just make sure to keep on going for the other 
-			                    // entries here.
-			                    ACE_DEBUG ((LM_ERROR, 
-				                              "RM::ppf caught %d\n", 
-				                              ex._info ().c_str ()));
-			                  }
-		                } // end else
-		            } // end else
-
-	             // Elevate new primary if necessary.
-	            if ((*fit).role == PRIMARY)
-		            {
-		              ACE_DEBUG ((LM_DEBUG,
-		                          "RM::ppf select new primary in APP_SET (%d)\n",
-		                          as.size ()));
-            		  
-		              for (APP_SET::iterator it = as.begin ();
-		                   it != as.end ();
-		                   ++it)
-		                {
-		                  // Compare the object id to the first element in
-		                  // the rank list and mark it as primary.
-            		      
-		                  if (new_primary->_is_equivalent ((*it).ior.in ()))
-			                  {
-			                    (*it).role = PRIMARY;
-                  			  
-			                    ACE_DEBUG ((LM_DEBUG,
-			                                "RM::ppf found a new primary\n"));
-                  			  
-			                    break;
-			                  }
-		                } // end for
-
-		              objectid_appset_map_.rebind ((*fit).object_id, as);
-		            }
-	          } // end if rank_list is not empty
-	      } // end for every failed application
-
+                      if (new_primary->_is_equivalent ((*it).ior.in ()))
+                        {
+                          (*it).role = PRIMARY;
+                    
+			  /*
+                          ACE_DEBUG ((LM_DEBUG,
+                                      "RM::process_proc_failure - "
+				      "found a new primary\n"));
+			  */
+                          break;
+                        }
+                    } // end for
+                  
+                  objectid_appset_map_.rebind ((*fit).object_id, as);
+                }
+            } // end if rank_list is not empty
+        } // end for every failed application
+      
       this->update_enhanced_ranklist ();
     }
   else // not in static_mode_
@@ -956,15 +977,15 @@ ReplicationManager_i::app_reg (APP_INFO & app)
             ACE_ERROR ((LM_ERROR,
                         "RM: in app_reg () - Unknown Role!!\n"));
         }
-/*
-      ACE_DEBUG ((LM_DEBUG,
+      /*
+      ACE_DEBUG ((LM_TRACE,
                   "RM: Registered successfully %s:%s:%s:%d "
                   "with Replication manager.\n",
                   host_name,
                   process_id,
                   object_id,
                   role));
-*/
+      */
     }
   else // If in static_mode_
     {
@@ -984,7 +1005,7 @@ ReplicationManager_i::app_reg (APP_INFO & app)
             static_ranklist_update (object_id,
                                     app.ior,
                                     role);    
-/*
+	    /*
             ACE_DEBUG ((LM_DEBUG,
                         "RM: Registered %s:%s:%s:%d with "
                         "Replication manager in static mode.\n",
@@ -1232,15 +1253,16 @@ ReplicationManager_i::update_enhanced_ranklist (void)
       // Create a new list that is one element larger than the old one.
       size_t old_length = rank_list_[i].ior_list.length ();
       ObjectList_var list_with_primary (new ObjectList (old_length + 1));
-      list_with_primary->length (old_length + 1);
 
       // Get primary from the map.
       if (primaries.find (object_id.c_str (), ai) == 0)
-	      {
-	        (*list_with_primary)[0] =
-	          CORBA::Object::_duplicate (ai.ior.in ());
-            
-	        primaries.unbind (ai.object_id);
+        {
+          list_with_primary->length (old_length + 1);
+      
+          (*list_with_primary)[0] =
+            CORBA::Object::_duplicate (ai.ior.in ());
+          
+          primaries.unbind (ai.object_id);
 
           // Add all the other entries behind it.
           for (size_t j = 0; j < old_length; ++j)
@@ -1251,14 +1273,22 @@ ReplicationManager_i::update_enhanced_ranklist (void)
             }
         }
       else
-	      {
+        {
           ACE_DEBUG ((LM_DEBUG,
                       "RM::send_rank_list - "
                       "could not find primary for %s.\n",
 		      object_id.c_str ()));
 
-          list_with_primary->length (0);
-	      }
+          list_with_primary->length (old_length);
+
+          // Add all the other entries behind it.
+          for (size_t j = 0; j < old_length; ++j)
+            {
+              (*list_with_primary)[j] =
+                CORBA::Object::_duplicate (
+                  rank_list_[i].ior_list[j].in ());
+            }
+        }
 
       // put the new list into the rank list instead of the old one
       enhanced_rank_list_[i].ior_list = list_with_primary;
@@ -1496,7 +1526,7 @@ RankList *
 ReplicationManager_i::register_agent (
   CORBA::Object_ptr agent_reference)
 {
-//  ACE_DEBUG ((LM_DEBUG, "RM: register_agent () called\n"));
+  //ACE_DEBUG ((LM_DEBUG, "RM: register_agent () called\n"));
   ForwardingAgent_var agent =
     ForwardingAgent::_narrow (agent_reference);
 

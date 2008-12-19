@@ -18,6 +18,7 @@ ACE_Thread_Mutex HMOptions::lock_;
 HMOptions::HMOptions (void)
   : RM_ior_ ("file://rm.ior"),
     HM_ior_file_ ("hm.ior"),
+    port_range_begin_ (7000),
     RM_update_freq_ (1),
     load_monitor_freq_(2)
 {
@@ -80,6 +81,17 @@ HMOptions::parse_args (int &argc, char **argv)
           host_id_ = arg;
           as.consume_arg ();
         }
+      else if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-port_range_begin"))))
+        {
+          std::istringstream istr (arg);
+          
+          if (!(istr >> port_range_begin_))
+            {
+              return false;
+            }
+                
+          as.consume_arg ();
+        }
       else if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-rm_update_freq"))))
         {
           std::istringstream istr (arg);
@@ -127,6 +139,12 @@ std::string
 HMOptions::host_id (void) const
 {
   return host_id_;
+}
+
+int 
+HMOptions::port_range_begin (void) const
+{
+  return port_range_begin_;
 }
 
 int

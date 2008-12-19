@@ -24,26 +24,39 @@ AppSideMonitor_Thread::AppSideMonitor_Thread (
 {
 }
 
+AppSideMonitor_Thread::AppSideMonitor_Thread (
+  ACE_Barrier &thread_barrier,
+  u_short port)
+  : port_ (port),
+    reactor_ (new ACE_TP_Reactor),
+    acceptor_ (serv_addr_, &reactor_),
+    synchronizer_ (thread_barrier)
+{
+}
+
 int
 AppSideMonitor_Thread::svc (void)
 {
-  Barrier_Guard barrier_guard (synchronizer_);
+  {
+    Barrier_Guard barrier_guard (synchronizer_);
 
-  if (serv_addr_.set (this->port_) == -1)
-    {
-      ACE_DEBUG ((LM_ERROR,
-                  "AppSideMonitor_Thread::svc: can't set port.\n"));
+    if (serv_addr_.set (this->port_) == -1)
+      {
+        ACE_DEBUG ((LM_ERROR,
+                    "AppSideMonitor_Thread::svc: can't set port.\n"));
 //      this->synchronizer_->wait ();
-      return EXIT_FAILURE;
-    }
+        return EXIT_FAILURE;
+      }
     
-  if (acceptor_.open (serv_addr_) == -1)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "AppSideMonitor_Thread::svc: can't open the socket.\n"));
+    if (acceptor_.open (serv_addr_) == -1)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "AppSideMonitor_Thread::svc: can't open the socket.\n"));
 //      this->synchronizer_->wait ();
-      return EXIT_FAILURE;
-    }
+        return EXIT_FAILURE;
+      }
+
+  } // release synchronizer here
 
 //  this->synchronizer_->wait ();
 //  this->synchronizer_ = 0;

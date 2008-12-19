@@ -18,7 +18,7 @@
 
 HostMonitorImpl::HostMonitorImpl (CORBA::ORB_ptr orb, Monitor_Thread *mt)
   : monitor_thread_ (mt),
-    port_counter_ (7000),
+    port_counter_ (HMOptions::instance ()->port_range_begin ()),
     connector_ (monitor_thread_->get_reactor ()),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -55,21 +55,19 @@ HostMonitorImpl::register_process (const char *process_id,
                          "Failed to open an connector socket.\n"), 1);
     }
 
-  //ACE_DEBUG ((LM_DEBUG, "Entering register process\n"));
-
   handler->set_host_monitor (this);
   handler->watch_process (handler->get_handle (),
                           process_id,
                           hostname,
                           port);
   process_map_.bind (process_id, handler);
-/*
-  ACE_DEBUG ((LM_DEBUG,
+  /*
+  ACE_DEBUG ((LM_TRACE,
               "HostMonitorImpl::register_process "
               "process_id = %s, port = %d.\n",
               process_id,
               port));
-*/
+  */
   return true;
 }
 
@@ -112,7 +110,11 @@ HostMonitorImpl::unregister_process (const char *process_id)
 
 ::CORBA::Short
 HostMonitorImpl::heartbeat_port (void)
-{
+{ 
+  /*
+  ACE_DEBUG ((LM_TRACE, "HostMonitorImpl::heartbeat_port () - "
+              "sent out port number %d\n", port_counter_));
+  */
   return port_counter_++;
 }
 

@@ -17,7 +17,7 @@ ACE_Thread_Mutex AppOptions::lock_;
 
 AppOptions::AppOptions (void)
   : host_monitor_ior_ ("file://hm.ior"),
-    port_ (5000),
+    port_ (0),
     role_ (2),
     load_ (40.0),
     use_dds_ (false)
@@ -68,6 +68,11 @@ AppOptions::parse_args (int &argc, char **argv)
       else if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-hm_ior"))))
         {
           host_monitor_ior_ = arg;        
+          as.consume_arg ();
+        }
+      else if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-host_id"))))
+        {
+          host_id_ = arg;        
           as.consume_arg ();
         }
       else if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-proc_id"))))
@@ -175,6 +180,8 @@ AppOptions::use_dds (void) const
   return use_dds_;
 }
 
-
-
-
+void 
+AppOptions::process_id (const std::string & id)
+{
+  process_id_ = id;
+}
