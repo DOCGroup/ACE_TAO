@@ -1,3 +1,28 @@
+Mon Dec 22 11:14:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Acceptor_Impl.cpp:
+          Layout change and use ACE_TEXT
+
+        * tao/CDR.h:
+        * tao/ORB_Core.h:
+          Doxygen changes
+
+        * tao/ORB_Core_Auto_Ptr.h:
+          Layout changes
+
+        * tao/SystemException.cpp:
+          Added timeout messages
+
+        * tao/TAO_Internal.cpp:
+          Call fini on the TAO_Singleton_Manager when the number
+          of services has dropped to zero
+
+        * tao/TAO_Server_Request.cpp:
+          Use more generic define then a purify one
+
+        * tao/TAO_Singleton_Manager.cpp:
+          Delete the lock in the destructor
+
 Wed Dec 17 15:39:46 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * TAO_IDL/tao_idl.mpc:
