@@ -92,8 +92,8 @@ public:
   // ORB. Refer to the constructor bodies in CDR.cpp for the
   // code that supplies these values to the base class constructor.
 
-  /// Default constructor, allocates <size> bytes in the internal
-  /// buffer, if <size> == 0 it allocates the default size.
+  /// Default constructor, allocates @a size bytes in the internal
+  /// buffer, if @a size == 0 it allocates the default size.
   TAO_OutputCDR (size_t size = 0,
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* buffer_allocator = 0,
@@ -104,7 +104,7 @@ public:
                  ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR);
 
   /// Build a CDR stream with an initial buffer, it will *not* remove
-  /// <data>, since it did not allocated it.
+  /// @a data, since it did not allocated it.
   TAO_OutputCDR (char *data,
                  size_t size,
                  int byte_order = ACE_CDR_BYTE_ORDER,
@@ -130,7 +130,7 @@ public:
                  ACE_CDR::Octet minor_version);
 
   /// Build a CDR stream with an initial Message_Block chain, it will *not*
-  /// remove <data>, since it did not allocate it.
+  /// remove @a data, since it did not allocate it.
   TAO_OutputCDR (ACE_Message_Block *data,
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  size_t memcpy_tradeoff = 0,
@@ -138,7 +138,7 @@ public:
                  ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR);
 
   /// Build a CDR stream with an initial data block, it will *not* remove
-  /// <data_block>, since it did not allocated it.
+  /// @a data, since it did not allocated it.
   TAO_OutputCDR (ACE_Data_Block *data,
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* message_block_allocator = 0,
@@ -365,7 +365,7 @@ public:
   TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
                 TAO_ORB_Core* orb_core = 0);
 
-  /// destructor
+  /// Destructor
   ~TAO_InputCDR (void);
 
   // = TAO specific methods.

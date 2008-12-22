@@ -63,9 +63,7 @@ public:
   //@}
 
 protected:
-
   TAO_ORB_Core *p_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

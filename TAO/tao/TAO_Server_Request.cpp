@@ -467,7 +467,7 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
 void
 TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
 {
-#if defined(ACE_HAS_PURIFY)
+#if defined(ACE_INITIALIZE_MEMORY_BEFORE_USE)
   // Only inititialize the buffer if we're compiling with Purify.
   // Otherwise, there is no real need to do so, especially since
   // we can avoid the initialization overhead at runtime if we
@@ -478,7 +478,9 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
 #endif /* ACE_HAS_PURIFY */
   TAO_GIOP_Message_Version gv;
   if (this->outgoing_)
-    this->outgoing_->get_version (gv);
+    {
+      this->outgoing_->get_version (gv);
+    }
   TAO_OutputCDR output (repbuf,
                         sizeof repbuf,
                         TAO_ENCAP_BYTE_ORDER,
