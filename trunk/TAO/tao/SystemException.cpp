@@ -813,7 +813,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
 
   CORBA::TIMEOUT const * timeout_exception =
     dynamic_cast <const CORBA::TIMEOUT *> (&exc);
-  if (intf_repos_exception != 0
+  if (timeout_exception != 0
       && minor_code < sizeof TIMEOUT_TABLE / sizeof (char *))
     return TIMEOUT_TABLE[minor_code];
 
