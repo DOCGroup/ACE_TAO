@@ -1,3 +1,8 @@
+Mon Dec 22 11:36:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_sunos5_common.GNU:
+          Solaris 10/11 ship default with lksctp
+
 Fri Dec 19 15:30:05 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * tests/UUID_Test.cpp:
