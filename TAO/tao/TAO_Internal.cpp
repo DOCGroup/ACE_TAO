@@ -65,11 +65,10 @@ namespace
    * sets apply_values to true
    *
    */
-  int
-  parse_global_args_i (int &argc,
-                       ACE_TCHAR **argv,
-                       ACE_ARGV &svc_config_argv,
-                       bool apply_values);
+  int parse_global_args_i (int &argc,
+                           ACE_TCHAR **argv,
+                           ACE_ARGV &svc_config_argv,
+                           bool apply_values);
 
   /**
    * Parses the supplied command-line arguments to extract any that
@@ -200,8 +199,7 @@ private:
 // ****************************************************************
 /// Note that the argument vector will be corrupted upon return
 int
-TAO::ORB::open_global_services (int argc,
-        ACE_TCHAR **argv)
+TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
 {
   {
     // Count of the number of (times we did this for all) ORBs.
@@ -358,7 +356,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
                       ACE_TEXT ("ORB to complete the global ")
                       ACE_TEXT ("initialization\n")));
 
-        ACE_MT (while (!is_ubergestalt_ready)
+      ACE_MT (while (!is_ubergestalt_ready)
       TAO_Ubergestalt_Ready_Condition::instance ()->wait ());
 
         if (TAO_debug_level > 4)
@@ -457,10 +455,19 @@ TAO::ORB::close_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg)
                             -1));
   --service_open_count;
 
-  if (pcfg == ACE_Service_Config::global())
-    return 0;
+  int result = 0;
 
-  return pcfg->close ();
+  if (service_open_count == 0)
+    {
+      result = TAO_Singleton_Manager::instance ()->fini ();
+    }
+
+  if (pcfg != ACE_Service_Config::global())
+    {
+      result = pcfg->close ();
+    }
+
+  return result;
 }
 
 void

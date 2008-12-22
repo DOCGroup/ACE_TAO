@@ -74,6 +74,11 @@ TAO_Singleton_Manager::~TAO_Singleton_Manager (void)
 {
   this->dynamically_allocated_ = false;   // Don't delete this again in fini()
   (void) this->fini ();
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  delete this->internal_lock_;
+  this->internal_lock_ = 0;
+#endif /* ACE_MT_SAFE */
 }
 
 sigset_t *
@@ -103,7 +108,6 @@ TAO_Singleton_Manager::instance (void)
   // This function should be called during construction of static
   // instances, or before any other threads have been created in the
   // process.  So, it's not thread safe.
-
   if (the_instance == 0)
     {
       TAO_Singleton_Manager *instance_pointer = 0;
@@ -238,11 +242,6 @@ TAO_Singleton_Manager::fini (void)
 
   delete this->default_mask_;
   this->default_mask_ = 0;
-
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  delete this->internal_lock_;
-  this->internal_lock_ = 0;
-#endif /* ACE_MT_SAFE */
 
   // Indicate that this TAO_Singleton_Manager instance has been shut down.
   this->object_manager_state_ = OBJ_MAN_SHUT_DOWN;

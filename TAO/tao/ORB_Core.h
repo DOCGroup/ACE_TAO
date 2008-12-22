@@ -697,7 +697,7 @@ public:
   /// corresponding event handlers from the reactor.
   int register_handle (ACE_HANDLE handle);
 
-  /// Remove <handle> from the ORB Core's handle set so that it
+  /// Remove @a handle from the ORB Core's handle set so that it
   /// isn't included in the set that is passed to the reactor upon ORB
   /// destruction.
   int remove_handle (ACE_HANDLE handle);
