@@ -1,3 +1,9 @@
+Mon Dec 22 16:05:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_time.inl:
+          Fixed ACE_OS::gethrtime. Thanks to Jaros?aw Nozderko
+          <jaroslaw dot nozderko at plus dot pl> for reporting this
+
 Mon Dec 22 11:36:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_sunos5_common.GNU:
