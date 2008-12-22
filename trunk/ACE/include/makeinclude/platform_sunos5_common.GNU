@@ -11,10 +11,12 @@ endif
 ifeq ($(shell /bin/uname -r),5.10)
   # Solaris 10 puts sendfile() in a separate library.
   LIBS          += -lsendfile
+  sctp          ?= lksctp
 endif
 ifeq ($(shell /bin/uname -r),5.11)
   # Solaris 11 puts sendfile() in a separate library.
   LIBS          += -lsendfile
+  sctp          ?= lksctp
 endif
 kstat ?= 1
 ifeq ($(kstat),1)
