@@ -47,7 +47,6 @@ ACE_RCSID (tao,
 #  define TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS 0
 #endif  /* !TAO_DEFAULT_RESOURCE_FACTORY_ARGS */
 
-
 namespace
 {
   /**
@@ -456,11 +455,6 @@ TAO::ORB::close_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg)
   --service_open_count;
 
   int result = 0;
-
-  if (service_open_count == 0)
-    {
-      result = TAO_Singleton_Manager::instance ()->fini ();
-    }
 
   if (pcfg != ACE_Service_Config::global())
     {
