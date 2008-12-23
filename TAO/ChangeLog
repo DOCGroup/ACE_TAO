@@ -1,3 +1,20 @@
+Tue Dec 23 19:48:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAO_Internal.cpp:
+          Reverted part of the change of
+          Mon Dec 22 11:14:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>.
+          The lifetime of the TAO_Singleton_Manager has to be dependent on the
+          TAO dll not on the last ORB. We really need a way to explicitly
+          tie the cleanup of the singletons to the DLL unload
+
+Tue Dec 23 09:20:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3506_Regression/server.cpp:
+          Use explicit activation
+
+        * tests/Portable_Interceptors/AMI/Client_Interceptor.cpp:
+          Prefix increment
+
 Mon Dec 22 11:14:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Acceptor_Impl.cpp:
