@@ -1,3 +1,9 @@
+Tue Dec 23 15:28:16 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * bin/ciao_tests.lst:
+
+          Scheduled 3 tests for idl3_to_xmi.
+
 Mon Dec 22 16:05:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_time.inl:
