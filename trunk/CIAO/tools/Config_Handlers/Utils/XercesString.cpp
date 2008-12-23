@@ -11,10 +11,10 @@ namespace CIAO
 namespace Config_Handlers
 {
 
-  XStr::XStr (const char* str)
+  XStr::XStr (const ACE_TCHAR *str)
     : _wstr(0)
   {
-    _wstr = XMLString::transcode(str);
+    _wstr = XMLString::transcode(ACE_TEXT_ALWAYS_CHAR (str));
   }
 
   XStr::XStr (XMLCh *wstr)
@@ -116,6 +116,13 @@ namespace Config_Handlers
   XMLCh XStr::operator [] (const int i) const
   {
     return _wstr[i];
+  }
+
+  XMLCh* XStr::release (void)
+  {
+    XMLCh* tmp = _wstr;
+    this->_wstr = 0;
+    return tmp;
   }
 
   bool operator== (const XStr& lhs, const XStr& rhs)

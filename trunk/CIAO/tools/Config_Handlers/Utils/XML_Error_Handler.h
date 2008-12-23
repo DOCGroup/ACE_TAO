@@ -35,7 +35,7 @@ namespace CIAO
      * @brief Error handler for XERCES
      *
      */
-    class XML_Error_Handler
+    class CIAO_XML_Utils_Export XML_Error_Handler
       : public DOMErrorHandler
     {
     public:

@@ -79,7 +79,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ServerResources (*reverse_handler.srd_xsc (), the_xsc);
 
     // write out the result
-    the_helper.write_DOM (the_xsc, "output.srd");
+    the_helper.write_DOM (the_xsc, ACE_TEXT ("output.srd"));
   }
 
   std::cout << "Test completed!";
