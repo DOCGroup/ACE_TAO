@@ -24,9 +24,9 @@ namespace Config_Handlers
   class CIAO_XML_Utils_Export XStr
   {
   public:
-    XStr() : _wstr(0L) { };
+    XStr() : _wstr(0L) { }
 
-    XStr (const char* str);
+    XStr (const ACE_TCHAR* wstr);
 
     XStr (XMLCh* wstr);
 
@@ -52,7 +52,9 @@ namespace Config_Handlers
 
     XMLCh operator [] (const int i) const;
 
-    operator const XMLCh* () const { return _wstr; };
+    operator const XMLCh* () const { return _wstr; }
+
+    XMLCh * release (void);
 
   private:
 

@@ -1,6 +1,5 @@
 //$Id$
 #include "XML_Helper.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "xercesc/util/XMLUniDefs.hpp"
 #include "xercesc/dom/DOM.hpp"
@@ -22,26 +21,39 @@ namespace CIAO
     using xercesc::XMLUni;
     using xercesc::DOMDocument;
     using xercesc::DOMException;
+    using xercesc::DOMDocumentType;
 
-    XML_Helper::XML_Helper (void)
-      : initialized_ (false)
+    template <typename Resolver, typename Error>
+    XML_Helper_T<Resolver, Error>::XML_Helper_T (void)
+      : initialized_ (false),
+        impl_ (0)
     {
       this->init_parser ();
     }
 
-    XML_Helper::~XML_Helper (void)
+    template <typename Resolver, typename Error>
+    XML_Helper_T<Resolver, Error>::~XML_Helper_T (void)
     {
-      this->terminate_parser ();
+      try
+        {
+          this->terminate_parser ();
+        }
+      catch (...)
+        {
+          // We don't care about exceptions here.
+        }
     }
 
+    template <typename Resolver, typename Error>
     bool
-    XML_Helper::is_initialized (void) const
+    XML_Helper_T<Resolver, Error>::is_initialized (void) const
     {
       return this->initialized_ == true;
     }
 
+    template <typename Resolver, typename Error>
     void
-    XML_Helper::init_parser (void)
+    XML_Helper_T<Resolver, Error>::init_parser (void)
     {
       if (this->initialized_)
         return;
@@ -53,12 +65,8 @@ namespace CIAO
         {
           xercesc::XMLPlatformUtils::Initialize();
         }
-      catch (const XMLException& e)
+      catch (const XMLException&)
         {
-          char* message =
-            XMLString::transcode (e.getMessage());
-          ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
-
           throw;
         }
       catch (...)
@@ -84,31 +92,52 @@ namespace CIAO
       return;
     }
 
+    template <typename Resolver, typename Error>
     XERCES_CPP_NAMESPACE::DOMDocument *
-    XML_Helper::create_dom (const ACE_TCHAR *root,
-                            const ACE_TCHAR *ns)
+    XML_Helper_T<Resolver, Error>::create_dom (const ACE_TCHAR *root,
+                                               const ACE_TCHAR *ns,
+                                               DOMDocumentType *doctype)
     {
+      if (!this->initialized_)
+        return 0;
+
       if (root == 0 || ns == 0)
         return 0;
 
-      return this->impl_->createDocument (XStr (ACE_TEXT_ALWAYS_CHAR (ns)),
-                                          XStr (ACE_TEXT_ALWAYS_CHAR (root)),
-                                          0);
+      return this->impl_->createDocument (XStr (ns),
+                                          XStr (root),
+                                          doctype);
     }
 
-    XERCES_CPP_NAMESPACE::DOMDocument *
-    XML_Helper::create_dom (const ACE_TCHAR *url)
+    template <typename Resolver, typename Error>
+    XERCES_CPP_NAMESPACE::DOMDocumentType *
+    XML_Helper_T<Resolver, Error>::create_doctype (const ACE_TCHAR *qn,
+                                                   const ACE_TCHAR *pid,
+                                                   const ACE_TCHAR *sid)
     {
+      if (!this->initialized_)
+        return 0;
+
+      return this->impl_->createDocumentType (XStr (qn),
+                                              XStr (pid),
+                                              XStr (sid));
+    }
+
+    template <typename Resolver, typename Error>
+    XERCES_CPP_NAMESPACE::DOMDocument *
+    XML_Helper_T<Resolver, Error>::create_dom (const ACE_TCHAR *url)
+    {
+      if (!this->initialized_)
+        return 0;
 
       if (url == 0)
         return impl_->createDocument(
-                                     XStr ("http://www.omg.org/DeploymentPlan"),
-                                     XStr ("deploymentPlan"),
-                                     0);
+          XStr (ACE_TEXT ("http://www.omg.org/DeploymentPlan")),
+          XStr (ACE_TEXT ("deploymentPlan")),
+          0);
 
       try
         {
-
           // Create a DOMBuilder
           DOMBuilder* parser =
             impl_->createDOMBuilder (DOMImplementationLS::MODE_SYNCHRONOUS,
@@ -148,41 +177,24 @@ namespace CIAO
           // The parser will treat validation error as fatal and will exit.
           parser->setFeature (XMLUni::fgXercesValidationErrorAsFatal, true);
 
-          XML_Error_Handler handler;
+          parser->setErrorHandler (&this->e_handler_);
 
-          parser->setErrorHandler (&handler);
+          parser->setEntityResolver (&this->resolver_);
 
-          CIAO_Schema_Resolver resolver;
+          std::auto_ptr<DOMDocument> doc (
+            parser->parseURI (ACE_TEXT_ALWAYS_CHAR (url)));
 
-          parser->setEntityResolver (&resolver);
-
-          DOMDocument* doc = parser->parseURI (ACE_TEXT_ALWAYS_CHAR (url));
-
-          if (handler.getErrors ())
+          if (this->e_handler_.getErrors ())
             throw 0;
 
-          return doc;
+          return doc.release ();
         }
       catch (const DOMException& e)
         {
-          const unsigned int maxChars = 2047;
-          XMLCh errText[maxChars + 1];
-
-          if (DOMImplementation::loadDOMExceptionMsg (e.code,
-                                                      errText,
-                                                      maxChars))
-            {
-              char* message =
-                XMLString::transcode (errText);
-              ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
-            }
           return 0;
-
         }
       catch (const XMLException& e)
         {
-          char* message = XMLString::transcode (e.getMessage());
-          ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
           throw 0;
         }
       catch (...)
@@ -195,18 +207,16 @@ namespace CIAO
       return 0;
     }
 
+    template <typename Resolver, typename Error>
     void
-    XML_Helper::terminate_parser (void)
+    XML_Helper_T<Resolver, Error>::terminate_parser (void)
     {
       try
         {
           xercesc::XMLPlatformUtils::Terminate();
         }
-      catch (const XMLException& e)
+      catch (const XMLException&)
         {
-          char* message =
-            XMLString::transcode (e.getMessage());
-          ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
           throw;
         }
 
@@ -214,27 +224,58 @@ namespace CIAO
       return;
     }
 
-    bool XML_Helper::write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc,
-                                const ACE_TCHAR *file)
+    template <typename Resolver, typename Error>
+    bool
+    XML_Helper_T<Resolver, Error>::write_DOM (
+      XERCES_CPP_NAMESPACE::DOMDocument *doc,
+      const ACE_TCHAR *file) const
     {
-      bool retn;
-      XERCES_CPP_NAMESPACE::DOMWriter *writer = impl_->createDOMWriter();
+      if (!this->initialized_)
+        return false;
 
-      if (writer->canSetFeature (XMLUni::fgDOMWRTFormatPrettyPrint,
-                                 true))
-        writer->setFeature (XMLUni::fgDOMWRTFormatPrettyPrint, true);
+      try
+        {
+          bool retn;
+          std::auto_ptr<XERCES_CPP_NAMESPACE::DOMWriter> writer (impl_->createDOMWriter());
 
-      xercesc::XMLFormatTarget* ft (new xercesc::LocalFileFormatTarget(ACE_TEXT_ALWAYS_CHAR (file)));
-      retn = writer->writeNode(ft, *doc);
-      delete writer;
-      delete ft;
-      return retn;
+          if (writer->canSetFeature (XMLUni::fgDOMWRTFormatPrettyPrint,
+                                     true))
+            {
+              writer->setFeature (XMLUni::fgDOMWRTFormatPrettyPrint, true);
+            }
+
+          std::auto_ptr <xercesc::XMLFormatTarget> ft (
+            new xercesc::LocalFileFormatTarget(ACE_TEXT_ALWAYS_CHAR (file)));
+          retn = writer->writeNode(ft.get (), *doc);
+          return retn;
+        }
+      catch (const xercesc::XMLException &e)
+        {
+          char* message =
+            XMLString::transcode (e.getMessage());
+          ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
+
+          char* name =
+            XMLString::transcode (e.getType());
+          ACE_Auto_Basic_Array_Ptr<char> cleanup_name (name);
+
+          ACE_ERROR ((LM_ERROR,
+                      "Caught exception while serializing DOM to file.\n"
+                      "Name: %C\n"
+                      "Message: %C\n"
+                      "SrcFile: %C\n"
+                      "SrcLine: %d\n",
+                      name,
+                      message,
+                      e.getSrcFile (),
+                      e.getSrcLine ()));
+          return false;
+        }
     }
   }
 }
+
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton< CIAO::Config_Handlers::XML_Helper, ACE_Null_Mutex> *
+template ACE_Singleton<CIAO::Config_Handlers::XML_Helper, ACE_Null_Mutex> *
 ACE_Singleton<CIAO::Config_Handlers::XML_Helper, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
-
-

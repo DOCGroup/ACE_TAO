@@ -1,10 +1,10 @@
 // $Id$
 
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "DynEnum_Handler.h"
 #include "DynAny_Handler.h"
 
 #include "Basic_Deployment_Data.hpp"
-#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/AnyTypeCode/Enum_TypeCode.h"
@@ -39,8 +39,7 @@ namespace CIAO
       // Grab pointer to the DynAny_Handler to use the orb and any factory.
       //      DynAny_Handler *dah = DynAny_Handler::instance ();
 
-      // @@ Leak this guy onto the heap to avoid a compile problem.
-      CORBA::TypeCode_ptr tc =
+      CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_enum_tc (
           ACE_TEXT_ALWAYS_CHAR (type.enum_ ().typeId ().c_str ()),
           ACE_TEXT_ALWAYS_CHAR (type.enum_ ().name ().c_str ()),
@@ -53,7 +52,7 @@ namespace CIAO
 
       // Make the actual DynEnum
       DynamicAny::DynAny_var temp =
-        DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
+        DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc.in ());
       DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow (temp.in ());
 
       retval->set_as_string (ACE_TEXT_ALWAYS_CHAR (value.begin_enum ()->c_str ()));

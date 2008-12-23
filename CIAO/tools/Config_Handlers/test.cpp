@@ -58,10 +58,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   //Create an XML_Helper for all the file work
   XML_Helper the_helper;
 
-  if (xercesc::DOMDocument *doc = the_helper.create_dom (ACE_TEXT_ALWAYS_CHAR (input_file)))
+  std::auto_ptr<xercesc::DOMDocument> doc (
+    the_helper.create_dom (ACE_TEXT_ALWAYS_CHAR (input_file)));
+  if (doc.get ())
     {
       //Read in the XSC type structure from the DOMDocument
-      DeploymentPlan dp = deploymentPlan (doc);
+      DeploymentPlan dp = deploymentPlan (doc.get ());
 
       //Convert the XSC to an IDL datatype
 
@@ -70,26 +72,24 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::cout << "Instance document import succeeded.  Dumping contents to file\n";
 
       //Retrieve the newly created IDL structure
-      Deployment::DeploymentPlan *idl = dp_handler.plan();
+      std::auto_ptr<Deployment::DeploymentPlan> idl (dp_handler.plan());
 
       // Check for server resources, if present....
-      check_srd (*idl);
+      check_srd (*idl.get());
 
       //Convert it back to an XSC structure with a new DP_Handler
-      DP_Handler reverse_handler(*idl);
+      DP_Handler reverse_handler(*idl.get());
 
       //Create a new DOMDocument for writing the XSC into XML
-      xercesc::DOMDocument* the_xsc (the_helper.create_dom(0));
+      std::auto_ptr<xercesc::DOMDocument> the_xsc (the_helper.create_dom(0));
 
       //Serialize the XSC into a DOMDocument
-      deploymentPlan(*reverse_handler.xsc(), the_xsc);
+      std::auto_ptr<DeploymentPlan> plan (reverse_handler.xsc());
+      deploymentPlan(*plan.get(), the_xsc.get());
 
 
       //Write it to test.xml
-      the_helper.write_DOM(the_xsc, "test.xml");
-
-      //Cleanliness is next to Godliness
-      delete doc;
+      the_helper.write_DOM(the_xsc.get(), ACE_TEXT ("test.xml"));
     }
 
   std::cout << "Test completed!\n";
