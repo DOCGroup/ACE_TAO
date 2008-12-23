@@ -1,14 +1,80 @@
+Tue Dec 23 15:11:07 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp:
+        * tools/Config_Handlers/Any_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/test.cpp:
+        * tools/Config_Handlers/test.cpp:
+        * tools/Config_Handlers/RT-CCM/test.cpp:
+
+          Fixed memory leaks in the tests and made few more TCHAR
+          related changes.
+
+        * tools/Config_Handlers/Utils/XercesString.cpp:
+        * tools/Config_Handlers/Utils/XercesString.h:
+
+          XStr now can be constructed from ACE_TCHAR.
+
+        * tools/Config_Handlers/Utils/XML_Helper.cpp:
+        * tools/Config_Handlers/Utils/XML_Helper.h:
+        * tools/Config_Handlers/Utils/XML_Schema_Resolver.cpp:
+        * tools/Config_Handlers/Utils/XML_Schema_Resolver.h:
+        * tools/Config_Handlers/Utils/XML_Error_Handler.h:
+        * tools/Config_Handlers/Utils/Utils.mpc:
+
+          Refactored the code so that XML_Helper now is a bit more
+          flexible in setting xml error handler and xml schema
+          resolver.
+
+        * tools/tools.mwc:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
+        * tools/IDL3_to_XMI/be_global.cpp:
+        * tools/IDL3_to_XMI/be_produce.cpp:
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+        * tools/IDL3_to_XMI/be_sunsoft.cpp:
+        * tools/IDL3_to_XMI/be_init.cpp:
+        * tools/IDL3_to_XMI/CIAO_IDL3_TO_XMI_Export.h:
+        * tools/IDL3_to_XMI/be_global.h:
+        * tools/IDL3_to_XMI/be_sunsoft.h:
+        * tools/IDL3_to_XMI/Literals.cpp:
+        * tools/IDL3_to_XMI/be_extern.h:
+        * tools/IDL3_to_XMI/identifier_helper.cpp:
+        * tools/IDL3_to_XMI/Literals.h:
+        * tools/IDL3_to_XMI/be_helper.cpp:
+        * tools/IDL3_to_XMI/identifier_helper.h:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.cpp:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+        * tools/IDL3_to_XMI/be_helper.h:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.h:
+
+          Made public an idl3_to_xmi utility for mapping IDL3 to
+          XML Metadata Interchange (XMI) format.
+
+        * tests/IDL3_to_XMI/XMI_For_Array/test.idl:
+        * tests/IDL3_to_XMI/XMI_For_Array/XMI.dtd:
+        * tests/IDL3_to_XMI/XMI_For_Array/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/File1.idl:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/XMI.dtd:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/File2.idl:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/test.idl:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/XMI.dtd:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/run_test.pl:
+
+          Added 3 tests for the idl3_to_xmi itility.
+
 Thu Dec 18 19:42:06 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/AttributeHeaderEmitters.cpp:
-        
+
           Fixed formatting error in code generation for readonly
           attributes.
 
 Thu Dec 18 19:01:19 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIAO_TAO_DAnCE.mwc:
-        
+
           Replaced lines 'CCF' and 'CIDLC' with 'CIDLC/CIDLC.mwc'
           so the big build can pick up the special options needed
           to build CIDLC.
@@ -16,7 +82,7 @@ Thu Dec 18 19:01:19 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu Dec 18 17:48:00 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIAO_TAO_DAnCE.mwc:
-        
+
           Removed the line '$ACE_ROOT/contrib/minizip/minizip.mpc'
           since it conflicts with the line '$ACE_ROOT/contrib'.
 

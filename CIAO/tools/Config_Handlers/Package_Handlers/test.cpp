@@ -86,7 +86,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 
           //Write it to test.xml
-          XML_HELPER->write_DOM(the_xsc, "test.xml");
+          XML_HELPER->write_DOM(the_xsc, ACE_TEXT ("test.xml"));
 
           //Cleanliness is next to Godliness
           delete doc;

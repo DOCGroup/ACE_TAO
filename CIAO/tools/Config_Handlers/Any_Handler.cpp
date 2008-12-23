@@ -31,7 +31,8 @@ namespace CIAO
       DynamicAny::DynAny_var dyn = DYNANY_HANDLER->extract_into_dynany (desc.type (),
                                                                         desc.value ());
 
-      toconfig = *dyn->to_any ();
+      CORBA::Any_var owner = dyn->to_any ();
+      toconfig = owner.in ();
 
       dyn->destroy ();
     }

@@ -35,7 +35,7 @@ namespace CIAO
 
         XStr root = dom->getDocumentElement ()->getTagName ();
 
-        if (root == XStr ("Deployment:topLevelPackageDescription"))
+        if (root == XStr (ACE_TEXT ("Deployment:topLevelPackageDescription")))
           {
             TopLevelPackageDescription tpd;
 
@@ -44,7 +44,7 @@ namespace CIAO
             PCD_Handler::package_config (*tpd.begin_basePackage (),
                                          toconfig);
           }
-        else if (root == XStr ("Deployment:packageConfiguration"))
+        else if (root == XStr (ACE_TEXT ("Deployment:packageConfiguration")))
           {
             PackageConfiguration pcd;
             pcd = packageConfiguration (dom);

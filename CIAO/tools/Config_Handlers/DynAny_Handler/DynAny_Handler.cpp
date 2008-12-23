@@ -201,8 +201,11 @@ namespace CIAO
           return Any (TCKind::tk_octet, val);
 
         case CORBA::tk_string:
-          val.add_string (ACE_TEXT_CHAR_TO_TCHAR (dyn->get_string ()));
-          return Any (TCKind::tk_string, val);
+          {
+            CORBA::String_var owner = dyn->get_string ();
+            val.add_string (ACE_TEXT_CHAR_TO_TCHAR (owner.in ()));
+            return Any (TCKind::tk_string, val);
+          }
 
         case CORBA::tk_longlong:
           val.add_longlong (dyn->get_longlong ());

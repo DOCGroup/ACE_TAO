@@ -1,55 +1,90 @@
 // $Id$
+#include <xercesc/util/PlatformUtils.hpp>
+#include <xercesc/util/XercesDefs.hpp>
+
 #include "XML_Schema_Resolver.h"
 #include "XercesString.h"
+
 #include "ace/Env_Value_T.h"
-#include <xercesc/framework/LocalFileInputSource.hpp>
-#include <xercesc/framework/Wrapper4InputSource.hpp>
 
-using xercesc::Wrapper4InputSource;
-using xercesc::LocalFileInputSource;
-
+#include <iostream>
 
 namespace CIAO
 {
   namespace Config_Handlers
   {
-    CIAO_Schema_Resolver::CIAO_Schema_Resolver (void)
+    Basic_Resolver::Basic_Resolver (const ACE_TCHAR *path)
+      : path_ (path)
     {
-      this->base_path_ = this->resolve_from_environment ();
     }
 
-    CIAO_Schema_Resolver::CIAO_Schema_Resolver (const char *path)
+    XMLCh *
+    Basic_Resolver::operator() (const XMLCh *const,
+                                const XMLCh *const systemId,
+                                const XMLCh *const) const
     {
-      if (path == 0)
-        this->base_path_ = this->resolve_from_environment ();
-      else
-        this->base_path_ = path;
-    }
-
-    /// This function is called by the Xerces infrastructure to
-    /// actually resolve the location of a schema.
-    DOMInputSource *
-    CIAO_Schema_Resolver::resolveEntity (const XMLCh *const publicId,
-                                         const XMLCh *const systemId,
-                                         const XMLCh *const baseURI)
-    {
-      ACE_UNUSED_ARG (baseURI);
-      ACE_UNUSED_ARG (publicId);
-
-      XStr path (this->base_path_.c_str ());
+      XStr path (path_);
       path.append (systemId);
-
-      // Ownership of these objects is given to other people.
-      return new Wrapper4InputSource (new LocalFileInputSource (path));
+      return path.release ();
     }
 
-    std::string
-    CIAO_Schema_Resolver::resolve_from_environment (void)
+    void
+    Basic_Resolver::set_path (const ACE_TCHAR *path)
     {
-      ACE_Env_Value <const ACE_TCHAR *> path (ACE_TEXT ("CIAO_ROOT"), ACE_TEXT (""));
+      this->path_ = path;
+    }
 
-      std::string retval (ACE_TEXT_ALWAYS_CHAR (path));
-      return retval += "/docs/schema/";
+    Environment_Resolver::Environment_Resolver (const ACE_TCHAR *variable,
+                                                const ACE_TCHAR *relpath)
+    {
+      xercesc::XMLPlatformUtils::Initialize();
+      this->add_path (variable, relpath);
+    }
+
+    Environment_Resolver::~Environment_Resolver ()
+    {
+      xercesc::XMLPlatformUtils::Terminate();
+    }
+
+    using xercesc::XMLPlatformUtils;
+
+    void
+    Environment_Resolver::add_path (const ACE_TCHAR *variable,
+                                    const ACE_TCHAR *relpath)
+    {
+      ACE_Env_Value <const ACE_TCHAR *> path_env (variable,
+                                                  ACE_TEXT(""));
+
+      XStr xpath (path_env);
+      XStr xrelpath (relpath);
+
+      xpath.append (xrelpath);
+
+      paths_.push_back (xpath);
+    }
+
+    XMLCh *
+    Environment_Resolver::operator() (const XMLCh *const,
+                                      const XMLCh *const systemId,
+                                      const XMLCh *const) const
+    {
+      for (std::vector<XStr>::const_iterator i = this->paths_.begin ();
+           i != this->paths_.end ();
+           ++i)
+        {
+          XStr path (*i);
+          path.append(systemId);
+
+          FileHandle file (XMLPlatformUtils::openFile (path));
+
+          // Check for the file presence.
+          if (file != 0)
+            {
+              XMLPlatformUtils::closeFile (file);
+              return path.release ();
+            }
+        }
+      return 0;
     }
   }
 }
