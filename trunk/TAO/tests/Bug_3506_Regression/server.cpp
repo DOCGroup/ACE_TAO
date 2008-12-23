@@ -99,20 +99,25 @@ Main_C::Create (int argc, ACE_TCHAR *argv[])
 
       IF_Test_impl *servant = new IF_Test_impl;
 
-      CORBA::Object_var reference = poa->servant_to_reference (servant);
+      PortableServer::ServantBase_var owner_transfer(servant);
 
-      IF_EXE_M_R::IF_ExeCtrlData_var servant_var =
-        IF_EXE_M_R::IF_ExeCtrlData::_narrow (reference.in ());
-      CORBA::String_var str = m_ORB_p->object_to_string (servant_var.in ());
+      PortableServer::ObjectId_var id =
+        poa->activate_object (servant);
+
+      CORBA::Object_var object = poa->id_to_reference (id.in ());
+
+      IF_EXE_M_R::IF_ExeCtrlData_var hello = IF_EXE_M_R::IF_ExeCtrlData::_narrow (object.in ());
+
+      CORBA::String_var ior = m_ORB_p->object_to_string (hello.in ());
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
         ACE_ERROR_RETURN((LM_ERROR,
-                                      "Cannot open output file for writing IOR: %s\n",
-                                      ior_output_file),
-                                     1);
-      ACE_OS::fprintf (output_file, "%s", str.in ());
+                          "Cannot open output file for writing IOR: %s\n",
+                          ior_output_file),
+                          1);
+      ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
       m_ORB_p->run ();
