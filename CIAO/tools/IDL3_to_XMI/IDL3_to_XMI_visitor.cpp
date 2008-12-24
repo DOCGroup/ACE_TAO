@@ -852,7 +852,7 @@ namespace CIAO
               this->set_attribute (LITERALS[VISIBIL], LITERALS[PUBLIC]);
               break;
             case AST_Field::vis_PRIVATE:
-              this->set_attribute (LITERALS[VISIBIL], LITERALS[PRIVATE]);
+              this->set_attribute (LITERALS[VISIBIL], LITERALS[PRIVAT]);
               break;
             default:
               throw Error ("unknown visibility type detected.", node);
@@ -1735,7 +1735,7 @@ namespace CIAO
           this->set_attribute (LITERALS[NS_TAG],
                                LITERALS[NS_VALUE]);
 
-          DOMElement *tmp;
+          DOMElement *tmp = 0;
 
           // Pregenerate stereotypes to cache xmi.ids.
           DOMElement *stereotypes = this->generate_stereotypes ();
@@ -1811,7 +1811,7 @@ namespace CIAO
     idl3_to_xmi_visitor::set_attribute (const ACE_TCHAR *name,
                                         const ACE_TCHAR *value)
     {
-      DOMElement *ele;
+      DOMElement *ele = 0;
       this->stack_.top (ele);
 
       ele->setAttribute (XStr (name), XStr (value));
@@ -1822,7 +1822,7 @@ namespace CIAO
     idl3_to_xmi_visitor::set_attribute (const ACE_TCHAR *name,
                                         const XMLCh *value)
     {
-      DOMElement *ele;
+      DOMElement *ele = 0;
       this->stack_.top (ele);
 
       ele->setAttribute (XStr (name), value);
@@ -1831,7 +1831,7 @@ namespace CIAO
     void
     idl3_to_xmi_visitor::add_text (const ACE_TCHAR *text)
     {
-      DOMElement *ele;
+      DOMElement *ele = 0;
       this->stack_.top (ele);
 
       DOMText *node = this->dom_->createTextNode (XStr (text));
@@ -1841,7 +1841,7 @@ namespace CIAO
     DOMElement *
     idl3_to_xmi_visitor::create_element (const ACE_TCHAR *name)
     {
-      DOMElement *ele;
+      DOMElement *ele = 0;
       this->stack_.top (ele);
 
       DOMElement *node = this->dom_->createElement (XStr (name));

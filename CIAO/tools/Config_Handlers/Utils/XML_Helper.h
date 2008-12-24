@@ -45,7 +45,7 @@ namespace CIAO
      */
     template <typename Resolver = CIAO_Schema_Resolver <>,
               typename Error_Handler = XML_Error_Handler>
-    class CIAO_XML_Utils_Export XML_Helper_T
+    class XML_Helper_T
     {
     public:
       XML_Helper_T (void);

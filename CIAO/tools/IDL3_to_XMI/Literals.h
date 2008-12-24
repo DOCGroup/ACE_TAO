@@ -80,7 +80,7 @@ namespace CIAO
         _NULL,
         ATTR,
         PUBLIC,
-        PRIVATE,
+        PRIVAT,
         TYPEID,
         RAISES,
         RETURN,
