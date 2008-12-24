@@ -65,6 +65,30 @@
 # define ACE_HAS_INTEL_ASSEMBLY
 #endif
 
+#if !defined (ACE_HAS_GCC_CONSTRUCTOR_ATTRIBUTE)
+#define ACE_HAS_GCC_CONSTRUCTOR_ATTRIBUTE 1
+#endif
+
+#if !defined (ACE_HAS_GCC_DESTRUCTOR_ATTRIBUTE)
+#define ACE_HAS_GCC_DESTRUCTOR_ATTRIBUTE 1
+#endif
+
+#if !defined (ACE_HAS_GCC_DEPRECATED_ATTRIBUTE)
+#define ACE_HAS_GCC_DEPRECATED_ATTRIBUTE 1
+#endif
+
+#if (ACE_HAS_GCC_CONSTRUCTOR_ATTRIBUTE == 1)
+# define ACE_GCC_CONSTRUCTOR_ATTRIBUTE __attribute__ ((constructor))
+#endif
+
+#if (ACE_HAS_GCC_DESTRUCTOR_ATTRIBUTE == 1)
+# define ACE_GCC_DESTRUCTOR_ATTRIBUTE __attribute__ ((destructor))
+#endif
+
+#if (ACE_HAS_GCC_DEPRECATED_ATTRIBUTE == 1)
+#define ACE_DEPRECATED __attribute__ ((deprecated))
+#endif
+
 // GNU g++ >= 4.x implements "#pragma once".
 #if (__GNUC__ < 4) && !defined (ACE_LACKS_PRAGMA_ONCE)
 // We define it with a -D with make depend.
