@@ -23,6 +23,7 @@ namespace
 
 #if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
 # define TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME ACE_PREPROC_CONCATENATE(TAO_VERSIONED_NAMESPACE_NAME, _TAO_Singleton_Manager_cleanup_destroyer)
+# define TAO_SINGLETON_MANAGER_FINI_NAME ACE_PREPROC_CONCATENATE(TAO_VERSIONED_NAMESPACE_NAME, _TAO_Singleton_Manager_fini)
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
 
 // Adapter for cleanup, used to register cleanup function with the
@@ -40,6 +41,22 @@ TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME (void *, void *)
       (void) TAO_Singleton_Manager::instance ()->fini ();
     }
 }
+
+#if (ACE_HAS_GCC_DESTRUCTOR_ATTRIBUTE == 1)
+static void TAO_SINGLETON_MANAGER_FINI_NAME (void) ACE_GCC_DESTRUCTOR_ATTRIBUTE;
+
+void TAO_SINGLETON_MANAGER_FINI_NAME (void)
+{
+#if defined (TAO_HAS_VERSIONED_NAMESPACE) \
+    && TAO_HAS_VERSIONED_NAMESPACE == 1
+  using namespace TAO_VERSIONED_NAMESPACE_NAME;
+#endif  /* TAO_HAS_VERSIONED_NAMESPACE */
+  if (the_instance)
+    {
+      (void) TAO_Singleton_Manager::instance ()->fini ();
+    }
+}
+#endif
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

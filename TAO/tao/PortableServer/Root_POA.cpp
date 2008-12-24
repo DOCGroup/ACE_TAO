@@ -2677,6 +2677,13 @@ TAO_POA_Static_Resources* TAO_POA_Static_Resources::instance_ = 0;
 TAO_POA_Static_Resources* TAO_POA_Static_Resources::initialization_reference_ =
   TAO_POA_Static_Resources::instance ();
 
+void
+TAO_POA_Static_Resources::fini (void)
+{
+  delete TAO_POA_Static_Resources::instance_;
+  TAO_POA_Static_Resources::instance_ = 0;
+}
+
 TAO_POA_Static_Resources*
 TAO_POA_Static_Resources::instance (void)
 {
