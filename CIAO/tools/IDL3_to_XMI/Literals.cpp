@@ -72,15 +72,15 @@ namespace CIAO
         ACE_TEXT("null"),                                   // NULL
         ACE_TEXT("Attribute"),                              // ATTR
         ACE_TEXT("public"),                                  // PUBLIC
-        ACE_TEXT("private"),                                  // PRIVAT
+        ACE_TEXT("private"),                                  // _PRIVATE
         ACE_TEXT("typeid"),                                 // TYPEID
         ACE_TEXT("raises"),                                 // RAISES
         ACE_TEXT("return"),                                 // RETURN
-        ACE_TEXT("in"),                                     // IN
+        ACE_TEXT("in"),                                     // _IN
         ACE_TEXT("inout"),                                  // INOUT
-        ACE_TEXT("out"),                                    // OUT
-        ACE_TEXT("true"),                                   // TRUE
-        ACE_TEXT("false"),                                  // FALSE
+        ACE_TEXT("out"),                                    // _OUT
+        ACE_TEXT("true"),                                   // _TRUE
+        ACE_TEXT("false"),                                  // _FALSE
         ACE_TEXT("TRUE"),                                   // CAPS_TRUE
         ACE_TEXT("FALSE"),                                  // CAPS_FALSE
         ACE_TEXT("1..1"),                                   // MULT_OTO

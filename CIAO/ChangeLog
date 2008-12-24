@@ -1,3 +1,11 @@
+Wed Dec 24 16:09:22 UTC 2008  Vladimir Zykov  <vz@prismtech.com>
+
+        * tools/IDL3_to_XMI/Literals.cpp:
+        * tools/IDL3_to_XMI/Literals.h:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+
+          Fixed more name clashes with macros, now on Windows.
+
 Wed Dec 24 11:00:29 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tools/Config_Handlers/Utils/XML_Helper.h:
