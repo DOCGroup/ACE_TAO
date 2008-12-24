@@ -40,7 +40,6 @@ TAO_TSS_Resources::instance (void)
 {
   // Hide the template instantiation to prevent multiple instances
   // from being created.
-
   return
     TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>::instance ();
 }

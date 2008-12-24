@@ -808,6 +808,9 @@ public:
   /// Return the singleton instance.
   static TAO_POA_Static_Resources* instance (void);
 
+  /// Cleanup the static singleton
+  static void fini (void) ACE_GCC_DESTRUCTOR_ATTRIBUTE;
+
 public:
 
   /**

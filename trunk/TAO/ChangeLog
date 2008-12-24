@@ -1,3 +1,19 @@
+Wed Dec 24 10:28:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAO_Singleton_Manager.cpp:
+          Added a fini method which is marked with ACE_GCC_DESTRUCTOR_ATTRIBUTE.
+          This will make sure we destroy the TAO_Singleton_Manager instance
+          when the TAO library gets unloaded
+
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Root_POA.h:
+          Added fini method and mark this with ACE_GCC_DESTRUCTOR_ATTRIBUTE.
+          With GCC this method then gets called when the TAO library gets
+          unloaded which fixes a memory leak
+
+        * tao/TAO_Singleton.cpp:
+          Only deliver implementation when ACE_HAS_DUMP is defined
+
 Tue Dec 23 19:48:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TAO_Internal.cpp:
