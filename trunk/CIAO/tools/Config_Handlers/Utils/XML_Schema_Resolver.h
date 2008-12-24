@@ -37,7 +37,7 @@ namespace CIAO
   namespace Config_Handlers
   {
     // forward decl.
-    struct Environment_Resolver;
+    class Environment_Resolver;
 
     /**
      * @class CIAO_Schema_Resolver
@@ -47,7 +47,7 @@ namespace CIAO
      * const ACE_TCHAR * operator () (...arguments from resolveEntity...)
      */
     template <typename Resolver_Functor = Environment_Resolver>
-    class CIAO_XML_Utils_Export CIAO_Schema_Resolver
+    class CIAO_Schema_Resolver
       : public virtual DOMEntityResolver
     {
     public:
