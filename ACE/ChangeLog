@@ -1,3 +1,15 @@
+Wed Dec 24 19:09:53 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Module.cpp (open, ACE_Module):
+        * ace/Service_Types.{h cpp} (find):
+        * examples/ASX/Event_Server/Event_Server/Consumer_Router.cpp (info):
+        * examples/ASX/Event_Server/Event_Server/Supplier_Router.cpp (info):
+        * examples/ASX/UPIPE_Event_Server/Consumer_Router.cpp (info):
+        * examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp (info):
+          Change mod_name to module_name;
+          agrees with .h file and works around a macro clash (mod_name)
+          on AIX 6.1.
+
 Wed Dec 24 11:07:22 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/ciao_tests.lst:
