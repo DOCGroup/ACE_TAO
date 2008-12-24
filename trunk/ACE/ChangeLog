@@ -1,3 +1,21 @@
+Wed Dec 24 10:25:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-g++-common.h:
+          Added ACE_GCC_CONSTRUCTOR_ATTRIBUTE which can be used to mark
+          a static method as a method that should be called when a shared
+          library gets loaded. Added ACE_GCC_DESTRUCTOR_ATTRIBUTE which
+          can be used to mark a static method as a method that should be
+          called when a shared library gets unloaded. Added ACE_DEPRECATED
+          which can be used to mark a method as deprecated. If a specific
+          gcc version doesn't have the attributes, you can set ACE_HAS_GCC_x
+          to 0. This will be used in TAO to explicitly delete static
+          objects when the dll gets unloaded, we could use this in more
+          places to reduce our memory leaks
+
+        * ace/config-macros.h:
+          If ACE_GCC_CONSTRUCTOR_ATTRIBUTE, ACE_GCC_DESTRUCTOR_ATTRIBUTE,
+          or ACE_DEPRECATED is not defined, then define them to nothing
+
 Tue Dec 23 15:28:16 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * bin/ciao_tests.lst:
