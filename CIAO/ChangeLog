@@ -1,3 +1,23 @@
+Wed Dec 24 11:00:29 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tools/Config_Handlers/Utils/XML_Helper.h:
+        * tools/Config_Handlers/Utils/XML_Schema_Resolver.h:
+
+          Fixed compile errors on Windows.
+
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+
+          Fixed link errors on static builds.
+
+        * tools/IDL3_to_XMI/Literals.cpp:
+        * tools/IDL3_to_XMI/Literals.h:
+
+          Fixed a clash with macro on SunOS compilers.
+
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+
+          Fixed compile warnings.
+
 Tue Dec 23 15:11:07 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:

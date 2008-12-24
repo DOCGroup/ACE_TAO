@@ -72,7 +72,7 @@ namespace CIAO
         ACE_TEXT("null"),                                   // NULL
         ACE_TEXT("Attribute"),                              // ATTR
         ACE_TEXT("public"),                                  // PUBLIC
-        ACE_TEXT("private"),                                  // PRIVATE
+        ACE_TEXT("private"),                                  // PRIVAT
         ACE_TEXT("typeid"),                                 // TYPEID
         ACE_TEXT("raises"),                                 // RAISES
         ACE_TEXT("return"),                                 // RETURN
