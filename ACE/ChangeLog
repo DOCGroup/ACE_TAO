@@ -1,3 +1,9 @@
+Wed Dec 24 11:07:22 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/ciao_tests.lst:
+
+          Disabled idl3_to_xmi tests on non-xerces builds.
+
 Wed Dec 24 10:25:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-g++-common.h:
