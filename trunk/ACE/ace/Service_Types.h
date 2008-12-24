@@ -182,7 +182,7 @@ public:
   int remove (ACE_Module_Type *module);
 
   /// Locate the ACE_Module with @a mod_name.
-  ACE_Module_Type *find (const ACE_TCHAR *mod_name) const;
+  ACE_Module_Type *find (const ACE_TCHAR *module_name) const;
 
   /// Dump the state of an object.
   void dump (void) const;
