@@ -331,8 +331,8 @@ namespace CIAO
 
           // isAbstract
           if (node->is_abstract ())
-            this->set_attribute (LITERALS[ABSTRACT], LITERALS[TRUE]);
-          else this->set_attribute (LITERALS[ABSTRACT], LITERALS[FALSE]);
+            this->set_attribute (LITERALS[ABSTRACT], LITERALS[_TRUE]);
+          else this->set_attribute (LITERALS[ABSTRACT], LITERALS[_FALSE]);
 
           NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
 
@@ -852,7 +852,7 @@ namespace CIAO
               this->set_attribute (LITERALS[VISIBIL], LITERALS[PUBLIC]);
               break;
             case AST_Field::vis_PRIVATE:
-              this->set_attribute (LITERALS[VISIBIL], LITERALS[PRIVAT]);
+              this->set_attribute (LITERALS[VISIBIL], LITERALS[_PRIVATE]);
               break;
             default:
               throw Error ("unknown visibility type detected.", node);
@@ -904,7 +904,7 @@ namespace CIAO
           switch (node->direction ())
             {
             case AST_Argument::dir_IN:
-              this->set_attribute (LITERALS[KIND], LITERALS[IN]);
+              this->set_attribute (LITERALS[KIND], LITERALS[_IN]);
               break;
 
             case AST_Argument::dir_INOUT:
@@ -912,7 +912,7 @@ namespace CIAO
               break;
 
             case AST_Argument::dir_OUT:
-              this->set_attribute (LITERALS[KIND], LITERALS[OUT]);
+              this->set_attribute (LITERALS[KIND], LITERALS[_OUT]);
               break;
 
             default:
