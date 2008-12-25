@@ -372,7 +372,9 @@ namespace CIAO
       {
         CIAO_TRACE ("CID_Handler::resolve_cid");
 
-        xercesc::DOMDocument *dom = XML_HELPER->create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
+        XML_Helper helper;
+
+        xercesc::DOMDocument *dom = helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for CID");

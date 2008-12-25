@@ -189,11 +189,11 @@ namespace CIAO
 
           return doc.release ();
         }
-      catch (const DOMException& e)
+      catch (const DOMException&)
         {
           return 0;
         }
-      catch (const XMLException& e)
+      catch (const XMLException&)
         {
           throw 0;
         }
