@@ -139,11 +139,13 @@ namespace CIAO
       ComponentPackageDescription * CPD_Handler::resolve_cpd (const char *uri)
       {
         CIAO_TRACE ("CPD_Handler::resolve_cpd");
-        if (!XML_HELPER->is_initialized ())
+
+        XML_Helper helper;
+        if (!helper.is_initialized ())
           return 0;
 
         xercesc::DOMDocument* dom =
-          XML_HELPER->create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
+          helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for component package description");

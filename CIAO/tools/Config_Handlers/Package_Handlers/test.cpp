@@ -55,8 +55,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv);
       ACE_UNUSED_ARG (orb);
 
+      XML_Helper helper;
 
-      if (xercesc::DOMDocument *doc = XML_HELPER->create_dom (ACE_TEXT_ALWAYS_CHAR (input_file)))
+      if (xercesc::DOMDocument *doc = helper.create_dom (ACE_TEXT_ALWAYS_CHAR (input_file)))
         {
 
           ::Deployment::PackageConfiguration idl_pc;
@@ -78,15 +79,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           PackageConfiguration out_pc (Packaging::PCD_Handler::package_config (idl_pc));
 
           //Create a new DOMDocument for writing the XSC into XML
-          xercesc::DOMDocument* the_xsc (XML_HELPER->create_dom("Deployment:packageConfiguration",
-                                                                "http://www.omg.org/Deployment"));
+          xercesc::DOMDocument* the_xsc (helper.create_dom("Deployment:packageConfiguration",
+                                                           "http://www.omg.org/Deployment"));
 
           //Serialize the XSC into a DOMDocument
           packageConfiguration(out_pc, the_xsc);
 
 
           //Write it to test.xml
-          XML_HELPER->write_DOM(the_xsc, ACE_TEXT ("test.xml"));
+          helper.write_DOM(the_xsc, ACE_TEXT ("test.xml"));
 
           //Cleanliness is next to Godliness
           delete doc;
