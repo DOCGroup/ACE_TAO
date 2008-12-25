@@ -24,7 +24,9 @@ namespace CIAO
       PCD_Handler::package_config (const ACE_TCHAR *uri,
                                    ::Deployment::PackageConfiguration &toconfig)
       {
-        XERCES_CPP_NAMESPACE::DOMDocument *dom = XML_HELPER->create_dom (uri);
+        XML_Helper helper;
+
+        XERCES_CPP_NAMESPACE::DOMDocument *dom = helper.create_dom (uri);
 
         if (dom == 0)
           {
@@ -143,8 +145,10 @@ namespace CIAO
 
       PackageConfiguration * PCD_Handler::resolve_package_config (const char *uri)
       {
+        XML_Helper helper;
+
         xercesc::DOMDocument* dom =
-          XML_HELPER->create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
+          helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for PackageConfiguration");

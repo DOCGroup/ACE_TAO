@@ -1,3 +1,18 @@
+Thu Dec 25 15:38:41 UTC 2008  Vladimir Zykov  <vz@prismtech.com>
+
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/test.cpp:
+        * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp:
+
+          Fixed linker errors on Windows.
+
+        * tools/Config_Handlers/Utils/XML_Helper.cpp:
+
+          Fixed a compile warning about unused variable.
+
 Wed Dec 24 16:09:22 UTC 2008  Vladimir Zykov  <vz@prismtech.com>
 
         * tools/IDL3_to_XMI/Literals.cpp:
