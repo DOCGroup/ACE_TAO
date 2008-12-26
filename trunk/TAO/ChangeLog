@@ -1,3 +1,9 @@
+Fri Dec 26 21:29:32 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl:
+          Increase timeout between client & server startups to give more
+          time for server initialization.
+
 Wed Dec 24 10:28:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TAO_Singleton_Manager.cpp:
