@@ -137,7 +137,7 @@ public:
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   //FUZZ: disable check_for_lack_ACE_OS
-  static void close (void);
+  static void close (void) ACE_GCC_DESTRUCTOR_ATTRIBUTE;
   //FUZZ: enable check_for_lack_ACE_OS
 
   static ACE_Recursive_Thread_Mutex *get_lock (void);
