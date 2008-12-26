@@ -9,6 +9,7 @@ project (CIAO_XML_Utils) : acelib, ace_output, xerces {
   Source_Files {
     XML_Schema_Resolver.cpp
     XML_Error_Handler.cpp
+    XML_Helper.cpp
     XercesString.cpp
   }
 }
