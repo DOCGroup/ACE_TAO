@@ -1,3 +1,22 @@
+Fri Dec 26 12:22:14 UTC 2008  Vladimir Zykov  <vz@prismtech.com>
+
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/test.cpp:
+        * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp:
+
+          Reverted my previous change (Thu Dec 25 15:38:41 UTC 2008).
+          It was wrong to fix the linker errors that way.
+
+        * tools/Config_Handlers/Utils/XML_Helper.cpp:
+        * tools/Config_Handlers/Utils/XML_Helper.tpp:
+        * tools/Config_Handlers/Utils/XML_Helper.h:
+        * tools/Config_Handlers/Utils/Utils.mpc:
+
+          Provided a proper fix for the linker problem on Windows.
+
 Thu Dec 25 15:38:41 UTC 2008  Vladimir Zykov  <vz@prismtech.com>
 
         * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:

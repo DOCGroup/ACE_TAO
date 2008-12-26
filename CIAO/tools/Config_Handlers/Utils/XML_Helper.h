@@ -107,11 +107,11 @@ namespace CIAO
 #define XML_HELPER CIAO::Config_Handlers::XML_Helper_Singleton::instance ()
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "XML_Helper.cpp"
+#include "XML_Helper.tpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("XML_Helper.cpp")
+#pragma implementation ("XML_Helper.tpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
