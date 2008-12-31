@@ -1,3 +1,13 @@
+Wed Dec 31 15:38:33 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Stack_Trace.cpp:
+
+          Fixed an off-by-one error in the string formatting code for Linux.
+
+        * tests/Stack_Trace_Test.cpp:
+
+          Use proper ACE_Log_Msg formatters (stack traces are always narrow).
+
 Fri Dec 26 16:42:33 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * bin/ciao_tests.lst:
