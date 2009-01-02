@@ -10,8 +10,8 @@ ACE_INLINE
 TAO::In_Fixed_Array_Argument_T<S_forany,Insert_Policy>::
 In_Fixed_Array_Argument_T (const typename S_forany::_slice_type * x)
   : x_ (
-#if defined __IBMCPP__ && (__IBMCPP__ <= 600 || __IBMCPP__ >= 800)
-        // @@ (OO) IBMCPP 6 and 8 can't handle the const_cast<> in the
+#if defined __IBMCPP__ && __IBMCPP__ <= 800
+        // @@ (OO) IBMCPP can't handle the const_cast<> in the
         //         multi-dimensional array case so C-style
         //         "sledgehammer" cast instead (reinterpret_cast<>
         //         doesn't work either).  It's not clear if this is
@@ -20,7 +20,7 @@ In_Fixed_Array_Argument_T (const typename S_forany::_slice_type * x)
         (typename S_forany::_slice_type *) x
 #else
         const_cast<typename S_forany::_slice_type *> (x)
-#endif  /* IBMCPP <= 600 */
+#endif  /* IBMCPP */
         )
 {
 }
