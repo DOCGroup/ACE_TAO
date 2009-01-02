@@ -3,7 +3,7 @@ Fri Jan  2 19:38:32 UTC 2009  Adam Mitz  <mitza@ociweb.com>
         * tao/Fixed_Array_Argument_T.inl:
 
           Extended the existing workaround for IBM Visual Age 6 (xlC 6)
-          to also cover version 8.  VA 7 is somehow immune to this one.
+          to also cover versions 7 and 8.
 
         * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
 
