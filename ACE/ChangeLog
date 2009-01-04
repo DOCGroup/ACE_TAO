@@ -1,3 +1,8 @@
+Sun Jan  4 10:47:27 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debianbuild/*:
+          Updated for next 1.6.8 micro release
+
 Sun Jan  4 03:55:27 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Service_Gestalt.cpp (process_directives): Ensure that the

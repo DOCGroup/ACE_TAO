@@ -6,6 +6,9 @@
 # Copyright (C) 2004  Raphael Bossek <bossekr@debian.org>
 # Copyright © 2005-2008 Thomas Girard <thomas.g.girard@free.fr>
 
+# This is the debhelper compatibility version to use.
+export DH_COMPAT=4
+
 INSTALL := install -o root -g root
 INSTALL_755 := $(INSTALL) -m 755
 
