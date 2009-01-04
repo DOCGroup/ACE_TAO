@@ -1222,6 +1222,8 @@ ACE_Service_Gestalt::process_directives (bool ignore_default_svc_conf_file)
   ACE_TString *sptr = 0;
   ACE_TString default_svc_conf (ACE_DEFAULT_SVC_CONF);
 
+  int failed = 0;
+
   // Iterate through all the svc.conf files.
   for (ACE_SVC_QUEUE_ITERATOR iter (*this->svc_conf_file_queue_);
        iter.next (sptr) != 0;
@@ -1233,9 +1235,10 @@ ACE_Service_Gestalt::process_directives (bool ignore_default_svc_conf_file)
       int result = this->process_file (sptr->fast_rep ());
       if (result < 0)
         return result;
+      failed += result;
     }
 
-  return 0;
+  return failed;
 
 } /* process_directives () */
 
