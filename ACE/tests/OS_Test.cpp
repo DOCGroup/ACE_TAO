@@ -34,6 +34,12 @@ ACE_RCSID(tests, OS_Test, "$Id$")
    ? static_cast<void>(0)                                       \
    : ACE_VERSIONED_NAMESPACE_NAME::__ace_assert(__FILE__, __LINE__, ACE_TEXT_CHAR_TO_TCHAR (#X)))
 
+// Simple helper to avoid comparing floating point values with ==
+template <typename T> bool is_equal (const T& a, const T& b)
+{
+  return !((a < b) || (a > b));
+}
+
 // Test ACE_OS::access() to be sure a file's existence is correctly noted.
 int
 access_test (void)
@@ -1100,6 +1106,54 @@ ace_ctype_test (void)
 }
 
 int
+ceil_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing ceil method\n")));
+
+  double values[]  = {-2.5, -1.5, 1.5, 2.5};
+  double results[] = {-2.0, -1.0, 2.0, 3.0};
+  double result = 0.0;
+  int error_count = 0;
+
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; i++)
+    {
+      result = ACE_OS::ceil (values [i]);
+      if (!is_equal(result, results[i]))
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ceil error: input %.1F, output %1F, expected %1F\n"), values [i], result, results [i]));
+          error_count++;
+        }
+    }
+
+  return error_count;
+}
+
+int
+floor_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing floor method\n")));
+
+  double values[]  = {-2.5, -1.5, 1.5, 2.5};
+  double results[] = {-3.0, -2.0, 1.0, 2.0};
+  double result = 0.0;
+  int error_count = 0;
+
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; i++)
+    {
+      result = ACE_OS::floor (values [i]);
+      if (!is_equal(result, results[i]))
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("floor error: input %.1F, output %1F, expected %1F\n"), values [i], result, results [i]));
+          error_count++;
+        }
+    }
+
+  return error_count;
+}
+
+int
 log2_test (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -1155,6 +1209,12 @@ run_main (int, ACE_TCHAR *[])
       status = result;
 
   if ((result = pagesize_test ()) != 0)
+      status = result;
+
+  if ((result = ceil_test ()) != 0)
+      status = result;
+
+  if ((result = floor_test ()) != 0)
       status = result;
 
   if ((result = log2_test ()) != 0)

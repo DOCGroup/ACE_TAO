@@ -1,3 +1,13 @@
+Mon Jan  5 09:37:38 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_math.inl:
+          Changed floor() and ceil() not to use == to compare floating
+          point values. This removes compile time warnings if gcc's
+          -Wfloat-equal option is enabled.
+
+        * tests/OS_Test.cpp:
+          Added tests for floor() and ceil().
+
 Sun Jan  4 10:47:27 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debianbuild/*:
