@@ -1,3 +1,12 @@
+Mon Jan  5 15:33:24 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+
+          Removed the vxe file from the GENERATED_DIRTY list, this silences
+          the GNU make warnings for "circular dependencies" on all executable
+          projects that run the idl compiler.
+
 Mon Jan  5 09:37:38 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_math.inl:
