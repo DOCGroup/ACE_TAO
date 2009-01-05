@@ -173,7 +173,6 @@ ifneq ($(VX_LIB_BUILD),1)
       EXEEXT = .vxe
       VXE_DIR := $(OUTPUT_DIRECTORY)
       EXE = $(BIN_UNCHECKED)
-      GENERATED_DIRTY += $(PRJ_DIR)/$(PRJ_FILE)
     endif
     PRJ_DIR = .
     CLEANUP_OBJS := ctdt.c $(PRJ_DIR)/$(PRJ_FILE) $(CLEANUP_OBJS)
