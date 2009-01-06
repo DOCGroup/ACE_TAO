@@ -9,7 +9,7 @@
 #ifndef ADMINISTRATOR_CIDL
 #define ADMINISTRATOR_CIDL
 
-#include <Administrator.idl>
+#include "Administrator.idl"
 
 composition session Administrator_Impl
 {

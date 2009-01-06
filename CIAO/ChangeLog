@@ -1,3 +1,57 @@
+Tue Jan  6 20:45:19 UTC 2009  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DevGuideExamples/Messenger/Administrator_exec_export.h:
+        * DevGuideExamples/Messenger/Administrator_stub_export.h:
+        * DevGuideExamples/Messenger/Administrator_svnt_export.h:
+        * DevGuideExamples/Messenger/Messenger_exec_export.h:
+        * DevGuideExamples/Messenger/Messenger_stub_export.h:
+        * DevGuideExamples/Messenger/Messenger_svnt_export.h:
+        * DevGuideExamples/Messenger/Receiver_exec_export.h:
+        * DevGuideExamples/Messenger/Receiver_stub_export.h:
+        * DevGuideExamples/Messenger/Receiver_svnt_export.h:
+
+          Regnerate export files.
+
+        * DevGuideExamples/Messenger/Administrator.cidl:
+        * DevGuideExamples/Messenger/Administrator.idl:
+        * DevGuideExamples/Messenger/Messenger.cidl:
+        * DevGuideExamples/Messenger/Messenger.idl:
+        * DevGuideExamples/Messenger/Receiver.cidl:
+        * DevGuideExamples/Messenger/Receiver.idl:
+
+          use #include "" instead of #include <>
+
+        * DevGuideExamples/Messenger/Administrator.mpc:
+        * DevGuideExamples/Messenger/Messenger.mpc:
+        * DevGuideExamples/Messenger/Receiver.mpc:
+
+          Updated the files to remove the executor dependency on the servant.
+
+        * DevGuideExamples/Messenger/Administrator_Client_IDL2.mpc:
+        * DevGuideExamples/Messenger/Administrator_Client_IDL3.mpc:
+        * DevGuideExamples/Messenger/StaticDAnCE/Messenger_StaticDAnCE.mpc:
+
+          Removed "requires += cidl" from the files above. We should be able
+          to build the example without needing to build the CIDLC compiler.
+
+        * DevGuideExamples/Messenger/Administrator_exec_i.h:
+        * DevGuideExamples/Messenger/Administrator_exec_i.cpp:
+        * DevGuideExamples/Messenger/History.idl:
+        * DevGuideExamples/Messenger/History_exec_i.h:
+        * DevGuideExamples/Messenger/Messenger_exec_i.h:
+        * DevGuideExamples/Messenger/Messenger_exec_i.cpp:
+        * DevGuideExamples/Messenger/Publication_exec_i.h:
+        * DevGuideExamples/Messenger/Receiver_exec_i.h:
+        * DevGuideExamples/Messenger/Receiver_exec_i.cpp:
+        * DevGuideExamples/Messenger/Runnable_exec_i.h:
+
+          Updated the files above. The executor now does not depend 
+          on the servant.
+
+        * DevGuideExamples/Messenger/descriptors/run_test.pl:
+
+          Use the executables in $CIAO_ROOT/bin.
+
 Fri Dec 26 12:22:14 UTC 2008  Vladimir Zykov  <vz@prismtech.com>
 
         * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp:

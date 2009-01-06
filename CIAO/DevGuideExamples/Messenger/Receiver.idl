@@ -10,8 +10,8 @@
 #define RECEIVER_IDL
 
 #include <Components.idl>
-#include <Message.idl>
-#include <History.idl>
+#include "Message.idl"
+#include "History.idl"
 
 component Receiver {
   consumes Message message_consumer;

@@ -43,9 +43,9 @@ namespace CIDL_Receiver_Impl
 
   void
   Receiver_exec_i::push_message_consumer (
-  ::Message * ev)
+    ::Message * ev)
   {
-    // Your code here.
+    /* Your code here. */
 
     // MY CODE
 
@@ -74,16 +74,29 @@ namespace CIDL_Receiver_Impl
 
   void
   Receiver_exec_i::set_session_context (
-  ::Components::SessionContext_ptr ctx)
+    ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-    Receiver_Context::_narrow (
-    ctx);
+      ::CCM_Receiver_Context::_narrow (ctx);
 
-    if (this->context_ == 0)
+    if (CORBA::is_nil (this->context_.in ()))
     {
-      throw CORBA::INTERNAL ();
+      throw ::CORBA::INTERNAL ();
     }
+  }
+
+  void
+  Receiver_exec_i::ciao_preactivate ()
+  {
+    /* Your code here. */
+    ACE_DEBUG((LM_INFO, ACE_TEXT("Receiver_exec_i::ciao_preactivate\n")));
+  }
+
+  void
+  Receiver_exec_i::ciao_postactivate ()
+  {
+    /* Your code here. */
+    ACE_DEBUG((LM_INFO, ACE_TEXT("Receiver_exec_i::ciao_postactivate\n")));
   }
 
   void
@@ -96,29 +109,15 @@ namespace CIDL_Receiver_Impl
   void
   Receiver_exec_i::ccm_passivate ()
   {
-    // Your code here.
+    /* Your code here. */
     ACE_DEBUG((LM_INFO, ACE_TEXT("Receiver_exec_i::ccm_passivate\n")));
   }
 
   void
   Receiver_exec_i::ccm_remove ()
   {
-    // Your code here.
+    /* Your code here. */
     ACE_DEBUG((LM_INFO, ACE_TEXT("Receiver_exec_i::ccm_remove\n")));
-  }
-
-  void
-  Receiver_exec_i::ciao_preactivate ()
-  {
-    // Your code here.
-    ACE_DEBUG((LM_INFO, ACE_TEXT("Receiver_exec_i::ciao_preactivate\n")));
-  }
-
-  void
-  Receiver_exec_i::ciao_postactivate ()
-  {
-    // Your code here.
-    ACE_DEBUG((LM_INFO, ACE_TEXT("Receiver_exec_i::ciao_postactivate\n")));
   }
 
   //==================================================================
@@ -147,12 +146,12 @@ namespace CIDL_Receiver_Impl
   ReceiverHome_exec_i::create ()
   {
     ::Components::EnterpriseComponent_ptr retval =
-    ::Components::EnterpriseComponent::_nil ();
+      ::Components::EnterpriseComponent::_nil ();
 
     ACE_NEW_THROW_EX (
-    retval,
-    Receiver_exec_i,
-    CORBA::NO_MEMORY ());
+      retval,
+      Receiver_exec_i,
+      ::CORBA::NO_MEMORY ());
 
     return retval;
   }
@@ -161,14 +160,13 @@ namespace CIDL_Receiver_Impl
   create_ReceiverHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =
-    ::Components::HomeExecutorBase::_nil ();
+      ::Components::HomeExecutorBase::_nil ();
 
     ACE_NEW_RETURN (
-    retval,
-    ReceiverHome_exec_i,
-    ::Components::HomeExecutorBase::_nil ());
+      retval,
+      ReceiverHome_exec_i,
+      ::Components::HomeExecutorBase::_nil ());
 
     return retval;
   }
 }
-

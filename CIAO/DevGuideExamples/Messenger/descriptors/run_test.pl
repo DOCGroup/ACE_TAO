@@ -21,19 +21,19 @@ else {
 }
 
 
-$NA = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
+$NA = new PerlACE::Process ("$CIAO_ROOT/bin/NodeApplication");
 $NA_cmd = $NA->Executable ();
 
-$NA1 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/NodeManager",
+$NA1 = new PerlACE::Process ("$CIAO_ROOT/bin/NodeManager",
                              "-ORBEndpoint iiop://localhost:11000 -s $NA_cmd");
 
-$NA2 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/NodeManager",
+$NA2 = new PerlACE::Process ("$CIAO_ROOT/bin/NodeManager",
                              "-ORBEndpoint iiop://localhost:22000 -s $NA_cmd");
 
-$NA3 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/NodeManager",
+$NA3 = new PerlACE::Process ("$CIAO_ROOT/bin/NodeManager",
                              "-ORBEndpoint iiop://localhost:33000 -s $NA_cmd");
 
-$NA4 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/NodeManager",
+$NA4 = new PerlACE::Process ("$CIAO_ROOT/bin/NodeManager",
                              "-ORBEndpoint iiop://localhost:44000 -s $NA_cmd");
 
 # Each Node Manager lauches a Node Application process.
@@ -59,7 +59,7 @@ if($Ret4 == -1) {
 }
 
 #Start an Execution Manager
-$EM = new PerlACE::Process ("$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager", "-o $emior -i ApplicationNodeMap.dat");
+$EM = new PerlACE::Process ("$CIAO_ROOT/bin/Execution_Manager", "-o $emior -i ApplicationNodeMap.dat");
 
 $Ret5 = $EM->Spawn ();
 if($Ret5 == -1) {
@@ -75,12 +75,12 @@ if (PerlACE::waitforfile_timed ($emior, 5) == -1) {
 
 sleep(5);
 #Start the plan laucnher
-$EX = new PerlACE::Process ("$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher",
+$EX = new PerlACE::Process ("$CIAO_ROOT/bin/plan_launcher",
                             "-p Application-flattened.cdp -k file://$emior ".
                             "-o $plior");
 
 #Stop the plan launcher 
-$EX2 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher",
+$EX2 = new PerlACE::Process ("$CIAO_ROOT/bin/plan_launcher",
                              "-k file://$emior -i file://$plior");
 
 $Ret6 = $EX->Spawn ();

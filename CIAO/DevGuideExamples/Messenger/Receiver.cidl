@@ -9,7 +9,7 @@
 #ifndef RECEIVER_CIDL
 #define RECEIVER_CIDL
 
-#include <Receiver.idl>
+#include "Receiver.idl"
 
 composition session Receiver_Impl
 {
