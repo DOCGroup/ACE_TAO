@@ -1,3 +1,14 @@
+Tue Jan  6 19:27:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.spec:
+        * rpmbuild/ace-tao-ciao.txt:
+        * rpmbuild/ace-tao.spec:
+        * rpmbuild/ace-tao.txt:
+          Made ace-tao-ciao the main spec file, the ace-tao one is created
+          by Ken Sedgwick which uses that one for Fedora but which we don't
+          use because it doesn't work with SuSE/CentOS/Mandriva. Hopefully
+          on the long term Ken will use the ace-tao-ciao file
+
 Mon Jan  5 15:33:24 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * include/makeinclude/platform_vxworks6.2.GNU:
