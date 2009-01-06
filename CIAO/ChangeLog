@@ -10,7 +10,7 @@ Tue Jan  6 20:45:19 UTC 2009  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * DevGuideExamples/Messenger/Receiver_stub_export.h:
         * DevGuideExamples/Messenger/Receiver_svnt_export.h:
 
-          Regnerate export files.
+          Regenerate export files.
 
         * DevGuideExamples/Messenger/Administrator.cidl:
         * DevGuideExamples/Messenger/Administrator.idl:
