@@ -23,13 +23,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Messenger_svnt.h"
-#include "Messenger_exec_export.h"
+#include "MessengerEC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "Messenger_exec_export.h"
 #include "tao/LocalObject.h"
 
 // MY CODE
@@ -39,7 +39,7 @@ namespace CIDL_Messenger_Impl
 {
   class MESSENGER_EXEC_Export Runnable_exec_i
   : public virtual ::CCM_Runnable,
-  public virtual ::CORBA::LocalObject
+    public virtual ::CORBA::LocalObject
   {
   public:
     Runnable_exec_i ();

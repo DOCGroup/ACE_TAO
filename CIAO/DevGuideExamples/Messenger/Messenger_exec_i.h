@@ -23,13 +23,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Messenger_svnt.h"
-#include "Messenger_exec_export.h"
+#include "MessengerEC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "Messenger_exec_export.h"
 #include "tao/LocalObject.h"
 
 // MY CODE
@@ -43,9 +43,9 @@ namespace CIDL_Messenger_Impl
   class History_exec_i;
 
   class MESSENGER_EXEC_Export Messenger_exec_i
-  : public virtual Messenger_Exec,
-    public virtual ::CORBA::LocalObject,
-    public virtual ACE_Task_Base
+    : public virtual Messenger_Exec,
+      public virtual ::CORBA::LocalObject,
+      public virtual ACE_Task_Base
   {
     public:
     Messenger_exec_i (void);
@@ -53,21 +53,21 @@ namespace CIDL_Messenger_Impl
 
     // Supported or inherited operations.
 
-    // Operations from ::Runnable
-
     // Attribute operations.
 
-    virtual char * subject ();
+    virtual char *
+    subject ();
 
-    virtual void subject (const char* subject);
+    virtual void
+    subject (const char * subject);
 
     // Port operations.
 
-    virtual ::CCM_Publication_ptr
-    get_content ();
-
     virtual ::CCM_Runnable_ptr
     get_control ();
+
+    virtual ::CCM_Publication_ptr
+    get_content ();
 
     virtual ::CCM_History_ptr
     get_message_history ();
@@ -76,42 +76,36 @@ namespace CIDL_Messenger_Impl
 
     virtual void
     set_session_context (
-    ::Components::SessionContext_ptr ctx);
+      ::Components::SessionContext_ptr ctx);
 
-    virtual void
-    ciao_preactivate ();
+    virtual void ciao_preactivate ();
 
-    virtual void
-    ciao_postactivate ();
+    virtual void ciao_postactivate ();
 
-    virtual void
-    ccm_activate ();
+    virtual void ccm_activate ();
 
-    virtual void
-    ccm_passivate ();
+    virtual void ccm_passivate ();
 
-    virtual void
-    ccm_remove ();
+    virtual void ccm_remove ();
 
     // MY CODE
     virtual int svc();
 
-    protected:
-    Messenger_Context *context_;
+    private:
+    ::CCM_Messenger_Context_var context_;
 
     // MY CODE
-    private:
-      Runnable_exec_i* control_;
-      Publication_exec_i* content_;
-      History_exec_i* history_;
+    Runnable_exec_i* control_;
+    Publication_exec_i* content_;
+    History_exec_i* history_;
 
-      std::string subject_;
-      const std::string user_;
+    std::string subject_;
+    const std::string user_;
   };
 
   class MESSENGER_EXEC_Export MessengerHome_exec_i
-  : public virtual MessengerHome_Exec,
-  public virtual ::CORBA::LocalObject
+    : public virtual MessengerHome_Exec,
+      public virtual ::CORBA::LocalObject
   {
     public:
     MessengerHome_exec_i (void);

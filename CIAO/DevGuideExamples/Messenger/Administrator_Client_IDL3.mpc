@@ -7,7 +7,6 @@
 //
 
 project(Administrator_Client_IDL3): ciao_client_dnc, valuetype,  {
-  requires += cidl
   after += Messenger_stub
   libs += Messenger_stub
 

@@ -1,7 +1,6 @@
 // $Id$
 
 project(Administrator_Client_IDL2_Compile): taoidl3toidl2defaults {
-  requires += cidl
   // ensures that only idl3-to-idl2 processing is performed
   custom_only = 1
 
@@ -19,7 +18,6 @@ project(Administrator_Client_IDL2_Compile): taoidl3toidl2defaults {
 }
 
 project(Administrator_Client_IDL2): ciao_client_dnc, valuetype {
-  requires += cidl
   after += Administrator_Client_IDL2_Compile
 
   exename = Administrator_Client_IDL2

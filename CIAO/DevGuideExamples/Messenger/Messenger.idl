@@ -10,10 +10,10 @@
 #define MESSENGER_IDL
 
 #include <Components.idl>
-#include <Runnable.idl>
-#include <Publication.idl>
-#include <Message.idl>
-#include <History.idl>
+#include "Runnable.idl"
+#include "Publication.idl"
+#include "Message.idl"
+#include "History.idl"
 
 component Messenger { 
   attribute string subject;

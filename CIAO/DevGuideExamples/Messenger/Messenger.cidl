@@ -9,7 +9,7 @@
 #ifndef MESSENGER_CIDL
 #define MESSENGER_CIDL
 
-#include <Messenger.idl>
+#include "Messenger.idl"
 
 composition session Messenger_Impl
 {

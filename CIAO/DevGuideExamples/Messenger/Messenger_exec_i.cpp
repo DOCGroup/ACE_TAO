@@ -108,18 +108,6 @@ namespace CIDL_Messenger_Impl
 
   // Port operations.
 
-  ::CCM_Publication_ptr
-  Messenger_exec_i::get_content ()
-  {
-    // Your code here.
-
-    // MY CODE
-
-    // bump up ref count because we give up ownership when we return this
-    this->content_->_add_ref();
-    return this->content_;
-  }
-
   ::CCM_Runnable_ptr
   Messenger_exec_i::get_control ()
   {
@@ -130,6 +118,18 @@ namespace CIDL_Messenger_Impl
     // bump up ref count because we give up ownership when we return this
     this->control_->_add_ref();
     return this->control_;
+  }
+
+  ::CCM_Publication_ptr
+  Messenger_exec_i::get_content ()
+  {
+    // Your code here.
+
+    // MY CODE
+
+    // bump up ref count because we give up ownership when we return this
+    this->content_->_add_ref();
+    return this->content_;
   }
 
   ::CCM_History_ptr
@@ -148,34 +148,33 @@ namespace CIDL_Messenger_Impl
 
   void
   Messenger_exec_i::set_session_context (
-  ::Components::SessionContext_ptr ctx)
+    ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-    Messenger_Context::_narrow (
-    ctx);
+      ::CCM_Messenger_Context::_narrow (ctx);
 
-    if (this->context_ == 0)
+    if (CORBA::is_nil (this->context_.in ()))
     {
-      throw CORBA::INTERNAL ();
+      throw ::CORBA::INTERNAL ();
     }
   }
 
   void
   Messenger_exec_i::ciao_preactivate ()
   {
-    // Your code here.
+    /* Your code here. */
   }
 
   void
   Messenger_exec_i::ciao_postactivate ()
   {
-    // Your code here.
+    /* Your code here. */
   }
 
   void
   Messenger_exec_i::ccm_activate ()
   {
-    // Your code here.
+    /* Your code here. */
     ACE_DEBUG((LM_INFO, ACE_TEXT("Messenger_exec_i::ccm_activate\n")));
     this->activate();
   }
@@ -183,14 +182,14 @@ namespace CIDL_Messenger_Impl
   void
   Messenger_exec_i::ccm_passivate ()
   {
-    // Your code here.
+    /* Your code here. */
     ACE_DEBUG((LM_INFO, ACE_TEXT("Messenger_exec_i::ccm_passivate\n")));
   }
 
   void
   Messenger_exec_i::ccm_remove ()
   {
-    // Your code here.
+    /* Your code here. */
     ACE_DEBUG((LM_INFO, ACE_TEXT("Messenger_exec_i::ccm_remove\n")));
   }
 
@@ -220,12 +219,12 @@ namespace CIDL_Messenger_Impl
   MessengerHome_exec_i::create ()
   {
     ::Components::EnterpriseComponent_ptr retval =
-    ::Components::EnterpriseComponent::_nil ();
+      ::Components::EnterpriseComponent::_nil ();
 
     ACE_NEW_THROW_EX (
-    retval,
-    Messenger_exec_i,
-    CORBA::NO_MEMORY ());
+      retval,
+      Messenger_exec_i,
+      ::CORBA::NO_MEMORY ());
 
     return retval;
   }
@@ -234,12 +233,12 @@ namespace CIDL_Messenger_Impl
   create_MessengerHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =
-    ::Components::HomeExecutorBase::_nil ();
+      ::Components::HomeExecutorBase::_nil ();
 
     ACE_NEW_RETURN (
-    retval,
-    MessengerHome_exec_i,
-    ::Components::HomeExecutorBase::_nil ());
+      retval,
+      MessengerHome_exec_i,
+      ::Components::HomeExecutorBase::_nil ());
 
     return retval;
   }

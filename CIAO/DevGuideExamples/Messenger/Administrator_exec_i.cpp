@@ -49,15 +49,14 @@ namespace CIDL_Administrator_Impl
 
   void
   Administrator_exec_i::set_session_context (
-  ::Components::SessionContext_ptr ctx)
+    ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-    Administrator_Context::_narrow (
-    ctx);
+      ::CCM_Administrator_Context::_narrow (ctx);
 
-    if (this->context_ == 0)
+    if (CORBA::is_nil (this->context_.in ()))
     {
-      throw CORBA::INTERNAL ();
+      throw ::CORBA::INTERNAL ();
     }
   }
 
@@ -230,12 +229,12 @@ namespace CIDL_Administrator_Impl
   AdministratorHome_exec_i::create ()
   {
     ::Components::EnterpriseComponent_ptr retval =
-    ::Components::EnterpriseComponent::_nil ();
+      ::Components::EnterpriseComponent::_nil ();
 
     ACE_NEW_THROW_EX (
-    retval,
-    Administrator_exec_i,
-    CORBA::NO_MEMORY ());
+      retval,
+      Administrator_exec_i,
+      ::CORBA::NO_MEMORY ());
 
     return retval;
   }
@@ -244,14 +243,13 @@ namespace CIDL_Administrator_Impl
   create_AdministratorHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =
-    ::Components::HomeExecutorBase::_nil ();
+      ::Components::HomeExecutorBase::_nil ();
 
     ACE_NEW_RETURN (
-    retval,
-    AdministratorHome_exec_i,
-    ::Components::HomeExecutorBase::_nil ());
+      retval,
+      AdministratorHome_exec_i,
+      ::Components::HomeExecutorBase::_nil ());
 
     return retval;
   }
 }
-
