@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (ADMINISTRATOR_SVNT_HAS_DLL)
+#  define ADMINISTRATOR_SVNT_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && ADMINISTRATOR_SVNT_HAS_DLL */
+
 #if !defined (ADMINISTRATOR_SVNT_HAS_DLL)
 #  define ADMINISTRATOR_SVNT_HAS_DLL 1
 #endif /* ! ADMINISTRATOR_SVNT_HAS_DLL */

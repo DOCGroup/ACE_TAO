@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (RECEIVER_STUB_HAS_DLL)
+#  define RECEIVER_STUB_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && RECEIVER_STUB_HAS_DLL */
+
 #if !defined (RECEIVER_STUB_HAS_DLL)
 #  define RECEIVER_STUB_HAS_DLL 1
 #endif /* ! RECEIVER_STUB_HAS_DLL */

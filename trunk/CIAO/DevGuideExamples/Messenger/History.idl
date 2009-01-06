@@ -9,7 +9,7 @@
 #ifndef HISTORY_IDL
 #define HISTORY_IDL
 
-#include <Message.idl>
+#include "Message.idl"
    
 interface History {
   Messages get_all();

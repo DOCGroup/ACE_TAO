@@ -23,20 +23,20 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Receiver_svnt.h"
-#include "Receiver_exec_export.h"
+#include "ReceiverEC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "Receiver_exec_export.h"
 #include "tao/LocalObject.h"
 
 namespace CIDL_Receiver_Impl
 {
   class RECEIVER_EXEC_Export Receiver_exec_i
-  : public virtual Receiver_Exec,
-  public virtual ::CORBA::LocalObject
+    : public virtual Receiver_Exec,
+      public virtual ::CORBA::LocalObject
   {
     public:
     Receiver_exec_i (void);
@@ -50,36 +50,31 @@ namespace CIDL_Receiver_Impl
 
     virtual void
     push_message_consumer (
-    ::Message *ev);
+      ::Message *ev);
 
     // Operations from Components::SessionComponent
 
     virtual void
     set_session_context (
-    ::Components::SessionContext_ptr ctx);
+      ::Components::SessionContext_ptr ctx);
 
-    virtual void
-    ciao_preactivate ();
+    virtual void ciao_preactivate ();
 
-    virtual void
-    ciao_postactivate ();
+    virtual void ciao_postactivate ();
 
-    virtual void
-    ccm_activate ();
+    virtual void ccm_activate ();
 
-    virtual void
-    ccm_passivate ();
+    virtual void ccm_passivate ();
 
-    virtual void
-    ccm_remove ();
+    virtual void ccm_remove ();
 
-    protected:
-    Receiver_Context *context_;
+    private:
+    ::CCM_Receiver_Context_var context_;
   };
 
   class RECEIVER_EXEC_Export ReceiverHome_exec_i
-  : public virtual ReceiverHome_Exec,
-  public virtual ::CORBA::LocalObject
+    : public virtual ReceiverHome_Exec,
+      public virtual ::CORBA::LocalObject
   {
     public:
     ReceiverHome_exec_i (void);

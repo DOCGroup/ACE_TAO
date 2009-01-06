@@ -23,24 +23,25 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Administrator_svnt.h"
-#include "Administrator_exec_export.h"
+#include "AdministratorEC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "Administrator_exec_export.h"
 #include "tao/LocalObject.h"
+
 #include "ace/Task.h"
 
 namespace CIDL_Administrator_Impl
 {
   class ADMINISTRATOR_EXEC_Export Administrator_exec_i
-  : public virtual Administrator_Exec,
-    public virtual ACE_Task_Base,
-    public virtual ::CORBA::LocalObject
+    : public virtual Administrator_Exec,
+      public virtual ::CORBA::LocalObject,
+      public virtual ACE_Task_Base
   {
-    public:
+  public:
     Administrator_exec_i (void);
     virtual ~Administrator_exec_i (void);
 
@@ -54,40 +55,34 @@ namespace CIDL_Administrator_Impl
 
     virtual void
     set_session_context (
-    ::Components::SessionContext_ptr ctx);
+      ::Components::SessionContext_ptr ctx);
 
-    virtual void
-    ccm_activate ();
+    virtual void ciao_preactivate ();
 
-    virtual void
-    ccm_passivate ();
+    virtual void ciao_postactivate ();
 
-    virtual void
-    ccm_remove ();
+    virtual void ccm_activate ();
 
-    virtual void
-    ciao_preactivate ();
+    virtual void ccm_passivate ();
 
-    virtual void
-    ciao_postactivate ();
+    virtual void ccm_remove ();
 
-    protected:
-    Administrator_Context *context_;
-
-  public:
     // Overridden from ACE_Task_Base
     int svc();
 
   private:
+
     void startPublishing();
     void stopPublishing();
     void changePublicationPeriod();
     void changePublicationText();
+
+    ::CCM_Administrator_Context_var context_;
   };
 
   class ADMINISTRATOR_EXEC_Export AdministratorHome_exec_i
-  : public virtual AdministratorHome_Exec,
-  public virtual ::CORBA::LocalObject
+    : public virtual AdministratorHome_Exec,
+      public virtual ::CORBA::LocalObject
   {
     public:
     AdministratorHome_exec_i (void);
@@ -114,4 +109,3 @@ namespace CIDL_Administrator_Impl
 #include /**/ "ace/post.h"
 
 #endif /* CIAO_ADMINISTRATOR_EXEC_H */
-

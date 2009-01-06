@@ -10,8 +10,8 @@
 #define ADMINISTRATOR_IDL
 
 #include <Components.idl>
-#include <Runnable.idl>
-#include <Publication.idl>
+#include "Runnable.idl"
+#include "Publication.idl"
 
 component Administrator {    
   uses multiple Runnable runnables;

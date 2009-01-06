@@ -2,7 +2,6 @@
 // $Id$
 
 project(Messenger_StaticDAnCE): ciao_static_dnc_app {
-  requires += cidl
   exename   = Messenger_StaticDAnCE
   requires += dummy_label
 
