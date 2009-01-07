@@ -288,7 +288,7 @@ ACE_INLINE bool
 ACE::isdotdir (const char *s)
 {
   return (s[0] == '.' && 
-	  ((s[1] == 0) || (s[1] == '.' && s[2] == 0)));
+          ((s[1] == 0) || (s[1] == '.' && s[2] == 0)));
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -296,7 +296,7 @@ ACE_INLINE bool
 ACE::isdotdir (const wchar_t *s)
 {
   return (s[0] == ACE_TEXT ('.') && 
-	  ((s[1] == 0) || (s[1] == ACE_TEXT ('.') && s[2] == 0)));
+          ((s[1] == 0) || (s[1] == ACE_TEXT ('.') && s[2] == 0)));
 }
 #endif /* ACE_HAS_WCHAR */
 
