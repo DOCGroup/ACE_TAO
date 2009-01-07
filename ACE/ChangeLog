@@ -1,3 +1,8 @@
+Wed Jan  7 14:22:45 UTC 2009  Marcel Smit <smit@remedy.nl>
+
+        * bin/fuzz.pl:
+          Corrected wrong perl run_test check
+		  
 Wed Jan  7 12:09:45 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * examples/Shared_Memory/test_MM.cpp:
