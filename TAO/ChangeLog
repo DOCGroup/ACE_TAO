@@ -1,3 +1,9 @@
+Wed Jan  7 19:12:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/tests:
+          Made CallbackTes, Codec, Collation and Oneway_Send_Timeouts "fuzz" compliant.
+          removed PerlACE::Run_Test
+
 Wed Jan  7 12:06:39 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.cpp:
