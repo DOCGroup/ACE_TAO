@@ -1,3 +1,12 @@
+Wed Jan  7 16:31:25 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Hash_Map_Manager_T.cpp:
+
+          Overloadded the item () and key () accessor methods for the
+          ACE_Hash_Map_Entry class so the methods can be used with
+          read-only versions of the ACE_Hash_Map_Entry object.
+
 Wed Jan  7 14:47:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/split-cpp.pl:

@@ -58,8 +58,20 @@ ACE_Hash_Map_Entry<EXT_ID, INT_ID>::key ()
   return ext_id_;
 }
 
+template <class EXT_ID, class INT_ID> const EXT_ID &
+ACE_Hash_Map_Entry<EXT_ID, INT_ID>::key () const
+{
+  return ext_id_;
+}
+
 template <class EXT_ID, class INT_ID> INT_ID &
 ACE_Hash_Map_Entry<EXT_ID, INT_ID>::item ()
+{
+  return int_id_;
+}
+
+template <class EXT_ID, class INT_ID> const INT_ID &
+ACE_Hash_Map_Entry<EXT_ID, INT_ID>::item () const
 {
   return int_id_;
 }
