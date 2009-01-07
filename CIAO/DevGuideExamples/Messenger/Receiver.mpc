@@ -87,12 +87,12 @@ project(Messenger_Receiver_exec) : ciao_component_dnc {
 
 project(Messenger_Receiver_svnt) : ciao_servant_dnc {
   avoids += ace_for_tao
-  after      += Messenger_Receiver_exec
+  after      += Messenger_svnt Messenger_Receiver_exec
   sharedname  = Receiver_svnt
   libs       += Receiver_exec \
                 Receiver_stub \
-                Messenger_stub \
-                Messenger_svnt
+                Messenger_svnt \
+                Messenger_stub
   
   dynamicflags = RECEIVER_SVNT_BUILD_DLL
   
