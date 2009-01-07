@@ -87,12 +87,12 @@ project(Messenger_Administrator_exec) : ciao_component_dnc {
 
 project(Messenger_Administrator_svnt) : ciao_servant_dnc {
   avoids += ace_for_tao
-  after      += Messenger_Administrator_exec
+  after      += Messenger_svnt Messenger_Administrator_exec
   sharedname  = Administrator_svnt
   libs       += Administrator_exec \
                 Administrator_stub \
-                Messenger_stub \
-                Messenger_svnt
+                Messenger_svnt \
+                Messenger_stub
   
   dynamicflags = ADMINISTRATOR_SVNT_BUILD_DLL
   
