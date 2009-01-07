@@ -1,3 +1,8 @@
+Wed Jan  7 21:01:39 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/ACE.inl:
+          Removed tabs.
+
 Wed Jan  7 16:31:25 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * ace/Hash_Map_Manager_T.h:
