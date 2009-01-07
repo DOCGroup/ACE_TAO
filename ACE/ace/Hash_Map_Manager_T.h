@@ -53,8 +53,14 @@ public:
   /// Key accessor.
   EXT_ID& key (void);
 
+  /// Read-only key accessor.
+  const EXT_ID& key (void) const;
+
   /// Item accessor.
   INT_ID& item (void);
+
+  /// Read-only item accessor.
+  const INT_ID& item (void) const;
 
   /// Key used to look up an entry.
   /// @deprecated Use key()
