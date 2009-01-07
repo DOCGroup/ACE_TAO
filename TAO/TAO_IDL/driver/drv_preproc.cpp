@@ -354,7 +354,7 @@ DRV_sweep_dirs (const char *rel_path,
     {
       // Skip the ".." and "." files in each directory.
       if (ACE::isdotdir (dir_entry->d_name) == true)
-	continue;
+        continue;
 
 #if defined (ACE_HAS_TCHAR_DIRENT)
       ACE_CString lname (ACE_TEXT_ALWAYS_CHAR (dir_entry->d_name));

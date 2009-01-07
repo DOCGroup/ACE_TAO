@@ -1,3 +1,9 @@
+Wed Jan  7 20:56:46 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+          Removed tabs.
+
 Wed Jan  7 19:12:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tao/tests:
