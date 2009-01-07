@@ -1,3 +1,9 @@
+Wed Jan  7 12:09:45 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * examples/Shared_Memory/test_MM.cpp:
+          Removed check for ACE_LACKS_MKSTEMP. mkstemp() is now
+          available on all ACE platforms.
+
 Wed Jan  7 07:40:41 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_math.inl:
