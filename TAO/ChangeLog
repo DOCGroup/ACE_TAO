@@ -1,3 +1,9 @@
+Wed Jan  7 12:06:39 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.cpp:
+          Removed check for ACE_LACKS_MKSTEMP. mkstemp() is now
+          available on all ACE platforms.
+
 Fri Jan  2 19:38:32 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Fixed_Array_Argument_T.inl:
