@@ -71,6 +71,8 @@ $process->DeleteFile($iorfile);
 my $testid;
 
 for ($testid = 1; $testid <= 9; ++$testid) {
+
+    $process->DeleteFile($iorfile);
  
     my $client_mode;
     my $server_mode;
@@ -79,34 +81,34 @@ for ($testid = 1; $testid <= 9; ++$testid) {
 
     my $SV;
 
-      $SV = $process->CreateProcess ("PI_ProcMode_Collocated_Test", 
+    $SV = $process->CreateProcess ("PI_ProcMode_Collocated_Test", 
                                       "-c $client_mode " .
                                       "-s $server_mode " .
                                       "-ORBobjrefstyle url");
       
-      print STDERR "\n\n==== Starting test variant #$testid\n\n";
+    print STDERR "\n\n==== Starting test variant #$testid\n\n";
 
-      $SV->Spawn ();
+    $SV->Spawn ();
      
-      if ($process->WaitForFileTimed ($iorfile,
+    if ($process->WaitForFileTimed ($iorfile,
                                    $process->ProcessStartWaitInterval()) == -1) {
-          print STDERR "ERROR: cannot find file <$process_iorfile>\n";
-          $SV->Kill (); $SV->TimedWait (1);
-          exit 1;
-      }
+        print STDERR "ERROR: cannot find file <$process_iorfile>\n";
+        $SV->Kill (); $SV->TimedWait (1);
+        exit 1;
+    }
       
-      my $collocated  = $SV->WaitKill ($process->ProcessStopWaitInterval());
+    my $collocated  = $SV->WaitKill ($process->ProcessStopWaitInterval());
 
-      if ($collocated != 0) {
-          print STDERR "ERROR: PI_ProcMode_Collocated_Test returned $collocated\n";
-          print STDERR "ERROR: For client-side mode [$client_mode],\n";
-          print STDERR "ERROR: and server-side mode [$server_mode].\n";
-          $status = 1;
-          print STDERR "\nTest variant #$testid of 9 failed!\n\n";
-      }
-      else {
-          print STDERR "\nTest variant #$testid of 9 passed!\n\n";
-      }
+    if ($collocated != 0) {
+        print STDERR "ERROR: PI_ProcMode_Collocated_Test returned $collocated\n";
+        print STDERR "ERROR: For client-side mode [$client_mode],\n";
+        print STDERR "ERROR: and server-side mode [$server_mode].\n";
+        $status = 1;
+        print STDERR "\nTest variant #$testid of 9 failed!\n\n";
+    }
+    else {
+        print STDERR "\nTest variant #$testid of 9 passed!\n\n";
+    }
 }
 
 if ($status == 0) {
