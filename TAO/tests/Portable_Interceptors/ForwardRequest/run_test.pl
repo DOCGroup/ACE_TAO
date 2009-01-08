@@ -8,21 +8,24 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$file1 = PerlACE::LocalFile ("test1.ior");
-$file2 = PerlACE::LocalFile ("test2.ior");
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 1 failed\n";
 
-unlink $file1;
-unlink $file2;
+my $server_iorbase = "test1.ior";
+my $client_iorbase = "test2.ior";
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o test1.ior -o test2.ior");
-}
-else {
-    $SV = new PerlACE::Process ("server", "-o $file1 -o $file2");
-}
-$CL = new PerlACE::Process ("client", "-k file://$file1 -k file://$file2");
+my $server_iorfile = $server->LocalFile ($server_iorbase);
+my $client_iorfile = $client->LocalFile ($client_iorbase);
+
+$server->DeleteFile ($server_iorbase);
+$client->DeleteFile ($client_iorbase);
+
+my $SV = $server->CreateProcess ("server", "-o $server_iorfile -o $client_iorfile");
+
+
+my $CL = $server->CreateProcess ("client", "-k file://$server_iorfile -k file://$client_iorfile");
 
 $status = 0;
 
@@ -30,33 +33,35 @@ print STDERR "\n\n==== Running PortableInterceptor::ForwardRequest test\n";
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($file1, $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$file1>\n";
-    $SV->Kill ();
+if ($server->WaitForFileTimed ($server_iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($file2, $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$file2>\n";
-    $SV->Kill ();
+if ($server->WaitForFileTimed ($client_iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill (60);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-if ($client != 0) {
+if ($client_status != 0) {
     print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server = $SV->WaitKill (5);
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
 
-if ($server != 0) {
+if ($server_status != 0) {
     print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-unlink $file1;
-unlink $file2;
+$server->DeleteFile ($server_iorbase);
+$client->DeleteFile ($client_iorbase);
 
 exit $status;
