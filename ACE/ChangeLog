@@ -1,3 +1,11 @@
+Wed Jan  8 10:39:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Removed "!LabVIEW_RT", "!WinCE" and "!FUZZ" from: 
+            TAO/tests/Portable_Interceptors/Bug_1559/run_test.pl
+            TAO/tests/Portable_Interceptors/Bug_2510_Regression/run_test.pl
+            TAO/tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/run_test.pl
+
 Wed Jan  7 21:01:39 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/ACE.inl:
