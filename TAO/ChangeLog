@@ -1,3 +1,9 @@
+Wed Jan  8 10:30:35 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+        * tests/Portable_Interceptors/Bug_1559/run_test.pl:
+        * tests/Portable_Interceptors/Bug_2510_Regression/run_test.pl:
+        * tests/Portable_Interceptors/Processing_Mode_Policy\Collocated/run_test.pl:
+          Made "fuzz" compliant.
+
 Wed Jan  7 20:56:46 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * TAO_IDL/driver/drv_mcpp_preproc.cpp:
