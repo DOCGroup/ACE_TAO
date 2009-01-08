@@ -1,4 +1,9 @@
-Wed Jan  8 10:30:35 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+Thu Jan  8 11:07:35 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+        * tests/Portable_Interceptors/Bug_1559/run_test.pl:
+        * tests/Portable_Interceptors/Processing_Mode_Policy\Collocated/run_test.pl:
+          Clean up used ior files.
+
+Thu Jan  8 10:30:35 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * tests/Portable_Interceptors/Bug_1559/run_test.pl:
         * tests/Portable_Interceptors/Bug_2510_Regression/run_test.pl:
         * tests/Portable_Interceptors/Processing_Mode_Policy\Collocated/run_test.pl:

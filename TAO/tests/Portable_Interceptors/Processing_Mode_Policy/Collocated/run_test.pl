@@ -116,4 +116,6 @@ else {
     print STDERR "\n==== One or more of the 9 test variants failed!\n";
 }
 
+$process->DeleteFile($iorfile);
+
 exit $status;
