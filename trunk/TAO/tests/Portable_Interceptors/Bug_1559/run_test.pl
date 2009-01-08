@@ -48,4 +48,7 @@ if ($server_status != 0) {
     $status = 1;
 }
 
+$server->DeleteFile($iorfile);
+$client->DeleteFile($iorfile);
+
 exit $status;
