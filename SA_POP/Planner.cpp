@@ -528,14 +528,18 @@ TaskImplID Planner::get_impl_id (TaskInstID task_inst)
   return this->working_plan_->get_impl_id(task_inst);
 
 }
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
-  // update effect throws excepetion
-  //TODO: Add Update fucntions in SANet and SANode for updating the effect link.
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
 
+
+void Planner::print_graph (std::basic_ostream<char, std::char_traits<char> >& strm)
+{
+  this->sanet_->print_graphviz(strm);
+
+}
+
+//Allows the planner to update an effect link
 void Planner::update_effect (SANet::TaskID tsk, SANet::CondID cnd, SANet::LinkWeight weight)
 {
-	this->sanet_->add_effect_link(tsk, cnd, weight);
+  this->sanet_->update_effect_link(tsk, cnd, weight);
 
 }
 

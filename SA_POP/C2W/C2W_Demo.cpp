@@ -25,6 +25,7 @@
 #include "LogGraphOut.h"
 
 #include <vector>
+#include <map>
 
 //Commands to run in the thread
 unsigned long WINAPI ThirdThread(PVOID pvParam)
@@ -35,7 +36,7 @@ unsigned long WINAPI ThirdThread(PVOID pvParam)
 }
 
 //for displaying conditions
-void displayConds(SA_POP::Planner *plans, std::vector<SANet::CondID> checks)
+void displayConds(SA_POP::Planner *plans, std::vector<SANet::CondID> checks, std::map<SANet::CondID, double> *cMap)
 {
 
   std::ofstream cfile;
@@ -49,10 +50,20 @@ void displayConds(SA_POP::Planner *plans, std::vector<SANet::CondID> checks)
 	 
 	  if(plans->get_cond_val(checks[node]) == 1)
 	  {
+      std::map<SANet::CondID, double>::iterator cmp = cMap->find(checks[node]);
+      if(cmp != cMap->end())
+      {
+        (*cmp).second = 1;
+      }
 		cfile <<  "\t" << "\"" << plans->get_cond_name(checks[node]) << " " << checks[node] << "\" [shape = box, color = green];\n";
 	  }
 	  else
-	  {
+	  {  
+      std::map<SANet::CondID, double>::iterator cmp = cMap->find(checks[node]);
+      if(cmp != cMap->end())
+      {
+        (*cmp).second = 0;
+      }
 		cfile <<  "\t" << "\"" << plans->get_cond_name(checks[node]) << " " << checks[node] << "\" [shape = box, color = red];\n";
 	  }
 	  std::cout << "Ready for Next Cond" << std::endl;
@@ -80,6 +91,7 @@ int main (int argc, char* argv[])
   std::string tm_filename = "";
   std::vector<SA_POP::CondID> * kconds = new std::vector<SA_POP::CondID>;
   std::vector<SANet::CondID> toCheck;
+  std::map<SANet::CondID, double> condMap;
 
   // Get filenames from user.
   std::cout << "Task Network file: ";
@@ -165,6 +177,7 @@ int main (int argc, char* argv[])
 		std::cout << "Enter the Condition ID to track:";
 		std::cin >> cid;
 		SA_POP::CondID ccid = SA_POP::CondID(cid);
+    condMap.insert(std::make_pair(ccid, 1));
 		toCheck.push_back(ccid);
 	
 	}
@@ -193,7 +206,7 @@ int main (int argc, char* argv[])
 	  
 	  std::string step;
 	  std::cout << "Would you like to advance to the next time step? (Y or N): ";
-	  displayConds(planner, toCheck);
+	  displayConds(planner, toCheck, &condMap);
 	  std::cin >> step;
 	  if(step == "Y" || step == "y")
 	  {
@@ -213,8 +226,17 @@ int main (int argc, char* argv[])
 			  std::cin >> curTask;
 			  std::cout << "Enter the Condition ID: ";
 			  std::cin >> curEff;
-			  //planner->(curTask, curEff, -1);
-			  planner->replan(100);
+        SA_POP::SA_Builder rebuilder;
+        sanet_in.build_net (sanet_filename, &rebuilder);
+        tm_in.build_task_map (tm_filename, &rebuilder);
+        planner = rebuilder.get_planner ();
+        planner->add_out_adapter (&graph_out);
+        for(std::map<SANet::CondID, double>::iterator cIter = condMap.begin(); cIter != condMap.end(); cIter++)
+        {
+          planner->update_cond_val((*cIter).first, (*cIter).second);
+        }
+        planner->update_effect(curTask, curEff, -1);
+			  planner->plan(100, goal);
 
 		  }
 		  else if(eff == "C" || eff == "c")
@@ -225,8 +247,22 @@ int main (int argc, char* argv[])
 			  std::cin >> envi;
 			  std::cout << "Enter the Probability: ";
 			  std::cin >> newprob;
-			  planner->update_cond_val(envi, newprob);
-			  planner->replan (100, goal);
+        std::map<SANet::CondID, double>::iterator cmp = condMap.find(envi);
+        if(cmp != condMap.end())
+        {
+          (*cmp).second = newprob;
+        }
+        SA_POP::SA_Builder rebuilder;
+        sanet_in.build_net (sanet_filename, &rebuilder);
+        tm_in.build_task_map (tm_filename, &rebuilder);
+        planner = rebuilder.get_planner ();
+        planner->add_out_adapter (&graph_out);
+        for(std::map<SANet::CondID, double>::iterator cIter = condMap.begin(); cIter != condMap.end(); cIter++)
+        {
+          planner->update_cond_val((*cIter).first, (*cIter).second);
+        }
+			  planner->plan (100, goal);
+
 		  }
 		  else
 		  {

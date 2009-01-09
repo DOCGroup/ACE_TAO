@@ -1,13 +1,36 @@
+Fri Jan  9 21:39:55 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * C2W/C2W_Demo.cpp:
+	Utilize update_effect function
+
+        * C2W/LogGraphOut.cpp:
+	Utilizes Complete Graphviz Visualization
+
+        * Planner.h:
+        * Planner.cpp:
+	Uses SANET::update_effect
+
+        * SANet/SANet.h:
+        * SANet/SANet.cpp:
+	Implements SANET::update_effect, which updates an effect link in a SANet, calls TaskNode::update_effect_link
+
+        * SANet/SANode.h:
+        * SANet/SANode.cpp:
+	Implements TaskNode::update_effect_link and CondNode::update_pre_link
+
+        * SA_WorkingPlan.cpp:
+	Clears causal links in reset_plan.
+
 Wed Dec 17 23:21:30 UTC 2008  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * C2W/C2W_Demo.cpp:
-	Minor update to setting effect
+        Minor update to setting effect
 
         * Planner.cpp:
-	Fixed typo
+        Fixed typo
 
         * SANet/SANode.cpp:
-	Check for changed condition value in CondNode::update()
+        Check for changed condition value in CondNode::update()
 
 Wed Dec 17 22:55:40 UTC 2008  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 

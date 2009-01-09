@@ -489,16 +489,24 @@ namespace SA_POP {
     virtual TaskImplID get_impl_id (TaskInstID task_inst);
 
 
-    /// (re) Set Effect Link
-    /**
-     * @param task_inst  The task id
+   /// (re) Set Effect Link
+   /**
+   * @param task_inst  The task id
 	 * @param task_inst  The Cond ID
 	 * @param task_inst  The LinkWeight
-	 * @param task_inst  The PortID(default is blank)
-     *
-     * @return nothing
-     */
+	 * 
+   *
+   * @return nothing
+   */
 	virtual void update_effect (SANet::TaskID tsk, SANet::CondID cnd, SANet::LinkWeight weight);
+  
+  /// print the graphviz network of the SANet
+  /**
+   * @param strm  Output stream on which to print network representation.
+   *
+   * @return nothing
+   */
+  virtual void print_graph (std::basic_ostream<char, std::char_traits<char> >& strm);
 
 
   protected:

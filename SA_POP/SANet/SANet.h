@@ -120,6 +120,20 @@ namespace SANet {
     virtual void add_effect_link (TaskID task_ID, CondID cond_ID,
       LinkWeight weight, PortID port_ID = "");
 
+    /// Update the task to condition link.
+    /**
+     * @param cond_ID  Condition node ID.
+     *
+     * @param task_ID  Task node ID.
+     *
+     * @param weight  Link weight (probability task sets condition to
+     * true, or negative of the probability task sets condition to false).
+     *
+     * @param port_ID  ID of port (on task) associated with this condition
+     *                 (used for data nodes).
+     */
+    void update_effect_link(TaskID task_ID, CondID cond_ID,
+                               LinkWeight weight, PortID port_ID= "");
 
 
     // ************************************************************************
@@ -134,6 +148,14 @@ namespace SANet {
      */
     virtual void print (std::basic_ostream<char, std::char_traits<char> >& strm
       = std::cout, bool verbose = false);
+    
+    /// Print Graphviz network representation to stream.
+    /**
+     * @param strm  Output stream on which to print network representation.
+     */
+    virtual void print_graphviz (std::basic_ostream<char, std::char_traits<char> >& strm);
+
+    
 
     /// Print XML network representation to stream.
     /**

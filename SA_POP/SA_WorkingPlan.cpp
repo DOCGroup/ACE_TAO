@@ -252,7 +252,7 @@ void SA_WorkingPlan::reset_plan ()
 	next_inst_id_ =1;
 	this->task_insts_.clear ();
 	this->task_impls_.clear ();
-    this->causal_links_.clear ();
+  this->causal_links_.clear ();
 
   // Clear goal.
   this->goal_.goal_id = "NULL";
