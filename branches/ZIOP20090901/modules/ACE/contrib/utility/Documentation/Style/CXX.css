@@ -1,0 +1,9 @@
+pre { BORDER-RIGHT: gray 1pt solid; PADDING-RIGHT: 2pt; BORDER-TOP: gray 1pt solid; DISPLAY: block; PADDING-LEFT: 2pt; PADDING-BOTTOM: 2pt; MARGIN-LEFT: 32pt; BORDER-LEFT: gray 1pt solid; MARGIN-RIGHT: 32pt; PADDING-TOP: 2pt; BORDER-BOTTOM: gray 1pt solid; FONT-FAMILY: "Courier New", Courier, mono; background-color: #EEEEEE; font-size: small}
+.keyword {  color: #000099}
+.identifier {  }
+.comment { color: #990000}
+.special {  color: #800040}
+.preprocessor { color: #006600}
+.string { color: #666666}
+.number { color: #666666}
+/* $Id$ */

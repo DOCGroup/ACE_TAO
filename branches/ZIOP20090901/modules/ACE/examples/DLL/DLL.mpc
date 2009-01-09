@@ -1,0 +1,22 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Newsweek) : acelib {
+  Source_Files {
+    Newsweek.cpp
+  }
+}
+
+project(*Today) : acelib {
+  Source_Files {
+    Today.cpp
+  }
+}
+
+project(*Main) : aceexe {
+  exename = test_dll
+  after  += DLL_Newsweek DLL_Today
+  Source_Files {
+    test_dll.cpp
+  }
+}
