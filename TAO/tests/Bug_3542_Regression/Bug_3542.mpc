@@ -1,3 +1,5 @@
+// -*- MPC -*-
+// $Id$
 
 project(*server) : taoserver, threads {
   after += *lib
