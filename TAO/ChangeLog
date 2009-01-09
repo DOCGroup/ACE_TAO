@@ -1,3 +1,8 @@
+Fri Jan  9 08:28:56 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3542_Regression/*:
+          New regression test for bugzilla 3542
+
 Thu Jan  8 19:10:56 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Portable_Interceptors/Request_Interceptor_Flow/run_test.pl:
