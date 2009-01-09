@@ -35,7 +35,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
-#undef clearerr
 #undef memset
 #undef memcpy
 #undef memmove
