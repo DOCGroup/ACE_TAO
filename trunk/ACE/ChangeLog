@@ -1,10 +1,19 @@
+Fri Jan  9 09:46:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Removed "!LabVIEW_RT", "!WinCE" and "!FUZZ" from: 
+            TAO/tests/Portable_Interceptors/AdvSlotExt/run_test.pl
+            TAO/tests/Portable_Interceptors/Redirection/run_test.pl
+            TAO/tests/Portable_Interceptors/Bug_3079/run_test.pl
+            TAO/tests/Portable_Interceptors/Bug_3080/run_test.pl
+
 Thu Jan  8 19:15:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/tao_orb_tests.lst:
           Removed "!LabVIEW_RT", "!WinCE" and "!FUZZ" from: 
-            TAO/tests/Portable_Interceptors/AMI/run_test.pl:
-            TAO/tests/Portable_Interceptors/PolicyFactory/run_test.pl:
-            TAO/tests/Portable_Interceptors/Request_Interceptor_Flow/run_test.pl:
+            TAO/tests/Portable_Interceptors/AMI/run_test.pl
+            TAO/tests/Portable_Interceptors/PolicyFactory/run_test.pl
+            TAO/tests/Portable_Interceptors/Request_Interceptor_Flow/run_test.pl
 
 Wed Jan  8 18:18:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
