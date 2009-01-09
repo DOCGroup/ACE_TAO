@@ -1,0 +1,9 @@
+This program performs a series of sanity check on the collocation support in TAO.
+
+After building the example, you'll get:
+
+  Coll_Test_Stubs.{dll,so}: This library contains stub implementations.
+
+  Diamond.{dll,so}: This library contains the implementation Diamond object.
+
+  Collocation[.exe]: This program performs the collocation test.

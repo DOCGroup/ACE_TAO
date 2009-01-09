@@ -1,0 +1,19 @@
+NTHREADS="16"
+
+NCONSUMERS="32 64 96 128 160 192 224 256 288 320 352 384 416 448 480 512"
+
+ITERATIONS=25000
+#ITERATIONS=3000
+
+LOCKING_TYPES="copy_on_read copy_on_write delayed"
+DISPATCHING_TYPES="threaded reactive rtcorba"
+FILTER_TYPES="null per_supplier"
+
+#IOR=/project/amras/coryan/IOR/roundtrip.ior
+IOR=test.ior
+
+#REMOTE_HOST=celegorm
+REMOTE_HOST=localhost
+
+#REMOTE_LOCATION=/project/celegorm/coryan/EC_Roundtrip
+REMOTE_LOCATION=$PWD

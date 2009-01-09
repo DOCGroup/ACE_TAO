@@ -1,0 +1,32 @@
+// $Id$
+
+This test provides regression coverage for bugzilla #2287.
+
+See http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2287 for more.
+
+The server installs a server request interceptor and persistent servant and writes out an IOGR for itself.
+The client installs client side FT support and invokes the method "throw_location_forward" on the IOGR.
+The server request interceptor detects invocations of this method and in response either:
+a/ Throws a location forward back to the original IOGR if cannot determine (from the expiration_time member of the FT request service context) thatthe client must have despatched the request after the expiration time.
+b/ Allows the request to be completed if it can determine absolutely that the request was dispatched after the expiration time. This indicates a regression to the client.
+
+A successful outcome is if the client stops following the location forwards once it detects that the expiration time has passed, and a TRANSIENT system exception is recived in the application code.
+
+__Regression Output__
+
+The expiration time has now passed !!
+Expiration time  : 133496335605156250
+Time now         : 133496335605312500
+Test Failed - REGRESSION !!! Client ORB is still retrying LOCATION_FORWARDs after the expiration time!!
+Expiration time  : 133496335605156250
+Time now         : 133496335605312500
+REGRESSION - Test has failed !!!
+(3128|3992) server - event loop finished
+Error: REGRESSION identified!!!
+ERROR: client returned 1
+
+__Successful Output__
+
+Client catches a TRANSIENT, as expected. No problem !
+(3528|3532) server - event loop finished
+Test passed !!!

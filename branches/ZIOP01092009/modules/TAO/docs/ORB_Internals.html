@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <!-- $Id$ -->
+    <title>TAO ORB Internals</title>
+  </head>
+
+  <body>
+    <h1>TAO ORB Internals</h1>
+
+    <P>This document will describe how the ORB internals work, with
+      special attention to the areas that are more poorly documented.
+      For example: we will not document (at least initially) the
+      pluggable protocols framework, the interpretive marshaling
+      engine, the POA, the waiting strategies and the
+      leader-follower.
+    </P>
+    <P>New ORB developers are expected to read this document and
+      document here all the things that they find hard to understand,
+      surprizing or event broken.
+      New members of the ORB core team are expected to fill in details 
+      that were not explained before.
+    </P>
+
+    <H3>Client Side event sequence</H3>
+
+    <P>In this section we will document the sequence of calls and
+      interactions on the client side.
+      Only the synchronous case, without forwarding or exceptions is
+      documented at this point.
+    </P>
+
+    <P>Assume the application invokes a method on an object reference, 
+      in the generated stub for that method the following sequence is
+      started:
+    <UL>
+      <LI>creates TAO_GIOP_Twoway_Invocation object
+      </LI>
+      <LI>calls start method on the invocation object
+      </LI>
+
+      <LI>TAO_GIOP_Twoway_Invocation::start:
+	<UL>
+	  <LI>finds the profile to use for this invocation
+	  </LI>
+	  <LI>passes the profile to Connector Registry to obtain 
+	    TAO_Transport object (wrapper around Service_Handler)
+	  </LI>
+	  <LI>generates and marshalls GIOP & Request headers for this
+	    invocation
+	  </LI>
+	</UL>
+      </LI>
+	
+      <LI>marshalls request parameters
+      </LI>
+      <LI>calls invoke method on the invocation object
+      </LI>
+  
+      <LI>TAO_GIOP_Twoway_Invocation::invoke:
+	<UL>
+	  <LI>sets TAO_Reply_Dispatcher (this is used to make both
+	    synch and asynch requests look the same)
+	  </LI>
+	  <LI>sends the request
+	  </LI>
+	  <LI>waits on the TAO_Wait_Strategy
+	  </LI>
+	</UL>
+      </LI>
+
+      <LI>if there was a minor problem or location forward, tries
+	    again: call TAO_GIO_Twoway_Invocation::start, etc.
+      </LI>
+      <LI>if everything went ok, demarshalls reply
+      </LI>
+    </UL>
+  </P>
+
+    <hr>
+    <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
+<!-- Created: Fri Sep 10 16:34:44 CDT 1999 -->
+<!-- hhmts start -->
+Last modified: Fri Sep 10 18:00:18 CDT 1999
+<!-- hhmts end -->
+  </body>
+</html>

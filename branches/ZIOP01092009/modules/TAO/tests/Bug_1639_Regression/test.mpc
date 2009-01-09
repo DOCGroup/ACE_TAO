@@ -1,0 +1,16 @@
+// -*- MPC -*-
+// $Id$
+
+project (Bug_1639_testclient) : taoserver, dynamicany {
+   exename    = client
+   Source_Files {
+      struct_client.cpp
+      structC.cpp
+      structS.cpp
+   }
+
+   IDL_Files {
+      struct.idl
+   }
+
+}

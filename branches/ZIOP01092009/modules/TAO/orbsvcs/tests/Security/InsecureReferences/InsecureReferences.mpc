@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project(*test): taoserver, orbsvcslib, security, ssliop, pi_server, codecfactory, interceptors { 
+  exename = test
+  Source_Files {
+    test.cpp
+  }
+}

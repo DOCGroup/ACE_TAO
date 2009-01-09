@@ -1,0 +1,57 @@
+#
+# Persistence Tests
+#
+
+# Default Persistence w/ auto_start - XML
+begin
+server_poas=1
+server_poa_objs=1
+client_threads=1
+client_iterations=1
+client_requests=1
+imr_persistence=XML
+activate_mode=manual
+env_varnum=4
+env_dir=./drivers
+run use_persistence
+
+# Default Persistence w/ auto_start - Binary
+begin
+server_poas=1
+server_poa_objs=1
+client_threads=1
+client_iterations=1
+client_requests=1
+imr_persistence=binary
+activate_mode=auto_start
+env_varnum=4
+env_dir=./drivers
+run use_persistence
+
+# Default Persistence w/ auto_start - Registry
+begin
+server_poas=1
+server_poa_objs=1
+client_threads=1
+client_iterations=1
+client_requests=1
+imr_persistence=registry
+activate_mode=auto_start
+env_varnum=4
+env_dir=./drivers
+run use_persistence
+
+--
+# Clear the persistence
+begin
+imr_persistence_clear=1
+imr_persistence=registry
+do start_imr();
+do kill_imr();
+imr_persistence=XML
+do start_imr();
+do kill_imr();
+imr_persistence=binary
+do start_imr();
+do kill_imr();
+--
