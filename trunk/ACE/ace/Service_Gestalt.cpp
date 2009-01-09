@@ -942,8 +942,7 @@ ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
 #else
   ACE_DLL dll;
 
-  auto_ptr<ACE_XML_Svc_Conf>
-    xml_svc_conf (this->get_xml_svc_conf (dll));
+  auto_ptr<ACE_XML_Svc_Conf> xml_svc_conf (this->get_xml_svc_conf (dll));
 
   if (xml_svc_conf.get () == 0)
     return -1;

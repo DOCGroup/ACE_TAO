@@ -441,6 +441,10 @@
 #if !defined(ACE_HAS_WINSOCK2)
 # define ACE_HAS_WINSOCK2 1
 #endif /* !defined(ACE_HAS_WINSOCK2) */
+// Not use WS1 by default
+#if !defined(ACE_HAS_WINSOCK1)
+# define ACE_HAS_WINSOCK1 0
+#endif /* !defined(ACE_HAS_WINSOCK1) */
 
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)

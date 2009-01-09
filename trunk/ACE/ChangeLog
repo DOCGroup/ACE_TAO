@@ -1,3 +1,17 @@
+Fri Jan  9 15:08:23 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Gestalt.cpp:
+          Layout changes
+
+        * ace/Service_Repository.{h,cpp}:
+          Doxygen changes
+
+        * ace/Framework_Component.cpp:
+          Use prefix increment
+
+        * ace/config-win32-common.h:
+          Introduced ACE_HAS_WINSOCK1 that is default set to 0
+
 Fri Jan  9 15:01:48 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-openvms.h:

@@ -22,11 +22,11 @@ ACE_RCSID (ace,
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository)
 
-// Process-wide Service Repository.
+/// Process-wide Service Repository.
 ACE_Service_Repository *ACE_Service_Repository::svc_rep_ = 0;
 
-// Controls whether the Service_Repository is deleted when we shut
-// down (we can only delete it safely if we created it)!
+/// Controls whether the Service_Repository is deleted when we shut
+/// down (we can only delete it safely if we created it)!
 bool ACE_Service_Repository::delete_svc_rep_ = false;
 
 void
@@ -46,7 +46,7 @@ ACE_Service_Repository::ACE_Service_Repository (void)
 }
 
 ACE_Service_Repository *
-ACE_Service_Repository::instance (size_t size /* = ACE_Service_Repository::DEFAULT_SIZE */)
+ACE_Service_Repository::instance (size_t size)
 {
   ACE_TRACE ("ACE_Service_Repository::instance");
 
@@ -102,8 +102,7 @@ ACE_Service_Repository::close_singleton (void)
     }
 }
 
-// Initialize the Repository to a clean slate.
-
+/// Initialize the Repository to a clean slate.
 int
 ACE_Service_Repository::open (size_t size)
 {
@@ -131,8 +130,7 @@ ACE_Service_Repository::ACE_Service_Repository (size_t size)
                 ACE_TEXT ("ACE_Service_Repository")));
 }
 
-// Finalize (call <fini> and possibly delete) all the services.
-
+/// Finalize (call fini() and possibly delete) all the services.
 int
 ACE_Service_Repository::fini (void)
 {
@@ -184,8 +182,7 @@ ACE_Service_Repository::fini (void)
   return (retval == 0) ? 0 : -1;
 }
 
-// Close down all the services.
-
+/// Close down all the services.
 int
 ACE_Service_Repository::close (void)
 {
@@ -249,13 +246,12 @@ ACE_Service_Repository::~ACE_Service_Repository (void)
   this->close ();
 }
 
-// Locate an entry with <name> in the table.  If <ignore_suspended> is
-// set then only consider services marked as resumed.  If the caller
-// wants the located entry, pass back a pointer to the located entry
-// via <srp>.  If <name> is not found -1 is returned.  If <name> is
-// found, but it is suspended and the caller wants to ignore suspended
-// services a -2 is returned.  Must be called with locks held.
-
+/// Locate an entry with @a name in the table.  If @a ignore_suspended is
+/// set then only consider services marked as resumed.  If the caller
+/// wants the located entry, pass back a pointer to the located entry
+/// via @a srp.  If @a name is not found -1 is returned.  If @a name is
+/// found, but it is suspended and the caller wants to ignore suspended
+/// services a -2 is returned.  Must be called with locks held.
 int
 ACE_Service_Repository::find_i (const ACE_TCHAR name[],
                                 size_t &slot,
@@ -303,7 +299,6 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
 /// DLL. No locking, caller makes sure calling it is safe. You can
 /// forcefully relocate any DLLs in the given range, not only the
 /// static ones - but that will cause Very Bad Things (tm) to happen.
-
 int
 ACE_Service_Repository::relocate_i (size_t begin,
                                     size_t end,
@@ -376,11 +371,10 @@ ACE_Service_Repository::find (const ACE_TCHAR name[],
   return this->find_i (name, ignore_location, srp, ignore_suspended);
 }
 
-
-// Insert the ACE_Service_Type SR into the repository.  Note that
-// services may be inserted either resumed or suspended. Using same
-// name as in an existing service causes the delete () to be called
-// for the old one, i.e. make sure @code sr is allocated on the heap!
+/// Insert the ACE_Service_Type SR into the repository.  Note that
+/// services may be inserted either resumed or suspended. Using same
+/// name as in an existing service causes the delete () to be called
+/// for the old one, i.e. make sure @code sr is allocated on the heap!
 int
 ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 {
@@ -462,7 +456,7 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
   return return_value;
 }
 
-// Resume a service that was previously suspended.
+/// Resume a service that was previously suspended.
 int
 ACE_Service_Repository::resume (const ACE_TCHAR name[],
                                 const ACE_Service_Type **srp)
@@ -477,9 +471,8 @@ ACE_Service_Repository::resume (const ACE_TCHAR name[],
   return this->service_vector_[i]->resume ();
 }
 
-// Suspend a service so that it will not be considered active under
-// most circumstances by other portions of the ACE_Service_Repository.
-
+/// Suspend a service so that it will not be considered active under
+/// most circumstances by other portions of the ACE_Service_Repository.
 int
 ACE_Service_Repository::suspend (const ACE_TCHAR name[],
                                  const ACE_Service_Type **srp)
@@ -493,12 +486,10 @@ ACE_Service_Repository::suspend (const ACE_TCHAR name[],
   return this->service_vector_[i]->suspend ();
 }
 
-
 /**
- * @brief Completely remove a <name> entry from the Repository and
+ * @brief Completely remove a @a name entry from the Repository and
  * dynamically unlink it if it was originally dynamically linked.
  */
-
 int
 ACE_Service_Repository::remove (const ACE_TCHAR name[], ACE_Service_Type **ps)
 {
@@ -520,7 +511,7 @@ ACE_Service_Repository::remove (const ACE_TCHAR name[], ACE_Service_Type **ps)
 }
 
 /**
- * @brief Completely remove a <name> entry from the Repository and
+ * @brief Completely remove a @a name entry from the Repository and
  * dynamically unlink it if it was originally dynamically linked.
  *
  * Return a ptr to the entry in @code ps. There is no locking so make
@@ -528,7 +519,7 @@ ACE_Service_Repository::remove (const ACE_TCHAR name[], ACE_Service_Type **ps)
  *
  * Since the order of services in the Respository matters, we can't
  * simply overwrite the entry being deleted with the last and
- * decrement the <current_size> by 1.  A good example of why the order
+ * decrement the @c current_size by 1.  A good example of why the order
  * matters is a dynamic service, in whose DLL there is at least one
  * static service. In order to prevent SEGV during finalization, those
  * static services must be finalized _before_the dynamic service that
@@ -576,24 +567,21 @@ ACE_Service_Repository_Iterator::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-
-// Initializes the iterator and skips over any suspended entries at
-// the beginning of the table, if necessary.  Note, you must not
-// perform destructive operations on elements during this iteration...
-
+/// Initializes the iterator and skips over any suspended entries at
+/// the beginning of the table, if necessary.  Note, you must not
+/// perform destructive operations on elements during this iteration...
 ACE_Service_Repository_Iterator::ACE_Service_Repository_Iterator
-  (ACE_Service_Repository &sr, int ignr_suspended)
+  (ACE_Service_Repository &sr, bool ignored_suspended)
   : svc_rep_ (sr),
     next_ (0),
-    ignore_suspended_ (ignr_suspended)
+    ignore_suspended_ (ignored_suspended)
 {
   while (!(done() || valid()))
     this->next_++;
 }
 
-// Obtains a pointer to the next valid service in the table.  If there
-// are no more entries, returns 0, else 1.
-
+/// Obtains a pointer to the next valid service in the table.  If there
+/// are no more entries, returns 0, else 1.
 int
 ACE_Service_Repository_Iterator::next (const ACE_Service_Type *&sr)
 {
@@ -606,11 +594,10 @@ ACE_Service_Repository_Iterator::next (const ACE_Service_Type *&sr)
   return 1;
 }
 
-// Advance the iterator by the proper amount.  If we are ignoring
-// suspended entries and the current entry is suspended, then we must
-// skip over this entry.  Otherwise, we must advance the NEXT index to
-// reference the next valid service entry.
-
+/// Advance the iterator by the proper amount.  If we are ignoring
+/// suspended entries and the current entry is suspended, then we must
+/// skip over this entry.  Otherwise, we must advance the NEXT index to
+/// reference the next valid service entry.
 int
 ACE_Service_Repository_Iterator::advance (void)
 {
