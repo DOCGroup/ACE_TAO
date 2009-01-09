@@ -150,6 +150,60 @@ void SANet::Network::add_effect_link (TaskID task_ID, CondID cond_ID,
     cond_ID), port_ID));
 };
 
+void SANet::Network::update_effect_link(TaskID task_ID, CondID cond_ID,
+                               LinkWeight weight, PortID port_ID)
+{
+   // Find task node pointer, throwing exception if not found.
+  TaskNodeMap::iterator task_iter = task_nodes_.find (task_ID);
+  if (task_iter == task_nodes_.end ()) {
+    throw UnknownNode ();
+  }
+  TaskNode *task_node = task_iter->second;
+
+  // Find condition node pointer, throwing exception if not found.
+  CondNodeMap::iterator cond_iter = cond_nodes_.find (cond_ID);
+  if (cond_iter == cond_nodes_.end ()) {
+    throw UnknownNode ();
+  }
+  CondNode *cond_node = cond_iter->second;
+
+  // update link.**************
+  task_node->update_effect (cond_ID, cond_node, weight);
+
+  // Update link to port map.
+  
+  EffectLinkPortMap::iterator eliter = this->effect_links_.find((std::make_pair (task_ID,
+    cond_ID)));
+  if(eliter != effect_links_.end())
+  {
+    (*eliter).second = port_ID;
+  }
+
+};
+
+void SANet::Network::print_graphviz(std::basic_ostream<char, std::char_traits<char> >& strm)
+{
+  for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
+    node_iter != task_nodes_.end (); node_iter++)
+  {
+    strm << "\t" << "\"" << node_iter->second->get_name() << " " << node_iter->first  << "\" " << "[shape=box, color = grey];\n";
+  }
+
+  for (CondNodeMap::iterator node_iter = cond_nodes_.begin ();
+    node_iter != cond_nodes_.end (); node_iter++)
+  {
+    strm << "\t" << "\"" << node_iter->second->get_name() << " " << node_iter->first  << "\" " << "[color = grey];\n";
+  }
+
+  for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
+    node_iter != task_nodes_.end (); node_iter++)
+  {
+    node_iter->second->print_effects_graphviz(strm);
+    node_iter->second->print_preconds_graphviz(strm);
+  }
+
+}
+
 void SANet::Network::print_xml (std::basic_ostream<char, std::char_traits<char> >& strm)
 {
   strm << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" << std::endl;

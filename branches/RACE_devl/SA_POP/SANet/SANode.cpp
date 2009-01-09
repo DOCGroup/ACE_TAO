@@ -480,6 +480,36 @@ void TaskNode::print_precond_links_xml (std::basic_ostream<char, std::char_trait
   }
 };
 
+//print Graphviz DOT format of precondition links
+void TaskNode::print_preconds_graphviz(std::basic_ostream<char, std::char_traits<char> >&
+                                      strm)
+{
+  for (NodeMap::iterator node_iter = pre_nodes_.begin ();
+    node_iter != pre_nodes_.end (); node_iter++)
+  {
+    //format for a pre-cond in graphviz with condition then task
+      strm << "\t" << "\"" << node_iter->second->get_name() << " " << node_iter->first << "\" " << " -> ";
+      strm <<  "\"" << this->name_ << " " << this->ID_ << "\" " << ";\n";
+  }
+
+
+}
+
+//print Graphviz DOT format of effect links
+void TaskNode::print_effects_graphviz(std::basic_ostream<char, std::char_traits<char> >&
+                                      strm)
+{
+  for (NodeMap::iterator node_iter = post_nodes_.begin ();
+    node_iter != post_nodes_.end (); node_iter++)
+  {
+    //format for the effect link in graphviz with task then condition
+      strm << "\t" << "\"" << this->name_ << " " << this->ID_ << "\" " << " -> ";
+      strm <<  "\"" << node_iter->second->get_name() << " " << node_iter->first << "\" " << ";\n";
+  }
+
+
+}
+
 // Print XML representation of node's effect links to stream.
 void TaskNode::print_effect_links_xml (std::basic_ostream<char, std::char_traits<char> >&
                                       strm)
@@ -660,6 +690,30 @@ void TaskNode::add_effect (CondID ID, CondNode *node, LinkWeight weight)
   // Add link for precondition node.
   node->add_pre_link (ID_, this, weight);
 };
+
+void TaskNode::update_effect (CondID ID, CondNode *node, LinkWeight weight)
+{
+  // update node to post-nodes.
+
+  NodeMap::iterator pnodesiter = post_nodes_.find(ID);
+  if(pnodesiter != post_nodes_.end())
+  {
+    (*pnodesiter).second = node;
+  }
+
+
+  // update link weight
+
+   LinkMap::iterator pliter = post_links_.find(ID);
+  if(pliter != post_links_.end())
+  {
+    (*pliter).second = weight;
+  }
+
+  // update link for precondition node.
+  node->update_pre_link (ID_, this, weight);
+};
+
 
 CondNode::CondNode (CondID ID, std::string name, MultFactor atten_factor,
                       Probability true_prob, Probability false_prob, Utility goal_util, CondKind condkind)
@@ -1308,6 +1362,25 @@ void CondNode::add_pre_link (TaskID ID, TaskNode *node, LinkWeight weight)
 
   // Add link weight.
   pre_links_.insert (std::make_pair (ID, weight));
+};
+
+void CondNode::update_pre_link (TaskID ID, TaskNode *node, LinkWeight weight)
+{
+  // update node to pre-nodes.
+
+  NodeMap::iterator nmiter = pre_nodes_.find(ID);
+  if(nmiter != pre_nodes_.end())
+  {
+    (*nmiter).second = node;
+  }
+
+  // update link weight.
+
+  LinkMap::iterator lmiter = pre_links_.find(ID);
+  if(lmiter != pre_links_.end())
+  {
+    (*lmiter).second = weight;
+  }
 };
 
 void CondNode::add_post_link (TaskID ID, TaskNode *node, LinkWeight weight)

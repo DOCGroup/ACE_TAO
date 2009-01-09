@@ -255,6 +255,18 @@ namespace SANet {
      */
     virtual void print_effect_links_xml (std::basic_ostream<char, std::char_traits<char> >& strm);
 
+    /// Print Graphviz representation of node's pre-condition links to stream.
+    /**
+     * @param strm  Output stream on which to print links into Graphviz representation.
+     */
+    virtual void print_preconds_graphviz(std::basic_ostream<char, std::char_traits<char> >& strm);
+
+    /// Print Graphviz representation of node's effect links to stream.
+    /**
+     * @param strm  Output stream on which to print links into Graphviz representation.
+     */
+    virtual void print_effects_graphviz(std::basic_ostream<char, std::char_traits<char> >& strm);
+
     /// Update node to next step.
     /**
      * @return  True if node changed probability or utility, false otherwise.
@@ -294,6 +306,17 @@ namespace SANet {
      * true, or negative of the probability task sets condition to false).
      */
     virtual void add_effect (CondID ID, CondNode *node, LinkWeight weight);
+
+    /// Update effect link.
+    /**
+     * @param ID  Node ID.
+     *
+     * @param node  Node pointer.
+     *
+     * @param weight  Link weight (probability task sets condition to
+     * true, or negative of the probability task sets condition to false).
+     */
+    virtual void update_effect (CondID ID, CondNode *node, LinkWeight weight);
 
   protected:
     /// Unconditional prior probability of success.
@@ -389,6 +412,16 @@ namespace SANet {
      * @param weight  Link weight.
      */
     virtual void add_pre_link (TaskID ID, TaskNode *node, LinkWeight weight);
+
+    /// update pre-link.
+    /**
+     * @param ID  Node ID.
+     *
+     * @param node  Node pointer.
+     *
+     * @param weight  Link weight.
+     */
+    virtual void update_pre_link (TaskID ID, TaskNode *node, LinkWeight weight);
 
     /// Add post-link.
     /**

@@ -65,7 +65,7 @@ void LogGraphOut::notify_eu (SA_POP::Planner *planner)
 unsigned long WINAPI SecondThread(PVOID pvParam)
 {
 	system("dot -Tgif GViz.dot -o step.gif");
-	//system("step.gif");
+	system("step.gif");
 	return 0;
 }
 
@@ -130,8 +130,10 @@ void LogGraphOut::notify_plan (SA_POP::Planner *planner)
 
   ofstream gfile;
   gfile.open("GViz.dot");
+
   
   gfile << "strict digraph graph" << graphn << " {\n";
+  planner->print_graph(gfile);
   if(graphn == 0)
   {
 	  for (CLSet::iterator cl_iter = plan.causal_links.begin ();
@@ -160,15 +162,39 @@ void LogGraphOut::notify_plan (SA_POP::Planner *planner)
 
 		if(planner->get_start_window (clink.first).first <= lastime)
 		{
-			gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << "[shape=box];\n";
-			gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << " -> ";
-			gfile <<  "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << ";\n";
-			if(planner->get_start_window (clink.second).first <= lastime)
+      if(planner->get_start_window (clink.first).first == lastime)
+      {
+        gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << "[shape=box, color= green];\n";
+        gfile <<  "\t\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << "[color = green];\n";
+		  	gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << " -> ";
+		  	gfile <<  "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << ";\n";
+      }
+      else
+      {
+			  gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << "[shape=box, color= blue];\n";
+        gfile <<  "\t\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << "[color = blue];\n";
+		  	gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << " -> ";
+		  	gfile <<  "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << ";\n";
+      }
+      
+      if(planner->get_start_window (clink.second).first <= lastime)
 			{
-				gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << "[shape=box];\n";
-				gfile << "\t" << "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << " -> ";
-				gfile << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << "\n";
-			}
+        if(planner->get_start_window (clink.second).first == lastime)
+        {
+          gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << "[shape=box, color = green];\n";
+          //gfile <<  "\t\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << "[color = green];\n";
+				  gfile << "\t" << "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << " -> ";
+				  gfile << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << ";\n";
+        }
+        else
+        {
+				  gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << "[shape=box, color = blue];\n";
+          gfile <<  "\t\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << "[color = blue];\n";
+				  gfile << "\t" << "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << " -> ";
+				  gfile << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << ";\n";
+			
+        }
+      }
 		}
 	 }
 
