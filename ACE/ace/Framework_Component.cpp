@@ -144,7 +144,7 @@ ACE_Framework_Repository::register_component (ACE_Framework_Component *fc)
   if (i < this->total_size_)
     {
       this->component_vector_[i] = fc;
-      this->current_size_++;
+      ++this->current_size_;
       return 0;
     }
 
