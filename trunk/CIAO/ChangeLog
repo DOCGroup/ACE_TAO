@@ -1,3 +1,12 @@
+Fri Jan  9 22:18:07 UTC 2009  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tests/Minimum/Receiver/Receiver.mpc:
+        * tests/Minimum/Sender/Sender.mpc:
+
+          Append "Minimum_" to the name of the generated libraries. The generated
+          libraries had the same name as those in $CIAO_ROOT/DevGuideExamples/Messenger
+          which cause some regression tests to fail.
+
 Wed Jan  7 15:11:48 UTC 2009  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DevGuideExamples/Messenger/Administrator.mpc:

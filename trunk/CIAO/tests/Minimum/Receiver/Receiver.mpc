@@ -37,7 +37,7 @@ project(Minimum_Base_Receiver_stub) : ciao_client_dnc {
   after += Minimum_Base_Receiver_idl_gen Minimum_Base_stub
   libs  += Minimum_Base_stub
   
-  sharedname = Receiver_stub
+  sharedname = Minimum_Receiver_stub
   dynamicflags   = RECEIVER_STUB_BUILD_DLL
 
   IDL_Files {
@@ -60,8 +60,8 @@ project(Minimum_Base_Receiver_stub) : ciao_client_dnc {
 project(Minimum_Base_Receiver_exec) : ciao_component_dnc {
   avoids += ace_for_tao
   after   += Minimum_Base_Receiver_cidl_gen Minimum_Base_Receiver_stub
-  sharedname = Receiver_exec
-  libs += Receiver_stub Minimum_Base_stub
+  sharedname = Minimum_Receiver_exec
+  libs += Minimum_Receiver_stub Minimum_Base_stub
   
   dynamicflags   = RECEIVER_EXEC_BUILD_DLL
 
@@ -88,9 +88,9 @@ project(Minimum_Base_Receiver_exec) : ciao_component_dnc {
 project(Minimum_Base_Receiver_svnt) : ciao_servant_dnc {
   avoids += ace_for_tao
   after      += Minimum_Base_skel Minimum_Base_Receiver_exec
-  sharedname  = Receiver_svnt
-  libs       += Receiver_exec \
-                Receiver_stub \
+  sharedname  = Minimum_Receiver_svnt
+  libs       += Minimum_Receiver_exec \
+                Minimum_Receiver_stub \
                 Minimum_Base_skel \
                 Minimum_Base_stub
   
