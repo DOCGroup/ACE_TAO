@@ -36,11 +36,11 @@ class ACE_DLL;
  * @brief Contains all the services offered by a Service
  * Configurator-based application.
  *
- * This class contains a vector of <ACE_Service_Types> *'s and
+ * This class contains a vector of ACE_Service_Types *'s and
  * allows an administrative entity to centrally manage and
  * control the behavior of application services.  Note that if
  * services are removed from the middle of the repository the
- * order won't necessarily be maintained since the <remove>
+ * order won't necessarily be maintained since the @a removeﬂ
  * method performs compaction.  However, the common case is not
  * to remove services, so typically they are deleted in the
  * reverse order that they were added originally.
@@ -73,7 +73,7 @@ public:
   /// resources.
   int close (void);
 
-  /// Finalize all the services by calling <fini> and deleting
+  /// Finalize all the services by calling fini() and deleting
   /// dynamically allocated services.
   int fini (void);
 
@@ -92,7 +92,7 @@ public:
 
   /// Insert a new service record.  Returns -1 when the service repository
   /// is full and 0 on success.
-  int insert (const ACE_Service_Type *);
+  int insert (const ACE_Service_Type *sr);
 
   /**
    * Locate a named entry in the service table, optionally ignoring
@@ -123,10 +123,10 @@ public:
 
   // = Liveness control
   /// Resume a service record.
-  int resume (const ACE_TCHAR[], const ACE_Service_Type ** = 0);
+  int resume (const ACE_TCHAR[], const ACE_Service_Type **srp = 0);
 
   /// Suspend a service record.
-  int suspend (const ACE_TCHAR[], const ACE_Service_Type ** = 0);
+  int suspend (const ACE_TCHAR[], const ACE_Service_Type **srp = 0);
 
   /// Return the current size of the repository.
   size_t current_size (void) const;
@@ -187,7 +187,6 @@ private:
   /// DLL. No locking, caller makes sure calling it is safe. You can
   /// forcefully relocate any DLLs in the given range, not only the
   /// static ones - but that will cause Very Bad Things (tm) to happen.
-
   int relocate_i (size_t begin,
                   size_t end,
                   const ACE_DLL &adll);
@@ -204,7 +203,7 @@ private:
   /// Pointer to a process-wide ACE_Service_Repository.
   static ACE_Service_Repository *svc_rep_;
 
-  /// Must delete the <svc_rep_> if true.
+  /// Must delete the @c svc_rep_ if true.
   static bool delete_svc_rep_;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -227,7 +226,7 @@ public:
   // = Initialization and termination methods.
   /// Constructor initializes the iterator.
   ACE_Service_Repository_Iterator (ACE_Service_Repository &sr,
-                                   int ignored_suspended = 1);
+                                   bool ignored_suspended = true);
 
   /// Destructor.
   ~ACE_Service_Repository_Iterator (void);
@@ -236,7 +235,7 @@ public:
 public:
   // = Iteration methods.
 
-  /// Pass back the <next_item> that hasn't been seen in the repository.
+  /// Pass back the @a next_item that hasn't been seen in the repository.
   /// Returns 0 when all items have been seen, else 1.
   int next (const ACE_Service_Type *&next_item);
 
@@ -266,7 +265,7 @@ private:
   size_t next_;
 
   /// Are we ignoring suspended services?
-  bool ignore_suspended_;
+  bool const ignore_suspended_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
