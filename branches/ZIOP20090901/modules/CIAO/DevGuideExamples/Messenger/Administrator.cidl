@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ *  @file Administrator.cidl
+ *
+ *  @author Don Busch <busch_d@ociweb.com>
+ */
+
+#ifndef ADMINISTRATOR_CIDL
+#define ADMINISTRATOR_CIDL
+
+#include "Administrator.idl"
+
+composition session Administrator_Impl
+{
+    home executor AdministratorHome_Exec
+    {
+        implements AdministratorHome;
+        manages    Administrator_Exec;
+    };
+};
+
+#endif
+

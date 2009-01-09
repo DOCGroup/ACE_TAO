@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+project : ifr_client \
+          , valuetype \
+          , pi \
+          , codecfactory \
+          , ciao_container_dnc \
+          , ciao_client_dnc \
+          , ciao_rtevent_dnc \
+          , naming \
+{
+  includes   += $(CIAO_ROOT)/ciaosvcs/Events
+  idlflags += -I$(CIAO_ROOT)/ciaosvcs/Events
+  libs     += CIAO_Events
+  after    += CIAO_Events
+}

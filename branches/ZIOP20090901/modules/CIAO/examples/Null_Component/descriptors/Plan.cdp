@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:deploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>FD6E278D-20AC-4FFD-B359-382963C5D9A1</UUID>
+
+  <implementation id="_DB0165FE-599E-485B-844E-E8D4C1FA3951">
+    <name>Null_Component.ComponentImplementations.Null_ComponentImplementation.Null_ComponentMonolithicImpl</name>
+    <source/>
+    <artifact>_F8CECE24-F3D4-4162-9A28-1CC7FA48C01B</artifact>
+    <artifact>_6DCFFB72-08DB-4546-B206-13B6AC2DB251</artifact>
+    <artifact>_7D050E10-E0DC-4A7A-810D-E847ED9ACC04</artifact>
+  </implementation>
+
+  <instance id="Null_Component.ComponentImplementations.Null_Assembly_Container.Null_Assembly.Null_Component">
+    <name>Null_Component.ComponentImplementations.Null_Assembly_Container.Null_Assembly.Null_Component</name>
+    <node>NodeA</node>
+    <source/>
+    <implementation>_DB0165FE-599E-485B-844E-E8D4C1FA3951</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Null_Component.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <artifact id="_F8CECE24-F3D4-4162-9A28-1CC7FA48C01B">
+    <name>Null_Component.ImplementationArtifacts.Null_ComponentArtifacts.Null_Component_stub</name>
+    <source/>
+    <node/>
+    <location>Null_Component_stub</location>
+  </artifact>
+
+  <artifact id="_6DCFFB72-08DB-4546-B206-13B6AC2DB251">
+    <name>Null_Component.ImplementationArtifacts.Null_ComponentArtifacts.Null_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>Null_Component_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Null_ComponentHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_7D050E10-E0DC-4A7A-810D-E847ED9ACC04">
+    <name>Null_Component.ImplementationArtifacts.Null_ComponentArtifacts.Null_Component_exec</name>
+    <source/>
+    <node/>
+    <location>Null_Component_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Null_ComponentHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+</Deployment:deploymentPlan>

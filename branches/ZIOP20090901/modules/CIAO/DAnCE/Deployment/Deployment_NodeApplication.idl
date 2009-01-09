@@ -1,0 +1,127 @@
+// $Id$
+
+#if !defined (DEPLOYMENT_NODEAPPLICATION_IDL)
+#define DEPLOYMENT_NODEAPPLICATION_IDL
+
+#include "Deployment_Application.idl"
+#include "Deployment_Core.idl"
+#include "Deployment_Container.idl"
+#include "Deployment_Events.idl"
+
+// *************** Packaging and Deployment ***************
+module Deployment
+{
+  /// CIAO specific extension
+  /// This struct captures the installation information of a particular
+  /// CIAO_Event_Service, as defined in <ciaosvcs/Events/CIAO_Events.idl>
+  struct ESInstallationInfo
+  {
+    string id;
+    CIAO::EventServiceType type;
+    string svcconf;
+    //Properties es_config;
+  };
+
+  /// CIAO specific
+  struct NodeImplementationInfo
+  {
+    ContainerImplementationInfos impl_infos;
+    Properties nodeapp_config;
+  };
+
+  /// CIAO specific
+  typedef sequence<CIAO::CIAO_Event_Service> CIAO_Event_Services;
+
+  /// CIAO specific extension
+  typedef sequence<ESInstallationInfo> ESInstallationInfos;
+  
+  // @@changed
+  //interface NodeApplication : Application
+  //{  
+  //};
+  
+  interface NodeApplication : Application
+  {
+    /// CIAO specific extensions
+    readonly attribute ::Deployment::Properties properties;
+
+    /// CIAO specific operation to handle dynamic system redeployment
+    /// and reconfiguration
+    /// @@ Initialize the nodeapplication, so it will know what
+    ///    components it will create and home many of them are
+    ///    there. However the real create action will take place when
+    ///    start launch is called on NodeApplicationManager.
+    long init ();
+
+    /// @@ This operation will be called by NodeApplicationManager
+    ///    client to really start to create homes and components.
+    /// CIAO specific extensions
+    ComponentInfos install (in NodeImplementationInfo node_impl_info)
+      raises (UnknownImplId,
+              ImplEntryPointNotFound,
+              InstallationFailure,
+              ::Components::InvalidConfiguration,
+              ::Components::RemoveFailure);
+
+    /// CIAO specific extension
+    /// This operation will create one or more CIAO_Event_Service objects
+    /// within the NodeApplication, which will be used to mediate the
+    /// communication of CCM events
+    CIAO::CIAO_Event_Service install_es (
+      in CIAO::DAnCE::EventServiceDeploymentDescription es_info)
+      raises (InstallationFailure);
+
+    /// CIAO specific extensions
+    ///@@ We know that Deployment::NodeApplicationManager will be returned,
+    ///   however to avoid the size of the shared object of CIAO_Server.
+    ///   we return an Object.
+    Object get_node_application_manager ();
+
+    /// CIAO specific extension
+    Container create_container (in ::Deployment::Properties properties)
+      raises (::Components::CreateFailure,
+              ::Components::InvalidConfiguration);
+
+    /// CIAO specific extension
+    void remove_container (in Container cref)
+      raises (::Components::RemoveFailure);
+
+    /// CIAO specific extension
+    Containers get_containers ();
+
+    /// CIAO specific extension
+    /// Remove a component instance from the NodeApplication
+    void remove_component (in string inst_name)
+      raises (::Components::RemoveFailure);
+
+    /// CIAO specific extensions
+    /// Activate a component instance from the NodeApplication
+    void activate_component (in string inst_name)
+      raises (::Deployment::StartError);
+
+    /// CIAO specific extensions
+    /// Passivate a component instance from the NodeApplication
+    void passivate_component (in string inst_name)
+      raises (::Components::RemoveFailure);
+
+    /// Remove all containers, components and component homes.
+    /// Shuts down the ORB of the NodeApplication to terminate the process.
+    oneway void remove ();
+
+    /// CIAO specific extension. This will enforce the component to
+    /// be activated (preactivate, activate, postactivated) before the assembly
+    /// is established
+    void ciao_preactivate ()
+      raises (StartError);
+
+    /// CIAO specific extension
+    void ciao_postactivate ()
+      raises (StartError);
+
+    /// CIAO specific extension
+    void ciao_passivate ()
+      raises (StopError);
+  };
+
+};
+#endif /* DEPLOYMENT_CORE_IDL */

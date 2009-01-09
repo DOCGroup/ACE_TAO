@@ -1,0 +1,21 @@
+// file      : CCF/Example/CIDL/LocalExecutorMapping/test-0.idl
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
+module Empty
+{
+  interface I
+  {
+  };
+};
+
+module M
+{
+  interface I {};
+
+  typedef I Internal;
+
+  //local interface CCM_I : I {};
+};
+
+eventtype E {};

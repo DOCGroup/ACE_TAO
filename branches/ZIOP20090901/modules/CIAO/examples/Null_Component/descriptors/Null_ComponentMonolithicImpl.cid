@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:componentImplementationDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>DB0165FE-599E-485B-844E-E8D4C1FA3951</UUID>
+
+  <implements href="Null_Component.ccd"/>
+
+  <monolithicImpl>
+    <primaryArtifact>
+      <name>Null_Component.ImplementationArtifacts.Null_ComponentArtifacts.Null_Component_stub</name>
+      <referencedArtifact href="Null_Component_stub.iad"/>
+    </primaryArtifact>
+    <primaryArtifact>
+      <name>Null_Component.ImplementationArtifacts.Null_ComponentArtifacts.Null_Component_svnt</name>
+      <referencedArtifact href="Null_Component_svnt.iad"/>
+    </primaryArtifact>
+    <primaryArtifact>
+      <name>Null_Component.ImplementationArtifacts.Null_ComponentArtifacts.Null_Component_exec</name>
+      <referencedArtifact href="Null_Component_exec.iad"/>
+    </primaryArtifact>
+  </monolithicImpl>
+
+  <configProperty>
+    <name>ComponentIOR</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>Null_Component.ior</string>
+      </value>
+    </value>
+  </configProperty>
+
+</Deployment:componentImplementationDescription>
