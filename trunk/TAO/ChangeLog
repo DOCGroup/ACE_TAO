@@ -1,3 +1,10 @@
+Fri Jan  9 09:41:51 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Portable_Interceptors/AdvSlotExt/run_test.pl:
+          tests/Portable_Interceptors/Redirection/run_test.pl:
+          tests/Portable_Interceptors/Bug_3079/run_test.pl:
+          Made "Fuzz" compliant.
+
 Fri Jan  9 08:28:56 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3542_Regression/*:
