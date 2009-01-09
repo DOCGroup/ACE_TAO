@@ -1,0 +1,27 @@
+// -*- MPC -*-
+// $Id$
+
+project(nsadd): namingexe, install {
+  install = $(ACE_ROOT)/bin
+  exename = tao_nsadd
+  Source_Files {
+    nsadd.cpp
+  }
+}
+
+project(nsdel): namingexe, install, svc_utils, messaging {
+  install = $(ACE_ROOT)/bin
+  exename = tao_nsdel
+  Source_Files {
+    nsdel.cpp
+  }
+}
+
+project(nslist): namingexe, install, svc_utils, messaging, strategies {
+  install = $(ACE_ROOT)/bin
+  exename = tao_nslist
+  Source_Files {
+    nslist.cpp
+  }
+}
+

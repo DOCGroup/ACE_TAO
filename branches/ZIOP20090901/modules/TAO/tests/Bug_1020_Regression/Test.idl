@@ -1,0 +1,26 @@
+/**
+ * @file Test.idl
+ *
+ * $Id$
+ *
+ * @author Carlos O'Ryan <coryan@atdesk.com>
+ *
+ */
+#ifndef BUG_1020_REGRESSION_TEST_IDL
+#define BUG_1020_REGRESSION_TEST_IDL
+
+module Test
+{
+  typedef sequence<octet> Payload;
+  interface Echo
+  {
+    Payload echo_payload (in Payload data);
+  };
+
+  interface Server
+  {
+    void start_task (in Echo client);
+  };
+};
+
+#endif /* BUG_1020_REGRESSION_TEST_IDL*/

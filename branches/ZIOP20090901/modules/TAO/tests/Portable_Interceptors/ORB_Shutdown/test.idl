@@ -1,0 +1,21 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file test.idl
+ *
+ * $Id$
+ *
+ * Simple IDL file to test PortableInterceptor/ORB::shutdown()
+ * semantics.
+ *
+ * @author Ossama Othman <ossama@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
+interface test
+{
+  void hello ();
+
+  oneway void shutdown ();
+};

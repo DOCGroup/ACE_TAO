@@ -1,0 +1,369 @@
+@(#)DIFFERENCES	1.1 95/09/13
+
+Note -- this documentation was distributed with the original SunSoft
+IIOP reference implementation and has very little relevance to what's
+in TAO.  We include it here only for "historical" reference, i.e., you
+should disregard most of what's in this document.
+
+        Doug Schmidt 
+
+----------------------------------------
+
+[ NOTE that the CORBA 2.0 specifications have now been published, but are
+not yet sufficiently available that this document can usefully just list
+any differences between that specification and this software.  As a rule,
+there are no differences between this software and CORBA 2.0 in areas
+where CORBA 2.0 has specified an interface. ]
+
+
+This document summarizes known differences between what is implemented in
+this software and currently available OMG specifications.  As a rule, these
+establish compatibility with revised specifications that are currently being
+prepared for publication. However, in some cases the differences resolve
+problems that are currently being addressed by ORB taskforces.  When those
+revised CORBA specifications are published, this document will be updated to
+reflect any remaining differences from them.
+
+The reason for those changes is that different specifications were adopted
+at the same time and there were in some cases subtle differences which need
+to be resolved.  Minor errata have also been fixed.  None of these changes
+are substantial, with the exception of the TypeCode interpreter API which
+was added to the C++ mapping.
+
+Also, note that the goal of this software is fidelity to the IIOP, so that
+issues relating (in particular) to the C++ language mapping or other OMG
+specifications were judged to be of less importance at this time.
+
+
+DIFFERENCES from IIOP in UNO Spec (95-3-10)
+-------------------------------------------
+Some changes to the original specification (94-9-32) for the IIOP protocol
+were found to be necessary; most related to the subsequently adopted Interface
+Repository (IFR) specification (94-11-7).  Others resulted from correction
+of minor editorial errors, and experience gained as multiple teams implement
+to that specification.
+
+The bulk of those changes have been incorporated into the 95-3-10 document,
+but these few have not.
+
+
+CDR TYPECODE INDIRECTION
+
+An additional constraint on the use of typecode indirection has been
+identified.  Specifically, the typecode to which an indirection points
+be "self-sufficient", and may not point "outside of itself" for any
+further indirections.  For example, always indirections occur within
+encapsulations, so it's OK for the indirection to point anywhere in
+that encapsulation, or at the encoded TCKind enum value immediately
+before the encapsulation's length.  For typecode encapsulations nested
+inside other typecode encapsulations, the indirection may point no
+further than the outermost encapsulation.
+
+Also, when an indirection points to another typecode, the byte order
+of that other typecode must be deduced from the encoded value found
+there.  This is straightforward for encoded TCKind values, all of which
+fit into a single byte:  if the first byte of the word is zero, then
+the encoding is big-endian, else it's little-endian.
+
+Indirecting to another indirection is not allowed, since the byte order
+of the encoded offset can't consistently be deduced.
+
+
+MISCELLANY
+
+The type GIOP::Version is assumed to be identical to IIOP::Version.
+As part of the editorial separation of GIOP from its Internet version
+IIOP, this typedef was accidentally omitted.
+
+This implementation of IIOP supports the OMG-IDL Primitive Data Types as
+defined in Appendix A of 94-9-32, but with TCKind numbers following the new
+tk_exception and tk_alias codes.  (That is, rather than using range 21-25,
+these TCKind values are in the range 23-27.)
+
+These data types are currently the topic of an RFP in process in the OMG,
+and are not currently defined as part of a current OMG specification. 
+Clients and servers using these extended data types are relying on CORBA
+extensions that are not yet standardized; and should be prepared to change.
+
+
+CORBA 2.0/CORE Differences
+--------------------------
+As of this writing, the new CORBA 2.0/CORE document has not yet been made
+available.  This is a modification of the CORBA 1.2 document, with the
+addition of (mandatory) extensions from the UNO (94-9-32) specification:
+notably DSI and some new object reference operations.  This summarizes
+differences between the as-yet-unpublished CORBA 2.0/CORE document and
+the original text in the UNO specification.
+
+
+DYNAMIC SKELETON INTERFACE
+
+Since the new "tk_except" typecodes now include the exception ID (this is
+the repository ID describing the exception's type) the "exception" operation
+used to report an exception through a ServerRequest no longer includes the
+exception ID.
+
+Since the OperationDef entries for attributes are no longer found in the
+interface repositories, the ServerRequest convenience operation to return
+this has been removed.  Application programs (such as bridges) must compare
+the operation name string with the prefixes "_get_" and "_set_" to see if
+any given operation applies to an attribute.  If an operation is one of the
+two for which an OMG-IDL "attribute" declaration is shorthand, then the
+application must search the interface repository for that attribute.
+
+(There are in fact three categories of operations on which an object adapter
+and implementation collaborate to handle:  user defined operations, user
+defined attributes, and operations defined by CORBA such as "is_a" and
+"get_implementation".  Some object adapters, like the BOA, handle this last
+category directly, rather than exposing it to applications.)
+
+The "non_existent" objref operation accidentally used attribute syntax; this
+has been corrected.  All operations on CORBA::Object references now use
+normal operation syntax in their (pseudo) IDL definitions, and are uniformly
+prefixed with underscores as part of their C++ mapping.
+
+
+DIFFERENCES from IDL C++ Mapping (94-9-14)
+------------------------------------------
+There are four basic ways in which the IIOP framework does not comply
+with the OMG's IDL C++ mapping specification, beyond the use of the CORBA2
+module/namespace rather than the CORBA module/namespace.  (CORBA2 is used
+so that this software can be linked with existing ORBs, which should be
+using the CORBA module/namespace already.)
+
+These ways are beyond the portability-derived use of the "class" construct
+(instead of the C++ namespace construct), and the use of CORBA2::Environment
+(rather than C++ exceptions), both of which are accomodated by the mapping:
+
+    (1) This framework does not attempt to be complete.
+    
+	Completeness is not required to implement the Internet IOP,
+	so time was not spent in providing a complete mapping.
+
+    (2) In some cases the API provided is not the one in the mapping.
+	For example CORBA2::Environment is not always passed in all
+	operations.  This was done to promote ease of implementation
+	and coding.
+
+    (3) Implementation details are generally exposed.
+
+	This isn't so much a noncompliance issue (it's not specified
+	that such details must be hidden) as an issue of allowing
+	noncompliant applications.  The effort required to actively
+	prevent use of implementation details by higher level code
+	would be nontrivial, and could slow down IIOP code, so no
+	time was applied to hiding such details.
+
+	(However, note that when the software was modified to use COM,
+	standard C++ techniques were used to hide most such details.)
+
+    (4) The C++ mapping needs completion in some areas.
+
+	Notably, 94-9-14 does not satisfy requirements to provide
+	support for for all data types in an "Any" or exception without
+	needing any precompiled data type support routines.  The
+	TypeCode interpreter addresses this issue.
+
+	Some additional operations were not adopted at the time 94-9-14
+	was defined; both 94-9-32 and 94-11-7 added new ORB interfaces
+	which are not found in the initial C++ mapping document.
+
+With respect to this fourth issue, descriptions of the API extensions
+used is provided later in this file.  The additional CORBA operations
+are not described since their mapping is straightforward if it isn't given
+in those documents.
+
+
+ACCESS TO ALL DATA IN "ANY" AND EXCEPTIONS
+
+The "void *" value in an "Any", and any "CORBA2::Exception *" value, may
+always be passed to the TypeCode interpreter (see next).  This allows access
+to all data held within an "Any" and an Exception.  The "void *" value in an
+Any with an exception TypeCode is of type CORBA2::Exception *".  Due to
+the way CORBA is specified, it is not possible to tell whether an "Any"
+holding an exception denotes a user or standard (system-defined) exception
+except by exhaustive comparison against exception IDs.
+
+Also, _all_ legal OMG-IDL data types may be held in an "Any", and may be
+manipulated using the TypeCode interpreter.  This satisfies a language
+mapping requirement that DII (and DSI) be able to manipulate all OMG-IDL
+data types without requiring compiler generated support for them.
+
+
+TYPECODE INTERPRETER
+
+In any given C/C++ execution environment there is a binary standard for how
+data is represented.  While that standard will differ between execution
+environments, there are a very limited number of ways in which those
+representations differ.  Those differences are encapsulated only in the
+TypeCode interpreter, so that portable applications using the dynamic
+typing infrastructure in the ORB can completely ignore how it's done in
+any particular environment.
+
+The APIs in this software distribution have been suggested for adoption as
+part of the OMG specification suite.  The two APIs are nonstatic member
+functions in the C++ mapping's TypeCode pseudo-object, and are augmented
+by a single new enumeration type.
+
+    unsigned long	size() 
+
+	This returns the size of an instance of the type that is
+	described by the TypeCode.
+	
+	For example, when invoked on the typecode constant CORBA::_tc_Short,
+	the value returned is sizeof(CORBA::Short); and when invoked on the
+	typecode for a structure, it is the size of that structure (including
+	any internal and tail padding needed).  When invoked on a sequence
+	typecode, it returns a value that does not include the size for
+	any embedded buffer.
+    
+    enum traverse_status {TRAVERSE_STOP, TRAVERSE_CONTINUE };
+	
+	This is a data type used in the traverse() member function.
+	It allows data type traversal to be terminated early for
+	non-exceptional conditions, and eliminates the confusion
+	that some similar APIs have created when they use a single
+	boolean value (does TRUE mean to stop, or to continue?).
+
+    traverse_status	traverse (
+			    const void	*value1;
+			    const void	*value2
+			    traverse_status	visit (
+				    TypeCode_ptr	tc,
+				    const void		*visit_value1,
+				    const void		*visit_value2,
+				    void		*visit_context
+				),
+			    void	*context
+			);
+
+	(In the current language mapping, CORBA2::Environment references
+	are passed as the final parameter to the 'traverse' and 'visit'
+	routines for use when reporting exceptions.)
+
+	The pointers "value1" and "value2" point to instances of the
+	data type described by the typecode (or are null pointers).
+
+	For each constituent of that data type (e.g. structure member)
+	the visit() routine is called once.   The constituent's type
+	is described by "tc"; "visit_value1" points to the constituent
+	of that type in "value1" (assuming the traverse routine was
+	not passed a null pointer) and similarly for "visit_value2".
+	The "visit_context" parameter is the context parameter passed
+	to the traverse() routine, and can point to whatever data is
+	needed by the visit() routine.
+
+	Members are traversed in first-to-last order, as defined in the
+	IDL specification for the data type.  So for example, the
+	visit routine for a structure could print out each element
+	on a IO stream passed through the context parameter, perhaps in
+	a neatly formatted form intended for human consumption.
+
+	The visit() function may choose to recursively traverse() each
+	element.  So for example if "tc->kind()" in a visit routine
+	returned CORBA::tk_struct, the contents of that struct would
+	be ignored unless the visit routine invoked traverse() using
+	the typecode and values passed to it.
+
+	If the visit() routine returns TRAVERSE_CONTINUE, succeeding
+	constituents of the data type are visited in turn; if it
+	returns TRAVERSE_STOP, the traverse() routine returns that
+	value to its caller.  Of course, if a visit() routine calls
+	traverse() itself, it may choose to ignore TRAVERSE_STOP.
+
+The traverse() routine is a powerful tool.  It is used in the IIOP code
+itself in several ways; look at such use for tutorial details.  You could
+implement data value comparison and "debug" data dumping as simple exercises
+in the use of these APIs.
+
+The "marshaling interpreter" (marshal.cc) uses it to encode and decode
+values according to the IIOP protocol specification.  The "Any" code
+(any.cc) uses traverse() both to free embedded pointers, and to make "deep"
+copies of any data structure given its TypeCode.
+
+Only that "deep copy" visit routine uses "value2" as anything other than a
+null pointer; it allows efficient construction of "deep copies" without
+needing extra space for temporary values or coroutine stacks.  (A general
+purpose two-value comparison could also use "value2".)  Most uses of the API
+only manipulate a single data value at a time; no realistic need has yet
+been seen for manipulating more than two data values at once.
+
+With respect to the OMG C and C++ mappings, it is clear that this style API
+must be provided for the C mapping, but some people have noted that a
+"purer" object oriented style API could also be provided in C++.  That style
+would use another internal visit routine, performing the requisite "switch"
+over the fixed number of TCKind values, and then make a virtual function
+call to an instance of a C++ class whose private state was the "context" and
+whose member functions matched the arms of the switch.
+
+
+MEMORY ALLOCATION
+
+In order to dynamically manipulate instances of arbitrary data types,
+applications need to be able to allocate and free memory.  The OMG C++
+mapping only says how to do this for data types which have static C++
+interfaces defined, which is clearly inadequate for using constructed
+types with the DII/DSI/Any family of interfaces.
+
+This infrastructure requires the standard "malloc" and "free" primitives to
+be used, and cast to the appropriate type.  Data allocated using malloc
+will normally be sized according to TypeCode::size(), and then be stored
+inside an Any.  When the Any is deleted, if the ORB deallocates the memory
+it always uses "free" (including for any nested pointers, and correctly
+handling cases such as arrays and sequences).
+
+Note that to support implementations where C and C++ language bindings
+share the same ORB infrastructure, this solution is inadequate.  This is
+because the C binding's CORBA_free() interface would have no way to
+determine the type of the data being freed.  Instead, typed allocation
+APIs will need to be used even when using the dynamically typed CORBA
+subsystem ... a TypeCode::malloc() routine would suffice, if it returned
+memory that was internally tagged with that TypeCode.  In such a case,
+the CORBA_free() routine could use that TypeCode to "deep free" data as
+required, and C++ "new" and "delete" operators would need to know about
+the internal tagging for all those data types.  Such tagged allocation
+would need to be used for all data that was to be freed by the ORB.
+
+(Having the C mapping require use of "typed free" routines, instead of the
+CORBA_free interface, is sufficient to eliminate this problem.)
+
+
+PASSING EXCEPTIONS THROUGH THE DII
+
+The C++ mapping's Dynamic Invocation Interface (DII) has key omissions
+in that it doesn't say how to access to user-defined exception values,
+and implicitly requires ORBs either to pass "excess" data on the wire
+or else to consult an interface repository to deal with exceptions or
+(deprecated) "context" strings.
+
+This software changes the DII specification in two ways to support the
+requirement for DII users to be able to see user-defined exceptions, yet
+not to violate the OMG-IDL type model by reporting illegal exceptions:
+
+    * The Object::_create_request() member function, through which DII
+      users provide all the information included in an IDL operation's
+      signature, has an additional parameter.
+
+      That parameter is a sequence of exception typecodes, describing
+      the user-defined exceptions that the operation can return.  (The
+      standard exceptions defined in CORBA may always be returned.)
+      When any other exception is returned, the client's ORB reports that
+      the object's type definition has been violated by the server's ORB.
+
+    * The TypeCode interpreter (see above) may be used to examine all
+      exception values reported through a CORBA::Environment.  A new
+      Exception::id() operation may be used to determine which typecode
+      should be used.
+
+Note that a number of portability and specification problems have been
+identified in the current C++ mapping for DII, e.g. for details of memory
+management.  Later versions of this code may attempt to closely comply
+with an improved mapping for DII, to the extent that the interpretation
+used here differs from that more unambiguous specification.
+
+Since there is no efficient way to distinguish typecodes for user defined
+exceptions from ones for system-defined ("standard") exceptions (comparing
+the exception ID against all the system defined ones is inefficient :-)
+a new enum type "ExceptionType" is defined.  (An analogous type is already
+defined for the C language mapping.)  This is used to report exceptions
+through DII and DSI.

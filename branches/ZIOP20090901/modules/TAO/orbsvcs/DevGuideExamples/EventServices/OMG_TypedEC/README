@@ -1,0 +1,18 @@
+// $Id$
+
+$TAO_ROOT/DevGuideExamples/EventServices/OMG_TypedEC
+
+This example is a simple demonstration of Typed Event Channel usage.
+The Messenger interface is slightly modified for use in this example
+to allow suppliers to send messages to all connected consumers.  To
+run the example, execute the following commands:
+
+export InterfaceRepositoryIOR=file://ifr.ior
+export NameServiceIOR=file://ns.ior
+$TAO_ROOT/orbsvcs/IFR_Service/IFR_Service -o ifr.ior &
+$ACE_ROOT/bin/tao_ifr Messenger.idl
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o ns.ior &
+$TAO_ROOT/orbsvcs/CosEvent_Service/CosEvent_Service -t &
+./Consumer &
+./Supplier
+

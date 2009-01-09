@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project: namingexe, rtsched {
+  exename = Sched_Conf
+  Source_Files {
+    Sched_Conf.cpp
+  }
+}

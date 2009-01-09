@@ -1,0 +1,132 @@
+OMG INTERFACE DEFINITION LANGUAGE COMPILER FRONT END: KNOWN PROBLEMS
+-==================================================================-
+
+INTRODUCTION
+
+This file describes what configurations are known to work correctly with
+this release, and what are the known problems with this release as shipped.
+Comments about future possible enhancements do not imply a commitment on
+the part of Sun or any of its subsidiaries to produce these enhancements.
+
+TESTED CONFIGURATIONS
+
+This release has been tested and is known to operate correctly on:
+
+- Sparcstation 2 running SunOS 4.1.2, when compiled with SparcWorks 3.0
+- Sparcstation 10 running Solaris 2.3, when compiled with SparcWorks 3.0.1
+- Sparcstation 10 running Solaris 2.3, when compiled with SparcWorks 4.0
+
+We are aware of a bug in GNU C++ (the latest version we tested was 2.5)
+which causes up-casting (changing the type of an instance from a base class
+to a more derived class, also known as "narrowing") to fail or cause a
+program crash.
+
+PROBLEMS:
+
+This is a list of known problems with the current version of the CFE:
+
+- The following syntax, although legal, is not accepted by the CFE:
+
+  .. sequence <string <10>> ..
+
+  This causes a parse error. The cause of this problem is that the '>>' is
+  read as a right shif operater and not as two '>'s. You can avoid this
+  problem by instead writing
+
+  .. sequence <string <10> > ..
+
+- The following syntax, although legal, is not accepted by the CFE:
+
+  const string foo = "abc" " and" " another" " string";
+
+  Instead, write:
+
+  const string foo = "abc and another string";
+
+- The printout produced by the -d option for dumping the AST is not always
+  perfect. Specifically, dumping of sequences and arrays is deficient.
+
+POSSIBLE FUTURE ENHANCEMENTS:
+
+This is a list of areas in which the code of the CFE may change in future
+releases:
+
+- The current release is restricted in its use of C++ because it must
+  be possible to compile it using C++ 2.1. However, we have also provided
+  files that depend on features which are only present in C++ 3.0, such as
+  templates. If your compiler supports templates and you wish to use them,
+  copy the files in include/utl_tmpl to include, and copy the files in
+  util/utl_tmpl to util. You will also need to make compiler dependent
+  modifications to Makefiles throughout the CFE directory hierarchy to
+  enable the use of templates.
+
+  The code using templates was donated by Steve Vinoski of HP.
+
+  In a future release of the CFE only the template code may be included,
+  and hence users will need to use a C++ 3.0 or higher compiler.
+
+- The UTL_list classes defined in the util directory are rudimentary. More
+  features may be added to make the functionality richer.
+
+- The UTL_String class may be rewritten or replaced by a standard ANSI C++
+  String implementation. Applications will be shielded from this change.
+
+COPYRIGHT:
+
+Copyright 1992, 1993, 1994 Sun Microsystems, Inc.  Printed in the United
+States of America.  All Rights Reserved.
+
+This product is protected by copyright and distributed under the following
+license restricting its use.
+
+The Interface Definition Language Compiler Front End (CFE) is made
+available for your use provided that you include this license and copyright
+notice on all media and documentation and the software program in which
+this product is incorporated in whole or part. You may copy and extend
+functionality (but may not remove functionality) of the Interface
+Definition Language CFE without charge, but you are not authorized to
+license or distribute it to anyone else except as part of a product or
+program developed by you or with the express written consent of Sun
+Microsystems, Inc. ("Sun").
+
+The names of Sun Microsystems, Inc. and any of its subsidiaries or
+affiliates may not be used in advertising or publicity pertaining to
+distribution of Interface Definition Language CFE as permitted herein.
+
+This license is effective until terminated by Sun for failure to comply
+with this license.  Upon termination, you shall destroy or return all code
+and documentation for the Interface Definition Language CFE.
+
+INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED AS IS WITH NO WARRANTIES OF
+ANY KIND INCLUDING THE WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS
+FOR A PARTICULAR PURPOSE, NONINFRINGEMENT, OR ARISING FROM A COURSE OF
+DEALING, USAGE OR TRADE PRACTICE.
+
+INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED WITH NO SUPPORT AND WITHOUT
+ANY OBLIGATION ON THE PART OF Sun OR ANY OF ITS SUBSIDIARIES OR AFFILIATES
+TO ASSIST IN ITS USE, CORRECTION, MODIFICATION OR ENHANCEMENT.
+
+SUN OR ANY OF ITS SUBSIDIARIES OR AFFILIATES SHALL HAVE NO LIABILITY WITH
+RESPECT TO THE INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY PATENTS BY
+INTERFACE DEFINITION LANGUAGE CFE OR ANY PART THEREOF.
+
+IN NO EVENT WILL SUN OR ANY OF ITS SUBSIDIARIES OR AFFILIATES BE LIABLE FOR
+ANY LOST REVENUE OR PROFITS OR OTHER SPECIAL, INDIRECT AND CONSEQUENTIAL
+DAMAGES, EVEN IF SUN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+Use, duplication, or disclosure by the government is subject to
+restrictions as set forth in subparagraph (c)(1)(ii) of the Rights in
+Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
+52.227-19.
+
+Sun, Sun Microsystems and the Sun logo are trademarks or registered
+trademarks of Sun Microsystems, Inc.
+
+SunSoft, Inc.  
+2550 Garcia Avenue 
+Mountain View, California  94043
+
+NOTE:
+
+SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
+trademarks or registered trademarks of Sun Microsystems, Inc.

@@ -1,0 +1,51 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ *  @file   Pollable.pidl
+ *
+ *  $Id$
+ *
+ * This file is used to generate the code in Pollable{C,S}.{h,cpp}
+ */
+//=============================================================================
+
+#ifndef TAO_POLLABLE_PIDL
+#define TAO_POLLABLE_PIDL
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  local interface PollableSet;
+
+  local interface Pollable
+  {
+    boolean is_ready (in unsigned long timeout);
+    PollableSet create_pollable_set ();
+  };
+
+  local interface DIIPollable : Pollable
+  {
+  };
+
+  local interface PollableSet
+  {
+    exception NoPossiblePollable {};
+    exception UnknownPollable {};
+
+    DIIPollable create_dii_pollable ();
+
+    void add_pollable (in Pollable potential);
+
+    Pollable get_ready_pollable (in unsigned long timeout)
+      raises (NoPossiblePollable);
+
+    void remove (in Pollable potential)
+      raises (UnknownPollable);
+
+    unsigned short number_left ();
+  };
+};
+
+#endif /* TAO_POLLABLE_PIDL */
