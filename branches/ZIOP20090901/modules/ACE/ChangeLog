@@ -1,7 +1,7 @@
-Fri Jan  9 09:46:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+Fri Jan  9 09:46:24 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/tao_orb_tests.lst:
-          Removed "!LabVIEW_RT", "!WinCE" and "!FUZZ" from: 
+          Removed "!LabVIEW_RT", "!WinCE" and "!FUZZ" from:
             TAO/tests/Portable_Interceptors/AdvSlotExt/run_test.pl
             TAO/tests/Portable_Interceptors/Redirection/run_test.pl
             TAO/tests/Portable_Interceptors/Bug_3079/run_test.pl
@@ -10,7 +10,7 @@ Fri Jan  9 09:46:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 Thu Jan  8 19:15:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/tao_orb_tests.lst:
-          Removed "!LabVIEW_RT", "!WinCE" and "!FUZZ" from: 
+          Removed "!LabVIEW_RT", "!WinCE" and "!FUZZ" from:
             TAO/tests/Portable_Interceptors/AMI/run_test.pl
             TAO/tests/Portable_Interceptors/PolicyFactory/run_test.pl
             TAO/tests/Portable_Interceptors/Request_Interceptor_Flow/run_test.pl
@@ -18,7 +18,7 @@ Thu Jan  8 19:15:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 Wed Jan  8 18:18:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/tao_orb_tests.lst:
-          Removed "!LabVIEW_RT", "!WinCE" and "!FUZZ" from: 
+          Removed "!LabVIEW_RT", "!WinCE" and "!FUZZ" from:
             TAO/tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/run_test.pl
             TAO/tests/Portable_Interceptors/ForwardRequest/run_test.pl
             TAO/tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/run_test.pl
@@ -28,7 +28,7 @@ Wed Jan  8 18:18:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 Wed Jan  8 10:39:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/tao_orb_tests.lst:
-          Removed "!LabVIEW_RT", "!WinCE" and "!FUZZ" from: 
+          Removed "!LabVIEW_RT", "!WinCE" and "!FUZZ" from:
             TAO/tests/Portable_Interceptors/Bug_1559/run_test.pl
             TAO/tests/Portable_Interceptors/Bug_2510_Regression/run_test.pl
             TAO/tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/run_test.pl
