@@ -28,14 +28,14 @@ my $client_iorfile3 = $client->LocalFile ($iorbase3);
 
 $server1->DeleteFile ($iorbase1);
 $server2->DeleteFile ($iorbase2);
-$server2->DeleteFile ($iorbase3);
+$server3->DeleteFile ($iorbase3);
 $client->DeleteFile ($iorbase1);
 $client->DeleteFile ($iorbase2);
 $client->DeleteFile ($iorbase3);
 
 $SV1 = $server1->CreateProcess ("server", "-o $server1_iorfile -c 1 -n 1 -s 1");
 $SV2 = $server2->CreateProcess ("server", "-o $server2_iorfile -n 2 -s 2");
-$SV3 = $server2->CreateProcess ("server", "-o $server3_iorfile -n 3 -s 3");
+$SV3 = $server3->CreateProcess ("server", "-o $server3_iorfile -n 3 -s 3");
 $CL  = $client->CreateProcess ("client", 
                     "-p file://$client_iorfile1 -f file://$client_iorfile2 -s file://$client_iorfile3");
 
@@ -54,14 +54,14 @@ if ($server1->WaitForFileTimed ($iorbase1,
     exit 1;
 }
 
-if ($server1->WaitForFileTimed ($iorbase2,
+if ($server2->WaitForFileTimed ($iorbase2,
                                $server2->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server2_iorfile>\n";
     $SV2->Kill (); $SV2->TimedWait (1);
     exit 1;
 }
 
-if ($server1->WaitForFileTimed ($iorbase3,
+if ($server3->WaitForFileTimed ($iorbase3,
                                $server3->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server3_iorfile>\n";
     $SV3->Kill (); $SV3->TimedWait (1);
@@ -115,7 +115,7 @@ if ($server3_status != 0) {
 
 $server1->DeleteFile ($iorbase1);
 $server2->DeleteFile ($iorbase2);
-$server2->DeleteFile ($iorbase3);
+$server3->DeleteFile ($iorbase3);
 $client->DeleteFile ($iorbase1);
 $client->DeleteFile ($iorbase2);
 $client->DeleteFile ($iorbase3);
