@@ -8,7 +8,7 @@
 #include "ace/Log_Msg.h"
 
 
-char const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testDllOrb",
   "Bug_3542",
   "_make_DllOrb",
@@ -16,14 +16,14 @@ char const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "-ORBDottedDecimalAddresses 1 -ORBCollocationStrategy thru_poa"
 );
 
-char const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
+ACE_TCHAR const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
 
 
 int
 ACE_TMAIN(int, ACE_TCHAR **)
 {
   int result = 0;
-#if false
+#if 0
   ACE_Service_Config serviceConfig;
 
   char signum[64];
