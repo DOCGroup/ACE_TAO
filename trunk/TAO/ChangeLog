@@ -1,3 +1,8 @@
+Sat Jan 10 07:52:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3542_Regression/server.cpp:
+          Fixed unicode compile errors
+
 Fri Jan  9 12:08:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Portable_Interceptors/Bug_3079/run_test.pl:
