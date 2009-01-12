@@ -62,7 +62,7 @@ public:
                     TAO_Synch_Reply_Dispatcher &rd) = 0;
 
   /// Register the handler needs with the reactor provided that it makes
-  /// sense for the  strategy.
+  /// sense for the strategy.
   virtual int register_handler (void) = 0;
 
   /// Returns a value to indicate whether the transport needs to set

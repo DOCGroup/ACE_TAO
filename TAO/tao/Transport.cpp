@@ -330,18 +330,9 @@ bool
 TAO_Transport::register_if_necessary (void)
 {
   if (this->is_connected_ &&
-      ! this->wait_strategy ()->is_registered () &&
-      this->wait_strategy ()->register_handler () != 0)
+      this->wait_strategy ()->register_handler () == -1)
     {
       // Registration failures.
-
-      // Purge from the connection cache, if we are not in the cache, this
-      // just does nothing.
-      (void) this->purge_entry ();
-
-      // Close the handler.
-      (void) this->close_connection ();
-
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -350,6 +341,14 @@ TAO_Transport::register_if_necessary (void)
                       ACE_TEXT ("in the reactor.\n"),
                       this->id ()));
         }
+
+      // Purge from the connection cache, if we are not in the cache, this
+      // just does nothing.
+      (void) this->purge_entry ();
+
+      // Close the handler.
+      (void) this->close_connection ();
+
       return false;
     }
   return true;
