@@ -91,7 +91,6 @@ project (XSC_Config_Handlers) : ciao_deployment_stub, ciao_events_dnc, ciao_conf
     XML_File_Intf.cpp
     IDREF_Base.cpp
     DnC_Dump.cpp
-    DnC_Dump_T.cpp
     Dump_Obj.cpp
     PCD_Handler.cpp
     IRDD_Handler.cpp
