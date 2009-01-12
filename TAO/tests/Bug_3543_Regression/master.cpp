@@ -6,13 +6,15 @@
 #include "tao/ORB.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Barrier.h"
 #include <list>
-#include <sstream>
-#include <iostream>
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
 size_t number_of_servers = 300;
 size_t steps = 10;
+int n_threads = 10;
+ACE_Barrier *barrier = 0;
+CORBA::ORB_var orb;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -94,7 +96,7 @@ void Dispatcher_shutdown(void)
     }
 }
 
-void Dispatcher_step(int id)
+void Dispatcher_step(int id, int i)
 {
     std::list<MasterClient::Server_var> copiedlist;
     {
@@ -102,7 +104,7 @@ void Dispatcher_step(int id)
       copiedlist = servers;
     }
 
-    ACE_DEBUG ((LM_DEBUG, "Id %d Sending %d pings\n", id, copiedlist.size()));
+    ACE_DEBUG ((LM_DEBUG, "Id %d Sending %d pings in iteration %d\n", id, copiedlist.size(), i));
     int ok = 0;
     int timeout = 0;
     int transient = 0;
@@ -146,7 +148,7 @@ void Dispatcher_step(int id)
     if(transient)
       {
         ACE_ERROR ((LM_ERROR, "TRANSIENT: %d\n", transient));
-      }
+	  }
     if(corba)
       {
         ACE_ERROR ((LM_ERROR, "CORBA: %d\n", corba));
@@ -164,16 +166,23 @@ void Dispatcher_run(int id)
     {
       if(started)
         {
-          Dispatcher_step(id);
+          Dispatcher_step (id, i);
           ++i;
         }
       if (i >= steps)
       {
-        ACE_DEBUG ((LM_DEBUG, "Id %d ready\n"));
+        ACE_DEBUG ((LM_DEBUG, "Id %d ready\n", id));
         break;
       }
       ACE_OS::sleep(1);
     }
+  ACE_DEBUG ((LM_DEBUG, "Waiting for barrier\n"));
+  barrier->wait ();
+  if (id == 0)
+  {
+    ACE_DEBUG ((LM_DEBUG, "Shutting down ORB\n"));
+    orb->shutdown (1);
+  }
 }
 
 int
@@ -181,7 +190,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -226,22 +235,34 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
+      barrier = new ACE_Barrier (n_threads);
+
       ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
-      int N = 10;
-      for(int i = 0; i < N; ++i)
+      for(int i = 0; i < n_threads; ++i)
         {
           thr_mgr->spawn_n (1, ACE_THR_FUNC (Dispatcher_run), reinterpret_cast<void *> (i), THR_NEW_LWP | THR_DETACHED);
         }
 
-      ACE_Time_Value tv (120);
-      orb->run(tv);
+      orb->run();
+
+      ACE_DEBUG ((LM_DEBUG, "Orb shutdown\n"));
 
       thr_mgr->wait ();
 
-      Dispatcher_shutdown ();
+	  ACE_DEBUG ((LM_DEBUG, "Worker threads ready\n"));
+
+	  Dispatcher_shutdown ();
+
+      servers.clear ();
+
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
+
+      orb = CORBA::ORB::_nil ();
+
+      delete barrier;
     }
   catch (const CORBA::Exception& ex)
     {

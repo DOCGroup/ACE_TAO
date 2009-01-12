@@ -3,7 +3,6 @@
 #include "masterS.h"
 #include "ace/Get_Opt.h"
 #include "tao/ORB.h"
-#include <iostream>
 
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 
