@@ -1,3 +1,8 @@
+Mon Jan 12 15:18:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3543_Regression/*:
+          New regression test for bugzilla 3543
+
 Mon Jan 12 11:54:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Parser_Registry.cpp:
