@@ -148,7 +148,7 @@ void Dispatcher_step(int id, int i)
     if(transient)
       {
         ACE_ERROR ((LM_ERROR, "TRANSIENT: %d\n", transient));
-	  }
+      }
     if(corba)
       {
         ACE_ERROR ((LM_ERROR, "CORBA: %d\n", corba));
@@ -250,9 +250,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       thr_mgr->wait ();
 
-	  ACE_DEBUG ((LM_DEBUG, "Worker threads ready\n"));
+      ACE_DEBUG ((LM_DEBUG, "Worker threads ready\n"));
 
-	  Dispatcher_shutdown ();
+      Dispatcher_shutdown ();
 
       servers.clear ();
 
