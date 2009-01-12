@@ -74,7 +74,6 @@ ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
 
 
 /// Destructor
-
 ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
 {
   const ACE_Service_Type *tmp = 0;
@@ -290,9 +289,8 @@ ACE_Service_Gestalt::init_i (void)
 }
 
 
-// Add the default statically-linked services to the Service
-// Repository.
-
+/// Add the default statically-linked services to the Service
+/// Repository.
 int
 ACE_Service_Gestalt::load_static_svcs (void)
 {
@@ -318,7 +316,6 @@ ACE_Service_Gestalt::load_static_svcs (void)
 
 
 /// Find a static service descriptor by name
-
 int
 ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
                                                  ACE_Static_Svc_Descriptor **ssd) const
@@ -346,7 +343,6 @@ ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
 }
 
 /// @brief
-
 const ACE_Static_Svc_Descriptor*
 ACE_Service_Gestalt::find_processed_static_svc (const ACE_TCHAR* name)
 {
@@ -372,7 +368,6 @@ ACE_Service_Gestalt::find_processed_static_svc (const ACE_TCHAR* name)
 ///
 /// This is part of the mechanism ensuring distinct local instances
 /// for static service objects, loaded in another repository.
-
 void
 ACE_Service_Gestalt::add_processed_static_svc
   (const ACE_Static_Svc_Descriptor *assd)
@@ -448,10 +443,6 @@ ACE_Service_Gestalt::dump (void) const
   ACE_TRACE ("ACE_Service_Gestalt::dump");
 #endif /* ACE_HAS_DUMP */
 }
-
-
-
-///
 
 int
 ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
@@ -602,17 +593,16 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 #endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
 
 
-// Dynamically link the shared object file and retrieve a pointer to
-// the designated shared object in this file.
-// @note This is obsolete (and error-prone) in the presense of dynamic
-// services with their own static services. This method will allow those
-// static services to register *before* the dynamic service that owns them.
-// Upon finalization of the static services the process may crash, because
-// the dynamic service's DLL may have been already released, together with
-// the memory in which the static services reside.
-// It may not crash, for instance, when the first static service to register
-// is the same as the dynamic service being loaded. You should be so lucky! ..
-
+/// Dynamically link the shared object file and retrieve a pointer to
+/// the designated shared object in this file.
+/// @note This is obsolete (and error-prone) in the presense of dynamic
+/// services with their own static services. This method will allow those
+/// static services to register *before* the dynamic service that owns them.
+/// Upon finalization of the static services the process may crash, because
+/// the dynamic service's DLL may have been already released, together with
+/// the memory in which the static services reside.
+/// It may not crash, for instance, when the first static service to register
+/// is the same as the dynamic service being loaded. You should be so lucky! ..
 int
 ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
                                  const ACE_TCHAR *parameters)
@@ -644,8 +634,8 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
 
 }
 
-// Dynamically link the shared object file and retrieve a pointer to
-// the designated shared object in this file.
+/// Dynamically link the shared object file and retrieve a pointer to
+/// the designated shared object in this file.
 int
 ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
                                    const ACE_TCHAR *parameters)
@@ -703,12 +693,11 @@ ACE_Service_Gestalt::remove (const ACE_TCHAR svc_name[])
   return this->repo_->remove (svc_name);
 }
 
-// Suspend <svc_name>.  Note that this will not unlink the service
-// from the daemon if it was dynamically linked, it will mark it as
-// being suspended in the Service Repository and call the <suspend>
-// member function on the appropriate <ACE_Service_Object>.  A service
-// can be resumed later on by calling the <resume> method...
-
+/// Suspend @a svc_name.  Note that this will not unlink the service
+/// from the daemon if it was dynamically linked, it will mark it as
+/// being suspended in the Service Repository and call the <suspend>
+/// member function on the appropriate <ACE_Service_Object>.  A service
+/// can be resumed later on by calling the <resume> method...
 int
 ACE_Service_Gestalt::suspend (const ACE_TCHAR svc_name[])
 {
