@@ -61,7 +61,7 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
       ACE_CString method = "_set_";
       method += prop[i].name.in();
 
-      CORBA::Request_ptr req (0);
+      CORBA::Request_var req;
 
       try
         {
@@ -69,7 +69,6 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
           req->add_in_arg ("x") = prop[i].value;
 
           req->invoke();
-          CORBA::release (req);
         }
       catch (const CORBA::BAD_OPERATION &)
         {
