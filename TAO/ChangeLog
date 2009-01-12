@@ -1,3 +1,11 @@
+Mon Jan 12 16:00:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3543_Regression/Bug_3543_Regression.mpc:
+          These executables use threads
+
+        * tests/Bug_3543_Regression/master.cpp:
+          Fixed fuzz errors
+
 Mon Jan 12 15:42:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3543_Regression/Bug_3543_Regression.mpc:

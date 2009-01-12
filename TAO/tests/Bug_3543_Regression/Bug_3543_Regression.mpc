@@ -9,7 +9,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoserver {
+project(*Server): taoserver, threads {
   after += *idl
   Source_Files {
     server.cpp
@@ -22,7 +22,7 @@ project(*Server): taoserver {
   }
 }
 
-project(*Master): taoserver {
+project(*Master): taoserver, threads {
   exename = master
   after += *idl
   Source_Files {
