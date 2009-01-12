@@ -44,13 +44,13 @@ if ($server->WaitForFileTimed ($iorbase,
 }
 
 for($i = 0; $i < $servers; $i++) {
-  $CL[$i] = $client->CreateProcess ("server", "-k file://$client_iorfile");
-  $client_status = $CL[$i]->Spawn ($client->ProcessStartWaitInterval());
+    $CL[$i] = $client->CreateProcess ("server", "-k file://$client_iorfile");
+    $client_status = $CL[$i]->Spawn ($client->ProcessStartWaitInterval());
 
-  if ($client_status != 0) {
-      print STDERR "ERROR: client returned $client_status\n";
-      $status = 1;
-  }
+    if ($client_status != 0) {
+        print STDERR "ERROR: client returned $client_status\n";
+        $status = 1;
+    }
 }
 
 $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 300);
@@ -61,12 +61,12 @@ if ($server_status != 0) {
 }
 
 for($i = 0; $i < $servers; $i++) {
-  $client_status = $CL[$i]->WaitKill ($client->ProcessStartWaitInterval());
+    $client_status = $CL[$i]->WaitKill ($client->ProcessStartWaitInterval());
 
-  if ($client_status != 0) {
-      print STDERR "ERROR: client $i returned $client_status\n";
-      $status = 1;
-  }
+    if ($client_status != 0) {
+        print STDERR "ERROR: client $i returned $client_status\n";
+        $status = 1;
+    }
 }
 
 $server->DeleteFile($iorbase);
