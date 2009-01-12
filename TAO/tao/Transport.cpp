@@ -343,11 +343,13 @@ TAO_Transport::register_if_necessary (void)
       (void) this->close_connection ();
 
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) IIOP_Connector [%d]::register_if_necessary, ")
-                    ACE_TEXT ("could not register the transport ")
-                    ACE_TEXT ("in the reactor.\n"),
-                    this->id ()));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::register_if_necessary, ")
+                      ACE_TEXT ("could not register the transport ")
+                      ACE_TEXT ("in the reactor.\n"),
+                      this->id ()));
+        }
       return false;
     }
   return true;
@@ -458,7 +460,7 @@ TAO_Transport::generate_request_header (
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) - Transport[%d]::generate_request_header, ")
+                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::generate_request_header, ")
                       ACE_TEXT ("error while marshalling the Request header\n"),
                       this->id()));
         }
@@ -1019,7 +1021,7 @@ TAO_Transport::drain_queue_i (ACE_Time_Value *max_wait_time)
           if (TAO_debug_level > 3)
           {
             ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t - Transport[%d]::drain_queue_i, ")
+              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_i, ")
               ACE_TEXT ("Discarding expired queued message.\n"),
               this->id ()));
           }
@@ -2705,11 +2707,13 @@ TAO_Transport::post_open (size_t id)
           (void) this->close_connection ();
 
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_open , ")
-               ACE_TEXT ("could not register the transport ")
-               ACE_TEXT ("in the reactor.\n"),
-               this->id ()));
+            {
+              ACE_ERROR ((LM_ERROR,
+                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_open , ")
+                     ACE_TEXT ("could not register the transport ")
+                     ACE_TEXT ("in the reactor.\n"),
+                     this->id ()));
+            }
 
           return false;
         }
@@ -2721,8 +2725,10 @@ TAO_Transport::post_open (size_t id)
   }
 
   if (TAO_debug_level > 9 && !this->cache_map_entry_)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_open")
-                          ACE_TEXT (", cache_map_entry_ is 0\n"), this->id_));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_open")
+                            ACE_TEXT (", cache_map_entry_ is 0\n"), this->id_));
+    }
 
   this->transport_cache_manager ().mark_connected (this->cache_map_entry_,
                                                    true);
@@ -2731,6 +2737,7 @@ TAO_Transport::post_open (size_t id)
   this->transport_cache_manager ().set_entry_state (
     this->cache_map_entry_,
     TAO::ENTRY_IDLE_BUT_NOT_PURGABLE);
+
   return true;
 }
 
