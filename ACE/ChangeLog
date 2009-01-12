@@ -1,3 +1,15 @@
+Mon Jan 12 08:45:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Default_Constants.h:
+          Added ACE_DEFAULT_SERVICE_GESTALT_SIZE which defaults to 1024
+
+        * ace/Service_Gestalt.cpp:
+          Doxygen changes
+
+        * ace/Service_Gestalt.h:
+          Use ACE_DEFAULT_SERVICE_GESTALT_SIZE instead of the hardcoded
+          default of 1024. Also made some doxygen changes
+
 Mon Jan 12 08:16:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
