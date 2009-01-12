@@ -22,7 +22,7 @@ project(*Server): taoserver {
   }
 }
 
-project(*Client): taoserver {
+project(*Master): taoserver {
   exename = master
   after += *idl
   Source_Files {
