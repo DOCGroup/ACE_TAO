@@ -48,7 +48,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-static ACE_Thread_Mutex mutex;
+static TAO_SYNCH_MUTEX mutex;
 std::list<MasterClient::Server_var> servers;
 bool started = false;
 
@@ -61,7 +61,7 @@ public:
 
   virtual void registerServer(MasterClient::Server_ptr c)
   {
-    ACE_GUARD(ACE_Thread_Mutex, mon, mutex);
+    ACE_GUARD(TAO_SYNCH_MUTEX, mon, mutex);
     servers.push_back(MasterClient::Server::_duplicate(c));
     if (servers.size () == number_of_servers)
     {
@@ -78,7 +78,7 @@ void Dispatcher_shutdown(void)
 {
     std::list<MasterClient::Server_var> copiedlist;
     {
-      ACE_GUARD(ACE_Thread_Mutex, mon, mutex);
+      ACE_GUARD(TAO_SYNCH_MUTEX, mon, mutex);
       copiedlist = servers;
     }
     std::list<MasterClient::Server_var>::iterator it;
@@ -98,7 +98,7 @@ void Dispatcher_step(int id)
 {
     std::list<MasterClient::Server_var> copiedlist;
     {
-      ACE_GUARD(ACE_Thread_Mutex, mon, mutex);
+      ACE_GUARD(TAO_SYNCH_MUTEX, mon, mutex);
       copiedlist = servers;
     }
 
