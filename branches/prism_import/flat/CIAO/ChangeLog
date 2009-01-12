@@ -1,3 +1,10 @@
+Mon Jan 12 17:41:29 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:
+
+          Use var types to encapsulates memory management instead
+          of using ptr types. This closes bugzilla 3538.
+
 Thu Dec 11 5:05:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/CCM_KeylessCCMHome.idl:
