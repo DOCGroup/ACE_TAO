@@ -169,6 +169,7 @@ void Dispatcher_run(int id)
         }
       if (i >= steps)
       {
+        ACE_DEBUG ((LM_DEBUG, "Id %d ready\n"));
         break;
       }
       ACE_OS::sleep(1);
