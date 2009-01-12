@@ -82,9 +82,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       MasterClient::Master_var vmaster = MasterClient::Master::_narrow(tmp.in ());
 
-      vmaster->registerServer(vserver.in());
-
       poa_manager->activate ();
+
+      vmaster->registerServer(vserver.in());
 
       orb->run();
 
