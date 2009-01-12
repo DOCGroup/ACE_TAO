@@ -12,11 +12,12 @@
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
 size_t number_of_servers = 300;
+size_t steps = 10;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:c:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:c:s:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -28,6 +29,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'c':
         number_of_servers = ACE_OS::atoi(get_opts.opt_arg ());
         break;
+      case 's':
+        steps = ACE_OS::atoi(get_opts.opt_arg ());
+        break;
 
       case '?':
       default:
@@ -35,6 +39,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "usage:  %s "
                            "-o <ior> "
                            "-c <number of servers> "
+                           "-s <steps> "
                            "\n",
                            argv [0]),
                           -1);
@@ -110,17 +115,15 @@ void Dispatcher_step(int id)
       }
       catch(CORBA::TIMEOUT & e)
       {
-          //std::cout << "CORBA::TIMEOUT" << std::endl;
           ++timeout;
       }
       catch(CORBA::TRANSIENT & e)
       {
-          //std::cout << "CORBA::TRANSIENT" << std::endl;
           ++transient;
       }
       catch(CORBA::Exception & e)
       {
-          std::cout << "CORBA::Exception " << e << std::endl;
+        ACE_ERROR ((LM_ERROR, "ERROR: Caught CORBA exception %C", e._info ()));
           ++corba;
       }
       catch(...)
@@ -138,15 +141,15 @@ void Dispatcher_step(int id)
 
 void Dispatcher_run(int id)
 {
-  int steps = 0;
+  size_t i = 0;
   while(1)
     {
       if(started)
         {
           Dispatcher_step(id);
-          ++steps;
+          ++i;
         }
-      if (steps >= 40)
+      if (i >= steps)
       {
         break;
       }
