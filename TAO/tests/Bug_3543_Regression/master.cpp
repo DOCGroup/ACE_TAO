@@ -155,8 +155,6 @@ void Dispatcher_run(int id)
       }
       ACE_OS::sleep(1);
     }
-
-  Dispatcher_shutdown ();
 }
 
 int
@@ -220,6 +218,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->run();
 
       thr_mgr->wait ();
+
+      Dispatcher_shutdown ();
 
       orb->destroy ();
     }
