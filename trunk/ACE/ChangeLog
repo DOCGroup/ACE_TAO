@@ -1,3 +1,11 @@
+Mon Jan 12 08:16:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug_3542
+
+        * bin/ciao_tests.lst:
+          Disabled DevGuideExample test in some configurations
+
 Fri Jan  9 15:08:23 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Service_Gestalt.cpp:
