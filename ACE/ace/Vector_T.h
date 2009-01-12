@@ -170,14 +170,14 @@ public:
 
   // = Compare operators
 
-  ///Equality comparison operator.
+  /// Equality comparison operator.
   /**
    * Compare this vector with @arg s for equality.  Two vectors are equal
    * if their sizes are equal and all the elements are equal.
    */
   bool operator== (const ACE_Vector<T, DEFAULT_SIZE> &s) const;
 
-  ///Inequality comparison operator.
+  /// Inequality comparison operator.
   /**
    * Compare this vector with @arg s for inequality such that @c *this !=
    * @arg s is always the complement of the boolean return value of

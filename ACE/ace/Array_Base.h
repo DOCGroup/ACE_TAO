@@ -118,7 +118,7 @@ public:
   size_type size (void) const;
 
   /**
-   * Changes the size of the array to match <new_size>.
+   * Changes the size of the array to match @a new_size.
    * It copies the old contents into the new array.
    * Return -1 on failure.
    */
@@ -128,7 +128,7 @@ public:
   size_type max_size (void) const;
 
   /**
-   * Changes the size of the array to match <new_size>.
+   * Changes the size of the array to match @a new_size.
    * It copies the old contents into the new array.
    * Return -1 on failure.
    * It does not affect new_size
@@ -166,11 +166,11 @@ public:
 protected:
 
   /// Returns 1 if @a slot is within range, i.e., 0 >= @a slot <
-  /// <cur_size_>, else returns 0.
+  /// @c cur_size_, else returns 0.
   bool in_range (size_type slot) const;
 
-  /// Maximum size of the array, i.e., the total number of <T> elements
-  /// in <array_>.
+  /// Maximum size of the array, i.e., the total number of @c T elements
+  /// in @c array_.
   size_type max_size_;
 
   /**
