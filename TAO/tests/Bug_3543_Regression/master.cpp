@@ -179,9 +179,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
       MasterImpl *hello_impl = 0;
       ACE_NEW_RETURN (hello_impl,
                       MasterImpl,
