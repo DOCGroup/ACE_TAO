@@ -1,3 +1,21 @@
+Mon Jan 12 18:41:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp (register_if_necessary):
+          Don't check if the transport is registered, we could get a thread
+          switch between the check and the registration. Also only when the
+          register_handler returns -1 we have a failure, with 1 it is already
+          registered. This fixes bugzilla 3543
+
+        * tao/Wait_On_Read.cpp:
+        * tao/Wait_Strategy.cpp:
+          Layout change
+
+        * tao/Wait_Strategy.h:
+          Doxygen change
+
+        * tao/Exception.h:
+          Layout changes
+
 Mon Jan 12 18:26:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3543_Regression/master.cpp:
