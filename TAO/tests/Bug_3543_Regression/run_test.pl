@@ -10,6 +10,7 @@ use PerlACE::TestTarget;
 
 $status = 0;
 $debug_level = '0';
+$servers = 10;
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
@@ -26,7 +27,7 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 @CL = ();
-$SV = $server->CreateProcess ("master", "-ORBdebuglevel $debug_level -o $server_iorfile");
+$SV = $server->CreateProcess ("master", "-ORBdebuglevel $debug_level -o $server_iorfile -c $servers");
 
 $server_status = $SV->Spawn ();
 
@@ -42,7 +43,7 @@ if ($server->WaitForFileTimed ($iorbase,
     exit 1;
 }
 
-for($i = 0; $i < 300; $i++) {
+for($i = 0; $i < $servers; $i++) {
   $CL[$i] = $client->CreateProcess ("server", "-k file://$client_iorfile");
   $client_status = $CL[$i]->Spawn ($client->ProcessStartWaitInterval());
 
@@ -52,14 +53,14 @@ for($i = 0; $i < 300; $i++) {
   }
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 120);
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 300);
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-for($i = 0; $i < 300; $i++) {
+for($i = 0; $i < $servers; $i++) {
   $client_status = $CL[$i]->WaitKill ($client->ProcessStartWaitInterval());
 
   if ($client_status != 0) {
