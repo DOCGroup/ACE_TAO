@@ -67,6 +67,10 @@ public:
     {
       started = true;
     }
+    else
+    {
+      ACE_DEBUG ((LM_DEBUG, "%d server registered with master\n", servers.size()));
+    }
   }
 };
 
@@ -229,7 +233,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           thr_mgr->spawn_n (1, ACE_THR_FUNC (Dispatcher_run), reinterpret_cast<void *> (i), THR_NEW_LWP | THR_DETACHED);
         }
 
-      orb->run();
+      ACE_Time_Value tv (120);
+      orb->run(tv);
 
       thr_mgr->wait ();
 
