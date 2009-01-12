@@ -10,7 +10,7 @@ use PerlACE::TestTarget;
 
 $status = 0;
 $debug_level = '0';
-$servers = 10;
+$servers = 300;
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
