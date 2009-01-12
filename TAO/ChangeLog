@@ -1,3 +1,11 @@
+Mon Jan 12 11:54:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Parser_Registry.cpp:
+          Unicode fix
+
+        * tao/Transport.cpp:
+          Fixed a few incorrect debug statements
+
 Mon Jan 12 08:12:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3542_Regression/run_test.pl:
