@@ -98,7 +98,7 @@ void Dispatcher_step(int id)
       copiedlist = servers;
     }
 
-    std::cout << "(" << id << ") Sending " << copiedlist.size() << " pings" << std::endl;
+    ACE_DEBUG ((LM_DEBUG, "Id %d Sending %d pings\n", id, copiedlist.size()));
     int ok = 0;
     int timeout = 0;
     int transient = 0;
@@ -113,30 +113,44 @@ void Dispatcher_step(int id)
         (*it)->ping();
         ++ok;
       }
-      catch(CORBA::TIMEOUT & e)
+      catch(CORBA::TIMEOUT &)
       {
           ++timeout;
       }
-      catch(CORBA::TRANSIENT & e)
+      catch(CORBA::TRANSIENT &)
       {
           ++transient;
       }
-      catch(CORBA::Exception & e)
+      catch(CORBA::Exception &e)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Caught CORBA exception %C", e._info ().c_str()));
           ++corba;
       }
       catch(...)
       {
-          //std::cout << "Exception" << std::endl;
           ++unknown;
       }
     }
-    if(ok) std::cout << "  (" << id << ") Ok: " << ok << std::endl;
-    if(timeout) std::cout << "  (" << id << ") TIMEOUT: " << timeout << std::endl;
-    if(transient) std::cout << "  (" << id << ") TRANSIENT: " << transient << std::endl;
-    if(corba) std::cout << "  (" << id << ") CORBA: " << corba << std::endl;
-    if(unknown) std::cout << "  (" << id << ") UNKNOWN: " << unknown << std::endl;
+    if(ok)
+      {
+        ACE_ERROR ((LM_ERROR, "Ok: %d\n", ok));
+      }
+    if(timeout)
+      {
+        ACE_ERROR ((LM_ERROR, "TIMEOUT: %d\n", timeout));
+      }
+    if(transient)
+      {
+        ACE_ERROR ((LM_ERROR, "TRANSIENT: %d\n", transient));
+      }
+    if(corba)
+      {
+        ACE_ERROR ((LM_ERROR, "CORBA: %d\n", corba));
+      }
+    if(unknown)
+      {
+        ACE_ERROR ((LM_ERROR, "UNKNOWN: %d\n", unknown));
+      }
 }
 
 void Dispatcher_run(int id)
