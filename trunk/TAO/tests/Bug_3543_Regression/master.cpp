@@ -195,6 +195,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       MasterClient::Master_var hello = MasterClient::Master::_narrow (object.in ());
 
+      poa_manager->activate ();
+
       CORBA::String_var ior = orb->object_to_string (hello.in ());
 
       // Output the IOR to the <ior_output_file>
