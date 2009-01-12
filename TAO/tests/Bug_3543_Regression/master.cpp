@@ -123,7 +123,7 @@ void Dispatcher_step(int id)
       }
       catch(CORBA::Exception & e)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Caught CORBA exception %C", e._info ()));
+        ACE_ERROR ((LM_ERROR, "ERROR: Caught CORBA exception %C", e._info ().c_str()));
           ++corba;
       }
       catch(...)
