@@ -1,3 +1,8 @@
+Mon Jan 12 19:14:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/Config_Handlers.mpc:
+          Don't add template files to the source files
+
 Fri Jan  9 22:18:07 UTC 2009  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/Minimum/Receiver/Receiver.mpc:
