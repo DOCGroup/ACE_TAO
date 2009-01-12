@@ -1,3 +1,8 @@
+Mon Jan 12 18:36:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug 3543 Regression
+
 Mon Jan 12 11:00:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Array_Base.h:
