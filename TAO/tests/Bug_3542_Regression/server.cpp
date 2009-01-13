@@ -12,12 +12,10 @@ ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testDllOrb",
   "Bug_3542",
   "_make_DllOrb",
-  "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -NumThreads 2 "
-  "-ORBDottedDecimalAddresses 1 -ORBCollocationStrategy thru_poa"
+  "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -NumThreads 2 -ORBDottedDecimalAddresses 1 -ORBCollocationStrategy thru_poa"
 );
 
 ACE_TCHAR const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
-
 
 int
 ACE_TMAIN(int, ACE_TCHAR **)
