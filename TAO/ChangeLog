@@ -1,3 +1,13 @@
+Tue Jan 13 08:53:46 UTC 2009  Marcel Smit <msmit@remedy.nl>
+        * tests/POA/Forwarding/run_test.pl:
+        * tests/POA/EndpointPolicy/run_test.pl:
+        * tests/POA/Persistent_ID/run_test.pl:
+        * tests/POA/Reference_Counting/run_test.pl:
+          Made "fuzz" compliant.
+        
+        * tests/Portable_Interceptors/Bug_3079/run_test.pl
+          Improved test script.
+
 Mon Jan 12 18:41:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp (register_if_necessary):

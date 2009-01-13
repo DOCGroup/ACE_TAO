@@ -57,6 +57,7 @@ if ($server1->WaitForFileTimed ($iorbase1,
 if ($server2->WaitForFileTimed ($iorbase2,
                                $server2->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server2_iorfile>\n";
+    $SV1->Kill (); $SV1->TimedWait (1);
     $SV2->Kill (); $SV2->TimedWait (1);
     exit 1;
 }
@@ -64,6 +65,8 @@ if ($server2->WaitForFileTimed ($iorbase2,
 if ($server3->WaitForFileTimed ($iorbase3,
                                $server3->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server3_iorfile>\n";
+    $SV1->Kill (); $SV1->TimedWait (1);
+    $SV2->Kill (); $SV2->TimedWait (1);
     $SV3->Kill (); $SV3->TimedWait (1);
     exit 1;
 }
