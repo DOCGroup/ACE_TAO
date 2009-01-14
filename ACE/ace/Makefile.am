@@ -1214,6 +1214,7 @@ nobase_include_HEADERS += \
   os_include/os_tgmath.h \
   os_include/os_time.h \
   os_include/os_trace.h \
+  os_include/os_typeinfo.h \
   os_include/os_ucontext.h \
   os_include/os_ulimit.h \
   os_include/os_unistd.h \
