@@ -215,8 +215,10 @@ Test_DynSequence::run_test (void)
           CORBA::Any tmp;
           tmp <<= CORBA::Any::from_string (replacement,20);
           CORBA::ULong io_index = 0;
-          DynamicAny::DynAny *&io = out_elems[io_index].inout();
-          io = dynany_factory->create_dyn_any (tmp);
+          // Since we directly change an element in a sequence we give
+          // ownership for the previous element to a local temporary object.
+          DynamicAny::DynAny_var io_owner = out_elems[io_index].inout();
+          out_elems[io_index].inout() = dynany_factory->create_dyn_any (tmp);
 
           // Compare the value of the replaced string.
           CORBA::String_var new_str = out_elems[io_index]->get_string();

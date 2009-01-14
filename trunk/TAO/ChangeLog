@@ -1,3 +1,9 @@
+Wed Jan 14 16:35:43 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/DynAny_Test/test_dynsequence.cpp:
+
+          Fixed a memory leak.
+
 Tue Jan 13 11:30:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3542_Regression/server.cpp:
