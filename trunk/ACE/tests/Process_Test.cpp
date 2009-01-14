@@ -27,7 +27,8 @@
 
 ACE_RCSID(tests, Process_Test, "Process_Test.cpp,v 4.11 1999/09/02 04:36:30 schmidt Exp")
 
-// This will only work on UNIX-like with /proc filesys.
+// This will only work on Linux. Even UNIX-ish with /proc filesys lacks the
+// 'self' level and link to the opened file name.
 static const char *proc_self_fd = "/proc/self/fd/";
 
 int
@@ -137,7 +138,15 @@ run_parent (bool inherit_files)
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-#if defined (ACE_LACKS_FORK) || defined (ACE_LACKS_READLINK)
+  // This test relies on the ability to get a list of open files for a process
+  // and examine each file descriptor to see which file is open, matching
+  // against an expected opened file name. Although most systems provide some
+  // mechanism to do this, the code in this test uses Linux-specific
+  // techniques. Thus, although it is possible to add the code for the
+  // checks on, for example, HP-UX (pstat_getproc, pstat_getpathname) and
+  // AIX (/proc is available, but there's no self and the fds are not links
+  // to the opened file names), the code isn't here at present.
+#if defined (ACE_LACKS_FORK) || defined (ACE_LACKS_READLINK) || !defined(linux)
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 

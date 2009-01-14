@@ -1,3 +1,12 @@
+Wed Jan 14 20:27:02 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * tests/Process_Test.cpp: Don't attempt to run this on anything other
+          than Linux. The code to verify inherited handles uses Linux-specific
+          mechanisms (particularly, that the entries in /proc/self/fd are
+          links to the file names opened). It's possible to write code on
+          other platforms to do the checks but it's non-trivial and will
+          probably be different for each platform.
+
 Wed Jan 14 13:13:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_typeinfo.h:
