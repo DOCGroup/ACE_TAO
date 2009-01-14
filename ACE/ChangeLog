@@ -1,3 +1,14 @@
+Wed Jan 14 13:13:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_typeinfo.h:
+          New file to wrap typeinfo
+
+        * ace/Makefile.am:
+          Added new file
+
+        * ace/Naming_Context.{h,cpp,inl}:
+          Changed debug/verbosity to a bool
+
 Mon Jan 12 18:59:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
