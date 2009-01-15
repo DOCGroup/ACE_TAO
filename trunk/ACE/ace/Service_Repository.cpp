@@ -236,11 +236,10 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
 
   for (i = 0; i < this->service_array_.size(); i++)
 	{
-	  array_type::const_iterator iter = this->service_array_.find (i);
+    array_type::const_iterator iter = this->service_array_.find (i);
 	  if (iter != this->service_array_.end ()
-		  && (*iter).second != 0 // skip any empty slots
-		  && ACE_OS::strcmp (name,
-							 (*iter).second->name ()) == 0)
+        && (*iter).second != 0 // skip any empty slots
+        && ACE_OS::strcmp (name, (*iter).second->name ()) == 0)
 		{
 		  element = iter;
 		  break;
