@@ -17,11 +17,11 @@
 #include "ace/Log_Msg.h"
 #include "ace/Framework_Component.h"
 #include "ace/Guard_T.h"
+#include "ace/os_include/os_typeinfo.h"
 
 ACE_RCSID (ace,
            Singleton,
            "$Id$")
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -95,7 +95,7 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
               ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
 
               // Register for destruction with ACE_Object_Manager.
-              ACE_Object_Manager::at_exit (singleton);
+              ACE_Object_Manager::at_exit (singleton, 0, typeid (TYPE).name ());
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
 #endif /* ACE_MT_SAFE */
@@ -282,7 +282,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
                               0);
 
               // Register for destruction with ACE_Object_Manager.
-              ACE_Object_Manager::at_exit (singleton);
+              ACE_Object_Manager::at_exit (singleton, 0, typeid (TYPE).name ());
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
 #endif /* ACE_MT_SAFE */

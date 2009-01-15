@@ -44,9 +44,9 @@ ACE_OS::abort (void)
 }
 
 ACE_INLINE int
-ACE_OS::atexit (ACE_EXIT_HOOK func)
+ACE_OS::atexit (ACE_EXIT_HOOK func, const char* name)
 {
-  return ACE_OS_Object_Manager::instance ()->at_exit (func);
+  return ACE_OS_Object_Manager::instance ()->at_exit (func, name);
 }
 
 ACE_INLINE int
