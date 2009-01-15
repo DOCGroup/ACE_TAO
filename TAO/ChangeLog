@@ -1,3 +1,10 @@
+Thu Jan 15 08:02:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAO_Singleton.cpp
+        * tao/TAO_Singleton_Manager.{h,cpp,inl}:
+          Pass the typeid when registering a cleanup hook. This is related to
+          bugzilla 3544
+
 Wed Jan 14 16:35:43 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/DynAny_Test/test_dynsequence.cpp:

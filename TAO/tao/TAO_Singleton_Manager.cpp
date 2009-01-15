@@ -6,6 +6,7 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
+#include "ace/os_include/os_typeinfo.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/TAO_Singleton_Manager.inl"
@@ -208,7 +209,8 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
           && ACE_Object_Manager::at_exit (
                this,
                (ACE_CLEANUP_FUNC) TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME,
-               0) != 0)
+               0,
+               typeid (*this).name ()) != 0)
         return -1;
 
       this->registered_with_object_manager_ = register_with_object_manager;
@@ -295,7 +297,8 @@ TAO_Singleton_Manager::shutting_down (void)
 int
 TAO_Singleton_Manager::at_exit_i (void *object,
                                   ACE_CLEANUP_FUNC cleanup_hook,
-                                  void *param)
+                                  void *param,
+                                  const char *name)
 {
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                             ace_mon,
@@ -315,7 +318,7 @@ TAO_Singleton_Manager::at_exit_i (void *object,
       return -1;
     }
 
-  return this->exit_info_.at_exit_i (object, cleanup_hook, param);
+  return this->exit_info_.at_exit_i (object, cleanup_hook, param, name);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
