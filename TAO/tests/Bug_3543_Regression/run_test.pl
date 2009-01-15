@@ -53,7 +53,7 @@ for($i = 0; $i < $servers; $i++) {
     }
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 300);
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 500);
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
