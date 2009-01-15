@@ -1,9 +1,23 @@
+Thu Jan 15 15:58:33 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+
+          Fixed bugzilla 3078.
+          - Add a check for id==0 to get_consumeradmin and get_supplieradmin
+            and use the default admins for these ids -- creating them
+            if necessary.
+
+        * orbsvcs/tests/Notify/Basic/IdAssignment.h:
+        * orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
+
+          Added test case for bugzilla 3078.
+
 Thu Jan 15 12:06:46 UTC 2009  Marcel Smit <msmit@remedy.nl>
 
         * tests/POA/DSI/run_test.pl:
         * tests/POA/Default_Servant2/run_test.pl:
           Made "fuzz" compliant.
-        
+
         * tests/POA/EndpointPolicy/run_test.pl:
           Reduced number of targets.
 
