@@ -37,14 +37,6 @@ ACE_Service_Repository::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Service_Repository::ACE_Service_Repository (void)
-  : service_vector_ (0),
-    current_size_ (0),
-    total_size_ (0)
-{
-  ACE_TRACE ("ACE_Service_Repository::ACE_Service_Repository");
-}
-
 ACE_Service_Repository *
 ACE_Service_Repository::instance (size_t size)
 {
@@ -108,26 +100,17 @@ ACE_Service_Repository::open (size_t size)
 {
   ACE_TRACE ("ACE_Service_Repository::open");
 
-  ACE_Service_Type **temp = 0;
+  // Create a new array and swap it with the local array
+  array_type local_array (size);
+  this->service_array_.swap (local_array);
 
-  ACE_NEW_RETURN (temp,
-                  ACE_Service_Type *[size],
-                  -1);
-
-  this->service_vector_ = const_cast<const ACE_Service_Type **> (temp);
-  this->total_size_ = size;
   return 0;
 }
 
 ACE_Service_Repository::ACE_Service_Repository (size_t size)
-  : current_size_ (0)
+  : service_array_ (size)
 {
   ACE_TRACE ("ACE_Service_Repository::ACE_Service_Repository");
-
-  if (this->open (size) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Service_Repository")));
 }
 
 /// Finalize (call fini() and possibly delete) all the services.
@@ -137,40 +120,35 @@ ACE_Service_Repository::fini (void)
   ACE_TRACE ("ACE_Service_Repository::fini");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  if (this->service_vector_ == 0)
-    return 0;
-
   int retval = 0;
 
   // Do not be tempted to use the prefix decrement operator.  Use
   // postfix decrement operator since the index is unsigned and may
   // wrap around the 0
-  for (size_t i = this->current_size_; i-- != 0; )
+  for (size_t i = this->service_array_.size(); i-- != 0; )
     {
       // <fini> the services in reverse order.
       ACE_Service_Type *s =
-        const_cast<ACE_Service_Type *> (this->service_vector_[i]);
+        const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
         {
           if (s != 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] (%d), ")
+                        ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d], ")
                         ACE_TEXT ("name=%s, type=%@, object=%@, active=%d\n"),
                         this,
                         i,
-                        this->total_size_,
                         s->name(),
                         s->type (),
                         (s->type () != 0) ? s->type ()->object () : 0,
                         s->active ()));
           else
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] (%d) -> 0\n"),
+                        ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] -> 0\n"),
                         this,
-                        i,
-                        this->total_size_));
+                        i));
         }
 #endif
 
@@ -189,24 +167,21 @@ ACE_Service_Repository::close (void)
   ACE_TRACE ("ACE_Service_Repository::close");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  if (this->service_vector_ == 0)
-    return 0;
-
 #ifndef ACE_NLOGGING
   if(ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@, size=%d\n"),
                 this,
-                this->current_size_));
+                this->service_array_.size()));
 #endif
 
   // Do not use the prefix decrement operator since the index is
   // unsigned and may wrap around the 0.
-  for (size_t i = this->current_size_; i-- != 0; )
+  for (size_t i = this->service_array_.size(); i-- != 0; )
     {
       // Delete services in reverse order.
       ACE_Service_Type *s =
-        const_cast<ACE_Service_Type *> (this->service_vector_[i]);
+        const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
 #ifndef ACE_NLOGGING
       if(ACE::debug ())
@@ -225,13 +200,10 @@ ACE_Service_Repository::close (void)
                         s));
         }
 #endif
-      --this->current_size_;
       delete s;
     }
 
-  delete [] this->service_vector_;
-  this->service_vector_ = 0;
-  this->current_size_ = 0;
+  this->service_array_.clear ();
 
   return 0;
 }
@@ -259,20 +231,26 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
                                 bool ignore_suspended) const
 {
   ACE_TRACE ("ACE_Service_Repository::find_i");
-  size_t i;
+  size_t i = 0;
+  array_type::const_iterator element = this->service_array_.end ();
 
-  for (i = 0; i < this->current_size_; i++)
-    {
-      if (this->service_vector_[i] != 0 // skip any empty slots
-          && ACE_OS::strcmp (name,
-                             this->service_vector_[i]->name ()) == 0)
-        break;
-    }
+  for (i = 0; i < this->service_array_.size(); i++)
+	{
+	  array_type::const_iterator iter = this->service_array_.find (i);
+	  if (iter != this->service_array_.end ()
+		  && (*iter).second != 0 // skip any empty slots
+		  && ACE_OS::strcmp (name,
+							 (*iter).second->name ()) == 0)
+		{
+		  element = iter;
+		  break;
+		}
+	}
 
-  if (i < this->current_size_)
+  if (element != this->service_array_.end ())
     {
       slot = i;
-      if (this->service_vector_[i]->fini_called ())
+      if ((*element).second->fini_called ())
         {
           if (srp != 0)
             *srp = 0;
@@ -280,10 +258,10 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
         }
 
       if (srp != 0)
-        *srp = this->service_vector_[i];
+        *srp = (*element).second;
 
       if (ignore_suspended
-          && this->service_vector_[i]->active () == 0)
+          && (*element).second->active () == 0)
         return -2;
 
       return 0;
@@ -309,7 +287,7 @@ ACE_Service_Repository::relocate_i (size_t begin,
   for (size_t i = begin; i < end; i++)
     {
       ACE_Service_Type *type =
-        const_cast<ACE_Service_Type *> (this->service_vector_[i]);
+        const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
       ACE_SHLIB_HANDLE old_handle = (type == 0) ? ACE_SHLIB_INVALID_HANDLE
                                                 : type->dll ().get_handle (0);
@@ -319,18 +297,16 @@ ACE_Service_Repository::relocate_i (size_t begin,
         {
           if (type == 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d] (size=%d)")
+                        ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d]")
                         ACE_TEXT (": skipping empty slot\n"),
                         this,
-                        i,
-                        this->total_size_));
+                        i));
           else
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d] (size=%d)")
+                        ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d]")
                         ACE_TEXT (": trying name=%s, handle: %d -> %d\n"),
                         this,
                         i,
-                        this->total_size_,
                         type->name (),
                         old_handle,
                         new_handle));
@@ -344,11 +320,10 @@ ACE_Service_Repository::relocate_i (size_t begin,
 #ifndef ACE_NLOGGING
           if (ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d] (size=%d)")
+                        ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d]")
                         ACE_TEXT (": relocating name=%s, handle: %d -> %d\n"),
                         this,
                         i,
-                        this->total_size_,
                         type->name (),
                         old_handle,
                         new_handle));
@@ -398,7 +373,7 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
     // Adding an entry.
     if (s != 0)
       {
-        this->service_vector_[i] = sr;
+        this->service_array_[i] = sr;
       }
     else
       {
@@ -408,37 +383,20 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
         // current_size_ and the new current_size_ value.  See
         // ACE_Service_Type_Dynamic_Guard ctor and dtor for details.
 
-        if (i < this->current_size_)
-          i = this->current_size_;
+        if (i < this->service_array_.size ())
+          i = this->service_array_.size ();
 
-        if (i < this->total_size_)
-          {
-            this->service_vector_[i] = sr;
-            this->current_size_++;
-            return_value = 0;
-          }
-        else
-          {
-            return_value = -1; // no space left
-          }
-
-        // Since there may be "holes" left by removed services one
-        // could consider wrapping current_size_ modulo
-        // total_size_. This is going to impact
-        // ACE_Service_Type_Dynamic_Guard, too and is tricky. Perhaps
-        // a new directive, like "reload" would be better as it can
-        // combine the removal and insertion in an atomic step and
-        // avoid creating too many "holes".
+        this->service_array_[i] = sr;
+        return_value = 0;
       }
   }
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SR::insert - repo=%@ [%d] (%d),")
+                ACE_TEXT ("ACE (%P|%t) SR::insert - repo=%@ [%d],")
                 ACE_TEXT (" name=%s (%C) (type=%@, object=%@, active=%d)\n"),
                 this,
                 i,
-                this->total_size_,
                 sr->name(),
                 (return_value == 0 ? ((s==0) ? "new" : "replacing") : "failed"),
                 sr->type (),
@@ -468,7 +426,7 @@ ACE_Service_Repository::resume (const ACE_TCHAR name[],
   if (-1 == this->find_i (name, i, srp, 0))
     return -1;
 
-  return this->service_vector_[i]->resume ();
+  return this->service_array_[i]->resume ();
 }
 
 /// Suspend a service so that it will not be considered active under
@@ -483,7 +441,7 @@ ACE_Service_Repository::suspend (const ACE_TCHAR name[],
   if (-1 == this->find_i (name, i, srp, 0))
     return -1;
 
-  return this->service_vector_[i]->suspend ();
+  return this->service_array_[i]->suspend ();
 }
 
 /**
@@ -538,22 +496,21 @@ ACE_Service_Repository::remove_i (const ACE_TCHAR name[], ACE_Service_Type **ps)
     return -1;    // Not found
 
   // We may need the old ptr - to be delete outside the lock!
-  *ps = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
+  *ps = const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SR::remove_i - repo=%@ [%d] (%d),")
+                ACE_TEXT ("ACE (%P|%t) SR::remove_i - repo=%@ [%d],")
                 ACE_TEXT (" name=%s (removed) (type=%@, active=%d)\n"),
                 this,
                 i,
-                this->total_size_,
                 name,
                 *ps,
                 (*ps)->active ()));
 #endif
 
-  this->service_vector_[i] = 0; // simply leave a gap
+  this->service_array_[i] = 0; // simply leave a gap
   return 0;
 }
 
@@ -590,7 +547,7 @@ ACE_Service_Repository_Iterator::next (const ACE_Service_Type *&sr)
   if (done ())
     return 0;
 
-  sr = this->svc_rep_.service_vector_[this->next_];
+  sr = this->svc_rep_.service_array_[this->next_];
   return 1;
 }
 
@@ -615,10 +572,10 @@ ACE_Service_Repository_Iterator::valid (void) const
 {
   ACE_TRACE ("ACE_Service_Repository_Iterator::valid");
   if (!this->ignore_suspended_)
-    return (this->svc_rep_.service_vector_[this->next_] != 0); // skip over gaps
+    return (this->svc_rep_.service_array_[this->next_] != 0); // skip over gaps
 
-  return (this->svc_rep_.service_vector_[this->next_] != 0
-          && this->svc_rep_.service_vector_[this->next_]->active ());
+  return (this->svc_rep_.service_array_[this->next_] != 0
+          && this->svc_rep_.service_array_[this->next_]->active ());
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

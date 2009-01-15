@@ -36,6 +36,15 @@ static const u_int VARIETIES = 3;
 
 static u_int error = 0;
 
+class MyRepository : public ACE_Service_Repository
+{
+public:
+  array_type& array ()
+  {
+    return service_array_;
+  }
+};
+
 /**
  * @class Test_Singleton
  *
@@ -80,13 +89,14 @@ Test_Singleton::instance (u_short variety)
   static Test_Singleton *instances[VARIETIES] = { 0 };
 
   if (instances[variety] == 0)
-    ACE_NEW_RETURN (instances[variety],
-                    Test_Singleton (variety),
-                    0);
+	ACE_NEW_RETURN (instances[variety],
+					Test_Singleton (variety),
+					0);
 
   ACE_Object_Manager::at_exit (instances[variety],
-                               test_singleton_cleanup,
-                               reinterpret_cast<void *> (static_cast<size_t> (variety)));
+							   test_singleton_cleanup,
+							   reinterpret_cast<void *> (static_cast<size_t> (variety)),
+							   "Test_Singleton");
   return instances[variety];
 }
 
@@ -145,7 +155,7 @@ testFailedServiceInit (int, ACE_TCHAR *[])
     }
 
   // Try to find the service; it should not be there.
-  ACE_Service_Type const *svcp;
+  ACE_Service_Type const *svcp = 0;
   if (-1 != ACE_Service_Repository::instance ()->find (ACE_TEXT ("Refuses_Svc"),
                                                        &svcp))
     {
@@ -316,7 +326,7 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
 }
 
 
-// @brief The size of a repository is pre-determined and can not be exceeded
+// @brief The size of a repository is unlimited and can be exceeded
 void
 testLimits (int , ACE_TCHAR *[])
 {
@@ -342,10 +352,9 @@ testLimits (int , ACE_TCHAR *[])
 #endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
     ;
 
-
   u_int error0 = error;
 
-  // Ensure enough room for one in a own
+  // Ensure enough room for one in a own, the repository can extend
   ACE_Service_Gestalt one (1, true);
 
   // Add two.
@@ -361,18 +370,135 @@ testLimits (int , ACE_TCHAR *[])
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected to have registered the first service\n")));
     }
 
-  if (-1 != one.find (ACE_TEXT ("Test_Object_2_More"), 0, 0))
+  if (-1 == one.find (ACE_TEXT ("Test_Object_2_More"), 0, 0))
     {
       ++error;
-      ACE_ERROR ((LM_ERROR, ACE_TEXT("Being able to add more than 1 service was not expected\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected to have registered the second service\n")));
+    }
+
+  ACE_Service_Repository_Iterator sri (*one.current_service_repository (), 0);
+
+  size_t index = 0;
+  for (const ACE_Service_Type *sr;
+       sri.next (sr) != 0;
+       sri.advance ())
+    {
+      if (index == 0 && ACE_OS::strcmp (sr->name(), ACE_TEXT ("Test_Object_1_More")) != 0)
+        {
+          ++error;
+          ACE_ERROR ((LM_ERROR, ACE_TEXT("Service 1 is wrong\n")));
+        }
+      if (index == 1 && ACE_OS::strcmp (sr->name(), ACE_TEXT ("Test_Object_2_More")) != 0)
+        {
+          ++error;
+          ACE_ERROR ((LM_ERROR, ACE_TEXT("Service 2 is wrong\n")));
+        }
+      ++index;
+    }
+
+  // Test close
+  one.current_service_repository ()->close();
+
+  if (one.current_service_repository ()->current_size () != 0)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT("Size of repository should be 0\n")));
     }
 
   if (error == error0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test completed successfully\n")));
   else
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test failed\n")));
+
 }
 
+void
+testrepository (int, ACE_TCHAR *[])
+{
+  MyRepository repository;
+  ACE_DLL handle;
+  ACE_Service_Type s0 (ACE_TEXT ("0"), 0, handle, false);
+  ACE_Service_Type s1 (ACE_TEXT ("1"), 0, handle, false);
+  ACE_Service_Type s2 (ACE_TEXT ("2"), 0, handle, false);
+  ACE_Service_Type s3 (ACE_TEXT ("3"), 0, handle, false);
+  ACE_Service_Type* result = 0;
+  repository.insert (&s0);
+  if (repository.current_size () != 1)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  repository.current_size ()));
+    }
+  repository.insert (&s1);
+  if (repository.current_size () != 2)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  repository.current_size ()));
+    }
+  repository.insert (&s2);
+  if (repository.current_size () != 3)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  repository.current_size ()));
+    }
+  if (repository.remove (ACE_TEXT ("1"), &result) != 0)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Remove failed\n")));
+    }
+  if (repository.current_size () != 3)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  repository.current_size ()));
+    }
+  if (repository.array ()[1] != 0)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Element 1 not zero\n"),
+                  repository.current_size ()));
+    }
+  repository.insert (&s3);
+  if (repository.current_size () != 4)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  repository.current_size ()));
+    }
+  repository.remove (ACE_TEXT ("0"), &result);
+  if (repository.remove (ACE_TEXT ("1"), &result) != -1)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Double remove didn't return -1\n")));
+    }
+  repository.remove (ACE_TEXT ("2"), &result);
+  repository.remove (ACE_TEXT ("3"), &result);
+  if (repository.current_size () != 4)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  repository.current_size ()));
+    }
+  repository.close ();
+  if (repository.current_size () != 0)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  repository.current_size ()));
+    }
+}
 
 // @brief ??
 void
@@ -538,6 +664,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   testLoadingServiceConfFile (argc, argv);
   testLoadingServiceConfFileAndProcessNo (argc, argv);
   testLimits (argc, argv);
+  testrepository (argc, argv);
 #if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_PTHREADS_STD)
   testNonACEThread();
 #endif
