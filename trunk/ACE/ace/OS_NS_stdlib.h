@@ -62,36 +62,56 @@ namespace ACE_OS {
    *
    */
   //@{
-
-
   ACE_NAMESPACE_INLINE_FUNCTION
   void _exit (int status = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void abort (void);
 
+  /**
+   * Register an at exit hook. The @a name can be used to analyze shutdown
+   * problems
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   int atexit (ACE_EXIT_HOOK func, const char* name = 0);
 
+  /*
+   * Convert string to integer
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   int atoi (const char *s);
 
 # if defined (ACE_HAS_WCHAR)
+  /*
+   * Convert string to integer
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   int atoi (const wchar_t *s);
 # endif /* ACE_HAS_WCHAR */
 
+  /*
+   * Convert string to long
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   long atol (const char *s);
 
+  /*
+   * Convert string to long
+   */
 # if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   long atol (const wchar_t *s);
 # endif /* ACE_HAS_WCHAR */
 
+  /*
+   * Convert string to double
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   double atof (const char *s);
 
+  /*
+   * Convert string to double
+   */
 # if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   double atof (const wchar_t *s);
@@ -102,10 +122,16 @@ namespace ACE_OS {
 #   undef atop
 # endif /* atop */
 
+  /*
+   * Convert string to pointer
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   void *atop (const char *s);
 
 # if defined (ACE_HAS_WCHAR)
+  /*
+   * Convert string to pointer
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   void *atop (const wchar_t *s);
 # endif /* ACE_HAS_WCHAR */
