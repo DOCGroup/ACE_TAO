@@ -61,7 +61,7 @@ ACE_Token_Manager::instance (void)
                           ACE_Token_Manager,
                           0);
           // Register for destruction with ACE_Object_Manager.
-          ACE_Object_Manager::at_exit (token_manager_);
+          ACE_Object_Manager::at_exit (token_manager_, 0, typeid (token_manager_).name ());
         }
     }
 

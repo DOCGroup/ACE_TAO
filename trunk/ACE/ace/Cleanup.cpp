@@ -11,6 +11,7 @@ ACE_RCSID (ace,
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/OS_Memory.h"
+#include "ace/os_include/os_typeinfo.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -37,19 +38,21 @@ ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *object, void *param)
 ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (void)
   : object_ (0),
     cleanup_hook_ (0),
-    param_ (0)
+    param_ (0),
+    name_ (0)
 {
 }
 
 ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (void *object,
                                               ACE_CLEANUP_FUNC cleanup_hook,
-                                              void *param)
+                                              void *param,
+                                              const char *name)
   : object_ (object),
     cleanup_hook_ (cleanup_hook),
-    param_ (param)
+    param_ (param),
+    name_ (name)
 {
 }
-
 
 ACE_Cleanup_Info_Node::~ACE_Cleanup_Info_Node (void)
 {
@@ -83,14 +86,15 @@ ACE_OS_Exit_Info::~ACE_OS_Exit_Info (void)
 int
 ACE_OS_Exit_Info::at_exit_i (void *object,
                              ACE_CLEANUP_FUNC cleanup_hook,
-                             void *param)
+                             void *param,
+                             const char* name)
 {
   // Return -1 and sets errno if unable to allocate storage.  Enqueue
   // at the head and dequeue from the head to get LIFO ordering.
   ACE_Cleanup_Info_Node *new_node = 0;
 
   ACE_NEW_RETURN (new_node,
-                  ACE_Cleanup_Info_Node (object, cleanup_hook, param),
+                  ACE_Cleanup_Info_Node (object, cleanup_hook, param, name),
                   -1);
 
   registered_objects_.push_front (new_node);

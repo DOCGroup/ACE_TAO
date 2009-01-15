@@ -17,6 +17,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_signal.h"
+#include "ace/os_include/os_typeinfo.h"
 
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE != 0)
 # include "ace/Object_Manager_Base.h"
@@ -398,7 +399,9 @@ ACE_Log_Msg::instance (void)
     {
       ACE_NEW_RETURN (log_msg_cleanup, ACE_Msg_Log_Cleanup, 0);
       // Register the instance for destruction at program termination.
-      ACE_Object_Manager::at_exit (log_msg_cleanup);
+      ACE_Object_Manager::at_exit (log_msg_cleanup,
+                                   0,
+                                   typeid (*log_msg_cleanup).name ());
     }
 
   return &log_msg_cleanup->object ();

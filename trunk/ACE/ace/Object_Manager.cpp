@@ -444,7 +444,8 @@ ACE_Object_Manager::instance (void)
 int
 ACE_Object_Manager::at_exit_i (void *object,
                                ACE_CLEANUP_FUNC cleanup_hook,
-                               void *param)
+                               void *param,
+                               const char* name)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
     *instance_->internal_lock_, -1));
@@ -462,7 +463,7 @@ ACE_Object_Manager::at_exit_i (void *object,
       return -1;
     }
 
-  return exit_info_.at_exit_i (object, cleanup_hook, param);
+  return exit_info_.at_exit_i (object, cleanup_hook, param, name);
 }
 
 int
@@ -547,16 +548,16 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
           if (lock == 0)
             {
               ACE_Cleanup_Adapter<ACE_Thread_Mutex> *lock_adapter = 0;
-              ACE_NEW_RETURN (lock_adapter,
-                              ACE_Cleanup_Adapter<ACE_Thread_Mutex>,
-                              -1);
-              lock = &lock_adapter->object ();
+			  ACE_NEW_RETURN (lock_adapter,
+							  ACE_Cleanup_Adapter<ACE_Thread_Mutex>,
+							  -1);
+			  lock = &lock_adapter->object ();
 
-              // Register the lock for destruction at program
-              // termination.  This call will cause us to grab the
-              // ACE_Object_Manager::instance ()->internal_lock_
-              // again; that's why it is a recursive lock.
-              ACE_Object_Manager::at_exit (lock_adapter);
+			  // Register the lock for destruction at program
+			  // termination.  This call will cause us to grab the
+			  // ACE_Object_Manager::instance ()->internal_lock_
+			  // again; that's why it is a recursive lock.
+			  ACE_Object_Manager::at_exit (lock_adapter, 0, typeid (*lock_adapter).name ());
             }
         }
     }

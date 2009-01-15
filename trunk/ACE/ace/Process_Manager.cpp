@@ -19,6 +19,7 @@
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/os_include/os_typeinfo.h"
 #include "ace/Truncate.h"
 
 ACE_RCSID (ace,
@@ -131,11 +132,13 @@ ACE_Process_Manager::instance (void)
 #if defined ACE_HAS_SIG_C_FUNC
           ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
                                        ACE_Process_Manager_cleanup,
-                                       0);
+                                       0,
+                                       typeid (*ACE_Process_Manager::instance_).name ());
 #else
           ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
                                        ACE_Process_Manager::cleanup,
-                                       0);
+                                       0,
+                                       typeid (*ACE_Process_Manager::instance_).name ());
 #endif /* ACE_HAS_SIG_C_FUNC */
 
         }
@@ -162,11 +165,13 @@ ACE_Process_Manager::instance (ACE_Process_Manager *tm)
 #if defined ACE_HAS_SIG_C_FUNC
   ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
                                 ACE_Process_Manager_cleanup,
-                                0);
+                                0,
+                                typeid (*ACE_Process_Manager::instance_).name ());
 #else
   ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
                                 ACE_Process_Manager::cleanup,
-                                0);
+                                0,
+                                typeid (*ACE_Process_Manager::instance_).name ());
 #endif /* ACE_HAS_SIG_C_FUNC */
 
   ACE_Process_Manager::instance_ = tm;
@@ -686,7 +691,7 @@ ACE_Process_Manager::find_proc (pid_t pid)
 {
   ACE_TRACE ("ACE_Process_Manager::find_proc");
 
-  for (size_t i = 0; i < this->current_count_; ++i) 
+  for (size_t i = 0; i < this->current_count_; ++i)
     {
       if (pid == this->process_table_[i].process_->getpid ())
         {
