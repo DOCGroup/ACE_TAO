@@ -1,25 +1,50 @@
+Thu Jan 15 18:55:00 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * C2W/C2W_Demo.cpp:
+	Uses the replan function in the planner for effects and condition updating
+
+        * SANet/SANode.cpp:
+	Updates CondNode::update and TaskNode::Update to handle effect link weighting changes.
+
+        * SA_PlanStrategy.h:
+        * SA_PlanStrategy.cpp:
+	Implements a reset function for the PlanStrategy.
+
+        * SA_SchedStrategy.h:
+        * SA_SchedStrategy.cpp:
+	Implements a reset function for the SchedStrategy
+
+        * SA_WorkingPlan.h:
+        * SA_WorkingPlan.cpp:
+	Calls the reset functions for both SchedStrategy and PlanStrategy in the replanning function.
+	Updated sched_links_ and reused_insts_ to reflect naming conventions.
+
+        * SchedStrategy.h:
+	Added virtual function for reset function
+
+
 Fri Jan  9 21:39:55 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * C2W/C2W_Demo.cpp:
-	Utilize update_effect function
+        Utilize update_effect function
 
         * C2W/LogGraphOut.cpp:
-	Utilizes Complete Graphviz Visualization
+        Utilizes Complete Graphviz Visualization
 
         * Planner.h:
         * Planner.cpp:
-	Uses SANET::update_effect
+        Uses SANET::update_effect
 
         * SANet/SANet.h:
         * SANet/SANet.cpp:
-	Implements SANET::update_effect, which updates an effect link in a SANet, calls TaskNode::update_effect_link
+        Implements SANET::update_effect, which updates an effect link in a SANet, calls TaskNode::update_effect_link
 
         * SANet/SANode.h:
         * SANet/SANode.cpp:
-	Implements TaskNode::update_effect_link and CondNode::update_pre_link
+        Implements TaskNode::update_effect_link and CondNode::update_pre_link
 
         * SA_WorkingPlan.cpp:
-	Clears causal links in reset_plan.
+        Clears causal links in reset_plan.
 
 Wed Dec 17 23:21:30 UTC 2008  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 

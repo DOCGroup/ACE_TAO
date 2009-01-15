@@ -37,6 +37,13 @@ SA_SchedStrategy::~SA_SchedStrategy (void)
   // Nothing to do.
 };
 
+void SA_SchedStrategy::reset()
+{
+  cur_decision_pt_ = SA_POP::SA_SchedStrategy::SCHEDULE_DECISION;
+  cur_seq_num_ = 1;
+}
+
+
 // Set command prototypes to use in scheduling.
 void SA_SchedStrategy::set_commands (ResolveSchedOrderCmd *resolve_sched_cmd,
   AdjustMinTimesCmd *adj_min_times_cmd,

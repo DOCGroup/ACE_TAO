@@ -61,6 +61,22 @@ SA_PlanStrategy::~SA_PlanStrategy (void)
   delete this->impl_choice_;
 };
 
+void SA_PlanStrategy::reset()
+{
+  has_cmds_ = false;
+  cur_task_ = SA_POP::NULL_TASK_ID;
+  cur_task_inst_ = SA_POP::NULL_TASK_ID;
+  cur_step_ = 0;
+  cur_decision_pt_ = SA_POP::SA_PlanStrategy::TASK_DECISION;
+  cur_seq_num_ = 1;
+  this->add_conds_cmd_ = new SA_AddOpenCondsCmd (this);
+  this->rmv_conds_cmd_ = new SA_RemoveOpenCondsCmd (this);
+  this->add_threats_cmd_ = new SA_AddOpenThreatsCmd (this);
+  this->rmv_threats_cmd_ = new SA_RemoveOpenThreatsCmd (this);
+  this->open_conds_.clear ();
+  this->open_threats_.clear ();
+};
+
 // Set command prototypes to use in planning.
 void SA_PlanStrategy::set_commands (AddTaskCmd *add_task_cmd,
   AssocTaskImplCmd *assoc_impl_cmd,

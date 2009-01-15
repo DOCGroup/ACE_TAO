@@ -246,6 +246,13 @@ bool TaskNode::update (void)
     }
   }
 
+
+
+  // Keep last utility values.
+  Utility_Info last_pos_util = this->pos_util_;
+  Utility_Info last_neg_util = this->neg_util_;
+  
+
   // Variables for current utility updates.
   Utility_Info cur_util;
   UtilityMap::iterator prev_util_iter;
@@ -364,6 +371,14 @@ bool TaskNode::update (void)
       }
     }
   }
+
+
+  // If last utility value is different from the updated utility value, update flag.
+  if (last_pos_util.utility != this->pos_util_.utility || last_pos_util.common != this->pos_util_.common)
+    this->util_changed_ = true;
+  if (last_neg_util.utility != this->neg_util_.utility || last_neg_util.common != this->neg_util_.common)
+    this->util_changed_ = true;
+
 
 //*****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG****DEBUG**** 
   // Include cost in current expected utility.
@@ -952,6 +967,10 @@ bool CondNode::update (void)
   LinkWeight cur_weight;
   MultFactor cur_mult;
 
+  // Keep last utility values.
+  Utility_Info last_pos_util = this->pos_util_;
+  Utility_Info last_neg_util = this->neg_util_;
+  
   // Reset utility info.
   pos_util_.utility = 0;
   pos_util_.common.clear ();
@@ -1068,7 +1087,12 @@ bool CondNode::update (void)
     }
   }
 
-        
+  // If last utility value is different from the updated utility value, update flag.
+  if (last_pos_util.utility != this->pos_util_.utility || last_pos_util.common != this->pos_util_.common)
+    this->util_changed_ = true;
+  if (last_neg_util.utility != this->neg_util_.utility || last_neg_util.common != this->neg_util_.common)
+    this->util_changed_ = true;
+
 
 
   // Variables for current probability value.
@@ -1078,7 +1102,7 @@ bool CondNode::update (void)
   
 
   // Make sure conditions/links in the network have not changed to bring
-  // max true/false probabilities below actual current values for condition.
+  // max true/false probabilities below initial (current environment) values for condition.
   if (this->true_prob_from_ == this->ID_ && this->true_prob_.probability != this->init_true_prob_) {
     this->true_prob_.probability = this->init_true_prob_;
     this->true_prob_.common.clear ();
@@ -1137,7 +1161,8 @@ bool CondNode::update (void)
     // Update probability based on current multiplier.
     cur_prob.probability = cur_mult * cur_prob.probability;
 
-    // Check true probability from node against current value (link weight should not be negative for true probability).
+    // If link weight has the same sign, check true probability from node against current value.
+    // Else (link weight has changed sign), reset true probability to our initial true probability.
     if (cur_weight >= 0) {
       // Change true probability if it has changed.
       if (true_prob_.probability != cur_prob.probability) {
@@ -1147,15 +1172,19 @@ bool CondNode::update (void)
         prob_changed_ = true;
       }
     } else {
-      std::cerr << "Error in condition node update:  Link weight changed.";
-      std::cerr << std::endl;
-      throw Update_Error ();
+      // Reset true probability to initial (current environment) value.
+      this->true_prob_.probability = this->init_true_prob_;
+      this->true_prob_.common.clear();
+      this->true_prob_from_ = this->ID_;
+
+      // Update prob_changed_ flag.
+      prob_changed_ = true;
     }
   }
 
 
   // Check for change in probability of node where current
-  // highest false probability comes from.  Update true
+  // highest false probability comes from.  Update false
   // probability if it has changed, so that newly inserted
   // condition probabilities will be noticed even if they
   // are lower than previous condition probability values.
@@ -1197,7 +1226,8 @@ bool CondNode::update (void)
     // Update probability based on current multiplier.
     cur_prob.probability = cur_mult * cur_prob.probability;
 
-    // Check false probability from node against current value (link weight should not be positive for false probability).
+    // If link weight has the same sign, check false probability from node against current value.
+    // Else (link weight has changed sign), reset false probability to our initial false probability.
     if (cur_weight <= 0) {
       // Change false probability if it has changed.
       if (false_prob_.probability != cur_prob.probability) {
@@ -1207,9 +1237,13 @@ bool CondNode::update (void)
         prob_changed_ = true;
       }
     } else {
-      std::cerr << "Error in condition node update:  Link weight changed.";
-      std::cerr << std::endl;
-      throw Update_Error ();
+      // Reset false probability to initial (current environment) value.
+      this->false_prob_.probability = 1 - this->init_true_prob_;
+      this->false_prob_.common.clear();
+      this->false_prob_from_ = this->ID_;
+
+      // Update prob_changed_ flag.
+      prob_changed_ = true;
     }
   }
 
