@@ -16,6 +16,7 @@
 #include "ace/Guard_T.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
+#include "ace/os_include/os_typeinfo.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/TAO_Singleton.inl"
@@ -93,7 +94,7 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance (void)
               ACE_NEW_RETURN (singleton, (TAO_Singleton<TYPE, ACE_LOCK>), 0);
 
               // Register for destruction with TAO_Singleton_Manager.
-              TAO_Singleton_Manager::at_exit (singleton);
+              TAO_Singleton_Manager::at_exit (singleton, 0, typeid (TYPE).name());
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
 #endif /* ACE_MT_SAFE */
@@ -191,7 +192,7 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
                               0);
 
               // Register for destruction with TAO_Singleton_Manager.
-              TAO_Singleton_Manager::at_exit (singleton);
+              TAO_Singleton_Manager::at_exit (singleton, 0, typeid (TYPE).name ());
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
 #endif /* ACE_MT_SAFE */
