@@ -1,3 +1,15 @@
+Thu Jan 15 16:59:21 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:
+        
+          Fixed bug in update_rank_list that prevented entries to be taken
+          into the local list.
+        
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/test_i.h:
+        
+          Fixed include statement to allow compilation without
+          FLARE_USES_DDS setting.
+
 Fri Dec 19 19:35:45 UTC 2008  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/AppOptions.h        

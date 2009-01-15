@@ -113,7 +113,7 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
   ReplicaGroup replica_group;
   
   if (replica_map_.find (ACE_CString (object_id),
-			                   replica_group) != 0)
+			 replica_group) != 0)
     {
       /*
       ACE_ERROR ((LM_WARNING, 
@@ -187,7 +187,7 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
 
       // if there is already an entry for this object_id it means that
       // we have a registered DDS object and should not override it.
-      if (!replica_map_.find (oid))
+      if (replica_map_.find (oid) != 0)
         {
           // create a new list for every replication group
           ReplicaGroup replica_group;

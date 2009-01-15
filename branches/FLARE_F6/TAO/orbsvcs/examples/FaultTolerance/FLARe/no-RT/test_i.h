@@ -22,6 +22,8 @@
 
 #ifdef FLARE_USES_DDS
 #  include "ccpp_State.h"
+#else
+#  include "StateC.h"
 #endif
 
 class test_i :  public POA_test
