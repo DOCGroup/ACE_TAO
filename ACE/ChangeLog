@@ -1,3 +1,23 @@
+Thu Jan 15 13:30:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/Logging_Strategy.h:
+        * ace/Service_Object.h:
+          Doxygen change
+
+        * ace/Service_Repository.{h,cpp,inl}:
+          Removed the restriction that the service repository can't
+          grow bigger then the size it got passed at construction. The
+          plain array has been replaced with an ACE_Array_Map which
+          will grow when needed. The behaviour that removing elements
+          means gap in the array hasn't been changed. This fixes bugzilla
+          3542
+
+        * ace/Service_Config_Test.cpp:
+          Extended this test to also test the Service Repository size
+          and the behaviour that we get gaps when removing services,
+          adding services after a remove will keep the gaps and just
+          grows the service repository
+
 Thu Jan 15 11:13:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/tao_orb_tests.lst:

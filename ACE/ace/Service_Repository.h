@@ -23,6 +23,7 @@
 
 #include "ace/Default_Constants.h"
 #include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Array_Map.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -57,10 +58,7 @@ public:
 
   // = Initialization and termination methods.
   /// Initialize the repository.
-  ACE_Service_Repository (void);
-
-  /// Initialize the repository.
-  ACE_Service_Repository (size_t size);
+  ACE_Service_Repository (size_t size = DEFAULT_SIZE);
 
   /// Initialize the repository.
   int open (size_t size = DEFAULT_SIZE);
@@ -119,20 +117,17 @@ public:
   /// the service's record is removed from the repository, but not deleted;
   /// *sr receives the service record pointer and the caller is responsible
   /// for properly disposing of it.
-  int remove (const ACE_TCHAR[], ACE_Service_Type **sr = 0);
+  int remove (const ACE_TCHAR name[], ACE_Service_Type **sr = 0);
 
   // = Liveness control
   /// Resume a service record.
-  int resume (const ACE_TCHAR[], const ACE_Service_Type **srp = 0);
+  int resume (const ACE_TCHAR name[], const ACE_Service_Type **srp = 0);
 
   /// Suspend a service record.
-  int suspend (const ACE_TCHAR[], const ACE_Service_Type **srp = 0);
+  int suspend (const ACE_TCHAR name[], const ACE_Service_Type **srp = 0);
 
   /// Return the current size of the repository.
   size_t current_size (void) const;
-
-  /// Return the total size of the repository.
-  size_t total_size (void) const;
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -140,7 +135,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-private:
+protected:
 
   friend class ACE_Service_Type_Dynamic_Guard;
 
@@ -191,14 +186,11 @@ private:
                   size_t end,
                   const ACE_DLL &adll);
 
+  /// The typedef of the array used to store the services.
+  typedef ACE_Array_Map <size_t, const ACE_Service_Type*> array_type;
+
   /// Contains all the configured services.
-  const ACE_Service_Type **service_vector_;
-
-  /// Current number of services.
-  size_t current_size_;
-
-  /// Maximum number of services.
-  size_t total_size_;
+  array_type service_array_;
 
   /// Pointer to a process-wide ACE_Service_Repository.
   static ACE_Service_Repository *svc_rep_;
