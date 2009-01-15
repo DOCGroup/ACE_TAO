@@ -46,6 +46,10 @@ private:
   void destroy_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id,
                                CosNotifyChannelAdmin::AdminID admin_id);
 
+  bool default_consumer_admin_test (CosNotifyChannelAdmin::ChannelID channel_id);
+  bool default_supplier_admin_test (CosNotifyChannelAdmin::ChannelID channel_id);
+
+
   // = Data members.
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
 

@@ -290,6 +290,7 @@ TAO_Notify_EventChannel::default_consumer_admin (void)
             }
         }
     }
+
   return CosNotifyChannelAdmin::ConsumerAdmin::_duplicate (this->default_consumer_admin_.in ());
 }
 
@@ -347,6 +348,12 @@ TAO_Notify_EventChannel::new_for_suppliers (CosNotifyChannelAdmin::InterFilterGr
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
 TAO_Notify_EventChannel::get_consumeradmin (CosNotifyChannelAdmin::AdminID id)
 {
+  // because default admins are allocated on-demand, we need to be sure one exists for id 0
+  if (id == 0)
+    {
+       return default_consumer_admin ();
+    }
+
   TAO_Notify_ConsumerAdmin_Find_Worker find_worker;
 
   return find_worker.resolve (id, this->ca_container());
@@ -355,6 +362,12 @@ TAO_Notify_EventChannel::get_consumeradmin (CosNotifyChannelAdmin::AdminID id)
 CosNotifyChannelAdmin::SupplierAdmin_ptr
 TAO_Notify_EventChannel::get_supplieradmin (CosNotifyChannelAdmin::AdminID id)
 {
+  // because default admins are allocated on-demand, we need to be sure one exists for id 0
+  if (id == 0)
+    {
+      return default_supplier_admin ();
+    }
+
   TAO_Notify_SupplierAdmin_Find_Worker find_worker;
 
   return find_worker.resolve (id, this->sa_container());
