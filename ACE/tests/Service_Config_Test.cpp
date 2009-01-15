@@ -89,14 +89,16 @@ Test_Singleton::instance (u_short variety)
   static Test_Singleton *instances[VARIETIES] = { 0 };
 
   if (instances[variety] == 0)
-	ACE_NEW_RETURN (instances[variety],
-					Test_Singleton (variety),
-					0);
+    {
+      ACE_NEW_RETURN (instances[variety],
+                      Test_Singleton (variety),
+                      0);
+    }
 
   ACE_Object_Manager::at_exit (instances[variety],
-							   test_singleton_cleanup,
-							   reinterpret_cast<void *> (static_cast<size_t> (variety)),
-							   "Test_Singleton");
+                               test_singleton_cleanup,
+                  reinterpret_cast<void *> (static_cast<size_t> (variety)),
+                  "Test_Singleton");
   return instances[variety];
 }
 
