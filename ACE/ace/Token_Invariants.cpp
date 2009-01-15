@@ -31,7 +31,7 @@ ACE_Token_Invariant_Manager::instance (void)
                           ACE_Token_Invariant_Manager,
                           0);
           // Register for destruction with ACE_Object_Manager.
-          ACE_Object_Manager::at_exit (instance_);
+          ACE_Object_Manager::at_exit (instance_, 0, typeid (instance_).name ());
         }
     }
 

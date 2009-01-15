@@ -394,11 +394,12 @@ ACE_OS_Object_Manager::fini (void)
 int ace_exit_hook_marker = 0;
 
 int
-ACE_OS_Object_Manager::at_exit (ACE_EXIT_HOOK func)
+ACE_OS_Object_Manager::at_exit (ACE_EXIT_HOOK func, const char* name)
 {
   return exit_info_.at_exit_i (&ace_exit_hook_marker,
                                reinterpret_cast <ACE_CLEANUP_FUNC> (func),
-                               0);
+                               0,
+                               name);
 }
 
 void

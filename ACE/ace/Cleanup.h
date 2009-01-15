@@ -57,7 +57,7 @@ public:
   virtual void cleanup (void *param = 0);
 };
 
-// Adapter for cleanup, used by ACE_Object_Manager.
+/// Adapter for cleanup, used by ACE_Object_Manager.
 extern "C" ACE_Export
 void ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *, void *param = 0);
 
@@ -74,7 +74,8 @@ public:
   ACE_Cleanup_Info_Node (void);
   ACE_Cleanup_Info_Node (void *object,
                          ACE_CLEANUP_FUNC cleanup_hook,
-                         void *param);
+                         void *param,
+                         const char *name);
   ~ACE_Cleanup_Info_Node (void);
 
   /// Equality operator.
@@ -97,6 +98,9 @@ private:
 
   /// Parameter passed to the <cleanup_hook_>.
   void *param_;
+
+  /// Name of the cleanup object
+  const char *name_;
 };
 
 typedef ACE_Intrusive_List<ACE_Cleanup_Info_Node> ACE_Cleanup_Info_Node_List;
@@ -120,7 +124,7 @@ public:
   ~ACE_OS_Exit_Info (void);
 
   /// Use to register a cleanup hook.
-  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
+  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, const char* name = 0);
 
   /// Look for a registered cleanup hook object.  Returns true if already
   /// registered, false if not.
