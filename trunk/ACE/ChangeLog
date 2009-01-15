@@ -1,4 +1,9 @@
-Thu Jan 15 13:30:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+Thu Jan 15 13:50:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdlib.h:
+          The added name argument should have a default value of 0
+
+Thu Jan 15 13:30:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Logging_Strategy.h:
         * ace/Service_Object.h:

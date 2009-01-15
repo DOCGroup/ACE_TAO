@@ -71,7 +71,7 @@ namespace ACE_OS {
   void abort (void);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int atexit (ACE_EXIT_HOOK func, const char* name);
+  int atexit (ACE_EXIT_HOOK func, const char* name = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int atoi (const char *s);
