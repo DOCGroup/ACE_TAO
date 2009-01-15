@@ -1,3 +1,12 @@
+Thu Jan 15 12:06:46 UTC 2009  Marcel Smit <msmit@remedy.nl>
+
+        * tests/POA/DSI/run_test.pl:
+        * tests/POA/Default_Servant2/run_test.pl:
+          Made "fuzz" compliant.
+        
+        * tests/POA/EndpointPolicy/run_test.pl:
+          Reduced number of targets.
+
 Thu Jan 15 08:02:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TAO_Singleton.cpp
