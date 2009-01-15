@@ -226,17 +226,20 @@ int main (int argc, char* argv[])
 			  std::cin >> curTask;
 			  std::cout << "Enter the Condition ID: ";
 			  std::cin >> curEff;
+        /*
         SA_POP::SA_Builder rebuilder;
         sanet_in.build_net (sanet_filename, &rebuilder);
         tm_in.build_task_map (tm_filename, &rebuilder);
         planner = rebuilder.get_planner ();
         planner->add_out_adapter (&graph_out);
+        */
         for(std::map<SANet::CondID, double>::iterator cIter = condMap.begin(); cIter != condMap.end(); cIter++)
         {
           planner->update_cond_val((*cIter).first, (*cIter).second);
         }
         planner->update_effect(curTask, curEff, -1);
-			  planner->plan(100, goal);
+        //planner->plan(100, goal);
+			  planner->replan(100, goal);
 
 		  }
 		  else if(eff == "C" || eff == "c")
@@ -252,16 +255,19 @@ int main (int argc, char* argv[])
         {
           (*cmp).second = newprob;
         }
+        /*
         SA_POP::SA_Builder rebuilder;
         sanet_in.build_net (sanet_filename, &rebuilder);
         tm_in.build_task_map (tm_filename, &rebuilder);
         planner = rebuilder.get_planner ();
         planner->add_out_adapter (&graph_out);
+        */
         for(std::map<SANet::CondID, double>::iterator cIter = condMap.begin(); cIter != condMap.end(); cIter++)
         {
           planner->update_cond_val((*cIter).first, (*cIter).second);
         }
-			  planner->plan (100, goal);
+			  //planner->plan (100, goal);
+        planner->replan(100, goal);
 
 		  }
 		  else

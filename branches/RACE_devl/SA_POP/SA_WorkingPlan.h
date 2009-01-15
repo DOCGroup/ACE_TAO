@@ -394,7 +394,7 @@ namespace SA_POP {
 	InstToWinMap init_end;
 
 	// The set of reused task instances
-	std::multiset<TaskInstID> reused_insts;
+	std::multiset<TaskInstID> reused_insts_;
   /// Insert initially task by task in the precedence graph
   /**
    * @param task_inst The task instance to insert into the precedence graph

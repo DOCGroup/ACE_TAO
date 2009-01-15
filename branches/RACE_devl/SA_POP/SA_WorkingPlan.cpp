@@ -37,6 +37,8 @@ add_threats_cmd_ (0)
   this->task_insts_.clear ();
   this->task_impls_.clear ();
   this->causal_links_.clear ();
+  this->reused_insts_.clear();
+  this->sched_links_.clear();
 
   // Clear goal.
   this->goal_.goal_id = "NULL";
@@ -253,6 +255,8 @@ void SA_WorkingPlan::reset_plan ()
 	this->task_insts_.clear ();
 	this->task_impls_.clear ();
   this->causal_links_.clear ();
+  this->reused_insts_.clear();
+  this->sched_links_.clear();
 
   // Clear goal.
   this->goal_.goal_id = "NULL";
@@ -654,7 +658,7 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
   {
 	  // Reuse the task instance
     task_inst = *cmd->used_task_insts_.begin();
-		this->reused_insts.insert(task_inst);
+		this->reused_insts_.insert(task_inst);
 	}
   // Create causal links for each task instance depending on the condition.
   for (TaskInstSet::iterator inst_iter = cmd->task_insts_.begin ();
@@ -688,7 +692,7 @@ void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
   else {
 	// Remove the task instance from the set of reusable task instances
 	  cmd->used_task_insts_.erase(cmd->used_task_insts_.begin());
-    this->reused_insts.erase(this->reused_insts.find(cmd->last_task_inst_));
+    this->reused_insts_.erase(this->reused_insts_.find(cmd->last_task_inst_));
   }
   // Remove causal links.
   for (SA_WorkingPlan::CondToCLinksMap::iterator cl_iter =
@@ -717,7 +721,7 @@ void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
 bool SA_WorkingPlan::execute (SA_AssocTaskImplCmd *cmd)
 {
   // Associate task instance with first implementation in list from command.
-  if(this->reused_insts.find(cmd->task_inst_)==this->reused_insts.end())
+  if(this->reused_insts_.find(cmd->task_inst_)==this->reused_insts_.end())
   {
     this->task_impls_.insert (std::make_pair(cmd->task_inst_, cmd->impls_.front ()));
     this->durations.insert(std::make_pair(cmd->task_inst_, this->planner_->get_impl(cmd->impls_.front())->get_duration()));
@@ -739,7 +743,7 @@ void SA_WorkingPlan::undo (SA_AssocTaskImplCmd *cmd)
 	this->prec_erase(cmd->task_inst_,cmd);
   cmd->causal_insertions.clear();
   cmd->simul_insertions.clear();
-  if(this->reused_insts.find(cmd->task_inst_)==this->reused_insts.end())
+  if(this->reused_insts_.find(cmd->task_inst_)==this->reused_insts_.end())
   {
     this->durations.erase(this->durations.find(cmd->task_inst_));
     this->task_impls_.erase (cmd->task_inst_);
@@ -1529,8 +1533,8 @@ PrecedenceSet *unranked = &this->precedence_graph_.find(UNRANKED)->second;
 	//		if(iter->second.second == GOAL_TASK_INST_ID && iter->second.first == task_inst) break;
 	//	if(iter==this->causal_links_.end() || cmd->impls_.size()!=0)
 	//	{
-	std::cout<<this->reused_insts.size()<<std::endl;
-	if(this->reused_insts.find(task_inst)==this->reused_insts.end())
+	std::cout<<this->reused_insts_.size()<<std::endl;
+	if(this->reused_insts_.find(task_inst)==this->reused_insts_.end())
 	{
 			before->erase(before->find(task_inst));
 			after->erase(after->find(task_inst));

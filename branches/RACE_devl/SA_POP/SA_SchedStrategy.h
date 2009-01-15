@@ -39,6 +39,10 @@ namespace SA_POP {
     /// Destructor.
     virtual ~SA_SchedStrategy (void);
 
+
+    /// reset the object
+    virtual void reset();
+
     /// Set command prototypes to use in scheduling.
     /**
      * @param resolve_sched_cmd  Prototype of command for resolving a

@@ -48,6 +48,10 @@ namespace SA_POP {
      */
     virtual bool satisfy_sched (TaskInstID task_inst) = 0;
 
+    ///reset SchedStrategy
+
+    virtual void reset(void) = 0;
+
     /// Satisfy fully instantiated plan.
     /**
      * @param task_inst  Current task instance being tried in the plan.

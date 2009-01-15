@@ -66,6 +66,12 @@ namespace SA_POP {
       ResolveCLThreatCmd *resolve_threat_cmd);
 
 
+    ///Reset Object.
+    /**
+    
+    **/
+    virtual void reset(void);
+
 
     // ************************************************************************
     // Planning methods.
