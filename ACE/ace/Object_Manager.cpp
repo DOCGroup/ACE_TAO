@@ -548,16 +548,18 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
           if (lock == 0)
             {
               ACE_Cleanup_Adapter<ACE_Thread_Mutex> *lock_adapter = 0;
-			  ACE_NEW_RETURN (lock_adapter,
-							  ACE_Cleanup_Adapter<ACE_Thread_Mutex>,
-							  -1);
-			  lock = &lock_adapter->object ();
+              ACE_NEW_RETURN (lock_adapter,
+                              ACE_Cleanup_Adapter<ACE_Thread_Mutex>,
+                              -1);
+              lock = &lock_adapter->object ();
 
-			  // Register the lock for destruction at program
-			  // termination.  This call will cause us to grab the
-			  // ACE_Object_Manager::instance ()->internal_lock_
-			  // again; that's why it is a recursive lock.
-			  ACE_Object_Manager::at_exit (lock_adapter, 0, typeid (*lock_adapter).name ());
+              // Register the lock for destruction at program
+              // termination.  This call will cause us to grab the
+              // ACE_Object_Manager::instance ()->internal_lock_
+              // again; that's why it is a recursive lock.
+              ACE_Object_Manager::at_exit (lock_adapter,
+                                           0,
+                                           typeid (*lock_adapter).name ());
             }
         }
     }
