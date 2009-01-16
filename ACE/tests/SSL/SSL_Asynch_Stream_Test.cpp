@@ -31,6 +31,7 @@
 
 #include "tests/test_config.h"
 #include "ace/Default_Constants.h"
+#include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Event_Handler.h"
 #include "ace/Get_Opt.h"
@@ -100,6 +101,9 @@ public:
   int open (const ACE_INET_Addr &listen_addr);
   //FUZZ: enable check_for_lack_ACE_OS
 
+  // Get the I/O handle.
+  virtual ACE_HANDLE get_handle (void) const;
+
   // Called when a new connection is ready to accept.
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
 
@@ -137,6 +141,34 @@ static int req_delay = 0;
 
 // This is the string sent from client to server.
 static const char *test_string = "SSL_Asynch_Stream_Test!";
+
+// Function to remove signals from the signal mask.
+static int
+disable_signal (int sigmin, int sigmax)
+{
+#ifndef ACE_WIN32
+
+  sigset_t signal_set;
+  if (ACE_OS::sigemptyset (&signal_set) == - 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Error: (%P|%t):%p\n"),
+                ACE_TEXT ("sigemptyset failed")));
+
+  for (int i = sigmin; i <= sigmax; i++)
+    ACE_OS::sigaddset (&signal_set, i);
+
+  //  Put the <signal_set>.
+  if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Error: (%P|%t):%p\n"),
+                ACE_TEXT ("pthread_sigmask failed")));
+#else
+  ACE_UNUSED_ARG (sigmin);
+  ACE_UNUSED_ARG (sigmax);
+#endif /* ACE_WIN32 */
+
+  return 1;
+}
 
 static void
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -180,6 +212,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 Client_Handler::~Client_Handler ()
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Client %@ handle %d down\n"),
+              this, this->stream_.handle ()));
   if (this->stream_.handle () != ACE_INVALID_HANDLE)
     {
       if (this->msgs_sent_ != cli_req_no)
@@ -202,6 +236,8 @@ Client_Handler::~Client_Handler ()
 int
 Client_Handler::open (ACE_HANDLE handle)
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Client %@ handle %d up\n"),
+              this, handle));
   if (this->stream_.open (*this, handle) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%t) Client_Handler: %p\n"),
@@ -230,6 +266,9 @@ Client_Handler::handle_write_stream
       delete this;
       return;
     }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Client %@ handle %d sent %B of %B bytes\n"),
+              this, this->stream_.handle (),
+              result.bytes_transferred (), result.bytes_to_write ()));
   ACE_Message_Block &b = result.message_block ();
   bool send_again = true;
   if (b.length () == 0)
@@ -265,6 +304,8 @@ Client_Handler::handle_write_stream
 
 Server_Handler::~Server_Handler ()
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Server %@ handle %d down\n"),
+              this, this->stream_.handle ()));
   if (this->stream_.handle () != ACE_INVALID_HANDLE)
     {
       if (this->msgs_rcvd_ != cli_req_no)
@@ -287,6 +328,8 @@ Server_Handler::~Server_Handler ()
 int
 Server_Handler::open (ACE_HANDLE handle)
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Server %@ handle %d up\n"),
+              this, handle));
   if (this->stream_.open (*this, handle) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%t) Server_Handler: %p\n"),
@@ -314,6 +357,9 @@ Server_Handler::handle_read_stream
       delete this;
       return;
     }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Server %@ handle %d recv %B of %B bytes\n"),
+              this, this->stream_.handle (),
+              result.bytes_transferred (), result.bytes_to_read ()));
   if (result.bytes_transferred () == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -361,6 +407,12 @@ Server_Acceptor::open (const ACE_INET_Addr &listen_addr)
                        ACE_TEXT ("listen")),
                       -1);
   return 0;
+}
+
+ACE_HANDLE
+Server_Acceptor::get_handle (void) const
+{
+  return this->acceptor_.get_handle ();
 }
 
 int
@@ -411,11 +463,11 @@ start_clients (void *)
 {
   // Client thread function.
   ACE_INET_Addr addr (rendezvous);
-  ACE_SSL_SOCK_Stream stream;
   ACE_SSL_SOCK_Connector connect;
 
   for (size_t i = 0 ; i < cli_conn_no; i++)
     {
+      ACE_SSL_SOCK_Stream stream;
       if (connect.connect (stream, addr) < 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -427,8 +479,10 @@ start_clients (void *)
       Client_Handler *new_handler = 0;
       ACE_NEW_RETURN (new_handler, Client_Handler, (ACE_THR_FUNC_RETURN)-1);
       if (new_handler->open (stream.get_handle ()) != 0)
-        delete new_handler;
-      stream.set_handle (ACE_INVALID_HANDLE);
+        {
+          delete new_handler;
+          stream.close ();
+        }
     }
 
   return 0;
@@ -446,12 +500,22 @@ run_main (int argc, ACE_TCHAR *argv[])
   context->private_key ("key.pem", SSL_FILETYPE_PEM);
 
   parse_args (argc, argv);
+  disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
+  disable_signal (SIGPIPE, SIGPIPE);
 
   Server_Acceptor acceptor;
   ACE_INET_Addr accept_addr (rendezvous);
 
   if (acceptor.open (accept_addr) == -1)
     return 1;
+  if (-1 == ACE_Reactor::instance ()->register_handler (&acceptor,
+                                                        ACE_Event_Handler::ACCEPT_MASK))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%t) %p; aborting\n"),
+                  ACE_TEXT ("register_handler")));
+      return 1;
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Listening at %s\n"), rendezvous));
   ACE_DEBUG ((LM_DEBUG,

@@ -1,3 +1,13 @@
+Fri Jan 16 22:32:38 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_Asynch_Stream.{h cpp}: Remove the handle_ member; use
+          the handle_ inherited from ACE_Asynch_Operation.
+
+        * tests/SSL/SSL_Asynch_Stream_Test.cpp: Register the acceptor with the
+          reactor so we hear about incoming connects. Other minor mods to
+          help see what's going on in the log. Hopefully will resolve
+          Bugzilla #3164.
+
 Fri Jan 16 07:26:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Token_Invariants.cpp:

@@ -97,7 +97,6 @@ ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream (
   ACE_SSL_Asynch_Stream::Stream_Type s_type,
   ACE_SSL_Context * context)
   : type_         (s_type),
-    handle_       (ACE_INVALID_HANDLE),
     proactor_     (0),
     ext_handler_  (0),
     ext_read_result_ (0),
@@ -265,7 +264,7 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
   // Get a proactor for/from the user.
   this->proactor_    = this->get_proactor (proactor, handler);
   this->ext_handler_ = & handler;
-  this->handle_      = handle;
+  this->handle (handle);
 
   // Open internal input stream
   if (this->bio_istream_.open (*this,   // real callbacks to this
@@ -347,7 +346,7 @@ ACE_SSL_Asynch_Stream::read (ACE_Message_Block & message_block,
   ACE_NEW_RETURN (this->ext_read_result_,
                   ACE_SSL_Asynch_Read_Stream_Result (
                     *this->ext_handler_,
-                    this->handle_,
+                    this->handle (),
                     message_block,
                     bytes_to_read,
                     act,
@@ -390,7 +389,7 @@ ACE_SSL_Asynch_Stream::write (ACE_Message_Block & message_block,
   ACE_NEW_RETURN (this->ext_write_result_,
                   ACE_SSL_Asynch_Write_Stream_Result (
                     *this->ext_handler_,
-                    this->handle_,
+                    this->handle (),
                     message_block,
                     bytes_to_write,
                     act,
