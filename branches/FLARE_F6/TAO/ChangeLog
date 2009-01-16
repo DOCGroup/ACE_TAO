@@ -1,3 +1,30 @@
+Fri Jan 16 15:29:20 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/LWFT_Service/LWFT_Service.mpc        
+        * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
+
+          Added StateSynchronizationAgent and code for registration with
+          the HostMonitor and the ReplicationManager.
+        
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc        
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.idl
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+
+          Added functionality to make the ReplicationManager itself a
+          replicated object.
+        
+        * orbsvcs/LWFT_Service/host_monitor.cpp:
+
+          Added LWFT_Client_Init to allow failovers to redundant
+          ReplicationManagers.
+        
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/no-RT.mpc        
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/server.cpp:
+
+          Added LWFT_Client_Init to allow failovers to redundant
+          ReplicationManagers.
+
 Thu Jan 15 16:59:21 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:

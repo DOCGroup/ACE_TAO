@@ -150,6 +150,7 @@ ReplicationManager_i::ReplicationManager_i (CORBA::ORB_ptr orb,
                                             bool static_mode,
                                             AlgoMode mode)
   : orb_ (CORBA::ORB::_duplicate (orb)),
+    proc_reg_ (orb),
     algo_thread_(0),
     proactive_(proactive),
     mode_(mode),
@@ -290,7 +291,24 @@ ReplicationManager_i::update_util_map (
   // If not present...
   if (map.find (key_str, v) != 0)
     {
+      // this means a new host monitor has joined and we can
       map.bind (key_str, value);
+
+      // if the host_monitor is on the same host
+      char hostname [100];
+      gethostname (hostname, sizeof (hostname));
+
+      if (ACE_OS::strcmp (hostname, key_str) == 0)
+        {
+          int result = proc_reg_.activate ();
+
+          if (result != 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "AppSideReg::activate () returned %d\n",
+                          result));
+            }
+        }
     }
   else
     {
@@ -836,20 +854,29 @@ ReplicationManager_i::replica_selection_algo (void)
                             {
                               std::priority_queue<UtilRank> util_ranked_queue = 
                                 util_sorted_host_list(*po_iter, host_list, host_util_map);
+
+                              // this check is necessary to make sure
+                              // there is utilization information for
+                              // this host available. When a
+                              // ReplicationManager starts up for
+                              // example the host_monitor on that host
+                              // is not yet running.
+                              if (util_ranked_queue.size () > 0)
+                                {
+                                  UtilRank ur (util_ranked_queue.top ());
+                                  
+                                  host_util_map.rebind (ur.host_id.c_str (),
+                                                        ur.util);
                               
-                              UtilRank ur (util_ranked_queue.top ());
-                              
-                              host_util_map.rebind (ur.host_id.c_str (),
-                                                    ur.util);
-                              
-                              update_ior_map (*po_iter,
-                                              util_ranked_queue);
+                                  update_ior_map (*po_iter,
+                                                  util_ranked_queue);
+                                }
                             }
                         }
                     }
                 }
             }
-          
+
           this->build_rank_list ();
           this->update_enhanced_ranklist ();
         }
@@ -1103,14 +1130,16 @@ ReplicationManager_i::util_sorted_host_list (
             }
           else
             {
-              ACE_DEBUG ((LM_ERROR,
+              ACE_DEBUG ((LM_WARNING,
                           "RM: Can't find utilization "
                           "of host_id=%s\n",
                           (*hl_iter).c_str ()));
+              /*
               ACE_DEBUG ((LM_ERROR,
                           "Size of utilmap=%d\n",
                           hu_map.current_size ()));
-              break;
+              */
+              //break;
             }
         }
     }
@@ -1565,6 +1594,61 @@ CORBA::Object_ptr
 ReplicationManager_i::get_next (const char * /* object_id */)
 {
   return CORBA::Object::_nil ();
+}
+
+void
+ReplicationManager_i::set_state (const ::CORBA::Any & state_value)
+{
+  // extract value to an intermediate long variable since it's not possible
+  // to extract to a long & directly
+  CORBA::Long value;
+
+  if (state_value >>= value);
+  else
+    ACE_DEBUG ((LM_WARNING,
+                "ReplicationManager_i::set_state () "
+                "could not extract state value from Any."));
+}
+  
+CORBA::Any *
+ReplicationManager_i::get_state (void)
+{
+  // create new any object
+  CORBA::Any_var state (new CORBA::Any);
+  
+  // create intermediate object with the value
+  CORBA::Long value = 1;
+
+  ACE_DEBUG ((LM_DEBUG, "Worker_i::get_state returns %d.\n", value));
+
+  // insert value into the any object
+  *state <<= value;
+
+  return state._retn ();
+}
+
+StateSynchronizationAgent_ptr 
+ReplicationManager_i::agent (void)
+{
+  return StateSynchronizationAgent::_duplicate (agent_.in ());
+}
+  
+void
+ReplicationManager_i::agent (StateSynchronizationAgent_ptr agent)
+{
+  agent_ = agent;
+}
+
+char * 
+ReplicationManager_i::object_id (void)
+{
+  return "ReplicationManager";
+}
+
+void 
+ReplicationManager_i::object_id (const char * /* object_id */)
+{
+  // no-op
 }
 
 MonitorUpdate *

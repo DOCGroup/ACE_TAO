@@ -66,7 +66,7 @@ project(test_client) : lwft_client {
   }
 }
 
-project(test_server) : lwft_server, naming, lwft_dds {
+project(test_server) : lwft_server, lwft_client, naming, lwft_dds {
   after  += test_client test_state_topic
   libs   += test_state_topic
   exename = server 
