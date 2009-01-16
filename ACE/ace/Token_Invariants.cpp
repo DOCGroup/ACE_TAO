@@ -3,6 +3,7 @@
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
 #include "ace/Object_Manager.h"
+#include "ace/os_include/os_typeinfo.h"
 
 ACE_RCSID (ace,
            Token_Invariants,
