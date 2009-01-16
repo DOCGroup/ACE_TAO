@@ -10,14 +10,15 @@
 #include "orbsvcs/orbsvcs/LWFT/HostMonitorImpl.h"
 #include "orbsvcs/orbsvcs/LWFT/Monitor_Thread.h"
 #include "orbsvcs/orbsvcs/LWFT/HMOptions.h"
+#include "orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.h"
 
 int main (int argc, char* argv[])
 {
   try 
     {
       /// First initialize the ORB, that will remove some arguments...
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      LWFT_Client_Init ci;
+      CORBA::ORB_var orb = ci.init (argc, argv);
 
       /// Initilize RootPOA.
       CORBA::Object_var poa_object =

@@ -19,6 +19,7 @@
 #include "orbsvcs/orbsvcs/LWFT/AppOptions.h"
 #include "orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.h"
 #include "orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.h"
+#include "orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.h"
 
 #include "test_i.h"
 #include "ServerTask.h"
@@ -97,7 +98,8 @@ main (int argc, char *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      LWFT_Client_Init client_initializer;
+      CORBA::ORB_var orb = client_initializer.init (argc, argv);
 
       if (CORBA::is_nil (orb.in ()))
 	{

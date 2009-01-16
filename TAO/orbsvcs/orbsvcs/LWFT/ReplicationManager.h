@@ -13,7 +13,7 @@
 #include "ace/Condition_T.h"
 #include "ace/Containers_T.h"
 #include "ace/Recursive_Thread_Mutex.h"
-
+#include "AppSideReg.h"
 #include "Timer.h"
 
 #include "ReplicationManagerS.h"
@@ -161,6 +161,18 @@ public:
   virtual CORBA::Object_ptr
   get_next (const char * object_id);
 
+  virtual void set_state (const ::CORBA::Any & state_value);
+  
+  virtual ::CORBA::Any * get_state (void);
+
+  virtual ::StateSynchronizationAgent_ptr agent (void);
+  
+  virtual void agent (StateSynchronizationAgent_ptr agent);
+  
+  virtual char * object_id (void);
+  
+  virtual void object_id (const char * object_id);
+
   bool
   replica_selection_algo (void);
 
@@ -228,9 +240,14 @@ public:
   
 private:  
   CORBA::ORB_var orb_;
+  AppSideReg proc_reg_;
+
   Algorithm * algo_thread_;
   bool proactive_;
   AlgoMode mode_;
+
+  // local StateSynchonizationAgent
+  StateSynchronizationAgent_var agent_;
   
   /// This flag disables the usage of host load calculations and
   /// therefore enables single host scenarios.

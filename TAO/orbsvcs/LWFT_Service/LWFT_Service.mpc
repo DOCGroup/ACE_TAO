@@ -5,7 +5,8 @@ project(ReplicationManager) : taoserver, naming {
   after += LWFT_ReplicationManagerImpl
   libs += LWFT_Common \
           LWFT_ReplicationManager \
-          LWFT_ReplicationManagerImpl
+          LWFT_ReplicationManagerImpl \
+          LWFT_Server
   exename = ReplicationManager
   
   IDL_Files {
@@ -27,7 +28,7 @@ project(ReplicationManager) : taoserver, naming {
   }
 }
 
-project(HostMonitor) : taoserver, portableserver {
+project(HostMonitor) : taoserver, portableserver, lwft_client {
   after += LWFT_HostMonitor
   libs += LWFT_Server \
           LWFT_HostMonitor

@@ -4,7 +4,7 @@
 #include "LWFTDataStructures.idl"
 #include "StateSynchronizationAgent.idl"
 
-interface ReplicationManager
+interface ReplicationManager : ReplicatedApplication
 {
   RankList register_agent (in Object agent_reference);
   
