@@ -1,3 +1,17 @@
+Sat Jan 17 04:41:36 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp
+        
+          Implemented get_state and set_state methods for the
+          ReplicationManager.
+
+        * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
+        
+          Added functionality to register the ReplicationManager with the
+          StateSynchronizationAgent.
+        
 Fri Jan 16 15:29:20 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/LWFT_Service/LWFT_Service.mpc        

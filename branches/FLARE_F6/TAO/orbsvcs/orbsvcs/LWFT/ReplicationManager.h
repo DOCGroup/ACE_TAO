@@ -238,11 +238,12 @@ public:
     UPDATE_LIST_MAX_SIZE = 100
   };
   
-private:  
+private:
   CORBA::ORB_var orb_;
   AppSideReg proc_reg_;
 
   Algorithm * algo_thread_;
+  bool standby_;
   bool proactive_;
   AlgoMode mode_;
 

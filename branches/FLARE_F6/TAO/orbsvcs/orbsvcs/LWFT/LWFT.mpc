@@ -199,10 +199,13 @@ project(*ReplicationManagerImpl) : portableserver, orbsvcs_output {
   sharedname = LWFT_ReplicationManagerImpl
   
   IDL_Files {
+    idlflags -= -Sa -St
+    AppInfo.idl
   }
   
   Source_Files {
     ReplicationManager.cpp
+    AppInfoC.cpp
   }
   
   Header_Files {

@@ -214,6 +214,9 @@ main (int argc, char *argv[])
 	AppOptions::instance ()->process_id ().c_str (),
 	sync_agent_thread.agent_ref ());
 
+      sync_agent_thread.agent_ref ()->register_application (rm_i->object_id (),
+                                                            rm.in ());
+
       RegistrationTask registration_task (
                          primary_rm.in (),
                          rm.in (),
