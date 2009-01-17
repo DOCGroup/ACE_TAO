@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ReplicationManager.h"
+#include "AppOptions.h"
 
 #include <string>
 #include <set>
@@ -9,6 +10,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #include "ForwardingAgentC.h"
+#include "AppInfoC.h"
 
 template <class T>
 void myswap (T & t1, T & t2)
@@ -152,6 +154,7 @@ ReplicationManager_i::ReplicationManager_i (CORBA::ORB_ptr orb,
   : orb_ (CORBA::ORB::_duplicate (orb)),
     proc_reg_ (orb),
     algo_thread_(0),
+    standby_ (AppOptions::instance ()->role () > PRIMARY),
     proactive_(proactive),
     mode_(mode),
     static_mode_ (static_mode),
@@ -341,7 +344,8 @@ ReplicationManager_i::process_updates (
   ACE_DLList<MonitorUpdate> & update_list)
 {
   bool major_update = false;
-  
+  bool only_util = true;  
+
   while (MonitorUpdate * up = update_list.delete_head ())
     {
       switch (up->type)
@@ -361,18 +365,27 @@ ReplicationManager_i::process_updates (
           case MonitorUpdate::PROC_FAIL_UPDATE: 
             //ACE_DEBUG ((LM_DEBUG,"PROC_FAIL_UPDATE\n"));
             process_proc_failure (up->process_id);
-
             major_update = true;
+            only_util = false;
             break;
           case MonitorUpdate::APP_REG:
             //ACE_DEBUG ((LM_DEBUG,"RUN_NOW\n"));
             app_reg (up->app_info);
+            only_util = false;
             break;
         }
         
       delete up;
     }
-  
+
+  if (!only_util)
+    {
+      ACE_DEBUG ((LM_INFO, "RM: state_changed () called.\n"));
+      this->send_state_synchronization_rank_list ();
+      agent_->state_changed (this->object_id ());
+      standby_ = false;
+    }
+
   return major_update;
 }
 
@@ -882,8 +895,11 @@ ReplicationManager_i::replica_selection_algo (void)
         }
     }
   
-  send_rank_list ();
-  send_state_synchronization_rank_list ();
+  if (!standby_)
+    {
+      send_rank_list ();
+      send_state_synchronization_rank_list ();
+    }
   
   return true;
 }
@@ -1134,12 +1150,13 @@ ReplicationManager_i::util_sorted_host_list (
                           "RM: Can't find utilization "
                           "of host_id=%s\n",
                           (*hl_iter).c_str ()));
+
               /*
               ACE_DEBUG ((LM_ERROR,
                           "Size of utilmap=%d\n",
                           hu_map.current_size ()));
               */
-              //break;
+              break;
             }
         }
     }
@@ -1599,15 +1616,56 @@ ReplicationManager_i::get_next (const char * /* object_id */)
 void
 ReplicationManager_i::set_state (const ::CORBA::Any & state_value)
 {
-  // extract value to an intermediate long variable since it's not possible
-  // to extract to a long & directly
-  CORBA::Long value;
+  //  ACE_DEBUG ((LM_INFO, "RM: set_state with\n"));
+  FLARE::ReplicationManager::ReplicationManagerState * value;
 
   if (state_value >>= value);
   else
     ACE_DEBUG ((LM_WARNING,
                 "ReplicationManager_i::set_state () "
                 "could not extract state value from Any."));
+
+  for (size_t i = 0;
+       i < value->utilization.length ();
+       ++i)
+    {
+      hostid_util_map_.bind (CORBA::string_dup(value->utilization[i].hostname),
+                             value->utilization[i].utilization);
+    }
+
+  for (size_t i = 0;
+       i < value->app_set_list.length ();
+       ++i)
+    {
+      APP_INFO info (CORBA::string_dup (value->app_set_list[i].object_id.in ()),
+                     value->app_set_list[i].load,
+                     CORBA::string_dup (value->app_set_list[i].host_name.in ()),
+                     CORBA::string_dup (value->app_set_list[i].process_id.in ()),
+                     (value->app_set_list[i].role == FLARE::ReplicationManager::PRIMARY ? PRIMARY : BACKUP),
+                     CORBA::Object::_duplicate (value->app_set_list[i].ior.in ()));
+
+      this->app_reg (info);
+    }
+
+  // delete old entries and take over new forwarding agent entries
+  agent_list_.reset ();
+  for (size_t i = 0;
+       i < value->forwarding_agents.length ();
+       ++i)
+    {
+      agent_list_.insert_tail (
+        CORBA::Object::_duplicate (value->forwarding_agents[i].in ()));
+    }
+
+  // delete old entries and take over new forwarding agent entries
+  state_synchronization_agent_list_.reset ();
+  for (size_t i = 0;
+       i < value->state_sync_agents.length ();
+       ++i)
+    {
+      state_synchronization_agent_list_.insert_tail (
+        StateSynchronizationAgent::_narrow (value->state_sync_agents[i].in ()));
+    }
 }
   
 CORBA::Any *
@@ -1616,13 +1674,73 @@ ReplicationManager_i::get_state (void)
   // create new any object
   CORBA::Any_var state (new CORBA::Any);
   
-  // create intermediate object with the value
-  CORBA::Long value = 1;
+  FLARE::ReplicationManager::ReplicationManagerState_var value (
+    new FLARE::ReplicationManager::ReplicationManagerState ());
 
-  ACE_DEBUG ((LM_DEBUG, "Worker_i::get_state returns %d.\n", value));
+  size_t index = 0;
+  for (OBJECTID_APPSET_MAP::iterator it = 
+         objectid_appset_map_.begin ();
+       it != objectid_appset_map_.end ();
+       ++it)
+    {
+      value->app_set_list.length (value->app_set_list.length () + 
+                                  it->item ().size ());
+
+      for (APP_SET::iterator ait =
+             it->item ().begin ();
+           ait != it->item ().end ();
+           ++ait)
+        {
+          FLARE::ReplicationManager::AppInfo ai;
+
+          ai.object_id = (*ait).object_id.c_str ();
+          ai.load = (*ait).load;
+          ai.host_name = (*ait).host_name.c_str ();
+          ai.process_id = (*ait).process_id.c_str ();
+          ((*ait).role == PRIMARY ? 
+             ai.role = FLARE::ReplicationManager::PRIMARY : 
+             ai.role = FLARE::ReplicationManager::BACKUP);
+          ai.ior = CORBA::Object::_duplicate ((*ait).ior.in ());
+
+          value->app_set_list[index++] = ai;
+        }
+    }
+
+  index = 0;
+  value->forwarding_agents.length (agent_list_.size ());
+  for (AGENT_LIST::iterator al_iter = agent_list_.begin ();
+       al_iter != agent_list_.end (); 
+       ++al_iter)
+    {
+      value->forwarding_agents[index++] = 
+        CORBA::Object::_duplicate ((*al_iter).in ());
+    }  
+
+  index = 0;
+  value->state_sync_agents.length (state_synchronization_agent_list_.size ());
+  for (STATE_SYNC_AGENT_LIST::iterator ssal_iter = state_synchronization_agent_list_.begin ();
+       ssal_iter != state_synchronization_agent_list_.end (); 
+       ++ssal_iter)
+    {
+      value->state_sync_agents[index++] = 
+        CORBA::Object::_duplicate ((*ssal_iter).in ());
+    }  
+
+  index = 0;
+  value->utilization.length (hostid_util_map_.current_size ());
+  FLARE::ReplicationManager::HostUtil util;
+  for (STRING_TO_DOUBLE_MAP::iterator h_it = hostid_util_map_.begin ();
+       h_it != hostid_util_map_.end ();
+       ++h_it)
+    {
+      util.hostname = h_it->key ().c_str ();
+      util.utilization = h_it->item ();
+
+      value->utilization[index++] = util;
+    }
 
   // insert value into the any object
-  *state <<= value;
+  *state <<= value._retn ();
 
   return state._retn ();
 }
