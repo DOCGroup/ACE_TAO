@@ -1,3 +1,9 @@
+Mon Jan 19 18:43:55 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/AppInfo.idl:
+        
+          Added new interfaces for ReplicationManager state transmission.
+
 Sat Jan 17 04:41:36 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/LWFT.mpc
