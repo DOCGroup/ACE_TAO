@@ -189,12 +189,9 @@ project(*ReplicationManager) : portableserver, orbsvcs_output {
   }
 }
 
-project(*ReplicationManagerImpl) : portableserver, orbsvcs_output {
-  after += *ReplicationManager *Client
-  libs += LWFT_Common \
-          LWFT_Client \
-          LWFT_ReplicationManager \
-          LWFT_StateSyncAgent
+project(*ReplicationManagerImpl) : portableserver, orbsvcs_output, lwft_server {
+  after += *Client
+  libs += LWFT_Client
   dynamicflags = RM_IMPL_BUILD_DLL
   sharedname = LWFT_ReplicationManagerImpl
   

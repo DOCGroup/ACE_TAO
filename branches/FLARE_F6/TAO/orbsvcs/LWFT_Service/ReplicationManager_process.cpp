@@ -40,7 +40,7 @@ public:
           AppOptions::instance ()->role (),
           local_rm_.in ());
       }
-    catch (CORBA::Exception & ex)
+    catch (CORBA::Exception &)
       {
         ACE_ERROR ((LM_ERROR, "RM: Could not register reference to "
                     " the ReplicationManager with the primary "
@@ -211,8 +211,8 @@ main (int argc, char *argv[])
       // register its own StateSynchronizationAgent
       rm_i->register_state_synchronization_agent (
         AppOptions::instance ()->host_id ().c_str (),
-	AppOptions::instance ()->process_id ().c_str (),
-	sync_agent_thread.agent_ref ());
+	      AppOptions::instance ()->process_id ().c_str (),
+	      sync_agent_thread.agent_ref ());
 
       sync_agent_thread.agent_ref ()->register_application (rm_i->object_id (),
                                                             rm.in ());
@@ -222,10 +222,10 @@ main (int argc, char *argv[])
                          rm.in (),
                          orb.in ());
 
-      if (registration_task.activate () == 0);
-      {
-        orb->run ();
-      }
+      if (registration_task.activate () == 0)
+        {
+          orb->run ();
+        }
 
       // ACE_DEBUG ((LM_DEBUG, "(%P|%t) RM - event loop finished\n"));
 
