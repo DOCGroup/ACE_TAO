@@ -762,8 +762,29 @@ be_visitor_union_branch_cdr_op_cs::visit_string (be_string *node)
           *os << "::CORBA::WString_var _tao_union_tmp;" << be_nl;
         }
 
-      *os << "result = strm >> _tao_union_tmp.out ();" << be_nl << be_nl
-          << "if (result)" << be_idt_nl
+      if (node->max_size ()->ev ()->u.ulval != 0)
+        {
+          if (node->width () == (long) sizeof (char))
+            {
+              *os << "result = strm >> TAO_InputCDR::to_bounded_string ("
+                  << "_tao_union_tmp.out (), "
+                  << node->max_size ()->ev ()->u.ulval << ");"
+                  << be_nl << be_nl;
+            }
+          else
+            {
+              *os << "result = strm >> TAO_InputCDR::to_bounded_wstring ("
+                  << "_tao_union_tmp.out (), "
+                  << node->max_size ()->ev ()->u.ulval << ");"
+                  << be_nl << be_nl;
+            }
+        }
+      else
+        {
+          *os << "result = strm >> _tao_union_tmp.out ();" << be_nl << be_nl;
+        }
+
+      *os << "if (result)" << be_idt_nl
           << "{" << be_idt_nl
           << "_tao_union."
           << f->local_name () << " (_tao_union_tmp);" << be_nl
@@ -773,8 +794,26 @@ be_visitor_union_branch_cdr_op_cs::visit_string (be_string *node)
       break;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "result = strm << _tao_union."
-          << f->local_name () << " ();";
+      if (node->max_size ()->ev ()->u.ulval != 0)
+        {
+          if (node->width () == (long) sizeof (char))
+            {
+              *os << "result = strm << TAO_OutputCDR::from_bounded_string ("
+                  << "_tao_union." << f->local_name () << " (), "
+                  << node->max_size ()->ev ()->u.ulval << ");";
+            }
+          else
+            {
+              *os << "result = strm << TAO_OutputCDR::from_bounded_wstring ("
+                  << "_tao_union." << f->local_name () << " (), "
+                  << node->max_size ()->ev ()->u.ulval << ");";
+            }
+        }
+      else
+        {
+          *os << "result = strm << _tao_union."
+              << f->local_name () << " ();";
+        }
       break;
 
     case TAO_CodeGen::TAO_CDR_SCOPE:

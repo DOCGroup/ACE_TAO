@@ -262,7 +262,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "vb_object," << be_nl
       << node->local_name () << "," << be_nl
-      << "false);" << be_nl << be_uidt_nl;
+      << "false);" << be_uidt_nl << be_nl;
 
   if (is_array)
     {
@@ -270,7 +270,31 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
           << "_forany temp (vb_object->_boxed_inout ());" << be_nl;
     }
     
-  *os << "return (strm >> " << unmarshal_arg << ");" << be_uidt_nl
+  *os << "return (strm >> ";
+
+  be_string *str = be_string::narrow_from_decl (bt);
+  if (str != 0 &&
+      str->max_size ()->ev ()->u.ulval != 0)
+    {
+      if (str->width () == (long) sizeof (char))
+        {
+          *os << "::TAO_InputCDR::to_bounded_string "
+              << "(vb_object->_pd_value, "
+              << str->max_size ()->ev ()->u.ulval << ")";
+        }
+      else
+        {
+          *os << "::TAO_InputCDR::to_bounded_wstring "
+              << "(vb_object->_pd_value, "
+              << str->max_size ()->ev ()->u.ulval << ")";
+        }
+    }
+  else
+    {
+      *os << unmarshal_arg;
+    }
+
+  *os << ");" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // _tao_unmarshal_v method.  Generated because ValueBase interface
@@ -587,7 +611,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_valuebox_cs::visit_string (be_string *)
+be_visitor_valuebox_cs::visit_string (be_string *str)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -604,7 +628,29 @@ be_visitor_valuebox_cs::visit_string (be_string *)
      << vb_node->name ()
      << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
      << "{" << be_idt_nl
-     << "return (strm << this->_pd_value);" << be_uidt_nl
+     << "return (strm << ";
+
+  if (str->max_size ()->ev ()->u.ulval != 0)
+    {
+      if (str->width () == (long) sizeof (char))
+        {
+          os << "::TAO_OutputCDR::from_bounded_string "
+             << "(this->_pd_value, "
+             << str->max_size ()->ev ()->u.ulval << ")";
+        }
+      else
+        {
+          os << "::TAO_OutputCDR::from_bounded_wstring "
+             << "(this->_pd_value, "
+             << str->max_size ()->ev ()->u.ulval << ")";
+        }
+    }
+  else
+    {
+      os << "this->_pd_value";
+    }
+
+  os << ");" << be_uidt_nl
      << "}" << be_nl << be_nl;
 
   return 0;

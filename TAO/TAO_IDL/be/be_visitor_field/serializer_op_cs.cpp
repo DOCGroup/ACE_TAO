@@ -785,11 +785,47 @@ be_visitor_field_serializer_op_cs::visit_string (be_string *node)
           << f->local_name () << ".in ())";
       break;
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> _tao_aggregate." << f->local_name () << ".out ())";
+      if (node != 0 && node->max_size ()->ev ()->u.ulval != 0)
+        {
+          if (node->width () == (long) sizeof (char))
+            {
+              *os << "(strm >> TAO_InputCDR::to_bounded_string (_tao_aggregate."
+                  << f->local_name () << ".out (), "
+                  << node->max_size ()->ev ()->u.ulval << "))";
+            }
+          else
+            {
+              *os << "(strm >> TAO_InputCDR::to_bounded_wstring (_tao_aggregate."
+                  << f->local_name () << ".out (), "
+                  << node->max_size ()->ev ()->u.ulval << "))";
+            }
+        }
+      else
+        {
+          *os << "(strm >> _tao_aggregate." << f->local_name () << ".out ())";
+        }
 
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
+      if (node != 0 && node->max_size ()->ev ()->u.ulval != 0)
+        {
+          if (node->width () == (long) sizeof (char))
+            {
+              *os << "(strm << TAO_OutputCDR::from_bounded_string (_tao_aggregate."
+                  << f->local_name () << ".in (), "
+                  << node->max_size ()->ev ()->u.ulval << "))";
+            }
+          else
+            {
+              *os << "(strm << TAO_OutputCDR::from_bounded_wstring (_tao_aggregate."
+                  << f->local_name () << ".in (), "
+                  << node->max_size ()->ev ()->u.ulval << "))";
+            }
+        }
+      else
+        {
+          *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
+        }
 
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:

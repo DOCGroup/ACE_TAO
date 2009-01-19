@@ -12,6 +12,7 @@
  */
 
 #include "tao/orbconf.h"
+#include "tao/SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -326,6 +327,36 @@ namespace TAO {
     return true;
   }
 
+  template <typename stream, typename charT, CORBA::ULong MAX, CORBA::ULong BD_STR_MAX>
+  bool demarshal_sequence(stream & strm, TAO::bounded_bd_string_sequence <charT, MAX, BD_STR_MAX> & target) {
+    typedef typename TAO::bounded_bd_string_sequence <charT, MAX, BD_STR_MAX> sequence;
+    typedef typename sequence::element_traits::string_var string_var;
+    ::CORBA::ULong new_length = 0;
+    if (!(strm >> new_length)) {
+      return false;
+    }
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
+      return false;
+    }
+    sequence tmp;
+    tmp.length(new_length);
+    for(CORBA::ULong i = 0; i < new_length; ++i) {
+      string_var string;
+      if (!(strm >> string.inout ())) {
+        return false;
+      }
+      else {
+        if (string.in () != 0 &&
+            ACE_OS::strlen (string.in ()) > tmp.bd_string_maximum ()) {
+          throw ::CORBA::BAD_PARAM ();
+        }
+        tmp[i] = string._retn ();
+      }
+    }
+    tmp.swap(target);
+    return true;
+  }
+
   template <typename stream, typename object_t, typename object_t_var, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_object_reference_sequence<object_t, object_t_var, MAX> & target) {
     typedef typename TAO::bounded_object_reference_sequence<object_t, object_t_var, MAX> sequence;
@@ -490,6 +521,24 @@ namespace TAO {
       return false;
     }
     for(CORBA::ULong i = 0; i < length; ++i) {
+      if (!(strm << source[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  template <typename stream, typename charT, CORBA::ULong MAX, CORBA::ULong BD_STR_MAX>
+  bool marshal_sequence(stream & strm, const TAO::bounded_bd_string_sequence <charT, MAX, BD_STR_MAX> & source) {
+    ::CORBA::ULong const length = source.length ();
+    if (!(strm << length)) {
+      return false;
+    }
+    for(CORBA::ULong i = 0; i < length; ++i) {
+      if (source[i].in () != 0 &&
+          ACE_OS::strlen (source[i]) > source.bd_string_maximum ()) {
+        throw ::CORBA::BAD_PARAM ();
+      }
       if (!(strm << source[i])) {
         return false;
       }

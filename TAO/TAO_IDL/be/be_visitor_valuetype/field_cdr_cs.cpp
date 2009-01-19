@@ -626,7 +626,7 @@ be_visitor_valuetype_field_cdr_cs::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_valuetype_field_cdr_cs::visit_string (be_string *)
+be_visitor_valuetype_field_cdr_cs::visit_string (be_string *str)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -647,12 +647,48 @@ be_visitor_valuetype_field_cdr_cs::visit_string (be_string *)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << this->pre_ << f->local_name ()
-          << this->post_ << ".out ())";
+      if (str != 0 && str->max_size ()->ev ()->u.ulval != 0)
+        {
+          if (str->width () == (long) sizeof (char))
+            {
+              *os << "(strm >> TAO_InputCDR::to_bounded_string ("
+                  << this->pre_ << f->local_name () << this->post_
+                  << ".out (), " << str->max_size ()->ev ()->u.ulval << "))";
+            }
+          else
+            {
+              *os << "(strm >> TAO_InputCDR::to_bounded_wstring ("
+                  << this->pre_ << f->local_name () << this->post_
+                  << ".out (), " << str->max_size ()->ev ()->u.ulval << "))";
+            }
+        }
+      else
+        {
+          *os << "(strm >> " << this->pre_ << f->local_name ()
+              << this->post_ << ".out ())";
+        }
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << this->pre_ << f->local_name ()
-          << this->post_ << ".in ())";
+      if (str != 0 && str->max_size ()->ev ()->u.ulval != 0)
+        {
+          if (str->width () == (long) sizeof (char))
+            {
+              *os << "(strm << TAO_OutputCDR::from_bounded_string ("
+                  <<  this->pre_ << f->local_name () << this->post_
+                  << ".in (), " << str->max_size ()->ev ()->u.ulval << "))";
+            }
+          else
+            {
+              *os << "(strm << TAO_OutputCDR::from_bounded_wstring ("
+                  <<  this->pre_ << f->local_name () << this->post_
+                  << ".in (), " << str->max_size ()->ev ()->u.ulval << "))";
+            }
+        }
+      else
+        {
+          *os << "(strm << " << this->pre_ << f->local_name ()
+              << this->post_ << ".in ())";
+        }
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Nothing to be done.
