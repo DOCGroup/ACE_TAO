@@ -264,7 +264,7 @@ ACE_TSS_CLEANUP_NAME (void *ptr)
   if (log_msg->thr_desc()!=0)
     log_msg->thr_desc()->log_msg_cleanup(log_msg);
   else
-    delete (ACE_Log_Msg *) ptr;
+    delete log_msg;
 }
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #endif /* ! ACE_MT_SAFE */

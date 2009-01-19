@@ -1,3 +1,12 @@
+Mon Jan 19 09:14:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_Log_Msg_Attributes.inl:
+          Initialize all members with default values
+
+        * ace/Log_Msg.cpp:
+          Just delete the casted ACE_Log_Msg pointer, no need todo
+          another cast
+
 Mon Jan 19 07:49:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/INET_Addr.cpp:
