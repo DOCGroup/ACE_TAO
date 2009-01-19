@@ -1,5 +1,5 @@
 /**
- * @file Bug_3500_Regression_Test.cppBug_3500_Regression_Test.cpp
+ * @file Bug_3500_Regression_Test.cpp
  *
  * $Id$
  *
@@ -30,7 +30,7 @@ run_main (int, ACE_TCHAR *argv[])
 
   void *mmap =
     ACE_OS::mmap(0,                   // addr
-	             128,                 // len
+             1   28,                 // len
                  PAGE_READWRITE,      // prot
                  MAP_SHARED,          // flags
                  ACE_INVALID_HANDLE,  // file_handle
@@ -47,7 +47,7 @@ run_main (int, ACE_TCHAR *argv[])
 
   if (0 != ret)
   {
-	  ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_OS::mmap() failed\n")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_OS::mmap() failed\n")));
   }
 
   ACE_END_TEST;
