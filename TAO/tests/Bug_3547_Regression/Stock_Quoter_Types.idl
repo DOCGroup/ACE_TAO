@@ -1,0 +1,9 @@
+#ifndef Stock_Quoter_Types_idl
+#define Stock_Quoter_Types_idl
+
+module Stock_Quoter_Types
+{
+   typedef string Stock_ID;
+};
+
+#endif /* Stock_Quoter_Types_idl */

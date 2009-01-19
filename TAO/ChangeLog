@@ -1,3 +1,8 @@
+Mon Jan 19 15:48:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3547_Regression/*
+          New regression test for bugzilla 3547
+
 Thu Jan 15 15:58:33 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
