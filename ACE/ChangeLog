@@ -1,3 +1,12 @@
+Mon Jan 19 07:49:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/INET_Addr.cpp:
+        * ace/Log_Record.inl:
+          Use ACE_HTONL macro
+
+        * ace/INET_Addr.inl:
+          Use ACE_NTOHS macro
+
 Fri Jan 16 22:32:38 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/SSL/SSL_Asynch_Stream.{h cpp}: Remove the handle_ member; use
