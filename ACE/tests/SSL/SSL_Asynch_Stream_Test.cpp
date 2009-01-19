@@ -372,8 +372,10 @@ Server_Handler::handle_read_stream
   // Scan through the received data for the expected string. There may be
   // multiples and/or partials. Count up how many arrive before the connection
   // is closed.
-  // The read operation left one byte space at the end so we can insert a
-  // nul terminator to ease scanning.
+  // Remember that the client side sends the terminating nul; in case the
+  // whole thing didn't arrive, we add a nul to the end of the receive
+  // block so we don't run off the end. When the recv into this buffer was
+  // initiated, we left the last byte empty to facilitate this.
   ACE_Message_Block &b = result.message_block ();
   *(b.wr_ptr ()) = '\0';
   size_t test_string_len = ACE_OS::strlen (test_string);
@@ -385,6 +387,10 @@ Server_Handler::handle_read_stream
                           b.rd_ptr (),
                           test_string));
       b.rd_ptr (test_string_len);
+      // That ran up over the string; can we also consume the nul?
+      if (b.length () > 0)
+        b.rd_ptr (1);
+      ++this->msgs_rcvd_;
     }
   b.crunch ();
   if (this->stream_.read (b, b.space () - 1) == -1)
