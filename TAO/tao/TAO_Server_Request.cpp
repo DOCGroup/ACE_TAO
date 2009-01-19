@@ -425,27 +425,40 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
                             gv.minor);
 
       this->transport_->assign_translators (0, &output);
-      // Make the reply message
-      if (this->mesg_base_->generate_exception_reply (*this->outgoing_,
-                                                      reply_params,
-                                                      ex) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - ServerRequest::tao_send_reply_exception, ")
-                      ACE_TEXT ("could not make exception reply\n")));
 
+      try
+        {
+          // Make the reply message
+          if (this->mesg_base_->generate_exception_reply (*this->outgoing_,
+                                                          reply_params,
+                                                          ex) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - ServerRequest::")
+                          ACE_TEXT ("tao_send_reply_exception, ")
+                          ACE_TEXT ("could not make exception reply\n")));
+            }
+
+          this->outgoing_->more_fragments (false);
+
+          // Send the message
+          if (this->transport_->send_message (*this->outgoing_,
+                                              0,
+                                              TAO_Transport::TAO_REPLY) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - ServerRequest::")
+                          ACE_TEXT ("tao_send_reply_exception, ")
+                          ACE_TEXT ("could not send exception reply\n")));
+            }
         }
-
-      this->outgoing_->more_fragments (false);
-
-      // Send the message
-      if (this->transport_->send_message (*this->outgoing_,
-                                          0,
-                                          TAO_Transport::TAO_REPLY) == -1)
+      catch (const ::CORBA::BAD_PARAM &bp_ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - ServerRequest::tao_send_reply_exception, ")
-                      ACE_TEXT ("could not send exception reply\n")));
+                      ACE_TEXT ("TAO (%P|%t) - ServerRequest::")
+                      ACE_TEXT ("tao_send_reply_exception, ")
+                      ACE_TEXT ("could not marshal exception reply\n")));
+          this->tao_send_reply_exception (bp_ex);
         }
     }
   else if (TAO_debug_level > 0)

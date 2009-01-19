@@ -19,8 +19,11 @@ TAO::In_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::marshal (
     TAO_OutputCDR & cdr
   )
 {
-  typedef typename S_var::s_traits::from_type from_type;
-  return cdr << from_type (this->x_, BOUND);
+  if (this->x_ != 0 && ACE_OS::strlen (this->x_) > BOUND)
+    {
+      throw ::CORBA::BAD_PARAM ();
+    }
+  return cdr << this->x_;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -79,8 +82,11 @@ TAO::Inout_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::marshal (
     TAO_OutputCDR & cdr
   )
 {
-  typedef typename S_var::s_traits::from_type from_type;
-  return cdr << from_type (this->x_, BOUND);
+  if (this->x_ != 0 && ACE_OS::strlen (this->x_) > BOUND)
+    {
+      throw ::CORBA::BAD_PARAM ();
+    }
+  return cdr << this->x_;
 }
 
 template<typename S_var,
@@ -91,9 +97,15 @@ TAO::Inout_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
-  typedef typename S_var::s_traits::to_type to_type;
-  delete [] this->x_;
-  return cdr >> to_type (this->x_, BOUND);
+  S_var tmp = this->x_;
+  CORBA::Boolean const demarshalled = cdr >> this->x_;
+  if (this->x_ != 0 && ACE_OS::strlen (this->x_) > BOUND)
+    {
+      S_var for_deletion = this->x_;
+      this->x_ = tmp._retn ();
+      throw ::CORBA::BAD_PARAM ();
+    }
+  return demarshalled;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -124,8 +136,12 @@ TAO::Out_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
-  typedef typename S_var::s_traits::to_type to_type;
-  return cdr >> to_type (this->x_, BOUND);
+  CORBA::Boolean const demarshalled = cdr >> this->x_;
+  if (this->x_ != 0 && ACE_OS::strlen (this->x_) > BOUND)
+    {
+      throw ::CORBA::BAD_PARAM ();
+    }
+  return demarshalled;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -156,8 +172,12 @@ TAO::Ret_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
-  typedef typename S_var::s_traits::to_type to_type;
-  return cdr >> to_type (this->x_.out (), BOUND);
+  CORBA::Boolean const demarshalled = cdr >> this->x_.out ();
+  if (this->x_.in () != 0 && ACE_OS::strlen (this->x_.in ()) > BOUND)
+    {
+      throw ::CORBA::BAD_PARAM ();
+    }
+  return demarshalled;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1

@@ -1,3 +1,44 @@
+Mon Jan 19 16:16:24 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tao/tao.mpc:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/PortableServer/BD_String_SArgument_T.cpp:
+        * tao/Bounded_Sequence_CDR_T.h:
+        * tao/Unbounded_Sequence_CDR_T.h:
+        * tao/CDR.inl:
+        * tao/Unbounded_BD_String_Sequence_T.h:
+        * tao/BD_String_Argument_T.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Sequence_T.h:
+        * tao/CDR.h:
+        * tao/Bounded_BD_String_Sequence_T.h:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/serializer_op_cs.cpp:
+
+          Fixed bug#3524. Now when a bounded string that violates its bounds
+          no matter it is used standalone or as a part of sequence, array,
+          struct, union, exception, valuebox, or valuetype is marshalled or
+          unmarshalled BAD_PARAM exception will be thrown as CORBA
+          specification suggests.
+
+        * tests/Bug_3524_Regression/client.cpp:
+        * tests/Bug_3524_Regression/test.idl:
+        * tests/Bug_3524_Regression/server.cpp:
+        * tests/Bug_3524_Regression/Bug_3524_Regression.mpc:
+        * tests/Bug_3524_Regression/test_i.cpp:
+        * tests/Bug_3524_Regression/README:
+        * tests/Bug_3524_Regression/run_test.pl:
+        * tests/Bug_3524_Regression/test_i.h:
+
+          Added a test for bug#3524.
+
 Mon Jan 19 15:48:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3547_Regression/*
