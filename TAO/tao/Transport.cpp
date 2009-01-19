@@ -2572,7 +2572,7 @@ TAO_Transport::notify_reactor (void)
     {
       // @todo: need to think about what is the action that
       // we can take when we get here.
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
          ACE_TEXT ("TAO (%P|%t) - Transport[%d]::notify_reactor, ")
          ACE_TEXT ("notify to the reactor failed..\n"),
          this->id ()));
