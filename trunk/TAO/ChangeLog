@@ -1,3 +1,8 @@
+Mon Jan 19 19:34:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3548_Regression/*:
+          New test for bugzilla 3548
+
 Mon Jan 19 16:16:24 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tao/tao.mpc:
