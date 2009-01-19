@@ -1,3 +1,7 @@
+Mon Jan 19 20:53:01 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * tests/SSL/SSL_Asynch_Stream_Test.cpp: More basic fixes.
+
 Mon Jan 19 19:34:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
