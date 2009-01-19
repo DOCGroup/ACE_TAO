@@ -7,7 +7,7 @@ interface UDPTestI
 {
     typedef octet BufferT[1000] ;
 
-	oneway void send( in BufferT Msg );
+    oneway void send( in BufferT Msg );
 };
 
 
