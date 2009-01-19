@@ -1,3 +1,24 @@
+Mon Jan 19 19:42:00 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
+        
+          Added lwft_server.mpb as a base project for LWFT_ReplicationManagerImpl.
+          
+        * orbsvcs/orbsvcs/LWFT/AppInfo.idl:
+        
+          Added include of LWFTDataStructures.idl and replaced typedef of
+          Object sequence with typedef of ObjectList. This change fixes
+          a link problem with Visual Studio.
+          
+        * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
+        
+          Removed an unused local variable, and removed an unintended
+          semicolon between an IF statement and its associated braces.
+          
+        * orbsvcs/LWFT_Service/LWFT_Service.mpc:
+        
+          Added lwft_server.mpb as a base project for ReplicationManager.
+
 Mon Jan 19 18:43:55 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/AppInfo.idl:

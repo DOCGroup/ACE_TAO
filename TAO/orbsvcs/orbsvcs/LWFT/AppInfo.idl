@@ -1,3 +1,20 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ *  @file    AppInfo.idl
+ *
+ *  $Id$
+ *
+ *  @author  Friedhelm Wolf (fwolf@dre.vanderbilt.edu)
+ */
+//=============================================================================
+
+#ifndef _LWFT_APPINFO_IDL_
+#define _LWFT_APPINFO_IDL_
+
+#include "LWFTDataStructures.idl"
+
 module FLARE
 {
   module ReplicationManager
@@ -20,7 +37,7 @@ module FLARE
 
     typedef sequence<AppInfo> AppInfoSeq;
 
-    typedef sequence<Object> AgentList;
+    typedef ObjectList AgentList;
 
     struct HostUtil
     {
@@ -39,3 +56,6 @@ module FLARE
     };
   }; // end module ReplicationManager
 }; // end module FLARE
+
+
+#endif /* _LWFT_APPINFO_IDL_ */

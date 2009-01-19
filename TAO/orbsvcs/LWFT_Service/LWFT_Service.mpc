@@ -1,12 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project(ReplicationManager) : taoserver, naming {
+project(ReplicationManager) : taoserver, naming, lwft_server {
   after += LWFT_ReplicationManagerImpl
-  libs += LWFT_Common \
-          LWFT_ReplicationManager \
-          LWFT_ReplicationManagerImpl \
-          LWFT_Server
+  libs += LWFT_ReplicationManagerImpl
   exename = ReplicationManager
   
   IDL_Files {
