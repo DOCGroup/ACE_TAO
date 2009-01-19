@@ -101,10 +101,10 @@ namespace TAO
     /// Return the underlying transport
     const TAO_Transport *transport (void) const;
 
-    /// Set <recycle_state>.
+    /// Set recycle_state.
     void recycle_state (Cache_Entries_State new_state);
 
-    /// Get <recycle_state>.
+    /// Get recycle_state.
     Cache_Entries_State recycle_state (void) const;
 
     /// Relinquish ownership of the TAO_Transport object associated with
@@ -167,7 +167,7 @@ namespace TAO
     /// Inequality comparison operator.
     bool operator!= (const Cache_ExtId &rhs) const;
 
-    /// <hash> function is required in order for this class to be usable by
+    /// hash function is required in order for this class to be usable by
     /// ACE_Hash_Map_Manager_Ex.
     u_long hash (void) const;
 
@@ -189,7 +189,6 @@ namespace TAO
     TAO_Transport_Descriptor_Interface *property (void) const;
 
   private:
-
     /// A property object that we represent.
     TAO_Transport_Descriptor_Interface *transport_property_;
 

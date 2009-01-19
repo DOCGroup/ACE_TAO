@@ -164,7 +164,7 @@ public:
   /// Set a new length for the sequence
   void length(CORBA::ULong length)
   {
-    if (length <= maximum_ || length <= length_)
+	if (length <= maximum_ || length <= length_)
     {
       if (buffer_ == 0)
         {
@@ -172,7 +172,7 @@ public:
           release_ = true;
         }
 
-      if (length_ < length)
+    if (length < length_)
       {
         // TODO This code does not provide the strong-exception
         //      guarantee, but it does provide the weak-exception
@@ -181,8 +181,10 @@ public:
         //      elements have been modified.  One could argue that
         //      this problem is irrelevant, as the elements already
         //      modified are unreachable to conforming applications.
+        element_traits::release_range(
+          buffer_ + length, buffer_ + length_);
         element_traits::initialize_range(
-            buffer_ + length_, buffer_ + length);
+          buffer_ + length, buffer_ + length_);
       }
       length_ = length;
       return;
