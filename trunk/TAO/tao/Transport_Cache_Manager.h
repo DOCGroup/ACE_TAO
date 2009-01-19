@@ -65,7 +65,7 @@ namespace TAO
   class TAO_Export Transport_Cache_Manager
   {
   public:
-    // results of a find
+    /// results of a find
     enum Find_Result
     {
       CACHE_FOUND_NONE,
@@ -110,7 +110,7 @@ namespace TAO
 
     /// this is just a shortcut for cache_transport with a third argument of
     /// <CODE>ENTRY_IDLE_AND_PURGABLE</CODE>
-    /// @@TODO: it should be replaced with a direct call to cache_transport,
+    /// @todo it should be replaced with a direct call to cache_transport,
     /// but that would require changes to all *_Connection_Handler so I'm
     /// deferring this for now. (wilsond@ociweb.com)
     int cache_idle_transport (TAO_Transport_Descriptor_Interface *prop,
