@@ -1,3 +1,9 @@
+Mon Jan 19 19:34:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+
+          Scheduled the test for bug#3548
+
 Mon Jan 19 16:36:33 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * bin/tao_orb_tests.lst:
