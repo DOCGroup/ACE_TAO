@@ -275,6 +275,56 @@ TAO_InputCDR::compressed (bool compressed)
 
 // ****************************************************************
 
+ACE_INLINE
+TAO_OutputCDR::from_bounded_string::from_bounded_string (const ACE_CDR::Char *s,
+                                                         ACE_CDR::ULong b)
+  : val_ (const_cast<ACE_CDR::Char *> (s)),
+    bound_ (b)
+{
+}
+
+ACE_INLINE
+TAO_InputCDR::to_bounded_string::to_bounded_string (ACE_CDR::Char *&s,
+                                                    ACE_CDR::ULong b)
+  : val_ (s),
+    bound_ (b)
+{
+}
+
+ACE_INLINE
+TAO_InputCDR::to_bounded_string::to_bounded_string (const ACE_CDR::Char *&s,
+                                                    ACE_CDR::ULong b)
+  : val_ (const_cast<ACE_CDR::Char *&> (s)),
+    bound_ (b)
+{
+}
+
+ACE_INLINE
+TAO_OutputCDR::from_bounded_wstring::from_bounded_wstring (const ACE_CDR::WChar *ws,
+                                                           ACE_CDR::ULong b)
+  : val_ (const_cast<ACE_CDR::WChar *> (ws)),
+    bound_ (b)
+{
+}
+
+ACE_INLINE
+TAO_InputCDR::to_bounded_wstring::to_bounded_wstring (ACE_CDR::WChar *&ws,
+                                                      ACE_CDR::ULong b)
+  : val_ (ws),
+    bound_ (b)
+{
+}
+
+ACE_INLINE
+TAO_InputCDR::to_bounded_wstring::to_bounded_wstring (const ACE_CDR::WChar *&ws,
+                                                      ACE_CDR::ULong b)
+  : val_ (const_cast<ACE_CDR::WChar *&> (ws)),
+    bound_ (b)
+{
+}
+
+// ****************************************************************
+
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::Short x)
 {
@@ -376,6 +426,28 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
     && static_cast<ACE_OutputCDR &> (os) << x;
 }
 
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      TAO_OutputCDR::from_bounded_string x)
+{
+  if (x.val_ != 0 &&
+      ACE_OS::strlen (x.val_) > x.bound_)
+    {
+      throw ::CORBA::BAD_PARAM ();
+    }
+  return os << x.val_;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      TAO_OutputCDR::from_bounded_wstring x)
+{
+  if (x.val_ != 0 &&
+      ACE_OS::strlen (x.val_) > x.bound_)
+    {
+      throw ::CORBA::BAD_PARAM ();
+    }
+  return os << x.val_;
+}
+
 // ****************************************************************
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
@@ -442,6 +514,30 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::WChar* &x)
 {
   return static_cast<ACE_InputCDR &> (is) >> x;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                      TAO_InputCDR::to_bounded_string x)
+{
+  CORBA::Boolean const marshal_flag = is >> x.val_;
+  if (marshal_flag && x.val_ != 0 &&
+      ACE_OS::strlen (x.val_) > x.bound_)
+    {
+      throw ::CORBA::BAD_PARAM ();
+    }
+  return marshal_flag;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                      TAO_InputCDR::to_bounded_wstring x)
+{
+  CORBA::Boolean const marshal_flag = is >> x.val_;
+  if (marshal_flag && x.val_ != 0 &&
+      ACE_OS::strlen (x.val_) > x.bound_)
+    {
+      throw ::CORBA::BAD_PARAM ();
+    }
+  return marshal_flag;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

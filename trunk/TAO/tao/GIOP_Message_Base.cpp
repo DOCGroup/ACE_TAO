@@ -775,6 +775,10 @@ TAO_GIOP_Message_Base::generate_exception_reply (
       this->generate_reply_header (cdr, params);
       x._tao_encode (cdr);
     }
+  catch (const ::CORBA::BAD_PARAM&)
+    {
+      throw;
+    }
   catch (const ::CORBA::Exception&)
     {
       // Now we know that while handling the error an other error

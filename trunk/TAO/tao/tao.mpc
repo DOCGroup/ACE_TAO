@@ -276,6 +276,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     BooleanSeqS.h
     Bounded_Array_Allocation_Traits_T.h
     Bounded_Array_Sequence_T.h
+    Bounded_BD_String_Sequence_T.h
     Bounded_Basic_String_Sequence_T.h
     Bounded_Object_Reference_Sequence_T.h
     Bounded_Reference_Allocation_Traits_T.h
@@ -546,6 +547,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     ULongSeqS.h
     Unbounded_Array_Allocation_Traits_T.h
     Unbounded_Array_Sequence_T.h
+    Unbounded_BD_String_Sequence_T.h
     Unbounded_Basic_String_Sequence_T.h
     Unbounded_Object_Reference_Sequence_T.h
     Unbounded_Octet_Sequence_T.h
