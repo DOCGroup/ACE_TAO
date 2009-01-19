@@ -1,3 +1,16 @@
+Mon Jan 19 19:37:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Generic_Sequence_T.h:
+          When the sequence shrinks we release the members that are not
+          available anymore by the user and then reinitialize them again.
+          This solution works but can probably be improved with respect
+          to performance and exception safety. This fixes bugzilla 3481
+          and 3548.
+
+        * ace/Cache_Entries.h:
+        * ace/Transport_Cache_Manager.h:
+          Doxygen change
+
 Mon Jan 19 19:34:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3548_Regression/*:
