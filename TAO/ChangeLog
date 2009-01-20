@@ -1,3 +1,8 @@
+Tue Jan 20 11:05:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
+
+        * tao/Transport_Connector.cpp:
+          Unicode fix
+
 Tue Jan 20 10:08:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Cache_Manager.{h,cpp}:
