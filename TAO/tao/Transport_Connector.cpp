@@ -401,7 +401,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
         {
           ACE_DEBUG ((LM_DEBUG,
             ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-            ACE_TEXT(" waiting on transport [%d]\n"),
+            ACE_TEXT("waiting on transport [%d]\n"),
             transport->id () ));
         }
 

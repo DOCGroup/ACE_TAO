@@ -11,6 +11,7 @@
 
 // IORTable include
 #include "tao/IORTable/IORTable.h"
+#include "ace/streams.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -65,7 +66,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   }
   catch (CORBA::Exception& e)
   {
-    ACE_PRINT_EXCEPTION (e, "");
+    e._tao_print_exception ("Exception caught:");
     return 1;
   }
 
