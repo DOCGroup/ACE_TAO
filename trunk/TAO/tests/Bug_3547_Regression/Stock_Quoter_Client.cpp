@@ -5,6 +5,7 @@
 // Stock Quoter Stub
 #include "Stock_QuoterC.h"
 #include "UDPTestC.h"
+#include "ace/streams.h"
 
 unsigned char Msg[1000] = { 0 } ;
 
@@ -47,11 +48,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
       quoter->shutdown ();
-    }
   }
   catch (CORBA::Exception& e)
   {
-    ACE_PRINT_EXCEPTION(e, "");
+    e._tao_print_exception ("Exception caught:");
     return 1;
   }
 
