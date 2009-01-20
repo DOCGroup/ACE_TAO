@@ -38,6 +38,12 @@ struct value_traits
     std::fill(begin, end, value_type ());
   }
 
+  inline static void release_range(
+      value_type *, value_type *)
+  {
+    // Noop for value sequences
+  }
+
 # ifndef ACE_LACKS_MEMBER_TEMPLATES
   // Allow MSVC++ >= 8 checked iterators to be used.
   template <typename iter>

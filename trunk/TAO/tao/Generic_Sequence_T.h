@@ -164,13 +164,13 @@ public:
   /// Set a new length for the sequence
   void length(CORBA::ULong length)
   {
-	if (length <= maximum_ || length <= length_)
+    if (length <= maximum_ || length <= length_)
     {
       if (buffer_ == 0)
         {
           buffer_ = allocbuf(maximum_);
           release_ = true;
-        }
+          }
 
     if (length < length_)
       {
