@@ -18,7 +18,7 @@ ACE_RCSID (tests,
            "$Id$")
 
 int
-run_main (int, ACE_TCHAR *argv[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_3500_Regression_Test"));
 
@@ -30,7 +30,7 @@ run_main (int, ACE_TCHAR *argv[])
 
   void *mmap =
     ACE_OS::mmap(0,                   // addr
-             1   28,                 // len
+                 28,                 // len
                  PAGE_READWRITE,      // prot
                  MAP_SHARED,          // flags
                  ACE_INVALID_HANDLE,  // file_handle
