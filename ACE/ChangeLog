@@ -1,3 +1,11 @@
+Tue Jan 20 06:25:01 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Cleanup.cpp:
+          Copy the name when it gets passed. It could be that the
+          string is a static string in a dll and then we can't print
+          it when things are crashing because the dll is then already
+          unloaded
+
 Mon Jan 19 20:53:01 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * tests/SSL/SSL_Asynch_Stream_Test.cpp: More basic fixes.

@@ -11,6 +11,7 @@ ACE_RCSID (ace,
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/OS_Memory.h"
+#include "ace/OS_NS_string.h"
 #include "ace/os_include/os_typeinfo.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -50,12 +51,14 @@ ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (void *object,
   : object_ (object),
     cleanup_hook_ (cleanup_hook),
     param_ (param),
-    name_ (name)
+    name_ (name ? ACE_OS::strdup (name) : 0)
 {
 }
 
 ACE_Cleanup_Info_Node::~ACE_Cleanup_Info_Node (void)
 {
+  if (this->name_)
+    ACE_OS::free ((void *) name_);
 }
 
 bool
