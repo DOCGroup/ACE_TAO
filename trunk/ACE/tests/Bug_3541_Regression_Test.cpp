@@ -21,7 +21,7 @@ ACE_RCSID (tests,
            "$Id$")
 
 int
-run_main (int, ACE_TCHAR *argv[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_3541_Regression_Test"));
 
@@ -148,5 +148,5 @@ run_main (int, ACE_TCHAR *argv[])
 
   ACE_END_TEST;
 
-  return 0;
+  return ret;
 }
