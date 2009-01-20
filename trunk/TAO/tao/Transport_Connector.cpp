@@ -541,7 +541,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 
                   ACE_DEBUG ((LM_DEBUG,
                               "TAO (%P|%t) - Transport_Connector::connect, "
-                              "got an existing %s Transport[%d] in role %s\n",
+                              "got an existing %C Transport[%d] in role %C\n",
                               base_transport->is_connected () ? "connected" :
                                                                 "unconnected",
                               base_transport->id (),
