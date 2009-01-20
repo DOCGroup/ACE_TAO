@@ -57,6 +57,12 @@ struct array_traits
         begin, end, &TAO::Array_Traits<forany_type>::zero);
   }
 
+  inline static void release_range(
+      value_type *, value_type *)
+  {
+    // Noop for array sequences
+  }
+
   inline static void initialize_range(
       value_type * begin, value_type * end)
   {
