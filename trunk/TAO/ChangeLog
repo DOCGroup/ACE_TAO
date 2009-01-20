@@ -1,3 +1,9 @@
+Tue Jan 20 10:08:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Cache_Manager.{h,cpp}:
+          Added a new is_entry_purgable_i to check whether a transport
+          can be purged or not. Use this method then when purging
+
 Tue Jan 20 06:18:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Value_Traits_T.h:

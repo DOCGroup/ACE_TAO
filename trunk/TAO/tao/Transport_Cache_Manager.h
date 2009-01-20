@@ -215,12 +215,17 @@ namespace TAO
     /**
      * Tries to find if the <int_id_> in entry is available for use.
      */
-    bool is_entry_available (const HASH_MAP_ENTRY &entry);
+    bool is_entry_available_i (const HASH_MAP_ENTRY &entry);
 
     /**
      * Tries to find if the <int_id_> in entry is connect pending
      */
-    bool is_entry_connecting (const HASH_MAP_ENTRY &entry);
+    bool is_entry_connecting_i (const HASH_MAP_ENTRY &entry);
+
+    /**
+     * Tries to find if the <int_id_> in entry is purgable
+     */
+    bool is_entry_purgable_i (const HASH_MAP_ENTRY &entry);
 
 #if !defined(ACE_LACKS_QSORT)
     /// Used by qsort
