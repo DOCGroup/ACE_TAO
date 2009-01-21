@@ -1,3 +1,15 @@
+Wed Jan 21 02:39:42 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/CDR_Stream.inl (current_alignment): Removed an
+          unnecessary/incorrect "return 0;" statement.  Thanks to Pan Kai
+          Luna <pan dot kai dot luna at gmail dot com> for reporting this.
+
+Tue Jan 20 22:42:08 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ACE-INSTALL.html (make): Updated the Cygwin documentation.
+          Thanks to Florent Vial <florent dot vial at gmail dot com> for
+          contributing this.
+
 Tue Jan 20 11:04:11 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3500_Regression_Test.cpp:
