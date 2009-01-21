@@ -1,3 +1,4 @@
+# -*- Makefile -*-
 # $Id$
 # VxWorks 6.3
 
@@ -198,15 +199,18 @@ ifeq ($(rtp),1)
       CPPFLAGS += -DACE_HAS_AIO_CALLS
       LIBS += AioPx
     endif
+    ifeq ($(PRJ_TYPE),library)
+      PICDIR = /PIC
+    endif
   endif
   LDFLAGS := $(filter-out -X, $(LDFLAGS))
   LDFLAGS := $(filter-out -N, $(LDFLAGS))
   LD := $(CPLUS)
   DLD := $(CPLUS)
   ifeq ($(findstring *sf,*$(TOOL)),*sf)
-    LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/sfcommon
+    LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/sfcommon$(PICDIR)
   else
-    LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/common
+    LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/common$(PICDIR)
   endif
 else
   include $(TGT_DIR)/h/make/defs.default

@@ -1,3 +1,10 @@
+Wed Jan 21 16:05:24 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+
+          Fixed a bug in the linker arguments for RTP shared libraries.
+
 Wed Jan 21 10:19:01 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace.mpc:
