@@ -1,9 +1,8 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // $Id$
 
-project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, filecache, versioned_namespace, pkgconfig, support_ostream {
+project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, uuid, filecache, versioned_namespace, pkgconfig, support_ostream {
   avoids       = ace_for_tao
-  libout       = $(ACE_ROOT)/lib
   sharedname   = ACE
   dynamicflags = ACE_BUILD_DLL
 
