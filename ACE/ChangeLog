@@ -1,3 +1,10 @@
+Wed Jan 21 10:19:01 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+          Use ace_output as base project instead of setting libout directly in this
+          mpc file
+
 Wed Jan 21 02:39:42 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/CDR_Stream.inl (current_alignment): Removed an
