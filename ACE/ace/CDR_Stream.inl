@@ -572,7 +572,6 @@ ACE_OutputCDR::current_alignment (size_t current_alignment)
   this->current_alignment_ = current_alignment;
 #else
   ACE_UNUSED_ARG (current_alignment);
-  return 0;
 #endif /* ACE_LACKS_CDR_ALIGNMENT */
 }
 
