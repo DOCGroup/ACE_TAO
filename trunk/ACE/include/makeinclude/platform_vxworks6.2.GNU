@@ -1,3 +1,4 @@
+# -*- Makefile -*-
 # $Id$
 # VxWorks 6.2
 
@@ -193,7 +194,19 @@ ifeq ($(rtp),1)
   LDFLAGS := $(filter-out -N, $(LDFLAGS))
   LD := $(CPLUS)
   DLD := $(CPLUS)
-  LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/common
+
+  ifeq ($(SHARED_LIBS), 1))
+    ifeq ($(PRJ_TYPE),library)
+      PICDIR = /PIC
+    endif
+  endif
+
+  ifeq ($(findstring *sf,*$(TOOL)),*sf)
+    LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/sfcommon$(PICDIR)
+  else
+    LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/common$(PICDIR)
+  endif
+
   LDLIBS += -ldl
 else
   include $(TGT_DIR)/h/make/defs.default
