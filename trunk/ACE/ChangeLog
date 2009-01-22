@@ -1,3 +1,10 @@
+Thu Jan 22 13:38:20 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Disabled the test for bug#3524 on corba_e_micro builds since it
+          uses valuetypes.
+
 Thu Jan 22 07:46:01 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
