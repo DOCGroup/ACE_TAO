@@ -1,4 +1,10 @@
-Fri Jan 22 15:44:01 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Jan 22 16:51:01 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_socket.inl (sendv):
+          Introduced a new ACE_DONT_USE_WSASEND, when this is set ACE doesn't
+          use WSAsend but just a loop of send calls
+
+Thu Jan 22 15:44:01 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.h:
           Only define the ACE_DEBUG/ACE_ERROR* when they are not defined
