@@ -1,3 +1,13 @@
+Thu Jan 22 18:34:01 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_sendfile.{h,cpp,inl}:
+          Previously ACE_HAS_SENDFILE should be defined or not, changed this
+          that it has be define to 1 or 0, makes it clearer to disable from
+          config.h
+
+        * ace/config-all.h:
+          Set ACE_HAS_SENDFILE to 0 when it is not defined yet
+
 Thu Jan 22 16:51:01 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_socket.inl (sendv):
