@@ -703,7 +703,7 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 // default for TAO, but we can suppress it also explicitly by set
 // TAO_HAS_SENDFILE to 0.
 #if !defined (TAO_HAS_SENDFILE)
-# if defined ACE_HAS_SENDFILE
+# if defined ACE_HAS_SENDFILE && ACE_HAS_SENDFILE == 1
 #  define TAO_HAS_SENDFILE 1
 # else
 #  define TAO_HAS_SENDFILE 0
