@@ -294,7 +294,7 @@ ACE_Object_Manager::init (void)
   // NOTE this only works for intel based windows builds.
 
 #    ifdef _M_IX86
-          HMODULE hKernel32 = LoadLibrary (ACE_TEXT ("kernel32.dll"));
+          HMODULE hKernel32 = ACE_TEXT_LoadLibrary (ACE_TEXT ("kernel32.dll"));
           if (hKernel32)
             {
               void *pOrgEntry =
