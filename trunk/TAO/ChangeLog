@@ -3,6 +3,11 @@ Thu Jan 22 20:17:43 UTC 2009  Adam Mitz  <mitza@ociweb.com>
         * TAO_IDL/fe/lex.yy.cpp:
         * TAO_IDL/fe/lex.yy.cpp.diff:
 
+          Re-generated lex.yy.cpp from idl.ll (see previous commit)
+          using flex 2.5.33.
+          This required updating the diff to *not* change n from size_t to
+          int, since having it as an int generates signed/unsigned warnings.
+
 Thu Jan 22 20:15:54 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * TAO_IDL/fe/idl.ll:
