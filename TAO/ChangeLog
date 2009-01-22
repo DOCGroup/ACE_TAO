@@ -1,3 +1,28 @@
+Thu Jan 22 22:58:21 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/CodecFactory/IOP_Codec_include.pidl:
+        * tao/Compression/Compression_include.pidl:
+        * tao/Monitor/Monitor_include.pidl:
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_include.pidl:
+        * tao/PI/PI_include.pidl:
+        * tao/PI_Server/PI_Server_include.pidl:
+        * tao/PortableServer/PortableServer_include.pidl:
+        * tao/RTCORBA/RTCORBA_include.pidl:
+        * tao/RTPortableServer/RTPortableServer_include.pidl:
+        * tao/RTScheduling/RTScheduler_include.pidl:
+
+          Due to a feature of the Visual Age C++ preprocessor, files
+          that do not have any non-preprocessor non-comment text in them
+          will not have #line values emitted.  This causes a problem for
+          tao_idl as it uses the #line text to determine which include files
+          to place in the generated files.  Not having the correct include
+          files in the generated C++ files may cause compilation errors.  In
+          order to get the preprocessor to emit the #line text for this
+          .pidl file, I have added a dummy typedef inside a dummy module.
+          This causes the right include files to be added to IDL generated
+          source files.  Thanks to Chad Elliott for the initial implementation
+          of this workaround.
+
 Thu Jan 22 20:17:43 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * TAO_IDL/fe/lex.yy.cpp:
