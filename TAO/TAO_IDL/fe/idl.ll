@@ -886,7 +886,7 @@ idl_atof (char *s)
   if (*s == '-')
     {
       neg = 1;
-      
+ 
       // Skip over the dash and possibly spaces after the dash
       while (*s == '-' || *s == ' ' || *s == '\t')
         {
@@ -937,7 +937,7 @@ idl_atof (char *s)
 
       if (e > 0)
         {
-          for (k = 1; e > 0; k *= 10, e--);
+          for (k = 1; e > 0; k *= 10, e--) ;
 
           if (negexp)
             {
