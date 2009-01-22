@@ -622,11 +622,10 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here. The same is also done in the higher layers.
 
-  ACE_Message_Block::Message_Flags flg = 0;
   ACE_Data_Block *db = 0;
 
   // Get the flag in the message block
-  flg = qd->msg_block ()->self_flags ();
+  ACE_Message_Block::Message_Flags flg = qd->msg_block ()->self_flags ();
 
   if (ACE_BIT_ENABLED (flg, ACE_Message_Block::DONT_DELETE))
     {
@@ -852,7 +851,7 @@ TAO_GIOP_Message_Base::process_request (
 
   try
     {
-      int parse_error = parser->parse_request_header (request);
+      int const parse_error = parser->parse_request_header (request);
 
       // Throw an exception if the
       if (parse_error != 0)

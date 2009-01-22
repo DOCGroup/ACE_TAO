@@ -48,7 +48,6 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
 
 TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources (void)
 {
-
 }
 
 TAO::Transport_Cache_Manager &

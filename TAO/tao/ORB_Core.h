@@ -226,7 +226,7 @@ public:
   CORBA::Object_ptr root_poa (void);
 
   /// Get the adapter registry
-  TAO_Adapter_Registry *adapter_registry (void);
+  TAO_Adapter_Registry &adapter_registry (void);
 
   /// @name Collocation Strategies
   //@{
