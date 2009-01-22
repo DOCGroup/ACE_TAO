@@ -1,3 +1,8 @@
+Thu Jan 22 18:35:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
+
+        * tao/orbconf.h:
+          Check whether ACE_HAS_SENDFILE is set to 0 or 1
+
 Thu Jan 22 18:27:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
 
         * ace/Cache_Entries.inl:
