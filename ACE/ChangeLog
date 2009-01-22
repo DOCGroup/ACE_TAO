@@ -1,3 +1,25 @@
+Fri Jan 22 15:44:01 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.h:
+          Only define the ACE_DEBUG/ACE_ERROR* when they are not defined
+          yet when ACE_NLOGGING is defined. This makes it possible for
+          users to globally disable logging but then just enable ACE_ERROR
+
+        * ace/Message_Block.cpp:
+          Code layout changes
+
+        * ace/SOCK_IO.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * ace/Select_Reactor_T.cpp:
+          Just define select_width twice and directly assign it
+
+        * ace/OS_NS_sys_socket.inl:
+          Move local variables into the loop
+
+        * ace/config-sunos5.9.h:
+        * ace/config-linux-common.h:
+          Define ACE_HAS_SENDFILE to 1
+
 Thu Jan 22 13:51:01 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3500_Regression_Test.cpp:
