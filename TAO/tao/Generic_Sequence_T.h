@@ -170,7 +170,7 @@ public:
         {
           buffer_ = allocbuf(maximum_);
           release_ = true;
-          }
+        }
 
     if (length < length_)
       {

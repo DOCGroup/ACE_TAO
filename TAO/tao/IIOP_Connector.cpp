@@ -357,7 +357,6 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
   // The code used to set the timeout to zero, with the intent of
   // polling the reactor for connection completion. However, the side-effect
   // was to cause the connection to timeout immediately.
-
   svc_handler = 0;
 
   int const result =

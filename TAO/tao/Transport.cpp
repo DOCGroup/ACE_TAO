@@ -1613,7 +1613,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
         {
           if (TAO_debug_level > 2)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ACE_ERROR ((LM_ERROR,
                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input, ")
                  ACE_TEXT ("error while parsing the head of the queue\n"),
                  this->id()));
@@ -1970,7 +1970,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                                    ACE_Message_Block::DONT_DELETE,
                                    this->orb_core_->input_cdr_msgblock_allocator ());
 
-
   // Align the message block
   ACE_CDR::mb_align (&message_block);
 
@@ -2180,8 +2179,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
           if (qd.missing_data () == 0)
             {
               // Dealing with a fragment
-              TAO_Queued_Data *nqd =
-                TAO_Queued_Data::duplicate (qd);
+              TAO_Queued_Data *nqd = TAO_Queued_Data::duplicate (qd);
 
               if (nqd == 0)
                 {
@@ -2275,8 +2273,10 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                   return -1;
                 }
 
-              // correct the end_marker
-              end_marker = message_block.rd_ptr ();
+              // correct the wr_ptr using the end_marker to point to the
+              // end of the first message else the code after this will
+              // see the full stream with all the messages
+              message_block.wr_ptr (end_marker);
 
               // Restore rd_ptr
               message_block.rd_ptr (rd_ptr_stack_mesg);
@@ -2297,7 +2297,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
                      ACE_TEXT ("notify reactor\n"),
                      this->id ()));
-
                 }
 
               int const retval = this->notify_reactor ();
@@ -2415,7 +2414,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
         {
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ACE_ERROR ((LM_ERROR,
                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
                  ACE_TEXT ("error in process_reply_message - %m\n"),
                  this->id ()));
@@ -2529,15 +2528,12 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
         }
 
       // Process the message...
-      if (this->process_parsed_messages (qd, rh) == -1)
-        {
-          return -1;
-        }
+      int const retval = this->process_parsed_messages (qd, rh);
 
       // Delete the Queued_Data..
       TAO_Queued_Data::release (qd);
 
-      return 0;
+      return retval;
     }
 
   return 1;

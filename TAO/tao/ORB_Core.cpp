@@ -1986,10 +1986,7 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
 
   if (collocated_orb_core.get ())
     {
-      TAO_Adapter_Registry *ar =
-        collocated_orb_core.get ()->adapter_registry ();
-
-      x = ar->create_collocated_object (stub, mprofile);
+      x = collocated_orb_core.get ()->adapter_registry ().create_collocated_object (stub, mprofile);
     }
 
 
@@ -2058,10 +2055,7 @@ TAO_ORB_Core::initialize_object_i (TAO_Stub *stub, const TAO_MProfile &mprofile)
 
   if (collocated_orb_core.get ())
     {
-      TAO_Adapter_Registry *ar =
-        collocated_orb_core.get ()->adapter_registry ();
-
-      retval = ar->initialize_collocated_object (stub);
+      retval = collocated_orb_core.get ()->adapter_registry ().initialize_collocated_object (stub);
     }
 
   return retval;
