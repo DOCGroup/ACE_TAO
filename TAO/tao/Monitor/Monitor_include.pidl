@@ -14,4 +14,12 @@
 ///FUZZ: disable check_for_include/
 #include "tao/Monitor/Monitor.pidl"
 
+// Add a dummy module here as a hack
+// Some preprocessors (IBM VA for one) require some code here in order
+// to spit out a #line for this file.  The IDL Compiler requires this
+// in order to generate the proper includes in the generated C++.
+module MONITOR_MONITOR_INCLUDE_IDL_Dummy {
+  typedef long dummy;
+};
+
 #endif /* _MONITOR_INCLUDE_IDL_ */

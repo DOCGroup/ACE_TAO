@@ -36,4 +36,12 @@
 
 #include "tao/ObjRefTemplate/ObjectReferenceTemplate.pidl"
 
+// Add a dummy module here as a hack
+// Some preprocessors (IBM VA 6 for one) require some code here in order
+// to spit out a #line for this file.  The IDL Compiler requires this
+// in order to generate the proper includes in the generated C++.
+module OBJREFTEMPLATE_OBJREFERENCETEMPLATE_INCLUDE_IDL_Dummy {
+  typedef long dummy;
+};
+
 #endif /* _OBJECTREFERENCETEMPLATE_INCLUDE_IDL_ */
