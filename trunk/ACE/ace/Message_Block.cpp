@@ -815,8 +815,10 @@ ACE_Data_Block::release_no_delete (ACE_Lock *lock)
     }
   // This is the case when no lock was passed in
   else
-    // Lock to be used is our lock
-    lock_to_be_used = this->locking_strategy_;
+    {
+      // Lock to be used is our lock
+      lock_to_be_used = this->locking_strategy_;
+    }
 
   // If there's a locking strategy then we need to acquire the lock
   // before decrementing the count.
@@ -827,7 +829,9 @@ ACE_Data_Block::release_no_delete (ACE_Lock *lock)
       result = this->release_i ();
     }
   else
-    result = this->release_i ();
+    {
+      result = this->release_i ();
+    }
 
   return result;
 }
