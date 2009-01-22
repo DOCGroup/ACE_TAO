@@ -76,6 +76,10 @@
 # define ACE_HAS_MONITOR_FRAMEWORK 1
 #endif
 
+#if !defined (ACE_HAS_SENDFILE)
+# define ACE_HAS_SENDFILE 0
+#endif
+
 #if !defined (ACE_HAS_MONITOR_POINTS)
 # define ACE_HAS_MONITOR_POINTS 0
 #endif
