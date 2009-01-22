@@ -26,7 +26,7 @@ run_main (int, ACE_TCHAR *[])
 
 #if defined(ACE_WIN32)
   ACE_HANDLE  handle = ACE_INVALID_HANDLE;
-  ACE_TString name   = "Bug3500";
+  ACE_TString name(ACE_TEXT ("Bug3500"));
 
   void *mmap =
     ACE_OS::mmap(0,                   // addr
