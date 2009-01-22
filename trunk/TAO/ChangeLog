@@ -1,3 +1,17 @@
+Thu Jan 22 20:15:54 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/fe/idl.ll:
+        * orbsvcs/examples/ImR/Combined_Service/test.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+
+          Fixed GCC 4.3 warnings.
+
+        * TAO_IDL/fe/fe_lookup.cpp:
+
+          Re-generated fe_lookup.cpp based on the updated command in the
+          mpc file committed in:
+          Wed Dec 17 15:39:46 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
 Thu Jan 22 18:35:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
 
         * tao/orbconf.h:
