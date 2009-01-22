@@ -1,3 +1,17 @@
+Thu Jan 22 19:20:06 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        Minor changes to resolve:
+
+        * ace/Monitor_Control/Windows_Multi_Instance_Monitor.cpp:
+        * ace/Object_Manager.cpp:
+
+          Win32 build errors with ACE_USES_WCHAR defined.
+
+        * apps/gperf/src/Key_List.cpp:
+        * tests/ARGV_Test.cpp:
+
+          GCC 4.3 warnings.
+
 Thu Jan 22 18:34:01 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_sendfile.{h,cpp,inl}:

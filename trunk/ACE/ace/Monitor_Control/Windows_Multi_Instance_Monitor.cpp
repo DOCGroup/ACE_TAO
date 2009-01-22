@@ -56,7 +56,7 @@ namespace ACE
         {
           Windows_Monitor *instance = new Windows_Monitor (path);
           this->instances_.enqueue_tail (instance);
-          path += lstrlen (path) + 1;
+          path += ACE_OS::strlen (path) + 1;
         }
 
       GlobalFree (paths);
