@@ -387,7 +387,7 @@
 #define ACE_HAS_TERMIOS
 
 // Linux implements sendfile().
-#define ACE_HAS_SENDFILE
+#define ACE_HAS_SENDFILE 1
 
 #define ACE_HAS_VOIDPTR_MMAP
 

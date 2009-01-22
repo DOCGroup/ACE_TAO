@@ -520,15 +520,12 @@ ACE_OS::recvv (ACE_HANDLE handle,
                       0,
                       0);
 # else
-  int i, chunklen;
-  char *chunkp = 0;
-
   // Step through the buffers requested by caller; for each one, cycle
   // through reads until it's filled or an error occurs.
-  for (i = 0; i < n && result > 0; ++i)
+  for (int i = 0; i < n && result > 0; ++i)
     {
-      chunkp = buffers[i].iov_base;     // Point to part of chunk being read
-      chunklen = buffers[i].iov_len;    // Track how much to read to chunk
+      char *chunkp = buffers[i].iov_base;     // Point to part of chunk being read
+      int chunklen = buffers[i].iov_len;    // Track how much to read to chunk
       while (chunklen > 0 && result > 0)
         {
           result = ::recv ((SOCKET) handle, chunkp, chunklen, 0);

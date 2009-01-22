@@ -32,13 +32,27 @@
 #include "ace/Assert.h"
 
 #if defined (ACE_NLOGGING)
-#define ACE_HEX_DUMP(X) do {} while (0)
-#define ACE_RETURN(Y) do { return (Y); } while (0)
-#define ACE_ERROR_RETURN(X, Y) return (Y)
-#define ACE_ERROR_BREAK(X) { break; }
-#define ACE_ERROR(X) do {} while (0)
-#define ACE_DEBUG(X) do {} while (0)
-#define ACE_ERROR_INIT(VALUE, FLAGS)
+#if !defined (ACE_HEX_DUMP)
+# define ACE_HEX_DUMP(X) do {} while (0)
+#endif
+#if !defined (ACE_RETURN)
+# define ACE_RETURN(Y) do { return (Y); } while (0)
+#endif
+#if !defined (ACE_ERROR_RETURN)
+# define ACE_ERROR_RETURN(X, Y) return (Y)
+#endif
+#if !defined (ACE_ERROR_BREAK)
+# define ACE_ERROR_BREAK(X) { break; }
+#endif
+#if !defined (ACE_ERROR)
+# define ACE_ERROR(X) do {} while (0)
+#endif
+#if !defined (ACE_DEBUG)
+# define ACE_DEBUG(X) do {} while (0)
+#endif
+#if !defined (ACE_ERROR_INIT)
+# define ACE_ERROR_INIT(VALUE, FLAGS)
+#endif
 #else
 #if !defined (ACE_HEX_DUMP)
 #define ACE_HEX_DUMP(X) \
