@@ -32,7 +32,7 @@ run_main (int, ACE_TCHAR *[])
 
   // ACE_OS::event_init()
 
-  const ACE_TCHAR *eventName = "Bug3541_Event";
+  const ACE_TCHAR *eventName = ACE_TEXT ("Bug3541_Event");
 
   ACE_Event event0(0,             // int manual_reset = 0
                    0,             // int initial_state = 0
@@ -72,7 +72,7 @@ run_main (int, ACE_TCHAR *[])
 
   // ACE_OS::sema_init
 
-  const ACE_TCHAR *semaphoreName = "Bug3541_Semaphore";
+  const ACE_TCHAR *semaphoreName = ACE_TEXT ("Bug3541_Semaphore");
 
   ACE_Semaphore semaphore0(1,               // int count = 1
                            USYNC_PROCESS,   // int type = USYNC_THREAD
@@ -110,7 +110,7 @@ run_main (int, ACE_TCHAR *[])
 
   // ACE_OS::mutex_init()
 
-  const ACE_TCHAR *mutexName = "Bug3541_Mutex";
+  const ACE_TCHAR *mutexName = ACE_TEXT ("Bug3541_Mutex");
 
   ACE_Mutex mutex0(USYNC_PROCESS,  // int type = USYNC_THREAD
                    mutexName);     // const ACE_TCHAR *name = 0
