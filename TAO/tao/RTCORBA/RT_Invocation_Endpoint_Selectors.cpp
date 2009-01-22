@@ -295,8 +295,8 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
           (match_bands &&
            endpoint_priority <= max_priority &&
            endpoint_priority >= min_priority) ||
-          r.profile ()->endpoint_count () == 1 &&
-          endpoint_priority == TAO_INVALID_PRIORITY)
+          (r.profile ()->endpoint_count () == 1 &&
+           endpoint_priority == TAO_INVALID_PRIORITY))
         {
           TAO_RT_Transport_Descriptor_Private_Connection_Property
             private_connection_descriptor_property;
