@@ -1,3 +1,8 @@
+Thu Jan 22 20:17:43 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+
 Thu Jan 22 20:15:54 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * TAO_IDL/fe/idl.ll:
