@@ -303,7 +303,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
   this->is_closed_ = true;
 
   // Save the ID for debugging messages
-  ACE_HANDLE handle = eh->get_handle ();
+  ACE_HANDLE const handle = eh->get_handle ();
 
   size_t const id = this->transport ()->id ();
   if (TAO_debug_level)

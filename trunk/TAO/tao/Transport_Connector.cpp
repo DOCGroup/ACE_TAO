@@ -515,8 +515,8 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
               if (TAO_debug_level > 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("TAO (%P|%t) Transport_Connector::connect")
-                    ACE_TEXT(" error in transport from cache\n")));
+                    ACE_TEXT("TAO (%P|%t) Transport_Connector::connect, ")
+                    ACE_TEXT("error in transport from cache\n")));
                 }
               (void) base_transport->close_connection ();
               (void) base_transport->purge_entry ();
@@ -527,8 +527,8 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
               if (TAO_debug_level > 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("TAO (%P|%t) Transport_Connector::connect")
-                    ACE_TEXT(" closed transport from cache\n")));
+                    ACE_TEXT("TAO (%P|%t) Transport_Connector::connect, ")
+                    ACE_TEXT("closed transport from cache\n")));
                 }
               (void) base_transport->purge_entry ();
               base_transport->remove_reference ();

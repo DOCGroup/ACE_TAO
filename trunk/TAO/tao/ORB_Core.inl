@@ -168,10 +168,10 @@ TAO_ORB_Core::orb (void)
   return this->orb_;
 }
 
-ACE_INLINE TAO_Adapter_Registry *
+ACE_INLINE TAO_Adapter_Registry &
 TAO_ORB_Core::adapter_registry (void)
 {
-  return &this->adapter_registry_;
+  return this->adapter_registry_;
 }
 
 ACE_INLINE TAO_Request_Dispatcher *

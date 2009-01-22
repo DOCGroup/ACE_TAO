@@ -1,3 +1,45 @@
+Thu Jan 22 18:27:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
+
+        * ace/Cache_Entries.inl:
+          Print the transport id instead of the transport pointer
+
+        * ace/Connection_Handler.cpp:
+          Const change
+
+        * ace/Generic_Sequence_T.h:
+          Layout change
+
+        * ace/GIOP_Message_Base.cpp:
+          Const change and directly set a local variable
+
+        * ace/IIOP_Connector.cpp:
+        * tao/Thread_Lane_Resources.cpp:
+          Layout change
+
+        * tao/Invocation_Adapter.cpp:
+          Updated layout of debug message
+
+        * tao/IORTable/Table_Adapter.{h,cpp}:
+          Let find_object return a bool
+
+        * tao/Adapter.h:
+          Layout changes
+
+        * tao/ORB_Core.{h,cpp,inl}:
+        * tao/Request_Dispatcher.cpp:
+          Let the adapter_registry return a reference instead of a
+          pointer and updated the calling code
+
+        * tao/Transport.cpp:
+          Layout changes, use ACE_ERROR for errors, fixed a memory
+          leak when process_parsed_messages fail. After handling
+          extra messages set the wr_ptr to the end of the first
+          message else we will process the first message with a
+          cdr stream that contains all the messages
+
+        * tao/Transport_Connector.cpp:
+          Fixed layout of debug messages
+
 Tue Jan 20 19:37:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
 
         * tao/Array_Traits_T.h:
