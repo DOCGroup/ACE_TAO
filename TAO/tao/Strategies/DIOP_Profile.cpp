@@ -122,8 +122,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
 {
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
-  const char *okd =
-    ACE_OS::strchr (ior, this->object_key_delimiter_);
+  const char *okd = ACE_OS::strchr (ior, this->object_key_delimiter_);
 
   if (okd == 0 || okd == ior)
     {
@@ -181,6 +180,12 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
 
   if (cp_pos == ior)
     {
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                   ACE_TEXT ("\nTAO (%P|%t) DIOP_Profile: ")
+                   ACE_TEXT ("Host address may be omited only when no port has been specified.\n")));
+        }
       // No hostname specified!  It is required by the spec.
       throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
