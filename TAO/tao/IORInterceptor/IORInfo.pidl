@@ -23,6 +23,10 @@
 #ifndef _IORINFO_IDL_
 #define _IORINFO_IDL_
 
+// This pragma is here to make the Visual Age preprocessor generate #line
+// output for this file before the files it includes.
+#pragma prefix ""
+
 #include "tao/PortableInterceptor.pidl"
 #include "tao/Policy_Forward.pidl"
 #include "tao/IOP.pidl"
