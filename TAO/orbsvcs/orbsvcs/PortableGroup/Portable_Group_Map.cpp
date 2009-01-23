@@ -132,9 +132,9 @@ TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_
       // Iterate through the list of ObjectKeys.
       while (entry)
         {
-          orb_core->adapter_registry ()->dispatch (entry->key,
-                                                   request,
-                                                   forward_to);
+          orb_core->adapter_registry ().dispatch (entry->key,
+                                                  request,
+                                                  forward_to);
 
           // Reset the read pointer in the message block.
           msgblk->rd_ptr (read_ptr);
