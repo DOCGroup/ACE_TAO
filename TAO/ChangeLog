@@ -1,9 +1,21 @@
-Fri Jan 23 07:58:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
+Fri Jan 23 08:03:58 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/POA/EndpointPolicy/run_test_dh.pl:
+        * tests/POA/EndpointPolicy/run_test_lh.pl:
+        * tests/POA/Explicit_Activation/run_test.pl:
+        * tests/POA/Loader/run_test.pl:
+        * tests/POA/On_Demand_Activation/run_test.pl:
+        * tests/POA/On_Demand_Loading/run_test.pl:
+        * tests/POA/Reference_Counted_Servant/run_test.pl:
+        * tests/Portable_Interceptors/Redirection/run_test.pl:
+          Made "fuzz" compliant.
+
+Fri Jan 23 07:58:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3547_Regression/Stock_Quoter_Client.cpp:
           Destroy the orb before exiting
 
-Fri Jan 23 06:39:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
+Fri Jan 23 06:39:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Cache_Entries.{inl,cpp}:
           Uninlined recycle_state it now calls the transport to get the
