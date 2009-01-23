@@ -54,12 +54,12 @@ ACE_RCSID (tao,
 static void
 dump_iov (iovec *iov, int iovcnt, size_t id,
           size_t current_transfer,
-          const char *location)
+          const ACE_TCHAR *location)
 {
   ACE_Guard <ACE_Log_Msg> log_guard (*ACE_Log_Msg::instance ());
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%C, ")
+              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
               ACE_TEXT ("sending %d buffers\n"),
               id, location, iovcnt));
 
@@ -74,7 +74,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%C, ")
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
                   ACE_TEXT ("buffer %d/%d has %d bytes\n"),
                   id, location,
                   i, iovcnt,
@@ -111,7 +111,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%C, ")
+              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
               ACE_TEXT ("end of data\n"),
               id, location));
 }
@@ -933,7 +933,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[], ACE_Time_Value *max
   if (TAO_debug_level == 5)
     {
       dump_iov (iov, iovcnt, this->id (),
-                byte_count, "drain_queue_helper");
+                byte_count, ACE_TEXT("drain_queue_helper"));
     }
 
   if (retval == 0)

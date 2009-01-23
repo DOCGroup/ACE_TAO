@@ -1,3 +1,17 @@
+Fri Jan 23 15:21:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CORBALOC_Parser.cpp:
+          Use prefix increment
+
+        * tao/default_resource.cpp:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Transport.cpp:
+          Various fixes and improvements to debug messages
+
+        * tao/Strategies/DIOP_Profile.cpp:
+          Log an error why the IOR is invalid
+
 Fri Jan 23 13:17:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Portable_Interceptors/ForwardRequest/run_test.pl:
