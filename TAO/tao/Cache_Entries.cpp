@@ -53,6 +53,17 @@ namespace TAO
 
     return *this;
   }
+
+  void
+  Cache_IntId::recycle_state (Cache_Entries_State st)
+  {
+    if (TAO_debug_level > 9)
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Cache_IntId::")
+                  ACE_TEXT ("recycle_state %C->%C Transport=%d IntId=%d\n"),
+                  state_name (recycle_state_), state_name (st),
+                  transport_ ? transport_->id() : 0, this));
+    this->recycle_state_ = st;
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
