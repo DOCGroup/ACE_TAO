@@ -6,18 +6,20 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 PerlACE::add_lib_path ('../Generic_Servant/.');
 
-$iorbase = "ior";
-$iorfile = PerlACE::LocalFile ("$iorbase");
+$iorbase0 = "ior";
 
 $status = 0;
 $oneway = "";
 $iterations = 100;
 
 $extra_args = "";
+
+ $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+ $client  = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 # Parse the arguments
 for ($i = 0; $i <= $#ARGV; $i++) {
@@ -38,7 +40,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
         $i++;
     }
     elsif ($ARGV[$i] eq "-f") {
-        $iorfile = $ARGV[$i + 1];
+        $iorbase0 = $ARGV[$i + 1];
         $i++;
     }
     else {
@@ -46,65 +48,75 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
 }
 
-$iorfile_1 = $iorfile."_1";
-$iorfile_2 = $iorfile."_2";
+$iorbase1 = $iorbase0."_1";
+$iorbase2 = $iorbase0."_2";
 
-unlink $iorfile_1;
-unlink $iorfile_2;
+$server0_iorfile = $server->LocalFile ($iorbase0);
+$server1_iorfile = $server->LocalFile ($iorbase1);
+$server2_iorfile = $server->LocalFile ($iorbase2);
+$client1_iorfile = $client->LocalFile ($iorbase1);
+$client2_iorfile = $client->LocalFile ($iorbase2);
 
-if (PerlACE::is_vxworks_test()) {
-  $SV = new PerlACE::ProcessVX ("server", "-f $iorbase $extra_args");
-}
-else {
-  $SV = new PerlACE::Process ("server", "-f $iorfile $extra_args");
-}
-$CL = new PerlACE::Process ("../Generic_Servant/client");
+$server->DeleteFile ($iorbase0);
+$server->DeleteFile ($iorbase1);
+$server->DeleteFile ($iorbase2);
+$client->DeleteFile ($iorbase1);
+$client->DeleteFile ($iorbase2);
 
-$server = $SV->Spawn ();
+$SV = $server->CreateProcess ("server", "-f $server0_iorfile $extra_args");
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+$CL = $client->CreateProcess ("../Generic_Servant/client");
+
+$server_status = $SV->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($iorfile_1, $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile_1>\n";
-    $SV->Kill ();
+if ($server->WaitForFileTimed ($iorbase1,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server1_iorfile>\n";
+    $SV1->Kill (); $SV1->TimedWait (1);
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($iorfile_2, $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile_2>\n";
-    $SV->Kill ();
+if ($server->WaitForFileTimed ($iorbase2,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server2_iorfile>\n";
+    $SV1->Kill (); $SV1->TimedWait (1);
     exit 1;
 }
 
-$CL->Arguments ("$extra_args $oneway -i $iterations -k file://$iorfile_1");
+$CL->Arguments ("$extra_args $oneway -i $iterations -k file://$client1_iorfile");
 
-$client = $CL->SpawnWaitKill (60);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-if ($client != 0) {
-    print STDERR "ERROR: client 1 returned $client\n";
+if ($client_status != 0) {
+    print STDERR "ERROR: client 1 returned $client_status\n";
     $status = 1;
 }
 
-$CL->Arguments ("$extra_args $oneway -i $iterations -k file://$iorfile_2 -x");
+$CL->Arguments ("$extra_args $oneway -i $iterations -k file://$client2_iorfile -x");
 
-$client = $CL->SpawnWaitKill (60);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-if ($client != 0) {
-    print STDERR "ERROR: client 2 returned $client\n";
+if ($client_status != 0) {
+    print STDERR "ERROR: client 2 returned $client_status\n";
     $status = 1;
 }
 
-$server = $SV->WaitKill (5);
+$server_stauts = $SV->WaitKill ($server->ProcessStopWaitInterval());
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+if ($server_stauts != 0) {
+    print STDERR "ERROR: server returned $server_stauts\n";
     $status = 1;
 }
 
-unlink $iorfile_1;
-unlink $iorfile_2;
+$server->DeleteFile ($iorbase0);
+$server->DeleteFile ($iorbase1);
+$server->DeleteFile ($iorbase2);
+$client->DeleteFile ($iorbase1);
+$client->DeleteFile ($iorbase2);
 
 exit $status;

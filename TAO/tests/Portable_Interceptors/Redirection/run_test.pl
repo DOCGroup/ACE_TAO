@@ -18,7 +18,8 @@ my $iorbase1 = "test.ior";
 my $iorbase2 = "test2.ior";
 
 my $server1_iorfile = $server1->LocalFile ($iorbase1);
-my $server2_iorfile = $client->LocalFile ($iorbase2);
+my $server2_iorfile = $server2->LocalFile ($iorbase2);
+my $client_server_iorfile  = $client->LocalFile ($iorbase1);
 my $client_iorfile  = $client->LocalFile ($iorbase2);
 
 $server1->DeleteFile($iorbase1);
@@ -30,7 +31,7 @@ $client->DeleteFile($iorbase2);
 
 $SV1 = $server1->CreateProcess ("server", "-o $server1_iorfile -c 1 -n 1");
 $SV2 = $server2->CreateProcess ("server", "-o $server2_iorfile -n 2");
-$CL  = $client->CreateProcess ("client", "-p file://$server1_iorfile -s file://$client_iorfile");
+$CL  = $client->CreateProcess ("client", "-p file://$client_server_iorfile -s file://$client_iorfile");
 
 $status = 0;
 
