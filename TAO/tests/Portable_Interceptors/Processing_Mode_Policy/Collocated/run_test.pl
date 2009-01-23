@@ -64,16 +64,10 @@ my $status = 0;
 
 my $process = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-my $iorfile = "test.ior";
-my $process_iorfile = $process->LocalFile ($iorfile);
-$process->DeleteFile($iorfile);
-
 my $testid;
 
 for ($testid = 1; $testid <= 9; ++$testid) {
 
-    $process->DeleteFile($iorfile);
- 
     my $client_mode;
     my $server_mode;
 
@@ -90,14 +84,7 @@ for ($testid = 1; $testid <= 9; ++$testid) {
 
     $SV->Spawn ();
      
-    if ($process->WaitForFileTimed ($iorfile,
-                                   $process->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$process_iorfile>\n";
-        $SV->Kill (); $SV->TimedWait (1);
-        exit 1;
-    }
-      
-    my $collocated  = $SV->WaitKill ($process->ProcessStopWaitInterval());
+    my $collocated  = $SV->WaitKill ($process->ProcessStopWaitInterval() + 30);
 
     if ($collocated != 0) {
         print STDERR "ERROR: PI_ProcMode_Collocated_Test returned $collocated\n";
@@ -117,7 +104,5 @@ if ($status == 0) {
 else {
     print STDERR "\n==== One or more of the 9 test variants failed!\n";
 }
-
-$process->DeleteFile($iorfile);
 
 exit $status;
