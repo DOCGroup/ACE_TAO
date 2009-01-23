@@ -48,9 +48,9 @@ PortableGroup_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,
     }
 
   // Dispatch based on object key.
-  orb_core->adapter_registry ()->dispatch (request.object_key (),
-                                           request,
-                                           forward_to);
+  orb_core->adapter_registry ().dispatch (request.object_key (),
+                                          request,
+                                          forward_to);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
