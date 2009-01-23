@@ -1,3 +1,9 @@
+Fri Jan 23 06:39:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
+
+        * tao/Cache_Entries.{inl,cpp}:
+          Uninlined recycle_state it now calls the transport to get the
+          id. The state will soon move to the transport.
+
 Thu Jan 22 22:58:21 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * tao/CodecFactory/IOP_Codec_include.pidl:
