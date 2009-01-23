@@ -39,12 +39,4 @@
 ///FUZZ: disable check_for_include/
 #include "tao/PortableServer/PortableServer.pidl"
 
-// Add a dummy module here as a hack
-// Some preprocessors (IBM VA 6 for one) require some code here in order
-// to spit out a #line for this file.  The IDL Compiler requires this
-// in order to generate the proper includes in the generated C++.
-module PORTABLESERVER_PORTABLESERVER_INCLUDE_IDL_Dummy {
-  typedef long dummy;
-};
-
 #endif /* _PORTABLESERVER_INCLUDE_IDL_ */

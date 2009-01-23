@@ -1,3 +1,21 @@
+Fri Jan 23 21:31:09 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/CodecFactory/IOP_Codec_include.pidl:
+        * tao/Compression/Compression_include.pidl:
+        * tao/IORInterceptor/IORInfo.pidl:
+        * tao/Monitor/Monitor_include.pidl:
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_include.pidl:
+        * tao/PI/PI_include.pidl:
+        * tao/PI_Server/PI_Server_include.pidl:
+        * tao/PortableServer/PortableServer_include.pidl:
+        * tao/RTCORBA/RTCORBA_include.pidl:
+        * tao/RTPortableServer/RTPortableServer_include.pidl:
+        * tao/RTScheduling/RTScheduler_include.pidl:
+
+          Modification to yesterday's commit:
+          Thu Jan 22 22:58:21 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+          Now using a different workaround as suggested by Johnny Willemsen.
+
 Fri Jan 23 15:21:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CORBALOC_Parser.cpp:
