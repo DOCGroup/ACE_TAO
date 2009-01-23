@@ -1,3 +1,8 @@
+Fri Jan 23 07:58:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
+
+        * tests/Bug_3547_Regression/Stock_Quoter_Client.cpp:
+          Destroy the orb before exiting
+
 Fri Jan 23 06:39:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
 
         * tao/Cache_Entries.{inl,cpp}:
