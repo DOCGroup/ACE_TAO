@@ -11,16 +11,16 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
 my $server1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $server2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $client  = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+my $server2 = PerlACE::TestTarget::create_target (1) || die "Create target 2 failed\n";
+my $client  = PerlACE::TestTarget::create_target (2) || die "Create target 3 failed\n";
 
 my $iorbase1 = "test.ior";
 my $iorbase2 = "test2.ior";
 
 my $server1_iorfile = $server1->LocalFile ($iorbase1);
 my $server2_iorfile = $server2->LocalFile ($iorbase2);
-my $client_server_iorfile  = $client->LocalFile ($iorbase1);
-my $client_iorfile  = $client->LocalFile ($iorbase2);
+my $client1_iorfile  = $client->LocalFile ($iorbase1);
+my $client2_iorfile  = $client->LocalFile ($iorbase2);
 
 $server1->DeleteFile($iorbase1);
 $server1->DeleteFile($iorbase2);
@@ -31,7 +31,7 @@ $client->DeleteFile($iorbase2);
 
 $SV1 = $server1->CreateProcess ("server", "-o $server1_iorfile -c 1 -n 1");
 $SV2 = $server2->CreateProcess ("server", "-o $server2_iorfile -n 2");
-$CL  = $client->CreateProcess ("client", "-p file://$client_server_iorfile -s file://$client_iorfile");
+$CL  = $client->CreateProcess ("client", "-p file://$client1_iorfile -s file://$client2_iorfile");
 
 $status = 0;
 

@@ -1,3 +1,11 @@
+Fri Jan 23 13:17:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Portable_Interceptors/ForwardRequest/run_test.pl:
+        * tests/Portable_Interceptors/PolicyFactory/run_test.pl:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/run_test.pl:
+        * tests/Portable_Interceptors/Redirection/run_test.pl:
+          Optimized scripts for Win CE targets
+
 Fri Jan 23 08:03:58 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/POA/EndpointPolicy/run_test_dh.pl:
