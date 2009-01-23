@@ -1368,7 +1368,7 @@ CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) created new ORB <%C>\n"),
+                  ACE_TEXT("TAO (%P|%t) - Created new ORB <%s>\n"),
                   orbid_string.c_str ()));
     }
 
@@ -1512,8 +1512,8 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
 
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Cannot stringify given ")
-                    ACE_TEXT ("object.  No or only unknown profiles.\n")));
+                    ACE_TEXT ("TAO (%P|%t) - Cannot stringify given ")
+                    ACE_TEXT ("object. No or only unknown profiles.\n")));
 
       throw ::CORBA::MARSHAL (
         CORBA::SystemException::_tao_minor_code (
@@ -1701,11 +1701,11 @@ CORBA::ORB::url_ior_string_to_object (const char* str)
   // Figure out if the servant is collocated.
   CORBA::Object_ptr obj = this->orb_core_->create_object (safe_objdata.get ());
 
-  if (CORBA::is_nil (obj))
-    return CORBA::Object::_nil ();
-
-  // Transfer ownership to the CORBA::Object
-  (void) safe_objdata.release ();
+  if (!CORBA::is_nil (obj))
+    {
+      // Transfer ownership to the CORBA::Object
+      (void) safe_objdata.release ();
+    }
 
   return obj;
 }

@@ -1299,7 +1299,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   else
     if  (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("TAO (%P|%t) ORB_Core: ")
+                    ACE_TEXT("TAO (%P|%t) - ORB_Core: ")
                     ACE_TEXT("Codeset Manager not available\n")));
 
   // Set up the pluggable protocol infrastructure.  First get a
@@ -1408,7 +1408,7 @@ TAO_ORB_Core::fini (void)
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Destroying ORB <%C>\n"),
+                  ACE_TEXT ("TAO (%P|%t) - Destroying ORB <%C>\n"),
                   this->orbid_));
     }
 
@@ -3073,7 +3073,8 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
       if (TAO_debug_level > 2)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("TAO (%P|%t) setting primary hook\n")));
+                      ACE_TEXT("TAO (%P|%t) - Setting primary connection ")
+                      ACE_TEXT("timeout hook\n")));
         }
       TOCSRi->connection_timeout_hook_ = hook;
     }
@@ -3083,7 +3084,8 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
       if (TAO_debug_level > 2)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("TAO (%P|%t) setting alternate hook\n")));
+                      ACE_TEXT("TAO (%P|%t) - Setting alternate connection ")
+                      ACE_TEXT("timeout hook\n")));
         }
       TOCSRi->alt_connection_timeout_hook_ = hook;
     }
@@ -3091,9 +3093,9 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
     if (TAO_debug_level > 2)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) not overwriting alternate hook.")
-                    ACE_TEXT (" Is it still null? %d\n"),
-                    TOCSRi->alt_connection_timeout_hook_ == 0));
+                    ACE_TEXT ("TAO (%P|%t) - Not overwriting alternate ")
+                    ACE_TEXT ("connection timeout hook. It is %@"),
+                    TOCSRi->alt_connection_timeout_hook_));
       }
 
 #undef TOCSRi
