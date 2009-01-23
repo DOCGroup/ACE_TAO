@@ -47,7 +47,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
              << e.symbol << endl;;
       }
 
-      quoter->shutdown ();
+    quoter->shutdown ();
+
+    orb->destroy ();
   }
   catch (CORBA::Exception& e)
   {
