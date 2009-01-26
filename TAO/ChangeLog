@@ -1,17 +1,23 @@
+Mon Jan 26 18:54:58 UTC 2009  James Chappell  <chappell_j@ociweb.com>
+
+        * tests/BiDirectional_DelayedUpcall/test_i.h:
+        * tests/Bug_1383_Regression/simple_i.h:
+          Remove compile AIX compile warnings.
+
 Mon Jan 26 17:17:56 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Transport_Connector.cpp:
-        
+
           Fix for bug 3557, reordered the evaluation of the endpoint so
           that one associated with a bidirectional transport may be found
-          in the cache even if the address may not be valid, such as 
+          in the cache even if the address may not be valid, such as
           containing an unresolvable hostname. The endpoint is still
           validated before a new connection is attempted.
 
           Also included some minor formatting changes.
 
         * tests/BiDirectional/run_test3557.pl:
-        
+
           New test to validate this fix.
 
 Mon Jan 26 15:42:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
