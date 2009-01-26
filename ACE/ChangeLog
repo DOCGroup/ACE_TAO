@@ -1,3 +1,8 @@
+Mon Jan 26 15:44:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3541_Regression_Test.cpp:
+          Fixed compiler errors on WinCE target.
+
 Mon Jan 26 15:39:36 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/tao_orb_tests.lst:

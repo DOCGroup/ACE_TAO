@@ -16,6 +16,7 @@
 #include "ace/SString.h"
 #include "tests/test_config.h"
 
+
 ACE_RCSID (tests,
            Bug_3541_Regression_Test,
            "$Id$")
@@ -81,8 +82,7 @@ run_main (int, ACE_TCHAR *[])
   lastError = ACE_OS::last_error();
   
   const ACE_sema_t &semaphoreLock = semaphore0.lock();
-
-  if ((semaphoreLock == ACE_INVALID_HANDLE) ||
+  if (((ACE_HANDLE)semaphoreLock == ACE_INVALID_HANDLE) ||
       (lastError != 0))
   {
     ret = -1;
