@@ -297,16 +297,7 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
   errno = 0; // need to clear errno to ensure a stale enotsup is not set
   if (desc == 0)
     return 0;
-  unsigned int endpoint_count = 0;
   TAO_Endpoint *root_ep = desc->endpoint();
-  for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(),0);
-       ep != 0;
-       ep = ep->next_filtered(this->orb_core(),root_ep))
-    if (this->set_validate_endpoint (ep) == 0)
-      ++endpoint_count;
-  if (endpoint_count == 0)
-    return 0;
-
   TAO_Transport *base_transport = 0;
 
   TAO::Transport_Cache_Manager &tcm =
@@ -343,6 +334,14 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
   // at this point to register several potential transports so that
   // when one succeeds the rest are cancelled or closed.
 
+  unsigned int endpoint_count = 0;
+  for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(),0);
+       ep != 0;
+       ep = ep->next_filtered(this->orb_core(),root_ep))
+    if (this->set_validate_endpoint (ep) == 0)
+      ++endpoint_count;
+  if (endpoint_count == 0)
+    return 0;
   return this->make_parallel_connection (r,*desc,timeout);
 }
 
@@ -486,10 +485,6 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                         TAO_Transport_Descriptor_Interface *desc,
                         ACE_Time_Value *timeout)
 {
-  if (desc == 0 ||
-      (this->set_validate_endpoint (desc->endpoint ()) == -1))
-    return 0;
-
   TAO::Transport_Cache_Manager &tcm =
     this->orb_core ()->lane_resources ().transport_cache ();
 
@@ -554,16 +549,19 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
               if (base_transport->is_connected ())
                 return base_transport;
 
-              // Is it possible to get a transport from the cache that is not
-              // connected? If not, then the following code is bogus. We cannot
-              // wait for a connection to complete on a transport in the cache.
+              // Is it possible to get a transport from the cache that
+              // is not connected? If not, then the following code is
+              // bogus. We cannot wait for a connection to complete on
+              // a transport in the cache.
               //
-              // (mesnier_p@ociweb.com) It is indeed possible to reach this point.
-              // The AMI_Buffering test does. When using non-blocking connects and
-              // the first request(s) are asynch and may be queued, the connection
-              // establishment may not be completed by the time the invocation is
-              // done with it. In that case it is up to a subsequent invocation to
-              // handle the connection completion.
+              // (mesnier_p@ociweb.com) It is indeed possible to reach
+              // this point.  The AMI_Buffering test does. When using
+              // non-blocking connects and the first request(s) are
+              // asynch and may be queued, the connection
+              // establishment may not be completed by the time the
+              // invocation is done with it. In that case it is up to
+              // a subsequent invocation to handle the connection
+              // completion.
 
               TransportCleanupGuard tg(base_transport);
               if (!this->wait_for_connection_completion (r, *desc,
@@ -605,8 +603,9 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
               if (TAO_debug_level > 4)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT("TAO (%P|%t) - Transport_Connector::waiting")
-                              ACE_TEXT(" for connection on transport [%d]\n"),
+                              ACE_TEXT("TAO (%P|%t) - ")
+			      ACE_TEXT("Transport_Connector::waiting ")
+                              ACE_TEXT("for connection on transport [%d]\n"),
                               base_transport->id ()));
                 }
 
@@ -633,7 +632,10 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
               if (TAO_debug_level > 4)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("TAO (%P|%t) - Transport_Connector::non-blocking: returning unconnected transport [%d]\n"),
+			      ACE_TEXT("TAO (%P|%t) - ")
+			      ACE_TEXT("Transport_Connector::non-blocking:")
+			      ACE_TEXT("returning unconnected ")
+			      ACE_TEXT("transport [%d]\n"),
                     base_transport->id ()));
                 }
 
@@ -643,6 +645,10 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
         }
       else
         {
+	  if (desc == 0 ||
+	      (this->set_validate_endpoint (desc->endpoint ()) == -1))
+	    return 0;
+
           // @todo: This is not the right place for this! (bugzilla 3023)
           // Purge connections (if necessary)
           tcm.purge ();
@@ -675,8 +681,10 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
               if (TAO_debug_level > 4)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT("TAO (%P|%t) - Transport_Connector::connect, ")
-                              ACE_TEXT("opening Transport[%d] in TAO_CLIENT_ROLE\n"),
+                              ACE_TEXT("TAO (%P|%t) - ")
+			      ACE_TEXT("Transport_Connector::connect, ")
+                              ACE_TEXT("opening Transport[%d] in ")
+			      ACE_TEXT("TAO_CLIENT_ROLE\n"),
                               base_transport->id ()));
                 }
 
@@ -687,7 +695,8 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                   if (TAO_debug_level > 4)
                     {
                       ACE_DEBUG ((LM_DEBUG,
-                                  ACE_TEXT("TAO (%P|%t) - Post_connect_hook failed.  ")
+                                  ACE_TEXT("TAO (%P|%t) - Post_connect_hook ")
+				  ACE_TEXT("failed.  ")
                                   ACE_TEXT("Purging transport[%d]\n"),
                                   base_transport->id ()));
                     }
@@ -702,7 +711,8 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
             }
           else // not making new connection
             {
-              (void) this->wait_for_transport (r, base_transport, timeout, true);
+              (void) this->wait_for_transport (r, base_transport,
+					       timeout, true);
               base_transport->remove_reference ();
             }
         }
