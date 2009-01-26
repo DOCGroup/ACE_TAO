@@ -306,7 +306,7 @@ TAO_Notify_SequencePushConsumer::push (const CosNotification::EventBatch& event_
                 this->push_consumer_->_stubobj()->orb_core()->orbid()));
   }
   //--cj end
-
+  last_ping_ = ACE_OS::gettimeofday ();
   this->push_consumer_->push_structured_events (event_batch);
 }
 
@@ -334,6 +334,12 @@ TAO_Notify_SequencePushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* o
   ACE_ASSERT(tmp != 0);
   this->init(tmp->push_consumer_.in());
   this->schedule_timer(false);
+}
+
+CORBA::Object_ptr
+TAO_Notify_SequencePushConsumer::get_consumer (void)
+{
+  return CosNotifyComm::SequencePushConsumer::_duplicate (this->push_consumer_.in ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
