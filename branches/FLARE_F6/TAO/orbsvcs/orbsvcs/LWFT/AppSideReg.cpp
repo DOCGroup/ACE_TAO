@@ -59,24 +59,24 @@ AppSideReg::svc (void)
       // retrieve the heartbeat port number from the HostMonitor if no
       // port parameter has been given.
       if (AppOptions::instance ()->port () == 0)
-	{
-	  try
-	    {
-	      port_ = hmvar_->heartbeat_port ();
-	    }
-	  catch (CORBA::SystemException & ex)
-	    {
-	      ACE_ERROR ((LM_ERROR,
-			  "AppSideReg::svc: HostMonitor "
-			  "heartbeat_port () call failed.\n"));
-	      outer_barrier_.wait ();
-	      return 1;
-	    }
-	}
+	      {
+	        try
+	          {
+	            port_ = hmvar_->heartbeat_port ();
+	          }
+	        catch (CORBA::SystemException &)
+	          {
+	            ACE_ERROR ((LM_ERROR,
+			        "AppSideReg::svc: HostMonitor "
+			        "heartbeat_port () call failed.\n"));
+	            outer_barrier_.wait ();
+	            return 1;
+	          }
+	      }
       else
-	{
-	  port_ = AppOptions::instance ()->port ();
-	}
+	      {
+	        port_ = AppOptions::instance ()->port ();
+	      }
 
       ACE_DEBUG ((LM_TRACE, "Creating the host monitor\n"));
 
