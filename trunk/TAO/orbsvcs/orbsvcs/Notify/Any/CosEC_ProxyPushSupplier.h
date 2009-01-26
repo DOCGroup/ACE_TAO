@@ -63,6 +63,8 @@ public:
   virtual void disconnect_push_supplier (
   );
 
+  virtual void validate ();
+
 private:
   /// Release
   virtual void release (void);

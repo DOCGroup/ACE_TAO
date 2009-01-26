@@ -1,3 +1,128 @@
+Mon Jan 26 19:41:44 UTC 2009  James Chappell  <chappell_j@ociweb.com>
+
+        * orbsvcs/Notify_Service/Notify_Service.h:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        
+          - Added LoggingWorker thread to run an reactor for Logging Strategy.
+            This would support the log file switch and roll over.
+
+          - To use this feature:
+            1) run Notification_Service with "-LoggingInterval <seconds>".
+
+            2) add Logging_Strategy directive to service configuration file.
+               e.g.
+               dynamic Logging_Strategy Service_Object* ACE:_make_ACE_Logging_Strategy()
+               "-s NS -f OSTREAM -t 0 -m 1024 -w"
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/Notify/Admin.h:
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Builder.h:
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+        * orbsvcs/orbsvcs/Notify/Consumer.h:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.h:
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h:
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.h:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/FilterFactory.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Properties.h:
+        * orbsvcs/orbsvcs/Notify/Properties.inl:
+        * orbsvcs/orbsvcs/Notify/Properties.cpp:
+        * orbsvcs/orbsvcs/Notify/Proxy.h:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.cpp:
+
+        * orbsvcs/orbsvcs/Notify/Supplier.h:
+        * orbsvcs/orbsvcs/Notify/Supplier.cpp:
+        
+        - Added proxy cleanup feature. It peridically validates the connection
+          to all clients via _non_exist() call. It records when last pushing
+          occurs to reduce the number of _non_exist() calls. If the validate
+          connection caught non-TIMEOUT exception then the NotificationService
+          disconnect the client.
+
+           To use this feature, add
+           "-ValidateClient -ValidateClientDelay <seconds> -ValidateClientInterval <seconds>"
+           to TAO_CosNotify_Service directive in service configuration.
+           e.g.
+           static TAO_CosNotify_Service
+           "-ValidateClient -ValidateClientDelay 1 -ValidateClientInterval 10"
+
+           The -ValidateClient needs be used for -ValidateClientDelay and
+           -ValidateClientInterval options to take effect. The -ValidateClientDelay
+           is the validate delay after init and the -ValidateClientInterval is the
+           interval for periodic validations.
+
+         - Fixed filter persistent.
+
+           The previous version saves the filter IOR to persistent data, the IOR is
+           never valid after the NotificationService restart as it's activated by root
+           poa which is not a persistent POA. Instead, the filter constraints are saved.
+
+           As filter is independent from admin or proxy object, the filter factory now
+           keeps track the filter objects and assigns a unique id to each filter. The
+           admin and proxy reference the filter with its unique id ("MapId"). When the
+           persistent data is loaded at init time, the filter factory creates the filters
+           with the specified ids and constraints and provides reference when loading
+           admin and proxy that reference it.       
+        
+         - Rolled back following changes as the changes actually still create filter 
+            factory servant singleton but activate it with default poa to create each
+            filter factory object reference for each event channel.
+
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+
+          - Removed %a in task activate failure logging message to avoid abort
+            upon failure.
+          - Made task activate failure due to EAGAIN to raise NO_RESOURCES
+            exception instead of BAD_PARAM.
+
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_FilterFactory.h:
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_FilterFactory.cpp:
+        * orbsvcs/tests/Notify/Test_Filter/Test_Filter.mpc:
+         Updated to accomodate above changes.
+
+
 Mon Jan 26 18:54:58 UTC 2009  James Chappell  <chappell_j@ociweb.com>
 
         * tests/BiDirectional_DelayedUpcall/test_i.h:

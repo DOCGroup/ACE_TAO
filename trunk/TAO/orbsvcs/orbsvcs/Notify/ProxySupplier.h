@@ -21,6 +21,7 @@
 #include "orbsvcs/Notify/Event.h"
 #include "orbsvcs/Notify/Proxy.h"
 #include "orbsvcs/Notify/ConsumerAdmin.h"
+#include "orbsvcs/Notify/Consumer.h"
 
 #include "orbsvcs/CosEventChannelAdminC.h"
 
@@ -85,7 +86,7 @@ private:
   TAO_Notify_ConsumerAdmin::Ptr consumer_admin_;
 
   /// The Consumer that we're connect to.
-  ACE_Auto_Ptr<TAO_Notify_Consumer> consumer_;
+  TAO_Notify_Consumer::Ptr consumer_;
 
   /// Access our Peer.
   virtual TAO_Notify_Peer* peer (void);
