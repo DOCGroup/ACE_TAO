@@ -1,3 +1,10 @@
+Mon Jan 26 11:13:49 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Bug_3524_Regression/client.cpp:
+        * tests/Bug_3524_Regression/test_i.cpp:
+
+          Fixed this test on CodeGear builds.
+
 Fri Jan 23 23:05:42 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.cpp:

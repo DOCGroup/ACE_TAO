@@ -332,7 +332,7 @@ A_i::vbx_method (::Test::A::FailOn where,
                           ::Test::val_bd_str,
                           CORBA::NO_MEMORY ());
         res = res_val;
-        *res = CORBA::string_dup (::Test::FailStr);
+        *res_val = CORBA::string_dup (::Test::FailStr);
       }
       break;
     }
@@ -379,7 +379,7 @@ A_i::vbx_method_s (::Test::A::FailOn where,
                           ::Test::val_bds_str,
                           CORBA::NO_MEMORY ());
         res = res_val;
-        *res = CORBA::string_dup (::Test::FailStr);
+        *res_val = CORBA::string_dup (::Test::FailStr);
       }
       break;
     }

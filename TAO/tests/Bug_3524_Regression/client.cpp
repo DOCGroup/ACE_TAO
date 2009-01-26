@@ -1061,12 +1061,11 @@ int test_valueboxes (::Test::A_ptr server)
   {
     ::Test::val_bd_str_var arg1;
     ACE_NEW_THROW_EX (arg1.inout (),
-                      ::Test::val_bd_str,
+                      ::Test::val_bd_str (::Test::FailStr),
                       CORBA::NO_MEMORY ());
     ::Test::val_bd_str_var arg2;
     ::Test::val_bd_str_out arg2_out = arg2;
     ::Test::val_bd_str_var arg3;
-    *arg1 = CORBA::string_dup (::Test::FailStr);
     status |=
       call_vbx_method (server,
                        ::Test::A::ARG1,
@@ -1080,12 +1079,11 @@ int test_valueboxes (::Test::A_ptr server)
   {
     ::Test::val_bds_str_var arg1;
     ACE_NEW_THROW_EX (arg1.inout (),
-                      ::Test::val_bds_str,
+                      ::Test::val_bds_str (::Test::FailStr),
                       CORBA::NO_MEMORY ());
     ::Test::val_bds_str_var arg2;
     ::Test::val_bds_str_out arg2_out = arg2;
     ::Test::val_bds_str_var arg3;
-    *arg1 = CORBA::string_dup (::Test::FailStr);
     status |=
       call_vbx_method_s (server,
                          ::Test::A::ARG1,
@@ -1162,9 +1160,8 @@ int test_valueboxes (::Test::A_ptr server)
     ::Test::val_bd_str_out arg2_out = arg2;
     ::Test::val_bd_str_var arg3;
     ACE_NEW_THROW_EX (arg3.inout (),
-                      ::Test::val_bd_str,
+                      ::Test::val_bd_str (::Test::FailStr),
                       CORBA::NO_MEMORY ());
-    *arg3 = CORBA::string_dup (::Test::FailStr);
     status |=
       call_vbx_method (server,
                        ::Test::A::ARG3,
@@ -1181,9 +1178,8 @@ int test_valueboxes (::Test::A_ptr server)
     ::Test::val_bds_str_out arg2_out = arg2;
     ::Test::val_bds_str_var arg3;
     ACE_NEW_THROW_EX (arg3.inout (),
-                      ::Test::val_bds_str,
+                      ::Test::val_bds_str (::Test::FailStr),
                       CORBA::NO_MEMORY ());
-    *arg3 = CORBA::string_dup (::Test::FailStr);
     status |=
       call_vbx_method_s (server,
                          ::Test::A::ARG3,
