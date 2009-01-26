@@ -1,3 +1,8 @@
+Mon Jan 26 17:26:41 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Added new test for fix of bug 3557.
+
 Mon Jan 26 15:44:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3541_Regression_Test.cpp:
