@@ -1,3 +1,14 @@
+Mon Jan 26 15:39:36 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Removed "!LabVIEW_RT", "!WinCE" and "!FUZZ" from:
+            TAO/tests/DII_AMI_Forward/run_test.pl
+            TAO/tests/DSI_AMH/run_test.pl
+            TAO/tests/DSI_AMI_Gateway/run_exception_test.pl
+            TAO/tests/DSI_AMI_Gateway/run_test.pl
+            TAO/tests/DSI_Gateway/run_exception_test.pl
+            TAO/tests/DSI_Gateway/run_test.pl
+
 Fri Jan 23 08:04:58 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/tao_orb_tests.lst:
