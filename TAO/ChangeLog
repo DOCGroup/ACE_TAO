@@ -1,3 +1,13 @@
+Mon Jan 26 15:35:24 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/DII_AMI_Forward/run_test.pl:
+        * tests/DSI_AMH/run_test.pl:
+        * tests/DSI_AMI_Gateway/run_exception_test.pl:
+        * tests/DSI_AMI_Gateway/run_test.pl:
+        * tests/DSI_Gateway/run_exception_test.pl:
+        * tests/DSI_Gateway/run_test.pl:
+          Made "fuzz" compliant.
+
 Mon Jan 26 11:13:49 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Bug_3524_Regression/client.cpp:
