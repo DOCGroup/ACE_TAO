@@ -1,3 +1,9 @@
+Mon Jan 26 16:19:00 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
+        
+          Removed unused variable and fixed indentation errors.
+
 Mon Jan 19 19:42:00 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
