@@ -11,9 +11,9 @@ use PerlACE::TestTarget;
 # Make pretty look thing
 print STDERR "\n";
 my $server1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $server2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $server3 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-my $client  = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
+my $server2 = PerlACE::TestTarget::create_target (1) || die "Create target 2 failed\n";
+my $server3 = PerlACE::TestTarget::create_target (1) || die "Create target 3 failed\n";
+my $client  = PerlACE::TestTarget::create_target (2) || die "Create target 4 failed\n";
 
 my $iorbase1 = "server.ior";
 my $iorbase2 = "server2.ior";
