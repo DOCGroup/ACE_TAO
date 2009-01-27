@@ -1,3 +1,9 @@
+Tue Jan 27 16:55:49 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Sequence_Unit_Tests/bounded_sequence_cdr_ut.cpp:
+
+          Fixed a compilation error after a fix for bug#3524.
+
 Tue Jan 27 16:13:41 UTC 2009  James Chappell  <chappell_j@ociweb.com>
 
         * orbsvcs/Notify_Service/Notify_Service.h:
