@@ -2928,6 +2928,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_laxity_message_queue (size_t hw
 // <ACE_Dynamic_Message_Queue>.
 
 #if defined (ACE_VXWORKS)
+  // factory method for a wrapped VxWorks message queue
 
 template <ACE_SYNCH_DECL>
 ACE_Message_Queue_Vx *
@@ -2942,7 +2943,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_Vx_message_queue (size_t max_me
                   0);
   return tmp;
 }
-  // factory method for a wrapped VxWorks message queue
+#endif /* defined (ACE_VXWORKS) */
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
@@ -2959,7 +2960,6 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_NT_message_queue (size_t max_th
 }
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
-#endif /* defined (ACE_VXWORKS) */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
