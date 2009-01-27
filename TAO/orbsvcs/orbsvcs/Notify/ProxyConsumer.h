@@ -68,19 +68,12 @@ public:
   /// The SA parent.
   TAO_Notify_SupplierAdmin& supplier_admin (void);
 
-  ACE_Time_Value last_ping() const;
-  void last_ping(const ACE_Time_Value& tv);
- 
 protected:
   /// Access the Supplier
   TAO_Notify_Supplier* supplier (void);
 
   /// Accept an event from the Supplier
   void push_i (TAO_Notify_Event * event);
-
-  /// Last time either push an event or validate connection 
-  /// via _non_exist call.
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, ACE_Time_Value> last_ping_;
 
 private:
   /// Is this part of a reliable channel
@@ -95,7 +88,6 @@ private:
 
   /// Access our Peer.
   virtual TAO_Notify_Peer* peer (void);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -10,8 +10,6 @@ ACE_RCSID(Notify, FilterAdmin, "$Id$")
 
 #include "orbsvcs/Notify/Topology_Saver.h"
 #include "orbsvcs/Notify/Properties.h"
-#include "orbsvcs/Notify/EventChannelFactory.h"
-#include "orbsvcs/Notify/FilterFactory.h"
 #include "ace/Bound_Ptr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -20,7 +18,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Notify_FilterAdmin::TAO_Notify_FilterAdmin (void)
 {
 }
-
 
 // Implementation skeleton destructor
 TAO_Notify_FilterAdmin::~TAO_Notify_FilterAdmin (void)
@@ -137,14 +134,8 @@ TAO_Notify_FilterAdmin::save_persistent (TAO_Notify::Topology_Saver& saver)
     {
       TAO_Notify::NVPList fattrs;
       CORBA::Long id = entry->ext_id_;
-
-      //TBD: this presume the filter always collocated.
-      //otherwise we need modify the filter interface to add get_filter_id()
-
-      TAO_Notify_FilterFactory* factory = ecf_->default_filter_factory_servant ();
-      TAO_Notify_Object::ID mapid = factory->get_filter_id (entry->int_id_.in ());
-
-      fattrs.push_back(TAO_Notify::NVP("MapId", mapid));
+      CORBA::String_var ior = orb->object_to_string(entry->int_id_.in());
+      fattrs.push_back(TAO_Notify::NVP("IOR", ior.in()));
       saver.begin_object(id, "filter", fattrs, changed);
       saver.end_object(id, "filter");
     }
@@ -159,12 +150,15 @@ TAO_Notify_FilterAdmin::load_child (const ACE_CString &type, CORBA::Long id,
 {
   if (type == "filter")
   {
-   TAO_Notify_Object::ID mapid = 0;
-   attrs.load("MapId", mapid);
+    TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
+    CORBA::ORB_var orb = properties->orb();
+    ACE_ASSERT(! CORBA::is_nil(orb.in()));
+    ACE_CString ior;
 
-   TAO_Notify_FilterFactory* factory = ecf_->default_filter_factory_servant ();
-   CosNotifyFilter::Filter_var filter = factory->get_filter (mapid);
- 
+    (void) attrs.load("IOR", ior);
+    CORBA::Object_var obj = orb->string_to_object(ior.c_str());
+    CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_unchecked_narrow(obj.in());
+
     if (! CORBA::is_nil(filter.in()))
     {
       this->filter_ids_.set_last_used(id);
@@ -180,12 +174,5 @@ TAO_Notify_FilterAdmin::release (void)
 {
   delete this;
 }
-
-void
-TAO_Notify_FilterAdmin::event_channel_factory (TAO_Notify_EventChannelFactory* ecf)
-{
-  this->ecf_.reset (ecf);
-}
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

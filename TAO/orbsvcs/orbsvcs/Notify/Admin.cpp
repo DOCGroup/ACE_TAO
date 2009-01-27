@@ -1,6 +1,5 @@
 // $Id$
 #include "orbsvcs/Notify/Admin.h"
-#include "orbsvcs/Notify/Validate_Worker_T.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Notify/Admin.inl"
@@ -54,8 +53,6 @@ TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent)
 
   this->ec_.reset (dynamic_cast<TAO_Notify_EventChannel *>(parent));
   ACE_ASSERT (this->ec_.get() != 0);
-
-  filter_admin_.event_channel_factory (this->ec_->event_channel_factory ());
 
   // this-> on the following line confuses VC6
   initialize (parent);
@@ -219,14 +216,5 @@ TAO_Notify_Admin::reconnect (void)
   TAO_Notify::Reconnect_Worker<TAO_Notify_Proxy> wrk;
   this->proxy_container().collection()->for_each(&wrk);
 }
-
-void
-TAO_Notify_Admin::validate ()
-{
-  TAO_Notify::Validate_Worker<TAO_Notify_Proxy> wrk;
-  this->proxy_container().collection()->for_each(&wrk);
-}
-
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

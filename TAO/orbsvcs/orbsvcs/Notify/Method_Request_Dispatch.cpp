@@ -79,8 +79,7 @@ int TAO_Notify_Method_Request_Dispatch::execute_i (void)
                                                                   parent.filter_operator ());
 
       if (TAO_debug_level > 1)
-        ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) Proxysupplier %x filter eval result = %d",
-          &this->proxy_supplier_ , val));
+        ACE_DEBUG ((LM_DEBUG, "Proxysupplier %x filter eval result = %d",&this->proxy_supplier_ , val));
 
       // Filter failed - do nothing.
       if (val == 0)

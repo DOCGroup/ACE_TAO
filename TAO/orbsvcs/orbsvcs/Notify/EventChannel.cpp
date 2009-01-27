@@ -17,7 +17,6 @@
 #include "orbsvcs/Notify/Proxy.h"
 #include "orbsvcs/Notify/Event_Manager.h"
 #include "orbsvcs/Notify/POA_Helper.h"
-#include "orbsvcs/Notify/Validate_Worker_T.h"
 
 #include "tao/debug.h"
 //#define DEBUG_LEVEL 9
@@ -48,6 +47,7 @@ TAO_Notify_EventChannel::TAO_Notify_EventChannel (void)
   : ecf_ (0)
   , ca_container_ (0)
   , sa_container_ (0)
+  , default_filter_factory_ (CosNotifyFilter::FilterFactory::_nil ())
 {
 }
 
@@ -110,6 +110,10 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
 
   this->set_admin (initial_admin);
 
+  PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
+  this->default_filter_factory_ =
+    TAO_Notify_PROPERTIES::instance()->builder()->build_filter_factory (default_poa.in());
+
   // Note originally default admins were allocated here, bt this caused problems
   // attempting to save the topology changes before the Event Channel was completely
   // constructed and linked to the ECF.
@@ -165,6 +169,10 @@ TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent* parent)
     TAO_Notify_PROPERTIES::instance ()->default_event_channel_qos_properties ();
 
   this->set_qos (default_ec_qos);
+
+  PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
+  this->default_filter_factory_ =
+    TAO_Notify_PROPERTIES::instance()->builder()->build_filter_factory (default_poa.in ());
 }
 
 
@@ -225,6 +233,8 @@ TAO_Notify_EventChannel::destroy (void)
 
   this->sa_container_.reset( 0 );
   this->ca_container_.reset( 0 );
+
+  this->default_filter_factory_ = CosNotifyFilter::FilterFactory::_nil();
 }
 
 void
@@ -312,7 +322,7 @@ TAO_Notify_EventChannel::default_supplier_admin (void)
 ::CosNotifyFilter::FilterFactory_ptr
 TAO_Notify_EventChannel::default_filter_factory (void)
 {
-  return this->ecf_->get_default_filter_factory ();
+  return CosNotifyFilter::FilterFactory::_duplicate (this->default_filter_factory_.in ());
 }
 
 ::CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -586,24 +596,5 @@ TAO_Notify_EventChannel::sa_container()
   ACE_ASSERT( this->sa_container_.get() != 0 );
   return *sa_container_;
 }
-
-
-void
-TAO_Notify_EventChannel::validate ()
-{
-  TAO_Notify::Validate_Worker<TAO_Notify_ConsumerAdmin> ca_wrk;
-  this->ca_container().collection()->for_each(&ca_wrk);
-
-  TAO_Notify::Validate_Worker<TAO_Notify_SupplierAdmin> sa_wrk;
-  this->sa_container().collection()->for_each(&sa_wrk);
-}
-
-
-TAO_Notify_EventChannelFactory* 
-TAO_Notify_EventChannel::event_channel_factory ()
-{
-  return this->ecf_.get ();
-}
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
