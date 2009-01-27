@@ -10,7 +10,7 @@
 
 StateSyncAgentTask::StateSyncAgentTask (
   CORBA::ORB_ptr orb,
-	StateSynchronization* agent)
+  StateSynchronizationAgent_i * agent)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     agent_ (agent),
     sync_ (2),
