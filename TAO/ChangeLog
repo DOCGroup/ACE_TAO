@@ -1,3 +1,9 @@
+Tue Jan 27 22:10:16 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:
+        
+          Fixed bug with wrong domain_id_ member initialization.
+
 Tue Jan 27 21:05:29 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.cpp:
