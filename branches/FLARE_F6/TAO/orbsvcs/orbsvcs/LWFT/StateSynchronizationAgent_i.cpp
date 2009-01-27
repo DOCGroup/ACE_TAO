@@ -28,7 +28,7 @@ StateSynchronizationAgent_i::StateSynchronizationAgent_i (
     host_id_ (host_id),
     process_id_ (process_id),
 #if defined (FLARE_USES_DDS)
-    domain_id_ (0),
+    domain_id_ ("FLAREDomain"),
     domain_participant_ (DDS::DomainParticipant::_nil ()),
     publisher_ (DDS::Publisher::_nil ()),
     subscriber_ (DDS::Subscriber::_nil ()),
