@@ -1,5 +1,5 @@
 // -*- C++ -*-
-// $Id: StateSyncAgentTask.cpp 83637 2008-11-10 16:59:13Z parsons $
+// $Id$
 
 #include "tao/PortableServer/POAC.h"
 
@@ -10,7 +10,7 @@
 
 StateSyncAgentTask::StateSyncAgentTask (
   CORBA::ORB_ptr orb,
-	StateSynchronizationAgent_i * agent)
+	StateSynchronization* agent)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     agent_ (agent),
     sync_ (2),

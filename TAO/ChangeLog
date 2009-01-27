@@ -1,3 +1,18 @@
+Tue Jan 27 20:55:44 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        
+          Changed debugging output.
+        
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.cpp:
+        
+          Fix line break format.
+        
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/SimpleTask/SimpleTask.mpc        
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/SimpleTask/server.cpp:
+        
+          Added ForwardingAgent for ReplicationManager redundancy.
+
 Mon Jan 26 16:19:00 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
