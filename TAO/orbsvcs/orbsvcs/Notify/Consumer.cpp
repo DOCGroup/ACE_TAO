@@ -11,14 +11,11 @@ ACE_RCSID (RT_Notify, TAO_Notify_Consumer, "$Id$")
 #include "orbsvcs/Notify/Timer.h"
 #include "orbsvcs/Notify/ProxySupplier.h"
 #include "orbsvcs/Notify/Method_Request_Event.h"
-#include "orbsvcs/Notify/QoSProperties.h"
-#include "orbsvcs/Notify/Properties.h"
 
 #include "orbsvcs/Time_Utilities.h"
 
 #include "tao/debug.h"
 #include "tao/corba.h"
-#include "tao/Messaging/Messaging_TypesC.h"
 
 #include "ace/Bound_Ptr.h"
 #include "ace/Unbounded_Queue.h"
@@ -45,10 +42,6 @@ TAO_Notify_Consumer::TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy)
   this->pending_events_.reset( pending_events );
 
   this->timer_.reset( this->proxy ()->timer () );
-
-  // Enable reference counting on the event handler.
-  this->reference_counting_policy ().value (
-    ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
 TAO_Notify_Consumer::~TAO_Notify_Consumer ()
@@ -58,18 +51,6 @@ TAO_Notify_Consumer::~TAO_Notify_Consumer ()
     this->cancel_timer ();
     this->timer_.reset ();
   }
-}
-
-CORBA::ULong
-TAO_Notify_Consumer::_incr_refcnt (void)
-{
-  return this->add_reference();
-}
-
-CORBA::ULong
-TAO_Notify_Consumer::_decr_refcnt (void)
-{
-  return this->remove_reference();
 }
 
 TAO_Notify_Proxy*
@@ -635,10 +616,6 @@ TAO_Notify_Consumer::schedule_timer (bool is_error)
                   static_cast<int> (this->proxy ()->id ())
                   ));
     }
-  if (this->is_suspended()) // double check to avoid race
-  {
-    this->cancel_timer();
-  }
 }
 
 void
@@ -660,17 +637,14 @@ TAO_Notify_Consumer::cancel_timer (void)
 int
 TAO_Notify_Consumer::handle_timeout (const ACE_Time_Value&, const void*)
 {
-  if (!this->is_suspended() && this->timer_.isSet() && this->timer_id_ != -1)
+  TAO_Notify_Consumer::Ptr grd (this);
+  this->timer_id_ = -1;  // This must come first, because dispatch_pending may try to resched
+  try
     {
-      TAO_Notify_Consumer::Ptr grd (this);
-      this->timer_id_ = -1;  // This must come first, because dispatch_pending may try to resched
-      try
-        {
-          this->dispatch_pending ();
-        }
-      catch (...)
-        {
-        }
+      this->dispatch_pending ();
+    }
+  catch (...)
+    {
     }
 
   return 0;
@@ -679,7 +653,6 @@ TAO_Notify_Consumer::handle_timeout (const ACE_Time_Value&, const void*)
 void
 TAO_Notify_Consumer::shutdown (void)
 {
-  this->suspend();
   if (this->timer_.isSet ())
     {
       this->cancel_timer ();
@@ -732,93 +705,6 @@ TAO_Notify_Consumer::assume_pending_events (TAO_Notify_Consumer& rhs)
       // timer value (unless we have a valid pacing interval).
       this->schedule_timer ();
     }
-  if (this->is_suspended()) // double check to avoid race
-  {
-    this->cancel_timer();
-  }
-}
-
-bool
-TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
-{
-  bool status = false;
-  CORBA::Object_var consumer = this->get_consumer ();
-  if (CORBA::is_nil (consumer.in ()))
-  {
-    // The consumer may not connected or the consumer did
-    // not provide a callback. In this case, the liveliness
-    // check should return true so it will be validated in 
-    // next period. 
-    if (allow_nil_consumer)
-      return true;
-    else
-      return status;
-  }
-
-  CORBA::PolicyList policy_list;
-  try
-    {
-      bool do_liveliness_check = false;
-      ACE_Time_Value now = ACE_OS::gettimeofday ();
-
-      if (CORBA::is_nil (this->rtt_obj_.in ()))
-      {
-        // We need to determine if the consumer on the other end is still
-        // alive.  Since we may be in an upcall from the owner of the
-        // original consumer, we have to put a timeout on the call in case
-        // the client side is not processing ORB requests at this time.  In
-        // the event that the timeout exception occurs, we will assume that
-        // the original consumer is still around.  If we get any other
-        // exception we will say that the original consumer is not
-        // available anymore.
-        TimeBase::TimeT timeout = 10000000;
-        CORBA::Any timeout_any;
-        timeout_any <<= timeout;
-
-        policy_list.length (1);
-        policy_list[0] = TAO_Notify_PROPERTIES::instance()->orb()->
-                          create_policy (
-                                Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-                                timeout_any);
-        rtt_obj_ =
-          consumer->_set_policy_overrides (policy_list,
-                                          CORBA::ADD_OVERRIDE);
-
-        // Clean up the policy that was allocated in the try/catch
-        for (CORBA::ULong i = 0; i < policy_list.length (); i++)
-          policy_list[i]->destroy ();
-
-        do_liveliness_check 
-          = (last_ping_ == ACE_Time_Value::zero ? true 
-          : now - last_ping_.value () >= TAO_Notify_PROPERTIES::instance()->validate_client_delay ());
-      }
-      else
-        do_liveliness_check = 
-          now - last_ping_.value () >= TAO_Notify_PROPERTIES::instance()->validate_client_interval ();
-
-      if (CORBA::is_nil (rtt_obj_.in ()))
-        status = false;
-      else if (do_liveliness_check || allow_nil_consumer)
-      {
-        last_ping_ = now;
-        status = !rtt_obj_->_non_existent ();
-      }
-      else
-        status = true;
-    }
-  catch (CORBA::TIMEOUT&)
-    {
-       status = true;
-    }
-  catch (CORBA::Exception& ex)
-    {
-      if (DEBUG_LEVEL > 0)
-      {        
-        ex._tao_print_exception ("TAO_Notify_Consumer::is_alive: false");
-      }
-    }
-
-  return status;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

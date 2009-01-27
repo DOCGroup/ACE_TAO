@@ -78,8 +78,6 @@ public:
 
 protected:
 
-  virtual CORBA::Object_ptr get_consumer (void);
-
   /// The Consumer
   CosNotifyComm::SequencePushConsumer_var push_consumer_;
 

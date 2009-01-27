@@ -267,7 +267,7 @@ TAO_Notify_ConsumerAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
 {
   CosNotifyFilter::FilterID fid =
     this->filter_admin_.add_filter (new_filter);
-   this->self_change ();
+  this->self_change ();
   return fid;
 }
 

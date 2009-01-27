@@ -57,10 +57,4 @@ TAO_Notify_PushSupplier::get_ior (void) const
   return result;
 }
 
-CORBA::Object_ptr
-TAO_Notify_PushSupplier::get_supplier (void)
-{
-  return CosEventComm::PushSupplier::_duplicate (this->push_supplier_.in ());
-}
-
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -20,9 +20,6 @@ ACE_RCSID(Notify,
 #include "orbsvcs/Notify/Find_Worker_T.h"
 #include "orbsvcs/Notify/Seq_Worker_T.h"
 #include "orbsvcs/Notify/POA_Helper.h"
-#include "orbsvcs/Notify/Validate_Worker_T.h"
-#include "orbsvcs/Notify/Validate_Client_Task.h"
-#include "orbsvcs/Notify/FilterFactory.h"
 
 #include "ace/Dynamic_Service.h"
 
@@ -82,18 +79,7 @@ TAO_Notify_EventChannelFactory::destroy (void)
 void
 TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa)
 {
-  this->poa_ = PortableServer::POA::_duplicate (poa);
-
   ACE_ASSERT (this->ec_container_.get() == 0);
-
-  TAO_Notify_FilterFactory * default_filter_factory_servant = 0;
-  PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
-  this->default_filter_factory_ =
-    TAO_Notify_PROPERTIES::instance()->builder()->build_filter_factory (
-      default_poa.in(),
-      default_filter_factory_servant);
-
-  this->default_filter_factory_servant_.reset (default_filter_factory_servant);
 
   // Init ec_container_
   TAO_Notify_EventChannel_Container* ecc = 0;
@@ -130,17 +116,6 @@ TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa)
   this->load_topology ();
 
   this->load_event_persistence ();
-
-  if (TAO_Notify_PROPERTIES::instance()->validate_client() == true)
-  {
-    TAO_Notify_validate_client_Task* validate_client_task = 0;
-    ACE_NEW_THROW_EX (validate_client_task,
-      TAO_Notify_validate_client_Task (TAO_Notify_PROPERTIES::instance()->validate_client_delay (),
-                                 TAO_Notify_PROPERTIES::instance()->validate_client_interval (),
-                                 this),
-      CORBA::INTERNAL ());
-    this->validate_client_task_.reset (validate_client_task);
-  }
 }
 
 void
@@ -172,23 +147,12 @@ TAO_Notify_EventChannelFactory::remove (TAO_Notify_EventChannel* event_channel)
 int
 TAO_Notify_EventChannelFactory::shutdown (void)
 {
-  if (this->validate_client_task_.get () != 0)
-  {
-    this->validate_client_task_->shutdown ();
-  }
-
   if (TAO_Notify_Object::shutdown () == 1)
     return 1;
 
   this->ec_container().shutdown ();
 
   return 0;
-}
-
-CosNotifyFilter::FilterFactory_ptr
-TAO_Notify_EventChannelFactory::get_default_filter_factory (void)
-{
-  return CosNotifyFilter::FilterFactory::_duplicate (this->default_filter_factory_.in ());
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
@@ -199,12 +163,6 @@ TAO_Notify_EventChannelFactory::create_named_channel (
     const char*)
 {
   return this->create_channel (initial_qos, initial_admin, id);
-}
-
-TAO_Notify_FilterFactory*
-TAO_Notify_EventChannelFactory::default_filter_factory_servant () const
-{
-  return this->default_filter_factory_servant_.get ();
 }
 
 ::CosNotifyChannelAdmin::EventChannel_ptr TAO_Notify_EventChannelFactory::create_channel (
@@ -270,16 +228,6 @@ TAO_Notify_EventChannelFactory::load_topology (void)
   }
   this->loading_topology_ = false;
 }
-
-void
-TAO_Notify_EventChannelFactory::validate ()
-{
-  TAO_Notify::Validate_Worker<TAO_Notify_EventChannel> wrk;
-
-  this->ec_container().collection()->for_each(&wrk);
-}
-
-
 bool
 TAO_Notify_EventChannelFactory::is_persistent () const
 {
@@ -297,8 +245,6 @@ TAO_Notify_EventChannelFactory::save_persistent (TAO_Notify::Topology_Saver& sav
 
   bool want_all_children =
     saver.begin_object(0, "channel_factory", attrs, changed);
-
-  this->default_filter_factory_servant_->save_persistent (saver);
 
   // for each deleted child
   //  delete_child  // if the child has persistence.
@@ -396,11 +342,7 @@ TAO_Notify_EventChannelFactory::load_child (const ACE_CString& type,
 {
   // ignore anything but our valid children (ie channel)
   TAO_Notify::Topology_Object * result = this;
-  if (type == "filter_factory")
-  {
-    return this->default_filter_factory_servant_.get ();
-  }
-  else if (type == "channel")
+  if (type == "channel")
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) EventChannelFactory reload channel %d\n")
@@ -559,6 +501,5 @@ TAO_Notify_EventChannelFactory::ec_container()
   ACE_ASSERT( this->ec_container_.get() != 0 );
   return *ec_container_;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

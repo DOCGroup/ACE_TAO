@@ -23,10 +23,6 @@
 #include "orbsvcs/CosNotifyFilterS.h"
 
 #include "orbsvcs/Notify/FilterFactory.h"
-#include "orbsvcs/Notify/ID_Factory.h"
-#include "orbsvcs/Notify/ETCL_Filter.h"
-#include "orbsvcs/Notify/Topology_Saver.h"
-  
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -66,39 +62,9 @@ public:
       const char * constraint_grammar,
       const CORBA::Any & default_value);
 
-
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
-
-  virtual TAO_Notify::Topology_Object* load_child (
-          const ACE_CString &type,
-          CORBA::Long id, 
-          const TAO_Notify::NVPList& attrs);
-
-  virtual TAO_Notify_Object::ID get_filter_id (CosNotifyFilter::Filter_ptr filter);
-  virtual CosNotifyFilter::Filter_ptr get_filter (const TAO_Notify_Object::ID& id);
-
-
 protected:
-
-  CosNotifyFilter::Filter_ptr 
-    create_filter (const char *constraint_grammar,
-                   const TAO_Notify_Object::ID& id,
-                   TAO_Notify_ETCL_Filter*& filter);
-
-  /// Release this object.
-  virtual void release (void);
-
   /// The POA in which to activate the Filters.
   PortableServer::POA_var filter_poa_;
-
-  /// Id generator for proxy suppliers
-  TAO_Notify_ID_Factory filter_ids_;
-
-  typedef ACE_Hash_Map_Manager <TAO_Notify_Object::ID,
-                                TAO_Notify_ETCL_Filter*,
-                                ACE_SYNCH_MUTEX>  FILTERMAP;
-
-  FILTERMAP filters_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
