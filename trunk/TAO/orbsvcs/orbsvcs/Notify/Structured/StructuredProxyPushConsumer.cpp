@@ -81,23 +81,6 @@ TAO_Notify_StructuredProxyPushConsumer::get_proxy_type_name (void) const
 }
 
 void
-TAO_Notify_StructuredProxyPushConsumer::validate ()
-{
-  TAO_Notify_Supplier* sup = this->supplier ();
-  if (sup != 0 && ! sup->is_alive (true))
-  {
-    if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, 
-        ACE_TEXT ("(%P|%t) TAO_Notify_StructuredProxyPushConsumer::validate(%d)"
-        "disconnecting \n"), this->id ()));
-    }
-
-    this->disconnect_structured_push_consumer ();
-  }
-}
-
-void
 TAO_Notify_StructuredProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& attrs)
 {
   SuperClass::load_attrs(attrs);

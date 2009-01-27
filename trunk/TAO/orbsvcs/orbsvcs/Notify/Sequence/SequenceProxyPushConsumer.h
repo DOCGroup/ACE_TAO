@@ -52,7 +52,6 @@ public:
   virtual const char * get_proxy_type_name (void) const;
 
   virtual void load_attrs (const TAO_Notify::NVPList& attrs);
-  virtual void validate ();
 
 protected:
   ///= Data Members

@@ -59,7 +59,6 @@ public:
 
 
   virtual void load_attrs (const TAO_Notify::NVPList& attrs);
-  virtual void validate ();
 
   /// = Servant methods
   // = interface methods
