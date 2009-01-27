@@ -1,3 +1,14 @@
+Tue Jan 27 22:26:59 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_array/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/serializer_op_cs.cpp:
+
+          Reverted a small portion of:
+          Mon Jan 19 16:16:24 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+          Because these files are only for -Gdcps, which doesn't use tao/CDR.h
+          for serialization primitives.
+
 Tue Jan 27 16:55:49 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Sequence_Unit_Tests/bounded_sequence_cdr_ut.cpp:

@@ -1035,37 +1035,8 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
           }
         else
           {
-            be_string *str = 0;
-            if (bt->node_type () == AST_Decl::NT_string ||
-                bt->node_type () == AST_Decl::NT_wstring)
-              {
-                str = be_string::narrow_from_decl (bt);
-                if (!str)
-                  {
-                    ACE_ERROR_RETURN ((LM_ERROR,
-                                       "(%N:%l) be_visitor_array_cdr_op_cs::"
-                                       "visit_node - "
-                                       "bad string node\n"),
-                                      -1);
-                  }
-              }
-
             *os << "_tao_marshal_flag = (strm >> ";
-            if (str != 0 && str->max_size ()->ev ()->u.ulval != 0)
-              {
-                if (str->width () == (long) sizeof (char))
-                  {
-                    *os << "TAO_InputCDR::to_bounded_string (_tao_array ";
-                  }
-                else
-                  {
-                    *os << "TAO_InputCDR::to_bounded_wstring (_tao_array ";
-                  }
-              }
-            else
-              {
-                *os << "_tao_array ";
-              }
+            *os << "_tao_array ";
 
             for (i = 0; i < ndims; ++i)
               {
@@ -1078,16 +1049,6 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
                 // handled in a special way.
                 case AST_Decl::NT_string:
                 case AST_Decl::NT_wstring:
-                  if (str->max_size ()->ev ()->u.ulval != 0)
-                    {
-                      *os << ".out (), "
-                          << str->max_size ()->ev ()->u.ulval << ")";
-                    }
-                  else
-                    {
-                      *os << ".out ()";
-                    }
-                  break;
                 case AST_Decl::NT_valuetype:
                 case AST_Decl::NT_eventtype:
                 case AST_Decl::NT_eventtype_fwd:
@@ -1186,37 +1147,8 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
           }
         else
           {
-            be_string *str = 0;
-            if (bt->node_type () == AST_Decl::NT_string ||
-                bt->node_type () == AST_Decl::NT_wstring)
-              {
-                str = be_string::narrow_from_decl (bt);
-                if (!str)
-                  {
-                    ACE_ERROR_RETURN ((LM_ERROR,
-                                       "(%N:%l) be_visitor_array_cdr_op_cs::"
-                                       "visit_node - "
-                                       "bad string node\n"),
-                                      -1);
-                  }
-              }
-
             *os << "_tao_marshal_flag = (strm << ";
-            if (str != 0 && str->max_size ()->ev ()->u.ulval != 0)
-              {
-                if (str->width () == (long) sizeof (char))
-                  {
-                    *os << "TAO_OutputCDR::from_bounded_string (_tao_array ";
-                  }
-                else
-                  {
-                    *os << "TAO_OutputCDR::from_bounded_wstring (_tao_array ";
-                  }
-              }
-            else
-              {
-                *os << "_tao_array ";
-              }
+            *os << "_tao_array ";
 
             for (i = 0; i < ndims; ++i)
               {
@@ -1229,16 +1161,6 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
                 // handled in a special way.
                 case AST_Decl::NT_string:
                 case AST_Decl::NT_wstring:
-                  if (str->max_size ()->ev ()->u.ulval != 0)
-                    {
-                      *os << ".in (), "
-                          << str->max_size ()->ev ()->u.ulval << ")";
-                    }
-                  else
-                    {
-                      *os << ".in ()";
-                    }
-                  break;
                 case AST_Decl::NT_valuetype:
                 case AST_Decl::NT_eventtype:
                 case AST_Decl::NT_eventtype_fwd:
