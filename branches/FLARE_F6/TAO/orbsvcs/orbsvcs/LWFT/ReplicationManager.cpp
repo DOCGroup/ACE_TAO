@@ -380,7 +380,7 @@ ReplicationManager_i::process_updates (
 
   if (!only_util)
     {
-      ACE_DEBUG ((LM_INFO, "RM: state_changed () called.\n"));
+      //ACE_DEBUG ((LM_TRACE, "RM: state_changed () called.\n"));
       this->send_state_synchronization_rank_list ();
       agent_->state_changed (this->object_id ());
       standby_ = false;

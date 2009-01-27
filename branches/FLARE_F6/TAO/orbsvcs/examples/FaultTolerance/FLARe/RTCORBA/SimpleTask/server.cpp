@@ -14,6 +14,7 @@
 #include "orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.h"
 #include "orbsvcs/orbsvcs/LWFT/ReplicationManagerC.h"
 #include "orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.h"
+#include "orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 
 
@@ -268,8 +269,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       // ORB.
+      LWFT_Client_Init client_initializer;
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        client_initializer.init (argc, argv);
 
       AppOptions::instance ()->parse_args (argc, argv);
 
