@@ -1,3 +1,9 @@
+Tue Jan 27 21:05:29 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.cpp:
+        
+          Fixed wrong parameter declaration.
+
 Tue Jan 27 20:55:44 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
