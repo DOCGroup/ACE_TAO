@@ -1,3 +1,11 @@
+Tue Jan 27 23:28:53 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Queue_T.cpp: Don't nest the ACE_HAS_WIN32_OVERLAPPED_IO
+          ifdef in the ACE_VXWORKS section; it'll never get used. Thanks to
+          Jesus Martinez <jmcruz at lcc dot uma dot es> for this fix.
+
+        * THANKS: Added Jesus Martinez.
+
 Mon Jan 26 17:26:41 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_orb_tests.lst:
