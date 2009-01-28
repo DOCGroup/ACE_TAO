@@ -1,7 +1,21 @@
+Wed Jan 28 20:22:45 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/ciao_tests.lst:
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+
+          Removed these files.  They have moved to the TAO and CIAO bin
+          directories.  This resolves bug 2748.
+
+        * bin/auto_run_tests.pl:
+        * bin/fuzz.pl:
+
+          Updated due to the new locations of the lst files.
+
 Wed Jan 28 15:02:11 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Message_Queue_T.cpp:
-        
+
           Fixed typo in ACE_NEW_RETURN argument list.
 
 Wed Jan 28 10:24:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>

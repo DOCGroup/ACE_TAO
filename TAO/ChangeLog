@@ -1,7 +1,15 @@
+Wed Jan 28 20:22:51 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+
+          These files moved here from $ACE_ROOT/bin, see bug 2748 and the
+          ACE ChangeLog entry for Wed Jan 28 20:22:45 UTC 2009.
+
 Wed Jan 28 14:32:17 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Transport_Connector.cpp:
-        
+
           Fix fuzz errors.
 
 Wed Jan 28 010:09:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
