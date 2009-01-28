@@ -214,7 +214,7 @@ Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
               this->nr_msgs_rcvd_));
   if (this->nr_msgs_rcvd_ != cli_req_no)
     ACE_ERROR((LM_ERROR,
-               "(%t) Handler 0x%x: Expected %d messages; got %d\n",
+               ACE_TEXT ("(%t) Handler 0x%x: Expected %d messages; got %d\n"),
                this,
                cli_req_no,
                this->nr_msgs_rcvd_));
@@ -240,8 +240,8 @@ svr_worker (void *)
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "Error handling events"),
+                       ACE_TEXT ("(%t) %p\n"),
+                       ACE_TEXT ("Error handling events")),
                       0);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -265,8 +265,8 @@ cli_worker (void *arg)
       if (connect.connect (stream, addr) < 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%t) %p\n",
-                      "connect"));
+                      ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("connect")));
           continue;
         }
 
@@ -280,8 +280,8 @@ cli_worker (void *arg)
                              (len + 1) * sizeof (ACE_TCHAR)) == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          "(%t) %p\n",
-                          "send_n"));
+                          ACE_TEXT ("(%t) %p\n"),
+                          ACE_TEXT ("send_n")));
               continue;
             }
           ACE_OS::sleep (delay);
@@ -321,8 +321,8 @@ worker (void *)
 
   if (connect.connect (stream, addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                "(%t) %p Error while connecting\n",
-                "connect"));
+                ACE_TEXT ("(%t) %p Error while connecting\n"),
+                ACE_TEXT ("connect")));
 
   const ACE_TCHAR *sbuf = ACE_TEXT ("\011shutdown");
 
@@ -332,8 +332,8 @@ worker (void *)
 
   if (stream.send_n (sbuf, (ACE_OS::strlen (sbuf) + 1) * sizeof (ACE_TCHAR)) == -1)
     ACE_ERROR ((LM_ERROR,
-                "(%t) %p\n",
-                "send_n"));
+                ACE_TEXT ("(%t) %p\n"),
+                ACE_TEXT ("send_n")));
 
   ACE_DEBUG ((LM_DEBUG,
               "Sent message of length  = %d\n",
