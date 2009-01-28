@@ -1,3 +1,14 @@
+Wed Jan 28 09:45:53 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3541_Regression.cpp:
+          Fixed last compile error
+
+        * tests/Multicast_Test.cpp:
+          Unicode fix
+
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+          Unicode fix
+
 Wed Jan 28 09:09:53 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_arpa_inet.inl:
