@@ -1,15 +1,21 @@
+Wed Jan 28 14:32:17 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Transport_Connector.cpp:
+        
+          Fix fuzz errors.
+
 Wed Jan 28 010:09:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3559_Regression:
         * tests/Bug_3559_Regression/Bug_3559_Regression_Test.cpp:
         * tests/Bug_3559_Regression/Bug_3559_Regression_Test.mpc:
         * tests/Bug_3559_Regression/run_test.pl:
-          
-          Added a new regression test for bug 3559. 
+
+          Added a new regression test for bug 3559.
           This test is there to check whether the logging framework
-          logs timestamps when -ORBVerboseLogging and -ORBLogFile 
-          are set. The test initializes the ORB with -ORBVerboseLogging 
-          set to 0, 1 and 2. This test checks whether the logging flags are 
+          logs timestamps when -ORBVerboseLogging and -ORBLogFile
+          are set. The test initializes the ORB with -ORBVerboseLogging
+          set to 0, 1 and 2. This test checks whether the logging flags are
           set properly and afterward it checks the generated log file.
 
 Wed Jan 28 08:59:25 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
