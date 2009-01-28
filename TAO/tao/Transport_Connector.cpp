@@ -604,7 +604,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT("TAO (%P|%t) - ")
-			      ACE_TEXT("Transport_Connector::waiting ")
+                              ACE_TEXT("Transport_Connector::waiting ")
                               ACE_TEXT("for connection on transport [%d]\n"),
                               base_transport->id ()));
                 }
@@ -632,10 +632,10 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
               if (TAO_debug_level > 4)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-			      ACE_TEXT("TAO (%P|%t) - ")
-			      ACE_TEXT("Transport_Connector::non-blocking:")
-			      ACE_TEXT("returning unconnected ")
-			      ACE_TEXT("transport [%d]\n"),
+                              ACE_TEXT("TAO (%P|%t) - ")
+                              ACE_TEXT("Transport_Connector::non-blocking:")
+                              ACE_TEXT("returning unconnected ")
+                              ACE_TEXT("transport [%d]\n"),
                     base_transport->id ()));
                 }
 
@@ -645,9 +645,9 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
         }
       else
         {
-	  if (desc == 0 ||
-	      (this->set_validate_endpoint (desc->endpoint ()) == -1))
-	    return 0;
+          if (desc == 0 ||
+              (this->set_validate_endpoint (desc->endpoint ()) == -1))
+            return 0;
 
           // @todo: This is not the right place for this! (bugzilla 3023)
           // Purge connections (if necessary)
@@ -682,9 +682,9 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT("TAO (%P|%t) - ")
-			      ACE_TEXT("Transport_Connector::connect, ")
+                              ACE_TEXT("Transport_Connector::connect, ")
                               ACE_TEXT("opening Transport[%d] in ")
-			      ACE_TEXT("TAO_CLIENT_ROLE\n"),
+                              ACE_TEXT("TAO_CLIENT_ROLE\n"),
                               base_transport->id ()));
                 }
 
@@ -696,7 +696,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                   ACE_TEXT("TAO (%P|%t) - Post_connect_hook ")
-				  ACE_TEXT("failed.  ")
+                                  ACE_TEXT("failed.  ")
                                   ACE_TEXT("Purging transport[%d]\n"),
                                   base_transport->id ()));
                     }
@@ -712,7 +712,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
           else // not making new connection
             {
               (void) this->wait_for_transport (r, base_transport,
-					       timeout, true);
+                                               timeout, true);
               base_transport->remove_reference ();
             }
         }
