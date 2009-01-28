@@ -81,6 +81,7 @@
 #define ACE_HAS_CHARPTR_SOCKOPT
 
 #define ACE_HAS_NONCONST_GETBY
+#define ACE_HAS_NONCONST_INET_ADDR
 
 // has man pages, but links with missing symbols and I can't find lib yet
 /* #define ACE_HAS_REGEX */

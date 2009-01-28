@@ -1,3 +1,20 @@
+Wed Jan 28 09:09:53 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_arpa_inet.inl:
+          Use new ACE_HAS_NONCONST_INET_ADDR
+
+        * ace/config-cray.h:
+        * ace/config-lynxos.h:
+        * ace/config-tandem.h:
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          Added ACE_HAS_NONCONST_INET_ADDR
+
+        * ace/config-vxworks6.7.h:
+          Undef ACE_HAS_NONCONST_INET_ADDR, WindRiver fixed their api
+
 Tue Jan 27 23:28:53 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/Message_Queue_T.cpp: Don't nest the ACE_HAS_WIN32_OVERLAPPED_IO
