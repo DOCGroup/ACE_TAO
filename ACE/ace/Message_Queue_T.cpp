@@ -2954,7 +2954,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_NT_message_queue (size_t max_th
   ACE_Message_Queue_NT *tmp = 0;
 
   ACE_NEW_RETURN (tmp,
-                  ACE_Message_Queue_NT (max_threads);
+                  ACE_Message_Queue_NT (max_threads),
                   0);
   return tmp;
 }

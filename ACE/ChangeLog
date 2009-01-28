@@ -1,3 +1,9 @@
+Wed Jan 28 15:02:11 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Message_Queue_T.cpp:
+        
+          Fixed typo in ACE_NEW_RETURN argument list.
+
 Wed Jan 28 10:24:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/tao_orb_tests.lst:
