@@ -1,3 +1,10 @@
+Wed Jan 28 20:22:52 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/ciao_tests.lst:
+
+          This file moved here from $ACE_ROOT/bin, see bug 2748 and the
+          ACE ChangeLog entry for Wed Jan 28 20:22:45 UTC 2009.
+
 Mon Jan 12 19:14:46 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/Config_Handlers.mpc:

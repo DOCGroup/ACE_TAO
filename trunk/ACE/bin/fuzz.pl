@@ -1349,9 +1349,13 @@ sub check_for_bad_run_test ()
 {
     print "Running run_test.pl test\n";
     # Add the know ACE files
-    push @files_lst, $ENV{"ACE_ROOT"} . "/bin/tao_orb_tests.lst";
-    push @files_lst, $ENV{"ACE_ROOT"} . "/bin/tao_other_tests.lst";
-    push @files_lst, $ENV{"ACE_ROOT"} . "/bin/ciao_tests.lst";
+    if (defined $ENV{"TAO_ROOT"}) {
+        push @files_lst, $ENV{"TAO_ROOT"} . "/bin/tao_orb_tests.lst";
+        push @files_lst, $ENV{"TAO_ROOT"} . "/bin/tao_other_tests.lst";
+    }
+    if (defined $ENV{"CIAO_ROOT"}) {
+        push @files_lst, $ENV{"CIAO_ROOT"} . "/bin/ciao_tests.lst";
+    }
     $config_list = new PerlACE::ConfigList;
     foreach $file (@files_lst) {
       $config_list->load ($file);
