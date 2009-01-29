@@ -65,7 +65,8 @@ if ($client_status != 0) {
     $status = 1;
 }
 
-$CL->Arguments("-k file://$client_gwfile -s");
+$CL = $client->CreateProcess ("client", "-k file://$client_gwfile -s");
+
 $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
 if ($client_status != 0) {
@@ -73,14 +74,14 @@ if ($client_status != 0) {
     $status = 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server_status = $SV->Kill ();
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-$gateway_status = $GW->WaitKill ($gateway->ProcessStopWaitInterval());
+$gateway_status = $GW->Kill ();
 
 if ($gateway_status != 0) {
     print STDERR "ERROR: gateway returned $gateway_status\n";

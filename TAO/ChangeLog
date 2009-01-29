@@ -1,3 +1,10 @@
+Thu Jan 29 14:40:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+      * tests/DSI_Gateway/run_exception_test.pl:
+      * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/run_test.pl:
+      
+        Fixed some runtime errors.
+
 Thu Jan 29 11:06:36 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tao/CDR.inl:
