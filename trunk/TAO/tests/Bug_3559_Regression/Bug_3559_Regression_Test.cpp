@@ -73,9 +73,9 @@ check_flags (const u_long& flags, const int& verbose)
   switch (verbose)
     {
       case 0:
-        /// Both VERBOSE and VERBOSE_LITE should be set
-        if ((flags & ACE_Log_Msg::VERBOSE) == 0 &&
-            (flags & ACE_Log_Msg::VERBOSE_LITE) == 0)
+        /// Both VERBOSE and VERBOSE_LITE shouldn't be set
+        if ((flags & ACE_Log_Msg::VERBOSE) != 0 &&
+            (flags & ACE_Log_Msg::VERBOSE_LITE) != 0)
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("Test failed: Verbose flag not set properly when verbose=0\n")));
@@ -118,10 +118,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                    ACE_TEXT ("Usage:\n\n")
                    ACE_TEXT ("OPTIONS:\n\n")
                    ACE_TEXT ("\t[-l Log file]\n\n")));
-        result = 1;
+        return 1;
       }
 
-      for (int verbose = 0; verbose < 3 && result == 0; verbose++)
+      for (int verbose = 0; verbose < 3; verbose++)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Start ORB_init with ORBVerboseLogging=%d\n"),
@@ -180,7 +180,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           CORBA::ORB_var orb = CORBA::ORB_init (argc, largv, orb_name);
           
-          u_long log_flags = ACE_Log_Msg::instance ()->flags();
+          u_long log_flags = ACE_LOG_MSG->flags();
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("log flags %d verbose: %d\n"),
@@ -190,6 +190,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           
           orb->destroy ();
           orb = CORBA::ORB::_nil ();
+          ACE_LOG_MSG->restart ();
 
           for (int i = 0; i < extra_argc; i++)
             ACE::strdelete (extra[i]);
@@ -204,9 +205,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   
   result += check_logging ();
+  
   if (result == 0)
     ACE_DEBUG ((LM_DEBUG, 
-                ACE_TEXT ("Test passed")));
+                ACE_TEXT ("Test passed!")));
   else
     ACE_ERROR ((LM_ERROR, 
                 ACE_TEXT ("Test failed. Result: %d\n"), 
