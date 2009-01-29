@@ -1,3 +1,9 @@
+Thu Jan 29 15:00:00 UTC 2009  Simon Massey  <sma@prismtech.com>
+
+        * tests/Bug_3559_Regression/run_test.pl:
+
+          Fixed Fuzz errors.
+
 Thu Jan 29 14:40:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
       * tests/DSI_Gateway/run_exception_test.pl:
