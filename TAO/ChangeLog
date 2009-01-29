@@ -1,11 +1,5 @@
 Thu Jan 29 09:05:00 UTC 2009  Simon Massey  <sma@prismtech.com>
 
-        * tests/Bug_3552_Regression/Bug_3552_Regression.mpc:
-
-          Added regression test (no fix committed yet)
-
-Thu Jan 29 09:05:00 UTC 2009  Simon Massey  <sma@prismtech.com>
-
         * bin/tao_orb_tests.lst:
         * tests/Bug_3559_Regression/Bug_3559_Regression_Test.cpp:
         * tests/Bug_3559_Regression/check.cpp:
@@ -13,6 +7,12 @@ Thu Jan 29 09:05:00 UTC 2009  Simon Massey  <sma@prismtech.com>
         * tests/Bug_3559_Regression/struct.idl:
 
           Added this regression test (No fix committed yet).
+
+Wed Jan 28 08:53:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3559_Regression/Bug_3559_Regression_Test.cpp:
+
+          Fixed compiler error on WinCE.
 
 Wed Jan 28 23:18:40 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
