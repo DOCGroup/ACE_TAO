@@ -665,11 +665,11 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
             {
               if (str->width () == (long) sizeof (char))
                 {
-                  *os << "TAO_InputCDR::to_bounded_string (_tao_array ";
+                  *os << "ACE_InputCDR::to_string (_tao_array ";
                 }
               else
                 {
-                  *os << "TAO_InputCDR::to_bounded_wstring (_tao_array ";
+                  *os << "ACE_InputCDR::to_wstring (_tao_array ";
                 }
             }
           else
@@ -792,11 +792,11 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
             {
               if (str->width () == (long) sizeof (char))
                 {
-                  *os << "TAO_OutputCDR::from_bounded_string (_tao_array ";
+                  *os << "ACE_OutputCDR::from_string (_tao_array ";
                 }
               else
                 {
-                  *os << "TAO_OutputCDR::from_bounded_wstring (_tao_array ";
+                  *os << "ACE_OutputCDR::from_wstring (_tao_array ";
                 }
             }
           else

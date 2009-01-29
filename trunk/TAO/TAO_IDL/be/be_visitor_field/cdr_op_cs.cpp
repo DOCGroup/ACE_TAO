@@ -653,13 +653,13 @@ be_visitor_field_cdr_op_cs::visit_string (be_string *str)
         {
           if (str->width () == (long) sizeof (char))
             {
-              *os << "(strm >> TAO_InputCDR::to_bounded_string (_tao_aggregate."
+              *os << "(strm >> ACE_InputCDR::to_string (_tao_aggregate."
                   << f->local_name () << ".out (), "
                   << str->max_size ()->ev ()->u.ulval << "))";
             }
           else
             {
-              *os << "(strm >> TAO_InputCDR::to_bounded_wstring (_tao_aggregate."
+              *os << "(strm >> ACE_InputCDR::to_wstring (_tao_aggregate."
                   << f->local_name () << ".out (), "
                   << str->max_size ()->ev ()->u.ulval << "))";
             }
@@ -675,13 +675,13 @@ be_visitor_field_cdr_op_cs::visit_string (be_string *str)
         {
           if (str->width () == (long) sizeof (char))
             {
-              *os << "(strm << TAO_OutputCDR::from_bounded_string (_tao_aggregate."
+              *os << "(strm << ACE_OutputCDR::from_string (_tao_aggregate."
                   << f->local_name () << ".in (), "
                   << str->max_size ()->ev ()->u.ulval << "))";
             }
           else
             {
-              *os << "(strm << TAO_OutputCDR::from_bounded_wstring (_tao_aggregate."
+              *os << "(strm << ACE_OutputCDR::from_wstring (_tao_aggregate."
                   << f->local_name () << ".in (), "
                   << str->max_size ()->ev ()->u.ulval << "))";
             }

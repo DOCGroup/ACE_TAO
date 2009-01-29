@@ -766,14 +766,14 @@ be_visitor_union_branch_cdr_op_cs::visit_string (be_string *node)
         {
           if (node->width () == (long) sizeof (char))
             {
-              *os << "result = strm >> TAO_InputCDR::to_bounded_string ("
+              *os << "result = strm >> ACE_InputCDR::to_string ("
                   << "_tao_union_tmp.out (), "
                   << node->max_size ()->ev ()->u.ulval << ");"
                   << be_nl << be_nl;
             }
           else
             {
-              *os << "result = strm >> TAO_InputCDR::to_bounded_wstring ("
+              *os << "result = strm >> ACE_InputCDR::to_wstring ("
                   << "_tao_union_tmp.out (), "
                   << node->max_size ()->ev ()->u.ulval << ");"
                   << be_nl << be_nl;
@@ -798,13 +798,13 @@ be_visitor_union_branch_cdr_op_cs::visit_string (be_string *node)
         {
           if (node->width () == (long) sizeof (char))
             {
-              *os << "result = strm << TAO_OutputCDR::from_bounded_string ("
+              *os << "result = strm << ACE_OutputCDR::from_string ("
                   << "_tao_union." << f->local_name () << " (), "
                   << node->max_size ()->ev ()->u.ulval << ");";
             }
           else
             {
-              *os << "result = strm << TAO_OutputCDR::from_bounded_wstring ("
+              *os << "result = strm << ACE_OutputCDR::from_wstring ("
                   << "_tao_union." << f->local_name () << " (), "
                   << node->max_size ()->ev ()->u.ulval << ");";
             }
