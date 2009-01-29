@@ -1,3 +1,9 @@
+Wed Jan 28 08:53:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3559_Regression/Bug_3559_Regression_Test.cpp:
+
+          Fixed compiler error on WinCE.
+
 Wed Jan 28 23:18:40 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Bug_3559_Regression/Bug_3559_Regression_Test.cpp:
