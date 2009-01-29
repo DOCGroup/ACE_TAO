@@ -49,7 +49,7 @@ ACE_OS::access (const char *path, int amode)
       ACE_OS::fclose (handle);
       return 0;
     }
-  return (-1);
+  return -1;
 #  else
     ACE_UNUSED_ARG (path);
     ACE_UNUSED_ARG (amode);

@@ -1,3 +1,14 @@
+Thu Jan 29 10:33:52 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ATM_Acceptor.cpp:
+        * ace/ATM_QoS.cpp:
+        * ace/ATM_Stream.cpp:
+        * ace/ATM_Stream.inl:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_unistd.inl:
+        * ace/OS_NS_wchar.cpp:
+          Don't use () when returning 0 or -1
+
 Wed Jan 28 20:22:45 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * bin/ciao_tests.lst:

@@ -451,7 +451,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
   ACE_UNUSED_ARG (rate);
   ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (len);
-  return (0);
+  return 0;
 #elif defined (ACE_HAS_FORE_ATM_XTI)
   struct t_opthdr *popt;
   char *buf;
@@ -621,7 +621,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
   ACE_UNUSED_ARG (rate);
   ACE_UNUSED_ARG (flag);
   ACE_UNUSED_ARG (len);
-  return (0);
+  return 0;
 #endif /* ACE_HAS_FORE_ATM_WS2 */
 }
 
