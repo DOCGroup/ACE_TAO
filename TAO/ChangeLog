@@ -1,3 +1,9 @@
+Thu Jan 29 09:28:52 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3559_Regression/Bug_3559_Regression_Test.cpp:
+
+          Optimized error logging. 
+
 Thu Jan 29 09:05:00 UTC 2009  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_orb_tests.lst:
@@ -8,7 +14,7 @@ Thu Jan 29 09:05:00 UTC 2009  Simon Massey  <sma@prismtech.com>
 
           Added this regression test (No fix committed yet).
 
-Wed Jan 28 08:53:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+Thu Jan 29 08:53:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3559_Regression/Bug_3559_Regression_Test.cpp:
 
