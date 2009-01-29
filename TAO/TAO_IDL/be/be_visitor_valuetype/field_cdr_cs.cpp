@@ -651,13 +651,13 @@ be_visitor_valuetype_field_cdr_cs::visit_string (be_string *str)
         {
           if (str->width () == (long) sizeof (char))
             {
-              *os << "(strm >> TAO_InputCDR::to_bounded_string ("
+              *os << "(strm >> ACE_InputCDR::to_string ("
                   << this->pre_ << f->local_name () << this->post_
                   << ".out (), " << str->max_size ()->ev ()->u.ulval << "))";
             }
           else
             {
-              *os << "(strm >> TAO_InputCDR::to_bounded_wstring ("
+              *os << "(strm >> ACE_InputCDR::to_wstring ("
                   << this->pre_ << f->local_name () << this->post_
                   << ".out (), " << str->max_size ()->ev ()->u.ulval << "))";
             }
@@ -673,13 +673,13 @@ be_visitor_valuetype_field_cdr_cs::visit_string (be_string *str)
         {
           if (str->width () == (long) sizeof (char))
             {
-              *os << "(strm << TAO_OutputCDR::from_bounded_string ("
+              *os << "(strm << ACE_OutputCDR::from_string ("
                   <<  this->pre_ << f->local_name () << this->post_
                   << ".in (), " << str->max_size ()->ev ()->u.ulval << "))";
             }
           else
             {
-              *os << "(strm << TAO_OutputCDR::from_bounded_wstring ("
+              *os << "(strm << ACE_OutputCDR::from_wstring ("
                   <<  this->pre_ << f->local_name () << this->post_
                   << ".in (), " << str->max_size ()->ev ()->u.ulval << "))";
             }
