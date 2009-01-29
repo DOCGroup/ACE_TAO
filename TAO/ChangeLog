@@ -1,8 +1,13 @@
+Thu Jan 29 10:32:52 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Transport.cpp:
+        * tao/Strategies/SCIOP_Transport.cpp:
+          Use operator!
+
 Thu Jan 29 09:28:52 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3559_Regression/Bug_3559_Regression_Test.cpp:
-
-          Optimized error logging. 
+          Optimized error logging.
 
 Thu Jan 29 09:05:00 UTC 2009  Simon Massey  <sma@prismtech.com>
 
