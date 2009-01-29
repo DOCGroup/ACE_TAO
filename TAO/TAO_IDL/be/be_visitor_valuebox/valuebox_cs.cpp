@@ -278,13 +278,13 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
     {
       if (str->width () == (long) sizeof (char))
         {
-          *os << "::TAO_InputCDR::to_bounded_string "
+          *os << "::ACE_InputCDR::to_string "
               << "(vb_object->_pd_value, "
               << str->max_size ()->ev ()->u.ulval << ")";
         }
       else
         {
-          *os << "::TAO_InputCDR::to_bounded_wstring "
+          *os << "::ACE_InputCDR::to_wstring "
               << "(vb_object->_pd_value, "
               << str->max_size ()->ev ()->u.ulval << ")";
         }
@@ -634,13 +634,13 @@ be_visitor_valuebox_cs::visit_string (be_string *str)
     {
       if (str->width () == (long) sizeof (char))
         {
-          os << "::TAO_OutputCDR::from_bounded_string "
+          os << "::ACE_OutputCDR::from_string "
              << "(this->_pd_value, "
              << str->max_size ()->ev ()->u.ulval << ")";
         }
       else
         {
-          os << "::TAO_OutputCDR::from_bounded_wstring "
+          os << "::ACE_OutputCDR::from_wstring "
              << "(this->_pd_value, "
              << str->max_size ()->ev ()->u.ulval << ")";
         }

@@ -1,3 +1,16 @@
+Thu Jan 29 11:06:36 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tao/CDR.inl:
+        * tao/CDR.h:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+
+          Removed to_bounded_string and from_bounded_string structs.
+          It turned out they are unnecessary.
+
 Thu Jan 29 10:32:52 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Transport.cpp:

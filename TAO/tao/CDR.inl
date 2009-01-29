@@ -275,56 +275,6 @@ TAO_InputCDR::compressed (bool compressed)
 
 // ****************************************************************
 
-ACE_INLINE
-TAO_OutputCDR::from_bounded_string::from_bounded_string (const ACE_CDR::Char *s,
-                                                         ACE_CDR::ULong b)
-  : val_ (const_cast<ACE_CDR::Char *> (s)),
-    bound_ (b)
-{
-}
-
-ACE_INLINE
-TAO_InputCDR::to_bounded_string::to_bounded_string (ACE_CDR::Char *&s,
-                                                    ACE_CDR::ULong b)
-  : val_ (s),
-    bound_ (b)
-{
-}
-
-ACE_INLINE
-TAO_InputCDR::to_bounded_string::to_bounded_string (const ACE_CDR::Char *&s,
-                                                    ACE_CDR::ULong b)
-  : val_ (const_cast<ACE_CDR::Char *&> (s)),
-    bound_ (b)
-{
-}
-
-ACE_INLINE
-TAO_OutputCDR::from_bounded_wstring::from_bounded_wstring (const ACE_CDR::WChar *ws,
-                                                           ACE_CDR::ULong b)
-  : val_ (const_cast<ACE_CDR::WChar *> (ws)),
-    bound_ (b)
-{
-}
-
-ACE_INLINE
-TAO_InputCDR::to_bounded_wstring::to_bounded_wstring (ACE_CDR::WChar *&ws,
-                                                      ACE_CDR::ULong b)
-  : val_ (ws),
-    bound_ (b)
-{
-}
-
-ACE_INLINE
-TAO_InputCDR::to_bounded_wstring::to_bounded_wstring (const ACE_CDR::WChar *&ws,
-                                                      ACE_CDR::ULong b)
-  : val_ (const_cast<ACE_CDR::WChar *&> (ws)),
-    bound_ (b)
-{
-}
-
-// ****************************************************************
-
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::Short x)
 {
@@ -427,7 +377,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      TAO_OutputCDR::from_bounded_string x)
+                                      ACE_OutputCDR::from_string x)
 {
   if (x.val_ != 0 &&
       ACE_OS::strlen (x.val_) > x.bound_)
@@ -438,7 +388,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      TAO_OutputCDR::from_bounded_wstring x)
+                                      ACE_OutputCDR::from_wstring x)
 {
   if (x.val_ != 0 &&
       ACE_OS::strlen (x.val_) > x.bound_)
@@ -517,9 +467,9 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
-                                      TAO_InputCDR::to_bounded_string x)
+                                      ACE_InputCDR::to_string x)
 {
-  CORBA::Boolean const marshal_flag = is >> x.val_;
+  CORBA::Boolean const marshal_flag = is >> const_cast<ACE_CDR::Char *&> (x.val_);
   if (marshal_flag && x.val_ != 0 &&
       ACE_OS::strlen (x.val_) > x.bound_)
     {
@@ -529,9 +479,9 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
-                                      TAO_InputCDR::to_bounded_wstring x)
+                                      ACE_InputCDR::to_wstring x)
 {
-  CORBA::Boolean const marshal_flag = is >> x.val_;
+  CORBA::Boolean const marshal_flag = is >> const_cast<ACE_CDR::WChar *&> (x.val_);
   if (marshal_flag && x.val_ != 0 &&
       ACE_OS::strlen (x.val_) > x.bound_)
     {

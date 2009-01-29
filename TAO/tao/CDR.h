@@ -150,22 +150,6 @@ public:
   /// Destructor.
   ~TAO_OutputCDR (void);
 
-  struct TAO_Export from_bounded_string
-  {
-    from_bounded_string (const ACE_CDR::Char* s,
-                         ACE_CDR::ULong b);
-    ACE_CDR::Char *val_;
-    ACE_CDR::ULong bound_;
-  };
-
-  struct TAO_Export from_bounded_wstring
-  {
-    from_bounded_wstring (const ACE_CDR::WChar* ws,
-                          ACE_CDR::ULong b);
-    ACE_CDR::WChar *val_;
-    ACE_CDR::ULong bound_;
-  };
-
   // @todo do we want a special method to write an array of
   // strings and wstrings?
 
@@ -384,26 +368,6 @@ public:
   /// Destructor
   ~TAO_InputCDR (void);
 
-  struct TAO_Export to_bounded_string
-  {
-    to_bounded_string (ACE_CDR::Char *&s,
-                       ACE_CDR::ULong b);
-    to_bounded_string (const ACE_CDR::Char *&s,
-                       ACE_CDR::ULong b);
-    ACE_CDR::Char *&val_;
-    ACE_CDR::ULong bound_;
-  };
-
-  struct TAO_Export to_bounded_wstring
-  {
-    to_bounded_wstring (ACE_CDR::WChar *&ws,
-                        ACE_CDR::ULong b);
-    to_bounded_wstring (const ACE_CDR::WChar *&ws,
-                        ACE_CDR::ULong b);
-    ACE_CDR::WChar *&val_;
-    ACE_CDR::ULong bound_;
-  };
-
   // = TAO specific methods.
 
   /// Accessor
@@ -466,9 +430,9 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const CORBA::WChar* x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      TAO_OutputCDR::from_bounded_string x);
+                                      ACE_OutputCDR::from_string x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      TAO_OutputCDR::from_bounded_wstring x);
+                                      ACE_OutputCDR::from_wstring x);
 
 // CDR input operators for CORBA types
 
@@ -495,9 +459,9 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::WChar* &x);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &os,
-                                      TAO_InputCDR::to_bounded_string x);
+                                      ACE_InputCDR::to_string x);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &os,
-                                      TAO_InputCDR::to_bounded_wstring x);
+                                      ACE_InputCDR::to_wstring x);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
