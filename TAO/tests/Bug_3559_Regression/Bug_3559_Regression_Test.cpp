@@ -37,7 +37,7 @@ int
 check_logging()
 {
   ACE_TCHAR buf[1024];
-  FILE* fp = ACE_OS::fopen (ACE_TEXT (log_file_),
+  FILE* fp = ACE_OS::fopen (log_file_,
                             ACE_TEXT ("r"));
 
   if (fp == 0)
@@ -51,8 +51,8 @@ check_logging()
 
   while (ACE_OS::fgets (buf, sizeof (buf), fp) != 0)
     {
-      ///When verbose is on, a line contains a timestamp and and LM_ string
-      if  (strstr (buf,"LM_") != 0)
+      ///When verbose is on, a line contains a timestamp and a @ character
+      if  (ACE_OS::strchr (buf, ACE_TEXT('@')) != 0)
         {
           ACE_DEBUG((LM_DEBUG, 
                      ACE_TEXT("Test OK, a timestamp was found\n")));
@@ -148,7 +148,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_NEW_RETURN (extra[16],
             ACE_TCHAR[ACE_OS::strlen(log_file_) + 1],
                           -1);
-          ACE_OS::sprintf (extra[16], "%s", log_file_);
+          ACE_OS::sprintf (extra[16], ACE_TEXT("%s"), log_file_);
           extra[17] = ACE::strnew (ACE_TEXT ("-ORBNegotiateCodesets"));
           extra[18] = ACE::strnew (ACE_TEXT ("0"));
           extra[19] = ACE::strnew (ACE_TEXT ("-ORBNodelay"));
@@ -159,7 +159,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_NEW_RETURN (extra[24],
                           ACE_TCHAR[2],
                           -1);
-          ACE_OS::sprintf (extra[24], "%d", verbose);
+          ACE_OS::sprintf (extra[24], ACE_TEXT("%d"), verbose);
 
           ACE_TCHAR **largv = new ACE_TCHAR *[argc+extra_argc];
           for (int i = 0; i < argc; i++)
@@ -176,7 +176,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           argc += extra_argc;
           
           ACE_TCHAR orb_name[25];
-          ACE_OS::sprintf(orb_name, "VERBOSE_LOGGING_TEST_%d", verbose);
+          ACE_OS::sprintf(orb_name, ACE_TEXT("VERBOSE_LOGGING_TEST_%d"), verbose);
 
           CORBA::ORB_var orb = CORBA::ORB_init (argc, largv, orb_name);
           
@@ -207,7 +207,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (result == 0)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("Test passed")));
   else
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Test failed. Result: %d"), 
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Test failed. Result: %d\n"), 
                 result));
   return result;
 }
