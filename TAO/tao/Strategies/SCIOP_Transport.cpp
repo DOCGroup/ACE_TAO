@@ -200,7 +200,7 @@ TAO_SCIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   IIOP::ListenPointList listen_list;
-  if ((cdr >> listen_list) == 0)
+  if (!(cdr >> listen_list))
     return -1;
 
   // As we have received a bidirectional information, set the flag to
