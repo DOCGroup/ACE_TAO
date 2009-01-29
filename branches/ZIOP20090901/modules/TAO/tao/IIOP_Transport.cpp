@@ -233,7 +233,7 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
   // Format the message in the stream first
   if (this->messaging_object ()->format_message (stream) != 0)
     return -1;
-
+// JW ZIOP here?
   // This guarantees to send all data (bytes) or return an error.
   ssize_t const n = this->send_message_shared (stub,
                                                message_semantics,

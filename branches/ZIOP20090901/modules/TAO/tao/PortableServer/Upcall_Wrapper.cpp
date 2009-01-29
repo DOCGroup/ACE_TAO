@@ -247,6 +247,7 @@ TAO::Upcall_Wrapper::post_upcall (TAO_ServerRequest& server_request,
                                   size_t nargs)
 {
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  // JW NO ZIOP, we just marshal the inout/out arguments
   // Marshal the operation "inout" and "out" arguments and return
   // value, if any.
   TAO_ZIOP_Adapter* ziop_adapter = server_request.orb_core ()->ziop_adapter ();

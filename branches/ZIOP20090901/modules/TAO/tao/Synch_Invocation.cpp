@@ -98,7 +98,7 @@ namespace TAO
 
         this->marshal_data (cdr);
 
-
+// JW ZIOP if enabled, everything after 12 bytes header
   // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
         TAO_Bind_Dispatcher_Guard dispatch_guard (

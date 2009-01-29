@@ -34,7 +34,7 @@ ZlibCompressor::compress (
 
   if (retval != Z_OK)
     {
-      throw ::Compression::CompressionException (retval);
+      throw ::Compression::CompressionException (retval, CORBA::string_dup(""));
     }
   else
     {
@@ -58,7 +58,7 @@ ZlibCompressor::decompress (
 
   if (retval != Z_OK)
     {
-      throw ::Compression::CompressionException (retval);
+      throw ::Compression::CompressionException (retval, "");
     }
   else
     {

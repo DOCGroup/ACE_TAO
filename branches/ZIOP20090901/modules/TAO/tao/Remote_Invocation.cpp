@@ -119,7 +119,7 @@ namespace TAO
 
   void
   Remote_Invocation::marshal_data (TAO_OutputCDR &out_stream)
-    {
+    { // JW no ziop here
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
     TAO_ZIOP_Adapter* ziop_adapter = this->stub()->orb_core()->ziop_adapter ();
 

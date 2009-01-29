@@ -198,7 +198,7 @@ TAO_ZIOP_Loader::check_min_ratio (CORBA::ULong /* original_data_length */, CORBA
     }*/
   return true;
 }
-
+// JW compress without details, just stream after 12 bytes
 bool
 TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &stream, TAO::Profile_Transport_Resolver &resolver)
 {
@@ -235,10 +235,11 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
 
           if (!CORBA::is_nil (srp.in ()))
             {
+// JW really check for a compatible compressor between client and server
               ::Compression::CompressorIdLevelList* list = srp->compressor_ids ();
               if (list)
                 {
-                  compressor_id = (*list)[0].compressor_id;
+                  compressor_id = (*list)[0].compressor_id; // 0 is not ok, make a test with bzip2/zlib on server and zlib/bzip2 on client
                   compression_level = (*list)[0].compression_level;
                 }
               else
@@ -257,7 +258,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
        // Set the read pointer to the point where the application data starts
        current->rd_ptr (current->wr_ptr());
     }
-
+// JW marshal args not needed, marshal rd_ptr = 12, to wr_ptr
   // Marshal application data
   if (!details.marshal_args (stream))
     {
@@ -292,7 +293,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
               bool compressed = this->compress (compressor.in (), input, myout);
 
               if (compressed && (myout.length () < original_data_length) && (this->check_min_ratio (original_data_length, myout.length())))
-                {
+                { // JW change header?????
                   stream.compressed (true);
                   current->wr_ptr (current->rd_ptr ());
                   stream.current_alignment (current->wr_ptr() - current->base ());

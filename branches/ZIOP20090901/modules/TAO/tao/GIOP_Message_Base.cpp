@@ -653,6 +653,9 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   input_cdr.compressed (qd->state().compressed ());
 #endif
 
+
+  // JW decompress if ZIOP and convert to GIOP
+
   transport->assign_translators(&input_cdr,&output);
 
   // We know we have some request message. Check whether it is a
@@ -808,7 +811,7 @@ TAO_GIOP_Message_Base::write_protocol_header (GIOP::MsgType type,
       0x4f, // 'O'
       0x50  // 'P'
     };
-
+ 
   header[4] = version.major;
   header[5] = version.minor;
 
@@ -868,6 +871,7 @@ TAO_GIOP_Message_Base::process_request (
       CORBA::Object_var forward_to;
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+      // NO ZIOP at all in this block
       if (cdr.compressed ())
         {
           TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
