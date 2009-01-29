@@ -1,3 +1,8 @@
+Thu Jan 29 12:59:52 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/mpc-mode.el:
+          Added patch from Stefan Naewe <stefan.naewe@googlemail.com>
+
 Thu Jan 29 10:33:52 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ATM_Acceptor.cpp:
