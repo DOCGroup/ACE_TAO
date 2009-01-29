@@ -62,12 +62,16 @@ sub get_test_modes
 
 my $status = 0;
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $process = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+
+my $iorbase = "test.ior";
+my $iorfile = $process->LocalFile ($iorbase);
+$process->DeleteFile($iorbase);
 
 my $testid;
 
 for ($testid = 1; $testid <= 9; ++$testid) {
+    $process->DeleteFile($iorbase);
 
     my $client_mode;
     my $server_mode;
@@ -76,24 +80,32 @@ for ($testid = 1; $testid <= 9; ++$testid) {
 
     my $SV;
 
-    $SV = $server->CreateProcess ("PI_ProcMode_Remote_TestServer", 
+    $SV = $process->CreateProcess ("PI_ProcMode_Remote_TestServer", 
                                       "-p $server_mode " .
                                       "-ORBobjrefstyle url");
       
     print STDERR "\n\n==== Starting test variant #$testid\n\n";
 
-    $server_status = $SV->Spawn ();
+    $server = $SV->Spawn ();
 
-    if ($server_status != 0) {
-        print STDERR "ERROR: server returned $server_status\n";
+    if ($server != 0) {
+        print STDERR "ERROR: server returned $server\n";
         exit 1;
     }
 
-    my $CL = $client->CreateProcess ("PI_ProcMode_Remote_TestClient",
+    if ($process->WaitForFileTimed ($iorbase,
+                                   $process->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file <$iorfile>\n";
+        $SV->Kill (); $SV->TimedWait (1);
+        exit 1;
+    }
+
+    my $CL;
+    $CL = $process->CreateProcess ("PI_ProcMode_Remote_TestClient",
                                       "-p $client_mode " .
                                       "-ORBobjrefstyle url");
 
-    my $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 30);
+    my $client_status = $CL->SpawnWaitKill ($process->ProcessStartWaitInterval());
 
     if ($client_status != 0) {
         print STDERR "ERROR: PI_ProcMode_TestClient returned $client_status\n";
@@ -102,7 +114,7 @@ for ($testid = 1; $testid <= 9; ++$testid) {
         $status = 1;
     }
 
-    my $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 30);
+    my $server_status = $SV->WaitKill ($process->ProcessStopWaitInterval());
 
     if ($server_status != 0) {
         print STDERR "ERROR: PI_ProcMode_TestServer returned $server_status\n";
@@ -118,6 +130,8 @@ for ($testid = 1; $testid <= 9; ++$testid) {
         print STDERR "\n==== Test variant #$testid (of 9) failed!\n";
     }
 }
+
+$process->DeleteFile($iorbase);
 
 if ($status == 0) {
     print STDERR "\n==== All 9 test variants were successful!\n";
