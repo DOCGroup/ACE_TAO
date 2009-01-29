@@ -28,7 +28,7 @@ run_main (int, ACE_TCHAR *[])
 
   int ret = 0;
 
-#if defined(ACE_WIN32)
+#if defined(ACE_WIN32) && !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   int lastError;
 
   // ACE_OS::event_init()
@@ -49,7 +49,9 @@ run_main (int, ACE_TCHAR *[])
   {
     ret = -1;
 
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Event(%s) failed - handle %d lastError %d\n"), eventName, eventHandle, lastError));
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("ACE_Event(%s) failed - handle %d lastError %d\n"),
+                eventName, eventHandle, lastError));
   }
   else
   {
@@ -67,7 +69,9 @@ run_main (int, ACE_TCHAR *[])
     {
       ret = -1;
 
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Event(%s) failed - handle %d lastError %d\n"), eventName, eventHandle, lastError));
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("ACE_Event(%s) failed - handle %d lastError %d\n"),
+                  eventName, eventHandle, lastError));
     }
   }
 
@@ -82,12 +86,14 @@ run_main (int, ACE_TCHAR *[])
   lastError = ACE_OS::last_error();
 
   const ACE_sema_t &semaphoreLock = semaphore0.lock();
-  if (((ACE_HANDLE)semaphoreLock == ACE_INVALID_HANDLE) ||
+  if ((semaphoreLock == ACE_INVALID_HANDLE) ||
       (lastError != 0))
   {
     ret = -1;
 
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Semaphore(%s) failed - lock %d lastError %d\n"), semaphoreName, semaphoreLock, lastError));
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("ACE_Semaphore(%s) failed - lock %d lastError %d\n"),
+                semaphoreName, semaphoreLock, lastError));
   }
   else
   {
@@ -99,12 +105,14 @@ run_main (int, ACE_TCHAR *[])
 
     const ACE_sema_t &semaphoreLock = semaphore1.lock();
 
-    if (((ACE_HANDLE)semaphoreLock == ACE_INVALID_HANDLE) ||
+    if ((semaphoreLock == ACE_INVALID_HANDLE) ||
         (lastError != ERROR_ALREADY_EXISTS))
     {
       ret = -1;
 
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Semaphore(%s) failed - lock %d lastError %d\n"), semaphoreName, semaphoreLock, lastError));
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("ACE_Semaphore(%s) failed - lock %d lastError %d\n"),
+                  semaphoreName, semaphoreLock, lastError));
     }
   }
 
@@ -124,7 +132,9 @@ run_main (int, ACE_TCHAR *[])
   {
     ret = -1;
 
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Mutex(%s) failed - lock %d lastError %d\n"), mutexName, mutexLock, lastError));
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("ACE_Mutex(%s) failed - lock %d lastError %d\n"),
+                mutexName, mutexLock, lastError));
   }
   else
   {
@@ -140,7 +150,9 @@ run_main (int, ACE_TCHAR *[])
     {
       ret = -1;
 
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Mutex(%s) failed - lock %d lastError %d\n"), mutexName, mutexLock, lastError));
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("ACE_Mutex(%s) failed - lock %d lastError %d\n"),
+                  mutexName, mutexLock, lastError));
     }
   }
 
