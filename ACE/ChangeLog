@@ -1,3 +1,11 @@
+Thu Jan 29 18:48:52 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3541_Regression_Test.cpp:
+          Fix compile error with WinCE < 6
+
+        * ace/config-win32-common.h:
+          Fixed incorrect comment
+
 Thu Jan 29 12:59:52 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/mpc-mode.el:
