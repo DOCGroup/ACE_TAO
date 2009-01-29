@@ -1572,15 +1572,15 @@ ACE_OS::sema_init (ACE_sema_t *s,
 
   if ((s->fd_[0] = ACE_OS::open (name, O_RDONLY | O_NONBLOCK)) == ACE_INVALID_HANDLE
       || (s->fd_[1] = ACE_OS::open (name, O_WRONLY | O_NONBLOCK)) == ACE_INVALID_HANDLE)
-    return (-1);
+    return -1;
 
   /* turn off nonblocking for fd_[0] */
   if ((flags = ACE_OS::fcntl (s->fd_[0], F_GETFL, 0)) < 0)
-    return (-1);
+    return -1;
 
   flags &= ~O_NONBLOCK;
   if (ACE_OS::fcntl (s->fd_[0], F_SETFL, flags) < 0)
-    return (-1);
+    return -1;
 
   //if (s->name_ && count)
   if (creator && count)
@@ -1588,7 +1588,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
       char    c = 1;
       for (u_int i=0; i<count ;++i)
         if (ACE_OS::write (s->fd_[1], &c, sizeof (char)) != 1)
-          return (-1);
+          return -1;
     }
 
   // In the case of process scope semaphores we can already unlink the FIFO now that
@@ -1602,7 +1602,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
       ACE_OS::unlink (name);
     }
 
-  return (0);
+  return 0;
 #elif defined (ACE_HAS_THREADS)
 #  if defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (name);
@@ -1800,8 +1800,8 @@ ACE_OS::sema_post (ACE_sema_t *s)
 # elif defined (ACE_USES_FIFO_SEM)
   char    c = 1;
   if (ACE_OS::write (s->fd_[1], &c, sizeof (char)) == sizeof (char))
-    return (0);
-  return (-1);
+    return 0;
+  return -1;
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   int result;
@@ -1890,10 +1890,10 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
 
   /* turn on nonblocking for s->fd_[0] */
   if ((flags = ACE_OS::fcntl (s->fd_[0], F_GETFL, 0)) < 0)
-    return (-1);
+    return -1;
   flags |= O_NONBLOCK;
   if (ACE_OS::fcntl (s->fd_[0], F_SETFL, flags) < 0)
-    return (-1);
+    return -1;
 
   // read sets errno to EAGAIN if no input
   rc = ACE_OS::read (s->fd_[0], &c, sizeof (char));
@@ -2010,8 +2010,8 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 # elif defined (ACE_USES_FIFO_SEM)
   char c;
   if (ACE_OS::read (s->fd_[0], &c, sizeof (char)) == 1)
-    return (0);
-  return (-1);
+    return 0;
+  return -1;
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   int result;
@@ -2193,13 +2193,13 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
           {
             if (rc == 0)
               errno = ETIME;
-            return (-1);
+            return -1;
           }
         }
 
       // try to read the signal *but* do *not* block
       if (rc == 1 && ACE_OS::sema_trywait (s) == 0)
-        return (0);
+        return 0;
 
       // we were woken for input but someone beat us to it
       // so we wait again if there is still time
@@ -2209,7 +2209,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   // make sure errno is set right
   errno = ETIME;
 
-  return (-1);
+  return -1;
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (s);
@@ -3111,7 +3111,7 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (ht_id, priority),
                                           ace_result_),
                         int, -1);
-#  else                        
+#  else
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CeSetThreadPriority (ht_id, priority),
                                           ace_result_),
                         int, -1);

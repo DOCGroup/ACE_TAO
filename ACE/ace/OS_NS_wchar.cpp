@@ -84,7 +84,7 @@ ACE_OS::wcscmp_emulation (const ACE_WCHAR_T *string1,
 {
   while (*string1 == *string2++)
     if (*string1++ == 0)
-      return (0);
+      return 0;
   return (*string1 - *--string2);
 }
 #endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSCMP */
