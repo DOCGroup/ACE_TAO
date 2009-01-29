@@ -14,9 +14,9 @@ const ACE_TCHAR* log_file_;
 
 
 int
-parse_args(int argc, ACE_TCHAR* argv[])
+parse_args (int argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opts(argc, argv, ACE_TEXT("l:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("l:"));
 
   int c;
 
@@ -55,7 +55,7 @@ check_logging()
       if  (ACE_OS::strchr (buf, ACE_TEXT('@')) != 0)
         {
           ACE_DEBUG((LM_DEBUG, 
-                     ACE_TEXT("Test OK, a timestamp was found\n")));
+                     ACE_TEXT ("Test OK, a timestamp was found\n")));
           (void) ACE_OS::fclose (fp);
           return 0;
         }
@@ -67,7 +67,7 @@ check_logging()
 }
 
 int
-check_flags(const u_long& flags, const int& verbose)
+check_flags (const u_long& flags, const int& verbose)
 {
   int result = 0;
   switch (verbose)
@@ -77,8 +77,8 @@ check_flags(const u_long& flags, const int& verbose)
         if ((flags & ACE_Log_Msg::VERBOSE) == 0 &&
             (flags & ACE_Log_Msg::VERBOSE_LITE) == 0)
           {
-            ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT("Test failed: Verbose flag not set properly when verbose=0\n")));
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("Test failed: Verbose flag not set properly when verbose=0\n")));
             result = 1;
           }
         break;
@@ -86,8 +86,8 @@ check_flags(const u_long& flags, const int& verbose)
         /// VERBOSE_LITE should be set
         if ((flags & ACE_Log_Msg::VERBOSE_LITE) == 0)
           {
-            ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT("Test failed: Verbose flag not set properly when verbose=1\n")));
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("Test failed: Verbose flag not set properly when verbose=1\n")));
             result = 1;
           }
         break;
@@ -95,8 +95,8 @@ check_flags(const u_long& flags, const int& verbose)
         /// VERBOSE should be set
         if ((flags & ACE_Log_Msg::VERBOSE) == 0)
           {
-            ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT("Test failed: Verbose flag not set properly when verbose=unknown\n")));
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("Test failed: Verbose flag not set properly when verbose=unknown\n")));
             result = 1;
           }
         break;
@@ -115,9 +115,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args(argc, argv) != 0)
       {
         ACE_ERROR((LM_ERROR,
-                   ACE_TEXT("Usage:\n\n")
-                   ACE_TEXT("OPTIONS:\n\n")
-                   ACE_TEXT("\t[-l Log file]\n\n")));
+                   ACE_TEXT ("Usage:\n\n")
+                   ACE_TEXT ("OPTIONS:\n\n")
+                   ACE_TEXT ("\t[-l Log file]\n\n")));
         result = 1;
       }
 
@@ -146,7 +146,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           extra[14] = ACE::strnew (ACE_TEXT ("iiop://:4178"));
           extra[15] = ACE::strnew (ACE_TEXT ("-ORBLogFile"));
           ACE_NEW_RETURN (extra[16],
-            ACE_TCHAR[ACE_OS::strlen(log_file_) + 1],
+                          ACE_TCHAR[ACE_OS::strlen(log_file_) + 1],
                           -1);
           ACE_OS::sprintf (extra[16], ACE_TEXT("%s"), log_file_);
           extra[17] = ACE::strnew (ACE_TEXT ("-ORBNegotiateCodesets"));
@@ -159,37 +159,37 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_NEW_RETURN (extra[24],
                           ACE_TCHAR[2],
                           -1);
-          ACE_OS::sprintf (extra[24], ACE_TEXT("%d"), verbose);
+          ACE_OS::sprintf (extra[24], ACE_TEXT ("%d"), verbose);
 
           ACE_TCHAR **largv = new ACE_TCHAR *[argc+extra_argc];
           for (int i = 0; i < argc; i++)
             largv[i] = argv[i];
 
-          ACE_DEBUG ((LM_DEBUG,"server adding args: "));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("server adding args: ")));
           for (int i = 0; i < extra_argc; i++)
             {
-              ACE_DEBUG ((LM_DEBUG, "%s ", extra[i]));
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s "), extra[i]));
               largv[argc+i] = extra[i];
             }
-          ACE_DEBUG ((LM_DEBUG, "\n"));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
           argc += extra_argc;
           
           ACE_TCHAR orb_name[25];
-          ACE_OS::sprintf(orb_name, ACE_TEXT("VERBOSE_LOGGING_TEST_%d"), verbose);
+          ACE_OS::sprintf (orb_name, ACE_TEXT ("VERBOSE_LOGGING_TEST_%d"), verbose);
 
           CORBA::ORB_var orb = CORBA::ORB_init (argc, largv, orb_name);
           
-          u_long log_flags = ACE_Log_Msg::instance()->flags();
+          u_long log_flags = ACE_Log_Msg::instance ()->flags();
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("log flags %d verbose: %d\n"),
                       log_flags, verbose));
 
-          result += check_flags(log_flags, verbose);
+          result += check_flags (log_flags, verbose);
           
           orb->destroy ();
-          orb = CORBA::ORB::_nil();
+          orb = CORBA::ORB::_nil ();
 
           for (int i = 0; i < extra_argc; i++)
             ACE::strdelete (extra[i]);
@@ -203,11 +203,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
   
-  result += check_logging();
+  result += check_logging ();
   if (result == 0)
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT("Test passed")));
+    ACE_DEBUG ((LM_DEBUG, 
+                ACE_TEXT ("Test passed")));
   else
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Test failed. Result: %d\n"), 
+    ACE_ERROR ((LM_ERROR, 
+                ACE_TEXT ("Test failed. Result: %d\n"), 
                 result));
   return result;
 }
