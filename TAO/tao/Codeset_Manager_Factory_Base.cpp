@@ -34,8 +34,6 @@ TAO_Codeset_Manager_Factory_Base::initialize (void)
     (ace_svc_desc_TAO_Codeset_Manager_Factory_Base);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if 0
 static int
 TAO_Requires_Codeset_Manager_Factory_Base =
@@ -49,3 +47,6 @@ ACE_STATIC_SVC_DEFINE (TAO_Codeset_Manager_Factory_Base,
                        &ACE_SVC_NAME (TAO_Codeset_Manager_Factory_Base),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+

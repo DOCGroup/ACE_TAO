@@ -1300,8 +1300,6 @@ TAO_Default_Resource_Factory::drop_replies_during_shutdown (void) const
   return this->drop_replies_;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 // ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Resource_Factory,
@@ -1312,3 +1310,6 @@ ACE_STATIC_SVC_DEFINE (TAO_Default_Resource_Factory,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Resource_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+

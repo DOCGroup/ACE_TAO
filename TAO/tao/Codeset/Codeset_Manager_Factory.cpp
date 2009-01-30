@@ -39,8 +39,6 @@ TAO_Codeset_Manager_Factory::create (void)
   return csm;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_FACTORY_DEFINE (TAO_Codeset, TAO_Codeset_Manager_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_Codeset_Manager_Factory,
                        ACE_TEXT ("TAO_Codeset"),
@@ -48,3 +46,5 @@ ACE_STATIC_SVC_DEFINE (TAO_Codeset_Manager_Factory,
                        &ACE_SVC_NAME (TAO_Codeset_Manager_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
+TAO_END_VERSIONED_NAMESPACE_DECL
+

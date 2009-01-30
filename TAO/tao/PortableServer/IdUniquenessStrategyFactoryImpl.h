@@ -44,10 +44,10 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DECLARE (IdUniquenessStrategyFactoryImpl)
 ACE_FACTORY_DECLARE (TAO_PortableServer, IdUniquenessStrategyFactoryImpl)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_PORTABLESERVER_IDUNIQUENESSSTRATEGYFACTORYIMPL_H */

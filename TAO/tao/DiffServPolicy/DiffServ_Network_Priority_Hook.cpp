@@ -94,7 +94,6 @@ TAO_DiffServ_Network_Priority_Hook::set_dscp_codepoint (
   connection_handler->set_dscp_codepoint (dscp_codepoint);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_DiffServPolicy, TAO_DiffServ_Network_Priority_Hook)
 ACE_STATIC_SVC_DEFINE (TAO_DiffServ_Network_Priority_Hook,
@@ -104,3 +103,4 @@ ACE_STATIC_SVC_DEFINE (TAO_DiffServ_Network_Priority_Hook,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
+TAO_END_VERSIONED_NAMESPACE_DECL

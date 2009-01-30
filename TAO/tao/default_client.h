@@ -111,10 +111,10 @@ private:
   bool use_cleanup_options_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Client_Strategy_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Client_Strategy_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_DEFAULT_CLIENT_H */

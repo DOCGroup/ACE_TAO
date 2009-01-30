@@ -43,10 +43,11 @@ public:
                                            ACE_TCHAR *argv []);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_PICurrent_Loader)
 ACE_FACTORY_DECLARE (TAO_PI, TAO_PICurrent_Loader)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 

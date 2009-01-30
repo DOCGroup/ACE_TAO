@@ -55,7 +55,7 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 ACE_STATIC_SVC_DEFINE (
   IdAssignmentStrategyFactoryImpl,
@@ -69,3 +69,4 @@ ACE_FACTORY_NAMESPACE_DEFINE (
   ACE_Local_Service,
   IdAssignmentStrategyFactoryImpl,
   TAO::Portable_Server::IdAssignmentStrategyFactoryImpl)
+TAO_END_VERSIONED_NAMESPACE_DECL

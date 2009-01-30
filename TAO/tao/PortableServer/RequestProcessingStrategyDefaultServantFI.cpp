@@ -56,7 +56,7 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 ACE_STATIC_SVC_DEFINE (
   RequestProcessingStrategyDefaultServantFactoryImpl,
@@ -71,6 +71,7 @@ ACE_FACTORY_NAMESPACE_DEFINE (
   RequestProcessingStrategyDefaultServantFactoryImpl,
   TAO::Portable_Server::RequestProcessingStrategyDefaultServantFactoryImpl)
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

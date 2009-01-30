@@ -44,11 +44,11 @@ public:
 static int TAO_Requires_NVList_Adapter_Impl_Initializer =
   TAO_NVList_Adapter_Impl::Initializer ();
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_NVList_Adapter_Impl)
 ACE_FACTORY_DECLARE (TAO_AnyTypeCode, TAO_NVList_Adapter_Impl)
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NVLIST_ADAPTER_IMPL_H */

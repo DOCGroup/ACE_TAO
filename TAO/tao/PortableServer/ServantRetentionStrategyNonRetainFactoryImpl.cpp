@@ -55,7 +55,6 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
   ServantRetentionStrategyNonRetainFactoryImpl,
@@ -69,5 +68,6 @@ ACE_FACTORY_NAMESPACE_DEFINE (
   ACE_Local_Service,
   ServantRetentionStrategyNonRetainFactoryImpl,
   TAO::Portable_Server::ServantRetentionStrategyNonRetainFactoryImpl)
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 && !CORBA_E_COMPACT && !CORBA_E_MICRO */

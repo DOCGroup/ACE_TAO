@@ -53,10 +53,11 @@ static int
 TAO_Requires_ValueType_Initializer =
   TAO_Valuetype_Adapter_Factory_Impl::Initializer ();
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_Valuetype_Adapter_Factory_Impl)
 ACE_FACTORY_DECLARE (TAO_Valuetype, TAO_Valuetype_Adapter_Factory_Impl)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define TAO_VALUETYPE_SAFE_INCLUDE
 // #include "tao/ValueType/ValueTypeC.h"

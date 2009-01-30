@@ -67,10 +67,11 @@ static int
 TAO_Requires_AMI_Arguments_Converter_Impl_Initializer =
   TAO_AMI_Arguments_Converter_Impl::Initializer ();
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_AMI_Arguments_Converter_Impl)
 ACE_FACTORY_DECLARE (TAO_Messaging, TAO_AMI_Arguments_Converter_Impl)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #include /**/ "ace/post.h"

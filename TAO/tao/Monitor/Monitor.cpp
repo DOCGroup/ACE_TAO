@@ -60,7 +60,6 @@ TAO_Monitor_Init::Initializer (void)
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_Monitor_Init);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_Monitor_Init,
                        ACE_TEXT ("Monitor_Init"),
@@ -69,6 +68,8 @@ ACE_STATIC_SVC_DEFINE (TAO_Monitor_Init,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_Monitor, TAO_Monitor_Init)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 
