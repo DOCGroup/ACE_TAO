@@ -379,7 +379,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_string x)
 {
-  if (x.val_ != 0 &&
+  if (x.bound_ != 0 && x.val_ != 0 &&
       ACE_OS::strlen (x.val_) > x.bound_)
     {
       throw ::CORBA::BAD_PARAM ();
@@ -390,7 +390,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_wstring x)
 {
-  if (x.val_ != 0 &&
+  if (x.bound_ != 0 && x.val_ != 0 &&
       ACE_OS::strlen (x.val_) > x.bound_)
     {
       throw ::CORBA::BAD_PARAM ();
@@ -469,8 +469,9 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       ACE_InputCDR::to_string x)
 {
-  CORBA::Boolean const marshal_flag = is >> const_cast<ACE_CDR::Char *&> (x.val_);
-  if (marshal_flag && x.val_ != 0 &&
+  CORBA::Boolean const marshal_flag =
+    is >> const_cast<ACE_CDR::Char *&> (x.val_);
+  if (marshal_flag && x.bound_ != 0 && x.val_ != 0 &&
       ACE_OS::strlen (x.val_) > x.bound_)
     {
       throw ::CORBA::BAD_PARAM ();
@@ -481,8 +482,9 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       ACE_InputCDR::to_wstring x)
 {
-  CORBA::Boolean const marshal_flag = is >> const_cast<ACE_CDR::WChar *&> (x.val_);
-  if (marshal_flag && x.val_ != 0 &&
+  CORBA::Boolean const marshal_flag =
+    is >> const_cast<ACE_CDR::WChar *&> (x.val_);
+  if (marshal_flag && x.bound_ != 0 && x.val_ != 0 &&
       ACE_OS::strlen (x.val_) > x.bound_)
     {
       throw ::CORBA::BAD_PARAM ();
