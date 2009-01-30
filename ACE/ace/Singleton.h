@@ -86,6 +86,9 @@ public:
   /// ACE_Singleton.
   virtual void cleanup (void *param = 0);
 
+  /// Explicitly delete the Singleton instance.
+  static void close (void);
+
   /// Dump the state of the object.
   static void dump (void);
 

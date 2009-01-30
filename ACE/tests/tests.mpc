@@ -1097,6 +1097,13 @@ project(Simple Message Block Test) : acetest {
   }
 }
 
+project(Singleton Test) : acetest {
+  exename = Singleton_Test
+  Source_Files {
+    Singleton_Test.cpp
+  }
+}
+
 project(SOCK Test) : acetest {
   exename = SOCK_Test
   Source_Files {
