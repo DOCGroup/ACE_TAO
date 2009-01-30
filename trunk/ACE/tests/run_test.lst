@@ -168,6 +168,7 @@ Semaphore_Test: !ACE_FOR_TAO
 Service_Config_Test: !STATIC
 Sigset_Ops_Test
 Simple_Message_Block_Test
+Singleton_Test
 Svc_Handler_Test: !ACE_FOR_TAO
 TP_Reactor_Test: !LynxOS !ACE_FOR_TAO
 TSS_Test
