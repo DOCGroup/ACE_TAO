@@ -1,3 +1,10 @@
+Fri Jan 30 12:39:14 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/default_resource.cpp:
+        * tao/Load_Protocol_Factory_T.h:
+        * tao/TAO_Internal.cpp:
+          Updated debug statements to get the same layout of the messages
+
 Fri Jan 30 10:57:14 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Message_Semantics.h:
