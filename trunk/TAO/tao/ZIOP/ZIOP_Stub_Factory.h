@@ -55,10 +55,11 @@ public:
                                  TAO_ORB_Core *orb_core);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_ZIOP, TAO_ZIOP_Stub_Factory)
 ACE_FACTORY_DECLARE (TAO_ZIOP, TAO_ZIOP_Stub_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif
 

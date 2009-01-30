@@ -44,10 +44,11 @@ public:
 static int
 TAO_Requires_IORManip_Initializer = TAO_IORManip_Loader::Initializer ();
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_IORManip_Loader)
 ACE_FACTORY_DECLARE (TAO_IORManip, TAO_IORManip_Loader)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define TAO_IORMANIP_SAFE_INCLUDE
 #include "tao/IORManipulation/IORC.h"

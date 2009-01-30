@@ -40,10 +40,10 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ImplicitActivationStrategyImplicit)
 ACE_FACTORY_DECLARE (TAO_PortableServer, ImplicitActivationStrategyImplicit)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif
 

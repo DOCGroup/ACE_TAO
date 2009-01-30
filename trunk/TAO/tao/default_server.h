@@ -86,10 +86,10 @@ protected:
   ACE_Time_Value thread_per_connection_timeout_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Server_Strategy_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Server_Strategy_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_DEFAULT_SERVER_FACTORY_H */

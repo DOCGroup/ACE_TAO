@@ -79,6 +79,8 @@
 # include "tao/ORB_Core.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_RCSID (tao,
            ORB_Core,
            "$Id$")
@@ -90,8 +92,6 @@ ACE_STATIC_SVC_DEFINE(TAO_ORB_Core_Static_Resources,
                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO, TAO_ORB_Core_Static_Resources)
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

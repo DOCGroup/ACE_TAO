@@ -52,10 +52,11 @@ class TAO_CSD_FW_Export TAO_CSD_Framework_Loader : public ACE_Service_Object
   virtual int init (int argc, ACE_TCHAR* []);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_CSD_FW, TAO_CSD_Framework_Loader)
 ACE_FACTORY_DECLARE (TAO_CSD_FW, TAO_CSD_Framework_Loader)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_CSD_FRAMEWORK_LOADER_H */

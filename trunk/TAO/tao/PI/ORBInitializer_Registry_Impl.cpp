@@ -241,8 +241,6 @@ TAO::ORBInitializer_Registry::post_init (
     }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DEFINE (ORBInitializer_Registry,
                        ACE_TEXT ("ORBInitializer_Registry"),
                        ACE_SVC_OBJ_T,
@@ -251,3 +249,6 @@ ACE_STATIC_SVC_DEFINE (ORBInitializer_Registry,
                        0)
 
 ACE_FACTORY_NAMESPACE_DEFINE (TAO_PI, ORBInitializer_Registry, TAO::ORBInitializer_Registry)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+

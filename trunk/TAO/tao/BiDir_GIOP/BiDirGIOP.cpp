@@ -96,7 +96,6 @@ TAO_BiDirGIOP_Loader::Initializer (void)
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_BiDirGIOP_Loader);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_BiDirGIOP_Loader,
                        ACE_TEXT ("BiDirGIOP_Loader"),
@@ -106,3 +105,5 @@ ACE_STATIC_SVC_DEFINE (TAO_BiDirGIOP_Loader,
                        0)
 
 ACE_FACTORY_DEFINE (TAO_BiDirGIOP, TAO_BiDirGIOP_Loader)
+
+TAO_END_VERSIONED_NAMESPACE_DECL

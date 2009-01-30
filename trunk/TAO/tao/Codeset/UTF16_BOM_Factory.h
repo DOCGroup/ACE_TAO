@@ -59,10 +59,10 @@ private:
   bool forceBE_;    // force big endian wchar, warray, & wstring
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Codeset, TAO_UTF16_BOM_Factory)
 ACE_FACTORY_DECLARE (TAO_Codeset, TAO_UTF16_BOM_Factory)
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #include /**/ "ace/post.h"
 #endif /* UTF16_BOM_FACTORY_H */

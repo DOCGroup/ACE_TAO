@@ -36,10 +36,10 @@ public:
   virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DECLARE (TAO_Object_Adapter_Factory)
 ACE_FACTORY_DECLARE (TAO_PortableServer, TAO_Object_Adapter_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

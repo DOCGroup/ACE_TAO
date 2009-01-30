@@ -77,11 +77,12 @@ protected:
 };
 
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Strategies, TAO_OC_Endpoint_Selector_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_OC_Endpoint_Selector_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_OC_ENDPOINT_SELECTOR_FACTORY_H */

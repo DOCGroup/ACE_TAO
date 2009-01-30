@@ -129,7 +129,6 @@ TAO_AMI_Arguments_Converter_Impl::Initializer (void)
 }
 
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
   TAO_AMI_Arguments_Converter_Impl,
@@ -142,3 +141,4 @@ ACE_STATIC_SVC_DEFINE (
 
 ACE_FACTORY_DEFINE (TAO_Messaging, TAO_AMI_Arguments_Converter_Impl)
 
+TAO_END_VERSIONED_NAMESPACE_DECL

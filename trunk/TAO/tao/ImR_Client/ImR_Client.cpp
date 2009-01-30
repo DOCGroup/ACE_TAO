@@ -227,8 +227,6 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DEFINE (
   ImR_Client_Adapter_Impl,
   ACE_TEXT ("Concrete_ImR_Client_Adapter"),
@@ -241,3 +239,6 @@ ACE_FACTORY_NAMESPACE_DEFINE (
   TAO_IMR_Client,
   ImR_Client_Adapter_Impl,
   TAO::ImR_Client::ImR_Client_Adapter_Impl)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+

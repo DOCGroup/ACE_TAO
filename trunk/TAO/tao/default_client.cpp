@@ -453,8 +453,6 @@ TAO_Default_Client_Strategy_Factory::use_cleanup_options (void) const
   return this->use_cleanup_options_;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 // ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Client_Strategy_Factory,
@@ -464,3 +462,6 @@ ACE_STATIC_SVC_DEFINE (TAO_Default_Client_Strategy_Factory,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Client_Strategy_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+

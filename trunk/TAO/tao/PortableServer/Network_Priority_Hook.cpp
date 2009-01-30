@@ -37,7 +37,6 @@ TAO_Network_Priority_Hook::initialize (void)
     (ace_svc_desc_TAO_Network_Priority_Hook);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_PortableServer, TAO_Network_Priority_Hook)
 ACE_STATIC_SVC_DEFINE (TAO_Network_Priority_Hook,
@@ -47,3 +46,4 @@ ACE_STATIC_SVC_DEFINE (TAO_Network_Priority_Hook,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
+TAO_END_VERSIONED_NAMESPACE_DECL

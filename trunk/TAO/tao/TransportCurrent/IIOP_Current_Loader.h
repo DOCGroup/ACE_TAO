@@ -63,13 +63,14 @@ namespace TAO
 #endif /* defined (TAO_AS_STATIC_LIBS) */
 
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Transport_Current,
                                TAO_Transport_IIOP_Current_Loader)
 
 ACE_FACTORY_DECLARE (TAO_Transport_Current,
                      TAO_Transport_IIOP_Current_Loader)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
