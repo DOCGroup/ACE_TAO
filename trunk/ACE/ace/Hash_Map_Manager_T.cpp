@@ -92,8 +92,8 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::dump 
 {
 #if defined (ACE_HAS_DUMP)
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("total_size_ = %d"), this->total_size_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d"), this->cur_size_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("total_size_ = %d\n"), this->total_size_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("cur_size_ = %d\n"), this->cur_size_));
   this->table_allocator_->dump ();
   this->entry_allocator_->dump ();
   this->lock_.dump ();
@@ -239,7 +239,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_
                                                             &this->table_[loc]);
       this->table_[loc].next_ = entry;
       entry->next_->prev_ = entry;
-      this->cur_size_++;
+      ++this->cur_size_;
       return 0;
     }
   else

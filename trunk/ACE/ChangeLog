@@ -1,3 +1,16 @@
+Fri Jan 30 15:02:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/Barrier.cpp:
+        * ace/Dynamic_Service_Base.cpp:
+        * ace/Hash_Map_Manager_T.cpp:
+        * ace/Malloc.cpp:
+        * ace/Malloc_T.cpp:
+        * ace/Mutex.cpp:
+        * ace/Pipe.cpp:
+        * ace/Semaphore.cpp:
+        * ace/TSS_T.cpp:
+          Removed some unnecessary ACE_DEBUG statements.
+
 Fri Jan 30 12:55:52 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
