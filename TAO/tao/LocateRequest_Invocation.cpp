@@ -70,7 +70,7 @@ namespace TAO
 
       countdown.update ();
 
-      s = this->send_message (cdr, TAO_Transport::TAO_TWOWAY_REQUEST
+      s = this->send_message (cdr, TAO_TWOWAY_REQUEST
                               , max_wait_time);
     }
 

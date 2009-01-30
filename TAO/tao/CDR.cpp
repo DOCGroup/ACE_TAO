@@ -74,7 +74,7 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
   , more_fragments_ (false)
   , request_id_ (0)
   , stub_ (0)
-  , message_semantics_ (TAO_Transport::TAO_TWOWAY_REQUEST)
+  , message_semantics_ (TAO_TWOWAY_REQUEST)
   , timeout_ (0)
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   , compressed_ (false)
@@ -113,7 +113,7 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
   , more_fragments_ (false)
   , request_id_ (0)
   , stub_ (0)
-  , message_semantics_ (TAO_Transport::TAO_TWOWAY_REQUEST)
+  , message_semantics_ (TAO_TWOWAY_REQUEST)
   , timeout_ (0)
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   , compressed_ (false)
@@ -145,7 +145,7 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
   , more_fragments_ (false)
   , request_id_ (0)
   , stub_ (0)
-  , message_semantics_ (TAO_Transport::TAO_TWOWAY_REQUEST)
+  , message_semantics_ (TAO_TWOWAY_REQUEST)
   , timeout_ (0)
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   , compressed_ (false)
@@ -168,7 +168,7 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
   , more_fragments_ (false)
   , request_id_ (0)
   , stub_ (0)
-  , message_semantics_ (TAO_Transport::TAO_TWOWAY_REQUEST)
+  , message_semantics_ (TAO_TWOWAY_REQUEST)
   , timeout_ (0)
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   , compressed_ (false)
@@ -194,7 +194,7 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Data_Block *data_block,
   , more_fragments_ (false)
   , request_id_ (0)
   , stub_ (0)
-  , message_semantics_ (TAO_Transport::TAO_TWOWAY_REQUEST)
+  , message_semantics_ (TAO_TWOWAY_REQUEST)
   , timeout_ (0)
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   , compressed_ (false)

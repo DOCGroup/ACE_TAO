@@ -8,6 +8,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Transport_Cache_Manager.h"
+#include "tao/Transport_Descriptor_Interface.h"
 #include "tao/Endpoint_Selector_Factory.h"
 #include "tao/Codeset_Manager.h"
 #include "tao/Connector_Registry.h"
