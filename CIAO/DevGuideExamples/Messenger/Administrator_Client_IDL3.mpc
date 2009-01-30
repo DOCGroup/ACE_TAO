@@ -1,14 +1,13 @@
 // $Id$
 
-//
 //  @file Administrator_Client_IDL3.mpc
 //
 //  @author Don Busch <busch_d@ociweb.com>
-//
 
-project(Administrator_Client_IDL3): ciao_client_dnc, valuetype,  {
+project(Administrator_Client_IDL3): ciao_client_dnc, valuetype {
   after += Messenger_stub
   libs += Messenger_stub
+  after += Administrator_Client_IDL2_Compile
 
   exename = Administrator_Client_IDL3
 
