@@ -1,3 +1,72 @@
+Fri Jan 30 10:57:14 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Message_Semantics.h:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+          Moved Message_Semantics out of the transport and to its own file,
+          this breaks some circular includes I got because CDR was dependent
+          on transport
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+          Updted for Messaging_Semantics move
+
+        * orbsvcs/tests/Interoperable_Naming/run_test.pl:
+          Layout changes
+
+        * tao/BiDir_GIOP/BiDir_Service_Context_Handler.cpp:
+          Add missing include of Transport.h
+
+        * tao/Cache_Entries.{h,cpp,inl}:
+          Removed
+
+        * tao/Cache_Entries_T.{h,cpp,inl}:
+          The original cache entry class now as C++ template
+
+        * tao/CDR.{h,cpp,inl}:
+          Break dependency on TAO_Transport and updated Message_Semantics
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/IIOP_Transport.h:
+        * tao/LocateRequest_Invocation.cpp:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/Remote_Invocation.{h,inl}
+        * tao/Strategies/COIOP_Transport.h:
+        * tao/Strategies/DIOP_Transport.h:
+        * tao/Strategies/SCIOP_Transport.h:
+        * tao/Strategies/SHMIOP_Transport.h:
+        * tao/Strategies/UIOP_Transport.h:
+        * tao/Synch_Invocation.cpp
+        * tao/TAO_Server_Request.cpp
+          Updated for Message_Semantics move
+
+        * tao/Invocation_Base.h:
+          Added missing include which was implicit in the past
+
+        * tao/Profile_Transport_Resolver.cpp:
+          Added missing include
+
+        * tao/RTCORBA/Thread_Pool.cpp:
+          Removed not needed include
+
+        * tao/tao.mpc:
+          Updated
+
+        * tao/Thread_Lane_Resources.cpp:
+        * tao/Thread_Lane_Resources.h:
+          Updated includes
+
+        * tao/Transport_Cache_Manager.{h,cpp,inl}:
+        * tao/Transport_Cache_Manager_T.{h,cpp,inl}:
+        * tao/Transport_Cache_Manager.h:
+          Refactored the existing transport cache manager into a C++
+          template and then use that in Transport_Cache_Manager.h to
+          not break existing interfaces. Having the tcm being a C++
+          template we can create a mock transport and start writing
+          regression tests for the purging behaviour without the
+          requirement to have a real transport in place
+
 Fri Jan 30 09:40:14 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tao/CDR.inl:

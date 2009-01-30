@@ -140,7 +140,7 @@ namespace TAO
 
   Invocation_Status
   Remote_Invocation::send_message (TAO_OutputCDR &cdr,
-                                   TAO_Transport::TAO_Message_Semantics message_semantics,
+                                   TAO_Message_Semantics message_semantics,
                                    ACE_Time_Value *max_wait_time)
   {
     TAO_Protocols_Hooks *tph =

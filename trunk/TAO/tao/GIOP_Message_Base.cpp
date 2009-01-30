@@ -927,7 +927,7 @@ TAO_GIOP_Message_Base::process_request (
 
           output.message_attributes (request_id,
                                      0,
-                                     TAO_Transport::TAO_REPLY,
+                                     TAO_REPLY,
                                      0,
                                      false);
 
@@ -948,7 +948,7 @@ TAO_GIOP_Message_Base::process_request (
 
           int const result = transport->send_message (output,
                                                       0,
-                                                      TAO_Transport::TAO_REPLY);
+                                                      TAO_REPLY);
           if (result == -1)
             {
               if (TAO_debug_level > 0)
@@ -1201,7 +1201,7 @@ TAO_GIOP_Message_Base::make_send_locate_reply (TAO_Transport *transport,
   // Send the message
   int const result = transport->send_message (output,
                                               0,
-                                              TAO_Transport::TAO_REPLY);
+                                              TAO_REPLY);
 
   // Print out message if there is an error
   if (result == -1)
@@ -1437,7 +1437,7 @@ TAO_GIOP_Message_Base::send_reply_exception (
 
   output.more_fragments (false);
 
-  return transport->send_message (output, 0, TAO_Transport::TAO_REPLY);
+  return transport->send_message (output, 0, TAO_REPLY);
 }
 
 void

@@ -27,6 +27,7 @@
 #include "tao/Transport_Timer.h"
 #include "tao/Incoming_Message_Queue.h"
 #include "tao/Incoming_Message_Stack.h"
+#include "tao/Message_Semantics.h"
 #include "ace/Time_Value.h"
 #include "ace/Basic_Stats.h"
 
@@ -606,13 +607,6 @@ public:
   virtual int handle_input (TAO_Resume_Handle &rh,
                             ACE_Time_Value *max_wait_time = 0);
 
-  enum TAO_Message_Semantics
-    {
-      TAO_ONEWAY_REQUEST = 0,
-      TAO_TWOWAY_REQUEST = 1,
-      TAO_REPLY
-    };
-
   /// Prepare the waiting and demuxing strategy to receive a reply for
   /// a new request.
   /**
@@ -656,7 +650,7 @@ public:
    */
   virtual int send_message (TAO_OutputCDR &stream,
                             TAO_Stub *stub = 0,
-                            TAO_Message_Semantics message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
+                            TAO_Message_Semantics message_semantics = TAO_TWOWAY_REQUEST,
                             ACE_Time_Value *max_time_wait = 0) = 0;
 
   /// Sent the contents of @a message_block
