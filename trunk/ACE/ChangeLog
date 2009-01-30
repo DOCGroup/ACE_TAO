@@ -1,3 +1,12 @@
+Fri Jan 30 12:55:52 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+        * tests/Bug_3532_Regression.cpp:
+          Added a new test for bugzilla 3532. This bug is not fixed, just
+          integrating the regression test. Thanks to Martin Gaus <Gaus@gmx.de>
+          for creating this test
+
 Fri Jan 30 12:38:52 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE.cpp:
