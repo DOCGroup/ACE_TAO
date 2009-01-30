@@ -1,3 +1,21 @@
+Fri Jan 30 11:54:52 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Intrusive_List.cpp:
+          Just have one exit point in the methods
+
+        * ace/Singleton.cpp:
+        * ace/Singleton.h:
+          Added a static close() which can be used to explicitly close
+          an ACE_Singleton. It will then deregister from the object manager
+          from cleanup. This way an application developer could close his
+          singletons explicitly, but keep the safety that ACE will do that
+          also when the application does a shutdown
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+        * tests/Singleton_Test.cpp:
+          Added a new test for the close
+
 Thu Jan 29 18:48:52 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3541_Regression_Test.cpp:

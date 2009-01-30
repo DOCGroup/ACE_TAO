@@ -108,8 +108,22 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
 template <class TYPE, class ACE_LOCK> void
 ACE_Singleton<TYPE, ACE_LOCK>::cleanup (void *)
 {
+  ACE_Object_Manager::remove_at_exit (this);
   delete this;
   ACE_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
+}
+
+template <class TYPE, class ACE_LOCK> void
+ACE_Singleton<TYPE, ACE_LOCK>::close (void)
+{
+  ACE_Singleton<TYPE, ACE_LOCK> *&singleton =
+    ACE_Singleton<TYPE, ACE_LOCK>::instance_i ();
+
+  if (singleton)
+    {
+      singleton->cleanup ();
+      ACE_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
+    }
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
