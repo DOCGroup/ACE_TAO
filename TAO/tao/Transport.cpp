@@ -24,6 +24,7 @@
 #include "tao/MMAP_Allocator.h"
 #include "tao/SystemException.h"
 #include "tao/operation_details.h"
+#include "tao/Transport_Descriptor_Interface.h"
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
@@ -1293,15 +1294,15 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
 
   switch (message_semantics)
     {
-      case TAO_Transport::TAO_TWOWAY_REQUEST:
+      case TAO_TWOWAY_REQUEST:
         ret = this->send_synchronous_message_i (message_block, max_wait_time);
         break;
 
-      case TAO_Transport::TAO_REPLY:
+      case TAO_REPLY:
         ret = this->send_reply_message_i (message_block, max_wait_time);
         break;
 
-      case TAO_Transport::TAO_ONEWAY_REQUEST:
+      case TAO_ONEWAY_REQUEST:
         ret = this->send_asynchronous_message_i (stub,
                                                  message_block,
                                                  max_wait_time);

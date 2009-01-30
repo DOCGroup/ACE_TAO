@@ -16,7 +16,6 @@ ACE_RCSID (RTCORBA,
 #include "tao/TSS_Resources.h"
 #include "tao/ORB.h"
 #include "tao/Acceptor_Registry.h"
-#include "tao/Transport_Cache_Manager.h"
 #include "tao/debug.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/LF_Follower.h"

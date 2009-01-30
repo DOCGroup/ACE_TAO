@@ -90,7 +90,7 @@ namespace TAO
 
         cdr.message_attributes (this->details_.request_id (),
                                 this->resolver_.stub (),
-                                TAO_Transport::TAO_TWOWAY_REQUEST,
+                                TAO_TWOWAY_REQUEST,
                                 max_wait_time,
                                 false);
 
@@ -118,7 +118,7 @@ namespace TAO
         countdown.update ();
 
         s = this->send_message (cdr,
-                                TAO_Transport::TAO_TWOWAY_REQUEST,
+                                TAO_TWOWAY_REQUEST,
                                 max_wait_time);
 
   ace_mon.release();
@@ -666,7 +666,7 @@ namespace TAO
 
     cdr.message_attributes (this->details_.request_id (),
           this->resolver_.stub (),
-          TAO_Transport::TAO_ONEWAY_REQUEST,
+          TAO_ONEWAY_REQUEST,
           max_wait_time,
           false);
 
@@ -680,7 +680,7 @@ namespace TAO
       {
         // We have a connected transport so we can send the message
         s = this->send_message (cdr,
-              TAO_Transport::TAO_ONEWAY_REQUEST,
+              TAO_ONEWAY_REQUEST,
               max_wait_time);
       }
     else
