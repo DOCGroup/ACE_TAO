@@ -169,7 +169,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
   // are useless
   if (this->factory_disabled_) {
     ACE_DEBUG ((LM_WARNING,
-                ACE_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ")
+                ACE_TEXT ("TAO (%P|%t) - Warning: Resource_Factory options ")
                 ACE_TEXT ("ignored\n")
                 ACE_TEXT ("Default Resource Factory is disabled\n")));
     return 0;
@@ -571,14 +571,14 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         // Can we assume there is an argument after the option?
         // ++curarg;
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Default_Resource_Factory - ")
+                    ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory - ")
                     ACE_TEXT ("unknown option <%s>\n"),
                     argv[curarg]));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Default_Resource_Factory - ")
+                    ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory - ")
                     ACE_TEXT ("ignoring option <%s>\n"),
                     argv[curarg]));
       }
@@ -1230,8 +1230,8 @@ TAO_Default_Resource_Factory::report_option_value_error (
                                  const ACE_TCHAR* option_value)
 {
   ACE_DEBUG((LM_DEBUG,
-             ACE_TEXT ("Default_Resource_Factory - unknown argument")
-             ACE_TEXT (" <%s> for <%s>\n"),
+             ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory - unknown ")
+             ACE_TEXT ("argument <%s> for <%s>\n"),
              option_value, option_name));
 }
 
@@ -1242,7 +1242,7 @@ TAO_Default_Resource_Factory::disable_factory (void)
   if (this->options_processed_)
     {
       ACE_DEBUG ((LM_WARNING,
-                  ACE_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
+                  ACE_TEXT ("TAO (%P|%t) - Warning: Resource_Factory options ignored\n")
                   ACE_TEXT ("Default Resource Factory is disabled\n")));
     }
 }
@@ -1257,7 +1257,7 @@ TAO_Default_Resource_Factory::codeset_manager(void)
     {
       if (TAO_debug_level >= 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) Default_Resource_Factory")
+                    ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory")
                     ACE_TEXT (" - unable to find codeset manager factory.\n")));
       return 0;
     }
@@ -1268,7 +1268,7 @@ TAO_Default_Resource_Factory::codeset_manager(void)
     {
       if (TAO_debug_level >= 2)
         ACE_DEBUG ((LM_INFO,
-                    ACE_TEXT ("TAO (%P|%t) Default_Resource_Factory")
+                    ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory")
                     ACE_TEXT (" - unable to create codeset manager.\n")));
       return 0;
     }
@@ -1278,7 +1278,7 @@ TAO_Default_Resource_Factory::codeset_manager(void)
 
   if (TAO_debug_level >= 1)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) Default_Resource_Factory - codeset manager=%@\n"),
+                ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory - codeset manager=%@\n"),
                 mgr));
 
   this->char_codeset_parameters_.apply_to (mgr->char_codeset_descriptor());
