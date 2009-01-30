@@ -177,9 +177,9 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                                   ACE_TEXT ("(\"%s\", 0x%x) -> %s: %s\n"),
                                   aix_pathname,
                                   open_mode,
-                                  ACE_TEXT ((this->handle_ != ACE_SHLIB_INVALID_HANDLE)
-                                                ? "succeeded"
-                                                : "failed"),
+                                  (this->handle_ != ACE_SHLIB_INVALID_HANDLE
+                                                ? ACE_TEXT ("succeeded")
+                                                : ACE_TEXT ("failed")),
                                   this->error()->c_str()));
                     }
 

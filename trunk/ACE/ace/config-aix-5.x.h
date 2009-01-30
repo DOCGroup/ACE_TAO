@@ -142,7 +142,7 @@
 #if defined (ACE_DLL_SUFFIX)
 #  undef ACE_DLL_SUFFIX
 #endif
-#define ACE_DLL_SUFFIX ".so"
+#define ACE_DLL_SUFFIX ACE_TEXT (".so")
 
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 
@@ -262,7 +262,7 @@
 #define ACE_LACKS_NETINET_TCP_H
 
 // AIX uses LIBPATH to search for libraries
-#define ACE_LD_SEARCH_PATH "LIBPATH"
+#define ACE_LD_SEARCH_PATH ACE_TEXT ("LIBPATH")
 
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096

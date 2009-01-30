@@ -1,3 +1,11 @@
+Fri Jan 30 20:42:45 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/DLL_Manager.cpp (ACE_DLL_Handle::open): Correct ACE_TEXT usage
+          in AIX case.
+
+        * ace/config-aix-5.x.h: Wrap ACE_DLL_SUFFIX and ACE_LD_SEARCH_PATH
+          with ACE_TEXT().
+
 Fri Jan 30 15:02:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * ace/Barrier.cpp:
