@@ -61,7 +61,6 @@ TAO_Endpoint_Acceptor_Filter_Factory::~TAO_Endpoint_Acceptor_Filter_Factory(void
 }
 
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_EndpointPolicy, TAO_Endpoint_Acceptor_Filter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_Endpoint_Acceptor_Filter_Factory,
@@ -71,3 +70,4 @@ ACE_STATIC_SVC_DEFINE (TAO_Endpoint_Acceptor_Filter_Factory,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
+TAO_END_VERSIONED_NAMESPACE_DECL

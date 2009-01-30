@@ -22,7 +22,6 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_NAMESPACE_DEFINE (
   ACE_Local_Service,
@@ -36,5 +35,7 @@ ACE_STATIC_SVC_DEFINE (
   &ACE_SVC_NAME (ImplicitActivationStrategyImplicit),
   ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
   0)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

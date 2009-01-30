@@ -91,10 +91,10 @@ public:
                                           CORBA::ORB_ptr orb);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_DLL_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_DLL_Parser)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DDL_PARSER == 1 */
 

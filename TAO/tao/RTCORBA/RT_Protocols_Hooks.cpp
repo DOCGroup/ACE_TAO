@@ -705,7 +705,6 @@ TAO_RT_Protocols_Hooks::set_thread_native_priority (
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_RT_Protocols_Hooks,
                        ACE_TEXT ("RT_Protocols_Hooks"),
@@ -715,5 +714,7 @@ ACE_STATIC_SVC_DEFINE (TAO_RT_Protocols_Hooks,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

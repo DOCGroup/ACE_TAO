@@ -58,10 +58,10 @@ public:
   virtual int requires_explicit_endpoint (void) const;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_IIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_IIOP_Protocol_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 

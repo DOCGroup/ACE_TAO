@@ -65,10 +65,10 @@ static int
 TAO_Requires_Acceptor_Filter_Factory =
 TAO_Acceptor_Filter_Factory::initialize ();
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DECLARE (TAO_Acceptor_Filter_Factory)
 ACE_FACTORY_DECLARE (TAO_PortableServer, TAO_Acceptor_Filter_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)*/
 

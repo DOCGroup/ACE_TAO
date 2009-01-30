@@ -48,10 +48,11 @@ public:
 static int
 TAO_Requires_DynamicAny_Initializer = TAO_DynamicAny_Loader::Initializer ();
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_DynamicAny_Loader)
 ACE_FACTORY_DECLARE (TAO_DynamicAny, TAO_DynamicAny_Loader)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_DYNAMICANY_H */

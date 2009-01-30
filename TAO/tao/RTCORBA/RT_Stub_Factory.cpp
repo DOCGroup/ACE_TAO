@@ -37,7 +37,6 @@ TAO_RT_Stub_Factory::create_stub (const char *repository_id,
   return retval;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 
@@ -48,5 +47,7 @@ ACE_STATIC_SVC_DEFINE (TAO_RT_Stub_Factory,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_RTCORBA, TAO_RT_Stub_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

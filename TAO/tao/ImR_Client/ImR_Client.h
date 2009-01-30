@@ -70,10 +70,11 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (ImR_Client_Adapter_Impl)
 ACE_FACTORY_DECLARE (TAO_IMR_Client, ImR_Client_Adapter_Impl)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

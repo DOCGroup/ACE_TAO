@@ -32,8 +32,6 @@ TAO_Default_Stub_Factory::create_stub (const char *repository_id,
   return retval;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 // ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (
@@ -45,3 +43,6 @@ ACE_STATIC_SVC_DEFINE (
     0
   )
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Stub_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+

@@ -36,8 +36,6 @@ TAO_CodecFactory_Loader::Initializer (void)
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_CodecFactory_Loader);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DEFINE (TAO_CodecFactory_Loader,
                        ACE_TEXT ("CodecFactory_Loader"),
                        ACE_SVC_OBJ_T,
@@ -45,3 +43,6 @@ ACE_STATIC_SVC_DEFINE (TAO_CodecFactory_Loader,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_CodecFactory, TAO_CodecFactory_Loader)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+

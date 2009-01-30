@@ -1376,10 +1376,10 @@ TAO_Export TAO_ORB_Core * TAO_ORB_Core_instance (void);
 
 // ****************************************************************
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_ORB_Core_Static_Resources)
 ACE_FACTORY_DECLARE (TAO, TAO_ORB_Core_Static_Resources)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB_Core.inl"

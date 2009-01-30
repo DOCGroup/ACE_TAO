@@ -441,7 +441,6 @@ TAO_ZIOP_Loader::marshal_reply_data (TAO_ServerRequest& server_request,
   return true;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_ZIOP_Loader,
                        ACE_TEXT ("ZIOP_Loader"),
@@ -452,3 +451,4 @@ ACE_STATIC_SVC_DEFINE (TAO_ZIOP_Loader,
 
 ACE_FACTORY_DEFINE (TAO_ZIOP, TAO_ZIOP_Loader)
 
+TAO_END_VERSIONED_NAMESPACE_DECL

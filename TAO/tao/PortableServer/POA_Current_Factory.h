@@ -37,10 +37,10 @@ public:
                                            ACE_TCHAR *argv []);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DECLARE (TAO_POA_Current_Factory)
 ACE_FACTORY_DECLARE (TAO_PortableServer, TAO_POA_Current_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -123,13 +123,16 @@ ANYTYPECODE__EXCEPTION_LIST
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_boolean value);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_AnyTypeCode_Adapter_Impl)
 ACE_FACTORY_DECLARE (TAO_AnyTypeCode, TAO_AnyTypeCode_Adapter_Impl)
 
 static int TAO_Requires_TAO_AnyTypeCode_Adapter_Impl =
   TAO_AnyTypeCode_Adapter_Impl::Initializer ();
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ANYTYPECODE_ADAPTER_IMPL_H */

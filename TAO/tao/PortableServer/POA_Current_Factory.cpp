@@ -18,8 +18,6 @@ TAO_POA_Current_Factory::create_object (CORBA::ORB_ptr,
   return adapter;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_FACTORY_DEFINE (TAO_PortableServer, TAO_POA_Current_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_POA_Current_Factory,
                        ACE_TEXT ("TAO_POA_Current_Factory"),
@@ -27,4 +25,6 @@ ACE_STATIC_SVC_DEFINE (TAO_POA_Current_Factory,
                        &ACE_SVC_NAME (TAO_POA_Current_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 

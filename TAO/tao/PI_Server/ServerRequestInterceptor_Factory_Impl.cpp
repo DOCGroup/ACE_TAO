@@ -37,7 +37,6 @@ TAO_ServerRequestInterceptor_Adapter_Factory_Impl::create (void)
   return obj;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_ServerRequestInterceptor_Adapter_Factory_Impl,
                        ACE_TEXT ("ServerRequestInterceptor_Adapter_Factory"),
@@ -46,5 +45,7 @@ ACE_STATIC_SVC_DEFINE (TAO_ServerRequestInterceptor_Adapter_Factory_Impl,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_PI_Server, TAO_ServerRequestInterceptor_Adapter_Factory_Impl)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS */

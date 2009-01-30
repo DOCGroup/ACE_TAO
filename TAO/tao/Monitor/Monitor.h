@@ -53,10 +53,10 @@ static int
 TAO_Requires_Monitor_Initializer = TAO_Monitor_Init::Initializer ();
 //#endif /* TAO_AS_STATIC_LIBS */
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_Monitor_Init)
 ACE_FACTORY_DECLARE (TAO_Monitor, TAO_Monitor_Init)
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 

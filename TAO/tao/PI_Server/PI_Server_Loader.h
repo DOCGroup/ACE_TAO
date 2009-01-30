@@ -38,10 +38,11 @@ public:
   virtual int init (int argc, ACE_TCHAR* []);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PI_Server, TAO_PI_Server_Loader)
 ACE_FACTORY_DECLARE (TAO_PI_Server, TAO_PI_Server_Loader)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_PI_SERVER_LOADER_H */

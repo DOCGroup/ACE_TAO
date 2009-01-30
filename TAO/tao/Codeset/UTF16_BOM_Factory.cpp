@@ -20,6 +20,8 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_STATIC_SVC_DEFINE (TAO_UTF16_BOM_Factory,
                        ACE_TEXT ("UTF16_BOM_Factory"),
                        ACE_SVC_OBJ_T,
@@ -30,7 +32,6 @@ ACE_STATIC_SVC_DEFINE (TAO_UTF16_BOM_Factory,
 ACE_FACTORY_DEFINE (TAO_Codeset, TAO_UTF16_BOM_Factory)
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UTF16_BOM_Factory::TAO_UTF16_BOM_Factory ()
   : translator_ (0)
