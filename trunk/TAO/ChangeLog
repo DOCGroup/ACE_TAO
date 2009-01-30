@@ -1,3 +1,8 @@
+Fri Jan 30 14:10:14 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CDR.inl:
+          Add include of SystemException for inline builds
+
 Fri Jan 30 12:39:14 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/default_resource.cpp:
