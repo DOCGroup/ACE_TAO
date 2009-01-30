@@ -2352,7 +2352,11 @@ ACE::format_hexdump (const char *buffer,
       textver[j] = 0;
 
       ACE_OS::sprintf (obuf,
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                       ACE_TEXT ("  %ls\n"),
+#else
                        ACE_TEXT ("  %s\n"),
+#endif
                        textver);
 
       while (*obuf != '\0')
@@ -2393,7 +2397,11 @@ ACE::format_hexdump (const char *buffer,
 
       textver[i] = 0;
       ACE_OS::sprintf (obuf,
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                       ACE_TEXT ("  %ls\n"),
+#else
                        ACE_TEXT ("  %s\n"),
+#endif
                        textver);
     }
   return size;

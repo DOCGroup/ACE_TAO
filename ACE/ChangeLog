@@ -1,3 +1,9 @@
+Fri Jan 30 12:38:52 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.cpp:
+        * ace/Log_Msg.cpp:
+          Fixed unicode logging problems on non windows platforms
+
 Fri Jan 30 11:54:52 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Intrusive_List.cpp:
