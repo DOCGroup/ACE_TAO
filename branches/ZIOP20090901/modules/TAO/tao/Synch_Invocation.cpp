@@ -15,6 +15,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Service_Context.h"
 #include "tao/SystemException.h"
+#include "tao/ZIOP_Adapter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
@@ -99,7 +100,19 @@ namespace TAO
         this->marshal_data (cdr);
 
 // JW ZIOP if enabled, everything after 12 bytes header
-  // Register a reply dispatcher for this invocation. Use the
+  //this->compress_data (cdr);
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+    TAO_ZIOP_Adapter* ziop_adapter = this->stub()->orb_core()->ziop_adapter ();
+
+    if (ziop_adapter)
+      {
+         ziop_adapter->marshal_data (this->details_, cdr, this->resolver_);
+      }
+#endif
+
+
+        
+        // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
         TAO_Bind_Dispatcher_Guard dispatch_guard (
           this->details_.request_id (),

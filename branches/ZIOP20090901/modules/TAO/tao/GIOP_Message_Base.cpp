@@ -651,10 +651,31 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   input_cdr.compressed (qd->state().compressed ());
-#endif
-
 
   // JW decompress if ZIOP and convert to GIOP
+  if (input_cdr.compressed ())
+    {
+      TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
+      if (adapter)
+        {
+          TAO_ServerRequest request (this,
+                                     input_cdr,
+                                     output,
+                                     transport,
+                                     this->orb_core_);
+          adapter->decompress (request);
+        }
+      else
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) ERROR: Unable to decompress ")
+                        ACE_TEXT ("data.\n")));
+
+          return -1;
+        }
+  }
+#endif
 
   transport->assign_translators(&input_cdr,&output);
 
@@ -869,27 +890,6 @@ TAO_GIOP_Message_Base::process_request (
       response_required = request.response_expected ();
 
       CORBA::Object_var forward_to;
-
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-      // NO ZIOP at all in this block
-      if (cdr.compressed ())
-        {
-          TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
-          if (adapter)
-            {
-              adapter->decompress (request);
-            }
-          else
-            {
-              if (TAO_debug_level > 0)
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("TAO (%P|%t) ERROR: Unable to decompress ")
-                            ACE_TEXT ("data.\n")));
-
-              return -1;
-            }
-      }
-#endif
 
       /*
        * Hook to specialize request processing within TAO
@@ -1954,11 +1954,6 @@ TAO_GIOP_Message_Base::set_giop_flags (TAO_OutputCDR & msg) const
   // Only supported in GIOP 1.1 or better.
   if (!(major <= 1 && minor == 0))
     ACE_SET_BITS (flags, msg.more_fragments () << 1);
-
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  if (!(major <= 1 && minor < 2))
-    ACE_SET_BITS (flags, msg.compressed () << 2);
-#endif
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

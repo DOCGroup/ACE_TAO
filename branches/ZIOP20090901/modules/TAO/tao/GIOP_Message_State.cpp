@@ -87,6 +87,26 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
 int
 TAO_GIOP_Message_State::parse_magic_bytes (char *buf)
 {
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  // The values are hard-coded to support non-ASCII platforms.
+  if (!(buf [0] == 0x5A      // 'Z'
+        && buf [1] == 0x49   // 'I'
+        && buf [2] == 0x4f   // 'O'
+        && buf [3] == 0x50)) // 'P'
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - ")
+                    ACE_TEXT ("TAO_GIOP_Message_State::parse_magic_bytes, ")
+                    ACE_TEXT ("bad ZIOP header: ")
+                    ACE_TEXT ("magic word [%02x,%02x,%02x,%02x]\n"),
+                    buf[0],
+                    buf[1],
+                    buf[2],
+                    buf[3]));
+      return -1;
+    }
+#else
   // The values are hard-coded to support non-ASCII platforms.
   if (!(buf [0] == 0x47      // 'G'
         && buf [1] == 0x49   // 'I'
@@ -97,7 +117,7 @@ TAO_GIOP_Message_State::parse_magic_bytes (char *buf)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - ")
                     ACE_TEXT ("TAO_GIOP_Message_State::parse_magic_bytes, ")
-                    ACE_TEXT ("bad header: ")
+                    ACE_TEXT ("bad GIOP header: ")
                     ACE_TEXT ("magic word [%02x,%02x,%02x,%02x]\n"),
                     buf[0],
                     buf[1],
@@ -105,6 +125,7 @@ TAO_GIOP_Message_State::parse_magic_bytes (char *buf)
                     buf[3]));
       return -1;
     }
+#endif
 
  return 0;
 }
@@ -183,8 +204,7 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
       // Read the compressed flag
-      this->compressed_ =
-        ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x04) == 4);
+      this->compressed_ = buf[0] == 0x5A;
 #endif
     }
 
