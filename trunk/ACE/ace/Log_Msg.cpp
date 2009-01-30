@@ -2235,7 +2235,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
     return 0;
 
   ACE_TCHAR* buf = 0;
-  const size_t buf_sz =
+  size_t const buf_sz =
     ACE_Log_Record::MAXLOGMSGLEN - ACE_Log_Record::VERBOSE_LEN - 58;
   ACE_NEW_RETURN (buf, ACE_TCHAR[buf_sz], -1);
 
@@ -2254,7 +2254,11 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
 
   if (text)
     sz = ACE_OS::sprintf (msg_buf,
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                          ACE_TEXT ("%ls - "),
+#else
                           ACE_TEXT ("%s - "),
+#endif
                           text);
 
   sz += ACE_OS::sprintf (msg_buf + sz,
