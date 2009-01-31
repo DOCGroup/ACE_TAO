@@ -111,7 +111,7 @@ namespace TAO
       virtual int send_message (TAO_OutputCDR &stream,
                                 TAO_Stub *stub = 0,
                                 TAO_Message_Semantics message_semantics =
-                                Transport::TAO_TWOWAY_REQUEST,
+                                TAO_TWOWAY_REQUEST,
                                 ACE_Time_Value *max_time_wait = 0);
 
       // @@ This is probably not needed - Priyanka
