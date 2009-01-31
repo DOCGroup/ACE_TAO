@@ -11,6 +11,8 @@
 
 #include "orbsvcs/orbsvcs/Notify/MonitorControl/Control.h"
 
+#include "ace/Hash_Map_Manager_T.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_MC_Export TAO_Control_Registry
