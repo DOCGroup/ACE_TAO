@@ -1,3 +1,9 @@
+Sat Jan 31 21:30:17 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+        
+          Fixes for versioned namespace. 
+        
 Fri Jan 30 14:52:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h:
@@ -185,9 +191,9 @@ Fri Jan 30 14:52:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tao/default_server.cpp:
 
           Enclosed service declarations/definitions and factory functions in versioned
-          namespace markers to better able handle mixing versioned and unversioned 
+          namespace markers to better able handle mixing versioned and unversioned
           compilations working together in shared namespaces.
-        
+
 Fri Jan 30 14:10:14 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CDR.inl:
