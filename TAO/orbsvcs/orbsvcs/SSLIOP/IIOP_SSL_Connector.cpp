@@ -9,7 +9,7 @@
 #include "tao/Wait_Strategy.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Transport.h"
-
+#include "tao/Transport_Descriptor_Interface.h"
 #include "ace/Strategies_T.h"
 
 
