@@ -1,3 +1,11 @@
+Mon Feb  2 11:18:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager_T.cpp:
+        * tao/Transport_Cache_Manager_T.h:
+        * tao/Transport_Cache_Manager_T.inl:
+          The purging strategy is now also a template argument
+
 Mon Feb  2 10:54:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
