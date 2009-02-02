@@ -1,3 +1,11 @@
+Mon Feb  2 12:14:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Cache_Manager_T.cpp:
+          Store the transports to be purged into a set and use that set
+          for the purging. This way we most oldest lru transport first, then
+          work towards the more recent used transports. This fixes bugzilla
+          3549
+
 Mon Feb  2 11:48:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Transport_Cache_Manager/Bug_3549_Regression.cpp:

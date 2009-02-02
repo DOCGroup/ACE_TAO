@@ -571,7 +571,8 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TDT, PS>::
     purge (void)
   {
-    ACE_Unbounded_Stack<transport_type*> transports_to_be_closed;
+    typedef ACE_Unbounded_Set<transport_type*> transport_set_type;
+    transport_set_type transports_to_be_closed;
 
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->cache_lock_, 0));
@@ -618,17 +619,18 @@ namespace TAO
                         transport->id ()));
                     }
 
-                  if (transports_to_be_closed.push (transport) != 0)
+                  if (transports_to_be_closed.insert_tail (transport) != 0)
                     {
                       if (TAO_debug_level > 0)
                         {
                           ACE_ERROR ((LM_ERROR,
                             ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T")
-                            ACE_TEXT ("::purge: Unable to push transport[%d] ")
-                            ACE_TEXT ("on the to-be-closed stack, so ")
-                            ACE_TEXT ("it will leak\n"),
+                            ACE_TEXT ("::purge: Unable to add transport[%d] ")
+                            ACE_TEXT ("on the to-be-closed set, so ")
+                            ACE_TEXT ("it will not be purged\n"),
                             transport->id ()));
                         }
+                      transport->remove_reference ();
                     }
 
                   // Count this as a successful purged entry
@@ -643,12 +645,15 @@ namespace TAO
     }
 
     // Now, without the lock held, lets go through and close all the transports.
-    transport_type *transport = 0;
-
-    while (! transports_to_be_closed.is_empty ())
+    if (! transports_to_be_closed.is_empty ())
       {
-        if (transports_to_be_closed.pop (transport) == 0)
+        transport_set_type::iterator it (transports_to_be_closed);
+        while (! it.done ())
           {
+            transport_type *transport = *it;
+            
+            it.advance ();
+            
             if (transport)
               {
                 transport->close_connection ();
