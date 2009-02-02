@@ -1,3 +1,12 @@
+Mon Feb  2 08:00:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Thread_Lane_Resources.cpp:
+        * tao/Transport_Cache_Manager_T.cpp:
+        * tao/Transport_Cache_Manager_T.h:
+          Changed the constructor of the TCM to accept all different config
+          values seperately instead of accepting the orb_core. This makes
+          it easier to write unit tests for the TCM
+
 Mon Feb  2 07:29:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
