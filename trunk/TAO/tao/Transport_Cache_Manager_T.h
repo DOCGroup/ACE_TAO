@@ -165,7 +165,7 @@ namespace TAO
     /**
      * This call is used for a specific use case by the ORB_Core
      * during shutdown. The only way the ORB can wake up threads
-     * waiting on these sockstes for replies is to iterate over
+     * waiting on these sockets for replies is to iterate over
      * these blockable transports and close the socket
      * handles. Without these the threads will continue to wait there
      * for ever.
@@ -222,17 +222,17 @@ namespace TAO
 
   private:
     /**
-     * Tries to find if the <int_id_> in entry is available for use.
+     * Tries to find if the @c int_id_ in @a entry is available for use.
      */
     bool is_entry_available_i (const HASH_MAP_ENTRY &entry);
 
     /**
-     * Tries to find if the <int_id_> in entry is connect pending
+     * Tries to find if the @c int_id_ in @a entry is connect pending
      */
     bool is_entry_connecting_i (const HASH_MAP_ENTRY &entry);
 
     /**
-     * Tries to find if the <int_id_> in entry is purgable
+     * Tries to find if the @c int_id_ in @a entry is purgable
      */
     bool is_entry_purgable_i (const HASH_MAP_ENTRY &entry);
 
