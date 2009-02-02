@@ -8,24 +8,23 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
-$debug_level = '0';
-
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
 $orb_log = "ORBLog.log";
-$server->LocalFile ($orb_log);
+$orb_logfile = $server->LocalFile ($orb_log);
 $server->DeleteFile ($orb_log);
 
-$SV = $server->CreateProcess ("server", "-l $orb_log");
+$SV = $server->CreateProcess ("server", "-l $orb_logfile");
 
 $SV->Spawn ();
-     
+
+if ($server->WaitForFileTimed ($orb_log,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$orb_logfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
 $SV->WaitKill ($server->ProcessStopWaitInterval());
 
 exit 0;
