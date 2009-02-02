@@ -1,4 +1,5 @@
 // $Id$
+
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/SString.h"
@@ -29,10 +30,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // We need an ORB to get an ORB core
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      // We create 10 transports and have a max of 10 tran
+      // We create 10 transports and have a max of 5 tran
 
       size_t const transport_max = 10;
-      int cache_maximum = 10;
+      int cache_maximum = 5;
       int purging_percentage = 20;
       size_t i = 0;
       mock_transport mytransport[transport_max];
@@ -47,29 +48,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           mytransport[i].purging_order (i);
         }
 
-      // Now purge the cache and see which one get removed. Only transport
-      // 0 and 1 should be purged in that order, 0 has the lowest purging
-      // count, 1 has the second lowest value.
-      my_cache.purge ();
-
-      for (i = 2; i < transport_max; i++)
-        {
-          if (mytransport[i].purged_count () != 0)
-            {
-              ACE_ERROR ((LM_ERROR, "ERROR Incorrect purged count %d for transport %d\n", mytransport[i].purged_count(), i));
-              ++result;
-            }
-        }
- 
-     if (mytransport[0].purged_count () != 1)
+     if (my_cache.current_size () != transport_max)
        {
-         ACE_ERROR ((LM_ERROR, "ERROR Incorrect purged count for transport 0: %d\n", mytransport[0].purged_count ()));
-         ++result;
-       }
-
-     if (mytransport[1].purged_count () != 2)
-       {
-         ACE_ERROR ((LM_ERROR, "ERROR Incorrect purged count for transport 1: %d\n", mytransport[1].purged_count ()));
+         ACE_ERROR ((LM_ERROR, "ERROR Incorrect cache size %d\n", my_cache.current_size ()));
          ++result;
        }
 

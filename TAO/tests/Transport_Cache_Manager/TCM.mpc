@@ -7,3 +7,10 @@ project(*Bug_3549_Regression): taoclient {
     Bug_3549_Regression.cpp
   }
 }
+
+project(*Bug_3558_Regression): taoclient {
+  exename = Bug_3558_Regression
+  Source_Files {
+    Bug_3558_Regression.cpp
+  }
+}
