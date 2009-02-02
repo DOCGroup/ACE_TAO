@@ -97,7 +97,7 @@ project (Tester_Client) : ciao_client_dnc, valuetype, ciao_deployment_stub, race
   avoids += ace_for_tao
   exename = tester_client
   after += Tester_Component_stub
-  libs += Tester_Component_stub OpString_stub
+  libs += Tester_Component_stub OpString_stub Input_Adapter_Base_stub 	Conductor_Component_stub  Controller_Base_stub 	TM_Proxy_Component_stub Effector_Base_stub  
   libs += SA_POP_Component_stub SA_POP_Component_stub SA_POP_IA_Component_stub RACE_common_stub Data_Base_Component_stub DAnCE_OA_Component_stub
 
 
