@@ -78,7 +78,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
   ACE_CDR::Boolean byte_order;
   ACE_CDR::ULong length;
 
-  ssize_t count = ACE::recv_n (this->peer ().get_handle (), 
+  ssize_t count = ACE::recv_n (this->peer ().get_handle (),
                                header->wr_ptr (),
                                8);
   switch (count)
@@ -107,14 +107,16 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
 
   // Extract the byte-order and use helper methods to disambiguate
   // octet, booleans, and chars.
-  header_cdr >> ACE_InputCDR::to_boolean (byte_order);
+  if (!(header_cdr >> ACE_InputCDR::to_boolean (byte_order)))
+    return -1;
 
   // Set the byte-order on the stream...
   header_cdr.reset_byte_order (byte_order);
 
   // Extract the length
-  header_cdr >> length;
-  
+  if (!(header_cdr >> length))
+    return -1;
+
   ACE_NEW_RETURN (payload_p,
                   ACE_Message_Block (length),
                   -1);
@@ -126,7 +128,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
   // Use <recv_n> to obtain the contents.
   if (ACE::recv_n (this->peer ().get_handle (),
                    payload->wr_ptr (),
-                   length) <= 0) 
+                   length) <= 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),

@@ -200,20 +200,22 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 #endif /* ACE_HAS_STREAM_PIPES */
 
   // Reflect addition of 8 bytes for the header.
-  header->wr_ptr (8); 
+  header->wr_ptr (8);
 
   // Create a CDR stream to parse the 8-byte header.
   ACE_InputCDR header_cdr (header.get ());
 
   // Extract the byte-order and use helper methods to disambiguate
   // octet, booleans, and chars.
-  header_cdr >> ACE_InputCDR::to_boolean (byte_order);
+  if (!(header_cdr >> ACE_InputCDR::to_boolean (byte_order)))
+    return -1;
 
   // Set the byte-order on the stream...
   header_cdr.reset_byte_order (byte_order);
 
   // Extract the length
-  header_cdr >> length;
+  if (!(header_cdr >> length))
+    return -1;
 
   ACE_NEW_RETURN (payload_p,
                   ACE_Message_Block (length),
@@ -274,11 +276,12 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 #endif /* ACE_HAS_STREAM_PIPES */
 
   // Reflect additional bytes for the message.
-  payload->wr_ptr (length);   
+  payload->wr_ptr (length);
 
   ACE_InputCDR payload_cdr (payload.get ());
   payload_cdr.reset_byte_order (byte_order);
-  payload_cdr >> log_record;  // Finally extract the <ACE_log_record>.
+  if (!(payload_cdr >> log_record))  // Finally extract the <ACE_log_record>.
+    return -1;
 
   log_record.length (length);
 
@@ -335,9 +338,11 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
                       *orig_ostream);
 
   if (this->logging_output_ == ACE_STDERR)
-    log_record.print (ACE_TEXT ("<localhost>"),
-                      ACE_Log_Msg::instance ()->flags (),
-                      stderr);
+    {
+      log_record.print (ACE_TEXT ("<localhost>"),
+                        ACE_Log_Msg::instance ()->flags (),
+                        stderr);
+    }
   else
     {
       // Serialize the log record using a CDR stream, allocate enough
@@ -352,18 +357,21 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
 
       // Insert contents of <log_record> into payload stream.
       ACE_OutputCDR payload (max_payload_size);
-      payload << log_record;
+      if (!(payload << log_record))
+        return -1;
 
       // Get the number of bytes used by the CDR stream.
-      ACE_CDR::ULong length = payload.total_length ();
+      ACE_CDR::ULong const length = payload.total_length ();
 
       // Send a header so the receiver can determine the byte order and
       // size of the incoming CDR stream.
       ACE_OutputCDR header (ACE_CDR::MAX_ALIGNMENT + 8);
-      header << ACE_OutputCDR::from_boolean (ACE_CDR_BYTE_ORDER);
+      if (!(header << ACE_OutputCDR::from_boolean (ACE_CDR_BYTE_ORDER)))
+        return -1;
 
       // Store the size of the payload that follows
-      header << ACE_CDR::ULong (length);
+      if (!(header << ACE_CDR::ULong (length)))
+        return -1;
 
       // Use an iovec to send both buffer and payload simultaneously.
       iovec iov[2];
@@ -376,7 +384,7 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
       // efficiently using "gather-write".
       if (ACE::sendv_n (this->logging_output_,iov, 2) == -1)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "Something about the sendv_n() failed, so switch to stderr\n"));
 
           if (ACE_Log_Msg::instance ()->msg_ostream () == 0)
@@ -453,7 +461,7 @@ private:
 
   ACE_Client_Logging_Handler *handler_;
   // Pointer to the singleton handler that receives messages from
-  // clients and forwards to the server. 
+  // clients and forwards to the server.
 };
 
 int

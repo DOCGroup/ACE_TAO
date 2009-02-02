@@ -1,3 +1,12 @@
+Mon Feb  2 07:40:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
+          Check return values of stream operators
+
+        * netsvcs/lib/Client_Logging_Handler.h:
+          Doxygen changes
+
 Fri Jan 30 20:42:45 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/DLL_Manager.cpp (ACE_DLL_Handle::open): Correct ACE_TEXT usage
