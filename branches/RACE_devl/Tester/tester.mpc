@@ -1,8 +1,15 @@
 project (Interactive_IA_Tester) : ciao_client_dnc, valuetype, ciao_deployment_stub, race_common {
   avoids += ace_for_tao
   exename = Interactive_IA_Tester
-  after += Interactive_Input_Adapter_stub
-  libs += Interactive_Input_Adapter_stub\
+  after += Interactive_Input_Adapter_stub Input_Adapter_Base_stub
+  libs += Input_Adapter_Base_stub \
+	Interactive_Input_Adapter_stub \
+	Conductor_Component_stub \
+	Data_Base_Component_stub \
+	DAnCE_OA_Component_stub \
+	Controller_Base_stub \
+	TM_Proxy_Component_stub \
+	Effector_Base_stub \
           OpString_stub \
           RACE_common_stub
 

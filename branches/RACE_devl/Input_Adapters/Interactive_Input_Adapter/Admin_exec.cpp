@@ -257,7 +257,7 @@ namespace CIAO
           msg << "plan_to_opstring: Converting plan to opstring\n";
           // First, we parse the XML file to obtain the deployment plan
           // IDL.
-          ACE_Auto_Ptr <::Deployment::DeploymentPlan > plan;
+          ACE_Auto_Ptr < ::Deployment::DeploymentPlan > plan;
           msg << "Opening the plan...";
           Config_Handlers::XML_File_Intf xfi (filename);
           plan.reset (xfi.get_plan ());
