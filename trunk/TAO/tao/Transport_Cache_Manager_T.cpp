@@ -647,13 +647,13 @@ namespace TAO
     // Now, without the lock held, lets go through and close all the transports.
     if (! transports_to_be_closed.is_empty ())
       {
-        transport_set_type::iterator it (transports_to_be_closed);
+        typename transport_set_type::iterator it (transports_to_be_closed);
         while (! it.done ())
           {
             transport_type *transport = *it;
-            
+
             it.advance ();
-            
+
             if (transport)
               {
                 transport->close_connection ();
