@@ -1,3 +1,9 @@
+Mon Feb  2 09:15:00 UTC 2009  Simon Massey  <sma@prismtech.com>
+
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+
+          Fix Bug_3559.
+
 Mon Feb  2 08:00:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Thread_Lane_Resources.cpp:
