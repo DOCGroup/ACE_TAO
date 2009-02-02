@@ -7,6 +7,7 @@
 #include "tao/Wait_Strategy.h"
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
+#include "ace/Lock_Adapter_T.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport_Cache_Manager_T.inl"
@@ -28,13 +29,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::Transport_Cache_Manager_T (TAO_ORB_Core &orb_core)
-    : percent_ (orb_core.resource_factory ()->purge_percentage ())
-    , purging_strategy_ (orb_core.resource_factory ()->create_purging_strategy ())
-    , cache_map_ (orb_core.resource_factory ()->cache_maximum ())
+  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::Transport_Cache_Manager_T (
+    int percent,
+    TAO_Connection_Purging_Strategy* purging_strategy,
+    int cache_maximum,
+    int locked,
+    const char *orbid)
+    : percent_ (percent)
+    , purging_strategy_ (purging_strategy)
+    , cache_map_ (cache_maximum)
     , cache_lock_ (0)
   {
-    if (orb_core.resource_factory ()->locked_transport_cache ())
+    if (locked)
       {
         ACE_NEW (this->cache_lock_,
                  ACE_Lock_Adapter <TAO_SYNCH_MUTEX> (this->cache_map_mutex_));
@@ -54,14 +60,16 @@ namespace TAO
     ACE_CString purge_name ("Connection_Cache_Purge_");
     ACE_CString size_name ("Connection_Cache_Size_");
 
-    purge_name += orb_core.orbid ();
-    size_name += orb_core.orbid ();
+    purge_name += orbid;
+    size_name += orbid;
 
     this->purge_monitor_->name (purge_name.c_str ());
     this->size_monitor_->name (size_name.c_str ());
 
     this->purge_monitor_->add_to_registry ();
     this->size_monitor_->add_to_registry ();
+#else
+  ACE_UNUSED_ARG (orbid);    
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
   }
 

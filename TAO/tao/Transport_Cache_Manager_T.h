@@ -25,7 +25,6 @@
 
 #include "tao/Cache_Entries_T.h"
 #include "tao/orbconf.h"
-#include "tao/ORB_Core.h"
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
 #include "ace/Monitor_Size.h"
@@ -97,7 +96,12 @@ namespace TAO
 
     // == Public methods
     /// Constructor
-    Transport_Cache_Manager_T (TAO_ORB_Core &orb_core);
+    Transport_Cache_Manager_T (
+      int percent,
+      TAO_Connection_Purging_Strategy* purging_strategy,
+      int cache_maximum,
+      int locked,
+      const char *orbid);
 
     /// Destructor
     ~Transport_Cache_Manager_T (void);
