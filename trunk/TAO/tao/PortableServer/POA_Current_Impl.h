@@ -69,7 +69,7 @@ namespace TAO
       friend class ::TAO_Root_POA;
 
       /// Return pointer to the invoking POA.  Raises the
-      /// <CORBA::NoContext> exception.
+      /// CORBA::NoContext exception.
       PortableServer::POA_ptr get_POA (void);
 
       /**
@@ -156,7 +156,7 @@ namespace TAO
       /**
        * The object ID of the current context.  This is the user id and
        * not the id the goes into the IOR.  Note also that unlike the
-       * <object_key>, this field is stored by value.
+       * @c object_key, this field is stored by value.
        */
       PortableServer::ObjectId object_id_;
 

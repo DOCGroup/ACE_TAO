@@ -1237,7 +1237,7 @@ TAO_Root_POA::check_for_valid_wait_for_completions (const TAO_ORB_Core &orb_core
           // belonging to the same ORB as this POA, the BAD_INV_ORDER
           // system exception with standard minor code 3 is raised and
           // POA destruction does not occur.
-          if (poa_current_impl != 0)
+          if ((poa_current_impl != 0) && (poa_current_impl->poa () != 0))
             {
               if (&orb_core == &poa_current_impl->orb_core ())
                 {
