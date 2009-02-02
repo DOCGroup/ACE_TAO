@@ -6,6 +6,7 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/operation_details.h"
 #include "tao/Stub.h"
+#include "tao/Transport.h"
 
 ACE_RCSID (ZIOP,
            ZIOP,
