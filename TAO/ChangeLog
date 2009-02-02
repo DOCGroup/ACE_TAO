@@ -1,11 +1,16 @@
+Mon Feb  2 18:47:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup_Loader.{h,cpp}:
+          Fixed unicode problem
+
 Mon Feb  2 15:21:26 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/fe/fe_lookup.cpp
         * TAO_IDL/fe/fe_lookup.cpp
         * TAO_IDL/fe/lex.yy.cpp
-        
+
           Forced a commit of these to shut up the build system and prevent re-generation
-          file during compilation. 
+          file during compilation.
 
 Mon Feb  2 14:52:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 

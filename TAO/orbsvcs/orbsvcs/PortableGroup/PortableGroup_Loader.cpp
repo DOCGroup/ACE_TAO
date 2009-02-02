@@ -20,7 +20,7 @@ TAO_PortableGroup_Loader::TAO_PortableGroup_Loader (void)
 
 int
 TAO_PortableGroup_Loader::init (int /*argc*/,
-                                char* /*argv*/ [])
+                                ACE_TCHAR* /*argv*/ [])
 {
   ACE_TRACE ("TAO_PortableGroup_Loader::init");
   // Register the ORB initializer.
