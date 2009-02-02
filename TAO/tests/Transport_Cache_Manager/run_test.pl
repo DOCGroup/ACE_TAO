@@ -21,24 +21,22 @@ push(@testsToRun, @tests);
 
 foreach my $process (@testsToRun) {
 
-  my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-  my $P = $server->CreateProcess ($process,
-                                '--log_level=nothing '
-                                .'--report_level=no');
-  print "Running $process ...\n";
-  my $result = $P->Spawn;
-  if ($result != 0) {
-    print "FAILED $process\n";
-    $final_result = 1;
-    next;
-  }
-  $result = $P->WaitKill($server->ProcessStartWaitInterval());
-  if ($result != 0) {
-    print "FAILED $process\n";
-    $final_result = 1;
-    next;
-  }
-  print "SUCCESS\n";
+    my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+    my $P = $server->CreateProcess ($process);
+    print "Running $process ...\n";
+    my $result = $P->Spawn;
+    if ($result != 0) {
+        print "FAILED $process\n";
+        $final_result = 1;
+        next;
+    }
+    $result = $P->WaitKill($server->ProcessStartWaitInterval());
+    if ($result != 0) {
+        print "FAILED $process\n";
+        $final_result = 1;
+        next;
+    }
+    print "SUCCESS\n";
 }
 
 exit $final_result;
