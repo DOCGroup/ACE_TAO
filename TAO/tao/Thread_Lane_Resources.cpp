@@ -43,8 +43,12 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
 {
   // Create the transport cache.
   ACE_NEW (this->transport_cache_,
-           TAO::Transport_Cache_Manager (orb_core));
-
+           TAO::Transport_Cache_Manager (
+            orb_core.resource_factory ()->purge_percentage (),
+            orb_core.resource_factory ()->create_purging_strategy (),
+            orb_core.resource_factory ()->cache_maximum (),
+            orb_core.resource_factory ()->locked_transport_cache (),
+            orb_core.orbid ()));
 }
 
 TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources (void)
