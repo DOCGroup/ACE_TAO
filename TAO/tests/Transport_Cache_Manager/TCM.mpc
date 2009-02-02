@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Bug_3549_Regression): taoclient {
+  exename = Bug_3549_Regression
+  Source_Files {
+    Bug_3549_Regression.cpp
+  }
+}
