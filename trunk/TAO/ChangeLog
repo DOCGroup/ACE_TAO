@@ -1,3 +1,13 @@
+Mon Feb  2 11:48:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Transport_Cache_Manager/Bug_3549_Regression.cpp:
+          Improved debug message
+
+        * tests/Transport_Cache_Manager/Bug_3558_Regression.cpp:
+        * tests/Transport_Cache_Manager/run_test.pl:
+        * tests/Transport_Cache_Manager/TCM.mpc:
+          Added regression test for bugzilla 3558
+
 Mon Feb  2 11:18:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Cache_Manager.h:
