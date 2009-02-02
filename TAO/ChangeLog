@@ -1,8 +1,17 @@
+Mon Feb  2 13:30:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Root_POA.cpp (check_for_valid_wait_for_completions):
+          Also check whether the poa member is not zero, when retrieving the
+          orb_core we use that pointer and could crash if it is zero
+
+        * tao/PortableServer/POA_Current_Impl.h:
+          Doxygen change
+
 Mon Feb  2 13:01:17 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3559_Regression/run_test.pl:
-          Fixed error in script for WinCE. Script should be waiting for logfile 
-          before calling WaitKill(). Also removed debug command line parameter 
+          Fixed error in script for WinCE. Script should be waiting for logfile
+          before calling WaitKill(). Also removed debug command line parameter
           since this isn't used by the server.
 
 Mon Feb  2 12:14:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
