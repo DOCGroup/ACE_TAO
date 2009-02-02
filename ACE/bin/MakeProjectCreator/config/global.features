@@ -51,6 +51,7 @@ vcl           = 0
 stl           = 0
 xsc           = 0
 mcpp          = 0
+tao_idl_fe_gen = 0
 
 // Features for various GUI libraries
 
