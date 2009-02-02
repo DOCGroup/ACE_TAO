@@ -1,9 +1,18 @@
+Mon Feb  2 07:29:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control_Registry.h:
+          Added missing include due to transport cache manager refactoring
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.h:
+          Updated for Messaging_Semantics move
+
 Sat Jan 31 21:30:17 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/AV/AV_Core.h:
-        
-          Fixes for versioned namespace. 
-        
+
+          Fixes for versioned namespace.
+
 Fri Jan 30 14:52:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h:
@@ -217,7 +226,7 @@ Fri Jan 30 10:57:14 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
-          Updted for Messaging_Semantics move
+          Updated for Messaging_Semantics move
 
         * orbsvcs/tests/Interoperable_Naming/run_test.pl:
           Layout changes
