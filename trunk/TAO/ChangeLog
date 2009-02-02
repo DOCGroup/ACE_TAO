@@ -1,3 +1,12 @@
+Mon Feb  2 10:54:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Transport_Cache_Manager directory
+
+        * tests/Transport_Cache_Manager/*:
+          New directory for just TCM tests using a mock transport,
+          transport descriptor interface, and purging strategy.
+
 Mon Feb  2 09:15:00 UTC 2009  Simon Massey  <sma@prismtech.com>
 
         * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:

@@ -233,9 +233,9 @@ TAO/tests/POA/MT_Servant_Locator/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E
 TAO/tests/POA/Bug_1592_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !FIXED_BUGS_ONLY
 TAO/tests/POA/Bug_2511_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/POA/Nested_Non_Servant_Upcalls/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
-TAO/tests/POA/Deactivate_Object/run_test.pl: 
+TAO/tests/POA/Deactivate_Object/run_test.pl:
 TAO/tests/POA/Reference_Counting/run_test.pl:
-TAO/tests/POA/Current/run_test.pl: 
+TAO/tests/POA/Current/run_test.pl:
 TAO/tests/POA/wait_for_completion/run_test.pl:
 TAO/tests/POA/POAManagerFactory/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/POA/EndpointPolicy/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
@@ -337,6 +337,7 @@ TAO/tests/TransportCurrent/Framework/run_test.pl -dynamic: !DISABLE_TRANSPORT_CU
 TAO/tests/TransportCurrent/Framework/run_test.pl -static: !DISABLE_TRANSPORT_CURRENT STATIC !DISABLE_INTERCEPTORS !MINIMUM !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/TransportCurrent/IIOP/run_test.pl -dynamic: !DISABLE_TRANSPORT_CURRENT !STATIC !DISABLE_INTERCEPTORS !MINIMUM !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/TransportCurrent/IIOP/run_test.pl -static: !DISABLE_TRANSPORT_CURRENT STATIC !DISABLE_INTERCEPTORS !MINIMUM !LabVIEW_RT !WinCE !FUZZ
+TAO/tests/Transport_Cache_Manager/run_test.pl
 TAO/tests/UNKNOWN_Exception/run_test.pl:
 TAO/tests/Native_Exceptions/run_test.pl:
 TAO/tests/Servant_To_Reference_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
