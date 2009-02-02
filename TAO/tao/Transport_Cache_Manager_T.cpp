@@ -28,10 +28,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::Transport_Cache_Manager_T (
+  template <typename TT, typename TDT, typename PS>
+  Transport_Cache_Manager_T<TT, TDT, PS>::Transport_Cache_Manager_T (
     int percent,
-    TAO_Connection_Purging_Strategy* purging_strategy,
+    purging_strategy* purging_strategy,
     int cache_maximum,
     int locked,
     const char *orbid)
@@ -69,12 +69,12 @@ namespace TAO
     this->purge_monitor_->add_to_registry ();
     this->size_monitor_->add_to_registry ();
 #else
-  ACE_UNUSED_ARG (orbid);    
+  ACE_UNUSED_ARG (orbid);
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::~Transport_Cache_Manager_T (void)
+  template <typename TT, typename TDT, typename PS>
+  Transport_Cache_Manager_T<TT, TDT, PS>::~Transport_Cache_Manager_T (void)
   {
     delete this->cache_lock_;
     this->cache_lock_ = 0;
@@ -90,9 +90,9 @@ namespace TAO
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   void
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::set_entry_state (HASH_MAP_ENTRY *entry,
+  Transport_Cache_Manager_T<TT, TDT, PS>::set_entry_state (HASH_MAP_ENTRY *entry,
                                             TAO::Cache_Entries_State state)
   {
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
@@ -106,9 +106,9 @@ namespace TAO
       }
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   int
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::bind_i (Cache_ExtId &ext_id,
+  Transport_Cache_Manager_T<TT, TDT, PS>::bind_i (Cache_ExtId &ext_id,
                                    Cache_IntId &int_id)
   {
     if (TAO_debug_level > 4)
@@ -208,9 +208,9 @@ namespace TAO
     return retval;
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
-  typename Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::Find_Result
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::find_transport (
+  template <typename TT, typename TDT, typename PS>
+  typename Transport_Cache_Manager_T<TT, TDT, PS>::Find_Result
+  Transport_Cache_Manager_T<TT, TDT, PS>::find_transport (
     transport_descriptor_type *prop,
     transport_type *&transport,
     size_t &busy_count)
@@ -257,9 +257,9 @@ namespace TAO
     return find_result;
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
-  typename Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::Find_Result
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::find_i (
+  template <typename TT, typename TDT, typename PS>
+  typename Transport_Cache_Manager_T<TT, TDT, PS>::Find_Result
+  Transport_Cache_Manager_T<TT, TDT, PS>::find_i (
     transport_descriptor_type *prop,
     transport_type *&transport,
     size_t &busy_count)
@@ -359,9 +359,9 @@ namespace TAO
     return found;
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   int
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::make_idle_i (HASH_MAP_ENTRY *entry)
+  Transport_Cache_Manager_T<TT, TDT, PS>::make_idle_i (HASH_MAP_ENTRY *entry)
   {
     if (entry == 0)
       return -1;
@@ -371,9 +371,9 @@ namespace TAO
     return 0;
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   int
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::update_entry (HASH_MAP_ENTRY *&entry)
+  Transport_Cache_Manager_T<TT, TDT, PS>::update_entry (HASH_MAP_ENTRY *&entry)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                               guard,
@@ -382,15 +382,15 @@ namespace TAO
     if (entry == 0)
       return -1;
 
-    TAO_Connection_Purging_Strategy *st = this->purging_strategy_;
+    purging_strategy *st = this->purging_strategy_;
     (void) st->update_item (entry->item ().transport ());
 
     return 0;
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   int
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::close_i (Connection_Handler_Set &handlers)
+  Transport_Cache_Manager_T<TT, TDT, PS>::close_i (Connection_Handler_Set &handlers)
   {
     HASH_MAP_ITER end_iter = this->cache_map_.end ();
 
@@ -414,9 +414,9 @@ namespace TAO
     return 0;
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   bool
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::blockable_client_transports_i (
+  Transport_Cache_Manager_T<TT, TDT, PS>::blockable_client_transports_i (
     Connection_Handler_Set &h)
   {
     HASH_MAP_ITER end_iter = this->cache_map_.end ();
@@ -439,9 +439,9 @@ namespace TAO
     return true;
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   int
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::purge_entry_i (HASH_MAP_ENTRY *&entry)
+  Transport_Cache_Manager_T<TT, TDT, PS>::purge_entry_i (HASH_MAP_ENTRY *&entry)
   {
     int retval = 0;
 
@@ -461,9 +461,9 @@ namespace TAO
     return retval;
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   void
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::mark_invalid_i (HASH_MAP_ENTRY *entry)
+  Transport_Cache_Manager_T<TT, TDT, PS>::mark_invalid_i (HASH_MAP_ENTRY *entry)
   {
     if (entry != 0)
       {
@@ -472,9 +472,9 @@ namespace TAO
       }
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   bool
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::is_entry_available_i (const HASH_MAP_ENTRY &entry)
+  Transport_Cache_Manager_T<TT, TDT, PS>::is_entry_available_i (const HASH_MAP_ENTRY &entry)
   {
     Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_IDLE_AND_PURGABLE ||
@@ -498,9 +498,9 @@ namespace TAO
     return result;
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   bool
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::is_entry_purgable_i (const HASH_MAP_ENTRY &entry)
+  Transport_Cache_Manager_T<TT, TDT, PS>::is_entry_purgable_i (const HASH_MAP_ENTRY &entry)
   {
     Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_IDLE_AND_PURGABLE ||
@@ -518,9 +518,9 @@ namespace TAO
     return result;
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   bool
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::
+  Transport_Cache_Manager_T<TT, TDT, PS>::
     is_entry_connecting_i (const HASH_MAP_ENTRY &entry)
   {
     Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
@@ -546,9 +546,9 @@ namespace TAO
   }
 
 #if !defined (ACE_LACKS_QSORT)
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   int
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::
+  Transport_Cache_Manager_T<TT, TDT, PS>::
     cpscmp(const void* a, const void* b)
   {
     const HASH_MAP_ENTRY** left  = (const HASH_MAP_ENTRY**)a;
@@ -566,9 +566,9 @@ namespace TAO
   }
 #endif /* ACE_LACKS_QSORT */
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   int
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::
+  Transport_Cache_Manager_T<TT, TDT, PS>::
     purge (void)
   {
     ACE_Unbounded_Stack<transport_type*> transports_to_be_closed;
@@ -577,7 +577,7 @@ namespace TAO
       ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->cache_lock_, 0));
 
       DESCRIPTOR_SET sorted_set = 0;
-      int sorted_size = this->fill_set_i (sorted_set);
+      int const sorted_size = this->fill_set_i (sorted_set);
 
       // Only call close_entries () if sorted_set != 0.  It takes
       // control of sorted_set and cleans up any allocated memory.  If
@@ -676,9 +676,9 @@ namespace TAO
     return 0;
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   void
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::
+  Transport_Cache_Manager_T<TT, TDT, PS>::
     sort_set (DESCRIPTOR_SET& entries,
               int current_size)
   {
@@ -707,9 +707,9 @@ namespace TAO
 #endif /* ACE_LACKS_QSORT */
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   int
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::
+  Transport_Cache_Manager_T<TT, TDT, PS>::
     fill_set_i (DESCRIPTOR_SET& sorted_set)
   {
     int current_size = 0;
@@ -740,7 +740,7 @@ namespace TAO
             for (int i = 0; i < current_size; ++i)
               {
                 sorted_set[i] = &(*iter);
-                iter++;
+                ++iter;
               }
 
             this->sort_set (sorted_set, current_size);

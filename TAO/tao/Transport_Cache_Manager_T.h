@@ -40,7 +40,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Connection_Handler;
 class TAO_Resource_Factory;
-class TAO_Connection_Purging_Strategy;
 
 template <class ACE_COND_MUTEX> class TAO_Condition;
 
@@ -59,12 +58,14 @@ namespace TAO
    * do quite a bit of work in this class for which we need a lock.
    *
    */
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT,
+            typename PS>
   class Transport_Cache_Manager_T
   {
   public:
-    typedef TRANSPORT_TYPE transport_type;
-    typedef TRANSPORT_DESCRIPTOR_TYPE transport_descriptor_type;
+    typedef TT transport_type;
+    typedef TDT transport_descriptor_type;
+    typedef PS purging_strategy;
 
     /// results of a find
     enum Find_Result
@@ -98,7 +99,7 @@ namespace TAO
     /// Constructor
     Transport_Cache_Manager_T (
       int percent,
-      TAO_Connection_Purging_Strategy* purging_strategy,
+      purging_strategy* purging_strategy,
       int cache_maximum,
       int locked,
       const char *orbid);
@@ -257,7 +258,7 @@ namespace TAO
     int percent_;
 
     /// The underlying connection purging strategy
-    TAO_Connection_Purging_Strategy *purging_strategy_;
+    purging_strategy *purging_strategy_;
 
     /// The hash map that has the connections
     HASH_MAP cache_map_;
