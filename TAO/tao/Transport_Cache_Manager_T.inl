@@ -1,3 +1,4 @@
+
 // -*- C++ -*-
 //
 //$Id$
@@ -6,9 +7,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   ACE_INLINE int
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::cache_transport (
+  Transport_Cache_Manager_T<TT, TDT, PS>::cache_transport (
     transport_descriptor_type *prop,
     transport_type *transport,
     Cache_Entries_State state)
@@ -35,34 +36,34 @@ namespace TAO
     return retval;
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   ACE_INLINE int
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::cache_idle_transport (
+  Transport_Cache_Manager_T<TT, TDT, PS>::cache_idle_transport (
     transport_descriptor_type *prop,
     transport_type *transport)
   {
     return cache_transport(prop, transport, ENTRY_IDLE_AND_PURGABLE);
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   ACE_INLINE int
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::purge_entry (HASH_MAP_ENTRY *&entry)
+  Transport_Cache_Manager_T<TT, TDT, PS>::purge_entry (HASH_MAP_ENTRY *&entry)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
     return this->purge_entry_i (entry);
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   ACE_INLINE void
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::mark_invalid (HASH_MAP_ENTRY *entry)
+  Transport_Cache_Manager_T<TT, TDT, PS>::mark_invalid (HASH_MAP_ENTRY *entry)
   {
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
     this->mark_invalid_i (entry);
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   ACE_INLINE void
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::mark_connected (HASH_MAP_ENTRY *entry, bool state)
+  Transport_Cache_Manager_T<TT, TDT, PS>::mark_connected (HASH_MAP_ENTRY *entry, bool state)
   {
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
     if (entry == 0)
@@ -76,17 +77,17 @@ namespace TAO
     entry->item().is_connected (state);
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   ACE_INLINE int
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::make_idle (HASH_MAP_ENTRY *entry)
+  Transport_Cache_Manager_T<TT, TDT, PS>::make_idle (HASH_MAP_ENTRY *entry)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
     return this->make_idle_i (entry);
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
-  ACE_INLINE typename Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::Find_Result
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::find (transport_descriptor_type *prop,
+  template <typename TT, typename TDT, typename PS>
+  ACE_INLINE typename Transport_Cache_Manager_T<TT, TDT, PS>::Find_Result
+  Transport_Cache_Manager_T<TT, TDT, PS>::find (transport_descriptor_type *prop,
                                  transport_type *&transport,
                                  size_t &busy_count)
   {
@@ -98,9 +99,9 @@ namespace TAO
     return this->find_i (prop, transport, busy_count);
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   ACE_INLINE int
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::
+  Transport_Cache_Manager_T<TT, TDT, PS>::
     close (Connection_Handler_Set &handlers)
   {
     // The cache lock pointer should only be zero if
@@ -118,9 +119,9 @@ namespace TAO
     return this->close_i (handlers);
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   ACE_INLINE bool
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::blockable_client_transports (
+  Transport_Cache_Manager_T<TT, TDT, PS>::blockable_client_transports (
     Connection_Handler_Set &handlers)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
@@ -131,23 +132,23 @@ namespace TAO
     return this->blockable_client_transports_i (handlers);
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   ACE_INLINE size_t
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::current_size (void) const
+  Transport_Cache_Manager_T<TT, TDT, PS>::current_size (void) const
   {
     return this->cache_map_.current_size ();
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
+  template <typename TT, typename TDT, typename PS>
   ACE_INLINE size_t
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::total_size (void) const
+  Transport_Cache_Manager_T<TT, TDT, PS>::total_size (void) const
   {
     return this->cache_map_.total_size ();
   }
 
-  template <typename TRANSPORT_TYPE, typename TRANSPORT_DESCRIPTOR_TYPE>
-  ACE_INLINE typename Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::HASH_MAP &
-  Transport_Cache_Manager_T<TRANSPORT_TYPE, TRANSPORT_DESCRIPTOR_TYPE>::map (void)
+  template <typename TT, typename TDT, typename PS>
+  ACE_INLINE typename Transport_Cache_Manager_T<TT, TDT, PS>::HASH_MAP &
+  Transport_Cache_Manager_T<TT, TDT, PS>::map (void)
   {
     return this->cache_map_;
   }
