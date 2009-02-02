@@ -57,17 +57,17 @@ class ACE_Svc_Export ACE_Client_Logging_Handler : public ACE_Svc_Handler<LOGGING
 public:
   // = Initialization and termination.
 
-  /// Default constructor.  <handle> is where the output is sent.
+  /// Default constructor. @a handle is where the output is sent.
   ACE_Client_Logging_Handler (ACE_HANDLE handle = ACE_STDERR);
 
-  /// Activate this instance of the <ACE_Client_Logging_Handler>
+  /// Activate this instance of the ACE_Client_Logging_Handler
   /// (called by the <ACE_Client_Logging_Acceptor>).
   virtual int open (void * = 0);
 
   /// Return the handle of the IPC endpoint.
   virtual ACE_HANDLE get_handle (void) const;
 
-  /// Called when object is removed from the <ACE_Reactor>.
+  /// Called when object is removed from the ACE_Reactor.
   virtual int close (u_long);
 
 private:
@@ -90,7 +90,7 @@ private:
   /// Called back when it's ok to send.
   virtual int handle_output (ACE_HANDLE);
 
-  /// Send the <log_record> to the logging server.
+  /// Send the @a log_record to the logging server.
   int send (ACE_Log_Record &log_record);
 
   /// This is either a SOCKET (if we're connected to a logging server)
