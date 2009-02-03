@@ -1,3 +1,53 @@
+Tue Feb  3 15:07:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Cache_Entries_T.h:
+        * tao/Cache_Entries_T.inl:
+          Removed ENTRY_IDLE_BUT_NOT_PURGABLE state. This was the initial state
+          a transport was set when it got connected, but this prevents the
+          transport to get purged when the cache is getting full. When the server
+          has been called by a lot of clients but didn't make invocations back
+          we have a lot of transports with this state and at the end the cache
+          got full. The disadvantage is that when we have a transport that has
+          been connected but not used until now it gets purged, when we then
+          need it again we have to recreate it.
+
+        * tao/Exclusive_TMS.cpp:
+        * tao/Exclusive_TMS.h:
+        * tao/Muxed_TMS.cpp:
+        * tao/Muxed_TMS.h:
+        * tao/Transport_Mux_Strategy.h:
+          Added a has_request, the TMS does now if we have pending
+          requests on a transport. When a transport has pending
+          request we can't purge it.
+
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+          Call cache_transport instead of cache_idle_transport
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+          Fixed unicode logging issue
+
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+          Added can_be_purged that is used by the TCM
+
+        * tao/Transport_Cache_Manager_T.cpp:
+        * tao/Transport_Cache_Manager_T.h:
+        * tao/Transport_Cache_Manager_T.inl:
+          Updated for the removed state and when selecting the transports
+          that can be purged also check the can_be_purged on the transport
+
+        * tao/Transport_Connector.cpp:
+          Unicode fix
+
+        * tests/Transport_Cache_Manager/Bug_3558_Regression.cpp:
+        * tests/Transport_Cache_Manager/mock_transport.h:
+          Updated for TCM/Transport changes
+
 Tue Feb  3 13:49:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/tao_orb_tests.lst
@@ -11,7 +61,7 @@ Tue Feb  3 13:49:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * tests/Bug_3558_Regression/run_test.pl
         * tests/Bug_3558_Regression/server.cpp
         * tests/Bug_3558_Regression/Test.idl
-        
+
           Added regression test for bug #3558
 
 Tue Feb  3 12:34:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
