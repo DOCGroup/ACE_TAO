@@ -254,8 +254,8 @@ public:
                                   const ACE_CDR::WChar *x);
   //@}
 
-  /// @note the portion written starts at <x> and ends
-  ///    at <x + length>.
+  /// @note the portion written starts at @a x and ends
+  ///    at @a x + @a length.
   /// The length is *NOT* stored into the CDR stream.
   //@{ @name Array write operations
   ACE_CDR::Boolean write_boolean_array (const ACE_CDR::Boolean *x,
