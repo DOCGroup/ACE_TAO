@@ -355,8 +355,7 @@ TAO_SCIOP_Connection_Handler::add_transport_to_cache (void)
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Idle the transport..
-  return cache.cache_idle_transport (&prop,
-                                     this->transport ());
+  return cache.cache_transport (&prop, this->transport ());
 
 }
 

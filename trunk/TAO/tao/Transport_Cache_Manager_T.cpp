@@ -477,8 +477,7 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TDT, PS>::is_entry_available_i (const HASH_MAP_ENTRY &entry)
   {
     Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
-    bool result = (entry_state == ENTRY_IDLE_AND_PURGABLE ||
-                   entry_state == ENTRY_IDLE_BUT_NOT_PURGABLE);
+    bool result = (entry_state == ENTRY_IDLE_AND_PURGABLE);
 
     if (result && entry.int_id_.transport () != 0)
     {
@@ -490,7 +489,8 @@ namespace TAO
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-                    ACE_TEXT ("is_entry_available_i: %C state is %C\n"),
+                    ACE_TEXT ("is_entry_available_i[%d]: %C state is %C\n"),
+                    entry.int_id_.transport () ? entry.int_id_.transport ()->id () : 0,
                     (result ? "true" : "false"),
                     Cache_IntId::state_name (entry_state)));
       }
@@ -500,17 +500,20 @@ namespace TAO
 
   template <typename TT, typename TDT, typename PS>
   bool
-  Transport_Cache_Manager_T<TT, TDT, PS>::is_entry_purgable_i (const HASH_MAP_ENTRY &entry)
+  Transport_Cache_Manager_T<TT, TDT, PS>::is_entry_purgable_i (HASH_MAP_ENTRY &entry)
   {
     Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
+    transport_type* transport = entry.int_id_.transport ();
     bool result = (entry_state == ENTRY_IDLE_AND_PURGABLE ||
-                   entry_state == ENTRY_PURGABLE_BUT_NOT_IDLE);
+                   entry_state == ENTRY_PURGABLE_BUT_NOT_IDLE)
+                   && transport->can_be_purged ();
 
     if (TAO_debug_level > 8)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-                    ACE_TEXT ("is_entry_purgable_i: %C state is %C\n"),
+                    ACE_TEXT ("is_entry_purgable_i[%d]: %C state is %C\n"),
+                    entry.int_id_.transport ()->id (),
                     (result ? "true" : "false"),
                     Cache_IntId::state_name (entry_state)));
       }
@@ -537,7 +540,8 @@ namespace TAO
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-                    ACE_TEXT ("is_entry_connecting_i: %C, state is %C\n"),
+                    ACE_TEXT ("is_entry_connecting_i[%d]: %C, state is %C\n"),
+                    entry.int_id_.transport () ? entry.int_id_.transport ()->id () : 0,
                     (result ? "true" : "false"),
                     Cache_IntId::state_name (entry_state)));
       }
@@ -593,7 +597,7 @@ namespace TAO
             {
               ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge: ")
-                ACE_TEXT ("Purging %d of %d cache entries\n"),
+                ACE_TEXT ("Trying to purge %d of %d cache entries\n"),
                 amount,
                 sorted_size));
             }
@@ -604,16 +608,15 @@ namespace TAO
             {
               if (this->is_entry_purgable_i (*sorted_set[i]))
                 {
-                  sorted_set[i]->int_id_.recycle_state (ENTRY_BUSY);
-
                   transport_type* transport =
                     sorted_set[i]->int_id_.transport ();
+                  sorted_set[i]->int_id_.recycle_state (ENTRY_BUSY);
                   transport->add_reference ();
 
                   if (TAO_debug_level > 4)
                     {
                       ACE_DEBUG ((LM_INFO,
-                        ACE_TEXT ("TAO (%P|%t) Transport_Cache_Manager_T::purge ")
+                        ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge, ")
                         ACE_TEXT ("Purgable Transport[%d] found in ")
                         ACE_TEXT ("cache\n"),
                         transport->id ()));
@@ -661,14 +664,15 @@ namespace TAO
               }
           }
       }
+
     if (TAO_debug_level > 4)
-          {
-            ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge: ")
-              ACE_TEXT ("Cache size after purging is [%d]\n"),
-              this->current_size ()
-              ));
-          }
+      {
+        ACE_DEBUG ((LM_INFO,
+          ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge: ")
+          ACE_TEXT ("Cache size after purging is [%d]\n"),
+          this->current_size ()
+          ));
+      }
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     /// The value doesn't matter, all we need is the timestamp,

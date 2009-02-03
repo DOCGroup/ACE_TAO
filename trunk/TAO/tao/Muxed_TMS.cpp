@@ -111,6 +111,17 @@ TAO_Muxed_TMS::unbind_dispatcher (CORBA::ULong request_id)
   return this->dispatcher_table_.unbind (request_id);
 }
 
+bool
+TAO_Muxed_TMS::has_request (void)
+{
+  ACE_GUARD_RETURN (ACE_Lock,
+                    ace_mon,
+                    *this->lock_,
+                    -1);
+
+  return this->dispatcher_table_.current_size () > 0;
+}
+
 int
 TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 {

@@ -111,20 +111,12 @@ namespace TAO
     /**
      * The transport has the property definition based on which caching
      * can be done. This method sets the cache entry status.  By
-     * default the status is set to <CODE>ENTRY_IDLE_BUT_NOT_PURGABLE</CODE>
+     * default the status is set to <CODE>ENTRY_IDLE_AND_PURGABLE</CODE>
      */
     int cache_transport (transport_descriptor_type *prop,
                          transport_type *transport,
                          Cache_Entries_State state =
-                           ENTRY_IDLE_BUT_NOT_PURGABLE);
-
-    /// this is just a shortcut for cache_transport with a third argument of
-    /// <CODE>ENTRY_IDLE_AND_PURGABLE</CODE>
-    /// @todo it should be replaced with a direct call to cache_transport,
-    /// but that would require changes to all *_Connection_Handler so I'm
-    /// deferring this for now. (wilsond@ociweb.com)
-    int cache_idle_transport (transport_descriptor_type *prop,
-                              transport_type *transport);
+                           ENTRY_IDLE_AND_PURGABLE);
 
     /// Check the Transport Cache to check whether the connection exists
     /// in the Cache and return the connection
@@ -234,7 +226,7 @@ namespace TAO
     /**
      * Tries to find if the @c int_id_ in @a entry is purgable
      */
-    bool is_entry_purgable_i (const HASH_MAP_ENTRY &entry);
+    bool is_entry_purgable_i (HASH_MAP_ENTRY &entry);
 
 #if !defined(ACE_LACKS_QSORT)
     /// Used by qsort

@@ -894,7 +894,7 @@ TAO_Connector::wait_for_connection_completion (
                   count));
       for (unsigned int i = 0; i < count; i++)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("%d%s"),transport[i]->id (),
+                    ACE_TEXT("%d%C"),transport[i]->id (),
                     (i < (count -1) ? ", " : "]\n")));
     }
 

@@ -64,6 +64,7 @@ public:
   virtual bool idle_after_send (void);
   virtual bool idle_after_reply (void);
   virtual void connection_closed (void);
+  virtual bool has_request (void);
   //@}
 
 protected:
@@ -71,14 +72,11 @@ protected:
   /// request_id().
   CORBA::ULong request_id_generator_;
 
-  /// If false then the request id and reply dispatcher below are
-  /// meaningless
-  bool has_request_;
-
   /// Request id for the current request.
   CORBA::ULong request_id_;
 
-  /// Reply Dispatcher corresponding to the request.
+  /// Reply Dispatcher corresponding to the request. If this is zero we don't
+  /// have a reply, if it not zero we have one
   TAO_Reply_Dispatcher *rd_;
 };
 
