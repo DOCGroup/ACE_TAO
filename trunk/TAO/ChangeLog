@@ -1,3 +1,10 @@
+Tue Feb  3 15:41:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Cache_Manager_T.cpp:
+        * tao/Transport_Cache_Manager_T.h:
+        * tao/Transport_Cache_Manager_T.inl:
+          Renamed TDT to TRDT in an attempt to fix Sun GCC issues
+
 Tue Feb  3 15:07:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Cache_Entries_T.h:
