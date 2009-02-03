@@ -47,7 +47,7 @@ public:
   /// Destructor
   virtual ~TAO_ZIOP_Loader (void);
 
-  virtual bool decompress (TAO_ServerRequest& server_request);
+  virtual bool decompress (TAO_InputCDR& cdr);
 
   // Compress the @a stream. Starting point of the compression is rd_ptr()
   virtual bool marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &stream, TAO::Profile_Transport_Resolver &resolver);

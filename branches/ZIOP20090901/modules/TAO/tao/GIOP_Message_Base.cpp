@@ -651,19 +651,22 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   input_cdr.compressed (qd->state().compressed ());
-
   // JW decompress if ZIOP and convert to GIOP
   if (input_cdr.compressed ())
     {
       TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
       if (adapter)
         {
-          TAO_ServerRequest request (this,
-                                     input_cdr,
-                                     output,
-                                     transport,
-                                     this->orb_core_);
-          adapter->decompress (request);
+          adapter->decompress (input_cdr);
+          //input_cdr is deccompressed. Now add the header again.
+          if (TAO_debug_level >= 5)
+            {
+              ACE_HEX_DUMP ((LM_DEBUG,
+                              const_cast <char*> (input_cdr.start ()->rd_ptr()),
+                              input_cdr.length(),
+                              ACE_TEXT ("GIOP message after decompression")));
+            }
+
         }
       else
         {
@@ -1514,9 +1517,10 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     // Print.
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - GIOP_Message_Base::dump_msg, "
-                "%C GIOP v%c.%c msg, %d data bytes, %s endian, "
+                "%C %cIOP v%c.%c msg, %d data bytes, %s endian, "
                 "%s compressed, Type %C[%u]\n",
                 label,
+                ptr[0],
                 digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
                 digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
                 len - TAO_GIOP_MESSAGE_HEADER_LEN ,

@@ -103,10 +103,10 @@ TAO_ZIOP_Loader::Initializer (void)
 }
 
 bool
-TAO_ZIOP_Loader::decompress (TAO_ServerRequest& server_request)
+TAO_ZIOP_Loader::decompress (TAO_InputCDR& cdr)
 {
   CORBA::Object_var compression_manager =
-    server_request.orb_core()->resolve_compression_manager();
+    cdr.orb_core()->resolve_compression_manager();
 
   Compression::CompressionManager_var manager =
     Compression::CompressionManager::_narrow (compression_manager.in ());
@@ -114,7 +114,7 @@ TAO_ZIOP_Loader::decompress (TAO_ServerRequest& server_request)
   if (!CORBA::is_nil(manager.in ()))
     {
       ZIOP::CompressedData data;
-      if (!(*(server_request.incoming()) >> data))
+      if (!(cdr >> data))
         return false;
 
       Compression::Compressor_var compressor = manager->get_compressor (data.compressorid, 6);
@@ -123,7 +123,7 @@ TAO_ZIOP_Loader::decompress (TAO_ServerRequest& server_request)
 
       compressor->decompress (data.data, myout);
       TAO_InputCDR* newstream = new TAO_InputCDR ((char*)myout.get_buffer(true), (size_t)data.original_length);
-      server_request.incoming()->steal_from (*newstream);
+      cdr.steal_from (*newstream);
     }
   else
     {
@@ -223,7 +223,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
           use_ziop = srp->compression_enabled ();
         }
     }
-
+  
   if (use_ziop)
     {
       policy = resolver.stub ()->get_cached_policy (TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY);
@@ -256,13 +256,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
   if (use_ziop)
     {
        // Set the read pointer to the point where the application data starts
-       current->rd_ptr (current->wr_ptr());
-    }
-// JW marshal args not needed, marshal rd_ptr = 12, to wr_ptr
-  // Marshal application data
-  if (!details.marshal_args (stream))
-    {
-      throw ::CORBA::MARSHAL ();
+       current->rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
     }
 
   current = const_cast <ACE_Message_Block*> (stream.current());
@@ -270,10 +264,6 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
 
   if (use_ziop && original_data_length > 0)
     {
-      // We can only compress one message block, so when compression is enabled first do
-      // a consolidate.
-      stream.consolidate ();
-
       CORBA::Object_var compression_manager =
         resolver.stub()->orb_core()->resolve_compression_manager();
 
@@ -293,13 +283,14 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
               bool compressed = this->compress (compressor.in (), input, myout);
 
               if (compressed && (myout.length () < original_data_length) && (this->check_min_ratio (original_data_length, myout.length())))
-                { // JW change header?????
+                { 
                   stream.compressed (true);
                   current->wr_ptr (current->rd_ptr ());
                   stream.current_alignment (current->wr_ptr() - current->base ());
                   ZIOP::CompressedData data;
                   data.compressorid = compressor_id;
                   data.original_length = input.length();
+                  stream.current ()->data_block ()->base ()[0] = 0x5A; 
                   data.data = myout;
                   stream << data;
                 }

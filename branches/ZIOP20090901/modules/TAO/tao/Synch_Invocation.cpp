@@ -104,6 +104,14 @@ namespace TAO
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
     TAO_ZIOP_Adapter* ziop_adapter = this->stub()->orb_core()->ziop_adapter ();
 
+    if (TAO_debug_level >= 5)
+      {
+        ACE_HEX_DUMP ((LM_DEBUG,
+                        const_cast <char*> (cdr.buffer ()),
+                        cdr.total_length (),
+                        ACE_TEXT ("GIOP message before compression")));
+      }
+
     if (ziop_adapter)
       {
          ziop_adapter->marshal_data (this->details_, cdr, this->resolver_);

@@ -1,3 +1,26 @@
+Tue Feb 04 12:42:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+      * tao/GIOP_Message_Base.cpp
+        Decompress input changed from TAO_ServerRequest to TAO_InputCDR.
+        Added log info after decompression. The user is able to view the
+        decompressed data.
+        Indication whether it's a GIOP or a ZIOP message in dump_msg.
+      
+      * tao/Synch_Invocation.cpp
+        Added log info before compression. The user is able to 
+        view the data before it is compressed.
+        
+      * tao/ZIOP/ZIOP.cpp
+        Decompress input changed from TAO_ServerRequest to TAO_InputCDR.
+        Also change header into ZIOP message after compression.
+        No consolidation when compression starts and setting
+        the read pointer right after the GIOP header before compression.
+        No marshalling of the input arguments.
+     
+      * tao/ZIOP/ZIOP.h
+      * tao/ZIOP_Adapter.h
+        Decompress input changed from TAO_ServerRequest to TAO_InputCDR.
+
 Fri Jan 30 16:47:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
       * tao/GIOP_Message_Base.cpp:
