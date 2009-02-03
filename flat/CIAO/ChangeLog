@@ -1,3 +1,12 @@
+Tue Feb  3 14:24:17 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+        * examples/Hello/descriptors/run_test.pl:
+        
+          Migrating changes to a new workspace. 
+        
 Mon Jan 12 17:41:29 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
         * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:

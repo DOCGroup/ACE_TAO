@@ -33,7 +33,7 @@ namespace DAnCE
       if (ior_output_file_)
         {
           ACE_OS::fprintf (ior_output_file_,
-                           "%C",
+                           "%s",
                            ior);
           ACE_OS::fclose (ior_output_file_);
           DANCE_DEBUG ( (LM_TRACE, "[%M] EM's ior was written into file \"%C\"\n", ior_file_name));
