@@ -418,6 +418,8 @@ ACE_OS::event_init (ACE_event_t *event,
   if (*event == 0)
     ACE_FAIL_RETURN (-1);
 
+  // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
+  ACE_OS::set_errno_to_last_error ();
   return 0;
 #else  /* ACE_WIN32 */
   return ACE_OS::event_init (event,
@@ -1652,7 +1654,11 @@ ACE_OS::sema_init (ACE_sema_t *s,
     ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
   else
-    return 0;
+    {
+      // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
+      ACE_OS::set_errno_to_last_error ();
+      return 0;
+    }
 #    else /* ACE_USES_WINCE_SEMA_SIMULATION */
   int result = -1;
 
@@ -1736,7 +1742,11 @@ ACE_OS::sema_init (ACE_sema_t *s,
     ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
   else
-    return 0;
+    {
+      // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
+      ACE_OS::set_errno_to_last_error ();
+      return 0;
+    }
 #   else /* ACE_USES_WINCE_SEMA_SIMULATION */
   int result = -1;
 
