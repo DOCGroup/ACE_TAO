@@ -143,6 +143,7 @@ TAO/tests/Bug_3542_Regression/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_C
 #TAO/tests/Bug_3543_Regression/run_test.pl: !ST
 TAO/tests/Bug_3548_Regression/run_test.pl:
 TAO/tests/Bug_3559_Regression/run_test.pl:
+TAO/tests/Bug_3558_Regression/run_test.pl:
 TAO/tests/Bug_3552_Regression/run_test.pl:
 TAO/tests/DIOP/run_test.pl: !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_MICRO !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/DIOP/run_test_ipv6.pl: IPV6 !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_MICRO !LabVIEW_RT !WinCE !FUZZ
