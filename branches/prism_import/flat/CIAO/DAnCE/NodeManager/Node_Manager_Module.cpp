@@ -36,7 +36,7 @@ namespace DAnCE
       if (ior_output_file_)
         {
           ACE_OS::fprintf (ior_output_file_,
-                           "%C",
+                           "%s",
                            ior);
           ACE_OS::fclose (ior_output_file_);
           return true;
@@ -536,8 +536,11 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
       if (0 != node_file.length ())
         {
           DANCE_DEBUG ((LM_TRACE,  DLINFO "DAnCE_NodeManager_Module::create_object - "
-                        "Writing node IOR to file.\n"));
-          DAnCE::Node_Manager::write_IOR (node_file.c_str (), ior.in ());
+                        "Writing node IOR %C to file %C.\n", node_file.c_str (), ior.in ()));
+          if (!DAnCE::Node_Manager::write_IOR (node_file.c_str (), ior.in ()))
+            DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_NodeManager_Module::create_object - "
+                          "Error: Unable to write IOR to file %C\n",
+                          node_file.c_str ()));
         }
 
       // Activate POA manager
