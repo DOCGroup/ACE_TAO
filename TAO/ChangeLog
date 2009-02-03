@@ -1,10 +1,15 @@
+Tue Feb  3 12:34:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connector.cpp:
+          Fixed layout of debug message
+
 Mon Feb  2 19:09:50 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/tao_idl.mpc:
 
           Moved all generation of fe elements to separate project
-          which must be explicitly enabled. 
-        
+          which must be explicitly enabled.
+
 Mon Feb  2 18:47:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup_Loader.{h,cpp}:
