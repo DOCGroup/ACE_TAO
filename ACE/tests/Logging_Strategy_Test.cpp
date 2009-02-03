@@ -467,10 +467,10 @@ int run_main (int argc, ACE_TCHAR *argv [])
 #else // Platform doesn't support DLLs, or configured to link
       // statically
   ACE_Logging_Strategy logging_strategy;
-  char ls_argc = argc - 1;
+  unsigned char ls_argc = argc - 1;
   ACE_Auto_Basic_Ptr<ACE_TCHAR *> ls_argv (new ACE_TCHAR *[ls_argc]);
 
-  for (char c = 0; c < ls_argc; c++)
+  for (unsigned char c = 0; c < ls_argc; c++)
     (ls_argv.get ())[c] = argv[c+1];
 
   if (logging_strategy.init (ls_argc, ls_argv.get ()) == -1)
