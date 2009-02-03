@@ -43,7 +43,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Cache all transports in the cache
       for (i = 0; i < transport_max; i++)
         {
-          my_cache.cache_idle_transport (&mytdi[i], &mytransport[i]);
+          my_cache.cache_transport (&mytdi[i], &mytransport[i]);
           mytransport[i].purging_order (i);
         }
 
