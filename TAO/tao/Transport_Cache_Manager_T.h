@@ -58,13 +58,12 @@ namespace TAO
    * do quite a bit of work in this class for which we need a lock.
    *
    */
-  template <typename TT, typename TDT,
-            typename PS>
+  template <typename TT, typename TRDT, typename PS>
   class Transport_Cache_Manager_T
   {
   public:
     typedef TT transport_type;
-    typedef TDT transport_descriptor_type;
+    typedef TRDT transport_descriptor_type;
     typedef PS purging_strategy;
 
     /// results of a find
