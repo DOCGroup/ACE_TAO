@@ -1,3 +1,19 @@
+Tue Feb  3 13:49:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/tao_orb_tests.lst
+        * tests/Bug_3558_Regression
+        * tests/Bug_3558_Regression/Bug_3558_Regression.mpc
+        * tests/Bug_3558_Regression/client.cpp
+        * tests/Bug_3558_Regression/Hello.cpp
+        * tests/Bug_3558_Regression/Hello.h
+        * tests/Bug_3558_Regression/Makefile.am
+        * tests/Bug_3558_Regression/README
+        * tests/Bug_3558_Regression/run_test.pl
+        * tests/Bug_3558_Regression/server.cpp
+        * tests/Bug_3558_Regression/Test.idl
+        
+          Added regression test for bug #3558
+
 Tue Feb  3 12:34:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connector.cpp:
