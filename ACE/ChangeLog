@@ -1,3 +1,28 @@
+Tue Feb  3 19:45:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Acceptor.h:
+        * ace/Active_Map_Manager_T.h:
+        * ace/CDR_Stream.h:
+        * ace/Configuration.h:
+        * ace/Connector.h:
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Dirent.h:
+        * ace/Map_T.h:
+        * ace/Message_Block.h:
+        * ace/Message_Queue_Vx.h:
+        * ace/Name_Request_Reply.h:
+        * ace/Reactor.h:
+        * ace/Reactor_Impl.h:
+        * ace/Select_Reactor_Base.h:
+        * ace/Select_Reactor_T.h:
+        * ace/Strategies_T.h:
+        * ace/WFMO_Reactor.h:
+          Doxygen changes
+
+        * ace/Unbounded_Queue.h:
+        * ace/Unbounded_Queue.inl:
+          Use bool
+
 Tue Feb  3 15:57:41 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Logging_Strategy_Test.cpp:

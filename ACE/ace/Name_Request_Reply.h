@@ -205,7 +205,7 @@ public:
   /// Default constructor.
   ACE_Name_Reply (void);
 
-  /// Create a <ACE_Name_Reply> message.
+  /// Create a ACE_Name_Reply message.
   ACE_Name_Reply (ACE_UINT32 type, ACE_UINT32 err); // Type of reply.
 
   /// Initialize length_ in order to ensure correct byte ordering
