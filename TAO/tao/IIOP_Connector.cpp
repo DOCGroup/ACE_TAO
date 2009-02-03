@@ -206,7 +206,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       if (TAO_debug_level > 1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) IIOP_Connector::make_connection, ")
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::make_connection, ")
                       ACE_TEXT("connection to <%C:%d> failed (%p)\n"),
                       iiop_endpoint->host (),
                       iiop_endpoint->port (),
@@ -618,7 +618,7 @@ TAO_IIOP_Connector::complete_connection (int result,
       if (TAO_debug_level > 0)
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("TAO (%P|%t) - IIOP_Connector::make_connection, ")
-                   ACE_TEXT("transport in error after cache! \n")));
+                   ACE_TEXT("transport in error after cache!\n")));
       svc_handler->cancel_pending_connection();
       transport->purge_entry();
       return 0;
