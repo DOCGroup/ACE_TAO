@@ -1897,7 +1897,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
         ACE_FAIL_RETURN (-1);
       else
       {
-          // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
+        // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
         ACE_OS::set_errno_to_last_error ();
         return 0;
       }
@@ -1990,7 +1990,11 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
       if (m->proc_mutex_ == 0)
         ACE_FAIL_RETURN (-1);
       else
-        return 0;
+        {
+          // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
+          ACE_OS::set_errno_to_last_error ();
+          return 0;
+        }
     case USYNC_THREAD:
       return ACE_OS::thread_mutex_init (&m->thr_mutex_,
                                          lock_type,
@@ -2503,7 +2507,11 @@ ACE_OS::event_init (ACE_event_t *event,
   if (*event == 0)
     ACE_FAIL_RETURN (-1);
   else
-    return 0;
+    {
+      // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
+      ACE_OS::set_errno_to_last_error ();
+      return 0;
+    }
 #elif defined (ACE_HAS_THREADS)
   ACE_UNUSED_ARG (sa);
   event->eventdata_ = 0;

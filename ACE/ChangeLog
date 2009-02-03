@@ -1,3 +1,11 @@
+Tue Feb  3 23:28:50 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_Thread.cpp (mutex_init, event_init):
+        * ace/OS_NS_Thread.inl (event_init, sema_init): Make sure errno gets
+          set to ERROR_ALREADY_EXISTS when creating an object that exists. This
+          is in Windows code only. Fixes Bugzilla #3541. Thanks to Bill Rizzi
+          for identifying the bug and supplying the test case and fix.
+
 Tue Feb  3 19:45:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Acceptor.h:
