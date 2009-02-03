@@ -1,9 +1,16 @@
+Tue Feb  3 15:57:41 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Logging_Strategy_Test.cpp:
+
+          Use unsigned char instead of char to index arrays, to silence
+          warnings from GCC 4.3.
+
 Mon Feb  2 19:07:39 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/global.features:
 
-          Added tao_idl_fe_gen feature to be automatically disabled. 
-        
+          Added tao_idl_fe_gen feature to be automatically disabled.
+
 Mon Feb  2 07:40:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/lib/Client_Logging_Handler.cpp:
