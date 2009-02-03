@@ -380,7 +380,7 @@ public:
    * Shorthand for calling
    * register_handler(ACE_HANDLE,ACE_Event_Handler*,ACE_Reactor_Mask),
    * multiple times for the same @a event_handler and @a masks but
-   * different <handles>.
+   * different @a handles.
    */
   int register_handler (const ACE_Handle_Set &handles,
                         ACE_Event_Handler *event_handler,
@@ -524,7 +524,7 @@ public:
    * Resume @a handles.
    *
    * Shorthand for calling resume_handler(ACE_HANDLE) with multiple
-   * <handles>.
+   * @a handles.
    */
   int resume_handler (const ACE_Handle_Set &handles);
 

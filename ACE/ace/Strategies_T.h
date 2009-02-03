@@ -107,7 +107,7 @@ public:
   /**
    * Create a SVC_HANDLER with the appropriate creation strategy.  The
    * default behavior of this method is to make a new SVC_HANDLER if
-   * @a sh == 0 (passing in the <Thread_Manager>), else @a sh is
+   * @a sh == 0 (passing in the Thread_Manager), else @a sh is
    * unchanged.  Returns -1 on failure, else 0.
    */
   virtual int make_svc_handler (SVC_HANDLER *&sh);
@@ -262,7 +262,7 @@ public:
 
   // = Factory method.
   /**
-   * Activate the <svc_handler> with an appropriate concurrency
+   * Activate the @a svc_handler with an appropriate concurrency
    * strategy.  The default behavior of this method is to activate the
    * SVC_HANDLER by calling its <open> method (which allows the
    * SVC_HANDLER to define its own concurrency strategy).
@@ -321,7 +321,7 @@ public:
   virtual ~ACE_Reactive_Strategy (void);
 
   // = Factory method.
-  /// Activate the <svc_handler> by registering it with the <Reactor>
+  /// Activate the @a svc_handler by registering it with the <Reactor>
   /// and then calling it's <open> hook.
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
                                     void *arg = 0);
@@ -875,7 +875,7 @@ public:
   /// Template method for making a new <svc_handler>
   virtual int make_svc_handler (SVC_HANDLER *&sh);
 
-  /// Template method for activating a new <svc_handler>
+  /// Template method for activating a new @a svc_handler
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
 
   /// Template method for setting the recycler information of the

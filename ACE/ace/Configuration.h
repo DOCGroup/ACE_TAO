@@ -598,7 +598,7 @@ public:
   /// allocator name_ was created in
   void free (ACE_Allocator *alloc);
 
-  /// <hash> function is required in order for this class to be usable by
+  /// hash function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
   u_long hash  (void) const;
 

@@ -187,7 +187,7 @@ protected:
 
   /**
    * Bridge method for accepting the new connection into the
-   * <svc_handler>.  The default behavior delegates to the
+   * @a svc_handler.  The default behavior delegates to the
    * PEER_ACCEPTOR::accept.
    */
   virtual int accept_svc_handler (SVC_HANDLER *svc_handler);
@@ -292,8 +292,6 @@ public:
   typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> ACCEPT_STRATEGY;
   typedef ACE_Concurrency_Strategy<SVC_HANDLER> CONCURRENCY_STRATEGY;
   typedef ACE_Scheduling_Strategy<SVC_HANDLER> SCHEDULING_STRATEGY;
-
-
 
   /// Default constructor.
   ACE_Strategy_Acceptor (const ACE_TCHAR service_name[] = 0,
