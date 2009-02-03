@@ -349,7 +349,7 @@ TAO::SSLIOP::Connection_Handler::add_transport_to_cache (void)
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Add the handler to Cache
-  return cache.cache_idle_transport (&prop, this->transport ());
+  return cache.cache_transport (&prop, this->transport ());
 }
 
 int
@@ -369,7 +369,7 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) Listening port [%d] on [%s]\n",
+                      "(%P|%t) Listening port [%d] on [%C]\n",
                       listen_point.port,
                       listen_point.host.in ()));
         }

@@ -560,6 +560,9 @@ public:
   /// Set the flush in post open flag
   void set_flush_in_post_open (void);
 
+  /// Can the transport be purged?
+  bool can_be_purged (void);
+
   /*
    * Specialization hook to add public methods from
    * concrete transport implementations to TAO's transport

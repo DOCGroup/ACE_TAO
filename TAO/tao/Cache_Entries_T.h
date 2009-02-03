@@ -37,9 +37,6 @@ namespace TAO
       /// Idle and can be purged.
       ENTRY_IDLE_AND_PURGABLE,
 
-      /// Idle but cannot be purged.
-      ENTRY_IDLE_BUT_NOT_PURGABLE,
-
       /// Can be purged, but is not idle (mostly for debugging).
       ENTRY_PURGABLE_BUT_NOT_IDLE,
 

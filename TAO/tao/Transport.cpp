@@ -499,6 +499,12 @@ TAO_Transport::purge_entry (void)
   return this->transport_cache_manager ().purge_entry (entry);
 }
 
+bool
+TAO_Transport::can_be_purged (void)
+{
+  return !this->tms_->has_request ();
+}
+
 int
 TAO_Transport::make_idle (void)
 {
@@ -2732,7 +2738,7 @@ TAO_Transport::post_open (size_t id)
   // update transport cache to make this entry available
   this->transport_cache_manager ().set_entry_state (
     this->cache_map_entry_,
-    TAO::ENTRY_IDLE_BUT_NOT_PURGABLE);
+    TAO::ENTRY_IDLE_AND_PURGABLE);
 
   return true;
 }

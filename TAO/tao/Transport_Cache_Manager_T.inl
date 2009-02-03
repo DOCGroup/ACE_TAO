@@ -26,7 +26,7 @@ namespace TAO
 
       // If it has already connected, go directly to the IDLE_BNP state
       if (int_id.is_connected () && state == ENTRY_CONNECTING)
-        int_id.recycle_state (ENTRY_IDLE_BUT_NOT_PURGABLE);
+        int_id.recycle_state (ENTRY_IDLE_AND_PURGABLE);
       else
         int_id.recycle_state (state);
 
@@ -34,15 +34,6 @@ namespace TAO
     }
 
     return retval;
-  }
-
-  template <typename TT, typename TDT, typename PS>
-  ACE_INLINE int
-  Transport_Cache_Manager_T<TT, TDT, PS>::cache_idle_transport (
-    transport_descriptor_type *prop,
-    transport_type *transport)
-  {
-    return cache_transport(prop, transport, ENTRY_IDLE_AND_PURGABLE);
   }
 
   template <typename TT, typename TDT, typename PS>
@@ -72,7 +63,7 @@ namespace TAO
     if (TAO_debug_level > 9 && state != entry->item ().is_connected ())
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T")
                   ACE_TEXT ("::mark_connected %C Transport=%d\n"),
-                  (state ? "true" : "false"), entry->item ().transport ()
+                  (state ? "true" : "false"), entry->item ().transport ()->id ()
                   ));
     entry->item().is_connected (state);
   }

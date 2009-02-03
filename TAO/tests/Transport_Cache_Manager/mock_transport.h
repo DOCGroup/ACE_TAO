@@ -16,6 +16,7 @@ public:
   TCM::HASH_MAP_ENTRY *cache_map_entry (void) {return this->entry_;}
   void close_connection (void) { purged_count_ = ++global_purged_count;};
   int purged_count (void) { return this->purged_count_;}
+  bool can_be_purged (void) { return true;}
 private:
   size_t id_;
   bool is_connected_;
