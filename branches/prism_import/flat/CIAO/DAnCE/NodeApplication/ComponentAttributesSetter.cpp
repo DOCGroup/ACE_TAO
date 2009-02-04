@@ -1,14 +1,15 @@
 // $Id$
 
+#include "tao/DynamicInterface/Request.h"
+
 #include "ComponentAttributesSetter.h"
-#include "Deployment/Deployment_ApplicationC.h"
 //#include "Cdmw_ccm_dance1_cif.stub.hpp"
 #include "tao/DynamicInterface/DII_CORBA_methods.h"
+#include "tao/DynamicInterface/Context.h"
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
-#include "tao/DynamicInterface/Context.h"
-#include "tao/DynamicInterface/Request.h"
 #include "DAnCE/Logger/Log_Macros.h"
+#include "Deployment/Deployment_ApplicationC.h"
 
 //bool read_config_value( const ACE_CString & name,
 //                        const Deployment::Properties & prop,
@@ -61,7 +62,7 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
       ACE_CString method = "_set_";
       method += prop[i].name.in();
 
-      CORBA::Request_var req;
+      ::CORBA::Request_var req;
 
       try
         {

@@ -11,6 +11,7 @@
 
 #ifdef GEN_OSTREAM_OPS
 #include <iostream>
+#include <sstream>
 #endif /* GEN_OSTREAM_OPS */
 
 namespace DAnCE
@@ -100,7 +101,12 @@ namespace DAnCE
                   "started for node %s and plan %s\n", this->name_.c_str(), plan.UUID.in()));
 
 #ifdef GEN_OSTREAM_OPS
-    std::cerr << plan << std::endl;
+    {
+      std::ostringstream plan_stream;
+      plan_stream << plan << std::endl;
+      DANCE_DEBUG ((LM_TRACE, DLINFO "NodeManager_impl::preparePlan - $s",
+                    plan_stream.str ().c_str ()));
+    }
 #endif /* GEN_OSTREAM_OPS */
 
     // resourceCommitment will be used on next development stage

@@ -36,7 +36,7 @@ namespace DAnCE
                            "%s",
                            ior);
           ACE_OS::fclose (ior_output_file_);
-          DANCE_DEBUG ( (LM_TRACE, "[%M] EM's ior was written into file \"%C\"\n", ior_file_name));
+          DANCE_DEBUG ( (LM_TRACE, DLINFO "ExectionManager::write_IOR - EM's ior was written into file \"%C\"\n", ior_file_name));
           return true;
         }
       else

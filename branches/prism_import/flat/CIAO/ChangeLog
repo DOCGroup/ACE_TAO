@@ -1,12 +1,42 @@
+Wed Feb  4 01:26:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIAO_TAO.mwc:
+        * CIAO_TAO_DAnCE.mwc:
+        
+          Added TAO_ROOT/utils.
+        
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        
+          Logging changes. 
+        
+        * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        
+          Compile fixes. 
+        
+        * DAnCE/NodeApplication/Name_Utilities.cpp:
+        
+          Fixed segmentation faults. 
+        
+        * DAnCE/tests/MocksTest/MockTest.mpc:
+        
+          Disabled. 
+        
+        * examples/Hello/descriptors/run_test.pl:
+        
+          Fixes to use correct binaries and arguments.   This test now runs. 
+        
 Tue Feb  3 14:24:17 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
         * DAnCE/NodeManager/Node_Manager_Module.cpp:
         * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
         * examples/Hello/descriptors/run_test.pl:
-        
-          Migrating changes to a new workspace. 
-        
+
+          Migrating changes to a new workspace.
+
 Mon Jan 12 17:41:29 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
         * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:

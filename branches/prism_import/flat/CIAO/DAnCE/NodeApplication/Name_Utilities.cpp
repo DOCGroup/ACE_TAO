@@ -30,6 +30,15 @@ namespace DAnCE
                                CosNaming::NamingContext_ptr ctx)
   {
     DANCE_TRACE ("Name_Utilities::bind_object");
+
+    if (CORBA::is_nil (ctx))
+      {
+        DANCE_ERROR ((LM_WARNING, DLINFO "Name_Utilities::bind_object - "
+                      "Provided naming context is nil, component %s will not be registered.",
+                      name));
+        return false;
+      }
+    
     try
       {
         CosNaming::Name nm;
@@ -82,6 +91,12 @@ namespace DAnCE
   {
     DANCE_TRACE ("Name_Utilities::bind_context");
     
+    if (CORBA::is_nil (ctx))
+      {
+        DANCE_ERROR ((LM_WARNING, DLINFO "Name_Utilities::bind_context - "
+                      "Provided naming context is nil, the naming context will not be bound."));
+      }
+
     CosNaming::Name newname (nm.length ());
     
     for (CORBA::ULong i = 0;
@@ -109,6 +124,13 @@ namespace DAnCE
                                  CosNaming::NamingContext_ptr ctx)
   {
     DANCE_TRACE ("Name_Utilities::unbind_object");
+
+    if (CORBA::is_nil (ctx))
+      {
+        DANCE_ERROR ((LM_WARNING, DLINFO "Name_Utilities::unbind_object - "
+                      "Provided naming context is nil, instance %s will not be unbound\n",
+                      name));
+      }
     
     CosNaming::Name nm;
     Name_Utilities::build_name (name, nm);
