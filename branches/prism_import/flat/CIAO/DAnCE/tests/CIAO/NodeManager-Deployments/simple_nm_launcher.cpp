@@ -37,7 +37,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   
   logger.reset (dlf);
   logger->init (argc, argv);
-  std::cerr << "2\n";
   
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
   
@@ -86,8 +85,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: calling start\n"));
       na->start ();
       
-      ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: start finished, sleeping 20 seconds.\n"));
-      ACE_OS::sleep (20);
+      ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: start finished, sleeping 5 seconds.\n"));
+      ACE_OS::sleep (5);
       ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: waking up from sleep, calling destroyApplication\n"));
       
       nam->destroyApplication (na.in ());

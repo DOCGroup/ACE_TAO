@@ -75,7 +75,7 @@ namespace CIDL_SimpleUser_Impl
     
     if (CORBA::is_nil (trig.in ()))
       {
-        CIAO_ERROR ((LM_ERROR, CLINFO "SimpleUser_exec_i::ccm_activate () - "
+        CIAO_ERROR ((LM_ERROR, "SimpleUser_exec_i::ccm_activate () - "
                      "Error: Reference nil for port trig\n"));
 	return;
       }
@@ -87,13 +87,13 @@ namespace CIDL_SimpleUser_Impl
       }
     catch (CORBA::Exception &ex)
       {
-        CIAO_ERROR ((LM_ERROR, CLINFO "SimpleUser_exec_i::ccm_activate () - "
+        CIAO_ERROR ((LM_ERROR, "SimpleUser_exec_i::ccm_activate () - "
                      "Caught CORBA exception, details follow:\n"));
-        ex._tao_print_exception (CLINFO "SimpleUser_exec_i::ccm_activate () - ");
+        ex._tao_print_exception ("SimpleUser_exec_i::ccm_activate () - ");
       }
     catch (...)
       {
-        CIAO_ERROR ((LM_ERROR, CLINFO "SimpleUser_exec_i::ccm_activate () - "
+        CIAO_ERROR ((LM_ERROR, "SimpleUser_exec_i::ccm_activate () - "
                      "Error: Caught unknown exception whilst invoking reference for port trig.\n"));
       }
   }

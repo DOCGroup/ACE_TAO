@@ -74,7 +74,7 @@ namespace CIDL_SimpleMultipleUser_Impl
     ::Simple::SimpleMultipleUser::trigConnections_var conns = 
         this->context_->get_connections_trig ();
     
-    CIAO_DEBUG ((LM_NOTICE, CLINFO "SimpleMultipleUser_exec_i::ccm_activate - "
+    CIAO_DEBUG ((LM_NOTICE, "SimpleMultipleUser_exec_i::ccm_activate - "
                  "Got %u connections to my receptacle\n",
                  conns->length ()));
     
@@ -82,7 +82,7 @@ namespace CIDL_SimpleMultipleUser_Impl
       {
         try
           {
-            CIAO_DEBUG ((LM_NOTICE, CLINFO "SimpleMultipleUser_exec_i::ccm_activate - "
+            CIAO_DEBUG ((LM_NOTICE, "SimpleMultipleUser_exec_i::ccm_activate - "
                          "Invoking %u'th connection\n", i));
             ::Simple::Trigger_var trig (conns[i].objref);
             
@@ -90,14 +90,14 @@ namespace CIDL_SimpleMultipleUser_Impl
           }
         catch (CORBA::Exception &ex)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "SimpleMultipleUser_exec_i::ccm_activate () - "
+            CIAO_ERROR ((LM_ERROR, "SimpleMultipleUser_exec_i::ccm_activate () - "
                          "Caught CORBA exception on %u'th reference, details follow:\n",
                          i));
-            ex._tao_print_exception (CLINFO "SimpleUser_exec_i::ccm_activate () - ");    
+            ex._tao_print_exception ("SimpleUser_exec_i::ccm_activate () - ");    
           }
         catch (...)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "SimpleMultipleUser_exec_i::ccm_activate () - "
+            CIAO_ERROR ((LM_ERROR, "SimpleMultipleUser_exec_i::ccm_activate () - "
                          "Error: Caught unknown exception whilst invoking reference for port trig.\n"));
           }
       }

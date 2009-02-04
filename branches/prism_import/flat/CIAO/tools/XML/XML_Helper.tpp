@@ -2,6 +2,7 @@
 #include "XML_Helper.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
+#include "ciao/Logger/Log_Macros.h"
 #include "xercesc/util/XMLUniDefs.hpp"
 #include "xercesc/dom/DOM.hpp"
 #include "XML_Error_Handler.h"
@@ -62,8 +63,8 @@ namespace CIAO
       if (this->initialized_)
         return;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Initializing the Xerces runtime \n"));
+      CIAO_DEBUG ((LM_TRACE, CLINFO
+                  "XML_Helper<>::is_initialized - Initializing the Xerces runtime \n"));
       // Initialize the Xerces run-time
       try
         {
