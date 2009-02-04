@@ -75,10 +75,8 @@ sub run_node_daemons {
       $node_app = "$CIAO_ROOT/bin/ciao_componentserver";
 
       $d_cmd = "$DAnCE/bin/dance_node_manager";
-      $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -d 30";
-      
-      print "$d_param";
-
+      $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --instance-nc corbaloc:rir:/NameService";
+      print "$d_param\n";
       $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
       $result = $Daemons[$i]->Spawn ();
       push(@processes, $Daemons[$i]);

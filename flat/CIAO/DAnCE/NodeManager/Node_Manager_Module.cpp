@@ -110,7 +110,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
   get_opts.long_option (ACE_TEXT("timeout"), 't', ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("domain-nc"), 'd', ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
-  get_opts.long_option (ACE_TEXT("instance-nc"), ACE_Get_Opt::ARG_OPTIONAL);
+  get_opts.long_option (ACE_TEXT("instance-nc"), ACE_Get_Opt::ARG_REQUIRED);
 
   //get_opts.long_option ("help", '?');
 
@@ -204,7 +204,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
               this->options_.server_args_ = get_opts.opt_arg ();
             }
           else if (ACE_OS::strcmp (get_opts.long_option (),
-                                   "instance-nc"))
+                                   "instance-nc") == 0)
             {
               if (get_opts.opt_arg () == 0)
                 {
