@@ -769,7 +769,6 @@ libTAO_la_SOURCES = \
   CORBALOC_Parser.cpp \
   CORBANAME_Parser.cpp \
   CORBA_String.cpp \
-  Cache_Entries.cpp \
   CharSeqC.cpp \
   Cleanup_Func_Registry.cpp \
   ClientRequestInterceptor_Adapter.cpp \
@@ -947,7 +946,6 @@ libTAO_la_SOURCES = \
   TimeBaseC.cpp \
   Transport.cpp \
   Transport_Acceptor.cpp \
-  Transport_Cache_Manager.cpp \
   Transport_Connector.cpp \
   Transport_Descriptor_Interface.cpp \
   Transport_Mux_Strategy.cpp \
@@ -1051,8 +1049,9 @@ nobase_include_HEADERS = \
   CORBA_String.h \
   CORBA_String.inl \
   CORBA_methods.h \
-  Cache_Entries.h \
-  Cache_Entries.inl \
+  Cache_Entries_T.cpp \
+  Cache_Entries_T.h \
+  Cache_Entries_T.inl \
   CharSeq.pidl \
   CharSeq.pidl \
   CharSeqC.h \
@@ -1433,7 +1432,9 @@ nobase_include_HEADERS = \
   Transport_Acceptor.h \
   Transport_Acceptor.inl \
   Transport_Cache_Manager.h \
-  Transport_Cache_Manager.inl \
+  Transport_Cache_Manager_T.cpp \
+  Transport_Cache_Manager_T.h \
+  Transport_Cache_Manager_T.inl \
   Transport_Connector.h \
   Transport_Connector.inl \
   Transport_Descriptor_Interface.h \
