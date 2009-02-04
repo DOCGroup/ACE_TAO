@@ -1,11 +1,21 @@
+Wed Feb  4 21:18:18 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Containers/Container_Base.cpp:
+         
+          Demoted the logging priority of failure to find a receptacle policy.
+
+        * examples/Hello/descriptors/run_test.pl:
+
+          removed some extraneous logging. 
+        
 Wed Feb  4 19:07:27 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
         * DAnCE/NodeManager/Node_Manager_Module.cpp:
         * examples/Hello/descriptors/run_test.pl:
 
-          fixing nameservice support. 
-        
+          fixing nameservice support.
+
 Wed Feb  4 01:26:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO_TAO.mwc:
