@@ -1,3 +1,15 @@
+Wed Feb  4 19:43:13 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Transport_Cache_Manager_T.h:
+        * tao/Transport_Cache_Manager_T.inl:
+        * tao/Transport_Cache_Manager_T.cpp:
+          Renamed PS template parameter, the gcc 3.3.2 compiler on
+          Solaris 9 seems to believe there is a numeric constant by that
+          name.
+
+        * tao/Makefile.am:
+          updated to reflect recent cache refactoring changes.
+        
 Wed Feb  4  13:51:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Muxed_TMS.cpp:
@@ -387,9 +399,10 @@ Fri Jan 30 14:52:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tao/default_server.h:
         * tao/default_server.cpp:
 
-          Enclosed service declarations/definitions and factory functions in versioned
-          namespace markers to better able handle mixing versioned and unversioned
-          compilations working together in shared namespaces.
+          Enclosed service declarations/definitions and factory functions
+          in versioned namespace markers to better able handle mixing
+          versioned and unversioned compilations working together in
+          shared namespaces.
 
 Fri Jan 30 14:10:14 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
