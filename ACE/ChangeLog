@@ -1,3 +1,12 @@
+Wed Feb  4 22:23:26 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_SEQPACK_Acceptor.h:
+        * ace/Multihomed_INET_Addr.h: Formatting fixes.
+
+        * tests/SOCK_SEQPACK_SCTP_Test.cpp: Removed asserts, fixed IPv6
+          operation, resync log after fork(), corrected negative association
+          test case.
+
 Tue Feb  3 23:28:50 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_Thread.cpp (mutex_init, event_init):

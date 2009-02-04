@@ -81,11 +81,9 @@ Server (void *arg)
   // hang tests.
   //
   if (-1 == AcceptorSocket->enable (ACE_NONBLOCK))
-  {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n"),
                 ACE_TEXT ("AcceptorSocket.enable (ACE_NONBLOCK)")));
-  }
 
   //
   // Set up select to wait for I/O events.
@@ -101,21 +99,15 @@ Server (void *arg)
                           0,
                           &tv);
 
-  ACE_ASSERT (tv == def_timeout);
-
   if (-1 == result)
-  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) %p\n"),
                        ACE_TEXT ("select")),
                       0);
-  }
-  else if (0 == result)
-  {
+  if (0 == result)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("(%P|%t) select timed out, shutting down\n")),
                       0);
-  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) waiting for client to connect\n")));
@@ -128,46 +120,38 @@ Server (void *arg)
     // Enable non-blocking I/O.
     //
     if (Stream.enable (ACE_NONBLOCK))
-    {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) %p\n"),
                          ACE_TEXT ("Stream.enable (ACE_NONBLOCK)")),
                         0);
-    }
 
     unsigned char byte = BYTE_MESG;
 
     if (-1 == Stream.send_n (&byte, 1))
-    {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("Stream.send_n")));
-    }
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) byte sent\n")));
 
     //
-    // Ubruptly terminate the association.
+    // Abruptly terminate the association.
     //
     if (-1 == Stream.abort ())
-    {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("Association.abort")));
-    }
 
     //
     // Negative test: make sure that we cannot send on a closed association.
     //
     if (-1 != Stream.send_n (&byte, 1))
-    {
       //FUZZ: disable check_for_lack_ACE_OS
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) Negative test fail: Association")
                   ACE_TEXT(".send_n succeeded after abort()\n")));
       //FUZZ: enable check_for_lack_ACE_OS
-    }
 
   }
 
@@ -175,11 +159,9 @@ Server (void *arg)
   // Close server socket.
   //
   if (-1 == AcceptorSocket->close ())
-  {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n"),
                 ACE_TEXT ("AcceptorSocket.close")));
-  }
 
   return 0;
 }
@@ -228,24 +210,28 @@ Client(void *arg)
                 ACE_TEXT ("Association.recv_n")));
   }
 
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) Client received %d bytes\n"),
-              bytes));
-  ACE_ASSERT(1 == bytes);
+  if (1 == bytes)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) Client received %B bytes\n"),
+                bytes));
+  else
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("(%P|%t) Client received %B bytes; expected 1\n"),
+                bytes));
 
   //
   // Give server a little time to abort the association.
   //
   ACE_OS::sleep(1);
 
-  if (-1 != Stream.recv_n (&b, 1, &tv, &bytes))
-  {
-    //FUZZ: disable check_for_lack_ACE_OS
+  // abort closes the connection, so the recv should either see a closed
+  // socket or some failure other than a timeout.
+  ssize_t cnt = Stream.recv_n (&b, 1, &tv, &bytes);
+  if (cnt > 0 || (cnt == -1 && errno == ETIME))
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) Negative test failed Association")
-                ACE_TEXT (".recv_n succeeded after abort()\n")));
-    //FUZZ: enable check_for_lack_ACE_OS
-  }
+                ACE_TEXT ("(%P|%t) Negative test failed; Association")
+                ACE_TEXT (".recv_n returned %b (w/ %m) after abort\n"),
+                cnt));
 
   return 0;
 }
@@ -264,59 +250,44 @@ spawn_test(bool ipv6_test)
 
   ACE_SOCK_SEQPACK_Acceptor AcceptorSocket;
 
-  ACE_Multihomed_INET_Addr ServerAddr (TTCPPORT,
+  const ACE_TCHAR *addrstr =
 #ifdef ACE_HAS_IPV6
-                                      (ipv6_test ?
-                                       ACE_IPV6_LOCALHOST :
-                                       ACE_LOCALHOST)
-#else /* ! ACE_HAS_IPV6 */
-                                       ACE_LOCALHOST
-#endif /* ! ACE_HAS_IPV6 */
+    ipv6_test ? ACE_IPV6_LOCALHOST : ACE_LOCALHOST;
+#else
+    ACE_LOCALHOST;
+#endif /* ACE_HAS_IPV6 */
+  ACE_Multihomed_INET_Addr ServerAddr (TTCPPORT,
+                                       addrstr
+#ifdef ACE_HAS_IPV6
+                                       ,1,
+                                       ipv6_test ? AF_INET6 : AF_INET
+#endif /* ACE_HAS_IPV6 */
                                        );
 
-  if (-1 == AcceptorSocket.open (ServerAddr,
-                                 1,
-#ifdef ACE_HAS_IPV6
-                                 (ipv6_test ? AF_INET6 : AF_INET),
-#else /* ! ACE_HAS_IPV6 */
-                                 AF_INET,
-#endif /* ! ACE_HAS_IPV6 */
-                                 ACE_DEFAULT_BACKLOG
-#if defined (IPPROTO_SCTP)
-                                 ,IPPROTO_SCTP
-#endif /* IPPROTO_SCTP */
-                                ))
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("AcceptorSocket.open")));
-  }
+  if (-1 == AcceptorSocket.open (ServerAddr, 1))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("AcceptorSocket.open")));
+    }
 
   if (-1 == AcceptorSocket.get_local_addr (ServerAddr))
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("AcceptorSocket.get_local_addr")));
-  }
-
-  struct sockaddr_in inaddr;
-
-  ServerAddr.get_addresses(&inaddr, 1);
-
-  ACE_ASSERT ((TTCPPORT == ServerAddr.get_port_number ()));
-  ACE_ASSERT ((ipv6_test || INADDR_LOOPBACK == ServerAddr.get_ip_address ()));
-  ACE_ASSERT ((!ipv6_test ||
-               ACE_Multihomed_INET_Addr(TTCPPORT, "::1") == ServerAddr));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("AcceptorSocket.get_local_addr")));
+    }
 
 #ifndef ACE_LACKS_FORK
   switch (ACE_OS::fork (ACE_TEXT ("child")))
   {
   case -1:
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p%a"),
+                ACE_TEXT ("(%P|%t) %p"),
                 ACE_TEXT ("fork failed")));
     break;
   case 0:
+    ACE_LOG_MSG->sync (ACE_TEXT ("SOCK_SEQPACK_SCTP_Test"));
     Client (&ServerAddr);
     ACE_OS::exit (0);
     break;
