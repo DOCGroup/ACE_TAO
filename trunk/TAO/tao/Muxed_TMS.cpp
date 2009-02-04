@@ -117,7 +117,7 @@ TAO_Muxed_TMS::has_request (void)
   ACE_GUARD_RETURN (ACE_Lock,
                     ace_mon,
                     *this->lock_,
-                    -1);
+                    false);
 
   return this->dispatcher_table_.current_size () > 0;
 }
