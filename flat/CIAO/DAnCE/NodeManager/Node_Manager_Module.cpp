@@ -171,14 +171,14 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
                         get_opts.opt_arg ()));
           this->options_.timeout_ = ACE_OS::atoi (get_opts.opt_arg ());
           break;
-
+          
         case 'd':
           DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                        "Binding to provided Domain Naming Context: '%C'\n",
+                        "Binding to provided Domain Naming Context: '%s'\n",
                         get_opts.opt_arg ()));
           this->options_.domain_nc_ = get_opts.opt_arg ();
           break;
-
+          
         case 'h':
           //case '?': // Display help for use of the server.
           //default:

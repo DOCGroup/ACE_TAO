@@ -2,6 +2,7 @@
 // $Id$
 
 project(*MockTest): dance, taoserver, naming, dance_mocks {
+  requires += ofccm                   
   exename   = MockTest
   after    += MockObject
   
@@ -12,6 +13,7 @@ project(*MockTest): dance, taoserver, naming, dance_mocks {
 }
 
 project(*MockObject): dance_mocks{
+  requires += ofccm                   
   sharedname  = MockObject
   dynamicflags = MOCKTEST_BUILD_DLL
   

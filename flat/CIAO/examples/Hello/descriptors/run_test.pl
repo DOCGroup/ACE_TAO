@@ -72,17 +72,19 @@ sub run_node_daemons {
       $port = $ports[$i];
       $nodename = $nodenames[$i];
       $iiop = "iiop://localhost:$port";
-      $node_app = "$CIAO_ROOT/bin/ciao_component_server";
+      $node_app = "$CIAO_ROOT/bin/ciao_componentserver";
 
       $d_cmd = "$DAnCE/bin/dance_node_manager";
       $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -d 30";
+      
+      print "$d_param";
 
       $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
       $result = $Daemons[$i]->Spawn ();
       push(@processes, $Daemons[$i]);
 
       if (PerlACE::waitforfile_timed ($iorfile,
-                                      $PerlACE::wait_interval_for_process_creation) == -1) {
+                                      30) == -1) {
           print STDERR
             "ERROR: The ior $iorfile file of node daemon $i could not be found\n";
           for (; $i >= 0; --$i) {

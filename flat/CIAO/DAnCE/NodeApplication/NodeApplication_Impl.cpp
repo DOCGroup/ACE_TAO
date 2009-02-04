@@ -24,6 +24,7 @@
 
 #ifdef GEN_OSTREAM_OPS
 #include <iostream>
+#include <sstream>
 #endif /* GEN_OSTREAM_OPS */
 
 using namespace DAnCE;
@@ -1558,7 +1559,12 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                providedReference.length()));
 
 #ifdef GEN_OSTREAM_OPS
-  std::cerr << providedReference << std::endl;
+  {
+    std::ostringstream pr_stream;
+    pr_stream << providedReference << std::endl;
+    DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_impl::finishLaunch - Provided references: %s",
+                  pr_stream.str ().c_str ()));
+  }
 #endif /* GEN_OSTREAM_OPS */
 
   for (unsigned int j = 0; j < this->plan_.connection.length(); ++j)
@@ -1571,7 +1577,11 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                     inst));
 
 #ifdef GEN_OSTREAM_OPS
-      std::cerr << this->plan_.connection[j];
+      {
+        std::ostringstream conn_stream;
+        conn_stream << this->plan_.connection[j] << std::endl;
+        DANCE_DEBUG ((LM_TRACE, "NodeApplication_impl::finishLaunch - Local connections: %s", conn_stream.str ().c_str ()));
+      }
 #endif /* GEN_OSTREAM_OPS  */
 
       Components::CCMObject_var obj =
