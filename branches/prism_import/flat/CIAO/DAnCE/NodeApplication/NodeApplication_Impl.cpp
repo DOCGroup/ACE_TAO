@@ -1371,7 +1371,7 @@ NodeApplication_Impl::get_instance_type (const Deployment::Properties& prop) con
         }
     }
 
-  DANCE_ERROR ((LM_ERROR, DLINFO  "NodeApplication_Impl::get_instance_type - "
+  DANCE_ERROR ((LM_INFO, DLINFO  "NodeApplication_Impl::get_instance_type - "
                 "Unable to determine instance type\n"));
   return eInvalid;
 }
