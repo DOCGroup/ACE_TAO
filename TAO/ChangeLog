@@ -1,3 +1,8 @@
+Wed Feb  4  13:51:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Muxed_TMS.cpp:
+          Fixed compile warning
+
 Tue Feb  3 15:43:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Transport_Cache_Manager/Bug_3549_Regression.cpp:
