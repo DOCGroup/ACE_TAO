@@ -15,8 +15,8 @@
 
 ACE_RCSID(Hello, client, "$Id$")
 
-ACE_TCHAR *ior1 = ACE_TEXT ("file://server1.ior");
-ACE_TCHAR *ior2 = ACE_TEXT ("file://server2.ior");
+const ACE_TCHAR *ior1 = ACE_TEXT ("file://server1.ior");
+const ACE_TCHAR *ior2 = ACE_TEXT ("file://server2.ior");
 
 int debug_level = 0;
 
@@ -74,7 +74,7 @@ test_server (void *arg)
   else if (server_nr == 2)
     {
       ACE_OS::sprintf(ior, ACE_TEXT ("%s"), ior2);
-      ACE_DEBUG((LM_DEBUG, 
+      ACE_DEBUG((LM_DEBUG,
                  ACE_TEXT("%D Expecting an exception for server %d\n"),
                  server_nr));
     }
@@ -82,8 +82,8 @@ test_server (void *arg)
   Test::Hello_var hello;
   try
     {
-      ACE_DEBUG ((LM_DEBUG, 
-                  ACE_TEXT ("%D Starting connection with server %d\n"), 
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("%D Starting connection with server %d\n"),
                   server_nr));
 
       CORBA::Object_var server = orb->string_to_object(ior);
@@ -111,7 +111,7 @@ test_server (void *arg)
                  server_nr,
                  orb->orb_core ()->lane_resources ().transport_cache ().current_size ()));
 
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%D (%P|%t) - string <%C> returned from server %d\n"),
                   the_string.in (), server_nr));
     }
@@ -138,18 +138,18 @@ test_server (void *arg)
 
   if (server_nr == 2)
     barrier.wait();
-  
-  ACE_DEBUG ((LM_DEBUG, 
+
+  ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%D Shutdown server %d\n"),
               server_nr));
-  
+
   if (!CORBA::is_nil(hello))
     hello->shutdown ();
 
   if (server_nr == 1)
     barrier.wait();
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%D Thread ended for server %d\n"),
               server_nr));
 
@@ -180,7 +180,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           extra[4] = ACE::strnew (ACE_TEXT ("-ORBdebuglevel"));
           extra[5] = ACE::strnew (ACE_TEXT ("10"));
         }
-      
+
       ACE_TCHAR **largv = new ACE_TCHAR *[argc+extra_argc];
       for (int i = 0; i < argc; i++)
         largv[i] = argv[i];
