@@ -71,7 +71,7 @@
 
   <instance xmi:id="SimpleNullHomeInstance">
     <name>SimpleNullHome</name>
-    <node>Node</node>
+    <node>NodeOne</node>
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="SimpleNullHomeImplementation" />
@@ -79,7 +79,7 @@
 
   <instance xmi:id="SimpleNullComponentInstance">
     <name>SimpleNullComponent</name>
-    <node>Node</node>
+    <node>NodeOne</node>
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="SimpleNullComponentImplementation" />

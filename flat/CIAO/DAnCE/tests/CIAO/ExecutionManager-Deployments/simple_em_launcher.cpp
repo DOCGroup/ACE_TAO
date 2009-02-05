@@ -45,7 +45,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   
   try
     {
-      ACE_DEBUG ((LM_DEBUG, "*** simple_em_launcher: parsing XML\n"));
+      ACE_DEBUG ((LM_INFO, "*** simple_em_launcher: parsing XML\n"));
       // Parse plan
       CIAO::Config_Handlers::XML_File_Intf xml (argv[2]);
       xml.add_search_path ("CIAO_ROOT", "/docs/schema/");
@@ -59,7 +59,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       
 
-      ACE_DEBUG ((LM_DEBUG, "*** simple_em_launcher: resoling execution manager reference.\n"));
+      ACE_DEBUG ((LM_INFO, "*** simple_em_launcher: resoling execution manager reference.\n"));
       CORBA::Object_var obj = orb->string_to_object (argv[1]);
       Deployment::ExecutionManager_var em = Deployment::ExecutionManager::_narrow (obj.in ());
       
@@ -69,33 +69,33 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           throw 1;
         }
 
-      ACE_DEBUG ((LM_DEBUG, "*** simple_em_launcher: calling prepareplan.\n"));
+      ACE_DEBUG ((LM_INFO, "*** simple_em_launcher: calling prepareplan.\n"));
       Deployment::DomainApplicationManager_var dam = em->preparePlan (*plan,
                                                                     Deployment::ResourceCommitmentManager::_nil ());
       
-      ACE_DEBUG ((LM_DEBUG, "*** simple_em_launcher: calling startLaunch\n"));
+      ACE_DEBUG ((LM_INFO, "*** simple_em_launcher: calling startLaunch\n"));
       Deployment::Connections_var conns;
       Deployment::Properties props;
       Deployment::Application_var app = dam->startLaunch (props, conns.out ());
       Deployment::DomainApplication_var da = Deployment::DomainApplication::_narrow (app.in ());
       
-      ACE_DEBUG ((LM_DEBUG, "*** simple_em_launcher: calling finishLaunch\n"));
+      ACE_DEBUG ((LM_INFO, "*** simple_em_launcher: calling finishLaunch\n"));
       da->finishLaunch (conns.in (), false);
       
-      ACE_DEBUG ((LM_DEBUG, "*** simple_em_launcher: calling start\n"));
+      ACE_DEBUG ((LM_INFO, "*** simple_em_launcher: calling start\n"));
       da->start ();
       
-      ACE_DEBUG ((LM_DEBUG, "*** simple_em_launcher: start finished, sleeping 20 seconds.\n"));
-      ACE_OS::sleep (20);
-      ACE_DEBUG ((LM_DEBUG, "*** simple_em_launcher: waking up from sleep, calling destroyApplication\n"));
+      ACE_DEBUG ((LM_INFO, "*** simple_em_launcher: start finished, sleeping 5 seconds.\n"));
+      ACE_OS::sleep (5);
+      ACE_DEBUG ((LM_INFO, "*** simple_em_launcher: waking up from sleep, calling destroyApplication\n"));
       
       dam->destroyApplication (da.in ());
       
-      ACE_DEBUG ((LM_DEBUG, "*** simple_em_launcher: calling destroyManager\n"));
+      ACE_DEBUG ((LM_INFO, "*** simple_em_launcher: calling destroyManager\n"));
       
       em->destroyManager (dam.in ());
       
-      ACE_DEBUG ((LM_DEBUG, "*** simple_em_launcher: destroyManager completed.\n"));
+      ACE_DEBUG ((LM_INFO, "*** simple_em_launcher: destroyManager completed.\n"));
       
       orb->destroy ();
     }
