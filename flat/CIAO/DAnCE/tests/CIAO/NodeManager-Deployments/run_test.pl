@@ -69,9 +69,14 @@ sub run_node_daemons {
   return 0;
 }
 
-opendir(DIR, ".");
-@files = grep(/\.cdp$/,readdir(DIR));
-closedir(DIR);
+if ($#ARGV == -1)
+{
+    opendir(DIR, ".");
+    @files = grep(/\.cdp$/,readdir(DIR));
+    closedir(DIR);
+} else {
+    @files = @ARGV;
+}
 
 foreach $file (@files) {
     delete_ior_files ();

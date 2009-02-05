@@ -628,8 +628,8 @@ namespace CIAO
     CIAO_DEBUG ((LM_TRACE, CLINFO
                 "Session_Container::install_component - Loading component servant\n"));
     PortableServer::Servant component_servant = screator (component_executor.in (),
-                                                          name,
-                                                          this);
+                                                          this,
+                                                          name);
 
     if (component_servant == 0)
       {

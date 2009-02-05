@@ -44,8 +44,8 @@ namespace CIAO
                                                            const char *ins_name);
   typedef ::Components::EnterpriseComponent_ptr (*ComponentFactory) (void);
   typedef ::PortableServer::Servant (*ComponentServantFactory) (::Components::EnterpriseComponent_ptr,
-                                                                const char *,
-								::CIAO::Container_ptr );
+                                                                ::CIAO::Container_ptr,
+                                                                const char *);
 
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                   HomeFactory,

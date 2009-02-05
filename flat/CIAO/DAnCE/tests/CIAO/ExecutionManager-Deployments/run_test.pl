@@ -92,8 +92,6 @@ sub run_node_daemons {
   return 0;
 }
 
-print "$#ARGV";
-
 if ($#ARGV == -1)
 {
     opendir(DIR, ".");

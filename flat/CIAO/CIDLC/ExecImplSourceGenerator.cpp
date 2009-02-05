@@ -465,8 +465,28 @@ namespace
     }
 
     virtual void
-    post (Type&)
+    post (Type &t)
     {
+      string name;
+      {
+        std::ostringstream ostr;
+        ostr.pword (name_printer_index) = os.pword (name_printer_index);
+        ostr << t.scoped_name ();
+        name = regex::perl_s (ostr.str (), "/::/_/");
+      }
+
+      os << "extern \"C\" " << ctx.export_macro ()
+         << " ::Components::EnterpriseComponent_ptr" << endl
+         << "create" << name << "_Impl (void)" << endl
+         << "{"
+         << "::Components::EnterpriseComponent_ptr retval =" << endl
+         << "  ::Components::EnterpriseComponent::_nil ();" << endl
+         << "ACE_NEW_RETURN (" << endl
+         << "retval," << endl
+         << t.name () << "_exec_i," << endl
+         << "::Components::EnterpriseComponent::_nil ());" << endl
+         << "return retval;"
+         << "}";
     }
   };
 

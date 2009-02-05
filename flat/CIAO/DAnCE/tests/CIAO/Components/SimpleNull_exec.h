@@ -65,7 +65,10 @@ namespace CIDL_SimpleNull_Impl
     private:
     ::Simple::CCM_SimpleNull_Context_var context_;
   };
-
+  
+  extern "C" SIMPLENULL_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Simple_SimpleNull_Impl (void);
+  
   class SIMPLENULL_EXEC_Export SimpleNullHome_exec_i
     : public virtual SimpleNullHome_Exec,
       public virtual ::CORBA::LocalObject

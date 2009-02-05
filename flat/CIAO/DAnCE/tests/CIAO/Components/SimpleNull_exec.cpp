@@ -94,6 +94,19 @@ namespace CIDL_SimpleNull_Impl
     // Your code here.
   }
 
+  extern "C" SIMPLENULL_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Simple_SimpleNull_Impl (void)
+  {
+    ::Components::EnterpriseComponent_ptr retval =
+      ::Components::EnterpriseComponent::_nil ();
+    
+    ACE_NEW_RETURN (retval,
+                    SimpleNull_exec_i,
+                    ::Components::EnterpriseComponent::_nil ());
+    
+    return retval;
+  }
+  
   //==================================================================
   // Home Executor Implementation Class:   SimpleNullHome_exec_i
   //==================================================================
