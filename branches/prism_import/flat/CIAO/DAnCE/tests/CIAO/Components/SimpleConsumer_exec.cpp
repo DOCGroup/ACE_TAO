@@ -50,10 +50,8 @@ namespace CIDL_SimpleConsumer_Impl
     CIAO_TRACE ("SimpleConsumer_exec_i::push_hello_ ()");
     // Your code here.
     
-    ::Simple::Hello_var hello (ev);
-    
     CIAO_DEBUG ((LM_EMERGENCY, "SimpleConsumer_exec_i::push_hello_ - "
-                 "Received hell event, value is %s\n", ev->hello_ ()));
+                 "Received hello event, value is %s\n", ev->hello_ ()));
   }
 
   // Operations from Components::SessionComponent

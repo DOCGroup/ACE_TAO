@@ -1,21 +1,37 @@
+Thu Feb  5 00:39:48 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_exec.cpp:
+        
+          Fixed a segmentation fault. 
+        
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/EmitsConnectionExplicitHome.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/MultiplexConnectionExplicitHome.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/PublishConnectionExplicitHome.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimpleComponentExplicitHome.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimplexConnectionExplicitHome.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp:
+        
+          Tests similar to those in NodeManager-Deployments, except across two nodes. 
+        
 Wed Feb  4 22:08:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleConsumer_exec.cpp:
         * DAnCE/tests/CIAO/Components/SimpleMultipleUser_exec.cpp:
         * DAnCE/tests/CIAO/Components/SimpleProvider_exec.cpp:
         * DAnCE/tests/CIAO/Components/SimpleUser_exec.cpp:
-        
+
           Removed CLINFO from the logging messages.
-        
+
         * DAnCE/tests/CIAO/NodeManager-Deployments/run_test.pl:
 
           Test script to execute all deployments in this directory
 
         * tools/XML/XML_Helper.tpp:
         * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
-        
-          Reduced logging. 
-                
+
+          Reduced logging.
+
 Wed Feb  4 21:18:18 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Containers/Container_Base.cpp:
