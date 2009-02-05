@@ -1,3 +1,36 @@
+Thu Feb  5 19:36:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ofccm/DAnCE_Scripts:
+        * ofccm/DAnCE_Scripts/em-log.conf:
+        * ofccm/DAnCE_Scripts/em.conf:
+        * ofccm/DAnCE_Scripts/integ_deployment.sh:
+        * ofccm/DAnCE_Scripts/integ_deployment.xsl:
+        * ofccm/DAnCE_Scripts/logger.conf:
+        * ofccm/DAnCE_Scripts/pl-log.conf:
+        * ofccm/DAnCE_Scripts/pl.conf:
+        * ofccm/DAnCE_Scripts/plb-log.conf:
+        * ofccm/DAnCE_Scripts/plb.conf:
+        * ofccm/DAnCE_Scripts/start_ExecutionManager.sh:
+        * ofccm/DAnCE_Scripts/start_PlanLauncher.sh:
+        * ofccm/DAnCE_Scripts/start_PlanLauncherBase.sh:
+        * ofccm/DAnCE_Scripts/start_demo_1.sh:
+
+        * DAnCE/bin/em-log.conf:
+        * DAnCE/bin/em.conf:
+        * DAnCE/bin/integ_deployment.sh:
+        * DAnCE/bin/integ_deployment.xsl:
+        * DAnCE/bin/logger.conf:
+        * DAnCE/bin/pl-log.conf:
+        * DAnCE/bin/pl.conf:
+        * DAnCE/bin/plb-log.conf:
+        * DAnCE/bin/plb.conf:
+        * DAnCE/bin/start_ExecutionManager.sh:
+        * DAnCE/bin/start_PlanLauncher.sh:
+        * DAnCE/bin/start_PlanLauncherBase.sh:
+        * DAnCE/bin/start_demo_1.sh:
+
+          Moved OFCCM specific scripts over to the ofccm directory.
+
 Thu Feb  5 19:07:02 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/IDL3_to_XMI:
@@ -5,9 +38,9 @@ Thu Feb  5 19:07:02 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
         * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
         * tools/IDL3_to_XMI/IR_Simulator_visitor.h:
-        
-          Ported this tool, and associated tests in from head. 
-        
+
+          Ported this tool, and associated tests in from head.
+
 Thu Feb  5 18:37:55 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/ciao_tests.lst:
