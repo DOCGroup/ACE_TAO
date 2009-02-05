@@ -39,7 +39,6 @@ ACE_Base_Thread_Adapter::ACE_Base_Thread_Adapter (
   , entry_point_ (entry_point)
   , thr_desc_ (td)
   , ctx_ (ACE_Service_Config::current())
-  , log_msg_attributes_ ()
 {
   ACE_OS_TRACE ("ACE_Base_Thread_Adapter::ACE_Base_Thread_Adapter");
 
