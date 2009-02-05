@@ -1,9 +1,19 @@
+Thu Feb  5 19:07:02 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/IDL3_to_XMI:
+        * tools/IDL3_to_XMI:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.h:
+        
+          Ported this tool, and associated tests in from head. 
+        
 Thu Feb  5 18:37:55 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/ciao_tests.lst:
-        
-          Ported this file in from trunk. 
-        
+
+          Ported this file in from trunk.
+
         * DAnCE/tests/NodeApplicationTest:
         * DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc:
         * DAnCE/tests/NodeApplicationTest/NodeAppTest_RoundTrip.cidl:
@@ -22,7 +32,7 @@ Thu Feb  5 18:37:55 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/tests/NodeApplicationTest/run_test_ex.pl:
         * DAnCE/tests/NodeApplicationTest/run_test_simple.pl:
 
-          Removed obsolete test. 
+          Removed obsolete test.
 
 Thu Feb  5 18:30:34 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
