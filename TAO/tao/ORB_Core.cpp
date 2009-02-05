@@ -849,7 +849,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBVerboseLogging"))))
         {
-          unsigned long verbose_logging = ACE_OS::atoi (current_arg);
+          unsigned long const verbose_logging = ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
 

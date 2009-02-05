@@ -37,6 +37,8 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   // Use single thread client connection handler
 #if defined (TAO_USE_ST_CLIENT_CONNECTION_HANDLER)
   this->wait_strategy_ = TAO_WAIT_ON_REACTOR;
+#elif defined (TAO_USE_WAIT_ON_LF_NO_UPCALL)
+  this->wait_strategy_ = TAO_WAIT_ON_LF_NO_UPCALL;
 #else
   this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
 #endif /* TAO_USE_ST_CLIENT_CONNECTION_HANDLER */
