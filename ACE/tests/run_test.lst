@@ -90,7 +90,7 @@ Log_Msg_Backend_Test: !ACE_FOR_TAO
 Log_Thread_Inheritance_Test: !ST
 Logging_Strategy_Test: !LynxOS !STATIC !ST
 Manual_Event_Test
-MEM_Stream_Test: !VxWorks !nsk !ACE_FOR_TAO !PHARLAP
+MEM_Stream_Test: !VxWorks !nsk !ACE_FOR_TAO !PHARLAP !QNX
 MM_Shared_Memory_Test: !Unicos !VxWorks !nsk !ACE_FOR_TAO
 MT_Reactor_Timer_Test
 MT_Reactor_Upcall_Test: !nsk

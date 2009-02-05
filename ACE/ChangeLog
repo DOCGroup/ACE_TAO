@@ -1,3 +1,17 @@
+Thu Feb  5 15:11:13 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/rules.local.GNU:
+
+          For the installed binary executable target, added a dependency on
+          the local binary executable so the installed version is refereshed
+          when the local one is rebuilt (only an issue when actual copies are
+          used and not symlinks).  Thanks to Hubert Talbot
+          <Hubert dot Talbot at criq dot qc dot ca> for reporting the issue.
+
+        * tests/run_test.lst:
+
+          Added !QNX to MEM_Stream_Test.  This test doesn't work on QNX.
+
 Wed Feb  4 22:23:26 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_SEQPACK_Acceptor.h:
