@@ -1,3 +1,13 @@
+Thu Feb 05 16:07:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+      * tao/ZIOP/ZIOP.cpp:
+      * tao/ZIOP/ZIOP.h:
+        Rewritten compression function to prevent double
+        code
+      
+      * tao/ZIOP_Adapter.h:
+        Name change (stream into cdr)
+
 Thu Feb 05 14:09:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
       * tao/GIOP_Message_Base.cpp:
