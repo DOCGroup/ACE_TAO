@@ -1603,7 +1603,10 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
 
       for (unsigned int i = 0; i < providedReference.length(); ++i)
         {
-          //DANCE_DEBUG((LM_DEBUG, "[%M] NodeApplication_impl::finishLaunch - loop on all connections iteration %d for connection %C\n", i, providedReference[i].name.in()));
+          /*DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - "
+                       "loop on all connections iteration %d for connection %C\n", 
+                       i, 
+                       providedReference[i].name.in()));*/
 
           if (name.compare (providedReference[i].name.in()) == 0)
             {
@@ -1681,7 +1684,8 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                         if (CORBA::is_nil (ext_inst.in()))
                           {
                             DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
-                                         "facet for %C can't be narrowed \n", name.c_str ()));
+                                         "reference for %C can't be narrowed \n", name.c_str ()));
+                            throw ::Deployment::InvalidConnection();
                             break;
                           }
                         try
@@ -1884,9 +1888,9 @@ NodeApplication_Impl::connect_emitter_ext (Components::CCMObject_ptr inst,
   try
     {
       DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - "
-                   "connect_consumer for %C started\n", port_name.c_str()));
+                   "connect_emitter_ext for %C started\n", port_name.c_str()));
       inst->connect_consumer (port_name.c_str(), event);
-      DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - connect_consumer finished\n"));
+      DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - connect_emitter_ext finished\n"));
     }
   catch (const ::Components::AlreadyConnected& )
     {
@@ -1912,7 +1916,7 @@ NodeApplication_Impl::connect_publisher (Components::CCMObject_ptr inst,
   if (CORBA::is_nil (inst))
     {
       DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::connect_publisher - "
-        "Provided a nil CCMObject reference while connecting port %C\n",
+                    "Provided a nil CCMObject reference while connecting port %C\n",
 		    port_name.c_str ()));
       throw ::Deployment::InvalidConnection ();
     }

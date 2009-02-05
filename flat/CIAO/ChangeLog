@@ -1,9 +1,21 @@
+Thu Feb  5 14:40:18 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/EmitsConnectionExplicitHome_NS.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/MultiplexConnectionExplicitHome_NS.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/PublishConnectionExplicitHome_NS.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimplexConnectionExplicitHome_NS.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
+        * tools/Config_Handlers/ERE_Handler.cpp:
+        
+          Fixes to enable external reference connections for non-provider connections. 
+        
 Thu Feb  5 00:39:48 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleConsumer_exec.cpp:
-        
-          Fixed a segmentation fault. 
-        
+
+          Fixed a segmentation fault.
+
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/EmitsConnectionExplicitHome.cdp:
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/MultiplexConnectionExplicitHome.cdp:
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/PublishConnectionExplicitHome.cdp:
@@ -11,9 +23,9 @@ Thu Feb  5 00:39:48 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimplexConnectionExplicitHome.cdp:
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp:
-        
-          Tests similar to those in NodeManager-Deployments, except across two nodes. 
-        
+
+          Tests similar to those in NodeManager-Deployments, except across two nodes.
+
 Wed Feb  4 22:08:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleConsumer_exec.cpp:

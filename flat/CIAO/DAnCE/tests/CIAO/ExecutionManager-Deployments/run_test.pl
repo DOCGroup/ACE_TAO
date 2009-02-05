@@ -92,9 +92,16 @@ sub run_node_daemons {
   return 0;
 }
 
-opendir(DIR, ".");
-@files = grep(/\.cdp$/,readdir(DIR));
-closedir(DIR);
+print "$#ARGV";
+
+if ($#ARGV == -1)
+{
+    opendir(DIR, ".");
+    @files = grep(/\.cdp$/,readdir(DIR));
+    closedir(DIR);
+} else {
+    @files = @ARGV;
+}
 
 foreach $file (@files) {
     print "Starting test for deployment $file\n";
