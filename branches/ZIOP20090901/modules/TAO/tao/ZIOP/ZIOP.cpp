@@ -114,16 +114,26 @@ TAO_ZIOP_Loader::decompress (TAO_InputCDR& cdr)
   if (!CORBA::is_nil(manager.in ()))
     {
       ZIOP::CompressedData data;
+      //first set the read pointer after the header
+      char * my_old_read = cdr.rd_ptr ();
       if (!(cdr >> data))
         return false;
-
+      
       Compression::Compressor_var compressor = manager->get_compressor (data.compressorid, 6);
       CORBA::OctetSeq myout;
       myout.length (data.original_length);
 
       compressor->decompress (data.data, myout);
-      TAO_InputCDR* newstream = new TAO_InputCDR ((char*)myout.get_buffer(true), (size_t)data.original_length);
-      cdr.steal_from (*newstream);
+      
+      //now copy the decompressed data to the stream...
+      ACE_Message_Block *mb = (ACE_Message_Block *)cdr.start ();
+      mb->rd_ptr (my_old_read);
+      mb->wr_ptr(mb->rd_ptr());
+      mb->copy((char*)myout.get_buffer(true), 
+              (size_t)data.original_length + TAO_GIOP_MESSAGE_HEADER_LEN);
+      cdr.start ()->data_block ()->base ()[0] = 0x47;
+      cdr.start ()->data_block ()->base ()[TAO_GIOP_MESSAGE_SIZE_OFFSET] = 
+        mb->length();
     }
   else
     {
@@ -291,6 +301,8 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
                   data.compressorid = compressor_id;
                   data.original_length = input.length();
                   stream.current ()->data_block ()->base ()[0] = 0x5A; 
+                  //adjust the size of the message 
+                  stream.current ()->data_block ()->base ()[TAO_GIOP_MESSAGE_SIZE_OFFSET] = stream.length ();
                   data.data = myout;
                   stream << data;
                 }
@@ -306,9 +318,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
 }
 
 bool
-TAO_ZIOP_Loader::marshal_reply_data (TAO_ServerRequest& server_request,
-                                     TAO::Argument * const * args,
-                                     size_t nargs)
+TAO_ZIOP_Loader::marshal_reply_data (TAO_OutputCDR& cdr, TAO_ORB_Core* orb_core)
 {
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP == 0
   ACE_UNUSED_ARG (server_request);
@@ -318,9 +328,8 @@ TAO_ZIOP_Loader::marshal_reply_data (TAO_ServerRequest& server_request,
   CORBA::Boolean use_ziop = false;
   Compression::CompressorId compressor_id = Compression::COMPRESSORID_ZLIB;
   Compression::CompressionLevel compression_level = 0;
-  TAO_Transport& transport = *server_request.transport ();
 
-  CORBA::Policy_var policy = transport.orb_core()->get_cached_policy_including_current (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
+  CORBA::Policy_var policy = orb_core->get_cached_policy_including_current (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
 
   if (!CORBA::is_nil (policy.in ()))
     {
@@ -335,7 +344,7 @@ TAO_ZIOP_Loader::marshal_reply_data (TAO_ServerRequest& server_request,
 
   if (use_ziop)
     {
-      policy = transport.orb_core()->get_cached_policy_including_current (TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY);
+      policy = orb_core->get_cached_policy_including_current (TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY);
 
       if (!CORBA::is_nil (policy.in ()))
         {
@@ -359,41 +368,22 @@ TAO_ZIOP_Loader::marshal_reply_data (TAO_ServerRequest& server_request,
         }
     }
 
-  TAO_OutputCDR & stream = (*server_request.outgoing ());
-  ACE_Message_Block* current = const_cast <ACE_Message_Block*> (stream.current ());
+  ACE_Message_Block* current = const_cast <ACE_Message_Block*> (cdr.current ());
+
+  char* old_rd_ptr = current->rd_ptr();
 
   if (use_ziop)
     {
-       // Set the read pointer to the point where the application data starts
-       current->rd_ptr (current->wr_ptr());
+       // Set the read pointer to the point where the data starts
+       current->rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
     }
-
-  // Marshal application data
-  TAO::Argument * const * const begin = args;
-  TAO::Argument * const * const end   = args + nargs;
-
-  for (TAO::Argument * const * i = begin; i != end; ++i)
-    {
-      if (!(*i)->marshal (stream))
-        {
-          TAO_OutputCDR::throw_skel_exception (errno);
-        }
-    }
-
-  // Reply body marshaling completed.  No other fragments to send.
-  stream.more_fragments (false);
-
-  current = const_cast <ACE_Message_Block*> (stream.current());
+  current = const_cast <ACE_Message_Block*> (cdr.current());
   CORBA::ULong const original_data_length =(CORBA::ULong)(current->wr_ptr() - current->rd_ptr());
 
   if (use_ziop && original_data_length > 0)
     {
-      // We can only compress one message block, so when compression is enabled first do
-      // a consolidate.
-      stream.consolidate ();
-
       CORBA::Object_var compression_manager =
-        server_request.transport ()->orb_core()->resolve_compression_manager();
+        orb_core->resolve_compression_manager();
 
       Compression::CompressionManager_var manager =
         Compression::CompressionManager::_narrow (compression_manager.in ());
@@ -413,21 +403,26 @@ TAO_ZIOP_Loader::marshal_reply_data (TAO_ServerRequest& server_request,
 
               if (compressed && (myout.length () < original_data_length)) // && (this->check_min_ratio (original_data_length, myout.length())))
                 {
-                  stream.compressed (true);
+                  
+                  cdr.compressed (true);
                   current->wr_ptr (current->rd_ptr ());
-                  stream.current_alignment (current->wr_ptr() - current->base ());
+                  cdr.current_alignment (current->wr_ptr() - current->base ());
                   ZIOP::CompressedData data;
                   data.compressorid = compressor_id;
                   data.original_length = input.length();
                   data.data = myout;
-                  stream << data;
+                  cdr << data;
+                  current->rd_ptr(old_rd_ptr);
+                  int begin = (current->rd_ptr() - current->base ());
+                  current->data_block ()->base ()[0 + begin] = 0x5A; 
+                  current->data_block ()->base ()[TAO_GIOP_MESSAGE_SIZE_OFFSET + begin] = 
+                    cdr.length() - TAO_GIOP_MESSAGE_HEADER_LEN;
                 }
             }
         }
     }
 
   // Set the read pointer back to the starting point
-  current->rd_ptr (current->base ());
 #endif
 
   return true;

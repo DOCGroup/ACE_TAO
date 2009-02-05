@@ -1,4 +1,27 @@
-Tue Feb 04 12:42:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+Thu Feb 05 13:53:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+      * tao/GIOP_Message_Base.cpp:
+        Fixed logging error.
+      
+      * tao/IIOP_Transport.cpp:
+      * tao/PortableServer/Upcall_Wrapper.cpp:
+        Move compression of reply message from Upcall_Wrapper.cpp
+        to IIOP_Transport.cpp.
+      
+      * tao/ZIOP/ZIOP.cpp:
+        Fixed errors during decompression. 
+        Changed marshal reply data. Marshalling of arguments
+        isn't necessary anymore; just compress everything after
+        the header.
+        For decompress and compress, set TAO_GIOP_MESSAGE_SIZE_OFFSET 
+        in order to represent the correct number of bytes.
+
+      * tao/ZIOP/ZIOP.h:
+      * tao/ZIOP_Adapter.h:
+        Changed function of marshal_reply_data.
+        Only TAO_OutputCDR and TAO_ORB_Core are needed here.
+
+Tue Feb 03 12:42:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
       * tao/GIOP_Message_Base.cpp
         Decompress input changed from TAO_ServerRequest to TAO_InputCDR.

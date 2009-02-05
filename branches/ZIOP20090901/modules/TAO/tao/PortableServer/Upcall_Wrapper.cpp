@@ -4,7 +4,6 @@
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableServer/Collocated_Arguments_Converter.h"
 #include "tao/SystemException.h"
-#include "tao/ZIOP_Adapter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/ServerRequestInterceptor_Adapter.h"
@@ -246,34 +245,20 @@ TAO::Upcall_Wrapper::post_upcall (TAO_ServerRequest& server_request,
                                   TAO::Argument * const * args,
                                   size_t nargs)
 {
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  // JW NO ZIOP, we just marshal the inout/out arguments
-  // Marshal the operation "inout" and "out" arguments and return
-  // value, if any.
-  TAO_ZIOP_Adapter* ziop_adapter = server_request.orb_core ()->ziop_adapter ();
+  TAO_OutputCDR & cdr = (*server_request.outgoing ());
+  TAO::Argument * const * const begin = args;
+  TAO::Argument * const * const end   = args + nargs;
 
-  if (ziop_adapter)
+  for (TAO::Argument * const * i = begin; i != end; ++i)
     {
-       ziop_adapter->marshal_reply_data (server_request, args, nargs);
-    }
-  else
-#endif
-    {
-      TAO_OutputCDR & cdr = (*server_request.outgoing ());
-      TAO::Argument * const * const begin = args;
-      TAO::Argument * const * const end   = args + nargs;
-
-      for (TAO::Argument * const * i = begin; i != end; ++i)
+      if (!(*i)->marshal (cdr))
         {
-          if (!(*i)->marshal (cdr))
-            {
-              TAO_OutputCDR::throw_skel_exception (errno);
-            }
+          TAO_OutputCDR::throw_skel_exception (errno);
         }
-
-      // Reply body marshaling completed.  No other fragments to send.
-      cdr.more_fragments (false);
     }
+
+  // Reply body marshaling completed.  No other fragments to send.
+  cdr.more_fragments (false);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

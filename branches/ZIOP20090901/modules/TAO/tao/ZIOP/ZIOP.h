@@ -60,9 +60,7 @@ public:
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);
 
-  bool marshal_reply_data (TAO_ServerRequest& server_request,
-                           TAO::Argument * const * args,
-                           size_t nargs);
+  bool marshal_reply_data (TAO_OutputCDR& cdr, TAO_ORB_Core* orb_core);
 
 private:
 

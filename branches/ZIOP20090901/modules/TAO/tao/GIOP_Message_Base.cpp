@@ -600,7 +600,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                         qd->giop_version ().major_version (),
                         qd->giop_version ().minor_version ());
 
-  // Get the read and write positions before we steal data.
+  // Get the read and write positions and header before we steal data.
   size_t rd_pos = qd->msg_block ()->rd_ptr () - qd->msg_block ()->base ();
   size_t const wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
@@ -651,18 +651,16 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   input_cdr.compressed (qd->state().compressed ());
-  // JW decompress if ZIOP and convert to GIOP
   if (input_cdr.compressed ())
     {
       TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
       if (adapter)
         {
           adapter->decompress (input_cdr);
-          //input_cdr is deccompressed. Now add the header again.
           if (TAO_debug_level >= 5)
             {
               ACE_HEX_DUMP ((LM_DEBUG,
-                              const_cast <char*> (input_cdr.start ()->rd_ptr()),
+                              const_cast <char*> (input_cdr.start ()->rd_ptr () - TAO_GIOP_MESSAGE_HEADER_LEN),
                               input_cdr.length(),
                               ACE_TEXT ("GIOP message after decompression")));
             }
