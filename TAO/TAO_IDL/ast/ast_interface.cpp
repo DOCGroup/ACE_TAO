@@ -1132,8 +1132,13 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
       // Successful?
       if (fd == 0)
         {
-          // Should we give an error here?
-          // No, look in fe_add_interface.
+          AST_Decl::NodeType nt = d->node_type ();
+          
+          if (nt == AST_Decl::NT_struct_fwd || nt == AST_Decl::NT_union_fwd)
+            {
+              idl_global->err ()->redef_error (i->full_name (),
+                                               d->full_name ());
+            }
         }
       // If it is a forward declared interface..
       else if (!fd->is_defined ())
