@@ -6390,7 +6390,9 @@ tao_yyreduce:
               AST_Decl::NodeType nt = d->node_type ();
 
               if (nt == AST_Decl::NT_struct_fwd
-                  || nt == AST_Decl::NT_union_fwd)
+                  || nt == AST_Decl::NT_union_fwd
+                  || nt == AST_Decl::NT_struct
+                  || nt == AST_Decl::NT_union)
                 {
                   if (! AST_Type::narrow_from_decl (d)->is_defined ())
                     {

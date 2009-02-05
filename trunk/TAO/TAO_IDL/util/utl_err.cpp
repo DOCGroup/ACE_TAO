@@ -1185,8 +1185,7 @@ UTL_Error::enum_val_lookup_failure (AST_Union *u,
 
 // Report clash between declared and referenced indentifiers.
 void
-UTL_Error::redef_error (char *b,
-                        char *n)
+UTL_Error::redef_error (const char *b, const char *n)
 {
   idl_error_header (EIDL_REDEF,
                     idl_global->lineno (),
@@ -1276,16 +1275,14 @@ UTL_Error::ambiguous (UTL_Scope *s,
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
-// Report a forward declared interface which was never defined.
+// Report a forward declared struct or union which was never defined.
 void
 UTL_Error::fwd_decl_not_defined (AST_Type *d)
 {
   idl_error_header (EIDL_DECL_NOT_DEFINED,
                     d->line (),
                     d->file_name ());
-  ACE_ERROR ((LM_ERROR,
-              "interface "));
-  d->local_name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);

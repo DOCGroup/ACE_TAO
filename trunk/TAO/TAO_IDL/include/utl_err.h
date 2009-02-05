@@ -173,8 +173,7 @@ public:
   void syntax_error (IDL_GlobalData::ParseState ps);
 
   // Report clash of declared and referenced indentifiers
-  void redef_error (char *n,
-                    char *t);
+  void redef_error (const char *n, const char *t);
 
   // Report a name being used with different spellings
   void name_case_error (char *n,
