@@ -41,7 +41,7 @@ class TAO_Export TAO_ZIOP_Adapter : public ACE_Service_Object
 public:
   virtual bool decompress (TAO_InputCDR& cdr) = 0;
 
-  virtual bool marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &stream, TAO::Profile_Transport_Resolver &resolver_) = 0;
+  virtual bool marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &cdr, TAO::Profile_Transport_Resolver &resolver_) = 0;
 
   virtual void load_policy_validators (TAO_Policy_Validator &validator) = 0;
 

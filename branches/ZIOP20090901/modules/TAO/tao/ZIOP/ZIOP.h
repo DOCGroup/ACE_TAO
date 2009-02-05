@@ -50,7 +50,7 @@ public:
   virtual bool decompress (TAO_InputCDR& cdr);
 
   // Compress the @a stream. Starting point of the compression is rd_ptr()
-  virtual bool marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &stream, TAO::Profile_Transport_Resolver &resolver);
+  virtual bool marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &cdr, TAO::Profile_Transport_Resolver &resolver);
 
   /// Initialize the BiDIR loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);
@@ -70,6 +70,11 @@ private:
 
   /// Get the compression low value, returns 0 when it is not set
   CORBA::ULong compression_low_value (TAO::Profile_Transport_Resolver &resolver) const;
+
+  bool compress_data (TAO_OutputCDR &cdr, 
+               CORBA::Object_ptr compression_manager,
+               ::Compression::CompressorId compressor_id, 
+               ::Compression::CompressionLevel compression_level);
 
   bool compress (Compression::Compressor_ptr compressor,
                  const ::Compression::Buffer &source,
