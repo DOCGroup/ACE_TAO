@@ -668,10 +668,127 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
 }
 
 void
-NodeApplication_Impl::install_component (Container &/*cont*/, Instance &/*inst*/)
+NodeApplication_Impl::install_component (Container &cont, Instance &inst)
 {
-  DANCE_TRACE( "NodeApplication_Impl::install_component (unsigned int index)");
-  throw CORBA::NO_IMPLEMENT ();
+  DANCE_TRACE( "NodeApplication_Impl::install_component");
+  
+  const ::Deployment::MonolithicDeploymentDescription &mdd = this->plan_.implementation[inst.mdd_idx];
+  const ::Deployment::InstanceDeploymentDescription &idd = this->plan_.instance[inst.idd_idx];
+  
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::install_home - "
+                "Starting installation of home %C on node %C\n",
+                idd.name.in (), idd.node.in ()));
+  
+  this->instances_[inst.idd_idx] = &inst;
+  
+  const char *entrypt = 0;
+  get_property_value (DAnCE::COMPONENT_FACTORY, mdd.execParameter, entrypt);
+
+  if (entrypt == 0)
+    {
+      DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::install_component - "
+                    "Unable to find component factory property on component %C\n",
+                    idd.name.in ()));
+      throw ::Deployment::InvalidComponentExecParameter (mdd.name.in (),
+                                                         "No 'component factory' property present on MDD\n");
+    }
+  
+  // @@TODO: Perhaps need better way to do this.
+  Components::ConfigValues config;
+  config.length (mdd.execParameter.length () + idd.configProperty.length ());
+  CORBA::ULong pos (0);
+  
+    for (CORBA::ULong i = 0; i < mdd.execParameter.length (); ++i)
+    {
+      DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::install_component - "
+                    "Inserting value for execParameter %C\n", mdd.execParameter[i].name.in ()));
+      config[pos++] = new CIAO::ConfigValue_impl (mdd.execParameter[i].name.in (),
+                                                  mdd.execParameter[i].value);
+    }
+
+  for (CORBA::ULong i = 0; i < idd.configProperty.length (); ++i)
+    {
+      DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::install_component - "
+                    "Inserting value for configProperty %C\n", idd.configProperty[i].name.in ()));
+      config[pos++] =  new CIAO::ConfigValue_impl (idd.configProperty[i].name.in (),
+                                                   idd.configProperty[i].value);
+    }
+  
+  ::CIAO::Deployment::Container_var ciao_cont = ::CIAO::Deployment::Container::_narrow (cont.ref.in ());
+
+  if (CORBA::is_nil (ciao_cont.in ()))
+    {
+      DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::install_component - "
+                    "Unable to narrow container assigned for component instance %C to one that supports "
+                    "un-homed components.\n"));
+      throw ::Deployment::PlanError (idd.name.in (),
+                                     "Hosting container does not support unhomed components.\n");
+    }
+  
+  try
+    {
+      DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::install_component - "
+                    "Calling install_component on container.  Component id '%C', entrypt '%C', "
+                    "length of config values is %u\n",
+                    idd.name.in (), entrypt, config.length ()));
+
+      ::Components::CCMObject_var comp = ciao_cont->install_component (idd.name.in (),
+                                                                       entrypt,
+                                                                       config);
+      
+      if (CORBA::is_nil (comp))
+        {
+          DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::install_component - "
+                        "Got nil object reference from container while installing component %C on node %C,"
+                        "throwing PlanError\n",
+                        idd.name.in (), idd.node.in ()));
+          throw ::Deployment::PlanError (idd.name.in (),
+                                         "Nil object reference returned from install_component on conainer");
+        }
+
+      DANCE_DEBUG ((LM_INFO, DLINFO  "NodeApplication_Impl::install_component - "
+                    "Component '%C' on node '%C' successfully installed\n",
+                    idd.name.in (), idd.node.in ()));
+      
+      inst.ref = CORBA::Object::_narrow (comp);
+      
+      DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::install_component - "
+                    "Populating attributes for home %C\n",
+                    idd.name.in ()));
+
+
+      ComponentAttributesSetter::SetComponentAttributes (idd.name.in (),
+                                                         inst.ref.in (),
+                                                         idd.configProperty,
+                                                         this->orb_.in ());
+
+      inst.state = eInstalled;
+    }
+    catch (const Components::InvalidConfiguration &)
+    {
+      DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::install_component - "
+                    "Error creating component %C on node %C, caught InvalidConfiguration.  Throwing exception\n",
+                    idd.name.in (), idd.node.in ()));
+      throw ::Deployment::InvalidProperty (idd.name.in (),
+                                           "Invalid configuration exception from container");
+    }
+  catch (const CORBA::Exception &ex)
+    {
+      DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::install_component - "
+                    "Caught CORBA exception while installing component %C: %C\n",
+                    idd.name.in (),
+                    ex._info ().c_str ()));
+      throw ::Deployment::StartError (idd.name.in (),
+                                      ex._info ().c_str ());
+    }
+  catch (...)
+    {
+      DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::install_component - "
+                    "Caught unknown C++ exception while installing component %C\n",
+                    idd.name.in ()));
+      throw ::Deployment::StartError (idd.name.in (),
+                                      "Unknown C++ exception");
+    }
 }
 
 void

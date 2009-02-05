@@ -62,13 +62,120 @@ namespace CIAO
     }
 
     ::Components::CCMObject_ptr
-    CIAO_Container_i::install_component (const char * /*id*/,
-                                         const char * /*entrypt*/,
-                                         const ::Components::ConfigValues & /*config*/)
+    CIAO_Container_i::install_component (const char * id,
+                                         const char * entrypt,
+                                         const ::Components::ConfigValues & config)
     {
       CIAO_TRACE("CIAO_Container_i::install_component");
-      throw CORBA::NO_IMPLEMENT ();
-      return 0;
+      
+      if (id == 0)
+	{
+	  CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
+                       "No home ID provided\n"));
+	  throw ::Components::Deployment::InvalidConfiguration ();
+	}
+      
+      Components::CCMObject_var comp;
+      
+      if (this->component_map_.find (id, comp) == 0)
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
+                       "Component with id %C already installed, aborting\n",
+                       id));
+          throw Components::CreateFailure ();
+        }
+
+      if (entrypt == 0)
+	{
+	  CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
+		      "No executor entrypoint found.\n"));
+	  throw ::Components::Deployment::InvalidConfiguration ();
+	}
+
+      CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::install_component - "
+                   "Attempting to install home with id [%C]\n",
+                   id));
+
+      CIAO_DEBUG ((LM_TRACE, CLINFO
+		  "CIAO_Container_i::install_component - "
+		  "Extracting ConfigValues from sequence of length [%u]\n",
+		  config.length ()));
+
+      CIAO::Utility::CONFIGVALUE_MAP cm;
+      CIAO::Utility::build_config_values_map (cm, config);
+      CORBA::Any val;
+
+      const char *tmp;
+      CORBA::String_var exec_art, svnt_art, svnt_entry;
+
+      if (cm.find (SVNT_ENTRYPT, val) == 0)
+        {
+          val >>= tmp;
+          svnt_entry = tmp;
+          CIAO_DEBUG ((LM_TRACE, CLINFO
+                       "CIAO_Container_i::install_component - "
+                       "Found Servant entrypoint %C\n", svnt_entry.in ()));
+        }
+      else
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO
+                       "CIAO_Container_i::install_component - "
+                       "Error:  No Servant entrypoint porovided, aborting installation\n"));
+          throw Components::InvalidConfiguration ();
+        }
+
+      if (cm.find (SVNT_ARTIFACT, val) == 0)
+        {
+          val >>= tmp;
+          svnt_art = tmp;
+          CIAO_DEBUG ((LM_TRACE, CLINFO
+                       "CIAO_Container_i::install_component - "
+                       "Found Servant artifact %C\n", svnt_art.in ()));
+        }
+      else
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO
+                       "CIAO_Container_i::install_component - "
+                       "Error:  No Servant artifact porovided, aborting installation\n"));
+          throw Components::InvalidConfiguration ();
+        }
+
+
+      if (cm.find (EXEC_ARTIFACT, val) == 0)
+        {
+          val >>= tmp;
+          exec_art = tmp;
+          CIAO_DEBUG ((LM_TRACE, CLINFO
+                       "CIAO_Container_i::install_component - "
+                       "Found executor artifact:  %C\n", exec_art.in ()));
+        }
+      else
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO
+                       "CIAO_Container_i::install_component - "
+                       "Error:  No Executor artifact porovided, aborting installation\n"));
+        }
+
+      CIAO_DEBUG ((LM_TRACE, CLINFO
+		  "CIAO_Container_i::install_component - "
+		  "Extraction resulted in map of [%u] values", cm.current_size ()));
+
+      comp = this->container_->install_component (exec_art,
+                                                  entrypt,
+                                                  svnt_art,
+                                                  svnt_entry,
+                                                  id);
+
+      if (this->component_map_.bind (id,
+                                     Components::CCMObject::_duplicate (comp.in ())) == -1)
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO
+                       "CIAO_Container_i::install_component - "
+                       "Unable to bind componnet into component map\n"));
+        }
+      
+      
+      return comp._retn ();
     }
 
     void
@@ -220,27 +327,6 @@ namespace CIAO
                        "CIAO_Container_i::install_home - "
                        "Unable to bind home into home map\n"));
         }
-
-      if (cm.find (REGISTER_NAMING, val) == 0)
-	{
-          const char *str_val;
-
-	  if (val >>= str_val)
-	    {
-	      CIAO_ERROR ((LM_WARNING, CLINFO
-                           "CIAO_Container_i::install_home - "
-                           "Naming service registration not yet supported\n"));
-
-                           //CIAO_DEBUG ((LM_NOTICE, CLINFO
-                           //                           "CIAO_Container_i::install_home - "
-                           //       "Home with ID [%C] registered in naming service with name [%C]\n",
-                           //			  id, str_val));
-	    }
-	  else
-	    CIAO_ERROR ((LM_WARNING, CLINFO
-			"CIAO_Container_i::install_home - "
-			"Warning: Extraction of Naming Service value failed!\n"));
-	}
 
       return  home._retn ();
     }
