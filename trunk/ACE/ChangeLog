@@ -1,3 +1,12 @@
+Thu Feb  5 21:14:15 UTC 2009  Steven Stallion  <stallions@ociweb.com>
+
+        * ace/Base_Thread_Adapter.cpp:
+        * tests/Log_Thread_Inheritance_Test.cpp:
+
+          Fixed a SEGV caused by ACE_Log_Msg where ACE threads inheriting
+          from non-ACE threads copied un-initialized ACE_OS_Log_Msg_Attributes
+          members. Fixes Bugzilla #3480.
+
 Thu Feb  5 15:11:13 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * include/makeinclude/rules.local.GNU:
