@@ -748,6 +748,36 @@ TAO_GIOP_Message_Base::process_reply_message (
   // Once we send the InputCDR stream we need to just forget about
   // the stream and never touch that again for anything. We basically
   // loose ownership of the data_block.
+
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  input_cdr.compressed (qd->state().compressed ());
+  if (input_cdr.compressed ())
+    {
+      TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
+      if (adapter)
+        {
+          adapter->decompress (input_cdr);
+          if (TAO_debug_level >= 5)
+            {
+              ACE_HEX_DUMP ((LM_DEBUG,
+                              const_cast <char*> (input_cdr.start ()->rd_ptr () - TAO_GIOP_MESSAGE_HEADER_LEN),
+                              input_cdr.length(),
+                              ACE_TEXT ("GIOP message after decompression")));
+            }
+
+        }
+      else
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) ERROR: Unable to decompress ")
+                        ACE_TEXT ("data.\n")));
+
+          return -1;
+        }
+  }
+#endif
+
   int retval = 0;
 
   switch (qd->msg_type ())

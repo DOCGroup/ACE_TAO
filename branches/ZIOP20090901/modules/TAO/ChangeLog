@@ -1,3 +1,9 @@
+Thu Feb 05 14:09:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+      * tao/GIOP_Message_Base.cpp:
+        Completed the circle. Reply data from a server gets decompressed 
+        when received by a client.
+
 Thu Feb 05 13:53:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
       * tao/GIOP_Message_Base.cpp:
