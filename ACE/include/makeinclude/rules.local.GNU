@@ -229,6 +229,10 @@ ifdef LIB_INSTALL
   $(LIB_INSTALL): $(VLIBS)
 endif
 
+ifneq ($(INSBIN),)
+  $(INSBIN)/$(VBIN): $(VBIN)
+endif
+
 INSTALL ?=
 install.local: $(INSTALL)
 
