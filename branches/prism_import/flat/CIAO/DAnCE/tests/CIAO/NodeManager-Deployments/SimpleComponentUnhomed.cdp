@@ -9,21 +9,20 @@
   <!-- Implementations declarations -->
 
   <!-- Server Dance implementation-->
-  <!-- Home implementation -->
-  <implementation xmi:id="SimpleNullHomeImplementation">
-    <name>SimpleNullHomeImplementation</name>
+  <implementation xmi:id="SimpleNullComponentImplementation">
+    <name>SimpleNullComponentImplementation</name>
     <source/>
     <artifact xmi:idref="SimpleNull_ExecArtifact" />
     <artifact xmi:idref="SimpleNull_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see §10.6.1) -->
-      <name>home factory</name>
+      <name>component factory</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Simple_SimpleNullHome_Impl</string>
+          <string>create_Simple_SimpleNull_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -34,7 +33,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Simple_SimpleNullHome_Servant</string>
+          <string>create_Simple_SimpleNull_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -62,38 +61,12 @@
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="SimpleNullComponentImplementation">
-    <name>SimpleNullComponentImplementation</name>
-    <source/>
-    <artifact xmi:idref="SimpleNull_ExecArtifact" />
-    <artifact xmi:idref="SimpleNull_SvntArtifact" />
-  </implementation>
-
-  <instance xmi:id="SimpleNullHomeInstance">
-    <name>SimpleNullHome</name>
-    <node>Node</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="SimpleNullHomeImplementation" />
-  </instance>
-
   <instance xmi:id="SimpleNullComponentInstance">
     <name>SimpleNullComponent</name>
     <node>Node</node>
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="SimpleNullComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SimpleNullHome</string>
-        </value>
-      </value>
-    </configProperty>
   </instance>
 
   <!-- Artifacts declarations -->

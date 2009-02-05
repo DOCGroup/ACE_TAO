@@ -1072,10 +1072,28 @@ namespace
     }
 
     virtual void
-    post (Type&)
+    post (Type &t)
     {
       // Component servant class closer.
       os << "};";
+      
+      std::string name;
+      
+      // We need to escape C++ keywords before flattening the name.
+      //
+      {
+        std::ostringstream ostr;
+        ostr.pword (name_printer_index) = os.pword (name_printer_index);
+        ostr << t.scoped_name ();
+        name = regex::perl_s (ostr.str (), "/::/_/");
+      }
+
+      os << "extern \"C\" " << ctx.export_macro ()
+         << " ::PortableServer::Servant" << endl
+         << "create" << name << "_Servant (" << endl
+         << "::Components::EnterpriseComponent_ptr p," << endl
+         << "CIAO::Container_ptr c," << endl
+         << "const char *ins_name);" << endl;
     }
   };
 

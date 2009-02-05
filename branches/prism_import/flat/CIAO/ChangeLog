@@ -1,10 +1,40 @@
+Thu Feb  5 18:30:34 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/ExecImplSourceGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+
+          Added component factory functions, similar to those already generated for
+          Homes. 
+        
+        * DAnCE/tests/CIAO/Components/SimpleNull_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleNull_exec.cpp:
+        
+          Added in generated factory functions from above. 
+        
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/run_test.pl:
+
+          Added ability to run a single plan by passing it as a command line
+          arguments. 
+        
+        * DAnCE/tests/CIAO/NodeManager-Deployments/SimpleComponentUnhomed.cdp:
+        
+          Test for unhomed components. 
+        
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Containers/Session/Session_Container.cpp:
+
+          Fixes for unhomed components. 
+        
 Thu Feb  5 16:03:59 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
         * ciao/ComponentServer/CIAO_Container_Impl.cpp:
-        
-          First cut implementation of unhomed component deployment.  Untested as yet. 
-        
+
+          First cut implementation of unhomed component deployment.  Untested as yet.
+
 Thu Feb  5 14:40:18 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:

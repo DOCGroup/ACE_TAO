@@ -3535,6 +3535,45 @@ namespace
 
       os << "}";
     }
+    
+    virtual void
+    post (Type& t)
+    {
+      // We need to escape C++ keywords before flattening the name.
+      //
+      string name;
+      {
+        std::ostringstream ostr;
+        ostr.pword (name_printer_index) = os.pword (name_printer_index);
+        ostr << t.scoped_name ();
+        name = regex::perl_s (ostr.str (), "/::/_/");
+      }
+      
+      os << "extern \"C\" " << ctx.export_macro ()
+         << " ::PortableServer::Servant"
+         << endl
+         << "create" << name << "_Servant (" << endl
+         << "::Components::EnterpriseComponent_ptr p," << endl
+         << "::CIAO::Container_ptr c," << endl
+         << "const char *ins_name)" << endl
+         << "{"
+         << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "_var x =" << endl
+         << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
+         << "::_narrow (p);" << endl
+         << "if (::CORBA::is_nil (x.in ()))" << endl
+         << "{"
+         << "return 0;" << endl
+         << "}"
+         << "::PortableServer::Servant retval = 0;"
+         << "ACE_NEW_RETURN(retval, " << endl
+         << t.name () << "_Servant (x.in ()," << endl
+         << "::Components::CCMHome::_nil ()," << endl
+         << "ins_name, 0, c)," << endl
+         << "0);" << endl
+         << "return retval;" << endl
+         << "}";
+    }
   };
 
   struct HomeEmitter : Traversal::Home, EmitterBase
