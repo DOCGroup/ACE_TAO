@@ -1,3 +1,29 @@
+Thu Feb  5 18:37:55 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/ciao_tests.lst:
+        
+          Ported this file in from trunk. 
+        
+        * DAnCE/tests/NodeApplicationTest:
+        * DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc:
+        * DAnCE/tests/NodeApplicationTest/NodeAppTest_RoundTrip.cidl:
+        * DAnCE/tests/NodeApplicationTest/NodeAppTest_RoundTrip.idl:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+        * DAnCE/tests/NodeApplicationTest/README:
+        * DAnCE/tests/NodeApplicationTest/RoundTrip_exec.h:
+        * DAnCE/tests/NodeApplicationTest/RoundTrip_exec.cpp:
+        * DAnCE/tests/NodeApplicationTest/RoundTrip_exec_export.h:
+        * DAnCE/tests/NodeApplicationTest/RoundTrip_stub_export.h:
+        * DAnCE/tests/NodeApplicationTest/RoundTrip_svnt_export.h:
+        * DAnCE/tests/NodeApplicationTest/run_test.pl:
+        * DAnCE/tests/NodeApplicationTest/run_test_ex.pl:
+        * DAnCE/tests/NodeApplicationTest/run_test_simple.pl:
+
+          Removed obsolete test. 
+
 Thu Feb  5 18:30:34 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIDLC/ExecImplHeaderGenerator.cpp:
@@ -6,28 +32,28 @@ Thu Feb  5 18:30:34 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * CIDLC/ServantSourceGenerator.cpp:
 
           Added component factory functions, similar to those already generated for
-          Homes. 
-        
+          Homes.
+
         * DAnCE/tests/CIAO/Components/SimpleNull_exec.h:
         * DAnCE/tests/CIAO/Components/SimpleNull_exec.cpp:
-        
-          Added in generated factory functions from above. 
-        
+
+          Added in generated factory functions from above.
+
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
         * DAnCE/tests/CIAO/NodeManager-Deployments/run_test.pl:
 
           Added ability to run a single plan by passing it as a command line
-          arguments. 
-        
+          arguments.
+
         * DAnCE/tests/CIAO/NodeManager-Deployments/SimpleComponentUnhomed.cdp:
-        
-          Test for unhomed components. 
-        
+
+          Test for unhomed components.
+
         * ciao/Containers/Session/Session_Container.h:
         * ciao/Containers/Session/Session_Container.cpp:
 
-          Fixes for unhomed components. 
-        
+          Fixes for unhomed components.
+
 Thu Feb  5 16:03:59 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
