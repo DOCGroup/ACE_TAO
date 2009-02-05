@@ -1,3 +1,12 @@
+Thu Feb  5 13:48:13 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/default_client.cpp:
+          Added TAO_USE_WAIT_ON_LF_NO_UPCALL as new define with which
+          the wait strategy can be set to lf_no_upcall
+
+        * tao/ORB_Core.cpp:
+          Const change
+
 Wed Feb  4 19:43:13 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Transport_Cache_Manager_T.h:
@@ -9,7 +18,7 @@ Wed Feb  4 19:43:13 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Makefile.am:
           updated to reflect recent cache refactoring changes.
-        
+
 Wed Feb  4  13:51:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Muxed_TMS.cpp:
