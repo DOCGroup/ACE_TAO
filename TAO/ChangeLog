@@ -1,3 +1,23 @@
+Thu Feb  5 23:40:24 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        
+          Added check for use of forward declared struct or union in
+          operation return type, similar to what exists for operation
+          parameters. Thanks to Ron van Hoof <rvhoof27@gmail.com> for
+          reporting the bug.
+     
+        * TAO_IDL/ast/ast_interface.cpp (fwd_redefinition_helper):
+        
+          Added check for forward declared struct or union being fully
+          defined as an interface, valuetype or component.
+          
+        * TAO_IDL/util/utl_err.cpp (redef_error):
+        * TAO_IDL/include/utl_err.h:
+        
+          Added const qualifier to both parameters of redef_error().
+
 Thu Feb  5 13:48:13 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/default_client.cpp:
