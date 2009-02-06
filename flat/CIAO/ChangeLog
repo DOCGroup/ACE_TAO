@@ -1,3 +1,24 @@
+Fri Feb  6 13:44:54 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/bin/PythonDAnCE:
+        * DAnCE/bin/PythonDAnCE/__init__.py:
+        * DAnCE/bin/PythonDAnCE/generator:
+        * DAnCE/bin/PythonDAnCE/generator/__init__.py:
+        * DAnCE/bin/PythonDAnCE/generator/_path.py:
+        * DAnCE/bin/PythonDAnCE/generator/artifact.py:
+        * DAnCE/bin/PythonDAnCE/generator/comp_impl.py:
+        * DAnCE/bin/PythonDAnCE/generator/comp_inst.py:
+        * DAnCE/bin/PythonDAnCE/generator/footer.py:
+        * DAnCE/bin/PythonDAnCE/generator/header.py:
+        * DAnCE/bin/PythonDAnCE/generator/home_impl.py:
+        * DAnCE/bin/PythonDAnCE/generator/home_inst.py:
+        * DAnCE/bin/PythonDAnCE/generator/homed_comp_impl.py:
+        * DAnCE/bin/PythonDAnCE/generator/homed_comp_inst.py:
+        * DAnCE/bin/PythonDAnCE/generator/templet.py:
+        * DAnCE/bin/generate_plan.py:
+
+          First cut implementation of a very simple cdp generator. 
+        
 Thu Feb  5 19:36:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ofccm/DAnCE_Scripts:
