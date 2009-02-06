@@ -17,7 +17,7 @@ def template (component_name) :
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Simple_${component_name}_Impl</string>
+          <string>create_${namespace}${component_name}_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -28,7 +28,7 @@ def template (component_name) :
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Simple_${component_name}_Servant</string>
+          <string>create_${namespace}${component_name}_Servant</string>
         </value>
       </value>
     </execParameter>

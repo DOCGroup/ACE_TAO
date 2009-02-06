@@ -1,7 +1,7 @@
 from templet import stringfunction
 
 @stringfunction
-def template (component_name) :
+def template (component_name, namespace) :
     """
   <implementation xmi:id="${component_name}HomeImplementation">
     <name>${component_name}HomeImplementation</name>
@@ -16,7 +16,7 @@ def template (component_name) :
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Simple_${component_name}Home_Impl</string>
+          <string>create_${namespace}${component_name}Home_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -27,7 +27,7 @@ def template (component_name) :
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Simple_${component_name}Home_Servant</string>
+          <string>create_${namespace}${component_name}Home_Servant</string>
         </value>
       </value>
     </execParameter>

@@ -1,19 +1,35 @@
+Fri Feb  6 19:51:02 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/bin/PythonDAnCE/generator/comp_impl.py:
+        * DAnCE/bin/PythonDAnCE/generator/home_impl.py:
+        * DAnCE/bin/generate_plan.py:
+        
+          Fixes to better handle namespaces components may be declared in. 
+        
+        * examples/BasicSP/descriptors/run_test.pl:
+          
+          Will run plan specified on commad line. 
+        
+        * examples/BasicSP/descriptors/BasicSP_Homed.cdp:
+        
+          Same as the _Unhomed plan, except all components are explicitly homed. 
+        
 Fri Feb  6 19:36:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/BasicSP/BMClosedED/BMClosedED_exec.cpp:
         * examples/BasicSP/BMDevice/BMDevice_exec.cpp:
         * examples/BasicSP/BMDisplay/BMDisplay_exec.cpp:
         * examples/BasicSP/EC/EC_exec.cpp:
-          
+
           Raised the priority of logging messages so they would appear
-          without CIAO_LOG_LEVEL being set. 
-        
+          without CIAO_LOG_LEVEL being set.
+
         * examples/BasicSP/EC/controller.cpp:
         * examples/BasicSP/descriptors/BasicSP_Unhomed.cdp:
         * examples/BasicSP/descriptors/run_test.pl:
-        
-          Fixes necessary to make this test work. 
-        
+
+          Fixes necessary to make this test work.
+
 Fri Feb  6 19:22:40 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
