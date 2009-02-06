@@ -1,9 +1,25 @@
+Fri Feb  6 19:36:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * examples/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * examples/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+        * examples/BasicSP/EC/EC_exec.cpp:
+          
+          Raised the priority of logging messages so they would appear
+          without CIAO_LOG_LEVEL being set. 
+        
+        * examples/BasicSP/EC/controller.cpp:
+        * examples/BasicSP/descriptors/BasicSP_Unhomed.cdp:
+        * examples/BasicSP/descriptors/run_test.pl:
+        
+          Fixes necessary to make this test work. 
+        
 Fri Feb  6 19:22:40 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
-        
-          Better exception handling. 
-        
+
+          Better exception handling.
+
 Fri Feb  6 18:26:39 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:

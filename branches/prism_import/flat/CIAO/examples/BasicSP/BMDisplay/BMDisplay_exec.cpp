@@ -22,10 +22,10 @@ MyImpl::BMDisplay_exec_i::push_data_ready (
 {
   ACE_UNUSED_ARG (ev);
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "BMDisplay - Doing computations \n"));
   
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "BMDisplay - Doing data fetch \n"));
   // Refresh position
   BasicSP::ReadData_var dat
@@ -37,7 +37,7 @@ MyImpl::BMDisplay_exec_i::push_data_ready (
   CORBA::String_var str =
     dat->get_data ();
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "BMDisplay - Display data is [%s] \n",
               str.in ()));
 
@@ -49,7 +49,7 @@ MyImpl::BMDisplay_exec_i::set_session_context (
     Components::SessionContext_ptr ctx
   )
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "MyImpl::BMDisplay_exec_i::set_session_context\n"));
   this->context_ =
     BasicSP::CCM_BMDisplay_Context::_narrow (ctx);
@@ -68,7 +68,7 @@ MyImpl::BMDisplay_exec_i::configuration_complete (
 void
 MyImpl::BMDisplay_exec_i::ccm_activate ()
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "MyImpl::BMDisplay_exec_i::ccm_activate\n"));
 }
 
@@ -76,14 +76,14 @@ void
 MyImpl::BMDisplay_exec_i::ccm_passivate (
   )
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "MyImpl::BMDisplay_exec_i::ccm_passivate\n"));
 }
 
 void
 MyImpl::BMDisplay_exec_i::ccm_remove ()
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "MyImpl::BMDisplay_exec_i::ccm_remove\n"));
 }
 

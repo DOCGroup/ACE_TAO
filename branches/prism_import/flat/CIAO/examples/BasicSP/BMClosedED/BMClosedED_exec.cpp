@@ -31,10 +31,10 @@ void
 MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *)
 {
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "BMClosedED - Doing computations \n"));
   
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "BMClosedED - Doing data fetch \n"));
 
   // Refresh position
@@ -43,7 +43,7 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *)
 
   if (CORBA::is_nil (dat.in ()))
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_DEBUG ((LM_EMERGENCY,
                   "BMClosedED - got nil from get_connection \n"));
 
       throw CORBA::BAD_INV_ORDER ();
@@ -52,7 +52,7 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *)
   CORBA::String_var str =
     dat->get_data ();
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "BMClosedED - Display data is [%s] \n",
               str.in ()));
 
@@ -74,7 +74,7 @@ MyImpl::BMClosedED_exec_i::set_session_context (
     Components::SessionContext_ptr ctx
   )
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "MyImpl::BMClosedED_exec_i::set_session_context\n"));
 
   this->context_ =
@@ -95,7 +95,7 @@ MyImpl::BMClosedED_exec_i::configuration_complete ()
 void
 MyImpl::BMClosedED_exec_i::ccm_activate ()
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "MyImpl::BMClosedED_exec_i::ccm_activate\n"));
 }
 
@@ -103,7 +103,7 @@ void
 MyImpl::BMClosedED_exec_i::ccm_passivate ()
 {
   //  if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ACE_DEBUG ((LM_EMERGENCY,
                 "MyImpl::BMClosedED_exec_i::ccm_passivate\n"));
 }
 
@@ -111,7 +111,7 @@ void
 MyImpl::BMClosedED_exec_i::ccm_remove ()
 {
   //  if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ACE_DEBUG ((LM_EMERGENCY,
                 "MyImpl::BMClosedED_exec_i::ccm_remove\n"));
 }
 

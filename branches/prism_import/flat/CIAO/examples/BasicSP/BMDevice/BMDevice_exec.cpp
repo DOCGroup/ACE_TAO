@@ -30,7 +30,7 @@ MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *)
   // Notify others
   BasicSP::DataAvailable_var event = new OBV_BasicSP::DataAvailable;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "BMDevice, received a timeout from EC \n"));
 
   this->context_->push_data_available (event);
@@ -40,7 +40,7 @@ MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *)
 void
 MyImpl::BMDevice_exec_i:: set_session_context (Components::SessionContext_ptr ctx)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "MyImpl::BMDevice_exec_i::set_session_context\n"));
 
   this->context_ =
@@ -61,21 +61,21 @@ MyImpl::BMDevice_exec_i::configuration_complete ()
 void
 MyImpl::BMDevice_exec_i::ccm_activate ()
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "MyImpl::BMDevice_exec_i::ccm_activate\n"));
 }
 
 void
 MyImpl::BMDevice_exec_i::ccm_passivate ()
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "MyImpl::BMDevice_exec_i::ccm_passivate\n"));
 }
 
 void
 MyImpl::BMDevice_exec_i::ccm_remove ()
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_EMERGENCY,
               "MyImpl::BMDevice_exec_i::ccm_remove\n"));
 }
 
