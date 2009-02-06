@@ -93,6 +93,11 @@ sub run_node_daemons {
   return 0;
 }
 
+if ($#ARGV == 0)
+{
+    $cdp_file = $ARGV[0];
+}
+
 delete_ior_files ();
 
 # Invoke naming service

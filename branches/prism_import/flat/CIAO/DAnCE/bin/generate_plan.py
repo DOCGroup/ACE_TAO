@@ -21,6 +21,8 @@ def parse_args ():
                        type="string", help="Homed component types to be included")
     parser.add_option ("-u", "--uuid", dest="uuid", action="store",
                        type="string", help="UUID for the generated plan")
+    parser.add_option ("-n", "--namespace", dest="namespace", action="store", default="",
+                       type="string", help="IDL namespace any components may be in")
     
     (options, arguments) = parser.parse_args ()
 
@@ -36,11 +38,14 @@ def main ():
     retval += generator.header.template (opts.uuid)
 
     artifacts = {}
+    
+    if opts.namespace != "":
+        opts.namespace += "_"
 
     #implementations
     if opts.homes is not None:
         for item in opts.homes:
-            retval += generator.home_impl.template (item)
+            retval += generator.home_impl.template (item, opts.namespace)
             artifacts[item] = 1
 
     if opts.homed_components is not None:
@@ -50,7 +55,7 @@ def main ():
 
     if opts.components is not None:
         for item in opts.components:
-            retval += generator.comp_impl.template (item)
+            retval += generator.comp_impl.template (item, opts.namespace)
             artifacts[item] = 1
 
     #instances
