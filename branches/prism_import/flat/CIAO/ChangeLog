@@ -1,19 +1,51 @@
+Fri Feb  6 20:28:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/bin/PythonDAnCE/generator/comp_impl.py:
+        
+          Fixes that should have been in previous commit. 
+        
+        * examples/Null_Component/Null_Component_exec.h:
+        * examples/Null_Component/Null_Component_exec.cpp:
+        * examples/Null_Component/descriptors/NodeMap.dat:
+        * examples/Null_Component/descriptors/Null_Homed.cdp:
+        * examples/Null_Component/descriptors/Null_Unhomed.cdp:
+        * examples/Null_Component/descriptors/run_test.pl:
+        
+          Ported this example to new CIAO/DAnCE.
+        
+        * examples/Null_Component/descriptors/Deployment.xsd:
+        * examples/Null_Component/descriptors/Domain.cdd:
+        * examples/Null_Component/descriptors/Null_Assembly.cid:
+        * examples/Null_Component/descriptors/Null_Assembly_Package.cpd:
+        * examples/Null_Component/descriptors/Null_Component.ccd:
+        * examples/Null_Component/descriptors/Null_ComponentMonolithicImpl.cid:
+        * examples/Null_Component/descriptors/Null_Component_Package.cpd:
+        * examples/Null_Component/descriptors/Null_Component_exec.iad:
+        * examples/Null_Component/descriptors/Null_Component_stub.iad:
+        * examples/Null_Component/descriptors/Null_Component_svnt.iad:
+        * examples/Null_Component/descriptors/PackageConfiguration.pcd:
+        * examples/Null_Component/descriptors/Plan.cdp:
+        * examples/Null_Component/descriptors/TopLevelPackage.tpd:
+        * examples/Null_Component/descriptors/XMI.xsd:
+
+          Removed these files.
+
 Fri Feb  6 19:51:02 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/bin/PythonDAnCE/generator/comp_impl.py:
         * DAnCE/bin/PythonDAnCE/generator/home_impl.py:
         * DAnCE/bin/generate_plan.py:
-        
-          Fixes to better handle namespaces components may be declared in. 
-        
+
+          Fixes to better handle namespaces components may be declared in.
+
         * examples/BasicSP/descriptors/run_test.pl:
-          
-          Will run plan specified on commad line. 
-        
+
+          Will run plan specified on commad line.
+
         * examples/BasicSP/descriptors/BasicSP_Homed.cdp:
-        
-          Same as the _Unhomed plan, except all components are explicitly homed. 
-        
+
+          Same as the _Unhomed plan, except all components are explicitly homed.
+
 Fri Feb  6 19:36:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/BasicSP/BMClosedED/BMClosedED_exec.cpp:

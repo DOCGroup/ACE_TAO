@@ -1,7 +1,7 @@
 from templet import stringfunction
 
 @stringfunction
-def template (component_name) :
+def template (component_name, namespace) :
     """
 
   <implementation xmi:id="${component_name}ComponentImplementation">

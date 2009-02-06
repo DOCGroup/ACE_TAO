@@ -83,6 +83,9 @@ namespace CIDL_Null_Component_Impl
     ::CCM_Null_Component_Context_var context_;
   };
 
+  extern "C" NULL_COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Null_Component_Impl (void);
+
   class NULL_COMPONENT_EXEC_Export Null_ComponentHome_exec_i
     : public virtual Null_ComponentHome_Exec,
       public virtual ::CORBA::LocalObject
