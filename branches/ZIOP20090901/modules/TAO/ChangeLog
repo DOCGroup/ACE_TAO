@@ -1,3 +1,10 @@
+Fri Feb 06 11:09:40 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+      * GIOP_Message_State.cpp
+        In parse_magic_bytes, always accept GIOP or ZIOP message headers. 
+        When ZIOP is used, a message is not necessarily compressed (and
+        therefore a normal GIOP message).
+        
 Thu Feb 05 16:07:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
       * tao/ZIOP/ZIOP.cpp:
