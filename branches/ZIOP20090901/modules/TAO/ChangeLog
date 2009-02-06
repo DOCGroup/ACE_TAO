@@ -1,3 +1,43 @@
+Fri Feb 06 15:03:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+      * tao/GIOP_Message_Base.cpp:
+        Centralized ZIOP compression (On each transport 
+        type(i.e. IIOP/DIOP and so on), format_message function 
+        is called before a message is send.
+        
+      * tao/IIOP_Transport.cpp:
+        Moved ZIOP compression to GIOP_Message_base.
+        
+      * tao/Synch_Invocation.cpp
+        Changed function header for marshal_data and marshal_reply_data.
+        
+      * tao/ZIOP/ZIOP.cpp
+        Changed function header for marshal_data and marshal_reply_data.
+        Removed commented code.
+        Implemented TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY. 
+        Added get_compression_details to TAO_ZIOP_Loader class
+
+      * tao/ZIOP/ZIOP.h
+        Changed function header for marshal_data and marshal_reply_data.
+        Added get_compression_details to TAO_ZIOP_Loader class
+
+      * tao/ZIOP_Adapter.h
+        Changed function header for marshal_data and marshal_reply_data.
+
+      * tao/ZIOP/ZIOP.pidl
+        Changed defines mentioned below to meet the OMG ZIOP specification.
+        ZIOP::COMPRESSION_ENABLING_POLICY_ID      =  64
+        ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID  =  65
+        ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID     =  66
+        ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID     =  67
+        
+      * tests/ZIOP/client.cpp
+        Enabled TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY.
+        
+      * tests/ZIOP/server.cpp
+        Rewritten compression policies. 
+        Enabled TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY.
+
 Fri Feb 06 11:09:40 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
       * GIOP_Message_State.cpp

@@ -64,7 +64,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       manager->register_factory(compr_fact.in ());
 
       CORBA::Boolean comp_enables = true;
-      CORBA::ULong min_value = 0;
+      CORBA::ULong min_value = 200;
       CORBA::Any compression_enabled;
       CORBA::Any compmin;
       Compression::CompressorIdLevelList compressor_id_list(2);

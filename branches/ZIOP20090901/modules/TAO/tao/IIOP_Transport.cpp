@@ -235,24 +235,6 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
   if (this->messaging_object ()->format_message (stream) != 0)
     return -1;
 
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  TAO_ZIOP_Adapter* ziop_adapter = this->orb_core ()->ziop_adapter ();
-
-  //ziop adapter found and not compressed yet
-  if (ziop_adapter && !stream.compressed ())
-    {
-      //no message dump here; allready done in format_message...
-      ziop_adapter->marshal_reply_data (stream, this->orb_core ());
-      if (TAO_debug_level >= 5)
-        {
-          ACE_HEX_DUMP ((LM_DEBUG,
-                          const_cast <char*> (stream.current ()->rd_ptr ()),
-                          stream.length (),
-                          ACE_TEXT ("ZIOP message after compression")));
-        }
-
-    }
-#endif
   // This guarantees to send all data (bytes) or return an error.
   ssize_t const n = this->send_message_shared (stub,
                                                message_semantics,

@@ -99,8 +99,6 @@ namespace TAO
 
         this->marshal_data (cdr);
 
-// JW ZIOP if enabled, everything after 12 bytes header
-  //this->compress_data (cdr);
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
     TAO_ZIOP_Adapter* ziop_adapter = this->stub()->orb_core()->ziop_adapter ();
 
@@ -114,11 +112,9 @@ namespace TAO
 
     if (ziop_adapter)
       {
-         ziop_adapter->marshal_data (this->details_, cdr, this->resolver_);
+        ziop_adapter->marshal_data (cdr, *this->resolver_.stub ());
       }
 #endif
-
-
         
         // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
