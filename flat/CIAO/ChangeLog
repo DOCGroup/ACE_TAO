@@ -1,17 +1,23 @@
+Fri Feb  6 19:22:40 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        
+          Better exception handling. 
+        
 Fri Feb  6 18:26:39 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
 
-          Better exception handling. 
-        
+          Better exception handling.
+
         * DAnCE/bin/PythonDAnCE/generator/artifact.py:
         * DAnCE/bin/PythonDAnCE/generator/comp_impl.py:
         * DAnCE/bin/PythonDAnCE/generator/header.py:
         * DAnCE/bin/generate_plan.py:
 
-          Bugfixes for plangenerator. 
-        
+          Bugfixes for plangenerator.
+
         * examples/BasicSP/BMClosedED/BMClosedED_exec.h:
         * examples/BasicSP/BMClosedED/BMClosedED_exec.cpp:
         * examples/BasicSP/BMDevice/BMDevice_exec.h:
@@ -21,17 +27,17 @@ Fri Feb  6 18:26:39 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * examples/BasicSP/EC/EC_exec.h:
         * examples/BasicSP/EC/EC_exec.cpp:
 
-          Added component servant and executor factory operations. 
-        
+          Added component servant and executor factory operations.
+
         * examples/BasicSP/descriptors/BasicSP.dat:
         * examples/BasicSP/descriptors/BasicSP_Unhomed.cdp:
         * examples/BasicSP/descriptors/run_test.pl:
-        
-          Ported to new version of DAnCE.  test script still needs to invoke correct controller. 
-        
+
+          Ported to new version of DAnCE.  test script still needs to invoke correct controller.
+
         * examples/BasicSP/descriptors/BasicSP.cdp:
 
-          Removed obsolete plan. 
+          Removed obsolete plan.
 
 Fri Feb  6 13:44:54 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 

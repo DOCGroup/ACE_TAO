@@ -951,14 +951,16 @@ NodeApplication_Impl::create_component_server (size_t index)
       DANCE_ERROR((LM_ERROR, DLINFO "NodeApplication_impl::create_container - "
                    "Components::Deployment::ServerActivator_var::create_component_server() "
                    "returned ::Components::CreateFailure exception\n"));
-      throw ::Deployment::StartError();
+      throw ::Deployment::StartError("",
+				     "Received a ::Components::CreateFailure exception while creating component server.");
     }
   catch (const ::Components::Deployment::InvalidConfiguration& )
     {
       DANCE_ERROR((LM_ERROR, DLINFO "NodeApplication_impl::create_container - "
                    "Components::Deployment::ServerActivator_var::create_component_server() "
                    "returned ::Components::Deployment::InvalidConfiguration exception\n"));
-      throw ::Deployment::InvalidProperty();
+      throw ::Deployment::InvalidProperty("",
+					  "::Components::Deployment::InvalidConfiguration exception caught while creating server");
     }
 
     try
@@ -1519,8 +1521,11 @@ NodeApplication_Impl::create_config_values (const Deployment::Properties& /*prop
       }
     default:
       {
-        DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::create_config_values - request is not a know type: eCreateComponentServer, eCreateContainer, eInstallHome, eCreateComponentWithConfigValues\n"));
-        throw ::Deployment::InvalidProperty();
+        DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::create_config_values - "
+		     "request is not a know type: eCreateComponentServer, eCreateContainer, "
+		     "eInstallHome, eCreateComponentWithConfigValues\n"));
+        throw ::Deployment::InvalidProperty("",
+					    "Invalid creation type for filling in config values");
       }
     }
 }
@@ -1658,7 +1663,8 @@ NodeApplication_Impl::getAllConnections()
                     DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::getAllConnections - "
                                  "Connection.InternalEndPoint.Kind is not a "
                                  "Deployment::Facet or Deployment::EventConsumer\n"));
-                    throw ::Deployment::InvalidProperty();
+                    throw ::Deployment::InvalidProperty(this->plan_.connection[i].name.in (),
+							"Invalid connection type, should be Facet or EventConsumer");
                   }
                 }
               //              index++;
@@ -1810,7 +1816,8 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
 			      {
 				DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
 					     "reference for %C can't be narrowed \n", name.c_str ()));
-				throw ::Deployment::InvalidConnection();
+				throw ::Deployment::InvalidConnection(conn.name.in (),
+								      "Couldn't narrow reference for external reference");
 				break;
 			      }
 			    try
@@ -1873,7 +1880,8 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
 				     conn.internalEndpoint[0].kind,
 				     conn.internalEndpoint[0].portName.in()
 				     ));
-			throw ::Deployment::InvalidConnection();
+			throw ::Deployment::InvalidConnection(conn.name.in (),
+							      "Invalid connection type, should be Receptacle or even producer.");
 		      }//default
 		    }//switch
 		}
@@ -1882,8 +1890,16 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
 		  DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_impl::finishLaunch - "
 				"Intercepted StartError exception while configuring %C conneciton, rethrowing\n",
 				name.c_str ()));
-		  throw ::Deployment::StartError (name.c_str (),
-						  ex.reason.in ());
+		  ex.name = name.c_str ();
+		  throw;
+		}
+	      catch (::Deployment::InvalidConnection &ex)
+		{
+		  DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_impl::finishLaunch - "
+				"Intercepted InvalidConnection exception while configuring %C conneciton, rethrowing\n",
+				name.c_str ()));
+		  ex.name = name.c_str ();
+		  throw;
 		}
             }//if(name.compare(providedReference[i].name.in()) == 0)
         }//for ( unsigned int i = 0; i < providedReference.length(); ++i )
@@ -1916,25 +1932,29 @@ NodeApplication_Impl::connect_receptacle (Components::CCMObject_ptr inst,
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::connect() returned ::Components::InvalidName exception\n"));
-      throw ::Deployment::StartError();
+      throw ::Deployment::StartError("",
+				     "Received InvalidName exception while connecting receptacle.");
     }
   catch (const ::Components::InvalidConnection& )
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::connect() returned ::Components::InvalidConnection exception\n"));
-      throw ::Deployment::InvalidConnection();
+      throw ::Deployment::InvalidConnection("",
+					    "InvalidConnection caught while connecting receptacle.");
     }
   catch (const ::Components::AlreadyConnected& )
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::connect() returned ::Components::AlreadyConnected exception\n"));
-      throw ::Deployment::InvalidConnection();
+      throw ::Deployment::InvalidConnection("",
+					    "Caught AlredyConnected exception while connecting receptacle");
     }
   catch (const ::Components::ExceededConnectionLimit& )
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::connect() returned ::Components::ExceededConnectionLimit exception\n"));
-      throw ::Deployment::InvalidConnection();
+      throw ::Deployment::InvalidConnection("",
+					    "Caught ExceededConnectionLimit exception while connecting receptacle.");
     }
   return res;
 }
@@ -1956,25 +1976,29 @@ NodeApplication_Impl::connect_receptacle_ext (Components::CCMObject_ptr inst,
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::connect() returned ::Components::InvalidName exception\n"));
-      throw ::Deployment::StartError();
+      throw ::Deployment::StartError("",
+				     "Caught InvalidName exception while connecting external receptacle.");
     }
   catch (const ::Components::InvalidConnection& )
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::connect() returned ::Components::InvalidConnection exception\n"));
-      throw ::Deployment::InvalidConnection();
+      throw ::Deployment::InvalidConnection("",
+					    "Caught InvalidConnection exception while connecting external receptacle.");
     }
   catch (const ::Components::AlreadyConnected& )
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::connect() returned ::Components::AlreadyConnected exception\n"));
-      //throw ::Deployment::InvalidConnection();
+      throw ::Deployment::InvalidConnection("",
+					    "Caught AlreadyConnected exception while connecting external receptacle.");
     }
   catch (const ::Components::ExceededConnectionLimit& )
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::connect() returned ::Components::ExceededConnectionLimit exception\n"));
-      throw ::Deployment::InvalidConnection();
+      throw ::Deployment::InvalidConnection("",
+					    "Caught ExceededConnectionLimit while connecting external receptacle.");
     }
   return res;
 }
@@ -1997,19 +2021,22 @@ NodeApplication_Impl::connect_emitter (Components::CCMObject_ptr inst,
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::connect_consumer() returned ::Components::InvalidName exception\n"));
-      throw ::Deployment::StartError();
+      throw ::Deployment::StartError("",
+				     "Caught InvalidName while connecting emitter.");
     }
   catch (const ::Components::AlreadyConnected& )
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::connect_consumer() returned ::Components::AlreadyConnected exception\n"));
-      throw ::Deployment::InvalidConnection();
+      throw ::Deployment::InvalidConnection("",
+					    "Caught AlreadyConnected exception while connecting emitter");
     }
   catch (const ::Components::InvalidConnection& )
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::connect_consumer() returned ::Components::InvalidConnection exception\n"));
-      throw ::Deployment::InvalidConnection();
+      throw ::Deployment::InvalidConnection("",
+					    "Caught InvalidConnection while connecting emitter.");
     }
 }
 
@@ -2030,13 +2057,15 @@ NodeApplication_Impl::connect_emitter_ext (Components::CCMObject_ptr inst,
     {
       DANCE_DEBUG ( (LM_WARNING, "NodeApplication_impl::finishLaunch - "
                      "Components::CCMObject_var::connect_consumer() returned ::Components::AlreadyConnected exception\n"));
-      //throw ::Deployment::InvalidConnection();
+      throw ::Deployment::InvalidConnection("",
+					    "Caught AlreadyConnected exception while connecting external emitter.");
     }
   catch (const ::Components::InvalidConnection& )
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::connect_consumer() returned ::Components::InvalidConnection exception\n"));
-      throw ::Deployment::InvalidConnection();
+      throw ::Deployment::InvalidConnection("",
+					    "Caught InvalidConnection exception while connecting external emitter.");
     }
 }
 
@@ -2066,19 +2095,19 @@ NodeApplication_Impl::connect_publisher (Components::CCMObject_ptr inst,
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::subscribe() returned ::Components::InvalidName exception\n"));
-      throw ::Deployment::StartError("", "Caught InvalidName exception");
+      throw ::Deployment::StartError("", "Caught InvalidName exception while connecting publisher");
     }
   catch (const ::Components::InvalidConnection& )
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::subscribe() returned ::Components::InvalidConnection exception\n"));
-      throw ::Deployment::InvalidConnection("", "Caught InvalidConnection exception");
+      throw ::Deployment::InvalidConnection("", "Caught InvalidConnection exception while connecting publisher.");
     }
   catch (const ::Components::ExceededConnectionLimit& )
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::subscribe() returned ::Components::ExceededCOnnectionLimit exception\n"));
-      throw ::Deployment::InvalidConnection("", "Caught ExceededConnectionLimit exception\n");
+      throw ::Deployment::InvalidConnection("", "Caught ExceededConnectionLimit exception while connecting publisher.");
     }
   return res;
 }
