@@ -36,6 +36,7 @@ ACE_Map_Manager<KeyType, DataElement, ACE_Null_Mutex>::equal
 }
 // Listing 1
 #else
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template<>
 int
 ACE_Map_Manager<KeyType, DataElement, ACE_Null_Mutex>::equal
@@ -43,6 +44,7 @@ ACE_Map_Manager<KeyType, DataElement, ACE_Null_Mutex>::equal
 {
   return (r1 == r2);
 }
+ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* 0 */
 
 class Map_Example
