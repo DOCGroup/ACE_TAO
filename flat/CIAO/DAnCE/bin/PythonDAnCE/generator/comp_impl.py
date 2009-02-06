@@ -3,6 +3,7 @@ from templet import stringfunction
 @stringfunction
 def template (component_name) :
     """
+
   <implementation xmi:id="${component_name}ComponentImplementation">
     <name>${component_name}ComponentImplementation</name>
     <source/>

@@ -61,6 +61,9 @@ namespace MyImpl
     BasicSP::CCM_BMDisplay_Context_var context_;
   };
 
+  extern "C" BMDISPLAY_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_BasicSP_BMDisplay_Impl (void);
+
   /**
    * @class BMDisplayHome_exec_impl
    *

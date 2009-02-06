@@ -115,6 +115,19 @@ MyImpl::BMClosedED_exec_i::ccm_remove ()
                 "MyImpl::BMClosedED_exec_i::ccm_remove\n"));
 }
 
+extern "C" BMCLOSEDED_EXEC_Export ::Components::EnterpriseComponent_ptr
+create_BasicSP_BMClosedED_Impl (void)
+{
+  ::Components::EnterpriseComponent_ptr retval =
+    ::Components::EnterpriseComponent::_nil ();
+  
+  ACE_NEW_RETURN (retval,
+		  MyImpl::BMClosedED_exec_i,
+		  ::Components::EnterpriseComponent::_nil ());
+
+  return retval;
+}
+
 /// Default ctor.
 MyImpl::BMClosedEDHome_exec_i::BMClosedEDHome_exec_i ()
 {
