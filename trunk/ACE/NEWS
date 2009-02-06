@@ -10,6 +10,12 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.7 and ACE-5.6.8
   pathname is "dot dir" (ie. "." or ".."). ACE::isdotdir() is significantly
   faster than pair of strcmp() calls.
 
+. Last micro release that is maintained for Borland/CodeGear C++
+  Builder 2007 and Intel C++ on Windows
+
+. Fixed crash when ACE thread tries to inherit the logging attributes
+  from non ACE threads
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.6 and ACE-5.6.7
 ====================================================
 
