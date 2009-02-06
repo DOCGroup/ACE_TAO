@@ -1,3 +1,9 @@
+Fri Feb  6 15:37:15 UTC 2009  Steven Stallion  <stallions@ociweb.com>
+
+        * tests/Log_Thread_Inheritance_Test.cpp:
+
+          Fixed missing extern "C" in pthread start routine.
+
 Fri Feb  6 10:55:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/Stats/index.shtml:

@@ -29,6 +29,7 @@ struct Inheritor : ACE_Task_Base
   }
 };
 
+extern "C"
 void* spawn_ace_task (void*)
 {
   Inheritor inheritor;
