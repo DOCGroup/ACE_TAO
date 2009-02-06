@@ -240,6 +240,17 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="ECComponentImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>rategen.ior</string>
+	</value>
+      </value>
+    </configProperty>
   </instance>
 
   <connection>

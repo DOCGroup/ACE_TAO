@@ -11,8 +11,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 
-const char *rategen_ior_ = 0;
-int rate = 2;
+const char *rategen_ior_ = "file://rategen.ior";
+int rate = 3;
 int turn_on = 1;
 
 int
@@ -103,7 +103,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           pulser->hertz (rate);
 
-          ACE_DEBUG ((LM_DEBUG, "Start up the Event services\n"));
+          ACE_DEBUG ((LM_EMERGENCY, "Start up the Event services\n"));
 
           pulser->start ();
         }
@@ -111,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           pulser->stop ();
 
-          ACE_DEBUG ((LM_DEBUG, "Stop the ES\n"));
+          ACE_DEBUG ((LM_EMERGENCY, "Stop the ES\n"));
         }
 
       orb->destroy ();

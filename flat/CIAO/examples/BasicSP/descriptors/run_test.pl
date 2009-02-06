@@ -21,7 +21,7 @@ $daemons = 4;
 $status = 0;
 $dat_file = "BasicSP.dat";
 $cdp_file = "BasicSP_Unhomed.cdp";
-$controller_exec = "$CIAO_ROOT/examples/BasicSP/";
+$controller_exec = "$CIAO_ROOT/examples/BasicSP/EC/controller";
 
 $nsior = PerlACE::LocalFile ("ns.ior");
 
@@ -36,8 +36,7 @@ sub delete_ior_files {
         unlink $iorfiles[$i];
     }
     unlink PerlACE::LocalFile ("EM.ior");
-    unlink PerlACE::LocalFile ("Receiver.ior");
-    unlink PerlACE::LocalFile ("Sender.ior");
+    unlink PerlACE::LocalFile ("rategen.ior");
     unlink PerlACE::LocalFile ("DAM.ior");
     unlink PerlACE::LocalFile ("ns.ior");
 }
@@ -154,22 +153,15 @@ $E =
 $E->SpawnWaitKill (5000);
 
 if (PerlACE::waitforfile_timed (
-      "Receiver.ior",
+      "rategen.ior",
       $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: The ior file of receiver could not be found\n";
     kill_open_processes ();
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ("Sender.ior",
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: The ior file of sender could not be found\n";
-    kill_open_processes ();
-    exit 1;
-}
-
 print "Invoking the controller\n";
-$controller = new PerlACE::Process ("$controller_exec", "-k file://Sender.ior");
+$controller = new PerlACE::Process ("$controller_exec", "-o");
 $result = $controller->SpawnWaitKill (3000);
 
 if ($result != 0) {
@@ -177,6 +169,7 @@ if ($result != 0) {
     $status = 1;
 }
 
+sleep 10;
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
 $E =
