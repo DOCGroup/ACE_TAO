@@ -1,18 +1,24 @@
+Fri Feb  6 22:06:51 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/ciao_tests.lst:
+        
+          Added in tests that have been ported. 
+        
 Fri Feb  6 20:28:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/bin/PythonDAnCE/generator/comp_impl.py:
-        
-          Fixes that should have been in previous commit. 
-        
+
+          Fixes that should have been in previous commit.
+
         * examples/Null_Component/Null_Component_exec.h:
         * examples/Null_Component/Null_Component_exec.cpp:
         * examples/Null_Component/descriptors/NodeMap.dat:
         * examples/Null_Component/descriptors/Null_Homed.cdp:
         * examples/Null_Component/descriptors/Null_Unhomed.cdp:
         * examples/Null_Component/descriptors/run_test.pl:
-        
+
           Ported this example to new CIAO/DAnCE.
-        
+
         * examples/Null_Component/descriptors/Deployment.xsd:
         * examples/Null_Component/descriptors/Domain.cdd:
         * examples/Null_Component/descriptors/Null_Assembly.cid:
