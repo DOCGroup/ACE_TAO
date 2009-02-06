@@ -71,6 +71,9 @@ namespace MyImpl
     MyImpl::ReadData_Impl* data_read_;
   };
 
+  extern "C" BMDEVICE_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_BasicSP_BMDevice_Impl (void);
+
   /**
    * @class BMDeviceHome_exec_i
    *

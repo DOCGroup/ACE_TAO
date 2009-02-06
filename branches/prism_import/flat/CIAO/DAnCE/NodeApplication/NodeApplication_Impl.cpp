@@ -1614,8 +1614,11 @@ NodeApplication_Impl::getAllConnections()
                       {
                         DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::getAllConnections - "
                                      "Components::CCMObject_var::provide_facet() returned "
-                                     "::Components::InvalidName exception\n"));
-                        throw ::Deployment::InvalidProperty();
+                                     "::Components::InvalidName exception for connection %C and port %C\n",
+				     this->plan_.connection[i].name.in (),
+				     this->plan_.connection[i].internalEndpoint[j].portName.in ()));
+                        throw ::Deployment::InvalidProperty(this->plan_.connection[i].name.in (),
+							    "Container returned InvalidName");
                       }
                     break;
                   }
@@ -1642,8 +1645,11 @@ NodeApplication_Impl::getAllConnections()
                       {
                         DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::getAllConnections - "
                                      "Components::CCMObject_var::get_consumer() returned "
-                                     "::Components::InvalidName exception\n"));
-                        throw ::Deployment::InvalidProperty();
+                                     "::Components::InvalidName exception for connection %C and port %C\n",
+				     this->plan_.connection[i].name.in (),
+				     this->plan_.connection[i].internalEndpoint[j].portName.in ()));
+                        throw ::Deployment::InvalidProperty(this->plan_.connection[i].name.in (),
+							    "Container returned InvalidName exception");
                       }
                     break;
                   }
@@ -1727,147 +1733,158 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
 
           if (name.compare (providedReference[i].name.in()) == 0)
             {
-              switch (conn.internalEndpoint[0].kind)
-                {
-                case Deployment::Facet:
-                  {
-                    DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - "
-                                 "set for facet %C \n", name.c_str ()));
-                    Components::CCMObject_var ext_inst;
-                    try
-                      {
-                        if (0 == conn.externalReference.length())
-                          {
-                            if (conn.internalEndpoint.length () == 2 &&
-                                (conn.internalEndpoint[1].kind == Deployment::MultiplexReceptacle ||
-                                 conn.internalEndpoint[1].kind == Deployment::SimplexReceptacle))
-                              {
-                                obj = Components::CCMObject::
-                                  _narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
+	      try
+		{
+		  switch (conn.internalEndpoint[0].kind)
+		    {
+		    case Deployment::Facet:
+		      {
+			DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - "
+				     "set for facet %C \n", name.c_str ()));
+			Components::CCMObject_var ext_inst;
+			try
+			  {
+			    if (0 == conn.externalReference.length())
+			      {
+				if (conn.internalEndpoint.length () == 2 &&
+				    (conn.internalEndpoint[1].kind == Deployment::MultiplexReceptacle ||
+				     conn.internalEndpoint[1].kind == Deployment::SimplexReceptacle))
+				  {
+				    obj = Components::CCMObject::
+				      _narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
 
-                                this->connect_receptacle (obj.in (),
-                                                          conn.internalEndpoint[1].portName.in(),
-                                                          providedReference[i].endpoint[0].in());
-                              }
-                            /*
-                            DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_impl::finishLaunch - "
-                                          "Unsupported facet connection; lacks either external reference or "
-                                          "multiple internalEndpoints.\n"));
-                            throw ::Deployment::StartError (name.c_str (),
-                                                            "Unsupported facet connection; lacks either external reference "
-                                                            "or multiple internalEndpoints.\n");
-                            */
-                            break;
-                          }
-                        CORBA::Object_var tmp =
-                          this->orb_->string_to_object (conn.externalReference[0].location.in());
-                        ext_inst = Components::CCMObject::_narrow (tmp);
-                        if (CORBA::is_nil (ext_inst.in()))
-                          {
-                            DANCE_ERROR((LM_ERROR, DLINFO "NodeApplication_impl::finishLaunch - "
-                                         "facet for %C can't be narrowed \n", name.c_str ()));
-                            break;
-                          }
-                        this->connect_receptacle_ext (ext_inst,
-                                                      conn.externalReference[0].portName.in(),
-                                                      providedReference[i].endpoint[0].in());
-                      }
-                    catch (const CORBA::OBJECT_NOT_EXIST&)
-                      {
-                        // @@TODO: Shouldn't this be an error?!?
-                        break;
-                      }
-                    catch (const CORBA::TRANSIENT&)
-                      {
-                        // @@TODO: Shouldn't this be an error?!?
-                        break;
-                      }
+				    this->connect_receptacle (obj.in (),
+							      conn.internalEndpoint[1].portName.in(),
+							      providedReference[i].endpoint[0].in());
+				  }
+				/*
+				  DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_impl::finishLaunch - "
+				  "Unsupported facet connection; lacks either external reference or "
+				  "multiple internalEndpoints.\n"));
+				  throw ::Deployment::StartError (name.c_str (),
+				  "Unsupported facet connection; lacks either external reference "
+				  "or multiple internalEndpoints.\n");
+				*/
+				break;
+			      }
+			    CORBA::Object_var tmp =
+			      this->orb_->string_to_object (conn.externalReference[0].location.in());
+			    ext_inst = Components::CCMObject::_narrow (tmp);
+			    if (CORBA::is_nil (ext_inst.in()))
+			      {
+				DANCE_ERROR((LM_ERROR, DLINFO "NodeApplication_impl::finishLaunch - "
+					     "facet for %C can't be narrowed \n", name.c_str ()));
+				break;
+			      }
+			    this->connect_receptacle_ext (ext_inst,
+							  conn.externalReference[0].portName.in(),
+							  providedReference[i].endpoint[0].in());
+			  }
+			catch (const CORBA::OBJECT_NOT_EXIST&)
+			  {
+			    // @@TODO: Shouldn't this be an error?!?
+			    break;
+			  }
+			catch (const CORBA::TRANSIENT&)
+			  {
+			    // @@TODO: Shouldn't this be an error?!?
+			    break;
+			  }
 
-                    break;
-                  }
-                case Deployment::EventConsumer:
-                  {
-                    DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - set for consumer \n"));
-                    Components::CCMObject_var ext_inst;
-                    try
-                      {
-                        if (0 == conn.externalReference.length())
-                          {
-                            break;
-                          }
-                        CORBA::Object_var tmp =
-                          this->orb_->string_to_object (conn.externalReference[0].location.in());
-                        ext_inst = Components::CCMObject::_narrow (tmp);
-                        if (CORBA::is_nil (ext_inst.in()))
-                          {
-                            DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
-                                         "reference for %C can't be narrowed \n", name.c_str ()));
-                            throw ::Deployment::InvalidConnection();
-                            break;
-                          }
-                        try
-                          {
-                            // Check is connection kind is consumer to emitter?
-                            this->connect_emitter_ext (ext_inst,
-                                                       conn.externalReference[0].portName.in(),
-                                                       providedReference[i].endpoint[0].in());
-                          }
-                        catch (const ::Components::InvalidName&)
-                          {
-                            // No this is consumer to publisher
-                            this->connect_publisher (ext_inst,
-                                                     conn.externalReference[0].portName.in(),
-                                                     providedReference[i].endpoint[0].in());
-                          }
-                      }
-                    catch (const CORBA::OBJECT_NOT_EXIST&)
-                      {
-                        break;
-                      }
-                    catch (const CORBA::TRANSIENT&)
-                      {
-                        break;
-                      }
-                    break;
-                  }
-                case Deployment::MultiplexReceptacle:
-                case Deployment::SimplexReceptacle:
-                  {
-                    // What we should do with Cookie, returned from connect call???
-                    DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - set for receptacle \n"));
-                    this->connect_receptacle (obj.in(),
-                                              conn.internalEndpoint[0].portName.in(),
-                                              providedReference[i].endpoint[0].in());
-                    break;
-                  }
-                case Deployment::EventEmitter:
-                  {
-                    DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - set for emitter \n"));
-                    this->connect_emitter (obj.in(),
-                                           conn.internalEndpoint[0].portName.in(),
-                                           providedReference[i].endpoint[0].in());
-                    break;
-                  }
-                case Deployment::EventPublisher:
-                  {
-                    DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - set for publisher \n"));
-                    this->connect_publisher (obj.in(),
-                                             conn.internalEndpoint[0].portName.in(),
-                                             providedReference[i].endpoint[0].in());
-                    break;
-                  }
-                default:
-                  {
-                    DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - currect Connection.InternalEndPoint.Kind "
-                                 "is not a Deployment::SimplexReceptacle, Deployment::EventEmitter, Deployment::EventPublisher "
-                                 "(Connection:%C Kind:%i PortName:%C)\n",
-                                 conn.name.in(),
-                                 conn.internalEndpoint[0].kind,
-                                 conn.internalEndpoint[0].portName.in()
-                                 ));
-                    throw ::Deployment::InvalidConnection();
-                  }//default
-                }//switch
+			break;
+		      }
+		    case Deployment::EventConsumer:
+		      {
+			DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - set for consumer \n"));
+			Components::CCMObject_var ext_inst;
+			try
+			  {
+			    if (0 == conn.externalReference.length())
+			      {
+				break;
+			      }
+			    CORBA::Object_var tmp =
+			      this->orb_->string_to_object (conn.externalReference[0].location.in());
+			    ext_inst = Components::CCMObject::_narrow (tmp);
+			    if (CORBA::is_nil (ext_inst.in()))
+			      {
+				DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
+					     "reference for %C can't be narrowed \n", name.c_str ()));
+				throw ::Deployment::InvalidConnection();
+				break;
+			      }
+			    try
+			      {
+				// Check is connection kind is consumer to emitter?
+				this->connect_emitter_ext (ext_inst,
+							   conn.externalReference[0].portName.in(),
+							   providedReference[i].endpoint[0].in());
+			      }
+			    catch (const ::Components::InvalidName&)
+			      {
+				// No this is consumer to publisher
+				this->connect_publisher (ext_inst,
+							 conn.externalReference[0].portName.in(),
+							 providedReference[i].endpoint[0].in());
+			      }
+			  }
+			catch (const CORBA::OBJECT_NOT_EXIST&)
+			  {
+			    break;
+			  }
+			catch (const CORBA::TRANSIENT&)
+			  {
+			    break;
+			  }
+			break;
+		      }
+		    case Deployment::MultiplexReceptacle:
+		    case Deployment::SimplexReceptacle:
+		      {
+			// What we should do with Cookie, returned from connect call???
+			DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - set for receptacle \n"));
+			this->connect_receptacle (obj.in(),
+						  conn.internalEndpoint[0].portName.in(),
+						  providedReference[i].endpoint[0].in());
+			break;
+		      }
+		    case Deployment::EventEmitter:
+		      {
+			DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - set for emitter \n"));
+			this->connect_emitter (obj.in(),
+					       conn.internalEndpoint[0].portName.in(),
+					       providedReference[i].endpoint[0].in());
+			break;
+		      }
+		    case Deployment::EventPublisher:
+		      {
+			DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - set for publisher \n"));
+			this->connect_publisher (obj.in(),
+						 conn.internalEndpoint[0].portName.in(),
+						 providedReference[i].endpoint[0].in());
+			break;
+		      }
+		    default:
+		      {
+			DANCE_ERROR((LM_ERROR, DLINFO "NodeApplication_impl::finishLaunch - currect Connection.InternalEndPoint.Kind "
+				     "is not a Deployment::SimplexReceptacle, Deployment::EventEmitter, Deployment::EventPublisher "
+				     "(Connection:%C Kind:%i PortName:%C)\n",
+				     conn.name.in(),
+				     conn.internalEndpoint[0].kind,
+				     conn.internalEndpoint[0].portName.in()
+				     ));
+			throw ::Deployment::InvalidConnection();
+		      }//default
+		    }//switch
+		}
+	      catch (::Deployment::StartError &ex)
+		{
+		  DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_impl::finishLaunch - "
+				"Intercepted StartError exception while configuring %C conneciton, rethrowing\n",
+				name.c_str ()));
+		  throw ::Deployment::StartError (name.c_str (),
+						  ex.reason.in ());
+		}
             }//if(name.compare(providedReference[i].name.in()) == 0)
         }//for ( unsigned int i = 0; i < providedReference.length(); ++i )
     }//for ( unsigned int j = 0; j < this->plan_.connection.length(); ++j )
@@ -2049,19 +2066,19 @@ NodeApplication_Impl::connect_publisher (Components::CCMObject_ptr inst,
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::subscribe() returned ::Components::InvalidName exception\n"));
-      throw ::Deployment::StartError();
+      throw ::Deployment::StartError("", "Caught InvalidName exception");
     }
   catch (const ::Components::InvalidConnection& )
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::subscribe() returned ::Components::InvalidConnection exception\n"));
-      throw ::Deployment::InvalidConnection();
+      throw ::Deployment::InvalidConnection("", "Caught InvalidConnection exception");
     }
   catch (const ::Components::ExceededConnectionLimit& )
     {
       DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
                    "Components::CCMObject_var::subscribe() returned ::Components::ExceededCOnnectionLimit exception\n"));
-      throw ::Deployment::InvalidConnection();
+      throw ::Deployment::InvalidConnection("", "Caught ExceededConnectionLimit exception\n");
     }
   return res;
 }

@@ -87,6 +87,19 @@ MyImpl::BMDisplay_exec_i::ccm_remove ()
               "MyImpl::BMDisplay_exec_i::ccm_remove\n"));
 }
 
+extern "C" BMDISPLAY_EXEC_Export ::Components::EnterpriseComponent_ptr
+create_BasicSP_BMDisplay_Impl (void)
+{
+  ::Components::EnterpriseComponent_ptr retval =
+    ::Components::EnterpriseComponent::_nil ();
+  
+  ACE_NEW_RETURN (retval,
+		  MyImpl::BMDisplay_exec_i,
+		  ::Components::EnterpriseComponent::_nil ());
+  
+  return retval;
+}
+
 /// Default ctor.
 MyImpl::BMDisplayHome_exec_impl::BMDisplayHome_exec_impl ()
 {

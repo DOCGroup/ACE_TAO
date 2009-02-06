@@ -70,6 +70,9 @@ namespace MyImpl
     ACE_Thread_Manager thr_mgr_;
   };
 
+  extern "C" EC_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_BasicSP_EC_Impl (void);
+
   /**
    * @class EC_exec_i
    *

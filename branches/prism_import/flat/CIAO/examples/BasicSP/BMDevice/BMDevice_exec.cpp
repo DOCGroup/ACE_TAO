@@ -79,6 +79,19 @@ MyImpl::BMDevice_exec_i::ccm_remove ()
               "MyImpl::BMDevice_exec_i::ccm_remove\n"));
 }
 
+extern "C" BMDEVICE_EXEC_Export ::Components::EnterpriseComponent_ptr
+create_BasicSP_BMDevice_Impl (void)
+{
+  ::Components::EnterpriseComponent_ptr retval =
+    ::Components::EnterpriseComponent::_nil ();
+  
+  ACE_NEW_RETURN (retval,
+		  MyImpl::BMDevice_exec_i,
+		  ::Components::EnterpriseComponent::_nil ());
+  
+  return retval;
+}
+
 /// Default ctor.
 MyImpl::BMDeviceHome_exec_i::BMDeviceHome_exec_i ()
 {

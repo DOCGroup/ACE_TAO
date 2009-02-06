@@ -10,4 +10,5 @@ def template (uuid):
   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>${uuid}</label>
   <UUID>${uuid}</UUID>
-    """
+
+"""

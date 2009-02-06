@@ -1,3 +1,38 @@
+Fri Feb  6 18:26:39 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+          Better exception handling. 
+        
+        * DAnCE/bin/PythonDAnCE/generator/artifact.py:
+        * DAnCE/bin/PythonDAnCE/generator/comp_impl.py:
+        * DAnCE/bin/PythonDAnCE/generator/header.py:
+        * DAnCE/bin/generate_plan.py:
+
+          Bugfixes for plangenerator. 
+        
+        * examples/BasicSP/BMClosedED/BMClosedED_exec.h:
+        * examples/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * examples/BasicSP/BMDevice/BMDevice_exec.h:
+        * examples/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/BasicSP/BMDisplay/BMDisplay_exec.h:
+        * examples/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+        * examples/BasicSP/EC/EC_exec.h:
+        * examples/BasicSP/EC/EC_exec.cpp:
+
+          Added component servant and executor factory operations. 
+        
+        * examples/BasicSP/descriptors/BasicSP.dat:
+        * examples/BasicSP/descriptors/BasicSP_Unhomed.cdp:
+        * examples/BasicSP/descriptors/run_test.pl:
+        
+          Ported to new version of DAnCE.  test script still needs to invoke correct controller. 
+        
+        * examples/BasicSP/descriptors/BasicSP.cdp:
+
+          Removed obsolete plan. 
+
 Fri Feb  6 13:44:54 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/bin/PythonDAnCE:
@@ -17,8 +52,8 @@ Fri Feb  6 13:44:54 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/bin/PythonDAnCE/generator/templet.py:
         * DAnCE/bin/generate_plan.py:
 
-          First cut implementation of a very simple cdp generator. 
-        
+          First cut implementation of a very simple cdp generator.
+
 Thu Feb  5 19:36:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ofccm/DAnCE_Scripts:

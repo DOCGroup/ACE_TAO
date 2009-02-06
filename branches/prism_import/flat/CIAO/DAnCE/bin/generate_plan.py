@@ -1,4 +1,8 @@
 #!/usr/bin/python
+import sys, os
+
+sys.path.append (os.getenv ("DANCE_ROOT"))
+
 
 def parse_args ():
     from optparse import OptionParser
@@ -34,32 +38,38 @@ def main ():
     artifacts = {}
 
     #implementations
-    
-    for item in opts.homes:
-        retval += generator.home_impl.template (item)
-        artifacts[item] = 1
+    if opts.homes is not None:
+        for item in opts.homes:
+            retval += generator.home_impl.template (item)
+            artifacts[item] = 1
 
-    for item in opts.homed_components:
-        retval += generator.homed_comp_impl.template (item)
-        artifacts[item] = 1
+    if opts.homed_components is not None:
+        for item in opts.homed_components:
+            retval += generator.homed_comp_impl.template (item)
+            artifacts[item] = 1
 
-    for item in opts.components:
-        retval += generator.comp_impl.template (item)
-        artifacts[item] = 1
+    if opts.components is not None:
+        for item in opts.components:
+            retval += generator.comp_impl.template (item)
+            artifacts[item] = 1
 
     #instances
-    for item in opts.homes:
-        retval += generator.home_inst.template (item)
-
-    for item in opts.homed_components:
-        retval += generator.homed_comp_inst.template (item)
-
-    for item in opts.components:
-        retval += generator.comp_inst.template (item)
+    if opts.homes is not None:
+        for item in opts.homes:
+            retval += generator.home_inst.template (item)
+    
+    if opts.homed_components is not None:
+        for item in opts.homed_components:
+            retval += generator.homed_comp_inst.template (item)
+            
+    if opts.components is not None:
+        for item in opts.components:
+            retval += generator.comp_inst.template (item)
         
     #artifacts
-    for item in artifacts.keys():
-        retval += generator.artifact.template(item)
+    if artifacts is not None:
+        for item in artifacts.keys():
+            retval += generator.artifact.template(item)
 
     retval += generator.footer.template ()
     

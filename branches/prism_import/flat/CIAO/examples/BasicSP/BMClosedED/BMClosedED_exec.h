@@ -73,6 +73,9 @@ namespace MyImpl
     BasicSP::CCM_BMClosedED_Context_var context_;
   };
 
+  extern "C" BMCLOSEDED_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_BasicSP_BMClosedED_Impl (void);
+
   /**
    * @class BMClosedEDHome_exec_i
    *
