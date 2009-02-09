@@ -1,0 +1,24 @@
+/* XPM */
+static char * active_xpm[] = {
+/* width height ncolors cpp */
+"16 15 3 1",
+/* colors */
+"  c none",
+"X c #dddd00",
+"O c #cccc00",
+/* pixels */
+"       XX       ",
+"       XX       ",
+"      XOOX      ",
+"      XOOX      ",
+"     XOOOOX     ",
+" XXXXOOOOOOXXXX ",
+"  XOOOOOOOOOOX  ",
+"   XOOOOOOOOX   ",
+"   XOOOOOOOOX   ",
+"   XOOOOOOOOX   ",
+"  XOOXXXXXXOOX  ",
+"  XOXX    XXOX  ",
+" XOX        XOX ",
+" XX          XX ",
+" X            X "};

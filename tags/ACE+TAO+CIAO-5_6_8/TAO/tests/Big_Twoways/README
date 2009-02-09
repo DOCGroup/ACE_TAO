@@ -1,0 +1,21 @@
+/**
+
+@page Big_Oneways Test README File
+
+	This is a stress test for the non-blocking I/O features in the
+ORB.  The test connects multiple peer processes together.  Each
+process sends messages to all its peers, using multiple threads to
+generate the messages.  Without non-blocking I/O the system soon
+deadlocks.
+
+	This is part of the regression testsuite for:
+
+http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=132
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.
+
+*/

@@ -1,0 +1,4 @@
+# VxWorks script for loading libraries used by: <%if(exename)%><%exename%><%endif%><%if(sharedname)%><%sharedname%><%else%><%if(staticname)%><%staticname%><%endif%><%endif%>
+<%foreach(reverse(libs))%>
+<%libname_prefix%><%lib%><%if(use_lib_modifier)%><%lib_modifier%><%endif%>
+<%endfor%>

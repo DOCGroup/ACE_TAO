@@ -1,0 +1,45 @@
+//$Id$
+project(IFR_Client) : taolib, tao_output, install, core_anytypecode, tao_versioning_idl_defaults {
+  sharedname   = TAO_IFR_Client
+  dynamicflags = TAO_IFR_CLIENT_BUILD_DLL
+
+  Source_Files {
+    IFR_Client
+  }
+
+  Header_Files {
+    IFR_Client
+  }
+
+  Inline_Files {
+    IFR_Client
+  }
+
+  Template_Files {
+    IFR_Client
+  }
+
+  Resource_Files {
+    IFR_Client
+  }
+
+  PIDL_Files {
+    IFR_Client
+  }
+
+  IDL_Files {
+    idlflags += -SS -GX \
+                -Wb,stub_export_macro=TAO_IFR_Client_Export \
+                -Wb,stub_export_include=tao/IFR_Client/ifr_client_export.h \
+                -o IFR_Client
+    idlflags -= -Sa -St
+    IFR_Client/IFR_Base.pidl
+    IFR_Client/IFR_Basic.pidl
+    IFR_Client/IFR_Components.pidl
+    IFR_Client/IFR_Extended.pidl
+  }
+
+  Pkgconfig_Files {
+    IFR_Client/TAO_IFR_Client.pc.in
+  }
+}

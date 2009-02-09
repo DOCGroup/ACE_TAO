@@ -1,0 +1,19 @@
+//$Id$
+
+#ifndef CODEGEN_CIDL
+#define CODEGEN_CIDL
+
+#include "CodeGen.idl"
+
+composition session CodeGen_Impl
+{
+  home executor CodeGenHome_Exec
+  {
+    implements Basic::CodeGenHome;
+    manages CodeGen_Exec;
+  };
+};
+
+#endif /* CODEGEN_CIDL */
+
+

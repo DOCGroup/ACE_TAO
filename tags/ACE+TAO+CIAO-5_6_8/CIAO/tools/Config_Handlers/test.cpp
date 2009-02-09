@@ -1,0 +1,120 @@
+// $Id$
+
+#include <iostream>
+
+#include "Deployment.hpp"
+#include "DP_Handler.h"
+#include "DAnCE/Deployment/Deployment_DataC.h"
+#include "DAnCE/Deployment/CIAO_ServerResourcesC.h"
+#include "ace/Get_Opt.h"
+#include "Utils/XML_Helper.h"
+#include "DnC_Dump.h"
+#include "tao/ORB.h"
+static const ACE_TCHAR *input_file = ACE_TEXT ("BasicSP.cdp");
+
+
+static int
+parse_args (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:"));
+
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'i':
+        input_file = get_opts.opt_arg ();
+        break;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-i <input file> "
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command-line
+  return 0;
+}
+
+// Check to see if SRD was imported.
+void check_srd (const Deployment::DeploymentPlan &);
+
+using namespace CIAO::Config_Handlers;
+
+
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+{
+
+  if (parse_args (argc, argv) != 0)
+    return 1;
+
+  // Initialize an ORB so Any will work
+  CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv);
+  ACE_UNUSED_ARG (orb);
+
+  //Create an XML_Helper for all the file work
+  XML_Helper the_helper;
+
+  std::auto_ptr<xercesc::DOMDocument> doc (
+    the_helper.create_dom (ACE_TEXT_ALWAYS_CHAR (input_file)));
+  if (doc.get ())
+    {
+      //Read in the XSC type structure from the DOMDocument
+      DeploymentPlan dp = deploymentPlan (doc.get ());
+
+      //Convert the XSC to an IDL datatype
+
+      DP_Handler dp_handler (dp);
+
+      std::cout << "Instance document import succeeded.  Dumping contents to file\n";
+
+      //Retrieve the newly created IDL structure
+      std::auto_ptr<Deployment::DeploymentPlan> idl (dp_handler.plan());
+
+      // Check for server resources, if present....
+      check_srd (*idl.get());
+
+      //Convert it back to an XSC structure with a new DP_Handler
+      DP_Handler reverse_handler(*idl.get());
+
+      //Create a new DOMDocument for writing the XSC into XML
+      std::auto_ptr<xercesc::DOMDocument> the_xsc (the_helper.create_dom(0));
+
+      //Serialize the XSC into a DOMDocument
+      std::auto_ptr<DeploymentPlan> plan (reverse_handler.xsc());
+      deploymentPlan(*plan.get(), the_xsc.get());
+
+
+      //Write it to test.xml
+      the_helper.write_DOM(the_xsc.get(), ACE_TEXT ("test.xml"));
+    }
+
+  std::cout << "Test completed!\n";
+
+  return 0;
+}
+
+
+void check_srd (const Deployment::DeploymentPlan &dp)
+{
+  for (CORBA::ULong i = 0;
+       i < dp.infoProperty.length ();
+       ++i)
+    {
+      if (ACE_OS::strcmp (dp.infoProperty[i].name.in (),
+                          "CIAOServerResources") == 0)
+        {
+          CIAO::DAnCE::ServerResource *test;
+
+          if (dp.infoProperty[i].value >>= test)
+            std::cerr << "ServerResources found and successfully extracted." << std::endl;
+          else
+            std::cerr << "ERROR: ServerResource extraction failed!" << std::endl;
+        }
+    }
+
+}
+

@@ -1,0 +1,51 @@
+<!-- $ID$ -->
+
+<CIAO:CIAOEvents
+ xmlns:CIAO="http://www.dre.vanderbilt.edu/CIAOEvents"
+ xmlns:xmi="http://www.omg.org/XMI"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.dre.vanderbilt.edu/CIAOEvents CIAOEvents.xsd">
+
+  <eventServiceConfiguration id="es_configuration-01">
+    <name>ES_01</name>
+    <node>SenderNode</node>
+    <type>RTEC</type>
+    <svc_cfg_file>svc.conf</svc_cfg_file>
+    
+    <filter>
+      <name>my_filter_01</name>
+      <type>DISJUNCTION</type>
+      <source>Hello-Sender-idd_click_out</source>
+      <source>Hello-Sender-idd-02_click_out</source>
+    </filter>
+    
+    <filter>
+      <name>my_filter_02</name>
+      <type>DISJUNCTION</type>
+      <source>Hello-Sender-idd_click_out</source>
+    </filter>    
+	  
+    <filter>
+      <name>my_filter_03</name>
+      <type>CONJUNCTION</type>
+      <source>Hello-Sender-idd_click_out</source>
+      <source>Hello-Sender-idd-02_click_out</source>
+     </filter>	 
+     
+    <filter>
+      <name>my_filter_04</name>
+      <type>CONJUNCTION</type>
+      <source>Hello-Sender-idd_click_out</source>
+     </filter>	       
+     
+     
+  </eventServiceConfiguration>
+  
+  <eventServiceConfiguration id="es_configuration-02">
+    <name>ES_02</name>
+    <node>SenderNode</node>
+    <type>RTEC</type>
+    <svc_cfg_file>svc.conf</svc_cfg_file>
+  </eventServiceConfiguration>
+
+</CIAO:CIAOEvents>  

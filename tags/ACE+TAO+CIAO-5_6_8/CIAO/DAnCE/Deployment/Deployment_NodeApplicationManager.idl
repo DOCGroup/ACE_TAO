@@ -1,0 +1,63 @@
+// $Id$
+#ifndef NODEAPPLICATIONMANAGER_IDL
+#define NODEAPPLICATIONMANAGER_IDL
+
+#include "Deployment_Core.idl"
+#include "Deployment_ApplicationManager.idl"
+#include "Deployment.idl"
+
+module Deployment {
+  /**
+   * CIAO specific structure to carry the scheduling params
+   * to set the process, required by RACE
+   * @struct Sched_Params
+   * @brief Carries Scheduling Params
+   */
+  struct Sched_Params
+  {
+    long policy_;
+    long priority_;
+    long scope_;
+    long msec_;
+  };
+
+  // @@changed:
+  // interface NodeApplicationManager :
+  //     ApplicationManager
+  //   {
+  //   };
+  
+  interface NodeApplicationManager :
+    ApplicationManager
+  {
+    /// CIAO specific operation to handle dynamic system redeployment
+    /// and reconfiguration
+    /// This operation could handle dynamic redeployment for
+    /// a node-level deployment plan within a node
+    /// @param add_or_remove If true, we add new components only, vice vesa.
+    Application perform_redeployment (in Properties configProperty,
+                                      out Connections providedReference,
+                                      in boolean add_or_remove,
+                                      in boolean start)
+      raises (PlanError,
+              InstallationFailure,
+              UnknownImplId,
+              ImplEntryPointNotFound,
+              InvalidConnection,
+              InvalidProperty,
+              ::Components::RemoveFailure);
+
+    /// CIAO specific operation to reset deployment plan
+    void reset_plan (in DeploymentPlan plan);
+
+    /// CIAO specific operation to set the information of
+    /// "shared components" (through NodeManager)
+    void set_shared_components (in ComponentPlans components);
+
+    /// CIAO specific function to set priority
+    /// of component, required by RACE
+    long set_priority (in string cid , in Sched_Params params);
+  };
+};
+
+#endif /* NODEAPPLICATIONMANAGER_IDL */
