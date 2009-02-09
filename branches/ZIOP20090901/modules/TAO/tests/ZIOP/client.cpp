@@ -102,6 +102,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                   the_string.in ()));
 
+      Test::Octet_Seq_var dummy = hello->get_big_reply ();
+
       hello->shutdown ();
 
       orb->destroy ();

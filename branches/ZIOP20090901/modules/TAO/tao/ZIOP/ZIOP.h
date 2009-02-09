@@ -69,7 +69,7 @@ private:
   static bool is_activated_;
 
   /// Get the compression low value, returns 0 when it is not set
-  CORBA::ULong compression_low_value (TAO_ORB_Core& orb_core) const;
+  CORBA::ULong compression_low_value (CORBA::Policy_ptr policy) const;
 
   bool get_compression_details(CORBA::Policy_ptr compression_enabling_policy,
                         CORBA::Policy_ptr compression_level_list_policy,
@@ -78,7 +78,7 @@ private:
 
   bool compress_data (TAO_OutputCDR &cdr, 
                       CORBA::Object_ptr compression_manager,
-                      TAO_ORB_Core& orb_core,
+                      CORBA::ULong low_value,
                       ::Compression::CompressorId compressor_id, 
                       ::Compression::CompressionLevel compression_level);
 

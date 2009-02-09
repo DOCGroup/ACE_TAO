@@ -1,3 +1,25 @@
+Mon Feb 09 14:48:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+      * tao/GIOP_Message_Base.cpp:
+        Set giop flags before compression.
+        
+      * tao/Synch_Invocation.cpp:
+        Log compressed data if compression succeeds
+        
+      * tao/ZIOP/ZIOP.cpp:
+      * tao/ZIOP/ZIOP.h:
+        Some changes to low value policy
+        Fixed decompression. ACE_Message_Block cannot hold a large 
+        number of bytes; needs a resize first.
+
+      * tests/ZIOP/client.cpp:
+      * tests/ZIOP/Hello.cpp:
+      * tests/ZIOP/Hello.h:
+      * tests/ZIOP/server.cpp:
+      * tests/ZIOP/Test.idl:
+        Expanded test with a new function. This function transfers 
+        a large number of bytes.
+
 Fri Feb 06 15:03:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
       * tao/GIOP_Message_Base.cpp:

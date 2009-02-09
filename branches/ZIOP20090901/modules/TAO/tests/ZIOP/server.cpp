@@ -86,7 +86,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Compression::CompressorIdLevelList compressor_id_list(2);
       compressor_id_list.length(2);
-      Compression::CompressorIdLevel levelid;
       compressor_id_list[0].compressor_id = Compression::COMPRESSORID_ZLIB;
       compressor_id_list[0].compression_level = 9;
       compressor_id_list[1].compressor_id = Compression::COMPRESSORID_BZIP2;

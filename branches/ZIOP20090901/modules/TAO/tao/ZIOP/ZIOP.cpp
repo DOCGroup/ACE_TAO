@@ -123,17 +123,19 @@ TAO_ZIOP_Loader::decompress (TAO_InputCDR& cdr)
       CORBA::OctetSeq myout;
       myout.length (data.original_length);
 
-      compressor->decompress (data.data, myout);
-      
       //now copy the decompressed data to the stream...
-      ACE_Message_Block *mb = (ACE_Message_Block *)cdr.start ();
+      compressor->decompress(data.data, myout);
+      ACE_Message_Block *mb = const_cast <ACE_Message_Block*> (cdr.start ());
       mb->rd_ptr (my_old_read);
+      mb->size ((size_t)data.original_length + TAO_GIOP_MESSAGE_HEADER_LEN);
       mb->wr_ptr(mb->rd_ptr());
-      mb->copy((char*)myout.get_buffer(true), 
-              (size_t)data.original_length + TAO_GIOP_MESSAGE_HEADER_LEN);
+      if (mb->copy((char*)myout.get_buffer(true), 
+              (size_t)data.original_length) != 0)
+        return false;
       //change it into a GIOP message..
       mb->base ()[0] = 0x47;
-      mb->base ()[TAO_GIOP_MESSAGE_SIZE_OFFSET] = mb->length();
+      mb->base ()[TAO_GIOP_MESSAGE_SIZE_OFFSET] = (size_t)data.original_length;
+
     }
   else
     {
@@ -144,17 +146,15 @@ TAO_ZIOP_Loader::decompress (TAO_InputCDR& cdr)
 }
 
 CORBA::ULong
-TAO_ZIOP_Loader::compression_low_value (TAO_ORB_Core& orb_core) const
+TAO_ZIOP_Loader::compression_low_value (CORBA::Policy_ptr policy) const
 {
   CORBA::ULong result = 0;
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-  CORBA::Policy_var policy = orb_core.get_cached_policy_including_current (TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY);
-
-  if (!CORBA::is_nil (policy.in ()))
+  if (!CORBA::is_nil (policy))
     {
       ZIOP::CompressionLowValuePolicy_var srp =
-        ZIOP::CompressionLowValuePolicy::_narrow (policy.in ());
+        ZIOP::CompressionLowValuePolicy::_narrow (policy);
 
       if (!CORBA::is_nil (srp.in ()))
         {
@@ -219,7 +219,7 @@ TAO_ZIOP_Loader::get_compression_details(CORBA::Policy_ptr compression_enabling_
     }
   else
     {
-      ACE_ERROR((LM_ERROR, ACE_TEXT("TAO (%P|%t) - TAO_ZIOP_Loader::get_compression_details : compression_enabling_policy is NIL. No ZIOP\n")));
+      //ACE_ERROR((LM_ERROR, ACE_TEXT("TAO (%P|%t) - TAO_ZIOP_Loader::get_compression_details : compression_enabling_policy is NIL. No ZIOP\n")));
     }
   
   if (use_ziop)
@@ -247,7 +247,7 @@ TAO_ZIOP_Loader::get_compression_details(CORBA::Policy_ptr compression_enabling_
         }
       else
         {
-          ACE_ERROR((LM_ERROR, ACE_TEXT("TAO (%P|%t) - TAO_ZIOP_Loader::get_compression_details : compression_level_list_policy is NIL. No ZIOP\n")));
+          //ACE_ERROR((LM_ERROR, ACE_TEXT("TAO (%P|%t) - TAO_ZIOP_Loader::get_compression_details : compression_level_list_policy is NIL. No ZIOP\n")));
           use_ziop = false;
         }
     }
@@ -257,10 +257,12 @@ TAO_ZIOP_Loader::get_compression_details(CORBA::Policy_ptr compression_enabling_
 bool
 TAO_ZIOP_Loader::compress_data (TAO_OutputCDR &cdr, 
                CORBA::Object_ptr compression_manager,
-               TAO_ORB_Core& orb_core,
+               CORBA::ULong low_value,
                Compression::CompressorId compressor_id, 
                Compression::CompressionLevel compression_level)
 {
+  cdr.consolidate ();
+  
   ACE_Message_Block* current = const_cast <ACE_Message_Block*> (cdr.current ());
 
   char* old_rd_ptr = current->rd_ptr();
@@ -280,7 +282,7 @@ TAO_ZIOP_Loader::compress_data (TAO_OutputCDR &cdr,
         {
           Compression::Compressor_var compressor = manager->get_compressor (compressor_id, compression_level);
 
-          if (original_data_length > this->compression_low_value (orb_core))
+          if (low_value > 0 && original_data_length > low_value)
             {
               CORBA::OctetSeq myout;
               CORBA::OctetSeq input (original_data_length, current);
@@ -332,12 +334,16 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_Stub& stub)
                       compression_level_list_policy.in (), 
                       compressor_id, compression_level);
 
-  CORBA::Object_var compression_manager =
-    stub.orb_core ()->resolve_compression_manager();
-  
+
   if (use_ziop)
-    return compress_data(cdr, compression_manager.in (), *stub.orb_core(), compressor_id, compression_level); 
-  
+    {
+      CORBA::Object_var compression_manager =
+        stub.orb_core ()->resolve_compression_manager();
+      CORBA::Policy_var policy_low_value = stub.get_cached_policy (TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY);
+      CORBA::ULong low_value = this->compression_low_value (policy_low_value.in ());
+      return compress_data(cdr, compression_manager.in (), low_value, compressor_id, compression_level); 
+    }
+
   return false;
 #endif
 
@@ -361,12 +367,15 @@ TAO_ZIOP_Loader::marshal_reply_data (TAO_OutputCDR& cdr, TAO_ORB_Core& orb_core)
   use_ziop = get_compression_details(compression_enabling_policy.in (), 
                       compression_level_list_policy.in (), 
                       compressor_id, compression_level);
-
-  CORBA::Object_var compression_manager =
-    orb_core.resolve_compression_manager();
   
   if (use_ziop)
-    return compress_data(cdr, compression_manager.in (), orb_core, compressor_id, compression_level); 
+    {
+      CORBA::Object_var compression_manager =
+        orb_core.resolve_compression_manager();
+      CORBA::Policy_var policy_low_value = orb_core.get_cached_policy_including_current (TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY);
+      CORBA::ULong low_value = this->compression_low_value (policy_low_value.in ());
+      return compress_data(cdr, compression_manager.in (), low_value, compressor_id, compression_level); 
+    }
   return false;
 
 #endif

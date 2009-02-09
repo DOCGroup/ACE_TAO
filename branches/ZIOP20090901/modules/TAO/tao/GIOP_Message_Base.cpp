@@ -239,29 +239,34 @@ TAO_GIOP_Message_Base::generate_fragment_header (TAO_OutputCDR & cdr,
 int
 TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
 {
+  this->set_giop_flags (stream);
+
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   TAO_ZIOP_Adapter* ziop_adapter = this->orb_core_->ziop_adapter ();
-
+  
   //ziop adapter found and not compressed yet
   if (ziop_adapter && !stream.compressed ())
     {
-      //no message dump here; allready done in format_message...
-      ziop_adapter->marshal_reply_data (stream, *this->orb_core_);
       if (TAO_debug_level >= 5)
         {
           ACE_HEX_DUMP ((LM_DEBUG,
                           const_cast <char*> (stream.current ()->rd_ptr ()),
-                          stream.length (),
-                          ACE_TEXT ("ZIOP message after compression")));
+                          stream.current ()->length (),
+                          ACE_TEXT ("GIOP message before compression")));
         }
 
+      if (ziop_adapter->marshal_reply_data (stream, *this->orb_core_))
+        {
+          if (TAO_debug_level >= 5)
+            {
+              ACE_HEX_DUMP ((LM_DEBUG,
+                              const_cast <char*> (stream.current ()->rd_ptr ()),
+                              stream.length (),
+                              ACE_TEXT ("ZIOP message after compression")));
+            }
+        }
     }
 #endif
-
-  // Ptr to first buffer.
-  char *buf = const_cast <char*> (stream.buffer ());
-
-  this->set_giop_flags (stream);
 
   // Length of all buffers.
   size_t const total_len = stream.total_length ();
@@ -273,6 +278,8 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
   // this particular environment and that isn't handled by the
   // networking infrastructure (e.g., IPSEC).
 
+  // Ptr to first buffer.
+  char *buf = const_cast <char*> (stream.buffer ());
   CORBA::ULong bodylen = static_cast <CORBA::ULong>
                            (total_len - TAO_GIOP_MESSAGE_HEADER_LEN);
 

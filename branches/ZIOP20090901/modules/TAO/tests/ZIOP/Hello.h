@@ -16,6 +16,8 @@ public:
   /// Constructor
   Hello (CORBA::ORB_ptr orb);
 
+  virtual Test::Octet_Seq *get_big_reply (void);
+
   // = The skeleton methods
   virtual char * get_string (const char * mystring);
 
@@ -24,6 +26,8 @@ public:
 private:
   /// Use an ORB reference to conver strings to objects and shutdown
   /// the application.
+  CORBA::ULong length_;
+  
   CORBA::ORB_var orb_;
 };
 
