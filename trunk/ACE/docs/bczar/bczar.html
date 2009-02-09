@@ -409,35 +409,30 @@
       /path/to/build/directory/BUILD_NAME/ by hand.<br>
       5. Think of the group who wrote the scoreboard update script, every time you 
       catch an otherwise not so obvious error with the help of the scoreboard. Tell <a href="mailto:devo-group@list.isis.vanderbilt.edu">
-        DEVO group </a>about it.<br>
-      6. Add $CVSROOT/CVSROOT/etc/FROZEN to freeze the repo
+        DEVO group</a> about it.<br>
+      6. Send a note to  <a href="mailto:sysadmin@isis.vanderbilt.edu">sysadmin@isis.vanderbilt.edu</a> asking for the repo to be frozen. Provide them a list of names, including yourself and bczar to be granted write permission.
       <br>
-      7. Add names of people who need to be given permission and make sure that you 
-      add your name so that you can see what is being checked in.
-      <br>
-      8. Leave a line at the end of the FROZEN file
-      <br>
-      9. Compile once on Win32, Linux and Solaris before cutting a beta.<br>
-      10. Trust the release script when making a release. Don't make tar balls by 
+      7. Compile once on Win32, Linux and Solaris before cutting a beta.<br>
+      8. Trust the release script when making a release. Don't make tar balls by 
       hand. Make sure that the public ftp directories 
       (/project/beguine/ftp/pub/ACE+TAO-distribution and 
       /project/beguine/ftp/pub/ACE+TAO-distribution/diffs) have the right 
       permissions, so that the release script can copy the tar balls.<br>
-      11. When making a release, make sure that all the auto_compiles on that machine 
+      9. When making a release, make sure that all the auto_compiles on that machine 
       (deuce.doc.wustl.edu) are stopped. Also make sure that there is enough space in 
       /tmp on that machine.<br>
-      12. When all hell breaks loose, don't wait for the nightly builds to monitor 
+      10. When all hell breaks loose, don't wait for the nightly builds to monitor 
       improvement. Instead manually start the builds.<br>
-      13. Maintain private up-to-date workspaces for problem platforms (read as 
+      11. Maintain private up-to-date workspaces for problem platforms (read as 
       Solaris).<br>
-      14. Don't hesitate to ask for help.<br>
-      15. When you get an account to access the cvs repo, make sure you are added to 
+      12. Don't hesitate to ask for help.<br>
+      13. When you get an account to access the svn repo, make sure you are added to 
       the correct groups, for example, 
       gid=100(users),5000(doc),5002(acetaodev),5003(cvs). Otherwise you will have 
       problem to checkout various modules.<br>
-      16. Install your public key to the different machines you have frequent access 
+      14. Install your public key to the different machines you have frequent access 
       to avoid typing password.<br>
-      17. Update this page if you have any more tips for future build czars :-). This 
+      15. Update this page if you have any more tips for future build czars :-). This 
       page is in svn under <code>ACE_wrappres/docs/bczar/bczar.html</code><br>
     </p>
     <hr>
