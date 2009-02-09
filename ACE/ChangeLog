@@ -1,3 +1,8 @@
+Mon Feb  9 09:19:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_rel_manpages:
+          We are now using doxygen 1.5.8
+
 Fri Feb  6 15:37:15 UTC 2009  Steven Stallion  <stallions@ociweb.com>
 
         * tests/Log_Thread_Inheritance_Test.cpp:
