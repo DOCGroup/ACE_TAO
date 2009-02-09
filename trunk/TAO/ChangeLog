@@ -1,3 +1,9 @@
+Mon Feb  9 17:33:32 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+        
+          Updated news file.
+
 Thu Feb  5 23:40:24 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/y.tab.cpp:
@@ -1012,12 +1018,12 @@ Thu Jan 22 20:15:54 UTC 2009  Adam Mitz  <mitza@ociweb.com>
           mpc file committed in:
           Wed Dec 17 15:39:46 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
-Thu Jan 22 18:35:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
+Thu Jan 22 18:35:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/orbconf.h:
           Check whether ACE_HAS_SENDFILE is set to 0 or 1
 
-Thu Jan 22 18:27:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
+Thu Jan 22 18:27:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Cache_Entries.inl:
           Print the transport id instead of the transport pointer
@@ -1059,7 +1065,7 @@ Thu Jan 22 18:27:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
         * tao/Transport_Connector.cpp:
           Fixed layout of debug messages
 
-Tue Jan 20 19:37:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
+Tue Jan 20 19:37:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Array_Traits_T.h:
           Deliver dummy release_range to resolve compile errors
@@ -1074,7 +1080,7 @@ Tue Jan 20 19:37:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
         * tao/Transport_Connector.cpp:
           Removed not needed space in debug message
 
-Tue Jan 20 11:05:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl
+Tue Jan 20 11:05:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Connector.cpp:
           Unicode fix
@@ -1506,9 +1512,9 @@ Mon Dec  8 13:55:43 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * tao/ORB_Core.cpp:
 
-          Added check for NULL before assigning global TAO_ORB_Core_Static_Resources
-          to the current service object. This should resolve Bug 3499 on non-Windows
-          systems.
+          Added check for NULL before assigning global
+          TAO_ORB_Core_Static_Resources to the current service
+          object. This should resolve Bug 3499 on non-Windows systems.
 
 Mon Dec  8 13:49:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
