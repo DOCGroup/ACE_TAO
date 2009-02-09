@@ -11,10 +11,16 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.7 and ACE-5.6.8
   faster than pair of strcmp() calls.
 
 . Last micro release that is maintained for Borland/CodeGear C++
-  Builder 2007 and Intel C++ on Windows
+  Builder 2007 and Intel C++ on Windows.
 
 . Fixed crash when ACE thread tries to inherit the logging attributes
-  from non ACE threads
+  from non ACE threads.
+
+. Fixed many small compile and test errors that occur on some platforms.
+
+. Fixed log output formatting on some platforms.
+
+. Bugs fixed:  2748, 3164, 3480, 3494, 3502, 3541, 3542, 3544, 3557. 
 
 USER VISIBLE CHANGES BETWEEN ACE-5.6.6 and ACE-5.6.7
 ====================================================

@@ -1,3 +1,11 @@
+Mon Feb  9 17:35:05 UTC 2009  Phil Mesnier  <phil@phil.ociweb.com>
+
+        * NEWS:
+          Updated news file.
+        
+        * docs/bczar/bczar.html:
+          Changed text to refer to SVN rather than CVS for freeze procedure.
+        
 Mon Feb  9 09:19:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_rel_manpages:
@@ -25,7 +33,7 @@ Thu Feb  5 23:50:27 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Added Ron van Hoof <rvhoof27 at gmail dot com>.
 
-Thu Feb  5 23:17:59 UTC 2009  Phil Mesnier  <phil@phil.ociweb.com>
+Thu Feb  5 23:17:59 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * THANKS:
 
@@ -4001,7 +4009,7 @@ Tue Sep 16 21:58:59 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
           make them inline. Removes a lot of boilerplate code and reduces
           static footprint.
 
-Tue Sep 16 21:12:21 UTC 2008  Phil Mesnier  <phil@ociweb.com>
+Tue Sep 16 21:12:21 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/MakeProjectCreator/config/crosscompile.mpb:
 
