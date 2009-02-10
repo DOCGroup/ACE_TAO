@@ -16,13 +16,13 @@ $status = 0;
 
 my $iorbase = "test.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
+my $client_iorfile = $t3->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
 $SV = $server->CreateProcess ("server", "-o $server_iorfile");
 $T = $client->CreateProcess ("OctetSeq", "-n 32 -l 8192 -h 8192 -s 1 -q");
-$CL = new PerlACE::Process ("client", "-i 5000 -k file://$iorfile");
+$CL = $t3->CreateProcess ("client", "-i 5000 -k file://$client_iorfile");
 
 print STDERR "\n\n==== Octet sequence passing test\n";
 
@@ -49,7 +49,7 @@ if ($client_status != 0) {
 
 $server_status = $SV->WaitKill (25);
 
-if ($serveserver_status != 0) {
+if ($server_status != 0) {
     print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
