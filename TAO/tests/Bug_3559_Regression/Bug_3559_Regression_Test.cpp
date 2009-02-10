@@ -33,7 +33,7 @@ parse_args (int argc, ACE_TCHAR* argv[])
 }
 
 
-int 
+int
 check_logging()
 {
   ACE_TCHAR buf[1024];
@@ -54,7 +54,7 @@ check_logging()
       ///When verbose is on, a line contains a timestamp and a @ character
       if  (ACE_OS::strchr (buf, ACE_TEXT('@')) != 0)
         {
-          ACE_DEBUG((LM_DEBUG, 
+          ACE_DEBUG((LM_DEBUG,
                      ACE_TEXT ("Test OK, a timestamp was found\n")));
           (void) ACE_OS::fclose (fp);
           return 0;
@@ -174,12 +174,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
           argc += extra_argc;
-          
+
           ACE_TCHAR orb_name[25];
           ACE_OS::sprintf (orb_name, ACE_TEXT ("VERBOSE_LOGGING_TEST_%d"), verbose);
 
           CORBA::ORB_var orb = CORBA::ORB_init (argc, largv, orb_name);
-          
+
           u_long log_flags = ACE_LOG_MSG->flags();
 
           ACE_DEBUG ((LM_DEBUG,
@@ -187,7 +187,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       log_flags, verbose));
 
           result += check_flags (log_flags, verbose);
-          
+
           orb->destroy ();
           orb = CORBA::ORB::_nil ();
           ACE_LOG_MSG->restart ();
