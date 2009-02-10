@@ -29,6 +29,8 @@
 #    define ACE_VXWORKS 0x650
 #   elif (_WRS_VXWORKS_MINOR == 6)
 #    define ACE_VXWORKS 0x660
+#   elif (_WRS_VXWORKS_MINOR == 7)
+#    define ACE_VXWORKS 0x670
 #   endif
 #  endif
 # endif
@@ -46,6 +48,8 @@
 # include "ace/config-vxworks6.5.h"
 #elif (ACE_VXWORKS == 0x660)
 # include "ace/config-vxworks6.6.h"
+#elif (ACE_VXWORKS == 0x670)
+# include "ace/config-vxworks6.7.h"
 #else
 #error Unknown VxWorks version
 #endif

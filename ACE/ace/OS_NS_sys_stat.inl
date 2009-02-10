@@ -261,7 +261,7 @@ namespace ACE_OS
       }
     return 0;
 #elif defined (__BORLANDC__) \
-      || (defined (_MSC_VER) && _MSC_VER >= 1300) \
+      || defined (_MSC_VER) \
       || defined (__MINGW32__)
     ACE_OSCALL_RETURN (ACE_WSTAT_FUNC_NAME (file, stp), int, -1);
 #else /* ACE_HAS_WINCE */
