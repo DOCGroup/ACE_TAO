@@ -149,12 +149,13 @@ TAO_ZIOP_Loader::decompress (TAO_InputCDR& cdr)
       
           ACE_Message_Block *mb = const_cast <ACE_Message_Block*> (cdr.start ());
           mb->rd_ptr (initial_rd_ptr);
-          mb->size ((size_t)data.original_length + TAO_GIOP_MESSAGE_HEADER_LEN);
+          if (mb->capacity() < (size_t)(data.original_length + TAO_GIOP_MESSAGE_HEADER_LEN))
+            mb->size ((size_t)(data.original_length + TAO_GIOP_MESSAGE_HEADER_LEN));
           mb->wr_ptr(mb->rd_ptr());
           if (mb->copy((char*)myout.get_buffer(true), 
                   (size_t)data.original_length) != 0)
             ACE_ERROR_RETURN((LM_ERROR, 
-                              ACE_TEXT("Failed to copy decompressed data : Buffer too small")),
+                              ACE_TEXT("Failed to copy decompressed data : Buffer too small\n")),
                               false);
           //change it into a GIOP message..
           mb->base ()[0] = 0x47;

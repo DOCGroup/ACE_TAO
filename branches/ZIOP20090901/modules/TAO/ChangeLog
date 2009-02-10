@@ -1,20 +1,31 @@
+Tue Feb 10 10:43:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+      * tao/GIOP_Message_Base.cpp:
+      * tao/GIOP_Message_Base.h:
+        Fixed error in printing consolidated messages.
+        
+      * tao/ZIOP/ZIOP.cpp:
+        Fixed error in decompression. If there's an offset in
+        ACE_Message_Block due to byte alignment, copying
+        data into that ACE_Message_Block went wrong.
+
 Tue Feb 10 08:17:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
-      * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp
-      * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp
-      * tao/GIOP_Message_Base.cpp
-      * tao/GIOP_Message_Base.h
-      * tao/IIOP_Transport.cpp
-      * tao/Strategies/DIOP_Transport.cpp
-      * tao/Strategies/SHMIOP_Transport.cpp
-      * tao/Synch_Invocation.cpp
-      * tao/Transport.cpp
-      * tao/Transport.h
+      * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
+      * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+      * tao/GIOP_Message_Base.cpp:
+      * tao/GIOP_Message_Base.h:
+      * tao/IIOP_Transport.cpp:
+      * tao/Strategies/DIOP_Transport.cpp:
+      * tao/Strategies/SHMIOP_Transport.cpp:
+      * tao/Synch_Invocation.cpp:
+      * tao/Transport.cpp:
+      * tao/Transport.h:
         Centralized compression of GIOP messages.
 
-      * tao/ZIOP/ZIOP.cpp
-      * tao/ZIOP/ZIOP.h
-      * tao/ZIOP_Adapter.h
+      * tao/ZIOP/ZIOP.cpp:
+      * tao/ZIOP/ZIOP.h:
+      * tao/ZIOP_Adapter.h:
         Improved error handling and logging.
 
 Mon Feb 09 14:48:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>

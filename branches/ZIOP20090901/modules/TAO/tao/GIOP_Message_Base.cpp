@@ -236,6 +236,30 @@ TAO_GIOP_Message_Base::generate_fragment_header (TAO_OutputCDR & cdr,
   return 0;
 }
 
+int 
+TAO_GIOP_Message_Base::dump_consolidated_msg (TAO_OutputCDR &stream, bool hex_dump_only)
+{
+  // Check whether the output cdr stream is build up of multiple
+  // messageblocks. If so, consolidate them to one block that can be
+  // dumped
+  ACE_Message_Block* consolidated_block = 0;
+  char *buf = const_cast <char*> (stream.buffer ());
+  size_t const total_len = stream.total_length ();
+  if (stream.begin()->cont () != 0)
+    {
+      ACE_NEW_RETURN (consolidated_block, ACE_Message_Block, 0);
+      ACE_CDR::consolidate (consolidated_block, stream.begin ());
+      buf = (char *) (consolidated_block->rd_ptr ());
+    }
+  ///
+  this->dump_msg ("send", reinterpret_cast <u_char *> (buf), total_len, hex_dump_only);
+
+  //
+  delete consolidated_block;
+  consolidated_block = 0;
+  //
+}
+
 int
 TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub& stub)
 {
@@ -249,10 +273,9 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub& stub)
     {
       if (TAO_debug_level >= 5)
         {
-          ACE_HEX_DUMP ((LM_DEBUG,
-                          const_cast <char*> (stream.current ()->rd_ptr ()),
-                          stream.current ()->length (),
-                          ACE_TEXT ("GIOP message before compression")));
+          ACE_DEBUG ((LM_DEBUG, 
+            ACE_TEXT("GIOP message before compression :\n")));
+          this->dump_consolidated_msg (stream, true);
         }
       bool compressed;
       if (&stub == 0)
@@ -302,23 +325,7 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub& stub)
 
   if (TAO_debug_level >= 5)
     {
-      // Check whether the output cdr stream is build up of multiple
-      // messageblocks. If so, consolidate them to one block that can be
-      // dumped
-      ACE_Message_Block* consolidated_block = 0;
-      if (stream.begin()->cont () != 0)
-        {
-          ACE_NEW_RETURN (consolidated_block, ACE_Message_Block, 0);
-          ACE_CDR::consolidate (consolidated_block, stream.begin ());
-          buf = (char *) (consolidated_block->rd_ptr ());
-        }
-      ///
-      this->dump_msg ("send", reinterpret_cast <u_char *> (buf), total_len);
-
-      //
-      delete consolidated_block;
-      consolidated_block = 0;
-      //
+      this->dump_consolidated_msg (stream, false);
     }
 
   return 0;
@@ -1506,7 +1513,8 @@ TAO_GIOP_Message_Base::send_reply_exception (
 void
 TAO_GIOP_Message_Base::dump_msg (const char *label,
                                  const u_char *ptr,
-                                 size_t len)
+                                 size_t len,
+                                 bool hex_dump_only)
 {
     if (TAO_debug_level < 10)
       {
@@ -1576,19 +1584,22 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
       }
 
     // Print.
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - GIOP_Message_Base::dump_msg, "
-                "%C %s v%c.%c msg, %d data bytes, %s endian, "
-                "%s compressed, Type %C[%u]\n",
-                label,
-                message_type,
-                digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
-                digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
-                len - TAO_GIOP_MESSAGE_HEADER_LEN ,
-                (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
-                (compressed == 0) ? ACE_TEXT("not") : ACE_TEXT("is"),
-                message_name,
-                *id));
+    if (!hex_dump_only)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - GIOP_Message_Base::dump_msg, "
+                    "%C %s v%c.%c msg, %d data bytes, %s endian, "
+                    "%s compressed, Type %C[%u]\n",
+                    label,
+                    message_type,
+                    digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
+                    digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
+                    len - TAO_GIOP_MESSAGE_HEADER_LEN ,
+                    (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
+                    (compressed == 0) ? ACE_TEXT("not") : ACE_TEXT("is"),
+                    message_name,
+                    *id));
+      }
 
     ACE_HEX_DUMP ((LM_DEBUG,
                    (const char *) ptr,
