@@ -1,3 +1,9 @@
+Tue Feb 10 18:26:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux.GNU:
+          Changed how we detect broken GCC versions, not check on the platform
+          but check on the gcc version (RedHat 4.1.1 or 4.1.2)
+
 Tue Feb 10 18:25:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-ciao.spec:
