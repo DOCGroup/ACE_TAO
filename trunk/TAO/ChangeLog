@@ -1,3 +1,11 @@
+Tue Feb 10 18:33:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3565_Regression/*
+          New test for bugzilla 3565
+
+        * tests/Bug_3566_Regression/*
+          New test for bugzilla 3566
+
 Tue Feb 10 18:32:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
