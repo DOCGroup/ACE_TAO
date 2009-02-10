@@ -18,7 +18,7 @@ project(CIAO_TargetManager_stub):  dance_lib, ccm_stub, dance_deployment_stub, d
   sharedname = CIAO_TargetManager_stub
   after += CIAO_TargetManager_idl
   dynamicflags   = TARGETMANAGER_STUB_BUILD_DLL
-
+  requires += dummy_label
   IDL_Files {
   }
 
@@ -36,7 +36,7 @@ project(CIAO_TargetManager_svnt) : ciao_servant, ciao_targetmanager_stub, dance_
                 -Wb,export_include=TargetManager_svnt_export.h
 
   dynamicflags = TARGETMANAGER_SVNT_BUILD_DLL
-
+  requires += dummy_label
   CIDL_Files {
     TargetManager.cidl
   }
@@ -59,7 +59,7 @@ project(CIAO_TargetManager_exec) : ciao_executor, ciao_domainapplicationmanager_
   sharedname = TargetManager_exec
    requires += dummy_label
   dynamicflags   = TARGETMANAGER_EXEC_BUILD_DLL
-
+  requires += dummy_label
   Source_Files {
     DomainDataManager.cpp
     TargetManager_exec.cpp
