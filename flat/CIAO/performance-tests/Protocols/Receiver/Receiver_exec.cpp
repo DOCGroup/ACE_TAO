@@ -219,8 +219,7 @@ namespace CIDL_ReceiverImpl
 
     this->orb_ =
       CORBA::ORB_init (argc,
-                      argv,
-                      "");
+                      argv);
 
   }
 

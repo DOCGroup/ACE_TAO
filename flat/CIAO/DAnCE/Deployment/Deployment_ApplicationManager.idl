@@ -7,27 +7,27 @@
 
 module Deployment {
 
-	exception ResourceNotAvailable {
-		string name;
-		string resourceType;
-		string propertyName;
-		string elementName;
-		string resourceName;
-	};
+  exception ResourceNotAvailable {
+    string name;
+    string resourceType;
+    string propertyName;
+    string elementName;
+    string resourceName;
+  };
 
-	interface ApplicationManager {
-		//@! in DOCGroup has additional parameter
-		Application startLaunch (	in Properties configProperty, 
-									out Connections providedReference)
-			raises (ResourceNotAvailable, 
-					StartError, 
-					InvalidProperty, 
-					InvalidNodeExecParameter, 
-					InvalidComponentExecParameter);
-			
-		void destroyApplication (in Application app)
-			raises (StopError);
-	};
+  interface ApplicationManager {
+    //@! in DOCGroup has additional parameter
+    Application startLaunch (       in Properties configProperty, 
+                                    out Connections providedReference)
+      raises (ResourceNotAvailable, 
+              StartError, 
+              InvalidProperty, 
+              InvalidNodeExecParameter, 
+              InvalidComponentExecParameter);
+                        
+    void destroyApplication (in Application app)
+      raises (StopError);
+  };
 };
 
 #endif /* DEPLOYMENT_APPLICATIONMANAGER_IDL */

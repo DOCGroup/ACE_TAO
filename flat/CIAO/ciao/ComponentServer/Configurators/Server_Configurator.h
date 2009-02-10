@@ -1,7 +1,7 @@
 //$Id$
 /**========================================================
  *
- * @file   ComponentServer_Configurator.h
+ * @file   Server_Configurator.h
  *
  * @Brief  This file contains the implementation of
  *         the basic ComponentServer_Configurator interface, the one

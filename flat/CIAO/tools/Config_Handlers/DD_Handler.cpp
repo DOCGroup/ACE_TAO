@@ -170,7 +170,6 @@ namespace CIAO
 
     ::Deployment::Domain const *
     DD_Handler::domain_idl () const
-      throw (DD_Handler::NoDomain)
     {
       if(!this->idl_domain_.get())
         throw NoDomain ();
@@ -181,7 +180,6 @@ namespace CIAO
 
     ::Deployment::Domain *
     DD_Handler::domain_idl ()
-      throw (DD_Handler::NoDomain)
     {
       if(!this->idl_domain_.get())
         throw NoDomain();
@@ -192,7 +190,6 @@ namespace CIAO
 
     Domain const *
     DD_Handler::domain_xsc () const
-      throw (DD_Handler::NoDomain)
     {
       if(!this->domain_.get())
         throw NoDomain ();
@@ -203,7 +200,6 @@ namespace CIAO
 
     Domain *
     DD_Handler::domain_xsc ()
-      throw (DD_Handler::NoDomain)
     {
       if(!this->domain_.get())
         throw NoDomain ();

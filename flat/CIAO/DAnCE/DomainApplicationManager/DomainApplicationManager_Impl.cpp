@@ -483,8 +483,8 @@ DomainApplicationManager_Impl::preparePlan()
   catch (CORBA::Exception &ex)
     {
       DANCE_ERROR ((LM_ERROR, DLINFO "DomainApplicationManager_Impl::preparePlan - "
-		    "Caught a CORBA exception, propagating StartError: %s\n",
-		    ex._info ().c_str ()));
+                    "Caught a CORBA exception, propagating StartError: %s\n",
+                    ex._info ().c_str ()));
       throw ::Deployment::StartError ();
     }
   catch (...)

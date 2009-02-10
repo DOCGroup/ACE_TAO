@@ -1,5 +1,5 @@
 /** 
- * @file simple_nm_launcher.cpp
+ * @file simple_em_launcher.cpp
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  * 
  * Launches then immediately tears down a plan. 

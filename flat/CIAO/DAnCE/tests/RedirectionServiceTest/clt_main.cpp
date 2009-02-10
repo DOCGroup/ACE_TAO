@@ -90,7 +90,7 @@ bool test (const ACE_CString& url)
 };
 
 
-int main (int argc, char * argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   orb = CORBA::ORB_init (argc, argv);
 

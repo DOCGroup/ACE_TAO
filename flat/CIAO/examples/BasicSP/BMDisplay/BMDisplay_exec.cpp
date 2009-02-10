@@ -94,8 +94,8 @@ create_BasicSP_BMDisplay_Impl (void)
     ::Components::EnterpriseComponent::_nil ();
   
   ACE_NEW_RETURN (retval,
-		  MyImpl::BMDisplay_exec_i,
-		  ::Components::EnterpriseComponent::_nil ());
+                  MyImpl::BMDisplay_exec_i,
+                  ::Components::EnterpriseComponent::_nil ());
   
   return retval;
 }

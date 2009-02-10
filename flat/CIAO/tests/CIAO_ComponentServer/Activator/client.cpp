@@ -41,7 +41,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-ACE_TMAIN (int argc,  char **argv)
+ACE_TMAIN (int argc,  ACE_TCHAR **argv)
 {
   using namespace CIAO::Deployment;
   

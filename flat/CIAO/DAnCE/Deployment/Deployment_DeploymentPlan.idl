@@ -9,200 +9,200 @@
 #include "tao/Typecode_types.pidl"
 
 module Deployment {
-	enum CCMComponentPortKind {
-		Facet,
-		SimplexReceptacle,
-		MultiplexReceptacle,
-		EventEmitter,
-		EventPublisher,
-		EventConsumer
-	};
+        enum CCMComponentPortKind {
+                Facet,
+                SimplexReceptacle,
+                MultiplexReceptacle,
+                EventEmitter,
+                EventPublisher,
+                EventConsumer
+        };
 
-	struct ComponentPortDescription {
-		string name;
-		string specificType;
-		::CORBA::StringSeq supportedType;
-		boolean provider;
-		boolean exclusiveProvider;
-		boolean exclusiveUser;
-		boolean optional;
-		CCMComponentPortKind kind;
-	};
+        struct ComponentPortDescription {
+                string name;
+                string specificType;
+                ::CORBA::StringSeq supportedType;
+                boolean provider;
+                boolean exclusiveProvider;
+                boolean exclusiveUser;
+                boolean optional;
+                CCMComponentPortKind kind;
+        };
 
-	typedef sequence < ComponentPortDescription > ComponentPortDescriptions;
+        typedef sequence < ComponentPortDescription > ComponentPortDescriptions;
 
-	struct ComponentPropertyDescription {
-		string name;
-		CORBA::TypeCode type;
-	};
+        struct ComponentPropertyDescription {
+                string name;
+                CORBA::TypeCode type;
+        };
 
-	typedef sequence < ComponentPropertyDescription > ComponentPropertyDescriptions;
+        typedef sequence < ComponentPropertyDescription > ComponentPropertyDescriptions;
 
-	struct ComponentInterfaceDescription {
-		string label;
-		string UUID;
-		string specificType;
-		::CORBA::StringSeq supportedType;
-		::CORBA::StringSeq idlFile;
-		Properties configProperty;
-		ComponentPortDescriptions port;
-		ComponentPropertyDescriptions property;
-		Properties infoProperty;
-	};
+        struct ComponentInterfaceDescription {
+                string label;
+                string UUID;
+                string specificType;
+                ::CORBA::StringSeq supportedType;
+                ::CORBA::StringSeq idlFile;
+                Properties configProperty;
+                ComponentPortDescriptions port;
+                ComponentPropertyDescriptions property;
+                Properties infoProperty;
+        };
 
-	struct MonolithicDeploymentDescription {
-		string name;
-		::CORBA::StringSeq source;
-		::CORBA::ULongSeq artifactRef;
-		Properties execParameter;
-		Requirements deployRequirement;
-	};
+        struct MonolithicDeploymentDescription {
+                string name;
+                ::CORBA::StringSeq source;
+                ::CORBA::ULongSeq artifactRef;
+                Properties execParameter;
+                Requirements deployRequirement;
+        };
 
-	typedef sequence < MonolithicDeploymentDescription > MonolithicDeploymentDescriptions;
+        typedef sequence < MonolithicDeploymentDescription > MonolithicDeploymentDescriptions;
 
-	enum ResourceUsageKind {
-		None,
-		InstanceUsesResource,
-		ResourceUsesInstance,
-		PortUsesResource,
-		ResourceUsesPort
-	};
+        enum ResourceUsageKind {
+                None,
+                InstanceUsesResource,
+                ResourceUsesInstance,
+                PortUsesResource,
+                ResourceUsesPort
+        };
 
-	struct InstanceResourceDeploymentDescription {
-		ResourceUsageKind resourceUsage;
-		string requirementName;
-		string resourceName;
-		Properties property;
-	};
+        struct InstanceResourceDeploymentDescription {
+                ResourceUsageKind resourceUsage;
+                string requirementName;
+                string resourceName;
+                Properties property;
+        };
 
-	typedef sequence < InstanceResourceDeploymentDescription > InstanceResourceDeploymentDescriptions;
+        typedef sequence < InstanceResourceDeploymentDescription > InstanceResourceDeploymentDescriptions;
 
-	struct InstanceDeploymentDescription {
-		string name;
-		string node;
-		::CORBA::StringSeq source;
-		unsigned long implementationRef;
-		Properties configProperty;
-		InstanceResourceDeploymentDescriptions deployedResource;
-		InstanceResourceDeploymentDescriptions deployedSharedResource;
-	};
+        struct InstanceDeploymentDescription {
+                string name;
+                string node;
+                ::CORBA::StringSeq source;
+                unsigned long implementationRef;
+                Properties configProperty;
+                InstanceResourceDeploymentDescriptions deployedResource;
+                InstanceResourceDeploymentDescriptions deployedSharedResource;
+        };
 
-	typedef sequence < InstanceDeploymentDescription > InstanceDeploymentDescriptions;
+        typedef sequence < InstanceDeploymentDescription > InstanceDeploymentDescriptions;
 
-	struct ComponentExternalPortEndpoint {
-		string portName;
-	};
+        struct ComponentExternalPortEndpoint {
+                string portName;
+        };
 
-	typedef sequence < ComponentExternalPortEndpoint > ComponentExternalPortEndpoints;
+        typedef sequence < ComponentExternalPortEndpoint > ComponentExternalPortEndpoints;
 
-	struct PlanSubcomponentPortEndpoint {
-		string portName;
-		boolean provider;
-		CCMComponentPortKind kind;
-		unsigned long instanceRef;
-	};
+        struct PlanSubcomponentPortEndpoint {
+                string portName;
+                boolean provider;
+                CCMComponentPortKind kind;
+                unsigned long instanceRef;
+        };
 
-	typedef sequence < PlanSubcomponentPortEndpoint > PlanSubcomponentPortEndpoints;
-	
-	//@! in DOCGroup provider, portName and supportesType are removed
-	struct ExternalReferenceEndpoint {
-		string location;
-		boolean provider;
-		string portName;
-		::CORBA::StringSeq supportedType;
-	};
+        typedef sequence < PlanSubcomponentPortEndpoint > PlanSubcomponentPortEndpoints;
+        
+        //@! in DOCGroup provider, portName and supportesType are removed
+        struct ExternalReferenceEndpoint {
+                string location;
+                boolean provider;
+                string portName;
+                ::CORBA::StringSeq supportedType;
+        };
 
-	typedef sequence < ExternalReferenceEndpoint > ExternalReferenceEndpoints;
+        typedef sequence < ExternalReferenceEndpoint > ExternalReferenceEndpoints;
 
-	struct ConnectionResourceDeploymentDescription {
-		string targetName;
-		string requirementName;
-		string resourceName;
-		Properties property;
-	};
+        struct ConnectionResourceDeploymentDescription {
+                string targetName;
+                string requirementName;
+                string resourceName;
+                Properties property;
+        };
 
-	typedef sequence < ConnectionResourceDeploymentDescription > ConnectionResourceDeploymentDescriptions;
+        typedef sequence < ConnectionResourceDeploymentDescription > ConnectionResourceDeploymentDescriptions;
 
-	struct PlanConnectionDescription {
-		string name;
-		::CORBA::StringSeq source;
-		Requirements deployRequirement;
-		ComponentExternalPortEndpoints externalEndpoint;
-		PlanSubcomponentPortEndpoints internalEndpoint;
-		ExternalReferenceEndpoints externalReference;
-		ConnectionResourceDeploymentDescriptions deployedResource;
-	};
+        struct PlanConnectionDescription {
+                string name;
+                ::CORBA::StringSeq source;
+                Requirements deployRequirement;
+                ComponentExternalPortEndpoints externalEndpoint;
+                PlanSubcomponentPortEndpoints internalEndpoint;
+                ExternalReferenceEndpoints externalReference;
+                ConnectionResourceDeploymentDescriptions deployedResource;
+        };
 
-	typedef sequence < PlanConnectionDescription > PlanConnectionDescriptions;
+        typedef sequence < PlanConnectionDescription > PlanConnectionDescriptions;
 
-	struct PlanSubcomponentPropertyReference {
-		string propertyName;
-		unsigned long instanceRef;
-	};
+        struct PlanSubcomponentPropertyReference {
+                string propertyName;
+                unsigned long instanceRef;
+        };
 
-	typedef sequence < PlanSubcomponentPropertyReference > PlanSubcomponentPropertyReferences;
+        typedef sequence < PlanSubcomponentPropertyReference > PlanSubcomponentPropertyReferences;
 
-	struct PlanPropertyMapping {
-		string name;
-		::CORBA::StringSeq source;
-		string externalName;
-		PlanSubcomponentPropertyReferences delegatesTo;
-	};
+        struct PlanPropertyMapping {
+                string name;
+                ::CORBA::StringSeq source;
+                string externalName;
+                PlanSubcomponentPropertyReferences delegatesTo;
+        };
 
-	typedef sequence < PlanPropertyMapping > PlanPropertyMappings;
+        typedef sequence < PlanPropertyMapping > PlanPropertyMappings;
 
-	struct ImplementationDependency {
-		string requiredType;
-	};
+        struct ImplementationDependency {
+                string requiredType;
+        };
 
-	typedef sequence < ImplementationDependency > ImplementationDependencies;
+        typedef sequence < ImplementationDependency > ImplementationDependencies;
 
-	struct ResourceDeploymentDescription {
-		string requirementName;
-		string resourceName;
-		Properties property;
-	};
+        struct ResourceDeploymentDescription {
+                string requirementName;
+                string resourceName;
+                Properties property;
+        };
 
-	typedef sequence < ResourceDeploymentDescription > ResourceDeploymentDescriptions;
+        typedef sequence < ResourceDeploymentDescription > ResourceDeploymentDescriptions;
 
-	struct ArtifactDeploymentDescription {
-		string name;
-		::CORBA::StringSeq location;
-		string node;
-		::CORBA::StringSeq source;
-		Properties execParameter;
-		Requirements deployRequirement;
-		ResourceDeploymentDescriptions deployedResource;
-	};
+        struct ArtifactDeploymentDescription {
+                string name;
+                ::CORBA::StringSeq location;
+                string node;
+                ::CORBA::StringSeq source;
+                Properties execParameter;
+                Requirements deployRequirement;
+                ResourceDeploymentDescriptions deployedResource;
+        };
 
-	typedef sequence < ArtifactDeploymentDescription > ArtifactDeploymentDescriptions;
+        typedef sequence < ArtifactDeploymentDescription > ArtifactDeploymentDescriptions;
 
-	enum PlanLocalityKind {
-		PlanSameProcess,
-		PlanDifferentProcess,
-		PlanNoConstraint
-	};
+        enum PlanLocalityKind {
+                PlanSameProcess,
+                PlanDifferentProcess,
+                PlanNoConstraint
+        };
 
-	struct PlanLocality {
-		PlanLocalityKind constraint;
-		::CORBA::ULongSeq constrainedInstanceRef;
-	};
-	//@! in DOCGroup not implemented
-	typedef sequence < PlanLocality > PlanLocalities;
-	//@! in DOCGroup localityConstraint is commented
-	struct DeploymentPlan {
-		string label;
-		string UUID;
-		ComponentInterfaceDescription realizes;
-		MonolithicDeploymentDescriptions implementation;
-		InstanceDeploymentDescriptions instance;
-		PlanConnectionDescriptions connection;
-		PlanPropertyMappings externalProperty;
-		ImplementationDependencies dependsOn;
-		ArtifactDeploymentDescriptions artifact;
-		Properties infoProperty;
-		PlanLocalities localityConstraint;
-	};
+        struct PlanLocality {
+                PlanLocalityKind constraint;
+                ::CORBA::ULongSeq constrainedInstanceRef;
+        };
+        //@! in DOCGroup not implemented
+        typedef sequence < PlanLocality > PlanLocalities;
+        //@! in DOCGroup localityConstraint is commented
+        struct DeploymentPlan {
+                string label;
+                string UUID;
+                ComponentInterfaceDescription realizes;
+                MonolithicDeploymentDescriptions implementation;
+                InstanceDeploymentDescriptions instance;
+                PlanConnectionDescriptions connection;
+                PlanPropertyMappings externalProperty;
+                ImplementationDependencies dependsOn;
+                ArtifactDeploymentDescriptions artifact;
+                Properties infoProperty;
+                PlanLocalities localityConstraint;
+        };
 };
 
 #endif /* DEPLOYMENT_DATA_IDL */

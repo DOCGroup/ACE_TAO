@@ -27,7 +27,6 @@ namespace CIAO
     void
     Any_Handler::extract_into_any (const Any& desc,
                                    CORBA::Any& toconfig)
-      throw (Config_Error)
     {
       CIAO_TRACE("Any_Handler::extract_into_any");
       try
@@ -50,7 +49,6 @@ namespace CIAO
     }
 
     Any Any_Handler::get_any (const ::CORBA::Any& src)
-      throw (Config_Error)
     {
       CIAO_TRACE("Any_Handler::extract_into_any - reverse");
 

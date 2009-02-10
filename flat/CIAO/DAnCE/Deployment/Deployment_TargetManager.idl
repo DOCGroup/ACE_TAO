@@ -18,22 +18,22 @@ module Deployment {
     UpdateDynamic
   };
 
-	interface TargetManager {
+  interface TargetManager {
 
-		Domain getAllResources ();
+    Domain getAllResources ();
 
-		Domain getAvailableResources ();
+    Domain getAvailableResources ();
 
-		//@! in DOCGroup renamed to createResourceCommitment
-		ResourceCommitmentManager commitResources (in ResourceAllocations resources)
-			raises (ResourceCommitmentFailure);
+    //@! in DOCGroup renamed to createResourceCommitment
+    ResourceCommitmentManager commitResources (in ResourceAllocations resources)
+      raises (ResourceCommitmentFailure);
 
-		void destroyResourceCommitment (in ResourceCommitmentManager manager);
+    void destroyResourceCommitment (in ResourceCommitmentManager manager);
 
-		void updateDomain (	in ::CORBA::StringSeq elements,
-							in Domain domainSubset,
-							in DomainUpdateKind updateKind);
-	};
+    void updateDomain ( in ::CORBA::StringSeq elements,
+                        in Domain domainSubset,
+                        in DomainUpdateKind updateKind);
+  };
 };
 
 #endif /* TARGETMANAGER_IDL */

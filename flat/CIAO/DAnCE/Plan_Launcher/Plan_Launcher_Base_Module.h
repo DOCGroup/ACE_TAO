@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file Plan_Launcher_Module.h
+ * @file Plan_Launcher_Base_Module.h
  *
  * $Id$
  *

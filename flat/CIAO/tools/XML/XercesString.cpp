@@ -87,7 +87,7 @@ namespace CIAO
         {
           XMLCh *result = new XMLCh[ size() - (tail - head) + 1 ];
           XMLCh *target = result;
-          bOK = target != NULL;
+          bOK = target != 0;
           if (bOK)
             {
               const XMLCh *cursor = begin();

@@ -1,6 +1,6 @@
 /**
- * @file ComponentServer_Base.idl
- *
+ * @file CCM_ComponentServer_Base.idl
+ * $Id$
  * Contains base types for all componenent server interfaces.
  * These interfaces are not part of the CCM standard.
  */

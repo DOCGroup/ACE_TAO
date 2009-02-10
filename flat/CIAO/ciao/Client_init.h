@@ -48,10 +48,10 @@ namespace CIAO
   namespace Utility
   {
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-				    CORBA::Any,
-				    ACE_Hash<ACE_CString>,
-				    ACE_Equal_To<ACE_CString>,
-				    ACE_Null_Mutex> CONFIGVALUE_MAP;
+                                    CORBA::Any,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_Null_Mutex> CONFIGVALUE_MAP;
   
     void CIAO_CLIENT_Export build_config_values_map (CONFIGVALUE_MAP &map, 
                                                      const ::Components::ConfigValues &config);

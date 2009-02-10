@@ -11,7 +11,7 @@
 
 #ifndef DANCE_COMMON_H
 #define DANCE_COMMON_H
-#include /**/ <ace/pre.h>
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 #include "ace/Hash_Map_Manager_T.h"

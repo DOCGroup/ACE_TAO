@@ -583,8 +583,7 @@ CIDL_SenderImpl::SenderExec_i::start (
 
   this->orb_ =
     CORBA::ORB_init (argc,
-                     argv,
-                     "");
+                     argv);
 
   CORBA::Object_var object =
     this->orb_->resolve_initial_references ("RTORB");

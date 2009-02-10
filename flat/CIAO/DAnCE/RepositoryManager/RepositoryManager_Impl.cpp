@@ -919,7 +919,6 @@ CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_descriptors (const char* pc_nam
     {
 //CHANGE(vt){
        //CIAO::Config_Handlers::Packaging::PCD_Handler::package_config (pc_name, *pc);
-       throw (int)1;
 //}
     }
   catch (...)

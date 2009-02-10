@@ -1,3 +1,4 @@
+// $Id$
 project (XSC_DynAny_Test) : ciao_config_handlers, ifr_client, taoidldefaults {
   requires += dummy_label
   exename = test

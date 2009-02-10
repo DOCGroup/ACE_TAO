@@ -77,7 +77,7 @@ namespace CIDL_SimpleUser_Impl
       {
         CIAO_ERROR ((LM_ERROR, "SimpleUser_exec_i::ccm_activate () - "
                      "Error: Reference nil for port trig\n"));
-	return;
+        return;
       }
     
     // Your code here.

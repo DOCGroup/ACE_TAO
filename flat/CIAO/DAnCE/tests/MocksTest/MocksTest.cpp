@@ -2,7 +2,7 @@
 #include "Mocks/ComponentServer_Impl.h"
 #include "tao/ORB.h"
 
-int main(int argc, ACE_TCHAR* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   {
 
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);

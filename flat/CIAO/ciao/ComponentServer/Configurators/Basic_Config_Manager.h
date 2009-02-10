@@ -12,7 +12,7 @@
 
 #ifndef CIAO_NACONFIG_MANAGER_H
 #define CIAO_NACONFIG_MANAGER_H
-#include /**/ <ace/pre.h>
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -59,14 +59,14 @@ namespace CIAO
       CORBA::ORB_var orb_;
 
       CORBA::Policy_ptr create_single_policy
-	(const PolicyDef &policy_def);
+        (const PolicyDef &policy_def);
 
       /// Hash_Map stuff.
       typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-	CORBA::PolicyList_var,
-	ACE_Hash<ACE_CString>,
-	ACE_Equal_To<ACE_CString>,
-	ACE_Null_Mutex> POLICY_MAP;
+        CORBA::PolicyList_var,
+        ACE_Hash<ACE_CString>,
+        ACE_Equal_To<ACE_CString>,
+        ACE_Null_Mutex> POLICY_MAP;
 
     /// Internal TP names to id map.
     POLICY_MAP policy_map_;

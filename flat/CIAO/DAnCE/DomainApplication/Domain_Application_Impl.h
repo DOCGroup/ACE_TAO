@@ -1,6 +1,6 @@
 /**========================================================
  *
- * @file   DomainApplication_Impl.h
+ * @file   DomainApplication_Impl_Impl.h
  *
  * @Brief  This file contains the implementation of
  *         the DomainApplication interface.

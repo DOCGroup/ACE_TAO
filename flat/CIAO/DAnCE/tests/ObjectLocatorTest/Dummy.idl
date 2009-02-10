@@ -1,12 +1,12 @@
-
+// $Id$
 #ifndef DUMMY_IDL
 #define DUMMY_IDL
 
 module ObjectLocatorTest
 {
-	interface Dummy {
-		string sayHello();
-	};
+        interface Dummy {
+                string sayHello();
+        };
 };
 
 #endif /* DUMMY_IDL */

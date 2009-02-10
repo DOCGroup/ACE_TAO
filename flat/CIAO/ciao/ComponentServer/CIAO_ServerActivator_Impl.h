@@ -1,5 +1,5 @@
 /**
- * @file CIAO_ServerActivator.h
+ * @file CIAO_ServerActivator_Impl.h
  * @author William R. Otte
  */
 

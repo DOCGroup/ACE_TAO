@@ -1,7 +1,7 @@
 /**
  * @file CIAO_FailureReasons.idl
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *
+ * $Id$
  * Failure code definitions for CIAO.  The VID is based on that of TAO, but
  * our failure reasons start at that base since this is a different namespace. 
  */

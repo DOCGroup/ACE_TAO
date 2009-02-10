@@ -227,7 +227,7 @@ bool check_foo_struct (CORBA::Any &any)
     check_stringseq (&foo->string_sequence);
 }
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {

@@ -1,7 +1,7 @@
 /**
  * @file Session_Container.idl
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *
+ * $Id$
  * Extends the basic container interface for session capabilities.
  */
 

@@ -44,8 +44,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   //
   CORBA::ORB_var orb =
     CORBA::ORB_init (argc,
-                     argv,
-                     "");
+                     argv);
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"));
   int c;

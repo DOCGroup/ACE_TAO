@@ -108,7 +108,7 @@ namespace CIAO
                                            oid.out ());
 
       if (this->home_servant_)
-	this->home_servant_->update_component_map (oid);
+        this->home_servant_->update_component_map (oid);
     }
     catch (const CORBA::Exception& ex)
     {
@@ -129,8 +129,8 @@ namespace CIAO
     CIAO_TRACE("Servant_Impl_Base::get_all_ports (void)");
     OBV_Components::ComponentPortDescription *cps = 0;
     ACE_NEW_THROW_EX (cps,
-		      OBV_Components::ComponentPortDescription,
-		      CORBA::NO_MEMORY ());
+                      OBV_Components::ComponentPortDescription,
+                      CORBA::NO_MEMORY ());
     ::Components::ComponentPortDescription_var retv = cps;
 
     ::Components::FacetDescriptions_var facets_desc =
@@ -183,8 +183,8 @@ namespace CIAO
     CIAO_TRACE("Servant_Impl_Base::get_named_facets");
     Components::FacetDescriptions *retval = 0;
     ACE_NEW_THROW_EX (retval,
-		      ::Components::FacetDescriptions,
-		      CORBA::NO_MEMORY ());
+                      ::Components::FacetDescriptions,
+                      CORBA::NO_MEMORY ());
     Components::FacetDescriptions_var safe_retval = retval;
     CORBA::ULong const len = names.length ();
     safe_retval->length (len);
@@ -211,8 +211,8 @@ namespace CIAO
     CIAO_TRACE ("Servant_Impl_Base::get_all_facets (void)");
     ::Components::FacetDescriptions *tmp = 0;
     ACE_NEW_THROW_EX (tmp,
-		      ::Components::FacetDescriptions,
-		      CORBA::NO_MEMORY ());
+                      ::Components::FacetDescriptions,
+                      CORBA::NO_MEMORY ());
 
     ::Components::FacetDescriptions_var retval = tmp;
 
@@ -284,7 +284,7 @@ namespace CIAO
     Components::ConsumerDescriptions *retval = 0;
     ACE_NEW_THROW_EX (retval,
                     ::Components::ConsumerDescriptions,
-		      CORBA::NO_MEMORY ());
+                      CORBA::NO_MEMORY ());
     Components::ConsumerDescriptions_var safe_retval = retval;
     CORBA::ULong const len = names.length ();
     safe_retval->length (len);
@@ -321,8 +321,8 @@ namespace CIAO
 
     ::Components::ReceptacleDescriptions *tmp = 0;
     ACE_NEW_THROW_EX (tmp,
-		      ::Components::ReceptacleDescriptions,
-		      CORBA::NO_MEMORY ());
+                      ::Components::ReceptacleDescriptions,
+                      CORBA::NO_MEMORY ());
 
     ::Components::ReceptacleDescriptions_var retval = tmp;
 
@@ -379,10 +379,10 @@ namespace CIAO
 
     ::Components::FacetDescription *fd = 0;
     ACE_NEW_THROW_EX (fd,
-		      ::OBV_Components::FacetDescription (port_name,
-							  port_ref->_interface_repository_id (),
-							  port_ref),
-		      CORBA::NO_MEMORY ());
+                      ::OBV_Components::FacetDescription (port_name,
+                                                          port_ref->_interface_repository_id (),
+                                                          port_ref),
+                      CORBA::NO_MEMORY ());
     ::Components::FacetDescription_var safe = fd;
 
     FacetTable::value_type entry;
@@ -391,7 +391,7 @@ namespace CIAO
 
     {
       ACE_WRITE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
-				CORBA::NO_RESOURCES ());
+                                CORBA::NO_RESOURCES ());
 
       (void) this->facet_table_.insert (entry);
     }
@@ -407,9 +407,9 @@ namespace CIAO
       }
 
     ACE_READ_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
-			     mon,
-			     this->lock_,
-			     CORBA::NO_RESOURCES ());
+                             mon,
+                             this->lock_,
+                             CORBA::NO_RESOURCES ());
 
     FacetTable::const_iterator iter =
       this->facet_table_.find (port_name);
@@ -472,8 +472,8 @@ namespace CIAO
                   receptacle_name));
 
       ACE_NEW_THROW_EX (rd,
-			OBV_Components::ReceptacleDescription,
-			CORBA::NO_MEMORY ());
+                        OBV_Components::ReceptacleDescription,
+                        CORBA::NO_MEMORY ());
       safe = rd;
 
       rd->name (receptacle_name);
@@ -484,9 +484,9 @@ namespace CIAO
 
       ::Components::ConnectionDescription *cd = 0;
       ACE_NEW_THROW_EX (cd,
-			OBV_Components::ConnectionDescription (cookie,
-							       recept_ref),
-			CORBA::NO_MEMORY ());
+                        OBV_Components::ConnectionDescription (cookie,
+                                                               recept_ref),
+                        CORBA::NO_MEMORY ());
       ::Components::ConnectionDescription_var cd_safe = cd;
       ::Components::ConnectionDescriptions cds (1);
 
@@ -503,9 +503,9 @@ namespace CIAO
 
       ::Components::ConnectionDescription *cd = 0;
       ACE_NEW_THROW_EX (cd,
-			OBV_Components::ConnectionDescription (cookie,
-							       recept_ref),
-			CORBA::NO_MEMORY ());
+                        OBV_Components::ConnectionDescription (cookie,
+                                                               recept_ref),
+                        CORBA::NO_MEMORY ());
       ::Components::ConnectionDescription_var cd_safe = cd;
       ::Components::ConnectionDescriptions & cds = rd->connections ();
       CORBA::ULong old_length = cds.length ();
@@ -528,21 +528,21 @@ namespace CIAO
 
   void
   Servant_Impl_Base::add_consumer (const char *port_name,
-				   ::Components::EventConsumerBase_ptr port_ref)
+                                   ::Components::EventConsumerBase_ptr port_ref)
   {
     CIAO_TRACE("Servant_Impl_Base::add_consumer");
     if (0 == port_name || ::CORBA::is_nil (port_ref))
       {
   CIAO_ERROR ((LM_ERROR, CLINFO "Servant_Impl_Base::add_consumer - Bad port name [%C] or bad objref\n",
-		    port_name));
+                    port_name));
         throw ::CORBA::BAD_PARAM ();
         return;
       }
 
     ::Components::ConsumerDescription *cd = 0;
     ACE_NEW_THROW_EX (cd,
-		      ::OBV_Components::ConsumerDescription,
-		      CORBA::NO_MEMORY ());
+                      ::OBV_Components::ConsumerDescription,
+                      CORBA::NO_MEMORY ());
 
     ::Components::ConsumerDescription_var safe = cd;
 
@@ -555,7 +555,7 @@ namespace CIAO
     entry.second = safe._retn ();
 
     ACE_WRITE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
-			      CORBA::NO_RESOURCES ());
+                              CORBA::NO_RESOURCES ());
 
     (void) this->consumer_table_.insert (entry);
   }
@@ -570,9 +570,9 @@ namespace CIAO
       }
 
     ACE_READ_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
-			     mon,
-			     this->lock_,
-			     CORBA::NO_RESOURCES ());
+                             mon,
+                             this->lock_,
+                             CORBA::NO_RESOURCES ());
 
     ConsumerTable::const_iterator iter =
       this->consumer_table_.find (port_name);
@@ -603,9 +603,9 @@ namespace CIAO
 
     {
       ACE_READ_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
-			       mon,
-			       this->lock_,
-			       CORBA::NO_RESOURCES ());
+                               mon,
+                               this->lock_,
+                               CORBA::NO_RESOURCES ());
 
       iter = this->consumer_table_.find (port_name);
 

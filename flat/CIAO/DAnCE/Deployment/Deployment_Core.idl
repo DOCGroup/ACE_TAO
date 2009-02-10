@@ -10,11 +10,11 @@
 
 module Deployment {
 
-	//@! in DOCGroup three additional exceptions specified
-	exception StopError {
-		string name;
-		string reason;
-	};
+        //@! in DOCGroup three additional exceptions specified
+        exception StopError {
+                string name;
+                string reason;
+        };
 };
 #endif /* DEPLOYMENT_CORE_IDL */
 
