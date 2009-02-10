@@ -1,3 +1,14 @@
+Tue Feb 10 18:36:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OctetSeq/run_test.pl:
+        * tests/AMH_Oneway/run_test.pl:
+        * tests/AMI/run_test.pl:
+        * tests/AMI_Timeouts/run_test.pl:
+          Converted to the new test framework
+
+        * tests/Bug_3559_Regression/Bug_3559_Regression_Test.cpp:
+          Zap empty spaces
+
 Tue Feb 10 18:33:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3565_Regression/*
