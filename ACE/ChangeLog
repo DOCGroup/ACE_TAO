@@ -1,3 +1,19 @@
+Tue Feb 10 18:20:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-pharlap.h:
+          Define ACE_HAS_WINSOCK1 to 1
+
+        * ace/config-vxworks.h:
+          Added support for VxWorks 6.7
+
+        * ace/config-win32-borland.h:
+          Removed support for C++Builder 2007
+
+        * ace/os_include/sys/os_types.h:
+        * ace/OS_NS_arpa_inet.cpp:
+        * ace/OS_NS_unistd.inl:
+          Fixes for VxWorks 6.7
+
 Tue Feb 10 05:39:28 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
@@ -9,7 +25,7 @@ Tue Feb 10 05:08:24 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
         * etc/index.html:
         * bin/diff-builds-and-group-fixed-tests-only.sh
           Update latest micro version links and date.
-        
+
         * ChangeLogs/ChangeLog-09a:
           Added this file.
 

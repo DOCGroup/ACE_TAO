@@ -23,7 +23,7 @@
 #  include "ace/os_include/os_unistd.h"
 #endif /* ACE_HAS_ACCESS_EMULATION */
 
-#if defined (ACE_VXWORKS) && (((ACE_VXWORKS >= 0x620) && (ACE_VXWORKS <= 0x660)) || defined (ACE_HAS_VXWORKS551_MEDUSA))
+#if defined (ACE_VXWORKS) && (((ACE_VXWORKS >= 0x620) && (ACE_VXWORKS <= 0x670)) || defined (ACE_HAS_VXWORKS551_MEDUSA))
 #  if defined (__RTP__)
 #    include "ace/os_include/os_strings.h"
 #  else

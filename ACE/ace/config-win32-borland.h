@@ -11,7 +11,7 @@
 #error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
-#if (__BORLANDC__ < 0x593)
+#if (__BORLANDC__ < 0x610)
 #error This version of CodeGear C++ is not supported.
 #endif
 
@@ -139,14 +139,6 @@
 #  error You must link against multi-threaded libraries when using ACE (check your project settings)
 # endif /* !_MT && !ACE_HAS_WINCE */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
-
-#if (__BORLANDC__ < 0x610)
-# define ACE_HAS_NONCONST_TEMPNAM
-# define ACE_LACKS_STRTOLL
-# define ACE_LACKS_WCSTOLL
-# define ACE_LACKS_STRTOULL
-# define ACE_LACKS_WCSTOULL
-#endif
 
 #if (__BORLANDC__ <= 0x610)
 # define ACE_LACKS_ISBLANK
