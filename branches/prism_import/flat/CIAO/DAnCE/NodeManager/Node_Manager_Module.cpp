@@ -542,14 +542,17 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                           "Error: Unable to write IOR to file %C\n",
                           node_file.c_str ()));
         }
-
+      
       // Activate POA manager
       PortableServer::POAManager_var mgr = this->root_poa_->the_POAManager ();
       mgr->activate ();
 
       // Finishing Deployment part
-      DANCE_DEBUG ((LM_DEBUG, DLINFO "DAnCE_NodeManager_Module::create_object - "
+      DANCE_DEBUG ((LM_NOTICE, DLINFO "DAnCE_NodeManager_Module::create_object - "
                     "DAnCE_NodeManager is running...\n"));
+      
+      DANCE_DEBUG ((LM_DEBUG, DLINFO "DAnCE_NodeManager_Module::create_object - "
+		    "NodeManager IOR: %s\n", ior.in ()));
 
       return nm_obj._retn ();
     }
