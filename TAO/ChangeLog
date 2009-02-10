@@ -1,3 +1,8 @@
+Tue Feb 10 18:29:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RT_Mutex.h:
+          Made destructor public to fix GCC 4.4 compile errors
+
 Tue Feb 10 05:39:28 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
@@ -6,7 +11,7 @@ Tue Feb 10 05:39:28 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 Tue Feb 10 05:19:18 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ChangeLogs/ChangeLog-09a:
-        
+
           Added this file.
 
 Mon Feb 09 12:01:28 CST 2009  Phil Mesnier  <mesnier_p@ociweb.com>

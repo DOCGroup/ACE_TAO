@@ -72,8 +72,6 @@ public:
   /// Returns the name of the mutex.
   virtual const char *name (void) const;
 
-protected:
-
   /// Destructor.
   virtual ~TAO_RT_Mutex (void);
 
