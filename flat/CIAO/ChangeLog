@@ -1,3 +1,38 @@
+Tue Feb 10 19:13:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+
+          Loffinf changes. 
+        
+        * DAnCE/tests/DeploymentPlanDump/test.cpp:
+        * DAnCE/tests/NodeApplicationManager-NodeApplication/test.cpp:
+
+          compile fixes to the last commit. 
+        
+        * VERSION:
+        * ciao/Version.h:
+
+          Updated version number to current. 
+        
+        * examples/DevGuideExamples:
+        * examples/DevGuideExamples/Messenger/Administrator.mpc:
+        * examples/DevGuideExamples/Messenger/Administrator_Client_IDL2.mpc:
+        * examples/DevGuideExamples/Messenger/Administrator_Client_IDL3.mpc:
+        * examples/DevGuideExamples/Messenger/Administrator_exec_i.h:
+        * examples/DevGuideExamples/Messenger/Administrator_exec_i.cpp:
+        * examples/DevGuideExamples/Messenger/Messenger.mpc:
+        * examples/DevGuideExamples/Messenger/Messenger_exec_i.h:
+        * examples/DevGuideExamples/Messenger/Messenger_exec_i.cpp:
+        * examples/DevGuideExamples/Messenger/Receiver.mpc:
+        * examples/DevGuideExamples/Messenger/Receiver_exec_i.h:
+        * examples/DevGuideExamples/Messenger/Receiver_exec_i.cpp:
+        * examples/DevGuideExamples/Messenger/StaticDAnCE/Messenger_StaticDAnCE.mpc:
+        * examples/DevGuideExamples/Messenger/descriptors/ApplicationNodeMap.dat:
+        * examples/DevGuideExamples/Messenger/descriptors/run_test.pl:
+
+          Partially ported this example. 
+        
 Tue Feb 10 18:18:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment.idl:
@@ -138,8 +173,8 @@ Tue Feb 10 18:18:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/IDL3_to_IDL2/cdmw_idl.cpp:
         * tools/XML/XercesString.cpp:
 
-          Fuzz. 
-        
+          Fuzz.
+
 Fri Feb  6 22:06:51 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/ciao_tests.lst:
