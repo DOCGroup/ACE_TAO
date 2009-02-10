@@ -24,8 +24,8 @@ namespace CIAO
                                         Deployment::CIAO_Container_i *container_impl,
                                         bool static_config_flag,
                                         const Static_Config_EntryPoints_Maps* maps,
-					const char *name,
-					const CORBA::PolicyList *more_policies)
+                                        const char *name,
+                                        const CORBA::PolicyList *more_policies)
     : Container_i (o, container_impl),
       number_ (0),
       static_config_flag_ (static_config_flag),
@@ -85,7 +85,7 @@ namespace CIAO
     if (CORBA::is_nil (poa_object.in ()))
       {
         CIAO_ERROR ((LM_ERROR, CLINFO
-		    "CIAO::Session_Container: Unable to initialize the POA.\n"));
+                    "CIAO::Session_Container: Unable to initialize the POA.\n"));
         throw Components::CreateFailure ();
       }
 
@@ -242,7 +242,7 @@ namespace CIAO
                     servant_artifact, servant_entrypoint));
 
         ACE_DLL executor_dll;
-		ACE_DLL servant_dll;
+                ACE_DLL servant_dll;
 
         if (primary_artifact == 0 || servant_artifact == 0)
           {
@@ -386,9 +386,9 @@ namespace CIAO
             error += servant_artifact;
           }
 
-	    CIAO_ERROR ((LM_ERROR, CLINFO
+            CIAO_ERROR ((LM_ERROR, CLINFO
           "Session_Container::ciao_install_home - Error:%C\n",
-		    error.c_str ()));
+                    error.c_str ()));
 
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
@@ -399,8 +399,8 @@ namespace CIAO
 
     if (CORBA::is_nil (home_executor.in ()))
       {
-	CIAO_ERROR ((LM_ERROR, CLINFO
-		    "Session_Container::Ciao_install_hoe - Home executor factory failed. \n"));
+        CIAO_ERROR ((LM_ERROR, CLINFO
+                    "Session_Container::Ciao_install_hoe - Home executor factory failed. \n"));
         throw Components::Deployment::InstallationFailure ();
       }
 
@@ -412,8 +412,8 @@ namespace CIAO
 
     if (home_servant == 0)
       {
-	    CIAO_ERROR ((LM_ERROR, CLINFO
-		    "Session_Container::ciao_install_home - Home servant factory failed.\n"));
+            CIAO_ERROR ((LM_ERROR, CLINFO
+                    "Session_Container::ciao_install_home - Home servant factory failed.\n"));
         throw Components::Deployment::InstallationFailure ();
       }
 
@@ -607,9 +607,9 @@ namespace CIAO
             error += servant_artifact;
           }
 
-	CIAO_ERROR ((LM_ERROR, CLINFO
+        CIAO_ERROR ((LM_ERROR, CLINFO
         "Session_Container::ciao_install_component - Error:%C\n",
-		    error.c_str ()));
+                    error.c_str ()));
 
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
@@ -620,8 +620,8 @@ namespace CIAO
 
     if (CORBA::is_nil (component_executor.in ()))
       {
-	CIAO_ERROR ((LM_ERROR, CLINFO
-		    "Session_Container::Ciao_install_hoe - Component executor factory failed. \n"));
+        CIAO_ERROR ((LM_ERROR, CLINFO
+                    "Session_Container::Ciao_install_hoe - Component executor factory failed. \n"));
         throw Components::Deployment::InstallationFailure ();
       }
 
@@ -634,7 +634,7 @@ namespace CIAO
     if (component_servant == 0)
       {
       CIAO_ERROR ((LM_ERROR, CLINFO
-		    "Session_Container::ciao_install_component - Component servant factory failed.\n"));
+                    "Session_Container::ciao_install_component - Component servant factory failed.\n"));
         throw Components::Deployment::InstallationFailure ();
       }
 
@@ -838,7 +838,7 @@ namespace CIAO
 
   void
   Session_Container::add_servant_to_map (PortableServer::ObjectId &,
-					 Dynamic_Component_Servant_Base*)
+                                         Dynamic_Component_Servant_Base*)
   {
     CIAO_TRACE ("Session_Container::add_servant_to_map");
     throw CORBA::NO_IMPLEMENT ();

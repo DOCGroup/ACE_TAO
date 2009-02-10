@@ -1,3 +1,4 @@
+
 // $Id$
 
 #include "GPS_exec.h"
@@ -47,7 +48,7 @@ void
 MyImpl::GPS_exec_i::push_Refresh (HUDisplay::tick *)
 {
 //   ACE_DEBUG ((LM_DEBUG,
-// 	      ACE_TEXT ("GPS: Received Refresh Event\n")));
+//            ACE_TEXT ("GPS: Received Refresh Event\n")));
 
   // Refresh position
   this->positionx_ += ACE_OS::rand () % DISPLACEMENT - (DISPLACEMENT/2);

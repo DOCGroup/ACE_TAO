@@ -74,10 +74,10 @@ namespace CIAO
       PortableServer::POA_ptr poa);
 
     virtual void etherealize (const PortableServer::ObjectId &oid,
-			      PortableServer::POA_ptr adapter,
-			      PortableServer::Servant servant,
-			      CORBA::Boolean cleanup_in_progress,
-			      CORBA::Boolean remaining_activations);
+                              PortableServer::POA_ptr adapter,
+                              PortableServer::Servant servant,
+                              CORBA::Boolean cleanup_in_progress,
+                              CORBA::Boolean remaining_activations);
     /// Local helper methods
 
   private:

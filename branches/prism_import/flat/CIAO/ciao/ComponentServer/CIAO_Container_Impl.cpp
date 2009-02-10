@@ -13,15 +13,15 @@ namespace CIAO
   {
     // Constructor
     CIAO_Container_i::CIAO_Container_i (const Components::ConfigValues &config,
-					const Static_Config_EntryPoints_Maps *static_entrypts,
-					const char *name,
-					const CORBA::PolicyList *policies,
-					CORBA::ORB_ptr orb,
-					PortableServer::POA_ptr poa)
+                                        const Static_Config_EntryPoints_Maps *static_entrypts,
+                                        const char *name,
+                                        const CORBA::PolicyList *policies,
+                                        CORBA::ORB_ptr orb,
+                                        PortableServer::POA_ptr poa)
       : orb_ (CORBA::ORB::_duplicate (orb)),
-	poa_ (PortableServer::POA::_duplicate (poa)),
-	config_ (config.length ()),
-	static_entrypts_maps_ (static_entrypts)
+        poa_ (PortableServer::POA::_duplicate (poa)),
+        config_ (config.length ()),
+        static_entrypts_maps_ (static_entrypts)
     {
       CIAO_TRACE("CIAO_Container_i::CIAO_Container_i");
 
@@ -69,11 +69,11 @@ namespace CIAO
       CIAO_TRACE("CIAO_Container_i::install_component");
       
       if (id == 0)
-	{
-	  CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
                        "No home ID provided\n"));
-	  throw ::Components::Deployment::InvalidConfiguration ();
-	}
+          throw ::Components::Deployment::InvalidConfiguration ();
+        }
       
       Components::CCMObject_var comp;
       
@@ -86,20 +86,20 @@ namespace CIAO
         }
 
       if (entrypt == 0)
-	{
-	  CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
-		      "No executor entrypoint found.\n"));
-	  throw ::Components::Deployment::InvalidConfiguration ();
-	}
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
+                      "No executor entrypoint found.\n"));
+          throw ::Components::Deployment::InvalidConfiguration ();
+        }
 
       CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::install_component - "
                    "Attempting to install home with id [%C]\n",
                    id));
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
-		  "CIAO_Container_i::install_component - "
-		  "Extracting ConfigValues from sequence of length [%u]\n",
-		  config.length ()));
+                  "CIAO_Container_i::install_component - "
+                  "Extracting ConfigValues from sequence of length [%u]\n",
+                  config.length ()));
 
       CIAO::Utility::CONFIGVALUE_MAP cm;
       CIAO::Utility::build_config_values_map (cm, config);
@@ -157,8 +157,8 @@ namespace CIAO
         }
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
-		  "CIAO_Container_i::install_component - "
-		  "Extraction resulted in map of [%u] values", cm.current_size ()));
+                  "CIAO_Container_i::install_component - "
+                  "Extraction resulted in map of [%u] values", cm.current_size ()));
 
       comp = this->container_->install_component (exec_art,
                                                   entrypt,
@@ -217,11 +217,11 @@ namespace CIAO
       CIAO_TRACE("CIAO_Container_i::install_home");
 
       if (id == 0)
-	{
-	  CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
-		      "No home ID provided\n"));
-	  throw ::Components::Deployment::InvalidConfiguration ();
-	}
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
+                      "No home ID provided\n"));
+          throw ::Components::Deployment::InvalidConfiguration ();
+        }
 
       Components::CCMHome_var home;
 
@@ -234,20 +234,20 @@ namespace CIAO
         }
 
       if (entrypt == 0)
-	{
-	  CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
-		      "No executor entrypoint found.\n"));
-	  throw ::Components::Deployment::InvalidConfiguration ();
-	}
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
+                      "No executor entrypoint found.\n"));
+          throw ::Components::Deployment::InvalidConfiguration ();
+        }
 
       CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::install_home - "
       "Attempting to install home with id [%C]\n",
-		  id));
+                  id));
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
-		  "CIAO_Container_i::install_home - "
-		  "Extracting ConfigValues from sequence of length [%u]\n",
-		  config.length ()));
+                  "CIAO_Container_i::install_home - "
+                  "Extracting ConfigValues from sequence of length [%u]\n",
+                  config.length ()));
 
       CIAO::Utility::CONFIGVALUE_MAP cm;
       CIAO::Utility::build_config_values_map (cm, config);
@@ -304,8 +304,8 @@ namespace CIAO
         }
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
-		  "CIAO_Container_i::install_home - "
-		  "Extraction resulted in map of [%u] values", cm.current_size ()));
+                  "CIAO_Container_i::install_home - "
+                  "Extraction resulted in map of [%u] values", cm.current_size ()));
 
 
       // extract config values here...

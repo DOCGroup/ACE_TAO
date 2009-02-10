@@ -7,10 +7,10 @@
 #include "DAnCE/Deployment/Deployment.idl"
 
 module Deployment {
-	interface NodeApplicationManager :
-		ApplicationManager
-	{
-	};
+        interface NodeApplicationManager :
+                ApplicationManager
+        {
+        };
 };
 
 #endif /* NODEAPPLICATIONMANAGER_IDL */

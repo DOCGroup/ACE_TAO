@@ -12,7 +12,6 @@ namespace DAnCE
       const char *node_name,
       const char *impl_name,
       const char *ns_name)
-    throw (ImplementationNotFound)
   {
     // Modifying the deployment plan in order to include the new instance ...
     ::Deployment::InstanceDeploymentDescriptions instance =
@@ -52,7 +51,6 @@ namespace DAnCE
   /*
   void
   DAnCE_Utils::add_connection (::Deployment::DeploymentPlan_var &deployment_plan, const char *connection_name, const char *port_name, const char *facet_instance, const char *receptacle_instance)
-    throw (InstanceNotFound)
   {
     // Modifying the deployment plan in order to include the new connection ...
 
@@ -105,7 +103,6 @@ namespace DAnCE
 
   void
   DAnCE_Utils::remove_instance (::Deployment::DeploymentPlan_var &deployment_plan, const char *instance_name)
-    throw (InstanceNotFound)
   {
     // Modifying the deployment plan in order to remove the instance ...
 
@@ -178,7 +175,6 @@ namespace DAnCE
   DAnCE_Utils::remove_connection (
       ::Deployment::DeploymentPlan_var &deployment_plan,
       const char *connection_name)
-    throw (ConnectionNotFound)
   {
     ::Deployment::PlanConnectionDescriptions connection = deployment_plan->connection;
 

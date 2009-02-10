@@ -1,6 +1,6 @@
 /**
  * $Id$
- * @file Plan_Launcher_Impl.h
+ * @file Plan_Launcher_Base_Impl.h
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  *
  * Contains the Plan_Launcher_i class, which can be used by

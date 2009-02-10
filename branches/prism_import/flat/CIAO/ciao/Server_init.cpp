@@ -42,27 +42,27 @@ namespace CIAO
     //             Implementation of NameUtility class
     // --------------------------------------------------------------
     bool NameUtility::bind_name (const char *namestr,
-				 CORBA::Object_ptr obj,
-				 CosNaming::NamingContextExt_var &root)
+                                 CORBA::Object_ptr obj,
+                                 CosNaming::NamingContextExt_var &root)
     {
       if (namestr == 0)
-	{
-	  CIAO_ERROR ((LM_WARNING, CLINFO
-		      "NameUtility::bind_name - "
-		      "called with null name, aborting registration. \n"));
-	  return false;
-	}
+        {
+          CIAO_ERROR ((LM_WARNING, CLINFO
+                      "NameUtility::bind_name - "
+                      "called with null name, aborting registration. \n"));
+          return false;
+        }
 
       CosNaming::Name name;
       NameUtility::create_name (namestr, name);
 
       if (name.length () > 1)
-	{
-	  // This name has contexts, create them.
-	  name.length (name.length () - 1);
-	  Utility::NameUtility::create_context_path (root.in (), name);
-	  name.length (name.length () + 1);
-	}
+        {
+          // This name has contexts, create them.
+          name.length (name.length () - 1);
+          Utility::NameUtility::create_context_path (root.in (), name);
+          name.length (name.length () + 1);
+        }
 
       return NameUtility::bind_object_path (root.in (), name, obj);
     }
@@ -76,11 +76,11 @@ namespace CIAO
       tok.delimiter ('/');
 
       for (char *p = tok.next (); p; p=tok.next ())
-	{
-	  CORBA::ULong pos = name.length ();
-	  name.length (pos + 1);
-	  name[pos].id = CORBA::string_dup (p);
-	}
+        {
+          CORBA::ULong pos = name.length ();
+          name.length (pos + 1);
+          name[pos].id = CORBA::string_dup (p);
+        }
     }
 
     void NameUtility::create_context_path (const CosNaming::NamingContextExt_ptr nc,
@@ -96,17 +96,17 @@ namespace CIAO
         {
           tmpCtxVar = nc->bind_new_context (name);
           CIAO_DEBUG ((LM_TRACE, CLINFO
-		      "NameUtility::CreateContextPath - Bound Context.\n\n"));
+                      "NameUtility::CreateContextPath - Bound Context.\n\n"));
         }
       catch (const CosNaming::NamingContext::AlreadyBound&)
         {
           CIAO_DEBUG ((LM_TRACE, CLINFO
-		      "NameUtility::CreateContextPath - Context Already Bound.\n\n"));
+                      "NameUtility::CreateContextPath - Context Already Bound.\n\n"));
         }
       catch (const CosNaming::NamingContext::NotFound& nf)
         {
           CIAO_DEBUG ((LM_TRACE, CLINFO
-		      "NameUtility::CreateContextPath - Context not found.\n\n"));
+                      "NameUtility::CreateContextPath - Context not found.\n\n"));
           isNotFound = true;
           lengthMissing = nf.rest_of_name.length ();
         }
@@ -114,7 +114,7 @@ namespace CIAO
       if (lengthMissing == name.length ())
         {
           CIAO_ERROR ((LM_ERROR, CLINFO
-		      "NameUtility::CreateContextPath - Null name length.\n\n"));
+                      "NameUtility::CreateContextPath - Null name length.\n\n"));
         }
 
       if (isNotFound)
@@ -137,7 +137,7 @@ namespace CIAO
 
                 tmpCtxVar = nc->bind_new_context (tmpName);
                 CIAO_DEBUG ((LM_TRACE, CLINFO
-			    "NameUtility::CreateContextPath - Bound New Context.\n"));
+                            "NameUtility::CreateContextPath - Bound New Context.\n"));
               }
           }
     }
@@ -160,7 +160,7 @@ namespace CIAO
       catch (const CosNaming::NamingContext::NotFound&)
         {
           CIAO_DEBUG ((LM_TRACE, CLINFO
-		      "NameUtility::BindObjectPath - Name not found, doing new bind.\n"));
+                      "NameUtility::BindObjectPath - Name not found, doing new bind.\n"));
           nc->bind (name, obj);
         }
       catch (...)
@@ -197,7 +197,7 @@ namespace CIAO
       if (CORBA::is_nil (tmpContextV.in ()))
         {
           CIAO_ERROR ((LM_ERROR, CLINFO
-		      "NameUtility::listBindings: Nil context.\n"));
+                      "NameUtility::listBindings: Nil context.\n"));
           return 0;
         }
 

@@ -173,7 +173,6 @@ namespace CIAO
 
     ::CIAO::DAnCE::EventServiceDeploymentDescriptions const *
         CIAOEvents_Handler::esd_idl () const
-      throw (CIAOEvents_Handler::NoESD)
       {
         if(!this->idl_esd_.get())
           throw NoESD ();
@@ -184,7 +183,6 @@ namespace CIAO
 
     ::CIAO::DAnCE::EventServiceDeploymentDescriptions *
         CIAOEvents_Handler::esd_idl ()
-      throw (CIAOEvents_Handler::NoESD)
       {
         if(!this->idl_esd_.get())
           throw NoESD();

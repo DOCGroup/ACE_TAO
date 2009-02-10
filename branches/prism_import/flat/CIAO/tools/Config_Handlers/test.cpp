@@ -43,7 +43,7 @@ void check_srd (const Deployment::DeploymentPlan &);
 using namespace CIAO::Config_Handlers;
 
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   if (parse_args (argc, argv) != 0)

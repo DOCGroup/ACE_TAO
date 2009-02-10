@@ -1,6 +1,7 @@
 /**
- * @file ComponentServer_Client.idl
+ * @file CCM_ComponentServer_Client.idl
  * Client side objects hosted by the NodeApplication.
+ * $Id$
  */
 
 #ifndef COMPONENTSERVER_CLIENT_IDL_
@@ -33,7 +34,7 @@ module Components
     {
       ComponentServer create_component_server(in ConfigValues config)
         raises(::Components::CreateFailure,
-	       ::Components::Deployment::InvalidConfiguration);
+               ::Components::Deployment::InvalidConfiguration);
 
       void remove_component_server(in ComponentServer server)
         raises(::Components::RemoveFailure);

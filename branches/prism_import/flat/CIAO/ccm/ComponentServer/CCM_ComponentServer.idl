@@ -23,7 +23,7 @@ module Components
 
       Container create_container(in ConfigValues config)
         raises (::Components::CreateFailure,
-		::Components::Deployment::InvalidConfiguration);
+                ::Components::Deployment::InvalidConfiguration);
 
       void remove_container(in Container cref) raises (::Components::RemoveFailure);
 
@@ -43,10 +43,10 @@ module Components
       CCMHome install_home(in UUID id,
                            in string entrypt,
                            in ConfigValues config)
-	    raises (::Components::Deployment::UnknownImplId,
-		::Components::Deployment::ImplEntryPointNotFound,
-		::Components::Deployment::InstallationFailure,
-		::Components::Deployment::InvalidConfiguration);
+            raises (::Components::Deployment::UnknownImplId,
+                ::Components::Deployment::ImplEntryPointNotFound,
+                ::Components::Deployment::InstallationFailure,
+                ::Components::Deployment::InvalidConfiguration);
 
       void remove_home(in CCMHome href) raises (::Components::RemoveFailure);
 

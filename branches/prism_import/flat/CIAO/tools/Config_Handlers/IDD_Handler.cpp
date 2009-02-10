@@ -19,7 +19,6 @@ namespace CIAO
     void
     IDD_Handler::instance_deployment_descrs (const deploymentPlan &src,
                                              Deployment::InstanceDeploymentDescriptions& dest)
-      throw (Config_Error)
     {
       CIAO_TRACE("IDD_Handler::instance_deployment_descrs");
       deploymentPlan::instance_const_iterator idd_e =
@@ -43,7 +42,6 @@ namespace CIAO
                                             const InstanceDeploymentDescription& src,
                                             Deployment::InstanceDeploymentDescription& dest,
                                             CORBA::ULong pos)
-      throw (Config_Error)
     {
       CIAO_TRACE("IDD_Handler::instance_deployment_descr");
       try
@@ -110,7 +108,6 @@ namespace CIAO
     InstanceDeploymentDescription
     IDD_Handler::instance_deployment_descr (
                                             const Deployment::InstanceDeploymentDescription& src)
-      throw (Config_Error)
     {
       CIAO_TRACE("IDD_Handler::instance_deployment_descr - reverse");
       //Get all the string/IDREFs

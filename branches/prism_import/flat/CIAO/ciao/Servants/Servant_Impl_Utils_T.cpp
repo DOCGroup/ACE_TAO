@@ -22,8 +22,8 @@ namespace CIAO
 
     ::Components::ReceptacleDescription *elem = 0;
     ACE_NEW_THROW_EX (elem,
-		      ::OBV_Components::ReceptacleDescription,
-		      CORBA::NO_MEMORY ());
+                      ::OBV_Components::ReceptacleDescription,
+                      CORBA::NO_MEMORY ());
 
     ::Components::ReceptacleDescription_var safe_elem = elem;
 
@@ -57,8 +57,8 @@ namespace CIAO
 
     ::Components::ReceptacleDescription *elem = 0;
     ACE_NEW_THROW_EX (elem,
-		      ::OBV_Components::ReceptacleDescription,
-		      CORBA::NO_MEMORY ());
+                      ::OBV_Components::ReceptacleDescription,
+                      CORBA::NO_MEMORY ());
 
     ::Components::ReceptacleDescription_var safe_elem = elem;
 
@@ -78,14 +78,14 @@ namespace CIAO
          ++iter, ++seq_slot)
       {
         ACE_NEW_THROW_EX (conn,
-			  ::OBV_Components::ConnectionDescription,
-			  CORBA::NO_MEMORY ());
+                          ::OBV_Components::ConnectionDescription,
+                          CORBA::NO_MEMORY ());
         ::Components::ConnectionDescription_var safe_conn = conn;
 
         ::Components::Cookie *key_cookie = 0;
         ACE_NEW_THROW_EX (key_cookie,
-			  CIAO::Cookie_Impl (iter->first),
-			  CORBA::NO_MEMORY ());
+                          CIAO::Cookie_Impl (iter->first),
+                          CORBA::NO_MEMORY ());
 
         // Valuetype member set operation calls add_ref.
         conn->ck (key_cookie);
@@ -113,8 +113,8 @@ namespace CIAO
 
     ::Components::PublisherDescription *elem = 0;
     ACE_NEW_THROW_EX (elem,
-		      ::OBV_Components::PublisherDescription,
-		      CORBA::NO_MEMORY ());
+                      ::OBV_Components::PublisherDescription,
+                      CORBA::NO_MEMORY ());
 
     ::Components::PublisherDescription_var safe_elem = elem;
 
@@ -133,8 +133,8 @@ namespace CIAO
          ++iter, ++map_slot)
       {
         ACE_NEW_THROW_EX (sub,
-			  ::OBV_Components::SubscriberDescription,
-			  CORBA::NO_MEMORY ());
+                          ::OBV_Components::SubscriberDescription,
+                          CORBA::NO_MEMORY ());
         ::Components::SubscriberDescription_var safe_sub = sub;
 
         ::Components::Cookie *key_cookie = 0;
@@ -165,8 +165,8 @@ namespace CIAO
     CIAO_TRACE ("Servant_Impl_Base::describe_emit_event_source");
     ::Components::EmitterDescription *elem = 0;
     ACE_NEW_THROW_EX (elem,
-		      ::OBV_Components::EmitterDescription,
-		      CORBA::NO_MEMORY ());
+                      ::OBV_Components::EmitterDescription,
+                      CORBA::NO_MEMORY ());
     ::Components::EmitterDescription_var safe_elem = elem;
 
     elem->name (port_name);

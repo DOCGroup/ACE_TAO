@@ -1,5 +1,5 @@
 /**
- * @file CIAO_Container.h
+ * @file CIAO_Container_Impl.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  */
 
@@ -51,11 +51,11 @@ namespace CIAO
       virtual ::Components::ConfigValues * configuration (void);
 
       virtual
-	::Components::Deployment::ComponentServer_ptr get_component_server (void);
+        ::Components::Deployment::ComponentServer_ptr get_component_server (void);
 
       virtual ::Components::CCMHome_ptr install_home (const char * id,
-						const char * entrypt,
-						const ::Components::ConfigValues & config);
+                                                const char * entrypt,
+                                                const ::Components::ConfigValues & config);
 
       virtual void remove_home (::Components::CCMHome_ptr href);
 

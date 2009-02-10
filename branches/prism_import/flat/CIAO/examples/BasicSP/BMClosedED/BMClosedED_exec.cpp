@@ -122,8 +122,8 @@ create_BasicSP_BMClosedED_Impl (void)
     ::Components::EnterpriseComponent::_nil ();
   
   ACE_NEW_RETURN (retval,
-		  MyImpl::BMClosedED_exec_i,
-		  ::Components::EnterpriseComponent::_nil ());
+                  MyImpl::BMClosedED_exec_i,
+                  ::Components::EnterpriseComponent::_nil ());
 
   return retval;
 }

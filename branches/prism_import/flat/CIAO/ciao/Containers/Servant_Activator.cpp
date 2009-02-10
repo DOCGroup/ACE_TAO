@@ -23,8 +23,8 @@ namespace CIAO
     /* _var should take care of this now.
     {
       ACE_GUARD (TAO_SYNCH_MUTEX,
-		 guard,
-		 this->mutex_);
+                 guard,
+                 this->mutex_);
 
       size_t const sz =  this->slot_index_;
 
@@ -48,9 +48,9 @@ namespace CIAO
       PortableServer::ObjectId_to_string (oid);
     {
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
-			  guard,
-			  this->mutex_,
-			  CORBA::NO_RESOURCES ());
+                          guard,
+                          this->mutex_,
+                          CORBA::NO_RESOURCES ());
       size_t const sz = this->slot_index_;
 
       for (size_t t = 0; t != sz; ++t)
@@ -83,9 +83,9 @@ namespace CIAO
 
     {
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
-			  guard,
-			  this->mutex_,
-			  CORBA::NO_RESOURCES ());
+                          guard,
+                          this->mutex_,
+                          CORBA::NO_RESOURCES ());
 
       size_t const sz = this->slot_index_;
       Port_Activator_var tmp;
@@ -183,13 +183,13 @@ namespace CIAO
       {
         ++this->slot_index_;
 
-	CIAO_DEBUG ((LM_INFO, CLINFO
-		    "Servant_Activator_i::"
-		    "register_port_activator"
+        CIAO_DEBUG ((LM_INFO, CLINFO
+                    "Servant_Activator_i::"
+                    "register_port_activator"
         " with port name [%C],"
-		    " the slot_index_ is [%d] \n",
-		    pa->name (),
-		    this->slot_index_));
+                    " the slot_index_ is [%d] \n",
+                    pa->name (),
+                    this->slot_index_));
 
         return true;
       }

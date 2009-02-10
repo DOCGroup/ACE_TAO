@@ -8,10 +8,10 @@
 
 module Deployment
 {
-	interface DomainApplication : 
-		Application
-	{
-	};
+        interface DomainApplication : 
+                Application
+        {
+        };
 };
 
 

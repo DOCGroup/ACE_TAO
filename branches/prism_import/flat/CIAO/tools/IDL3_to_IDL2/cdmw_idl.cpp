@@ -395,7 +395,7 @@ DRV_drive (const char *s)
 */
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Initialize driver and global variables.
   int init_status = DRV_init (argc, argv);

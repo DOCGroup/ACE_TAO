@@ -21,7 +21,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Resolve HomeFinder interface
 

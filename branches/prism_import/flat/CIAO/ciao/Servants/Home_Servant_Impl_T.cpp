@@ -170,12 +170,12 @@ namespace CIAO
     typedef typename COMP_SVNT::_stub_type stub_type;
     COMP_SVNT *svt = 0;
     ACE_NEW_THROW_EX (svt,
-		      COMP_SVNT (exe,
-				 home.in (),
-				 this->ins_name_,
-				 this,
-				 this->container_),
-		      CORBA::NO_MEMORY ());
+                      COMP_SVNT (exe,
+                                 home.in (),
+                                 this->ins_name_,
+                                 this,
+                                 this->container_),
+                      CORBA::NO_MEMORY ());
 
     PortableServer::ServantBase_var safe (svt);
     PortableServer::ObjectId_var oid;

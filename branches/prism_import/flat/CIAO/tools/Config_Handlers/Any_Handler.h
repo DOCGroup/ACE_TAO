@@ -51,11 +51,9 @@ namespace CIAO
       virtual ~Any_Handler (void);
 
       static void extract_into_any (const Any& desc,
-                                    ::CORBA::Any& toconfig)
-        throw (Config_Error);
+                                    ::CORBA::Any& toconfig);
 
-      static Any get_any (const CORBA::Any &src)
-        throw (Config_Error);
+      static Any get_any (const CORBA::Any &src);
     };
     }
 }

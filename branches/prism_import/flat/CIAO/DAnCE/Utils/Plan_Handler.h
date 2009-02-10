@@ -46,26 +46,22 @@ namespace DAnCE
         const char *instance_name, 
         const char *node_name, 
         const char *impl_name, 
-        const char *ns_name = 0)
-      throw (ImplementationNotFound);
+        const char *ns_name = 0);
 
     static void add_connection (
         ::Deployment::DeploymentPlan &deployment_plan, 
         const char *connection_name, 
         const char *port_name, 
         const char *facet_instance, 
-        const char *receptacle_instance)
-      throw (InstanceNotFound);
+        const char *receptacle_instance);
 
     static void remove_instance (
         ::Deployment::DeploymentPlan &deployment_plan, 
-        const char *instance_name)
-      throw (InstanceNotFound);
+        const char *instance_name);
 
     static void remove_connection (
         ::Deployment::DeploymentPlan &deployment_plan, 
-        const char *connection_name)
-      throw (ConnectionNotFound);
+        const char *connection_name);
 
     static void print_instances (
       const ::Deployment::DeploymentPlan &deployment_plan);

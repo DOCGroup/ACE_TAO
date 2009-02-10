@@ -51,11 +51,9 @@ namespace CIAO
 
       ~CIAOEvents_Handler (void);
 
-      CIAO::DAnCE::EventServiceDeploymentDescriptions const *esd_idl (void) const
-        throw (CIAOEvents_Handler::NoESD);
-
-      CIAO::DAnCE::EventServiceDeploymentDescriptions *esd_idl (void)
-        throw (CIAOEvents_Handler::NoESD);
+      CIAO::DAnCE::EventServiceDeploymentDescriptions const *esd_idl (void) const;
+        
+      CIAO::DAnCE::EventServiceDeploymentDescriptions *esd_idl (void);
 
     private:
       bool build_esd ();

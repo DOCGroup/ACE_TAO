@@ -1,3 +1,4 @@
+//$Id$
 module dynany_test
 {
   typedef sequence<double> DoubleSequence;

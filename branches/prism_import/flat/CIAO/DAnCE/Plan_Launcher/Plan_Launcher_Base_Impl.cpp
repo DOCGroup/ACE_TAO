@@ -25,7 +25,7 @@ Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, int argc,
     {
       DANCE_DEBUG ((LM_INFO, DLINFO "Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - "
                     "Creating internal ORB.\n"));
-      this->orb_ = CORBA::ORB_init (argc, argv, "");
+      this->orb_ = CORBA::ORB_init (argc, argv);
     }
   this->parse_args(argc, argv);
 

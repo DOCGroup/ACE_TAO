@@ -95,16 +95,16 @@ namespace CIAO
 
       /// Hash_Map stuff.
       typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-				      RTCORBA::ThreadpoolId,
-				      ACE_Hash<ACE_CString>,
-				      ACE_Equal_To<ACE_CString>,
-				      ACE_Null_Mutex> TP_MAP;
+                                      RTCORBA::ThreadpoolId,
+                                      ACE_Hash<ACE_CString>,
+                                      ACE_Equal_To<ACE_CString>,
+                                      ACE_Null_Mutex> TP_MAP;
 
       typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-				      RTCORBA::PriorityBands_var,
-				      ACE_Hash<ACE_CString>,
-				      ACE_Equal_To<ACE_CString>,
-				      ACE_Null_Mutex> PB_MAP;
+                                      RTCORBA::PriorityBands_var,
+                                      ACE_Hash<ACE_CString>,
+                                      ACE_Equal_To<ACE_CString>,
+                                      ACE_Null_Mutex> PB_MAP;
 
     /// Internal TP name to id map.
     TP_MAP threadpool_map_;

@@ -9,13 +9,13 @@
 
 module Deployment
 {
-	typedef sequence < Object > Endpoints;
-	//@! in DOCGroup this struct seriously extended
-	struct Connection {
-		string name;
-		Endpoints endpoint;
-	};
+        typedef sequence < Object > Endpoints;
+        //@! in DOCGroup this struct seriously extended
+        struct Connection {
+                string name;
+                Endpoints endpoint;
+        };
 
-	typedef sequence < Connection > Connections;
+        typedef sequence < Connection > Connections;
 };
 #endif /* DEPLOYMENT_CONNECTION_IDL */

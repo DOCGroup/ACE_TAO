@@ -1,7 +1,7 @@
 /**
  * @file CIAO_Port_Activator.idl
  * @author Wiliam R. Otte <wotte@dre.vanderbilt.edu
- *
+ * $Id$
  * Local interface describing servant activators for component ports.
  */
 

@@ -5,38 +5,38 @@
 
 module Deployment {
 
-	struct Property {
-		string name;
-		any value;
-	};
+        struct Property {
+                string name;
+                any value;
+        };
 
-	typedef sequence < Property > Properties;
-	
-	struct Requirement {
-		string name;
-		string resourceType;
-		Properties property;
-	};
+        typedef sequence < Property > Properties;
+        
+        struct Requirement {
+                string name;
+                string resourceType;
+                Properties property;
+        };
 
-	typedef sequence < Requirement > Requirements;
+        typedef sequence < Requirement > Requirements;
 
-	enum SatisfierPropertyKind {
-		Quantity,
-		Capacity,
-		Minimum,
-		Maximum,
-		_Attribute,
-		Selection
-	};
+        enum SatisfierPropertyKind {
+                Quantity,
+                Capacity,
+                Minimum,
+                Maximum,
+                _Attribute,
+                Selection
+        };
 
-	struct SatisfierProperty {
-		string name;
-		SatisfierPropertyKind kind;
-		boolean dynamic;
-		any value;
-	};
-	
-	typedef sequence < SatisfierProperty > SatisfierProperties;
+        struct SatisfierProperty {
+                string name;
+                SatisfierPropertyKind kind;
+                boolean dynamic;
+                any value;
+        };
+        
+        typedef sequence < SatisfierProperty > SatisfierProperties;
 };
 
 #endif /* DEPLOYMENT_BASE_IDL */

@@ -1,7 +1,7 @@
 /**
  * @file XML_Typedefs.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *
+ * $Id$
  * Typedefs from the XML Utilities.
  */
 #ifndef XML_TYPEDEFS_H

@@ -129,7 +129,7 @@ namespace CIAO
                                                          const char *servant_entrypoint,
                                                          const char *name);
 
-	/// Activate component
+        /// Activate component
     virtual void activate_component (Components::CCMObject_ptr compref);
 
     virtual void passivate_component (Components::CCMObject_ptr compref);
