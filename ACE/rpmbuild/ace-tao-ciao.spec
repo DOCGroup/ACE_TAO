@@ -1,7 +1,7 @@
 # Set the version number here.
-%define ACEVER  5.6.8
-%define TAOVER  1.6.8
-%define CIAOVER 0.6.8
+%define ACEVER  5.6.9
+%define TAOVER  1.6.9
+%define CIAOVER 0.6.9
 # Set is_major_ver if the version is X.Y instead X.Y.Z
 
 # TODO
@@ -173,10 +173,10 @@ BuildRequires: fox16-devel
 
 %if 0%{?suse_version}
 
-%define ace_packages ace ace-xml ace-gperf ace-kokyu 
-%define tao_packages tao tao-utils tao tao-cosnaming tao-cosevent tao-cosnotification tao-costrading tao-rtevent tao-cosconcurrency 
+%define ace_packages ace ace-xml ace-gperf ace-kokyu
+%define tao_packages tao tao-utils tao tao-cosnaming tao-cosevent tao-cosnotification tao-costrading tao-rtevent tao-cosconcurrency
 %define all_ace_packages %{?ace_packages} %{?fltk_pac} %{?tk_pac} %{?qt_pac} %{?fox_pac} %{?xt_pac}
-%define all_tao_packages %{?tao_packages} %{?tao_fl_pac} %{?tao_qt_pac} %{?tao_xt_pac} %{?tao_tk_pac} 
+%define all_tao_packages %{?tao_packages} %{?tao_fl_pac} %{?tao_qt_pac} %{?tao_xt_pac} %{?tao_tk_pac}
 
 %define debug_package_requires %{all_ace_packages} %{all_tao_packages}
 %endif
