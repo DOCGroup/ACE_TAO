@@ -16,13 +16,13 @@ ACE_INLINE int
 ACE_OS::ace_isalnum (ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
-# if defined (_MSC_VER) && (_MSC_VER >= 1300)
+# if defined (_MSC_VER)
   // For MSVC 7.x, we need to prevent "illegal" character getting into
   // isalnum, otherwise, it will crash the program.
   return c > 0 && c < 0xFF && iswalnum (c);
 # else
   return iswalnum (c);
-# endif /* _MSC_VER && _MSC_VER >= 1300 */
+# endif /* _MSC_VER */
 #else /* ACE_USES_WCHAR */
   return isalnum ((unsigned char) c);
 #endif /* ACE_USES_WCHAR */

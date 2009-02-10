@@ -1953,9 +1953,9 @@ ACE_WFMO_Reactor::dispatch_handles (DWORD wait_status)
 #if ! defined(__BORLANDC__) \
     && !defined (ghs) \
     && !defined (__MINGW32__) \
-    && !(defined (_MSC_VER) && _MSC_VER >= 1300)
+    && !defined (_MSC_VER)
                  // wait_status is unsigned in Borland, Green Hills,
-                 // mingw32 and MSVC++ >= 7.1.
+                 // mingw32 and MSVC++
                  // This >= is always true, with a warning.
                  wait_status >= WAIT_OBJECT_0 &&
 #endif
