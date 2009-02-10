@@ -42,10 +42,9 @@ public:
   virtual bool decompress (TAO_InputCDR& cdr) = 0;
 
   virtual bool marshal_data (TAO_OutputCDR& cdr, TAO_Stub& stub) = 0;
+  virtual bool marshal_data (TAO_OutputCDR& cdr, TAO_ORB_Core& orb_core) = 0;
 
   virtual void load_policy_validators (TAO_Policy_Validator &validator) = 0;
-
-  virtual bool marshal_reply_data (TAO_OutputCDR& cdr, TAO_ORB_Core& orb_core) = 0;
 
   /// The virtual destructor
   virtual ~TAO_ZIOP_Adapter (void);

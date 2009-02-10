@@ -15,7 +15,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Service_Context.h"
 #include "tao/SystemException.h"
-#include "tao/ZIOP_Adapter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
@@ -98,30 +97,6 @@ namespace TAO
         this->write_header (cdr);
 
         this->marshal_data (cdr);
-
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    TAO_ZIOP_Adapter* ziop_adapter = this->stub()->orb_core()->ziop_adapter ();
-    
-
-    if (TAO_debug_level >= 5)
-      {
-        ACE_HEX_DUMP ((LM_DEBUG,
-                        const_cast <char*> (cdr.buffer ()),
-                        cdr.total_length (),
-                        ACE_TEXT ("GIOP message before compression")));
-      }
-
-      if (ziop_adapter->marshal_data (cdr, *this->resolver_.stub ()))
-        {
-          if (TAO_debug_level >= 5)
-            {
-              ACE_HEX_DUMP ((LM_DEBUG,
-                              const_cast <char*> (cdr.current ()->rd_ptr ()),
-                              cdr.length (),
-                              ACE_TEXT ("ZIOP message after compression")));
-            }
-        }
-#endif
         
         // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
@@ -710,12 +685,12 @@ namespace TAO
     else
       {
         if (TAO_debug_level > 4)
-    ACE_DEBUG ((LM_DEBUG,
-          "TAO (%P|%t) - Synch_Oneway_Invocation::"
-          "remote_oneway, queueing message\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Synch_Oneway_Invocation::"
+                      "remote_oneway, queueing message\n"));
 
-        if (transport->format_queue_message (cdr, max_wait_time) != 0)
-    s = TAO_INVOKE_FAILURE;
+        if (transport->format_queue_message (cdr, max_wait_time, *this->resolver_.stub()) != 0)
+          s = TAO_INVOKE_FAILURE;
       }
   }
 

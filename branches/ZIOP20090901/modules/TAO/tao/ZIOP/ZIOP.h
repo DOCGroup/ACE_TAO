@@ -51,6 +51,7 @@ public:
 
   // Compress the @a stream. Starting point of the compression is rd_ptr()
   virtual bool marshal_data (TAO_OutputCDR& cdr, TAO_Stub& stub);
+  virtual bool marshal_data (TAO_OutputCDR& cdr, TAO_ORB_Core& orb_core);
 
   /// Initialize the BiDIR loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);
@@ -59,8 +60,6 @@ public:
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);
-
-  bool marshal_reply_data (TAO_OutputCDR& cdr, TAO_ORB_Core& orb_core);
 
 private:
 
@@ -85,6 +84,10 @@ private:
   bool compress (Compression::Compressor_ptr compressor,
                  const ::Compression::Buffer &source,
                  ::Compression::Buffer &target);
+  
+  bool decompress (Compression::Compressor_ptr compressor,
+                   const ::Compression::Buffer &source,
+                   ::Compression::Buffer &target);
 
   bool check_min_ratio (CORBA::ULong original_data_length, CORBA::ULong compressed_length) const;
 };

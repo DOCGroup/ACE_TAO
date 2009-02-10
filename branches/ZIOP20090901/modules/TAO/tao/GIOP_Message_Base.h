@@ -85,7 +85,7 @@ public:
   /// Format the message. As we have not written the message length in
   /// the header, we make use of this oppurtunity to insert and format
   /// the message.
-  int format_message (TAO_OutputCDR &cdr);
+  int format_message (TAO_OutputCDR &cdr, TAO_Stub& stub);
 
   /**
    * Parse the details of the next message from the @a incoming

@@ -237,7 +237,7 @@ TAO_GIOP_Message_Base::generate_fragment_header (TAO_OutputCDR & cdr,
 }
 
 int
-TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
+TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub& stub)
 {
   this->set_giop_flags (stream);
 
@@ -254,17 +254,22 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
                           stream.current ()->length (),
                           ACE_TEXT ("GIOP message before compression")));
         }
-
-      if (ziop_adapter->marshal_reply_data (stream, *this->orb_core_))
+      bool compressed;
+      if (&stub == 0)
         {
-          if (TAO_debug_level >= 5)
-            {
-              ACE_HEX_DUMP ((LM_DEBUG,
-                              const_cast <char*> (stream.current ()->rd_ptr ()),
-                              stream.length (),
-                              ACE_TEXT ("ZIOP message after compression")));
-            }
+          compressed = ziop_adapter->marshal_data (stream, *this->orb_core_);
         }
+      else
+        {
+          compressed = ziop_adapter->marshal_data (stream, stub);
+        }
+       
+        if (TAO_debug_level >= 5)
+          {
+            if (!compressed)
+              ACE_DEBUG ((LM_DEBUG, 
+                          ACE_TEXT("GIOP message not compressed")));
+          }
     }
 #endif
 
@@ -1529,7 +1534,9 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 
     // Byte order.
     int const byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
-    int const compressed = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x04;
+    int const compressed = ptr[0] == 0x5A;
+    ACE_TCHAR message_type[5];
+    ACE_OS::sprintf(message_type, "%c%c%c%c", ptr[0], ptr[1], ptr[2], ptr[3]);
 
     // Get the version info
     CORBA::Octet const major = ptr[TAO_GIOP_VERSION_MAJOR_OFFSET];
@@ -1571,10 +1578,10 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     // Print.
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - GIOP_Message_Base::dump_msg, "
-                "%C %cIOP v%c.%c msg, %d data bytes, %s endian, "
+                "%C %s v%c.%c msg, %d data bytes, %s endian, "
                 "%s compressed, Type %C[%u]\n",
                 label,
-                ptr[0],
+                message_type,
                 digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
                 digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
                 len - TAO_GIOP_MESSAGE_HEADER_LEN ,
@@ -1584,9 +1591,9 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
                 *id));
 
     ACE_HEX_DUMP ((LM_DEBUG,
-                    (const char *) ptr,
-                    len,
-                    ACE_TEXT ("GIOP message")));
+                   (const char *) ptr,
+                   len,
+                   ACE_TEXT ("GIOP/ZIOP message")));
 }
 
 int
