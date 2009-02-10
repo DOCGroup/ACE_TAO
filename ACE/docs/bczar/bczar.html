@@ -281,6 +281,8 @@
         While doxygen churns, format a release announcement, including the release 
         notes gathered from developers.
         <ul>
+          <li>Get from bugzilla the bugs fixed. Use the following 
+              <a href="http://bugzilla.dre.vanderbilt.edu/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=ACE&product=CIAO&product=CoSMIC&product=MPC&product=OpenDDS&product=TAO&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailassigned_to1=1&emailtype1=substring&email1=&emailreporter2=1&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=2008-11-28&chfieldto=Now&chfield=resolution&chfieldvalue=FIXED&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">query</a> as start query and update the start date.</li>
           <li>
             Let <a href="mailto:schmidt@cs.wustl.edu">Doug Schmidt</a> review these before 
             you do anything with them.</li></ul>
@@ -362,6 +364,8 @@
           <li>
             <code>cd /export/www/download.dre/ACE+TAO-distribution</code></li>
           <li>
+            Check that the packages in this directory are all from today</li>
+          <li>
             Modify <b><code>/export/anduriltmp/bczar/copy_script.sh</code></b>
           to use the correct ACE version X.Y.Z and run it.
         </ul><br>
@@ -381,7 +385,7 @@
         the original is in the bin directory of the distribution.</li>
       <li>
         Update in the autobuild archive the file configs/scoreboard/releases.xml with 
-        the made release. This is used by the integrated scoreboard on http://remedy.nl  Remember to do a changelog entry.</li>
+        the made release (version number and release date). This is used by the integrated scoreboard on http://remedy.nl  Remember to do a changelog entry.</li>
       <li>
         Update the ACE_wrappers repo (remember to create a changelog entry, and possiably archive the old changelog to the changelog directory if this has become too long):<ul>
         <li>docs/Download.html to show the new release. Make sure you refer to the 
@@ -392,6 +396,12 @@
         <li>bin/diff-builds-and-group-fixed-tests-only.sh to give the correct default old_date for this release.</li></ul>
       <li>
         Update the NEWS, TAO/NEWS, and TAO/CIAO/NEWS files to have a new section for the next release.</li>
+      <li>
+        Update the rpmbuild/*.spec files to have a new version for the next release.</li>
+      <li>
+        Validate the packages on the webserver whether they are really containing the new release. Make at least
+        one builid where you run the TAO Hello world test and check if the libraries are having the
+        correct version number.</li>
       </ol>
     </p>
     <hr>
