@@ -1,20 +1,26 @@
+Tue Feb 10 23:31:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/TargetManager/TargetManager.mpc:
+
+          Disabled this for now. 
+        
 Tue Feb 10 19:13:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/Node_Manager_Module.cpp:
         * ciao/Containers/Session/Session_Container.cpp:
 
-          Loffinf changes. 
-        
+          Loffinf changes.
+
         * DAnCE/tests/DeploymentPlanDump/test.cpp:
         * DAnCE/tests/NodeApplicationManager-NodeApplication/test.cpp:
 
-          compile fixes to the last commit. 
-        
+          compile fixes to the last commit.
+
         * VERSION:
         * ciao/Version.h:
 
-          Updated version number to current. 
-        
+          Updated version number to current.
+
         * examples/DevGuideExamples:
         * examples/DevGuideExamples/Messenger/Administrator.mpc:
         * examples/DevGuideExamples/Messenger/Administrator_Client_IDL2.mpc:
@@ -31,8 +37,8 @@ Tue Feb 10 19:13:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * examples/DevGuideExamples/Messenger/descriptors/ApplicationNodeMap.dat:
         * examples/DevGuideExamples/Messenger/descriptors/run_test.pl:
 
-          Partially ported this example. 
-        
+          Partially ported this example.
+
 Tue Feb 10 18:18:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment.idl:
