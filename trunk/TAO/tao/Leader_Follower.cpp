@@ -86,8 +86,7 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
   // Note that we are waiting.
   ++this->event_loop_threads_waiting_;
 
-  while (this->client_thread_is_leader_ &&
-         result != -1)
+  while (this->client_thread_is_leader_ && result != -1)
     {
       if (max_wait_time == 0)
         {

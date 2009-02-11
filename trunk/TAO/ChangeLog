@@ -1,3 +1,31 @@
+Wed Feb 11 14:15:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Leader_Follower.cpp:
+          Layout change
+
+        * tao/Leader_Follower.h:
+          Updated link to bugzilla
+
+        * tao/Leader_Follower.inl:
+          Const change
+
+        * tao/LF_Event_Loop_Thread_Helper.h:
+          Doxygen change
+
+        * tao/LF_Strategy_Complete.cpp:
+        * tao/Transport.cpp:
+          Updated debug message to match others
+
+        * tao/LF_Strategy_Complete.h:
+        * tao/LocateRequest_Invocation.cpp:
+          Layout change
+
+        * tao/Muxed_TMS.cpp:
+          Check the return value of pop
+
+        * tao/Synch_Invocation.cpp:
+          Layout changes
+
 Wed Feb 11 13:40:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3531_Regression/*:

@@ -286,9 +286,10 @@ TAO_Muxed_TMS::clear_cache_i (void)
     {
       TAO_Reply_Dispatcher *rd = 0;
 
-      ubs.pop (rd);
-
-      rd->connection_closed ();
+      if (ubs.pop (rd) == 0)
+        {
+          rd->connection_closed ();
+        }
     }
 
   return 0;
