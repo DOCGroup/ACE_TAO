@@ -124,10 +124,10 @@ TAO_ZIOP_Loader::decompress (Compression::Compressor_ptr compressor,
 }
 
 bool
-TAO_ZIOP_Loader::decompress (TAO_InputCDR& cdr)
+TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd, TAO_ORB_Core& orb_core)
 {
   CORBA::Object_var compression_manager =
-    cdr.orb_core()->resolve_compression_manager();
+    orb_core.resolve_compression_manager();
 
   Compression::CompressionManager_var manager =
     Compression::CompressionManager::_narrow (compression_manager.in ());
@@ -136,7 +136,19 @@ TAO_ZIOP_Loader::decompress (TAO_InputCDR& cdr)
     {
       ZIOP::CompressedData data;
       //first set the read pointer after the header
-      char * initial_rd_ptr = cdr.rd_ptr ();
+      size_t begin = qd.msg_block ()-> rd_ptr() - qd.msg_block ()->base ();
+      char * initial_rd_ptr = qd.msg_block ()-> rd_ptr();
+      size_t const wr = qd.msg_block ()->wr_ptr () - qd.msg_block ()->base ();
+
+      TAO_InputCDR cdr (*db,
+                        qd.msg_block ()->self_flags (),
+                        begin + TAO_GIOP_MESSAGE_HEADER_LEN,
+                        wr,
+                        qd.byte_order (),
+                        qd.giop_version ().major_version (),
+                        qd.giop_version ().minor_version (),
+                        &orb_core);
+
       if (!(cdr >> data))
         return false;
       
@@ -146,21 +158,26 @@ TAO_ZIOP_Loader::decompress (TAO_InputCDR& cdr)
 
       if (decompress(compressor.in(), data.data, myout))
         {
-          ACE_Message_Block *mb = const_cast <ACE_Message_Block*> (cdr.start ());
-          mb->rd_ptr (initial_rd_ptr);
+          ACE_Message_Block *mb = new ACE_Message_Block(); //  const_cast <ACE_Message_Block*> (cdr.start ());
+          mb->size ((size_t)(data.original_length + TAO_GIOP_MESSAGE_HEADER_LEN));
+          qd.msg_block ()->rd_ptr (initial_rd_ptr);
+          mb->copy(qd.msg_block ()->base () + begin, TAO_GIOP_MESSAGE_HEADER_LEN);
 
-          int begin = (mb->rd_ptr() - mb->base () - TAO_GIOP_MESSAGE_HEADER_LEN);
-          if (mb->capacity() < (size_t)(data.original_length + TAO_GIOP_MESSAGE_HEADER_LEN + begin))
-            mb->size ((size_t)(data.original_length + TAO_GIOP_MESSAGE_HEADER_LEN + begin));
-          mb->wr_ptr(mb->rd_ptr());
+          if (begin > 0)
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n")));
+          else
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("###########################################\n")));
+
           if (mb->copy((char*)myout.get_buffer(true), 
                   (size_t)data.original_length) != 0)
             ACE_ERROR_RETURN((LM_ERROR, 
                               ACE_TEXT("TAO - (%P|%t) - Failed to copy decompressed data : Buffer too small\n")),
                               false);
           //change it into a GIOP message..
-          mb->base ()[0 + begin] = 0x47;
+          mb->base ()[0] = 0x47;
           //mb->base ()[TAO_GIOP_MESSAGE_SIZE_OFFSET + begin] = (size_t)data.original_length;
+          ACE_CDR::mb_align (mb);
+          *db = mb->data_block ();
           return true;
         }
     }
@@ -171,6 +188,34 @@ TAO_ZIOP_Loader::decompress (TAO_InputCDR& cdr)
 
   return true;
 }
+
+
+/*
+Making use of "begin".
+          ACE_Message_Block *mb = new ACE_Message_Block(); //  const_cast <ACE_Message_Block*> (cdr.start ());
+          mb->size ((size_t)(data.original_length + TAO_GIOP_MESSAGE_HEADER_LEN + begin));
+          mb->copy(qd.msg_block ()->base (), TAO_GIOP_MESSAGE_HEADER_LEN + begin);
+
+          if (begin > 0)
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n")));
+          else
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("###########################################\n")));
+
+          if (mb->copy((char*)myout.get_buffer(true), 
+                  (size_t)data.original_length) != 0)
+            ACE_ERROR_RETURN((LM_ERROR, 
+                              ACE_TEXT("TAO - (%P|%t) - Failed to copy decompressed data : Buffer too small\n")),
+                              false);
+          //change it into a GIOP message..
+          mb->base ()[0 + begin] = 0x47;
+         
+          //mb->base ()[TAO_GIOP_MESSAGE_SIZE_OFFSET + begin] = (size_t)data.original_length;
+          //link the new created message block to 
+          ACE_CDR::mb_align (mb);
+          *db = mb->data_block ();
+          return true;
+*/
+
 
 CORBA::ULong
 TAO_ZIOP_Loader::compression_policy_value (CORBA::Policy_ptr policy) const

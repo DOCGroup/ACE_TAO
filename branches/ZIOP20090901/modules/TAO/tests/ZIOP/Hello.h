@@ -16,7 +16,8 @@ public:
   /// Constructor
   Hello (CORBA::ORB_ptr orb);
 
-  virtual Test::Octet_Seq *get_big_reply (void);
+  virtual Test::Octet_Seq *get_big_reply ();
+  virtual void big_request (const ::Test::Octet_Seq & octet_in);
 
   // = The skeleton methods
   virtual char * get_string (const char * mystring);

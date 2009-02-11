@@ -15,8 +15,9 @@ char *
 Hello::get_string (const char * mystring)
 {
   ACE_DEBUG ((LM_DEBUG, "Received <%s>\n", mystring));
-  return CORBA::string_dup ("Hello there!Hello there!Hello there!Hello there!Hello there!Hello there!Hello there!Hello there!Hello there!\n");
+  return CORBA::string_dup ("Hello there!Hello there!Hello there!Hello there!Hello there!Hello there!Hello there!Hello there!Hello there!");
 }
+
 
 Test::Octet_Seq *
 Hello::get_big_reply ()
@@ -28,6 +29,22 @@ Hello::get_big_reply ()
 
   return reply_mesg._retn ();
 }
+
+void 
+Hello::big_request (const ::Test::Octet_Seq & octet_in)
+{
+  if (octet_in.length () > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_TEXT("Server side BLOB received\n")));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_ERROR, 
+                  ACE_TEXT("Error recieving BLOB on server\n")));
+    }
+}
+
 
 
 void
