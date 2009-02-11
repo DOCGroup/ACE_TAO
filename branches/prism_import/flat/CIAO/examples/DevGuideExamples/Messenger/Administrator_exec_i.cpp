@@ -88,7 +88,8 @@ namespace CIDL_Administrator_Impl
     ACE_DEBUG((LM_INFO, ACE_TEXT("ccm_remove\n")));
   }
 
-  void configuration_complete (void)
+  void 
+  Administrator_exec_i::configuration_complete (void)
   {
     ACE_DEBUG ((LM_INFO, ACE_TEXT("configuration_complete\n")));
   }

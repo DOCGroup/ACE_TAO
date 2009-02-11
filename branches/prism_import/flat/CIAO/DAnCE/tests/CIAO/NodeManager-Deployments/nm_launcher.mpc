@@ -1,5 +1,4 @@
-project(simple_nm_launcher) : ciao_config_handlers, dance_nodemanager_stub {
-  libs += CIAO_Logger
+project(simple_nm_launcher) : ciao_config_handlers, dance_nodemanager_stub, ciao_logger {
   Source_Files {
     simple_nm_launcher.cpp
   }

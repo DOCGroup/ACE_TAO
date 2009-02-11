@@ -19,9 +19,9 @@ project(SimpleComponent_cidl_gen) : ciaocidldefaults, taoidldefaults {
   custom_only = 1
   cidlflags += --svnt-export-macro SIMPLECOMPONENT_SVNT_Export \
                --svnt-export-include SimpleComponent_svnt_export.h
-  idlflags += -Wb,export_macro=SIMPLECOMPONENT_EXEC_Export \
-              -Wb,export_include=SimpleComponent_exec_export.h \
-              -SS
+//  idlflags += -Wb,export_macro=SIMPLECOMPONENT_EXEC_Export \
+//              -Wb,export_include=SimpleComponent_exec_export.h \
+//              -SS
 
   CIDL_Files {
     SimpleComponent.cidl
@@ -57,11 +57,11 @@ project(SimpleComponent_stub) : ccm_stub {
   }
 }
 
-project(SimpleComponent_exec) : ciao_executor, ccm_svnt {
+project(SimpleComponent_exec) : ciao_executor {
   avoids += ace_for_tao
-  after   += SimpleComponent_cidl_gen SimpleComponent_svnt
+  after   += SimpleComponent_cidl_gen 
   sharedname = SimpleComponent_exec
-  libs += SimpleComponent_stub SimpleComponent_svnt
+  libs += SimpleComponent_stub 
 
   dynamicflags   = SIMPLECOMPONENT_EXEC_BUILD_DLL
 
@@ -85,10 +85,10 @@ project(SimpleComponent_exec) : ciao_executor, ccm_svnt {
 }
 
 
-project(SimpleComponent_svnt) : ciao_servant, ccm_svnt {
+project(SimpleComponent_svnt) : ciao_servant {
   avoids += ace_for_tao
   sharedname  = SimpleComponent_svnt
-  libs       += SimpleComponent_stub SimpleComponent_exec
+  libs       += SimpleComponent_stub 
   after +=   SimpleComponent_stub SimpleComponent_cidl_gen
   dynamicflags = SIMPLECOMPONENT_SVNT_BUILD_DLL
 
