@@ -12,8 +12,18 @@ my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 
 $SV = $server->CreateProcess ("server");
 
-$SV->Spawn ();
+$server_status = $SV->Spawn ();
 
-$SV->WaitKill ($server->ProcessStopWaitInterval());
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
 
-exit 0;
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    $status = 1;
+}
+
+exit $status;
