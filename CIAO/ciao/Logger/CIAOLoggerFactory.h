@@ -1,3 +1,4 @@
+// $Id$
 #ifndef LOGGERFACTORY_H_
 #define LOGGERFACTORY_H_
 

@@ -1,7 +1,7 @@
 /** 
  * @file simple_nm_launcher.cpp
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- * 
+ *  $Id$
  * Launches then immediately tears down a plan. 
  */
 

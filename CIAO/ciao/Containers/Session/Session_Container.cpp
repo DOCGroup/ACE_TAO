@@ -558,10 +558,10 @@ namespace CIAO
         // standard forbids casting a pointer-to-object (including
         // void*) directly to a pointer-to-function.
         void *void_ptr = executor_dll.symbol (entry_point);
-	ACE_DEBUG ((LM_EMERGENCY, "***** vp: %u\n", void_ptr));
+        ACE_DEBUG ((LM_EMERGENCY, "***** vp: %u\n", void_ptr));
         ptrdiff_t tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr);
         ccreator = reinterpret_cast<ComponentFactory> (tmp_ptr);
-	ACE_DEBUG ((LM_EMERGENCY, "***** cc: %u\n", ccreator));
+        ACE_DEBUG ((LM_EMERGENCY, "***** cc: %u\n", ccreator));
         void_ptr = servant_dll.symbol (servant_entrypoint);
         tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr);
         screator = reinterpret_cast<ComponentServantFactory> (tmp_ptr);

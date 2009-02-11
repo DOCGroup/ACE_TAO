@@ -1,3 +1,4 @@
+// $Id$
 /**
  * @file Configurator_Factory.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

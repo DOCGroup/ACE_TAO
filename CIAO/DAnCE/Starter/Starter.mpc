@@ -1,4 +1,4 @@
-
+// $Id$
 project(Starter) : taoexe, dance_exe, dance_logger, messaging, naming, iortable {
   exename = dance
   macros +=  DANCE_BUILD_STARTER_EXE

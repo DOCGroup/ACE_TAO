@@ -1,3 +1,4 @@
+// $Id$
 #ifndef LOGGER_SERVICE_H_
 #define LOGGER_SERVICE_H_
 
