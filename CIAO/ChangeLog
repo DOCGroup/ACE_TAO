@@ -1,9 +1,15 @@
+Wed Feb 11 19:21:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * NEWS:
+        
+          Updated news file. 
+        
 Wed Feb 11 19:05:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/XML/XML_Helper.tpp:
-        
+
           Ported writing code to xerces 3.
-        
+
 Wed Feb 11 16:19:40 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO_TAO.mwc:
