@@ -167,11 +167,11 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
 
       orb->destroy ();
     }
-  catch (::Components::CreateFailure &e)
+  catch (::Components::CreateFailure &)
     {
       ACE_ERROR ((LM_ERROR, "Error: Caught CreateFailure exception.\n"));
     }
-  catch (::Components::RemoveFailure &e)
+  catch (::Components::RemoveFailure &)
     {
       ACE_ERROR ((LM_ERROR, "Error: Caught RemoveFailure exception.\n"));
     }
@@ -179,4 +179,5 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
     {
       ACE_ERROR ((LM_ERROR, "Error: Caught unknown exception\n"));
     }
+  return 0;
 }
