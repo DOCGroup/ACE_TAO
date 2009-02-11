@@ -112,8 +112,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       //shouldn't compress since data.length < low_value policy
       ACE_DEBUG((LM_DEBUG, 
-                  ACE_TEXT("Start get_string; large compression ratio")));
-      //ACE_OS::sleep(1);
+                  ACE_TEXT("Start get_string; large compression ratio\n")));
+
       CORBA::String_var the_string = hello->get_string ("This is a test string"
                                                         "This is a test string"
                                                         "This is a test string"
@@ -125,18 +125,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                                         "This is a test string");
       
       CORBA::LongLong bytes_send_2 = ::TAO::Transport::Stats().bytes_sent ();
-      /*
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT("(%P|%t) - Initial bytes send %d; Bytes send after invocation: %d; Difference : %d\n"), 
-                  bytes_send_1, bytes_send_2, bytes_send_2 - bytes_send_1));
-      */
-
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                   the_string.in ()));
 
+//      ACE_DEBUG ((LM_DEBUG,
+//        ACE_TEXT("(%P|%t) - Initial bytes send %d; Bytes send after invocation: %d; Difference : %d\n"), 
+//                  bytes_send_1, bytes_send_2, bytes_send_2 - bytes_send_1));
+      
       ACE_DEBUG((LM_DEBUG, 
-                  ACE_TEXT("Start get_string; small compression ratio")));
-      //ACE_OS::sleep(1);
+                  ACE_TEXT("Start get_string; small compression ratio\n")));
 
       //shouldn't compress since compress_ratio < min_ratio
       the_string = hello->get_string ("!@#$#%^#@&^%*$@#GFGSd"
@@ -149,8 +146,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   the_string.in ()));
 
       ACE_DEBUG((LM_DEBUG, 
-                  ACE_TEXT("Start get_big_reply; large compression ratio")));
-      //ACE_OS::sleep(1);
+                  ACE_TEXT("Start get_big_reply; large compression ratio\n")));
 
       //Prepare to send a large number of bytes. Should be compressed
       Test::Octet_Seq_var dummy = hello->get_big_reply ();
@@ -167,7 +163,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       //now send a large blob from here....
       ACE_DEBUG((LM_DEBUG, 
-                  ACE_TEXT("Start big_request; large compression ratio")));
+                  ACE_TEXT("Start big_request; large compression ratio\n")));
       //ACE_OS::sleep(1);
       int length = 2000;
       Test::Octet_Seq send_msg(length);

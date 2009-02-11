@@ -157,6 +157,11 @@ public:
   bool is_ready_for_bidirectional (TAO_OutputCDR &msg) const;
 
 private:
+  /// Decompresses a ZIOP message and turns it into a GIOP message
+  bool decompress (ACE_Data_Block **db, TAO_Queued_Data& qd, 
+                                   size_t& rd_pos, size_t& wr_pos);
+
+  
   /// Processes the GIOP_REQUEST messages
   int process_request (TAO_Transport *transport,
                        TAO_InputCDR &input,

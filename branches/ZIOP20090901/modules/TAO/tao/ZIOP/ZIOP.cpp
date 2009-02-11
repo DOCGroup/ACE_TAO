@@ -163,11 +163,6 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd, TAO_ORB_C
           qd.msg_block ()->rd_ptr (initial_rd_ptr);
           mb->copy(qd.msg_block ()->base () + begin, TAO_GIOP_MESSAGE_HEADER_LEN);
 
-          if (begin > 0)
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n")));
-          else
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("###########################################\n")));
-
           if (mb->copy((char*)myout.get_buffer(true), 
                   (size_t)data.original_length) != 0)
             ACE_ERROR_RETURN((LM_ERROR, 
@@ -188,34 +183,6 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd, TAO_ORB_C
 
   return true;
 }
-
-
-/*
-Making use of "begin".
-          ACE_Message_Block *mb = new ACE_Message_Block(); //  const_cast <ACE_Message_Block*> (cdr.start ());
-          mb->size ((size_t)(data.original_length + TAO_GIOP_MESSAGE_HEADER_LEN + begin));
-          mb->copy(qd.msg_block ()->base (), TAO_GIOP_MESSAGE_HEADER_LEN + begin);
-
-          if (begin > 0)
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n")));
-          else
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("###########################################\n")));
-
-          if (mb->copy((char*)myout.get_buffer(true), 
-                  (size_t)data.original_length) != 0)
-            ACE_ERROR_RETURN((LM_ERROR, 
-                              ACE_TEXT("TAO - (%P|%t) - Failed to copy decompressed data : Buffer too small\n")),
-                              false);
-          //change it into a GIOP message..
-          mb->base ()[0 + begin] = 0x47;
-         
-          //mb->base ()[TAO_GIOP_MESSAGE_SIZE_OFFSET + begin] = (size_t)data.original_length;
-          //link the new created message block to 
-          ACE_CDR::mb_align (mb);
-          *db = mb->data_block ();
-          return true;
-*/
-
 
 CORBA::ULong
 TAO_ZIOP_Loader::compression_policy_value (CORBA::Policy_ptr policy) const
@@ -265,7 +232,14 @@ TAO_ZIOP_Loader::check_min_ratio (CORBA::ULong original_data_length,
                                   CORBA::Long min_ratio) const
 {
   ::Compression::CompressionRatio ratio = 100 - (compressed_length / original_data_length) * 100;
-  return min_ratio == 0 || ratio > min_ratio;
+  bool accepted = min_ratio == 0 || ratio > min_ratio;
+  if (TAO_debug_level > 8)
+    {
+      ACE_ERROR ((LM_ERROR,
+        ACE_TEXT ("TAO (%P|%t) - TAO_ZIOP_Loader::check_min_ratio : Ratio:%d Accepted:%d\n"),
+          ratio, accepted));
+    }
+  return accepted;
 }
 
 bool
@@ -283,6 +257,12 @@ TAO_ZIOP_Loader::get_compression_details(CORBA::Policy_ptr compression_enabling_
       if (!CORBA::is_nil (srp.in ()))
         {
           use_ziop = srp->compression_enabled ();
+          if (!use_ziop && TAO_debug_level > 8)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT("TAO (%P|%t) - TAO_ZIOP_Loader::get_compression_details: ")
+                          ACE_TEXT("No ZIOP policy set\n")));
+            }
         }
     }
   else
@@ -311,7 +291,9 @@ TAO_ZIOP_Loader::get_compression_details(CORBA::Policy_ptr compression_enabling_
                 }
               else
                 {
-                  // No compatible compressor found
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT("TAO (%P|%t) - TAO_ZIOP_Loader::get_compression_details: ")
+                              ACE_TEXT("No appropriate compressor found\n")));
                   use_ziop = false;
                 }
             }
@@ -321,8 +303,7 @@ TAO_ZIOP_Loader::get_compression_details(CORBA::Policy_ptr compression_enabling_
           ACE_ERROR((LM_ERROR, 
                      ACE_TEXT("TAO (%P|%t) - ")
                      ACE_TEXT("TAO_ZIOP_Loader::get_compression_details : ")
-                     ACE_TEXT("compression_level_list_policy is NIL. No ZIOP\n")));
-          use_ziop = false;
+                     ACE_TEXT("Compression level policy not found\n")));
         }
     }
   return use_ziop;
@@ -382,6 +363,12 @@ TAO_ZIOP_Loader::compress_data (TAO_OutputCDR &cdr,
                   current->data_block ()->base ()[TAO_GIOP_MESSAGE_SIZE_OFFSET + begin] = 
                     cdr.length() - TAO_GIOP_MESSAGE_HEADER_LEN;
                 }
+            }
+          else if (TAO_debug_level > 8)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT("TAO (%P|%t) - TAO_ZIOP_Loader::compress_data: No compression used")
+                          ACE_TEXT("->Low Value Policy applied\n")));
             }
         }
     }
