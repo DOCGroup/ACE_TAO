@@ -21,10 +21,6 @@ replacement in the near term:
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
-. Expand support for complex types in deployment XML.
-
-. Enable use of CDR encoded deployment plans.
-
 . Enhance Execution Manager and Domain Application Manager to make calls
   on the Target Manager to get resource information.
 
@@ -46,8 +42,6 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Integrate RT-CORBA 1.2 dynamic scheduling feature into CIAO, which
   will allow the application developers to use dynamica scheduling
   through meta-programming model.
-
-. Enhance DAnCE to support OpenCCM components.
 
 . Update DAnCE IDL data structures and interfaces to comply with the
   06-04-01 version of the DnC specification, and perform
@@ -85,12 +79,47 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Implement a planner to query the TargetManager and RepositoryManager
   and generate deployment plans on the fly.
 
-. Start update of IDL/semantics to conform to 06-04-01 specification.
-  This will immediately break most CIAO specific extensions, such as shared
-  components and ReDaC.
-
 USER VISIBLE CHANGES BETWEEN CIAO-0.6.8 and CIAO-0.6.9
 ======================================================
+
+.  The CIAO refactoring branch has been merged to the main line of
+   development.  This version of CIAO contains extensive refactoring
+   of the CIAO container code and includes a new version of DAnCE
+   based on code provided by PrismTech. 
+
+.  Porting hints may be found at CIAO_ROOT/docs/{INSERT FILE HERE}
+
+.  CIAO no longer supports implicitly homed components.  This means
+   that components must either be deployed using an explicity
+   deployed and nominated home, or must be deployed without the use of
+   a home.  Unhomed components require new factory methods similar to
+   those used for homes.  These can be obtained by issuing the
+   --gen-exec-impl operation to the CIDL compiler. 
+
+.  CoSMIC support is not currently available for this version of
+   CIAO/DAnCE.
+
+.  Extant deployment plans are no longer valid for this version of
+   DAnCE.  Until CoSMIC support is available,
+   DANCE_ROOT/bin/generate_plan.py may be used to assist in the
+   creation of well-formed deployment plans. 
+
+.  Names for most DAnCE executables have changed.  Please see the
+   Quoter tutorial found at CIAO_ROOT/docs/tutorials/Quoter for
+   details.  
+
+.  DAnCE now supports connection endpoints realized by extra-plan
+   object references. 
+
+.  Support for shared components and ReDaC has been removed with no
+   immediate replacement planned. 
+
+.  Support for RTEC integration, RT-CCM, RepositoryManager,
+   TargetManager, and staticly linked depoyment has not yet been ported
+   to the new CIAO/DAnCE.
+
+.  CIAO/DAnCE now supports by Xerces 3.X and 2.X. 
+
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.6.7 and CIAO-0.6.8
 ======================================================
