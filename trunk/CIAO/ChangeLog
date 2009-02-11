@@ -1,10 +1,36 @@
+Wed Feb 11 20:56:24 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+
+        * MPC/config/ciao_client_dnc.mpb:
+        * MPC/config/ciao_domainapplicationmanager_dnc.mpb:
+        * MPC/config/ciao_events_base_dnc.mpb:
+        * MPC/config/ciao_events_dnc.mpb:
+        * MPC/config/ciao_rtevent_dnc.mpb:
+        * MPC/config/ciao_servant_dnc.mpb:
+        * MPC/config/ciao_static_dnc_app.mpb:
+        
+          _dnc_ projects are obsolete.  
+        
+        * tools/Config_Handlers/CIAO_Events:
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.hpp:
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.cpp:
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents_Handler.h:
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents_Handler.cpp:
+        * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers.mpc:
+        * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers_Export.h:
+        * tools/Config_Handlers/CIAO_Events/test.cpp:
+
+          These handlers are obsolete, and have been removed along with
+          ciaosvcs.  This infrastructure will hopefully be replaced soon
+          with the connector framework. 
+
 Wed Feb 11 20:01:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/Porting_Hints.txt:
         * NEWS:
-        
-          Porting hints for the new DAnCE. 
-        
+
+          Porting hints for the new DAnCE.
+
 Wed Feb 11 19:33:59 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ChangeLog:
