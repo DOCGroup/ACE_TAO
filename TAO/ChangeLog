@@ -1,3 +1,9 @@
+Wed Feb 11 10:09:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3565_Regression/run_test.pl:
+        * tests/Bug_3566_Regression/run_test.pl:
+          Improved these scripts
+
 Wed Feb 11 08:50:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
