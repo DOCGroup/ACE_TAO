@@ -159,6 +159,11 @@ BE_GlobalData::usage (void) const
       ACE_TEXT (" -x <filename>\t\tIncluded IDL file that wasn't processed")
       ACE_TEXT (" by this tool (regenerate include directive unchanged)\n")
     ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -e\t\t\tGenerate just an include of original IDL file")
+      ACE_TEXT (" if no IDL3 declarations are found\n")
+    ));
 }
 
 AST_Generator *
