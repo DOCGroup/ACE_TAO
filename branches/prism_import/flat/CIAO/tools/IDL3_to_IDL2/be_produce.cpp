@@ -88,9 +88,8 @@ BE_abort (void)
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("Fatal Error - Aborting\n")));
 
-  BE_cleanup ();
-
-  ACE_OS::exit (1);
+  // BE_cleanup will be called after the exception is caught.
+  throw Bailout ();
 }
 
 // Do the work of this BE. This is the starting point for code generation.

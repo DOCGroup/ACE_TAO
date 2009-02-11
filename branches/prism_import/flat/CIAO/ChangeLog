@@ -1,9 +1,28 @@
+Wed Feb 11 00:18:44 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CCF:
+        * CCF/CCF/CodeGenerationKit/IndentationCxx.hpp:
+        * CCF/CCF/CodeGenerationKit/IndentationJava.hpp:
+        * CIDLC:
+        * CIDLC/AttributeHeaderEmitters.cpp:
+        * CIDLC/DescriptorGenerator.cpp:
+        * CIDLC/Literals.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/SizeTypeCalculator.cpp:
+        * CIDLC/cidlc.cpp:
+        * docs:
+        * docs/tutorials/Quoter/Simple/Broker/StockBrokerDriver.cpp:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributorDriver.cpp:
+        * tools/IDL3_to_IDL2:
+
+          Merged changes in from trunk
+        
 Tue Feb 10 23:31:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/TargetManager.mpc:
 
-          Disabled this for now. 
-        
+          Disabled this for now.
+
 Tue Feb 10 19:13:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/Node_Manager_Module.cpp:

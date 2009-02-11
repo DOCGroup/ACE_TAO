@@ -362,6 +362,7 @@ main (int argc, char* argv[])
     }
 
     // Generate descriptor code.
+    if (cl.get_value ("gen-desc-file", false))
     {
       DescriptorGenerator desc_gen;
       desc_gen.generate (cl, tu);
