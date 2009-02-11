@@ -3486,7 +3486,18 @@ static char *
 idl_get_pragma_string (char *pragma)
 {
   // Get pointers to each end of the substring between the quotes.
-  const char *start = ACE_OS::strchr (pragma, '"') + 1;
+  const char *firstquote = ACE_OS::strchr (pragma '"');
+
+  if (firstquote == 0)
+    {
+      idl_global->err ()->syntax_error (
+          IDL_GlobalData::PS_PragmaPrefixSyntax
+        );
+
+      return 0;
+    }
+
+  const char *start = firstquote + 1;
   const char *end = ACE_OS::strchr (start, '"');
 
   if (end == 0)
