@@ -1,3 +1,16 @@
+Tue Feb 10 02:48:01 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc: Added
+        
+          libs += TAO_PortableServer
+
+        * examples/Advanced/ch_8_and_10/icp.h: Added #include for "ace/OS.h".
+
+        * examples/Advanced/ch_8_and_10/server.h: Zapped a stray ')'.
+  
+          Thanks to Joe Lihn <joelihn at hotmail dot com> for reporting
+          these problems and providing the fixes. 
+  
 Wed Feb 11 14:15:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Leader_Follower.cpp:
