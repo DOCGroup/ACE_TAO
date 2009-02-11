@@ -8,7 +8,12 @@
 #include "XML_Error_Handler.h"
 #include "XML_Schema_Resolver.h"
 #include "xercesc/framework/LocalFileFormatTarget.hpp"
+#include "xercesc/dom/DOM.hpp"
 #include "XercesString.h"
+
+#if XERCES_VERSION_MAJOR == 3
+#include "xercesc/dom/DOMLSSerializer.hpp"
+#endif
 
 namespace CIAO
 {
@@ -237,13 +242,41 @@ namespace CIAO
     
     template <typename Resolver, typename Error>
     bool 
-    XML_Helper<Resolver, Error>::write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *,
-                                            const ACE_TCHAR *) const
+    XML_Helper<Resolver, Error>::write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc,
+                                            const ACE_TCHAR *file) const
     {
-      /*try
-        {*/
-        throw 1;
-    	/* @@TODO: Reimplement for xerces 3. 
+      try
+        {
+          bool retn;
+#if XERCES_VERSION_MAJOR == 3
+          XERCES_CPP_NAMESPACE::DOMLSSerializer *serializer (impl_->createLSSerializer ());
+          XERCES_CPP_NAMESPACE::DOMConfiguration *ser_config (serializer->getDomConfig ());
+          XERCES_CPP_NAMESPACE::DOMLSOutput *output (impl_->createLSOutput ());
+          
+          if (ser_config->canSetParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true))
+            ser_config->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
+          
+          XMLFormatTarget *format_target = new XERCES_CPP_NAMESPACE::LocalFileFormatTarget (file);
+          
+          output->setByteStream (format_target);
+          
+          retn = serializer->write (doc, output);
+          
+          output->release ();
+          serializer->release ();
+          return retn;
+#else          
+          std::auto_ptr <XERCES_CPP_NAMESPACE::DOMWriter> writer (impl_->createDOMWriter());
+          
+          if (writer->canSetFeature (XMLUni::fgDOMWRTFormatPrettyPrint,
+                                     true))
+            writer->setFeature (XMLUni::fgDOMWRTFormatPrettyPrint, true);
+          
+          std::auto_ptr <xercesc::XMLFormatTarget> ft (new xercesc::LocalFileFormatTarget(file));
+          retn = writer->writeNode(ft.get (), *doc);
+          
+          return retn;
+#endif
         }
       catch (const xercesc::XMLException &e)
         {
@@ -265,7 +298,7 @@ namespace CIAO
                       e.getSrcFile (),
                       e.getSrcLine ()));
           return false;
-          }*/
+        }
     }
   }
 }
