@@ -53,7 +53,7 @@ namespace CIAO
      * X: First argument to the function
      * Y: Second argument to the function
      */
-#define SEQ_HAND_GCC_BUG_WORKAROUND(W, X, Y) \
+#define SEQ_HAND_GCC_BUG_WORKAROUND(W, X, Y)    \
     while(0) { \
       W (*X, Y[0]);  \
     }
@@ -70,7 +70,7 @@ namespace CIAO
 
       void operator() (const ::XMLSchema::string<ACE_TCHAR>  &src)
       {
-        dest_[pos_++] = ACE_TEXT_ALWAYS_CHAR (src.c_str ());
+        dest_[pos_++] = src.c_str ();
       }
 
     private:

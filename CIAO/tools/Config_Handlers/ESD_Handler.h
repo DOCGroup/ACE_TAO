@@ -52,8 +52,7 @@ namespace CIAO
           const DeploymentPlan &src,
           ::Deployment::EventServiceDeploymentDescriptions& dest);
 
-      static EventServiceDeploymentDescription es_deployment_descr (
-          const Deployment::EventServiceDeploymentDescription &src);
+      static EventServiceDeploymentDescription es_deployment_descr (const Deployment::EventServiceDeploymentDescription &src);
 
       static IDREF_Base<CORBA::ULong> IDREF;
 

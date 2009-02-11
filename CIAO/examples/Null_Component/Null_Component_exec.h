@@ -71,9 +71,7 @@ namespace CIDL_Null_Component_Impl
     set_session_context (
       ::Components::SessionContext_ptr ctx);
 
-    virtual void ciao_preactivate ();
-
-    virtual void ciao_postactivate ();
+    virtual void configuration_complete ();
 
     virtual void ccm_activate ();
 
@@ -84,6 +82,9 @@ namespace CIDL_Null_Component_Impl
     private:
     ::CCM_Null_Component_Context_var context_;
   };
+
+  extern "C" NULL_COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Null_Component_Impl (void);
 
   class NULL_COMPONENT_EXEC_Export Null_ComponentHome_exec_i
     : public virtual Null_ComponentHome_Exec,

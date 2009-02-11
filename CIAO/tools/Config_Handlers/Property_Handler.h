@@ -29,20 +29,21 @@ namespace Deployment
 namespace CIAO
 {
   namespace Config_Handlers
-  {
-    class Property;
+    {
+      class Property;
 
-    /*
-     * @class Property_Handler
-     *
-     * @brief Handler class for <CCMComponentPortDescription> types.
-     *
-     * This class defines handler methods to map values from
-     * XSC objects, parsed from the descriptor files, to the
-     * corresponding CORBA IDL type for the schema element.
-     */
+      /*
+       * @class Property_Handler
+       *
+       * @brief Handler class for <CCMComponentPortDescription> types.
+       *
+       * This class defines handler methods to map values from
+       * XSC objects, parsed from the descriptor files, to the
+       * corresponding CORBA IDL type for the schema element.
+       *
+       */
 
-    class Config_Handlers_Common_Export Property_Handler
+      class Config_Handlers_Common_Export Property_Handler
     {
     public:
       Property_Handler (void);
@@ -52,16 +53,17 @@ namespace CIAO
       /// <CIAO::Config_Handlers::Property> to the CORBA IDL type
       /// <Deployment::Property>.
       static void handle_property (const Property& desc,
-                                   ::Deployment::Property& toconfig);
+                       ::Deployment::Property& toconfig);
       static Property get_property (const ::Deployment::Property& src);
     };
 
-    typedef Sequence_Handler < Property,
-                               ::Deployment::Properties,
-                               ::Deployment::Property,
-                               Property_Handler::handle_property >
-      Property_Functor;
-  }
+
+      typedef Sequence_Handler < Property,
+                 ::Deployment::Properties,
+                 ::Deployment::Property,
+                 Property_Handler::handle_property > Property_Functor;
+
+    }
 }
 
 #include /**/ "ace/post.h"

@@ -9,10 +9,6 @@
 
 #include "ace/config-all.h"
 
-#if defined (ACE_AS_STATIC_LIBS) && !defined (RT_CCM_HANDLERS_HAS_DLL)
-#  define RT_CCM_HANDLERS_HAS_DLL 0
-#endif /* ACE_AS_STATIC_LIBS && RT_CCM_HANDLERS_HAS_DLL */
-
 #if !defined (RT_CCM_HANDLERS_HAS_DLL)
 #  define RT_CCM_HANDLERS_HAS_DLL 1
 #endif /* ! RT_CCM_HANDLERS_HAS_DLL */

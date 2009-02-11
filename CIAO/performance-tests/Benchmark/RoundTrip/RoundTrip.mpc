@@ -33,7 +33,7 @@ project(Benchmark_RoundTrip_cidl_gen) : ciaocidldefaults, taoidldefaults {
   }
 }
 
-project(Benchmark_RoundTrip_stub) : ciao_client_dnc {
+project(Benchmark_RoundTrip_stub) : ccm_stub {
   avoids += ace_for_tao
   after += Benchmark_RoundTrip_idl_gen Benchmark_stub
   libs  += Benchmark_stub
@@ -58,7 +58,7 @@ project(Benchmark_RoundTrip_stub) : ciao_client_dnc {
   }
 }
 
-project(Benchmark_RoundTrip_exec) : ciao_component_dnc {
+project(Benchmark_RoundTrip_exec) : ciao_executor {
   avoids += ace_for_tao
   after   += Benchmark_RoundTrip_cidl_gen Benchmark_RoundTrip_stub
   sharedname = RoundTrip_exec
@@ -89,7 +89,7 @@ project(Benchmark_RoundTrip_exec) : ciao_component_dnc {
 }
 
 
-project(Benchmark_RoundTrip_svnt) : ciao_servant_dnc {
+project(Benchmark_RoundTrip_svnt) : ciao_servant {
   avoids += ace_for_tao
   after      += Benchmark_skel Benchmark_RoundTrip_exec
   sharedname  = RoundTrip_svnt
@@ -122,7 +122,7 @@ project(Benchmark_RoundTrip_svnt) : ciao_servant_dnc {
   }
 }
 
-project (RoundTrip_client) : ciao_client_dnc, valuetype, strategies {
+project (RoundTrip_client) : ccm_stub, valuetype, strategies {
   avoids += ace_for_tao
   exename = client
   after += Benchmark_RoundTrip_stub

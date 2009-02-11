@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n ICBasic"
 
-project(ICBasic_stub): ciao_client_dnc {
+project(ICBasic_stub): ccm_stub {
 
   sharedname = ICBasic_stub
   idlflags += -Wb,stub_export_macro=ICBASIC_STUB_Export -Wb,stub_export_include=ICBasic_stub_export.h -Wb,skel_export_macro=ICBASIC_SVNT_Export -Wb,skel_export_include=ICBasic_svnt_export.h

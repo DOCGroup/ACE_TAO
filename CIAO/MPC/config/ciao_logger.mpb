@@ -1,0 +1,6 @@
+// -*- MPC -*-
+
+project : ciao, messaging {
+  after += CIAO_Logger
+  libs  += CIAO_Logger
+}

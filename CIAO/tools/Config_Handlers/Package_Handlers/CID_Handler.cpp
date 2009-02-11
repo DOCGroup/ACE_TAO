@@ -11,7 +11,7 @@
 
 #include "Basic_Deployment_Data.hpp"
 #include "DAnCE/Deployment/Deployment_DataC.h"
-#include "Utils/XML_Helper.h"
+#include "XML_Typedefs.h"
 #include "Utils/Exceptions.h"
 
 #include "Deployment.hpp"
@@ -29,226 +29,224 @@ namespace CIAO
 
       struct Capability_Handler
       {
-        static void handle_capability (const Capability &desc,
-                                       ::Deployment::Capability &toconfig)
-        {
-          CIAO_TRACE ("Capability_Handler::get_capability");
+    static void handle_capability (const Capability &desc,
+                       ::Deployment::Capability &toconfig)
+    {
+      CIAO_TRACE ("Capability_Handler::get_capability");
 
-          toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
+      toconfig.name = desc.name ().c_str ();
 
-          toconfig.resourceType.length (desc.count_resourceType ());
-          std::for_each (desc.begin_resourceType (),
-                         desc.end_resourceType (),
-                         String_Seq_Functor (toconfig.resourceType));
+      toconfig.resourceType.length (desc.count_resourceType ());
+      std::for_each (desc.begin_resourceType (),
+             desc.end_resourceType (),
+             String_Seq_Functor (toconfig.resourceType));
 
-          toconfig.property.length (desc.count_property ());
-          std::for_each (desc.begin_property (),
-                         desc.end_property (),
-                         SatisfierProperty_Functor (toconfig.property));
-        }
+      toconfig.property.length (desc.count_property ());
+      std::for_each (desc.begin_property (),
+             desc.end_property (),
+             SatisfierProperty_Functor (toconfig.property));
+    }
 
-        static Capability get_capability (const ::Deployment::Capability &src)
-        {
-          CIAO_TRACE ("Capability_Handler::get_capability - reverse");
+    static Capability get_capability (const ::Deployment::Capability &src)
+    {
+      CIAO_TRACE ("Capability_Handler::get_capability - reverse");
 
-          Capability retval (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
+      Capability retval (src.name.in ());
 
-          for (CORBA::ULong i = 0; i < src.resourceType.length (); ++i)
-              retval.add_resourceType (ACE_TEXT_CHAR_TO_TCHAR (src.resourceType[i].in ()));
+      for (CORBA::ULong i = 0; i < src.resourceType.length (); ++i)
+      retval.add_resourceType (src.resourceType[i].in ());
 
-          for (CORBA::ULong i = 0; i < src.property.length (); ++i)
-            retval.add_property (
-              SatisfierProperty_Handler::get_sat_property (src.property[i]));
+      for (CORBA::ULong i = 0; i < src.property.length (); ++i)
+        retval.add_property (SatisfierProperty_Handler::get_sat_property (src.property[i]));
 
-          return retval;
-        }
+      return retval;
+    }
       };
 
-      typedef Sequence_Handler <
-        Capability,
-        ::Deployment::Capabilities,
-        ::Deployment::Capability,
-        Capability_Handler::handle_capability > Capability_Functor;
+      typedef Sequence_Handler < Capability,
+                 ::Deployment::Capabilities,
+                 ::Deployment::Capability,
+                 Capability_Handler::handle_capability > Capability_Functor;
 
       struct IR_Handler
       {
-        static void handle_ir (const ImplementationRequirement &desc,
-                               ::Deployment::ImplementationRequirement &toconfig)
+    static void handle_ir (const ImplementationRequirement &desc,
+                   ::Deployment::ImplementationRequirement &toconfig)
+    {
+      CIAO_TRACE ("IR_Handler::get_ir");
+
+      if (desc.resourceUsage_p ())
         {
-          CIAO_TRACE ("IR_Handler::get_ir");
+          switch (desc.resourceUsage ().integral ())
+        {
+        case ResourceUsageKind::None_l:
+          toconfig.resourceUsage = Deployment::None;
+          break;
 
-          if (desc.resourceUsage_p ())
+        case ResourceUsageKind::InstanceUsesResource_l:
+          toconfig.resourceUsage = Deployment::InstanceUsesResource;
+          break;
+
+        case ResourceUsageKind::ResourceUsesInstance_l:
+          toconfig.resourceUsage = Deployment::ResourceUsesInstance;
+          break;
+
+        case ResourceUsageKind::PortUsesResource_l:
+          toconfig.resourceUsage = Deployment::PortUsesResource;
+          break;
+
+        case ResourceUsageKind::ResourceUsesPort_l:
+          toconfig.resourceUsage = Deployment::ResourceUsesPort;
+          break;
+
+        default:
+          throw Config_Error (desc.name (),
+                      "Unknown ResourceUsageKind.");
+          break;
+        }
+        }
+
+      if (desc.resourcePort_p ())
+        toconfig.resourcePort = desc.resourcePort ().c_str ();
+
+      if (desc.componentPort_p  ())
+        toconfig.componentPort = desc.componentPort ().c_str ();
+
+      toconfig.resourceType = desc.resourceType ().c_str ();
+      toconfig.name = desc.name ().c_str ();
+
+      std::for_each (desc.begin_property (),
+             desc.end_property (),
+             Property_Functor (toconfig.property ));
+    }
+
+    static ImplementationRequirement
+    get_ir (const ::Deployment::ImplementationRequirement &src)
+    {
+      CIAO_TRACE ("IR_Handler::get_ir - reverse");
+
+      ImplementationRequirement retval (src.resourceType.in (),
+                        src.name.in ());
+
+      if (src.resourceUsage.length () == 1)
+        switch (src.resourceUsage[0])
           {
-            switch (desc.resourceUsage ().integral ())
-              {
-              case ResourceUsageKind::None_l:
-                toconfig.resourceUsage = Deployment::None;
-                break;
+          case Deployment::None:
+        retval.resourceUsage (ResourceUsageKind::None);
+        break;
 
-              case ResourceUsageKind::InstanceUsesResource_l:
-                toconfig.resourceUsage = Deployment::InstanceUsesResource;
-                break;
+          case Deployment::InstanceUsesResource:
+        retval.resourceUsage (ResourceUsageKind::InstanceUsesResource);
+        break;
 
-              case ResourceUsageKind::ResourceUsesInstance_l:
-                toconfig.resourceUsage = Deployment::ResourceUsesInstance;
-                break;
+          case Deployment::ResourceUsesInstance:
+        retval.resourceUsage (ResourceUsageKind::ResourceUsesInstance);
+        break;
 
-              case ResourceUsageKind::PortUsesResource_l:
-                toconfig.resourceUsage = Deployment::PortUsesResource;
-                break;
+          case Deployment::PortUsesResource:
+        retval.resourceUsage (ResourceUsageKind::PortUsesResource);
+        break;
 
-              case ResourceUsageKind::ResourceUsesPort_l:
-                toconfig.resourceUsage = Deployment::ResourceUsesPort;
-                break;
+          case Deployment::ResourceUsesPort:
+        retval.resourceUsage (ResourceUsageKind::ResourceUsesPort);
+        break;
 
-              default:
-                throw Config_Error (ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ()),
-                                    "Unknown ResourceUsageKind.");
-                break;
-              }
+          default:
+        throw Config_Error (src.name.in (),
+                    "Unknown ResourceUsageKind.");
+        break;
           }
 
-          if (desc.resourcePort_p ())
-            toconfig.resourcePort = ACE_TEXT_ALWAYS_CHAR (desc.resourcePort ().c_str ());
+      retval.resourcePort (src.resourcePort.in ());
 
-          if (desc.componentPort_p  ())
-            toconfig.componentPort = ACE_TEXT_ALWAYS_CHAR (desc.componentPort ().c_str ());
+      retval.componentPort (src.componentPort.in ());
 
-          toconfig.resourceType = ACE_TEXT_ALWAYS_CHAR (desc.resourceType ().c_str ());
-          toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
+      for (CORBA::ULong i = 0; i < src.property.length (); ++i)
+        retval.add_property (Property_Handler::get_property (src.property[i]));
 
-          std::for_each (desc.begin_property (),
-                        desc.end_property (),
-                        Property_Functor (toconfig.property ));
-        }
-
-        static ImplementationRequirement
-        get_ir (const ::Deployment::ImplementationRequirement &src)
-        {
-          CIAO_TRACE ("IR_Handler::get_ir - reverse");
-
-          ImplementationRequirement retval (ACE_TEXT_CHAR_TO_TCHAR (src.resourceType.in ()),
-                                            ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
-
-          if (src.resourceUsage.length () == 1)
-            switch (src.resourceUsage[0])
-            {
-            case Deployment::None:
-              retval.resourceUsage (ResourceUsageKind::None);
-              break;
-
-            case Deployment::InstanceUsesResource:
-              retval.resourceUsage (ResourceUsageKind::InstanceUsesResource);
-              break;
-
-            case Deployment::ResourceUsesInstance:
-              retval.resourceUsage (ResourceUsageKind::ResourceUsesInstance);
-              break;
-
-            case Deployment::PortUsesResource:
-              retval.resourceUsage (ResourceUsageKind::PortUsesResource);
-              break;
-
-            case Deployment::ResourceUsesPort:
-              retval.resourceUsage (ResourceUsageKind::ResourceUsesPort);
-              break;
-
-            default:
-              throw Config_Error (src.name.in (),
-                                  "Unknown ResourceUsageKind.");
-              break;
-            }
-
-          retval.resourcePort (ACE_TEXT_CHAR_TO_TCHAR (src.resourcePort.in ()));
-
-          retval.componentPort (ACE_TEXT_CHAR_TO_TCHAR (src.componentPort.in ()));
-
-          for (CORBA::ULong i = 0; i < src.property.length (); ++i)
-            retval.add_property (Property_Handler::get_property (src.property[i]));
-
-          return retval;
-        }
+      return retval;
+    }
       };
 
-      typedef Sequence_Handler <
-        ImplementationRequirement,
-        ::Deployment::ImplementationRequirements,
-        ::Deployment::ImplementationRequirement,
-        IR_Handler::handle_ir > IR_Functor;
+      typedef Sequence_Handler < ImplementationRequirement,
+                 ::Deployment::ImplementationRequirements,
+                 ::Deployment::ImplementationRequirement,
+                 IR_Handler::handle_ir > IR_Functor;
 
       struct MID_Handler
       {
-        static void handle_mid (
-            const MonolithicImplementationDescription &desc,
-            ::Deployment::MonolithicImplementationDescription &toconfig)
+    static void handle_mid (const MonolithicImplementationDescription &desc,
+                ::Deployment::MonolithicImplementationDescription &toconfig)
+    {
+      CIAO_TRACE ("MID_Handler::get_mid");
+
+      toconfig.nodeExecParameter.length (desc.count_nodeExecParameter ());
+      std::for_each (desc.begin_nodeExecParameter (),
+             desc.end_nodeExecParameter (),
+             Property_Functor (toconfig.nodeExecParameter));
+
+      toconfig.componentExecParameter.length (desc.count_componentExecParameter ());
+      std::for_each (desc.begin_componentExecParameter (),
+             desc.end_componentExecParameter (),
+             Property_Functor (toconfig.componentExecParameter));
+
+      toconfig.deployRequirement.length (desc.count_deployRequirement ());
+      while (0)
         {
-          CIAO_TRACE ("MID_Handler::get_mid");
-
-          toconfig.nodeExecParameter.length (desc.count_nodeExecParameter ());
-          std::for_each (desc.begin_nodeExecParameter (),
-                         desc.end_nodeExecParameter (),
-                         Property_Functor (toconfig.nodeExecParameter));
-
-          toconfig.componentExecParameter.length (
-            desc.count_componentExecParameter ());
-          std::for_each (desc.begin_componentExecParameter (),
-                         desc.end_componentExecParameter (),
-                         Property_Functor (toconfig.componentExecParameter));
-
-          toconfig.deployRequirement.length (desc.count_deployRequirement ());
-          while (0)
-            {
-              IR_Handler::handle_ir (*desc.begin_deployRequirement (),
-                                     toconfig.deployRequirement[0]);
-            }
-          std::for_each (desc.begin_deployRequirement (),
-                         desc.end_deployRequirement (),
-                         IR_Functor (toconfig.deployRequirement));
-
-          toconfig.primaryArtifact.length (desc.count_primaryArtifact ());
-          SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
-                                       desc.begin_primaryArtifact (),
-                                       toconfig.primaryArtifact);
-          std::for_each (desc.begin_primaryArtifact (),
-                         desc.end_primaryArtifact (),
-                         NIA_Functor (toconfig.primaryArtifact));
+          IR_Handler::handle_ir (*desc.begin_deployRequirement (),
+                     toconfig.deployRequirement[0]);
         }
+      std::for_each (desc.begin_deployRequirement (),
+             desc.end_deployRequirement (),
+             IR_Functor (toconfig.deployRequirement));
 
-        static MonolithicImplementationDescription
-        get_mid (const ::Deployment::MonolithicImplementationDescription &src)
-        {
-          CIAO_TRACE ("MID_Handler::get_mid - reverse");
+      toconfig.primaryArtifact.length (desc.count_primaryArtifact ());
+      SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
+                       desc.begin_primaryArtifact (),
+                       toconfig.primaryArtifact);
+      std::for_each (desc.begin_primaryArtifact (),
+             desc.end_primaryArtifact (),
+             NIA_Functor (toconfig.primaryArtifact));
+    }
 
-          MonolithicImplementationDescription retval;
+    static MonolithicImplementationDescription
+    get_mid (const ::Deployment::MonolithicImplementationDescription &src)
+    {
+      CIAO_TRACE ("MID_Handler::get_mid - reverse");
 
-          for (CORBA::ULong i = 0; i < src.nodeExecParameter.length (); ++i)
-            retval.add_nodeExecParameter
-              (Property_Handler::get_property (src.nodeExecParameter[i]));
+      MonolithicImplementationDescription retval;
 
-          for (CORBA::ULong i = 0; i < src.componentExecParameter.length (); ++i)
-            retval.add_componentExecParameter
-              (Property_Handler::get_property (src.componentExecParameter[i]));
+      for (CORBA::ULong i = 0; i < src.nodeExecParameter.length (); ++i)
+        retval.add_nodeExecParameter
+          (Property_Handler::get_property (src.nodeExecParameter[i]));
 
-          for (CORBA::ULong i = 0; i < src.deployRequirement.length (); ++i)
-            retval.add_deployRequirement
-              (IR_Handler::get_ir (src.deployRequirement[i]));
+      for (CORBA::ULong i = 0; i < src.componentExecParameter.length (); ++i)
+        retval.add_componentExecParameter
+          (Property_Handler::get_property (src.componentExecParameter[i]));
 
-          for (CORBA::ULong i = 0; i < src.primaryArtifact.length (); ++i)
-            retval.add_primaryArtifact
-              (NIA_Handler::get_nia (src.primaryArtifact[i]));
+      for (CORBA::ULong i = 0; i < src.deployRequirement.length (); ++i)
+        retval.add_deployRequirement
+          (IR_Handler::get_ir (src.deployRequirement[i]));
 
-          return retval;
-        }
+      for (CORBA::ULong i = 0; i < src.primaryArtifact.length (); ++i)
+        retval.add_primaryArtifact
+          (NIA_Handler::get_nia (src.primaryArtifact[i]));
+
+      return retval;
+    }
+
       };
 
-      typedef Sequence_Handler <
-        MonolithicImplementationDescription,
-        ::Deployment::MonolithicImplementationDescriptions,
-        ::Deployment::MonolithicImplementationDescription,
-        MID_Handler::handle_mid > MID_Functor;
+      typedef Sequence_Handler < MonolithicImplementationDescription,
+                 ::Deployment::MonolithicImplementationDescriptions,
+                 ::Deployment::MonolithicImplementationDescription,
+                 MID_Handler::handle_mid > MID_Functor;
+
+      
 
       void
-      CID_Handler::component_impl_descr (const ComponentImplementationDescription &desc,
+      CID_Handler::component_impl_descr (
+                                         const ComponentImplementationDescription &desc,
                                          ::Deployment::ComponentImplementationDescription &toconfig)
       {
         CIAO_TRACE ("CID_Handler::component_impl_descr");
@@ -258,17 +256,17 @@ namespace CIAO
 
         if (desc.href_p ())
           {
-            xsc_cid.reset (CID_Handler::resolve_cid (ACE_TEXT_ALWAYS_CHAR (desc.href ().c_str ())));
+            xsc_cid.reset (CID_Handler::resolve_cid (desc.href ().c_str ()));
             cid = xsc_cid.get ();
           }
         else
           cid = &desc;
 
         if (cid->label_p ())
-          toconfig.label = ACE_TEXT_ALWAYS_CHAR (cid->label ().c_str ());
+          toconfig.label = cid->label ().c_str ();
 
         if (cid->UUID_p ())
-          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (cid->UUID ().c_str ());
+          toconfig.UUID = cid->UUID ().c_str ();
 
         if (cid->implements_p ())
           { // MAJO: We should be able to assume this exists, fix broken interpeters..
@@ -286,7 +284,7 @@ namespace CIAO
           {
             toconfig.monolithicImpl.length (1);
             MID_Handler::handle_mid (cid->monolithicImpl (),
-                                     toconfig.monolithicImpl[0]);
+                     toconfig.monolithicImpl[0]);
           }
         else
           throw Plan_Error ("ComponentImplementationDescription must have either assemblyImpl or monolithicImpl");
@@ -299,9 +297,9 @@ namespace CIAO
 
         // capability
         toconfig.capability.length (cid->count_capability ());
-        SEQ_HAND_GCC_BUG_WORKAROUND (Capability_Handler::handle_capability,
-                                     cid->begin_capability (),
-                                     toconfig.capability);
+    SEQ_HAND_GCC_BUG_WORKAROUND (Capability_Handler::handle_capability,
+                     cid->begin_capability (),
+                     toconfig.capability);
         std::for_each (cid->begin_capability (),
                        cid->end_capability (),
                        Capability_Functor (toconfig.capability));
@@ -312,14 +310,14 @@ namespace CIAO
         for (ComponentImplementationDescription::dependsOn_const_iterator i = cid->begin_dependsOn ();
              i != cid->end_dependsOn ();
              ++i)
-          toconfig.dependsOn[pos++].requiredType =
-            ACE_TEXT_ALWAYS_CHAR (i->requiredType ().c_str ());
+          toconfig.dependsOn[pos++].requiredType = i->requiredType ().c_str ();
 
         // infoProperty
         toconfig.infoProperty.length (cid->count_infoProperty ());
         std::for_each (cid->begin_infoProperty (),
                        cid->end_infoProperty (),
                        Property_Functor (toconfig.infoProperty));
+
       }
 
       ComponentImplementationDescription
@@ -329,8 +327,8 @@ namespace CIAO
 
         ComponentImplementationDescription retval;
 
-        retval.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
-        retval.UUID (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
+        retval.label (src.label.in ());
+        retval.UUID (src.UUID.in ());
 
         {
           retval.implements (Comp_Intf_Descr_Handler::comp_intf_descr (src.implements));
@@ -350,18 +348,19 @@ namespace CIAO
 
         for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
           {
-            retval.add_configProperty (Property_Handler::get_property (src.configProperty[i]));
+            retval.add_configProperty (
+                                       Property_Handler::get_property (src.configProperty[i]));
           }
 
         for (CORBA::ULong i = 0; i < src.dependsOn.length (); ++i)
           {
-            retval.add_dependsOn (ImplementationDependency (
-              ACE_TEXT_CHAR_TO_TCHAR (src.dependsOn[i].requiredType.in ())));
+            retval.add_dependsOn (ImplementationDependency (src.dependsOn[i].requiredType.in ()));
           }
 
         for (CORBA::ULong i = 0; i < src.infoProperty.length (); ++i)
           {
-            retval.add_infoProperty (Property_Handler::get_property (src.infoProperty[i]));
+            retval.add_infoProperty (
+                                     Property_Handler::get_property (src.infoProperty[i]));
           }
 
         return retval;
@@ -372,18 +371,16 @@ namespace CIAO
       {
         CIAO_TRACE ("CID_Handler::resolve_cid");
 
-        xercesc::DOMDocument *dom = XML_HELPER->create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
+        xercesc::DOMDocument *dom = XML_Helper::XML_HELPER.create_dom (uri);
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for CID");
 
-        try
-        {
+        try {
           return new ComponentImplementationDescription
             (componentImplementationDescription (dom));
         }
-        catch (...)
-        {
+        catch (...) {
           throw Parse_Error ("Unable to create XSC structure for CID");
         }
       }

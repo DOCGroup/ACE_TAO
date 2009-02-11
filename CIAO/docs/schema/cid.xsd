@@ -9,6 +9,14 @@
   <xsd:include schemaLocation="iad.xsd" />
   <xsd:include schemaLocation="pcd.xsd" />
   <xsd:include schemaLocation="cpd.xsd" />
+  
+  <xsd:complexType name="ComponentPackageReference">
+    <xsd:sequence>
+      <xsd:element name="requiredUUID" type="xsd:string" minOccurs="0" />
+      <xsd:element name="requiredName" type="xsd:string" minOccurs="0" />
+      <xsd:element name="requiredType" type="Deployment:ComponentInterfaceDescription"/>
+    </xsd:sequence>
+  </xsd:complexType>
 
   <xsd:complexType name="SubcomponentInstantiationDescription">
     <xsd:sequence>
@@ -26,7 +34,7 @@
   <xsd:complexType name="SubcomponentPropertyReference">
     <xsd:sequence>
       <xsd:element name="propertyName" type="xsd:string"/>
-      <xsd:element name="instance" type="xsd:IDREF"/>
+      <xsd:element name="instance" type="Deployment:IdRef"/>
     </xsd:sequence>
   </xsd:complexType>
 

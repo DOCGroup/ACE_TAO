@@ -25,7 +25,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    class DeploymentPlan;
+    class deploymentPlan;
   }
 }
 
@@ -39,7 +39,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    class XSC_XML_Handlers_Export DeploymentPlan : public ::XSCRT::Type
+    class XSC_XML_Handlers_Export deploymentPlan : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
 
@@ -163,14 +163,29 @@ namespace CIAO
       protected:
       ::std::list< ::CIAO::Config_Handlers::Property > infoProperty_;
 
+      // localityConstraint
+      // 
       public:
-      DeploymentPlan ();
+      typedef ::std::list< ::CIAO::Config_Handlers::PlanLocality >::iterator localityConstraint_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::PlanLocality >::const_iterator localityConstraint_const_iterator;
+      localityConstraint_iterator begin_localityConstraint ();
+      localityConstraint_iterator end_localityConstraint ();
+      localityConstraint_const_iterator begin_localityConstraint () const;
+      localityConstraint_const_iterator end_localityConstraint () const;
+      void add_localityConstraint (::CIAO::Config_Handlers::PlanLocality const& );
+      size_t count_localityConstraint (void) const;
 
-      DeploymentPlan (::XSCRT::XML::Element< ACE_TCHAR > const&);
-      DeploymentPlan (DeploymentPlan const& s);
+      protected:
+      ::std::list< ::CIAO::Config_Handlers::PlanLocality > localityConstraint_;
 
-      DeploymentPlan&
-      operator= (DeploymentPlan const& s);
+      public:
+      deploymentPlan ();
+
+      deploymentPlan (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      deploymentPlan (deploymentPlan const& s);
+
+      deploymentPlan&
+      operator= (deploymentPlan const& s);
 
       private:
       char regulator__;
@@ -193,7 +208,7 @@ namespace CIAO
   {
     namespace Traversal
     {
-      struct XSC_XML_Handlers_Export DeploymentPlan : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::DeploymentPlan >
+      struct XSC_XML_Handlers_Export deploymentPlan : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::deploymentPlan >
       {
         virtual void
         traverse (Type&);
@@ -266,6 +281,12 @@ namespace CIAO
 
         virtual void
         implementation_post (Type const&);
+
+        virtual void
+        implementation_none (Type&);
+
+        virtual void
+        implementation_none (Type const&);
 
         virtual void
         instance (Type&);
@@ -418,6 +439,36 @@ namespace CIAO
         infoProperty_none (Type const&);
 
         virtual void
+        localityConstraint (Type&);
+
+        virtual void
+        localityConstraint (Type const&);
+
+        virtual void
+        localityConstraint_pre (Type&);
+
+        virtual void
+        localityConstraint_pre (Type const&);
+
+        virtual void
+        localityConstraint_next (Type&);
+
+        virtual void
+        localityConstraint_next (Type const&);
+
+        virtual void
+        localityConstraint_post (Type&);
+
+        virtual void
+        localityConstraint_post (Type const&);
+
+        virtual void
+        localityConstraint_none (Type&);
+
+        virtual void
+        localityConstraint_none (Type const&);
+
+        virtual void
         post (Type&);
 
         virtual void
@@ -435,11 +486,11 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct DeploymentPlan : Traversal::DeploymentPlan, 
+      struct deploymentPlan : Traversal::deploymentPlan, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
-        typedef ::CIAO::Config_Handlers::DeploymentPlan Type;
-        DeploymentPlan (::XSCRT::XML::Element< ACE_TCHAR >&);
+        typedef ::CIAO::Config_Handlers::deploymentPlan Type;
+        deploymentPlan (::XSCRT::XML::Element< ACE_TCHAR >&);
 
         virtual void 
         traverse (Type &o)
@@ -683,8 +734,41 @@ namespace CIAO
         virtual void
         infoProperty_post (Type const&);
 
+        virtual void 
+        localityConstraint_pre (Type &o)
+        {
+
+          this->localityConstraint_pre (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        localityConstraint_pre (Type const&);
+
+        virtual void 
+        localityConstraint_next (Type &o)
+        {
+
+          this->localityConstraint_next (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        localityConstraint_next (Type const&);
+
+        virtual void 
+        localityConstraint_post (Type &o)
+        {
+
+          this->localityConstraint_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        localityConstraint_post (Type const&);
+
         protected:
-        DeploymentPlan ();
+        deploymentPlan ();
       };
     }
   }

@@ -1,315 +1,212 @@
-//$Id$
+// -*- C++ -*-
 
-/**========================================================
- *
- * @file   NodeApplication_Impl.h
- *
- * @Brief  This file contains the implementation of
- *         the NodeApplication interface.
- *
- * @author Tao Lu <lu@dre.vanderbilt.edu>
- * @author Gan Deng <dengg@dre.vanderbilt.edu>
- *========================================================*/
-
-#ifndef NODEAPPLICATION_IMPL_H
-#define NODEAPPLICATION_IMPL_H
-#include /**/ "ace/pre.h"
-
-#include "CIAO_NodeApplication_export.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Synch.h"
-#include "ace/Synch_Traits.h"
-#include "ace/SString.h"
-#include "ace/Hash_Map_Manager_T.h"
-#include "tao/ORB.h"
-#include "DAnCE/Deployment/Deployment_NodeApplicationS.h"
-#include "ciao/Server_init.h"
-#include "ciao/CIAO_common.h"
-#include "ciao/Object_Set_T.h"
-#include "ciaosvcs/Events/CIAO_EventService_Factory_impl.h"
-#include "ciaosvcs/Events/CIAO_Events_Base/CIAO_EventsS.h"
-
-#include "NodeApp_Configurator.h"
-#include "Session_Container.h"
-
-using CIAO::Utility::write_IOR;
-
+//=============================================================================
 /**
+ *  @file    NodeApplication_Impl.h
  *
- * @class NodeApplication_Impl
+ *  $Id$
  *
- * @brief This class implements the NodeApplication interface.
- * This interface is semantically very simillar to container
- * in the old DnC spec. However this class will also be used
- * as a Server for hosting home/component. This way we reduce the
- * complexity of the framework by omitting the componentserver layer.
+ * @Brief  Implementation of Deployment::NodeApplication
  *
- * @@TODO add configuration capabilities. Threading is one of them.
- *
- * @@Assumptions:
- * 1. Now the implementation is not thread safe.
- * // @@Gan, the above assumption is _really_ bad. Could you please
- * use the lock in the imeplementation to do some simple
- * prootections.
- **/
+ * @author Erwin Gottlieb <eg@prismtech.com>
+ * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ */
+//=============================================================================
 
-namespace CIAO
+
+#ifndef NODEAPPLICATION_IMPL_H_
+#define NODEAPPLICATION_IMPL_H_
+
+#include "NodeApplication_Export.h"
+
+#include "ace/Map_Manager.h"
+#include "ace/Containers_T.h"
+#include "tao/ORB.h"
+#include "tao/Object.h"
+#include "ccm/CCM_KeylessCCMHomeC.h"
+#include "ccm/ComponentsC.h"
+#include "RedirectionService/RedirectionService.h"
+#include "ciao/ComponentServer/CIAO_ServerActivator_Impl.h"
+//#include "Cdmw/CDMW_IDLC.h"
+
+#include "ccm/ComponentServer/CCM_ComponentServerC.h"
+#include "Deployment/Deployment_NodeApplicationS.h"
+#include "Deployment/Deployment_DeploymentPlanC.h"
+#include "Deployment/DeploymentC.h"
+#include "Deployment/Deployment_common.h"
+
+//#include "ComponentInstallation_Impl.h"
+namespace DAnCE
 {
-  // @@ Gan, as we discussed before can you please wrap this
-  // implementation in a namespace Node_Application or whatever to
-  // signify that it belongs to another software piece of CIAO?
-  class NODEAPPLICATION_Export NodeApplication_Impl
-    : public virtual POA_Deployment::NodeApplication
+
+  class NodeManager_Impl;
+
+  class NodeApplication_Export NodeApplication_Impl : public virtual POA_Deployment::NodeApplication
   {
   public:
-    enum Component_State
-    {
-      NEW_BORN, PRE_ACTIVE, ACTIVE, POST_ACTIVE, PASSIVE, DEACTIVATED
-    };
+    NodeApplication_Impl (CORBA::ORB_ptr orb,
+                          PortableServer::POA_ptr poa,
+                          const Deployment::DeploymentPlan& plan,
+                          RedirectionService & redirection,
+                          const ACE_CString& node_name,
+                          const PROPERTY_MAP &properties);
 
-    typedef struct _component_state_info
-    {
-      Components::CCMObject_var objref_;
-      Component_State state_;
-    } Component_State_Info;
+    virtual ~NodeApplication_Impl();
 
-    NodeApplication_Impl (CORBA::ORB_ptr o,
-                          PortableServer::POA_ptr p,
-                          NodeApp_Configurator &c,
-                          const Static_Config_EntryPoints_Maps* static_entrypts_maps =0);
-
-    /// Default destructor.
-    virtual ~NodeApplication_Impl (void);
-
-    /**
-     * @brief This operation dose 2 things.
-     *        1. Get the external connction (facet and Event source)
-     *           and connect them to the local receptacle/event sink.
-     *        2. If the start augment is true, start the Components.
-     * @Note:
-     * The connection containes the object ref of the provided object
-     * reference (facet/event consumer) of components from other NodeApplications.
-     * However the name field stores the name of the port on the local component.
-     */
-    virtual void
-    finishLaunch (const Deployment::Connections & connections,
-                  CORBA::Boolean start,
-                  CORBA::Boolean add_connection);
+    virtual void finishLaunch (const Deployment::Connections & providedReference,
+                               ::CORBA::Boolean start);
 
     virtual void start ();
 
-    /*-------------  CIAO specific IDL operations (idl)----------
-     *
-     *-----------------------------------------------------------*/
+    Deployment::Connections * getAllConnections();
 
-    virtual void ciao_preactivate ();
+    //TODO Exception specification should be customized
+    void init_components();
 
-    virtual void ciao_postactivate ();
+    void configuration_complete_components ();
 
-    virtual void ciao_passivate ();
+    void passivate_components ();
 
-    /// Initialize the NodeApplication
-    virtual CORBA::Long init ();
+    void remove_components ();
 
-    /// Start install homes and components.
-    virtual ::Deployment::ComponentInfos *
-      install (const ::Deployment::NodeImplementationInfo & node_impl_info);
+    enum ERequestType
+    {
+      eCreateComponentServer,
+      eCreateContainer,
+      eInstallHome,
+      eCreateComponentWithConfigValues
+    };
 
-    /// Install a number of CIAO_Event_Service objects within the NA
-    virtual ::CIAO::CIAO_Event_Service *
-      install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescription & es_info);
+    enum EInstanceType
+    {
+      eHome,
+      eComponent,
+      eHomedComponent,
+      eInvalid
+    };
 
-    /// Get the object reference of the NodeApplicationManager.
-    /// This might come in handy later.
-    virtual ::CORBA::Object_ptr get_node_application_manager ();
-
-    /// Access the readonly attribute.
-    virtual ::Deployment::Properties * properties ();
-
-    /// Remove a component instance from the NodeApplication
-    virtual void remove_component (const char * inst_name);
-
-    virtual void activate_component (const char * name);
-
-    virtual void passivate_component (const char * name);
-
-    /// Remove everything inside including all components and homes.
-    virtual void remove ();
-
-    /// Create a container interface, which will be hosted in this NodeApplication.
-    virtual ::Deployment::Container_ptr
-      create_container (const ::Deployment::Properties &properties);
-
-    /// Remove a container interface.
-    virtual void remove_container (::Deployment::Container_ptr cref);
-
-    /// Get all container object refs
-    virtual ::Deployment::Containers * get_containers ();
-
-    /*-------------  CIAO specific helper functions (C++)---------
-     *
-     *-----------------------------------------------------------*/
-
-    /// Get the containing POA.  This operation does *not*
-    /// increase the reference count of the POA.
-    virtual PortableServer::POA_ptr _default_POA (void);
-
-    /// Return the cached object reference of this NodeApplication object.
-    /// This operation does *NOT* increase the reference count.
-    ::Deployment::NodeApplication_ptr
-    get_objref ();
-
-    /*------- CIAO helper functions for pub/sub service -------
-     *
-     *--------------------------------------------------------*/
-
-    /// Set up a connection using the CIAO_Event_Service, which
-    /// is available as a field in the <Deployment::Connection>
-    /// struct type.
-    /// If <add_or_remove> input parameter is true, then we will
-    /// add the event connection, otherwise we will remove the
-    /// event connection.
-    void build_event_connection (
-        const Deployment::Connection & connection,
-        bool add_or_remove);
-
+    enum EComponentState
+    {
+      eUninstalled,
+      eInstalled,
+      eConfigured,
+      eActive,
+      ePassive,
+      eRemoved,
+      eInvalidState
+    };
+    
+      
   protected:
-    /// If <add_connection> is "false", then we shall "remove"
-    /// the connections, otherwise we will add these connections.
-    virtual void
-    finishLaunch_i (const Deployment::Connections & connections,
-                    CORBA::Boolean start,
-                    CORBA::Boolean add_connection);
-    virtual void
-    handle_facet_receptable_connection (
-        Components::CCMObject_ptr comp,
-        const Deployment::Connection & connection,
-        CORBA::Boolean add_connection);
+    //TODO Add throw specification
+    void init();
 
-    virtual void
-    handle_emitter_consumer_connection (
-        Components::CCMObject_ptr comp,
-        const Deployment::Connection & connection,
-        CORBA::Boolean add_connection);
+    struct Container;
 
-    virtual void
-    handle_publisher_consumer_connection (
-        Components::CCMObject_ptr comp,
-        const Deployment::Connection & connection,
-        CORBA::Boolean add_connection);
+    struct Instance
+    {
+      Instance (EInstanceType type = eInvalid,
+                Container *cont = 0,
+                CORBA::ULong idd = 0,
+                CORBA::ULong mdd = 0) :
+        state (eUninstalled),
+        type (type), idd_idx (idd), mdd_idx (mdd), home(0),
+        container (cont)
+      {
+      }
 
-    virtual bool
-    _is_es_consumer_conn (Deployment::Connection conn);
+      EComponentState state;
+      EInstanceType type;
+      CORBA::ULong idd_idx;
+      CORBA::ULong mdd_idx;
+      CORBA::Object_var ref;
+      Instance *home;
+      Container *container;
+    };
 
-    virtual bool
-    _is_publisher_es_conn (Deployment::Connection conn);
+    typedef ACE_Array<Instance> INSTANCES;
+    typedef ACE_Array<Instance *> INSTANCE_PTRS;
 
-    /// Register the publisher to the CIAO event service
-    /// The only fields of <connection> struct used in this method
-    /// are: <type>, <event_service>, <instanceName>, <portName>.
-    virtual void
-    handle_publisher_es_connection (
-        Components::CCMObject_ptr comp,
-        const Deployment::Connection & connection,
-        CORBA::Boolean add_connection);
+    struct Container
+    {
+      INSTANCES homes;
+      INSTANCES components;
+      Deployment::Properties properties;
+      Components::Deployment::Container_var ref;
+    };
 
-    /// Register the consumer to the CIAO event service
-    virtual void
-    handle_es_consumer_connection (
-        const Deployment::Connection & connection,
-        CORBA::Boolean add_connection);
+    typedef ACE_Array<Container> CONTAINERS;
 
-    /// Create and initialize all the containers
-    virtual CORBA::Long create_all_containers (
-        const ::Deployment::ContainerImplementationInfos & container_infos);
+    struct ComponentServer
+    {
+      CONTAINERS containers;
+      Deployment::Properties properties;
+      Components::Deployment::ComponentServer_var ref;
+    };
 
-    /// Create a "key" for the connection
-    virtual ACE_CString *
-    create_connection_key (const Deployment::Connection & connection);
+    typedef ACE_Array<ComponentServer> COMPONENTSERVERS;
 
-    /// To build a map between a component instance and  its container
-    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                    Deployment::Container_var,
-                                    ACE_Hash<ACE_CString>,
-                                    ACE_Equal_To<ACE_CString>,
-                                    ACE_Null_Mutex> Component_Container_Map;
-    typedef Component_Container_Map::iterator Component_Container_Iterator;
-    Component_Container_Map component_container_map_;
+    EInstanceType get_instance_type (const Deployment::Properties& prop) const;
 
+    void create_config_values (const Deployment::Properties& prop,
+                               const ERequestType request,
+                               Components::ConfigValues& cfg) const;
 
-    /// To store all created Component objects as well as their lifecycle
-    /// states..
-    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                    Component_State_Info,
-                                    ACE_Hash<ACE_CString>,
-                                    ACE_Equal_To<ACE_CString>,
-                                    ACE_Null_Mutex> CCMComponent_Map;
-    typedef CCMComponent_Map::iterator Component_Iterator;
-    CCMComponent_Map component_state_map_;
+    void create_config_values(const Deployment::Properties& prop,
+                            Components::ConfigValues& cfg) const;
 
-    /// A Map which stores all the connection cookies
-    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                    ::Components::Cookie_var,
-                                    ACE_Hash<ACE_CString>,
-                                    ACE_Equal_To<ACE_CString>,
-                                    ACE_Null_Mutex> Cookie_Map;
-    typedef Cookie_Map::iterator Cookie_Map_Iterator;
-    Cookie_Map cookie_map_;
+    void create_component_server (size_t index);
 
-    /// Synchronize access to the object set.
-    TAO_SYNCH_MUTEX lock_;
+    void create_container (size_t server, size_t container);
 
-    /// Keep a list of managed Container objects.
-    Object_Set<Deployment::Container, Deployment::Container_var> container_set_;
+    void install_home (Container &cont, Instance &inst);
 
-    /// Keep a pointer to the managing ORB serving this servant.
+    void install_component (Container &cont, Instance &inst);
+
+    void install_homed_component (Container &cont, Instance &inst);
+    
+    void store_instance_ior (Instance &inst);
+    
+    Components::Cookie* connect_receptacle (Components::CCMObject_ptr inst,
+                                           const ACE_CString& port_name,
+                                           CORBA::Object_ptr facet);
+
+    Components::Cookie* connect_receptacle_ext (Components::CCMObject_ptr inst,
+                                              const ACE_CString& port_name,
+                                              CORBA::Object_ptr facet);
+
+    void connect_emitter (Components::CCMObject_ptr inst,
+                         const ACE_CString& port_name,
+                         CORBA::Object_ptr consumer);
+
+    void connect_emitter_ext (Components::CCMObject_ptr inst,
+                            const ACE_CString& port_name,
+                            CORBA::Object_ptr consumer);
+
+    Components::Cookie* connect_publisher (Components::CCMObject_ptr inst,
+                                           const ACE_CString& port_name,
+                                           CORBA::Object_ptr consumer);
+
     CORBA::ORB_var orb_;
 
-    /// Keep a pointer to the managing POA.
-    // @@Gan/Jai, which POA is this? Same as the component POA or a
-    // different one. My sense is that its different. Could you please
-    //document it?
     PortableServer::POA_var poa_;
 
-    // Configurator for allocating NodeApp resources and policies
-    NodeApp_Configurator &configurator_;
+    const Deployment::DeploymentPlan& plan_;
 
-    /// Cached properties
-    Deployment::Properties properties_;
+    //ComponentInstallation_Impl* installation_;
+    auto_ptr<CIAO::Deployment::CIAO_ServerActivator_i>  activator_;
 
-    /// And a reference to the NodeApplicationManager that created us.
-    ::CORBA::Object_var node_app_manager_;
+    RedirectionService & redirection_;
 
-    /// Cache the object reference (of ourselves).
-    ::Deployment::NodeApplication_var objref_;
+    ACE_CString node_name_;
 
-    /// A factory to create CIAO event services
-    EventService_Factory_impl es_factory_;
-
-    /// Cache the (NA specific) installation info of all the
-    /// CIAO_Event_Services
-    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                    DAnCE::EventServiceDeploymentDescriptions_var,
-                                    ACE_Hash<ACE_CString>,
-                                    ACE_Equal_To<ACE_CString>,
-                                    ACE_Null_Mutex> ES_Installation_Map;
-    typedef ES_Installation_Map::iterator ES_Installation_Map_Iterator;
-    ES_Installation_Map es_info_map_;
-
-    const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
-  private:
-    /// Default constructor, noop
-    NodeApplication_Impl(void);
+    PROPERTY_MAP properties_;
+    
+    COMPONENTSERVERS servers_;
+    
+    INSTANCE_PTRS instances_;
+    
+    CosNaming::NamingContext_var instance_nc_;
   };
-}
-
-#if defined (__ACE_INLINE__)
-# include "NodeApplication_Impl.inl"
-#endif /* __ACE_INLINE__ */
-
-#include /**/ "ace/post.h"
-#endif /* NODEAPPLICATION_IMPL_H */
+};
+#endif /*NODEAPPLICATION_IMPL_H_*/

@@ -1,6 +1,6 @@
 // $Id$
 
-project (Multi_Threaded_client) : ciao_client_dnc, strategies {
+project (Multi_Threaded_client) : ccm_stub, strategies {
   exename = client
   after += Benchmark_RoundTripClient_stub
   libs += RoundTripClient_stub Benchmark_stub

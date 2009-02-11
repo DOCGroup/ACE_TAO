@@ -28,43 +28,39 @@ namespace Deployment
 namespace CIAO
 {
   namespace Config_Handlers
-  {
-    class PlanConnectionDescription;
-    class ComponentExternalPortEndpoint;
+    {
+      class PlanConnectionDescription;
+      class ComponentExternalPortEndpoint;
 
-    /*
-     * @class CEPE_Handler
-     *
-     * @brief Handler class for <ComponentExternalPortEndpoint> types.
-     *
-     * This class defines handler methods to map values from
-     * XSC ComponentExternalPortEndpoint objects, parsed from
-     * the descriptor files, to the corresponding CORBA IDL type.
-     *
-     */
+      /*
+       * @class CEPE_Handler
+       *
+       * @brief Handler class for <ComponentExternalPortEndpoint> types.
+       *
+       * This class defines handler methods to map values from
+       * XSC ComponentExternalPortEndpoint objects, parsed from
+       * the descriptor files, to the corresponding CORBA IDL type.
+       *
+       */
 
-    class Config_Handlers_Common_Export CEPE_Handler
+      class Config_Handlers_Common_Export CEPE_Handler
     {
     public:
-      static void external_port_endpoints (
-          const PlanConnectionDescription &src,
-          ::Deployment::ComponentExternalPortEndpoints &dest);
+      static void external_port_endpoints (const PlanConnectionDescription &src,
+                           ::Deployment::ComponentExternalPortEndpoints &dest);
 
       static ComponentExternalPortEndpoint
-      external_port_endpoint (
-          const ::Deployment::ComponentExternalPortEndpoint &src);
+        external_port_endpoint (const ::Deployment::ComponentExternalPortEndpoint &src);
 
-      static void handle_external_port_endpoint (
-          const ComponentExternalPortEndpoint &src,
-          ::Deployment::ComponentExternalPortEndpoint &dest);
+      static void handle_external_port_endpoint (const ComponentExternalPortEndpoint &src,
+                             ::Deployment::ComponentExternalPortEndpoint &dest);
     };
 
-    typedef Sequence_Handler < ComponentExternalPortEndpoint,
-                               ::Deployment::ComponentExternalPortEndpoints,
-                               ::Deployment::ComponentExternalPortEndpoint,
-                               CEPE_Handler::handle_external_port_endpoint >
-      CEPE_Functor;
-  }
+      typedef Sequence_Handler < ComponentExternalPortEndpoint,
+    ::Deployment::ComponentExternalPortEndpoints,
+    ::Deployment::ComponentExternalPortEndpoint,
+    CEPE_Handler::handle_external_port_endpoint > CEPE_Functor;
+    }
 }
 
 #include /**/ "ace/post.h"

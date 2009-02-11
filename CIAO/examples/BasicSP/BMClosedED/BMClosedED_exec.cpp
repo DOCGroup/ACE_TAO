@@ -31,14 +31,11 @@ void
 MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *)
 {
 
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "BMClosedED - Doing computations \n"));
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "BMClosedED - Doing data fetch \n"));
-    }
+  ACE_DEBUG ((LM_EMERGENCY,
+              "BMClosedED - Doing computations \n"));
+  
+  ACE_DEBUG ((LM_EMERGENCY,
+              "BMClosedED - Doing data fetch \n"));
 
   // Refresh position
   BasicSP::ReadData_var dat
@@ -46,7 +43,7 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *)
 
   if (CORBA::is_nil (dat.in ()))
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_DEBUG ((LM_EMERGENCY,
                   "BMClosedED - got nil from get_connection \n"));
 
       throw CORBA::BAD_INV_ORDER ();
@@ -55,12 +52,9 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *)
   CORBA::String_var str =
     dat->get_data ();
 
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "BMClosedED - Display data is [%s] \n",
-                  str.in ()));
-    }
+  ACE_DEBUG ((LM_EMERGENCY,
+              "BMClosedED - Display data is [%s] \n",
+              str.in ()));
 
   if (ACE_OS::strcmp (str.in (), "BM DEVICE DATA") == 0)
     {
@@ -80,11 +74,8 @@ MyImpl::BMClosedED_exec_i::set_session_context (
     Components::SessionContext_ptr ctx
   )
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::BMClosedED_exec_i::set_session_context\n"));
-    }
+  ACE_DEBUG ((LM_EMERGENCY,
+              "MyImpl::BMClosedED_exec_i::set_session_context\n"));
 
   this->context_ =
     BasicSP::CCM_BMClosedED_Context::_narrow (ctx);
@@ -97,31 +88,22 @@ MyImpl::BMClosedED_exec_i::set_session_context (
 }
 
 void
-MyImpl::BMClosedED_exec_i::ciao_preactivate ()
+MyImpl::BMClosedED_exec_i::configuration_complete ()
 {
 }
 
 void
 MyImpl::BMClosedED_exec_i::ccm_activate ()
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::BMClosedED_exec_i::ccm_activate\n"));
-    }
-
-}
-
-void
-MyImpl::BMClosedED_exec_i::ciao_postactivate ()
-{
+  ACE_DEBUG ((LM_EMERGENCY,
+              "MyImpl::BMClosedED_exec_i::ccm_activate\n"));
 }
 
 void
 MyImpl::BMClosedED_exec_i::ccm_passivate ()
 {
   //  if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ACE_DEBUG ((LM_EMERGENCY,
                 "MyImpl::BMClosedED_exec_i::ccm_passivate\n"));
 }
 
@@ -129,8 +111,21 @@ void
 MyImpl::BMClosedED_exec_i::ccm_remove ()
 {
   //  if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ACE_DEBUG ((LM_EMERGENCY,
                 "MyImpl::BMClosedED_exec_i::ccm_remove\n"));
+}
+
+extern "C" BMCLOSEDED_EXEC_Export ::Components::EnterpriseComponent_ptr
+create_BasicSP_BMClosedED_Impl (void)
+{
+  ::Components::EnterpriseComponent_ptr retval =
+    ::Components::EnterpriseComponent::_nil ();
+  
+  ACE_NEW_RETURN (retval,
+                  MyImpl::BMClosedED_exec_i,
+                  ::Components::EnterpriseComponent::_nil ());
+
+  return retval;
 }
 
 /// Default ctor.

@@ -32,7 +32,7 @@ project(Stock_Base_StockBroker_cidl_gen) : ciaocidldefaults, taoidldefaults {
   }
 }
 
-project(Stock_Base_StockBroker_stub) : ciao_client_dnc {
+project(Stock_Base_StockBroker_stub) : ccm_stub {
   avoids += ace_for_tao
   after += Stock_Base_StockBroker_idl_gen Stock_Base_stub
   libs  += Stock_Base_stub
@@ -57,7 +57,7 @@ project(Stock_Base_StockBroker_stub) : ciao_client_dnc {
   }
 }
 
-project(Stock_Base_StockBroker_exec) : ciao_component_dnc {
+project(Stock_Base_StockBroker_exec) : ciao_executor {
   avoids += ace_for_tao
   after   += Stock_Base_StockBroker_cidl_gen Stock_Base_StockBroker_stub
   sharedname = StockBroker_exec
@@ -85,7 +85,7 @@ project(Stock_Base_StockBroker_exec) : ciao_component_dnc {
 }
 
 
-project(Stock_Base_StockBroker_svnt) : ciao_servant_dnc {
+project(Stock_Base_StockBroker_svnt) : ciao_servant {
   avoids += ace_for_tao
   after      += Stock_Base_skel Stock_Base_StockBroker_exec
   sharedname  = StockBroker_svnt
@@ -118,7 +118,7 @@ project(Stock_Base_StockBroker_svnt) : ciao_servant_dnc {
   }
 }
 
-project (Stock_Base_StockBrokerDriver) : ciao_client_dnc, valuetype {
+project (Stock_Base_StockBrokerDriver) : ccm_stub, valuetype {
   avoids += ace_for_tao
   exename = StockBrokerDriver
   after += Stock_Base_StockBroker_stub

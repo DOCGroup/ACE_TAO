@@ -11,12 +11,13 @@
 #include "tao/ORB.h"
 #include "Utils/Exceptions.h"
 
-static const ACE_TCHAR *input_file = ACE_TEXT ("BasicSP.cdp");
+static const char *input_file = "BasicSP.cdp";
+
 
 static int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:"));
+  ACE_Get_Opt get_opts (argc, argv, "i:");
 
   int c;
 
@@ -44,10 +45,12 @@ void check_srd (const Deployment::DeploymentPlan &);
 
 using namespace CIAO::Config_Handlers;
 
+
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+
       if (parse_args (argc, argv) != 0)
         return 1;
 
@@ -56,7 +59,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_UNUSED_ARG (orb);
 
 
-      if (xercesc::DOMDocument *doc = XML_HELPER->create_dom (ACE_TEXT_ALWAYS_CHAR (input_file)))
+      if (xercesc::DOMDocument *doc = XML_HELPER->create_dom (input_file))
         {
 
           ::Deployment::PackageConfiguration idl_pc;
@@ -66,7 +69,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             //std::cerr << "XML to XSC conversion succeeded. Converting to IDL...\n";
 
             //Convert the XSC to an IDL datatype
-            Packaging::PCD_Handler::package_config (ACE_TEXT_ALWAYS_CHAR (input_file), idl_pc);
+            Packaging::PCD_Handler::package_config (input_file, idl_pc);
             std::cout << "Instance document import succeeded.  Dumping contents to file\n";
           }
 
@@ -86,7 +89,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 
           //Write it to test.xml
-          XML_HELPER->write_DOM(the_xsc, ACE_TEXT ("test.xml"));
+          XML_HELPER->write_DOM(the_xsc, "test.xml");
 
           //Cleanliness is next to Godliness
           delete doc;

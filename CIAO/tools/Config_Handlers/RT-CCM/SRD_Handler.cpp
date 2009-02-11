@@ -1,5 +1,5 @@
 // $Id$
-#include "Utils/XML_Helper.h"
+#include "Utils/XML_Typedefs.h"
 #include "SRD_Handler.h"
 #include "CIAOServerResources.hpp"
 #include "CLA_Handler.h"
@@ -14,10 +14,8 @@ namespace CIAO
       srd_ (0),
       retval_ (false)
     {
-      XML_Helper helper;
-
       XERCES_CPP_NAMESPACE::DOMDocument *dom =
-        helper.create_dom (file);
+        XML_HELPER.create_dom (file);
 
       if (!dom)
         throw SRD_Handler::NoSRD ();
@@ -64,7 +62,7 @@ namespace CIAO
 
       if(this->srd_->svcconf_p())
         {
-          this->idl_srd_->svcconf = ACE_TEXT_ALWAYS_CHAR (srd_->svcconf().uri().c_str());
+          this->idl_srd_->svcconf = (srd_->svcconf().uri().c_str());
         }
 
       this->retval_ = OC_Handler::orb_config (this->srd_->orbConfigs (),
@@ -72,7 +70,7 @@ namespace CIAO
 
       if (this->srd_->id_p ())
         {
-          this->idl_srd_->Id = ACE_TEXT_ALWAYS_CHAR (srd_->id ().c_str ());
+          this->idl_srd_->Id = srd_->id ().c_str ();
         }
 
       return this->retval_;
@@ -96,18 +94,18 @@ namespace CIAO
       len = idl_srd_->args.length();
       for(size_t i = 0; i < len; i++)
         {
-          XMLSchema::string < ACE_TCHAR > curr (ACE_TEXT_CHAR_TO_TCHAR (this->idl_srd_->args[i]));
+          XMLSchema::string < ACE_TCHAR > curr ((this->idl_srd_->args[i]));
           sco.add_arg(curr);
         }
       this->srd_->cmdline (sco);
 
       //Then a similar thing for the svcconf
-      XMLSchema::string < ACE_TCHAR > curr (ACE_TEXT_CHAR_TO_TCHAR (this->idl_srd_->svcconf.in ()));
+      XMLSchema::string < ACE_TCHAR > curr (this->idl_srd_->svcconf);
       ACESvcConf asc;
       asc.uri(curr);
       this->srd_->svcconf (asc);
 
-      XMLSchema::string < ACE_TCHAR > id (ACE_TEXT_CHAR_TO_TCHAR (this->idl_srd_->Id.in ()));
+      XMLSchema::string < ACE_TCHAR > id (this->idl_srd_->Id.in ());
       this->srd_->id  (id);
 
       return true;
@@ -154,3 +152,5 @@ namespace CIAO
     }
   }
 }
+
+

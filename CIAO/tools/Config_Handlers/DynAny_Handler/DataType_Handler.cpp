@@ -98,7 +98,7 @@ namespace CIAO{
 
           default:
             ACE_ERROR ((LM_ERROR, "Invalid typecode in any\n"));
-            throw 1;
+            throw Config_Error ("", "Invalid typecode");
           }
 
         //   This case used to be supported...is it not in the schema?
@@ -170,7 +170,7 @@ namespace CIAO{
             type.kind (TCKind::tk_TypeCode);
           default:
             ACE_ERROR ((LM_ERROR, "Invalid typecode\n"));
-            throw 1;
+            throw Config_Error ("", "Invalid typecode");
           }
 
         return type;

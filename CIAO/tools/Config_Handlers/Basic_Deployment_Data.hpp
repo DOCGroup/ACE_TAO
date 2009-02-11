@@ -25,9 +25,11 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
+    class IdRef;
     class TCKind;
     class DataType;
     class DataValue;
+    class AliasType;
     class EnumType;
     class StructType;
     class StructMemberType;
@@ -58,9 +60,10 @@ namespace CIAO
     class ImplementationDependency;
     class Capability;
     class ImplementationRequirement;
-    class ComponentPackageReference;
     class SubcomponentPortEndpoint;
     class AssemblyConnectionDescription;
+    class PlanLocalityKind;
+    class PlanLocality;
   }
 }
 
@@ -68,10 +71,52 @@ namespace CIAO
 #include <list>
 #include "XMLSchema/Types.hpp"
 
+#include "XMI.hpp"
+
 namespace CIAO
 {
   namespace Config_Handlers
   {
+    class XSC_XML_Handlers_Export IdRef : public ::XSCRT::Type
+    {
+      typedef ::XSCRT::Type Base;
+
+      // href
+      // 
+      public:
+      bool href_p () const;
+      ::XMLSchema::string< ACE_TCHAR > const& href () const;
+      ::XMLSchema::string< ACE_TCHAR >& href ();
+      void href (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > href_;
+
+      // idref
+      // 
+      public:
+      bool idref_p () const;
+      ::XMLSchema::IDREF< ACE_TCHAR > const& idref () const;
+      ::XMLSchema::IDREF< ACE_TCHAR >& idref ();
+      void idref (::XMLSchema::IDREF< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::IDREF< ACE_TCHAR > > idref_;
+
+      public:
+      IdRef ();
+
+      IdRef (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      IdRef (IdRef const& s);
+
+      IdRef&
+      operator= (IdRef const& s);
+
+      private:
+      char regulator__;
+    };
+
+
     class XSC_XML_Handlers_Export TCKind : public ::XSCRT::Type
     {
       public:
@@ -195,16 +240,26 @@ namespace CIAO
       protected:
       ::std::auto_ptr< ::CIAO::Config_Handlers::SequenceType > sequence_;
 
-      // id
+      // alias
       // 
       public:
-      bool id_p () const;
-      ::XMLSchema::ID< ACE_TCHAR > const& id () const;
-      ::XMLSchema::ID< ACE_TCHAR >& id ();
-      void id (::XMLSchema::ID< ACE_TCHAR > const& );
+      bool alias_p () const;
+      ::CIAO::Config_Handlers::AliasType const& alias () const;
+      void alias (::CIAO::Config_Handlers::AliasType const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > id_;
+      ::std::auto_ptr< ::CIAO::Config_Handlers::AliasType > alias_;
+
+      // xmi_id
+      // 
+      public:
+      bool xmi_id_p () const;
+      ::XMLSchema::ID< ACE_TCHAR > const& xmi_id () const;
+      ::XMLSchema::ID< ACE_TCHAR >& xmi_id ();
+      void xmi_id (::XMLSchema::ID< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > xmi_id_;
 
       public:
       DataType (::CIAO::Config_Handlers::TCKind const& kind__);
@@ -419,6 +474,21 @@ namespace CIAO
       protected:
       ::std::list< ::XMLSchema::double_ > longdouble_;
 
+      // element
+      // 
+      public:
+      typedef ::std::list< ::CIAO::Config_Handlers::DataValue >::iterator element_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::DataValue >::const_iterator element_const_iterator;
+      element_iterator begin_element ();
+      element_iterator end_element ();
+      element_const_iterator begin_element () const;
+      element_const_iterator end_element () const;
+      void add_element (::CIAO::Config_Handlers::DataValue const& );
+      size_t count_element (void) const;
+
+      protected:
+      ::std::list< ::CIAO::Config_Handlers::DataValue > element_;
+
       // member
       // 
       public:
@@ -442,6 +512,53 @@ namespace CIAO
 
       DataValue&
       operator= (DataValue const& s);
+
+      private:
+      char regulator__;
+    };
+
+
+    class XSC_XML_Handlers_Export AliasType : public ::XSCRT::Type
+    {
+      typedef ::XSCRT::Type Base;
+
+      // name
+      // 
+      public:
+      ::XMLSchema::string< ACE_TCHAR > const& name () const;
+      void name (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
+
+      // typeId
+      // 
+      public:
+      ::XMLSchema::string< ACE_TCHAR > const& typeId () const;
+      void typeId (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > typeId_;
+
+      // elementType
+      // 
+      public:
+      ::CIAO::Config_Handlers::DataType const& elementType () const;
+      void elementType (::CIAO::Config_Handlers::DataType const& );
+
+      protected:
+      ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > elementType_;
+
+      public:
+      AliasType (::XMLSchema::string< ACE_TCHAR > const& name__,
+                 ::XMLSchema::string< ACE_TCHAR > const& typeId__,
+                 ::CIAO::Config_Handlers::DataType const& elementType__);
+
+      AliasType (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      AliasType (AliasType const& s);
+
+      AliasType&
+      operator= (AliasType const& s);
 
       private:
       char regulator__;
@@ -753,11 +870,11 @@ namespace CIAO
       // 
       public:
       bool bound_p () const;
-      ::XMLSchema::string< ACE_TCHAR > const& bound () const;
-      void bound (::XMLSchema::string< ACE_TCHAR > const& );
+      ::XMLSchema::unsignedInt const& bound () const;
+      void bound (::XMLSchema::unsignedInt const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > bound_;
+      ::std::auto_ptr< ::XMLSchema::unsignedInt > bound_;
 
       // elementType
       // 
@@ -1210,16 +1327,16 @@ namespace CIAO
       protected:
       ::std::list< ::CIAO::Config_Handlers::ResourceDeploymentDescription > deployedResource_;
 
-      // id
+      // xmi_id
       // 
       public:
-      bool id_p () const;
-      ::XMLSchema::ID< ACE_TCHAR > const& id () const;
-      ::XMLSchema::ID< ACE_TCHAR >& id ();
-      void id (::XMLSchema::ID< ACE_TCHAR > const& );
+      bool xmi_id_p () const;
+      ::XMLSchema::ID< ACE_TCHAR > const& xmi_id () const;
+      ::XMLSchema::ID< ACE_TCHAR >& xmi_id ();
+      void xmi_id (::XMLSchema::ID< ACE_TCHAR > const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > id_;
+      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > xmi_id_;
 
       public:
       ArtifactDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& name__,
@@ -1267,17 +1384,17 @@ namespace CIAO
       // artifact
       // 
       public:
-      typedef ::std::list< ::XMLSchema::IDREF< ACE_TCHAR > >::iterator artifact_iterator;
-      typedef ::std::list< ::XMLSchema::IDREF< ACE_TCHAR > >::const_iterator artifact_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::IdRef >::iterator artifact_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::IdRef >::const_iterator artifact_const_iterator;
       artifact_iterator begin_artifact ();
       artifact_iterator end_artifact ();
       artifact_const_iterator begin_artifact () const;
       artifact_const_iterator end_artifact () const;
-      void add_artifact (::XMLSchema::IDREF< ACE_TCHAR > const& );
+      void add_artifact (::CIAO::Config_Handlers::IdRef const& );
       size_t count_artifact (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::IDREF< ACE_TCHAR > > artifact_;
+      ::std::list< ::CIAO::Config_Handlers::IdRef > artifact_;
 
       // execParameter
       // 
@@ -1309,16 +1426,16 @@ namespace CIAO
       protected:
       ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
-      // id
+      // xmi_id
       // 
       public:
-      bool id_p () const;
-      ::XMLSchema::ID< ACE_TCHAR > const& id () const;
-      ::XMLSchema::ID< ACE_TCHAR >& id ();
-      void id (::XMLSchema::ID< ACE_TCHAR > const& );
+      bool xmi_id_p () const;
+      ::XMLSchema::ID< ACE_TCHAR > const& xmi_id () const;
+      ::XMLSchema::ID< ACE_TCHAR >& xmi_id ();
+      void xmi_id (::XMLSchema::ID< ACE_TCHAR > const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > id_;
+      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > xmi_id_;
 
       public:
       MonolithicDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& name__);
@@ -1468,11 +1585,11 @@ namespace CIAO
       // implementation
       // 
       public:
-      ::XMLSchema::IDREF< ACE_TCHAR > const& implementation () const;
-      void implementation (::XMLSchema::IDREF< ACE_TCHAR > const& );
+      ::CIAO::Config_Handlers::IdRef const& implementation () const;
+      void implementation (::CIAO::Config_Handlers::IdRef const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::IDREF< ACE_TCHAR > > implementation_;
+      ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > implementation_;
 
       // configProperty
       // 
@@ -1514,22 +1631,22 @@ namespace CIAO
       protected:
       ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > deployedSharedResource_;
 
-      // id
+      // xmi_id
       // 
       public:
-      bool id_p () const;
-      ::XMLSchema::ID< ACE_TCHAR > const& id () const;
-      ::XMLSchema::ID< ACE_TCHAR >& id ();
-      void id (::XMLSchema::ID< ACE_TCHAR > const& );
+      bool xmi_id_p () const;
+      ::XMLSchema::ID< ACE_TCHAR > const& xmi_id () const;
+      ::XMLSchema::ID< ACE_TCHAR >& xmi_id ();
+      void xmi_id (::XMLSchema::ID< ACE_TCHAR > const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > id_;
+      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > xmi_id_;
 
       public:
       InstanceDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& name__,
                                      ::XMLSchema::string< ACE_TCHAR > const& node__,
                                      ::XMLSchema::string< ACE_TCHAR > const& source__,
-                                     ::XMLSchema::IDREF< ACE_TCHAR > const& implementation__);
+                                     ::CIAO::Config_Handlers::IdRef const& implementation__);
 
       InstanceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR > const&);
       InstanceDeploymentDescription (InstanceDeploymentDescription const& s);
@@ -1782,16 +1899,16 @@ namespace CIAO
       // instance
       // 
       public:
-      ::XMLSchema::IDREF< ACE_TCHAR > const& instance () const;
-      void instance (::XMLSchema::IDREF< ACE_TCHAR > const& );
+      ::CIAO::Config_Handlers::IdRef const& instance () const;
+      void instance (::CIAO::Config_Handlers::IdRef const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::IDREF< ACE_TCHAR > > instance_;
+      ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > instance_;
 
       public:
       PlanSubcomponentPortEndpoint (::XMLSchema::string< ACE_TCHAR > const& portName__,
                                     ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__,
-                                    ::XMLSchema::IDREF< ACE_TCHAR > const& instance__);
+                                    ::CIAO::Config_Handlers::IdRef const& instance__);
 
       PlanSubcomponentPortEndpoint (::XSCRT::XML::Element< ACE_TCHAR > const&);
       PlanSubcomponentPortEndpoint (PlanSubcomponentPortEndpoint const& s);
@@ -1817,8 +1934,43 @@ namespace CIAO
       protected:
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > location_;
 
+      // provider
+      // 
       public:
-      ExternalReferenceEndpoint (::XMLSchema::string< ACE_TCHAR > const& location__);
+      ::XMLSchema::boolean const& provider () const;
+      void provider (::XMLSchema::boolean const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::boolean > provider_;
+
+      // portName
+      // 
+      public:
+      bool portName_p () const;
+      ::XMLSchema::string< ACE_TCHAR > const& portName () const;
+      void portName (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > portName_;
+
+      // supportedType
+      // 
+      public:
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator supportedType_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator supportedType_const_iterator;
+      supportedType_iterator begin_supportedType ();
+      supportedType_iterator end_supportedType ();
+      supportedType_const_iterator begin_supportedType () const;
+      supportedType_const_iterator end_supportedType () const;
+      void add_supportedType (::XMLSchema::string< ACE_TCHAR > const& );
+      size_t count_supportedType (void) const;
+
+      protected:
+      ::std::list< ::XMLSchema::string< ACE_TCHAR > > supportedType_;
+
+      public:
+      ExternalReferenceEndpoint (::XMLSchema::string< ACE_TCHAR > const& location__,
+                                 ::XMLSchema::boolean const& provider__);
 
       ExternalReferenceEndpoint (::XSCRT::XML::Element< ACE_TCHAR > const&);
       ExternalReferenceEndpoint (ExternalReferenceEndpoint const& s);
@@ -2171,53 +2323,6 @@ namespace CIAO
     };
 
 
-    class XSC_XML_Handlers_Export ComponentPackageReference : public ::XSCRT::Type
-    {
-      typedef ::XSCRT::Type Base;
-
-      // requiredUUID
-      // 
-      public:
-      bool requiredUUID_p () const;
-      ::XMLSchema::string< ACE_TCHAR > const& requiredUUID () const;
-      void requiredUUID (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > requiredUUID_;
-
-      // requiredName
-      // 
-      public:
-      bool requiredName_p () const;
-      ::XMLSchema::string< ACE_TCHAR > const& requiredName () const;
-      void requiredName (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > requiredName_;
-
-      // requiredType
-      // 
-      public:
-      ::XMLSchema::string< ACE_TCHAR > const& requiredType () const;
-      void requiredType (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > requiredType_;
-
-      public:
-      ComponentPackageReference (::XMLSchema::string< ACE_TCHAR > const& requiredType__);
-
-      ComponentPackageReference (::XSCRT::XML::Element< ACE_TCHAR > const&);
-      ComponentPackageReference (ComponentPackageReference const& s);
-
-      ComponentPackageReference&
-      operator= (ComponentPackageReference const& s);
-
-      private:
-      char regulator__;
-    };
-
-
     class XSC_XML_Handlers_Export SubcomponentPortEndpoint : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
@@ -2234,15 +2339,15 @@ namespace CIAO
       // instance
       // 
       public:
-      ::XMLSchema::IDREF< ACE_TCHAR > const& instance () const;
-      void instance (::XMLSchema::IDREF< ACE_TCHAR > const& );
+      ::CIAO::Config_Handlers::IdRef const& instance () const;
+      void instance (::CIAO::Config_Handlers::IdRef const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::IDREF< ACE_TCHAR > > instance_;
+      ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > instance_;
 
       public:
       SubcomponentPortEndpoint (::XMLSchema::string< ACE_TCHAR > const& portName__,
-                                ::XMLSchema::IDREF< ACE_TCHAR > const& instance__);
+                                ::CIAO::Config_Handlers::IdRef const& instance__);
 
       SubcomponentPortEndpoint (::XSCRT::XML::Element< ACE_TCHAR > const&);
       SubcomponentPortEndpoint (SubcomponentPortEndpoint const& s);
@@ -2340,6 +2445,79 @@ namespace CIAO
       private:
       char regulator__;
     };
+
+
+    class XSC_XML_Handlers_Export PlanLocalityKind : public ::XSCRT::Type
+    {
+      public:
+      PlanLocalityKind (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      PlanLocalityKind (::XSCRT::XML::Attribute< ACE_TCHAR > const&);
+
+      static PlanLocalityKind const SameProcess;
+      static PlanLocalityKind const DifferentProcess;
+      static PlanLocalityKind const NoConstraint;
+
+      enum Value
+      {
+        SameProcess_l, DifferentProcess_l, NoConstraint_l
+      };
+
+
+      Value
+      integral () const;
+
+      friend bool XSC_XML_Handlers_Export 
+      operator== (PlanLocalityKind const& a, PlanLocalityKind const& b);
+
+      friend bool XSC_XML_Handlers_Export 
+      operator!= (PlanLocalityKind const& a, PlanLocalityKind const& b);
+
+      private:
+      PlanLocalityKind (Value v);
+
+      Value v_;
+    };
+
+    bool XSC_XML_Handlers_Export operator== (PlanLocalityKind const &a, PlanLocalityKind const &b);
+
+    bool XSC_XML_Handlers_Export operator!= (PlanLocalityKind const &a, PlanLocalityKind const &b);
+
+
+    class XSC_XML_Handlers_Export PlanLocality : public ::XSCRT::Type
+    {
+      typedef ::XSCRT::Type Base;
+
+      // constraint
+      // 
+      public:
+      ::CIAO::Config_Handlers::PlanLocalityKind const& constraint () const;
+      void constraint (::CIAO::Config_Handlers::PlanLocalityKind const& );
+
+      protected:
+      ::std::auto_ptr< ::CIAO::Config_Handlers::PlanLocalityKind > constraint_;
+
+      // constrainedInstance
+      // 
+      public:
+      ::CIAO::Config_Handlers::IdRef const& constrainedInstance () const;
+      void constrainedInstance (::CIAO::Config_Handlers::IdRef const& );
+
+      protected:
+      ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > constrainedInstance_;
+
+      public:
+      PlanLocality (::CIAO::Config_Handlers::PlanLocalityKind const& constraint__,
+                    ::CIAO::Config_Handlers::IdRef const& constrainedInstance__);
+
+      PlanLocality (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      PlanLocality (PlanLocality const& s);
+
+      PlanLocality&
+      operator= (PlanLocality const& s);
+
+      private:
+      char regulator__;
+    };
   }
 }
 
@@ -2358,6 +2536,51 @@ namespace CIAO
   {
     namespace Traversal
     {
+      struct XSC_XML_Handlers_Export IdRef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::IdRef >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        href (Type&);
+
+        virtual void
+        href (Type const&);
+
+        virtual void
+        href_none (Type&);
+
+        virtual void
+        href_none (Type const&);
+
+        virtual void
+        idref (Type&);
+
+        virtual void
+        idref (Type const&);
+
+        virtual void
+        idref_none (Type&);
+
+        virtual void
+        idref_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
       typedef
       ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::TCKind >
       TCKind;
@@ -2431,16 +2654,28 @@ namespace CIAO
         sequence_none (Type const&);
 
         virtual void
-        id (Type&);
+        alias (Type&);
 
         virtual void
-        id (Type const&);
+        alias (Type const&);
 
         virtual void
-        id_none (Type&);
+        alias_none (Type&);
 
         virtual void
-        id_none (Type const&);
+        alias_none (Type const&);
+
+        virtual void
+        xmi_id (Type&);
+
+        virtual void
+        xmi_id (Type const&);
+
+        virtual void
+        xmi_id_none (Type&);
+
+        virtual void
+        xmi_id_none (Type const&);
 
         virtual void
         post (Type&);
@@ -2854,6 +3089,36 @@ namespace CIAO
         longdouble_none (Type const&);
 
         virtual void
+        element (Type&);
+
+        virtual void
+        element (Type const&);
+
+        virtual void
+        element_pre (Type&);
+
+        virtual void
+        element_pre (Type const&);
+
+        virtual void
+        element_next (Type&);
+
+        virtual void
+        element_next (Type const&);
+
+        virtual void
+        element_post (Type&);
+
+        virtual void
+        element_post (Type const&);
+
+        virtual void
+        element_none (Type&);
+
+        virtual void
+        element_none (Type const&);
+
+        virtual void
         member (Type&);
 
         virtual void
@@ -2882,6 +3147,45 @@ namespace CIAO
 
         virtual void
         member_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct XSC_XML_Handlers_Export AliasType : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::AliasType >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        name (Type&);
+
+        virtual void
+        name (Type const&);
+
+        virtual void
+        typeId (Type&);
+
+        virtual void
+        typeId (Type const&);
+
+        virtual void
+        elementType (Type&);
+
+        virtual void
+        elementType (Type const&);
 
         virtual void
         post (Type&);
@@ -3716,16 +4020,16 @@ namespace CIAO
         deployedResource_none (Type const&);
 
         virtual void
-        id (Type&);
+        xmi_id (Type&);
 
         virtual void
-        id (Type const&);
+        xmi_id (Type const&);
 
         virtual void
-        id_none (Type&);
+        xmi_id_none (Type&);
 
         virtual void
-        id_none (Type const&);
+        xmi_id_none (Type const&);
 
         virtual void
         post (Type&);
@@ -3863,16 +4167,16 @@ namespace CIAO
         deployRequirement_none (Type const&);
 
         virtual void
-        id (Type&);
+        xmi_id (Type&);
 
         virtual void
-        id (Type const&);
+        xmi_id (Type const&);
 
         virtual void
-        id_none (Type&);
+        xmi_id_none (Type&);
 
         virtual void
-        id_none (Type const&);
+        xmi_id_none (Type const&);
 
         virtual void
         post (Type&);
@@ -4065,16 +4369,16 @@ namespace CIAO
         deployedSharedResource_none (Type const&);
 
         virtual void
-        id (Type&);
+        xmi_id (Type&);
 
         virtual void
-        id (Type const&);
+        xmi_id (Type const&);
 
         virtual void
-        id_none (Type&);
+        xmi_id_none (Type&);
 
         virtual void
-        id_none (Type const&);
+        xmi_id_none (Type const&);
 
         virtual void
         post (Type&);
@@ -4316,6 +4620,48 @@ namespace CIAO
 
         virtual void
         location (Type const&);
+
+        virtual void
+        provider (Type&);
+
+        virtual void
+        provider (Type const&);
+
+        virtual void
+        portName (Type&);
+
+        virtual void
+        portName (Type const&);
+
+        virtual void
+        portName_none (Type&);
+
+        virtual void
+        portName_none (Type const&);
+
+        virtual void
+        supportedType (Type&);
+
+        virtual void
+        supportedType (Type const&);
+
+        virtual void
+        supportedType_pre (Type&);
+
+        virtual void
+        supportedType_pre (Type const&);
+
+        virtual void
+        supportedType_next (Type&);
+
+        virtual void
+        supportedType_next (Type const&);
+
+        virtual void
+        supportedType_post (Type&);
+
+        virtual void
+        supportedType_post (Type const&);
 
         virtual void
         post (Type&);
@@ -4789,57 +5135,6 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct XSC_XML_Handlers_Export ComponentPackageReference : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ComponentPackageReference >
-      {
-        virtual void
-        traverse (Type&);
-
-        virtual void
-        traverse (Type const&);
-
-        virtual void
-        pre (Type&);
-
-        virtual void
-        pre (Type const&);
-
-        virtual void
-        requiredUUID (Type&);
-
-        virtual void
-        requiredUUID (Type const&);
-
-        virtual void
-        requiredUUID_none (Type&);
-
-        virtual void
-        requiredUUID_none (Type const&);
-
-        virtual void
-        requiredName (Type&);
-
-        virtual void
-        requiredName (Type const&);
-
-        virtual void
-        requiredName_none (Type&);
-
-        virtual void
-        requiredName_none (Type const&);
-
-        virtual void
-        requiredType (Type&);
-
-        virtual void
-        requiredType (Type const&);
-
-        virtual void
-        post (Type&);
-
-        virtual void
-        post (Type const&);
-      };
-
       struct XSC_XML_Handlers_Export SubcomponentPortEndpoint : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::SubcomponentPortEndpoint >
       {
         virtual void
@@ -5019,6 +5314,43 @@ namespace CIAO
         virtual void
         post (Type const&);
       };
+
+      typedef
+      ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PlanLocalityKind >
+      PlanLocalityKind;
+
+      struct XSC_XML_Handlers_Export PlanLocality : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PlanLocality >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        constraint (Type&);
+
+        virtual void
+        constraint (Type const&);
+
+        virtual void
+        constrainedInstance (Type&);
+
+        virtual void
+        constrainedInstance (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
     }
   }
 }
@@ -5031,6 +5363,49 @@ namespace CIAO
   {
     namespace Writer
     {
+      struct IdRef : Traversal::IdRef, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::IdRef Type;
+        IdRef (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        href (Type &o)
+        {
+
+          this->href (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        href (Type const&);
+
+        virtual void 
+        idref (Type &o)
+        {
+
+          this->idref (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        idref (Type const&);
+
+        protected:
+        IdRef ();
+      };
+
       struct TCKind : Traversal::TCKind, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
@@ -5122,15 +5497,26 @@ namespace CIAO
         sequence (Type const&);
 
         virtual void 
-        id (Type &o)
+        alias (Type &o)
         {
 
-          this->id (const_cast <Type const &> (o));
+          this->alias (const_cast <Type const &> (o));
         }
 
 
         virtual void
-        id (Type const&);
+        alias (Type const&);
+
+        virtual void 
+        xmi_id (Type &o)
+        {
+
+          this->xmi_id (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        xmi_id (Type const&);
 
         protected:
         DataType ();
@@ -5583,6 +5969,39 @@ namespace CIAO
         longdouble_post (Type const&);
 
         virtual void 
+        element_pre (Type &o)
+        {
+
+          this->element_pre (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        element_pre (Type const&);
+
+        virtual void 
+        element_next (Type &o)
+        {
+
+          this->element_next (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        element_next (Type const&);
+
+        virtual void 
+        element_post (Type &o)
+        {
+
+          this->element_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        element_post (Type const&);
+
+        virtual void 
         member_pre (Type &o)
         {
 
@@ -5617,6 +6036,60 @@ namespace CIAO
 
         protected:
         DataValue ();
+      };
+
+      struct AliasType : Traversal::AliasType, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::AliasType Type;
+        AliasType (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        name (Type &o)
+        {
+
+          this->name (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        name (Type const&);
+
+        virtual void 
+        typeId (Type &o)
+        {
+
+          this->typeId (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        typeId (Type const&);
+
+        virtual void 
+        elementType (Type &o)
+        {
+
+          this->elementType (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        elementType (Type const&);
+
+        protected:
+        AliasType ();
       };
 
       struct EnumType : Traversal::EnumType, 
@@ -6676,15 +7149,15 @@ namespace CIAO
         deployedResource_post (Type const&);
 
         virtual void 
-        id (Type &o)
+        xmi_id (Type &o)
         {
 
-          this->id (const_cast <Type const &> (o));
+          this->xmi_id (const_cast <Type const &> (o));
         }
 
 
         virtual void
-        id (Type const&);
+        xmi_id (Type const&);
 
         protected:
         ArtifactDeploymentDescription ();
@@ -6851,15 +7324,15 @@ namespace CIAO
         deployRequirement_post (Type const&);
 
         virtual void 
-        id (Type &o)
+        xmi_id (Type &o)
         {
 
-          this->id (const_cast <Type const &> (o));
+          this->xmi_id (const_cast <Type const &> (o));
         }
 
 
         virtual void
-        id (Type const&);
+        xmi_id (Type const&);
 
         protected:
         MonolithicDeploymentDescription ();
@@ -7109,15 +7582,15 @@ namespace CIAO
         deployedSharedResource (Type const&);
 
         virtual void 
-        id (Type &o)
+        xmi_id (Type &o)
         {
 
-          this->id (const_cast <Type const &> (o));
+          this->xmi_id (const_cast <Type const &> (o));
         }
 
 
         virtual void
-        id (Type const&);
+        xmi_id (Type const&);
 
         protected:
         InstanceDeploymentDescription ();
@@ -7439,6 +7912,61 @@ namespace CIAO
 
         virtual void
         location (Type const&);
+
+        virtual void 
+        provider (Type &o)
+        {
+
+          this->provider (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        provider (Type const&);
+
+        virtual void 
+        portName (Type &o)
+        {
+
+          this->portName (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        portName (Type const&);
+
+        virtual void 
+        supportedType_pre (Type &o)
+        {
+
+          this->supportedType_pre (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        supportedType_pre (Type const&);
+
+        virtual void 
+        supportedType_next (Type &o)
+        {
+
+          this->supportedType_next (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        supportedType_next (Type const&);
+
+        virtual void 
+        supportedType_post (Type &o)
+        {
+
+          this->supportedType_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        supportedType_post (Type const&);
 
         protected:
         ExternalReferenceEndpoint ();
@@ -7978,60 +8506,6 @@ namespace CIAO
         ImplementationRequirement ();
       };
 
-      struct ComponentPackageReference : Traversal::ComponentPackageReference, 
-      virtual ::XSCRT::Writer< ACE_TCHAR >
-      {
-        typedef ::CIAO::Config_Handlers::ComponentPackageReference Type;
-        ComponentPackageReference (::XSCRT::XML::Element< ACE_TCHAR >&);
-
-        virtual void 
-        traverse (Type &o)
-        {
-
-          this->traverse (const_cast <Type const &> (o));
-        }
-
-
-        virtual void
-        traverse (Type const&);
-
-        virtual void 
-        requiredUUID (Type &o)
-        {
-
-          this->requiredUUID (const_cast <Type const &> (o));
-        }
-
-
-        virtual void
-        requiredUUID (Type const&);
-
-        virtual void 
-        requiredName (Type &o)
-        {
-
-          this->requiredName (const_cast <Type const &> (o));
-        }
-
-
-        virtual void
-        requiredName (Type const&);
-
-        virtual void 
-        requiredType (Type &o)
-        {
-
-          this->requiredType (const_cast <Type const &> (o));
-        }
-
-
-        virtual void
-        requiredType (Type const&);
-
-        protected:
-        ComponentPackageReference ();
-      };
-
       struct SubcomponentPortEndpoint : Traversal::SubcomponentPortEndpoint, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
@@ -8237,6 +8711,67 @@ namespace CIAO
 
         protected:
         AssemblyConnectionDescription ();
+      };
+
+      struct PlanLocalityKind : Traversal::PlanLocalityKind, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        PlanLocalityKind (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        traverse (Type const&);
+
+        protected:
+        PlanLocalityKind ();
+      };
+
+      struct PlanLocality : Traversal::PlanLocality, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::PlanLocality Type;
+        PlanLocality (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        constraint (Type &o)
+        {
+
+          this->constraint (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        constraint (Type const&);
+
+        virtual void 
+        constrainedInstance (Type &o)
+        {
+
+          this->constrainedInstance (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        constrainedInstance (Type const&);
+
+        protected:
+        PlanLocality ();
       };
     }
   }

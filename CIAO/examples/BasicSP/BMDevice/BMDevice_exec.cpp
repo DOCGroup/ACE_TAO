@@ -30,11 +30,8 @@ MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *)
   // Notify others
   BasicSP::DataAvailable_var event = new OBV_BasicSP::DataAvailable;
 
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "BMDevice, received a timeout from EC \n"));
-    }
+  ACE_DEBUG ((LM_EMERGENCY,
+              "BMDevice, received a timeout from EC \n"));
 
   this->context_->push_data_available (event);
 }
@@ -43,11 +40,8 @@ MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *)
 void
 MyImpl::BMDevice_exec_i:: set_session_context (Components::SessionContext_ptr ctx)
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::BMDevice_exec_i::set_session_context\n"));
-    }
+  ACE_DEBUG ((LM_EMERGENCY,
+              "MyImpl::BMDevice_exec_i::set_session_context\n"));
 
   this->context_ =
     BasicSP::CCM_BMDevice_Context::_narrow (ctx);
@@ -60,44 +54,42 @@ MyImpl::BMDevice_exec_i:: set_session_context (Components::SessionContext_ptr ct
 }
 
 void
-MyImpl::BMDevice_exec_i::ciao_preactivate ()
+MyImpl::BMDevice_exec_i::configuration_complete ()
 {
 }
 
 void
 MyImpl::BMDevice_exec_i::ccm_activate ()
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::BMDevice_exec_i::ccm_activate\n"));
-    }
-
-}
-
-void
-MyImpl::BMDevice_exec_i::ciao_postactivate ()
-{
+  ACE_DEBUG ((LM_EMERGENCY,
+              "MyImpl::BMDevice_exec_i::ccm_activate\n"));
 }
 
 void
 MyImpl::BMDevice_exec_i::ccm_passivate ()
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::BMDevice_exec_i::ccm_passivate\n"));
-    }
+  ACE_DEBUG ((LM_EMERGENCY,
+              "MyImpl::BMDevice_exec_i::ccm_passivate\n"));
 }
 
 void
 MyImpl::BMDevice_exec_i::ccm_remove ()
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::BMDevice_exec_i::ccm_remove\n"));
-    }
+  ACE_DEBUG ((LM_EMERGENCY,
+              "MyImpl::BMDevice_exec_i::ccm_remove\n"));
+}
+
+extern "C" BMDEVICE_EXEC_Export ::Components::EnterpriseComponent_ptr
+create_BasicSP_BMDevice_Impl (void)
+{
+  ::Components::EnterpriseComponent_ptr retval =
+    ::Components::EnterpriseComponent::_nil ();
+  
+  ACE_NEW_RETURN (retval,
+		  MyImpl::BMDevice_exec_i,
+		  ::Components::EnterpriseComponent::_nil ());
+  
+  return retval;
 }
 
 /// Default ctor.

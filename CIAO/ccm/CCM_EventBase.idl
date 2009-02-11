@@ -1,0 +1,12 @@
+// $Id$
+
+#if !defined (CCM_EVENTBASE_IDL)
+#define CCM_EVENTBASE_IDL
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  abstract valuetype EventBase {};
+};
+#endif /* CCM_EVENTBASE_IDL */

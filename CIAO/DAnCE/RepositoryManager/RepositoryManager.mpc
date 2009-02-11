@@ -4,8 +4,8 @@
 //RepositoryManager project: implementation of a repository manager
 //compleint with the D&C spec
 
-project (RepositoryManager) : ciao_server_dnc, ciao_config_handlers, zlib, ciaoexe {
-
+project (RepositoryManager) : ccm_stub { //ciao_server_dnc, ciao_config_handlers, zlib, ciaoexe {
+  requires += dummy_label
   includes += $(CIAO_ROOT)/tools/Config_Handlers $(ACE_ROOT)/contrib/minizip
   //to circumvent an improper include resolution
   //in the Package_Handlers/PC_Intf.h
@@ -36,7 +36,8 @@ project (RepositoryManager) : ciao_server_dnc, ciao_config_handlers, zlib, ciaoe
 
 // RMadmin project: a sample client for the RM.
 
-project (RMAdmin) : ciao_servant_dnc, ciao_config_handlers, ciaoexe {
+project (RMAdmin) : ccm_stub { //ciao_servant_dnc, ciao_config_handlers, ciaoexe {
+  requires += dummy_label
   exename = RMadmin
   after  += RepositoryManager
 

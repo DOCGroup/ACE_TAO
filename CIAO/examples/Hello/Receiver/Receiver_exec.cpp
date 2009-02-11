@@ -36,7 +36,7 @@ namespace CIDL_Receiver_Impl
   {
     //Get the message from the Sender first.
     ACE_DEBUG ((LM_DEBUG,
-                "Receiver - Informed by the Sender with message [%s]\n",
+                "Receiver - Informed by the Sender with message [%C]\n",
                 ev->data ()));
 
     Hello::ReadMessage_var rev
@@ -48,7 +48,7 @@ namespace CIDL_Receiver_Impl
     CORBA::String_var str = rev->get_message ();
 
     ACE_DEBUG ((LM_DEBUG,
-                "Receiver - Got message from the server [%s] \n",
+                "Receiver - Got message from the server [%C]\n",
                 str.in () ));
   }
 
@@ -68,23 +68,16 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ciao_preactivate ()
+  Receiver_exec_i::configuration_complete ()
   {
     ACE_DEBUG ((LM_DEBUG,
-                "Receiver_exec_i::ciao_preactivate\n"));
+                "Receiver_exec_i::configuration_complete\n"));
   }
 
   void
   Receiver_exec_i::ccm_activate ()
   {
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_activate\n"));
-  }
-
-  void
-  Receiver_exec_i::ciao_postactivate ()
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                "Receiver_exec_i::ciao_postactivate\n"));
   }
 
   void

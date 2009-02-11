@@ -1,11 +1,10 @@
 // $Id$
 
 #include "Client_init.h"
-#include "CCM_ComponentC.h"
-#include "CCM_StandardConfiguratorC.h"
+#include <ccm/CCM_ComponentC.h>
+#include <ccm/CCM_StandardConfiguratorC.h>
 #include "CIAO_common.h"
-
-#include "ace/Env_Value_T.h"
+#include "Valuetype_Factories/ConfigValue.h"
 
 int
 CIAO::Client_init (CORBA::ORB_ptr o)
@@ -35,23 +34,72 @@ CIAO::Client_init (CORBA::ORB_ptr o)
   return 0;
 }
 
-/// This should really be an anonymous namespace, but some compilers
-/// still don't support this features.  Therefore, just use a long
-/// namespace name here.
-namespace ciao_anonymous_namespace
+namespace CIAO
 {
-  int debug_level = -1;
-}
+  namespace Utility
+  {
+    void build_config_values_map (CONFIGVALUE_MAP &map,
+                                  const ::Components::ConfigValues &config)
+  {
+    CIAO_TRACE("CIAO::build_config_values_map");
+    map.unbind_all ();
 
-int
-CIAO::debug_level (void)
-{
-  if (ciao_anonymous_namespace::debug_level == -1)
+    for (CORBA::ULong i = 0; i < config.length (); ++i)
+      {
+            int retval = map.rebind (config[i]->name (), config[i]->value ());
+
+            if (retval == 1)
+              {
+              CIAO_ERROR ((LM_WARNING, CLINFO "build_config_values_map: Duplicate value for %C encountered, "        
+                        "old value overwritten.\n",
+                        config[i]->name ()));
+              }
+            else if (retval == -1)
+          {
+          CIAO_ERROR ((LM_WARNING, CLINFO "build_config_values_map: Error binding value for %C, ignoring.\n",
+                        config[i]->name ()));
+              }
+        CIAO_DEBUG ((LM_TRACE, CLINFO
+            "build_config_values_map: Bound value for config value %C\n",
+                    config[i]->name ()));
+      }
+  }
+
+    void build_config_values_sequence (::Components::ConfigValues &config,
+                                       const CONFIGVALUE_MAP &map)
     {
-      // Initialize the thing.
-      ACE_Env_Value<int> envar (ACE_TEXT ("CIAO_DEBUG_LEVEL"), 1);
-      ciao_anonymous_namespace::debug_level = envar;
+      CIAO_TRACE ("CIAO::build_config_values_sequence");
+
+      config.length (map.current_size ());
+
+      CORBA::ULong pos = 0;
+
+      for (CONFIGVALUE_MAP::const_iterator i = map.begin ();
+           (i.advance ()) != 0; ++pos)
+            {
+          Components::ConfigValue_var newval;
+              ACE_NEW_THROW_EX (newval,
+                            ConfigValue_impl (i->ext_id_.c_str (), i->int_id_),
+                                CORBA::NO_MEMORY ());
+              config[pos] =  newval._retn ();
+            }
     }
 
-  return ciao_anonymous_namespace::debug_level;
+    /*
+    void print_config_values (const ::Components::ConfigValues &config,
+                              ACE_Log_Priority prio,
+                              const char * prefix)
+    {
+      if (config.length () > 0)
+        for (CORBA::ULong i = 0; i < config.length (); ++i)
+          {
+            ACE_CString
+            CIAO_DEBUG ((prio, pfx +
+
+
+    }
+    */
+
+  }
 }
+

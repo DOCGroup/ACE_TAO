@@ -9,57 +9,61 @@
 
 module Deployment {
 
-  struct Resource {
-    string name;
-    ::CORBA::StringSeq resourceType;
-    SatisfierProperties property;
-  };
+        struct Resource {
+                string name;
+                ::CORBA::StringSeq resourceType;
+                SatisfierProperties property;
+        };
 
-  typedef sequence < Resource > Resources;
+        typedef sequence < Resource > Resources;
 
-  struct SharedResource {
-    string name;
-    ::CORBA::StringSeq resourceType;
-    ::CORBA::ULongSeq nodeRef;
-    SatisfierProperties property;
-  };
-  typedef sequence < SharedResource > SharedResources;
+        struct SharedResource {
+                string name;
+                ::CORBA::StringSeq resourceType;
+                ::CORBA::ULongSeq nodeRef;
+                SatisfierProperties property;
+        };
+        
+        typedef sequence < SharedResource > SharedResources;
 
-  struct Node {
-    string name;
-    string label;
-    ::CORBA::ULongSeq sharedResourceRef;
-    ::CORBA::ULongSeq connectionRef;
-    Resources resource;
-  };
-  typedef sequence < Node > Nodes;
+        struct Node {
+                string name;
+                string label;
+                ::CORBA::ULongSeq sharedResourceRef;
+                ::CORBA::ULongSeq connectionRef;
+                Resources resource;
+        };
 
-  struct Interconnect {
-    string name;
-    string label;
-    ::CORBA::ULongSeq connectionRef;
-    ::CORBA::ULongSeq connectRef;
-    Resources resource;
-  };
-  typedef sequence < Interconnect > Interconnects;
+        typedef sequence < Node > Nodes;
 
-  struct Bridge {
-    string name;
-    string label;
-    ::CORBA::ULongSeq connectRef;
-    Resources resource;
-  };
-  typedef sequence < Bridge > Bridges;
+        struct Interconnect {
+                string name;
+                string label;
+                ::CORBA::ULongSeq connectionRef;
+                ::CORBA::ULongSeq connectRef;
+                Resources resource;
+        };
 
-  struct Domain {
-    string UUID;
-    string label;
-    SharedResources sharedResource;
-    Nodes node;
-    Interconnects interconnect;
-    Bridges bridge;
-    Properties infoProperty;
-  };
+        typedef sequence < Interconnect > Interconnects;
+
+        struct Bridge {
+                string name;
+                string label;
+                ::CORBA::ULongSeq connectRef;
+                Resources resource;
+        };
+
+        typedef sequence < Bridge > Bridges;
+
+        struct Domain {
+                string UUID;
+                string label;
+                SharedResources sharedResource;
+                Nodes node;
+                Interconnects interconnect;
+                Bridges bridge;
+                Properties infoProperty;
+        };
 };
 
 #endif /* DEPLOYMENT_TARGETDATA_IDL */

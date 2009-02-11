@@ -1,6 +1,7 @@
 // $Id$
 
-project(CIAO_TargetManager_stub): ciao_client_dnc, ciao_deployment_stub, ciao_nodemanager_stub, ace_output {
+project(CIAO_TargetManager_stub) : ccm_stub { //: ciao_client_dnc, ciao_deployment_stub, ciao_nodemanager_stub, ace_output {
+  requires += dummy_label
   sharedname = TargetManager_stub
   idlflags += -Wb,stub_export_macro=TARGETMANAGER_STUB_Export \
               -Wb,stub_export_include=TargetManager_stub_export.h \
@@ -21,7 +22,8 @@ project(CIAO_TargetManager_stub): ciao_client_dnc, ciao_deployment_stub, ciao_no
   }
 }
 
-project(CIAO_TargetManager_svnt) : ciao_servant_dnc, ciao_targetmanager_stub, ace_output {
+project(CIAO_TargetManager_svnt) : ciao_servant { // : ciao_servant_dnc, ciao_targetmanager_stub, ace_output {
+  requires += dummy_label
   sharedname  = TargetManager_svnt
 
   idlflags  +=  -Wb,export_macro=TARGETMANAGER_SVNT_Export \
@@ -47,7 +49,8 @@ project(CIAO_TargetManager_svnt) : ciao_servant_dnc, ciao_targetmanager_stub, ac
 }
 
 
-project(CIAO_TargetManager_exec) : ciao_component_dnc, ciao_config_handlers, ciao_domainapplicationmanager_dnc, ciao_targetmanager_svnt, ace_output {
+project(CIAO_TargetManager_exec) : ciao_executor { //: ciao_component_dnc, ciao_config_handlers, ciao_domainapplicationmanager_dnc, ciao_targetmanager_svnt, ace_output {
+  requires += dummy_label
   sharedname = TargetManager_exec
 
   dynamicflags   = TARGETMANAGER_EXEC_BUILD_DLL

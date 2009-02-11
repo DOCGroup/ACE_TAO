@@ -19,10 +19,10 @@ namespace CIAO
       CIAO_TRACE("RDD_Handler::resource_deployment_descr");
 
       dest.requirementName =
-        ACE_TEXT_ALWAYS_CHAR (src.requirementName ().c_str ());
+        src.requirementName ().c_str ();
 
       dest.resourceName=
-        ACE_TEXT_ALWAYS_CHAR (src.resourceName ().c_str ());
+        src.resourceName ().c_str ();
 
       std::for_each (src.begin_property (),
                      src.end_property (),
@@ -36,8 +36,8 @@ namespace CIAO
     {
       CIAO_TRACE("RDD_Handler::resource_deployment_descr - reverse");
 
-      XMLSchema::string< ACE_TCHAR > reqname (ACE_TEXT_CHAR_TO_TCHAR (src.requirementName.in ()));
-      XMLSchema::string< ACE_TCHAR > resname (ACE_TEXT_CHAR_TO_TCHAR (src.resourceName.in ()));
+      XMLSchema::string< char > reqname ((src.requirementName));
+      XMLSchema::string< char > resname ((src.resourceName.in ()));
 
       ResourceDeploymentDescription rdd (reqname,resname);
 

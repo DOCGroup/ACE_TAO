@@ -78,7 +78,7 @@ if (defined $opt_l) {
 
 if (defined $opt_c) {
     $client_def =
-'project ('."$unique_prefix"."$opt_c".') : ciao_client_dnc, valuetype {
+'project ('."$unique_prefix"."$opt_c".') : ccm_stub, valuetype {
   exename = '."$opt_c".'
   after += '."$unique_prefix"."$com_name".'_stub
   libs  += '."$com_name".'_stub '."$stub_depend"."
@@ -123,7 +123,7 @@ project('."$unique_prefix"."$com_name".'_cidl_gen) : ciaocidldefaults, taoidldef
 
     $component_def =
 '
-project('."$unique_prefix"."$com_name".'_exec) : ciao_component_dnc {
+project('."$unique_prefix"."$com_name".'_exec) : ciao_executor {
   avoids += ace_for_tao
   after   += '."$unique_prefix"."$com_name".'_cidl_gen '."$unique_prefix"."$com_name".'_stub
   sharedname = '."$com_name".'_exec
@@ -159,8 +159,8 @@ $cli_idlflags =
               -Wb,skel_export_include='."$com_name"."$svr_suffix".'_export.h'
 ;
 
-$cli_base = "ciao_client_dnc";
-$svr_base = "ciao_servant_dnc";
+$cli_base = "ccm_stub";
+$svr_base = "ciao_servant";
 $svr_after = "$unique_prefix"."$com_name".'_exec';
 
 $svr_libs = "$com_name".'_exec \
@@ -183,7 +183,7 @@ if (defined $opt_n) {
     '."$com_name".'_skel_export.h
 ';
 
-    $svr_base = "ciao_component_dnc";    
+    $svr_base = "ciao_executor";    
     $cidl_block = "";
 }
 else {

@@ -10,7 +10,7 @@
 
 #include "GPS_exec_export.h"
 #include "GPSEC.h"
-#include "CIAO_common.h"
+#include "ciao/CIAO_common.h"
 #include "ace/OS_NS_time.h"
 #include "tao/LocalObject.h"
 
@@ -48,11 +48,9 @@ namespace MyImpl
     // Operations from Components::SessionComponent
     void set_session_context (Components::SessionContext_ptr ctx);
 
-    void ciao_preactivate ();
+    void configuration_complete ();
 
     void ccm_activate ();
-
-    void ciao_postactivate ();
 
     void ccm_passivate ();
 

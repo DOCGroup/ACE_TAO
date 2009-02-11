@@ -2,6 +2,6 @@
 // $Id$
 
 project : ciao_targetmanager_stub {
-  libs     += TargetManager_svnt
+  libs     += CIAO_TargetManager_svnt
   after    += CIAO_TargetManager_svnt
 }

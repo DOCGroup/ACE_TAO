@@ -18,12 +18,13 @@ workspace {
   $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Serv.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Skel.mpc
+  ccm
   CIDLC/CIDLC.mwc
   ciao
   ciaosvcs
   DAnCE
   tools/Config_Handlers
-
+  tools/XML
   exclude {
     DAnCE/tests
   }

@@ -10,7 +10,7 @@
 
 #include "DAnCE/Deployment/Deployment_ExecutionManager.idl"
 
-module CIAO
+module DAnCE
 {
   /**
    * @brief CIAO Execution Manager Program

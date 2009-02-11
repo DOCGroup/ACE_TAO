@@ -11,7 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Utils/XML_Helper.h"
+#include "XML_Typedefs.h"
 #include "Utils/Functors.h"
 #include "IDREF_Base.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
@@ -61,8 +61,8 @@ namespace CIAO
       typedef Sequence_Handler < SubcomponentInstantiationDescription,
                                  ::Deployment::SubcomponentInstantiationDescriptions,
                                  ::Deployment::SubcomponentInstantiationDescription,
-                                 SID_Handler::handle_sub_comp_inst_descr >
-        SID_Functor;
+    SID_Handler::handle_sub_comp_inst_descr > SID_Functor;
+
     }
   }
 }

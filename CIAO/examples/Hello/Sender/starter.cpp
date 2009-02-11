@@ -4,7 +4,7 @@
 #include "ace/Get_Opt.h"
 
 // IOR file of the Sender
-const char * ior = 0;
+const ACE_TCHAR * ior = 0;
 const char * message = 0;
 
 int
@@ -39,7 +39,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
   if (ior  == 0)
     {
-      ior = "file://Sender.ior";
+      ior = ACE_TEXT("file://Sender.ior");
     }
 
   return 0;
