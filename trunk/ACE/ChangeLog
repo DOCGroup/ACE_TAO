@@ -1,3 +1,10 @@
+Wed Feb 11 16:20:19 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * include/makeinclude/wrapper_macros.GNU:
+        
+          Removed xerces from this file, as its no longer a feature.  
+          Thanks to Adam Mitz for pointing this out.
+        
 Wed Feb 11 06:59:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-msvc.h:
