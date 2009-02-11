@@ -1,3 +1,11 @@
+Wed Feb 11 13:40:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3531_Regression/*:
+        * bin/tao_orb_tests.lst:
+          Added bug 3531 regression. Thanks to Russell Mora
+          <russell_mora at symantec dot com> for creating this test. This
+          will fail, no fix integrated at this moment
+
 Wed Feb 11 10:32:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
