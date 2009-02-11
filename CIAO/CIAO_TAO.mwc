@@ -26,7 +26,6 @@ workspace {
   CIDLC
   DAnCE
   ciao
-  ciaosvcs
   tools
   tests
   examples

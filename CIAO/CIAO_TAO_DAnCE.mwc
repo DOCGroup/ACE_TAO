@@ -21,7 +21,6 @@ workspace {
   ccm
   CIDLC/CIDLC.mwc
   ciao
-  ciaosvcs
   DAnCE
   tools/Config_Handlers
   tools/XML
