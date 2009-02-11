@@ -1,10 +1,16 @@
+Wed Feb 11 16:19:40 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIAO_TAO.mwc:
+        
+          Added ccm to this workspace. 
+        
 Wed Feb 11 16:01:21 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO_TAO.mwc:
         * CIAO_TAO_DAnCE.mwc:
 
           Removed ciaosvcs.
-        
+
 Wed Feb 11 15:57:38 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciaocidldefaults.mpb:
