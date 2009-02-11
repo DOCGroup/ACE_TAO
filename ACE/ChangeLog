@@ -1,9 +1,14 @@
+Wed Feb 11 06:52:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux.GNU:
+          Fixed Red Hat detection
+
 Tue Feb 10 20:38:27 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/global.features:
 
-          Made xerces2 and xerces3 disabled by default. 
-        
+          Made xerces2 and xerces3 disabled by default.
+
 Tue Feb 10 20:16:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_ctype.inl:

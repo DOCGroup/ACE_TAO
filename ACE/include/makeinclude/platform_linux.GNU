@@ -28,7 +28,7 @@ ifeq (Ubuntu, $(findstring Ubuntu,$(LSB_RELEASE_ID)))
     no_hidden_visibility ?= 1
   endif
 endif
-ifeq (Red Hat, $(findstring Red Hat,$(CXX_VERSION)))
+ifeq (Red Hat, $(findstring Red Hat,$(CXX_FULL_VERSION)))
   ifeq (4.1.1, $(findstring 4.1.1,$(CXX_VERSION)))
     gcc_template_instantiation_visibility ?= 1
   endif
