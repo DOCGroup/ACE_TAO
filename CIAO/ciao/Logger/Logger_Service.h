@@ -1,3 +1,4 @@
+// $Id$
 #ifndef CIAO_LOGGER_SERVICE_H_
 #define CIAO_LOGGER_SERVICE_H_
 

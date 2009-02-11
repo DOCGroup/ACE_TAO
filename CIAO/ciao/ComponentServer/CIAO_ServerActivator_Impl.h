@@ -1,3 +1,4 @@
+// $Id$
 /**
  * @file CIAO_ServerActivator_Impl.h
  * @author William R. Otte

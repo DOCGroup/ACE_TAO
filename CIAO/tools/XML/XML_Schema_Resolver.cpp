@@ -1,3 +1,4 @@
+// $Id$
 #include <xercesc/util/PlatformUtils.hpp>
 #include <xercesc/util/XercesDefs.hpp>
 

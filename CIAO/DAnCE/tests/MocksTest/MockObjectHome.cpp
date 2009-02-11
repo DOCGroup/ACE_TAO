@@ -1,3 +1,4 @@
+// $Id$
 #include "MockObjectHome.h"
 
 ::Components::CCMObject_ptr

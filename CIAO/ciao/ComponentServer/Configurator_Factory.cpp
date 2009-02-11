@@ -1,5 +1,5 @@
 #include "Configurator_Factory.h"
-
+// $Id$
 #include "ace/Arg_Shifter.h"
 #include "ciao/CIAO_common.h"
 #include "Configurators/Server_Configurator.h"

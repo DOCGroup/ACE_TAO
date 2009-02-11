@@ -120,8 +120,8 @@ namespace CIDL_Receiver_Impl
       ::Components::EnterpriseComponent::_nil ();
     
     ACE_NEW_RETURN (retval,
-		    Receiver_exec_i,
-		    ::Components::EnterpriseComponent::_nil ());
+                    Receiver_exec_i,
+                    ::Components::EnterpriseComponent::_nil ());
     
     return retval;
   }

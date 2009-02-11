@@ -1,4 +1,4 @@
-
+// $Id$
 project (*RedirectionServiceTestServer): dance, taoserver, iortable, naming, dance_redirection_service, dance_logger, naming_serv  {
 	exename = RedirectionServiceTestServer
 

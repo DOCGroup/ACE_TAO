@@ -1,4 +1,4 @@
-
+// $Id$
 project (ObjectLocatorTestServer): dance, taoserver, iortable, dance_redirection_service, dance_logger {
 	exename = ObjectLocatorTestServer
 

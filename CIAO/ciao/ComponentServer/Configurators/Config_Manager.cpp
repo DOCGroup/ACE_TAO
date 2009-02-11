@@ -1,3 +1,4 @@
+// $Id$
 #include "Config_Manager.h"
 
 namespace CIAO

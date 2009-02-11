@@ -1,3 +1,4 @@
+// $Id$
 /**
  * @file CIAO_ComponentServer_Impl.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

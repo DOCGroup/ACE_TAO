@@ -1,3 +1,4 @@
+// $Id$
 #ifndef MOCKOBJECTHOME_H_
 #define MOCKOBJECTHOME_H_
 
