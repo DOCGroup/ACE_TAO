@@ -86,8 +86,8 @@ create_BasicSP_BMDevice_Impl (void)
     ::Components::EnterpriseComponent::_nil ();
   
   ACE_NEW_RETURN (retval,
-		  MyImpl::BMDevice_exec_i,
-		  ::Components::EnterpriseComponent::_nil ());
+                  MyImpl::BMDevice_exec_i,
+                  ::Components::EnterpriseComponent::_nil ());
   
   return retval;
 }

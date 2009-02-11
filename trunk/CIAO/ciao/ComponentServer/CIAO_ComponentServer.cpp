@@ -1,7 +1,7 @@
 /**
  * @file CIAO_ComponentServer.cpp
  * @author William R. Otte
- *
+ * // $Id$
  * Implementation and main for CIAO_ComponentServer.
  */
 

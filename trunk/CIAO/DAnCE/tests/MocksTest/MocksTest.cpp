@@ -1,3 +1,4 @@
+// $Id$
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "Mocks/ComponentServer_Impl.h"
 #include "tao/ORB.h"

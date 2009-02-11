@@ -1,3 +1,4 @@
+// $Id$
 #ifndef REGISTRATIONPATH_H_
 #define REGISTRATIONPATH_H_
 #include "ace/SString.h"

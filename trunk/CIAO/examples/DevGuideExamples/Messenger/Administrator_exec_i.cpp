@@ -202,8 +202,8 @@ namespace CIDL_Administrator_Impl
       ::Components::EnterpriseComponent::_nil ();
     
     ACE_NEW_RETURN (retval,
-		    Administrator_exec_i,
-		    ::Components::EnterpriseComponent::_nil ());
+                    Administrator_exec_i,
+                    ::Components::EnterpriseComponent::_nil ());
     
     return retval;
   }

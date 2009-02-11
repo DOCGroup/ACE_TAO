@@ -1,9 +1,93 @@
+Wed Feb 11 19:33:59 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ChangeLog:
+        * DAnCE/DomainApplication/Domain_Application_Impl.h:
+        * DAnCE/Logger/File_Logger_Backend.h:
+        * DAnCE/Logger/File_Logger_Backend.cpp:
+        * DAnCE/Logger/Log_Macros.h:
+        * DAnCE/Logger/Logger_Service.h:
+        * DAnCE/Logger/Logger_Service.cpp:
+        * DAnCE/NodeApplication/Name_Utilities.h:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/RedirectionService/RedirectionService.h:
+        * DAnCE/Starter/DAnCELoggerFactory.h:
+        * DAnCE/Starter/Starter.h:
+        * DAnCE/Starter/Starter.mpc:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/em_launcher.mpc:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/nm_launcher.mpc:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
+        * DAnCE/tests/DeploymentPlanDump/DeploymentPlanDump.mpc:
+        * DAnCE/tests/DeploymentPlanDump/test.cpp:
+        * DAnCE/tests/DeploymentPlanTestReferences/DeploymentPlanTestReferences.mpc:
+        * DAnCE/tests/DeploymentPlanTestReferences/test.cpp:
+        * DAnCE/tests/DeploymentTest1/DeploymentTest1.mpc:
+        * DAnCE/tests/DeploymentTest1/test.cpp:
+        * DAnCE/tests/MocksTest/MockObjectHome.h:
+        * DAnCE/tests/MocksTest/MockObjectHome.cpp:
+        * DAnCE/tests/MocksTest/MocksTest.cpp:
+        * DAnCE/tests/NameServiceTest/DummyImpl.h:
+        * DAnCE/tests/NameServiceTest/DummyImpl.cpp:
+        * DAnCE/tests/NameServiceTest/RegistrationPath.h:
+        * DAnCE/tests/NameServiceTest/clt_main.cpp:
+        * DAnCE/tests/NameServiceTest/srv_main.cpp:
+        * DAnCE/tests/NodeApplicationManager-NodeApplication/NodeApplicationManager-NodeApplication.mpc:
+        * DAnCE/tests/NodeApplicationManager-NodeApplication/test.cpp:
+        * DAnCE/tests/NodeManager-NodeApplicationManager/NodeManager-NodeApplicationManager.mpc:
+        * DAnCE/tests/NodeManager-NodeApplicationManager/test.cpp:
+        * DAnCE/tests/ObjectLocatorTest/DummyImpl.h:
+        * DAnCE/tests/ObjectLocatorTest/DummyImpl.cpp:
+        * DAnCE/tests/ObjectLocatorTest/ObjectLocatorTest.mpc:
+        * DAnCE/tests/ObjectLocatorTest/RegistrationPath.h:
+        * DAnCE/tests/ObjectLocatorTest/clt_main.cpp:
+        * DAnCE/tests/ObjectLocatorTest/srv_main.cpp:
+        * DAnCE/tests/RedirectionServiceTest/DummyImpl.h:
+        * DAnCE/tests/RedirectionServiceTest/DummyImpl.cpp:
+        * DAnCE/tests/RedirectionServiceTest/RedirectionServiceTest.mpc:
+        * DAnCE/tests/RedirectionServiceTest/RegistrationPath.h:
+        * DAnCE/tests/RedirectionServiceTest/clt_main.cpp:
+        * DAnCE/tests/RedirectionServiceTest/srv_main.cpp:
+        * MPC/config/ciao_logger.mpb:
+        * MPC/config/dance_logger.mpb:
+        * ciao/CIAO.mpc:
+        * ciao/ComponentServer/CIAO_ComponentServer.h:
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp:
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.h:
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:
+        * ciao/ComponentServer/CIAO_Container_Impl.h:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+        * ciao/ComponentServer/Configurator_Factory.h:
+        * ciao/ComponentServer/Configurator_Factory.cpp:
+        * ciao/ComponentServer/Configurators/Config_Manager.cpp:
+        * ciao/ComponentServer/Configurators/Configurators.mpc:
+        * ciao/ComponentServer/Configurators/NoOp/NoOp_Configurator.mpc:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Logger/CIAOLoggerFactory.h:
+        * ciao/Logger/File_Logger_Backend.h:
+        * ciao/Logger/File_Logger_Backend.cpp:
+        * ciao/Logger/Log_Macros.h:
+        * ciao/Logger/Logger_Service.h:
+        * ciao/Logger/Logger_Service.cpp:
+        * ciao/Servants/Servants.mpc:
+        * examples/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/DevGuideExamples/Messenger/Administrator_exec_i.cpp:
+        * examples/DevGuideExamples/Messenger/Messenger_exec_i.cpp:
+        * examples/DevGuideExamples/Messenger/Receiver_exec_i.cpp:
+        * tests/CIAO_ComponentServer/Activator/Activator.mpc:
+        * tests/CIAO_ComponentServer/Basic/Basic.mpc:
+        * tools/XML/XML_Schema_Resolver.cpp:
+
+          Fuzz errors. 
+        
 Wed Feb 11 19:21:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * NEWS:
-        
-          Updated news file. 
-        
+
+          Updated news file.
+
 Wed Feb 11 19:05:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/XML/XML_Helper.tpp:
@@ -6204,59 +6288,59 @@ Tue Oct 23 14:27:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
 Mon Oct 22 18:54:03 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * performance-tests\Protocols\Sender\Custom_Network_Priority_Mapping.cpp:
-        * performance-tests\Protocols\Sender\Custom_Network_Priority_Mapping.h:
+        * performance-tests/Protocols/Sender/Custom_Network_Priority_Mapping.cpp:
+        * performance-tests/Protocols/Sender/Custom_Network_Priority_Mapping.h:
 
           New files, factored out of existing files.
 
-        * performance-tests\Benchmark\Benchmark_skel_export.h:
-        * tests\Minimum\Minimum_Base\Minimum_Base.mpc:
-        * tests\Minimum\Minimum_Base\Minimum_Base_skel_export.h:
-        * examples\Hello\Hello_Base\Hello_Base_skel_export.h:
-        * examples\Swapping\Hello_Base\Hello_Base_skel_export.h:
+        * performance-tests/Benchmark/Benchmark_skel_export.h:
+        * tests/Minimum/Minimum_Base/Minimum_Base.mpc:
+        * tests/Minimum/Minimum_Base/Minimum_Base_skel_export.h:
+        * examples/Hello/Hello_Base/Hello_Base_skel_export.h:
+        * examples/Swapping/Hello_Base/Hello_Base_skel_export.h:
 
           New files, renamed from corresponding files removed, as
           listed below.
 
-        * performance-tests\Benchmark\Benchmark_svnt_export.h:
-        * tests\Minimum\Minimum_Base\Minimum_Base_svnt_export.h:
-        * tests\Minimum\Minimum_Base\Minimum.mpc:
-        * examples\Hello\Hello_Base\Hello_Base_svnt_export.h:
-        * examples\Swapping\Hello_Base\Hello_Base_svnt_export.h:
+        * performance-tests/Benchmark/Benchmark_svnt_export.h:
+        * tests/Minimum/Minimum_Base/Minimum_Base_svnt_export.h:
+        * tests/Minimum/Minimum_Base/Minimum.mpc:
+        * examples/Hello/Hello_Base/Hello_Base_svnt_export.h:
+        * examples/Swapping/Hello_Base/Hello_Base_svnt_export.h:
 
           Removed files, renamed as described above.
 
-        * performance-tests\Protocols\Sender\Sender_exec.cpp:
-        * performance-tests\Protocols\Sender\Sender.mpc:
-        * performance-tests\Protocols\Controller\Controller.mpc:
-        * performance-tests\Protocols\Receiver\Receiver.mpc:
-        * performance-tests\Protocols\common\Protocols.mpc:
-        * performance-tests\Benchmark\RoundTripClient\RoundTripClient.mpc:
-        * performance-tests\Benchmark\RoundTrip\client.cpp:
-        * performance-tests\Benchmark\RoundTrip\RoundTrip.mpc:
-        * performance-tests\Benchmark\server.cpp:
-        * performance-tests\Benchmark\Multi_Threaded\client.cpp:
-        * performance-tests\Benchmark\Multi_Threaded\Multi_Threaded.mpc:
-        * performance-tests\Benchmark\README
-        * performance-tests\Benchmark\Benchmark.mpc:
-        * performance-tests\Benchmark\RoundTripServer\server.cpp:
-        * performance-tests\Benchmark\RoundTripServer\RoundTripServer.mpc:
-        * tests\Minimum\Sender\Sender_exec.cpp:
-        * tests\Minimum\Sender\Sender_exec.h:
-        * tests\Minimum\Sender\Sender.mpc:
-        * tests\Minimum\Receiver\Receiver.mpc:
-        * tests\Minimum\Receiver\Receiver_exec.cpp:
-        * tests\Minimum\Receiver\Receiver_exec.h:
-        * examples\Hello\Sender\Sender.mpc:
-        * examples\Hello\Receiver\Receiver.mpc:
-        * examples\Hello\Hello_Base\Hello_Base.mpc:
-        * examples\Display\Display_Base\Display_Base.mpc:
-        * examples\Display\RateGen\RateGen.mpc:
-        * examples\Display\GPS\GPS.mpc:
-        * examples\Display\NavDisplay\NavDisplay.mpc:
-        * examples\Swapping\Sender\Sender.mpc:
-        * examples\Swapping\Receiver\Receiver.mpc:
-        * examples\Swapping\Hello_Base\Hello_Base.mpc:
+        * performance-tests/Protocols/Sender/Sender_exec.cpp:
+        * performance-tests/Protocols/Sender/Sender.mpc:
+        * performance-tests/Protocols/Controller/Controller.mpc:
+        * performance-tests/Protocols/Receiver/Receiver.mpc:
+        * performance-tests/Protocols/common/Protocols.mpc:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc:
+        * performance-tests/Benchmark/RoundTrip/client.cpp:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
+        * performance-tests/Benchmark/server.cpp:
+        * performance-tests/Benchmark/Multi_Threaded/client.cpp:
+        * performance-tests/Benchmark/Multi_Threaded/Multi_Threaded.mpc:
+        * performance-tests/Benchmark/README
+        * performance-tests/Benchmark/Benchmark.mpc:
+        * performance-tests/Benchmark/RoundTripServer/server.cpp:
+        * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
+        * tests/Minimum/Sender/Sender_exec.cpp:
+        * tests/Minimum/Sender/Sender_exec.h:
+        * tests/Minimum/Sender/Sender.mpc:
+        * tests/Minimum/Receiver/Receiver.mpc:
+        * tests/Minimum/Receiver/Receiver_exec.cpp:
+        * tests/Minimum/Receiver/Receiver_exec.h:
+        * examples/Hello/Sender/Sender.mpc:
+        * examples/Hello/Receiver/Receiver.mpc:
+        * examples/Hello/Hello_Base/Hello_Base.mpc:
+        * examples/Display/Display_Base/Display_Base.mpc:
+        * examples/Display/RateGen/RateGen.mpc:
+        * examples/Display/GPS/GPS.mpc:
+        * examples/Display/NavDisplay/NavDisplay.mpc:
+        * examples/Swapping/Sender/Sender.mpc:
+        * examples/Swapping/Receiver/Receiver.mpc:
+        * examples/Swapping/Hello_Base/Hello_Base.mpc:
 
           - Modified *_exec.{h, cpp} files and MPC files to reverse
             the exec->svnt dependency. Also moved generated
@@ -6563,7 +6647,7 @@ Wed Oct 17 18:47:50 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Restored included files needed at instantiation time.
 
-        * ciaosvcs/Events/CIAO_RTEC\CIAO_RTEvent.cpp(create_rt_event_channel):
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp(create_rt_event_channel):
 
           Commented out unused arg.
 

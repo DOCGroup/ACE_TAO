@@ -1,3 +1,4 @@
+// $Id$
 /**
  * @file Log_Macros.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

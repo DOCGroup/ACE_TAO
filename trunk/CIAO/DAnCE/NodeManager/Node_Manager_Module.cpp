@@ -552,7 +552,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                     "DAnCE_NodeManager is running...\n"));
       
       DANCE_DEBUG ((LM_DEBUG, DLINFO "DAnCE_NodeManager_Module::create_object - "
-		    "NodeManager IOR: %s\n", ior.in ()));
+                    "NodeManager IOR: %s\n", ior.in ()));
 
       return nm_obj._retn ();
     }

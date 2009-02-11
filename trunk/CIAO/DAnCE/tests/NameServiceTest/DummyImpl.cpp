@@ -1,3 +1,4 @@
+// $Id$
 #include "DummyImpl.h"
 
 namespace NameServiceTest
