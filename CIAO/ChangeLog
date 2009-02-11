@@ -1,3 +1,10 @@
+Wed Feb 11 20:01:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/Porting_Hints.txt:
+        * NEWS:
+        
+          Porting hints for the new DAnCE. 
+        
 Wed Feb 11 19:33:59 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ChangeLog:
@@ -80,8 +87,8 @@ Wed Feb 11 19:33:59 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/CIAO_ComponentServer/Basic/Basic.mpc:
         * tools/XML/XML_Schema_Resolver.cpp:
 
-          Fuzz errors. 
-        
+          Fuzz errors.
+
 Wed Feb 11 19:21:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * NEWS:
