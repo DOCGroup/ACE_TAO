@@ -1,3 +1,18 @@
+Wed Feb 11 15:57:38 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ciaocidldefaults.mpb:
+        
+          Fixed build order. 
+        
+        * MPC/config/cidlc.mpb:
+        
+          Removed boost_system from the base projects. 
+        
+        * tools/Config_Handlers/DynAny_Handler/DataType_Handler.cpp:
+        * tools/XML/XML_Helper.tpp:
+
+          Warning fixes. 
+        
 Wed Feb 11 14:46:15 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CCF:
@@ -1035,8 +1050,8 @@ Wed Feb 11 14:46:15 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/XML/XercesString.cpp:
         * tools/tools.mwc:
 
-           Merged in from prism_import branch. 
-        
+           Merged in from prism_import branch.
+
         * DAnCE/Deployment/CIAO_NodeApplication_CallBack.idl:
         * DAnCE/Deployment/CIAO_ServerResources.idl:
         * DAnCE/Deployment/Deployment_Container.idl:
