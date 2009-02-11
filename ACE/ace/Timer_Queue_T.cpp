@@ -166,7 +166,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Queue_T (FUNCTOR *upcall_functor,
-                                                           ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
+                                                               ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
   : gettimeofday_ (ACE_OS::gettimeofday),
     delete_upcall_functor_ (upcall_functor == 0),
     delete_free_list_ (freelist == 0),

@@ -10,8 +10,11 @@ project(*client) : taoclient {
 
 project(*server) : taoserver {
   requires += dummy_label
+  libs += TAO_PortableServer
   source_files {
     server.cpp
     icp.cpp
   }
 }
+
+
