@@ -1,25 +1,24 @@
 // $Id$
 
-project (Package_Config_Handlers) : acelib, ace_output, ciao_deployment_stub, ciao_config_handlers_base {
+project (Package_Config_Handlers) : acelib, dance_deployment_stub, ciao_config_handlers_base, dance {
   sharedname = Package_Config_Handlers
   dynamicflags = PACKAGING_HANDLERS_BUILD_DLL
   avoids   += ace_for_tao
-
-  includes += $(CIAO_ROOT)/ciao
-
+    
+  includes += $(CIAO_ROOT)/ciao 
+  libpaths += $(CIAO_ROOT)/bin
+ 
   after    += XSC_Config_Handlers_Common \
               XSC_Config_Handlers \
               XSC_DynAny_Handler \
               XSC_XML_Handlers \
               CIAO_XML_Utils \
-              CIAO_Events_Handlers
 
   libs     += XSC_Config_Handlers_Common \
               XSC_Config_Handlers \
               XSC_DynAny_Handler \
               XSC_XML_Handlers \
               CIAO_XML_Utils \
-              CIAO_Events_Handlers RT_CCM_Config_Handlers
 
   Source_files {
     CAD_Handler.cpp
@@ -43,10 +42,11 @@ project (Package_Config_Handlers) : acelib, ace_output, ciao_deployment_stub, ci
 
 }
 
-project (Package_Config_Handlers_Tests) : ciao_component_dnc, ciao_config_handlers, ifr_client {
+project (Package_Config_Handlers_Tests) : dance_deployment_stub, ciao_config_handlers, ifr_client {
   exename = test
   macros   += XML_USE_PTHREADS
   avoids   += ace_for_tao
+  requires += dummy_label 
 
   Source_Files {
     test.cpp

@@ -14,6 +14,9 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
+#include "ace/Hash_Map_Manager_T.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "Deployment/Deployment_ConnectionC.h"
 
 #if !defined ACE_LACKS_PRAGMA_ONCE
 #pragma once
@@ -21,8 +24,14 @@
 
 /// A struct which captures the binding information about a component
 
-namespace CIAO
+namespace DAnCE 
 {
+  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                  CORBA::Any,
+                                  ACE_Hash<ACE_CString>,
+                                  ACE_Equal_To<ACE_CString>,
+                                  ACE_Null_Mutex> PROPERTY_MAP;
+  
   /// A struct which captures the compnent  binding information, which
   /// is useful for inter-assembly connection setup
   typedef struct _component_binding
@@ -38,7 +47,7 @@ namespace CIAO
 
     Deployment::Connections_var providedReference_;
 
-    bool operator==(const struct _component_binding & comp) const
+    bool operator==(const struct _component_binding & comp)
     {
       if (this->name_ == comp.name_ &&
           this->plan_uuid_ == comp.plan_uuid_ &&

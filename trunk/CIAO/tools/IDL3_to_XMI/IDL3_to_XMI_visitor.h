@@ -25,7 +25,7 @@
 
 #include "utl_scoped_name.h"
 #include "Literals.h"
-#include "Config_Handlers/Utils/XercesString.h"
+#include "XML/XercesString.h"
 #include "CIAO_IDL3_TO_XMI_Export.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -224,7 +224,7 @@ namespace CIAO
       ACE_TCHAR * union_label_value (AST_Expression *exp);
 
       typedef ACE_Hash_Map_Manager_Ex< ACE_TString,
-                                       CIAO::Config_Handlers::XStr,
+                                       CIAO::XML::XStr,
                                        ACE_Hash <ACE_TString>,
                                        ACE_Equal_To <ACE_TString>,
                                        ACE_Null_Mutex > XMI_ID_MAP;
@@ -277,7 +277,7 @@ namespace CIAO
 
       XERCES_CPP_NAMESPACE::DOMElement *associations_;
 
-      const CIAO::Config_Handlers::XStr base_id_;
+      const CIAO::XML::XStr base_id_;
 
       /// true if for some reason the generated output is bad
       /// and shouldn't be written.

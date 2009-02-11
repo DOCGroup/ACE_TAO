@@ -84,13 +84,7 @@ namespace CIDL_Null_Component_Impl
   }
 
   void
-  Null_Component_exec_i::ciao_preactivate ()
-  {
-    // Your code here.
-  }
-
-  void
-  Null_Component_exec_i::ciao_postactivate ()
+  Null_Component_exec_i::configuration_complete ()
   {
     // Your code here.
   }
@@ -111,6 +105,20 @@ namespace CIDL_Null_Component_Impl
   Null_Component_exec_i::ccm_remove ()
   {
     // Your code here.
+  }
+
+  extern "C" NULL_COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Null_Component_Impl (void)
+  {
+    ::Components::EnterpriseComponent_ptr retval =
+      ::Components::EnterpriseComponent::_nil ();
+
+    ACE_NEW_RETURN (
+      retval,
+      Null_Component_exec_i,
+      ::Components::EnterpriseComponent::_nil ());
+
+    return retval;
   }
 
   //==================================================================

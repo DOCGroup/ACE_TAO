@@ -1,7 +1,7 @@
 //$Id$
 
 project (RT_CCM_XML_Generation) : xscdefaults {
-   requires += xsc
+   requires += xsc dummy_label
 
    xscflags += --cxx-banner-file $(CIAO_ROOT)/docs/schema/xsc-banner.cpp
    xscflags += --cxx-header-banner-file $(CIAO_ROOT)/docs/schema/xsc-banner.h
@@ -9,7 +9,7 @@ project (RT_CCM_XML_Generation) : xscdefaults {
    xscflags += --cxx-namespace-regex  <%quote%>%.*vanderbilt.*%CIAO/Config_Handlers%<%quote%>
    xscflags += --cxx-export-header RT_CCM_Handlers_Export.h
    xscflags += --search-path "$(CIAO_ROOT)/docs/schema"
-
+   
    custom_only = 1
 
    XSC_Files {
@@ -18,7 +18,7 @@ project (RT_CCM_XML_Generation) : xscdefaults {
    }
 }
 
-project (RT_CCM_Config_Handlers) : acelib, ace_output, ciao_deployment_stub, ciao_config_handlers_base {
+project (RT_CCM_Config_Handlers) : acelib, dance_deployment_stub, ciao_config_handlers_base {
   sharedname = RT_CCM_Config_Handlers
   dynamicflags   = RT_CCM_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
@@ -26,6 +26,8 @@ project (RT_CCM_Config_Handlers) : acelib, ace_output, ciao_deployment_stub, cia
   includes += $(CIAO_ROOT)/ciao
 
   after += RT_CCM_XML_Generation
+  
+  requires += dummy_label
 
   Source_Files {
         CIAOServerResources.cpp
@@ -46,7 +48,7 @@ project (RT_CCM_Config_Handlers) : acelib, ace_output, ciao_deployment_stub, cia
   }
 }
 
-//project (RT-CCM_Config_Handlers_Tests) : ciao_component_dnc, xerces {
+//project (RT-CCM_Config_Handlers_Tests) : ciao_executor, xerces {
 //  requires += dummy_label
 //  exename = rt-ccm-test
 //  after    += RT-CCM-Handlers

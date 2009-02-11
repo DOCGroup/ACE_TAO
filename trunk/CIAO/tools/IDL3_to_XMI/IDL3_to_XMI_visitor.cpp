@@ -41,7 +41,7 @@
 #include "ace/ACE.h"
 
 #include "Literals.h"
-#include "Config_Handlers/Utils/XercesString.h"
+#include "XML/XercesString.h"
 
 #include <iostream>
 #include <limits>
@@ -49,14 +49,14 @@
 
 #include "xercesc/dom/DOM.hpp"
 
-#include "Config_Handlers/Utils/XML_Helper.h"
+#include "XML/XML_Helper.h"
 
 using XERCES_CPP_NAMESPACE::DOMDocument;
 using XERCES_CPP_NAMESPACE::DOMAttr;
 using XERCES_CPP_NAMESPACE::DOMElement;
 using XERCES_CPP_NAMESPACE::DOMText;
 using XERCES_CPP_NAMESPACE::DOMDocumentType;
-using CIAO::Config_Handlers::XStr;
+using CIAO::XML::XStr;
 
 
 
@@ -1711,8 +1711,11 @@ namespace CIAO
 
           ACE_DEBUG ((LM_DEBUG, "Opening %C\n",
                       target_name.c_str ()));
-
-          CIAO::Config_Handlers::XML_Helper helper;
+          
+          CIAO::XML::NoOp_Resolver res_func;
+          CIAO::XML::XML_Schema_Resolver<> resolver (res_func);
+          CIAO::XML::XML_Error_Handler handler;
+          CIAO::XML::XML_Helper<> helper (resolver, handler);
 
           // Create XML document
           std::auto_ptr<DOMDocumentType> doctype (

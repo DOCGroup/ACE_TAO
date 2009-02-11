@@ -32,7 +32,7 @@ project(Null_Component_cidl_gen) : ciaocidldefaults, taoidldefaults {
   }
 }
 
-project(Null_Component_stub) : ciao_client_dnc {
+project(Null_Component_stub) : ccm_stub {
   avoids += ace_for_tao
   after += Null_Component_idl_gen Null_Interface_stub
   libs  += Null_Interface_stub
@@ -57,7 +57,7 @@ project(Null_Component_stub) : ciao_client_dnc {
   }
 }
 
-project(Null_Component_exec) : ciao_component_dnc {
+project(Null_Component_exec) : ciao_executor {
   avoids += ace_for_tao
   after   += Null_Component_cidl_gen Null_Component_stub
   sharedname = Null_Component_exec
@@ -85,7 +85,7 @@ project(Null_Component_exec) : ciao_component_dnc {
 }
 
 
-project(Null_Component_svnt) : ciao_servant_dnc {
+project(Null_Component_svnt) : ciao_servant {
   avoids += ace_for_tao
   after      += Null_Interface_skel Null_Component_exec
   sharedname  = Null_Component_svnt

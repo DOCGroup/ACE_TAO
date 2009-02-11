@@ -1,0 +1,6 @@
+// -*- MPC -*-
+
+project : dance, messaging {
+  after += DAnCE_Logger
+  libs  += DAnCE_Logger
+}

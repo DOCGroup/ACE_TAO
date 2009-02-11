@@ -39,9 +39,7 @@ namespace CIDL_SenderImpl
 
     void ccm_remove (void);
 
-    void ciao_preactivate (void);
-
-    void ciao_postactivate (void);
+    void configuration_complete (void);
 
   protected:
 

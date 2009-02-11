@@ -52,13 +52,10 @@ namespace MyImpl
     set_session_context (Components::SessionContext_ptr ctx);
 
     virtual void
-    ciao_preactivate ();
+    configuration_complete ();
 
     virtual void
     ccm_activate ();
-    virtual void
-    ciao_postactivate ();
-
 
     virtual void
     ccm_passivate ();
@@ -73,6 +70,9 @@ namespace MyImpl
     private:
     MyImpl::ReadData_Impl* data_read_;
   };
+
+  extern "C" BMDEVICE_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_BasicSP_BMDevice_Impl (void);
 
   /**
    * @class BMDeviceHome_exec_i

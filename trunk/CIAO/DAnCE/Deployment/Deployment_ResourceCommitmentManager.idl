@@ -8,34 +8,29 @@
 
 module Deployment {
 
-  exception ResourceCommitmentFailure {
-    string reason;
-    long index;
-    string propertyName;
-    ::CORBA::AnySeq propertyValue;
-  };
-  /**
-   * @struct ResourceAllocation
-   * @brief Identifies a resource within a domain that is 
-   *  allocated from and the amount it is allocated
-   */
-  struct ResourceAllocation
-  {
-    string elementName;
-    string resourceName;
-    Properties property;
-  };
+        struct ResourceAllocation {
+                string elementName;
+                string resourceName;
+                Properties property;
+        };
 
-  /// The Resource Allocation Sequence
-  typedef sequence <ResourceAllocation> ResourceAllocations;
+        typedef sequence < ResourceAllocation > ResourceAllocations;
 
-  interface ResourceCommitmentManager {
-    void commitResources (in ResourceAllocations resources)
-      raises (ResourceCommitmentFailure);
-    void releaseResources (in ResourceAllocations resources)
-      raises (ResourceCommitmentFailure);
-  };
+        exception ResourceCommitmentFailure {
+                string reason;
+                long index;
+                string propertyName;
+                ::CORBA::AnySeq propertyValue;
+        };
+
+        interface ResourceCommitmentManager {
+                void commitResources (in ResourceAllocations resources)
+                        raises (ResourceCommitmentFailure);
+                void releaseResources (in ResourceAllocations resources)
+                        raises (ResourceCommitmentFailure);
+        };
+
 };
 
+#endif //RESOURCE_COMMITMENT_MANAGER_IDL
 
-#endif

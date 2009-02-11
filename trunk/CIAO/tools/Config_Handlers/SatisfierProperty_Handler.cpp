@@ -25,8 +25,8 @@ namespace CIAO
                                                  Deployment::SatisfierProperty& toconfig)
     {
       CIAO_TRACE("SatisfierProperty_Handler::get_sat_property");
-
-      toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
+      
+      toconfig.name = desc.name ().c_str ();
 
       switch (desc.kind ().integral ())
         {
@@ -56,14 +56,22 @@ namespace CIAO
           
         default:
           ACE_ERROR ((LM_ERROR, "Unknown SatisfierPropertyKind\n"));
-          throw 1;
+          throw Config_Error (desc.name (), "Unknown SatisfierPropertyKind");
           
         }
 
       toconfig.dynamic = desc.dynamic ();
-
-      Any_Handler::extract_into_any (desc.value (),
-                                     toconfig.value);
+      
+      try
+        {
+          Any_Handler::extract_into_any (desc.value (),
+                                         toconfig.value);
+        }
+      catch (Config_Error &ex)
+        {
+          ex.name_ = desc.name ();
+          throw ex;
+        }
     }
 
     SatisfierProperty
@@ -72,7 +80,7 @@ namespace CIAO
     {
       CIAO_TRACE("SatisfierProperty_Handler::get_sat_property - reverse");
 
-      ::XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
+      ::XMLSchema::string< ACE_TCHAR > name ((src.name));
       SatisfierPropertyKind::Value kind;
 
       const SatisfierPropertyKind *spk = 0;

@@ -9,6 +9,8 @@
 #include "ciao/CIAO_common.h"
 #include "DynAny_Handler/DynAny_Handler.h"
 
+#include "ace/Null_Mutex.h"
+
 namespace CIAO
 {
   namespace Config_Handlers
@@ -25,16 +27,25 @@ namespace CIAO
     void
     Any_Handler::extract_into_any (const Any& desc,
                                    CORBA::Any& toconfig)
-
     {
       CIAO_TRACE("Any_Handler::extract_into_any");
-      DynamicAny::DynAny_var dyn = DYNANY_HANDLER->extract_into_dynany (desc.type (),
-                                                                        desc.value ());
+      try
+        {
+          DynamicAny::DynAny_var dyn = DYNANY_HANDLER->extract_into_dynany (desc.type (),
+                                                                            desc.value ());
 
-      CORBA::Any_var owner = dyn->to_any ();
-      toconfig = owner.in ();
-
-      dyn->destroy ();
+          toconfig = *dyn->to_any ();
+          
+          dyn->destroy ();
+        }
+      catch (Config_Error &ex)
+        {
+          throw ex;
+        }
+      catch (...)
+        {
+          throw Config_Error ("", "Caught error whilst parsing XML into Any\n");
+        }
     }
 
     Any Any_Handler::get_any (const ::CORBA::Any& src)

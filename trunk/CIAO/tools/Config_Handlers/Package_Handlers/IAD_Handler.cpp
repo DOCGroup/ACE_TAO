@@ -6,7 +6,7 @@
 #include "Req_Handler.h"
 #include "Utils/Functors.h"
 #include "Utils/Exceptions.h"
-#include "Utils/XML_Helper.h"
+#include "XML_Typedefs.h"
 
 #include "Deployment.hpp"
 #include "ciao/CIAO_common.h"
@@ -29,7 +29,7 @@ namespace CIAO
 
         if (desc.href_p ())
           {
-            safe_iad.reset (IAD_Handler::resolve_iad (ACE_TEXT_ALWAYS_CHAR (desc.href ().c_str ())));
+            safe_iad.reset (IAD_Handler::resolve_iad (desc.href ().c_str ()));
             iad = safe_iad.get ();
           }
         else
@@ -37,10 +37,10 @@ namespace CIAO
 
 
         if (iad->label_p ())
-          toconfig.label = ACE_TEXT_ALWAYS_CHAR (iad->label ().c_str ());
+          toconfig.label = iad->label ().c_str ();
 
         if (iad->UUID_p ())
-          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (iad->UUID ().c_str ());
+          toconfig.UUID = iad->UUID ().c_str ();
 
         toconfig.location.length (iad->count_location ());
         std::for_each (iad->begin_location (),
@@ -48,9 +48,9 @@ namespace CIAO
                        String_Seq_Functor (toconfig.location));
 
         toconfig.dependsOn.length (iad->count_dependsOn ());
-        SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
-                                     desc.begin_dependsOn (),
-                                     toconfig.dependsOn);
+    SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
+                     desc.begin_dependsOn (),
+                     toconfig.dependsOn);
         std::for_each (iad->begin_dependsOn (),
                        iad->end_dependsOn (),
                        NIA_Functor (toconfig.dependsOn));
@@ -77,11 +77,11 @@ namespace CIAO
         CIAO_TRACE ("IAD_Handler::impl_artifact_descr - reverse");
         ImplementationArtifactDescription retval;
 
-        retval.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
-        retval.UUID (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
+        retval.label (src.label.in ());
+        retval.UUID (src.UUID.in ());
 
         for (CORBA::ULong i = 0; i < src.location.length (); ++i)
-          retval.add_location (ACE_TEXT_CHAR_TO_TCHAR (src.location[i].in ()));
+          retval.add_location (src.location[i].in ());
 
         for (CORBA::ULong i = 0; i < src.dependsOn.length (); ++i)
           retval.add_dependsOn (NIA_Handler::get_nia (src.dependsOn[i]));
@@ -105,7 +105,7 @@ namespace CIAO
       {
         CIAO_TRACE ("IAD_Handler::resolve_iad");
 
-        xercesc::DOMDocument *dom = XML_HELPER->create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
+        xercesc::DOMDocument *dom = XML_Helper::XML_HELPER.create_dom (uri);
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for IAD");

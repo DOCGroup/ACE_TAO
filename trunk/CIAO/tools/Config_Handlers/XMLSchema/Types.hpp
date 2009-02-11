@@ -296,6 +296,45 @@ namespace XMLSchema
   };
 
   template <typename C>
+  class QName: public Name<C>
+  {
+  protected:
+    typedef typename Name<C>::Base__ Base__;
+
+  public:
+    QName()
+    {
+    }
+
+    QName(XSCRT::XML::Element<C> const& e)
+        : Name<C> (e)
+    {
+    }
+
+    QName(XSCRT::XML::Attribute<C> const& a)
+        : Name<C> (a)
+    {
+    }
+
+    QName(Base__ const& x)
+        : Name<C> (x)
+    {
+    }
+
+    QName (C const* x)
+        : Name<C> (x)
+    {
+    }
+
+    QName&
+    operator= (Base__ const& x)
+    {
+      static_cast<Base__&> (*this) = x;
+      return *this;
+    }
+  };
+
+  template <typename C>
   struct IdentityProvider : XSCRT::IdentityProvider
   {
     IdentityProvider (NCName<C> const& id)

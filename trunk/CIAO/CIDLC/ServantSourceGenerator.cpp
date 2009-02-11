@@ -861,7 +861,7 @@ namespace
         os << "if (! result.second)" << endl
            << "{"
            << "ACE_ERROR_RETURN ((LM_ERROR," << endl
-           << "\"subscribe on %s failed\\n\"," << endl
+           << "\"subscribe on %C failed\\n\"," << endl
            << "\"" << p.name () << "\")," << endl
            << "0);"
            << "}";
@@ -911,7 +911,7 @@ namespace
         os << "if (! result.second)" << endl
            << "{"
            << "ACE_ERROR_RETURN ((LM_ERROR," << endl
-           << "\"generic subscribe on %s failed\\n\"," << endl
+           << "\"generic subscribe on %C failed\\n\"," << endl
            << "\"" << p.name () << "\")," << endl
            << "0);"
            << "}";
@@ -1176,7 +1176,7 @@ namespace
       os << t.name () << "_Context::"
          << t.name () << "_Context (" << endl
          << "::Components::CCMHome_ptr h," << endl
-         << "::CIAO::Session_Container *c," << endl
+         << "::CIAO::Container_ptr c," << endl
          << t.name () << "_Servant *sv)" << endl
          << "  : ::CIAO::Context_Impl_Base (h, c), " << endl
          << "    ::CIAO::Context_Impl<" << endl
@@ -1497,14 +1497,14 @@ namespace
            << u.name ().unescaped_str () << "\");"
            << "receptacle_name += '_';"
            << "receptacle_name += this->context_->_ciao_instance_id ();"
-           << "::CORBA::PolicyList policy_list =" << endl
+           << "::CORBA::PolicyList_var policy_list =" << endl
            << "  this->container_->get_receptacle_policy ("
            << "receptacle_name.c_str ());" << endl;
 
-        os << "if (policy_list.length () != 0)" << endl
+        os << "if (policy_list->length () != 0)" << endl
            << "{"
            << "::CORBA::Object_var over_ridden_object =" << endl
-           << "  _ciao_conn->_set_policy_overrides (policy_list," << endl
+           << "  _ciao_conn->_set_policy_overrides (policy_list.in ()," << endl
            << "CORBA::SET_OVERRIDE);"
            << "_ciao_conn =" << endl
            << "  ";
@@ -1951,15 +1951,16 @@ namespace
            << "tmp," << endl
            << "MACRO_MADNESS_TYPEDEF (obj_id.c_str ()," << endl
            << "\"" << p.name ().unescaped_str () << "\"," << endl
-           << "::CIAO::Port_Activator::Facet," << endl
+           << "::CIAO::Port_Activator_Types::FACET," << endl
            << "0," << endl
            << "this->context_," << endl
            << "this)," << endl
-           << "::CORBA::NO_MEMORY ());" << endl;
+           << "::CORBA::NO_MEMORY ());" << endl
+           << "::CIAO::Port_Activator_var pa = tmp;" << endl;
 
-        os << "::CIAO::Servant_Activator *sa = " << endl
+        os << "::CIAO::Servant_Activator_var sa = " << endl
            << "this->container_->ports_servant_activator ();" << endl
-           << "if (!sa->register_port_activator (tmp))" << endl
+           << "if (!sa->register_port_activator (pa._retn ()))" << endl
            << "{"
            << "return ";
 
@@ -1976,7 +1977,7 @@ namespace
         Traversal::ProviderData::belongs (p, repo_id_belongs_);
 
         os << "," << endl
-           << "  ::CIAO::Container::Facet_Consumer);" << endl
+           << "  ::CIAO::Container_Types::FACET_CONSUMER_t);" << endl
            << "this->add_facet (\""
            << p.name ().unescaped_str () << "\"," << endl
            << "obj.in ());" << endl;
@@ -2155,12 +2156,9 @@ namespace
            << "if (event_repo_id == 0)" << endl
            << "{"
            << "throw ::CORBA::BAD_PARAM ();" << endl
-           << "}"
-           << scope_.name () << "_Context *ctx =" << endl
-           << "  " << scope_.name ()
-           << "_Context::_narrow (this->ctx_.in ());" << endl;
+           << "}" << endl;
 
-        os << "CORBA::ORB_ptr orb = ctx->_ciao_the_Container ()->the_ORB ();"
+        os << "CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()->orb ();"
            << endl;
 
         os << "CORBA::ValueFactory f =" << endl
@@ -2261,13 +2259,14 @@ namespace
         os << "ACE_NEW_THROW_EX (tmp," << endl
            << "MACRO_MADNESS_TYPEDEF (obj_id.c_str ()," << endl
            << "\"" << c.name ().unescaped_str () << "\"," << endl
-           << "::CIAO::Port_Activator::Sink," << endl
+           << "::CIAO::Port_Activator_Types::SINK," << endl
            << "this->executor_.in ()," << endl
            << "this->context_," << endl
            << "this)," << endl
-           << "::CORBA::NO_MEMORY ());" << endl;
+           << "::CORBA::NO_MEMORY ());" << endl
+           << "::CIAO::Port_Activator_var pa = tmp;" << endl;
 
-        os << "::CIAO::Servant_Activator *sa =" << endl
+        os << "::CIAO::Servant_Activator_var sa =" << endl
            << "  this->container_->ports_servant_activator ();" << endl
            << "if (!sa->register_port_activator (tmp))" << endl
            << "{"
@@ -2286,7 +2285,7 @@ namespace
         Traversal::ConsumerData::belongs (c, repo_id_belongs_);
 
         os << "," << endl
-           << "  ::CIAO::Container::Facet_Consumer);" << endl;
+           << "  ::CIAO::Container_Types::FACET_CONSUMER_t);" << endl;
 
         os << "::Components::EventConsumerBase_var ecb =" << endl
            << "  ::Components::EventConsumerBase::_narrow (obj.in ());"
@@ -2411,7 +2410,7 @@ namespace
 
         if (r->gen_factory ())
           {
-            os << "CIAO_REGISTER_OBV_FACTORY (" << endl;
+            os << "TAO_OBV_REGISTER_FACTORY (" << endl;
 
             r->TraversalType::belongs (st, blongs);
 
@@ -2819,7 +2818,7 @@ namespace
          << "::Components::CCMHome_ptr h," << endl
          << "const char *ins_name," << endl
          << "::CIAO::Home_Servant_Impl_Base *hs," << endl
-         << "::CIAO::Session_Container *c)" << endl
+         << "::CIAO::Container_ptr c)" << endl
          << "  : ::CIAO::Servant_Impl_Base "
          << "(h, hs, c)," << endl
          << "    ::CIAO::Servant_Impl<" << endl
@@ -3536,6 +3535,45 @@ namespace
 
       os << "}";
     }
+    
+    virtual void
+    post (Type& t)
+    {
+      // We need to escape C++ keywords before flattening the name.
+      //
+      string name;
+      {
+        std::ostringstream ostr;
+        ostr.pword (name_printer_index) = os.pword (name_printer_index);
+        ostr << t.scoped_name ();
+        name = regex::perl_s (ostr.str (), "/::/_/");
+      }
+      
+      os << "extern \"C\" " << ctx.export_macro ()
+         << " ::PortableServer::Servant"
+         << endl
+         << "create" << name << "_Servant (" << endl
+         << "::Components::EnterpriseComponent_ptr p," << endl
+         << "::CIAO::Container_ptr c," << endl
+         << "const char *ins_name)" << endl
+         << "{"
+         << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "_var x =" << endl
+         << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
+         << "::_narrow (p);" << endl
+         << "if (::CORBA::is_nil (x.in ()))" << endl
+         << "{"
+         << "return 0;" << endl
+         << "}"
+         << "::PortableServer::Servant retval = 0;"
+         << "ACE_NEW_RETURN(retval, " << endl
+         << t.name () << "_Servant (x.in ()," << endl
+         << "::Components::CCMHome::_nil ()," << endl
+         << "ins_name, 0, c)," << endl
+         << "0);" << endl
+         << "return retval;" << endl
+         << "}";
+    }
   };
 
   struct HomeEmitter : Traversal::Home, EmitterBase
@@ -3820,7 +3858,7 @@ namespace
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
          << "const char *ins_name," << endl
-         << "::CIAO::Session_Container *c)" << endl
+         << "::CIAO::Container_ptr c)" << endl
          << "  : ::CIAO::Home_Servant_Impl_Base (c)," << endl
          << "    ::CIAO::";
 
@@ -4053,7 +4091,7 @@ namespace
          << endl
          << "create" << name << "_Servant (" << endl
          << "::Components::HomeExecutorBase_ptr p," << endl
-         << "::CIAO::Session_Container *c," << endl
+         << "::CIAO::Container_ptr c," << endl
          << "const char *ins_name)" << endl
          << "{"
          << t.scoped_name ().scope_name () << "::CCM_"
@@ -4193,11 +4231,14 @@ ServantSourceEmitter::pre (TranslationUnit&)
   bool swapping = (swap_option == "upgradeable");
 
   os << "#include \"" << file_name << "\"" << endl
-     << "#include \"ciao/Cookies.h\"" << endl
-     << "#include \"ciao/Servant_Activator.h\"" << endl
-     << (swapping ? "#include \"ciao/Dynamic_Component_Activator.h\"\n" : "")
-     << "#include \"ciao/Port_Activator_T.h\"" << endl
+     << "#include \"ciao/Valuetype_Factories/Cookies.h\"" << endl
+     << "#include \"ciao/Containers/CIAO_Servant_ActivatorC.h\"" << endl
+     << (swapping ? "#include \"ciao/Servants/Swapping/Dynamic_Component_Activator.h\"\n" : "")
+     << "#include \"ciao/Servants/Port_Activator_T.h\"" << endl
+     << "#include \"ciao/Servants/CIAO_Port_ActivatorC.h\"" << endl
      << "#include \"tao/SystemException.h\"" << endl
+     << "#include \"tao/Valuetype/ValueFactory.h\"" << endl
+     << "#include \"tao/ORB_Core.h\"" << endl
      << "#include \"ace/SString.h\"" << endl << endl;
 }
 

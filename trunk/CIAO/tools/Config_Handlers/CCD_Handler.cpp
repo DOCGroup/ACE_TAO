@@ -22,18 +22,18 @@ namespace CIAO
       CIAO_TRACE("CCD_Handler::component_interface_descr");
       if (desc.UUID_p ())
         toconfig.UUID =
-          CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.UUID ().c_str ()));
+          CORBA::string_dup (desc.UUID ().c_str ());
 
       if (desc.label_p ())
         {
           toconfig.label =
-            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.label ().c_str ()));
+            CORBA::string_dup (desc.label ().c_str ());
         }
 
       if (desc.specificType_p ())
         {
           toconfig.specificType =
-            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.specificType ().c_str ()));
+            CORBA::string_dup (desc.specificType ().c_str ());
         }
 
       ComponentInterfaceDescription::supportedType_const_iterator
@@ -46,7 +46,7 @@ namespace CIAO
            s != end;
            ++s)
         {
-          toconfig.supportedType[pos++] = ACE_TEXT_ALWAYS_CHAR (s->c_str ());
+          toconfig.supportedType[pos++] = s->c_str ();
         }
 
       ComponentInterfaceDescription::idlFile_const_iterator
@@ -58,7 +58,7 @@ namespace CIAO
            sidl != eidl;
            ++sidl)
         {
-          toconfig.idlFile [pos++] = ACE_TEXT_ALWAYS_CHAR (sidl->c_str ());
+          toconfig.idlFile [pos++] = sidl->c_str ();
         }
 
       ComponentInterfaceDescription::configProperty_const_iterator pend =
@@ -71,7 +71,7 @@ namespace CIAO
            ++pstart)
         {
           Property_Handler::handle_property (*pstart,
-                                             toconfig.configProperty [pos++]);
+                         toconfig.configProperty [pos++]);
         }
 
       pos = 0;
@@ -105,7 +105,7 @@ namespace CIAO
             infoProp++)
         {
           Property_Handler::handle_property (*infoProp,
-                                             toconfig.infoProperty[pos]);
+                         toconfig.infoProperty[pos]);
         }
     }
 
@@ -117,9 +117,9 @@ namespace CIAO
       ComponentInterfaceDescription cid;
 
       //Load up the basic string members
-      XMLSchema::string< ACE_TCHAR > uuid (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
-      XMLSchema::string< ACE_TCHAR > label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
-      XMLSchema::string< ACE_TCHAR > specifict (ACE_TEXT_CHAR_TO_TCHAR (src.specificType.in ()));
+      XMLSchema::string< char > uuid ((src.UUID));
+      XMLSchema::string< char > label ((src.label));
+      XMLSchema::string< char > specifict ((src.specificType));
 
       //Then put them in the CID
       cid.UUID (uuid);
@@ -130,7 +130,7 @@ namespace CIAO
       ::CORBA::ULong total = src.supportedType.length ();
       for (size_t i = 0; i < total; ++i)
         {
-          XMLSchema::string< ACE_TCHAR > curr (ACE_TEXT_CHAR_TO_TCHAR (src.supportedType[i].in ()));
+          XMLSchema::string< char > curr ((src.supportedType[i]));
           cid.add_supportedType (curr);
         }
 
@@ -138,7 +138,7 @@ namespace CIAO
       total = src.idlFile.length ();
       for (size_t j = 0; j < total; ++j)
         {
-          XMLSchema::string< ACE_TCHAR > curr (ACE_TEXT_CHAR_TO_TCHAR (src.idlFile[j].in ()));
+          XMLSchema::string< char > curr ((src.idlFile[j]));
           cid.add_idlFile (curr);
         }
 

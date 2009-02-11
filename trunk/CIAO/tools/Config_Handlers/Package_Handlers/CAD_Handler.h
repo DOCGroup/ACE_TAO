@@ -10,7 +10,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Utils/XML_Helper.h"
+#include "XML_Typedefs.h"
 #include "DAnCE/Deployment/DeploymentC.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
 

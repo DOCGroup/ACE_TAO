@@ -1,24 +1,11 @@
 // -*- MPC -*-
 // $Id$
 
-project(NodeApplicationManager): ciao_server_dnc, ciao_deployment_svnt, dance_extension_stub, ciao_nodeapplication, ace_output {
-
-  sharedname   = NodeApplicationManager
-  after       += NodeManager_stub CIAO_TargetManager_stub
-  dynamicflags = CIAO_NAM_BUILD_DLL
+project: dance_lib, naming, dance_node_application, dance_deployment_svnt, dance_deployment_stub, dynamicinterface, ccm_componentserver_svnt, ciao_cs_client {
+  sharedname   = DAnCE_NodeApplicationManager
+  dynamicflags = NODEAPPLICATIONMANAGER_BUILD_DLL
 
   Source_Files {
     NodeApplicationManager_Impl.cpp
-    ImplementationInfo.cpp
-    Containers_Info_Map.cpp
-    URL_Parser.cpp
-  }
-
-  Header_Files {
-    NodeApplicationManager_Impl.h
-    ImplementationInfo.h
-    Containers_Info_Map.h
-    URL_Parser.h
-    CIAO_NAM_Export.h
   }
 }

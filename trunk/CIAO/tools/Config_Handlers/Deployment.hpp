@@ -58,8 +58,8 @@ namespace CIAO
     domain (xercesc::DOMDocument const*);
 
     XSC_XML_Handlers_Export
-    ::CIAO::Config_Handlers::DeploymentPlan
-    deploymentPlan (xercesc::DOMDocument const*);
+    ::CIAO::Config_Handlers::deploymentPlan
+    DeploymentPlan (xercesc::DOMDocument const*);
 
     XSC_XML_Handlers_Export
     ::CIAO::Config_Handlers::ImplementationArtifactDescription
@@ -121,7 +121,7 @@ namespace CIAO
 
     XSC_XML_Handlers_Export
     void
-    deploymentPlan (::CIAO::Config_Handlers::DeploymentPlan const&, xercesc::DOMDocument*);
+    DeploymentPlan (::CIAO::Config_Handlers::deploymentPlan const&, xercesc::DOMDocument*);
 
     XSC_XML_Handlers_Export
     void

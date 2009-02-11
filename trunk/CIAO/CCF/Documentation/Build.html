@@ -196,7 +196,9 @@ section.</p>
 <a href="http://www.boost.org/more/getting_started.html">Boost Building
 Instructions</a>. Please remember the install locations of the boost libraries
 because they will be needed to properly configure your environment for building
-CCF.<p>
+CCF.
+bjam --build-dir="c:\temp\boost2" --toolset=msvc-8.0 link=static/variant=debug/runtime-link=static --with-regex<p>
+
 
 <!--p>After you have successfully compiled necessary libraries in the boost
 distribution you need to do one more thing. Inside the boost distribution

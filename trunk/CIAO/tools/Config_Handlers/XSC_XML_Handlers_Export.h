@@ -9,10 +9,6 @@
 
 #include "ace/config-all.h"
 
-#if defined (ACE_AS_STATIC_LIBS) && !defined (XSC_XML_HANDLERS_HAS_DLL)
-#  define XSC_XML_HANDLERS_HAS_DLL 0
-#endif /* ACE_AS_STATIC_LIBS && XSC_XML_HANDLERS_HAS_DLL */
-
 #if !defined (XSC_XML_HANDLERS_HAS_DLL)
 #  define XSC_XML_HANDLERS_HAS_DLL 1
 #endif /* ! XSC_XML_HANDLERS_HAS_DLL */

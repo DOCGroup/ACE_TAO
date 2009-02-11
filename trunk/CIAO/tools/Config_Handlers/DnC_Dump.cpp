@@ -525,7 +525,7 @@ namespace Deployment
 
     dump ("requiredUUID", cpr.requiredUUID);
     dump ("requiredName", cpr.requiredName);
-    dump ("requiredType", cpr.requiredType);
+    dump ("requiredType", cpr.requiredType.specificType);
   }
 
   // SubcomponentInstantiationDescription
@@ -736,7 +736,7 @@ namespace Deployment
     dump ("UUID", pc.UUID);
     dump_sequence ("specializedConfig", pc.specializedConfig);
     dump_sequence ("basePackage", pc.basePackage);
-    dump_sequence ("reference", pc.reference);
+    dump_sequence ("reference", pc.referencedPackage);
     dump_sequence ("selectRequirement", pc.selectRequirement);
     dump_sequence ("configProperty", pc.configProperty);
   }
@@ -960,7 +960,20 @@ encoded with different type"));
                       temp));
         }
         break;
-
+        
+        case CORBA::tk_enum:
+        {
+/*          CORBA::Enum temp;
+          if (! (any >>= temp))
+            {
+              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected enum \
+encoded with different type"));
+              throw CORBA::INTERNAL ();
+            }
+*/          ACE_DEBUG ((LM_DEBUG, "%sAny value: some enum \n", Dump_Obj::indent ()));
+        }
+        break;
+        
       default:
         ACE_DEBUG ((LM_DEBUG, "Unknown type encoded in Any\n"));
         throw CORBA::INTERNAL ();
