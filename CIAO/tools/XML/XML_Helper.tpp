@@ -237,8 +237,8 @@ namespace CIAO
     
     template <typename Resolver, typename Error>
     bool 
-    XML_Helper<Resolver, Error>::write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc,
-                                            const ACE_TCHAR *file) const
+    XML_Helper<Resolver, Error>::write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *,
+                                            const ACE_TCHAR *) const
     {
       /*try
         {*/
