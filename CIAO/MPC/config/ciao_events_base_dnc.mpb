@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcslib, ciao_container_dnc, ciao_client_dnc {
+project : orbsvcslib, ccm_stub {
   libs     += CIAO_Events_Base
   after    += CIAO_Events_Base
 }

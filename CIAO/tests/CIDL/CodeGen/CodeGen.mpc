@@ -38,7 +38,7 @@ project(Basic_CodeGen_cidl_gen) : ciaocidldefaults, taoidldefaults {
   }
 }
 
-project(Basic_CodeGen_stub) : ciao_client_dnc {
+project(Basic_CodeGen_stub) : ccm_stub {
   avoids += ace_for_tao
   after += Basic_CodeGen_idl_gen Basic_stub
   libs  += Basic_stub
@@ -63,7 +63,7 @@ project(Basic_CodeGen_stub) : ciao_client_dnc {
   }
 }
 
-project(Basic_CodeGen_exec) : ciao_component_dnc {
+project(Basic_CodeGen_exec) : ciao_executor {
   avoids += ace_for_tao
   after   += Basic_CodeGen_cidl_gen Basic_CodeGen_stub
   sharedname = CodeGen_exec
@@ -91,7 +91,7 @@ project(Basic_CodeGen_exec) : ciao_component_dnc {
 }
 
 
-project(Basic_CodeGen_svnt) : ciao_servant_dnc {
+project(Basic_CodeGen_svnt) : ciao_servant {
   avoids += ace_for_tao
   after      += Basic_skel Basic_CodeGen_exec
   sharedname  = CodeGen_svnt

@@ -9,10 +9,6 @@
 
 #include "ace/config-all.h"
 
-#if defined (ACE_AS_STATIC_LIBS) && !defined (DYNANY_HANDLER_HAS_DLL)
-#  define DYNANY_HANDLER_HAS_DLL 0
-#endif /* ACE_AS_STATIC_LIBS && DYNANY_HANDLER_HAS_DLL */
-
 #if !defined (DYNANY_HANDLER_HAS_DLL)
 #  define DYNANY_HANDLER_HAS_DLL 1
 #endif /* ! DYNANY_HANDLER_HAS_DLL */

@@ -39,7 +39,7 @@ namespace CIAO
     domain (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == ACE_TEXT ("domain"))
+      if (e.name () == "domain")
       {
         ::CIAO::Config_Handlers::Domain r (e);
         return r;
@@ -51,13 +51,13 @@ namespace CIAO
       }
     }
 
-    ::CIAO::Config_Handlers::DeploymentPlan
-    deploymentPlan (xercesc::DOMDocument const* d)
+    ::CIAO::Config_Handlers::deploymentPlan
+    DeploymentPlan (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == ACE_TEXT ("deploymentPlan"))
+      if (e.name () == "DeploymentPlan")
       {
-        ::CIAO::Config_Handlers::DeploymentPlan r (e);
+        ::CIAO::Config_Handlers::deploymentPlan r (e);
         return r;
       }
 
@@ -71,7 +71,7 @@ namespace CIAO
     implementationArtifactDescription (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == ACE_TEXT ("implementationArtifactDescription"))
+      if (e.name () == "implementationArtifactDescription")
       {
         ::CIAO::Config_Handlers::ImplementationArtifactDescription r (e);
         return r;
@@ -87,7 +87,7 @@ namespace CIAO
     componentInterfaceDescription (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == ACE_TEXT ("componentInterfaceDescription"))
+      if (e.name () == "componentInterfaceDescription")
       {
         ::CIAO::Config_Handlers::ComponentInterfaceDescription r (e);
         return r;
@@ -103,7 +103,7 @@ namespace CIAO
     componentImplementationDescription (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == ACE_TEXT ("componentImplementationDescription"))
+      if (e.name () == "componentImplementationDescription")
       {
         ::CIAO::Config_Handlers::ComponentImplementationDescription r (e);
         return r;
@@ -119,7 +119,7 @@ namespace CIAO
     componentPackageDescription (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == ACE_TEXT ("componentPackageDescription"))
+      if (e.name () == "componentPackageDescription")
       {
         ::CIAO::Config_Handlers::ComponentPackageDescription r (e);
         return r;
@@ -135,7 +135,7 @@ namespace CIAO
     packageConfiguration (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == ACE_TEXT ("packageConfiguration"))
+      if (e.name () == "packageConfiguration")
       {
         ::CIAO::Config_Handlers::PackageConfiguration r (e);
         return r;
@@ -151,7 +151,7 @@ namespace CIAO
     topLevelPackageDescription (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == ACE_TEXT ("topLevelPackageDescription"))
+      if (e.name () == "topLevelPackageDescription")
       {
         ::CIAO::Config_Handlers::TopLevelPackageDescription r (e);
         return r;
@@ -206,7 +206,7 @@ namespace CIAO
     domain (::CIAO::Config_Handlers::Domain const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != ACE_TEXT ("domain"))
+      if (e.name () != "domain")
       {
         throw 1;
       }
@@ -229,12 +229,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ValueType,
       virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
       virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AliasType,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::DataValue,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::float_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::double_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedByte, ACE_TCHAR >,
@@ -256,15 +257,15 @@ namespace CIAO
     }
 
     void
-    deploymentPlan (::CIAO::Config_Handlers::DeploymentPlan const& s, xercesc::DOMDocument* d)
+    DeploymentPlan (::CIAO::Config_Handlers::deploymentPlan const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != ACE_TEXT ("deploymentPlan"))
+      if (e.name () != "DeploymentPlan")
       {
         throw 1;
       }
 
-      struct W : virtual ::CIAO::Config_Handlers::Writer::DeploymentPlan,
+      struct W : virtual ::CIAO::Config_Handlers::Writer::deploymentPlan,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::ComponentInterfaceDescription,
       virtual ::CIAO::Config_Handlers::Writer::Property,
@@ -277,12 +278,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ValueType,
       virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
       virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AliasType,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::DataValue,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::float_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::double_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
@@ -294,6 +296,7 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::CCMComponentPortKind,
       virtual ::CIAO::Config_Handlers::Writer::ComponentPropertyDescription,
       virtual ::CIAO::Config_Handlers::Writer::MonolithicDeploymentDescription,
+      virtual ::CIAO::Config_Handlers::Writer::IdRef,
       virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
       virtual ::CIAO::Config_Handlers::Writer::Requirement,
       virtual ::CIAO::Config_Handlers::Writer::InstanceDeploymentDescription,
@@ -307,6 +310,8 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ImplementationDependency,
       virtual ::CIAO::Config_Handlers::Writer::ArtifactDeploymentDescription,
       virtual ::CIAO::Config_Handlers::Writer::ResourceDeploymentDescription,
+      virtual ::CIAO::Config_Handlers::Writer::PlanLocality,
+      virtual ::CIAO::Config_Handlers::Writer::PlanLocalityKind,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         W (::XSCRT::XML::Element< ACE_TCHAR >& e)
@@ -323,7 +328,7 @@ namespace CIAO
     implementationArtifactDescription (::CIAO::Config_Handlers::ImplementationArtifactDescription const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != ACE_TEXT ("implementationArtifactDescription"))
+      if (e.name () != "implementationArtifactDescription")
       {
         throw 1;
       }
@@ -341,12 +346,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ValueType,
       virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
       virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AliasType,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::DataValue,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::float_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::double_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
@@ -371,7 +377,7 @@ namespace CIAO
     componentInterfaceDescription (::CIAO::Config_Handlers::ComponentInterfaceDescription const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != ACE_TEXT ("componentInterfaceDescription"))
+      if (e.name () != "componentInterfaceDescription")
       {
         throw 1;
       }
@@ -388,12 +394,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ValueType,
       virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
       virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AliasType,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::DataValue,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::float_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::double_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
@@ -420,7 +427,7 @@ namespace CIAO
     componentImplementationDescription (::CIAO::Config_Handlers::ComponentImplementationDescription const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != ACE_TEXT ("componentImplementationDescription"))
+      if (e.name () != "componentImplementationDescription")
       {
         throw 1;
       }
@@ -438,12 +445,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ValueType,
       virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
       virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AliasType,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::DataValue,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::float_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::double_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
@@ -464,6 +472,7 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::Requirement,
       virtual ::CIAO::Config_Handlers::Writer::AssemblyConnectionDescription,
       virtual ::CIAO::Config_Handlers::Writer::SubcomponentPortEndpoint,
+      virtual ::CIAO::Config_Handlers::Writer::IdRef,
       virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
       virtual ::CIAO::Config_Handlers::Writer::ComponentExternalPortEndpoint,
       virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,
@@ -494,7 +503,7 @@ namespace CIAO
     componentPackageDescription (::CIAO::Config_Handlers::ComponentPackageDescription const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != ACE_TEXT ("componentPackageDescription"))
+      if (e.name () != "componentPackageDescription")
       {
         throw 1;
       }
@@ -512,12 +521,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ValueType,
       virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
       virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AliasType,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::DataValue,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::float_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::double_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
@@ -538,6 +548,7 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::Requirement,
       virtual ::CIAO::Config_Handlers::Writer::AssemblyConnectionDescription,
       virtual ::CIAO::Config_Handlers::Writer::SubcomponentPortEndpoint,
+      virtual ::CIAO::Config_Handlers::Writer::IdRef,
       virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
       virtual ::CIAO::Config_Handlers::Writer::ComponentExternalPortEndpoint,
       virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,
@@ -568,7 +579,7 @@ namespace CIAO
     packageConfiguration (::CIAO::Config_Handlers::PackageConfiguration const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != ACE_TEXT ("packageConfiguration"))
+      if (e.name () != "packageConfiguration")
       {
         throw 1;
       }
@@ -587,12 +598,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ValueType,
       virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
       virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AliasType,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::DataValue,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::float_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::double_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
@@ -612,6 +624,7 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ComponentPackageImport,
       virtual ::CIAO::Config_Handlers::Writer::AssemblyConnectionDescription,
       virtual ::CIAO::Config_Handlers::Writer::SubcomponentPortEndpoint,
+      virtual ::CIAO::Config_Handlers::Writer::IdRef,
       virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
       virtual ::CIAO::Config_Handlers::Writer::ComponentExternalPortEndpoint,
       virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,
@@ -642,7 +655,7 @@ namespace CIAO
     topLevelPackageDescription (::CIAO::Config_Handlers::TopLevelPackageDescription const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != ACE_TEXT ("topLevelPackageDescription"))
+      if (e.name () != "topLevelPackageDescription")
       {
         throw 1;
       }
@@ -662,12 +675,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ValueType,
       virtual ::CIAO::Config_Handlers::Writer::ValueMemberType,
       virtual ::CIAO::Config_Handlers::Writer::SequenceType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AliasType,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::DataValue,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::short_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::float_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::double_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
@@ -687,6 +701,7 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ComponentPackageImport,
       virtual ::CIAO::Config_Handlers::Writer::AssemblyConnectionDescription,
       virtual ::CIAO::Config_Handlers::Writer::SubcomponentPortEndpoint,
+      virtual ::CIAO::Config_Handlers::Writer::IdRef,
       virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
       virtual ::CIAO::Config_Handlers::Writer::ComponentExternalPortEndpoint,
       virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,

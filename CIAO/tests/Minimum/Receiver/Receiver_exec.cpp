@@ -57,13 +57,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ciao_preactivate ()
-  {
-    // Your code here.
-  }
-
-  void
-  Receiver_exec_i::ciao_postactivate ()
+  Receiver_exec_i::configuration_complete ()
   {
     // Your code here.
   }

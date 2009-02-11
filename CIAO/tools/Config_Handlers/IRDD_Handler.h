@@ -48,23 +48,24 @@ namespace CIAO
        * corresponding CORBA IDL Any type.
        *
        */
-      class Config_Handlers_Export IRDD_Handler 
-      {
+      class Config_Handlers_Export IRDD_Handler {
       public:
-        IRDD_Handler (void);
-        virtual ~IRDD_Handler (void);
+    IRDD_Handler (void);
+    virtual ~IRDD_Handler (void);
 
-        static void handle_irdd (const InstanceResourceDeploymentDescription& desc,
-                                 Deployment::InstanceResourceDeploymentDescription& toconfig);
+    static void handle_irdd (const InstanceResourceDeploymentDescription& desc,
+                            Deployment::InstanceResourceDeploymentDescription& toconfig)
+      /*throw (Config_Error)*/;
 
-        static InstanceResourceDeploymentDescription
-        instance_resource_deployment_descr (const Deployment::InstanceResourceDeploymentDescription& src);
+    static InstanceResourceDeploymentDescription
+      instance_resource_deployment_descr (const Deployment::InstanceResourceDeploymentDescription& src)
+      /*throw (Config_Error)*/;
       };
 
       typedef Sequence_Handler < InstanceResourceDeploymentDescription,
-                                 ::Deployment::InstanceResourceDeploymentDescriptions,
-                                 ::Deployment::InstanceResourceDeploymentDescription,
-                                 IRDD_Handler::handle_irdd > IRDD_Functor;
+                 ::Deployment::InstanceResourceDeploymentDescriptions,
+                 ::Deployment::InstanceResourceDeploymentDescription,
+                 IRDD_Handler::handle_irdd > IRDD_Functor;
     }
 }
 

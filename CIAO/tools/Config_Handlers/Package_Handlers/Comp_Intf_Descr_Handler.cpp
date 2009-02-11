@@ -1,7 +1,7 @@
 // $Id$
 #include "Comp_Intf_Descr_Handler.h"
 
-#include "Utils/XML_Helper.h"
+#include "XML_Typedefs.h"
 #include "Utils/Exceptions.h"
 #include "Utils/Functors.h"
 #include "DataType_Handler.h"
@@ -23,7 +23,7 @@ namespace CIAO
           {
             CIAO_TRACE ("Comp_Prop_Handler::get_cpd");
 
-            toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
+            toconfig.name = desc.name ().c_str ();
             DataType_Handler::data_type (desc.type (),
                                          toconfig.type);
           }
@@ -33,7 +33,7 @@ namespace CIAO
           {
             CIAO_TRACE ("Comp_Prop_Handler::get_cpd - reverse");
 
-            return ComponentPropertyDescription (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
+            return ComponentPropertyDescription (src.name.in (),
                                                  DataType_Handler::data_type (src.type));
           }
 
@@ -57,22 +57,21 @@ namespace CIAO
 
         if (desc.href_p ())
           {
-            safe_cid.reset (Comp_Intf_Descr_Handler::resolve_cid (
-              ACE_TEXT_ALWAYS_CHAR (desc.href ().c_str ())));
+            safe_cid.reset (Comp_Intf_Descr_Handler::resolve_cid (desc.href ().c_str ()));
             cid = safe_cid.get ();
           }
         else
           cid = &desc;
 
         if (cid->label_p ())
-          toconfig.label = ACE_TEXT_ALWAYS_CHAR (cid->label ().c_str ());
+          toconfig.label = cid->label ().c_str ();
 
         if (cid->UUID_p ())
-          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (cid->UUID ().c_str ());
+          toconfig.UUID = cid->UUID ().c_str ();
 
         // MAJO: SpecificType should be required.
         if (cid->specificType_p ())
-          toconfig.specificType = ACE_TEXT_ALWAYS_CHAR (cid->specificType ().c_str ());
+          toconfig.specificType = cid->specificType ().c_str ();
 
         toconfig.supportedType.length (cid->count_supportedType ());
         std::for_each (cid->begin_supportedType (),
@@ -95,9 +94,9 @@ namespace CIAO
                        CIAO::Config_Handlers::CPD_Functor (toconfig.port));
 
         toconfig.property.length (cid->count_property ());
-        SEQ_HAND_GCC_BUG_WORKAROUND (Comp_Prop_Handler::handle_cpd,
-                                     cid->begin_property (),
-                                     toconfig.property);
+    SEQ_HAND_GCC_BUG_WORKAROUND (Comp_Prop_Handler::handle_cpd,
+                     cid->begin_property (),
+                     toconfig.property);
         std::for_each (cid->begin_property (),
                        cid->end_property (),
                        Comp_Prop_Functor (toconfig.property));
@@ -116,15 +115,15 @@ namespace CIAO
         CIAO_TRACE ("Comp_Intf_Descr_Handler::comp_intf_descr - reverse");
         ComponentInterfaceDescription retval;
 
-        retval.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
-        retval.UUID (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
-        retval.specificType (ACE_TEXT_CHAR_TO_TCHAR (src.specificType.in ()));
+        retval.label (src.label.in ());
+        retval.UUID (src.UUID.in ());
+        retval.specificType (src.specificType.in ());
 
         for (CORBA::ULong i = 0; i < src.supportedType.length (); ++i)
-          retval.add_supportedType (ACE_TEXT_CHAR_TO_TCHAR (src.supportedType[i].in ()));
+          retval.add_supportedType (src.supportedType[i].in ());
 
         for (CORBA::ULong i = 0; i < src.idlFile.length (); ++i)
-          retval.add_idlFile (ACE_TEXT_CHAR_TO_TCHAR (src.idlFile[i].in ()));
+          retval.add_idlFile (src.idlFile[i].in ());
 
         for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
           retval.add_configProperty (
@@ -149,7 +148,7 @@ namespace CIAO
       {
         CIAO_TRACE ("Comp_Intf_Descr_Handler::resolve_cid");
 
-        xercesc::DOMDocument *dom = XML_HELPER->create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
+        xercesc::DOMDocument *dom = XML_Helper::XML_HELPER.create_dom (uri);
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for Component Interface Description.");

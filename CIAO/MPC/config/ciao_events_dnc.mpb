@@ -5,8 +5,7 @@ project : ifr_client \
           , valuetype \
           , pi \
           , codecfactory \
-          , ciao_container_dnc \
-          , ciao_client_dnc \
+	  , ccm_stub \
           , ciao_rtevent_dnc \
           , naming \
 {

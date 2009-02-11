@@ -46,13 +46,10 @@ namespace MyImpl
     set_session_context (Components::SessionContext_ptr ctx);
 
     virtual void
-    ciao_preactivate ();
+    configuration_complete ();
 
     virtual void
     ccm_activate ();
-
-    virtual void
-    ciao_postactivate ();
 
     virtual void
     ccm_passivate ();
@@ -63,6 +60,9 @@ namespace MyImpl
     /// Copmponent specific context
     BasicSP::CCM_BMDisplay_Context_var context_;
   };
+
+  extern "C" BMDISPLAY_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_BasicSP_BMDisplay_Impl (void);
 
   /**
    * @class BMDisplayHome_exec_impl

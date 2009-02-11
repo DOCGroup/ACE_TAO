@@ -34,7 +34,6 @@
 #undef interface
 #endif
 
-
 namespace CCF
 {
   namespace IDL2

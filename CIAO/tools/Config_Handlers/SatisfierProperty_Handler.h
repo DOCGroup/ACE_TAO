@@ -29,20 +29,21 @@ namespace Deployment
 namespace CIAO
 {
   namespace Config_Handlers
-  {
-    class SatisfierProperty;
+    {
+      class SatisfierProperty;
 
-    /*
-     * @class SatisfierProperty_Handler
-     *
-     * @brief Handler class for <CCMComponentPortDescription> types.
-     *
-     * This class defines handler methods to map values from
-     * XSC objects, parsed from the descriptor files, to the
-     * corresponding CORBA IDL type for the schema element.
-     */
+      /*
+       * @class SatisfierProperty_Handler
+       *
+       * @brief Handler class for <CCMComponentPortDescription> types.
+       *
+       * This class defines handler methods to map values from
+       * XSC objects, parsed from the descriptor files, to the
+       * corresponding CORBA IDL type for the schema element.
+       *
+       */
 
-    class Config_Handlers_Common_Export SatisfierProperty_Handler
+      class Config_Handlers_Common_Export SatisfierProperty_Handler
     {
     public:
       SatisfierProperty_Handler (void);
@@ -52,17 +53,16 @@ namespace CIAO
       /// <CIAO::Config_Handlers::SatisfierProperty> to the CORBA IDL type
       /// <Deployment::SatisfierProperty>.
       static void handle_sat_property (const SatisfierProperty& desc,
-                                       ::Deployment::SatisfierProperty& toconfig);
-      static SatisfierProperty get_sat_property (
-        const ::Deployment::SatisfierProperty& src);
+                       ::Deployment::SatisfierProperty& toconfig);
+      static SatisfierProperty get_sat_property (const ::Deployment::SatisfierProperty& src);
     };
 
-    typedef Sequence_Handler < SatisfierProperty,
-                               ::Deployment::SatisfierProperties,
-                               ::Deployment::SatisfierProperty,
-                               SatisfierProperty_Handler::handle_sat_property>
-      SatisfierProperty_Functor;
-  }
+      typedef Sequence_Handler < SatisfierProperty,
+    ::Deployment::SatisfierProperties,
+    ::Deployment::SatisfierProperty,
+    SatisfierProperty_Handler::handle_sat_property> SatisfierProperty_Functor;
+
+    }
 }
 
 #include /**/ "ace/post.h"

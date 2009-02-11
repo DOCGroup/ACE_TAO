@@ -4,7 +4,11 @@
 
 #include "DynAny_Handler.h"
 #include "DynEnum_Handler.h"
+#include "DynSequence_Handler.h"
+#include "DynStruct_Handler.h"
+#include "DynAlias_Handler.h"
 #include "Basic_Deployment_Data.hpp"
+#include "Common.h"
 
 namespace CIAO
 {
@@ -25,7 +29,7 @@ namespace CIAO
       if (CORBA::is_nil (daf_.in ()))
         {
           ACE_ERROR ((LM_ERROR, "Unable to narrow Dynamic Any factory\n"));
-          throw 1;
+          throw Config_Error ("", "Unable to narrow DynAny factory");
         }
     }
 
@@ -46,10 +50,14 @@ namespace CIAO
     }
 
     DynamicAny::DynAny_ptr
-    DynAny_Handler::extract_into_dynany (const DataType& type,
-                                         const DataValue& value)
+    DynAny_Handler::extract_into_dynany (const DataType &type,
+                                         const DataValue &value,
+                                         CORBA::TypeCode_ptr req_tc)
     {
       DynamicAny::DynAny_var retval;
+      
+      if (req_tc)
+        retval = this->daf_->create_dyn_any_from_type_code (req_tc);
 
       switch (type.kind ().integral ())
         {
@@ -57,92 +65,93 @@ namespace CIAO
         case TCKind::tk_null_l:
         case TCKind::tk_void_l:
           ACE_ERROR ((LM_WARNING, "I don't know how to handle null or void types\n"));
-
+              
         case TCKind::tk_short_l:
-          retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_short);
+          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_short);
           retval->insert_short (CORBA::Short (static_cast < ::XMLSchema::short_ const & > (*value.begin_short ())));
           break;
-
+              
         case TCKind::tk_long_l:
-          retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_long);
+          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_long);
           retval->insert_long (CORBA::Long (static_cast < ::XMLSchema::int_ const& > (*value.begin_long ())));
           break;
 
         case TCKind::tk_ushort_l:
-          retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_ushort);
+          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_ushort);
           retval->insert_ushort (CORBA::UShort (static_cast< ::XMLSchema::unsignedShort const & > (*value.begin_ushort ())));
           break;
 
         case TCKind::tk_ulong_l:
-          retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_ulong);
+          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_ulong);
           retval->insert_ulong (CORBA::ULong (static_cast < ::XMLSchema::unsignedInt const& > (*value.begin_ulong ())));
           break;
 
         case TCKind::tk_float_l:
-          retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_float);
+          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_float);
           retval->insert_float (CORBA::Float (*value.begin_float ()));
           break;
 
         case TCKind::tk_double_l:
-          retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_double);
+          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_double);
           retval->insert_double (CORBA::Double (*value.begin_double ()));
           break;
 
         case TCKind::tk_boolean_l:
-          retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_boolean);
+          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_boolean);
           retval->insert_boolean (static_cast < ::XMLSchema::boolean const& > (*value.begin_boolean ()));
           break;
 
         case TCKind::tk_char_l:
-          retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_char);
+          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_char);
           retval->insert_char (CORBA::Char (*value.begin_string ()->c_str ()));
           break;
 
         case TCKind::tk_octet_l:
-          retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_octet);
+          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_octet);
           retval->insert_octet (static_cast <const unsigned char &> (*value.begin_octet ()));
           break;
 
         case TCKind::tk_string_l:
-          retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_string);
-          retval->insert_string (ACE_TEXT_ALWAYS_CHAR (value.begin_string ()->c_str ()));
+          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_string);
+          retval->insert_string (value.begin_string ()->c_str ());
           break;
 
         case TCKind::tk_longlong_l:
-          retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_longlong);
+          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_longlong);
           retval->insert_longlong (CORBA::LongLong (static_cast < ::XMLSchema::long_ const& > (*value.begin_longlong ())));
           break;
 
         case TCKind::tk_ulonglong_l:
-          retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_ulonglong);
+          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_ulonglong);
           retval->insert_ulonglong (CORBA::ULongLong (static_cast < ::XMLSchema::unsignedLong const& > (*value.begin_ulonglong ())));
           break;
 
-         case TCKind::tk_longdouble_l:
-           break;
-
         case TCKind::tk_wchar_l:
-          retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_wchar);
+          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_wchar);
           retval->insert_wchar (CORBA::WChar (*value.begin_string ()->c_str ()));
           break;
 
-        case TCKind::tk_wstring_l:
-          break;
-
         case TCKind::tk_enum_l:
-          ACE_ERROR ((LM_ERROR, "Preparing to extract into enum\n"));
-          return DynEnum_Handler::extract_into_dynany (type, value);
+          return DynEnum_Handler::extract_into_dynany (type, value, req_tc);
+          
+        case TCKind::tk_sequence_l:
+          return DynSequence_Handler::extract_into_dynany (type, value, req_tc);
+          
+        case TCKind::tk_struct_l:
+          return DynStruct_Handler::extract_into_dynany (type, value, req_tc);
 
+        case TCKind::tk_alias_l:
+          return DynAlias_Handler::extract_into_dynany (type, value, req_tc);
+
+        case TCKind::tk_longdouble_l:
+        case TCKind::tk_wstring_l:
         case TCKind::tk_wfixed_l:
         case TCKind::tk_any_l:
         case TCKind::tk_TypeCode_l:
         case TCKind::tk_Principal_l:
         case TCKind::tk_objref_l:
-        case TCKind::tk_struct_l:
         case TCKind::tk_union_l:
-        case TCKind::tk_sequence_l:
         case TCKind::tk_array_l:
-        case TCKind::tk_alias_l:
         case TCKind::tk_except_l:
         case TCKind::tk_value_l:
         case TCKind::tk_value_box_l:
@@ -153,7 +162,7 @@ namespace CIAO
         case TCKind::tk_home_l:
         case TCKind::tk_event_l:
           ACE_ERROR ((LM_ERROR, "Type not supported\n"));
-          throw 1;
+          throw Config_Error ("", "Type not supported");
         }
 
       return retval._retn ();
@@ -201,11 +210,8 @@ namespace CIAO
           return Any (TCKind::tk_octet, val);
 
         case CORBA::tk_string:
-          {
-            CORBA::String_var owner = dyn->get_string ();
-            val.add_string (ACE_TEXT_CHAR_TO_TCHAR (owner.in ()));
-            return Any (TCKind::tk_string, val);
-          }
+          val.add_string (dyn->get_string ());
+          return Any (TCKind::tk_string, val);
 
         case CORBA::tk_longlong:
           val.add_longlong (dyn->get_longlong ());
@@ -235,9 +241,135 @@ namespace CIAO
         case ::CORBA::tk_null:
         default:
           ACE_ERROR ((LM_ERROR, "DynAny_Handler: I have no idea how to perform a referse mapping.\n"));
-          throw 1;
+          throw Config_Error ("", "reverse mapping for this type not supported");
         }
+    }
+    
+    CORBA::TypeCode_ptr 
+    DynAny_Handler::create_typecode (const DataType &type)
+    {
+      
+      switch (type.kind ().integral ())
+        {
+          // ========== BASIC TYPES
+        case TCKind::tk_null_l:
+        case TCKind::tk_void_l:
+          ACE_ERROR ((LM_WARNING, "I don't know how to handle null or void types\n"));
+          throw Config_Error ("", "Null or void types not supported");
+          break;
 
+        case TCKind::tk_short_l:
+          return CORBA::_tc_short;
+          break;
+
+        case TCKind::tk_long_l:
+          return CORBA::_tc_long;
+          break;
+
+        case TCKind::tk_ushort_l:
+          return CORBA::_tc_ushort;
+          break;
+
+        case TCKind::tk_ulong_l:
+          return CORBA::_tc_ulong;
+          break;
+
+        case TCKind::tk_float_l:
+          return CORBA::_tc_float;
+          break;
+
+        case TCKind::tk_double_l:
+          return CORBA::_tc_double;
+          break;
+
+        case TCKind::tk_boolean_l:
+          return CORBA::_tc_boolean;
+          break;
+
+        case TCKind::tk_char_l:
+          return CORBA::_tc_char;
+          break;
+
+        case TCKind::tk_octet_l:
+          return CORBA::_tc_octet;
+          break;
+
+        case TCKind::tk_string_l:
+          return CORBA::_tc_string;
+          break;
+
+        case TCKind::tk_longlong_l:
+          return CORBA::_tc_longlong;
+          break;
+
+        case TCKind::tk_ulonglong_l:
+          return CORBA::_tc_ulonglong;
+          break;
+
+        case TCKind::tk_longdouble_l:
+          break;
+
+        case TCKind::tk_wchar_l:
+          return CORBA::_tc_wchar;
+          break;
+
+        case TCKind::tk_wstring_l:
+          break;
+
+        case TCKind::tk_enum_l:
+          return DynEnum_Handler::create_typecode (type);
+          
+        case TCKind::tk_struct_l:
+          return DynStruct_Handler::create_typecode (type);
+
+        case TCKind::tk_sequence_l:
+          return DynSequence_Handler::create_typecode (type);
+
+        case TCKind::tk_alias_l:
+          return DynAlias_Handler::create_typecode (type);
+
+        case TCKind::tk_wfixed_l:
+        case TCKind::tk_any_l:
+        case TCKind::tk_TypeCode_l:
+        case TCKind::tk_Principal_l:
+        case TCKind::tk_objref_l:
+        case TCKind::tk_union_l:
+        case TCKind::tk_array_l:
+        case TCKind::tk_except_l:
+        case TCKind::tk_value_l:
+        case TCKind::tk_value_box_l:
+        case TCKind::tk_native_l:
+        case TCKind::tk_abstract_interface_l:
+        case TCKind::tk_local_interface_l:
+        case TCKind::tk_component_l:
+        case TCKind::tk_home_l:
+        case TCKind::tk_event_l:
+          ACE_ERROR ((LM_ERROR, "Type not supported\n"));
+          throw Config_Error ("", "Type not supported");
+        }
+      
+      return 0;
+    }
+    
+    void 
+    DynAny_Handler::register_typecode (const std::string typeID,
+                                       CORBA::TypeCode_ptr tc)
+    {
+      this->typecode_map_[typeID] = tc;
+    }
+    
+    
+    CORBA::TypeCode_ptr
+    DynAny_Handler::get_typecode (const std::string typeID)
+    {
+      try
+        {
+          return this->typecode_map_ [typeID];
+        }
+      catch (...)
+        {
+          return 0;
+        }
     }
   }
 }

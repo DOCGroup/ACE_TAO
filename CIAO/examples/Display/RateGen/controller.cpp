@@ -12,7 +12,7 @@
  * RateGen.
  */
 
-const char *rategen_ior_ = 0;
+const ACE_TCHAR *rategen_ior_ = 0;
 int rate = 2;
 int turn_on = 1;
 
@@ -55,7 +55,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
   if (rategen_ior_ == 0)
     {
-      rategen_ior_ = "file://RateGen.ior";
+      rategen_ior_ = ACE_TEXT("file://RateGen.ior");
     }
 
   if (rate == 0)

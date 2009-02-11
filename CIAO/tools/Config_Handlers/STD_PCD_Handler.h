@@ -12,7 +12,6 @@
 #define CIAO_CONFIG_HANDLERS_STD_PCD_HANDLER_H
 
 #include /**/ "ace/pre.h"
-#include "Utils/XML_Helper.h"
 
 #include "Config_Handlers_Export.h"
 
@@ -45,8 +44,7 @@ namespace CIAO
     {
 
     public:
-      STD_PCD_Handler (XML_Helper *xml_helper)
-        :xml_helper_ (xml_helper)
+      STD_PCD_Handler ()
       {
       }
 
@@ -65,11 +63,9 @@ namespace CIAO
     private:
       // Disable the default constructor
       STD_PCD_Handler ()
-        :xml_helper_ (0)
       {
       }
 
-      XML_Helper *xml_helper_;
     };
  }
 }

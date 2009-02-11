@@ -2,7 +2,7 @@
 // $Id$
 //
 #include "LatencyTest.h"
-#include "CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 
 LatencyTest_Impl::LatencyTest_Impl (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -13,8 +13,7 @@ LatencyTest_Impl::LatencyTest_Impl (CORBA::ORB_ptr orb)
 CORBA::Long
 LatencyTest_Impl::makeCall (CORBA::Long send_time)
 {
-  if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "Sending Time back \n"));
+  CIAO_DEBUG ((LM_DEBUG, CLINFO"Sending Time back \n"));
 
   return send_time;
 }

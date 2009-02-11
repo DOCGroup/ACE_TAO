@@ -48,9 +48,9 @@ namespace CIAO
           if ((*iter).id_p ())
           {
             ACE_CString cstr ((*iter).id ().c_str ());
-
-            STD_CID_Handler::IDREF.bind_ref (cstr,len);
-          }
+            
+        STD_CID_Handler::IDREF.bind_ref (cstr,len);
+      }
 
           if (!this->xml_helper_->is_initialized ())
             return false;
@@ -103,8 +103,8 @@ namespace CIAO
               (*ep_iter).portName ().c_str ();
 
             CORBA::ULong tmp = 0;
-            STD_CID_Handler::IDREF.find_ref (
-              ACE_CString ((((*ep_iter).instance ()).id ()).c_str ()), tmp);
+        STD_CID_Handler::IDREF.find_ref (ACE_CString ((((*ep_iter).instance ()).id ()).c_str ()),
+                         tmp);
             CORBA::ULong ref = tmp;
             idl_cad.connection[conn_len].internalEndpoint [endp_len].instanceRef = ref;
           }

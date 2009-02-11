@@ -1,0 +1,25 @@
+// $Id$
+
+#if !defined (CCM_ENUMERATION_IDL)
+#define CCM_ENUMERATION_IDL
+
+#include "ccm/CCM_Object.idl"
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  /// @@ Enumeration and DefaultEnumeration are only for EJB to CCM
+  /// mapping?  At any rate, we should be able to skip them for now.
+  abstract valuetype Enumeration
+  {
+    boolean has_more_elements();
+    CCMObject next_element();
+  };
+
+  valuetype DefaultEnumeration : Enumeration
+  {
+    private CCMObjectSeq objects;
+  };
+};
+#endif /* CCM_ENUMERATION_IDL */

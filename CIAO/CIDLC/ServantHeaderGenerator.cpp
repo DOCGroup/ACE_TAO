@@ -441,7 +441,7 @@ namespace
 
       os << t.name () << "_Context (" << endl
          << "::Components::CCMHome_ptr h," << endl
-         << "::CIAO::Session_Container *c," << endl
+         << "::CIAO::Container_ptr c," << endl
          << t.name () << "_Servant *sv);" << endl;
 
       os << "virtual ~" << t.name () << "_Context (void);"
@@ -887,7 +887,7 @@ namespace
          << "::Components::CCMHome_ptr h," << endl
          << "const char *ins_name," << endl
          << "::CIAO::Home_Servant_Impl_Base *hs," << endl
-         << "::CIAO::Session_Container *c);" << endl;
+         << "::CIAO::Container_ptr c);" << endl;
 
       os << "virtual ~" << t.name () << "_Servant (void);" << endl;
 
@@ -1082,10 +1082,28 @@ namespace
     }
 
     virtual void
-    post (Type&)
+    post (Type &t)
     {
       // Component servant class closer.
       os << "};";
+      
+      std::string name;
+      
+      // We need to escape C++ keywords before flattening the name.
+      //
+      {
+        std::ostringstream ostr;
+        ostr.pword (name_printer_index) = os.pword (name_printer_index);
+        ostr << t.scoped_name ();
+        name = regex::perl_s (ostr.str (), "/::/_/");
+      }
+
+      os << "extern \"C\" " << ctx.export_macro ()
+         << " ::PortableServer::Servant" << endl
+         << "create" << name << "_Servant (" << endl
+         << "::Components::EnterpriseComponent_ptr p," << endl
+         << "CIAO::Container_ptr c," << endl
+         << "const char *ins_name);" << endl;
     }
   };
 
@@ -1132,7 +1150,7 @@ namespace
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
          << "const char *ins_name," << endl
-         << "::CIAO::Session_Container *c);" << endl;
+         << "::CIAO::Container_ptr c);" << endl;
 
       os << "virtual ~" << t.name () << "_Servant (void);" << endl;
 
@@ -1342,7 +1360,7 @@ namespace
          << " ::PortableServer::Servant" << endl
          << "create" << name << "_Servant (" << endl
          << "::Components::HomeExecutorBase_ptr p," << endl
-         << "CIAO::Session_Container *c," << endl
+         << "CIAO::Container_ptr c," << endl
          << "const char *ins_name);" << endl;
     }
 
@@ -1538,16 +1556,16 @@ ServantHeaderEmitter::pre (TranslationUnit&)
   string swap_option = cl_.get_value ("custom-container", "");
   bool swapping = (swap_option == "upgradeable");
 
-  os << "#include \"ciao/"
-     << (swapping ? "Swapping_Container.h" : "Session_Container.h")
+  os << "#include \"ciao/Containers/"
+     << (swapping ? "Swapping/Swapping_Container.h" : "Container_BaseC.h")
      << "\"" << endl
-     << "#include \"ciao/"
-     << (swapping ? "Upgradeable_Context_Impl_T.h"
+     << "#include \"ciao/Contexts/"
+     << (swapping ? "Swapping/Upgradeable_Context_Impl_T.h"
                   : "Context_Impl_T.h")
      << "\"" << endl
-     << "#include \"ciao/Servant_Impl_T.h\"" << endl
-     << "#include \"ciao/"
-     << (swapping ? "Swapping_Servant_Home_Impl_T.h"
+     << "#include \"ciao/Servants/Servant_Impl_T.h\"" << endl
+     << "#include \"ciao/Servants/"
+     << (swapping ? "Swapping/Swapping_Servant_Home_Impl_T.h"
                   : "Home_Servant_Impl_T.h")
      << "\"" << endl << endl;
 }

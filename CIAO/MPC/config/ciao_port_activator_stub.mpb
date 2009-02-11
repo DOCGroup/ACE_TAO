@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : portableserver {
+  after += CIAO_Port_Activator_stub
+  libs += CIAO_Port_Activator_stub
+}

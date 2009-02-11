@@ -1,11 +1,11 @@
 //==============================================================
 /**
-*  @file  ADD_Handler.h
-*
-*  $Id$
-*
-*  @author Jules White <jules@dre.vanderbilt.edu>
-*/
+ *  @file  ADD_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author Jules White <jules@dre.vanderbilt.edu>
+ */
 //================================================================
 
 #ifndef CIAO_CONFIG_HANDLERS_ADD_Handler_H
@@ -23,50 +23,48 @@
 
 namespace Deployment
 {
-struct ArtifactDeploymentDescription;
-class ArtifactDeploymentDescriptions;
+  struct ArtifactDeploymentDescription;
+  class ArtifactDeploymentDescriptions;
 }
 
 
 namespace CIAO
 {
 
-namespace Config_Handlers
-{
-class DeploymentPlan;
-class ArtifactDeploymentDescription;
+  namespace Config_Handlers
+    {
+      class deploymentPlan;
+      class ArtifactDeploymentDescription;
 
-/*
-* @class ADD_Handler
-*
-* @brief Handler class for <ArtifactDeploymentDescription> types.
-*
-* This class defines handler methods to map values from XSC
-* ArtifactDeploymentDescription objects, parsed from the
-*       // @@ Jules, why Any type?
-* descriptor files, to the  corresponding CORBA IDL Any type.
-*/
-class Config_Handlers_Export ADD_Handler
-{
-public:
-static void artifact_deployment_descrs (
-const DeploymentPlan &src,
-::Deployment::ArtifactDeploymentDescriptions &dest);
+      /*
+       * @class ADD_Handler
+       *
+       * @brief Handler class for <ArtifactDeploymentDescription> types.
+       *
+       * This class defines handler methods to map values from XSC
+       * ArtifactDeploymentDescription objects, parsed from the
+       *       // @@ Jules, why Any type?
+       * descriptor files, to the  corresponding CORBA IDL Any type.
+       */
+      class Config_Handlers_Export ADD_Handler
+        {
+        public:
+          static void artifact_deployment_descrs (const deploymentPlan &src,
+                                                  ::Deployment::ArtifactDeploymentDescriptions &dest);
 
-static ArtifactDeploymentDescription
-artifact_deployment_descr (
-const Deployment::ArtifactDeploymentDescription &src);
+          static ArtifactDeploymentDescription
+            artifact_deployment_descr (const Deployment::ArtifactDeploymentDescription &src);
 
-///  The IDREF Table associated with this class
-static IDREF_Base<CORBA::ULong> IDREF;
+          ///  The IDREF Table associated with this class
+          static IDREF_Base<CORBA::ULong> IDREF;
 
-private:
-static void artifact_deployment_descr (
-const ArtifactDeploymentDescription& desc,
-::Deployment::ArtifactDeploymentDescription &dest,
-CORBA::ULong l = 0);
-};
-}
+        private:
+          static void artifact_deployment_descr (
+                                                 const ArtifactDeploymentDescription& desc,
+                                                 ::Deployment::ArtifactDeploymentDescription &dest,
+                                                 CORBA::ULong l = 0);
+        };
+    }
 }
 
 #include /**/ "ace/post.h"

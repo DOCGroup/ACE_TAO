@@ -11,10 +11,6 @@
 #include "ID_Handler.h"
 #include "Property_Handler.h"
 #include "cdp.hpp"
-#include "RT-CCM/SRD_Handler.h"
-#include "RT-CCM/CIAOServerResources.hpp"
-#include "CIAO_Events/CIAOEvents_Handler.h"
-#include "CIAO_Events/CIAOEvents.hpp"
 
 #include "PCD_Handler.h"
 
@@ -26,7 +22,7 @@ ACE_RCSID (Config_Handlers,
   {
     namespace Config_Handlers
     {
-      DP_Handler::DP_Handler (DeploymentPlan &dp)
+      DP_Handler::DP_Handler (deploymentPlan &dp)
         :   xsc_dp_ (0)
         , idl_dp_ (0)
         , retval_ (true)
@@ -36,7 +32,7 @@ ACE_RCSID (Config_Handlers,
       }
 
       DP_Handler::DP_Handler (const ::Deployment::DeploymentPlan &plan)
-        : xsc_dp_ (new DeploymentPlan),
+        : xsc_dp_ (new deploymentPlan),
           idl_dp_ (0),
           retval_ (0)
       {
@@ -49,7 +45,7 @@ ACE_RCSID (Config_Handlers,
       {
       }
 
-      DeploymentPlan const *
+      deploymentPlan const *
       DP_Handler::xsc (void) const
       {
         if (this->retval_ && this->xsc_dp_.get () != 0)
@@ -58,7 +54,7 @@ ACE_RCSID (Config_Handlers,
         throw NoPlan ();
       }
 
-      DeploymentPlan *
+      deploymentPlan *
       DP_Handler::xsc (void)
       {
         if (this->retval_ && this->xsc_dp_.get () != 0)
@@ -86,7 +82,7 @@ ACE_RCSID (Config_Handlers,
       }
 
       bool
-      DP_Handler::resolve_plan (DeploymentPlan &xsc_dp)
+      DP_Handler::resolve_plan (deploymentPlan &xsc_dp)
       {
         CIAO_TRACE ("DP_Handler::resolve_plan");
 
@@ -99,18 +95,18 @@ ACE_RCSID (Config_Handlers,
         if (xsc_dp.label_p ())
           {
             this->idl_dp_->label =
-              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (xsc_dp.label ().c_str ()));
+              CORBA::string_dup (xsc_dp.label ().c_str ());
           }
 
         // Read in the UUID, if present
         if (xsc_dp.UUID_p ())
           {
             this->idl_dp_->UUID =
-              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (xsc_dp.UUID ().c_str ()));
+              CORBA::string_dup (xsc_dp.UUID ().c_str ());
           }
 
         // Similar thing for dependsOn
-        for (DeploymentPlan::dependsOn_const_iterator dstart = xsc_dp.begin_dependsOn ();
+        for (deploymentPlan::dependsOn_const_iterator dstart = xsc_dp.begin_dependsOn ();
              dstart != xsc_dp.end_dependsOn ();
              ++dstart)
           {
@@ -122,7 +118,7 @@ ACE_RCSID (Config_Handlers,
           }
 
         // ... An the property stuff
-        for (DeploymentPlan::infoProperty_const_iterator pstart = xsc_dp.begin_infoProperty ();
+        for (deploymentPlan::infoProperty_const_iterator pstart = xsc_dp.begin_infoProperty ();
              pstart != xsc_dp.end_infoProperty ();
              ++pstart)
           {
@@ -131,44 +127,8 @@ ACE_RCSID (Config_Handlers,
 
             this->idl_dp_->infoProperty.length (len + 1);
 
-            if (pstart->name () == ACE_TEXT ("CIAOServerResources"))
-              {
-                /*
-                 * Hook for RT-CCM
-                 */
-
-
-                ACE_DEBUG ((LM_DEBUG,
-                            "Importing ServerResources...\n"));
-
-                // Parse the SR document
-                SRD_Handler srd_handler (pstart->value ().value ().begin_string ()->c_str ());
-
-                // Populate the property
-                this->idl_dp_->infoProperty [len].name = ACE_TEXT_ALWAYS_CHAR (pstart->name ().c_str ());
-                this->idl_dp_->infoProperty [len].value <<= *(srd_handler.srd_idl ());
-              }
-            else if (pstart->name () == ACE_TEXT ("CIAOEvents"))
-              {
-                /*
-                * Hook for EVENTS
-                */
-
-                ACE_DEBUG ((LM_DEBUG,
-                            "Importing CIAOEvents...\n"));
-
-                // Parse the SR document
-                CIAOEvents_Handler event_handler (pstart->value ().value ().begin_string ()->c_str ());
-
-                // Populate the property
-                this->idl_dp_->infoProperty [len].name = ACE_TEXT_ALWAYS_CHAR (pstart->name ().c_str ());
-                this->idl_dp_->infoProperty [len].value <<= *(event_handler.esd_idl ());
-              }
-            else
-              {
-                Property_Handler::handle_property (*pstart,
-                                                this->idl_dp_->infoProperty [len]);
-              }
+            Property_Handler::handle_property (*pstart,
+                                               this->idl_dp_->infoProperty [len]);
           }
 
         // Read in the realizes, if present
@@ -217,14 +177,14 @@ ACE_RCSID (Config_Handlers,
         // Read in the label, if present, since minoccurs = 0
         if (plan.label != 0)
           {
-            XMLSchema::string< ACE_TCHAR > i(ACE_TEXT_CHAR_TO_TCHAR (plan.label.in ()));
+            XMLSchema::string< char > i((plan.label));
             this->xsc_dp_->label(i);
           }
 
         // Read in the UUID, if present
         if (plan.UUID != 0)
           {
-            XMLSchema::string< ACE_TCHAR > j(ACE_TEXT_CHAR_TO_TCHAR (plan.UUID.in ()));
+            XMLSchema::string< char > j((plan.UUID));
             this->xsc_dp_->UUID(j);
           }
 

@@ -23,7 +23,7 @@
 #include "ast_component.h"
 #include "utl_scoped_name.h"
 #include "Literals.h"
-#include "Config_Handlers/Utils/XercesString.h"
+#include "XML/XercesString.h"
 #include "CIAO_IDL3_TO_XMI_Export.h"
 
 

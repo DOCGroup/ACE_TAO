@@ -22,13 +22,13 @@ namespace CIAO
       toconfig.UUID =
         desc.UUID ().c_str ();
 
-      if (!this->xml_helper_->is_initialized ())
+      if (!XML_Helper::XML_HELPER.is_initialized ())
         return false;
 
       // parse the .cpd (ComponentPackageDescription) file
       // that <basePackage> links to
       xercesc::DOMDocument* dom =
-        this->xml_helper_->create_dom ((desc.basePackage()).href ().c_str ());
+        XML_Helper::XML_HELPER.create_dom ((desc.basePackage()).href ().c_str ());
 
       if (!dom)
         return false;
@@ -38,7 +38,7 @@ namespace CIAO
 
       Deployment::ComponentPackageDescription idl_cpc;
 
-      STD_CPD_Handler cpd_handler (this->xml_helper_);
+      STD_CPD_Handler cpd_handler;
 
       cpd_handler.component_package_descr (cpc,
                                            idl_cpc);

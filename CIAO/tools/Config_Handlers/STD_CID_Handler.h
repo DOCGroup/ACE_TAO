@@ -13,7 +13,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Utils/XML_Helper.h"
 #include "IDREF_Base.h"
 #include "Config_Handlers_Export.h"
 #include "DAnCE/Deployment/DeploymentC.h"
@@ -44,8 +43,7 @@ namespace CIAO
 
     public:
 
-      STD_CID_Handler (XML_Helper *xml_helper)
-        :xml_helper_ (xml_helper)
+      STD_CID_Handler (void)
       {
       }
 
@@ -69,8 +67,6 @@ namespace CIAO
         :xml_helper_ (0)
       {
       }
-
-      XML_Helper *xml_helper_;
     };
   }
 }

@@ -34,7 +34,7 @@ project(BMClosedED_lem_gen) : ciaocidldefaults, taoidldefaults {
 
 }
 
-project(BMClosedED_stub): ciao_client_dnc {
+project(BMClosedED_stub): ccm_stub {
   after += BasicSP_stub BMClosedED_stub_gen
   sharedname = BMClosedED_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
@@ -59,7 +59,7 @@ project(BMClosedED_stub): ciao_client_dnc {
 }
 
 
-project(BMClosedED_exec) : ciao_component_dnc {
+project(BMClosedED_exec) : ciao_executor {
   after      += BMClosedED_stub BMClosedED_lem_gen BasicSP_exec
   sharedname = BMClosedED_exec
   libs       += BMClosedED_stub
@@ -88,7 +88,7 @@ project(BMClosedED_exec) : ciao_component_dnc {
 
 }
 
-project(BMClosedED_svnt) : ciao_servant_dnc {
+project(BMClosedED_svnt) : ciao_servant {
   after += BasicSP_svnt BMClosedED_exec
 
   includes += $(CIAO_ROOT)/examples/BasicSP
