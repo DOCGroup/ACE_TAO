@@ -476,8 +476,6 @@ namespace XSCRT
   //
   //
 
-#if !defined (_MSC_VER) || (_MSC_VER >= 1300)
-
   template<>
   template<>
   inline
@@ -513,58 +511,6 @@ namespace XSCRT
   {
     x_ = (a.value () == L"true") || (a.value () == L"1");
   }
-
-#else
-
-  template <>
-  class FundamentalType<bool> : public Type
-  {
-  public:
-    FundamentalType ()
-    {
-    }
-
-    template<typename C>
-    FundamentalType (XML::Element<C> const& e)
-    {
-      x_ = (e.value ()[0] == 't') || (e.value ()[0] == '1');
-    }
-
-    template<typename C>
-    FundamentalType (XML::Attribute<C> const& a)
-    {
-      x_ = (a.value ()[0] == 't') || (a.value ()[0] == '1');
-    }
-
-    FundamentalType (bool const& x)
-        : x_ (x)
-    {
-    }
-
-    FundamentalType&
-    operator= (bool const& x)
-    {
-      x_ = x;
-      return *this;
-    }
-
-  public:
-    operator bool const& () const
-    {
-      return x_;
-    }
-
-    operator bool& ()
-    {
-      return x_;
-    }
-
-  protected:
-    bool x_;
-  };
-
-#endif
-
 }
 
 #include "XSCRT/Elements.ipp"
