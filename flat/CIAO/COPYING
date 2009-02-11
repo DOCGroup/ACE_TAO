@@ -8,7 +8,7 @@
    referred to as "DOC software") are copyrighted by [5]Douglas C.
    Schmidt and his [6]research group at [7]Washington University,
    [8]University of California, Irvine, and [9]Vanderbilt University,
-   Copyright (c) 1993-2008, all rights reserved. Since DOC software is
+   Copyright (c) 1993-2009, all rights reserved. Since DOC software is
    open-source, freely available software, you are free to use, modify,
    copy, and distribute--perpetually and irrevocably--the DOC software
    source code and object code produced from the source, as well as copy
@@ -32,20 +32,7 @@
    maintained by the [16]DOC Group at the [17]Institute for Software
    Integrated Systems (ISIS) and the [18]Center for Distributed Object
    Computing of Washington University, St. Louis for the development of
-   open-source software as part of the open-source software community. By
-   submitting comments, suggestions, code, code snippets, techniques
-   (including that of usage) and algorithms (collectively
-   ``Submissions''), submitters acknowledge that they have the right to
-   do so, that any such Submissions are given freely and unreservedly,
-   and that they waive any claims to copyright or ownership. In addition,
-   submitters acknowledge that any such Submission might become part of
-   the copyright maintained on the overall body of code that comprises
-   the DOC software. By making a Submission, submitter agree to these
-   terms. Moreover, submitters acknowledge that the incorporation or
-   modification of such Submissions is entirely at the discretion of the
-   moderators of the open-source DOC software projects or their
-   designees.
-
+   open-source software as part of the open-source software community.
    Submissions are provided by the submitter ``as is'' with no warranties
    whatsoever, including any warranty of merchantability, noninfringement
    of third party intellectual property, or fitness for any particular
@@ -83,12 +70,11 @@
    University, UC Irvine, and Vanderbilt University, may not be used to
    endorse or promote products or services derived from this source
    without express written permission from Washington University, UC
-   Irvine, or Vanderbilt University. Further, products or services
-   derived from this source may not be called ACE(TM), TAO(TM), CIAO(TM),
-   or CoSMIC(TM) nor may the name Washington University, UC Irvine, or
-   Vanderbilt University appear in their names, without express written
-   permission from Washington University, UC Irvine, and Vanderbilt
-   University.
+   Irvine, or Vanderbilt University. This license grants no permission to
+   call products or services derived from this source ACE(TM), TAO(TM),
+   CIAO(TM), or CoSMIC(TM), nor does it grant permission for the name
+   Washington University, UC Irvine, or Vanderbilt University to appear
+   in their names.
 
    If you have any suggestions, additions, comments, or questions, please
    let [20]me know.
