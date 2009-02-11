@@ -1,3 +1,14 @@
+Wed Feb 11 21:03:46 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp(idl_get_pragma_string):
+        * TAO_IDL/fe/idl.ll(idl_get_pragma_string):
+        
+          Beefed up error checking to catch the case where one or both
+          quote are missing from the #pragma prefix string, and output
+          a syntax error instead of crashing. Thanks to Bogdan Jeram
+          <bjeram at eso dot org> for reporting the bug. This fix closes
+          [BUGID:3568].
+
 Wed Feb 11 16:14:04 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc: Zapped
