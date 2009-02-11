@@ -161,7 +161,7 @@ private:
 };
 
 /**
- * @class CompressionLowValuePolicy
+ * @class CompressionMinRatioPolicy
  *
  * @brief  Implementation of the ZIOP::CompressionLowValuePolicy
  */

@@ -100,6 +100,7 @@ TAO_ZIOPPolicy_Validator::legal_policy_impl (CORBA::PolicyType type)
 {
   return (type == ZIOP::COMPRESSION_ENABLING_POLICY_ID ||
           type == ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID ||
+          type == ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID ||
           type == ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID);
 }
 

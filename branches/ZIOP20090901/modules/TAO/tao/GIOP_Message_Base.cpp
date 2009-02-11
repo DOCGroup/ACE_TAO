@@ -694,7 +694,8 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
       TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
       if (adapter)
         {
-          adapter->decompress (input_cdr);
+          if (!adapter->decompress (input_cdr))
+            return -1;
           if (TAO_debug_level >= 5)
             {
               ACE_HEX_DUMP ((LM_DEBUG,
@@ -702,7 +703,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                               input_cdr.length(),
                               ACE_TEXT ("GIOP message after decompression")));
             }
-
+          
         }
       else
         {
@@ -715,7 +716,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
         }
   }
 #endif
-
+  
   transport->assign_translators(&input_cdr,&output);
 
   // We know we have some request message. Check whether it is a

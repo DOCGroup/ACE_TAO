@@ -68,7 +68,7 @@ private:
   static bool is_activated_;
 
   /// Get the compression low value, returns 0 when it is not set
-  CORBA::ULong compression_low_value (CORBA::Policy_ptr policy) const;
+  CORBA::ULong compression_policy_value (CORBA::Policy_ptr policy) const;
 
   bool get_compression_details(CORBA::Policy_ptr compression_enabling_policy,
                         CORBA::Policy_ptr compression_level_list_policy,
@@ -78,6 +78,7 @@ private:
   bool compress_data (TAO_OutputCDR &cdr, 
                       CORBA::Object_ptr compression_manager,
                       CORBA::ULong low_value,
+                      CORBA::Long min_ratio,
                       ::Compression::CompressorId compressor_id, 
                       ::Compression::CompressionLevel compression_level);
 
@@ -89,7 +90,9 @@ private:
                    const ::Compression::Buffer &source,
                    ::Compression::Buffer &target);
 
-  bool check_min_ratio (CORBA::ULong original_data_length, CORBA::ULong compressed_length) const;
+  bool check_min_ratio (CORBA::ULong original_data_length, 
+                        CORBA::ULong compressed_length,
+                        CORBA::Long min_ratio) const;
 };
 
 static int
