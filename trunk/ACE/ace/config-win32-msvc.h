@@ -42,6 +42,7 @@
 #  define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 #endif /* _WIN32_WCE */
 
+//FUZZ: disable check_for_msc_ver
 #if (_MSC_VER >= 1600)
 # include "ace/config-win32-msvc-10.h"
 #elif (_MSC_VER >= 1500)
@@ -53,6 +54,7 @@
 #else
 # error This version of Microsoft Visual C++ is not supported.
 #endif
+//FUZZ: enable check_for_msc_ver
 
 // MFC changes the behavior of operator new at all MSVC versions from 6 up
 // by throwing a static CMemoryException* instead of std::bad_alloc
