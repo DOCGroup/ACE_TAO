@@ -1,3 +1,11 @@
+Wed Feb 11 16:14:04 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc: Zapped
+        
+          libs += TAO_PortableServer
+
+          based upon recommendation of Johnny Willemsen.
+
 Tue Feb 10 02:48:01 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc: Added
