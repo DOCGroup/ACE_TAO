@@ -1,3 +1,7 @@
+Wed Feb 11 22:26:26  2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/LSOCK_CODgram.h: Improved the comments and usage scenario.
+
 Wed Feb 11 16:20:19 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * include/makeinclude/wrapper_macros.GNU:
