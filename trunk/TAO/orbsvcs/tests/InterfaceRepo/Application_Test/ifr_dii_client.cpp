@@ -322,11 +322,7 @@ IFR_DII_Client::invoke_and_display (void)
 
       const char *title = 0;
 
-# if (defined (_MSC_VER) && (_MSC_VER < 1310))
-      ACE_ASSERT ((*args->item (1)->value () >>= title) == 1);
-# else
       ACE_ASSERT ((*args->item (1)->value () >>= title) == true);
-# endif  /* _MSC_VER <= 1310 */
 
       const char *correct = "Sgt. Pepper's Lonely Hearts Club Band";
       ACE_ASSERT (ACE_OS::strcmp (title, correct) == 0);
