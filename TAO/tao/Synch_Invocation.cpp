@@ -98,8 +98,7 @@ namespace TAO
 
         this->marshal_data (cdr);
 
-
-  // Register a reply dispatcher for this invocation. Use the
+        // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
         TAO_Bind_Dispatcher_Guard dispatch_guard (
           this->details_.request_id (),
@@ -121,7 +120,7 @@ namespace TAO
                                 TAO_TWOWAY_REQUEST,
                                 max_wait_time);
 
-  ace_mon.release();
+        ace_mon.release();
 
 #if TAO_HAS_INTERCEPTORS == 1
         // @@NOTE: Too much code repetition.
