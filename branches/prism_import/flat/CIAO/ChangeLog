@@ -1,3 +1,44 @@
+Wed Feb 11 02:15:21 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIAO-INSTALL.html:
+        * CIAO.mwc:
+        * CIAO_DAnCE.mwc:
+        * CIAO_TAO.mwc:
+        * CIAO_TAO_DAnCE.mwc:
+        * COPYING:
+        * ChangeLogs:
+        * NEWS:
+        * PROBLEM-REPORT-FORM:
+        * README:
+        * Release:
+        * VERSION:
+        * bin:
+        * bin/ciao_tests.lst:
+        * ciaosvcs:
+        * examples:
+        * examples/BasicSP/EC/client.cpp:
+        * examples/BasicSP/EC/controller.cpp:
+        * examples/DevGuideExamples:
+        * examples/Display/GPS/GPS_exec.cpp:
+        * examples/Display/NavDisplay/NavDisplay_exec.cpp:
+        * examples/Display/RateGen/controller.cpp:
+        * examples/Hello/Sender/starter.cpp:
+        * examples/Null_Component/StaticDAnCEApp.cpp:
+        * examples/Null_Component/descriptors/run_test.pl:
+        * examples/Swapping/Sender/starter.cpp:
+        * performance-tests:
+        * performance-tests/Benchmark/Multi_Threaded/client.cpp:
+        * performance-tests/Benchmark/RoundTrip/RoundTripEI.idl:
+        * performance-tests/Benchmark/RoundTrip/client.cpp:
+        * performance-tests/Benchmark/RoundTripClient/client.cpp:
+        * performance-tests/Protocols/Controller/Controller.cpp:
+        * performance-tests/Protocols/Receiver/Receiver_exec.cpp:
+        * performance-tests/Protocols/Sender/Sender_exec.cpp:
+        * performance-tests/mico/mico-thrput-st/client.cc:
+        * rules.ciao.GNU:
+
+          Merged in changes from HEAD. 
+        
 Wed Feb 11 01:36:39 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Logger/Logger.mpc:
@@ -12,8 +53,8 @@ Wed Feb 11 01:36:39 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/CIAO_ComponentServer/SimpleComponent/client.cpp:
         * tests/Minimum/Receiver/Receiver.mpc:
 
-          Windows fixes. 
-        
+          Windows fixes.
+
 Wed Feb 11 00:18:44 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CCF:
@@ -32,7 +73,7 @@ Wed Feb 11 00:18:44 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/IDL3_to_IDL2:
 
           Merged changes in from trunk
-        
+
 Tue Feb 10 23:31:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/TargetManager.mpc:
