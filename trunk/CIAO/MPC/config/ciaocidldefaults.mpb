@@ -2,6 +2,7 @@
 // $Id$
 
 project {
+  after += CIDLC
   // Set the cidl compiler and flags as template values
   specific {
     cidlc      = $(CIAO_ROOT)/bin/cidlc
