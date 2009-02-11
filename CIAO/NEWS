@@ -87,7 +87,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.6.8 and CIAO-0.6.9
    of the CIAO container code and includes a new version of DAnCE
    based on code provided by PrismTech. 
 
-.  Porting hints may be found at CIAO_ROOT/docs/{INSERT FILE HERE}
+.  Porting hints may be found at CIAO_ROOT/docs/Porting_Hints.txt
 
 .  CIAO no longer supports implicitly homed components.  This means
    that components must either be deployed using an explicity
