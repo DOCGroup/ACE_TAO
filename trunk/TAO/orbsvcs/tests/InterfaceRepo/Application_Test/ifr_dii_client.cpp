@@ -334,11 +334,7 @@ IFR_DII_Client::invoke_and_display (void)
 
       CORBA::Float price = 0.0f;
 
-# if (defined (_MSC_VER) && (_MSC_VER < 1310))
-      ACE_ASSERT ((*args->item (2)->value () >>= price) == 1);
-# else
       ACE_ASSERT ((*args->item (2)->value () >>= price) == true);
-# endif  /* _MSC_VER <= 1310 */
 
       ACE_ASSERT (price == 13.49f);
 
