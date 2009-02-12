@@ -20,7 +20,6 @@
 #include "tao/ORB.h"
 #include "tao/Object.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "DAnCELoggerFactory.h"
 #include "tao/Object_Loader.h"
 #include "tao/IORTable/IORTable.h"
 #include "DAnCE/Logger/Log_Macros.h"
