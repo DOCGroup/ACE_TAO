@@ -33,6 +33,7 @@ project(Display_GPS_cidl_gen) : ciaocidldefaults, taoidldefaults {
 }
 
 project(Display_GPS_stub) : ccm_stub {
+  requires += dummy_label
   avoids += ace_for_tao
   after += Display_GPS_idl_gen Display_Base_stub
   libs  += Display_Base_stub
@@ -58,6 +59,7 @@ project(Display_GPS_stub) : ccm_stub {
 }
 
 project(Display_GPS_exec) : ciao_executor {
+  requires += dummy_label
   avoids += ace_for_tao
   after   += Display_GPS_cidl_gen Display_GPS_stub
   sharedname = GPS_exec
@@ -86,6 +88,7 @@ project(Display_GPS_exec) : ciao_executor {
 
 
 project(Display_GPS_svnt) : ciao_servant {
+  requires += dummy_label
   avoids += ace_for_tao
   after      += Display_Base_skel Display_GPS_exec
   sharedname  = GPS_svnt

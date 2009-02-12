@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p SimpleCommon SimpleMultipleUser"
 
-project(SimpleCommon_SimpleMultipleUser_idl_gen) : taoidldefaults, anytypecode {
+project(SimpleCom_SimpleMulUser_idl_gen) : taoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLEMULTIPLEUSER_STUB_Export \
@@ -14,7 +14,7 @@ project(SimpleCommon_SimpleMultipleUser_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(SimpleCommon_SimpleMultipleUser_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(SimpleCom_SimpleMulUser_cidl_gen) : ciaocidldefaults, taoidldefaults {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro SIMPLEMULTIPLEUSER_SVNT_Export \

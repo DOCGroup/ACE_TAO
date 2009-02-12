@@ -1,5 +1,5 @@
 // $Id$
-project (*RedirectionServiceTestServer): dance, taoserver, iortable, naming, dance_redirection_service, dance_logger, naming_serv  {
+project (RedirectionServiceTestServer): dance, taoserver, iortable, naming, dance_redirection_service, dance_logger, naming_serv  {
 	exename = RedirectionServiceTestServer
 
 	IDL_Files {
@@ -14,7 +14,7 @@ project (*RedirectionServiceTestServer): dance, taoserver, iortable, naming, dan
   	}
 }
 
-project (*RedirectionServiceTestClient): dance, taoclient, naming, dance_logger {
+project (RedirectionServiceTestClient): dance, taoclient, naming, dance_logger {
 	after = *RedirectionServiceTestServer
 	exename = RedirectionServiceTestClient
 
