@@ -2,7 +2,7 @@
 
 #include <Components.idl>
 
-module Simple
+module DeCoRAM
 {
   component FTClient
   {

@@ -6,7 +6,7 @@ composition session FTClient_Impl
 {
   home executor FTClientHome_Exec
   {
-    implements Simple::FTClientHome;
+    implements DeCoRAM::FTClientHome;
     manages SimpleProvider_Exec;
   };
 };
