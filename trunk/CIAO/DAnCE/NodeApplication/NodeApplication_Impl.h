@@ -208,5 +208,5 @@ namespace DAnCE
     
     CosNaming::NamingContext_var instance_nc_;
   };
-};
+}
 #endif /*NODEAPPLICATION_IMPL_H_*/

@@ -66,6 +66,6 @@ namespace DAnCE
       TDomainManagers managers_;
       Node_Locator locator_;
     };
-};//DAnCE
+}//DAnCE
 
 #endif /*EXECUTIONMANAGER_IMPL_H_*/

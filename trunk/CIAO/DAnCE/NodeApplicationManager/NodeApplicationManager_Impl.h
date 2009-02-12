@@ -55,5 +55,5 @@ namespace DAnCE
       ACE_CString node_name_;
       PROPERTY_MAP properties_;
     };
-};
+}
 #endif /*NODEAPPLICATIONMANAGER_IMPL_H_*/

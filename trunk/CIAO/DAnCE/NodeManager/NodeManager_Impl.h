@@ -64,6 +64,6 @@ namespace DAnCE
     RedirectionService& redirection_;
     PROPERTY_MAP properties_;
   };
-};
+}
 
 #endif /*NODEMANAGER_IMPL_H_*/
