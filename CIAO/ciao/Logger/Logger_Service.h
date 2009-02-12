@@ -29,6 +29,6 @@ namespace CIAO
 
 } // DAnCE
 
-ACE_FACTORY_DECLARE (CIAO_Logger, Logger_Service);
+ACE_FACTORY_DECLARE (CIAO_Logger, Logger_Service)
 
 #endif /*LOGGER_SERVICE_H_*/
