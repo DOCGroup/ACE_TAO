@@ -3486,7 +3486,7 @@ static char *
 idl_get_pragma_string (char *pragma)
 {
   // Get pointers to each end of the substring between the quotes.
-  const char *firstquote = ACE_OS::strchr (pragma '"');
+  const char *firstquote = ACE_OS::strchr (pragma, '"');
 
   if (firstquote == 0)
     {
