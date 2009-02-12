@@ -1,10 +1,19 @@
+Thu Feb 12 18:31:40 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Logger/Logger_Service.h:
+        * DAnCE/Logger/Logger_Service.cpp:
+        * ciao/Logger/Logger_Service.h:
+        * ciao/Logger/Logger_Service.cpp:
+
+          Compile fixes. 
+        
 Thu Feb 12 17:48:35 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/DevGuideExamples/Messenger/Receiver.mpc:
         * tests/Minimum/Receiver/Receiver.mpc:
 
-          Linking fixes. 
-        
+          Linking fixes.
+
 Thu Feb 12 16:52:56 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp:
