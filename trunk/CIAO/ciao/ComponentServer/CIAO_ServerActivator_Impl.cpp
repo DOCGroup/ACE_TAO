@@ -408,7 +408,7 @@ namespace CIAO
       CIAO_TRACE (CLINFO "CIAO_ServerActivator_i::multi_threaded_wait_for_callback");
 
       // Wait for a conditional variable
-      ACE_GUARD_THROW_EX ( ACE_Thread_Mutex,
+      ACE_GUARD_THROW_EX ( TAO_SYNCH_MUTEX,
                            guard,
                            this->mutex_,
                            CORBA::NO_RESOURCES ());

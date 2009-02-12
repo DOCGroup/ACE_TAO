@@ -1,5 +1,10 @@
-Wed Feb 11 20:56:24 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+Thu Feb 12 10:36:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
+          Fixed fuzz errors
+
+Wed Feb 11 20:56:24 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_client_dnc.mpb:
         * MPC/config/ciao_domainapplicationmanager_dnc.mpb:
@@ -8,9 +13,9 @@ Wed Feb 11 20:56:24 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * MPC/config/ciao_rtevent_dnc.mpb:
         * MPC/config/ciao_servant_dnc.mpb:
         * MPC/config/ciao_static_dnc_app.mpb:
-        
-          _dnc_ projects are obsolete.  
-        
+
+          _dnc_ projects are obsolete.
+
         * tools/Config_Handlers/CIAO_Events:
         * tools/Config_Handlers/CIAO_Events/CIAOEvents.hpp:
         * tools/Config_Handlers/CIAO_Events/CIAOEvents.cpp:
@@ -22,7 +27,7 @@ Wed Feb 11 20:56:24 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           These handlers are obsolete, and have been removed along with
           ciaosvcs.  This infrastructure will hopefully be replaced soon
-          with the connector framework. 
+          with the connector framework.
 
 Wed Feb 11 20:01:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
