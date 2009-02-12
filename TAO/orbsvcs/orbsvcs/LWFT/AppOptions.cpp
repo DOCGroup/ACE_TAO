@@ -20,7 +20,8 @@ AppOptions::AppOptions (void)
     port_ (0),
     role_ (2),
     load_ (40.0),
-    use_dds_ (false)
+    use_dds_ (false),
+    debug_level_ (0)
 {
   char hostname [100];
   gethostname (hostname, sizeof (hostname));
@@ -117,11 +118,24 @@ AppOptions::parse_args (int &argc, char **argv)
           use_dds_ = true;
           as.consume_arg ();
         }
+      else if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-debug"))))
+        {
+          std::istringstream istr (arg);
+          
+          if (!(istr >> debug_level_))
+            {
+              return false;
+            }
+            
+          as.consume_arg ();
+        }
       else
         {
           as.ignore_arg ();
         }
     }
+
+  this->set_debug_level ();
 
   return true;
 }
@@ -184,4 +198,44 @@ void
 AppOptions::process_id (const std::string & id)
 {
   process_id_ = id;
+}
+
+void 
+AppOptions::set_debug_level (void)
+{
+  u_long mask = LM_EMERGENCY | LM_ALERT | LM_CRITICAL | LM_ERROR;
+
+  switch (debug_level_)
+    {
+    case 0: break;
+    case 1:
+      {
+        mask |= LM_WARNING;
+        break;
+      }
+    case 2:
+      {
+        mask |= LM_DEBUG;
+        break;
+      }
+    case 3:
+      {
+        mask |= LM_TRACE;
+        break;
+      }
+    case 4:
+      {
+        mask |= LM_NOTICE;
+        break;
+      }
+    case 5:
+      {
+        mask |= LM_INFO;
+        break;
+      }
+    default: break;
+    }
+
+  ACE_LOG_MSG->priority_mask (mask,
+                              ACE_Log_Msg::PROCESS);
 }

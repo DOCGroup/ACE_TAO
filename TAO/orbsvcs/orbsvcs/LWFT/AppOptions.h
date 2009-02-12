@@ -45,11 +45,24 @@ public:
   double load (void) const;
   bool use_dds (void) const;
 
+  /**
+   *  @return the debug level of the application:
+   *          0 - all errors and other urgent levels
+   *          1 - warnings are shown as well
+   *          2 - LM_DEBUG messages added
+   *          3 - LM_TRACE messages added
+   *          4 - LM_NOTICE messages added
+   *          5 - LM_INFO messages added
+   */
+  long debug_level (void) const;
+
   void process_id (const std::string & id);
 
 protected:
   /// Constructor is protected to ensure Singleton access.
   AppOptions (void);
+
+  void set_debug_level (void);
 
   std::string host_monitor_ior_;
   std::string host_id_;
@@ -60,6 +73,7 @@ protected:
   size_t role_;
   double load_;
   bool use_dds_;
+  long debug_level_;
 
   /// Singleton-related stuff.
   static AppOptions * volatile instance_;
