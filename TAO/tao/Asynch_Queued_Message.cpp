@@ -153,7 +153,7 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
           // This debug is for testing purposes!
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Asynch_Queued_Message::clone\n"
-                      "Using global pool for allocation \n"));
+                      "Using global pool for allocation\n"));
         }
 
       ACE_NEW_RETURN (qm,

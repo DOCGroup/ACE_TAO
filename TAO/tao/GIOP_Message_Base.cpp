@@ -93,7 +93,7 @@ TAO_GIOP_Message_Base::generate_request_header (
       if (TAO_debug_level)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")));
+                      ACE_TEXT ("(%P|%t) Error in writing GIOP header\n")));
         }
 
       return -1;
@@ -108,7 +108,7 @@ TAO_GIOP_Message_Base::generate_request_header (
     {
       if (TAO_debug_level)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Error in writing request header \n")));
+                    ACE_TEXT ("(%P|%t) Error in writing request header\n")));
 
       return -1;
     }
@@ -135,7 +135,7 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
     {
       if (TAO_debug_level)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")));
+                    ACE_TEXT ("(%P|%t) Error in writing GIOP header\n")));
 
       return -1;
     }
@@ -146,7 +146,7 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
     {
       if (TAO_debug_level)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Error in writing locate request header \n")));
+                    ACE_TEXT ("(%P|%t) Error in writing locate request header\n")));
 
 
       return -1;
@@ -170,7 +170,7 @@ TAO_GIOP_Message_Base::generate_reply_header (
     {
       if (TAO_debug_level)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")));
+                    ACE_TEXT ("(%P|%t) Error in writing GIOP header\n")));
 
       return -1;
     }
@@ -228,7 +228,7 @@ TAO_GIOP_Message_Base::generate_fragment_header (TAO_OutputCDR & cdr,
     {
       if (TAO_debug_level)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")));
+                    ACE_TEXT ("(%P|%t) Error in writing GIOP header\n")));
 
       return -1;
     }

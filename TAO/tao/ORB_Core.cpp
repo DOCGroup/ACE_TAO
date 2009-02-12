@@ -2377,7 +2377,7 @@ TAO_ORB_Core::destroy_interceptors (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Exception in TAO_ORB_Core")
-                      ACE_TEXT ("::destroy_interceptors () \n")));
+                      ACE_TEXT ("::destroy_interceptors ()\n")));
         }
     }
 
@@ -3231,7 +3231,7 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
           catch (const ::CORBA::Exception& ex)
             {
               ex._tao_print_exception (
-                "Cannot initialize the ior_interceptor_adapter \n");
+                "Cannot initialize the ior_interceptor_adapter\n");
             }
         }
     }
@@ -3416,7 +3416,7 @@ TAO_ORB_Core::valuetype_adapter (void)
           catch (const ::CORBA::Exception& ex)
             {
               ex._tao_print_exception (
-                "Cannot initialize the valuetype_adapter \n");
+                "Cannot initialize the valuetype_adapter\n");
             }
         }
 

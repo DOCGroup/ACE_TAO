@@ -31,7 +31,7 @@ namespace TAO
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - ACE_TkReactor created \n"));
+                    "TAO (%P|%t) - ACE_TkReactor created\n"));
     }
 
     return this->reactor_impl_;

@@ -224,7 +224,7 @@ namespace TAO
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - Exception in ")
                         ACE_TEXT ("Interceptor_List")
-                        ACE_TEXT ("::destroy_interceptors () \n")));
+                        ACE_TEXT ("::destroy_interceptors ()\n")));
           }
       }
   }

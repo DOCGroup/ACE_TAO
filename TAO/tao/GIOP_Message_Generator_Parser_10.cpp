@@ -60,7 +60,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
       if (TAO_debug_level)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
+                      ACE_TEXT ("(%N |%l) Unable to handle this request\n")));
         }
       return false;
     }

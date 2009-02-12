@@ -96,9 +96,9 @@ TAO_SHMIOP_Transport::recv (char *buf,
       if (TAO_debug_level > 3 && errno != ETIME)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) -  SHMIOP_Transport::recv, %p \n"),
+                      ACE_TEXT ("TAO (%P|%t) -  SHMIOP_Transport::recv, %p\n"),
                       ACE_TEXT ("TAO - read message failure ")
-                      ACE_TEXT ("recv_i () \n")));
+                      ACE_TEXT ("recv_i ()\n")));
         }
     }
   else if (n == 0)

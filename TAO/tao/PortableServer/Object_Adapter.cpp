@@ -191,7 +191,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
       ACE_ERROR ((LM_ERROR,
                   "linear option for -ORBPersistentidPolicyDemuxStrategy "
                   "not supported with minimum POA maps. "
-                  "Ingoring option to use default... \n"));
+                  "Ingoring option to use default...\n"));
       /* FALL THROUGH */
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
     case TAO_DYNAMIC_HASH:
@@ -221,7 +221,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
       ACE_ERROR ((LM_ERROR,
                   "linear and dynamic options for -ORBTransientidPolicyDemuxStrategy "
                   "are not supported with minimum POA maps. "
-                  "Ingoring option to use default... \n"));
+                  "Ingoring option to use default...\n"));
       /* FALL THROUGH */
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
     case TAO_ACTIVE_DEMUX:

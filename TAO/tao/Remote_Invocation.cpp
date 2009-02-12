@@ -87,7 +87,7 @@ namespace TAO
                           ACE_TEXT ("TAO (%P|%t) - ")
                           ACE_TEXT ("Remote_Invocation::init_target_spec, ")
                           ACE_TEXT ("Error in finding index for ")
-                          ACE_TEXT ("IOP::IOR \n")));
+                          ACE_TEXT ("IOP::IOR\n")));
             }
 
           return;
@@ -211,7 +211,7 @@ namespace TAO
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - ")
                         ACE_TEXT ("Remote_Invocation::send_message, ")
-                        ACE_TEXT ("failure while sending message \n")));
+                        ACE_TEXT ("failure while sending message\n")));
           }
 
         // Close the transport and all the associated stuff along with

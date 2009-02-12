@@ -91,7 +91,7 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::bind_dispatcher, ")
-                    ACE_TEXT ("bind dispatcher failed: result = %d, request id = %d \n"),
+                    ACE_TEXT ("bind dispatcher failed: result = %d, request id = %d\n"),
                     result, request_id));
 
       return -1;
