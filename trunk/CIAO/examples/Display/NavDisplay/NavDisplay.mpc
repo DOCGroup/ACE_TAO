@@ -33,6 +33,7 @@ project(Display_NavDisplay_cidl_gen) : ciaocidldefaults, taoidldefaults {
 }
 
 project(Display_NavDisplay_stub) : ccm_stub {
+  requires += dummy_label
   avoids += ace_for_tao
   after += Display_NavDisplay_idl_gen Display_Base_stub
   libs  += Display_Base_stub
@@ -58,6 +59,7 @@ project(Display_NavDisplay_stub) : ccm_stub {
 }
 
 project(Display_NavDisplay_exec) : ciao_executor {
+  requires += dummy_label
   avoids += ace_for_tao
   after   += Display_NavDisplay_cidl_gen Display_NavDisplay_stub
   sharedname = NavDisplay_exec
@@ -86,6 +88,7 @@ project(Display_NavDisplay_exec) : ciao_executor {
 
 
 project(Display_NavDisplay_svnt) : ciao_servant {
+  requires += dummy_label
   avoids += ace_for_tao
   after      += Display_Base_skel Display_NavDisplay_exec
   sharedname  = NavDisplay_svnt
