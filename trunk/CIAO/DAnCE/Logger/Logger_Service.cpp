@@ -156,5 +156,5 @@ namespace DAnCE
 } // DAnCE
 
 using namespace DAnCE;
-ACE_FACTORY_DEFINE (DAnCE_Logger, Logger_Service);
+ACE_FACTORY_DEFINE (DAnCE_Logger, Logger_Service)
 

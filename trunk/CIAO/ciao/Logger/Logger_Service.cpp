@@ -147,5 +147,5 @@ namespace CIAO
 } // CIAO
 
 using namespace CIAO;
-ACE_FACTORY_DEFINE (CIAO_Logger, Logger_Service);
+ACE_FACTORY_DEFINE (CIAO_Logger, Logger_Service)
 
