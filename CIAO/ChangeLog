@@ -1,3 +1,9 @@
+Thu Feb 12 18:33:59 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/RedirectionService/NameServiceRedirection.h:
+
+          Compile fixes. 
+        
 Thu Feb 12 18:31:40 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Logger/Logger_Service.h:
@@ -5,8 +11,8 @@ Thu Feb 12 18:31:40 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/Logger/Logger_Service.h:
         * ciao/Logger/Logger_Service.cpp:
 
-          Compile fixes. 
-        
+          Compile fixes.
+
 Thu Feb 12 17:48:35 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/DevGuideExamples/Messenger/Receiver.mpc:

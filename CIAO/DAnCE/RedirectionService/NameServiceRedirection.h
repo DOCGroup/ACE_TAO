@@ -53,5 +53,5 @@ namespace DAnCE
       typedef ACE_Map_Manager<ACE_CString, TRecords*, ACE_Null_Mutex> TTransactions;
       TTransactions transactions_;
     };
-};
+}
 #endif /*NAMESERVICEREDIRECTION_H_*/
