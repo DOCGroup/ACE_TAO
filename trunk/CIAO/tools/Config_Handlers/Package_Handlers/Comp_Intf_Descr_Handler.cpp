@@ -1,5 +1,5 @@
 // $Id$
-#include "tao/AnyTypecode/TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "Comp_Intf_Descr_Handler.h"
 #include "XML_Typedefs.h"
 #include "Utils/Exceptions.h"
