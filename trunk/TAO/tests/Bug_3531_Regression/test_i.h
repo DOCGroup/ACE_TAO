@@ -31,9 +31,9 @@ public:
 private:
   CORBA::ORB_var orb_;
   // The ORB
-  ACE_Thread_Mutex           lock_;
-  ACE_Condition_Thread_Mutex cond_;
-  bool                       timer_registed_;
+  TAO_SYNCH_MUTEX     lock_;
+  TAO_SYNCH_CONDITION cond_;
+  bool                timer_registed_;
 };
 
 #if defined(__ACE_INLINE__)
