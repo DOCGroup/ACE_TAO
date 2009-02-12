@@ -70,6 +70,6 @@ namespace DAnCE
       typedef ACE_Map_Manager<ACE_CString, DAnCE::CCMObjectLocator*,  ACE_Null_Mutex> TLocators;
       TLocators locators_;
     };
-};
+}
 
 #endif /*REDIRECTIONSERVICE_H_*/

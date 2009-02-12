@@ -87,7 +87,7 @@ bool test (const ACE_CString& url)
     }
 
   return res;
-};
+}
 
 
 int ACE_TMAIN (int argc, ACE_TCHAR * argv[])

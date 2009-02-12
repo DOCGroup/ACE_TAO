@@ -68,6 +68,6 @@ namespace DAnCE
       void preparePlan();
     };
 
-};//DAnCE
+}//DAnCE
 
 #endif /*DOMAINAPPLICATIONMANAGER_IMPL_H_*/
