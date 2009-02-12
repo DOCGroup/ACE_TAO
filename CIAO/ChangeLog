@@ -1,3 +1,24 @@
+Thu Feb 12 13:34:33 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser.mpc:
+        * DAnCE/tests/NodeApplicationManager-NodeApplication/NAM_NA.mpc:
+        * DAnCE/tests/RedirectionServiceTest/RedirectionServiceTest.mpc:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.mpc:
+        
+          Fuzz fixes. 
+        
+        * examples/Display/Display_Base/Display_Base.mpc:
+        * examples/Display/GPS/GPS.mpc:
+        * examples/Display/NavDisplay/NavDisplay.mpc:
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+        * examples/Display/RateGen/RateGen.mpc:
+        
+          Disabled this example until it can be ported. 
+
+        * DAnCE/tests/NodeApplicationManager-NodeApplication/NodeApplicationManager-NodeApplication.mpc:
+
+          Removed this file.
+
 Thu Feb 12 10:36:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:

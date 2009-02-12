@@ -1,6 +1,7 @@
 // $Id$
 
 project(Display_NavDisplayGUI_exec) : ciao_executor, qt {
+  requires += dummy_label
   avoids += ace_for_tao
   after   += Display_NavDisplay_cidl_gen \
              Display_NavDisplay_stub
@@ -49,6 +50,7 @@ project(Display_NavDisplayGUI_exec) : ciao_executor, qt {
 }
 
 project(Display_NavDisplayGUI_svnt) : ciao_servant {
+  requires += dummy_label
   avoids += ace_for_tao
   requires += qt
   after      += Display_Base_skel Display_NavDisplayGUI_exec
