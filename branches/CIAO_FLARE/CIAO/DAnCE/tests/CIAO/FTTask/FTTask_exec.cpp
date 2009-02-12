@@ -62,6 +62,8 @@ namespace CIDL_FTTask_Impl
 
     start = ACE_OS::gethrtime ();    
 
+    std::cerr << "x";
+
     this->cpu_.run (static_cast <size_t> (execution_time));
 
     end = ACE_OS::gethrtime ();
@@ -328,6 +330,13 @@ namespace CIDL_FTTask_Impl
 	    tnh.bind ("FLARe/" + tnh.escape_dots (this->get_hostname ()) + "/" + 
 		      this->get_process_id () + "/Worker",
 		      ref.in ());
+
+            // and write it to a file
+            std::string iorfilename = object_id_ + ".ior";
+            std::ofstream file (iorfilename.c_str ());
+            file << orb_->object_to_string (ref.in ());
+            file.flush ();
+            file.close ();
 	  }
       }
     catch (Name_Helper_Exception & ex)

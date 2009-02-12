@@ -47,7 +47,6 @@ namespace CIDL_FTClient_Impl
     // Supported or inherited operations.
 
     // Attribute operations.
-
     virtual ::CORBA::Double
     period (void);
 
@@ -92,7 +91,7 @@ namespace CIDL_FTClient_Impl
     virtual void ccm_remove (void);
 
     private:
-    ::Simple::CCM_FTClient_Context_var context_;
+    DeCoRAM::CCM_FTClient_Context_var context_;
     
     // members for attribute implementation
     CORBA::Double period_;
@@ -134,7 +133,7 @@ namespace CIDL_FTClient_Impl
   };
 
   extern "C" FTCLIENT_EXEC_Export ::Components::HomeExecutorBase_ptr
-  create_Simple_FTClientHome_Impl (void);
+  create_DeCoRAM_FTClientHome_Impl (void);
 };
 
 #include /**/ "ace/post.h"

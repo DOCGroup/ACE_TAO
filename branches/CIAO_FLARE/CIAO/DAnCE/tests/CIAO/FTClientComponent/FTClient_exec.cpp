@@ -105,6 +105,12 @@ namespace CIDL_FTClient_Impl
 
     CORBA::Object_var obj = orb_->string_to_object (server_ior);
 
+    if (CORBA::is_nil (obj.in ()))
+      {
+        CIAO_DEBUG ((LM_WARNING,
+                     ACE_TEXT ("FTClient_exec_i::server_ior () : could not resolve server reference.\n")));
+      }
+
     try
       {
         server_ = DeCoRAM::Worker::_narrow (obj.in ());
@@ -132,7 +138,7 @@ namespace CIDL_FTClient_Impl
     ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-      ::Simple::CCM_FTClient_Context::_narrow (ctx);
+      DeCoRAM::CCM_FTClient_Context::_narrow (ctx);
 
     if (CORBA::is_nil (this->context_.in ()))
     {
@@ -231,7 +237,7 @@ namespace CIDL_FTClient_Impl
   }
 
   extern "C" FTCLIENT_EXEC_Export ::Components::HomeExecutorBase_ptr
-  create_Simple_FTClientHome_Impl (void)
+  create_DeCoRAM_FTClientHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();

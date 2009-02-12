@@ -31,7 +31,7 @@ namespace CIDL_FTClient_Impl
     CORBA::Object_var obj = orb_->resolve_initial_references ("RTCurrent");
     RTCORBA::Current_var rt_current = RTCORBA::Current::_narrow (obj);
 
-    rt_current->the_priority (client_executor_->priority ());
+    //    rt_current->the_priority (client_executor_->priority ());
 
     try
       {
@@ -52,7 +52,7 @@ namespace CIDL_FTClient_Impl
     catch (CORBA::SystemException & ex)
       {
         CIAO_DEBUG ((LM_WARNING, 
-                     ACE_TEXT ("FTClient_Timer_Handler::handle_timeout () -"
+                     ACE_TEXT ("FTClient_Timer_Handler::handle_timeout () - "
                                "caught: %s"), ex._info ().c_str ()));
       }
 
