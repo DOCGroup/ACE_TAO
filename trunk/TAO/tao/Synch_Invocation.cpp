@@ -270,7 +270,7 @@ namespace TAO
           {
             ACE_DEBUG ((LM_DEBUG,
                         "TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply, "
-                        "recovering after an error \n"));
+                        "recovering after an error\n"));
           }
 
         // You the smarty, don't try to moving the unbind_dispatcher
@@ -436,7 +436,7 @@ namespace TAO
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::location_forward ")
-                    ACE_TEXT ("being handled \n")));
+                    ACE_TEXT ("being handled\n")));
       }
 
     CORBA::Object_var fwd;
@@ -466,7 +466,7 @@ namespace TAO
     if (TAO_debug_level > 3)
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Synch_Twoway_Invocation::"
-                  "handle_user_exception \n"));
+                  "handle_user_exception\n"));
 
     // Pull the exception from the stream.
     CORBA::String_var buf;
@@ -512,7 +512,7 @@ namespace TAO
     if (TAO_debug_level > 3)
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Synch_Twoway_Invocation::"
-                  "handle_system_exception \n"));
+                  "handle_system_exception\n"));
 
     CORBA::String_var type_id;
 

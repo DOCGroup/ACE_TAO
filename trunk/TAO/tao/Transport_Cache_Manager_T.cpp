@@ -167,7 +167,7 @@ namespace TAO
                   ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i: ")
                     ACE_TEXT ("Unable to bind Transport[%d] @ hash:index{%d:%d}. ")
-                    ACE_TEXT ("Trying with a new index \n"),
+                    ACE_TEXT ("Trying with a new index\n"),
                     int_id.transport ()->id (),
                     ext_id.hash (),
                     ext_id.index ()));
@@ -179,8 +179,8 @@ namespace TAO
             if (TAO_debug_level > 0)
               {
                 ACE_ERROR ((LM_ERROR,
-                  "TAO (%P|%t) - Transport_Cache_Manager_T::bind_i, "
-                  "ERROR: unable to bind transport\n"));
+                  ACE_TEXT("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i, ")
+                  ACE_TEXT("ERROR: unable to bind transport\n")));
               }
             more_to_do = false;
           }
@@ -244,7 +244,7 @@ namespace TAO
                     if (TAO_debug_level > 0)
                       ACE_ERROR ((LM_ERROR,
                                   ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T[%d]")
-                                  ACE_TEXT ("::find_transport, remove_handler failed \n"),
+                                  ACE_TEXT ("::find_transport, remove_handler failed\n"),
                                   transport->id ()));
                   }
                 else

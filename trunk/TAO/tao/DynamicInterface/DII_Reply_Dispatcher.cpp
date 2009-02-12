@@ -49,7 +49,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
           ACE_ERROR ((
             LM_ERROR,
             "TAO (%P|%t) - DII_Deferred_Reply_Dispatcher::dispatch_reply "
-            "clone_from failed \n"));
+            "clone_from failed\n"));
         }
       return -1;
     }

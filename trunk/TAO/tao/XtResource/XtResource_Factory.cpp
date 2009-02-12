@@ -25,7 +25,7 @@ namespace TAO
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT("TAO (%P|%t) - XtAppContext is undefined.")
-                  ACE_TEXT(" Cannot create ACE_XtReactor \n")));
+                  ACE_TEXT(" Cannot create ACE_XtReactor\n")));
       return 0;
     }
 
@@ -37,7 +37,7 @@ namespace TAO
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - ACE_XtReactor created \n"));
+                    "TAO (%P|%t) - ACE_XtReactor created\n"));
     }
 
     return this->reactor_impl_;

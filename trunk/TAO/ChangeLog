@@ -1,3 +1,63 @@
+Thu Feb 12 20:22:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Exclusive_TMS.cpp:
+          Updated a few debug statements to have the same layout as in other
+          places
+
+        * tao/Acceptor_Impl.cpp
+        * tao/Asynch_Queued_Message.cpp
+        * tao/CSD_Framework/CSD_Strategy_Repository.cpp
+        * tao/default_resource.cpp
+        * tao/DynamicInterface/DII_Invocation.cpp
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp
+        * tao/DynamicInterface/DII_Reply_Handler.cpp
+        * tao/Exclusive_TMS.cpp
+        * tao/FlResource/FlResource_Factory.cpp
+        * tao/FoxResource/FoxResource_Factory.cpp
+        * tao/GIOP_Message_Base.cpp
+        * tao/GIOP_Message_Generator_Parser_10.cpp
+        * tao/GIOP_Message_State.cpp
+        * tao/IIOP_Connector.cpp
+        * tao/IIOP_Profile.cpp
+        * tao/Invocation_Adapter.cpp
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp
+        * tao/Muxed_TMS.cpp
+        * tao/ORB_Core.cpp
+        * tao/PI/Interceptor_List_T.cpp
+        * tao/PortableServer/Active_Object_Map.cpp
+        * tao/PortableServer/Object_Adapter.cpp
+        * tao/PortableServer/Root_POA.cpp
+        * tao/QtResource/QtResource_Factory.cpp
+        * tao/Queued_Data.cpp
+        * tao/Remote_Invocation.cpp
+        * tao/RTScheduling/Request_Interceptor.cpp
+        * tao/RTScheduling/RTScheduler_Initializer.cpp
+        * tao/Strategies/COIOP_Acceptor.cpp
+        * tao/Strategies/COIOP_Profile.cpp
+        * tao/Strategies/DIOP_Acceptor.cpp
+        * tao/Strategies/DIOP_Transport.cpp
+        * tao/Strategies/SCIOP_Acceptor.cpp
+        * tao/Strategies/SCIOP_Connection_Handler.cpp
+        * tao/Strategies/SCIOP_Connector.cpp
+        * tao/Strategies/SCIOP_Endpoint.cpp
+        * tao/Strategies/SCIOP_Profile.cpp
+        * tao/Strategies/SCIOP_Transport.cpp
+        * tao/Strategies/SHMIOP_Profile.cpp
+        * tao/Strategies/SHMIOP_Transport.cpp
+        * tao/Strategies/UIOP_Acceptor.cpp
+        * tao/Strategies/UIOP_Connector.cpp
+        * tao/Strategies/UIOP_Profile.cpp
+        * tao/Strategies/UIOP_Transport.cpp
+        * tao/Synch_Invocation.cpp
+        * tao/Synch_Reply_Dispatcher.cpp
+        * tao/Tagged_Profile.cpp
+        * tao/TkResource/TkResource_Factory.cpp
+        * tao/Transport_Cache_Manager_T.cpp
+        * tao/Transport_Connector.cpp
+        * tao/Wait_On_Read.cpp
+        * tao/XtResource/XtResource_Factory.cpp
+          Updated debug statements with layout and unicode fixes
+
 Thu Feb 12 19:33:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3567_Regression/*:

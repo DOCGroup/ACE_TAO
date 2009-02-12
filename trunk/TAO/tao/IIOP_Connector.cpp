@@ -557,7 +557,7 @@ TAO_IIOP_Connector::complete_connection (int result,
       if (TAO_debug_level > 0)
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("TAO (%P|%t) - IIOP_Connector::make_connection, ")
-                   ACE_TEXT("transport in error before cache! \n")));
+                   ACE_TEXT("transport in error before cache!\n")));
       transport->connection_handler()->cancel_pending_connection();
       return 0;
     }

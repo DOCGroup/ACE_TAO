@@ -88,7 +88,7 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) TAO_Exclusive_TMS::dispatch_reply - <%d != %d>\n"),
+                    ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::dispatch_reply - <%d != %d>\n"),
                     this->request_id_, params.request_id_));
 
       // The return value 0 informs the transport that the mux strategy
@@ -113,7 +113,7 @@ TAO_Exclusive_TMS::reply_timed_out (CORBA::ULong request_id)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) TAO_Exclusive_TMS::reply_timed_out - <%d != %d>\n"),
+                    ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::reply_timed_out - <%d != %d>\n"),
                     this->request_id_, request_id));
 
       // The return value 0 informs the transport that the mux strategy

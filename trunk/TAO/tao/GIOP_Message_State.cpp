@@ -68,7 +68,7 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
                 (this->message_type_ == GIOP::CloseConnection) ? "CloseConnection" :
                 (this->message_type_ == GIOP::MessageError) ? "MessageError" : "unknown";
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - GIOP %s received \n"), which));
+                          ACE_TEXT ("TAO (%P|%t) - GIOP %C received\n"), which));
             }
           return 0;
         default:
@@ -76,7 +76,7 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - ")
                         ACE_TEXT ("TAO_GIOP_Message_State::parse_magic_bytes, ")
-                        ACE_TEXT ("Message of size zero recd. \n")));
+                        ACE_TEXT ("Message of size zero recd.\n")));
           return -1;
         }
     }
