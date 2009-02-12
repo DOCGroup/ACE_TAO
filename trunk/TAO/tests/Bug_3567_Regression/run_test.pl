@@ -11,20 +11,12 @@ use PerlACE::TestTarget;
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-$client_conf = $client->LocalFile ("muxed$PerlACE::svcconf_ext");
-
 $debug_level = '0';
 $iterations = '1';
 
 foreach $i (@ARGV) {
-    if ($i eq '-mux') {
-        $client_conf = $client->LocalFile ("muxed$PerlACE::svcconf_ext");
-    }
-    elsif ($i eq '-debug') {
+    if ($i eq '-debug') {
         $debug_level = '10';
-    }
-    elsif ($i eq '-exclusive') {
-        $client_conf = $client->LocalFile ("exclusive$PerlACE::svcconf_ext");
     }
 }
 
@@ -51,7 +43,6 @@ if ($server->WaitForFileTimed ($iorbase,
 }
 
 $CL2 = $client->CreateProcess ("client",
-                               "-ORBsvcconf $client_conf"
                                . " -ORBdebuglevel $debug_level"
                                . " -k file://$client_iorfile "
                                . " -i $iterations -d");

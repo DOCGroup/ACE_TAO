@@ -6,16 +6,13 @@
  *  $Id$
  *
  *  A client which uses the AMI callback model.
- *
- *
- *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
- *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
 //=============================================================================
 
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_unistd.h"
 #include "ami_test_i.h"
 
 ACE_RCSID (AMI,
@@ -24,7 +21,7 @@ ACE_RCSID (AMI,
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
-int niterations = 5;
+int niterations = 10;
 int debug = 0;
 int number_of_replies = 0;
 
@@ -117,23 +114,6 @@ public:
   A::AMI_AMI_TestHandler_var the_handler_var_;
 };
 
-class Synch_Client : public ACE_Task_Base
-{
-public:
-  /// ctor
-  Synch_Client (A::AMI_Test_ptr server, int niterations);
-
-  /// The thread entry point.
-  virtual int svc (void);
-
-  // private:
-  /// Var for the AMI_Test object.
-  A::AMI_Test_var ami_test_var_;
-
-  /// The number of iterations on each client thread.
-  int niterations_;
-};
-
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
@@ -162,9 +142,10 @@ public:
                       result,
                       out_l));
         }
-        
-      --number_of_replies;
+      ACE_OS::sleep (1);        
       ami_test_var_->sendc_set_yadda (0, 5);
+
+      --number_of_replies;
     };
 
    void foo_excep (::Messaging::ExceptionHolder * excep_holder)
@@ -278,13 +259,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            "Cannot activate client threads\n"),
                           1);
 
-      Synch_Client synch_client (server.in (), niterations);
-      if (synch_client.activate (THR_NEW_LWP | THR_JOINABLE,
-                           nthreads) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate synch_client threads\n"),
-                          1);
-
       // Main thread collects replies. It needs to collect
       // <nthreads*niterations> replies.
       number_of_replies = nthreads *niterations;
@@ -315,9 +289,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       client.thr_mgr ()->wait ();
-      synch_client.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
+
+      server->shutdown ();
 
       root_poa->destroy (1,  // ethernalize objects
                          0  // wait for completion
@@ -368,37 +343,6 @@ Client::svc (void)
   return 0;
 }
 
-Synch_Client::Synch_Client (A::AMI_Test_ptr server,
-                int niterations)
-                :  ami_test_var_ (A::AMI_Test::_duplicate (server)),
-     niterations_ (10*niterations)
-{
-}
-
-int
-Synch_Client::svc (void)
-{
-  try
-    {
-      for (int i = 0; i < this->niterations_; ++i)
-        {
-          CORBA::Long x;
-          ami_test_var_->foo (x, in_number, in_str);
-        }
-      if (debug)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) :<%d> Synchronous methods issued\n",
-                      niterations));
-        }
-    }
-  catch (const CORBA::Exception& ex)
-    {
-      ex._tao_print_exception ("Synch_Client_Client: exception raised");
-    }
-  return 0;
-}
-
 Worker::Worker (CORBA::ORB_ptr orb)
   :  orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -407,22 +351,15 @@ Worker::Worker (CORBA::ORB_ptr orb)
 int
 Worker::svc (void)
 {
-      //while (number_of_replies > 0)
-      //  {
-      //    CORBA::Boolean pending = orb->work_pending();
-
-      //    if (pending)
-      //      {
-      //        orb->perform_work();
-      //      }
-      //  }
-
-  try
+  while (number_of_replies > 0)
     {
-      this->orb_->run ();
+      CORBA::Boolean pending = this->orb_->work_pending();
+
+      if (pending)
+        {
+          this->orb_->perform_work();
+        }
     }
-  catch (const CORBA::Exception&)
-    {
-    }
+
   return 0;
 }

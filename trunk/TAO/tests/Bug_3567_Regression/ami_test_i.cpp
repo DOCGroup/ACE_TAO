@@ -16,6 +16,7 @@
 
 #include "ami_test_i.h"
 #include "tao/debug.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(AMI, ami_test_i, "$Id$")
 
@@ -62,7 +63,7 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
           return 0;
         }
     }
-
+  ACE_OS::sleep (1);
   return 931234;
 }
 
