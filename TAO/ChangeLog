@@ -1,8 +1,16 @@
+Thu Feb 12 00:02:27 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_3531_Regression/Bug_3531_Regression.mpc:
+        * tests/Bug_3531_Regression/test_i.h:
+        * tests/Bug_3531_Regression/test_i.cpp:
+        
+          Fuzz fixes.
+
 Wed Feb 11 21:03:46 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/lex.yy.cpp(idl_get_pragma_string):
         * TAO_IDL/fe/idl.ll(idl_get_pragma_string):
-        
+
           Beefed up error checking to catch the case where one or both
           quote are missing from the #pragma prefix string, and output
           a syntax error instead of crashing. Thanks to Bogdan Jeram
@@ -12,7 +20,7 @@ Wed Feb 11 21:03:46 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 Wed Feb 11 16:14:04 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc: Zapped
-        
+
           libs += TAO_PortableServer
 
           based upon recommendation of Johnny Willemsen.
@@ -20,16 +28,16 @@ Wed Feb 11 16:14:04 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 Tue Feb 10 02:48:01 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc: Added
-        
+
           libs += TAO_PortableServer
 
         * examples/Advanced/ch_8_and_10/icp.h: Added #include for "ace/OS.h".
 
         * examples/Advanced/ch_8_and_10/server.h: Zapped a stray ')'.
-  
+
           Thanks to Joe Lihn <joelihn at hotmail dot com> for reporting
-          these problems and providing the fixes. 
-  
+          these problems and providing the fixes.
+
 Wed Feb 11 14:15:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Leader_Follower.cpp:
