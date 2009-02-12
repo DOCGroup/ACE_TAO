@@ -1,19 +1,27 @@
+Thu Feb 12 15:15:11 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/RedirectionServiceTest/RedirectionServiceTest.mpc:
+        * MPC/config/ciao_logger.mpb:
+        * MPC/config/dance_logger.mpb:
+
+          Ordering/linking/build issues. 
+        
 Thu Feb 12 13:34:33 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleMultipleUser.mpc:
         * DAnCE/tests/NodeApplicationManager-NodeApplication/NAM_NA.mpc:
         * DAnCE/tests/RedirectionServiceTest/RedirectionServiceTest.mpc:
         * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.mpc:
-        
-          Fuzz fixes. 
-        
+
+          Fuzz fixes.
+
         * examples/Display/Display_Base/Display_Base.mpc:
         * examples/Display/GPS/GPS.mpc:
         * examples/Display/NavDisplay/NavDisplay.mpc:
         * examples/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
         * examples/Display/RateGen/RateGen.mpc:
-        
-          Disabled this example until it can be ported. 
+
+          Disabled this example until it can be ported.
 
         * DAnCE/tests/NodeApplicationManager-NodeApplication/NodeApplicationManager-NodeApplication.mpc:
 
