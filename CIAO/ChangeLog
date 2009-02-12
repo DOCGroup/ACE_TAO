@@ -1,3 +1,9 @@
+Thu Feb 12 19:05:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
+
+          Compile fix. 
+        
 Thu Feb 12 18:37:35 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplication/Domain_Application_Impl.h:
@@ -9,8 +15,8 @@ Thu Feb 12 18:37:35 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/RedirectionService/RedirectionService.h:
         * DAnCE/tests/RedirectionServiceTest/clt_main.cpp:
 
-          Compile fixes. 
-        
+          Compile fixes.
+
 Thu Feb 12 18:33:59 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/RedirectionService/NameServiceRedirection.h:
