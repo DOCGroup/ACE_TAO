@@ -273,6 +273,15 @@
 #define ACE_LACKS_WAIT
 #define ACE_LACKS_IOVEC
 #define ACE_LACKS_LOG2
+#define ACE_LACKS_CADDR_T
+#if !defined(__MINGW32__) && !defined (__BORLANDC__)
+# define ACE_LACKS_MODE_T
+#endif
+#if !defined (__BORLANDC__)
+# define ACE_LACKS_NLINK_T
+# define ACE_LACKS_UID_T
+# define ACE_LACKS_GID_T
+#endif
 
 #define ACE_HAS_PDH_H
 #define ACE_HAS_PDHMSG_H
