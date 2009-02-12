@@ -14,7 +14,7 @@ project (RedirectionServiceTestServer): dance, taoserver, iortable, naming, danc
   	}
 }
 
-project (RedirectionServiceTestClient): dance, taoclient, naming, dance_logger {
+project (RedirectionServiceTestClient): dance, taoclient, naming, dance_logger, naming, portableserver, anytypecode {
 	after = *RedirectionServiceTestServer
 	exename = RedirectionServiceTestClient
 

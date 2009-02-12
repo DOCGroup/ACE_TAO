@@ -1,7 +1,7 @@
 // $Id$
 // -*- MPC -*-
 
-project : ciao, messaging {
+project : ciao, acelib {
   after += CIAO_Logger
   libs  += CIAO_Logger
 }
