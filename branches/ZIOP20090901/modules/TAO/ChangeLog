@@ -1,3 +1,8 @@
+Thu Feb 12 08:55:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+      
+      * tests/ZIOP/client.cpp:
+        Refactored code. Added logging of statistics.
+    
 Tue Feb 10 10:43:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
       * tao/GIOP_Message_Base.cpp:

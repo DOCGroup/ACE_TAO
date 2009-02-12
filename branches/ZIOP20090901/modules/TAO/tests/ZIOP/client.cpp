@@ -5,6 +5,8 @@
 #include "tao/ZIOP/ZIOP.h"
 #include "ace/OS.h"
 #include "tao/Compression/zlib/ZlibCompressor_Factory.h"
+#include "tao/ORB_Constants.h"
+#include "tao/TransportCurrent/TC_IIOPC.h"
 
 ACE_RCSID(Hello, client, "$Id$")
 
@@ -34,6 +36,133 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   // Indicates sucessful parsing of the command line
   return 0;
+}
+
+void log_statistics (ACE_TCHAR* test,
+                     ::TAO::CounterT initial_bytes_send, 
+                     ::TAO::CounterT initial_bytes_recv,
+                     ::TAO::CounterT bytes_send_after_test,
+                     ::TAO::CounterT bytes_recv_after_test)
+{
+  ACE_DEBUG ((LM_DEBUG, 
+              ACE_TEXT ("%s statistics:") 
+              ACE_TEXT (" initial bytes sent:%d")
+              ACE_TEXT (" initial bytes recv:%d")
+              ACE_TEXT (" bytes sent after test:%d")
+              ACE_TEXT (" bytes recv after test:%d\n"),
+              test,
+              initial_bytes_send, 
+              initial_bytes_recv,
+              bytes_send_after_test,
+              bytes_recv_after_test));
+}
+
+void start_low_value_test(Test::Hello_ptr hello, ::TAO::Transport::IIOP::Current_ptr tc)
+{
+  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
+  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
+
+  ACE_DEBUG((LM_DEBUG, 
+            ACE_TEXT("Start get_string; large compression ratio\n")));
+
+  CORBA::String_var the_string = hello->get_string ("This is a test string"
+                                                    "This is a test string"
+                                                    "This is a test string"
+                                                    "This is a test string"
+                                                    "This is a test string"
+                                                    "This is a test string"
+                                                    "This is a test string"
+                                                    "This is a test string"
+                                                    "This is a test string");
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
+              the_string.in ()));
+
+  log_statistics ("low_value_test", initial_bytes_sent, initial_bytes_recv,
+        tc->bytes_sent (), tc->bytes_received ());
+
+}
+
+void start_min_ratio_test (Test::Hello_ptr hello, ::TAO::Transport::IIOP::Current_ptr tc)
+{
+  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
+  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
+
+  ACE_DEBUG((LM_DEBUG, 
+              ACE_TEXT("Start get_string; small compression ratio\n")));
+
+  //shouldn't compress since compress_ratio < min_ratio
+  CORBA::String_var the_string = hello->get_string ("!@#$#%^#@&^%*$@#GFGSd"
+                                                    "fgdbdfgwe%^@#$#$%EQRT"
+                                                    "sfdgdafs56#$@@#$&((%$"
+                                                    "#4&%3#4%^21@!sdfSADHv"
+                                                    "dsaAhn~1`2#$#sAFDGHdf");
+
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
+              the_string.in ()));
+
+  log_statistics ("min_ratio_test", initial_bytes_sent, initial_bytes_recv,
+        tc->bytes_sent (), tc->bytes_received ());
+}
+
+void start_big_reply_test (Test::Hello_ptr hello, ::TAO::Transport::IIOP::Current_ptr tc)
+{
+  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
+  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
+
+  ACE_DEBUG((LM_DEBUG, 
+              ACE_TEXT("Start get_big_reply; large compression ratio\n")));
+
+  //Prepare to send a large number of bytes. Should be compressed
+  Test::Octet_Seq_var dummy = hello->get_big_reply ();
+  if (dummy.ptr ()->length () > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_TEXT("Client side BLOB received\n")));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_ERROR, 
+                  ACE_TEXT("Error recieving BLOB on Client\n")));
+    }
+
+  log_statistics ("big_reply_test",initial_bytes_sent, initial_bytes_recv,
+        tc->bytes_sent (), tc->bytes_received ());
+}
+
+void start_big_request_test (Test::Hello_ptr hello, ::TAO::Transport::IIOP::Current_ptr tc)
+{
+  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
+  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
+
+  ACE_DEBUG((LM_DEBUG, 
+              ACE_TEXT("Start big_request; large compression ratio\n")));
+  //ACE_OS::sleep(1);
+  int length = 2000;
+  Test::Octet_Seq send_msg(length);
+  send_msg.length (length);
+
+  hello->big_request(send_msg);
+
+  log_statistics ("big_request_test", initial_bytes_sent, initial_bytes_recv,
+        tc->bytes_sent (), tc->bytes_received ());
+}
+
+void start_tests (Test::Hello_ptr hello, ::TAO::Transport::IIOP::Current_ptr tc)
+{
+  //::CORBA::String_var rhost (tc->remote_host ());
+  //::CORBA::String_var lhost (tc->local_host ());
+  //::CORBA::Long id = tc->id ();
+  //::TAO::CounterT bs = tc->bytes_sent ();
+  //::TAO::CounterT br = tc->bytes_received ();
+  //::TAO::CounterT rs = tc->messages_sent ();
+  //::TAO::CounterT rr = tc->messages_received ();
+  start_low_value_test (hello, tc);
+
+  start_min_ratio_test (hello, tc);
+
+  start_big_reply_test (hello, tc);
+
+  start_big_request_test (hello, tc);
 }
 
 int
@@ -110,66 +239,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              ior),
                             1);
         }
-      //shouldn't compress since data.length < low_value policy
-      ACE_DEBUG((LM_DEBUG, 
-                  ACE_TEXT("Start get_string; large compression ratio\n")));
 
-      CORBA::String_var the_string = hello->get_string ("This is a test string"
-                                                        "This is a test string"
-                                                        "This is a test string"
-                                                        "This is a test string"
-                                                        "This is a test string"
-                                                        "This is a test string"
-                                                        "This is a test string"
-                                                        "This is a test string"
-                                                        "This is a test string");
+      CORBA::Object_var tcobject =
+                orb->resolve_initial_references ("TAO::Transport::IIOP::Current");
       
-      CORBA::LongLong bytes_send_2 = ::TAO::Transport::Stats().bytes_sent ();
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
-                  the_string.in ()));
-
-//      ACE_DEBUG ((LM_DEBUG,
-//        ACE_TEXT("(%P|%t) - Initial bytes send %d; Bytes send after invocation: %d; Difference : %d\n"), 
-//                  bytes_send_1, bytes_send_2, bytes_send_2 - bytes_send_1));
+      ::TAO::Transport::IIOP::Current_var tc =
+        ::TAO::Transport::IIOP::Current::_narrow (tcobject.in ());
+      if (CORBA::is_nil (tc.in ()))
+        throw ::CORBA::INTERNAL ();
       
-      ACE_DEBUG((LM_DEBUG, 
-                  ACE_TEXT("Start get_string; small compression ratio\n")));
-
-      //shouldn't compress since compress_ratio < min_ratio
-      the_string = hello->get_string ("!@#$#%^#@&^%*$@#GFGSd"
-                                      "fgdbdfgwe%^@#$#$%EQRT"
-                                      "sfdgdafs56#$@@#$&((%$"
-                                      "#4&%3#4%^21@!sdfSADHv"
-                                      "dsaAhn~1`2#$#sAFDGHdf");
-
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
-                  the_string.in ()));
-
-      ACE_DEBUG((LM_DEBUG, 
-                  ACE_TEXT("Start get_big_reply; large compression ratio\n")));
-
-      //Prepare to send a large number of bytes. Should be compressed
-      Test::Octet_Seq_var dummy = hello->get_big_reply ();
-      if (dummy.ptr ()->length () > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG, 
-                      ACE_TEXT("Client side BLOB received\n")));
-        }
-      else
-        {
-          ACE_DEBUG ((LM_ERROR, 
-                      ACE_TEXT("Error recieving BLOB on Client\n")));
-        }
-
-      //now send a large blob from here....
-      ACE_DEBUG((LM_DEBUG, 
-                  ACE_TEXT("Start big_request; large compression ratio\n")));
-      //ACE_OS::sleep(1);
-      int length = 2000;
-      Test::Octet_Seq send_msg(length);
-      send_msg.length (length);
-
-      hello->big_request(send_msg);
+      start_tests(hello.in (), tc.in ());
 
       hello->shutdown ();
       
