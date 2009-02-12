@@ -14,8 +14,8 @@ project (ObjectLocatorTestServer): dance, taoserver, iortable, dance_redirection
   	}
 }
 
-project (ObjectLocatorTestClient): dance, taoclient, anytypecode, dance_logger {
-
+project (ObjectLocatorTestClient): dance, taoclient, anytypecode, dance_logger, portableserver {
+        
 	after  += ObjectLocatorTestServer
 	exename = ObjectLocatorTestClient
 
