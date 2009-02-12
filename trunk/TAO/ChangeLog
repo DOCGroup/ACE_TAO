@@ -1,17 +1,22 @@
+Thu Feb 12 08:52:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMH_Oneway/run_test.pl:
+          Fixed a bug in this script
+
 Thu Feb 12 02:39:44 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/fe/idl.ll:
         * TAO_IDL/fe/lex.yy.cpp:
 
-          Fixed a small syntax problem from 
+          Fixed a small syntax problem from
           Wed Feb 11 21:03:46 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
-        
+
 Thu Feb 12 00:02:27 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Bug_3531_Regression/Bug_3531_Regression.mpc:
         * tests/Bug_3531_Regression/test_i.h:
         * tests/Bug_3531_Regression/test_i.cpp:
-        
+
           Fuzz fixes.
 
 Wed Feb 11 21:03:46 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
