@@ -1,9 +1,29 @@
+Thu Feb 12 16:18:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Logger/DAnCELoggerFactory.h:
+        * DAnCE/Logger/Logger_Service.h:
+        * DAnCE/tests/ObjectLocatorTest/ObjectLocatorTest.mpc:
+        
+          Compile/link fixes. 
+        
+        * MPC/config/ciao_config_manager.mpb:
+        
+          Removed svn:executable property.
+        
+        * MPC/config/ciaocidldefaults.mpb:
+        
+          Ported in pre-merge fixes. 
+        
+        * DAnCE/Starter/DAnCELoggerFactory.h:
+
+          Removed this file.
+
 Thu Feb 12 15:52:16 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/RedirectionService/RedirectionService.mpc:
 
-          Linking error. 
-        
+          Linking error.
+
 Thu Feb 12 15:15:11 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/RedirectionServiceTest/RedirectionServiceTest.mpc:

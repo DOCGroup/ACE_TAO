@@ -1,6 +1,6 @@
 // $Id$
-#ifndef LOGGERFACTORY_H_
-#define LOGGERFACTORY_H_
+#ifndef DAnCE_LOGGERFACTORY_BASE_H_
+#define DAnCE_LOGGERFACTORY_BASE_H_
 
 #include "ace/Service_Object.h"
 #include "tao/ORB.h"
