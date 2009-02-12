@@ -179,9 +179,9 @@ namespace CIAO
 
       ACE_CString cs_args_;
 
-      ACE_Thread_Mutex mutex_;
+      TAO_SYNCH_MUTEX mutex_;
 
-      ACE_Condition<ACE_Thread_Mutex> condition_;
+      ACE_Condition<TAO_SYNCH_MUTEX> condition_;
     };
 
 
