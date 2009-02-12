@@ -38,13 +38,17 @@ if ($server->WaitForFileTimed ($iorbase,
 }
 
 # Run the client.
-$client = $CL->Spawn ();
+$client_status = $CL->Spawn ();
+if ($client_status != 0) {
+    print STDERR "ERROR: Client returned $client_status\n";
+    $status = 1;
+}
 
 # Clean up.
 
-$client = $CL->WaitKill (30);
-if ($client != 0) {
-    print STDERR "ERROR: Client returned $client\n";
+$client_status = $CL->WaitKill (30);
+if ($client_status != 0) {
+    print STDERR "ERROR: Client returned $client_status\n";
     $status = 1;
 }
 
