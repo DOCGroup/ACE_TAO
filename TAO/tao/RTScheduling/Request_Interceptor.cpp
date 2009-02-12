@@ -179,7 +179,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
       if (CORBA::is_nil (type.in ()))
         {
           ACE_ERROR ((LM_ERROR,
-                      "type = 0 \n"));
+                      "type = 0\n"));
           return;
         }
       const char * id = type->id ();
@@ -328,7 +328,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "The Guid is %d \n",
+                "The Guid is %d\n",
                 id));
 
   // Create new DT.

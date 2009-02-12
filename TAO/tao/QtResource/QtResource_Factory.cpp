@@ -25,7 +25,7 @@ namespace TAO
       {
         ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - QApplication is undefined.",
-                    " Cannot create ACE_QtReactor \n"));
+                    " Cannot create ACE_QtReactor\n"));
         return 0;
       }
 

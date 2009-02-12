@@ -94,7 +94,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, ")
-                      ACE_TEXT ("could not add the handler to cache \n")));
+                      ACE_TEXT ("could not add the handler to cache\n")));
         }
 
       return -1;

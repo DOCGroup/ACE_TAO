@@ -1978,7 +1978,7 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "IMR IOR = \n%C\n",
+                    "IMR IOR =\n%C\n",
                     imr_str.in ()));
 
       // Search for "corbaloc:" alone, without the protocol.  This code
@@ -2011,7 +2011,7 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "ImR-ified IOR = \n%C\n",
+                    "ImR-ified IOR =\n%C\n",
                     ior.c_str ()));
 
       obj = this->orb_core_.orb ()->string_to_object (ior.c_str ());

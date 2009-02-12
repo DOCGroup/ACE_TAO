@@ -150,7 +150,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) UIUP_Connector::make_connection, ")
-                ACE_TEXT ("making a new connection \n")));
+                ACE_TEXT ("making a new connection\n")));
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
@@ -267,7 +267,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) UIOP_Connector::make_connection, ")
-                      ACE_TEXT ("could not add the new connection to Cache \n")));
+                      ACE_TEXT ("could not add the new connection to Cache\n")));
         }
 
       return 0;

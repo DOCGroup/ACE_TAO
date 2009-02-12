@@ -396,7 +396,7 @@ TAO_SCIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) TAO - IIOP_Profile::create_profile_body "
-                  "no object key marshalled \n"));
+                  "no object key marshalled\n"));
     }
 
   // Tagged Components

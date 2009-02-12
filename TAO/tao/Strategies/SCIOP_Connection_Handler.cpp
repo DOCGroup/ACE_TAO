@@ -208,8 +208,8 @@ TAO_SCIOP_Connection_Handler::open (void*)
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("TAO(%P|%t) - SCIOP_Connection_Handler::open, ")
-                ACE_TEXT("The local addr is (%s) \n"),
-                local_addr. get_host_addr ()));
+                ACE_TEXT("The local addr is (%C)\n"),
+                local_addr.get_host_addr ()));
 
   if (local_addr.get_ip_address () == remote_addr.get_ip_address ()
       && local_addr.get_port_number () == remote_addr.get_port_number ())
