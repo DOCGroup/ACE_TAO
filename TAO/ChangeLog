@@ -1,3 +1,9 @@
+Thu Feb 12 10:28:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3567_Regression/*:
+          Added new regression test for bug 3567. The test is not ready yet, working
+          on extending it to reproduce this bug.
+
 Thu Feb 12 08:52:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMH_Oneway/run_test.pl:
