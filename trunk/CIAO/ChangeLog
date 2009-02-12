@@ -1,11 +1,17 @@
+Thu Feb 12 15:52:16 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/RedirectionService/RedirectionService.mpc:
+
+          Linking error. 
+        
 Thu Feb 12 15:15:11 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/RedirectionServiceTest/RedirectionServiceTest.mpc:
         * MPC/config/ciao_logger.mpb:
         * MPC/config/dance_logger.mpb:
 
-          Ordering/linking/build issues. 
-        
+          Ordering/linking/build issues.
+
 Thu Feb 12 13:34:33 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleMultipleUser.mpc:
