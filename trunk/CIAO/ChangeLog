@@ -1,11 +1,18 @@
+Thu Feb 12 17:48:35 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * examples/DevGuideExamples/Messenger/Receiver.mpc:
+        * tests/Minimum/Receiver/Receiver.mpc:
+
+          Linking fixes. 
+        
 Thu Feb 12 16:52:56 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp:
         * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
         * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc:
 
-          Compile fixes. 
-        
+          Compile fixes.
+
 Thu Feb 12 16:18:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Logger/DAnCELoggerFactory.h:
