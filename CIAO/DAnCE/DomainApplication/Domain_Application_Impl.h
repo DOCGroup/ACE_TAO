@@ -73,7 +73,7 @@ namespace DAnCE
       Deployment::Application_var na_;
       void startLaunch (const Deployment::Properties & configProperty);
     };
-}; // DAnCE
+} // DAnCE
 
 #include /**/ "ace/post.h"
 #endif // DOMAIN_APPLICATION_H
