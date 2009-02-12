@@ -1,7 +1,7 @@
 // $Id$
 // -*- MPC -*-
 
-project : dance, messaging {
+project : dance, acelib {
   after += DAnCE_Logger
   libs  += DAnCE_Logger
 }
