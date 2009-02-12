@@ -19,9 +19,6 @@ project(Minimum_Base_Receiver_cidl_gen) : ciaocidldefaults, taoidldefaults {
   custom_only = 1
   cidlflags += --svnt-export-macro RECEIVER_SVNT_Export \
                --svnt-export-include Receiver_svnt_export.h
-//  idlflags += -Wb,export_macro=RECEIVER_EXEC_Export \
-//              -Wb,export_include=Receiver_exec_export.h \
-//              -SS
 	     
   cidlflags += -I$(CIAO_ROOT)/ccm
 
@@ -92,10 +89,9 @@ project(Minimum_Base_Receiver_svnt) : ciao_servant {
   avoids += ace_for_tao
   after      += Minimum_Base_skel Minimum_Base_Receiver_exec
   sharedname  = Receiver_svnt
-  libs       += Receiver_exec \
-                Receiver_stub \
+  libs       += Minimum_Base_stub \
                 Minimum_Base_skel \
-                Minimum_Base_stub
+                Receiver_stub 
   
   dynamicflags = RECEIVER_SVNT_BUILD_DLL
   
