@@ -18,10 +18,32 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
+#include "ace/Task.h"
 
 ACE_RCSID(AMI, server, "$Id$")
 
 const ACE_TCHAR *ior_output_file = 0;
+int nthreads = 5;
+
+class Worker : public ACE_Task_Base
+{
+  // = TITLE
+  //   Run a server thread
+  //
+  // = DESCRIPTION
+  //   Use the ACE_Task_Base class to run server threads
+  //
+public:
+  Worker (CORBA::ORB_ptr orb);
+  // ctor
+
+  virtual int svc (void);
+  // The thread entry point.
+
+private:
+  CORBA::ORB_var orb_;
+  // The orb
+};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -36,7 +58,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior_output_file = get_opts.opt_arg ();
         break;
       case 'd':
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case '?':
       default:
@@ -106,7 +128,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      orb->run ();
+      Worker worker (orb.in ());
+      if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
+                           nthreads) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot activate client threads\n"),
+                          1);
+
+      worker.thr_mgr ()->wait ();
 
       root_poa->destroy (1,  // ethernalize objects
                          0  // wait for completion
@@ -122,5 +151,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
+  return 0;
+}
+
+Worker::Worker (CORBA::ORB_ptr orb)
+  :  orb_ (CORBA::ORB::_duplicate (orb))
+{
+}
+
+int
+Worker::svc (void)
+{
+  try
+    {
+      this->orb_->run ();
+    }
+  catch (const CORBA::Exception&)
+    {
+    }
   return 0;
 }

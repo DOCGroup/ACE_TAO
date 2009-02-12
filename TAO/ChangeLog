@@ -1,3 +1,11 @@
+Thu Feb 12 19:33:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3567_Regression/*:
+          Extended this reproducer
+
+        * bin/tao_orb_tests.lst:
+          Added 3567
+
 Thu Feb 12 10:36:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3531_Regression/client.cpp:
