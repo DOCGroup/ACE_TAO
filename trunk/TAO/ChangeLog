@@ -1,5 +1,10 @@
 Thu Feb 12 10:36:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * tests/Bug_3531_Regression/client.cpp:
+          Unicode fix
+
+Thu Feb 12 10:36:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * tests/Bug_3531_Regression/server.cpp:
           Unicode fix
 
