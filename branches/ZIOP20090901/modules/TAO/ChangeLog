@@ -1,3 +1,50 @@
+Thu Feb 12 15:06:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+      * tao/Compression/bzip2/Bzip2Compressor.cpp:
+      * tao/Compression/zlib/ZlibCompressor.cpp:
+        Used a define for header size.
+
+      * tao/ORB_Core.h:
+      * tao/ORB_Core.inl:
+        Removed ziop_enabled function since it wasn't used
+
+      * tao/orbconf.h:
+        TAO_CACHED_MIN_COMPRESSION_RATIO_POLICY_ID changed into
+        TAO_CACHED_MIN_COMPRESSION_RATIO_POLICY
+      
+      * tao/CDR.cpp:
+      * tao/CDR.h:
+      * tao/CDR.inl:
+      * tao/GIOP_Message_Base.cpp:
+      * tao/GIOP_Message_Base.h:
+      * tao/GIOP_Message_State.cpp:
+      * tao/GIOP_Message_State.h:
+      * tao/GIOP_Message_State.inl:
+      * tao/Messaging/Asynch_Invocation.cpp:
+      * tao/Synch_Invocation.cpp:
+      * tao/TAO_Server_Request.cpp:
+        Removed compressed_ flag since it wasn't in use.
+        compressed_ is part of GIOP_Message_State.
+      
+      * tao/ZIOP/ZIOP.cpp:
+      * tao/ZIOP/ZIOP.h:
+        Minor refactoring changes
+      
+      * tao/ZIOP/ZIOP.pidl:
+        Removed tab characters
+        
+      * tao/ZIOP/ZIOP_Policy_i.cpp:
+        TAO_CACHED_MIN_COMPRESSION_RATIO_POLICY_ID changed into
+        TAO_CACHED_MIN_COMPRESSION_RATIO_POLICY
+      
+      * tao/ZIOP/ZIOP_Policy_Validator.cpp:
+        Implemented min ratio policy.
+        Some minor refactoring changes.
+      
+      * tests/ZIOP/client.cpp:
+      * tests/ZIOP/ZIOP.mpc:
+        Implement Transport::Current in order to get statistical data.
+
 Thu Feb 12 08:55:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
       
       * tests/ZIOP/client.cpp:

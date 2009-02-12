@@ -70,10 +70,24 @@ private:
   /// Get the compression low value, returns 0 when it is not set
   CORBA::ULong compression_policy_value (CORBA::Policy_ptr policy) const;
 
+  bool get_compressor_details (
+                        ::Compression::CompressorIdLevelList *list,
+                        Compression::CompressorId &compressor_id, 
+                        Compression::CompressionLevel &compression_level);
+
   bool get_compression_details(CORBA::Policy_ptr compression_enabling_policy,
                         CORBA::Policy_ptr compression_level_list_policy,
                         Compression::CompressorId &compressor_id, 
                         Compression::CompressionLevel &compression_level);
+
+  void complete_compression (Compression::Compressor_ptr compressor,
+                             TAO_OutputCDR &cdr, 
+                             ACE_Message_Block& mb,
+                             char *initial_rd_ptr, 
+                             CORBA::ULong low_value, 
+                             CORBA::Long min_ratio,
+                             CORBA::ULong original_data_length,
+                             Compression::CompressorId compressor_id);
 
   bool compress_data (TAO_OutputCDR &cdr, 
                       CORBA::Object_ptr compression_manager,
@@ -90,8 +104,7 @@ private:
                    const ::Compression::Buffer &source,
                    ::Compression::Buffer &target);
 
-  bool check_min_ratio (CORBA::ULong original_data_length, 
-                        CORBA::ULong compressed_length,
+  bool check_min_ratio (::Compression::CompressionRatio ratio,
                         CORBA::Long min_ratio) const;
 };
 

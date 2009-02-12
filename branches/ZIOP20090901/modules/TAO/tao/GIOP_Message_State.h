@@ -75,6 +75,7 @@ public:
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   /// Return the compressed information
   CORBA::Boolean compressed (void) const;
+  void compressed (CORBA::Boolean compressed);
 #endif
 
 private:

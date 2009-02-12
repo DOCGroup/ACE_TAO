@@ -183,7 +183,7 @@ private:
 
   /// Print out a debug messages..
   void dump_msg (const char *label, const u_char *ptr, 
-                 size_t len, bool hex_dump_only=false);
+                 size_t len, bool hex_dump_only = false);
 
   /// Writes the GIOP header in to @a msg
   /// @note If the GIOP header happens to change in the future, we can

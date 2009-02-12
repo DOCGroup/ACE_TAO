@@ -270,7 +270,7 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub& stub)
   TAO_ZIOP_Adapter* ziop_adapter = this->orb_core_->ziop_adapter ();
   
   //ziop adapter found and not compressed yet
-  if (ziop_adapter && !stream.compressed ())
+  if (ziop_adapter/* && !stream.compressed ()*/)
     {
       if (TAO_debug_level >= 5)
         {
@@ -1058,8 +1058,7 @@ TAO_GIOP_Message_Base::process_request (
           output.message_attributes (request_id,
                                      0,
                                      TAO_Transport::TAO_REPLY,
-                                     0,
-                                     false);
+                                     0);
 
           // Make the GIOP header and Reply header
           this->generate_reply_header (output, reply_params);

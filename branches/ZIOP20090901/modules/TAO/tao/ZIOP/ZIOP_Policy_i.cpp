@@ -350,7 +350,7 @@ CompressionMinRatioPolicy::ratio (void)
 TAO_Cached_Policy_Type
 CompressionMinRatioPolicy::_tao_cached_type (void) const
 {
-  return TAO_CACHED_MIN_COMPRESSION_RATIO_POLICY_ID;
+  return TAO_CACHED_MIN_COMPRESSION_RATIO_POLICY;
 }
 
 }

@@ -21,36 +21,16 @@ TAO_OutputCDR::more_fragments (bool more)
   this->more_fragments_ = more;
 }
 
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-ACE_INLINE bool
-TAO_OutputCDR::compressed (void) const
-{
-  return this->compressed_;
-}
-
-ACE_INLINE void
-TAO_OutputCDR::compressed (bool compressed)
-{
-  this->compressed_ = compressed;
-}
-#endif
-
 ACE_INLINE void
 TAO_OutputCDR::message_attributes (CORBA::ULong request_id,
                                    TAO_Stub * stub,
                                    TAO_Transport::TAO_Message_Semantics message_semantics,
-                                   ACE_Time_Value * timeout,
-                                   bool compressed)
+                                   ACE_Time_Value * timeout)
 {
   this->request_id_        = request_id;
   this->stub_              = stub;
   this->message_semantics_ = message_semantics;
   this->timeout_           = timeout;
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  this->compressed_        = compressed;
-#else
-  ACE_UNUSED_ARG (compressed);
-#endif
 }
 
 ACE_INLINE CORBA::ULong
@@ -98,9 +78,6 @@ TAO_InputCDR::TAO_InputCDR (const char *buf,
                   major_version,
                   minor_version),
     orb_core_ (orb_core)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -115,9 +92,6 @@ TAO_InputCDR::TAO_InputCDR (size_t bufsiz,
                   major_version,
                   minor_version),
     orb_core_ (orb_core)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -132,9 +106,6 @@ TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
                   major_version,
                   minor_version),
     orb_core_ (orb_core)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -151,9 +122,6 @@ TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
                   minor_version,
                   lock),
     orb_core_ (orb_core)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -170,9 +138,6 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
                   major_version,
                   minor_version),
     orb_core_ (orb_core)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -194,9 +159,6 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
                   major_version,
                   minor_version),
     orb_core_ (orb_core)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -209,9 +171,6 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
                   size,
                   offset),
     orb_core_ (rhs.orb_core_)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -221,9 +180,6 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
   : ACE_InputCDR (rhs,
                   size),
     orb_core_ (rhs.orb_core_)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -231,9 +187,6 @@ ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs)
   : ACE_InputCDR (rhs),
     orb_core_ (rhs.orb_core_)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -242,9 +195,6 @@ TAO_InputCDR::TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
                             TAO_ORB_Core* orb_core)
   : ACE_InputCDR (rhs),
     orb_core_ (orb_core)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -258,20 +208,6 @@ TAO_InputCDR::orb_core (void) const
 {
   return this->orb_core_;
 }
-
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-ACE_INLINE bool
-TAO_InputCDR::compressed (void) const
-{
-  return this->compressed_;
-}
-
-ACE_INLINE void
-TAO_InputCDR::compressed (bool compressed)
-{
-  this->compressed_ = compressed;
-}
-#endif
 
 // ****************************************************************
 

@@ -182,7 +182,7 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
       // Read the compressed flag
-      this->compressed_ = buf[0] == 0x5A;
+      this->compressed_ = (buf[0] == 0x5A);
 #endif
     }
 

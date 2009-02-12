@@ -6,7 +6,7 @@
 #include "ace/OS.h"
 #include "tao/Compression/zlib/ZlibCompressor_Factory.h"
 #include "tao/ORB_Constants.h"
-#include "tao/TransportCurrent/TC_IIOPC.h"
+#include "tao/TransportCurrent/TCC.h"
 
 ACE_RCSID(Hello, client, "$Id$")
 
@@ -57,10 +57,12 @@ void log_statistics (ACE_TCHAR* test,
               bytes_recv_after_test));
 }
 
-void start_low_value_test(Test::Hello_ptr hello, ::TAO::Transport::IIOP::Current_ptr tc)
+void start_low_value_test(Test::Hello_ptr hello, ::TAO::Transport::Current_ptr tc)
 {
-  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
-  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
+#if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT == 1
+//  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
+//  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
+#endif
 
   ACE_DEBUG((LM_DEBUG, 
             ACE_TEXT("Start get_string; large compression ratio\n")));
@@ -77,15 +79,18 @@ void start_low_value_test(Test::Hello_ptr hello, ::TAO::Transport::IIOP::Current
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
               the_string.in ()));
 
-  log_statistics ("low_value_test", initial_bytes_sent, initial_bytes_recv,
-        tc->bytes_sent (), tc->bytes_received ());
-
+#if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
+//  log_statistics ("low_value_test", initial_bytes_sent, initial_bytes_recv,
+//        tc->bytes_sent (), tc->bytes_received ());
+#endif
 }
 
-void start_min_ratio_test (Test::Hello_ptr hello, ::TAO::Transport::IIOP::Current_ptr tc)
+void start_min_ratio_test (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr tc)
 {
-  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
-  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
+#if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
+//  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
+//  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
+#endif
 
   ACE_DEBUG((LM_DEBUG, 
               ACE_TEXT("Start get_string; small compression ratio\n")));
@@ -100,14 +105,18 @@ void start_min_ratio_test (Test::Hello_ptr hello, ::TAO::Transport::IIOP::Curren
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
               the_string.in ()));
 
-  log_statistics ("min_ratio_test", initial_bytes_sent, initial_bytes_recv,
-        tc->bytes_sent (), tc->bytes_received ());
+#if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
+//  log_statistics ("min_ratio_test", initial_bytes_sent, initial_bytes_recv,
+//        tc->bytes_sent (), tc->bytes_received ());
+#endif
 }
 
-void start_big_reply_test (Test::Hello_ptr hello, ::TAO::Transport::IIOP::Current_ptr tc)
+void start_big_reply_test (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr tc)
 {
-  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
-  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
+#if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
+//  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
+//  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
+#endif
 
   ACE_DEBUG((LM_DEBUG, 
               ACE_TEXT("Start get_big_reply; large compression ratio\n")));
@@ -125,14 +134,18 @@ void start_big_reply_test (Test::Hello_ptr hello, ::TAO::Transport::IIOP::Curren
                   ACE_TEXT("Error recieving BLOB on Client\n")));
     }
 
-  log_statistics ("big_reply_test",initial_bytes_sent, initial_bytes_recv,
-        tc->bytes_sent (), tc->bytes_received ());
+#if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
+//  log_statistics ("big_reply_test",initial_bytes_sent, initial_bytes_recv,
+//        tc->bytes_sent (), tc->bytes_received ());
+#endif
 }
 
-void start_big_request_test (Test::Hello_ptr hello, ::TAO::Transport::IIOP::Current_ptr tc)
+void start_big_request_test (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr tc)
 {
-  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
-  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
+#if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
+//  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
+//  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
+#endif
 
   ACE_DEBUG((LM_DEBUG, 
               ACE_TEXT("Start big_request; large compression ratio\n")));
@@ -143,11 +156,13 @@ void start_big_request_test (Test::Hello_ptr hello, ::TAO::Transport::IIOP::Curr
 
   hello->big_request(send_msg);
 
-  log_statistics ("big_request_test", initial_bytes_sent, initial_bytes_recv,
-        tc->bytes_sent (), tc->bytes_received ());
+#if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
+//  log_statistics ("big_request_test", initial_bytes_sent, initial_bytes_recv,
+//        tc->bytes_sent (), tc->bytes_received ());
+#endif
 }
 
-void start_tests (Test::Hello_ptr hello, ::TAO::Transport::IIOP::Current_ptr tc)
+void start_tests (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr tc)
 {
   //::CORBA::String_var rhost (tc->remote_host ());
   //::CORBA::String_var lhost (tc->local_host ());
@@ -156,6 +171,13 @@ void start_tests (Test::Hello_ptr hello, ::TAO::Transport::IIOP::Current_ptr tc)
   //::TAO::CounterT br = tc->bytes_received ();
   //::TAO::CounterT rs = tc->messages_sent ();
   //::TAO::CounterT rr = tc->messages_received ();
+
+
+#if !defined (TAO_HAS_TRANSPORT_CURRENT) || TAO_HAS_TRANSPORT_CURRENT == 0
+  ACE_DEBUG((LM_DEBUG, 
+              ACE_TEXT ("No statistical information available since TAO_HAS_TRANSPORT_CURRENT is not set")));
+#endif
+
   start_low_value_test (hello, tc);
 
   start_min_ratio_test (hello, tc);
@@ -168,9 +190,31 @@ void start_tests (Test::Hello_ptr hello, ::TAO::Transport::IIOP::Current_ptr tc)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  int extra_argc = 2;
+
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      ACE_TCHAR **extra = 0;
+      ACE_NEW_RETURN (extra, ACE_TCHAR *[extra_argc], -1);
+      extra[0] = ACE::strnew (ACE_TEXT ("-ORBSvcConfDirective"));
+      extra[1] = ACE::strnew (ACE_TEXT ("dynamic TAO_Transport_Current_Loader Service_Object")
+                              ACE_TEXT (" * TAO_TC:_make_TAO_Transport_Current_Loader() ''"));
+
+      ACE_TCHAR **largv = new ACE_TCHAR *[argc+extra_argc];
+      for (int i = 0; i < argc; i++)
+        largv[i] = argv[i];
+
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("server adding args: ")));
+      for (int i = 0; i < extra_argc; i++)
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s "), extra[i]));
+          largv[argc+i] = extra[i];
+        }
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+
+      argc += extra_argc;
+
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, largv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -241,10 +285,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       CORBA::Object_var tcobject =
-                orb->resolve_initial_references ("TAO::Transport::IIOP::Current");
+                orb->resolve_initial_references ("TAO::Transport::Current");
       
-      ::TAO::Transport::IIOP::Current_var tc =
-        ::TAO::Transport::IIOP::Current::_narrow (tcobject.in ());
+      ::TAO::Transport::Current_var tc =
+        ::TAO::Transport::Current::_narrow (tcobject.in ());
       if (CORBA::is_nil (tc.in ()))
         throw ::CORBA::INTERNAL ();
       
@@ -253,6 +297,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       hello->shutdown ();
       
       orb->destroy ();
+
+      for (int i = 0; i < extra_argc; i++)
+        ACE::strdelete (extra[i]);
+      delete [] extra;
+      delete [] largv;
     }
   catch (const CORBA::Exception& ex)
     {
