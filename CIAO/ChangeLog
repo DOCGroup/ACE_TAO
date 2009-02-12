@@ -1,19 +1,27 @@
+Thu Feb 12 16:52:56 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc:
+
+          Compile fixes. 
+        
 Thu Feb 12 16:18:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Logger/DAnCELoggerFactory.h:
         * DAnCE/Logger/Logger_Service.h:
         * DAnCE/tests/ObjectLocatorTest/ObjectLocatorTest.mpc:
-        
-          Compile/link fixes. 
-        
+
+          Compile/link fixes.
+
         * MPC/config/ciao_config_manager.mpb:
-        
+
           Removed svn:executable property.
-        
+
         * MPC/config/ciaocidldefaults.mpb:
-        
-          Ported in pre-merge fixes. 
-        
+
+          Ported in pre-merge fixes.
+
         * DAnCE/Starter/DAnCELoggerFactory.h:
 
           Removed this file.
