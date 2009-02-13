@@ -303,7 +303,7 @@ ReplicationManager_i::update_util_map (
 
       if (ACE_OS::strcmp (hostname, key_str) == 0)
         {
-          int result = proc_reg_.activate ();
+          int result = proc_reg_.register_process ();
 
           if (result != 0)
             {
