@@ -19,13 +19,13 @@
 
 #include "lwft_client_export.h"
 
+class ForwardingAgent_i;
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Versioned_Namespace.h"
-
-#include "ForwardingAgent_Thread.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,7 +51,7 @@ public:
   CORBA::ORB_ptr init (int &argc, char *argv[]);
   
 private:
-  ForwardingAgent_Thread fa_thread_;
+  ForwardingAgent_i *agent_;
 };
 
 #include /**/ "ace/post.h"

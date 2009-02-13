@@ -2,12 +2,19 @@
 // $Id$
 
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/Servant_Base.h"
+#include "tao/ORBInitializer_Registry.h"
+
+#include "orbsvcs/orbsvcs/Naming/Naming_Client.h"
 
 #include "LWFT_Client_Init.h"
+#include "ForwardingAgent.h"
+#include "Client_ORBInitializer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 LWFT_Client_Init::LWFT_Client_Init (void)
+  : agent_ (new ForwardingAgent_i ())
 {
 }
 
@@ -22,12 +29,14 @@ LWFT_Client_Init::init (int &argc, char *argv[])
 
   try
     {
-      fa_thread_.register_orb_initializer ();
+      // Create an ORB initializer and register it.
+      PortableInterceptor::ORBInitializer_var orb_initializer =
+        new Client_ORBInitializer (agent_);
+
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
       
       // fa_thread_ and calling app both own ORB reference.
-
       the_orb = CORBA::ORB_init (argc, argv);
-      fa_thread_.orb (the_orb.in ());
       
       //====================================================
       // Must do this so we can create the Forwarding Agent
@@ -47,29 +56,32 @@ LWFT_Client_Init::init (int &argc, char *argv[])
       
       //====================================================
 
-      int result = fa_thread_.activate ();
-
-      if (result != 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("LWFT_Client_Init::init: - ")
-                      ACE_TEXT ("Cannot activate forwarding ")
-                      ACE_TEXT ("agent thread\n")));
-          return CORBA::ORB::_nil ();
-        }
-      else
-        {
-        /*
-          ACE_DEBUG ((LM_TRACE,
-                      ACE_TEXT ("LWFT_Client_Init::init: - ")
-                      ACE_TEXT ("forwarding agent activated.\n")));
-         */
-        }
+      // Resolve the Naming Service and get the objref of the RM.
+      TAO_Naming_Client naming_client;
+      naming_client.init (the_orb);
+      CosNaming::NamingContext_var root_context =
+        naming_client.get_context ();
+      
+      CosNaming::Name rm_name;
+      rm_name.length (1UL);
+      rm_name[0UL].id = "ReplicationManager";
+      
+      CORBA::Object_var tmp = root_context->resolve (rm_name);
+      
+      ReplicationManager_var rm =
+        ReplicationManager::_narrow (tmp.in ());
+      
+      // Give ownership to the POA in this thread.
+      PortableServer::ServantBase_var owner_transfer (agent_);
+      
+      // Create the object reference and register it with the RM.
+      agent_->initialize (rm.in ());      
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "LWFT_Client_Init::init: ");
+      ex._tao_print_exception ("LWFT_Client_Init::init :  exception caught :");
+      return CORBA::ORB::_nil ();;
     }
-    
+  
   return the_orb._retn ();
 }

@@ -1020,7 +1020,7 @@ ReplicationManager_i::app_reg (APP_INFO & app)
             ACE_ERROR ((LM_ERROR,
                         "RM: in app_reg () - Unknown Role!!\n"));
         }
-      /*
+
       ACE_DEBUG ((LM_TRACE,
                   "RM: Registered successfully %s:%s:%s:%d "
                   "with Replication manager.\n",
@@ -1028,7 +1028,6 @@ ReplicationManager_i::app_reg (APP_INFO & app)
                   process_id,
                   object_id,
                   role));
-      */
     }
   else // If in static_mode_
     {
