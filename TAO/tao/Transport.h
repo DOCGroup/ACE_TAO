@@ -704,7 +704,7 @@ public:
   ///            block, used in the implementation of timeouts.
   int format_queue_message (TAO_OutputCDR &stream,
                             ACE_Time_Value *max_wait_time,
-                            TAO_Stub& stub);
+                            TAO_Stub* stub);
 
   /// Send a message block chain,
   int send_message_block_chain (const ACE_Message_Block *message_block,

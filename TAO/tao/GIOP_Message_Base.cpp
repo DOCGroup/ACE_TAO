@@ -262,7 +262,7 @@ TAO_GIOP_Message_Base::dump_consolidated_msg (TAO_OutputCDR &stream, bool hex_du
 }
 
 int
-TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub& stub)
+TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub* stub)
 {
   this->set_giop_flags (stream);
 
@@ -278,13 +278,13 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub& stub)
           this->dump_consolidated_msg (stream, true);
         }
       bool compressed;
-      if (&stub == 0)
+      if (stub)
         {
-          compressed = ziop_adapter->marshal_data (stream, *this->orb_core_);
+          compressed = ziop_adapter->marshal_data (stream, stub);
         }
       else
         {
-          compressed = ziop_adapter->marshal_data (stream, stub);
+          compressed = ziop_adapter->marshal_data (stream, *this->orb_core_);
         }
 
         if (TAO_debug_level >= 5)
