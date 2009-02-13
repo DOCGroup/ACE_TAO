@@ -208,14 +208,22 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   // Extract the byte-order and use helper methods to disambiguate
   // octet, booleans, and chars.
   if (!(header_cdr >> ACE_InputCDR::to_boolean (byte_order)))
-    return 0;
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Can't extract byte_order\n")));
+      return 0;
+    }
 
   // Set the byte-order on the stream...
   header_cdr.reset_byte_order (byte_order);
 
   // Extract the length
   if (!(header_cdr >> length))
-    return 0;
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Can't extract length\n")));
+      return 0;
+    }
 
   ACE_NEW_RETURN (payload_p,
                   ACE_Message_Block (length),
@@ -281,7 +289,11 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   ACE_InputCDR payload_cdr (payload.get ());
   payload_cdr.reset_byte_order (byte_order);
   if (!(payload_cdr >> log_record))  // Finally extract the <ACE_log_record>.
-    return 0;
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Can't extract log_record\n")));
+      return 0;
+    }
 
   log_record.length (length);
 
@@ -358,7 +370,11 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
       // Insert contents of <log_record> into payload stream.
       ACE_OutputCDR payload (max_payload_size);
       if (!(payload << log_record))
-        return -1;
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Can't insert log_record\n")));
+          return -1;
+        }
 
       // Get the number of bytes used by the CDR stream.
       ACE_CDR::ULong const length = payload.total_length ();
@@ -367,11 +383,19 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
       // size of the incoming CDR stream.
       ACE_OutputCDR header (ACE_CDR::MAX_ALIGNMENT + 8);
       if (!(header << ACE_OutputCDR::from_boolean (ACE_CDR_BYTE_ORDER)))
-        return -1;
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Can't insert byte order\n")));
+          return -1;
+        }
 
       // Store the size of the payload that follows
       if (!(header << ACE_CDR::ULong (length)))
-        return -1;
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Can't insert length\n")));
+          return -1;
+        }
 
       // Use an iovec to send both buffer and payload simultaneously.
       iovec iov[2];
