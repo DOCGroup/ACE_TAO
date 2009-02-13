@@ -48,7 +48,9 @@ public:
   LWFT_Client_Init (void);
   ~LWFT_Client_Init (void);
   
-  CORBA::ORB_ptr init (int &argc, char *argv[]);
+  CORBA::ORB_ptr init (int &argc,
+                       ACE_TCHAR *argv[],
+                       const ACE_TCHAR *orb_name = 0);
   
 private:
   ForwardingAgent_i *agent_;

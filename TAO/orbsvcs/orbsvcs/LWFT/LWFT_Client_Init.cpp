@@ -23,7 +23,9 @@ LWFT_Client_Init::~LWFT_Client_Init (void)
 }
 
 CORBA::ORB_ptr
-LWFT_Client_Init::init (int &argc, char *argv[])
+LWFT_Client_Init::init (int &argc,
+                        char *argv[],
+                        const ACE_TCHAR *orb_name)
 {
   CORBA::ORB_var the_orb;
 
@@ -36,7 +38,7 @@ LWFT_Client_Init::init (int &argc, char *argv[])
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
       
       // fa_thread_ and calling app both own ORB reference.
-      the_orb = CORBA::ORB_init (argc, argv);
+      the_orb = CORBA::ORB_init (argc, argv, orb_name);
       
       //====================================================
       // Must do this so we can create the Forwarding Agent
