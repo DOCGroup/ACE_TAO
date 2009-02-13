@@ -43,7 +43,7 @@ if ($server->WaitForFileTimed ($iorbase,
 }
 
 $CL2 = $client->CreateProcess ("client",
-                               . " -ORBdebuglevel $debug_level"
+                               " -ORBdebuglevel $debug_level"
                                . " -k file://$client_iorfile "
                                . " -i $iterations -d");
 
