@@ -157,11 +157,13 @@ public:
   bool is_ready_for_bidirectional (TAO_OutputCDR &msg) const;
 
 private:
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   /// Decompresses a ZIOP message and turns it into a GIOP message
-  bool decompress (ACE_Data_Block **db, TAO_Queued_Data& qd, 
+  bool decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
                                    size_t& rd_pos, size_t& wr_pos);
+#endif
 
-  
+
   /// Processes the GIOP_REQUEST messages
   int process_request (TAO_Transport *transport,
                        TAO_InputCDR &input,
@@ -182,7 +184,7 @@ private:
   int dump_consolidated_msg (TAO_OutputCDR &stream, bool hex_dump_only);
 
   /// Print out a debug messages..
-  void dump_msg (const char *label, const u_char *ptr, 
+  void dump_msg (const char *label, const u_char *ptr,
                  size_t len, bool hex_dump_only = false);
 
   /// Writes the GIOP header in to @a msg

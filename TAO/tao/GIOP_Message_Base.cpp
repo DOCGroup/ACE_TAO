@@ -236,7 +236,7 @@ TAO_GIOP_Message_Base::generate_fragment_header (TAO_OutputCDR & cdr,
   return 0;
 }
 
-int 
+int
 TAO_GIOP_Message_Base::dump_consolidated_msg (TAO_OutputCDR &stream, bool hex_dump_only)
 {
   // Check whether the output cdr stream is build up of multiple
@@ -268,7 +268,7 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub& stub)
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   TAO_ZIOP_Adapter* ziop_adapter = this->orb_core_->ziop_adapter ();
-  
+
   //ziop adapter found and not compressed yet
   if (ziop_adapter)
     {
@@ -286,14 +286,16 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub& stub)
         {
           compressed = ziop_adapter->marshal_data (stream, stub);
         }
-       
+
         if (TAO_debug_level >= 5)
           {
             if (!compressed)
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT("GIOP message not compressed")));
           }
     }
+#else
+  ACE_UNUSED_ARG (stub);
 #endif
 
   // Length of all buffers.
@@ -678,10 +680,10 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
     }
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  if (!decompress (&db, *qd, rd_pos, wr_pos))
+  if (!this->decompress (&db, *qd, rd_pos, wr_pos))
      return -1;
 #endif
-  
+
     TAO_InputCDR input_cdr (db,
                           flg,
                           rd_pos,
@@ -722,8 +724,9 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
     }
 }
 
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
 bool
-TAO_GIOP_Message_Base::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd, 
+TAO_GIOP_Message_Base::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
                                    size_t& rd_pos, size_t& wr_pos)
 {
   if (qd.state().compressed ())
@@ -756,7 +759,7 @@ TAO_GIOP_Message_Base::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
     }
   return true;
 }
-
+#endif
 
 int
 TAO_GIOP_Message_Base::process_reply_message (
@@ -782,7 +785,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   ACE_Data_Block *db = qd->msg_block ()->data_block ();;
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  if (!decompress (&db, *qd, rd_pos, wr_pos))
+  if (!this->decompress (&db, *qd, rd_pos, wr_pos))
      return -1;
 #endif
   // Create a empty buffer on stack
@@ -893,7 +896,7 @@ TAO_GIOP_Message_Base::write_protocol_header (GIOP::MsgType type,
       0x4f, // 'O'
       0x50  // 'P'
     };
- 
+
   header[4] = version.major;
   header[5] = version.minor;
 

@@ -1,20 +1,26 @@
+Fri Feb 13 15:04:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+          Fixed compile problem when ZIOP is not enabled
+
 Fri Feb 13 14:35:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         Implementation of the ZIOP Beta 1 spec
-        
+
         * tao/CDR.cpp:
         * tao/CDR.h:
         * tao/CDR.inl:
         * tao/Messaging/Asynch_Invocation.cpp:
         * tao/TAO_Server_Request.cpp:
           Removed obsolete compression flag.
-          
+
         * tao/Compression/zlib/ZlibCompressor.cpp:
         * tao/Compression/bzip2/Bzip2Compressor.cpp:
         * tao/Compression/Compression.pidl:
           Added description to Compression exception in order to
           meet the ZIOP Beta 1 specification
-        
+
         * tao/Compression/Compression_Manager.cpp:
           No major changes made.
 
@@ -22,30 +28,30 @@ Fri Feb 13 14:35:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * tao/GIOP_Message_Base.h:
         * tao/GIOP_Message_State.cpp:
           Implementation of compression and decompression methods.
-          
+
         * tao/ORB_Core.h:
         * tao/ORB_Core.inl:
           Removed ziop_enabled method since it became obsolete.
-        
+
         * tao/orbconf.h:
           Implemented compression policies.
-        
+
         * tao/Remote_Invocation.cpp:
         * tao/PortableServer/Upcall_Wrapper.cpp:
           Removed compression and decompression methods here (moved
           to GIOP_Message_Base.
-          
+
         * tao/Synch_Invocation.cpp:
           Due to interface change of format_message method in GIOP_Message_Base.
           Removed obsolete compression flag.
-        
+
         * tao/ZIOP_Adapter.h:
         * tao/ZIOP/ZIOP.cpp:
         * tao/ZIOP/ZIOP.h:
         * tao/ZIOP/ZIOP.pidl:
           Refactored current ZIOP implementation in order to meet
           the ZIOP Beta 1 specification.
-          
+
         * tao/ZIOP/ZIOP_Policy_i.cpp:
         * tao/ZIOP/ZIOP_Policy_i.h:
         * tao/ZIOP/ZIOP_Policy_Validator.cpp:
