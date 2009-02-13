@@ -96,7 +96,7 @@ namespace TAO
         this->write_header (cdr);
 
         this->marshal_data (cdr);
-        
+
         // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
         TAO_Bind_Dispatcher_Guard dispatch_guard (
@@ -687,8 +687,12 @@ namespace TAO
                       "TAO (%P|%t) - Synch_Oneway_Invocation::"
                       "remote_oneway, queueing message\n"));
 
-        if (transport->format_queue_message (cdr, max_wait_time, *this->resolver_.stub()) != 0)
-          s = TAO_INVOKE_FAILURE;
+        if (transport->format_queue_message (cdr,
+                                             max_wait_time,
+                                             this->resolver_.stub()) != 0)
+          {
+            s = TAO_INVOKE_FAILURE;
+          }
       }
   }
 

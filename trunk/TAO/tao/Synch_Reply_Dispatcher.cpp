@@ -79,7 +79,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
 
   // Must reset the message state, it is possible that the same reply
   // dispatcher is used because the request must be re-sent.
-  //this->message_state_.reset (0);
+  // this->message_state_.reset (0);
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
   if (ACE_BIT_DISABLED ((*params.input_cdr_).start()->data_block()->flags(),
