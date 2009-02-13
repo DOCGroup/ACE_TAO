@@ -1536,9 +1536,9 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 
     // Byte order.
     int const byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
-    int const compressed = ptr[0] == 0x5A;
     ACE_TCHAR message_type[15];
-    ACE_OS::sprintf(message_type, "%c%c%c%c message", ptr[0], ptr[1], ptr[2], ptr[3]);
+    ACE_OS::sprintf(message_type, ACE_TEXT("%c%c%c%c message"),
+                    ptr[0], ptr[1], ptr[2], ptr[3]);
 
     // Get the version info
     CORBA::Octet const major = ptr[TAO_GIOP_VERSION_MAJOR_OFFSET];
@@ -1581,9 +1581,9 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     if (!hex_dump_only)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - GIOP_Message_Base::dump_msg, "
-                    "%C %s v%c.%c, %d data bytes, %s endian, "
-                    "Type %C[%u]\n",
+                    ACE_TEXT("TAO (%P|%t) - GIOP_Message_Base::dump_msg, ")
+                    ACE_TEXT("%C %s v%c.%c, %d data bytes, %s endian, ")
+                    ACE_TEXT("Type %C[%u]\n"),
                     label,
                     message_type,
                     digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
@@ -1596,7 +1596,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     ACE_HEX_DUMP ((LM_DEBUG,
                    (const char *) ptr,
                    len,
-                   ACE_TEXT (message_type)));
+                   message_type));
 }
 
 int
