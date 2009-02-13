@@ -117,7 +117,7 @@ TAO_ZIOP_Loader::decompress (Compression::Compressor_ptr compressor,
     {
       ACE_ERROR_RETURN((LM_ERROR, 
                         ACE_TEXT ("Decompression failed: %C\n"),
-                        e._info ()),
+                        e._info ().c_str ()),
                         false);
     }
 
@@ -228,7 +228,7 @@ TAO_ZIOP_Loader::compress (Compression::Compressor_ptr compressor,
     {
       ACE_ERROR_RETURN((LM_ERROR, 
                         ACE_TEXT ("Compression failed: %C\n"),
-                        e._info ()),
+                        e._info ().c_str ()),
                         false);
     }
 
