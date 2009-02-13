@@ -85,7 +85,7 @@ public:
   /// Format the message. As we have not written the message length in
   /// the header, we make use of this oppurtunity to insert and format
   /// the message.
-  int format_message (TAO_OutputCDR &cdr, TAO_Stub& stub);
+  int format_message (TAO_OutputCDR &cdr, TAO_Stub* stub);
 
   /**
    * Parse the details of the next message from the @a incoming
@@ -160,7 +160,7 @@ private:
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   /// Decompresses a ZIOP message and turns it into a GIOP message
   bool decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
-                                   size_t& rd_pos, size_t& wr_pos);
+                   size_t& rd_pos, size_t& wr_pos);
 #endif
 
 

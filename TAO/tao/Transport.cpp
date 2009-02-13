@@ -560,7 +560,7 @@ TAO_Transport::handle_output (ACE_Time_Value *max_wait_time)
 int
 TAO_Transport::format_queue_message (TAO_OutputCDR &stream,
                                      ACE_Time_Value *max_wait_time,
-                                     TAO_Stub& stub)
+                                     TAO_Stub* stub)
 {
   if (this->messaging_object ()->format_message (stream, stub) != 0)
     return -1;
