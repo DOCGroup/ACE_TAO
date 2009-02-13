@@ -1,3 +1,8 @@
+Fri Feb 13 03:19:39 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_3567_Regression/run_test.pl:
+          Fuzz fix.
+
 Thu Feb 12 20:22:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Exclusive_TMS.cpp:
