@@ -1,9 +1,15 @@
+Fri Feb 13 18:20:14 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/ciao_tests.lst:
+
+          Fixed tests. 
+        
 Fri Feb 13 13:58:38 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_client.mpb:
 
-          linking error. 
-        
+          linking error.
+
 Fri Feb 13 13:21:48 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
