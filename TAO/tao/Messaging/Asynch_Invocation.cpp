@@ -76,8 +76,7 @@ namespace TAO
         cdr.message_attributes (this->details_.request_id (),
                                 this->resolver_.stub (),
                                 TAO_ONEWAY_REQUEST,
-                                max_wait_time,
-                                false);
+                                max_wait_time);
 
         this->write_header (cdr);
 

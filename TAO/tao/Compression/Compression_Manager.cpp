@@ -18,7 +18,6 @@ namespace TAO
     if (!::CORBA::is_nil (compressor_factory))
       {
         ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-
         CORBA::ULong const length = this->factories_.length ();
 
         for (CORBA::ULong i = 0; i < length; ++i)
@@ -62,7 +61,6 @@ namespace TAO
 
         this->factories_[i] = ::Compression::CompressorFactory::_nil ();
         // make sequence smaller
-
         return;
       }
 
