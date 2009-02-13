@@ -1,3 +1,11 @@
+Fri Feb 13 11:12:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
+          When demarshaling fails return 0 instead of -1. That keeps the
+          event handler registered with the reactor for the next log
+          message.
+
 Thu Feb 12 07:33:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:
