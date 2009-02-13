@@ -847,7 +847,7 @@ ACE_Service_Gestalt::get_xml_svc_conf (ACE_DLL &xmldll)
   if (xmldll.open (ACE_TEXT ("ACEXML_XML_Svc_Conf_Parser")) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("ACE (%P|%t) Failure to open ACEXML_XML_Svc_Conf_Parser: %p\n"),
-                       "ACE_Service_Config::get_xml_svc_conf"),
+                       ACE_TEXT("ACE_Service_Config::get_xml_svc_conf")),
                       0);
 
   void * foo =

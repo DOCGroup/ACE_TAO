@@ -47,7 +47,7 @@ ACE_Threading_Helper<ACE_Thread_Mutex>::ACE_Threading_Helper ()
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) Failed to create thread key: %p\n"),
-                  ""));
+                  ACE_TEXT ("")));
     }
 }
 
@@ -56,8 +56,8 @@ ACE_Threading_Helper<ACE_Thread_Mutex>::set (void* p)
 {
   if (ACE_Thread::setspecific (key_, p) == -1)
     ACE_ERROR ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Service Config failed to set thread key value: %p\n"),
-                       ""));
+               ACE_TEXT ("(%P|%t) Service Config failed to set thread key value: %p\n"),
+               ACE_TEXT("")));
 }
 
 void*
@@ -67,7 +67,7 @@ ACE_Threading_Helper<ACE_Thread_Mutex>::get (void)
   if (ACE_Thread::getspecific (key_, &temp) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Service Config failed to get thread key value: %p\n"),
-                       ""),
+                       ACE_TEXT("")),
                       0);
   return temp;
 }
@@ -110,7 +110,7 @@ ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
 {
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SCG:<ctor=%@>")
+                ACE_TEXT ("ACE (%P|%t) - SCG:<ctor=%@>")
                 ACE_TEXT (" - config=%@ repo=%@ superceded by repo=%@\n"),
                 this,
                 this->saved_.get (),
