@@ -1,3 +1,8 @@
+Fri Feb 13 15:44:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ZIOP/ZIOP.cpp:
+          Fixed compile error
+
 Fri Feb 13 15:37:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp:
