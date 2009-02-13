@@ -270,12 +270,11 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub& stub)
   TAO_ZIOP_Adapter* ziop_adapter = this->orb_core_->ziop_adapter ();
   
   //ziop adapter found and not compressed yet
-  if (ziop_adapter/* && !stream.compressed ()*/)
+  if (ziop_adapter)
     {
       if (TAO_debug_level >= 5)
         {
-          ACE_DEBUG ((LM_DEBUG, 
-            ACE_TEXT("GIOP message before compression :\n")));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Before compression: ")));
           this->dump_consolidated_msg (stream, true);
         }
       bool compressed;
@@ -680,36 +679,8 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
     }
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  if (qd->state().compressed ())
-    {
-      TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
-      if (adapter)
-        {
-          if (!adapter->decompress (&db, *qd, *this->orb_core_))
-            return -1;
-          rd_pos = TAO_GIOP_MESSAGE_HEADER_LEN;
-          wr_pos = db->size ();
-          if (TAO_debug_level >= 5)
-            {
-              ACE_HEX_DUMP ((LM_DEBUG,
-                              const_cast <char*> (db->base ()),
-                              db->size (),
-                              ACE_TEXT ("GIOP message after decompression")));
-            }
-          
-        }
-      else
-        {
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) ERROR: Unable to decompress ")
-                        ACE_TEXT ("data.\n")));
-
-          return -1;
-        }
-    }
-//  if (!decompress (&db, *qd, rd_pos, wr_pos))
-     //return -1;
+  if (!decompress (&db, *qd, rd_pos, wr_pos))
+     return -1;
 #endif
   
     TAO_InputCDR input_cdr (db,
@@ -756,7 +727,6 @@ bool
 TAO_GIOP_Message_Base::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd, 
                                    size_t& rd_pos, size_t& wr_pos)
 {
-  /*
   if (qd.state().compressed ())
     {
       TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
@@ -765,15 +735,15 @@ TAO_GIOP_Message_Base::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
           if (!adapter->decompress (db, qd, *this->orb_core_))
             return false;
           rd_pos = TAO_GIOP_MESSAGE_HEADER_LEN;
-          wr_pos = db.size ();
+          ACE_Data_Block *tmp = *db;
+          wr_pos = tmp->size();
           if (TAO_debug_level >= 5)
             {
               ACE_HEX_DUMP ((LM_DEBUG,
-                              const_cast <char*> (db.base ()),
-                              db.size (),
+                              const_cast <char*> (tmp->base ()),
+                              tmp->size (),
                               ACE_TEXT ("GIOP message after decompression")));
             }
-          
         }
       else
         {
@@ -785,7 +755,6 @@ TAO_GIOP_Message_Base::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
           return false;
         }
     }
-    */
   return true;
 }
 
@@ -834,34 +803,8 @@ TAO_GIOP_Message_Base::process_reply_message (
   // loose ownership of the data_block.
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  if (qd->state().compressed ())
-    {
-      TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
-      if (adapter)
-        {
-          if (!adapter->decompress (&db, *qd, *this->orb_core_))
-            return -1;
-          rd_pos = TAO_GIOP_MESSAGE_HEADER_LEN;
-          wr_pos = db->size ();
-          if (TAO_debug_level >= 5)
-            {
-              ACE_HEX_DUMP ((LM_DEBUG,
-                              const_cast <char*> (db->base ()),
-                              db->size (),
-                              ACE_TEXT ("GIOP message after decompression")));
-            }
-          
-        }
-      else
-        {
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) ERROR: Unable to decompress ")
-                        ACE_TEXT ("data.\n")));
-
-          return -1;
-        }
-    }
+  if (!decompress (&db, *qd, rd_pos, wr_pos))
+     return -1;
 #endif
   // Create a empty buffer on stack
   // NOTE: We use the same data block in which we read the message and
@@ -1602,8 +1545,8 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     // Byte order.
     int const byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
     int const compressed = ptr[0] == 0x5A;
-    ACE_TCHAR message_type[5];
-    ACE_OS::sprintf(message_type, "%c%c%c%c", ptr[0], ptr[1], ptr[2], ptr[3]);
+    ACE_TCHAR message_type[15];
+    ACE_OS::sprintf(message_type, "%c%c%c%c message", ptr[0], ptr[1], ptr[2], ptr[3]);
 
     // Get the version info
     CORBA::Octet const major = ptr[TAO_GIOP_VERSION_MAJOR_OFFSET];
@@ -1647,23 +1590,21 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
       {
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - GIOP_Message_Base::dump_msg, "
-                    "%C %s v%c.%c msg, %d data bytes, %s endian, "
-                    "%s compressed, Type %C[%u]\n",
+                    "%C %s v%c.%c, %d data bytes, %s endian, "
+                    "Type %C[%u]\n",
                     label,
                     message_type,
                     digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
                     digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
                     len - TAO_GIOP_MESSAGE_HEADER_LEN ,
                     (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
-                    (compressed == 0) ? ACE_TEXT("not") : ACE_TEXT("is"),
                     message_name,
                     *id));
       }
-
     ACE_HEX_DUMP ((LM_DEBUG,
                    (const char *) ptr,
                    len,
-                   ACE_TEXT ("GIOP/ZIOP message")));
+                   ACE_TEXT (message_type)));
 }
 
 int

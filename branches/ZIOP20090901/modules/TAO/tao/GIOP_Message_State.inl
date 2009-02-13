@@ -66,12 +66,6 @@ TAO_GIOP_Message_State::compressed (void) const
 {
   return this->compressed_;
 }
-
-ACE_INLINE void
-TAO_GIOP_Message_State::compressed (CORBA::Boolean compressed)
-{
-  this->compressed_ = compressed;
-}
 #endif
 
 TAO_END_VERSIONED_NAMESPACE_DECL

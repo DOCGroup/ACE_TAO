@@ -183,7 +183,6 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
           mb->base ()[0] = 0x47;
           ACE_CDR::mb_align (mb);
           *db = mb->data_block ();
-          //qd.state ().compressed (false);
           return true;
         }
     }

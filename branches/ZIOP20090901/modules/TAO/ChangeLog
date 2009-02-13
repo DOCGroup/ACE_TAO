@@ -1,3 +1,22 @@
+Fri Feb 13 11:33:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+      * tao/GIOP_Message_Base.cpp:
+      * tao/GIOP_Message_State.h:
+      * tao/GIOP_Message_State.inl:
+        Removed setter for compressed flag.
+        Optimize logging before and after (de)compression.
+        
+      * tao/ZIOP/ZIOP.cpp:
+        No need to set compressed flag after decompression.
+        This flag isn't used after decompression
+        
+      * tests/ZIOP/client.cpp:
+        Minor log message change.
+      
+      * tests/ZIOP/run_test.pl:
+        To prevent errors when adding hardcoded command line
+        parameters in server.
+
 Thu Feb 12 15:06:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
       * tao/Compression/bzip2/Bzip2Compressor.cpp:
