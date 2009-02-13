@@ -2075,8 +2075,8 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 
   if (file_size == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%N:%l:%p\n",
-                       "POSIX_Asynch_Transmit_File:filesize failed"),
+                       ACE_TEXT("Error:%N:%l:%p\n"),
+                       ACE_TEXT("POSIX_Asynch_Transmit_File:filesize failed")),
                       -1);
 
   if (bytes_to_write == 0)
@@ -2084,8 +2084,8 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 
   if (offset > (size_t) file_size)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%p\n",
-                       "Asynch_Transmit_File:File size is less than offset"),
+                       ACE_TEXT("Error:%p\n"),
+                       ACE_TEXT("Asynch_Transmit_File:File size is less than offset")),
                       -1);
 
   if (offset != 0)

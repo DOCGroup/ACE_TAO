@@ -157,12 +157,16 @@ ACE_Remote_Token_Proxy::request_reply (ACE_Token_Request &request,
   ACE_SOCK_Stream *peer = ACE_Token_Connections::instance ()->get_connection ();
 
   if (peer == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "BIG PROBLEMS with get_connection"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT("(%P|%t) %p\n"),
+                      ACE_TEXT("BIG PROBLEMS with get_connection")), -1);
 
   // Transmit request via a blocking send.
 
   if (peer->send_n (buffer, length) != length)
-    ACE_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("send_n failed")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("send_n failed")), -1);
   else
     {
       ACE_Token_Reply reply;

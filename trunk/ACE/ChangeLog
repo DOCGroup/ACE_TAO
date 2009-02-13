@@ -1,3 +1,27 @@
+Fri Feb 13 13:30:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dev_Poll_Reactor.cpp
+        * ace/Log_Msg.cpp
+        * ace/MEM_Acceptor.cpp
+        * ace/MMAP_Memory_Pool.cpp
+        * ace/POSIX_Asynch_IO.cpp
+        * ace/POSIX_CB_Proactor.cpp
+        * ace/POSIX_Proactor.cpp
+        * ace/Registry_Name_Space.cpp
+        * ace/Remote_Tokens.cpp
+        * ace/Service_Config.cpp
+        * ace/Service_Gestalt.cpp
+        * ace/Shared_Memory_Pool.cpp
+        * ace/SOCK_Dgram_Bcast.cpp
+        * ace/SUN_Proactor.cpp
+        * ace/TLI.cpp
+          Use ACE_TEXT() with %p in ACE_DEBUG/ACE_ERROR. The log string
+          passed to ACE_DEBUG/ACE_ERROR is converted automatically to
+          unicode in an unicode build. The %p expects an unicode string,
+          if a plain ascii string is passed in, this is just handled as
+          unicode string and could lead to a crash because then we are
+          just reading random memory
+
 Fri Feb 13 12:18:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/lib/Client_Logging_Handler.cpp:
