@@ -254,7 +254,10 @@ ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
                                   value,
                                   type);
           if (result != 0)
-            ACE_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Registry::Naming_Context::resolve")), result);
+            ACE_ERROR_RETURN ((LM_ERROR,
+                              ACE_TEXT ("%p\n"),
+                              ACE_TEXT ("ACE_Registry::Naming_Context::resolve")),
+                              result);
 
           // Complete binding
           ACE_Name_Binding binding (key, value, type);
