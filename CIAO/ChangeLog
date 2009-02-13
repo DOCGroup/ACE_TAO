@@ -1,9 +1,15 @@
+Fri Feb 13 13:14:27 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment.mwc:
+
+          Removed this file.
+
 Fri Feb 13 01:37:22 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Version.h:
 
-          Version string was incorrect. 
-        
+          Version string was incorrect.
+
 Fri Feb 13 01:30:34 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_componentserver_stub.mpb:
