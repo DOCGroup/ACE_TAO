@@ -116,10 +116,8 @@ TAO_ZIOP_Loader::decompress (Compression::Compressor_ptr compressor,
   catch (::Compression::CompressionException &e)
     {
       ACE_ERROR_RETURN((LM_ERROR, 
-                        ACE_TEXT ("Decompression failed. Reason: %s. ")
-                        ACE_TEXT ("Description : %s "),
-                        ACE_TEXT ("Summary : %s\n"),
-                        e.reason, e.description, e._info ()),
+                        ACE_TEXT ("Decompression failed: %C\n"),
+                        e._info ()),
                         false);
     }
 
@@ -229,10 +227,8 @@ TAO_ZIOP_Loader::compress (Compression::Compressor_ptr compressor,
   catch (::Compression::CompressionException &e)
     {
       ACE_ERROR_RETURN((LM_ERROR, 
-                        ACE_TEXT ("Compression failed. Reason: %s. ")
-                        ACE_TEXT ("Description : %s "),
-                        ACE_TEXT ("Summary : %s\n"),
-                        e.reason, e.description, e._info ()),
+                        ACE_TEXT ("Compression failed: %C\n"),
+                        e._info ()),
                         false);
     }
 
