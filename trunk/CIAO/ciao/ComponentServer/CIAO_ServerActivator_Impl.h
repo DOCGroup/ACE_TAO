@@ -14,6 +14,7 @@
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Unbounded_Set_Ex.h"
 #include "ace/Synch_Traits.h"
+#include "ace/Condition_T.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/orbconf.h"
 #include "ciao/Client_init.h"
