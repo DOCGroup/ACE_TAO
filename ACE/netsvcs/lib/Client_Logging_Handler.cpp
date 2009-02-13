@@ -208,14 +208,14 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   // Extract the byte-order and use helper methods to disambiguate
   // octet, booleans, and chars.
   if (!(header_cdr >> ACE_InputCDR::to_boolean (byte_order)))
-    return -1;
+    return 0;
 
   // Set the byte-order on the stream...
   header_cdr.reset_byte_order (byte_order);
 
   // Extract the length
   if (!(header_cdr >> length))
-    return -1;
+    return 0;
 
   ACE_NEW_RETURN (payload_p,
                   ACE_Message_Block (length),
@@ -281,7 +281,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   ACE_InputCDR payload_cdr (payload.get ());
   payload_cdr.reset_byte_order (byte_order);
   if (!(payload_cdr >> log_record))  // Finally extract the <ACE_log_record>.
-    return -1;
+    return 0;
 
   log_record.length (length);
 
@@ -347,7 +347,7 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
     {
       // Serialize the log record using a CDR stream, allocate enough
       // space for the complete <ACE_Log_Record>.
-      const size_t max_payload_size =
+      size_t const max_payload_size =
         4 // type()
         + 8 // timestamp
         + 4 // process id
