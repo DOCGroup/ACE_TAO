@@ -24,6 +24,7 @@ project(*Server): taoserver, compression, ziop, codecfactory, zlibcompressor {
 
 project(*Client): taoclient, compression, ziop, codecfactory, zlibcompressor {
   after += *idl
+  libs  += TAO_TC
   Source_Files {
     client.cpp
   }
