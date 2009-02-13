@@ -1,10 +1,22 @@
+Fri Feb 13 01:00:01 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+        * DAnCE/NodeManager/NodeManager.mpc:
+        * MPC/config/ciao_componentserver_stub.mpb:
+        * MPC/config/dance_node_application.mpb:
+        * MPC/config/dance_node_application_manager.mpb:
+        * MPC/config/dance_node_manager.mpb:
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp:
+
+          Additional compile fixes. 
+        
 Thu Feb 12 22:47:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Starter/Starter.cpp:
         * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
 
           Compile fixes.
-        
+
 Thu Feb 12 19:05:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
