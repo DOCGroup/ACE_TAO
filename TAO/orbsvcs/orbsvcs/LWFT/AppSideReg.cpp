@@ -78,7 +78,7 @@ AppSideReg::svc (void)
 	        port_ = AppOptions::instance ()->port ();
 	      }
 
-      ACE_DEBUG ((LM_TRACE, "Creating the host monitor\n"));
+      ACE_DEBUG ((LM_TRACE, "AppSideReg: creating the host monitor\n"));
 
       ACE_Barrier internal_thread_barrier (2);
       monitor_ =
