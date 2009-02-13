@@ -47,10 +47,11 @@ public:
   /// Destructor
   virtual ~TAO_ZIOP_Loader (void);
 
-  virtual bool decompress (TAO_ServerRequest& server_request);
+  virtual bool decompress (ACE_Data_Block **db, TAO_Queued_Data& qd, TAO_ORB_Core& orb_core);
 
   // Compress the @a stream. Starting point of the compression is rd_ptr()
-  virtual bool marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &stream, TAO::Profile_Transport_Resolver &resolver);
+  virtual bool marshal_data (TAO_OutputCDR& cdr, TAO_Stub& stub);
+  virtual bool marshal_data (TAO_OutputCDR& cdr, TAO_ORB_Core& orb_core);
 
   /// Initialize the BiDIR loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);
@@ -60,10 +61,6 @@ public:
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);
 
-  bool marshal_reply_data (TAO_ServerRequest& server_request,
-                           TAO::Argument * const * args,
-                           size_t nargs);
-
 private:
 
   /// Flag to indicate whether the ZIOP library has been
@@ -71,13 +68,44 @@ private:
   static bool is_activated_;
 
   /// Get the compression low value, returns 0 when it is not set
-  CORBA::ULong compression_low_value (TAO::Profile_Transport_Resolver &resolver) const;
+  CORBA::ULong compression_policy_value (CORBA::Policy_ptr policy) const;
+
+  bool get_compressor_details (
+                        ::Compression::CompressorIdLevelList *list,
+                        Compression::CompressorId &compressor_id, 
+                        Compression::CompressionLevel &compression_level);
+
+  bool get_compression_details(CORBA::Policy_ptr compression_enabling_policy,
+                        CORBA::Policy_ptr compression_level_list_policy,
+                        Compression::CompressorId &compressor_id, 
+                        Compression::CompressionLevel &compression_level);
+
+  void complete_compression (Compression::Compressor_ptr compressor,
+                             TAO_OutputCDR &cdr, 
+                             ACE_Message_Block& mb,
+                             char *initial_rd_ptr, 
+                             CORBA::ULong low_value, 
+                             CORBA::Long min_ratio,
+                             CORBA::ULong original_data_length,
+                             Compression::CompressorId compressor_id);
+
+  bool compress_data (TAO_OutputCDR &cdr, 
+                      CORBA::Object_ptr compression_manager,
+                      CORBA::ULong low_value,
+                      CORBA::Long min_ratio,
+                      ::Compression::CompressorId compressor_id, 
+                      ::Compression::CompressionLevel compression_level);
 
   bool compress (Compression::Compressor_ptr compressor,
                  const ::Compression::Buffer &source,
                  ::Compression::Buffer &target);
+  
+  bool decompress (Compression::Compressor_ptr compressor,
+                   const ::Compression::Buffer &source,
+                   ::Compression::Buffer &target);
 
-  bool check_min_ratio (CORBA::ULong original_data_length, CORBA::ULong compressed_length) const;
+  bool check_min_ratio (::Compression::CompressionRatio ratio,
+                        CORBA::Long min_ratio) const;
 };
 
 static int

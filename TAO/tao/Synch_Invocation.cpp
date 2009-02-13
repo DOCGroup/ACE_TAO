@@ -91,13 +91,12 @@ namespace TAO
         cdr.message_attributes (this->details_.request_id (),
                                 this->resolver_.stub (),
                                 TAO_TWOWAY_REQUEST,
-                                max_wait_time,
-                                false);
+                                max_wait_time);
 
         this->write_header (cdr);
 
         this->marshal_data (cdr);
-
+        
         // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
         TAO_Bind_Dispatcher_Guard dispatch_guard (
@@ -666,8 +665,7 @@ namespace TAO
     cdr.message_attributes (this->details_.request_id (),
           this->resolver_.stub (),
           TAO_ONEWAY_REQUEST,
-          max_wait_time,
-          false);
+          max_wait_time);
 
     this->write_header (cdr);
 
@@ -685,12 +683,12 @@ namespace TAO
     else
       {
         if (TAO_debug_level > 4)
-    ACE_DEBUG ((LM_DEBUG,
-          "TAO (%P|%t) - Synch_Oneway_Invocation::"
-          "remote_oneway, queueing message\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Synch_Oneway_Invocation::"
+                      "remote_oneway, queueing message\n"));
 
-        if (transport->format_queue_message (cdr, max_wait_time) != 0)
-    s = TAO_INVOKE_FAILURE;
+        if (transport->format_queue_message (cdr, max_wait_time, *this->resolver_.stub()) != 0)
+          s = TAO_INVOKE_FAILURE;
       }
   }
 

@@ -85,7 +85,7 @@ public:
   /// Format the message. As we have not written the message length in
   /// the header, we make use of this oppurtunity to insert and format
   /// the message.
-  int format_message (TAO_OutputCDR &cdr);
+  int format_message (TAO_OutputCDR &cdr, TAO_Stub& stub);
 
   /**
    * Parse the details of the next message from the @a incoming
@@ -157,6 +157,11 @@ public:
   bool is_ready_for_bidirectional (TAO_OutputCDR &msg) const;
 
 private:
+  /// Decompresses a ZIOP message and turns it into a GIOP message
+  bool decompress (ACE_Data_Block **db, TAO_Queued_Data& qd, 
+                                   size_t& rd_pos, size_t& wr_pos);
+
+  
   /// Processes the GIOP_REQUEST messages
   int process_request (TAO_Transport *transport,
                        TAO_InputCDR &input,
@@ -173,8 +178,12 @@ private:
   TAO_GIOP_Message_Generator_Parser *get_parser (
     const TAO_GIOP_Message_Version &version) const;
 
+  /// Print out consolidate messages
+  int dump_consolidated_msg (TAO_OutputCDR &stream, bool hex_dump_only);
+
   /// Print out a debug messages..
-  void dump_msg (const char *label, const u_char *ptr, size_t len);
+  void dump_msg (const char *label, const u_char *ptr, 
+                 size_t len, bool hex_dump_only = false);
 
   /// Writes the GIOP header in to @a msg
   /// @note If the GIOP header happens to change in the future, we can

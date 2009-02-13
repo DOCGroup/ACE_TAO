@@ -25,7 +25,6 @@ TAO_ZIOP_PolicyFactory::create_policy (
       ::CORBA::Boolean val;
 
       // Extract the value from the any.
-
       if (!(value >>= CORBA::Any::to_boolean (val)))
         {
           throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
@@ -66,7 +65,6 @@ TAO_ZIOP_PolicyFactory::create_policy (
       ::CORBA::ULong val;
 
       // Extract the value from the any.
-
       if (!(value >>= val))
         {
           throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
@@ -87,7 +85,6 @@ TAO_ZIOP_PolicyFactory::create_policy (
       ::Compression::CompressionRatio val;
 
       // Extract the value from the any.
-
       if (!(value >>= val))
         {
           throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
