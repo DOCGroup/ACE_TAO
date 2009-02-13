@@ -1,9 +1,16 @@
+Fri Feb 13 19:58:37 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Generator/Plan_Generator.mpc:
+        * MPC/config/dance_plan_generator.mpc:
+
+          Re-enabled the plan generator. 
+        
 Fri Feb 13 18:20:14 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/ciao_tests.lst:
 
-          Fixed tests. 
-        
+          Fixed tests.
+
 Fri Feb 13 13:58:38 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_client.mpb:

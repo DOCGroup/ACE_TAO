@@ -1,0 +1,4 @@
+project : dance_deployment_stub, naming {
+  after += Plan_Generator
+  libs += DAnCE_Plan_Generator
+}
