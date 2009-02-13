@@ -307,7 +307,7 @@ CompressionMinRatioPolicy::policy_type (void)
 {
   // Future policy implementors: notice how this minimizes the
   // footprint of the class.
-  return ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID;
+  return ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID;
 }
 
 
@@ -350,7 +350,7 @@ CompressionMinRatioPolicy::ratio (void)
 TAO_Cached_Policy_Type
 CompressionMinRatioPolicy::_tao_cached_type (void) const
 {
-  return TAO_CACHED_POLICY_UNCACHED;
+  return TAO_CACHED_MIN_COMPRESSION_RATIO_POLICY;
 }
 
 }

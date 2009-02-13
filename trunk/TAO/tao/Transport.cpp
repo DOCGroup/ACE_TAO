@@ -559,9 +559,10 @@ TAO_Transport::handle_output (ACE_Time_Value *max_wait_time)
 
 int
 TAO_Transport::format_queue_message (TAO_OutputCDR &stream,
-                                     ACE_Time_Value *max_wait_time)
+                                     ACE_Time_Value *max_wait_time,
+                                     TAO_Stub& stub)
 {
-  if (this->messaging_object ()->format_message (stream) != 0)
+  if (this->messaging_object ()->format_message (stream, stub) != 0)
     return -1;
 
   return this->queue_message_i (stream.begin (), max_wait_time);
@@ -2259,7 +2260,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
           // putting them into queue.  When this is done we can return
           // to process this message, and notifying other threads to
           // process the messages in queue.
-
           char * end_marker = message_block.rd_ptr ()
                             + mesg_length;
 
@@ -2329,7 +2329,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
             {
               return -1;
             }
-
           // move the rd_ptr tp position of end_marker
           message_block.rd_ptr (end_marker);
         }

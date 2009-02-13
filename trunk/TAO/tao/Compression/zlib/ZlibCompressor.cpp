@@ -23,7 +23,8 @@ ZlibCompressor::compress (
     ::Compression::Buffer & target
   )
 {
-  uLongf max_length = static_cast <uLongf> (source.length () * 1.1) + 12;
+  uLongf max_length = 
+    static_cast <uLongf> (source.length () * 1.1) + TAO_GIOP_MESSAGE_HEADER_LEN;
   target.length (static_cast <CORBA::ULong> (max_length));
 
   int const retval = ::compress2 (reinterpret_cast <Bytef*>(target.get_buffer ()),
@@ -34,7 +35,8 @@ ZlibCompressor::compress (
 
   if (retval != Z_OK)
     {
-      throw ::Compression::CompressionException (retval);
+      throw ::Compression::CompressionException (retval, 
+          CORBA::string_dup(""));
     }
   else
     {
@@ -58,7 +60,7 @@ ZlibCompressor::decompress (
 
   if (retval != Z_OK)
     {
-      throw ::Compression::CompressionException (retval);
+      throw ::Compression::CompressionException (retval, "");
     }
   else
     {
