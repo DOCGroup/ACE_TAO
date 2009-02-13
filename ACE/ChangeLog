@@ -1,3 +1,9 @@
+Fri Feb 13 12:18:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
+          Log a message when insert/extract fails
+
 Fri Feb 13 11:12:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/lib/Client_Logging_Handler.cpp:

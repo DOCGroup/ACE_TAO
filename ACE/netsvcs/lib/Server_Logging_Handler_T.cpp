@@ -107,14 +107,22 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
   // Extract the byte-order and use helper methods to disambiguate
   // octet, booleans, and chars.
   if (!(header_cdr >> ACE_InputCDR::to_boolean (byte_order)))
-    return 0;
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Can't extract byte_order\n")));
+      return 0;
+    }
 
   // Set the byte-order on the stream...
   header_cdr.reset_byte_order (byte_order);
 
   // Extract the length
   if (!(header_cdr >> length))
-    return 0;
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Can't extract length\n")));
+      return 0;
+    }
 
   ACE_NEW_RETURN (payload_p,
                   ACE_Message_Block (length),
@@ -140,7 +148,11 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
   ACE_InputCDR payload_cdr (payload.get ());
   payload_cdr.reset_byte_order (byte_order);
   if (!(payload_cdr >> log_record))  // Finally extract the <ACE_log_record>.
-    return 0;
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Can't extract log_record\n")));
+      return 0;
+    }
 
   log_record.length (length);
 
