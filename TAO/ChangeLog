@@ -1,3 +1,9 @@
+Sat Feb 14 07:36:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression/lzo/LzoCompressor.cpp:
+        * tao/Compression/zlib/ZlibCompressor.cpp:
+          Fixed compile errors
+
 Fri Feb 13 15:44:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ZIOP/ZIOP.cpp:
