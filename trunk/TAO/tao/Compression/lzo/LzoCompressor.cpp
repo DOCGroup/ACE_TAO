@@ -39,7 +39,7 @@ LzoCompressor::compress (
 
   if (retval != LZO_E_OK)
     {
-      throw ::Compression::CompressionException (retval);
+      throw ::Compression::CompressionException (retval, "");
     }
   else
     {
@@ -66,7 +66,7 @@ LzoCompressor::decompress (
 
   if (retval != LZO_E_OK)
     {
-      throw ::Compression::CompressionException (retval);
+      throw ::Compression::CompressionException (retval, "");
     }
   else
     {
