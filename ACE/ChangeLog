@@ -1,3 +1,12 @@
+Sat Feb 14 14:53:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Print null if we get a nill string for a %p format specifier instead
+          of causing a crash. This fixes bugzilla 3571
+
+        * tests/Log_Msg_Test.cpp:
+          Extended this test.
+
 Fri Feb 13 13:30:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dev_Poll_Reactor.cpp
