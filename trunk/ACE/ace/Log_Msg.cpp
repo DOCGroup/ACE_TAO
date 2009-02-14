@@ -1271,16 +1271,20 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                         ACE_OS::strcpy (fp, ACE_TEXT ("ls: %ls"));
+                        wchar_t *str = va_arg (argp, wchar_t *);
 #else
                         ACE_OS::strcpy (fp, ACE_TEXT ("s: %s"));
+                        ACE_TCHAR *str = va_arg (argp, ACE_TCHAR *);
 #endif
                         if (can_check)
                           this_len = ACE_OS::snprintf
-                            (bp, bspace, format, va_arg (argp, ACE_TCHAR *),
+                            (bp, bspace, format,
+                             str ? str : ACE_TEXT ("(null)"),
                              ACE_TEXT_CHAR_TO_TCHAR (msg));
                         else
                           this_len = ACE_OS::sprintf
-                            (bp, format, va_arg (argp, ACE_TCHAR *),
+                            (bp, format,
+                             str ? str : ACE_TEXT ("(null)"),
                              ACE_TEXT_CHAR_TO_TCHAR (msg));
 #if defined (ACE_WIN32)
                       }
@@ -1311,6 +1315,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         // it into a string.  If this doesn't work it
                         // returns "unknown error" which is fine for
                         // our purposes.
+                        ACE_TCHAR *str = va_arg (argp, ACE_TCHAR *);
                         if (lpMsgBuf == 0)
                           {
                             const ACE_TCHAR *message =
@@ -1319,12 +1324,12 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                             if (can_check)
                               this_len = ACE_OS::snprintf
                                 (bp, bspace, format,
-                                 va_arg (argp, const ACE_TCHAR *),
+                                 str ? str : ACE_TEXT ("(null)"),
                                  message);
                             else
                               this_len = ACE_OS::sprintf
                                 (bp, format,
-                                 va_arg (argp, const ACE_TCHAR *),
+                                 str ? str : ACE_TEXT ("(null)"),
                                  message);
                           }
                         else
@@ -1333,12 +1338,12 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                             if (can_check)
                               this_len = ACE_OS::snprintf
                                 (bp, bspace, format,
-                                 va_arg (argp, ACE_TCHAR *),
+                                 str ? str : ACE_TEXT ("(null)"),
                                  lpMsgBuf);
                             else
                               this_len = ACE_OS::sprintf
                                 (bp, format,
-                                 va_arg (argp, ACE_TCHAR *),
+                                 str ? str : ACE_TEXT ("(null)"),
                                  lpMsgBuf);
                             // Free the buffer.
                             ::LocalFree (lpMsgBuf);
