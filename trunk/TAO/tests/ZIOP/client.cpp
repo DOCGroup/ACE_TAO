@@ -39,32 +39,32 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void log_statistics (ACE_TCHAR* test,
-                     ::TAO::CounterT initial_bytes_send, 
+                     ::TAO::CounterT initial_bytes_send,
                      ::TAO::CounterT initial_bytes_recv,
                      ::TAO::CounterT bytes_send_after_test,
                      ::TAO::CounterT bytes_recv_after_test)
 {
-  ACE_DEBUG ((LM_DEBUG, 
-              ACE_TEXT ("%s statistics:") 
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("%s statistics:")
               ACE_TEXT (" initial bytes sent:%d")
               ACE_TEXT (" initial bytes recv:%d")
               ACE_TEXT (" bytes sent after test:%d")
               ACE_TEXT (" bytes recv after test:%d\n"),
               test,
-              initial_bytes_send, 
+              initial_bytes_send,
               initial_bytes_recv,
               bytes_send_after_test,
               bytes_recv_after_test));
 }
 
-void start_low_value_test(Test::Hello_ptr hello, ::TAO::Transport::Current_ptr tc)
+void start_low_value_test(Test::Hello_ptr hello, ::TAO::Transport::Current_ptr)
 {
 #if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT == 1
 //  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
 //  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
 #endif
 
-  ACE_DEBUG((LM_DEBUG, 
+  ACE_DEBUG((LM_DEBUG,
             ACE_TEXT("Start get_string; large compression ratio\n")));
 
   CORBA::String_var the_string = hello->get_string ("This is a test string"
@@ -85,14 +85,14 @@ void start_low_value_test(Test::Hello_ptr hello, ::TAO::Transport::Current_ptr t
 #endif
 }
 
-void start_min_ratio_test (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr tc)
+void start_min_ratio_test (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr)
 {
 #if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
 //  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
 //  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
 #endif
 
-  ACE_DEBUG((LM_DEBUG, 
+  ACE_DEBUG((LM_DEBUG,
               ACE_TEXT("Start get_string; small compression ratio\n")));
 
   //shouldn't compress since compress_ratio < min_ratio
@@ -111,26 +111,26 @@ void start_min_ratio_test (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr 
 #endif
 }
 
-void start_big_reply_test (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr tc)
+void start_big_reply_test (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr)
 {
 #if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
 //  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
 //  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
 #endif
 
-  ACE_DEBUG((LM_DEBUG, 
+  ACE_DEBUG((LM_DEBUG,
               ACE_TEXT("Start get_big_reply; large compression ratio\n")));
 
   //Prepare to send a large number of bytes. Should be compressed
   Test::Octet_Seq_var dummy = hello->get_big_reply ();
   if (dummy.ptr ()->length () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("Client side BLOB received\n")));
     }
   else
     {
-      ACE_DEBUG ((LM_ERROR, 
+      ACE_DEBUG ((LM_ERROR,
                   ACE_TEXT("Error recieving BLOB on Client\n")));
     }
 
@@ -140,14 +140,14 @@ void start_big_reply_test (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr 
 #endif
 }
 
-void start_big_request_test (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr tc)
+void start_big_request_test (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr)
 {
 #if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
 //  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
 //  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
 #endif
 
-  ACE_DEBUG((LM_DEBUG, 
+  ACE_DEBUG((LM_DEBUG,
               ACE_TEXT("Start big_request; large compression ratio\n")));
   //ACE_OS::sleep(1);
   int length = 2000;
@@ -174,7 +174,7 @@ void start_tests (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr tc)
 
 
 #if !defined (TAO_HAS_TRANSPORT_CURRENT) || TAO_HAS_TRANSPORT_CURRENT == 0
-  ACE_DEBUG((LM_DEBUG, 
+  ACE_DEBUG((LM_DEBUG,
               ACE_TEXT ("No statistical information available since TAO_HAS_TRANSPORT_CURRENT is not set")));
 #endif
 
