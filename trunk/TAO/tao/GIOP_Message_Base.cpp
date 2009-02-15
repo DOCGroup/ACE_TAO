@@ -280,7 +280,7 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub* stub)
       bool compressed;
       if (stub)
         {
-          compressed = ziop_adapter->marshal_data (stream, stub);
+          compressed = ziop_adapter->marshal_data (stream, *stub);
         }
       else
         {
