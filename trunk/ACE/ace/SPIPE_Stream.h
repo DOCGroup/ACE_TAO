@@ -144,7 +144,7 @@ public:
   ssize_t sendv_n (const iovec iov[],
                    int len) const;
 
-  /// Receive an <iovec> of size @a len to the stream.
+  /// Receive an <iovec> of size @a len from the stream.
   ssize_t recvv_n (iovec iov[],
                    int len) const;
 

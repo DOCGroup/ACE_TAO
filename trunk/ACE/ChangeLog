@@ -1,3 +1,28 @@
+Mon Feb 16 13:30:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Array_Base.h:
+        * ace/Local_Tokens.h:
+        * ace/SPIPE_Stream.h:
+        * ace/Stream.h:
+        * ace/Unbounded_Set_Ex.h:
+        * ace/Vector_T.h
+          Doyxgen change
+
+        * ace/Hash_Map_Manager_T.cpp:
+          Use prefix increment
+
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Hash_Map_Manager_T.inl:
+          Removed cur_size method, current_size does the same and is
+          public
+
+        * ace/Log_Msg.cpp:
+          Layout change
+
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+          If we don't receive the exact number of bytes with spipe stream
+          see that as error
+
 Mon Feb 16 10:57:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg_IPC.cpp:

@@ -212,7 +212,7 @@ public:
 
   // = Iteration methods.
 
-  /// Pass back the <next_item> that hasn't been seen in the Array.
+  /// Pass back the @a next_item that hasn't been seen in the Array.
   /// Returns 0 when all items have been seen, else 1.
   int next (T *&next_item);
 

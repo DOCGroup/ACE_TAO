@@ -2203,7 +2203,6 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
             ACE_Log_Msg_Manager::custom_backend_->log (log_record);
         }
 
-
       // This must come last, after the other two print operations
       // (see the <ACE_Log_Record::print> method for details).
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,

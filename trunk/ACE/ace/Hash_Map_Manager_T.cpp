@@ -266,7 +266,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::trybi
                                                             &this->table_[loc]);
       this->table_[loc].next_ = entry;
       entry->next_->prev_ = entry;
-      this->cur_size_++;
+      ++this->cur_size_;
       return 0;
     }
   else
