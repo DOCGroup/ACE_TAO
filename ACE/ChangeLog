@@ -1,7 +1,15 @@
+Mon Feb 16 18:58:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.h:
+        * ace/FIFO_Recv_Msg.h:
+        * ace/FIFO_Send_Msg.h:
+        * ace/SPIPE_Stream.h:
+          Doxygen changes
+
 Mon Feb 16 17:09:40 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/global.features:
-        
+
           Disabled ofccm by default.
 
 Mon Feb 16 13:30:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
