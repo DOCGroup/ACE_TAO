@@ -84,12 +84,12 @@ public:
   /// Recv bytes via STREAM pipes using "band" mode.
   ssize_t recv (void *buf, size_t len) const;
 
-  /// Send <cntl> and <data> via STREAM pipes.
+  /// Send @a cntl and @a data via STREAM pipes.
   ssize_t send (const ACE_Str_Buf *cntl,
                 const ACE_Str_Buf *data,
                 int flags = 0) const;
 
-  /// Recv <cntl> and <data> via STREAM pipes.
+  /// Recv @a cntl and @a data via STREAM pipes.
   ssize_t recv (ACE_Str_Buf *cntl,
                 ACE_Str_Buf *data,
                 int *flags) const;
