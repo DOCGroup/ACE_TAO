@@ -120,8 +120,8 @@ public:
                  ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Build a CDR stream with an initial buffer, it will *not* remove
-  /// <data>, since it did not allocated it.  It's important to be careful
-  /// with the alignment of <data>.
+  /// @a data, since it did not allocated it.  It's important to be careful
+  /// with the alignment of @a data.
   /**
    * Create an output stream from an arbitrary buffer, care must be
    * exercised with alignment, because this contructor will align if
@@ -663,7 +663,7 @@ public:
                 ACE_Lock* lock = 0);
 
   /// Create an input stream from an ACE_Data_Block. The <flag>
-  /// indicates whether the <data> can be deleted by the CDR stream
+  /// indicates whether the @a data can be deleted by the CDR stream
   /// or not
   ACE_InputCDR (ACE_Data_Block *data,
                 ACE_Message_Block::Message_Flags flag = 0,
