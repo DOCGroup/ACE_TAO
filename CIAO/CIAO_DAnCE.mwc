@@ -1,8 +1,8 @@
 //$Id$
 
 workspace {
+  ccm
   ciao
   DAnCE
-  ciaosvcs
   tools/Config_Handlers
 }
