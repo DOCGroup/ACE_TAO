@@ -1,3 +1,10 @@
+Mon Feb 16 16:39:26 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Bug_3524_Regression/run_test.pl:
+
+          Fixed a variable name for IOR file deletion at the end of the
+          script.
+
 Sat Feb 14 07:36:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Compression/lzo/LzoCompressor.cpp:
