@@ -436,13 +436,6 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::table
   return this->table_;
 }
 
-template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
-size_t
-ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::cur_size (void) const
-{
-  return this->cur_size_;
-}
-
 template <class EXT_ID,
           class INT_ID,
           class HASH_KEY,

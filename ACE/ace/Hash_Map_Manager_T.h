@@ -559,9 +559,6 @@ protected:
   /// Accessor of the underlying table
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *table (void);
 
-  /// Accessor of the current size attribute
-  size_t cur_size (void) const;
-
 private:
   /**
    * Array of ACE_Hash_Map_Entry *s, each of which points to an
