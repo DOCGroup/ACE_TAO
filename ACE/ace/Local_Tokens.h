@@ -270,7 +270,7 @@ public:
   /// Destructor.
   ~ACE_TPQ_Iterator (void);
 
-  /// Pass back the <next_item>.
+  /// Pass back the @a next_item.
   int next (ACE_TPQ_Entry *&next_item);
 
   /// Returns 1 when all items have been seen, else 0.

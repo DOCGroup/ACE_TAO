@@ -123,13 +123,9 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (header.get ());
 
-  ACE_CDR::Boolean byte_order;
-  ACE_CDR::ULong length;
-
 #if defined (ACE_HAS_STREAM_PIPES)
   // We're getting a logging message from a local application using
   // STREAM pipes, which are nicely prioritized for us.
-
   ACE_Str_Buf header_msg (header->wr_ptr (),
                           0,
                           8);
@@ -164,9 +160,9 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   // We're getting a logging message from a local application using
   // sockets pipes, which are NOT prioritized for us.
 
-  ssize_t count = ACE::recv_n (handle,
-                               header->wr_ptr (),
-                               8);
+  ssize_t const count = ACE::recv_n (handle,
+                                     header->wr_ptr (),
+                                     8);
   switch (count)
     {
       // Handle shutdown and error cases.
@@ -207,6 +203,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 
   // Extract the byte-order and use helper methods to disambiguate
   // octet, booleans, and chars.
+  ACE_CDR::Boolean byte_order;
   if (!(header_cdr >> ACE_InputCDR::to_boolean (byte_order)))
     {
       ACE_ERROR ((LM_ERROR,
@@ -218,6 +215,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   header_cdr.reset_byte_order (byte_order);
 
   // Extract the length
+  ACE_CDR::ULong length;
   if (!(header_cdr >> length))
     {
       ACE_ERROR ((LM_ERROR,
@@ -243,7 +241,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                        &payload_msg,
                        &flags);
 
-  if (result < 0 || payload_msg.len == 0)
+  if (result < 0 || payload_msg.len != length)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%p\n"),
@@ -288,7 +286,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 
   ACE_InputCDR payload_cdr (payload.get ());
   payload_cdr.reset_byte_order (byte_order);
-  if (!(payload_cdr >> log_record))  // Finally extract the <ACE_log_record>.
+  if (!(payload_cdr >> log_record))  // Finally extract the ACE_log_record.
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Can't extract log_record\n")));

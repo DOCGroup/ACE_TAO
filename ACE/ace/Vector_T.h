@@ -272,7 +272,7 @@ public:
 
   // = Iteration methods.
 
-  /// Pass back the <next_item> that hasn't been seen in the vector.
+  /// Pass back the @a next_item that hasn't been seen in the vector.
   /// Returns 0 when all items have been seen, else 1.
   int next (T *&next_item);
 
