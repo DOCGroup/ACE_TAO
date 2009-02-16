@@ -1,3 +1,8 @@
+Mon Feb 16 10:57:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg_IPC.cpp:
+          Check all stream insertion return values
+
 Sat Feb 14 14:53:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:
