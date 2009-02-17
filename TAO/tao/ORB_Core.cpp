@@ -405,14 +405,14 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   int no_server_side_name_lookups = 0;
 
 #if defined (TAO_STD_PROFILE_COMPONENTS)
-  int std_profile_components = 1;
+  bool std_profile_components = true;
 #else
-  int std_profile_components = 0;
+  bool std_profile_components = false;
 #endif /* TAO_STD_PROFILE_COMPONENTS */
 
-  int linger = -1;
-  time_t accept_error_delay = 5;
-  int use_parallel_connects = 0;
+  int linger = TAO_SO_LINGER;
+  time_t accept_error_delay = TAO_ACCEPT_ERROR_DELAY;
+  bool use_parallel_connects = TAO_USE_PARALLEL_CONNECT;
 
   // Copy command line parameter not to use original.
   ACE_Argv_Type_Converter command_line (argc, argv);
@@ -426,9 +426,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                     -1);
 
 #if (TAO_NEGOTIATE_CODESETS == 1)
-  int negotiate_codesets = 1;
+  bool negotiate_codesets = true;
 #else
-  int negotiate_codesets = 0;
+  bool negotiate_codesets = false;
 #endif /* TAO_NEGOTIATE_CODESETS */
 
   // Pick up the value of the use_implrepo_ flag from an environment variable

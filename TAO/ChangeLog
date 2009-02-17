@@ -1,9 +1,24 @@
+Tue Feb 17 15:14:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+        * tao/orbconf.h:
+          Added TAO_SO_LINGER, TAO_ACCEPT_ERROR_DELAY and
+          TAO_USE_PARALLEL_CONNECT which can be set in config.h
+          to control the default values.
+
+        * tao/ORB_Core.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/params.h:
+        * tao/params.inl:
+        * tao/Profile.cpp:
+          Changed std_profile_components to a real bool
+
 Tue Feb 17 14:43:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tao/Strategies/UIOP_Connector.cpp:
 
-          Fixed syntax problem. 
-        
+          Fixed syntax problem.
+
 Tue Feb 17 14:03:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:

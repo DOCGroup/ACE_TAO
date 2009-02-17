@@ -139,14 +139,14 @@ TAO_ORB_Parameters::default_init_ref (void) const
   return CORBA::string_dup (this->default_init_ref_.c_str ());
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_ORB_Parameters::std_profile_components (void) const
 {
   return this->std_profile_components_;
 }
 
 ACE_INLINE void
-TAO_ORB_Parameters::std_profile_components (int x)
+TAO_ORB_Parameters::std_profile_components (bool x)
 {
   this->std_profile_components_ = x;
 }
