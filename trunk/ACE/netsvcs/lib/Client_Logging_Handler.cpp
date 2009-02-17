@@ -477,9 +477,11 @@ private:
   // Local IP/port number to use for the connection to the server logging
   // daemon.
 
+#if (ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1)
   const ACE_TCHAR *logger_key_;
   // Communication endpoint where the client logging daemon will
   // listen for connections from clients.
+#endif
 
   ACE_Client_Logging_Handler *handler_;
   // Pointer to the singleton handler that receives messages from
@@ -494,12 +496,15 @@ ACE_Client_Logging_Acceptor::fini (void)
   if (this->handler_ != 0)
     this->handler_->close (0);
 
+#if (ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1)
   // Try to unlink the logger key so weird things don't happen if
   // we're using STREAM pipes.
   ACE_OS::unlink (this->logger_key_);
 
   // This memory was allocated by <ACE_OS::strdup>.
   ACE_OS::free ((void *) this->logger_key_);
+#endif
+
   ACE_OS::free ((void *) this->server_host_);
 
   return 0;
@@ -532,7 +537,9 @@ ACE_Client_Logging_Acceptor::info (ACE_TCHAR **strp, size_t length) const
 ACE_Client_Logging_Acceptor::ACE_Client_Logging_Acceptor (void)
   : server_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
     server_port_ (ACE_DEFAULT_LOGGING_SERVER_PORT),
+#if (ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1)
     logger_key_ (ACE_OS::strdup (ACE_DEFAULT_LOGGER_KEY)),
+#endif
     handler_ (0)
 {
 }
@@ -550,6 +557,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
   // options.
   this->parse_args (argc, argv);
 
+#if (ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1)
   // Try to unlink the logger key so weird things don't happen if
   // we're using STREAM pipes.
   ACE_OS::unlink (this->logger_key_);
@@ -560,6 +568,8 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("%p\n"),
                        this->logger_key_),
                       -1);
+#endif
+
   // Establish connection with the server.
   ACE_SOCK_Connector con;
   ACE_SOCK_Stream stream;
@@ -651,8 +661,10 @@ ACE_Client_Logging_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
           this->server_host_ = ACE_OS::strdup (get_opt.opt_arg ());
           break;
         case 'k':
+#if (ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1)
           ACE_OS::free ((void *) this->logger_key_);
           this->logger_key_ = ACE_OS::strdup (get_opt.opt_arg ());
+#endif
           break;
         case 'p':
           this->server_port_ = ACE_OS::atoi (get_opt.opt_arg ());
