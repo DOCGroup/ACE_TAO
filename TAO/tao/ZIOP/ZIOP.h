@@ -72,34 +72,34 @@ private:
 
   bool get_compressor_details (
                         ::Compression::CompressorIdLevelList *list,
-                        Compression::CompressorId &compressor_id, 
+                        Compression::CompressorId &compressor_id,
                         Compression::CompressionLevel &compression_level);
 
   bool get_compression_details(CORBA::Policy_ptr compression_enabling_policy,
                         CORBA::Policy_ptr compression_level_list_policy,
-                        Compression::CompressorId &compressor_id, 
+                        Compression::CompressorId &compressor_id,
                         Compression::CompressionLevel &compression_level);
 
   void complete_compression (Compression::Compressor_ptr compressor,
-                             TAO_OutputCDR &cdr, 
+                             TAO_OutputCDR &cdr,
                              ACE_Message_Block& mb,
-                             char *initial_rd_ptr, 
-                             CORBA::ULong low_value, 
+                             char *initial_rd_ptr,
+                             CORBA::ULong low_value,
                              CORBA::Long min_ratio,
                              CORBA::ULong original_data_length,
                              Compression::CompressorId compressor_id);
 
-  bool compress_data (TAO_OutputCDR &cdr, 
+  bool compress_data (TAO_OutputCDR &cdr,
                       CORBA::Object_ptr compression_manager,
                       CORBA::ULong low_value,
                       CORBA::Long min_ratio,
-                      ::Compression::CompressorId compressor_id, 
+                      ::Compression::CompressorId compressor_id,
                       ::Compression::CompressionLevel compression_level);
 
   bool compress (Compression::Compressor_ptr compressor,
                  const ::Compression::Buffer &source,
                  ::Compression::Buffer &target);
-  
+
   bool decompress (Compression::Compressor_ptr compressor,
                    const ::Compression::Buffer &source,
                    ::Compression::Buffer &target);

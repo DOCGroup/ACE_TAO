@@ -268,7 +268,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
     this->orb_core ()->lane_resources ().
     transport_cache ().cache_transport (&desc, transport);
 
-  if (retval != 0)
+  if (retval == -1)
     {
       svc_handler->close();
       if (TAO_debug_level > 0)

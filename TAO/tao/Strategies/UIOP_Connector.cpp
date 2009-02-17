@@ -258,7 +258,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
                                                                              transport);
   // Failure in adding to cache.
-  if (retval != 0)
+  if (retva l== -1)
     {
       // Close the handler.
       svc_handler->close ();

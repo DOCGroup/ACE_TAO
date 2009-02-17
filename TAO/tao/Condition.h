@@ -36,7 +36,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Same as to the ACE_Condition variable wrapper
  *
  * This class differs from ACE_Condition in that it uses a
- * TAO_SYNCH_CONDITION instead of ACE_cond_t  under the hood to
+ * TAO_SYNCH_CONDITION instead of ACE_cond_t under the hood to
  * provide blocking.
  */
 template <class MUTEX>
@@ -99,7 +99,7 @@ private:
   MUTEX *mutex_;
 
   /// A flag to indicate whether the lock needs to be deleted.
-  int delete_lock_;
+  bool delete_lock_;
 
   /// Condition variable.
   TAO_SYNCH_CONDITION *cond_;
