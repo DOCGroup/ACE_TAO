@@ -121,7 +121,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (header.get ());
 
-#if defined (ACE_HAS_STREAM_PIPES)
+#if (ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1)
   // We're getting a logging message from a local application using
   // STREAM pipes, which are nicely prioritized for us.
   ACE_Str_Buf header_msg (header->wr_ptr (),
@@ -137,7 +137,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                            (ACE_Str_Buf *) 0,
                            &flags);
 
-  if (result < 0 || header_msg.len != length)
+  if (result < 0 || header_msg.len == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("client closing down unexpectedly\n")));
@@ -191,7 +191,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
       // Just fall through in this case..
       break;
     }
-#endif /* ACE_HAS_STREAM_PIPES */
+#endif /* ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1 */
 
   // Reflect addition of 8 bytes for the header.
   header->wr_ptr (8);
@@ -229,7 +229,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   // Ensure there's sufficient room for log record payload.
   ACE_CDR::grow (payload.get (), 8 + ACE_CDR::MAX_ALIGNMENT + length);
 
-#if defined (ACE_HAS_STREAM_PIPES)
+#if (ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1)
   ACE_Str_Buf payload_msg (payload->wr_ptr (),
                            0,
                            length);
@@ -251,7 +251,9 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
            | ACE_Event_Handler::EXCEPT_MASK
            | ACE_Event_Handler::DONT_CALL) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%n: %p\n"),
+                           ACE_TEXT ("%n: result %d, length %d %p\n"),
+                           result,
+                           payload_msg.len
                            ACE_TEXT ("remove_handler")),
                           -1);
       spipe.close ();
@@ -277,7 +279,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
       ACE_OS::closesocket (handle);
       return 0;
     }
-#endif /* ACE_HAS_STREAM_PIPES */
+#endif /* ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1 */
 
   // Reflect additional bytes for the message.
   payload->wr_ptr (length);
@@ -563,7 +565,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
   ACE_SOCK_Stream stream;
   ACE_INET_Addr server_addr;
 
-#if defined (ACE_HAS_STREAM_PIPES)
+#if (ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1)
   ACE_SPIPE_Addr lserver_addr;
 
   // Figure out what local port we're really bound to.
@@ -593,7 +595,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("bounded to local port %d on handle %u\n"),
               lserver_addr.get_port_number (),
               this->acceptor ().get_handle ()));
-#endif /* ACE_HAS_STREAM_PIPES */
+#endif /* ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1 */
 
   if (con.connect (stream,
                    this->server_addr_,
