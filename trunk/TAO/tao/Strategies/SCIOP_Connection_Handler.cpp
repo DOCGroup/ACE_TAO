@@ -356,7 +356,6 @@ TAO_SCIOP_Connection_Handler::add_transport_to_cache (void)
 
   // Idle the transport..
   return cache.cache_transport (&prop, this->transport ());
-
 }
 
 int

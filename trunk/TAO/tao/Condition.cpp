@@ -16,7 +16,7 @@ template <class MUTEX>
 TAO_Condition<MUTEX>::TAO_Condition (MUTEX &m)
 
   : mutex_ (&m),
-    delete_lock_ (0),
+    delete_lock_ (false),
     cond_ (0)
 {
   // @todo: Need to add the allocatore here..
@@ -27,7 +27,7 @@ TAO_Condition<MUTEX>::TAO_Condition (MUTEX &m)
 template <class MUTEX>
 TAO_Condition<MUTEX>::TAO_Condition (void)
     : mutex_ (0),
-      delete_lock_ (0),
+      delete_lock_ (false),
       cond_ (0)
 
 {
@@ -36,7 +36,7 @@ TAO_Condition<MUTEX>::TAO_Condition (void)
   ACE_NEW (this->mutex_,
            MUTEX);
 
-  this->delete_lock_ = 1;
+  this->delete_lock_ = true;
 
   ACE_NEW (this->cond_,
            TAO_SYNCH_CONDITION (*this->mutex_));

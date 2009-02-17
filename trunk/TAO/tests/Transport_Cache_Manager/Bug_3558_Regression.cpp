@@ -48,7 +48,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           mytransport[i].purging_order (i);
         }
 
-     if (my_cache.current_size () != transport_max)
+     if (my_cache.current_size () != cache_maximum)
        {
          ACE_ERROR ((LM_ERROR, "ERROR Incorrect cache size %d\n", my_cache.current_size ()));
          ++result;

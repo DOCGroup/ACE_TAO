@@ -115,18 +115,22 @@ test_server (void *arg)
                   ACE_TEXT ("%D (%P|%t) - string <%C> returned from server %d\n"),
                   the_string.in (), server_nr));
     }
-  catch (const CORBA::TRANSIENT &)
+  catch (const CORBA::TRANSIENT &e)
     {
       if (server_nr == 2)
        {
           ACE_DEBUG((LM_DEBUG,
-                     ACE_TEXT ("%D Expected exception for server %d\n"),
-                     server_nr));
+                     ACE_TEXT ("%D Expected exception for server %d: %C\n"),
+                     server_nr,
+                     e._info().c_str()));
         }
       else
+        {
           ACE_ERROR((LM_ERROR,
-                     ACE_TEXT ("%D Unexpected exception for server %d\n"),
-                     server_nr));
+                     ACE_TEXT ("%D Unexpected exception for server %d: %C\n"),
+                     server_nr,
+                     e._info().c_str()));
+        }
     }
   catch (...)
     {
@@ -144,7 +148,15 @@ test_server (void *arg)
               server_nr));
 
   if (!CORBA::is_nil(hello))
-    hello->shutdown ();
+    {
+      try
+        {
+          hello->shutdown ();
+        }
+      catch (...)
+        {
+        }
+     }
 
   if (server_nr == 1)
     barrier.wait();
@@ -172,7 +184,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_TCHAR **extra = 0;
       ACE_NEW_RETURN (extra, ACE_TCHAR *[extra_argc], -1);
       extra[0] = ACE::strnew (ACE_TEXT ("-ORBSvcConfDirective"));
-      extra[1] = ACE::strnew (ACE_TEXT ("static Resource_Factory \"-ORBConnectionCacheMax 1\""));
+      extra[1] = ACE::strnew (ACE_TEXT ("static Resource_Factory \"-ORBConnectionCacheMax 1 -ORBConnectionCachePurgePercentage 60\""));
       extra[2] = ACE::strnew (ACE_TEXT ("-ORBSvcConfDirective"));
       extra[3] = ACE::strnew (ACE_TEXT ("static Client_Strategy_Factory \"-ORBTransportMuxStrategy EXCLUSIVE\""));
       if (debug_level > 0)
