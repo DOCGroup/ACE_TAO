@@ -253,7 +253,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%n: result %d, length %d %p\n"),
                            result,
-                           payload_msg.len
+                           payload_msg.len,
                            ACE_TEXT ("remove_handler")),
                           -1);
       spipe.close ();
