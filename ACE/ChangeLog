@@ -1,3 +1,44 @@
+Tue Feb 17 10:57:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+        * ace/svc_export.h:
+        * netsvcs/lib/svc_export.h:
+        * ace/Makefile.am:
+        * netsvcs/lib/Makefile.am
+          Moved svc_export to the netsvcs lib directory, it belongs there
+
+        * ace/CDR_Stream.cpp:
+          Layout change
+
+        * ace/Lock_Adapter_T.h:
+        * ace/Message_Block.cpp:
+        * ace/Message_Block.h:
+        * ace/Reverse_Lock_T.h:
+          Doxygen change
+
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+          Make sure we receive the expected length
+
+        * netsvcs/lib/lib.mpc:
+          Set the correct export define
+
+        * netsvcs/lib/Client_Logging_Handler.h:
+        * netsvcs/lib/Name_Handler.cpp:
+        * netsvcs/lib/Name_Handler.h:
+        * netsvcs/lib/Server_Logging_Handler.h:
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
+        * netsvcs/lib/Time_Request_Reply.cpp:
+        * netsvcs/lib/Time_Request_Reply.h:
+        * netsvcs/lib/Token_Handler.cpp:
+        * netsvcs/lib/Token_Handler.h:
+        * netsvcs/lib/TS_Clerk_Handler.cpp:
+        * netsvcs/lib/TS_Clerk_Handler.h:
+        * netsvcs/lib/TS_Server_Handler.cpp:
+        * netsvcs/lib/TS_Server_Handler.h:
+          Updated include of svc_export and no need to set the
+          build define
+
 Mon Feb 16 18:58:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Stream.h:

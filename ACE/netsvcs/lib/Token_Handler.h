@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu) 
+ *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu)
  *          Tim Harrison (harrison@cs.wustl.edu)
  */
 //=============================================================================
@@ -24,7 +24,7 @@
 #include "ace/Local_Tokens.h"
 #include "ace/Token_Collection.h"
 #include "ace/Token_Request_Reply.h"
-#include "ace/svc_export.h"
+#include "svc_export.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 

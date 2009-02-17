@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_SVC_DLL
-
 #include "ace/Get_Opt.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Connector.h"
@@ -139,7 +137,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                            (ACE_Str_Buf *) 0,
                            &flags);
 
-  if (result < 0 || header_msg.len == 0)
+  if (result < 0 || header_msg.len != length)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("client closing down unexpectedly\n")));

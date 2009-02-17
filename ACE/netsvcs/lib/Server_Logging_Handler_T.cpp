@@ -3,8 +3,6 @@
 #ifndef ACE_SERVER_LOGGING_HANDLERT_C
 #define ACE_SERVER_LOGGING_HANDLERT_C
 
-#define ACE_BUILD_SVC_DLL
-
 #include "ace/config-all.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Record.h"
