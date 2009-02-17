@@ -113,6 +113,19 @@ const size_t TAO_RD_TABLE_SIZE = 16;
 const size_t TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE = 64;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
+// Should we use parallel connect
+#if !defined (TAO_USE_PARALLEL_CONNECT)
+const bool TAO_USE_PARALLEL_CONNECT = false;
+#endif /* !TAO_USE_PARALLEL_CONNECT */
+
+#if !defined (TAO_ACCEPT_ERROR_DELAY)
+const time_t TAO_ACCEPT_ERROR_DELAY = 5;
+#endif /* TAO_ACCEPT_ERROR_DELAY */
+
+#if !defined (TAO_SO_LINGER)
+const int TAO_SO_LINGER = -1;
+#endif /* TAO_SO_LINGER */
+
 // The default size of TAO's initial object reference table, i.e. the
 // one used as the underlying implementation for the
 // CORBA::ORB::register_initial_reference() and
