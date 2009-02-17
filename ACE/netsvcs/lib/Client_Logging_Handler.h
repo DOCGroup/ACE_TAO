@@ -22,7 +22,7 @@
 
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
-#include "svc_export.h"
+#include "ace/svc_export.h"
 
 #if !defined (ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES)
 #if defined (ACE_HAS_STREAM_PIPES)

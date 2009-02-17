@@ -16,7 +16,7 @@
 
 #include "Log_Message_Receiver.h"
 #include "Server_Logging_Handler_T.h"
-#include "svc_export.h"
+#include "ace/svc_export.h"
 
 // Typedefs for Logging Handlers & acceptors using a static type based
 // log message receivers.

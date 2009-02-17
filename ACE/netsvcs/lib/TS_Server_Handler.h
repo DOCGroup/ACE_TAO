@@ -22,7 +22,7 @@
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Svc_Handler.h"
-#include "svc_export.h"
+#include "ace/svc_export.h"
 
 #include "Time_Request_Reply.h"
 
