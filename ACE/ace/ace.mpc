@@ -470,6 +470,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     post.h
     pre.h
     streams.h
+    svc_export.h
   }
 
   Documentation_Files {
