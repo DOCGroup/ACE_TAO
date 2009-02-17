@@ -371,6 +371,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     post.h
     pre.h
     streams.h
+    svc_export.h
   }
 
   Documentation_Files {

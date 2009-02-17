@@ -1247,7 +1247,8 @@ nobase_include_HEADERS += \
   os_include/sys/os_wait.h \
   post.h \
   pre.h \
-  streams.h 
+  streams.h \
+  svc_export.h
 
 pkgconfig_DATA += \
   ACE.pc
