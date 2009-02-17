@@ -28,7 +28,7 @@
 #include "ace/Naming_Context.h"
 #include "ace/Name_Request_Reply.h"
 #include "ace/Null_Mutex.h"
-#include "svc_export.h"
+#include "ace/svc_export.h"
 
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT

@@ -17,7 +17,4 @@ project(netsvcs): ace_output, acelib {
     Token_Handler.cpp
     Base_Optimizer.cpp
   }
-  Header_Files {
-    svc_export.h
-  }
 }
