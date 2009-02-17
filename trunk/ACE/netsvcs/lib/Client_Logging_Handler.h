@@ -24,7 +24,15 @@
 #include "ace/Svc_Handler.h"
 #include "svc_export.h"
 
+#if !defined (ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES)
 #if defined (ACE_HAS_STREAM_PIPES)
+# define ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES 1
+#else
+# define ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES 0
+#endif /* ACE_HAS_STREAM_PIPES */
+#endif
+
+#if (ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1)
 #define LOGGING_STREAM ACE_SPIPE_STREAM
 #define LOGGING_ACCEPTOR ACE_SPIPE_ACCEPTOR
 #define LOGGING_ADDR ACE_SPIPE_Addr
@@ -32,7 +40,7 @@
 #define LOGGING_STREAM ACE_SOCK_STREAM
 #define LOGGING_ACCEPTOR ACE_SOCK_ACCEPTOR
 #define LOGGING_ADDR ACE_INET_Addr
-#endif /* ACE_HAS_STREAM_PIPES */
+#endif /* ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1 */
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class ACE_Svc_Export ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>;
@@ -84,7 +92,7 @@ private:
    * Receive logging records from applications.  This is necessary to
    * handle madness with UNIX select, which can't deal with MSG_BAND
    * data easily due to its overly simple interface...  This just
-   * calls <handle_input>.
+   * calls handle_input().
    */
   virtual int handle_exception (ACE_HANDLE);
 
