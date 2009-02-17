@@ -70,14 +70,6 @@ extern "C"
 #  undef sigismember
 #endif /* ACE_HAS_SIG_MACROS */
 
-// This must come after signal.h is #included.  It's to counteract
-// the sigemptyset and sigfillset #defines, which only happen
-// when __OPTIMIZE__ is #defined (really!) on Linux.
-#if defined (linux) && defined (__OPTIMIZE__)
-#  undef sigemptyset
-#  undef sigfillset
-#endif /* linux && __OPTIMIZE__ */
-
 #if !defined (ACE_HAS_SIG_ATOMIC_T)
    typedef int sig_atomic_t;
 #endif /* !ACE_HAS_SIG_ATOMIC_T */
