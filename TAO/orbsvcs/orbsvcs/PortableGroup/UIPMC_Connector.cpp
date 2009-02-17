@@ -191,7 +191,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                                                              transport);
 
   // Failure in adding to cache.
-  if (retval != 0)
+  if (retval == -1)
     {
       // Close the handler (this will also delete svc_handler).
       svc_handler->close ();

@@ -99,8 +99,8 @@ namespace TAO
     Transport_Cache_Manager_T (
       int percent,
       purging_strategy* purging_strategy,
-      int cache_maximum,
-      int locked,
+      size_t cache_maximum,
+      bool locked,
       const char *orbid);
 
     /// Destructor
@@ -258,6 +258,9 @@ namespace TAO
 
     /// The lock that is used by the cache map
     ACE_Lock *cache_lock_;
+
+    /// Maximum size of the cache
+    size_t cache_maximum_;
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     /// Connection cache purge monitor.

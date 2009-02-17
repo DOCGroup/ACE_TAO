@@ -234,7 +234,7 @@ TAO::IIOP_SSL_Connector::make_connection (
       transport);
 
   // Failure in adding to cache.
-  if (retval != 0)
+  if (retval == -1)
     {
       // Close the handler.
       svc_handler->close ();

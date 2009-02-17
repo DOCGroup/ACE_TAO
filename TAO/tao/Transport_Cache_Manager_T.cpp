@@ -32,13 +32,18 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::Transport_Cache_Manager_T (
     int percent,
     purging_strategy* purging_strategy,
-    int cache_maximum,
-    int locked,
+    size_t cache_maximum,
+    bool locked,
     const char *orbid)
     : percent_ (percent)
     , purging_strategy_ (purging_strategy)
     , cache_map_ (cache_maximum)
     , cache_lock_ (0)
+    , cache_maximum_ (cache_maximum)
+#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
+    , purge_monitor_ (0)
+    , size_monitor_ (0)
+#endif /* TAO_HAS_MONITOR_POINTS==1 */
   {
     if (locked)
       {
@@ -108,13 +113,14 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   int
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::bind_i (Cache_ExtId &ext_id,
-                                   Cache_IntId &int_id)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::bind_i (
+    Cache_ExtId &ext_id,
+    Cache_IntId &int_id)
   {
     if (TAO_debug_level > 4)
        {
          ACE_DEBUG ((LM_INFO,
-            ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i: ")
+            ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i, ")
             ACE_TEXT ("Transport[%d] @ hash:index{%d:%d}\n"),
             int_id.transport ()->id (),
             ext_id.hash (),
@@ -132,57 +138,71 @@ namespace TAO
     bool more_to_do = true;
     while (more_to_do)
       {
-        retval = this->cache_map_.bind (ext_id, int_id, entry);
-        if (retval == 0)
+        if (this->cache_map_.current_size () >= cache_maximum_)
           {
-            // The entry has been added to cache succesfully
-            // Add the cache_map_entry to the transport
-            int_id.transport ()->cache_map_entry (entry);
-            more_to_do = false;
-          }
-        else if (retval == 1)
-          {
-            if (entry->item ().transport () == int_id.transport ())
-              {
-                // update the cache status
-                // we are already holding the lock, do not call set_entry_state
-                entry->item ().recycle_state (int_id.recycle_state ());
-                if (TAO_debug_level > 9 &&
-                    entry->item ().is_connected () != int_id.is_connected ())
-                  ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("TAO (%P|%t) - Transport_Cache_")
-                              ACE_TEXT ("Manager::bind_i: Updating existing ")
-                              ACE_TEXT ("entry sets is_connected to %C\n"),
-                              (int_id.is_connected () ? "true" : "false")));
-
-                entry->item ().is_connected (int_id.is_connected ());
-                retval = 0;
-                more_to_do = false;
-              }
-            else
-            {
-              ext_id.index (ext_id.index () + 1);
-              if (TAO_debug_level > 8)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i: ")
-                    ACE_TEXT ("Unable to bind Transport[%d] @ hash:index{%d:%d}. ")
-                    ACE_TEXT ("Trying with a new index\n"),
-                    int_id.transport ()->id (),
-                    ext_id.hash (),
-                    ext_id.index ()));
-                }
-            }
-          }
-        else
-          {
+            retval = -1;
             if (TAO_debug_level > 0)
               {
                 ACE_ERROR ((LM_ERROR,
                   ACE_TEXT("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i, ")
-                  ACE_TEXT("ERROR: unable to bind transport\n")));
+                  ACE_TEXT("ERROR: unable to bind transport, cache is full\n")));
               }
             more_to_do = false;
+          }
+        else
+          {
+            retval = this->cache_map_.bind (ext_id, int_id, entry);
+            if (retval == 0)
+              {
+                // The entry has been added to cache succesfully
+                // Add the cache_map_entry to the transport
+                int_id.transport ()->cache_map_entry (entry);
+                more_to_do = false;
+              }
+            else if (retval == 1)
+              {
+                if (entry->item ().transport () == int_id.transport ())
+                  {
+                    // update the cache status
+                    // we are already holding the lock, do not call set_entry_state
+                    entry->item ().recycle_state (int_id.recycle_state ());
+                    if (TAO_debug_level > 9 &&
+                        entry->item ().is_connected () != int_id.is_connected ())
+                      ACE_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("TAO (%P|%t) - Transport_Cache_")
+                                  ACE_TEXT ("Manager::bind_i, Updating existing ")
+                                  ACE_TEXT ("entry sets is_connected to %C\n"),
+                                  (int_id.is_connected () ? "true" : "false")));
+
+                    entry->item ().is_connected (int_id.is_connected ());
+                    retval = 0;
+                    more_to_do = false;
+                  }
+                else
+                {
+                  ext_id.index (ext_id.index () + 1);
+                  if (TAO_debug_level > 8)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i, ")
+                        ACE_TEXT ("Unable to bind Transport[%d] @ hash:index{%d:%d}. ")
+                        ACE_TEXT ("Trying with a new index\n"),
+                        int_id.transport ()->id (),
+                        ext_id.hash (),
+                        ext_id.index ()));
+                    }
+                }
+              }
+            else
+              {
+                if (TAO_debug_level > 0)
+                  {
+                    ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i, ")
+                      ACE_TEXT("ERROR: unable to bind transport\n")));
+                  }
+                more_to_do = false;
+              }
           }
       }
     if (retval == 0)
@@ -293,7 +313,7 @@ namespace TAO
                 if (TAO_debug_level > 6)
                   {
                     ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::find_i: ")
+                      ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::find_i, ")
                       ACE_TEXT ("Found available Transport[%d] @hash:index {%d:%d}\n"),
                       entry->item ().transport ()->id (),
                       entry->ext_id_.hash (),
@@ -306,7 +326,7 @@ namespace TAO
                 if (TAO_debug_level > 6)
                   {
                     ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::find_i: ")
+                      ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::find_i, ")
                       ACE_TEXT ("Found connecting Transport[%d] @hash:index {%d:%d}\n"),
                       entry->item ().transport ()->id (),
                       entry->ext_id_.hash (),
@@ -332,7 +352,7 @@ namespace TAO
                 if (TAO_debug_level > 6)
                   {
                     ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::find_i: ")
+                      ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::find_i, ")
                       ACE_TEXT ("Found busy Transport[%d] @hash:index {%d:%d}\n"),
                       entry->item ().transport ()->id (),
                       entry->ext_id_.hash (),
@@ -489,7 +509,7 @@ namespace TAO
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-                    ACE_TEXT ("is_entry_available_i[%d]: %C state is %C\n"),
+                    ACE_TEXT ("is_entry_available_i[%d], %C state is %C\n"),
                     entry.int_id_.transport () ? entry.int_id_.transport ()->id () : 0,
                     (result ? "true" : "false"),
                     Cache_IntId::state_name (entry_state)));
@@ -512,7 +532,7 @@ namespace TAO
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-                    ACE_TEXT ("is_entry_purgable_i[%d]: %C state is %C\n"),
+                    ACE_TEXT ("is_entry_purgable_i[%d], %C state is %C\n"),
                     entry.int_id_.transport ()->id (),
                     (result ? "true" : "false"),
                     Cache_IntId::state_name (entry_state)));
@@ -540,7 +560,7 @@ namespace TAO
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-                    ACE_TEXT ("is_entry_connecting_i[%d]: %C, state is %C\n"),
+                    ACE_TEXT ("is_entry_connecting_i[%d], %C, state is %C\n"),
                     entry.int_id_.transport () ? entry.int_id_.transport ()->id () : 0,
                     (result ? "true" : "false"),
                     Cache_IntId::state_name (entry_state)));
@@ -590,13 +610,15 @@ namespace TAO
       if (sorted_set != 0)
         {
           // BEGIN FORMER close_entries
-          // Calculate the number of entries to purge
-          int const amount = (sorted_size * this->percent_) / 100;
+          // Calculate the number of entries to purge, when we have
+          // to purge try to at least to purge minimal of 1 entry
+          // which is needed if we have a very small cache maximum
+          int const amount = (sorted_size * this->percent_) / 100 + 1;
 
           if (TAO_debug_level > 4)
             {
               ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge: ")
+                ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge, ")
                 ACE_TEXT ("Trying to purge %d of %d cache entries\n"),
                 amount,
                 sorted_size));
@@ -628,7 +650,7 @@ namespace TAO
                         {
                           ACE_ERROR ((LM_ERROR,
                             ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T")
-                            ACE_TEXT ("::purge: Unable to add transport[%d] ")
+                            ACE_TEXT ("::purge, Unable to add transport[%d] ")
                             ACE_TEXT ("on the to-be-closed set, so ")
                             ACE_TEXT ("it will not be purged\n"),
                             transport->id ()));
@@ -668,7 +690,7 @@ namespace TAO
     if (TAO_debug_level > 4)
       {
         ACE_DEBUG ((LM_INFO,
-          ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge: ")
+          ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge, ")
           ACE_TEXT ("Cache size after purging is [%d]\n"),
           this->current_size ()
           ));
@@ -735,7 +757,7 @@ namespace TAO
         if (TAO_debug_level > 6)
           {
             ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::fill_set_i: ")
+              ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::fill_set_i, ")
               ACE_TEXT ("current_size = %d, cache_maximum = %d\n"),
               current_size, cache_maximum));
           }

@@ -101,10 +101,13 @@ CORBA::SystemException::~SystemException (void)
 CORBA::SystemException &
 CORBA::SystemException::operator= (const CORBA::SystemException &src)
 {
-  this->Exception::operator= (src);
+  if (this != &src)
+    {
+      this->Exception::operator= (src);
 
-  this->minor_ = src.minor_;
-  this->completed_ = src.completed_;
+      this->minor_ = src.minor_;
+      this->completed_ = src.completed_;
+    }
 
   return *this;
 }

@@ -438,14 +438,19 @@ TAO_IIOP_Connector::complete_connection (int result,
 
   if (result != -1)
     {
-      // We received a compeleted connection and 0 or more pending.
+      // We received a completed connection and 0 or more pending.
       // the winner is the last member of the list, because the
       // iterator stopped on a successful connect.
       transport = tlist[count-1];
       desc.reset_endpoint (ep_list[count-1]);
       TAO::Transport_Cache_Manager &tcm =
         this->orb_core ()->lane_resources ().transport_cache ();
-      tcm.cache_transport (&desc, transport);
+      if (tcm.cache_transport (&desc, transport) == -1)
+        {
+          // Cache is full, so close the connection again
+          sh_list[count-1]->close ();
+          transport = 0;
+        }
     }
   else
     {
@@ -593,7 +598,7 @@ TAO_IIOP_Connector::complete_connection (int result,
     }
 
   // Failure in adding to cache
-  if (retval != 0)
+  if (retval == -1)
     {
       // Close the handler.
       svc_handler->close ();

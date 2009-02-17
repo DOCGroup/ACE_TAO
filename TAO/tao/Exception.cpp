@@ -66,11 +66,14 @@ CORBA::Exception::~Exception (void)
 CORBA::Exception &
 CORBA::Exception::operator= (const CORBA::Exception &src)
 {
-  this->id_ = CORBA::string_dup (src.id_);
-  ACE_ASSERT (this->id_.in () != 0);
+  if (this != &src)
+    {
+      this->id_ = CORBA::string_dup (src.id_);
+      ACE_ASSERT (this->id_.in () != 0);
 
-  this->name_ = CORBA::string_dup (src.name_);
-  ACE_ASSERT (this->name_.in () != 0);
+      this->name_ = CORBA::string_dup (src.name_);
+      ACE_ASSERT (this->name_.in () != 0);
+    }
 
   return *this;
 }

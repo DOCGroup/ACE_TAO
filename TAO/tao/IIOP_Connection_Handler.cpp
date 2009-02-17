@@ -30,8 +30,10 @@ TAO_IIOP_Connection_Handler::add_reference (void)
   Reference_Count rc = TAO_IIOP_SVC_HANDLER::add_reference ();
   if (TAO_debug_level > 9)
     {
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - IIOP_Connection_Handler[%d]::"
-                  "add_reference, up to %d\n", this->transport (), rc));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
+                  ACE_TEXT("add_reference, up to %d\n"),
+                  this->transport (), rc));
     }
   return rc;
 
@@ -44,8 +46,9 @@ TAO_IIOP_Connection_Handler::remove_reference (void)
   Reference_Count rc = TAO_IIOP_SVC_HANDLER::remove_reference ();
   if (TAO_debug_level > 9)
     {
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - IIOP_Connection_Handler[%d]::"
-                  "remove_reference, down to %d\n", tport, rc));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
+                  ACE_TEXT("remove_reference, down to %d\n"), tport, rc));
     }
   return rc;
 }
@@ -78,8 +81,9 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
 
   if (TAO_debug_level > 9)
     {
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - IIOP_Connection_Handler[%d] ctor, "
-                  "this = %d\n",
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d] ctor, ")
+                  ACE_TEXT("this=%@\n"),
                   static_cast<TAO_Transport *> (specific_transport), this));
     }
 
@@ -567,8 +571,8 @@ TAO_IIOP_Connection_Handler::set_tos (int tos)
           if (TAO_debug_level)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - IIOP_Connection_Handler::"
-                          "set_dscp_codepoint -> IPV6_TCLASS not supported yet\n"));
+                          ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::")
+                          ACE_TEXT("set_dscp_codepoint -> IPV6_TCLASS not supported yet\n")));
             }
           return 0;
         }
@@ -588,8 +592,8 @@ TAO_IIOP_Connection_Handler::set_tos (int tos)
       if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - IIOP_Connection_Handler::"
-                      "set_dscp_codepoint -> dscp: %x; result: %d; %s\n",
+                      ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::")
+                      ACE_TEXT("set_dscp_codepoint -> dscp: %x; result: %d; %C\n"),
                       tos,
                       result,
                       result == -1 ? "try running as superuser" : ""));
@@ -658,8 +662,6 @@ TAO_IIOP_Connection_Handler::abort (void)
         }
     }
 }
-
-
 
 //@@ CONNECTION_HANDLER_SPL_COPY_HOOK_END
 /*
