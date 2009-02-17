@@ -1,3 +1,9 @@
+Tue Feb 17 23:56:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/global.features:
+
+          Disabled xerces by default as well. 
+        
 Tue Feb 17 20:19:06 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/os_include/os_stddef.h:
