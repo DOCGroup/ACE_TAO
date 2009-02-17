@@ -1,3 +1,8 @@
+Tue Feb 17 14:27:50 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/os_include/os_signal.h:
+          Removed some legacy Linux code.
+
 Tue Feb 17 14:20:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Based_Pointer_Test_Lib.cpp:
