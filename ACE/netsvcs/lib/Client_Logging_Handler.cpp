@@ -568,6 +568,13 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("%p\n"),
                        this->logger_key_),
                       -1);
+#else
+  // Initialize the acceptor endpoint.
+  if (this->open (LOGGING_ADDR ()) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("open")),
+                      -1);
 #endif
 
   // Establish connection with the server.
