@@ -52,6 +52,7 @@ stl           = 0
 xsc           = 0
 mcpp          = 0
 tao_idl_fe_gen = 0
+xerces = 0
 xerces2 = 0
 xerces3 = 0
 ofccm = 0
