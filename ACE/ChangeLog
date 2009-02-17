@@ -1,3 +1,10 @@
+Tue Feb 17 11:52:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+        * netsvcs/lib/Client_Logging_Handler.h:
+          Added new ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES which
+          can be explicitly set to 0 to just use sockets
+
 Tue Feb 17 10:57:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace.mpc:
