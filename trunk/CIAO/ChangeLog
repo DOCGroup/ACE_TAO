@@ -1,3 +1,9 @@
+Mon Feb 16 12:53:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * CIAO-INSTALL.html:
+          Updated because "Boost System" and "Boost Regex" were also
+          needed to compile CIAO with Visual Studio.
+
 Mon Feb 16 09:55:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO_DAnCE.mwc:
