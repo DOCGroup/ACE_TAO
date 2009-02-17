@@ -1,3 +1,9 @@
+Tue Feb 17 14:43:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tao/Strategies/UIOP_Connector.cpp:
+
+          Fixed syntax problem. 
+        
 Tue Feb 17 14:03:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
