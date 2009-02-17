@@ -19,7 +19,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Time_Value.h"
-#include "svc_export.h"
+#include "ace/svc_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

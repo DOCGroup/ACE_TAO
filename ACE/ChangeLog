@@ -1,3 +1,20 @@
+Tue Feb 17 18:08:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/lib/Client_Logging_Handler.h:
+        * netsvcs/lib/Name_Handler.cpp:
+        * netsvcs/lib/Name_Handler.h:
+        * netsvcs/lib/Server_Logging_Handler.h:
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
+        * netsvcs/lib/Time_Request_Reply.cpp:
+        * netsvcs/lib/Time_Request_Reply.h:
+        * netsvcs/lib/Token_Handler.cpp:
+        * netsvcs/lib/Token_Handler.h:
+        * netsvcs/lib/TS_Clerk_Handler.cpp:
+        * netsvcs/lib/TS_Clerk_Handler.h:
+        * netsvcs/lib/TS_Server_Handler.cpp:
+        * netsvcs/lib/TS_Server_Handler.h:
+          Revert svc_export.h file, much more dependencies then I expected
+
 Tue Feb 17 17:46:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace.mpc:
