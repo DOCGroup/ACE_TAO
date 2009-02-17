@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_SVC_DLL
-
 #include "ace/Containers.h"
 #include "ace/Get_Opt.h"
 #include "ace/Singleton.h"
@@ -621,13 +619,13 @@ ACE_Name_Handler::lists_entries (void)
 
 ACE_Naming_Context *
 ACE_Name_Handler::naming_context (void)
-{ 
-  return naming_context_; 
+{
+  return naming_context_;
 }
 
 ACE_Naming_Context *
 ACE_Name_Acceptor::naming_context (void)
-{ 
+{
   return &naming_context_;
 }
 

@@ -802,7 +802,7 @@ protected:
   /**
    * Decrease the reference count, but don't delete the object.
    * Returns 0 if the object should be removed.
-   * If <lock> is equal to the locking strategy then we assume that
+   * If @a lock is equal to the locking strategy then we assume that
    * the lock is beign held by the current thread; this is used to
    * release all the data blocks in a chain while holding a single
    * lock.

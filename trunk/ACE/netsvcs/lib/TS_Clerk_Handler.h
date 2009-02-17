@@ -24,7 +24,7 @@
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
-#include "ace/svc_export.h"
+#include "svc_export.h"
 #include "ace/os_include/os_dirent.h"
 
 #include "Time_Request_Reply.h"

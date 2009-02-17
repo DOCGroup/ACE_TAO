@@ -22,7 +22,7 @@
 
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
-#include "ace/svc_export.h"
+#include "svc_export.h"
 
 #if defined (ACE_HAS_STREAM_PIPES)
 #define LOGGING_STREAM ACE_SPIPE_STREAM
@@ -45,13 +45,14 @@ template class ACE_Svc_Export ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>;
  * records from local applications processes and forwards them to
  * the server logging daemon running on another host.
  *
- * The default implementation uses an <ACE_SPIPE_Stream> to
+ * The default implementation uses an ACE_SPIPE_Stream to
  * receive the logging message from the application and an
- * <ACE_SOCK_Stream> to forward the logging message to the
+ * ACE_SOCK_Stream to forward the logging message to the
  * server.  However, on platforms that don't support
  * <ACE_SPIPEs> (e.g., Win32) we use sockets instead.
  */
-class ACE_Svc_Export ACE_Client_Logging_Handler : public ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>
+class ACE_Svc_Export ACE_Client_Logging_Handler :
+  public ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>
 {
 
 public:
@@ -61,7 +62,7 @@ public:
   ACE_Client_Logging_Handler (ACE_HANDLE handle = ACE_STDERR);
 
   /// Activate this instance of the ACE_Client_Logging_Handler
-  /// (called by the <ACE_Client_Logging_Acceptor>).
+  /// (called by the ACE_Client_Logging_Acceptor).
   virtual int open (void * = 0);
 
   /// Return the handle of the IPC endpoint.

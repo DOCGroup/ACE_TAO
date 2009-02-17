@@ -1903,8 +1903,7 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
     {
       // @@NOTE: We need to probably add another method to the message
       // block interface to simplify this
-      db =
-        cdr.start_.data_block ()->clone_nocopy ();
+      db = cdr.start_.data_block ()->clone_nocopy ();
 
       if (db == 0 || db->size ((wr_bytes) +
                                ACE_CDR::MAX_ALIGNMENT) == -1)

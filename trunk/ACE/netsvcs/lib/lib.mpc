@@ -4,7 +4,7 @@
 project(netsvcs): ace_output, acelib {
   avoids       += ace_for_tao
   sharedname    = netsvcs
-  dynamicflags += ACE_NETSVCS_BUILD_DLL
+  dynamicflags += ACE_BUILD_SVC_DLL
   Source_Files {
     Time_Request_Reply.cpp
     TS_Server_Handler.cpp
@@ -16,5 +16,8 @@ project(netsvcs): ace_output, acelib {
     Server_Logging_Handler.cpp
     Token_Handler.cpp
     Base_Optimizer.cpp
+  }
+  Header_Files {
+    svc_export.h
   }
 }

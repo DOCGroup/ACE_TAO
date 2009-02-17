@@ -882,7 +882,7 @@ ACE_Message_Block::release (void)
           // One guard for all
           ACE_GUARD_RETURN (ACE_Lock, ace_mon, *lock, 0);
 
-          // Call non-guarded release with <lock>
+          // Call non-guarded release with @a lock
           destroy_dblock = this->release_i (lock);
         }
       // This is the case when we have a valid data block but no lock

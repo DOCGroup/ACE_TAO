@@ -28,7 +28,7 @@
 #include "ace/Naming_Context.h"
 #include "ace/Name_Request_Reply.h"
 #include "ace/Null_Mutex.h"
-#include "ace/svc_export.h"
+#include "svc_export.h"
 
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
@@ -145,9 +145,9 @@ private:
 
   ///  Naming Context
   ACE_Naming_Context *naming_context_;
-  
+
   ACE_Naming_Context *naming_context (void);
-  
+
   /// Handle binds.
   int bind (void);
 
