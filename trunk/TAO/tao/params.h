@@ -144,8 +144,8 @@ public:
 
   /// Disable the OMG standard profile components, useful for
   /// homogenous environments.
-  int std_profile_components (void) const;
-  void std_profile_components (int x);
+  bool std_profile_components (void) const;
+  void std_profile_components (bool x);
 
   /// Scheduling policy.
   /**
@@ -331,7 +331,7 @@ private:
   time_t accept_error_delay_;
 
   /// If true then the standard OMG components are not generated.
-  int std_profile_components_;
+  bool std_profile_components_;
 
   /// Scheduling policy.
   /**

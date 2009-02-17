@@ -525,7 +525,7 @@ TAO_Profile::verify_orb_configuration (void)
 {
   // If the ORB isn't configured to support tagged components, then
   // throw an exception.
-  if (this->orb_core_->orb_params ()->std_profile_components () == 0
+  if (!this->orb_core_->orb_params ()->std_profile_components ()
       || !this->orb_core_->orb ()->_use_omg_ior_format ())
     {
       if (TAO_debug_level > 0)
