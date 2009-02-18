@@ -1,3 +1,9 @@
+Wed Feb 18 12:31:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * CIAO-INSTALL.html:
+          To build CIAO using Xerces one has to set xerces3=1 or
+          xerces2=1 in default.features.
+
 Wed Feb 18 08:51:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/RepositoryManager/Repository_Manager_Module.cpp:
