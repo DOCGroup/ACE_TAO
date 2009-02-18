@@ -85,7 +85,7 @@ namespace DAnCE
       }
       
     private:
-      ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> thread_counter_;
+      ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> thread_counter_;
       CORBA::ORB_var orb_;
     };
   }

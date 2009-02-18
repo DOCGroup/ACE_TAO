@@ -1,3 +1,10 @@
+Wed Feb 18 08:51:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/RepositoryManager/Repository_Manager_Module.cpp:
+        * MPC/config/dance_repository_manager.mpb:
+        * MPC/config/dance_repository_manager_base.mpb:
+          Resolved minor fuzz errors.
+
 Wed Feb 18 00:52:18 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment_RepositoryManager.idl:
