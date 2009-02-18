@@ -341,6 +341,7 @@ namespace TAO {
   bool demarshal_sequence(stream & strm, TAO::unbounded_basic_string_sequence <charT> & target) {
     typedef TAO::unbounded_basic_string_sequence <charT> sequence;
     typedef typename sequence::element_traits::string_var string_var;
+    typedef typename sequence::allocation_traits sequence_allocation_traits;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -348,8 +349,9 @@ namespace TAO {
     if (new_length > strm.length()) {
       return false;
     }
-    sequence tmp(new_length);
-    tmp.length(new_length);
+    sequence tmp(new_length, new_length,
+                 sequence_allocation_traits::allocbuf_noinit(new_length),
+                 true);
     for(CORBA::ULong i = 0; i < new_length; ++i) {
       string_var string;
       if (!(strm >> string.inout ())) {
@@ -367,6 +369,7 @@ namespace TAO {
   bool demarshal_sequence(stream & strm, TAO::unbounded_bd_string_sequence <charT, BD_STR_MAX> & target) {
     typedef TAO::unbounded_bd_string_sequence <charT, BD_STR_MAX> sequence;
     typedef typename sequence::element_traits::string_var string_var;
+    typedef typename sequence::allocation_traits sequence_allocation_traits;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -374,8 +377,9 @@ namespace TAO {
     if (new_length > strm.length()) {
       return false;
     }
-    sequence tmp(new_length);
-    tmp.length(new_length);
+    sequence tmp(new_length, new_length,
+                 sequence_allocation_traits::allocbuf_noinit(new_length),
+                 true);
     for(CORBA::ULong i = 0; i < new_length; ++i) {
       string_var string;
       if (!(strm >> string.inout ())) {
@@ -396,6 +400,7 @@ namespace TAO {
   template <typename stream, typename object_t, typename object_t_var>
   bool demarshal_sequence(stream & strm, TAO::unbounded_object_reference_sequence<object_t, object_t_var> & target) {
     typedef TAO::unbounded_object_reference_sequence<object_t, object_t_var> sequence;
+    typedef typename sequence::allocation_traits sequence_allocation_traits;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -403,8 +408,9 @@ namespace TAO {
     if (new_length > strm.length()) {
       return false;
     }
-    sequence tmp(new_length);
-    tmp.length(new_length);
+    sequence tmp(new_length, new_length,
+                 sequence_allocation_traits::allocbuf_noinit(new_length),
+                 true);
     typename sequence::value_type * buffer = tmp.get_buffer();
     for(CORBA::ULong i = 0; i < new_length; ++i) {
       if (!(strm >> buffer[i])) {

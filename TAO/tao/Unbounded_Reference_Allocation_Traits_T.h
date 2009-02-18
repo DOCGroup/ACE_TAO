@@ -42,6 +42,17 @@ struct unbounded_reference_allocation_traits
     reinterpret_cast<value_type**>(buffer)[0] = buffer + maximum + 1;
 
     // no throw
+    reference_traits::initialize_range(buffer + 1, buffer + maximum + 1);
+
+    return buffer + 1;
+  }
+
+  inline static value_type * allocbuf_noinit(CORBA::ULong maximum)
+  {
+    value_type * buffer = new value_type[maximum + 1];
+    reinterpret_cast<value_type**>(buffer)[0] = buffer + maximum + 1;
+
+    // no throw
     reference_traits::zero_range(buffer + 1, buffer + maximum + 1);
 
     return buffer + 1;

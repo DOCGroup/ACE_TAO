@@ -1,3 +1,53 @@
+Wed Feb 18 10:37:15 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+          Fixed bug#3574 and bug#3473. This must improve performance
+          when handling sequences.
+
+        * tao/String_Traits_T.h:
+        * tao/Value_Traits_T.h:
+        * tao/Object_Reference_Traits_T.h:
+        * tao/Array_Traits_T.h:
+        * tao/Valuetype/Valuetype_Traits_T.h:
+
+          Added copy_swap_range() which swaps pointers for dynamically
+          allocated types and copies values for all of the rest. This
+          is useful when we know that copying is reduntant since the old
+          buffer will be destroyed immediately after the operation.
+          Changed std::fill to ACE_OS::memset in zero_range() which
+          turned to be faster when only needed to zero a region of
+          memory.
+
+        * tao/Bounded_Value_Allocation_Traits_T.h:
+        * tao/Bounded_Reference_Allocation_Traits_T.h:
+        * tao/Bounded_Array_Allocation_Traits_T.h:
+        * tao/Unbounded_Value_Allocation_Traits_T.h:
+        * tao/Unbounded_Reference_Allocation_Traits_T.h:
+        * tao/Unbounded_Array_Allocation_Traits_T.h:
+        * tao/Valuetype/Bounded_Valuetype_Allocation_Traits_T.h:
+        * tao/Valuetype/Unbounded_Valuetype_Allocation_Traits_T.h:
+
+          Added allocbuf_noinit which does what allocbuf previously
+          did and now allocbuf works as required by CORBA C++ mapping
+          i.e. it returns correctly initilized buffer. This also fixes
+          bug#3473.
+
+        * tao/Valuetype/Bounded_Valuetype_Sequence_T.h:
+        * tao/Valuetype/Unbounded_Valuetype_Sequence_T.h:
+        * tao/Unbounded_Sequence_CDR_T.h:
+        * tao/Bounded_Sequence_CDR_T.h:
+
+          Changed the way temporaries are created. Since they don't need
+          a properly constructed internal buffer allocbuf_noinit is used
+          for their creation.
+
+        * tao/Unbounded_Octet_Sequence_T.h:
+        * tao/Generic_Sequence_T.h:
+
+          Updated the temporaries creation and improved generic_sequence::
+          length(CORBA::ULong) when extending a sequence by employing
+          copy_swap_range() for old values while moving them to a new
+          sequence.
+
 Tue Feb 17 15:14:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:

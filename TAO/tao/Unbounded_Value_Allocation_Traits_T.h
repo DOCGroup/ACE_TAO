@@ -40,6 +40,11 @@ struct unbounded_value_allocation_traits
     return new value_type[maximum];
   }
 
+  inline static value_type * allocbuf_noinit(CORBA::ULong maximum)
+  {
+    return new value_type[maximum];
+  }
+
   inline static void freebuf(value_type * buffer)
   {
     delete[] buffer;
