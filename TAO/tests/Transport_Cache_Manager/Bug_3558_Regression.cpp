@@ -33,7 +33,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // We create 10 transports and have a max of 5 tran
 
       size_t const transport_max = 10;
-      int cache_maximum = 5;
+      size_t const cache_maximum = 5;
       int purging_percentage = 20;
       size_t i = 0;
       mock_transport mytransport[transport_max];

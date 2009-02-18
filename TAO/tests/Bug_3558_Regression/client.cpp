@@ -184,7 +184,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_TCHAR **extra = 0;
       ACE_NEW_RETURN (extra, ACE_TCHAR *[extra_argc], -1);
       extra[0] = ACE::strnew (ACE_TEXT ("-ORBSvcConfDirective"));
-      extra[1] = ACE::strnew (ACE_TEXT ("static Resource_Factory \"-ORBConnectionCacheMax 1 -ORBConnectionCachePurgePercentage 60\""));
+      extra[1] = ACE::strnew (ACE_TEXT ("static Resource_Factory \"-ORBConnectionCacheMax 1 -ORBConnectionCachePurgePercentage 100\""));
       extra[2] = ACE::strnew (ACE_TEXT ("-ORBSvcConfDirective"));
       extra[3] = ACE::strnew (ACE_TEXT ("static Client_Strategy_Factory \"-ORBTransportMuxStrategy EXCLUSIVE\""));
       if (debug_level > 0)
