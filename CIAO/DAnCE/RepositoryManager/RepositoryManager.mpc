@@ -1,12 +1,10 @@
 // -*- MPC -*-
 // $Id$
 
-project (DAnCE_RepositoryManager) : dance_deployment_svnt, ciao_config_handlers, ccm_stub, dance_repository_manager_base, naming, iortable, utils {
+project (DAnCE_RepositoryManager) : dance_deployment_svnt, ciao_config_handlers, ccm_stub, dance_repository_manager_base, naming, iortable, utils, minizip {
   requires += dummy_label
-  includes += $(ACE_ROOT)/contrib
   requires += zlib dummy_label
-  after += minizip
-  libs += Package_Config_Handlers minizip
+  libs += Package_Config_Handlers
 
   IDL_Files {
     RepositoryManagerDaemon.idl
