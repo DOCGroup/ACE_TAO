@@ -16,11 +16,11 @@ Wed Feb 18 10:25:49 UTC 2009  Olli Savia  <ops@iki.fi>
 
 Wed Feb 18 09:22:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
-        * DLL_Test.h:
+        * tests/DLL_Test.h:
           Revert changes made by Johnny (just use
           ace/svc_export.h again).
 
-        * DLL_Test_Export.h:
+        * tests/DLL_Test_Export.h:
           Removed since ace/svc_export.h is
           used again.
 
