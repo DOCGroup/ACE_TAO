@@ -22,7 +22,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/Trace.h"
-#include "DLL_Test_Export.h"
+#include "ace/svc_export.h"
 
 /**
  * @class Hello
@@ -61,7 +61,7 @@ public:
 
 
 // Used to test dynamic_cast<> in shared libraries.
-class DLL_Test_Export Child : public Parent
+class ACE_Svc_Export Child : public Parent
 {
 public:
 
