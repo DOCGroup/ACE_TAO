@@ -1,3 +1,10 @@
+Wed Feb 18 19:06:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+        * netsvcs/lib/Client_Logging_Handler.h:
+          Just use ACE_HAS_STREAM_PIPES, there are too much other
+          dependencies on this define
+
 Wed Feb 18 15:34:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/tests.mpc:
