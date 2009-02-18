@@ -84,6 +84,7 @@ project(CCM_stub) : taolib_with_idl, tao_output, valuetype, ifr_client {
 project(CCM_svnt_idl) : taolib_with_idl, valuetype {
   idlflags   += -Wb,export_include=CCM_Svnt_Export.h
   idlflags   += -Wb,export_macro=CCM_Svnt_Export
+  idlflags   += -I$(CIAO_ROOT)
   custom_only = 1
   IDL_Files {
     idlflags += -SS -Sci \
