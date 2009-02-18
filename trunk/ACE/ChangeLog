@@ -1,3 +1,12 @@
+Wed Feb 18 19:36:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc-7.h:
+          Layout change
+
+        * ace/config-win32-msvc-8.h:
+          Disable warning 4250, and 4355, we do this for the other
+          msvc versions but not for vc8
+
 Wed Feb 18 19:06:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/lib/Client_Logging_Handler.cpp:

@@ -112,7 +112,7 @@
 #pragma warning(disable:4231)
 
 // 'function' : unreferenced local function has been removed
-# pragma warning(disable:4505)
+#pragma warning(disable:4505)
 
 // A template can not be exported. Only an instantiation may be exported.
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
