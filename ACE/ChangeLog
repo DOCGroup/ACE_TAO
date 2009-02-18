@@ -1,3 +1,8 @@
+Wed Feb 18 20:51:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/minizip.mpb:
+          Added new base project for minizip
+
 Wed Feb 18 19:36:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-msvc-7.h:
