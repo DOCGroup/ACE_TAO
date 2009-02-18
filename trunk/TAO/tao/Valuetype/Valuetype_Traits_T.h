@@ -10,6 +10,7 @@
  * @author Carlos O'Ryan
  */
 #include "Valuetype_Traits_Base_T.h"
+#include "ace/OS_NS_string.h"
 
 #include <algorithm>
 #include <functional>
@@ -32,7 +33,7 @@ struct valuetype_traits_decorator
   inline static void zero_range(
       object_type ** begin, object_type ** end)
   {
-    std::fill(begin, end, derived::nil());
+    ACE_OS::memset (begin, 0, (end - begin) * sizeof (object_type*));
   }
 
   inline static void initialize_range(
@@ -54,6 +55,22 @@ struct valuetype_traits_decorator
       object_type ** begin, object_type ** end, object_type ** dst)
   {
     std::transform(begin, end, dst, &derived::duplicate);
+  }
+#endif  /* ACE_LACKS_MEMBER_TEMPLATES */
+
+#ifndef ACE_LACKS_MEMBER_TEMPLATES
+  // Allow MSVC++ >= 8 checked iterators to be used.
+  template <typename iter>
+  inline static void copy_swap_range(
+      object_type ** begin, object_type ** end, iter dst)
+  {
+    std::swap_ranges(begin, end, dst);
+  }
+#else
+  inline static void copy_swap_range(
+      object_type ** begin, object_type ** end, object_type ** dst)
+  {
+    std::swap_ranges(begin, end, dst);
   }
 #endif  /* ACE_LACKS_MEMBER_TEMPLATES */
 

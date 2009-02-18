@@ -117,6 +117,7 @@ private:
   template <typename stream, typename object_t, typename object_t_var, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_valuetype_sequence<object_t, object_t_var, MAX> & target) {
     typedef TAO::bounded_valuetype_sequence<object_t, object_t_var, MAX> sequence;
+    typedef typename sequence::allocation_traits sequence_allocation_traits;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -124,8 +125,9 @@ private:
     if ((new_length > strm.length()) || (new_length > target.maximum ())) {
         return false;
     }
-    sequence tmp;
-    tmp.length(new_length);
+    sequence tmp(new_length,
+                 sequence_allocation_traits::allocbuf_noinit(new_length),
+                 true);
     typename sequence::value_type * buffer = tmp.get_buffer();
     for(CORBA::ULong i = 0; i < new_length; ++i) {
       if (!(strm >> buffer[i])) {

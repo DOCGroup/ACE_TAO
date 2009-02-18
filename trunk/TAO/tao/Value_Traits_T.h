@@ -11,6 +11,8 @@
  * @author Carlos O'Ryan
  */
 
+#include "ace/OS_NS_string.h"
+
 #include <algorithm>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -29,7 +31,7 @@ struct value_traits
   inline static void zero_range(
       value_type * begin , value_type * end)
   {
-    std::fill(begin, end, value_type ());
+    ACE_OS::memset (begin, 0, (end - begin) * sizeof (value_type));
   }
 
   inline static void initialize_range(
@@ -59,6 +61,22 @@ struct value_traits
     std::copy(begin, end, dst);
   }
 # endif  /* !ACE_LACKS_MEMBER_TEMPLATES */
+
+#ifndef ACE_LACKS_MEMBER_TEMPLATES
+  // Allow MSVC++ >= 8 checked iterators to be used.
+  template <typename iter>
+  inline static void copy_swap_range(
+      value_type * begin, value_type * end, iter dst)
+  {
+    copy_range(begin, end, dst);
+  }
+#else
+  inline static void copy_swap_range(
+      value_type * begin, value_type * end, value_type * dst)
+  {
+    copy_range(begin, end, dst);
+  }
+#endif  /* !ACE_LACKS_MEMBER_TEMPLATES */
 };
 
 } // namespace details

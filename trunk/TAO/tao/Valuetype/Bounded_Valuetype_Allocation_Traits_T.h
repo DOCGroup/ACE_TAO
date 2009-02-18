@@ -40,6 +40,15 @@ struct bounded_valuetype_allocation_traits
   {
     value_type * buffer = new value_type[MAX];
     // no throw
+    valuetype_traits::initialize_range(buffer, buffer + MAX);
+
+    return buffer;
+  }
+
+  inline static value_type * allocbuf_noinit(CORBA::ULong /* maximum */)
+  {
+    value_type * buffer = new value_type[MAX];
+    // no throw
     valuetype_traits::zero_range(buffer, buffer + MAX);
 
     return buffer;
