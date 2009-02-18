@@ -25,7 +25,7 @@
 #include "ace/LOCK_SOCK_Acceptor.h"
 #include "ace/Task_T.h"
 #include "ace/Asynch_IO.h"
-#include "netsvcs/lib/svc_export.h"
+#include "ace/svc_export.h"
 #include "HTTP_Handler.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
