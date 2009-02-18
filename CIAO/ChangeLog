@@ -1,3 +1,8 @@
+Wed Feb 18 20:52:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+          use the new minizip base project
+
 Wed Feb 18 20:45:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/CIAO_Servant_Activator.mpc
