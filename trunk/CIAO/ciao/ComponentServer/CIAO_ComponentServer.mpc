@@ -4,6 +4,7 @@ project(CIAO_ComponentServer_IDL) : taoidldefaults, anytypecode {
   idlflags     += -Wb,stub_export_include=CIAO_ComponentServer_stub_export.h
   idlflags     += -Wb,skel_export_macro=CIAO_ComponentServer_svnt_Export
   idlflags     += -Wb,skel_export_include=CIAO_ComponentServer_svnt_export.h
+  idlflags     += -I$(CIAO_ROOT)
 
   custom_only=1
 
@@ -18,6 +19,7 @@ project(CIAO_CS_Client_IDL) : taoidldefaults, anytypecode {
   idlflags     += -Wb,stub_export_include=CIAO_ComponentServer_stub_export.h
   idlflags     += -Wb,skel_export_macro=CIAO_CS_Client_svnt_Export
   idlflags     += -Wb,skel_export_include=CIAO_CS_Client_svnt_export.h
+  idlflags     += -I$(CIAO_ROOT)
 
   custom_only=1
 
