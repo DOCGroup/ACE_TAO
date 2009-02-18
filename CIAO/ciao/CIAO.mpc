@@ -1,5 +1,6 @@
 // $Id$
 project(CIAO_Exception_IDL) : taoidldefaults {
+  idlflags   += -I$(CIAO_ROOT)
   custom_only = 1
   IDL_Files {
     idlflags += -Sci -SS
@@ -23,8 +24,8 @@ project(CIAO_Client) : ccm_stub, ciao_lib, ccm_cookie, ccm_configvalue {
 
 project(CIAO_Server) : ccm_stub, naming, ciao_client, ciao_lib, ccm_cookie {
   dynamicflags = CIAO_SERVER_BUILD_DLL
-   
-  Source_Files { 
+
+  Source_Files {
     Server_init.cpp
   }
   Header_Files {
