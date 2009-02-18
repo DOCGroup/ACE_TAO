@@ -23,7 +23,7 @@
 #include "ace/OS_Memory.h"         //for ACE_NEW* macros
 
 #include <string>
-#include "unzip.h"
+#include "minizip/unzip.h"
 #define MAXFILENAME (256)
 #define CASESENSITIVITY (0)
 #define WRITEBUFFERSIZE (8192)
