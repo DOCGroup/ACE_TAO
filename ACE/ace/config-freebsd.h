@@ -146,6 +146,7 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_LOG2
 #define ACE_LACKS_SI_ADDR
+#define ACE_LACKS_ISCTYPE
 
 // Compiler/platform supports SVR4 signal typedef
 #define ACE_HAS_SVR4_SIGNAL_T
