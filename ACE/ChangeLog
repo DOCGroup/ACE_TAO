@@ -1,3 +1,9 @@
+Wed Feb 18 15:34:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/tests.mpc:
+          Reverted the last changes made by Johnny
+          (ace/svc_export.h is back again).
+
 Wed Feb 18 12:58:33 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-freebsd.h:
