@@ -16,7 +16,9 @@
 #include "ace/INET_Addr.h"
 #include "Client_Logging_Handler.h"
 
-ACE_RCSID(lib, Client_Logging_Handler, "$Id$")
+ACE_RCSID(lib,
+          Client_Logging_Handler,
+          "$Id$")
 
 ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (ACE_HANDLE output_handle)
   : logging_output_ (output_handle)
@@ -72,7 +74,7 @@ ACE_Client_Logging_Handler::open (void *)
                        ACE_TEXT ("get_remote_addr")),
                       -1);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("connected to client on handle %u\n"),
+              ACE_TEXT ("Connected to client on handle %u\n"),
               this->peer ().get_handle ()));
   return 0;
 }
@@ -102,7 +104,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   if (handle == this->logging_output_)
     // We're getting a message from the logging server!
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("received data from server!\n")),
+                       ACE_TEXT ("Received data from server!\n")),
                       -1);
   ACE_Log_Record log_record;
 
@@ -121,7 +123,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (header.get ());
 
-#if (ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1)
+#if defined (ACE_HAS_STREAM_PIPES)
   // We're getting a logging message from a local application using
   // STREAM pipes, which are nicely prioritized for us.
   ACE_Str_Buf header_msg (header->wr_ptr (),
@@ -191,7 +193,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
       // Just fall through in this case..
       break;
     }
-#endif /* ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1 */
+#endif /* ACE_HAS_STREAM_PIPES */
 
   // Reflect addition of 8 bytes for the header.
   header->wr_ptr (8);
@@ -229,7 +231,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   // Ensure there's sufficient room for log record payload.
   ACE_CDR::grow (payload.get (), 8 + ACE_CDR::MAX_ALIGNMENT + length);
 
-#if (ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1)
+#if defined (ACE_HAS_STREAM_PIPES)
   ACE_Str_Buf payload_msg (payload->wr_ptr (),
                            0,
                            length);
@@ -279,7 +281,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
       ACE_OS::closesocket (handle);
       return 0;
     }
-#endif /* ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1 */
+#endif /* ACE_HAS_STREAM_PIPES */
 
   // Reflect additional bytes for the message.
   payload->wr_ptr (length);
@@ -567,7 +569,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
   ACE_SOCK_Stream stream;
   ACE_INET_Addr server_addr;
 
-#if (ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1)
+#if defined (ACE_HAS_STREAM_PIPES)
   ACE_SPIPE_Addr lserver_addr;
 
   // Figure out what local port we're really bound to.
@@ -578,7 +580,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("starting up Client Logging Daemon, ")
+              ACE_TEXT ("Starting up Client Logging Daemon, ")
               ACE_TEXT ("bounded to STREAM addr %s on handle %u\n"),
               lserver_addr.get_path_name (),
               this->acceptor ().get_handle ()));
@@ -593,11 +595,11 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("starting up Client Logging Daemon, ")
+              ACE_TEXT ("Starting up Client Logging Daemon, ")
               ACE_TEXT ("bounded to local port %d on handle %u\n"),
               lserver_addr.get_port_number (),
               this->acceptor ().get_handle ()));
-#endif /* ACE_NETSVCS_CLIENT_LOGGING_HANDLER_USES_STREAM_PIPES == 1 */
+#endif /* ACE_HAS_STREAM_PIPES */
 
   if (con.connect (stream,
                    this->server_addr_,
@@ -605,7 +607,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
                    this->local_addr_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("can't connect to logging server %s on port %d: ")
+                  ACE_TEXT ("Can't connect to logging server %s on port %d: ")
                   ACE_TEXT ("%m, using stderr\n"),
                   this->server_addr_.get_host_name (),
                   this->server_addr_.get_port_number (),
@@ -625,7 +627,8 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
                            ACE_TEXT ("get_remote_addr")),
                           -1);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Client Logging Daemon is connected to Server Logging Daemon %s on port %d on handle %u\n"),
+                  ACE_TEXT ("Client Logging Daemon is connected to Server ")
+                  ACE_TEXT ("Logging Daemon %s on port %d on handle %u\n"),
                   server_addr.get_host_name (),
                   server_addr.get_port_number (),
                   stream.get_handle ()));
