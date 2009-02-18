@@ -5,7 +5,7 @@ project(CCM_stub_idl) : taolib_with_idl, valuetype {
   idlflags  += -Wb,stub_export_macro=CCM_Stub_Export
   idlflags  += -Wb,skel_export_include=CCM_Svnt_Export.h
   idlflags  += -Wb,skel_export_macro=CCM_Svnt_Export
-  idlflags  += -I$(CIAO_ROOT)/ccm
+  idlflags  += -I$(CIAO_ROOT)
   custom_only = 1
   IDL_Files {
     idlflags += -SS -Sci
