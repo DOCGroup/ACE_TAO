@@ -19,13 +19,12 @@
 #include "ace/OS_NS_sys_stat.h"        //for filesize and fstat and mkdir
 #include "ace/streams.h"
 
-#include "Config_Handlers/DnC_Dump.h"
 
 #include "RM_Helper.h"          //to be able to externalize/internalize a PackageConfiguration
 #include "tao/CDR.h"          //for TAO CDR classes
 #include "ace/Message_Block.h"      //for ACE_Message_Block
 
-#include "Package_Handlers/PCD_Handler.h"
+#include "Config_Handlers/Package_Handlers/PCD_Handler.h"
 
 #include "orbsvcs/CosNamingC.h"
 

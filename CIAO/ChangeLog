@@ -1,3 +1,22 @@
+Wed Feb 18 00:52:18 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/Deployment_RepositoryManager.idl:
+        * DAnCE/RepositoryManager/DAnCE_RepositoryManager_Module_Export.h:
+        * DAnCE/RepositoryManager/RMadmin.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DAnCE/RepositoryManager/Repository_Manager_Exec.cpp:
+        * DAnCE/RepositoryManager/Repository_Manager_Module.h:
+        * DAnCE/RepositoryManager/Repository_Manager_Module.cpp:
+        * DAnCE/RepositoryManager/ZIP_Wrapper.h:
+        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp:
+        * MPC/config/dance_repository_manager.mpb:
+        * MPC/config/dance_repository_manager_base.mpb:
+
+          Initial porting work. Still untested, so it will remain
+          disabled for the time being using dummy_label.
+        
 Mon Feb 16 12:53:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * CIAO-INSTALL.html:

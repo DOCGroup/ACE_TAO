@@ -28,7 +28,7 @@
 #include "ace/OS_NS_fcntl.h"      //for open
 #include "ace/OS_NS_sys_stat.h"   //for filesize and mkdir
 
-#include "unzip.h"
+#include "minizip/unzip.h"
 
 
 /**
