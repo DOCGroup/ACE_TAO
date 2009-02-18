@@ -14,7 +14,8 @@
  *  the D&C spec
  *
  * @author Stoyan Paunov
- *         Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+ * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+ * @author William R. Otte <wotte@dre.vanderbilt.edu>
  */
 //======================================================================
 
@@ -48,170 +49,153 @@ namespace
   static const size_t TEMP_LEN = 1024;
 }
 
-class  CIAO_RepositoryManagerDaemon_i :
-  public virtual POA_CIAO::RepositoryManagerDaemon
+namespace DAnCE
 {
-public:
-  /// Constructor
-  CIAO_RepositoryManagerDaemon_i (CORBA::ORB_ptr the_orb,
-                  const char* server = "localhost:5432",
-                  const char* install_dir = "RepositoryManager");
+  class  RepositoryManagerDaemon_i :
+    public virtual POA_CIAO::RepositoryManagerDaemon
+  {
+  public:
+    /// Constructor
+    RepositoryManagerDaemon_i (CORBA::ORB_ptr the_orb,
+                               const ACE_TCHAR* server = "localhost:5432",
+                               const ACE_TCHAR* install_dir = "RepositoryManager");
 
-  /// Destructor
-  virtual ~CIAO_RepositoryManagerDaemon_i (void);
+    /// Destructor
+    virtual ~RepositoryManagerDaemon_i (void);
 
-  virtual
-  void shutdown (
+    virtual void shutdown ();
 
-    );
+    virtual
+    void installPackage (const ACE_TCHAR * installationName,
+                         const ACE_TCHAR * location,
+                         ::CORBA::Boolean replace);
 
-  virtual
-  void installPackage (
-      const char * installationName,
-      const char * location,
-      ::CORBA::Boolean replace
-    );
+    virtual
+    void createPackage (const ACE_TCHAR * installationName,
+                        const ::Deployment::PackageConfiguration & package,
+                        const ACE_TCHAR * baseLocation,
+                        ::CORBA::Boolean replace);
 
-  virtual
-  void createPackage (
-      const char * installationName,
-      const ::Deployment::PackageConfiguration & package,
-      const char * baseLocation,
-      ::CORBA::Boolean replace
-    );
+    virtual
+    ::Deployment::PackageConfiguration * findPackageByName (const ACE_TCHAR * name);
 
-  virtual
-  ::Deployment::PackageConfiguration * findPackageByName (
-      const char * name
-    );
+    virtual
+    ::Deployment::PackageConfiguration * findPackageByUUID (const ACE_TCHAR * UUID);
 
-  virtual
-  ::Deployment::PackageConfiguration * findPackageByUUID (
-      const char * UUID
-    );
+    virtual
+    ::CORBA::StringSeq * findNamesByType (const ACE_TCHAR * type);
 
-  virtual
-  ::CORBA::StringSeq * findNamesByType (
-      const char * type
-    );
+    virtual
+    ::CORBA::StringSeq * getAllNames ();
 
-  virtual
-  ::CORBA::StringSeq * getAllNames (
+    virtual
+    ::CORBA::StringSeq * getAllTypes ();
 
-    );
+    virtual
+    void deletePackage (const ACE_TCHAR * installationName);
 
-  virtual
-  ::CORBA::StringSeq * getAllTypes (
+  protected:
 
-    );
+    /// Function to parse and return the PackageConfiguration from a specified
+    /// package
+    Deployment::PackageConfiguration* retrieve_PC_from_package (ACE_TCHAR* package);
 
-  virtual
-  void deletePackage (
-      const char * installationName
-    );
+    /// Find out what the name of the PackageConfiguration file is
+    void find_PC_name (ACE_TCHAR* package, ACE_CString& pcd_name);
 
-protected:
-
-  /// Function to parse and return the PackageConfiguration from a specified
-  /// package
-  Deployment::PackageConfiguration* retrieve_PC_from_package (char* package);
-
-  /// Find out what the name of the PackageConfiguration file is
-  void find_PC_name (char* package, ACE_CString& pcd_name);
-
-  /// Function to parse and return the PackageConfiguration from the already
-  /// extracted descriptor files
-  Deployment::PackageConfiguration* retrieve_PC_from_descriptors (const char* pc_name,
-                                                                  const char* descriptor_dir);
+    /// Function to parse and return the PackageConfiguration from the already
+    /// extracted descriptor files
+    Deployment::PackageConfiguration* retrieve_PC_from_descriptors (const ACE_TCHAR* pc_name,
+                                                                    const ACE_TCHAR* descriptor_dir);
 
 
-  /// Function to retrieve a file via HTTP
-  /// stores the file in the passed preallocated ACE_Message_Block
-  /// @retval 1 success
-  /// @retval 0 error
-  int HTTP_Get (const char* URL, ACE_Message_Block &mb);
+    /// Function to retrieve a file via HTTP
+    /// stores the file in the passed preallocated ACE_Message_Block
+    /// @retval 1 success
+    /// @retval 0 error
+    int HTTP_Get (const ACE_TCHAR* URL, ACE_Message_Block &mb);
 
-  /// Function to extract all necessary files for parsing the
-  /// PackageConfiguration descriptor and populating the idl struct.
-  /// @retval 1 success
-  /// @retval 0 error
-  ///
-  /// @note ACE_CString& pcd_name is an out parameter
-  int extract_descriptor_files (char* package,
-    ACE_CString& pcd_name);
-
-
-  /// Function to remove the files extracted for parsing the PackageConfiguration
-  /// descriptor and populating the idl struct. It reads the names of the files
-  /// from the package. They correspond to the names on disk.
-  /// @retval 1 on success
-  /// @retval 0 on error
-  int remove_descriptor_files (char* package);
+    /// Function to extract all necessary files for parsing the
+    /// PackageConfiguration descriptor and populating the idl struct.
+    /// @retval 1 success
+    /// @retval 0 error
+    ///
+    /// @note ACE_CString& pcd_name is an out parameter
+    int extract_descriptor_files (ACE_TCHAR* package,
+                                  ACE_CString& pcd_name);
 
 
-  /// Function to remove the files extracted from the package upon istallation
-  /// It reads the names of the files from the package. They correspond to the
-  /// names on disk. It deletes each file, then it deletes the directories that
-  /// contain them.
-  /// @note extraction location is path/*archive_name*/
-  /// @retval 1 on success
-  /// @retval 0 on error
-  int remove_extracted_package (const char* package_path);
-
-  /// Function to extract the type of the component from
-  /// the PackageConfiguration and update the interface map
-  /// @retval 1 on success
-  /// @retval 0 on error
-  int add_type (::Deployment::PackageConfiguration& pc,
-                const char* name);
-
-  /// Function to remove the interface type of the component
-  /// being removed from the interface map
-  /// @retval 1 on success
-  /// @retval 0 on error
-  int remove_type (::Deployment::PackageConfiguration& pc,
-                   const char* name);
-
-  /// Function to dump the state of the RepositoryManager
-  void dump (void);
-
-  /// Function to save the package info of the RepositoryManager
-  void save (void);
-
-private:
-  /// Cached information about the installed PackageConfigurations
-  /// A separate map for the installation names and their UUID's
-  /// Key:  PackageConfiguration name or its UUID (CString type)
-  /// Value:  The location of the local copy of the package
-
-  ///Based on the synchronization needed we can parametrize this with either
-  ///ACE_Null_Mutex or ACE_RW_Mutex
-
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                  ACE_CString,
-                                  ACE_Hash<ACE_CString>,
-                                  ACE_Equal_To<ACE_CString>,
-                                  ACE_RW_Mutex> PCMap;
-
-  typedef PCMap::ITERATOR PCMap_Iterator;
-  typedef PCMap::ENTRY PCEntry;
+    /// Function to remove the files extracted for parsing the PackageConfiguration
+    /// descriptor and populating the idl struct. It reads the names of the files
+    /// from the package. They correspond to the names on disk.
+    /// @retval 1 on success
+    /// @retval 0 on error
+    int remove_descriptor_files (ACE_TCHAR* package);
 
 
-  /// Cached information about the installed Component Interfaces
-  /// A map which associates Component supportedType with the
-  /// names of packages which implement this component type
-  /// Key:  Component supportedType
-  /// Value:  Unbounded set of the names of installed packages which
-  ///      implement this component type
+    /// Function to remove the files extracted from the package upon istallation
+    /// It reads the names of the files from the package. They correspond to the
+    /// names on disk. It deletes each file, then it deletes the directories that
+    /// contain them.
+    /// @note extraction location is path/*archive_name*/
+    /// @retval 1 on success
+    /// @retval 0 on error
+    int remove_extracted_package (const ACE_TCHAR* package_path);
 
-  ///Based on the synchronization needed we can parametrize this with either
-  ///ACE_Null_Mutex or ACE_RW_Mutex
+    /// Function to extract the type of the component from
+    /// the PackageConfiguration and update the interface map
+    /// @retval 1 on success
+    /// @retval 0 on error
+    int add_type (::Deployment::PackageConfiguration& pc,
+                  const ACE_TCHAR* name);
 
-  typedef ACE_Hash_Multi_Map_Manager<ACE_CString,
-                                     ACE_CString,
-                                     ACE_Hash<ACE_CString>,
-                                     ACE_Equal_To<ACE_CString>,
-                                     ACE_RW_Mutex> CIMap;
+    /// Function to remove the interface type of the component
+    /// being removed from the interface map
+    /// @retval 1 on success
+    /// @retval 0 on error
+    int remove_type (::Deployment::PackageConfiguration& pc,
+                     const ACE_TCHAR* name);
+
+    /// Function to dump the state of the RepositoryManager
+    void dump (void);
+
+    /// Function to save the package info of the RepositoryManager
+    void save (void);
+
+  private:
+    /// Cached information about the installed PackageConfigurations
+    /// A separate map for the installation names and their UUID's
+    /// Key:  PackageConfiguration name or its UUID (CString type)
+    /// Value:  The location of the local copy of the package
+
+    ///Based on the synchronization needed we can parametrize this with either
+    ///ACE_Null_Mutex or ACE_RW_Mutex
+
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                    ACE_CString,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_RW_Mutex> PCMap;
+
+    typedef PCMap::ITERATOR PCMap_Iterator;
+    typedef PCMap::ENTRY PCEntry;
+
+
+    /// Cached information about the installed Component Interfaces
+    /// A map which associates Component supportedType with the
+    /// names of packages which implement this component type
+    /// Key:  Component supportedType
+    /// Value:  Unbounded set of the names of installed packages which
+    ///      implement this component type
+
+    ///Based on the synchronization needed we can parametrize this with either
+    ///ACE_Null_Mutex or ACE_RW_Mutex
+
+    typedef ACE_Hash_Multi_Map_Manager<ACE_CString,
+                                       ACE_CString,
+                                       ACE_Hash<ACE_CString>,
+                                       ACE_Equal_To<ACE_CString>,
+                                       ACE_RW_Mutex> CIMap;
 
   typedef CIMap::ITERATOR CIMap_Iterator;
   typedef CIMap::ENTRY CIEntry;
@@ -234,7 +218,7 @@ private:
   CORBA::ORB_var the_orb_;
 
   /// Will hold the current working directory
-  char cwd_ [TEMP_LEN];
+  ACE_TCHAR cwd_ [TEMP_LEN];
 
   /// Full path for the install directory
   ACE_CString install_root_;
@@ -245,5 +229,7 @@ private:
   /// Directory where the packages will be stored locally
   ACE_CString install_path;
 };
+
+}
 
 #endif /* REPOSITORYMANAGER_H_  */
