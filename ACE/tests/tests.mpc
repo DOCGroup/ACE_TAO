@@ -62,13 +62,12 @@ project(DLL Test Parent Lib) : acelib {
 project(DLL Test Lib) : acelib, dll_test_parent_lib {
   libout       = .
   sharedname   = DLL_Test_Lib
-  dynamicflags = DLL_TEST_BUILD_DLL
+  dynamicflags = ACE_SVC_BUILD_DLL
 
   Source_Files {
     DLL_Test_Impl.cpp
   }
   Header_Files {
-    DLL_Test_Export.h
     test_config.h
   }
   Resource_Files {
@@ -79,7 +78,7 @@ project(Based Pointer Test Lib) : acelib {
   libout       = .
   avoids      += ace_for_tao
   sharedname   = Based_Pointer_Test_Lib
-  dynamicflags = BASED_POINTER_BUILD_DLL
+  dynamicflags = ACE_SVC_BUILD_DLL
 
   Source_Files {
     Based_Pointer_Test_Lib.cpp
