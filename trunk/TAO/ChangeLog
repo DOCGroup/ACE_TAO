@@ -1,3 +1,17 @@
+Wed Feb 18 18:57:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orbconf.h:
+          Removed commented out code
+
+        * tao/Transport_Cache_Manager_T.cpp:
+          Don't try to always purge 1 entry
+
+        * tao/Bug_3558_Regression/client.cpp:
+          Set the purging percentage to 100
+
+        * tao/Transport_Cache_Manager/Bug_3558_Regression.cpp
+          Fixed gnu warning
+
 Wed Feb 18 10:37:15 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
           Fixed bug#3574 and bug#3473. This must improve performance

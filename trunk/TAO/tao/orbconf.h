@@ -221,9 +221,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 # endif /* !defined(_WIN32) */
 #endif /* __WIN32__ */
 
-// Define to `int' if <sys/types.h> doesn't define.
-/* #undef pid_t */
-
 // Define if your processor does not store words with the most significant
 // byte first.
 
