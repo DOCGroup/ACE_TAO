@@ -1,9 +1,20 @@
+Wed Feb 18 10:25:49 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-g++-common.h:
+          Define ACE_LACKS_NUMERIC_LIMITS and ACE_LACKS_ISCTYPE if
+          compiling with GCC 2.x.
+
+        * ace/config-lynxos.h:
+        * ace/config-vxworks5.x.h:
+          Do not define ACE_LACKS_NUMERIC_LIMITS. It is now handled by
+          config-g++-common.h.
+
 Wed Feb 18 09:22:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DLL_Test.h:
-          Revert changes made by Johnny (just use 
+          Revert changes made by Johnny (just use
           ace/svc_export.h again).
-          
+
         * DLL_Test_Export.h:
           Removed since ace/svc_export.h is
           used again.
@@ -12,8 +23,8 @@ Tue Feb 17 23:56:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/global.features:
 
-          Disabled xerces by default as well. 
-        
+          Disabled xerces by default as well.
+
 Tue Feb 17 20:19:06 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/os_include/os_stddef.h:
