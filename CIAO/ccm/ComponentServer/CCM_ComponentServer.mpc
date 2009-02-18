@@ -6,6 +6,7 @@ project(CCM_ComponentServer_IDL) : taoidldefaults, anytypecode {
   idlflags     += -Wb,stub_export_include=DAnCE_ComponentServer_stub_export.h
   idlflags     += -Wb,skel_export_macro=DAnCE_ComponentServer_svnt_Export
   idlflags     += -Wb,skel_export_include=DAnCE_ComponentServer_svnt_export.h
+  idlflags     += -I$(CIAO_ROOT)
 
   custom_only = 1
 

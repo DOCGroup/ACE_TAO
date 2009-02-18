@@ -1,3 +1,8 @@
+Wed Feb 18 20:26:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/ComponentServer/CCM_ComponentServer.mpc
+          Set correct -I option
+
 Wed Feb 18 20:21:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentServer.mpc:
