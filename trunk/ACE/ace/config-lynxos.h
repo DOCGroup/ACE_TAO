@@ -116,10 +116,6 @@
 # endif
 #endif /* ACE_MT_SAFE */
 
-#if __GNUC__ < 3
-# define ACE_LACKS_NUMERIC_LIMITS
-#endif /* __GNUC__ < 3 */
-
 // By default, don't include RCS Id strings in object code.
 #if !defined (ACE_USE_RCSID)
 # define ACE_USE_RCSID 0
