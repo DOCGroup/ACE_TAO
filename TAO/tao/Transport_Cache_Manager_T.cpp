@@ -613,7 +613,7 @@ namespace TAO
           // Calculate the number of entries to purge, when we have
           // to purge try to at least to purge minimal of 1 entry
           // which is needed if we have a very small cache maximum
-          int const amount = (sorted_size * this->percent_) / 100 + 1;
+          int const amount = (sorted_size * this->percent_) / 100;
 
           if (TAO_debug_level > 4)
             {
