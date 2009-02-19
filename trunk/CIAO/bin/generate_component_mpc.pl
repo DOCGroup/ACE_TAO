@@ -50,7 +50,7 @@ $USVR_SUFFIX = uc $svr_suffix;
 if (defined $opt_p) {
     $stub_depend = "$opt_p".'_stub';
     $lib_depend = "$opt_p".'_skel '."$opt_p".'_stub';
-    
+
     $svr_plibs ='\
                 '."$opt_p".'_skel \
                 '."$opt_p".'_stub';
@@ -89,10 +89,10 @@ if (defined $opt_c) {
   Source_Files {
     '."$opt_c".'.cpp
   }
-  
+
   Header_Files {
   }
-  
+
   Inline_Files {
   }
 }
@@ -102,7 +102,7 @@ if (defined $opt_c) {
 if (! defined $opt_n) {
     $cidl_gen =
 '
-project('."$unique_prefix"."$com_name".'_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project('."$unique_prefix"."$com_name".'_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro '."$UCOM_NAME".'_SVNT_Export \
@@ -110,11 +110,11 @@ project('."$unique_prefix"."$com_name".'_cidl_gen) : ciaocidldefaults, taoidldef
   idlflags += -Wb,export_macro='."$UCOM_NAME".'_EXEC_Export \
               -Wb,export_include='."$com_name".'_exec_export.h \
               -SS
-              
+
   CIDL_Files {'."
     $com_name".'.cidl
   }
-  
+
   IDL_Files {'."
     $com_name".'E.idl
   }
@@ -138,13 +138,13 @@ project('."$unique_prefix"."$com_name".'_exec) : ciao_executor {
     $com_name".'EC.cpp'."
     $com_name".'_exec.cpp
   }
-  
+
   Header_Files {'."
     $com_name".'EC.h'."
     $com_name".'_exec.h'."
     $com_name".'_exec_export.h
   }
-  
+
   Inline_Files {'."
     $com_name".'EC.inl
   }
@@ -168,7 +168,7 @@ $svr_libs = "$com_name".'_exec \
 
 if (defined $opt_n) {
     $svr_after = "$unique_prefix"."$com_name".'_stub';
-    
+
     $svr_libs = "$com_name".'_stub
 ';
 
@@ -183,7 +183,7 @@ if (defined $opt_n) {
     '."$com_name".'_skel_export.h
 ';
 
-    $svr_base = "ciao_executor";    
+    $svr_base = "ciao_executor";
     $cidl_block = "";
 }
 else {
@@ -212,7 +212,7 @@ else {
 $mpc_template = '// $Id$
 // This file is generated with "'."generate_component_mpc.pl $flags".'"
 
-project('."$unique_prefix"."$com_name".'_idl_gen) : taoidldefaults, anytypecode {
+project('."$unique_prefix"."$com_name".'_idl_gen) : ciaoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
   '."$cli_idlflags".'
@@ -260,9 +260,9 @@ project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base".' {
   }
 
   Source_Files {'."$svr_src".'  }
-  
+
   Header_Files {'."$svr_hdr".'  }
-  
+
   Inline_Files {
     '."$com_name".'S.inl
   }

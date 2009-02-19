@@ -1,6 +1,5 @@
 // $Id$
-project(CIAO_Exception_IDL) : taoidldefaults {
-  idlflags   += -I$(CIAO_ROOT)
+project(CIAO_Exception_IDL) : ciaoidldefaults {
   custom_only = 1
   IDL_Files {
     idlflags += -Sci -SS

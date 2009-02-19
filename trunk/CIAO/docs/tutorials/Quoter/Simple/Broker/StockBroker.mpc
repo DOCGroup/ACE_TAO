@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Stock_Base -c StockBrokerDriver StockBroker"
 
-project(Stock_Base_StockBroker_idl_gen) : taoidldefaults, anytypecode {
+project(Stock_Base_StockBroker_idl_gen) : ciaoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=STOCKBROKER_STUB_Export \
@@ -14,7 +14,7 @@ project(Stock_Base_StockBroker_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Stock_Base_StockBroker_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(Stock_Base_StockBroker_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro STOCKBROKER_SVNT_Export \
@@ -22,11 +22,11 @@ project(Stock_Base_StockBroker_cidl_gen) : ciaocidldefaults, taoidldefaults {
   idlflags += -Wb,export_macro=STOCKBROKER_EXEC_Export \
               -Wb,export_include=StockBroker_exec_export.h \
               -SS
-              
+
   CIDL_Files {
     StockBroker.cidl
   }
-  
+
   IDL_Files {
     StockBrokerE.idl
   }
@@ -36,7 +36,7 @@ project(Stock_Base_StockBroker_stub) : ccm_stub {
   avoids += ace_for_tao
   after += Stock_Base_StockBroker_idl_gen Stock_Base_stub
   libs  += Stock_Base_stub
-  
+
   sharedname = StockBroker_stub
   dynamicflags   = STOCKBROKER_STUB_BUILD_DLL
 
@@ -62,7 +62,7 @@ project(Stock_Base_StockBroker_exec) : ciao_executor {
   after   += Stock_Base_StockBroker_cidl_gen Stock_Base_StockBroker_stub
   sharedname = StockBroker_exec
   libs += StockBroker_stub Stock_Base_stub
-  
+
   dynamicflags   = STOCKBROKER_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -72,13 +72,13 @@ project(Stock_Base_StockBroker_exec) : ciao_executor {
     StockBrokerEC.cpp
     StockBroker_exec.cpp
   }
-  
+
   Header_Files {
     StockBrokerEC.h
     StockBroker_exec.h
     StockBroker_exec_export.h
   }
-  
+
   Inline_Files {
     StockBrokerEC.inl
   }
@@ -93,9 +93,9 @@ project(Stock_Base_StockBroker_svnt) : ciao_servant {
                 StockBroker_stub \
                 Stock_Base_skel \
                 Stock_Base_stub
-  
+
   dynamicflags = STOCKBROKER_SVNT_BUILD_DLL
-  
+
   CIDL_Files {
   }
 
@@ -106,13 +106,13 @@ project(Stock_Base_StockBroker_svnt) : ciao_servant {
     StockBrokerS.cpp
     StockBroker_svnt.cpp
   }
-  
+
   Header_Files {
     StockBrokerS.h
     StockBroker_svnt.h
     StockBroker_svnt_export.h
   }
-  
+
   Inline_Files {
     StockBrokerS.inl
   }
@@ -123,17 +123,17 @@ project (Stock_Base_StockBrokerDriver) : ccm_stub, valuetype {
   exename = StockBrokerDriver
   after += Stock_Base_StockBroker_stub
   libs  += StockBroker_stub Stock_Base_stub
-  
+
   IDL_Files {
   }
 
   Source_Files {
     StockBrokerDriver.cpp
   }
-  
+
   Header_Files {
   }
-  
+
   Inline_Files {
   }
 }

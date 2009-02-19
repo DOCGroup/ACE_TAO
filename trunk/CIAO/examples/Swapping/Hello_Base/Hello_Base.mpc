@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n -e -u Swapping Hello_Base"
 
-project(Swapping_Hello_Base_idl_gen) : taoidldefaults, anytypecode {
+project(Swapping_Hello_Base_idl_gen) : ciaoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
   idlflags +=  \
@@ -17,9 +17,9 @@ project(Swapping_Hello_Base_idl_gen) : taoidldefaults, anytypecode {
 
 project(Swapping_Hello_Base_stub) : ccm_stub {
   avoids += ace_for_tao
-  after += Swapping_Hello_Base_idl_gen 
-  libs  += 
-  
+  after += Swapping_Hello_Base_idl_gen
+  libs  +=
+
   sharedname = Swapping_Hello_Base_stub
   dynamicflags   = HELLO_BASE_STUB_BUILD_DLL
 
@@ -46,22 +46,22 @@ project(Swapping_Hello_Base_skel) : ciao_executor {
   after      +=  Swapping_Hello_Base_stub
   sharedname  = Swapping_Hello_Base_skel
   libs       += Swapping_Hello_Base_stub
- 
-  
+
+
   dynamicflags = HELLO_BASE_SKEL_BUILD_DLL
-  
+
   IDL_Files {
   }
 
   Source_Files {
     Hello_BaseS.cpp
   }
-  
+
   Header_Files {
     Hello_BaseS.h
     Hello_Base_skel_export.h
   }
-  
+
   Inline_Files {
     Hello_BaseS.inl
   }

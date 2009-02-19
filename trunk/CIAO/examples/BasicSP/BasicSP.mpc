@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n HUDisplay"
 
-project(BasicSP_stub_gen): taoidldefaults, anytypecode {
+project(BasicSP_stub_gen): ciaoidldefaults, anytypecode {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=BASICSP_STUB_Export \
            -Wb,stub_export_include=BasicSP_stub_export.h \
@@ -23,7 +23,7 @@ project(BasicSP_lem_gen) : ciaocidldefaults {
   }
 }
 
-project(BasicSP_lem_gen_idl) : taoidldefaults {
+project(BasicSP_lem_gen_idl) : ciaoidldefaults {
   custom_only = 1
   after += BasicSP_lem_gen
   idlflags  += -Wb,stub_export_macro=BASICSP_EXEC_Export \

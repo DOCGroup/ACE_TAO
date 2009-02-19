@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Display_Base -u Display GPS"
 
-project(Display_GPS_idl_gen) : taoidldefaults, anytypecode {
+project(Display_GPS_idl_gen) : ciaoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=GPS_STUB_Export \
@@ -14,7 +14,7 @@ project(Display_GPS_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Display_GPS_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(Display_GPS_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro GPS_SVNT_Export \
@@ -22,11 +22,11 @@ project(Display_GPS_cidl_gen) : ciaocidldefaults, taoidldefaults {
   idlflags += -Wb,export_macro=GPS_EXEC_Export \
               -Wb,export_include=GPS_exec_export.h \
               -SS
-              
+
   CIDL_Files {
     GPS.cidl
   }
-  
+
   IDL_Files {
     GPSE.idl
   }
@@ -37,7 +37,7 @@ project(Display_GPS_stub) : ccm_stub {
   avoids += ace_for_tao
   after += Display_GPS_idl_gen Display_Base_stub
   libs  += Display_Base_stub
-  
+
   sharedname = GPS_stub
   dynamicflags   = GPS_STUB_BUILD_DLL
 
@@ -64,7 +64,7 @@ project(Display_GPS_exec) : ciao_executor {
   after   += Display_GPS_cidl_gen Display_GPS_stub
   sharedname = GPS_exec
   libs += GPS_stub Display_Base_stub
-  
+
   dynamicflags   = GPS_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -74,13 +74,13 @@ project(Display_GPS_exec) : ciao_executor {
     GPSEC.cpp
     GPS_exec.cpp
   }
-  
+
   Header_Files {
     GPSEC.h
     GPS_exec.h
     GPS_exec_export.h
   }
-  
+
   Inline_Files {
     GPSEC.inl
   }
@@ -96,9 +96,9 @@ project(Display_GPS_svnt) : ciao_servant {
                 GPS_stub \
                 Display_Base_skel \
                 Display_Base_stub
-  
+
   dynamicflags = GPS_SVNT_BUILD_DLL
-  
+
   CIDL_Files {
   }
 
@@ -109,13 +109,13 @@ project(Display_GPS_svnt) : ciao_servant {
     GPSS.cpp
     GPS_svnt.cpp
   }
-  
+
   Header_Files {
     GPSS.h
     GPS_svnt.h
     GPS_svnt_export.h
   }
-  
+
   Inline_Files {
     GPSS.inl
   }
