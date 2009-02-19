@@ -126,6 +126,9 @@ public:
   bool ifr_fwd_added (void);
   void ifr_fwd_added (bool val);
 
+  bool gen_dds_decls (void) const;
+  void gen_dds_decls (bool val);
+
   const char *nested_type_name (AST_Decl *d,
                                 const char *suffix = 0,
                                 const char *prefix = 0);
@@ -185,6 +188,10 @@ protected:
 
   mutable bool recursing_in_legal_pk_;
   // Node-specific flag to abort recursion in legal_for_primary_key().
+  
+  bool gen_dds_decls_;
+  // Flag triggering generation of decls related to the datatype,
+  // to help with template programming.
 };
 
 #endif           // _AST_TYPE_AST_TYPE_HH

@@ -66,10 +66,14 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
       << be_nl
       << "typedef " << node->local_name () << "_out _out_type;"
       << be_nl << be_nl;
+      
+  // Only if the necessary #pragma has been seen.    
+  node->gen_dds_typedefs (os);
 
   if (be_global->any_support ())
     {
-      *os << "static void _tao_any_destructor (void *);";
+      *os << "static void _tao_any_destructor (void *);"
+          << be_nl;
     }
 
   // Generate code for field members.

@@ -269,11 +269,20 @@ be_type::gen_common_varout (TAO_OutStream *os)
       << "// " << __FILE__ << ":" << __LINE__;
 
   AST_Type::SIZE_TYPE st = this->size_type ();
+  AST_Decl::NodeType nt = this->node_type ();
 
   *os << be_nl << be_nl
-      << (this->node_type () == AST_Decl::NT_struct ? "struct "
-                                                    : "class ")
+      << (nt == AST_Decl::NT_struct ? "struct " : "class ")
       << this->local_name () << ";";
+      
+  if (this->gen_dds_decls ())
+    {
+      *os << be_nl << be_nl
+          << "class " << this->local_name () << "Seq;" << be_nl
+          << "class " << this->local_name () << "TypeSupport;" << be_nl
+          << "class " << this->local_name () << "DataWriter;" << be_nl
+          << "class " << this->local_name () << "DataReader;";
+    }
 
   *os << be_nl << be_nl
       << "typedef" << be_idt_nl
@@ -300,6 +309,23 @@ be_type::gen_common_varout (TAO_OutStream *os)
     }
 
   this->common_varout_gen_ = 1;
+}
+
+void
+be_type::gen_dds_typedefs (TAO_OutStream *os)
+{
+  if (this->gen_dds_decls ())
+    {
+      *os << "typedef " << this->local_name  ()
+          << "Seq _seq_type;" << be_nl
+          << "typedef " << this->local_name  ()
+          << "TypeSupport _type_support_type;" << be_nl
+          << "typedef " << this->local_name  ()
+          << "DataWriter _data_writer_type;" << be_nl
+          << "typedef " << this->local_name  ()
+          << "DataReader _data_reader_type;"
+          << be_nl << be_nl;
+    }
 }
 
 bool
