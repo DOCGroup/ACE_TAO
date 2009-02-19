@@ -118,7 +118,7 @@ public:
   {
     if (rhs.maximum_ == 0) return;
     generic_sequence tmp(rhs.maximum_, rhs.length_,
-                         allocation_traits::allocbuf_noinit(rhs.length_),
+                         allocation_traits::allocbuf_noinit(rhs.maximum_),
                          true);
     element_traits::copy_range(
         rhs.buffer_,
