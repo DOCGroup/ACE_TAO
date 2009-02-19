@@ -123,7 +123,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (header.get ());
 
-#if defined (ACE_HAS_STREAM_PIPES)
+#if (ACE_HAS_STREAM_LOG_MSG_IPC == 1)
   // We're getting a logging message from a local application using
   // STREAM pipes, which are nicely prioritized for us.
   ACE_Str_Buf header_msg (header->wr_ptr (),
@@ -193,7 +193,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
       // Just fall through in this case..
       break;
     }
-#endif /* ACE_HAS_STREAM_PIPES */
+#endif /* ACE_HAS_STREAM_LOG_MSG_IPC == 1 */
 
   // Reflect addition of 8 bytes for the header.
   header->wr_ptr (8);
@@ -231,7 +231,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   // Ensure there's sufficient room for log record payload.
   ACE_CDR::grow (payload.get (), 8 + ACE_CDR::MAX_ALIGNMENT + length);
 
-#if defined (ACE_HAS_STREAM_PIPES)
+#if (ACE_HAS_STREAM_LOG_MSG_IPC == 1)
   ACE_Str_Buf payload_msg (payload->wr_ptr (),
                            0,
                            length);
@@ -281,7 +281,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
       ACE_OS::closesocket (handle);
       return 0;
     }
-#endif /* ACE_HAS_STREAM_PIPES */
+#endif /* ACE_HAS_STREAM_LOG_MSG_IPC == 1 */
 
   // Reflect additional bytes for the message.
   payload->wr_ptr (length);
@@ -569,7 +569,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
   ACE_SOCK_Stream stream;
   ACE_INET_Addr server_addr;
 
-#if defined (ACE_HAS_STREAM_PIPES)
+#if (ACE_HAS_STREAM_LOG_MSG_IPC == 1)
   ACE_SPIPE_Addr lserver_addr;
 
   // Figure out what local port we're really bound to.
@@ -599,7 +599,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("bounded to local port %d on handle %u\n"),
               lserver_addr.get_port_number (),
               this->acceptor ().get_handle ()));
-#endif /* ACE_HAS_STREAM_PIPES */
+#endif /* ACE_HAS_STREAM_LOG_MSG_IPC == 1 */
 
   if (con.connect (stream,
                    this->server_addr_,

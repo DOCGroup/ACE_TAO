@@ -154,7 +154,7 @@ ACE_Data_Block::dump (void) const
               ACE_TEXT ("cur_size_ = %u\n")
               ACE_TEXT ("max_size_ = %u\n")
               ACE_TEXT ("flags_ = %u\n")
-              ACE_TEXT ("base_ = %u\n")
+              ACE_TEXT ("base_ = %@\n")
               ACE_TEXT ("locking_strategy_ = %u\n")
               ACE_TEXT ("reference_count_ = %u\n")
               ACE_TEXT ("---------------------------\n"),
@@ -179,11 +179,11 @@ ACE_Message_Block::dump (void) const
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("-----( Message Block )-----\n")
               ACE_TEXT ("priority_ = %d\n")
-              ACE_TEXT ("next_ = %u\n")
-              ACE_TEXT ("prev_ = %u\n")
-              ACE_TEXT ("cont_ = %u\n")
-              ACE_TEXT ("rd_ptr_ = %u\n")
-              ACE_TEXT ("wr_ptr_ = %u\n")
+              ACE_TEXT ("next_ = %@\n")
+              ACE_TEXT ("prev_ = %@\n")
+              ACE_TEXT ("cont_ = %@\n")
+              ACE_TEXT ("rd_ptr_ = %@\n")
+              ACE_TEXT ("wr_ptr_ = %@\n")
               ACE_TEXT ("---------------------------\n"),
               this->priority_,
               this->next_,
@@ -984,6 +984,7 @@ ACE_Message_Block::~ACE_Message_Block (void)
 
   this->prev_ = 0;
   this->next_ = 0;
+  this->cont_ = 0;
 }
 
 ACE_Data_Block *

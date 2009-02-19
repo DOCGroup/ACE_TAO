@@ -23,7 +23,7 @@
 // IPC conduit between sender and client daemon.  This should be
 // included in the ACE_Log_Msg class, but due to "order of include"
 // problems it can't be...
-#if defined (ACE_HAS_STREAM_PIPES)
+#if (ACE_HAS_STREAM_LOG_MSG_IPC == 1)
 # include "ace/SPIPE_Connector.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_SPIPE_Stream ACE_LOG_MSG_IPC_STREAM;
