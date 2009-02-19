@@ -1,5 +1,10 @@
+Thu Feb 19 20:27:33 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-freebsd.h:
+          Removed ACE_HAS_SIG_MACROS.
+
 Thu Feb 19 17:38:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
-        
+
         * tests/Process_Manager_Test.cpp:
           Expanded test with process priority on Windows platforms.
 
