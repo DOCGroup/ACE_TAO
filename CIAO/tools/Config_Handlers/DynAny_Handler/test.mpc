@@ -1,5 +1,5 @@
 // $Id$
-project (XSC_DynAny_Test) : ciao_config_handlers, ifr_client, taoidldefaults {
+project (XSC_DynAny_Test) : ciao_config_handlers, ifr_client, ciaoidldefaults {
   requires += dummy_label
   exename = test
   macros   += XML_USE_PTHREADS

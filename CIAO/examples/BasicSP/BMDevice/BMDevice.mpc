@@ -1,6 +1,6 @@
 // $Id$
 
-project(BMDevice_stub_gen): taoidldefaults,anytypecode {
+project(BMDevice_stub_gen): ciaoidldefaults,anytypecode {
   custom_only = 1
   idlflags += -I $(CIAO_ROOT)/examples/BasicSP
   idlflags += -Wb,stub_export_macro=BMDEVICE_STUB_Export
@@ -13,7 +13,7 @@ project(BMDevice_stub_gen): taoidldefaults,anytypecode {
   }
 }
 
-project(BMDevice_lem_gen) : ciaocidldefaults, taoidldefaults {
+project(BMDevice_lem_gen) : ciaocidldefaults, ciaoidldefaults {
   after += BasicSP_lem_gen
   custom_only = 1
   cidlflags -= --

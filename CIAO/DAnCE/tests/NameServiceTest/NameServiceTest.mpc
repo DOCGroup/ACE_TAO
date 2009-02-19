@@ -1,6 +1,6 @@
 // $Id$
 
-project(*idl): taoidldefaults {
+project(*idl): ciaoidldefaults {
   IDL_Files {
     Dummy.idl
   }

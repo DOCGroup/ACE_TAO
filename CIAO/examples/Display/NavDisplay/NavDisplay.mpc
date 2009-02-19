@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Display_Base -u Display NavDisplay"
 
-project(Display_NavDisplay_idl_gen) : taoidldefaults, anytypecode {
+project(Display_NavDisplay_idl_gen) : ciaoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NAVDISPLAY_STUB_Export \
@@ -14,7 +14,7 @@ project(Display_NavDisplay_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Display_NavDisplay_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(Display_NavDisplay_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro NAVDISPLAY_SVNT_Export \
@@ -22,11 +22,11 @@ project(Display_NavDisplay_cidl_gen) : ciaocidldefaults, taoidldefaults {
   idlflags += -Wb,export_macro=NAVDISPLAY_EXEC_Export \
               -Wb,export_include=NavDisplay_exec_export.h \
               -SS
-              
+
   CIDL_Files {
     NavDisplay.cidl
   }
-  
+
   IDL_Files {
     NavDisplayE.idl
   }
@@ -37,7 +37,7 @@ project(Display_NavDisplay_stub) : ccm_stub {
   avoids += ace_for_tao
   after += Display_NavDisplay_idl_gen Display_Base_stub
   libs  += Display_Base_stub
-  
+
   sharedname = NavDisplay_stub
   dynamicflags   = NAVDISPLAY_STUB_BUILD_DLL
 
@@ -64,7 +64,7 @@ project(Display_NavDisplay_exec) : ciao_executor {
   after   += Display_NavDisplay_cidl_gen Display_NavDisplay_stub
   sharedname = NavDisplay_exec
   libs += NavDisplay_stub Display_Base_stub
-  
+
   dynamicflags   = NAVDISPLAY_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -74,13 +74,13 @@ project(Display_NavDisplay_exec) : ciao_executor {
     NavDisplayEC.cpp
     NavDisplay_exec.cpp
   }
-  
+
   Header_Files {
     NavDisplayEC.h
     NavDisplay_exec.h
     NavDisplay_exec_export.h
   }
-  
+
   Inline_Files {
     NavDisplayEC.inl
   }
@@ -96,9 +96,9 @@ project(Display_NavDisplay_svnt) : ciao_servant {
                 NavDisplay_stub \
                 Display_Base_skel \
                 Display_Base_stub
-  
+
   dynamicflags = NAVDISPLAY_SVNT_BUILD_DLL
-  
+
   CIDL_Files {
   }
 
@@ -109,13 +109,13 @@ project(Display_NavDisplay_svnt) : ciao_servant {
     NavDisplayS.cpp
     NavDisplay_svnt.cpp
   }
-  
+
   Header_Files {
     NavDisplayS.h
     NavDisplay_svnt.h
     NavDisplay_svnt_export.h
   }
-  
+
   Inline_Files {
     NavDisplayS.inl
   }

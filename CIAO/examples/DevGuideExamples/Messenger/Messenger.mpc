@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl Messenger"
 
-project(Messenger_idl_gen) : taoidldefaults, anytypecode {
+project(Messenger_idl_gen) : ciaoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=MESSENGER_STUB_Export \
@@ -18,7 +18,7 @@ project(Messenger_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Messenger_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(Messenger_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro MESSENGER_SVNT_Export \
@@ -26,11 +26,11 @@ project(Messenger_cidl_gen) : ciaocidldefaults, taoidldefaults {
   idlflags += -Wb,export_macro=MESSENGER_EXEC_Export \
               -Wb,export_include=Messenger_exec_export.h \
               -SS
-              
+
   CIDL_Files {
     Messenger.cidl
   }
-  
+
   IDL_Files {
     MessengerE.idl
   }
@@ -38,9 +38,9 @@ project(Messenger_cidl_gen) : ciaocidldefaults, taoidldefaults {
 
 project(Messenger_stub) : ccm_stub {
   avoids += ace_for_tao
-  after += Messenger_idl_gen 
-  libs  += 
-  
+  after += Messenger_idl_gen
+  libs  +=
+
   sharedname = Messenger_stub
   dynamicflags   = MESSENGER_STUB_BUILD_DLL
 
@@ -68,7 +68,7 @@ project(Messenger_stub) : ccm_stub {
     RunnableC.inl
     PublicationC.inl
     MessageC.inl
-    HistoryC.inl  
+    HistoryC.inl
     MessengerC.inl
   }
 }
@@ -77,8 +77,8 @@ project(Messenger_exec) : ciao_executor {
   avoids += ace_for_tao
   after   += Messenger_cidl_gen Messenger_stub
   sharedname = Messenger_exec
-  libs += Messenger_stub 
-  
+  libs += Messenger_stub
+
   dynamicflags   = MESSENGER_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -91,16 +91,16 @@ project(Messenger_exec) : ciao_executor {
     History_exec_i.cpp
     Runnable_exec_i.cpp
   }
-  
+
   Header_Files {
     MessengerEC.h
     Messenger_exec_i.h
     Publication_exec_i.h
     History_exec_i.h
-    Runnable_exec_i.h    
+    Runnable_exec_i.h
     Messenger_exec_export.h
   }
-  
+
   Inline_Files {
     MessengerEC.inl
   }
@@ -112,10 +112,10 @@ project(Messenger_svnt) : ciao_servant {
   after      += Messenger_exec
   sharedname  = Messenger_svnt
   libs       += Messenger_exec \
-                Messenger_stub 
-  
+                Messenger_stub
+
   dynamicflags = MESSENGER_SVNT_BUILD_DLL
-  
+
   CIDL_Files {
   }
 
@@ -130,7 +130,7 @@ project(Messenger_svnt) : ciao_servant {
     MessengerS.cpp
     Messenger_svnt.cpp
   }
-  
+
   Header_Files {
     RunnableS.h
     PublicationS.h
@@ -140,7 +140,7 @@ project(Messenger_svnt) : ciao_servant {
     Messenger_svnt.h
     Messenger_svnt_export.h
   }
-  
+
   Inline_Files {
     RunnableS.inl
     PublicationS.inl

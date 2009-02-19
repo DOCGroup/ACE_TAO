@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p SimpleCommon SimplePublisher"
 
-project(SimpleCommon_SimplePublisher_idl_gen) : taoidldefaults, anytypecode {
+project(SimpleCommon_SimplePublisher_idl_gen) : ciaoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLEPUBLISHER_STUB_Export \
@@ -14,7 +14,7 @@ project(SimpleCommon_SimplePublisher_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(SimpleCommon_SimplePublisher_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(SimpleCommon_SimplePublisher_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro SIMPLEPUBLISHER_SVNT_Export \
@@ -22,11 +22,11 @@ project(SimpleCommon_SimplePublisher_cidl_gen) : ciaocidldefaults, taoidldefault
   idlflags += -Wb,export_macro=SIMPLEPUBLISHER_EXEC_Export \
               -Wb,export_include=SimplePublisher_exec_export.h \
               -SS
-              
+
   CIDL_Files {
     SimplePublisher.cidl
   }
-  
+
   IDL_Files {
     SimplePublisherE.idl
   }
@@ -36,7 +36,7 @@ project(SimpleCommon_SimplePublisher_stub) : ccm_stub {
   avoids += ace_for_tao
   after += SimpleCommon_SimplePublisher_idl_gen SimpleCommon_stub
   libs  += SimpleCommon_stub
-  
+
   sharedname = SimplePublisher_stub
   dynamicflags   = SIMPLEPUBLISHER_STUB_BUILD_DLL
 
@@ -62,7 +62,7 @@ project(SimpleCommon_SimplePublisher_exec) : ciao_executor {
   after   += SimpleCommon_SimplePublisher_cidl_gen SimpleCommon_SimplePublisher_stub
   sharedname = SimplePublisher_exec
   libs += SimplePublisher_stub SimpleCommon_stub
-  
+
   dynamicflags   = SIMPLEPUBLISHER_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -72,13 +72,13 @@ project(SimpleCommon_SimplePublisher_exec) : ciao_executor {
     SimplePublisherEC.cpp
     SimplePublisher_exec.cpp
   }
-  
+
   Header_Files {
     SimplePublisherEC.h
     SimplePublisher_exec.h
     SimplePublisher_exec_export.h
   }
-  
+
   Inline_Files {
     SimplePublisherEC.inl
   }
@@ -93,9 +93,9 @@ project(SimpleCommon_SimplePublisher_svnt) : ciao_servant {
                 SimplePublisher_stub \
                 SimpleCommon_skel \
                 SimpleCommon_stub
-  
+
   dynamicflags = SIMPLEPUBLISHER_SVNT_BUILD_DLL
-  
+
   CIDL_Files {
   }
 
@@ -106,13 +106,13 @@ project(SimpleCommon_SimplePublisher_svnt) : ciao_servant {
     SimplePublisherS.cpp
     SimplePublisher_svnt.cpp
   }
-  
+
   Header_Files {
     SimplePublisherS.h
     SimplePublisher_svnt.h
     SimplePublisher_svnt_export.h
   }
-  
+
   Inline_Files {
     SimplePublisherS.inl
   }

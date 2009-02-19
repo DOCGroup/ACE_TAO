@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Benchmark -l .. -c client RoundTripClient"
 
-project(Benchmark_RoundTripClient_idl_gen) : taoidldefaults, anytypecode {
+project(Benchmark_RoundTripClient_idl_gen) : ciaoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ROUNDTRIPCLIENT_STUB_Export \
@@ -14,7 +14,7 @@ project(Benchmark_RoundTripClient_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Benchmark_RoundTripClient_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(Benchmark_RoundTripClient_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro ROUNDTRIPCLIENT_SVNT_Export \
@@ -22,11 +22,11 @@ project(Benchmark_RoundTripClient_cidl_gen) : ciaocidldefaults, taoidldefaults {
   idlflags += -Wb,export_macro=ROUNDTRIPCLIENT_EXEC_Export \
               -Wb,export_include=RoundTripClient_exec_export.h \
               -SS
-              
+
   CIDL_Files {
     RoundTripClient.cidl
   }
-  
+
   IDL_Files {
     RoundTripClientE.idl
     RoundTripClientEI.idl << RoundTripClientE.idl
@@ -74,14 +74,14 @@ project(Benchmark_RoundTripClient_exec) : ciao_executor {
     RoundTripClientEIC.cpp
     RoundTripClient_exec.cpp
   }
-  
+
   Header_Files {
     RoundTripClientEC.h
     RoundTripClientEIC.h
     RoundTripClient_exec.h
     RoundTripClient_exec_export.h
   }
-  
+
   Inline_Files {
     RoundTripClientEC.inl
     RoundTripClientEIC.inl
@@ -99,7 +99,7 @@ project(Benchmark_RoundTripClient_svnt) : ciao_servant {
                 Benchmark_stub
   libpaths += ..
   dynamicflags = ROUNDTRIPCLIENT_SVNT_BUILD_DLL
-  
+
   CIDL_Files {
   }
 
@@ -110,13 +110,13 @@ project(Benchmark_RoundTripClient_svnt) : ciao_servant {
     RoundTripClientS.cpp
     RoundTripClient_svnt.cpp
   }
-  
+
   Header_Files {
     RoundTripClientS.h
     RoundTripClient_svnt.h
     RoundTripClient_svnt_export.h
   }
-  
+
   Inline_Files {
     RoundTripClientS.inl
   }
@@ -134,10 +134,10 @@ project (RoundTripClient_client) : ccm_stub, valuetype {
   Source_Files {
     client.cpp
   }
-  
+
   Header_Files {
   }
-  
+
   Inline_Files {
   }
 }

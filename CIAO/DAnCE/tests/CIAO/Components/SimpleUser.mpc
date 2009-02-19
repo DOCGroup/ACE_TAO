@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p SimpleCommon SimpleUser"
 
-project(SimpleCommon_SimpleUser_idl_gen) : taoidldefaults, anytypecode {
+project(SimpleCommon_SimpleUser_idl_gen) : ciaoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLEUSER_STUB_Export \
@@ -14,7 +14,7 @@ project(SimpleCommon_SimpleUser_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(SimpleCommon_SimpleUser_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(SimpleCommon_SimpleUser_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro SIMPLEUSER_SVNT_Export \
@@ -22,11 +22,11 @@ project(SimpleCommon_SimpleUser_cidl_gen) : ciaocidldefaults, taoidldefaults {
   idlflags += -Wb,export_macro=SIMPLEUSER_EXEC_Export \
               -Wb,export_include=SimpleUser_exec_export.h \
               -SS
-              
+
   CIDL_Files {
     SimpleUser.cidl
   }
-  
+
   IDL_Files {
     SimpleUserE.idl
   }
@@ -36,7 +36,7 @@ project(SimpleCommon_SimpleUser_stub) : ccm_stub {
   avoids += ace_for_tao
   after += SimpleCommon_SimpleUser_idl_gen SimpleCommon_stub
   libs  += SimpleCommon_stub
-  
+
   sharedname = SimpleUser_stub
   dynamicflags   = SIMPLEUSER_STUB_BUILD_DLL
 
@@ -62,7 +62,7 @@ project(SimpleCommon_SimpleUser_exec) : ciao_executor {
   after   += SimpleCommon_SimpleUser_cidl_gen SimpleCommon_SimpleUser_stub
   sharedname = SimpleUser_exec
   libs += SimpleUser_stub SimpleCommon_stub
-  
+
   dynamicflags   = SIMPLEUSER_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -72,13 +72,13 @@ project(SimpleCommon_SimpleUser_exec) : ciao_executor {
     SimpleUserEC.cpp
     SimpleUser_exec.cpp
   }
-  
+
   Header_Files {
     SimpleUserEC.h
     SimpleUser_exec.h
     SimpleUser_exec_export.h
   }
-  
+
   Inline_Files {
     SimpleUserEC.inl
   }
@@ -93,9 +93,9 @@ project(SimpleCommon_SimpleUser_svnt) : ciao_servant {
                 SimpleUser_stub \
                 SimpleCommon_skel \
                 SimpleCommon_stub
-  
+
   dynamicflags = SIMPLEUSER_SVNT_BUILD_DLL
-  
+
   CIDL_Files {
   }
 
@@ -106,13 +106,13 @@ project(SimpleCommon_SimpleUser_svnt) : ciao_servant {
     SimpleUserS.cpp
     SimpleUser_svnt.cpp
   }
-  
+
   Header_Files {
     SimpleUserS.h
     SimpleUser_svnt.h
     SimpleUser_svnt_export.h
   }
-  
+
   Inline_Files {
     SimpleUserS.inl
   }
