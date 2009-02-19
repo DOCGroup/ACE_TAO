@@ -90,7 +90,7 @@ ACE_Log_Msg_IPC::log (ACE_Log_Record &log_record)
   iov[1].iov_base = payload.begin ()->rd_ptr ();
   iov[1].iov_len  = length;
 
-#if defined (ACE_HAS_STREAM_PIPES)
+#if (ACE_HAS_STREAM_LOG_MSG_IPC == 1)
   // Use the <putpmsg> API if supported to ensure correct message
   // queueing according to priority.
 
@@ -108,7 +108,7 @@ ACE_Log_Msg_IPC::log (ACE_Log_Record &log_record)
   // We're running over sockets, so send header and payload
   // efficiently using "gather-write".
   return this->message_queue_.sendv_n (iov, 2);
-#endif /* ACE_HAS_STREAM_PIPES */
+#endif /* ACE_HAS_STREAM_LOG_MSG_IPC */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
