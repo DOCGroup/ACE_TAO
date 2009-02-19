@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    ComponentInstallation_Impl.h
+ *  @file    CIAO_ComponentInstallation_Impl.h
  *
  *  $Id$
  *
