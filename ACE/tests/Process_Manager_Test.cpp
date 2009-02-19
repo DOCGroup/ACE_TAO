@@ -40,6 +40,7 @@
 ACE_RCSID(tests, Process_Manager_Test, "Process_Manager_Test.cpp,v 4.11 1999/09/02 04:36:30 schmidt Exp")
 
 static u_int debug_test = 0;
+static u_int process_id = 0;
 
 class Exit_Handler : public ACE_Event_Handler
 {
@@ -79,7 +80,8 @@ usage (const ACE_TCHAR *argv0)
 static pid_t
 spawn_child (const ACE_TCHAR *argv0,
              ACE_Process_Manager &mgr,
-             int sleep_time = 0)
+             int sleep_time,
+             int my_process_id)
 {
 #if defined (ACE_WIN32)
 const ACE_TCHAR *cmdline_format = ACE_TEXT("\"%s\" %s %d");
@@ -89,18 +91,59 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
 const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%ls %ls %d");
 #endif
   ACE_Process_Options opts;
+  
+  ACE_TCHAR prio[64];
+  ACE_TCHAR cmd[16];
+  debug_test ? ACE_OS::sprintf (cmd, ACE_TEXT ("-d")) : 
+               ACE_OS::sprintf (cmd, ACE_TEXT (""));
+
+#if defined (ACE_WIN32)
+  if (my_process_id == 1)
+    {
+      opts.creation_flags (ABOVE_NORMAL_PRIORITY_CLASS);
+      ACE_OS::sprintf (prio, ACE_TEXT("and priority 'above normal'"));
+    }
+  else if (my_process_id == 2)
+    {
+      opts.creation_flags (BELOW_NORMAL_PRIORITY_CLASS);
+      ACE_OS::sprintf (prio, ACE_TEXT("and priority 'below normal'"));
+    }
+  else if (my_process_id == 3)
+    {
+      opts.creation_flags (IDLE_PRIORITY_CLASS);
+      ACE_OS::sprintf (prio, ACE_TEXT("and priority 'idle'"));
+    }
+  else if (my_process_id == 4)
+    {
+      opts.creation_flags (HIGH_PRIORITY_CLASS);
+      ACE_OS::sprintf (prio, ACE_TEXT("and priority 'high'"));
+    }
+  else if (my_process_id == 5)
+    {
+      opts.creation_flags (NORMAL_PRIORITY_CLASS);
+      ACE_OS::sprintf (prio, ACE_TEXT("and priority 'normal'"));
+    }
+  else
+    ACE_OS::sprintf(prio, "");
+
+  ACE_TCHAR pd [16];
+  ACE_OS::sprintf (pd, " -p %d", my_process_id); 
+  ACE_OS::strcat (cmd, pd);
+#else
+  ACE_OS::sprintf(prio, "");
+#endif
 
   opts.command_line (cmdline_format,
                      argv0,
-                     debug_test ? ACE_TEXT ("-d") : ACE_TEXT (""),
+                     cmd,
                      sleep_time);
 
   pid_t result = mgr.spawn (opts);
 
   if (result != ACE_INVALID_PID)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) spawned child: pid %d time %d\n"),
-                int (result), sleep_time));
+                ACE_TEXT ("(%P) spawned child: pid %d time %d %C\n"),
+                int (result), sleep_time, prio));
   else
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn failed")));
 
@@ -138,7 +181,8 @@ public:
     ACE_exitcode exitcode;
     pid_t my_child = spawn_child (argv0_,
                                   mgr_,
-                                  sleep_time_);
+                                  sleep_time_,
+                                  0);
     result = mgr_.wait (my_child,
                         &exitcode);
     if (result != my_child)
@@ -197,23 +241,49 @@ command_line_test (void)
   return result;
 }
 
+#if defined (ACE_WIN32)
+void 
+check_process_priority (DWORD priority)
+{
+  if ((process_id == 0) ||
+      (process_id == 1 && priority == ABOVE_NORMAL_PRIORITY_CLASS) ||
+      (process_id == 2 && priority == BELOW_NORMAL_PRIORITY_CLASS) ||
+      (process_id == 3 && priority == IDLE_PRIORITY_CLASS) ||
+      (process_id == 4 && priority == HIGH_PRIORITY_CLASS) ||
+      (process_id == 5 && priority == NORMAL_PRIORITY_CLASS) ||
+      (process_id == 7 && priority == NORMAL_PRIORITY_CLASS))
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Process ID (%d) and priority (%d) match\n"),
+            process_id, priority));
+  else
+      ACE_ERROR ((LM_ERROR, 
+                  ACE_TEXT ("Given process priority (%d) and real priority (%d) differ.\n"), 
+                  process_id, priority));
+}
+#endif
+
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt args (argc, argv, ACE_TEXT ("d"));
+#if defined (ACE_WIN32)
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("dp:"));
+#else
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("d"));
+#endif
+  int opt;
+  while ((opt = get_opt ()) != EOF)
+    {
+      switch (opt)
+        {
+          case 'd':
+            debug_test = 1u;
+            break;
+          case 'p':
+            process_id = ACE_OS::atoi (get_opt.opt_arg ());
+            break;
+        }
+    }
 
-  for (int arg = args (); arg != EOF; arg = args ())
-    switch (arg)
-      {
-      case 'd':
-        debug_test = 1u;
-        break;
-      default:
-        usage (argv[0]);
-        break;
-      }
-
-  if (args.opt_ind () == argc - 1)
+  if (get_opt.opt_ind () == argc - 1)
     {
       // child process: sleep & exit
       ACE_TCHAR lognm[MAXPATHLEN];
@@ -221,18 +291,42 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_OS::sprintf(lognm, ACE_TEXT ("Process_Manager_Test-child-%d"), mypid);
 
       ACE_START_TEST (lognm);
-      int secs = ACE_OS::atoi (argv[args.opt_ind ()]);
+      int secs = ACE_OS::atoi (argv[get_opt.opt_ind ()]);
       ACE_OS::sleep (secs ? secs : 1);
+      
+      
+      ACE_TCHAR prio[64];
+#if defined (ACE_WIN32)
+      DWORD priority = ::GetPriorityClass (::GetCurrentProcess());
+
+      check_process_priority(priority);
+
+      if (priority == ABOVE_NORMAL_PRIORITY_CLASS)
+        ACE_OS::sprintf (prio, ACE_TEXT("and priority 'above normal'"));
+      else if (priority == BELOW_NORMAL_PRIORITY_CLASS)
+        ACE_OS::sprintf (prio, ACE_TEXT("and priority 'below normal'"));
+      else if (priority == HIGH_PRIORITY_CLASS)
+        ACE_OS::sprintf (prio, ACE_TEXT("and priority 'high'"));
+      else if (priority == IDLE_PRIORITY_CLASS)
+        ACE_OS::sprintf (prio, ACE_TEXT("and priority 'idle'"));
+      else if (priority == NORMAL_PRIORITY_CLASS)
+        ACE_OS::sprintf (prio, ACE_TEXT("and priority 'normal'"));
+      else if (priority == REALTIME_PRIORITY_CLASS)
+        ACE_OS::sprintf (prio, ACE_TEXT("and priority 'realtime'"));
+#else
+      ACE_OS::sprintf (prio, "");
+#endif
       if (debug_test)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%T: pid %P about to exit with code %d\n"),
-                    secs));
+                    ACE_TEXT ("%T: pid %P about to exit with code %d %C\n"),
+                    secs,
+                    prio));
       ACE_END_LOG;
 
       return secs;
     }
 
-  if (args.opt_ind () != argc)      // incorrect usage
+  if (get_opt.opt_ind () != argc)      // incorrect usage
     usage (argv[0]);
 
   ACE_START_TEST (ACE_TEXT ("Process_Manager_Test"));
@@ -255,6 +349,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // wait for a specific PID
   pid_t child1 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
+                              1,
                               1);
   result = mgr.wait (child1,
                      &exitcode);
@@ -279,10 +374,12 @@ run_main (int argc, ACE_TCHAR *argv[])
   // wait for a specific PID; another should finish first
   pid_t child2 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
-                              1);
+                              1,
+                              2);
   pid_t child3 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
-                              4);
+                              4,
+                              3);
   result = mgr.wait (child3,
                      &exitcode);
 
@@ -328,7 +425,8 @@ run_main (int argc, ACE_TCHAR *argv[])
   // This one shouldn't timeout:
   pid_t child4 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
-                              1);
+                              1,
+                              4);
   result = mgr.wait (0, ACE_Time_Value (4), &exitcode);
 
   if (result != child4)
@@ -350,7 +448,8 @@ run_main (int argc, ACE_TCHAR *argv[])
   // This one should timeout:
   pid_t child5 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
-                              4);
+                              4,
+                              5);
   result = mgr.wait (0, ACE_Time_Value (1), &exitcode);
   if (result != 0)
     {
@@ -385,7 +484,10 @@ run_main (int argc, ACE_TCHAR *argv[])
                 exitcode));
 
   // Terminate a child process and make sure we can wait for it.
-  pid_t child6 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"), mgr, 5);
+  pid_t child6 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"), 
+                              mgr, 
+                              5,
+                              6);
   ACE_exitcode status6;
   if (-1 == mgr.terminate (child6))
     {
@@ -456,10 +558,12 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   pid_t child7 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
-                              5);
+                              5,
+                              7);
   /* pid_t child8 = */ spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                                     mgr,
-                                    6);
+                                    6,
+                                    0);
 
   mgr.register_handler (new Exit_Handler ("specific"),
                         child7);
