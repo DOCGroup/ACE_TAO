@@ -1,3 +1,24 @@
+Thu Feb 19 14:01:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Default_Constants.h:
+        * ace/Log_Msg_IPC.cpp:
+        * ace/Log_Msg_IPC.h:
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+        * netsvcs/lib/Client_Logging_Handler.h:
+          Added new ACE_HAS_STREAM_LOG_MSG_IPC which controls whether the
+          ACE Log_Msg IPC should use streams or not. When ACE_HAS_STREAM_PIPES
+          is defined we default to 1, else to 0. We do see that using stream
+          pipes causes problems on at least Solaris, so the user can decide
+          to set this value explicitly to 0
+
+        * ace/CDR_Stream.cpp:
+        * ace/CDR_Stream.h:
+        * ace/Message_Block.inl:
+          Doxygen and layout changes
+
+        * ace/Message_Block.cpp:
+          Use %@ for pointers
+
 Wed Feb 18 20:51:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/minizip.mpb:

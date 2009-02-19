@@ -919,7 +919,7 @@ public:
    */
   void exchange_data_blocks (ACE_InputCDR &cdr);
 
-  /// Copy the data portion from the @c cdr to this cdr and return the
+  /// Copy the data portion from the @a cdr to this cdr and return the
   /// data content (ie. the ACE_Data_Block) from this CDR to the
   /// caller.
   /**

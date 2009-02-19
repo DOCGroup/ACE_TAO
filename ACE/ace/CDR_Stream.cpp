@@ -1894,8 +1894,7 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
 
   ACE_CDR::mb_align (&this->start_);
 
-  ACE_Data_Block *db =
-    this->start_.data_block ();
+  ACE_Data_Block *db = this->start_.data_block ();
 
   // If the size of the data that needs to be copied are higher than
   // what is available, then do a reallocation.
