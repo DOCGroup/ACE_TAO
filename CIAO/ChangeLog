@@ -1,3 +1,8 @@
+Thu Feb 19 09:27:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+          Resolved linking error.
+
 Wed Feb 18 20:52:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/RepositoryManager/RepositoryManager.mpc:
