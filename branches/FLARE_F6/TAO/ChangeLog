@@ -1,3 +1,46 @@
+Thu Feb 19 19:59:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/lwft_server.mpb:
+
+          Added lwft_client as base project, since with the recently
+          added redundancy of the Replication Manager itself, all
+          replicated applications are a FLARe client of the RM.
+
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.cpp:
+        * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
+
+          Cosmetic changes, or removal of commented-out code.
+      
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
+
+          Removed call to orb->destroy() in destructor, since this
+          class is no longer in a spawned thread. Also commented out
+          the call to stop the monitor thread for the same reason, and
+          added a comment that this call will have to appear somewhere
+          else ultimately.
+
+        * orbsvcs/orbsvcs/CosNaming.idl:
+
+          Cosmetis changes.
+
+        * TAO_IDL/include/ast_structure.h:
+        * TAO_IDL/include/ast_type.h:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/be_include/be_type.h:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+
+          Added code to detect an OpenSplice #pragam keylist directive,
+          which identifies an IDL declaration as a DDS datatype. This
+          detection then triggers code generation that creates typedefs
+          in the corresponding C++ struct that relate the datatype to its
+          associated IDL sequence, TypeSupport, DataWriter and DataReader
+          types. These typedefs are helpful in template programming.
+
 Fri Feb 13 19:07:33 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.h (init):

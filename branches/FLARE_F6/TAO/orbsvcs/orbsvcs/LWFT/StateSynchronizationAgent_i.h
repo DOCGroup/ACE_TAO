@@ -101,8 +101,8 @@ class SSA_Export StateSynchronizationAgent_i
 #endif /* FLARE_USES_DDS */
 
   std::string get_unique_id (const std::string & app_name);
-
- private:
+  
+private:
   /// orb reference
   CORBA::ORB_var orb_;
 

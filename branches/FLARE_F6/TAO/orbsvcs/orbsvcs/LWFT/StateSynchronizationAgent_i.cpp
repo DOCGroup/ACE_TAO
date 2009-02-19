@@ -28,7 +28,7 @@ StateSynchronizationAgent_i::StateSynchronizationAgent_i (
     host_id_ (host_id),
     process_id_ (process_id),
 #if defined (FLARE_USES_DDS)
-    domain_id_ ("FLAREDomain"),
+    domain_id_ (0),//"FLAREDomain"),
     domain_participant_ (DDS::DomainParticipant::_nil ()),
     publisher_ (DDS::Publisher::_nil ()),
     subscriber_ (DDS::Subscriber::_nil ()),
@@ -61,9 +61,22 @@ StateSynchronizationAgent_i::~StateSynchronizationAgent_i (void)
 #ifdef FLARE_USES_DDS
   if (!use_corba_)
     {
-      this->delete_subscriber ();
-      this->delete_publisher ();
-      this->delete_participant ();
+      DDS::ReturnCode_t status =
+        domain_participant_->delete_contained_entities ();
+        
+      if (status != DDS::RETCODE_OK)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "SSA - "
+                      "Bad retcode from delete_contained_entities()\n"));
+        }
+        
+      if (! this->delete_participant ())
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "SSA - "
+                      "Bad retcode from delete_participant()\n"));
+        }
     }
 #endif /* FLARE_USES_DDS */
 }
@@ -131,18 +144,18 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
        ++it)
     {
       try
-	{
-	  // Set the state on this replica.
-	  (*it)->set_state (state.in ());
-	}
+	      {
+	        // Set the state on this replica.
+	        (*it)->set_state (state.in ());
+	      }
       catch (const CORBA::SystemException& ex)
-	{
-	  ACE_DEBUG ((LM_WARNING, 
-		      "(%P|%t) SSA::state_changed () "
-		      "exception while contacting a "
-		      "server replica for %s.\n",
-		      object_id));
-	}
+	      {
+	        ACE_DEBUG ((LM_WARNING, 
+		                  "(%P|%t) SSA::state_changed () "
+		                  "exception while contacting a "
+		                  "server replica for %s.\n",
+		                  object_id));
+	      }
     }
 }
 
@@ -151,7 +164,7 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
 {
   if (use_corba_)
     {
-      // if only corba is used, we can simple reset the map
+      // If only corba is used, we can simply reset the map.
       replica_map_.close ();
       replica_map_.open ();
     }
@@ -182,18 +195,18 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
                   rank_list[i].ior_list.length ()));
       */
 
-      // use the application id as a key for the map
+      // Use the application id as a key for the map.
       ACE_CString oid (rank_list[i].object_id);
 
-      // if there is already an entry for this object_id it means that
+      // If there is already an entry for this object_id it means that
       // we have a registered DDS object and should not override it.
       if (replica_map_.find (oid) != 0)
         {
-          // create a new list for every replication group
+          // Create a new list for every replication group.
           ReplicaGroup replica_group;
           replica_group.use_dds = false;      
 
-          // for each entry of a replica group
+          // For each entry of a replica group...
           for (size_t j = 0;
                j < rank_list[i].ior_list.length ();
                ++j)
@@ -224,7 +237,7 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
                 }
             }
 
-          // add one replication group to the map
+          // Add one replication group to the map.
           replica_map_.bind (oid, replica_group);
         }
     }
@@ -378,3 +391,4 @@ StateSynchronizationAgent_i::get_unique_id (
 
   return unique_id;
 }
+

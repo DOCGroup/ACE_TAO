@@ -104,7 +104,7 @@ main (int argc, char *argv[])
 
       // create task for state synchronization agent
       StateSyncAgentTask sync_agent_thread (orb.in (),
-					    ssa_servant);
+                                            ssa_servant);
 
       int result = sync_agent_thread.activate ();
       

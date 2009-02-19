@@ -91,7 +91,8 @@ AST_Type::AST_Type (void)
     has_constructor_ (0),
     nested_type_name_ (0),
     in_recursion_ (-1),
-    recursing_in_legal_pk_ (false)
+    recursing_in_legal_pk_ (false),
+    gen_dds_decls_ (false)
 {
 }
 
@@ -106,7 +107,8 @@ AST_Type::AST_Type (AST_Decl::NodeType nt,
     has_constructor_ (0),
     nested_type_name_ (0),
     in_recursion_ (-1),
-    recursing_in_legal_pk_ (false)
+    recursing_in_legal_pk_ (false),
+    gen_dds_decls_ (false)
 {
 }
 
@@ -191,6 +193,18 @@ void
 AST_Type::ifr_fwd_added (bool val)
 {
   this->ifr_fwd_added_ = val;
+}
+
+bool
+AST_Type::gen_dds_decls (void) const
+{
+  return this->gen_dds_decls_;
+}
+
+void
+AST_Type::gen_dds_decls (bool val)
+{
+  this->gen_dds_decls_ = val;
 }
 
 bool

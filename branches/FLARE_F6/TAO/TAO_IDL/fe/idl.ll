@@ -97,6 +97,7 @@ static void             idl_store_pragma (char *);
 static char *           idl_get_pragma_string (char *);
 static bool             idl_valid_version (char *);
 static AST_Decl *       idl_find_node (char *);
+static void             idl_set_dds_decls_flag (char *);
 
 #define ace_yytext yytext
 
@@ -755,6 +756,9 @@ idl_store_pragma (char *buf)
     {
       char *sample_type = idl_get_pragma_string (buf);
       idl_global->add_dcps_data_type (sample_type);
+      
+      // Set flag that triggers generation of fwd decls & typedefs.
+      idl_set_dds_decls_flag (buf + 23);
     }
   else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_KEY", 13) == 0)
     {
@@ -784,6 +788,11 @@ idl_store_pragma (char *buf)
   else if (ACE_OS::strncmp (buf + 8, "DCPS_GEN_ZERO_COPY_READ", 23) == 0)
     {
       idl_global->dcps_gen_zero_copy_read (true);
+    }
+  else if( ACE_OS::strncmp (buf + 8, "keylist", 7) == 0)
+    {
+      // If we're here, we have an OpenSplice idlpp pragma.
+      idl_set_dds_decls_flag (buf + 16);
     }
 }
 
@@ -1073,7 +1082,18 @@ static char *
 idl_get_pragma_string (char *pragma)
 {
   // Get pointers to each end of the substring between the quotes.
-  const char *start = ACE_OS::strchr (pragma, '"') + 1;
+  const char *firstquote = ACE_OS::strchr (pragma, '"');
+
+  if (firstquote == 0)
+    {
+      idl_global->err ()->syntax_error (
+          IDL_GlobalData::PS_PragmaPrefixSyntax
+        );
+
+      return 0;
+    }
+
+  const char *start = firstquote + 1;
   const char *end = ACE_OS::strchr (start, '"');
 
   if (end == 0)
@@ -1176,3 +1196,32 @@ idl_find_node (char *s)
 
   return d;
 }
+
+static void
+idl_set_dds_decls_flag (char *s)
+{
+  ACE_CString work (s);
+  ACE_CString target (work.substr (0, work.find (' ')));
+  char *ncs = const_cast<char *> (target.c_str ());
+  AST_Decl *node = idl_find_node (ncs);
+  
+  if (node == 0)
+    {
+      Identifier id (ncs);
+      UTL_Scope *scope =
+        idl_global->scopes ().top_non_null ();
+      node = scope->lookup_by_name_local (&id, 0);
+    }
+    
+  if (node != 0)
+    {
+      AST_Structure *st =
+        AST_Structure::narrow_from_decl (node);
+        
+      if (st != 0)
+        {
+          st->gen_dds_decls (true);
+        }
+    }
+}
+

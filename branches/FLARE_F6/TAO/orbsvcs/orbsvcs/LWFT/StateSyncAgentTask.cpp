@@ -48,10 +48,6 @@ StateSyncAgentTask::svc (void)
 	        StateSynchronizationAgent::_narrow (ssa_object.in ());
 
         poa_manager->activate ();
-
-        // Main loop has to wait until the agent servant is registered
-        // within the root POA.
-//        sync_.wait ();
       }
 
       this->orb_->run ();

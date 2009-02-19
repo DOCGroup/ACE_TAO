@@ -142,7 +142,7 @@ public:
   // Accessors for the member.
   AST_StructureFwd *fwd_decl (void) const;
   void fwd_decl (AST_StructureFwd *node);
-
+  
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

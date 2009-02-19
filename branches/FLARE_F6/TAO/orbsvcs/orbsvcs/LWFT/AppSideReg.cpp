@@ -25,8 +25,9 @@ AppSideReg::AppSideReg (CORBA::ORB_ptr orb)
 
 AppSideReg::~AppSideReg (void)
 {
-  monitor_->stop ();
-  orb_->destroy ();
+  // Now that this class is no longer a thread, the line below
+  // will have to appear somewhere else.
+//  monitor_->stop ();
 }
 
 int
