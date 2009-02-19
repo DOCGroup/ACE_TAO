@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Benchmark -l .. -c client Roundtrip"
 
-project(Benchmark_RoundTrip_idl_gen) : taoidldefaults, anytypecode {
+project(Benchmark_RoundTrip_idl_gen) : ciaoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ROUNDTRIP_STUB_Export \
@@ -14,7 +14,7 @@ project(Benchmark_RoundTrip_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Benchmark_RoundTrip_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(Benchmark_RoundTrip_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro ROUNDTRIP_SVNT_Export \
@@ -22,11 +22,11 @@ project(Benchmark_RoundTrip_cidl_gen) : ciaocidldefaults, taoidldefaults {
   idlflags += -Wb,export_macro=ROUNDTRIP_EXEC_Export \
               -Wb,export_include=RoundTrip_exec_export.h \
               -SS
-              
+
   CIDL_Files {
     RoundTrip.cidl
   }
-  
+
   IDL_Files {
     RoundTripE.idl
     RoundTripEI.idl << RoundTripE.idl
@@ -74,14 +74,14 @@ project(Benchmark_RoundTrip_exec) : ciao_executor {
     RoundTripEIC.cpp
     RoundTrip_exec.cpp
   }
-  
+
   Header_Files {
     RoundTripEC.h
     RoundTripEIC.h
     RoundTrip_exec.h
     RoundTrip_exec_export.h
   }
-  
+
   Inline_Files {
     RoundTripEC.inl
     RoundTripEIC.inl
@@ -99,7 +99,7 @@ project(Benchmark_RoundTrip_svnt) : ciao_servant {
                 Benchmark_stub
   libpaths += ..
   dynamicflags = ROUNDTRIP_SVNT_BUILD_DLL
-  
+
   CIDL_Files {
   }
 
@@ -110,13 +110,13 @@ project(Benchmark_RoundTrip_svnt) : ciao_servant {
     RoundTripS.cpp
     RoundTrip_svnt.cpp
   }
-  
+
   Header_Files {
     RoundTripS.h
     RoundTrip_svnt.h
     RoundTrip_svnt_export.h
   }
-  
+
   Inline_Files {
     RoundTripS.inl
   }
@@ -134,10 +134,10 @@ project (RoundTrip_client) : ccm_stub, valuetype, strategies {
   Source_Files {
     client.cpp
   }
-  
+
   Header_Files {
   }
-  
+
   Inline_Files {
   }
 }

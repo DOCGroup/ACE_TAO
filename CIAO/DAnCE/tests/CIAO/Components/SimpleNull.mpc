@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl SimpleNull"
 
-project(SimpleNull_idl_gen) : taoidldefaults, anytypecode {
+project(SimpleNull_idl_gen) : ciaoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLENULL_STUB_Export \
@@ -14,7 +14,7 @@ project(SimpleNull_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(SimpleNull_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(SimpleNull_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro SIMPLENULL_SVNT_Export \
@@ -22,11 +22,11 @@ project(SimpleNull_cidl_gen) : ciaocidldefaults, taoidldefaults {
   idlflags += -Wb,export_macro=SIMPLENULL_EXEC_Export \
               -Wb,export_include=SimpleNull_exec_export.h \
               -SS
-              
+
   CIDL_Files {
     SimpleNull.cidl
   }
-  
+
   IDL_Files {
     SimpleNullE.idl
   }
@@ -34,9 +34,9 @@ project(SimpleNull_cidl_gen) : ciaocidldefaults, taoidldefaults {
 
 project(SimpleNull_stub) : ccm_stub {
   avoids += ace_for_tao
-  after += SimpleNull_idl_gen 
-  libs  += 
-  
+  after += SimpleNull_idl_gen
+  libs  +=
+
   sharedname = SimpleNull_stub
   dynamicflags   = SIMPLENULL_STUB_BUILD_DLL
 
@@ -61,8 +61,8 @@ project(SimpleNull_exec) : ciao_executor {
   avoids += ace_for_tao
   after   += SimpleNull_cidl_gen SimpleNull_stub
   sharedname = SimpleNull_exec
-  libs += SimpleNull_stub 
-  
+  libs += SimpleNull_stub
+
   dynamicflags   = SIMPLENULL_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -72,13 +72,13 @@ project(SimpleNull_exec) : ciao_executor {
     SimpleNullEC.cpp
     SimpleNull_exec.cpp
   }
-  
+
   Header_Files {
     SimpleNullEC.h
     SimpleNull_exec.h
     SimpleNull_exec_export.h
   }
-  
+
   Inline_Files {
     SimpleNullEC.inl
   }
@@ -90,10 +90,10 @@ project(SimpleNull_svnt) : ciao_servant {
   after      +=  SimpleNull_exec
   sharedname  = SimpleNull_svnt
   libs       += SimpleNull_exec \
-                SimpleNull_stub 
-  
+                SimpleNull_stub
+
   dynamicflags = SIMPLENULL_SVNT_BUILD_DLL
-  
+
   CIDL_Files {
   }
 
@@ -104,13 +104,13 @@ project(SimpleNull_svnt) : ciao_servant {
     SimpleNullS.cpp
     SimpleNull_svnt.cpp
   }
-  
+
   Header_Files {
     SimpleNullS.h
     SimpleNull_svnt.h
     SimpleNull_svnt_export.h
   }
-  
+
   Inline_Files {
     SimpleNullS.inl
   }

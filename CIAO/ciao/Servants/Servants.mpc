@@ -1,5 +1,5 @@
 // $Id$
-project(CIAO_Port_Activator_stub) : portableserver, taoidldefaults, ciao_lib {
+project(CIAO_Port_Activator_stub) : portableserver, ciaoidldefaults, ciao_lib {
    dynamicflags = CIAO_PORT_ACTIVATOR_BUILD_DLL
    idlflags  += -Wb,stub_export_include=CIAO_Port_Activator_export.h
    idlflags  += -Wb,stub_export_macro=CIAO_Port_Activator_Export

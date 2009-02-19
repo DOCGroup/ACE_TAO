@@ -1,3 +1,70 @@
+Thu Feb 19 13:13:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ciaoidldefaults.mpb:
+          New base project for ciao projects that use idl. This adds CIAO_ROOT
+          and CIAO_ROOT/ccm to the idl compiler inclues
+
+        * MPC/config/ciaolib_with_idl.mpb:
+          New ciao base project
+
+        * bin/generate_component_mpc.pl
+        * ccm/CCM.mpc
+        * ccm/ComponentServer/CCM_ComponentServer.mpc
+        * ciao/CIAO.mpc
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc
+        * ciao/Containers/CIAO_Servant_Activator.mpc
+        * ciao/Servants/Servants.mpc
+        * DAnCE/Deployment/DAnCE_Core.mpc
+        * DAnCE/Interfaces/Interfaces.mpc
+        * DAnCE/tests/CIAO/Components/SimpleAttribute.mpc
+        * DAnCE/tests/CIAO/Components/SimpleCommon.mpc
+        * DAnCE/tests/CIAO/Components/SimpleConsumer.mpc
+        * DAnCE/tests/CIAO/Components/SimpleEmitter.mpc
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser.mpc
+        * DAnCE/tests/CIAO/Components/SimpleNull.mpc
+        * DAnCE/tests/CIAO/Components/SimpleProvider.mpc
+        * DAnCE/tests/CIAO/Components/SimplePublisher.mpc
+        * DAnCE/tests/CIAO/Components/SimpleUser.mpc
+        * DAnCE/tests/NameServiceTest/NameServiceTest.mpc
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker.mpc
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.mpc
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc
+        * examples/BasicSP/BasicSP.mpc
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc
+        * examples/BasicSP/BMDevice/BMDevice.mpc
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc
+        * examples/BasicSP/EC/EC.mpc
+        * examples/DevGuideExamples/Messenger/Administrator.mpc
+        * examples/DevGuideExamples/Messenger/Messenger.mpc
+        * examples/DevGuideExamples/Messenger/Receiver.mpc
+        * examples/Display/Display_Base/Display_Base.mpc
+        * examples/Display/GPS/GPS.mpc
+        * examples/Display/NavDisplay/NavDisplay.mpc
+        * examples/Display/RateGen/RateGen.mpc
+        * examples/Hello/Hello_Base/Hello_Base.mpc
+        * examples/Hello/Receiver/Receiver.mpc
+        * examples/Hello/Sender/Sender.mpc
+        * examples/Null_Component/Null_Component.mpc
+        * examples/Null_Component/Null_Interface.mpc
+        * examples/Null_Component/StaticDAnCEApp.mpc
+        * examples/Swapping/Hello_Base/Hello_Base.mpc
+        * examples/Swapping/Receiver/Receiver.mpc
+        * examples/Swapping/Sender/Sender.mpc
+        * performance-tests/Benchmark/Benchmark.mpc
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
+        * performance-tests/Protocols/common/Protocols.mpc
+        * performance-tests/Protocols/Receiver/Receiver.mpc
+        * performance-tests/Protocols/Sender/Sender.mpc
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.mpc
+        * tests/CIDL/CodeGen/Basic.mpc
+        * tests/CIDL/CodeGen/CodeGen.mpc
+        * tests/Minimum/Minimum_Base/Minimum_Base.mpc
+        * tests/Minimum/Receiver/Receiver.mpc
+        * tests/Minimum/Sender/Sender.mpc
+        * tools/Config_Handlers/DynAny_Handler/test.mpc
+          Use the new base projects
+
 Thu Feb 19 12:25:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/DataType_Handler.cpp:

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Null_Component_StaticDAnCEApp): iortable, taoidldefaults {
+project(Null_Component_StaticDAnCEApp): iortable, ciaoidldefaults {
   after    += Null_Component_svnt
   exename   = StaticDAnCEApp
   requires += dummy_label
@@ -17,11 +17,11 @@ project(Null_Component_StaticDAnCEApp): iortable, taoidldefaults {
   Source_Files {
     StaticDAnCEApp.cpp
   }
-  
+
   Header_Files {
     plan.h
   }
-  
+
   Inline_Files {
   }
 }

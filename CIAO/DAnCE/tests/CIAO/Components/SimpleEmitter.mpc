@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p SimpleCommon SimpleEmitter"
 
-project(SimpleCommon_SimpleEmitter_idl_gen) : taoidldefaults, anytypecode {
+project(SimpleCommon_SimpleEmitter_idl_gen) : ciaoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLEEMITTER_STUB_Export \
@@ -14,7 +14,7 @@ project(SimpleCommon_SimpleEmitter_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(SimpleCommon_SimpleEmitter_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(SimpleCommon_SimpleEmitter_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro SIMPLEEMITTER_SVNT_Export \
@@ -22,11 +22,11 @@ project(SimpleCommon_SimpleEmitter_cidl_gen) : ciaocidldefaults, taoidldefaults 
   idlflags += -Wb,export_macro=SIMPLEEMITTER_EXEC_Export \
               -Wb,export_include=SimpleEmitter_exec_export.h \
               -SS
-              
+
   CIDL_Files {
     SimpleEmitter.cidl
   }
-  
+
   IDL_Files {
     SimpleEmitterE.idl
   }
@@ -36,7 +36,7 @@ project(SimpleCommon_SimpleEmitter_stub) : ccm_stub {
   avoids += ace_for_tao
   after += SimpleCommon_SimpleEmitter_idl_gen SimpleCommon_stub
   libs  += SimpleCommon_stub
-  
+
   sharedname = SimpleEmitter_stub
   dynamicflags   = SIMPLEEMITTER_STUB_BUILD_DLL
 
@@ -62,7 +62,7 @@ project(SimpleCommon_SimpleEmitter_exec) : ciao_executor {
   after   += SimpleCommon_SimpleEmitter_cidl_gen SimpleCommon_SimpleEmitter_stub
   sharedname = SimpleEmitter_exec
   libs += SimpleEmitter_stub SimpleCommon_stub
-  
+
   dynamicflags   = SIMPLEEMITTER_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -72,13 +72,13 @@ project(SimpleCommon_SimpleEmitter_exec) : ciao_executor {
     SimpleEmitterEC.cpp
     SimpleEmitter_exec.cpp
   }
-  
+
   Header_Files {
     SimpleEmitterEC.h
     SimpleEmitter_exec.h
     SimpleEmitter_exec_export.h
   }
-  
+
   Inline_Files {
     SimpleEmitterEC.inl
   }
@@ -93,9 +93,9 @@ project(SimpleCommon_SimpleEmitter_svnt) : ciao_servant {
                 SimpleEmitter_stub \
                 SimpleCommon_skel \
                 SimpleCommon_stub
-  
+
   dynamicflags = SIMPLEEMITTER_SVNT_BUILD_DLL
-  
+
   CIDL_Files {
   }
 
@@ -106,13 +106,13 @@ project(SimpleCommon_SimpleEmitter_svnt) : ciao_servant {
     SimpleEmitterS.cpp
     SimpleEmitter_svnt.cpp
   }
-  
+
   Header_Files {
     SimpleEmitterS.h
     SimpleEmitter_svnt.h
     SimpleEmitter_svnt_export.h
   }
-  
+
   Inline_Files {
     SimpleEmitterS.inl
   }

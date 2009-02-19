@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl SimpleComponent"
 
-project(SimpleComponent_idl_gen) : taoidldefaults, anytypecode {
+project(SimpleComponent_idl_gen) : ciaoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLECOMPONENT_STUB_Export \
@@ -14,7 +14,7 @@ project(SimpleComponent_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(SimpleComponent_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(SimpleComponent_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro SIMPLECOMPONENT_SVNT_Export \
@@ -59,9 +59,9 @@ project(SimpleComponent_stub) : ccm_stub {
 
 project(SimpleComponent_exec) : ciao_executor {
   avoids += ace_for_tao
-  after   += SimpleComponent_cidl_gen 
+  after   += SimpleComponent_cidl_gen
   sharedname = SimpleComponent_exec
-  libs += SimpleComponent_stub 
+  libs += SimpleComponent_stub
 
   dynamicflags   = SIMPLECOMPONENT_EXEC_BUILD_DLL
 
@@ -88,7 +88,7 @@ project(SimpleComponent_exec) : ciao_executor {
 project(SimpleComponent_svnt) : ciao_servant {
   avoids += ace_for_tao
   sharedname  = SimpleComponent_svnt
-  libs       += SimpleComponent_stub 
+  libs       += SimpleComponent_stub
   after +=   SimpleComponent_stub SimpleComponent_cidl_gen
   dynamicflags = SIMPLECOMPONENT_SVNT_BUILD_DLL
 

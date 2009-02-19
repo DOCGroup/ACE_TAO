@@ -6,7 +6,7 @@
 //       caution when regenerating this file (that is, remember to
 //       insert the logic for autogeneration of executor files).
 
-project(Basic_CodeGen_idl_gen) : taoidldefaults, anytypecode {
+project(Basic_CodeGen_idl_gen) : ciaoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=CODEGEN_STUB_Export \
@@ -19,7 +19,7 @@ project(Basic_CodeGen_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Basic_CodeGen_cidl_gen) : ciaocidldefaults, taoidldefaults {
+project(Basic_CodeGen_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro CODEGEN_SVNT_Export \
@@ -28,11 +28,11 @@ project(Basic_CodeGen_cidl_gen) : ciaocidldefaults, taoidldefaults {
   idlflags += -Wb,export_macro=CODEGEN_EXEC_Export \
               -Wb,export_include=CodeGen_exec_export.h \
               -SS
-              
+
   CIDL_Files {
     CodeGen.cidl
   }
-  
+
   IDL_Files {
     CodeGenE.idl
   }
@@ -42,7 +42,7 @@ project(Basic_CodeGen_stub) : ccm_stub {
   avoids += ace_for_tao
   after += Basic_CodeGen_idl_gen Basic_stub
   libs  += Basic_stub
-  
+
   sharedname = CodeGen_stub
   dynamicflags   = CODEGEN_STUB_BUILD_DLL
 
@@ -68,7 +68,7 @@ project(Basic_CodeGen_exec) : ciao_executor {
   after   += Basic_CodeGen_cidl_gen Basic_CodeGen_stub
   sharedname = CodeGen_exec
   libs += CodeGen_stub Basic_stub
-  
+
   dynamicflags   = CODEGEN_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -78,13 +78,13 @@ project(Basic_CodeGen_exec) : ciao_executor {
     CodeGenEC.cpp
     CodeGen_exec.cpp
   }
-  
+
   Header_Files {
     CodeGenEC.h
     CodeGen_exec.h
     CodeGen_exec_export.h
   }
-  
+
   Inline_Files {
     CodeGenEC.inl
   }
@@ -99,9 +99,9 @@ project(Basic_CodeGen_svnt) : ciao_servant {
                 CodeGen_stub \
                 Basic_skel \
                 Basic_stub
-  
+
   dynamicflags = CODEGEN_SVNT_BUILD_DLL
-  
+
   CIDL_Files {
   }
 
@@ -112,13 +112,13 @@ project(Basic_CodeGen_svnt) : ciao_servant {
     CodeGenS.cpp
     CodeGen_svnt.cpp
   }
-  
+
   Header_Files {
     CodeGenS.h
     CodeGen_svnt.h
     CodeGen_svnt_export.h
   }
-  
+
   Inline_Files {
     CodeGenS.inl
   }
