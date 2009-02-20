@@ -18,7 +18,7 @@
 <UL>
 <li><a href="http://www.dre.vanderbilt.edu/cosmic">CoSMIC</a> tools are not used in this tutorial.</li>
 <li>This is only a <em>GENERAL</em> way of building up a CIAO application and deploying it with DAnCE. The user could always change the process in his own way. For example: the IDL file content, the project structure etc.</li>
-<li>To download the code of this example please refer to the CVS repository at <code>$CIAO_ROOT/DAnCE/examples/Hello</code>.</li>
+<li>To download the code of this example please refer to the SVN repository at <code>$CIAO_ROOT/examples/Hello</code>.</li>
 </UL>
 <hr>
 
@@ -45,7 +45,7 @@ This Hello example is contructed in the following ways:
     interface <code>ReadMessage</code>, which are used by both the
     Sender and the Receiver, so we put both of them in Hello.idl.</li>
     <P>
-    
+
 <li>Look at the <code>Hello_Base.mpc</code> file to get an idea how the Hello_Base_stub and Hello_Base_svnt projects are organized. <a href="http://downloads.ociweb.com/MPC/MakeProjectCreator.pdf">MPC</a> is a utility we used to generate makefiles or VC project/solution files for all <a href="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</a>, <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a> and <a href="http://www.cs.wustl.edu/~schmidt/CIAO.html">CIAO</a> libraries.</li>
 </Ol>
 
@@ -132,12 +132,12 @@ Receiver. However, you need to change the Sender.idl to make it
 <li> Please make sure that the Modified_Deployment.xsd and XMI.xsd files are in the Hello/descriptors directory.
 The former file could be found in $CIAO_ROOT/docs/schema directory. <P>
 
-<li> Create the <em>NodeManagerMap.dat</em> file containing the CORBALOC IIOP address of each <code>NodeManager</code> 
-     where it is running. Please refer to the existing <code>NodeManagerMap.dat</code> for details, 
-     as you can see, we only specify 2 <code>NodeManagers</code>, which means these two components 
+<li> Create the <em>NodeManagerMap.dat</em> file containing the CORBALOC IIOP address of each <code>NodeManager</code>
+     where it is running. Please refer to the existing <code>NodeManagerMap.dat</code> for details,
+     as you can see, we only specify 2 <code>NodeManagers</code>, which means these two components
      will be installed in the different <code>NodeApplication</code> server. Please refer to the
      <em>flattened_deploymentplan.cdp</em> file to see how a deployer
-    could specify the mapping between components and nodes.</li> 
+    could specify the mapping between components and nodes.</li>
 
 Note: Creating the deployment plan descriptor is a tedious and
     error-prone job, you can download <a
@@ -158,26 +158,26 @@ Finally you are ready to deploy the component-based application you have develop
 
   <LI> Go into the <em> descriptors </em> directory Start NodeManagers
       (NodeDameon) by running <code> run_NodeDaemons.pl </code> <P>
-  
+
   <LI> Start the execution manager:
   <code>$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager -o EM.ior -i NodeManagerMap.dat </code>
   </LI>
-  
-  <ul type="square"> <li> <em>NOTE</em>: As one can see, we use the "NodeManagerMap.dat" file to instruct the 
+
+  <ul type="square"> <li> <em>NOTE</em>: As one can see, we use the "NodeManagerMap.dat" file to instruct the
        Execution_Manager how to find the endpoint of each individual NodeManager (i.e., Node Daemon) where
        component(s) will be deployed, so this is non-standard. We plan to use Naming Service to do this in the future.
   </ul><P>
 
   <LI> Start the plan launcher:
   <code> $CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p flattened_deploymentplan.cdp -k file://EM.ior </code>
-  
+
   <ul type="square"> <li> If you don't want to register component(s) with CORBA naming service, then you don't have to start
   your naming service, and you can use the below code to start the executor:
-  
+
   <code> $CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p flattened_deploymentplan_without_ns.cdp -k file://EM.ior </code><P>
-  
+
   After this, components should be deployed successfully. </ul><P>
-  
+
   <LI> You can go into the <em>
       $CIAO_ROOT/DAnCE/examples/Hello/descriptor </em> directory and
       run the

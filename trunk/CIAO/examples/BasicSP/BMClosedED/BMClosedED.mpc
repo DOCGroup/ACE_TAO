@@ -16,8 +16,7 @@ project(BMClosedED_stub_gen): ciaoidldefaults,anytypecode {
 project(BMClosedED_lem_gen) : ciaocidldefaults, ciaoidldefaults {
   after += BasicSP_lem_gen
   custom_only = 1
-  cidlflags -= --
-  cidlflags += -I $(CIAO_ROOT)/examples/BasicSP --
+  cidlflags += -I $(CIAO_ROOT)/examples/BasicSP
 
   idlflags += -I $(CIAO_ROOT)/examples/BasicSP
   idlflags  +=  -Wb,export_macro=BMCLOSEDED_EXEC_Export \
