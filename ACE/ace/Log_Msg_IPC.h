@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Default_Constants.h"
+
 // IPC conduit between sender and client daemon.  This should be
 // included in the ACE_Log_Msg class, but due to "order of include"
 // problems it can't be...
