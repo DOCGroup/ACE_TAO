@@ -42,6 +42,14 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
     {
       return 0;
     }
+    
+  // We don't need to look at the returned DCPS_Data_Type_Info itself -
+  // as long as it's non-zero, we know enough to set the flag that
+  // triggers generation of typedefs helpful for template programming.
+  if (idl_global->is_dcps_type (node->name ()) != 0)
+    {
+      node->gen_dds_decls (true);
+    }
 
   // Evaluate the member in time for the decision to generate
   // the recursive typecode include in the stub source file.
@@ -67,7 +75,8 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
       << "typedef " << node->local_name () << "_out _out_type;"
       << be_nl << be_nl;
       
-  // Only if the necessary #pragma has been seen.    
+  // Only if the necessary #pragma has been seen, indicating a
+  // DDS datatype.    
   node->gen_dds_typedefs (os);
 
   if (be_global->any_support ())

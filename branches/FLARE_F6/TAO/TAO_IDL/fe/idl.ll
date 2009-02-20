@@ -756,9 +756,6 @@ idl_store_pragma (char *buf)
     {
       char *sample_type = idl_get_pragma_string (buf);
       idl_global->add_dcps_data_type (sample_type);
-      
-      // Set flag that triggers generation of fwd decls & typedefs.
-      idl_set_dds_decls_flag (buf + 23);
     }
   else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_KEY", 13) == 0)
     {
