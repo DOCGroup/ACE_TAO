@@ -1,3 +1,50 @@
+Fri Feb 20 14:49:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ccm/CCM.mpc
+        * ccm/ComponentServer/CCM_ComponentServer.mpc
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc
+        * ciao/Contexts/Context.mpc
+        * ciao/Servants/Servants.mpc
+        * DAnCE/Deployment/DAnCE_Core.mpc
+        * DAnCE/DomainApplication/DomainApplication.mpc
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
+        * DAnCE/ExecutionManager/ExecutionManager.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/RedirectionService/RedirectionService.mpc
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser.mpc
+        * DAnCE/tests/DeploymentPlanTestReferences/DeploymentPlanTestReferences.mpc
+        * DAnCE/tests/DeploymentTest1/DeploymentTest1.mpc
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker.mpc
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.mpc
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc
+        * examples/BasicSP/BMDevice/BMDevice.mpc
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc
+        * examples/BasicSP/EC/EC.mpc
+        * examples/Hello/Hello_Base/Hello_Base.mpc
+        * examples/Hello/Receiver/Receiver.mpc
+        * examples/Hello/Sender/Sender.mpc
+        * examples/Swapping/Receiver/Receiver.mpc
+        * examples/Swapping/Sender/Sender.mpc
+        * MPC/config/ccm_stub.mpb
+        * MPC/config/ciao_client.mpb
+        * MPC/config/ciao_output.mpb
+        * performance-tests/Benchmark/Multi_Threaded/Multi_Threaded.mpc
+        * performance-tests/Protocols/common/Protocols.mpc
+        * performance-tests/Protocols/Controller/Controller.mpc
+        * performance-tests/Protocols/Receiver/Receiver.mpc
+        * performance-tests/Protocols/Sender/Sender.mpc
+        * tests/Minimum/Receiver/Receiver.mpc
+        * tests/Minimum/Sender/Sender.mpc
+        * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc
+          Added a ciao_output which is used by the core CIAO/DAnCE libraries and
+          then only these are installed under ACE_ROOT/lib, all examples/tests
+          just put their libs in the current directory. That fixes the clash
+          of creating the same dll's for different tests that are all placed
+          in ACE_ROOT/lib
+
 Fri Feb 20 12:36:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * examples/BasicSP/BasicSP.mpc:
@@ -5,9 +52,9 @@ Fri Feb 20 12:36:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * examples/BasicSP/BMDevice/BMDevice.mpc:
         * examples/BasicSP/BMDisplay/BMDisplay.mpc:
         * examples/BasicSP/EC/EC.mpc:
-          Removed 'cidlflags -= --' and 'cidlflags += .... --'. 
+          Removed 'cidlflags -= --' and 'cidlflags += .... --'.
           See also Bugzilla #3520
-          
+
         * examples/Hello/step-by-step.html:
           Changed CVS in SVN.
           Hello example is located in $CIAO_ROOT/examples.

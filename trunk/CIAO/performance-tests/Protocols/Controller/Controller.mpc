@@ -9,4 +9,5 @@ project (Protocols_Controller) : ccm_stub, rtcorba {
   libs += Protocols_Receiver_stub \
           Protocols_Sender_stub \
           Protocols_stub
+  libpaths += ../common ../Sender ../Receiver
 }

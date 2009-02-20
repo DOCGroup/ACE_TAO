@@ -1,13 +1,13 @@
 // $Id$
 
-project (Package_Config_Handlers) : acelib, dance_deployment_stub, ciao_config_handlers_base, dance, typecodefactory {
+project (Package_Config_Handlers) : acelib, dance_deployment_stub, ciao_config_handlers_base, dance, typecodefactory, ciao_output {
   sharedname = Package_Config_Handlers
   dynamicflags = PACKAGING_HANDLERS_BUILD_DLL
   avoids   += ace_for_tao
-    
-  includes += $(CIAO_ROOT)/ciao 
+
+  includes += $(CIAO_ROOT)/ciao
   libpaths += $(CIAO_ROOT)/bin
- 
+
   after    += XSC_Config_Handlers_Common \
               XSC_Config_Handlers \
               XSC_DynAny_Handler \
@@ -46,7 +46,7 @@ project (Package_Config_Handlers_Tests) : dance_deployment_stub, ciao_config_han
   exename = test
   macros   += XML_USE_PTHREADS
   avoids   += ace_for_tao
-  requires += dummy_label 
+  requires += dummy_label
 
   Source_Files {
     test.cpp

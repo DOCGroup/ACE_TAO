@@ -2,7 +2,7 @@
 // $Id$
 
 
-project: dance_lib, taolib, tao_output, dance_deployment_stub, dance_deployment_svnt, dance_logger {
+project: dance_lib, taolib, ciao_output, dance_deployment_stub, dance_deployment_svnt, dance_logger {
   sharedname   = DAnCE_DomainApplication
   dynamicflags = DOMAIN_APPLICATION_BUILD_DLL
 

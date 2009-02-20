@@ -49,7 +49,7 @@ project(CCM_stub_idl) : ciaolib_with_idl, valuetype {
 
 }
 
-project(CCM_stub) : ciaolib_with_idl, tao_output, valuetype, ifr_client {
+project(CCM_stub) : ciaolib_with_idl, ciao_output, valuetype, ifr_client {
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)
   dynamicflags = CCM_STUB_BUILD_DLL
