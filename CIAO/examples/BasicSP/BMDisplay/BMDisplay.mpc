@@ -36,6 +36,7 @@ project(BMDisplay_stub): ccm_stub {
   after += BasicSP_stub BMDisplay_stub_gen
   sharedname = BMDisplay_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
+  libpaths += ..
 
   libs += BasicSP_stub
 
@@ -68,6 +69,7 @@ project(BMDisplay_exec) : ciao_executor {
   libs       += BMDisplay_stub
   libs       += BasicSP_exec BasicSP_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
+  libpaths += ..
 
   dynamicflags   = BMDISPLAY_EXEC_BUILD_DLL
 
@@ -102,6 +104,7 @@ project(BMDisplay_svnt) : ciao_servant {
   libs    += BMDisplay_stub BMDisplay_exec
   libs    += BasicSP_stub BasicSP_svnt
   dynamicflags = BMDISPLAY_SVNT_BUILD_DLL
+  libpaths += ..
 
   CIDL_Files {
   }

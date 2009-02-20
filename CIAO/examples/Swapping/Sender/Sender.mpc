@@ -38,6 +38,7 @@ project(Swapping_Hello_Sender_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
 project(Swapping_Hello_Sender_stub): ccm_stub {
   requires += dummy_label
   avoids += ace_for_tao
+  libpaths += ../Hello_Base
   after += Swapping_Hello_Base_stub \
            Swapping_Hello_Sender_idl_gen
   sharedname = Swapping_Sender_stub
@@ -63,6 +64,7 @@ project(Swapping_Hello_Sender_stub): ccm_stub {
 
 project(Swapping_Hello_Sender_svnt) : ciao_servant {
   requires += dummy_label
+  libpaths += ../Hello_Base
   avoids += ace_for_tao
   after += Swapping_Hello_Base_skel \
            Swapping_Hello_Sender_stub \
@@ -108,6 +110,7 @@ project(Swapping_Hello_Sender_exec) : ciao_executor {
                Swapping_Sender_stub \
                Swapping_Hello_Base_skel \
                Swapping_Hello_Base_stub
+  libpaths += ../Hello_Base
 
   dynamicflags   = SENDER_EXEC_BUILD_DLL
 
@@ -134,6 +137,7 @@ project(Swapping_Hello_Sender_exec_1) : ciao_executor {
                Swapping_Sender_stub \
                Swapping_Hello_Base_skel \
                Swapping_Hello_Base_stub
+  libpaths += ../Hello_Base
 
   dynamicflags   = SENDER_EXEC_1_BUILD_DLL
 
@@ -160,6 +164,7 @@ project(Swapping_Hello_Sender_exec_2) : ciao_executor {
                Swapping_Sender_stub \
                Swapping_Hello_Base_skel \
                Swapping_Hello_Base_stub
+  libpaths += ../Hello_Base
 
   dynamicflags   = SENDER_EXEC_2_BUILD_DLL
 
@@ -186,6 +191,7 @@ project (Swapping_Hello_Starter) : ccm_stub, valuetype {
   after += Swapping_Hello_Sender_stub
   libs += Swapping_Sender_stub \
           Swapping_Hello_Base_stub
+  libpaths += ../Hello_Base
 
   IDL_Files {
   }
