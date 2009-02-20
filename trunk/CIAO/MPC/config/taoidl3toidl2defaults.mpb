@@ -12,7 +12,7 @@ project {
     automatic                   = 1
     dependent                   = $(TAO_IDL3_TO_IDL2_DEP)
     command                     = $(TAO_IDL3_TO_IDL2)
-    commandflags                = -I$(CIAO_ROOT)/ccm -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
+    commandflags                = -I$(CIAO_ROOT) -I$(CIAO_ROOT)/ccm -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
     libpath                     = $(ACE_ROOT)/lib
     inputext                    = .idl
     generic_outputext           = _IDL2.idl
