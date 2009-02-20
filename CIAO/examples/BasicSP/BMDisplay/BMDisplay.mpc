@@ -16,8 +16,7 @@ project(BMDisplay_stub_gen): ciaoidldefaults,anytypecode {
 project(BMDisplay_lem_gen) : ciaocidldefaults, ciaoidldefaults {
   after += BasicSP_lem_gen
   custom_only = 1
-  cidlflags -= --
-  cidlflags += -I $(CIAO_ROOT)/examples/BasicSP --
+  cidlflags += -I $(CIAO_ROOT)/examples/BasicSP
 
   idlflags += -I $(CIAO_ROOT)/examples/BasicSP
   idlflags  +=  -Wb,export_macro=BMDISPLAY_EXEC_Export \

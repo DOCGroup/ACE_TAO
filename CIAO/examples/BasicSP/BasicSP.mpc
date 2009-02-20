@@ -15,8 +15,7 @@ project(BasicSP_stub_gen): ciaoidldefaults, anytypecode {
 
 project(BasicSP_lem_gen) : ciaocidldefaults {
   custom_only = 1
-  cidlflags -= --
-  cidlflags += --lem-force-all --
+  cidlflags += --lem-force-all
 
   CIDL_Files {
     BasicSP.idl

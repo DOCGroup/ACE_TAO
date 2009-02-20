@@ -1,3 +1,17 @@
+Fri Feb 20 12:36:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/BasicSP/BasicSP.mpc:
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/BasicSP/EC/EC.mpc:
+          Removed 'cidlflags -= --' and 'cidlflags += .... --'. 
+          See also Bugzilla #3520
+          
+        * examples/Hello/step-by-step.html:
+          Changed CVS in SVN.
+          Hello example is located in $CIAO_ROOT/examples.
+
 Fri Feb 20 11:11:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.mpc:
