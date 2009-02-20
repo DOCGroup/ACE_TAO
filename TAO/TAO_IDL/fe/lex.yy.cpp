@@ -2977,9 +2977,6 @@ idl_store_pragma (char *buf)
     {
       char *sample_type = idl_get_pragma_string (buf);
       idl_global->add_dcps_data_type (sample_type);
-      
-      // Set flag that triggers generation of fwd decls & typedefs.
-      idl_set_dds_decls_flag (buf + 23);
     }
   else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_KEY", 13) == 0)
     {
@@ -3425,6 +3422,7 @@ idl_set_dds_decls_flag (char *s)
 {
   ACE_CString work (s);
   ACE_CString target (work.substr (0, work.find (' ')));
+  
   char *ncs = const_cast<char *> (target.c_str ());
   AST_Decl *node = idl_find_node (ncs);
   

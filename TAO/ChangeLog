@@ -1,3 +1,33 @@
+Fri Feb 20 22:08:49 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        
+          Cosmetic changes.
+          
+        * TAO_IDL/fe/lex.yy.cpp(idl_store_pragma):
+        * TAO_IDL/fe/idl.ll(idl_store_pragma):
+        
+          Removed code to look up a node referred to by a
+          #pragma DCPS_DATA_TYPE directive, since the node
+          may be declared later in the IDL file. Moved the
+          detection to the visitor, see below.
+          
+        * TAO_IDL/util/utl_global(string_to_scoped_name).cpp:
+        
+          Fixed logic to cover more use cases, and replaced 
+          char* pointers and char arrays with ACE_CString.
+          
+        * TAO_IDL/be_include/be_visitor_structure.h:
+        
+          Added #include file.
+          
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        
+          Reused code added for OpenDDS to detect if a node is
+          an OpenDDS datatype, and set the flag that triggers
+          generation of useful typedefs for the associated
+          sequence, TypeSupport, DataWriter and DataReader types.
+
 Fri Feb 20 17:57:04 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
