@@ -11,8 +11,6 @@
  * @author Carlos O'Ryan
  */
 
-#include "ace/OS_NS_string.h"
-
 #include <algorithm>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -31,7 +29,7 @@ struct value_traits
   inline static void zero_range(
       value_type * begin , value_type * end)
   {
-    ACE_OS::memset (begin, 0, (end - begin) * sizeof (value_type));
+    std::fill(begin, end, value_type ());
   }
 
   inline static void initialize_range(
