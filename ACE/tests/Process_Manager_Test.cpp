@@ -40,7 +40,9 @@
 ACE_RCSID(tests, Process_Manager_Test, "Process_Manager_Test.cpp,v 4.11 1999/09/02 04:36:30 schmidt Exp")
 
 static u_int debug_test = 0;
+#if defined (ACE_HAS_WIN32_PRIORITY_CLASS)
 static u_int process_id = 0;
+#endif
 
 class Exit_Handler : public ACE_Event_Handler
 {
@@ -83,6 +85,7 @@ spawn_child (const ACE_TCHAR *argv0,
              int sleep_time,
              int my_process_id)
 {
+
 #if defined (ACE_WIN32)
 const ACE_TCHAR *cmdline_format = ACE_TEXT("\"%s\" %s %d");
 #elif !defined (ACE_USES_WCHAR)
@@ -91,13 +94,13 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
 const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%ls %ls %d");
 #endif
   ACE_Process_Options opts;
-  
+
   ACE_TCHAR prio[64];
   ACE_TCHAR cmd[16];
-  debug_test ? ACE_OS::sprintf (cmd, ACE_TEXT ("-d")) : 
+  debug_test ? ACE_OS::sprintf (cmd, ACE_TEXT ("-d")) :
                ACE_OS::sprintf (cmd, ACE_TEXT (""));
 
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PRIORITY_CLASS)
   if (my_process_id == 1)
     {
       opts.creation_flags (ABOVE_NORMAL_PRIORITY_CLASS);
@@ -127,7 +130,7 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
     ACE_OS::sprintf(prio, "");
 
   ACE_TCHAR pd [16];
-  ACE_OS::sprintf (pd, " -p %d", my_process_id); 
+  ACE_OS::sprintf (pd, ACE_TEXT (" -p %d"), my_process_id);
   ACE_OS::strcat (cmd, pd);
 #else
   ACE_OS::sprintf(prio, "");
@@ -241,8 +244,8 @@ command_line_test (void)
   return result;
 }
 
-#if defined (ACE_WIN32)
-void 
+#if defined (ACE_HAS_WIN32_PRIORITY_CLASS)
+void
 check_process_priority (DWORD priority)
 {
   if ((process_id == 0) ||
@@ -255,8 +258,8 @@ check_process_priority (DWORD priority)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Process ID (%d) and priority (%d) match\n"),
             process_id, priority));
   else
-      ACE_ERROR ((LM_ERROR, 
-                  ACE_TEXT ("Given process priority (%d) and real priority (%d) differ.\n"), 
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Given process priority (%d) and real priority (%d) differ.\n"),
                   process_id, priority));
 }
 #endif
@@ -264,7 +267,7 @@ check_process_priority (DWORD priority)
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PRIORITY_CLASS)
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("dp:"));
 #else
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("d"));
@@ -277,9 +280,11 @@ run_main (int argc, ACE_TCHAR *argv[])
           case 'd':
             debug_test = 1u;
             break;
+#if defined (ACE_HAS_WIN32_PRIORITY_CLASS)
           case 'p':
             process_id = ACE_OS::atoi (get_opt.opt_arg ());
             break;
+#endif
         }
     }
 
@@ -293,10 +298,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_START_TEST (lognm);
       int secs = ACE_OS::atoi (argv[get_opt.opt_ind ()]);
       ACE_OS::sleep (secs ? secs : 1);
-      
-      
+
       ACE_TCHAR prio[64];
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32_HAS_PRIORITY_CLASS)
       DWORD priority = ::GetPriorityClass (::GetCurrentProcess());
 
       check_process_priority(priority);
@@ -314,7 +318,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       else if (priority == REALTIME_PRIORITY_CLASS)
         ACE_OS::sprintf (prio, ACE_TEXT("and priority 'realtime'"));
 #else
-      ACE_OS::sprintf (prio, "");
+      ACE_OS::sprintf (prio, ACE_TEXT (""));
 #endif
       if (debug_test)
         ACE_DEBUG ((LM_DEBUG,
@@ -484,8 +488,8 @@ run_main (int argc, ACE_TCHAR *argv[])
                 exitcode));
 
   // Terminate a child process and make sure we can wait for it.
-  pid_t child6 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"), 
-                              mgr, 
+  pid_t child6 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
+                              mgr,
                               5,
                               6);
   ACE_exitcode status6;

@@ -1,3 +1,11 @@
+Fri Feb 20 09:54:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/config-win32-common.h:
+        * tests/Process_Manager_Test.cpp:
+          Added define ACE_HAS_WIN32_PRIORITY_CLASS. On win32 
+          platforms where process priority classes exists, 
+          one can use this define.
+
 Fri Feb 20 09:28:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg_IPC.h:
