@@ -33,6 +33,7 @@ endif
 CC      = gcc
 CXX     = g++
 RC      = windres
+DLLTOOL = dlltool
 
 RC_OUTPUT_FLAG = -o
 
@@ -87,7 +88,7 @@ PLATFORM_WX_LDFLAGS   ?= $(shell wx-config --ldflags)
 # to workaround to a bug in ld.
 SHLIBBUILD = \
   $(RM) $(VSHDIR)/$@.def.old $(VSHDIR)/$@.def; \
-  dlltool --export-all --output-def $(VSHDIR)/$@.def --dllname $@ \
+  $(DLLTOOL) --export-all --output-def $(VSHDIR)/$@.def --dllname $@ \
     $(VSHOBJS) \
   && mv $(VSHDIR)/$@.def $(VSHDIR)/$@.def.old \
   && sed 's/;.*$$//g' < $(VSHDIR)/$@.def.old > $(VSHDIR)/$@.def \

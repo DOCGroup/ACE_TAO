@@ -1,9 +1,23 @@
+Fri Feb 20 13:50:33 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Support MinGW 3.15
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Improvement for cross compilation
+
+          Thanks to Jani Hakala <jahakala at iki dot fi> for delivering some
+          patches
+
+        * ace/config-vxworks6.7.h:
+          Improved support
+
 Fri Feb 20 09:54:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * ace/config-win32-common.h:
         * tests/Process_Manager_Test.cpp:
-          Added define ACE_HAS_WIN32_PRIORITY_CLASS. On win32 
-          platforms where process priority classes exists, 
+          Added define ACE_HAS_WIN32_PRIORITY_CLASS. On win32
+          platforms where process priority classes exists,
           one can use this define.
 
 Fri Feb 20 09:28:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
