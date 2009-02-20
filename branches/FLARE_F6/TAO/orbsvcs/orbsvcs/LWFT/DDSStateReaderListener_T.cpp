@@ -13,12 +13,8 @@
 #ifndef _DDS_STATE_READER_LISTENER_T_CPP_
 #define _DDS_STATE_READER_LISTENER_T_CPP_
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE>
-DDSStateReaderListener_T<TOPIC_TYPE, 
-			                   TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE>::DDSStateReaderListener_T (
+template <typename DATA_TYPE>
+DDSStateReaderListener_T<DATA_TYPE>::DDSStateReaderListener_T (
   const std::string & id,							    
   ReplicatedApplication_ptr application)
   : id_ (id),
@@ -26,22 +22,14 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 {
 }
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE>
-DDSStateReaderListener_T<TOPIC_TYPE, 
-			                   TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE>::~DDSStateReaderListener_T (void)
+template <typename DATA_TYPE>
+DDSStateReaderListener_T<DATA_TYPE>::~DDSStateReaderListener_T (void)
 {
 }
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE>
+template <typename DATA_TYPE>
 void
-DDSStateReaderListener_T<TOPIC_TYPE, 
-			                   TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE>::on_requested_deadline_missed (
+DDSStateReaderListener_T<DATA_TYPE>::on_requested_deadline_missed (
     DDS::DataReader_ptr,
     const DDS::RequestedDeadlineMissedStatus &)
   throw (CORBA::SystemException)
@@ -51,13 +39,9 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 	            ACE_TEXT ("on_requested_deadline_missed ()\n")));
 }
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE>
+template <typename DATA_TYPE>
 void
-DDSStateReaderListener_T<TOPIC_TYPE, 
-			                   TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE>::on_requested_incompatible_qos (
+DDSStateReaderListener_T<DATA_TYPE>::on_requested_incompatible_qos (
     DDS::DataReader_ptr,
     const DDS::RequestedIncompatibleQosStatus &status)
   throw (CORBA::SystemException)
@@ -70,39 +54,27 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 	            status.last_policy_id));
 }
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE>
+template <typename DATA_TYPE>
 void
-DDSStateReaderListener_T<TOPIC_TYPE, 
-			                   TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE>::on_liveliness_changed (
+DDSStateReaderListener_T<DATA_TYPE>::on_liveliness_changed (
     DDS::DataReader_ptr,
     const DDS::LivelinessChangedStatus &)
   throw (CORBA::SystemException)
 {
 }
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE>
+template <typename DATA_TYPE>
 void
-DDSStateReaderListener_T<TOPIC_TYPE, 
-			                   TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE>::on_subscription_matched (
+DDSStateReaderListener_T<DATA_TYPE>::on_subscription_matched (
     DDS::DataReader_ptr,
     const DDS::SubscriptionMatchedStatus &)
   throw (CORBA::SystemException)
 {
 }
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE>
+template <typename DATA_TYPE>
 void
-DDSStateReaderListener_T<TOPIC_TYPE, 
-			                   TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE>::on_sample_rejected (
+DDSStateReaderListener_T<DATA_TYPE>::on_sample_rejected (
     DDS::DataReader_ptr,
     const DDS::SampleRejectedStatus &)
   throw (CORBA::SystemException)
@@ -112,18 +84,14 @@ DDSStateReaderListener_T<TOPIC_TYPE,
 	            ACE_TEXT ("on_sample_rejected ()\n")));
 }
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE>
+template <typename DATA_TYPE>
 void
-DDSStateReaderListener_T<TOPIC_TYPE, 
-			                   TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE>::on_data_available (
+DDSStateReaderListener_T<DATA_TYPE>::on_data_available (
     DDS::DataReader_ptr reader)
   throw (CORBA::SystemException)
 {
-  typename TOPIC_DATA_READER::_var_type state_dr = 
-    TOPIC_DATA_READER::_narrow (reader);
+  typename DATA_TYPE::_data_reader_type::_var_type state_dr = 
+    DATA_TYPE::_data_reader_type::_narrow (reader);
   
   if (CORBA::is_nil (state_dr.in ()))
     {
@@ -132,7 +100,7 @@ DDSStateReaderListener_T<TOPIC_TYPE,
                   ACE_TEXT ("DDSStateReaderListener_T::_narrow() failed.\n")));
     }
     
-  TOPIC_SEQUENCE state_samples;
+  DATA_TYPE::_seq_type state_samples;
   DDS::SampleInfoSeq sis;
   
   DDS::ReturnCode_t status =
@@ -147,7 +115,7 @@ DDSStateReaderListener_T<TOPIC_TYPE,
     {
       if (state_samples.length () > 0)
         {
-          TOPIC_TYPE state_sample = state_samples[0];
+          DATA_TYPE state_sample = state_samples[0];
           DDS::SampleInfo si = sis[0];
 /*
           ACE_DEBUG ((LM_TRACE,
@@ -197,13 +165,9 @@ DDSStateReaderListener_T<TOPIC_TYPE,
     }
 }
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_DATA_READER, 
-          typename TOPIC_SEQUENCE>
+template <typename DATA_TYPE>
 void
-DDSStateReaderListener_T<TOPIC_TYPE, 
-		                     TOPIC_DATA_READER, 
-                         TOPIC_SEQUENCE>::on_sample_lost (
+DDSStateReaderListener_T<DATA_TYPE>::on_sample_lost (
     DDS::DataReader_ptr,
     const DDS::SampleLostStatus &)
   throw (CORBA::SystemException)

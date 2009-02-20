@@ -1,3 +1,20 @@
+Fri Feb 20 17:57:04 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
+        
+          Removed an empty try block.       
+ 
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h:
+        * orbsvcs/orbsvcs/LWFT/DDSStateUpdate_T.cpp:
+        * orbsvcs/orbsvcs/LWFT/DDSStateReaderListener_T.h:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i_T.cpp:
+        * orbsvcs/orbsvcs/LWFT/DDSStateReaderListener_T.cpp:
+        * orbsvcs/orbsvcs/LWFT/DDSStateUpdate_T.h:
+        
+          Removed all but one of the DDS-related template parameters,
+          since we are now generating typedefs in DDS datatype
+          structs that can be used as traits.
+
 Thu Feb 19 19:59:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MPC/config/lwft_server.mpb:

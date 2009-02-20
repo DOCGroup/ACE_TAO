@@ -24,11 +24,11 @@
  * @brief Implementation of the StatefulObject interface that uses
  *        DDS to disseminate state information to replicas
  */
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_TYPE_SUPPORT,
-	        typename TOPIC_DATA_WRITER,
-          typename TOPIC_DATA_READER,
-	        typename TOPIC_SEQUENCE>
+template <typename DATA_TYPE>//, 
+//	        typename DATA_TYPE_SUPPORT,
+//	        typename DATA_WRITER,
+//          typename DATA_READER,
+//	        typename DATA_TYPE_SEQUENCE>
 class DDSStateUpdate_T : public StatefulObject
 {
 public:
@@ -51,7 +51,7 @@ public:
 
 protected:
   /// contains the value sent most recently
-  TOPIC_TYPE state_;
+  DATA_TYPE state_;
 
 private:
   // Helper methods for DDS initialization.
@@ -72,8 +72,8 @@ private:
   DDS::Subscriber_var sub_;
   DDS::Topic_var topic_;
   DDS::InstanceHandle_t instance_handle_;
-  typename TOPIC_DATA_WRITER::_var_type datawriter_;
-  typename TOPIC_DATA_READER::_var_type datareader_;
+  typename DATA_TYPE::_data_writer_type::_var_type datawriter_;
+  typename DATA_TYPE::_data_reader_type::_var_type datareader_;
   DDS::DataReaderListener_var listener_;
 };
 
