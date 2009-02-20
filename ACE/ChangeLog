@@ -1,5 +1,14 @@
 Fri Feb 20 07:29:18 UTC 2009  Olli Savia  <ops@iki.fi>
 
+        * tests/Based_Pointer_Test_Lib.cpp:
+          Reverted the last changes made by Johnny
+          (ace/svc_export.h is back again).
+          
+        * tests/Based_Pointer_Test_Lib_Export.h:
+          Removed from repository (ace/svc_export.h is back again).
+
+Fri Feb 20 07:29:18 UTC 2009  Olli Savia  <ops@iki.fi>
+
         * ace/config-openbsd.h:
           Added ACE_LACKS_LOG2 and ACE_LACKS_ISCTYPE.
 
