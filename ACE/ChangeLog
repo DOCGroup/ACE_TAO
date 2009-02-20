@@ -1,3 +1,8 @@
+Fri Feb 20 07:29:18 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-openbsd.h:
+          Added ACE_LACKS_LOG2 and ACE_LACKS_ISCTYPE.
+
 Thu Feb 19 20:27:33 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-freebsd.h:
