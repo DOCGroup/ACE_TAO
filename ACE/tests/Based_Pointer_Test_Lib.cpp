@@ -17,7 +17,7 @@
 // ============================================================================
 
 #include "ace/ACE.h"
-#include "Based_Pointer_Test_Lib_Export.h"
+#include "ace/svc_export.h"
 #include "ace/Based_Pointer_Repository.h"
 
 ACE_RCSID (tests,
@@ -26,10 +26,10 @@ ACE_RCSID (tests,
 
 #if defined (ACE_OPENVMS)
     // with OPENVMS symbol names > 31 cause us trouble with dlsym()
-extern "C" Based_Pointer_Export void *
+extern "C" ACE_Svc_Export void *
 get_based_pointer_repo_inst (void)
 #else
-extern "C" Based_Pointer_Export void *
+extern "C" ACE_Svc_Export void *
 get_based_pointer_repository_instance (void)
 #endif
 {
