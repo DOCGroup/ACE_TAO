@@ -16,7 +16,7 @@ project(CCM_ComponentServer_IDL) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(CCM_ComponentServer_stub) : ciaolib_with_idl, tao_output, messaging, ccm_stub, anytypecode, ciao_lib  {
+project(CCM_ComponentServer_stub) : ciaolib_with_idl, ciao_output, messaging, ccm_stub, anytypecode, ciao_lib  {
   dynamicflags = DANCE_COMPONENTSERVER_STUB_BUILD_DLL
   after += CCM_ComponentServer_IDL
 
@@ -36,7 +36,7 @@ project(CCM_ComponentServer_stub) : ciaolib_with_idl, tao_output, messaging, ccm
   }
 }
 
-project(CCM_ComponentServer_svnt) : ciaolib_with_idl, tao_output, messaging, ccm_componentserver_stub,  anytypecode, ciao_lib  {
+project(CCM_ComponentServer_svnt) : ciaolib_with_idl, ciao_output, messaging, ccm_componentserver_stub,  anytypecode, ciao_lib  {
   dynamicflags = DANCE_COMPONENTSERVER_SVNT_BUILD_DLL
 
   Header_Files {
