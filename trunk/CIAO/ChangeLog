@@ -1,3 +1,8 @@
+Fri Feb 20 11:11:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.mpc:
+          Fixed this MPC file
+
 Fri Feb 20 09:53:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taoidl3toidl2defaults.mpb:
