@@ -92,6 +92,17 @@
 # define ACE_MT_SAFE 1
 #endif
 
+// On winCE these classes do not exist. If they are
+// introduced in the future, no changes need to be made
+#if defined (ABOVE_NORMAL_PRIORITY_CLASS) && \
+  defined (BELOW_NORMAL_PRIORITY_CLASS) && \
+  defined (HIGH_PRIORITY_CLASS) && \
+  defined (IDLE_PRIORITY_CLASS) && \
+  defined (NORMAL_PRIORITY_CLASS) && \
+  defined (REALTIME_PRIORITY_CLASS)
+#define ACE_HAS_WIN32_PRIORITY_CLASS
+#endif
+
 // Build ACE services as DLLs.  If you write a library and want it to
 // use ACE_Svc_Export, this will cause those macros to build dlls.  If
 // you want your ACE service to be a static library, comment out this
