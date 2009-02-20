@@ -1,9 +1,14 @@
+Fri Feb 20 09:28:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg_IPC.h:
+          Added include of Default_Constants.h
+
 Fri Feb 20 07:29:18 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/Based_Pointer_Test_Lib.cpp:
           Reverted the last changes made by Johnny
           (ace/svc_export.h is back again).
-          
+
         * tests/Based_Pointer_Test_Lib_Export.h:
           Removed from repository (ace/svc_export.h is back again).
 
