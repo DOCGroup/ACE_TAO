@@ -51,6 +51,10 @@
 #  define ACE_LACKS_DIRENT_H
 #endif
 
+#if (__MINGW32_MAJOR_VERSION > 3)  || ((__MINGW32_MAJOR_VERSION == 3) && (__MINGW32_MINOR_VERSION >= 15))
+# undef ACE_LACKS_USECONDS_T
+#endif
+
 #undef ACE_LACKS_SIGSET
 #undef ACE_HAS_WTOF
 
