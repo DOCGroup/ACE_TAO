@@ -22,9 +22,7 @@
  * @brief this listener receives data from DDS and posts it to the replicated
  *        application.
  */
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_DATA_READER,
-	        typename TOPIC_SEQUENCE>
+template <typename DATA_TYPE>
 class DDSStateReaderListener_T : public DDS::DataReaderListener
 {
 public:

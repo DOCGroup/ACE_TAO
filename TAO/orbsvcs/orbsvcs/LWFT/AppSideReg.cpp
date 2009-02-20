@@ -91,18 +91,6 @@ AppSideReg::register_process (void)
 
       internal_thread_barrier.wait ();
       
-      /// Waiting for the AppSideMonitor_Thread to finish its socket stuff.
-      try
-        {
-         // hmvar_->dump ();
-        }
-      catch (CORBA::Exception &)
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "AppSideReg: exception from dump.\n"));
-          throw;
-        }
-
       //ACE_DEBUG ((LM_TRACE, "AppSideReg::svc before registering process.\n"));
 
       try

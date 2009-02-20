@@ -17,16 +17,8 @@
 #include "DDSStateReaderListener_T.h"
 #include "DDSFailure.h"
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_TYPE_SUPPORT,
-	        typename TOPIC_DATA_WRITER,
-          typename TOPIC_DATA_READER,
-          typename TOPIC_SEQUENCE>
-DDSStateUpdate_T<TOPIC_TYPE,
-		             TOPIC_TYPE_SUPPORT,
-		             TOPIC_DATA_WRITER,
-		             TOPIC_DATA_READER,
-                 TOPIC_SEQUENCE>::DDSStateUpdate_T (
+template <typename DATA_TYPE>
+DDSStateUpdate_T<DATA_TYPE>::DDSStateUpdate_T (
   const std::string & topic_name,
   const std::string & id,
   DDS::DomainParticipant_ptr participant,
@@ -39,41 +31,23 @@ DDSStateUpdate_T<TOPIC_TYPE,
     pub_ (DDS::Publisher::_duplicate (publisher)),
     sub_ (DDS::Subscriber::_duplicate (subscriber)),
     topic_ (DDS::Topic::_nil ()),
-    datawriter_ (TOPIC_DATA_WRITER::_nil ()),
-    datareader_ (TOPIC_DATA_READER::_nil ()),
-    listener_ (new DDSStateReaderListener_T <TOPIC_TYPE,
-	                                           TOPIC_DATA_READER,
-                                             TOPIC_SEQUENCE> (id, application))    
+    datawriter_ (DATA_TYPE::_data_writer_type::_nil ()),
+    datareader_ (DATA_TYPE::_data_reader_type::_nil ()),
+    listener_ (new DDSStateReaderListener_T <DATA_TYPE> (id, application))   
 {
   id_ = id.c_str ();
   this->init ();
 }
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_TYPE_SUPPORT,
-	        typename TOPIC_DATA_WRITER,
-          typename TOPIC_DATA_READER,
-          typename TOPIC_SEQUENCE>
-DDSStateUpdate_T<TOPIC_TYPE,
-		             TOPIC_TYPE_SUPPORT,
-		             TOPIC_DATA_WRITER,
-		             TOPIC_DATA_READER,
-                 TOPIC_SEQUENCE>::~DDSStateUpdate_T (void)
+template <typename DATA_TYPE>
+DDSStateUpdate_T<DATA_TYPE>::~DDSStateUpdate_T (void)
 {
   this->fini ();
 }
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_TYPE_SUPPORT,
-	        typename TOPIC_DATA_WRITER,
-          typename TOPIC_DATA_READER,
-          typename TOPIC_SEQUENCE>
+template <typename DATA_TYPE>
 bool
-DDSStateUpdate_T<TOPIC_TYPE,
-		             TOPIC_TYPE_SUPPORT,
-		             TOPIC_DATA_WRITER,
-		             TOPIC_DATA_READER,
-                 TOPIC_SEQUENCE>::init (void)
+DDSStateUpdate_T<DATA_TYPE>::init (void)
 {
   if (!this->create_topic ())
     {
@@ -93,17 +67,9 @@ DDSStateUpdate_T<TOPIC_TYPE,
   return true;
 }
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_TYPE_SUPPORT,
-	        typename TOPIC_DATA_WRITER,
-          typename TOPIC_DATA_READER,
-          typename TOPIC_SEQUENCE>
+template <typename DATA_TYPE>
 bool
-DDSStateUpdate_T<TOPIC_TYPE,
-		             TOPIC_TYPE_SUPPORT,
-		             TOPIC_DATA_WRITER,
-		             TOPIC_DATA_READER,
-                 TOPIC_SEQUENCE>::fini ()
+DDSStateUpdate_T<DATA_TYPE>::fini (void)
 {
   DDS::ReturnCode_t status =
     this->pub_->delete_datawriter (this->datawriter_.in ());
@@ -123,21 +89,13 @@ DDSStateUpdate_T<TOPIC_TYPE,
   return true;
 }
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_TYPE_SUPPORT,
-	        typename TOPIC_DATA_WRITER,
-          typename TOPIC_DATA_READER,
-          typename TOPIC_SEQUENCE>
+template <typename DATA_TYPE>
 void
-DDSStateUpdate_T<TOPIC_TYPE,
-		             TOPIC_TYPE_SUPPORT,
-		             TOPIC_DATA_WRITER,
-		             TOPIC_DATA_READER,
-                 TOPIC_SEQUENCE>::set_state (
+DDSStateUpdate_T<DATA_TYPE>::set_state (
   const CORBA::Any & state_value)
 {
   // Extract value from any.
-  const TOPIC_TYPE * value = 0;
+  const DATA_TYPE * value = 0;
 
   // Update value on state topic sample, but make sure to
   // set the 'id' field with our unique string, since the
@@ -176,19 +134,11 @@ DDSStateUpdate_T<TOPIC_TYPE,
 
 }
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_TYPE_SUPPORT,
-	        typename TOPIC_DATA_WRITER,
-          typename TOPIC_DATA_READER,
-          typename TOPIC_SEQUENCE>
+template <typename DATA_TYPE>
 bool
-DDSStateUpdate_T<TOPIC_TYPE,
-		             TOPIC_TYPE_SUPPORT,
-		             TOPIC_DATA_WRITER,
-		             TOPIC_DATA_READER,
-                 TOPIC_SEQUENCE>::create_topic ()
+DDSStateUpdate_T<DATA_TYPE>::create_topic (void)
 {
-  DDS::TypeSupport_var ts = new TOPIC_TYPE_SUPPORT ();
+  DDS::TypeSupport_var ts = new DATA_TYPE::_type_support_type ();
   CORBA::String_var data_type_name = ts->get_type_name ();
   
   DDS::ReturnCode_t status =
@@ -224,17 +174,9 @@ DDSStateUpdate_T<TOPIC_TYPE,
   return true;
 }
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_TYPE_SUPPORT,
-	        typename TOPIC_DATA_WRITER,
-          typename TOPIC_DATA_READER,
-          typename TOPIC_SEQUENCE>
+template <typename DATA_TYPE>
 bool
-DDSStateUpdate_T<TOPIC_TYPE,
-		             TOPIC_TYPE_SUPPORT,
-		             TOPIC_DATA_WRITER,
-		             TOPIC_DATA_READER,
-                 TOPIC_SEQUENCE>::create_datawriter ()
+DDSStateUpdate_T<DATA_TYPE>::create_datawriter (void)
 {
   DDS::DataWriterQos dw_qos;
   DDS::ReturnCode_t status =
@@ -260,7 +202,7 @@ DDSStateUpdate_T<TOPIC_TYPE,
     }
   
   datawriter_ =
-    TOPIC_DATA_WRITER::_narrow (datawriter_base.in ());
+    DATA_TYPE::_data_writer_type::_narrow (datawriter_base.in ());
   
   if (CORBA::is_nil (datawriter_.in ()))
     {
@@ -275,17 +217,9 @@ DDSStateUpdate_T<TOPIC_TYPE,
   return true;
 }
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_TYPE_SUPPORT,
-	        typename TOPIC_DATA_WRITER,
-          typename TOPIC_DATA_READER,
-          typename TOPIC_SEQUENCE>
+template <typename DATA_TYPE>
 bool
-DDSStateUpdate_T<TOPIC_TYPE,
-		             TOPIC_TYPE_SUPPORT,
-		             TOPIC_DATA_WRITER,
-		             TOPIC_DATA_READER,
-                 TOPIC_SEQUENCE>::create_datareader ()
+DDSStateUpdate_T<DATA_TYPE>::create_datareader (void)
 {
   DDS::DataReaderQos dr_qos;
   DDS::ReturnCode_t status =
@@ -311,7 +245,7 @@ DDSStateUpdate_T<TOPIC_TYPE,
     }
   
   datareader_ =
-    TOPIC_DATA_READER::_narrow (datareader_base.in ());
+    DATA_TYPE::_data_reader_type::_narrow (datareader_base.in ());
   
   if (CORBA::is_nil (datareader_.in ()))
     {

@@ -17,11 +17,7 @@
 
 #include "DDSStateUpdate_T.h"
 
-template <typename TOPIC_TYPE, 
-	        typename TOPIC_TYPE_SUPPORT,
-	        typename TOPIC_DATA_WRITER,
-          typename TOPIC_DATA_READER,
-	        typename TOPIC_SEQUENCE>
+template <typename DATA_TYPE>
 void
 StateSynchronizationAgent_i::register_application_with_dds (
   const char * object_id,
@@ -61,11 +57,7 @@ StateSynchronizationAgent_i::register_application_with_dds (
           // register a DDS participant for this application
           replica_group.replicas.push_back (
             typename StateSynchronizationAgent_i::STATEFUL_OBJECT_PTR (
-               new DDSStateUpdate_T <TOPIC_TYPE,
-                                     TOPIC_TYPE_SUPPORT,
-                                     TOPIC_DATA_WRITER,
-                                     TOPIC_DATA_READER,
-                                     TOPIC_SEQUENCE> (
+               new DDSStateUpdate_T <DATA_TYPE> (
                  oid.c_str (),
                  this->get_unique_id (oid.c_str ()),
                  domain_participant_.in (),

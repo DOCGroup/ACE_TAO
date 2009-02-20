@@ -53,11 +53,7 @@ class SSA_Export StateSynchronizationAgent_i
 
 #ifdef FLARE_USES_DDS
   /// Registers application for state synchronization with DDS
-  template <typename TOPIC_TYPE, 
-            typename TOPIC_TYPE_SUPPORT,
-            typename TOPIC_DATA_WRITER,
-            typename TOPIC_DATA_READER,
-            typename TOPIC_SEQUENCE>
+  template <typename DATA_TYPE>
   void register_application_with_dds (const char * object_id,
                                       ReplicatedApplication_ptr app);
 #endif /* FLARE_USES_DDS */
