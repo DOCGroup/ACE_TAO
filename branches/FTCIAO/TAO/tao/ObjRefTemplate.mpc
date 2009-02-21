@@ -1,0 +1,62 @@
+//$Id$
+project(ObjRefTemplate) : valuetype, portableserver, install, tao_output, tao_versioning_idl_defaults {
+  sharedname   = TAO_ObjRefTemplate
+  dynamicflags = TAO_ORT_BUILD_DLL
+
+  Source_Files {
+    ObjRefTemplate
+  }
+
+  Header_Files {
+    ObjRefTemplate
+  }
+
+  Inline_Files {
+    ObjRefTemplate
+  }
+
+  Template_Files {
+    ObjRefTemplate
+  }
+
+  Resource_Files {
+    ObjRefTemplate
+  }
+
+  PIDL_Files {
+    ObjRefTemplate
+  }
+
+  IDL_Files {
+    idlflags += -Gp -Gd -SS -Sorb -GX \
+                -Wb,export_macro=TAO_ORT_Export \
+                -Wb,export_include=tao/ObjRefTemplate/ort_export.h \
+                -Wb,include_guard=TAO_OBJREF_TEMPLATE_SAFE_INCLUDE \
+                -Wb,safe_include=tao/ObjRefTemplate/ObjectReferenceTemplate.h \
+                -o ObjRefTemplate
+    idlflags -= -Sa -St
+    ObjRefTemplate/ObjectReferenceTemplate.pidl
+  }
+
+  IDL_Files {
+    idlflags += -SS -Sorb -GX -Sci \
+                -Wb,export_macro=TAO_ORT_Export \
+                -Wb,export_include=tao/ObjRefTemplate/ort_export.h \
+                -Wb,unique_include=tao/ObjRefTemplate/ObjectReferenceTemplate.h \
+                -o ObjRefTemplate
+    ObjRefTemplate/ObjectReferenceTemplate_include.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Gp -Gd -SS -GA -Sorb  \
+                -Wb,export_macro=TAO_ORT_Export \
+                -Wb,export_include=tao/ObjRefTemplate/ort_export.h \
+                -o ObjRefTemplate
+    idlflags -= -Sa -St
+    ObjRefTemplate/Default_ORT.pidl
+  }
+
+  Pkgconfig_Files {
+    ObjRefTemplate/TAO_ObjRefTemplate.pc.in
+  }
+}

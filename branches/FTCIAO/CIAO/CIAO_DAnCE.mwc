@@ -1,0 +1,8 @@
+//$Id$
+
+workspace {
+  ccm
+  ciao
+  DAnCE
+  tools/Config_Handlers
+}

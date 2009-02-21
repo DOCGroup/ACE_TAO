@@ -1,0 +1,21 @@
+//$Id$
+//StockDistributor.cidl,v 1.0
+/**
+ * @file Distributor.cidl
+ *
+ * @author ming xiong <xiongm@isis.vanderbilt.edu>
+ */
+
+#ifndef STOCKDISTRIBUTOR_CIDL
+#define STOCKDISTRIBUTOR_CIDL
+
+#include "StockDistributor.idl"
+
+composition session StockDistributor_Impl {
+  home executor StockDistributorHome_Exec  {
+    implements Stock::StockDistributorHome;
+    manages StockDistributor_Exec;
+  };
+};
+
+#endif /* STOCKDISTRIBUTOR_CIDL */

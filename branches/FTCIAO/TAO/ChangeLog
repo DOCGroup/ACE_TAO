@@ -1,0 +1,568 @@
+Fri Feb 20 23:17:07 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * tests/Portable_Interceptors/Bug_3582:
+        
+          Added test program for a bug about TRANSIENT exceptions being
+          not intercepted when RTCORBA is used.
+
+Fri Feb 20 11:36:50 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tao/Value_Traits_T.h:
+
+          Reverted the change from std::fill to ACE_OS::memset.
+          Despite there was no problem with it on the scoreboard
+          it was unsafe in case value_traits was instantiated
+          for struct that has a non-POD type as its member.
+          The rest of similar changes are equivalent to what we
+          had before.
+
+Thu Feb 19 10:59:31 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tao/Generic_Sequence_T.h:
+
+          Fixed a small mistake in the commit
+          "Wed Feb 18 10:37:15 UTC 2009  Vladimir Zykov".
+
+Wed Feb 18 18:57:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orbconf.h:
+          Removed commented out code
+
+        * tao/Transport_Cache_Manager_T.cpp:
+          Don't try to always purge 1 entry
+
+        * tao/Bug_3558_Regression/client.cpp:
+          Set the purging percentage to 100
+
+        * tao/Transport_Cache_Manager/Bug_3558_Regression.cpp
+          Fixed gnu warning
+
+Wed Feb 18 10:37:15 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+          Fixed bug#3574 and bug#3473. This must improve performance
+          when handling sequences.
+
+        * tao/String_Traits_T.h:
+        * tao/Value_Traits_T.h:
+        * tao/Object_Reference_Traits_T.h:
+        * tao/Array_Traits_T.h:
+        * tao/Valuetype/Valuetype_Traits_T.h:
+
+          Added copy_swap_range() which swaps pointers for dynamically
+          allocated types and copies values for all of the rest. This
+          is useful when we know that copying is reduntant since the old
+          buffer will be destroyed immediately after the operation.
+          Changed std::fill to ACE_OS::memset in zero_range() which
+          turned to be faster when only needed to zero a region of
+          memory.
+
+        * tao/Bounded_Value_Allocation_Traits_T.h:
+        * tao/Bounded_Reference_Allocation_Traits_T.h:
+        * tao/Bounded_Array_Allocation_Traits_T.h:
+        * tao/Unbounded_Value_Allocation_Traits_T.h:
+        * tao/Unbounded_Reference_Allocation_Traits_T.h:
+        * tao/Unbounded_Array_Allocation_Traits_T.h:
+        * tao/Valuetype/Bounded_Valuetype_Allocation_Traits_T.h:
+        * tao/Valuetype/Unbounded_Valuetype_Allocation_Traits_T.h:
+
+          Added allocbuf_noinit which does what allocbuf previously
+          did and now allocbuf works as required by CORBA C++ mapping
+          i.e. it returns correctly initilized buffer. This also fixes
+          bug#3473.
+
+        * tao/Valuetype/Bounded_Valuetype_Sequence_T.h:
+        * tao/Valuetype/Unbounded_Valuetype_Sequence_T.h:
+        * tao/Unbounded_Sequence_CDR_T.h:
+        * tao/Bounded_Sequence_CDR_T.h:
+
+          Changed the way temporaries are created. Since they don't need
+          a properly constructed internal buffer allocbuf_noinit is used
+          for their creation.
+
+        * tao/Unbounded_Octet_Sequence_T.h:
+        * tao/Generic_Sequence_T.h:
+
+          Updated the temporaries creation and improved generic_sequence::
+          length(CORBA::ULong) when extending a sequence by employing
+          copy_swap_range() for old values while moving them to a new
+          sequence.
+
+Tue Feb 17 15:14:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+        * tao/orbconf.h:
+          Added TAO_SO_LINGER, TAO_ACCEPT_ERROR_DELAY and
+          TAO_USE_PARALLEL_CONNECT which can be set in config.h
+          to control the default values.
+
+        * tao/ORB_Core.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/params.h:
+        * tao/params.inl:
+        * tao/Profile.cpp:
+          Changed std_profile_components to a real bool
+
+Tue Feb 17 14:43:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tao/Strategies/UIOP_Connector.cpp:
+
+          Fixed syntax problem.
+
+Tue Feb 17 14:03:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * tao/Strategies/DIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+          Only the return of -1 with cache_transport should be seen as an error
+
+        * tao/Cache_Entries_T.cpp:
+          Updated some debug statements
+
+        * tao/Condition.cpp:
+        * tao/Condition.h:
+          Changed delete_lock_ to a bool
+
+        * tao/Exception.cpp:
+        * tao/SystemException.cpp:
+          Check for self assignment in operator=
+
+        * tao/IIOP_Connection_Handler.cpp:
+          Layout changes to debug statements and use ACE_TEXT
+
+        * tao/IIOP_Connector.cpp:
+          Check the return value of cache_transport
+
+        * tao/Leader_Follower.inl:
+          Const change
+
+        * tao/LF_CH_Event.cpp:
+        * tao/LF_Event.h:
+        * tao/LF_Event.inl:
+          Addeds state_name to LF_Event and print the state as string instead
+          of number
+
+        * tao/Strategies/SCIOP_Acceptor.cpp:
+          Fixed gcc warning, don't use ACE_UNUSED_ARG anymore
+
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+          Layout change
+
+        * tao/String_Alloc.cpp:
+          Simplified check
+
+        * tao/Transport_Cache_Manager_T.cpp:
+        * tao/Transport_Cache_Manager_T.h:
+        * tao/Transport_Cache_Manager_T.inl:
+          Updated various debug statements. When we have to purge the cache always try
+          to purge the cache with 1 entry else we don't purge when we have a very small
+          cache. Make the maximum transport cache size a real maximum, it was previously
+          not a real maximum, just a default allocation value. This fixes 3570
+
+        * tao/Transport_Connector.cpp:
+          Check the return value of cache_transport.
+
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP.h
+          Layout changes
+
+        * tests/Bug_3558_Regression/client.cpp:
+        * tests/Transport_Cache_Manager/Bug_3558_Regression.cpp:
+          The cache has now a real maximum, updated these tests
+
+Tue Feb 17 11:04:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          3566 and 4567 are not fixed yet
+
+Mon Feb 16 16:39:26 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Bug_3524_Regression/run_test.pl:
+
+          Fixed a variable name for IOR file deletion at the end of the
+          script.
+
+Sat Feb 14 07:36:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression/lzo/LzoCompressor.cpp:
+        * tao/Compression/zlib/ZlibCompressor.cpp:
+          Fixed compile errors
+
+Fri Feb 13 15:44:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ZIOP/ZIOP.cpp:
+          Fixed compile error
+
+Fri Feb 13 15:37:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+          Unicode fix and removed not needed variable
+
+Fri Feb 13 15:22:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Big_Reply/Test.idl:
+        * tests/Bug_3430_Regression/Bug_3430_Regression.mpc:
+        * tests/ZIOP/client.cpp:
+        * tests/ZIOP/Hello.cpp:
+        * tests/ZIOP/Hello.h:
+        * tests/ZIOP/run_test.pl:
+        * tests/ZIOP/server.cpp:
+        * tests/ZIOP/Test.idl:
+        * tests/ZIOP/ZIOP.mpc:
+          Updated to meet the latest ZIOP changes (see previous
+          commits).
+
+Fri Feb 13 15:17:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp
+        * tao/GIOP_Message_Base.cpp
+        * tao/GIOP_Message_Base.h
+        * tao/IIOP_Transport.cpp
+        * tao/Strategies/DIOP_Transport.cpp
+        * tao/Strategies/SCIOP_Transport.cpp
+        * tao/Strategies/SHMIOP_Transport.cpp
+        * tao/Strategies/UIOP_Transport.cpp
+        * tao/Synch_Invocation.cpp
+        * tao/Synch_Reply_Dispatcher.cpp
+        * tao/Transport.cpp
+        * tao/Transport.h
+          Pass the stub as pointer, it could be zero
+
+Fri Feb 13 15:04:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+          Fixed compile problem when ZIOP is not enabled
+
+Fri Feb 13 14:35:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        Implementation of the ZIOP Beta 1 spec
+
+        * tao/CDR.cpp:
+        * tao/CDR.h:
+        * tao/CDR.inl:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/TAO_Server_Request.cpp:
+          Removed obsolete compression flag.
+
+        * tao/Compression/zlib/ZlibCompressor.cpp:
+        * tao/Compression/bzip2/Bzip2Compressor.cpp:
+        * tao/Compression/Compression.pidl:
+          Added description to Compression exception in order to
+          meet the ZIOP Beta 1 specification
+
+        * tao/Compression/Compression_Manager.cpp:
+          No major changes made.
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_State.cpp:
+          Implementation of compression and decompression methods.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+          Removed ziop_enabled method since it became obsolete.
+
+        * tao/orbconf.h:
+          Implemented compression policies.
+
+        * tao/Remote_Invocation.cpp:
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+          Removed compression and decompression methods here (moved
+          to GIOP_Message_Base.
+
+        * tao/Synch_Invocation.cpp:
+          Due to interface change of format_message method in GIOP_Message_Base.
+          Removed obsolete compression flag.
+
+        * tao/ZIOP_Adapter.h:
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP.h:
+        * tao/ZIOP/ZIOP.pidl:
+          Refactored current ZIOP implementation in order to meet
+          the ZIOP Beta 1 specification.
+
+        * tao/ZIOP/ZIOP_Policy_i.cpp:
+        * tao/ZIOP/ZIOP_Policy_i.h:
+        * tao/ZIOP/ZIOP_Policy_Validator.cpp:
+        * tao/ZIOP/ZIOP_PolicyFactory.cpp:
+          Implemented compression policies.
+
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+        * tao/IIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+          Due to interface change of format_message method in GIOP_Message_Base.
+
+Fri Feb 13 03:19:39 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_3567_Regression/run_test.pl:
+          Fuzz fix.
+
+Thu Feb 12 20:22:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Exclusive_TMS.cpp:
+          Updated a few debug statements to have the same layout as in other
+          places
+
+        * tao/Acceptor_Impl.cpp
+        * tao/Asynch_Queued_Message.cpp
+        * tao/CSD_Framework/CSD_Strategy_Repository.cpp
+        * tao/default_resource.cpp
+        * tao/DynamicInterface/DII_Invocation.cpp
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp
+        * tao/DynamicInterface/DII_Reply_Handler.cpp
+        * tao/Exclusive_TMS.cpp
+        * tao/FlResource/FlResource_Factory.cpp
+        * tao/FoxResource/FoxResource_Factory.cpp
+        * tao/GIOP_Message_Base.cpp
+        * tao/GIOP_Message_Generator_Parser_10.cpp
+        * tao/GIOP_Message_State.cpp
+        * tao/IIOP_Connector.cpp
+        * tao/IIOP_Profile.cpp
+        * tao/Invocation_Adapter.cpp
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp
+        * tao/Muxed_TMS.cpp
+        * tao/ORB_Core.cpp
+        * tao/PI/Interceptor_List_T.cpp
+        * tao/PortableServer/Active_Object_Map.cpp
+        * tao/PortableServer/Object_Adapter.cpp
+        * tao/PortableServer/Root_POA.cpp
+        * tao/QtResource/QtResource_Factory.cpp
+        * tao/Queued_Data.cpp
+        * tao/Remote_Invocation.cpp
+        * tao/RTScheduling/Request_Interceptor.cpp
+        * tao/RTScheduling/RTScheduler_Initializer.cpp
+        * tao/Strategies/COIOP_Acceptor.cpp
+        * tao/Strategies/COIOP_Profile.cpp
+        * tao/Strategies/DIOP_Acceptor.cpp
+        * tao/Strategies/DIOP_Transport.cpp
+        * tao/Strategies/SCIOP_Acceptor.cpp
+        * tao/Strategies/SCIOP_Connection_Handler.cpp
+        * tao/Strategies/SCIOP_Connector.cpp
+        * tao/Strategies/SCIOP_Endpoint.cpp
+        * tao/Strategies/SCIOP_Profile.cpp
+        * tao/Strategies/SCIOP_Transport.cpp
+        * tao/Strategies/SHMIOP_Profile.cpp
+        * tao/Strategies/SHMIOP_Transport.cpp
+        * tao/Strategies/UIOP_Acceptor.cpp
+        * tao/Strategies/UIOP_Connector.cpp
+        * tao/Strategies/UIOP_Profile.cpp
+        * tao/Strategies/UIOP_Transport.cpp
+        * tao/Synch_Invocation.cpp
+        * tao/Synch_Reply_Dispatcher.cpp
+        * tao/Tagged_Profile.cpp
+        * tao/TkResource/TkResource_Factory.cpp
+        * tao/Transport_Cache_Manager_T.cpp
+        * tao/Transport_Connector.cpp
+        * tao/Wait_On_Read.cpp
+        * tao/XtResource/XtResource_Factory.cpp
+          Updated debug statements with layout and unicode fixes
+
+Thu Feb 12 19:33:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3567_Regression/*:
+          Extended this reproducer
+
+        * bin/tao_orb_tests.lst:
+          Added 3567
+
+Thu Feb 12 10:36:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3531_Regression/client.cpp:
+          Unicode fix
+
+Thu Feb 12 10:36:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3531_Regression/server.cpp:
+          Unicode fix
+
+Thu Feb 12 10:28:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3567_Regression/*:
+          Added new regression test for bug 3567. The test is not ready yet, working
+          on extending it to reproduce this bug.
+
+Thu Feb 12 08:52:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMH_Oneway/run_test.pl:
+          Fixed a bug in this script
+
+Thu Feb 12 02:39:44 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Fixed a small syntax problem from
+          Wed Feb 11 21:03:46 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+Thu Feb 12 00:02:27 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_3531_Regression/Bug_3531_Regression.mpc:
+        * tests/Bug_3531_Regression/test_i.h:
+        * tests/Bug_3531_Regression/test_i.cpp:
+
+          Fuzz fixes.
+
+Wed Feb 11 21:03:46 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp(idl_get_pragma_string):
+        * TAO_IDL/fe/idl.ll(idl_get_pragma_string):
+
+          Beefed up error checking to catch the case where one or both
+          quote are missing from the #pragma prefix string, and output
+          a syntax error instead of crashing. Thanks to Bogdan Jeram
+          <bjeram at eso dot org> for reporting the bug. This fix closes
+          [BUGID:3568].
+
+Wed Feb 11 16:14:04 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc: Zapped
+
+          libs += TAO_PortableServer
+
+          based upon recommendation of Johnny Willemsen.
+
+Tue Feb 10 02:48:01 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc: Added
+
+          libs += TAO_PortableServer
+
+        * examples/Advanced/ch_8_and_10/icp.h: Added #include for "ace/OS.h".
+
+        * examples/Advanced/ch_8_and_10/server.h: Zapped a stray ')'.
+
+          Thanks to Joe Lihn <joelihn at hotmail dot com> for reporting
+          these problems and providing the fixes.
+
+Wed Feb 11 14:15:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Leader_Follower.cpp:
+          Layout change
+
+        * tao/Leader_Follower.h:
+          Updated link to bugzilla
+
+        * tao/Leader_Follower.inl:
+          Const change
+
+        * tao/LF_Event_Loop_Thread_Helper.h:
+          Doxygen change
+
+        * tao/LF_Strategy_Complete.cpp:
+        * tao/Transport.cpp:
+          Updated debug message to match others
+
+        * tao/LF_Strategy_Complete.h:
+        * tao/LocateRequest_Invocation.cpp:
+          Layout change
+
+        * tao/Muxed_TMS.cpp:
+          Check the return value of pop
+
+        * tao/Synch_Invocation.cpp:
+          Layout changes
+
+Wed Feb 11 13:40:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3531_Regression/*:
+        * bin/tao_orb_tests.lst:
+          Added bug 3531 regression. Thanks to Russell Mora
+          <russell_mora at symantec dot com> for creating this test. This
+          will fail, no fix integrated at this moment
+
+Wed Feb 11 10:32:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+          And now the last msc ver check
+
+Wed Feb 11 10:09:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3565_Regression/run_test.pl:
+        * tests/Bug_3566_Regression/run_test.pl:
+          Improved these scripts
+
+Wed Feb 11 08:50:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+          Removed a second old msc ver check
+
+Wed Feb 11 07:03:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+          Removed old msc ver check
+
+Tue Feb 10 20:13:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OctetSeq/run_test.pl:
+          Fixed fuzz errors
+
+Tue Feb 10 18:37:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added 3565/3566 and enabled some tests for fuzz/wince
+
+Tue Feb 10 18:36:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OctetSeq/run_test.pl:
+        * tests/AMH_Oneway/run_test.pl:
+        * tests/AMI/run_test.pl:
+        * tests/AMI_Timeouts/run_test.pl:
+          Converted to the new test framework
+
+        * tests/Bug_3559_Regression/Bug_3559_Regression_Test.cpp:
+          Zap empty spaces
+
+Tue Feb 10 18:33:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3565_Regression/*
+          New test for bugzilla 3565
+
+        * tests/Bug_3566_Regression/*
+          New test for bugzilla 3566
+
+Tue Feb 10 18:32:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
+          No need for intermediate variable
+
+Tue Feb 10 18:31:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/catior/test.bat:
+          Updated for catior rename
+
+Tue Feb 10 18:29:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RT_Mutex.h:
+          Made destructor public to fix GCC 4.4 compile errors
+
+Tue Feb 10 05:39:28 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+          revision bump.
+
+Tue Feb 10 05:19:18 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ChangeLogs/ChangeLog-09a:
+
+          Added this file.
+
+Mon Feb 09 12:01:28 CST 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO version 1.6.8 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
