@@ -40,7 +40,7 @@ MyImpl::GPS_exec_i::~GPS_exec_i ()
   MyImpl::GPS_exec_i::get_MyLocation ()
   {
 //     ACE_DEBUG ((LM_DEBUG,
-//                 "GPS_exec::get_MyLocation called\n "));
+//                 "GPS_exec::get_MyLocation called\n"));
     return (new Position_Impl (*this));
   }
 

@@ -25,11 +25,11 @@ parse_args (int argc, char *argv[])
       case 's':
         cs_path = get_opts.opt_arg ();
         break;
-        
+
       case 'd':
         spawn_delay = ACE_OS::atoi (get_opts.opt_arg ());
         break;
-        
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -48,25 +48,25 @@ int
 ACE_TMAIN (int argc,  ACE_TCHAR **argv)
 {
   using namespace CIAO::Deployment;
-  
+
   CIAO::Logger_Service logger;
-  
+
   logger.init (argc, argv);
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       if (parse_args (argc, argv) != 0)
-        return 1;      
-      
+        return 1;
+
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA");
-      
+
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ());
-      
+
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
-      
+
       poa_manager->activate ();
   ACE_DEBUG ((LM_DEBUG, "foo\n"));
 
@@ -77,21 +77,21 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
                                                                    orb.in (),
                                                                    root_poa.in ());
   ACE_DEBUG ((LM_DEBUG, "bar\n"));
-      
+
       PortableServer::ServantBase_var safe = sa_tmp;
-      
+
       ServerActivator_var sa = sa_tmp->_this ();
 
       //ACE_DEBUG ((LM_DEBUG, "Attempting to create componentserver with no configvalues\n"));
       // Make a componentserver with no configvalues
       ComponentServer_var server1 (ComponentServer::_narrow (sa->create_component_server (0)));
-        
+
       if (CORBA::is_nil (server1.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Nil componentserver references"), -1);
         }
-      
+
       Components::Deployment::Container_var tmp = server1->create_container (0);
       Container_var cont1a = Container::_narrow (tmp.in ());
 
@@ -100,14 +100,14 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
           ACE_ERROR ((LM_ERROR, "Error: Got nil object reference from first create op on server 1 %u %u\n",
                       tmp.in (), cont1a.in ()));
           return -1;
-        }      
+        }
 
       // Make our configvalues
-      // ::Components::ConfigValues_var configs = new 
+      // ::Components::ConfigValues_var configs = new
       CORBA::Any val;
       ::Components::ConfigValues configs(3);
       configs.length (3);
-      
+
       val <<= "create_Foo_SimpleHome_Servant";
       configs[0] = new CIAO::ConfigValue_impl (CIAO::Deployment::SVNT_ENTRYPT,
                                                val);
@@ -122,36 +122,36 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
       Components::CCMHome_var home = cont1a->install_home ("MyNameIsEarl",
                                                            "create_Foo_SimpleHome_Impl",
                                                            configs);
-      
+
       if (CORBA::is_nil (home))
         {
           ACE_ERROR ((LM_ERROR, "Got back a nil home ref from install_home\n"));
           return -1;
         }
-      
+
       Foo::SimpleHome_var shome = Foo::SimpleHome::_narrow (home.in ());
-      
+
       if (CORBA::is_nil (shome))
         {
           ACE_ERROR ((LM_ERROR, "Narrow failed from CCM_Home to SimpleHome\n"));
           return -1;
         }
-      
-      
+
+
       Foo::SimpleComponent_var sc = shome->create ();
-      
+
       if (CORBA::is_nil (sc))
         {
-          ACE_ERROR ((LM_ERROR, "Home failed to make a component\n "));
+          ACE_ERROR ((LM_ERROR, "Home failed to make a component\n"));
           return -1;
         }
-      
+
       sc->trigger ();
-      
+
       cont1a->remove_home (home.in ());
-      
+
       server1->remove_container (cont1a.in ());
-      
+
             //ACE_DEBUG ((LM_DEBUG, "Removing component server\n"));
       sa->remove_component_server (server1.in ());
             //ACE_DEBUG ((LM_DEBUG, "Componentserver removed\n"));
