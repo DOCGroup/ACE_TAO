@@ -36,7 +36,7 @@ namespace CIDL_Sender_Impl
   Sender_exec_i::get_push_message ()
   {
     ACE_DEBUG ((LM_DEBUG,
-                "Sender_exec.i::get_push_message called\n "));
+                "Sender_exec.i::get_push_message called\n"));
     return ( new Message_Impl (*this) );
   }
 

@@ -1,3 +1,15 @@
+Sat Feb 21 20:06:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp
+        * examples/Display/GPS/GPS_exec.cpp
+        * examples/Hello/Sender/Sender_exec.cpp
+        * examples/Swapping/Sender/Sender_exec.cpp
+        * tests/CIAO_ComponentServer/SimpleComponent/client.cpp
+          Updated debug statements
+
+        * examples/Hello/descriptors/DeploymentPlan.cdp
+          Reverted accident checkin
+
 Sat Feb 21 19:53:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_Container_Impl.cpp:
