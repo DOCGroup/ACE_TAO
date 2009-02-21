@@ -293,7 +293,7 @@ namespace CIAO
                ++arg_i)
             {
               CIAO_DEBUG ((LM_TRACE, CLINFO
-                           "CIAO_ServerActivator_i::construct_command_line - Adding argument %C from ServerResource\n ",
+                           "CIAO_ServerActivator_i::construct_command_line - Adding argument %C from ServerResource\n",
                            sr->args[arg_i].in ()));
               cmd_options += " "; // space between command line args
               cmd_options += sr->args[arg_i];
@@ -304,7 +304,7 @@ namespace CIAO
           if (ACE_OS::strcmp (sr->svcconf.in (), "") != 0)
             {
               CIAO_DEBUG ((LM_TRACE, CLINFO
-                           "CIAO_ServerActivator_i::construct_command_line - Using SvcConf file %C\n ",
+                           "CIAO_ServerActivator_i::construct_command_line - Using SvcConf file %C\n",
                            sr->svcconf.in ()));
               cmd_options += " -ORBSvcConf ";
               cmd_options += sr->svcconf;
