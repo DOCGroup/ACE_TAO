@@ -133,6 +133,7 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
   ACE_OS::sprintf (pd, ACE_TEXT (" -p %d"), my_process_id);
   ACE_OS::strcat (cmd, pd);
 #else
+  ACE_UNUSED_ARG (my_process_id);
   ACE_OS::sprintf(prio, "");
 #endif
 
