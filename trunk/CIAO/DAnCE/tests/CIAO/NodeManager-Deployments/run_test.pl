@@ -10,7 +10,7 @@ use PerlACE::Run_Test;
 
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
 $TAO_ROOT = "$ENV{'TAO_ROOT'}";
-$DAnCE = "$ENV{'CIAO_ROOT'}/DAnCE";
+$DAnCE = "$ENV{'DANCE_ROOT'}";
 $daemons_running = 0;
 $daemons = 1;
 @ports = ( 60001 );
@@ -82,11 +82,11 @@ foreach $file (@files) {
     delete_ior_files ();
 
     print "Running test for plan $file\n";
-    
+
     # Invoke node daemons.
     print "Invoking node daemon\n";
     $status = run_node_daemons ();
-    
+
     if ($status != 0) {
         print STDERR "ERROR: Unable to execute the node daemon\n";
         kill_open_processes ();
@@ -94,19 +94,19 @@ foreach $file (@files) {
     }
 
     $daemons_running = 1;
-    
+
     # Invoke executor - start the application -.
     print "Launching the plan. file://NodeApp1.ior \n";
     $E = new PerlACE::Process ("simple_nm_launcher",
                                "file://NodeApp1.ior $file");
 
     $status = $E->SpawnWaitKill (5000);
-    
+
     if ($status != 0)
     {
         print "ERROR:  simple_nm_launcher returned error status $status\n";
     }
-    
+
     print "Test for plan $file succeeded\n";
     kill_open_processes ();
 }

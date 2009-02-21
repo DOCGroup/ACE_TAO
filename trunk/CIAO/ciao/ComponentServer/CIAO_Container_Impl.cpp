@@ -68,16 +68,16 @@ namespace CIAO
                                          const ::Components::ConfigValues & config)
     {
       CIAO_TRACE("CIAO_Container_i::install_component");
-      
+
       if (id == 0)
         {
           CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
                        "No home ID provided\n"));
           throw ::Components::Deployment::InvalidConfiguration ();
         }
-      
+
       Components::CCMObject_var comp;
-      
+
       if (this->component_map_.find (id, comp) == 0)
         {
           CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
@@ -174,8 +174,8 @@ namespace CIAO
                        "CIAO_Container_i::install_component - "
                        "Unable to bind componnet into component map\n"));
         }
-      
-      
+
+
       return comp._retn ();
     }
 
@@ -242,8 +242,7 @@ namespace CIAO
         }
 
       CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::install_home - "
-      "Attempting to install home with id [%C]\n",
-                  id));
+      "Attempting to install home with id [%C]\n", id));
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
                   "CIAO_Container_i::install_home - "
@@ -254,7 +253,7 @@ namespace CIAO
       CIAO::Utility::build_config_values_map (cm, config);
       CORBA::Any val;
 
-      const char *tmp;
+      const char *tmp = 0;
       CORBA::String_var exec_art, svnt_art, svnt_entry;
       if (cm.find (SVNT_ENTRYPT, val) == 0)
         {
@@ -379,7 +378,7 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_Container_i::get_homes");
 
-      ::Components::CCMHomes * tmp_homes;
+      ::Components::CCMHomes *tmp_homes = 0;
 
       ACE_NEW_THROW_EX (tmp_homes,
                         ::Components::CCMHomes (this->home_map_.current_size ()),
@@ -410,7 +409,6 @@ namespace CIAO
                        "Attempting to remove container that still has %u homes and %u components installed\n",
                        this->home_map_.current_size (),
                        this->component_map_.current_size ()));
-
         }
 
       //this->container_->_remove_ref ();
