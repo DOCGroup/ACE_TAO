@@ -60,7 +60,7 @@ sub run_node_daemons {
       $iiop = "iiop://localhost:$port";
       $node_app = "$CIAO_ROOT/bin/NodeApplication";
 
-      $d_cmd = "$CIAO_ROOT/bin/NodeManager";
+      $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
       $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile -a \"-r\"";
 
       $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
@@ -107,7 +107,7 @@ if (PerlACE::waitforfile_timed ("EM.ior",
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR
       "ERROR: The ior file of execution manager could not be found\n";
-    kill_open_processes (); 
+    kill_open_processes ();
     exit 1;
 }
 
@@ -125,7 +125,7 @@ $E->SpawnWaitKill (5000);
 if (PerlACE::waitforfile_timed ("TSEC_CheckPoint.ior",
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: The ior file of sender could not be found\n";
-    kill_open_processes (); 
+    kill_open_processes ();
     exit 1;
 }
 

@@ -10,7 +10,7 @@ use PerlACE::Run_Test;
 
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
 $TAO_ROOT = "$ENV{'TAO_ROOT'}";
-$DAnCE = "$ENV{'CIAO_ROOT'}/DAnCE";
+$DAnCE = "$ENV{'DANCE_ROOT'}";
 $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
