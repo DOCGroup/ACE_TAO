@@ -134,7 +134,7 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
   ACE_OS::strcat (cmd, pd);
 #else
   ACE_UNUSED_ARG (my_process_id);
-  ACE_OS::sprintf(prio, "");
+  ACE_OS::sprintf(prio, ACE_TEXT(""));
 #endif
 
   opts.command_line (cmdline_format,
@@ -146,7 +146,7 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
 
   if (result != ACE_INVALID_PID)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) spawned child: pid %d time %d %C\n"),
+                ACE_TEXT ("(%P) spawned child: pid %d time %d %s\n"),
                 int (result), sleep_time, prio));
   else
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn failed")));
@@ -323,7 +323,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 #endif
       if (debug_test)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%T: pid %P about to exit with code %d %C\n"),
+                    ACE_TEXT ("%T: pid %P about to exit with code %d %s\n"),
                     secs,
                     prio));
       ACE_END_LOG;
