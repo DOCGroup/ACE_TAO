@@ -189,7 +189,7 @@ namespace CIAO
   {
     CIAO_TRACE ("Session_Container::install_servant");
 
-    PortableServer::POA_ptr tmp = 0;
+    PortableServer::POA_ptr tmp = PortableServer::POA::_nil();
 
     if (t == Container_Types::COMPONENT_t ||
         t == Container_Types::HOME_t)
@@ -242,7 +242,7 @@ namespace CIAO
                     servant_artifact, servant_entrypoint));
 
         ACE_DLL executor_dll;
-                ACE_DLL servant_dll;
+        ACE_DLL servant_dll;
 
         if (primary_artifact == 0 || servant_artifact == 0)
           {
@@ -259,8 +259,7 @@ namespace CIAO
               }
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container.cpp -"
-                        "Session_Container::ciao_install_home -"
+                        "Session_Container::install_home -"
                         "ERROR: %C\n",
                         exception.c_str ()));
 
@@ -275,8 +274,7 @@ namespace CIAO
             error += primary_artifact;
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container.cpp -"
-                        "Session_Container::ciao_install_home -"
+                        "Session_Container::install_home -"
                         "ERROR in opening the executor DLL [%C] \n",
                         primary_artifact));
 
@@ -284,7 +282,8 @@ namespace CIAO
           }
 
         CIAO_DEBUG ((LM_TRACE, CLINFO
-                    "Session_Container::install_home - Executor DLL successfully opened\n"));
+                    "Session_Container::install_home - "
+                    "Executor DLL successfully opened\n"));
 
         if (servant_dll.open (servant_artifact,
                               ACE_DEFAULT_SHLIB_MODE,
@@ -294,8 +293,7 @@ namespace CIAO
             error += servant_artifact;
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container.cpp -"
-                        "Session_Container::ciao_install_home -"
+                        "Session_Container::install_home -"
                         "ERROR in opening the servant DLL [%C] \n",
                         servant_artifact));
 
@@ -303,7 +301,8 @@ namespace CIAO
           }
 
         CIAO_DEBUG ((LM_TRACE, CLINFO
-                    "Session_Container::install_home - Servant DLL successfully openend.\n"));
+                    "Session_Container::install_home - "
+                    "Servant DLL successfully openend.\n"));
 
         if (entry_point == 0 || servant_entrypoint == 0)
           {
@@ -312,8 +311,7 @@ namespace CIAO
             if (entry_point == 0)
               {
                 CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Session_Container.cpp -"
-                            "Session_Container::ciao_install_home -"
+                            "Session_Container::install_home -"
                             "ERROR in opening the executor entry point "
                             "for executor DLL [%C] \n",
                             primary_artifact));
@@ -322,8 +320,7 @@ namespace CIAO
             else
               {
                 CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Session_Container.cpp -"
-                            "Session_Container::ciao_install_home -"
+                            "Session_Container::install_home -"
                             "ERROR in opening the servant entry point "
                             "for servant DLL [%C] \n",
                             servant_artifact));
@@ -347,7 +344,8 @@ namespace CIAO
     else
       {
         CIAO_DEBUG ((LM_DEBUG, CLINFO
-                    "Session_Container::install_home - Loading statically linked home [%C]\n",
+                    "Session_Container::install_home - "
+                    "Loading statically linked home [%C]\n",
                     name));
 
         if (static_entrypts_maps_ == 0
@@ -365,8 +363,8 @@ namespace CIAO
                                                                 hcreator);
 
         ACE_CString servant_entrypoint_str (servant_entrypoint);
-        static_entrypts_maps_->home_servant_creator_funcptr_map_->find (servant_entrypoint_str,
-                                                                        screator);
+        static_entrypts_maps_->home_servant_creator_funcptr_map_->find (
+          servant_entrypoint_str, screator);
       }
 
     if (hcreator == 0 || screator == 0)
@@ -387,7 +385,7 @@ namespace CIAO
           }
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-          "Session_Container::ciao_install_home - Error:%C\n",
+          "Session_Container::install_home - Error:%C\n",
                     error.c_str ()));
 
         throw Components::Deployment::ImplEntryPointNotFound ();
@@ -400,7 +398,8 @@ namespace CIAO
     if (CORBA::is_nil (home_executor.in ()))
       {
         CIAO_ERROR ((LM_ERROR, CLINFO
-                    "Session_Container::ciao_install_hoe - Home executor factory failed. \n"));
+                    "Session_Container::install_hoe - "
+                    "Home executor factory failed. \n"));
         throw Components::Deployment::InstallationFailure ();
       }
 
@@ -413,7 +412,8 @@ namespace CIAO
     if (home_servant == 0)
       {
             CIAO_ERROR ((LM_ERROR, CLINFO
-                    "Session_Container::ciao_install_home - Home servant factory failed.\n"));
+                    "Session_Container::install_home - "
+                    "Home servant factory failed.\n"));
         throw Components::Deployment::InstallationFailure ();
       }
 
@@ -480,8 +480,7 @@ namespace CIAO
               }
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container.cpp -"
-                        "Session_Container::ciao_install_component -"
+                        "Session_Container::install_component -"
                         "ERROR: %C\n",
                         exception.c_str ()));
 
@@ -496,8 +495,7 @@ namespace CIAO
             error += primary_artifact;
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container.cpp -"
-                        "Session_Container::ciao_install_component -"
+                        "Session_Container::install_component -"
                         "ERROR in opening the executor DLL [%C] \n",
                         primary_artifact));
 
@@ -515,8 +513,7 @@ namespace CIAO
             error += servant_artifact;
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container.cpp -"
-                        "Session_Container::ciao_install_component -"
+                        "Session_Container::install_component -"
                         "ERROR in opening the servant DLL [%C] \n",
                         servant_artifact));
 
@@ -533,8 +530,7 @@ namespace CIAO
             if (entry_point == 0)
               {
                 CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Session_Container.cpp -"
-                            "Session_Container::ciao_install_component -"
+                            "Session_Container::install_component -"
                             "ERROR in opening the executor entry point "
                             "for executor DLL [%C] \n",
                             primary_artifact));
@@ -543,8 +539,7 @@ namespace CIAO
             else
               {
                 CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Session_Container.cpp -"
-                            "Session_Container::ciao_install_component -"
+                            "Session_Container::install_component -"
                             "ERROR in opening the servant entry point "
                             "for servant DLL [%C] \n",
                             servant_artifact));
@@ -569,7 +564,8 @@ namespace CIAO
     else
       {
         CIAO_DEBUG ((LM_DEBUG, CLINFO
-                    "Session_Container::install_component - Loading statically linked component [%C]\n",
+                    "Session_Container::install_component - "
+                    "Loading statically linked component [%C]\n",
                     name));
 
         if (static_entrypts_maps_ == 0
@@ -577,7 +573,8 @@ namespace CIAO
             || static_entrypts_maps_->component_servant_creator_funcptr_map_ == 0)
           {
             CIAO_DEBUG ((LM_ERROR, CLINFO
-                        "Session_Container::install_component - ERROR: Static entrypoint "
+                        "Session_Container::install_component - "
+                        "ERROR: Static entrypoint "
                         "maps are null or imcomplete.\n"));
             throw Components::Deployment::ImplEntryPointNotFound ();
           }
@@ -609,25 +606,28 @@ namespace CIAO
           }
 
         CIAO_ERROR ((LM_ERROR, CLINFO
-        "Session_Container::ciao_install_component - Error:%C\n",
+        "Session_Container::install_component - Error:%C\n",
                     error.c_str ()));
 
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
 
     CIAO_DEBUG ((LM_TRACE, CLINFO
-                "Session_Container::install_component - Loading component executor\n"));
+                "Session_Container::install_component - "
+                "Loading component executor\n"));
     Components::EnterpriseComponent_var component_executor = ccreator ();
 
     if (CORBA::is_nil (component_executor.in ()))
       {
         CIAO_ERROR ((LM_ERROR, CLINFO
-                    "Session_Container::Ciao_install_hoe - Component executor factory failed. \n"));
+                    "Session_Container::install_component - "
+                    "Component executor factory failed. \n"));
         throw Components::Deployment::InstallationFailure ();
       }
 
     CIAO_DEBUG ((LM_TRACE, CLINFO
-                "Session_Container::install_component - Loading component servant\n"));
+                "Session_Container::install_component - "
+                "Loading component servant\n"));
     PortableServer::Servant component_servant = screator (component_executor.in (),
                                                           this,
                                                           name);
@@ -635,14 +635,16 @@ namespace CIAO
     if (component_servant == 0)
       {
       CIAO_ERROR ((LM_ERROR, CLINFO
-                    "Session_Container::ciao_install_component - Component servant factory failed.\n"));
+                    "Session_Container::install_component - "
+                    "Component servant factory failed.\n"));
         throw Components::Deployment::InstallationFailure ();
       }
 
     PortableServer::ServantBase_var safe (component_servant);
 
     CIAO_DEBUG ((LM_TRACE, CLINFO
-                "Session_Container::install_component - Installing component servant\n"));
+                "Session_Container::install_component - "
+                "Installing component servant\n"));
 
     PortableServer::ObjectId_var oid;
 
@@ -653,7 +655,8 @@ namespace CIAO
       Components::CCMObject::_narrow (objref.in ());
 
     CIAO_DEBUG ((LM_TRACE, CLINFO
-                "Session_Container::install_component - Component successfully created\n"));
+                "Session_Container::install_component - "
+                "Component successfully created\n"));
 
     return componentref._retn ();
   }
@@ -798,7 +801,7 @@ namespace CIAO
   {
     CIAO_TRACE ("Session_Container::uninstall_servant");
 
-    PortableServer::POA_ptr tmp = 0;
+    PortableServer::POA_ptr tmp = PortableServer::POA::_nil();
 
     if ((t == Container_Types::COMPONENT_t) ||
         (t == Container_Types::HOME_t))
@@ -872,7 +875,7 @@ namespace CIAO
   {
     CIAO_TRACE ("Session_Container::generate_reference");
 
-    PortableServer::POA_ptr tmp = 0;
+    PortableServer::POA_ptr tmp = PortableServer::POA::_nil();
 
     if (t == Container_Types::COMPONENT_t ||
         t == Container_Types::HOME_t)

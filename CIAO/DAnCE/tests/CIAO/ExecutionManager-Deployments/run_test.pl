@@ -10,7 +10,7 @@ use PerlACE::Run_Test;
 
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
 $TAO_ROOT = "$ENV{'TAO_ROOT'}";
-$DAnCE = "$ENV{'CIAO_ROOT'}/DAnCE";
+$DAnCE = "$ENV{'DANCE_ROOT'}";
 $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
@@ -104,12 +104,12 @@ if ($#ARGV == -1)
 foreach $file (@files) {
     print "Starting test for deployment $file\n";
     delete_ior_files ();
-    
+
     print STDERR "Starting Naming Service\n";
-    
+
     $NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 0 -ORBEndpoint iiop://localhost:60003 -o ns.ior");
     $NS->Spawn ();
-    
+
     if (PerlACE::waitforfile_timed ($nsior, $PerlACE::wait_interval_for_process_creation) == -1)
     {
         print STDERR "ERROR: cannot find naming service IOR file\n";
@@ -120,8 +120,8 @@ foreach $file (@files) {
 
 # Set up NamingService environment
     $ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:60003/NameService";
-    
-    
+
+
 # Invoke node daemons.
     print "Invoking node daemons\n";
     $status = run_node_daemons ();
@@ -131,15 +131,15 @@ foreach $file (@files) {
         kill_open_processes ();
         exit 1;
     }
-    
+
     $daemons_running = 1;
-    
+
     # Invoke execution manager.
     print "Invoking execution manager\n";
     $EM = new PerlACE::Process ("$DAnCE/bin/dance_execution_manager",
                                 "-eEM.ior --domain-nc corbaloc:rir:/NameService");
     $EM->Spawn ();
-    
+
     if (PerlACE::waitforfile_timed ("EM.ior",
                                     $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR
@@ -147,16 +147,16 @@ foreach $file (@files) {
         kill_open_processes ();
         exit 1;
     }
-    
+
     $em_running = 1;
-    
+
     # Invoke executor - start the application -.
     print "Invoking executor - start the application -\n";
     $E = new PerlACE::Process ("simple_em_launcher",
                                "file://EM.ior $file");
-    
+
     $status = $E->SpawnWaitKill (5000);
-    
+
     if ($status != 0)
     {
         print "ERROR: simple_em_launcher returned an error code while deploying $file\n";

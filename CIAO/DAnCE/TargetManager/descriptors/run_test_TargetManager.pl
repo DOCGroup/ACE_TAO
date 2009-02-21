@@ -8,7 +8,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{'ACE_ROOT'}/bin";
 use PerlACE::Run_Test;
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
-$DAnCE = "$ENV{'CIAO_ROOT'}/DAnCE";
+$DAnCE = "$ENV{'DANCE_ROOT'}";
 
 $daemons_running = 0;
 $em_running = 0;
@@ -58,7 +58,7 @@ sub run_node_daemons {
       $iiop = "iiop://localhost:$port";
       $node_app = "$CIAO_ROOT/bin/NodeApplication";
 
-      $d_cmd = "$CIAO_ROOT/bin/NodeManager";
+      $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
       $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile";
 
       $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);

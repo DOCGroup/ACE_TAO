@@ -298,7 +298,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <connection>
     <name>MessageConnection</name>
     <internalEndpoint>
@@ -336,26 +336,26 @@
     <name>Hello_Receiver_exec</name>
     <source/>
     <node/>
-    <location>Hello_Receiver_exec</location>
+    <location>../Receiver/Hello_Receiver_exec</location>
   </artifact>
   <artifact xmi:id="Hello_Receiver_SvntArtifact">
     <name>Hello_Receiver_svnt</name>
     <source/>
     <node/>
-    <location>Hello_Receiver_svnt</location>
+    <location>../Receiver/Hello_Receiver_svnt</location>
   </artifact>
 
   <artifact xmi:id="Hello_Sender_ExecArtifact">
     <name>Hello_Sender_exec</name>
     <source/>
     <node/>
-    <location>Hello_Sender_exec</location>
+    <location>../Sender/Hello_Sender_exec</location>
   </artifact>
   <artifact xmi:id="Hello_Sender_SvntArtifact">
     <name>Hello_Sender_svnt</name>
     <source/>
     <node/>
-    <location>Hello_Sender_svnt</location>
+    <location>../Sender/Hello_Sender_svnt</location>
   </artifact>
 
 </Deployment:DeploymentPlan>
