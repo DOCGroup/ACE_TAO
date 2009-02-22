@@ -1,3 +1,13 @@
+Sun Feb 22 16:34:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp
+          Resolved a few typos.
+          
+        * examples/Hello/descriptors/run_NodeDaemons.pl
+        * examples/Hello/step-by-step.html
+          Adapted to match with the current status.
+
 Sun Feb 22 07:27:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentServer.cpp
