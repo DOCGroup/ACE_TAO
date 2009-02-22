@@ -17,7 +17,7 @@ project(Hello_Base_idl_gen) : ciaoidldefaults, anytypecode {
 project(Hello_Base_stub) : ccm_stub {
   avoids += ace_for_tao
   after += Hello_Base_idl_gen
-
+  libout = ../lib
   sharedname = Hello_Base_stub
   dynamicflags   = HELLO_BASE_STUB_BUILD_DLL
 
@@ -44,7 +44,8 @@ project(Hello_Base_skel) : ccm_svnt {
   after      +=  Hello_Base_stub
   sharedname  = Hello_Base_skel
   libs       += Hello_Base_stub
-
+  libout = ../lib
+  libpaths += ../lib
 
   dynamicflags = HELLO_BASE_SKEL_BUILD_DLL
 

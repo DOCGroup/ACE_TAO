@@ -1,3 +1,15 @@
+Sun Feb 22 07:15:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Hello/descriptors/run_test.pl
+        * examples/Hello/descriptors/run_test_without_ns.pl
+        * examples/Hello/descriptors_RTCCM/rt_run_test.pl
+        * examples/Hello/Hello_Base/Hello_Base.mpc
+        * examples/Hello/lib
+        * examples/Hello/Receiver/Receiver.mpc
+        * examples/Hello/Sender/Sender.mpc
+          Put all libs in a project specific lib directory and then add
+          this directory to the libpath in the perl scripts.
+
 Sat Feb 21 20:06:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp
