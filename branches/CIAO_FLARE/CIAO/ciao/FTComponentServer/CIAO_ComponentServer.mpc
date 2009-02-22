@@ -60,7 +60,7 @@ project(CIAO_FTCS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_ft_com
   }
 }
 
-project(CIAO_FTComponentServer_svnt) : ccm_componentserver_svnt, ciao_ft_componentserver_stub, portableserver, ciao_ft_componentserver_configurator, ciao_session_container, naming, ciao_server {
+project(CIAO_FTComponentServer_svnt) : ccm_componentserver_svnt, ciao_ft_componentserver_stub, portableserver, ciao_ft_componentserver_configurator, ciao_ft_session_container, naming, ciao_server {
 
   dynamicflags = CIAO_FTCOMPONENTSERVER_SVNT_BUILD_DLL
 
@@ -75,7 +75,7 @@ project(CIAO_FTComponentServer_svnt) : ccm_componentserver_svnt, ciao_ft_compone
   }
 }
 
-project(CIAO_FTComponentServer_exe) : ccm_componentserver_svnt, portableserver, ciao_ft_componentserver_svnt, messaging, anytypecode, ciao_server, ciaoexe, ciao_session_container, ciao_ft_componentserver_configurator, rtcorba {
+project(CIAO_FTComponentServer_exe) : ccm_componentserver_svnt, portableserver, ciao_ft_componentserver_svnt, messaging, anytypecode, ciao_server, ciaoexe, ciao_ft_session_container, ciao_ft_componentserver_configurator,  pi_server, iorinterceptor {// , rtcorba
   exename = ciao_ft_componentserver
   libs += CIAO_Logger LWFT_StateSyncAgent LWFT_ReplicationManager LWFT_Client LWFT_Server
   macros += CIAO_BUILD_COMPONENTSERVER_EXE
