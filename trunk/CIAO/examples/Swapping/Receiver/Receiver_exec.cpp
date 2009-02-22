@@ -43,7 +43,7 @@ namespace CIDL_Receiver_Impl
   {
     //Get the message from the Sender first.
     ACE_DEBUG ((LM_DEBUG,
-                "Receiver - Informed by the Sender \n"));
+                "Receiver - Informed by the Sender\n"));
 
     Hello::ReadMessage_var rev
       = this->context_->get_connection_read_message
@@ -58,7 +58,7 @@ namespace CIDL_Receiver_Impl
       rev->get_message ();
 
     ACE_DEBUG ((LM_DEBUG,
-                "Receiver - Got message from the server [%s] \n",
+                "Receiver - Got message from the server [%s]\n",
                 str.in () ));
   }
 

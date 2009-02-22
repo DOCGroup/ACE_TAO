@@ -26,11 +26,6 @@
 #include "tao/LocalObject.h"
 #include "ciao/Containers/CIAO_Servant_ActivatorC.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 namespace CIAO
 {
   class Port_Activator;
@@ -98,10 +93,6 @@ namespace CIAO
     TAO_SYNCH_MUTEX  mutex_;
   };
 }
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 

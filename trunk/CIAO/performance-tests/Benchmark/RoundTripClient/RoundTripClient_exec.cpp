@@ -153,6 +153,6 @@ MyImpl::RoundTripClientHome_exec_i::create ()
 extern "C" ROUNDTRIPCLIENT_EXEC_Export ::Components::HomeExecutorBase_ptr
 createRoundTripClientHome_Impl (void)
 {
-  CIAO_DEBUG ((LM_INFO, CLINFO "Creating RoundTrip_client impl \n"));
+  CIAO_DEBUG ((LM_INFO, CLINFO "Creating RoundTrip_client impl\n"));
   return new MyImpl::RoundTripClientHome_exec_i ();
 }

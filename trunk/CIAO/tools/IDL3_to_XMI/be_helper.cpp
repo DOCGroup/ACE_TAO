@@ -30,7 +30,7 @@ ACE_RCSID (be,
            "$Id$")
 
 static const char copyright[] =
-" <-- \n"
+" <--\n"
 " -*- XML -*-\n"
 "\n"
 " $I" "d$\n\n"

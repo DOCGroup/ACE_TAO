@@ -21,9 +21,9 @@ namespace Deployment
 
         for (CORBA::ULong i = 0; i < size; ++i)
           {
-            ACE_DEBUG ((LM_DEBUG, "%s%s %d: \n",
+            ACE_DEBUG ((LM_DEBUG, "%s%s %d:\n",
                         Dump_Obj::indent(), caption, i));
-            ACE_DEBUG ((LM_DEBUG, "%s  %s: \n",
+            ACE_DEBUG ((LM_DEBUG, "%s  %s:\n",
                         Dump_Obj::indent(), str_seq[i].in ()));
           }
       }
@@ -555,7 +555,7 @@ namespace Deployment
 
     a >>= v;
 
-    ACE_DEBUG ((LM_DEBUG, "%sinstance: %s \n", Dump_Obj::indent (),
+    ACE_DEBUG ((LM_DEBUG, "%sinstance: %s\n", Dump_Obj::indent (),
                 v->instance[value].name.in ()));
   }
 
@@ -588,7 +588,7 @@ namespace Deployment
 
     a >>= v;
 
-    ACE_DEBUG ((LM_DEBUG, "%sinstance: %s \n", Dump_Obj::indent (),
+    ACE_DEBUG ((LM_DEBUG, "%sinstance: %s\n", Dump_Obj::indent (),
                 v->instance[value].name.in ()));
   }
 
@@ -706,7 +706,7 @@ namespace Deployment
 
     dump ("Name", pci.name);
     ACE_DEBUG ((LM_DEBUG,
-                "%sreferencedImplementation: \n", Dump_Obj::indent()));
+                "%sreferencedImplementation:\n", Dump_Obj::indent()));
     DnC_Dump::dump (pci.referencedImplementation);
   }
 
@@ -719,7 +719,7 @@ namespace Deployment
 
     dump ("label", comppkgdesc.label);
     dump ("UUID", comppkgdesc.UUID);
-    ACE_DEBUG ((LM_DEBUG, "%srealizes: \n", Dump_Obj::indent ()));
+    ACE_DEBUG ((LM_DEBUG, "%srealizes:\n", Dump_Obj::indent ()));
     DnC_Dump::dump (comppkgdesc.realizes); // ComponentInterfaceDescription
     dump_sequence ("configProperty", comppkgdesc.configProperty);
     dump_sequence ("implementation", comppkgdesc.implementation);
@@ -766,7 +766,7 @@ namespace Deployment
 encoded different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %d \n", Dump_Obj::indent (),
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -777,7 +777,7 @@ encoded different type"));
         break;
 
       case CORBA::tk_void:
-        ACE_DEBUG ((LM_DEBUG, "Any value: void type encoded \n"));
+        ACE_DEBUG ((LM_DEBUG, "Any value: void type encoded\n"));
         break;
       case CORBA::tk_long:
         {
@@ -788,7 +788,7 @@ encoded different type"));
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %d \n", Dump_Obj::indent (),
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -802,7 +802,7 @@ encoded with different type"));
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %u \n", Dump_Obj::indent (),
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %u\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -816,7 +816,7 @@ encoded with different type"));
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %u \n", Dump_Obj::indent (),
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %u\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -830,7 +830,7 @@ encoded with different type"));
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %f \n", Dump_Obj::indent (),
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %f\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -843,7 +843,7 @@ encoded with different type"));
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %f \n", Dump_Obj::indent (),
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %f\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -858,9 +858,9 @@ encoded with different type"));
             }
 
           if (temp)
-            ACE_DEBUG ((LM_DEBUG, "Any value: True \n"));
+            ACE_DEBUG ((LM_DEBUG, "Any value: True\n"));
           else
-            ACE_DEBUG ((LM_DEBUG, "Any value: False \n"));
+            ACE_DEBUG ((LM_DEBUG, "Any value: False\n"));
         }
         break;
 
@@ -873,7 +873,7 @@ encoded with different type"));
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %c \n", Dump_Obj::indent (),
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %c\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -887,7 +887,7 @@ encoded with different type"));
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %d \n", Dump_Obj::indent (),
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -901,7 +901,7 @@ encoded with different type"));
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %s \n", Dump_Obj::indent (),
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %s\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -914,7 +914,7 @@ encoded with different type"));
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %l \n", Dump_Obj::indent (),
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %l\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -928,7 +928,7 @@ encoded with different type"));
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %d \n", Dump_Obj::indent (),
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
                       temp));
         }
 
@@ -942,7 +942,7 @@ encoded with different type"));
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %c \n", Dump_Obj::indent (),
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %c\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -956,11 +956,11 @@ encoded with different type"));
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %s \n", Dump_Obj::indent (),
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %s\n", Dump_Obj::indent (),
                       temp));
         }
         break;
-        
+
         case CORBA::tk_enum:
         {
 /*          CORBA::Enum temp;
@@ -970,10 +970,10 @@ encoded with different type"));
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-*/          ACE_DEBUG ((LM_DEBUG, "%sAny value: some enum \n", Dump_Obj::indent ()));
+*/          ACE_DEBUG ((LM_DEBUG, "%sAny value: some enum\n", Dump_Obj::indent ()));
         }
         break;
-        
+
       default:
         ACE_DEBUG ((LM_DEBUG, "Unknown type encoded in Any\n"));
         throw CORBA::INTERNAL ();

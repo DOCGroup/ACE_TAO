@@ -304,7 +304,7 @@ namespace CIAO
         {
           CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentServer_Task::run - Starting ORB without RT support\n"));
           this->svc ();
-          CIAO_DEBUG ((LM_INFO, CLINFO "ComponentServer_Task::run - ORB has shutdown, terminating ComponentServer \n"));
+          CIAO_DEBUG ((LM_INFO, CLINFO "ComponentServer_Task::run - ORB has shutdown, terminating ComponentServer\n"));
         }
     }
 
@@ -393,7 +393,7 @@ namespace CIAO
       CIAO_TRACE ("ComponentServer_Task::usage");
       // Shouldn't be subject to CIAO's logging policy
       ACE_ERROR ((LM_EMERGENCY, "Usage: CIAO_ComponentServer <options>\n"
-                   "Options: \n"
+                   "Options:\n"
                    "\t-h|--help\t\t\t\tShow help\n"
                    "\t-l|--log-level <level>\t\t\tSets log level (default 5). 1 - most detailed.\n"
                    "\t-u|--uuid <uuid> \t\t\tSets UUID of spawned component server (required)\n"

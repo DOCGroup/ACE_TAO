@@ -73,7 +73,7 @@ int ZIP_Wrapper::file_list_info (char* zip_name,
   if (uf==0)
     {
       ACE_DEBUG((LM_DEBUG, ACE_TEXT("There is some problem in opening"
-                 " %s or %s.zip using unzOpen \n"), zip_name, zip_name));
+                 " %s or %s.zip using unzOpen\n"), zip_name, zip_name));
       return 1;
     }
   unz_global_info gi;
@@ -81,7 +81,7 @@ int ZIP_Wrapper::file_list_info (char* zip_name,
   int err = unzGetGlobalInfo(uf, &gi);
   if (err!=UNZ_OK)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("unzGetGlobalInfo failed while trying"
-               " to get global information about zipfile \n"), err));
+               " to get global information about zipfile\n"), err));
   /* gi.number_entry corresponds to the number of directory entries
      in the zip file */
   for (uLong i=0;i<gi.number_entry;i++)
@@ -213,14 +213,14 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path, bool verbose)
   if (err!=UNZ_OK)
     {
       ACE_DEBUG((LM_DEBUG, ACE_TEXT("unzGetGlobalInfo failed to get global"
-                                    " information about zipfile \n"), err));
+                                    " information about zipfile\n"), err));
       return false;
     }
   err =unzGoToFirstFile(uf);
   if (err!=UNZ_OK)
     {
       ACE_DEBUG((LM_DEBUG,ACE_TEXT("error %d with zipfile in"
-                 " unzGoToFirstFile \n"), err));
+                 " unzGoToFirstFile\n"), err));
       return false;
     }
   /* read each entry of zip file, create directory structure if it is

@@ -9,7 +9,7 @@ namespace CIDL_Sender_Impl
   char*
   Message_Impl_1::get_message ()
   {
-    ACE_DEBUG ((LM_DEBUG, "Sender 1 sending out message. \n"));
+    ACE_DEBUG ((LM_DEBUG, "Sender 1 sending out message.\n"));
     return CORBA::string_dup (component_.message_.in ());
   }
 
