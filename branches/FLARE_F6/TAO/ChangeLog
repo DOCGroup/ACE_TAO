@@ -1,3 +1,26 @@
+Sun Feb 22 00:04:09 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/AppOptions.cpp:
+        
+          Changed the way log message levels are masked.
+        
+        * MPC/config/lwft_server.mpb:
+        
+          Added projects necessary for servers now due to them being
+          clients for the ReplicationManager.
+        
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:
+        * orbsvcs/orbsvcs/LWFT/CorbaStateUpdate.h        
+        * orbsvcs/orbsvcs/LWFT/CorbaStateUpdate.cpp:
+        
+          Changed update_rank_list behavior. Casting to
+          ReplicatedApplication appears now in set_state to reduce network
+          communication due to narrow calls.
+
+        * orbsvcs/orbsvcs/LWFT/Client_Request_Interceptor.cpp:
+        
+          Added debugging output.
+
 Fri Feb 20 22:08:49 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:

@@ -30,8 +30,13 @@ Client_Request_Interceptor::destroy (void)
 
 void
 Client_Request_Interceptor::send_request (
-      PortableInterceptor::ClientRequestInfo_ptr)
+    PortableInterceptor::ClientRequestInfo_ptr /* ri */)
 {
+  /*
+  ACE_DEBUG ((LM_INFO, 
+              ACE_TEXT("(%P|%t) Client_Request_Interceptor::send_request (%s)\n"), 
+              ri->operation ()));
+  */
 }
 
 void
@@ -42,8 +47,13 @@ Client_Request_Interceptor::send_poll (
 
 void
 Client_Request_Interceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr)
+    PortableInterceptor::ClientRequestInfo_ptr /* ri */)
 {
+  /*
+  ACE_DEBUG ((LM_INFO, 
+              ACE_TEXT("(%P|%t) Client_Request_Interceptor::receive_reply (%s)\n"), 
+              ri->operation ()));
+  */
 }
 
 void
@@ -84,6 +94,11 @@ Client_Request_Interceptor::receive_exception (
 
 void
 Client_Request_Interceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr)
+   PortableInterceptor::ClientRequestInfo_ptr /* ri */)
 {
+  /*
+  ACE_DEBUG ((LM_INFO, 
+              ACE_TEXT("(%P|%t) Client_Request_Interceptor::receive_other (%s)\n"), 
+              ri->operation ()));
+  */
 }

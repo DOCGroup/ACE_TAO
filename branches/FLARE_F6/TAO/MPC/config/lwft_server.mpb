@@ -2,7 +2,10 @@
 // $Id$
 
 project : lwft_client, pi_server, interceptors, iorinterceptor, splicelib {
-  libs += LWFT_Server \
-          LWFT_StateSyncAgent
+  libs += LWFT_Common \
+          LWFT_Server \
+          LWFT_StateSyncAgent \
+          LWFT_ReplicationManager
+
   after += LWFT_ReplicationManager
 }
