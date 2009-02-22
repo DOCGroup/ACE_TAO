@@ -1,3 +1,9 @@
+Sun Feb 22 13:53:15 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * tests/Portable_Interceptors/Bug_3582/server.cpp:
+        
+          Fixed compiler warning on win platforms.
+
 Sun Feb 22 10:13:07 UTC 2009  Marcel Smit <msmit@remedy.nl>
 
         * tests/Portable_Interceptors/Bug_3582/client.cpp
