@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include "ace/Get_Opt.h"
+#include "ace\OS_NS_unistd.h"
 #include "testC.h"
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
@@ -94,7 +95,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "CLIENT: Request %d handled by object %d.\n",
                       i,
                       number));
-          sleep (1);
+          ACE_OS::sleep (1);
         }
 
       server->shutdown ();
