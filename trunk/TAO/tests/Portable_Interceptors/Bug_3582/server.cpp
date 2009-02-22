@@ -91,14 +91,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // Run the ORB event loop.
-      try
-        {
-          orb->run ();
-        }
-      catch (const CORBA::BAD_INV_ORDER & ex)
-        {
-          // no op
-        };
+      orb->run ();
 
       root_poa->destroy (1, 1);
 
