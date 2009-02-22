@@ -12,7 +12,7 @@ namespace CIDL_Sender_Impl
   char*
   Message_Impl::get_message ()
   {
-    ACE_DEBUG ((LM_DEBUG, "Sender sending out message. \n"));
+    ACE_DEBUG ((LM_DEBUG, "Sender sending out message.\n"));
     return CORBA::string_dup (component_.message_.in ());
   }
 
@@ -176,7 +176,7 @@ namespace CIDL_Sender_Impl
   ::Components::EnterpriseComponent_ptr
   SenderHome_exec_i::create ()
   {
-    ACE_DEBUG ((LM_DEBUG, "%P|%t) creating SenderHome \n"));
+    ACE_DEBUG ((LM_DEBUG, "%P|%t) creating SenderHome\n"));
     return new SenderSwap_exec_i;
   }
 

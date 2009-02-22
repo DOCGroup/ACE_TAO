@@ -137,7 +137,7 @@ int CIAO::DomainDataManager::call_all_node_managers ()
                   "TargetM (%P|%t) DomainDataManager.cpp -"
                   "CIAO::DomainDataManager::call_all_node_managers -"
                   "ERROR while trying to initialize after reading "
-                  "node details DAT file \n"));
+                  "node details DAT file\n"));
       return 0;
     }
 
