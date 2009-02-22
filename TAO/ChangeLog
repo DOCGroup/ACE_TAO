@@ -1,3 +1,8 @@
+Sun Feb 22 10:13:07 UTC 2009  Marcel Smit <msmit@remedy.nl>
+
+        * tests/Portable_Interceptors/Bug_3582/client.cpp
+          Fixed compiler error on WinCE.
+
 Fri Feb 20 23:17:07 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * tests/Portable_Interceptors/Bug_3582:
