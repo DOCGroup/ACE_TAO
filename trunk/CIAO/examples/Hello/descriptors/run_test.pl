@@ -25,6 +25,8 @@ $controller_exec = "$CIAO_ROOT/examples/Hello/Sender/starter";
 
 $nsior = PerlACE::LocalFile ("ns.ior");
 
+PerlACE::add_lib_path ('../lib');
+
 unlink $nsior;
 
 $E = 0;

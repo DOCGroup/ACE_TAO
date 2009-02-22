@@ -20,6 +20,8 @@ $dat_file = "NodeManagerMap.dat";
 $cdp_file = "DeploymentPlan.cdp";
 $controller_exec = "$CIAO_ROOT/examples/Hello/Sender/starter";
 
+PerlACE::add_lib_path ('../lib');
+
 $E = 0;
 $EM = 0;
 
