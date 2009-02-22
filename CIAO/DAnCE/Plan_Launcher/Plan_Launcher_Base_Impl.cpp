@@ -393,7 +393,7 @@ void Plan_Launcher_Base_Impl::usage(const ACE_TCHAR* program)
           //                    ACE_TEXT ("-n|--node-mgr : Use naming service to fetch EM\n")
           ACE_TEXT ("-q|--stop-plan : Stop the plan\n")
           ACE_TEXT ("-h|--help : Show this usage information\n")
-          ACE_TEXT ("-x|--read-plan <XML_DEPLOYMENT_PLAN_URL>")));
+          ACE_TEXT ("-x|--read-plan <XML_DEPLOYMENT_PLAN_URL>\n\n")));
 }
 
 void Plan_Launcher_Base_Impl::parse_args(int argc, ACE_TCHAR *argv[])
