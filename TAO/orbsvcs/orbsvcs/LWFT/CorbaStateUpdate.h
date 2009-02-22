@@ -14,7 +14,7 @@
 #define _CORBA_STATE_UPDATE_H_
 
 #include "StatefulObject.h"
-#include "ReplicatedApplicationC.h"
+#include "tao/Object.h"
 
 /**
  * @class CorbaStateUpdate
@@ -27,7 +27,7 @@ class CorbaStateUpdate : public StatefulObject
 public:
 
   /// ctor
-  CorbaStateUpdate (ReplicatedApplication_ptr application);
+  CorbaStateUpdate (CORBA::Object_ptr application);
 
   /// dtor
   virtual ~CorbaStateUpdate ();
@@ -36,7 +36,7 @@ public:
   virtual void set_state (const ::CORBA::Any & state_value);  
 
 private:
-  ReplicatedApplication_var application_;
+  CORBA::Object_var application_;
 };
 
 #endif /* _CORBA_STATE_UPDATE_H_ */

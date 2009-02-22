@@ -182,18 +182,16 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
         }
     }
 
-  //ACE_DEBUG ((LM_TRACE,
-  //            "SSA::update_rank_list with:\n"));
+  ACE_DEBUG ((LM_TRACE,
+              "SSA::update_rank_list with:\n"));
 
   // for each replication group in the replica group list
   for (size_t i = 0; i < rank_list.length (); ++i)
     {
-      /*
       ACE_DEBUG ((LM_TRACE,
                   "\toid = %s (%d entries)\n", 
                   rank_list[i].object_id.in (),
                   rank_list[i].ior_list.length ()));
-      */
 
       // Use the application id as a key for the map.
       ACE_CString oid (rank_list[i].object_id);
@@ -220,8 +218,7 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
                   replica_group.replicas.push_back (
                     STATEFUL_OBJECT_PTR (
                       new CorbaStateUpdate (
-                        ReplicatedApplication::_narrow (
-                          rank_list[i].ior_list[j]))));
+                          rank_list[i].ior_list[j])));
                 }
               catch (const CORBA::SystemException& ex)
                 {

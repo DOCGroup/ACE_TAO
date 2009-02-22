@@ -11,9 +11,10 @@
 //=============================================================================
 
 #include "CorbaStateUpdate.h"
+#include "ReplicatedApplicationC.h"
 
-CorbaStateUpdate::CorbaStateUpdate(ReplicatedApplication_ptr application)
-  : application_ (ReplicatedApplication::_duplicate (application))
+CorbaStateUpdate::CorbaStateUpdate(CORBA::Object_ptr application)
+  : application_ (CORBA::Object::_duplicate (application))
 {
 }
 
@@ -25,5 +26,10 @@ void
 CorbaStateUpdate::set_state (const ::CORBA::Any & state_value)
 {
   if (!CORBA::is_nil (application_.in ()))
-    application_->set_state (state_value);
+    {
+      ReplicatedApplication_var ra =
+        ReplicatedApplication::_narrow (application_.in ());
+      
+      ra->set_state (state_value);
+    }
 }

@@ -215,22 +215,22 @@ AppOptions::set_debug_level (void)
       }
     case 2:
       {
-        mask |= LM_DEBUG;
+        mask |= LM_WARNING | LM_DEBUG;
         break;
       }
     case 3:
       {
-        mask |= LM_TRACE;
+        mask |= LM_WARNING | LM_DEBUG | LM_TRACE;
         break;
       }
     case 4:
       {
-        mask |= LM_NOTICE;
+        mask |= LM_WARNING | LM_DEBUG | LM_TRACE | LM_NOTICE;
         break;
       }
     case 5:
       {
-        mask |= LM_INFO;
+        mask |= LM_WARNING | LM_DEBUG | LM_TRACE | LM_NOTICE | LM_INFO;
         break;
       }
     default: break;
