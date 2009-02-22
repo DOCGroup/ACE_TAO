@@ -112,7 +112,7 @@ namespace TM_Tester
       }
       catch(CORBA::Exception &)
       {
-        ACE_ERROR ((LM_ERROR ,"Error:TargetManager:CORBA Generic Exception \n"));
+        ACE_ERROR ((LM_ERROR ,"Error:TargetManager:CORBA Generic Exception\n"));
         ACE_ERROR ((LM_ERROR ,"Error:TargetManager:Exception in TargetManager call\n"));
       }
 

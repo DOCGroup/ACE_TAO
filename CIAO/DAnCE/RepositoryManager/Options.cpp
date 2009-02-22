@@ -124,7 +124,7 @@ void Options::usage (void)
   -a <names by type> \n\
   [-t <:type>] \n\
   -N <all names> \n\
-  -T <all types> \n"));
+  -T <all types>\n"));
 }
 
 Options::Options (void)

@@ -79,7 +79,7 @@ ACE_RCSID (Config_Handlers,
 
             for (CORBA::ULong i = 0; i < size; ++i)
               {
-                ACE_DEBUG ((LM_DEBUG, "%s%s %d: \n", Dump_Obj::indent(),
+                ACE_DEBUG ((LM_DEBUG, "%s%s %d:\n", Dump_Obj::indent(),
                             caption, i));
                 DnC_Dump::dump (seq[i]);
               }

@@ -67,7 +67,7 @@ Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, int argc,
         }
     }
   DANCE_DEBUG ((LM_TRACE, DLINFO "Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - "
-                "Obtained Execution Manager ref \n"));
+                "Obtained Execution Manager ref\n"));
 }
 
 Plan_Launcher_Base_Impl::~Plan_Launcher_Base_Impl()
@@ -77,7 +77,7 @@ Plan_Launcher_Base_Impl::~Plan_Launcher_Base_Impl()
 void Plan_Launcher_Base_Impl::execute()
 {
   DANCE_TRACE ("Plan_Launcher_Base_Impl::execute - ");
-  
+
   if (this->mode_ & MODE_START_PLAN)
     {
       size_t sz = this->cdr_plan_urls_.size();
@@ -114,7 +114,7 @@ const char *
 Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
 {
   DANCE_TRACE ("Plan_Launcher_Base_Impl::launch_plan");
-  
+
   try
     {
       DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::launch_plan - Starting...\n"));
@@ -125,7 +125,7 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
           return 0;
         }
 
-      DANCE_DEBUG ( (LM_DEBUG, DLINFO 
+      DANCE_DEBUG ( (LM_DEBUG, DLINFO
               ACE_TEXT ("Plan_Launcher_Base_Impl::launch_plan - ")
               ACE_TEXT ("about to call this->em_->preparePlan\n")));
 
@@ -161,7 +161,7 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
       this->write_dam_ior (dam.in());
 
       DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::launch_plan - "
-                    "Obtained DAM ref \n"));
+                    "Obtained DAM ref\n"));
 
       ::Deployment::Properties_var properties;
       ACE_NEW_RETURN (properties,
@@ -306,7 +306,7 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
 bool Plan_Launcher_Base_Impl::teardown_plan(const char *uuid)
 {
   DANCE_TRACE ("Plan_Launcher_Base_Impl::teardown_plan");
-  
+
   try
     {
       DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::teardown_plan - looking for uuid=\"%s\"\n", uuid));
@@ -346,7 +346,7 @@ bool Plan_Launcher_Base_Impl::teardown_plan(const char *uuid)
   return true;
 }
 
-void 
+void
 Plan_Launcher_Base_Impl::teardown_plan(::Deployment::DomainApplicationManager_ptr dam)
 {
   DANCE_DEBUG ((LM_DEBUG, DLINFO
@@ -383,7 +383,7 @@ void Plan_Launcher_Base_Impl::usage(const ACE_TCHAR* program)
       DANCE_ERROR ( (LM_ERROR, ACE_TEXT ("[(%P|%t) Executor] Usage: %s <options>\n"), program));
     }
 
-  DANCE_ERROR ( (LM_ERROR, ACE_TEXT ("Options : \n")
+  DANCE_ERROR ( (LM_ERROR, ACE_TEXT ("Options :\n")
           ACE_TEXT ("-k|--em-ior <EXECUTION_MANAGER_IOR>")
           ACE_TEXT (" : Default file://em.ior\n")
           ACE_TEXT ("-d|--read-cdr-plan <CDR_DEPLOYMENT_PLAN_URL>\n")
@@ -507,7 +507,7 @@ void Plan_Launcher_Base_Impl::write_dam_ior(
     }
 }
 
-void 
+void
 Plan_Launcher_Base_Impl::stop_plan()
 {
   bool stopped = false;
@@ -687,7 +687,7 @@ Deployment::DeploymentPlan*Plan_Launcher_Base_Impl::read_cdr_plan_file(
   return res;
 }
 
-void 
+void
 Plan_Launcher_Base_Impl::write_cdr_plan_file(const char * filename,
     const Deployment::DeploymentPlan & plan)
 {
@@ -803,8 +803,8 @@ Plan_Launcher_Base_Impl::expand_env_vars (const char * s)
             else
               {
                 DANCE_DEBUG ((LM_WARNING, DLINFO "Plan_Launcher_Base_Impl::expand_env_vars - "
-                              "Envvar can not be parsed out at %i in \"%s\"", 
-                              pos_start, 
+                              "Envvar can not be parsed out at %i in \"%s\"",
+                              pos_start,
                               src.c_str()));
               }
           }

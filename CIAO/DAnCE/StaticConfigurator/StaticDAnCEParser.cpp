@@ -106,7 +106,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            "extern \"C\" ::Components::HomeExecutorBase_ptr %s (void);\n",
                            impl_infos[i].impl_infos[j].executor_entrypt.in ());
           ACE_OS::fprintf (fp,
-                           "extern \"C\" ::PortableServer::Servant %s \n",
+                           "extern \"C\" ::PortableServer::Servant %s\n",
                            impl_infos[i].impl_infos[j].servant_entrypt.in ());
           ACE_OS::fprintf (fp,
                            "\t\t(::Components::HomeExecutorBase_ptr p,\n");
@@ -130,7 +130,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::fprintf (fp, "  ::CIAO::ServantFactory servant_fptr_;\n");
   ACE_OS::fprintf (fp, "};\n");
   ACE_OS::fprintf (fp, "/// Homes\n");
-  ACE_OS::fprintf (fp, "HomeAttributes homes_table[]= \n");
+  ACE_OS::fprintf (fp, "HomeAttributes homes_table[]=\n");
   ACE_OS::fprintf (fp, "{\n");
 
   num_containers = impl_infos.length ();

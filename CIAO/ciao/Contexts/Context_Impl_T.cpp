@@ -44,7 +44,7 @@ namespace CIAO
           }
         catch (const CORBA::Exception& ex)
           {
-            ex._tao_print_exception ("Caught Exception \n");
+            ex._tao_print_exception ("Caught Exception\n");
             return CORBA::Object::_nil ();
           }
 

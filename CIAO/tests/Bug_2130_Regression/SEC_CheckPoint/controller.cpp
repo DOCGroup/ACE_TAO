@@ -186,7 +186,7 @@ ACE_TMAIN
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception ("Who is the culprit \n");
+    ex._tao_print_exception ("Who is the culprit\n");
     cerr << "Uncaught CORBA exception" << endl;
 
     return 1;

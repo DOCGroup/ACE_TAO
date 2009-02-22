@@ -49,7 +49,7 @@ namespace CIAO
         {
           CIAO_ERROR ((LM_WARNING, CLINFO
                       "NameUtility::bind_name - "
-                      "called with null name, aborting registration. \n"));
+                      "called with null name, aborting registration.\n"));
           return false;
         }
 

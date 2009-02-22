@@ -74,7 +74,7 @@ namespace
     if (properties.find (name, any) == 0)
       {
         if (any >>= CORBA::Any::to_boolean(val))
-                  {      
+                  {
             return true;
                   }
         else
@@ -671,16 +671,16 @@ void
 NodeApplication_Impl::install_component (Container &cont, Instance &inst)
 {
   DANCE_TRACE( "NodeApplication_Impl::install_component");
-  
+
   const ::Deployment::MonolithicDeploymentDescription &mdd = this->plan_.implementation[inst.mdd_idx];
   const ::Deployment::InstanceDeploymentDescription &idd = this->plan_.instance[inst.idd_idx];
-  
+
   DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::install_home - "
                 "Starting installation of home %C on node %C\n",
                 idd.name.in (), idd.node.in ()));
-  
+
   this->instances_[inst.idd_idx] = &inst;
-  
+
   const char *entrypt = 0;
   get_property_value (DAnCE::COMPONENT_FACTORY, mdd.execParameter, entrypt);
 
@@ -692,12 +692,12 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
       throw ::Deployment::InvalidComponentExecParameter (mdd.name.in (),
                                                          "No 'component factory' property present on MDD\n");
     }
-  
+
   // @@TODO: Perhaps need better way to do this.
   Components::ConfigValues config;
   config.length (mdd.execParameter.length () + idd.configProperty.length ());
   CORBA::ULong pos (0);
-  
+
     for (CORBA::ULong i = 0; i < mdd.execParameter.length (); ++i)
     {
       DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::install_component - "
@@ -713,7 +713,7 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
       config[pos++] =  new CIAO::ConfigValue_impl (idd.configProperty[i].name.in (),
                                                    idd.configProperty[i].value);
     }
-  
+
   ::CIAO::Deployment::Container_var ciao_cont = ::CIAO::Deployment::Container::_narrow (cont.ref.in ());
 
   if (CORBA::is_nil (ciao_cont.in ()))
@@ -724,7 +724,7 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
       throw ::Deployment::PlanError (idd.name.in (),
                                      "Hosting container does not support unhomed components.\n");
     }
-  
+
   try
     {
       DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::install_component - "
@@ -735,7 +735,7 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
       ::Components::CCMObject_var comp = ciao_cont->install_component (idd.name.in (),
                                                                        entrypt,
                                                                        config);
-      
+
       if (CORBA::is_nil (comp))
         {
           DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::install_component - "
@@ -749,9 +749,9 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
       DANCE_DEBUG ((LM_INFO, DLINFO  "NodeApplication_Impl::install_component - "
                     "Component '%C' on node '%C' successfully installed\n",
                     idd.name.in (), idd.node.in ()));
-      
+
       inst.ref = CORBA::Object::_narrow (comp);
-      
+
       DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::install_component - "
                     "Populating attributes for home %C\n",
                     idd.name.in ()));
@@ -1733,8 +1733,8 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
       for (unsigned int i = 0; i < providedReference.length(); ++i)
         {
           /*DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - "
-                       "loop on all connections iteration %d for connection %C\n", 
-                       i, 
+                       "loop on all connections iteration %d for connection %C\n",
+                       i,
                        providedReference[i].name.in()));*/
 
           if (name.compare (providedReference[i].name.in()) == 0)
@@ -1746,7 +1746,7 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                     case Deployment::Facet:
                       {
                         DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - "
-                                     "set for facet %C \n", name.c_str ()));
+                                     "set for facet %C\n", name.c_str ()));
                         Components::CCMObject_var ext_inst;
                         try
                           {
@@ -1779,7 +1779,7 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                             if (CORBA::is_nil (ext_inst.in()))
                               {
                                 DANCE_ERROR((LM_ERROR, DLINFO "NodeApplication_impl::finishLaunch - "
-                                             "facet for %C can't be narrowed \n", name.c_str ()));
+                                             "facet for %C can't be narrowed\n", name.c_str ()));
                                 break;
                               }
                             this->connect_receptacle_ext (ext_inst,
@@ -1801,7 +1801,7 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                       }
                     case Deployment::EventConsumer:
                       {
-                        DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - set for consumer \n"));
+                        DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - set for consumer\n"));
                         Components::CCMObject_var ext_inst;
                         try
                           {
@@ -1815,7 +1815,7 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                             if (CORBA::is_nil (ext_inst.in()))
                               {
                                 DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::finishLaunch - "
-                                             "reference for %C can't be narrowed \n", name.c_str ()));
+                                             "reference for %C can't be narrowed\n", name.c_str ()));
                                 throw ::Deployment::InvalidConnection(conn.name.in (),
                                                                       "Couldn't narrow reference for external reference");
                                 break;
@@ -1849,7 +1849,7 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                     case Deployment::SimplexReceptacle:
                       {
                         // What we should do with Cookie, returned from connect call???
-                        DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - set for receptacle \n"));
+                        DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - set for receptacle\n"));
                         this->connect_receptacle (obj.in(),
                                                   conn.internalEndpoint[0].portName.in(),
                                                   providedReference[i].endpoint[0].in());
@@ -1857,7 +1857,7 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                       }
                     case Deployment::EventEmitter:
                       {
-                        DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - set for emitter \n"));
+                        DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - set for emitter\n"));
                         this->connect_emitter (obj.in(),
                                                conn.internalEndpoint[0].portName.in(),
                                                providedReference[i].endpoint[0].in());
@@ -1865,7 +1865,7 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                       }
                     case Deployment::EventPublisher:
                       {
-                        DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - set for publisher \n"));
+                        DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - set for publisher\n"));
                         this->connect_publisher (obj.in(),
                                                  conn.internalEndpoint[0].portName.in(),
                                                  providedReference[i].endpoint[0].in());

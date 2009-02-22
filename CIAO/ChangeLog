@@ -1,3 +1,50 @@
+Sun Feb 22 07:27:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp
+        * ciao/ComponentServer/Configurators/Basic_Config_Manager.cpp
+        * ciao/Containers/Container_Base.cpp
+        * ciao/Containers/Servant_Activator.cpp
+        * ciao/Containers/Servant_Activator.h
+        * ciao/Containers/Session/Session_Container.cpp
+        * ciao/Contexts/Context_Impl_T.cpp
+        * ciao/Server_init.cpp
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp
+        * DAnCE/RepositoryManager/Options.cpp
+        * DAnCE/RepositoryManager/RMadmin.cpp
+        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp
+        * DAnCE/TargetManager/CmpClient.cpp
+        * DAnCE/TargetManager/DomainDataManager.cpp
+        * docs/tutorials/Quoter/Simple/Broker/StockBrokerDriver.cpp
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributorDriver.cpp
+        * examples/BasicSP/BMClosedED/BMClosedED_exec.cpp
+        * examples/BasicSP/BMDevice/BMDevice_exec.cpp
+        * examples/BasicSP/BMDisplay/BMDisplay_exec.cpp
+        * examples/BasicSP/EC/client.cpp
+        * examples/BasicSP/EC/controller.cpp
+        * examples/Display/RateGen/controller.cpp
+        * examples/Hello/Sender/Sender_exec.cpp
+        * examples/Hello/Sender/starter.cpp
+        * examples/Swapping/Receiver/Receiver_exec.cpp
+        * examples/Swapping/Sender/Sender_exec.cpp
+        * examples/Swapping/Sender/Sender_exec_1.cpp
+        * examples/Swapping/Sender/Sender_exec_2.cpp
+        * examples/Swapping/Sender/starter.cpp
+        * performance-tests/Benchmark/Multi_Threaded/client.cpp
+        * performance-tests/Benchmark/Multi_Threaded/Client_Task.cpp
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp
+        * performance-tests/Benchmark/RoundTripServer/LatencyTest.cpp
+        * tests/Bug_2130_Regression/SEC_CheckPoint/controller.cpp
+        * tools/Config_Handlers/DnC_Dump.cpp
+        * tools/Config_Handlers/DnC_Dump_T.cpp
+        * tools/Config_Handlers/IDD_Handler.cpp
+        * tools/Config_Handlers/MDD_Handler.cpp
+        * tools/IDL3_to_XMI/be_helper.cpp
+          Updated debug statements
+
 Sun Feb 22 07:15:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Hello/descriptors/run_test.pl
