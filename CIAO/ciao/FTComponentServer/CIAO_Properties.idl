@@ -22,6 +22,7 @@ module CIAO
     const string SERVER_TIMEOUT = "edu.vanderbilt.dre.CIAO.ServerTimeout";
     const string SERVER_MULTITHREAD = "edu.vanderbilt.dre.CIAO.Multithreaded";
     const string REGISTER_NAMING = "edu.vanderbilt.dre.CIAO.RegisterNaming";
+    const string OBJECT_ID = "edu.vanderbilt.dre.CIAO.ObjectId";
     
   };
 };
