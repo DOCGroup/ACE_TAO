@@ -34,7 +34,8 @@ project(BMClosedED_lem_gen) : ciaocidldefaults, ciaoidldefaults {
 }
 
 project(BMClosedED_stub): ccm_stub {
-  libpaths += ..
+  libout = ../lib
+  libpaths += ../lib
   after += BasicSP_stub BMClosedED_stub_gen
   sharedname = BMClosedED_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
@@ -65,7 +66,8 @@ project(BMClosedED_exec) : ciao_executor {
   libs       += BMClosedED_stub
   libs       += BasicSP_stub BasicSP_exec
   includes += $(CIAO_ROOT)/examples/BasicSP
-  libpaths += ..
+  libout = ../lib
+  libpaths += ../lib
 
   dynamicflags   = BMCLOSEDED_EXEC_BUILD_DLL
 
@@ -98,7 +100,8 @@ project(BMClosedED_svnt) : ciao_servant {
 
   libs    += BMClosedED_stub BMClosedED_exec
   libs    += BasicSP_stub BasicSP_exec BasicSP_svnt
-  libpaths += ..
+  libout = ../lib
+  libpaths += ../lib
 
   dynamicflags = BMCLOSEDED_SVNT_BUILD_DLL
 
