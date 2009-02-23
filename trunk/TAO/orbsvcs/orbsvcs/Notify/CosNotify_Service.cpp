@@ -48,7 +48,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         {
           arg_shifter.consume_arg ();
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) The -MTDispatching option has been deprecated, use -DispatchingThreads \n")));
+                      ACE_TEXT ("(%P|%t) The -MTDispatching option has been deprecated, use -DispatchingThreads\n")));
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-DispatchingThreads"))))
         {
@@ -59,7 +59,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         {
           arg_shifter.consume_arg ();
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) The -MTSourceEval option has been deprecated, use -SourceThreads \n")));
+                      ACE_TEXT ("(%P|%t) The -MTSourceEval option has been deprecated, use -SourceThreads\n")));
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-SourceThreads"))))
         {
@@ -70,27 +70,27 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         {
           arg_shifter.consume_arg ();
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) The -MTLookup option has been deprecated, use -SourceThreads \n")));
+                      ACE_TEXT ("(%P|%t) The -MTLookup option has been deprecated, use -SourceThreads\n")));
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-LookupThreads"))))
         {
           supplier_threads += ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) The -LookupThreads option has been deprecated, use -SourceThreads \n")));
+                      ACE_TEXT ("(%P|%t) The -LookupThreads option has been deprecated, use -SourceThreads\n")));
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTListenerEval")) == 0)
         {
           arg_shifter.consume_arg ();
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) The -MTListenerEval option has been deprecated, use -DispatchingThreads \n")));
+                      ACE_TEXT ("(%P|%t) The -MTListenerEval option has been deprecated, use -DispatchingThreads\n")));
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ListenerThreads"))))
         {
           // Since this option is always added to consumer_threads, we'll
           // deprecate it in favor of that option.
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) The -ListenerThreads option has been deprecated, use -DispatchingThreads \n")));
+                      ACE_TEXT ("(%P|%t) The -ListenerThreads option has been deprecated, use -DispatchingThreads\n")));
           consumer_threads += ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }

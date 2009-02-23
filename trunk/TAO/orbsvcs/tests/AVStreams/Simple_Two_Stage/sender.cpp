@@ -93,7 +93,7 @@ Sender::parse_args (int argc,
             max_frame_count_ = (long) ACE_OS::atoi (opts.opt_arg ());
             if (max_frame_count_ > 1000000)
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Max Frame Count should be < 10^6 \n"),
+                                 "Max Frame Count should be < 10^6\n"),
                                 -1);
             break;
           }

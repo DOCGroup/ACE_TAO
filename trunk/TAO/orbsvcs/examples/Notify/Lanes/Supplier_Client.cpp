@@ -234,7 +234,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                               -1);
           else
             ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT ("(%t) Task activation at priority %d failed. \n")));
+                        ACE_TEXT ("(%t) Task activation at priority %d failed.\n")));
         }
 
       orb_run_task.thr_mgr ()->wait ();

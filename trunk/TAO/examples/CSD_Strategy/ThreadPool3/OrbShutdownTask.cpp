@@ -54,7 +54,7 @@ int
 OrbShutdownTask::svc()
 {
   ACE_OS::sleep (2);
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t)OrbShutdownTask::svc shutdown orb \n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t)OrbShutdownTask::svc shutdown orb\n"));
   try
   {
     this->orb_->shutdown(0);

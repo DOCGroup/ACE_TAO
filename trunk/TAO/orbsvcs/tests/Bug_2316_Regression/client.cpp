@@ -40,7 +40,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_ERROR, "Test Failed - Regression. "
                       "Sending UIPMC object ref to server failed with:\n"));
-          marshal._tao_print_exception ("Exception : \n");
+          marshal._tao_print_exception ("Exception :\n");
           result = 1;
         }
 

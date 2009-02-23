@@ -174,10 +174,10 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
     case '?':
     default:
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT("Usage: %s \n")
+        ACE_TEXT("Usage: %s\n")
         ACE_TEXT("  -j join the object group\n")
         ACE_TEXT("  -p set as primary\n")
-        ACE_TEXT("  -s <global|local> \n")
+        ACE_TEXT("  -s <global|local>\n")
         ACE_TEXT("\n"),
         argv[0]));
       return -1;

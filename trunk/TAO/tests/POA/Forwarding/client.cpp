@@ -77,7 +77,7 @@ do_calls (test_ptr test)
 
           // Print the result of doit () method of the test reference.
           ACE_DEBUG ((LM_DEBUG,
-                      "doit() returned %d \n",
+                      "doit() returned %d\n",
                       result));
         }
 

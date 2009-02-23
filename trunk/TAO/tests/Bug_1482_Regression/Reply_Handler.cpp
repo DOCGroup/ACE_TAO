@@ -24,7 +24,7 @@ Reply_Handler::next_prime_excep (
   catch (const CORBA::COMM_FAILURE& )
     {
       /*ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <next_prime_excep> called: \n"));
+                  "Callback method <next_prime_excep> called:\n"));
                   */
 
       ACE_Time_Value tv (10, 0);

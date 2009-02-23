@@ -94,7 +94,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (number < 250)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ERROR: Did not forward to new location \n"));
+                      "(%P|%t) ERROR: Did not forward to new location\n"));
           ACE_OS::abort ();
         }
 

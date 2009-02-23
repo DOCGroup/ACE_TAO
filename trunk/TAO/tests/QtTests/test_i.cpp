@@ -16,7 +16,7 @@ void
 LCD_Display_imp::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "The ORB has been shutdown, Close the windows to exit \n"));
+              "The ORB has been shutdown, Close the windows to exit\n"));
   this->orb_->shutdown (0);
   this->orb_->destroy ();
 }
@@ -25,7 +25,7 @@ void
 LCD_Display_imp::send_val (CORBA::Long val)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "The value from server is <%d> \n", val));
+              "The value from server is <%d>\n", val));
   emit set_value (val);
 }
 

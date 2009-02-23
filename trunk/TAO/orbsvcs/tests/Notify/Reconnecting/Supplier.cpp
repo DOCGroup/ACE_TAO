@@ -310,7 +310,7 @@ void Supplier_Main::usage(FILE * log)const
       ACE_TEXT ("  -pause n          Pause after sending n events. Write to file \"Supplier.paused\"\n")
       ACE_TEXT ("  -serial_number n  What serial number to start with.\n")
       ACE_TEXT ("  -v                Verbose output.\n")
-      ACE_TEXT ("  -disconnect       Disconnect from channel on exit (prevents reconnect.) \n")
+      ACE_TEXT ("  -disconnect       Disconnect from channel on exit (prevents reconnect.)\n")
       ACE_TEXT ("  -nonamesvc        Don't use the name service to find EventChannelFactory\n")
       , log);
   //FUZZ: enable check_for_lack_ACE_OS

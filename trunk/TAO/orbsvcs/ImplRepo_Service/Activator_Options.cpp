@@ -208,7 +208,7 @@ Activator_Options::print_usage (void) const
               "\n"
               "ImR_Activator [-c cmd] [-d 0|1|2] [-e buflen] [-o file] [-l] [-n name] [-m maxenv]\n"
               "\n"
-              "  -c command  Runs service commands \n"
+              "  -c command  Runs service commands\n"
               "              ('install' or 'remove' or 'install_no_imr')\n"
               "  -d level    Sets the debug level\n"
               "  -e buflen   Set the environment buffer length in bytes for activated servants\n"

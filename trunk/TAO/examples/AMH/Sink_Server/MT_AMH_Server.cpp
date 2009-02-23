@@ -21,9 +21,9 @@ void
 MT_AMH_Server::usage (const char *message)
 {
   static const char * usage =
-    "invoke as: mt_server -o <ior_output_file> \n"
-    " -n <num_threads> \n"
-    "-s <sleep_time (in microseconds)> \n";
+    "invoke as: mt_server -o <ior_output_file>\n"
+    " -n <num_threads>\n"
+    "-s <sleep_time (in microseconds)>\n";
 
   // @@ Mayur, why don't you just place the usage message directly in
   //    the below ACE_ERROR macro?  It's not a big deal.  It's just

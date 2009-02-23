@@ -160,7 +160,7 @@ ConnectDisconnect::parse_args(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG((LM_DEBUG,
                      "usage: %s "
-                     "-count testcount \n"
+                     "-count testcount\n"
                      "-consumers number_of_consumers"
                      "-suppliers number_of_suppliers",
                      argv[0],

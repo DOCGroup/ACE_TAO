@@ -250,7 +250,7 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
         reinterpret_cast<Employee *> (temp);
       ACE_DEBUG ((LM_DEBUG,
                   "Employee with key = %C will be removed from the database: "
-                  "name = %C and id = %d \n",
+                  "name = %C and id = %d\n",
                   key,
                   employee->name (),
                   employee->id ()));

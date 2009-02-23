@@ -77,7 +77,7 @@ Persistent_Client_i::run (const char *name,
                                                ctr);
 
               ACE_DEBUG ((LM_DEBUG,
-                          "Grid value [%d][%d] =  %d \n",index_, ctr,ret_val));
+                          "Grid value [%d][%d] =  %d\n",index_, ctr,ret_val));
             }
         }
 

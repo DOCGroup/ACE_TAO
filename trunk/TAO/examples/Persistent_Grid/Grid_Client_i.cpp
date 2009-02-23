@@ -83,7 +83,7 @@ Grid_Client_i::run (const char *name,
           for (CORBA::Short ctr = 0; ctr < height_; ctr++)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "Grid value [%d][%d] =  %d \n",index_, ctr,value_+ctr));
+                          "Grid value [%d][%d] =  %d\n",index_, ctr,value_+ctr));
               // Set a value on the grid
               grid->set (index_,
                          ctr,

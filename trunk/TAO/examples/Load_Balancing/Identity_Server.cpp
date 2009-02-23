@@ -172,7 +172,7 @@ int
 Identity_Server::run (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Identity_Server: Initialized \n"));
+              "Identity_Server: Initialized\n"));
 
   int result;
 

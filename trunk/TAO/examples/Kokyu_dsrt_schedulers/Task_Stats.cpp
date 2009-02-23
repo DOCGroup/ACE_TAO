@@ -65,7 +65,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
   if (output_file == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s cannot be opened \n",
+                  "%s cannot be opened\n",
                   file_name));
     }
 

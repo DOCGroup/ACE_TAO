@@ -84,7 +84,7 @@ do_primary_test (CORBA::Object_var &server,
 int do_shutdown_test (CORBA::Object_var &server)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "[client] invoking shutdown on the server \n "));
+              "[client] invoking shutdown on the server \n"));
   try
     {
       CORBA::Request_var req = server->_request("shutdown");

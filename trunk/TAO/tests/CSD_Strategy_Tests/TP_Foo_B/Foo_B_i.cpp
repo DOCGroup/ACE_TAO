@@ -181,11 +181,11 @@ Foo_B_i::test_var_array_arg(const Var_Array messages)
 {
   this->op_count_[13] ++;
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_var_array_arg ")
-  //                     ACE_TEXT(" %s \n"), messages[0].in ()));
+  //                     ACE_TEXT(" %s\n"), messages[0].in ()));
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_var_array_arg ")
-  //                     ACE_TEXT(" %s \n"), messages[1].in ()));
+  //                     ACE_TEXT(" %s\n"), messages[1].in ()));
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_var_array_arg ")
-  //                     ACE_TEXT(" %s \n"), messages[2].in ()));
+  //                     ACE_TEXT(" %s\n"), messages[2].in ()));
   unsigned cur_client_id = 0;
 
   for (unsigned i = 0 ; i < 3; i ++)
@@ -224,7 +224,7 @@ Foo_B_i::test_special_basic_arg(CORBA::Boolean value,
 {
   this->op_count_[14] ++;
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_special_basic_arg ")
-  //                     ACE_TEXT(" got special basic arg: %d \n"), value));
+  //                     ACE_TEXT(" got special basic arg: %d\n"), value));
 
   CORBA::Boolean expected_special_value = client_id % 2;
   if (expected_special_value != value)
@@ -243,7 +243,7 @@ Foo_B_i::test_objref_arg(Callback_ptr cb)
   ACE_UNUSED_ARG(cb);
   this->op_count_[15] ++;
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_objref_arg ")
-  //                     ACE_TEXT(" got callback object. \n")));
+  //                     ACE_TEXT(" got callback object.\n")));
 }
 
 

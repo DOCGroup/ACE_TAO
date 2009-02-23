@@ -119,7 +119,7 @@ parse_args (int argc, ACE_TCHAR **argv)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "%s usage: \n"
+                           "%s usage:\n"
                            "\t-b <bands file> (defaults to %s)\n"
                            "\t-b <lanes file> (defaults to %s)\n"
                            "\t-o <ior file base> (defaults to %s)\n"

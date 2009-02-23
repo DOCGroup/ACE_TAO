@@ -31,7 +31,7 @@ Base_Server::~Base_Server (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "Exception caught while destroying Base_Server \n");
+        "Exception caught while destroying Base_Server\n");
     }
 }
 

@@ -59,7 +59,7 @@ template <class Supplier_Traits> void
 TAO_Notify_Tests_Supplier_T<Supplier_Traits>::offer_change (CosNotification::EventTypeSeq &added, CosNotification::EventTypeSeq& removed)
 {
   // Let the user see what we're subscribed for,
-  ACE_DEBUG ((LM_DEBUG, "(%P, %t) Calling Supplier offer change: \n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P, %t) Calling Supplier offer change:\n"));
 
   CORBA::ULong i = 0;
 

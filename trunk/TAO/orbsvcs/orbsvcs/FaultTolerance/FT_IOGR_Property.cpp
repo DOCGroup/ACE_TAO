@@ -245,7 +245,7 @@ TAO_FT_IOGR_Property::encode_properties (
       if (TAO_debug_level > 2)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "TAO-FT (%P|%t) - The group tagged component ",
-                           "is null \n"),
+                           "is null\n"),
                           0);
     }
 

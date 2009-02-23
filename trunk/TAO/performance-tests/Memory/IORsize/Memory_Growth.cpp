@@ -20,12 +20,12 @@ Memory_Growth::send_objref (const Test::PayLoad & /*p*/
   ACE_Manual_Event me;
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Going to wait .. \n"));
+              "(%P|%t) Going to wait ..\n"));
 
   me.wait ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Wokeup from wait .. \n"));
+              "(%P|%t) Wokeup from wait ..\n"));
   return;
 }
 

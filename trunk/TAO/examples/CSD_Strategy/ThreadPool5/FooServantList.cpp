@@ -175,7 +175,7 @@ FooServantList::deactivate_servant (void)
             {
               servants_[i]->active(false);
               ACE_DEBUG((LM_DEBUG, "(%P|%t)FooServantList::deactivate_servant "
-                "deactivate %dth servant \n", i+1));
+                "deactivate %dth servant\n", i+1));
 
               PortableServer::ObjectId_var id =
                 poa_->servant_to_id (safe_servants_[i].in ());

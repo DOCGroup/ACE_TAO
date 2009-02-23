@@ -109,7 +109,7 @@ RTEvent_Logging_Service::init (int argc, ACE_TCHAR* argv[])
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%P|%t) Unable to initialize "
-                         "the factory. \n"),
+                         "the factory.\n"),
                         -1);
     }
 

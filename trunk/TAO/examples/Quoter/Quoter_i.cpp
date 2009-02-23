@@ -206,7 +206,7 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
               if (i == factories_ptr->length ())
                 {
                   ACE_ERROR ((LM_ERROR,
-                              "Quoter::copy: Last factory did not work. \n"
+                              "Quoter::copy: Last factory did not work.\n"
                               "No more factories are available. I give up.\n"));
                   throw CosLifeCycle::NoFactory (factoryKey);
                 }

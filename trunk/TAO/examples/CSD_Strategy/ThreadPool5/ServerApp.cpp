@@ -319,21 +319,21 @@ void
 ServerApp::usage_statement()
 {
   ACE_ERROR((LM_ERROR,
-              "(%P|%t) usage:  %s \n"
-              "\t[-p <ior_filename_prefix>] \n"
-              "\t[-s <num_servants>] \n"
-              "\t[-c <num_clients>] \n"
-              "\t[-n <num_csd_threads>] \n"
-              "\t[-t <num_orb_threads>] \n"
-              "\t[-l <collocation_test>] \n"
-              "\t[-d <servant_to_deactivate>] \n"
+              "(%P|%t) usage:  %s\n"
+              "\t[-p <ior_filename_prefix>]\n"
+              "\t[-s <num_servants>]\n"
+              "\t[-c <num_clients>]\n"
+              "\t[-n <num_csd_threads>]\n"
+              "\t[-t <num_orb_threads>]\n"
+              "\t[-l <collocation_test>]\n"
+              "\t[-d <servant_to_deactivate>]\n"
               "Default ior_filename_prefix is 'foo'.\n"
               "Default num_servants is 1.\n"
               "Default num_clients is 1.\n"
               "Default num_orb_threads is 1.\n"
               "Default collocation_test flag is 0.\n"
               "Default servant_to_deactivate is -1 means not deactivate servant.\n"
-              "   0  means deactivate all servant. \n"
+              "   0  means deactivate all servant.\n"
               "   >0 means the index (servant_to_deactivate-1) of the servant in the servant list.\n",
               this->exe_name_.c_str ()));
 }

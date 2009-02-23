@@ -87,13 +87,13 @@ TAO_Notify_Tests_Worker::svc (void)
       return -1;
     }
 
-  ACE_DEBUG ((LM_ERROR, "Activated Worker Thread for commands @ priority:%d \n", priority));
+  ACE_DEBUG ((LM_ERROR, "Activated Worker Thread for commands @ priority:%d\n", priority));
 #endif
 
 
   try
     {
-      ACE_DEBUG ((LM_DEBUG, "Running Commands... \n"));
+      ACE_DEBUG ((LM_DEBUG, "Running Commands...\n"));
       this->cmd_builder_->execute ();
     }
   catch (const CORBA::Exception& ex)
@@ -145,7 +145,7 @@ TAO_Notify_Tests_ORB_Run_Worker::svc (void)
       return -1;
     }
 
-  ACE_DEBUG ((LM_ERROR, "Activated ORB Run Worker Thread to run the ORB @ priority:%d \n", priority));
+  ACE_DEBUG ((LM_ERROR, "Activated ORB Run Worker Thread to run the ORB @ priority:%d\n", priority));
 #endif
 
   try

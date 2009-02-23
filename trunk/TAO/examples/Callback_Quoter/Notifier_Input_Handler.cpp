@@ -81,7 +81,7 @@ Notifier_Input_Handler::init_naming_service (void)
   catch (const CosNaming::NamingContext::AlreadyBound&)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to bind %s \n",
+                         "Unable to bind %s\n",
                          "Notifier"),
                         -1);
     }
@@ -206,7 +206,7 @@ Notifier_Input_Handler::run (void)
 
 
   ACE_DEBUG ((LM_DEBUG,
-              " Type \"q\" to quit \n "));
+              " Type \"q\" to quit \n"));
 
   int result = this->orb_manager_.run ();
 

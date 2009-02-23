@@ -22,7 +22,7 @@ Foo_i::baz (void)
 {
   if (this->current_.in() == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "FOO (%P|%t) No ClientCredentials available \n"));
+      ACE_DEBUG ((LM_DEBUG, "FOO (%P|%t) No ClientCredentials available\n"));
       return;
     }
 

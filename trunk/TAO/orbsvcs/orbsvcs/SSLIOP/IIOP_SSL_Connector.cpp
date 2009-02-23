@@ -124,7 +124,7 @@ TAO::IIOP_SSL_Connector::make_connection (
   if (TAO_debug_level > 4)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) IIOP_SSL_Connector::connect ")
-                ACE_TEXT ("making a new connection \n")));
+                ACE_TEXT ("making a new connection\n")));
 
   // Get the right synch options
   ACE_Synch_Options synch_options;

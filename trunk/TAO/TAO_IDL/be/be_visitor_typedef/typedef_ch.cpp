@@ -177,7 +177,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_array - "
-                             "base class visitor failed \n"),
+                             "base class visitor failed\n"),
                             -1);
         }
     }
@@ -290,7 +290,7 @@ be_visitor_typedef_ch::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_enum - "
-                             "base class visitor failed \n"),
+                             "base class visitor failed\n"),
                             -1);
         }
     }
@@ -462,7 +462,7 @@ be_visitor_typedef_ch::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_sequence - "
-                             "base class visitor failed \n"),
+                             "base class visitor failed\n"),
                             -1);
         }
     }
@@ -510,7 +510,7 @@ be_visitor_typedef_ch::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_structure - "
-                             "base class visitor failed \n"),
+                             "base class visitor failed\n"),
                             -1);
         }
     }
@@ -556,7 +556,7 @@ be_visitor_typedef_ch::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_union - "
-                             "base class visitor failed \n"),
+                             "base class visitor failed\n"),
                             -1);
         }
     }

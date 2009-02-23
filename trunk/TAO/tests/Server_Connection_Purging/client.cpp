@@ -61,7 +61,7 @@ Purging_Handler::handle_close (ACE_HANDLE h,
 {
   if (purged_handles % 10 == 0)
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) purging handle [%d] \n",
+                "(%P|%t) purging handle [%d]\n",
                 h));
 
   ++purged_handles;
@@ -111,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                        &ph[i],
                                        ACE_Event_Handler::READ_MASK) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Registration failed \n"),
+                           "Registration failed\n"),
                           -1);
 
       // ACE_Time_Value tv (1);
@@ -140,7 +140,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   if ((iter - purged_handles) > 20)
     ACE_ERROR_RETURN ((LM_ERROR,
-                      "(%P|%t) Purging hasnt worked at all \n"),
+                      "(%P|%t) Purging hasnt worked at all\n"),
                        -1);
 
   return 0;

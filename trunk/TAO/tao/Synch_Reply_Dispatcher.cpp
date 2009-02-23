@@ -87,7 +87,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   {
     // Data block is on the heap, so just duplicate it.
     this->reply_cdr_ = *params.input_cdr_;
-    this->reply_cdr_.clr_mb_flags( ACE_Message_Block::DONT_DELETE );
+    this->reply_cdr_.clr_mb_flags (ACE_Message_Block::DONT_DELETE);
   }
   else
   {
