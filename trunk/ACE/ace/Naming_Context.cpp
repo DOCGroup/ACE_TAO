@@ -624,8 +624,8 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
                          "\t[-p nameserver port]\n"
                          "\t[-s database name]\n"
                          "\t[-b base address]\n"
-                         "\t[-v] (verbose) \n"
-                         "\t[-r] (use Win32 Registry) \n",
+                         "\t[-v] (verbose)\n"
+                         "\t[-r] (use Win32 Registry)\n",
                          argv[0]);
         /* NOTREACHED */
         break;

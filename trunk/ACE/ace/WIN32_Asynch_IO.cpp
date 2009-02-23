@@ -2385,7 +2385,7 @@ ACE_WIN32_Asynch_Connect::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
   if (this->flg_open_)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%N:%l:ACE_WIN32_Asynch_Connect::open:")
-                       ACE_TEXT ("connector already open \n")),
+                       ACE_TEXT ("connector already open\n")),
                       -1);
 
   //int result =

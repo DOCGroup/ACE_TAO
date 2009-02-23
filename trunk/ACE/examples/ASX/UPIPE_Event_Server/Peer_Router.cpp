@@ -84,7 +84,7 @@ Peer_Handler<ROUTER, KEY>::svc (void)
           if (this->router_task_->unbind_peer (this->get_handle ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                                ACE_TEXT ("unbind failed")), -1);
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) shutting down \n")));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) shutting down\n")));
           return -1; // We do not need to be deregistered by reactor
           // as we were not registered at all
         }

@@ -165,13 +165,13 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                               "\t[-H high water mark]\n"
                               "\t[-i number of test iterations]\n"
                               "\t[-L low water mark]\n"
-                              "\t[-M] message size \n"
+                              "\t[-M] message size\n"
                               "\t[-n] (THR_NEW_LWP)\n"
                               "\t[-q max queue size]\n"
                               "\t[-S supplier file]\n"
                               "\t[-s supplier port]\n"
                               "\t[-t number of threads]\n"
-                              "\t[-v] (verbose) \n",
+                              "\t[-v] (verbose)\n",
                               ACE_TEXT_ALWAYS_CHAR (argv[0]));
         ACE_OS::exit (1);
         /* NOTREACHED */

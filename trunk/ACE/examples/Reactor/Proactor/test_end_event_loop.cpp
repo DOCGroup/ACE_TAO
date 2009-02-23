@@ -83,7 +83,7 @@ public:
       if (this->time_flag_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t):Going to do *timed* <run_event_loop> \n"));
+                      "(%P|%t):Going to do *timed* <run_event_loop>\n"));
 
           ACE_Time_Value run_time (13);
 
@@ -95,7 +95,7 @@ public:
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t):Going to do *indefinite* <run_event_loop> \n"));
+                      "(%P|%t):Going to do *indefinite* <run_event_loop>\n"));
 
           if (ACE_Proactor::instance ()->run_event_loop () == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t):%p.\n",
@@ -117,7 +117,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   ACE_UNUSED_ARG (argv);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P | %t):Test starts \n"));
+              "(%P | %t):Test starts\n"));
 
   // Let us get the singleton proactor created here. This is very
   // important. This will mask the signal used in the Proactor masked

@@ -1,3 +1,123 @@
+Mon Feb 23 08:16:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features
+          Layout changes
+
+        * bin/PerlACE/ProcessVX_Unix.pm
+          Improved quote handling
+
+        * debianbuild/dsc:
+          New file
+
+        * ace/Activation_Queue.cpp
+        * ace/ATM_Addr.cpp
+        * ace/ATM_Connector.inl
+        * ace/Configuration_Import_Export.cpp
+        * ace/Dynamic_Message_Strategy.cpp
+        * ace/Future.cpp
+        * ace/Message_Queue_T.cpp
+        * ace/Naming_Context.cpp
+        * ace/POSIX_Asynch_IO.cpp
+        * ace/QoS/QoS_Session_Impl.cpp
+        * ace/Timer_Heap_T.cpp
+        * ace/Timer_Wheel_T.cpp
+        * ace/TP_Reactor.cpp
+        * ace/WIN32_Asynch_IO.cpp
+        * ACEXML/examples/SAXPrint/main.cpp
+        * apps/gperf/src/Options.cpp
+        * apps/JAWS/server/HTTP_Handler.cpp
+        * apps/mkcsregdb/mkcsregdb.cpp
+        * ASNMP/examples/get/get.cpp
+        * ASNMP/examples/get/get_async.cpp
+        * ASNMP/examples/next/next.cpp
+        * ASNMP/examples/set/set.cpp
+        * ASNMP/examples/trap/trap.cpp
+        * ASNMP/examples/walk/walk.cpp
+        * examples/APG/Containers/DLList.cpp
+        * examples/APG/Containers/Hash_Map.cpp
+        * examples/APG/Containers/Hash_Map_Hash.cpp
+        * examples/APG/Containers/Map_Manager.cpp
+        * examples/APG/Containers/Map_Manager_Specialization.cpp
+        * examples/APG/Containers/RB_Tree.cpp
+        * examples/APG/Containers/RB_Tree_Functors.cpp
+        * examples/APG/ThreadManagement/Coop_Cancel.cpp
+        * examples/APG/ThreadManagement/ExitHandler.cpp
+        * examples/APG/ThreadManagement/Pool.cpp
+        * examples/APG/ThreadManagement/Signals2.cpp
+        * examples/APG/ThreadManagement/Start_Hook.cpp
+        * examples/APG/ThreadSafety/Atomic_Op.cpp
+        * examples/APG/ThreadSafety/TSS.cpp
+        * examples/APG/Timers/Task.cpp
+        * examples/ASX/Event_Server/Event_Server/Options.cpp
+        * examples/ASX/Event_Server/Event_Server/Peer_Router.cpp
+        * examples/ASX/Event_Server/Transceiver/transceiver.cpp
+        * examples/ASX/UPIPE_Event_Server/Options.cpp
+        * examples/ASX/UPIPE_Event_Server/Peer_Router.cpp
+        * examples/Connection/misc/Connection_Handler.cpp
+        * examples/IPC_SAP/ATM_SAP/CPP-client.cpp
+        * examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp
+        * examples/IPC_SAP/SSL_SAP/SSL-server.cpp
+        * examples/QOS/Change_Receiver_FlowSpec/receiver.cpp
+        * examples/QOS/Change_Receiver_FlowSpec/sender.cpp
+        * examples/QOS/Change_Sender_TSpec/receiver.cpp
+        * examples/QOS/Change_Sender_TSpec/sender.cpp
+        * examples/QOS/Simple/receiver.cpp
+        * examples/QOS/Simple/sender.cpp
+        * examples/Reactor/Proactor/post_completions.cpp
+        * examples/Reactor/Proactor/test_aiosig.cpp
+        * examples/Reactor/Proactor/test_aiosig_ace.cpp
+        * examples/Reactor/Proactor/test_end_event_loop.cpp
+        * examples/Threads/auto_event.cpp
+        * examples/Threads/manual_event.cpp
+        * examples/Timer_Queue/Async_Timer_Queue_Test.cpp
+        * Kokyu/DSRT_CV_Dispatcher_Impl_T.cpp
+        * Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp
+        * Kokyu/tests/DSRT_MIF/MIF.cpp
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp
+        * netsvcs/lib/Name_Handler.cpp
+        * NEWS
+        * performance-tests/SCTP/Options_Manager.cpp
+        * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp
+        * performance-tests/TCP/tcp_test.cpp
+        * performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp
+        * performance-tests/UDP/udp_test.cpp
+        * protocols/tests/HTBP/Reactor_Tests/server.cpp
+        * protocols/tests/HTBP/Send_Large_Msg/server.cpp
+        * protocols/tests/HTBP/Send_Recv_Tests/client.cpp
+        * protocols/tests/HTBP/Send_Recv_Tests/server.cpp
+        * tests/Cache_Map_Manager_Test.cpp
+        * tests/CDR_Array_Test.cpp
+        * tests/CDR_Test.cpp
+        * tests/DLList_Test.cpp
+        * tests/Get_Opt_Test.cpp
+        * tests/Hash_Map_Manager_Test.cpp
+        * tests/Hash_Multi_Map_Manager_Test.cpp
+        * tests/IOStream_Test.cpp
+        * tests/Logging_Strategy_Test.cpp
+        * tests/Max_Default_Port_Test.cpp
+        * tests/Max_Default_Port_Test_IPV6.cpp
+        * tests/Message_Queue_Notifications_Test.cpp
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp
+        * tests/Multicast_Test.cpp
+        * tests/Multicast_Test_IPV6.cpp
+        * tests/Naming_Test.cpp
+        * tests/Network_Adapters_Test.cpp
+        * tests/Pipe_Test.cpp
+        * tests/QtReactor_Test.cpp
+        * tests/Reactor_Notification_Queue_Test.cpp
+        * tests/Reactor_Remove_Resume_Test.cpp
+        * tests/Reactor_Remove_Resume_Test_Dev_Poll.cpp
+        * tests/Reactors_Test.cpp
+        * tests/Signal_Test.cpp
+        * tests/SOCK_Netlink_Test.cpp
+        * tests/SOCK_SEQPACK_SCTP_Test.cpp
+        * tests/SString_Test.cpp
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp
+        * tests/Upgradable_RW_Test.cpp
+          Zapped empty spaces at the end of a line
+
 Fri Feb 20 13:50:33 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/config-win32-mingw.h:

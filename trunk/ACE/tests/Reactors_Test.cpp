@@ -252,7 +252,7 @@ run_main (int, ACE_TCHAR *[])
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) all threads are finished \n")));
+              ACE_TEXT ("(%t) all threads are finished\n")));
 
 #else
   ACE_ERROR ((LM_INFO,

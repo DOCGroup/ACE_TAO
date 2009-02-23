@@ -144,12 +144,12 @@ Echo_Handler::open (ACE_Reactor * const    reactor,
   if (this->reactor ())
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
-                       ACE_TEXT ("reactor is already set. \n")),
+                       ACE_TEXT ("reactor is already set.\n")),
                       -1);
   if (!reactor)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Echo_Handler::open - failed : ")
-                       ACE_TEXT ("NULL pointer to reactor provided. \n")),
+                       ACE_TEXT ("NULL pointer to reactor provided.\n")),
                       -1);
 
   this->reactor (reactor);

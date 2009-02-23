@@ -338,7 +338,7 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
    }
 
    if (WSALookupServiceEnd (hLookup) == SOCKET_ERROR) {
-     ACE_OS::printf ("Error : WSALookupServiceEnd failed! %d \n",
+     ACE_OS::printf ("Error : WSALookupServiceEnd failed! %d\n",
                      ::WSAGetLastError ());
       errno = EINVAL;
       return -1;

@@ -254,8 +254,8 @@ oneway_server (void *arg)
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\t\treal time = %f secs \n")
-              ACE_TEXT ("\t\tuser time = %f secs \n")
+              ACE_TEXT ("\t\treal time = %f secs\n")
+              ACE_TEXT ("\t\tuser time = %f secs\n")
               ACE_TEXT ("\t\tsystem time = %f secs\n"),
               et.real_time,
               et.user_time,
