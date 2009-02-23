@@ -1,14 +1,13 @@
 // $Id$
 
-project(Display_NavDisplayGUI_exec) : ciao_executor, qt {
+project(Display_NavDisplayGUI_exec) : ciao_executor, ace_qt4, qt4_qt3support {
   avoids += ace_for_tao
   after   += Display_NavDisplay_cidl_gen \
              Display_NavDisplay_stub
-  requires += qt
   sharedname = NavDisplayGUI_exec
   libs += NavDisplay_stub Display_Base_stub
   dynamicflags   = NAVDISPLAY_EXEC_BUILD_DLL QT_DLL
-  includes  += ../NavDisplay /usr/include/qt3
+  includes  += ../NavDisplay
   libout = ../lib
   libpaths += ../lib
 
@@ -49,9 +48,8 @@ project(Display_NavDisplayGUI_exec) : ciao_executor, qt {
   }
 }
 
-project(Display_NavDisplayGUI_svnt) : ciao_servant {
+project(Display_NavDisplayGUI_svnt) : ciao_servant, ace_qt4, qt4_qt3support {
   avoids += ace_for_tao
-  requires += qt
   after      += Display_Base_skel Display_NavDisplayGUI_exec
   sharedname  = NavDisplayGUI_svnt
   includes  += ../NavDisplay
