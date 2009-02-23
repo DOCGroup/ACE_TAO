@@ -92,6 +92,17 @@
 # define ACE_MT_SAFE 1
 #endif
 
+// On winCE these classes do not exist. If they are
+// introduced in the future, no changes need to be made
+#if defined (ABOVE_NORMAL_PRIORITY_CLASS) && \
+  defined (BELOW_NORMAL_PRIORITY_CLASS) && \
+  defined (HIGH_PRIORITY_CLASS) && \
+  defined (IDLE_PRIORITY_CLASS) && \
+  defined (NORMAL_PRIORITY_CLASS) && \
+  defined (REALTIME_PRIORITY_CLASS)
+#define ACE_HAS_WIN32_PRIORITY_CLASS
+#endif
+
 // Build ACE services as DLLs.  If you write a library and want it to
 // use ACE_Svc_Export, this will cause those macros to build dlls.  If
 // you want your ACE service to be a static library, comment out this
@@ -191,7 +202,15 @@
 
 #if !defined (ACE_HAS_WINCE)
 // Platform supports pread() and pwrite()
-# define ACE_HAS_P_READ_WRITE
+# define ACE_HAS_WTOF
+#endif /* ! ACE_HAS_WINCE */
+
+#define ACE_HAS_P_READ_WRITE
+
+#if !defined (ACE_HAS_WINCE)
+# define ACE_HAS_DIRECT_H
+# define ACE_HAS_PROCESS_H
+# define ACE_HAS_IO_H
 #endif /* ! ACE_HAS_WINCE */
 
 #if !defined (__MINGW32__)
@@ -265,6 +284,15 @@
 #define ACE_LACKS_WAIT
 #define ACE_LACKS_IOVEC
 #define ACE_LACKS_LOG2
+#define ACE_LACKS_CADDR_T
+#if !defined(__MINGW32__) && !defined (__BORLANDC__)
+# define ACE_LACKS_MODE_T
+#endif
+#if !defined (__BORLANDC__)
+# define ACE_LACKS_NLINK_T
+# define ACE_LACKS_UID_T
+# define ACE_LACKS_GID_T
+#endif
 
 #define ACE_HAS_PDH_H
 #define ACE_HAS_PDHMSG_H
@@ -433,6 +461,10 @@
 #if !defined(ACE_HAS_WINSOCK2)
 # define ACE_HAS_WINSOCK2 1
 #endif /* !defined(ACE_HAS_WINSOCK2) */
+// Not use WS1 by default
+#if !defined(ACE_HAS_WINSOCK1)
+# define ACE_HAS_WINSOCK1 0
+#endif /* !defined(ACE_HAS_WINSOCK1) */
 
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -442,7 +474,7 @@
 #  include /**/ <winsock2.h>
 // WinCE 4 doesn't define the Exxx values without the WSA prefix, so do that
 // here. This is all lifted from the #if 0'd out part of winsock2.h.
-#  if defined (UNDER_CE)
+#  if defined (_WIN32_WCE) && (_WIN32_WCE < 0x600)
 #    define EWOULDBLOCK             WSAEWOULDBLOCK
 #    define EINPROGRESS             WSAEINPROGRESS
 #    define EALREADY                WSAEALREADY
@@ -530,8 +562,8 @@
 # define ACE_HAS_IP_MULTICAST
 #endif /* ACE_HAS_WINSOCK2 */
 
-#if !defined (ACE_HAS_WINCE) || defined (PPC)   /* CE only on some CPUs */
-#  define ACE_HAS_INTERLOCKED_EXCHANGEADD
+#if !defined (ACE_HAS_WINCE)
+# define ACE_HAS_INTERLOCKED_EXCHANGEADD
 #endif
 #define ACE_HAS_WIN32_TRYLOCK
 
@@ -542,7 +574,7 @@
 # define ACE_HAS_CANCEL_IO
 # define ACE_HAS_WIN32_OVERLAPPED_IO
 # define ACE_HAS_WIN32_NAMED_PIPES
-#endif /* !defined (ACE_USES_WINCE_SEMA_SIMULATION) && !ACE_HAS_PHARLAP */
+#endif /* !defined (ACE_HAS_WINCE) && !ACE_HAS_PHARLAP */
 
 #if !defined (ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION)
 # define ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION EXCEPTION_CONTINUE_SEARCH

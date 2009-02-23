@@ -252,7 +252,6 @@ ACE_Thread_Descriptor::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthr_handle_ = %d"), this->thr_handle_));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ngrp_id_ = %d"), this->grp_id_));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthr_state_ = %d"), this->thr_state_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ncleanup_info_.cleanup_hook_ = %x"), this->cleanup_info_.cleanup_hook_));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nflags_ = %x\n"), this->flags_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -628,9 +627,9 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   // @@ How are thread handles implemented on AIX?  Do they
   // also need to be duplicated?
   if (t_handle != 0)
-# if defined (ACE_HAS_WINCE)
+# if defined (ACE_LACKS_DUPLICATEHANDLE)
     *t_handle = thr_handle;
-# else  /* ! ACE_HAS_WINCE */
+# else  /* ! ACE_LACKS_DUP */
   (void) ::DuplicateHandle (::GetCurrentProcess (),
                             thr_handle,
                             ::GetCurrentProcess (),
@@ -638,7 +637,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                             0,
                             TRUE,
                             DUPLICATE_SAME_ACCESS);
-# endif /* ! ACE_HAS_WINCE */
+# endif /* ! ACE_LACKS_DUP */
 #else  /* ! ACE_HAS_WTHREADS */
   if (t_handle != 0)
     *t_handle = thr_handle;
@@ -898,14 +897,17 @@ ACE_Thread_Manager::run_thread_exit_hooks (int i)
   // generalized to support an arbitrary number of hooks.
 
   ACE_Thread_Descriptor *td = this->thread_desc_self ();
-  if (td != 0 && td->cleanup_info.cleanup_hook_ != 0)
+  for (ACE_Cleanup_Info_Node *iter = td->cleanup_info_->pop_front ();
+       iter != 0;
+       iter = cleanup_info_->pop_front ())
     {
-      (*td->cleanup_info_.cleanup_hook_)
-        (td->cleanup_info_.object_,
-         td->cleanup_info_.param_);
-
-      td->cleanup_info_.cleanup_hook_ = 0;
+      if (iter->cleanup_hook () != 0)
+        {
+          (*iter->cleanup_hook ()) (iter->object (), iter->param ());
+        }
+      delete iter;
     }
+
   ACE_UNUSED_ARG (i);
 #else
   ACE_UNUSED_ARG (i);

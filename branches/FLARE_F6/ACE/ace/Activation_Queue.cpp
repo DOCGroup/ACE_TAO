@@ -23,7 +23,7 @@ ACE_Activation_Queue::dump (void) const
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("delete_queue_ = %d\n"),
               this->delete_queue_));
-  ACE_DEBUG ((LM_INFO, ACE_TEXT ("queue_: \n")));
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("queue_:\n")));
   if (this->queue_)
     this->queue_->dump();
   else

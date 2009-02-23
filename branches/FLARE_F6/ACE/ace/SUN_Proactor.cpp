@@ -112,8 +112,8 @@ ACE_SUN_Proactor::handle_events_i (ACE_Time_Value *delta)
 
        default:         // EFAULT
          ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t)::%p \nNumAIO=%d\n",
-                       "ACE_SUN_Proactor::handle_events: aiowait failed",
+                       ACE_TEXT("%N:%l:(%P | %t)::%p \nNumAIO=%d\n"),
+                       ACE_TEXT("ACE_SUN_Proactor::handle_events: aiowait failed"),
                         num_started_aio_),
                       -1);
        }
@@ -202,9 +202,9 @@ ACE_SUN_Proactor::find_completed_aio (aio_result_t *result,
                                transfer_count) == 0)
     { // should never be
       ACE_ERROR ((LM_ERROR,
-                  "%N:%l:(%P | %t)::%p\n",
-                  "ACE_SUN_Proactor::find_completed_aio:"
-                  "should never be !!!\n"));
+                  ACE_TEXT("%N:%l:(%P | %t)::%p\n"),
+                  ACE_TEXT("ACE_SUN_Proactor::find_completed_aio:")
+                  ACE_TEXT("should never be !!!\n")));
       return 0;
     }
 

@@ -178,12 +178,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE::HTBP::Stream stream (session);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) client %s connected from %d\n"),
-              ACE_TEXT_CHAR_TO_TCHAR(cli_addr.get_host_name ()),
+              ACE_TEXT ("(%P|%t) client %C connected from %d\n"),
+              cli_addr.get_host_name (),
               cli_addr.get_port_number ()));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P) *****  server TEST 1 ***** \n")));
+              ACE_TEXT("(%P) *****  server TEST 1 *****\n")));
   //*******************   TEST 1   ******************************
   //
   // Do a iovec recvv - the client should send 255 bytes, which we
@@ -232,7 +232,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P) ***** server  TEST 2 ***** \n")));
+              ACE_TEXT("(%P) ***** server  TEST 2 *****\n")));
 
   //*******************   TEST 2   ******************************
   //

@@ -41,6 +41,28 @@ log2_test (void)
   return error_count;
 }
 
+int
+ace_debug_test (void)
+{
+  int test_status = 0;
+
+  // Check if ACE::debug() is by default false when no ACE_DEBUG environment variable
+  // is there
+  const char* debug = ACE_OS::getenv ("ACE_DEBUG");
+  if (debug == 0)
+    {
+      if (ACE::debug())
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE::debug() returns true.\n")));
+    }
+  else
+    {
+      if (!ACE::debug())
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE::debug() returns false.\n")));
+    }
+
+  return test_status;
+}
+
 // Test ACE::execname to be sure it finds .exe without regard to case.
 int
 execname_test (void)
@@ -98,6 +120,9 @@ run_main (int, ACE_TCHAR *[])
 
   if ((result = log2_test ()) != 0)
     status = result;
+
+  if ((result = ace_debug_test ()) != 0)
+      status = result;
 
   ACE_END_TEST;
   return status;

@@ -133,8 +133,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::cur_arg_strncasecmp (const CHAR_TYPE *flag)
                               flag,
                               flag_length) == 0)
         {
-          if (ACE_OS::strlen(temp_[current_index_]) ==
-              flag_length)
+          if (ACE_OS::strlen(temp_[current_index_]) == flag_length)
             {
               // match and lengths are equal
               return 0;

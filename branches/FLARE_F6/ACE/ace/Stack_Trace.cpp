@@ -77,13 +77,13 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
         {
           // this could be more efficient by remembering where we left off in buf_
           char *symp = &stack_syms[i][0];
-          while (this->buflen_ < SYMBUFSIZ && *symp != '\0')
+          while (this->buflen_ < SYMBUFSIZ - 2 && *symp != '\0')
             {
               this->buf_[this->buflen_++] = *symp++;
             }
           this->buf_[this->buflen_++] = '\n'; // put a newline at the end
         }
-      this->buf_[this->buflen_+1] = '\0'; // zero terminate the string
+      this->buf_[this->buflen_] = '\0'; // zero terminate the string
 
       ::free (stack_syms);
     }

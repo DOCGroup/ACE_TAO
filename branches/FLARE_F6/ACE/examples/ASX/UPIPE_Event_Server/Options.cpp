@@ -165,34 +165,27 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                               "\t[-H high water mark]\n"
                               "\t[-i number of test iterations]\n"
                               "\t[-L low water mark]\n"
-                              "\t[-M] message size \n"
+                              "\t[-M] message size\n"
                               "\t[-n] (THR_NEW_LWP)\n"
                               "\t[-q max queue size]\n"
                               "\t[-S supplier file]\n"
                               "\t[-s supplier port]\n"
                               "\t[-t number of threads]\n"
-                              "\t[-v] (verbose) \n",
+                              "\t[-v] (verbose)\n",
                               ACE_TEXT_ALWAYS_CHAR (argv[0]));
         ACE_OS::exit (1);
         /* NOTREACHED */
         break;
       }
 
-  // HACK! This needs to be done to avoid the mismatch from ACE_TEXT
-  // in ACE_SIZE_T_FORMAT_SPECIFIER to narrow-char on wide-char builds.
-  // It only works because it's at the end of the file.
-# if defined (ACE_TEXT)
-#  undef ACE_TEXT
-# endif
-# define ACE_TEXT(X) X
   if (this->verbose ())
     ACE_OS::printf ("%8d = initial concurrency hint\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER " = total iterations\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER " = thread count\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER " = low water mark\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER " = high water mark\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER " = message_size\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER " = initial queue length\n"
+                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = total iterations\n"
+                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = thread count\n"
+                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = low water mark\n"
+                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = high water mark\n"
+                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = message_size\n"
+                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = initial queue length\n"
                     "%8d = THR_BOUND\n"
                     "%8d = THR_NEW_LWP\n",
                     ACE_OS::thr_getconcurrency (),

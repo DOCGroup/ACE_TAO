@@ -523,9 +523,9 @@ void Options_Manager::_show_usage(FILE* out, ACE_TCHAR const * const opts_set)
 
     if (ACE_OS::strstr(__program_name, ACE_TEXT ("SOCK_SEQPACK_srv"))) {
       ACE_OS::fprintf (out, "   -a   w.x.y.z,a.b.c.d,...  server-accept-addr    INADDR_ANY\n"
-                            "        (comma-separated                                     \n"
-                            "         list of one or more                                 \n"
-                            "         addresses)                                          \n");
+                            "        (comma-separated                                    \n"
+                            "         list of one or more                                \n"
+                            "         addresses)                                         \n");
     } else {
       ACE_OS::fprintf (out, "   -a   w.x.y.z        server-accept-addr          INADDR_ANY\n");
     }

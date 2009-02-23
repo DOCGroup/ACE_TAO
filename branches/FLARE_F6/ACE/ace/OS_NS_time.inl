@@ -334,8 +334,9 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ACE_OS::clock_gettime (
 #if defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
          CLOCK_MONOTONIC,
-#endif /* !ACE_HAS_CLOCK_GETTIME_MONOTONIC */
+#else
          CLOCK_REALTIME,
+#endif /* !ACE_HAS_CLOCK_GETTIME_MONOTONIC */
          &ts);
 
   // Carefully create the return value to avoid arithmetic overflow

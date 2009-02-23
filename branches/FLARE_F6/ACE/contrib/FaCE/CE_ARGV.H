@@ -34,7 +34,7 @@ class CE_ARGV
 {
 public:
     /**
-     * Ctor accepts CE command line as a paramter.
+     * Ctor accepts CE command line as a parameter.
      */
     CE_ARGV(wchar_t* cmdLine);
 
@@ -44,7 +44,7 @@ public:
     ~CE_ARGV(void);
 
     /**
-     * Returns the number of command line paramters, same as argc on Unix.
+     * Returns the number of command line parameters, same as argc on Unix.
      */
     int argc(void);
 
@@ -65,7 +65,7 @@ private:
     CE_ARGV(CE_ARGV&);
 
     /**
-     * Pointer of converted command line paramters.
+     * Pointer of converted command line parameters.
      */
     wchar_t** ce_argv_;
 

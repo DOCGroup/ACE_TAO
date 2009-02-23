@@ -23,6 +23,7 @@
 // Fortunately, PharLap ETS offers much of the Win32 API. But it's still on
 // Winsock 1.1
 #define ACE_HAS_WINSOCK2 0
+#define ACE_HAS_WINSOCK1 1
 
 // The TSS implementation doesn't pass muster on the TSS_Test, but it works
 // well with ACE's TSS emulation.

@@ -346,7 +346,7 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
                           -1);
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "rapi_sender () call succeeds with PATH Tear! \n"));
+                    "rapi_sender () call succeeds with PATH Tear!\n"));
 
       return 0;
     }
@@ -421,7 +421,7 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
-                "rapi_sender () call succeeds ! \n"));
+                "rapi_sender () call succeeds !\n"));
   return 0;
 }
 
@@ -456,7 +456,7 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
                           -1);
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "rapi_reserve () for RESV Tear call succeeds \n"));
+                    "rapi_reserve () for RESV Tear call succeeds\n"));
 
       return 0;
     }
@@ -524,7 +524,7 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
-                "rapi_reserve () call succeeds \n"));
+                "rapi_reserve () call succeeds\n"));
 
   return 0;
 }
@@ -689,7 +689,7 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Setting QoS with ACE_OS::ioctl () succeeds \n")));
+                ACE_TEXT ("Setting QoS with ACE_OS::ioctl () succeeds\n")));
 
   return 0;
 }

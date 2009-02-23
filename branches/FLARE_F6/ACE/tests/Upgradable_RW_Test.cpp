@@ -299,9 +299,9 @@ Time_Calculation ::print_stats (void)
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\n")
-                  ACE_TEXT ("\treal_time\t = %0.06f ms, \n")
-                  ACE_TEXT ("\tuser_time\t = %0.06f ms, \n")
-                  ACE_TEXT ("\tsystem_time\t = %0.06f ms, \n")
+                  ACE_TEXT ("\treal_time\t = %0.06f ms,\n")
+                  ACE_TEXT ("\tuser_time\t = %0.06f ms,\n")
+                  ACE_TEXT ("\tsystem_time\t = %0.06f ms,\n")
                   ACE_TEXT ("\t%0.00f calls/second\n"),
                   elapsed_time.real_time   < 0.0 ? 0.0 : elapsed_time.real_time,
                   elapsed_time.user_time   < 0.0 ? 0.0 : elapsed_time.user_time,
@@ -438,7 +438,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   if (not_upgraded != 0 || upgraded != 0)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("upgraded to not upgraded ratio = %f \n"),
+                ACE_TEXT ("upgraded to not upgraded ratio = %f\n"),
                 (float) upgraded / (float) (not_upgraded + upgraded)));
 
   ACE_DEBUG ((LM_DEBUG,

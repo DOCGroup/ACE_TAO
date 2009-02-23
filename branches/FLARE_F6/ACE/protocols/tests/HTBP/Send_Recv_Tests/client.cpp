@@ -128,10 +128,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               remote.get_port_number()));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) connected to %s\n"),
-              ACE_TEXT_CHAR_TO_TCHAR(remote.get_host_name ())));
+              ACE_TEXT ("(%P|%t) connected to %C\n"),
+              remote.get_host_name ()));
 
-   ACE_DEBUG ((LM_DEBUG, "(%P) *****  client TEST 1 ***** \n"));
+   ACE_DEBUG ((LM_DEBUG, "(%P) *****  client TEST 1 *****\n"));
 
  //*******************   TEST 1   ******************************
   //
@@ -184,7 +184,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
   //  ACE_OS::sleep (10);
-  ACE_DEBUG ((LM_DEBUG, "(%P) *****  client TEST 2 ***** \n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P) *****  client TEST 2 *****\n"));
 
   //*******************   TEST 2   ******************************
   //

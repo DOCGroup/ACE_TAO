@@ -1,3 +1,4 @@
+#! /usr/bin/perl
 eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
     & eval 'exec perl -w -S $0 $argv:q'
     if 0;
@@ -32,7 +33,7 @@ foreach $total_threads (sort {$a <=> $b} @total_threads) {
   open (FILE, "client-${total_threads}.log")  ||
     die "$0: unable to open \"client-${total_threads}.log\"\n";
   while ($line = <FILE>) {
-    if ($line =~ /.*usec-per-message = ([\d\.]+)/) 
+    if ($line =~ /.*usec-per-message = ([\d\.]+)/)
     {
         $high_latency  += $1 ;
 	$number++;

@@ -108,7 +108,7 @@ static
 void print_till_death (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\n-> start generating messages... \n"));
+              "\n-> start generating messages...\n"));
 
   for (int i = 0; i < 1000; i++)
     {
@@ -191,7 +191,7 @@ count_files (void)
                 num_files));
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n-< counting finished... \n"));
+              "\n-< counting finished...\n"));
 }
 
 // get the file statistics
@@ -200,10 +200,9 @@ static time_t
 get_statistics (ACE_TCHAR *f_name)
 {
   ACE_stat buf;
-  int result;
 
   // Get data associated with "file_name":
-  result = ACE_OS::stat (f_name, &buf);
+  int result = ACE_OS::stat (f_name, &buf);
 
   // Check if statistics are valid:
   if (result != 0)
@@ -218,24 +217,12 @@ get_statistics (ACE_TCHAR *f_name)
                   ACE_TEXT ("      File size (B): %d\n"),
                   buf.st_size));
 
-#if defined (ACE_HAS_WINCE)
-      time_t tm = buf.st_mtime.sec();
-
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("      Time modified : %s\n"),
-                  ACE_OS::ctime (&tm)));
-#else
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("      Time modified : %s\n"),
                   ACE_OS::ctime (&buf.st_mtime)));
-#endif  // ACE_HAS_WINCE
     }
 
-#if defined (ACE_HAS_WINCE)
-  return buf.st_mtime.sec();
-#else
   return buf.st_mtime;
-#endif  // ACE_HAS_WINCE
 }
 
 // analyse the file order
@@ -243,7 +230,7 @@ static void
 order (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\n-> start testing order... \n")));
+              ACE_TEXT ("\n-> start testing order...\n")));
 
   if (num_files <= 2)
     {
@@ -312,19 +299,17 @@ remove_files (void)
               ACE_TEXT ("-> removing existent files...\n")));
 
   int error = 0;
-  int test;
   int i = 0;
-  ACE_TCHAR backup[MAXPATHLEN+1];
 
   do
     {
-      i++;
+      ++i;
+      ACE_TCHAR backup[MAXPATHLEN+1];
       ACE_OS::sprintf (backup,
                        ACE_TEXT ("%s.%d"),
                        file_name,
                        i);
-      test = ACE_OS::unlink (backup);
-      if (test != 0)
+      if (ACE_OS::unlink (backup) != 0)
         error = 1;
     }
   while (error != 1);
@@ -428,7 +413,9 @@ int run_main (int argc, ACE_TCHAR *argv [])
     {
       l_argv[0] = (ACE_TCHAR *)ACE_TEXT ("Logging_Strategy_Test");
       l_argv[1] =
-        (ACE_TCHAR *) ACE_TEXT ("-slog/Logging_Strategy_Test")
+        (ACE_TCHAR *) ACE_TEXT ("-s")
+                      ACE_DEFAULT_TEST_DIR
+                      ACE_TEXT ("log/Logging_Strategy_Test")
                       ACE_LOG_FILE_EXT_NAME;
       l_argv[2] = (ACE_TCHAR *) ACE_TEXT ("-o");
       l_argv[3] = 0;
@@ -480,10 +467,10 @@ int run_main (int argc, ACE_TCHAR *argv [])
 #else // Platform doesn't support DLLs, or configured to link
       // statically
   ACE_Logging_Strategy logging_strategy;
-  char ls_argc = argc - 1;
+  unsigned char ls_argc = argc - 1;
   ACE_Auto_Basic_Ptr<ACE_TCHAR *> ls_argv (new ACE_TCHAR *[ls_argc]);
 
-  for (char c = 0; c < ls_argc; c++)
+  for (unsigned char c = 0; c < ls_argc; c++)
     (ls_argv.get ())[c] = argv[c+1];
 
   if (logging_strategy.init (ls_argc, ls_argv.get ()) == -1)

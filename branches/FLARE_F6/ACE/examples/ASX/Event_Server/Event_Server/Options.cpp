@@ -168,32 +168,26 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                               "\t[-H high water mark]\n"
                               "\t[-i number of test iterations]\n"
                               "\t[-L low water mark]\n"
-                              "\t[-M] message size \n"
+                              "\t[-M] message size\n"
                               "\t[-n] (THR_NEW_LWP)\n"
                               "\t[-q max queue size]\n"
                               "\t[-s supplier port]\n"
                               "\t[-t number of threads]\n"
-                              "\t[-v] (verbose) \n",
+                              "\t[-v] (verbose)\n",
                               ACE_TEXT_ALWAYS_CHAR (argv[0]));
         ACE_OS::exit (1);
         /* NOTREACHED */
         break;
       }
 
-  // This is a major hack to get the size_t format spec to be a narrow
-  // char, same as the other strings for printf() here. It only works
-  // because this is the end of the source file. It makes the
-  // ACE_SIZE_T_FORMAT_SPECIFIER not use ACE_TEXT, effectively.
-#undef ACE_TEXT
-#define ACE_TEXT(A) A
   if (this->verbose ())
     ACE_OS::printf ("%8d = initial concurrency hint\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER " = total iterations\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER " = thread count\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER " = low water mark\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER " = high water mark\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER " = message_size\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER " = initial queue length\n"
+                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = total iterations\n"
+                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = thread count\n"
+                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = low water mark\n"
+                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = high water mark\n"
+                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = message_size\n"
+                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = initial queue length\n"
                     "%8d = THR_BOUND\n"
                     "%8d = THR_NEW_LWP\n",
                     ACE_Thread::getconcurrency (),

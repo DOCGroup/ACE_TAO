@@ -198,7 +198,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
     {
       if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
         ACE_ERROR ((LM_ERROR,
-                    "%p\n", this->backing_store_name_));
+                    ACE_TEXT("%p\n"), this->backing_store_name_));
     }
 #endif /* ACE_WIN32 */
 }
@@ -311,12 +311,12 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
     {
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
       this->base_addr_ = this->mmap_.addr ();
-      
+
       if (obase_addr && this->base_addr_ != obase_addr)
         {
           ACE_BASED_POINTER_REPOSITORY::instance ()->unbind (obase_addr);
         }
-        
+
       ACE_BASED_POINTER_REPOSITORY::instance ()->bind (this->base_addr_,
                                                        map_size);
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

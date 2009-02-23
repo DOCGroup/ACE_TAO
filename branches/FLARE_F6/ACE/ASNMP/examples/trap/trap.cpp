@@ -145,7 +145,7 @@ void trapapp::usage()
 {
   cout << "Usage:\n";
   cout << "trap [options] dotted-quad | DNSName[:port]\n";
-  cout << "      -c Community_name, default is 'public' \n";
+  cout << "      -c Community_name, default is 'public'\n";
   cout << "      -r N  retries default is N = 1 retry\n";
   cout << "      -t N  timeout in seconds default is 1 second" << endl;
   cout << "      -e oid  enterprise oid default is 1.3.6.1.2.1.1.1.2.0.1\n";

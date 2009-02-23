@@ -32,14 +32,13 @@
 #include "ace/Reactor.h"
 #include "ace/Timer_Queue.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_signal.h"
 
 #include "Network_Adapters_Test.h"
-
 
 ACE_RCSID (tests,
            Network_Adapters_Test,
            "$Id$")
-
 
 /**
  * There are two major uses of the functionality:
@@ -145,12 +144,12 @@ Echo_Handler::open (ACE_Reactor * const    reactor,
   if (this->reactor ())
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
-                       ACE_TEXT ("reactor is already set. \n")),
+                       ACE_TEXT ("reactor is already set.\n")),
                       -1);
   if (!reactor)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Echo_Handler::open - failed : ")
-                       ACE_TEXT ("NULL pointer to reactor provided. \n")),
+                       ACE_TEXT ("NULL pointer to reactor provided.\n")),
                       -1);
 
   this->reactor (reactor);
@@ -821,7 +820,7 @@ Repeats_Handler::handle_timeout (ACE_Time_Value const &,
   this->counter_++ ;
   if (one_button_test && this->counter_ > 3)
     {
-      ::raise (SIGINT);
+      ACE_OS::raise (SIGINT);
     }
   if (this->check_handler_)
     {
@@ -848,7 +847,7 @@ extern "C"
 }
 #endif /* #if defined (ACE_HAS_SIG_C_FUNC) */
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 BOOL CtrlHandler(DWORD fdwCtrlType)
 {
   switch (fdwCtrlType)
@@ -858,7 +857,7 @@ BOOL CtrlHandler(DWORD fdwCtrlType)
     case CTRL_SHUTDOWN_EVENT:
     case CTRL_CLOSE_EVENT:
     case CTRL_LOGOFF_EVENT:
-      ::raise (SIGINT);
+      ACE_OS::raise (SIGINT);
       return TRUE;
 
       // Pass other signals to the next handler.
@@ -1025,7 +1024,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Network_Adapters_Test"));
 
 #if defined (ACE_WIN32)
+#if !defined (ACE_HAS_WINCE)
   SetConsoleCtrlHandler((PHANDLER_ROUTINE) CtrlHandler, TRUE);
+#endif
 #else /* #if defined (ACE_WIN32) */
   // Set a handler for SIGSEGV signal to call for abort.
   ACE_Sig_Action sa1 ((ACE_SignalHandler) sigsegv_handler, SIGSEGV);

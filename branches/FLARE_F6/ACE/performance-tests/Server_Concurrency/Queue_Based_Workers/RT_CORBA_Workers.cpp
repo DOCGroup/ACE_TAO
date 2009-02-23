@@ -62,7 +62,7 @@ Synchronisers::start_synchronization (void)
         if (debug)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) Ready to signal start \n"));
+                        "(%P|%t) Ready to signal start\n"));
           }
         // Start the timer
         test_timer.start ();
@@ -81,7 +81,7 @@ Synchronisers::start_synchronization (void)
     {
       //FUZZ: disable check_for_lack_ACE_OS
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Ready to wait () on event.. \n"));
+                  "(%P|%t) Ready to wait () on event..\n"));
       //FUZZ: enable check_for_lack_ACE_OS
     }
 
@@ -116,7 +116,7 @@ Synchronisers::end_synchronization (void)
         if (debug)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) Ended peacefully \n"));
+                        "(%P|%t) Ended peacefully\n"));
           }
 
         // return to do our work;
@@ -130,7 +130,7 @@ Synchronisers::end_synchronization (void)
   if (debug)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Going to wait .. \n"));
+                  "(%P|%t) Going to wait ..\n"));
     }
 
   // Wait blisfully till we are woken up
@@ -235,7 +235,7 @@ Worker_Task::svc (void)
         {
           if (debug)
             ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) Got stop message after [%d] messages \n",
+                        "(%P|%t) Got stop message after [%d] messages\n",
                         this->messages_processed_));
 
           break;
@@ -300,7 +300,7 @@ Input_Task::svc (void)
   if (debug)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) Sending close messages \n"));
+                  "(%t) Sending close messages\n"));
     }
 
 
@@ -388,7 +388,7 @@ Output_Task::put (ACE_Message_Block *mb, ACE_Time_Value *)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Sticking message into "
-                  " output queue \n"));
+                  " output queue\n"));
                   }*/
   return this->putq (mb);
 }
@@ -556,18 +556,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     (double) elapsed_time / number_of_messages;
 
   ACE_DEBUG ((LM_DEBUG,
-     "(%P|%t) Throughput is [%f] \n",
+     "(%P|%t) Throughput is [%f]\n",
      elapsed_time_per_invocation));
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Throughput is [%f] \n",
+              "(%P|%t) Throughput is [%f]\n",
               1000000000/ elapsed_time_per_invocation));
 
 #endif /*ACE_WIN32 */
   for (i = 0; i < number_of_workers; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Message process for thread [%d] is [%d] \n",
+                  "Message process for thread [%d] is [%d]\n",
                   i, workers[i]->processed ()));
       delete workers[i];
     }
@@ -582,7 +582,7 @@ int
 ACE_TMAIN(int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Not supported in single threaded builds \n"));
+              "(%P|%t) Not supported in single threaded builds\n"));
 
   return 0;
 }

@@ -104,7 +104,7 @@ protected:
 
   /**
    * Flag indicating whether the ACE_Object_Manager was dynamically
-   * allocated by ACE.  (If is was dynamically allocated by the
+   * allocated by ACE. (If is was dynamically allocated by the
    * application, then the application is responsible for destroying
    * it.)
    */
@@ -205,7 +205,7 @@ public:
   static ACE_OS_Object_Manager *instance (void);
 
   /// For <ACE_OS::atexit> support.
-  int at_exit (ACE_EXIT_HOOK func);
+  int at_exit (ACE_EXIT_HOOK func, const char* name = 0);
 
 //private:
   /// Singleton instance pointer.

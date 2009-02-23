@@ -15,7 +15,7 @@
 #endif /* __GNUG__ */
 
 #define ACE_LACKS_SUSECONDS_T
-#define ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT ("%lu")
+#define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
 
 #if defined (ACE_HAS_PENTIUM)
 # undef ACE_HAS_PENTIUM

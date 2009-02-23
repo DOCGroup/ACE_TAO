@@ -135,7 +135,9 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
                         ACE_CACHE_MAP_MANAGER \
                         ACE_THROW_SPEC \
                         ACE_T1 \
-                        ACE_T2
+                        ACE_T2 \
+                        ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
+                        ACE_END_VERSIONED_NAMESPACE_DECL
 
 #---------------------------------------------------------------------------
 # Configuration::addtions related to external references

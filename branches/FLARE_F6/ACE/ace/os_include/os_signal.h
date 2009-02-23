@@ -70,14 +70,6 @@ extern "C"
 #  undef sigismember
 #endif /* ACE_HAS_SIG_MACROS */
 
-// This must come after signal.h is #included.  It's to counteract
-// the sigemptyset and sigfillset #defines, which only happen
-// when __OPTIMIZE__ is #defined (really!) on Linux.
-#if defined (linux) && defined (__OPTIMIZE__)
-#  undef sigemptyset
-#  undef sigfillset
-#endif /* linux && __OPTIMIZE__ */
-
 #if !defined (ACE_HAS_SIG_ATOMIC_T)
    typedef int sig_atomic_t;
 #endif /* !ACE_HAS_SIG_ATOMIC_T */
@@ -134,6 +126,14 @@ extern "C"
 #  define SIGALRM 0
 #endif /* SIGALRM */
 
+#if !defined (SIGABRT)
+#  define SIGABRT 0
+#endif /* SIGABRT */
+
+#if !defined (SIGTERM)
+#  define SIGTERM 0
+#endif /* SIGTERM */
+
 #if !defined (SIG_DFL)
 #  define SIG_DFL ((__sighandler_t) 0)
 #endif /* SIG_DFL */
@@ -164,6 +164,10 @@ extern "C"
    // highest-numbered signal.
 #  define ACE_NSIG NSIG
 #endif /* __Lynx__ */
+
+#if defined (ACE_HAS_WINCE)
+  typedef void (__cdecl * __sighandler_t)(int);
+#endif
 
 #if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES) || defined (ACE_HAS_LYNXOS50_SIGNALS)
    // Prototypes for both signal() and struct sigaction are consistent..

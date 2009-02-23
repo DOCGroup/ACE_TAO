@@ -26,9 +26,9 @@
 
 #include "ace/os_include/sys/os_types.h"
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_DIRECT_H)
 #  include /**/ <direct.h>
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_HAS_DIRECT_H */
 
 #if !defined (ACE_LACKS_SYS_STAT_H)
 #  include /**/ <sys/stat.h>
@@ -77,7 +77,6 @@ extern "C"
 #endif /* S_ISLNK */
 
 #if defined (ACE_HAS_WINCE)
-#  include "ace/Time_Value.h"
 
 // Translate the WinCE bits into names expected by our callers.
 // The dwFileAttributes parameter doesn't have protection info, so
@@ -87,6 +86,10 @@ extern "C"
 #  define S_IFREG FILE_ATTRIBUTE_NORMAL
 #  define S_IFLNK 0
 
+    // Since CE does not have _stat by default as NT/2000 does, the 'stat'
+    // struct defined here will be used.  Also note that CE file system
+    // struct is only for the CE 3.0 or later.
+    // Refer to the WCHAR.H from Visual C++ and WIBASE.H from eVC 3.0.
    struct stat
    {
       /// always 0 on Windows platforms
@@ -96,19 +99,19 @@ extern "C"
       dev_t st_rdev;
 
       /// file attribute
-      unsigned short st_mode;
+      mode_t st_mode;
 
       /// number of hard links
-      short st_nlink;
+      nlink_t st_nlink;
 
       /// time of last access
-      ACE_Time_Value st_atime;
+      time_t st_atime;
 
       /// time of last data modification
-      ACE_Time_Value st_mtime;
+      time_t st_mtime;
 
       /// time of creation
-      ACE_Time_Value st_ctime;
+      time_t st_ctime;
 
       /// file size, in bytes
       ACE_OFF_T st_size;

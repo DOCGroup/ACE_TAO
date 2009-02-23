@@ -1145,11 +1145,11 @@ public:
   /// Close down and release dynamically allocated resources.
   virtual ~ACE_Hash_Map_Manager_Ex_Adapter (void);
 
-  /// Initialize a <Map> with size @a length.
+  /// Initialize a Map with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = 0);
 
-  /// Close down a <Map> and release dynamically allocated resources.
+  /// Close down a Map and release dynamically allocated resources.
   virtual int close (void);
 
   /**
@@ -1204,7 +1204,7 @@ public:
   virtual int bind_create_key (const VALUE &value);
 
   /// Recovers the original key potentially modified by the map during
-  /// <bind_modify_key>.
+  /// bind_modify_key().
   virtual int recover_key (const KEY &modified_key,
                            KEY &original_key);
 

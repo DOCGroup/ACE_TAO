@@ -108,13 +108,13 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int fdetach (const char *file);
 
-  /// UNIX-style <ioctl>.
+  /// UNIX-style @c ioctl
   ACE_NAMESPACE_INLINE_FUNCTION
   int ioctl (ACE_HANDLE handle,
              ACE_IOCTL_TYPE_ARG2 cmd,
              void * = 0);
 
-  /// QoS-enabled <ioctl>.
+  /// QoS-enabled @c ioctl
   extern ACE_Export
   int ioctl (ACE_HANDLE socket,
              unsigned long io_control_code,

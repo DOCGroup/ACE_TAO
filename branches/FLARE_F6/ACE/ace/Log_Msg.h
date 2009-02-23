@@ -24,19 +24,35 @@
 #include "ace/Default_Constants.h"
 #include "ace/Log_Priority.h"
 #include "ace/os_include/os_limits.h"
+#include "ace/Atomic_Op.h"
+#include "ace/Synch_Traits.h"
 
 // The ACE_ASSERT macro used to be defined here, include ace/Assert.h
 // for backwards compatibility.
 #include "ace/Assert.h"
 
 #if defined (ACE_NLOGGING)
-#define ACE_HEX_DUMP(X) do {} while (0)
-#define ACE_RETURN(Y) do { return (Y); } while (0)
-#define ACE_ERROR_RETURN(X, Y) return (Y)
-#define ACE_ERROR_BREAK(X) { break; }
-#define ACE_ERROR(X) do {} while (0)
-#define ACE_DEBUG(X) do {} while (0)
-#define ACE_ERROR_INIT(VALUE, FLAGS)
+#if !defined (ACE_HEX_DUMP)
+# define ACE_HEX_DUMP(X) do {} while (0)
+#endif
+#if !defined (ACE_RETURN)
+# define ACE_RETURN(Y) do { return (Y); } while (0)
+#endif
+#if !defined (ACE_ERROR_RETURN)
+# define ACE_ERROR_RETURN(X, Y) return (Y)
+#endif
+#if !defined (ACE_ERROR_BREAK)
+# define ACE_ERROR_BREAK(X) { break; }
+#endif
+#if !defined (ACE_ERROR)
+# define ACE_ERROR(X) do {} while (0)
+#endif
+#if !defined (ACE_DEBUG)
+# define ACE_DEBUG(X) do {} while (0)
+#endif
+#if !defined (ACE_ERROR_INIT)
+# define ACE_ERROR_INIT(VALUE, FLAGS)
+#endif
 #else
 #if !defined (ACE_HEX_DUMP)
 #define ACE_HEX_DUMP(X) \
@@ -583,6 +599,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
+  void cleanup_ostream ();
+
   /// Status of operation (-1 means failure, >= 0 means success).
   int status_;
 
@@ -607,6 +625,15 @@ private:
   /// The ostream where logging messages can be written.
   ACE_OSTREAM_TYPE *ostream_;
 
+  /// This pointer is 0 if we are not reference counting (the user has not
+  /// passed "true" for the delete_ostream argument to msg_ostream).
+  /// If we are reference counting, this points to a shared count that will
+  /// be deleted when it reaches zero.  Since we want optional but shared
+  /// ownership neither std::auto_ptr nor ACE_Strong_Bound_Ptr have the right
+  /// semantics.  *Bound_Ptr also doesn't take advantage of Atomic_Op.
+  typedef ACE_Atomic_Op<ACE_SYNCH_MUTEX, unsigned long> Atomic_ULong;
+  Atomic_ULong *ostream_refcount_;
+
   /// The callback object.
   ACE_Log_Msg_Callback *msg_callback_;
 
@@ -618,9 +645,6 @@ private:
 
   /// Are we allowing tracing in this thread?
   bool tracing_enabled_;
-
-  /// Are we deleting this ostream?
-  bool delete_ostream_;
 
   /**
    * If we're running in the context of an ACE_Thread_Manager this

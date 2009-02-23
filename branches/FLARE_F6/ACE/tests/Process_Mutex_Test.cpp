@@ -160,7 +160,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       static const ACE_TCHAR* format = ACE_TEXT ("%s -c -n %s%s");
 #endif /* !ACE_WIN32 && ACE_USES_WCHAR */
       ACE_Process_Options options;
-      options.command_line (format, argv[0], mutex_name,
+      options.command_line (format, argc > 0 ? argv[0] : ACE_TEXT ("Process_Mutex_Test"), mutex_name,
                             release_mutex == 0 ? ACE_TEXT (" -d") : ACE_TEXT (""));
 
       // Spawn <n_processes> child processes that will contend for the

@@ -1,4 +1,5 @@
 // $Id$
+  //FUZZ: disable check_for_lack_ACE_OS
 
 #include <iostream>
 #include <assert.h>
@@ -192,3 +193,4 @@ int main (int, char *[])
   return 0;
 
 }
+  //FUZZ: enable check_for_lack_ACE_OS

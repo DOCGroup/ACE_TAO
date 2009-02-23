@@ -243,8 +243,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_finish (ACE_SOCK_SEQPACK_Association 
       if (error == EINPROGRESS || error == EWOULDBLOCK)
         {
           // This expression checks if we were polling.
-          if (timeout->sec () == 0
-              && timeout->usec () == 0)
+          if (*timeout == ACE_Time_Value::zero)
             error = EWOULDBLOCK;
           // Wait synchronously using timeout.
           else if (this->complete (new_association,

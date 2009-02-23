@@ -135,9 +135,9 @@ ACE_POSIX_CB_Proactor::handle_events_i (u_long milli_seconds)
       if (lerror != ETIME &&   // timeout
           lerror != EINTR )    // interrupted system call
         ACE_ERROR ((LM_ERROR,
-                    "%N:%l:(%P | %t)::%p\n",
-                    "ACE_POSIX_CB_Proactor::handle_events:"
-                    "semaphore acquire failed"
+                    ACE_TEXT("%N:%l:(%P | %t)::%p\n"),
+                    ACE_TEXT("ACE_POSIX_CB_Proactor::handle_events:")
+                    ACE_TEXT("semaphore acquire failed")
                   ));
     }
 

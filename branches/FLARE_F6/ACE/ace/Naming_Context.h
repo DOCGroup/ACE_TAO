@@ -337,17 +337,17 @@ public:
   void use_registry (bool x);
 
   /// Return debug status
-  int debug (void);
+  bool debug (void);
 
   /// Return verbose status
-  int verbose (void);
+  bool verbose (void);
 
 private:
   /// Extra debugging info
-  int debugging_;
+  bool debugging_;
 
   /// Extra verbose messages
-  int verbosity_;
+  bool verbosity_;
 
   /// Use Win32 Registry
   bool use_registry_;

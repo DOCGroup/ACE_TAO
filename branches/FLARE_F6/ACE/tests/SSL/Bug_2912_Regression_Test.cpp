@@ -145,7 +145,7 @@ get_dh1024 ()
   return(dh);
 }
 
-DH*
+extern "C" DH*
 tmp_dh_callback (SSL *s, int is_export, int keylength)
 {
   ACE_UNUSED_ARG(s);

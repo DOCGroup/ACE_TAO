@@ -597,7 +597,11 @@ test_format_specs (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%IENDINDENTING\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%W\n"), ACE_TEXT_WIDE ("My string test\n")));
   ACE_TCHAR* nill_string = 0;
+  char* char_nill_string = 0;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%W\n"), nill_string));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s\n"), nill_string));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\n"), char_nill_string));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%m %p\n"), nill_string));
   errno = ENOENT;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%m %p\n"), ACE_TEXT("perror")));
 

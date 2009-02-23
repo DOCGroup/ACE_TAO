@@ -166,8 +166,8 @@ void
 Printer::print (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) %s\n"),
-              ACE_TEXT_CHAR_TO_TCHAR(this->message_)));
+              ACE_TEXT ("(%t) %C\n"),
+              this->message_));
 }
 
 #if defined (ACE_HAS_THREADS)

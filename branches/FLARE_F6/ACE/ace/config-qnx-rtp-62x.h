@@ -86,7 +86,8 @@
 #define ACE_LACKS_POLL_H
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_LACKS_RWLOCK_T
-#define ACE_LACKS_SOCKET_BUFSIZ
+#define ACE_LACKS_SO_SNDBUF
+#define ACE_LACKS_SO_RCVBUF
 #define ACE_LACKS_STREAM_MODULES
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_STRPTIME
@@ -101,6 +102,7 @@
 #define ACE_LACKS_ALPHASORT
 #define ACE_LACKS_FD_MASK
 #define ACE_LACKS_NFDBITS
+#define ACE_LACKS_ISCTYPE
 
 #define ACE_LACKS_RLIMIT         // QNX rlimit syscalls don't work properly with ACE.
 

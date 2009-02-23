@@ -2,9 +2,6 @@
 
 #include "ace/Malloc_T.h"
 #include "ace/OS_Memory.h"
-#if !defined (ACE_HAS_WINCE)
-//# include "ace/Service_Config.h"
-#endif /* !ACE_HAS_WINCE */
 #include "ace/SString.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"

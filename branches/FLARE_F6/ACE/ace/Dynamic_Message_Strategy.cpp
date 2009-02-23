@@ -149,7 +149,7 @@ ACE_Deadline_Message_Strategy::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Dynamic_Message_Strategy base class: \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Dynamic_Message_Strategy base class:\n")));
   this->ACE_Dynamic_Message_Strategy::dump ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nderived class: ACE_Deadline_Message_Strategy\n")));
@@ -192,7 +192,7 @@ ACE_Laxity_Message_Strategy::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Dynamic_Message_Strategy base class: \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Dynamic_Message_Strategy base class:\n")));
   this->ACE_Dynamic_Message_Strategy::dump ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nderived class: ACE_Laxity_Message_Strategy\n")));

@@ -341,6 +341,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "-u         = Tell MSVC to use the environment\n";
         print "-vc7       = Use MSVC 7 toolset\n";
         print "-vc8       = Use MSVC 8 toolset\n";
+        print "-vc9       = Use MSVC 9 toolset\n";
         print "\n";
         print "-ACE       = Build ACE and its tests\n";
         print "-TAO       = Build ACE+TAO and its tests\n";

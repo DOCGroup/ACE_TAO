@@ -81,7 +81,7 @@ ACE_ATM_Acceptor::get_local_addr (ACE_ATM_Addr &local_addr)
     return -1;
   }
 
-  return (0);
+  return 0;
 #else
   ACE_UNUSED_ARG (local_addr);
 
@@ -298,7 +298,7 @@ ACE_ATM_Acceptor::accept (ACE_ATM_Stream &new_sap,
   ACE_UNUSED_ARG (reset_new_handle);
   ACE_UNUSED_ARG (params);
   ACE_UNUSED_ARG (qos);
-  return (0);
+  return 0;
 #endif /* ACE_HAS_FORE_ATM_XTI */
 }
 

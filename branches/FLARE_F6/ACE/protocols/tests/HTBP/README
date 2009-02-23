@@ -1,8 +1,8 @@
 $Id$
 
 Test cases for the HTTP Tunneling Bidirectional Protocol. For more
-information on the protocol itself, refer to ace/HTBP/README. These
-tests are adaptations of essential ACE SOCK tests, with the minimal
+information on the protocol itself, refer to protocols/ace/HTBP/README.
+These tests are adaptations of essential ACE SOCK tests, with the minimal
 changes to support using HTBP rather than SOCK.
 
 Contained in this directory:

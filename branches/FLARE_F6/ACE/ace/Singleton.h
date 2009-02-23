@@ -82,9 +82,12 @@ public:
   /// Global access point to the Singleton.
   static TYPE *instance (void);
 
-  /// Cleanup method, used by <ace_cleanup_destroyer> to destroy the
+  /// Cleanup method, used by @c ace_cleanup_destroyer to destroy the
   /// ACE_Singleton.
   virtual void cleanup (void *param = 0);
+
+  /// Explicitly delete the Singleton instance.
+  static void close (void);
 
   /// Dump the state of the object.
   static void dump (void);

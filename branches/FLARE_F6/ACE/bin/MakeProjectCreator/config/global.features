@@ -33,6 +33,7 @@ java          = 0
 zlib          = 0
 zzip          = 0
 bzip2         = 0
+lzo2          = 0
 ipv6          = 0
 mfc           = 0
 rpc           = 0
@@ -50,7 +51,11 @@ vcl           = 0
 stl           = 0
 xsc           = 0
 mcpp          = 0
-
+tao_idl_fe_gen = 0
+xerces        = 0
+xerces2       = 0
+xerces3       = 0
+ofccm         = 0
 // Features for various GUI libraries
 
 // Some of features are switched on because they are also controlled

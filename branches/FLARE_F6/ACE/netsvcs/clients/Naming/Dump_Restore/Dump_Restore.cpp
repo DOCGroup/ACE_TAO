@@ -40,7 +40,7 @@ Dump_Restore::Dump_Restore (int argc, ACE_TCHAR *argv[])
       // problme of Display () not printing the right hostname
       ACE_OS::strcpy (this->hostname_,
                       this->name_options_->nameserver_host ());
-      this->port_ = 
+      this->port_ =
         this->name_options_->nameserver_port ();
 
       if (this->ns_context_->open (ACE_Naming_Context::NET_LOCAL) == -1)
@@ -193,7 +193,7 @@ Dump_Restore::display_menu (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("<D> Dump <file name>\n")));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("<Q> or ^C (exit) \n")));
+              ACE_TEXT ("<Q> or ^C (exit)\n")));
 }
 
 
@@ -331,7 +331,7 @@ Dump_Restore::populate (Dump_Restore::Operation_Type op)
                                    allocator);
 
       for (char *temp;
-           (temp = read_buffer.read ('\n')) != 0; 
+           (temp = read_buffer.read ('\n')) != 0;
            )
         {
           char *name = 0;
@@ -421,7 +421,7 @@ Dump_Restore::unbind (const char *key)
   int result = ns_context_->unbind (key);
 
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("ns_context_->unbind")),
                       -1);
@@ -433,7 +433,7 @@ Dump_Restore::rebind (const char *key,
                       const char *value,
                       const char *type)
 {
-  if (ns_context_->rebind (key, 
+  if (ns_context_->rebind (key,
                            value,
                            type) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

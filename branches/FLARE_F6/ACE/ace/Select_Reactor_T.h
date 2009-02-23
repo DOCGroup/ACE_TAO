@@ -279,7 +279,7 @@ public:
                               ACE_Reactor_Mask);
 
   /**
-   * Removes all the @a mask bindings for handles in the <handle_set>
+   * Removes all the @a mask bindings for handles in the @a handle_set
    * bind of <Event_Handler>.  If there are no more bindings for any
    * of these handlers then they are removed from the Select_Reactor.
    */
@@ -298,7 +298,7 @@ public:
                               ACE_Sig_Action *old_disp = 0,
                               int sigkey = -1);
 
-  /// Calls <remove_handler> for every signal in <sigset>.
+  /// Calls <remove_handler> for every signal in @a sigset.
   virtual int remove_handler (const ACE_Sig_Set &sigset);
 
   // = Suspend and resume Handlers.
@@ -309,7 +309,7 @@ public:
   /// Temporarily suspend the <Event_Handler> associated with @a handle.
   virtual int suspend_handler (ACE_HANDLE handle);
 
-  /// Suspend all <handles> in handle set temporarily.
+  /// Suspend all @a handles in handle set temporarily.
   virtual int suspend_handler (const ACE_Handle_Set &handles);
 
   /// Suspend all the <Event_Handlers> in the Select_Reactor.
@@ -323,7 +323,7 @@ public:
   /// @a handle.
   virtual int resume_handler (ACE_HANDLE handle);
 
-  /// Resume all <handles> in handle set.
+  /// Resume all @a handles in handle set.
   virtual int resume_handler (const ACE_Handle_Set &handles);
 
   /// Resume all the <Event_Handlers> in the Select_Reactor.
@@ -373,8 +373,8 @@ public:
 
   /**
    * Cancel all <event_handlers> that match the address of
-   * <event_handler>.  If @a dont_call_handle_close is 0 then the
-   * <handle_close> method of <event_handler> will be invoked.
+   * @a event_handler.  If @a dont_call_handle_close is 0 then the
+   * <handle_close> method of @a event_handler will be invoked.
    * Returns number of handler's cancelled.
    */
   virtual int cancel_timer (ACE_Event_Handler *event_handler,
@@ -431,7 +431,7 @@ public:
   /**
    * Set the maximum number of times that the
    * <ACE_Select_Reactor_Notify::handle_input> method will iterate and
-   * dispatch the <ACE_Event_Handlers> that are passed in via the
+   * dispatch the ACE_Event_Handlers that are passed in via the
    * notify pipe before breaking out of its <recv> loop.  By default,
    * this is set to -1, which means "iterate until the pipe is empty."
    * Setting this to a value like "1 or 2" will increase "fairness"
@@ -443,7 +443,7 @@ public:
   /**
    * Get the maximum number of times that the
    * <ACE_Select_Reactor_Notify::handle_input> method will iterate and
-   * dispatch the <ACE_Event_Handlers> that are passed in via the
+   * dispatch the ACE_Event_Handlers that are passed in via the
    * notify pipe before breaking out of its <recv> loop.
    */
   virtual int max_notify_iterations (void);
@@ -556,7 +556,7 @@ protected:
                                   ACE_Event_Handler *eh,
                                   ACE_Reactor_Mask mask);
 
-  /// Register a set of <handles>.
+  /// Register a set of @a handles.
   virtual int register_handler_i (const ACE_Handle_Set &handles,
                                   ACE_Event_Handler *handler,
                                   ACE_Reactor_Mask mask);
@@ -566,7 +566,7 @@ protected:
   virtual int remove_handler_i (ACE_HANDLE handle,
                                 ACE_Reactor_Mask);
 
-  /// Remove a set of <handles>.
+  /// Remove a set of @a handles.
   virtual int remove_handler_i (const ACE_Handle_Set &handles,
                                 ACE_Reactor_Mask);
 

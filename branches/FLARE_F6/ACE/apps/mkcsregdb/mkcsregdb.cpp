@@ -236,7 +236,7 @@ csdb_generator::init_output (const char *srcfile)
   ACE_OS::fprintf (outf_,"/*\n * Codeset registry DB, generated %s * source: %s\n",
                    ACE_OS::asctime (ACE_OS::localtime(&now)),
                    srcfile);
-  ACE_OS::fprintf (outf_," *\n * To populate the registry_db, construct a codeset registry text file based \n");
+  ACE_OS::fprintf (outf_," *\n * To populate the registry_db, construct a codeset registry text file based\n");
   ACE_OS::fprintf (outf_," * on the OSF's Character and Code Set Registry. See DCE RFC 40.1 for details\n");
   ACE_OS::fprintf (outf_," * on obtaining the full text for the current registry. Once you have composed\n");
   ACE_OS::fprintf (outf_," * a text file containing all the desired codeset information, build and run\n");

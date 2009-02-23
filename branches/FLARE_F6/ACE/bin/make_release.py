@@ -707,6 +707,8 @@ def generate_workspaces (stage_dir):
     ce_option += ' -value_template platforms+=\'"Smartphone 2003 (ARMV4)"\' '
     ce_option += ' -value_template platforms+=\'"Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"\' '
     ce_option += ' -value_template platforms+=\'"Windows Mobile 5.0 Smartphone SDK (ARMV4I)"\' '
+    ce_option += ' -value_template platforms+=\'"Windows Mobile 6 Standard SDK (ARMV4I)"\' '
+    ce_option += ' -value_template platforms+=\'"Windows Mobile 6 Professional SDK (ARMV4I)"\' '
 
     redirect_option = str ()
     if not opts.verbose:

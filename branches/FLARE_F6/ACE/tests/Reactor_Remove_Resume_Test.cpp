@@ -100,7 +100,7 @@ Bogus_Handler::handle_close (ACE_HANDLE,
 
   // This event handler is being closed by the reactor unexpectedly.
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ACE_TEXT ("Bogus_Handler unexpectedly closed\n ")),
+                     ACE_TEXT ("Bogus_Handler unexpectedly closed\n")),
                     -1);
 }
 
@@ -343,7 +343,7 @@ handle_events (ACE_Reactor & reactor,
       timeout.sec (2);
       int const result = reactor.handle_events (&timeout);
 
-      
+
       if (result > 0)
         {
           ACE_ERROR ((LM_ERROR,

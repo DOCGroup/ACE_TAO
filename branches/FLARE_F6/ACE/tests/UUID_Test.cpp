@@ -79,6 +79,30 @@ Tester::test (void)
       retval = -1;
     }
 
+  ACE_Utils::UUID nil_uuid (*ACE_Utils::UUID::NIL_UUID.to_string ());
+  ACE_DEBUG ((LM_DEBUG,
+              "UUID Constructed from NIL_UUID with string copy\n %s\n",
+              nil_uuid.to_string ()->c_str ()));
+
+  if (nil_uuid != ACE_Utils::UUID::NIL_UUID)
+    {
+      ACE_ERROR ((LM_ERROR, "Error: UUIDs are not the same with NIL_UUID string copy\n"));
+      retval = -1;
+    }
+
+    // Construct UUID using the assignment constructor
+  ACE_Utils::UUID new_uuid_assigment;
+  new_uuid_assigment = new_uuid;
+  ACE_DEBUG ((LM_DEBUG,
+              "UUID Constructed from above Generated UUID with assignment\n %s\n",
+              new_uuid_assigment.to_string ()->c_str ()));
+
+  if (new_uuid != new_uuid_assigment)
+    {
+      ACE_ERROR ((LM_ERROR, "Error: UUIDs are not the same with assignment\n"));
+      retval = -1;
+    }
+
   // Generate UUID with process and thread ids.
   auto_ptr <ACE_Utils::UUID> uuid_with_tp_id (ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (0x0001,
                                                                                                      0xc0));

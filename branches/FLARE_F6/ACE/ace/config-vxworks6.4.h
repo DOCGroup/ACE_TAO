@@ -83,6 +83,7 @@
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_3_PARAM_READDIR_R
 #define ACE_HAS_NONCONST_GETBY
+#define ACE_HAS_NONCONST_INET_ADDR
 #define ACE_HAS_NONCONST_SWAB
 #define ACE_LACKS_UNIX_SYSLOG
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 32768
@@ -199,6 +200,7 @@
 
 #define ACE_HAS_CHARPTR_SOCKOPT
 #define ACE_LACKS_SYMLINKS
+#define ACE_LACKS_ISCTYPE
 
 #if defined __RTP__
   // We are building for RTP mode
@@ -225,6 +227,7 @@
   #if !defined (IOV_MAX) || (IOV_MAX == 0)
     #define ACE_IOV_MAX 16
   #endif
+  #define ACE_LACKS_ISASCII
 #else
   // We are building for kernel mode
   #define ACE_LACKS_SUSECONDS_T
@@ -276,6 +279,8 @@
   #  define ACE_MAIN ace_main
   #endif /* ! ACE_MAIN */
   #define ACE_LACKS_TZSET
+  #define ACE_LACKS_ISWCTYPE
+  #define ACE_LACKS_ISBLANK
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides

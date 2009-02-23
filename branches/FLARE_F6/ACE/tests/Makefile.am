@@ -223,7 +223,6 @@ noinst_HEADERS += \
   ACE_Init_Test_Resource.h \
   ACE_Init_Test_StdAfx.h \
   Bound_Ptr_Test.h \
-  CE_fostream.h \
   Cache_Map_Manager_Test.h \
   Cached_Accept_Conn_Test.h \
   Cached_Conn_Test.h \
@@ -482,9 +481,7 @@ CDR_File_Test_CPPFLAGS = \
 
 CDR_File_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
-  CDR_File_Test.cpp \
-  CE_fostream.cpp \
-  CE_fostream.h
+  CDR_File_Test.cpp 
 
 CDR_File_Test_LDADD = \
   libTest_Output.la \
@@ -1196,7 +1193,6 @@ UnloadLibACE_SOURCES = \
   ACE_Init_Test_Resource.h \
   ACE_Init_Test_StdAfx.h \
   Bound_Ptr_Test.h \
-  CE_fostream.h \
   Cache_Map_Manager_Test.h \
   Cached_Accept_Conn_Test.h \
   Cached_Conn_Test.h \

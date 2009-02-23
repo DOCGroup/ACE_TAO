@@ -20,11 +20,13 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Semaphore)
 void
 ACE_Semaphore::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Semaphore::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Semaphore::ACE_Semaphore (unsigned int count,

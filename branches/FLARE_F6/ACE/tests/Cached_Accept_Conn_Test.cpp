@@ -60,7 +60,7 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::Accept_Strategy (CACHED_CONNE
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-                                                         int restart)
+                                                         bool restart)
 {
   int result = ACCEPT_STRATEGY_BASE::open (local_addr,
                                            restart);
@@ -295,7 +295,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
   for (int i = 1; i <= iterations; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("iteration %d\n"),
+                  ACE_TEXT ("%T iteration %d\n"),
                   i));
 
       // Connect strategy is required by the <out_of_sockets_handler>.

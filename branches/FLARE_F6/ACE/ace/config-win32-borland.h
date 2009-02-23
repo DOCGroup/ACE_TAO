@@ -11,6 +11,10 @@
 #error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
+#if (__BORLANDC__ < 0x610)
+#error This version of CodeGear C++ is not supported.
+#endif
+
 #define ACE_HAS_CUSTOM_EXPORT_MACROS
 #define ACE_Proper_Export_Flag __declspec (dllexport)
 #define ACE_Proper_Import_Flag __declspec (dllimport)
@@ -120,8 +124,8 @@
 # define ACE_HAS_NEW_NOTHROW
 # define ACE_TEMPLATES_REQUIRE_SOURCE 1
 # define ACE_SIZEOF_LONG_DOUBLE 10
-# define ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT ("%Lu")
-# define ACE_INT64_FORMAT_SPECIFIER ACE_TEXT ("%Ld")
+# define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%Lu"
+# define ACE_INT64_FORMAT_SPECIFIER_ASCII "%Ld"
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 # define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 
@@ -136,22 +140,11 @@
 # endif /* !_MT && !ACE_HAS_WINCE */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
-#if (__BORLANDC__ < 0x580)
-# define ACE_LACKS_INTPTR_T
-# define ACE_HAS_NONCONST_SWAB
-# define ACE_HAS_NONCONST_FDOPEN
-#endif
-
-# if (__BORLANDC__ < 0x590)
-#   define ACE_LACKS_PLACEMENT_OPERATOR_DELETE 1
-# endif
-
-#if (__BORLANDC__ < 0x610)
-# define ACE_HAS_NONCONST_TEMPNAM
-# define ACE_LACKS_STRTOLL
-# define ACE_LACKS_WCSTOLL
-# define ACE_LACKS_STRTOULL
-# define ACE_LACKS_WCSTOULL
+#if (__BORLANDC__ <= 0x610)
+# define ACE_LACKS_ISBLANK
+# define ACE_LACKS_ISWBLANK
+# define ACE_LACKS_ISCTYPE
+# define ACE_LACKS_ISWCTYPE
 #endif
 
 #if (__BORLANDC__ <= 0x610)
@@ -163,9 +156,11 @@
 # endif
 #endif
 
+
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 #define ACE_STRCASECMP_EQUIVALENT ::stricmp
 #define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
+#define ACE_WTOF_EQUIVALENT ::_wtof
 #define ACE_HAS_ITOA 1
 
 #include /**/ "ace/post.h"

@@ -19,19 +19,21 @@
 #include /**/ "ace/config-all.h"
 
 #if !defined (ACE_DEFAULT_SSL_CERT_FILE)
-#  ifdef WIN32
-#    define ACE_DEFAULT_SSL_CERT_FILE "cert.pem"
-#  else
-#    define ACE_DEFAULT_SSL_CERT_FILE "/etc/ssl/cert.pem"
-#  endif  /* WIN32 */
+// Define a default CA certificate filename here if required e.g.:
+// #  ifdef WIN32
+// #    define ACE_DEFAULT_SSL_CERT_FILE "cert.pem"
+// #  else
+// #    define ACE_DEFAULT_SSL_CERT_FILE "/etc/ssl/cert.pem"
+// #  endif  /* WIN32 */
 #endif /* ACE_DEFAULT_SSL_CERT_FILE */
 
 #if !defined (ACE_DEFAULT_SSL_CERT_DIR)
-#  ifdef WIN32
-#    define ACE_DEFAULT_SSL_CERT_DIR "certs"
-#  else
-#    define ACE_DEFAULT_SSL_CERT_DIR "/etc/ssl/certs"
-#  endif  /* WIN32 */
+// Define a default CA certificate files directory here if required. e.g.:
+// #  ifdef WIN32
+// #    define ACE_DEFAULT_SSL_CERT_DIR "certs"
+// #  else
+// #    define ACE_DEFAULT_SSL_CERT_DIR "/etc/ssl/certs"
+// #  endif  /* WIN32 */
 #endif /* ACE_DEFAULT_SSL_CERT_DIR */
 
 #if !defined (ACE_SSL_CERT_FILE_ENV)

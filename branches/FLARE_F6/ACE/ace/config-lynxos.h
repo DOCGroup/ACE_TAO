@@ -69,7 +69,6 @@
 #define ACE_HAS_SSIZE_T
 #define ACE_HAS_STREAMS
 #define ACE_HAS_STRERROR
-#define ACE_HAS_SYSV_IPC
 #define ACE_HAS_SYS_SIGLIST
 #define ACE_HAS_SYS_SOCKIO_H
 #define ACE_HAS_TERMIOS
@@ -99,6 +98,7 @@
 #define ACE_PAGE_SIZE 4096
 #define ACE_POSIX_SIG_PROACTOR
 #define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
+#define ACE_LACKS_ISCTYPE
 
 // LynxOS has poll.h but it is unusable since implementation is not provided
 #define ACE_LACKS_POLL_H
@@ -115,10 +115,6 @@
 #   define ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR
 # endif
 #endif /* ACE_MT_SAFE */
-
-#if __GNUC__ < 3
-# define ACE_LACKS_NUMERIC_LIMITS
-#endif /* __GNUC__ < 3 */
 
 // By default, don't include RCS Id strings in object code.
 #if !defined (ACE_USE_RCSID)
@@ -142,6 +138,7 @@
 # define ACE_LACKS_STRNCASECMP_PROTOTYPE
 # define ACE_LACKS_SYS_SELECT_H
 # define ACE_HAS_NONCONST_GETBY
+# define ACE_HAS_NONCONST_INET_ADDR
 #endif
 
 #if (ACE_LYNXOS_MAJOR > 4) || (ACE_LYNXOS_MAJOR == 4 && ACE_LYNXOS_MINOR >= 2)
@@ -170,6 +167,7 @@
 #  define ACE_HAS_STRBUF_T
 #  define ACE_HAS_SYSV_IPC
 #  define ACE_LACKS_USECONDS_T
+#  define ACE_LACKS_ISBLANK
 #endif
 
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)

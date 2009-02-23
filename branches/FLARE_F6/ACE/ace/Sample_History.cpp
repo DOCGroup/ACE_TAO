@@ -46,7 +46,7 @@ ACE_Sample_History::dump_samples (const ACE_TCHAR *msg,
 #ifndef ACE_NLOGGING
   for (size_t i = 0; i != this->sample_count_; ++i)
     {
-      const ACE_UINT64 val = this->samples_[i] / scale_factor;
+      ACE_UINT64 const val = this->samples_[i] / scale_factor;
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s: ")
                   ACE_SIZE_T_FORMAT_SPECIFIER

@@ -657,7 +657,7 @@ ACE_TP_Reactor::notify_handle (ACE_HANDLE,
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACE_TP_Reactor::notify_handle: ")
-              ACE_TEXT ("Wrong version of notify_handle() got called \n")));
+              ACE_TEXT ("Wrong version of notify_handle() got called\n")));
 
   ACE_ASSERT (eh == 0);
   ACE_UNUSED_ARG (eh);

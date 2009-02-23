@@ -33,14 +33,25 @@ namespace ACE_Utils
   class ACE_Export UUID_Node
   {
   public:
-
-    /// Constructor
-    UUID_Node (void);
-
+    /// Size of the node in bytes.
     enum {NODE_ID_SIZE = 6};
+
+    /// Type definition of the node.
     typedef u_char Node_ID[NODE_ID_SIZE];
 
+    /// Default constructor
+    UUID_Node (void);
+
+    /**
+     * Copy constructor.
+     *
+     * @param[in]         node          Source node.
+     */
+    UUID_Node (const UUID_Node & node);
+
     Node_ID &node_ID (void);
+    const Node_ID &node_ID (void) const;
+
     void node_ID (Node_ID&);
 
     ///// Equality Operations
@@ -50,7 +61,11 @@ namespace ACE_Utils
     ///// Relational Operations
     //bool operator <  (const UUID_Node& right) const;
 
+    /// Assign the value of an existing node id to this object.
+    const UUID_Node & operator = (const UUID_Node & rhs);
+
   private:
+    /// The value of the node id.
     Node_ID node_ID_;
   };
 
@@ -102,8 +117,10 @@ namespace ACE_Utils
     u_char clock_seq_low (void) const;
     void clock_seq_low (u_char);
 
-    UUID_Node* node (void) const;
-    void node (UUID_Node*);
+    UUID_Node* node (void);
+    const UUID_Node* node (void) const;
+
+    void node (const UUID_Node*);
 
     ACE_CString* thr_id (void);
     void thr_id (char*);
@@ -112,7 +129,7 @@ namespace ACE_Utils
     void pid (char*);
 
     /// Returns a string representation of the UUID
-    const ACE_CString* to_string (void);
+    const ACE_CString* to_string (void) const;
 
     /// Set the value using a string
     void from_string (const ACE_CString& uuid_string);
@@ -129,10 +146,16 @@ namespace ACE_Utils
     //bool operator<= (const UUID &right) const;
     //bool operator>= (const UUID &right) const;
 
-  private:
-    void from_string_i (const ACE_CString& uuid_string);
+    /// Assign an existing UUID to this UUID.
+    const UUID & operator = (const UUID & rhs);
 
-    UUID& operator= (const UUID&);
+  private:
+    /**
+     * Helper method to convert from a string UUID.
+     *
+     * @param[in]        uuid_string        String version of UUID.
+     */
+    void from_string_i (const ACE_CString& uuid_string);
 
     /// Data Members for Class Attributes
     ACE_UINT32 time_low_;
@@ -140,14 +163,15 @@ namespace ACE_Utils
     ACE_UINT16 time_hi_and_version_;
     u_char clock_seq_hi_and_reserved_;
     u_char clock_seq_low_;
-    UUID_Node* node_;
-    bool node_release_;
+
+    UUID_Node node_;
+
     ACE_CString thr_id_;
     ACE_CString pid_;
 
     /// The string representation of the UUID. This is created and
     /// updated only on demand.
-    ACE_CString *as_string_;
+    mutable ACE_Auto_Ptr <ACE_CString> as_string_;
   };
 
   /**
@@ -209,7 +233,7 @@ namespace ACE_Utils
     /// Obtain a UUID timestamp and clock sequence. Compensate for the
     /// fact that the time obtained from getSystem time has a
     /// resolution less than 100ns.
-    void get_timestamp_and_clocksequence (UUID_Time& timestamp, 
+    void get_timestamp_and_clocksequence (UUID_Time& timestamp,
                                           ACE_UINT16& clockSequence);
 
     /// Obtain the system time in UTC as a count of 100 nanosecond intervals

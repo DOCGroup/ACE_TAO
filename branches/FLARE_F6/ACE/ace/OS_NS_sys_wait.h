@@ -59,7 +59,7 @@ namespace ACE_OS
               ACE_HANDLE handle = 0);
 
   /**
-   * Calls @c ::waitpid on UNIX/POSIX platforms Does not work on Vxworks 5.5.x.
+   * Calls @c ::waitpid on UNIX/POSIX platforms Does not work on VxWorks 5.5.x.
    * On Win32, @a pid is ignored if the @a handle is not equal to 0.
    * Passing the process @a handle is prefer on Win32 because using
    * @a pid to wait on the project doesn't always work correctly

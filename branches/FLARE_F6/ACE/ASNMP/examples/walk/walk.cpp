@@ -141,8 +141,8 @@ void walkapp::usage()
 {
   cout << "Usage:\n";
   cout << "walk [options] dotted-quad | DNSName[:port]\n";
-  cout << "      -o OID starts with oid after 1.3.6.1.2.1.1.1.0 (mibII sysDescr.0) \n";
-  cout << "      -c Community_name, default is 'public' \n";
+  cout << "      -o OID starts with oid after 1.3.6.1.2.1.1.1.0 (mibII sysDescr.0)\n";
+  cout << "      -c Community_name, default is 'public'\n";
   cout << "      -r N  retries default is N = 1 retry\n";
   cout << "      -t N  timeout in seconds default is 1 second" << endl;
 }

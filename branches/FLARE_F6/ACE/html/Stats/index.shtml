@@ -22,7 +22,7 @@
       href="http://www.dre.vanderbilt.edu/scoreboard"> nightly</A>
       regression tests.  The complete source for the tests is
       available as part of the ACE+TAO+CIAO <A
-      HREF="http://deuce.doc.wustl.edu/Download.html"> distribution
+      HREF="http://download.dre.vanderbilt.edu"> distribution
       </A>. The hardware and software configuration used for these
       tests is described <A
       HREF="configuration.shtml">here</A>. Notice, however, that the
@@ -48,6 +48,9 @@ In addition to the statistics described above, a number of other ACE/TAO/CIAO de
 </li>
 <li>
   <a href="http://www.dre.vanderbilt.edu/Scoreboard/">Automated Builds</a>
+</li>
+<li>
+  <a href="http://www.dre.vanderbilt.edu/~isisbuilds/auto_compile_logs/isislab/emulab/FC6xampler/Template-Display/_Report/">Xampler Performance benchmarks</a>
 </li>
 </ul>
 The <i>Code Coverage</i> pages illustrate which areas of
