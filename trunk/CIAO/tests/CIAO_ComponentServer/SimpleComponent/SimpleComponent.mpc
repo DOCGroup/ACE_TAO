@@ -62,7 +62,7 @@ project(SimpleComponent_stub) : ccm_stub {
 
 project(SimpleComponent_exec) : ciao_executor {
   avoids += ace_for_tao
-  after   += SimpleComponent_idle_gen
+  after   += SimpleComponent_idle_gen SimpleComponent_stub
   sharedname = SimpleComponent_exec
   libs += SimpleComponent_stub
 
