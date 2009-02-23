@@ -92,9 +92,9 @@ extern "C"
 void herror (const char *str);
 #endif /* ACE_HAS_H_ERRNO */
 
-#if !defined (ACE_WIN32) && defined (ACE_LACKS_T_ERRNO)
+#if defined (ACE_LACKS_T_ERRNO)
 extern int t_errno;
-#endif /* ACE_WIN32 && ACE_LACKS_T_ERRNO */
+#endif /* ACE_LACKS_T_ERRNO */
 
 #if !defined (ENOSYS)
 # define ENOSYS EFAULT /* Operation not supported or unknown error. */

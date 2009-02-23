@@ -34,7 +34,7 @@ Like Regular Support, both char and wchar_t versions of some methods are
 available, but unlike Regular Support, other methods that have char arguments
 or return values may have wchar_t arguments or return values.
 
-This has only been tested in Windows, and is the default for Windows CE.
+This has been tested on Windows and Linux, and is the default for Windows CE.
 
 @subsection wchar_othermacros Other Important Macros
 
@@ -55,15 +55,9 @@ ACE_TCHAR * and needs to be a char * string.
 ACE_TEXT_WIDE ("foo") is unique in that it always maps to L"foo".  It is not
 a conditional macro.
 
-For string constants in code, ACE_TEXT and ACE_LIB_TEXT are used to put the
-Unicode prefix (Usually 'L') before the string when needed.  By default both
-are controlled by ACE_USES_WCHAR.
-
-All ACE code except for the ACE library should use ACE_TEXT.  ACE_LIB_TEXT
-was introduced as a short-term fix for backwards compatibility purposes.
-This allows ACE_TEXT to be overriden to act just like TEXT in Microsoft
-Windows while not affecting ACE's interface.  In the future ACE_LIB_TEXT and
-this backwards compatibility will be deprecated and removed.
+For string constants in code, ACE_TEXT is used to put the Unicode prefix
+(Usually 'L') before the string when needed.  This is controlled by
+ACE_USES_WCHAR.
 
 Finally, on Windows there are a bunch of ACE_TEXT_Apicall type macros which
 are used to choose the correct version of a Win32 API function depending on
@@ -75,7 +69,7 @@ done.
 
 One of the more troublesome aspect of supporting wide and Ansi strings is
 the fact that the format strings for ACE_DEBUG and family always had to have
-ACE_TEXT (or ACE_LIB_TEXT) around them.
+ACE_TEXT around them.
 
 Now this should not be the case, since ACE_Log_Msg was extended to support
 both types of format strings concurrently.  This is okay, but when strings

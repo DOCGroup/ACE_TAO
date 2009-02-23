@@ -62,6 +62,10 @@
 #define ACE_DEFAULT_SERVICE_REPOSITORY_SIZE 1024
 #endif /* ACE_DEFAULT_SERVICE_REPOSITORY_SIZE */
 
+#if !defined (ACE_DEFAULT_SERVICE_GESTALT_SIZE)
+#define ACE_DEFAULT_SERVICE_GESTALT_SIZE 1024
+#endif /* ACE_DEFAULT_SERVICE_GESTALT_SIZE */
+
 #if !defined (ACE_REACTOR_NOTIFICATION_ARRAY_SIZE)
 #define ACE_REACTOR_NOTIFICATION_ARRAY_SIZE 1024
 #endif /* ACE_REACTOR_NOTIFICATION_ARRAY_SIZE */
@@ -196,7 +200,7 @@
 #   define ACE_DEFAULT_TIME_SERVER_STR "ACE_TS_TIME"
 # endif /* ACE_DEFAULT_TIME_SERVER_STR */
 
-// Used by the FIFO tests and the Client_Logging_Handler netsvc.
+// Used by the FIFO tests
 # if !defined (ACE_DEFAULT_RENDEZVOUS)
 #   if defined (ACE_HAS_STREAM_PIPES)
 #     define ACE_DEFAULT_RENDEZVOUS ACE_TEXT("/tmp/fifo.ace")
@@ -210,13 +214,20 @@
 # define ACE_DEFAULT_SYSLOG_FACILITY LOG_USER
 # endif /* ACE_DEFAULT_SYSLOG_FACILITY */
 
-# if !defined (ACE_DEFAULT_LOGGER_KEY)
+# if !defined (ACE_HAS_STREAM_LOG_MSG_IPC)
+#   if defined (ACE_HAS_STREAM_PIPES)
+#     define ACE_HAS_STREAM_LOG_MSG_IPC 1
+#   else
+#     define ACE_HAS_STREAM_LOG_MSG_IPC 0
+#   endif /* ACE_HAS_STREAM_PIPES */
+# endif /* !ACE_HAS_STREAM_LOG_MSG_IPC */
 
-#     if defined (ACE_HAS_STREAM_PIPES)
-#       define ACE_DEFAULT_LOGGER_KEY ACE_TEXT ("/tmp/server_daemon")
-#     else
-#       define ACE_DEFAULT_LOGGER_KEY ACE_TEXT ("localhost:20012")
-#     endif /* ACE_HAS_STREAM_PIPES */
+# if !defined (ACE_DEFAULT_LOGGER_KEY)
+#   if (ACE_HAS_STREAM_LOG_MSG_IPC == 1)
+#     define ACE_DEFAULT_LOGGER_KEY ACE_TEXT ("/tmp/server_daemon")
+#   else
+#     define ACE_DEFAULT_LOGGER_KEY ACE_TEXT ("localhost:20012")
+#   endif /* ACE_HAS_STREAM_LOG_MSG_IPC==1 */
 # endif /* ACE_DEFAULT_LOGGER_KEY */
 
 // The way to specify the local host for loopback IP. This is usually

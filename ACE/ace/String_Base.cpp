@@ -394,8 +394,8 @@ ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
                                s.rep_,
                                smaller_length * sizeof (CHAR));
 
-  if (!result)
-    result = static_cast<int> (this->len_ - s.len_);
+  if (result == 0 && this->len_ != s.len_)
+    result = this->len_ > s.len_ ? 1 : -1;
   return result;
 }
 

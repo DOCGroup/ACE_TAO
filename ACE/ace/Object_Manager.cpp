@@ -294,7 +294,7 @@ ACE_Object_Manager::init (void)
   // NOTE this only works for intel based windows builds.
 
 #    ifdef _M_IX86
-          HMODULE hKernel32 = LoadLibrary (ACE_TEXT ("kernel32.dll"));
+          HMODULE hKernel32 = ACE_TEXT_LoadLibrary (ACE_TEXT ("kernel32.dll"));
           if (hKernel32)
             {
               void *pOrgEntry =
@@ -444,7 +444,8 @@ ACE_Object_Manager::instance (void)
 int
 ACE_Object_Manager::at_exit_i (void *object,
                                ACE_CLEANUP_FUNC cleanup_hook,
-                               void *param)
+                               void *param,
+                               const char* name)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
     *instance_->internal_lock_, -1));
@@ -462,7 +463,22 @@ ACE_Object_Manager::at_exit_i (void *object,
       return -1;
     }
 
-  return exit_info_.at_exit_i (object, cleanup_hook, param);
+  return exit_info_.at_exit_i (object, cleanup_hook, param, name);
+}
+
+int
+ACE_Object_Manager::remove_at_exit_i (void *object)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+    *instance_->internal_lock_, -1));
+
+  if (shutting_down_i ())
+    {
+      errno = EAGAIN;
+      return -1;
+    }
+
+  return exit_info_.remove (object);
 }
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -531,7 +547,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
 
           if (lock == 0)
             {
-              ACE_Cleanup_Adapter<ACE_Thread_Mutex> *lock_adapter;
+              ACE_Cleanup_Adapter<ACE_Thread_Mutex> *lock_adapter = 0;
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_Thread_Mutex>,
                               -1);
@@ -541,7 +557,9 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
               // termination.  This call will cause us to grab the
               // ACE_Object_Manager::instance ()->internal_lock_
               // again; that's why it is a recursive lock.
-              ACE_Object_Manager::at_exit (lock_adapter);
+              ACE_Object_Manager::at_exit (lock_adapter,
+                                           0,
+                                           typeid (*lock_adapter).name ());
             }
         }
     }
@@ -579,7 +597,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Mutex *&lock)
 
           if (lock == 0)
             {
-              ACE_Cleanup_Adapter<ACE_Mutex> *lock_adapter;
+              ACE_Cleanup_Adapter<ACE_Mutex> *lock_adapter = 0;
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_Mutex>,
                               -1);
@@ -663,7 +681,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
 
           if (lock == 0)
             {
-              ACE_Cleanup_Adapter<ACE_RW_Thread_Mutex> *lock_adapter;
+              ACE_Cleanup_Adapter<ACE_RW_Thread_Mutex> *lock_adapter = 0;
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_RW_Thread_Mutex>,
                               -1);

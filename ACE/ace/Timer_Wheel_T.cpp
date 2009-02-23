@@ -699,7 +699,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("\nresolution_ = %d"), 1 << this->res_bits_));
   ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("\nwheel_ = \n")));
+    ACE_TEXT ("\nwheel_ =\n")));
 
   for (u_int i = 0; i < this->spoke_count_; ++i)
     {

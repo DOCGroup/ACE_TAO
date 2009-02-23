@@ -622,8 +622,8 @@ public:
                                 ACE_Event_Handler **old_sh = 0,
                                 ACE_Sig_Action *old_disp = 0);
 
-  /// Registers <new_sh> to handle a set of signals <sigset> using the
-  /// <new_disp>.
+  /// Registers @a new_sh to handle a set of signals @a sigset using the
+  /// @a new_disp.
   virtual int register_handler (const ACE_Sig_Set &sigset,
                                 ACE_Event_Handler *new_sh,
                                 ACE_Sig_Action *new_disp = 0);
@@ -647,7 +647,7 @@ public:
                               ACE_Reactor_Mask mask);
 
   /**
-   * Removes all handles in <handle_set>.  If @a mask ==
+   * Removes all handles in @a handle_set.  If @a mask ==
    * ACE_Event_Handler::DONT_CALL then the <handle_close> method of
    * the associated <event_handler>s is not invoked.
    */
@@ -665,7 +665,7 @@ public:
                               ACE_Sig_Action *old_disp = 0,
                               int sigkey = -1);
 
-  /// Calls <remove_handler> for every signal in <sigset>.
+  /// Calls <remove_handler> for every signal in @a sigset.
   virtual int remove_handler (const ACE_Sig_Set &sigset);
 
   // = Suspend and resume Handlers.
@@ -793,7 +793,7 @@ public:
 
   /**
    * Set the maximum number of times that ACE_Reactor_Impl will
-   * iterate and dispatch the <ACE_Event_Handlers> that are passed in
+   * iterate and dispatch the ACE_Event_Handlers that are passed in
    * via the notify queue before breaking out of its
    * <ACE_Message_Queue::dequeue> loop.  By default, this is set to
    * -1, which means "iterate until the queue is empty."  Setting this
@@ -805,7 +805,7 @@ public:
 
   /**
    * Get the maximum number of times that the ACE_Reactor_Impl will
-   * iterate and dispatch the <ACE_Event_Handlers> that are passed in
+   * iterate and dispatch the ACE_Event_Handlers that are passed in
    * via the notify queue before breaking out of its
    * <ACE_Message_Queue::dequeue> loop.
    */

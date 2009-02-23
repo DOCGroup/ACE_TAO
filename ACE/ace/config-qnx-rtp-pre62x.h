@@ -84,7 +84,8 @@
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SBRK
 #define ACE_LACKS_SEEKDIR
-#define ACE_LACKS_SOCKET_BUFSIZ
+#define ACE_LACKS_SO_SNDBUF
+#define ACE_LACKS_SO_RCVBUF
 #define ACE_LACKS_SOCKETPAIR
 // Even if the QNX RTP docs says that socket pair are
 // available, there is actually no implementation of

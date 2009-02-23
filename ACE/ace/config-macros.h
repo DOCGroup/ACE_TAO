@@ -629,4 +629,22 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 #define ACE_PREPROC_CONCATENATE(A,B) ACE_PREPROC_CONCATENATE_IMPL(A,B)
 // -------------------------------------------------------------------
 
+/// If MPC is using a lib modifier this define will be set and this then
+/// is used by the service configurator framework
+#if defined MPC_LIB_MODIFIER && !defined (ACE_LD_DECORATOR_STR)
+#define ACE_LD_DECORATOR_STR ACE_TEXT( MPC_LIB_MODIFIER )
+#endif /* MPC_LIB_MODIFIER */
+
+#ifndef ACE_GCC_CONSTRUCTOR_ATTRIBUTE
+# define ACE_GCC_CONSTRUCTOR_ATTRIBUTE
+#endif
+
+#ifndef ACE_GCC_DESTRUCTOR_ATTRIBUTE
+# define ACE_GCC_DESTRUCTOR_ATTRIBUTE
+#endif
+
+#ifndef ACE_DEPRECATED
+# define ACE_DEPRECATED
+#endif
+
 #endif /* ACE_CONFIG_MACROS_H */

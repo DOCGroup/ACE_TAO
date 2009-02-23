@@ -18,6 +18,7 @@ endif
 pipes ?= 1
 
 CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
+CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
 
 ifeq (Ubuntu, $(findstring Ubuntu,$(LSB_RELEASE_ID)))
   ifeq (7.10, $(findstring 7.10,$(LSB_RELEASE_RELEASE)))
@@ -27,19 +28,11 @@ ifeq (Ubuntu, $(findstring Ubuntu,$(LSB_RELEASE_ID)))
     no_hidden_visibility ?= 1
   endif
 endif
-ifeq (Fedora, $(findstring Fedora,$(LSB_RELEASE_ID)))
-  ifeq (6, $(findstring 6,$(LSB_RELEASE_RELEASE)))
+ifeq (Red Hat, $(findstring Red Hat,$(CXX_FULL_VERSION)))
+  ifeq (4.1.1, $(findstring 4.1.1,$(CXX_VERSION)))
     gcc_template_instantiation_visibility ?= 1
   endif
-  ifeq (7, $(findstring 7,$(LSB_RELEASE_RELEASE)))
-    gcc_template_instantiation_visibility ?= 1
-  endif
-  ifeq (8, $(findstring 8,$(LSB_RELEASE_RELEASE)))
-    gcc_template_instantiation_visibility ?= 1
-  endif
-endif
-ifeq (RedHatEnterpriseServer, $(findstring RedHatEnterpriseServer,$(LSB_RELEASE_ID)))
-  ifeq (5, $(findstring 5,$(LSB_RELEASE_RELEASE)))
+  ifeq (4.1.2, $(findstring 4.1.2,$(CXX_VERSION)))
     gcc_template_instantiation_visibility ?= 1
   endif
 endif

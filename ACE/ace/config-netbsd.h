@@ -123,6 +123,9 @@
 #define ACE_LACKS_WCSICMP 1
 #define ACE_LACKS_WCSNICMP 1
 #define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR 1
+#define ACE_LACKS_WSCANF
+#define ACE_LACKS_SWSCANF
+#define ACE_LACKS_ISCTYPE
 
 #if defined(__x86_64__)
 #define ACE_SIZEOF_DOUBLE 8
@@ -138,8 +141,8 @@
 typedef unsigned long ACE_UINT64;
 typedef   signed long ACE_INT64;
 
-#define ACE_SSIZE_T_FORMAT_SPECIFIER  ACE_TEXT ("%ld")
-#define ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT ("%lu")
+#define ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII  "%ld"
+#define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
 
 #elif defined(__i386__)
 

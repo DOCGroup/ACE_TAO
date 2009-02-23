@@ -17,6 +17,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_signal.h"
+#include "ace/os_include/os_typeinfo.h"
 
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE != 0)
 # include "ace/Object_Manager_Base.h"
@@ -137,7 +138,7 @@ public:
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   //FUZZ: disable check_for_lack_ACE_OS
-  static void close (void);
+  static void close (void) ACE_GCC_DESTRUCTOR_ATTRIBUTE;
   //FUZZ: enable check_for_lack_ACE_OS
 
   static ACE_Recursive_Thread_Mutex *get_lock (void);
@@ -263,7 +264,7 @@ ACE_TSS_CLEANUP_NAME (void *ptr)
   if (log_msg->thr_desc()!=0)
     log_msg->thr_desc()->log_msg_cleanup(log_msg);
   else
-    delete (ACE_Log_Msg *) ptr;
+    delete log_msg;
 }
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #endif /* ! ACE_MT_SAFE */
@@ -398,7 +399,9 @@ ACE_Log_Msg::instance (void)
     {
       ACE_NEW_RETURN (log_msg_cleanup, ACE_Msg_Log_Cleanup, 0);
       // Register the instance for destruction at program termination.
-      ACE_Object_Manager::at_exit (log_msg_cleanup);
+      ACE_Object_Manager::at_exit (log_msg_cleanup,
+                                   0,
+                                   typeid (*log_msg_cleanup).name ());
     }
 
   return &log_msg_cleanup->object ();
@@ -650,11 +653,11 @@ ACE_Log_Msg::ACE_Log_Msg (void)
     msg_ (0),
     restart_ (1),  // Restart by default...
     ostream_ (0),
+    ostream_refcount_ (0),
     msg_callback_ (0),
     trace_depth_ (0),
     trace_active_ (false),
     tracing_enabled_ (true), // On by default?
-    delete_ostream_(false),
     thr_desc_ (0),
     priority_mask_ (default_priority_mask_),
     timestamp_ (0)
@@ -743,22 +746,28 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
         }
     }
 
-  //
-  // do we need to close and clean up?
-  //
-  if (this->delete_ostream_)
-#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-    {
-      ACE_OS::fclose (this->ostream_);
-    }
-#else
-    {
-      delete ostream_;
-      ostream_ = 0;
-    }
-#endif
+  this->cleanup_ostream ();
 
   delete[] this->msg_;
+}
+
+void
+ACE_Log_Msg::cleanup_ostream ()
+{
+  if (this->ostream_refcount_)
+    {
+      if (--*this->ostream_refcount_ == 0)
+        {
+          delete this->ostream_refcount_;
+#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+          ACE_OS::fclose (this->ostream_);
+#else
+          delete this->ostream_;
+          this->ostream_ = 0;
+#endif
+        }
+      this->ostream_refcount_ = 0;
+    }
 }
 
 // Open the sender-side of the message queue.
@@ -1262,16 +1271,20 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                         ACE_OS::strcpy (fp, ACE_TEXT ("ls: %ls"));
+                        wchar_t *str = va_arg (argp, wchar_t *);
 #else
                         ACE_OS::strcpy (fp, ACE_TEXT ("s: %s"));
+                        ACE_TCHAR *str = va_arg (argp, ACE_TCHAR *);
 #endif
                         if (can_check)
                           this_len = ACE_OS::snprintf
-                            (bp, bspace, format, va_arg (argp, ACE_TCHAR *),
+                            (bp, bspace, format,
+                             str ? str : ACE_TEXT ("(null)"),
                              ACE_TEXT_CHAR_TO_TCHAR (msg));
                         else
                           this_len = ACE_OS::sprintf
-                            (bp, format, va_arg (argp, ACE_TCHAR *),
+                            (bp, format,
+                             str ? str : ACE_TEXT ("(null)"),
                              ACE_TEXT_CHAR_TO_TCHAR (msg));
 #if defined (ACE_WIN32)
                       }
@@ -1302,6 +1315,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         // it into a string.  If this doesn't work it
                         // returns "unknown error" which is fine for
                         // our purposes.
+                        ACE_TCHAR *str = va_arg (argp, ACE_TCHAR *);
                         if (lpMsgBuf == 0)
                           {
                             const ACE_TCHAR *message =
@@ -1310,12 +1324,12 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                             if (can_check)
                               this_len = ACE_OS::snprintf
                                 (bp, bspace, format,
-                                 va_arg (argp, const ACE_TCHAR *),
+                                 str ? str : ACE_TEXT ("(null)"),
                                  message);
                             else
                               this_len = ACE_OS::sprintf
                                 (bp, format,
-                                 va_arg (argp, const ACE_TCHAR *),
+                                 str ? str : ACE_TEXT ("(null)"),
                                  message);
                           }
                         else
@@ -1324,12 +1338,12 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                             if (can_check)
                               this_len = ACE_OS::snprintf
                                 (bp, bspace, format,
-                                 va_arg (argp, ACE_TCHAR *),
+                                 str ? str : ACE_TEXT ("(null)"),
                                  lpMsgBuf);
                             else
                               this_len = ACE_OS::sprintf
                                 (bp, format,
-                                 va_arg (argp, ACE_TCHAR *),
+                                 str ? str : ACE_TEXT ("(null)"),
                                  lpMsgBuf);
                             // Free the buffer.
                             ::LocalFree (lpMsgBuf);
@@ -1360,8 +1374,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'm': // Format the string assocated with the errno value.
                   {
                     errno = 0;
-                    char *msg = 0;
-                    msg = ACE_OS::strerror (ACE::map_errno (this->errnum ()));
+                    char *msg = ACE_OS::strerror (ACE::map_errno (this->errnum ()));
                     // Windows can try to translate the errnum using
                     // system calls if strerror() doesn't get anything useful.
 #if defined (ACE_WIN32)
@@ -2190,7 +2203,6 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
             ACE_Log_Msg_Manager::custom_backend_->log (log_record);
         }
 
-
       // This must come last, after the other two print operations
       // (see the <ACE_Log_Record::print> method for details).
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
@@ -2226,7 +2238,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
     return 0;
 
   ACE_TCHAR* buf = 0;
-  const size_t buf_sz =
+  size_t const buf_sz =
     ACE_Log_Record::MAXLOGMSGLEN - ACE_Log_Record::VERBOSE_LEN - 58;
   ACE_NEW_RETURN (buf, ACE_TCHAR[buf_sz], -1);
 
@@ -2245,7 +2257,11 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
 
   if (text)
     sz = ACE_OS::sprintf (msg_buf,
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                          ACE_TEXT ("%ls - "),
+#else
                           ACE_TEXT ("%s - "),
+#endif
                           text);
 
   sz += ACE_OS::sprintf (msg_buf + sz,
@@ -2412,18 +2428,32 @@ void
 ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m, bool delete_ostream)
 {
   if (this->ostream_ == m)
-    return;
-
-  if (this->delete_ostream_)
     {
-#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-      ACE_OS::fclose (this->ostream_);
-#else
-      delete this->ostream_;
-#endif
+      // Same stream, allow user to change the delete_ostream "flag"
+      if (delete_ostream && !this->ostream_refcount_)
+        {
+          ACE_NEW (this->ostream_refcount_, Atomic_ULong (1));
+        }
+      else if (!delete_ostream && this->ostream_refcount_)
+        {
+          if (--*this->ostream_refcount_ == 0)
+            {
+              delete this->ostream_refcount_;
+            }
+          this->ostream_refcount_ = 0;
+        }
+      // The other two cases are no-ops, the user has requested the same
+      // state that's already present.
+      return;
     }
 
-  this->delete_ostream_ = delete_ostream;
+  this->cleanup_ostream ();
+
+  if (delete_ostream)
+    {
+      ACE_NEW (this->ostream_refcount_, Atomic_ULong (1));
+    }
+
   this->ostream_ = m;
 }
 
@@ -2477,6 +2507,15 @@ ACE_Log_Msg::init_hook (ACE_OS_Log_Msg_Attributes &attributes
     {
       ACE_Log_Msg *inherit_log = ACE_LOG_MSG;
       attributes.ostream_ = inherit_log->msg_ostream ();
+      if (attributes.ostream_ && inherit_log->ostream_refcount_)
+        {
+          ++*inherit_log->ostream_refcount_;
+          attributes.ostream_refcount_ = inherit_log->ostream_refcount_;
+        }
+      else
+        {
+          attributes.ostream_refcount_ = 0;
+        }
       attributes.priority_mask_ = inherit_log->priority_mask ();
       attributes.tracing_enabled_ = inherit_log->tracing_enabled ();
       attributes.restart_ = inherit_log->restart ();
@@ -2501,7 +2540,10 @@ ACE_Log_Msg::inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
 
   if (attributes.ostream_)
     {
-      new_log->msg_ostream (attributes.ostream_);
+      new_log->ostream_ = attributes.ostream_;
+      new_log->ostream_refcount_ =
+        static_cast<Atomic_ULong *> (attributes.ostream_refcount_);
+
       new_log->priority_mask (attributes.priority_mask_);
 
       if (attributes.tracing_enabled_)

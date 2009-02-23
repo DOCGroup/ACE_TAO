@@ -145,9 +145,9 @@ private:
 
   ///  Naming Context
   ACE_Naming_Context *naming_context_;
-  
+
   ACE_Naming_Context *naming_context (void);
-  
+
   /// Handle binds.
   int bind (void);
 

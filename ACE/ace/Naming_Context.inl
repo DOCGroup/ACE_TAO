@@ -14,7 +14,7 @@ ACE_Name_Options::use_registry (bool x)
   this->use_registry_ = x;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Name_Options::verbose (void)
 {
   ACE_TRACE ("ACE_Name_Options::verbose");
@@ -35,7 +35,7 @@ ACE_Name_Options::namespace_dir (void)
   return this->namespace_dir_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Name_Options::debug (void)
 {
   ACE_TRACE ("ACE_Name_Options::debug");

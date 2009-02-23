@@ -159,7 +159,6 @@ HTTP_Server::init (int argc, ACE_TCHAR *argv[])
   //you know what you are doing
   ACE_Auto_Ptr<HTTP_Handler_Factory> factory (f);
 
-
   // Choose what concurrency strategy to run.
   switch (this->strategy_)
     {

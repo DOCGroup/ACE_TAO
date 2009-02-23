@@ -415,8 +415,8 @@ ACE_Naming_Context::fini (void)
 }
 
 ACE_Name_Options::ACE_Name_Options (void)
-  : debugging_ (0),
-    verbosity_ (0),
+  : debugging_ (false),
+    verbosity_ (false),
     use_registry_ (false),
     nameserver_port_ (ACE_DEFAULT_SERVER_PORT),
     nameserver_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
@@ -580,7 +580,7 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
         }
         break;
       case 'd':
-        this->debugging_ = 1;
+        this->debugging_ = true;
         break;
       case 'r':
         this->use_registry_ = true;
@@ -613,7 +613,7 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_HAS_TRACE */
         break;
       case 'v':
-        this->verbosity_ = 1;
+        this->verbosity_ = true;
         break;
       default:
         ACE_OS::fprintf (stderr, "%s\n"
@@ -624,8 +624,8 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
                          "\t[-p nameserver port]\n"
                          "\t[-s database name]\n"
                          "\t[-b base address]\n"
-                         "\t[-v] (verbose) \n"
-                         "\t[-r] (use Win32 Registry) \n",
+                         "\t[-v] (verbose)\n"
+                         "\t[-r] (use Win32 Registry)\n",
                          argv[0]);
         /* NOTREACHED */
         break;

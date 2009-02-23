@@ -47,6 +47,7 @@ libACE_SSL_la_LIBADD = \
 nobase_include_HEADERS = \
   SSL_Asynch_BIO.h \
   SSL_Asynch_Stream.h \
+  SSL_Asynch_Stream.inl \
   SSL_Context.h \
   SSL_Context.inl \
   SSL_Export.h \

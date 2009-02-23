@@ -27,7 +27,7 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_enqueue_start (u_long i)
           this->interval_initialized_ = 1;
           ACE_hrtime_t hrtime_now = ACE_OS::gethrtime ();
           ACE_High_Res_Timer::hrtime_to_tv (this->interval_start_,
-                                                    hrtime_now);
+                                            hrtime_now);
           this->interval_end_.set (this->interval_start_.sec(),
                                    this->interval_start_.usec());
         }

@@ -35,7 +35,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
-#undef clearerr
 #undef memset
 #undef memcpy
 #undef memmove
@@ -129,6 +128,7 @@
 #define ACE_LACKS_SETSCHED
 #define ACE_LACKS_SYSCALL 1
 #define ACE_LACKS_WCSTOULL 1
+#define ACE_LACKS_WCSTOLL
 
 /* (missing) standard data types */
 #define ACE_LACKS_CONST_TIMESPEC_PTR 1
@@ -191,5 +191,7 @@
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS 1
 #define ACE_LACKS_UNIX_SYSLOG 1
 #define ACE_LACKS_ALPHASORT 1
+#define ACE_LACKS_ISCTYPE
+#define ACE_LACKS_ISBLANK
 
 #endif

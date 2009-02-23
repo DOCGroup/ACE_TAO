@@ -37,7 +37,7 @@ void create_large_env (setenvfn_t setenv, void *ctx)
     {
       char name[2] = { 'A' + i, '\0' };
       char value[varsize];
-      memset (value, 'R', varsize);
+      ACE_OS::memset (value, 'R', varsize);
       value[varsize - 1] = '\0';
       setenv (ACE_TEXT_CHAR_TO_TCHAR (name),
               ACE_TEXT_CHAR_TO_TCHAR (value),

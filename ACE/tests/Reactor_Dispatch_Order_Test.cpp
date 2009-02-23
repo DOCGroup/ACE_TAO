@@ -102,7 +102,7 @@ int
 Handler::handle_timeout (const ACE_Time_Value &,
                          const void *)
 {
-  int me = this->dispatch_order_++;
+  int const me = this->dispatch_order_++;
   if (me != 1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("handle_timeout should be #1; it's %d\n"),
@@ -116,7 +116,7 @@ Handler::handle_timeout (const ACE_Time_Value &,
 int
 Handler::handle_output (ACE_HANDLE)
 {
-  int me = this->dispatch_order_++;
+  int const me = this->dispatch_order_++;
   if (me != 2)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("handle_output should be #2; it's %d\n"),
@@ -138,7 +138,7 @@ Handler::handle_output (ACE_HANDLE)
 int
 Handler::handle_input (ACE_HANDLE fd)
 {
-  int me = this->dispatch_order_++;
+  int const me = this->dispatch_order_++;
   if (me != 3)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("handle_input should be #3; it's %d\n"),

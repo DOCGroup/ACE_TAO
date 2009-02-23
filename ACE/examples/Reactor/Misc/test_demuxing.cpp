@@ -145,14 +145,13 @@ Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
         (this->handle_,
          ACE_Event_Handler::READ_MASK,
          ACE_Reactor::ADD_MASK);
-#if defined (ACE_WIN32) && defined (SIGTERM)
+#if defined (SIGTERM) && (SIGTERM != 0)
     case SIGTERM:
-
       // This is coded thusly to avoid problems if SIGQUIT is a legit
       // value but is not a preprocessor macro.
 #elif !defined (SIGQUIT) || (SIGQUIT != 0)
     case SIGQUIT:
-#endif /* ACE_WIN32 */
+#endif /* SIGTERM != 0 */
       ACE_Reactor::end_event_loop ();
       break;
     default:

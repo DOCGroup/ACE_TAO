@@ -89,7 +89,7 @@ public:
    * @param use_select Affects behavior when called back by the reactor
    *                   when a connection can be accepted.  If non-zero,
    *                   this object will accept all pending connections,
-   *                   intead of just the one that triggered the reactor
+   *                   instead of just the one that triggered the reactor
    *                   callback.  Uses ACE_OS::select() internally to
    *                   detect any remaining acceptable connections.
    *                   The default is 1.
@@ -128,7 +128,7 @@ public:
    * @param use_select Affects behavior when called back by the reactor
    *                   when a connection can be accepted.  If non-zero,
    *                   this object will accept all pending connections,
-   *                   intead of just the one that triggered the reactor
+   *                   instead of just the one that triggered the reactor
    *                   callback.  Uses ACE_OS::select() internally to
    *                   detect any remaining acceptable connections.
    *                   The default is 1.
@@ -187,7 +187,7 @@ protected:
 
   /**
    * Bridge method for accepting the new connection into the
-   * <svc_handler>.  The default behavior delegates to the
+   * @a svc_handler.  The default behavior delegates to the
    * PEER_ACCEPTOR::accept.
    */
   virtual int accept_svc_handler (SVC_HANDLER *svc_handler);
@@ -293,8 +293,6 @@ public:
   typedef ACE_Concurrency_Strategy<SVC_HANDLER> CONCURRENCY_STRATEGY;
   typedef ACE_Scheduling_Strategy<SVC_HANDLER> SCHEDULING_STRATEGY;
 
-
-
   /// Default constructor.
   ACE_Strategy_Acceptor (const ACE_TCHAR service_name[] = 0,
                          const ACE_TCHAR service_description[] = 0,
@@ -341,7 +339,7 @@ public:
    * @param use_select   Affects behavior when called back by the reactor
    *                     when a connection can be accepted.  If non-zero,
    *                     this object will accept all pending connections,
-   *                     intead of just the one that triggered the reactor
+   *                     instead of just the one that triggered the reactor
    *                     callback.  Uses ACE_OS::select() internally to
    *                     detect any remaining acceptable connections.
    *                     The default is 1.

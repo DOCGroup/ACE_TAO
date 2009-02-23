@@ -172,6 +172,7 @@
 //Platform uses non-const char * in calls to gethostbyaddr, gethostbyname,
 // getservbyname
 #define ACE_HAS_NONCONST_GETBY
+#define ACE_HAS_NONCONST_INET_ADDR
 // Platform's select() uses non-const timeval* (only found on Linux right now)
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 // And on Tandem :-)

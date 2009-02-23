@@ -397,7 +397,7 @@ ACE_Message_Block::replace_data_block (ACE_Data_Block *db)
   if (db != 0)
     {
       // Set the read and write pointers in the <Message_Block> to point
-      // to the buffer in the <ACE_Data_Block>.
+      // to the buffer in the ACE_Data_Block.
       this->rd_ptr (this->data_block ()->base ());
       this->wr_ptr (this->data_block ()->base ());
     }

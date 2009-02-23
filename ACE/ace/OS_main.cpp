@@ -4,6 +4,8 @@
 
 ACE_RCSID(ace, OS_main, "$Id$")
 
+#if !defined (ACE_DOESNT_DEFINE_MAIN)
+
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
 
 #include "ace/Init_ACE.h"
@@ -111,12 +113,21 @@ int ACE_Main_Base::run (HINSTANCE,
                         int)
 {
   ACE_TCHAR cmdline[1024];
-  ACE_OS::strcpy (cmdline, ACE_TEXT ("program "));
+  ACE_TCHAR msg_file [MAXPATHLEN];
+  if (ACE_TEXT_GetModuleFileName (0, msg_file, MAXPATHLEN))
+    {
+      ACE_OS::strcpy (cmdline, msg_file);
+      ACE_OS::strcat (cmdline, ACE_TEXT (" "));
+    }
+  else
+    {
+      ACE_OS::strcpy (cmdline, ACE_TEXT ("program "));
+    }
   ACE_OS::strcat (cmdline, ACE_TEXT_WCHAR_TO_TCHAR (lpCmdLine));
   ACE_ARGV ce_argv (cmdline);
   ACE::init ();
   ACE_MAIN_OBJECT_MANAGER
-  int i = this->run_i (ce_argv.argc (), ce_argv.argv ());
+  int const i = this->run_i (ce_argv.argc (), ce_argv.argv ());
   ACE::fini ();
   return i;
 }
@@ -124,4 +135,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #  endif   /* !ACE_HAS_WINCE */
 
-# endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
+#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
+
+#endif /* ACE_DOESNT_DEFINE_MAIN */
+

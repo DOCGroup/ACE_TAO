@@ -50,7 +50,7 @@ int Tree_Example::run (void)
         }
     }
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Using find: \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Using find:\n")));
   for (int j = 0; j < 100; j++)
     {
       tree_.find (j, d);
@@ -77,7 +77,7 @@ void Tree_Example::iterate_forward (void)
 {
   ACE_TRACE (ACE_TEXT ("Tree_Example::iterate_forward"));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Forward Iteration: \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Forward Iteration:\n")));
   for (Tree<int, DataElement*>::iterator iter = tree_.begin ();
        iter != tree_.end (); iter++)
     {
@@ -91,7 +91,7 @@ void Tree_Example::iterate_reverse (void)
 {
   ACE_TRACE (ACE_TEXT ("Tree_Example::iterate_reverse"));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Reverse Iteration: \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Reverse Iteration:\n")));
   for (Tree<int, DataElement*>::reverse_iterator iter
          = tree_.rbegin ();
        iter != tree_.rend (); iter++)

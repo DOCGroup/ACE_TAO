@@ -55,7 +55,7 @@ run_test (void)
                        warm_colors[i]) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("bind failed for %s in %s\n"),
-                          warm_colors[i], 
+                          warm_colors[i],
                           color_sorts[0]),
                           -1);
     }
@@ -68,11 +68,11 @@ run_test (void)
                        entry) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("bind failed for %s in %s\n"),
-                          cold_colors[i], 
+                          cold_colors[i],
                           color_sorts[1]),
                           -1);
     }
-  
+
   HASH_STRING_VALUE_SET value_set;
   entry = 0;
   for (i = 0; neutral_colors[i] != 0; i++)
@@ -258,11 +258,11 @@ run_test (void)
            iter++)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%s  \n"),
+                      ACE_TEXT ("%s \n"),
                       *iter));
         }
     }
-  
+
   // Check the unbind operation.
   if (colors.unbind (color_sorts[0]) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -275,7 +275,7 @@ run_test (void)
                        warm_colors[i]) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("bind failed for %s in %s\n"),
-                          warm_colors[i], 
+                          warm_colors[i],
                           color_sorts[0]),
                           -1);
     }
@@ -292,7 +292,7 @@ run_test (void)
                        warm_colors[i]) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("bind failed for %s in %s\n"),
-                          warm_colors[i], 
+                          warm_colors[i],
                           color_sorts[0]),
                           -1);
     }
@@ -303,7 +303,7 @@ run_test (void)
                          warm_colors[i]) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("unbind failed for %s in %s\n"),
-                           warm_colors[i], 
+                           warm_colors[i],
                            color_sorts[0]),
                           -1);
     }
@@ -326,7 +326,7 @@ run_test (void)
            iter++)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%s  \n"),
+                      ACE_TEXT ("%s \n"),
                       *iter));
         }
     }
@@ -357,7 +357,7 @@ run_test (void)
            iter++)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%s  \n"),
+                      ACE_TEXT ("%s \n"),
                       *iter));
         }
     }

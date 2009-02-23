@@ -27,7 +27,7 @@ endif # ! i86pc
 
 CC              = gcc
 CXX             = g++
-FLAGS_C_CC      += -W -Wall -Wpointer-arith
+CFLAGS          += -W -Wall -Wpointer-arith
 
 ifeq ($(threads),1)
   CPPFLAGS      += -D_REENTRANT
@@ -54,11 +54,10 @@ include $(ACE_ROOT)/include/makeinclude/platform_sunos5_common.GNU
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-CFLAGS  += $(FLAGS_C_CC)
-CCFLAGS += $(FLAGS_C_CC) $(TEMPLATES_FLAG)
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 
 # Make sure we resolve all symbols at link time, see bugzilla 2710
-LDFLAGS += -z now
+LDFLAGS         += -z now
 
 ## Unfortunately, gcc 3.0 fails to many cpp files with
 ## optimization enabled.  Even -O causes the compiler

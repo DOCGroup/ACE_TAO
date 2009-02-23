@@ -1,4 +1,4 @@
-ACKNOWLEDGEMENTS
+ACKNOWLEDGEMENTSACKNOWLEDGEMENTS
 
 ACE and TAO have been deeply influenced and improved by the following
 members of my research group at Washington University in St. Louis, the
@@ -2121,7 +2121,6 @@ Popeye Cai <popeye dot cai at utstar dot com>
 David Highley <dhighley at highley-recommended dot com>
 Sonicfly Zhou <zhoucn at txsec dot com>
 Phil Billingham <phil_billingham at ml dot com>
-David Giovannini <giovannd at ociweb dot com>
 Paul Daugherty <Paul at nextalk dot com>
 Robert Schwebel <robert at schwebel dot de>
 William Cote <William dot Cote at hp dot com>
@@ -2261,6 +2260,24 @@ Nathalie D'Amours <nathalie at bearsontheloose dot com>
 Mele Giovanni <giovanni dot mele at nagra dot com>
 Philipp Thomas <pth at suse dot de>
 Mark Hebbel <Mark dot Hebbel at baslerweb dot com>
+Tim Pollock <pollockt at ociweb dot com>
+Jack Lavender <jack dot lavender at seconcepts dot com>
+Alexandre Skrzyniarz <alexandre dot skrzyniarz at fr dot thalesgroup dot com>
+E Vahala <erkki dot vahala at pp dot inet dot fi>
+Christian Fromme <kaner dot strace dot org>
+Daniel Lang <danial dot lang at alphagate dot at>
+Greg Bothe <ace at netrats dot net>
+Anand Kumar <anandkumar95 at gmail dot com>
+Joe Pallas <pallas at cs dot stanford dot edu>
+Marcel Smit <msmit at remedy dot nl>
+Florent Vial <florent dot vial at gmail dot com>
+Pan Kai Luna <pan dot kai dot luna at gmail dot com>
+Jesus Martinez <jmcruz at lcc dot uma dot es>
+Martin Gaus <Gaus at gmx dot de>
+Steve Stallion <stallions at ociweb dot com>
+Ron van Hoof <rvhoof27 at gmail dot com>
+Joe Lihn <joelihn at hotmail dot com>
+Jani Hakala <jahakala at iki dot fi>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

@@ -171,7 +171,7 @@ protected:
   int count_;
 
   /// Tells us what is the maximum log file to write. We will write
-  /// <max_file_number_> + 1 files (includes the current log file).
+  /// @c max_file_number_ + 1 files (includes the current log file).
   /// Default value is 1, i.e., 2 files by default.
   int max_file_number_;
 
@@ -181,7 +181,7 @@ protected:
   u_long interval_;
 
   /// Maximum logfile size (in KB).  Default value is
-  /// <ACE_DEFAULT_MAX_LOGFILE_SIZE>.
+  /// ACE_DEFAULT_MAX_LOGFILE_SIZE.
   u_long max_size_;
 
   /// ACE_Log_Msg instance to work with

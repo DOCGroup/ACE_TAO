@@ -132,7 +132,8 @@ sub DeleteFile ($)
     my $self = shift;
     $self->{FTP}->login("","");
     foreach my $file (@_) {
-      $self->{FTP}->delete($file);
+      my $newfile = $self->LocalFile($file);
+      $self->{FTP}->delete($newfile);
     }
 }
 
@@ -142,8 +143,9 @@ sub GetFile ($)
     my $self = shift;
     my $remote_file = shift;
     my $local_file = shift;
+    my $newfile = $self->LocalFile($file);
     $self->{FTP}->ascii();
-    if ($self->{FTP}->get($remote_file, $local_file)) {
+    if ($self->{FTP}->get($newfile, $local_file)) {
         return 0;
     }
     return -1;
@@ -154,6 +156,7 @@ sub WaitForFileTimed ($)
     my $self = shift;
     my $file = shift;
     my $timeout = shift;
+    my $newfile = $self->LocalFile($file);
     my $targetport = $self->{CTLPORT};
     my $target = new Net::Telnet(Errmode => 'return');
     if (!$target->open(Host => $self->{IPNAME}, Port => $targetport)) {
@@ -161,7 +164,7 @@ sub WaitForFileTimed ($)
                       $target->errmsg(), "\n";
         return -1;
     }
-    my $cmdline = "waitforfile $file $timeout";
+    my $cmdline = "waitforfile $newfile $timeout";
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print "-> $cmdline\n";
     }

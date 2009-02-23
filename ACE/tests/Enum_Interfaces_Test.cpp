@@ -70,8 +70,8 @@ run_main (int, ACE_TCHAR *[])
           else if (the_addr_array[i].get_type() == AF_INET6)
             ++num_ipv6;
 #endif /* ACE_HAS_IPV6 */
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\t%s\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (the_addr_array[i].get_host_addr ())));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\t%C\n"),
+                    the_addr_array[i].get_host_addr ()));
         }
 
       delete [] the_addr_array;

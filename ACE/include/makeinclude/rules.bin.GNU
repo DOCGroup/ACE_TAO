@@ -9,7 +9,7 @@
 #----------------------------------------------------------------------------
 
 ifdef BIN
-  VBIN = $(BIN:%=%$(VAR))
+  VBIN = $(ARCH_BIN:%=%$(VAR))
   # VBIN always depends on idl_stubs and libraries, if they exist.
   ifdef IDL_SRC
     $(VBIN): $(IDL_SRC)
@@ -39,14 +39,15 @@ VXWORKSLINK ?=
 using_aix_vacpp ?=
 
 ifeq ($(VXWORKSLINK),1)
-$(BIN): $(DEFAULTRULE)
+$(ARCH_BIN): $(DEFAULTRULE)
 	mv $(DEFAULTRULE) $@
 else # !VXWORKSLINK
   ifeq (1,$(using_aix_vacpp))
-$(BIN): %: %.icc $(SRC)
+$(ARCH_BIN): %: %.icc $(SRC)
 	vacbld_r $< -severitylevel=warning
   else # !using_aix_vacpp
-$(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
-	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $(sort $(VDIR)$@.$(OBJEXT) $(VOBJS)) $(VLDLIBS) $(POSTLINK)
+# Since we add in the vdir, don't use arch_bin.  use bin instead!
+$(ARCH_BIN): %: $(VDIR)$(BIN).$(OBJEXT) $(VOBJS)
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $(sort $(VDIR)$(BIN).$(OBJEXT) $(VOBJS)) $(VLDLIBS) $(POSTLINK)
   endif # using_aix_vacpp
 endif

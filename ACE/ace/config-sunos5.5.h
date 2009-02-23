@@ -368,6 +368,9 @@
 #define ACE_HAS_GPERF
 #define ACE_HAS_DIRENT
 
+#define ACE_LACKS_ISCTYPE
+#define ACE_LACKS_ISBLANK
+
 #if defined (__SUNPRO_CC)
 # define ACE_CC_NAME ACE_TEXT ("SunPro C++")
 # define ACE_CC_MAJOR_VERSION (__SUNPRO_CC >> 8)

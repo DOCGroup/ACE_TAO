@@ -142,7 +142,7 @@
 #if defined (ACE_DLL_SUFFIX)
 #  undef ACE_DLL_SUFFIX
 #endif
-#define ACE_DLL_SUFFIX ".so"
+#define ACE_DLL_SUFFIX ACE_TEXT (".so")
 
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 
@@ -247,6 +247,8 @@
 
 #define ACE_HAS_UTIME
 
+#define ACE_HAS_CTYPE_T
+
 // Platform has XPG4 wide character type and functions. However, the size
 // of wchar_t changes for 32- vs. 64-bit builds (unsigned short vs. unsigned
 // int, respectively).
@@ -260,7 +262,7 @@
 #define ACE_LACKS_NETINET_TCP_H
 
 // AIX uses LIBPATH to search for libraries
-#define ACE_LD_SEARCH_PATH "LIBPATH"
+#define ACE_LD_SEARCH_PATH ACE_TEXT ("LIBPATH")
 
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
@@ -330,5 +332,6 @@
 #define ACE_SCANDIR_SEL_LACKS_CONST
 #define ACE_HAS_SIGSUSPEND
 #define ACE_HAS_TIMEZONE  /* Call tzset() to set timezone */
+#define ACE_LACKS_ISCTYPE
 
 #endif /* ACE_CONFIG_AIX_5_X_H */

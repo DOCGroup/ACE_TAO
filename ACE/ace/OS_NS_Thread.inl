@@ -418,6 +418,8 @@ ACE_OS::event_init (ACE_event_t *event,
   if (*event == 0)
     ACE_FAIL_RETURN (-1);
 
+  // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
+  ACE_OS::set_errno_to_last_error ();
   return 0;
 #else  /* ACE_WIN32 */
   return ACE_OS::event_init (event,
@@ -1572,15 +1574,15 @@ ACE_OS::sema_init (ACE_sema_t *s,
 
   if ((s->fd_[0] = ACE_OS::open (name, O_RDONLY | O_NONBLOCK)) == ACE_INVALID_HANDLE
       || (s->fd_[1] = ACE_OS::open (name, O_WRONLY | O_NONBLOCK)) == ACE_INVALID_HANDLE)
-    return (-1);
+    return -1;
 
   /* turn off nonblocking for fd_[0] */
   if ((flags = ACE_OS::fcntl (s->fd_[0], F_GETFL, 0)) < 0)
-    return (-1);
+    return -1;
 
   flags &= ~O_NONBLOCK;
   if (ACE_OS::fcntl (s->fd_[0], F_SETFL, flags) < 0)
-    return (-1);
+    return -1;
 
   //if (s->name_ && count)
   if (creator && count)
@@ -1588,7 +1590,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
       char    c = 1;
       for (u_int i=0; i<count ;++i)
         if (ACE_OS::write (s->fd_[1], &c, sizeof (char)) != 1)
-          return (-1);
+          return -1;
     }
 
   // In the case of process scope semaphores we can already unlink the FIFO now that
@@ -1602,7 +1604,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
       ACE_OS::unlink (name);
     }
 
-  return (0);
+  return 0;
 #elif defined (ACE_HAS_THREADS)
 #  if defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (name);
@@ -1642,17 +1644,21 @@ ACE_OS::sema_init (ACE_sema_t *s,
   // its maximum value initialized to <max>.
   SECURITY_ATTRIBUTES sa_buffer;
   SECURITY_DESCRIPTOR sd_buffer;
-  *s = ::CreateSemaphoreA
+  *s = ACE_TEXT_CreateSemaphore
     (ACE_OS::default_win32_security_attributes_r (sa, &sa_buffer, &sd_buffer),
      count,
      max,
-     name);
+     ACE_TEXT_CHAR_TO_TCHAR (name));
 
   if (*s == 0)
     ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
   else
-    return 0;
+    {
+      // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
+      ACE_OS::set_errno_to_last_error ();
+      return 0;
+    }
 #    else /* ACE_USES_WINCE_SEMA_SIMULATION */
   int result = -1;
 
@@ -1736,7 +1742,11 @@ ACE_OS::sema_init (ACE_sema_t *s,
     ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
   else
-    return 0;
+    {
+      // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
+      ACE_OS::set_errno_to_last_error ();
+      return 0;
+    }
 #   else /* ACE_USES_WINCE_SEMA_SIMULATION */
   int result = -1;
 
@@ -1800,8 +1810,8 @@ ACE_OS::sema_post (ACE_sema_t *s)
 # elif defined (ACE_USES_FIFO_SEM)
   char    c = 1;
   if (ACE_OS::write (s->fd_[1], &c, sizeof (char)) == sizeof (char))
-    return (0);
-  return (-1);
+    return 0;
+  return -1;
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   int result;
@@ -1890,10 +1900,10 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
 
   /* turn on nonblocking for s->fd_[0] */
   if ((flags = ACE_OS::fcntl (s->fd_[0], F_GETFL, 0)) < 0)
-    return (-1);
+    return -1;
   flags |= O_NONBLOCK;
   if (ACE_OS::fcntl (s->fd_[0], F_SETFL, flags) < 0)
-    return (-1);
+    return -1;
 
   // read sets errno to EAGAIN if no input
   rc = ACE_OS::read (s->fd_[0], &c, sizeof (char));
@@ -2010,8 +2020,8 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 # elif defined (ACE_USES_FIFO_SEM)
   char c;
   if (ACE_OS::read (s->fd_[0], &c, sizeof (char)) == 1)
-    return (0);
-  return (-1);
+    return 0;
+  return -1;
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   int result;
@@ -2193,13 +2203,13 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
           {
             if (rc == 0)
               errno = ETIME;
-            return (-1);
+            return -1;
           }
         }
 
       // try to read the signal *but* do *not* block
       if (rc == 1 && ACE_OS::sema_trywait (s) == 0)
-        return (0);
+        return 0;
 
       // we were woken for input but someone beat us to it
       // so we wait again if there is still time
@@ -2209,7 +2219,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   // make sure errno is set right
   errno = ETIME;
 
-  return (-1);
+  return -1;
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (s);
@@ -2259,7 +2269,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 #     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   int msec_timeout;
 
-  if (tv.sec () == 0 && tv.usec () == 0)
+  if (tv == ACE_Time_Value::zero)
     msec_timeout = 0; // Do a "poll."
   else
     {
@@ -2674,10 +2684,13 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
 # elif defined (ACE_HAS_STHREADS)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (ht_id, &priority), result), int, -1);
-# elif defined (ACE_HAS_WTHREADS) && !defined (ACE_HAS_WINCE)
+# elif defined (ACE_HAS_WTHREADS)
   ACE_Errno_Guard error (errno);
-
+#   if !defined (ACE_HAS_WINCE)
   priority = ::GetThreadPriority (ht_id);
+#   else
+  priority = ::CeGetThreadPriority (ht_id);
+#   endif
 
 #   if defined (ACE_HAS_PHARLAP)
 #     if defined (ACE_PHARLAP_LABVIEW_RT)
@@ -2686,7 +2699,7 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
   DWORD timeslice = ::EtsGetTimeSlice ();
   policy = timeslice == 0 ? ACE_SCHED_OTHER : ACE_SCHED_FIFO;
 #     endif /* ACE_PHARLAP_LABVIEW_RT */
-#   else
+#   elif !defined (ACE_HAS_WINCE)
   DWORD priority_class = ::GetPriorityClass (::GetCurrentProcess ());
   if (priority_class == 0 && (error = ::GetLastError ()) != NO_ERROR)
     ACE_FAIL_RETURN (-1);
@@ -3104,9 +3117,15 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
                                        result),
                      int, -1);
 # elif defined (ACE_HAS_WTHREADS)
+#  if !defined (ACE_HAS_WINCE)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (ht_id, priority),
                                           ace_result_),
                         int, -1);
+#  else
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CeSetThreadPriority (ht_id, priority),
+                                          ace_result_),
+                        int, -1);
+#  endif /* ACE_HAS_WINCE */
 # elif defined (ACE_HAS_VXTHREADS)
   ACE_OSCALL_RETURN (::taskPrioritySet (ht_id, priority), int, -1);
 # else

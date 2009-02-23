@@ -54,7 +54,7 @@ ACE_Future_Rep<T>::dump (void) const
   ACE_DEBUG ((LM_DEBUG,
               "ref_count_ = %d\n",
  (int) this->ref_count_));
-  ACE_DEBUG ((LM_INFO,"value_: \n"));
+  ACE_DEBUG ((LM_INFO,"value_:\n"));
   if (this->value_)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (NON-NULL)\n")));
   else
@@ -62,9 +62,9 @@ ACE_Future_Rep<T>::dump (void) const
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (NULL)\n")));
     //FUZZ: enable check_for_NULL
 
-  ACE_DEBUG ((LM_INFO,"value_ready_: \n"));
+  ACE_DEBUG ((LM_INFO,"value_ready_:\n"));
   this->value_ready_.dump ();
-  ACE_DEBUG ((LM_INFO,"value_ready_mutex_: \n"));
+  ACE_DEBUG ((LM_INFO,"value_ready_mutex_:\n"));
   this->value_ready_mutex_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

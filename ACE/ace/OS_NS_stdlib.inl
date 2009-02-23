@@ -44,9 +44,9 @@ ACE_OS::abort (void)
 }
 
 ACE_INLINE int
-ACE_OS::atexit (ACE_EXIT_HOOK func)
+ACE_OS::atexit (ACE_EXIT_HOOK func, const char* name)
 {
-  return ACE_OS_Object_Manager::instance ()->at_exit (func);
+  return ACE_OS_Object_Manager::instance ()->at_exit (func, name);
 }
 
 ACE_INLINE int
@@ -64,6 +64,44 @@ ACE_OS::atoi (const wchar_t *s)
 #else /* ACE_WIN32 */
   return ACE_OS::atoi (ACE_Wide_To_Ascii (s).char_rep ());
 #endif /* ACE_WIN32 */
+}
+#endif /* ACE_HAS_WCHAR */
+
+ACE_INLINE long
+ACE_OS::atol (const char *s)
+{
+  ACE_OSCALL_RETURN (::atol (s), long, -1);
+}
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE long
+ACE_OS::atol (const wchar_t *s)
+{
+#if defined (ACE_WIN32)
+  ACE_OSCALL_RETURN (::_wtol (s), long, -1);
+#else /* ACE_WIN32 */
+  return ACE_OS::atol (ACE_Wide_To_Ascii (s).char_rep ());
+#endif /* ACE_WIN32 */
+}
+#endif /* ACE_HAS_WCHAR */
+
+ACE_INLINE double
+ACE_OS::atof (const char *s)
+{
+  ACE_OSCALL_RETURN (::atof (s), double, -1);
+}
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE double
+ACE_OS::atof (const wchar_t *s)
+{
+#if !defined (ACE_HAS_WTOF)
+  return ACE_OS::atof (ACE_Wide_To_Ascii (s).char_rep ());
+#elif defined (ACE_WTOF_EQUIVALENT)
+  ACE_OSCALL_RETURN (ACE_WTOF_EQUIVALENT (s), double, -1);
+#else /* ACE_HAS__WTOF */
+  ACE_OSCALL_RETURN (::wtof (s), double, -1);
+#endif /* ACE_HAS_WTOF */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -390,7 +428,6 @@ ACE_OS::rand_r (ACE_RANDR_TYPE& seed)
 
 #endif /* !ACE_WIN32 */
 
-#if !defined (ACE_HAS_WINCE)
 #  if !defined (ACE_LACKS_REALPATH)
 ACE_INLINE char *
 ACE_OS::realpath (const char *file_name,
@@ -402,7 +439,6 @@ ACE_OS::realpath (const char *file_name,
   return ::realpath (file_name, resolved_name);
 #    endif /* ! ACE_WIN32 */
 }
-#  endif /* !ACE_LACKS_REALPATH */
 
 #  if defined (ACE_HAS_WCHAR)
 ACE_INLINE wchar_t *
@@ -489,7 +525,7 @@ ACE_OS::strtoul (const char *s, char **ptr, int base)
 #endif /* ACE_LACKS_STRTOUL */
 }
 
-#if defined (ACE_HAS_WCHAR) 
+#if defined (ACE_HAS_WCHAR)
 ACE_INLINE unsigned long
 ACE_OS::strtoul (const wchar_t *s, wchar_t **ptr, int base)
 {
@@ -513,7 +549,7 @@ ACE_OS::strtoll (const char *s, char **ptr, int base)
 #endif /* ACE_LACKS_STRTOLL */
 }
 
-#if defined (ACE_HAS_WCHAR) 
+#if defined (ACE_HAS_WCHAR)
 ACE_INLINE ACE_INT64
 ACE_OS::strtoll (const wchar_t *s, wchar_t **ptr, int base)
 {

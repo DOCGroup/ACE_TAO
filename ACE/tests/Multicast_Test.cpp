@@ -602,7 +602,7 @@ MCT_Event_Handler::handle_input (ACE_HANDLE /*handle*/)
       ACE_DEBUG ((LM_ERROR,
                   ACE_TEXT ("MCT_Event_Handler::handle_input - ")
                   ACE_TEXT ("Received dgram for a group we didn't join ")
-                  ACE_TEXT ("(%s) \n"),
+                  ACE_TEXT ("(%s)\n"),
                   buf));
     }
   return 0;
@@ -762,7 +762,7 @@ int send_dgram (ACE_SOCK_Dgram &socket, ACE_INET_Addr addr, int done = 0)
         ACE_OS::sprintf (buf, "%s/%d", address, port);
 
       if (socket.send (buf, ACE_OS::strlen (buf),addr) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Send to %s, %p\n"),
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Send to %C, %p\n"),
                            address,
                            ACE_TEXT ("send_dgram - error calling send on ")
                            ACE_TEXT ("ACE_SOCK_Dgram.")), -1);

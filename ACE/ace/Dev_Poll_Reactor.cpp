@@ -1051,7 +1051,7 @@ ACE_Dev_Poll_Reactor::handle_events_i (ACE_Time_Value *max_wait_time,
     {
       result = this->work_pending_i (max_wait_time);
       if (result == -1)
-        ACE_ERROR ((LM_ERROR, "%t: %p\n", "work_pending_i"));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT("%t: %p\n"), ACE_TEXT("work_pending_i")));
     }
   while (result == -1 && this->restart_ != 0 && errno == EINTR);
 
@@ -1415,7 +1415,7 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
 
      if (::epoll_ctl (this->poll_fd_, op, handle, &epev) == -1)
        {
-         ACE_ERROR ((LM_ERROR, "%p\n", "epoll_ctl"));
+         ACE_ERROR ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("epoll_ctl")));
  (void) this->handler_rep_.unbind (handle);
          return -1;
        }
@@ -1428,7 +1428,7 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
      // again, possibly for different event.  Add new mask to the
      // current one.
      if (this->mask_ops_i (handle, mask, ACE_Reactor::ADD_MASK) == -1)
-       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "mask_ops_i"), -1);
+       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("mask_ops_i")), -1);
    }
 
 #ifndef  ACE_HAS_EVENT_POLL
@@ -2465,7 +2465,7 @@ ACE_Dev_Poll_Reactor::Token_Guard::acquire_quietly (ACE_Time_Value *max_wait)
         return 0;
       else
         {
-          ACE_ERROR ((LM_ERROR, "%t: %p\n", "token acquire_read"));
+          ACE_ERROR ((LM_ERROR, ACE_TEXT("%t: %p\n"), ACE_TEXT("token acquire_read")));
           return -1;
         }
     }

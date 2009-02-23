@@ -48,9 +48,6 @@
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
-// Header files lack t_errno for ACE_TLI.
-//#define ACE_LACKS_T_ERRNO
-
 // Compiler/platform supports poll().
 // #define ACE_HAS_POLL
 

@@ -68,7 +68,7 @@ SignalableTask::handle_alert (void)
 // Listing 1 code/ch13
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Main thread \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Main thread\n")));
   SignalableTask handler;
   handler.activate (THR_NEW_LWP | THR_JOINABLE, 5);
 

@@ -103,7 +103,7 @@ ACE_ATM_Stream::recv (void *buf,
   ACE_UNUSED_ARG(buf);
   ACE_UNUSED_ARG(n);
   ACE_UNUSED_ARG(flags);
-  return (0);
+  return 0;
 #endif /* ACE_HAS_FORE_ATM_XTI */
 }
 
@@ -126,7 +126,7 @@ ACE_ATM_Stream::send_n (const void *buf,
   ACE_UNUSED_ARG(buf);
   ACE_UNUSED_ARG(n);
   ACE_UNUSED_ARG(flags);
-  return (0);
+  return 0;
 #endif /* ACE_HAS_FORE_ATM_XTI */
 }
 

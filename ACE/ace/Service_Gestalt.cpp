@@ -74,7 +74,6 @@ ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
 
 
 /// Destructor
-
 ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
 {
   const ACE_Service_Type *tmp = 0;
@@ -290,9 +289,8 @@ ACE_Service_Gestalt::init_i (void)
 }
 
 
-// Add the default statically-linked services to the Service
-// Repository.
-
+/// Add the default statically-linked services to the Service
+/// Repository.
 int
 ACE_Service_Gestalt::load_static_svcs (void)
 {
@@ -318,7 +316,6 @@ ACE_Service_Gestalt::load_static_svcs (void)
 
 
 /// Find a static service descriptor by name
-
 int
 ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
                                                  ACE_Static_Svc_Descriptor **ssd) const
@@ -346,7 +343,6 @@ ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
 }
 
 /// @brief
-
 const ACE_Static_Svc_Descriptor*
 ACE_Service_Gestalt::find_processed_static_svc (const ACE_TCHAR* name)
 {
@@ -372,7 +368,6 @@ ACE_Service_Gestalt::find_processed_static_svc (const ACE_TCHAR* name)
 ///
 /// This is part of the mechanism ensuring distinct local instances
 /// for static service objects, loaded in another repository.
-
 void
 ACE_Service_Gestalt::add_processed_static_svc
   (const ACE_Static_Svc_Descriptor *assd)
@@ -448,10 +443,6 @@ ACE_Service_Gestalt::dump (void) const
   ACE_TRACE ("ACE_Service_Gestalt::dump");
 #endif /* ACE_HAS_DUMP */
 }
-
-
-
-///
 
 int
 ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
@@ -602,17 +593,16 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 #endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
 
 
-// Dynamically link the shared object file and retrieve a pointer to
-// the designated shared object in this file.
-// @note This is obsolete (and error-prone) in the presense of dynamic
-// services with their own static services. This method will allow those
-// static services to register *before* the dynamic service that owns them.
-// Upon finalization of the static services the process may crash, because
-// the dynamic service's DLL may have been already released, together with
-// the memory in which the static services reside.
-// It may not crash, for instance, when the first static service to register
-// is the same as the dynamic service being loaded. You should be so lucky! ..
-
+/// Dynamically link the shared object file and retrieve a pointer to
+/// the designated shared object in this file.
+/// @note This is obsolete (and error-prone) in the presense of dynamic
+/// services with their own static services. This method will allow those
+/// static services to register *before* the dynamic service that owns them.
+/// Upon finalization of the static services the process may crash, because
+/// the dynamic service's DLL may have been already released, together with
+/// the memory in which the static services reside.
+/// It may not crash, for instance, when the first static service to register
+/// is the same as the dynamic service being loaded. You should be so lucky! ..
 int
 ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
                                  const ACE_TCHAR *parameters)
@@ -644,8 +634,8 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
 
 }
 
-// Dynamically link the shared object file and retrieve a pointer to
-// the designated shared object in this file.
+/// Dynamically link the shared object file and retrieve a pointer to
+/// the designated shared object in this file.
 int
 ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
                                    const ACE_TCHAR *parameters)
@@ -703,12 +693,11 @@ ACE_Service_Gestalt::remove (const ACE_TCHAR svc_name[])
   return this->repo_->remove (svc_name);
 }
 
-// Suspend <svc_name>.  Note that this will not unlink the service
-// from the daemon if it was dynamically linked, it will mark it as
-// being suspended in the Service Repository and call the <suspend>
-// member function on the appropriate <ACE_Service_Object>.  A service
-// can be resumed later on by calling the <resume> method...
-
+/// Suspend @a svc_name.  Note that this will not unlink the service
+/// from the daemon if it was dynamically linked, it will mark it as
+/// being suspended in the Service Repository and call the <suspend>
+/// member function on the appropriate <ACE_Service_Object>.  A service
+/// can be resumed later on by calling the <resume> method...
 int
 ACE_Service_Gestalt::suspend (const ACE_TCHAR svc_name[])
 {
@@ -858,7 +847,7 @@ ACE_Service_Gestalt::get_xml_svc_conf (ACE_DLL &xmldll)
   if (xmldll.open (ACE_TEXT ("ACEXML_XML_Svc_Conf_Parser")) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("ACE (%P|%t) Failure to open ACEXML_XML_Svc_Conf_Parser: %p\n"),
-                       "ACE_Service_Config::get_xml_svc_conf"),
+                       ACE_TEXT("ACE_Service_Config::get_xml_svc_conf")),
                       0);
 
   void * foo =
@@ -942,8 +931,7 @@ ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
 #else
   ACE_DLL dll;
 
-  auto_ptr<ACE_XML_Svc_Conf>
-    xml_svc_conf (this->get_xml_svc_conf (dll));
+  auto_ptr<ACE_XML_Svc_Conf> xml_svc_conf (this->get_xml_svc_conf (dll));
 
   if (xml_svc_conf.get () == 0)
     return -1;
@@ -1147,26 +1135,22 @@ ACE_Service_Gestalt::parse_args_i (int argc,
                                    bool &ignore_default_svc_conf_file)
 {
   ACE_TRACE ("ACE_Service_Gestalt::parse_args_i");
-  //FUZZ: disable check_for_lack_ACE_OS
-  ACE_Get_Opt getopt (argc,
-                      argv,
-                      ACE_TEXT ("df:k:nyS:"),
-                      1); // Start at argv[1].
-  //FUZZ: enable check_for_lack_ACE_OS
+  ACE_Get_Opt get_opt (argc,
+                       argv,
+                       ACE_TEXT ("df:k:nyS:"),
+                       1); // Start at argv[1].
 
   if (this->init_svc_conf_file_queue () == -1)
     return -1;
 
-  //FUZZ: disable check_for_lack_ACE_OS
-  for (int c; (argc != 0) && ((c = getopt ()) != -1); )
-  //FUZZ: enable check_for_lack_ACE_OS
+  for (int c; (argc != 0) && ((c = get_opt ()) != -1); )
     switch (c)
       {
       case 'd':
         ACE::debug (1);
         break;
       case 'f':
-        if (this->svc_conf_file_queue_->enqueue_tail (ACE_TString (getopt.opt_arg ())) == -1)
+        if (this->svc_conf_file_queue_->enqueue_tail (ACE_TString (get_opt.opt_arg ())) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("%p\n"),
                              ACE_TEXT ("enqueue_tail")),
@@ -1178,7 +1162,7 @@ ACE_Service_Gestalt::parse_args_i (int argc,
          * @TODO: Is this always a static storage? Shouldn't we copy
          * & gain ownership of the value?
          */
-        this->logger_key_ = getopt.opt_arg ();
+        this->logger_key_ = get_opt.opt_arg ();
         break;
       case 'n':
         this->no_static_svcs_ = 1;
@@ -1194,7 +1178,7 @@ ACE_Service_Gestalt::parse_args_i (int argc,
                             -1);
           }
 
-        if (this->svc_queue_->enqueue_tail (ACE_TString (getopt.opt_arg ())) == -1)
+        if (this->svc_queue_->enqueue_tail (ACE_TString (get_opt.opt_arg ())) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("%p\n"),
                              ACE_TEXT ("enqueue_tail")),
@@ -1226,6 +1210,8 @@ ACE_Service_Gestalt::process_directives (bool ignore_default_svc_conf_file)
   ACE_TString *sptr = 0;
   ACE_TString default_svc_conf (ACE_DEFAULT_SVC_CONF);
 
+  int failed = 0;
+
   // Iterate through all the svc.conf files.
   for (ACE_SVC_QUEUE_ITERATOR iter (*this->svc_conf_file_queue_);
        iter.next (sptr) != 0;
@@ -1237,9 +1223,10 @@ ACE_Service_Gestalt::process_directives (bool ignore_default_svc_conf_file)
       int result = this->process_file (sptr->fast_rep ());
       if (result < 0)
         return result;
+      failed += result;
     }
 
-  return 0;
+  return failed;
 
 } /* process_directives () */
 

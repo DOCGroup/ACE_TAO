@@ -19,4 +19,9 @@ project : aceexe {
   }
   Template_Files {
   }
+  Build_Files {
+    tests.mpc
+    tests.mwc
+    acetest.mpb
+  }
 }

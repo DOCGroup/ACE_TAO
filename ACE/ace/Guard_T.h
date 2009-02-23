@@ -32,7 +32,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief This data structure is meant to be used within a method or
  * function...  It performs automatic aquisition and release of
- * a parameterized synchronization object <ACE_LOCK>.
+ * a parameterized synchronization object ACE_LOCK.
  *
  * The <ACE_LOCK> class given as an actual parameter must provide at
  * the very least the <acquire>, <tryacquire>, <release>, and

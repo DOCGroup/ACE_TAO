@@ -570,7 +570,7 @@ protected:
 
   /**
    * True if state has changed during dispatching of
-   * <ACE_Event_Handlers>, else false.  This is used to determine
+   * ACE_Event_Handlers, else false.  This is used to determine
    * whether we need to make another trip through the
    * <Select_Reactor>'s <wait_for_multiple_events> loop.
    */

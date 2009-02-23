@@ -474,7 +474,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           if (ack != data_buf_len)
             ACE_DEBUG ((LM_DEBUG, "received ack for only %d bytes\n", ack));
         }
-      printf("Client finished. \n");
+      printf("Client finished.\n");
     }
   else
     {
@@ -520,7 +520,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                "ttcp"),
                               -1);
         }
-      printf("Server finished. \n");
+      printf("Server finished.\n");
     }
 
   /*  if (errno)

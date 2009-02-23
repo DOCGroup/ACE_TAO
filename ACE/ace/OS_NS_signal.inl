@@ -227,6 +227,17 @@ sigsuspend (const sigset_t *sigset)
 #endif /* ACE_HAS_SIGSUSPEND */
 }
 
+ACE_INLINE int
+raise (const int signum)
+{
+#if defined (ACE_LACKS_RAISE)
+  ACE_UNUSED_ARG (signum);
+  ACE_NOTSUP_RETURN (-1);
+#else
+  ACE_OSCALL_RETURN (::raise (signum), int, -1);
+#endif /* ACE_LACKS_RAISE */
+}
+
 }  /* end namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

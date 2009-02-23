@@ -58,7 +58,7 @@ namespace ACE_OS {
  * Some versions of CE don't support @c errno and some versions'
  * implementations are busted.  So we implement our own.
  * Our implementation takes up one Tls key, however, it does not
- * allocate memory fromt the heap so there's no problem with cleanin
+ * allocate memory from the heap so there's no problem with cleaning
  * up the errno when a thread exit.
  */
 class ACE_Export ACE_CE_Errno

@@ -167,7 +167,7 @@ bool
 ACE::debug (void)
 {
   static const char* debug = ACE_OS::getenv ("ACE_DEBUG");
-  return (ACE::debug_ != 0) ? ACE::debug_ : (debug != 0 ? (*debug != '0'): false);
+  return (ACE::debug_ != 0) ? ACE::debug_ : (debug != 0 ? (*debug != '0') : false);
 }
 
 void
@@ -373,7 +373,6 @@ ACE::hash_pjw (const wchar_t *str)
 }
 #endif /* ACE_HAS_WCHAR */
 
-#if !defined (ACE_HAS_WINCE)
 ACE_TCHAR *
 ACE::strenvdup (const ACE_TCHAR *str)
 {
@@ -381,7 +380,6 @@ ACE::strenvdup (const ACE_TCHAR *str)
 
   return ACE_OS::strenvdup (str);
 }
-#endif /* ACE_HAS_WINCE */
 
 /*
 
@@ -2330,7 +2328,7 @@ ACE::format_hexdump (const char *buffer,
 
   size_t i;
 
-  size_t lines = size / 16;
+  size_t const lines = size / 16;
   for (i = 0; i < lines; i++)
     {
       size_t j;
@@ -2354,7 +2352,11 @@ ACE::format_hexdump (const char *buffer,
       textver[j] = 0;
 
       ACE_OS::sprintf (obuf,
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                       ACE_TEXT ("  %ls\n"),
+#else
                        ACE_TEXT ("  %s\n"),
+#endif
                        textver);
 
       while (*obuf != '\0')
@@ -2395,7 +2397,11 @@ ACE::format_hexdump (const char *buffer,
 
       textver[i] = 0;
       ACE_OS::sprintf (obuf,
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                       ACE_TEXT ("  %ls\n"),
+#else
                        ACE_TEXT ("  %s\n"),
+#endif
                        textver);
     }
   return size;
@@ -2538,14 +2544,14 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 #else
   ACE_Handle_Set rd_handles;
   ACE_Handle_Set wr_handles;
-
   rd_handles.set_bit (h);
   wr_handles.set_bit (h);
 #endif /* !ACE_WIN32 && ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 
 #if defined (ACE_WIN32)
   // Winsock is different - it sets the exception bit for failed connect,
-  // unlike other platforms, where the read bit is set.
+  // unlike other platforms, where the write bit is set for both success
+  // and fail.
   ACE_Handle_Set ex_handles;
   ex_handles.set_bit (h);
 #endif /* ACE_WIN32 */
@@ -2565,11 +2571,19 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   int n = ACE_OS::poll (&fds, 1, timeout);
 
 # else
-  int n = ACE_OS::select (int (h) + 1,
-                          rd_handles,
-                          wr_handles,
-                          0,
-                          timeout);
+  int n = 0;
+  if (is_tli)
+    n = ACE_OS::select (int (h) + 1,
+                        rd_handles,
+                        wr_handles,
+                        0,
+                        timeout);
+  else
+    n = ACE_OS::select (int (h) + 1,
+                        0,
+                        wr_handles,
+                        0,
+                        timeout);
 # endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 #endif /* ACE_WIN32 */
 
@@ -2583,11 +2597,14 @@ ACE::handle_timed_complete (ACE_HANDLE h,
       return ACE_INVALID_HANDLE;
     }
 
-  // Usually, a ready-for-write handle is successfully connected, and
-  // ready-for-read (exception on Win32) is a failure. On fails, we
-  // need to grab the error code via getsockopt. On possible success for
-  // any platform where we can't tell just from select() (e.g. AIX),
-  // we also need to check for success/fail.
+  // On Windows, a ready-for-write handle is successfully connected, and
+  // ready-for-exception is a failure. On fails, we need to grab the error
+  // code via getsockopt.
+  // On BSD sockets using select(), the handle becomes writable on
+  // completion either success or fail, so if the select() does not time
+  // out, we need to check for success/fail.
+  // It is believed that TLI sockets use the readable=fail, writeable=success
+  // but that hasn't been as well tested.
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (is_tli);
 
@@ -2599,34 +2616,20 @@ ACE::handle_timed_complete (ACE_HANDLE h,
       need_to_check = true;
       known_failure = true;
     }
-#elif defined (ACE_VXWORKS)
-  ACE_UNUSED_ARG (is_tli);
-
-  // Force the check on VxWorks.  The read handle for "h" is not set,
-  // so "need_to_check" is false at this point.  The write handle is
-  // set, for what it's worth.
-  need_to_check = true;
 #else
   if (is_tli)
-
 # if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
     need_to_check = (fds.revents & POLLIN) && !(fds.revents & POLLOUT);
 # else
-  need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
+    need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
 # endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 
   else
-#if defined(AIX)
-    // AIX is broken... both success and failed connect will set the
-    // write handle only, so always check.
-    need_to_check = true;
-#else
 # if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
-  need_to_check = (fds.revents & POLLIN);
+    need_to_check = (fds.revents & POLLIN);
 # else
-  need_to_check = rd_handles.is_set (h);
+    need_to_check = true;
 # endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
-#endif /* AIX */
 #endif /* ACE_WIN32 */
 
   if (need_to_check)
@@ -2733,9 +2736,7 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
             return -1;
           /* NOTREACHED */
         case 0:
-          if (timeout != 0
-              && timeout->sec () == 0
-              && timeout->usec () == 0)
+          if (timeout != 0 && *timeout == ACE_Time_Value::zero)
             errno = EWOULDBLOCK;
           else
             errno = ETIMEDOUT;
@@ -3386,27 +3387,82 @@ ACE::strnew (const wchar_t *s)
 }
 #endif /* ACE_HAS_WCHAR */
 
-inline static bool equal_char(char a, char b, bool case_sensitive)
+// helper functions for ACE::wild_match()
+namespace
 {
-  if (case_sensitive)
-    return a == b;
-  return ACE_OS::ace_tolower(a) == ACE_OS::ace_tolower(b);
+
+  inline bool equal_char (char a, char b, bool case_sensitive)
+  {
+    if (case_sensitive)
+      return a == b;
+    return ACE_OS::ace_tolower (a) == ACE_OS::ace_tolower (b);
+  }
+
+  // precond:  *p == '[' start of char class
+  // postcond: *p == ']' end of the char class
+  inline bool equal_class (char s, const char *&p, bool case_sensitive)
+  {
+    ++p;
+    bool negate = false;
+    if (*p == '!')
+      {
+        negate = true;
+        ++p;
+      }
+    // ] and - are regular in 1st position
+    for (bool first = true; *p && (first || *p != ']'); ++p)
+      {
+        if (!first && *p == '-' && p[1] != ']')
+          {
+            if (!p[1] || p[1] <= p[-1]) // invalid range
+              {
+                continue;
+              }
+            // Since we are in the POSIX locale, only the basic ASCII
+            // characters are allowed as the range endpoints.  These characters
+            // are the same values in both signed and unsigned chars so we
+            // don't have to account for any "pathological cases."
+            for (char range = p[-1] + 1; range <= p[1]; ++range)
+              {
+                if (equal_char (s, range, case_sensitive))
+                  {
+                    while (*++p != ']') {}
+                    return !negate;
+                  }
+              }
+            ++p; // consume the character 1 past the -
+          }
+        else if (equal_char (s, *p, case_sensitive))
+          {
+            while (*++p != ']') {}
+            return !negate;
+          }
+        first = false;
+      }
+    return negate;
+  }
 }
 
 bool
-ACE::wild_match(const char* str, const char* pat, bool case_sensitive)
+ACE::wild_match(const char *str, const char *pat, bool case_sensitive,
+                bool character_classes)
 {
   if (str == pat)
     return true;
   if (pat == 0 || str == 0)
     return false;
 
-  bool star = false;
-  const char* s = str;
-  const char* p = pat;
+  bool star = false, escape = false;
+  const char *s = str;
+  const char *p = pat;
   while (*s != '\0')
     {
-      if (*p == '*')
+      if (!escape && *p == '\\')
+        {
+          ++p;
+          escape = true;
+        }
+      else if (!escape && *p == '*')
         {
           star = true;
           pat = p;
@@ -3416,22 +3472,38 @@ ACE::wild_match(const char* str, const char* pat, bool case_sensitive)
             return true;
           p = pat;
         }
-      else if (*p == '?')
+      else if (!escape && *p == '?')
         {
           ++s;
           ++p;
         }
-      else if (! equal_char(*s, *p, case_sensitive))
+      else if (!escape && character_classes && *p == '[')
+        {
+          if (equal_class (*s, p, case_sensitive))
+            {
+              ++p;
+            }
+           else
+            {
+              if (!star)
+                return false;
+              p = pat;
+            }
+          ++s;
+        }
+      else if (!equal_char (*s, *p, case_sensitive))
         {
           if (!star)
             return false;
-          s = ++str;
+          ++s;
           p = pat;
+          escape = false;
         }
       else
         {
           ++s;
           ++p;
+          escape = false;
         }
     }
   if (*p == '*')

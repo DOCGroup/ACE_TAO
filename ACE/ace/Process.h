@@ -113,7 +113,7 @@ public:
    * Set a single environment variable, @a variable_name.  Since
    * different platforms separate each environment variable
    * differently, you must call this method once for each variable.
-   * <format> can be any printf format string.  So options->setenv
+   * @a format can be any printf format string.  So options->setenv
    * ("FOO","one + two = %s", "three") will result in "FOO=one + two =
    * three".
    */
@@ -220,9 +220,9 @@ public:
   /// ACE_Process_Manager to manage groups of processes.
   pid_t setgroup (pid_t pgrp);
 
-  /// Allows disabling of handle inheritence, default is TRUE.
-  int handle_inheritence (void);
-  void handle_inheritence (int);
+  /// Allows disabling of handle inheritance, default is TRUE.
+  int handle_inheritance (void);
+  void handle_inheritance (int);
 
   /// Cause the specified handle to be passed to a child process
   /// when it runs a new program image.
@@ -351,9 +351,6 @@ protected:
 
   ACE_TEXT_STARTUPINFO startup_info_;
 
-  /// Default TRUE.
-  BOOL handle_inheritence_;
-
   /// Pointer to security_buf1_.
   LPSECURITY_ATTRIBUTES process_attributes_;
 
@@ -378,6 +375,9 @@ protected:
   uid_t rgid_;
   uid_t egid_;
 #endif /* ACE_WIN32 */
+
+  /// Default true.
+  bool handle_inheritance_;
 
 #if !defined (ACE_HAS_WINCE)
   /// Is 1 if stdhandles was called.
@@ -439,7 +439,7 @@ protected:
   ACE_TCHAR process_name_[MAXPATHLEN + 1];
 
   /// Indicate if a Unicode environment should be used
-  bool use_unicode_environment_;  
+  bool use_unicode_environment_;
 };
 
 //class ACE_Process_Manager;

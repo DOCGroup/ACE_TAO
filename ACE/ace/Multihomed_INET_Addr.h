@@ -61,11 +61,11 @@ public:
    * AF_INET6. To specify IPv4, use AF_INET.
    */
     ACE_Multihomed_INET_Addr(u_short port_number,
-                           const char primary_host_name[],
-                           int encode = 1,
-                           int address_family = AF_UNSPEC,
-                           const char *(secondary_host_names[]) = 0,
-                           size_t size = 0);
+                             const char primary_host_name[],
+                             int encode = 1,
+                             int address_family = AF_UNSPEC,
+                             const char *(secondary_host_names[]) = 0,
+                             size_t size = 0);
 
   /**
    * Constructs an ACE_Multihomed_INET_Addr from a @a port_number,
@@ -91,6 +91,7 @@ public:
                            int address_family = AF_UNSPEC,
                            const wchar_t *(secondary_host_names[]) = 0,
                            size_t size = 0);
+
   int set (u_short port_number,
            const wchar_t primary_host_name[],
            int encode = 1,

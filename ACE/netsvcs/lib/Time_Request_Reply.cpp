@@ -7,8 +7,6 @@
 #include "ace/os_include/netinet/os_in.h"
 #include "ace/os_include/arpa/os_inet.h"
 
-#define ACE_BUILD_SVC_DLL
-
 #include "Time_Request_Reply.h"
 
 ACE_RCSID(lib, Time_Request_Reply, "$Id$")

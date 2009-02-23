@@ -35,8 +35,8 @@ endif # versioned_so
 # The following targets arrange to build both unshared and shared libraries
 #----------------------------------------------------------------------------
 
-LIB ?=
-VLIB = $(LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
+LIB_PREFIX ?= lib
+VLIB = $(ARCH_LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 CLEANUP_VLIB = $(CLEANUP_LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 
 # Add VLIB to VLIBS if building static_libs.
@@ -46,13 +46,13 @@ endif
 
 SHLIB ?=
 # Setup shared library variables, including versions.
-VSHLIB_NO_VER = $(SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
+VSHLIB_NO_VER = $(ARCH_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 CLEANUP_VSHLIB_NO_VER = $(CLEANUP_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 VSHLIB = $(VSHLIB_NO_VER:%=%$(SOVERSION))
 CLEANUP_VSHLIB = $(CLEANUP_VSHLIB_NO_VER:%=%$(SOVERSION))
 
 SHLIBA ?=
-VSHLIBA = $(SHLIBA:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
+VSHLIBA = $(ARCH_SHLIBA:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 
 # Add VSHLIB if we're building shared_libs.
 ifdef shared_libs
@@ -159,8 +159,12 @@ $(VLIB): $(VLOBJS)
   ifeq (1,$(ACE_OPENVMS))
 	find $(TMPINCDIR:%=%) -name "*.o" -or -name "*.obj" | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
   else
+    ifneq (,$(AR.cc.override))
+	$(AR.cc.override)
+    else
 	([ "`echo $(TMPINCDIR:%=%/*.o)`" != "$(TMPINCDIR:%=%/*.o)" ] && echo $(TMPINCDIR:%=%/*.o); \
 	echo $(filter %.o, $?)) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
+    endif
   endif
   ifdef ibmcxx_build
 # This is required to get AIX IBM C/C++ to instantiate and compile the needed
@@ -236,7 +240,11 @@ $(VSHLIB): $(VSHOBJS)
           ifeq ($(split),1)
 	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHDIR)/*.$(OBJEXT) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
           else # ! split
+            ifneq ($(SOLINK.cc.override),)
+	$(SOLINK.cc.override)
+            else
 	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $^ $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
+            endif #override
           endif  # split
       endif  # ibmcxx_build
     endif  # SHLIBBUILD

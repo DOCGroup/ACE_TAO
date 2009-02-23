@@ -815,7 +815,7 @@ ACE_POSIX_Asynch_Accept::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
   if (this->flg_open_)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::open:")
-                       ACE_TEXT("acceptor already open \n")),
+                       ACE_TEXT("acceptor already open\n")),
                       -1);
 
   if (-1 == ACE_POSIX_Asynch_Operation::open (handler_proxy,
@@ -2075,8 +2075,8 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 
   if (file_size == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%N:%l:%p\n",
-                       "POSIX_Asynch_Transmit_File:filesize failed"),
+                       ACE_TEXT("Error:%N:%l:%p\n"),
+                       ACE_TEXT("POSIX_Asynch_Transmit_File:filesize failed")),
                       -1);
 
   if (bytes_to_write == 0)
@@ -2084,8 +2084,8 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 
   if (offset > (size_t) file_size)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%p\n",
-                       "Asynch_Transmit_File:File size is less than offset"),
+                       ACE_TEXT("Error:%p\n"),
+                       ACE_TEXT("Asynch_Transmit_File:File size is less than offset")),
                       -1);
 
   if (offset != 0)

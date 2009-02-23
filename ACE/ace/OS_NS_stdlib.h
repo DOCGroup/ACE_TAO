@@ -62,23 +62,59 @@ namespace ACE_OS {
    *
    */
   //@{
-
-
   ACE_NAMESPACE_INLINE_FUNCTION
   void _exit (int status = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void abort (void);
 
+  /**
+   * Register an at exit hook. The @a name can be used to analyze shutdown
+   * problems
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
-  int atexit (ACE_EXIT_HOOK func);
+  int atexit (ACE_EXIT_HOOK func, const char* name = 0);
 
+  /*
+   * Convert string to integer
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   int atoi (const char *s);
 
 # if defined (ACE_HAS_WCHAR)
+  /*
+   * Convert string to integer
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   int atoi (const wchar_t *s);
+# endif /* ACE_HAS_WCHAR */
+
+  /*
+   * Convert string to long
+   */
+  ACE_NAMESPACE_INLINE_FUNCTION
+  long atol (const char *s);
+
+  /*
+   * Convert string to long
+   */
+# if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  long atol (const wchar_t *s);
+# endif /* ACE_HAS_WCHAR */
+
+  /*
+   * Convert string to double
+   */
+  ACE_NAMESPACE_INLINE_FUNCTION
+  double atof (const char *s);
+
+  /*
+   * Convert string to double
+   */
+# if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  double atof (const wchar_t *s);
 # endif /* ACE_HAS_WCHAR */
 
   // atop not in spec
@@ -86,10 +122,16 @@ namespace ACE_OS {
 #   undef atop
 # endif /* atop */
 
+  /*
+   * Convert string to pointer
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   void *atop (const char *s);
 
 # if defined (ACE_HAS_WCHAR)
+  /*
+   * Convert string to pointer
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   void *atop (const wchar_t *s);
 # endif /* ACE_HAS_WCHAR */
@@ -201,7 +243,6 @@ namespace ACE_OS {
   extern ACE_Export
   void *realloc (void *, size_t);
 
-#if !defined (ACE_HAS_WINCE)
 #  if !defined (ACE_LACKS_REALPATH)
   ACE_NAMESPACE_INLINE_FUNCTION
 #  else
@@ -213,7 +254,6 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *realpath (const wchar_t *file_name, wchar_t *resolved_name);
 #  endif /* ACE_HAS_WCHAR */
-#endif /* ACE_HAS_WINCE */
 
   // exit_hook and set_exit_hook not in spec
   /// Function that is called by <ACE_OS::exit>, if non-null.
@@ -255,7 +295,7 @@ namespace ACE_OS {
   /// Converts a string to a long value (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   long strtol (const wchar_t *s, wchar_t **ptr, int base);
-  
+
 #if defined (ACE_LACKS_WCSTOL)
   extern ACE_Export
   long wcstol_emulation (const wchar_t *nptr, wchar_t **endptr, int base);
@@ -278,7 +318,7 @@ namespace ACE_OS {
   /// Converts a string to an unsigned long value (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   unsigned long strtoul (const wchar_t *s, wchar_t **ptr, int base);
-  
+
 #if defined (ACE_LACKS_WCSTOUL)
   extern ACE_Export
   unsigned long wcstoul_emulation (const wchar_t *nptr,
@@ -303,7 +343,7 @@ namespace ACE_OS {
   /// Converts a string to a signed 64 bit int value (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_INT64 strtoll (const wchar_t *s, wchar_t **ptr, int base);
-  
+
 #if defined (ACE_LACKS_WCSTOLL)
   extern ACE_Export
   ACE_INT64 wcstoll_emulation (const wchar_t *nptr,
@@ -328,7 +368,7 @@ namespace ACE_OS {
   /// Converts a string to a unsigned 64 bit int value (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_UINT64 strtoull (const wchar_t *s, wchar_t **ptr, int base);
-  
+
 #if defined (ACE_LACKS_WCSTOULL)
   extern ACE_Export
   ACE_UINT64 wcstoull_emulation (const wchar_t *nptr,

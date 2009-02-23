@@ -201,7 +201,7 @@ public:
   /**
    * This method is optional; if not explicitly invoked, it is invoked by
    * the first <subscribe>, using the subscribed address/port# and network
-   * interface paramters.
+   * interface parameters.
    * The <mcast_addr> parameter defines the default send address/port# and
    * also the port# and, if the OPT_BINDADDR_YES option is used,
    * the multicast address that is bound to this socket.

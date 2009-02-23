@@ -159,7 +159,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
           // non-blocking handle or whether there's really an error.
           if (t_errno == TNODATA)
             {
-              if (timeout->sec () == 0 && timeout->usec () == 0)
+              if (*timeout == ACE_Time_Value::zero)
                 errno = EWOULDBLOCK;
               else
                 result = this->complete (new_stream, 0, timeout);

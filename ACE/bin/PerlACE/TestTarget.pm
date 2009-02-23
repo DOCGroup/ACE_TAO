@@ -10,6 +10,8 @@ use strict;
 use English;
 use POSIX qw(:time_h);
 use File::Copy;
+use PerlACE::Run_Test;
+use Sys::Hostname;
 
 ###############################################################################
 
@@ -51,6 +53,11 @@ sub create_target
       if ($config_os =~ /VxWorks/i) {
         require PerlACE::TestTarget_VxWorks;
         $target = new PerlACE::TestTarget_VxWorks ($config_name);
+        last SWITCH;
+      }
+      if ($config_os =~ /WinCE/i) {
+        require PerlACE::TestTarget_WinCE;
+        $target = new PerlACE::TestTarget_WinCE ($config_name);
         last SWITCH;
       }
       print STDERR "$config_os is an unknown OS type!\n";
@@ -122,8 +129,76 @@ sub GetConfigSettings ($)
             $self->{EXE_SUBDIR} = $PerlACE::Process::ExeSubDir;
         }
     }
-    $self->{PROCESS_START_WAIT_INTERVAL} = 15;
-    $self->{PROCESS_STOP_WAIT_INTERVAL} = 10;
+    $env_name = $env_prefix.'PROCESS_START_WAIT_INTERVAL';
+    if (exists $ENV{$env_name}) {
+        $self->{PROCESS_START_WAIT_INTERVAL} = $ENV{$env_name};
+    } else {
+        $self->{PROCESS_START_WAIT_INTERVAL} = 15;
+    }
+    $env_name = $env_prefix.'PROCESS_STOP_WAIT_INTERVAL';
+    if (exists $ENV{$env_name}) {
+        $self->{PROCESS_STOP_WAIT_INTERVAL} = $ENV{$env_name};
+    } else {
+        $self->{PROCESS_STOP_WAIT_INTERVAL} = 10;
+    }
+    $env_name = $env_prefix.'HOSTNAME';
+    if (exists $ENV{$env_name}) {
+        $self->{HOSTNAME} = $ENV{$env_name};
+    } else {
+        $self->{HOSTNAME} = hostname();
+    }
+    $env_name = $env_prefix.'IBOOT';
+    if (exists $ENV{$env_name}) {
+        $self->{IBOOT} = $ENV{$env_name};
+    }
+    $env_name = $env_prefix.'IBOOT_PASSWD';
+    if (exists $ENV{$env_name}) {
+        $self->{IBOOT_PASSWD} = $ENV{$env_name};
+    }
+    $env_name = $env_prefix.'IBOOT_OUTLET';
+    if (exists $ENV{$env_name}) {
+        $self->{IBOOT_OUTLET} = $ENV{$env_name};
+    }
+    $env_name = $env_prefix.'IBOOT_USER';
+    if (exists $ENV{$env_name}) {
+        $self->{IBOOT_USER} = $ENV{$env_name};
+    }
+    $env_name = $env_prefix.'IBOOT_PASSWD';
+    if (exists $ENV{$env_name}) {
+        $self->{IBOOT_PASSWD} = $ENV{$env_name};
+    }
+    $env_name = $env_prefix.'REBOOT_TIME';
+    if (exists $ENV{$env_name}) {
+        $self->{REBOOT_TIME} = $ENV{$env_name};
+    } else {
+        $self->{REBOOT_TIME} = 0;
+    }
+    $env_name = $env_prefix.'REBOOT';
+    if (exists $ENV{$env_name}) {
+        $self->{REBOOT} = $ENV{$env_name};
+    } else {
+        $self->{REBOOT} = 0;
+    }
+    $env_name = $env_prefix.'STARTUP_COMMAND';
+    if (exists $ENV{$env_name}) {
+        $self->{STARTUP_COMMAND} = $ENV{$env_name};
+    }
+    $env_name = $env_prefix.'TELNET_HOST';
+    if (exists $ENV{$env_name}) {
+        $self->{TELNET_HOST} = $ENV{$env_name};
+    } else {
+        $self->{TELNET_HOST} = $self->{HOSTNAME};
+    }
+    $env_name = $env_prefix.'TELNET_PORT';
+    if (exists $ENV{$env_name}) {
+        $self->{TELNET_PORT} = $ENV{$env_name};
+    } else {
+        $self->{TELNET_PORT} = 23;
+    }
+    $env_name = $env_prefix.'HOST_ROOT';
+    if (exists $ENV{$env_name}) {
+        $self->{HOST_ROOT} = $ENV{$env_name};
+    }
 }
 
 ##################################################################
@@ -146,6 +221,12 @@ sub CIAO_ROOT ($)
     return $self->{ciao_root};
 }
 
+sub HostName ($)
+{
+    my $self = shift;
+    return $self->{HOSTNAME};
+}
+
 sub ExeSubDir ($)
 {
     my $self = shift;
@@ -154,6 +235,12 @@ sub ExeSubDir ($)
         $self->{EXE_SUBDIR} = $new_val;
     }
     return $self->{EXE_SUBDIR};
+}
+
+sub RandomPort ($)
+{
+    my $self = shift;
+    return (int(rand($$)) % 22766) + 10002;
 }
 
 sub ProcessStartWaitInterval ($)
@@ -181,14 +268,28 @@ sub LocalFile ($)
     my $self = shift;
     my $file = shift;
     my $newfile = PerlACE::LocalFile($file);
-    print STDERR "LocalFile for $file is $newfile\n";
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+      print STDERR "LocalFile for $file is $newfile\n";
+    }
     return $newfile;
+}
+
+sub AddLibPath ($)
+{
+    my $self = shift;
+    my $dir = shift;
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+      print STDERR "Adding libpath $dir\n";
+    }
+    PerlACE::add_lib_path ($dir);
 }
 
 sub DeleteFile ($)
 {
     my $self = shift;
-    unlink (@_);
+    my $file = shift;
+    my $newfile = PerlACE::LocalFile($file);
+    unlink ($newfile);
 }
 
 sub GetFile ($)
@@ -205,10 +306,11 @@ sub PutFile ($)
 {
     my $self = shift;
     my $src = shift;
-    my $dest = shift;
+    my $dest = $self->LocalFile ($src);
     if ($src != $dest) {
         copy ($src, $dest);
     }
+    return 0;
 }
 
 sub WaitForFileTimed ($)
@@ -216,7 +318,8 @@ sub WaitForFileTimed ($)
     my $self = shift;
     my $file = shift;
     my $timeout = shift;
-    return PerlACE::waitforfile_timed ($file, $timeout);
+    my $newfile = $self->LocalFile($file);
+    return PerlACE::waitforfile_timed ($newfile, $timeout);
 }
 
 sub CreateProcess ($)
