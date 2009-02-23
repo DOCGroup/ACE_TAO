@@ -1,7 +1,15 @@
+Mon Feb 23 07:58:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added 3581
+
+        * tests/Portable_Interceptors/Bug_3582/client.cpp:
+          Fixed include
+
 Sun Feb 22 13:53:15 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * tests/Portable_Interceptors/Bug_3582/server.cpp:
-        
+
           Fixed compiler warning on win platforms.
 
 Sun Feb 22 10:13:07 UTC 2009  Marcel Smit <msmit@remedy.nl>
@@ -12,7 +20,7 @@ Sun Feb 22 10:13:07 UTC 2009  Marcel Smit <msmit@remedy.nl>
 Fri Feb 20 23:17:07 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * tests/Portable_Interceptors/Bug_3582:
-        
+
           Added test program for a bug about TRANSIENT exceptions being
           not intercepted when RTCORBA is used.
 
