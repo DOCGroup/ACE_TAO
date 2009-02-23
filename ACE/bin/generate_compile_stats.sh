@@ -278,16 +278,16 @@ create_dirs ()
 {
   echo "create_dirs() '$1'"
   if ! [ -d "${1}" ]; then
-    mkdir ${1}
+    mkdir -p ${1}
   fi
   if ! [ -d "${1}data" ]; then
-    mkdir ${1}data
+    mkdir -p ${1}data
   fi
   if ! [ -d "${1}images" ]; then
-    mkdir ${1}images
+    mkdir -p ${1}images
   fi
   if ! [ -d "${1}images/thumbnails" ]; then
-    mkdir ${1}images/thumbnails
+    mkdir -p ${1}images/thumbnails
   fi
 }
 
