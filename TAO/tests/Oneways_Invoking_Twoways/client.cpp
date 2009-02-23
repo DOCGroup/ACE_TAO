@@ -119,7 +119,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Thread_Manager::instance ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Event Loop finished \n"));
+                  "Event Loop finished\n"));
 
       orb->destroy ();
     }

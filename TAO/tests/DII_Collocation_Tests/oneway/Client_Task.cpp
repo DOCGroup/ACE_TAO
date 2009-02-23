@@ -220,7 +220,7 @@ Client_Task::svc (void)
   catch (...)
     {
       error_count_ ++;
-      ACE_ERROR ((LM_ERROR, "(%P|%t)Client_Task::svc - caught unknown exception \n"));
+      ACE_ERROR ((LM_ERROR, "(%P|%t)Client_Task::svc - caught unknown exception\n"));
       return 1;
     }
 

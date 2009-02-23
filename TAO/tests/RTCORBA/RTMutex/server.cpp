@@ -347,7 +347,7 @@ mutex_test_try_lock_thread (void *args)
   try
     {
       // check that try_lock (0) returns false
-      ACE_DEBUG ((LM_DEBUG,"attempting try_lock (0) - expect failure (but no exceptions) \n"));
+      ACE_DEBUG ((LM_DEBUG,"attempting try_lock (0) - expect failure (but no exceptions)\n"));
       result = mutex->try_lock (0u);
 
       if (result)

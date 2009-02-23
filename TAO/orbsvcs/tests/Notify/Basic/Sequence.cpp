@@ -64,10 +64,10 @@ Sequence::init (int argc,
   if (TAO_debug_level)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Options: event count = %d \n"
-                  "supplier batch size = %d \n"
-                  "consumer batch size = %d \n"
-                  "pacing = %d secs \n"
+                  "Options: event count = %d\n"
+                  "supplier batch size = %d\n"
+                  "consumer batch size = %d\n"
+                  "pacing = %d secs\n"
                   , event_count_
                   , supplier_batch_size_
                   , consumer_batch_size_
@@ -176,7 +176,7 @@ Sequence::parse_args (int argc,
                      "-SupplierBatchSize size "
                      "-ConsumerBatchSize size "
                      "-ConsumerDelay delay "
-                     "-Pacing pacing \n",
+                     "-Pacing pacing\n",
                      argv[0], argv[0]));
 
           arg_shifter.consume_arg ();

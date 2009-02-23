@@ -286,13 +286,13 @@ SelfClient::svc (void)
                   if (CORBA::is_nil (newserver.in()))
                     {
                       ACE_DEBUG ((LM_DEBUG,
-                                  "(%P|%t)  Not found it \n"));
+                                  "(%P|%t)  Not found it\n"));
 
                     }
                   else
                     {
                       ACE_DEBUG ((LM_DEBUG,
-                                  "(%P|%t) Found it \n"));
+                                  "(%P|%t) Found it\n"));
                     }
                 }
 

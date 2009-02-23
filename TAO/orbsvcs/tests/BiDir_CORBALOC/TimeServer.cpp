@@ -110,7 +110,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (inc.in ()))
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) Error fetching naming context \n"));
+                      "(%P|%t) Error fetching naming context\n"));
         }
 
       CosNaming::Name service_name;

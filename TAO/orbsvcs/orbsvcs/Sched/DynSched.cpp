@@ -1972,9 +1972,9 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
             "Minimum Critical Priority:         %3d\n\n\n"
 
             "DISPATCH PRIORITIES:\n\n"
-            "                                  (critical              \n"
-            "                                   instant)              \n"
-            "             dispatch              dynamic      static   \n"
+            "                                  (critical             \n"
+            "                                   instant)             \n"
+            "             dispatch              dynamic      static  \n"
             "operation          ID  priority  subpriority  subpriority\n"
             "---------    --------  --------  -----------  -----------\n",
       dispatch_count, threads_, tasks_, status_,
@@ -2170,7 +2170,7 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
 {
   if (ACE_OS::fprintf (
         file, "\n\nPREEMPTION TIMELINE:\n\n"
-        "              dispatch     start      stop  \n"
+        "              dispatch     start      stop \n"
         "operation           ID    (nsec)    (nsec)\n"
         "---------  -----------    ------    ------\n") < 0)
   {
@@ -2254,7 +2254,7 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
   //FUZZ: disable check_for_lack_ACE_OS
   if (ACE_OS::fprintf (
       file, "\n\nVIEWER TIMELINE:\n\n"
-            "                                    arrival  deadline   completion    execution  \n"
+            "                                    arrival  deadline   completion    execution \n"
             "operation  utilization   overhead    (nsec)    (nsec)  time (nsec)  time (nsec)\n"
             "---------  -----------   --------   -------  --------  -----------  -----------\n") < 0)
   {

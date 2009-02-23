@@ -67,13 +67,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         if (check != l)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ERROR: Extracted value not equal "
-                             "to the encoded value \n"),
+                             "to the encoded value\n"),
                             -1);
 
       }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Test passed \n"));
+                  "(%P|%t) Test passed\n"));
     }
   catch (const CORBA::Exception& ex)
     {

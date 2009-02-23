@@ -139,7 +139,7 @@ void test_colocal (ForwardRequestTest::test_ptr server)
   if (number < 250)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) ERROR: Did not forward to new location \n"));
+                  "(%P|%t) ERROR: Did not forward to new location\n"));
       ACE_OS::abort ();
     }
 }

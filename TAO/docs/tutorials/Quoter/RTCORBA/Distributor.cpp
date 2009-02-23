@@ -52,7 +52,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "usage: %s\n"
-                             "-o <Distributor IOR> (default is file://StockDistributor.ior) \n"
+                             "-o <Distributor IOR> (default is file://StockDistributor.ior)\n"
                              "-r <Distributor notification rate> (default is 1 second)\n"
                              "-u <Database update rate> (default is 1 second)\n"
                              "-c Flag that indicates that the object should be registered with naming service\n"

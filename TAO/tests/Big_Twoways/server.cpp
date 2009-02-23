@@ -191,7 +191,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           return 1;
         }
 
-      ACE_DEBUG ((LM_DEBUG, "All sessions finished . . . \n"));
+      ACE_DEBUG ((LM_DEBUG, "All sessions finished . . .\n"));
 
       for (j = 0; j != peer_count; ++j)
         {

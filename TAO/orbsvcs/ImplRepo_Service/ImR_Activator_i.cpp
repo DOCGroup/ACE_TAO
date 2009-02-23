@@ -341,7 +341,7 @@ ImR_Activator_i::start_server(const char* name,
 
   if (debug_ > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "ImR Activator: Successfully started <%s>, pid=%d \n", name, pid));
+      ACE_DEBUG ((LM_DEBUG, "ImR Activator: Successfully started <%s>, pid=%d\n", name, pid));
     }
 }
 

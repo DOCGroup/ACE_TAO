@@ -2448,7 +2448,7 @@ assign_priorities_i (void)
       RtecScheduler::RT_Info* rt_info_ptr =
         this->entry_ptr_array_[i]->actual_rt_info ();
       ACE_DEBUG ((LM_DEBUG,
-                  " %s [%d] crit=%d,prio=%d,preemption_prio=%d,subprio=%d\n ",
+                  " %s [%d] crit=%d,prio=%d,preemption_prio=%d,subprio=%d\n",
                   rt_info_ptr->entry_point.in (),
                   rt_info_ptr->handle,
                   rt_info_ptr->criticality,
@@ -2473,7 +2473,7 @@ assign_priorities_i (void)
       RtecScheduler::RT_Info* rt_info_ptr =
         this->entry_ptr_array_[i]->actual_rt_info ();
       ACE_DEBUG ((LM_DEBUG,
-                  " %s [%d] crit=%d,prio=%d,preemption_prio=%d,subprio=%d\n ",
+                  " %s [%d] crit=%d,prio=%d,preemption_prio=%d,subprio=%d\n",
                   rt_info_ptr->entry_point.in (),
                   rt_info_ptr->handle,
                   rt_info_ptr->criticality,

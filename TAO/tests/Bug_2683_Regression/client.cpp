@@ -41,7 +41,7 @@ public:
             target->ping();
             if (this->do_shutdown_)
               {
-                ACE_DEBUG ((LM_DEBUG,"(%P|%t) Calling shutdown \n"));
+                ACE_DEBUG ((LM_DEBUG,"(%P|%t) Calling shutdown\n"));
                 this->do_shutdown_ = false;
                 target->shutdown ();
               }

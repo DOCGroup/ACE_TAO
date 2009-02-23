@@ -429,7 +429,7 @@ AdminProperties::create_consumers (void)
   catch (const CORBA::Exception& ex)
     {
         ex._tao_print_exception (
-          "\nError: Exception in connecting consumer \n");
+          "\nError: Exception in connecting consumer\n");
     }
 }
 

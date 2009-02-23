@@ -63,7 +63,7 @@ FTP_Client_Callback::handle_timeout (void *)
       mb.wr_ptr (n);
       int result = this->protocol_object_->send_frame (&mb);
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send \n"),-1);
+        ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send\n"),-1);
       ACE_DEBUG ((LM_DEBUG,"handle_timeout::buffer sent succesfully\n"));
     }
   catch (const CORBA::Exception& ex)

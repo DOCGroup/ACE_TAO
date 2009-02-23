@@ -23,7 +23,7 @@ Thread_Pool::Thread_Pool (ACE_Thread_Manager *thr_mgr,
                       n_threads) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
-                "activate failed \n"));
+                "activate failed\n"));
 }
 
 Thread_Pool::~Thread_Pool (void)

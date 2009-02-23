@@ -91,9 +91,9 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
       double tmp = 1000 / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\treal_time\t = %0.06f ms, \n"
-                  "\tuser_time\t = %0.06f ms, \n"
-                  "\tsystem_time\t = %0.06f ms, \n"
+                  "\treal_time\t = %0.06f ms,\n"
+                  "\tuser_time\t = %0.06f ms,\n"
+                  "\tsystem_time\t = %0.06f ms,\n"
                   "\t%0.00f calls/second\n",
                   elapsed_time.real_time   < 0.0 ? 0.0 : elapsed_time.real_time,
                   elapsed_time.user_time   < 0.0 ? 0.0 : elapsed_time.user_time,

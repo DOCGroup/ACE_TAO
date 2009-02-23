@@ -117,7 +117,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
           {
                   if (TAO_debug_level > 0)
                     ACE_DEBUG ((LM_DEBUG,
-                          "setting coffee object \n" ));
+                          "setting coffee object\n" ));
             try
               {
                 // get access to a Coffee Object
@@ -138,7 +138,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
         case 3:
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "setting constant string \n" ));
+                        "setting constant string\n" ));
                 this->in_[i] <<= "Const string";
                 this->inout_[i] <<= 0; // different from in_
           break;

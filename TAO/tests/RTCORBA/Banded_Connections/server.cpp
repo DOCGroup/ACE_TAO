@@ -72,7 +72,7 @@ Test_i::test_method (CORBA::Boolean client_propagated,
       // Print out the bands.
       int index = -1;
       ACE_DEBUG ((LM_DEBUG,
-                  "\nPriority Bands: \n"));
+                  "\nPriority Bands:\n"));
       for (CORBA::ULong i = 0; i < this->bands_.length (); ++i)
         {
           ACE_DEBUG ((LM_DEBUG,

@@ -33,7 +33,7 @@ Supplier::parse_args (int argc, ACE_TCHAR *argv [])
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
                       " -n <COS Event Service name>"
-                      " \n",
+                      "\n",
                       argv[0]));
           return -1;
         }

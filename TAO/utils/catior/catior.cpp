@@ -1451,9 +1451,9 @@ void displayHex (TAO_InputCDR & str)
   ACE_CString theDescr = _find_info (theSetId);
 
   if (theDescr.length () == 0)
-    ACE_DEBUG ((LM_DEBUG," Unknown CodeSet \n "));
+    ACE_DEBUG ((LM_DEBUG," Unknown CodeSet \n"));
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" %C \n"), theDescr.c_str ()));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" %C\n"), theDescr.c_str ()));
 }
 
 CORBA::Boolean
@@ -1466,7 +1466,7 @@ cat_codeset_info (TAO_InputCDR& cdr)
   TAO_InputCDR stream (cdr, length);
   cdr.skip_bytes(length);
 
-  ACE_DEBUG ((LM_DEBUG, "\tComponent length: %u \n", length));
+  ACE_DEBUG ((LM_DEBUG, "\tComponent length: %u\n", length));
 
   ACE_DEBUG ((LM_DEBUG,
                "\tComponent byte order:\t%s Endian\n",
@@ -1486,10 +1486,10 @@ cat_codeset_info (TAO_InputCDR& cdr)
                        "for char.\n"),
                       false);
 
-  ACE_DEBUG ((LM_DEBUG, "\tNumber of CCS for char %u \n", c_ccslen));
+  ACE_DEBUG ((LM_DEBUG, "\tNumber of CCS for char %u\n", c_ccslen));
 
   if (c_ccslen)
-    ACE_DEBUG ((LM_DEBUG, "\tConversion Codesets for char are: \n"));
+    ACE_DEBUG ((LM_DEBUG, "\tConversion Codesets for char are:\n"));
 
   //  Loop through and display them
   CORBA::ULong index = 0;
@@ -1513,10 +1513,10 @@ cat_codeset_info (TAO_InputCDR& cdr)
                        "for wchar.\n"),
                       false);
 
-  ACE_DEBUG ((LM_DEBUG, "\tNumber of CCS for wchar %u \n", w_ccslen));
+  ACE_DEBUG ((LM_DEBUG, "\tNumber of CCS for wchar %u\n", w_ccslen));
 
   if (w_ccslen)
-    ACE_DEBUG ((LM_DEBUG, "\tConversion Codesets for wchar are: \n"));
+    ACE_DEBUG ((LM_DEBUG, "\tConversion Codesets for wchar are:\n"));
 
   //  Loop through and display them
   for (index = 0; index < w_ccslen; ++index)

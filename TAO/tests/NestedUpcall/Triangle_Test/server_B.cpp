@@ -117,7 +117,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   Object_B_Server object_B_Server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n \t NestedUpCalls.Triangle_Test: Object B Server \n \n"));
+              "\n \t NestedUpCalls.Triangle_Test: Object B Server \n\n"));
 
   try
     {

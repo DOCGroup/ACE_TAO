@@ -552,7 +552,7 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
 
 
   ACE_DEBUG ((LM_DEBUG,
-              "All functions work properly \n"));
+              "All functions work properly\n"));
   return 0;
 }
 

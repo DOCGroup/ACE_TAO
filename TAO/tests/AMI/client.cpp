@@ -58,7 +58,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-d "
-                           "-c"
                            "-k <ior> "
                            "-n <nthreads> "
                            "-i <niterations> "
@@ -129,7 +128,7 @@ public:
     {
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <foo_excep> called: \n"));
+                  "Callback method <foo_excep> called:\n"));
       try
         {
           excep_holder->raise_exception ();
@@ -150,19 +149,19 @@ public:
   void get_yadda_excep (::Messaging::ExceptionHolder *)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <get_yadda_excep> called: \n"));
+                  "Callback method <get_yadda_excep> called:\n"));
     };
 
   void set_yadda (void)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <set_yadda> called: \n"));
+                  "Callback method <set_yadda> called:\n"));
     };
 
   void set_yadda_excep (::Messaging::ExceptionHolder *)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <set_yadda_excep> called: \n"));
+                  "Callback method <set_yadda_excep> called:\n"));
     };
   ~Handler (void)
   {
@@ -171,7 +170,7 @@ public:
   void inout_arg_test (const char *)
   {
     ACE_DEBUG ((LM_DEBUG,
-                "Callback method <set_yadda_excep> called: \n"));
+                "Callback method <set_yadda_excep> called:\n"));
   }
 
   void inout_arg_test_excep (::Messaging::ExceptionHolder *)

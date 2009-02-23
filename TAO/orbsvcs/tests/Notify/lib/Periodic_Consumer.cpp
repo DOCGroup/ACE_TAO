@@ -81,7 +81,7 @@ void
 TAO_Notify_Tests_Periodic_Consumer::handle_start_event (const CosNotification::PropertySeq& prop_seq)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s received inital (-1)th event \n", this->name_.c_str ()));
+    ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s received inital (-1)th event\n", this->name_.c_str ()));
 
   for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
     {
@@ -203,7 +203,7 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
 
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s received %d event type (%s,%s) \n", this->name_.c_str (), this->count_,
+      ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s received %d event type (%s,%s)\n", this->name_.c_str (), this->count_,
                   notification.header.fixed_header.event_type.domain_name.in(),
                   notification.header.fixed_header.event_type.type_name.in()));
     }
@@ -247,7 +247,7 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
         this->client_->done (this);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s done \n", this->name_.c_str ()));
+        ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s done\n", this->name_.c_str ()));
     }
 }
 

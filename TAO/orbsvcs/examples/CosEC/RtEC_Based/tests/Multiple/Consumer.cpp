@@ -34,7 +34,7 @@ Consumer::parse_args (int argc, ACE_TCHAR *argv [])
                       "Usage: %s "
                       " -n <COS Event Service name>"
                       " -c event_count"
-                      " \n",
+                      "\n",
                       argv[0]));
           return -1;
         }

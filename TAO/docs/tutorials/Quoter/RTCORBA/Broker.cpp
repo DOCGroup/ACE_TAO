@@ -87,9 +87,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "usage: %s\n"
-                             "-o <Distributor IOR> (default is file://StockDistributor.ior) \n"
-                             "-p <Priority> (default is 2) \n"
-                             "-n <Stock name> (default is IBM) \n"
+                             "-o <Distributor IOR> (default is file://StockDistributor.ior)\n"
+                             "-p <Priority> (default is 2)\n"
+                             "-n <Stock name> (default is IBM)\n"
                              "-c Use the naming service"
                              "\n",
                              argv [0]),

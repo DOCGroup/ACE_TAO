@@ -43,7 +43,7 @@ LifeCycle::parse_args (int argc,
         {
           ACE_DEBUG ((LM_DEBUG,
                       "usage: %s "
-                      "-count testcount \n",
+                      "-count testcount\n",
                       argv[0],
                       argv[0]));
 
@@ -92,7 +92,7 @@ LifeCycle::init (int argc, ACE_TCHAR *argv[])
   if (CORBA::is_nil (notify_factory_.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  " (%P|%t) Unable to locate Notify_Service \n"));
+                  " (%P|%t) Unable to locate Notify_Service\n"));
 
       return;
     }

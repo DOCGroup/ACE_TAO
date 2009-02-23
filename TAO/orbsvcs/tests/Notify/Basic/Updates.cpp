@@ -116,10 +116,10 @@ Updates::types_changed (const CosNotification::EventTypeSeq & added,
 {
   if (TAO_debug_level)
     {
-      ACE_DEBUG ((LM_DEBUG, "Added Types.. \n"));
+      ACE_DEBUG ((LM_DEBUG, "Added Types..\n"));
       this->print_event_types (added);
 
-      ACE_DEBUG ((LM_DEBUG, "Removed Types.. \n"));
+      ACE_DEBUG ((LM_DEBUG, "Removed Types..\n"));
       this->print_event_types (removed);
     }
 
@@ -224,7 +224,7 @@ Updates::test_subscription_change (void)
 
     if (TAO_debug_level)
       {
-        ACE_DEBUG ((LM_DEBUG, "obtain_subscription_types \n"));
+        ACE_DEBUG ((LM_DEBUG, "obtain_subscription_types\n"));
         this->print_event_types (obtained.in ());
       }
   }
@@ -260,7 +260,7 @@ Updates::test_subscription_change (void)
 
     if (TAO_debug_level)
       {
-        ACE_DEBUG ((LM_DEBUG, "obtain_subscription_types \n"));
+        ACE_DEBUG ((LM_DEBUG, "obtain_subscription_types\n"));
         this->print_event_types (obtained.in ());
       }
   }
@@ -295,7 +295,7 @@ Updates::test_subscription_change (void)
 
     if (TAO_debug_level)
       {
-        ACE_DEBUG ((LM_DEBUG, "obtain_subscription_types \n"));
+        ACE_DEBUG ((LM_DEBUG, "obtain_subscription_types\n"));
         this->print_event_types (obtained.in ());
       }
   }
@@ -342,7 +342,7 @@ Updates::test_offer_change (void)
 
     if (TAO_debug_level)
       {
-        ACE_DEBUG ((LM_DEBUG, "obtain_offer_types \n"));
+        ACE_DEBUG ((LM_DEBUG, "obtain_offer_types\n"));
         this->print_event_types (obtained.in ());
       }
   }
@@ -378,7 +378,7 @@ Updates::test_offer_change (void)
 
     if (TAO_debug_level)
       {
-        ACE_DEBUG ((LM_DEBUG, "obtain_offer_types \n"));
+        ACE_DEBUG ((LM_DEBUG, "obtain_offer_types\n"));
         this->print_event_types (obtained.in ());
       }
   }
@@ -413,7 +413,7 @@ Updates::test_offer_change (void)
 
     if (TAO_debug_level)
       {
-        ACE_DEBUG ((LM_DEBUG, "obtain_offer_types \n"));
+        ACE_DEBUG ((LM_DEBUG, "obtain_offer_types\n"));
         this->print_event_types (obtained.in ());
       }
   }

@@ -64,9 +64,9 @@ Server_Task::svc (void)
               connection_no =
                 this->orb_->orb_core ()->lane_resources ().transport_cache ().current_size ();
               ACE_ERROR ((LM_DEBUG,
-                          "(%P|%t) ERROR: New connections have been created \n"));
+                          "(%P|%t) ERROR: New connections have been created\n"));
               ACE_ERROR ((LM_DEBUG,
-                          "(%P|%t) ERROR: We will crash now... \n"));
+                          "(%P|%t) ERROR: We will crash now...\n"));
               ACE_OS::abort ();
             }
 

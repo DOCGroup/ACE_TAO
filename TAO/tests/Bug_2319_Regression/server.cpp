@@ -114,7 +114,7 @@ void
 ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr,
                              Test::Timestamp)
 {
-  ACE_OS::printf("Recieved Timestamp # %d \n", calls_received);
+  ACE_OS::printf("Recieved Timestamp # %d\n", calls_received);
   ACE_OS::sleep(1);
   ++calls_received;
 
@@ -270,7 +270,7 @@ static ACE_THR_FUNC_RETURN start_client(void* _arg)
   for (int i = 0; i < num_calls; i++)
     {
       roundtrip->test_method(time);
-      ACE_DEBUG ((LM_DEBUG, "Sent call # %d \n", i));
+      ACE_DEBUG ((LM_DEBUG, "Sent call # %d\n", i));
     }
 
   return 0;

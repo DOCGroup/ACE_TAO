@@ -108,7 +108,7 @@ void FTClientMain::commandUsage(FILE* out)
     "  Access as attribute:\n"
     "    >N    set attribute to N\n"
     "    <     get attribite\n"
-    "  Try methods to be used by fault tolerant infrastructure: \n"
+    "  Try methods to be used by fault tolerant infrastructure:\n"
     "    !     is_alive\n"
     "    s     get_state\n"
     "    S     set_state\n"
@@ -122,7 +122,7 @@ void FTClientMain::commandUsage(FILE* out)
     "      (FT_TestReplica interface)\n"
     "        d%d before state change\n"
     "        d%d after state change, before replication\n"
-    "        d%d after replication, before reply \n"
+    "        d%d after replication, before reply\n"
     "      (Monitorable interface)\n"
     "        d%d during is alive\n"
     "        d%d is_alive returns false\n"
@@ -548,7 +548,7 @@ int FTClientMain::run (void)
       }
       catch (const CORBA::SystemException& sysex)
       {
-        ACE_OS::fprintf (stdout, "FT Client: Caught system exception: \n");
+        ACE_OS::fprintf (stdout, "FT Client: Caught system exception:\n");
         sysex._tao_print_exception ("FT Client");
 
         retry = 0;

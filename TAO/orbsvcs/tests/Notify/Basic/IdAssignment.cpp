@@ -106,7 +106,7 @@ IdAssignment::init (int argc,
   if (CORBA::is_nil (obj.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  " (%P|%t) Unable to locate Notify_Service \n"));
+                  " (%P|%t) Unable to locate Notify_Service\n"));
       return;
     }
 
@@ -237,7 +237,7 @@ IdAssignment::default_consumer_admin_test (CosNotifyChannelAdmin::ChannelID chan
                   " (%P|%t) Unable to create default consumer admin\n"),
                   false);
     }
-  
+
   CosNotifyChannelAdmin::ConsumerAdmin_var def = ec->default_consumer_admin ();
   if (CORBA::is_nil (default_consumer_admin.in()))
     {
@@ -249,7 +249,7 @@ IdAssignment::default_consumer_admin_test (CosNotifyChannelAdmin::ChannelID chan
   if (! default_consumer_admin->_is_equivalent(def.in ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-        " (%P|%t) failed for default consumer admin checking \n"),
+        " (%P|%t) failed for default consumer admin checking\n"),
         false);
     }
 
@@ -283,7 +283,7 @@ IdAssignment::default_supplier_admin_test (CosNotifyChannelAdmin::ChannelID chan
                   " (%P|%t) Unable to create default supplier admin\n"),
                   false);
     }
-  
+
   CosNotifyChannelAdmin::SupplierAdmin_var def = ec->default_supplier_admin ();
   if (CORBA::is_nil (default_supplier_admin.in()))
     {
@@ -295,7 +295,7 @@ IdAssignment::default_supplier_admin_test (CosNotifyChannelAdmin::ChannelID chan
   if (! default_supplier_admin->_is_equivalent(def.in ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-        " (%P|%t) failed for default supplier admin checking \n"),
+        " (%P|%t) failed for default supplier admin checking\n"),
         false);
     }
 

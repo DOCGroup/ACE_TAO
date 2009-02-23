@@ -101,7 +101,7 @@ public:
       ++reply_count_;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <foo_excep> called: \n"
+                  "Callback method <foo_excep> called:\n"
                                   "Testing proper exception handling ...\n"));
       try
         {

@@ -126,7 +126,7 @@ int MessengerServer::parse_args (int argc, ACE_TCHAR* argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage: %s\n "
+                           "usage: %s\n"
                            "-x (default) - shutdown on client invocation\n"
                            "-p <n> - use polling loop for <n> iterations\n"
                            "-t <n> - schedule timer for <n> seconds\n"
