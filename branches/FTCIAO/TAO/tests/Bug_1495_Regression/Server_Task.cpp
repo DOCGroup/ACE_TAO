@@ -38,7 +38,7 @@ Server_Task::svc (void)
       if (CORBA::is_nil (poa_object.in ()))
         {
           ACE_ERROR ((LM_ERROR,
-                      " (%P|%t) Unable to initialize the POA \n"));
+                      " (%P|%t) Unable to initialize the POA\n"));
           return 1;
         }
 

@@ -117,7 +117,7 @@ AST_UnionBranch::dump (ACE_OSTREAM_TYPE &o)
       AST_UnionLabel *ul = this->label (i);
       ul->dump (o);
 
-      this->dump_i (o, ": \n");
+      this->dump_i (o, ":\n");
     }
 
   AST_Field::dump (o);
@@ -220,12 +220,12 @@ AST_UnionBranch::coerce_labels (AST_Union *u)
   for (unsigned long i = 0; i < this->label_list_length (); ++i)
     {
       AST_UnionLabel *ul = this->label (i);
-      
+
       if (ul->label_kind () == AST_UnionLabel::UL_default)
         {
           continue;
         }
-        
+
       AST_Expression *lv = ul->label_val ();
       lv->set_ev (lv->coerce (u->udisc_type ()));
     }

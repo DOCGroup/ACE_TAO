@@ -10,7 +10,7 @@ Starter::Starter (CORBA::ORB_ptr orb)
   if (this->naming_client_.init (orb) != 0)
     ACE_ERROR ((LM_ERROR,
     " (%P|%t) Unable to initialize "
-    "the TAO_Naming_Client. \n"));
+    "the TAO_Naming_Client.\n"));
 }
 
 void

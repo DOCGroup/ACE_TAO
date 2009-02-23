@@ -158,7 +158,7 @@ ClientApp::arg_dependency_checks()
     {
       ACE_ERROR((LM_ERROR,
                  "Error: Required command-line option (-n <client id>).\n"
-                 "       The client id should be positive integer. \n"));
+                 "       The client id should be positive integer.\n"));
       this->usage_statement();
       return -1;
     }

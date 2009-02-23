@@ -30,7 +30,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s "
                            "-o <IOR> "
-                           "-n <server number> \n",
+                           "-n <server number>\n",
                            argv[0]),
                           -1);
       }
@@ -91,14 +91,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // Run the ORB event loop.
-      try
-        {
-          orb->run ();
-        }
-      catch (const CORBA::BAD_INV_ORDER & ex)
-        {
-          // no op
-        };
+      orb->run ();
 
       root_poa->destroy (1, 1);
 

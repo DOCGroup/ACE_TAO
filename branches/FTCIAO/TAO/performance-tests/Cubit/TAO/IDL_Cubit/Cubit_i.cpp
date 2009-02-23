@@ -360,7 +360,7 @@ Cubit_i::cube_rti_data (const Cubit::RtiPacket &input,
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Input: \n"));
+                  "Input:\n"));
       print_RtiPacket (input);
     }
 
@@ -375,7 +375,7 @@ Cubit_i::cube_rti_data (const Cubit::RtiPacket &input,
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Output: \n"));
+                  "Output:\n"));
       print_RtiPacket (*output.ptr ());
     }
 }

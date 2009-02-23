@@ -111,7 +111,7 @@ TLS_Client::run_tests (void)
   CORBA::Long retval = basic_log->get_n_records ().lo();
 #endif
 
-  ACE_DEBUG ((LM_DEBUG, "Number of records in Log = %d \n", retval));
+  ACE_DEBUG ((LM_DEBUG, "Number of records in Log = %d\n", retval));
 
   ACE_DEBUG ((LM_DEBUG,
               "Calling BasicLog::get_current_size...\n"));
@@ -121,7 +121,7 @@ TLS_Client::run_tests (void)
   retval = basic_log->get_current_size ().lo();
 #endif
 
-  ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d \n", retval));
+  ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
 
   ACE_DEBUG ((LM_DEBUG, "Querying the Log: %s\n", QUERY_1));
   DsLogAdmin::Iterator_var iter_out;
@@ -142,7 +142,7 @@ TLS_Client::run_tests (void)
 #endif
 
   ACE_DEBUG ((LM_DEBUG,
-              "Deleting records... \n"));
+              "Deleting records...\n"));
 
   retval = basic_log->delete_records (QUERY_LANG, QUERY_2);
 
@@ -154,7 +154,7 @@ TLS_Client::run_tests (void)
   retval = basic_log->get_n_records ().lo();
 #endif
 
-  ACE_DEBUG ((LM_DEBUG, "Number of records in Log after delete = %d \n",
+  ACE_DEBUG ((LM_DEBUG, "Number of records in Log after delete = %d\n",
               retval));
 
   ACE_DEBUG ((LM_DEBUG, "Geting the current_size again...\n"));
@@ -164,7 +164,7 @@ TLS_Client::run_tests (void)
   retval = basic_log->get_current_size ().lo();
 #endif
 
-  ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d \n", retval));
+  ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
 
   basic_log->destroy ();
 }

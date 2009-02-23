@@ -186,7 +186,7 @@ Supplier::run (void)
   long timer_id = 0;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Market Status Supplier Daemon is running...\n "));
+              "Market Status Supplier Daemon is running...\n"));
 
   // This sets the period for the stock-feed.
   ACE_Time_Value period (period_value_);
@@ -217,7 +217,7 @@ Supplier::via_naming_service (void)
       if (naming_services_client_.init (orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
+                           "the TAO_Naming_Client.\n"),
                           -1);
       CosNaming::Name notifier_ref_name (1);
       notifier_ref_name.length (1);

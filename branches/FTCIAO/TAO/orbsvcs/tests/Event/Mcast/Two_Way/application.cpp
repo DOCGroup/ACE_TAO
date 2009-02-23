@@ -431,7 +431,7 @@ Heartbeat_Application::push (const RtecEventComm::EventSet &events)
             {
               ACE_ERROR ((LM_ERROR,
                           "Unable to add new entry "
-                          "to heartbeat database \n"));
+                          "to heartbeat database\n"));
               break;
             }
 

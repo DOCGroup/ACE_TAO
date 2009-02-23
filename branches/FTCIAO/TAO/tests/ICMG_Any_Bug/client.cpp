@@ -58,7 +58,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Hello reference \n"),
+                             "Nil Test::Hello reference\n"),
                             1);
         }
 
@@ -80,7 +80,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (obj2.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Any_To_Object reference \n"),
+                             "Nil Any_To_Object reference\n"),
                             1);
         }
 
@@ -90,7 +90,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (hello_world.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::HelloWorld reference \n"),
+                             "Nil Test::HelloWorld reference\n"),
                             1);
         }
 

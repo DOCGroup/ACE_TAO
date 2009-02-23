@@ -163,7 +163,7 @@ parse_args (int argc, ACE_TCHAR **argv)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "<message_count> must be a multiple <iterations> "
-                         "or the program should be changed to flush explicitly \n"),
+                         "or the program should be changed to flush explicitly\n"),
                         -1);
     }
 

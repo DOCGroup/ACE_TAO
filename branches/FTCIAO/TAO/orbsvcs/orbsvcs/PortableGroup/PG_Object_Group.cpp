@@ -228,7 +228,7 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
   if (TAO_debug_level > 6)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("PG (%P|%t) exit Object_Group add_member \n")));
+                  ACE_TEXT("PG (%P|%t) exit Object_Group add_member\n")));
     }
 }
 

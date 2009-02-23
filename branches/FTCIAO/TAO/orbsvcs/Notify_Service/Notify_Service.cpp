@@ -510,7 +510,7 @@ Worker::svc (void)
       return -1;
     }
 
-  ACE_DEBUG ((LM_DEBUG, "Activated Worker Thread to run the ORB @ priority:%d \n", priority));
+  ACE_DEBUG ((LM_DEBUG, "Activated Worker Thread to run the ORB @ priority:%d\n", priority));
 #endif
 
   try

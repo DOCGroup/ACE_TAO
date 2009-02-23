@@ -115,7 +115,7 @@ int
 Load_Balancing_Service::run (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Load_Balancer: Initialized \n"));
+              "Load_Balancer: Initialized\n"));
 
   int result;
 

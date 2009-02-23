@@ -31,7 +31,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Caught a CORBA exception \n");
+      ex._tao_print_exception ("Caught a CORBA exception\n");
       return 1;
     }
   catch (...)

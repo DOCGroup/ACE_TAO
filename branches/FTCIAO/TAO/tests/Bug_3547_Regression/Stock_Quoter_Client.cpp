@@ -9,8 +9,6 @@
 
 unsigned char Msg[1000] = { 0 } ;
 
-const ACE_TCHAR *iorFile = ACE_TEXT("file://gazza.ior");
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
@@ -21,14 +19,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Use a simple ObjectKey to access the Stock Quoter.
     // (Client ORB must be initialized with
     // -ORBInitRef MyStockQuoter=corbaloc:...)
+    CORBA::Object_var udp_obj =
+      orb->resolve_initial_references ("UDPTest");
+
     CORBA::Object_var stock_quoter_obj =
       orb->resolve_initial_references ("MyStockQuoter");
 
-    CORBA::Object_var object = orb->string_to_object (iorFile);
-    UDPTestI_var server = UDPTestI::_narrow (object.in ());
+    UDPTestI_var server = UDPTestI::_narrow (udp_obj.in ());
 
-    // Narrow the reference to the Stock_Quoter interface
-    //UDPTestI_var UDP = UDPTestI::_narrow (UDP_obj.in());
     Stock_Quoter_var quoter = Stock_Quoter::_narrow (stock_quoter_obj.in());
 
     memset( Msg, 1, 1000 ) ;

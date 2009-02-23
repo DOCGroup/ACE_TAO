@@ -78,6 +78,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Test successful.. \n"));
+              "(%P|%t) Test successful..\n"));
   return 0;
 }

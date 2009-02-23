@@ -56,7 +56,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           //FUZZ: disable check_for_NULL
           ACE_ERROR_RETURN  ((LM_ERROR,
-                              "The received objref is NULL \n"),
+                              "The received objref is NULL\n"),
                              -1);
           //FUZZ: enable check_for_NULL
         }
@@ -75,7 +75,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Caught an exception \n");
+      ex._tao_print_exception ("Caught an exception\n");
       return -1;
     }
   return 0;
@@ -88,7 +88,7 @@ void run_test (Simple_Server_ptr server)
       try
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "About to make remote call \n"));
+                      "About to make remote call\n"));
           ACE_OS::sleep (2);
 
           // Make a remote call
@@ -99,7 +99,7 @@ void run_test (Simple_Server_ptr server)
           ACE_OS::sleep (25);
           ACE_DEBUG ((LM_DEBUG, " hope you did\n")); */
           ACE_DEBUG ((LM_DEBUG,
-                      "I am going to shutdown \n"));
+                      "I am going to shutdown\n"));
           server->shutdown ();
           ACE_OS::sleep (23);
         }

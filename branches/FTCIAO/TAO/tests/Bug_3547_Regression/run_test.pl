@@ -12,7 +12,7 @@ $status = 0;
 
 $SV = new PerlACE::Process ("server", "-ORBListenEndpoints iiop://:4177;diop://:15177");
 
-$CL = new PerlACE::Process ("client", "-ORBInitRef UDPTest=corbaloc:diop::15177/UDPTest -ORBDefaultInitRef corbaloc:iiop::4177");
+$CL = new PerlACE::Process ("client", "-ORBInitRef UDPTest=corbaloc:diop:localhost:15177/UDPTest -ORBDefaultInitRef corbaloc:iiop:localhost:4177 -ORBDebugLevel 10");
 
 $server = $SV->Spawn ();
 

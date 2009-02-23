@@ -104,7 +104,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
   RtecScheduler::handle_t h_final_consumer_rep_rt_info = 0;
 
 #ifdef EC_KOKYU_LOGGING
-  ACE_DEBUG ((LM_DEBUG, "consumer rt_info found in consumerqos[%d] \n", npos));
+  ACE_DEBUG ((LM_DEBUG, "consumer rt_info found in consumerqos[%d]\n", npos));
 #endif
 
   if (npos >= 0 && establish_final_consumer_dependency == 1)

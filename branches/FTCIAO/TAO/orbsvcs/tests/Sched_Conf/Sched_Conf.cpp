@@ -363,7 +363,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (my_name_client.init (orb.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
+                           "the TAO_Naming_Client.\n"),
                           -1);
 
       CosNaming::NamingContext_var context =

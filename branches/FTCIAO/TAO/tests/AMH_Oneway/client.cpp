@@ -58,7 +58,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           roundtrip->test_method (time);
 
-          ACE_DEBUG ((LM_DEBUG, "Sent call # %d \n", i));
+          ACE_DEBUG ((LM_DEBUG, "Sent call # %d\n", i));
         }
       orb->destroy();
       // The following sleep is a workaround for a defect in the Windows

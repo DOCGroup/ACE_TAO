@@ -26,7 +26,7 @@ test_i::op (void)
     {
       ACE_ERROR ((LM_ERROR,
                   "PortableInterceptor::ServerRequestInterceptor::"
-                  "receive_request() not called \n"
+                  "receive_request() not called\n"
                   "prior to target operation execution.\n"));
 
       throw CORBA::INTERNAL ();

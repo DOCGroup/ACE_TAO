@@ -121,7 +121,7 @@ Simple_Test::parse_args (int argc,
         {
           ACE_DEBUG ((LM_DEBUG,
                       "usage: %s "
-                      "-events event_count \n",
+                      "-events event_count\n",
                       argv[0],
                       argv[0]));
 

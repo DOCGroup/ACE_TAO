@@ -167,7 +167,7 @@ Consumer_Handler::via_naming_service (void)
       if (naming_services_client_.init (orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
+                           "the TAO_Naming_Client.\n"),
                           -1);
 
       CosNaming::Name notifier_ref_name (1);
@@ -219,10 +219,10 @@ Consumer_Handler::init (int argc, ACE_TCHAR **argv)
       if (this->interactive_ == 1)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      " Services provided:\n "
-                      " * Registration <type 'r'>\n "
-                      " * Unregistration <type 'u'>\n "
-                      " * Quit <type 'q'>\n "));
+                      " Services provided:\n"
+                      " * Registration <type 'r'>\n"
+                      " * Unregistration <type 'u'>\n"
+                      " * Quit <type 'q'>\n"));
 
           ACE_NEW_RETURN (consumer_input_handler_,
                           Consumer_Input_Handler (this),

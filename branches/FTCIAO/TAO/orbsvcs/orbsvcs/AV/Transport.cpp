@@ -219,7 +219,7 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO_AV_Acceptor_Registry::open \n"));
+                "TAO_AV_Acceptor_Registry::open\n"));
 
   TAO_AV_FlowSpecSetItor last_flowspec
     = flow_spec_set.end ();

@@ -90,7 +90,7 @@ Client_Task::svc (void)
 
       hello->onewayTest();
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - returned from onewayTest() call \n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - returned from onewayTest() call\n"));
 
       hello->shutdown ();
     }

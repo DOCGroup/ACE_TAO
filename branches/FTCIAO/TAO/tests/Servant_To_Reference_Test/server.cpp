@@ -56,7 +56,7 @@ MT_Task::svc (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("(%P|%t) Caugh exception \n");
+      ex._tao_print_exception ("(%P|%t) Caugh exception\n");
     }
 
   return 0;

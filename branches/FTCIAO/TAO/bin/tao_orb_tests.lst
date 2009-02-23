@@ -335,6 +335,7 @@ TAO/tests/Portable_Interceptors/Redirection/run_test.pl: !MINIMUM !CORBA_E_COMPA
 TAO/tests/Portable_Interceptors/Bug_3079/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/Bug_3080/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/Bug_2133/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
+TAO/tests/Portable_Interceptors/Bug_3582/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
 TAO/tests/ORT/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
 TAO/tests/Object_Loader/run_test.pl: !STATIC !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Two_Objects/run_test.pl: !ST

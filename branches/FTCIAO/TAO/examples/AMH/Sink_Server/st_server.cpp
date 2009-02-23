@@ -12,8 +12,8 @@ usage (const char *message)
   // Mayur: It makes the newline stand out
 
   static const char * usage =
-    "invoke as: st_server -o <ior_output_file> \n"
-    "-s <sleep_time (in microseconds)> \n";
+    "invoke as: st_server -o <ior_output_file>\n"
+    "-s <sleep_time (in microseconds)>\n";
 
   ACE_ERROR ((LM_ERROR, "%s : %s", message, usage));
 }
@@ -27,7 +27,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   if (amh_server.parse_args () != 1)
     {
-      usage ("IOR file missing \n");
+      usage ("IOR file missing\n");
       ACE_OS::exit (1);
     }
 
@@ -35,7 +35,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   if (servant.parse_args (argc, argv) != 1)
     {
-      usage ("Sleep time unspecified \n");
+      usage ("Sleep time unspecified\n");
       ACE_OS::exit (1);
     }
 

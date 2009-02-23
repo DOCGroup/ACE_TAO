@@ -399,7 +399,7 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Invalid UIPMC endpoint format: ")
-                                 ACE_TEXT ("endpoint priorities no longer supported. \n"),
+                                 ACE_TEXT ("endpoint priorities no longer supported.\n"),
                                  value.c_str ()),
                                 -1);
             }

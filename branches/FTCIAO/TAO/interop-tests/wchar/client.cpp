@@ -330,7 +330,7 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
     CORBA::String_var server_orb =
       server->orb_name();
     ACE_ERROR ((LM_ERROR,
-                "wchar_interop test (TAO client, %s server) %s \n",
+                "wchar_interop test (TAO client, %s server) %s\n",
                 server_orb.in(),
                 (result ? "passed" : "failed")));
     if (kill_server)

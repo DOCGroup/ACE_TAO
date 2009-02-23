@@ -24,7 +24,7 @@ void
 Callback_i::callback_method (void)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Callback method called \n"));
+    ACE_DEBUG ((LM_DEBUG, "Callback method called\n"));
 }
 
 
@@ -36,7 +36,7 @@ Simple_Server_i::handle_timeout (const ACE_Time_Value &,
 {
   if (TAO_debug_level > 0)
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("About to make a remote call in the Upcall \n")));
+              ACE_TEXT ("About to make a remote call in the Upcall\n")));
 
   for (int times = 0;
         times < this->no_iterations_;

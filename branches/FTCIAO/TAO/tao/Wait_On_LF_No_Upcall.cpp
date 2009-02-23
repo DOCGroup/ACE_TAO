@@ -101,7 +101,7 @@ namespace TAO
 
     if ((this->transport_->opened_as () == TAO::TAO_CLIENT_ROLE) &&
         (this->transport_->bidirectional_flag () == 0) &&
-        (tss->upcalls_temporarily_suspended_on_this_thread_ == true))
+        (tss->upcalls_temporarily_suspended_on_this_thread_))
       return false;
 
     return true;

@@ -131,7 +131,7 @@ ServantManager_i::parse_string (const ACE_TCHAR *s)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "the servant dll:%s\n the factory_function:%s\n ",
+                "the servant dll:%s\n the factory_function:%s\n",
                 this->dllname_.c_str (),
                 this->create_symbol_.c_str ()));
 }

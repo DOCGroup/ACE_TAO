@@ -177,11 +177,11 @@ Foo_i::test_var_array_arg (
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_var_array_arg ")
-                       ACE_TEXT(" %s \n"), messages[0].in ()));
+                       ACE_TEXT(" %s\n"), messages[0].in ()));
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_var_array_arg ")
-                       ACE_TEXT(" %s \n"), messages[1].in ()));
+                       ACE_TEXT(" %s\n"), messages[1].in ()));
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_var_array_arg ")
-                       ACE_TEXT(" %s \n"), messages[2].in ()));
+                       ACE_TEXT(" %s\n"), messages[2].in ()));
 }
 
 
@@ -191,7 +191,7 @@ Foo_i::test_special_basic_arg (
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_special_basic_arg ")
-                       ACE_TEXT(" got special basic arg: %d \n"), value));
+                       ACE_TEXT(" got special basic arg: %d\n"), value));
 }
 
 
@@ -202,7 +202,7 @@ Foo_i::test_objref_arg (
 {
   this->callback_ = Callback::_duplicate (cb);
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_objref_arg ")
-                       ACE_TEXT(" got callback object. \n")));
+                       ACE_TEXT(" got callback object.\n")));
 }
 
 

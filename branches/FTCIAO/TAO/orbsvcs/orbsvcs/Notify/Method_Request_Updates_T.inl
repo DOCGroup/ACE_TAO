@@ -26,7 +26,7 @@ TAO_Notify_Method_Request_Updates_T<SEQ, PROXY, SEQ_PARAM, PROXY_PARAM>::execute
     {
       if (TAO_debug_level > 0)
         ex._tao_print_exception (
-          "TAO_Notify_Method_Request_Updates::execute error sending updates\n ");
+          "TAO_Notify_Method_Request_Updates::execute error sending updates\n");
     }
 
   return 0;

@@ -211,7 +211,7 @@ TAO_LB_LoadMinimum::next_member (
       //       very lightweight and stateless.
 /*
        ACE_DEBUG ((LM_DEBUG,
-                   "CALLING RANDOM  REFERENCE FOR LOCATION \n"));
+                   "CALLING RANDOM  REFERENCE FOR LOCATION\n"));
 */
 
       return TAO_LB_Random::_tao_next_member (object_group,

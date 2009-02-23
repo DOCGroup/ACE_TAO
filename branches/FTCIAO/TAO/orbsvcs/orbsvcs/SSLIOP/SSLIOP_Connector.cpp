@@ -459,7 +459,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
     {
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) Initializing SSLIOP_Endpoint \n")
+                    ACE_TEXT ("TAO (%P|%t) Initializing SSLIOP_Endpoint\n")
                     ));
 
       if (this->base_connector_.creation_strategy ()->make_svc_handler (
@@ -535,7 +535,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
       if (TAO_debug_level > 4)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, ")
-                    ACE_TEXT ("making a new connection \n")));
+                    ACE_TEXT ("making a new connection\n")));
 
       // Purge connections (if necessary)
       this->orb_core ()->lane_resources ().transport_cache ().purge ();

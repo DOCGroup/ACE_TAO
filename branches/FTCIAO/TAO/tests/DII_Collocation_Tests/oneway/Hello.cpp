@@ -144,7 +144,7 @@ Hello::test_var_array_arg(const Test::Var_Array messages)
   {
     if (debug)
       ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_var_array_arg ")
-                        ACE_TEXT("messages[%d] = %s \n"), i, messages[i].in ()));
+                        ACE_TEXT("messages[%d] = %s\n"), i, messages[i].in ()));
     if (ACE_OS::strncmp (messages[i].in (), TEST_STR, ACE_OS::strlen (TEST_STR)) != 0)
       ERROR_COUNT ("Hello::test_var_array_arg")
   }
@@ -156,7 +156,7 @@ Hello::test_special_basic_arg(CORBA::Char value)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_special_basic_arg ")
-                          ACE_TEXT(" got special basic arg: %c \n"), value));
+                          ACE_TEXT(" got special basic arg: %c\n"), value));
   if (value != TEST_SPECIAL_VALUE)
     ERROR_COUNT ("Hello::test_special_basic_arg")
 }
@@ -167,7 +167,7 @@ void Hello::test_objref_arg (
   )
 {
   if (debug)
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_objref_arg \n")));
+    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_objref_arg\n")));
 
   if (CORBA::is_nil (test))
     ERROR_COUNT ("Hello::test_objref_arg")
@@ -190,7 +190,7 @@ void Hello::test_object_arg (
   )
 {
   if (debug)
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_object_arg \n")));
+    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_object_arg\n")));
   ::Test::Simple_Test_var simple_test = ::Test::Simple_Test::_narrow (o);
 
   CORBA::ULong error_count = 0;
@@ -209,7 +209,7 @@ void Hello::test_args_1 (
   )
 {
   if (debug)
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_1 \n")));
+    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_1\n")));
   ::Test::Simple_Test_var simple_test = ::Test::Simple_Test::_narrow (arg1);
 
   CORBA::ULong error_count = 0;
@@ -234,7 +234,7 @@ void Hello::test_args_2 (
   )
 {
   if (debug)
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_2 \n")));
+    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_2\n")));
   if (ACE_OS::strncmp (arg1, TEST_STR, ACE_OS::strlen (TEST_STR)) != 0 )
     ERROR_COUNT ("Hello::test_args_2")
 
@@ -258,7 +258,7 @@ void Hello::test_args_3 (
   )
 {
   if (debug)
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_3 \n")));
+    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_3\n")));
   if (ACE_OS::strncmp (arg1, TEST_STR, ACE_OS::strlen (arg1)) != 0)
     ERROR_COUNT ("Hello::test_args_3")
   if (ACE_OS::strncmp (arg2.get_buffer (), TEST_STR, ::Test::BOUNDED_VAR_SIZE) != 0)

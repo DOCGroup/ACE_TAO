@@ -14,7 +14,7 @@ class Foo_i : public virtual POA_foo
 public:
   virtual void check ()
   {
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) checking \n"));
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) checking\n"));
   }
 };
 

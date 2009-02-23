@@ -42,7 +42,7 @@ int parse_args(int argc, ACE_TCHAR* argv[])
   if (result == -1 || (id.length () == 0 && output.length () == 0))
   {
     ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT("Usage: %s \n")
+      ACE_TEXT("Usage: %s\n")
       ACE_TEXT("  [-i id]  set the id that is used to register to the naming service\n")
       ACE_TEXT("  [-k kind] set the kind that is used to register to the naming service\n")
       ACE_TEXT("  [-o filename] set the output file name for the IOR\n")
