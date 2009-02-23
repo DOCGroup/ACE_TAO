@@ -151,7 +151,7 @@ Client::svc (void)
   catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Expected exceptions \n"));
+                  "(%P|%t) Expected exceptions\n"));
     }
   return 0;
 }

@@ -213,7 +213,7 @@ int FT_ReplicaFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
         // fall thru
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s \n"
+                           "usage:  %s\n"
                            " -o <factory ior file>\n"
                            " -n <naming service registration name>\n"
                            " -f <factory registry ior file>\n"

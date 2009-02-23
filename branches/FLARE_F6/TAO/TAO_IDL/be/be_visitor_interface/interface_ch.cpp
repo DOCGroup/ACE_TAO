@@ -153,7 +153,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                          "(%P|%t) Error in "
                          "be_visitor_interface_ch::"
                          "visit_interface while generating "
-                         "_narrow () declaration \n"),
+                         "_narrow () declaration\n"),
                         -1);
     }
 
@@ -165,7 +165,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                          "(%P|%t) Error in "
                          "be_visitor_interface_ch::"
                          "visit_interface while generating "
-                         "_unchecked_narrow () declaration \n"),
+                         "_unchecked_narrow () declaration\n"),
                         -1);
     }
 
@@ -214,14 +214,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  if (node->session_component_child () == 1)
-    {
-      *os << "// These two are inherited from SessionComponent."
-          << be_nl << be_nl
-          << "virtual void ciao_preactivate (void);" << be_nl
-          << "virtual void ciao_postactivate (void);" << be_nl;
-    }
 
   // If we inherit from both CORBA::Object and CORBA::AbstractBase,
   // we have to override _add_ref() to avoid ambiguity.

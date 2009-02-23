@@ -1,6 +1,31 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
+USER VISIBLE CHANGES BETWEEN TAO-1.6.8 and TAO-1.6.9
+====================================================
+
+USER VISIBLE CHANGES BETWEEN TAO-1.6.7 and TAO-1.6.8
+====================================================
+
+. Fixed race condition when multiple threads make a connection to the
+  same server (bugzilla 3543)
+
+. Updated several tests to the new test framework
+
+. Fixed several memory leaks and make sure the TAO singletons are
+  destructed when the TAO DLL gets unloaded
+
+. Improved WinCE unicode support and extended the number of tests that
+  can be run with WinCE
+
+. Fixed some race conditions in the transport cache. There are several
+  known issues resolved in the transport cache when it starts purging.
+
+. Fixed memory leak in string and object reference sequences.
+
+. Bugs fixed: 3078, 3499, 3524, 3543, 3549, 3557, 3559.
+
+
 USER VISIBLE CHANGES BETWEEN TAO-1.6.6 and TAO-1.6.7
 ====================================================
 
@@ -9,7 +34,7 @@ USER VISIBLE CHANGES BETWEEN TAO-1.6.6 and TAO-1.6.7
   the default filter operators.
 
 . The full TAO distribution compiles with unicode enabled. Work is ongoing
-  to make all of the TAO runtime tests and examples unicode compatiable.
+  to make the TAO runtime results comparable with the ascii builds.
 
 . Added two new ORB parameters, -ORBIPHopLimit and -ORBIPMulticastLoop. The
   first one controls number of hops an IPv4/IPv6 packet can outlive. The

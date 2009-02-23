@@ -1237,7 +1237,7 @@ TAO_Root_POA::check_for_valid_wait_for_completions (const TAO_ORB_Core &orb_core
           // belonging to the same ORB as this POA, the BAD_INV_ORDER
           // system exception with standard minor code 3 is raised and
           // POA destruction does not occur.
-          if (poa_current_impl != 0)
+          if ((poa_current_impl != 0) && (poa_current_impl->poa () != 0))
             {
               if (&orb_core == &poa_current_impl->orb_core ())
                 {
@@ -1978,7 +1978,7 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "IMR IOR = \n%C\n",
+                    "IMR IOR =\n%C\n",
                     imr_str.in ()));
 
       // Search for "corbaloc:" alone, without the protocol.  This code
@@ -2011,7 +2011,7 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "ImR-ified IOR = \n%C\n",
+                    "ImR-ified IOR =\n%C\n",
                     ior.c_str ()));
 
       obj = this->orb_core_.orb ()->string_to_object (ior.c_str ());
@@ -2676,6 +2676,13 @@ TAO_POA_Static_Resources* TAO_POA_Static_Resources::instance_ = 0;
 // the race condition to initialize the lock.
 TAO_POA_Static_Resources* TAO_POA_Static_Resources::initialization_reference_ =
   TAO_POA_Static_Resources::instance ();
+
+void
+TAO_POA_Static_Resources::fini (void)
+{
+  delete TAO_POA_Static_Resources::instance_;
+  TAO_POA_Static_Resources::instance_ = 0;
+}
 
 TAO_POA_Static_Resources*
 TAO_POA_Static_Resources::instance (void)

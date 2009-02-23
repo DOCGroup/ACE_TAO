@@ -79,7 +79,7 @@ Server_Request_Interceptor::receive_request_service_contexts (
   this->request_count_++;
 
 /*  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) receive_request_service_context called [%d] times \n",
+              "(%P|%t) receive_request_service_context called [%d] times\n",
               this->request_count_));
               */
 

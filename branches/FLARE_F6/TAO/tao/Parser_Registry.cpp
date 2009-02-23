@@ -62,7 +62,7 @@ TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
           if (TAO_debug_level >= 1)
             {
               ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) Failed to find Service Object"
-                          " for %s.\n", names[i]));
+                          " for %C.\n", names[i]));
             }
         }
       else

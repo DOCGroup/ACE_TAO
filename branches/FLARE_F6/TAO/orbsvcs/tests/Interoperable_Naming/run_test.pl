@@ -5,7 +5,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-# This is a perl script that runs the NamingContextExt test. It starts 
+# This is a perl script that runs the NamingContextExt test. It starts
 # the Naming service, server and the client as necessary
 
 use lib "$ENV{ACE_ROOT}/bin";
@@ -15,7 +15,7 @@ use PerlACE::Run_Test;
 # executables
 $iorfile = PerlACE::LocalFile ("ns.ior");
 
-# Run the server and client for the test. 
+# Run the server and client for the test.
 
 $NS = new PerlACE::Process ("../../Naming_Service/Naming_Service", "-o $iorfile");
 $CL = new PerlACE::Process ("client", "-s -ORBInitRef NameService=file://$iorfile");
@@ -30,7 +30,7 @@ if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_cr
     $NS->Kill ();
     exit 1;
 }
-   
+
 $client = $CL->SpawnWaitKill (60);
 
 if ($client != 0) {

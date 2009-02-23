@@ -53,7 +53,6 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
   ThreadStrategySingleFactoryImpl,
@@ -67,5 +66,6 @@ ACE_FACTORY_NAMESPACE_DEFINE (
   ACE_Local_Service,
   ThreadStrategySingleFactoryImpl,
   TAO::Portable_Server::ThreadStrategySingleFactoryImpl)
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

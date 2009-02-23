@@ -94,7 +94,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, ")
-                      ACE_TEXT ("could not add the handler to cache \n")));
+                      ACE_TEXT ("could not add the handler to cache\n")));
         }
 
       return -1;
@@ -128,8 +128,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
       // Otherwise, it is the reactive concurrency model. We may want
       // to register ourselves with the reactor. Call the register
       // handler on the transport.
-      result =
-        sh->transport ()->register_handler ();
+      result = sh->transport ()->register_handler ();
     }
 
   if (result != -1)
@@ -166,8 +165,8 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
              error = ACE_TEXT("could not register new connection in the reactor");
 
            ACE_ERROR ((LM_ERROR,
-                       "TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, "
-                       "%s\n", error));
+                       ACE_TEXT("TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, ")
+                       ACE_TEXT("%s\n"), error));
          }
 
       return -1;

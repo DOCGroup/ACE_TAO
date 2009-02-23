@@ -47,7 +47,7 @@ Client_Task::svc (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception Caught \n");
+      ex._tao_print_exception ("Exception Caught\n");
       return -1;
     }
 

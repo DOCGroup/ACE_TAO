@@ -231,7 +231,7 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
                                   ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
-  if (this->messaging_object ()->format_message (stream) != 0)
+  if (this->messaging_object ()->format_message (stream, stub) != 0)
     return -1;
 
   // This guarantees to send all data (bytes) or return an error.
@@ -296,7 +296,7 @@ TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   IIOP::ListenPointList listen_list;
-  if ((cdr >> listen_list) == 0)
+  if (!(cdr >> listen_list))
     return -1;
 
   // As we have received a bidirectional information, set the flag to
@@ -434,16 +434,16 @@ TAO_IIOP_Transport::get_listen_point (
 
       // Get the count of the number of elements
       const CORBA::ULong len = listen_point_list.length ();
-  
+
       // Increase the length by 1
       listen_point_list.length (len + 1);
-  
+
       // We have the connection and the acceptor endpoint on the
       // same interface
       IIOP::ListenPoint & point = listen_point_list[len];
       point.host = CORBA::string_dup (interface_name.in ());
       point.port = endpoint_addr[index].get_port_number ();
-  
+
       if (TAO_debug_level >= 5)
         {
           ACE_DEBUG ((LM_DEBUG,

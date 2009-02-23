@@ -8,6 +8,7 @@ ACE_RCSID (BiDir_GIOP,
 
 #include "tao/CDR.h"
 #include "tao/TAO_Server_Request.h"
+#include "tao/Transport.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

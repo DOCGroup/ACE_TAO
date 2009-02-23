@@ -16,6 +16,7 @@
 #include "ace/Guard_T.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
+#include "ace/os_include/os_typeinfo.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/TAO_Singleton.inl"
@@ -26,6 +27,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class TYPE, class ACE_LOCK> void
 TAO_Singleton<TYPE, ACE_LOCK>::dump (void)
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("TAO_Singleton<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
@@ -33,6 +35,7 @@ TAO_Singleton<TYPE, ACE_LOCK>::dump (void)
               TAO_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class TYPE, class ACE_LOCK> TAO_Singleton<TYPE, ACE_LOCK> *&
@@ -91,7 +94,7 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance (void)
               ACE_NEW_RETURN (singleton, (TAO_Singleton<TYPE, ACE_LOCK>), 0);
 
               // Register for destruction with TAO_Singleton_Manager.
-              TAO_Singleton_Manager::at_exit (singleton);
+              TAO_Singleton_Manager::at_exit (singleton, 0, typeid (TYPE).name());
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
 #endif /* ACE_MT_SAFE */
@@ -121,6 +124,7 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::singleton_ = 0;
 template <class TYPE, class ACE_LOCK> void
 TAO_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("TAO_TSS_Singleton<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
@@ -128,6 +132,7 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
               TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class TYPE, class ACE_LOCK> TAO_TSS_Singleton<TYPE, ACE_LOCK> *&
@@ -187,7 +192,7 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
                               0);
 
               // Register for destruction with TAO_Singleton_Manager.
-              TAO_Singleton_Manager::at_exit (singleton);
+              TAO_Singleton_Manager::at_exit (singleton, 0, typeid (TYPE).name ());
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
 #endif /* ACE_MT_SAFE */

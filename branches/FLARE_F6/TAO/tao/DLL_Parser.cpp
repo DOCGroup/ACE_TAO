@@ -63,7 +63,6 @@ TAO_DLL_Parser::parse_string (const char *ior,
   return loader->create_object (orb, 0, 0);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_DLL_Parser,
                        ACE_TEXT ("DLL_Parser"),
@@ -75,5 +74,7 @@ ACE_STATIC_SVC_DEFINE (TAO_DLL_Parser,
 
 
 ACE_FACTORY_DEFINE (TAO, TAO_DLL_Parser)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DDL_PARSER == 1 */

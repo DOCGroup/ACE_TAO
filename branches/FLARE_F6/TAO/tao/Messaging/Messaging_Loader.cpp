@@ -66,7 +66,6 @@ TAO_Messaging_Loader::init (int,
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 /////////////////////////////////////////////////////////////////////
 
@@ -78,3 +77,5 @@ ACE_STATIC_SVC_DEFINE (TAO_Messaging_Loader,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
+
+TAO_END_VERSIONED_NAMESPACE_DECL

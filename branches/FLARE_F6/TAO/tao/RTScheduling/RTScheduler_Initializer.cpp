@@ -141,7 +141,7 @@ TAO_RTScheduler_ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr
   if (CORBA::is_nil (rt_current.in ()))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) ::post_init \n"
+                  "(%P|%t) ::post_init\n"
                   "(%P|%t) Unable to narrow to RTCORBA::Current\n"));
       throw ::CORBA::INTERNAL ();
     }

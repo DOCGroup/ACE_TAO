@@ -46,7 +46,7 @@ Consumer_i::shutdown (void)
   // Instruct the ORB to shutdown.
 
   ACE_DEBUG ((LM_DEBUG,
-              " consumer shutting down \n "));
+              " consumer shutting down \n"));
 
   this->orb_->shutdown ();
 }

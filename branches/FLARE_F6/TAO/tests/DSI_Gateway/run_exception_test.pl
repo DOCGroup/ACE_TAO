@@ -6,79 +6,92 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$svbase = "server.ior";
-$svfile = PerlACE::LocalFile ("$svbase");
-$gwfile = PerlACE::LocalFile ("gateway.ior");
 
-unlink $svfile;
-unlink $gwfile;
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $gateway = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+
+my $iorbase = "server.ior";
+my $gwbase = "gateway.ior";
+
+my $server_iorfile = $server->LocalFile ($iorbase);
+my $server_gwfile = $server->LocalFile ($gwbase);
+my $gateway_iorfile = $server->LocalFile ($iorbase);
+my $gateway_gwfile = $server->LocalFile ($gwbase);
+my $client_gwfile = $client->LocalFile ($gwbase);
+
+$server->DeleteFile ($iorbase);
+$server->DeleteFile ($gwbase);
+$gateway->DeleteFile ($iorbase);
+$gateway->DeleteFile ($gwbase);
+$client->DeleteFile ($gwbase);
 
 $status = 0;
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o $svbase");
-}
-else {
-    $SV = new PerlACE::Process ("server", "-o $svfile");
-}
-$GW = new PerlACE::Process ("gateway", "-k file://$svfile -o $gwfile");
-$CL = new PerlACE::Process ("client", "-k file://$gwfile -u");
+$SV = $server->CreateProcess ("server", "-o $server_iorfile");
+$GW = $gateway->CreateProcess ("gateway", "-k file://$gateway_iorfile -o $gateway_gwfile");
+$CL = $client->CreateProcess ("client", "-k file://$client_gwfile -u");
 
-$server = $SV->Spawn ();
+$server_status = $SV->Spawn ();
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($svfile, $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$svfile>\n";
-    $SV->Kill ();
+if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
 $GW->Spawn ();
 
-if (PerlACE::waitforfile_timed ($gwfile, $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$gwfile>\n";
-    $SV->Kill ();
-    $GW->Kill ();
+if ($gateway->WaitForFileTimed ($gwbase,
+                               $gateway->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$gateway_gwfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    $GW->Kill (); $GW->TimedWait (1);
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill (60);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$CL = new PerlACE::Process ("client", "-k file://$gwfile -s");
+$CL = $client->CreateProcess ("client", "-k file://$client_gwfile -s");
 
-$client = $CL->SpawnWaitKill (60);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$server = $SV->Kill ();
+$server_status = $SV->Kill ();
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-$gateway = $GW->Kill ();
+$gateway_status = $GW->Kill ();
 
-if ($gateway != 0) {
-    print STDERR "ERROR: gateway returned $gateway\n";
+if ($gateway_status != 0) {
+    print STDERR "ERROR: gateway returned $gateway_status\n";
     $status = 1;
 }
 
-unlink $svfile;
-unlink $gwfile;
+$server->DeleteFile ($iorbase);
+$server->DeleteFile ($gwbase);
+$gateway->DeleteFile ($iorbase);
+$gateway->DeleteFile ($gwbase);
+$client->DeleteFile ($gwbase);
 
 exit $status;

@@ -103,9 +103,6 @@ TAO_Default_Thread_Lane_Resources_Manager_Factory::create_thread_lane_resources_
 
 // -------------------------------------------------------
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
 ACE_STATIC_SVC_DEFINE (TAO_Default_Thread_Lane_Resources_Manager_Factory,
                        ACE_TEXT ("Default_Thread_Lane_Resources_Manager_Factory"),
                        ACE_SVC_OBJ_T,
@@ -113,3 +110,7 @@ ACE_STATIC_SVC_DEFINE (TAO_Default_Thread_Lane_Resources_Manager_Factory,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Thread_Lane_Resources_Manager_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+

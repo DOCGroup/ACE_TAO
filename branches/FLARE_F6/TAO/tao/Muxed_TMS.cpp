@@ -91,7 +91,7 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::bind_dispatcher, ")
-                    ACE_TEXT ("bind dispatcher failed: result = %d, request id = %d \n"),
+                    ACE_TEXT ("bind dispatcher failed: result = %d, request id = %d\n"),
                     result, request_id));
 
       return -1;
@@ -109,6 +109,17 @@ TAO_Muxed_TMS::unbind_dispatcher (CORBA::ULong request_id)
                     -1);
 
   return this->dispatcher_table_.unbind (request_id);
+}
+
+bool
+TAO_Muxed_TMS::has_request (void)
+{
+  ACE_GUARD_RETURN (ACE_Lock,
+                    ace_mon,
+                    *this->lock_,
+                    false);
+
+  return this->dispatcher_table_.current_size () > 0;
 }
 
 int
@@ -275,9 +286,10 @@ TAO_Muxed_TMS::clear_cache_i (void)
     {
       TAO_Reply_Dispatcher *rd = 0;
 
-      ubs.pop (rd);
-
-      rd->connection_closed ();
+      if (ubs.pop (rd) == 0)
+        {
+          rd->connection_closed ();
+        }
     }
 
   return 0;

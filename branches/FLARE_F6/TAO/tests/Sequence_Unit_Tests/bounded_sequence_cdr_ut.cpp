@@ -14,9 +14,11 @@
 
 #include "mock_reference.hpp"
 
+#include "ace/OS_NS_string.h"
 #include "tao/Bounded_Object_Reference_Sequence_T.h"
 #include "tao/Bounded_Value_Sequence_T.h"
 #include "tao/Bounded_Basic_String_Sequence_T.h"
+#include "tao/Bounded_BD_String_Sequence_T.h"
 #include "tao/Bounded_Array_Sequence_T.h"
 #include "tao/Bounded_Sequence_CDR_T.h"
 #include "tao/CDR.h"

@@ -183,7 +183,6 @@ namespace CORBA
     virtual CORBA::Exception *_tao_duplicate (void) const = 0;
 
   protected:
-
     /// Default constructor.
     Exception (void);
 
@@ -194,13 +193,11 @@ namespace CORBA
     Exception (const char *repository_id, const char *local_name);
 
   private:
-
     /// Repository Id
     CORBA::String_var id_;
 
     /// Local name.
     CORBA::String_var name_;
-
   };
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)

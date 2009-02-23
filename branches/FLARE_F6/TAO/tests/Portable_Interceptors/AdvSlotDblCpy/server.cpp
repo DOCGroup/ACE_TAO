@@ -10,12 +10,42 @@
 #include "tao/ORBInitializer_Registry.h"
 
 #include "ace/OS_NS_stdio.h"
+#include "ace/Get_Opt.h"
 
 #include "InvokeMeS.h"
 
 using namespace CORBA;
 using namespace PortableServer;
 using namespace PortableInterceptor;
+
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+
+int
+parse_args (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'o':
+        ior_output_file = get_opts.opt_arg ();
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-o <iorfile>"
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
+
 
 namespace
 {
@@ -278,6 +308,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   ORB_var orb (ORB_init (argc, argv));
 
+  if (parse_args (argc, argv) != 0)
+    return 1;
+
   Object_var obj (orb->resolve_initial_references ("RootPOA"));
 
   POA_var root_poa (POA::_narrow (obj.in ()));
@@ -296,16 +329,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   poa_manager->activate ();
 
-
   // Dump the ior.
   //
-  FILE *output_file= ACE_OS::fopen ("server.ior", "w");
+  FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
   if (output_file == 0)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open output file <%s> for writing "
                        "IOR: %C",
-                       output_file,
+                       ior_output_file,
                        ior.in ()),
                       1);
   }
@@ -313,8 +345,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_OS::fprintf (output_file, "%s", ior.in ());
   ACE_OS::fclose (output_file);
 
-  ACE_DEBUG ((LM_DEBUG, "Server is ready, IOR is in '%C'\n", output_file));
-
+  ACE_DEBUG ((LM_DEBUG, "Server is ready, IOR is in '%s'\n", ior_output_file));
 
   // Run the ORB event loop.
   //

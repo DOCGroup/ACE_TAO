@@ -349,18 +349,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "error - corruption of "
                       "default case label value\n"));
         }
-        
-      char buf[32];
-      ACE_OS::sprintf (buf, "%ld", SignedGen::val);
 
-      if (ACE_OS::strcmp (buf, "-3") != 0)
+      if (SignedGen::val !=  -3)
         {
           ++error_count;
           ACE_DEBUG ((LM_DEBUG,
                       "error - signed integer literal "
                       "generated as unsigned\n"));
         }
-        
+
       root_poa->destroy (true, true);
     }
   catch (const CORBA::Exception& ex)

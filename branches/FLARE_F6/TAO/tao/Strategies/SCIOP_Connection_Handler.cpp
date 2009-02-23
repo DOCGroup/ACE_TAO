@@ -27,6 +27,7 @@
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Wait_Strategy.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID (tao,
            SCIOP_Connection_Handler,
@@ -207,8 +208,8 @@ TAO_SCIOP_Connection_Handler::open (void*)
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("TAO(%P|%t) - SCIOP_Connection_Handler::open, ")
-                ACE_TEXT("The local addr is (%s) \n"),
-                local_addr. get_host_addr ()));
+                ACE_TEXT("The local addr is (%C)\n"),
+                local_addr.get_host_addr ()));
 
   if (local_addr.get_ip_address () == remote_addr.get_ip_address ()
       && local_addr.get_port_number () == remote_addr.get_port_number ())
@@ -354,9 +355,7 @@ TAO_SCIOP_Connection_Handler::add_transport_to_cache (void)
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Idle the transport..
-  return cache.cache_idle_transport (&prop,
-                                     this->transport ());
-
+  return cache.cache_transport (&prop, this->transport ());
 }
 
 int

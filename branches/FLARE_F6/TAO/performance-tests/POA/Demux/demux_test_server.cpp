@@ -129,7 +129,7 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
       if (this->use_user_id_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Using the USER_ID policy ... \n"));
+                      "Using the USER_ID policy ...\n"));
 
           policies[0] =
             this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID);
@@ -137,7 +137,7 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Using the SYSTEM_ID policy ... \n"));
+                      "Using the SYSTEM_ID policy ...\n"));
 
           policies[0] =
             this->root_poa_->create_id_assignment_policy (PortableServer::SYSTEM_ID);
@@ -411,7 +411,7 @@ Demux_Test_Server::init_naming_service (void)
   if (this->my_name_client_.init (this->orb_.in ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to initialize "
-                       "the ACE_Naming_Client. \n"),
+                       "the ACE_Naming_Client.\n"),
                       -1);
 
   // success

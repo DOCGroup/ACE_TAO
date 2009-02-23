@@ -46,9 +46,9 @@ parse_args (int argc, ACE_TCHAR **argv)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "\nusage:  %s \n"
-                           "-f forward to IOR \n"
-                           "-o output file for IOR \n"
+                           "\nusage:  %s\n"
+                           "-f forward to IOR\n"
+                           "-o output file for IOR\n"
                            "\n",
                            argv [0]),
                           -1);

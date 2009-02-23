@@ -92,7 +92,7 @@ namespace TAO
       {
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - DII_Invocation::"
-                    "handle_user_exception \n"));
+                    "handle_user_exception\n"));
       }
 
     // Match the exception interface repository id with the

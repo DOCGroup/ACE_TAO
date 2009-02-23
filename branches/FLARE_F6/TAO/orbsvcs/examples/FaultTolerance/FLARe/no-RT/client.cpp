@@ -19,6 +19,7 @@
 
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/ORBInitializer_Registry.h"
+#include "tao/ORB_Core.h"
 
 #include "orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.h"
 

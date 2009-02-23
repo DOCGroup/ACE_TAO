@@ -44,7 +44,7 @@ ServerServant::CreateExtra (CORBA::ULong len,
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Create extra called with "
-              " length [%d] \n", len));
+              " length [%d]\n", len));
 
   ACE_NEW_THROW_EX (seq,
                     ServerSequence (len),
@@ -68,7 +68,7 @@ ServerServant::CreateExtra (CORBA::ULong len,
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Returned from CreateExtra () \n"));
+              "(%P|%t) Returned from CreateExtra ()\n"));
 }
 
 
@@ -77,7 +77,7 @@ void
 ServerServant::DeleteExtra (const ServerSequence &seq)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Deleting sequences \n"));
+              "(%P|%t) Deleting sequences\n"));
 
   PortableServer::ObjectId_var oid;
   PortableServer::ServantBase *servant = 0;
@@ -97,7 +97,7 @@ ServerServant::DeleteExtra (const ServerSequence &seq)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Returned after deleting sequences \n"));
+              "(%P|%t) Returned after deleting sequences\n"));
 
 }
 
@@ -140,16 +140,13 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 {
-
-  if (parse_args (argc, argv) == -1)
-    return -1;
-
   try
     {
       // Initialize the broker
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+
+      if (parse_args (argc, argv) == -1)
+        return -1;
 
       CORBA::Object_var vRootPOABase =
         orb->resolve_initial_references ("RootPOA");

@@ -33,7 +33,7 @@ sub test($)
 
     print STDERR "Test $executable reported success.\n";
     return 0;
-} 
+}
 
 my $status = 0;
 $status += test("Bug_1459");

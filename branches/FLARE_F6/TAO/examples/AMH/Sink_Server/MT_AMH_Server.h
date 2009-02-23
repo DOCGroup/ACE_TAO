@@ -33,7 +33,7 @@ public:
   // print usage text
   void usage (const char *message);
 
-  // We need to parse an extra thread_count paramter for
+  // We need to parse an extra thread_count parameter for
   // multi-threraded server.
   int parse_args (void);
 

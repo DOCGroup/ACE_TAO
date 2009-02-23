@@ -79,7 +79,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
 
   // Must reset the message state, it is possible that the same reply
   // dispatcher is used because the request must be re-sent.
-  //this->message_state_.reset (0);
+  // this->message_state_.reset (0);
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
   if (ACE_BIT_DISABLED ((*params.input_cdr_).start()->data_block()->flags(),
@@ -87,7 +87,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   {
     // Data block is on the heap, so just duplicate it.
     this->reply_cdr_ = *params.input_cdr_;
-    this->reply_cdr_.clr_mb_flags( ACE_Message_Block::DONT_DELETE );
+    this->reply_cdr_.clr_mb_flags (ACE_Message_Block::DONT_DELETE);
   }
   else
   {
@@ -99,7 +99,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
           {
             ACE_ERROR ((LM_ERROR,
                         "TAO (%P|%t) - Synch_Reply_Dispatcher::dispatch_reply "
-                        "clone_from failed \n"));
+                        "clone_from failed\n"));
           }
         return -1;
       }

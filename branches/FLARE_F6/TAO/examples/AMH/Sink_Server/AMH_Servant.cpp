@@ -109,7 +109,7 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception in start_test \n");
+      ex._tao_print_exception ("Exception in start_test\n");
     }
 
   // Footnote: This method is thread-safe:
@@ -127,7 +127,7 @@ AMH_Servant::start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception in start_test \n");
+      ex._tao_print_exception ("Exception in start_test\n");
     }
 }
 
@@ -140,7 +140,7 @@ AMH_Servant::end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception in end_test \n");
+      ex._tao_print_exception ("Exception in end_test\n");
     }
 }
 

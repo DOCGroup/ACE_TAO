@@ -114,7 +114,7 @@ Server::init (int argc,
       if (my_naming_client_.init (this->orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
+                           "the TAO_Naming_Client.\n"),
                           -1);
 
       ACE_NEW_RETURN (this->streamendpoint_b_, TAO_StreamEndPoint_B, -1);

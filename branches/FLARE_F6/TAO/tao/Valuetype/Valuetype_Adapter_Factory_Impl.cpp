@@ -44,7 +44,6 @@ TAO_Valuetype_Adapter_Factory_Impl::Initializer (void)
       );
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
     TAO_Valuetype_Adapter_Factory_Impl,
@@ -56,3 +55,4 @@ ACE_STATIC_SVC_DEFINE (
   )
 
 ACE_FACTORY_DEFINE (TAO_Valuetype, TAO_Valuetype_Adapter_Factory_Impl)
+TAO_END_VERSIONED_NAMESPACE_DECL

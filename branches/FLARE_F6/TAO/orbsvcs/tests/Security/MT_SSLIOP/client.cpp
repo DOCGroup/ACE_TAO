@@ -106,7 +106,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       client.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) threads finished \n"));
+                  "(%P|%t) threads finished\n"));
 
       // Shut down the server if -x option given in command line
       if (do_shutdown)

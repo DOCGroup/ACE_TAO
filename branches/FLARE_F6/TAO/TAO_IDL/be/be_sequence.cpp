@@ -27,6 +27,7 @@
 #include "be_field.h"
 #include "be_visitor.h"
 #include "be_helper.h"
+#include "be_string.h"
 
 #include "utl_identifier.h"
 #include "idl_defines.h"
@@ -624,27 +625,121 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
 
       break;
     case be_sequence::MNG_STRING:
-      if (this->unbounded ())
-        {
-          *os << "TAO::unbounded_basic_string_sequence<char>";
-        }
-      else
-        {
-          *os << "TAO::bounded_basic_string_sequence<char, "
-              << this->max_size ()->ev ()->u.ulval << ">";
-        }
+      {
+        be_type *prim_type = 0;
+        if (elem->node_type () == AST_Decl::NT_typedef)
+          {
+            // Get the primitive base type of this typedef node.
+            be_typedef *t = be_typedef::narrow_from_decl (elem);
+            prim_type = t->primitive_base_type ();
+          }
+        else
+          {
+            prim_type = elem;
+          }
+
+        if (prim_type->node_type () == AST_Decl::NT_string)
+          {
+            be_string *str =
+              be_string::narrow_from_decl (prim_type);
+            if (!str)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%N:%l) be_sequence::"
+                                   "gen_base_class_name - "
+                                   "bad string node\n"),
+                                  -1);
+              }
+
+            // We need to make a distinction between bounded and
+            // unbounded strings.
+            if (str->max_size ()->ev ()->u.ulval != 0)
+              {
+                if (this->unbounded ())
+                  {
+                    *os << "TAO::unbounded_bd_string_sequence<char, "
+                        << str->max_size ()->ev ()->u.ulval << ">";
+                  }
+                else
+                  {
+                    *os << "TAO::bounded_bd_string_sequence<char, "
+                        << this->max_size ()->ev ()->u.ulval << ", "
+                        << str->max_size ()->ev ()->u.ulval << ">";
+                  }
+              }
+            else
+              {
+                if (this->unbounded ())
+                  {
+                    *os << "TAO::unbounded_basic_string_sequence<char>";
+                  }
+                else
+                  {
+                    *os << "TAO::bounded_basic_string_sequence<char, "
+                        << this->max_size ()->ev ()->u.ulval << ">";
+                  }
+              }
+          }
+      }
 
       break;
     case be_sequence::MNG_WSTRING:
-      if (this->unbounded ())
-        {
-          *os << "TAO::unbounded_basic_string_sequence<CORBA::WChar>";
-        }
-      else
-        {
-          *os << "TAO::bounded_basic_string_sequence<CORBA::WChar, "
-              << this->max_size ()->ev ()->u.ulval << ">";
-        }
+      {
+        be_type *prim_type = 0;
+        if (elem->node_type () == AST_Decl::NT_typedef)
+          {
+            // Get the primitive base type of this typedef node.
+            be_typedef *t = be_typedef::narrow_from_decl (elem);
+            prim_type = t->primitive_base_type ();
+          }
+        else
+          {
+            prim_type = elem;
+          }
+
+        if (prim_type->node_type () == AST_Decl::NT_wstring)
+          {
+            be_string *str =
+              be_string::narrow_from_decl (prim_type);
+            if (!str)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%N:%l) be_sequence::"
+                                   "gen_base_class_name - "
+                                   "bad string node\n"),
+                                  -1);
+              }
+
+            // We need to make a distinction between bounded and
+            // unbounded strings.
+            if (str->max_size ()->ev ()->u.ulval != 0)
+              {
+                if (this->unbounded ())
+                  {
+                    *os << "TAO::unbounded_bd_string_sequence<CORBA::WChar, "
+                        << str->max_size ()->ev ()->u.ulval << ">";
+                  }
+                else
+                  {
+                    *os << "TAO::bounded_bd_string_sequence<CORBA::WChar, "
+                        << this->max_size ()->ev ()->u.ulval << ", "
+                        << str->max_size ()->ev ()->u.ulval << ">";
+                  }
+              }
+            else
+              {
+                if (this->unbounded ())
+                  {
+                    *os << "TAO::unbounded_basic_string_sequence<CORBA::WChar>";
+                  }
+                else
+                  {
+                    *os << "TAO::bounded_basic_string_sequence<CORBA::WChar, "
+                        << this->max_size ()->ev ()->u.ulval << ">";
+                  }
+              }
+          }
+      }
 
       break;
     default: // Not a managed type.

@@ -188,7 +188,7 @@ FactoryClient::find_channel (const char* channel_id)
         orb_->object_to_string (channel.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-              "Find returned - %s \n",
+              "Find returned - %s\n",
                   str.in ()));
 
       this->find_channel_id (channel.in ());
@@ -210,7 +210,7 @@ FactoryClient::find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel)
     orb_->object_to_string (channel);
 
   ACE_DEBUG ((LM_DEBUG,
-              "trying to find the Channel %s \n",
+              "trying to find the Channel %s\n",
               str.in ()));
 
   char *channel_id =

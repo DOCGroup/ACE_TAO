@@ -114,12 +114,12 @@ namespace TAO
     public:
 
       /// Set @c struct @c TypeCode parameters.
-      void struct_parameters (char const * name,
+      bool struct_parameters (char const * name,
                               MemberArrayType const & fields,
                               CORBA::ULong nfields);
 
       /// Set @c union @c TypeCode parameters.
-      void union_parameters (
+      bool union_parameters (
                              char const * name,
                              TypeCodeType const & discriminant_type,
                              MemberArrayType const & cases,
@@ -127,7 +127,7 @@ namespace TAO
                              CORBA::Long default_index);
 
       /// Set @c valuetype or @c eventtype @c TypeCode parameters.
-      void valuetype_parameters (char const * name,
+      bool valuetype_parameters (char const * name,
                                  CORBA::ValueModifier modifier,
                                  TypeCodeType const & concrete_base,
                                  MemberArrayType const & fields,
@@ -164,6 +164,8 @@ namespace TAO
        */
       mutable bool in_recursion_;
 
+      /// Track whether data has been initialized.
+      bool data_initialized_;
     };
 
   }  // End namespace TypeCode

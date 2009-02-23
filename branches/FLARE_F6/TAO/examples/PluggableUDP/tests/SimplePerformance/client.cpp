@@ -162,7 +162,7 @@ Client::svc (void)
       else
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "Time for %u Msgs: %u usec \n",
+                    "Time for %u Msgs: %u usec\n",
                     this->niterations_,
                     dur));
 

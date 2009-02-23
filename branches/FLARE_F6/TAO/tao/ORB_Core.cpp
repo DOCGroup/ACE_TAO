@@ -79,6 +79,8 @@
 # include "tao/ORB_Core.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_RCSID (tao,
            ORB_Core,
            "$Id$")
@@ -90,8 +92,6 @@ ACE_STATIC_SVC_DEFINE(TAO_ORB_Core_Static_Resources,
                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO, TAO_ORB_Core_Static_Resources)
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 
@@ -140,7 +140,9 @@ TAO_ORB_Core_Static_Resources::instance (void)
           TAO_ORB_Core_Static_Resources* global_tocsr =
             ACE_Dynamic_Service<TAO_ORB_Core_Static_Resources>::instance
             (global,"TAO_ORB_Core_Static_Resources");
-          *tocsr = *global_tocsr;
+
+          if (global_tocsr != 0)
+            *tocsr = *global_tocsr;
         }
     }
 
@@ -403,14 +405,14 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   int no_server_side_name_lookups = 0;
 
 #if defined (TAO_STD_PROFILE_COMPONENTS)
-  int std_profile_components = 1;
+  bool std_profile_components = true;
 #else
-  int std_profile_components = 0;
+  bool std_profile_components = false;
 #endif /* TAO_STD_PROFILE_COMPONENTS */
 
-  int linger = -1;
-  time_t accept_error_delay = 5;
-  int use_parallel_connects = 0;
+  int linger = TAO_SO_LINGER;
+  time_t accept_error_delay = TAO_ACCEPT_ERROR_DELAY;
+  bool use_parallel_connects = TAO_USE_PARALLEL_CONNECT;
 
   // Copy command line parameter not to use original.
   ACE_Argv_Type_Converter command_line (argc, argv);
@@ -424,9 +426,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                     -1);
 
 #if (TAO_NEGOTIATE_CODESETS == 1)
-  int negotiate_codesets = 1;
+  bool negotiate_codesets = true;
 #else
-  int negotiate_codesets = 0;
+  bool negotiate_codesets = false;
 #endif /* TAO_NEGOTIATE_CODESETS */
 
   // Pick up the value of the use_implrepo_ flag from an environment variable
@@ -847,7 +849,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBVerboseLogging"))))
         {
-          unsigned long verbose_logging = ACE_OS::atoi (current_arg);
+          unsigned long const verbose_logging = ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
 
@@ -1297,7 +1299,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   else
     if  (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("TAO (%P|%t) ORB_Core: ")
+                    ACE_TEXT("TAO (%P|%t) - ORB_Core: ")
                     ACE_TEXT("Codeset Manager not available\n")));
 
   // Set up the pluggable protocol infrastructure.  First get a
@@ -1406,7 +1408,7 @@ TAO_ORB_Core::fini (void)
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Destroying ORB <%C>\n"),
+                  ACE_TEXT ("TAO (%P|%t) - Destroying ORB <%C>\n"),
                   this->orbid_));
     }
 
@@ -1984,10 +1986,7 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
 
   if (collocated_orb_core.get ())
     {
-      TAO_Adapter_Registry *ar =
-        collocated_orb_core.get ()->adapter_registry ();
-
-      x = ar->create_collocated_object (stub, mprofile);
+      x = collocated_orb_core.get ()->adapter_registry ().create_collocated_object (stub, mprofile);
     }
 
 
@@ -2056,10 +2055,7 @@ TAO_ORB_Core::initialize_object_i (TAO_Stub *stub, const TAO_MProfile &mprofile)
 
   if (collocated_orb_core.get ())
     {
-      TAO_Adapter_Registry *ar =
-        collocated_orb_core.get ()->adapter_registry ();
-
-      retval = ar->initialize_collocated_object (stub);
+      retval = collocated_orb_core.get ()->adapter_registry ().initialize_collocated_object (stub);
     }
 
   return retval;
@@ -2381,7 +2377,7 @@ TAO_ORB_Core::destroy_interceptors (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Exception in TAO_ORB_Core")
-                      ACE_TEXT ("::destroy_interceptors () \n")));
+                      ACE_TEXT ("::destroy_interceptors ()\n")));
         }
     }
 
@@ -3077,7 +3073,8 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
       if (TAO_debug_level > 2)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("TAO (%P|%t) setting primary hook\n")));
+                      ACE_TEXT("TAO (%P|%t) - Setting primary connection ")
+                      ACE_TEXT("timeout hook\n")));
         }
       TOCSRi->connection_timeout_hook_ = hook;
     }
@@ -3087,7 +3084,8 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
       if (TAO_debug_level > 2)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("TAO (%P|%t) setting alternate hook\n")));
+                      ACE_TEXT("TAO (%P|%t) - Setting alternate connection ")
+                      ACE_TEXT("timeout hook\n")));
         }
       TOCSRi->alt_connection_timeout_hook_ = hook;
     }
@@ -3095,9 +3093,9 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
     if (TAO_debug_level > 2)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) not overwriting alternate hook.")
-                    ACE_TEXT (" Is it still null? %d\n"),
-                    TOCSRi->alt_connection_timeout_hook_ == 0));
+                    ACE_TEXT ("TAO (%P|%t) - Not overwriting alternate ")
+                    ACE_TEXT ("connection timeout hook. It is %@"),
+                    TOCSRi->alt_connection_timeout_hook_));
       }
 
 #undef TOCSRi
@@ -3233,7 +3231,7 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
           catch (const ::CORBA::Exception& ex)
             {
               ex._tao_print_exception (
-                "Cannot initialize the ior_interceptor_adapter \n");
+                "Cannot initialize the ior_interceptor_adapter\n");
             }
         }
     }
@@ -3418,7 +3416,7 @@ TAO_ORB_Core::valuetype_adapter (void)
           catch (const ::CORBA::Exception& ex)
             {
               ex._tao_print_exception (
-                "Cannot initialize the valuetype_adapter \n");
+                "Cannot initialize the valuetype_adapter\n");
             }
         }
 

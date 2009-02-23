@@ -504,9 +504,10 @@ namespace CORBA
     CORBA::Policy_ptr _create_policy (CORBA::PolicyType type);
 #endif
 
-    // Reference counting...
+    /// Reference counting...
     unsigned long _incr_refcnt (void);
     unsigned long _decr_refcnt (void);
+    unsigned long _refcnt (void) const;
 
     /// Set the IOR flag.
     void _use_omg_ior_format (CORBA::Boolean ior);

@@ -354,7 +354,7 @@ int test_basic_invocations (Test * test_object)
   catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) test_basic_invocations: caught a C++ exception \n"));
+                "(%P|%t) test_basic_invocations: caught a C++ exception\n"));
       fail = 1;
     }
 
@@ -520,7 +520,7 @@ int test_boxed_string_invocations (Test * test_object)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) test_boxed_string_invocations: "
-                  "caught a C++ exception \n"));
+                  "caught a C++ exception\n"));
       fail = 1;
     }
 
@@ -688,7 +688,7 @@ int test_boxed_sequence_invocations (Test * test_object)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) test_boxed_sequence_invocations: "
-                  "caught a C++ exception \n"));
+                  "caught a C++ exception\n"));
       fail = 1;
     }
 
@@ -942,7 +942,7 @@ int test_boxed_struct_invocations (Test * test_object)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) test_boxed_struct_invocations: "
-                  "caught a C++ exception \n"));
+                  "caught a C++ exception\n"));
       fail = 1;
     }
 
@@ -1181,7 +1181,7 @@ int test_boxed_array_invocations (Test * test_object)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) test_boxed_array_invocations: "
-                  "caught a C++ exception \n"));
+                  "caught a C++ exception\n"));
       fail = 1;
     }
 
@@ -1411,7 +1411,7 @@ int test_boxed_union_invocations (Test * test_object)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) test_boxed_union_invocations: "
-                  "caught a C++ exception \n"));
+                  "caught a C++ exception\n"));
       fail = 1;
     }
 
@@ -1454,7 +1454,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) Initialization failure: caught a C++ exception \n"));
+                "(%P|%t) Initialization failure: caught a C++ exception\n"));
       return 1;
     }
 

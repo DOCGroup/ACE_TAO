@@ -80,8 +80,8 @@ Results::print_stats (void)
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n*=*=*=*=*= Average *=*=*=*=*=*=\n"
-                  "\treal_time\t= %0.06f ms, \n"
-                  "\tuser_time\t= %0.06f ms, \n"
+                  "\treal_time\t= %0.06f ms,\n"
+                  "\tuser_time\t= %0.06f ms,\n"
                   "\tsystem_time\t= %0.06f ms\n"
                   "\t%0.00f calls/second\n"
                   "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=\n",

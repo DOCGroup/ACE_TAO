@@ -180,7 +180,6 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
   return dscp;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_DS_Network_Priority_Protocols_Hooks,
                        ACE_TEXT ("DS_Network_Priority_Protocols_Hooks"),
@@ -191,3 +190,4 @@ ACE_STATIC_SVC_DEFINE (TAO_DS_Network_Priority_Protocols_Hooks,
                        0)
 ACE_FACTORY_DEFINE (TAO_DiffServPolicy,
                     TAO_DS_Network_Priority_Protocols_Hooks)
+TAO_END_VERSIONED_NAMESPACE_DECL

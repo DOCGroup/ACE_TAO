@@ -53,7 +53,7 @@ namespace FTRTEC {
 #else
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) SCTP not enabled. ",
-                  " Enable SCTP and rebuild ACE+TAO \n"));
+                  " Enable SCTP and rebuild ACE+TAO\n"));
 #endif /* TAO_HAS_SCIOP */
       argc--; argv++;
     }

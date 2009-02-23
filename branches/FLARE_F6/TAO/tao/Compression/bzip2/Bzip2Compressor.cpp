@@ -23,7 +23,8 @@ Bzip2Compressor::compress (
     ::Compression::Buffer & target
   )
 {
-  unsigned int max_length = static_cast <unsigned int> (source.length () * 1.1) + 12;
+  unsigned int max_length = 
+    static_cast <unsigned int> (source.length () * 1.1) + TAO_GIOP_MESSAGE_HEADER_LEN;
   target.length (static_cast <CORBA::ULong> (max_length));
 
   // todo, check 0,1 values
@@ -37,7 +38,7 @@ Bzip2Compressor::compress (
 
   if (retval != BZ_OK)
     {
-      throw ::Compression::CompressionException (retval);
+      throw ::Compression::CompressionException (retval, "");
     }
   else
     {
@@ -64,7 +65,7 @@ Bzip2Compressor::decompress (
 
   if (retval != BZ_OK)
     {
-      throw ::Compression::CompressionException (retval);
+      throw ::Compression::CompressionException (retval, "");
     }
   else
     {

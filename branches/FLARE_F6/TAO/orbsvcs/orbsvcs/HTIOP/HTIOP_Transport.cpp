@@ -167,7 +167,7 @@ TAO::HTIOP::Transport::send_message (TAO_OutputCDR &stream,
                                      ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
-  if (this->messaging_object ()->format_message (stream) != 0)
+  if (this->messaging_object ()->format_message (stream, stub) != 0)
     return -1;
 
   // This guarantees to send all data (bytes) or return an error.
@@ -271,7 +271,7 @@ TAO::HTIOP::Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT("TAO (%P|%t) - TAO::HTIOP::Transport::set_bidir_info, "),
-                          ACE_TEXT("error getting listen_point \n")));
+                          ACE_TEXT("error getting listen_point\n")));
 
               return;
             }
@@ -345,7 +345,7 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%P|%t) Could not resolve local host")
-                             ACE_TEXT (" name \n")),
+                             ACE_TEXT (" name\n")),
                             -1);
         }
 

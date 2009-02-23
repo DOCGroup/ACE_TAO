@@ -34,7 +34,7 @@ Hello::request_callback (Test::Hello_ptr call_me)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "Exception attempting to callback client obj ref: \n");
+        "Exception attempting to callback client obj ref:\n");
       throw;
     }
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Call back succeeded !!!\n"));

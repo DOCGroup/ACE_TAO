@@ -28,7 +28,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Block_Flushing_Strategy.cpp
     Blocked_Connect_Strategy.cpp
     BooleanSeqC.cpp
-    Cache_Entries.cpp
     CDR.cpp
     CharSeqC.cpp
     Cleanup_Func_Registry.cpp
@@ -217,7 +216,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     TimeBaseC.cpp
     Transport.cpp
     Transport_Acceptor.cpp
-    Transport_Cache_Manager.cpp
     Transport_Connector.cpp
     Transport_Descriptor_Interface.cpp
     Transport_Mux_Strategy.cpp
@@ -276,6 +274,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     BooleanSeqS.h
     Bounded_Array_Allocation_Traits_T.h
     Bounded_Array_Sequence_T.h
+    Bounded_BD_String_Sequence_T.h
     Bounded_Basic_String_Sequence_T.h
     Bounded_Object_Reference_Sequence_T.h
     Bounded_Reference_Allocation_Traits_T.h
@@ -283,7 +282,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Bounded_Value_Allocation_Traits_T.h
     Bounded_Value_Sequence_T.h
     Buffer_Allocator_T.h
-    Cache_Entries.h
+    Cache_Entries_T.h
     CDR.h
     CharSeqC.h
     CharSeqS.h
@@ -405,6 +404,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     LongSeqS.h
     LRU_Connection_Purging_Strategy.h
     MCAST_Parser.h
+    Message_Semantics.h
     Messaging_PolicyValueC.h
     Messaging_SyncScopeC.h
     MMAP_Allocator.h
@@ -527,6 +527,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Timeprobe.h
     Transport_Acceptor.h
     Transport_Cache_Manager.h
+    Transport_Cache_Manager_T.h
     Transport_Connector.h
     Transport_Descriptor_Interface.h
     Transport.h
@@ -546,6 +547,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     ULongSeqS.h
     Unbounded_Array_Allocation_Traits_T.h
     Unbounded_Array_Sequence_T.h
+    Unbounded_BD_String_Sequence_T.h
     Unbounded_Basic_String_Sequence_T.h
     Unbounded_Object_Reference_Sequence_T.h
     Unbounded_Octet_Sequence_T.h

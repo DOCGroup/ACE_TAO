@@ -52,7 +52,6 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
   RequestProcessingStrategyAOMOnlyFactoryImpl,
@@ -66,3 +65,4 @@ ACE_FACTORY_NAMESPACE_DEFINE (
   ACE_Local_Service,
   RequestProcessingStrategyAOMOnlyFactoryImpl,
   TAO::Portable_Server::RequestProcessingStrategyAOMOnlyFactoryImpl)
+TAO_END_VERSIONED_NAMESPACE_DECL

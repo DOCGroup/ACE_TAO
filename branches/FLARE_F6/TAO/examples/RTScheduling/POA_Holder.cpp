@@ -120,7 +120,7 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
                   arg_shifter.consume_arg ();
 
                   //if (TAO_debug_level > 0)
-                  ACE_DEBUG ((LM_DEBUG, "band parsed - %d, %d \n",
+                  ACE_DEBUG ((LM_DEBUG, "band parsed - %d, %d\n",
                               bands_[b_index].low, bands_[b_index].high));
                   b_index++;
                 }

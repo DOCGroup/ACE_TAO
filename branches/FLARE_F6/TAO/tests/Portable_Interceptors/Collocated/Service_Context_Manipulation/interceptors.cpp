@@ -170,7 +170,7 @@ Echo_Client_Request_Interceptor::receive_reply (
   catch (const CORBA::BAD_PARAM&)
     {
       ACE_ERROR ((LM_ERROR,
-                  "ERROR: Service Context Error \n"));
+                  "ERROR: Service Context Error\n"));
     }
 }
 
@@ -247,7 +247,7 @@ Echo_Client_Request_Interceptor::receive_exception (
   catch (const CORBA::BAD_PARAM&)
     {
       ACE_ERROR ((LM_ERROR,
-                  "ERROR: Service Context Error \n"));
+                  "ERROR: Service Context Error\n"));
     }
 }
 

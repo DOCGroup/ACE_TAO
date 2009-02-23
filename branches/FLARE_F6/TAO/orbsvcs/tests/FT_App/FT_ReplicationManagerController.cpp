@@ -96,7 +96,7 @@ int TAO_FT_ReplicationManagerController::init (int &argc, ACE_TCHAR *argv[])
   {
     ex._tao_print_exception (
       ACE_TEXT (
-        "TAO_FT_ReplicationManagerController::init: \n"));
+        "TAO_FT_ReplicationManagerController::init:\n"));
     result = -1;
   }
 
@@ -166,7 +166,7 @@ int TAO_FT_ReplicationManagerController::run ()
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-      ACE_TEXT ("TAO_FT_ReplicationManagerController::run: \n"));
+      ACE_TEXT ("TAO_FT_ReplicationManagerController::run:\n"));
     result = -1;
   }
 

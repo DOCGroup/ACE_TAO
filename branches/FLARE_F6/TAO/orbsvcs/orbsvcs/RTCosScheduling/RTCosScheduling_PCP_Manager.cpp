@@ -404,12 +404,7 @@ PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
       /// Store in the global variable.
       this->shm_key_ = temp_file;
 
-#ifndef ACE_LACKS_MKSTEMP
-      if (ACE_OS::mkstemp (this->shm_key_) == 0
-#else
-      char *new_key = ACE_OS::mktemp (this->shm_key_);
-      if (ACE_OS::fopen(new_key, "w") != 0
-#endif /* ACE_LACKS_MKSTEMP */
+      if (ACE_OS::mkxxstemp (this->shm_key_) == 0
           || (ACE_OS::unlink (this->shm_key_) == -1
 #ifndef ACE_HAS_WINCE
              && errno == EPERM
@@ -458,7 +453,7 @@ PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
           ACE_ERROR((LM_ERROR,
                    "Error in %s: Line %d - Error in creating "
                    "array to hold lock information "
-                   "ServerScheduler not created\n "
+                   "ServerScheduler not created\n"
                    __FILE__,
                    __LINE__));
           ACE_OS::exit(1);

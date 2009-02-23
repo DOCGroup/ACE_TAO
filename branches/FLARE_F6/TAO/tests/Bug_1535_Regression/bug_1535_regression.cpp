@@ -59,7 +59,7 @@ test_create_object_before_servant_reactivation (
   if (CORBA::is_nil (object.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) nil reference in create_reference_with_id \n"));
+                  "(%P|%t) nil reference in create_reference_with_id\n"));
 
       return;
     }
@@ -83,7 +83,7 @@ test_create_object_before_servant_reactivation (
   if(CORBA::is_nil (object.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) nil reference in string_to_object (servant reactivation) \n"));
+                  "(%P|%t) nil reference in string_to_object (servant reactivation)\n"));
       return;
     }
 
@@ -113,7 +113,7 @@ test_create_object_before_POA_reactivation(
   if (CORBA::is_nil (object.in ()))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) nil reference in create_reference_with_id \n"));
+                  "(%P|%t) nil reference in create_reference_with_id\n"));
       return;
     }
 
@@ -130,7 +130,7 @@ test_create_object_before_POA_reactivation(
   if (CORBA::is_nil (object.in ()))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) nil reference in string_to_object (POA reactivation) \n"));
+                  "(%P|%t) nil reference in string_to_object (POA reactivation)\n"));
 
       return;
     }
@@ -213,7 +213,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Caught a CORBA exception \n");
+      ex._tao_print_exception ("Caught a CORBA exception\n");
       return 1;
     }
   catch (...)

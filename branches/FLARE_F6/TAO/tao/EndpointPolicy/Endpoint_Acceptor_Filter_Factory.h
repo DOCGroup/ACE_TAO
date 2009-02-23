@@ -45,10 +45,11 @@ public:
   TAO_Acceptor_Filter* create_object (TAO_POA_Manager& poamanager);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_EndpointPolicy, TAO_Endpoint_Acceptor_Filter_Factory)
 ACE_FACTORY_DECLARE (TAO_EndpointPolicy, TAO_Endpoint_Acceptor_Filter_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #include /**/ "ace/post.h"

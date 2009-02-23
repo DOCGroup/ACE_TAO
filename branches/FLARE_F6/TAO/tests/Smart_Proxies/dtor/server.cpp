@@ -27,7 +27,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 void
 Test_i::hello (CORBA::Long howmany)
 {
-  ACE_DEBUG ((LM_DEBUG, "hello called with : %i \n", howmany));
+  ACE_DEBUG ((LM_DEBUG, "hello called with : %i\n", howmany));
 }
 
 void

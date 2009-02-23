@@ -32,10 +32,7 @@ IFR_DII_Client::init (int argc,
   // to get the object reference of the target via the Naming
   // Service. Since we're not testing the Naming Service here,
   // we just use the IOR which is stored in a file by the server.
-  this->target_ =
-    this->orb_->string_to_object ("file://iorfile"
-                                  );
-
+  this->target_ = this->orb_->string_to_object ("file://iorfile");
 
   if (CORBA::is_nil (this->target_.in ()))
   {
@@ -87,8 +84,7 @@ IFR_DII_Client::run (void)
 }
 
 int
-IFR_DII_Client::parse_args (int argc,
-                            ACE_TCHAR *argv[])
+IFR_DII_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("dn"));
   int c;
@@ -145,8 +141,7 @@ IFR_DII_Client::lookup_interface_def (void)
     this->repo_->lookup_name (this->namespace_name.in (),
                               -1,            // Unlimited level recursion.
                               CORBA::dk_all, // Any type of contained object.
-                              1              // Exclude parents of interfaces.
-                              );
+                              1);              // Exclude parents of interfaces.
 
   CORBA::ULong length = candidates->length ();
   CORBA::Container_var candidate;
@@ -172,8 +167,7 @@ IFR_DII_Client::lookup_interface_def (void)
         {
           // Does this container contain any interfaces?
           interfaces = candidate->contents (CORBA::dk_Interface,
-                                            1     // Exclude parents.
-                                            );
+                                            1);     // Exclude parents.
 
           n_interfaces = interfaces->length ();
 
@@ -210,8 +204,7 @@ IFR_DII_Client::get_operation_def (void)
   // What operation(s) does this interface contain?
   CORBA::ContainedSeq_var operations =
     this->target_def_->contents (CORBA::dk_Operation,
-                                 0  // Do not exclude inherited operations.
-                                 );
+                                 0);  // Do not exclude inherited operations.
 
   CORBA::ULong n_operations = operations->length ();
   CORBA::String_var operation_name;
@@ -312,21 +305,13 @@ IFR_DII_Client::invoke_and_display (void)
 
       const char *artist = 0;
 
-# if (defined (_MSC_VER) && (_MSC_VER < 1310))
-      ACE_ASSERT ((*args->item (0)->value () >>= artist) == 1);
-# else
       ACE_ASSERT ((*args->item (0)->value () >>= artist) == true);
-# endif  /* _MSC_VER <= 1310 */
 
       ACE_ASSERT (ACE_OS::strcmp (artist, "the Beatles") == 0);
 
       const char *title = 0;
 
-# if (defined (_MSC_VER) && (_MSC_VER < 1310))
-      ACE_ASSERT ((*args->item (1)->value () >>= title) == 1);
-# else
       ACE_ASSERT ((*args->item (1)->value () >>= title) == true);
-# endif  /* _MSC_VER <= 1310 */
 
       const char *correct = "Sgt. Pepper's Lonely Hearts Club Band";
       ACE_ASSERT (ACE_OS::strcmp (title, correct) == 0);
@@ -334,11 +319,7 @@ IFR_DII_Client::invoke_and_display (void)
 
       CORBA::Float price = 0.0f;
 
-# if (defined (_MSC_VER) && (_MSC_VER < 1310))
-      ACE_ASSERT ((*args->item (2)->value () >>= price) == 1);
-# else
       ACE_ASSERT ((*args->item (2)->value () >>= price) == true);
-# endif  /* _MSC_VER <= 1310 */
 
       ACE_ASSERT (price == 13.49f);
 

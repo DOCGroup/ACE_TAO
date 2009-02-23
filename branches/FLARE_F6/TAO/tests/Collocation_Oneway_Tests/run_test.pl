@@ -6,59 +6,56 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$status = 0;
+my $server = PerlACE::TestTarget::create_target(1) || die "Create target 1 failed\n";
+
 $iorbase = "test.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
+$status = 0;
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("Collocated_Test");
-    $iorfile = $iorbase;
-}
-else {
-    $SV = new PerlACE::Process ("Collocated_Test");
-    $iorfile = PerlACE::LocalFile ($iorbase);
-}
-unlink $iorfile;
+$SV = $server->CreateProcess ("Collocated_Test");
 
 print STDERR "======== Running in Default Mode \n";
-$SV->Arguments ("-o $iorfile -k file://$iorfile -m none ");
-$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
+$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -m none ");
+$sv = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocation_Oneway_Test\n";
     $status = 1;
 }
-unlink $iorfile;
+$server->DeleteFile($iorbase);
 
 print STDERR "======== Running in Default Mode \n";
-$SV->Arguments ("-o $iorfile -k file://$iorfile -m transport");
-$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
+$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -m transport");
+$sv = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocation_Oneway_Test\n";
     $status = 1;
 }
-unlink $iorfile;
+$server->DeleteFile($iorbase);
 
 print STDERR "======== Running in Default Mode \n";
-$SV->Arguments ("-o $iorfile -k file://$iorfile -m server");
-$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
+$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -m server");
+$sv = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocation_Oneway_Test\n";
     $status = 1;
 }
-unlink $iorfile;
+$server->DeleteFile($iorbase);
 
 print STDERR "======== Running in Default Mode \n";
-$SV->Arguments ("-o $iorfile -k file://$iorfile -m target");
-$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
+$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -m target");
+$sv = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocation_Oneway_Test\n";
     $status = 1;
 }
-unlink $iorfile;
+$server->DeleteFile($iorbase);
+$server->GetStderrLog();
 
 exit $status;

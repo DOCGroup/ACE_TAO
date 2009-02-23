@@ -113,6 +113,19 @@ const size_t TAO_RD_TABLE_SIZE = 16;
 const size_t TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE = 64;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
+// Should we use parallel connect
+#if !defined (TAO_USE_PARALLEL_CONNECT)
+const bool TAO_USE_PARALLEL_CONNECT = false;
+#endif /* !TAO_USE_PARALLEL_CONNECT */
+
+#if !defined (TAO_ACCEPT_ERROR_DELAY)
+const time_t TAO_ACCEPT_ERROR_DELAY = 5;
+#endif /* TAO_ACCEPT_ERROR_DELAY */
+
+#if !defined (TAO_SO_LINGER)
+const int TAO_SO_LINGER = -1;
+#endif /* TAO_SO_LINGER */
+
 // The default size of TAO's initial object reference table, i.e. the
 // one used as the underlying implementation for the
 // CORBA::ORB::register_initial_reference() and
@@ -207,9 +220,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #   define _WIN32
 # endif /* !defined(_WIN32) */
 #endif /* __WIN32__ */
-
-// Define to `int' if <sys/types.h> doesn't define.
-/* #undef pid_t */
 
 // Define if your processor does not store words with the most significant
 // byte first.
@@ -703,7 +713,7 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 // default for TAO, but we can suppress it also explicitly by set
 // TAO_HAS_SENDFILE to 0.
 #if !defined (TAO_HAS_SENDFILE)
-# if defined ACE_HAS_SENDFILE
+# if defined ACE_HAS_SENDFILE && ACE_HAS_SENDFILE == 1
 #  define TAO_HAS_SENDFILE 1
 # else
 #  define TAO_HAS_SENDFILE 0
@@ -772,6 +782,8 @@ enum TAO_Cached_Policy_Type
   TAO_CACHED_COMPRESSION_ENABLING_POLICY,
 
   TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY,
+
+  TAO_CACHED_MIN_COMPRESSION_RATIO_POLICY,
 
   TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY,
 

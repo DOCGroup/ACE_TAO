@@ -34,7 +34,7 @@ Collocation_Tester::match_answer (const char *actual_answer,
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Call to <%C> returned with success: %C \n"), method_name, actual_answer));
+                  ACE_TEXT ("Call to <%C> returned with success: %C\n"), method_name, actual_answer));
       return 0;
     }
 }

@@ -117,7 +117,7 @@ TAO_IORInterceptor_Adapter_Impl::components_established (
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
   // for this servant.
-  const size_t interceptor_count = this->ior_interceptor_list_.size ();
+  size_t const interceptor_count = this->ior_interceptor_list_.size ();
 
   // All the establish_components() interception points have been
   // invoked. Now call the components_established() interception point
@@ -149,7 +149,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
       const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
       PortableInterceptor::AdapterState state)
 {
-  const size_t interceptor_count = this->ior_interceptor_list_.size ();
+  size_t const interceptor_count = this->ior_interceptor_list_.size ();
 
   if (interceptor_count == 0)
     return;
@@ -191,7 +191,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
   /// Whenever the POAManager state is changed, the
   /// adapter_manager_state_changed method is to be invoked on all the IOR
   ///  Interceptors.
-  const size_t interceptor_count = this->ior_interceptor_list_.size ();
+  size_t const interceptor_count = this->ior_interceptor_list_.size ();
 
   if (interceptor_count == 0)
     return;

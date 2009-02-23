@@ -35,7 +35,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * has the smallest ordering number and will therefore be purged
  * first.
  */
-
 class TAO_Export TAO_LRU_Connection_Purging_Strategy
   : public TAO_Connection_Purging_Strategy
 {

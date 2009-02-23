@@ -793,7 +793,7 @@ TAO_AV_UDP_QoS_Acceptor::activate_svc_handler (TAO_AV_UDP_QoS_Flow_Handler *hand
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "(%N,%l) Acceptor Svc Handler QOS ENABLED \n"));
+                "(%N,%l) Acceptor Svc Handler QOS ENABLED\n"));
 
   TAO_AV_UDP_QoS_Session_Helper helper;
 
@@ -1040,7 +1040,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
   catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%N,%l) Negotiator Not Found \n"));
+                  "(%N,%l) Negotiator Not Found\n"));
     }
 
   this->endpoint_->set_flow_handler (this->flowname_.c_str (),flow_handler);

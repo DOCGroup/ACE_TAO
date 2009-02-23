@@ -147,7 +147,7 @@ TAO_Queued_Data::release (TAO_Queued_Data *qd)
       // This debug is for testing purposes!
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Queued_Data[%d]::release\n",
-                  "Using global pool for releasing \n"));
+                  "Using global pool for releasing\n"));
     }
   delete qd;
 
@@ -191,7 +191,7 @@ TAO_Queued_Data::duplicate (TAO_Queued_Data &sqd)
       // This debug is for testing purposes!
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Queued_Data[%d]::duplicate\n",
-                  "Using global pool for allocation \n"));
+                  "Using global pool for allocation\n"));
     }
 
   ACE_NEW_RETURN (qd,

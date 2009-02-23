@@ -17,6 +17,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
   : TypeCodeBase (kind, id, name, fields, nfields)
   , lock_ ()
   , in_recursion_ (false)
+  , data_initialized_(true)
 {
   // ACE_ASSERT (kind != CORBA::tk_except);
 }
@@ -40,6 +41,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                   default_index)
   , lock_ ()
   , in_recursion_ (false)
+  , data_initialized_(true)
 {
 }
 
@@ -64,6 +66,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                   nfields)
   , lock_ ()
   , in_recursion_ (false)
+  , data_initialized_(true)
 {
 }
 
@@ -77,6 +80,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
   : TypeCodeBase (kind, id)
   , lock_ ()
   , in_recursion_ (false)
+  , data_initialized_(false)
 {
 //   ACE_ASSERT (kind == CORBA::tk_struct
 //               || kind == CORBA::tk_union
@@ -85,7 +89,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
 }
 
 template <class TypeCodeBase, typename TypeCodeType, typename MemberArrayType>
-ACE_INLINE void
+ACE_INLINE bool
 TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
                               MemberArrayType>::struct_parameters (
@@ -93,13 +97,22 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
   MemberArrayType const & fields,
   CORBA::ULong nfields)
 {
-  this->base_attributes_.name (name);
-  this->fields_  = fields;
-  this->nfields_ = nfields;
+  // Do not replace pre-existing fields!
+  if ( !this->data_initialized_ )
+    {
+      this->base_attributes_.name (name);
+      this->fields_  = fields;
+      this->nfields_ = nfields;
+      this->data_initialized_ = true;
+
+      return true;
+    }
+
+  return false;
 }
 
 template <class TypeCodeBase, typename TypeCodeType, typename MemberArrayType>
-ACE_INLINE void
+ACE_INLINE bool
 TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
                               MemberArrayType>::union_parameters (
@@ -109,15 +122,23 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
   CORBA::ULong ncases,
   CORBA::Long default_index)
 {
-  this->base_attributes_.name (name);
-  this->discriminant_type_ = discriminant_type;
-  this->cases_             = cases;
-  this->ncases_            = ncases;
-  this->default_index_     = default_index;
+  if ( !this->data_initialized_ )
+    {
+      this->base_attributes_.name (name);
+      this->discriminant_type_ = discriminant_type;
+      this->cases_             = cases;
+      this->ncases_            = ncases;
+      this->default_index_     = default_index;
+      this->data_initialized_ = true;
+
+      return true;
+    }
+
+  return false;
 }
 
 template <class TypeCodeBase, typename TypeCodeType, typename MemberArrayType>
-ACE_INLINE void
+ACE_INLINE bool
 TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
                               MemberArrayType>::valuetype_parameters (
@@ -127,11 +148,19 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
   MemberArrayType const & fields,
   CORBA::ULong nfields)
 {
-  this->base_attributes_.name (name);
-  this->type_modifier_ = modifier;
-  this->concrete_base_ = concrete_base;
-  this->fields_        = fields;
-  this->nfields_       = nfields;
+  if ( !this->data_initialized_ )
+    {
+      this->base_attributes_.name (name);
+      this->type_modifier_ = modifier;
+      this->concrete_base_ = concrete_base;
+      this->fields_        = fields;
+      this->nfields_       = nfields;
+      this->data_initialized_ = true;
+
+      return true;
+    }
+
+  return false;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

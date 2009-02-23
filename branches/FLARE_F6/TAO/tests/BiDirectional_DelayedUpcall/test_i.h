@@ -43,7 +43,7 @@ private:
   // The orb
 };
 
-class Simple_Server_i : public virtual POA_Simple_Server, ACE_Event_Handler
+class Simple_Server_i : public virtual POA_Simple_Server, public virtual ACE_Event_Handler
 {
   // = TITLE
   //   Simpler Server implementation

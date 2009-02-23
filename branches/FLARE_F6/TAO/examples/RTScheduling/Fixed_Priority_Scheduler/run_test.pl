@@ -27,7 +27,7 @@ $NS->Spawn ();
 
 if (PerlACE::waitforfile_timed ($nsior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find naming service IOR file\n";
-    $NS->Kill (); 
+    $NS->Kill ();
     exit 1;
 }
 
@@ -35,7 +35,7 @@ print STDERR "Starting Test 1\n";
 
 $TS1->Spawn ();
 
-sleep 5;
+sleep 10;
 
 print STDERR "Starting Test 2\n";
 
@@ -77,12 +77,3 @@ if ($nserver != 0) {
 unlink $nsior;
 
 exit $status;
-
-
-
-
-
-
-
-
-

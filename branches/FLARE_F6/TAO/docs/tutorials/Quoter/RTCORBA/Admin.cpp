@@ -65,10 +65,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "usage: %s\n"
-                             "-o <Distributor IOR> (the ior file of stock distributor (default is file://StockDistributor.ior)) \n"
-                             "-r <rate> (set the distribution rate to 'n' seconds (default is 1)) \n"
-                             "-b (start the stock distributor) \n"
-                             "-s (stop the stock distributor) \n"
+                             "-o <Distributor IOR> (the ior file of stock distributor (default is file://StockDistributor.ior))\n"
+                             "-r <rate> (set the distribution rate to 'n' seconds (default is 1))\n"
+                             "-b (start the stock distributor)\n"
+                             "-s (stop the stock distributor)\n"
                              "\n",
                              argv [0]),
                             -1);

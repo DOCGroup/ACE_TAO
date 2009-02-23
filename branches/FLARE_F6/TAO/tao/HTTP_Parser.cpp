@@ -126,8 +126,6 @@ TAO_HTTP_Parser::parse_string (const char *nior,
   return orb->string_to_object (string.c_str());
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DEFINE (TAO_HTTP_Parser,
                        ACE_TEXT ("HTTP_Parser"),
                        ACE_SVC_OBJ_T,
@@ -137,5 +135,8 @@ ACE_STATIC_SVC_DEFINE (TAO_HTTP_Parser,
                        0)
 
 ACE_FACTORY_DEFINE (TAO, TAO_HTTP_Parser)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #endif /* TAO_HAS_HTTP_PARSER == 1 */

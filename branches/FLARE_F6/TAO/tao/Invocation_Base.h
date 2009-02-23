@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Invocation_Utils.h"
+#include "tao/GIOPC.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/Exception.h"

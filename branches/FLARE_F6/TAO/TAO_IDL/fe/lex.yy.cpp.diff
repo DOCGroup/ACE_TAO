@@ -17,15 +17,6 @@
  
  typedef int8_t flex_int8_t;
  typedef uint8_t flex_uint8_t;
-@@ -1078,7 +1079,7 @@
-         if ( TAO_YY_CURRENT_BUFFER_LVALUE->tao_yy_is_interactive ) \
-                 { \
-                 int c = '*'; \
--                size_t n; \
-+                int n; \
-                 for ( n = 0; n < max_size && \
-                              (c = getc( tao_yyin )) != EOF && c != '\n'; ++n ) \
-                         buf[n] = (char) c; \
 @@ -1698,7 +1699,7 @@
                    idl_global->set_lineno(idl_global->lineno() + 1);
                    idl_store_pragma(ace_tao_yytext);

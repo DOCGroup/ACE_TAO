@@ -37,7 +37,6 @@ RT_Endpoint_Selector_Factory::get_selector (void)
   return this->rt_invocation_endpoint_selector_;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 
@@ -48,5 +47,7 @@ ACE_STATIC_SVC_DEFINE (RT_Endpoint_Selector_Factory,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_RTCORBA, RT_Endpoint_Selector_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

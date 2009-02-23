@@ -8,6 +8,7 @@
 #include "ace/Multihomed_INET_Addr.h"
 #include "tao/debug.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID (AV,
            SCTP_SEQ,
@@ -176,7 +177,8 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
   this->reactor_ = reactor;
   this->entry_ = entry;
 
-  ACE_UINT32 local_ip_addr [entry->num_local_sec_addrs ()];
+  ACE_Auto_Array_Ptr<ACE_UINT32> local_ip_addr
+    (new ACE_UINT32[entry->num_local_sec_addrs ()]);
   ACE_INET_Addr ip_addr;
   char** addrs = entry->get_local_sec_addr ();
   for (int i = 0; i < entry->num_local_sec_addrs (); i++)
@@ -184,7 +186,7 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
       ACE_CString addr_str (addrs[i]);
       addr_str += ":";
       ip_addr.set (addr_str.c_str ());
-      local_ip_addr [i] = ip_addr.get_ip_address ();
+      local_ip_addr[i] = ip_addr.get_ip_address ();
     }
 
 
@@ -192,20 +194,18 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
   multi_addr.set (local_addr.get_port_number (),
                   local_addr.get_ip_address (),
                   1,
-                  local_ip_addr,
+                  local_ip_addr.get(),
                   entry->num_local_sec_addrs ());
 
   char buf[BUFSIZ];
-  multi_addr.addr_to_string (buf,
-                             BUFSIZ);
+  multi_addr.addr_to_string (buf, BUFSIZ);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_AV_SCTP_SEQ_Base_Acceptor::open: %s",
                 buf));
 
-  int result = this->open (multi_addr,reactor);
-  if (result < 0)
+  if (this->open (multi_addr,reactor) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Base_Acceptor::open failed\n"),-1);
 
   return 0;
@@ -214,7 +214,7 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
 int
 TAO_AV_SCTP_SEQ_Base_Acceptor::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler)
 {
-  int result = this->acceptor_->make_svc_handler (handler);
+  int const result = this->acceptor_->make_svc_handler (handler);
   if (result < 0)
     return result;
   handler->reactor (this->reactor_);
@@ -285,8 +285,7 @@ TAO_AV_SCTP_SEQ_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   ACE_INET_Addr *inet_addr = (ACE_INET_Addr *) address;
 
   char buf[BUFSIZ];
-  inet_addr->addr_to_string (buf,
-                             BUFSIZ);
+  inet_addr->addr_to_string (buf, BUFSIZ);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -377,8 +376,7 @@ TAO_AV_SCTP_SEQ_Base_Connector::connector_open (TAO_AV_SCTP_SEQ_Connector *conne
   this->connector_ = connector;
   this->reactor_ = reactor;
 
-  int result = this->open (reactor);
-  if (result < 0)
+  if (this->open (reactor) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Base_Connector::open failed\n"),-1);
   return 0;
 }
@@ -499,7 +497,8 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
                       -1);
     }
 
-  ACE_UINT32 local_ip_addr [entry->num_peer_sec_addrs ()];
+  ACE_Auto_Array_Ptr<ACE_UINT32> local_ip_addr
+    (new ACE_UINT32[entry->num_peer_sec_addrs ()]);
   ACE_INET_Addr ip_addr;
   char** addrs = entry->get_peer_sec_addr ();
   for (int i = 0; i < entry->num_peer_sec_addrs (); i++)
@@ -507,14 +506,14 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
       ACE_CString addr_str (addrs[i]);
       addr_str += ":";
       ip_addr.set (addr_str.c_str ());
-      local_ip_addr [i] = ip_addr.get_ip_address ();
+      local_ip_addr[i] = ip_addr.get_ip_address ();
     }
 
   if (entry->num_peer_sec_addrs () != 0)
     local_addr.set (addr->get_port_number (),
                     addr->get_ip_address (),
                     1,
-                    local_ip_addr,
+                    local_ip_addr.get(),
                     entry->num_peer_sec_addrs ());
   else
     local_addr.set (addr->get_port_number (),
@@ -626,8 +625,7 @@ TAO_AV_SCTP_SEQ_Factory::make_connector (void)
 
 
 int
-TAO_AV_SCTP_SEQ_Factory::init (int,
-                               char *[])
+TAO_AV_SCTP_SEQ_Factory::init (int, ACE_TCHAR *[])
 {
 
   return 0;
@@ -867,7 +865,7 @@ TAO_AV_SCTP_SEQ_Flow_Factory::~TAO_AV_SCTP_SEQ_Flow_Factory (void)
 
 int
 TAO_AV_SCTP_SEQ_Flow_Factory::init (int /* argc */,
-                                    char * /* argv */ [])
+                                    ACE_TCHAR * /* argv */ [])
 {
   return 0;
 }

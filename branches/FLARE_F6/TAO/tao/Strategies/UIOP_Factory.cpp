@@ -86,7 +86,6 @@ TAO_UIOP_Protocol_Factory::requires_explicit_endpoint (void) const
   return 1;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_UIOP_Protocol_Factory,
                        ACE_TEXT ("UIOP_Factory"),
@@ -97,6 +96,8 @@ ACE_STATIC_SVC_DEFINE (TAO_UIOP_Protocol_Factory,
                        0)
 
 ACE_FACTORY_DEFINE (TAO_Strategies, TAO_UIOP_Protocol_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #endif  /* TAO_HAS_UIOP == 1 */

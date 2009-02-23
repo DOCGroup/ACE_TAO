@@ -244,7 +244,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
       || CORBA::is_nil (this->supplier_ec_.in ()))
     return;
 
-  // ACE_DEBUG ((LM_DEBUG, "ECG (%t) update_consumer_i \n"));
+  // ACE_DEBUG ((LM_DEBUG, "ECG (%t) update_consumer_i\n"));
 
   this->open_i (c_qos);
 }
@@ -443,7 +443,7 @@ TAO_EC_Gateway_IIOP::disconnect_push_supplier (void)
 void
 TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events)
 {
-  // ACE_DEBUG ((LM_DEBUG, "TAO_EC_Gateway_IIOP::push (%P|%t) - \n"));
+  // ACE_DEBUG ((LM_DEBUG, "TAO_EC_Gateway_IIOP::push (%P|%t) -\n"));
 
   if (events.length () == 0)
     {

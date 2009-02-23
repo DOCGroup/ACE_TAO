@@ -11,8 +11,8 @@ use strict;
 
 my $target = PerlACE::TestTarget::create_target(1)
     or die "Create target failed\n";
-my $test = $target->CreateProcess('Bug_3481_Regression', '');
-my $result = $test->SpawnWaitKill(60);
+my $test = $target->CreateProcess("Bug_3481_Regression");
+my $result = $test->SpawnWaitKill($target->ProcessStartWaitInterval());
 if ($result != 0) {
     print STDERR "ERROR: test returned $result\n";
     exit 1;

@@ -24,6 +24,7 @@
 #include "ace/Thread_Mutex.h"
 #include /**/ "tao/TAO_Export.h"
 #include "tao/params.h"
+#include "tao/Transport_Cache_Manager.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
@@ -38,11 +39,6 @@ class TAO_MProfile;
 class TAO_New_Leader_Generator;
 class TAO_Connector_Registry;
 class TAO_Resource_Factory;
-
-namespace TAO
-{
-  class Transport_Cache_Manager;
-}
 
 /**
  * @class TAO_Thread_Lane_Resources
@@ -92,6 +88,7 @@ public:
    */
   TAO_Connector_Registry *connector_registry (void);
 
+  /// Get the transport cache
   TAO::Transport_Cache_Manager &transport_cache (void);
 
   TAO_Leader_Follower &leader_follower (void);

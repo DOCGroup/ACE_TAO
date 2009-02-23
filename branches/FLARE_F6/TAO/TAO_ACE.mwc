@@ -19,5 +19,6 @@ workspace {
     orbsvcs/tests
     orbsvcs/performance-tests
     orbsvcs/examples
+    orbsvcs/DevGuideExamples
   }
 }

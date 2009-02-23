@@ -22,15 +22,19 @@ $CL1 = new PerlACE::Process ("client", "-k file://$iorfile");
 $CL2 = new PerlACE::Process ("client", "-ORBSvcConf reactor$PerlACE::svcconf_ext -k file://$iorfile");
 $CL3 = new PerlACE::Process ("client", "-ORBSvcConf blocked$PerlACE::svcconf_ext -k file://$iorfile -x 1");
 
+$server_status = $SV->Spawn ();
 
-$SV->Spawn ();
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-} 
+}
 
 print STDERR "===== Base test, using LF \n";
 $client1 = $CL1->SpawnWaitKill (100);

@@ -5,6 +5,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
 
+#include "ace/os_include/os_netdb.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/OS_NS_string.h"
@@ -314,7 +315,7 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
       if (TAO_debug_level > 3)
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) Adding path [%C] "
-                    " as preferred path for [%C] \n",
+                    " as preferred path for [%C]\n",
                     path.c_str (), this->host_.in ()));
 
       pos = tmp.find (latest->host_.in (),

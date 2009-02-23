@@ -27,8 +27,8 @@ my $target2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 fai
 $iorbase = "server.ior";
 $iorfile1 = $target1->LocalFile ("$iorbase");
 $iorfile2 = $target2->LocalFile ("$iorbase");
-$target1->DeleteFile($iorfile);
-$target2->DeleteFile($iorfile);
+$target1->DeleteFile($iorbase);
+$target2->DeleteFile($iorbase);
 
 $SV = $target1->CreateProcess ("server", "$debug_opts_sv -ORBdebuglevel $debug_level -o $iorfile1");
 $CL = $target2->CreateProcess ("client", "$debug_opts_cl -ORBDebugLevel $debug_level -k file://$iorfile2");
@@ -64,7 +64,7 @@ if ($server != 0) {
 $target1->GetStderrLog();
 $target2->GetStderrLog();
 
-$target1->DeleteFile($iorfile);
-$target2->DeleteFile($iorfile);
+$target1->DeleteFile($iorbase);
+$target2->DeleteFile($iorbase);
 
 exit $status;

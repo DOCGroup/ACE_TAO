@@ -24,6 +24,7 @@
 #include "tao/MMAP_Allocator.h"
 #include "tao/SystemException.h"
 #include "tao/operation_details.h"
+#include "tao/Transport_Descriptor_Interface.h"
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
@@ -54,12 +55,12 @@ ACE_RCSID (tao,
 static void
 dump_iov (iovec *iov, int iovcnt, size_t id,
           size_t current_transfer,
-          const char *location)
+          const ACE_TCHAR *location)
 {
   ACE_Guard <ACE_Log_Msg> log_guard (*ACE_Log_Msg::instance ());
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%C, ")
+              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
               ACE_TEXT ("sending %d buffers\n"),
               id, location, iovcnt));
 
@@ -74,7 +75,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%C, ")
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
                   ACE_TEXT ("buffer %d/%d has %d bytes\n"),
                   id, location,
                   i, iovcnt,
@@ -111,7 +112,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%C, ")
+              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
               ACE_TEXT ("end of data\n"),
               id, location));
 }
@@ -330,10 +331,17 @@ bool
 TAO_Transport::register_if_necessary (void)
 {
   if (this->is_connected_ &&
-      ! this->wait_strategy ()->is_registered () &&
-      this->wait_strategy ()->register_handler () != 0)
+      this->wait_strategy ()->register_handler () == -1)
     {
       // Registration failures.
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::register_if_necessary, ")
+                      ACE_TEXT ("could not register the transport ")
+                      ACE_TEXT ("in the reactor.\n"),
+                      this->id ()));
+        }
 
       // Purge from the connection cache, if we are not in the cache, this
       // just does nothing.
@@ -342,12 +350,6 @@ TAO_Transport::register_if_necessary (void)
       // Close the handler.
       (void) this->close_connection ();
 
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) IIOP_Connector [%d]::register_if_necessary, ")
-                    ACE_TEXT ("could not register the transport ")
-                    ACE_TEXT ("in the reactor.\n"),
-                    this->id ()));
       return false;
     }
   return true;
@@ -458,7 +460,7 @@ TAO_Transport::generate_request_header (
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) - Transport[%d]::generate_request_header, ")
+                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::generate_request_header, ")
                       ACE_TEXT ("error while marshalling the Request header\n"),
                       this->id()));
         }
@@ -495,6 +497,12 @@ TAO_Transport::purge_entry (void)
     this->cache_map_entry_ = 0;
   }
   return this->transport_cache_manager ().purge_entry (entry);
+}
+
+bool
+TAO_Transport::can_be_purged (void)
+{
+  return !this->tms_->has_request ();
 }
 
 int
@@ -551,9 +559,10 @@ TAO_Transport::handle_output (ACE_Time_Value *max_wait_time)
 
 int
 TAO_Transport::format_queue_message (TAO_OutputCDR &stream,
-                                     ACE_Time_Value *max_wait_time)
+                                     ACE_Time_Value *max_wait_time,
+                                     TAO_Stub* stub)
 {
-  if (this->messaging_object ()->format_message (stream) != 0)
+  if (this->messaging_object ()->format_message (stream, stub) != 0)
     return -1;
 
   return this->queue_message_i (stream.begin (), max_wait_time);
@@ -932,7 +941,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[], ACE_Time_Value *max
   if (TAO_debug_level == 5)
     {
       dump_iov (iov, iovcnt, this->id (),
-                byte_count, "drain_queue_helper");
+                byte_count, ACE_TEXT("drain_queue_helper"));
     }
 
   if (retval == 0)
@@ -1019,7 +1028,7 @@ TAO_Transport::drain_queue_i (ACE_Time_Value *max_wait_time)
           if (TAO_debug_level > 3)
           {
             ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t - Transport[%d]::drain_queue_i, ")
+              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_i, ")
               ACE_TEXT ("Discarding expired queued message.\n"),
               this->id ()));
           }
@@ -1292,15 +1301,15 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
 
   switch (message_semantics)
     {
-      case TAO_Transport::TAO_TWOWAY_REQUEST:
+      case TAO_TWOWAY_REQUEST:
         ret = this->send_synchronous_message_i (message_block, max_wait_time);
         break;
 
-      case TAO_Transport::TAO_REPLY:
+      case TAO_REPLY:
         ret = this->send_reply_message_i (message_block, max_wait_time);
         break;
 
-      case TAO_Transport::TAO_ONEWAY_REQUEST:
+      case TAO_ONEWAY_REQUEST:
         ret = this->send_asynchronous_message_i (stub,
                                                  message_block,
                                                  max_wait_time);
@@ -1612,7 +1621,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
         {
           if (TAO_debug_level > 2)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ACE_ERROR ((LM_ERROR,
                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input, ")
                  ACE_TEXT ("error while parsing the head of the queue\n"),
                  this->id()));
@@ -1969,7 +1978,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                                    ACE_Message_Block::DONT_DELETE,
                                    this->orb_core_->input_cdr_msgblock_allocator ());
 
-
   // Align the message block
   ACE_CDR::mb_align (&message_block);
 
@@ -2179,8 +2187,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
           if (qd.missing_data () == 0)
             {
               // Dealing with a fragment
-              TAO_Queued_Data *nqd =
-                TAO_Queued_Data::duplicate (qd);
+              TAO_Queued_Data *nqd = TAO_Queued_Data::duplicate (qd);
 
               if (nqd == 0)
                 {
@@ -2253,7 +2260,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
           // putting them into queue.  When this is done we can return
           // to process this message, and notifying other threads to
           // process the messages in queue.
-
           char * end_marker = message_block.rd_ptr ()
                             + mesg_length;
 
@@ -2274,8 +2280,10 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                   return -1;
                 }
 
-              // correct the end_marker
-              end_marker = message_block.rd_ptr ();
+              // correct the wr_ptr using the end_marker to point to the
+              // end of the first message else the code after this will
+              // see the full stream with all the messages
+              message_block.wr_ptr (end_marker);
 
               // Restore rd_ptr
               message_block.rd_ptr (rd_ptr_stack_mesg);
@@ -2296,7 +2304,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
                      ACE_TEXT ("notify reactor\n"),
                      this->id ()));
-
                 }
 
               int const retval = this->notify_reactor ();
@@ -2322,7 +2329,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
             {
               return -1;
             }
-
           // move the rd_ptr tp position of end_marker
           message_block.rd_ptr (end_marker);
         }
@@ -2414,7 +2420,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
         {
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ACE_ERROR ((LM_ERROR,
                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
                  ACE_TEXT ("error in process_reply_message - %m\n"),
                  this->id ()));
@@ -2528,15 +2534,12 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
         }
 
       // Process the message...
-      if (this->process_parsed_messages (qd, rh) == -1)
-        {
-          return -1;
-        }
+      int const retval = this->process_parsed_messages (qd, rh);
 
       // Delete the Queued_Data..
       TAO_Queued_Data::release (qd);
 
-      return 0;
+      return retval;
     }
 
   return 1;
@@ -2571,7 +2574,7 @@ TAO_Transport::notify_reactor (void)
     {
       // @todo: need to think about what is the action that
       // we can take when we get here.
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
          ACE_TEXT ("TAO (%P|%t) - Transport[%d]::notify_reactor, ")
          ACE_TEXT ("notify to the reactor failed..\n"),
          this->id ()));
@@ -2668,7 +2671,7 @@ bool
 TAO_Transport::post_open (size_t id)
 {
   if (TAO_debug_level > 9)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport::post_open ")
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport::post_open, ")
                 ACE_TEXT ("tport id changed from %d to %d\n"), this->id_, id));
   this->id_ = id;
 
@@ -2705,11 +2708,13 @@ TAO_Transport::post_open (size_t id)
           (void) this->close_connection ();
 
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_open , ")
-               ACE_TEXT ("could not register the transport ")
-               ACE_TEXT ("in the reactor.\n"),
-               this->id ()));
+            {
+              ACE_ERROR ((LM_ERROR,
+                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_open , ")
+                     ACE_TEXT ("could not register the transport ")
+                     ACE_TEXT ("in the reactor.\n"),
+                     this->id ()));
+            }
 
           return false;
         }
@@ -2721,8 +2726,10 @@ TAO_Transport::post_open (size_t id)
   }
 
   if (TAO_debug_level > 9 && !this->cache_map_entry_)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_open")
-                          ACE_TEXT (", cache_map_entry_ is 0\n"), this->id_));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_open")
+                            ACE_TEXT (", cache_map_entry_ is 0\n"), this->id_));
+    }
 
   this->transport_cache_manager ().mark_connected (this->cache_map_entry_,
                                                    true);
@@ -2730,7 +2737,8 @@ TAO_Transport::post_open (size_t id)
   // update transport cache to make this entry available
   this->transport_cache_manager ().set_entry_state (
     this->cache_map_entry_,
-    TAO::ENTRY_IDLE_BUT_NOT_PURGABLE);
+    TAO::ENTRY_IDLE_AND_PURGABLE);
+
   return true;
 }
 

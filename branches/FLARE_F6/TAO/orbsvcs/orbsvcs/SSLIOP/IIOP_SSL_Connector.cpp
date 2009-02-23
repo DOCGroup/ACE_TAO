@@ -9,7 +9,7 @@
 #include "tao/Wait_Strategy.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Transport.h"
-
+#include "tao/Transport_Descriptor_Interface.h"
 #include "ace/Strategies_T.h"
 
 
@@ -124,7 +124,7 @@ TAO::IIOP_SSL_Connector::make_connection (
   if (TAO_debug_level > 4)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) IIOP_SSL_Connector::connect ")
-                ACE_TEXT ("making a new connection \n")));
+                ACE_TEXT ("making a new connection\n")));
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
@@ -234,7 +234,7 @@ TAO::IIOP_SSL_Connector::make_connection (
       transport);
 
   // Failure in adding to cache.
-  if (retval != 0)
+  if (retval == -1)
     {
       // Close the handler.
       svc_handler->close ();

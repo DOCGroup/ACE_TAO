@@ -382,8 +382,6 @@ TAO_Default_Server_Strategy_Factory::report_option_value_error (
              option_value, option_name));
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DEFINE (TAO_Default_Server_Strategy_Factory,
                        ACE_TEXT ("Server_Strategy_Factory"),
                        ACE_SVC_OBJ_T,
@@ -391,3 +389,6 @@ ACE_STATIC_SVC_DEFINE (TAO_Default_Server_Strategy_Factory,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Server_Strategy_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+

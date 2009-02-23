@@ -9,8 +9,11 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $iorbase = "server.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server");
+$SV = $server->CreateProcess ("server", "-o $server_iorfile -k file://$server_iorfile");
 
 $test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 

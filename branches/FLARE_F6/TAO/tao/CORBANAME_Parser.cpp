@@ -145,7 +145,6 @@ TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
   return obj;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_CORBANAME_Parser,
                        ACE_TEXT ("CORBANAME_Parser"),
@@ -156,6 +155,8 @@ ACE_STATIC_SVC_DEFINE (TAO_CORBANAME_Parser,
                        0)
 
 ACE_FACTORY_DEFINE (TAO, TAO_CORBANAME_Parser)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBANAME_PARSER == 1 */
 

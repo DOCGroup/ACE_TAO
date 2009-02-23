@@ -47,7 +47,6 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
   LifespanStrategyPersistentFactoryImpl,
@@ -62,3 +61,4 @@ ACE_FACTORY_NAMESPACE_DEFINE (
   LifespanStrategyPersistentFactoryImpl,
   TAO::Portable_Server::LifespanStrategyPersistentFactoryImpl)
 
+TAO_END_VERSIONED_NAMESPACE_DECL

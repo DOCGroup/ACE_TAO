@@ -250,10 +250,10 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
       if (TAO_debug_level)
         {
           ACE_ERROR ((LM_ERROR,
-                      "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
-                      "connection to <%s:%d> failed (%p)\n",
+                      ACE_TEXT("TAO (%P|%t) - SCIOP_Connector::make_connection_i, ")
+                      ACE_TEXT("connection to <%C:%d> failed (%p)\n"),
                       sciop_endpoint->host (), sciop_endpoint->port (),
-                      "errno"));
+                      ACE_TEXT("errno")));
         }
 
       return 0;
@@ -286,7 +286,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
                                                                              transport);
 
   // Failure in adding to cache.
-  if (retval != 0)
+  if (retval == -1)
     {
       // Close the handler.
       svc_handler->close ();

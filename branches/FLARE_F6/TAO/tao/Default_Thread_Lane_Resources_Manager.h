@@ -101,10 +101,10 @@ public:
 
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Thread_Lane_Resources_Manager_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Thread_Lane_Resources_Manager_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

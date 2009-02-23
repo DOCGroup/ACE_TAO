@@ -36,7 +36,7 @@ if ($server_status != 0) {
 }
 
 if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
+                                $server->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server_iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
@@ -70,7 +70,7 @@ if ($server_status != 0) {
 $server->GetStderrLog();
 $client->GetStderrLog();
 
-$server->DeleteFile($server_iorfile);
-$client->DeleteFile($client_iorfile);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 exit $status;

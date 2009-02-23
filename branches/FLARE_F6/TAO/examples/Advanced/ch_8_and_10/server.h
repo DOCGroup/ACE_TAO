@@ -68,7 +68,7 @@ class Thermostat_impl :
 public:
     // CORBA operations
     virtual CCS::TempType get_nominal();
-    virtual CCS::TempType set_nominal(CCS::TempType new_temp));
+    virtual CCS::TempType set_nominal(CCS::TempType new_temp);
 
     // Constructor and destructor
     Thermostat_impl(

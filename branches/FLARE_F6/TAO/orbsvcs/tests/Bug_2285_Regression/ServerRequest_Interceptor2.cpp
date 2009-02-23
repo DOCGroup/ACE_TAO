@@ -173,7 +173,7 @@ catch (const CORBA::Exception& ex)
   {
     ACE_DEBUG ((LM_ERROR, "Unexpected (non regression problem) error - test failed\n"));
     ex._tao_print_exception (
-      "Exception in TAO249_ServerRequest_Interceptor2::receive_request \n");
+      "Exception in TAO249_ServerRequest_Interceptor2::receive_request\n");
     throw;
   }
 

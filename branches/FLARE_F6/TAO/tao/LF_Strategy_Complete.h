@@ -24,9 +24,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
-
-
 /**
  * @brief A concrete TAO_LF_Strategy for ORB configurations that use
  * the Leader/Followers event loop.

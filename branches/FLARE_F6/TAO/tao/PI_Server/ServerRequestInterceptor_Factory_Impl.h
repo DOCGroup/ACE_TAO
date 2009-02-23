@@ -43,10 +43,11 @@ public:
   virtual TAO::ServerRequestInterceptor_Adapter *create (void);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_ServerRequestInterceptor_Adapter_Factory_Impl)
 ACE_FACTORY_DECLARE (TAO_PI_Server, TAO_ServerRequestInterceptor_Adapter_Factory_Impl)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS */
 

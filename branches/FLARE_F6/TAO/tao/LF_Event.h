@@ -124,6 +124,8 @@ public:
   /// Reset the state, irrespective of the previous states
   void reset_state (int new_state);
 
+  static const char *state_name (int st);
+
 protected:
 
   /// Validate the state change

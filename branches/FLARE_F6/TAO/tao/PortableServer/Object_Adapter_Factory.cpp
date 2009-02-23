@@ -18,7 +18,6 @@ TAO_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
   return adapter;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_PortableServer, TAO_Object_Adapter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_Object_Adapter_Factory,
@@ -28,3 +27,4 @@ ACE_STATIC_SVC_DEFINE (TAO_Object_Adapter_Factory,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 
+TAO_END_VERSIONED_NAMESPACE_DECL

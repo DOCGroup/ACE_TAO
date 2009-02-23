@@ -6,45 +6,48 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 
 use lib  "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$status = 0;
-$file = PerlACE::LocalFile ("test.ior");
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-unlink $file;
+my $iorbase = "test.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o test.ior");
-}
-else {
-    $SV = new PerlACE::Process ("server", "-o $file");    
-}
-$CL = new PerlACE::Process ("client", "-k file://$file");
+$SV = $server->CreateProcess ("server", "-o $server_iorfile");
+$CL = $client->CreateProcess ("client", "-k file://$client_iorfile");
+
+$server_status = $SV->Spawn ();
+
+my $status = 0;
 
 print STDERR "\n\n==== Running Request_Interceptor_Flow test\n";
 
-$SV->Spawn ();
-
-if (PerlACE::waitforfile_timed ($file, $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$file>\n";
-    $SV->Kill (); 
+if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill (60);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-if ($client != 0) {
+if ($client_status != 0) {
     print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server = $SV->WaitKill (5);
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
 
-if ($server != 0) {
+if ($server_status != 0) {
     print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-unlink $file;
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 exit $status;

@@ -53,7 +53,7 @@
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/GIOP_Message_Version.h"
-#include "tao/Transport.h"
+#include "tao/Message_Semantics.h"
 
 #include "ace/CDR_Stream.h"
 
@@ -92,8 +92,8 @@ public:
   // ORB. Refer to the constructor bodies in CDR.cpp for the
   // code that supplies these values to the base class constructor.
 
-  /// Default constructor, allocates <size> bytes in the internal
-  /// buffer, if <size> == 0 it allocates the default size.
+  /// Default constructor, allocates @a size bytes in the internal
+  /// buffer, if @a size == 0 it allocates the default size.
   TAO_OutputCDR (size_t size = 0,
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* buffer_allocator = 0,
@@ -104,7 +104,7 @@ public:
                  ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR);
 
   /// Build a CDR stream with an initial buffer, it will *not* remove
-  /// <data>, since it did not allocated it.
+  /// @a data, since it did not allocated it.
   TAO_OutputCDR (char *data,
                  size_t size,
                  int byte_order = ACE_CDR_BYTE_ORDER,
@@ -130,7 +130,7 @@ public:
                  ACE_CDR::Octet minor_version);
 
   /// Build a CDR stream with an initial Message_Block chain, it will *not*
-  /// remove <data>, since it did not allocate it.
+  /// remove @a data, since it did not allocate it.
   TAO_OutputCDR (ACE_Message_Block *data,
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  size_t memcpy_tradeoff = 0,
@@ -138,7 +138,7 @@ public:
                  ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR);
 
   /// Build a CDR stream with an initial data block, it will *not* remove
-  /// <data_block>, since it did not allocated it.
+  /// @a data, since it did not allocated it.
   TAO_OutputCDR (ACE_Data_Block *data,
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* message_block_allocator = 0,
@@ -180,20 +180,11 @@ public:
   /// Specify whether there are more data fragments to come.
   void more_fragments (bool more);
 
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  /// Are we containing compressed data?
-  bool compressed (void) const;
-
-  /// Specify whether we have compressed data.
-  void compressed (bool compressed);
-#endif
-
   /// Set fragmented message attributes.
   void message_attributes (CORBA::ULong request_id,
                            TAO_Stub * stub,
-                           TAO_Transport::TAO_Message_Semantics message_semantics,
-                           ACE_Time_Value * timeout,
-                           bool compressed);
+                           TAO_Message_Semantics message_semantics,
+                           ACE_Time_Value * timeout);
 
   /// Fragmented message request ID.
   CORBA::ULong request_id (void) const;
@@ -202,7 +193,7 @@ public:
   TAO_Stub * stub (void) const;
 
   /// Message semantics (twoway, oneway, reply)
-  TAO_Transport::TAO_Message_Semantics message_semantics (void) const;
+  TAO_Message_Semantics message_semantics (void) const;
 
   /// Maximum time to wait for outgoing message to be sent.
   ACE_Time_Value * timeout (void) const;
@@ -240,15 +231,10 @@ private:
   /**
    * @see TAO_Transport
    */
-  TAO_Transport::TAO_Message_Semantics message_semantics_;
+  TAO_Message_Semantics message_semantics_;
 
   /// Request/reply send timeout.
   ACE_Time_Value * timeout_;
-
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  /// Do we contain compressed data
-  bool compressed_;
-#endif
   //@}
 };
 
@@ -365,7 +351,7 @@ public:
   TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
                 TAO_ORB_Core* orb_core = 0);
 
-  /// destructor
+  /// Destructor
   ~TAO_InputCDR (void);
 
   // = TAO specific methods.
@@ -380,21 +366,9 @@ public:
   static void throw_stub_exception (int error_num);
   static void throw_skel_exception (int error_num);
 
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  /// Are we containing compressed data?
-  bool compressed (void) const;
-
-  /// Specify whether we have compressed data.
-  void compressed (bool compressed);
-#endif
-
 private:
   /// The ORB_Core, required to extract object references.
   TAO_ORB_Core* orb_core_;
-
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  CORBA::Boolean compressed_;
-#endif
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -429,6 +403,10 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const CORBA::Char* x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const CORBA::WChar* x);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      ACE_OutputCDR::from_string x);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      ACE_OutputCDR::from_wstring x);
 
 // CDR input operators for CORBA types
 
@@ -454,6 +432,10 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::Char* &x);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::WChar* &x);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &os,
+                                      ACE_InputCDR::to_string x);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &os,
+                                      ACE_InputCDR::to_wstring x);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

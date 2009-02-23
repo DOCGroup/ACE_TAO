@@ -42,10 +42,11 @@ public:
 static int
 TAO_Requires_PolicyFactory_Initializer = TAO_PolicyFactory_Loader::Initializer ();
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_PolicyFactory_Loader)
 ACE_FACTORY_DECLARE (TAO_PI, TAO_PolicyFactory_Loader)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -192,7 +192,7 @@ TAO_Table_Adapter::initialize_collocated_object (TAO_Stub *stub)
   return ! found;
 }
 
-CORBA::Long
+bool
 TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
                                 CORBA::Object_out forward_to)
 {
@@ -205,9 +205,9 @@ TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
     }
   catch (const ::IORTable::NotFound&)
     {
-      return 0;
+      return false;
     }
-  return 1;
+  return true;
 }
 
 // ****************************************************************
