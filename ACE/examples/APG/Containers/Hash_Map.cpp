@@ -54,7 +54,7 @@ int Hash_Map_Example::run (void)
       map_.bind (i, DataElement(i));
     }
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Map has \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Map has\n")));
   for (int j = 0; j < 100; j++)
     {
       DataElement d;
@@ -82,7 +82,7 @@ void Hash_Map_Example::iterate_forward (void)
 {
   ACE_TRACE (ACE_TEXT ("Hash_Map_Example::iterate_forward"));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Forward Iteration \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Forward Iteration\n")));
   for (Hash_Map<int, DataElement>::iterator iter = map_.begin ();
        iter != map_.end (); iter++)
     {
@@ -95,7 +95,7 @@ void Hash_Map_Example::iterate_reverse (void)
 {
   ACE_TRACE (ACE_TEXT ("Hash_Map_Example::iterate_reverse"));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Reverse Iteration \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Reverse Iteration\n")));
   for (Hash_Map<int, DataElement>::reverse_iterator iter = map_.rbegin ();
        iter != map_.rend (); iter++)
     {

@@ -163,7 +163,7 @@ int
 Request_Handler::resume_handler (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) resume_handler () called \n")));
+              ACE_TEXT ("(%t) resume_handler () called\n")));
   return 1;
 }
 

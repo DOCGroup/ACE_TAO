@@ -149,7 +149,7 @@ Accept_Handler::handle_input (ACE_HANDLE h)
       if ((*ch)->state() == ACE::HTBP::Channel::Data_Queued)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) Server Accept_Handler::handle_input \n"),
+                      ACE_TEXT ("(%P|%t) Server Accept_Handler::handle_input\n"),
                       ACE_TEXT ("Issuing notification on handler\n")));
           this->reactor()->notify (session->handler(),
                                    ACE_Event_Handler::READ_MASK);

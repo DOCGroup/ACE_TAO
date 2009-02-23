@@ -84,7 +84,7 @@ usage (void)
               "  [-m message size]\n"
               "  [-i iterations]\n"
               "  [-I usdelay]\n"
-              "  [-b socket bufsz] \n"
+              "  [-b socket bufsz]\n"
               "  [-p port]\n"
               "  [-s]\n"
               "  [-c]\n"
@@ -93,7 +93,7 @@ usage (void)
               "  [-a to use the ACE Select reactor]\n"
               "  [-x to use the ACE TP reactor]\n"
               "  [-w to use the ACE WFMO reactor]\n"
-              "  targethost \n"));
+              "  targethost\n"));
 }
 
 // ****************************************************************

@@ -369,7 +369,7 @@ ACE_Name_Handler::shared_bind (int rebind)
     {
 #if 0
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("request for BIND \n")));
+                  ACE_TEXT ("request for BIND\n")));
 #endif /* 0 */
       result = this->naming_context ()->bind (a_name,
                                                   a_value,
@@ -379,7 +379,7 @@ ACE_Name_Handler::shared_bind (int rebind)
     {
 #if 0
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("request for REBIND \n")));
+                  ACE_TEXT ("request for REBIND\n")));
 #endif /* 0 */
       result = this->naming_context ()->rebind (a_name,
                                                     a_value,
@@ -398,7 +398,7 @@ ACE_Name_Handler::resolve (void)
 {
   ACE_TRACE (ACE_TEXT ("ACE_Name_Handler::resolve"));
 #if 0
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("request for RESOLVE \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("request for RESOLVE\n")));
 #endif /* 0 */
   ACE_NS_WString a_name (this->name_request_.name (),
                          this->name_request_.name_len () / sizeof (ACE_WCHAR_T));
@@ -431,7 +431,7 @@ ACE_Name_Handler::unbind (void)
 {
   ACE_TRACE (ACE_TEXT ("ACE_Name_Handler::unbind"));
 #if 0
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("request for UNBIND \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("request for UNBIND\n")));
 #endif /* 0 */
   ACE_NS_WString a_name (this->name_request_.name (),
                          this->name_request_.name_len () / sizeof (ACE_WCHAR_T));
@@ -549,7 +549,7 @@ ACE_Name_Handler::lists_entries (void)
     {
 #if 0
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("request for LIST_NAME_ENTRIES \n")));
+                  ACE_TEXT ("request for LIST_NAME_ENTRIES\n")));
 #endif /* 0 */
       result = this->naming_context ()->
         ACE_Naming_Context::list_name_entries (set, pattern);
@@ -558,7 +558,7 @@ ACE_Name_Handler::lists_entries (void)
     {
 #if 0
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("request for LIST_VALUE_ENTRIES \n")));
+                  ACE_TEXT ("request for LIST_VALUE_ENTRIES\n")));
 #endif /* 0 */
       result = this->naming_context ()->
         ACE_Naming_Context::list_value_entries (set, pattern);
@@ -567,7 +567,7 @@ ACE_Name_Handler::lists_entries (void)
     {
 #if 0
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("request for LIST_TYPE_ENTRIES \n")));
+                  ACE_TEXT ("request for LIST_TYPE_ENTRIES\n")));
 #endif /* 0 */
       result = this->naming_context ()->
         ACE_Naming_Context::list_type_entries (set, pattern);

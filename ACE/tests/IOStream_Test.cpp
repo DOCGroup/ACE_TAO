@@ -375,7 +375,7 @@ server (void *arg = 0)
   ACE_OS::sleep (5);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT (" (%P|%t) Server Sending:  1 .12342134 666555444 23.45 -46.5e9 \n")));
+              ACE_TEXT (" (%P|%t) Server Sending:  1 .12342134 666555444 23.45 -46.5e9\n")));
   client_handler << 1 << " ";
   client_handler << .12342134 << " ";
   client_handler << 666555444 << " ";

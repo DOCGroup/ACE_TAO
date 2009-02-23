@@ -64,7 +64,7 @@ Synchronisers::start_synchronization (void)
     if (debug)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Ready to go.. \n"));
+                    "(%P|%t) Ready to go..\n"));
       }
 
     if (ready_threads == number_of_threads)
@@ -106,7 +106,7 @@ Synchronisers::end_synchronization (void)
     if (debug)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Ready to go.. \n"));
+                    "(%P|%t) Ready to go..\n"));
       }
 
     if (ready_threads == number_of_threads)
@@ -347,7 +347,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (result != 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) - Failed again no hope \n"));
+                          "(%P|%t) - Failed again no hope\n"));
 
               return 0;
             }
@@ -368,14 +368,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       );
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Throughput is [%f] \n",
+              "(%P|%t) Throughput is [%f]\n",
               1000000000/ elapsed_time_per_invocation));
 
 
   for (i = 0; i < number_of_threads; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Message consumed in thread [%d] is [%d] \n",
+                  "Message consumed in thread [%d] is [%d]\n",
                   i, leader_followers[i]->processed ()));
       delete leader_followers[i];
     }
@@ -394,7 +394,7 @@ int
 ACE_TMAIN(int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%p|%t) Cannot run in SIngle threaded mode \n"));
+              "(%p|%t) Cannot run in SIngle threaded mode\n"));
 
   return 0;
 }

@@ -239,7 +239,7 @@ Async_Timer_Queue_Test_Driver::display_menu (void)
   // The menu of options provided to the user.
   static char menu[] =
     "****\n"
-    "1) schedule timer <usecs> \n"
+    "1) schedule timer <usecs>\n"
     "2) cancel timer <timer_id>\n"
     "^C list timers\n"
     "^\\ exit program\n";

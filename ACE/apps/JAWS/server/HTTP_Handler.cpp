@@ -34,7 +34,7 @@ void
 HTTP_Handler::open (ACE_HANDLE handle,
                     ACE_Message_Block &initial_data)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) New connection \n"));
+  ACE_DEBUG ((LM_DEBUG, "(%t) New connection\n"));
 
   int sockbufsize = HTTP_Handler::MAX_SOCKBUFSIZE;
   int result = ACE_OS::setsockopt (handle,
