@@ -34,7 +34,8 @@ project(BMDevice_lem_gen) : ciaocidldefaults, ciaoidldefaults {
 }
 
 project(BMDevice_stub): ccm_stub {
-  libpaths += ..
+  libout = ../lib
+  libpaths += ../lib
   after += BasicSP_stub BMDevice_stub_gen
   sharedname = BMDevice_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
@@ -67,7 +68,8 @@ project(BMDevice_exec) : ciao_executor {
 
   sharedname = BMDevice_exec
   libs       += BMDevice_stub BasicSP_exec BasicSP_stub
-  libpaths += ..
+  libout = ../lib
+  libpaths += ../lib
 
   includes += $(CIAO_ROOT)/examples/BasicSP
 
@@ -100,7 +102,8 @@ project(BMDevice_svnt) : ciao_servant {
   libs    += BMDevice_stub BMDevice_exec
   libs    += BasicSP_stub BasicSP_exec BasicSP_svnt
   dynamicflags = BMDEVICE_SVNT_BUILD_DLL
-  libpaths += ..
+  libout = ../lib
+  libpaths += ../lib
 
   CIDL_Files {
   }

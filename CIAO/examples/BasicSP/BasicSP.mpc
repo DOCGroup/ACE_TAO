@@ -39,6 +39,8 @@ project(BasicSP_stub): ccm_stub {
   sharedname = BasicSP_stub
   dynamicflags = BASICSP_STUB_BUILD_DLL
   includes += $(CIAO_ROOT)/examples/BasicSP
+  libout = lib
+  libpaths += lib
 
   IDL_Files {
   }
@@ -58,6 +60,8 @@ project(BasicSP_exec) : ciao_executor {
   libs += BasicSP_stub
   dynamicflags = BASICSP_EXEC_BUILD_DLL
   includes += $(CIAO_ROOT)/examples/BasicSP
+  libout = lib
+  libpaths += lib
 
   IDL_Files {
   }
@@ -80,6 +84,8 @@ project(BasicSP_svnt) : ciao_servant {
   libs    += BasicSP_stub BasicSP_exec
   includes += $(CIAO_ROOT)/examples/BasicSP
   dynamicflags = BASICSP_SVNT_BUILD_DLL
+  libout = lib
+  libpaths += lib
 
   IDL_Files {
   }

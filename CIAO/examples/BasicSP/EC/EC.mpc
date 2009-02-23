@@ -38,6 +38,8 @@ project(EC_stub): ccm_stub {
   sharedname = EC_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
   libpaths += ..
+  libout = ../lib
+  libpaths += ../lib
 
   libs += BasicSP_stub
 
@@ -68,7 +70,8 @@ project(EC_exec) : ciao_executor {
   libs       += EC_stub BasicSP_stub
   libs       += BasicSP_exec
   includes += $(CIAO_ROOT)/examples/BasicSP
-  libpaths += ..
+  libout = ../lib
+  libpaths += ../lib
 
   dynamicflags   = EC_EXEC_BUILD_DLL
 
@@ -99,7 +102,8 @@ project(EC_svnt) : ciao_servant {
   libs    += EC_stub EC_exec
   libs    += BasicSP_stub BasicSP_svnt
   dynamicflags = EC_SVNT_BUILD_DLL
-  libpaths += ..
+  libout = ../lib
+  libpaths += ../lib
 
   CIDL_Files {
   }
@@ -125,7 +129,8 @@ project (EC_client) : ccm_stub {
   exename = client
   libs += EC_stub BasicSP_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
-  libpaths += ..
+  libout = ../lib
+  libpaths += ../lib
 
   IDL_Files {
   }
@@ -149,7 +154,8 @@ project (EC_controller) : ccm_stub {
   exename = controller
   includes += $(CIAO_ROOT)/examples/BasicSP
   libs += EC_stub BasicSP_stub
-  libpaths += ..
+  libout = ../lib
+  libpaths += ../lib
 
   IDL_Files {
   }

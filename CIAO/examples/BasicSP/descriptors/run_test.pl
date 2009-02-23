@@ -23,6 +23,8 @@ $dat_file = "BasicSP.dat";
 $cdp_file = "BasicSP_Unhomed.cdp";
 $controller_exec = "$CIAO_ROOT/examples/BasicSP/EC/controller";
 
+PerlACE::add_lib_path ('../lib');
+
 $nsior = PerlACE::LocalFile ("ns.ior");
 
 unlink $nsior;
