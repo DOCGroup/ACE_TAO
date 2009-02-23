@@ -181,7 +181,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // For other case this is expected.
       if (do_self_shutdown == 0)
         {
-          x._tao_print_exception ("ERROR: Unexpected exception \n");
+          x._tao_print_exception ("ERROR: Unexpected exception\n");
         }
     }
   catch (const CORBA::Exception& ex)

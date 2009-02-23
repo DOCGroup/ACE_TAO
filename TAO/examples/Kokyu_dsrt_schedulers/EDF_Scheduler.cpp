@@ -503,7 +503,7 @@ EDF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
     {
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T): sched_policy nil.\n "));
+                  "(%t|%T): sched_policy nil.\n"));
 #endif
       //24 hrs from now - infinity
       ACE_Time_Value deadline_tv = ACE_OS::gettimeofday () + ACE_Time_Value (24*60*60,0);

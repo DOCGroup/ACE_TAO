@@ -91,8 +91,8 @@ RedGreen_Test::destroy_ec ()
           // around to figure out the problem.  Report the incident to the
           // log and be done with it.
           ACE_DEBUG ((LM_INFO,
-                      "INFO: Got a COMM_FAILURE exception while trying to \n"
-                      "      invoke `destroy()' on the Event Channel in the \n"
+                      "INFO: Got a COMM_FAILURE exception while trying to\n"
+                      "      invoke `destroy()' on the Event Channel in the\n"
                       "      RedGreen destroy_ec. This is likely not a problem.\n"));
         }
       catch (const CORBA::Exception& ex)

@@ -408,7 +408,7 @@ plus:
                 compat_mode = TRUE;     /* 'compatible' mode        */
                 mcpp_mode = STD;
             }
-            else 
+            else
                 usage( opt);
             standard = (mcpp_mode == STD || mcpp_mode == POST_STD);
             if (old_mode != STD && old_mode != mcpp_mode)
@@ -1483,7 +1483,7 @@ static void def_a_macro(
     skip_nl();                      /* Clear the appended <newline> */
 }
 
-static void     chk_opts( 
+static void     chk_opts(
     int     sflag,      /* Flag of Standard or post-Standard mode   */
     long    std_val,                /* Value of __STDC_VERSION__    */
     int     ansi,                   /* -ansi (GCC only)             */
@@ -1845,7 +1845,7 @@ static void set_sys_dirs(
     set_a_dir( "/usr/local/include");
 #endif
 
-#ifdef  C_INCLUDE_DIR1 
+#ifdef  C_INCLUDE_DIR1
     set_a_dir( C_INCLUDE_DIR1);
 #endif
 #ifdef  C_INCLUDE_DIR2
@@ -2086,7 +2086,7 @@ static char *   norm_path(
             } else {                                /* Impossible   */
                 break;
             }
-        } else {                                    /* Impossible   */ 
+        } else {                                    /* Impossible   */
             break;
         }
     }
@@ -2260,7 +2260,7 @@ static void init_gcc_macro(
                 && scan_token( skip_ws(), (tp = work_buf, &tp), work_end)
                         == NAM
                     && str_eq( work_buf, "define")) {
-                defp = do_define( TRUE);    /* Ignore re-definition */ 
+                defp = do_define( TRUE);    /* Ignore re-definition */
                 if (defp->nargs >= DEF_NOARGS - 1)
                     *predef++ = defp;   /* Register only non-Standard macros*/
             }
@@ -2420,7 +2420,7 @@ void    put_depend(
     }
     /* Any new header.  Append its name to output.  */
     if (llen + fnamlen > MAX_OUT_LEN) {         /* Line is long     */
-        out_p = mcpp_stpcpy( out_p, " \\\n ");       /* Fold it          */
+        out_p = mcpp_stpcpy( out_p, " \\\n");       /* Fold it          */
         llen = 1;
     }
     llen += fnamlen + 1;
@@ -2433,7 +2433,7 @@ void    put_depend(
 }
 
 static char *   md_init(
-    const char *    filename,   /* The source file name             */ 
+    const char *    filename,   /* The source file name             */
     char *  output              /* Output to dependency file        */
 )
 /*
@@ -2547,10 +2547,10 @@ int     do_include(
     int     token_type;
     char *  fname;
     int     delim;                          /* " or <, >            */
-    
+
     // WO: sharp here to capture line info from includer
     sharp ();
-    
+
     if ((delim = skip_ws()) == '\n') {      /* No argument          */
         cerror( no_name, 0, 0L, 0);
         return  FALSE;
@@ -2724,7 +2724,7 @@ static int  has_directory(
 )
 /*
  * If a directory is found in the 'source' filename string (i.e. "includer"),
- * the directory part of the string is copied to 'directory' and 
+ * the directory part of the string is copied to 'directory' and
  * has_directory() returns TRUE.
  * Else, nothing is copied and it returns FALSE.
  */

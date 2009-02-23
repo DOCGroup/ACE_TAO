@@ -79,28 +79,28 @@ namespace Test
         {
           ACE_UNUSED_ARG (f);
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) Caught COMM_FAILURE Exception \n"));
+                      "(%P|%t) Caught COMM_FAILURE Exception\n"));
 
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) This is expected \n"));
+                      "(%P|%t) This is expected\n"));
 
           return 0;
         }
       catch (const CORBA::Exception& ex)
         {
-          ex._tao_print_exception ("Caught CORBA Exception \n");
+          ex._tao_print_exception ("Caught CORBA Exception\n");
 
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) Error in test \n"));
+                      "(%P|%t) Error in test\n"));
 
           return -1;
         }
       catch (...)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) Caught a C++ exception \n"));
+                      "(%P|%t) Caught a C++ exception\n"));
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) Error in test \n"));
+                      "(%P|%t) Error in test\n"));
 
           return -1;
         }
@@ -125,7 +125,7 @@ namespace Test
       try
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) Calling shutdown \n"));
+                      "(%P|%t) Calling shutdown\n"));
 
           // Just wait for the main thread to start sending out
           // messages
@@ -147,7 +147,7 @@ namespace Test
           if (el.real_time > 1)
             {
               ACE_ERROR ((LM_ERROR,
-                          "(%P|%t) ERROR: Too long to shutdown \n"));
+                          "(%P|%t) ERROR: Too long to shutdown\n"));
 
               return 0;
             }
@@ -155,15 +155,15 @@ namespace Test
       catch (...)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) Caught exception during shutdown \n"));
+                      "(%P|%t) Caught exception during shutdown\n"));
 
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) Error in test \n"));
+                      "(%P|%t) Error in test\n"));
           return -1;
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Returning from shutdown \n"));
+                  "(%P|%t) Returning from shutdown\n"));
       return 0;
     }
   private:
@@ -204,7 +204,7 @@ namespace Test
                             1);
 
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Activating shutdown thread \n"));
+                    "(%P|%t) Activating shutdown thread\n"));
 
         Shutdown_Task st (orb.in ());
 
@@ -220,15 +220,15 @@ namespace Test
       }
     catch (const CORBA::Exception& ex)
       {
-        ex._tao_print_exception ("CORBA Exception caught \n");
+        ex._tao_print_exception ("CORBA Exception caught\n");
         ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) Eror in test \n"));
+                    "(%P|%t) Eror in test\n"));
         return -1;
       }
     catch (...)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Error in test \n"));
+                    "(%P|%t) Error in test\n"));
         return -1;
       }
 

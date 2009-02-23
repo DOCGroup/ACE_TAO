@@ -174,7 +174,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Calibrating scale factory . . . "));
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-      ACE_DEBUG ((LM_DEBUG, "done %d \n", gsf));
+      ACE_DEBUG ((LM_DEBUG, "done %d\n", gsf));
 
       recv_latency.dump_results (ACE_TEXT("Receive"), gsf);
 

@@ -38,7 +38,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "Usage:  %s "
                            "-o <IOR> "
                            "-c <CrashPoint> "
-                           "-n <server number> \n",
+                           "-n <server number>\n",
                            argv[0]),
                           -1);
       }

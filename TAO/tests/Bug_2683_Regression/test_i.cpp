@@ -18,7 +18,7 @@ test_i::ping (void)
 void
 test_i::shutdown (void)
 {
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t) requesting shutdown \n"));
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) requesting shutdown\n"));
   this->killer_->activate ();
 }
 
@@ -32,7 +32,7 @@ int
 ORB_Killer::svc ()
 {
   ACE_OS::sleep (1);
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t) doing shutdown \n"));
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) doing shutdown\n"));
   orb_->shutdown(1);
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) shutdown complete\n"));
   return 0;

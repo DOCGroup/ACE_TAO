@@ -600,7 +600,7 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("TAO (%P|%t) Invalid SSLIOP endpoint format: ")
-                             ACE_TEXT ("endpoint priorities no longer supported. \n"),
+                             ACE_TEXT ("endpoint priorities no longer supported.\n"),
                              value.c_str ()),
                             -1);
         }

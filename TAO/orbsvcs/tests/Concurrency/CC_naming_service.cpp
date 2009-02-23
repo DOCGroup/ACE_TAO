@@ -139,7 +139,7 @@ CC_naming_service::init_naming_service (void)
       if (my_name_client_.init (orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
+                           "the TAO_Naming_Client.\n"),
                           -1);
 
       CORBA::Object_var factory_obj = get_obj_from_name ("CosConcurrency",

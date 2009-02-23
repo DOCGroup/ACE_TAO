@@ -169,7 +169,7 @@ TAO_Notify_ThreadPool_Consumer::dump_throughput (void)
 {
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
 
-  ACE_DEBUG ((LM_DEBUG, "(%P,%t) Consumer %d \n", proxy_supplier_id_));
+  ACE_DEBUG ((LM_DEBUG, "(%P,%t) Consumer %d\n", proxy_supplier_id_));
 
   ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          t_last_ - t_first_,

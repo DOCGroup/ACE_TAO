@@ -130,7 +130,7 @@ Identity_Server::register_groups (void)
   catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%N | %l) <Unbind> harmless here \n"));
+                  "(%N | %l) <Unbind> harmless here\n"));
     }
 
   // Unbind the previously registered round robin group
@@ -141,7 +141,7 @@ Identity_Server::register_groups (void)
   catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%N | %l) <Unbind> harmless here \n"));
+                  "(%N | %l) <Unbind> harmless here\n"));
     }
 
 
@@ -214,7 +214,7 @@ Identity_Server::create_objects (size_t number_of_objects,
       catch (const CORBA::Exception&)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%N | %l) Harmless here \n"));
+                      "(%N | %l) Harmless here\n"));
         }
 
       // Bind the servant in the random <Object_Group>.

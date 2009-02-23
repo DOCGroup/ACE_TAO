@@ -144,7 +144,7 @@ Consumer_Input_Handler::unregister_consumer ()
       this->consumer_handler_->server_->unregister_callback (this->consumer_handler_->consumer_var_.in());
 
       ACE_DEBUG ((LM_DEBUG,
-                  " Consumer Unregistered \n "));
+                  " Consumer Unregistered \n"));
       consumer_handler_->unregistered_ = 1;
       consumer_handler_->registered_ = 0;
     }
@@ -173,7 +173,7 @@ Consumer_Input_Handler::quit_consumer_process ()
           this->consumer_handler_->server_->unregister_callback (this->consumer_handler_->consumer_var_.in ());
 
           ACE_DEBUG ((LM_DEBUG,
-                      " Consumer Unregistered \n "));
+                      " Consumer Unregistered \n"));
           consumer_handler_->unregistered_ = 0;
           consumer_handler_->registered_ = 0;
         }

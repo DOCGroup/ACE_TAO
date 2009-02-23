@@ -453,7 +453,7 @@ PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
           ACE_ERROR((LM_ERROR,
                    "Error in %s: Line %d - Error in creating "
                    "array to hold lock information "
-                   "ServerScheduler not created\n "
+                   "ServerScheduler not created\n"
                    __FILE__,
                    __LINE__));
           ACE_OS::exit(1);

@@ -52,7 +52,7 @@ Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flows
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "In Handle Connection Requested \n"));
+                "In Handle Connection Requested\n"));
 
   for (CORBA::ULong i = 0;
        i < flowspec.length ();

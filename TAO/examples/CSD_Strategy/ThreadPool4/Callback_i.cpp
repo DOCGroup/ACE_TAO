@@ -16,7 +16,7 @@ void
 Callback_i::test_method (
 )
 {
-  ACE_DEBUG((LM_DEBUG, "(%P|%t)Callback_i::test_method called \n"));
+  ACE_DEBUG((LM_DEBUG, "(%P|%t)Callback_i::test_method called\n"));
 
 }
 

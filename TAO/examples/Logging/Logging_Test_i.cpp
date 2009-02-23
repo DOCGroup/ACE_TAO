@@ -83,7 +83,7 @@ Logger_Client::init_naming_service (void)
   if (my_name_client_.init (orb_.in ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to initialize "
-                       "the TAO_Naming_Client. \n"),
+                       "the TAO_Naming_Client.\n"),
                       -1);
 
   // Resolve an instance of the Logger_Factory
@@ -194,22 +194,22 @@ Logger_Client::run (void)
       // Setup the first log record
       this->init_record (rec1,
                          Logger::LM_DEBUG,
-                         "log() test (1) \n");
+                         "log() test (1)\n");
 
       // Setup the second log record
       this->init_record (rec2,
                          Logger::LM_MAX,
-                         "log() test (2) \n");
+                         "log() test (2)\n");
 
       // Setup the third log record
       this->init_record (rec3,
                          Logger::LM_INFO,
-                         "logv() test (3) \n");
+                         "logv() test (3)\n");
 
       // Setup the fourth log record
       this->init_record (rec4,
                          Logger::LM_EMERGENCY,
-                         "log_twoway() test (4) \n");
+                         "log_twoway() test (4)\n");
 
       // If debugging, output the new log records
       if (TAO_debug_level > 0)

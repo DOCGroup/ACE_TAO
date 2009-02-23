@@ -72,14 +72,14 @@ Filter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin)
   this->verify_filter_count (filter_admin, 0);
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG, "Adding a filter \n"));
+    ACE_DEBUG ((LM_DEBUG, "Adding a filter\n"));
 
   CosNotifyFilter::FilterID id_1 = this->add_filter (filter_admin);
 
   this->verify_filter_count (filter_admin, 1);
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG, "Adding another filter \n"));
+    ACE_DEBUG ((LM_DEBUG, "Adding another filter\n"));
 
   this->add_filter (filter_admin);
 
@@ -87,7 +87,7 @@ Filter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 
   if (TAO_debug_level)
     {
-      ACE_DEBUG ((LM_DEBUG, "Calling print_filters \n"));
+      ACE_DEBUG ((LM_DEBUG, "Calling print_filters\n"));
       this->print_filters (filter_admin);
     }
 
@@ -101,18 +101,18 @@ Filter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 
   if (TAO_debug_level)
     {
-      ACE_DEBUG ((LM_DEBUG, "Calling print_filters \n"));
+      ACE_DEBUG ((LM_DEBUG, "Calling print_filters\n"));
       this->print_filters (filter_admin);
     }
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG, "Calling remove_all_filters \n"));
+    ACE_DEBUG ((LM_DEBUG, "Calling remove_all_filters\n"));
 
   filter_admin->remove_all_filters ();
 
   if (TAO_debug_level)
     {
-      ACE_DEBUG ((LM_DEBUG, "Calling print_filters \n"));
+      ACE_DEBUG ((LM_DEBUG, "Calling print_filters\n"));
       this->print_filters (filter_admin);
     }
 
@@ -163,7 +163,7 @@ Filter::print_filters (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 {
   CosNotifyFilter::FilterIDSeq_var filter_seq = filter_admin->get_all_filters ();
 
-  ACE_DEBUG ((LM_DEBUG, "Getting all %d filters...\n ", filter_seq->length ()));
+  ACE_DEBUG ((LM_DEBUG, "Getting all %d filters...\n", filter_seq->length ()));
 
   for (CORBA::ULong i = 0; i < filter_seq->length (); ++i)
     {

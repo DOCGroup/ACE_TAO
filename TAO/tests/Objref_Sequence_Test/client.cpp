@@ -100,12 +100,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       //------------- End of donated untouched section
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Call delete on the server \n"));
+                  "(%P|%t) Call delete on the server\n"));
 
       server->DeleteExtra (vServers.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Calling shutdown \n"));
+                  "(%P|%t) Calling shutdown\n"));
       server->shutdown ();
 
     }

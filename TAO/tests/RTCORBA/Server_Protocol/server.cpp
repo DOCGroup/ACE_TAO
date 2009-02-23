@@ -133,7 +133,7 @@ check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
 
           if (!CORBA::is_nil (tcp_properties.in ()))
             ACE_DEBUG ((LM_DEBUG,
-                        "     Properties: \n"
+                        "     Properties:\n"
                         "      send_buffer_size = %d\n"
                         "      receive_buffer_size = %d\n"
                         "      keep_alive = %d\n"
@@ -154,7 +154,7 @@ check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
 
           if (!CORBA::is_nil (uiop_properties.in ()))
             ACE_DEBUG ((LM_DEBUG,
-                        "     Properties: \n"
+                        "     Properties:\n"
                         "      send_buffer_size = %d\n"
                         "      receive_buffer_size = %d\n",
                         uiop_properties->send_buffer_size (),
@@ -167,7 +167,7 @@ check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
 
           if (!CORBA::is_nil (shmem_properties.in ()))
             ACE_DEBUG ((LM_DEBUG,
-                        "     Properties: \n"
+                        "     Properties:\n"
                         "      send_buffer_size = %d\n"
                         "      receive_buffer_size = %d\n"
                         "      keep_alive = %d\n"
@@ -192,7 +192,7 @@ check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
 
           if (!CORBA::is_nil (diop_properties.in ()))
             ACE_DEBUG ((LM_DEBUG,
-                        "     Properties: \n"
+                        "     Properties:\n"
                         "      enable_network_priority = %d\n",
                         diop_properties->enable_network_priority ()));
         }
@@ -203,7 +203,7 @@ check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
 
           if (!CORBA::is_nil (sciop_properties.in ()))
             ACE_DEBUG ((LM_DEBUG,
-                        "     Properties: \n"
+                        "     Properties:\n"
                         "      send_buffer_size = %d\n"
                         "      receive_buffer_size = %d\n"
                         "      keep_alive = %d\n"

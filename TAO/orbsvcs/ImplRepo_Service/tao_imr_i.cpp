@@ -220,7 +220,7 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
     limit - 1,
     locked_out));
   for (CORBA::ULong i = 0; i < info.startup.environment.length (); ++i)
-    ACE_DEBUG ((LM_DEBUG, "Environment Variable: %s=%s \n",
+    ACE_DEBUG ((LM_DEBUG, "Environment Variable: %s=%s\n",
     info.startup.environment[i].name.in (),
     info.startup.environment[i].value.in ()));
 

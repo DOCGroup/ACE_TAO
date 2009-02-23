@@ -134,16 +134,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (freq != 919263)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) ERROR in the test \n")));
+                    ACE_TEXT ("(%P|%t) ERROR in the test\n")));
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) Shutting server down \n")));
+                  ACE_TEXT ("(%P|%t) Shutting server down\n")));
 
       server->shutdown ();
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Caught an exception \n");
+      ex._tao_print_exception ("Caught an exception\n");
       return -1;
     }
 

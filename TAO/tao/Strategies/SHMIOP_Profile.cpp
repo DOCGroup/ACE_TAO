@@ -244,7 +244,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) SHMIOP_Profile::parse_string () - \n")
+                      ACE_TEXT ("TAO (%P|%t) SHMIOP_Profile::parse_string () -\n")
                       ACE_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
         }
 

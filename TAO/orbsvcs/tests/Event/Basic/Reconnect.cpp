@@ -65,7 +65,7 @@ EC_Reconnect::print_args (void) const
 {
   this->EC_Driver::print_args ();
 
-  ACE_DEBUG ((LM_DEBUG, "EC_Reconnect: \n"
+  ACE_DEBUG ((LM_DEBUG, "EC_Reconnect:\n"
               " consumer_reconnect = %d\n"
               " supplier_reconnect = %d\n"
               " disconnect_count = %d\n",

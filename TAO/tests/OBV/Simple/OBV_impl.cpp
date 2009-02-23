@@ -28,7 +28,7 @@ Event_impl::_copy_value (void)
 void
 Event_impl::do_print (void)
 {
-  ACE_DEBUG((LM_DEBUG, "(value %d)  \n",
+  ACE_DEBUG((LM_DEBUG, "(value %d) \n",
              (CORBA::ULong) this->value_()));
 }
 

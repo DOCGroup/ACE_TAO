@@ -2549,7 +2549,7 @@ BE_GlobalData::arg_post_proc (void)
   if (!be_global->tc_support () && be_global->opt_tc ())
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Bad Combination -St and -Gt \n")));
+                  ACE_TEXT ("Bad Combination -St and -Gt\n")));
     }
 }
 
@@ -2703,12 +2703,12 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -GI[h|s|b|e|c|a|d]\tGenerate Implementation Files \n")
+      ACE_TEXT (" -GI[h|s|b|e|c|a|d]\tGenerate Implementation Files\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT ("  \t\t\th - Implementation header file name ending.")
-      ACE_TEXT (" Default is I.h \n")
+      ACE_TEXT (" Default is I.h\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -2718,7 +2718,7 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT ("  \t\t\tb - Prefix to the implementation class names.")
-      ACE_TEXT (" Default is 'no prefix' \n")
+      ACE_TEXT (" Default is 'no prefix'\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

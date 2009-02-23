@@ -106,8 +106,8 @@ Identity_Client::run (void)
 
   if (obj.in () == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%N|%l) <ERROR> [Identity_Client::run] \n")
-                       ACE_TEXT ("factory_resolve \n")),
+                       ACE_TEXT ("(%N|%l) <ERROR> [Identity_Client::run]\n")
+                       ACE_TEXT ("factory_resolve\n")),
                       -1);
 
   Load_Balancer::Object_Group_Factory_var factory =
@@ -151,7 +151,7 @@ Identity_Client::run (void)
         orb->object_to_string (object_group.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "The ior string is %s \n", iorstring.in ()));
+                  "The ior string is %s\n", iorstring.in ()));
 #if defined (DOORS_MEASURE_STATS)
       // Grab timestamp again.
       ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -162,7 +162,7 @@ Identity_Client::run (void)
 
     }
 
-  ACE_OS::printf ("*=*=*=*=Aggregated result *=*=*=*=*= \n");
+  ACE_OS::printf ("*=*=*=*=Aggregated result *=*=*=*=*=\n");
   throughput.dump_results (ACE_TEXT("Aggregated"), gsf);
 #endif /*TAO_MEASURE_STATS */
 

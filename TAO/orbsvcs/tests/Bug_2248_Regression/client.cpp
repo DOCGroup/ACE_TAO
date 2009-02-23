@@ -262,7 +262,7 @@ Manager::run (void)
   catch (const CORBA::Exception&)
     {
       ACE_ERROR_RETURN ((LM_DEBUG,
-                         "Error in run \n"),
+                         "Error in run\n"),
                         -1);
     }
 

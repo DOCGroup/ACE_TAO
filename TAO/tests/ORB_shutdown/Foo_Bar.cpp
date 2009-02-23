@@ -13,7 +13,7 @@ Foo_Bar::Foo_Bar (CORBA::ORB_ptr orb)
 Foo_Bar::~Foo_Bar (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Shutting down the ORB again \n"));
+              "(%P|%t) Shutting down the ORB again\n"));
 
   this->orb_->shutdown (1);
 }

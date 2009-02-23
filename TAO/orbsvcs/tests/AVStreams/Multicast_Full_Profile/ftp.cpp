@@ -69,7 +69,7 @@ FTP_Client_Callback::handle_timeout (void *)
   mb.wr_ptr (n);
   int result = this->protocol_object_->send_frame (&mb);
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send \n"),-1);
+    ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send\n"),-1);
   ACE_DEBUG ((LM_DEBUG,"handle_timeout::buffer sent succesfully\n"));
   return 0;
 }
@@ -196,7 +196,7 @@ Client::bind_to_server (const char *name)
       if (my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
+                           "the TAO_Naming_Client.\n"),
                           -1);
 
       CosNaming::Name server_mmdevice_name (1);
@@ -257,7 +257,7 @@ Client::init (int argc, ACE_TCHAR *argv[])
       if (this->my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
+                           "the TAO_Naming_Client.\n"),
                           -1);
 
       this->fp_ = ACE_OS::fopen (this->filename_, "r");

@@ -43,7 +43,7 @@ void
 Test_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Shutting down \n"));
+              "(%P|%t) Shutting down\n"));
   this->orb_->shutdown (0);
 }
 

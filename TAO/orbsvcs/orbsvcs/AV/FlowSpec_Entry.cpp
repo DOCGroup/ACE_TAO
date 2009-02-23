@@ -348,7 +348,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "AV BOTH %s \n",
+                      "AV BOTH %s\n",
                       protocol_tokenizer[1]));
 
           TAO_Tokenizer address_tokenizer (protocol_tokenizer[1], ':');
@@ -598,7 +598,7 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
       ACE_TCHAR buf [BUFSIZ];
       addr->addr_to_string (buf, BUFSIZ);
       ACE_DEBUG ((LM_DEBUG,
-                  "Peer Address %s \n",
+                  "Peer Address %s\n",
                   buf));
 
     }

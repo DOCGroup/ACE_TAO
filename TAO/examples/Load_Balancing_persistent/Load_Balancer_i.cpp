@@ -70,7 +70,7 @@ Object_Group_Factory_i::make_round_robin (const char * id)
                                  (void *)this->rr_groups_) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to bind \n"),
+                             "Unable to bind\n"),
                             0);
         }
     }
@@ -148,7 +148,7 @@ Object_Group_Factory_i::make_random (const char * id)
                                  (void *)this->random_groups_) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to bind \n"),
+                             "Unable to bind\n"),
                             0);
         }
     }
@@ -399,7 +399,7 @@ Object_Group_Factory_i::resolve (const char * id)
                             now - latency_base);
 
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-  ACE_OS::printf ("*=*=*=*=Aggregated result *=*=*=*=*= \n");
+  ACE_OS::printf ("*=*=*=*=Aggregated result *=*=*=*=*=\n");
   this->throughput_.dump_results (ACE_TEXT("Aggregated"), gsf);
 
 #endif /*DOORS_MEASURE_STATS*/
@@ -633,7 +633,7 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
                                       (void *)this->members_) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          "Unable to bind \n"));
+                          "Unable to bind\n"));
 
             }
         }
@@ -698,7 +698,7 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
                                  (void *)this->member_id_list_) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Unable to bind \n"));
+                      "Unable to bind\n"));
           return;
         }
     }
@@ -847,7 +847,7 @@ Object_Group_i::read_from_memory (void)
       else
         {
           ACE_ERROR ((LM_ERROR,
-                      "Unable to find tha HASH MAP  in the MMAP file \n"));
+                      "Unable to find tha HASH MAP  in the MMAP file\n"));
         }
     }
 
@@ -867,7 +867,7 @@ Object_Group_i::read_from_memory (void)
       else
         {
           ACE_ERROR ((LM_ERROR,
-                      "Unable to find tha HASH MAP  in the MMAP file \n"));
+                      "Unable to find tha HASH MAP  in the MMAP file\n"));
         }
     }
 

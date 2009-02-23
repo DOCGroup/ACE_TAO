@@ -105,7 +105,7 @@ Worker::svc()
         {
           excep = true;
           ACE_ERROR ((LM_ERROR,
-                      "(%t) Exception caught: %s after %d invocations \n",
+                      "(%t) Exception caught: %s after %d invocations\n",
                       ex._name(), i));
           i = 39;
         }

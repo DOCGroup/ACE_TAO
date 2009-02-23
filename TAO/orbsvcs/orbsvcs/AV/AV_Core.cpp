@@ -833,7 +833,7 @@ TAO_AV_Core::init_transport_factories (void)
           const ACE_CString &name = (*factory)->name ();
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "%s \n",
+                        "%s\n",
                         name.c_str ()));
 
           (*factory)->factory (
@@ -1070,7 +1070,7 @@ TAO_AV_Core::init_flow_protocol_factories (void)
           const ACE_CString &name = (*factory)->name ();
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "%s \n",
+                        "%s\n",
                         name.c_str ()));
 
           (*factory)->factory (

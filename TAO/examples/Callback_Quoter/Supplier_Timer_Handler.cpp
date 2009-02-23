@@ -52,16 +52,16 @@ Supplier_Timer_Handler:: handle_timeout (const ACE_Time_Value & /* tv */,
 {
 
   ACE_DEBUG ((LM_DEBUG,
-              "Sending Stock Market Information to Notifier... \n"));
+              "Sending Stock Market Information to Notifier...\n"));
 
   // The next current stock rates are obtained from a file.
   if (this->get_stock_information () == -1)
     return 0;
-  
-  
+
+
   // Send the stock information to the notifier.  Graceful exit when
   // the notifier doesnt accept the information.
-  if (this->supplier_obj_->send_market_status (stockname_, 
+  if (this->supplier_obj_->send_market_status (stockname_,
                                                value_) < 0)
     {
       this->reactor_->end_event_loop ();
@@ -80,7 +80,7 @@ int
 Supplier_Timer_Handler::get_stock_information (void)
 {
   // Scan the file and obtain the stock information.
-  if (fscanf (file_ptr_, 
+  if (fscanf (file_ptr_,
               "%s %ld\n",
               stockname_,
               &value_) != EOF)
@@ -97,5 +97,5 @@ Supplier_Timer_Handler::get_stock_information (void)
       this->reactor_->end_event_loop ();
       return -1;
     }
-} 
+}
 
