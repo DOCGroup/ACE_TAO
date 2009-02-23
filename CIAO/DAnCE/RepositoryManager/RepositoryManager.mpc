@@ -1,13 +1,18 @@
 // -*- MPC -*-
 // $Id$
 
-project (DAnCE_RepositoryManager) : dance_deployment_svnt, ciao_config_handlers, ccm_stub, dance_repository_manager_base, naming, iortable, utils, minizip {
-  requires += dummy_label
-  requires += zlib dummy_label
-  libs += Package_Config_Handlers
-
+project (DAnCE_RepositoryManager_IDL) : ciaoidldefaults {
+  custom_only = 1
   IDL_Files {
     RepositoryManagerDaemon.idl
+  }
+}
+
+project (DAnCE_RepositoryManager) : dance_deployment_svnt, ciao_config_handlers, ccm_stub, dance_repository_manager_base, naming, iortable, utils, minizip, zlib {
+  requires += zlib
+  libs += Package_Config_Handlers
+  after += DAnCE_RepositoryManager_IDL
+  IDL_Files {
   }
 
   Source_Files {
@@ -24,23 +29,22 @@ project (DAnCE_RepositoryManager) : dance_deployment_svnt, ciao_config_handlers,
 }
 
 project (DAnCE_RepositoryManager_Exec) : dance_repository_manager, dance_exe {
-   exename = dance_repository_manager
-   requires += dummy_label
-   Source_Files {
-     Repository_Manager_Exec.cpp
-   }
+  requires += zlib
+  exename = dance_repository_manager
+  Source_Files {
+    Repository_Manager_Exec.cpp
+  }
+  IDL_Files {
+  }
 }
 
 
 // RMadmin project: a sample client for the RM.
-
 project (RMAdmin) : dance_deployment_stub, ciao_config_handlers, naming {
-  requires += dummy_label
   exename = dance_rm_admin
-  after  += RepositoryManager
+  after  += DAnCE_RepositoryManager DAnCE_RepositoryManager_IDL
 
   IDL_Files {
-   RepositoryManagerDaemon.idl
   }
 
   Source_Files {
