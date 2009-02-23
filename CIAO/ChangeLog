@@ -1,3 +1,9 @@
+Mon Feb 23 13:25:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+          Use seperate idl project and removed dummy label, it compiles, testing
+          has still to be done
+
 Mon Feb 23 11:30:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Home_Servant_Impl_T.cpp:

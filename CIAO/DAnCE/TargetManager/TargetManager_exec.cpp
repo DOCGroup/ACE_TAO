@@ -1,6 +1,6 @@
 // $Id$
 #include "TargetManager_exec.h"
-#include "ciao/CIAO_common.h"
+//#include "ciao/CIAO_common.h"
 #include "tools/Config_Handlers/DD_Handler.h"
 #include "tools/Config_Handlers/DnC_Dump.h"
 
@@ -178,8 +178,7 @@ namespace CIDL_TargetManager_i
   TargetManagerImpl_exec_i::set_session_context (
   ::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
-    TargetManagerImpl_Context::_narrow (ctx);
+    this->context_ = TargetManagerImpl_Context::_narrow (ctx);
 
     if (this->context_ == 0)
     {
