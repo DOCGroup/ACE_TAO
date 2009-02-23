@@ -1,3 +1,10 @@
+Mon Feb 23 09:29:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/run_test.pl:
+          Updated because of the fact that libs are not put in ACE_ROOT/lib
+          anymore
+
 Mon Feb 23 09:22:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Null_Component/descriptors/run_test.pl:
