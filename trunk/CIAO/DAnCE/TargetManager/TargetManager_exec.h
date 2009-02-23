@@ -54,10 +54,6 @@ namespace CIDL_TargetManager_i
     set_session_context (
     ::Components::SessionContext_ptr ctx);
 
-    virtual void ciao_preactivate ();
-
-    virtual void ciao_postactivate ();
-
     virtual void ccm_activate ();
 
     virtual void ccm_passivate ();
@@ -89,7 +85,7 @@ namespace CIDL_TargetManager_i
 
     virtual ::Deployment::Domain * getAvailableResources ();
 
-    virtual ::Deployment::ResourceCommitmentManager_ptr 
+    virtual ::Deployment::ResourceCommitmentManager_ptr
       commitResources (const ::Deployment::ResourceAllocations & resources);
 
     virtual void releaseResources (::Deployment::ResourceCommitmentManager_ptr manager);
