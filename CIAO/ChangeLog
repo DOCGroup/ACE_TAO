@@ -1,3 +1,9 @@
+Mon Feb 23 13:58:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/TargetManager/TargetManager_exec.cpp
+        * DAnCE/TargetManager/TargetManager_exec.h
+          Removed ciao_preactivate/ciao_postactivate
+
 Mon Feb 23 13:25:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/RepositoryManager/RepositoryManager.mpc:
