@@ -1,9 +1,8 @@
 // $Id$
 
 #include "NavDisplayGUI_exec.h"
-#include "CIAO_common.h"
-#include <qapplication.h>
-#include <qevent.h>
+#include <Qt/qapplication.h>
+#include <Qt/qevent.h>
 
 #include "UpdatePositionCmd.h"
 #include "QuitCmd.h"
@@ -19,23 +18,11 @@ static const char *argv[] =
 MyImpl::NavDisplayGUI_exec_impl::NavDisplayGUI_exec_impl (void)
   : unit_(1, "Model T3+"), loc_(50, 20, 0)
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::NavDisplayGUI_exec_impl::"
-                  "NavDisplayGUI_exec_impl ()\n"));
-    }
 }
 
 /// Default destructor.
 MyImpl::NavDisplayGUI_exec_impl::~NavDisplayGUI_exec_impl (void)
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::NavDisplayGUI_exec_impl::"
-                  "~NavDisplayGUI_exec_impl ()\n"));
-    }
 }
 
 // Operations from HUDisplay::NavDisplay
@@ -66,7 +53,7 @@ MyImpl::NavDisplayGUI_exec_impl::push_Refresh (
   //ACE_DEBUG ((LM_DEBUG, "DISPLAY: Current Location is: %d %d\n", int(attrs.x_), int(attrs.y_)));
 
   RootPanel *root_pane = worker_->getMainWindow ();
-  
+
   if (root_pane != 0)
     {
       UpdatePositionCmd *cmd = UpdatePositionCmd::create (
@@ -83,13 +70,6 @@ MyImpl::NavDisplayGUI_exec_impl::push_Refresh (
 void
 MyImpl::NavDisplayGUI_exec_impl::set_session_context (Components::SessionContext_ptr ctx)
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::NavDisplayGUI_exec_impl::"
-                  "set_session_context\n"));
-    }
-
   this->context_ =
     HUDisplay::CCM_NavDisplay_Context::_narrow (ctx);
 
@@ -108,13 +88,6 @@ MyImpl::NavDisplayGUI_exec_impl::configuration_complete (void)
 void
 MyImpl::NavDisplayGUI_exec_impl::ccm_activate (void)
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "ENTER: MyImpl::NavDisplayGUI_exec_impl::"
-                  "ccm_activate\n"));
-    }
-
   worker_ = new Worker (sizeof (argv) / sizeof (argv[0]),
                         const_cast<char **> (argv));
 
@@ -132,28 +105,13 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_activate (void)
     &(this->unit_));
   QCustomEvent *evt = new QCustomEvent (QEvent::User, cmd);
   QApplication::postEvent (worker_->getMainWindow (), evt);
-
-
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "LEAVE: MyImpl::NavDisplayGUI_exec_impl::"
-                  "ccm_activate\n"));
-    }
 }
 
 void
 MyImpl::NavDisplayGUI_exec_impl::ccm_passivate (void)
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::NavDisplayGUI_exec_impl::"
-                  "ccm_passivate\n"));
-    }
-
   RootPanel *target = worker_->getMainWindow ();
-  
+
   if (target != 0)
     {
       QuitCmd *cmd = QuitCmd::create( target);
@@ -168,34 +126,16 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_passivate (void)
 void
 MyImpl::NavDisplayGUI_exec_impl::ccm_remove (void)
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::NavDisplayGUI_exec_impl::"
-                  "ccm_remove\n"));
-    }
 }
 
 /// Default ctor.
 MyImpl::NavDisplayGUIHome_exec_impl::NavDisplayGUIHome_exec_impl (void)
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::NavDisplayGUI_exec_impl::"
-                  "NavDisplayGUIHome_exec_impl ()\n"));
-    }
 }
 
 /// Default dtor.
 MyImpl::NavDisplayGUIHome_exec_impl::~NavDisplayGUIHome_exec_impl (void)
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::NavDisplayGUI_exec_impl::"
-                  "~NavDisplayGUIHome_exec_impl ()\n"));
-    }
 }
 
 // Explicit home operations.
@@ -205,12 +145,6 @@ MyImpl::NavDisplayGUIHome_exec_impl::~NavDisplayGUIHome_exec_impl (void)
 ::Components::EnterpriseComponent_ptr
 MyImpl::NavDisplayGUIHome_exec_impl::create (void)
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::NavDisplayGUIHome_exec_impl::create()\n"));
-    }
-
   return new MyImpl::NavDisplayGUI_exec_impl;
 }
 
@@ -218,10 +152,5 @@ MyImpl::NavDisplayGUIHome_exec_impl::create (void)
 extern "C" NAVDISPLAY_EXEC_Export ::Components::HomeExecutorBase_ptr
 createNavDisplayHome_Impl (void)
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "createNavDisplayHome_Impl()\n"));
-    }
-    
   return new MyImpl::NavDisplayGUIHome_exec_impl;
 }

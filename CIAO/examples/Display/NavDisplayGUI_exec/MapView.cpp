@@ -6,15 +6,15 @@
 #include "worldmap1.xpm"
 
 MapView::MapView(
-  QCanvas& c,
+  Q3Canvas& c,
   QWidget* parent,
   const char* name,
-  WFlags f)
+  Qt::WindowFlags f)
   :
-  QCanvasView(&c, parent, name, f),
+  Q3CanvasView(&c, parent, name, f),
   bg_pixmap_(worldmap1)
 {
-  viewport()->setBackgroundMode(NoBackground);
+  viewport()->setBackgroundMode(Qt::NoBackground);
   enableClipper(TRUE);
   if(!bg_pixmap_.isNull())
   {

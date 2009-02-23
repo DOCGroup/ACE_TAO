@@ -3,15 +3,15 @@
 #ifndef __MAPVIEW_H
 #define __MAPVIEW_H
 
-#include <qcanvas.h>
-#include <qpixmap.h>
+#include <Qt/q3canvas.h>
+#include <Qt/qpixmap.h>
 
-class MapView : public QCanvasView
+class MapView : public Q3CanvasView
 {
   Q_OBJECT
 
 public:
-  MapView(QCanvas&, QWidget* parent=0, const char* name=0, WFlags f=0);
+  MapView(Q3Canvas&, QWidget* parent=0, const char* name=0, Qt::WindowFlags f=0);
   void clear();
 
 protected:
