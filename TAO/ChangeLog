@@ -1,3 +1,10 @@
+Mon Feb 23 13:12:52 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Removed ciao_{pre,post}activate. 
+        
 Mon Feb 23 07:58:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
