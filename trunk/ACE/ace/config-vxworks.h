@@ -36,13 +36,7 @@
 # endif
 #endif /* ! ACE_VXWORKS */
 
-#if (ACE_VXWORKS == 0x551)
-# include "ace/config-vxworks5.x.h"
-#elif (ACE_VXWORKS == 0x620)
-# include "ace/config-vxworks6.2.h"
-#elif (ACE_VXWORKS == 0x630)
-# include "ace/config-vxworks6.3.h"
-#elif (ACE_VXWORKS == 0x640)
+#if (ACE_VXWORKS == 0x640)
 # include "ace/config-vxworks6.4.h"
 #elif (ACE_VXWORKS == 0x650)
 # include "ace/config-vxworks6.5.h"
@@ -51,7 +45,7 @@
 #elif (ACE_VXWORKS == 0x670)
 # include "ace/config-vxworks6.7.h"
 #else
-#error Unknown VxWorks version
+#error Unknown or unsupported VxWorks version
 #endif
 
 #include /**/ "ace/post.h"

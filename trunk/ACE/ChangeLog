@@ -1,3 +1,13 @@
+Mon Feb 23 13:11:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+          Removed, these VxWorks versions aren't maintained anymore
+
+        * ace/config-vxworks.h:
+          Updated
+
 Mon Feb 23 08:16:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/global.features
