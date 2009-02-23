@@ -1,0 +1,7 @@
+module DeCoRAM
+{
+  interface Worker
+  {
+    void run_task (in double execution_time);
+  };
+};

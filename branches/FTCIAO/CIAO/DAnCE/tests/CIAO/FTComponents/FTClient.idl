@@ -1,0 +1,18 @@
+// $Id$
+
+#include <Components.idl>
+
+module DeCoRAM
+{
+  component FTClient
+  {
+    attribute double period;
+    attribute double execution_time;
+    attribute unsigned long priority;
+    attribute string server_ior;
+  };
+
+  home FTClientHome manages FTClient
+  {
+  };
+};

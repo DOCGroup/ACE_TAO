@@ -1,0 +1,12 @@
+// $Id$
+
+#include "FTClient.idl"
+
+composition session FTClient_Impl
+{
+  home executor FTClientHome_Exec
+  {
+    implements DeCoRAM::FTClientHome;
+    manages SimpleProvider_Exec;
+  };
+};
