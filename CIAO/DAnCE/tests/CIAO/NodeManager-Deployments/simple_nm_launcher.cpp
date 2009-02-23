@@ -17,9 +17,12 @@
 
 int usage ()
 {
-  ACE_ERROR ((LM_ERROR, "simple_nm_launcher <nm_url> <plan>\n"));
+  ACE_ERROR ((LM_ERROR, "simple_nm_launcher <nm_url> <plan> [-m]\n"));
   return -1;
 }
+
+// if this flag is set, the user has to give input for shutdown
+bool manual_stop = false;
 
 #include <iostream>
 
@@ -40,9 +43,17 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
   
-  if (argc != 3)
+  if (argc < 3)
     return usage ();
   
+  if (argc > 3)
+    {
+      if (ACE_OS::strcmp (argv[3], "-m"))
+        manual_stop = true;
+      else
+        return usage ();
+    }
+
   try
     {
       ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: parsing XML\n"));
@@ -84,10 +95,24 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       
       ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: calling start\n"));
       na->start ();
-      
-      ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: start finished, sleeping 5 seconds.\n"));
-      ACE_OS::sleep (5);
-      ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: waking up from sleep, calling destroyApplication\n"));
+
+      if (manual_stop)
+        {
+          ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: "
+                      "start finished, press key to shut down..\n"));
+          char c;
+          std::cin >> c;
+          ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: "
+                      "calling destroyApplication\n"));
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: "
+                      "start finished, sleeping 5 seconds.\n"));
+          ACE_OS::sleep (5);
+          ACE_DEBUG ((LM_DEBUG, "*** simple_nm_launcher: "
+                      "waking up from sleep, calling destroyApplication\n"));
+        }
       
       nam->destroyApplication (na.in ());
       
