@@ -1,9 +1,8 @@
 // $Id$
 #include "TargetManager_exec.h"
 #include "ciao/CIAO_common.h"
-#include <orbsvcs/CosNamingC.h>
-#include "Config_Handlers/DD_Handler.h"
-#include "Config_Handlers/DnC_Dump.h"
+#include "tools/Config_Handlers/DD_Handler.h"
+#include "tools/Config_Handlers/DnC_Dump.h"
 
 #include "DomainEventsC.h"
 
@@ -59,20 +58,20 @@ namespace CIDL_TargetManager_i
       get_data_manager ()->get_current_domain ();
   }
 
-  void
+  ::Deployment::ResourceCommitmentManager_ptr
   TargetManager_exec_i::commitResources (
-  const ::Deployment::DeploymentPlan & plan)
+  const ::Deployment::ResourceAllocations & resources)
   {
     return CIAO::DomainDataManager::
-      get_data_manager ()->commitResources (plan);
+      get_data_manager ()->commitResources (resources);
   }
 
   void
   TargetManager_exec_i::releaseResources (
-  const ::Deployment::DeploymentPlan &  plan)
+  ::Deployment::ResourceCommitmentManager_ptr manager)
   {
     return CIAO::DomainDataManager::
-      get_data_manager ()->releaseResources (plan);
+      get_data_manager ()->releaseResources (manager);
   }
 
   void
@@ -132,11 +131,11 @@ namespace CIDL_TargetManager_i
 
   void
   TargetManager_exec_i::destroyResourceCommitment (
-  ::Deployment::ResourceCommitmentManager_ptr resources)
+  ::Deployment::ResourceCommitmentManager_ptr manager)
   {
     ::Deployment::ResourceAllocations res;
     res.length (0);
-    resources->releaseResources (res);
+    manager->releaseResources (res);
     return;
   }
   //==================================================================
@@ -166,7 +165,7 @@ namespace CIDL_TargetManager_i
     if (CORBA::is_nil (this->exec_object_.in ()))
       {
         this->exec_object_ = new TargetManager_exec_i(this,
-                      context_->_ciao_the_Container()->the_ORB(),
+                      context_->_ciao_the_Container()->_get_orb(),
                       context_);
       }
 
@@ -200,6 +199,11 @@ namespace CIDL_TargetManager_i
     // Your code here.
   }
 
+  void
+  TargetManagerImpl_exec_i::configuration_complete ()
+  {
+    // Your code here.
+  }
 
   void
   TargetManagerImpl_exec_i::ccm_activate ()

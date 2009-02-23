@@ -37,7 +37,7 @@ namespace CIAO
   {
     CIAO_TRACE ("Home_Servant_Impl<>::destructor");
 
-    const OBJ_ITERATOR end = this->objref_map_.end ();
+    OBJ_ITERATOR const end = this->objref_map_.end ();
 
     for (OBJ_ITERATOR iter = this->objref_map_.begin ();
          iter != end;
