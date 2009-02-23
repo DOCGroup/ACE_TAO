@@ -8,6 +8,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.8 and ACE-5.6.9
 
 . Removed Borland/CodeGear C++ Builder 2007 support
 
+. Removed VxWorks 5.5.x, 6.2, and 6.3 support
+
+. Improved again Unicode support
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.7 and ACE-5.6.8
 ====================================================
 
