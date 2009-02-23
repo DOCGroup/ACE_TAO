@@ -87,7 +87,7 @@ My_Accept_Handler::handle_input (ACE_HANDLE)
   }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("My_Accept_Handler::handle_input \n")));
+              ACE_TEXT ("My_Accept_Handler::handle_input\n")));
 
   // Close the opened stream, else it'll leak a handle. Don't close
   // the acceptor here, though, because get_handle() needs it to
@@ -186,7 +186,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 #else
   const u_short ports_to_test = 300;
 #endif
-  
+
   //Ports beyond 65279 were said to bad on NT sp 3.
   for (u_short idx = USHRT_MAX; idx != USHRT_MAX - ports_to_test; --idx)
     {

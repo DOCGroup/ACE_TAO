@@ -62,7 +62,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ZZIPLIB support has not been")
                         ACE_TEXT (" compiled in. Refer to ")
                         ACE_TEXT ("$ACE_ROOT/ACEXML/README for more ")
-                        ACE_TEXT ("information. \n")));
+                        ACE_TEXT ("information.\n")));
             return -1;
 #else
             break;

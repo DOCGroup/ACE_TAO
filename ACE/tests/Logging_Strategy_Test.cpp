@@ -108,7 +108,7 @@ static
 void print_till_death (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\n-> start generating messages... \n"));
+              "\n-> start generating messages...\n"));
 
   for (int i = 0; i < 1000; i++)
     {
@@ -191,7 +191,7 @@ count_files (void)
                 num_files));
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n-< counting finished... \n"));
+              "\n-< counting finished...\n"));
 }
 
 // get the file statistics
@@ -200,7 +200,7 @@ static time_t
 get_statistics (ACE_TCHAR *f_name)
 {
   ACE_stat buf;
-  
+
   // Get data associated with "file_name":
   int result = ACE_OS::stat (f_name, &buf);
 
@@ -230,7 +230,7 @@ static void
 order (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\n-> start testing order... \n")));
+              ACE_TEXT ("\n-> start testing order...\n")));
 
   if (num_files <= 2)
     {

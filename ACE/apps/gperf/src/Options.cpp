@@ -243,7 +243,7 @@ Options::~Options (void)
                          "all characters are used in the hash function\n");
 
       ACE_OS::fprintf (stderr,
-                       "maximum keysig size = %d\nkey positions are: \n",
+                       "maximum keysig size = %d\nkey positions are:\n",
                        total_keysig_size_);
 
       for (ptr = key_positions_; *ptr != EOS; ptr++)
@@ -440,7 +440,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                              "\tof 2 generates 2 tables with 1/2 the elements in each table, etc.\n"
                              "\tThis is useful since many C compilers cannot correctly generate code\n"
                              "\tfor large switch statements.\n"
-                             "-t\tAllows the user to include a structured type declaration for \n"
+                             "-t\tAllows the user to include a structured type declaration for\n"
                              "\tgenerated code. Any text before %%%% is consider part of the type\n"
                              "\tdeclaration.  Key words and additional fields may follow this, one\n"
                              "\tgroup of fields per line.\n"

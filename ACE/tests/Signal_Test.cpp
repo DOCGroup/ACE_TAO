@@ -97,7 +97,7 @@ handle_signal (int signum)
 
 #if 0
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) killing child pid %d \n"),
+                    ACE_TEXT ("(%P|%t) killing child pid %d\n"),
                     child_pid));
 #endif
         int const result = ACE_OS::kill (child_pid,

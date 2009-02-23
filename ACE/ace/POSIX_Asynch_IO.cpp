@@ -815,7 +815,7 @@ ACE_POSIX_Asynch_Accept::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
   if (this->flg_open_)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::open:")
-                       ACE_TEXT("acceptor already open \n")),
+                       ACE_TEXT("acceptor already open\n")),
                       -1);
 
   if (-1 == ACE_POSIX_Asynch_Operation::open (handler_proxy,
