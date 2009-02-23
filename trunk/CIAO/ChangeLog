@@ -1,3 +1,41 @@
+Mon Feb 23 11:30:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+          Const change
+
+        * DAnCE/TargetManager/CmpClient.cpp:
+          Fixed compile error
+
+        * DAnCE/TargetManager/DomainDataManager.cpp:
+          Fixed some errors and commented out some code blocks that
+          have to be reworked
+
+        * DAnCE/TargetManager/DomainDataManager.h:
+          Updated to the new ciao, partly disabled
+
+        * DAnCE/TargetManager/DomainEvents.idl:
+          Updated include
+
+        * DAnCE/TargetManager/ResourceCommitmentManager.cpp:
+          Const change
+
+        * DAnCE/TargetManager/TargetManager_exec.cpp:
+        * DAnCE/TargetManager/TargetManager_exec.h:
+          Fixed compile errors
+
+        * DAnCE/TargetManager/TargetManagerExt.idl:
+          Fixed type
+
+        * DAnCE/TargetManager/TargetManagerImpl.idl:
+          Fixed include
+
+        * DAnCE/tests/DeploymentPlanTestReferences/DeploymentPlanTestReferences.mpc:
+        * DAnCE/tests/DeploymentTest1/DeploymentTest1.mpc
+          Don't use ciao_output for a test
+
+        * MPC/config/dance_domain_application_manager.mpb:
+          Add naming as base
+
 Mon Feb 23 09:52:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/BasicSP/BasicSP.mpc

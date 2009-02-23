@@ -17,7 +17,7 @@
 #include "ace/FILE_Connector.h"
 #include "ace/FILE_Addr.h"
 #include "ace/Get_Opt.h"
-#include "Config_Handlers/DnC_Dump.h"
+#include "tools/Config_Handlers/DnC_Dump.h"
 
 /**
  * TM_Tester contains the code to test the TM Component
@@ -141,16 +141,13 @@ namespace TM_Tester
 
       try
       {
-        manager = targetI->createResourceCommitment (resource_seq);
-
-        manager->commitResources (resource_seq);
-
+        manager = targetI->commitResources (resource_seq);
       }
-      catch(CORBA::NO_IMPLEMENT &)
+      catch(const CORBA::NO_IMPLEMENT &)
       {
         ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
       }
-      catch (::Deployment::ResourceCommitmentFailure& e)
+      catch (const ::Deployment::ResourceCommitmentFailure& e)
       {
         resource_available = 0;
         ACE_ERROR ((LM_ERROR, "TargetManager commitResources ResourceCommitmentFailure Exception\n"));

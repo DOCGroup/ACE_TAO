@@ -64,6 +64,8 @@ namespace CIDL_TargetManager_i
 
     virtual void ccm_remove ();
 
+    virtual void configuration_complete ();
+
   protected:
     /// The service context pointer
     TargetManagerImpl_Context *context_;
@@ -73,7 +75,7 @@ namespace CIDL_TargetManager_i
   };
   class TARGETMANAGER_EXEC_Export TargetManager_exec_i
   : public virtual ::Deployment::CCM_TargetManager,
-  public virtual ::CORBA::LocalObject
+    public virtual ::CORBA::LocalObject
   {
     public:
     TargetManager_exec_i (TargetManagerImpl_exec_i* exec,
@@ -87,9 +89,10 @@ namespace CIDL_TargetManager_i
 
     virtual ::Deployment::Domain * getAvailableResources ();
 
-    virtual void commitResources (const ::Deployment::DeploymentPlan & plan);
+    virtual ::Deployment::ResourceCommitmentManager_ptr 
+      commitResources (const ::Deployment::ResourceAllocations & resources);
 
-    virtual void releaseResources (const ::Deployment::DeploymentPlan & argname);
+    virtual void releaseResources (::Deployment::ResourceCommitmentManager_ptr manager);
 
     virtual void
     updateDomain (
