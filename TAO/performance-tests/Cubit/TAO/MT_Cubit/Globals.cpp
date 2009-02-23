@@ -61,7 +61,7 @@ Globals::parse_args (int argc, ACE_TCHAR *argv[])
                            "[-t <number_of_servants>]      // # of servant threads to create     \n\t\t\t"
                            "[-f <ior_file> ]               // specify a file to output all ior's \n\t\t\t"
                            "[-m ]                          // Use multiple priorities for threads\n\t\t\t"
-                           "[-r ]                          // Run the thread-per-rate test       \n"
+                           "[-r ]                          // Run the thread-per-rate test      \n"
                            ,argv [0]),
                           -1);
       }

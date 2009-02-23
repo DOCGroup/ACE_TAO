@@ -51,7 +51,7 @@ public:
   /// Global access point to the Singleton.
   static TYPE *instance (void);
 
-  /// Cleanup method, used by <ace_cleanup_destroyer> to destroy the
+  /// Cleanup method, used by @c ace_cleanup_destroyer to destroy the
   /// singleton.
   virtual void cleanup (void *param = 0);
 
@@ -93,7 +93,7 @@ public:
   /// Global access point to the Singleton.
   static TYPE *instance (void);
 
-  /// Cleanup method, used by <ace_cleanup_destroyer> to destroy the
+  /// Cleanup method, used by @c ace_cleanup_destroyer to destroy the
   /// singleton.
   virtual void cleanup (void *param = 0);
 
@@ -116,10 +116,8 @@ protected:
   static TAO_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
 
 private:
-
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_TSS_Singleton<TYPE,ACE_LOCK> &))
   ACE_UNIMPLEMENTED_FUNC (TAO_TSS_Singleton (const TAO_TSS_Singleton<TYPE,ACE_LOCK> &))
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

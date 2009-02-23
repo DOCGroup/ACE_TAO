@@ -975,7 +975,7 @@ Cubit_Client::cube_rti_data (int,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Input: \n"));
+                      "Input:\n"));
 
           print_RtiPacket (input);
         }
@@ -992,7 +992,7 @@ Cubit_Client::cube_rti_data (int,
 
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Output: \n"));
+                      "Output:\n"));
 
           print_RtiPacket (*vout.ptr ());
 
@@ -1045,7 +1045,7 @@ Cubit_Client::cube_any (int i)
       if (arg_long != ret_long)
         {
           ACE_ERROR ((LM_ERROR,
-                      "** cube_any(%d)  ERROR (got %d, expect %d) \n",
+                      "** cube_any(%d)  ERROR (got %d, expect %d)\n",
                       (CORBA::Long) this->func (i),
                       ret_long, arg_long));
 

@@ -41,11 +41,12 @@ public:
 static int
 TAO_Requires_EndpointPolicy_Initializer = TAO_EndpointPolicy_Initializer::static_init ();
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_EndpointPolicy, TAO_EndpointPolicy_Initializer)
 ACE_FACTORY_DECLARE (TAO_EndpointPolicy, TAO_EndpointPolicy_Initializer)
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #define TAO_ENDPOINTPOLICY_SAFE_INCLUDE

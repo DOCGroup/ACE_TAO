@@ -64,7 +64,7 @@ TAO_CSD_Strategy_Repository::add_strategy (const ACE_CString& name,
   if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("Strategy_Repository::add_strategy for %s \n"),
+                  ACE_TEXT("Strategy_Repository::add_strategy for %C\n"),
                   name.c_str ()));
     }
   return 0;
@@ -103,7 +103,6 @@ TAO_CSD_Strategy_Repository::Strategy_Node::find(const ACE_CString &name)
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 /////////////////////////////////////////////////////////////////////
 
@@ -115,3 +114,4 @@ ACE_STATIC_SVC_DEFINE (TAO_CSD_Strategy_Repository,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
+TAO_END_VERSIONED_NAMESPACE_DECL

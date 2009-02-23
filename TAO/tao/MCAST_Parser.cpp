@@ -478,8 +478,6 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
     mcast_name_cstring.substring (1, mcast_name_cstring.length() - 1).c_str ();
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DEFINE (TAO_MCAST_Parser,
                        ACE_TEXT ("MCAST_Parser"),
                        ACE_SVC_OBJ_T,
@@ -489,5 +487,8 @@ ACE_STATIC_SVC_DEFINE (TAO_MCAST_Parser,
                        0)
 
 ACE_FACTORY_DEFINE (TAO, TAO_MCAST_Parser)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #endif /* TAO_HAS_MCAST_PARSER == 1 */

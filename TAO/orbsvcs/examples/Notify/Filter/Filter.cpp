@@ -423,7 +423,7 @@ Filter_StructuredPushSupplier::send_event
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
   ACE_DEBUG ((LM_DEBUG,
-              "%C is sending an event \n", my_name_.fast_rep ()));
+              "%C is sending an event\n", my_name_.fast_rep ()));
 
   proxy_consumer_->push_structured_event (event);
 }

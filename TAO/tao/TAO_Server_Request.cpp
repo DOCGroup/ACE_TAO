@@ -269,9 +269,8 @@ TAO_ServerRequest::init_reply (void)
 
   this->outgoing_->message_attributes (this->request_id_,
                                        0,
-                                       TAO_Transport::TAO_REPLY,
-                                       0,
-                                       false);
+                                       TAO_REPLY,
+                                       0);
 
   // Construct a REPLY header.
   this->mesg_base_->generate_reply_header (*this->outgoing_, reply_params);
@@ -317,9 +316,8 @@ TAO_ServerRequest::send_no_exception_reply (void)
 
   this->outgoing_->message_attributes (this->request_id_,
                                        0,
-                                       TAO_Transport::TAO_REPLY,
-                                       0,
-                                       false);
+                                       TAO_REPLY,
+                                       0);
 
   // Construct a REPLY header.
   this->mesg_base_->generate_reply_header (*this->outgoing_, reply_params);
@@ -329,7 +327,7 @@ TAO_ServerRequest::send_no_exception_reply (void)
   // Send the message.
   int result = this->transport_->send_message (*this->outgoing_,
                                                0,
-                                               TAO_Transport::TAO_REPLY);
+                                               TAO_REPLY);
 
   if (result == -1)
     {
@@ -356,7 +354,7 @@ TAO_ServerRequest::tao_send_reply (void)
 
   int const result = this->transport_->send_message (*this->outgoing_,
                                                      0,
-                                                     TAO_Transport::TAO_REPLY);
+                                                     TAO_REPLY);
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -425,27 +423,40 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
                             gv.minor);
 
       this->transport_->assign_translators (0, &output);
-      // Make the reply message
-      if (this->mesg_base_->generate_exception_reply (*this->outgoing_,
-                                                      reply_params,
-                                                      ex) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - ServerRequest::tao_send_reply_exception, ")
-                      ACE_TEXT ("could not make exception reply\n")));
 
+      try
+        {
+          // Make the reply message
+          if (this->mesg_base_->generate_exception_reply (*this->outgoing_,
+                                                          reply_params,
+                                                          ex) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - ServerRequest::")
+                          ACE_TEXT ("tao_send_reply_exception, ")
+                          ACE_TEXT ("could not make exception reply\n")));
+            }
+
+          this->outgoing_->more_fragments (false);
+
+          // Send the message
+          if (this->transport_->send_message (*this->outgoing_,
+                                              0,
+                                              TAO_REPLY) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - ServerRequest::")
+                          ACE_TEXT ("tao_send_reply_exception, ")
+                          ACE_TEXT ("could not send exception reply\n")));
+            }
         }
-
-      this->outgoing_->more_fragments (false);
-
-      // Send the message
-      if (this->transport_->send_message (*this->outgoing_,
-                                          0,
-                                          TAO_Transport::TAO_REPLY) == -1)
+      catch (const ::CORBA::BAD_PARAM &bp_ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - ServerRequest::tao_send_reply_exception, ")
-                      ACE_TEXT ("could not send exception reply\n")));
+                      ACE_TEXT ("TAO (%P|%t) - ServerRequest::")
+                      ACE_TEXT ("tao_send_reply_exception, ")
+                      ACE_TEXT ("could not marshal exception reply\n")));
+          this->tao_send_reply_exception (bp_ex);
         }
     }
   else if (TAO_debug_level > 0)
@@ -467,7 +478,7 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
 void
 TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
 {
-#if defined(ACE_HAS_PURIFY)
+#if defined(ACE_INITIALIZE_MEMORY_BEFORE_USE)
   // Only inititialize the buffer if we're compiling with Purify.
   // Otherwise, there is no real need to do so, especially since
   // we can avoid the initialization overhead at runtime if we
@@ -478,7 +489,9 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
 #endif /* ACE_HAS_PURIFY */
   TAO_GIOP_Message_Version gv;
   if (this->outgoing_)
-    this->outgoing_->get_version (gv);
+    {
+      this->outgoing_->get_version (gv);
+    }
   TAO_OutputCDR output (repbuf,
                         sizeof repbuf,
                         TAO_ENCAP_BYTE_ORDER,
@@ -510,9 +523,8 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
 
   this->outgoing_->message_attributes (this->request_id_,
                                        0,
-                                       TAO_Transport::TAO_REPLY,
-                                       0,
-                                       false);
+                                       TAO_REPLY,
+                                       0);
 
   // Make the reply message
   if (this->mesg_base_->generate_reply_header (*this->outgoing_,
@@ -541,7 +553,7 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
   // Send the message
   if (this->transport_->send_message (*this->outgoing_,
                                       0,
-                                      TAO_Transport::TAO_REPLY) == -1)
+                                      TAO_REPLY) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_cached_reply, ")

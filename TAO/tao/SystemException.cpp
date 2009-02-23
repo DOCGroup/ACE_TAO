@@ -101,10 +101,13 @@ CORBA::SystemException::~SystemException (void)
 CORBA::SystemException &
 CORBA::SystemException::operator= (const CORBA::SystemException &src)
 {
-  this->Exception::operator= (src);
+  if (this != &src)
+    {
+      this->Exception::operator= (src);
 
-  this->minor_ = src.minor_;
-  this->completed_ = src.completed_;
+      this->minor_ = src.minor_;
+      this->completed_ = src.completed_;
+    }
 
   return *this;
 }
@@ -673,6 +676,13 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "No entry for requested interface in Interface Repository." // 2
     };
 
+  static const char *TIMEOUT_TABLE[] =
+    {
+      "Reply is not available in the Poller by the timeout set for it.", // 1
+      "End time specified in RequestEndTimePolicy or RelativeRequestTimeoutPolicy has expired.", // 2
+      "End time specified in ReplyEndTimePolicy or RelativeReplyTimeoutPolicy has expired." // 3
+    };
+
   if (minor_code == 0)
     return "*unknown description*";
 
@@ -803,6 +813,12 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   if (intf_repos_exception != 0
       && minor_code < sizeof INTF_REPOS_TABLE / sizeof (char *))
     return INTF_REPOS_TABLE[minor_code];
+
+  CORBA::TIMEOUT const * timeout_exception =
+    dynamic_cast <const CORBA::TIMEOUT *> (&exc);
+  if (timeout_exception != 0
+      && minor_code < sizeof TIMEOUT_TABLE / sizeof (char *))
+    return TIMEOUT_TABLE[minor_code];
 
 #else
   ACE_UNUSED_ARG (exc);

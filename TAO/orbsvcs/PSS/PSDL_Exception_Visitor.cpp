@@ -167,12 +167,12 @@ TAO_PSDL_Exception_Visitor::print_class_for_exception (void)
   *ps_sh << "          TAO_OutputCDR &\n";
   *ps_sh << "\n";
   *ps_sh << "        ) const;\n";
-  *ps_sh << "      \n";
+  *ps_sh << "     \n";
   *ps_sh << "      virtual void _tao_decode (\n";
   *ps_sh << "          TAO_InputCDR &\n";
   *ps_sh << "\n";
   *ps_sh << "        );\n";
-  *ps_sh << "      \n";
+  *ps_sh << "     \n";
 
   if (this->identifiers_.size () > 1)
     {
@@ -208,14 +208,14 @@ TAO_PSDL_Exception_Visitor::print_class_for_exception (void)
         }
     }
 
-  *ps_sh << "      \n";
+  *ps_sh << "     \n";
   *ps_sh << "      virtual CORBA::TypeCode_ptr _type (void) const;\n";
   *ps_sh << "    };\n";
   *ps_sh << "\n";
   *ps_sh << "static ::CORBA::TypeCode_ptr _tc_"
        << this->exception_name_ << ";\n";
-  *ps_sh << "    \n";
-  *ps_sh << "    \n";
+  *ps_sh << "   \n";
+  *ps_sh << "   \n";
   *ps_sh << "#endif /* end #if !defined */\n";
-  *ps_sh << "    \n";
+  *ps_sh << "   \n";
 }

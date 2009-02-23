@@ -74,7 +74,7 @@ public:
    **/
   virtual int reply_timed_out (CORBA::ULong request_id) = 0;
 
-  /// Dispatch the reply for <request_id>, cleanup any resources
+  /// Dispatch the reply for request_id, cleanup any resources
   /// allocated for that request.
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params) = 0;
 
@@ -91,6 +91,9 @@ public:
   /// The transport object has closed the connection, inform all Reply
   /// dispatchers and waiting strategies.
   virtual void connection_closed (void) = 0;
+
+  /// Do we have a request pending
+  virtual bool has_request (void) = 0;
 
 protected:
   /// Cache the transport reference.

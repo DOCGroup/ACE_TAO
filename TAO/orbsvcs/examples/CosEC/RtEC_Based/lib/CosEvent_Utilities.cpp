@@ -25,7 +25,7 @@ CosEC_ServantBase::~CosEC_ServantBase (void)
 {
   // No-Op.
 #if 0
-  ACE_DEBUG ((LM_DEBUG, "in cosec servant base %d \n", this));
+  ACE_DEBUG ((LM_DEBUG, "in cosec servant base %d\n", this));
 #endif
 }
 

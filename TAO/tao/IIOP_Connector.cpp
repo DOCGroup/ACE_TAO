@@ -206,7 +206,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       if (TAO_debug_level > 1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) IIOP_Connector::make_connection, ")
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::make_connection, ")
                       ACE_TEXT("connection to <%C:%d> failed (%p)\n"),
                       iiop_endpoint->host (),
                       iiop_endpoint->port (),
@@ -324,20 +324,21 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
                                       TAO_IIOP_Endpoint *iiop_endpoint,
                                       ACE_Time_Value *timeout)
 {
-  const ACE_INET_Addr &remote_address =
-    iiop_endpoint->object_addr ();
+  const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
 
   u_short port = 0;
   ACE_UINT32 const ia_any = INADDR_ANY;
   ACE_INET_Addr local_addr(port, ia_any);
 
   if (iiop_endpoint->is_preferred_network ())
-    local_addr.set (port,
-                    iiop_endpoint->preferred_network ());
+    {
+      local_addr.set (port, iiop_endpoint->preferred_network ());
+    }
 #if defined (ACE_HAS_IPV6)
   else if (remote_address.get_type () == AF_INET6)
-    local_addr.set (port,
-                    ACE_IPV6_ANY);
+    {
+      local_addr.set (port, ACE_IPV6_ANY);
+    }
 #endif /* ACE_HAS_IPV6 */
 
   if (TAO_debug_level > 2)
@@ -356,7 +357,6 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
   // The code used to set the timeout to zero, with the intent of
   // polling the reactor for connection completion. However, the side-effect
   // was to cause the connection to timeout immediately.
-
   svc_handler = 0;
 
   int const result =
@@ -438,14 +438,19 @@ TAO_IIOP_Connector::complete_connection (int result,
 
   if (result != -1)
     {
-      // We received a compeleted connection and 0 or more pending.
+      // We received a completed connection and 0 or more pending.
       // the winner is the last member of the list, because the
       // iterator stopped on a successful connect.
       transport = tlist[count-1];
       desc.reset_endpoint (ep_list[count-1]);
       TAO::Transport_Cache_Manager &tcm =
         this->orb_core ()->lane_resources ().transport_cache ();
-      tcm.cache_transport (&desc, transport);
+      if (tcm.cache_transport (&desc, transport) == -1)
+        {
+          // Cache is full, so close the connection again
+          sh_list[count-1]->close ();
+          transport = 0;
+        }
     }
   else
     {
@@ -557,7 +562,7 @@ TAO_IIOP_Connector::complete_connection (int result,
       if (TAO_debug_level > 0)
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("TAO (%P|%t) - IIOP_Connector::make_connection, ")
-                   ACE_TEXT("transport in error before cache! \n")));
+                   ACE_TEXT("transport in error before cache!\n")));
       transport->connection_handler()->cancel_pending_connection();
       return 0;
     }
@@ -593,7 +598,7 @@ TAO_IIOP_Connector::complete_connection (int result,
     }
 
   // Failure in adding to cache
-  if (retval != 0)
+  if (retval == -1)
     {
       // Close the handler.
       svc_handler->close ();
@@ -618,7 +623,7 @@ TAO_IIOP_Connector::complete_connection (int result,
       if (TAO_debug_level > 0)
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("TAO (%P|%t) - IIOP_Connector::make_connection, ")
-                   ACE_TEXT("transport in error after cache! \n")));
+                   ACE_TEXT("transport in error after cache!\n")));
       svc_handler->cancel_pending_connection();
       transport->purge_entry();
       return 0;

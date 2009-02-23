@@ -82,7 +82,7 @@ dump_node (BaseNode* bn, int indent)
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%x <BaseNode> \n",
+                      "%x <BaseNode>\n",
                       bn));
         }
     }

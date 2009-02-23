@@ -42,10 +42,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      ACE_CString env ("SSL_CERT_FILE=");
-      env += cert_file;
-      ACE_OS::putenv (env.c_str ());
-
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 

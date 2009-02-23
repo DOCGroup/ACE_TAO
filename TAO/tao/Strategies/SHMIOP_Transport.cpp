@@ -96,9 +96,9 @@ TAO_SHMIOP_Transport::recv (char *buf,
       if (TAO_debug_level > 3 && errno != ETIME)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) -  SHMIOP_Transport::recv, %p \n"),
+                      ACE_TEXT ("TAO (%P|%t) -  SHMIOP_Transport::recv, %p\n"),
                       ACE_TEXT ("TAO - read message failure ")
-                      ACE_TEXT ("recv_i () \n")));
+                      ACE_TEXT ("recv_i ()\n")));
         }
     }
   else if (n == 0)
@@ -298,7 +298,7 @@ TAO_SHMIOP_Transport::send_message (TAO_OutputCDR &stream,
                                     ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
-  if (this->messaging_object ()->format_message (stream) != 0)
+  if (this->messaging_object ()->format_message (stream, stub) != 0)
     return -1;
 
   // Strictly speaking, should not need to loop here because the

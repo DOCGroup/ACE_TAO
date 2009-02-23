@@ -24,15 +24,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 return 1;
              }
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
-          ACE_UNUSED_ARG (ex);
           return 1;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
-       ACE_UNUSED_ARG (ex);
        return 2;
     }
 

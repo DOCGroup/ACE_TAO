@@ -6,108 +6,116 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $status = 0;
 
-$goodiorbase = "good.ior";
-$badiorbase = "bad.ior";
-$rootiorbase = "root.ior";
-$goodiorfile = PerlACE::LocalFile ("$goodiorbase");
-$badiorfile =  PerlACE::LocalFile ("$badiorbase");
-$rootiorfile =  PerlACE::LocalFile ("$rootiorbase");
-unlink $goodiorfile;
-unlink $badiorfile;
-unlink $rootiorfile;
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+
+my $goodiorbase = "good.ior";
+my $badiorbase = "bad.ior";
+
+my $server_good_iorfile = $server->LocalFile ($goodiorbase);
+my $server_bad_iorfile = $server->LocalFile ($badiorbase);
+my $client_good_iorfile = $client->LocalFile ($goodiorbase);
+my $client_bad_iorfile = $client->LocalFile ($badiorbase);
+
+$server->DeleteFile($goodiorbase);
+$server->DeleteFile($badiorbase);
+$client->DeleteFile($goodiorbase);
+$client->DeleteFile($badiorbase);
 
 $port = 12345;
 
-if (PerlACE::is_vxworks_test()) {
-    $sharedSV = new PerlACE::ProcessVX ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -g $goodiorbase -b $badiorbase -p $port");
-}
-else {
-    $sharedSV = new PerlACE::Process ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -g $goodiorfile -b $badiorfile -p $port");
-}
-
-if (PerlACE::is_vxworks_test()) {
-    $multiSV = new PerlACE::ProcessVX ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 0 -g $goodiorbase -b $badiorbase -p $port");
-}
-else {
-    $multiSV = new PerlACE::Process ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 0 -g $goodiorfile -b $badiorfile -p $port");
-}
-
-$goodCL = new PerlACE::Process ("client", " -k file://$goodiorfile");
-$badCL = new PerlACE::Process ("client", " -b -k file://$badiorfile");
+$sharedSV = $server->CreateProcess ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -g $server_good_iorfile -b $server_bad_iorfile -p $port");
+$goodCL = $client->CreateProcess ("client", "-k file://$client_good_iorfile");
+$badCL  = $client->CreateProcess ("client", "-b -k file://$client_bad_iorfile");
 
 print "Starting server using shared profiles\n";
 
-$sharedSV->Spawn ();
+$server_status_shared = $sharedSV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($goodiorfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$goodiorfile>\n";
+if ($server_status_shared != 0) {
+    print STDERR "ERROR: server returned $server_status_shared\n";
+    exit 1;
+}
+
+if ($server->WaitForFileTimed ($goodiorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_good_iorfile>\n";
     $sharedSV->Kill (); $sharedSV->TimedWait (1);
     exit 1;
 }
 
-$client = $badCL->SpawnWaitKill (300);
+$client_status_bad = $badCL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+if ($client_status_bad != 0) {
+    print STDERR "ERROR: bad client returned $client_status_bad\n";
     $status = 1;
 }
 
-$client = $goodCL->SpawnWaitKill (300);
+$client_good_status = $goodCL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+if ($client_good_status != 0) {
+    print STDERR "ERROR: good client returned $client_good_status\n";
     $status = 1;
 }
 
-$server = $sharedSV->WaitKill (15);
+$server_status_shared = $sharedSV->WaitKill ($server->ProcessStopWaitInterval());
 
-if ($server != 0) {
-    print STDERR "ERROR: server [single profile per IOR] returned $server\n";
+if ($server_status_shared != 0) {
+    print STDERR "ERROR: server [single profile per IOR] returned $server_status_shared\n";
     $status = 1;
 }
 
-unlink $goodiorfile;
-unlink $badiorfile;
+$server->DeleteFile($goodiorbase);
+$server->DeleteFile($badiorbase);
+$client->DeleteFile($goodiorbase);
+$client->DeleteFile($badiorbase);
 
 print "Starting server using multiple profiles\n";
 
-$multiSV->Spawn();
+$multiSV = $server->CreateProcess ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 0 -g $server_good_iorfile -b $server_bad_iorfile -p $port");
 
-if (PerlACE::waitforfile_timed ($goodiorfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$goodiorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+$server_status_multi = $multiSV->Spawn ();
+
+if ($server_status_multi != 0) {
+    print STDERR "ERROR: server returned $server_status_multi\n";
     exit 1;
 }
 
-$client = $badCL->SpawnWaitKill (300);
+if ($server->WaitForFileTimed ($goodiorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_good_iorfile>\n";
+    $multiSV->Kill (); $multiSV->TimedWait (1);
+    exit 1;
+}
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+$client_bad_status = $badCL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+
+if ($client_bad_status != 0) {
+    print STDERR "ERROR: bad client returned $client_bad_status\n";
     $status = 1;
 }
 
-$client = $goodCL->SpawnWaitKill (300);
+$client_good_status = $goodCL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+if ($client_good_status != 0) {
+    print STDERR "ERROR: good client returned $client_good_status\n";
     $status = 1;
 }
 
-$server = $multiSV->WaitKill (15);
+$server_multi_status = $multiSV->WaitKill ($server->ProcessStopWaitInterval());
 
-if ($server != 0) {
-    print STDERR "ERROR: server [multiple profiles per IOR] returned $server\n";
+if ($server_multi_status != 0) {
+    print STDERR "ERROR: server [multiple profiles per IOR] returned $server_multi_status\n";
     $status = 1;
 }
 
-unlink $goodiorfile;
-unlink $badiorfile;
-unlink $rootiorfile;
+$server->DeleteFile($goodiorbase);
+$server->DeleteFile($badiorbase);
+$client->DeleteFile($goodiorbase);
+$client->DeleteFile($badiorbase);
 
 exit $status;

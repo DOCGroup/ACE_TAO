@@ -160,11 +160,15 @@ protected:
   CORBA::Boolean stop_run_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_AV_SINGLETON_DECLARE (ACE_Singleton, TAO_AV_Core, ACE_Null_Mutex)
 
 typedef ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex> TAO_AV_CORE;
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_AV_CORE_H */

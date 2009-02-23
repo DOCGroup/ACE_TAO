@@ -4,6 +4,8 @@
 #include "ace/Log_Msg.h"
 #include "tao/Codeset/UTF8_Latin1_Factory.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_STATIC_SVC_DEFINE (TAO_UTF8_Latin1_Factory,
                        ACE_TEXT ("UTF8_Latin1_Factory"),
                        ACE_SVC_OBJ_T,
@@ -13,7 +15,6 @@ ACE_STATIC_SVC_DEFINE (TAO_UTF8_Latin1_Factory,
                        0)
 ACE_FACTORY_DEFINE (TAO_Codeset, TAO_UTF8_Latin1_Factory)
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UTF8_Latin1_Factory::TAO_UTF8_Latin1_Factory()
   : translator_ (0)

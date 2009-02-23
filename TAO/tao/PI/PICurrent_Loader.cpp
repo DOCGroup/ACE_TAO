@@ -37,7 +37,6 @@ TAO_PICurrent_Loader::create_object (CORBA::ORB_ptr orb,  int, ACE_TCHAR *[])
   return obj;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_PICurrent_Loader,
                        ACE_TEXT ("PICurrent_Loader"),
@@ -46,5 +45,7 @@ ACE_STATIC_SVC_DEFINE (TAO_PICurrent_Loader,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_PI, TAO_PICurrent_Loader)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

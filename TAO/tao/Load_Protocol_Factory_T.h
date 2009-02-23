@@ -100,7 +100,7 @@ namespace TAO
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("TAO (%P|%t) Loaded default ")
+                      ACE_TEXT("TAO (%P|%t) - Loaded default ")
                       ACE_TEXT("protocol <%C>\n"),
                       name));
         }

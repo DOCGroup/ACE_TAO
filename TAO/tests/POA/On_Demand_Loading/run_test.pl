@@ -6,11 +6,14 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 PerlACE::add_lib_path ('../Generic_Servant/.');
 
-$iorfile = "ior";
+$iorbase0 = "ior";
+
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 $oneway = "";
 $iterations = 100;
@@ -38,7 +41,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
       $i++;
     }
     elsif ($ARGV[$i] eq "-f") {
-      $iorfile = $ARGV[$i + 1];
+      $iorbase0 = $ARGV[$i + 1];
       $i++;
     }
     else {
@@ -46,63 +49,76 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
 }
 
-$iorfile1 = $iorfile."_1";
-$iorfile2 = $iorfile."_2";
+$iorbase1 = $iorbase0."_1";
+$iorbase2 = $iorbase0."_2";
 
-unlink $iorfile1, $iorfile2;
+$iorfile0 = $server->LocalFile ($iorbase0);
+$iorfile1 = $server->LocalFile ($iorbase1);
+$iorfile2 = $server->LocalFile ($iorbase2);
 
-if (PerlACE::is_vxworks_test()) {
-  $SV  = new PerlACE::ProcessVX ("server", "-f $iorfile $extra_args");
-}
-else {
-  $SV  = new PerlACE::Process ("server", "-f $iorfile $extra_args");
-}
-$CL1 = new PerlACE::Process ("../Generic_Servant/client",
-                             "$extra_args $oneway -i $iterations -k file://$iorfile1");
-$CL2 = new PerlACE::Process ("../Generic_Servant/client",
-                             "$extra_args $oneway -i $iterations -k file://$iorfile2 -x");
+$client_iorfile1 = $client->LocalFile ($iorbase1);
+$client_iorfile2 = $client->LocalFile ($iorbase2);
 
-$server = $SV->Spawn ();
+$server->DeleteFile($iorbase0);
+$server->DeleteFile($iorbase1);
+$server->DeleteFile($iorbase2);
+$client->DeleteFile ($iorbase1);
+$client->DeleteFile ($iorbase2);
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+$SV = $server->CreateProcess ("server", "-f $iorfile0 $extra_args");
+$CL = $client->CreateProcess ("../Generic_Servant/client");
+
+$server_status = $SV->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($iorfile1, $PerlACE::wait_interval_for_process_creation) == -1) {
+if ($server->WaitForFileTimed ($iorbase1,
+                               $server->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile1>\n";
-    $SV->Kill ();
+    $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($iorfile2, $PerlACE::wait_interval_for_process_creation) == -1) {
+if ($server->WaitForFileTimed ($iorbase2,
+                               $server->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile2>\n";
-    $SV->Kill ();
+    $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
-$client = $CL1->SpawnWaitKill (60);
+$CL->Arguments ("$extra_args $oneway -i $iterations -k file://$client_iorfile1");
 
-if ($client != 0) {
-    print STDERR "ERROR: client 1 returned $client\n";
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+
+if ($client_status != 0) {
+    print STDERR "ERROR: client 1 returned $client_status\n";
     $status = 1;
 }
 
-$client = $CL2->SpawnWaitKill (60);
+$CL->Arguments ("$extra_args $oneway -i $iterations -k file://$client_iorfile2 -x");
 
-if ($client != 0) {
-    print STDERR "ERROR: client 2 returned $client\n";
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+
+if ($client_status != 0) {
+    print STDERR "ERROR: client 2 returned $client_status\n";
     $status = 1;
 }
 
-$server = $SV->WaitKill (5);
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     $SV->Kill ();
     $status = 1;
 }
 
-unlink $iorfile1, $iorfile2;
+$server->DeleteFile($iorbase0);
+$server->DeleteFile($iorbase1);
+$server->DeleteFile($iorbase2);
+$client->DeleteFile ($iorbase1);
+$client->DeleteFile ($iorbase2);
 
 exit $status;

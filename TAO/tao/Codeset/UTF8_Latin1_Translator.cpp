@@ -45,10 +45,10 @@ TAO_UTF8_Latin1_Translator::read_char (ACE_InputCDR &cdr, ACE_CDR::Char &x)
       if (ox < 0xC0)
         {
           x = ox;
-          return 1;
+          return true;
         }
     }
-  return 0;
+  return false;
 }
 
 ACE_CDR::ULong
@@ -80,7 +80,7 @@ TAO_UTF8_Latin1_Translator::read_char_i (ACE_InputCDR &cdr, ACE_CDR::Char &x)
 
 ACE_CDR::Boolean
 TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
-                                    ACE_CDR::Char *&x)
+                                         ACE_CDR::Char *&x)
 {
   ACE_CDR::ULong len;
   if (!cdr.read_ulong (len))
@@ -207,15 +207,15 @@ TAO_UTF8_Latin1_Translator::write_char_array (ACE_OutputCDR & cdr,
                                          ACE_CDR::ULong length)
 {
   if (length == 0)
-    return 1;
+    return true;
 
   for (size_t i = 0; i < length; ++i)
     // We still have to write each char individually, as any translated
     // value may fail to fit in a single octet.
     if (this->write_char (cdr, x[i]) == 0)
-      return 0;
+      return false;
 
-  return 1;
+  return true;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

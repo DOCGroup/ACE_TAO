@@ -1,5 +1,5 @@
 // $Id$
-/* A Bison parser, made by GNU Bison 1.875d.  */
+/*  A Bison parser, made by GNU Bison 1.875d.  */
 
 /*   Skeleton parser for Yacc-like parsing with Bison,
    Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
@@ -6390,7 +6390,9 @@ tao_yyreduce:
               AST_Decl::NodeType nt = d->node_type ();
 
               if (nt == AST_Decl::NT_struct_fwd
-                  || nt == AST_Decl::NT_union_fwd)
+                  || nt == AST_Decl::NT_union_fwd
+                  || nt == AST_Decl::NT_struct
+                  || nt == AST_Decl::NT_union)
                 {
                   if (! AST_Type::narrow_from_decl (d)->is_defined ())
                     {

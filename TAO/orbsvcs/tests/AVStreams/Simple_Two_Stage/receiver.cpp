@@ -91,7 +91,7 @@ Receiver_Callback::dump_samples (const char* file)
   if (stats_file == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Stats.dat cannot be opened \n"));
+                  "Stats.dat cannot be opened\n"));
     }
 
   int i;

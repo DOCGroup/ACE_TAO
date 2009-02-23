@@ -272,7 +272,7 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\n \t NestedUpCalls.Triangle_Test: Initiator Server \n \n"));
+              "\n \t NestedUpCalls.Triangle_Test: Initiator Server \n\n"));
 
   try
     {

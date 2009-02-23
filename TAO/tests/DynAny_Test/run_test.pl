@@ -6,22 +6,19 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $status = 0;
 $type = "";
+
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
 sub run_test
 {
     my $type = shift(@_);
 
-    if (PerlACE::is_vxworks_test()) {
-        $BT = new PerlACE::ProcessVX ("basic_test", "-t $type");
-    }
-    else {
-        $BT = new PerlACE::Process ("basic_test", "-t $type");
-    }
-    my $basictest = $BT->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
+   $BT = $server->CreateProcess ("basic_test", "-t $type");
+    my $basictest = $BT->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
     if ($basictest != 0) {
         print STDERR "ERROR: basic test for ($type) returned $basictest\n";

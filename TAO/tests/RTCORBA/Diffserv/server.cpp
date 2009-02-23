@@ -62,7 +62,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s \n"
+                           "usage:  %s\n"
                            "\t-p <corba priority> [defaults to %d]\n"
                            "\n",
                            argv [0],

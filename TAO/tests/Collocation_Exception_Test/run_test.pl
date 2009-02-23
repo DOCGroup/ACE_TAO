@@ -6,29 +6,27 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
+
+my $server = PerlACE::TestTarget::create_target(1) || die "Create target 1 failed\n";
 
 $iorbase = "test.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
 $status = 0;
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("Collocated_Test");
-    $iorfile = $iorbase;
-}
-else {
-    $SV = new PerlACE::Process ("Collocated_Test");
-    $iorfile = PerlACE::LocalFile ("test.ior");
-}
-unlink $iorfile;
-$SV->Arguments ("-o $iorfile -k file://$iorfile");
+$SV = $server->CreateProcess ("Collocated_Test");
+
+$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile");
 
 print STDERR "======== Running in Default Mode \n";
-$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
+$sv = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocation_Exception_Test\n";
     $status = 1;
 }
-unlink $iorfile;
+$server->DeleteFile($iorbase);
+$server->GetStderrLog();
 
 exit $status;

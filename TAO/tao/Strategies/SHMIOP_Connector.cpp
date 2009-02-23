@@ -218,7 +218,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                                                              transport);
 
   // Failure in adding to cache.
-  if (retval != 0)
+  if (retval == -1)
     {
       // Close the handler.
       svc_handler->close ();

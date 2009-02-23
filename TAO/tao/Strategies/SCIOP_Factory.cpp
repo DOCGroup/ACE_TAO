@@ -78,7 +78,6 @@ TAO_SCIOP_Protocol_Factory::requires_explicit_endpoint (void) const
   return 1;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_SCIOP_Protocol_Factory,
                        ACE_TEXT ("SCIOP_Factory"),
@@ -89,5 +88,7 @@ ACE_STATIC_SVC_DEFINE (TAO_SCIOP_Protocol_Factory,
                        0)
 
 ACE_FACTORY_DEFINE (TAO, TAO_SCIOP_Protocol_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */

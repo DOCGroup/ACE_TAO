@@ -172,13 +172,13 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
       }
     if (*ior == ',') // more endpoints follow
       {
-        ior++;
+        ++ior;
         continue;
       }
 
     if (*ior == '/') // found key separator
       {
-        ior ++;
+        ++ior;
         break;
       }
 
@@ -349,7 +349,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
   canonical_endpoint += raw_port;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 ACE_STATIC_SVC_DEFINE (TAO_CORBALOC_Parser,
                        ACE_TEXT ("CORBALOC_Parser"),
@@ -360,5 +360,7 @@ ACE_STATIC_SVC_DEFINE (TAO_CORBALOC_Parser,
                        0)
 
 ACE_FACTORY_DEFINE (TAO, TAO_CORBALOC_Parser)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBALOC_PARSER == 1 */

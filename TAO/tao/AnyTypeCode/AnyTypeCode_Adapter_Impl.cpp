@@ -177,7 +177,6 @@ TAO_AnyTypeCode_Adapter_Impl::Initializer (void)
       );
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
   TAO_AnyTypeCode_Adapter_Impl,
@@ -189,4 +188,5 @@ ACE_STATIC_SVC_DEFINE (
 
 ACE_FACTORY_DEFINE (TAO_AnyTypeCode, TAO_AnyTypeCode_Adapter_Impl)
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 

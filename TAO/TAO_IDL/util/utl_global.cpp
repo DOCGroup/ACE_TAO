@@ -725,7 +725,6 @@ IDL_GlobalData::validate_included_idl_files (void)
 
   // New number of included_idl_files.
   size_t newj = 0;
-  size_t n_found = 0;
   size_t n_pre_preproc_includes = idl_global->n_included_idl_files ();
   char **pre_preproc_includes = idl_global->included_idl_files ();
   size_t n_post_preproc_includes = idl_global->n_include_file_names ();
@@ -737,19 +736,26 @@ IDL_GlobalData::validate_included_idl_files (void)
   char *post_tmp = 0;
   char *full_path = 0;
 
-  for (size_t j = 0; j < n_pre_preproc_includes; ++j)
-    {
-      // Check this name with the names list that we got from the
-      // preprocessor.
-      size_t valid_file = 0;
-      full_path = ACE_OS::realpath (pre_preproc_includes[j],
-                                    pre_abspath);
+  // We are going to assemble a list of the include files found in
+  // the top level file in the order that they are found in the pre-
+  // processor output here
+  // @see bug TAO#711 / Bugzilla #3513 for more
+  char** ordered_include_files = new char*[n_pre_preproc_includes];
 
-      if (full_path != 0)
+  for (size_t i = 0; i < n_post_preproc_includes; ++i)
+    {
+      for (size_t j = 0; j < n_pre_preproc_includes; ++j)
         {
-          for (size_t ni = 0; ni < n_post_preproc_includes; ++ni)
+          // Check this name with the name that we got from the
+          // preprocessor.
+
+          size_t valid_file = 0;
+          full_path = ACE_OS::realpath (pre_preproc_includes[j],
+                                        pre_abspath);
+
+          if (full_path != 0)
             {
-              post_tmp = post_preproc_includes[ni]->get_string ();
+              post_tmp = post_preproc_includes[i]->get_string ();
               full_path = ACE_OS::realpath (post_tmp, post_abspath);
               if (full_path != 0
                   && this->path_cmp (pre_abspath, post_abspath) == 0
@@ -757,41 +763,37 @@ IDL_GlobalData::validate_included_idl_files (void)
                 {
                   // This file name is valid.
                   valid_file = 1;
-                  ++n_found;
-                  break;
                 }
             }
-        }
 
-      if (valid_file == 0)
-        {
-          for (ACE_Unbounded_Queue_Iterator<char *>iter (
-                   this->include_paths_
-                 );
-               !iter.done ();
-               iter.advance ())
+          if (valid_file == 0)
             {
-              iter.next (path_tmp);
-              ACE_CString pre_partial (*path_tmp);
-
-              // If the include path has literal "s (because of an include
-              // of a Windows path with spaces), we must remove them here.
-              if (this->hasspace (pre_partial.c_str ()))
+              for (ACE_Unbounded_Queue_Iterator<char *>iter (
+                      this->include_paths_
+                    );
+                  !iter.done ();
+                  iter.advance ())
                 {
-                  pre_partial =
-                    pre_partial.substr (1, pre_partial.length () - 2);
-                }
+                  iter.next (path_tmp);
+                  ACE_CString pre_partial (*path_tmp);
 
-              pre_partial += ACE_DIRECTORY_SEPARATOR_STR_A;
-              pre_partial += pre_preproc_includes[j];
-              full_path =
-                ACE_OS::realpath (pre_partial.c_str (), pre_abspath);
-
-              if (full_path != 0)
-                {
-                  for (size_t m = 0; m < n_post_preproc_includes; ++m)
+                  // If the include path has literal "s (because of an include
+                  // of a Windows path with spaces), we must remove them here.
+                  if (this->hasspace (pre_partial.c_str ()))
                     {
-                      post_tmp = post_preproc_includes[m]->get_string ();
+                      pre_partial =
+                        pre_partial.substr (1, pre_partial.length () - 2);
+                    }
+
+                  pre_partial += ACE_DIRECTORY_SEPARATOR_STR_A;
+                  pre_partial += pre_preproc_includes[j];
+                  full_path =
+                    ACE_OS::realpath (pre_partial.c_str (), pre_abspath);
+
+                  if (full_path != 0)
+                    {
+
+                      post_tmp = post_preproc_includes[i]->get_string ();
                       full_path = ACE_OS::realpath (post_tmp, post_abspath);
 
                       if (full_path != 0
@@ -800,49 +802,58 @@ IDL_GlobalData::validate_included_idl_files (void)
                         {
                           // This file name is valid.
                           valid_file = 1;
-                          ++n_found;
                           break;
                         }
                     }
                 }
-
-              if (valid_file == 1)
-                {
-                  break;
-                }
             }
-        }
 
-      // Remove the file, if it is not valid.
-      if (valid_file == 0)
-        {
-          delete [] pre_preproc_includes[j];
-          pre_preproc_includes[j] = 0;
-        }
-      else
-        {
-          // File is valid.
-
-          // Move it to new index if necessary.
-          if (j != newj)
+          if (valid_file == 1)
             {
+              // File is valid.
               // Move to the new index position.
-              pre_preproc_includes[newj] =
-                pre_preproc_includes[j];
+              // ... in the ordered list
+              ordered_include_files[newj] =
+                    pre_preproc_includes[j];
 
-              // Make old position 0.
-              pre_preproc_includes[j] = 0;
+              // Increment the new index.
+              newj++;
+
+              for (size_t k = j + 1; k < n_pre_preproc_includes; ++k)
+                {
+                  // Shift remaining entries down
+                  pre_preproc_includes[k-1] = pre_preproc_includes[k];
+                }
+
+              // Reduce length and zero the discarded element
+              pre_preproc_includes[--n_pre_preproc_includes] = 0;
+
+              // Break out to next entry in pre-processor
+              // output
+              break;
             }
-
-          // Increment the new index.
-          newj++;
         }
 
-      if (n_found == n_post_preproc_includes)
+      if (n_pre_preproc_includes == 0)
         {
           break;
         }
     }
+
+  // Tidy up not required includes
+  for (size_t l = 0; l < n_pre_preproc_includes; ++l)
+    {
+      delete [] pre_preproc_includes[l];
+      pre_preproc_includes[l] = 0;
+    }
+
+  // Copy list back
+  for (size_t m = 0; m < newj; ++m)
+    {
+      pre_preproc_includes[m] = ordered_include_files[m];
+    }
+
+  delete [] ordered_include_files;
 
   // Now adjust the count on the included_idl_files.
   idl_global->n_included_idl_files (newj);

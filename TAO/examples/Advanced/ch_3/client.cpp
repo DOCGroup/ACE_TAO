@@ -73,7 +73,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch  (const CORBA::Exception &x)
     {
-      x._tao_print_exception ("Who is the culprit \n");
+      x._tao_print_exception ("Who is the culprit\n");
       cerr << "Uncaught CORBA exception" << endl;
       return 1;
     }

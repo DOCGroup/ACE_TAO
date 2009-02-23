@@ -85,10 +85,10 @@ static int
 TAO_Requires_IFR_Client_Initializer =
   TAO_IFR_Client_Adapter_Impl::Initializer ();
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_IFR_Client_Adapter_Impl)
 ACE_FACTORY_DECLARE (TAO_IFR_Client, TAO_IFR_Client_Adapter_Impl)
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #include /**/ "ace/post.h"

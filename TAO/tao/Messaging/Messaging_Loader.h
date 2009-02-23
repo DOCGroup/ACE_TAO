@@ -40,10 +40,11 @@ public:
   virtual int init (int argc, ACE_TCHAR* []);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Messaging, TAO_Messaging_Loader)
 ACE_FACTORY_DECLARE (TAO_Messaging, TAO_Messaging_Loader)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_MESSAGING_LOADER_H */

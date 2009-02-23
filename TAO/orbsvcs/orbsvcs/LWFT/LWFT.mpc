@@ -113,7 +113,7 @@ project(*Server) : iorinterceptor, orbsvcs_output {
   }
 }
 
-project(*StateSyncAgent) : portableserver, orbsvcs_output, lwft_dds , splicelib {
+project(*StateSyncAgent) : portableserver, orbsvcs_output { // , lwft_dds , splicelib {
   after += *Common
   idlflags += -Wb,export_macro=SSA_Export \
               -Wb,export_include=ssa_export.h

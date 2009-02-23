@@ -100,7 +100,7 @@ int TAO_Notify_Method_Request_Dispatch::execute_i (void)
       if (TAO_debug_level > 0)
         ex._tao_print_exception (
           ACE_TEXT (
-            "TAO_Notify_Method_Request_Dispatch::: error sending event.\n "));
+            "TAO_Notify_Method_Request_Dispatch::: error sending event.\n"));
     }
 
   return 0;

@@ -20,9 +20,15 @@ TAO_ORB_Core::_incr_refcnt (void)
 }
 
 ACE_INLINE unsigned long
+TAO_ORB_Core::_refcnt (void) const
+{
+  return this->refcount_.value ();
+}
+
+ACE_INLINE unsigned long
 TAO_ORB_Core::_decr_refcnt (void)
 {
-  unsigned long count = --this->refcount_;
+  unsigned long const count = --this->refcount_;
   if (count != 0)
     return count;
 
@@ -162,10 +168,10 @@ TAO_ORB_Core::orb (void)
   return this->orb_;
 }
 
-ACE_INLINE TAO_Adapter_Registry *
+ACE_INLINE TAO_Adapter_Registry &
 TAO_ORB_Core::adapter_registry (void)
 {
-  return &this->adapter_registry_;
+  return this->adapter_registry_;
 }
 
 ACE_INLINE TAO_Request_Dispatcher *
@@ -446,18 +452,6 @@ ACE_INLINE void
 TAO_ORB_Core::ziop_adapter (TAO_ZIOP_Adapter *adapter)
 {
   this->ziop_adapter_ = adapter;
-}
-
-ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::ziop_enabled () const
-{
-  return this->ziop_enabled_;
-}
-
-ACE_INLINE void
-TAO_ORB_Core::ziop_enabled (CORBA::Boolean value)
-{
-  this->ziop_enabled_ = value;
 }
 
 ACE_INLINE TAO::ORBInitializer_Registry_Adapter *

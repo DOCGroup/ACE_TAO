@@ -106,7 +106,7 @@ IdAssignment::init (int argc,
   if (CORBA::is_nil (obj.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  " (%P|%t) Unable to locate Notify_Service \n"));
+                  " (%P|%t) Unable to locate Notify_Service\n"));
       return;
     }
 
@@ -192,7 +192,6 @@ IdAssignment::create_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id
   CosNotifyChannelAdmin::EventChannel_var ec =
     this->notify_factory_->get_event_channel (channel_id);
 
-
   if (CORBA::is_nil (ec.in ()))
     {
       ACE_ERROR((LM_ERROR,
@@ -213,6 +212,98 @@ IdAssignment::create_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id
                 "created consumer admin\n"));
 
   return adminid;
+}
+
+
+bool
+IdAssignment::default_consumer_admin_test (CosNotifyChannelAdmin::ChannelID channel_id)
+{
+  CosNotifyChannelAdmin::EventChannel_var ec =
+    this->notify_factory_->get_event_channel (channel_id);
+
+  if (CORBA::is_nil (ec.in ()))
+    {
+      ACE_ERROR((LM_ERROR,
+                 " (%P|%t) Unable to find event channel\n"));
+      return false;
+    }
+
+  CosNotifyChannelAdmin::ConsumerAdmin_var default_consumer_admin =
+    ec->get_consumeradmin (0);
+
+  if (CORBA::is_nil (default_consumer_admin.in()))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                  " (%P|%t) Unable to create default consumer admin\n"),
+                  false);
+    }
+
+  CosNotifyChannelAdmin::ConsumerAdmin_var def = ec->default_consumer_admin ();
+  if (CORBA::is_nil (default_consumer_admin.in()))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                  " (%P|%t) Unable to get default consumer admin\n"),
+                  false);
+    }
+
+  if (! default_consumer_admin->_is_equivalent(def.in ()))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+        " (%P|%t) failed for default consumer admin checking\n"),
+        false);
+    }
+
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "passed default consumer admin test.\n"));
+
+  return true;
+}
+
+
+bool
+IdAssignment::default_supplier_admin_test (CosNotifyChannelAdmin::ChannelID channel_id)
+{
+  CosNotifyChannelAdmin::EventChannel_var ec =
+    this->notify_factory_->get_event_channel (channel_id);
+
+  if (CORBA::is_nil (ec.in ()))
+    {
+      ACE_ERROR((LM_ERROR,
+                 " (%P|%t) Unable to find event channel\n"));
+      return false;
+    }
+
+  CosNotifyChannelAdmin::SupplierAdmin_var default_supplier_admin =
+    ec->get_supplieradmin (0);
+
+  if (CORBA::is_nil (default_supplier_admin.in()))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                  " (%P|%t) Unable to create default supplier admin\n"),
+                  false);
+    }
+
+  CosNotifyChannelAdmin::SupplierAdmin_var def = ec->default_supplier_admin ();
+  if (CORBA::is_nil (default_supplier_admin.in()))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                  " (%P|%t) Unable to get default supplier admin\n"),
+                  false);
+    }
+
+  if (! default_supplier_admin->_is_equivalent(def.in ()))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+        " (%P|%t) failed for default supplier admin checking\n"),
+        false);
+    }
+
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "passed default supplier admin test.\n"));
+
+  return true;
 }
 
 
@@ -317,6 +408,9 @@ IdAssignment::run_test(void)
                 this->create_consumer_admin (ec_id [ec_count]);
             }
 
+          if (this->default_consumer_admin_test (ec_id[ec_count]) == false)
+            ACE_OS::exit (1);
+
           // Connect <supplier_admin_count_> number of suppliers
           // to the current ec.
           for (int supp_count = 0;
@@ -326,6 +420,9 @@ IdAssignment::run_test(void)
               supplier_admin_id [supp_count] =
                 this->create_supplier_admin (ec_id [ec_count]);
             }
+
+          if (this->default_supplier_admin_test (ec_id[ec_count]) == false)
+            ACE_OS::exit (1);
         }
 
       // Destroy the ec, the admins should destroy too.

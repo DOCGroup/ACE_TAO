@@ -138,7 +138,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         receiver->get_event_count ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Number of events received.. [%d] \n",
+                  "(%P|%t) Number of events received.. [%d]\n",
                   count));
 
       root_poa->destroy (1,

@@ -10,7 +10,7 @@
 #include <string>
 
 #define assertTrue(CONDITION) \
-    if (CONDITION == false) { \
+    if (!(CONDITION)) { \
       ACE_CString str ("Error : "#CONDITION" "__FILE__":"); \
       char line[32]; \
       ACE_OS::sprintf (line, "%d", __LINE__); \

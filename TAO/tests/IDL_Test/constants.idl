@@ -139,4 +139,6 @@ module SignedGen
   // getting generated as an unsigned literal.
   typedef long LongType;
   const LongType val = -3;
+  typedef short ShortType;
+  const ShortType short_val = -3;
 };

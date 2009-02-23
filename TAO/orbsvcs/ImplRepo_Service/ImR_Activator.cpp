@@ -171,7 +171,7 @@ run_service_command (Activator_Options& opts)
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, "Error: Unknown service command :%d \n",
+      ACE_ERROR ((LM_ERROR, "Error: Unknown service command :%d\n",
         opts.service_command ()));
       return -1;
     }

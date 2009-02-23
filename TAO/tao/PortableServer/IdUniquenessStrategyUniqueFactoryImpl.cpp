@@ -50,7 +50,6 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
   IdUniquenessStrategyUniqueFactoryImpl,
@@ -65,3 +64,4 @@ ACE_FACTORY_NAMESPACE_DEFINE (
   IdUniquenessStrategyUniqueFactoryImpl,
   TAO::Portable_Server::IdUniquenessStrategyUniqueFactoryImpl)
 
+TAO_END_VERSIONED_NAMESPACE_DECL

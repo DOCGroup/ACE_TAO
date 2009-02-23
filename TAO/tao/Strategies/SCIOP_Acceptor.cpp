@@ -9,6 +9,7 @@
 #include "tao/Codeset_Manager.h"
 #include "tao/Transport.h"
 #include "tao/CDR.h"
+#include "ace/os_include/os_netdb.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Strategies/SCIOP_Acceptor.inl"
@@ -17,7 +18,6 @@
 ACE_RCSID(tao,
           SCIOP_Acceptor,
           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -213,8 +213,8 @@ TAO_SCIOP_Acceptor::close (void)
 int
 TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          ACE_Reactor *reactor,
-                         int major,
-                         int minor,
+                         int,
+                         int,
                          const char *address,
                          const char *options)
 {
@@ -234,9 +234,6 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   if (address == 0)
     return -1;
-
-  ACE_UNUSED_ARG (major);
-  ACE_UNUSED_ARG (minor);
 
   // Parse options
   if (this->parse_options (options) == -1)
@@ -385,7 +382,10 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                primary_ip_addr,
                1,
                secondary_ip_addrs,
-               num_secondary_ip_addrs));
+               num_secondary_ip_addrs) != 0)
+    {
+      return -1;
+    }
 
   // Number of endpoints equals the size of the hostname array.
   this->endpoint_count_ = hostnames.size();
@@ -452,8 +452,8 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 int
 TAO_SCIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                  ACE_Reactor *reactor,
-                                 int major,
-                                 int minor,
+                                 int,
+                                 int,
                                  const char *options)
 {
   this->orb_core_ = orb_core;
@@ -468,10 +468,6 @@ TAO_SCIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
-
-
-  ACE_UNUSED_ARG (major);
-  ACE_UNUSED_ARG (minor);
 
   // Parse options
   if (this->parse_options (options) == -1)
@@ -892,7 +888,7 @@ TAO_SCIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) SCIOP_Profile::decode - v%d.%d\n"),
                       major,
                       minor));
@@ -917,7 +913,7 @@ TAO_SCIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     }
 
   // ... and object key.
-  if ((cdr >> object_key) == 0)
+  if (!(cdr >> object_key))
     return -1;
 
   // We are NOT bothered about the rest.
@@ -1002,7 +998,7 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Invalid SCIOP endpoint format: ")
-                                 ACE_TEXT ("endpoint priorities no longer supported. \n")),
+                                 ACE_TEXT ("endpoint priorities no longer supported.\n")),
                                 -1);
             }
           else if (name == "portspan")

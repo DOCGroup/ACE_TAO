@@ -11,6 +11,7 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID (Strategies,
            SHMIOP_Profile,
@@ -243,7 +244,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) SHMIOP_Profile::parse_string () - \n")
+                      ACE_TEXT ("TAO (%P|%t) SHMIOP_Profile::parse_string () -\n")
                       ACE_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
         }
 
@@ -391,7 +392,7 @@ TAO_SHMIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) TAO - UIOP_Profile::create_profile_body "
-                  "no object key marshalled \n"));
+                  "no object key marshalled\n"));
     }
 
   if (this->version_.major > 1

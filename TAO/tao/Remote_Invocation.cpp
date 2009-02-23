@@ -11,7 +11,6 @@
 #include "tao/Network_Priority_Protocols_Hooks.h"
 #include "tao/debug.h"
 #include "tao/SystemException.h"
-#include "tao/ZIOP_Adapter.h"
 
 ACE_RCSID (tao,
            Remote_Invocation,
@@ -87,7 +86,7 @@ namespace TAO
                           ACE_TEXT ("TAO (%P|%t) - ")
                           ACE_TEXT ("Remote_Invocation::init_target_spec, ")
                           ACE_TEXT ("Error in finding index for ")
-                          ACE_TEXT ("IOP::IOR \n")));
+                          ACE_TEXT ("IOP::IOR\n")));
             }
 
           return;
@@ -120,27 +119,16 @@ namespace TAO
   void
   Remote_Invocation::marshal_data (TAO_OutputCDR &out_stream)
     {
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    TAO_ZIOP_Adapter* ziop_adapter = this->stub()->orb_core()->ziop_adapter ();
-
-    if (ziop_adapter)
-      {
-         ziop_adapter->marshal_data (this->details_, out_stream, this->resolver_);
-      }
-    else
-#endif
-      {
-        // Marshal application data
-        if (this->details_.marshal_args (out_stream) == false)
-          {
-            throw ::CORBA::MARSHAL ();
-          }
-      }
+      // Marshal application data
+      if (this->details_.marshal_args (out_stream) == false)
+        {
+          throw ::CORBA::MARSHAL ();
+        }
   }
 
   Invocation_Status
   Remote_Invocation::send_message (TAO_OutputCDR &cdr,
-                                   TAO_Transport::TAO_Message_Semantics message_semantics,
+                                   TAO_Message_Semantics message_semantics,
                                    ACE_Time_Value *max_wait_time)
   {
     TAO_Protocols_Hooks *tph =
@@ -211,7 +199,7 @@ namespace TAO
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - ")
                         ACE_TEXT ("Remote_Invocation::send_message, ")
-                        ACE_TEXT ("failure while sending message \n")));
+                        ACE_TEXT ("failure while sending message\n")));
           }
 
         // Close the transport and all the associated stuff along with

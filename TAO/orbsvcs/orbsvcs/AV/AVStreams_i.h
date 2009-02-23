@@ -345,7 +345,7 @@ public:
   /// constructor taking a stream qos parameter.
   TAO_AV_QoS (AVStreams::streamQoS &stream_qos);
 
-  /// sets the maps with the QoS paramter.
+  /// sets the maps with the QoS parameter.
   int set (AVStreams::streamQoS &stream_qos);
 
   /// gets the flow_qos.

@@ -9,8 +9,8 @@
 #include "orbsvcs/Event_Utilities.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (orbsvcs, 
-           Event_Utilities, 
+ACE_RCSID (orbsvcs,
+           Event_Utilities,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -140,7 +140,7 @@ void event_debug (const char* p,
 void
 ACE_ConsumerQOS_Factory::debug (const RtecEventChannelAdmin::ConsumerQOS& qos)
 {
-  ACE_DEBUG ((LM_DEBUG, "ConsumerQOS { \n"));
+  ACE_DEBUG ((LM_DEBUG, "ConsumerQOS {\n"));
   ACE_DEBUG ((LM_DEBUG, "  is_gateway: %d\n", qos.is_gateway));
 
   for (u_int i = 0; i < qos.dependencies.length (); ++i)
@@ -200,7 +200,7 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
 
 void ACE_SupplierQOS_Factory::debug (const RtecEventChannelAdmin::SupplierQOS& qos)
 {
-  ACE_DEBUG ((LM_DEBUG, "SupplierQOS { \n"));
+  ACE_DEBUG ((LM_DEBUG, "SupplierQOS {\n"));
   ACE_DEBUG ((LM_DEBUG, "  is_gateway: %d\n", qos.is_gateway));
 
   for (u_int i = 0; i < qos.publications.length (); ++i)

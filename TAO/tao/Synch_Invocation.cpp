@@ -90,16 +90,14 @@ namespace TAO
 
         cdr.message_attributes (this->details_.request_id (),
                                 this->resolver_.stub (),
-                                TAO_Transport::TAO_TWOWAY_REQUEST,
-                                max_wait_time,
-                                false);
+                                TAO_TWOWAY_REQUEST,
+                                max_wait_time);
 
         this->write_header (cdr);
 
         this->marshal_data (cdr);
 
-
-  // Register a reply dispatcher for this invocation. Use the
+        // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
         TAO_Bind_Dispatcher_Guard dispatch_guard (
           this->details_.request_id (),
@@ -118,10 +116,10 @@ namespace TAO
         countdown.update ();
 
         s = this->send_message (cdr,
-                                TAO_Transport::TAO_TWOWAY_REQUEST,
+                                TAO_TWOWAY_REQUEST,
                                 max_wait_time);
 
-  ace_mon.release();
+        ace_mon.release();
 
 #if TAO_HAS_INTERCEPTORS == 1
         // @@NOTE: Too much code repetition.
@@ -271,7 +269,7 @@ namespace TAO
           {
             ACE_DEBUG ((LM_DEBUG,
                         "TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply, "
-                        "recovering after an error \n"));
+                        "recovering after an error\n"));
           }
 
         // You the smarty, don't try to moving the unbind_dispatcher
@@ -437,7 +435,7 @@ namespace TAO
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::location_forward ")
-                    ACE_TEXT ("being handled \n")));
+                    ACE_TEXT ("being handled\n")));
       }
 
     CORBA::Object_var fwd;
@@ -467,7 +465,7 @@ namespace TAO
     if (TAO_debug_level > 3)
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Synch_Twoway_Invocation::"
-                  "handle_user_exception \n"));
+                  "handle_user_exception\n"));
 
     // Pull the exception from the stream.
     CORBA::String_var buf;
@@ -513,7 +511,7 @@ namespace TAO
     if (TAO_debug_level > 3)
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Synch_Twoway_Invocation::"
-                  "handle_system_exception \n"));
+                  "handle_system_exception\n"));
 
     CORBA::String_var type_id;
 
@@ -666,9 +664,8 @@ namespace TAO
 
     cdr.message_attributes (this->details_.request_id (),
           this->resolver_.stub (),
-          TAO_Transport::TAO_ONEWAY_REQUEST,
-          max_wait_time,
-          false);
+          TAO_ONEWAY_REQUEST,
+          max_wait_time);
 
     this->write_header (cdr);
 
@@ -680,18 +677,22 @@ namespace TAO
       {
         // We have a connected transport so we can send the message
         s = this->send_message (cdr,
-              TAO_Transport::TAO_ONEWAY_REQUEST,
+              TAO_ONEWAY_REQUEST,
               max_wait_time);
       }
     else
       {
         if (TAO_debug_level > 4)
-    ACE_DEBUG ((LM_DEBUG,
-          "TAO (%P|%t) - Synch_Oneway_Invocation::"
-          "remote_oneway, queueing message\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Synch_Oneway_Invocation::"
+                      "remote_oneway, queueing message\n"));
 
-        if (transport->format_queue_message (cdr, max_wait_time) != 0)
-    s = TAO_INVOKE_FAILURE;
+        if (transport->format_queue_message (cdr,
+                                             max_wait_time,
+                                             this->resolver_.stub()) != 0)
+          {
+            s = TAO_INVOKE_FAILURE;
+          }
       }
   }
 

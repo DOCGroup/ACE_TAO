@@ -51,7 +51,6 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
   ServantRetentionStrategyRetainFactoryImpl,
@@ -65,3 +64,4 @@ ACE_FACTORY_NAMESPACE_DEFINE (
   ACE_Local_Service,
   ServantRetentionStrategyRetainFactoryImpl,
   TAO::Portable_Server::ServantRetentionStrategyRetainFactoryImpl)
+TAO_END_VERSIONED_NAMESPACE_DECL

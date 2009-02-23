@@ -21,19 +21,19 @@ Any_String (const CORBA::Any& any)
 
   if (any >>= s)
     {
-      ACE_OS::sprintf (out, ACE_TEXT_ALWAYS_CHAR(ACE_INT16_FORMAT_SPECIFIER), s);
+      ACE_OS::sprintf (out, ACE_INT16_FORMAT_SPECIFIER_ASCII, s);
     }
   else if (any >>= us)
     {
-      ACE_OS::sprintf (out, ACE_TEXT_ALWAYS_CHAR(ACE_UINT16_FORMAT_SPECIFIER), us);
+      ACE_OS::sprintf (out, ACE_UINT16_FORMAT_SPECIFIER_ASCII, us);
     }
   else if (any >>= l)
     {
-      ACE_OS::sprintf (out, ACE_TEXT_ALWAYS_CHAR(ACE_INT32_FORMAT_SPECIFIER), l);
+      ACE_OS::sprintf (out, ACE_INT32_FORMAT_SPECIFIER_ASCII, l);
     }
   else if (any >>= ul)
     {
-      ACE_OS::sprintf (out, ACE_TEXT_ALWAYS_CHAR(ACE_UINT32_FORMAT_SPECIFIER), ul);
+      ACE_OS::sprintf (out, ACE_UINT32_FORMAT_SPECIFIER_ASCII, ul);
     }
   else if (any >>= str)
     {
@@ -44,7 +44,7 @@ Any_String (const CORBA::Any& any)
 #if defined (ACE_LACKS_LONGLONG_T)
       ACE_OS::strcpy (out, ull.as_string (out));
 #else
-      ACE_OS::sprintf (out, ACE_TEXT_ALWAYS_CHAR(ACE_UINT64_FORMAT_SPECIFIER), ull);
+      ACE_OS::sprintf (out, ACE_UINT64_FORMAT_SPECIFIER_ASCII, ull);
 #endif /* ACE_LACKS_LONGLONG_T */
     }
   else

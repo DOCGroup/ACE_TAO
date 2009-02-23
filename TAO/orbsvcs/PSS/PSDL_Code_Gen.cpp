@@ -77,7 +77,7 @@ TAO_PSDL_Code_Gen::set_name_obj_ref (const char *name,
   if (result == -1)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Bind not done successfully \n"));
+                  "Bind not done successfully\n"));
     }
   else if (result == 1)
     {

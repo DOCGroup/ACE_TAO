@@ -128,7 +128,7 @@ public:
     return length_;
   }
   inline void length(CORBA::ULong length) {
-    if (length <= maximum_ || length <= length_)
+    if (length <= maximum_)
       {
         if (this->mb_ == 0)
           {

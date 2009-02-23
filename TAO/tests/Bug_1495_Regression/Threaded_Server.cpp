@@ -70,7 +70,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (poa_object.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             " (%P|%t) Unable to initialize the POA. \n" ),
+                             " (%P|%t) Unable to initialize the POA.\n" ),
                              1);
         }
 
@@ -95,7 +95,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR,
             "(%P|%t) Could not obtain reference to "
-            "server request interceptor. \n"),
+            "server request interceptor.\n"),
             -1);
         }
 
@@ -105,7 +105,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (forward_location.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil \n",
+                             "Object reference <%s> is nil\n",
                              ior_input_file),
                              1);
         }
@@ -152,7 +152,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_ERROR ((LM_ERROR, "ERROR: Forward location has not occured!\n"));
         }
 
-      ACE_DEBUG ((LM_DEBUG, "Threaded Server event loop finished \n"));
+      ACE_DEBUG ((LM_DEBUG, "Threaded Server event loop finished\n"));
       root_poa->destroy (1, 1);
 
       orb->destroy ();

@@ -628,7 +628,7 @@ be_visitor_field_cdr_op_cs::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_field_cdr_op_cs::visit_string (be_string *)
+be_visitor_field_cdr_op_cs::visit_string (be_string *str)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -649,11 +649,47 @@ be_visitor_field_cdr_op_cs::visit_string (be_string *)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> _tao_aggregate." << f->local_name () << ".out ())";
+      if (str != 0 && str->max_size ()->ev ()->u.ulval != 0)
+        {
+          if (str->width () == (long) sizeof (char))
+            {
+              *os << "(strm >> ACE_InputCDR::to_string (_tao_aggregate."
+                  << f->local_name () << ".out (), "
+                  << str->max_size ()->ev ()->u.ulval << "))";
+            }
+          else
+            {
+              *os << "(strm >> ACE_InputCDR::to_wstring (_tao_aggregate."
+                  << f->local_name () << ".out (), "
+                  << str->max_size ()->ev ()->u.ulval << "))";
+            }
+        }
+      else
+        {
+          *os << "(strm >> _tao_aggregate." << f->local_name () << ".out ())";
+        }
 
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
+      if (str != 0 && str->max_size ()->ev ()->u.ulval != 0)
+        {
+          if (str->width () == (long) sizeof (char))
+            {
+              *os << "(strm << ACE_OutputCDR::from_string (_tao_aggregate."
+                  << f->local_name () << ".in (), "
+                  << str->max_size ()->ev ()->u.ulval << "))";
+            }
+          else
+            {
+              *os << "(strm << ACE_OutputCDR::from_wstring (_tao_aggregate."
+                  << f->local_name () << ".in (), "
+                  << str->max_size ()->ev ()->u.ulval << "))";
+            }
+        }
+      else
+        {
+          *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
+        }
 
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
@@ -930,8 +966,12 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << fname << "_forany "
           << "_tao_aggregate_" << f->local_name () << be_idt << be_idt_nl
+          << "#if defined __IBMCPP__ && __IBMCPP__ <= 800" << be_nl
+          << "((" << fname << "_slice*) (" << be_nl
+          << "#else" << be_nl
           << "(const_cast<" << be_idt << be_idt_nl
-          << fname << "_slice*> (" << be_nl
+          << fname << "_slice*> (" << be_uidt << be_uidt_nl
+          << "#endif" << be_idt << be_idt_nl
           << "_tao_aggregate." << f->local_name () << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt_nl;

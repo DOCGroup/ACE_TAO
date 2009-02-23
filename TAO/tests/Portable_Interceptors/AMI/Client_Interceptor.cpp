@@ -97,7 +97,7 @@ Echo_Client_Request_Interceptor::receive_reply (
       throw CORBA::BAD_PARAM();
     }
 
-  Echo_Client_Request_Interceptor::reply_count++;
+  ++Echo_Client_Request_Interceptor::reply_count;
 }
 
 void

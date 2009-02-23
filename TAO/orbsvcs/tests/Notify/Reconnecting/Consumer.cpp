@@ -73,7 +73,7 @@ StructuredPushConsumer_i::offer_change (
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
   ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P,%t) StructuredPushConsumer offered change \n")
+    ACE_TEXT ("(%P,%t) StructuredPushConsumer offered change\n")
     ));
 }
 
@@ -213,7 +213,7 @@ StructuredPushConsumer_i::push_structured_event (
   {
     this->problem_ = true;
     ACE_DEBUG ((LM_ERROR,
-      ACE_TEXT ("(%P|%t) Structured Consumer: no filterable data. \n")
+      ACE_TEXT ("(%P|%t) Structured Consumer: no filterable data.\n")
       ));
   }
   this->may_discard_ = 0;
@@ -621,7 +621,7 @@ AnyPushConsumer_i::push (
       {
         this->problem_ = true;
         ACE_DEBUG ((LM_ERROR,
-          ACE_TEXT ("(%P|%t) Any Consumer: no filterable data in structured event. \n")
+          ACE_TEXT ("(%P|%t) Any Consumer: no filterable data in structured event.\n")
           ));
       }
     }
@@ -864,10 +864,10 @@ void Consumer_Main::usage(FILE * out)const
     ACE_TEXT ("                    What type of event to send (pick one, default is -any)\n")
     ACE_TEXT ("  -expect n         How many events of each type are expected.\n")
     ACE_TEXT ("  -fail n           Throw an exception every n events.\n")
-    ACE_TEXT ("  -serial_number n  What serial number to start with \n")
+    ACE_TEXT ("  -serial_number n  What serial number to start with\n")
     ACE_TEXT ("                    or -1 to disable serial number checking.\n")
     ACE_TEXT ("  -v                Verbose output.\n")
-    ACE_TEXT ("  -disconnect       Disconnect from channel on exit (prevents reconnect.) \n")
+    ACE_TEXT ("  -disconnect       Disconnect from channel on exit (prevents reconnect.)\n")
     ACE_TEXT ("  -nonamesvc        Don't use the name service to find EventChannelFactory\n")
     , out);
   //FUZZ: enable check_for_lack_ACE_OS

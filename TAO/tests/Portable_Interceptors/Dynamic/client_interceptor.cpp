@@ -80,7 +80,7 @@ Echo_Client_Request_Interceptor::send_request (
       if (paramlist->length () != 2)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) All parameters not available \n"));
+                      "(%P|%t) All parameters not available\n"));
 
         }
 
@@ -91,7 +91,7 @@ Echo_Client_Request_Interceptor::send_request (
           paramlist[second].mode != CORBA::PARAM_OUT)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ERROR in the extracted argument list \n"));
+                      "(%P|%t) ERROR in the extracted argument list\n"));
         }
 
       CORBA::Long param = 0;
@@ -102,7 +102,7 @@ Echo_Client_Request_Interceptor::send_request (
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR in send_request while checking "
                       "the value of the extracted "
-                      "arguments \n"));
+                      "arguments\n"));
         }
 
       CORBA::TypeCode_var second_typecode = paramlist[second].argument.type ();
@@ -150,7 +150,7 @@ Echo_Client_Request_Interceptor::receive_reply (
       if (paramlist->length () != 2)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) All parameters not available \n"));
+                      "(%P|%t) All parameters not available\n"));
 
         }
 
@@ -161,7 +161,7 @@ Echo_Client_Request_Interceptor::receive_reply (
           paramlist[second].mode != CORBA::PARAM_OUT)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ERROR in the extracted argument list \n"));
+                      "(%P|%t) ERROR in the extracted argument list\n"));
         }
 
       CORBA::Long param = 0;
@@ -172,7 +172,7 @@ Echo_Client_Request_Interceptor::receive_reply (
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR in send_request while checking "
                       "the value of the extracted "
-                      "arguments \n"));
+                      "arguments\n"));
         }
 
       const char *str = 0;
@@ -187,7 +187,7 @@ Echo_Client_Request_Interceptor::receive_reply (
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR in send_request while checking "
                       "the value of the extracted "
-                      "out arguments \n"));
+                      "out arguments\n"));
         }
     }
 

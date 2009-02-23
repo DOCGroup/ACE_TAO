@@ -25,7 +25,12 @@ else {
 
 print STDERR "\nrunning ST version of the client and the server\n\n";
 
-$SV->Spawn ();
+$server_status = $SV->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {

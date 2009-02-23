@@ -98,7 +98,7 @@ ServantList<T>::deactivate(PortableServer::POA_ptr poa)
   catch (...)
   {
     ACE_ERROR((LM_ERROR, "(%P|%t)ServantList_T::deactivate_servant "
-    "Caught unknown exception \n"));
+    "Caught unknown exception\n"));
   }
 }
 #endif

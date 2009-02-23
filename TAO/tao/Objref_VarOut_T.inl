@@ -113,9 +113,7 @@ TAO_Objref_Out_T<T>::TAO_Objref_Out_T (T *& p)
 
 template <typename T>
 ACE_INLINE
-TAO_Objref_Out_T<T>::TAO_Objref_Out_T (
-    TAO_Objref_Var_T<T> & p
-  )
+TAO_Objref_Out_T<T>::TAO_Objref_Out_T (TAO_Objref_Var_T<T> & p)
   : ptr_ (p.out ())
 {
   TAO::Objref_Traits<T>::release (this->ptr_);
@@ -124,9 +122,7 @@ TAO_Objref_Out_T<T>::TAO_Objref_Out_T (
 
 template <typename T>
 ACE_INLINE
-TAO_Objref_Out_T<T>::TAO_Objref_Out_T (
-    const TAO_Objref_Out_T<T> & p
-  )
+TAO_Objref_Out_T<T>::TAO_Objref_Out_T (const TAO_Objref_Out_T<T> & p)
   : ptr_ (p.ptr_)
 {
 }
@@ -134,11 +130,18 @@ TAO_Objref_Out_T<T>::TAO_Objref_Out_T (
 template <typename T>
 ACE_INLINE
 TAO_Objref_Out_T<T> &
-TAO_Objref_Out_T<T>::operator= (
-    const TAO_Objref_Out_T<T> & p
-  )
+TAO_Objref_Out_T<T>::operator= (const TAO_Objref_Out_T<T> & p)
 {
   this->ptr_ = p.ptr_;
+  return *this;
+}
+
+template <typename T>
+ACE_INLINE
+TAO_Objref_Out_T<T> &
+TAO_Objref_Out_T<T>::operator= (const TAO_Objref_Var_T<T> & p)
+{
+  this->ptr_ = TAO::Objref_Traits<T>::duplicate (p.ptr ());
   return *this;
 }
 

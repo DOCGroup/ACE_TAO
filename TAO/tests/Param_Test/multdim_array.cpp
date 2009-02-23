@@ -208,7 +208,7 @@ Test_Multdim_Array::print (const Param_Test::Multdim_Array_slice *a)
         {
           for (CORBA::ULong k=0; k < Param_Test::DIM1; k++)
             {
-              ACE_DEBUG ((LM_DEBUG, "\t\tElement #%d #%d #%d = %d \n",i,j,k, a[i][j][k]));
+              ACE_DEBUG ((LM_DEBUG, "\t\tElement #%d #%d #%d = %d\n",i,j,k, a[i][j][k]));
             }
         }
     }

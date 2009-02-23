@@ -141,7 +141,7 @@ TAO::SSLIOP::Transport::send_message (TAO_OutputCDR &stream,
                                       ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
-  if (this->messaging_object ()->format_message (stream) != 0)
+  if (this->messaging_object ()->format_message (stream, stub) != 0)
     return -1;
 
   // Strictly speaking, should not need to loop here because the
@@ -248,7 +248,7 @@ TAO::SSLIOP::Transport::set_bidir_context_info (
             {
               ACE_ERROR ((LM_ERROR,
                           "TAO (%P|%t) - SSLIOP_Transport::set_bidir_info, ",
-                          "error getting listen_point \n"));
+                          "error getting listen_point\n"));
               return;
             }
         }
@@ -316,7 +316,7 @@ TAO::SSLIOP::Transport::get_listen_point (
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) Could not resolve local host")
-                         ACE_TEXT (" name \n")),
+                         ACE_TEXT (" name\n")),
                         -1);
     }
 

@@ -263,8 +263,7 @@ TAO_SHMIOP_Connection_Handler::add_transport_to_cache (void)
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Add the handler to Cache
-  return cache.cache_idle_transport (&prop,
-                                     this->transport ());
+  return cache.cache_transport (&prop, this->transport ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

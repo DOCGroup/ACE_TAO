@@ -21,7 +21,7 @@ Test_impl::op1 (
   if (TAO_debug_level > 0)
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t)Test_impl::op1")
-               ACE_TEXT(" id=%s basic_data=%u desc=%s \n"),
+               ACE_TEXT(" id=%s basic_data=%u desc=%s\n"),
                id, iv->basic_data (), desc));
 
    char *tmp =
@@ -46,7 +46,7 @@ Test_impl::op2 (
   if (TAO_debug_level > 0)
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t)Test_impl::op2")
-               ACE_TEXT(" id=%s basic_data=%u data1=%u desc=%s \n"),
+               ACE_TEXT(" id=%s basic_data=%u data1=%u desc=%s\n"),
                id, iv->basic_data (), iv->data1 (), desc));
   char *tmp =
     CORBA::string_alloc (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2);
@@ -71,7 +71,7 @@ Test_impl::op3 (
   if (TAO_debug_level > 0)
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t)Test_impl::op3")
-               ACE_TEXT(" id=%s basic_data=%u data=%u data4=%u desc=%s \n"),
+               ACE_TEXT(" id=%s basic_data=%u data=%u data4=%u desc=%s\n"),
                id, iv->basic_data (), iv->nv4()->data (), iv->data4 (), desc));
 
   char *tmp =
@@ -106,21 +106,21 @@ Test_impl::op4 (
   {
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t)Test_impl::op4")
-               ACE_TEXT(" id=%s basic_data=%u data1=%u desc=%s \n"),
+               ACE_TEXT(" id=%s basic_data=%u data1=%u desc=%s\n"),
                id, iv1->basic_data (), iv1->data1 (), desc));
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t)Test_impl::op4")
-               ACE_TEXT(" id=%s basic_data=%u data=%u data4=%u desc=%s \n"),
+               ACE_TEXT(" id=%s basic_data=%u data=%u data4=%u desc=%s\n"),
                id, iv2->basic_data (), iv2->nv4()->data (),
                iv2->data4 (), desc));
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t)Test_impl::op4")
-               ACE_TEXT(" id=%s basic_data=%u data=%u data4=%u desc=%s \n"),
+               ACE_TEXT(" id=%s basic_data=%u data=%u data4=%u desc=%s\n"),
                id, iv3->basic_data (), iv3->nv4()->data (),
                iv3->data4 (), desc));
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t)Test_impl::op4")
-               ACE_TEXT(" id=%s basic_data=%u data1=%u desc=%s \n"),
+               ACE_TEXT(" id=%s basic_data=%u data1=%u desc=%s\n"),
                id, iv4->basic_data (), iv4->data1 (), desc));
   }
 
@@ -165,7 +165,7 @@ Test_impl::op5 (const CORBA::Any& val,
       if (TAO_debug_level > 0)
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("(%P|%t)Test_impl::op5")
-                   ACE_TEXT(" id=%s basic_data=%u data1=%u desc=%s \n"),
+                   ACE_TEXT(" id=%s basic_data=%u data1=%u desc=%s\n"),
                    id, iv->basic_data (), iv->data1 (), desc));
       char *tmp =
         CORBA::string_alloc (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2);

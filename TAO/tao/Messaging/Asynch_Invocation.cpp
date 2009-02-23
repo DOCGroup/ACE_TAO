@@ -75,9 +75,8 @@ namespace TAO
         // call.
         cdr.message_attributes (this->details_.request_id (),
                                 this->resolver_.stub (),
-                                TAO_Transport::TAO_ONEWAY_REQUEST,
-                                max_wait_time,
-                                false);
+                                TAO_ONEWAY_REQUEST,
+                                max_wait_time);
 
         this->write_header (cdr);
 
@@ -111,7 +110,7 @@ namespace TAO
         // paraphernalia within the ORB to fire, like buffering if
         // send blocks etc.
         s = this->send_message (cdr,
-                                TAO_Transport::TAO_ONEWAY_REQUEST,
+                                TAO_ONEWAY_REQUEST,
                                 max_wait_time);
 
         ace_mon.release();

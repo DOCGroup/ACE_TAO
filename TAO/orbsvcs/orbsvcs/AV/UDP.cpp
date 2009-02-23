@@ -551,7 +551,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
       local_addr->addr_to_string (buf,BUFSIZ);
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO_AV_UDP_ACCEPTOR::open:%s \n",
+                    "TAO_AV_UDP_ACCEPTOR::open:%s\n",
                     buf));
     }
 
@@ -762,7 +762,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
       local_addr->addr_to_string (buf,BUFSIZ);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_CONNECTOR::connect:%s \n",buf));
+        ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_CONNECTOR::connect:%s\n",buf));
     }
 
   // call activate svc handler.

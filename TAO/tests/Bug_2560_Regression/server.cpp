@@ -40,6 +40,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try {
     // First initialize the ORB, that will remove some arguments...
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "TestORB");
+
+    if (parse_args (argc, argv) != 0)
+      return 1;
+
     CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA");
     PortableServer::POA_var root_poa = PortableServer::POA::_narrow (poa_object.in());
     PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();

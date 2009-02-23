@@ -84,7 +84,6 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
   ThreadStrategyFactoryImpl,
@@ -99,3 +98,4 @@ ACE_FACTORY_NAMESPACE_DEFINE (
   ThreadStrategyFactoryImpl,
   TAO::Portable_Server::ThreadStrategyFactoryImpl)
 
+TAO_END_VERSIONED_NAMESPACE_DECL

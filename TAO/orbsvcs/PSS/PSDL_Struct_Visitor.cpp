@@ -545,7 +545,7 @@ TAO_PSDL_Struct_Visitor::print_class_for_structure (ACE_CString struct_name)
 
   *ps_sh << "};\n";
 
-  *ps_sh << "class  " << struct_name << "_out \n";
+  *ps_sh << "class  " << struct_name << "_out\n";
   *ps_sh << "{\n";
   *ps_sh << "  public:\n";
   *ps_sh << "    " << struct_name << "_out ("

@@ -193,7 +193,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       CORBA::Long retval = notify_log_->get_n_records ().lo();
 #endif
 
-      ACE_DEBUG ((LM_DEBUG, "Number of records in Log = %d \n", retval));
+      ACE_DEBUG ((LM_DEBUG, "Number of records in Log = %d\n", retval));
 
       ACE_DEBUG ((LM_DEBUG,
                   "Calling NotifyLog::get_current_size...\n"));
@@ -203,7 +203,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
        retval = notify_log_->get_current_size ().lo();
 #endif
 
-      ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d \n", retval));
+      ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
 
       ACE_DEBUG ((LM_DEBUG, "Querying the Log: %s\n", QUERY_1));
       DsLogAdmin::Iterator_var iter_out;
@@ -223,7 +223,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 #endif
 
      ACE_DEBUG ((LM_DEBUG,
-                 "Deleting records... \n"));
+                 "Deleting records...\n"));
 
      retval = notify_log_->delete_records (QUERY_LANG, QUERY_2);
 
@@ -235,7 +235,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
      retval = notify_log_->get_n_records ().lo();
 #endif
 
-     ACE_DEBUG ((LM_DEBUG, "Number of records in Log after delete = %d \n",
+     ACE_DEBUG ((LM_DEBUG, "Number of records in Log after delete = %d\n",
                  retval));
 
      ACE_DEBUG ((LM_DEBUG, "Geting the current_size again...\n"));
@@ -245,7 +245,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
      retval = notify_log_->get_current_size ().lo();
 #endif
 
-     ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d \n", retval));
+     ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
 
      this->notify_log_->destroy();
 

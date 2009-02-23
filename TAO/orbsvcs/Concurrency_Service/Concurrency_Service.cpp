@@ -207,7 +207,7 @@ ACE_TMAIN (int argc, ACE_TCHAR ** argv)
   Concurrency_Service concurrency_service;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n \t Concurrency Service:SERVER \n \n"));
+              "\n \t Concurrency Service:SERVER \n\n"));
 
   try
     {

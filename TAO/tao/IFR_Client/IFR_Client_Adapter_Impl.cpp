@@ -203,7 +203,6 @@ TAO_IFR_Client_Adapter_Impl::Initializer (void)
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_IFR_Client_Adapter_Impl);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
     TAO_IFR_Client_Adapter_Impl,
@@ -215,3 +214,4 @@ ACE_STATIC_SVC_DEFINE (
   )
 
 ACE_FACTORY_DEFINE (TAO_IFR_Client, TAO_IFR_Client_Adapter_Impl)
+TAO_END_VERSIONED_NAMESPACE_DECL

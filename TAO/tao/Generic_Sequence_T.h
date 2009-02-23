@@ -117,8 +117,9 @@ public:
     , release_(false)
   {
     if (rhs.maximum_ == 0) return;
-    generic_sequence tmp(rhs.maximum_);
-    tmp.length_ = rhs.length_;
+    generic_sequence tmp(rhs.maximum_, rhs.length_,
+                         allocation_traits::allocbuf_noinit(rhs.maximum_),
+                         true);
     element_traits::copy_range(
         rhs.buffer_,
         rhs.buffer_ + rhs.length_,
@@ -164,15 +165,19 @@ public:
   /// Set a new length for the sequence
   void length(CORBA::ULong length)
   {
-    if (length <= maximum_ || length <= length_)
+    if (length <= maximum_)
     {
       if (buffer_ == 0)
         {
           buffer_ = allocbuf(maximum_);
           release_ = true;
+          length_ = length;
+          // Since allocbuf returns completely initialized buffer
+          // no further actions are required.
+          return;
         }
 
-      if (length_ < length)
+    if (length < length_)
       {
         // TODO This code does not provide the strong-exception
         //      guarantee, but it does provide the weak-exception
@@ -181,16 +186,19 @@ public:
         //      elements have been modified.  One could argue that
         //      this problem is irrelevant, as the elements already
         //      modified are unreachable to conforming applications.
+        element_traits::release_range(
+          buffer_ + length, buffer_ + length_);
         element_traits::initialize_range(
-            buffer_ + length_, buffer_ + length);
+          buffer_ + length, buffer_ + length_);
       }
       length_ = length;
       return;
     }
 
-    generic_sequence tmp(length);
-    tmp.length_ = length;
-    element_traits::copy_range(
+    generic_sequence tmp(length, length,
+                         allocation_traits::allocbuf_noinit(length),
+                         true);
+    element_traits::copy_swap_range(
       buffer_,
       buffer_ + length_,
       ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_));

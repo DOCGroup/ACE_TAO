@@ -137,7 +137,7 @@ TAO_SCIOP_Transport::send_message (TAO_OutputCDR &stream,
                                    ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
-  if (this->messaging_object ()->format_message (stream) != 0)
+  if (this->messaging_object ()->format_message (stream, stub) != 0)
     return -1;
 
   // This guarantees to send all data (bytes) or return an error.
@@ -200,7 +200,7 @@ TAO_SCIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   IIOP::ListenPointList listen_list;
-  if ((cdr >> listen_list) == 0)
+  if (!(cdr >> listen_list))
     return -1;
 
   // As we have received a bidirectional information, set the flag to
@@ -234,7 +234,7 @@ TAO_SCIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
             {
               ACE_ERROR ((LM_ERROR,
                           "TAO (%P|%t) - SCIOP_Transport::set_bidir_info, "
-                          "error getting listen_point \n"));
+                          "error getting listen_point\n"));
 
               return;
             }
@@ -294,7 +294,7 @@ TAO_SCIOP_Transport::get_listen_point (
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) Could not resolve local host")
-                         ACE_TEXT (" name \n")),
+                         ACE_TEXT (" name\n")),
                         -1);
     }
 

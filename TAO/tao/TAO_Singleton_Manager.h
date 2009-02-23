@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    TAO_Singleton_Manager.h
@@ -37,7 +36,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * The TAO_Singleton_Manager is basically simplified version of the
  * ACE_Object_Manager.  It is designed specifically to manage
- * singletons created by TAO.  For example, singleton instances
+ * singletons created by TAO. For example, singleton instances
  * created by TAO will be automatically registered with the singleton
  * instance of this Singleton Manager.
  * @par
@@ -91,32 +90,33 @@ public:
   /**
    * The object is deleted via the ace_cleanup_destroyer.  If you need
    * more flexiblity, see the other at_exit method below.  For OS's
-   * that do not have processes, cleanup takes place  at the end of
+   * that do not have processes, cleanup takes place at the end of
    * main.  Returns 0 on success.  On failure, returns -1 and sets
    * errno to: EAGAIN if shutting down, ENOMEM if insufficient virtual
    * memory, or EEXIST if the object (or array) had already been
    * registered.
    */
-  static int at_exit (ACE_Cleanup *object, void *param = 0);
+  static int at_exit (ACE_Cleanup *object, void *param = 0, const char* name = 0);
 
   /// Register an object (or array) for cleanup at process
   /// termination.
   /**
-   * cleanup_hook points to a (global, or static member) function that
+   * @a cleanup_hook points to a (global, or static member) function that
    * is called for the object or array when it to be destroyed.  It
    * may perform any necessary cleanup specific for that object or its
-   * class.  param is passed as the second parameter to the
+   * class.  @a param is passed as the second parameter to the
    * cleanup_hook function; the first parameter is the object (or
-   * array) to be destroyed.  cleanup_hook, for example, may delete
+   * array) to be destroyed.  @a cleanup_hook, for example, may delete
    * the object (or array).  For OS's that do not have processes, this
-   * function is the same as <at_thread_exit>.  Returns 0 on success.
+   * function is the same as @c at_thread_exit.  Returns 0 on success.
    * On failure, returns -1 and sets errno to: EAGAIN if shutting
    * down, ENOMEM if insufficient virtual memory, or EEXIST if the
    * object (or array) had already been registered.
    */
   static int at_exit (void *object,
                       ACE_CLEANUP_FUNC cleanup_hook,
-                      void *param);
+                      void *param,
+                      const char* name);
 
 protected:
 
@@ -136,10 +136,9 @@ private:
 
   /// Register an object or array for deletion at program termination.
   /// See description of static version above for return values.
-  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
+  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, const char* name);
 
 private:
-
   /// Default signal set used, for example, in ACE_Sig_Guard.
   sigset_t *default_mask_;
 

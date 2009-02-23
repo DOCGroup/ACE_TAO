@@ -51,13 +51,11 @@ public:
 
   /// The ORB is shutting down, destroy any resources attached to this
   /// adapter.
-  virtual void close (int wait_for_completion
-                      ) = 0;
+  virtual void close (int wait_for_completion) = 0;
 
   /// Check if the adapter can be closed in the current context, raise
   /// an exception if not.
-  virtual void check_close (int wait_for_completion
-                            ) = 0;
+  virtual void check_close (int wait_for_completion) = 0;
 
   /**
    * Return the priority assigned to this adapter.
@@ -69,8 +67,7 @@ public:
   /// Return the status....
   virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
-                        CORBA::Object_out forward_to
-                        ) = 0;
+                        CORBA::Object_out forward_to) = 0;
 
   enum {
     /// The operation was successfully dispatched, an exception may
@@ -103,6 +100,7 @@ public:
   /// Create a collocated object using the given profile and stub.
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &) = 0;
+
   /// Initialize a collocated object using the given stub
   /// pointer for lazily evaluated object references.
   virtual CORBA::Long initialize_collocated_object (TAO_Stub *) = 0;

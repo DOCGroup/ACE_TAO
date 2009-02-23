@@ -183,7 +183,7 @@ Manager::make_iors_register (void)
 
   if (third_ior == 0)
     ACE_DEBUG ((LM_DEBUG,
-                "Here is the culprit \n"));
+                "Here is the culprit\n"));
   // Third Server
   CORBA::Object_var object_tertiary =
     this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (third_ior));
@@ -214,7 +214,7 @@ Manager::make_iors_register (void)
 
   if (object_tertiary.in () == 0)
     ACE_DEBUG ((LM_DEBUG,
-                " There is a problem \n"));
+                " There is a problem\n"));
 
   TAO_IOP::TAO_IOR_Manipulation::IORList iors_again (3);
   iors_again.length(3);

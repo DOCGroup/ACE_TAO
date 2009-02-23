@@ -16,6 +16,7 @@ SUBDIRS = \
         Bug_3495_Regression \
         IDL3_Test \
         IFR_Inheritance_Test \
+        IFR_Self_Recursive_IDL_Test \
         IFR_Test \
         Latency_Test \
         Persistence_Test

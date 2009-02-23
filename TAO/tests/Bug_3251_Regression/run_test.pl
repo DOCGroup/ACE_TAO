@@ -6,26 +6,17 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-if (PerlACE::is_vxworks_test()) {
-  $SVP = new PerlACE::ProcessVX ("server", "");
-}
-else {
-  $SVP = new PerlACE::Process ("server", "");
-}
-# Run the AMH server.
-$sv = $SVP->Spawn ();
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-if ($sv != 0) {
-   print STDERR "ERROR: server returned $sv\n";
-   exit 1;
+$SV = $server->CreateProcess ("server");
+
+$test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
+
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    exit 1;
 }
 
-$svnk = $SVP->WaitKill (60);
-if ($svnk != 0) {
-    print STDERR "ERROR: Server returned $svnk\n";
-    $status = 1;
-}
-
-exit $status;
+exit 0;

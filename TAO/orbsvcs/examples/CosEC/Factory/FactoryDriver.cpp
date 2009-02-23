@@ -86,7 +86,7 @@ FactoryDriver::start (int argc, ACE_TCHAR *argv [])
       if (naming_client_.init (orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
+                           "the TAO_Naming_Client.\n"),
                           1);
 
       CosNaming::NamingContext_var context =
@@ -97,7 +97,7 @@ FactoryDriver::start (int argc, ACE_TCHAR *argv [])
                                   context.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Unable to initialize "
-                           "the factory. \n"),
+                           "the factory.\n"),
                           1);
 
       // activate the factory in the root poa.

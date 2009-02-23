@@ -55,7 +55,7 @@ Simple_Server_i::shutdown_now (CORBA::Boolean is_clean)
 {
   if (is_clean == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "Performing catastrophic shutdown \n"));
+      ACE_DEBUG ((LM_DEBUG, "Performing catastrophic shutdown\n"));
 #if defined (DIGITAL_UNIX) || defined (DEC_CXX) || defined (ACE_OPENVMS)
       ACE_OS::_exit();
 #else

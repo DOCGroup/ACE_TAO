@@ -76,9 +76,9 @@ TAO_UIOP_Transport::recv (char *buf,
       errno != ETIME)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - UIOP_Transport::recv, %p %p \n"),
+                  ACE_TEXT ("TAO (%P|%t) - UIOP_Transport::recv, %p %p\n"),
                   ACE_TEXT ("TAO - read message failure ")
-                  ACE_TEXT ("recv () \n")));
+                  ACE_TEXT ("recv ()\n")));
     }
 
   // Error handling
@@ -123,7 +123,7 @@ TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
                                   ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
-  if (this->messaging_object ()->format_message (stream) != 0)
+  if (this->messaging_object ()->format_message (stream, stub) != 0)
     return -1;
 
   // Strictly speaking, should not need to loop here because the

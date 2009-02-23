@@ -242,7 +242,7 @@ Server<Servant>::register_name (const char *name)
   catch (const CosNaming::NamingContext::AlreadyBound&)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Unable to bind %C \n"),
+                         ACE_TEXT ("Unable to bind %C\n"),
                          name),
                         -1);
     }
@@ -387,7 +387,7 @@ Client<ServerInterface>::init (const char *name,
         {
           // No IOR specified. Use the Naming Service
           ACE_DEBUG((LM_DEBUG,
-                     ACE_TEXT ("Using the Naming Service \n")));
+                     ACE_TEXT ("Using the Naming Service\n")));
           int retv = this->obtain_initial_references (name);
           if (retv ==-1)
             return -1;
@@ -417,7 +417,7 @@ Client<ServerInterface>::obtain_initial_references (const char *name)
       if (naming_client_.init (orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("[CLIENT] Process/Thread Id : (%P/%t) Unable to initialize ")
-                           ACE_TEXT ("the TAO_Naming_Client. \n")),
+                           ACE_TEXT ("the TAO_Naming_Client.\n")),
                           -1);
 
       CosNaming::Name server_name (1);

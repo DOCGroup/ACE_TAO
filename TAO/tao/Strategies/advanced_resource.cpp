@@ -682,7 +682,6 @@ TAO_Advanced_Resource_Factory::report_unsupported_error (
              option_name));
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 
@@ -695,3 +694,4 @@ ACE_STATIC_SVC_DEFINE (TAO_Advanced_Resource_Factory,
 ACE_FACTORY_DEFINE (TAO_Strategies, TAO_Advanced_Resource_Factory)
 
 // ****************************************************************
+TAO_END_VERSIONED_NAMESPACE_DECL

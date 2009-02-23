@@ -9,7 +9,7 @@
 #include "simpleS.h"
 #include "calleeC.h"
 
-class Simple_i : public POA_Simple, ACE_Event_Handler
+class Simple_i : public POA_Simple, public ACE_Event_Handler
 {
 public:
   Simple_i(CORBA::ORB_ptr orb);

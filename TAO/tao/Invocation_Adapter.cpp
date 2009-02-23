@@ -113,7 +113,7 @@ namespace TAO
               {
                 ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Invocation_Adapter::invoke_i, "
-                  "handling forwarded locations \n"));
+                  "handling forwarded locations\n"));
               }
           }
       }
@@ -247,7 +247,7 @@ namespace TAO
       {
         if (is_timeout && *max_wait_time == ACE_Time_Value::zero)
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t)Invocation_Adapter::invoke_remote_i: ")
+                      ACE_TEXT ("TAO (%P|%t) - Invocation_Adapter::invoke_remote_i, ")
                       ACE_TEXT ("max wait time consumed during transport resolution\n")));
       }
 

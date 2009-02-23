@@ -13,6 +13,7 @@
 
 #include "tao/orbconf.h"
 #include "tao/CORBA_String.h"
+#include "tao/SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -340,6 +341,7 @@ namespace TAO {
   bool demarshal_sequence(stream & strm, TAO::unbounded_basic_string_sequence <charT> & target) {
     typedef TAO::unbounded_basic_string_sequence <charT> sequence;
     typedef typename sequence::element_traits::string_var string_var;
+    typedef typename sequence::allocation_traits sequence_allocation_traits;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -347,8 +349,9 @@ namespace TAO {
     if (new_length > strm.length()) {
       return false;
     }
-    sequence tmp(new_length);
-    tmp.length(new_length);
+    sequence tmp(new_length, new_length,
+                 sequence_allocation_traits::allocbuf_noinit(new_length),
+                 true);
     for(CORBA::ULong i = 0; i < new_length; ++i) {
       string_var string;
       if (!(strm >> string.inout ())) {
@@ -362,9 +365,11 @@ namespace TAO {
     return true;
   }
 
-  template <typename stream, typename object_t, typename object_t_var>
-  bool demarshal_sequence(stream & strm, TAO::unbounded_object_reference_sequence<object_t, object_t_var> & target) {
-    typedef TAO::unbounded_object_reference_sequence<object_t, object_t_var> sequence;
+  template <typename stream, typename charT, CORBA::ULong BD_STR_MAX>
+  bool demarshal_sequence(stream & strm, TAO::unbounded_bd_string_sequence <charT, BD_STR_MAX> & target) {
+    typedef TAO::unbounded_bd_string_sequence <charT, BD_STR_MAX> sequence;
+    typedef typename sequence::element_traits::string_var string_var;
+    typedef typename sequence::allocation_traits sequence_allocation_traits;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -372,8 +377,40 @@ namespace TAO {
     if (new_length > strm.length()) {
       return false;
     }
-    sequence tmp(new_length);
-    tmp.length(new_length);
+    sequence tmp(new_length, new_length,
+                 sequence_allocation_traits::allocbuf_noinit(new_length),
+                 true);
+    for(CORBA::ULong i = 0; i < new_length; ++i) {
+      string_var string;
+      if (!(strm >> string.inout ())) {
+        return false;
+      }
+      else {
+        if (string.in () != 0 &&
+            ACE_OS::strlen (string.in ()) > tmp.bd_string_maximum ()) {
+          throw ::CORBA::BAD_PARAM ();
+        }
+        tmp[i] = string._retn ();
+      }
+    }
+    tmp.swap(target);
+    return true;
+  }
+
+  template <typename stream, typename object_t, typename object_t_var>
+  bool demarshal_sequence(stream & strm, TAO::unbounded_object_reference_sequence<object_t, object_t_var> & target) {
+    typedef TAO::unbounded_object_reference_sequence<object_t, object_t_var> sequence;
+    typedef typename sequence::allocation_traits sequence_allocation_traits;
+    ::CORBA::ULong new_length = 0;
+    if (!(strm >> new_length)) {
+      return false;
+    }
+    if (new_length > strm.length()) {
+      return false;
+    }
+    sequence tmp(new_length, new_length,
+                 sequence_allocation_traits::allocbuf_noinit(new_length),
+                 true);
     typename sequence::value_type * buffer = tmp.get_buffer();
     for(CORBA::ULong i = 0; i < new_length; ++i) {
       if (!(strm >> buffer[i])) {
@@ -540,6 +577,24 @@ namespace TAO {
       return false;
     }
     for(CORBA::ULong i = 0; i < length; ++i) {
+      if (!(strm << source[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  template <typename stream, typename charT, CORBA::ULong BD_STR_MAX>
+  bool marshal_sequence(stream & strm, const TAO::unbounded_bd_string_sequence <charT, BD_STR_MAX> & source) {
+    ::CORBA::ULong const length = source.length ();
+    if (!(strm << length)) {
+      return false;
+    }
+    for(CORBA::ULong i = 0; i < length; ++i) {
+      if (source[i].in () != 0 &&
+          ACE_OS::strlen (source[i]) > source.bd_string_maximum ()) {
+        throw ::CORBA::BAD_PARAM ();
+      }
       if (!(strm << source[i])) {
         return false;
       }

@@ -94,9 +94,9 @@ TAO_DIOP_Transport::recv (char *buf,
   if (n == -1 && TAO_debug_level > 4)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - DIOP_Transport::recv, %p \n"),
+                  ACE_TEXT ("TAO (%P|%t) - DIOP_Transport::recv, %p\n"),
                   ACE_TEXT ("TAO - read message failure ")
-                  ACE_TEXT ("recv () \n")));
+                  ACE_TEXT ("recv ()\n")));
     }
 
   // Error handling
@@ -251,7 +251,7 @@ TAO_DIOP_Transport::send_message (TAO_OutputCDR &stream,
                                   ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
-  if (this->messaging_object ()->format_message (stream) != 0)
+  if (this->messaging_object ()->format_message (stream, stub) != 0)
     return -1;
 
   // Strictly speaking, should not need to loop here because the

@@ -197,13 +197,13 @@ test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Any did not receive a short [%d] \n",
+                               "Any did not receive a short [%d]\n",
                                i),
                               1);
         }
       else
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Any decode failed [%d] \n",
+                           "Any decode failed [%d]\n",
                            i),
                           1);
     }
@@ -259,9 +259,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 TAO_InputCDR input (output);
                 if (TAO_debug_level > 0)
                   {
-                    ACE_DEBUG ((LM_DEBUG, "Output CDR: \n"));
+                    ACE_DEBUG ((LM_DEBUG, "Output CDR:\n"));
                     ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
-                    ACE_DEBUG ((LM_DEBUG, "Input CDR: \n"));
+                    ACE_DEBUG ((LM_DEBUG, "Input CDR:\n"));
                     ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
                   }
 

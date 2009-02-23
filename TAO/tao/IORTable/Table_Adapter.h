@@ -61,9 +61,8 @@ public:
 private:
   static ACE_Lock * create_lock (bool enable_locking, TAO_SYNCH_MUTEX &l);
   /// Helper method to find an object bound in the table.
-  /// @return 1 if found, 0 otherwise.
-  CORBA::Long find_object (TAO::ObjectKey &key,
-                           CORBA::Object_out forward_to);
+  bool find_object (TAO::ObjectKey &key,
+                    CORBA::Object_out forward_to);
 
   /// The ORB Core we belong to
   TAO_ORB_Core &orb_core_;

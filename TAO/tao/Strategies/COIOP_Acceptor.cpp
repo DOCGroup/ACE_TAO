@@ -354,7 +354,7 @@ TAO_COIOP_Acceptor::parse_options (const char *str)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Invalid COIOP endpoint format: ")
-                                 ACE_TEXT ("endpoint priorities no longer supported. \n")),
+                                 ACE_TEXT ("endpoint priorities no longer supported.\n")),
                                 -1);
             }
           else

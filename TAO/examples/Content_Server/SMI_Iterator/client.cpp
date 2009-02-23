@@ -75,7 +75,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (factory.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Object pointed to by:\n ")
+                             ACE_TEXT ("Object pointed to by:\n")
                              ACE_TEXT ("%s\n")
                              ACE_TEXT ("is not an Iterator_Factory ")
                              ACE_TEXT ("object.\n"),

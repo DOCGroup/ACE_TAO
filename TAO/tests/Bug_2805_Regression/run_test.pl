@@ -6,29 +6,24 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $debug_level = '0';
-$iterations = '1';
-
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '1';
     }
 }
 
-if (PerlACE::is_vxworks_test()) {
-    $CL = new PerlACE::ProcessVX ("client", "-ORBdebuglevel $debug_level");
-}
-else {
-    $CL = new PerlACE::Process ("client", "-ORBdebuglevel $debug_level");
-}
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-$client = $CL->SpawnWaitKill (60);
+$SV = $server->CreateProcess ("client", "-ORBdebuglevel $debug_level");
 
-if ($client != 0) {
+$test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
+
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
     exit 1;
 }
 
 exit 0;
-

@@ -6,29 +6,19 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $status = 0;
 
 $port = 12345;
 
-if (PerlACE::is_vxworks_test()) {
-    $iiopSV = new PerlACE::ProcessVX ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -h default -p $port");
-}
-else {
-    $iiopSV = new PerlACE::Process ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -h default -p $port");
-}
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-if (PerlACE::is_vxworks_test()) {
-    $multiSV = new PerlACE::ProcessVX ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 0 -h multi -p $port");
-}
-else {
-    $multiSV = new PerlACE::Process ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 0 -h multi -p $port");
-}
+$iiopSV = $server->CreateProcess ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -h default -p $port");
 
 print "Starting server using only IIOP\n";
 
-$result = $iiopSV->SpawnWaitKill (300);
+$result = $iiopSV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($result != 0) {
     print STDERR "ERROR: IIOP-only server returned $result\n";
@@ -37,7 +27,9 @@ if ($result != 0) {
 
 print "Starting server using multiple protocols\n";
 
-$result = $multiSV->SpawnWaitKill(300);
+$multiSV = $server->CreateProcess ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 0 -h multi -p $port");
+
+$result = $multiSV->SpawnWaitKill($server->ProcessStartWaitInterval());
 
 if ($result != 0) {
     print STDERR "ERROR: multiprotocol server returned $result\n";

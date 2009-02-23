@@ -32,65 +32,80 @@ TAO_ZIOPPolicy_Validator::validate_impl (TAO_Policy_Set &policies)
 
   if (srp.in () == 0)
     return;
-
-  // Set the flag in the ORB_Core
-  orb_core_.ziop_enabled (srp->compression_enabled ());
 }
 
 void
 TAO_ZIOPPolicy_Validator::merge_policies_impl (TAO_Policy_Set &policies)
 {
-  // Check if the user has specified the priority model policy.
-  CORBA::Policy_var priority_model =
+  // Check if the user has specified the compression enabled policy.
+  CORBA::Policy_var compression_enabled =
     policies.get_cached_policy (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
 
-  if (CORBA::is_nil (priority_model.in ()))
+  if (CORBA::is_nil (compression_enabled.in ()))
     {
-      // If not, check if the priority model policy has been specified
+      // If not, check if the compression enabled policy has been specified
       // at the ORB level.
-      priority_model =
+      compression_enabled =
         this->orb_core_.get_cached_policy (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
 
-      if (!CORBA::is_nil (priority_model.in ()))
+      if (!CORBA::is_nil (compression_enabled.in ()))
         {
           // If so, we'll use that policy.
-          policies.set_policy (priority_model.in ());
+          policies.set_policy (compression_enabled.in ());
         }
     }
 
-  // Check if the user has specified the server protocol policy.
-  CORBA::Policy_var server_protocol =
+  // Check if the user has specified the compression low value policy.
+  CORBA::Policy_var low_value_policy =
     policies.get_cached_policy (TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY);
 
-  if (CORBA::is_nil (server_protocol.in ()))
+  if (CORBA::is_nil (low_value_policy.in ()))
     {
-      // If not, check if the server protocol policy has been
+      // If not, check if the compression low value policy has been
       // specified at the ORB level.
-      server_protocol =
+      low_value_policy =
         this->orb_core_.get_cached_policy (TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY);
 
-      if (!CORBA::is_nil (server_protocol.in ()))
+      if (!CORBA::is_nil (low_value_policy.in ()))
         {
           // If so, we'll use that policy.
-          policies.set_policy (server_protocol.in ());
+          policies.set_policy (low_value_policy.in ());
         }
     }
 
-  // Check if the user has specified the server protocol policy.
-  CORBA::Policy_var x =
-    policies.get_cached_policy (TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY);
+  // Check if the user has specified the minimum compression ratio policy.
+  CORBA::Policy_var min_ratio_policy =
+    policies.get_cached_policy (TAO_CACHED_MIN_COMPRESSION_RATIO_POLICY);
 
-  if (CORBA::is_nil (x.in ()))
+  if (CORBA::is_nil (min_ratio_policy.in ()))
     {
-      // If not, check if the server protocol policy has been
+      // If not, check if the minimum compression ratio policy has been
       // specified at the ORB level.
-      x =
-        this->orb_core_.get_cached_policy (TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY);
+      min_ratio_policy =
+        this->orb_core_.get_cached_policy (TAO_CACHED_MIN_COMPRESSION_RATIO_POLICY);
 
-      if (!CORBA::is_nil (x.in ()))
+      if (!CORBA::is_nil (min_ratio_policy.in ()))
         {
           // If so, we'll use that policy.
-          policies.set_policy (x.in ());
+          policies.set_policy (min_ratio_policy.in ());
+        }
+    }
+
+  // Check if the user has specified the compression list policy.
+  CORBA::Policy_var compressior_list_policy =
+    policies.get_cached_policy (TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY);
+
+  if (CORBA::is_nil (compressior_list_policy.in ()))
+    {
+      // If not, check if the compression list policy has been
+      // specified at the ORB level.
+      compressior_list_policy =
+        this->orb_core_.get_cached_policy (TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY);
+
+      if (!CORBA::is_nil (compressior_list_policy.in ()))
+        {
+          // If so, we'll use that policy.
+          policies.set_policy (compressior_list_policy.in ());
         }
     }
 }
@@ -100,6 +115,7 @@ TAO_ZIOPPolicy_Validator::legal_policy_impl (CORBA::PolicyType type)
 {
   return (type == ZIOP::COMPRESSION_ENABLING_POLICY_ID ||
           type == ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID ||
+          type == ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID ||
           type == ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID);
 }
 

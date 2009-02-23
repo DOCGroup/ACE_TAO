@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : lwft_client, pi_server, interceptors, iorinterceptor, splicelib {
+project : lwft_client, pi_server, interceptors, iorinterceptor { // , splicelib {
   libs += LWFT_Common \
           LWFT_Server \
           LWFT_StateSyncAgent \

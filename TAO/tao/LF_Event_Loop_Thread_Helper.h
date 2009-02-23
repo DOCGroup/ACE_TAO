@@ -41,7 +41,7 @@ public:
   /// Destructor
   ~TAO_LF_Event_Loop_Thread_Helper (void);
 
-  /// Calls <set_event_loop_thread> on the leader/followers object.
+  /// Calls @c set_event_loop_thread on the leader/followers object.
   int event_loop_return (void) const;
 
 private:
@@ -51,8 +51,7 @@ private:
   /// The Leader/Follower Strategy used by this ORB.
   TAO_LF_Strategy &lf_strategy_;
 
-  /// Remembers the status returned while trying to enter the event
-  /// loop.
+  /// Remembers the status returned while trying to enter the event loop.
   int event_loop_return_;
 };
 

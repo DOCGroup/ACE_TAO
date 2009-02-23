@@ -36,7 +36,7 @@ Client::init (int argc,
   if (my_name_client_.init (manager_.orb()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to initialize "
-                       "the TAO_Naming_Client. \n"),
+                       "the TAO_Naming_Client.\n"),
                       -1);
 
   // Bind PropertySetDef Object.

@@ -2,6 +2,8 @@
 //
 // $Id$
 
+#include "tao/SystemException.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -21,36 +23,16 @@ TAO_OutputCDR::more_fragments (bool more)
   this->more_fragments_ = more;
 }
 
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-ACE_INLINE bool
-TAO_OutputCDR::compressed (void) const
-{
-  return this->compressed_;
-}
-
-ACE_INLINE void
-TAO_OutputCDR::compressed (bool compressed)
-{
-  this->compressed_ = compressed;
-}
-#endif
-
 ACE_INLINE void
 TAO_OutputCDR::message_attributes (CORBA::ULong request_id,
                                    TAO_Stub * stub,
-                                   TAO_Transport::TAO_Message_Semantics message_semantics,
-                                   ACE_Time_Value * timeout,
-                                   bool compressed)
+                                   TAO_Message_Semantics message_semantics,
+                                   ACE_Time_Value * timeout)
 {
   this->request_id_        = request_id;
   this->stub_              = stub;
   this->message_semantics_ = message_semantics;
   this->timeout_           = timeout;
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  this->compressed_        = compressed;
-#else
-  ACE_UNUSED_ARG (compressed);
-#endif
 }
 
 ACE_INLINE CORBA::ULong
@@ -65,7 +47,7 @@ TAO_OutputCDR::stub (void) const
   return this->stub_;
 }
 
-ACE_INLINE TAO_Transport::TAO_Message_Semantics
+ACE_INLINE TAO_Message_Semantics
 TAO_OutputCDR::message_semantics (void) const
 {
   return this->message_semantics_;
@@ -98,9 +80,6 @@ TAO_InputCDR::TAO_InputCDR (const char *buf,
                   major_version,
                   minor_version),
     orb_core_ (orb_core)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -115,9 +94,6 @@ TAO_InputCDR::TAO_InputCDR (size_t bufsiz,
                   major_version,
                   minor_version),
     orb_core_ (orb_core)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -132,9 +108,6 @@ TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
                   major_version,
                   minor_version),
     orb_core_ (orb_core)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -151,9 +124,6 @@ TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
                   minor_version,
                   lock),
     orb_core_ (orb_core)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -170,9 +140,6 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
                   major_version,
                   minor_version),
     orb_core_ (orb_core)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -194,9 +161,6 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
                   major_version,
                   minor_version),
     orb_core_ (orb_core)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -209,9 +173,6 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
                   size,
                   offset),
     orb_core_ (rhs.orb_core_)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -221,9 +182,6 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
   : ACE_InputCDR (rhs,
                   size),
     orb_core_ (rhs.orb_core_)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -231,9 +189,6 @@ ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs)
   : ACE_InputCDR (rhs),
     orb_core_ (rhs.orb_core_)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -242,9 +197,6 @@ TAO_InputCDR::TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
                             TAO_ORB_Core* orb_core)
   : ACE_InputCDR (rhs),
     orb_core_ (orb_core)
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-    , compressed_ (false)
-#endif
 {
 }
 
@@ -258,20 +210,6 @@ TAO_InputCDR::orb_core (void) const
 {
   return this->orb_core_;
 }
-
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-ACE_INLINE bool
-TAO_InputCDR::compressed (void) const
-{
-  return this->compressed_;
-}
-
-ACE_INLINE void
-TAO_InputCDR::compressed (bool compressed)
-{
-  this->compressed_ = compressed;
-}
-#endif
 
 // ****************************************************************
 
@@ -376,6 +314,28 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
     && static_cast<ACE_OutputCDR &> (os) << x;
 }
 
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      ACE_OutputCDR::from_string x)
+{
+  if (x.bound_ != 0 && x.val_ != 0 &&
+      ACE_OS::strlen (x.val_) > x.bound_)
+    {
+      throw ::CORBA::BAD_PARAM ();
+    }
+  return os << x.val_;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      ACE_OutputCDR::from_wstring x)
+{
+  if (x.bound_ != 0 && x.val_ != 0 &&
+      ACE_OS::strlen (x.val_) > x.bound_)
+    {
+      throw ::CORBA::BAD_PARAM ();
+    }
+  return os << x.val_;
+}
+
 // ****************************************************************
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
@@ -442,6 +402,32 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::WChar* &x)
 {
   return static_cast<ACE_InputCDR &> (is) >> x;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                      ACE_InputCDR::to_string x)
+{
+  CORBA::Boolean const marshal_flag =
+    is >> const_cast<ACE_CDR::Char *&> (x.val_);
+  if (marshal_flag && x.bound_ != 0 && x.val_ != 0 &&
+      ACE_OS::strlen (x.val_) > x.bound_)
+    {
+      throw ::CORBA::BAD_PARAM ();
+    }
+  return marshal_flag;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                      ACE_InputCDR::to_wstring x)
+{
+  CORBA::Boolean const marshal_flag =
+    is >> const_cast<ACE_CDR::WChar *&> (x.val_);
+  if (marshal_flag && x.bound_ != 0 && x.val_ != 0 &&
+      ACE_OS::strlen (x.val_) > x.bound_)
+    {
+      throw ::CORBA::BAD_PARAM ();
+    }
+  return marshal_flag;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -22,6 +22,7 @@ module Compression
     exception CompressionException
     {
         unsigned long reason;
+        string description;
     };
 
     /**
@@ -42,7 +43,7 @@ module Compression
     /**
      * CompressorId type.
      */
-    typedef unsigned long CompressorId;
+    typedef unsigned short CompressorId;
     const CompressorId COMPRESSORID_NONE = 0;
     const CompressorId COMPRESSORID_GZIP = 1;
     const CompressorId COMPRESSORID_PKZIP = 2;
@@ -55,19 +56,18 @@ module Compression
     const CompressorId COMPRESSORID_XAR = 9;
 
     /**
-     * CompressorId list
-     */
-    typedef sequence <CompressorId> CompressorIdList;
-
-    /**
      * CompressionLevel type.
      */
-    typedef unsigned long CompressionLevel;
+    typedef unsigned short CompressionLevel;
 
+    /**
+     * CompressionRatio type.
+     */
     typedef long CompressionRatio;
 
-    local interface CompressorFactory;
-
+    /**
+     * CompressionLevelId struc.
+     */
     struct CompressorIdLevel {
       CompressorId     compressor_id;
       CompressionLevel compression_level;
@@ -75,6 +75,8 @@ module Compression
     typedef sequence <CompressorIdLevel> CompressorIdLevelList;
 
     typedef CORBA::OctetSeq Buffer;
+
+    local interface CompressorFactory;
 
     /**
      * Compressor - abstraction of a compressor and decompressor.

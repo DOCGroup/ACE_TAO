@@ -71,7 +71,6 @@ TAO_FILE_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
   return object;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_FILE_Parser,
                        ACE_TEXT ("FILE_Parser"),
@@ -82,6 +81,8 @@ ACE_STATIC_SVC_DEFINE (TAO_FILE_Parser,
                        0)
 
 ACE_FACTORY_DEFINE (TAO, TAO_FILE_Parser)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_FILE_PARSER == 1 */
 

@@ -49,7 +49,7 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
 
   ACE_DEBUG ((LM_DEBUG,
-              "The OID is <%s> \n", s.in ()));
+              "The OID is <%s>\n", s.in ()));
   if (ACE_OS::strstr (s.in (), "Simple_Server") == 0)
     {
       throw CORBA::OBJECT_NOT_EXIST ();
@@ -60,10 +60,10 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
     Simple_Server::_narrow (this->objref_.in ());
 
   ACE_DEBUG ((LM_DEBUG,
-              "Got the narrowed secondary server too... \n"));
+              "Got the narrowed secondary server too...\n"));
 
   ACE_DEBUG ((LM_DEBUG,
-              "About to throw exception.. \n"));
+              "About to throw exception..\n"));
 
   throw PortableServer::ForwardRequest (
     CORBA::Object::_duplicate (

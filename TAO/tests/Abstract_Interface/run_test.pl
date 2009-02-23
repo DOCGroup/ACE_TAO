@@ -24,11 +24,11 @@ foreach $i (@ARGV) {
 my $server = PerlACE::TestTarget::create_target(1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target(2) || die "Create target 2 failed\n";
 
-$iorfilebase = "test.ior";
-$server_iorfile = $server->LocalFile ("$iorfilebase");
-$client_iorfile = $client->LocalFile ("$iorfilebase");
-$server->DeleteFile($iorfilebase);
-$client->DeleteFile($iorfilebase);
+$iorbase = "test.ior";
+$server_iorfile = $server->LocalFile ("$iorbase");
+$client_iorfile = $client->LocalFile ("$iorbase");
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 $SV = $server->CreateProcess ("server",
                               "-ORBDottedDecimalAddresses 1 "
@@ -36,7 +36,7 @@ $SV = $server->CreateProcess ("server",
 
 $SV->Spawn ();
 
-if ($server->WaitForFileTimed ($iorfilebase,
+if ($server->WaitForFileTimed ($iorbase,
                                $server->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server_iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
@@ -73,8 +73,20 @@ if ($server_status != 0) {
     $status = 1;
 }
 
-$server->DeleteFile($iorfilebase);
-$client->DeleteFile($iorfilebase);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 exit $status;
+
+
+
+
+
+
+
+
+
+
+
+
 

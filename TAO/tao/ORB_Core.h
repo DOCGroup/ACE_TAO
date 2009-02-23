@@ -205,9 +205,6 @@ public:
   TAO_ZIOP_Adapter *ziop_adapter () const;
   void ziop_adapter (TAO_ZIOP_Adapter *adapter);
 
-  CORBA::Boolean ziop_enabled () const;
-  void ziop_enabled (CORBA::Boolean value);
-
   TAO_Service_Context_Registry &service_context_registry (void);
 
   /// Get the protocol factories
@@ -226,7 +223,7 @@ public:
   CORBA::Object_ptr root_poa (void);
 
   /// Get the adapter registry
-  TAO_Adapter_Registry *adapter_registry (void);
+  TAO_Adapter_Registry &adapter_registry (void);
 
   /// @name Collocation Strategies
   //@{
@@ -690,13 +687,14 @@ public:
   /// Reference counting...
   unsigned long _incr_refcnt (void);
   unsigned long _decr_refcnt (void);
+  unsigned long _refcnt (void) const;
 
   /// Register the handle of an open connection with the ORB Core
   /// handle set.  This handle set will be used to explicitly remove
   /// corresponding event handlers from the reactor.
   int register_handle (ACE_HANDLE handle);
 
-  /// Remove <handle> from the ORB Core's handle set so that it
+  /// Remove @a handle from the ORB Core's handle set so that it
   /// isn't included in the set that is passed to the reactor upon ORB
   /// destruction.
   int remove_handle (ACE_HANDLE handle);
@@ -1375,10 +1373,10 @@ TAO_Export TAO_ORB_Core * TAO_ORB_Core_instance (void);
 
 // ****************************************************************
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_ORB_Core_Static_Resources)
 ACE_FACTORY_DECLARE (TAO, TAO_ORB_Core_Static_Resources)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB_Core.inl"
