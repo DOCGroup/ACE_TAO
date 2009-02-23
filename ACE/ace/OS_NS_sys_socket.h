@@ -74,7 +74,7 @@ namespace ACE_OS
 # endif /* ACE_WIN32 */
 
   //@{ @name A set of wrappers for sockets.
-  /// BSD-style <accept> (no QoS).
+  /// BSD-style @c accept (no QoS).
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE accept (ACE_HANDLE handle,
                      struct sockaddr *addr,
@@ -82,9 +82,9 @@ namespace ACE_OS
 
 #if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
   /**
-   * QoS-enabled <accept>, which passes @a qos_params to <accept>.  If
-   * the OS platform doesn't support QoS-enabled <accept> then the
-   * @a qos_params are ignored and the BSD-style <accept> is called.
+   * QoS-enabled @c accept, which passes @a qos_params to @c accept.  If
+   * the OS platform doesn't support QoS-enabled @c accept then the
+   * @a qos_params are ignored and the BSD-style @c accept is called.
    */
   extern ACE_Export
   ACE_HANDLE accept (ACE_HANDLE handle,
@@ -102,7 +102,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int closesocket (ACE_HANDLE s);
 
-  /// BSD-style <connect> (no QoS).
+  /// BSD-style @c connect (no QoS).
   ACE_NAMESPACE_INLINE_FUNCTION
   int connect (ACE_HANDLE handle,
                struct sockaddr *addr,
@@ -110,9 +110,9 @@ namespace ACE_OS
 
 #if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
   /**
-   * QoS-enabled <connect>, which passes @a qos_params to <connect>.
-   * If the OS platform doesn't support QoS-enabled <connect> then the
-   * @a qos_params are ignored and the BSD-style <connect> is called.
+   * QoS-enabled @c connect, which passes @a qos_params to @c connect.
+   * If the OS platform doesn't support QoS-enabled @c connect then the
+   * @a qos_params are ignored and the BSD-style @c connect is called.
    */
   extern ACE_Export
   int connect (ACE_HANDLE handle,
