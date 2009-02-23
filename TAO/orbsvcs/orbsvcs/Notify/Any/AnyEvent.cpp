@@ -54,7 +54,7 @@ TAO_Notify_AnyEvent_No_Copy::push (TAO_Notify_Consumer* consumer) const
 {
   if (DEBUG_LEVEL > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
-                "TAO_Notify_AnyEvent::push \n"));
+                "TAO_Notify_AnyEvent::push\n"));
 
   consumer->push (*this->event_);
 }

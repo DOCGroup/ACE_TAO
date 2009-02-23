@@ -313,12 +313,12 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
                   "******************************\n"));
 
       ACE_ERROR ((LM_ERROR,
-                  "ERROR DETECTED \n"));
+                  "ERROR DETECTED\n"));
 
       if (crc == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Sending process may not have computed CRC \n"));
+                      "Sending process may not have computed CRC\n"));
         }
       else
         {
@@ -327,13 +327,13 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
         }
 
       ACE_ERROR ((LM_ERROR,
-                  "Message was received from [%s:%s:%d] \n",
+                  "Message was received from [%s:%s:%d]\n",
                   from.get_host_name (),
                   from.get_host_addr (),
                   from.get_port_number()));
 
       ACE_ERROR ((LM_ERROR,
-                  "Num errors = %d \n",
+                  "Num errors = %d\n",
                   ++err_count));
       ACE_ERROR ((LM_ERROR,
                   "This is a bad thing. Attempting to ignore ..\n"));

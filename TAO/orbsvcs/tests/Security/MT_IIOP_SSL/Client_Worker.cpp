@@ -25,7 +25,7 @@ Client_Worker::validate_connection (void)
 
           if(TAO_debug_level > 0)
             ACE_DEBUG (( LM_DEBUG,
-                         "******** VALIDATED ******* \n"));
+                         "******** VALIDATED *******\n"));
         }
       catch (const CORBA::Exception&)
         {
@@ -57,7 +57,7 @@ Client_Worker::svc (void)
   catch (const CORBA::Exception& ex)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) Got an exception \n"));
+                  "(%P|%t) Got an exception\n"));
       ex._tao_print_exception ("Client_Worker : Exception Raised");
 
       return -1;

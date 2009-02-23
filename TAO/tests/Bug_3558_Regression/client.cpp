@@ -197,7 +197,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       for (int i = 0; i < argc; i++)
         largv[i] = argv[i];
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D client adding args: \n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D client adding args:\n")));
       for (int i = 0; i < extra_argc; i++)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\t\t%s\n"), extra[i]));

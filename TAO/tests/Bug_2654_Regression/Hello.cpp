@@ -33,7 +33,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 void
 Hello::set_callback (Test::CallBack_ptr cb)
 {
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t) got callback \n"));
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) got callback\n"));
   this->callback_ = Test::CallBack::_duplicate(cb);
   this->callback_->method2();
 }

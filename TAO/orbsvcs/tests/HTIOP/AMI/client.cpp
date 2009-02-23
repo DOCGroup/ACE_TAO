@@ -117,7 +117,7 @@ public:
     {
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <foo_excep> called: \n"));
+                  "Callback method <foo_excep> called:\n"));
       try
         {
           excep_holder->raise_exception ();
@@ -138,19 +138,19 @@ public:
   void get_yadda_excep (::Messaging::ExceptionHolder *)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <get_yadda_excep> called: \n"));
+                  "Callback method <get_yadda_excep> called:\n"));
     };
 
   void set_yadda (void)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <set_yadda> called: \n"));
+                  "Callback method <set_yadda> called:\n"));
     };
 
   void set_yadda_excep (::Messaging::ExceptionHolder *)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <set_yadda_excep> called: \n"));
+                  "Callback method <set_yadda_excep> called:\n"));
     };
   ~Handler (void) {};
 };

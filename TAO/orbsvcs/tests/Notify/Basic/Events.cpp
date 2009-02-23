@@ -146,7 +146,7 @@ Events::parse_args (int argc,
           ACE_DEBUG((LM_DEBUG,
                      "usage: %s "
                      "-use_default_admin "
-                     "-events event_count \n",
+                     "-events event_count\n",
                      argv[0], argv[0]));
 
           arg_shifter.consume_arg ();

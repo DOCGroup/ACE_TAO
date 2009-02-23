@@ -428,7 +428,7 @@ TAO_PropertyNamesIterator_Tester::test_next_n (size_t n)
     }
   for (size_t i = 0; i < pnames_var.in ().length (); i++)
     ACE_DEBUG ((LM_DEBUG,
-                "str %s \n",
+                "str %s\n",
                 (const char *) pnames_var[i]));
   return 0;
 }

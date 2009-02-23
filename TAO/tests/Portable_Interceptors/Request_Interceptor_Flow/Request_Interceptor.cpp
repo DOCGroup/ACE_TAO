@@ -58,7 +58,7 @@ Request_Interceptor::destroy (void)
                   "(%P) The number of starting interception point "
                   "calls (%u)\n"
                   "(%P) did not equal the number of ending "
-                  "interception \n"
+                  "interception\n"
                   "(%P) point calls (%u).\n\n",
                   this->name_.in (),
                   s_count,

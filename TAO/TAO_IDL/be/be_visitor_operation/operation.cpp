@@ -115,12 +115,12 @@ be_visitor_operation::is_amh_exception_holder (be_interface *node)
       amh_underbar[3] == node_name[3]
       ) // node name starts with "AMH_"
     {
-      //ACE_DEBUG ((LM_DEBUG, "Passed first test of amh_excepholder \n"));
+      //ACE_DEBUG ((LM_DEBUG, "Passed first test of amh_excepholder\n"));
       const char *last_E = ACE_OS::strrchr (node->full_name (), 'E');
       if (last_E != 0
           && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
         {
-          //ACE_DEBUG ((LM_DEBUG, "be_visitor_operation: Passed second test of amh_excepholder \n"));
+          //ACE_DEBUG ((LM_DEBUG, "be_visitor_operation: Passed second test of amh_excepholder\n"));
           is_an_amh_exception_holder = 1;
         }
     }

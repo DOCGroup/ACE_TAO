@@ -84,13 +84,13 @@ test_timeout (CORBA::Object_ptr object)
       if (el.real_time > 0.200)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) ERROR: Too long to timeout: %F \n",
+                             "(%P|%t) ERROR: Too long to timeout: %F\n",
                              el.real_time),
                              1);
         }
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Success, timeout: %F \n",
+                    "(%P|%t) Success, timeout: %F\n",
                     el.real_time));
     }
 

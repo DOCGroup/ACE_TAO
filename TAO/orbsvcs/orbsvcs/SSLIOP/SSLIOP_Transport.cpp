@@ -248,7 +248,7 @@ TAO::SSLIOP::Transport::set_bidir_context_info (
             {
               ACE_ERROR ((LM_ERROR,
                           "TAO (%P|%t) - SSLIOP_Transport::set_bidir_info, ",
-                          "error getting listen_point \n"));
+                          "error getting listen_point\n"));
               return;
             }
         }
@@ -316,7 +316,7 @@ TAO::SSLIOP::Transport::get_listen_point (
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) Could not resolve local host")
-                         ACE_TEXT (" name \n")),
+                         ACE_TEXT (" name\n")),
                         -1);
     }
 

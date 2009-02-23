@@ -36,7 +36,7 @@ RIR_Narrow<Interface>::resolve (CORBA::ORB_ptr orb,
           ACE_OS::exit (1);
         }
     } catch (const CORBA::Exception& ex) {
-      ex._tao_print_exception ("Caught an exception \n");
+      ex._tao_print_exception ("Caught an exception\n");
     }
   return intface._retn ();
 }

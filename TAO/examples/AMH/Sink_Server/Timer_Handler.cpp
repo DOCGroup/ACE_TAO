@@ -33,7 +33,7 @@ Timer_Handler::handle_timeout (const ACE_Time_Value &,
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "Exception in Timer_Handler::handle_timeout \n");
+        "Exception in Timer_Handler::handle_timeout\n");
       return -1;
     }
 

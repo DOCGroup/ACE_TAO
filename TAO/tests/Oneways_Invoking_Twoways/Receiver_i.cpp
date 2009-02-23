@@ -22,7 +22,7 @@ CORBA::Long
 Receiver_i::receive_call (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t)  Doing a ping... \n"));
+              "(%P|%t)  Doing a ping...\n"));
 
   this->sender_->ping ();
 
@@ -39,6 +39,6 @@ void
 Receiver_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) About to invoke shudown... \n"));
+              "(%P|%t) About to invoke shudown...\n"));
   this->orb_->shutdown (0);
 }

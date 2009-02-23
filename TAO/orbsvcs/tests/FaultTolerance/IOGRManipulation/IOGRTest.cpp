@@ -146,12 +146,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Testing for tagged component \n"));
+                  "(%P|%t) Testing for tagged component\n"));
 
       if ((ftc.object_group_ref_version != 5) &&
           (ftc.object_group_id != 10))
         ACE_ERROR ((LM_ERROR,
-                    "%P|%t) Not working right \n"));
+                    "%P|%t) Not working right\n"));
 
       if (retval)
         ACE_DEBUG ((LM_DEBUG,

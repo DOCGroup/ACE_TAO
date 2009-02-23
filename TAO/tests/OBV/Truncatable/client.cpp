@@ -475,7 +475,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       }
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - shutdown orb \n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - shutdown orb\n"));
 
 
       test->shutdown ();
@@ -484,11 +484,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (fail)
         {
-          ACE_ERROR ((LM_ERROR, "(%P|%t) client: test failed \n"));
+          ACE_ERROR ((LM_ERROR, "(%P|%t) client: test failed\n"));
           return 1;
         }
       else
-        ACE_DEBUG((LM_DEBUG, "(%P|%t) client: test passed \n"));
+        ACE_DEBUG((LM_DEBUG, "(%P|%t) client: test passed\n"));
     }
   catch (const CORBA::Exception& ex)
     {

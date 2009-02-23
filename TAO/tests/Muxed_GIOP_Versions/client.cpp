@@ -117,7 +117,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (!server_shutdown)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "starting string_to_object %s \n",
+                      "starting string_to_object %s\n",
                       corbaloc_arg));
 
           for (int c = 0; c < (niterations * 2); c++)

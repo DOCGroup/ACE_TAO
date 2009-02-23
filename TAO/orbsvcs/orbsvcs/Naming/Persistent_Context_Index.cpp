@@ -174,7 +174,7 @@ TAO_Persistent_Context_Index::recreate_all (void)
   IND_DEF::ENTRY *entry = 0;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Starting to recreate Naming Contexts from the file... \n"));
+    ACE_DEBUG ((LM_DEBUG, "Starting to recreate Naming Contexts from the file...\n"));
 
   // For each entry in <index_>, create a Naming Context servant.
   do

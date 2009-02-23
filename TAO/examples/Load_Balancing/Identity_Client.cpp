@@ -97,7 +97,7 @@ Identity_Client::init (int argc,
 int
 Identity_Client::run (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "Identity_Client: Initialized \n"));
+  ACE_DEBUG ((LM_DEBUG, "Identity_Client: Initialized\n"));
 
   // Contact the <Object_Group_Factory> to obtain an <Object_Group>.
   CORBA::ORB_var orb = orb_manager_.orb ();

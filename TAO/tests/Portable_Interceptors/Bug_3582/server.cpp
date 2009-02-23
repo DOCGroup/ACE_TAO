@@ -30,7 +30,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s "
                            "-o <IOR> "
-                           "-n <server number> \n",
+                           "-n <server number>\n",
                            argv[0]),
                           -1);
       }

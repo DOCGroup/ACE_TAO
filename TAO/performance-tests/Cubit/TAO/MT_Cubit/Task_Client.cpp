@@ -144,7 +144,7 @@ Task_State::parse_args (int argc,ACE_TCHAR *argv[])
                   "[-g <granularity>]     // choose the granularity of the timing of CORBA calls                      \n\t\t\t"
                   "[-c]                   // run the number of context switches test.                                 \n\t\t\t"
                   "[-l]                   // use direct function calls, as opposed to CORBA requests.  ONLY to be used with -u option.\n\t\t\t"
-                  "[-m]                   // use multiple priorities for the low priority clients.                    \n"
+                  "[-m]                   // use multiple priorities for the low priority clients.                   \n"
                   ,argv [0]));
       return -1;
     }

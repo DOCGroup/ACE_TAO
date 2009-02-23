@@ -61,7 +61,7 @@ Supplier::init (int argc, ACE_TCHAR *argv[])
                        "register_handler"),
                       -1);
   ACE_DEBUG ((LM_DEBUG,
-              "Supplier initialized.. \n"));
+              "Supplier initialized..\n"));
   return 0;
 }
 

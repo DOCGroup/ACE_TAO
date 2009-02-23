@@ -153,7 +153,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                          "(%P|%t) Error in "
                          "be_visitor_interface_ch::"
                          "visit_interface while generating "
-                         "_narrow () declaration \n"),
+                         "_narrow () declaration\n"),
                         -1);
     }
 
@@ -165,7 +165,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                          "(%P|%t) Error in "
                          "be_visitor_interface_ch::"
                          "visit_interface while generating "
-                         "_unchecked_narrow () declaration \n"),
+                         "_unchecked_narrow () declaration\n"),
                         -1);
     }
 

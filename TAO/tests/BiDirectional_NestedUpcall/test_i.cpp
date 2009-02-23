@@ -23,7 +23,7 @@ void
 Callback_i::callback_method ( /**/)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Callback method called \n"));
+    ACE_DEBUG ((LM_DEBUG, "Callback method called\n"));
 }
 
 
@@ -36,7 +36,7 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback)
     {
       if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("About to make a remote call in the Upcall \n")));
+                  ACE_TEXT ("About to make a remote call in the Upcall\n")));
 
       for (int times = 0;
            times < this->no_iterations_;

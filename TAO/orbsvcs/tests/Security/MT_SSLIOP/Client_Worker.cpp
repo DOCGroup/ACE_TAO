@@ -27,7 +27,7 @@ Client_Worker::validate_connection (void)
           this->another_->test_method (j);
           if(TAO_debug_level > 0)
             ACE_DEBUG (( LM_DEBUG,
-                         "******** VALIDATED ******* \n"));
+                         "******** VALIDATED *******\n"));
         }
       catch (const CORBA::Exception&)
         {
