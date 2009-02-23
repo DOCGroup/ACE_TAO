@@ -1,3 +1,13 @@
+Mon Feb 23 15:02:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Display/Display_Base/Display_Base.mpc
+        * examples/Display/GPS/GPS.mpc
+        * examples/Display/lib
+        * examples/Display/NavDisplay/NavDisplay.mpc
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc
+        * examples/Display/RateGen/RateGen.mpc
+          Put all libs in a new lib directory
+
 Mon Feb 23 14:42:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2130_Regression/descriptors/run_test.pl:
