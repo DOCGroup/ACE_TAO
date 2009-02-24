@@ -5,6 +5,7 @@
 
 #include "CIAO_CS_ClientC.h"
 #include "CIAO_Container_Impl.h"
+#include "CIAO_PropertiesC.h"
 
 namespace CIAO
 {
@@ -72,7 +73,7 @@ namespace CIAO
           const char *name = 0;
           CIAO_Container_i *cont = 0;
           ACE_NEW_THROW_EX (cont,
-                            CIAO_Container_i (config, 0, name, &policies,
+                            CIAO_Container_i (config, 0, name, &policies, this->ci_.in (),
                               this->orb_.in (), this->poa_.in ()),
                             CORBA::NO_MEMORY ());
 
@@ -235,12 +236,18 @@ namespace CIAO
     }
 
     void
-    CIAO_ComponentServer_i::init (
-      ::Components::Deployment::ServerActivator_ptr sa,
-      Components::ConfigValues *cvs)
+    CIAO_ComponentServer_i::init (::Components::Deployment::ServerActivator_ptr sa,
+                                  Components::ConfigValues *cvs)
     {
       this->serv_act_ = ::Components::Deployment::ServerActivator::_duplicate(sa);
       this->config_values_ = cvs;
+      
+      for (CORBA::ULong i = 0; i < this->config_values_->length (); ++i)
+        {
+          if (ACE_OS::strcmp (CIAO::Deployment::COMPONENTINSTALLATION_REF,
+                              this->config_values_[i]->name ()) == 0)
+            this->config_values_[i]->value () >>= this->ci_;
+        }
     }
   }
 }
