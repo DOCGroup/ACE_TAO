@@ -1,3 +1,9 @@
+Tue Feb 24 10:47:54 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * CIAO_DAnCE.mwc:
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+          Resolved linker errors.
+
 Mon Feb 23 16:06:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Display/NavDisplayGUI_exec/Command.h
