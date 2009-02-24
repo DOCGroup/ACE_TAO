@@ -1,3 +1,9 @@
+Tue Feb 24 12:32:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Logger/Logger_Service.cpp:
+        * DAnCE/Starter/Starter.cpp:
+          Unicode fixes
+
 Tue Feb 24 10:47:54 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * CIAO_DAnCE.mwc:

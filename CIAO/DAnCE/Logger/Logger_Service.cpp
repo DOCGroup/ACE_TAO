@@ -20,15 +20,14 @@ namespace DAnCE
   {
     // Get prospective values from the environment first, those given on
     // command line can override
-    ACE_Env_Value<int> log ("DANCE_LOG_LEVEL", this->log_level_);
-    
+    ACE_Env_Value<int> log (ACE_TEXT("DANCE_LOG_LEVEL"), this->log_level_);
+
     this->log_level_ = log;
 
-    ACE_Env_Value<int> trace ("DANCE_TRACE_ENABLE", this->trace_);
+    ACE_Env_Value<int> trace (ACE_TEXT("DANCE_TRACE_ENABLE"), this->trace_);
     this->trace_ = trace;
 
-    
-    ACE_Env_Value<const char *> filename ("DANCE_LOG_FILE", this->filename_.c_str ());
+    ACE_Env_Value<const char *> filename (ACE_TEXT("DANCE_LOG_FILE"), this->filename_.c_str ());
     this->filename_ = filename;
 
     this->parse_args (argc, argv);
@@ -38,19 +37,19 @@ namespace DAnCE
     return 0;
   }
 
-  
+
   void
-  Logger_Service::parse_args (int argc, char **argv)
+  Logger_Service::parse_args (int argc, ACE_TCHAR **argv)
   {
-    const ACE_TCHAR *shortl = "-l";
-    const ACE_TCHAR *longl = "--log-level";
-    const ACE_TCHAR *tracel = "--trace";
+    const ACE_TCHAR *shortl = ACE_TEXT("-l");
+    const ACE_TCHAR *longl = ACE_TEXT("--log-level");
+    const ACE_TCHAR *tracel = ACE_TEXT("--trace");
     //    const ACE_TCHAR *traces = "-t";
-    const ACE_TCHAR *lfl = "--log-file";
-    const ACE_TCHAR *lfs = "-f";    
-      
+    const ACE_TCHAR *lfl = ACE_TEXT("--log-file");
+    const ACE_TCHAR *lfs = ACE_TEXT("-f");
+
     // We need to actually FIND the -l option, as the get_opt won't ignore
-    // the ORB options and such. 
+    // the ORB options and such.
     for (int i = 0; i < argc; ++i)
       {
         if (//ACE_OS::strncmp (argv[i], traces, 2) == 0 ||
@@ -59,19 +58,19 @@ namespace DAnCE
             this->trace_ = true;
             continue;
           }
-        
+
         if (ACE_OS::strncmp (argv[i], shortl, 2) == 0 ||
             ACE_OS::strncmp (argv[i], longl, 11 ) == 0)
           {
             if ((i + 1) < argc && *argv[i + 1] != '-')
               {
                 int level = ACE_OS::atoi (argv[i + 1]);
-                
+
                 if (level != 0)
                   this->log_level_ = level;
               }
           }
-        
+
         if (ACE_OS::strncmp (argv[i], lfs, 2) == 0 ||
             ACE_OS::strncmp (argv[i], lfl, 10 ) == 0)
           {
@@ -80,9 +79,9 @@ namespace DAnCE
                 this->filename_ = argv[i+1];
               }
           }
-      }    
+      }
   }
-  
+
   void
   Logger_Service::set_levels (void)
   {
@@ -95,9 +94,9 @@ namespace DAnCE
       {
         DANCE_DISABLE_TRACE ();
       }
-    
+
     u_long new_mask = 0;
-    
+
     if (this->log_level_ >= 9)
       {
         new_mask |= LM_TRACE;
