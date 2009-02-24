@@ -8,6 +8,7 @@
 #define CIAO_COMPONENTSERVER_IMPL_H_
 
 #include "ciao/ComponentServer/CIAO_ComponentServerS.h"
+#include "ciao/ComponentServer/CIAO_CS_ClientC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -72,6 +73,8 @@ namespace CIAO
         _is_equivalent<Container_var> > CONTAINERS;
 
       CONTAINERS containers_;
+      
+      CIAO::Deployment::ComponentInstallation_var ci_;
     };
   }
 }
