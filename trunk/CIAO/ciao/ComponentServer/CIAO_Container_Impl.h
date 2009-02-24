@@ -8,6 +8,7 @@
 #define CIAO_CONTAINER_H_
 
 #include "CIAO_ComponentServerS.h"
+#include "CIAO_CS_ClientC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -34,6 +35,7 @@ namespace CIAO
                         const Static_Config_EntryPoints_Maps *,
                         const char *,
                         const CORBA::PolicyList *,
+                        CIAO::Deployment::ComponentInstallation_ptr,
                         CORBA::ORB_ptr,
                         PortableServer::POA_ptr);
 
@@ -109,6 +111,8 @@ namespace CIAO
                                       ACE_Equal_To<ACE_CString>,
                                       ACE_Null_Mutex> CCMNaming_Map;
       CCMNaming_Map naming_map_;
+      
+      CIAO::Deployment::ComponentInstallation_var ci_;
     };
   }
 }

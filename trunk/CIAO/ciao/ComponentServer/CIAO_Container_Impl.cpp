@@ -7,6 +7,7 @@
 #include "ciao/Server_init.h"
 #include "ciao/Client_init.h"
 #include "CIAO_PropertiesC.h"
+#include "CIAO_CS_ClientC.h"
 
 namespace CIAO
 {
@@ -17,12 +18,14 @@ namespace CIAO
                                         const Static_Config_EntryPoints_Maps *static_entrypts,
                                         const char *name,
                                         const CORBA::PolicyList *policies,
+                                        CIAO::Deployment::ComponentInstallation_ptr ci,
                                         CORBA::ORB_ptr orb,
                                         PortableServer::POA_ptr poa)
       : orb_ (CORBA::ORB::_duplicate (orb)),
         poa_ (PortableServer::POA::_duplicate (poa)),
         config_ (config.length ()),
-        static_entrypts_maps_ (static_entrypts)
+        static_entrypts_maps_ (static_entrypts),
+        ci_ (CIAO::Deployment::ComponentInstallation::_duplicate (ci))
     {
       CIAO_TRACE("CIAO_Container_i::CIAO_Container_i");
 
@@ -128,7 +131,7 @@ namespace CIAO
       if (cm.find (SVNT_ARTIFACT, val) == 0)
         {
           val >>= tmp;
-          svnt_art = tmp;
+          svnt_art = this->ci_->get_implementation (tmp);
           CIAO_DEBUG ((LM_TRACE, CLINFO
                        "CIAO_Container_i::install_component - "
                        "Found Servant artifact %C\n", svnt_art.in ()));
@@ -145,7 +148,7 @@ namespace CIAO
       if (cm.find (EXEC_ARTIFACT, val) == 0)
         {
           val >>= tmp;
-          exec_art = tmp;
+          exec_art = this->ci_->get_implementation (tmp);
           CIAO_DEBUG ((LM_TRACE, CLINFO
                        "CIAO_Container_i::install_component - "
                        "Found executor artifact:  %C\n", exec_art.in ()));
@@ -274,7 +277,7 @@ namespace CIAO
       if (cm.find (SVNT_ARTIFACT, val) == 0)
         {
           val >>= tmp;
-          svnt_art = tmp;
+          svnt_art = this->ci_->get_implementation (tmp);
           CIAO_DEBUG ((LM_TRACE, CLINFO
                        "CIAO_Container_i::install_home - "
                        "Found Servant artifact %C\n", svnt_art.in ()));
@@ -291,7 +294,7 @@ namespace CIAO
       if (cm.find (EXEC_ARTIFACT, val) == 0)
         {
           val >>= tmp;
-          exec_art = tmp;
+          exec_art = this->ci_->get_implementation (tmp);
           CIAO_DEBUG ((LM_TRACE, CLINFO
                        "CIAO_Container_i::install_home - "
                        "Found executor artifact:  %C\n", exec_art.in ()));

@@ -1,3 +1,24 @@
+Tue Feb 24 15:57:43 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * ciao/ComponentServer/CIAO_CS_Client.idl:
+        * ciao/ComponentServer/CIAO_ComponentInstallation_Impl.h:
+        * ciao/ComponentServer/CIAO_ComponentInstallation_Impl.cpp:
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp:
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.h:
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:
+        * ciao/ComponentServer/CIAO_Container_Impl.h:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/ComponentServer/CIAO_Properties.idl:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+        * tests/CIAO_ComponentServer/Activator/client.cpp:
+        * tests/CIAO_ComponentServer/SimpleComponent/client.cpp:
+
+          Added the ComponentInstallation and implementation to the CIAO
+          componentserver framework. 
+        
 Tue Feb 24 12:32:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Logger/Logger_Service.cpp:

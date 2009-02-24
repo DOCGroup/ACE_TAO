@@ -202,9 +202,6 @@ namespace CIAO
           CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
                        "Making callback on my ServerActivator\n"));
 
-          CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
-                       "Calling back to ServerActivator\n"));
-
           try
             {
               // Callback to NodeApplication to get configuration

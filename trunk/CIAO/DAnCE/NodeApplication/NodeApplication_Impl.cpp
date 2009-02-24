@@ -11,6 +11,7 @@
 #include "ccm/CCM_SessionComponentC.h"
 #include "ciao/Valuetype_Factories/ConfigValue.h"
 #include "ciao/ComponentServer/CIAO_ServerActivator_Impl.h"
+#include "ciao/ComponentServer/CIAO_ComponentInstallation_Impl.h"
 #include "ciao/ComponentServer/CIAO_PropertiesC.h"
 #include "DAnCE/Logger/Log_Macros.h"
 #include "Deployment/Deployment_BaseC.h"
@@ -204,6 +205,20 @@ namespace
         exception.reason = reason;
       }
   }
+  
+  const char * get_artifact_location (const char * name, 
+                                      const ::Deployment::ArtifactDeploymentDescriptions &art)
+  {
+    DANCE_TRACE ("NodeApplication::<anonymous>::get_artifact_location");
+    
+    for (CORBA::ULong i = 0; i < art.length (); ++i)
+      {
+        if (ACE_OS::strcmp (name, art[0].name.in ()) == 0)
+          return art[0].location[0].in ();
+      }
+    
+    return 0;
+  }
 }
 
 
@@ -340,19 +355,35 @@ NodeApplication_Impl::init()
 
   DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::init - "
                 "Spawning server activator\n"));
+  
+  CIAO::Deployment::ComponentInstallation_Impl *tmp_ci;
 
+  ACE_NEW_THROW_EX (tmp_ci, 
+                    CIAO::Deployment::ComponentInstallation_Impl (),
+                    CORBA::NO_MEMORY ());
+  
+  PortableServer::ServantBase_var safe_servant = tmp_ci;
+  
+  this->poa_->activate_object (tmp_ci);
+  
+  for (CORBA::ULong i = 0; i < this->plan_.artifact.length (); ++i)
+    {
+      tmp_ci->install (this->plan_.artifact[i].name,
+                       this->plan_.artifact[i].location[0]);
+    }
+  
   CIAO::Deployment::CIAO_ServerActivator_i *tmp_act;
   ACE_NEW_THROW_EX (tmp_act,
                     CIAO::Deployment::CIAO_ServerActivator_i (spawn,
                                                               cs_path,
                                                               cs_args,
                                                               multithread,
+                                                              tmp_ci->_this (),
                                                               this->orb_.in(),
                                                               this->poa_.in()),
                     CORBA::NO_MEMORY ());
-
   this->activator_.reset (tmp_act);
-
+  
   PortableServer::ObjectId_var sa_id =
     this->poa_->activate_object (this->activator_.get ());
 
@@ -570,7 +601,7 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
   // need to get significant property values
   const char *entrypt = 0;
   get_property_value (DAnCE::HOME_FACTORY, mdd.execParameter, entrypt);
-
+  
   if (entrypt == 0)
     {
       DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::install_home - "
