@@ -12,6 +12,7 @@ project (DAnCE_RepositoryManager) : dance_deployment_svnt, ciao_config_handlers,
   requires += zlib
   libs += Package_Config_Handlers
   after += DAnCE_RepositoryManager_IDL
+  dynamicflags = DANCE_REPOSITORYMANAGER_MODULE_BUILD_DLL
   IDL_Files {
   }
 
@@ -40,9 +41,8 @@ project (DAnCE_RepositoryManager_Exec) : dance_repository_manager, dance_exe {
 
 
 // RMadmin project: a sample client for the RM.
-project (RMAdmin) : dance_deployment_stub, ciao_config_handlers, naming {
+project (RMAdmin) : dance_repository_manager, dance_deployment_stub, ciao_config_handlers, naming {
   exename = dance_rm_admin
-  after  += DAnCE_RepositoryManager DAnCE_RepositoryManager_IDL
 
   IDL_Files {
   }
