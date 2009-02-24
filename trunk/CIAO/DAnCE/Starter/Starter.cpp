@@ -57,23 +57,23 @@ namespace DAnCE
 {
 
 Starter::Starter(int argc, ACE_TCHAR * argv[]) :
-      orb_(CORBA::ORB_init (argc, argv, "")), 
+      orb_(CORBA::ORB_init (argc, argv, "")),
       optLogLevel_(5), //default
-      argc_(argc), 
-      argv_(argv), 
-      optNS_(false), 
-      optEM_(false), 
+      argc_(argc),
+      argv_(argv),
+      optNS_(false),
+      optEM_(false),
       optPLB_(false),
       optPL_(false)
 {
   DANCE_TRACE ("DAnCE::Starter::Starter ()");
 
   Logger_Service
-      * dlf = ACE_Dynamic_Service<Logger_Service>::instance ("DAnCE_Logger_Backend_Factory");  
+      * dlf = ACE_Dynamic_Service<Logger_Service>::instance ("DAnCE_Logger_Backend_Factory");
 
   if (!dlf)
     dlf = new Logger_Service;
-  
+
   this->logger_.reset (dlf);
   this->logger_->init (argc, argv);
 
@@ -84,7 +84,7 @@ Starter::Starter(int argc, ACE_TCHAR * argv[]) :
 
   this->configure_logging_backend ();
 
-  DANCE_DEBUG ((LM_TRACE, DLINFO 
+  DANCE_DEBUG ((LM_TRACE, DLINFO
                 "Starter::Starter - Starter was created successfully.\n"));
 }
 
@@ -117,23 +117,23 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
 
   ACE_Get_Opt opts(argc, argv, "p::n:e::c::r::il:hg:x:d:qk:w:t:a:", 1, 0,
       ACE_Get_Opt::RETURN_IN_ORDER);
-  opts.long_option("process-ns", 'p', ACE_Get_Opt::ARG_OPTIONAL);
-  opts.long_option("process-ns-options", ACE_Get_Opt::ARG_REQUIRED);
-  opts.long_option("node-mgr", 'n', ACE_Get_Opt::ARG_REQUIRED);
-  opts.long_option("exec-mgr", 'e', ACE_Get_Opt::ARG_OPTIONAL);
-  opts.long_option("create-plan-ns", 'c', ACE_Get_Opt::ARG_OPTIONAL);
-  opts.long_option("rebind-plan-ns", 'r', ACE_Get_Opt::ARG_OPTIONAL);
-  opts.long_option("port-indirection", 'i', ACE_Get_Opt::NO_ARG);
-  opts.long_option("log-level", 'l', ACE_Get_Opt::ARG_REQUIRED);
-  opts.long_option("help", 'h', ACE_Get_Opt::NO_ARG);
-  opts.long_option("gen-object-key", 'g', ACE_Get_Opt::ARG_REQUIRED);
-  opts.long_option("read-plan", 'x', ACE_Get_Opt::ARG_REQUIRED);
-  opts.long_option("read-cdr-plan", 'd', ACE_Get_Opt::ARG_REQUIRED);
-  opts.long_option("stop-plan", 'q', ACE_Get_Opt::NO_ARG);
-  opts.long_option("em-ior", 'k', ACE_Get_Opt::ARG_REQUIRED);
-  opts.long_option("write-cdr-plan", 'w', ACE_Get_Opt::ARG_REQUIRED);
-  opts.long_option("plan-uuid", 't', ACE_Get_Opt::ARG_REQUIRED);
-  opts.long_option("dam-ior", 'a', ACE_Get_Opt::ARG_REQUIRED);
+  opts.long_option(ACE_TEXT("process-ns"), 'p', ACE_Get_Opt::ARG_OPTIONAL);
+  opts.long_option(ACE_TEXT("process-ns-options"), ACE_Get_Opt::ARG_REQUIRED);
+  opts.long_option(ACE_TEXT("node-mgr"), 'n', ACE_Get_Opt::ARG_REQUIRED);
+  opts.long_option(ACE_TEXT("exec-mgr"), 'e', ACE_Get_Opt::ARG_OPTIONAL);
+  opts.long_option(ACE_TEXT("create-plan-ns"), 'c', ACE_Get_Opt::ARG_OPTIONAL);
+  opts.long_option(ACE_TEXT("rebind-plan-ns"), 'r', ACE_Get_Opt::ARG_OPTIONAL);
+  opts.long_option(ACE_TEXT("port-indirection"), 'i', ACE_Get_Opt::NO_ARG);
+  opts.long_option(ACE_TEXT("log-level"), 'l', ACE_Get_Opt::ARG_REQUIRED);
+  opts.long_option(ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
+  opts.long_option(ACE_TEXT("gen-object-key"), 'g', ACE_Get_Opt::ARG_REQUIRED);
+  opts.long_option(ACE_TEXT("read-plan"), 'x', ACE_Get_Opt::ARG_REQUIRED);
+  opts.long_option(ACE_TEXT("read-cdr-plan"), 'd', ACE_Get_Opt::ARG_REQUIRED);
+  opts.long_option(ACE_TEXT("stop-plan"), 'q', ACE_Get_Opt::NO_ARG);
+  opts.long_option(ACE_TEXT("em-ior"), 'k', ACE_Get_Opt::ARG_REQUIRED);
+  opts.long_option(ACE_TEXT("write-cdr-plan"), 'w', ACE_Get_Opt::ARG_REQUIRED);
+  opts.long_option(ACE_TEXT("plan-uuid"), 't', ACE_Get_Opt::ARG_REQUIRED);
+  opts.long_option(ACE_TEXT("dam-ior"), 'a', ACE_Get_Opt::ARG_REQUIRED);
 
   int j;
   char c;
@@ -183,7 +183,7 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
                         node.iorfile_ = s;
                         DANCE_DEBUG ( (LM_TRACE, "[%M] and its IOR will be written to file \"%s\".\n", node.iorfile_.c_str()));
                       }
-                    
+
                   }
                 if (0 == this->nodes_.find(nodename))
                   {
