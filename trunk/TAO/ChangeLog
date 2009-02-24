@@ -1,3 +1,8 @@
+Tue Feb 24 11:27:44 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/QtResource/QtResource_Loader.h:
+          Resolved compiler error when using Qt 4.
+          
 Mon Feb 23 17:42:11 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * tests/Portable_Interceptors/Bug_3582/run_test.pl:
