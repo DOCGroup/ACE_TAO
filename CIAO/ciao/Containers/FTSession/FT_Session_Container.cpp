@@ -233,7 +233,7 @@ namespace CIAO
 
     CORBA::String_var name = PortableServer::ObjectId_to_string (oid);
     CIAO_DEBUG ((LM_DEBUG, CLINFO
-                 "FT_Session_Container::install_servant_with_id (%C)",
+                 "FT_Session_Container::install_servant_with_id (%C)\n",
                  name.in ()));
     
     tmp->activate_object_with_id (oid,
@@ -537,7 +537,7 @@ namespace CIAO
 
             CIAO_ERROR ((LM_ERROR, CLINFO
                         "FT_Session_Container::install_component - "
-                        "ERROR in opening the executor DLL [%C] \n",
+                        "ERROR in opening the executor DLL [%C] - code \n",
                         primary_artifact));
 
             throw Components::Deployment::UnknownImplId ();

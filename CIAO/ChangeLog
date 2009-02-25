@@ -1,3 +1,17 @@
+Wed Feb 25 18:17:38 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.cpp:
+        
+          Removed RTCORBA code.
+        
+        * DAnCE/tests/CIAO/FTComponents/FTComponents.mpc:
+        
+          Changed library includes.
+        
+        * ciao/Containers/FTSession/FT_Session_Container.cpp:
+        
+          Fixed debugging output.
+
 Wed Feb 25 03:41:17 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:

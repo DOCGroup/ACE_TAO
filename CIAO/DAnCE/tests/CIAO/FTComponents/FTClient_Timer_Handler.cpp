@@ -1,7 +1,7 @@
 // $Id$
 
 #include <ace/High_Res_Timer.h>
-#include <tao/RTCORBA/RTCORBA.h>
+//#include <tao/RTCORBA/RTCORBA.h>
 #include "FTClient_Timer_Handler.h"
 #include "ciao/CIAO_common.h"
 #include "WorkerC.h"
@@ -28,10 +28,12 @@ namespace CIDL_FTClient_Impl
   {
     DeCoRAM::Worker_var server = client_executor_->server ();
 
+    /*
     CORBA::Object_var obj = orb_->resolve_initial_references ("RTCurrent");
     RTCORBA::Current_var rt_current = RTCORBA::Current::_narrow (obj);
 
-    //    rt_current->the_priority (client_executor_->priority ());
+    rt_current->the_priority (client_executor_->priority ());
+    */
 
     try
       {
