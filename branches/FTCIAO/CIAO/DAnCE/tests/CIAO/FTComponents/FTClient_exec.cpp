@@ -200,6 +200,19 @@ namespace CIDL_FTClient_Impl
     // Your code here.
   }
 
+  extern "C" FTCLIENT_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_DeCoRAM_FTClient_Impl (void)
+  {
+    ::Components::EnterpriseComponent_ptr retval =
+      ::Components::EnterpriseComponent::_nil ();
+    
+    ACE_NEW_RETURN (retval,
+                    FTClient_exec_i,
+                    ::Components::EnterpriseComponent::_nil ());
+    
+    return retval;
+  }
+
   //==================================================================
   // Home Executor Implementation Class:   FTClientHome_exec_i
   //==================================================================

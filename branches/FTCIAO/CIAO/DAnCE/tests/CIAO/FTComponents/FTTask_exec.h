@@ -133,6 +133,9 @@ namespace CIDL_FTTask_Impl
     long state_;
   };
 
+  extern "C" FTTASK_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_DeCoRAM_FTTask_Impl (void);
+
   class FTTASK_EXEC_Export FTTaskHome_exec_i
     : public virtual FTTaskHome_Exec,
       public virtual ::CORBA::LocalObject

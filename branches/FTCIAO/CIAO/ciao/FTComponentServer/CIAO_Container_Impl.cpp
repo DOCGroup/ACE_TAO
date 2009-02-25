@@ -69,7 +69,30 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_Container_i::install_component");
 
-      if (id == 0)
+      const char *tmp;
+      CORBA::String_var name;
+
+      CIAO::Utility::CONFIGVALUE_MAP cm;
+      CIAO::Utility::build_config_values_map (cm, config);
+      CORBA::Any val;
+
+      if (cm.find (OBJECT_ID, val) == 0)
+        {
+          val >>= tmp;
+          name = tmp;
+          CIAO_DEBUG ((LM_TRACE, CLINFO
+                       "CIAO_Container_i::install_component - "
+                       "Found ObjectId %C\n", name.in ()));
+        }
+      else
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO
+                       "CIAO_Container_i::install_component - "
+                       "Found no ObjectId property, using component id instead\n"));
+          name = id;
+        }
+
+      if (name == 0)
         {
           CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
                        "No home ID provided\n"));
@@ -78,11 +101,11 @@ namespace CIAO
 
       Components::CCMObject_var comp;
 
-      if (this->component_map_.find (id, comp) == 0)
+      if (this->component_map_.find (name.in (), comp) == 0)
         {
           CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
                        "Component with id %C already installed, aborting\n",
-                       id));
+                       name.in ()));
           throw Components::CreateFailure ();
         }
 
@@ -95,18 +118,13 @@ namespace CIAO
 
       CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::install_component - "
                    "Attempting to install home with id [%C]\n",
-                   id));
+                   name.in ()));
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
                   "CIAO_Container_i::install_component - "
                   "Extracting ConfigValues from sequence of length [%u]\n",
                   config.length ()));
 
-      CIAO::Utility::CONFIGVALUE_MAP cm;
-      CIAO::Utility::build_config_values_map (cm, config);
-      CORBA::Any val;
-
-      const char *tmp;
       CORBA::String_var exec_art, svnt_art, svnt_entry;
 
       if (cm.find (SVNT_ENTRYPT, val) == 0)
@@ -159,15 +177,15 @@ namespace CIAO
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
                   "CIAO_Container_i::install_component - "
-                  "Extraction resulted in map of [%u] values", cm.current_size ()));
+                  "Extraction resulted in map of [%u] values\n", cm.current_size ()));
 
       comp = this->container_->install_component (exec_art,
                                                   entrypt,
                                                   svnt_art,
                                                   svnt_entry,
-                                                  id);
+                                                  name.in ());
 
-      if (this->component_map_.bind (id,
+      if (this->component_map_.bind (name.in (),
                                      Components::CCMObject::_duplicate (comp.in ())) == -1)
         {
           CIAO_ERROR ((LM_ERROR, CLINFO
@@ -305,7 +323,7 @@ namespace CIAO
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
                   "CIAO_Container_i::install_home - "
-                  "Extraction resulted in map of [%u] values", cm.current_size ()));
+                  "Extraction resulted in map of [%u] values\n", cm.current_size ()));
 
 
       // extract config values here...

@@ -1,13 +1,19 @@
 // $Id$
 
-project(Worker) : ciaoidldefaults, anytypecode {
+project(Worker) : ciaoidldefaults, anytypecode, ciao_lib, portableserver {
   idlflags += -Wb,stub_export_macro=FTWORKER_Export \
-              -Wb,stub_export_include=FTWorker_export.h
+              -Wb,stub_export_include=FTWorker_export.h \
+              -Wb,skel_export_macro=FTWORKER_Export \
+              -Wb,skel_export_include=FTWorker_export.h
+
+  macros += FTWORKER_BUILD_DLL
 
   IDL_Files {
     Worker.idl
   }
   Source_Files{
+    WorkerC.cpp
+    WorkerS.cpp
   }
 }
 
@@ -46,12 +52,10 @@ project(FTClient_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   }
 }
 
-project(FTClient_stub) : ccm_stub {
+project(FTClient_stub) : ccm_stub, ciao_lib {
   avoids += ace_for_tao
   after += FTClient_idl_gen Worker
   libs += Worker
-  
-  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
 
   sharedname = FTClient_stub
   dynamicflags   = FTCLIENT_STUB_BUILD_DLL
@@ -73,7 +77,7 @@ project(FTClient_stub) : ccm_stub {
   }
 }
 
-project(FTClient_exec) : ciao_executor, ciao_container_base, orbsvcslib {
+project(FTClient_exec) : ciao_executor, ciao_container_base, naming, orbsvcslib, ciao_lib {
   avoids += ace_for_tao
   after   += FTClient_cidl_gen FTClient_stub
   sharedname = FTClient_exec
@@ -103,7 +107,7 @@ project(FTClient_exec) : ciao_executor, ciao_container_base, orbsvcslib {
 }
 
 
-project(FTClient_svnt) : ciao_servant {
+project(FTClient_svnt) : ciao_servant, naming, ciao_lib {
   avoids += ace_for_tao
   after      +=  FTClient_exec
   sharedname  = FTClient_svnt
@@ -170,7 +174,7 @@ project(FTTask_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   }
 }
 
-project(FTTask_stub) : ccm_stub {
+project(FTTask_stub) : ccm_stub, ciao_lib {
   avoids += ace_for_tao
   after += FTTask_idl_gen Worker
   libs += Worker
@@ -179,7 +183,7 @@ project(FTTask_stub) : ccm_stub {
 
   sharedname = FTTask_stub
   dynamicflags   = FTTASK_STUB_BUILD_DLL
-  libs += LWFT_Common LWFT_StateSyncAgent
+  libs +=  LWFT_StateSyncAgent
 
   IDL_Files {
   }
@@ -198,11 +202,11 @@ project(FTTask_stub) : ccm_stub {
   }
 }
 
-project(FTTask_exec) : ciao_executor, ciao_container_base, naming, orbsvcslib,  {
+project(FTTask_exec) : ciao_executor, ciao_container_base, naming, orbsvcslib, ciao_lib {
   avoids += ace_for_tao
   after   += FTTask_cidl_gen FTTask_stub
   sharedname = FTTask_exec
-  libs += FTTask_stub CUTS CUTS_CPU_Worker
+  libs += FTTask_stub CUTS CUTS_CPU_Worker Worker
   libpaths += $(CUTS_ROOT)/lib
   includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT $(CUTS_ROOT) $(CUTS_ROOT)/cuts/workers
   dynamicflags   = FTTASK_EXEC_BUILD_DLL
@@ -227,12 +231,13 @@ project(FTTask_exec) : ciao_executor, ciao_container_base, naming, orbsvcslib,  
 }
 
 
-project(FTTask_svnt) : ciao_servant, naming {
+project(FTTask_svnt) : ciao_servant, naming, ciao_lib {
   avoids += ace_for_tao
   after      += FTTask_exec
   sharedname  = FTTask_svnt
   libs       += FTTask_exec \
-                FTTask_stub 
+                FTTask_stub \
+                Worker
 
   includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
   dynamicflags = FTTASK_SVNT_BUILD_DLL

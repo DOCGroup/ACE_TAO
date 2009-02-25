@@ -256,10 +256,10 @@ namespace CIAO
   //                                            --Tao
   Components::CCMHome_ptr
   FT_Session_Container::install_home (const char *primary_artifact,
-                                   const char *entry_point,
-                                   const char *servant_artifact,
-                                   const char *servant_entrypoint,
-                                   const char *name)
+                                      const char *entry_point,
+                                      const char *servant_artifact,
+                                      const char *servant_entrypoint,
+                                      const char *name)
   {
     CIAO_TRACE ("FT_Session_Container::install_home");
 
@@ -314,7 +314,7 @@ namespace CIAO
             error += primary_artifact;
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "FT_Session_Container::install_home -"
+                        "FT_Session_Container::install_home - "
                         "ERROR in opening the executor DLL [%C] \n",
                         primary_artifact));
 
@@ -333,7 +333,7 @@ namespace CIAO
             error += servant_artifact;
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "FT_Session_Container::install_home -"
+                        "FT_Session_Container::install_home - "
                         "ERROR in opening the servant DLL [%C] \n",
                         servant_artifact));
 
@@ -351,7 +351,7 @@ namespace CIAO
             if (entry_point == 0)
               {
                 CIAO_ERROR ((LM_ERROR, CLINFO
-                            "FT_Session_Container::install_home -"
+                            "FT_Session_Container::install_home - "
                             "ERROR in opening the executor entry point "
                             "for executor DLL [%C] \n",
                             primary_artifact));
@@ -360,7 +360,7 @@ namespace CIAO
             else
               {
                 CIAO_ERROR ((LM_ERROR, CLINFO
-                            "FT_Session_Container::install_home -"
+                            "FT_Session_Container::install_home - "
                             "ERROR in opening the servant entry point "
                             "for servant DLL [%C] \n",
                             servant_artifact));
@@ -521,7 +521,7 @@ namespace CIAO
 
             CIAO_ERROR ((LM_ERROR, CLINFO
                         "FT_Session_Container.cpp -"
-                        "FT_Session_Container::ciao_install_component -"
+                        "FT_Session_Container::ciao_install_component - "
                         "ERROR: %C\n",
                         exception.c_str ()));
 
@@ -536,7 +536,7 @@ namespace CIAO
             error += primary_artifact;
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "FT_Session_Container::install_component -"
+                        "FT_Session_Container::install_component - "
                         "ERROR in opening the executor DLL [%C] \n",
                         primary_artifact));
 

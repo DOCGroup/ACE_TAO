@@ -4,7 +4,7 @@
 
 #include "CIAO_CS_ClientC.h"
 #include "CIAO_Container_Impl.h"
-#include "tao/RTCORBA/RTCORBA.h"
+//#include "tao/RTCORBA/RTCORBA.h"
 
 const size_t CS_DEFAULT_PRIORITY = 0;
 
@@ -72,7 +72,10 @@ namespace CIAO
           CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_ComponentServer_i::create_container - Request received with %u config values\n",
                        config.length ()));
 	  
+          CORBA::PolicyList policies (0);
+
           // get RT ORB and set client_propagated priority
+          /*
           CORBA::Object_var obj = orb_->resolve_initial_references ("RTORB");
           RTCORBA::RTORB_var rtorb = RTCORBA::RTORB::_narrow (obj);
 
@@ -85,7 +88,7 @@ namespace CIAO
                               RTCORBA::CLIENT_PROPAGATED,
                               CS_DEFAULT_PRIORITY));
             }
-
+          */
 	  const char *name = 0;
 
           CIAO_Container_i *cont = 0;

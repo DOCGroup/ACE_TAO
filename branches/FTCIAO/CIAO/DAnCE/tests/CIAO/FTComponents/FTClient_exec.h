@@ -110,6 +110,9 @@ namespace CIDL_FTClient_Impl
     
   };
 
+  extern "C" FTCLIENT_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_DeCoRAM_FTClient_Impl (void);
+
   class FTCLIENT_EXEC_Export FTClientHome_exec_i
     : public virtual FTClientHome_Exec,
       public virtual ::CORBA::LocalObject

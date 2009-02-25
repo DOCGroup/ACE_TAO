@@ -751,6 +751,26 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
                     idd.name.in (), idd.node.in ()));
       
       inst.ref = CORBA::Object::_narrow (comp);
+
+      DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::install_home - "
+                    "set attribute for component reference.\n"));
+
+      // this is a quick hack that allows an executor to get its own reference
+      // by using a component attribute COMPONENT_REFERENCE
+      for (size_t i = 0; i < idd.configProperty.length (); ++i)
+	{
+	  if (ACE_OS::strcmp (idd.configProperty[i].name,
+			      "COMPONENT_REFERENCE") == 0)
+	    {
+	      CORBA::Any value;
+	      value <<= inst.ref;
+
+	      // THIS IS UGLY AND SHOULD NOT STAY IN HERE FOR LONG!
+	      *(const_cast <CORBA::Any*> (&idd.configProperty[i].value)) = value;
+
+	      break;
+	    }
+	}
       
       DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::install_component - "
                     "Populating attributes for home %C\n",
@@ -890,6 +910,26 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
                     "Component %C successfully installed in home %C\n",
                     idd.name.in (),
                     home_id));
+
+      DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::install_home - "
+                    "set attribute for component reference.\n"));
+
+      // this is a quick hack that allows an executor to get its own reference
+      // by using a component attribute COMPONENT_REFERENCE
+      for (size_t i = 0; i < idd.configProperty.length (); ++i)
+	{
+	  if (ACE_OS::strcmp (idd.configProperty[i].name,
+			      "COMPONENT_REFERENCE") == 0)
+	    {
+	      CORBA::Any value;
+	      value <<= inst.ref;
+
+	      // THIS IS UGLY AND SHOULD NOT STAY IN HERE FOR LONG!
+	      *(const_cast <CORBA::Any*> (&idd.configProperty[i].value)) = value;
+
+	      break;
+	    }
+	}
 
       DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::install_home - "
                     "Populating attributes for component %C\n",

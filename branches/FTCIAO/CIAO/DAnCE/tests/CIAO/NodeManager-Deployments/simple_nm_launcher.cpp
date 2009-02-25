@@ -48,7 +48,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   
   if (argc > 3)
     {
-      if (ACE_OS::strcmp (argv[3], "-m"))
+      if (ACE_OS::strcmp (argv[3], "-m") == 0)
         manual_stop = true;
       else
         return usage ();

@@ -166,7 +166,7 @@ namespace CIAO
 
           AppSideReg proc_reg (orb_.in ());
           
-          int result = proc_reg.activate ();
+          int result = proc_reg.register_process ();
       
           if (result != 0)
             {
@@ -242,7 +242,7 @@ namespace CIAO
 		{
 		  CIAO_DEBUG ((LM_ERROR, CLINFO "ComponentServer_Task::svc - "
 			       "Failed to narrow callback IOR\n"));
-		  throw Error ("Faled to narrow callback IOR");
+		  throw Error ("Failed to narrow callback IOR");
 		}
           
 	      Components::ConfigValues_var config;
@@ -253,7 +253,7 @@ namespace CIAO
 		if  (cf == 0)
 		  {
 		    CIAO_ERROR ((LM_CRITICAL, "ComponentServer_Task::run - "
-				 "Out of memory error while allocating config values."));
+				 "Out of memory error while allocating config values\n"));
 		  }
 		else config = cf;
 	      }
@@ -321,7 +321,7 @@ namespace CIAO
       catch (Name_Helper_Exception & ex)
 	{
 	  CIAO_ERROR ((LM_ERROR, CLINFO "ComponentServer_Task::svc - "
-		       "Name helper exception: %s", ex.what ()));
+		       "Name helper exception: %s\n", ex.what ()));
 	}
 
       return -1;

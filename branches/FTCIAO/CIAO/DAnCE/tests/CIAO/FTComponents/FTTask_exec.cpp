@@ -385,6 +385,20 @@ namespace CIDL_FTTask_Impl
   }
 
 
+  extern "C" FTTASK_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_DeCoRAM_FTTask_Impl (void)
+  {
+    ::Components::EnterpriseComponent_ptr retval =
+      ::Components::EnterpriseComponent::_nil ();
+    
+    ACE_NEW_RETURN (retval,
+                    FTTask_exec_i,
+                    ::Components::EnterpriseComponent::_nil ());
+    
+    return retval;
+  }
+
+
   //==================================================================
   // Home Executor Implementation Class:   FTTaskHome_exec_i
   //==================================================================
