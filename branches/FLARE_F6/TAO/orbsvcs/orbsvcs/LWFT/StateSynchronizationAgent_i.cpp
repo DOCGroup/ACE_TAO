@@ -182,13 +182,13 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
         }
     }
 
-  ACE_DEBUG ((LM_TRACE,
+  ACE_DEBUG ((LM_INFO,
               "SSA::update_rank_list with:\n"));
 
   // for each replication group in the replica group list
   for (size_t i = 0; i < rank_list.length (); ++i)
     {
-      ACE_DEBUG ((LM_TRACE,
+      ACE_DEBUG ((LM_INFO,
                   "\toid = %s (%d entries)\n", 
                   rank_list[i].object_id.in (),
                   rank_list[i].ior_list.length ()));
