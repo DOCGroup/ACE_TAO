@@ -6,6 +6,10 @@ project(Worker) : ciaoidldefaults, anytypecode, ciao_lib, portableserver {
               -Wb,skel_export_macro=FTWORKER_Export \
               -Wb,skel_export_include=FTWorker_export.h
 
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  }
+
   macros += FTWORKER_BUILD_DLL
 
   IDL_Files {
@@ -236,8 +240,7 @@ project(FTTask_svnt) : ciao_servant, naming, ciao_lib {
   after      += FTTask_exec
   sharedname  = FTTask_svnt
   libs       += FTTask_exec \
-                FTTask_stub \
-                Worker
+                FTTask_stub
 
   includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
   dynamicflags = FTTASK_SVNT_BUILD_DLL
