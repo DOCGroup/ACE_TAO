@@ -42,6 +42,8 @@ namespace CIAO
               shifter.ignore_arg ();
             }
         }
+
+      return retval;
     }
   }
 }

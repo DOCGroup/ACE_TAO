@@ -1,3 +1,55 @@
+Wed Feb 25 03:41:17 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
+        
+          Corrected string check.
+        
+        * MPC/config/ciao_ft_componentserver_svnt.mpb
+        * MPC/config/ciao_ft_componentserver_stub.mpb:
+        
+          Adopted to non ft templates.
+
+        * DAnCE/tests/CIAO/FTComponents/FTTask_exec.h
+        * DAnCE/tests/CIAO/FTComponents/FTTask_exec.cpp
+        * DAnCE/tests/CIAO/FTComponents/FTClient_exec.h
+        * DAnCE/tests/CIAO/FTComponents/FTClient_exec.cpp:
+        
+          Add component creation functions.
+        
+        * DAnCE/tests/CIAO/FTComponents/FTComponents.mpc:
+
+          Change library includes.
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        
+          Added code to intialize a COMPONENT_SERVER attribute if present.
+
+        * ciao/FTComponentServer/CIAO_Container_Impl.cpp:
+        
+          Added code for extracting the ObjectId config property and use
+          it as a USER_ID on servant registration.
+        
+        * ciao/FTComponentServer/CIAO_FTComponentServer_Impl.cpp:
+        
+          Removed RTCORBA calls.
+        
+        * ciao/FTComponentServer/CIAO_FTComponentServer.cpp:
+        
+          Changed debugging output and changed AppSideReg usage.
+
+        * ciao/FTComponentServer/CIAO_ComponentServer.mpc:
+        
+          Changed library includes.          
+        
+        * ciao/FTComponentServer/Configurator_Factory.cpp:
+        
+          Added return statement.
+
+        * ciao/FTComponentServer/Name_Helper_T.h        
+        * ciao/Containers/FTSession/FT_Session_Container.cpp:
+         
+          Fixing debugging output format.
+
 Mon Feb 23 23:07:15 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * MPC/config/ciao_ft_session_container.mpb

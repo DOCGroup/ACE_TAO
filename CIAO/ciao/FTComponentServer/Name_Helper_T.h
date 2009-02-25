@@ -70,7 +70,7 @@ class Name_Helper_T
     if (obj_name.empty ())
       throw Name_Helper_Exception ("Name_Helper_T::bind - no object name.");
 
-    ACE_DEBUG ((LM_DEBUG, "path=%s, name=%s", obj_path.c_str (), obj_name.c_str ()));
+    ACE_DEBUG ((LM_INFO, "path=%s, name=%s\n", obj_path.c_str (), obj_name.c_str ()));
 
     CosNaming::Name_var name;
     CosNaming::NamingContext_var nc;

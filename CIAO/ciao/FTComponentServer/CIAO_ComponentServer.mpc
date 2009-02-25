@@ -44,8 +44,7 @@ project(CIAO_FTComponentServer_stub) : ccm_componentserver_stub, ciaolib_with_id
   }
 }
 
-project(CIAO_FTCS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_ft_componentserver_stub, portableserver, \
-    ciao_client, ciao_lib {
+project(CIAO_FTCS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_ft_componentserver_stub, portableserver, ciao_client, ciao_lib {
   dynamicflags = CIAO_CS_CLIENT_SVNT_BUILD_DLL
   after += CIAO_FTCS_Client_IDL CIAO_FTComponentServer_stub
 
@@ -62,11 +61,9 @@ project(CIAO_FTCS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_ft_com
   }
 }
 
-project(CIAO_FTComponentServer_svnt) : ccm_componentserver_svnt, ciao_ft_componentserver_stub, portableserver, ciao_ft_session_container, naming, ciao_server {
+project(CIAO_FTComponentServer_svnt) : ccm_componentserver_svnt, ciao_ft_componentserver_stub, portableserver, ciao_ft_componentserver_configurator, ciao_ft_session_container, naming, ciao_server {
 
   dynamicflags = CIAO_FTCOMPONENTSERVER_SVNT_BUILD_DLL
-  after += CIAO_FT_Basic_Configurator
-  libs += CIAO_FT_Basic_Configurator
 
   IDL_Files {
   }
