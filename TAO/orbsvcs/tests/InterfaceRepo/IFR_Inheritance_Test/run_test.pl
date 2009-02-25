@@ -81,7 +81,7 @@ if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_cr
     exit 1;
 }
 
-if( $TAO_IFR->SpawnWaitKill(10) != 0 )
+if( $TAO_IFR->SpawnWaitKill(20) != 0 )
 {
    print STDERR "ERROR: can't compile IDL\n";
    $TAO_IFR->Kill ();
@@ -151,6 +151,6 @@ if ($server != 0) {
 }
 
 unlink $iorfile;
+unlink $testoutputfilename;
 
 exit $status;
-

@@ -20,6 +20,8 @@ inventory_i::getCDinfo (const char * artist,
   price = 0.0f;
   ACE_CString name_key ("Beatles");
   ACE_CString name (artist);
+  CORBA::String_var tmp = title;
+  ACE_UNUSED_ARG (tmp);
 
   if (name.strstr (name_key) != ACE_CString::npos)
     {
