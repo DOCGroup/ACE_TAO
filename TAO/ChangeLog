@@ -1,21 +1,31 @@
+Wed Feb 25 10:07:20 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Bug_3574_Regression/test.cpp:
+        * tests/Bug_3574_Regression/run_test.pl:
+        * tests/Bug_3574_Regression/README:
+        * tests/Bug_3574_Regression/Bug_3574_Regression.mpc:
+        * bin/tao_orb_tests.lst:
+
+          Added a test for bug#3574 and scheduled it for run.
+
 Wed Feb 25 00:28:09 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
-        
+
           Removed two throw statements that prevented client request
           interceptors to be invoked. Thanks to Simon McQueen <sm at
           prismtech dot com> for pointing this out. This fix
           closes [BUGID:3582].
-        
+
 Tue Feb 24 11:27:44 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tao/QtResource/QtResource_Loader.h:
           Resolved compiler error when using Qt 4.
-          
+
 Mon Feb 23 17:42:11 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * tests/Portable_Interceptors/Bug_3582/run_test.pl:
-        
+
           Updated to new test framework.
 
 Mon Feb 23 13:12:52 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
