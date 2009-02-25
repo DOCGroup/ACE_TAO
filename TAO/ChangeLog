@@ -1,3 +1,9 @@
+Wed Feb 25 19:45:54 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:
+        
+          Changed degging level of update_rank_list output.
+
 Sun Feb 22 00:04:09 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/AppOptions.cpp:
