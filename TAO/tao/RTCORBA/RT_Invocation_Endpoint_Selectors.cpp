@@ -49,7 +49,6 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
 
       // If we get here, we completely failed to find an endpoint selector
       // that we know how to use, so throw an exception.
-      throw ::CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
   else
     {
@@ -132,8 +131,6 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
 
   // If we get here, we found at least one pertinent profile, but no
   // usable endpoints.
-  throw ::CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
-
 }
 
 int
