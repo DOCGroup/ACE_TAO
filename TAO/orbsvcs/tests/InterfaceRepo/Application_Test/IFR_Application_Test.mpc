@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): taoexe, portableserver, ifr_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*server): taoexe, portableserver, ifr_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, svc_utils {
   exename = server
   Source_Files {
     test_i.cpp

@@ -1,3 +1,18 @@
+Wed Feb 25 16:22:50 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/main.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/IFR_Application_Test.mpc:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/server.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/test_i.cpp:
+        * tests/NestedUpcall/MT_Client_Test/server.cpp:
+        * tests/NestedUpcall/MT_Client_Test/client.cpp:
+
+          Fixed memory leaks.
+
 Wed Feb 25 10:07:20 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Bug_3574_Regression/test.cpp:
