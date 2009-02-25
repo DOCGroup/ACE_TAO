@@ -196,7 +196,6 @@ TAO_ConstantDef_i::value_i (void)
                     CORBA::NO_MEMORY ());
 
   retval->replace (impl);
-  safety.release ();
   return retval;
 }
 
@@ -243,6 +242,7 @@ TAO_ConstantDef_i::value_i (const CORBA::Any &value)
       TAO_InputCDR in (out);
       mb = in.steal_contents ();
     }
+  ACE_Auto_Ptr<ACE_Message_Block> safe (mb);
 
   CORBA::TCKind kind = val_tc->kind ();
 
