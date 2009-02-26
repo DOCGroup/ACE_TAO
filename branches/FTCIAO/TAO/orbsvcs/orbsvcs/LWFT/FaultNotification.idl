@@ -1,0 +1,15 @@
+// $Id$
+
+#ifndef FAULTNOTIFICATION_IDL
+#define FAULTNOTIFICATION_IDL
+
+module FLARE {
+
+  interface FaultNotification {
+    void proc_failure (in string host,
+                       in string component_instance);
+  };
+
+};
+
+#endif /* FAULTNOTIFICATION_IDL */

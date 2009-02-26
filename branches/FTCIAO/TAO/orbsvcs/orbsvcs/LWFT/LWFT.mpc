@@ -168,22 +168,29 @@ project(*ReplicationManager) : portableserver, orbsvcs_output {
               
   IDL_Files {
     ReplicationManager.idl
+    FaultNotification.idl
   }
   
   Source_Files {
     ReplicationManagerC.cpp
     ReplicationManagerS.cpp
+    FaultNotificationC.cpp
+    FaultNotificationS.cpp
   }
   
   Header_Files {
     ReplicationManagerC.h
     ReplicationManagerS.h
+    FaultNotificationC.cpp
+    FaultNotificationS.cpp
     rm_export.h
   }
   
   Inline_Files {
     ReplicationManagerC.inl
     ReplicationManagerS.inl
+    FaultNotificationC.inl
+    FaultNotificationS.inl
   }
 }
 
