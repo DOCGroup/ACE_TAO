@@ -701,8 +701,8 @@ create_images ()
   local TMP=0
 
   while read object; do
-    if [ -e $object ] && [ `sort -k 2n $object | head -n 1 | cut -d' ' -f2` ]; then
-      let TMP=`sort -k 2n $object | head -n 1 | cut -d' ' -f2`
+    if [ -e $object ] && [ `sort -k 2n $object | tail -n 1 | cut -d' ' -f2` ]; then
+      let TMP=`sort -k 2n $object | tail -n 1 | cut -d' ' -f2`
       let TMP=$TMP*16/10
       STEP=1000
       HIGH=0
