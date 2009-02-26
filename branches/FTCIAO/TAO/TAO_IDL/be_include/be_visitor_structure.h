@@ -22,6 +22,8 @@
 #ifndef TAO_BE_VISITOR_STRUCTURE_H
 #define TAO_BE_VISITOR_STRUCTURE_H
 
+#include "global_extern.h"
+
 #include "be_union.h"
 #include "be_enum.h"
 

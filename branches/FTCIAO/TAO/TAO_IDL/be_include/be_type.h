@@ -71,6 +71,10 @@ public:
 
   void gen_common_varout (TAO_OutStream *os);
   // Generate _var and _out typedefs for structs and unions.
+  
+  void gen_dds_typedefs (TAO_OutStream *os);
+  // Generate *Seq, *TypeSupport, *DataWriter and *DataReader
+  // typedefs, if this is a DDS datatype.
 
   bool seen_in_sequence (void) const;
   virtual void seen_in_sequence (bool val);

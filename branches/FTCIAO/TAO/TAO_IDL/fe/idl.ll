@@ -97,6 +97,7 @@ static void             idl_store_pragma (char *);
 static char *           idl_get_pragma_string (char *);
 static bool             idl_valid_version (char *);
 static AST_Decl *       idl_find_node (char *);
+static void             idl_set_dds_decls_flag (char *);
 
 #define ace_yytext yytext
 
@@ -785,6 +786,11 @@ idl_store_pragma (char *buf)
     {
       idl_global->dcps_gen_zero_copy_read (true);
     }
+  else if( ACE_OS::strncmp (buf + 8, "keylist", 7) == 0)
+    {
+      // If we're here, we have an OpenSplice idlpp pragma.
+      idl_set_dds_decls_flag (buf + 16);
+    }
 }
 
 /*
@@ -1187,3 +1193,32 @@ idl_find_node (char *s)
 
   return d;
 }
+
+static void
+idl_set_dds_decls_flag (char *s)
+{
+  ACE_CString work (s);
+  ACE_CString target (work.substr (0, work.find (' ')));
+  char *ncs = const_cast<char *> (target.c_str ());
+  AST_Decl *node = idl_find_node (ncs);
+  
+  if (node == 0)
+    {
+      Identifier id (ncs);
+      UTL_Scope *scope =
+        idl_global->scopes ().top_non_null ();
+      node = scope->lookup_by_name_local (&id, 0);
+    }
+    
+  if (node != 0)
+    {
+      AST_Structure *st =
+        AST_Structure::narrow_from_decl (node);
+        
+      if (st != 0)
+        {
+          st->gen_dds_decls (true);
+        }
+    }
+}
+

@@ -1,3 +1,117 @@
+Thu Feb 26 04:24:02 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * MPC/config/lwft_server.mpb
+        * MPC/config/lwft_dds.mpb
+        * MPC/config/lwft_client.mpb:
+        
+          Added mpc templates for the lightweight fault tolerance
+          framework.
+        
+        * orbsvcs/orbsvcs/LWFT
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h
+        * orbsvcs/orbsvcs/LWFT/DDSStateUpdate_T.cpp
+        * orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.h
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
+        * orbsvcs/orbsvcs/LWFT/IOR_Interceptor.h
+        * orbsvcs/orbsvcs/LWFT/StatefulObject.cpp
+        * orbsvcs/orbsvcs/LWFT/Monitor_Manager.cpp
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp
+        * orbsvcs/orbsvcs/LWFT/HMOptions.h
+        * orbsvcs/orbsvcs/LWFT/ReplicatedApplication.idl
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.h
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp
+        * orbsvcs/orbsvcs/LWFT/CorbaStateUpdate.cpp
+        * orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.h
+        * orbsvcs/orbsvcs/LWFT/DDSStateReaderListener_T.h
+        * orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.cpp
+        * orbsvcs/orbsvcs/LWFT/LWFTDataStructures.idl
+        * orbsvcs/orbsvcs/LWFT/rm_impl_export.h
+        * orbsvcs/orbsvcs/LWFT/IOR_Interceptor.cpp
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc
+        * orbsvcs/orbsvcs/LWFT/HostMonitor.idl
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i_T.cpp
+        * orbsvcs/orbsvcs/LWFT/Timer.cpp
+        * orbsvcs/orbsvcs/LWFT/ServerORBInitializer.h
+        * orbsvcs/orbsvcs/LWFT/Utilization_Monitor.cpp
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp
+        * orbsvcs/orbsvcs/LWFT/StatefulObject.h
+        * orbsvcs/orbsvcs/LWFT/Client_ORBInitializer.cpp
+        * orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.cpp
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent.h
+        * orbsvcs/orbsvcs/LWFT/DDSStateReaderListener_T.cpp
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.h
+        * orbsvcs/orbsvcs/LWFT/lwft_common_export.h
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Handler.cpp
+        * orbsvcs/orbsvcs/LWFT/ssa_export.h
+        * orbsvcs/orbsvcs/LWFT/AppOptions.cpp
+        * orbsvcs/orbsvcs/LWFT/CorbaStateUpdate.h
+        * orbsvcs/orbsvcs/LWFT/Client_Request_Interceptor.cpp
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent.idl
+        * orbsvcs/orbsvcs/LWFT/Barrier_Guard.cpp
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.h
+        * orbsvcs/orbsvcs/LWFT/ServerORBInitializer.cpp
+        * orbsvcs/orbsvcs/LWFT/Monitor_Thread.cpp
+        * orbsvcs/orbsvcs/LWFT/lwft_client_export.h
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent.cpp
+        * orbsvcs/orbsvcs/LWFT/Monitor_Manager.inl
+        * orbsvcs/orbsvcs/LWFT/DDSFailure.cpp
+        * orbsvcs/orbsvcs/LWFT/ObjectReferenceFactory.h
+        * orbsvcs/orbsvcs/LWFT/Failure_Handler.cpp
+        * orbsvcs/orbsvcs/LWFT/RM_Proxy.h
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.h
+        * orbsvcs/orbsvcs/LWFT/Timer.h
+        * orbsvcs/orbsvcs/LWFT/Utilization_Monitor.h
+        * orbsvcs/orbsvcs/LWFT/Client_ORBInitializer.h
+        * orbsvcs/orbsvcs/LWFT/host_monitor_export.h
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.idl
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Handler.h
+        * orbsvcs/orbsvcs/LWFT/AppOptions.h
+        * orbsvcs/orbsvcs/LWFT/ObjectReferenceFactory.idl
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp
+        * orbsvcs/orbsvcs/LWFT/DDSStateUpdate_T.h
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent.idl
+        * orbsvcs/orbsvcs/LWFT/lwft_server_export.h
+        * orbsvcs/orbsvcs/LWFT/Client_Request_Interceptor.h
+        * orbsvcs/orbsvcs/LWFT/README
+        * orbsvcs/orbsvcs/LWFT/ObjectReferenceFactory.cpp
+        * orbsvcs/orbsvcs/LWFT/Barrier_Guard.h
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.cpp
+        * orbsvcs/orbsvcs/LWFT/RM_Proxy.cpp
+        * orbsvcs/orbsvcs/LWFT/HMOptions.cpp
+        * orbsvcs/orbsvcs/LWFT/AppInfo.idl
+        * orbsvcs/orbsvcs/LWFT/Monitor_Thread.h
+        * orbsvcs/orbsvcs/LWFT/rm_export.h
+        * orbsvcs/orbsvcs/LWFT/Monitor_Manager.h
+        * orbsvcs/orbsvcs/LWFT/DDSFailure.h
+        * orbsvcs/orbsvcs/LWFT/Failure_Handler.h:
+        
+          Added LWFT libraries.
+        
+        * orbsvcs/LWFT_Service
+        * orbsvcs/LWFT_Service/RMOptions.h
+        * orbsvcs/LWFT_Service/ReplicationManager_process.cpp
+        * orbsvcs/LWFT_Service/host_monitor.cpp
+        * orbsvcs/LWFT_Service/LWFT_Service.mpc
+        * orbsvcs/LWFT_Service/RMOptions.cpp:
+        
+          Added LWFT services. 
+        
+        * TAO_IDL/include/ast_structure.h
+        * TAO_IDL/include/idl_global.h
+        * TAO_IDL/include/ast_type.h
+        * TAO_IDL/be/be_type.cpp
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp
+        * TAO_IDL/ast/ast_type.cpp
+        * TAO_IDL/be_include/be_visitor_structure.h
+        * TAO_IDL/be_include/be_type.h
+        * TAO_IDL/fe/lex.yy.cpp
+        * TAO_IDL/fe/idl.ll
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Added changes to IDL compiler that generate DDS type
+          information.
+
 Mon Feb 23 13:12:52 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
