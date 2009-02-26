@@ -502,7 +502,7 @@ protected:
   /// appropriate point specified by <requeue_position_>.
   virtual void renew (void) = 0;
 
-  /// Check to see if the <Event_Handler> associated with @a handle is
+  /// Check to see if the Event_Handler associated with @a handle is
   /// suspended. Returns 0 if not, 1 if so.
   virtual int is_suspended_i (ACE_HANDLE handle) = 0;
 

@@ -1008,8 +1008,8 @@ ACE_Service_Gestalt::init_svc_conf_file_queue (void)
 
 
 int
-ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
-                             const ACE_TCHAR* /*logger_key*/,
+ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
+                             const ACE_TCHAR* logger_key,
                              bool ignore_static_svcs,
                              bool ignore_default_svc_conf_file,
                              bool ignore_debug_flag)
@@ -1018,7 +1018,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
   int result = 0;
   ACE_Log_Msg *log_msg = ACE_LOG_MSG;
 
-  no_static_svcs_ = ignore_static_svcs;
+  this->no_static_svcs_ = ignore_static_svcs;
 
   // Record the current log setting upon entering this thread.
   u_long old_process_mask = log_msg->priority_mask
@@ -1042,6 +1042,31 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
     return 0;
 
   if (this->init_i () != 0)
+    return -1;
+
+  u_long flags = log_msg->flags ();
+
+  // Only use STDERR if the caller hasn't already set the flags.
+  if (flags == 0)
+    flags = (u_long) ACE_Log_Msg::STDERR;
+
+  const ACE_TCHAR *key = logger_key;
+
+  if (key == 0 || ACE_OS::strcmp (key, ACE_DEFAULT_LOGGER_KEY) == 0)
+    {
+      // Only use the static <logger_key_> if the caller doesn't
+      // override it in the parameter list or if the key supplied is
+      // equal to the default static logger key.
+      key = this->logger_key_;
+    }
+  else
+    {
+      ACE_SET_BITS (flags, ACE_Log_Msg::LOGGER);
+    }
+
+  if (log_msg->open (program_name,
+                     flags,
+                     key) == -1)
     return -1;
 
   if (!ignore_debug_flag)

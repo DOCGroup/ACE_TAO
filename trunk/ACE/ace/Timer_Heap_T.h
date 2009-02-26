@@ -143,7 +143,7 @@ public:
 
   /**
    * Cancel all timers associated with @a type.  If @a dont_call_handle_close
-   * is 0then the <functor> will be invoked.  Returns number of timers
+   * is 0 then the <functor> will be invoked.  Returns number of timers
    * cancelled.
    */
   virtual int cancel (const TYPE &type,

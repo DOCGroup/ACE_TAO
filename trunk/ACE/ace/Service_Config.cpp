@@ -273,48 +273,52 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   const ACE_TCHAR *key = logger_key;
 
   if (key == 0 || ACE_OS::strcmp (key, ACE_DEFAULT_LOGGER_KEY) == 0)
-    // Only use the static <logger_key_> if the caller doesn't
-    // override it in the parameter list or if the key supplied is
-    // equal to the default static logger key.
-    key = ACE_Service_Config::current()->logger_key_;
+    {
+      // Only use the static <logger_key_> if the caller doesn't
+      // override it in the parameter list or if the key supplied is
+      // equal to the default static logger key.
+      key = ACE_Service_Config::current()->logger_key_;
+    }
   else
-    ACE_SET_BITS (flags, ACE_Log_Msg::LOGGER);
+    {
+      ACE_SET_BITS (flags, ACE_Log_Msg::LOGGER);
+    }
 
   if (log_msg->open (program_name,
                      flags,
                      key) == -1)
     return -1;
 
-    if (ACE::debug ())
-      ACE_DEBUG ((LM_STARTUP,
-                  ACE_TEXT ("starting up daemon %n\n")));
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_STARTUP,
+                ACE_TEXT ("starting up daemon %n\n")));
 
-    // Initialize the Service Repository (this will still work if
-    // user forgets to define an object of type ACE_Service_Config).
-    ACE_Service_Repository::instance (ACE_Service_Gestalt::MAX_SERVICES);
+  // Initialize the Service Repository (this will still work if
+  // user forgets to define an object of type ACE_Service_Config).
+  ACE_Service_Repository::instance (ACE_Service_Gestalt::MAX_SERVICES);
 
-    // Initialize the ACE_Reactor (the ACE_Reactor should be the
-    // same size as the ACE_Service_Repository).
-    ACE_Reactor::instance ();
+  // Initialize the ACE_Reactor (the ACE_Reactor should be the
+  // same size as the ACE_Service_Repository).
+  ACE_Reactor::instance ();
 
-    // There's no point in dealing with this on NT since it doesn't
-    // really support signals very well...
+  // There's no point in dealing with this on NT since it doesn't
+  // really support signals very well...
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
-    // Only attempt to register a signal handler for positive
-    // signal numbers.
-    if (ACE_Service_Config::signum_ > 0)
-      {
-        ACE_Sig_Set ss;
-        ss.sig_add (ACE_Service_Config::signum_);
-        if ((ACE_Reactor::instance () != 0) &&
-            (ACE_Reactor::instance ()->register_handler
-             (ss, ACE_Service_Config::signal_handler_) == -1))
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("can't register signal handler\n")));
-      }
+  // Only attempt to register a signal handler for positive
+  // signal numbers.
+  if (ACE_Service_Config::signum_ > 0)
+    {
+      ACE_Sig_Set ss;
+      ss.sig_add (ACE_Service_Config::signum_);
+      if ((ACE_Reactor::instance () != 0) &&
+          (ACE_Reactor::instance ()->register_handler
+           (ss, ACE_Service_Config::signal_handler_) == -1))
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("can't register signal handler\n")));
+    }
 #endif /* ACE_LACKS_UNIX_SIGNALS */
 
-    return 0;
+  return 0;
 }
 
 /// Return the global configuration instance. Always returns the same
