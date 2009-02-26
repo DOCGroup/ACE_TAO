@@ -138,7 +138,7 @@ template <typename DATA_TYPE>
 bool
 DDSStateUpdate_T<DATA_TYPE>::create_topic (void)
 {
-  DDS::TypeSupport_var ts = new DATA_TYPE::_type_support_type ();
+  DDS::TypeSupport_var ts = new typename DATA_TYPE::_type_support_type ();
   CORBA::String_var data_type_name = ts->get_type_name ();
   
   DDS::ReturnCode_t status =
