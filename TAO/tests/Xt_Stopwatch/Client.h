@@ -19,7 +19,7 @@
 #include "testC.h"
 
 
-#include "tao/XtResource_Loader.h"
+#include "tao/XtResource/XtResource_Loader.h"
 class Control;
 
 class Client
