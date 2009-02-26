@@ -1,3 +1,9 @@
+Thu Feb 26 20:42:57 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * DAnCE/Logger/Logger_Service.cpp: 
+        
+          Fix for TCHAR ambiguity.
+
 Tue Feb 24 16:00:32 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Hello/descriptors/NodeManagerMap.dat:
