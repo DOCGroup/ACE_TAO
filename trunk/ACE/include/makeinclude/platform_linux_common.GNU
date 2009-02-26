@@ -10,6 +10,9 @@ optimize ?= 1
 threads ?= 1
 insure ?= 0
 
+LSB_RELEASE_ID := $(shell lsb_release -i)
+LSB_RELEASE_RELEASE := $(shell lsb_release -r)
+
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
 PLATFORM_XT_LDFLAGS=
@@ -43,13 +46,24 @@ PLATFORM_BOOST_CPPFLAGS ?=
 PLATFORM_BOOST_LDLAGS ?=
 PLATFORM_BOOST_UTF_LIBS ?= -lboost_unit_test_framework
 
-PLATFORM_TCL_CPPFLAGS=
-PLATFORM_TCL_LIBS=-ltcl
-PLATFORM_TCL_LDFLAGS=
+ifeq (Ubuntu, $(findstring Ubuntu,$(LSB_RELEASE_ID)))
+  PLATFORM_TK_CPPFLAGS=$(shell . /usr/lib/tk*/tkConfig.sh && echo -n $$TK_INCLUDE_SPEC $$TK_DEFS)
+  PLATFORM_TK_LIBS=$(shell . /usr/lib/tk*/tkConfig.sh && echo -n $$TK_LIB_FLAG)
+  PLATFORM_TK_LDFLAGS=
 
-PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib*/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
-PLATFORM_TK_LIBS=$(shell . /usr/lib*/tkConfig.sh && echo -n $$TK_LIB_FLAG)
-PLATFORM_TK_LDFLAGS=
+  PLATFORM_TCL_CPPFLAGS=
+  PLATFORM_TCL_LIBS=-ltcl8.4
+  PLATFORM_TCL_LDFLAGS=
+else
+  PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib*/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
+  PLATFORM_TK_LIBS=$(shell . /usr/lib*/tkConfig.sh && echo -n $$TK_LIB_FLAG)
+  PLATFORM_TK_LDFLAGS=
+
+
+  PLATFORM_TCL_CPPFLAGS=
+  PLATFORM_TCL_LIBS=-ltcl
+  PLATFORM_TCL_LDFLAGS=
+endif
 
 PLATFORM_QT_CPPFLAGS ?= -I$(QTDIR)/include
 PLATFORM_QT_LIBS ?= -lqt-mt
@@ -85,9 +99,6 @@ ifeq ($(nptl),0)
   CPPFLAGS += -DACE_LACKS_LINUX_NPTL
 endif
 
-LSB_RELEASE_ID := $(shell lsb_release -i)
-LSB_RELEASE_RELEASE := $(shell lsb_release -r)
-
 ssl ?= 0
 ifeq ($(ssl),1)
   # Some Linux OpenSSL installations compile in Kerberos support.  Add
@@ -113,4 +124,3 @@ PIC      = -fPIC
 AR      ?= ar
 ARFLAGS  = rsuv
 RANLIB   = @true
-
