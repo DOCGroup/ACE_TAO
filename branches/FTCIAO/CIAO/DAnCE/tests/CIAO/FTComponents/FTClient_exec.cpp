@@ -36,7 +36,6 @@ namespace CIDL_FTClient_Impl
     : period_ (0.0),
       execution_time_ (0.0),
       priority_ (0),
-      server_ (DeCoRAM::Worker::_nil ()),
       orb_ (CORBA::ORB::_nil ()),
       timeout_handler_ (this)
   {
@@ -90,43 +89,21 @@ namespace CIDL_FTClient_Impl
   char *
   FTClient_exec_i::server_ior ()
   {
-    return orb_->object_to_string (server_.in ());
+    return CORBA::string_dup (server_ior_.in ());
   }
 
   void
   FTClient_exec_i::server_ior (const char * server_ior)
   {
-    if (CORBA::is_nil (orb_.in ()))
-      {
-        CIAO_DEBUG ((LM_WARNING, 
-                     ACE_TEXT ("FTClient_exec_i::server_ior () : ORB is nil.\n")));
-        return;
-      }
-
-    CORBA::Object_var obj = orb_->string_to_object (server_ior);
-
-    if (CORBA::is_nil (obj.in ()))
-      {
-        CIAO_DEBUG ((LM_WARNING,
-                     ACE_TEXT ("FTClient_exec_i::server_ior () : could not resolve server reference.\n")));
-      }
-
-    try
-      {
-        server_ = DeCoRAM::Worker::_narrow (obj.in ());
-      }
-    catch (CORBA::SystemException & ex)
-      {
-        CIAO_DEBUG ((LM_WARNING, 
-                     ACE_TEXT ("FTClient_exec_i::server_ior () : caught %s\n"), 
-                     ex._info ().c_str ()));
-      }
+    server_ior_ = server_ior;
   }
 
   DeCoRAM::Worker_ptr 
   FTClient_exec_i::server (void)
   {
-    return DeCoRAM::Worker::_duplicate (server_.in ());
+    CORBA::Object_var obj = orb_->string_to_object (server_ior_);
+
+    return DeCoRAM::Worker::_narrow (obj.in ());
   }
 
   // Port operations.
@@ -178,6 +155,8 @@ namespace CIDL_FTClient_Impl
   void
   FTClient_exec_i::ccm_activate ()
   {
+    CIAO_TRACE ("FTClient_exec_i::ccm_activate ()");
+
     // register the timer handler with the ORB reactor
     ACE_Time_Value period;
     period.msec (static_cast<long> (period_));

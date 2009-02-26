@@ -26,17 +26,20 @@ namespace CIDL_FTClient_Impl
   FTClient_Timer_Handler::handle_timeout (const ACE_Time_Value &,
                                           const void *)
   {
-    DeCoRAM::Worker_var server = client_executor_->server ();
-
-    /*
-    CORBA::Object_var obj = orb_->resolve_initial_references ("RTCurrent");
-    RTCORBA::Current_var rt_current = RTCORBA::Current::_narrow (obj);
-
-    rt_current->the_priority (client_executor_->priority ());
-    */
-
     try
       {
+        /*
+          CORBA::Object_var obj = orb_->resolve_initial_references ("RTCurrent");
+          RTCORBA::Current_var rt_current = RTCORBA::Current::_narrow (obj);
+          
+          rt_current->the_priority (client_executor_->priority ());
+        */
+
+        DeCoRAM::Worker_var server = client_executor_->server ();
+
+        if (CORBA::is_nil (server.in ()))
+            return 0;
+
         ACE_hrtime_t start, end;
         start = ACE_OS::gethrtime ();
 
@@ -51,7 +54,7 @@ namespace CIDL_FTClient_Impl
                      client_executor_->execution_time (),
                      end - start));
       }
-    catch (CORBA::SystemException & ex)
+    catch (CORBA::Exception & ex)
       {
         CIAO_DEBUG ((LM_WARNING, 
                      "FTClient_Timer_Handler::handle_timeout () - "

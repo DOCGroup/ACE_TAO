@@ -719,7 +719,7 @@ namespace CIAO
           throw CIAO::InvalidComponent  ();
 
         CIAO_DEBUG ((LM_TRACE, CLINFO "FT_Session_Container::activate_component - "
-                     "Invoking CCM activate on provided component object reference."));
+                     "Invoking CCM activate on provided component object reference.\n"));
         sess->activate_component ();
       }
     catch (const CIAO::InvalidComponent &)

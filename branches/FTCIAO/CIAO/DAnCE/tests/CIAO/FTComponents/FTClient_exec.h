@@ -100,7 +100,7 @@ namespace CIDL_FTClient_Impl
 
     CORBA::ULong priority_;
 
-    DeCoRAM::Worker_var server_;
+    CORBA::String_var server_ior_;
 
     CORBA::ORB_var orb_;
 

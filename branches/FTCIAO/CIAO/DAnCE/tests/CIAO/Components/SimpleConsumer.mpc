@@ -32,7 +32,7 @@ project(SimpleCommon_SimpleConsumer_cidl_gen) : ciaocidldefaults, ciaoidldefault
   }
 }
 
-project(SimpleCommon_SimpleConsumer_stub) : ccm_stub {
+project(SimpleCommon_SimpleConsumer_stub) : ccm_stub, ciao_lib {
   avoids += ace_for_tao
   after += SimpleCommon_SimpleConsumer_idl_gen SimpleCommon_stub
   libs  += SimpleCommon_stub
@@ -57,7 +57,7 @@ project(SimpleCommon_SimpleConsumer_stub) : ccm_stub {
   }
 }
 
-project(SimpleCommon_SimpleConsumer_exec) : ciao_executor {
+project(SimpleCommon_SimpleConsumer_exec) : ciao_executor, ciao_lib {
   avoids += ace_for_tao
   after   += SimpleCommon_SimpleConsumer_cidl_gen SimpleCommon_SimpleConsumer_stub
   sharedname = SimpleConsumer_exec
@@ -85,7 +85,7 @@ project(SimpleCommon_SimpleConsumer_exec) : ciao_executor {
 }
 
 
-project(SimpleCommon_SimpleConsumer_svnt) : ciao_servant {
+project(SimpleCommon_SimpleConsumer_svnt) : ciao_servant, ciao_lib {
   avoids += ace_for_tao
   after      += SimpleCommon_skel SimpleCommon_SimpleConsumer_exec
   sharedname  = SimpleConsumer_svnt

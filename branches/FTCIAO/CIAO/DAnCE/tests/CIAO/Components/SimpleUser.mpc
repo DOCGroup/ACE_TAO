@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p SimpleCommon SimpleUser"
 
-project(SimpleCommon_SimpleUser_idl_gen) : ciaoidldefaults, anytypecode {
+project(SimpleCommon_SimpleUser_idl_gen) : ciaoidldefaults, anytypecode, ciao_lib {
   avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLEUSER_STUB_Export \
@@ -14,7 +14,7 @@ project(SimpleCommon_SimpleUser_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(SimpleCommon_SimpleUser_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
+project(SimpleCommon_SimpleUser_cidl_gen) : ciaocidldefaults, ciaoidldefaults, ciao_lib {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro SIMPLEUSER_SVNT_Export \
@@ -32,7 +32,7 @@ project(SimpleCommon_SimpleUser_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   }
 }
 
-project(SimpleCommon_SimpleUser_stub) : ccm_stub {
+project(SimpleCommon_SimpleUser_stub) : ccm_stub, ciao_lib {
   avoids += ace_for_tao
   after += SimpleCommon_SimpleUser_idl_gen SimpleCommon_stub
   libs  += SimpleCommon_stub
@@ -57,7 +57,7 @@ project(SimpleCommon_SimpleUser_stub) : ccm_stub {
   }
 }
 
-project(SimpleCommon_SimpleUser_exec) : ciao_executor {
+project(SimpleCommon_SimpleUser_exec) : ciao_executor, ciao_lib {
   avoids += ace_for_tao
   after   += SimpleCommon_SimpleUser_cidl_gen SimpleCommon_SimpleUser_stub
   sharedname = SimpleUser_exec
@@ -85,7 +85,7 @@ project(SimpleCommon_SimpleUser_exec) : ciao_executor {
 }
 
 
-project(SimpleCommon_SimpleUser_svnt) : ciao_servant {
+project(SimpleCommon_SimpleUser_svnt) : ciao_servant, ciao_lib {
   avoids += ace_for_tao
   after      += SimpleCommon_skel SimpleCommon_SimpleUser_exec
   sharedname  = SimpleUser_svnt
