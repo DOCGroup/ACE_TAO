@@ -560,9 +560,7 @@ footprint ()
     if [ -e $FILE ]; then
       #echo "inside if"
       SIZE=`size $FILE | grep -v text | awk '{s += \$4} END {print s}'`
-      echo "$DATE $SIZE" > $lpath/tmp.size
-      echo $lpath/${outfile}.size >> $lpath/tmp.size
-      mv $lpath/tmp.size $lpath/${outfile}.size
+      echo "$DATE $SIZE" >> $lpath/${outfile}.size
 
       # only process the included objects if it's a library
       if [ "$TYPE" = "LIB" ]; then
@@ -602,9 +600,7 @@ process_included ()
     OUTFILE="${FILE#*$BASE_ROOT/}"     # strip off $BASE_ROOT
     OUTFILE="${OUTFILE//\//___}"       # replace "/" with "___"
     #echo "size = ($size)"
-    echo "$DATE $size" > $lpath/tmp.size
-    echo $lpath/${OUTFILE}.size >> $lpath/tmp.size
-    mv $lpath/tmp.size $lpath/${OUTFILE}.size
+    echo "$DATE $size" >> $lpath/${OUTFILE}.size
 
     # add the object
     echo -n "$OUTFILE " >> ${DEST}/size_composites.txt
@@ -910,7 +906,7 @@ create_page ()
         echo "${i##*___}"
       fi
       echo '</TD><TD>'
-      echo sort -k 2n ${DEST}/data/${i}.${EXT} | tail -n1  | cut -d" " -f1`
+      echo `sort -k 2n ${DEST}/data/${i}.${EXT} | tail -n1  | cut -d" " -f1`
       let LAST=`sort -k 2n ${DEST}/data/${i}.${EXT} | tail -n1 | cut -d" " -f2`
       echo "</TD><TD align=right>$LAST</TD>"
       let PRE=`sort -k 2n ${DEST}/data/${i}.${EXT} | tail -n2 | head -n1 | cut -d" " -f2`
