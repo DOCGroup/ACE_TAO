@@ -14,7 +14,7 @@ project(SimpleCommon_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(SimpleCommon_stub) : ccm_stub {
+project(SimpleCommon_stub) : ccm_stub, ciao_lib {
   avoids += ace_for_tao
   after += SimpleCommon_idl_gen
   libs  +=
@@ -39,7 +39,7 @@ project(SimpleCommon_stub) : ccm_stub {
   }
 }
 
-project(SimpleCommon_skel) : ccm_svnt {
+project(SimpleCommon_skel) : ccm_svnt, ciao_lib {
   avoids += ace_for_tao
   after      +=  SimpleCommon_stub
   sharedname  = SimpleCommon_skel

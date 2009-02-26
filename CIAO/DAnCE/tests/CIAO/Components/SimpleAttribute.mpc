@@ -32,7 +32,7 @@ project(SimpleAttribute_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   }
 }
 
-project(SimpleAttribute_stub) : ccm_stub {
+project(SimpleAttribute_stub) : ccm_stub, ciao_lib {
   avoids += ace_for_tao
   after += SimpleAttribute_idl_gen
   libs  +=
@@ -57,7 +57,7 @@ project(SimpleAttribute_stub) : ccm_stub {
   }
 }
 
-project(SimpleAttribute_exec) : ciao_executor {
+project(SimpleAttribute_exec) : ciao_executor, ciao_lib {
   avoids += ace_for_tao
   after   += SimpleAttribute_cidl_gen SimpleAttribute_stub
   sharedname = SimpleAttribute_exec
@@ -85,7 +85,7 @@ project(SimpleAttribute_exec) : ciao_executor {
 }
 
 
-project(SimpleAttribute_svnt) : ciao_servant {
+project(SimpleAttribute_svnt) : ciao_servant, ciao_lib {
   avoids += ace_for_tao
   after      +=  SimpleAttribute_exec
   sharedname  = SimpleAttribute_svnt

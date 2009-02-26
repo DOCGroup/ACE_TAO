@@ -1,3 +1,33 @@
+Thu Feb 26 16:05:54 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp:
+        
+          Added manual mode.
+        
+        * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.cpp
+        * DAnCE/tests/CIAO/FTComponents/FTClient_exec.cpp
+        * DAnCE/tests/CIAO/FTComponents/FTClient_exec.h:
+        
+          The server reference is now resolved in every call to prevent
+          problems with startup order of FTTask and FTClient components.
+        
+        * DAnCE/tests/CIAO/Components/SimplePublisher.mpc
+        * DAnCE/tests/CIAO/Components/SimpleEmitter.mpc
+        * DAnCE/tests/CIAO/Components/SimpleNull.mpc
+        * DAnCE/tests/CIAO/Components/SimpleProvider.mpc
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser.mpc
+        * DAnCE/tests/CIAO/Components/SimpleConsumer.mpc
+        * DAnCE/tests/CIAO/Components/SimpleAttribute.mpc
+        * DAnCE/tests/CIAO/Components/SimpleCommon.mpc
+        * DAnCE/tests/CIAO/Components/SimpleUser.mpc:
+        
+          Added ciao_lib base project to all libraries to make them
+          install into $ACE_ROOT/lib.
+
+        * ciao/Containers/FTSession/FT_Session_Container.cpp:
+        
+          Debug output cosmetic changes.
+
 Wed Feb 25 18:17:38 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.cpp:
