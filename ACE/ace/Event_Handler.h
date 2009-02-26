@@ -114,7 +114,7 @@ public:
 
   /**
    * Called when timer expires.  @a current_time represents the current
-   * time that the <Event_Handler> was selected for timeout
+   * time that the Event_Handler was selected for timeout
    * dispatching and @a act is the asynchronous completion token that
    * was passed in when <schedule_timer> was invoked.
    */

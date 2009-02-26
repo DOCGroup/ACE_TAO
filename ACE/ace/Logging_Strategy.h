@@ -93,7 +93,7 @@ public:
 
   /**
    * Timeout handler which tests logfile size.  If the current logfile
-   * size exceeds <max_size_>, the current logfile is closed, saved to
+   * size exceeds @c max_size_, the current logfile is closed, saved to
    * logfile.old, and a new logfile is reopened.
    */
   virtual int handle_timeout (const ACE_Time_Value& tv,
@@ -110,7 +110,7 @@ public:
    * @arg '-n' Set the program name for the %n format specifier.
    * @arg '-N' The maximum number of logfiles that we want created.
    * @arg '-o' Specifies that we want the no standard logfiles ordering
-   *           (fastest processing in <handle_timeout>).  Default is not to
+   *           (fastest processing in handle_timeout()).  Default is not to
    *           order logfiles.
    * @arg '-p' Pass in the process-wide priorities to either enable (e.g.,
    *           DEBUG, INFO, WARNING, NOTICE, ERROR, CRITICAL, ALERT,
@@ -136,10 +136,10 @@ protected:
   void priorities (ACE_TCHAR *priority_string,
                    ACE_Log_Msg::MASK_TYPE mask);
 
-  /// Current thread's priority mask set by <priorities>
+  /// Current thread's priority mask set by @c priorities
   u_long thread_priority_mask_;
 
-  /// Process-wide priority mask set by <priorities>
+  /// Process-wide priority mask set by @c priorities
   u_long process_priority_mask_;
 
   /// Flags we keep track of.
