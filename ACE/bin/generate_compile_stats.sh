@@ -214,7 +214,7 @@ parse ()
 #
 # gen_chart
 #
-# Generate the actual charts and move them to $DEST
+# Generate the actual charts and move them to ${DEST}
 #
 ###############################################################################
 gen_chart ()
@@ -247,23 +247,21 @@ gen_chart ()
     set ylabel "${YLABEL}"
     set terminal png small size 800,600 color
     set yrange [$low:$high]
-    set output ".metrics/images/${object}_${TYPE}.png"
+    set output "${DEST}/images/${object}_${TYPE}.png"
     set title "${object//___//}"
-    plot '.metrics/data/${object}.${EXT}' using 1:(\$2/$FACTOR) notitle w points, '.metrics/data/${object}.${EXT}' using 1:(\$2/$FACTOR) notitle w l lt 3 lw 4
+    plot '${DEST}/data/${object}.${EXT}' using 1:(\$2/$FACTOR) notitle w points, '${DEST}/data/${object}.${EXT}' using 1:(\$2/$FACTOR) notitle w l lt 3 lw 4
     exit
 EOF
 
   # here's how to reduce the scale
   #  plot '$1' using 1:(\$2/1024.0) title '$3' w l
 
-  # copy the data and images to $DEST
-  /bin/cp .metrics/images/${object}_${TYPE}.png $DEST/images/${object}_${TYPE}.png
+  # copy the data and images to ${DEST}
   # don't do thumbnails, yet...
-  #/bin/cp .metrics/images/${object}_size.png .metrics/images/thumbnails/${object}_size.png
-  #/usr/bin/X11/mogrify -geometry '25%' .metrics/images/thumbnails/${object}_size.png
-  #/bin/cp .metrics/images/thumbnails/${object}_size.mgk $DEST/images/thumbnails/${object}_size.png
-  /usr/bin/tac .metrics/data/${object}.${EXT} > $DEST/data/${object}.${EXT}
-  /usr/bin/tail -5 .metrics/data/${object}.${EXT} > $DEST/data/LAST_${object}.${EXT}
+  #/bin/cp ${DEST}/images/${object}_size.png ${DEST}/images/thumbnails/${object}_size.png
+  #/usr/bin/X11/mogrify -geometry '25%' ${DEST}/images/thumbnails/${object}_size.png
+  #/bin/cp ${DEST}/images/thumbnails/${object}_size.mgk ${DEST}/images/thumbnails/${object}_size.png
+  /usr/bin/tail -5 ${DEST}/data/${object}.${EXT} > ${DEST}/data/LAST_${object}.${EXT}
 
 }
 
@@ -335,7 +333,7 @@ process_file ()
     let hundreths="${userdec}+${systemdec}"
 
     let CURRENT_TIME="(${seconds}*100 + ${hundreths})+$FUDGE_FACTOR"
-    echo $DATE $CURRENT_TIME >> .metrics/data/${CURRENT_OBJECT}.txt
+    echo $DATE $CURRENT_TIME >> ${DEST}/data/${CURRENT_OBJECT}.txt
 
   done # while
 }
@@ -424,13 +422,13 @@ create_composite_list ()
   local INFILE=$1
 
   # create a pattern file
-  echo "\-L" > .metrics/comp_match.txt
-  echo "Entering directory" >> .metrics/comp_match.txt
+  echo "\-L" > ${DEST}/comp_match.txt
+  echo "Entering directory" >> ${DEST}/comp_match.txt
 
   # grep out the entering directory line and all the link lines,
   # but only keep entering directory lines preceeding link lines.
-  cat $INFILE | grep -f .metrics/comp_match.txt | grep -B1 "\-L" \
-   | grep -ve "--" | composite_list > .metrics/composites.txt
+  cat $INFILE | grep -f ${DEST}/comp_match.txt | grep -B1 "\-L" \
+   | grep -ve "--" | composite_list > ${DEST}/composites.txt
 }
 
 ###############################################################################
@@ -493,13 +491,13 @@ create_library_list ()
   local INFILE=$1
 
   # create a pattern file
-  echo "chmod" > .metrics/lib_match.txt
-  echo "Entering directory" >> .metrics/lib_match.txt
+  echo "chmod" > ${DEST}/lib_match.txt
+  echo "Entering directory" >> ${DEST}/lib_match.txt
 
   # grep out the entering directory line and all the link lines,
   # but only keep entering directory lines preceeding link lines.
-  cat $INFILE | grep -f .metrics/lib_match.txt | grep -B1 "chmod" \
-   | grep -ve "--" | library_list > .metrics/libraries.txt
+  cat $INFILE | grep -f ${DEST}/lib_match.txt | grep -B1 "chmod" \
+   | grep -ve "--" | library_list > ${DEST}/libraries.txt
 }
 
 ###############################################################################
@@ -514,7 +512,7 @@ rollup_compile_times ()
   local temp
   local tdate=""
   local ttime=0
-  local lpath=".metrics/data/"
+  local lpath="${DEST}/data/"
 
   # rollup compile times
   while read outfile colon infiles; do
@@ -543,14 +541,14 @@ footprint ()
   echo "footprint()"
   local TYPE="$1"
   local fpath=""
-  local lpath=".metrics/data/"
+  local lpath="${DEST}/data/"
   local FILE=""
   local SIZE=""
 
   # Remove the old size_composites.txt and create a new one since
   # we have all the info we need from the size command on a library.
-  if [ "$TYPE" = "LIB" ] && [ -e .metrics/size_composites.txt ]; then
-    rm .metrics/size_composites.txt
+  if [ "$TYPE" = "LIB" ] && [ -e ${DEST}/size_composites.txt ]; then
+    rm ${DEST}/size_composites.txt
   fi
 
   # go through all the targets and get the sizes of the target and
@@ -595,7 +593,7 @@ process_included ()
   # size dependencies for each library.
   LIBRARY="${LIBRARY#*$BASE_ROOT/}"   # strip off $BASE_ROOT
   LIBRARY="${LIBRARY//\//___}"        # replace "/" with "___"
-  echo -n  "$LIBRARY : " >> .metrics/size_composites.txt
+  echo -n  "$LIBRARY : " >> ${DEST}/size_composites.txt
 
   while read size colon file; do
     FILE=$fpath/$file
@@ -605,11 +603,11 @@ process_included ()
     echo "$DATE $size" >> $lpath/${OUTFILE}.size
 
     # add the object
-    echo -n "$OUTFILE " >> .metrics/size_composites.txt
+    echo -n "$OUTFILE " >> ${DEST}/size_composites.txt
 
   done
   # add newline
-  echo "" >> .metrics/size_composites.txt
+  echo "" >> ${DEST}/size_composites.txt
 
 }
 
@@ -645,15 +643,15 @@ process_map_file ()
     lib="${line##/*/}"    # strip off path, but only if it starts a line
     lib="${lib%%.a*}"     # strip off rest of line
     lib="$lib.a"          # put back the .a to make it unambiguous
-    libpath=`grep $lib .metrics/libraries.txt`
+    libpath=`grep $lib ${DEST}/libraries.txt`
     path="${libpath%___lib*}"         # strip off libname
     FILE="${line#*(}"             # strip off everything up to object name
     FILE="${FILE%%)*}"            # strip off rest of line
     FILE="${path}___${FILE}"
-    echo -n "$FILE " >> .metrics/size_composites.txt
+    echo -n "$FILE " >> ${DEST}/size_composites.txt
   done
 
-  echo "" >> .metrics/size_composites.txt
+  echo "" >> ${DEST}/size_composites.txt
 
 }
 
@@ -671,7 +669,7 @@ create_size_composites ()
     # reconstitue file name
     FILE="$BASE_ROOT/${outfile//___//}.map"
     if [ -e $FILE ]; then
-      echo -n "$outfile : " >> .metrics/size_composites.txt
+      echo -n "$outfile : " >> ${DEST}/size_composites.txt
       # only process lines that don't begin with a space
       cat $FILE | sed -e '/Memory Configuration/,$d' \
         | sed -e '/Allocating common symbols/,$d' \
@@ -774,8 +772,8 @@ create_index_page ()
 
   echo "), and we use " $COMPILER " version "
 
-  $COMPILER -dumpversion > .metrics/compilerversion.txt 2>&1
-  cat .metrics/compilerversion.txt
+  $COMPILER -dumpversion > ${DEST}/compilerversion.txt 2>&1
+  cat ${DEST}/compilerversion.txt
 
   echo ' to compile '$BASE_TITLE'. </P>'
 
@@ -819,8 +817,8 @@ create_index_page ()
   echo '</PRE></TD></TR><TR><TD>Compiler Version</TD><TD>'$COMPILER' -v</TD></TR>'
   echo '<TR><TD colspan="2">'
 
-  $COMPILER -v > .metrics/compiler.txt 2>&1
-  cat .metrics/compiler.txt
+  $COMPILER -v > ${DEST}/compiler.txt 2>&1
+  cat ${DEST}/compiler.txt
 
   if [ -e "/lib/libc.so.6" ]; then
     echo '</TD></TR><TR><TD>Library Version</TD><TD>/lib/libc.so.6</TD></TR>'
@@ -867,7 +865,7 @@ create_page ()
   echo '</style>'
   echo '<body text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">'
   echo "<br><center><h1>$TITLE</h1></center><br>"
-  if [ -e ".metrics/images/${BASE}_${TYPE}.png" ]; then
+  if [ -e "${DEST}/images/${BASE}_${TYPE}.png" ]; then
     echo '<DIV align="center"><P>'
     echo "<IMG alt=\"$BASE\" border=0 src=\"images/${BASE}_${TYPE}.png\""
     echo 'width="800" height="600"></P></DIV>'
@@ -881,21 +879,21 @@ create_page ()
   echo "<TR><TD align=center><b>Date</b></TD><TD align=center><b>$UNITS</b></TD>"
   echo '<TD align=center><b>%chg</b></TD></TR>'
   while read i; do
-    if [ -e ".metrics/data/${i}.${EXT}" ]; then
+    if [ -e "${DEST}/data/${i}.${EXT}" ]; then
       LAST=0 PRE=0 VAL_TMP=0 VAL_INT=0 VAL_SIGN="+"
       echo '<TR><TD>'
-      if [ -e ".metrics/${i}_${TYPE}.html" ]; then
+      if [ -e "${DEST}/${i}_${TYPE}.html" ]; then
         # strip off "TAO___" if it exists
         NAME=${i#TAO___}
         # strip off "CIAO___" if it exists
         NAME=${i#CIAO___}
         echo "<a href=\"${i}_${TYPE}.html\">${NAME//___//}</a>"
-      elif [ -e ".metrics/images/${i}_${TYPE}.png" ]; then
+      elif [ -e "${DEST}/images/${i}_${TYPE}.png" ]; then
         # since you'll only have images if it's a composite, strip off the
         # path for the name
         if [ "$TYPE" = "Footprint" ]; then
           # if we are doing footprint, add library
-          llib=`grep -e "lib.*\.a" .metrics/size_composites.txt | grep ${i} | awk '{print $1}'`
+          llib=`grep -e "lib.*\.a" ${DEST}/size_composites.txt | grep ${i} | awk '{print $1}'`
           #echo "lib $llib"
           #llib="${llib% :}"
           llib="${llib//___//}"
@@ -908,10 +906,10 @@ create_page ()
         echo "${i##*___}"
       fi
       echo '</TD><TD>'
-      echo `tail -n1 .metrics/data/${i}.${EXT} | cut -d" " -f1`
-      let LAST=`tail -n1 .metrics/data/${i}.${EXT} | cut -d" " -f2`
+      echo `tail -n1 ${DEST}/data/${i}.${EXT} | cut -d" " -f1`
+      let LAST=`tail -n1 ${DEST}/data/${i}.${EXT} | cut -d" " -f2`
       echo "</TD><TD align=right>$LAST</TD>"
-      let PRE=`tail -n2 .metrics/data/${i}.${EXT} | head -n1 | cut -d" " -f2`
+      let PRE=`tail -n2 ${DEST}/data/${i}.${EXT} | head -n1 | cut -d" " -f2`
       let VAL_TMP="((($LAST+1)-($PRE+1))*1000)/($PRE+1)"
       if [ $VAL_TMP -lt 0 ]; then
         VAL_SIGN="-"
@@ -946,18 +944,18 @@ create_page ()
 sort_list ()
 {
   # sort the dependency files
-  if [ -e .metrics/tmp_list ]; then
-    rm .metrics/tmp_list
+  if [ -e ${DEST}/tmp_list ]; then
+    rm ${DEST}/tmp_list
   fi
 
-  touch .metrics/tmp_list
+  touch ${DEST}/tmp_list
   for i in $@; do
-    echo "$i" >> .metrics/tmp_list
+    echo "$i" >> ${DEST}/tmp_list
     #echo $i
   done
 
   # sort eats underscores, soo...
-  sed "s/___/000/g" .metrics/tmp_list | sort -f | sed "s/000/___/g"
+  sed "s/___/000/g" ${DEST}/tmp_list | sort -f | sed "s/000/___/g"
 }
 
 ###############################################################################
@@ -980,8 +978,7 @@ create_html ()
     # create individual page for app/lib
 
     sort_list ${files} | create_page ${base} ${TYPE} \
-      > .metrics/${base}_${TYPE}.html
-    cp .metrics/${base}_${TYPE}.html $DEST/${base}_${TYPE}.html
+      > ${DEST}/${base}_${TYPE}.html
     if [ "${base}" != "${base#TAO___CIAO}" ]; then
       CIAO_OBJS="${CIAO_OBJS} ${base}"
     elif [ "${base}" != "${base#TAO}" ]; then
@@ -993,26 +990,21 @@ create_html ()
   done
 
   # create main page
-  create_index_page ${TYPE} > .metrics/index.html
-  cp .metrics/index.html ${DEST}/index.html
+  create_index_page ${TYPE} > ${DEST}/index.html
 
   if [ "${TYPE}" = "Compilation" ] || [ "${TYPE}" = "Footprint" ]; then
     if [ $BASE_TITLE = $DEFAULT_TITLE ]; then
       name="ace_${TYPE}.html"
-      sort_list ${ACE_OBJS} | create_page "ACE" ${TYPE} > .metrics/${name}
-      cp .metrics/${name} ${DEST}/${name}
+      sort_list ${ACE_OBJS} | create_page "ACE" ${TYPE} > ${DEST}/${name}
 
       name="tao_${TYPE}.html"
-      sort_list ${TAO_OBJS} | create_page "TAO" ${TYPE} > .metrics/${name}
-      cp .metrics/${name} ${DEST}/${name}
+      sort_list ${TAO_OBJS} | create_page "TAO" ${TYPE} > ${DEST}/${name}
 
       name="ciao_${TYPE}.html"
-      sort_list ${CIAO_OBJS} | create_page "CIAO" ${TYPE} > .metrics/${name}
-      cp .metrics/${name} ${DEST}/${name}
+      sort_list ${CIAO_OBJS} | create_page "CIAO" ${TYPE} > ${DEST}/${name}
     else
       name="all_${TYPE}.html"
-      sort_list ${ACE_OBJS} | create_page $BASE_TITLE ${TYPE} > .metrics/${name}
-      cp .metrics/${name} ${DEST}/${name}
+      sort_list ${ACE_OBJS} | create_page $BASE_TITLE ${TYPE} > ${DEST}/${name}
     fi
   fi
 }
@@ -1035,8 +1027,8 @@ BASE_TITLE=$DEFAULT_TITLE
 COMPILER="gcc"
 
 parse $@
-create_dirs ".metrics/"
-create_dirs "$DEST/"
+create_dirs "${DEST}/"
+create_dirs "${DEST}/"
 
 if [ "$METRIC" = "Compilation" ]; then
 
@@ -1046,46 +1038,46 @@ if [ "$METRIC" = "Compilation" ]; then
   # grab the compile time metrics for objects only and process them
   grep "compile time(0):" $INFILE | grep "\.o" | cut -d' ' -f3,4,5 | process_file
 
-  # Create .metrics/composites.txt with entries like this:
+  # Create ${DEST}/composites.txt with entries like this:
   # tests___OS_Test :  tests___OS_Test.o tests___Main.o
   create_composite_list $TARGETS
 
   # compile times
-  cat .metrics/composites.txt | rollup_compile_times
-  find .metrics/data/ -name "*.txt" | create_images $DEST "Compilation"
-  cat .metrics/composites.txt | create_html $DEST "Compilation"
+  cat ${DEST}/composites.txt | rollup_compile_times
+  find ${DEST}/data/ -name "*.txt" | create_images ${DEST} "Compilation"
+  cat ${DEST}/composites.txt | create_html ${DEST} "Compilation"
 
 elif [ "$METRIC" = "Footprint" ]; then
 
   ########################################################
   # footprint
 
-  # Create .metrics/libraries.txt with entries like this:
+  # Create ${DEST}/libraries.txt with entries like this:
   # ace___libACE.a
   create_library_list $TARGETS
 
-  # Create .metrics/composites.txt with entries like this:
+  # Create ${DEST}/composites.txt with entries like this:
   # tests___OS_Test :  tests___OS_Test.o tests___Main.o
   create_composite_list $TARGETS
 
   # Run size on the executables and append results to *.size file.
-  cat .metrics/composites.txt | footprint
+  cat ${DEST}/composites.txt | footprint
 
   # Run size on the libraries and append results to *.size for the
   # library and each contained object.
-  # It also creates .metrics/size_composites.txt based on size output for
+  # It also creates ${DEST}/size_composites.txt based on size output for
   # libraries with entries like this:
   # ace___libACE.a : ace___ACE.o ace___Addr.o
-  cat .metrics/libraries.txt | footprint LIB
+  cat ${DEST}/libraries.txt | footprint LIB
 
-  # Add executables to .metrics/size_composites.txt based on output
+  # Add executables to ${DEST}/size_composites.txt based on output
   # from the map files (created with LDFLAGS=-Xlinker -M -Xlinker
   # -Map -Xlinker $(@).map).  Find the map files of we want based on
-  # entries in .metrics/composites.txt.
-  cat .metrics/composites.txt | create_size_composites
+  # entries in ${DEST}/composites.txt.
+  cat ${DEST}/composites.txt | create_size_composites
 
-  find .metrics/data/ -name "*.size" | create_images $DEST "Footprint"
-  cat .metrics/size_composites.txt | create_html $DEST "Footprint"
+  find ${DEST}/data/ -name "*.size" | create_images ${DEST} "Footprint"
+  cat ${DEST}/size_composites.txt | create_html ${DEST} "Footprint"
 
 else
   echo "metric type ($METRIC) not recognized"
