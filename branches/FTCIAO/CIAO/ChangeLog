@@ -1,3 +1,19 @@
+Thu Feb 26 18:17:03 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/FaultCorrelationManager.idl
+        * DAnCE/Deployment/DAnCE_Core.mpc
+        * DAnCE/FaultCorrelationManager
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_export.h
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.h
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module_export.h
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager.mpc
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Exec.cpp
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.cpp:
+        
+          Added sceleton for the FaultCorrelationManager.
+
 Thu Feb 26 16:05:54 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp:

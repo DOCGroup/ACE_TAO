@@ -1,0 +1,15 @@
+// $Id$
+
+#ifndef FAULTCORRELATIONMANAGER_IDL
+#define FAULTCORRELATIONMANAGER_IDL
+
+#include "orbsvcs/orbsvcs/LWFT/FaultNotification.idl"
+
+module FTDeployment {
+
+  interface FaultCorrelationManager : FLARE::FaultNotification {
+    void stop_failver_unit (in string fou_id);
+  };
+};
+
+#endif /* FAULTCORRELATIONMANAGER_IDL */
