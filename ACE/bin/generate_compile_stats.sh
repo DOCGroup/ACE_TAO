@@ -560,7 +560,9 @@ footprint ()
     if [ -e $FILE ]; then
       #echo "inside if"
       SIZE=`size $FILE | grep -v text | awk '{s += \$4} END {print s}'`
-      echo "$DATE $SIZE" >> $lpath/${outfile}.size
+      echo "$DATE $SIZE" > $lpath/tmp.size
+      echo $lpath/${outfile}.size >> $lpath/tmp.size
+      mv $lpath/tmp.size $lpath/${outfile}.size
 
       # only process the included objects if it's a library
       if [ "$TYPE" = "LIB" ]; then
