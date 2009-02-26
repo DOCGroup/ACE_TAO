@@ -1,3 +1,22 @@
+Thu Feb 26 23:23:05 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/FaultCorrelationManager.idl:
+        
+          Added execution manager interface as inherited interface.
+        
+        * DAnCE/Deployment/DAnCE_Core.mpc:
+        
+          Created a separate library for the FaultCorrelationManager
+          interface.
+        
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.h
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager.mpc
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.cpp:
+        
+          Implemented basic funtionality of execution manager forwarding.
+
 Thu Feb 26 18:17:03 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/FaultCorrelationManager.idl

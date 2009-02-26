@@ -110,6 +110,9 @@ FaultCorrelationManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
                         get_opts.opt_arg ()));
           this->options_.domain_nc_ = get_opts.opt_arg ();
           break;
+        case 'e':
+          this->options_.exec_mgr_ior_ = get_opts.opt_arg ();
+          break;
           
         case 'h':
           //case '?': // Display help for use of the server.
@@ -295,8 +298,24 @@ FaultCorrelationManager_Module::create_object (CORBA::ORB_ptr orb,
             }
         }
 
+      /*
       DANCE_DEBUG ((LM_DEBUG, DLINFO "FaultCorrelationManager_Module::create_object - "
-                    "FaultCorrelationManager::run_main - creating FaultCorrelationManager\n"));
+                    "starting thread.\n"));
+
+      if (task_.activate () != 0)
+        {
+          DANCE_DEBUG ((LM_ERROR, DLINFO "FaultCorrelationManager_Module::create_object - "
+                        "ERROR - could not start new thread.\n"));
+        }
+      */
+
+      DANCE_DEBUG ((LM_DEBUG, DLINFO "FaultCorrelationManager_Module::create_object - "
+                    "creating FaultCorrelationManager\n"));
+
+      CORBA::Object_var obj = orb->string_to_object (this->options_.exec_mgr_ior_);
+
+      Deployment::ExecutionManager_var exec_mgr =
+        Deployment::ExecutionManager::_narrow (obj.in ());
 
       //Creating node manager servant
       DAnCE::FaultCorrelationManager_Impl * fcm = 0;
@@ -307,6 +326,7 @@ FaultCorrelationManager_Module::create_object (CORBA::ORB_ptr orb,
 
       ACE_NEW_RETURN (fcm,
                       DAnCE::FaultCorrelationManager_Impl (orb,
+                                                           exec_mgr.in (),
                                                            properties),
                       CORBA::Object::_nil ());
 
