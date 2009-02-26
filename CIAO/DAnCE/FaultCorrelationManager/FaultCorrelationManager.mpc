@@ -1,0 +1,20 @@
+project(FaultCorrelationManager_Module) : dance_lib, dance_deployment_svnt, dance_deployment_stub, naming_serv, lwft_client, utils {
+  sharedname = FaultCorrelationManager
+
+  dynamicflags = FAULTCORRELATIONMANAGER_BUILD_DLL FAULTCORRELATIONMANAGER_MODULE_BUILD_DLL
+
+  Source_Files {
+    FaultCorrelationManager_Impl.cpp
+    FaultCorrelationManager_Module.cpp
+  }
+}
+
+project(FaultCorrelationManager_Exec) : utils, dance_exe, naming_serv {
+  exename = fcm
+  after += FaultCorrelationManager_Module
+  libs += FaultCorrelationManager
+
+  Source_Files {
+    FaultCorrelationManager_Exec.cpp
+  }
+}

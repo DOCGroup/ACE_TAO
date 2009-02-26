@@ -42,6 +42,7 @@ project(Deployment_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream 
     Deployment_DomainApplication.idl
     Deployment_ExecutionManager.idl
     Deployment_RepositoryManager.idl
+    FaultCorrelationManager.idl
   }
 
 }
@@ -82,6 +83,7 @@ project(Deployment_stub) : ciaolib_with_idl, ciao_output, valuetype, ifr_client,
     Deployment_RepositoryManagerC.cpp
     Deployment_ResourceCommitmentManagerC.cpp
     DAnCE_PropertiesC.cpp
+    FaultCorrelationManagerC.cpp
   }
 }
 
@@ -113,6 +115,7 @@ project(Deployment_svnt) : dance_deployment_stub, ciao_output, ciaolib_with_idl,
     Deployment_ExecutionManagerS.cpp
     Deployment_TargetManagerS.cpp
     Deployment_ResourceCommitmentManagerS.cpp
+    FaultCorrelationManagerS.cpp
   }
 
 }
