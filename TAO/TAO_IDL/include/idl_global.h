@@ -403,31 +403,41 @@ public:
 
   // = Types & methods supporting DDS DCPS data type/key definition (from #pragma)
   typedef ACE_Unbounded_Queue<ACE_TString> DCPS_Key_List;
+  
   struct DCPS_Data_Type_Info {
     UTL_ScopedName *name_;
     DCPS_Key_List   key_list_;
   };
-  typedef ACE_Unbounded_Queue_Iterator<ACE_TString> DCPS_Data_Type_Info_Iter;
+  
+  typedef
+  ACE_Unbounded_Queue_Iterator<ACE_TString> DCPS_Data_Type_Info_Iter;
 
-  typedef ACE_Hash_Map_Manager_Ex< const char*,
-                                   DCPS_Data_Type_Info*,
-                                   ACE_Hash<char*>,
-                                   ACE_Equal_To<char*>,
-                                   ACE_Null_Mutex>        DCPS_Type_Info_Map ;
+  typedef
+  ACE_Hash_Map_Manager_Ex<const char*,
+                          DCPS_Data_Type_Info*,
+                          ACE_Hash<char*>,
+                          ACE_Equal_To<char*>,
+                          ACE_Null_Mutex> DCPS_Type_Info_Map ;
 
-  // FE calls when #pragma DCPS_DATA_TYPE is processed
+  // FE calls when #pragma DCPS_DATA_TYPE is processed.
   virtual void add_dcps_data_type (const char* id);
-  // FE calls when #pragma DCPS_DATA_KEY is processed
+  
+  // FE calls when #pragma DCPS_DATA_KEY is processed.
   virtual bool add_dcps_data_key (const char* id, const char* key);
-  // returns null if not matching; otherwise pointer to the info
+  
+  // returns null if not matching; otherwise pointer to the info.
   virtual DCPS_Data_Type_Info* is_dcps_type (UTL_ScopedName* target);
-  // FE calls when #pragma DCPS_SUPPORT_ZERO_COPY_READ is processed
+  
+  // FE calls when #pragma DCPS_SUPPORT_ZERO_COPY_READ is processed.
   virtual void dcps_support_zero_copy_read (bool value);
-  // BE calls to check the status of zero-copy read support
+  
+  // BE calls to check the status of zero-copy read support.
   virtual bool dcps_support_zero_copy_read (void) const;
-  // FE calls when #pragma DCPS_GEN_ZERO_COPY_READ is processed
+  
+  // FE calls when #pragma DCPS_GEN_ZERO_COPY_READ is processed.
   virtual void dcps_gen_zero_copy_read (bool value);
-  // BE calls to check the status of zero-copy read support
+  
+  // BE calls to check the status of zero-copy read support.
   virtual bool dcps_gen_zero_copy_read (void) const;
 
   // = Access methods to deal with other IDL files included in the main
@@ -717,6 +727,7 @@ private:
   bool ignore_idl3_;
   // Need this for eventtypes left over after running idl3_to_idl2,
   // we don't want to try to generate another event consumer.
+  
   DCPS_Type_Info_Map dcps_type_info_map_ ;
   // Map of #pragma DCPS_DATA_TYPE and DCPS_DATA_KEY infomation.
 

@@ -1208,105 +1208,66 @@ IDL_GlobalData::update_prefix (char *filename)
 UTL_ScopedName *
 IDL_GlobalData::string_to_scoped_name (char *s)
 {
-  char *start = s;
-  int len = 0;
+  ACE_CString work (s);
   UTL_ScopedName *retval = 0;
-  char tmp[256];
-
-  // If we're doing #pragma ID, the id string may have a ::
-  // while the target scoped name does not, so we check for
-  // a space.
-  char *test = ACE_OS::strchr (start, ' ');
-  char *end = ACE_OS::strstr (start, "::");
-
-  if (test != 0 && test - end < 0)
+  
+  // If the string contains target + value (from a pragma
+  // directive), truncate the value.
+  work = work.substr (0, work.find (' '));
+  
+  // Find the first double colon, if any.
+  ACE_CString::size_type nextpos = work.find ("::");
+  
+  // If there's a leading double colon, skip it and find
+  // the next one.
+  if (nextpos == 0)
     {
-      end = test;
+      work = work.substr (2);
+      nextpos = work.find ("::");
     }
+    
+  ACE_CString tmp;
 
-  while (end != 0)
+  while (true)
     {
-      len = end - start;
-
-      if (len != 0)
+      tmp = work.substr (0, nextpos);
+      
+      Identifier *id = 0;
+      ACE_NEW_RETURN  (id, Identifier (tmp.c_str ()), 0);
+      
+      if (retval == 0)
         {
-          ACE_OS::strncpy (tmp,
-                           start,
-                           len);
-
-          tmp[len] = '\0';
-
-          Identifier *id = 0;
-          ACE_NEW_RETURN (id,
-                          Identifier (tmp),
+          ACE_NEW_RETURN (retval,
+                          UTL_ScopedName (id,
+                                          0),
+                          0);
+        }
+      else
+        {
+          UTL_ScopedName *conc_name = 0;
+          ACE_NEW_RETURN (conc_name,
+                          UTL_ScopedName (id,
+                                          0),
                           0);
 
-          if (retval == 0)
-            {
-              ACE_NEW_RETURN (retval,
-                              UTL_ScopedName (id,
-                                              0),
-                              0);
-            }
-          else
-            {
-              UTL_ScopedName *conc_name = 0;
-              ACE_NEW_RETURN (conc_name,
-                              UTL_ScopedName (id,
-                                              0),
-                              0);
-
-              retval->nconc (conc_name);
-            }
+          retval->nconc (conc_name);
         }
-
-      start = end + 2;
-      end = (end[0] == ' ' ? 0 : ACE_OS::strstr (start, "::"));
-
-      if (test != 0 && test - end < 0)
+      
+      if (nextpos == ACE_CString::npos)
         {
-          end = 0;
+          // We're done.
+          break;
         }
+      else
+        {
+          // Skip the double colons.
+          work = work.substr (nextpos + 2);
+        }
+      
+      // Find the next double colons, if any.
+      nextpos = work.find ("::");
     }
-
-  len = test - start;
-
-  // This means we've already dealt with the space between the target
-  // name and the id string (above) and we're done.
-  if (test == 0 || len <= 0)
-    {
-      return retval;
-    }
-
-  ACE_OS::strncpy (tmp,
-                   start,
-                   len);
-
-  tmp[len] = '\0';
-
-  Identifier *id = 0;
-  ACE_NEW_RETURN (id,
-                  Identifier (tmp),
-                  0);
-
-  if (retval == 0)
-    {
-      ACE_NEW_RETURN (retval,
-                      UTL_ScopedName (id,
-                                      0),
-                      0);
-    }
-  else
-    {
-      UTL_ScopedName *conc_name = 0;
-      ACE_NEW_RETURN (conc_name,
-                      UTL_ScopedName (id,
-                                      0),
-                      0);
-
-      retval->nconc (conc_name);
-    }
-
+    
   return retval;
 }
 
