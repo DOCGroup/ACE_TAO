@@ -261,7 +261,7 @@ EOF
   #/bin/cp ${DEST}/images/${object}_size.png ${DEST}/images/thumbnails/${object}_size.png
   #/usr/bin/X11/mogrify -geometry '25%' ${DEST}/images/thumbnails/${object}_size.png
   #/bin/cp ${DEST}/images/thumbnails/${object}_size.mgk ${DEST}/images/thumbnails/${object}_size.png
-  /usr/bin/tail -5 ${DEST}/data/${object}.${EXT} > ${DEST}/data/LAST_${object}.${EXT}
+  #/usr/bin/tail -5 ${DEST}/data/${object}.${EXT} > ${DEST}/data/LAST_${object}.${EXT}
 
 }
 
