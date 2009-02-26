@@ -1,3 +1,9 @@
+Thu Feb 26 09:24:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
+          Don't generate the LAST file anymore, it only takes disk space
+          and is not used
+
 Thu Feb 26 08:39:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/*:
