@@ -4,10 +4,11 @@
 #define FAULTCORRELATIONMANAGER_IDL
 
 #include "orbsvcs/orbsvcs/LWFT/FaultNotification.idl"
+#include "Deployment_ExecutionManager.idl"
 
 module FTDeployment {
 
-  interface FaultCorrelationManager : FLARE::FaultNotification {
+  interface FaultCorrelationManager : FLARE::FaultNotification, Deployment::ExecutionManager {
     void stop_failver_unit (in string fou_id);
   };
 };

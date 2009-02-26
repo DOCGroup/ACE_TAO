@@ -42,7 +42,6 @@ project(Deployment_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream 
     Deployment_DomainApplication.idl
     Deployment_ExecutionManager.idl
     Deployment_RepositoryManager.idl
-    FaultCorrelationManager.idl
   }
 
 }
@@ -83,7 +82,6 @@ project(Deployment_stub) : ciaolib_with_idl, ciao_output, valuetype, ifr_client,
     Deployment_RepositoryManagerC.cpp
     Deployment_ResourceCommitmentManagerC.cpp
     DAnCE_PropertiesC.cpp
-    FaultCorrelationManagerC.cpp
   }
 }
 
@@ -115,7 +113,32 @@ project(Deployment_svnt) : dance_deployment_stub, ciao_output, ciaolib_with_idl,
     Deployment_ExecutionManagerS.cpp
     Deployment_TargetManagerS.cpp
     Deployment_ResourceCommitmentManagerS.cpp
-    FaultCorrelationManagerS.cpp
   }
 
+}
+
+project(FCM) : ciaolib_with_idl, ciao_output, valuetype, ifr_client, messaging, dance_lib, dance_logger, gen_ostream, lwft_client {
+  after += Deployment_svnt
+  libs += DAnCE_Deployment_svnt DAnCE_Deployment_stub
+  sharedname   =  FCM
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  dynamicflags += DEPLOYMENT_STUB_BUILD_DLL
+
+  idlflags     += -Wb,stub_export_macro=Deployment_stub_Export
+  idlflags     += -Wb,stub_export_include=Deployment_stub_export.h
+  idlflags     += -Wb,skel_export_macro=Deployment_stub_Export
+  idlflags     += -Wb,skel_export_include=Deployment_stub_export.h
+
+  
+  IDL_Files {
+    FaultCorrelationManager.idl
+  }
+
+  Source_Files {
+    FaultCorrelationManagerC.cpp
+    FaultCorrelationManagerS.cpp
+  }
 }
