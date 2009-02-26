@@ -73,8 +73,8 @@ public:
   /**
    * Constructor takes a @a mode (i.e., ACE_FREE_LIST_WITH_POOL or
    * ACE_PURE_FREE_LIST), a count of the number of nodes to
-   * <prealloc>, a low and high water mark (<lwm> and <hwm>) that
-   * indicate when to allocate more nodes, an increment value (<inc>)
+   * @a prealloc, a low and high water mark (@a lwm and @a hwm) that
+   * indicate when to allocate more nodes, an increment value (@a inc)
    * that indicates how many nodes to allocate when the list must
    * grow.
    */

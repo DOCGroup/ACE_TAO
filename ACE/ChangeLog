@@ -1,3 +1,28 @@
+Thu Feb 26 12:26:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Addr.cpp:
+          Layout change
+
+        * ace/Event_Handler.h:
+        * ace/Free_List.h:
+        * ace/Logging_Strategy.h:
+        * ace/Process_Manager.h:
+        * ace/Select_Reactor_Base.h:
+        * ace/Select_Reactor_T.h:
+        * ace/SSL/SSL_SOCK_Acceptor.inl:
+        * ace/Timer_Heap_T.h:
+        * ace/Timer_Wheel_T.h:
+          Doxygen change
+
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.cpp:
+        * ace/Service_Gestalt.h:
+          Changed the default value of the logger_key argument
+          to open to 0. That way we can easier check if the user
+          has overridden the default. Also check the logger_key
+          in Service_Gestalt, so that it can be set through TAO.
+          This fixes bugzilla 3597
+
 Thu Feb 26 10:45:58 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_linux_common.GNU:

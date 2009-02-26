@@ -116,7 +116,7 @@ public:
    * ACE_Log_Msg::priority_mask appropriately.
    */
   int open (const ACE_TCHAR program_name[],
-            const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
+            const ACE_TCHAR *logger_key = 0,
             bool ignore_static_svcs = true,
             bool ignore_default_svc_conf_file = false,
             bool ignore_debug_flag = false);
@@ -173,7 +173,7 @@ public:
    */
   int open (int argc,
             ACE_TCHAR *argv[],
-            const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
+            const ACE_TCHAR *logger_key = 0,
             bool ignore_static_svcs = true,
             bool ignore_default_svc_conf_file = false,
             bool ignore_debug_flag = false);
@@ -337,7 +337,7 @@ protected:
    * errors that occurred on failure and 0 otherwise.
    */
   int open_i (const ACE_TCHAR program_name[],
-              const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
+              const ACE_TCHAR *logger_key = 0,
               bool ignore_static_svcs = true,
               bool ignore_default_svc_conf_file = false,
               bool ignore_debug_flag = false);
