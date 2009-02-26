@@ -1,3 +1,9 @@
+Thu Feb 26 08:40:48 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile.am:
+
+          Fixed link error in autoconf build.
+
 Thu Feb 26 07:18:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3574_Regression/test.cpp:
