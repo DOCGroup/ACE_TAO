@@ -1,3 +1,8 @@
+Thu Feb 26 10:45:58 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_linux_common.GNU:
+          Fixed TCL/TK flags for Ubuntu.
+
 Thu Feb 26 09:24:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_compile_stats.sh:
