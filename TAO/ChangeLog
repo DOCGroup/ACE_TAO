@@ -1,3 +1,10 @@
+Thu Feb 26 23:27:15 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc
+        * orbsvcs/orbsvcs/LWFT/FaultNotification.idl:
+        
+          Added FaultNotification interface definition.
+
 Thu Feb 26 04:24:02 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * MPC/config/lwft_server.mpb
