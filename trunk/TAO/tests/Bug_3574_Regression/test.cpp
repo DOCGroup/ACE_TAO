@@ -23,6 +23,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   seq.length (99);
   // No reallocation should happen for the buffer.
   ACE_TEST_ASSERT (seq.get_buffer () == wholebuf);
+  // And set the length to the same value
+  seq.length (99);
+  ACE_TEST_ASSERT (seq.get_buffer () == wholebuf);
   // We cannot be sure that the pointer to the reinitialized 100th
   // element is different from the old one since memory manager can
   // return the same pointer that we've just released but it must
@@ -38,6 +41,11 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // element was reinitialized as CORBA spec requires.
   ACE_TEST_ASSERT (seq[99].in () != 0);
   ACE_TEST_ASSERT (ACE_OS::strcmp (seq[99].in (), "") == 0);
+  seq.length (101);
+  // Reallocation should happen for the buffer.
+  ACE_TEST_ASSERT (seq.get_buffer () != wholebuf);
+  ACE_TEST_ASSERT (seq[100].in () != 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (seq[100].in (), "") == 0);
 
   return 0;
 }
