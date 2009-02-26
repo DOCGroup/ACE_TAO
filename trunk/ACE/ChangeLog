@@ -1,3 +1,8 @@
+Thu Feb 26 08:39:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/*:
+          Improved these files
+
 Thu Feb 26 08:02:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_compile_stats.sh:
