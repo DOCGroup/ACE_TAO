@@ -1,3 +1,11 @@
+Thu Feb 26 12:08:25 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3597_Regression/Bug_3597_Regression.mpc:
+        * tests/Bug_3597_Regression/run_test.pl:
+        * tests/Bug_3597_Regression/server.cpp:
+          Added a new regression test for bugzilla 3597, the
+          -ORBServiceConfigLoggerKey is broken and doesn't work
+
 Thu Feb 26 11:14:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * Bug_3553_Regression:
@@ -9,9 +17,9 @@ Thu Feb 26 11:14:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * Bug_3553_Regression/Test.idl:
         * Bug_3553_Regression/TransportCache.mpc:
         * bin/tao_orb_tests.lst:
-          Added regression test for bug 3553. With this test 
-          you can test how many items the transport cache may 
-          hold and how the orb behaves when a maximum number 
+          Added regression test for bug 3553. With this test
+          you can test how many items the transport cache may
+          hold and how the orb behaves when a maximum number
           of items is reached.
 
 Thu Feb 26 08:40:48 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
