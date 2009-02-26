@@ -910,10 +910,10 @@ create_page ()
         echo "${i##*___}"
       fi
       echo '</TD><TD>'
-      echo head -n1 ${DEST}/data/${i}.${EXT} | cut -d" " -f1`
-      let LAST=`head -n1 ${DEST}/data/${i}.${EXT} | cut -d" " -f2`
+      echo sort -k 2n ${DEST}/data/${i}.${EXT} | tail -n1  | cut -d" " -f1`
+      let LAST=`sort -k 2n ${DEST}/data/${i}.${EXT} | tail -n1 | cut -d" " -f2`
       echo "</TD><TD align=right>$LAST</TD>"
-      let PRE=`head -n2 ${DEST}/data/${i}.${EXT} | head -n1 | cut -d" " -f2`
+      let PRE=`sort -k 2n ${DEST}/data/${i}.${EXT} | tail -n2 | head -n1 | cut -d" " -f2`
       let VAL_TMP="((($LAST+1)-($PRE+1))*1000)/($PRE+1)"
       if [ $VAL_TMP -lt 0 ]; then
         VAL_SIGN="-"
