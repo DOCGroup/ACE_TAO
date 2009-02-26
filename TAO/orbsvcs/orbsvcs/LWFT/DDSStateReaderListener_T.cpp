@@ -100,7 +100,7 @@ DDSStateReaderListener_T<DATA_TYPE>::on_data_available (
                   ACE_TEXT ("DDSStateReaderListener_T::_narrow() failed.\n")));
     }
     
-  DATA_TYPE::_seq_type state_samples;
+  typename DATA_TYPE::_seq_type state_samples;
   DDS::SampleInfoSeq sis;
   
   DDS::ReturnCode_t status =
