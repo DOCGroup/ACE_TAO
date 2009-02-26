@@ -1,3 +1,9 @@
+Thu Feb 26 08:02:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
+          Don't use the .metrics directory, on emulab we always get a fresh
+          system. Just use the DEST directory directly
+
 Mon Feb 23 19:34:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_compile_stats.sh:
