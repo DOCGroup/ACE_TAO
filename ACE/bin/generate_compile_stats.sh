@@ -602,7 +602,9 @@ process_included ()
     OUTFILE="${FILE#*$BASE_ROOT/}"     # strip off $BASE_ROOT
     OUTFILE="${OUTFILE//\//___}"       # replace "/" with "___"
     #echo "size = ($size)"
-    echo "$DATE $size" >> $lpath/${OUTFILE}.size
+    echo "$DATE $size" > $lpath/tmp.size
+    echo $lpath/${OUTFILE}.size >> $lpath/tmp.size
+    mv $lpath/tmp.size $lpath/${OUTFILE}.size
 
     # add the object
     echo -n "$OUTFILE " >> ${DEST}/size_composites.txt
