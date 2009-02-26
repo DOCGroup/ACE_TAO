@@ -261,7 +261,7 @@ EOF
   #/bin/cp ${DEST}/images/${object}_size.png ${DEST}/images/thumbnails/${object}_size.png
   #/usr/bin/X11/mogrify -geometry '25%' ${DEST}/images/thumbnails/${object}_size.png
   #/bin/cp ${DEST}/images/thumbnails/${object}_size.mgk ${DEST}/images/thumbnails/${object}_size.png
-  #/usr/bin/tail -5 ${DEST}/data/${object}.${EXT} > ${DEST}/data/LAST_${object}.${EXT}
+  #/usr/bin/head -5 ${DEST}/data/${object}.${EXT} > ${DEST}/data/LAST_${object}.${EXT}
 
 }
 
@@ -518,7 +518,7 @@ rollup_compile_times ()
   while read outfile colon infiles; do
     #echo "$outfile ----- $infiles"
     for i in $infiles; do
-      temp=`tail -n 1 ${lpath}${i}.txt`
+      temp=`head -n 1 ${lpath}${i}.txt`
       tdate=${temp%% *}
       let ttime="${temp##* }"
 
@@ -701,8 +701,8 @@ create_images ()
   local TMP=0
 
   while read object; do
-    if [ -e $object ] && [ `sort -k 2n $object | tail -n 1 | cut -d' ' -f2` ]; then
-      let TMP=`sort -k 2n $object | tail -n 1 | cut -d' ' -f2`
+    if [ -e $object ] && [ `sort -k 2n $object | head -n 1 | cut -d' ' -f2` ]; then
+      let TMP=`sort -k 2n $object | head -n 1 | cut -d' ' -f2`
       let TMP=$TMP*16/10
       STEP=1000
       HIGH=0
@@ -910,10 +910,10 @@ create_page ()
         echo "${i##*___}"
       fi
       echo '</TD><TD>'
-      echo `tail -n1 ${DEST}/data/${i}.${EXT} | cut -d" " -f1`
-      let LAST=`tail -n1 ${DEST}/data/${i}.${EXT} | cut -d" " -f2`
+      echo head -n1 ${DEST}/data/${i}.${EXT} | cut -d" " -f1`
+      let LAST=`head -n1 ${DEST}/data/${i}.${EXT} | cut -d" " -f2`
       echo "</TD><TD align=right>$LAST</TD>"
-      let PRE=`tail -n2 ${DEST}/data/${i}.${EXT} | head -n1 | cut -d" " -f2`
+      let PRE=`head -n2 ${DEST}/data/${i}.${EXT} | head -n1 | cut -d" " -f2`
       let VAL_TMP="((($LAST+1)-($PRE+1))*1000)/($PRE+1)"
       if [ $VAL_TMP -lt 0 ]; then
         VAL_SIGN="-"
