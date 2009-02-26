@@ -1,3 +1,12 @@
+Thu Feb 26 12:23:25 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.cpp:
+          Updated layout of debug message
+
+        * ace/TAO_Internal.cpp:
+          Pass 0 as default logger key, makes it easier to check in ACE
+          whether we have set an own key or noet
+
 Thu Feb 26 12:08:25 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3597_Regression/Bug_3597_Regression.mpc:

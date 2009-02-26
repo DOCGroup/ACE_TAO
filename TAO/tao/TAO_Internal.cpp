@@ -503,7 +503,7 @@ namespace
 
     return pcfg->open (command_line.get_argc (),
                        command_line.get_TCHAR_argv (),
-                       ACE_DEFAULT_LOGGER_KEY,
+                       0,
                        0, // Don't ignore static services.
                        ignore_default_svc_conf_file);
   }
