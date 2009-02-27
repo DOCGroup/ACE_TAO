@@ -236,6 +236,8 @@ gen_chart ()
   local high=$5
   let high="${high}/${FACTOR}"
 
+  sort -t'/' -k1n -k2n -k3n ${DEST}/data/${object}.${EXT} | grep -E ^2 > tmp.txt
+
   gnuplot <<EOF
     set data style lp l
     set time "$DATE"
@@ -249,20 +251,12 @@ gen_chart ()
     set yrange [$low:$high]
     set output "${DEST}/images/${object}_${TYPE}.png"
     set title "${object//___//}"
-    plot '${DEST}/data/${object}.${EXT}' using 1:(\$2/$FACTOR) notitle w points, '${DEST}/data/${object}.${EXT}' using 1:(\$2/$FACTOR) notitle w l lt 3 lw 4
+    plot 'tmp.txt' using 1:(\$2/$FACTOR) notitle w points, 'tmp.txt' using 1:(\$2/$FACTOR) notitle w l lt 3 lw 4
     exit
 EOF
 
   # here's how to reduce the scale
   #  plot '$1' using 1:(\$2/1024.0) title '$3' w l
-
-  # copy the data and images to ${DEST}
-  # don't do thumbnails, yet...
-  #/bin/cp ${DEST}/images/${object}_size.png ${DEST}/images/thumbnails/${object}_size.png
-  #/usr/bin/X11/mogrify -geometry '25%' ${DEST}/images/thumbnails/${object}_size.png
-  #/bin/cp ${DEST}/images/thumbnails/${object}_size.mgk ${DEST}/images/thumbnails/${object}_size.png
-  #/usr/bin/head -5 ${DEST}/data/${object}.${EXT} > ${DEST}/data/LAST_${object}.${EXT}
-
 }
 
 ###############################################################################
@@ -697,10 +691,10 @@ create_images ()
   local TMP=0
 
   while read object; do
-    if [ -e $object ] && [ `sort -t'/' -k1n -k2n -k3n $object | tail -n 1 | cut -d' ' -f2` ]; then
-      let TMP=`sort -t'/' -k1n -k2n -k3n $object | tail -n 1 | cut -d' ' -f2`
+    if [ -e $object ] && [ `sort -t'/' -k1n -k2n -k3n $object | grep -E ^2 | tail -n 1 | cut -d' ' -f2` ]; then
+      let TMP=`sort -t'/' -k1n -k2n -k3n $object | grep -E ^2 | tail -n 1 | cut -d' ' -f2`
       let TMP=$TMP*16/10
-      STEP=1000
+      STEP=100
       HIGH=0
       while [ $HIGH -eq 0 ]; do
         if [ $TMP -lt $STEP ]; then
@@ -906,10 +900,10 @@ create_page ()
         echo "${i##*___}"
       fi
       echo '</TD><TD>'
-      echo `sort -t'/' -k1n -k2n -k3n  ${DEST}/data/${i}.${EXT} | tail -n1  | cut -d" " -f1`
-      let LAST=`sort -t'/' -k1n -k2n -k3n ${DEST}/data/${i}.${EXT} | tail -n1 | cut -d" " -f2`
+      echo `sort -t'/' -k1n -k2n -k3n  ${DEST}/data/${i}.${EXT} | grep -E ^2 | tail -n1  | cut -d" " -f1`
+      let LAST=`sort -t'/' -k1n -k2n -k3n ${DEST}/data/${i}.${EXT} | grep -E ^2 | tail -n1 | cut -d" " -f2`
       echo "</TD><TD align=right>$LAST</TD>"
-      let PRE=`sort -t'/' -k1n -k2n -k3n ${DEST}/data/${i}.${EXT} | tail -n2 | head -n1 | cut -d" " -f2`
+      let PRE=`sort -t'/' -k1n -k2n -k3n ${DEST}/data/${i}.${EXT} | grep -E ^2 | tail -n2 | head -n1 | cut -d" " -f2`
       let VAL_TMP="((($LAST+1)-($PRE+1))*1000)/($PRE+1)"
       if [ $VAL_TMP -lt 0 ]; then
         VAL_SIGN="-"
