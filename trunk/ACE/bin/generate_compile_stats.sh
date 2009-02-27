@@ -225,15 +225,21 @@ gen_chart ()
   local EXT="txt"
   local YLABEL="Compile Time (Seconds)"
   local FACTOR=100
+  local low=$4
+  local high=$5
+
   if [ "$TYPE" = "Footprint" ]; then
     EXT="size"
-    YLABEL="Footprint (KBytes)"
-    FACTOR=1024
+    if [ ${high} -gt 1024 ]; then
+      YLABEL="Footprint (KBytes)"
+      FACTOR=1024
+    else
+      YLABEL="Footprint (Bytes)"
+      FACTOR=1
+    fi
   fi
 
-  local low=$4
   let low="${low}/${FACTOR}"
-  local high=$5
   let high="${high}/${FACTOR}"
 
   sort -t'/' -k1n -k2n -k3n ${DEST}/data/${object}.${EXT} | grep -E ^2 > tmp.txt
