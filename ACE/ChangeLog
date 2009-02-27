@@ -1,3 +1,9 @@
+Fri Feb 27 09:50:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/ace_qt3reactor.mpc:
+        * ace/ace_qt4reactor.mpc:
+          Preventing QtReactor_moc.cpp to be included twice
+
 Fri Feb 27 08:21:47 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/FlReactor/FlReactor.cpp:
