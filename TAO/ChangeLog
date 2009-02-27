@@ -1,3 +1,8 @@
+Fri Feb 27 10:09:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression/bzip2/Bzip2Compressor.cpp:
+          Don't use TAO_GIOP_MESSAGE_HEADER_LEN
+
 Fri Feb 27 09:26:17 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tao/Compression/bzip2/Bzip2Compressor.cpp:
