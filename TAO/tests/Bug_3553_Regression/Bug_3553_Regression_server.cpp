@@ -76,7 +76,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           CORBA::String_var ior_string = orb->object_to_string (object.in());
           ACE_DEBUG((LM_DEBUG, ACE_TEXT("Registring object %d with IOR string: %C\n"),
             i, ior_string.in ()));
-          ACE_TCHAR identifier[32];
+          ACE_TCHAR* identifier (ACE_TEXT (""));
           ACE_OS::sprintf (identifier, ACE_TEXT ("TransportCacheTest%d"), i);
           table->bind(identifier, ior_string.in());
         }
