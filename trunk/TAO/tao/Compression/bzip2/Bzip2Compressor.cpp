@@ -1,4 +1,5 @@
 #include "Bzip2Compressor.h"
+#include "tao/GIOP_Message_State.h"
 
 ACE_RCSID (BZIP2,
            Bzip2Compressor,

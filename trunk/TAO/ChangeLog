@@ -1,3 +1,9 @@
+Fri Feb 27 09:26:17 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tao/Compression/bzip2/Bzip2Compressor.cpp:
+          Added #include "tao/GIOP_Message_State.h" to pull
+          TAO_GIOP_MESSAGE_HEADER_LEN.
+
 Fri Feb 27 08:36:13 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * examples/AMI/FL_Callback/Progress_i.h:
