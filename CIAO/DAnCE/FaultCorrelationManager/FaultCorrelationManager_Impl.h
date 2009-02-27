@@ -13,6 +13,7 @@
 #ifndef FAULTCORRELATIONMANAGER_IMPL_H_
 #define FAULTCORRELATIONMANAGER_IMPL_H_
 
+#include <map>
 #include "ace/Map_Manager.h"
 #include "tao/ORB.h"
 #include "FaultCorrelationManager_export.h"
@@ -61,6 +62,9 @@ namespace DAnCE
 
     void process_deployment_plan (const Deployment::DeploymentPlan & plan);
 
+    char * get_property (const char * name,
+                         const Deployment::Properties & properties);
+
   private:
     typedef ACE_Map_Manager<ACE_CString, 
                             Deployment::DomainApplicationManager_var, 
@@ -70,8 +74,13 @@ namespace DAnCE
                             ACE_CString,
                             ACE_Null_Mutex> TStringMap;
 
+    typedef std::map<ACE_CString, ACE_CString> TObjectIdMap;
+
+    typedef ACE_Map_Manager<ACE_CString,
+                            TObjectIdMap,
+                            ACE_Null_Mutex> TNodeMap;
+
     typedef TStringMap TInstancesOfPlan;
-    typedef TStringMap TNodeComponents;
 
   private:
     CORBA::ORB_var orb_;
@@ -84,7 +93,7 @@ namespace DAnCE
 
     TInstancesOfPlan instances_;
 
-    TNodeComponents nodes_;
+    TNodeMap nodes_;
   };
 }
 
