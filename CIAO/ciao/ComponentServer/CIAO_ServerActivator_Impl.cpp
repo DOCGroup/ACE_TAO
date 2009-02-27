@@ -31,7 +31,7 @@ namespace CIAO
         mutex_ (),
         condition_ (mutex_),
         ci_ (CIAO::Deployment::ComponentInstallation::_duplicate (ci))
-        
+
     {
       CIAO_TRACE (CLINFO "CIAO_ServerActivator_i::CIAO_ServerActivator_i");
     }
@@ -41,9 +41,10 @@ namespace CIAO
     }
 
     void
-    CIAO_ServerActivator_i::component_server_callback (::Components::Deployment::ComponentServer_ptr serverref,
-                                                       const char * server_UUID,
-                                                       ::Components::ConfigValues_out config)
+    CIAO_ServerActivator_i::component_server_callback (
+      ::Components::Deployment::ComponentServer_ptr serverref,
+      const char * server_UUID,
+      ::Components::ConfigValues_out config)
     {
       CIAO_TRACE(CLINFO "CIAO_ServerActivator_i::component_server_callback");
 
@@ -526,17 +527,20 @@ namespace CIAO
       ACE_NEW_THROW_EX (config,
                         Components::ConfigValues (1),
                         CORBA::NO_MEMORY ());
-      
-      CIAO::Deployment::ComponentInstallation_ptr ci = 
+
+      CIAO::Deployment::ComponentInstallation_ptr ci =
         CIAO::Deployment::ComponentInstallation::_duplicate (this->ci_.in ());
       CORBA::Any ci_any;
       ci_any <<= ci;
-      
+
+      OBV_Components::ConfigValue* p = 0;
+      ACE_NEW_THROW_EX (p,
+                        OBV_Components::ConfigValue (),
+                        CORBA::NO_MEMORY ());
+      p->name (CIAO::Deployment::COMPONENTINSTALLATION_REF);
+      p->value (ci_any);
       config->length (1);
-      config[0] = new OBV_Components::ConfigValue ();
-      config[0]->name (CIAO::Deployment::COMPONENTINSTALLATION_REF);
-      config[0]->value (ci_any);
-        
+      config.operator[](0) = p;
     }
   }
 }
