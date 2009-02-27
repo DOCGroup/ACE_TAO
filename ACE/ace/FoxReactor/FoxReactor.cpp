@@ -118,7 +118,7 @@ ACE_FoxReactor::FoxWaitForMultipleEvents (int width,
 }
 
 
-long ACE_FoxReactor::onFileEvents(FXObject* ob, FXSelector se, void* handle){
+long ACE_FoxReactor::onFileEvents(FXObject* /* ob */, FXSelector se, void* handle){
   FXSelector sel=FXSELTYPE(se);
   ACE_Select_Reactor_Handle_Set dispatch_set;
   bool f=false;
@@ -139,7 +139,7 @@ long ACE_FoxReactor::onFileEvents(FXObject* ob, FXSelector se, void* handle){
   if(f) dispatch (1, dispatch_set);
 }
 
-long ACE_FoxReactor::onTimerEvents(FXObject* ob, FXSelector sel, void* handle)
+long ACE_FoxReactor::onTimerEvents(FXObject* /* ob */, FXSelector /* sel */, void* /* handle */)
 {
   // Deal with any timer events
   ACE_Select_Reactor_Handle_Set handle_set;
@@ -147,6 +147,8 @@ long ACE_FoxReactor::onTimerEvents(FXObject* ob, FXSelector sel, void* handle)
 
   // Set next timeout signal
   this->reset_timeout ();
+  
+  return 0;
 }
 
 int

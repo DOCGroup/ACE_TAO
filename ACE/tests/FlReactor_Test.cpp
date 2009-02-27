@@ -35,13 +35,13 @@ ACE_RCSID(tests, FlReactor_Test, "$Id$")
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 
-#include /**/ <FL/Fl.h>
-#include /**/ <FL/Fl_Window.h>
-#include /**/ <FL/Fl_Hor_Slider.h>
-#include /**/ <FL/Fl_Box.h>
+#include /**/ <FL/Fl.H>
+#include /**/ <FL/Fl_Window.H>
+#include /**/ <FL/Fl_Hor_Slider.H>
+#include /**/ <FL/Fl_Box.H>
 #include /**/ <FL/math.h>
 #include /**/ <FL/gl.h>
-#include /**/ <FL/Fl_Gl_Window.h>
+#include /**/ <FL/Fl_Gl_Window.H>
 
 class Test_Window : public Fl_Gl_Window
 {
