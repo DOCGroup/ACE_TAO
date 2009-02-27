@@ -1,6 +1,6 @@
 // $Id$
 project(proc_failure) : dance_deployment_stub {
-  libs += FCM 
+  libs += DAnCE_FaultCorrelationManager_stub
 
   Source_Files {
     proc_failure.cpp

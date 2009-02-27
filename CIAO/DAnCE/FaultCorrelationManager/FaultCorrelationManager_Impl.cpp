@@ -52,7 +52,7 @@ namespace DAnCE
                      node) != 0)
       {
         DANCE_DEBUG ((LM_WARNING,
-                      "FCM::proc_failure (%C,%C): node '%C' not found.\n",
+                      "FCM::proc_failure (%C, %C): node '%C' not found.\n",
                       object_id,
                       node_id,
                       node_id));
@@ -64,7 +64,7 @@ namespace DAnCE
     if (component_id.length () == 0)
       {
         DANCE_DEBUG ((LM_WARNING,
-                      "FCM::proc_failure (%C,%C): "
+                      "FCM::proc_failure (%C, %C): "
                       "object_id '%C' on '%C' not found.\n",
                       object_id,
                       node_id,
@@ -78,7 +78,7 @@ namespace DAnCE
                          plan_id) != 0)
       {
         DANCE_DEBUG ((LM_WARNING,
-                      "FCM::proc_failure (%C,%C): "
+                      "FCM::proc_failure (%C, %C): "
                       "plan for component '%C' not found.\n",
                       object_id,
                       node_id,
@@ -93,6 +93,44 @@ namespace DAnCE
                   node_id,
                   component_id.c_str (),
                   plan_id.c_str ()));
+
+    try
+      {
+        Deployment::DomainApplicationManager_var dam;
+
+        if (dams_.find (plan_id.c_str (),
+                        dam) != 0)
+          {
+            DANCE_DEBUG ((LM_TRACE, 
+                          "FCM::proc_failure (%C, %C): "
+                          "could not resolce DAM for plan '%C'.\n",
+                          object_id,
+                          node_id,
+                          plan_id.c_str ()));
+          }
+
+        Deployment::Applications_var apps = dam->getApplications();
+
+        for (size_t i = 0; i < apps->length(); ++i)
+          {
+            dam->destroyApplication(apps[i]);
+          }
+
+        exec_mgr_->destroyManager (dam.in ());
+
+        DANCE_DEBUG ((LM_TRACE, 
+                      "FCM::proc_failure (%C, %C): "
+                      "plan '%C' was shutdown sucessfully.\n",
+                      object_id,
+                      node_id,
+                      plan_id.c_str ()));
+      }
+    catch (const CORBA::Exception & ex)
+      {
+        DANCE_DEBUG ((LM_ERROR,
+                      "FCM::proc_failure caught %n",
+                      ex._info ().c_str ()));
+      }
   }
 
   ::Deployment::DomainApplicationManager_ptr
@@ -103,7 +141,8 @@ namespace DAnCE
     Deployment::DomainApplicationManager_var dam =
       exec_mgr_->preparePlan (plan, resourceCommitment);
 
-    dams_.bind (plan.UUID.in(), dam.in ());
+    dams_.bind (plan.UUID.in(), 
+                Deployment::DomainApplicationManager::_duplicate (dam.in ()));
 
     this->process_deployment_plan (plan);
 

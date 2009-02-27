@@ -61,3 +61,45 @@ project (DAnCE_NodeManager_svnt): dance_lib, messaging, dance_deployment_svnt, d
    NodeManagerDaemonS.cpp
   }
 }
+
+project (DAnCE_FaultCorrelationManager_idl): ciaoidldefaults, anytypecode {
+  custom_only = 1
+  idlflags     += -Wb,stub_export_macro=FaultCorrelationManager_stub_Export
+  idlflags     += -Wb,stub_export_include=FaultCorrelationManager_stub_export.h
+  idlflags     += -Wb,skel_export_macro=FaultCorrelationManager_svnt_Export
+  idlflags     += -Wb,skel_export_include=FaultCorrelationManager_svnt_export.h
+
+  IDL_Files {
+    FaultCorrelationManager.idl
+  }
+}
+
+project (DAnCE_FaultCorrelationManager_stub): dance_lib, messaging, dance_deployment_stub {
+  after += DAnCE_FaultCorrelationManager_idl
+  sharedname = DAnCE_FaultCorrelationManager_stub
+  libs += LWFT_ReplicationManager
+
+  dynamicflags = FAULTCORRELATIONMANAGER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FaultCorrelationManagerC.cpp
+  }
+}
+
+project (DAnCE_FaultCorrelationManager_svnt): dance_lib, messaging, dance_deployment_svnt, ciao_output, ciaolib_with_idl {
+  after += DAnCE_FaultCorrelationManager_idl
+  sharedname = DAnCE_FaultCorrelationManager_svnt
+  libs += LWFT_ReplicationManager DAnCE_FaultCorrelationManager_stub
+
+  dynamicflags = FAULTCORRELATIONMANAGER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FaultCorrelationManagerS.cpp
+  }
+}

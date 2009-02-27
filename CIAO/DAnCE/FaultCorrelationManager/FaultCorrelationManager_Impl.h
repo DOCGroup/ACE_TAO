@@ -17,7 +17,7 @@
 #include "ace/Map_Manager.h"
 #include "tao/ORB.h"
 #include "FaultCorrelationManager_export.h"
-#include "Deployment/FaultCorrelationManagerS.h"
+#include "Interfaces/FaultCorrelationManagerS.h"
 #include "Deployment/Deployment_common.h"
 #include "Deployment/Deployment_ExecutionManagerC.h"
 //#include "Deployment/Deployment_DomainApplicationManagerC.h"
@@ -29,7 +29,7 @@ namespace DAnCE
    *         for component deployments.
    */
   class FAULTCORRELATIONMANAGER_Export FaultCorrelationManager_Impl : 
-    public virtual POA_FTDeployment::FaultCorrelationManager
+    public virtual POA_DAnCE::FaultCorrelationManager
   {
   public:
     // the fixed listener port is caused by the usage of CCM Object locator
