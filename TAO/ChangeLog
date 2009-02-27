@@ -1,3 +1,9 @@
+Fri Feb 27 07:13:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3553_Regression/Bug_3553_Regression_client.cpp:
+        * tests/Bug_3553_Regression/Bug_3553_Regression_server.cpp:
+          Resolved unicode compiler error.
+
 Thu Feb 26 15:04:43 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/Xt_Stopwatch/Client.h:
