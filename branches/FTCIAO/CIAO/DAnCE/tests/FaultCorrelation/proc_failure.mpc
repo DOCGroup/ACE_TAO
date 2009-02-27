@@ -1,0 +1,8 @@
+// $Id$
+project(proc_failure) : dance_deployment_stub {
+  libs += FCM 
+
+  Source_Files {
+    proc_failure.cpp
+  }
+}

@@ -440,6 +440,9 @@ FaultCorrelationManager_Module::create_poas (void)
 void
 FaultCorrelationManager_Module::create_fcm_properties (DAnCE::PROPERTY_MAP &props)
 {
+  CORBA::Any value;
+  value <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.exec_mgr_ior_), 0);
+  props.bind ("exec-mgr", value);
   if (this->options_.instance_nc_)
     {
       CORBA::Any val;

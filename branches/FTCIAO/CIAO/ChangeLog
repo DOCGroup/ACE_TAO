@@ -1,3 +1,23 @@
+Fri Feb 27 15:40:10 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/tests/FaultCorrelation
+        * DAnCE/tests/FaultCorrelation/proc_failure.mpc
+        * DAnCE/tests/FaultCorrelation/proc_failure.cpp:
+        
+          Added test application that triggers the FCMs proc_failure
+          interface.
+        
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp:
+        
+          Added functionality for deploymentplan analysis.
+        
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.cpp:
+        
+          Added exec-mgr property to the list to make sure the list is
+          never empty, which would cause problems in the constructor of
+          FaultCorrelationManager_Impl.
+
 Thu Feb 26 23:23:05 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/FaultCorrelationManager.idl:
