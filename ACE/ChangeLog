@@ -1,6 +1,12 @@
 Fri Feb 27 10:09:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_compile_stats.sh:
+          If the object size is smaller then 1Kb, generate the graph in
+          bytes
+
+Fri Feb 27 10:09:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
           Changed gnuplot generation
 
 Fri Feb 27 09:50:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
