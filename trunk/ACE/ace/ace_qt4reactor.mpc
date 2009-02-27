@@ -13,7 +13,7 @@ project(ACE_Qt4Reactor) : acedefaults, install, acelib, ace_output, ace_qt4 {
   Source_Files {
 
     QtReactor/QtReactor_moc.cpp
-    QtReactor
+    QtReactor/QtReactor.cpp
   }
 
   Header_Files {
