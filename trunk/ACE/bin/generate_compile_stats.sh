@@ -875,9 +875,9 @@ create_page ()
   echo "<center><h2>Detail (${DATE})</h2></center>"
 
   echo '<TABLE border="2"><TBODY><TR><TD rowspan=2><b>Object</b></TD>'
-  echo '<TD colspan="3" align=center><b>Last Compile</b></TD></TR>'
+  echo '<TD colspan="4" align=center><b>Last Compile</b></TD></TR>'
   echo "<TR><TD align=center><b>Date</b></TD><TD align=center><b>$UNITS</b></TD>"
-  echo '<TD align=center><b>%chg</b></TD></TR>'
+  echo '<TD align=center><b>%chg</b></TD><TD align=center><b>Data</b></TD></TR>'
   while read i; do
     if [ -e "${DEST}/data/${i}.${EXT}" ]; then
       LAST=0 PRE=0 VAL_TMP=0 VAL_INT=0 VAL_SIGN="+"
@@ -919,14 +919,16 @@ create_page ()
       fi
       let VAL_INT="$VAL_TMP/10"
       let VAL_TENTH="$VAL_TMP-($VAL_INT*10)"
-      echo "<TD align=right>${VAL_SIGN}${VAL_INT}.${VAL_TENTH}</TD></TR>"
+      echo "<TD align=right>${VAL_SIGN}${VAL_INT}.${VAL_TENTH}</TD>"
+      echo "<TD align=right><a href=\"data/${i}.${EXT}\">Data</a></TD>"
+      ecoo "</TR>"
     else
       echo '<TR><TD>'
       echo "${i}"
       echo '</TD><TD>'
       echo '?'
       echo "</TD><TD align=right>?</TD>"
-      echo "<TD align=right>?</TD></TR>"
+      echo "<TD align=right>?</TD><TD align=right>?</TD></TR>"
     fi
   done # for
   echo '</TBODY></TABLE>'
