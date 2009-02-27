@@ -18,10 +18,10 @@ namespace DAnCE
 {
   FaultCorrelationManager_Impl::FaultCorrelationManager_Impl (
     CORBA::ORB_ptr orb,
-    Deployment::ExecutionManager_ptr exec_mgr,
+    DAnCE::ExecutionManagerDaemon_ptr exec_mgr,
     const PROPERTY_MAP & options)
     : orb_ (CORBA::ORB::_duplicate (orb)),
-      exec_mgr_ (Deployment::ExecutionManager::_duplicate (exec_mgr)),
+      exec_mgr_ (DAnCE::ExecutionManagerDaemon::_duplicate (exec_mgr)),
       properties_ (options.current_size ())
   {
     PROPERTY_MAP::const_iterator i = options.begin ();
@@ -164,6 +164,12 @@ namespace DAnCE
     dams_.unbind (plan->UUID.in ());
 
     exec_mgr_->destroyManager (manager);
+  }
+
+  void
+  FaultCorrelationManager_Impl::shutdown (void)
+  {
+    exec_mgr_->shutdown ();
   }
 
   void

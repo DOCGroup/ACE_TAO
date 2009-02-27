@@ -13,7 +13,7 @@ project(FaultCorrelationManager_Module) : dance_lib, dance_deployment_svnt, nami
 project(FaultCorrelationManager_Exec) : utils, dance_exe, naming_serv {
   exename = fcm
   after += FaultCorrelationManager_Module
-  libs += FaultCorrelationManager
+  libs += DAnCE_FaultCorrelationManager_svnt FaultCorrelationManager
 
   Source_Files {
     FaultCorrelationManager_Exec.cpp
