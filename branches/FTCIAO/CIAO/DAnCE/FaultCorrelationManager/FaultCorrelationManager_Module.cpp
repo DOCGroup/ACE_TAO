@@ -26,7 +26,7 @@ const char * FCM_OID = "FaultCorrelationManager";
 
 namespace DAnCE
 {
-  namespace FaultCorrelationManager
+  namespace FCM
   {
     bool
     write_IOR (const ACE_TCHAR * ior_file_name, const char* ior)
@@ -270,7 +270,7 @@ FaultCorrelationManager_Module::create_object (CORBA::ORB_ptr orb,
               if (0 != this->options_.process_ns_file_)
                 {
                   CORBA::String_var ior = orb->object_to_string (naming_obj.in ());
-                  DAnCE::FaultCorrelationManager::write_IOR (this->options_.process_ns_file_, ior.in ());
+                  DAnCE::FCM::write_IOR (this->options_.process_ns_file_, ior.in ());
                 }
               plan_nc = CosNaming::NamingContext::_narrow (naming_obj.in ());
               if (CORBA::is_nil (plan_nc.in ()))
@@ -362,7 +362,7 @@ FaultCorrelationManager_Module::create_object (CORBA::ORB_ptr orb,
       // Writing ior to file
       DANCE_DEBUG ((LM_TRACE,  DLINFO "FaultCorrelationManager_Module::create_object - "
                     "Writing node IOR %C to file %C.\n", ior.in (), fcm_file.c_str ()));
-          if (!DAnCE::FaultCorrelationManager::write_IOR (fcm_file.c_str (), ior.in ()))
+          if (!DAnCE::FCM::write_IOR (fcm_file.c_str (), ior.in ()))
             DANCE_ERROR ((LM_ERROR, DLINFO "FaultCorrelationManager_Module::create_object - "
                           "Error: Unable to write IOR to file %C\n",
                           fcm_file.c_str ()));

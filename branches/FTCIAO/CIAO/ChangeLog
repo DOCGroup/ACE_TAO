@@ -1,3 +1,23 @@
+Fri Feb 27 18:12:13 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/FaultCorrelationManager.idl
+        * DAnCE/Deployment/DAnCE_Core.mpc:
+        * DAnCE/Interfaces/FaultCorrelationManager.idl        
+        * DAnCE/Interfaces/Interfaces.mpc
+        * DAnCE/Interfaces/FaultCorrelationManager_svnt_export.h
+        * DAnCE/Interfaces/FaultCorrelationManager_stub_export.h
+
+          Moved idl file to Interfaces directory.
+
+        * DAnCE/tests/FaultCorrelation/proc_failure.mpc
+        * DAnCE/tests/FaultCorrelation/proc_failure.cpp
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager.mpc
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.cpp
+        
+          Adjusted libraries and includes.
+        
 Fri Feb 27 15:40:10 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/FaultCorrelation

@@ -6,7 +6,7 @@
  * interface
  */
 
-#include "Deployment/FaultCorrelationManagerC.h"
+#include "Interfaces/FaultCorrelationManagerC.h"
 
 int usage ()
 {
@@ -29,8 +29,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var obj = orb->string_to_object (argv[1]);
 
-      FTDeployment::FaultCorrelationManager_var fcm =
-        FTDeployment::FaultCorrelationManager::_narrow (obj.in ());
+      DAnCE::FaultCorrelationManager_var fcm =
+        DAnCE::FaultCorrelationManager::_narrow (obj.in ());
 
       if (CORBA::is_nil (fcm.in ()))
         {
@@ -39,7 +39,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG, 
-                  "calling proc_failure (%c,%C)\n",
+                  "calling proc_failure (%C, %C)\n",
                   argv[2],
                   argv[3]));
 
