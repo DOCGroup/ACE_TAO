@@ -19,8 +19,7 @@
 #include "FaultCorrelationManager_export.h"
 #include "Interfaces/FaultCorrelationManagerS.h"
 #include "Deployment/Deployment_common.h"
-#include "Deployment/Deployment_ExecutionManagerC.h"
-//#include "Deployment/Deployment_DomainApplicationManagerC.h"
+#include "Interfaces/ExecutionManagerDaemonC.h"
 
 namespace DAnCE
 {
@@ -34,7 +33,7 @@ namespace DAnCE
   public:
     // the fixed listener port is caused by the usage of CCM Object locator
     FaultCorrelationManager_Impl (CORBA::ORB_ptr orb,
-                                  Deployment::ExecutionManager_ptr exec_mgr,
+                                  DAnCE::ExecutionManagerDaemon_ptr exec_mgr,
                                   const PROPERTY_MAP &options);
 
     virtual ~FaultCorrelationManager_Impl();
@@ -57,6 +56,8 @@ namespace DAnCE
 
     virtual void destroyManager (
         ::Deployment::DomainApplicationManager_ptr manager);
+
+    virtual void shutdown (void);
 
   private:
 
@@ -85,7 +86,7 @@ namespace DAnCE
   private:
     CORBA::ORB_var orb_;
 
-    Deployment::ExecutionManager_var exec_mgr_;
+    DAnCE::ExecutionManagerDaemon_var exec_mgr_;
 
     PROPERTY_MAP properties_;
 

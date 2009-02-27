@@ -1,3 +1,23 @@
+Fri Feb 27 18:39:39 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/Interfaces/FaultCorrelationManager.idl
+        * DAnCE/Interfaces/ExecutionManager_svnt_export.h
+        * DAnCE/Interfaces/Interfaces.mpc:
+        
+          The FaultCorrelationManager now supports
+          DAnCE::ExecutionManagerDaemon instead of only
+          Deployment::ExecutionManager so that a plan launcher can work
+          with it.
+        
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager.mpc
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.cpp
+        * DAnCE/tests/FaultCorrelation/proc_failure.mpc:
+
+          Adjusted these files to reflect the change in the interface
+          inheritance structure.
+
 Fri Feb 27 18:12:13 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/FaultCorrelationManager.idl

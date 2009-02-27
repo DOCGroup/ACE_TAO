@@ -314,8 +314,8 @@ FaultCorrelationManager_Module::create_object (CORBA::ORB_ptr orb,
 
       CORBA::Object_var obj = orb->string_to_object (this->options_.exec_mgr_ior_);
 
-      Deployment::ExecutionManager_var exec_mgr =
-        Deployment::ExecutionManager::_narrow (obj.in ());
+      DAnCE::ExecutionManagerDaemon_var exec_mgr =
+        DAnCE::ExecutionManagerDaemon::_narrow (obj.in ());
 
       //Creating node manager servant
       DAnCE::FaultCorrelationManager_Impl * fcm = 0;

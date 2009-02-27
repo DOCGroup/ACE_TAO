@@ -4,11 +4,11 @@
 #define FAULTCORRELATIONMANAGER_IDL
 
 #include "orbsvcs/orbsvcs/LWFT/FaultNotification.idl"
-#include "DAnCE/Deployment/Deployment_ExecutionManager.idl"
+#include "ExecutionManagerDaemon.idl"
 
 module DAnCE 
 {
-  interface FaultCorrelationManager : FLARE::FaultNotification, Deployment::ExecutionManager {
+  interface FaultCorrelationManager : FLARE::FaultNotification, DAnCE::ExecutionManagerDaemon {
     void stop_failver_unit (in string fou_id);
   };
 };
