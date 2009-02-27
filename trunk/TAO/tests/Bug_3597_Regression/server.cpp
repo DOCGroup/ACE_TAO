@@ -16,7 +16,7 @@ public:
   virtual int open (const ACE_TCHAR *logger_key);
 
   virtual int reset (void);
-  
+
   virtual int close (void);
 
   virtual ssize_t log (ACE_Log_Record &log_record);
@@ -59,7 +59,7 @@ Backend::ok (void) const
   return this->ok_;
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   Backend b;
   ACE_Log_Msg_Backend *old_b = ACE_Log_Msg::msg_backend (&b);
