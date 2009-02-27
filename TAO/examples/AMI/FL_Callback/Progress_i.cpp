@@ -2,8 +2,8 @@
 
 #include "Progress_i.h"
 
-#include <FL/Fl_Slider.h>
-#include <FL/Fl_Button.h>
+#include <FL/Fl_Slider.H>
+#include <FL/Fl_Button.H>
 
 ACE_RCSID (FL_Cube,
            test_i,
