@@ -1,3 +1,8 @@
+Fri Feb 27 07:52:36 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * performance-tests/RPC/client.cpp:
+          Added #include "ace/Throughput_Stats.h" to fix compile errors.
+
 Fri Feb 27 07:08:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_compile_stats.sh:

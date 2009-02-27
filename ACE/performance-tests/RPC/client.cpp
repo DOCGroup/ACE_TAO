@@ -4,6 +4,7 @@
 #include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
+#include "ace/Throughput_Stats.h"
 
 #include "ping.h"
 
