@@ -1,3 +1,13 @@
+Fri Feb 27 08:36:13 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * examples/AMI/FL_Callback/Progress_i.h:
+        * examples/AMI/FL_Callback/Progress_i.cpp:
+        * examples/AMI/FL_Callback/progress.cpp:
+        * tests/FL_Cube/client.cpp:
+        * tests/FL_Cube/server.cpp:
+        * tests/FL_Cube/test_i.h:
+          Fixed includes.
+
 Fri Feb 27 07:13:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3553_Regression/Bug_3553_Regression_client.cpp:

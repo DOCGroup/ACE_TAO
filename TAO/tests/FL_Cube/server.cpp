@@ -6,7 +6,7 @@
 
 ACE_RCSID(FL_Cube, server, "$Id$")
 
-#include <FL/Fl.h>
+#include <FL/Fl.H>
 
 const ACE_TCHAR *ior_output_file = 0;
 

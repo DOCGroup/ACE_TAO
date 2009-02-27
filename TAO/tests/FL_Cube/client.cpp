@@ -5,9 +5,9 @@
 
 ACE_RCSID(FL_Cube, client, "$Id$")
 
-#include <FL/Fl.h>
-#include <FL/Fl_Window.h>
-#include <FL/Fl_Roller.h>
+#include <FL/Fl.H>
+#include <FL/Fl_Window.H>
+#include <FL/Fl_Roller.H>
 
 class Client
 {
