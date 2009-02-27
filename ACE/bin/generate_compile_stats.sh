@@ -697,8 +697,8 @@ create_images ()
   local TMP=0
 
   while read object; do
-    if [ -e $object ] && [ `sort -k 2n $object | tail -n 1 | cut -d' ' -f2` ]; then
-      let TMP=`sort -k 2n $object | tail -n 1 | cut -d' ' -f2`
+    if [ -e $object ] && [ `sort -k 1n -k 2n -k 3n $object | tail -n 1 | cut -d' ' -f2` ]; then
+      let TMP=`sort -k 1n -k 2n -k 3n $object | tail -n 1 | cut -d' ' -f2`
       let TMP=$TMP*16/10
       STEP=1000
       HIGH=0
@@ -906,10 +906,10 @@ create_page ()
         echo "${i##*___}"
       fi
       echo '</TD><TD>'
-      echo `sort -k 2n ${DEST}/data/${i}.${EXT} | tail -n1  | cut -d" " -f1`
-      let LAST=`sort -k 2n ${DEST}/data/${i}.${EXT} | tail -n1 | cut -d" " -f2`
+      echo `sort -k 1n -k 2n -k 3n  ${DEST}/data/${i}.${EXT} | tail -n1  | cut -d" " -f1`
+      let LAST=`sort -k 1n -k 2n -k 3n ${DEST}/data/${i}.${EXT} | tail -n1 | cut -d" " -f2`
       echo "</TD><TD align=right>$LAST</TD>"
-      let PRE=`sort -k 2n ${DEST}/data/${i}.${EXT} | tail -n2 | head -n1 | cut -d" " -f2`
+      let PRE=`sort -k 1n -k 2n -k 3n ${DEST}/data/${i}.${EXT} | tail -n2 | head -n1 | cut -d" " -f2`
       let VAL_TMP="((($LAST+1)-($PRE+1))*1000)/($PRE+1)"
       if [ $VAL_TMP -lt 0 ]; then
         VAL_SIGN="-"
