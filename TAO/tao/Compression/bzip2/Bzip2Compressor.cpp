@@ -1,5 +1,4 @@
 #include "Bzip2Compressor.h"
-#include "tao/GIOP_Message_State.h"
 
 ACE_RCSID (BZIP2,
            Bzip2Compressor,
@@ -24,8 +23,8 @@ Bzip2Compressor::compress (
     ::Compression::Buffer & target
   )
 {
-  unsigned int max_length = 
-    static_cast <unsigned int> (source.length () * 1.1) + TAO_GIOP_MESSAGE_HEADER_LEN;
+  unsigned int max_length =
+    static_cast <unsigned int> (source.length () * 1.1) + 12;
   target.length (static_cast <CORBA::ULong> (max_length));
 
   // todo, check 0,1 values
