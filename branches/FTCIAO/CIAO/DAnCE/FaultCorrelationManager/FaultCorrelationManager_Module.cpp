@@ -10,6 +10,7 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/orbsvcs/Naming/Naming_Loader.h"
+#include "orbsvcs/orbsvcs/LWFT/ReplicationManagerC.h"
 #include "ciao/CIAO_common.h"
 #include "ciao/Valuetype_Factories/Cookies.h"
 #include "ciao/FTComponentServer/CIAO_PropertiesC.h"
@@ -63,6 +64,7 @@ FaultCorrelationManager_Module::usage (void)
   DANCE_TRACE ("FaultCorrelationManager_Module::usage");
   return "Node Manager Options:\n"
     "\t-e,--exec-mgr\t\t [execution manager ior file name]\n"
+    "\t-r,--rep-mgr\t\t [replication manager ior file name]\n"
     "\t-d,--domain-nc [NC]\t Default naming context for domain objects.\n"
     "\t--instance-nc [NC]\t Default naming context for instance registration directives. No argument indicates Domain NC.\n"
     "\t-h,help\t\t\t print this help message\n";
@@ -73,12 +75,13 @@ FaultCorrelationManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc,
                         argv,
-                        ACE_TEXT("d:e:p::c::h"),
+                        ACE_TEXT("d:r:e:p::c::h"),
                         0,
                         0,
                         ACE_Get_Opt::RETURN_IN_ORDER);
 
   get_opts.long_option (ACE_TEXT("exec-mgr"), 'e', ACE_Get_Opt::ARG_REQUIRED);
+  get_opts.long_option (ACE_TEXT("rep-mgr"), 'r', ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("process-ns"), 'p', ACE_Get_Opt::ARG_OPTIONAL);
   get_opts.long_option (ACE_TEXT("create-plan-ns"), 'c', ACE_Get_Opt::ARG_OPTIONAL);
   get_opts.long_option (ACE_TEXT("domain-nc"), 'd', ACE_Get_Opt::ARG_REQUIRED);
@@ -112,6 +115,9 @@ FaultCorrelationManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
           break;
         case 'e':
           this->options_.exec_mgr_ior_ = get_opts.opt_arg ();
+          break;
+        case 'r':
+          this->options_.rep_mgr_ior_ = get_opts.opt_arg ();
           break;
           
         case 'h':
@@ -317,6 +323,15 @@ FaultCorrelationManager_Module::create_object (CORBA::ORB_ptr orb,
       DAnCE::ExecutionManagerDaemon_var exec_mgr =
         DAnCE::ExecutionManagerDaemon::_narrow (obj.in ());
 
+      if (CORBA::is_nil (exec_mgr.in ()))
+        {
+          DANCE_DEBUG ((LM_ERROR, 
+                        DLINFO "FaultCorrelationManager_Module::create_object - "
+                        "could not resolve ExecutionManager.\n"));
+
+          return CORBA::Object::_nil ();
+        }
+
       //Creating node manager servant
       DAnCE::FaultCorrelationManager_Impl * fcm = 0;
 
@@ -339,7 +354,7 @@ FaultCorrelationManager_Module::create_object (CORBA::ORB_ptr orb,
         PortableServer::string_to_ObjectId (FCM_OID);
       this->fcm_poa_->activate_object_with_id (oid, fcm);
   
-  // Getting node manager ior
+      // Getting node manager ior
       CORBA::Object_var fcm_obj = this->fcm_poa_->id_to_reference (oid.in ());
       CORBA::String_var ior = orb->object_to_string (fcm_obj.in ());
 
@@ -370,6 +385,29 @@ FaultCorrelationManager_Module::create_object (CORBA::ORB_ptr orb,
       // Activate POA manager
       PortableServer::POAManager_var mgr = this->root_poa_->the_POAManager ();
       mgr->activate ();
+
+      // register FCM as a listener to ReplicationManager failure reports
+
+      // TODO somewhere we have to unregister this again!
+
+      obj = orb->string_to_object (this->options_.rep_mgr_ior_);
+            
+      ReplicationManager_var rep_mgr =
+        ReplicationManager::_narrow (obj.in ());
+
+      if (CORBA::is_nil (rep_mgr.in ()))
+        {
+          DANCE_DEBUG ((LM_ERROR, 
+                        DLINFO "FaultCorrelationManager_Module::create_object - "
+                        "could not resolve ReplicationManager.\n"));
+
+          return CORBA::Object::_nil ();
+        }
+
+      FLARE::FaultNotification_var fn = 
+        FLARE::FaultNotification::_narrow (fcm_obj.in ());
+
+      rep_mgr->register_fault_notification (fn.in ());
 
       // Finishing Deployment part
       DANCE_DEBUG ((LM_NOTICE, DLINFO "FaultCorrelationManager_Module::create_object - "

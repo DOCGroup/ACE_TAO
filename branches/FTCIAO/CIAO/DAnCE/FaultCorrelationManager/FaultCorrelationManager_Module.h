@@ -31,7 +31,6 @@
 #include "tao/Object_Loader.h"
 #include "DAnCE/Deployment/DAnCE_Loader.h"
 #include "DAnCE/Deployment/Deployment_common.h"
-//#include "FaultCorrelation_Task.h"
 
 namespace DAnCE {
   class FaultCorrelationManager_Impl;
@@ -58,6 +57,7 @@ class FaultCorrelationManager_Module_Export FaultCorrelationManager_Module
         const char * domain_nc_;
         const char * instance_nc_;
         const char * exec_mgr_ior_;
+        const char * rep_mgr_ior_;
         
         SOptions()
             : process_ns_ (false),
@@ -66,7 +66,8 @@ class FaultCorrelationManager_Module_Export FaultCorrelationManager_Module
               create_plan_ns_ior_ (0),
               domain_nc_ (0),
               instance_nc_ (0),
-              exec_mgr_ior_ (0)
+              exec_mgr_ior_ ("file://EM.ior"),
+              rep_mgr_ior_ ("file://RM.ior")
         {
         }
       };
