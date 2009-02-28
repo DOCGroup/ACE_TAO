@@ -236,8 +236,12 @@ public:
 
   typedef ACE_Unbounded_Set<CORBA::Object_var> AGENT_LIST;
 
-  typedef ACE_Unbounded_Set<StateSynchronizationAgent_var> 
-    STATE_SYNC_AGENT_LIST;
+  typedef ACE_Hash_Map_Manager_Ex <
+    ACE_CString,
+    StateSynchronizationAgent_var,
+    ACE_Hash<ACE_CString>,
+    ACE_Equal_To<ACE_CString>,
+    ACE_Null_Mutex> STATE_SYNC_AGENT_MAP;
 
   typedef ACE_Hash_Map_Manager_Ex<
     FLARE::NotificationId,
@@ -288,7 +292,7 @@ private:
   AGENT_LIST agent_list_;
   ACE_RW_Thread_Mutex rank_list_mutex_;
   ACE_Thread_Mutex enhanced_rank_list_agent_list_combined_mutex_;
-  STATE_SYNC_AGENT_LIST state_synchronization_agent_list_;
+  STATE_SYNC_AGENT_MAP state_synchronization_agent_map_;
   ACE_Thread_Mutex state_sync_agent_list_mutex_;
 
   ACE_Thread_Mutex notify_mutex_;

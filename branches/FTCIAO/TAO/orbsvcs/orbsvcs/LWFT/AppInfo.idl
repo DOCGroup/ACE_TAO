@@ -14,6 +14,7 @@
 #define _LWFT_APPINFO_IDL_
 
 #include "LWFTDataStructures.idl"
+#include "StateSynchronizationAgent.idl"
 
 module FLARE
 {
@@ -39,6 +40,14 @@ module FLARE
 
     typedef ObjectList AgentList;
 
+    struct StateSyncAgentEntry
+    {
+      StateSynchronizationAgent agent;
+      string process_id;
+    };
+
+    typedef sequence<StateSyncAgentEntry> StateSyncAgentEntries;
+
     struct HostUtil
     {
       string hostname;
@@ -51,11 +60,10 @@ module FLARE
     {
       AppInfoSeq app_set_list;
       AgentList forwarding_agents;
-      AgentList state_sync_agents;
+      StateSyncAgentEntries state_sync_agents;
       HostUtilSeq utilization;
     };
   }; // end module ReplicationManager
 }; // end module FLARE
-
 
 #endif /* _LWFT_APPINFO_IDL_ */

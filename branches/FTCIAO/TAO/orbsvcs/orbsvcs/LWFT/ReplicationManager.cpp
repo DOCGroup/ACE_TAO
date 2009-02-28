@@ -1429,11 +1429,11 @@ ReplicationManager_i::send_state_synchronization_rank_list (void)
   ACE_Guard <ACE_Thread_Mutex> state_sync_guard (
     state_sync_agent_list_mutex_);
     
-  for (STATE_SYNC_AGENT_LIST::iterator al_iter = 
-         state_synchronization_agent_list_.begin ();
-       al_iter != state_synchronization_agent_list_.end (); )
+  for (STATE_SYNC_AGENT_MAP::iterator al_iter = 
+         state_synchronization_agent_map_.begin ();
+       al_iter != state_synchronization_agent_map_.end (); )
     {
-      StateSynchronizationAgent_var agent = *al_iter;
+      StateSynchronizationAgent_var agent = al_iter->item ();
 
       try 
         {
@@ -1442,13 +1442,19 @@ ReplicationManager_i::send_state_synchronization_rank_list (void)
         }
       catch (CORBA::SystemException &)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "RM: A state synchronization agent died.\n"));
-
-          STATE_SYNC_AGENT_LIST::iterator tmp_it = al_iter;
+          STATE_SYNC_AGENT_MAP::iterator tmp_it = al_iter;          
           ++tmp_it;
-          (void) state_synchronization_agent_list_.remove (*al_iter);
+
+          ACE_CString process_id = al_iter->key ();
+
+          (void) state_synchronization_agent_map_.unbind (al_iter);
           al_iter = tmp_it;
+
+          this->proc_failure (process_id.c_str ());
+
+          ACE_DEBUG ((LM_TRACE,
+                      "RM: A state synchronization agent (pid=%s) died.\n",
+                      process_id.c_str ()));
         }
     }
 }
@@ -1608,7 +1614,7 @@ ReplicationManager_i::register_agent (
 RankList *
 ReplicationManager_i::register_state_synchronization_agent (
   const char * /* host_id */,
-  const char * /* process_id */,
+  const char * process_id,
   StateSynchronizationAgent_ptr agent)
 {
   // ((LM_DEBUG, "RM: register_state_synchronization_agent () called\n"));
@@ -1616,7 +1622,8 @@ ReplicationManager_i::register_state_synchronization_agent (
   ACE_Guard <ACE_Thread_Mutex> agent_guard (
     state_sync_agent_list_mutex_);
 
-  this->state_synchronization_agent_list_.insert_tail (
+  this->state_synchronization_agent_map_.bind (
+    process_id,
     StateSynchronizationAgent::_duplicate (agent));
 
   ACE_Read_Guard <ACE_RW_Thread_Mutex> rl_guard (rank_list_mutex_);
@@ -1676,13 +1683,14 @@ ReplicationManager_i::set_state (const ::CORBA::Any & state_value)
     }
 
   // delete old entries and take over new forwarding agent entries
-  state_synchronization_agent_list_.reset ();
+  state_synchronization_agent_map_.unbind_all ();
   for (size_t i = 0;
        i < value->state_sync_agents.length ();
        ++i)
     {
-      state_synchronization_agent_list_.insert_tail (
-        StateSynchronizationAgent::_narrow (value->state_sync_agents[i].in ()));
+      state_synchronization_agent_map_.bind (
+        value->state_sync_agents[i].process_id.in (),
+        StateSynchronizationAgent::_duplicate (value->state_sync_agents[i].agent.in ()));
     }
 }
   
@@ -1735,13 +1743,15 @@ ReplicationManager_i::get_state (void)
     }  
 
   index = 0;
-  value->state_sync_agents.length (state_synchronization_agent_list_.size ());
-  for (STATE_SYNC_AGENT_LIST::iterator ssal_iter = state_synchronization_agent_list_.begin ();
-       ssal_iter != state_synchronization_agent_list_.end (); 
+  value->state_sync_agents.length (state_synchronization_agent_map_.current_size ());
+  for (STATE_SYNC_AGENT_MAP::iterator ssal_iter = state_synchronization_agent_map_.begin ();
+       ssal_iter != state_synchronization_agent_map_.end (); 
        ++ssal_iter)
     {
-      value->state_sync_agents[index++] = 
-        CORBA::Object::_duplicate ((*ssal_iter).in ());
+      value->state_sync_agents[index].agent = 
+        StateSynchronizationAgent::_duplicate (ssal_iter->item ().in ());
+      value->state_sync_agents[index].process_id =
+        ssal_iter->key ().c_str ();
     }  
 
   index = 0;
