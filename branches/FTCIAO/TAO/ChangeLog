@@ -1,3 +1,10 @@
+Sat Feb 28 22:21:06 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp
+        * orbsvcs/orbsvcs/LWFT/FaultNotification.idl:
+        
+          Changed callback method name.
+
 Sat Feb 28 17:06:22 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
