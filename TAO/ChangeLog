@@ -1,3 +1,22 @@
+Sat Feb 28 17:06:22 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
+        
+          Generate typcode and any information for the
+          StateSynchronizationAgent interface.
+        
+        * orbsvcs/orbsvcs/LWFT/AppInfo.idl:
+        
+          Added process id information for the state synchronization agent
+          list.
+        
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        
+          When a state synchronization agent registers its process id will
+          be stored so that the replication manager later can find errors
+          based on failed state synchronization instances.          
+
 Sat Feb 28 00:31:20 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp:

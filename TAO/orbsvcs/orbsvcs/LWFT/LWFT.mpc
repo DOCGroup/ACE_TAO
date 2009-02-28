@@ -117,6 +117,7 @@ project(*StateSyncAgent) : portableserver, orbsvcs_output { // , lwft_dds , spli
   after += *Common
   idlflags += -Wb,export_macro=SSA_Export \
               -Wb,export_include=ssa_export.h
+  idlflags -= -St -Sa
   dynamicflags = SSA_BUILD_DLL
   libs += LWFT_Common 
   sharedname = LWFT_StateSyncAgent
