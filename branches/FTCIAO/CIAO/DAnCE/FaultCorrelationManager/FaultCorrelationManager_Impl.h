@@ -14,7 +14,11 @@
 #define FAULTCORRELATIONMANAGER_IMPL_H_
 
 #include <map>
+#include <queue>
 #include "ace/Map_Manager.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Task.h"
+#include "ace/Condition_T.h"
 #include "tao/ORB.h"
 #include "FaultCorrelationManager_export.h"
 #include "Interfaces/FaultCorrelationManagerS.h"
@@ -28,7 +32,8 @@ namespace DAnCE
    *         for component deployments.
    */
   class FAULTCORRELATIONMANAGER_Export FaultCorrelationManager_Impl : 
-    public virtual POA_DAnCE::FaultCorrelationManager
+    public virtual POA_DAnCE::FaultCorrelationManager,
+    public ACE_Task_Base
   {
   public:
     // the fixed listener port is caused by the usage of CCM Object locator
@@ -38,13 +43,13 @@ namespace DAnCE
 
     virtual ~FaultCorrelationManager_Impl();
 
-    virtual void stop_failver_unit (const char * fou_id);
+    virtual void stop_failover_unit (const char * fou_id);
 
     // methods from inherited interfaces
 
     // FaultNotification
-    virtual void proc_failure (const char * object_id,
-                               const char * node_id);
+    virtual void app_failure (const char * host,
+                              const char * application);
 
     // ExecutionManager
     virtual ::Deployment::DomainApplicationManager_ptr preparePlan (
@@ -59,9 +64,16 @@ namespace DAnCE
 
     virtual void shutdown (void);
 
+    virtual int svc (void);
+
   private:
 
-    void process_deployment_plan (const Deployment::DeploymentPlan & plan);
+    // FaultNotification
+    void app_failure_i (const char * host,
+                        const char * application);
+
+    void process_deployment_plan (const Deployment::DeploymentPlan & plan,
+                                  bool deploy = true);
 
     char * get_property (const char * name,
                          const Deployment::Properties & properties);
@@ -83,6 +95,12 @@ namespace DAnCE
 
     typedef TStringMap TInstancesOfPlan;
 
+    struct FailureInfo 
+    {
+      ACE_CString host;
+      ACE_CString application;
+    };
+
   private:
     CORBA::ORB_var orb_;
 
@@ -95,6 +113,15 @@ namespace DAnCE
     TInstancesOfPlan instances_;
 
     TNodeMap nodes_;
+
+    // these parts belong the role as active object
+    bool stop_;
+
+    ACE_Thread_Mutex app_failure_lock_;
+
+    ACE_Condition <ACE_Thread_Mutex> new_notification_;
+
+    std::queue <FailureInfo> notification_queue_;
   };
 }
 

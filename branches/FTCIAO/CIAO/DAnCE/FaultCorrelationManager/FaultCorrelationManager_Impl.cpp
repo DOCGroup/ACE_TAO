@@ -22,7 +22,9 @@ namespace DAnCE
     const PROPERTY_MAP & options)
     : orb_ (CORBA::ORB::_duplicate (orb)),
       exec_mgr_ (DAnCE::ExecutionManagerDaemon::_duplicate (exec_mgr)),
-      properties_ (options.current_size ())
+      properties_ (options.current_size ()),
+      stop_ (false),
+      new_notification_ (app_failure_lock_)
   {
     PROPERTY_MAP::const_iterator i = options.begin ();
     while (!i.done ())
@@ -36,40 +38,138 @@ namespace DAnCE
 
   FaultCorrelationManager_Impl::~FaultCorrelationManager_Impl()
   {
+    DANCE_DEBUG ((LM_TRACE, "FaultCorrelationManager_Impl::~FaultCorrelationManager_Impl (void)\n"));
+    stop_ = true;
+    new_notification_.signal ();
+
+    this->wait ();
+  }
+
+  int 
+  FaultCorrelationManager_Impl::svc (void)
+  {
+    DANCE_DEBUG ((LM_TRACE, "FaultCorrelationManager_Impl::svc (void)\n"));
+
+    while (!stop_)
+      {
+        FailureInfo fi;
+
+        {
+          ACE_Guard <ACE_Thread_Mutex> guard (app_failure_lock_);
+
+          while (notification_queue_.empty () && !stop_)
+            {
+              new_notification_.wait ();
+            }
+
+          if (notification_queue_.empty ())
+            continue;
+
+          fi = notification_queue_.front ();
+          notification_queue_.pop ();
+        }
+        
+        this->app_failure_i (fi.host.c_str (), 
+                             fi.application.c_str ());
+      }
+
+    return 0;
+  }
+  
+  void
+  FaultCorrelationManager_Impl::stop_failover_unit (const char * fou_id)
+  {
+    try
+      {
+        Deployment::DomainApplicationManager_var dam;
+
+        if (dams_.find (fou_id,
+                        dam) != 0)
+          {
+            DANCE_DEBUG ((LM_TRACE, 
+                          "FCM::stop_failover_unit (%C): "
+                          "could not resolve DAM'.\n",
+                          fou_id));
+
+            return;
+          }
+
+        Deployment::Applications_var apps = dam->getApplications();
+
+        for (size_t i = 0; i < apps->length(); ++i)
+          {
+            try
+              {
+                dam->destroyApplication(apps[i]);
+              }
+            catch (const CORBA::SystemException & ex)
+              {
+                ACE_DEBUG ((LM_WARNING,
+                            "FCM: application %d already stopped.\n",
+                            i));
+              }
+          }
+
+        this->destroyManager (dam.in ());
+
+        DANCE_DEBUG ((LM_TRACE, 
+                      "FCM::stop_failover_unit (%C): "
+                      "plan was shutdown sucessfully.\n",
+                      fou_id));
+      }
+    catch (const CORBA::Exception & ex)
+      {
+        DANCE_DEBUG ((LM_ERROR,
+                      "FCM::stop_failover_unit caught %n\n"
+                      "      Most likely a complete node manager crashed.\n",
+                      ex._info ().c_str ()));
+      }
   }
 
   void
-  FaultCorrelationManager_Impl::stop_failver_unit (const char * /* fou_id */)
+  FaultCorrelationManager_Impl::app_failure (const char * host,
+                                             const char * application)
   {
+    DANCE_DEBUG ((LM_TRACE, "FaultCorrelationManager_Impl::app_failure ()\n"));
+
+    ACE_Guard <ACE_Thread_Mutex> guard (app_failure_lock_);
+
+    FailureInfo fi = {host, application};
+
+    notification_queue_.push (fi);
+
+    new_notification_.signal ();
   }
 
   void
-  FaultCorrelationManager_Impl::proc_failure (const char * object_id,
-                                              const char * node_id)
+  FaultCorrelationManager_Impl::app_failure_i (const char * host,
+                                               const char * application)
   {
+    DANCE_DEBUG ((LM_TRACE, "FaultCorrelationManager_Impl::app_failure_i ()\n"));
+
     TObjectIdMap node;
-    if (nodes_.find (node_id,
+    if (nodes_.find (host,
                      node) != 0)
       {
         DANCE_DEBUG ((LM_WARNING,
-                      "FCM::proc_failure (%C, %C): node '%C' not found.\n",
-                      object_id,
-                      node_id,
-                      node_id));
+                      "FCM::app_failure (%C, %C): node '%C' not found.\n",
+                      application,
+                      host,
+                      host));
         return;
       }
 
-    ACE_CString component_id = node[object_id];
+    ACE_CString component_id = node[application];
 
     if (component_id.length () == 0)
       {
         DANCE_DEBUG ((LM_WARNING,
-                      "FCM::proc_failure (%C, %C): "
-                      "object_id '%C' on '%C' not found.\n",
-                      object_id,
-                      node_id,
-                      object_id,
-                      node_id));
+                      "FCM::app_failure (%C, %C): "
+                      "application '%C' on '%C' not found.\n",
+                      application,
+                      host,
+                      application,
+                      host));
         return;
       }
 
@@ -78,59 +178,23 @@ namespace DAnCE
                          plan_id) != 0)
       {
         DANCE_DEBUG ((LM_WARNING,
-                      "FCM::proc_failure (%C, %C): "
+                      "FCM::app_failure (%C, %C): "
                       "plan for component '%C' not found.\n",
-                      object_id,
-                      node_id,
+                      application,
+                      host,
                       component_id.c_str ()));
         return;
       }
 
     DANCE_DEBUG ((LM_TRACE, 
-                  "FCM::proc_failure (%C, %C): "
+                  "FCM::app_failure (%C, %C): "
                   "caused by component '%C' in plan '%C'.\n",
-                  object_id,
-                  node_id,
+                  application,
+                  host,
                   component_id.c_str (),
                   plan_id.c_str ()));
 
-    try
-      {
-        Deployment::DomainApplicationManager_var dam;
-
-        if (dams_.find (plan_id.c_str (),
-                        dam) != 0)
-          {
-            DANCE_DEBUG ((LM_TRACE, 
-                          "FCM::proc_failure (%C, %C): "
-                          "could not resolce DAM for plan '%C'.\n",
-                          object_id,
-                          node_id,
-                          plan_id.c_str ()));
-          }
-
-        Deployment::Applications_var apps = dam->getApplications();
-
-        for (size_t i = 0; i < apps->length(); ++i)
-          {
-            dam->destroyApplication(apps[i]);
-          }
-
-        exec_mgr_->destroyManager (dam.in ());
-
-        DANCE_DEBUG ((LM_TRACE, 
-                      "FCM::proc_failure (%C, %C): "
-                      "plan '%C' was shutdown sucessfully.\n",
-                      object_id,
-                      node_id,
-                      plan_id.c_str ()));
-      }
-    catch (const CORBA::Exception & ex)
-      {
-        DANCE_DEBUG ((LM_ERROR,
-                      "FCM::proc_failure caught %n",
-                      ex._info ().c_str ()));
-      }
+    this->stop_failover_unit (plan_id.c_str ());
   }
 
   ::Deployment::DomainApplicationManager_ptr
@@ -163,6 +227,8 @@ namespace DAnCE
 
     dams_.unbind (plan->UUID.in ());
 
+    this->process_deployment_plan (plan, false);
+
     exec_mgr_->destroyManager (manager);
   }
 
@@ -174,20 +240,34 @@ namespace DAnCE
 
   void
   FaultCorrelationManager_Impl::process_deployment_plan (
-    const Deployment::DeploymentPlan &  plan)
+    const Deployment::DeploymentPlan &  plan,
+    bool deploy)
   {
     // add all found component instances to the map
     const Deployment::InstanceDeploymentDescription id;
     for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
-      {        
-        // add component with the plan id it belongs to
-        instances_.bind (plan.instance[i].name.in (), 
-                         plan.UUID.in ());
+      { 
+        if (deploy)
+          {
+            // add component with the plan id it belongs to
+            instances_.bind (plan.instance[i].name.in (), 
+                             plan.UUID.in ());
 
-        DANCE_DEBUG ((LM_TRACE, 
-                      "FCM: instance[%C] -> plan[%C]\n",
-                      plan.instance[i].name.in (), 
-                      plan.UUID.in ()));
+            DANCE_DEBUG ((LM_TRACE, 
+                          "FCM: instance[%C] -> plan[%C]\n",
+                          plan.instance[i].name.in (), 
+                          plan.UUID.in ()));
+          }
+        else
+          {
+            // remove component entry
+            instances_.unbind (plan.instance[i].name.in ());
+
+            DANCE_DEBUG ((LM_TRACE, 
+                          "FCM: instance[%C] removed\n",
+                          plan.instance[i].name.in ()));
+
+          }
 
         // find object_id property if existing
         CORBA::String_var object_id (
@@ -198,28 +278,55 @@ namespace DAnCE
           object_id = plan.instance[i].name.in ();
 
         TObjectIdMap oidmap;
-        if (nodes_.find (plan.instance[i].node.in (),
-                         oidmap) == 0)
+        if (deploy)
           {
-            // the new component to exisiting node map
-            oidmap[object_id.in ()] = plan.instance[i].name.in ();
-            nodes_.rebind (plan.instance[i].node.in (),
-                           oidmap);
+            if (nodes_.find (plan.instance[i].node.in (),
+                             oidmap) == 0)
+              {
+                // the new component to exisiting node map
+                oidmap[object_id.in ()] = plan.instance[i].name.in ();
+                nodes_.rebind (plan.instance[i].node.in (),
+                               oidmap);
+              }
+            else
+              {
+                // if no entry for this node exists, add a new one
+                TObjectIdMap om;
+                om[object_id.in ()] = plan.instance[i].name.in ();
+                nodes_.bind (plan.instance[i].node.in (),
+                             om);
+              }
+
+            DANCE_DEBUG ((LM_TRACE, 
+                          "FCM: node[%C] -> oid[%C] -> instance[%C]\n",
+                          plan.instance[i].node.in (), 
+                          object_id.in (),
+                          plan.instance[i].name.in ()));
           }
         else
           {
-            // if no entry for this node exists, add a new one
-            TObjectIdMap om;
-            om[object_id.in ()] = plan.instance[i].name.in ();
-            nodes_.bind (plan.instance[i].node.in (),
-                         om);
-          }
+            // remove node map entry
+            if (nodes_.find (plan.instance[i].node.in (),
+                             oidmap) == 0)
+              {
+                // the new component to exisiting node map
+                oidmap.erase (object_id.in ());
 
-        DANCE_DEBUG ((LM_TRACE, 
-                      "FCM: node[%C] -> oid[%C] -> instance[%C]\n",
-                      plan.instance[i].node.in (), 
-                      object_id.in (),
-                      plan.instance[i].name.in ()));
+                DANCE_DEBUG ((LM_TRACE, 
+                              "FCM: node[%C] -> oid[%C] removed.\n",
+                              plan.instance[i].node.in (), 
+                              object_id.in ()));
+
+                if (oidmap.size () == 0)
+                  {
+                    nodes_.unbind (plan.instance[i].node.in ());
+
+                    DANCE_DEBUG ((LM_TRACE, 
+                                  "FCM: node[%C] removed.\n",
+                                  plan.instance[i].node.in ()));
+                  }
+              }            
+          }
       }
   }
 
