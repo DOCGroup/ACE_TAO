@@ -68,8 +68,12 @@ namespace CIDL_FTTask_Impl
 
     end = ACE_OS::gethrtime ();
 
+    ++state_;
+
+    agent_->state_changed (object_id_.c_str ());
+
     CIAO_DEBUG ((LM_INFO, 
-                 ACE_TEXT ("Task %s #%d: start=%Tu end=%T time=%d ms"),
+                 ACE_TEXT ("Task %s #%d: start=%Tu end=%T time=%d ms\n"),
                  object_id_.c_str (),
                  state_,
                  start,
@@ -104,7 +108,7 @@ namespace CIDL_FTTask_Impl
     // create intermediate object with the value
     CORBA::Long value = state_;
 
-    ACE_DEBUG ((LM_DEBUG, "FTTask_exec_i::get_state returns %d.\n", value));
+    ACE_DEBUG ((LM_TRACE, "FTTask_exec_i::get_state returns %d.\n", value));
 
     // insert value into the any object
     *state <<= value;
