@@ -50,7 +50,7 @@ AppSideMonitor_Thread::svc (void)
     
     if (acceptor_.open (serv_addr_) == -1)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_ERROR,
                     "AppSideMonitor_Thread::svc: can't open the socket.\n"));
 //      this->synchronizer_->wait ();
         return EXIT_FAILURE;

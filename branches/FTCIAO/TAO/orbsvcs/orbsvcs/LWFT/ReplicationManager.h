@@ -130,7 +130,7 @@ public:
                         double hertz, 
                         bool proactive = true,
                         bool static_mode = false,
-			                  AlgoMode mode = PROCESS_LEVEL);
+                        AlgoMode mode = PROCESS_LEVEL);
 
   ~ReplicationManager_i (void);
 
@@ -172,6 +172,12 @@ public:
   virtual char * object_id (void);
   
   virtual void object_id (const char * object_id);
+
+  virtual FLARE::NotificationId register_fault_notification (
+    FLARE::FaultNotification_ptr receiver);
+
+  virtual void unregister_fault_notification (
+    FLARE::NotificationId id);
 
   bool
   replica_selection_algo (void);
@@ -232,6 +238,13 @@ public:
 
   typedef ACE_Unbounded_Set<StateSynchronizationAgent_var> 
     STATE_SYNC_AGENT_LIST;
+
+  typedef ACE_Hash_Map_Manager_Ex<
+    FLARE::NotificationId,
+    FLARE::FaultNotification_var,
+    ACE_Hash<FLARE::NotificationId>,
+    ACE_Equal_To<FLARE::NotificationId>,
+    ACE_Null_Mutex> NOTIFICATION_MAP;
   
   enum
   {
@@ -265,7 +278,7 @@ private:
   STRING_TO_DOUBLE_MAP hostid_util_map_;
   STRING_TO_DOUBLE_MAP objectid_load_map_;
   STRING_TO_STRING_MAP processid_host_map_;
-  
+
   STRING_TO_STRING_LIST_MAP processid_backup_map_;
   STRING_TO_STRING_LIST_MAP processid_primary_map_;
   STRING_TO_STRING_LIST_MAP hostid_process_map_;
@@ -277,6 +290,10 @@ private:
   ACE_Thread_Mutex enhanced_rank_list_agent_list_combined_mutex_;
   STATE_SYNC_AGENT_LIST state_synchronization_agent_list_;
   ACE_Thread_Mutex state_sync_agent_list_mutex_;
+
+  ACE_Thread_Mutex notify_mutex_;
+  FLARE::NotificationId subscription_counter_;
+  NOTIFICATION_MAP notify_subscriptions_;
 
   void update_enhanced_ranklist (void);
     
@@ -349,6 +366,9 @@ private:
                  STRING_TO_DOUBLE_MAP & dest);
                  
   void print_queue (std::priority_queue <UtilRank> queue);
+
+  void send_failure_notice (const char * object_id,
+                            const char * host_id);
 };
 
 #endif  /* REPLICATION_MANAGER_H */

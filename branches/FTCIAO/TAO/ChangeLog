@@ -1,3 +1,16 @@
+Sat Feb 28 00:31:20 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp:
+
+          Changed debugging level in error case.
+        
+        * orbsvcs/orbsvcs/LWFT/FaultNotification.idl:
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.idl
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp
+        
+          Added FaultNotifier interface to ReplicationManager.
+
 Thu Feb 26 23:27:15 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/LWFT.mpc

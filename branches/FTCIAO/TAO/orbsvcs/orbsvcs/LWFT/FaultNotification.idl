@@ -10,6 +10,19 @@ module FLARE {
                        in string component_instance);
   };
 
+  exception NotifyRegistrationError {};
+
+  typedef unsigned long NotificationId;
+
+  interface FaultNotifier {
+
+    NotificationId register_fault_notification (in FaultNotification receiver)
+      raises (NotifyRegistrationError);
+
+    void unregister_fault_notification (in NotificationId id);
+
+  };
+
 };
 
 #endif /* FAULTNOTIFICATION_IDL */
