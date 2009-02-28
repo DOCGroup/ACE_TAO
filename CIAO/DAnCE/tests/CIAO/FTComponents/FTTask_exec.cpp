@@ -331,8 +331,7 @@ namespace CIDL_FTTask_Impl
 
             DeCoRAM::Worker_var ref = DeCoRAM::Worker::_narrow (myself_.in ());
 
-	    tnh.bind ("FLARe/" + tnh.escape_dots (this->get_hostname ()) + "/" + 
-		      this->get_process_id () + "/Worker",
+	    tnh.bind ("FLARE_TESTAPPLICATION/" + object_id_,
 		      ref.in ());
 
             // and write it to a file

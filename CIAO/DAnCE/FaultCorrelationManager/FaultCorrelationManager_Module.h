@@ -93,7 +93,6 @@ class FaultCorrelationManager_Module_Export FaultCorrelationManager_Module
   void create_poas (void);
   void create_fcm_properties (DAnCE::PROPERTY_MAP &props);
 
-  std::auto_ptr <DAnCE::FaultCorrelationManager_Impl> fcm_;
   CORBA::ORB_var orb_;
   CosNaming::NamingContext_var domain_nc_;
 

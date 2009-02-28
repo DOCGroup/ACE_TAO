@@ -9,7 +9,7 @@
 module DAnCE 
 {
   interface FaultCorrelationManager : FLARE::FaultNotification, DAnCE::ExecutionManagerDaemon {
-    void stop_failver_unit (in string fou_id);
+    void stop_failover_unit (in string fou_id);
   };
 };
 

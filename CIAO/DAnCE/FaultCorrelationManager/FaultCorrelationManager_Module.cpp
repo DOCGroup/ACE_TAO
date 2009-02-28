@@ -347,7 +347,8 @@ FaultCorrelationManager_Module::create_object (CORBA::ORB_ptr orb,
 
       DANCE_DEBUG ((LM_TRACE, DLINFO "FaultCorrelationManager_Module::create_object - "
                     "New FaultCorrelationMananger servant instance for NodeManager allocated.\n"));
-      fcm_.reset (fcm);
+
+      PortableServer::ServantBase_var owner_transfer (fcm);
   
       // Registering servant in poa
       PortableServer::ObjectId_var oid =
@@ -415,6 +416,12 @@ FaultCorrelationManager_Module::create_object (CORBA::ORB_ptr orb,
       
       DANCE_DEBUG ((LM_DEBUG, DLINFO "FaultCorrelationManager_Module::create_object - "
                     "FaultCorrelationManager IOR: %s\n", ior.in ()));
+
+      // make object active
+      fcm->activate ();
+
+      DANCE_DEBUG ((LM_DEBUG, DLINFO "FaultCorrelationManager_Module::create_object - "
+                    "activated thread for processing failure notifications.\n"));
 
       return fcm_obj._retn ();
     }
