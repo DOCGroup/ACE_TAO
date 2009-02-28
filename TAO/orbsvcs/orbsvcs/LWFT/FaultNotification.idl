@@ -6,8 +6,8 @@
 module FLARE {
 
   interface FaultNotification {
-    void proc_failure (in string host,
-                       in string component_instance);
+    void app_failure (in string host,
+                      in string application);
   };
 
   exception NotifyRegistrationError {};

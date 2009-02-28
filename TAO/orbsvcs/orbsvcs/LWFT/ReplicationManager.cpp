@@ -613,7 +613,7 @@ ReplicationManager_i::process_proc_failure (
       if (this->processid_host_map_.find (process_id, host) == 0)
         {
           ACE_DEBUG ((LM_TRACE,
-                      "RM: process %s on host %s failed",
+                      "RM: process %s on host %s failed\n",
                       process_id.c_str (),
                       host.c_str ()));
 
@@ -1839,7 +1839,7 @@ ReplicationManager_i::send_failure_notice (const char * object_id,
            it != notify_subscriptions_.end ();
            ++it)
         {
-          it->item ()->proc_failure (host_id, object_id);
+          it->item ()->app_failure (host_id, object_id);
         }
     }
   catch (const CORBA::Exception & ex)
