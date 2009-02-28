@@ -3,8 +3,9 @@
 
 #include "LWFTDataStructures.idl"
 #include "StateSynchronizationAgent.idl"
+#include "FaultNotification.idl"
 
-interface ReplicationManager : ReplicatedApplication
+interface ReplicationManager : ReplicatedApplication, FLARE::FaultNotifier
 {
   RankList register_agent (in Object agent_reference);
   

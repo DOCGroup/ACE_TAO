@@ -159,7 +159,8 @@ ReplicationManager_i::ReplicationManager_i (CORBA::ORB_ptr orb,
     mode_(mode),
     static_mode_ (static_mode),
     update_available_(update_mutex_),
-    update_list_full_(update_mutex_)
+    update_list_full_(update_mutex_),
+    subscription_counter_ (1)
 {
   algo_thread_ = new Algorithm (this);
   algo_thread_->activate ();
@@ -393,6 +394,8 @@ void
 ReplicationManager_i::process_proc_failure (
   ACE_CString const & process_id)
 {
+  ACE_DEBUG ((LM_TRACE, "RM: process_proc_failure (%s)\n", process_id.c_str ()));
+
   if (static_mode_)
     {
       //ACE_DEBUG ((LM_TRACE, "RM: process_proc_failure ()\n"));
@@ -609,6 +612,19 @@ ReplicationManager_i::process_proc_failure (
       // If present...
       if (this->processid_host_map_.find (process_id, host) == 0)
         {
+          ACE_DEBUG ((LM_TRACE,
+                      "RM: process %s on host %s failed",
+                      process_id.c_str (),
+                      host.c_str ()));
+
+          STRING_LIST primaries;
+          if (processid_primary_map_.find (process_id, primaries) == 0)
+            {
+              // for now just take the first entry and send it
+              send_failure_notice ((*(primaries.begin ())).c_str (),
+                                   host.c_str ());
+            }
+
           replace_primary_tags (process_id, host);
           replace_backup_tags (process_id, host);
           this->processid_host_map_.unbind (process_id);
@@ -978,6 +994,9 @@ ReplicationManager_i::app_reg (APP_INFO & app)
   const char * host_name = app.host_name.c_str ();
   const char * process_id = app.process_id.c_str ();
   Role role = app.role;
+
+  // add the received information to a map that knows which object ids
+  // are in a process
 
   if (!static_mode_)
     {
@@ -1766,6 +1785,59 @@ void
 ReplicationManager_i::object_id (const char * /* object_id */)
 {
   // no-op
+}
+
+FLARE::NotificationId
+ReplicationManager_i::register_fault_notification (
+  FLARE::FaultNotification_ptr receiver)
+{
+  ACE_Guard <ACE_Thread_Mutex> guard (notify_mutex_);
+
+  if (notify_subscriptions_.bind (
+        subscription_counter_,
+        FLARE::FaultNotification::_duplicate (receiver)) != 0)
+    {
+      throw FLARE::NotifyRegistrationError ();
+    }
+
+  return subscription_counter_++;
+}
+
+void
+ReplicationManager_i::unregister_fault_notification (
+  FLARE::NotificationId id)
+{
+  ACE_Guard <ACE_Thread_Mutex> guard (notify_mutex_);
+
+  notify_subscriptions_.unbind (id);
+}
+
+void 
+ReplicationManager_i::send_failure_notice (const char * object_id,
+                                           const char * host_id)
+{
+  ACE_DEBUG ((LM_TRACE, 
+              "RM: '%s' on '%s' failed.\n",
+              object_id,
+              host_id));
+
+  try
+    {
+      ACE_Guard <ACE_Thread_Mutex> guard (notify_mutex_);
+      
+      for (NOTIFICATION_MAP::iterator it = notify_subscriptions_.begin ();
+           it != notify_subscriptions_.end ();
+           ++it)
+        {
+          it->item ()->proc_failure (host_id, object_id);
+        }
+    }
+  catch (const CORBA::Exception & ex)
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  "RM: send_failure_notice - caught %s\n",
+                  ex._info ().c_str ()));
+    }
 }
 
 MonitorUpdate *
