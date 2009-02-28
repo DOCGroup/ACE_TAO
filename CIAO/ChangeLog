@@ -1,3 +1,10 @@
+Sat Feb 28 03:21:27 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.h
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.cpp:
+        
+          Added registration with the FLARe ReplicationManager.
+
 Fri Feb 27 18:39:39 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/Interfaces/FaultCorrelationManager.idl
