@@ -1,3 +1,11 @@
+Sun Mar  1 05:53:24 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.idl
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        
+          Exchanged replica_selection_algorithm.
+
 Sat Feb 28 22:21:06 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp
