@@ -5,6 +5,7 @@
 #define REPLICATION_MANAGER_H
 
 #include <list>
+#include <string>
 #include <queue>
 
 #include "ace/Hash_Map_Manager_T.h"
@@ -179,6 +180,15 @@ public:
   virtual void unregister_fault_notification (
     FLARE::NotificationId id);
 
+  virtual void set_ranklist_constraints (
+     const RankListConstraints & constraints);
+
+  void
+  load_based_selection_algo (void);
+
+  void
+  static_selection_algo (void);
+
   bool
   replica_selection_algo (void);
 
@@ -249,6 +259,15 @@ public:
     ACE_Hash<FLARE::NotificationId>,
     ACE_Equal_To<FLARE::NotificationId>,
     ACE_Null_Mutex> NOTIFICATION_MAP;
+
+  typedef std::list<ACE_CString> RANKLIST_CONSTRAINT;
+
+  typedef ACE_Hash_Map_Manager_Ex <
+    ACE_CString,
+    RANKLIST_CONSTRAINT,
+    ACE_Hash<ACE_CString>,
+    ACE_Equal_To<ACE_CString>,
+    ACE_Null_Mutex> RANKLIST_CONSTRAINT_MAP;
   
   enum
   {
@@ -282,6 +301,9 @@ private:
   STRING_TO_DOUBLE_MAP hostid_util_map_;
   STRING_TO_DOUBLE_MAP objectid_load_map_;
   STRING_TO_STRING_MAP processid_host_map_;
+
+  RANKLIST_CONSTRAINT_MAP ranklist_constraints_;
+  ACE_RW_Thread_Mutex constraint_lock_;
 
   STRING_TO_STRING_LIST_MAP processid_backup_map_;
   STRING_TO_STRING_LIST_MAP processid_primary_map_;
