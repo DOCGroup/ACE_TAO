@@ -2142,34 +2142,6 @@ AC_CHECK_HEADER([map],
   ],)
 ],)
 
-AC_CHECK_HEADER([queue],
-[
-  AC_CHECK_HEADER([netinet/in.h],
-   [
-    ACE_CACHE_CHECK([if STL queue class conflicts with <netinet/in.h> queue struct],
-    [ace_cv_header_stl_queue_conflict],
-    [
-     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <queue>
-#include <netinet/in.h>
-       ]],[[
-#ifdef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
-        std::queue<char> ace_queue;
-#else
-        queue<char> ace_queue;
-#endif  /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-       ]])],[
-        ace_cv_header_stl_queue_conflict=no
-       ],[
-        ace_cv_header_stl_queue_conflict=yes
-       ])
-    ],[AC_DEFINE([ACE_HAS_STL_QUEUE_CONFLICT])],)
-  ],)
-],)
-
 dnl Check whether platform supports the standard C++ library
 dnl TODO: For now, check whether headers <new>, <iomanip>
 dnl       and <memory> exist; is there a better way?

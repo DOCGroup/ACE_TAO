@@ -1,3 +1,12 @@
+Sun Mar  1 20:20:16 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/os_include/netinet/os_in.h:
+        * ace/os_include/os_netdb.h:
+        * ace/os_include/os_stropts.h:
+        * configure.ac:
+        * m4/config_h.m4:
+          Removed legacy ACE_HAS_STL_QUEUE_CONFLICT macro.
+
 Sun Mar  1 18:45:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_footprint_chart.sh
