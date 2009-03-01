@@ -1,3 +1,11 @@
+Sun Mar  1 18:45:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_footprint_chart.sh
+        * bin/generate_performance_chart.sh
+        * bin/generate_topinfo_charts.sh
+        * bin/performance_stats.sh
+          Rotate xlabel to make them more readable
+
 Sun Mar  1 07:36:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_performance_chart.sh:
