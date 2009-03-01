@@ -1,3 +1,10 @@
+Sun Mar  1 19:31:00 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * docs/tutorials/Quoter/RTCORBA/Admin.cpp:
+        * docs/tutorials/Quoter/RTCORBA/Broker.cpp:
+        * docs/tutorials/Quoter/RTCORBA/Broker_i.cpp:
+          Fixed compile warnings.
+
 Fri Feb 27 10:09:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Compression/bzip2/Bzip2Compressor.cpp:
