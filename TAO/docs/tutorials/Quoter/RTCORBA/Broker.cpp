@@ -137,18 +137,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Get a reference to the RootPOA.
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa = PortableServer::POA::_narrow (obj);
+      PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in ());
 
       // Activate the POAManager.
       PortableServer::POAManager_var mgr = poa->the_POAManager ();
       mgr->activate ();
 
       // Read and destringify the Stock_Distributor object's IOR.
-      obj = get_distributor_reference (orb);
+      obj = get_distributor_reference (orb.in ());
 
       // Narrow the IOR to a Stock_Distributor object reference.
       Stock::StockDistributor_var stock_distributor =
-        Stock::StockDistributor::_narrow (obj);
+        Stock::StockDistributor::_narrow (obj.in ());
 
       if (CORBA::is_nil (stock_distributor.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -159,7 +159,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Create an instance of the <StockBroker>.
 
       // Create the factory object. Create a <Stock::StockBroker>.
-      Stock_StockBrokerHome_i stock_broker_home (orb);
+      Stock_StockBrokerHome_i stock_broker_home (orb.in ());
       Stock::StockBroker_var stock_broker =
         stock_broker_home.create (stock_distributor.in (),
                                   stock_name.c_str ());
@@ -176,7 +176,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Subscribe the consumer with the distributor.
       ::Stock::Cookie_var cookie =
-          stock_distributor->subscribe_notifier (consumer, priority_level);
+        stock_distributor->subscribe_notifier (consumer.in (), priority_level);
 
       consumer->cookie (cookie.in ());
 
@@ -191,7 +191,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           -1);
 
       // Stash the stock_quoter object reference away for later use.
-      stock_broker->connect_quoter_info (stock_quoter);
+      stock_broker->connect_quoter_info (stock_quoter.in ());
 
       // Run the event loop.
       ACE_DEBUG ((LM_DEBUG,

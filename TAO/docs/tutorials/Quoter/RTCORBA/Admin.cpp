@@ -113,11 +113,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var obj = get_distributor_reference (orb);
+      CORBA::Object_var obj = get_distributor_reference (orb.in ());
 
       // Narrow the IOR to a Stock_Distributor object reference.
       Stock::StockDistributor_var stock_distributor =
-        Stock::StockDistributor::_narrow(obj);
+        Stock::StockDistributor::_narrow(obj.in ());
 
       if (CORBA::is_nil (stock_distributor.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
