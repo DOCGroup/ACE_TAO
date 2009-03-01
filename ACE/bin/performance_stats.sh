@@ -108,9 +108,9 @@ for i in $SEQUENCE_TESTS; do
 done
 
 for i in $COMMON_TESTS TCP Default; do
-  $ACE_ROOT/bin/generate_performance_chart.sh ${i}.txt ${i}.png "$i" 800x600
+  $ACE_ROOT/bin/generate_performance_chart.sh ${i}.txt ${i}.png "$i" 800,600
   /bin/cp ${i}.png $DEST/images/${i}.png
-  $ACE_ROOT/bin/generate_performance_chart.sh ${i}.txt ${i}.png "$i" 160x120
+  $ACE_ROOT/bin/generate_performance_chart.sh ${i}.txt ${i}.png "$i" 160,120
   /bin/cp ${i}.png $DEST/thumbnails/${i}.png
   /usr/bin/tac ${i}.txt > $DEST/data/${i}.txt
   /usr/bin/tail -5 ${i}.txt > $DEST/data/LAST_${i}.txt
