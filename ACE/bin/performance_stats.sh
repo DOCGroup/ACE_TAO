@@ -140,6 +140,7 @@ gnuplot <<_EOF_ >/dev/null 2>&1
     set xdata time
     set timefmt '%Y/%m/%d-%H:%M'
     set xlabel 'Date (YYYYMMDD)'
+    set xtics rotate
     set ylabel 'Throughput (Requests/Second)'
     set yrange [0:]
     set terminal png small size 800,600 color
@@ -163,6 +164,7 @@ gnuplot <<_EOF_ >/dev/null 2>&1
     set xdata time
     set timefmt '%Y/%m/%d-%H:%M'
     set xlabel 'Date (YYYYMMDD)'
+    set xtics rotate
     set ylabel 'Throughput (Requests/Second)'
     set yrange [0:35000]
     set terminal png small size 800,600 color
