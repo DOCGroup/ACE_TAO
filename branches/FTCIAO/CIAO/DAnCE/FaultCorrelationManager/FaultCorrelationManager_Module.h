@@ -58,6 +58,7 @@ class FaultCorrelationManager_Module_Export FaultCorrelationManager_Module
         const char * instance_nc_;
         const char * exec_mgr_ior_;
         const char * rep_mgr_ior_;
+        const char * ior_file_;
         
         SOptions()
             : process_ns_ (false),
@@ -67,7 +68,8 @@ class FaultCorrelationManager_Module_Export FaultCorrelationManager_Module
               domain_nc_ (0),
               instance_nc_ (0),
               exec_mgr_ior_ ("file://EM.ior"),
-              rep_mgr_ior_ ("file://RM.ior")
+              rep_mgr_ior_ ("file://RM.ior"),
+              ior_file_ ("FCM.ior")
         {
         }
       };
