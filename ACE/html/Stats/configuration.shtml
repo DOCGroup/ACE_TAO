@@ -40,6 +40,14 @@
 </PRE>
 	  </TD>
 	</TR>
+	</TR>
+	<TR><TD>ACE+TAO Configuration</TD><TD>default.features</TD></TR>
+	<TR><TD colspan="2">
+<PRE>
+<!--#include file="data/default.features.txt"-->
+</PRE>
+	  </TD>
+	</TR>
 	<TR><TD>CPU Information</TD><TD>/proc/cpuinfo</TD></TR>
 	<TR><TD colspan="2">
 <PRE>
