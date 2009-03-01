@@ -27,18 +27,6 @@
 #include "ace/os_include/netinet/os_in.h"
 #include "ace/os_include/os_limits.h"
 
-#if !defined (ACE_LACKS_NETDB_H)
-#  if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#    define queue _Queue_
-#  endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-   extern "C" {
-#  include /**/ <netdb.h>
-   }
-#  if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#    undef queue
-#  endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-#endif /* !ACE_LACKS_NETDB_H */
-
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
 #  include /**/ <hostLib.h>
 #endif /* ACE_VXWORKS */
@@ -49,6 +37,10 @@ extern "C"
 {
 #endif /* __cplusplus */
 
+#if !defined (ACE_LACKS_NETDB_H)
+#  include /**/ <netdb.h>
+#endif /* !ACE_LACKS_NETDB_H */
+  
 #if defined (ACE_LACKS_HOSTENT)
 struct  hostent {
         char    *h_name;        /* official name of host */

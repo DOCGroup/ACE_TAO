@@ -1,3 +1,4 @@
+
 // -*- C++ -*-
 
 //=============================================================================
@@ -31,23 +32,16 @@
 #  include /**/ <ws2tcpip.h>
 #endif /* ACE_HAS_WINSOCK2 */
 
-#if !defined (ACE_LACKS_NETINET_IN_H)
-#  if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#    define queue _Queue_
-#  endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-   extern "C" {
-#  include /**/ <netinet/in.h>
-   }
-#  if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#    undef queue
-#  endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-#endif /* !ACE_LACKS_NETINET_IN_H */
-
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
 {
 #endif /* __cplusplus */
+
+#if !defined (ACE_LACKS_NETINET_IN_H)
+#  include /**/ <netinet/in.h>
+#endif /* !ACE_LACKS_NETINET_IN_H */
+
 
 # if defined (ACE_HAS_PHARLAP_RT)
 #   define ACE_IPPROTO_TCP SOL_SOCKET

@@ -241,10 +241,6 @@ AH_TEMPLATE([ACE_HAS_STL_MAP_CONFLICT],
 [Used when users want to compile ACE with STL and STL map class
 conflicts with <net/if.h> map struct.])
 
-AH_TEMPLATE([ACE_HAS_STL_QUEUE_CONFLICT],
-[Used when users want to compile ACE with STL and STL queue class
-conflicts with <netinet/in.h> queue struct.])
-
 AH_TEMPLATE([ACE_HAS_4_4BSD_SENDMSG_RECVMSG],
 [Platform has BSD 4.4 sendmsg()/recvmsg() APIs.])
 
