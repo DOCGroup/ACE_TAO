@@ -5,7 +5,6 @@
 #define REPLICATION_MANAGER_H
 
 #include <list>
-#include <string>
 #include <queue>
 
 #include "ace/Hash_Map_Manager_T.h"

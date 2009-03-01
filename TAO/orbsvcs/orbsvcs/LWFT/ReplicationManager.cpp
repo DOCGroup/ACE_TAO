@@ -906,7 +906,8 @@ ReplicationManager_i::static_selection_algo (void)
   // objectid_rankedior_map_ according to the sorted list given by an
   // external source.
 
-  ACE_DEBUG ((LM_INFO, "RM: static ranklist order:\n"));
+  ACE_DEBUG ((LM_INFO, "RM: static ranklist order(%d):\n",
+              objectid_appset_map_.current_size ()));
 
   APP_SET tmp_apps;
   for (OBJECTID_APPSET_MAP::iterator appset_it = objectid_appset_map_.begin ();
