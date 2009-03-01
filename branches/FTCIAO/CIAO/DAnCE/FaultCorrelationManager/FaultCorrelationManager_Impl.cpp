@@ -19,9 +19,11 @@ namespace DAnCE
   FaultCorrelationManager_Impl::FaultCorrelationManager_Impl (
     CORBA::ORB_ptr orb,
     DAnCE::ExecutionManagerDaemon_ptr exec_mgr,
+    ReplicationManager_ptr rep_mgr,
     const PROPERTY_MAP & options)
     : orb_ (CORBA::ORB::_duplicate (orb)),
       exec_mgr_ (DAnCE::ExecutionManagerDaemon::_duplicate (exec_mgr)),
+      rep_mgr_ (ReplicationManager::_duplicate (rep_mgr)),
       properties_ (options.current_size ()),
       stop_ (false),
       new_notification_ (app_failure_lock_)
@@ -210,6 +212,12 @@ namespace DAnCE
 
     this->process_deployment_plan (plan);
 
+    this->add_constraints (plan);
+
+    RankListConstraints_var constraints = this->get_constraints ();
+
+    rep_mgr_->set_ranklist_constraints (constraints.in ());
+
     return Deployment::DomainApplicationManager::_duplicate (dam.in ());
   }
     
@@ -350,6 +358,69 @@ namespace DAnCE
       }
 
     return 0;
+  }
+
+  void 
+  FaultCorrelationManager_Impl::add_constraints (const Deployment::DeploymentPlan & plan)
+  {
+    // add all found component instances to the map
+    const Deployment::InstanceDeploymentDescription id;
+    for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
+      { 
+        // find object_id property if existing
+        CORBA::String_var object_id (
+          this->get_property (CIAO::Deployment::OBJECT_ID,
+                              plan.instance[i].configProperty));
+
+        if (object_id.in () == 0)
+          object_id = plan.instance[i].name.in ();
+
+        RANKLIST_CONSTRAINT constr;
+        if (constraints_.find (object_id.in (),
+                               constr) == 0)
+          {
+            // add to already existing constraint
+            constr.push_back (plan.instance[i].node.in ());
+            constraints_.rebind (object_id.in (),
+                                 constr);
+          }
+        else
+          {
+            // create new list
+            constr.push_back (plan.instance[i].node.in ());
+            constraints_.bind (object_id.in (),
+                               constr);
+          }
+      }
+  }
+
+  RankListConstraints *
+  FaultCorrelationManager_Impl::get_constraints (void)
+  {
+    RankListConstraints_var constraints = new RankListConstraints ();
+    constraints->length (constraints_.current_size ());
+    CORBA::ULong index = 0;
+
+    for (RANKLIST_CONSTRAINT_MAP::iterator it = constraints_.begin ();
+         it != constraints_.end ();
+         ++it)
+      {
+        RankListConstraint_var constr (new RankListConstraint ());
+        constr->object_id = it->key ().c_str ();
+        constr->hosts.length (it->item ().size ());
+        CORBA::ULong cindex = 0;
+
+        for (RANKLIST_CONSTRAINT::iterator cit = it->item ().begin ();
+             cit != it->item ().end ();
+             ++cit)
+          {
+            constr->hosts[cindex++] = cit->c_str ();
+          }
+
+        constraints[index++] = constr;
+      }
+
+    return constraints._retn ();
   }
 
 };

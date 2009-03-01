@@ -13,8 +13,10 @@
 #ifndef FAULTCORRELATIONMANAGER_IMPL_H_
 #define FAULTCORRELATIONMANAGER_IMPL_H_
 
+#include <list>
 #include <map>
 #include <queue>
+#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Map_Manager.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Task.h"
@@ -24,6 +26,7 @@
 #include "Interfaces/FaultCorrelationManagerS.h"
 #include "Deployment/Deployment_common.h"
 #include "Interfaces/ExecutionManagerDaemonC.h"
+#include "orbsvcs/orbsvcs/LWFT/ReplicationManagerC.h"
 
 namespace DAnCE
 {
@@ -39,6 +42,7 @@ namespace DAnCE
     // the fixed listener port is caused by the usage of CCM Object locator
     FaultCorrelationManager_Impl (CORBA::ORB_ptr orb,
                                   DAnCE::ExecutionManagerDaemon_ptr exec_mgr,
+                                  ReplicationManager_ptr rep_mgr,
                                   const PROPERTY_MAP &options);
 
     virtual ~FaultCorrelationManager_Impl();
@@ -78,6 +82,10 @@ namespace DAnCE
     char * get_property (const char * name,
                          const Deployment::Properties & properties);
 
+    void add_constraints (const Deployment::DeploymentPlan & plan);
+
+    RankListConstraints * get_constraints (void);
+
   private:
     typedef ACE_Map_Manager<ACE_CString, 
                             Deployment::DomainApplicationManager_var, 
@@ -101,10 +109,21 @@ namespace DAnCE
       ACE_CString application;
     };
 
+  typedef std::list<ACE_CString> RANKLIST_CONSTRAINT;
+
+  typedef ACE_Hash_Map_Manager_Ex <
+    ACE_CString,
+    RANKLIST_CONSTRAINT,
+    ACE_Hash<ACE_CString>,
+    ACE_Equal_To<ACE_CString>,
+    ACE_Null_Mutex> RANKLIST_CONSTRAINT_MAP;
+
   private:
     CORBA::ORB_var orb_;
 
     DAnCE::ExecutionManagerDaemon_var exec_mgr_;
+
+    ReplicationManager_var rep_mgr_;
 
     PROPERTY_MAP properties_;
 
@@ -113,6 +132,8 @@ namespace DAnCE
     TInstancesOfPlan instances_;
 
     TNodeMap nodes_;
+
+    RANKLIST_CONSTRAINT_MAP constraints_;
 
     // these parts belong the role as active object
     bool stop_;

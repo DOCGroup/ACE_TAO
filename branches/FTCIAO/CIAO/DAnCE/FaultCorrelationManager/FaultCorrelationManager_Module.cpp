@@ -337,6 +337,24 @@ FaultCorrelationManager_Module::create_object (CORBA::ORB_ptr orb,
           return CORBA::Object::_nil ();
         }
 
+      // register FCM as a listener to ReplicationManager failure reports
+
+      // TODO somewhere we have to unregister this again!
+
+      obj = orb->string_to_object (this->options_.rep_mgr_ior_);
+            
+      ReplicationManager_var rep_mgr =
+        ReplicationManager::_narrow (obj.in ());
+
+      if (CORBA::is_nil (rep_mgr.in ()))
+        {
+          DANCE_DEBUG ((LM_ERROR, 
+                        DLINFO "FaultCorrelationManager_Module::create_object - "
+                        "could not resolve ReplicationManager.\n"));
+
+          return CORBA::Object::_nil ();
+        }
+
       //Creating node manager servant
       DAnCE::FaultCorrelationManager_Impl * fcm = 0;
 
@@ -347,6 +365,7 @@ FaultCorrelationManager_Module::create_object (CORBA::ORB_ptr orb,
       ACE_NEW_RETURN (fcm,
                       DAnCE::FaultCorrelationManager_Impl (orb,
                                                            exec_mgr.in (),
+                                                           rep_mgr.in (),
                                                            properties),
                       CORBA::Object::_nil ());
 
@@ -389,24 +408,6 @@ FaultCorrelationManager_Module::create_object (CORBA::ORB_ptr orb,
       // Activate POA manager
       PortableServer::POAManager_var mgr = this->root_poa_->the_POAManager ();
       mgr->activate ();
-
-      // register FCM as a listener to ReplicationManager failure reports
-
-      // TODO somewhere we have to unregister this again!
-
-      obj = orb->string_to_object (this->options_.rep_mgr_ior_);
-            
-      ReplicationManager_var rep_mgr =
-        ReplicationManager::_narrow (obj.in ());
-
-      if (CORBA::is_nil (rep_mgr.in ()))
-        {
-          DANCE_DEBUG ((LM_ERROR, 
-                        DLINFO "FaultCorrelationManager_Module::create_object - "
-                        "could not resolve ReplicationManager.\n"));
-
-          return CORBA::Object::_nil ();
-        }
 
       FLARE::FaultNotification_var fn = 
         FLARE::FaultNotification::_narrow (fcm_obj.in ());
