@@ -1,3 +1,14 @@
+Sun Mar  1 01:10:12 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/FTComponents/FTTask_exec.cpp:
+        
+          Changed debugging output.
+        
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.h
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.cpp:
+        
+          Added option for ior output filename.
+
 Sat Feb 28 22:22:47 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/Interfaces/FaultCorrelationManager.idl:

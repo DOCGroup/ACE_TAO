@@ -63,6 +63,7 @@ FaultCorrelationManager_Module::usage (void)
 {
   DANCE_TRACE ("FaultCorrelationManager_Module::usage");
   return "Node Manager Options:\n"
+    "\t-o,--ior-file\t\t [ior file name for FCM reference]\n"
     "\t-e,--exec-mgr\t\t [execution manager ior file name]\n"
     "\t-r,--rep-mgr\t\t [replication manager ior file name]\n"
     "\t-d,--domain-nc [NC]\t Default naming context for domain objects.\n"
@@ -75,11 +76,12 @@ FaultCorrelationManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc,
                         argv,
-                        ACE_TEXT("d:r:e:p::c::h"),
+                        ACE_TEXT("d:r:e:o:p::c::h"),
                         0,
                         0,
                         ACE_Get_Opt::RETURN_IN_ORDER);
 
+  get_opts.long_option (ACE_TEXT("ior-file"), 'o', ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("exec-mgr"), 'e', ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("rep-mgr"), 'r', ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("process-ns"), 'p', ACE_Get_Opt::ARG_OPTIONAL);
@@ -112,6 +114,9 @@ FaultCorrelationManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
                         "Binding to provided Domain Naming Context: '%s'\n",
                         get_opts.opt_arg ()));
           this->options_.domain_nc_ = get_opts.opt_arg ();
+          break;
+        case 'o':
+          this->options_.ior_file_ = get_opts.opt_arg ();
           break;
         case 'e':
           this->options_.exec_mgr_ior_ = get_opts.opt_arg ();
@@ -373,15 +378,13 @@ FaultCorrelationManager_Module::create_object (CORBA::ORB_ptr orb,
           this->domain_nc_->rebind (name, fcm_obj.in ());
         }
 
-      ACE_CString fcm_file ("FCM.ior");
-
       // Writing ior to file
       DANCE_DEBUG ((LM_TRACE,  DLINFO "FaultCorrelationManager_Module::create_object - "
-                    "Writing node IOR %C to file %C.\n", ior.in (), fcm_file.c_str ()));
-          if (!DAnCE::FCM::write_IOR (fcm_file.c_str (), ior.in ()))
+                    "Writing node IOR %C to file %C.\n", ior.in (), options_.ior_file_));
+          if (!DAnCE::FCM::write_IOR (options_.ior_file_, ior.in ()))
             DANCE_ERROR ((LM_ERROR, DLINFO "FaultCorrelationManager_Module::create_object - "
                           "Error: Unable to write IOR to file %C\n",
-                          fcm_file.c_str ()));
+                          options_.ior_file_));
       
       // Activate POA manager
       PortableServer::POAManager_var mgr = this->root_poa_->the_POAManager ();

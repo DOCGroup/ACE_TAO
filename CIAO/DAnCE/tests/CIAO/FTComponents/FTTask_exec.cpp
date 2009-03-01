@@ -60,9 +60,9 @@ namespace CIDL_FTTask_Impl
   {
     ACE_hrtime_t start, end;
 
-    start = ACE_OS::gethrtime ();    
+    std::cerr << object_id_ << "@" << this->get_process_id () << " ";
 
-    std::cerr << "x";
+    start = ACE_OS::gethrtime ();    
 
     this->cpu_.run (static_cast <size_t> (execution_time));
 
@@ -108,7 +108,7 @@ namespace CIDL_FTTask_Impl
     // create intermediate object with the value
     CORBA::Long value = state_;
 
-    ACE_DEBUG ((LM_TRACE, "FTTask_exec_i::get_state returns %d.\n", value));
+    ACE_DEBUG ((LM_INFO, "FTTask_exec_i::get_state returns %d.\n", value));
 
     // insert value into the any object
     *state <<= value;
