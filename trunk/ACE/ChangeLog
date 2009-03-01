@@ -1,3 +1,11 @@
+Sun Mar  1 07:36:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_performance_chart.sh:
+        * bin/performance_stats.sh:
+        * html/Stats/configuration.shtml:
+        * html/Stats/footprint.shtml:
+          Extended these files to that we can use them on emulab
+
 Fri Feb 27 12:31:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_compile_stats.sh:

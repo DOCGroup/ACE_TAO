@@ -12,6 +12,11 @@ ACE_ROOT=$1
 DEST=$2
 DATE=`date +%Y/%m/%d-%H:%M`
 
+mkdir -p $DEST/images
+mkdir -p $DEST/data
+mkdir -p $DEST/thumbnails
+COMPILER="gcc"
+
 COMMON_TESTS="AMI DII DSI Deferred Single_Threaded Thread_Per_Connection Thread_Pool AMH_Single_Threaded"
 
 SEQUENCE_TESTS="AMI DII DSI Deferred Single_Threaded Thread_Per_Connection Thread_Pool AMH_Single_Threaded"
@@ -103,23 +108,29 @@ for i in $SEQUENCE_TESTS; do
 done
 
 for i in $COMMON_TESTS TCP Default; do
-  $ACE_ROOT/bin/generate_performance_chart.sh ${i}.txt ${i}.png "$i"
+  $ACE_ROOT/bin/generate_performance_chart.sh ${i}.txt ${i}.png "$i" 800x600
   /bin/cp ${i}.png $DEST/images/${i}.png
+  $ACE_ROOT/bin/generate_performance_chart.sh ${i}.txt ${i}.png "$i" 160x120
+  /bin/cp ${i}.png $DEST/thumbnails/${i}.png
   /usr/bin/tac ${i}.txt > $DEST/data/${i}.txt
   /usr/bin/tail -5 ${i}.txt > $DEST/data/LAST_${i}.txt
 done
 
 for i in $SEQ_TEST_TYPE ; do
-  $ACE_ROOT/bin/generate_performance_chart.sh Sequence_Default_${i}.txt Sequence_Default_${i}.png "Default Configuration for $i sequences"
+  $ACE_ROOT/bin/generate_performance_chart.sh Sequence_Default_${i}.txt Sequence_Default_${i}.png "Default Configuration for $i sequences" 800x600
   /bin/cp Sequence_Default_${i}.png $DEST/images/Sequence_Default_${i}.png
+  $ACE_ROOT/bin/generate_performance_chart.sh Sequence_Default_${i}.txt Sequence_Default_${i}.png "Default Configuration for $i sequences" 160x120
+  /bin/cp Sequence_Default_${i}.png $DEST/thumbnails/Sequence_Default_${i}.png
   /usr/bin/tac $DEST/source/Sequence_Default_${i}.txt > $DEST/data/Sequence_Default_${i}.txt
   /usr/bin/tail -5 $DEST/source/Sequence_Default_${i}.txt > $DEST/data/LAST_Sequence_Default_${i}.txt
 done
 
 for i in $SEQUENCE_TESTS; do
 for j in $SEQ_TEST_TYPE; do
-  $ACE_ROOT/bin/generate_performance_chart.sh Sequence_${i}_${j}.txt Sequence_${i}_${j}.png "Sequence_$i_$j"
+  $ACE_ROOT/bin/generate_performance_chart.sh Sequence_${i}_${j}.txt Sequence_${i}_${j}.png "Sequence_$i_$j" 800x600
   /bin/cp Sequence_${i}_${j}.png $DEST/images/Sequence_${i}_${j}.png
+  $ACE_ROOT/bin/generate_performance_chart.sh Sequence_${i}_${j}.txt Sequence_${i}_${j}.png "Sequence_$i_$j" 160x120
+  /bin/cp Sequence_${i}_${j}.png $DEST/thumbnails/Sequence_${i}_${j}.png
   /usr/bin/tac Sequence_${i}_${j}.txt > $DEST/data/Sequence_${i}_${j}.txt
   /usr/bin/tail -5 Sequence_${i}_${j}.txt > $DEST/data/LAST_Sequence_${i}_${j}.txt
 done
@@ -172,28 +183,21 @@ _EOF_
 
 /bin/cp CORBA.png All.png $DEST/images/
 
-MOGRIFY=/usr/local/bin/mogrify
-if [ ! -x "$MOGRIFY" ]; then
-  MOGRIFY=/usr/X11R6/bin/mogrify
-fi
-
-(
-  cd $DEST/images
-  /bin/cp *.png thumbnails
-  for i in *.png; do
-    $MOGRIFY -geometry '25%' thumbnails/$i
-  done
-)
-
 cd $DEST/data
 /bin/uname -a > uname.txt
-/usr/bin/gcc -v > gcc.txt 2>&1
-/usr/bin/gcc -dumpversion > gccversion.txt 2>&1
+$COMPILER -v > gcc.txt 2>&1
+$COMPILER -dumpversion > gccversion.txt 2>&1
 /lib/libc.so.6 | sed -e 's/</\&lt;/g' -e 's/>/\&gt;/g' > libc.txt
 cat /proc/cpuinfo > cpuinfo.txt
 cat /proc/meminfo > meminfo.txt
-cat /etc/SuSE-release > linuxversion.txt
+if [ -e "/etc/SuSE-release" ]; then
+  cat /etc/SuSE-release > linuxversion.txt
+fi
+if [ -e "/etc/redhat-release" ]; then
+  cat /etc/redhat-release > linuxversion.txt
+fi
 
 cat $ACE_ROOT/ace/config.h > config.h.txt
 cat $ACE_ROOT/include/makeinclude/platform_macros.GNU > platform_macros.GNU.txt
+cat $ACE_ROOT/bin/MakeProjectCreator/config/default.features > default.features.txt
 cp $ACE_ROOT/html/Stats/* $DEST
