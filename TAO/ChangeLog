@@ -1,3 +1,9 @@
+Mon Mar  2 19:06:05 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_ut.cpp:
+          Reordered includes to make sure config.h gets included
+          before boost headers.
+
 Mon Mar  2 15:42:13 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Messenger_i.cpp:
