@@ -24,11 +24,16 @@
 #include "orbsvcs/Notify/Topology_Factory.h"
 #include "orbsvcs/Notify/Reconnection_Registry.h"
 #include "orbsvcs/Notify/Routing_Slip.h"
+#include "orbsvcs/Notify/Validate_Client_Task.h"
+#include "orbsvcs/Notify/Name_Value_Pair.h"
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/NotifyExtS.h"
+#include "ace/Auto_Ptr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_Notify_FilterFactory;
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -47,7 +52,6 @@ template <class TYPE> class TAO_Notify_Container_T;
 class TAO_Notify_Serv_Export TAO_Notify_EventChannelFactory
   : public virtual POA_NotifyExt::EventChannelFactory
   , public TAO_Notify::Topology_Parent
-
 {
   friend class TAO_Notify_Builder;
   typedef ACE_Unbounded_Set <TAO_Notify::Routing_Slip_Ptr> Routing_Slip_Set;
@@ -70,6 +74,10 @@ public:
 
   /// Remove @a channel from the <ec_container_>
   virtual void remove (TAO_Notify_EventChannel* channel);
+
+  /// Accesor for the default filter factory shared by all EC's.
+  virtual CosNotifyFilter::FilterFactory_ptr get_default_filter_factory (
+    );
 
   /// This method is called by the Notify_Service when the event channel
   /// is automatically created and bound in the name service.
@@ -103,6 +111,7 @@ public:
                                                    const TAO_Notify::NVPList& attrs);
   CosNotifyChannelAdmin::EventChannelFactory_ptr activate_self (void);
   virtual void reconnect (void);
+  virtual void validate ();
 
   /// Handle change notifications
   bool handle_change (void);
@@ -115,6 +124,9 @@ public:
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_Object * follow_id_path (TAO_Notify::IdVec & id_path, size_t position);
   virtual TAO_Notify_Object::ID get_id (void) const;
+
+  TAO_Notify_FilterFactory* 
+    default_filter_factory_servant () const;
 
 private:
 
@@ -170,6 +182,13 @@ private:
   /// Release this object.
   virtual void release (void);
 
+  ACE_Auto_Ptr <TAO_Notify_validate_client_Task> validate_client_task_;
+
+  /// The default filter factory.
+  CosNotifyFilter::FilterFactory_var default_filter_factory_;
+  ACE_Auto_Ptr <TAO_Notify_FilterFactory> default_filter_factory_servant_;
+
+  PortableServer::POA_var poa_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

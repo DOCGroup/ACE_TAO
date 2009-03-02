@@ -84,6 +84,8 @@ public:
     CORBA::Long id, const TAO_Notify::NVPList& attrs);
   virtual void reconnect (void);
 
+  virtual void validate ();
+
   void set_default (bool is_default);
   bool is_default () const;
   virtual void load_attrs(const TAO_Notify::NVPList& attrs);

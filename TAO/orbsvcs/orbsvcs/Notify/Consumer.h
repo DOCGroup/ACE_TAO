@@ -27,7 +27,7 @@
 #include "orbsvcs/Notify/Event.h"
 #include "orbsvcs/Notify/Timer.h"
 #include "ace/Event_Handler.h"
-
+#include "ace/Atomic_Op.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -57,11 +57,18 @@ public:
   };
 
 public:
+
+typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
+
   /// Constructor
   TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy);
 
   /// Destructor
   virtual ~TAO_Notify_Consumer ();
+
+  /// This method sigantures deliberately match the RefCounting methods required for ESF Proxy
+  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _decr_refcnt (void);
 
   /// Access Specific Proxy.
   TAO_Notify_ProxySupplier* proxy_supplier (void);
@@ -110,8 +117,17 @@ public:
   /// schedule our timer.  The caller should have locked the proxy lock
   /// before calling this method.
   void assume_pending_events (TAO_Notify_Consumer& rhs);
+    
+  /// Is the connected consumer still around?
+  bool is_alive (bool allow_nil_consumer);
+  
 
 protected:
+
+  /// This method is called by the is_alive() method.  It should provide
+  /// the connected consumer or nil if there is none.
+  virtual CORBA::Object_ptr get_consumer (void) = 0;
+
   typedef ACE_Unbounded_Queue<TAO_Notify_Method_Request_Event_Queueable *> Request_Queue;
 
   DispatchStatus dispatch_request (TAO_Notify_Method_Request_Event * request);
@@ -182,10 +198,16 @@ protected:
   /// The Timer Manager that we use.
   TAO_Notify_Timer::Ptr timer_;
 
+  /// Last time either push an event or validate connection 
+  /// via _non_exist call.
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, ACE_Time_Value> last_ping_;
+
 private:
 
   /// Events pending to be delivered.
   ACE_Auto_Ptr< Request_Queue > pending_events_;
+
+  CORBA::Object_var rtt_obj_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

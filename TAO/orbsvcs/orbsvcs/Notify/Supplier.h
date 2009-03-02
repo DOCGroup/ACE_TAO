@@ -47,7 +47,12 @@ public:
   /// Access Base Proxy.
   virtual TAO_Notify_Proxy* proxy (void);
 
+  virtual CORBA::Object_ptr get_supplier (void) = 0;
+
+  bool is_alive (bool allow_nil_supplier);
+
 protected:
+
   /// Dispatch updates implementation.
   virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
                                    const CosNotification::EventTypeSeq& removed);
@@ -57,6 +62,8 @@ protected:
 
   /// Interface that accepts subscription_changes
   CosNotifyComm::NotifySubscribe_var subscribe_;
+
+  CORBA::Object_var rtt_obj_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
