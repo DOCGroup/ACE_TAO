@@ -1,3 +1,16 @@
+Mon Mar  2 10:25:12 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tao/String_Sequence_Element_T.h:
+
+          Fixed a bug#3575.
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_helper.h:
+
+          Fixed known memory leak in tao_idl.
+
 Mon Mar  2 08:44:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3553_Regression/Bug_3553_Regression_client.cpp:

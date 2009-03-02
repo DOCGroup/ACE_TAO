@@ -127,7 +127,7 @@ public:
   TAO_OutStream::STREAM_TYPE stream_type (void);
   // return the stream type
 
-  FILE *file (void);
+  FILE *&file (void);
   // Return the underlying lowlevel file pointer.
 
   int incr_indent (unsigned short flag = 1);
