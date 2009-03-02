@@ -37,6 +37,9 @@ TAO_Notify_ProxySupplier::init (TAO_Notify_ConsumerAdmin* consumer_admin)
 
   this->consumer_admin_.reset (consumer_admin);
 
+  this->filter_admin_.event_channel_factory (
+    this->consumer_admin_->event_channel()->event_channel_factory ());
+
   const CosNotification::QoSProperties &default_ps_qos =
     TAO_Notify_PROPERTIES::instance ()->default_proxy_supplier_qos_properties ();
 
@@ -57,7 +60,7 @@ void
 TAO_Notify_ProxySupplier::connect (TAO_Notify_Consumer *consumer)
 {
   // Adopt the consumer
-  ACE_Auto_Ptr< TAO_Notify_Consumer > auto_consumer (consumer);
+  TAO_Notify_Consumer::Ptr auto_consumer (consumer);
 
   TAO_Notify_Atomic_Property_Long& consumer_count = this->admin_properties().consumers ();
   const TAO_Notify_Property_Long& max_consumers = this->admin_properties().max_consumers ();
