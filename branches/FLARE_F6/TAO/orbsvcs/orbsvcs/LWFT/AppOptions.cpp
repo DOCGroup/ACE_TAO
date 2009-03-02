@@ -46,6 +46,11 @@ AppOptions::instance (void)
   return instance_;
 }
 
+AppOptions::~AppOptions (void)
+{
+  monitor_->stop ();
+}
+
 bool
 AppOptions::parse_args (int &argc, char **argv)
 {
@@ -198,6 +203,12 @@ void
 AppOptions::process_id (const std::string & id)
 {
   process_id_ = id;
+}
+
+void
+AppOptions::monitor (AppSideMonitor_Thread *mon)
+{
+  this->monitor_ = mon;
 }
 
 void 
