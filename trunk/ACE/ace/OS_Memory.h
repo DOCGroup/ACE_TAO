@@ -266,7 +266,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * ~(alignment - 1) = 1...110...0 = T2
  *
- * Notice that there is a multiple of <alignment> in the range
+ * Notice that there is a multiple of @a alignment in the range
  * [<value>,<value> + T1], also notice that if
  *
  * X = ( <value> + T1 ) & T2
@@ -276,7 +276,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * <value> <= X <= <value> + T1
  *
  * because the & operator only changes the last bits, and since X is a
- * multiple of <alignment> (its last bits are zero) we have found the
+ * multiple of @a alignment (its last bits are zero) we have found the
  * multiple we wanted.
  */
 /// Return the next integer aligned to a required boundary

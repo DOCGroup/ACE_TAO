@@ -60,8 +60,8 @@ private:
   // = Prevent assignment and initialization.
   ACE_UNIMPLEMENTED_FUNC (void operator= (const
                                           ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> &))
-    ACE_UNIMPLEMENTED_FUNC (ACE_Auto_IncDec (const
-                                             ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Auto_IncDec (const
+                                           ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> &))
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
