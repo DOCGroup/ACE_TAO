@@ -147,7 +147,7 @@ TAO_OutStream::stream_type (void)
 
 // Return the underlying lowlevel file pointer.
 // indentation.
-FILE *
+FILE *&
 TAO_OutStream::file (void)
 {
   return this->fp_;

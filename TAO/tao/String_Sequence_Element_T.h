@@ -114,10 +114,10 @@ public:
     return *this->element_;
   }
 
-  inline const character_type *_retn (void) {
-    value_type * copy_ = this->element_;
+  inline character_type *_retn (void) {
+    character_type * copy = *this->element_;
     *this->element_ = traits::default_initializer();
-    return *copy_;
+    return copy;
   }
 
   void swap(string_sequence_element & rhs)
