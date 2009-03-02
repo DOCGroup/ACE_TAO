@@ -34,7 +34,7 @@
 
 // MY CODE
 #include <list>
-#include "ace/Synch.h"
+#include "ace/Thread_Mutex.h"
 
 namespace CIDL_Messenger_Impl
 {
@@ -48,18 +48,16 @@ namespace CIDL_Messenger_Impl
 
     // Operations from ::History
 
-    virtual ::Messages *
-    get_all ();
+    virtual ::Messages *get_all ();
 
-    virtual ::Message *
-    get_latest ();
+    virtual ::Message *get_latest ();
 
     // MY CODE
 
-    void add( ::Message* message );
+    void add( ::Message* message);
 
   private:
-    ACE_Mutex lock_;
+    ACE_Thread_Mutex lock_;
 
     typedef std::list< ::Message_var> MessageList;
     MessageList messages_;
