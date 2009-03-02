@@ -30,7 +30,6 @@ project (DAnCE_RepositoryManager) : dance_deployment_svnt, ciao_config_handlers,
 }
 
 project (DAnCE_RepositoryManager_Exec) : dance_repository_manager, dance_exe {
-  requires += zlib
   exename = dance_repository_manager
   Source_Files {
     Repository_Manager_Exec.cpp
@@ -43,10 +42,8 @@ project (DAnCE_RepositoryManager_Exec) : dance_repository_manager, dance_exe {
 // RMadmin project: a sample client for the RM.
 project (RMAdmin) : dance_repository_manager, dance_deployment_stub, ciao_config_handlers, naming {
   exename = dance_rm_admin
-
   IDL_Files {
   }
-
   Source_Files {
     RMadmin.cpp
     RepositoryManagerDaemonC.cpp
