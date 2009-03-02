@@ -678,9 +678,10 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
       // heap.
       db = qd->msg_block ()->data_block ()->duplicate ();
     }
+  ACE_Data_Block *db_new = db; 
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  ACE_Data_Block* db_new = this->decompress (*db, *qd, rd_pos, wr_pos);
+  db_new = this->decompress (*db, *qd, rd_pos, wr_pos);
   if (db_new == 0)
      return -1;
 #endif
@@ -786,9 +787,10 @@ TAO_GIOP_Message_Base::process_reply_message (
     }
 
   ACE_Data_Block *db = qd->msg_block ()->data_block ();
+  ACE_Data_Block *db_new = db; 
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  ACE_Data_Block* db_new = this->decompress (*db, *qd, rd_pos, wr_pos);
+  db_new = this->decompress (*db, *qd, rd_pos, wr_pos);
   if (db_new == 0)
      return -1;
 #endif
