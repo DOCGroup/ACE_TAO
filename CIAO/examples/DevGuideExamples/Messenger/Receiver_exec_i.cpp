@@ -42,8 +42,7 @@ namespace CIDL_Receiver_Impl
   // Port operations.
 
   void
-  Receiver_exec_i::push_message_consumer (
-    ::Message * ev)
+  Receiver_exec_i::push_message_consumer (::Message * ev)
   {
     /* Your code here. */
 
@@ -118,11 +117,11 @@ namespace CIDL_Receiver_Impl
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_RETURN (retval,
                     Receiver_exec_i,
                     ::Components::EnterpriseComponent::_nil ());
-    
+
     return retval;
   }
 
