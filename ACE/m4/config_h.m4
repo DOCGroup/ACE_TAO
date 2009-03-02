@@ -237,10 +237,6 @@ AH_TEMPLATE([ACE_HAS_STDARG_THR_DEST],
 [Platform has void (*)(...) prototype for pthread_key_create()
 destructor (e.g., LynxOS).])
 
-AH_TEMPLATE([ACE_HAS_STL_MAP_CONFLICT],
-[Used when users want to compile ACE with STL and STL map class
-conflicts with <net/if.h> map struct.])
-
 AH_TEMPLATE([ACE_HAS_4_4BSD_SENDMSG_RECVMSG],
 [Platform has BSD 4.4 sendmsg()/recvmsg() APIs.])
 
