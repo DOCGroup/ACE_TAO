@@ -1,3 +1,13 @@
+Mon Mar  2 11:08:42 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Bug_3575_Regression/test.cpp:
+        * tests/Bug_3575_Regression/run_test.pl:
+        * tests/Bug_3575_Regression/README:
+        * tests/Bug_3575_Regression/Bug_3575_Regression.mpc:
+        * bin/tao_orb_tests.lst:
+
+          Added a test for bug#3575 and scheduled it for run.
+
 Mon Mar  2 10:25:12 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tao/String_Sequence_Element_T.h:
