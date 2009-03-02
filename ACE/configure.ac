@@ -2114,34 +2114,6 @@ ACE_CACHE_CHECK([for new style C++ include file support],
    AC_DEFINE([ACE_HAS_STRING_CLASS])
   ],)
 
-AC_CHECK_HEADER([map],
-[
-  AC_CHECK_HEADER([net/if.h],
-   [
-    ACE_CACHE_CHECK([if STL map class conflicts with <net/if.h> map struct],
-    [ace_cv_header_stl_map_conflict],
-    [
-     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <map>
-#include <net/if.h>
-       ]],[[
-#ifdef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
-        std::map<char, char> ace_map;
-#else
-        map<char, char> ace_map;
-#endif  /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-       ]])],[
-        ace_cv_header_stl_map_conflict=no
-       ],[
-        ace_cv_header_stl_map_conflict=yes
-       ])
-    ],[AC_DEFINE([ACE_HAS_STL_MAP_CONFLICT])],)
-  ],)
-],)
-
 dnl Check whether platform supports the standard C++ library
 dnl TODO: For now, check whether headers <new>, <iomanip>
 dnl       and <memory> exist; is there a better way?
