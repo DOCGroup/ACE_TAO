@@ -40,6 +40,23 @@ const char *const Key_List::default_array_type = "char *";
 // in_word_set return type, by default.
 const char *const Key_List::default_return_type = "char *";
 
+namespace
+{
+
+char *
+dup_string (const char *const str)
+{
+  char *buf = 0;
+  ACE_NEW_RETURN (buf,
+                  char [ACE_OS::strlen (str) + 1],
+                  0);
+  ACE_OS::strcpy (buf, str);
+
+  return buf;
+}
+
+} // unnamed namespace
+
 // How wide the printed field width must be to contain the maximum
 // hash value.
 int Key_List::field_width = 0;
@@ -70,6 +87,10 @@ Key_List::~Key_List (void)
       delete this->head;
       this->head = temp;
     }
+
+  delete [] this->array_type_;
+  delete [] this->return_type;
+  delete [] this->struct_tag;
 }
 
 // Gathers the input stream into a buffer until one of two things occur:
@@ -141,6 +162,7 @@ Key_List::special_input (char delimiter)
       buf[i] = static_cast<char> (c);
     }
 
+  delete [] buf;
   return 0;
 }
 
@@ -182,6 +204,7 @@ Key_List::output_types (void)
 {
   if (option[TYPE])
     {
+      delete [] array_type_;
       array_type_ = array_type ();
       if (array_type_ == 0)
         // Something's wrong, but we'll catch it later on....
@@ -193,6 +216,7 @@ Key_List::output_types (void)
                                                       "{\n\0");
           if (option[POINTER])      // And it must return a pointer...
             {
+              delete [] return_type;
               ACE_NEW_RETURN (return_type,
                               char[struct_tag_length + 2],
                               -1);
@@ -203,6 +227,7 @@ Key_List::output_types (void)
               return_type[struct_tag_length + 1] = '\0';
             }
 
+          delete [] struct_tag;
           ACE_NEW_RETURN (struct_tag,
                           char[struct_tag_length + 2],
                           -1);
@@ -218,7 +243,10 @@ Key_List::output_types (void)
         }
     }
   else if (option[POINTER])     // Return a char *.
-    return_type = (char *) Key_List::default_array_type;
+    {
+      delete [] return_type;
+      return_type = dup_string (Key_List::default_array_type);
+    }
   return 0;
 }
 
@@ -1532,7 +1560,7 @@ Key_List::output_lookup_function (void)
         {
           ACE_OS::printf ("            {\n"
                   "              %schar *s = wordlist[slot]", option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "");
-          if (array_type_ != Key_List::default_array_type)
+          if (ACE_OS::strcmp (array_type_, Key_List::default_array_type) != 0)
             ACE_OS::printf (".%s", option.key_name ());
 
           ACE_OS::printf (";\n\n              if (%s%s == *s && !ACE_OS::%s)\n                return %s;\n            }\n",
@@ -1551,7 +1579,7 @@ Key_List::output_lookup_function (void)
               "              while (--ptr >= base)\n                ",
               option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "", struct_tag,
               option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "", struct_tag);
-      if (array_type_ != Key_List::default_array_type)
+      if (ACE_OS::strcmp (array_type_, Key_List::default_array_type) != 0)
         {
           if (option[COMP])
               ACE_OS::printf ("if (%s == *ptr->%s && !ACE_OS::%s (str + 1, ptr->%s + 1, len - 1",
@@ -1568,8 +1596,8 @@ Key_List::output_lookup_function (void)
                 ? (option[STRCASECMP] ? "strncasecmp (str + 1, *ptr + 1, len - 1" : "strncmp (str + 1, *ptr + 1, len - 1")
                 : (option[STRCASECMP] ? "strcasecmp (str + 1, *ptr + 1" : "strcmp (str + 1, *ptr + 1"));
       ACE_OS::printf ("))\n                  return %sptr;"
-              "\n            }\n        }\n    %s\n}\n", array_type_ ==
-              Key_List::default_array_type ? "*" : "", option[OPTIMIZE] ? "" : "}\n  return 0;");
+              "\n            }\n        }\n    %s\n}\n", ACE_OS::strcmp (array_type_,
+              Key_List::default_array_type) == 0 ? "*" : "", option[OPTIMIZE] ? "" : "}\n  return 0;");
     }
   else
     {
@@ -1581,7 +1609,7 @@ Key_List::output_lookup_function (void)
 
           ACE_OS::printf ("          %schar *s = wordlist[key]", option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "");
 
-          if (array_type_ != Key_List::default_array_type)
+          if (ACE_OS::strcmp (array_type_, Key_List::default_array_type) != 0)
             ACE_OS::printf (".%s", option.key_name ());
 
           ACE_OS::printf (";\n\n          if (%s%s == *s && !ACE_OS::%s)\n            return %s",
@@ -1946,9 +1974,9 @@ Key_List::dump (void)
 Key_List::Key_List (void)
   : head (0),
     total_duplicates (0),
-    array_type_ ((char *) Key_List::default_array_type),
-    return_type ((char *) Key_List::default_return_type),
-    struct_tag ((char *) Key_List::default_array_type),
+    array_type_ (dup_string (Key_List::default_array_type)),
+    return_type (dup_string (Key_List::default_return_type)),
+    struct_tag (dup_string (Key_List::default_array_type)),
     max_key_len (INT_MIN),
     min_key_len (INT_MAX),
     key_sort (0),
