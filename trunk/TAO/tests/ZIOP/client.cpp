@@ -150,7 +150,7 @@ void start_big_request_test (Test::Hello_ptr hello, ::TAO::Transport::Current_pt
   ACE_DEBUG((LM_DEBUG,
               ACE_TEXT("Start big_request; large compression ratio\n")));
   //ACE_OS::sleep(1);
-  int length = 2000;
+  int length = 40000;
   Test::Octet_Seq send_msg(length);
   send_msg.length (length);
 
@@ -178,13 +178,13 @@ void start_tests (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr tc)
               ACE_TEXT ("No statistical information available since TAO_HAS_TRANSPORT_CURRENT is not set")));
 #endif
 
-  start_low_value_test (hello, tc);
+//  start_low_value_test (hello, tc);
 
-  start_min_ratio_test (hello, tc);
+//  start_min_ratio_test (hello, tc);
 
   start_big_reply_test (hello, tc);
 
-  start_big_request_test (hello, tc);
+//  start_big_request_test (hello, tc);
 }
 
 int
@@ -243,13 +243,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       compressor_id_list[0].compression_level = 5;
       compressor_id_list[1].compressor_id = Compression::COMPRESSORID_BZIP2;
       compressor_id_list[1].compression_level = 5;
-      
+
       //Setting policy whether compression is used.
       CORBA::Boolean compression_enabling = true;
       CORBA::Any compression_enabling_any;
       compression_enabling_any <<= CORBA::Any::from_boolean(compression_enabling);
 
-      //Setting policy for minimum amount of bytes that needs to be 
+      //Setting policy for minimum amount of bytes that needs to be
       //compressed. If a message is smaller than this, it doesn't get
       //compressed
       CORBA::ULong compression_low_value = 100;
@@ -259,10 +259,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Any min_compression_ratio_any;
       CORBA::Long min_compression_ratio = 75;
       min_compression_ratio_any <<= min_compression_ratio;
-      
+
       CORBA::Any compressor_id_any;
       compressor_id_any <<= compressor_id_list;
 
+#if defined TAO_HAS_ZIOP && TAO_HAS_ZIOP == 1
       CORBA::PolicyList policies(4);
       policies.length(4);
 
@@ -273,8 +274,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var tmp = orb->string_to_object(ior);
       CORBA::Object_var tmp2 = tmp->_set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
-
       Test::Hello_var hello = Test::Hello::_narrow(tmp2.in ());
+#else
+      CORBA::Object_var tmp = orb->string_to_object(ior);
+      Test::Hello_var hello = Test::Hello::_narrow(tmp.in ());
+#endif
+
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -286,16 +291,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var tcobject =
                 orb->resolve_initial_references ("TAO::Transport::Current");
-      
+
       ::TAO::Transport::Current_var tc =
         ::TAO::Transport::Current::_narrow (tcobject.in ());
       if (CORBA::is_nil (tc.in ()))
         throw ::CORBA::INTERNAL ();
-      
-      start_tests(hello.in (), tc.in ());
+
+      //for (int i = 0; i < 1000; ++i)
+        start_tests(hello.in (), tc.in ());
 
       hello->shutdown ();
-      
+
       orb->destroy ();
 
       for (int i = 0; i < extra_argc; i++)

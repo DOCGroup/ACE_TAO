@@ -1,3 +1,16 @@
+Mon Mar  2 15:09:21 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP.h:
+        * tao/ZIOP_Adapter.h:
+          Changed decompress interface to handle incoming 
+          and outgoing message blocks and errors better.
+          
+        * tests/ZIOP/client.cpp:
+          Tempory blocked some tests.
+
 Mon Mar  2 14:54:21 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/Xt_Stopwatch/Stopwatch_display.cpp:

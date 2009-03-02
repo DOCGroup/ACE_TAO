@@ -124,10 +124,12 @@ TAO_ZIOP_Loader::decompress (Compression::Compressor_ptr compressor,
   return true;
 }
 
-bool
-TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
+ACE_Data_Block *
+TAO_ZIOP_Loader::decompress (ACE_Data_Block& db, TAO_Queued_Data& qd,
                              TAO_ORB_Core& orb_core)
 {
+  ACE_Data_Block *db_ret = &db;
+  
   CORBA::Object_var compression_manager =
     orb_core.resolve_compression_manager();
 
@@ -141,8 +143,8 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
       size_t begin = qd.msg_block ()-> rd_ptr() - qd.msg_block ()->base ();
       char * initial_rd_ptr = qd.msg_block ()-> rd_ptr();
       size_t const wr = qd.msg_block ()->wr_ptr () - qd.msg_block ()->base ();
-
-      TAO_InputCDR cdr (*db,
+      
+      TAO_InputCDR cdr (db.duplicate (),
                         qd.msg_block ()->self_flags (),
                         begin + TAO_GIOP_MESSAGE_HEADER_LEN,
                         wr,
@@ -161,17 +163,13 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
 
       if (decompress(compressor.in(), data.data, myout))
         {
-          ACE_Message_Block *mb = new ACE_Message_Block();
-
-          mb->size ((size_t)(data.original_length +
+          ACE_Message_Block mb ((size_t)(data.original_length +
                         TAO_GIOP_MESSAGE_HEADER_LEN));
-
           qd.msg_block ()->rd_ptr (initial_rd_ptr);
-
-          mb->copy(qd.msg_block ()->base () + begin,
+          mb.copy(qd.msg_block ()->base () + begin,
                         TAO_GIOP_MESSAGE_HEADER_LEN);
 
-          if (mb->copy((char*)myout.get_buffer(true),
+          if (mb.copy((char*)myout.get_buffer(true),
                   (size_t)data.original_length) != 0)
             ACE_ERROR_RETURN((LM_ERROR,
                               ACE_TEXT ("TAO - (%P|%t) - ")
@@ -179,18 +177,18 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
                               ACE_TEXT ("Buffer too small\n")),
                               false);
           //change it into a GIOP message..
-          mb->base ()[0] = 0x47;
-          ACE_CDR::mb_align (mb);
-          *db = mb->data_block ();
-          return true;
+          mb.base ()[0] = 0x47;
+          ACE_CDR::mb_align (&mb);
+          db_ret = mb.data_block ();
+          return db_ret->duplicate ();
         }
     }
   else
     {
-      return false;
+      return 0;
     }
 
-  return true;
+  return db_ret;
 }
 
 CORBA::ULong
