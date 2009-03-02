@@ -1,3 +1,8 @@
+Mon Mar  2 07:37:59 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * performance-tests/RPC/client.cpp:
+          Fixed compile error on LynxOS 4.2
+
 Sun Mar  1 20:35:34 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-sunos5.5.h:
