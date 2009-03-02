@@ -33,7 +33,7 @@ if ($sv != 0) {
 if ($server->WaitForFileTimed ($iorbase,
                                $server->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+    $sv->Kill (); $sv->TimedWait (1);
     exit 1;
 }
 
