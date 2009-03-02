@@ -147,7 +147,7 @@ test_server (void *arg)
               ACE_TEXT ("%D Shutdown server %d\n"),
               server_nr));
 
-  if (!CORBA::is_nil(hello))
+  if (!CORBA::is_nil(hello.in ()))
     {
       try
         {
