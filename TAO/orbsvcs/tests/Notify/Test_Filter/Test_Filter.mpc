@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(TAO_RT_NotifyTests_Filter): orbsvcslib, notification_skel, rtcorba, etcl, dynamicany, portableserver, iortable {
+project(TAO_RT_NotifyTests_Filter): orbsvcslib, notification_skel, notify_serv, rtcorba, etcl, dynamicany, portableserver, iortable {
   sharedname = TAO_RT_NotifyTests_Filter
   dynamicflags    = TAO_RT_Test_Filter_BUILD_DLL
   IDL_Files {

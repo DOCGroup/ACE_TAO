@@ -87,6 +87,7 @@ public:
                                                    CORBA::Long id,
                                                    const TAO_Notify::NVPList& attrs);
   virtual void reconnect (void);
+  virtual void validate ();
 
   virtual TAO_Notify_Object::ID get_id () const {return id();}
 
@@ -112,6 +113,8 @@ public:
   /// This is public to allow TAO_MonitorSupplierAdmin access.
   virtual CosNotifyChannelAdmin::SupplierAdmin_ptr
     get_supplieradmin (CosNotifyChannelAdmin::AdminID id);
+
+  TAO_Notify_EventChannelFactory * event_channel_factory ();
 
 private:
   typedef TAO_Notify_Container_T <TAO_Notify_ConsumerAdmin> TAO_Notify_ConsumerAdmin_Container;
@@ -177,10 +180,6 @@ private:
   /// SupplierAdmin Container.
   ACE_Auto_Ptr< TAO_Notify_SupplierAdmin_Container > sa_container_;
 
-  /// The default filter factory.
-  CosNotifyFilter::FilterFactory_var default_filter_factory_;
-
-  /// Release
   virtual void release (void);
 };
 

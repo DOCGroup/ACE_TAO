@@ -18,6 +18,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Synch.h"
 #include "ace/Argv_Type_Converter.h"
+#include "ace/Logging_Strategy.h"
 
 TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
 : notify_service_ (0)
@@ -30,6 +31,7 @@ TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
 , nthreads_ (1)
 , separate_dispatching_orb_ (false)
 , timeout_ (0)
+, logging_worker_(this)
 {
   // No-Op.
 }
@@ -147,6 +149,8 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
     {
       this->notify_service_->init_service (this->orb_.in ());
     }
+
+  logging_worker_.start();
 
   if (this->nthreads_ > 0) // we have chosen to run in a thread pool.
     {
@@ -316,6 +320,7 @@ TAO_Notify_Service_Driver::run (void)
 
   this->orb_->run ();
 
+  this->logging_worker_.end();
   return 0;
 }
 
@@ -453,6 +458,11 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
                      "timeout will not be applied.\n"));
 #endif /* TAO_HAS_CORBA_MESSAGING != 0 */
         }
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-LoggingInterval"))))
+        {
+          this->logging_interval_ = ACE_Time_Value (ACE_OS::atoi (current_arg));
+          arg_shifter.consume_arg ();
+        }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-?")) == 0)
         {
           ACE_DEBUG((LM_DEBUG,
@@ -479,6 +489,61 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
 }
 
 /*****************************************************************/
+LoggingWorker::LoggingWorker(TAO_Notify_Service_Driver* ns)
+: ns_ (ns),
+  started_ (false)
+{
+}
+
+
+void
+LoggingWorker::start ()
+{
+  ACE_Logging_Strategy* logging_strategy =  ACE_Dynamic_Service<ACE_Logging_Strategy>::instance ("Logging_Strategy");
+  if (logging_strategy == 0)
+  {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t)logging_strategy == 0\n"));
+  }
+  else
+  {
+      if (this->activate (THR_NEW_LWP | THR_JOINABLE, 1) == -1)
+      {
+         ACE_DEBUG ((LM_DEBUG, "(%P|%t)can not activate the logging event thread\n"));
+      }
+      else {
+        if (this->ns_->logging_interval_ > ACE_Time_Value::zero)
+        {
+          ACE_Time_Value delay;
+          if (this->ns_->orb_->orb_core()->reactor()->schedule_timer (logging_strategy, 0, delay, this->ns_->logging_interval_) == -1)
+          {
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t)failed to schedule logging switch timer\n"));
+          }
+        }
+      }
+      
+  }
+}
+
+
+int 
+LoggingWorker::svc (void)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t)Running logging reactor \n"));
+  started_ = true;
+  this->logging_reactor_.run_event_loop();
+
+  return 0;
+}
+
+void
+LoggingWorker::end ()
+{
+  if (started_)
+  {
+    this->logging_reactor_.end_event_loop();
+    this->thr_mgr ()->wait ();
+  }
+}
 
 Worker::Worker (void)
 {

@@ -23,13 +23,28 @@
 #include "orbsvcs/CosNamingC.h"
 #include "../orbsvcs/Notify/CosNotify_Initializer.h"
 #include "ace/SString.h"
+#include "ace/Reactor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Service;
-TAO_END_VERSIONED_NAMESPACE_DECL
+class TAO_Notify_Service_Driver;
 
 #define NOTIFY_KEY "NotifyEventChannelFactory"
 #define NOTIFY_CHANNEL_NAME "NotifyEventChannel"
+
+class LoggingWorker : public ACE_Task_Base
+{
+  public:
+   LoggingWorker (TAO_Notify_Service_Driver* ns);
+   virtual int svc (void);
+   void start ();
+   void end ();
+   private:
+     
+     ACE_Reactor logging_reactor_;
+     TAO_Notify_Service_Driver* ns_;
+     bool started_;
+};
 
 /**
  * @class Worker
@@ -63,6 +78,8 @@ private:
  */
 class TAO_Notify_Service_Driver
 {
+
+ friend class LoggingWorker;
 
  public:
   // = Initialization and termination methods.
@@ -149,7 +166,12 @@ protected:
 
   /// The relative round-trip timeout
   suseconds_t timeout_;
+
+  ACE_Time_Value logging_interval_;
+  LoggingWorker logging_worker_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* NOTIFY_SERVICE_H */

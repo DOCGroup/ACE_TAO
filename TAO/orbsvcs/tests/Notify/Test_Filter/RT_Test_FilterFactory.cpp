@@ -70,4 +70,29 @@ TAO_Notify_Tests_RT_Test_FilterFactory::create_mapping_filter (const char * /*co
   throw CORBA::NO_IMPLEMENT ();
 }
 
+TAO_Notify_Object::ID 
+TAO_Notify_Tests_RT_Test_FilterFactory::get_filter_id (CosNotifyFilter::Filter_ptr /*filter*/)
+{
+  throw CORBA::NO_IMPLEMENT ();
+}
+
+CosNotifyFilter::Filter_ptr 
+TAO_Notify_Tests_RT_Test_FilterFactory::get_filter (const TAO_Notify_Object::ID& /*id*/)
+{
+  throw CORBA::NO_IMPLEMENT ();
+}
+
+void
+TAO_Notify_Tests_RT_Test_FilterFactory::release (void)
+{
+  delete this;
+  //@@ inform factory
+}
+
+void 
+TAO_Notify_Tests_RT_Test_FilterFactory::save_persistent (TAO_Notify::Topology_Saver& /*saver*/)
+{
+  throw CORBA::NO_IMPLEMENT ();
+}
+
 ACE_FACTORY_DEFINE (TAO_RT_Test_Filter, TAO_Notify_Tests_RT_Test_FilterFactory)

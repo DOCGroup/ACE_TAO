@@ -49,4 +49,10 @@ TAO_Notify_StructuredPushSupplier::get_ior (void) const
   return result;
 }
 
+CORBA::Object_ptr
+TAO_Notify_StructuredPushSupplier::get_supplier (void)
+{
+  return CosNotifyComm::StructuredPushSupplier::_duplicate (this->push_supplier_.in ());
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL

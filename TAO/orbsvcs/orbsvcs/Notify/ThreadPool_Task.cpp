@@ -87,16 +87,16 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
         this->_decr_refcnt();
       }
 
-    if (TAO_debug_level > 0)
+    if (ACE_OS::last_error () == EPERM)
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Insufficient privilege.\n")));
+    else if (ACE_OS::last_error () == EAGAIN)
     {
-      if (ACE_OS::last_error () == EPERM)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Insufficient privilege.\n")));
-      else
-        ACE_DEBUG ((LM_ERROR,
-        ACE_TEXT ("(%t) task activation at priority %d failed\n")
-        ACE_TEXT ("exiting!\n%a"),
-        tp_params.default_priority));
+      ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("(%P|%t) task activation at priority %d failed %p\n"),
+      tp_params.default_priority, "activate"));
+      throw CORBA::NO_RESOURCES ();
     }
+
     throw CORBA::BAD_PARAM ();
   }
 }
@@ -151,7 +151,7 @@ TAO_Notify_ThreadPool_Task::svc (void)
       else
       {
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG, "ThreadPool_Task dequeue failed\n"));
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t)ThreadPool_Task dequeue failed\n"));
       }
     }
     catch (const CORBA::Exception& ex)
