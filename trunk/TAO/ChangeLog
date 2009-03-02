@@ -1,3 +1,8 @@
+Mon Mar  2 11:10:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMH_Oneway/run_test.pl:
+          Fixed typo in this file
+
 Mon Mar  2 11:08:42 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Bug_3575_Regression/test.cpp:
