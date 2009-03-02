@@ -1,3 +1,8 @@
+Mon Mar  2 19:23:21 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+          Resolved compiler error when ZIOP is off
+
 Mon Mar  2 19:06:05 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/Sequence_Unit_Tests/unbounded_octet_sequence_ut.cpp:
