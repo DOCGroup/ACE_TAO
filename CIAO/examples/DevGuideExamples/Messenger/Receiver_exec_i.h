@@ -48,15 +48,12 @@ namespace CIDL_Receiver_Impl
 
     // Port operations.
 
-    virtual void
-    push_message_consumer (
-      ::Message *ev);
+    virtual void push_message_consumer (::Message *ev);
 
     // Operations from Components::SessionComponent
 
     virtual void
-    set_session_context (
-      ::Components::SessionContext_ptr ctx);
+    set_session_context (::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete ();
 

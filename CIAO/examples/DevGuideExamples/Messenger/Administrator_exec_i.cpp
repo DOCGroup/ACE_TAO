@@ -88,7 +88,7 @@ namespace CIDL_Administrator_Impl
     ACE_DEBUG((LM_INFO, ACE_TEXT("ccm_remove\n")));
   }
 
-  void 
+  void
   Administrator_exec_i::configuration_complete (void)
   {
     ACE_DEBUG ((LM_INFO, ACE_TEXT("configuration_complete\n")));
@@ -146,7 +146,7 @@ namespace CIDL_Administrator_Impl
       this->context_->get_connections_runnables();
 
     std::cout << "Starting Publication" << std::endl;
-    for ( unsigned int i = 0; i < connections->length(); ++i ) {
+    for ( CORBA::ULong i = 0; i < connections->length(); ++i ) {
       Runnable_var runnable = (*connections)[i].objref;
       runnable->start();
     }
@@ -159,7 +159,7 @@ namespace CIDL_Administrator_Impl
       this->context_->get_connections_runnables();
 
     std::cout << "Stopping Publication" << std::endl;
-    for ( unsigned int i = 0; i < connections->length(); ++i ) {
+    for ( CORBA::ULong i = 0; i < connections->length(); ++i ) {
       Runnable_var runnable = (*connections)[i].objref;
       runnable->stop();
     }
@@ -174,7 +174,7 @@ namespace CIDL_Administrator_Impl
     char period[10];
     std::cout << "Please enter a new period in seconds: ";
     std::cin.getline( period, sizeof( period ) );
-    for ( unsigned int i = 0; i < contents->length(); ++i ) {
+    for ( CORBA::ULong i = 0; i < contents->length(); ++i ) {
       Publication_var publication = (*contents)[i].objref;
       publication->period( ACE_OS::atoi(period) );
     }
@@ -189,7 +189,7 @@ namespace CIDL_Administrator_Impl
     char buffer[1024];
     std::cout << "Please enter new text: ";
     std::cin.getline( buffer, sizeof(buffer) );
-    for ( unsigned int i = 0; i < contents->length(); ++i ) {
+    for ( CORBA::ULong i = 0; i < contents->length(); ++i ) {
       Publication_var publication = (*contents)[i].objref;
       publication->text( buffer );
     }
@@ -200,11 +200,11 @@ namespace CIDL_Administrator_Impl
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_RETURN (retval,
                     Administrator_exec_i,
                     ::Components::EnterpriseComponent::_nil ());
-    
+
     return retval;
   }
 

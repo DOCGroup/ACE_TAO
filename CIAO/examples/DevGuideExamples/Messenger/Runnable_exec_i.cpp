@@ -52,7 +52,7 @@ namespace CIDL_Messenger_Impl
     this->run_lock_.acquire();
   }
 
-  ACE_Mutex&
+  ACE_Thread_Mutex&
   Runnable_exec_i::get_run_lock ()
   {
     return this->run_lock_;
