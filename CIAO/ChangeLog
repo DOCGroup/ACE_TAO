@@ -1,3 +1,17 @@
+Mon Mar  2 09:48:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+        * MPC/config/dance_repository_manager.mpb:
+          RepositoryManager requires zlib
+
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/ExecImplSourceGenerator.cpp:
+          Generate void as empty argument name to generate code that
+          follows the ACE coding conventions
+
+        * tools/Config_Handlers/DnC_Dump.h:
+          Layout change
+
 Mon Mar  2 10:05:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/DevGuideExamples/Messenger/Administrator_exec_i.cpp
