@@ -53,7 +53,7 @@ ACE_RCSID (tests,
 
 static void set_label(Widget w, const char *p)
 {
-    XtVaSetValues (w, XtNlabel, p, 0);
+    XtVaSetValues (w, XtNlabel, p, static_cast<void *>(0));
 }
 #define LABEL_WIDGET labelWidgetClass
 #define BUTTON_WIDGET commandWidgetClass
@@ -235,7 +235,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                                 &argc,
                                 argv,
                                 0,
-                                0);
+                                static_cast<void *>(0));
 
   digits_rc = create_box(topLevel, "digits_rc");
 
