@@ -16,6 +16,7 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Auto_Ptr.h"
 
+#include "AppSideMonitor_Thread.h"
 #include "lwft_server_export.h"
 
 /**
@@ -31,6 +32,8 @@ class LWFT_Server_Export AppOptions
 public:
   /// Singleton access method.
   static AppOptions *instance (void);
+  
+  ~AppOptions (void);
 
   bool parse_args (int &argc, char **argv);
   
@@ -57,6 +60,7 @@ public:
   long debug_level (void) const;
 
   void process_id (const std::string & id);
+  void monitor (AppSideMonitor_Thread *mon);
 
 protected:
   /// Constructor is protected to ensure Singleton access.
@@ -74,6 +78,7 @@ protected:
   double load_;
   bool use_dds_;
   long debug_level_;
+  std::auto_ptr <AppSideMonitor_Thread> monitor_;
 
   /// Singleton-related stuff.
   static AppOptions * volatile instance_;

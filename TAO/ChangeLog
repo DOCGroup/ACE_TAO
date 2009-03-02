@@ -1,3 +1,15 @@
+Mon Mar  2 19:56:16 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.h:
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppOptions.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppOptions.h:
+        
+          Moved storage of the application monitor thread class
+          from class AppSideReg, which is no longer a thread in
+          its own right and hence goes out of scope quickly, to
+          the AppOptions singleton.
+
 Thu Feb 26 04:10:51 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/DDSStateUpdate_T.cpp
