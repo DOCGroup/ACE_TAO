@@ -1318,7 +1318,7 @@ namespace ACE_OS {
 
   //@}
 
-  /// Low-level interface to <priocntl>(2).
+  /// Low-level interface to @c priocntl(2).
   /**
    * Can't call the following priocntl, because that's a macro on
    * Solaris.
@@ -1475,7 +1475,7 @@ namespace ACE_OS {
              size_t nsops);
   //@}
 
-  /// Friendly interface to <priocntl>(2).
+  /// Friendly interface to @c priocntl(2).
   extern ACE_Export
   int set_scheduling_params (const ACE_Sched_Params &,
                              ACE_id_t id = ACE_SELF);
