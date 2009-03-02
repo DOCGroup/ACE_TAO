@@ -1,3 +1,10 @@
+Mon Mar  2 12:57:14 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/test_idl.cpp:
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/client.cpp:
+
+          Fixed local memory leaks in these tests.
+
 Mon Mar  2 11:42:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
