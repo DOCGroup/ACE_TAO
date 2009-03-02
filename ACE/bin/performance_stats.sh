@@ -108,7 +108,7 @@ for i in $SEQUENCE_TESTS; do
 done
 
 for i in $COMMON_TESTS TCP Default; do
-  $ACE_ROOT/bin/generate_performance_chart.sh ${i}.txt ${i}.png "$i" 800,600
+  $ACE_ROOT/bin/generate_performance_chart.sh ${i}.txt ${i}.png "$i" 1024,768
   /bin/cp ${i}.png $DEST/images/${i}.png
   $ACE_ROOT/bin/generate_performance_chart.sh ${i}.txt ${i}.png "$i" 160,120
   /bin/cp ${i}.png $DEST/thumbnails/${i}.png
@@ -117,9 +117,9 @@ for i in $COMMON_TESTS TCP Default; do
 done
 
 for i in $SEQ_TEST_TYPE ; do
-  $ACE_ROOT/bin/generate_performance_chart.sh Sequence_Default_${i}.txt Sequence_Default_${i}.png "Default Configuration for $i sequences" 800x600
+  $ACE_ROOT/bin/generate_performance_chart.sh Sequence_Default_${i}.txt Sequence_Default_${i}.png "Default Configuration for $i sequences" 1024,768
   /bin/cp Sequence_Default_${i}.png $DEST/images/Sequence_Default_${i}.png
-  $ACE_ROOT/bin/generate_performance_chart.sh Sequence_Default_${i}.txt Sequence_Default_${i}.png "Default Configuration for $i sequences" 160x120
+  $ACE_ROOT/bin/generate_performance_chart.sh Sequence_Default_${i}.txt Sequence_Default_${i}.png "Default Configuration for $i sequences" 160,120
   /bin/cp Sequence_Default_${i}.png $DEST/thumbnails/Sequence_Default_${i}.png
   /usr/bin/tac $DEST/source/Sequence_Default_${i}.txt > $DEST/data/Sequence_Default_${i}.txt
   /usr/bin/tail -5 $DEST/source/Sequence_Default_${i}.txt > $DEST/data/LAST_Sequence_Default_${i}.txt
@@ -127,9 +127,9 @@ done
 
 for i in $SEQUENCE_TESTS; do
 for j in $SEQ_TEST_TYPE; do
-  $ACE_ROOT/bin/generate_performance_chart.sh Sequence_${i}_${j}.txt Sequence_${i}_${j}.png "Sequence_$i_$j" 800x600
+  $ACE_ROOT/bin/generate_performance_chart.sh Sequence_${i}_${j}.txt Sequence_${i}_${j}.png "Sequence_$i_$j" 1024,768
   /bin/cp Sequence_${i}_${j}.png $DEST/images/Sequence_${i}_${j}.png
-  $ACE_ROOT/bin/generate_performance_chart.sh Sequence_${i}_${j}.txt Sequence_${i}_${j}.png "Sequence_$i_$j" 160x120
+  $ACE_ROOT/bin/generate_performance_chart.sh Sequence_${i}_${j}.txt Sequence_${i}_${j}.png "Sequence_$i_$j" 160,120
   /bin/cp Sequence_${i}_${j}.png $DEST/thumbnails/Sequence_${i}_${j}.png
   /usr/bin/tac Sequence_${i}_${j}.txt > $DEST/data/Sequence_${i}_${j}.txt
   /usr/bin/tail -5 Sequence_${i}_${j}.txt > $DEST/data/LAST_Sequence_${i}_${j}.txt
