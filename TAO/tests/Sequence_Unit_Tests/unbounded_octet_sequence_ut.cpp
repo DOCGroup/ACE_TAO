@@ -8,16 +8,16 @@
  * @author Johnny Willemsen
  */
 
-#include <boost/test/unit_test.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
-
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
 #include "tao/Unbounded_Value_Sequence_T.h"
 
 #include "value_sequence_tester.hpp"
+
+#include <boost/test/unit_test.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
 #include "tao/Basic_Types.h"
 #include "tao/CDR.h"
