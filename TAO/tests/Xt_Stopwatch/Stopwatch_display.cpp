@@ -50,7 +50,7 @@ Stopwatch_display::set_time (CORBA::Float time)
   XmString xmstr = XmStringCreateSimple (buf);
 
   // Display the string in the Label widget
-  XtVaSetValues (this->label_, XmNlabelString, xmstr, 0);
+  XtVaSetValues (this->label_, XmNlabelString, xmstr, static_cast<void *>(0));
   //??Can use XtSetValues with ac and al values..
 
   // The compound string can be freed once passed to the widget
