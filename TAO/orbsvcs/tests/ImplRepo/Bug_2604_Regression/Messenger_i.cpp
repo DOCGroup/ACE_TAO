@@ -9,6 +9,7 @@ Messenger_i::send_message (const char *user_name, const char *subject,
               ACE_TEXT ("Message from: %C\nSubject: %C\nMessage: %C\n"),
               user_name, subject, message));
   const char *reply = "A reply from the server.";
+  CORBA::string_free (message);
   message = CORBA::string_dup (reply);
   if (++this->count_ == 6)
     {

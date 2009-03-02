@@ -1059,7 +1059,6 @@ ImR_Locator_i::find (const char* server,
                      ImplementationRepository::ServerInformation_out imr_info)
 {
   ACE_ASSERT (server != 0);
-  ACE_NEW_THROW_EX (imr_info, ImplementationRepository::ServerInformation, CORBA::NO_MEMORY ());
 
   Server_Info_Ptr info = this->repository_.get_server (server);
   if (! info.null ())
@@ -1071,6 +1070,8 @@ ImR_Locator_i::find (const char* server,
     }
   else
     {
+      ACE_NEW_THROW_EX (imr_info, ImplementationRepository::ServerInformation, CORBA::NO_MEMORY ());
+
       if (debug_ > 1)
         ACE_DEBUG ((LM_DEBUG, "ImR: Cannot find server <%s>\n", server));
     }
