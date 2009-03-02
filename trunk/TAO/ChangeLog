@@ -1,3 +1,17 @@
+Mon Mar  2 15:42:13 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Messenger_i.cpp:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/run_test.pl:
+        * orbsvcs/tests/ImplRepo/nestea_client_i.cpp:
+
+          Fixed memory leaks local to these tests.
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          Fixed a memory leak in ImR_Locator_i::find(). imr_info was
+          allocated in that function and immediately overwritten by
+          new allocation.
+
 Mon Mar  2 15:09:21 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp:
@@ -5,9 +19,9 @@ Mon Mar  2 15:09:21 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * tao/ZIOP/ZIOP.cpp:
         * tao/ZIOP/ZIOP.h:
         * tao/ZIOP_Adapter.h:
-          Changed decompress interface to handle incoming 
+          Changed decompress interface to handle incoming
           and outgoing message blocks and errors better.
-          
+
         * tests/ZIOP/client.cpp:
           Tempory blocked some tests.
 
