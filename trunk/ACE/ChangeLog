@@ -1,3 +1,11 @@
+Mon Mar  2 19:58:57 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/README:
+        * ace/os_include/net/os_if.h:
+        * configure.ac:
+        * m4/config_h.m4:
+          Removed legacy ACE_HAS_STL_MAP_CONFLICT macro.
+
 Mon Mar  2 14:51:20 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * examples/Misc/test_XtReactor1.cpp:
