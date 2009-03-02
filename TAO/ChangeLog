@@ -1,3 +1,8 @@
+Mon Mar  2 07:44:16 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/Bug_3558_Regression/client.cpp:
+          Fixed compile warning.
+
 Sun Mar  1 19:31:00 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * docs/tutorials/Quoter/RTCORBA/Admin.cpp:
