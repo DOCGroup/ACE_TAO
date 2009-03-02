@@ -55,7 +55,7 @@ static void set_label(Widget w, const char *p)
   XtVaSetValues (w,
                  XmNlabelString,
                  XmStringCreateLocalized( (char*) p),
-                 0);
+                 static_cast<void *>(0));
 }
 #define LABEL_WIDGET xmLabelWidgetClass
 #define BUTTON_WIDGET xmPushButtonWidgetClass
@@ -242,7 +242,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                                 &argc,
                                 argv,
                                 0,
-                                0);
+                                static_cast<void *>(0));
 
   digits_rc = create_box(topLevel, "digits_rc");
 

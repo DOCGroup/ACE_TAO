@@ -1,3 +1,11 @@
+Mon Mar  2 14:51:20 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * examples/Misc/test_XtReactor1.cpp:
+        * examples/Misc/test_XtReactor2.cpp:
+        * tests/XtAthenaReactor_Test.cpp:
+        * tests/XtMotifReactor_Test.cpp:
+          Fixed compile warning and run-time error on 64-bit systems.
+
 Mon Mar  2 11:44:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Auto_IncDec_T.h:
