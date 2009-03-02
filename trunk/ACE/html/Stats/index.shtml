@@ -52,6 +52,21 @@ In addition to the statistics described above, a number of other ACE/TAO/CIAO de
 <li>
   <a href="http://www.dre.vanderbilt.edu/~isisbuilds/auto_compile_logs/isislab/emulab/FC6xampler/Template-Display/_Report/">Xampler Performance benchmarks</a>
 </li>
+<li>
+  <a href="http://www.dre.vanderbilt.edu/Stats/CORBAecompact/">Footprint CORBA/e compact</a>
+</li>
+<li>
+  <a href="http://www.dre.vanderbilt.edu/Stats/CORBAeminimum/">Footprint CORBA/e minimum</a>
+</li>
+<li>
+  <a href="http://www.dre.vanderbilt.edu/Stats/CORBAeminimums/">Footprint CORBA/e minimum single threaded</a>
+</li>
+<li>
+  <a href="http://www.dre.vanderbilt.edu/Stats/minimum/">Footprint Minimum CORBA</a>
+</li>
+<li>
+  <a href="http://www.dre.vanderbilt.edu/Stats/regular/">Footprint Regular CORBA</a>
+</li>
 </ul>
 The <i>Code Coverage</i> pages illustrate which areas of
 ACE+TAO+CIAO code are used, and how frequently.  The <i>Scoreboard</i>
