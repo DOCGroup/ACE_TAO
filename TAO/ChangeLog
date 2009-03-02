@@ -1,3 +1,9 @@
+Mon Mar  2 08:44:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3553_Regression/Bug_3553_Regression_client.cpp:
+        * tests/Bug_3553_Regression/Bug_3553_Regression_server.cpp:
+          Resolved compiler warning.
+
 Mon Mar  2 08:20:51 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile.am:
