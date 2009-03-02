@@ -1,3 +1,8 @@
+Mon Mar  2 14:54:21 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/Xt_Stopwatch/Stopwatch_display.cpp:
+          Fixed compile warning and run-time error on 64-bit systems.
+
 Mon Mar  2 12:57:14 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/test_idl.cpp:
