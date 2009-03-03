@@ -1,3 +1,18 @@
+Tue Mar  3 07:56:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/DevGuideExamples/Messenger/History_exec_i.cpp
+        * examples/DevGuideExamples/Messenger/History_exec_i.h
+        * examples/DevGuideExamples/Messenger/Messenger_exec_i.cpp
+        * examples/DevGuideExamples/Messenger/Publication_exec_i.cpp
+        * examples/DevGuideExamples/Messenger/Publication_exec_i.h
+        * examples/DevGuideExamples/Messenger/Runnable_exec_i.cpp
+        * examples/DevGuideExamples/Messenger/Runnable_exec_i.h
+          Fixed fuzz error
+
+        * examples/DevGuideExamples/Messenger/StaticDAnCE/run_test.pl
+        * examples/DevGuideExamples/Messenger/descriptors/run_test.pl
+          Fixed typo
+
 Mon Mar  2 09:48:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/RepositoryManager/RepositoryManager.mpc:
