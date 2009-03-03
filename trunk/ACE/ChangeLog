@@ -1,3 +1,11 @@
+Tue Mar  3 07:35:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Unbounded_Set_Test.cpp:
+          Also test the is_empty() method
+
+        * tests/Log_Msg_Backend_Test.cpp:
+          Directly assign variable
+
 Tue Mar  3 05:27:13 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/os_include/net/os_if.h:
