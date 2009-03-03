@@ -85,7 +85,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_OS::strcat (object_string, reference_string);
 
           CORBA::Object_var hello_obj = orb->string_to_object (object_string);
-          orb->register_initial_reference (reference_string, hello_obj.in ());
+          orb->register_initial_reference ((const char *) reference_string, hello_obj.in ());
 
           CORBA::String_var ior_string = orb->object_to_string (hello_obj.in());
           ACE_DEBUG((LM_DEBUG, ACE_TEXT("IOR string for reference %d : %C\n"),
