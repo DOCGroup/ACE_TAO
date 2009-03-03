@@ -280,8 +280,7 @@ ACE_Blob_Writer::send_request (void)
 
   // Create the header, store the actual length in mesglen.
   mesglen = ACE_OS::sprintf (mesg, "%s /%s %s " ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "\n\n",
-                             request_prefix_, filename_, request_suffix_,
-                             (unsigned long)length_);
+                             request_prefix_, filename_, request_suffix_, length_);
 
   // Send the header followed by the data
 
