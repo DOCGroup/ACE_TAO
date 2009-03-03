@@ -457,6 +457,9 @@ FilterClient::varify_filter (CosNotifyFilter::FilterAdmin_var& admin,
                              const char* constraint_expr,
                              const char* mod_constraint_expr) 
 {
+  ACE_UNUSED_ARG (constraint_expr); 
+  // only used to validate assert, which is 
+  // compiled out for nondebug builds.
   CosNotifyFilter::FilterIDSeq_var ids 
     = admin->get_all_filters ();
 
@@ -477,11 +480,16 @@ FilterClient::varify_filter (CosNotifyFilter::FilterAdmin_var& admin,
   for (index = 0; index < infos->length (); ++ index)
   {
     CosNotifyFilter::ConstraintID id = infos[index].constraint_id;
+    ACE_UNUSED_ARG (id); 
+    // only used to validate assert, which is 
+    // compiled out for nondebug builds.
     ACE_ASSERT (id != 0);
-
     ACE_ASSERT (ACE_OS::strcmp (infos[index].constraint_expression.constraint_expr.in (), constraint_expr) == 0);
 
     CosNotification::EventTypeSeq& events = infos[index].constraint_expression.event_types;
+    ACE_UNUSED_ARG (events); 
+    // only used to validate assert, which is 
+    // compiled out for nondebug builds.
     ACE_ASSERT (events.length () == 1);
 
     ACE_ASSERT (ACE_OS::strcmp (events[0].domain_name.in (), DOMAIN_NAME) == 0);

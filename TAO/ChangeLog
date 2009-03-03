@@ -1,3 +1,8 @@
+Tue Mar  3 23:11:40 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Notify/Persistent_Filter/Filter.cpp:
+          Silence warnings on nondebug builds.
+
 Tue Mar  3 21:12:10 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
@@ -16,7 +21,7 @@ Tue Mar  3 21:12:10 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
         * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp:
 
           Fix debug output formatting for wchar consistency.
-        
+
 Tue Mar  3 13:01:25 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3547_Regression/Stock_Quoter_Client.cpp:
