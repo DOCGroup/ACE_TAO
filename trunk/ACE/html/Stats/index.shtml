@@ -67,6 +67,12 @@ In addition to the statistics described above, a number of other ACE/TAO/CIAO de
 <li>
   <a href="http://www.dre.vanderbilt.edu/Stats/regular/">Footprint Regular CORBA</a>
 </li>
+<li>
+  <a href="compilation.shtml">Compilation metrics Regular CORBA</a>
+</li>
+<li>
+  <a href="performance.shtml">Performance metrics Regular CORBA</a>
+</li>
 </ul>
 The <i>Code Coverage</i> pages illustrate which areas of
 ACE+TAO+CIAO code are used, and how frequently.  The <i>Scoreboard</i>
