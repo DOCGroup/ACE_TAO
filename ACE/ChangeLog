@@ -1,3 +1,8 @@
+Tue Mar  3 19:59:10 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * apps/JAWS/clients/Blobby/Blob_Handler.cpp:
+          Fixed compile warning.
+
 Tue Mar  3 19:43:42 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/Process_Manager_Test.cpp:
