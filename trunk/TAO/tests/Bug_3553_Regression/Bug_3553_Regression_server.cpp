@@ -78,7 +78,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             i, ior_string.in ()));
           char identifier[32];
           ACE_OS::sprintf (identifier, ACE_TEXT ("TransportCacheTest%d"), i);
-          table->bind(identifier, ior_string.in());
+          table->bind((const char *) identifier, ior_string.in());
         }
 
       PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
