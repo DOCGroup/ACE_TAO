@@ -56,13 +56,13 @@ In addition to the statistics described above, a number of other ACE/TAO/CIAO de
   <a href="http://www.dre.vanderbilt.edu/Stats/CORBAecompact/">Footprint CORBA/e compact</a>
 </li>
 <li>
-  <a href="http://www.dre.vanderbilt.edu/Stats/CORBAeminimum/">Footprint CORBA/e minimum</a>
+  <a href="http://www.dre.vanderbilt.edu/Stats/CORBAemicro/">Footprint CORBA/e micro</a>
 </li>
 <li>
-  <a href="http://www.dre.vanderbilt.edu/Stats/CORBAeminimums/">Footprint CORBA/e minimum single threaded</a>
+  <a href="http://www.dre.vanderbilt.edu/Stats/CORBAemicros/">Footprint CORBA/e micro single threaded</a>
 </li>
 <li>
-  <a href="http://www.dre.vanderbilt.edu/Stats/minimum/">Footprint Minimum CORBA</a>
+  <a href="http://www.dre.vanderbilt.edu/Stats/CORBAminimum/">Footprint Minimum CORBA</a>
 </li>
 <li>
   <a href="http://www.dre.vanderbilt.edu/Stats/regular/">Footprint Regular CORBA</a>
