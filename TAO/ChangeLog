@@ -1,3 +1,8 @@
+Tue Mar  3 13:01:25 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3547_Regression/Stock_Quoter_Client.cpp:
+          Added a worker thread
+
 Tue Mar  3 12:31:25 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/DIOP_Acceptor.cpp
