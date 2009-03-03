@@ -58,6 +58,11 @@ run_main (int, ACE_TCHAR *[])
       ACE_ERROR ((LM_ERROR, "Error: ubs.size () != 0\n"));
       retval = -1;
     }
+  if (!ubs.is_empty ())
+    {
+      ACE_ERROR ((LM_ERROR, "Error: !ubs.is_empty ()\n"));
+      retval = -1;
+    }
 
   // Insert a value. Immediately remove it.
   r = ubs.insert (node);

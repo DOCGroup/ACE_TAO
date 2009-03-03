@@ -37,7 +37,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   virtual int reset (void);
-  
+
   //FUZZ: disable check_for_lack_ACE_OS
   virtual int close (void);
   //FUZZ: enable check_for_lack_ACE_OS
@@ -105,8 +105,7 @@ run_main (int, ACE_TCHAR *[])
   // Set up the backend prior to ACE_START_TEST so the initialization can
   // call the back end's reset().
   Backend b;
-  ACE_Log_Msg_Backend *old_b;
-  old_b = ACE_Log_Msg::msg_backend (&b);
+  ACE_Log_Msg_Backend *old_b = ACE_Log_Msg::msg_backend (&b);
 
   ACE_START_TEST (ACE_TEXT ("Log_Msg_Backend_Test"));
 
@@ -120,7 +119,7 @@ run_main (int, ACE_TCHAR *[])
       ++status;
     }
 
-  // Reopen to get the backend established. 
+  // Reopen to get the backend established.
   u_long flags = ACE_LOG_MSG->flags ();
   flags |= ACE_Log_Msg::CUSTOM;
   if (-1 == ACE_LOG_MSG->open (ACE_TEXT ("Log_Msg_Backend_Test"), flags))
