@@ -1,3 +1,11 @@
+Tue Mar  3 10:42:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/Stats/compilation.shtml:
+        * html/Stats/footprint.shtml:
+        * html/Stats/navigation.html:
+        * html/Stats/performance.shtml:
+          Updated links to the new results
+
 Tue Mar  3 07:46:45 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:
