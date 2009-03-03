@@ -89,8 +89,8 @@ TAO_Notify_StructuredProxyPushConsumer::validate ()
     if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG, 
-        ACE_TEXT ("(%P|%t) TAO_Notify_StructuredProxyPushConsumer::validate(%d)"
-        "disconnecting \n"), this->id ()));
+		  ACE_TEXT ("(%P|%t) TAO_Notify_StructuredProxyPushConsumer::validate(%d)")
+		  ACE_TEXT("disconnecting \n"), this->id ()));
     }
 
     this->disconnect_structured_push_consumer ();

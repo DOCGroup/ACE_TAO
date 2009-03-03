@@ -180,13 +180,13 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         properties->defaultSupplierAdminFilterOp (op);
         arg_shifter.consume_arg ();
       }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-ValidateClient")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ValidateClient")) == 0)
       {
         arg_shifter.consume_arg ();
         TAO_Notify_PROPERTIES::instance()->validate_client (true);
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Using reactive client control.\n")));
       }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-ValidateClientDelay")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ValidateClientDelay")) == 0)
       {
         current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ValidateClientDelay"));
         if (current_arg != 0)
@@ -205,7 +205,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         if (current_arg != 0)
           arg_shifter.consume_arg ();
       }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-ValidateClientInterval")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ValidateClientInterval")) == 0)
       {
         current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ValidateClientInterval"));
         if (current_arg != 0)
