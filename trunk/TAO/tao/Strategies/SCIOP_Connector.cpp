@@ -275,7 +275,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
-                "new %s connection to <%s:%d> on Transport[%d]\n",
+                "new %C connection to <%C:%d> on Transport[%d]\n",
                 transport->is_connected() ? "connected" : "not connected",
                 sciop_endpoint->host (), sciop_endpoint->port (),
                 svc_handler->peer ().get_handle ()));

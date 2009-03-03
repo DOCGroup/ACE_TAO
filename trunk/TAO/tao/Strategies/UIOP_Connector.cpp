@@ -76,8 +76,7 @@ TAO_UIOP_Connector::close (void)
 }
 
 TAO_Profile *
-TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len
-                                   )
+TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len)
 {
   if (this->check_prefix (str) != 0)
     return 0;
@@ -88,7 +87,7 @@ TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) TAO_UIOP_CONNECTOR::corbaloc_scan error: "
-                    "explicit terminating charactor '|' is missing from <%s>",
+                    "explicit terminating charactor '|' is missing from <%C>",
                     str));
       return 0;
     }
@@ -226,7 +225,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       if (TAO_debug_level > 3)
           ACE_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - UIOP_Connector::make_connection, "
-                      "connection to <%s> failed (%p)\n",
+                      "connection to <%C> failed (%p)\n",
                       uiop_endpoint->rendezvous_point (),
                       ACE_TEXT("errno")));
 
@@ -248,7 +247,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - UIOP_Connector::make_connection, "
-                "new %s connection to <%s> on Transport[%d]\n",
+                "new %C connection to <%C> on Transport[%d]\n",
                 transport->is_connected() ? "connected" : "not connected",
                 uiop_endpoint->rendezvous_point (),
                 svc_handler->peer ().get_handle ()));

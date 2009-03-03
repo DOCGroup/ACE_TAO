@@ -1,3 +1,15 @@
+Tue Mar  3 12:31:25 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/DIOP_Acceptor.cpp
+        * tao/Strategies/DIOP_Connection_Handler.cpp
+        * tao/Strategies/SCIOP_Acceptor.cpp
+        * tao/Strategies/SCIOP_Connection_Handler.cpp
+        * tao/Strategies/SCIOP_Connector.cpp
+        * tao/Strategies/UIOP_Acceptor.cpp
+        * tao/Strategies/UIOP_Connection_Handler.cpp
+        * tao/Strategies/UIOP_Connector.cpp
+          Unicode fixes
+
 Mon Mar  2 07:22:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3553_Regression/Bug_3553_Regression_client.cpp:
@@ -89,7 +101,7 @@ Mon Mar  2 22:48:25 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
           filter persistence. Also, a debug line was found to contain a
           '%a' which triggered an abort when encountered. This was
           removed. The original new feature descriptions follow.
-        
+
           Added proxy cleanup feature. It periodically validates the
           connection to all clients via _non_exist() call. It records when
           last pushing occurs to reduce the number of _non_exist()
@@ -102,7 +114,7 @@ Mon Mar  2 22:48:25 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
           static TAO_CosNotify_Service
             "-ValidateClient -ValidateClientDelay 1 -ValidateClientInterval
              10"
-        
+
           The -ValidateClient needs be used for -ValidateClientDelay and
           -ValidateClientInterval options to take effect. The
           -ValidateClientDelay is the validate delay after init and the
@@ -126,7 +138,7 @@ Mon Mar  2 22:48:25 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
           default poa to create each filter factory object reference for
           each event channel.
 
-        
+
 Mon Mar  2 19:23:21 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp:
