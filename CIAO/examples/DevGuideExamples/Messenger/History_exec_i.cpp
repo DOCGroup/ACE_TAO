@@ -43,7 +43,7 @@ namespace CIDL_Messenger_Impl
     // Your code here.
 
     // MY CODE
-    ACE_Guard<ACE_Thread_Mutex> guard(this->lock_);
+    ACE_Guard<TAO_SYNCH_MUTEX> guard(this->lock_);
 
     ACE_DEBUG((LM_INFO, ACE_TEXT("History_i::get_all\n") ));
 
@@ -70,7 +70,7 @@ namespace CIDL_Messenger_Impl
     // Your code here.
 
     // MY CODE
-    ACE_Guard<ACE_Thread_Mutex> guard(this->lock_);
+    ACE_Guard<TAO_SYNCH_MUTEX> guard(this->lock_);
 
     ACE_DEBUG((LM_INFO, ACE_TEXT("History_i::get_latest\n") ));
 
@@ -85,7 +85,7 @@ namespace CIDL_Messenger_Impl
   void
   History_exec_i::add( ::Message* message )
   {
-    ACE_Guard<ACE_Thread_Mutex> guard(lock_);
+    ACE_Guard<TAO_SYNCH_MUTEX> guard(lock_);
 
     // bump up the reference count; we don't own it.
     // the _var in the STL list takes ownership of the "copy"

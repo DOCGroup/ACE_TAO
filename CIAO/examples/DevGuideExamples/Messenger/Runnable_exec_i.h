@@ -52,10 +52,10 @@ namespace CIDL_Messenger_Impl
     virtual void stop ();
 
     // MY CODE
-    ACE_Thread_Mutex& get_run_lock();
+    TAO_SYNCH_MUTEX& get_run_lock();
 
   private:
-    ACE_Thread_Mutex run_lock_;
+    TAO_SYNCH_MUTEX run_lock_;
   };
 }
 

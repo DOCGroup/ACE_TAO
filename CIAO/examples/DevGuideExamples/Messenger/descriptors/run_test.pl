@@ -81,7 +81,7 @@ if (PerlACE::waitforfile_timed ($emior, 5) == -1) {
 }
 
 sleep(5);
-#Start the plan laucnher
+#Start the plan  launcher
 $EX = new PerlACE::Process ("$DANCE_ROOT/bin/dance_plan_launcher",
                             "-x Application-flattened_Unhomed.cdp -k file://$emior ");
 
