@@ -1,3 +1,22 @@
+Tue Mar  3 21:12:10 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.cpp:
+
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.cpp:
+
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp:
+
+          Fix debug output formatting for wchar consistency.
+        
 Tue Mar  3 13:01:25 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3547_Regression/Stock_Quoter_Client.cpp:
