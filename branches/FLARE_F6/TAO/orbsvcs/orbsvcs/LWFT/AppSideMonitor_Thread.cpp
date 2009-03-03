@@ -15,30 +15,33 @@
 #include "AppSideMonitor_Thread.h"
 #include "AppOptions.h"
 
-AppSideMonitor_Thread::AppSideMonitor_Thread (
-  ACE_Barrier &thread_barrier)
-  : port_ (AppOptions::instance ()->port ()),
-    reactor_ (new ACE_TP_Reactor),
+AppSideMonitor_Thread*
+AppSideMonitor_Thread::instance (void)
+{
+  return
+    ACE_Singleton<AppSideMonitor_Thread, ACE_SYNCH_MUTEX>::instance ();
+}
+
+AppSideMonitor_Thread::AppSideMonitor_Thread (void)
+  : reactor_ (new ACE_TP_Reactor),
     acceptor_ (serv_addr_, &reactor_),
-    synchronizer_ (thread_barrier)
+    synchronizer_ (0)
 {
 }
 
-AppSideMonitor_Thread::AppSideMonitor_Thread (
-  ACE_Barrier &thread_barrier,
-  u_short port)
-  : port_ (port),
-    reactor_ (new ACE_TP_Reactor),
-    acceptor_ (serv_addr_, &reactor_),
-    synchronizer_ (thread_barrier)
+void
+AppSideMonitor_Thread::configure (ACE_Barrier *thread_barrier,
+                                  u_short port)
 {
+  this->synchronizer_ = thread_barrier;
+  this->port_ = port;
 }
 
 int
 AppSideMonitor_Thread::svc (void)
 {
   {
-    Barrier_Guard barrier_guard (synchronizer_);
+    Barrier_Guard barrier_guard (*synchronizer_);
 
     if (serv_addr_.set (this->port_) == -1)
       {
