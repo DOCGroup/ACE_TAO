@@ -31,33 +31,36 @@ AppSideReg::register_process (void)
 {
   try
     {
-      CORBA::Object_var obj = orb_->string_to_object (HM_ior_.c_str());
+      CORBA::Object_var obj =
+        orb_->string_to_object (HM_ior_.c_str());
 
       if (CORBA::is_nil (obj))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "AppSideReg::svc: nil HM reference\n"),
+                             "AppSideReg::register_process: nil HM reference\n"),
                             1);
         }
 
       /// Downcast the object reference to a reference of type HostMonitor.
-      this->hmvar_ = HostMonitor::_narrow (obj);
+      HostMonitor_var hmvar = HostMonitor::_narrow (obj);
       
-      if (CORBA::is_nil (hmvar_))
+      if (CORBA::is_nil (hmvar))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "AppSideReg::svc: HostMonitor "
                              "narrow failed.\n"),
                             1);
         }
+        
+      u_short port;
 
-      // retrieve the heartbeat port number from the HostMonitor if no
+      // Retrieve the heartbeat port number from the HostMonitor if no
       // port parameter has been given.
       if (AppOptions::instance ()->port () == 0)
 	      {
 	        try
 	          {
-	            port_ = hmvar_->heartbeat_port ();
+	            port = hmvar->heartbeat_port ();
 	          }
 	        catch (CORBA::SystemException &)
 	          {
@@ -69,16 +72,18 @@ AppSideReg::register_process (void)
 	      }
       else
 	      {
-	        port_ = AppOptions::instance ()->port ();
+	        port = AppOptions::instance ()->port ();
 	      }
 
       ACE_DEBUG ((LM_TRACE,
                   "AppSideReg: creating the host monitor\n"));
 
       ACE_Barrier internal_thread_barrier (2);
+      
       AppSideMonitor_Thread *mon =
-          new AppSideMonitor_Thread (internal_thread_barrier,
-                                     port_);
+        AppSideMonitor_Thread::instance ();
+        
+      mon->configure (&internal_thread_barrier, port);
 
       mon->activate ();
 
@@ -86,7 +91,7 @@ AppSideReg::register_process (void)
 
       internal_thread_barrier.wait ();
       
-      // Store monitor in singleton so it will stay around.
+      // Keep a reference to the monitor singleton.
       AppOptions::instance ()->monitor (mon);
       
       //ACE_DEBUG ((LM_TRACE, "AppSideReg::svc before registering process.\n"));
@@ -95,10 +100,10 @@ AppSideReg::register_process (void)
         {
           //ACE_DEBUG ((LM_TRACE, "AppSideReg::svc - got heartbeat port %d from hm.\n", port_));
           CORBA::Boolean good_register =
-            hmvar_->register_process (
+            hmvar->register_process (
               AppOptions::instance ()->process_id ().c_str (),
               AppOptions::instance ()->host_id ().c_str (),
-              port_);
+              port);
               
           if (good_register)
             {
@@ -139,11 +144,11 @@ AppSideReg::register_process (void)
 
   return 0;
 }
-
+/*
 void
 AppSideReg::unregister_process (void)
 {
   hmvar_->unregister_process (
     AppOptions::instance ()->process_id ().c_str ());
 }
-
+*/

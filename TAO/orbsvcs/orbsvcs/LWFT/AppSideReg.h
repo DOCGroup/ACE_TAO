@@ -30,12 +30,11 @@ public:
 
   int register_process (void);
   
-  void unregister_process (void);
+  // This needs to be moved somewhere else.
+//  void unregister_process (void);
 
 private:
-  u_short port_;
   std::string HM_ior_;
-  HostMonitor_var hmvar_;
   CORBA::ORB_var orb_;
 };
 
