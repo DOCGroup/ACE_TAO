@@ -321,7 +321,7 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ")
-                  ACE_TEXT ("DIOP_Acceptor::open, specified host=%s:%d\n"),
+                  ACE_TEXT ("DIOP_Acceptor::open, specified host=%C:%d\n"),
                   (specified_hostname.length () == 0 ? "<null>" : specified_hostname.c_str ()),
                   addr.get_port_number ()));
     }

@@ -415,8 +415,8 @@ TAO_SCIOP_Connection_Handler::set_tos (int tos)
       if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - SCIOP_Connection_Handler::"
-                      "set_dscp_codepoint -> dscp: %x; result: %d; %s\n",
+                      ACE_TEXT("TAO (%P|%t) - SCIOP_Connection_Handler::")
+                      ACE_TEXT("set_dscp_codepoint -> dscp: %x; result: %d; %C\n"),
                       tos,
                       result,
                       result == -1 ? "try running as superuser" : ""));
