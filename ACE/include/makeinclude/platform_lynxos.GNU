@@ -29,7 +29,7 @@ else
   #### before running "make".
 
   ifeq (,$(VERSION))
-    export VERSION=4.0.0
+    export VERSION = 4.0.0
   endif # VERSION
 
   ifeq (,$(LYNXTARGET))
@@ -37,34 +37,23 @@ else
   endif # LYNXTARGET
 
   ifeq (,$(OBJSFORMAT))
-    ifeq (x86,$(LYNXTARGET))
-      OBJSFORMAT = coff
-    else  # ! x86
-      OBJSFORMAT = xcoff
-    endif # ! x86
-    export OBJSFORMAT
+    export OBJSFORMAT = elf
   endif # OBJSFORMAT
 
   ifeq (,$(HOST_OS))
-    export HOST_OS = sunos
+    export HOST_OS = linux
   endif # HOST_OS
 
   ifeq (,$(HOST_OS_REVISION))
-    #### Added for 3.1.0
-    export HOST_OS_REVISION = `uname -r`
+    export HOST_OS_REVISION = $(shell uname -r)
   endif # HOST_OS_REVISION
-
-  ifeq (,$(HOST_OS_TYPE))
-    #### Added for 3.1.0
-    export HOST_OS_TYPE = solaris
-  endif # HOST_OS_TYPE
 
   ifeq (,$(ENV_PREFIX))
     export ENV_PREFIX = /usr/lynx/$(VERSION)/$(LYNXTARGET)
   endif # ENV_PREFIX
 
   ifeq (,$(findstring $(ENV_PREFIX),$(PATH)))
-    export PATH:=$(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/bin:$(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/usr/bin:$(PATH)
+    export PATH := $(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/bin:$(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/usr/bin:$(PATH)
   endif # PATH
 endif # ! LynxOS
 
