@@ -57,7 +57,7 @@
 	<TR>
 	  <TD>AMI</TD>
 	    <TD><A HREF="images/AMI.png">
-		<IMG ALT="AMI" SRC="images/thumbnails/AMI.png">
+		<IMG height=240 width=320 ALT="AMI" SRC="images/AMI.png">
 		</A>
 	    </TD>
 	  <TD>
@@ -72,7 +72,7 @@
 	  <TR>
 	  <TD>AMH_Single_Threaded</TD>
 	    <TD><A HREF="images/AMH_Single_Threaded.png">
-		<IMG ALT="AMH_Single_Threaded" SRC="images/thumbnails/AMH_Single_Threaded.png">
+		<IMG height=240 width=320 ALT="AMH_Single_Threaded" SRC="images/AMH_Single_Threaded.png">
 		</A>
 	    </TD>
 	  <TD>
@@ -87,7 +87,7 @@
 	<TR>
 	  <TD>DII</TD>
 	    <TD><A HREF="images/DII.png">
-		<IMG ALT="DII" SRC="images/thumbnails/DII.png">
+		<IMG height=240 width=320 ALT="DII" SRC="images/DII.png">
 		</A>
 	    </TD>
 	  <TD>
@@ -102,7 +102,7 @@
 	<TR>
 	  <TD>DSI</TD>
 	    <TD><A HREF="images/DSI.png">
-		<IMG ALT="DSI" SRC="images/thumbnails/DSI.png">
+		<IMG height=240 width=320 ALT="DSI" SRC="images/DSI.png">
 		</A>
 	    </TD>
 	  <TD>
@@ -117,7 +117,7 @@
 	<TR>
 	  <TD>Deferred</TD>
 	    <TD><A HREF="images/Deferred.png">
-		<IMG ALT="Deferred" SRC="images/thumbnails/Deferred.png">
+		<IMG height=240 width=320 ALT="Deferred" SRC="images/Deferred.png">
 		</A>
 	    </TD>
 	  <TD>
@@ -135,7 +135,7 @@
 	       for single-threaded apps)<BR>
 	    </TD>
 	    <TD><A HREF="images/Single_Threaded.png">
-		<IMG ALT="Single_Threaded" SRC="images/thumbnails/Single_Threaded.png">
+		<IMG height=240 width=320 ALT="Single_Threaded" SRC="images/Single_Threaded.png">
 		</A>
 	    </TD>
 	  <TD>
@@ -150,7 +150,7 @@
 	<TR>
 	  <TD>Single_Threaded</TD>
 	    <TD><A HREF="images/Default.png">
-		<IMG ALT="Default" SRC="images/thumbnails/Default.png">
+		<IMG height=240 width=320 ALT="Default" SRC="images/Default.png">
 		</A>
 	    </TD>
 	  <TD>
@@ -165,7 +165,7 @@
 	<TR>
 	  <TD>Thread_Per_Connection</TD>
 	    <TD><A HREF="images/Thread_Per_Connection.png">
-		<IMG ALT="Thread_Per_Connection" SRC="images/thumbnails/Thread_Per_Connection.png">
+		<IMG height=240 width=320 ALT="Thread_Per_Connection" SRC="images/Thread_Per_Connection.png">
 		</A>
 	    </TD>
 	  <TD>
@@ -180,7 +180,7 @@
 	<TR>
 	  <TD>Thread_Pool</TD>
 	    <TD><A HREF="images/Thread_Pool.png">
-		<IMG ALT="Thread_Pool" SRC="images/thumbnails/Thread_Pool.png">
+		<IMG height=240 width=320 ALT="Thread_Pool" SRC="images/Thread_Pool.png">
 		</A>
 	    </TD>
 	  <TD>

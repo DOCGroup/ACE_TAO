@@ -284,9 +284,6 @@ create_dirs ()
   if ! [ -d "${1}images" ]; then
     mkdir -p ${1}images
   fi
-  if ! [ -d "${1}images/thumbnails" ]; then
-    mkdir -p ${1}images/thumbnails
-  fi
 }
 
 ###############################################################################
