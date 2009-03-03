@@ -1,3 +1,8 @@
+Tue Mar  3 19:43:42 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/Process_Manager_Test.cpp:
+          Fixed gcc's "zero-length format string" warning.
+
 Tue Mar  3 13:32:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_compile_stats.sh:
