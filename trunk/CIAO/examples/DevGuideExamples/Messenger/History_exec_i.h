@@ -57,7 +57,7 @@ namespace CIDL_Messenger_Impl
     void add( ::Message* message);
 
   private:
-    ACE_Thread_Mutex lock_;
+    TAO_SYNCH_MUTEX lock_;
 
     typedef std::list< ::Message_var> MessageList;
     MessageList messages_;

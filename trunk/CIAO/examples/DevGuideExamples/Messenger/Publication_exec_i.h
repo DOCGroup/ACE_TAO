@@ -60,7 +60,7 @@ namespace CIDL_Messenger_Impl
     std::string text_;
     CORBA::UShort period_;
 
-    ACE_Thread_Mutex lock_;
+    TAO_SYNCH_MUTEX lock_;
   };
 }
 
