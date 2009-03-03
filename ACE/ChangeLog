@@ -1,3 +1,11 @@
+Tue Mar  3 13:32:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
+        * bin/performance_stats.sh:
+        * html/Stats/performance.shtml:
+        * html/Stats/simple_footprint.shtml:
+          Don't generate thumbnails, just show the original graphs on 320x240
+
 Tue Mar  3 11:13:48 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:
