@@ -99,6 +99,10 @@ ifeq ($(threads),1)
   SOFLAGS += -mthreads
 endif
 
+ifeq ($(rpc),1)
+  LIBS    += -lrpc
+endif
+
 ifeq ($(shared_libs),1)
   CPPFLAGS += -DACE_HAS_SVR4_DYNAMIC_LINKING
   LDFLAGS  += -mshared
