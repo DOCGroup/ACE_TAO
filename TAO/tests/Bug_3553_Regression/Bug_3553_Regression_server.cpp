@@ -76,9 +76,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           CORBA::String_var ior_string = orb->object_to_string (object.in());
           ACE_DEBUG((LM_DEBUG, ACE_TEXT("Registring object %d with IOR string: %C\n"),
             i, ior_string.in ()));
-          char identifier[32];
+          char* identifier ("");
           ACE_OS::sprintf (identifier, ACE_TEXT ("TransportCacheTest%d"), i);
-          table->bind((const char *) identifier, ior_string.in());
+          table->bind(identifier, ior_string.in());
         }
 
       PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();

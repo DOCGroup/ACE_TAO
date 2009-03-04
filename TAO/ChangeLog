@@ -1,3 +1,9 @@
+Wed Mar  2 13:13:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3553_Regression/Bug_3553_Regression_client.cpp:
+        * tests/Bug_3553_Regression/Bug_3553_Regression_server.cpp:
+          Resolved compiler errors and warnings.
+
 Wed Mar  4 03:04:05 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
