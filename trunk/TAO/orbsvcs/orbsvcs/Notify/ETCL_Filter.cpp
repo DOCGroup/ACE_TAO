@@ -245,9 +245,9 @@ TAO_Notify_ETCL_Filter::add_constraints (
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Adding constraint %d, %s\n"),
+                      ACE_TEXT ("Adding constraint %d, %C\n"),
                       pop_index,
-                      ACE_TEXT_CHAR_TO_TCHAR (constraint_list [pop_index].constraint_expr.in ())));
+                      constraint_list [pop_index].constraint_expr.in ()));
         }
     }
 
