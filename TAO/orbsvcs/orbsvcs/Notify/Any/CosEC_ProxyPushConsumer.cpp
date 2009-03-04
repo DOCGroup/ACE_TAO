@@ -84,8 +84,8 @@ TAO_Notify_CosEC_ProxyPushConsumer::validate ()
     if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG, 
-		  ACE_TEXT ("(%P|%t) TAO_Notify_CosEC_ProxyPushConsumer::validate(%d)")
-		  ACE_TEXT ("disconnecting \n"), this->id ()));
+                  ACE_TEXT ("(%P|%t) TAO_Notify_CosEC_ProxyPushConsumer::validate(%d)")
+                  ACE_TEXT ("disconnecting \n"), this->id ()));
     }
 
     this->disconnect_push_consumer ();
