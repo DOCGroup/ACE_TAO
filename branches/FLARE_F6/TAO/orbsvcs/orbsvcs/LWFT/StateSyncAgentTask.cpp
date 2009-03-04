@@ -51,8 +51,6 @@ StateSyncAgentTask::svc (void)
       }
 
       this->orb_->run ();
-
-      this->orb_->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

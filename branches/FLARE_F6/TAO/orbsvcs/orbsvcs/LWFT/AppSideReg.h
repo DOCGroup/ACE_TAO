@@ -11,9 +11,7 @@
 #ifndef __APPSIDEREG_H_
 #define __APPSIDEREG_H_
 
-#include <string>
-
-#include "HostMonitorC.h"
+#include "lwft_server_export.h"
 
 /**
  *  @class  AppSideReg
@@ -24,18 +22,13 @@
 class LWFT_Server_Export AppSideReg
 {
 public:
-  AppSideReg (CORBA::ORB_ptr);
-
+  AppSideReg (void);
   ~AppSideReg (void);
 
   int register_process (void);
   
   // This needs to be moved somewhere else.
 //  void unregister_process (void);
-
-private:
-  std::string HM_ior_;
-  CORBA::ORB_var orb_;
 };
 
 

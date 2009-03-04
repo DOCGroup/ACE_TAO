@@ -208,7 +208,19 @@ AppOptions::process_id (const std::string & id)
 void
 AppOptions::monitor (AppSideMonitor_Thread *mon)
 {
-  this->monitor_ = mon;
+  monitor_ = mon;
+}
+
+void
+AppOptions::orb (CORBA::ORB_ptr the_orb)
+{
+  orb_ = the_orb;
+}
+
+CORBA::ORB_ptr
+AppOptions::orb (void)
+{
+  return orb_;
 }
 
 void 

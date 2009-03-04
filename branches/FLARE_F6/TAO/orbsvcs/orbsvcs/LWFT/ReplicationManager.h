@@ -13,7 +13,7 @@
 #include "ace/Condition_T.h"
 #include "ace/Containers_T.h"
 #include "ace/Recursive_Thread_Mutex.h"
-#include "AppSideReg.h"
+
 #include "Timer.h"
 
 #include "ReplicationManagerS.h"
@@ -240,7 +240,6 @@ public:
   
 private:
   CORBA::ORB_var orb_;
-  AppSideReg proc_reg_;
 
   Algorithm * algo_thread_;
   bool standby_;

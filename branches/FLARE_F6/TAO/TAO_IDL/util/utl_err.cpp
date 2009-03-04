@@ -268,12 +268,17 @@ exprtype_to_string (AST_Expression::ExprType t)
   case AST_Expression::EV_wchar:
     return "wchar";
   case AST_Expression::EV_longlong:
+    return "long long";
   case AST_Expression::EV_ulonglong:
+    return "unsigned long long";
   case AST_Expression::EV_longdouble:
+    return "long double";
   case AST_Expression::EV_wstring:
+    return "wstring";
   case AST_Expression::EV_any:
+    return "CORBA::Any";
   case AST_Expression::EV_object:
-    return 0;
+    return "CORBA::Object";
   }
   return 0;
 }

@@ -16,6 +16,8 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Auto_Ptr.h"
 
+#include "tao/ORB.h"
+
 #include "AppSideMonitor_Thread.h"
 #include "lwft_server_export.h"
 
@@ -61,6 +63,10 @@ public:
 
   void process_id (const std::string & id);
   void monitor (AppSideMonitor_Thread *mon);
+  
+  // Neither storage nor access creates a duplicate.
+  void orb (CORBA::ORB_ptr the_orb);
+  CORBA::ORB_ptr orb (void);
 
 protected:
   /// Constructor is protected to ensure Singleton access.
@@ -79,6 +85,7 @@ protected:
   bool use_dds_;
   long debug_level_;
   std::auto_ptr <AppSideMonitor_Thread> monitor_;
+  CORBA::ORB_ptr orb_;
 
   /// Singleton-related stuff.
   static AppOptions * volatile instance_;

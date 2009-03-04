@@ -1,3 +1,46 @@
+Wed Mar  4 20:16:16 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/lwft_server.mpb:
+        
+          Added LWFT_Server and LWFT_StateSyncAgent to 'after' list.
+          
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
+        
+          Removed LWFT_Client from 'libs' and 'after' lists for
+          projects that have lwft_server base class. Also
+          removed AppSideReg.cpp from LWFT_Server project.
+          
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h:
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.h:
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.h:
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Handler.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppOptions.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Handler.h:
+        * orbsvcs/orbsvcs/LWFT/AppOptions.h:
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.cpp:
+        
+          - Relocated class AppSideReg functionality (in
+            register_process() method) to AppSideMonitor_Thread
+            class. Class files will be removed after more testing.
+            
+          - Replaced usage of former class with the latter
+            in ReplicationManager.
+            
+          - Turned AppSideMonitor_Thread into an ACE singleton,
+            and modified its overridden activate() method (from
+            ACE_Task) to be a no-op on all but the first call.
+            
+          - Added storage for an ORB in AppOptions, for use
+            cases where ORB is shared, and to eliminate some
+            ORB_init() calls.
+          
+        * TAO_IDL/util/utl_err.cpp (expr_to_string):
+        
+          Filled in empty case statements.
+
 Tue Mar  3 18:36:19 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/AppSideReg.h:

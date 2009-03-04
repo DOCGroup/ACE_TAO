@@ -152,7 +152,6 @@ ReplicationManager_i::ReplicationManager_i (CORBA::ORB_ptr orb,
                                             bool static_mode,
                                             AlgoMode mode)
   : orb_ (CORBA::ORB::_duplicate (orb)),
-    proc_reg_ (orb),
     algo_thread_(0),
     standby_ (AppOptions::instance ()->role () > PRIMARY),
     proactive_(proactive),
@@ -294,16 +293,19 @@ ReplicationManager_i::update_util_map (
   // If not present...
   if (map.find (key_str, v) != 0)
     {
-      // this means a new host monitor has joined and we can
+      // This means a new host monitor has joined.
       map.bind (key_str, value);
 
-      // if the host_monitor is on the same host
+      // If the host_monitor is on the same host...
       char hostname [100];
       gethostname (hostname, sizeof (hostname));
 
       if (ACE_OS::strcmp (hostname, key_str) == 0)
         {
-          int result = proc_reg_.register_process ();
+          AppSideMonitor_Thread *mon =
+            AppSideMonitor_Thread::instance ();
+            
+          int result = mon->activate ();
 
           if (result != 0)
             {
