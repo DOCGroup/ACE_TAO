@@ -8,7 +8,7 @@ gnuplot <<_EOF_ >/dev/null 2>&1
     set xtics rotate
     set format x "%Y/%m/%d"
     set timefmt '%Y/%m/%d-%H:%M'
-    set xlabel 'Date (YYYYMMDD)'
+    set xlabel 'Date (YYYY/MM/DD)' 0,-3
     set ylabel 'Throughput (Requests/Second)'
     set terminal png small size $4 color
     set yrange [0:]
