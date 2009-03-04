@@ -224,7 +224,7 @@ gen_chart ()
   local TYPE=$3
   local EXT="txt"
   local YLABEL="Compile Time (Seconds)"
-  local FACTOR=100
+  local FACTOR=1
   local low=$4
   local high=$5
 
@@ -253,7 +253,7 @@ gen_chart ()
     set xtics rotate
     set xlabel 'Date (YYYY/MM/DD)' 0,-3
     set ylabel "${YLABEL}"
-    set terminal png small size 800,600 color
+    set terminal png small size 1024,768 color
     set yrange [$low:$high]
     set output "${DEST}/images/${object}_${TYPE}.png"
     set title "${object//___//}"
