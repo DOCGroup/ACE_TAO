@@ -200,7 +200,7 @@ protected:
 
   /// Last time either push an event or validate connection 
   /// via _non_exist call.
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, ACE_Time_Value> last_ping_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, ACE_Time_Value> last_ping_;
 
 private:
 

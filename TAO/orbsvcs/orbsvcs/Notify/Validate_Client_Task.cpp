@@ -40,7 +40,7 @@ TAO_Notify_validate_client_Task::svc (void)
   while (! this->shutdown_)
   {
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, *(this->condition_.mutex()), -1);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, *(this->condition_.mutex()), -1);
       this->condition_.wait (&due);
     }
 
@@ -78,7 +78,7 @@ void
 TAO_Notify_validate_client_Task::shutdown (void)
 {
   {
-    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, *(this->condition_.mutex()));
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *(this->condition_.mutex()));
     this->shutdown_ = true;
     this->condition_.signal ();
   }

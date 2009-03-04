@@ -75,8 +75,8 @@ int TAO_Notify_Method_Request_Dispatch::execute_i (void)
 
       if (TAO_debug_level > 1)
         ACE_DEBUG ((LM_DEBUG, 
-		    ACE_TEXT ("Notify (%P|%t) Proxysupplier %x filter ")
-		    ACE_TEXT ("eval result = %d"),
+                    ACE_TEXT ("Notify (%P|%t) Proxysupplier %x filter ")
+                    ACE_TEXT ("eval result = %d"),
           &this->proxy_supplier_ , val));
 
       // Filter failed - do nothing.
@@ -141,10 +141,10 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
       if (proxy_supplier != 0)
       {
         if (DEBUG_LEVEL > 6)
-	  ACE_DEBUG ((LM_DEBUG,
-		      ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
-		      ACE_TEXT (" reload event for %s\n"),
-		      textpath.c_str()));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
+                      ACE_TEXT (" reload event for %s\n"),
+                      textpath.c_str()));
         ACE_NEW_NORETURN (result,
           TAO_Notify_Method_Request_Dispatch_Queueable (delivery_request, proxy_supplier, true));
       }
@@ -154,24 +154,24 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
         if (proxy_consumer == 0)
         {
           ACE_ERROR ((LM_ERROR,
-		      ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
-		      ACE_TEXT ("::unmarshal: unknown proxy id %s\n"),
-		      textpath.c_str()));
+                      ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
+                      ACE_TEXT ("::unmarshal: unknown proxy id %s\n"),
+                      textpath.c_str()));
         }
         else
         {
           ACE_ERROR ((LM_ERROR,
-		      ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
-		      ACE_TEXT ("::unmarshal: wrong type of proxy id %s\n"),
-		      textpath.c_str()));
+                      ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
+                      ACE_TEXT ("::unmarshal: wrong type of proxy id %s\n"),
+                      textpath.c_str()));
         }
       }
     }
     else
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
-		  ACE_TEXT ("::unmarshal: Cant read proxy id path\n")));
+                  ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
+                  ACE_TEXT ("::unmarshal: Cant read proxy id path\n")));
     }
   }
   return result;
