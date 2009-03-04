@@ -143,7 +143,7 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
         if (DEBUG_LEVEL > 6)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
-                      ACE_TEXT (" reload event for %s\n"),
+                      ACE_TEXT (" reload event for %C\n"),
                       textpath.c_str()));
         ACE_NEW_NORETURN (result,
           TAO_Notify_Method_Request_Dispatch_Queueable (delivery_request, proxy_supplier, true));
@@ -155,14 +155,14 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
-                      ACE_TEXT ("::unmarshal: unknown proxy id %s\n"),
+                      ACE_TEXT ("::unmarshal: unknown proxy id %C\n"),
                       textpath.c_str()));
         }
         else
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
-                      ACE_TEXT ("::unmarshal: wrong type of proxy id %s\n"),
+                      ACE_TEXT ("::unmarshal: wrong type of proxy id %C\n"),
                       textpath.c_str()));
         }
       }
