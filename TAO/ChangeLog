@@ -1,3 +1,9 @@
+Wed Mar  4 17:41:53 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+          Clean up debug messages for wchar support.
+        
 Wed Mar  2 13:13:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3553_Regression/Bug_3553_Regression_client.cpp:
@@ -25,7 +31,7 @@ Wed Mar  4 03:04:05 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Validate_Client_Task.cpp:
           Fuzz fixes.
-        
+
 Tue Mar  3 23:11:40 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Notify/Persistent_Filter/Filter.cpp:
