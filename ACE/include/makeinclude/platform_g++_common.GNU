@@ -122,3 +122,8 @@ else
     CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
   endif # GXX_4_OR_BETTER == 1
 endif # shared_libs
+
+# GCC 2.x needs this to compile TAO correctly 
+ifeq ($(CXX_MAJOR_VERSION), 2)
+  CCFLAGS += -ftemplate-depth-23
+endif
