@@ -1,3 +1,8 @@
+Wed Mar  4 20:01:11 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Add -ftemplate-depth-23 to CCFLAGS when compiling with GCC 2.x. 
+
 Wed Mar  4 10:04:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_footprint_chart.sh:
