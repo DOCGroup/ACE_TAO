@@ -78,14 +78,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int iter = 1;
       for (iter = 1; iter <= cache_size; ++iter)
         {
-          char object_string [64];
-          char reference_string [32];
-          ACE_OS::sprintf (reference_string, ACE_TEXT ("TransportCacheTest%d"), iter);
-          ACE_OS::sprintf (object_string, ACE_TEXT ("corbaloc:iiop:localhost:%d/"), port_nr);
+          char* object_string ("");
+          char* reference_string ("");
+          ACE_OS::sprintf (reference_string, "TransportCacheTest%d", iter);
+          ACE_OS::sprintf (object_string, "corbaloc:iiop:localhost:%d/", port_nr);
           ACE_OS::strcat (object_string, reference_string);
 
           CORBA::Object_var hello_obj = orb->string_to_object (object_string);
-          orb->register_initial_reference ((const char *) reference_string, hello_obj.in ());
+          orb->register_initial_reference (reference_string, hello_obj.in ());
 
           CORBA::String_var ior_string = orb->object_to_string (hello_obj.in());
           ACE_DEBUG((LM_DEBUG, ACE_TEXT("IOR string for reference %d : %C\n"),
