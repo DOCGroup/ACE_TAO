@@ -1,3 +1,9 @@
+Wed Mar  4 20:56:50 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.cpp:
+          Fuzz fix.
+        
 Wed Mar  4 20:54:01 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
