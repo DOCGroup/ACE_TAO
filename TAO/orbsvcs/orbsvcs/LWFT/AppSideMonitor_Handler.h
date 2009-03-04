@@ -24,13 +24,10 @@
 class AppSideMonitor_Handler : public ACE_Svc_Handler <ACE_SOCK_Acceptor::PEER_STREAM, ACE_NULL_SYNCH>
 {
   public:
-
     typedef ACE_Svc_Handler <ACE_SOCK_Acceptor::PEER_STREAM, ACE_NULL_SYNCH> super;
     typedef ACE_Acceptor <AppSideMonitor_Handler, ACE_SOCK_Acceptor> FactoryAcceptor;
 
-  //private:
-    AppSideMonitor_Handler ();
-  public:
+    AppSideMonitor_Handler (void);
 
     virtual int handle_input (ACE_HANDLE fd);
     virtual int open (void *factory);
