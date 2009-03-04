@@ -77,8 +77,8 @@ TAO_Notify_Constraint_Expr::load_child (
     CORBA::ULong len = this->constr_expr.event_types.length ();
     if (DEBUG_LEVEL) 
       ACE_DEBUG ((LM_DEBUG,
-		  ACE_TEXT ("(%P|%t) reload EventType %d \n"),
-		  len + 1));
+                  ACE_TEXT ("(%P|%t) reload EventType %d \n"),
+                  len + 1));
 
     this->constr_expr.event_types.length (len + 1);
     this->constr_expr.event_types[len].domain_name = CORBA::string_dup (domain);
@@ -157,7 +157,7 @@ TAO_Notify_ETCL_Filter::add_constraint_i (CosNotifyFilter::ConstraintID cnstr_id
 
   if (TAO_debug_level > 1)
     ACE_DEBUG ((LM_DEBUG, 
-		ACE_TEXT("Added an empty constraint to filter\n")));
+                ACE_TEXT("Added an empty constraint to filter\n")));
 
   if (this->constraint_expr_list_.bind (cnstr_id, notify_constr_expr) == -1)
     throw CORBA::INTERNAL ();
@@ -193,8 +193,8 @@ TAO_Notify_ETCL_Filter::add_constraint_i
   {
     if (TAO_debug_level > 1)
       ACE_DEBUG ((LM_DEBUG, 
-		  ACE_TEXT ("Added constraint %s to filter %d\n"), 
-		  expr.constraint_expr.in (), this->id_));
+                  ACE_TEXT ("Added constraint %s to filter %d\n"), 
+                  expr.constraint_expr.in (), this->id_));
 
     cnstr_id = ++constraint_expr_ids_;
   }
@@ -202,8 +202,8 @@ TAO_Notify_ETCL_Filter::add_constraint_i
   {
     if (TAO_debug_level > 1)
       ACE_DEBUG ((LM_DEBUG, 
-		  ACE_TEXT ("Loaded constraint %s to filter %d\n"), 
-		  expr.constraint_expr.in (), this->id_));
+                  ACE_TEXT ("Loaded constraint %s to filter %d\n"), 
+                  expr.constraint_expr.in (), this->id_));
   }
 
   if (this->constraint_expr_list_.bind (cnstr_id, notify_constr_expr) == -1)
@@ -224,7 +224,7 @@ TAO_Notify_ETCL_Filter::add_constraints (
 
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG, 
-		  ACE_TEXT ("constraint_length = %d\n"),
+                  ACE_TEXT ("constraint_length = %d\n"),
                   constraint_length));
 
   // Create the list that goes out.
@@ -594,9 +594,9 @@ TAO_Notify_ETCL_Filter::load_child (const ACE_CString &type,
       constraint_expr_ids_ = id;
 
       if (DEBUG_LEVEL) 
-	ACE_DEBUG ((LM_DEBUG,
-		    ACE_TEXT ("(%P|%t) reload filter %d constraint %d\n"),
-		    static_cast<int> (this->id_), static_cast<int> (id)));
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) reload filter %d constraint %d\n"),
+                    static_cast<int> (this->id_), static_cast<int> (id)));
 
       TAO_Notify_Constraint_Expr* expr 
         = this->add_constraint_i (id);

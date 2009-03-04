@@ -96,7 +96,7 @@ protected:
 
   typedef ACE_Hash_Map_Manager <TAO_Notify_Object::ID,
                                 TAO_Notify_ETCL_Filter*,
-                                ACE_SYNCH_MUTEX>  FILTERMAP;
+                                TAO_SYNCH_MUTEX>  FILTERMAP;
 
   FILTERMAP filters_;
 };
