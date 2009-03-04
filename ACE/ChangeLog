@@ -1,3 +1,10 @@
+Wed Mar  4 10:04:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_footprint_chart.sh:
+        * bin/generate_performance_chart.sh:
+        * bin/performance_stats.sh:
+          Updated size and scale of the graphs
+
 Wed Mar  4 08:14:35 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/Process_Manager_Test.cpp:

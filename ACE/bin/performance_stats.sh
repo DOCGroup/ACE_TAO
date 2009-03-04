@@ -136,7 +136,7 @@ gnuplot <<_EOF_ >/dev/null 2>&1
     set xtics rotate
     set ylabel 'Throughput (Requests/Second)'
     set yrange [0:]
-    set terminal png small size 800,600 color
+    set terminal png small size 1024,768 color
     set output "/dev/null"
     plot 'AMI.txt' using 1:2 title 'AMI' w l
     replot 'DII.txt' using 1:2 title 'DII' w l
@@ -159,8 +159,8 @@ gnuplot <<_EOF_ >/dev/null 2>&1
     set xlabel 'Date (YYYYMMDD)'
     set xtics rotate
     set ylabel 'Throughput (Requests/Second)'
-    set yrange [0:35000]
-    set terminal png small size 800,600 color
+    set yrange [0:]
+    set terminal png small size 1024,768 color
     set output "/dev/null"
     plot 'AMI.txt' using 1:2 title 'AMI' w l
     replot 'DII.txt' using 1:2 title 'DII' w l
