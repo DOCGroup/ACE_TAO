@@ -101,7 +101,7 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
   if (debug_test)
     ACE_OS::strcpy (cmd, ACE_TEXT ("-d"));
   else
-    cmd[0] = '\0';
+    cmd[0] = ACE_TEXT ('\0');
 
 #if defined (ACE_HAS_WIN32_PRIORITY_CLASS)
   if (my_process_id == 1)
@@ -130,14 +130,14 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
       ACE_OS::sprintf (prio, ACE_TEXT("and priority 'normal'"));
     }
   else
-    prio[0] = '\0';
+    prio[0] = ACE_TEXT ('\0');
 
   ACE_TCHAR pd [16];
   ACE_OS::sprintf (pd, ACE_TEXT (" -p %d"), my_process_id);
   ACE_OS::strcat (cmd, pd);
 #else
   ACE_UNUSED_ARG (my_process_id);
-  prio[0] = '\0';
+  prio[0] = ACE_TEXT ('\0');
 #endif
 
   opts.command_line (cmdline_format,
@@ -322,7 +322,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       else if (priority == REALTIME_PRIORITY_CLASS)
         ACE_OS::sprintf (prio, ACE_TEXT("and priority 'realtime'"));
 #else
-      prio[0] = '\0';
+      prio[0] = ACE_TEXT ('\0');
 #endif
       if (debug_test)
         ACE_DEBUG ((LM_DEBUG,
