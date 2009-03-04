@@ -11,7 +11,7 @@ gnuplot <<_EOF_ >/dev/null 2>&1
     set xlabel 'Date (YYYYMMDD)'
     set ylabel 'Throughput (Requests/Second)'
     set terminal png small size $4 color
-    set yrange [4000:33000]
+    set yrange [0:]
     set output "$2"
     plot '$1' using 1:2 title '$3' w l
     exit
