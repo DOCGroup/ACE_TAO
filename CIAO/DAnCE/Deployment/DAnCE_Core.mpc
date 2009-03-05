@@ -48,7 +48,6 @@ project(Deployment_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream 
 
 // Valuetype library must be linked for this project.
 // Please don't remove.
-//project(Deployment_stub) : ciaolib_with_idl, valuetype, ifr_client, ciao_events_base_dnc, ccm_stub, messaging, ciao_lib {
 project(Deployment_stub) : ciaolib_with_idl, ciao_output, valuetype, ifr_client, messaging, dance_lib, dance_logger, gen_ostream {
   sharedname   =  DAnCE_Deployment_stub
   after += Deployment_IDL

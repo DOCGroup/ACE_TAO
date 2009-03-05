@@ -16,26 +16,18 @@ namespace CIDL_TargetManager_i
 
   TargetManager_exec_i::
   TargetManager_exec_i (TargetManagerImpl_exec_i* exec ,
-                        CORBA::ORB_ptr orb,
-                        TargetManagerImpl_Context *context)
-    : _exec (exec),
-      orb_ (CORBA::ORB::_duplicate (orb)),
-      context_ (context)
+                        CORBA::ORB_ptr orb)
+    : exec_ (exec),
+      orb_ (::CORBA::ORB::_duplicate (orb))
   {
     // The DomainDataManager created here ...
 
     // get its own obj ref , then call
-
-    CORBA::Object_var object = context_->get_CCM_object ();
-    CIAO::TargetManagerImpl_var target_impl =
-            CIAO::TargetManagerImpl::_narrow (object.in ());
-    ::Deployment::TargetManager_var target =
-            target_impl->provide_targetMgr ();
-
+    ::Deployment::TargetManager_var target = this->exec_->get_targetMgr ();
+    
     // Create Domain Data here
 
     CIAO::DomainDataManager::create (orb_.in (), target.in ());
-//    CIAO::Domain_Singleton::instance ();
   }
 
   TargetManager_exec_i::~TargetManager_exec_i (void)
@@ -103,8 +95,7 @@ namespace CIDL_TargetManager_i
 
         changed_event->changes (temp_domain);
         changed_event->change_kind (updateKind);
-
-        context_->push_changes (changed_event);
+        this->exec_->context_->push_changes (changed_event);
       }
 
   }
@@ -165,8 +156,7 @@ namespace CIDL_TargetManager_i
     if (CORBA::is_nil (this->exec_object_.in ()))
       {
         this->exec_object_ = new TargetManager_exec_i(this,
-                      context_->_ciao_the_Container()->_get_orb(),
-                      context_);
+                                     context_->_get_orb());
       }
 
     return ::Deployment::CCM_TargetManager::_duplicate (this->exec_object_.in ());
@@ -178,9 +168,8 @@ namespace CIDL_TargetManager_i
   TargetManagerImpl_exec_i::set_session_context (
   ::Components::SessionContext_ptr ctx)
   {
-    this->context_ = TargetManagerImpl_Context::_narrow (ctx);
-
-    if (this->context_ == 0)
+    this->context_ = ::CIAO::CCM_TargetManagerImpl_Context::_narrow (ctx);
+    if (CORBA::is_nil (this->context_.in ()))
     {
       throw CORBA::INTERNAL ();
     }
