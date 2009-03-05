@@ -208,7 +208,7 @@ AppOptions::process_id (const std::string & id)
 void
 AppOptions::monitor (AppSideMonitor_Thread *mon)
 {
-  monitor_ = mon;
+  monitor_.reset (mon);
 }
 
 void

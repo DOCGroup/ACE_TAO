@@ -15,7 +15,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
-#include "orbsvcs/orbsvcs/LWFT/AppSideReg.h"
 #include "orbsvcs/orbsvcs/LWFT/AppOptions.h"
 #include "orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.h"
 #include "orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.h"
@@ -111,15 +110,14 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_TRACE, ACE_TEXT ("ORB initialized.\n")));
 
       AppOptions::instance ()->parse_args (argc, argv);
+      AppOptions::instance ()->orb (orb.in ());
 
-      AppSideReg proc_reg (orb.in ());
-
-      int result = proc_reg.activate ();
+      int result = AppSideMonitor_Thread::instance ()->activate ();
       
       if (result != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "AppSideReg::activate () returned %d\n",
+                             "AppMonitor_Thread::activate () returned %d\n",
                              result),
                             -1);
         }
