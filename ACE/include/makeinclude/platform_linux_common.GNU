@@ -10,8 +10,8 @@ optimize ?= 1
 threads ?= 1
 insure ?= 0
 
-LSB_RELEASE_ID := $(shell lsb_release -i)
-LSB_RELEASE_RELEASE := $(shell lsb_release -r)
+LSB_RELEASE_ID := $(shell lsb_release -i 2> /dev/null || echo Distributor ID: Unknown)
+LSB_RELEASE_RELEASE := $(shell lsb_release -r 2> /dev/null || echo Release: Unknown)
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
@@ -87,7 +87,7 @@ endif
 PLATFORM_AIO_SUPPORT := \
        $(shell test "`ls -L /usr/lib*/librt.so* /lib*/librt.so*`" && echo -DACE_HAS_AIO_CALLS)
 
-GNU_LIBPTHREAD_VERSION := $(shell getconf GNU_LIBPTHREAD_VERSION)
+GNU_LIBPTHREAD_VERSION := $(shell getconf GNU_LIBPTHREAD_VERSION 2> /dev/null || echo Unknown)
 ifeq (NPTL, $(word 1,$(GNU_LIBPTHREAD_VERSION)))
   NPTL_VERS := $(subst ., ,$(word 2,$(GNU_LIBPTHREAD_VERSION)))
   ifneq (0, $(word 1,$(NPTL_VERS)))
