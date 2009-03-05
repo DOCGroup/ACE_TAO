@@ -1,5 +1,5 @@
 //$Id$
-project(*idl) : tao_versioning_idl_defaults {
+project(*core_idl) : tao_versioning_idl_defaults {
   custom_only = 1
   IDL_Files {
     idlflags += -Gp -Gd -Sci -SS -Sorb \
@@ -13,7 +13,7 @@ project(*idl) : tao_versioning_idl_defaults {
 }
 
 project(IORTable) : taolib, tao_output, install, taoidldefaults {
-  after       += *idl
+  after       += *core_idl
   sharedname   = TAO_IORTable
   dynamicflags = TAO_IORTABLE_BUILD_DLL
 

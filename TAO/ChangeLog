@@ -1,3 +1,11 @@
+Thu Mar  5 17:43:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/EndpointPolicy.mpc
+        * tao/IORTable.mpc
+        * tao/Strategies.mpc
+        * tao/ZIOP.mpc
+          Made idl projects unique to resolve name clashes
+
 Thu Mar  5 10:22:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
