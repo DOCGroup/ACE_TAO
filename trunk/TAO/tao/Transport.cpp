@@ -2330,7 +2330,15 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
               return -1;
             }
           // move the rd_ptr tp position of end_marker
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+          // during decompression, data_block has changed. Re initialise end marker
+          // message_block always contains the decompressed data in one block
+          // ziop take care of the read-write pointers in its datablock.
+          message_block.rd_ptr (message_block.base());
+          message_block.wr_ptr (message_block.rd_ptr ());
+#else
           message_block.rd_ptr (end_marker);
+#endif
         }
     }
 

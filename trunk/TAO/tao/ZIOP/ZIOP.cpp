@@ -124,12 +124,10 @@ TAO_ZIOP_Loader::decompress (Compression::Compressor_ptr compressor,
   return true;
 }
 
-ACE_Data_Block *
-TAO_ZIOP_Loader::decompress (ACE_Data_Block& db, TAO_Queued_Data& qd,
+bool
+TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
                              TAO_ORB_Core& orb_core)
 {
-  ACE_Data_Block *db_ret = &db;
-  
   CORBA::Object_var compression_manager =
     orb_core.resolve_compression_manager();
 
@@ -143,8 +141,8 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block& db, TAO_Queued_Data& qd,
       size_t begin = qd.msg_block ()-> rd_ptr() - qd.msg_block ()->base ();
       char * initial_rd_ptr = qd.msg_block ()-> rd_ptr();
       size_t const wr = qd.msg_block ()->wr_ptr () - qd.msg_block ()->base ();
-      
-      TAO_InputCDR cdr (db.duplicate (),
+
+      TAO_InputCDR cdr ((*db),
                         qd.msg_block ()->self_flags (),
                         begin + TAO_GIOP_MESSAGE_HEADER_LEN,
                         wr,
@@ -169,7 +167,7 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block& db, TAO_Queued_Data& qd,
           mb.copy(qd.msg_block ()->base () + begin,
                         TAO_GIOP_MESSAGE_HEADER_LEN);
 
-          if (mb.copy((char*)myout.get_buffer(true),
+          if (mb.copy((char*)myout.get_buffer(false),
                   (size_t)data.original_length) != 0)
             ACE_ERROR_RETURN((LM_ERROR,
                               ACE_TEXT ("TAO - (%P|%t) - ")
@@ -179,16 +177,17 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block& db, TAO_Queued_Data& qd,
           //change it into a GIOP message..
           mb.base ()[0] = 0x47;
           ACE_CDR::mb_align (&mb);
-          db_ret = mb.data_block ();
-          return db_ret->duplicate ();
+          *db = mb.data_block ()->duplicate ();
+          ACE_Data_Block *db_org = qd.msg_block ()->replace_data_block (mb.data_block ());
+          return true;
         }
     }
   else
     {
-      return 0;
+      return false;
     }
 
-  return db_ret;
+  return true;
 }
 
 CORBA::ULong

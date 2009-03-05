@@ -1,3 +1,26 @@
+Thu Mar  5 07:36:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp
+        * tao/GIOP_Message_Base.h
+        * tao/ZIOP/ZIOP.cpp
+        * tao/ZIOP/ZIOP.h
+        * tao/ZIOP_Adapter.h
+          Reverted last changes.
+          Resolved memory leak and assert error during
+          release of an ACE_Data_Block.
+
+        * tao/Transport.cpp
+          No need to set read write pointer correctly. ZIOP
+          is responsible for that.
+          
+        * tests/ZIOP/client.cpp
+          Enabled all tests again
+
+        * tests/Bug_3553_Regression/Bug_3553_Regression_client.cpp
+        * tests/Bug_3553_Regression/Bug_3553_Regression_server.cpp
+          Reverted last changes. Compiler errors should be resolved.
+
+
 Wed Mar  4 22:40:08 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
