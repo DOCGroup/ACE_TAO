@@ -893,7 +893,7 @@ public:
 
   /**
    * Remove the ACE_Event_Handler currently associated with @a signum.
-   * <sigkey> is ignored in this implementation since there is only
+   * @a sigkey is ignored in this implementation since there is only
    * one instance of a signal handler.  Install the new disposition
    * (if given) and return the previous disposition (if desired by the
    * caller).  Returns 0 on success and -1 if @a signum is invalid.
