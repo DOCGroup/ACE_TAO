@@ -1,10 +1,33 @@
 //$Id$
-project(IFR_Client) : taolib, tao_output, install, core_anytypecode, tao_versioning_idl_defaults {
+project(*idl) : tao_versioning_idl_defaults {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -SS -GX \
+                -Wb,stub_export_macro=TAO_IFR_Client_Export \
+                -Wb,stub_export_include=tao/IFR_Client/ifr_client_export.h \
+                -o IFR_Client
+    idlflags -= -Sa -St
+    IFR_Client/IFR_Base.pidl
+    IFR_Client/IFR_Basic.pidl
+    IFR_Client/IFR_Components.pidl
+    IFR_Client/IFR_Extended.pidl
+  }
+}
+
+project(IFR_Client) : taolib, tao_output, install, anytypecode, taoidldefaults {
+  after       += *idl
   sharedname   = TAO_IFR_Client
   dynamicflags = TAO_IFR_CLIENT_BUILD_DLL
 
   Source_Files {
     IFR_Client
+  }
+
+  Source_Files {
+    IFR_Client/IFR_BaseC.cpp
+    IFR_Client/IFR_BasicC.cpp
+    IFR_Client/IFR_ComponentsC.cpp
+    IFR_Client/IFR_ExtendedC.cpp
   }
 
   Header_Files {
@@ -28,15 +51,6 @@ project(IFR_Client) : taolib, tao_output, install, core_anytypecode, tao_version
   }
 
   IDL_Files {
-    idlflags += -SS -GX \
-                -Wb,stub_export_macro=TAO_IFR_Client_Export \
-                -Wb,stub_export_include=tao/IFR_Client/ifr_client_export.h \
-                -o IFR_Client
-    idlflags -= -Sa -St
-    IFR_Client/IFR_Base.pidl
-    IFR_Client/IFR_Basic.pidl
-    IFR_Client/IFR_Components.pidl
-    IFR_Client/IFR_Extended.pidl
   }
 
   Pkgconfig_Files {
