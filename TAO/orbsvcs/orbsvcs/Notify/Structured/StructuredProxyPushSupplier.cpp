@@ -74,7 +74,7 @@ TAO_Notify_StructuredProxyPushSupplier::validate ()
     {
       ACE_DEBUG ((LM_DEBUG, 
                   ACE_TEXT ("(%P|%t) TAO_Notify_StructuredProxyPushSupplier::validate(%d)")
-                  ACE_TEXT("disconnecting \n")), this->id ()));
+                  ACE_TEXT ("disconnecting \n"), this->id ()));
     }
 
     this->disconnect_structured_push_supplier ();
