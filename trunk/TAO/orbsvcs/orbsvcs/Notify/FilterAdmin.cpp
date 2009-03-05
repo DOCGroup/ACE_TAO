@@ -141,7 +141,7 @@ TAO_Notify_FilterAdmin::save_persistent (TAO_Notify::Topology_Saver& saver)
       //TBD: this presume the filter always collocated.
       //otherwise we need modify the filter interface to add get_filter_id()
 
-      TAO_Notify_FilterFactory* factory = ecf_->default_filter_factory_servant ();
+      TAO_Notify_FilterFactory* factory = ec_->default_filter_factory_servant ();
       TAO_Notify_Object::ID mapid = factory->get_filter_id (entry->int_id_.in ());
 
       fattrs.push_back(TAO_Notify::NVP("MapId", mapid));
@@ -162,7 +162,7 @@ TAO_Notify_FilterAdmin::load_child (const ACE_CString &type, CORBA::Long id,
    TAO_Notify_Object::ID mapid = 0;
    attrs.load("MapId", mapid);
 
-   TAO_Notify_FilterFactory* factory = ecf_->default_filter_factory_servant ();
+   TAO_Notify_FilterFactory* factory = ec_->default_filter_factory_servant ();
    CosNotifyFilter::Filter_var filter = factory->get_filter (mapid);
  
     if (! CORBA::is_nil(filter.in()))
@@ -182,9 +182,9 @@ TAO_Notify_FilterAdmin::release (void)
 }
 
 void
-TAO_Notify_FilterAdmin::event_channel_factory (TAO_Notify_EventChannelFactory* ecf)
+TAO_Notify_FilterAdmin::event_channel (TAO_Notify_EventChannel* ec)
 {
-  this->ecf_.reset (ecf);
+  this->ec_.reset (ec);
 }
 
 

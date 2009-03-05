@@ -1,3 +1,33 @@
+Thu Mar  5 19:56:32 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.h:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+
+          - Reverted to following commit to have filter factory per event 
+            channel.
+            Mon Mar 17 13:39:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+               * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+               * orbsvcs/orbsvcs/Notify/EventChannel.h:
+                 Create a filter factory for each event channel instead
+                 of a global singleton
+          
+          - Updated to persist filter factory as part of event channel.
+          
+        * orbsvcs/tests/Notify/Persistent_Filter/run_test.pl:
+
+          Minor fix.
+          
+        * bin/tao_orb_tests.lst:
+
+          Added Persistent_Filter test.
+          
 Thu Mar  5 19:20:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tao/Compression/Base_Compressor.cpp:

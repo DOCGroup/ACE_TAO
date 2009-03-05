@@ -18,8 +18,7 @@ $naming_ior = PerlACE::LocalFile ("naming.ior");
 
 $svc_conf = PerlACE::LocalFile ("NS.conf");
 
-$persistent_file = PerlACE::LocalFile ("persistency.notif.xml");
-$persistent_file_backup = PerlACE::LocalFile ("persistency.notif.000");
+$persistent_prefix = "persistency.notif";
 
 $status = 0;
 
@@ -121,8 +120,7 @@ sub run_test
   unlink $notify_ior;
 }
 
-unlink $persistent_file;
-unlink $persistent_file_backup;
+unlink <$persistent_prefix.*>;
 
 run_test ();
 run_test ("-m -p ");

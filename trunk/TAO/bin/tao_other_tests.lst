@@ -145,6 +145,7 @@ TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl: !ST !NO_MESSAGING 
 TAO/orbsvcs/tests/Notify/Reconnecting/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ !LynxOS
 TAO/orbsvcs/tests/Notify/XML_Persistence/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
 TAO/orbsvcs/tests/Notify/Persistent_POA/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
+TAO/orbsvcs/tests/Notify/Persistent_Filter/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
 TAO/orbsvcs/tests/EC_Mcast/run_test.pl: !NO_MCAST !NO_MESSAGING !DISABLE_ToFix_LynxOS_PPC !ACE_FOR_TAO !CORBA_E_MICRO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
 # FAILS 'TAO/orbsvcs/tests/EC_Multiple/run_test.pl !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
 # NO REDIRECTION TAO/examples/Simple/echo/run_test.pl < Echo.idl !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ

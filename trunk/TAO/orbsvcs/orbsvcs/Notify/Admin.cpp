@@ -55,7 +55,7 @@ TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent)
   this->ec_.reset (dynamic_cast<TAO_Notify_EventChannel *>(parent));
   ACE_ASSERT (this->ec_.get() != 0);
 
-  filter_admin_.event_channel_factory (this->ec_->event_channel_factory ());
+  filter_admin_.event_channel (this->ec_.get ());
 
   // this-> on the following line confuses VC6
   initialize (parent);
