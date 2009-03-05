@@ -57,6 +57,7 @@ public:
 private:
   // Prevent instance creation outside of ACE_Singleton.
   AppSideMonitor_Thread (void);
+  ~AppSideMonitor_Thread (void);
   
 private:
   u_short port_;

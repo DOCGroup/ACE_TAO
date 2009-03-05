@@ -9,6 +9,8 @@
 
 #include "ace/OS_NS_unistd.h"
 
+#include "AppSideMonitor_Thread.h"
+
 #include "ForwardingAgentC.h"
 #include "AppInfoC.h"
 

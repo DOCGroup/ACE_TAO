@@ -12,6 +12,7 @@ project(*Common) : pi_server, interceptors, iorinterceptor, orbsvcs_output {
   }
   
   Source_Files {
+    AppOptions.cpp
     Barrier_Guard.cpp
     LWFTDataStructuresC.cpp
     LWFTDataStructuresS.cpp
@@ -87,7 +88,6 @@ project(*Server) : iorinterceptor, orbsvcs_output {
   }
   
   Source_Files {
-    AppOptions.cpp
     AppSideMonitor_Thread.cpp
     AppSideMonitor_Handler.cpp
     HostMonitorC.cpp

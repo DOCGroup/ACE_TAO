@@ -32,15 +32,10 @@ class SSA_Export StateSynchronizationAgent_i
   : public POA_StateSynchronizationAgent
 {
  public:
-  /// ctor
-  /// @param reference to a simple long value representing
-  ///        the state of the application
-  StateSynchronizationAgent_i (CORBA::ORB_ptr orb,
-			                         const std::string & host_id,
+  StateSynchronizationAgent_i (const std::string & host_id,
 			                         const std::string & process_id,
                                bool use_corba = true);
 
-  /// dtor
   ~StateSynchronizationAgent_i (void);
 
   /// Implementation of the StateSynchronizationAgent interface.
@@ -101,9 +96,6 @@ class SSA_Export StateSynchronizationAgent_i
   std::string get_unique_id (const std::string & app_name);
   
 private:
-  /// orb reference
-  CORBA::ORB_var orb_;
-
   /// host on which the agent is running
   std::string host_id_;
 

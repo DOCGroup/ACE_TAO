@@ -1,3 +1,24 @@
+Thu Mar  5 17:21:14 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h:
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.h:
+        * orbsvcs/orbsvcs/LWFT/AppOptions.cpp:
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.h:
+        * orbsvcs/orbsvcs/LWFT/AppOptions.h:
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.cpp:
+        
+          - Made StateSyncAgentTask into an ACE singleton, which
+            now creates the StateSynchronizationAgent servant
+            internally instead of getting it passed in.
+            
+          - Moved AppOptions to the LWFT_Common library to avoid
+            a circular dependence between LWFT_Server and
+            LWFT_StateSyncAgent.
+
 Thu Mar  5 15:02:30 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h:
