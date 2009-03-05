@@ -178,7 +178,7 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
           mb.base ()[0] = 0x47;
           ACE_CDR::mb_align (&mb);
           *db = mb.data_block ()->duplicate ();
-          ACE_Data_Block *db_org = qd.msg_block ()->replace_data_block (mb.data_block ());
+          qd.msg_block ()->replace_data_block (mb.data_block ());
           return true;
         }
     }
