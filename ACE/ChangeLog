@@ -1,3 +1,10 @@
+Thu Mar  5 20:18:42 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_linux_common.GNU:
+          Improved support for systems that lack 'lsb_release' command
+          and systems which getconf doesn't support 'GNU_LIBPTHREAD_VERSION'
+          variable.
+
 Thu Mar  5 19:22:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace_qt3reactor.mpc:
