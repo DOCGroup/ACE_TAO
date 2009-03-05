@@ -1,3 +1,14 @@
+Thu Mar  5 19:20:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/Compression/Base_Compressor.cpp:
+          Resolved error in calculating compression ratio.
+          
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP.h:
+          Acceptance of compression ratio is now based on 
+          the current compression ratio in stead of overall
+          compression ratio.
+
 Thu Mar  5 18:59:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA.mpc

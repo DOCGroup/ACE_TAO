@@ -103,8 +103,12 @@ private:
   bool decompress (Compression::Compressor_ptr compressor,
                    const ::Compression::Buffer &source,
                    ::Compression::Buffer &target);
+  
+  CORBA::ULong get_ratio (CORBA::OctetSeq& uncompressed, 
+                          CORBA::OctetSeq& compressed);
 
-  bool check_min_ratio (::Compression::CompressionRatio ratio,
+  bool check_min_ratio (const CORBA::ULong& this_ratio,
+                        ::Compression::CompressionRatio overall_ratio,
                         CORBA::Long min_ratio) const;
 };
 
