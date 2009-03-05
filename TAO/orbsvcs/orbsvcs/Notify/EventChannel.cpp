@@ -48,6 +48,7 @@ TAO_Notify_EventChannel::TAO_Notify_EventChannel (void)
   : ecf_ (0)
   , ca_container_ (0)
   , sa_container_ (0)
+  , default_filter_factory_ (CosNotifyFilter::FilterFactory::_nil ())
 {
 }
 
@@ -110,6 +111,16 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
 
   this->set_admin (initial_admin);
 
+  PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
+  TAO_Notify_FilterFactory * default_filter_factory_servant = 0;
+
+  this->default_filter_factory_ =
+    TAO_Notify_PROPERTIES::instance()->builder()->build_filter_factory (
+    default_poa.in(), default_filter_factory_servant);
+
+  this->default_filter_factory_servant_.reset (default_filter_factory_servant);
+
+
   // Note originally default admins were allocated here, bt this caused problems
   // attempting to save the topology changes before the Event Channel was completely
   // constructed and linked to the ECF.
@@ -165,6 +176,15 @@ TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent* parent)
     TAO_Notify_PROPERTIES::instance ()->default_event_channel_qos_properties ();
 
   this->set_qos (default_ec_qos);
+
+  PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
+  TAO_Notify_FilterFactory * default_filter_factory_servant = 0;
+
+  this->default_filter_factory_ =
+    TAO_Notify_PROPERTIES::instance()->builder()->build_filter_factory (
+    default_poa.in(), default_filter_factory_servant);
+
+  this->default_filter_factory_servant_.reset (default_filter_factory_servant);
 }
 
 
@@ -225,6 +245,9 @@ TAO_Notify_EventChannel::destroy (void)
 
   this->sa_container_.reset( 0 );
   this->ca_container_.reset( 0 );
+
+  this->default_filter_factory_ = CosNotifyFilter::FilterFactory::_nil();
+  this->default_filter_factory_servant_.reset (0);
 }
 
 void
@@ -312,7 +335,13 @@ TAO_Notify_EventChannel::default_supplier_admin (void)
 ::CosNotifyFilter::FilterFactory_ptr
 TAO_Notify_EventChannel::default_filter_factory (void)
 {
-  return this->ecf_->get_default_filter_factory ();
+  return CosNotifyFilter::FilterFactory::_duplicate (this->default_filter_factory_.in ());
+}
+
+TAO_Notify_FilterFactory*
+TAO_Notify_EventChannel::default_filter_factory_servant () const
+{
+  return this->default_filter_factory_servant_.get ();
 }
 
 ::CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -432,6 +461,8 @@ TAO_Notify_EventChannel::save_persistent (TAO_Notify::Topology_Saver& saver)
 
     bool want_all_children = saver.begin_object(
       this->id(), "channel", attrs, changed);
+  
+    this->default_filter_factory_servant_->save_persistent (saver);
 
     TAO_Notify::Save_Persist_Worker<TAO_Notify_ConsumerAdmin> ca_wrk(saver, want_all_children);
 
@@ -481,7 +512,11 @@ TAO_Notify_EventChannel::load_child (const ACE_CString &type,
                                                   const TAO_Notify::NVPList& attrs)
 {
   TAO_Notify::Topology_Object* result = this;
-  if (type == "consumer_admin")
+  if (type == "filter_factory")
+  {
+    return this->default_filter_factory_servant_.get ();
+  }
+  else if (type == "consumer_admin")
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) EventChannel reload consumer_admin %d\n")
@@ -598,12 +633,6 @@ TAO_Notify_EventChannel::validate ()
   this->sa_container().collection()->for_each(&sa_wrk);
 }
 
-
-TAO_Notify_EventChannelFactory* 
-TAO_Notify_EventChannel::event_channel_factory ()
-{
-  return this->ecf_.get ();
-}
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

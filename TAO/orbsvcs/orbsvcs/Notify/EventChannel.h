@@ -24,9 +24,11 @@
 #include "orbsvcs/Notify/Topology_Object.h"
 #include "orbsvcs/Notify/Object.h"
 #include "orbsvcs/Notify/EventChannelFactory.h"
+#include "orbsvcs/Notify/FilterFactory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_Notify_FilterFactory;
 class TAO_Notify_ConsumerAdmin;
 class TAO_Notify_SupplierAdmin;
 class TAO_Notify_EventChannelFactory;
@@ -114,7 +116,7 @@ public:
   virtual CosNotifyChannelAdmin::SupplierAdmin_ptr
     get_supplieradmin (CosNotifyChannelAdmin::AdminID id);
 
-  TAO_Notify_EventChannelFactory * event_channel_factory ();
+  TAO_Notify_FilterFactory* default_filter_factory_servant () const;
 
 private:
   typedef TAO_Notify_Container_T <TAO_Notify_ConsumerAdmin> TAO_Notify_ConsumerAdmin_Container;
@@ -179,6 +181,10 @@ private:
 
   /// SupplierAdmin Container.
   ACE_Auto_Ptr< TAO_Notify_SupplierAdmin_Container > sa_container_;
+
+  /// The default filter factory.
+  CosNotifyFilter::FilterFactory_var default_filter_factory_;
+  ACE_Auto_Ptr <TAO_Notify_FilterFactory> default_filter_factory_servant_;
 
   virtual void release (void);
 };
