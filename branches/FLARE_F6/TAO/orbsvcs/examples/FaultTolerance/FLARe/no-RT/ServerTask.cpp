@@ -20,6 +20,7 @@
 #include "orbsvcs/orbsvcs/LWFT/ReplicationManagerC.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "ServerTask.h"
+#include "orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h"
 #include "test_i.h"
 
 std::vector<std::string> object_ids;
@@ -28,7 +29,7 @@ std::vector<double> object_loads;
 
 ServerTask::ServerTask (ServerOptions & options,
 			CORBA::ORB_ptr orb,
-			StateSynchronizationAgent_i * agent)
+			StateSynchronizationAgent_ptr agent)
   : options_ (options),
     orb_ (CORBA::ORB::_duplicate (orb)),
     agent_ (agent)
@@ -103,32 +104,13 @@ ServerTask::svc (void)
 	}
       else
 	{
-          // get reference of the state synchronization agent
-          CORBA::Object_var obj =
-            orb_->resolve_initial_references ("RootPOA");
-
-          PortableServer::POA_var root_poa =
-            PortableServer::POA::_narrow (obj.in ());
-
-          obj = root_poa->servant_to_reference (agent_);
-
-          StateSynchronizationAgent_var agent =
-            StateSynchronizationAgent::_narrow (obj.in ());
-
-          if (CORBA::is_nil (agent.in ()))
-            {
-              ACE_DEBUG ((LM_ERROR, "ServerTask: Could not get object "
-                          "reference to StateSynchronizationAgent.\n"));
-              return 1;
-            }
-
 	  // ***************************************************
 	  // register replication agent with the replication manager
 
 	  rm->register_state_synchronization_agent (
             AppOptions::instance ()->host_id ().c_str (),
 	    AppOptions::instance ()->process_id ().c_str (),
-	    agent.in ());
+	    agent_.in ());
 
 	  // ***************************************************
 	  // activate as many servants as required
@@ -139,7 +121,7 @@ ServerTask::svc (void)
 		new test_i (this->orb_.in (),
 			    poa.in (),
 			    object_ids[i].c_str (),
-			    agent.in (),
+			    agent_.in (),
 			    options_.stop);
 
 	      PortableServer::ServantBase_var safe_servant (servant);
@@ -174,17 +156,28 @@ ServerTask::svc (void)
 #ifdef FLARE_USES_DDS
               if (!AppOptions::instance ()->use_dds ())
 #endif
-                agent->register_application (object_ids[i].c_str (),
-                                             test.in ());
+                agent_->register_application (object_ids[i].c_str (),
+                                              test.in ());
 #ifdef FLARE_USES_DDS
               else
-                agent_->register_application_with_dds <
-                  State,
-                  StateTypeSupport,
-                  StateDataWriter,
-                  StateDataReader, 
-                  StateSeq> (object_ids[i].c_str (),
-                             test.in ());
+                {
+                  // get reference of the state synchronization agent
+                  CORBA::Object_var obj =
+                    orb_->resolve_initial_references ("RootPOA");
+
+                  PortableServer::POA_var root_poa =
+                    PortableServer::POA::_narrow (obj.in ());
+
+                  PortableServer::ServantBase_var agent_srv = 
+                    root_poa->reference_to_servant (agent_.in ());
+
+                  StateSynchronizationAgent_i * agent =
+                    dynamic_cast <StateSynchronizationAgent_i *> (agent_srv.in ());
+
+                  agent->register_application_with_dds <
+                    State> (object_ids[i].c_str (),
+                               test.in ());
+                }
 #endif
 
 	      ACE_DEBUG ((LM_DEBUG,

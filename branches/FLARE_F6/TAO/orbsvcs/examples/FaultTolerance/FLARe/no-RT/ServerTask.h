@@ -20,7 +20,6 @@
 #endif
 
 #include "tao/PortableServer/POAC.h"
-#include "orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h"
 
 struct ServerOptions
 {
@@ -50,7 +49,7 @@ class ServerTask : public ACE_Task_Base
 public:
   ServerTask (ServerOptions & options,
               CORBA::ORB_ptr orb,
-              StateSynchronizationAgent_i * agent);
+              StateSynchronizationAgent_ptr agent);
 
   int svc (void);
 
@@ -68,7 +67,7 @@ private:
 
   CORBA::ORB_var orb_;
 
-  StateSynchronizationAgent_i * agent_;
+  StateSynchronizationAgent_var agent_;
 };
 
 #endif /* _FLARE_SERVER_TASK_H_ */

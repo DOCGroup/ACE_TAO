@@ -16,6 +16,7 @@
 #include "tao/debug.h"
 
 #include "orbsvcs/orbsvcs/LWFT/AppOptions.h"
+#include "orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.h"
 #include "orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.h"
 #include "orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.h"
 #include "orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.h"
@@ -131,21 +132,7 @@ main (int argc, char *argv[])
           return result;
         }
 
-      StateSynchronizationAgent_i* ssa_servant =
-	      new StateSynchronizationAgent_i (
-	        orb.in (),
-		AppOptions::instance ()->host_id (),
-		AppOptions::instance ()->process_id (),
-		!(AppOptions::instance ()->use_dds ()));
-
-      PortableServer::ServantBase_var owner_transfer (ssa_servant);
-      // ACE_DEBUG ((LM_TRACE, ACE_TEXT ("StateSynchronizationAgent created.\n")));
-
-      // create task for state synchronization agent
-      StateSyncAgentTask sync_agent_thread (orb.in (),
-					    ssa_servant);
-
-      result = sync_agent_thread.activate ();
+      result = StateSyncAgentTask::instance ()->activate ();
       
       if (result != 0)
         {
@@ -167,7 +154,7 @@ main (int argc, char *argv[])
       // Create task.
       ServerTask task (server_options,
                        orb.in (),
-                       ssa_servant);
+                       StateSyncAgentTask::instance ()->agent_ref ());
 
       // Activate task.
       result = task.activate (THR_NEW_LWP | THR_JOINABLE);

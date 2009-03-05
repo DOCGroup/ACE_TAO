@@ -1,3 +1,11 @@
+Thu Mar  5 20:08:18 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/server.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.h
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.cpp:
+                
+          Adjusted client example to previous changes in LWFT.  
+
 Thu Mar  5 19:04:09 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
