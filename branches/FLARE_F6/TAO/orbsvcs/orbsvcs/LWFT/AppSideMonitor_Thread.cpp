@@ -16,7 +16,6 @@
 
 #include "AppSideMonitor_Thread.h"
 #include "AppOptions.h"
-#include "HostMonitorC.h"
 
 AppSideMonitor_Thread*
 AppSideMonitor_Thread::instance (void)
@@ -69,9 +68,9 @@ AppSideMonitor_Thread::svc (void)
                                 1);
             }
 
-          hmvar = HostMonitor::_narrow (obj.in ());
+          hmvar_ = HostMonitor::_narrow (obj.in ());
             
-          if (CORBA::is_nil (hmvar.in ()))
+          if (CORBA::is_nil (hmvar_.in ()))
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "AppSideMonitor_Thread::svc: "
@@ -93,7 +92,7 @@ AppSideMonitor_Thread::svc (void)
         {
           try
             {
-              port_ = hmvar->heartbeat_port ();
+              port_ = hmvar_->heartbeat_port ();
             }
           catch (CORBA::Exception &ex)
             {
@@ -108,44 +107,9 @@ AppSideMonitor_Thread::svc (void)
           port_ = AppOptions::instance ()->port ();
         }
 
-      try
-        {
-//          ACE_DEBUG ((LM_TRACE,
-//                      "AppSideReg::svc - got heartbeat port "
-//                      "%d from hm.\n", port_));
-          CORBA::Boolean good_register =
-            hmvar->register_process (
-              AppOptions::instance ()->process_id ().c_str (),
-              AppOptions::instance ()->host_id ().c_str (),
-              port_);
-              
-          if (good_register)
-            {
-        /*
-              ACE_DEBUG ((LM_TRACE,
-                          "Registered successfully %s "
-                          "with host monitor.\n",
-                          AppOptions::instance ()->process_id ().c_str())); 
-        */
-            }
-          else
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Registeration with the monitor "
-                                 "failed. Maybe the "
-                                 "hostmonitor needs to be set to "
-                                 "another "
-                                 "port range.\n"),
-                                1);
-            }
-        }
-      catch (CORBA::Exception &ex)
-        {
-          ACE_PRINT_EXCEPTION (ex,
-                               "AppSideMonitor_Thread::svc: "
-                               "HostMonitor::register_process():");
-          return -1;
-        }
+//      ACE_DEBUG ((LM_TRACE,
+//                  "AppSideReg::svc - got heartbeat port "
+//                  "%d from hm.\n", port_));
 
       if (serv_addr_.set (port_) == -1)
         {
@@ -211,9 +175,51 @@ AppSideMonitor_Thread::activate (long /* flags */,
   int retval = this->ACE_Task_Base::activate ();
   sync_.wait ();
   
-  // Keep a reference to the monitor singleton.
-  AppOptions::instance ()->monitor (this);
+  if (retval != 0)
+    {
+      return retval;
+    }
   
-  return retval;
+  AppOptions *app_opts = AppOptions::instance ();
+  
+  // Keep a reference to the monitor singleton.
+  app_opts->monitor (this);
+  
+  try
+    {
+      CORBA::Boolean good_register =
+        hmvar_->register_process (app_opts->process_id ().c_str (),
+                                  app_opts->host_id ().c_str (),
+                                  port_);
+          
+      if (good_register)
+        {
+    /*
+          ACE_DEBUG ((LM_TRACE,
+                      "Registered successfully %s "
+                      "with host monitor.\n",
+                      AppOptions::instance ()->process_id ().c_str())); 
+    */
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Registeration with the monitor "
+                             "failed. Maybe the "
+                             "hostmonitor needs to be set to "
+                             "another "
+                             "port range.\n"),
+                            1);
+        }
+    }
+  catch (CORBA::Exception &ex)
+    {
+      ACE_PRINT_EXCEPTION (ex,
+                           "AppSideMonitor_Thread::svc: "
+                           "HostMonitor::register_process():");
+      return -1;
+    }
+
+  return 0;
 }
 
