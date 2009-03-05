@@ -1,3 +1,11 @@
+Thu Mar  5 19:04:09 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
+        
+          Overlooked in checkin
+          
+          Thu Mar  5 17:21:14 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Thu Mar  5 17:21:14 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h:

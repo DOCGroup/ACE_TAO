@@ -96,18 +96,17 @@ main (int argc, char *argv[])
 
       StateSynchronizationAgent_i* ssa_servant =
 	      new StateSynchronizationAgent_i (
-	        orb.in (),
-		AppOptions::instance ()->host_id (),
-		AppOptions::instance ()->process_id (),
-		!(AppOptions::instance ()->use_dds ()));
+		    AppOptions::instance ()->host_id (),
+		    AppOptions::instance ()->process_id (),
+		    !(AppOptions::instance ()->use_dds ()));
 
       PortableServer::ServantBase_var owner_xfer_ssa (ssa_servant);
 
-      // create task for state synchronization agent
-      StateSyncAgentTask sync_agent_thread (orb.in (),
-                                            ssa_servant);
-
-      int result = sync_agent_thread.activate ();
+      // Create task for state synchronization agent.
+      StateSyncAgentTask *sync_agent_thread =
+        StateSyncAgentTask::instance ();
+        
+      int result = sync_agent_thread->activate ();
       
       if (result != 0)
         {
@@ -207,16 +206,17 @@ main (int argc, char *argv[])
         }
 
       // add reference for state synchronization of the RM itself
-      rm_i->agent (sync_agent_thread.agent_ref ());
+      rm_i->agent (sync_agent_thread->agent_ref ());
 
       // register its own StateSynchronizationAgent
       rm_i->register_state_synchronization_agent (
         AppOptions::instance ()->host_id ().c_str (),
 	      AppOptions::instance ()->process_id ().c_str (),
-	      sync_agent_thread.agent_ref ());
+	      sync_agent_thread->agent_ref ());
 
-      sync_agent_thread.agent_ref ()->register_application (rm_i->object_id (),
-                                                            rm.in ());
+      sync_agent_thread->agent_ref ()->register_application (
+        rm_i->object_id (),
+        rm.in ());
 
       RegistrationTask registration_task (
                          primary_rm.in (),
