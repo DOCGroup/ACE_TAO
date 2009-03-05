@@ -1,29 +1,6 @@
 //$Id$
-project(PortableServer) : taolib, tao_output, install, core_anytypecode, tao_versioning_idl_defaults {
-  sharedname   = TAO_PortableServer
-  dynamicflags = TAO_PORTABLESERVER_BUILD_DLL
-
-  Source_Files {
-    PortableServer
-  }
-
-  Header_Files {
-    PortableServer
-  }
-
-  Inline_Files {
-    PortableServer
-  }
-
-  Template_Files {
-    PortableServer/Servant_var.cpp
-    PortableServer/*_T.cpp
-  }
-
-  Resource_Files {
-    PortableServer
-  }
-
+project(*idl) : tao_versioning_idl_defaults {
+  custom_only = 1
   IDL_Files {
     idlflags += -Gp -Gd -Sci -SS -Sorb -GA \
                 -Wb,export_macro=TAO_PortableServer_Export \
@@ -82,9 +59,75 @@ project(PortableServer) : taolib, tao_output, install, core_anytypecode, tao_ver
                 -o PortableServer
     PortableServer/PortableServer.pidl
   }
+}
+
+project(PortableServer) : taolib, tao_output, install, anytypecode, taoidldefaults {
+  after       += *idl
+  sharedname   = TAO_PortableServer
+  dynamicflags = TAO_PORTABLESERVER_BUILD_DLL
+
+  Source_Files {
+    PortableServer
+  }
+
+  Source_Files {
+    PortableServer/ForwardRequestC.cpp
+    PortableServer/AdapterActivatorC.cpp
+    PortableServer/IdAssignmentPolicyC.cpp
+    PortableServer/IdUniquenessPolicyC.cpp
+    PortableServer/ImplicitActivationPolicyC.cpp
+    PortableServer/LifespanPolicyC.cpp
+    PortableServer/RequestProcessingPolicyC.cpp
+    PortableServer/ServantActivatorC.cpp
+    PortableServer/ServantLocatorC.cpp
+    PortableServer/ServantManagerC.cpp
+    PortableServer/ServantRetentionPolicyC.cpp
+    PortableServer/ThreadPolicyC.cpp
+    PortableServer/POAManagerC.cpp
+    PortableServer/POAManagerFactoryC.cpp
+    PortableServer/POAC.cpp
+    PortableServer/PS_CurrentC.cpp
+    PortableServer/PortableServer_includeC.cpp
+    PortableServer/PortableServerC.cpp
+    PortableServer/AdapterActivatorA.cpp
+    PortableServer/ForwardRequestA.cpp
+    PortableServer/IdAssignmentPolicyA.cpp
+    PortableServer/IdUniquenessPolicyA.cpp
+    PortableServer/ImplicitActivationPolicyA.cpp
+    PortableServer/LifespanPolicyA.cpp
+    PortableServer/PS_ForwardA.cpp
+    PortableServer/Regular_POA.cpp
+    PortableServer/RequestProcessingPolicyA.cpp
+    PortableServer/Root_POA.cpp
+    PortableServer/ServantActivatorA.cpp
+    PortableServer/ServantLocatorA.cpp
+    PortableServer/ServantManagerA.cpp
+    PortableServer/ServantRetentionPolicyA.cpp
+    PortableServer/ThreadPolicyA.cpp
+  }
+
+  Header_Files {
+    PortableServer
+  }
+
+  Inline_Files {
+    PortableServer
+  }
+
+  Template_Files {
+    PortableServer/Servant_var.cpp
+    PortableServer/*_T.cpp
+  }
+
+  Resource_Files {
+    PortableServer
+  }
 
   PIDL_Files {
     PortableServer
+  }
+
+  IDL_Files {
   }
 
   Pkgconfig_Files {

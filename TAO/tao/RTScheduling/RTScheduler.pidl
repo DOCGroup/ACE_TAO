@@ -28,7 +28,7 @@
 
 #include "tao/RTCORBA/RTCORBA_include.pidl"
 #include "tao/PortableServer/PortableServer_include.pidl"
-#include "tao/PI/ClientRequestInfo.pidl"
+#include "tao/PI/PI_include.pidl"
 #include "tao/PI_Server/ServerRequestInfo.pidl"
 #include "tao/PortableInterceptor.pidl"
 #include "tao/PI/PIForwardRequest.pidl"

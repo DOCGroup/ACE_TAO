@@ -1,10 +1,34 @@
 //$Id$
-project(EndpointPolicy) : taolib, tao_output, install, portableserver, pi, tao_versioning_idl_defaults, tao_no_iiop, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*idl) : tao_versioning_idl_defaults {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -GA -SS -Sci -Sorb \
+                -Wb,export_macro=TAO_EndpointPolicy_Export \
+                -Wb,export_include=tao/EndpointPolicy/EndpointPolicy_Export.h \
+                -o EndpointPolicy
+    idlflags -= -Sa -St
+    EndpointPolicy/EndpointPolicy.pidl
+    EndpointPolicy/IIOPEndpointValue.pidl
+    EndpointPolicy/EndpointPolicyType.pidl
+  }
+}
+
+project(EndpointPolicy) : taolib, tao_output, install, portableserver, pi, taoidldefaults, tao_no_iiop, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after       += *idl
   sharedname   = TAO_EndpointPolicy
   dynamicflags = TAO_ENDPOINTPOLICY_BUILD_DLL
 
   Source_Files {
     EndpointPolicy
+  }
+
+  Source_Files {
+    EndpointPolicy/EndpointPolicyC.cpp
+    EndpointPolicy/IIOPEndpointValueC.cpp
+    EndpointPolicy/EndpointPolicyTypeC.cpp
+    EndpointPolicy/EndpointPolicyA.cpp
+    EndpointPolicy/EndpointPolicyTypeA.cpp
+    EndpointPolicy/IIOPEndpointValueA.cpp
   }
 
   Header_Files {
@@ -24,17 +48,10 @@ project(EndpointPolicy) : taolib, tao_output, install, portableserver, pi, tao_v
   }
 
   PIDL_Files {
+    EndpointPolicy
   }
 
   IDL_Files {
-    idlflags += -GA -SS -Sci -Sorb \
-                -Wb,export_macro=TAO_EndpointPolicy_Export \
-                -Wb,export_include=tao/EndpointPolicy/EndpointPolicy_Export.h \
-                -o EndpointPolicy
-    idlflags -= -St
-    EndpointPolicy/EndpointPolicy.pidl
-    EndpointPolicy/IIOPEndpointValue.pidl
-    EndpointPolicy/EndpointPolicyType.pidl
   }
 
   Pkgconfig_Files {

@@ -1,31 +1,6 @@
 //$Id$
-project(Messaging) : taolib, tao_output, install, portableserver, pi, valuetype, tao_versioning_idl_defaults {
-  sharedname   = TAO_Messaging
-  dynamicflags = TAO_MESSAGING_BUILD_DLL
-
-  Source_Files {
-    Messaging
-  }
-
-  Header_Files {
-    Messaging
-  }
-
-  Inline_Files {
-    Messaging
-  }
-
-  Template_Files {
-    Messaging
-  }
-
-  Resource_Files {
-    Messaging
-  }
-
-  PIDL_Files {
-  }
-
+project(*idl) : tao_versioning_idl_defaults {
+  custom_only = 1
   IDL_Files {
     idlflags += -SS -GA -Gp -Gd -Sorb -Sal \
                 -Wb,export_macro=TAO_Messaging_Export \
@@ -84,6 +59,56 @@ project(Messaging) : taolib, tao_output, install, portableserver, pi, valuetype,
                 -o Messaging
     idlflags -= -Sa -St
     Messaging/Messaging.pidl
+  }
+}
+
+project(Messaging) : taolib, tao_output, install, portableserver, pi, valuetype, taoidldefaults {
+  after       += *idl
+  sharedname   = TAO_Messaging
+  dynamicflags = TAO_MESSAGING_BUILD_DLL
+
+  Source_Files {
+    Messaging
+  }
+
+  Source_Files {
+    Messaging/ExceptionHolderC.cpp
+    Messaging/PollableC.cpp
+    Messaging/Messaging_TypesC.cpp
+    Messaging/TAO_ExtC.cpp
+    Messaging/Messaging_RT_PolicyC.cpp
+    Messaging/Messaging_SyncScope_PolicyC.cpp
+    Messaging/Messaging_No_ImplC.cpp
+    Messaging/MessagingC.cpp
+    Messaging/ExceptionHolderA.cpp
+    Messaging/MessagingA.cpp
+    Messaging/Messaging_No_ImplA.cpp
+    Messaging/Messaging_RT_PolicyA.cpp
+    Messaging/Messaging_SyncScope_PolicyA.cpp
+    Messaging/TAO_ExtA.cpp
+  }
+
+  Header_Files {
+    Messaging
+  }
+
+  Inline_Files {
+    Messaging
+  }
+
+  Template_Files {
+    Messaging
+  }
+
+  Resource_Files {
+    Messaging
+  }
+
+  PIDL_Files {
+    Messaging
+  }
+
+  IDL_Files {
   }
 
   Pkgconfig_Files {
