@@ -1,3 +1,8 @@
+Thu Mar  5 20:39:56 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/ZIOP/ZIOP.cpp
+          Resolved compiler warning
+
 Thu Mar  5 19:56:32 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Admin.cpp:
