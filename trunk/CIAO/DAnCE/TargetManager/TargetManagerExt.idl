@@ -68,13 +68,13 @@ module CIAO
    */
   interface TargetManagerExt
   {
-    ///Returns the pid in which a component runs
+    /// Returns the pid in which a component runs
     long get_pid (in string component_uuid);
-    
-    /// returns the cpu usage for each host in the 
+
+    /// Returns the cpu usage for each host in the
     /// last cycle
     Host_Infos get_host_cpu ();
-    
+
     /// Return the detail of the components
     Component_Infos get_component_cpu ();
 
