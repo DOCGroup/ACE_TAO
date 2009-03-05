@@ -1,3 +1,25 @@
+Thu Mar  5 18:22:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Deployment/DAnCE_Core.mpc:
+          Removed commented out line
+
+        * DAnCE/TargetManager/CmpClient.cpp:
+          Datatype fix
+
+        * DAnCE/TargetManager/TargetManager.mpc:
+        * DAnCE/TargetManager/TM_Client.mpc:
+          Updated to new CIAO
+
+        * DAnCE/TargetManager/TargetManager_exec.cpp:
+        * DAnCE/TargetManager/TargetManager_exec.h:
+          Made compiling again, no testing has been done yet
+
+        * DAnCE/TargetManager/TargetManagerExt.idl:
+          Doxygen change
+
+        * tools/Config_Handlers/Config_Handlers.mpc:
+          No need to set dynamic flags
+
 Tue Mar  3 07:56:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/DevGuideExamples/Messenger/History_exec_i.cpp

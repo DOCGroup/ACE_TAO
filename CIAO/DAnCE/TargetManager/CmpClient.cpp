@@ -57,7 +57,7 @@ namespace TM_Tester
           call_update = true;
           break;
         case 'd':
-         add_to_domain = false;
+          add_to_domain = false;
           break;
         case '?':  // display help for use of the server.
         default:
@@ -274,9 +274,8 @@ namespace TM_Tester
     {
       std::ofstream out (domain.node[i].name.in ());
 
-
       // write in the node usage ...
-      for (size_t j = 0;j < domain.node[i].resource.length ();j++)
+      for (CORBA::ULong j = 0;j < domain.node[i].resource.length ();j++)
       {
 
         if (!ACE_OS::strcmp (domain.node[i].resource[j].name.in (), "Processor"))
@@ -302,6 +301,5 @@ namespace TM_Tester
 
       out.close ();
     }
-
   }
 }
