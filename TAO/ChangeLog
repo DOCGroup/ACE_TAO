@@ -1,3 +1,19 @@
+Thu Mar  5 15:02:30 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h:
+        
+          Cosmetic changes.
+          
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.h:
+        
+          Moved the call to register_process() on the HostMonitor
+          out of svc() to the overridden activate(), after the
+          base class activate() returns. This call must wait until
+          the heartbeat socket is set up, which happens in svc().
+          Thanks to Friedhelm Wolf <fwolf@dre.vanderbilt.edu> for
+          pointing this out.
+
 Thu Mar  5 03:21:39 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/AppOptions.cpp:

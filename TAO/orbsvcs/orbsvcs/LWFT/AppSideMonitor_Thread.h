@@ -20,7 +20,7 @@
 #include "ace/Synch_Traits.h"
 
 #include "AppSideMonitor_Handler.h"
-#include "lwft_server_export.h"
+#include "HostMonitorC.h"
 
 /**
  *  @class  AppSideMonitor_Thread
@@ -65,6 +65,7 @@ private:
   ACE_Acceptor<AppSideMonitor_Handler, ACE_SOCK_Acceptor> acceptor_;
   ACE_Barrier sync_;
   bool activated_;
+  HostMonitor_var hmvar_;
 };
 
 

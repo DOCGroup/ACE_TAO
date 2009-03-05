@@ -14,9 +14,11 @@
 #define STATE_SYNCHRONIZATION_AGENT_I_H_
 
 #include <list>
+
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Refcounted_Auto_Ptr.h"
+
 #include "StateSynchronizationAgentS.h"
 #include "StatefulObject.h"
 #include "ssa_export.h"
