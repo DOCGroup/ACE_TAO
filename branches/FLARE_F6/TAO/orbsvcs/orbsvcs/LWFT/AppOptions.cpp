@@ -48,7 +48,6 @@ AppOptions::instance (void)
 
 AppOptions::~AppOptions (void)
 {
-  monitor_->stop ();
 }
 
 bool
@@ -203,12 +202,6 @@ void
 AppOptions::process_id (const std::string & id)
 {
   process_id_ = id;
-}
-
-void
-AppOptions::monitor (AppSideMonitor_Thread *mon)
-{
-  monitor_.reset (mon);
 }
 
 void

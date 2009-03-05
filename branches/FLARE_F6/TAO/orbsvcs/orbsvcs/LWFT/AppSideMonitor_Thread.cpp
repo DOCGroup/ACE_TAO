@@ -17,7 +17,7 @@
 #include "AppSideMonitor_Thread.h"
 #include "AppOptions.h"
 
-AppSideMonitor_Thread*
+AppSideMonitor_Thread *
 AppSideMonitor_Thread::instance (void)
 {
   return
@@ -30,6 +30,12 @@ AppSideMonitor_Thread::AppSideMonitor_Thread (void)
     sync_ (2),
     activated_ (false)
 {
+}
+
+AppSideMonitor_Thread::~AppSideMonitor_Thread (void)
+{
+  this->stop ();
+  this->wait ();
 }
 
 void
@@ -48,8 +54,6 @@ AppSideMonitor_Thread::svc (void)
   {
     Barrier_Guard barrier_guard (sync_);
     
-    HostMonitor_var hmvar;
-
     try
       {
       try
@@ -181,9 +185,6 @@ AppSideMonitor_Thread::activate (long /* flags */,
     }
   
   AppOptions *app_opts = AppOptions::instance ();
-  
-  // Keep a reference to the monitor singleton.
-  app_opts->monitor (this);
   
   try
     {
