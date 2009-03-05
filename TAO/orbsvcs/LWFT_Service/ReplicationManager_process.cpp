@@ -64,6 +64,7 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
+      AppOptions::instance ()->orb (orb.in ());
       AppOptions::instance ()->parse_args (argc, argv);
 
       CORBA::Object_var object =
