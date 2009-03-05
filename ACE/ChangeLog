@@ -1,7 +1,19 @@
+Thu Mar  5 19:22:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_qt3reactor.mpc:
+        * ace/ace_qt4reactor.mpc:
+          Moved moc step to seperate project to get the correct build order
+          with incredibuild
+
+        * ace/Select_Reactor_T.h:
+        * ace/Sig_Handler.h:
+        * ace/WFMO_Reactor.h:
+          Doxygen changes
+
 Wed Mar  4 20:01:11 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_g++_common.GNU:
-          Add -ftemplate-depth-23 to CCFLAGS when compiling with GCC 2.x. 
+          Add -ftemplate-depth-23 to CCFLAGS when compiling with GCC 2.x.
 
 Wed Mar  4 10:04:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
