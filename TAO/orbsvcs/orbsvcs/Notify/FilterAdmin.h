@@ -24,9 +24,9 @@
 #include "orbsvcs/Notify/Event.h"
 #include "orbsvcs/Notify/notify_serv_export.h"
 #include "orbsvcs/Notify/Topology_Object.h"
-#include "orbsvcs/Notify/EventChannelFactory.h"
+#include "orbsvcs/Notify/EventChannel.h"
 
-class TAO_Notify_EventChannelFactory; 
+class TAO_Notify_EventChannel; 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -72,9 +72,7 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
   virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
     const TAO_Notify::NVPList& attrs);
 
-
-  void event_channel_factory (TAO_Notify_EventChannelFactory* ecf);
-
+  void event_channel (TAO_Notify_EventChannel* ec);
 
  private:
   typedef ACE_Hash_Map_Manager <CosNotifyFilter::FilterID, CosNotifyFilter::Filter_var, ACE_SYNCH_NULL_MUTEX> FILTER_LIST;
@@ -90,7 +88,7 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
   /// Id generator for proxy suppliers
   TAO_Notify_ID_Factory filter_ids_;
 
-  TAO_Notify_EventChannelFactory::Ptr ecf_;
+  TAO_Notify_EventChannel::Ptr ec_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

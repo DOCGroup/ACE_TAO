@@ -75,10 +75,6 @@ public:
   /// Remove @a channel from the <ec_container_>
   virtual void remove (TAO_Notify_EventChannel* channel);
 
-  /// Accesor for the default filter factory shared by all EC's.
-  virtual CosNotifyFilter::FilterFactory_ptr get_default_filter_factory (
-    );
-
   /// This method is called by the Notify_Service when the event channel
   /// is automatically created and bound in the name service.
   virtual CosNotifyChannelAdmin::EventChannel_ptr create_named_channel (
@@ -124,9 +120,6 @@ public:
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_Object * follow_id_path (TAO_Notify::IdVec & id_path, size_t position);
   virtual TAO_Notify_Object::ID get_id (void) const;
-
-  TAO_Notify_FilterFactory* 
-    default_filter_factory_servant () const;
 
 private:
 
@@ -183,10 +176,6 @@ private:
   virtual void release (void);
 
   ACE_Auto_Ptr <TAO_Notify_validate_client_Task> validate_client_task_;
-
-  /// The default filter factory.
-  CosNotifyFilter::FilterFactory_var default_filter_factory_;
-  ACE_Auto_Ptr <TAO_Notify_FilterFactory> default_filter_factory_servant_;
 
   PortableServer::POA_var poa_;
 };

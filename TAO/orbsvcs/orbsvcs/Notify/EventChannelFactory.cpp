@@ -86,15 +86,6 @@ TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa)
 
   ACE_ASSERT (this->ec_container_.get() == 0);
 
-  TAO_Notify_FilterFactory * default_filter_factory_servant = 0;
-  PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
-  this->default_filter_factory_ =
-    TAO_Notify_PROPERTIES::instance()->builder()->build_filter_factory (
-      default_poa.in(),
-      default_filter_factory_servant);
-
-  this->default_filter_factory_servant_.reset (default_filter_factory_servant);
-
   // Init ec_container_
   TAO_Notify_EventChannel_Container* ecc = 0;
   ACE_NEW_THROW_EX (ecc,
@@ -185,11 +176,6 @@ TAO_Notify_EventChannelFactory::shutdown (void)
   return 0;
 }
 
-CosNotifyFilter::FilterFactory_ptr
-TAO_Notify_EventChannelFactory::get_default_filter_factory (void)
-{
-  return CosNotifyFilter::FilterFactory::_duplicate (this->default_filter_factory_.in ());
-}
 
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_Notify_EventChannelFactory::create_named_channel (
@@ -201,11 +187,6 @@ TAO_Notify_EventChannelFactory::create_named_channel (
   return this->create_channel (initial_qos, initial_admin, id);
 }
 
-TAO_Notify_FilterFactory*
-TAO_Notify_EventChannelFactory::default_filter_factory_servant () const
-{
-  return this->default_filter_factory_servant_.get ();
-}
 
 ::CosNotifyChannelAdmin::EventChannel_ptr TAO_Notify_EventChannelFactory::create_channel (
     const CosNotification::QoSProperties & initial_qos,
@@ -297,8 +278,6 @@ TAO_Notify_EventChannelFactory::save_persistent (TAO_Notify::Topology_Saver& sav
 
   bool want_all_children =
     saver.begin_object(0, "channel_factory", attrs, changed);
-
-  this->default_filter_factory_servant_->save_persistent (saver);
 
   // for each deleted child
   //  delete_child  // if the child has persistence.
@@ -396,11 +375,7 @@ TAO_Notify_EventChannelFactory::load_child (const ACE_CString& type,
 {
   // ignore anything but our valid children (ie channel)
   TAO_Notify::Topology_Object * result = this;
-  if (type == "filter_factory")
-  {
-    return this->default_filter_factory_servant_.get ();
-  }
-  else if (type == "channel")
+  if (type == "channel")
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) EventChannelFactory reload channel %d\n")
