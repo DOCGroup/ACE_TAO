@@ -1,15 +1,65 @@
 //$Id$
 
-project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_versioning_idl_defaults, gen_ostream, corba_e_micro, corba_e_compact, core_minimum_corba, tao_no_iiop {
-  sharedname   = TAO
-  dynamicflags = TAO_BUILD_DLL
-
+project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream {
+  custom_only = 1
   idlflags += -SS -Sorb -GA -Gp -Gd -oA AnyTypeCode \
               -Wb,export_macro=TAO_Export \
               -Wb,export_include=tao/TAO_Export.h \
               -Wb,anyop_export_macro=TAO_AnyTypeCode_Export \
               -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h
   idlflags -= -Sa -St
+
+  IDL_Files {
+    GIOP.pidl >> AnyTypeCode/GIOPA.h AnyTypeCode/GIOPA.cpp
+  }
+
+  IDL_Files {
+    idlflags += -Sci
+    CONV_FRAME.pidl >> AnyTypeCode/CONV_FRAMEA.h AnyTypeCode/CONV_FRAMEA.cpp
+    Current.pidl >> AnyTypeCode/CurrentA.h AnyTypeCode/CurrentA.cpp
+    IIOP.pidl >> AnyTypeCode/IIOPA.h AnyTypeCode/IIOPA.cpp
+    IIOP_Endpoints.pidl >> AnyTypeCode/IIOP_EndpointsA.h AnyTypeCode/IIOP_EndpointsA.cpp
+    IOP.pidl >> AnyTypeCode/IOPA.h AnyTypeCode/IOPA.cpp
+    Messaging_PolicyValue.pidl >> AnyTypeCode/Messaging_PolicyValueA.h AnyTypeCode/Messaging_PolicyValueA.cpp
+    Messaging_SyncScope.pidl >> AnyTypeCode/Messaging_SyncScopeA.h AnyTypeCode/Messaging_SyncScopeA.cpp
+    ObjectIdList.pidl >> AnyTypeCode/ObjectIdListA.h AnyTypeCode/ObjectIdListA.cpp
+    orb_types.pidl >> AnyTypeCode/orb_typesA.h AnyTypeCode/orb_typesA.cpp
+    ParameterMode.pidl >> AnyTypeCode/ParameterModeA.h AnyTypeCode/ParameterModeA.cpp
+    Policy_Forward.pidl >> AnyTypeCode/Policy_ForwardA.h AnyTypeCode/Policy_ForwardA.cpp
+    Policy_Manager.pidl >> AnyTypeCode/Policy_ManagerA.h AnyTypeCode/Policy_ManagerA.cpp
+    Policy_Current.pidl >> AnyTypeCode/Policy_CurrentA.h AnyTypeCode/Policy_CurrentA.cpp
+    PI_Forward.pidl >> AnyTypeCode/PI_ForwardA.h AnyTypeCode/PI_ForwardA.cpp
+    PortableInterceptor.pidl >> AnyTypeCode/PortableInterceptorA.h AnyTypeCode/PortableInterceptorA.cpp
+    Services.pidl >> AnyTypeCode/ServicesA.h AnyTypeCode/ServicesA.cpp
+    TAO.pidl >> AnyTypeCode/TAOA.h AnyTypeCode/TAOA.cpp
+    TimeBase.pidl >> AnyTypeCode/TimeBaseA.h AnyTypeCode/TimeBaseA.cpp
+  }
+
+  IDL_Files {
+    idlflags += -Sci -Gse
+    BooleanSeq.pidl >> AnyTypeCode/BooleanSeqA.h AnyTypeCode/BooleanSeqA.cpp
+    CharSeq.pidl >> AnyTypeCode/CharSeqA.h AnyTypeCode/CharSeqA.cpp
+    DoubleSeq.pidl >> AnyTypeCode/DoubleSeqA.h AnyTypeCode/DoubleSeqA.cpp
+    FloatSeq.pidl >> AnyTypeCode/FloatSeqA.h AnyTypeCode/FloatSeqA.cpp
+    LongDoubleSeq.pidl >> AnyTypeCode/LongDoubleSeqA.h AnyTypeCode/LongDoubleSeqA.cpp
+    LongLongSeq.pidl >> AnyTypeCode/LongLongSeqA.h AnyTypeCode/LongLongSeqA.cpp
+    LongSeq.pidl >> AnyTypeCode/LongSeqA.h AnyTypeCode/LongSeqA.cpp
+    OctetSeq.pidl >> AnyTypeCode/OctetSeqA.h AnyTypeCode/OctetSeqA.cpp
+    ShortSeq.pidl >> AnyTypeCode/ShortSeqA.h AnyTypeCode/ShortSeqA.cpp
+    StringSeq.pidl >> AnyTypeCode/StringSeqA.h AnyTypeCode/StringSeqA.cpp
+    ULongLongSeq.pidl >> AnyTypeCode/ULongLongSeqA.h AnyTypeCode/ULongLongSeqA.cpp
+    ULongSeq.pidl >> AnyTypeCode/ULongSeqA.h AnyTypeCode/ULongSeqA.cpp
+    UShortSeq.pidl >> AnyTypeCode/UShortSeqA.h AnyTypeCode/UShortSeqA.cpp
+    WCharSeq.pidl >> AnyTypeCode/WCharSeqA.h AnyTypeCode/WCharSeqA.cpp
+    WStringSeq.pidl >> AnyTypeCode/WStringSeqA.h AnyTypeCode/WStringSeqA.cpp
+  }
+
+}
+
+project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoidldefaults, gen_ostream, corba_e_micro, corba_e_compact, core_minimum_corba, tao_no_iiop {
+  after       += TAO_Core_idl
+  sharedname   = TAO
+  dynamicflags = TAO_BUILD_DLL
 
   Source_Files(TAO_COMPONENTS) {
     Abstract_Servant_Base.cpp
@@ -595,52 +645,10 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     orb.idl
   }
 
-  IDL_Files {
-    GIOP.pidl >> AnyTypeCode/GIOPA.h AnyTypeCode/GIOPA.cpp
-  }
-
-  IDL_Files {
-    idlflags += -Sci
-    CONV_FRAME.pidl >> AnyTypeCode/CONV_FRAMEA.h AnyTypeCode/CONV_FRAMEA.cpp
-    Current.pidl >> AnyTypeCode/CurrentA.h AnyTypeCode/CurrentA.cpp
-    IIOP.pidl >> AnyTypeCode/IIOPA.h AnyTypeCode/IIOPA.cpp
-    IIOP_Endpoints.pidl >> AnyTypeCode/IIOP_EndpointsA.h AnyTypeCode/IIOP_EndpointsA.cpp
-    IOP.pidl >> AnyTypeCode/IOPA.h AnyTypeCode/IOPA.cpp
-    Messaging_PolicyValue.pidl >> AnyTypeCode/Messaging_PolicyValueA.h AnyTypeCode/Messaging_PolicyValueA.cpp
-    Messaging_SyncScope.pidl >> AnyTypeCode/Messaging_SyncScopeA.h AnyTypeCode/Messaging_SyncScopeA.cpp
-    ObjectIdList.pidl >> AnyTypeCode/ObjectIdListA.h AnyTypeCode/ObjectIdListA.cpp
-    orb_types.pidl >> AnyTypeCode/orb_typesA.h AnyTypeCode/orb_typesA.cpp
-    ParameterMode.pidl >> AnyTypeCode/ParameterModeA.h AnyTypeCode/ParameterModeA.cpp
-    Policy_Forward.pidl >> AnyTypeCode/Policy_ForwardA.h AnyTypeCode/Policy_ForwardA.cpp
-    Policy_Manager.pidl >> AnyTypeCode/Policy_ManagerA.h AnyTypeCode/Policy_ManagerA.cpp
-    Policy_Current.pidl >> AnyTypeCode/Policy_CurrentA.h AnyTypeCode/Policy_CurrentA.cpp
-    PI_Forward.pidl >> AnyTypeCode/PI_ForwardA.h AnyTypeCode/PI_ForwardA.cpp
-    PortableInterceptor.pidl >> AnyTypeCode/PortableInterceptorA.h AnyTypeCode/PortableInterceptorA.cpp
-    Services.pidl >> AnyTypeCode/ServicesA.h AnyTypeCode/ServicesA.cpp
-    TAO.pidl >> AnyTypeCode/TAOA.h AnyTypeCode/TAOA.cpp
-    TimeBase.pidl >> AnyTypeCode/TimeBaseA.h AnyTypeCode/TimeBaseA.cpp
-  }
-
-  IDL_Files {
-    idlflags += -Sci -Gse
-    BooleanSeq.pidl >> AnyTypeCode/BooleanSeqA.h AnyTypeCode/BooleanSeqA.cpp
-    CharSeq.pidl >> AnyTypeCode/CharSeqA.h AnyTypeCode/CharSeqA.cpp
-    DoubleSeq.pidl >> AnyTypeCode/DoubleSeqA.h AnyTypeCode/DoubleSeqA.cpp
-    FloatSeq.pidl >> AnyTypeCode/FloatSeqA.h AnyTypeCode/FloatSeqA.cpp
-    LongDoubleSeq.pidl >> AnyTypeCode/LongDoubleSeqA.h AnyTypeCode/LongDoubleSeqA.cpp
-    LongLongSeq.pidl >> AnyTypeCode/LongLongSeqA.h AnyTypeCode/LongLongSeqA.cpp
-    LongSeq.pidl >> AnyTypeCode/LongSeqA.h AnyTypeCode/LongSeqA.cpp
-    OctetSeq.pidl >> AnyTypeCode/OctetSeqA.h AnyTypeCode/OctetSeqA.cpp
-    ShortSeq.pidl >> AnyTypeCode/ShortSeqA.h AnyTypeCode/ShortSeqA.cpp
-    StringSeq.pidl >> AnyTypeCode/StringSeqA.h AnyTypeCode/StringSeqA.cpp
-    ULongLongSeq.pidl >> AnyTypeCode/ULongLongSeqA.h AnyTypeCode/ULongLongSeqA.cpp
-    ULongSeq.pidl >> AnyTypeCode/ULongSeqA.h AnyTypeCode/ULongSeqA.cpp
-    UShortSeq.pidl >> AnyTypeCode/UShortSeqA.h AnyTypeCode/UShortSeqA.cpp
-    WCharSeq.pidl >> AnyTypeCode/WCharSeqA.h AnyTypeCode/WCharSeqA.cpp
-    WStringSeq.pidl >> AnyTypeCode/WStringSeqA.h AnyTypeCode/WStringSeqA.cpp
-  }
-
   Pkgconfig_Files {
     TAO.pc.in
+  }
+
+  IDL_Files {
   }
 }

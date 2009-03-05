@@ -578,7 +578,6 @@ TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 #endif /* ACE_HAS_IPV6 */
   encap.write_string (this->endpoint_.host ());
 
-
   // UNSIGNED SHORT port number
   encap.write_ushort (this->endpoint_.port ());
 
@@ -592,8 +591,7 @@ TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
                   "no object key marshalled\n"));
     }
 
-  if (this->version_.major > 1
-      || this->version_.minor > 0)
+  if (this->version_.major > 1 || this->version_.minor > 0)
     this->tagged_components ().encode (encap);
 }
 
@@ -631,17 +629,17 @@ TAO_IIOP_Profile::encode_alternate_endpoints (void)
           ACE_CString tmp;
           size_t len = pos - host;
           tmp.set (endpoint->host (), len, 1);
-          if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
-              || (out_cdr << tmp.c_str () == 0)
-              || (out_cdr << endpoint->port () == 0))
+          if (!(out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
+              || !(out_cdr << tmp.c_str ())
+              || !(out_cdr << endpoint->port ()))
             return -1;
           out_cdr.write_string (len, endpoint->host ());
         }
       else
 #endif /* ACE_HAS_IPV6 */
-      if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
-                || (out_cdr << endpoint->host () == 0)
-          || (out_cdr << endpoint->port () == 0))
+      if (!(out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
+          || !(out_cdr << endpoint->host ())
+          || !(out_cdr << endpoint->port ()))
         return -1;
 
       IOP::TaggedComponent tagged_component;
@@ -732,9 +730,8 @@ TAO_IIOP_Profile::encode_endpoints (void)
 
   // Encode the data structure.
   TAO_OutputCDR out_cdr;
-  if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
-       == 0)
-      || (out_cdr << endpoints) == 0)
+  if (!(out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
+      || !(out_cdr << endpoints))
     return -1;
 
   this->set_tagged_components (out_cdr);
@@ -759,14 +756,14 @@ TAO_IIOP_Profile::decode_endpoints (void)
 
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
-      if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+      if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
         return -1;
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
       TAO::IIOPEndpointSequence endpoints;
 
-      if ((in_cdr >> endpoints) == 0)
+      if (!(in_cdr >> endpoints))
         return -1;
 
       // Get the priority of the first endpoint (head of the list.
@@ -811,7 +808,7 @@ TAO_IIOP_Profile::decode_endpoints (void)
 
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
-      if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+      if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
         return -1;
 
       in_cdr.reset_byte_order (static_cast<int>(byte_order));
@@ -819,8 +816,7 @@ TAO_IIOP_Profile::decode_endpoints (void)
       CORBA::String_var host;
       CORBA::Short port;
 
-      if ((in_cdr >> host.out()) == 0 ||
-          (in_cdr >> port) == 0)
+      if (!(in_cdr >> host.out()) || !(in_cdr >> port))
         return -1;
 
       TAO_IIOP_Endpoint *endpoint = 0;

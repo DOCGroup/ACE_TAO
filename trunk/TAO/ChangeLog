@@ -1,3 +1,59 @@
+Thu Mar  5 10:22:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode.mpc
+        * tao/BiDir_GIOP.mpc
+        * tao/Bzip2Compressor.mpc
+        * tao/CodecFactory.mpc
+        * tao/Codeset.mpc
+        * tao/Compression.mpc
+        * tao/CSD_Framework.mpc
+        * tao/DiffServPolicy.mpc
+        * tao/DynamicAny.mpc
+        * tao/DynamicInterface.mpc
+        * tao/EndpointPolicy.mpc
+        * tao/FlResource.mpc
+        * tao/FoxResource.mpc
+        * tao/IFR_Client.mpc
+        * tao/IIOP_Profile.cpp
+        * tao/ImR_Client.mpc
+        * tao/IORInterceptor.mpc
+        * tao/IORManipulation.mpc
+        * tao/IORTable.mpc
+        * tao/LzoCompressor.mpc
+        * tao/Messaging.mpc
+        * tao/Monitor.mpc
+        * tao/ObjRefTemplate.mpc
+        * tao/PI.mpc
+        * tao/PI_Server.mpc
+        * tao/PortableServer.mpc
+        * tao/QtResource.mpc
+        * tao/RTCORBA.mpc
+        * tao/RTPortableServer.mpc
+        * tao/RTScheduler.mpc
+        * tao/SmartProxies.mpc
+        * tao/Strategies.mpc
+        * tao/tao.mpc
+        * tao/TC.mpc
+        * tao/TC_IIOP.mpc
+        * tao/TkResource.mpc
+        * tao/TypeCodeFactory.mpc
+        * tao/Valuetype.mpc
+        * tao/XtResource.mpc
+        * tao/ZIOP.mpc
+        * tao/ZlibCompressor.mpc
+          Use a seperate project for the idl files. This way a clean on a source
+          project doesn't result in the regeneration of all idl files. Also this
+          solves the dependency problem when using Incredibuild
+
+        * tao/EndpointPolicy/EndpointPolicy_Factory.cpp:
+          Initialise pointer with 0
+
+        * tao/RTScheduling/RTScheduler.pidl:
+          Changed PI include
+
+        * tao/Seq_Out_T.h:
+          Layout change
+
 Thu Mar  5 07:36:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp
@@ -12,7 +68,7 @@ Thu Mar  5 07:36:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * tao/Transport.cpp
           No need to set read write pointer correctly. ZIOP
           is responsible for that.
-          
+
         * tests/ZIOP/client.cpp
           Enabled all tests again
 

@@ -1,10 +1,29 @@
 //$Id$
-project(DiffServPolicy) : taolib, tao_output, install, portableserver, pi, tao_versioning_idl_defaults, tao_no_iiop, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*idl) : tao_versioning_idl_defaults, tao_no_iiop {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -GA -SS -Sci -Sorb \
+                -Wb,export_macro=TAO_DiffServPolicy_Export \
+                -Wb,export_include=tao/DiffServPolicy/DiffServPolicy_Export.h \
+                -Wb,include_guard=TAO_DIFFSERVPOLICY_SAFE_INCLUDE \
+                -Wb,safe_include=tao/DiffServPolicy/DiffServPolicy.h \
+                -o DiffServPolicy
+    idlflags -= -St
+    DiffServPolicy/DiffServPolicy.pidl
+  }
+}
+
+project(DiffServPolicy) : taolib, tao_output, install, portableserver, pi, taoidldefaults, tao_no_iiop, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after       += *idl
   sharedname   = TAO_DiffServPolicy
   dynamicflags = TAO_DIFFSERVPOLICY_BUILD_DLL
 
   Source_Files {
     DiffServPolicy
+  }
+
+  Source_Files {
+    DiffServPolicy/DiffServPolicyC.cpp
   }
 
   Header_Files {
@@ -24,17 +43,10 @@ project(DiffServPolicy) : taolib, tao_output, install, portableserver, pi, tao_v
   }
 
   PIDL_Files {
+    DiffServPolicy
   }
 
   IDL_Files {
-    idlflags += -GA -SS -Sci -Sorb \
-                -Wb,export_macro=TAO_DiffServPolicy_Export \
-                -Wb,export_include=tao/DiffServPolicy/DiffServPolicy_Export.h \
-                -Wb,include_guard=TAO_DIFFSERVPOLICY_SAFE_INCLUDE \
-                -Wb,safe_include=tao/DiffServPolicy/DiffServPolicy.h \
-                -o DiffServPolicy
-    idlflags -= -St
-    DiffServPolicy/DiffServPolicy.pidl
   }
 
   Pkgconfig_Files {
