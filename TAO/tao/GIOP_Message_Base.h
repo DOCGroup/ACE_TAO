@@ -159,7 +159,9 @@ public:
 private:
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   /// Decompresses a ZIOP message and turns it into a GIOP message
-  ACE_Data_Block * decompress (ACE_Data_Block& db, TAO_Queued_Data& qd,
+  /// When decompressed, db contains a complete new ACE_Data_Block and
+  /// therefore qd its data block is alse replaced.
+  bool decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
                    size_t& rd_pos, size_t& wr_pos);
 #endif
 

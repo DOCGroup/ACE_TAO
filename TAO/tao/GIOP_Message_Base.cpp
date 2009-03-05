@@ -678,15 +678,13 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
       // heap.
       db = qd->msg_block ()->data_block ()->duplicate ();
     }
-  ACE_Data_Block *db_new = db; 
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  db_new = this->decompress (*db, *qd, rd_pos, wr_pos);
-  if (db_new == 0)
+  if (!this->decompress (&db, *qd, rd_pos, wr_pos))
      return -1;
 #endif
 
-    TAO_InputCDR input_cdr (db_new,
+    TAO_InputCDR input_cdr (db,
                           flg,
                           rd_pos,
                           wr_pos,
@@ -726,30 +724,27 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 }
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-ACE_Data_Block *
-TAO_GIOP_Message_Base::decompress (ACE_Data_Block& db, TAO_Queued_Data& qd,
+bool
+TAO_GIOP_Message_Base::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
                                    size_t& rd_pos, size_t& wr_pos)
 {
-  ACE_Data_Block *db_new = &db;
-
   if (qd.state().compressed ())
     {
       TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
       if (adapter)
         {
-          db_new = adapter->decompress (db, qd, *this->orb_core_);
-          if (db_new == 0)
-            return 0;
+          qd.consolidate ();
+          if (!adapter->decompress (db, qd, *this->orb_core_))
+            return false;
           rd_pos = TAO_GIOP_MESSAGE_HEADER_LEN;
-          wr_pos = db_new->size();
+          wr_pos = (*db)->size();
           if (TAO_debug_level >= 5)
             {
               ACE_HEX_DUMP ((LM_DEBUG,
-                              const_cast <char*> (db_new->base ()),
-                              db_new->size (),
+                              const_cast <char*> ((*db)->base ()),
+                              (*db)->size (),
                               ACE_TEXT ("GIOP message after decompression")));
             }
-          qd.msg_block ()->data_block (db_new);
         }
       else
         {
@@ -758,10 +753,10 @@ TAO_GIOP_Message_Base::decompress (ACE_Data_Block& db, TAO_Queued_Data& qd,
                         ACE_TEXT ("TAO (%P|%t) ERROR: Unable to decompress ")
                         ACE_TEXT ("data.\n")));
 
-          return 0;
+          return false;
         }
     }
-  return db_new;
+  return true;
 }
 #endif
 
@@ -787,18 +782,16 @@ TAO_GIOP_Message_Base::process_reply_message (
     }
 
   ACE_Data_Block *db = qd->msg_block ()->data_block ();
-  ACE_Data_Block *db_new = db; 
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  db_new = this->decompress (*db, *qd, rd_pos, wr_pos);
-  if (db_new == 0)
+  if (!this->decompress (&db, *qd, rd_pos, wr_pos))
      return -1;
 #endif
   // Create a empty buffer on stack
   // NOTE: We use the same data block in which we read the message and
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here.
-  TAO_InputCDR input_cdr (db_new,
+  TAO_InputCDR input_cdr (db,
                           ACE_Message_Block::DONT_DELETE,
                           rd_pos,
                           wr_pos,
