@@ -178,13 +178,13 @@ void start_tests (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr tc)
               ACE_TEXT ("No statistical information available since TAO_HAS_TRANSPORT_CURRENT is not set")));
 #endif
 
-//  start_low_value_test (hello, tc);
+  start_low_value_test (hello, tc);
 
-//  start_min_ratio_test (hello, tc);
+  start_min_ratio_test (hello, tc);
 
   start_big_reply_test (hello, tc);
 
-//  start_big_request_test (hello, tc);
+  start_big_request_test (hello, tc);
 }
 
 int
@@ -284,7 +284,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Hello reference <%s>\n",
+                             "Nil Test::Hello reference <%C>\n",
                              ior),
                             1);
         }
@@ -297,8 +297,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (tc.in ()))
         throw ::CORBA::INTERNAL ();
 
-      //for (int i = 0; i < 1000; ++i)
-        start_tests(hello.in (), tc.in ());
+      start_tests(hello.in (), tc.in ());
 
       hello->shutdown ();
 
