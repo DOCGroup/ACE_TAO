@@ -232,17 +232,26 @@ TAO_ZIOP_Loader::compress (Compression::Compressor_ptr compressor,
   return true;
 }
 
+CORBA::ULong
+TAO_ZIOP_Loader::get_ratio (CORBA::OctetSeq& uncompressed, CORBA::OctetSeq& compressed)
+{
+  return CORBA::ULong (100 - ((CORBA::Double)compressed.length () / uncompressed.length () * 
+              (CORBA::Double)100));
+}
+
 bool
-TAO_ZIOP_Loader::check_min_ratio (::Compression::CompressionRatio ratio,
+TAO_ZIOP_Loader::check_min_ratio (const CORBA::ULong& this_ratio,
+                                  ::Compression::CompressionRatio overall_ratio,
                                   CORBA::Long min_ratio) const
 {
-  bool accepted = min_ratio == 0 || ratio > min_ratio;
+  bool accepted = min_ratio == 0 || 
+          static_cast < ::Compression::CompressionRatio>(this_ratio) > min_ratio;
   if (TAO_debug_level > 8)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - TAO_ZIOP_Loader::check_min_ratio: ")
-                  ACE_TEXT ("Ratio:%d Accepted:%d\n"),
-                  ratio, accepted));
+                  ACE_TEXT ("Ratio until now:%d This ratio:%d Accepted:%d\n"),
+                  overall_ratio, this_ratio, accepted));
     }
   return accepted;
 }
@@ -340,23 +349,24 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
 {
   if (low_value > 0 && original_data_length > low_value)
     {
-      CORBA::OctetSeq myout;
+      CORBA::OctetSeq output;
       CORBA::OctetSeq input (original_data_length, &mb);
-      myout.length (original_data_length);
+      output.length (original_data_length);
 
-      bool compressed = this->compress (compressor, input, myout);
+      bool compressed = this->compress (compressor, input, output);
 
       if (compressed &&
-          (myout.length () < original_data_length) &&
-          (this->check_min_ratio (compressor->compression_ratio(),
-              min_ratio)))
+          (output.length () < original_data_length) &&
+          (this->check_min_ratio (this->get_ratio (input, output),
+                      compressor->compression_ratio(),
+                      min_ratio)))
         {
           mb.wr_ptr (mb.rd_ptr ());
           cdr.current_alignment (mb.wr_ptr() - mb.base ());
           ZIOP::CompressedData data;
           data.compressorid = compressor_id;
           data.original_length = input.length();
-          data.data = myout;
+          data.data = output;
           cdr << data;
           mb.rd_ptr(initial_rd_ptr);
           int begin = (mb.rd_ptr() - mb.base ());
