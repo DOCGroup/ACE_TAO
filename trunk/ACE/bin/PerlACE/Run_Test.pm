@@ -217,6 +217,7 @@ sub add_lib_path {
 
   # Set the library path supporting various platforms.
   add_path('PATH', $value);
+  add_path('DYLD_LIBRARY_PATH', $value);
   add_path('LD_LIBRARY_PATH', $value);
   add_path('LIBPATH', $value);
   add_path('SHLIB_PATH', $value);

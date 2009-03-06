@@ -135,7 +135,8 @@ sub CommandLine ()
       if (defined $libpath) {
         my($csh) = (defined $self->{REMOTEINFO}->{shell} &&
                             $self->{REMOTEINFO}->{shell} =~ /csh/);
-        foreach my $pvar ('LD_LIBRARY_PATH', 'LIBPATH', 'SHLIB_PATH') {
+        foreach my $pvar ('DYLD_LIBRARY_PATH', 'LD_LIBRARY_PATH',
+                          'LIBPATH', 'SHLIB_PATH') {
           if ($csh) {
             $commandline .= "if (! \\\$?$pvar) setenv $pvar; " .
                             "setenv $pvar $libpath:\\\$$pvar; ";
