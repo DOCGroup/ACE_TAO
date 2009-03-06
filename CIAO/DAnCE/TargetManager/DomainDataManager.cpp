@@ -1,4 +1,4 @@
-// $Id$  
+// $Id$
 #include "DomainDataManager.h"
 
 #include "tools/Config_Handlers/DD_Handler.h"
@@ -195,8 +195,7 @@ int CIAO::DomainDataManager::call_all_node_managers ()
 
 
 ::Deployment::ResourceCommitmentManager_ptr CIAO::DomainDataManager
-::commitResources (
-                   const ::Deployment::ResourceAllocations & resources)
+::commitResources (const ::Deployment::ResourceAllocations &)
 {
 /*
   // commit the resources
@@ -238,8 +237,7 @@ int CIAO::DomainDataManager::call_all_node_managers ()
 
 
 void CIAO::DomainDataManager::
-releaseResources (
-                  const ::Deployment::ResourceCommitmentManager_ptr manager)
+releaseResources (const ::Deployment::ResourceCommitmentManager_ptr)
 {
   // release the resources
 /*
