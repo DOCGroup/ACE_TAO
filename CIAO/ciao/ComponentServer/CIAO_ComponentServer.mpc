@@ -87,10 +87,10 @@ project(CIAO_ComponentServer_svnt) : ccm_componentserver_svnt, ciao_componentser
 
 project(CIAO_ComponentServer_exe) : ccm_componentserver_svnt, portableserver, ciao_componentserver_svnt, \
 				    messaging, anytypecode, ciao_server, ciaoexe, ciao_session_container,\
-                                    {
+                                    ciao_logger {
   exename = ciao_componentserver
-  libs += CIAO_Basic_Configurator CIAO_Logger
-  after += CIAO_Basic_Configurator CIAO_Logger
+  libs += CIAO_Basic_Configurator
+  after += CIAO_Basic_Configurator
   macros += CIAO_BUILD_COMPONENTSERVER_EXE
   Source_Files {
     CIAO_ComponentServer.cpp
