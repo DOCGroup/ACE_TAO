@@ -38,7 +38,8 @@ the following three components:
   <li>The <font face="Courier New">NavDisplayGUI</font> directory contains
   implementations for a <font face="Courier New">NavDisplay</font> with
   graphical interface. To use this graphical interface you need to install qt
-  libraries and have qt enabled (qt = 1) in your <font face="Courier New">$ACE_ROOT/bin/MakeProjectCreator/config/global.features</font>.
+  libraries and have qt enabled (qt = 1) in your
+  <font face="Courier New">$ACE_ROOT/bin/MakeProjectCreator/config/global.features</font>.
   In some Linux distributions qt is installed by default. There is a
   non-commercial version of qt libraries for Windows
   <a href="http://www.dre.vanderbilt.edu/%7Edengg/ITS/qt-win-noncommercial-msvc-3.2.1.exe">
@@ -53,16 +54,19 @@ the following three components:
 
 
 <li>1. The interfaces,
-data types and exceptions used by the components of this application are 
+data types and exceptions used by the components of this application are
 specified in the
-<a href="HUDisplay.idl"> <code>
-HUDisplay.idl</code></a> file, placed in this example root directory ($CIAO_ROOT/examples/Display).
+<a href="./Display_Base/Display_Base.idl"> <code>
+HUDisplay.idl</code></a> file, placed in this example root directory ($CIAO_ROOT/examples/Display_Base).
 This is a IDL2 file and uses the familiar CORBA data types. The lib generated
 from HUDisplay.idl is linked to all the components of this example. <p></p>
 
 </li><li>2. mpc  files for each of the components
-are available in the components directories. We use the  <a href="http://downloads.ociweb.com/MPC/MakeProjectCreator.pdf">MPC</a>
-to generate makefiles and Visual C++ project/solutions files for all <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE.html">ACE</a>, <a href="http://www.cs.wustl.edu/%7Eschmidt/TAO.html">TAO</a> and <a href="http://www.cs.wustl.edu/%7Eschmidt/CIAO.html">CIAO</a> libraries.
+are available in the components directories. We use the <a href="http://downloads.ociweb.com/MPC/MakeProjectCreator.pdf">MPC</a>
+to generate makefiles and Visual C++ project/solutions files for
+all <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE.html">ACE</a>,
+<a href="http://www.cs.wustl.edu/%7Eschmidt/TAO.html">TAO</a> and
+<a href="http://www.cs.wustl.edu/%7Eschmidt/CIAO.html">CIAO</a> libraries.
 
 </li><li>3. idl and cidl files for each component are placed in components directory.  </li>
 
