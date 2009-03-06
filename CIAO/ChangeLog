@@ -1,3 +1,17 @@
+Fri Mar  6 20:17:32 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * docs/CIAO.pdf:
+
+        This work is based on the TAO 1.4a TAO Developers Guide chapter
+        on CIAO published by OCI, with some modification to bring the material
+        up to date. This is a continuing, the goal is to improve this
+        document with time to serve as the authoritative reference/documentation
+        for CIAO users.
+
+        Thanks to OCI for making this chapter publicly available and allowing
+        us to modify it.
+
+
 Fri Mar  6 18:54:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentServer.mpc:
