@@ -106,7 +106,6 @@ project(Messenger_exec) : ciao_executor {
   }
 }
 
-
 project(Messenger_svnt) : ciao_servant {
   avoids += ace_for_tao
   after      += Messenger_exec
