@@ -1,3 +1,13 @@
+Fri Mar  6 12:01:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/TargetManager/DomainDataManager.cpp
+        * DAnCE/TargetManager/ResourceCommitmentManager.cpp
+          layout changes
+
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc
+          Moved moc files to their own project to resolve build problems
+          build incredibuild
+
 Fri Mar  6 08:27:15 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * docs/tutorials/Quoter/Simple/01.html:
@@ -5,7 +15,7 @@ Fri Mar  6 08:27:15 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * docs/tutorials/Quoter/Simple/03.html:
         * docs/tutorials/Quoter/Simple/04.html:
         * examples/Display/README.html:
-          Addapted to the new naming convention of 
+          Addapted to the new naming convention of
           the dance executables.
 
 Thu Mar  5 18:22:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
