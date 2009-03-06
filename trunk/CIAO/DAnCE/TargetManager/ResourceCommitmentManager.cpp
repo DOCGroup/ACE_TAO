@@ -45,7 +45,7 @@ int CIAO::ResourceCommitmentManager_i::add_to_commited_resource (
 
   this->resources_.length (current_length + res.length ());
 
-  for (CORBA::ULong i =0;i < res.length ();i++)
+  for (CORBA::ULong i = 0;i < res.length ();i++)
     this->resources_[current_length + i] = res[i];
 
   return 0;

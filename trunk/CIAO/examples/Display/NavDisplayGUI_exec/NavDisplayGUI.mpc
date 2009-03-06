@@ -1,9 +1,20 @@
 // $Id$
 
+project(Display_NavDisplayGUI_exec_moc) : ace_qt4, qt4_qt3support {
+  custom_only = 1
+  MOC_Files {
+    DetailView.h
+    MapView.h
+    NodeItem.h
+    RootPanel.h
+  }
+}
+
 project(Display_NavDisplayGUI_exec) : ciao_executor, ace_qt4, qt4_qt3support {
   avoids += ace_for_tao
   after   += Display_NavDisplay_cidl_gen \
-             Display_NavDisplay_stub
+             Display_NavDisplay_stub \
+             Display_NavDisplayGUI_exec_moc
   sharedname = NavDisplayGUI_exec
   libs += NavDisplay_stub Display_Base_stub
   dynamicflags   = NAVDISPLAY_EXEC_BUILD_DLL QT_DLL
@@ -34,10 +45,6 @@ project(Display_NavDisplayGUI_exec) : ciao_executor, ace_qt4, qt4_qt3support {
   }
 
   MOC_Files {
-    DetailView.h
-    MapView.h
-    NodeItem.h
-    RootPanel.h
   }
 
   Source_Files {
@@ -65,6 +72,9 @@ project(Display_NavDisplayGUI_svnt) : ciao_servant, ace_qt4, qt4_qt3support {
   }
 
   IDL_Files {
+  }
+
+  MOC_Files {
   }
 
   Source_Files {

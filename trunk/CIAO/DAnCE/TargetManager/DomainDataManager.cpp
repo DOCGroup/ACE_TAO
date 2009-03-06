@@ -420,7 +420,6 @@ void CIAO::DomainDataManager::stop_monitors ()
           continue;
         }
 
-
       if (!CORBA::is_nil (node_manager.in ()))
         {
           try
@@ -459,7 +458,7 @@ int CIAO::DomainDataManager::add_to_domain (
       ::Deployment::Node a_node;
 
       if (!this->find_in_initial_domain (domain.node[i].name.in (),
-                                        a_node))
+                                         a_node))
         continue; // dont know this node
 
       //check if already present
