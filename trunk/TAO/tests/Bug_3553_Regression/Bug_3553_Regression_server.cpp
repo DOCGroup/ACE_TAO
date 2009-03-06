@@ -74,10 +74,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       for (int i = 1; i <= cache_size; ++i)
         {
           CORBA::String_var ior_string = orb->object_to_string (object.in());
-          ACE_DEBUG((LM_DEBUG, ACE_TEXT("Registring object %d with IOR string: %C\n"),
+          ACE_DEBUG((LM_DEBUG, ACE_TEXT("Registering object %d with IOR string: %C\n"),
             i, ior_string.in ()));
-          ACE_TCHAR* identifier (ACE_TEXT (""));
-          ACE_OS::sprintf (identifier, ACE_TEXT ("TransportCacheTest%d"), i);
+          char identifier[256];
+          ACE_OS::sprintf (identifier, "TransportCacheTest%d", i);
           table->bind(identifier, ior_string.in());
         }
 

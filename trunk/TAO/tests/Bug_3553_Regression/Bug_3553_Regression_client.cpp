@@ -78,8 +78,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int iter = 1;
       for (iter = 1; iter <= cache_size; ++iter)
         {
-          ACE_TCHAR* object_string (ACE_TEXT (""));
-          ACE_TCHAR* reference_string (ACE_TEXT (""));
+          char object_string[256];
+          char reference_string[256];
           ACE_OS::sprintf (reference_string, "TransportCacheTest%d", iter);
           ACE_OS::sprintf (object_string, "corbaloc:iiop:localhost:%d/", port_nr);
           ACE_OS::strcat (object_string, reference_string);
