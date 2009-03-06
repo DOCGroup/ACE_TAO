@@ -1,3 +1,13 @@
+Fri Mar  6 17:28:09 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+
+          This is an extension of the change in:
+          Mon Sep  1 20:18:51 UTC 2008  Ciju John  <johnc at ociweb dot com>
+          There are two classes in this file, DII_Invocation_Adapter and
+          DII_Deferred_Invocation_Adapter.  This commit applies the same change
+          to DII_Deferred_Invocation_Adapter.
+
 Fri Mar  6 07:41:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging.mpc
