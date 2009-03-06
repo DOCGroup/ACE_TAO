@@ -1,3 +1,13 @@
+Fri Mar  6 19:49:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3553_Regression/Bug_3553_Regression.mpc:
+        * tests/Bug_3553_Regression/TransportCache.mpc:
+          Renamed mpc file
+
+        * tests/Bug_3553_Regression/Bug_3553_Regression_client.cpp:
+        * tests/Bug_3553_Regression/Bug_3553_Regression_server.cpp:
+          Fixed compile errors/warnings
+
 Fri Mar  6 18:53:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTPortableServer.mpc:
