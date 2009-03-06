@@ -80,6 +80,7 @@ project(Messaging) : taolib, tao_output, install, portableserver, pi, valuetype,
     Messaging/Messaging_SyncScope_PolicyC.cpp
     Messaging/Messaging_No_ImplC.cpp
     Messaging/MessagingC.cpp
+    Messaging/MessagingS.cpp
     Messaging/ExceptionHolderA.cpp
     Messaging/MessagingA.cpp
     Messaging/Messaging_No_ImplA.cpp

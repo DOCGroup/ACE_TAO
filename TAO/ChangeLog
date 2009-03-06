@@ -1,3 +1,8 @@
+Fri Mar  6 07:41:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging.mpc
+          Added missing file
+
 Thu Mar  5 23:54:00 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Validate_Client_Task.h:
