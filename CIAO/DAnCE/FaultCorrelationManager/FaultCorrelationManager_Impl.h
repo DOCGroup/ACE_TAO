@@ -52,8 +52,9 @@ namespace DAnCE
     // methods from inherited interfaces
 
     // FaultNotification
-    virtual void app_failure (const char * host,
-                              const char * application);
+    virtual void app_failure (
+        const char * host,
+        const ::FLARE::ApplicationList & applications);
 
     // ExecutionManager
     virtual ::Deployment::DomainApplicationManager_ptr preparePlan (

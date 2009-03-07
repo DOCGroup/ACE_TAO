@@ -129,16 +129,22 @@ namespace DAnCE
   }
 
   void
-  FaultCorrelationManager_Impl::app_failure (const char * host,
-                                             const char * application)
+  FaultCorrelationManager_Impl::app_failure (
+    const char * host,
+    const ::FLARE::ApplicationList & applications)
   {
     DANCE_DEBUG ((LM_TRACE, "FaultCorrelationManager_Impl::app_failure ()\n"));
 
-    ACE_Guard <ACE_Thread_Mutex> guard (app_failure_lock_);
+    {
+      ACE_Guard <ACE_Thread_Mutex> guard (app_failure_lock_);
 
-    FailureInfo fi = {host, application};
-
-    notification_queue_.push (fi);
+      for (CORBA::ULong i = 0; i < applications.length (); ++i)
+        {
+          FailureInfo fi = {host, applications[i].in ()};
+          
+          notification_queue_.push (fi);
+        }
+    }
 
     new_notification_.signal ();
   }
