@@ -15,7 +15,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
   try
     {
       int argcm = argc + 2;
-      char ** argvm = new char* [argcm+1];
+      ACE_TCHAR ** argvm = new ACE_TCHAR* [argcm+1];
       for (int i = 0; i < argc; ++i)
         {
           argvm[i] = argv[i];

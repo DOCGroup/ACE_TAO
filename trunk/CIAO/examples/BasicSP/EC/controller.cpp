@@ -11,7 +11,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 
-const char *rategen_ior_ = "file://rategen.ior";
+const ACE_TCHAR *rategen_ior_ = ACE_TEXT("file://rategen.ior");
 int rate = 3;
 int turn_on = 1;
 
@@ -58,7 +58,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
   if (rategen_ior_ == 0)
     {
-      rategen_ior_ = "file://ec.ior";
+      rategen_ior_ = ACE_TEXT("file://ec.ior");
     }
 
   if (rate == 0)

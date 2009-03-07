@@ -487,12 +487,12 @@ void Starter::generateObjectKey(const char * node, const char * plan,
     }
   DANCE_DEBUG ( (LM_TRACE, "[%M] Starter::generateObjectKey printing result : %s\n", s.c_str()));
   ACE_OS::printf ("%s\n", s.c_str());
-  
+
   this->orb_->_use_omg_ior_format(prev_format);
   DANCE_DEBUG ( (LM_TRACE, "[%M] Starter::generateObjectKey completed.\n"));
 }
 
-void Starter::write_IOR(const char * ior_file_name, const char* ior)
+void Starter::write_IOR(const ACE_TCHAR * ior_file_name, const char* ior)
 {
   FILE* ior_output_file_ = ACE_OS::fopen (ior_file_name, "w");
 
@@ -516,12 +516,12 @@ void Starter::initNaming()
       * loader = ACE_Dynamic_Service<TAO_Object_Loader>::instance ("Naming_Loader");
   if (0 == loader)
     {
-      ACE_CString directive = 
+      ACE_CString directive =
         "dynamic Naming_Loader Service_Object * TAO_CosNaming_Serv:_make_TAO_Naming_Loader() \"";
       directive += this->optNSOptions_ + "\"";
       ACE_Service_Config::process_directive(directive.c_str());
     }
-    
+
     DANCE_DEBUG ( (LM_TRACE, "[%M] Putting ior to file if necessary...\n"));
     if (0 < this->optNSFile_.length())
       {
@@ -535,7 +535,7 @@ void Starter::initNaming()
             this->write_IOR(this->optNSFile_.c_str(), this->orb_->object_to_string(obj));
           }
       }
-    
+
 /*    CORBA::Object_var table_object = this->orb_->resolve_initial_references ("IORTable");
     IORTable::Table_var table = IORTable::Table::_narrow (table_object.in ());
     if (CORBA::is_nil (table.in()))
@@ -707,7 +707,7 @@ Starter::argCopyForNode (const char * node, int & c, char **& v)
       {
         v[c++] = CORBA::string_dup (n.iorfile_.c_str());
       }
-    
+
     bool take = false;
     for (int i = 0; i < this->argc_; ++i)
       {
@@ -872,7 +872,7 @@ Starter::releaseArgs (int c, char ** v)
     delete [] v;
   }
 
-bool 
+bool
 Starter::isPossibleOption(const char* opt)
 {
   const char * validOptions[] =
@@ -893,7 +893,7 @@ Starter::isPossibleOption(const char* opt)
           , "stop-plan", "q"
           , 0
         };
-  
+
   ACE_CString option = opt;
   for (int i = 0; 0 != validOptions[i]; ++i)
     {
@@ -902,7 +902,7 @@ Starter::isPossibleOption(const char* opt)
   return false;
 }
 
-void 
+void
 Starter::configure_logging_backend (void)
 {
   Logger_Service
@@ -917,7 +917,7 @@ Starter::configure_logging_backend (void)
       ACE_Log_Msg * ace = ACE_Log_Msg::instance();
       ace->clr_flags(ace->flags());
       ace->set_flags(ACE_Log_Msg::CUSTOM);
-    }  
+    }
 }
 
 } // DAnCE

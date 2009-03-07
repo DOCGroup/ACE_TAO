@@ -1,3 +1,12 @@
+Sat Mar  7 15:40:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Logger/Logger_Service.cpp
+        * DAnCE/Starter/Starter.cpp
+        * DAnCE/Starter/Starter.h
+        * DAnCE/tests/NameServiceTest/srv_main.cpp
+        * examples/BasicSP/EC/controller.cpp
+          Unicode fixes
+
 Fri Mar  6 20:17:32 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
         * docs/CIAO.pdf:
