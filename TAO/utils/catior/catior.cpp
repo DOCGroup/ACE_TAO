@@ -21,6 +21,7 @@
 #include "tao/Messaging_PolicyValueC.h"
 #include "tao/Messaging/Messaging_TypesC.h"
 #include "tao/ZIOP/ZIOP.h"
+#include "tao/Compression/Compression.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/IIOP_Profile.h"
@@ -84,7 +85,7 @@ catiiop (char* string)
   CORBA::UShort port_number;
   char *cp = ACE_OS::strchr (string, ':');
 
-  if (cp == 0)
+  if (!cp)
     {
       throw CORBA::DATA_CONVERSION ();
     }
@@ -101,7 +102,7 @@ catiiop (char* string)
 
   cp = ACE_OS::strchr ((char *) string, '/');
 
-  if (cp == 0)
+  if (!cp)
     {
       throw CORBA::DATA_CONVERSION ();
     }
@@ -235,7 +236,7 @@ catior (char const * str)
   continue_decoding = stream.read_ulong (profiles);
 
   // Get the count of profiles that follow.
-  if (continue_decoding == 0)
+  if (!continue_decoding)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "cannot read the profile count\n"));
@@ -264,7 +265,7 @@ catior (char const * str)
         continue_decoding = stream.read_ulong (tag);
 
         // Get the profile ID tag.
-        if (continue_decoding == 0)
+        if (!continue_decoding)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "cannot read profile tag\n"));
@@ -356,7 +357,7 @@ catpoop (char* string)
 
   char *cp = ACE_OS::strchr (string, ':');
 
-  if (cp == 0)
+  if (!cp)
     {
       throw CORBA::DATA_CONVERSION ();
     }
@@ -744,7 +745,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                             "\nhere is the IOR\n%C\n\n",
                             aString.rep ()));
 
-                char* str;
+                char* str = 0;
                 if (aString.find ("IOR:") == 0)
                   {
                     ACE_DEBUG ((LM_DEBUG,
@@ -899,7 +900,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                             "\nhere is the IOR\n%C\n\n",
                             aString.rep ()));
 
-                char* str;
+                char* str = 0;
                 if (aString.find ("IOR:") == 0)
                   {
                     ACE_DEBUG ((LM_DEBUG,
@@ -986,7 +987,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 CORBA::Boolean
 cat_tag_orb_type (TAO_InputCDR& stream) {
   CORBA::ULong length = 0;
-  if (stream.read_ulong (length) == 0)
+  if (!(stream.read_ulong (length)))
     return true;
 
   TAO_InputCDR stream2 (stream, length);
@@ -1065,14 +1066,15 @@ CORBA::Boolean
 cat_tao_tag_endpoints (TAO_InputCDR& stream)
 {
   CORBA::ULong length = 0;
-  if (stream.read_ulong (length) == 0)
-    return 1;
+  if (!(stream.read_ulong (length)))
+    return true;
 
   TAO_InputCDR stream2 (stream, length);
   stream.skip_bytes(length);
 
   TAO::IIOPEndpointSequence epseq;
-  stream2 >> epseq;
+  if (!(stream2 >> epseq))
+    return true;
 
   for (unsigned int iter=0; iter < epseq.length() ; iter++) {
     ACE_DEBUG ((LM_DEBUG,
@@ -1093,33 +1095,59 @@ cat_tao_tag_endpoints (TAO_InputCDR& stream)
 CORBA::Boolean
 cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
   CORBA::ULong length = 0;
-  if (stream.read_ulong (length) == 0)
-    return 1;
+  if (!(stream.read_ulong (length)))
+    return true;
 
   TAO_InputCDR stream2 (stream, length);
   stream.skip_bytes(length);
 
   CORBA::String_var host;
   CORBA::UShort port;
-  if ((stream2  >> host.out()) == 0 ||
-      (stream2 >> port) == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"cannot extract endpoint info\n"),0);
-  ACE_DEBUG ((LM_DEBUG,
-              "%I endpoint: %C:%d\n", host.in(), port));
-  return 1;
+  if (!(stream2  >> host.out() ||
+      !(stream2 >> port)))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,"cannot extract endpoint info\n"),false);
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I endpoint: %C:%d\n", host.in(), port));
+    }
+    
+  return true;
+}
+
+const char *
+ziop_compressorid_name (int st)
+{
+  switch (st)
+    {
+      case ::Compression::COMPRESSORID_NONE: return "NONE";
+      case ::Compression::COMPRESSORID_GZIP: return "GZIP";
+      case ::Compression::COMPRESSORID_PKZIP: return "PKZIP";
+      case ::Compression::COMPRESSORID_BZIP2: return "BZIP2";
+      case ::Compression::COMPRESSORID_ZLIB: return "ZLIB";
+      case ::Compression::COMPRESSORID_LZMA: return "LZMA";
+      case ::Compression::COMPRESSORID_LZO: return "LZO";
+      case ::Compression::COMPRESSORID_RZIP: return "RZIP";
+      case ::Compression::COMPRESSORID_7X: return "7X";
+      case ::Compression::COMPRESSORID_XAR: return "XAR";
+    }
+  return "Unknown";
 }
 
 CORBA::Boolean
 cat_tag_policies (TAO_InputCDR& stream) {
   CORBA::ULong length = 0;
-  if (stream.read_ulong (length) == 0)
-    return 1;
+  if (!(stream.read_ulong (length)))
+    return true;
 
   TAO_InputCDR stream2 (stream, length);
   stream.skip_bytes(length);
 
   Messaging::PolicyValueSeq policies;
-  stream2 >> policies;
+  if (!(stream2 >> policies))
+    return true;
 
   ACE_DEBUG ((LM_DEBUG,
               "%I Number of policies: %d\n",
@@ -1135,7 +1163,7 @@ cat_tag_policies (TAO_InputCDR& stream) {
 
     CORBA::Boolean byte_order;
     if (!(stream3 >> ACE_InputCDR::to_boolean (byte_order)))
-      return 1;
+      return true;
 
     stream3.reset_byte_order (static_cast <int> (byte_order));
 
@@ -1148,8 +1176,10 @@ cat_tag_policies (TAO_InputCDR& stream) {
       RTCORBA::PriorityModel priority_model;
       RTCORBA::Priority server_priority;
 
-      stream3 >> priority_model;
-      stream3 >> server_priority;
+      if (!(stream3 >> priority_model))
+        return true;
+      if (!(stream3 >> server_priority))
+        return true;
 
       if (priority_model == RTCORBA::CLIENT_PROPAGATED) {
         ACE_DEBUG ((LM_DEBUG,"%I\t Priority Model: %d (CLIENT_PROPAGATED)\n",
@@ -1244,12 +1274,13 @@ cat_tag_policies (TAO_InputCDR& stream) {
                   policies[iter].ptype));
       ::Compression::CompressorIdLevelList idlist;
       if (!(stream3 >> idlist))
-        return 1;
+        return true;
       CORBA::ULong index = 0;
       for (; index < idlist.length(); index++)
         {
-          ACE_DEBUG ((LM_DEBUG,"%I\t CompressorId: %d Level: %d\n",
-                      idlist[index].compressor_id, idlist[index].compression_level));
+          ACE_DEBUG ((LM_DEBUG,"%I\t CompressorId: %C Level: %d\n",
+                      ziop_compressorid_name(idlist[index].compressor_id),
+                      idlist[index].compression_level));
         }
     } else if (policies[iter].ptype == ZIOP::COMPRESSION_ENABLING_POLICY_ID) {
       ACE_DEBUG ((LM_DEBUG,
@@ -1257,7 +1288,8 @@ cat_tag_policies (TAO_InputCDR& stream) {
                   iter+1,
                   policies[iter].ptype));
       CORBA::Boolean status;
-      stream3 >> ACE_InputCDR::to_boolean (status);
+      if (!(stream3 >> ACE_InputCDR::to_boolean (status)))
+        return true;
       ACE_DEBUG ((LM_DEBUG,"%I\t Enabled: %d\n",
                   status));
     } else {
@@ -1267,7 +1299,7 @@ cat_tag_policies (TAO_InputCDR& stream) {
     }
   }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -1324,7 +1356,7 @@ cat_tag_ssl_sec_trans (TAO_InputCDR& cdr) {
    */
 
   CORBA::ULong length = 0;
-  if (cdr.read_ulong (length) == 0)
+  if (!(cdr.read_ulong (length)))
     return false;
 
   TAO_InputCDR stream (cdr, length);
@@ -1987,7 +2019,7 @@ cat_nsk_profile_helper (TAO_InputCDR& stream,
 
   // Get address
   char* fsaddress;
-  if ((str >> fsaddress) == 0)
+  if (!(str >> fsaddress))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%I problem decoding file system address\n"));
