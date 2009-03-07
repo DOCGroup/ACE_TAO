@@ -1,5 +1,5 @@
 //$Id$
-project(*idl) : taoidldefaults {
+project(*idl) : tao_versioning_idl_defaults, avoids_corba_e_micro {
   custom_only = 1
   IDL_Files {
     idlflags += -Gp -Gd -Sci -SS -Sorb -GX \
