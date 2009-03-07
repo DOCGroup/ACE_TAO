@@ -20,7 +20,8 @@ HMOptions::HMOptions (void)
     HM_ior_file_ ("hm.ior"),
     port_range_begin_ (7000),
     RM_update_freq_ (1),
-    load_monitor_freq_(2)
+    load_monitor_freq_(2),
+    debug_level_ (0)    
 {
   char hostname [100];
   gethostname (hostname, sizeof (hostname));
@@ -114,6 +115,17 @@ HMOptions::parse_args (int &argc, char **argv)
                 
           as.consume_arg ();
         }
+      else if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-debug"))))
+        {
+          std::istringstream istr (arg);
+          
+          if (!(istr >> debug_level_))
+            {
+              return false;
+            }
+            
+          as.consume_arg ();
+        }
       else
         {
           as.ignore_arg ();
@@ -171,3 +183,42 @@ HMOptions::ior_access (void) const
   return ior_access_;
 }
 
+void 
+HMOptions::set_debug_level (void)
+{
+  u_long mask = LM_EMERGENCY | LM_ALERT | LM_CRITICAL | LM_ERROR;
+
+  switch (debug_level_)
+    {
+    case 0: break;
+    case 1:
+      {
+        mask |= LM_WARNING;
+        break;
+      }
+    case 2:
+      {
+        mask |= LM_WARNING | LM_DEBUG;
+        break;
+      }
+    case 3:
+      {
+        mask |= LM_WARNING | LM_DEBUG | LM_TRACE;
+        break;
+      }
+    case 4:
+      {
+        mask |= LM_WARNING | LM_DEBUG | LM_TRACE | LM_NOTICE;
+        break;
+      }
+    case 5:
+      {
+        mask |= LM_WARNING | LM_DEBUG | LM_TRACE | LM_NOTICE | LM_INFO;
+        break;
+      }
+    default: break;
+    }
+
+  ACE_LOG_MSG->priority_mask (mask,
+                              ACE_Log_Msg::PROCESS);
+}

@@ -392,8 +392,8 @@ private:
                  
   void print_queue (std::priority_queue <UtilRank> queue);
 
-  void send_failure_notice (const char * object_id,
-                            const char * host_id);
+  void send_failure_notice (const char * host,
+                            const ::FLARE::ApplicationList & object_ids);
 };
 
 #endif  /* REPLICATION_MANAGER_H */

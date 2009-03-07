@@ -16,6 +16,7 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Auto_Ptr.h"
 
+#include "AppSideMonitor_Thread.h"
 #include "lwft_server_export.h"
 
 /**
@@ -32,6 +33,8 @@ public:
   /// Singleton access method.
   static AppOptions *instance (void);
 
+  ~AppOptions (void);
+
   bool parse_args (int &argc, char **argv);
   
   /// Member accessors.
@@ -40,6 +43,7 @@ public:
   u_short port (void) const;
   std::string object_info_file (void) const;
   std::string process_id (void) const;
+  void monitor (AppSideMonitor_Thread *mon);
   std::string app_id (void) const;
   size_t role (void) const;
   double load (void) const;
@@ -74,6 +78,7 @@ protected:
   double load_;
   bool use_dds_;
   long debug_level_;
+  std::auto_ptr <AppSideMonitor_Thread> monitor_;
 
   /// Singleton-related stuff.
   static AppOptions * volatile instance_;

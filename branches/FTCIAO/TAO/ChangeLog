@@ -1,3 +1,27 @@
+Sat Mar  7 04:01:52 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/HMOptions.h
+        * orbsvcs/orbsvcs/LWFT/HMOptions.cpp
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp:
+        
+          Added debugging level option.
+        
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h        
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp
+        * orbsvcs/orbsvcs/LWFT/FaultNotification.idl:
+        
+          Changed failure notification interface.
+
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.h:
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppOptions.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppOptions.h:
+        
+          Moved storage of the application monitor thread class
+          from class AppSideReg, which is no longer a thread in
+          its own right and hence goes out of scope quickly, to
+          the AppOptions singleton.
+
 Sun Mar  1 06:46:09 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.h:

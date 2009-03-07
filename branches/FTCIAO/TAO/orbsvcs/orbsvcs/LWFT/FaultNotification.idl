@@ -5,9 +5,11 @@
 
 module FLARE {
 
+  typedef sequence<string> ApplicationList;
+
   interface FaultNotification {
     void app_failure (in string host,
-                      in string application);
+                      in ApplicationList applications);
   };
 
   exception NotifyRegistrationError {};
