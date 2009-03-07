@@ -45,9 +45,22 @@ public:
   std::pair <char, std::string> ior_access (void) const;
   bool use_naming_service (void) const;
 
+  /**
+   *  @return the debug level of the application:
+   *          0 - all errors and other urgent levels
+   *          1 - warnings are shown as well
+   *          2 - LM_DEBUG messages added
+   *          3 - LM_TRACE messages added
+   *          4 - LM_NOTICE messages added
+   *          5 - LM_INFO messages added
+   */
+  long debug_level (void) const;
+
 protected:
   /// Constructor is protected to ensure Singleton access.
   HMOptions (void);
+
+  void set_debug_level (void);
 
   std::string RM_ior_;
   std::string host_id_;
@@ -57,6 +70,7 @@ protected:
   size_t RM_update_freq_;
   size_t load_monitor_freq_;
   std::pair <char, std::string> ior_access_;
+  long debug_level_;
 
   /// Singleton-related stuff.
   static HMOptions * volatile instance_;

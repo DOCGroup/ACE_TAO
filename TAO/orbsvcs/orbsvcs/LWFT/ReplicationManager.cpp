@@ -622,9 +622,18 @@ ReplicationManager_i::process_proc_failure (
           STRING_LIST primaries;
           if (processid_primary_map_.find (process_id, primaries) == 0)
             {
+              FLARE::ApplicationList ids;
+              CORBA::ULong index = 0;
+              ids.length (primaries.size ());
+              for (STRING_LIST::iterator it = primaries.begin ();
+                   it != primaries.end ();
+                   ++it)
+                {
+                  ids[index++] = (*it).c_str ();
+                }
               // for now just take the first entry and send it
-              send_failure_notice ((*(primaries.begin ())).c_str (),
-                                   host.c_str ());
+              send_failure_notice (host.c_str (),
+                                   ids);
             }
 
           replace_primary_tags (process_id, host);
@@ -1913,13 +1922,13 @@ ReplicationManager_i::unregister_fault_notification (
 }
 
 void 
-ReplicationManager_i::send_failure_notice (const char * object_id,
-                                           const char * host_id)
+ReplicationManager_i::send_failure_notice (const char * host,
+                                           const ::FLARE::ApplicationList & object_ids)
 {
   ACE_DEBUG ((LM_TRACE, 
               "RM: '%s' on '%s' failed.\n",
-              object_id,
-              host_id));
+              object_ids[0].in (),
+              host));
 
   try
     {
@@ -1929,7 +1938,7 @@ ReplicationManager_i::send_failure_notice (const char * object_id,
            it != notify_subscriptions_.end ();
            ++it)
         {
-          it->item ()->app_failure (host_id, object_id);
+          it->item ()->app_failure (host, object_ids);
         }
     }
   catch (const CORBA::Exception & ex)

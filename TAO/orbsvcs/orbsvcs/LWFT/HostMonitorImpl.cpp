@@ -61,13 +61,13 @@ HostMonitorImpl::register_process (const char *process_id,
                           hostname,
                           port);
   process_map_.bind (process_id, handler);
-  /*
+
   ACE_DEBUG ((LM_TRACE,
               "HostMonitorImpl::register_process "
               "process_id = %s, port = %d.\n",
               process_id,
               port));
-  */
+
   return true;
 }
 

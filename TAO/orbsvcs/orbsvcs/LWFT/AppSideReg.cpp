@@ -7,11 +7,6 @@
  *  @brief Defines implementation of AppSideReg.
  *
  */
-
-#include <sstream>
-#include <stdexcept>
-#include <algorithm>
-
 #include "ace/Barrier.h"
 
 #include "AppSideReg.h"
@@ -80,17 +75,19 @@ AppSideReg::register_process (void)
                   "AppSideReg: creating the host monitor\n"));
 
       ACE_Barrier internal_thread_barrier (2);
-      monitor_ =
-        std::auto_ptr<AppSideMonitor_Thread> (
+      AppSideMonitor_Thread *mon =
           new AppSideMonitor_Thread (internal_thread_barrier,
-                                     port_));
+                                     port_);
 
-      monitor_->activate ();
+      mon->activate ();
 
       //ACE_DEBUG ((LM_TRACE, "Host monitor activated\n"));
 
       internal_thread_barrier.wait ();
       
+      // Store monitor in singleton so it will stay around.
+      AppOptions::instance ()->monitor (mon);
+
       //ACE_DEBUG ((LM_TRACE, "AppSideReg::svc before registering process.\n"));
 
       try
