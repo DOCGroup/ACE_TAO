@@ -144,7 +144,7 @@ TAO/tests/Bug_3542_Regression/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_C
 #TAO/tests/Bug_3543_Regression/run_test.pl: !ST
 TAO/tests/Bug_3548_Regression/run_test.pl:
 TAO/tests/Bug_3552_Regression/run_test.pl:
-TAO/tests/Bug_3553_Regression/run_test.pl:
+TAO/tests/Bug_3553_Regression/run_test.pl: !CORBA_E_MICRO
 TAO/tests/Bug_3559_Regression/run_test.pl:
 TAO/tests/Bug_3558_Regression/run_test.pl:
 TAO/tests/Bug_3565_Regression/run_test.pl:

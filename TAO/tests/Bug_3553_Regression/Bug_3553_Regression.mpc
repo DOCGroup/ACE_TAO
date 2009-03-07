@@ -23,7 +23,7 @@ project(*Server): taoserver, iortable {
   }
 }
 
-project(*Client): taoclient, rtcorba {
+project(*Client): taoclient, rtcorba, avoids_corba_e_micro {
   after += *idl
   Source_Files {
     Bug_3553_Regression_client.cpp
