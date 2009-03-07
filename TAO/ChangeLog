@@ -1,3 +1,8 @@
+Sat Mar  7 20:54:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/catior/catior.cpp:
+          Extended output for ZIOP and check more return values
+
 Sat Mar  7 18:55:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3553_Regression/Bug_3553_Regression.mpc:
