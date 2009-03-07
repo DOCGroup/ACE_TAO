@@ -1,3 +1,9 @@
+Sat Mar  7 16:51:20 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Notify/Persistent_Filter/Filter.h:
+        * orbsvcs/tests/Notify/Persistent_Filter/Filter.cpp:
+          Fix wchar support.
+
 Sat Mar  7 14:54:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTScheduler.mpc

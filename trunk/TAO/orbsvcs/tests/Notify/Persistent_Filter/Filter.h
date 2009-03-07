@@ -45,8 +45,8 @@ class FilterClient
   ~FilterClient ();
   // Destructor
 
-  void init_supplier (int argc, char *argv []);
-  void init_consumer (int argc, char *argv []);
+  void init_supplier (int argc, ACE_TCHAR *argv []);
+  void init_consumer (int argc, ACE_TCHAR *argv []);
   // Init the Client.
 
   void run_supplier ();
@@ -59,9 +59,9 @@ class FilterClient
  protected:
 
   int parse_args (int argc,
-                  char *argv[]);
+                  ACE_TCHAR *argv[]);
 
-  void init_ORB (int& argc, char **& argv);
+  void init_ORB (int& argc, ACE_TCHAR **& argv);
   // Initializes the ORB.
 
   void resolve_naming_service ();
@@ -95,7 +95,7 @@ class FilterClient
 
   void wait_consumer_complete ();
 
-  void varify_filter (CosNotifyFilter::FilterAdmin_var& admin, 
+  void verify_filter (CosNotifyFilter::FilterAdmin_var& admin, 
                       const char* constraint_expr,
                       const char* mod_constraint_expr);
 
