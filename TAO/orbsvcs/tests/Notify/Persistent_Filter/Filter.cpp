@@ -46,10 +46,9 @@ FilterClient::~FilterClient ()
 
 
 int 
-FilterClient::parse_args (int argc,
-                          char *argv[])
+FilterClient::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "pm");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("pm"));
   int c;
 
   while ((c = opts ()) != -1)
@@ -65,9 +64,7 @@ FilterClient::parse_args (int argc,
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage: %s"
-                           " [-p] [-m]"
-                           "\n",
+                           ACE_TEXT ("usage: %C [-p] [-m]\n"),
                            argv [0]),
                           -1);
       }
@@ -76,7 +73,7 @@ FilterClient::parse_args (int argc,
 }
 
 void
-FilterClient::init_supplier (int argc, char *argv [])
+FilterClient::init_supplier (int argc, ACE_TCHAR *argv [])
 {
   init_ORB (argc, argv);
   
@@ -112,7 +109,7 @@ FilterClient::init_supplier (int argc, char *argv [])
 
 
 void
-FilterClient::init_consumer (int argc, char *argv [])
+FilterClient::init_consumer (int argc, ACE_TCHAR *argv [])
 {
   init_ORB (argc, argv);
 
@@ -222,8 +219,7 @@ FilterClient::done (void)
 }
 
 void
-FilterClient::init_ORB (int& argc,
-                      char **& argv)
+FilterClient::init_ORB (int& argc, ACE_TCHAR **& argv)
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
@@ -366,7 +362,7 @@ FilterClient::get_supplieradmin ()
 
   CosNotifyFilter::FilterAdmin_var admin 
     = CosNotifyFilter::FilterAdmin::_narrow (supplier_admin_.in ()); 
-  varify_filter (admin, SA_FILTER, MOD_SA_FILTER);
+  verify_filter (admin, SA_FILTER, MOD_SA_FILTER);
 }
 
 
@@ -446,14 +442,14 @@ FilterClient::get_consumeradmin ()
 
   CosNotifyFilter::FilterAdmin_var admin 
     = CosNotifyFilter::FilterAdmin::_narrow (consumer_admin_1_.in ()); 
-  varify_filter (admin, CA_FILTER, MOD_CA_FILTER);
+  verify_filter (admin, CA_FILTER, MOD_CA_FILTER);
   admin = CosNotifyFilter::FilterAdmin::_narrow (consumer_admin_2_.in ()); 
-  varify_filter (admin, CA_FILTER, MOD_CA_FILTER);
+  verify_filter (admin, CA_FILTER, MOD_CA_FILTER);
 }
 
 
 void 
-FilterClient::varify_filter (CosNotifyFilter::FilterAdmin_var& admin, 
+FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin, 
                              const char* constraint_expr,
                              const char* mod_constraint_expr) 
 {
