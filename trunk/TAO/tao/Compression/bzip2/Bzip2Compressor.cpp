@@ -32,9 +32,9 @@ Bzip2Compressor::compress (
                                   &max_length,
                                   reinterpret_cast <char*>(const_cast<CORBA::Octet*>(source.get_buffer ())),
                                   source.length (),
-                                  0,
+                                  9,
                                   1,
-                                  this->compression_level ());
+                                  this->compression_level () * 25);
 
   if (retval != BZ_OK)
     {
