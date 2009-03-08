@@ -1,3 +1,11 @@
+Sun Mar  8 19:20:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Compression/zlib/ZlibCompressor.cpp:
+          Also retrieve error string
+
+        * Compression/bzip2/Bzip2Compressor.cpp:
+          Fixed call to the bzip2 library
+
 Sun Mar  8 14:41:44 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * MPC/config/notification_serv.mpb:
