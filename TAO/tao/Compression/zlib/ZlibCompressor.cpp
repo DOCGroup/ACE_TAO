@@ -35,7 +35,7 @@ ZlibCompressor::compress (
 
   if (retval != Z_OK)
     {
-      throw ::Compression::CompressionException (retval, "");
+      throw ::Compression::CompressionException (retval, ::zError (retval));
     }
   else
     {
