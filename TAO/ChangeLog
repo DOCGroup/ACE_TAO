@@ -1,3 +1,12 @@
+Sun Mar  8 00:12:06 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+          Added new Notify svc source file.
+
+        * orbsvcs/tests/Notify/Makefile.am:
+        * orbsvcs/tests/Notify/Persistent_Filter/Makefile.am:
+          Added new Persistent_Filter test.
+
 Sat Mar  7 20:54:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/catior/catior.cpp:

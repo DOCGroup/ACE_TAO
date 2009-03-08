@@ -2209,6 +2209,7 @@ libTAO_CosNotification_Serv_la_SOURCES = \
   Notify/Topology_Loader.cpp \
   Notify/Topology_Object.cpp \
   Notify/Topology_Saver.cpp \
+  Notify/Validate_Client_Task.cpp \
   Notify/Worker_Task.cpp
 
 libTAO_CosNotification_Serv_la_LDFLAGS = \
@@ -2336,6 +2337,7 @@ nobase_include_HEADERS += \
   Notify/Topology_Object.h \
   Notify/Topology_Object.inl \
   Notify/Topology_Saver.h \
+  Notify/Validate_Client_Task.h \
   Notify/Worker_Task.h \
   Notify/notify_serv_export.h
 
