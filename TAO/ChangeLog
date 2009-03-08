@@ -1,3 +1,9 @@
+Sun Mar  8 14:41:44 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/config/notification_serv.mpb:
+          Add dependency on messaging lib that was introduced by the
+          new notification feature for validating notification peers.
+
 Sun Mar  8 00:12:06 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Makefile.am:
