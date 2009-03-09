@@ -20,6 +20,12 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"
+#include "orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h"
+#include "orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.h"
+#include "orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.h"
+#include "orbsvcs/orbsvcs/LWFT/AppOptions.h"
+#include "orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.h"
+#include "orbsvcs/orbsvcs/LWFT/ReplicationManagerC.h"
 #include "ciao/CIAO_common.h"
 #include "ciao/Logger/Logger_Service.h"
 #include "ciao/Logger/Log_Macros.h"
@@ -30,12 +36,6 @@
 #include "CIAO_CS_ClientC.h"
 #include "Configurator_Factory.h"
 #include "Configurators/Server_Configurator.h"
-#include "StateSynchronizationAgent_i.h"
-#include "orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.h"
-#include "orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.h"
-#include "orbsvcs/orbsvcs/LWFT/AppOptions.h"
-#include "orbsvcs/orbsvcs/LWFT/AppSideReg.h"
-#include "orbsvcs/orbsvcs/LWFT/ReplicationManagerC.h"
 
 #ifdef CIAO_BUILD_COMPONENTSERVER_EXE
 
@@ -118,9 +118,6 @@ namespace CIAO
           throw Error ("Unable to load ComponentServer configurator.");
         }
 
-      AppOptions::instance ()->parse_args (argc, argv);
-      AppOptions::instance ()->process_id (this->get_process_id ());
-      
       this->configurator_->pre_orb_initialize ();
 
       LWFT_Client_Init initializer;
@@ -128,6 +125,10 @@ namespace CIAO
       CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_Task::CIAO_ComponentServer_Task - "
                    "Creating ORB\n"));
       this->orb_ = initializer.init (argc, argv);
+
+      AppOptions::instance ()->parse_args (argc, argv);
+      AppOptions::instance ()->process_id (this->get_process_id ());
+      AppOptions::instance ()->orb (CORBA::ORB::_duplicate (orb_.in ()));
 
       this->configurator_->post_orb_initialize (this->orb_.in ());
 
@@ -164,9 +165,7 @@ namespace CIAO
 	  CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
 		       "starting AppSideMonitor thread.\n"));
 
-          AppSideReg proc_reg (orb_.in ());
-          
-          int result = proc_reg.register_process ();
+          int result = AppSideMonitor_Thread::instance ()->activate ();;
       
           if (result != 0)
             {
@@ -181,11 +180,10 @@ namespace CIAO
 
 	  // start up SSA
 	  StateSynchronizationAgent_i* ssa_servant = 0;
-	  ACE_NEW_NORETURN (ssa_servant,  StateSynchronizationAgent_i (
-				orb_.in (),
-			        this->get_hostname (), // this has to be replaced by the
-				this->get_process_id ()));   // real hostname and process id
-
+	  ACE_NEW_NORETURN (ssa_servant, StateSynchronizationAgent_i (
+            this->get_hostname (), // this has to be replaced by the
+            this->get_process_id ()));   // real hostname and process id
+          
 	  if (ssa_servant == 0)
 	    {
 	      CIAO_ERROR ((LM_CRITICAL, "ComponentServer_Task::run - "

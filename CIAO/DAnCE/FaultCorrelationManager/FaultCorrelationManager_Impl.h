@@ -85,6 +85,8 @@ namespace DAnCE
 
     void add_constraints (const Deployment::DeploymentPlan & plan);
 
+    void remove_constraints (const Deployment::DeploymentPlan & plan);
+
     RankListConstraints * get_constraints (void);
 
   private:

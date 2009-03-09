@@ -83,6 +83,10 @@ namespace DAnCE
   {
     try
       {
+        DANCE_DEBUG ((LM_TRACE, 
+                      "FCM::stop_failover_unit (%C)\n",
+                      fou_id));        
+
         Deployment::DomainApplicationManager_var dam;
 
         if (dams_.find (fou_id,
@@ -112,7 +116,15 @@ namespace DAnCE
               }
           }
 
+        Deployment::DeploymentPlan_var plan = dam->getPlan ();
+
+        this->remove_constraints (plan);
+
         this->destroyManager (dam.in ());
+
+        RankListConstraints_var constraints = this->get_constraints ();
+        
+        rep_mgr_->set_ranklist_constraints (constraints.in ());
 
         DANCE_DEBUG ((LM_TRACE, 
                       "FCM::stop_failover_unit (%C): "
@@ -133,7 +145,7 @@ namespace DAnCE
     const char * host,
     const ::FLARE::ApplicationList & applications)
   {
-    DANCE_DEBUG ((LM_TRACE, "FaultCorrelationManager_Impl::app_failure ()\n"));
+    DANCE_DEBUG ((LM_TRACE, "FCM: app_failure ()\n"));
 
     {
       ACE_Guard <ACE_Thread_Mutex> guard (app_failure_lock_);
@@ -396,6 +408,43 @@ namespace DAnCE
             constr.push_back (plan.instance[i].node.in ());
             constraints_.bind (object_id.in (),
                                constr);
+          }
+      }
+  }
+
+  void 
+  FaultCorrelationManager_Impl::remove_constraints (const Deployment::DeploymentPlan & plan)
+  {
+    // add all found component instances to the map
+    const Deployment::InstanceDeploymentDescription id;
+    for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
+      { 
+        // find object_id property if existing
+        CORBA::String_var object_id (
+          this->get_property (CIAO::Deployment::OBJECT_ID,
+                              plan.instance[i].configProperty));
+
+        if (object_id.in () == 0)
+          object_id = plan.instance[i].name.in ();
+
+        RANKLIST_CONSTRAINT constr;
+        if (constraints_.find (object_id.in (),
+                               constr) == 0)
+          {
+            for (RANKLIST_CONSTRAINT::iterator it = constr.begin ();
+                 it != constr.end ();
+                 ++it)
+              {
+                if (it->compare (plan.instance[i].node.in ()) == 0)
+                  {
+                    constr.erase (it);
+
+                    if (constr.size () == 0)
+                      constraints_.unbind (object_id.in ());
+
+                    break;
+                  }
+              }
           }
       }
   }
