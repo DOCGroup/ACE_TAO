@@ -1,4 +1,4 @@
-// client.cpp,v 1.5 2002/01/29 20:21:07 okellogg Exp
+// $Id$
 
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
