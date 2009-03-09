@@ -16,8 +16,9 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Auto_Ptr.h"
 
-#include "AppSideMonitor_Thread.h"
-#include "lwft_server_export.h"
+#include "tao/ORB.h"
+
+#include "lwft_common_export.h"
 
 /**
  *  @class   AppOptions
@@ -25,14 +26,14 @@
  *  @brief Declares AppOptions singleton to hold the command line options.
  */
 
-class LWFT_Server_Export AppOptions
+class LWFT_Common_Export AppOptions
 /// TITLE
 ///   Singleton class for the program options.
 {
 public:
   /// Singleton access method.
   static AppOptions *instance (void);
-
+  
   ~AppOptions (void);
 
   bool parse_args (int &argc, char **argv);
@@ -43,7 +44,6 @@ public:
   u_short port (void) const;
   std::string object_info_file (void) const;
   std::string process_id (void) const;
-  void monitor (AppSideMonitor_Thread *mon);
   std::string app_id (void) const;
   size_t role (void) const;
   double load (void) const;
@@ -61,6 +61,10 @@ public:
   long debug_level (void) const;
 
   void process_id (const std::string & id);
+  
+  // Neither storage nor access creates a duplicate.
+  void orb (CORBA::ORB_ptr the_orb);
+  CORBA::ORB_ptr orb (void);
 
 protected:
   /// Constructor is protected to ensure Singleton access.
@@ -78,7 +82,7 @@ protected:
   double load_;
   bool use_dds_;
   long debug_level_;
-  std::auto_ptr <AppSideMonitor_Thread> monitor_;
+  CORBA::ORB_ptr orb_;
 
   /// Singleton-related stuff.
   static AppOptions * volatile instance_;

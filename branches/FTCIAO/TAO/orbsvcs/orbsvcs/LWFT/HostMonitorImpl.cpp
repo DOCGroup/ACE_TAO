@@ -52,7 +52,7 @@ HostMonitorImpl::register_process (const char *process_id,
   if (connector_.connect (handler, serv_addr, options) < 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Failed to open an connector socket.\n"), 1);
+                         "Failed to open a connector socket.\n"), 1);
     }
 
   handler->set_host_monitor (this);
@@ -61,13 +61,13 @@ HostMonitorImpl::register_process (const char *process_id,
                           hostname,
                           port);
   process_map_.bind (process_id, handler);
-
+  /*
   ACE_DEBUG ((LM_TRACE,
               "HostMonitorImpl::register_process "
               "process_id = %s, port = %d.\n",
               process_id,
               port));
-
+  */
   return true;
 }
 

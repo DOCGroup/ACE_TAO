@@ -20,12 +20,10 @@
 #endif
 
 StateSynchronizationAgent_i::StateSynchronizationAgent_i (
-  CORBA::ORB_ptr orb,
   const std::string & host_id,
   const std::string & process_id,
   bool use_corba)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
-    host_id_ (host_id),
+  : host_id_ (host_id),
     process_id_ (process_id),
 #if defined (FLARE_USES_DDS)
     domain_id_ (0),//"FLAREDomain"),

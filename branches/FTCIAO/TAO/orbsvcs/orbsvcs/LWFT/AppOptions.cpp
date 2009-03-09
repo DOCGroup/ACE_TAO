@@ -48,7 +48,6 @@ AppOptions::instance (void)
 
 AppOptions::~AppOptions (void)
 {
-  monitor_->stop ();
 }
 
 bool
@@ -175,12 +174,6 @@ AppOptions::process_id (void) const
   return process_id_;
 }
 
-void
-AppOptions::monitor (AppSideMonitor_Thread *mon)
-{
-  this->monitor_.reset (mon);
-}
-
 std::string
 AppOptions::app_id (void) const
 {
@@ -209,6 +202,18 @@ void
 AppOptions::process_id (const std::string & id)
 {
   process_id_ = id;
+}
+
+void
+AppOptions::orb (CORBA::ORB_ptr the_orb)
+{
+  orb_ = the_orb;
+}
+
+CORBA::ORB_ptr
+AppOptions::orb (void)
+{
+  return orb_;
 }
 
 void 

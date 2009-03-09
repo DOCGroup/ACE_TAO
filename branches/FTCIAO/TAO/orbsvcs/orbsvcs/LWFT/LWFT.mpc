@@ -12,6 +12,7 @@ project(*Common) : pi_server, interceptors, iorinterceptor, orbsvcs_output {
   }
   
   Source_Files {
+    AppOptions.cpp
     Barrier_Guard.cpp
     LWFTDataStructuresC.cpp
     LWFTDataStructuresS.cpp
@@ -87,10 +88,8 @@ project(*Server) : iorinterceptor, orbsvcs_output {
   }
   
   Source_Files {
-    AppOptions.cpp
     AppSideMonitor_Thread.cpp
     AppSideMonitor_Handler.cpp
-    AppSideReg.cpp
     HostMonitorC.cpp
     IOR_Interceptor.cpp
     LWFT_Server_Init.cpp
@@ -182,8 +181,8 @@ project(*ReplicationManager) : portableserver, orbsvcs_output {
   Header_Files {
     ReplicationManagerC.h
     ReplicationManagerS.h
-    FaultNotificationC.cpp
-    FaultNotificationS.cpp
+    FaultNotificationC.h
+    FaultNotificationS.h
     rm_export.h
   }
   
@@ -196,8 +195,6 @@ project(*ReplicationManager) : portableserver, orbsvcs_output {
 }
 
 project(*ReplicationManagerImpl) : portableserver, orbsvcs_output, lwft_server {
-  after += *Client
-  libs += LWFT_Client
   dynamicflags = RM_IMPL_BUILD_DLL
   sharedname = LWFT_ReplicationManagerImpl
   
