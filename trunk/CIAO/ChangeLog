@@ -1,3 +1,8 @@
+Mon Mar  9 13:39:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/*:
+          Added all CIAO doxygen files
+
 Mon Mar  8 12:50:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/CIAO_Servant_Activator.mpc:
