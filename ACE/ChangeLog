@@ -1,3 +1,11 @@
+Mon Mar  9 07:08:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_footprint_chart.sh:
+          Changed location of footer
+
+        * bin/MakeProjectCreator/config/global.features:
+          lzo1 is disabled by default
+
 Fri Mar  6 20:28:50 UTC 2009  Steven Stallion  <stallions@ociweb.com>
 
         * bin/PerlACE/Process_Unix.pm:
