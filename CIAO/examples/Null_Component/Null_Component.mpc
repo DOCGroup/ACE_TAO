@@ -1,8 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Null_Interface Null_Component"
 
-project(Null_Component_idl_gen) : ciaoidldefaults, anytypecode {
-  avoids += ace_for_tao
+project(Null_Component_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NULL_COMPONENT_STUB_Export \
               -Wb,stub_export_include=Null_Component_stub_export.h \
@@ -14,8 +13,7 @@ project(Null_Component_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(Null_Component_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
-  avoids += ace_for_tao
+project(Null_Component_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
   cidlflags += --svnt-export-macro NULL_COMPONENT_SVNT_Export \
                --svnt-export-include Null_Component_svnt_export.h
@@ -32,8 +30,7 @@ project(Null_Component_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   }
 }
 
-project(Null_Component_stub) : ccm_stub {
-  avoids += ace_for_tao
+project(Null_Component_stub) : ccm_stub, avoids_ace_for_tao {
   after += Null_Component_idl_gen Null_Interface_stub
   libs  += Null_Interface_stub
 
@@ -57,8 +54,7 @@ project(Null_Component_stub) : ccm_stub {
   }
 }
 
-project(Null_Component_exec) : ciao_executor {
-  avoids += ace_for_tao
+project(Null_Component_exec) : ciao_executor, avoids_ace_for_tao {
   after   += Null_Component_cidl_gen Null_Component_stub
   sharedname = Null_Component_exec
   libs += Null_Component_stub Null_Interface_stub
@@ -85,8 +81,7 @@ project(Null_Component_exec) : ciao_executor {
 }
 
 
-project(Null_Component_svnt) : ciao_servant {
-  avoids += ace_for_tao
+project(Null_Component_svnt) : ciao_servant, avoids_ace_for_tao {
   after      += Null_Interface_skel Null_Component_exec
   sharedname  = Null_Component_svnt
   libs       += Null_Component_exec \

@@ -1,9 +1,8 @@
 // $Id$
 // This file is generated with "generate_component_mpc_extra.pl -p Hello_Base Sender"
 
-project(Swapping_Hello_Sender_idl_gen) : ciaoidldefaults, anytypecode {
+project(Swapping_Hello_Sender_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   requires += dummy_label
-  avoids += ace_for_tao
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
               -Wb,stub_export_include=Sender_stub_export.h \
@@ -15,9 +14,8 @@ project(Swapping_Hello_Sender_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(Swapping_Hello_Sender_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
+project(Swapping_Hello_Sender_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
   requires += dummy_label
-  avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro SENDER_SVNT_Export \
                --svnt-export-include Sender_svnt_export.h \
@@ -35,9 +33,8 @@ project(Swapping_Hello_Sender_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   }
 }
 
-project(Swapping_Hello_Sender_stub): ccm_stub {
+project(Swapping_Hello_Sender_stub): ccm_stub, avoids_ace_for_tao {
   requires += dummy_label
-  avoids += ace_for_tao
   libpaths += ../Hello_Base
   after += Swapping_Hello_Base_stub \
            Swapping_Hello_Sender_idl_gen
@@ -62,10 +59,9 @@ project(Swapping_Hello_Sender_stub): ccm_stub {
   }
 }
 
-project(Swapping_Hello_Sender_svnt) : ciao_servant {
+project(Swapping_Hello_Sender_svnt) : ciao_servant, avoids_ace_for_tao {
   requires += dummy_label
   libpaths += ../Hello_Base
-  avoids += ace_for_tao
   after += Swapping_Hello_Base_skel \
            Swapping_Hello_Sender_stub \
            Swapping_Hello_Sender_cidl_gen
@@ -101,9 +97,8 @@ project(Swapping_Hello_Sender_svnt) : ciao_servant {
   }
 }
 
-project(Swapping_Hello_Sender_exec) : ciao_executor {
+project(Swapping_Hello_Sender_exec) : ciao_executor, avoids_ace_for_tao {
   requires += dummy_label
-  avoids += ace_for_tao
   after   += Swapping_Hello_Sender_svnt
   sharedname = Swapping_Sender_exec
   libs      += Swapping_Sender_svnt \
@@ -127,9 +122,8 @@ project(Swapping_Hello_Sender_exec) : ciao_executor {
   }
 }
 
-project(Swapping_Hello_Sender_exec_1) : ciao_executor {
+project(Swapping_Hello_Sender_exec_1) : ciao_executor, avoids_ace_for_tao {
   requires += dummy_label
-  avoids += ace_for_tao
   after   += Swapping_Hello_Sender_exec
   sharedname = Swapping_Sender_exec_1
   libs      += Swapping_Sender_exec \
@@ -154,9 +148,8 @@ project(Swapping_Hello_Sender_exec_1) : ciao_executor {
   }
 }
 
-project(Swapping_Hello_Sender_exec_2) : ciao_executor {
+project(Swapping_Hello_Sender_exec_2) : ciao_executor, avoids_ace_for_tao {
   requires += dummy_label
-  avoids += ace_for_tao
   after   += Swapping_Hello_Sender_exec
   sharedname = Swapping_Sender_exec_2
   libs      += Swapping_Sender_exec \
@@ -184,9 +177,8 @@ project(Swapping_Hello_Sender_exec_2) : ciao_executor {
   }
 }
 
-project (Swapping_Hello_Starter) : ccm_stub, valuetype {
+project (Swapping_Hello_Starter) : ccm_stub, valuetype, avoids_ace_for_tao {
   requires += dummy_label
-  avoids += ace_for_tao
   exename = Upgradeable_starter
   after += Swapping_Hello_Sender_stub
   libs += Swapping_Sender_stub \

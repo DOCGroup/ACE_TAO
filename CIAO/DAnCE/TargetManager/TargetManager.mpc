@@ -1,7 +1,6 @@
 // $Id$
 
-project(CIAO_TargetManager_cidl_gen) : ciaocidldefaults {
-  avoids += ace_for_tao
+project(CIAO_TargetManager_cidl_gen) : ciaocidldefaults, avoids_ace_for_tao {
   custom_only = 1
   cidlflags += --svnt-export-macro TARGETMANAGER_SVNT_Export \
                --svnt-export-include TargetManager_svnt_export.h
@@ -11,8 +10,7 @@ project(CIAO_TargetManager_cidl_gen) : ciaocidldefaults {
   }
 }
 
-project(CIAO_TargetManager_idl_gen) : ciaoidldefaults {
-  avoids += ace_for_tao
+project(CIAO_TargetManager_idl_gen) : ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
   after += CIAO_TargetManager_cidl_gen
   idlflags += -Wb,export_macro=TARGETMANAGER_EXEC_Export \

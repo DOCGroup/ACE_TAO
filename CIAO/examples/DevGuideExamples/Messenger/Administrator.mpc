@@ -1,8 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Messenger Administrator"
 
-project(Messenger_Administrator_idl_gen) : ciaoidldefaults, anytypecode {
-  avoids += ace_for_tao
+project(Messenger_Administrator_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ADMINISTRATOR_STUB_Export \
               -Wb,stub_export_include=Administrator_stub_export.h \
@@ -14,8 +13,7 @@ project(Messenger_Administrator_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(Messenger_Administrator_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
-  avoids += ace_for_tao
+project(Messenger_Administrator_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
   cidlflags += --svnt-export-macro ADMINISTRATOR_SVNT_Export \
                --svnt-export-include Administrator_svnt_export.h
@@ -32,8 +30,7 @@ project(Messenger_Administrator_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   }
 }
 
-project(Messenger_Administrator_stub) : ccm_stub {
-  avoids += ace_for_tao
+project(Messenger_Administrator_stub) : ccm_stub, avoids_ace_for_tao {
   after += Messenger_Administrator_idl_gen Messenger_stub
   libs  += Messenger_stub
 
@@ -57,8 +54,7 @@ project(Messenger_Administrator_stub) : ccm_stub {
   }
 }
 
-project(Messenger_Administrator_exec) : ciao_executor {
-  avoids += ace_for_tao
+project(Messenger_Administrator_exec) : ciao_executor, avoids_ace_for_tao {
   after   += Messenger_Administrator_cidl_gen Messenger_Administrator_stub
   sharedname = Administrator_exec
   libs += Administrator_stub Messenger_stub
@@ -85,8 +81,7 @@ project(Messenger_Administrator_exec) : ciao_executor {
 }
 
 
-project(Messenger_Administrator_svnt) : ciao_servant {
-  avoids += ace_for_tao
+project(Messenger_Administrator_svnt) : ciao_servant, avoids_ace_for_tao {
   after      += Messenger_svnt Messenger_Administrator_exec
   sharedname  = Administrator_svnt
   libs       += Administrator_exec \
