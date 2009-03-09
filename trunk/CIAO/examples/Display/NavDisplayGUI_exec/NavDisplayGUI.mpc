@@ -10,8 +10,7 @@ project(Display_NavDisplayGUI_exec_moc) : ace_qt4, qt4_qt3support {
   }
 }
 
-project(Display_NavDisplayGUI_exec) : ciao_executor, ace_qt4, qt4_qt3support {
-  avoids += ace_for_tao
+project(Display_NavDisplayGUI_exec) : ciao_executor, ace_qt4, qt4_qt3support, avoids_ace_for_tao {
   after   += Display_NavDisplay_cidl_gen \
              Display_NavDisplay_stub \
              Display_NavDisplayGUI_exec_moc
@@ -55,8 +54,7 @@ project(Display_NavDisplayGUI_exec) : ciao_executor, ace_qt4, qt4_qt3support {
   }
 }
 
-project(Display_NavDisplayGUI_svnt) : ciao_servant, ace_qt4, qt4_qt3support {
-  avoids += ace_for_tao
+project(Display_NavDisplayGUI_svnt) : ciao_servant, ace_qt4, qt4_qt3support, avoids_ace_for_tao {
   after      += Display_Base_skel Display_NavDisplayGUI_exec
   sharedname  = NavDisplayGUI_svnt
   includes  += ../NavDisplay

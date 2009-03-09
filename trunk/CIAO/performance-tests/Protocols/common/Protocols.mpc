@@ -1,8 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n Protocols"
 
-project(Protocols_idl_gen) : ciaoidldefaults, anytypecode {
-  avoids += ace_for_tao
+project(Protocols_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=PROTOCOLS_STUB_Export \
               -Wb,stub_export_include=Protocols_stub_export.h \
@@ -14,8 +13,7 @@ project(Protocols_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(Protocols_stub) : ccm_stub {
-  avoids += ace_for_tao
+project(Protocols_stub) : ccm_stub, avoids_ace_for_tao {
   after += Protocols_idl_gen
 
   sharedname = Protocols_stub
@@ -39,8 +37,7 @@ project(Protocols_stub) : ccm_stub {
 }
 
 
-project(Protocols_skel) : ciao_executor {
-  avoids += ace_for_tao
+project(Protocols_skel) : ciao_executor, avoids_ace_for_tao {
   after      +=  Protocols_stub
   sharedname  = Protocols_skel
   libs       += Protocols_stub

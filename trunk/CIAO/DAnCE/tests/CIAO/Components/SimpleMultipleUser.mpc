@@ -1,8 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p SimpleCommon SimpleMultipleUser"
 
-project(SimpleCom_SimpleMulUser_idl_gen) : ciaoidldefaults, anytypecode {
-  avoids += ace_for_tao
+project(SimpleCom_SimpleMulUser_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLEMULTIPLEUSER_STUB_Export \
               -Wb,stub_export_include=SimpleMultipleUser_stub_export.h \
@@ -14,8 +13,7 @@ project(SimpleCom_SimpleMulUser_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(SimpleCom_SimpleMulUser_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
-  avoids += ace_for_tao
+project(SimpleCom_SimpleMulUser_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
   cidlflags += --svnt-export-macro SIMPLEMULTIPLEUSER_SVNT_Export \
                --svnt-export-include SimpleMultipleUser_svnt_export.h
@@ -32,8 +30,7 @@ project(SimpleCom_SimpleMulUser_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   }
 }
 
-project(SimpleCommon_SimpleMultipleUser_stub) : ccm_stub {
-  avoids += ace_for_tao
+project(SimpleCommon_SimpleMultipleUser_stub) : ccm_stub, avoids_ace_for_tao {
   after += SimpleCommon_stub SimpleCom_SimpleMulUser_idl_gen
   libs  += SimpleCommon_stub
 
@@ -57,8 +54,7 @@ project(SimpleCommon_SimpleMultipleUser_stub) : ccm_stub {
   }
 }
 
-project(SimpleCommon_SimpleMultipleUser_exec) : ciao_executor {
-  avoids += ace_for_tao
+project(SimpleCommon_SimpleMultipleUser_exec) : ciao_executor, avoids_ace_for_tao {
   after   += SimpleCom_SimpleMulUser_cidl_gen SimpleCommon_SimpleMultipleUser_stub
   sharedname = SimpleMultipleUser_exec
   libs += SimpleMultipleUser_stub SimpleCommon_stub
@@ -85,8 +81,7 @@ project(SimpleCommon_SimpleMultipleUser_exec) : ciao_executor {
 }
 
 
-project(SimpleCommon_SimpleMultipleUser_svnt) : ciao_servant {
-  avoids += ace_for_tao
+project(SimpleCommon_SimpleMultipleUser_svnt) : ciao_servant, avoids_ace_for_tao {
   after      += SimpleCommon_skel SimpleCommon_SimpleMultipleUser_exec
   sharedname  = SimpleMultipleUser_svnt
   libs       += SimpleMultipleUser_exec \

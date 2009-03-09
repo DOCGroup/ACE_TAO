@@ -1,8 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl SimpleNull"
 
-project(SimpleNull_idl_gen) : ciaoidldefaults, anytypecode {
-  avoids += ace_for_tao
+project(SimpleNull_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLENULL_STUB_Export \
               -Wb,stub_export_include=SimpleNull_stub_export.h \
@@ -14,8 +13,7 @@ project(SimpleNull_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(SimpleNull_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
-  avoids += ace_for_tao
+project(SimpleNull_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
   cidlflags += --svnt-export-macro SIMPLENULL_SVNT_Export \
                --svnt-export-include SimpleNull_svnt_export.h
@@ -32,8 +30,7 @@ project(SimpleNull_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   }
 }
 
-project(SimpleNull_stub) : ccm_stub {
-  avoids += ace_for_tao
+project(SimpleNull_stub) : ccm_stub, avoids_ace_for_tao {
   after += SimpleNull_idl_gen
   libs  +=
 
@@ -57,8 +54,7 @@ project(SimpleNull_stub) : ccm_stub {
   }
 }
 
-project(SimpleNull_exec) : ciao_executor {
-  avoids += ace_for_tao
+project(SimpleNull_exec) : ciao_executor, avoids_ace_for_tao {
   after   += SimpleNull_cidl_gen SimpleNull_stub
   sharedname = SimpleNull_exec
   libs += SimpleNull_stub
@@ -85,8 +81,7 @@ project(SimpleNull_exec) : ciao_executor {
 }
 
 
-project(SimpleNull_svnt) : ciao_servant {
-  avoids += ace_for_tao
+project(SimpleNull_svnt) : ciao_servant, avoids_ace_for_tao {
   after      +=  SimpleNull_exec
   sharedname  = SimpleNull_svnt
   libs       += SimpleNull_exec \

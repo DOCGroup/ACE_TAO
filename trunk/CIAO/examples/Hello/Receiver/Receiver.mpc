@@ -1,8 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl Receiver"
 
-project(Hello_Receiver_idl_gen) : ciaoidldefaults, anytypecode {
-  avoids += ace_for_tao
+project(Hello_Receiver_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
               -Wb,stub_export_include=Receiver_stub_export.h \
@@ -14,8 +13,7 @@ project(Hello_Receiver_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(Hello_Receiver_cidl_gen) : ciaocidldefaults {
-  avoids += ace_for_tao
+project(Hello_Receiver_cidl_gen) : ciaocidldefaults, avoids_ace_for_tao {
   custom_only = 1
   cidlflags += --svnt-export-macro RECEIVER_SVNT_Export \
                --svnt-export-include Receiver_svnt_export.h
@@ -25,8 +23,7 @@ project(Hello_Receiver_cidl_gen) : ciaocidldefaults {
   }
 }
 
-project(Hello_Receiver_idle_gen) : ciaoidldefaults {
-  avoids += ace_for_tao
+project(Hello_Receiver_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   after += Hello_Receiver_cidl_gen
   custom_only = 1
   idlflags += -Wb,export_macro=RECEIVER_EXEC_Export \
@@ -38,8 +35,7 @@ project(Hello_Receiver_idle_gen) : ciaoidldefaults {
   }
 }
 
-project(Hello_Receiver_stub) : ccm_stub {
-  avoids += ace_for_tao
+project(Hello_Receiver_stub) : ccm_stub, avoids_ace_for_tao {
   after += Hello_Receiver_idl_gen Hello_Base_stub
   libs  += Hello_Base_stub
   libout = ../lib
@@ -65,8 +61,7 @@ project(Hello_Receiver_stub) : ccm_stub {
   }
 }
 
-project(Hello_Receiver_exec) : ciao_executor {
-  avoids += ace_for_tao
+project(Hello_Receiver_exec) : ciao_executor, avoids_ace_for_tao {
   after   += Hello_Receiver_idle_gen Hello_Receiver_stub
   sharedname = Hello_Receiver_exec
   libs += Hello_Receiver_stub Hello_Base_stub
@@ -95,8 +90,7 @@ project(Hello_Receiver_exec) : ciao_executor {
 }
 
 
-project(Hello_Receiver_svnt) : ciao_servant {
-  avoids += ace_for_tao
+project(Hello_Receiver_svnt) : ciao_servant, avoids_ace_for_tao {
   after      += Hello_Base_skel Hello_Receiver_exec
   sharedname  = Hello_Receiver_svnt
   libs       += Hello_Receiver_exec \
