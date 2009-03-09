@@ -1,3 +1,10 @@
+Mon Mar  8 10:38:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_IDL2/be_sunsoft.cpp:
+        * tools/IDL3_to_XMI/be_sunsoft.cpp:
+          Use the ACE format specifiers, migrated this from the tao_idl
+          compiler be_sunsoft.cpp to these files
+
 Mon Mar  8 09:44:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL3_to_XMI/Bug_3607_Regression/*:
