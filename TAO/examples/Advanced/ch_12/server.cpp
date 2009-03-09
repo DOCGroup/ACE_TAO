@@ -686,7 +686,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   catch  (const CORBA::Exception & e)
     {
       std::cerr << "Uncaught CORBA exception: "
-                //<< e
+                << e
                 << std::endl;
       return 1;
     }

@@ -38,6 +38,4 @@ extern "C" {
         );
 }
 
-size_t min(const size_t len1, const size_t len2);
-
 #endif /* _ICP_H */
