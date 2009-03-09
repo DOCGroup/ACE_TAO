@@ -1,8 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n Display_Base"
 
-project(Display_Base_idl_gen) : ciaoidldefaults, anytypecode {
-  avoids += ace_for_tao
+project(Display_Base_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=DISPLAY_BASE_STUB_Export \
               -Wb,stub_export_include=Display_Base_stub_export.h \
@@ -14,8 +13,7 @@ project(Display_Base_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(Display_Base_stub) : ccm_stub {
-  avoids += ace_for_tao
+project(Display_Base_stub) : ccm_stub, avoids_ace_for_tao {
   after += Display_Base_idl_gen
   libout = ../lib
   libpaths += ../lib
@@ -41,8 +39,7 @@ project(Display_Base_stub) : ccm_stub {
 }
 
 
-project(Display_Base_skel) : ciao_executor {
-  avoids += ace_for_tao
+project(Display_Base_skel) : ciao_executor, avoids_ace_for_tao {
   after      +=  Display_Base_stub
   sharedname  = Display_Base_skel
   libs       += Display_Base_stub

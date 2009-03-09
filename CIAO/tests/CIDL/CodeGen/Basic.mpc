@@ -1,8 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n Basic"
 
-project(Basic_idl_gen) : ciaoidldefaults, anytypecode {
-  avoids += ace_for_tao
+project(Basic_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=BASIC_STUB_Export \
               -Wb,stub_export_include=Basic_stub_export.h \
@@ -14,8 +13,7 @@ project(Basic_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(Basic_stub) : ccm_stub {
-  avoids += ace_for_tao
+project(Basic_stub) : ccm_stub, avoids_ace_for_tao {
   after += Basic_idl_gen
   libs  +=
 
@@ -40,8 +38,7 @@ project(Basic_stub) : ccm_stub {
 }
 
 
-project(Basic_skel) : ciao_executor {
-  avoids += ace_for_tao
+project(Basic_skel) : ciao_executor, avoids_ace_for_tao {
   after      +=  Basic_stub
   sharedname  = Basic_skel
   libs       += Basic_stub

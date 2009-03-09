@@ -102,8 +102,7 @@ if (defined $opt_c) {
 if (! defined $opt_n) {
     $cidl_gen =
 '
-project('."$unique_prefix"."$com_name".'_cidl_gen) : ciaocidldefaults {
-  avoids += ace_for_tao
+project('."$unique_prefix"."$com_name".'_cidl_gen) : ciaocidldefaults, avoids_ace_for_tao {
   custom_only = 1
   cidlflags += --svnt-export-macro '."$UCOM_NAME".'_SVNT_Export \
                --svnt-export-include '."$com_name".'_svnt_export.h
@@ -113,8 +112,7 @@ project('."$unique_prefix"."$com_name".'_cidl_gen) : ciaocidldefaults {
   }
 }
 
-project('."$unique_prefix"."$com_name".'_idle_gen) : ciaoidldefaults {
-  avoids += ace_for_tao
+project('."$unique_prefix"."$com_name".'_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   after += '."$unique_prefix"."$com_name".'_cidl_gen
   custom_only = 1
   idlflags += -Wb,export_macro='."$UCOM_NAME".'_EXEC_Export \
@@ -129,8 +127,7 @@ project('."$unique_prefix"."$com_name".'_idle_gen) : ciaoidldefaults {
 
     $component_def =
 '
-project('."$unique_prefix"."$com_name".'_exec) : ciao_executor {
-  avoids += ace_for_tao
+project('."$unique_prefix"."$com_name".'_exec) : ciao_executor, avoids_ace_for_tao {
   after   += '."$unique_prefix"."$com_name".'_idle_gen '."$unique_prefix"."$com_name".'_stub
   sharedname = '."$com_name".'_exec
   libs += '."$com_name".'_stub '."$stub_depend
@@ -218,8 +215,7 @@ else {
 $mpc_template = '// $Id$
 // This file is generated with "'."generate_component_mpc.pl $flags".'"
 
-project('."$unique_prefix"."$com_name".'_idl_gen) : ciaoidldefaults, anytypecode {
-  avoids += ace_for_tao
+project('."$unique_prefix"."$com_name".'_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   '."$cli_idlflags".'
 
@@ -228,8 +224,7 @@ project('."$unique_prefix"."$com_name".'_idl_gen) : ciaoidldefaults, anytypecode
   }
 }
 '."$cidl_gen".'
-project('."$unique_prefix"."$com_name".'_stub) : '."$cli_base".' {
-  avoids += ace_for_tao
+project('."$unique_prefix"."$com_name".'_stub) : '."$cli_base".', avoids_ace_for_tao {
   after += '."$unique_prefix"."$com_name".'_idl_gen '."$stub_depend".'
   libs  += '."$stub_depend"."
   $lib_paths".'
@@ -254,8 +249,7 @@ project('."$unique_prefix"."$com_name".'_stub) : '."$cli_base".' {
 }
 '."$component_def".'
 
-project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base".' {
-  avoids += ace_for_tao
+project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base".', avoids_ace_for_tao {
   after      += '."$svr_p_after "."$svr_after".'
   sharedname  = '."$com_name"."$svr_suffix".'
   libs       += '."$svr_libs $svr_plibs
