@@ -35,7 +35,7 @@ project(RTCORBA_Quoter_Common): negotiate_codesets, rtportableserver, rtcorba, t
     }
 }
 
-project(RTCORBA_Quoter_Admin): valuetype, rt_client, naming, stl {
+project(RTCORBA_Quoter_Admin): valuetype, rt_server, naming, stl {
   after = RTCORBA_Quoter_Common
   libs += RTCORBA_Quoter_Common
   exename = admin
