@@ -1,3 +1,19 @@
+Mon Mar  9 21:06:36 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+        * orbsvcs/tests/Notify/Validate_Client/README:
+        * orbsvcs/tests/Notify/Validate_Client/notify.conf:
+        * orbsvcs/tests/Notify/Validate_Client/persistency_copy:
+        * orbsvcs/tests/Notify/Validate_Client/run_test.pl:
+
+          Added test for Notify_Service client connection validation
+          feature.
+
+        * bin/tao_other_tests.lst:
+
+          Added Notify Validate_Client test.
+
 Mon Mar  9 19:08:39 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * docs/tutorials/Quoter/RTCORBA/StockQuoter.mpc:
