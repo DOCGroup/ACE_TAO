@@ -9,10 +9,6 @@
 #include <set>
 #include <vector>
 
-// #include <iostream>
-// using std::wcerr;
-// using std::endl;
-
 #include "XSCRT/ExtendedTypeInfo.hpp"
 
 namespace XSCRT
@@ -36,11 +32,6 @@ namespace XSCRT
 
       virtual void
       trampoline (B const& n) = 0;
-
-      /*@@ VC6
-      template <typename X>
-      friend class DispatcherBase;
-      */
     };
 
 

@@ -102,18 +102,24 @@ if (defined $opt_c) {
 if (! defined $opt_n) {
     $cidl_gen =
 '
-project('."$unique_prefix"."$com_name".'_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
+project('."$unique_prefix"."$com_name".'_cidl_gen) : ciaocidldefaults {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro '."$UCOM_NAME".'_SVNT_Export \
                --svnt-export-include '."$com_name".'_svnt_export.h
-  idlflags += -Wb,export_macro='."$UCOM_NAME".'_EXEC_Export \
-              -Wb,export_include='."$com_name".'_exec_export.h \
-              -SS
 
   CIDL_Files {'."
     $com_name".'.cidl
   }
+}
+
+project('."$unique_prefix"."$com_name".'_idle_gen) : ciaoidldefaults {
+  avoids += ace_for_tao
+  after += '."$unique_prefix"."$com_name".'_cidl_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro='."$UCOM_NAME".'_EXEC_Export \
+              -Wb,export_include='."$com_name".'_exec_export.h \
+              -SS
 
   IDL_Files {'."
     $com_name".'E.idl
@@ -125,7 +131,7 @@ project('."$unique_prefix"."$com_name".'_cidl_gen) : ciaocidldefaults, ciaoidlde
 '
 project('."$unique_prefix"."$com_name".'_exec) : ciao_executor {
   avoids += ace_for_tao
-  after   += '."$unique_prefix"."$com_name".'_cidl_gen '."$unique_prefix"."$com_name".'_stub
+  after   += '."$unique_prefix"."$com_name".'_idle_gen '."$unique_prefix"."$com_name".'_stub
   sharedname = '."$com_name".'_exec
   libs += '."$com_name".'_stub '."$stub_depend
   $lib_paths".'
@@ -288,14 +294,14 @@ print "The following commands have been executed:\n\n";
 
 $command = "generate_export_file.pl $UCOM_NAME".'_STUB > '."$com_name".'_stub_export.h';
 print "\t$command"."\n";
-system ("$ACE_ROOT".'/bin/'."$command");
+system ("perl $ACE_ROOT".'/bin/'."$command");
 
 $command = "generate_export_file.pl $UCOM_NAME"."$USVR_SUFFIX".' > '."$com_name"."$svr_suffix".'_export.h';
 print "\t$command"."\n";
-system ("$ACE_ROOT".'/bin/'."$command");
+system ("perl $ACE_ROOT".'/bin/'."$command");
 
 if (! defined $opt_n) {
     $command = "generate_export_file.pl $UCOM_NAME".'_EXEC > '."$com_name".'_exec_export.h';
     print "\t$command"."\n";
-    system ("$ACE_ROOT".'/bin/'."$command");
+    system ("perl $ACE_ROOT".'/bin/'."$command");
 }
