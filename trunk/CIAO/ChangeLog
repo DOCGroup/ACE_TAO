@@ -1,3 +1,18 @@
+Mon Mar  8 09:12:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_component_mpc.pl:
+          Generate a seperate project for compiling the E.idl file, makes
+          it easier for parallel builds and incredibuild
+
+        * examples/Hello/Receiver/Receiver.mpc:
+          Updated to use a seperate project for the E.idl file
+
+        * MPC/config/cidlc.mpb:
+          Added support for vc10
+
+        * tools/Config_Handlers/XSCRT/Traversal.hpp:
+          Removed commented out code
+
 Mon Mar  8 08:31:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentServer.mpc:
