@@ -111,9 +111,9 @@ AppSideMonitor_Thread::svc (void)
           port_ = AppOptions::instance ()->port ();
         }
 
-//      ACE_DEBUG ((LM_TRACE,
-//                  "AppSideReg::svc - got heartbeat port "
-//                  "%d from hm.\n", port_));
+      ACE_DEBUG ((LM_TRACE,
+                  "AppSideReg::svc - got heartbeat port "
+                  "%d from hm.\n", port_));
 
       if (serv_addr_.set (port_) == -1)
         {
@@ -140,13 +140,15 @@ AppSideMonitor_Thread::svc (void)
     }
   }
 
-  //ACE_DEBUG ((LM_DEBUG, "Entering reactor event loop.\n"));
+  ACE_DEBUG ((LM_TRACE, "AppSideMonitor_Thread: Entering reactor event loop.\n"));
   if (reactor_.run_reactor_event_loop() == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "run_reactor_event_loop failed\n"),
                         -1);
     }
+
+  ACE_DEBUG ((LM_TRACE, "AppSideMonitor_Thread: finishing.\n"));
   
   return 0;
 }
