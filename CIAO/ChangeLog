@@ -1,3 +1,11 @@
+Mon Mar  8 08:19:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/DevGuideExamples/Messenger/Messenger.mpc:
+          Removed not needed line
+
+        * examples/DevGuideExamples/Messenger/Messenger_exec_i.h:
+          Updated include
+
 Sat Mar  7 15:40:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Logger/Logger_Service.cpp
