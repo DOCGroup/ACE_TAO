@@ -28,7 +28,8 @@
 #include <map>
 #include <list>
 #include <assert.h>
-//#include <corba/poaS.h>
+#include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/ServantLocatorC.h"
 
 using namespace std;
 

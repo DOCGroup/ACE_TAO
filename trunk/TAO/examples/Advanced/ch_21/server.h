@@ -30,7 +30,8 @@
 #include <list>
 #include <map>
 #include <assert.h>
-// #include <corba/poaS.h>
+#include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/ServantLocatorC.h"
 
 #include "CCSS.h"
 
@@ -80,7 +81,7 @@ class Thermostat_impl :
 public:
     // CORBA operations
     virtual CCS::TempType   get_nominal();
-    virtual CCS::TempType   set_nominal(CCS::TempType new_temp));
+    virtual CCS::TempType   set_nominal(CCS::TempType new_temp);
 
     // Constructor and destructor
     Thermostat_impl(CCS::AssetType anum);
@@ -102,7 +103,7 @@ public:
     virtual CCS::Controller::ThermometerSeq* list();
     virtual void find(CCS::Controller::SearchSeq & slist);
     virtual void change(const CCS::Controller::ThermostatSeq & tlist,
-                        CORBA::Short                           delta));
+                        CORBA::Short                           delta);
 
     virtual CCS::Thermometer_ptr create_thermometer(CCS::AssetType anum,
                                                     const char*    loc);

@@ -169,7 +169,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       catch (const CORBA::SystemException &se)
         {
           std::cerr << "Cannot narrow controller reference: "
-               //<< se
+               << se
                << std::endl;
           throw 0;
         }
@@ -290,7 +290,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   catch  (const CORBA::Exception & e)
     {
       std::cerr << "Uncaught CORBA exception: "
-                //<< e
+                << e
                 << std::endl;
       return 1;
     }

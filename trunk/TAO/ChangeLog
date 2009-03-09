@@ -1,3 +1,31 @@
+Mon Mar  9 11:21:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/ch_12/Advanced_ch_12.mpc
+        * examples/Advanced/ch_12/client.cpp
+        * examples/Advanced/ch_12/icp.cpp
+        * examples/Advanced/ch_12/icp.h
+        * examples/Advanced/ch_12/server.cpp
+        * examples/Advanced/ch_12/server.h
+        * examples/Advanced/ch_18/Advanced_ch_18.mpc
+        * examples/Advanced/ch_18/client.cpp
+        * examples/Advanced/ch_18/icp.cpp
+        * examples/Advanced/ch_18/icp.h
+        * examples/Advanced/ch_18/server.cpp
+        * examples/Advanced/ch_18/server.h
+        * examples/Advanced/ch_21/Advanced_ch_21.mpc
+        * examples/Advanced/ch_21/client.cpp
+        * examples/Advanced/ch_21/icp.cpp
+        * examples/Advanced/ch_21/icp.h
+        * examples/Advanced/ch_21/server.cpp
+        * examples/Advanced/ch_21/server.h
+        * examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc
+        * examples/Advanced/ch_8_and_10/client.cpp
+        * examples/Advanced/ch_8_and_10/icp.cpp
+        * examples/Advanced/ch_8_and_10/icp.h
+        * examples/Advanced/ch_8_and_10/server.cpp
+          Added missing mpc files, missing includes, use long instead of short
+          to resolve convertion warnings.
+
 Mon Mar  9 07:16:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ZIOP.pdf:

@@ -40,7 +40,7 @@ resolve_init(CORBA::ORB_ptr orb, const char * id)
     catch (const CORBA::Exception & e) {
         std::cerr << "Cannot get initial reference for "
              << id << ": "
-             //<< e
+             << e
              << std::endl;
         throw 0;
     }
@@ -53,7 +53,7 @@ resolve_init(CORBA::ORB_ptr orb, const char * id)
     catch (const CORBA::Exception & e) {
         std::cerr << "Cannot narrow reference for "
              << id << ": "
-             //<< e
+             << e
              << std::endl;
         throw 0;
     }
@@ -82,7 +82,7 @@ resolve_name(
     }
     catch (const CORBA::Exception & e) {
         std::cerr << "Cannot resolve binding: "
-                  //<< e
+                  << e
                   << std::endl;
         throw 0;
     }
@@ -97,7 +97,7 @@ resolve_name(
     }
     catch (const CORBA::Exception & e) {
         std::cerr << "Cannot narrow reference: "
-                  //<< e
+                  << e
                   << std::endl;
         throw 0;
     }
@@ -352,7 +352,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
     } catch (const CORBA::Exception & e) {
         std::cerr << "Uncaught CORBA exception: "
-                  //<< e
+                  << e
                   << std::endl;
         return 1;
     } catch (...) {
