@@ -1,4 +1,4 @@
-// client.cpp,v 1.5 2002/01/29 20:21:07 okellogg Exp
+// $Id$
 
 #include "common.h"
 
@@ -28,7 +28,7 @@ namespace CosNotifyCommImpl{
     };
 
     void disconnect_structured_push_consumer()
-    {};	 	
+    {};         
 
     void offer_change (
       const CosNotification::EventTypeSeq &,
@@ -146,7 +146,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     constraints[0].constraint_expr = CORBA::string_dup(
       "");
 
-    filter->add_constraints(constraints);					
+    filter->add_constraints(constraints);                                       
 
     pps->add_filter(filter.in());
 
