@@ -23,7 +23,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "MessengerEC.h"
+#include "Messenger_svnt.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
