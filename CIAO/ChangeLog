@@ -1,3 +1,15 @@
+Mon Mar  8 08:29:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+          Put the executables in CIAO_ROOT/bin, not ACE_ROOT/bin
+
+        * MPC/config/taoidl3toidl2defaults.mpb:
+        * tests/IDL3_to_XMI/XMI_For_Array/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/run_test.pl:
+          updated because these executables are now put in CIAO_ROOT/bin
+
 Mon Mar  8 08:19:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/DevGuideExamples/Messenger/Messenger.mpc:
