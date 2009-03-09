@@ -1,3 +1,28 @@
+Mon Mar  9 07:05:37 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
+        * orbsvcs/orbsvcs/Notify/EventType.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.cpp:
+
+          Fixed Bugzilla #1884 - reconstruct the constraint expression
+          with event type and the expression provided by user so the
+          event types of a constraint are evaluated as well.
+
+        * orbsvcs/tests/Notify/Bug_1884_Regression/Bug_1884_Regression.mpc:
+        * orbsvcs/tests/Notify/Bug_1884_Regression/common.h:
+        * orbsvcs/tests/Notify/Bug_1884_Regression/consumer.cpp:
+        * orbsvcs/tests/Notify/Bug_1884_Regression/ecf.conf:
+        * orbsvcs/tests/Notify/Bug_1884_Regression/filter.cpp:
+        * orbsvcs/tests/Notify/Bug_1884_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_1884_Regression/supplier.cpp:
+
+          Added new regression test.
+
+        * bin/tao_other_tests.lst:
+
+          Added Bugzilla #1884 test.
+
 Mon Mar  9 07:08:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Compression/bzip2/Bzip2Compressor.cpp:
