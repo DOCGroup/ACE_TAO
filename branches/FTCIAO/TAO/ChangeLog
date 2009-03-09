@@ -1,3 +1,16 @@
+Mon Mar  9 17:30:45 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp
+        * orbsvcs/orbsvcs/LWFT/Failure_Handler.cpp
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp:
+        
+          Changed debugging output.
+        
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        
+          Added functionality to remove state sync agents in case of
+          process failures.
+
 Mon Mar  9 15:54:19 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * MPC/config/lwft_server.mpb

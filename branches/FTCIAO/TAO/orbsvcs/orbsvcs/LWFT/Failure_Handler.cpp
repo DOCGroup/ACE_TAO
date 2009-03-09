@@ -31,7 +31,7 @@ int Failure_Handler::handle_input (ACE_HANDLE fd)
   
   if (process_map_.find (fd, pinfo) == 0) /// if found
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ACE_DEBUG ((LM_TRACE,
                 "It looks like process %s has failed.\n",
                 pinfo.process_id.c_str()));
     process_map_.unbind (fd);

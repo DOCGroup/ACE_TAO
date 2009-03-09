@@ -631,7 +631,7 @@ ReplicationManager_i::process_proc_failure (
                 {
                   ids[index++] = (*it).c_str ();
                 }
-              // for now just take the first entry and send it
+
               send_failure_notice (host.c_str (),
                                    ids);
             }
@@ -654,6 +654,21 @@ ReplicationManager_i::process_proc_failure (
                           "Data structure invariant broken.\n",
                           host.c_str()));
             }
+
+          {
+            // a failed process means that the state synchronization
+            // agent is no longer reachable either.
+            ACE_Guard <ACE_Thread_Mutex> guard (state_sync_agent_list_mutex_);
+
+            // remove state synchronization agent reference
+            if (state_synchronization_agent_map_.unbind (process_id) == 0)
+              {
+                ACE_DEBUG ((LM_TRACE,
+                            "RM: process_proc_failure () : "
+                            "removed state sync agent from list.\n"));
+              }
+          }
+
         }
       else
         {
