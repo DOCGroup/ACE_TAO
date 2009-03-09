@@ -5,16 +5,23 @@
 
 #include "Barrier_Guard.h"
 
+#include "AppOptions.h"
+
 #include "StateSyncAgentTask.h"
 #include "StateSynchronizationAgent_i.h"
 
-StateSyncAgentTask::StateSyncAgentTask (
-  CORBA::ORB_ptr orb,
-  StateSynchronizationAgent_i * agent)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
-    agent_ (agent),
+StateSyncAgentTask *
+StateSyncAgentTask::instance (void)
+{
+  return
+    ACE_Singleton<StateSyncAgentTask, ACE_SYNCH_MUTEX>::instance ();
+}
+
+StateSyncAgentTask::StateSyncAgentTask (void)
+  : orb_ (AppOptions::instance ()->orb ()),
     sync_ (2),
-    agent_ref_ (StateSynchronizationAgent::_nil ())
+    agent_ref_ (StateSynchronizationAgent::_nil ()),
+    activated_ (false)
 {
 }
 
@@ -36,7 +43,20 @@ StateSyncAgentTask::svc (void)
           root_poa->the_POAManager ();
 
         // ***************************************************
-        // activate state synchronzation agent
+        // Create state synchronzation agent.
+        
+        AppOptions *app_opts = AppOptions::instance ();
+
+        agent_ =
+	        new StateSynchronizationAgent_i (
+            app_opts->host_id (),
+            app_opts->process_id (),
+            ! app_opts->use_dds ());
+
+        PortableServer::ServantBase_var owner_transfer (agent_);
+
+        // ***************************************************
+        // Activate state synchronzation agent.
 
         PortableServer::ObjectId_var ssa_oid =
 	        root_poa->activate_object (agent_);
@@ -51,8 +71,6 @@ StateSyncAgentTask::svc (void)
       }
 
       this->orb_->run ();
-
-      this->orb_->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
@@ -76,6 +94,15 @@ StateSyncAgentTask::activate (long /* flags */,
                               ACE_thread_t /* thread_ids */ [],
                               const char* /* thr_name */ [])
 {
+  if (activated_)
+    {
+      return 0;
+    }
+  else
+    {
+      activated_ = true;
+    }
+    
   // This will end up back in our overridden svc() method. We
   // want to wait for it to execute the statements in its body
   // before returning control to the calling application.

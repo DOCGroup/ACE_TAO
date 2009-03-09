@@ -1,3 +1,46 @@
+Mon Mar  9 15:54:19 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * MPC/config/lwft_server.mpb
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.h
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Handler.cpp
+        * orbsvcs/orbsvcs/LWFT/AppOptions.cpp
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.h
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Handler.h
+        * orbsvcs/orbsvcs/LWFT/AppOptions.h
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.cpp
+        * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
+        
+          Manually merged in changes from FLARE_F6 branch revisions 84712
+          - 84732.
+                
+        * orbsvcs/examples/FaultTolerance/FLARe
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.h
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/trigger.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/test.idl
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/State.idl
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/server.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/passive_client.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Trigger_i.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/README
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/client.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Trigger_i.h
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/test_i.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/Trigger.idl
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/no-RT.mpc
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/state_ts_export.h
+        * orbsvcs/examples/FaultTolerance/FLARe/no-RT/test_i.h:
+        
+          Added FLARe example application.
+
 Sat Mar  7 04:01:52 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/HMOptions.h
