@@ -1,5 +1,5 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -p Hello_Base -u Hello Receiver"
+// This file is generated with "generate_component_mpc.pl Receiver"
 
 project(Hello_Receiver_idl_gen) : ciaoidldefaults, anytypecode {
   avoids += ace_for_tao
@@ -14,18 +14,24 @@ project(Hello_Receiver_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(Hello_Receiver_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
+project(Hello_Receiver_cidl_gen) : ciaocidldefaults {
   avoids += ace_for_tao
   custom_only = 1
   cidlflags += --svnt-export-macro RECEIVER_SVNT_Export \
                --svnt-export-include Receiver_svnt_export.h
-  idlflags += -Wb,export_macro=RECEIVER_EXEC_Export \
-              -Wb,export_include=Receiver_exec_export.h \
-              -SS
 
   CIDL_Files {
     Receiver.cidl
   }
+}
+
+project(Receiver_idle_gen) : ciaoidldefaults {
+  avoids += ace_for_tao
+  after += Receiver_cidl_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=RECEIVER_EXEC_Export \
+              -Wb,export_include=Receiver_exec_export.h \
+              -SS
 
   IDL_Files {
     ReceiverE.idl
@@ -61,7 +67,7 @@ project(Hello_Receiver_stub) : ccm_stub {
 
 project(Hello_Receiver_exec) : ciao_executor {
   avoids += ace_for_tao
-  after   += Hello_Receiver_cidl_gen Hello_Receiver_stub
+  after   += Hello_Receiver_idle_gen Hello_Receiver_stub
   sharedname = Hello_Receiver_exec
   libs += Hello_Receiver_stub Hello_Base_stub
   libout = ../lib
