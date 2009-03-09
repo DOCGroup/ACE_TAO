@@ -1,3 +1,9 @@
+Mon Mar  8 12:50:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/CIAO_Servant_Activator.mpc:
+        * MPC/config/ciao_servant_activator.mpb:
+          Disabled with minimum corba
+
 Mon Mar  8 12:42:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_component_mpc.pl
