@@ -37,7 +37,8 @@ CONTROLLED_FILES = \
         TAO/MPC \
 	TAO/tao \
 	TAO/tests \
-	TAO/utils
+	TAO/utils \
+	TAO/etc
 
 RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
                 ACE_wrappers/TAO/TAO-INSTALL \
