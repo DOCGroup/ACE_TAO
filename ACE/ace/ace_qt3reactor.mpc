@@ -4,7 +4,7 @@
 project(ACE_Qt3Reactor_moc) : acedefaults, ace_qt3 {
   custom_only = 1
   MOC_Files {
-    QtReactor
+    QtReactor/QtReactor.h
   }
 }
 

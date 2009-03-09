@@ -1,3 +1,8 @@
+Mon Mar  9 07:22:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_qt3reactor.mpc:
+          Explicitly list moc file to resolve compile warning on fc6
+
 Mon Mar  9 07:08:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_footprint_chart.sh:
