@@ -4,7 +4,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "tao/ORB.h"
 #include "tao/Compression/Compression.h"
-#include "tao/Compression/zlib/ZlibCompressor_Factory.h"
+#include "tao/Compression/bzip2/Bzip2Compressor_Factory.h"
 
 ACE_RCSID (Hello,
            server,
@@ -50,9 +50,8 @@ test_duplicate_compression_factory (
       // Register duplicate
       cm->register_factory (cf);
     }
-  catch (const Compression::FactoryAlreadyRegistered& ex)
+  catch (const Compression::FactoryAlreadyRegistered&)
     {
-      ACE_UNUSED_ARG (ex);
       succeed = true;
     }
   catch (const CORBA::Exception&)
@@ -121,7 +120,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Compression::CompressorFactory_ptr compressor_factory;
 
-      ACE_NEW_RETURN (compressor_factory, TAO::Zlib_CompressorFactory (), 1);
+      ACE_NEW_RETURN (compressor_factory, TAO::Bzip2_CompressorFactory (), 1);
 
       Compression::CompressorFactory_var compr_fact = compressor_factory;
       manager->register_factory(compr_fact.in ());
@@ -140,7 +139,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           mytest[j] = 'a';
         }
 
-      Compression::Compressor_var compressor = manager->get_compressor (::Compression::COMPRESSORID_ZLIB, 6);
+      Compression::Compressor_var compressor = manager->get_compressor (
+        ::Compression::COMPRESSORID_BZIP2, 6);
 
       CORBA::OctetSeq myout;
       myout.length ((CORBA::ULong)(mytest.length() * 1.1));
@@ -158,7 +158,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Compression worked, original size %d, compressed size %d\n", mytest.length(), myout.length ()));
+          ACE_DEBUG ((LM_DEBUG, "Compression worked with bzip2, original "
+                                "size %d, compressed size %d\n",
+                                mytest.length(), myout.length ()));
         }
 
       if (!test_invalid_compression_factory (manager.in ()))
