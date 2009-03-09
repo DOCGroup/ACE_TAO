@@ -25,9 +25,9 @@ project(Hello_Receiver_cidl_gen) : ciaocidldefaults {
   }
 }
 
-project(Receiver_idle_gen) : ciaoidldefaults {
+project(Hello_Receiver_idle_gen) : ciaoidldefaults {
   avoids += ace_for_tao
-  after += Receiver_cidl_gen
+  after += Hello_Receiver_cidl_gen
   custom_only = 1
   idlflags += -Wb,export_macro=RECEIVER_EXEC_Export \
               -Wb,export_include=Receiver_exec_export.h \
