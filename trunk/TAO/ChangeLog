@@ -1,14 +1,21 @@
+Mon Mar  9 19:08:39 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * docs/tutorials/Quoter/RTCORBA/StockQuoter.mpc:
+          Changed RTCORBA_Quoter_Admin to depend on rt_server rather than
+          rt_client. This isn't quite right but it fixes nasty linking
+          problem on LynxOS and doesn't do any harm on other platforms.
+
 Mon Mar  9 14:04:35 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile.am:
           Added missing include directories for server build.
-        
+
         * orbsvcs/tests/Notify/Bug_1884_Regression/common.h:
         * orbsvcs/tests/Notify/Bug_1884_Regression/consumer.cpp:
         * orbsvcs/tests/Notify/Bug_1884_Regression/filter.cpp:
         * orbsvcs/tests/Notify/Bug_1884_Regression/supplier.cpp:
           Clean up fuzz errors.
-        
+
 Mon Mar  9 13:39:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/*:
