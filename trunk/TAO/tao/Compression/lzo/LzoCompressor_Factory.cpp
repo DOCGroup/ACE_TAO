@@ -5,7 +5,7 @@ ACE_RCSID (LZO,
            Lzo_Compressor_Factory,
            "$Id$")
 
-#include <lzo/lzo1x.h>
+#include <lzo1x.h>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

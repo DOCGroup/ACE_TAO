@@ -27,7 +27,6 @@ Bzip2Compressor::compress (
     static_cast <unsigned int> (source.length () * 1.1) + 12;
   target.length (static_cast <CORBA::ULong> (max_length));
 
-  // todo, check 0,1 values
   int const retval = ::BZ2_bzBuffToBuffCompress (reinterpret_cast <char*>(target.get_buffer ()),
                                   &max_length,
                                   reinterpret_cast <char*>(const_cast<CORBA::Octet*>(source.get_buffer ())),

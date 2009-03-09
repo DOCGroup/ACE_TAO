@@ -1,3 +1,30 @@
+Mon Mar  9 07:08:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression/bzip2/Bzip2Compressor.cpp:
+          Removed old comment
+
+        * tao/Compression/lzo/LzoCompressor.cpp:
+        * tao/Compression/lzo/LzoCompressor_Factory.cpp:
+          Updated includes, now this also compiles on windows with lzo
+
+        * tao/LzoCompressor.mpc:
+          Use lzo1
+
+        * tests/Compression/bzip2server.cpp
+        * tests/Compression/Compression_Test.mpc
+        * tests/Compression/lzoserver.cpp
+        * tests/Compression/run_test.pl
+        * tests/Compression/server.cpp
+        * tests/Compression/zlibserver.cpp
+          Test bzip2/lzo/zlib independently.
+
+        * tests/IDL_Test/IDL_Test.mpc:
+          Moved idl files to their own project and list then all source
+          files explicitly. Now we can build this project with incredibuild
+
+        * tests/DIOP/client.cpp:
+          prefix increment and layout change
+
 Sun Mar  8 19:20:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Compression/zlib/ZlibCompressor.cpp:

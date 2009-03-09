@@ -1,15 +1,8 @@
 // -*- MPC -*-
 // $Id$
-
-project(*Main): taoserver, messaging, gen_ostream {
-  exename = main
+project(*IDL): taoserver, messaging, gen_ostream {
+  custom_only=1
   idlflags += -GC -GH -Gd -GT
-
-  verbatim(gnuace, macros) {
-    ifeq ($(OSTYPE),VMS)
-      CCFLAGS += -Wc/DISTINGUISH_NESTED_ENUMS
-    endif
-  }
 
   IDL_Files {
     array.idl
@@ -66,12 +59,126 @@ project(*Main): taoserver, messaging, gen_ostream {
     typecode.idl
     valuetype.idl
   }
+}
+
+project(*Main): taoserver, messaging, gen_ostream {
+  exename = main
+  after += *IDL
+  verbatim(gnuace, macros) {
+    ifeq ($(OSTYPE),VMS)
+      CCFLAGS += -Wc/DISTINGUISH_NESTED_ENUMS
+    endif
+  }
+
+  IDL_Files {
+  }
 
   Source_Files {
+    anonymousA.cpp
+    anonymousC.cpp
+    anonymousS.cpp
+    arrayC.cpp
+    arrayS.cpp
+    array_onlyA.cpp
+    array_onlyC.cpp
+    array_onlyS.cpp
+    Bug_2350_RegressionC.cpp
+    Bug_2350_RegressionS.cpp
+    Bug_2577_RegressionC.cpp
+    Bug_2577_RegressionS.cpp
+    Bug_2582_RegressionC.cpp
+    Bug_2582_RegressionS.cpp
+    Bug_2583_RegressionC.cpp
+    Bug_2583_RegressionS.cpp
+    Bug_2616_RegressionC.cpp
+    Bug_2616_RegressionS.cpp
+    Bug_2619_RegressionC.cpp
+    Bug_2619_RegressionS.cpp
+    constantsA.cpp
+    constantsC.cpp
+    constantsS.cpp
+    dif2A.cpp
+    dif2C.cpp
+    dif2S.cpp
+    enum_in_structC.cpp
+    enum_in_structS.cpp
+    fullC.cpp
+    fullS.cpp
+    fwdC.cpp
+    fwdS.cpp
+    generic_objectA.cpp
+    generic_objectC.cpp
+    generic_objectS.cpp
+    gperfC.cpp
+    gperfS.cpp
+    includedC.cpp
+    includedS.cpp
+    includingC.cpp
+    includingS.cpp
+    inheritA.cpp
+    inheritC.cpp
+    inheritS.cpp
+    interfaceC.cpp
+    interfaceS.cpp
+    keywordsA.cpp
+    keywordsC.cpp
+    keywordsS.cpp
     main.cpp
-    *C.cpp
-    *S.cpp
-    *A.cpp
+    moduleA.cpp
+    moduleC.cpp
+    moduleS.cpp
+    nested_scopeC.cpp
+    nested_scopeS.cpp
+    old_arrayC.cpp
+    old_arrayS.cpp
+    old_constantsC.cpp
+    old_constantsS.cpp
+    old_sequenceC.cpp
+    old_sequenceS.cpp
+    old_structC.cpp
+    old_structS.cpp
+    old_union2C.cpp
+    old_union2S.cpp
+    old_unionC.cpp
+    old_unionS.cpp
+    paramsC.cpp
+    paramsS.cpp
+    pragmaA.cpp
+    pragmaC.cpp
+    pragmaS.cpp
+    primtypesA.cpp
+    primtypesC.cpp
+    primtypesS.cpp
+    reopened_modulesC.cpp
+    reopened_modulesS.cpp
+    reopen_include1C.cpp
+    reopen_include1S.cpp
+    reopen_include2C.cpp
+    reopen_include2S.cpp
+    repo_id_modA.cpp
+    repo_id_modC.cpp
+    repo_id_modS.cpp
+    sequenceC.cpp
+    sequenceS.cpp
+    simple2C.cpp
+    simple2S.cpp
+    simpleC.cpp
+    simpleS.cpp
+    structC.cpp
+    structS.cpp
+    typecodeA.cpp
+    typecodeC.cpp
+    typecodeS.cpp
+    typedefA.cpp
+    typedefC.cpp
+    typedefS.cpp
+    typeprefixC.cpp
+    typeprefixS.cpp
+    unionC.cpp
+    unionS.cpp
+    valuetypeA.cpp
+    valuetypeC.cpp
+    valuetypeS.cpp
   }
 
   Template_Files {
