@@ -123,8 +123,8 @@ ICP_offline(unsigned long id)
 //      exact temperature:      40%
 
 static
-short
-vary_temp(short temp)
+long
+vary_temp(long temp)
 {
     #if defined (__BORLANDC__) || defined (_MSC_VER)
       long r = ACE_OS::rand() % 50;
@@ -192,7 +192,7 @@ private:
 // determined by vary_temp().
 
 static
-short
+long
 actual_temp(const StateMap::iterator & pos)
 {
     long sum = 0;
@@ -258,15 +258,15 @@ ICP_get(
             return -1;                      // Must be thermostat
         ACE_OS::memcpy(
             value, &pos->second.nominal_temp,
-            std::min(len, sizeof(pos->second.nominal_temp))
+            ace_min(len, sizeof(pos->second.nominal_temp))
         );
     } else if (ACE_OS::strcmp(attr, "temperature") == 0) {
-        short temp = actual_temp(pos);
-        ACE_OS::memcpy(value, &temp, std::min(len, sizeof(temp)));
+        long temp = actual_temp(pos);
+        ACE_OS::memcpy(value, &temp, ace_min(len, sizeof(temp)));
     } else if (ACE_OS::strcmp(attr, "MIN_TEMP") == 0) {
-        ACE_OS::memcpy(value, &MIN_TEMP, std::min(len, sizeof(MIN_TEMP)));
+        ACE_OS::memcpy(value, &MIN_TEMP, ace_min(len, sizeof(MIN_TEMP)));
     } else if (ACE_OS::strcmp(attr, "MAX_TEMP") == 0) {
-        ACE_OS::memcpy(value, &MAX_TEMP, std::min(len, sizeof(MAX_TEMP)));
+        ACE_OS::memcpy(value, &MAX_TEMP, ace_min(len, sizeof(MAX_TEMP)));
     } else {
         return -1;                          // No such attribute
     }

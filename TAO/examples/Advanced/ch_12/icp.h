@@ -22,7 +22,9 @@
 #ifndef _ICP_H
 #define _ICP_H
 
-extern "C" 
+#include "ace/OS.h"
+
+extern "C"
 {
   int ICP_online (unsigned long id);   // Add device
   int ICP_offline (unsigned long id);  // Remove device
@@ -33,11 +35,9 @@ extern "C"
                void *value,
                size_t len);
   // Set attribute
-  int ICP_set (unsigned long id, 
+  int ICP_set (unsigned long id,
                const char *attr,
                const void *value);
 }
-
-size_t min(const size_t len1, const size_t len2);
 
 #endif /* _ICP_H */
