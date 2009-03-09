@@ -3,6 +3,7 @@
 #include "common.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdlib.h"
 
 int runtime = 5; //sec
 
@@ -45,7 +46,7 @@ namespace CosNotifyCommImpl{
   };
 }
 
-int parse_args (int argc, char *argv[])
+int parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "t:");
   int x;
@@ -54,12 +55,14 @@ int parse_args (int argc, char *argv[])
     switch (x)
   {
     case 't':
-      runtime = atoi (get_opts.optarg);
+      runtime = ACE_OS::atoi (get_opts.optarg);
       break;
 
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
-        "usage:  %s -t <runtime>\n", argv [0]), -1);
+                         ACE_TEXT ("usage:  %s -t <runtime>\n"), 
+                         argv [0]), 
+                        -1);
   }
 
   return 0; // successful parse
