@@ -84,7 +84,7 @@ TAO_Notify_Constraint_Expr::load_child (
     this->constr_expr.event_types[len].domain_name = CORBA::string_dup (domain);
     this->constr_expr.event_types[len].type_name = CORBA::string_dup (type);
 
-    this->interpreter.build_tree (this->constr_expr.constraint_expr.in ());
+    this->interpreter.build_tree (this->constr_expr);
   }
 
   return result;
@@ -185,7 +185,7 @@ TAO_Notify_ETCL_Filter::add_constraint_i
     constraint.constraint_expression;
 
   notify_constr_expr->interpreter.
-    build_tree (expr.constraint_expr.in ());
+    build_tree (expr);
 
   notify_constr_expr->constr_expr = expr;
 
