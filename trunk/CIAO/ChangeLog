@@ -1,3 +1,11 @@
+Mon Mar  8 09:44:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL3_to_XMI/Bug_3607_Regression/*:
+          new test for 3607
+
+        * bin/ciao_tests.lst:
+          Added new test and enabled other idl3_to_xmi tests for fuzz
+
 Mon Mar  8 09:12:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_component_mpc.pl:
