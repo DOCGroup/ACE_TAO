@@ -1,3 +1,17 @@
+Mon Mar  9 07:16:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/ZIOP.pdf:
+          Removed, the ZIOP spec is now available at the OMG website as
+          ptc/09-01-03
+
+        * MPC/config/bzip2compressor.mpb:
+        * MPC/config/lzocompressor.mpb:
+          new base projects
+
+        * MPC/config/tao_versioning_idl_defaults.mpb
+          No need to add after TAO_IDL_EXE, that is already in the base
+          project
+
 Mon Mar  9 07:05:37 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
