@@ -1,3 +1,9 @@
+Mon Mar  8 08:31:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+        * MPC/config/ciao_cs_client.mpb:
+          ciao_cs_client_svnt needs threads
+
 Mon Mar  8 08:29:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
