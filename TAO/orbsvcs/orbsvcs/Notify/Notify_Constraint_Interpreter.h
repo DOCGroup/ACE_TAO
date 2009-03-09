@@ -51,11 +51,14 @@ public:
    * Constraint exception if the constraint given has syntax errors or
    * semantic errors, such as mismatched types.
    */
-  void build_tree (const char* constraints);
+  void build_tree (const CosNotifyFilter::ConstraintExp& exp);
 
   /// Returns true if the constraint is evaluated successfully by
   /// the evaluator.
   CORBA::Boolean evaluate (TAO_Notify_Constraint_Visitor &evaluator);
+
+private:
+  void build_tree (const char* constraints);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
