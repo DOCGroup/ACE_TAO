@@ -78,6 +78,7 @@ if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION") {
 @CIAO_DOCS = ('ciao_config_handlers'
              ,'ciao_DAnCE'
              ,'ciao');
+@DDS_DOCS = ('dds');
 
 # Modify defaults using the command line arguments
 &parse_args ();
@@ -91,10 +92,10 @@ if (!-r "$ACE_ROOT/ace/config.h") {
     $wrote_configh = 1;
 }
 
-&generate_doxy_files ('ACE',  "$ACE_ROOT/VERSION", @ACE_DOCS) if (!$exclude_ace);
-&generate_doxy_files ('TAO',  "$TAO_ROOT/VERSION", @TAO_DOCS) if (!$exclude_tao);
-&generate_doxy_files ('CIAO',"$CIAO_ROOT/VERSION", @CIAO_DOCS) if (!$exclude_ciao);
-&generate_doxy_files ('DDS',  "$DDS_ROOT/VERSION", ('dds')) if $dds;
+&generate_doxy_files ('ACE',  "$ACE_ROOT", @ACE_DOCS) if (!$exclude_ace);
+&generate_doxy_files ('TAO',  "$TAO_ROOT", @TAO_DOCS) if (!$exclude_tao);
+&generate_doxy_files ('CIAO', "$CIAO_ROOT", @CIAO_DOCS) if (!$exclude_ciao);
+&generate_doxy_files ('DDS',  "$DDS_ROOT", @DDS_DOCS) if $dds;
 
 unlink "$ACE_ROOT/ace/config.h" if $wrote_configh;
 
@@ -143,8 +144,9 @@ sub same_dir {
 sub generate_doxy_files {
 
   my $KIT = shift;
-  my $VERSION_FILE = shift;
+  my $ROOT_DIR = shift;
   my @DOCS = @_;
+  my $VERSION_FILE = "$ROOT_DIR/VERSION";
 
   my $VERSION = 'Snapshot ('.
     POSIX::strftime("%Y/%m/%d-%H:%M", localtime)
@@ -161,7 +163,7 @@ sub generate_doxy_files {
       $VERSION = $major.'.'.$minor.'.'.$beta;
     }
 
-    my $input = "etc/".$i.".doxygen";
+    my $input = "$ROOT_DIR/etc/".$i.".doxygen";
     my $output = "/tmp/".$i.".".$$.".doxygen";
 
     open(DOXYINPUT, $input)

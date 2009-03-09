@@ -1,3 +1,11 @@
+Mon Mar  9 13:39:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/*:
+          Added all TAO doxygen files
+
+        * Release
+          Added etc directory
+
 Mon Mar  9 11:21:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Advanced/ch_12/Advanced_ch_12.mpc

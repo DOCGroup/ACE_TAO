@@ -1,3 +1,11 @@
+Mon Mar  9 13:39:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/*:
+          Moved all TAO and CIAO files to TAO_ROOT/etc and CIAO_ROOT/etc
+
+        * bin/generate_doxygen.pl:
+          Updated for doxygen file change
+
 Mon Mar  9 07:22:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace_qt3reactor.mpc:
