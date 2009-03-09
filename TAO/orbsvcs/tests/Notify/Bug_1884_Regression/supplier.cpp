@@ -1,4 +1,4 @@
-// client.cpp,v 1.5 2002/01/29 20:21:07 okellogg Exp
+// $Id$
 
 #include "common.h"
 #include "ace/OS.h"
@@ -112,7 +112,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     try{
       ppc->push_structured_event(event);
-    }  	
+    }   
     catch (CORBA::SystemException& se)
     {
       std::cerr << "System exception occurred during push: "

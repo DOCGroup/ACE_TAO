@@ -1,4 +1,4 @@
-// client.cpp,v 1.5 2002/01/29 20:21:07 okellogg Exp
+// $Id$
 
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
@@ -142,7 +142,7 @@ void update_constraints (const CosNotifyFilter::Filter_var& filter,
     constraints[0].constraint_expr = CORBA::string_dup("");
 
     CosNotifyFilter::ConstraintInfoSeq_var cons_info 
-      = filter->add_constraints(constraints);					
+      = filter->add_constraints(constraints);                                   
 
     std::cout << "Constructing a filter..." << std::endl;
 
@@ -162,8 +162,7 @@ void update_constraints (const CosNotifyFilter::Filter_var& filter,
 }
 
 
-int
-main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
