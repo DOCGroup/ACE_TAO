@@ -1,3 +1,11 @@
+Tue Mar 10 11:39:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Servant_Impl_Base.h:
+        * ciao/Servants/Servant_Impl_Utils_T.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+          Moved static methods to CIAO::Servant namespace to fix
+          linker problems with the CB2009 compiler.
+
 Tue Mar 10 11:01:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/TargetManager/TargetManager.mpc:

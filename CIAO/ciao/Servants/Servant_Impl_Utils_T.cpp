@@ -11,14 +11,14 @@ namespace CIAO
 {
   template<typename T_var>
   void
-  Servant_Impl_Base::describe_simplex_receptacle (
+  Servant::describe_simplex_receptacle (
       const char *port_name,
       const char *port_type_repo_id,
       T_var &connection,
       ::Components::ReceptacleDescriptions_var &descriptions,
       CORBA::ULong slot)
   {
-    CIAO_TRACE ("Servant_Impl_Base::describe_simplex_receptacle");
+    CIAO_TRACE ("Servant::describe_simplex_receptacle");
 
     ::Components::ReceptacleDescription *elem = 0;
     ACE_NEW_THROW_EX (elem,
@@ -45,7 +45,7 @@ namespace CIAO
 
   template<typename T_var>
   void
-  Servant_Impl_Base::describe_multiplex_receptacle (
+  Servant::describe_multiplex_receptacle (
       const char *port_name,
       const char *port_type_repo_id,
       ACE_Array_Map<ptrdiff_t, T_var> &objrefs,
@@ -53,7 +53,7 @@ namespace CIAO
       CORBA::ULong slot
     )
   {
-    CIAO_TRACE ("Servant_Impl_Base::describe_multiplex_receptacle");
+    CIAO_TRACE ("Servant::describe_multiplex_receptacle");
 
     ::Components::ReceptacleDescription *elem = 0;
     ACE_NEW_THROW_EX (elem,
@@ -101,7 +101,7 @@ namespace CIAO
 
   template<typename T_var>
   void
-  Servant_Impl_Base::describe_pub_event_source (
+  Servant::describe_pub_event_source (
       const char *port_name,
       const char *port_type_repo_id,
       ACE_Array_Map<ptrdiff_t, T_var> &consumers,
@@ -109,7 +109,7 @@ namespace CIAO
       CORBA::ULong slot
     )
   {
-    CIAO_TRACE ("Servant_Impl_Base::describe_pub_event_source");
+    CIAO_TRACE ("Servant::describe_pub_event_source");
 
     ::Components::PublisherDescription *elem = 0;
     ACE_NEW_THROW_EX (elem,
@@ -155,14 +155,14 @@ namespace CIAO
 
   template<typename T_var>
   void
-  Servant_Impl_Base::describe_emit_event_source (
+  Servant::describe_emit_event_source (
       const char *port_name,
       const char *port_type_repo_id,
       T_var &consumer_ref,
       ::Components::EmitterDescriptions_var &descriptions,
       CORBA::ULong slot)
   {
-    CIAO_TRACE ("Servant_Impl_Base::describe_emit_event_source");
+    CIAO_TRACE ("Servant::describe_emit_event_source");
     ::Components::EmitterDescription *elem = 0;
     ACE_NEW_THROW_EX (elem,
                       ::OBV_Components::EmitterDescription,
