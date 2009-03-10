@@ -18,7 +18,7 @@ project(*client) : taoclient, naming {
   }
 }
 
-project(*server) : taoserver, naming {
+project(*server) : taoserver, naming, avoids_corba_e_micro, avoids_corba_e_compact {
   after += *idl
   source_files {
     server.cpp

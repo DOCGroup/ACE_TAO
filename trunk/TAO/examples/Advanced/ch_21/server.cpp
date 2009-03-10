@@ -18,8 +18,7 @@
 //
 // ============================================================================
 
-#include <iostream>
-#include <fstream>
+#include <ace/streams.h>
 #include <strstream>
 #include "server.h"
 #include <ace/Synch_T.h>
