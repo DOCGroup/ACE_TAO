@@ -207,11 +207,15 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
     }
   if (TAO_debug_level > 2)
     {
+      ACE_CString tcs_c_locale;
+      ACE_CString tcs_w_locale;
+      ACE_Codeset_Registry::registry_to_locale (tcs_c, tcs_c_locale, 0, 0);
+      ACE_Codeset_Registry::registry_to_locale (tcs_w, tcs_w_locale, 0, 0);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                   ACE_TEXT ("process_service_context, ")
-                  ACE_TEXT ("using tcsc = %08x, tcsw = %08x\n"),
-                  tcs_c,tcs_w));
+                  ACE_TEXT ("using tcsc <%C> (%08x), tcsw <%C> (%08x)\n"),
+                  tcs_c_locale.c_str (), tcs_c, tcs_w_locale.c_str (), tcs_w));
     }
 
   request.transport()->char_translator(this->get_char_trans (tcs_c));
@@ -241,19 +245,26 @@ TAO_Codeset_Manager_i::generate_service_context (TAO_Operation_Details &opd,
 
   if (TAO_debug_level > 2)
     {
+      ACE_CString tcs_c_locale;
+      ACE_CString tcs_w_locale;
+      ACE_Codeset_Registry::registry_to_locale (codeset_cntx.char_data, tcs_c_locale, 0, 0);
+      ACE_Codeset_Registry::registry_to_locale (codeset_cntx.wchar_data, tcs_w_locale, 0, 0);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                   ACE_TEXT ("generate_service_context, ")
-                  ACE_TEXT ("using tcs_c = %08x, tcs_w = %08x\n"),
+                  ACE_TEXT ("using tcs_c <%C> (%08x), tcs_w <%C> (%08x)\n"),
+                  tcs_c_locale.c_str (),
                   codeset_cntx.char_data,
+                  tcs_w_locale.c_str (),
                   codeset_cntx.wchar_data));
     }
 
   TAO_OutputCDR codeset_cdr;
-  codeset_cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
-  codeset_cdr << codeset_cntx;
-
-  service_cntx.set_context (IOP::CodeSets,codeset_cdr);
+  if ((codeset_cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)) &&
+      (codeset_cdr << codeset_cntx))
+    {
+      service_cntx.set_context (IOP::CodeSets,codeset_cdr);
+    }
 }
 
 /// Checks whether the NCS is a part of CCS

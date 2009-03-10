@@ -1,3 +1,9 @@
+Tue Mar 10 10:20:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Codeset/Codeset_Manager_i.cpp:
+          Retrieve the locale as string and add that to the
+          debug messages.
+
 Tue Mar 10 09:11:54 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tao/ZIOP/ZIOP.cpp:
@@ -18,8 +24,8 @@ Tue Mar 10 08:22:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * tao/ZIOP/ZIOP.cpp:
         * tao/ZIOP/ZIOP.h:
         * utils/catior/catior.cpp:
-          Resolved bugzilla 3611. ZIOP logging according to 
-          TAO standard. More log info regarding compression 
+          Resolved bugzilla 3611. ZIOP logging according to
+          TAO standard. More log info regarding compression
           details.
 
 Tue Mar 10 07:05:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
