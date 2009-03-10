@@ -237,7 +237,7 @@ TAO_GIOP_Message_Base::generate_fragment_header (TAO_OutputCDR & cdr,
 }
 
 int
-TAO_GIOP_Message_Base::dump_consolidated_msg (TAO_OutputCDR &stream, bool hex_dump_only)
+TAO_GIOP_Message_Base::dump_consolidated_msg (TAO_OutputCDR &stream)
 {
   // Check whether the output cdr stream is build up of multiple
   // messageblocks. If so, consolidate them to one block that can be
@@ -251,13 +251,12 @@ TAO_GIOP_Message_Base::dump_consolidated_msg (TAO_OutputCDR &stream, bool hex_du
       ACE_CDR::consolidate (consolidated_block, stream.begin ());
       buf = (char *) (consolidated_block->rd_ptr ());
     }
-  ///
-  this->dump_msg ("send", reinterpret_cast <u_char *> (buf), total_len, hex_dump_only);
 
-  //
+  this->dump_msg ("send", reinterpret_cast <u_char *> (buf), total_len);
+
   delete consolidated_block;
   consolidated_block = 0;
-  //
+
   return 0;
 }
 
@@ -265,6 +264,9 @@ int
 TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub* stub)
 {
   this->set_giop_flags (stream);
+  
+  const char * label = "";
+  bool log_msg = TAO_debug_level > 9;
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   TAO_ZIOP_Adapter* ziop_adapter = this->orb_core_->ziop_adapter ();
@@ -272,10 +274,9 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub* stub)
   //ziop adapter found and not compressed yet
   if (ziop_adapter)
     {
-      if (TAO_debug_level >= 5)
+      if (TAO_debug_level > 9)
         {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Before compression: ")));
-          this->dump_consolidated_msg (stream, true);
+          this->dump_consolidated_msg (stream);
         }
       bool compressed;
       if (stub)
@@ -287,11 +288,13 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub* stub)
           compressed = ziop_adapter->marshal_data (stream, *this->orb_core_);
         }
 
-        if (TAO_debug_level >= 5)
+        if (TAO_debug_level > 9)
           {
             if (!compressed)
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT("GIOP message not compressed")));
+            else 
+              log_msg = false;
           }
     }
 #else
@@ -325,9 +328,9 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub* stub)
                      buf + TAO_GIOP_MESSAGE_SIZE_OFFSET);
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
 
-  if (TAO_debug_level >= 5)
+  if (log_msg)
     {
-      this->dump_consolidated_msg (stream, false);
+      this->dump_consolidated_msg (stream);
     }
 
   return 0;
@@ -645,13 +648,6 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   size_t wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
-  if (TAO_debug_level >= 5)
-    {
-      this->dump_msg ("recv",
-                      reinterpret_cast <u_char *> (qd->msg_block ()->rd_ptr ()),
-                      qd->msg_block ()->length ());
-    }
-
   // Create a input CDR stream. We do the following
   //  1 - If the incoming message block has a data block with a flag
   //      DONT_DELETE  (for the data block) we create an input CDR
@@ -682,6 +678,13 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   if (!this->decompress (&db, *qd, rd_pos, wr_pos))
      return -1;
+#else
+  if (TAO_debug_level > 9)
+    {
+      this->dump_msg ("recv",
+                      reinterpret_cast <u_char *> (qd->msg_block ()->rd_ptr ()),
+                      qd->msg_block ()->length ());
+    }
 #endif
 
     TAO_InputCDR input_cdr (db,
@@ -738,12 +741,12 @@ TAO_GIOP_Message_Base::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
             return false;
           rd_pos = TAO_GIOP_MESSAGE_HEADER_LEN;
           wr_pos = (*db)->size();
-          if (TAO_debug_level >= 5)
+          if (TAO_debug_level > 9)
             {
-              ACE_HEX_DUMP ((LM_DEBUG,
-                              const_cast <char*> ((*db)->base ()),
-                              (*db)->size (),
-                              ACE_TEXT ("GIOP message after decompression")));
+              this->dump_msg ("recv",
+                              reinterpret_cast <u_char *> ((*db)->base ()),
+                              (*db)->size ());
+                
             }
         }
       else
@@ -774,19 +777,20 @@ TAO_GIOP_Message_Base::process_reply_message (
   size_t wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
-  if (TAO_debug_level >= 5)
-    {
-      this->dump_msg ("recv",
-                      reinterpret_cast <u_char *> (qd->msg_block ()->rd_ptr ()),
-                      qd->msg_block ()->length ());
-    }
-
   ACE_Data_Block *db = qd->msg_block ()->data_block ();
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   if (!this->decompress (&db, *qd, rd_pos, wr_pos))
      return -1;
+#else
+  if (TAO_debug_level > 9)
+    {
+      this->dump_msg ("recv",
+                      reinterpret_cast <u_char *> (qd->msg_block ()->rd_ptr ()),
+                      qd->msg_block ()->length ());
+    }
 #endif
+
   // Create a empty buffer on stack
   // NOTE: We use the same data block in which we read the message and
   // we pass it on to the higher layers of the ORB. So we dont to any
@@ -1302,7 +1306,7 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
     0, 0, 0, 0
   };
 
-  if (TAO_debug_level >= 5)
+  if (TAO_debug_level > 9)
     {
       this->dump_msg ("send_error",
                       reinterpret_cast <const u_char *> (error_message),
@@ -1412,7 +1416,7 @@ TAO_GIOP_Message_Base::
   // @@ should recv and discard queued data for portability; note
   // that this won't block (long) since we never set SO_LINGER
 
-  if (TAO_debug_level >= 5)
+  if (TAO_debug_level > 9)
     {
       this->dump_msg ("send_close_connection",
                       reinterpret_cast <const u_char *> (close_message),
@@ -1505,8 +1509,7 @@ TAO_GIOP_Message_Base::send_reply_exception (
 void
 TAO_GIOP_Message_Base::dump_msg (const char *label,
                                  const u_char *ptr,
-                                 size_t len,
-                                 bool hex_dump_only)
+                                 size_t len)
 {
     if (TAO_debug_level < 10)
       {
@@ -1534,9 +1537,6 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 
     // Byte order.
     int const byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
-    ACE_TCHAR message_type[15];
-    ACE_OS::sprintf(message_type, ACE_TEXT("%c%c%c%c message"),
-                    ptr[0], ptr[1], ptr[2], ptr[3]);
 
     // Get the version info
     CORBA::Octet const major = ptr[TAO_GIOP_VERSION_MAJOR_OFFSET];
@@ -1576,25 +1576,21 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
       }
 
     // Print.
-    if (!hex_dump_only)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("TAO (%P|%t) - GIOP_Message_Base::dump_msg, ")
-                    ACE_TEXT("%C %s v%c.%c, %d data bytes, %s endian, ")
-                    ACE_TEXT("Type %C[%u]\n"),
-                    label,
-                    message_type,
-                    digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
-                    digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
-                    len - TAO_GIOP_MESSAGE_HEADER_LEN ,
-                    (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
-                    message_name,
-                    *id));
-      }
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("TAO (%P|%t) - GIOP_Message_Base::dump_msg, ")
+                ACE_TEXT("%C GIOP message v%c.%c, %d data bytes, %s endian, ")
+                ACE_TEXT("Type %C[%u]\n"),
+                label,
+                digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
+                digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
+                len - TAO_GIOP_MESSAGE_HEADER_LEN ,
+                (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
+                message_name,
+                *id));
     ACE_HEX_DUMP ((LM_DEBUG,
                    (const char *) ptr,
                    len,
-                   message_type));
+                   "GIOP message"));
 }
 
 int

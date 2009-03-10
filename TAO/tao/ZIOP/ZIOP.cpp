@@ -103,6 +103,58 @@ TAO_ZIOP_Loader::Initializer (void)
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_ZIOP_Loader);
 }
 
+const char *
+TAO_ZIOP_Loader::ziop_compressorid_name (::Compression::CompressorId st)
+{
+  switch (st)
+    {
+      case ::Compression::COMPRESSORID_NONE: return "NONE";
+      case ::Compression::COMPRESSORID_GZIP: return "GZIP";
+      case ::Compression::COMPRESSORID_PKZIP: return "PKZIP";
+      case ::Compression::COMPRESSORID_BZIP2: return "BZIP2";
+      case ::Compression::COMPRESSORID_ZLIB: return "ZLIB";
+      case ::Compression::COMPRESSORID_LZMA: return "LZMA";
+      case ::Compression::COMPRESSORID_LZO: return "LZO";
+      case ::Compression::COMPRESSORID_RZIP: return "RZIP";
+      case ::Compression::COMPRESSORID_7X: return "7X";
+      case ::Compression::COMPRESSORID_XAR: return "XAR";
+    }
+  return "Unknown";
+}
+
+void
+TAO_ZIOP_Loader::dump_msg (const char *type,  const u_char *ptr,
+                                size_t len, size_t original_data_length, 
+                                ::Compression::CompressorId  compressor_id, 
+                                ::Compression::CompressionLevel compression_level)
+{
+  if (TAO_debug_level < 10)
+    {
+      return;
+    }
+
+  static const char digits[] = "0123456789ABCD";
+  int const byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
+  CORBA::Double const ratio = 100 - (((CORBA::Double)len/original_data_length) *
+                                  (CORBA::Double) 100);
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("TAO (%P|%t) - ZIOP_Loader::dump_msg, ")
+              ACE_TEXT ("ZIOP message v%c.%c %C, %d data bytes, %s endian, ")
+              ACE_TEXT ("original_data_length = %d, ratio = %4.2f, ") 
+              ACE_TEXT ("compressor = %C, compression_level = %d\n"),
+              digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
+              digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
+              type,
+              len - TAO_GIOP_MESSAGE_HEADER_LEN ,
+              (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
+              original_data_length, ratio, 
+              ziop_compressorid_name(compressor_id), compression_level));
+  ACE_HEX_DUMP ((LM_DEBUG,
+                 (const char *) ptr,
+                 len,
+                 "ZIOP message"));
+}
 
 bool
 TAO_ZIOP_Loader::decompress (Compression::Compressor_ptr compressor,
@@ -177,8 +229,19 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
           //change it into a GIOP message..
           mb.base ()[0] = 0x47;
           ACE_CDR::mb_align (&mb);
+
+          if (TAO_debug_level > 9)
+            {  // we're only logging ZIOP messages. Log datablock before it's
+               // replaced by it's decompressed datablock 
+               this->dump_msg ("before decompression", reinterpret_cast <u_char *>(qd.msg_block ()->rd_ptr ()), 
+                    qd.msg_block ()->length (), data.original_length, 
+                    data.compressorid, compressor->compression_level ());
+            }
+          //replace data block
           *db = mb.data_block ()->duplicate ();
           qd.msg_block ()->replace_data_block (mb.data_block ());
+          
+
           return true;
         }
     }
@@ -249,8 +312,8 @@ TAO_ZIOP_Loader::check_min_ratio (const CORBA::ULong& this_ratio,
   if (TAO_debug_level > 8)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - TAO_ZIOP_Loader::check_min_ratio: ")
-                  ACE_TEXT ("Ratio until now:%d This ratio:%d Accepted:%d\n"),
+                  ACE_TEXT ("TAO (%P|%t) - TAO_ZIOP_Loader::check_min_ratio, ")
+                  ACE_TEXT ("overall_ratio = %d, this_ratio = %d, accepted = %d\n"),
                   overall_ratio, this_ratio, accepted));
     }
   return accepted;
@@ -373,6 +436,14 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
           mb.data_block ()->base ()[0 + begin] = 0x5A;
           mb.data_block ()->base ()[TAO_GIOP_MESSAGE_SIZE_OFFSET + begin] =
             cdr.length() - TAO_GIOP_MESSAGE_HEADER_LEN;
+
+          if (TAO_debug_level > 9)
+            {
+               this->dump_msg ("after compression", reinterpret_cast <u_char *>(mb.rd_ptr ()), 
+                    mb.length (), data.original_length, 
+                    data.compressorid, compressor->compression_level ());
+            }
+
         }
     }
     else if (TAO_debug_level > 8)

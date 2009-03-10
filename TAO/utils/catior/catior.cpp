@@ -1118,7 +1118,7 @@ cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
 }
 
 const char *
-ziop_compressorid_name (int st)
+ziop_compressorid_name (::Compression::CompressorId st)
 {
   switch (st)
     {

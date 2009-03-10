@@ -67,7 +67,15 @@ private:
   /// activated.
   static bool is_activated_;
 
-  /// Get the compression low value, returns 0 when it is not set
+  const char *ziop_compressorid_name (::Compression::CompressorId st);
+
+  /// dump a ZIOP datablock after (de)compression
+  void dump_msg (const char *type,  const u_char *ptr,
+                size_t len, size_t original_data_length, 
+                ::Compression::CompressorId  compressor_id, 
+                ::Compression::CompressionLevel compression_level);
+
+/// Get the compression low value, returns 0 when it is not set
   CORBA::ULong compression_policy_value (CORBA::Policy_ptr policy) const;
 
   bool get_compressor_details (
