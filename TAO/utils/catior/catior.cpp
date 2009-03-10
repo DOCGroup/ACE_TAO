@@ -1117,25 +1117,6 @@ cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
   return true;
 }
 
-const char *
-ziop_compressorid_name (::Compression::CompressorId st)
-{
-  switch (st)
-    {
-      case ::Compression::COMPRESSORID_NONE: return "NONE";
-      case ::Compression::COMPRESSORID_GZIP: return "GZIP";
-      case ::Compression::COMPRESSORID_PKZIP: return "PKZIP";
-      case ::Compression::COMPRESSORID_BZIP2: return "BZIP2";
-      case ::Compression::COMPRESSORID_ZLIB: return "ZLIB";
-      case ::Compression::COMPRESSORID_LZMA: return "LZMA";
-      case ::Compression::COMPRESSORID_LZO: return "LZO";
-      case ::Compression::COMPRESSORID_RZIP: return "RZIP";
-      case ::Compression::COMPRESSORID_7X: return "7X";
-      case ::Compression::COMPRESSORID_XAR: return "XAR";
-    }
-  return "Unknown";
-}
-
 CORBA::Boolean
 cat_tag_policies (TAO_InputCDR& stream) {
   CORBA::ULong length = 0;
@@ -1279,7 +1260,7 @@ cat_tag_policies (TAO_InputCDR& stream) {
       for (; index < idlist.length(); index++)
         {
           ACE_DEBUG ((LM_DEBUG,"%I\t CompressorId: %C Level: %d\n",
-                      ziop_compressorid_name(idlist[index].compressor_id),
+                      TAO_ZIOP_Loader::ziop_compressorid_name(idlist[index].compressor_id),
                       idlist[index].compression_level));
         }
     } else if (policies[iter].ptype == ZIOP::COMPRESSION_ENABLING_POLICY_ID) {
