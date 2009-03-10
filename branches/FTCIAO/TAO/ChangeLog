@@ -1,3 +1,31 @@
+Tue Mar 10 20:19:22 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp:
+        
+          Debugging output and other minor changes.
+        
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        
+          Added timing output.
+        
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent.idl:
+        
+          Cosmetic changes.
+        
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/client.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker.idl
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Client_Timer_Handler.h
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker_i.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker_i.h
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker.mpc
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/server.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Client_Timer_Handler.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/run_test.pl:
+        
+          Added new test application for timing measurements.
+
 Mon Mar  9 17:30:45 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp

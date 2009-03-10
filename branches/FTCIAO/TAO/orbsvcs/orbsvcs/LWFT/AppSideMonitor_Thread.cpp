@@ -112,7 +112,7 @@ AppSideMonitor_Thread::svc (void)
         }
 
       ACE_DEBUG ((LM_TRACE,
-                  "AppSideReg::svc - got heartbeat port "
+                  "AppSideMonitor_Thread::svc - got heartbeat port "
                   "%d from hm.\n", port_));
 
       if (serv_addr_.set (port_) == -1)
@@ -123,7 +123,7 @@ AppSideMonitor_Thread::svc (void)
                             -1);
         }
       
-      if (acceptor_.open (serv_addr_) == -1)
+      if (acceptor_.open (serv_addr_) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "AppSideMonitor_Thread::svc: "
