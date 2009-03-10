@@ -352,8 +352,8 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   TAO_OutputCDR cdr;
 
   // Marshal the information into the stream
-  if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
-      || (cdr << listen_point_list) == 0)
+  if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
+      || (!(cdr << listen_point_list)))
     return;
 
   // Add this info in to the svc_list
