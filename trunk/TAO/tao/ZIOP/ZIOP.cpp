@@ -148,8 +148,10 @@ TAO_ZIOP_Loader::dump_msg (const char *type,  const u_char *ptr,
               type,
               len - TAO_GIOP_MESSAGE_HEADER_LEN ,
               (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
-              original_data_length, ratio, 
-              ziop_compressorid_name(compressor_id), compression_level));
+              original_data_length, 
+              ratio, 
+              TAO_ZIOP_Loader::ziop_compressorid_name(compressor_id), 
+              compression_level));
   ACE_HEX_DUMP ((LM_DEBUG,
                  (const char *) ptr,
                  len,
