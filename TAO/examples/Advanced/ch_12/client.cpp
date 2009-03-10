@@ -19,12 +19,8 @@
 //
 // ============================================================================
 
-#include    "CCSC.h"        // ORB-specific
-
-// The following headers are #included automatically by ACE+TAO.
-// Therefore, they don't need to be included explicitly.
-#include    <iostream>
-// #include    <fstream.h>
+#include "CCSC.h"        // ORB-specific
+#include <ace/streams.h>
 
 using namespace std;
 

@@ -8,7 +8,7 @@ project(*idl) : taoclient {
   custom_only = 1
 }
 
-project(*client) : taoclient {
+project(*client) : taoclient, avoids_corba_e_micro, avoids_corba_e_compact {
   after += *idl
   source_files {
     client.cpp
@@ -18,7 +18,7 @@ project(*client) : taoclient {
   }
 }
 
-project(*server) : taoserver {
+project(*server) : taoserver, avoids_corba_e_micro, avoids_corba_e_compact {
   after += *idl
   source_files {
     server.cpp

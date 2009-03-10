@@ -1,3 +1,15 @@
+Tue Mar 10 07:05:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/ch_12/client.cpp
+        * examples/Advanced/ch_12/server.cpp
+        * examples/Advanced/ch_18/Advanced_ch_18.mpc
+        * examples/Advanced/ch_18/client.cpp
+        * examples/Advanced/ch_18/server.cpp
+        * examples/Advanced/ch_21/Advanced_ch_21.mpc
+        * examples/Advanced/ch_21/client.cpp
+        * examples/Advanced/ch_21/server.cpp
+          Fixed compile issues
+
 Mon Mar  9 22:06:29 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Notify/Bug_1884_Regression/consumer.cpp:

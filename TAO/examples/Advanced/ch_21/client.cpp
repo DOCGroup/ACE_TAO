@@ -18,9 +18,8 @@
 //
 // ============================================================================
 
-#include    "CCSC.h"        // ORB-specific
-#include    <iostream>
-// #include    <fstream.h>
+#include "CCSC.h"        // ORB-specific
+#include <ace/streams.h>
 
 using namespace std;
 
