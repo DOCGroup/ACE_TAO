@@ -1,3 +1,11 @@
+Tue Mar 10 09:11:54 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP.h:
+        * utils/catior/catior.cpp:
+          Moved ziop_compressor_name to Ziop loader class.
+          Made this function static.
+
 Tue Mar 10 08:46:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp:
