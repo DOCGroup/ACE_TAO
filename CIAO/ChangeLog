@@ -1,3 +1,8 @@
+Tue Mar 10 13:03:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Display/NavDisplayGUI_exec/RootPanel.cpp:
+          Fixed compile warning
+
 Tue Mar 10 11:39:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.h:
