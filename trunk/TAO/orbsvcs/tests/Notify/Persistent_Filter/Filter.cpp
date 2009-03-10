@@ -189,6 +189,9 @@ FilterClient::run_supplier ()
 {
   this->wait_ready ();
 
+  //Add delay so consumer won't miss any events.
+  ACE_OS::sleep (5);
+
   send_events ();
 
   this->wait_consumer_complete ();
