@@ -1,0 +1,44 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Worker.idl
+  }
+
+  custom_only = 1
+}
+
+project(*Server): lwft_server, lwft_client, naming {
+  after += *idl
+
+  libpaths += $(CUTS_ROOT)/lib
+  libs += CUTS CUTS_CPU_Worker LWFT_StateSyncAgent
+  includes += $(CUTS_ROOT) $(CUTS_ROOT)/cuts/workers
+
+  Source_Files {
+    Worker_i.cpp
+    server.cpp
+  }
+
+  Source_Files {
+    WorkerC.cpp
+    WorkerS.cpp
+  }
+
+  IDL_Files {
+  }
+}
+
+project(*Client): lwft_client, naming {
+  after += *idl
+
+  Source_Files {
+    client.cpp
+    Client_Timer_Handler.cpp
+    WorkerC.cpp
+  }
+
+  IDL_Files {
+  }
+}

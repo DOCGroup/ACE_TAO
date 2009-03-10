@@ -8,7 +8,7 @@
 #include <set>
 
 #include "ace/OS_NS_unistd.h"
-
+#include <ace/High_Res_Timer.h>
 #include "AppSideMonitor_Thread.h"
 #include "ForwardingAgentC.h"
 #include "AppInfoC.h"
@@ -1634,6 +1634,8 @@ ReplicationManager_i::update_ior_map (
 void
 ReplicationManager_i::proc_failure (const char *process_id)
 {
+  ACE_DEBUG ((LM_DEBUG, "RM: pf(%s) - %T\n", process_id));
+
   ACE_Guard <ACE_Thread_Mutex> guard(update_mutex_);
   ACE_Time_Value wait_time (5);
   

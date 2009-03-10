@@ -29,7 +29,7 @@ interface StateSynchronizationAgent
   /// Informs the replication manager about applications for which
   /// it is responsible for replication. 
   void register_application (in string object_id,
-			                       in ReplicatedApplication app);
+                             in ReplicatedApplication app);
 };
 
 #endif /* _STATE_SYNCHRONIZATION_AGENT_IDL_ */

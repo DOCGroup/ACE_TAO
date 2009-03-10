@@ -42,7 +42,13 @@ HostMonitorImpl::register_process (const char *process_id,
                                    const char * hostname,
                                    CORBA::Long port)
 {
-  //ACE_DEBUG ((LM_DEBUG, "Entering register process\n"));
+  ACE_DEBUG ((LM_TRACE,
+              "HostMonitorImpl::register_process "
+              "process_id = %s, host = %s, port = %d.\n",
+              process_id,
+              hostname,
+              port));
+
   Failure_Handler *handler = 0;
   ACE_SOCK_Connector::PEER_ADDR serv_addr;
   serv_addr.set (port, hostname);
@@ -62,12 +68,7 @@ HostMonitorImpl::register_process (const char *process_id,
                           port);
   process_map_.bind (process_id, handler);
 
-  ACE_DEBUG ((LM_TRACE,
-              "HostMonitorImpl::register_process "
-              "process_id = %s, port = %d.\n",
-              process_id,
-              port));
-
+  
   return true;
 }
 
