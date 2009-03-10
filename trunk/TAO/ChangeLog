@@ -1,3 +1,17 @@
+Tue Mar 10 14:18:19 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+          Optimized logging when ZIOP is not enabled.
+          
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP_Stub.cpp:
+          Implemented CompressorIdLevelList policy. On the client
+          ZIOP checks which compressor should be used. 
+          Bug 3619 is added since a ZIOP server has no idea of the 
+          client CompressorIdLevelList policy at this moment. A ZIOP
+          client should always implement at least one ZIOP server 
+          CompressorIdLevelList policy.
+
 Tue Mar 10 10:20:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Codeset/Codeset_Manager_i.cpp:

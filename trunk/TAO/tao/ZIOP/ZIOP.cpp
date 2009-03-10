@@ -182,6 +182,12 @@ bool
 TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
                              TAO_ORB_Core& orb_core)
 {
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP == 0
+  ACE_UNUSED_ARG (db);
+  ACE_UNUSED_ARG (qd);
+  ACE_UNUSED_ARG (orb_core);
+  return true;
+#else
   CORBA::Object_var compression_manager =
     orb_core.resolve_compression_manager();
 
@@ -253,6 +259,7 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
     }
 
   return true;
+#endif
 }
 
 CORBA::ULong
@@ -333,6 +340,18 @@ TAO_ZIOP_Loader::get_compressor_details (
     {
       compressor_id = (*list)[0].compressor_id;
       compression_level = (*list)[0].compression_level;
+
+      if (TAO_debug_level > 6)
+        {
+          ACE_DEBUG ((LM_DEBUG, 
+                      ACE_TEXT ("TAO (%P|%t) - ")
+                      ACE_TEXT ("TAO_ZIOP_Loader::get_compressor_details,")
+                      ACE_TEXT ("compressor policy found, compressor = %C, ")
+                      ACE_TEXT ("compression_level = %d\n"), 
+                      TAO_ZIOP_Loader::ziop_compressorid_name (compressor_id),
+                      compression_level));
+        }
+
     }
   else
     {
@@ -396,7 +415,8 @@ TAO_ZIOP_Loader::get_compression_details(
           ACE_ERROR((LM_ERROR,
                      ACE_TEXT("TAO (%P|%t) - ")
                      ACE_TEXT("TAO_ZIOP_Loader::get_compression_details : ")
-                     ACE_TEXT("Compression level policy not found\n")));
+                     ACE_TEXT("Compressor ID/Level list policy not found\n")));
+          use_ziop = false;
         }
     }
   return use_ziop;
@@ -508,7 +528,8 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_Stub& stub)
   return true;
 #else
   CORBA::Boolean use_ziop = false;
-  Compression::CompressorId compressor_id = Compression::COMPRESSORID_ZLIB;
+  
+  Compression::CompressorId compressor_id = Compression::COMPRESSORID_NONE;
   Compression::CompressionLevel compression_level = 0;
 
   CORBA::Policy_var compression_enabling_policy =
@@ -552,7 +573,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR& cdr, TAO_ORB_Core& orb_core)
   return true;
 #else
   CORBA::Boolean use_ziop = false;
-  Compression::CompressorId compressor_id = Compression::COMPRESSORID_ZLIB;
+  Compression::CompressorId compressor_id = Compression::COMPRESSORID_NONE;
   Compression::CompressionLevel compression_level = 0;
 
   CORBA::Policy_var compression_enabling_policy =
