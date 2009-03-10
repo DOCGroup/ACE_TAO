@@ -265,13 +265,12 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub* stub)
 {
   this->set_giop_flags (stream);
   
-  const char * label = "";
   bool log_msg = TAO_debug_level > 9;
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   TAO_ZIOP_Adapter* ziop_adapter = this->orb_core_->ziop_adapter ();
 
-  //ziop adapter found and not compressed yet
+  // Ziop adapter found and not compressed yet
   if (ziop_adapter)
     {
       if (TAO_debug_level > 9)
@@ -292,7 +291,9 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub* stub)
           {
             if (!compressed)
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT("GIOP message not compressed")));
+                          ACE_TEXT ("TAO (%P|%t) - ")
+                          ACE_TEXT ("TAO_GIOP_Message_Base::format_message, ")
+                          ACE_TEXT ("GIOP message not compressed\n")));
             else 
               log_msg = false;
           }
