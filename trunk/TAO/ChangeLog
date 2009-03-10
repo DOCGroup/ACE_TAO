@@ -1,3 +1,11 @@
+Tue Mar 10 19:05:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+          Check return values of write_ulong
+
+        * tao/IIOP_Transport.cpp:
+          Use operator!
+
 Tue Mar 10 18:47:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp:
