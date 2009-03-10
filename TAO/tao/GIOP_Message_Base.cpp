@@ -677,16 +677,18 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
     }
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  if (!this->decompress (&db, *qd, rd_pos, wr_pos))
-     return -1;
-#else
+  if (qd->state ().compressed ())
+    {
+      if (!this->decompress (&db, *qd, rd_pos, wr_pos))
+        return -1;
+    }
+#endif
   if (TAO_debug_level > 9)
     {
       this->dump_msg ("recv",
                       reinterpret_cast <u_char *> (qd->msg_block ()->rd_ptr ()),
                       qd->msg_block ()->length ());
     }
-#endif
 
     TAO_InputCDR input_cdr (db,
                           flg,
@@ -732,33 +734,23 @@ bool
 TAO_GIOP_Message_Base::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
                                    size_t& rd_pos, size_t& wr_pos)
 {
-  if (qd.state().compressed ())
+  TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
+  if (adapter)
     {
-      TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
-      if (adapter)
-        {
-          qd.consolidate ();
-          if (!adapter->decompress (db, qd, *this->orb_core_))
-            return false;
-          rd_pos = TAO_GIOP_MESSAGE_HEADER_LEN;
-          wr_pos = (*db)->size();
-          if (TAO_debug_level > 9)
-            {
-              this->dump_msg ("recv",
-                              reinterpret_cast <u_char *> ((*db)->base ()),
-                              (*db)->size ());
-                
-            }
-        }
-      else
-        {
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) ERROR: Unable to decompress ")
-                        ACE_TEXT ("data.\n")));
+      qd.consolidate ();
+      if (!adapter->decompress (db, qd, *this->orb_core_))
+        return false;
+      rd_pos = TAO_GIOP_MESSAGE_HEADER_LEN;
+      wr_pos = (*db)->size();
+    }
+  else
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) ERROR: Unable to decompress ")
+                    ACE_TEXT ("data.\n")));
 
-          return false;
-        }
+      return false;
     }
   return true;
 }
@@ -781,16 +773,18 @@ TAO_GIOP_Message_Base::process_reply_message (
   ACE_Data_Block *db = qd->msg_block ()->data_block ();
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  if (!this->decompress (&db, *qd, rd_pos, wr_pos))
-     return -1;
-#else
+  if (qd->state ().compressed ())
+    {
+      if (!this->decompress (&db, *qd, rd_pos, wr_pos))
+        return -1;
+    }
+#endif
   if (TAO_debug_level > 9)
     {
       this->dump_msg ("recv",
                       reinterpret_cast <u_char *> (qd->msg_block ()->rd_ptr ()),
                       qd->msg_block ()->length ());
     }
-#endif
 
   // Create a empty buffer on stack
   // NOTE: We use the same data block in which we read the message and
