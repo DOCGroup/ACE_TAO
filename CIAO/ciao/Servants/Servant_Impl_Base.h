@@ -41,6 +41,40 @@ namespace CIAO
   typedef Container *Container_ptr;
   typedef TAO_Objref_Var_T<Container> Container_var;
 
+  namespace Servant {
+    template<typename T_var>
+    void describe_simplex_receptacle (
+        const char *port_name,
+        const char *port_type_repo_id,
+        T_var &connection,
+        ::Components::ReceptacleDescriptions_var &descriptions,
+        CORBA::ULong slot);
+
+    template<typename T_var>
+    void describe_multiplex_receptacle (
+        const char *port_name,
+        const char *port_type_repo_id,
+        ACE_Array_Map<ptrdiff_t, T_var> &objrefs,
+        ::Components::ReceptacleDescriptions_var &descriptions,
+        CORBA::ULong slot);
+
+    template<typename T_var>
+    void describe_pub_event_source (
+        const char *port_name,
+        const char *port_type_repo_id,
+        ACE_Array_Map<ptrdiff_t, T_var> &consumers,
+        ::Components::PublisherDescriptions_var &descriptions,
+        CORBA::ULong slot);
+
+    template<typename T_var>
+    void describe_emit_event_source (
+        const char *port_name,
+        const char *port_type_repo_id,
+        T_var &consumer_ref,
+        ::Components::EmitterDescriptions_var &descriptions,
+        CORBA::ULong slot);
+  } /* Servant */
+
   /**
    * @class Servant_Impl_Base
    *
@@ -170,38 +204,6 @@ namespace CIAO
 
     /// Called from generated servant class to help with
     /// get_all_*() methods.
-
-    template<typename T_var>
-    static void describe_simplex_receptacle (
-        const char *port_name,
-        const char *port_type_repo_id,
-        T_var &connection,
-        ::Components::ReceptacleDescriptions_var &descriptions,
-        CORBA::ULong slot);
-
-    template<typename T_var>
-    static void describe_multiplex_receptacle (
-        const char *port_name,
-        const char *port_type_repo_id,
-        ACE_Array_Map<ptrdiff_t, T_var> &objrefs,
-        ::Components::ReceptacleDescriptions_var &descriptions,
-        CORBA::ULong slot);
-
-    template<typename T_var>
-    static void describe_pub_event_source (
-        const char *port_name,
-        const char *port_type_repo_id,
-        ACE_Array_Map<ptrdiff_t, T_var> &consumers,
-        ::Components::PublisherDescriptions_var &descriptions,
-        CORBA::ULong slot);
-
-    template<typename T_var>
-    static void describe_emit_event_source (
-        const char *port_name,
-        const char *port_type_repo_id,
-        T_var &consumer_ref,
-        ::Components::EmitterDescriptions_var &descriptions,
-        CORBA::ULong slot);
 
   protected:
     typedef ACE_Array_Map<ACE_CString,
