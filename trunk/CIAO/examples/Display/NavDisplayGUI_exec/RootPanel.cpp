@@ -13,7 +13,7 @@
 RootPanel::RootPanel(Q3Canvas &c, QWidget *parent, const char *name)
 : QMainWindow(parent, name), canvas(c)
 {
-  QSplitter *s1 = new QSplitter( Qt::Orientation::Vertical, this , "main" );
+  QSplitter *s1 = new QSplitter( Qt::Vertical, this , "main" );
   navview = new MapView(canvas, s1);
   s1->moveToFirst(navview);
 
