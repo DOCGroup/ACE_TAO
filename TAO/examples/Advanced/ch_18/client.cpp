@@ -17,11 +17,10 @@
 //
 // ============================================================================
 
-#include    "CCSC.h"        // ORB-specific
-#include    "assert.h"
-#include    <orbsvcs/CosNamingC.h>
-#include    <iostream>
-// #include    <fstream.h>
+#include "CCSC.h"        // ORB-specific
+#include "assert.h"
+#include <orbsvcs/CosNamingC.h>
+#include <ace/streams.h>
 // ----------------------------------------------------------------
 
 using namespace std;
