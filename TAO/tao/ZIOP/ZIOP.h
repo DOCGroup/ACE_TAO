@@ -60,14 +60,15 @@ public:
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);
+  
+  /// Converts compressor ID to a compressor name.
+  static const char * ziop_compressorid_name (::Compression::CompressorId st);
 
 private:
 
   /// Flag to indicate whether the ZIOP library has been
   /// activated.
   static bool is_activated_;
-
-  const char *ziop_compressorid_name (::Compression::CompressorId st);
 
   /// dump a ZIOP datablock after (de)compression
   void dump_msg (const char *type,  const u_char *ptr,
