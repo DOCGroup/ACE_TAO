@@ -1,10 +1,15 @@
+Tue Mar 10 08:46:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+          Resolved compiler warning.
+
 Tue Mar 10 08:22:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
-        * tao/GIOP_Message_Base.cpp
-        * tao/GIOP_Message_Base.h
-        * tao/ZIOP/ZIOP.cpp
-        * tao/ZIOP/ZIOP.h
-        * utils/catior/catior.cpp
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP.h:
+        * utils/catior/catior.cpp:
           Resolved bugzilla 3611. ZIOP logging according to 
           TAO standard. More log info regarding compression 
           details.
