@@ -1585,7 +1585,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     ACE_HEX_DUMP ((LM_DEBUG,
                    (const char *) ptr,
                    len,
-                   "GIOP message"));
+                   ACE_TEXT ("GIOP message")));
 }
 
 int
