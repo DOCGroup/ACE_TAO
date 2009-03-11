@@ -1,3 +1,11 @@
+Wed Mar 11 18:54:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ciaoidldefaults.mpb:
+          Added build_files as base project, that way also the mpc/mwc
+          files are added to the generated solution. This way we see
+          in the ms ide also for custom cidl projects the mpc files.
+          Thanks to Adam Mitz for suggesting this solution
+
 Wed Mar 11 12:40:08 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/XSCRT/Elements.hpp:
