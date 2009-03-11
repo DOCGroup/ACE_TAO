@@ -529,8 +529,8 @@ find (CCS::Controller::SearchSeq & slist)
         CCS::Controller::SearchCriterion sc = slist[i].key._d ();
         if (sc == CCS::Controller::ASSET) {
             // Search for matching asset number.
-                bool make = false;
-            CCS::AssetType num;
+            bool make = false;
+            CCS::AssetType num = 0;
                 {
                 ACE_Guard<ACE_Mutex> guard (m_assets_mutex);
                 where = m_assets.find (slist[i].key.asset_num ());

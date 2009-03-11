@@ -19,6 +19,7 @@ project(*client) : taoclient {
 }
 
 project(*server) : taoserver {
+  requires += dummy_label
   after += *idl
   source_files {
     server.cpp
