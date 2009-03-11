@@ -1,3 +1,11 @@
+Wed Mar 11 18:54:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+          Added build_files as base project, that way also the mpc/mwc
+          files are added to the generated solution. This way we see
+          in the ms ide also for custom idl projects the mpc files.
+          Thanks to Adam Mitz for suggesting this solution
+
 Wed Mar 11 07:39:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Advanced/ch_12/icp.cpp
