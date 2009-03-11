@@ -1,3 +1,8 @@
+Wed Mar 11 22:14:04 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/ZIOP/ZIOP.cpp:
+          Fix for wchar builds.
+
 Wed Mar 11 19:40:38 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/tests/Notify/Bug_1884_Regression/common.h:
