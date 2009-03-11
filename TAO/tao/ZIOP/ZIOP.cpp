@@ -155,7 +155,7 @@ TAO_ZIOP_Loader::dump_msg (const char *type,  const u_char *ptr,
   ACE_HEX_DUMP ((LM_DEBUG,
                  (const char *) ptr,
                  len,
-                 "ZIOP message"));
+                 ACE_TEXT ("ZIOP message")));
 }
 
 bool
