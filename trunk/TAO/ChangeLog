@@ -1,3 +1,9 @@
+Wed Mar 11 19:40:38 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/tests/Notify/Bug_1884_Regression/common.h:
+        * orbsvcs/tests/Notify/Bug_1884_Regression/filter.cpp:
+          Fixed compile warnings.
+
 Wed Mar 11 18:54:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taobaseidldefaults.mpb:

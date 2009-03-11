@@ -23,7 +23,7 @@ get_event_channel(CORBA::ORB_ptr orb)
   std::cout << "IorEventChannelFactory=" << ior << std::endl;
   CORBA::Object_var obj = orb->string_to_object(ior);
 
-  if (CORBA::is_nil(obj))
+  if (CORBA::is_nil(obj.in ()))
   {
     std::cerr << "Bad ec_fact.ior " << std::endl; 
     exit(1);
@@ -31,7 +31,7 @@ get_event_channel(CORBA::ORB_ptr orb)
 
 
   CosNotifyChannelAdmin::EventChannelFactory_var factory =
-    CosNotifyChannelAdmin::EventChannelFactory::_narrow(obj);
+    CosNotifyChannelAdmin::EventChannelFactory::_narrow(obj.in ());
   if (CORBA::is_nil(factory.in()))
   {
     std::cerr << "Could not _narrow object to type CosNotifyChannelAdmin::EventChannelFactory" << std::endl;
