@@ -121,12 +121,7 @@ static
 long
 vary_temp (long temp)
 {
-  #if defined (__BORLANDC__) || defined (_MSC_VER)
-    long r = ACE_OS::rand() % 50;
-  #else
-    long r = lrand48() % 50;
-  #endif
-
+  long r = ACE_OS::rand() % 50;
   long delta;
   if  (r < 5)
     delta = 3;
@@ -137,12 +132,7 @@ vary_temp (long temp)
   else
     delta = 0;
 
-  #if defined (__BORLANDC__) || defined (_MSC_VER)
-    if (ACE_OS::rand() % 2)
-  #else
-    if (lrand48() % 2)
-  #endif
-
+  if (ACE_OS::rand() % 2)
     delta = -delta;
   return temp + delta;
 
