@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project {
+project: build_files {
   // Set the idl compiler and flags as template values, except for
   // automake.  It has it's own settings in AutomakeWorkspaceHelper.pm and
   // expects to see $(TAO_IDL) in the generated Makefile.am
