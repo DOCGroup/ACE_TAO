@@ -1,3 +1,11 @@
+Wed Mar 11 07:39:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/ch_12/icp.cpp
+        * examples/Advanced/ch_18/icp.cpp
+        * examples/Advanced/ch_21/icp.cpp
+        * examples/Advanced/ch_8_and_10/icp.cpp
+          Always use ACE_OS::rand
+
 Wed Mar 11 07:20:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Advanced/ch_12/Advanced_ch_12.mpc
