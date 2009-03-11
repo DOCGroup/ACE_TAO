@@ -1,10 +1,20 @@
+Wed Mar 11 07:20:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/ch_12/Advanced_ch_12.mpc
+        * examples/Advanced/ch_18/Advanced_ch_18.mpc
+        * examples/Advanced/ch_21/Advanced_ch_21.mpc
+          Disabled server project for the moment
+
+        * examples/Advanced/ch_21/server.cpp:
+          Fixed compile warning
+
 Tue Mar 10 23:56:26 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/tests/Notify/Persistent_Filter/Filter.cpp:
 
           Added delay to synchronize supplier and consumer to
           avoid test failure due to lost events.
-          
+
 Tue Mar 10 19:05:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Generator_Parser_12.cpp:
