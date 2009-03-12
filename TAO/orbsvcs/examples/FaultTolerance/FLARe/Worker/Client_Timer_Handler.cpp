@@ -8,30 +8,31 @@
 extern double execution_time;
 
 Client_Timer_Handler::Client_Timer_Handler (long iterations,
-						const std::string & filename,
-						const ACE_Time_Value & period,
-						bool logging)
+                                            const std::string & filename,
+                                            const ACE_Time_Value & period,
+                                            bool logging)
   : period_ (period),
     invocations_ (0),
+    logfile_ (filename),
     max_iterations_ (iterations),
     logging_ (logging)
 {
-  if (logging_)
-    out_.open (filename.c_str ());
 }
 
 Client_Timer_Handler::~Client_Timer_Handler ()
 {
   if (logging_)
     {
+      std::ofstream out (logfile_.c_str ());
+
       for (TimingList::iterator it = history_.begin ();
            it != history_.end ();
            ++it)
         {
-          out_ << it->first << " " << it->second << std::endl;
+          out << *it << std::endl;
         }
 
-      out_.close ();
+      out.close ();
     }
 }
 
@@ -51,9 +52,6 @@ int
 Client_Timer_Handler::handle_timeout (const ACE_Time_Value &,
                                       const void *)
 {
-  if ((max_iterations_ > 0) && (invocations_++ > max_iterations_))
-    orb_->shutdown ();
-
   try
     {
       timer_.start ();
@@ -68,9 +66,7 @@ Client_Timer_Handler::handle_timeout (const ACE_Time_Value &,
       timer_.elapsed_time (rt);
 
       if (logging_)
-	history_.push_back (
-          TimingResult (rt.msec (),
-                        ACE_Time_Value (period_ - rt).msec ()));
+	history_.push_back (rt.msec ());
     }
   catch (CORBA::SystemException & ex)
     {
@@ -81,6 +77,13 @@ Client_Timer_Handler::handle_timeout (const ACE_Time_Value &,
       orb_->shutdown ();
 
       return 1;
+    }
+
+  if ((max_iterations_ > 0) && (++invocations_ > max_iterations_))
+    {
+      worker_->stop ();
+      
+      orb_->shutdown ();
     }
 
   return 0;

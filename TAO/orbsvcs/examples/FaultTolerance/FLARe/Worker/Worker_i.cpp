@@ -1,5 +1,44 @@
 #include "Worker_i.h"
 
+Failure_Task::Failure_Task (CORBA::ORB_ptr orb,
+                            long limit,
+                            long & count)
+  : condition_ (lock_),
+    orb_ (CORBA::ORB::_duplicate (orb)),
+    limit_ (limit),
+    count_ (count),
+    stop_ (false)
+{
+}
+
+int
+Failure_Task::svc (void)
+{
+  ACE_Guard <ACE_Thread_Mutex> guard (lock_);
+
+  while (((limit_ == 0) || (count_ < limit_)) && !stop_)
+    {
+      condition_.wait ();
+    }
+
+  orb_->shutdown ();
+
+  return 0;
+}
+
+void 
+Failure_Task::signal (void)
+{
+  condition_.signal ();
+}
+
+void
+Failure_Task::stop (void)
+{
+  stop_ = true;
+  condition_.signal ();
+}
+
 Worker_i::Worker_i (CORBA::ORB_ptr orb,
                     PortableServer::POA_ptr poa,
                     const std::string & object_id,
@@ -10,8 +49,10 @@ Worker_i::Worker_i (CORBA::ORB_ptr orb,
     object_id_ (object_id),
     agent_ (StateSynchronizationAgent::_duplicate (agent)),
     state_ (0),
-    suicidal_count_ (invocations)
+    suicidal_count_ (invocations),
+    task_ (orb_.in (), suicidal_count_, state_)
 {
+  task_.activate ();
 }
 
 void
@@ -22,11 +63,14 @@ Worker_i::run_task (CORBA::Double execution_time)
   ++state_;
 
   agent_->state_changed (object_id_.c_str ());
+
+  task_.signal ();
 }
 
 void Worker_i::stop ()
 {
-  this->orb_->shutdown (0);
+  task_.stop ();
+  this->orb_->shutdown ();
 }
 
 void
@@ -86,4 +130,3 @@ Worker_i::object_id (const char * object_id)
 {
   object_id_ = object_id;
 }
-

@@ -1,3 +1,18 @@
+Thu Mar 12 03:48:16 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/server.cpp        
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker_i.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker_i.h:
+        
+          Added task for failure that can be triggered based on the
+          invocation count.
+
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/client.cpp        
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Client_Timer_Handler.h
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Client_Timer_Handler.cpp:
+        
+          Changed measurement and shutdown behavior.
+
 Tue Mar 10 20:19:22 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp:

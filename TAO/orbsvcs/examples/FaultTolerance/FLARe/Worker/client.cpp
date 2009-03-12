@@ -99,9 +99,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // PriorityModelPolicy, and get their server priorities.
 
       Client_Timer_Handler timeout_handler (iterations,
-					    server_id + "-client.txt",
-					    period,
-					    logging);
+                                            server_id + "-client.txt",
+                                            period,
+                                            logging);
 
       timeout_handler.set_orb (orb.in ());
       timeout_handler.set_worker (server1.in ());
@@ -116,21 +116,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                                     ACE_Time_Value::zero,
                                                     period);
 
-      if (kill_me)
-	{
-	  std::ostringstream os;
-	  os << "kill-" << ACE_OS::getpid ();
-	  std::ofstream file (os.str ().c_str ());
-	  file << 0;
-	  file.close ();
-	}
-
       orb->run ();
 
       orb->orb_core ()->reactor ()->cancel_timer (&timeout_handler);
-
-      // DeCoRAM::Workering over. Shut down Server ORB.
-      server1->stop ();
     }
   catch (const CORBA::Exception& ex)
     {
