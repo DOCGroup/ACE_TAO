@@ -1,3 +1,11 @@
+Thu Mar 12 08:42:59 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile.am:
+
+          Fixed a compile/link problem on autoconf builds. My
+          previous attepmts were unlucky because I added missing
+          include/libs to a wrong executable.
+
 Thu Mar 12 07:53:36 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/Bug_2953_Regression/server.cpp:
