@@ -23,7 +23,7 @@ void Stock_StockNameConsumer_i::push_StockName (::Stock::StockNames *the_stockna
        i < the_stockname->names ().length ();
        ++i)
     {
-      if (ACE_OS::strcmp (this->stock_name_,
+      if (ACE_OS::strcmp (this->stock_name_.in (),
                           the_stockname->names ()[i]) == 0)
         {
           // Get the quoter for the connection from the <context_>.

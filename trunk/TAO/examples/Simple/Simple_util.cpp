@@ -166,7 +166,7 @@ Server<Servant>::init (const char *servant_name,
                   ACE_TEXT ("The IOR is: <%C>\n"),
                   str.in ()));
 
-      if (this->ins_ && this->test_for_ins (str) != 0)
+      if (this->ins_ && this->test_for_ins (str.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("test_for_ins (): failed\n")),
                           -1);
