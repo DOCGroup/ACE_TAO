@@ -3,7 +3,31 @@
 
 #include "WorkerS.h"
 #include "CPU/CPU_Worker.h"
+#include "ace/Task.h"
+#include "ace/Condition_T.h"
 #include "orbsvcs/orbsvcs/LWFT/StateSynchronizationAgentC.h"
+
+class Failure_Task : public ACE_Task_Base
+{
+ public:
+  Failure_Task (CORBA::ORB_ptr orb,
+                long limit,
+                long & count);
+
+  int svc (void);
+
+  void signal (void);
+
+  void stop (void);
+
+ private:
+  ACE_Thread_Mutex lock_;
+  ACE_Condition <ACE_Thread_Mutex> condition_;
+  CORBA::ORB_var orb_;
+  long limit_;
+  long & count_;
+  bool stop_;
+};
 
 class Worker_i : public POA_DeCoRAM::Worker
 {
@@ -46,6 +70,8 @@ class Worker_i : public POA_DeCoRAM::Worker
   long state_;
 
   long suicidal_count_;
+
+  Failure_Task task_;
 };
 
 #endif /* WORKER_I_H_ */

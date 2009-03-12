@@ -119,7 +119,7 @@ Task::Task (ACE_Thread_Manager &thread_manager,
   : ACE_Task_Base (&thread_manager),
     orb_ (CORBA::ORB::_duplicate (orb)),
     rm_ (ReplicationManager::_duplicate (rm)),
-    agent_ (agent)
+    agent_ (StateSynchronizationAgent::_duplicate (agent))
 {
 }
 
@@ -182,6 +182,11 @@ Task::svc (void)
 			 AppOptions::instance ()->process_id ().c_str (),
 			 AppOptions::instance ()->role (),
 			 obj.in ());
+
+      ReplicatedApplication_var app = ReplicatedApplication::_narrow (obj.in ());
+
+      agent_->register_application (AppOptions::instance ()->app_id ().c_str (),
+                                    app.in ());
 
       // Start ORB event loop.
       this->orb_->run ();
