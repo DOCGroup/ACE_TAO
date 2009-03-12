@@ -81,13 +81,7 @@ CompressorIdLevelListPolicy::destroy (void)
 ::Compression::CompressorIdLevelList *
 CompressorIdLevelListPolicy::compressor_ids (void)
 {
-  ::Compression::CompressorIdLevelList *tmp = 0;
-  ACE_NEW_THROW_EX (tmp,
-                    ::Compression::CompressorIdLevelList (this->value_),
-                    CORBA::NO_MEMORY (TAO::VMCID,
-                                      CORBA::COMPLETED_NO));
-
-  return tmp;
+  return &this->value_;
 }
 
 TAO_Cached_Policy_Type

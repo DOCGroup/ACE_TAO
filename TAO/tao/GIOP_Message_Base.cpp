@@ -675,6 +675,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
       // heap.
       db = qd->msg_block ()->data_block ()->duplicate ();
     }
+  db->size (qd->msg_block ()->length ());
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   if (qd->state ().compressed ())
@@ -686,12 +687,12 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   if (TAO_debug_level > 9)
     {
       this->dump_msg ("recv",
-                      reinterpret_cast <u_char *> (qd->msg_block ()->rd_ptr ()),
-                      qd->msg_block ()->length ());
+                      reinterpret_cast <u_char *> (db->base ()),
+                      db->size ());
     }
 
-    TAO_InputCDR input_cdr (db,
-                          flg,
+  TAO_InputCDR input_cdr (db,
+                          db->flags (),
                           rd_pos,
                           wr_pos,
                           qd->byte_order (),
@@ -737,7 +738,6 @@ TAO_GIOP_Message_Base::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
   TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
   if (adapter)
     {
-      qd.consolidate ();
       if (!adapter->decompress (db, qd, *this->orb_core_))
         return false;
       rd_pos = TAO_GIOP_MESSAGE_HEADER_LEN;
@@ -770,10 +770,25 @@ TAO_GIOP_Message_Base::process_reply_message (
   size_t wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
-  ACE_Data_Block *db = qd->msg_block ()->data_block ();
+  ACE_Data_Block *db = 0;
+
+  // Get the flag in the message block
+  ACE_Message_Block::Message_Flags flg = qd->msg_block ()->self_flags ();
+
+  if (ACE_BIT_ENABLED (flg, ACE_Message_Block::DONT_DELETE))
+    {
+      // Use the same datablock
+      db = qd->msg_block ()->data_block ();
+    }
+  else
+    {
+      // Use a duplicated datablock as the datablock has come off the
+      // heap.
+      db = qd->msg_block ()->data_block ()->duplicate ();
+    }
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  if (qd->state ().compressed ())
+   if (qd->state ().compressed ())
     {
       if (!this->decompress (&db, *qd, rd_pos, wr_pos))
         return -1;
@@ -782,8 +797,8 @@ TAO_GIOP_Message_Base::process_reply_message (
   if (TAO_debug_level > 9)
     {
       this->dump_msg ("recv",
-                      reinterpret_cast <u_char *> (qd->msg_block ()->rd_ptr ()),
-                      qd->msg_block ()->length ());
+                      reinterpret_cast <u_char *> (db->base ()),
+                      db->size ());
     }
 
   // Create a empty buffer on stack
@@ -791,7 +806,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here.
   TAO_InputCDR input_cdr (db,
-                          ACE_Message_Block::DONT_DELETE,
+                          db->flags (),
                           rd_pos,
                           wr_pos,
                           qd->byte_order (),

@@ -197,7 +197,7 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
   if (!CORBA::is_nil(manager.in ()))
     {
       ZIOP::CompressedData data;
-      //first set the read pointer after the header
+      // first set the read pointer after the header
       size_t begin = qd.msg_block ()-> rd_ptr() - qd.msg_block ()->base ();
       char * initial_rd_ptr = qd.msg_block ()-> rd_ptr();
       size_t const wr = qd.msg_block ()->wr_ptr () - qd.msg_block ()->base ();
@@ -221,8 +221,10 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
 
       if (decompress(compressor.in(), data.data, myout))
         {
-          ACE_Message_Block mb ((size_t)(data.original_length +
-                        TAO_GIOP_MESSAGE_HEADER_LEN));
+          size_t new_data_length = (size_t)(data.original_length +
+                        TAO_GIOP_MESSAGE_HEADER_LEN);
+          
+          ACE_Message_Block mb (new_data_length);
           qd.msg_block ()->rd_ptr (initial_rd_ptr);
           mb.copy(qd.msg_block ()->base () + begin,
                         TAO_GIOP_MESSAGE_HEADER_LEN);
@@ -247,9 +249,7 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
             }
           //replace data block
           *db = mb.data_block ()->duplicate ();
-          qd.msg_block ()->replace_data_block (mb.data_block ());
-          
-
+          (*db)->size (new_data_length);
           return true;
         }
     }

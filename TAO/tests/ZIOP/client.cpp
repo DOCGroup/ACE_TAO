@@ -5,6 +5,7 @@
 #include "tao/ZIOP/ZIOP.h"
 #include "ace/OS.h"
 #include "tao/Compression/zlib/ZlibCompressor_Factory.h"
+#include "tao/Compression/bzip2/Bzip2Compressor_Factory.h"
 #include "tao/ORB_Constants.h"
 #include "tao/TransportCurrent/TCC.h"
 
@@ -123,7 +124,7 @@ void start_big_reply_test (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr)
 
   //Prepare to send a large number of bytes. Should be compressed
   Test::Octet_Seq_var dummy = hello->get_big_reply ();
-  if (dummy.ptr ()->length () > 0)
+  if (dummy->length () > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("Client side BLOB received\n")));
@@ -177,14 +178,115 @@ void start_tests (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr tc)
   ACE_DEBUG((LM_DEBUG,
               ACE_TEXT ("No statistical information available since TAO_HAS_TRANSPORT_CURRENT is not set")));
 #endif
+  start_big_reply_test (hello, tc);
 
   start_low_value_test (hello, tc);
 
   start_min_ratio_test (hello, tc);
 
-  start_big_reply_test (hello, tc);
-
   start_big_request_test (hello, tc);
+}
+
+
+int
+register_factories (CORBA::ORB_ptr orb)
+{
+  CORBA::Object_var compression_manager =
+    orb->resolve_initial_references("CompressionManager");
+
+  Compression::CompressionManager_var manager =
+    Compression::CompressionManager::_narrow (compression_manager.in ());
+
+  if (CORBA::is_nil(manager.in ()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       " (%P|%t) Panic: nil compression manager\n"),
+                      1);
+  //register Zlib compressor
+  Compression::CompressorFactory_ptr compressor_factory;
+  ACE_NEW_RETURN (compressor_factory, TAO::Zlib_CompressorFactory (), 1);
+  Compression::CompressorFactory_var compr_fact = compressor_factory;
+  manager->register_factory(compr_fact.in ());
+  // register bzip2 compressor
+  ACE_NEW_RETURN (compressor_factory, TAO::Bzip2_CompressorFactory (), 1);
+  compr_fact = compressor_factory;
+  manager->register_factory(compr_fact.in ());
+  return 0;
+}
+
+CORBA::Policy_ptr 
+create_compressor_id_level_list_policy (CORBA::ORB_ptr orb)
+{
+  Compression::CompressorIdLevelList compressor_id_list(3);
+  compressor_id_list.length(3);
+  compressor_id_list[0].compressor_id = Compression::COMPRESSORID_LZO;
+  compressor_id_list[0].compression_level = 5;
+  compressor_id_list[1].compressor_id = Compression::COMPRESSORID_BZIP2;
+  compressor_id_list[1].compression_level = 5;
+  compressor_id_list[2].compressor_id = Compression::COMPRESSORID_ZLIB;
+  compressor_id_list[2].compression_level = 5;
+
+  CORBA::Any compressor_id_any;
+  compressor_id_any <<= compressor_id_list;
+
+  return orb->create_policy (ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID, compressor_id_any);
+}
+
+CORBA::Policy_ptr 
+create_low_value_policy (CORBA::ORB_ptr orb)
+{
+  // Setting policy for minimum amount of bytes that needs to be
+  // compressed. If a message is smaller than this, it doesn't get
+  // compressed
+  CORBA::ULong compression_low_value = 100;
+  CORBA::Any low_value_any;
+  low_value_any <<= compression_low_value;
+  
+  return orb->create_policy (ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID, low_value_any);
+}
+
+CORBA::Policy_ptr 
+create_compression_enabled_policy (CORBA::ORB_ptr orb)
+{
+  // Setting policy whether compression is used.
+  CORBA::Boolean compression_enabling = false;
+  CORBA::Any compression_enabling_any;
+  compression_enabling_any <<= CORBA::Any::from_boolean(compression_enabling);
+  
+  return orb->create_policy (ZIOP::COMPRESSION_ENABLING_POLICY_ID, compression_enabling_any);
+}
+
+CORBA::Policy_ptr 
+create_min_ratio_policy (CORBA::ORB_ptr orb)
+{
+  CORBA::Any min_compression_ratio_any;
+  CORBA::Long min_compression_ratio = 75;
+  min_compression_ratio_any <<= min_compression_ratio;
+  
+  return orb->create_policy (ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID, min_compression_ratio_any);
+}
+
+Test::Hello_var
+prepare_tests (CORBA::ORB_ptr orb)
+{
+  register_factories(orb);      
+
+#if defined TAO_HAS_ZIOP && TAO_HAS_ZIOP == 1
+  CORBA::PolicyList policies(4);
+  policies.length(4);
+
+  policies[0] = create_compressor_id_level_list_policy (orb);
+  policies[1] = create_low_value_policy (orb);
+  policies[2] = create_compression_enabled_policy (orb);
+  policies[3] = create_min_ratio_policy (orb);
+
+  CORBA::Object_var tmp = orb->string_to_object(ior);
+  CORBA::Object_var tmp2 = tmp->_set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
+  Test::Hello_var hello = Test::Hello::_narrow(tmp2.in ());
+  return hello._retn ();
+#else
+  CORBA::Object_var tmp = orb->string_to_object(ior);
+  Test::Hello_var hello = Test::Hello::_narrow(tmp.in ());
+#endif
 }
 
 int
@@ -219,67 +321,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var compression_manager =
-        orb->resolve_initial_references("CompressionManager");
-
-      Compression::CompressionManager_var manager =
-        Compression::CompressionManager::_narrow (compression_manager.in ());
-
-      if (CORBA::is_nil(manager.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil compression manager\n"),
-                          1);
-
-      Compression::CompressorFactory_ptr compressor_factory;
-
-      ACE_NEW_RETURN (compressor_factory, TAO::Zlib_CompressorFactory (), 1);
-
-      Compression::CompressorFactory_var compr_fact = compressor_factory;
-      manager->register_factory(compr_fact.in ());
-
-      Compression::CompressorIdLevelList compressor_id_list(2);
-      compressor_id_list.length(2);
-      compressor_id_list[0].compressor_id = Compression::COMPRESSORID_ZLIB;
-      compressor_id_list[0].compression_level = 5;
-      compressor_id_list[1].compressor_id = Compression::COMPRESSORID_BZIP2;
-      compressor_id_list[1].compression_level = 5;
-
-      //Setting policy whether compression is used.
-      CORBA::Boolean compression_enabling = true;
-      CORBA::Any compression_enabling_any;
-      compression_enabling_any <<= CORBA::Any::from_boolean(compression_enabling);
-
-      //Setting policy for minimum amount of bytes that needs to be
-      //compressed. If a message is smaller than this, it doesn't get
-      //compressed
-      CORBA::ULong compression_low_value = 100;
-      CORBA::Any low_value_any;
-      low_value_any <<= compression_low_value;
-
-      CORBA::Any min_compression_ratio_any;
-      CORBA::Long min_compression_ratio = 75;
-      min_compression_ratio_any <<= min_compression_ratio;
-
-      CORBA::Any compressor_id_any;
-      compressor_id_any <<= compressor_id_list;
-
-#if defined TAO_HAS_ZIOP && TAO_HAS_ZIOP == 1
-      CORBA::PolicyList policies(4);
-      policies.length(4);
-
-      policies[0] = orb->create_policy (ZIOP::COMPRESSION_ENABLING_POLICY_ID, compression_enabling_any);
-      policies[1] = orb->create_policy (ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID, compressor_id_any);
-      policies[2] = orb->create_policy (ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID, low_value_any);
-      policies[3] = orb->create_policy (ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID, min_compression_ratio_any);
-
-      CORBA::Object_var tmp = orb->string_to_object(ior);
-      CORBA::Object_var tmp2 = tmp->_set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
-      Test::Hello_var hello = Test::Hello::_narrow(tmp2.in ());
-#else
-      CORBA::Object_var tmp = orb->string_to_object(ior);
-      Test::Hello_var hello = Test::Hello::_narrow(tmp.in ());
-#endif
-
+      Test::Hello_var hello = prepare_tests (orb.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -297,6 +339,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (tc.in ()))
         throw ::CORBA::INTERNAL ();
 
+      //for (int i = 0; i < 100; ++i)
       start_tests(hello.in (), tc.in ());
 
       hello->shutdown ();
