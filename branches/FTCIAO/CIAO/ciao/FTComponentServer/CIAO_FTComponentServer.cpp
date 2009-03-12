@@ -130,6 +130,19 @@ namespace CIAO
       AppOptions::instance ()->process_id (this->get_process_id ());
       AppOptions::instance ()->orb (CORBA::ORB::_duplicate (orb_.in ()));
 
+      CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task - "
+                   "starting AppSideMonitor thread.\n"));
+
+      int result = AppSideMonitor_Thread::instance ()->activate ();;
+      
+      if (result != 0)
+        {
+          CIAO_DEBUG ((LM_ERROR,
+                       CLINFO "CIAO_ComponentServer_Task::CIAO_ComponentServer_Task - "
+                       "AppSideMonitor_Thread::activate () returned %d\n",
+                       result));
+        }
+
       this->configurator_->post_orb_initialize (this->orb_.in ());
 
       this->parse_args (argc, argv);
@@ -161,19 +174,6 @@ namespace CIAO
 	    root_poa->the_POAManager ();
       
 	  poa_manager->activate ();
-
-	  CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
-		       "starting AppSideMonitor thread.\n"));
-
-          int result = AppSideMonitor_Thread::instance ()->activate ();;
-      
-          if (result != 0)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "AppSideReg::activate () returned %d\n",
-                                 result),
-                                -1);
-            }
 
 	  CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
 		       "Creating state synchronization servant\n"));

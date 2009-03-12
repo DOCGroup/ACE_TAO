@@ -1,3 +1,23 @@
+Thu Mar 12 15:57:15 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/FTComponents/Worker.idl
+        * DAnCE/tests/CIAO/FTComponents/FTTask_exec.h
+        * DAnCE/tests/CIAO/FTComponents/FTTask_exec.cpp
+        * DAnCE/tests/CIAO/FTComponents/Failure_Task.h
+        * DAnCE/tests/CIAO/FTComponents/Failure_Task.cpp
+        * DAnCE/tests/CIAO/FTComponents/FTComponents.mpc:
+        
+          Added new class that allows concurrent shutdown of a component.
+        
+        * DAnCE/tests/CIAO/FTComponents/killtask.cpp:
+        
+          Wrote executable to shutdown component through its Worker::stop
+          method.
+
+        * ciao/FTComponentServer/CIAO_FTComponentServer.cpp:
+        
+          relocated AppSideMonitor_Thread activation.
+
 Mon Mar  9 17:27:48 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h

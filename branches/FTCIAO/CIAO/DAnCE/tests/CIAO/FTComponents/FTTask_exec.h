@@ -49,6 +49,8 @@ namespace CIDL_FTTask_Impl
     run_task (
       ::CORBA::Double execution_time);
 
+    virtual void stop (void);
+
     virtual void
     set_state (
       const ::CORBA::Any & state_value);
