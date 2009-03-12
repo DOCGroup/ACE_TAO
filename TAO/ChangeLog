@@ -1,3 +1,9 @@
+Thu Mar 12 20:36:47 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+          Fixed compile errors on LynxOS 4.0 with gcc 2.95.
+
 Thu Mar 12 12:45:05 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * docs/tutorials/Quoter/RTCORBA/StockNameConsumer_i.cpp:
