@@ -935,7 +935,7 @@ ReplicationManager_i::static_selection_algo (void)
 
   APP_SET tmp_apps;
   for (OBJECTID_APPSET_MAP::iterator appset_it = objectid_appset_map_.begin ();
-       appset_it != objectid_appset_map_.begin ();
+       appset_it != objectid_appset_map_.end ();
        ++appset_it)
     {
       ACE_DEBUG ((LM_INFO, "[\toid %s:", appset_it->key ().c_str ()));
@@ -995,8 +995,9 @@ ReplicationManager_i::static_selection_algo (void)
             }
         } // end for tmp_apps
 
-      objectid_rankedior_map_.bind (appset_it->key (),
-                                    iorlist);
+      if (iorlist.ior_list.size () > 0)
+        objectid_rankedior_map_.bind (appset_it->key (),
+                                      iorlist);
 
       ACE_DEBUG ((LM_INFO, "\n"));
     } // end for objectid_appset_map_
