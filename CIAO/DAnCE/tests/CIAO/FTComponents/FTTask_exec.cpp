@@ -81,6 +81,12 @@ namespace CIDL_FTTask_Impl
                  end - start));
   }
 
+  void 
+  FTTask_exec_i::stop (void)
+  {
+    ACE_OS::exit (1);
+  }
+
   void
   FTTask_exec_i::set_state (
     const ::CORBA::Any & state_value)

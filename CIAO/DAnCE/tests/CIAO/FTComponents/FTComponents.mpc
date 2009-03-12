@@ -221,11 +221,13 @@ project(FTTask_exec) : ciao_executor, ciao_container_base, naming, orbsvcslib, c
   Source_Files {
     FTTaskEC.cpp
     FTTask_exec.cpp
+    Failure_Task.cpp
   }
   
   Header_Files {
     FTTaskEC.h
     FTTask_exec.h
+    Failure_Task.h
     FTTask_exec_export.h
   }
   
@@ -264,5 +266,18 @@ project(FTTask_svnt) : ciao_servant, naming, ciao_lib {
   
   Inline_Files {
     FTTaskS.inl
+  }
+}
+
+project(killtask) : naming, ciao {
+
+  after += Worker
+  libs += Worker
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    killtask.cpp
   }
 }
