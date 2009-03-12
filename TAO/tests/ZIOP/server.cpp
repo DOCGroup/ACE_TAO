@@ -5,6 +5,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "tao/ZIOP/ZIOP.h"
 #include "tao/Compression/zlib/ZlibCompressor_Factory.h"
+#include "tao/Compression/bzip2/Bzip2Compressor_Factory.h"
 #include "tao/Policy_ManagerC.h"
 #include "tao/Policy_CurrentC.h"
 #include "tao/Transport.h"
@@ -69,6 +70,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (compressor_factory, TAO::Zlib_CompressorFactory (), 1);
 
       Compression::CompressorFactory_var compr_fact = compressor_factory;
+      manager->register_factory(compr_fact.in ());
+
+      ACE_NEW_RETURN (compressor_factory, TAO::Bzip2_CompressorFactory (), 1);
+      compr_fact = compressor_factory;
       manager->register_factory(compr_fact.in ());
 
       CORBA::Object_var poa_object =

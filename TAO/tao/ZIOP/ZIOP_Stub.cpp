@@ -5,6 +5,7 @@
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "tao/ZIOP/ZIOP_Policy_i.h"
+#include "tao/ZIOP/ZIOP.h"
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
 #include "tao/Policy_Manager.h"
@@ -187,18 +188,18 @@ TAO_ZIOP_Stub::effective_compression_id_list_policy (void)
   CORBA::Policy_var exposed =
     this->exposed_compression_id_list_policy ();
 
-  // Reconcile client-exposed and locally set values.
-  if (CORBA::is_nil (exposed.in ()))
-    return override._retn ();
-
-  if (CORBA::is_nil (override.in ()))
-    return exposed._retn ();
-
   ZIOP::CompressorIdLevelListPolicy_var override_policy_var =
     ZIOP::CompressorIdLevelListPolicy::_narrow (override.in ());
 
   ZIOP::CompressorIdLevelListPolicy_var exposed_policy_var =
     ZIOP::CompressorIdLevelListPolicy::_narrow (exposed.in ());
+
+    // Reconcile client-exposed and locally set values.
+  if (CORBA::is_nil (exposed_policy_var.in ()))
+    return override._retn ();
+
+  if (CORBA::is_nil (override_policy_var.in ()))
+    return exposed._retn ();
 
   // Check which compressor id we should use and which level
   for (CORBA::ULong nr_exposed = 0; 
@@ -212,10 +213,12 @@ TAO_ZIOP_Stub::effective_compression_id_list_policy (void)
         {
           ACE_DEBUG ((LM_DEBUG, 
                       ACE_TEXT ("TAO (%P|%t) - ")
-                      ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy,")
-                      ACE_TEXT ("exposed_policy = %d, compressor_id = %d, ")
+                      ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy, ")
+                      ACE_TEXT ("exposed_policy = %d, compressor_id = %C, ")
                       ACE_TEXT ("compression_level = %d\n"), 
-                      nr_exposed, exposed_compressor.ptr ()->compressor_id,
+                      nr_exposed, 
+                      TAO_ZIOP_Loader::ziop_compressorid_name (
+                            exposed_compressor.ptr ()->compressor_id),
                       exposed_compressor.ptr ()->compression_level));
         }
       // check if a local policy matches this exposed policy
@@ -229,35 +232,31 @@ TAO_ZIOP_Stub::effective_compression_id_list_policy (void)
             {
               ACE_DEBUG ((LM_DEBUG, 
                           ACE_TEXT ("TAO (%P|%t) - ")
-                          ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy,")
-                          ACE_TEXT ("checking override_policy = %d, compressor_id = %d, ")
+                          ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy, ")
+                          ACE_TEXT ("checking override_policy = %d, compressor_id = %C, ")
                           ACE_TEXT ("compression_level = %d\n"), 
-                          nr_override, override_compressor.ptr ()->compressor_id,
-                          override_compressor.ptr ()->compression_level));
+                          nr_override, 
+                          TAO_ZIOP_Loader::ziop_compressorid_name (
+                                override_compressor->compressor_id),
+                          override_compressor->compression_level));
             }
-          if (override_compressor.ptr ()->compressor_id == 
-              exposed_compressor.ptr ()->compressor_id)
+          if (override_compressor->compressor_id == 
+              exposed_compressor->compressor_id)
             {  
-              ::Compression::CompressorIdLevelList compressor_id_list(1);
-              compressor_id_list.length(1);
-              compressor_id_list[0].compressor_id = override_compressor.ptr ()->compressor_id;
+              CORBA::Policy_var tmp_policy = override_policy_var->copy ();
+              ZIOP::CompressorIdLevelListPolicy_var idlevellist_policy_var =
+                    ZIOP::CompressorIdLevelListPolicy::_narrow (tmp_policy.in ());
+              if (CORBA::is_nil (idlevellist_policy_var.in ()))
+                return override._retn ();
 
+              idlevellist_policy_var->compressor_ids ()->operator [] (0).compressor_id = 
+                    override_compressor->compressor_id;
               //according to ZIOP spec, return the compressor with the lowest compression level.  
-              if (override_compressor.ptr ()->compression_level < 
-                  exposed_compressor.ptr ()->compression_level)
-                {
-                  compressor_id_list[0].compression_level = 
-                    override_compressor.ptr ()->compression_level;
-                }
-              else
-                {
-                  compressor_id_list[0].compression_level = 
-                    exposed_compressor.ptr ()->compression_level;
-                }
+              idlevellist_policy_var.ptr ()->compressor_ids ()->operator [] (0).compression_level = 
+                ACE_MIN (override_compressor->compression_level,
+                        exposed_compressor->compression_level);
 
-              CORBA::Any compressor_id_any;
-              compressor_id_any <<= compressor_id_list;
-              return this->orb_->create_policy (ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID, compressor_id_any);
+              return idlevellist_policy_var._retn ();
             }
         }
     }

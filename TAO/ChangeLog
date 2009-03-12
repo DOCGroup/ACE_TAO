@@ -1,3 +1,34 @@
+Thu Mar 12 07:42:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/Transport.cpp:
+        * tao/ZIOP/ZIOP.cpp:
+          Refactored decompression of large data blocks.
+          
+        * tao/GIOP_Message_State.cpp:
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Message_State.inl:
+          Always set the compressed flag. Now, a ZIOP client
+          connecting to a non-ZIOP server receives an 
+          exception.
+
+        * tao/ZIOP/ZIOP_Policy_i.cpp:
+          Return the compressor ID/Level list instead of 
+          a copy of this list.
+          
+        * tao/ZIOP/ZIOP_Stub.cpp:
+          Refactored. Make a copy of an existing policy
+          instead of creating a new one.
+          
+        * tests/ZIOP/client.cpp:
+          Refactored.
+          Extended tests.
+          
+        * tests/ZIOP/Hello.cpp:
+        * tests/ZIOP/server.cpp:
+        * tests/ZIOP/ZIOP.mpc:
+          Extended tests.
+
 Wed Mar 11 22:14:04 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/ZIOP/ZIOP.cpp:
