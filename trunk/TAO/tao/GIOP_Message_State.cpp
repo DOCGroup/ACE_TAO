@@ -180,10 +180,7 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
       this->more_fragments_ =
         ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02) == 2);
 
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-      // Read the compressed flag
       this->compressed_ = (buf[0] == 0x5A);
-#endif
     }
 
   return 0;
