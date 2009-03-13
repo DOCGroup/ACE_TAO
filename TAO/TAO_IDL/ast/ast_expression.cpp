@@ -1819,9 +1819,36 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
 {
   AST_ExprValue *retval = 0;
 
-  if (this->pd_v1 == 0 || this->pd_v2 == 0)
+  if (this->pd_v1 == 0)
     {
       return 0;
+    }
+  else
+    {
+      AST_Expression::ExprType et = this->pd_v1->pd_ev->et;
+      
+      if (et == AST_Expression::EV_string
+          || et == AST_Expression::EV_wstring)
+        {
+          idl_global->err ()->incompatible_type_error (this);                                 
+          return 0;
+        }
+    }
+
+  if (this->pd_v2 == 0)
+    {
+      return 0;
+    }
+  else
+    {
+      AST_Expression::ExprType et = this->pd_v2->pd_ev->et;
+      
+      if (et == AST_Expression::EV_string
+          || et == AST_Expression::EV_wstring)
+        {
+          idl_global->err ()->incompatible_type_error (this);                                 
+          return 0;
+        }
     }
 
   this->pd_v1->set_ev (this->pd_v1->eval_internal (ek));
@@ -1844,31 +1871,31 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
       retval->et = EV_ulonglong;
 
       switch (this->pd_ec)
-  {
-  case EC_add:
-    retval->u.ullval =
-      this->pd_v1->ev ()->u.ullval + this->pd_v2->ev ()->u.ullval;
-    break;
-  case EC_minus:
-    retval->u.ullval =
-      this->pd_v1->ev ()->u.ullval - this->pd_v2->ev ()->u.ullval;
-    break;
-  case EC_mul:
-    retval->u.ullval =
-      this->pd_v1->ev ()->u.ullval * this->pd_v2->ev ()->u.ullval;
-    break;
-  case EC_div:
-    if (this->pd_v2->ev ()->u.ullval == 0)
-      {
-        return 0;
-      }
+        {
+        case EC_add:
+          retval->u.ullval =
+            this->pd_v1->ev ()->u.ullval + this->pd_v2->ev ()->u.ullval;
+          break;
+        case EC_minus:
+          retval->u.ullval =
+            this->pd_v1->ev ()->u.ullval - this->pd_v2->ev ()->u.ullval;
+          break;
+        case EC_mul:
+          retval->u.ullval =
+            this->pd_v1->ev ()->u.ullval * this->pd_v2->ev ()->u.ullval;
+          break;
+        case EC_div:
+          if (this->pd_v2->ev ()->u.ullval == 0)
+            {
+              return 0;
+            }
 
-    retval->u.ullval =
-      this->pd_v1->ev ()->u.ullval / this->pd_v2->ev  ()->u.ullval;
-    break;
-  default:
-    return 0;
-  }
+          retval->u.ullval =
+            this->pd_v1->ev ()->u.ullval / this->pd_v2->ev  ()->u.ullval;
+          break;
+        default:
+          return 0;
+        }
     }
   else if (ek == EK_longlong)
     {
@@ -1877,31 +1904,31 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
       retval->et = EV_longlong;
 
       switch (this->pd_ec)
-  {
-  case EC_add:
-    retval->u.llval =
-      this->pd_v1->ev ()->u.llval + this->pd_v2->ev ()->u.llval;
-    break;
-  case EC_minus:
-    retval->u.llval =
-      this->pd_v1->ev ()->u.llval - this->pd_v2->ev ()->u.llval;
-    break;
-  case EC_mul:
-    retval->u.llval =
-      this->pd_v1->ev ()->u.llval * this->pd_v2->ev ()->u.llval;
-    break;
-  case EC_div:
-    if (this->pd_v2->ev ()->u.llval == 0)
-      {
-        return 0;
-      }
+        {
+        case EC_add:
+          retval->u.llval =
+            this->pd_v1->ev ()->u.llval + this->pd_v2->ev ()->u.llval;
+          break;
+        case EC_minus:
+          retval->u.llval =
+            this->pd_v1->ev ()->u.llval - this->pd_v2->ev ()->u.llval;
+          break;
+        case EC_mul:
+          retval->u.llval =
+            this->pd_v1->ev ()->u.llval * this->pd_v2->ev ()->u.llval;
+          break;
+        case EC_div:
+          if (this->pd_v2->ev ()->u.llval == 0)
+            {
+              return 0;
+            }
 
-    retval->u.llval =
-      this->pd_v1->ev ()->u.llval / this->pd_v2->ev  ()->u.llval;
-    break;
-  default:
-    return 0;
-  }
+          retval->u.llval =
+            this->pd_v1->ev ()->u.llval / this->pd_v2->ev  ()->u.llval;
+          break;
+        default:
+          return 0;
+        }
     }
   else
 #endif
@@ -1911,31 +1938,31 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
       retval->et = EV_double;
 
       switch (this->pd_ec)
-  {
-  case EC_add:
-    retval->u.dval =
-      this->pd_v1->ev ()->u.dval + this->pd_v2->ev ()->u.dval;
-    break;
-  case EC_minus:
-    retval->u.dval =
-      this->pd_v1->ev ()->u.dval - this->pd_v2->ev ()->u.dval;
-    break;
-  case EC_mul:
-    retval->u.dval =
-      this->pd_v1->ev ()->u.dval * this->pd_v2->ev ()->u.dval;
-    break;
-  case EC_div:
-    if (this->pd_v2->ev ()->u.dval == 0.0)
-      {
-        return 0;
-      }
+        {
+        case EC_add:
+          retval->u.dval =
+            this->pd_v1->ev ()->u.dval + this->pd_v2->ev ()->u.dval;
+          break;
+        case EC_minus:
+          retval->u.dval =
+            this->pd_v1->ev ()->u.dval - this->pd_v2->ev ()->u.dval;
+          break;
+        case EC_mul:
+          retval->u.dval =
+            this->pd_v1->ev ()->u.dval * this->pd_v2->ev ()->u.dval;
+          break;
+        case EC_div:
+          if (this->pd_v2->ev ()->u.dval == 0.0)
+            {
+              return 0;
+            }
 
-    retval->u.dval =
-      this->pd_v1->ev ()->u.dval / this->pd_v2->ev  ()->u.dval;
-    break;
-  default:
-    return 0;
-  }
+          retval->u.dval =
+            this->pd_v1->ev ()->u.dval / this->pd_v2->ev  ()->u.dval;
+          break;
+        default:
+          return 0;
+        }
     }
 
   return retval;
@@ -1948,9 +1975,36 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
 {
   AST_ExprValue *retval = 0;
 
-  if (this->pd_v1 == 0 || this->pd_v2 == 0)
+  if (this->pd_v1 == 0)
     {
       return 0;
+    }
+  else
+    {
+      AST_Expression::ExprType et = this->pd_v1->pd_ev->et;
+      
+      if (et == AST_Expression::EV_string
+          || et == AST_Expression::EV_wstring)
+        {
+          idl_global->err ()->incompatible_type_error (this);                                 
+          return 0;
+        }
+    }
+
+  if (this->pd_v2 == 0)
+    {
+      return 0;
+    }
+  else
+    {
+      AST_Expression::ExprType et = this->pd_v2->pd_ev->et;
+      
+      if (et == AST_Expression::EV_string
+          || et == AST_Expression::EV_wstring)
+        {
+          idl_global->err ()->incompatible_type_error (this);                                 
+          return 0;
+        }
     }
 
   this->pd_v1->set_ev (this->pd_v1->eval_internal (ek));
@@ -2040,9 +2094,36 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
 {
   AST_Expression::AST_ExprValue *retval = 0;
 
-  if (this->pd_v1 == 0 || this->pd_v2 == 0)
+  if (this->pd_v1 == 0)
     {
       return 0;
+    }
+  else
+    {
+      AST_Expression::ExprType et = this->pd_v1->pd_ev->et;
+      
+      if (et == AST_Expression::EV_string
+          || et == AST_Expression::EV_wstring)
+        {
+          idl_global->err ()->incompatible_type_error (this);                                 
+          return 0;
+        }
+    }
+
+  if (this->pd_v2 == 0)
+    {
+      return 0;
+    }
+  else
+    {
+      AST_Expression::ExprType et = this->pd_v2->pd_ev->et;
+      
+      if (et == AST_Expression::EV_string
+          || et == AST_Expression::EV_wstring)
+        {
+          idl_global->err ()->incompatible_type_error (this);                                 
+          return 0;
+        }
     }
 
   this->pd_v1->set_ev (this->pd_v1->eval_internal (ek));
@@ -2365,6 +2446,17 @@ AST_Expression::eval_un_op (AST_Expression::EvalKind ek)
   if (this->pd_v1 == 0)
     {
       return 0;
+    }
+  else
+    {
+      AST_Expression::ExprType et = this->pd_v1->pd_ev->et;
+      
+      if (et == AST_Expression::EV_string
+          || et == AST_Expression::EV_wstring)
+        {
+          idl_global->err ()->incompatible_type_error (this);                                 
+          return 0;
+        }
     }
 
   this->pd_v1->set_ev (this->pd_v1->eval_internal (ek));
