@@ -1,3 +1,10 @@
+Fri Mar 13 04:07:28 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp:
+        
+          Added logging functionality for fou shutdown timing.
+
 Fri Mar 13 02:33:32 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/FTComponents/FTClient.idl

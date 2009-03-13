@@ -16,6 +16,7 @@
 #include <list>
 #include <map>
 #include <queue>
+#include "ace/High_Res_Timer.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Map_Manager.h"
 #include "ace/Thread_Mutex.h"
@@ -146,6 +147,13 @@ namespace DAnCE
     ACE_Condition <ACE_Thread_Mutex> new_notification_;
 
     std::queue <FailureInfo> notification_queue_;
+
+    ACE_High_Res_Timer timer_;
+
+    typedef std::pair <unsigned long, std::string> TFouShutdownTime;
+    typedef std::list <TFouShutdownTime> SHUTDOWN_TIME_LIST;
+
+    SHUTDOWN_TIME_LIST history_;
   };
 }
 
