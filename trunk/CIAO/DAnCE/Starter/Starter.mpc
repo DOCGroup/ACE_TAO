@@ -1,5 +1,5 @@
 // $Id$
-project(Starter) : taoexe, dance_exe, dance_logger, messaging, naming, iortable {
+project(Starter) : taoexe, dance_exe, dance_logger, messaging, naming, iortable, avoids_minimum_corba {
   exename = dance
   macros +=  DANCE_BUILD_STARTER_EXE
   Source_Files {
