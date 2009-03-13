@@ -86,7 +86,7 @@ public:
    *                    amount of time passes before the connection is made,
    *                    this method returns -1 and errno == ETIME. Note
    *                    the difference between this case and when a blocking
-   *                    connect is attmpted that TCP times out - in the latter
+   *                    connect is attempted that TCP times out - in the latter
    *                    case, errno will be ETIMEDOUT.
    * @param local_sap   (optional) The local address to bind to.  If it's
    *                    the default value of @c ACE_Addr::sap_any then the
@@ -137,7 +137,7 @@ public:
    *                    amount of time passes before the connection is made,
    *                    this method returns -1 and errno == ETIME. Note
    *                    the difference between this case and when a blocking
-   *                    connect is attmpted that TCP times out - in the latter
+   *                    connect is attempted that TCP times out - in the latter
    *                    case, errno will be ETIMEDOUT.
    * @param local_sap   (optional) The local address to bind to.  If it's
    *                    the default value of @c ACE_Addr::sap_any then the
@@ -191,7 +191,7 @@ public:
    *                    amount of time passes before the connection is made,
    *                    this method returns -1 and errno == ETIME. Note
    *                    the difference between this case and when a blocking
-   *                    connect is attmpted that TCP times out - in the latter
+   *                    connect is attempted that TCP times out - in the latter
    *                    case, errno will be ETIMEDOUT.
    * @param local_sap   (optional) The local address to bind to.  If it's
    *                    the default value of @c ACE_Addr::sap_any then the
@@ -242,7 +242,7 @@ public:
    *                    amount of time passes before the connection is made,
    *                    this method returns -1 and errno == ETIME. Note
    *                    the difference between this case and when a blocking
-   *                    connect is attmpted that TCP times out - in the latter
+   *                    connect is attempted that TCP times out - in the latter
    *                    case, errno will be ETIMEDOUT.
    * @param local_sap   (optional) The local address to bind to.  If it's
    *                    the default value of @c ACE_Addr::sap_any then the
