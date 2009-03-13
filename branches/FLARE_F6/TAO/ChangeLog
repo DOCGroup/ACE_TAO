@@ -1,3 +1,15 @@
+Fri Mar 13 19:20:59 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+        
+          Added checks for use of string/wstring types in evaluation
+          of binary operations, bit operations, mod operations and
+          unary operations. If one of the types in question is found
+          in one of these use cases, an 'incompatible types' error
+          is output. Formerly, in some cases, there would be merely
+          a 'coercion failure' error, in other cases, there would
+          be an unhandled C++ exception.
+
 Thu Mar  5 20:55:53 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
