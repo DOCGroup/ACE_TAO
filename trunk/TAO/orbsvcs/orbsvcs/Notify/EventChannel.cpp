@@ -49,6 +49,7 @@ TAO_Notify_EventChannel::TAO_Notify_EventChannel (void)
   , ca_container_ (0)
   , sa_container_ (0)
   , default_filter_factory_ (CosNotifyFilter::FilterFactory::_nil ())
+  , default_filter_factory_servant_ (0)
 {
 }
 
@@ -111,20 +112,17 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
 
   this->set_admin (initial_admin);
 
-  PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
-  TAO_Notify_FilterFactory * default_filter_factory_servant = 0;
+  PortableServer::POA_var default_poa = 
+    TAO_Notify_PROPERTIES::instance ()->default_poa ();
 
   this->default_filter_factory_ =
     TAO_Notify_PROPERTIES::instance()->builder()->build_filter_factory (
-    default_poa.in(), default_filter_factory_servant);
+    default_poa.in(), this->default_filter_factory_servant_);
 
-  this->default_filter_factory_servant_.reset (default_filter_factory_servant);
-
-
-  // Note originally default admins were allocated here, bt this caused problems
-  // attempting to save the topology changes before the Event Channel was completely
-  // constructed and linked to the ECF.
-  // Lazy evaluation also avoids creating unneded admins.
+  // Note originally default admins were allocated here, bt this
+  // caused problems attempting to save the topology changes before
+  // the Event Channel was completely constructed and linked to the
+  // ECF.  Lazy evaluation also avoids creating unneded admins.
 }
 
 
@@ -178,13 +176,9 @@ TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent* parent)
   this->set_qos (default_ec_qos);
 
   PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
-  TAO_Notify_FilterFactory * default_filter_factory_servant = 0;
-
   this->default_filter_factory_ =
     TAO_Notify_PROPERTIES::instance()->builder()->build_filter_factory (
-    default_poa.in(), default_filter_factory_servant);
-
-  this->default_filter_factory_servant_.reset (default_filter_factory_servant);
+    default_poa.in(), this->default_filter_factory_servant_);
 }
 
 
@@ -247,7 +241,8 @@ TAO_Notify_EventChannel::destroy (void)
   this->ca_container_.reset( 0 );
 
   this->default_filter_factory_ = CosNotifyFilter::FilterFactory::_nil();
-  this->default_filter_factory_servant_.reset (0);
+
+  this->default_filter_factory_servant_->destroy();
 }
 
 void
@@ -341,7 +336,7 @@ TAO_Notify_EventChannel::default_filter_factory (void)
 TAO_Notify_FilterFactory*
 TAO_Notify_EventChannel::default_filter_factory_servant () const
 {
-  return this->default_filter_factory_servant_.get ();
+  return this->default_filter_factory_servant_;
 }
 
 ::CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -508,20 +503,21 @@ TAO_Notify_EventChannel::load_attrs(const TAO_Notify::NVPList& attrs)
 
 TAO_Notify::Topology_Object *
 TAO_Notify_EventChannel::load_child (const ACE_CString &type,
-                                                  CORBA::Long id,
-                                                  const TAO_Notify::NVPList& attrs)
+                                     CORBA::Long id,
+                                     const TAO_Notify::NVPList& attrs)
 {
   TAO_Notify::Topology_Object* result = this;
   if (type == "filter_factory")
   {
-    return this->default_filter_factory_servant_.get ();
+    return this->default_filter_factory_servant_;
   }
   else if (type == "consumer_admin")
   {
-    if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) EventChannel reload consumer_admin %d\n")
-      , static_cast<int> (id)
-      ));
+    if (DEBUG_LEVEL) 
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) EventChannel reload consumer_admin %d\n")
+                  , static_cast<int> (id)
+                  ));
 
     // call special builder method to reload
     TAO_Notify_Builder* bld = TAO_Notify_PROPERTIES::instance()->builder();
@@ -540,10 +536,11 @@ TAO_Notify_EventChannel::load_child (const ACE_CString &type,
   }
   else if (type == "supplier_admin")
   {
-    if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) EventChannel reload supplier_admin %d\n")
-      , static_cast<int> (id)
-      ));
+    if (DEBUG_LEVEL) 
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) EventChannel reload supplier_admin %d\n")
+                  , static_cast<int> (id)
+                  ));
     TAO_Notify_Builder* bld = TAO_Notify_PROPERTIES::instance()->builder();
 
     TAO_Notify_SupplierAdmin * sa = bld->build_supplier_admin (

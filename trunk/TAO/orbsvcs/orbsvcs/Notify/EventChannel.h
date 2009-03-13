@@ -184,7 +184,7 @@ private:
 
   /// The default filter factory.
   CosNotifyFilter::FilterFactory_var default_filter_factory_;
-  ACE_Auto_Ptr <TAO_Notify_FilterFactory> default_filter_factory_servant_;
+  TAO_Notify_FilterFactory * default_filter_factory_servant_;
 
   virtual void release (void);
 };

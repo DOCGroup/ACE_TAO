@@ -35,22 +35,51 @@ TAO_Notify_ETCL_FilterFactory::~TAO_Notify_ETCL_FilterFactory ()
   }
 
   this->filters_.unbind_all ();
+
 }
 
 CosNotifyFilter::FilterFactory_ptr
 TAO_Notify_ETCL_FilterFactory::create (PortableServer::POA_ptr filter_poa)
 {
-  this->filter_poa_ = PortableServer::POA::_duplicate(filter_poa); // save the filter poa.
+  this->filter_poa_ = PortableServer::POA::_duplicate(filter_poa);
 
-  PortableServer::ServantBase_var servant_var (this);
+  CORBA::Object_var object = CORBA::Object::_nil();
+  try
+    {
+      PortableServer::ObjectId_var id = filter_poa->activate_object (this);
+      object = filter_poa->id_to_reference (id.in());
+    }
+  catch (PortableServer::POA::ServantAlreadyActive&)
+    {
+      try
+        {
+          object = filter_poa->servant_to_reference (this);
+        }
+      catch (CORBA::Exception& )
+        {
+         return CosNotifyFilter::FilterFactory::_nil();
+        }
+    }
 
-  PortableServer::ObjectId_var id = filter_poa->activate_object (this);
+  return  CosNotifyFilter::FilterFactory::_narrow (object.in ());
+}
 
-  CORBA::Object_var object = filter_poa->id_to_reference (id.in ());
+void
+TAO_Notify_ETCL_FilterFactory::destroy (void)
+{
+  if (CORBA::is_nil(this->filter_poa_))
+    return;
+  PortableServer::ServantBase_var guard(this);
+  try
+    {
+      PortableServer::ObjectId_var id =
+        this->filter_poa_->servant_to_id (this);
+      this->filter_poa_->deactivate_object (id.in());
+    }
+  catch (CORBA::Exception&)
+    {
+    }
 
-  CosNotifyFilter::FilterFactory_var filter = CosNotifyFilter::FilterFactory::_narrow (object.in ());
-
-  return filter._retn();
 }
 
 CosNotifyFilter::Filter_ptr
@@ -145,10 +174,11 @@ TAO_Notify_ETCL_FilterFactory::load_child (const ACE_CString &type,
     if (attrs.find ("FilterId", value))
     {
       TAO_Notify_Object::ID id = ACE_OS::atoi (value);
-      if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("(%P|%t) reload filter %d\n")
-        , static_cast<int> (id)
-        ));
+      if (DEBUG_LEVEL) 
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) reload filter %d\n"),
+                    static_cast<int> (id)
+                    ));
 
       filter_ids_.set_last_used (id);
 

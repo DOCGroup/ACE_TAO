@@ -42,6 +42,8 @@ public:
   /// The Factory is activated in the default POA. The filters created are activated in the <filter_poa>.
   virtual CosNotifyFilter::FilterFactory_ptr create (
       PortableServer::POA_ptr filter_poa) = 0;
+  virtual void destroy (void) = 0;
+
   virtual TAO_Notify_Object::ID get_filter_id (CosNotifyFilter::Filter_ptr filter) = 0;
   virtual CosNotifyFilter::Filter_ptr get_filter (const TAO_Notify_Object::ID& id) = 0;
 };

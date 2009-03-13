@@ -1,3 +1,24 @@
+Fri Mar 13 23:26:08 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h:
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/FilterFactory.h:
+
+          Fix for recent uptick in Notify test failures. The problem is
+          that now each EC gets its own filter factory instance, and in
+          the tests, a single notify service has multiple ECs being
+          created and destroyed, and cleaning up the FilterFactory servant
+          reference. On occasion, a new filter factory servant instance
+          would be allocated at the same address as a previous one, which
+          caused the POA to believe the servant was already active.
+        
+          The solution is to deactivate the FilterFactory object when done
+          with it rather than explicitly deleting the servant. This way if
+          the builder ever does want to legitemately reuse a common
+          servant, that should work too.
+        
 Fri Mar 13 08:01:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Advanced/ch_8_and_10/server.cpp:
