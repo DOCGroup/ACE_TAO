@@ -1,3 +1,8 @@
+Fri Mar 13 08:01:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/ch_8_and_10/server.cpp:
+          Disable the server project again
+
 Thu Mar 12 20:36:47 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
