@@ -1,3 +1,9 @@
+Fri Mar 13 02:25:36 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Client_Timer_Handler.h:
+        
+          Removed unnecessary ofstream member.
+
 Thu Mar 12 15:28:41 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
