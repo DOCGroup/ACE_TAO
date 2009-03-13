@@ -168,6 +168,7 @@ ReplicationManager_i::ReplicationManager_i (CORBA::ORB_ptr orb,
   algo_thread_->activate ();
   this->Timer::hertz (hertz);
   this->Timer::start ();
+  timer_.reset ();
 }
 
 ReplicationManager_i::~ReplicationManager_i (void)
@@ -678,6 +679,20 @@ ReplicationManager_i::process_proc_failure (
                       process_id.c_str ()));
         }
     }
+
+  // add all logged proc_failure info to the log file
+  std::ofstream out;
+  out.open ("rm-failures.txt", ios_base::app);
+
+  for (PROC_FAIL_TIME_LIST::iterator it = failure_history_.begin ();
+       it != failure_history_.end ();
+       ++it)
+    {
+      out << it->second << " " << it->first << std::endl;
+    }
+
+  out.close ();
+  failure_history_.clear ();
 }
 
 void
@@ -1635,7 +1650,7 @@ ReplicationManager_i::update_ior_map (
 void
 ReplicationManager_i::proc_failure (const char *process_id)
 {
-  ACE_DEBUG ((LM_DEBUG, "RM: pf(%s) - %T\n", process_id));
+  timer_.stop ();
 
   ACE_Guard <ACE_Thread_Mutex> guard(update_mutex_);
   ACE_Time_Value wait_time (5);
@@ -1655,6 +1670,12 @@ ReplicationManager_i::proc_failure (const char *process_id)
   
   update_list_.insert_tail (MonitorUpdate::create_proc_fail_update(process_id));
   update_available_.broadcast();
+
+  ACE_Time_Value tv;
+  timer_.elapsed_time (tv);
+  failure_history_.push_back (TProcessFailureTime (tv.msec (), process_id));
+  timer_.reset ();
+  timer_.start ();
 }
 
 void

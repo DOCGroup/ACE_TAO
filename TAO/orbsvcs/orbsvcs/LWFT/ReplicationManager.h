@@ -8,6 +8,7 @@
 #include <queue>
 
 #include "ace/Hash_Map_Manager_T.h"
+#include "ace/High_Res_Timer.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/Condition_T.h"
@@ -317,6 +318,12 @@ private:
   ACE_Thread_Mutex notify_mutex_;
   FLARE::NotificationId subscription_counter_;
   NOTIFICATION_MAP notify_subscriptions_;
+
+  ACE_High_Res_Timer timer_;
+  
+  typedef std::pair <unsigned long, std::string> TProcessFailureTime;
+  typedef std::list <TProcessFailureTime> PROC_FAIL_TIME_LIST;
+  PROC_FAIL_TIME_LIST failure_history_;
 
   void update_enhanced_ranklist (void);
     
