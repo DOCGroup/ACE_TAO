@@ -1,3 +1,10 @@
+Fri Mar 13 03:40:01 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        
+          Added logging for process failure times.
+
 Fri Mar 13 02:25:36 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/Client_Timer_Handler.h:
