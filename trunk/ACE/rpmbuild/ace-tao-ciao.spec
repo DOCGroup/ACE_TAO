@@ -866,24 +866,6 @@ cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 ssl = 1
 EOF
 
-%if 0%{?centos_version}
-cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
-gcc_template_instantiation_visibility = 1
-EOF
-%endif
-
-%if 0%{?fedora_version} >= 8
-cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
-gcc_template_instantiation_visibility = 1
-EOF
-%endif
-
-%if 0%{?rhel_version} >= 500
-cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
-gcc_template_instantiation_visibility = 1
-EOF
-%endif
-
 %if %{?_with_xt:1}%{!?_with_xt:0}
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 xt = 1
