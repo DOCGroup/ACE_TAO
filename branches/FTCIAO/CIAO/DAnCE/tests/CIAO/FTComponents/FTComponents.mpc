@@ -21,6 +21,27 @@ project(Worker) : ciaoidldefaults, anytypecode, ciao_lib, portableserver {
   }
 }
 
+project(Trigger) : ciaoidldefaults, anytypecode, ciao_lib, portableserver {
+  idlflags += -Wb,stub_export_macro=FTTRIGGER_Export \
+              -Wb,stub_export_include=FTTrigger_export.h \
+              -Wb,skel_export_macro=FTTRIGGER_Export \
+              -Wb,skel_export_include=FTTrigger_export.h
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  }
+
+  macros += FTTRIGGER_BUILD_DLL
+
+  IDL_Files {
+    Trigger.idl
+  }
+  Source_Files{
+    TriggerC.cpp
+    TriggerS.cpp
+  }
+}
+
 project(FTClient_idl_gen) : ciaoidldefaults, anytypecode {
   avoids += ace_for_tao
   custom_only = 1
@@ -58,8 +79,8 @@ project(FTClient_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
 
 project(FTClient_stub) : ccm_stub, ciao_lib {
   avoids += ace_for_tao
-  after += FTClient_idl_gen Worker
-  libs += Worker
+  after += FTClient_idl_gen Worker Trigger
+  libs += Worker Trigger
 
   sharedname = FTClient_stub
   dynamicflags   = FTCLIENT_STUB_BUILD_DLL
@@ -279,5 +300,18 @@ project(killtask) : naming, ciao {
 
   Source_Files {
     killtask.cpp
+  }
+}
+
+project(client_trigger) : naming, ciao {
+
+  after += Trigger
+  libs += Trigger
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    client_trigger.cpp
   }
 }

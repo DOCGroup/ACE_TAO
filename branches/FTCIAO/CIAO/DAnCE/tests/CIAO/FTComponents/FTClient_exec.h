@@ -46,6 +46,8 @@ namespace CIDL_FTClient_Impl
 
     // Supported or inherited operations.
 
+    virtual void start (void);
+
     // Attribute operations.
     virtual ::CORBA::Double
     period (void);
@@ -76,6 +78,12 @@ namespace CIDL_FTClient_Impl
 
     virtual void
     name (const char * name);
+
+    virtual ::CORBA::Object_ptr
+    COMPONENT_REFERENCE ();
+
+    virtual void
+    COMPONENT_REFERENCE (::CORBA::Object_ptr COMPONENT_REFERENCE);
 
     // returns the reference to the server
     DeCoRAM::Worker_ptr server (void);
@@ -109,8 +117,12 @@ namespace CIDL_FTClient_Impl
     CORBA::String_var server_ior_;
 
     std::string name_;
+
+    bool started_;
     
     CORBA::ORB_var orb_;
+
+    CORBA::Object_var myself_;
 
     // event handler that allows a repeated scheduling 
     // of calls to the server

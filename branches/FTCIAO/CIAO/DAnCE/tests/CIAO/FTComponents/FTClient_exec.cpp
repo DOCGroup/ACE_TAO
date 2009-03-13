@@ -25,6 +25,7 @@
 #include "ciao/CIAO_common.h"
 #include "ciao/Containers/Container_Base.h"
 #include "FTClient_Timer_Handler.h"
+#include "ciao/FTComponentServer/Name_Helper_T.h"
 
 namespace CIDL_FTClient_Impl
 {
@@ -36,6 +37,8 @@ namespace CIDL_FTClient_Impl
     : period_ (0.0),
       execution_time_ (0.0),
       iterations_ (0),
+      name_ ("?"),
+      started_ (false),
       orb_ (CORBA::ORB::_nil ()),
       timeout_handler_ (this)
   {
@@ -46,6 +49,26 @@ namespace CIDL_FTClient_Impl
   }
 
   // Supported or inherited operations.
+
+  void
+  FTClient_exec_i::start (void)
+  {
+    CIAO_TRACE ("FTClient_exec_i::start ()");
+
+    if (!started_)
+      {
+        // register the timer handler with the ORB reactor
+        ACE_Time_Value period;
+        period.msec (static_cast<long> (period_));
+
+        orb_->orb_core ()->reactor ()->schedule_timer (&timeout_handler_,
+                                                       0,
+                                                       ACE_Time_Value::zero,
+                                                       period);
+
+        started_ = true;
+      }    
+  }
 
   // Attribute operations.
 
@@ -118,6 +141,20 @@ namespace CIDL_FTClient_Impl
     name_ = name;
   }
 
+  ::CORBA::Object_ptr
+  FTClient_exec_i::COMPONENT_REFERENCE ()
+  {
+    CIAO_TRACE ("FTClient_exec_i::COMPONENT_REFERENCE () getter");
+    return CORBA::Object::_duplicate (myself_.in ());
+  }
+
+  void
+  FTClient_exec_i::COMPONENT_REFERENCE (::CORBA::Object_ptr COMPONENT_REFERENCE)
+  {
+    CIAO_TRACE ("FTClient_exec_i::COMPONENT_REFERENCE () setter");
+    myself_ = CORBA::Object::_duplicate (COMPONENT_REFERENCE);
+  }
+
   // Port operations.
 
   // Operations from Components::SessionComponent
@@ -169,14 +206,21 @@ namespace CIDL_FTClient_Impl
   {
     CIAO_TRACE ("FTClient_exec_i::ccm_activate ()");
 
-    // register the timer handler with the ORB reactor
-    ACE_Time_Value period;
-    period.msec (static_cast<long> (period_));
+    // publish application in NameService for the client
 
-    orb_->orb_core ()->reactor ()->schedule_timer (&timeout_handler_,
-                                                   0,
-                                                   ACE_Time_Value::zero,
-                                                   period);
+    Name_Helper_T <Trigger> tnh (orb_.in ());
+
+    Trigger_var ref = Trigger::_narrow (myself_.in ());
+
+    tnh.bind ("FLARE_TESTAPPLICATION/" + name_ + "Client",
+              ref.in ());
+
+    // and write it to a file
+    std::string iorfilename = name_ + "Client.ior";
+    std::ofstream file (iorfilename.c_str ());
+    file << orb_->object_to_string (ref.in ());
+    file.flush ();
+    file.close ();
   }
 
   void
