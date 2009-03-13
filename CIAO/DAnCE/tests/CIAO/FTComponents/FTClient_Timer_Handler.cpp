@@ -82,7 +82,7 @@ namespace CIDL_FTClient_Impl
       {
         // this code makes sure the client component stops execution
         if ((client_executor_->iterations () > 0) && 
-            (++count_ > client_executor_->iterations ()))
+            (++count_ >= client_executor_->iterations ()))
           {
             server_->stop ();
             
@@ -108,7 +108,7 @@ namespace CIDL_FTClient_Impl
     if (logging_)
       {
         std::string logfile = client_executor_->name ();
-        logfile += "client.txt";
+        logfile += "-client.txt";
         std::ofstream out (logfile.c_str ());
 
         for (TimingList::iterator it = history_.begin ();
