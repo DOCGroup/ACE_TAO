@@ -44,8 +44,6 @@ class Client_Timer_Handler : public ACE_Event_Handler
 
     long max_iterations_;
 
-    std::ofstream out_;
-
     bool logging_;
 
     typedef std::list<CORBA::ULong> TimingList;
