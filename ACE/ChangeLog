@@ -1,3 +1,8 @@
+Fri Mar 13 19:21:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.spec:
+          Removed checks for OS version, we now use the gcc version
+
 Fri Mar 13 08:16:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh:
