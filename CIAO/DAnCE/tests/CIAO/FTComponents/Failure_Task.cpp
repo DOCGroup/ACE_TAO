@@ -12,15 +12,21 @@
 
 #include "Failure_Task.h"
 
-Failure_Task::Failure_Task (CORBA::ORB_ptr orb,
-                            long limit,
-                            long & count)
+Failure_Task::Failure_Task (long & count)
   : condition_ (lock_),
-    orb_ (CORBA::ORB::_duplicate (orb)),
-    limit_ (limit),
+    orb_ (CORBA::ORB::_nil ()),
+    limit_ (0),
     count_ (count),
     stop_ (false)
 {
+}
+
+void
+Failure_Task::init (CORBA::ORB_ptr orb,
+                    long limit)
+{
+  orb_ = orb;
+  limit_ = limit;
 }
 
 int

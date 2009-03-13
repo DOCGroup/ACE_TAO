@@ -11,6 +11,7 @@ module DeCoRAM
     attribute Object COMPONENT_REFERENCE;
     attribute short  role;
     attribute double load;
+    attribute long   failure_count;
   };
 
   home FTTaskHome manages FTTask
