@@ -32,6 +32,7 @@
 #include "FTTask_exec_export.h"
 #include "tao/LocalObject.h"
 #include "CPU/CPU_Worker.h"
+#include "Failure_Task.h"
 
 namespace CIDL_FTTask_Impl
 {
@@ -90,6 +91,12 @@ namespace CIDL_FTTask_Impl
     virtual void
     role (::CORBA::Short role);
 
+    virtual CORBA::Long 
+    failure_count (void);
+    
+    virtual void 
+    failure_count (CORBA::Long failure_count);
+
     // Port operations.
 
     // Operations from Components::SessionComponent
@@ -133,6 +140,10 @@ namespace CIDL_FTTask_Impl
     bool primary_;
 
     long state_;
+
+    long suicidal_count_;
+
+    Failure_Task task_;
   };
 
   extern "C" FTTASK_EXEC_Export ::Components::EnterpriseComponent_ptr

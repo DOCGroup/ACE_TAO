@@ -28,9 +28,11 @@ class Failure_Task : public ACE_Task_Base
 {
  public:
   /// constructor
-  Failure_Task (CORBA::ORB_ptr orb,
-                long limit,
-                long & count);
+  Failure_Task (long & count);
+
+  /// initializes the task
+  void init (CORBA::ORB_ptr orb,
+             long limit);
 
   int svc (void);
 

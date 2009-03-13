@@ -35,7 +35,7 @@ namespace CIDL_FTClient_Impl
   FTClient_exec_i::FTClient_exec_i (void)
     : period_ (0.0),
       execution_time_ (0.0),
-      priority_ (0),
+      iterations_ (0),
       orb_ (CORBA::ORB::_nil ()),
       timeout_handler_ (this)
   {
@@ -75,15 +75,15 @@ namespace CIDL_FTClient_Impl
   }
 
   ::CORBA::ULong
-  FTClient_exec_i::priority ()
+  FTClient_exec_i::iterations ()
   {
-    return priority_;
+    return iterations_;
   }
 
   void
-  FTClient_exec_i::priority (::CORBA::ULong priority)
+  FTClient_exec_i::iterations (::CORBA::ULong iterations)
   {
-    priority_ = priority;
+    iterations_ = iterations;
   }
 
   char *
@@ -104,6 +104,18 @@ namespace CIDL_FTClient_Impl
     CORBA::Object_var obj = orb_->string_to_object (server_ior_);
 
     return DeCoRAM::Worker::_narrow (obj.in ());
+  }
+
+  char *
+  FTClient_exec_i::name (void)
+  {
+    return CORBA::string_dup (name_.c_str ());
+  }
+
+  void
+  FTClient_exec_i::name (const char * name)
+  {
+    name_ = name;
   }
 
   // Port operations.
@@ -171,6 +183,8 @@ namespace CIDL_FTClient_Impl
   FTClient_exec_i::ccm_passivate ()
   {
     orb_->orb_core ()->reactor ()->cancel_timer (&timeout_handler_);
+
+    timeout_handler_.dump ();
   }
 
   void

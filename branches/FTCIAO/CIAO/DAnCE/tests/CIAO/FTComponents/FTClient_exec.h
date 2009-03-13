@@ -60,16 +60,22 @@ namespace CIDL_FTClient_Impl
     execution_time (::CORBA::Double execution_time);
 
     virtual ::CORBA::ULong
-    priority (void);
+    iterations (void);
 
     virtual void
-    priority (::CORBA::ULong priority);
+    iterations (::CORBA::ULong iterations);
 
     virtual char *
     server_ior (void);
 
     virtual void
     server_ior (const char * server_ior);
+
+    virtual char *
+    name (void);
+
+    virtual void
+    name (const char * name);
 
     // returns the reference to the server
     DeCoRAM::Worker_ptr server (void);
@@ -98,16 +104,17 @@ namespace CIDL_FTClient_Impl
 
     CORBA::Double execution_time_;
 
-    CORBA::ULong priority_;
+    CORBA::ULong iterations_;
 
     CORBA::String_var server_ior_;
 
+    std::string name_;
+    
     CORBA::ORB_var orb_;
 
     // event handler that allows a repeated scheduling 
-    // of calls tot the server
-    FTClient_Timer_Handler timeout_handler_;
-    
+    // of calls to the server
+    FTClient_Timer_Handler timeout_handler_;    
   };
 
   extern "C" FTCLIENT_EXEC_Export ::Components::EnterpriseComponent_ptr

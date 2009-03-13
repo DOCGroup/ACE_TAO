@@ -42,7 +42,9 @@ namespace CIDL_FTTask_Impl
       object_id_ ("Fault Tolerant Task"),
       load_ (30),
       primary_ (true),
-      state_ (0)
+      state_ (0),
+      suicidal_count_ (0),
+      task_ (state_)
   {
     CIAO_TRACE ("FTTask_exec_i::FTTask_exec_i (void)");
   }
@@ -58,33 +60,22 @@ namespace CIDL_FTTask_Impl
   FTTask_exec_i::run_task (
     ::CORBA::Double execution_time)
   {
-    ACE_hrtime_t start, end;
-
-    std::cerr << object_id_ << "@" << this->get_process_id () << " ";
-
-    start = ACE_OS::gethrtime ();    
+    CIAO_DEBUG ((LM_TRACE, "x(%d) ", state_));
 
     this->cpu_.run (static_cast <size_t> (execution_time));
 
-    end = ACE_OS::gethrtime ();
-
     ++state_;
-
+    
     agent_->state_changed (object_id_.c_str ());
 
-    CIAO_DEBUG ((LM_INFO, 
-                 ACE_TEXT ("Task %s #%d: start=%Tu end=%T time=%d ms\n"),
-                 object_id_.c_str (),
-                 state_,
-                 start,
-                 end,
-                 end - start));
+    task_.signal ();
   }
 
   void 
   FTTask_exec_i::stop (void)
   {
-    ACE_OS::exit (1);
+    task_.stop ();
+    this->orb_->shutdown ();
   }
 
   void
@@ -197,6 +188,18 @@ namespace CIDL_FTTask_Impl
       primary_ = true;
     else
       primary_ = false;
+  }
+
+  CORBA::Long
+  FTTask_exec_i::failure_count (void)
+  {
+    return suicidal_count_;
+  }
+    
+  void 
+  FTTask_exec_i::failure_count (CORBA::Long failure_count)
+  {
+    suicidal_count_ = failure_count;
   }
 
   // Port operations.
@@ -347,6 +350,9 @@ namespace CIDL_FTTask_Impl
             file.flush ();
             file.close ();
 	  }
+
+        task_.init (orb_.in (), suicidal_count_);
+        task_.activate ();
       }
     catch (Name_Helper_Exception & ex)
       {
@@ -365,6 +371,9 @@ namespace CIDL_FTTask_Impl
   FTTask_exec_i::ccm_passivate ()
   {
     CIAO_TRACE ("FTTask_exec_i::ccm_passivate");
+
+    task_.stop ();
+    task_.wait ();
   }
 
   void

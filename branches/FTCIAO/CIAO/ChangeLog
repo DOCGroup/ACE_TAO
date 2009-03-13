@@ -1,3 +1,18 @@
+Fri Mar 13 02:33:32 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/FTComponents/FTClient.idl
+        * DAnCE/tests/CIAO/FTComponents/FTTask_exec.cpp
+        * DAnCE/tests/CIAO/FTComponents/FTTask_exec.h
+        * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.cpp
+        * DAnCE/tests/CIAO/FTComponents/Failure_Task.cpp
+        * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.h
+        * DAnCE/tests/CIAO/FTComponents/FTClient_exec.cpp
+        * DAnCE/tests/CIAO/FTComponents/Failure_Task.h
+        * DAnCE/tests/CIAO/FTComponents/FTClient_exec.h
+        * DAnCE/tests/CIAO/FTComponents/FTTask.idl:
+        
+          Changed client and server behavior for automated test cases.
+
 Thu Mar 12 15:57:15 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/FTComponents/Worker.idl
