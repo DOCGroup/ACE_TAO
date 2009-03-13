@@ -10,6 +10,7 @@
  */
 //=============================================================================
 
+#include "ace/High_Res_Timer.h"
 #include "FaultCorrelationManager_Impl.h"
 #include "ciao/FTComponentServer/CIAO_PropertiesC.h"
 #include "DAnCE/Logger/Log_Macros.h"
@@ -73,6 +74,20 @@ namespace DAnCE
         
         this->app_failure_i (fi.host.c_str (), 
                              fi.application.c_str ());
+
+        // add all logged proc_failure info to the log file
+        std::ofstream out;
+        out.open ("fou-shutdown.txt", ios_base::app);
+
+        for (SHUTDOWN_TIME_LIST::iterator it = history_.begin ();
+             it != history_.end ();
+             ++it)
+          {
+            out << it->second << " " << it->first << std::endl;
+          }
+
+        out.close ();
+        history_.clear ();
       }
 
     return 0;
@@ -102,6 +117,8 @@ namespace DAnCE
 
         Deployment::Applications_var apps = dam->getApplications();
 
+        timer_.start ();
+
         for (size_t i = 0; i < apps->length(); ++i)
           {
             try
@@ -115,6 +132,8 @@ namespace DAnCE
                             i));
               }
           }
+
+        timer_.stop ();
 
         Deployment::DeploymentPlan_var plan = dam->getPlan ();
 
@@ -130,6 +149,10 @@ namespace DAnCE
                       "FCM::stop_failover_unit (%C): "
                       "plan was shutdown sucessfully.\n",
                       fou_id));
+
+        ACE_Time_Value tv;
+        timer_.elapsed_time (tv);
+        history_.push_back (TFouShutdownTime (tv.msec (), fou_id));
       }
     catch (const CORBA::Exception & ex)
       {
