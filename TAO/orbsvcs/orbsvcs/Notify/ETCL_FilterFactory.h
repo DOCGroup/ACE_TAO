@@ -57,6 +57,8 @@ public:
   virtual CosNotifyFilter::FilterFactory_ptr create (
       PortableServer::POA_ptr filter_poa);
 
+  virtual void destroy (void);
+
   ///= CosNotifyFilter::FilterFactory methods
 
   virtual CosNotifyFilter::Filter_ptr create_filter (
