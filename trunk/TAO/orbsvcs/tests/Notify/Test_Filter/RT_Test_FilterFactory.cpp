@@ -21,8 +21,6 @@ TAO_Notify_Tests_RT_Test_FilterFactory::create (PortableServer::POA_ptr filter_p
 {
   this->filter_poa_ = PortableServer::POA::_duplicate(filter_poa); // save the filter poa.
 
-  PortableServer::ServantBase_var servant_var (this);
-
   PortableServer::ObjectId_var id = filter_poa->activate_object (this);
 
   CORBA::Object_var object = filter_poa->id_to_reference (id.in ());
@@ -30,6 +28,24 @@ TAO_Notify_Tests_RT_Test_FilterFactory::create (PortableServer::POA_ptr filter_p
   CosNotifyFilter::FilterFactory_var filter = CosNotifyFilter::FilterFactory::_narrow (object.in ());
 
   return filter._retn();
+}
+
+void
+TAO_Notify_Tests_RT_Test_FilterFactory::destroy (void)
+{
+  if (CORBA::is_nil(this->filter_poa_))
+    return;
+  PortableServer::ServantBase_var guard(this);
+  try
+    {
+      PortableServer::ObjectId_var id =
+        this->filter_poa_->servant_to_id (this);
+      this->filter_poa_->deactivate_object (id.in());
+    }
+  catch (CORBA::Exception&)
+    {
+    }
+
 }
 
 CosNotifyFilter::Filter_ptr
