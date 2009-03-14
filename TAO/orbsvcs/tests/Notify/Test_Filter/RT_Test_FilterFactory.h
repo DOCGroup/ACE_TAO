@@ -47,6 +47,7 @@ public:
   ///= TAO_Notify_Tests_FilterFactory methods.
 
   virtual CosNotifyFilter::FilterFactory_ptr create (PortableServer::POA_ptr filter_poa);
+  virtual void destroy (void);
 
   ///= CosNotifyFilter::FilterFactory methods
 
