@@ -76,6 +76,7 @@
 #define ACE_LACKS_ALPHASORT_PROTOTYPE
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 #define ACE_LACKS_GETPGID
+#define ACE_LACKS_ISCTYPE
 #define ACE_LACKS_MADVISE
 #define ACE_LACKS_MKSTEMP_PROTOTYPE
 #define ACE_LACKS_MKTEMP_PROTOTYPE
@@ -98,7 +99,6 @@
 #define ACE_PAGE_SIZE 4096
 #define ACE_POSIX_SIG_PROACTOR
 #define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
-#define ACE_LACKS_ISCTYPE
 
 // LynxOS has poll.h but it is unusable since implementation is not provided
 #define ACE_LACKS_POLL_H
@@ -150,16 +150,16 @@
 #if (ACE_LYNXOS_MAJOR >=5)
 // LynxOS 5.0 Additons
 #  define ACE_HAS_LYNXOS50_SIGNALS
-#  define ACE_LACKS_SYS_SEM_H
-#  define ACE_LACKS_STROPTS_H
-#  define ACE_LACKS_SEMBUF_T
+#  define ACE_HAS_NONCONST_GETBY
+#  define ACE_HAS_NONCONST_INET_ADDR
 #  define ACE_LACKS_INET_ATON_PROTOTYPE
-#  define ACE_LACKS_STRRECVFD
 #  define ACE_LACKS_MKSTEMP
 #  define ACE_LACKS_RLIMIT
-#  define __NO_INCLUDE_WARN__
+#  define ACE_LACKS_SEMBUF_T
+#  define ACE_LACKS_STROPTS_H
+#  define ACE_LACKS_STRRECVFD
+#  define ACE_LACKS_SYS_SEM_H
 #  define _sys_siglist __sys_siglist
-#  define ACE_HAS_NONCONST_GETBY
 #else
 // LynxOS 5.0 Removals
 #  define ACE_HAS_LYNXOS_SIGNALS
