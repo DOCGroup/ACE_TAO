@@ -1288,12 +1288,7 @@ install -d %{buildroot}%{_libdir}
 # ACE_ROOT/ace directory they get versioned with ACE's version number
 # rather then TAO's.  Use the ACEVERSO macro for now ...
 install \
-        ${ACE_ROOT}/lib/libTAO_IDL_BE.so.%{ACEVERSO} \
-        ${ACE_ROOT}/lib/libTAO_IDL_FE.so.%{ACEVERSO} \
         %{buildroot}%{_libdir}
-
-(cd %{buildroot}%{_libdir} && ln -sf libTAO_IDL_BE.so.%{ACEVERSO} libTAO_IDL_BE.so)
-(cd %{buildroot}%{_libdir} && ln -sf libTAO_IDL_FE.so.%{ACEVERSO} libTAO_IDL_FE.so)
 
 install -d %{buildroot}%{_bindir}
 install ${ACE_ROOT}/bin/ace_gperf %{buildroot}%{_bindir}
@@ -2318,9 +2313,6 @@ fi
 %defattr(-,root,root,-)
 %config %{_sysconfdir}/profile.d/tao-devel.sh
 
-%{_libdir}/libTAO_IDL_FE.so.%{ACEVERSO}
-%{_libdir}/libTAO_IDL_BE.so.%{ACEVERSO}
-
 %{_bindir}/tao_imr
 %{_bindir}/tao_ifr
 %{_datadir}/tao/MPC
@@ -2685,6 +2677,9 @@ fi
 # ================================================================
 
 %changelog
+* Fri Mar 13 2009 Johnny Willemsen <jwillemsen@remedy.nl> - 5.6.8-2
+- Removed specific OS checks
+
 * Fri Aug 22 2008 Johnny Willemsen <jwillemsen@remedy.nl> - 5.6.5-1
 - Initial version. Be aware that this is a subversion snapshot, almost
   5.6.6

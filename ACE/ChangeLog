@@ -1,8 +1,13 @@
+Sun Mar 15 18:44:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.spec:
+          Removed workarounds for TAO_IDL lib version numbers
+
 Sat Mar 14 22:05:15 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
           Updated for LynxOS 5.0
-        
+
 Fri Mar 13 19:21:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-ciao.spec:
