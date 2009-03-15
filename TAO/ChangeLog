@@ -1,3 +1,10 @@
+Sun Mar 15 18:39:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/tao_idl.mpc:
+          Added $TAO_ROOT to the includes to pull in rules.tao.GNU which
+          results in all TAO_IDL libs to get the TAO version number.
+          This fixes bugzilla 3395
+
 Sat Mar 14 13:29:22 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Notify/Test_Filter/RT_Test_FilterFactory.h:
