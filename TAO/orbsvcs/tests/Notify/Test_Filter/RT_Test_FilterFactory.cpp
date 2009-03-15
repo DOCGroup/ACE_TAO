@@ -33,7 +33,7 @@ TAO_Notify_Tests_RT_Test_FilterFactory::create (PortableServer::POA_ptr filter_p
 void
 TAO_Notify_Tests_RT_Test_FilterFactory::destroy (void)
 {
-  if (CORBA::is_nil(this->filter_poa_))
+  if (CORBA::is_nil(this->filter_poa_.in ()))
     return;
   PortableServer::ServantBase_var guard(this);
   try
