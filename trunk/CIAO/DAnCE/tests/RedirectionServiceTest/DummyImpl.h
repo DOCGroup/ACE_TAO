@@ -6,7 +6,6 @@
 
 namespace Test
   {
-
     class DummyImpl
           : public virtual POA_Test::Dummy
       {
