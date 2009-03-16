@@ -1,3 +1,19 @@
+Mon Mar 16 15:12:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Asynch_Reply_Dispatcher_Base.h:
+        * tao/Fault_Tolerance_Service.h:
+        * tao/IIOP_Acceptor.h:
+        * tao/LF_Event_Binder.h:
+        * tao/LF_Multi_Event.h:
+        * tao/ObjectKey_Table.h:
+        * tao/Policy_Validator.h:
+        * tao/Profile_Transport_Resolver.h:
+          Added private copy constructor/assignment operator to prevent
+          making a copy which leads to a double delete
+
+        * tao/Resume_Handle.inl:
+          Check for self assignment
+
 Mon Mar 16 14:58:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DiffServ/run_test.pl
