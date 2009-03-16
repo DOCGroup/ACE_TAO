@@ -31,18 +31,14 @@ TAO_FT_Invocation_Endpoint_Selector::select_endpoint (
     TAO::Profile_Transport_Resolver *r,
     ACE_Time_Value *val)
 {
-  bool retval =
-    this->select_primary (r,
-                          val);
+  bool retval = this->select_primary (r, val);
 
   if (retval)
     return;
 
-  retval =
-    this->select_secondary (r,
-                            val);
+  retval = this->select_secondary (r, val);
 
-  if (retval == false)
+  if (!retval)
     {
       // If we get here, we completely failed to find an endpoint selector
       // that we know how to use, so throw an exception.
@@ -70,8 +66,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
     return false;
 
   // Did not succeed. Try to look for primaries all over the place
-  CORBA::ULong sz =
-    prof_list->size ();
+  CORBA::ULong const sz = prof_list->size ();
 
   // Iterate through the list in a circular fashion. Stop one before
   // the list instead of trying the same thing again.
@@ -92,7 +87,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
                                tmp,
                                max_wait_time);
 
-          if (retval == true)
+          if (retval)
             return true;
         }
     }
@@ -118,8 +113,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
   if (prof_list == 0)
     return false;
 
-  CORBA::ULong sz =
-    prof_list->size ();
+  CORBA::ULong const sz = prof_list->size ();
 
   for (CORBA::ULong i = 0;
        i != sz;
@@ -189,7 +183,7 @@ bool
 TAO_FT_Invocation_Endpoint_Selector::check_profile_for_primary (
     TAO_Profile *pfile)
 {
-  if (pfile == 0)
+  if (!pfile)
     return false;
 
   IOP::TaggedComponent tagged_component;

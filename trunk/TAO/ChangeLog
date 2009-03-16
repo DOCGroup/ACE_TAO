@@ -1,7 +1,13 @@
+Mon Mar 16 07:56:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
+          Layout, const, and use operator! changes
+
 Mon Mar 16 07:54:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * orsvcs/orbsvcs/Event/EC_Thread_Flags.cpp:
-        * orsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Thread_Flags.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
           Unicode fixes
 
 Sun Mar 15 19:50:41 UTC 2009  Olli Savia  <ops@iki.fi>
