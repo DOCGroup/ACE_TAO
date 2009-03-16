@@ -1,3 +1,8 @@
+Mon Mar 16 20:04:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
+          Let gnuplot figure our the yrange high
+
 Mon Mar 16 19:46:53 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * THANKS

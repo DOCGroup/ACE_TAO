@@ -254,7 +254,7 @@ gen_chart ()
     set xlabel 'Date (YYYY/MM/DD)' 0,-3
     set ylabel "${YLABEL}"
     set terminal png small size 1024,768 color
-    set yrange [$low:$high]
+    set yrange [0:]
     set output "${DEST}/images/${object}_${TYPE}.png"
     set title "${object//___//}"
     plot 'tmp.txt' using 1:(\$2/$FACTOR) notitle w points, 'tmp.txt' using 1:(\$2/$FACTOR) notitle w l lt 3 lw 4
