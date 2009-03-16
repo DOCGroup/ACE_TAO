@@ -525,7 +525,7 @@ namespace TAO
     CORBA::ULong minor = 0;
     CORBA::ULong completion = 0;
 
-    if ((cdr >> minor) == 0 || (cdr >> completion) == 0)
+    if (!(cdr >> minor) || !(cdr >> completion))
       {
         throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }

@@ -41,8 +41,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
   )
 {
-  TAO_Service_Context &request_service_context =
-    req.request_service_context ();
+  TAO_Service_Context &request_service_context = req.request_service_context ();
   TAO_Service_Context &reply_service_context = req.reply_service_context ();
 
   TAO_Thread_Pool *thread_pool =
@@ -115,11 +114,11 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                                  (context->context_data.get_buffer ()),
                                 context->context_data.length ());
               CORBA::Boolean byte_order;
-              if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+              if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
                 throw ::CORBA::MARSHAL ();
               cdr.reset_byte_order (static_cast<int> (byte_order));
 
-              if ((cdr >> target_priority) == 0)
+              if (!(cdr >> target_priority))
                 throw ::CORBA::MARSHAL ();
 
               // Save the target priority in the response service

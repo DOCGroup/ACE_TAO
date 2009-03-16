@@ -355,7 +355,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 
   // This loop iterates through CORBA::PolicyList to convert
   // each CORBA::Policy into a CORBA::PolicyValue
-  size_t const plen = policy_list->length ();
+  CORBA::ULong const plen = policy_list->length ();
 
   policy_value_seq.length (plen);
 
@@ -390,8 +390,11 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = Messaging::TAG_POLICIES;
 
-  out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
-  out_cdr << policy_value_seq;
+  if (!(out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
+    return;
+
+  if (!(out_cdr << policy_value_seq))
+    return;
 
   length = out_cdr.total_length ();
 
@@ -439,7 +442,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl)
 
           if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
             {
-              return ;
+              return;
             }
 
           in_cdr.reset_byte_order (static_cast <int> (byte_order));

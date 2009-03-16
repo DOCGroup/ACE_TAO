@@ -1,3 +1,19 @@
+Mon Mar 16 08:34:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Exclusive_TMS.h:
+        * tao/Muxed_TMS.h:
+          Added forward declaration
+
+        * tao/Policy_Set.cpp:
+          Layout changes
+
+        * tao/Profile.cpp:
+          Fixed 64bit issue, use operator!
+
+        * tao/Synch_Invocation.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+          Use operator!
+
 Mon Mar 16 08:26:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Client_Propagated/run_test.pl:
