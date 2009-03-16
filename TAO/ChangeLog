@@ -1,3 +1,12 @@
+Mon Mar 16 08:54:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+          Use CORBA::is_nil and small optimizations
+
+        * tao/DynamicInterface/DII_Reply_Dispatcher.h:
+        * tao/Codeset/Codeset.cpp:
+          Layout changes
+
 Mon Mar 16 08:34:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Exclusive_TMS.h:
