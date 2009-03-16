@@ -17,17 +17,17 @@ my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 $T = $server->CreateProcess ("Collocation");
 
 if ($continuous) {
-  $T->Arguments("-ORBSvcConf continuous$PerlACE::svcconf_ext");
+    $T->Arguments("-ORBSvcConf continuous$PerlACE::svcconf_ext");
 }
 
 $test = $T->SpawnWaitKill(60);
 if ($test == 2) {
-  # Mark as no longer running to avoid errors on exit.
-  $T->{RUNNING} = 0;
+    # Mark as no longer running to avoid errors on exit.
+    $T->{RUNNING} = 0;
 } else {
-  if ($test != 0) {
-    print STDERR "ERROR: test returned $test\n";
-    exit 1;
+    if ($test != 0) {
+        print STDERR "ERROR: test returned $test\n";
+        exit 1;
   }
 }
 
