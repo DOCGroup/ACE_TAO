@@ -39,18 +39,16 @@ if ($server_status != 0) {
 }
 
 if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1)
-{
+                               $server->ProcessStartWaitInterval()) == -1) {
     $server = $SV->TimedWait (1);
-    if ($server == 2)
-    {
+    if ($server == 2) {
         # Mark as no longer running to avoid errors on exit.
         $SV->{RUNNING} = 0;
         exit $status;
     }
     else
     {
-        print STDERR "ERROR: cannot find file <$iorfile>\n";
+        print STDERR "ERROR: cannot find file <$iorbase>\n";
         $SV->Kill ();
         exit 1;
     }
@@ -58,16 +56,14 @@ if ($server->WaitForFileTimed ($iorbase,
 
 $client_status = $CL->SpawnWaitKill (60);
 
-if ($client_status != 0)
-{
+if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
 $server_status = $SV->WaitKill (60);
 
-if ($server_status != 0)
-{
+if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
