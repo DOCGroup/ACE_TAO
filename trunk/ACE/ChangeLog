@@ -1,3 +1,10 @@
+Mon Mar 16 13:01:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Asynch_IO.h:
+        * ace/Based_Pointer_Repository.h:
+          Added private copy constructor/assignment operator to prevent
+          making a copy which leads to a double delete
+
 Mon Mar 16 12:29:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Configuration.cpp:
