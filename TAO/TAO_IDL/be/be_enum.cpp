@@ -84,7 +84,7 @@ be_enum::gen_ostream_operator (TAO_OutStream *os)
       UTL_ScopedName *mname =
         this->value_to_name (static_cast<unsigned long> (i));
     
-      *os << "case " << i << ": return strm << \""
+      *os << "case " << mname << ": return strm << \""
           << mname << "\";" << be_nl;
     }
     
