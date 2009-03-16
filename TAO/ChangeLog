@@ -1,3 +1,8 @@
+Mon Mar 16 11:50:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Client_Propagated/run_test.pl:
+          Fixed fuzz errors
+
 Mon Mar 16 11:36:58 UTC 2009  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
