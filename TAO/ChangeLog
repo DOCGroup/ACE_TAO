@@ -1,3 +1,17 @@
+Mon Mar 16 13:08:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Adapter_Registry.h:
+        * tao/Asynch_Queued_Message.h:
+        * tao/Connection_Handler.h:
+        * tao/IIOP_Connector.cpp:
+        * tao/Muxed_TMS.h:
+          Added private copy constructor/assignment operator to prevent
+          making a copy which leads to a double delete
+
+        * tao/IIOP_Endpoint.cpp:
+        * tao/Transport_Selection_Guard.h:
+          Check for self assignment
+
 Mon Mar 16 12:44:49 UTC 2009  Simon McQueen  <sm@prismtech.com>
 
         * bin/tao_orb_tests.lst:

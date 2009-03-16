@@ -412,6 +412,9 @@ namespace
 
   private:
     TAO_Transport** tlist_;
+  private:
+    ACE_UNIMPLEMENTED_FUNC (void operator= (const TList_Holder &))
+    ACE_UNIMPLEMENTED_FUNC (TList_Holder (const TList_Holder &))
   };
 }
 

@@ -102,6 +102,11 @@ protected:
                              const ACE_Time_Value &abs_timeout,
                              ACE_Allocator *alloc,
                              bool is_heap_allocated);
+
+private:
+  void operator= (const TAO_Asynch_Queued_Message &);
+  TAO_Asynch_Queued_Message (const TAO_Asynch_Queued_Message &);
+
 private:
   /// The number of bytes in the buffer
   size_t const size_;

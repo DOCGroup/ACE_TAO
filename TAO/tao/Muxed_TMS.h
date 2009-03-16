@@ -71,6 +71,10 @@ public:
   virtual void connection_closed (void);
   virtual bool has_request (void);
 
+  private:
+    ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Muxed_TMS &))
+    ACE_UNIMPLEMENTED_FUNC (TAO_Muxed_TMS (const TAO_Muxed_TMS &))
+
 private:
   /// Lock to protect the state of the object
   ACE_Lock *lock_;
