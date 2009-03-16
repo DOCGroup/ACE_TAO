@@ -122,6 +122,10 @@ namespace TAO
     int unbind_i (Refcounted_ObjectKey *&key);
 
   private:
+    void operator= (const ObjectKey_Table &);
+    ObjectKey_Table (const ObjectKey_Table &);
+
+  private:
 
     // Some useful typedefs.
     typedef ACE_RB_Tree<TAO::ObjectKey,
