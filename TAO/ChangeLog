@@ -1,3 +1,9 @@
+Mon Mar 16 19:26:32 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * configure.ac:
+        
+          Added missing declaration for new orbsvcs/Notify test directory.
+
 Mon Mar 16 19:17:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Collocation/run_test.pl:
