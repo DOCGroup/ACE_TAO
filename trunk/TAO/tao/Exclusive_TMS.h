@@ -25,6 +25,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Pluggable_Reply_Params;
+class TAO_Reply_Dispatcher;
 
 /**
  * @class TAO_Exclusive_TMS
