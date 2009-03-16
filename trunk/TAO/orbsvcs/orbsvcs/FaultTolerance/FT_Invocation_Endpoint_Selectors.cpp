@@ -38,12 +38,13 @@ TAO_FT_Invocation_Endpoint_Selector::select_endpoint (
 
   retval = this->select_secondary (r, val);
 
-  if (!retval)
-    {
-      // If we get here, we completely failed to find an endpoint selector
-      // that we know how to use, so throw an exception.
-      throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
-    }
+  // If we get here and still haven't found a primary or
+  // secondary then we used to throw a TRANSIENT exception here.
+  // But that would prevent any request interception points
+  // being called. They may know how to fix the problem so
+  // we wait to throw the exception in
+  // Synch_Twoway_Invocation::remote_twoway and
+  // Synch_Oneway_Invocation::remote_oneway instead.
 
   return;
 }
@@ -65,7 +66,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
   if (prof_list == 0)
     return false;
 
-  // Did not succeed. Try to look for primaries all over the place
+  // Try to look for primaries all over the place
   CORBA::ULong const sz = prof_list->size ();
 
   // Iterate through the list in a circular fashion. Stop one before
@@ -79,7 +80,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
       bool retval =
         this->check_profile_for_primary (tmp);
 
-      // Choose a non-primary
+      // Found a primary
       if (retval == true && tmp != 0)
         {
           retval =
@@ -125,7 +126,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
       bool retval =
         this->check_profile_for_primary (tmp);
 
-      // Choose a non-primary
+      // Found a non-primary
       if (retval == false && tmp != 0)
         {
           retval =
