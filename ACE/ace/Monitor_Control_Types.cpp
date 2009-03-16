@@ -53,17 +53,20 @@ namespace ACE
     Monitor_Control_Types::Constraint&
     Monitor_Control_Types::Constraint::operator= (const Constraint& rhs)
     {
-      if (this->control_action != 0)
+      if (this != &rhs)
         {
-          this->control_action->remove_ref ();
-        }
+          if (this->control_action != 0)
+            {
+              this->control_action->remove_ref ();
+            }
 
-      this->expr = rhs.expr;
-      this->control_action = rhs.control_action;
+          this->expr = rhs.expr;
+          this->control_action = rhs.control_action;
 
-      if (this->control_action != 0)
-        {
-          this->control_action->add_ref ();
+          if (this->control_action != 0)
+            {
+              this->control_action->add_ref ();
+            }
         }
 
       return *this;

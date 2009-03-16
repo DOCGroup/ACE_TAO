@@ -1617,7 +1617,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
 
   section += sub_section;
   ACE_Configuration_ExtId SectionExtId (section.fast_rep ());
-  SECTION_HASH::ENTRY* section_entry;
+  SECTION_HASH::ENTRY* section_entry = 0;
   SECTION_HASH* hashmap = index_;
   if (hashmap->find (SectionExtId, section_entry))
     return -1;
@@ -1801,7 +1801,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
     return -1;
 
   // Get the entry for this item (if it exists)
-  VALUE_HASH::ENTRY* entry;
+  VALUE_HASH::ENTRY* entry = 0;
   ACE_Configuration_ExtId item_name (t_name);
   if (section_int.value_hash_map_->VALUE_HASH::find (item_name, entry) == 0)
     {
@@ -1860,7 +1860,7 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
     return -1;  // section does not exist
 
   // Get the entry for this item (if it exists)
-  VALUE_HASH::ENTRY* entry;
+  VALUE_HASH::ENTRY* entry = 0;
   ACE_Configuration_ExtId item_name (t_name);
   if (section_int.value_hash_map_->VALUE_HASH::find (item_name, entry) == 0)
     {
@@ -1910,7 +1910,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
     return -1;    // section does not exist
 
   // Get the entry for this item (if it exists)
-  VALUE_HASH::ENTRY* entry;
+  VALUE_HASH::ENTRY* entry = 0;
   ACE_Configuration_ExtId item_name (t_name);
   if (section_int.value_hash_map_->VALUE_HASH::find (item_name, entry) == 0)
     {
@@ -2100,7 +2100,7 @@ ACE_Configuration_Heap::find_value (const ACE_Configuration_Section_Key& key,
 
   // Find it
   ACE_Configuration_ExtId ValueExtId (t_name);
-  VALUE_HASH::ENTRY* value_entry;
+  VALUE_HASH::ENTRY* value_entry = 0;
   if (((VALUE_HASH *) IntId.value_hash_map_)->find (ValueExtId, value_entry))
     return -1;  // value does not exist
 
@@ -2130,7 +2130,7 @@ ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
 
   // Find it
   ACE_Configuration_ExtId ValueExtId (t_name);
-  VALUE_HASH::ENTRY* value_entry;
+  VALUE_HASH::ENTRY* value_entry = 0;
   if (((VALUE_HASH *) IntId.value_hash_map_)->find (ValueExtId, value_entry))
     return -1;
 
