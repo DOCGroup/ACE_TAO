@@ -1,3 +1,13 @@
+Mon Mar 16 15:52:33 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_enum.cpp(gen_ostream_operator):
+        
+          For the (optional) generation of an ostream operator for
+          enums, changed the code generation to use the actual enum
+          value for the switch cases, rather than the equivalent
+          integers. Thanks to Johnny Willemsen <jwillemsen@remedy.nl>
+          for reporting the bug. This fix closes [BUGID:3625].
+
 Mon Mar 16 15:27:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Thread_Lane_Resources_Manager.h:
