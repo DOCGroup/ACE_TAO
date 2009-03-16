@@ -1,3 +1,44 @@
+Mon Mar 16 11:36:58 UTC 2009  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
+
+          Remove uninterceptable exception.
+
+        * orbsvcs/tests/Bug_3598b_Regression/Bug_3598b_Regression.mpc:
+        * orbsvcs/tests/Bug_3598b_Regression/ClientORBInitializer.h:
+        * orbsvcs/tests/Bug_3598b_Regression/ClientORBInitializer.cpp:
+        * orbsvcs/tests/Bug_3598b_Regression/ClientRequest_Interceptor.h:
+        * orbsvcs/tests/Bug_3598b_Regression/ClientRequest_Interceptor.cpp:
+        * orbsvcs/tests/Bug_3598b_Regression/Hello.h:
+        * orbsvcs/tests/Bug_3598b_Regression/Hello.cpp:
+        * orbsvcs/tests/Bug_3598b_Regression/README:
+        * orbsvcs/tests/Bug_3598b_Regression/Test.idl:
+        * orbsvcs/tests/Bug_3598b_Regression/client.cpp:
+        * orbsvcs/tests/Bug_3598b_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_3598b_Regression/server.cpp:
+
+          Regression test for the above.
+
+        * tao/Strategies/Optimized_Connection_Endpoint_Selector.cpp:
+
+          Remove uninterceptable exception.
+
+        * tests/Bug_3598a_Regression/Bug_3598a_Regression.mpc:
+        * tests/Bug_3598a_Regression/ClientORBInitializer.h:
+        * tests/Bug_3598a_Regression/ClientORBInitializer.cpp:
+        * tests/Bug_3598a_Regression/ClientRequest_Interceptor.h:
+        * tests/Bug_3598a_Regression/ClientRequest_Interceptor.cpp:
+        * tests/Bug_3598a_Regression/Hello.h:
+        * tests/Bug_3598a_Regression/Hello.cpp:
+        * tests/Bug_3598a_Regression/README:
+        * tests/Bug_3598a_Regression/Test.idl:
+        * tests/Bug_3598a_Regression/client.cpp:
+        * tests/Bug_3598a_Regression/run_test.pl:
+        * tests/Bug_3598a_Regression/server.cpp:
+        * tests/Bug_3598a_Regression/svc.conf:
+
+          Regression test for the above.
+
 Mon Mar 16 08:54:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
