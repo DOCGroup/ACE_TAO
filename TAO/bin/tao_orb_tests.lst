@@ -157,7 +157,7 @@ TAO/tests/DIOP/run_test.pl: !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/DIOP/run_test_ipv6.pl: IPV6 !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_MICRO !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/RTCORBA/Activate_Object_Multiple_ORBs/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !LabVIEW_RT !WinCE !FUZZ
-TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !LabVIEW_RT !WinCE !FUZZ
+TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !IPV6 !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/RTCORBA/Collocation/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/RTCORBA/Destroy_Thread_Pool/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !LabVIEW_RT !WinCE !FUZZ
