@@ -97,6 +97,45 @@ test_register_nil_compression_factory (
   return succeed;
 }
 
+bool
+test_compression (CORBA::ULong nelements,
+              Compression::CompressionManager_ptr cm)
+{
+  bool succeed = false;
+
+  CORBA::OctetSeq mytest;
+  mytest.length (nelements);
+  for (CORBA::ULong j = 0; j != nelements; ++j)
+    {
+      mytest[j] = 'a';
+    }
+
+  Compression::Compressor_var compressor = cm->get_compressor (::Compression::COMPRESSORID_ZLIB, 6);
+
+  CORBA::OctetSeq myout;
+  myout.length ((CORBA::ULong)(mytest.length() * 1.1));
+
+  compressor->compress (mytest, myout);
+
+  CORBA::OctetSeq decompress;
+  decompress.length (nelements);
+
+  compressor->decompress (myout, decompress);
+
+  if (decompress != mytest)
+    {
+      ACE_ERROR ((LM_ERROR, "Error, decompress not working\n"));
+
+    }
+  else
+    {
+      succeed = true;
+      ACE_DEBUG ((LM_DEBUG, "Compression worked with zlib, original "
+                            "size %d, compressed size %d\n",
+                            mytest.length(), myout.length ()));
+    }
+  return succeed;
+}
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -131,36 +170,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (!test_register_nil_compression_factory (manager.in ()))
         retval = 1;
 
-      CORBA::ULong const nelements = 1024;
-      CORBA::OctetSeq mytest;
-      mytest.length (1024);
-      for (CORBA::ULong j = 0; j != nelements; ++j)
-        {
-          mytest[j] = 'a';
-        }
+      if (!test_compression (1024, manager.in ()))
+        retval = 1;
 
-      Compression::Compressor_var compressor = manager->get_compressor (::Compression::COMPRESSORID_ZLIB, 6);
-
-      CORBA::OctetSeq myout;
-      myout.length ((CORBA::ULong)(mytest.length() * 1.1));
-
-      compressor->compress (mytest, myout);
-
-      CORBA::OctetSeq decompress;
-      decompress.length (1024);
-
-      compressor->decompress (myout, decompress);
-
-      if (decompress != mytest)
-        {
-          ACE_ERROR ((LM_ERROR, "Error, decompress not working\n"));
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG, "Compression worked with zlib, original "
-                                "size %d, compressed size %d\n",
-                                mytest.length(), myout.length ()));
-        }
+      if (!test_compression (5, manager.in ()))
+        retval = 1;
+      
 
       if (!test_invalid_compression_factory (manager.in ()))
         retval = 1;
