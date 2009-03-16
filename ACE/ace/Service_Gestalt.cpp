@@ -853,8 +853,14 @@ ACE_Service_Gestalt::get_xml_svc_conf (ACE_DLL &xmldll)
   void * foo =
     xmldll.symbol (ACE_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
 
-  ACE_XML_Svc_Conf::Factory factory =
-    reinterpret_cast<ACE_XML_Svc_Conf::Factory> (foo);
+#if defined (ACE_OPENVMS) && (!defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64))
+  int const temp_p = reinterpret_cast<int> (foo);
+#else
+  intptr_t const temp_p = reinterpret_cast<intptr_t> (foo);
+#endif
+
+  ACE_XML_Svc_Conf::Factory factory = reinterpret_cast<ACE_XML_Svc_Conf::Factory> (temp_p);
+
   if (factory == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("ACE (%P|%t) Unable to resolve factory: %p\n"),
