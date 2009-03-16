@@ -508,6 +508,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Notify/MC/Makefile
     orbsvcs/tests/Notify/MT_Dispatching/Makefile
     orbsvcs/tests/Notify/Ordering/Makefile
+    orbsvcs/tests/Notify/Persistent_Filter/Makefile
     orbsvcs/tests/Notify/Persistent_POA/Makefile
     orbsvcs/tests/Notify/PluggableTopology/Makefile
     orbsvcs/tests/Notify/RT_lib/Makefile
