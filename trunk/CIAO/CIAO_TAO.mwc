@@ -25,8 +25,8 @@ workspace {
   ccm
   CCF
   CIDLC
-  DAnCE
   ciao
+  DAnCE
   tools
   tests
   examples
