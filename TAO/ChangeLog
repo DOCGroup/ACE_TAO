@@ -1,3 +1,39 @@
+Mon Mar 16 16:31:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/Compression/bzip2/Bzip2Compressor.cpp:
+          Fix issue when compressing just a few bytes.
+          
+        * tao/GIOP_Message_Base.cpp:
+          Fixed logging errors.
+        
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP.h:
+          Optimized log information. 
+          Better handling of exceptions/return values (GIOP
+          should be used).
+
+        * tests/ZIOP/TestCompressor:
+        * tests/ZIOP/testcompressor.mpb:
+        * tests/ZIOP/TestCompressor/TAO_TestCompressor.pc.in:
+        * tests/ZIOP/TestCompressor/TAO_TestCompressor.rc:
+        * tests/ZIOP/TestCompressor/TestCompressor.cpp:
+        * tests/ZIOP/TestCompressor/TestCompressor.h:
+        * tests/ZIOP/TestCompressor/TestCompressor_export.h:
+        * tests/ZIOP/TestCompressor/TestCompressor_Factory.cpp:
+        * tests/ZIOP/TestCompressor/TestCompressor_Factory.h:
+        * tests/ZIOP/ZIOP.mpc:
+          Added testcompressor. This compressor just throws
+          compression and decompression exceptions. These exception
+          should be handled properly by ZIOP. 
+        
+        * tests/ZIOP/client.cpp:
+        * tests/ZIOP/run_test.pl:
+        * tests/ZIOP/server.cpp:
+          Optimized tests. Refactored code by using 
+          functions. Optimized tests when TAO_HAS_ZIOP define
+          is zero or not defined.
+          Added test compressor. 
+
 Mon Mar 16 15:52:33 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_enum.cpp(gen_ostream_operator):
