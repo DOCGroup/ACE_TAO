@@ -84,6 +84,10 @@ protected:
   /// Destructor.
   virtual ~TAO_Asynch_Reply_Dispatcher_Base (void);
 
+private:
+  void operator= (const TAO_Asynch_Reply_Dispatcher_Base &);
+  TAO_Asynch_Reply_Dispatcher_Base (const TAO_Asynch_Reply_Dispatcher_Base &);
+
 protected:
   /// The service context list.
   /**

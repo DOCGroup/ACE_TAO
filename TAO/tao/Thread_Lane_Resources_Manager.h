@@ -72,6 +72,10 @@ public:
   TAO_LF_Strategy &lf_strategy (void);
   // @}
 
+private:
+  void operator= (const TAO_Thread_Lane_Resources_Manager &);
+  TAO_Thread_Lane_Resources_Manager (const TAO_Thread_Lane_Resources_Manager &);
+
 protected:
   /// The ORB Core.
   TAO_ORB_Core * const orb_core_;

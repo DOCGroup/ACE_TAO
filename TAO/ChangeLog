@@ -1,6 +1,12 @@
+Mon Mar 16 15:27:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Thread_Lane_Resources_Manager.h:
+        * tao/Asynch_Reply_Dispatcher_Base.h:
+          Added private copy constructor/assignment operator to prevent
+          making a copy which leads to a double delete
+
 Mon Mar 16 15:12:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tao/Asynch_Reply_Dispatcher_Base.h:
         * tao/Fault_Tolerance_Service.h:
         * tao/IIOP_Acceptor.h:
         * tao/LF_Event_Binder.h:
