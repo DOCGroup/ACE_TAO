@@ -153,7 +153,7 @@ ACE_Scheduler::get_rt_info (Object_Name name,
       if (info_collection_.bind (lookup, info_array) != 0)
         {
           delete rtinfo;
-          delete info_array;
+          delete [] info_array;
           rtinfo = 0;
           return FAILED; // Error!
         }
