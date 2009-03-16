@@ -45,9 +45,7 @@ if ($server->WaitForFileTimed ($iorbase,
         # Mark as no longer running to avoid errors on exit.
         $SV->{RUNNING} = 0;
         exit $status;
-    }
-    else
-    {
+    } else {
         print STDERR "ERROR: cannot find file <$iorbase>\n";
         $SV->Kill ();
         exit 1;
