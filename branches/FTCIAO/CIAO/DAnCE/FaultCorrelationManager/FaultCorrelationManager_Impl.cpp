@@ -188,7 +188,9 @@ namespace DAnCE
   FaultCorrelationManager_Impl::app_failure_i (const char * host,
                                                const char * application)
   {
-    DANCE_DEBUG ((LM_TRACE, "FaultCorrelationManager_Impl::app_failure_i ()\n"));
+    DANCE_DEBUG ((LM_TRACE, "FaultCorrelationManager_Impl::app_failure_i (%s, %s)\n",
+                  host,
+                  application));
 
     TObjectIdMap node;
     if (nodes_.find (host,

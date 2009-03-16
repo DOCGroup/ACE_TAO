@@ -16,6 +16,7 @@ namespace CIDL_FTClient_Impl
       logging_ (logging),
       count_ (0)
   {
+    timer_.calibrate ();
   }
 
   void
@@ -59,8 +60,6 @@ namespace CIDL_FTClient_Impl
 
         timer_.start ();
 
-        // we have to do some profiling first to see how we can achieve
-        // the correct execution time.
         server_->run_task (client_executor_->execution_time ());
 
         timer_.stop ();

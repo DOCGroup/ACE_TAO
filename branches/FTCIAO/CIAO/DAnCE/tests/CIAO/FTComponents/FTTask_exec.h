@@ -33,6 +33,7 @@
 #include "tao/LocalObject.h"
 #include "CPU/CPU_Worker.h"
 #include "Failure_Task.h"
+#include "ace/High_Res_Timer.h"
 
 namespace CIDL_FTTask_Impl
 {
@@ -144,6 +145,8 @@ namespace CIDL_FTTask_Impl
     long suicidal_count_;
 
     Failure_Task task_;
+
+    ACE_High_Res_Timer timer_;
   };
 
   extern "C" FTTASK_EXEC_Export ::Components::EnterpriseComponent_ptr
