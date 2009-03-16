@@ -89,7 +89,7 @@ private:
                         Compression::CompressorId &compressor_id,
                         Compression::CompressionLevel &compression_level);
 
-  void complete_compression (Compression::Compressor_ptr compressor,
+  bool complete_compression (Compression::Compressor_ptr compressor,
                              TAO_OutputCDR &cdr,
                              ACE_Message_Block& mb,
                              char *initial_rd_ptr,

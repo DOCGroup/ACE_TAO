@@ -294,8 +294,11 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub* stub)
                           ACE_TEXT ("TAO (%P|%t) - ")
                           ACE_TEXT ("TAO_GIOP_Message_Base::format_message, ")
                           ACE_TEXT ("GIOP message not compressed\n")));
-            else 
-              log_msg = false;
+            // no need to log. If compressed->ZIOP library dumps message
+            // if not compressed (due to failure or policy settings)
+            // message hasn't changed and was allready dumped
+            // prior to compression...
+            log_msg = false;
           }
     }
 #else
@@ -685,10 +688,10 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
     }
 #endif
   if (TAO_debug_level > 9)
-    {
+    { //due to alignment data block has an offset which needs to be corrected
       this->dump_msg ("recv",
-                      reinterpret_cast <u_char *> (db->base ()),
-                      db->size ());
+                      reinterpret_cast <u_char *> (db->base () + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN),
+                      db->size ()  + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN);
     }
 
   TAO_InputCDR input_cdr (db,
@@ -786,6 +789,7 @@ TAO_GIOP_Message_Base::process_reply_message (
       // heap.
       db = qd->msg_block ()->data_block ()->duplicate ();
     }
+  db->size (qd->msg_block ()->length ());
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
    if (qd->state ().compressed ())
@@ -797,8 +801,8 @@ TAO_GIOP_Message_Base::process_reply_message (
   if (TAO_debug_level > 9)
     {
       this->dump_msg ("recv",
-                      reinterpret_cast <u_char *> (db->base ()),
-                      db->size ());
+                      reinterpret_cast <u_char *> (db->base () + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN),
+                      db->size ()  + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN);
     }
 
   // Create a empty buffer on stack

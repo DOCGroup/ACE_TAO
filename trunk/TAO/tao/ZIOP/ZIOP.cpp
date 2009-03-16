@@ -141,16 +141,16 @@ TAO_ZIOP_Loader::dump_msg (const char *type,  const u_char *ptr,
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - ZIOP_Loader::dump_msg, ")
               ACE_TEXT ("ZIOP message v%c.%c %C, %d data bytes, %s endian, ")
-              ACE_TEXT ("original_data_length = %d, ratio = %4.2f, ") 
+              ACE_TEXT ("original_data_length = %d, ratio = %4.2f, ")
               ACE_TEXT ("compressor = %C, compression_level = %d\n"),
               digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
               digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
               type,
               len - TAO_GIOP_MESSAGE_HEADER_LEN ,
               (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
-              original_data_length, 
-              ratio, 
-              TAO_ZIOP_Loader::ziop_compressorid_name(compressor_id), 
+              original_data_length,
+              ratio,
+              TAO_ZIOP_Loader::ziop_compressorid_name(compressor_id),
               compression_level));
   ACE_HEX_DUMP ((LM_DEBUG,
                  (const char *) ptr,
@@ -170,7 +170,8 @@ TAO_ZIOP_Loader::decompress (Compression::Compressor_ptr compressor,
   catch (::Compression::CompressionException &e)
     {
       ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("Decompression failed: %C\n"),
+                        ACE_TEXT ("TAO (%P|%t) - TAO_ZIOP_Loader::decompress, ")
+                        ACE_TEXT ("decompression failed, %C\n"),
                         e._info ().c_str ()),
                         false);
     }
@@ -223,7 +224,7 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
         {
           size_t new_data_length = (size_t)(data.original_length +
                         TAO_GIOP_MESSAGE_HEADER_LEN);
-          
+
           ACE_Message_Block mb (new_data_length);
           qd.msg_block ()->rd_ptr (initial_rd_ptr);
           mb.copy(qd.msg_block ()->base () + begin,
@@ -233,18 +234,20 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
                   (size_t)data.original_length) != 0)
             ACE_ERROR_RETURN((LM_ERROR,
                               ACE_TEXT ("TAO - (%P|%t) - ")
-                              ACE_TEXT ("Failed to copy decompressed data : ")
+                              ACE_TEXT ("TAO_ZIOP_Loader::decompress, ")
+                              ACE_TEXT ("failed to copy decompressed data, ")
                               ACE_TEXT ("Buffer too small\n")),
                               false);
-          //change it into a GIOP message..
+          // change it into a GIOP message..
           mb.base ()[0] = 0x47;
           ACE_CDR::mb_align (&mb);
 
           if (TAO_debug_level > 9)
             {  // we're only logging ZIOP messages. Log datablock before it's
-               // replaced by it's decompressed datablock 
-               this->dump_msg ("before decompression", reinterpret_cast <u_char *>(qd.msg_block ()->rd_ptr ()), 
-                    qd.msg_block ()->length (), data.original_length, 
+               // replaced by it's decompressed datablock
+               this->dump_msg ("before decompression", 
+                    reinterpret_cast <u_char *>(qd.msg_block ()->rd_ptr ()),
+                    qd.msg_block ()->length (), data.original_length,
                     data.compressorid, compressor->compression_level ());
             }
           //replace data block
@@ -296,7 +299,8 @@ TAO_ZIOP_Loader::compress (Compression::Compressor_ptr compressor,
   catch (::Compression::CompressionException &e)
     {
       ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("Compression failed: %C\n"),
+                        ACE_TEXT ("TAO (%P|%t) - TAO_ZIOP_Loader::compress, ")
+                        ACE_TEXT ("compression failed, %C\n"),
                         e._info ().c_str ()),
                         false);
     }
@@ -307,7 +311,7 @@ TAO_ZIOP_Loader::compress (Compression::Compressor_ptr compressor,
 CORBA::ULong
 TAO_ZIOP_Loader::get_ratio (CORBA::OctetSeq& uncompressed, CORBA::OctetSeq& compressed)
 {
-  return CORBA::ULong (100 - ((CORBA::Double)compressed.length () / uncompressed.length () * 
+  return CORBA::ULong (100 - ((CORBA::Double)compressed.length () / uncompressed.length () *
               (CORBA::Double)100));
 }
 
@@ -316,7 +320,7 @@ TAO_ZIOP_Loader::check_min_ratio (const CORBA::ULong& this_ratio,
                                   ::Compression::CompressionRatio overall_ratio,
                                   CORBA::Long min_ratio) const
 {
-  bool accepted = min_ratio == 0 || 
+  bool accepted = min_ratio == 0 ||
           static_cast < ::Compression::CompressionRatio>(this_ratio) > min_ratio;
   if (TAO_debug_level > 8)
     {
@@ -343,22 +347,25 @@ TAO_ZIOP_Loader::get_compressor_details (
 
       if (TAO_debug_level > 6)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - ")
                       ACE_TEXT ("TAO_ZIOP_Loader::get_compressor_details,")
                       ACE_TEXT ("compressor policy found, compressor = %C, ")
-                      ACE_TEXT ("compression_level = %d\n"), 
+                      ACE_TEXT ("compression_level = %d\n"),
                       TAO_ZIOP_Loader::ziop_compressorid_name (compressor_id),
-                      compression_level));
+                          compression_level));
         }
 
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - ")
-                  ACE_TEXT ("TAO_ZIOP_Loader::get_compressor_details: ")
-                  ACE_TEXT ("No appropriate compressor found\n")));
+      if (TAO_debug_level > 6)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - ")
+                      ACE_TEXT ("TAO_ZIOP_Loader::get_compressor_details, ")
+                      ACE_TEXT ("no appropriate compressor found\n")));
+        }
       return false;
     }
   return true;
@@ -384,17 +391,20 @@ TAO_ZIOP_Loader::get_compression_details(
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - ")
-                          ACE_TEXT ("TAO_ZIOP_Loader::get_compression_details: ")
-                          ACE_TEXT ("No ZIOP policy set\n")));
+                          ACE_TEXT ("TAO_ZIOP_Loader::get_compression_details, ")
+                          ACE_TEXT ("ZIOP enabled policy not set\n")));
             }
         }
     }
   else
     {
-      ACE_ERROR((LM_ERROR,
-                 ACE_TEXT("TAO (%P|%t) - ")
-                 ACE_TEXT("TAO_ZIOP_Loader::get_compression_details : ")
-                 ACE_TEXT("compression_enabling_policy is NIL. No ZIOP\n")));
+      if (TAO_debug_level > 6)
+        {
+          ACE_ERROR((LM_ERROR,
+                     ACE_TEXT ("TAO (%P|%t) - ")
+                     ACE_TEXT ("TAO_ZIOP_Loader::get_compression_details, ")
+                     ACE_TEXT ("compression_enabling_policy is NIL, no ZIOP\n")));
+        }
     }
 
   if (use_ziop)
@@ -410,19 +420,22 @@ TAO_ZIOP_Loader::get_compression_details(
                                     compressor_id, compression_level);
             }
         }
-      else
+      else 
         {
-          ACE_ERROR((LM_ERROR,
-                     ACE_TEXT("TAO (%P|%t) - ")
-                     ACE_TEXT("TAO_ZIOP_Loader::get_compression_details : ")
-                     ACE_TEXT("Compressor ID/Level list policy not found\n")));
+          if (TAO_debug_level > 6)
+            {
+              ACE_ERROR((LM_ERROR,
+                         ACE_TEXT("TAO (%P|%t) - ")
+                         ACE_TEXT("TAO_ZIOP_Loader::get_compression_details, ")
+                         ACE_TEXT("compressor ID/Level list policy not found\n")));
+            }
           use_ziop = false;
         }
     }
   return use_ziop;
 }
 
-void
+bool
 TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
                                        TAO_OutputCDR &cdr,
                                        ACE_Message_Block& mb,
@@ -438,11 +451,10 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
       CORBA::OctetSeq input (original_data_length, &mb);
       output.length (original_data_length);
 
-      bool compressed = this->compress (compressor, input, output);
-
-      if (compressed &&
-          (output.length () < original_data_length) &&
-          (this->check_min_ratio (this->get_ratio (input, output),
+      if (!this->compress (compressor, input, output))
+        return false;
+      else if ((output.length () < original_data_length) &&
+              (this->check_min_ratio (this->get_ratio (input, output),
                       compressor->compression_ratio(),
                       min_ratio)))
         {
@@ -461,21 +473,24 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
 
           if (TAO_debug_level > 9)
             {
-               this->dump_msg ("after compression", reinterpret_cast <u_char *>(mb.rd_ptr ()), 
-                    mb.length (), data.original_length, 
+               this->dump_msg ("after compression", reinterpret_cast <u_char *>(mb.rd_ptr ()),
+                    mb.length (), data.original_length,
                     data.compressorid, compressor->compression_level ());
             }
 
         }
+      else
+        return false;
     }
     else if (TAO_debug_level > 8)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - ")
-                    ACE_TEXT ("TAO_ZIOP_Loader::compress_data: ")
-                    ACE_TEXT ("No compression used")
-                    ACE_TEXT ("->Low Value Policy applied\n")));
+                    ACE_TEXT ("TAO_ZIOP_Loader::compress_data, ")
+                    ACE_TEXT ("no compression used, ")
+                    ACE_TEXT ("low value policy applied\n")));
       }
+  return true;
 }
 
 bool
@@ -486,6 +501,8 @@ TAO_ZIOP_Loader::compress_data (TAO_OutputCDR &cdr,
                Compression::CompressorId compressor_id,
                Compression::CompressionLevel compression_level)
 {
+  bool compressed = true;
+  
   cdr.consolidate ();
 
   ACE_Message_Block* current = const_cast <ACE_Message_Block*> (cdr.current ());
@@ -509,14 +526,14 @@ TAO_ZIOP_Loader::compress_data (TAO_OutputCDR &cdr,
           Compression::Compressor_var compressor =
             manager->get_compressor (compressor_id, compression_level);
 
-          complete_compression(compressor.in (), cdr, *current,
+          compressed = complete_compression(compressor.in (), cdr, *current,
                 initial_rd_ptr, low_value, min_ratio,
                 original_data_length, compressor_id);
         }
     }
-  //set back read pointer in case no compression was done...
+  // set back read pointer in case no compression was done...
   current->rd_ptr(initial_rd_ptr);
-  return true;
+  return compressed;
 }
 
 bool
@@ -528,7 +545,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_Stub& stub)
   return true;
 #else
   CORBA::Boolean use_ziop = false;
-  
+
   Compression::CompressorId compressor_id = Compression::COMPRESSORID_NONE;
   Compression::CompressionLevel compression_level = 0;
 

@@ -6,17 +6,22 @@
 #include "ace/OS.h"
 #include "tao/Compression/zlib/ZlibCompressor_Factory.h"
 #include "tao/Compression/bzip2/Bzip2Compressor_Factory.h"
-#include "tao/ORB_Constants.h"
-#include "tao/TransportCurrent/TCC.h"
+#include "TestCompressor//TestCompressor_Factory.h"
 
 ACE_RCSID(Hello, client, "$Id$")
 
+#define DEFAULT_COMPRESSION_LEVEL 6
+::Compression::CompressionManager_var compression_manager = 0;
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+int test = 1;
+
+int start_tests (Test::Hello_ptr hello, CORBA::ORB_ptr orb);
+
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:t:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -24,6 +29,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'k':
         ior = get_opts.opt_arg ();
+        break;
+      case 't':
+        test = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -39,34 +47,251 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-void log_statistics (ACE_TCHAR* test,
-                     ::TAO::CounterT initial_bytes_send,
-                     ::TAO::CounterT initial_bytes_recv,
-                     ::TAO::CounterT bytes_send_after_test,
-                     ::TAO::CounterT bytes_recv_after_test)
+int
+register_factories (CORBA::ORB_ptr orb)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%s statistics:")
-              ACE_TEXT (" initial bytes sent:%d")
-              ACE_TEXT (" initial bytes recv:%d")
-              ACE_TEXT (" bytes sent after test:%d")
-              ACE_TEXT (" bytes recv after test:%d\n"),
-              test,
-              initial_bytes_send,
-              initial_bytes_recv,
-              bytes_send_after_test,
-              bytes_recv_after_test));
+  CORBA::Object_var compression_manager_obj =
+    orb->resolve_initial_references("CompressionManager");
+
+  compression_manager = ::Compression::CompressionManager::_narrow (
+            compression_manager_obj.in ());
+
+  if (CORBA::is_nil(compression_manager.in ()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       " (%P|%t) Panic: nil compression manager\n"),
+                      1);
+  //register Zlib compressor
+  ::Compression::CompressorFactory_ptr compressor_factory;
+  ACE_NEW_RETURN (compressor_factory, TAO::Zlib_CompressorFactory (), 1);
+  ::Compression::CompressorFactory_var compr_fact = compressor_factory;
+  compression_manager->register_factory(compr_fact.in ());
+
+  // register bzip2 compressor
+  ACE_NEW_RETURN (compressor_factory, TAO::Bzip2_CompressorFactory (), 1);
+  compr_fact = compressor_factory;
+  compression_manager->register_factory(compr_fact.in ());
+
+  // register test compressor
+  ACE_NEW_RETURN (compressor_factory, TAO::Test_CompressorFactory (), 1);
+  compr_fact = compressor_factory;
+  compression_manager->register_factory(compr_fact.in ());
+  return 0;
 }
 
-void start_low_value_test(Test::Hello_ptr hello, ::TAO::Transport::Current_ptr)
+CORBA::Policy_ptr
+create_compressor_id_level_list_policy (CORBA::ORB_ptr orb, bool add_zlib_for_test_1)
 {
-#if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT == 1
-//  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
-//  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
-#endif
+  ::Compression::CompressorIdLevelList compressor_id_list;
 
+  switch (test)
+    {
+    case 1:
+      if (add_zlib_for_test_1)
+        compressor_id_list.length(2);
+      else
+        compressor_id_list.length(1);
+      compressor_id_list[0].compressor_id = ::Compression::COMPRESSORID_LZO;
+      compressor_id_list[0].compression_level = DEFAULT_COMPRESSION_LEVEL;
+      if (add_zlib_for_test_1)
+        {
+          compressor_id_list[1].compressor_id = ::Compression::COMPRESSORID_ZLIB;
+          compressor_id_list[1].compression_level = DEFAULT_COMPRESSION_LEVEL;
+        }
+      break;
+    case 2:
+      compressor_id_list.length(1);
+      compressor_id_list[0].compressor_id = COMPRESSORID_FOR_TESTING;
+      compressor_id_list[0].compression_level = DEFAULT_COMPRESSION_LEVEL;
+      break;
+    case 3:
+    case 4:
+    default:
+      compressor_id_list.length(2);
+      compressor_id_list[0].compressor_id = ::Compression::COMPRESSORID_ZLIB;
+      compressor_id_list[0].compression_level = DEFAULT_COMPRESSION_LEVEL;
+      compressor_id_list[1].compressor_id = ::Compression::COMPRESSORID_BZIP2;
+      compressor_id_list[1].compression_level = DEFAULT_COMPRESSION_LEVEL;
+      break;
+    }
+  CORBA::Any compressor_id_any;
+  compressor_id_any <<= compressor_id_list;
+
+  return orb->create_policy (ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID, compressor_id_any);
+}
+
+CORBA::Policy_ptr
+create_low_value_policy (CORBA::ORB_ptr orb)
+{
+  // Setting policy for minimum amount of bytes that needs to be
+  // compressed. If a message is smaller than this, it doesn't get
+  // compressed.
+  // make sure everything gets compressed.
+  CORBA::ULong compression_low_value = 10;
+  if (test == 3)
+    compression_low_value = 5000000;
+
+  CORBA::Any low_value_any;
+  low_value_any <<= compression_low_value;
+
+  return orb->create_policy (ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID, low_value_any);
+}
+
+CORBA::Policy_ptr
+create_compression_enabled_policy (CORBA::ORB_ptr orb)
+{
+  // Setting policy whether compression is used.
+  CORBA::Boolean compression_enabling = true;
+  CORBA::Any compression_enabling_any;
+  compression_enabling_any <<= CORBA::Any::from_boolean(compression_enabling);
+
+  return orb->create_policy (ZIOP::COMPRESSION_ENABLING_POLICY_ID, compression_enabling_any);
+}
+
+CORBA::Policy_ptr
+create_min_ratio_policy (CORBA::ORB_ptr orb)
+{
+  CORBA::Any min_compression_ratio_any;
+  CORBA::Long min_compression_ratio = 50;
+  min_compression_ratio_any <<= min_compression_ratio;
+
+  return orb->create_policy (ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID, min_compression_ratio_any);
+}
+
+Test::Hello_var
+create_policies (CORBA::ORB_ptr orb, bool add_zlib_compressor)
+{
+  CORBA::PolicyList policies(4);
+  policies.length(4);
+
+  policies[0] = create_compressor_id_level_list_policy (orb, add_zlib_compressor);
+  policies[1] = create_low_value_policy (orb);
+  policies[2] = create_compression_enabled_policy (orb);
+  policies[3] = create_min_ratio_policy (orb);
+
+  CORBA::Object_var tmp = orb->string_to_object(ior);
+  CORBA::Object_var tmp2 = tmp->_set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
+  Test::Hello_var hello = Test::Hello::_narrow(tmp2.in ());
+  return hello._retn ();
+}
+
+Test::Hello_var
+prepare_tests (CORBA::ORB_ptr orb, bool create_factories=true)
+{
+
+#if defined TAO_HAS_ZIOP && TAO_HAS_ZIOP == 1
+  if (create_factories)
+    register_factories(orb);
+
+  return create_policies (orb, !create_factories);
+#else
+  ACE_UNUSED_ARG (create_factories);
+  CORBA::Object_var tmp = orb->string_to_object(ior);
+  Test::Hello_var hello = Test::Hello::_narrow(tmp.in ());
+  return hello._retn ();
+#endif
+}
+
+int
+check_results (CORBA::ORB_ptr orb, Test::Hello_ptr hello)
+{
+#if defined TAO_HAS_ZIOP && TAO_HAS_ZIOP == 1
+  switch (test)
+    {
+    case 1:
+      try
+        {
+          // should throw an exception
+          compression_manager->get_compressor (::Compression::COMPRESSORID_LZO,
+              DEFAULT_COMPRESSION_LEVEL);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("ERROR : check_results, ")
+                             ACE_TEXT ("no exception thrown when applying for ")
+                             ACE_TEXT ("LZO Compressor\n")),
+                            1);
+        }
+      catch (::Compression::UnknownCompressorId)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("check_results, expected exception caught, ")
+                      ACE_TEXT ("(unknown factory)\n")));
+          Test::Hello_var hello = prepare_tests (orb, false);
+          test = -1;
+          return start_tests (hello.in (), orb);
+        }
+      break;
+    case -1:
+      {
+        ::Compression::Compressor_ptr compressor =
+          compression_manager->get_compressor (::Compression::COMPRESSORID_ZLIB,
+            DEFAULT_COMPRESSION_LEVEL);
+        if (!CORBA::is_nil (compressor))
+          {
+            if (compressor->compressed_bytes () == 0)
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("ERROR : check_results, no compression used ")
+                                 ACE_TEXT ("during test 1a\n")),
+                                1);
+            else
+               return 0;
+          }
+        else
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("ERROR : check_results, zlib compressor not found ")
+                               ACE_TEXT ("during test 1a\n")),
+                              1);
+          }
+      }
+      break;
+    case 2:
+      return 0;
+      break;
+    case 3:
+    case 4:
+      {
+        // low value policy test. No compression should be used.
+        ::Compression::Compressor_ptr compressor =
+        compression_manager->get_compressor (::Compression::COMPRESSORID_ZLIB,
+          DEFAULT_COMPRESSION_LEVEL);
+        if (!CORBA::is_nil (compressor))
+          {
+            if (compressor->compressed_bytes () != 0)
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("ERROR : check_results, compression used ")
+                                 ACE_TEXT ("during test %d\n"), test),
+                                1);
+            else
+              return 0;
+          }
+        else
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("ERROR : check_results, zlib compressor not found ")
+                               ACE_TEXT ("during test %d\n"), test),
+                              1);
+          }
+      }
+      break;
+    default:
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ERROR : check_results, unknown test ID\n")),
+                        1);
+    }
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     ACE_TEXT ("ERROR : check_results, unexpected\n")),
+                    1);
+#else
+  ACE_UNUSED_ARG (orb);
+  ACE_UNUSED_ARG (hello);
+  return 0;
+#endif
+}
+
+int 
+run_string_test (Test::Hello_ptr hello)
+{
   ACE_DEBUG((LM_DEBUG,
-            ACE_TEXT("Start get_string; large compression ratio\n")));
+            ACE_TEXT("run_string_test, start\n")));
 
   CORBA::String_var the_string = hello->get_string ("This is a test string"
                                                     "This is a test string"
@@ -79,244 +304,76 @@ void start_low_value_test(Test::Hello_ptr hello, ::TAO::Transport::Current_ptr)
                                                     "This is a test string");
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
               the_string.in ()));
+  if (ACE_OS::strstr (the_string._retn (), ACE_TEXT ("Hello there")) == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ERROR : run_string_test, unexpected string received\n")),
+                        1);
+    }
 
-#if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
-//  log_statistics ("low_value_test", initial_bytes_sent, initial_bytes_recv,
-//        tc->bytes_sent (), tc->bytes_received ());
-#endif
+  return 0;
 }
 
-void start_min_ratio_test (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr)
+int 
+run_big_reply_test (Test::Hello_ptr hello)
 {
-#if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
-//  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
-//  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
-#endif
-
   ACE_DEBUG((LM_DEBUG,
-              ACE_TEXT("Start get_string; small compression ratio\n")));
-
-  //shouldn't compress since compress_ratio < min_ratio
-  CORBA::String_var the_string = hello->get_string ("!@#$#%^#@&^%*$@#GFGSd"
-                                                    "fgdbdfgwe%^@#$#$%EQRT"
-                                                    "sfdgdafs56#$@@#$&((%$"
-                                                    "#4&%3#4%^21@!sdfSADHv"
-                                                    "dsaAhn~1`2#$#sAFDGHdf");
-
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
-              the_string.in ()));
-
-#if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
-//  log_statistics ("min_ratio_test", initial_bytes_sent, initial_bytes_recv,
-//        tc->bytes_sent (), tc->bytes_received ());
-#endif
-}
-
-void start_big_reply_test (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr)
-{
-#if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
-//  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
-//  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
-#endif
-
-  ACE_DEBUG((LM_DEBUG,
-              ACE_TEXT("Start get_big_reply; large compression ratio\n")));
+              ACE_TEXT("start get_big_reply\n")));
 
   //Prepare to send a large number of bytes. Should be compressed
   Test::Octet_Seq_var dummy = hello->get_big_reply ();
   if (dummy->length () > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("Client side BLOB received\n")));
+                  ACE_TEXT("get_big_reply, received = %d bytes\n"),
+                      dummy->length ()));
     }
   else
     {
-      ACE_DEBUG ((LM_ERROR,
-                  ACE_TEXT("Error recieving BLOB on Client\n")));
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ERROR : get_big_reply, ")
+                         ACE_TEXT ("error receiving client side blob\n")),
+                        1);
     }
-
-#if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
-//  log_statistics ("big_reply_test",initial_bytes_sent, initial_bytes_recv,
-//        tc->bytes_sent (), tc->bytes_received ());
-#endif
+  return 0;
 }
 
-void start_big_request_test (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr)
+int 
+run_big_request_test (Test::Hello_ptr hello)
 {
-#if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
-//  ::TAO::CounterT initial_bytes_sent = tc->bytes_sent ();
-//  ::TAO::CounterT initial_bytes_recv = tc->bytes_received ();
-#endif
-
-  ACE_DEBUG((LM_DEBUG,
-              ACE_TEXT("Start big_request; large compression ratio\n")));
-  //ACE_OS::sleep(1);
   int length = 40000;
   Test::Octet_Seq send_msg(length);
   send_msg.length (length);
 
-  hello->big_request(send_msg);
-
-#if defined (TAO_HAS_TRANSPORT_CURRENT) && TAO_HAS_TRANSPORT_CURRENT ==1
-//  log_statistics ("big_request_test", initial_bytes_sent, initial_bytes_recv,
-//        tc->bytes_sent (), tc->bytes_received ());
-#endif
-}
-
-void start_tests (Test::Hello_ptr hello, ::TAO::Transport::Current_ptr tc)
-{
-  //::CORBA::String_var rhost (tc->remote_host ());
-  //::CORBA::String_var lhost (tc->local_host ());
-  //::CORBA::Long id = tc->id ();
-  //::TAO::CounterT bs = tc->bytes_sent ();
-  //::TAO::CounterT br = tc->bytes_received ();
-  //::TAO::CounterT rs = tc->messages_sent ();
-  //::TAO::CounterT rr = tc->messages_received ();
-
-
-#if !defined (TAO_HAS_TRANSPORT_CURRENT) || TAO_HAS_TRANSPORT_CURRENT == 0
   ACE_DEBUG((LM_DEBUG,
-              ACE_TEXT ("No statistical information available since TAO_HAS_TRANSPORT_CURRENT is not set")));
-#endif
-  start_big_reply_test (hello, tc);
+              ACE_TEXT("run_big_request_test, send = %d bytes\n"), length));
 
-  start_low_value_test (hello, tc);
-
-  start_min_ratio_test (hello, tc);
-
-  start_big_request_test (hello, tc);
-}
-
-
-int
-register_factories (CORBA::ORB_ptr orb)
-{
-  CORBA::Object_var compression_manager =
-    orb->resolve_initial_references("CompressionManager");
-
-  Compression::CompressionManager_var manager =
-    Compression::CompressionManager::_narrow (compression_manager.in ());
-
-  if (CORBA::is_nil(manager.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Panic: nil compression manager\n"),
-                      1);
-  //register Zlib compressor
-  Compression::CompressorFactory_ptr compressor_factory;
-  ACE_NEW_RETURN (compressor_factory, TAO::Zlib_CompressorFactory (), 1);
-  Compression::CompressorFactory_var compr_fact = compressor_factory;
-  manager->register_factory(compr_fact.in ());
-  // register bzip2 compressor
-  ACE_NEW_RETURN (compressor_factory, TAO::Bzip2_CompressorFactory (), 1);
-  compr_fact = compressor_factory;
-  manager->register_factory(compr_fact.in ());
+  hello->big_request(send_msg);
   return 0;
 }
 
-CORBA::Policy_ptr 
-create_compressor_id_level_list_policy (CORBA::ORB_ptr orb)
+int 
+start_tests (Test::Hello_ptr hello, CORBA::ORB_ptr orb)
 {
-  Compression::CompressorIdLevelList compressor_id_list(3);
-  compressor_id_list.length(3);
-  compressor_id_list[0].compressor_id = Compression::COMPRESSORID_LZO;
-  compressor_id_list[0].compression_level = 5;
-  compressor_id_list[1].compressor_id = Compression::COMPRESSORID_BZIP2;
-  compressor_id_list[1].compression_level = 5;
-  compressor_id_list[2].compressor_id = Compression::COMPRESSORID_ZLIB;
-  compressor_id_list[2].compression_level = 5;
+  int result = 0;
+  if (test != 4)
+    {
+      result += run_string_test (hello);
+      result += run_big_request_test (hello);
+    }
+  result += run_big_reply_test (hello);
 
-  CORBA::Any compressor_id_any;
-  compressor_id_any <<= compressor_id_list;
-
-  return orb->create_policy (ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID, compressor_id_any);
-}
-
-CORBA::Policy_ptr 
-create_low_value_policy (CORBA::ORB_ptr orb)
-{
-  // Setting policy for minimum amount of bytes that needs to be
-  // compressed. If a message is smaller than this, it doesn't get
-  // compressed
-  CORBA::ULong compression_low_value = 100;
-  CORBA::Any low_value_any;
-  low_value_any <<= compression_low_value;
-  
-  return orb->create_policy (ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID, low_value_any);
-}
-
-CORBA::Policy_ptr 
-create_compression_enabled_policy (CORBA::ORB_ptr orb)
-{
-  // Setting policy whether compression is used.
-  CORBA::Boolean compression_enabling = false;
-  CORBA::Any compression_enabling_any;
-  compression_enabling_any <<= CORBA::Any::from_boolean(compression_enabling);
-  
-  return orb->create_policy (ZIOP::COMPRESSION_ENABLING_POLICY_ID, compression_enabling_any);
-}
-
-CORBA::Policy_ptr 
-create_min_ratio_policy (CORBA::ORB_ptr orb)
-{
-  CORBA::Any min_compression_ratio_any;
-  CORBA::Long min_compression_ratio = 75;
-  min_compression_ratio_any <<= min_compression_ratio;
-  
-  return orb->create_policy (ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID, min_compression_ratio_any);
-}
-
-Test::Hello_var
-prepare_tests (CORBA::ORB_ptr orb)
-{
-  register_factories(orb);      
-
-#if defined TAO_HAS_ZIOP && TAO_HAS_ZIOP == 1
-  CORBA::PolicyList policies(4);
-  policies.length(4);
-
-  policies[0] = create_compressor_id_level_list_policy (orb);
-  policies[1] = create_low_value_policy (orb);
-  policies[2] = create_compression_enabled_policy (orb);
-  policies[3] = create_min_ratio_policy (orb);
-
-  CORBA::Object_var tmp = orb->string_to_object(ior);
-  CORBA::Object_var tmp2 = tmp->_set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
-  Test::Hello_var hello = Test::Hello::_narrow(tmp2.in ());
-  return hello._retn ();
-#else
-  CORBA::Object_var tmp = orb->string_to_object(ior);
-  Test::Hello_var hello = Test::Hello::_narrow(tmp.in ());
-#endif
+  result += check_results (orb, hello);
+  return result;
 }
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  int extra_argc = 2;
-
+  int result = 0;
   try
     {
-      ACE_TCHAR **extra = 0;
-      ACE_NEW_RETURN (extra, ACE_TCHAR *[extra_argc], -1);
-      extra[0] = ACE::strnew (ACE_TEXT ("-ORBSvcConfDirective"));
-      extra[1] = ACE::strnew (ACE_TEXT ("dynamic TAO_Transport_Current_Loader Service_Object")
-                              ACE_TEXT (" * TAO_TC:_make_TAO_Transport_Current_Loader() ''"));
-
-      ACE_TCHAR **largv = new ACE_TCHAR *[argc+extra_argc];
-      for (int i = 0; i < argc; i++)
-        largv[i] = argv[i];
-
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("client adding args: ")));
-      for (int i = 0; i < extra_argc; i++)
-        {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s "), extra[i]));
-          largv[argc+i] = extra[i];
-        }
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
-
-      argc += extra_argc;
-
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, largv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -326,37 +383,30 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Hello reference <%C>\n",
+                             "ERROR : Nil Test::Hello reference <%C>\n",
                              ior),
                             1);
         }
 
-      CORBA::Object_var tcobject =
-                orb->resolve_initial_references ("TAO::Transport::Current");
-
-      ::TAO::Transport::Current_var tc =
-        ::TAO::Transport::Current::_narrow (tcobject.in ());
-      if (CORBA::is_nil (tc.in ()))
-        throw ::CORBA::INTERNAL ();
-
-      //for (int i = 0; i < 100; ++i)
-      start_tests(hello.in (), tc.in ());
+      try
+        {
+          result += start_tests(hello.in (), orb.in ());
+        }
+      catch (const CORBA::Exception& ex)
+        {
+          ex._tao_print_exception ("Exception caught:");
+          ++result;
+        }
 
       hello->shutdown ();
 
       orb->destroy ();
-
-      for (int i = 0; i < extra_argc; i++)
-        ACE::strdelete (extra[i]);
-      delete [] extra;
-      delete [] largv;
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught:");
-      return 1;
+      ++result;
     }
 
-  return 0;
+  return result;
 }
-
