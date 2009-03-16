@@ -1,3 +1,9 @@
+Mon Mar 16 14:58:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DiffServ/run_test.pl
+        * bin/tao_orb_tests.lst:
+          Converted to the new test framework
+
 Mon Mar 16 13:08:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Adapter_Registry.h:
