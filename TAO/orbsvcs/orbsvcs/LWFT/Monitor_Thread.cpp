@@ -14,7 +14,7 @@
 #include "tao/Exception.h"
 
 Monitor_Thread::Monitor_Thread (void)
-  : reactor_ (new ACE_TP_Reactor())
+  : reactor_ (new ACE_TP_Reactor ())
 {
 }
 
@@ -26,15 +26,15 @@ Monitor_Thread::svc (void)
       if (reactor_.run_reactor_event_loop() == -1)
 	      {
 	        ACE_ERROR_RETURN ((LM_ERROR,
-			                       "Monitor_Thread: "
-			                       "run_reactor_event_loop failed\n"),
+			                       ACE_TEXT ("Monitor_Thread: ")
+			                       ACE_TEXT ("run_reactor_event_loop failed\n")),
 			                      -1);
 	      }
     }
   catch (CORBA::Exception & ex)
     {
       ACE_DEBUG ((LM_ERROR,
-                  "Monitor_Thread::svc - caught %s",
+                  ACE_TEXT ("Monitor_Thread::svc - caught %s"),
                   ex._info ().c_str ()));
       return -1;
     }
@@ -42,7 +42,8 @@ Monitor_Thread::svc (void)
   return 0;
 }
 /*
-int Monitor_Thread::register_handler (ACE_Event_Handler *event_handler, ACE_Reactor_Mask mask)
+int Monitor_Thread::register_handler (ACE_Event_Handler *event_handler,
+                                      ACE_Reactor_Mask mask)
 {
   return reactor_.register_handler (event_handler, mask);
 }

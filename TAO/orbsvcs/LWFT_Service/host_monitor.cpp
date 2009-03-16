@@ -38,8 +38,8 @@ int main (int argc, char* argv[])
       if (! opts->parse_args (argc, argv))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Host Monitor options "
-                             "are incorrect.\n"),
+                             ACE_TEXT ("Host Monitor options ")
+                             ACE_TEXT ("are incorrect.\n")),
                             -1);
         }
         
@@ -69,7 +69,8 @@ int main (int argc, char* argv[])
     }
   catch (CORBA::Exception &ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "A CORBA exception was raised:");
+      ACE_PRINT_EXCEPTION (ex,
+                           ACE_TEXT ("A CORBA exception was raised:"));
       return -1;
     }
   

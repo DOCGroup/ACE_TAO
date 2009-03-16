@@ -97,7 +97,8 @@ DDSStateReaderListener_T<DATA_TYPE>::on_data_available (
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("on_data_available(): ")
-                  ACE_TEXT ("DDSStateReaderListener_T::_narrow() failed.\n")));
+                  ACE_TEXT ("DDSStateReaderListener_T::_narrow() ")
+                  ACE_TEXT ("failed.\n")));
     }
     
   typename DATA_TYPE::_seq_type state_samples;

@@ -34,7 +34,8 @@ Client_Request_Interceptor::send_request (
 {
   /*
   ACE_DEBUG ((LM_INFO, 
-              ACE_TEXT("(%P|%t) Client_Request_Interceptor::send_request (%s)\n"), 
+              ACE_TEXT ("(%P|%t) Client_Request_Interceptor::")
+              ACE_TEXT ("send_request (%s)\n"),
               ri->operation ()));
   */
 }
@@ -51,7 +52,8 @@ Client_Request_Interceptor::receive_reply (
 {
   /*
   ACE_DEBUG ((LM_INFO, 
-              ACE_TEXT("(%P|%t) Client_Request_Interceptor::receive_reply (%s)\n"), 
+              ACE_TEXT ("(%P|%t) Client_Request_Interceptor::")
+              ACE_TEXT ("receive_reply (%s)\n"), 
               ri->operation ()));
   */
 }
@@ -69,8 +71,8 @@ Client_Request_Interceptor::receive_exception (
     }
 /*
   ACE_DEBUG ((LM_DEBUG,
-              "Client_Request_Interceptor::receive_exception - "
-	            "caught %s\n",
+              ACE_TEXT ("Client_Request_Interceptor::")
+              ACE_TEXT ("receive_exception - caught %s\n"),
 	            ri->received_exception_id ()));
 */
   const CORBA::ULong tagID = 9654;
@@ -87,8 +89,9 @@ Client_Request_Interceptor::receive_exception (
   catch (CORBA::BAD_PARAM&)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Client_Request_Interceptor::receive_exception - "
-		              "Tagged Component not found\n"));
+                  ACE_TEXT ("Client_Request_Interceptor::")
+                  ACE_TEXT ("receive_exception - ")
+                  ACE_TEXT ("Tagged Component not found\n")));
     }
 }
 
@@ -98,7 +101,8 @@ Client_Request_Interceptor::receive_other (
 {
   /*
   ACE_DEBUG ((LM_INFO, 
-              ACE_TEXT("(%P|%t) Client_Request_Interceptor::receive_other (%s)\n"), 
+              ACE_TEXT ("(%P|%t) Client_Request_Interceptor::")
+              ACE_TEXT ("receive_other (%s)\n"), 
               ri->operation ()));
   */
 }

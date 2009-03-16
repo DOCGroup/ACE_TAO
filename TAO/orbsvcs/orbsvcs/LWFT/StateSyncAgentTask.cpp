@@ -74,7 +74,8 @@ StateSyncAgentTask::svc (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("SSA task thread: exception caught:");
+      ex._tao_print_exception (
+        ACE_TEXT ("SSA task thread: exception caught:"));
       return 1;
     }
 
@@ -98,10 +99,8 @@ StateSyncAgentTask::activate (long /* flags */,
     {
       return 0;
     }
-  else
-    {
-      activated_ = true;
-    }
+  
+  activated_ = true;
     
   // This will end up back in our overridden svc() method. We
   // want to wait for it to execute the statements in its body

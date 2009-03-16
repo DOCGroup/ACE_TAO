@@ -29,7 +29,7 @@ ServerORBInitializer::post_init (
 
   CORBA::String_var orb_id = info->orb_id ();
 
-  // Create and register the test's IORInterceptor
+  // Create and register the test's IORInterceptor.
 
   PortableInterceptor::IORInterceptor_ptr ior_intercept;
   ACE_NEW_THROW_EX (ior_intercept,

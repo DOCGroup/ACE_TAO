@@ -18,7 +18,7 @@ CorbaStateUpdate::CorbaStateUpdate(CORBA::Object_ptr application)
 {
 }
 
-CorbaStateUpdate::~CorbaStateUpdate()
+CorbaStateUpdate::~CorbaStateUpdate (void)
 {
 }
 

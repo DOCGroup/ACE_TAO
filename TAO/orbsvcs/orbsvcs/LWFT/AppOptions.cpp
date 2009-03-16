@@ -26,7 +26,7 @@ AppOptions::AppOptions (void)
   char hostname [100];
   gethostname (hostname, sizeof (hostname));
   host_id_ = hostname;
-//  ACE_DEBUG ((LM_DEBUG, "Hostname is %s.\n", hostname));
+//  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Hostname is %s.\n", hostname)));
 }
 
 AppOptions *
