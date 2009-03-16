@@ -81,7 +81,8 @@ LWFT_Client_Init::init (int &argc,
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("LWFT_Client_Init::init :  exception caught :");
+      ex._tao_print_exception (
+        ACE_TEXT ("LWFT_Client_Init::init :  exception caught :"));
       return CORBA::ORB::_nil ();;
     }
   

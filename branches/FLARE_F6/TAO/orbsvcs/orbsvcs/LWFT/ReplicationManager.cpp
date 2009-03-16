@@ -113,15 +113,16 @@ APP_INFO::operator = (APP_INFO const & app_info)
 bool 
 operator == (APP_INFO const & lhs, APP_INFO const & rhs)
 {
-  return ((lhs.object_id == rhs.object_id) &&
-          (lhs.host_name == rhs.host_name) &&
-          (lhs.process_id == rhs.process_id) &&
-          (lhs.role == rhs.role)); 
+  return (lhs.object_id == rhs.object_id
+          && lhs.host_name == rhs.host_name
+          && lhs.process_id == rhs.process_id
+          && lhs.role == rhs.role); 
 }
 
 class Algorithm : public ACE_Task_Base
 {
   ReplicationManager_i * rm_;
+  
 public: 
   Algorithm (ReplicationManager_i * rm);
   virtual int svc (void);
@@ -190,9 +191,9 @@ ReplicationManager_i::register_application (
       if(update_list_full_.wait (update_mutex_, &wait_time) == -1)  // timeout
         {
           ACE_DEBUG ((LM_ERROR,
-                      "RM: register_application CORBA upcall "
-                      "waited too long. Skipping"
-                      "register_application. %s:%s:%s:%d.\n",
+                      ACE_TEXT ("RM: register_application CORBA upcall ")
+                      ACE_TEXT ("waited too long. Skipping")
+                      ACE_TEXT ("register_application. %s:%s:%s:%d.\n"),
                       host_id,
                       process_id,
                       object_id,
@@ -228,7 +229,8 @@ ReplicationManager_i::update_proc_host_map (
   else 
     {
       ACE_DEBUG ((LM_ERROR,
-                  "RM: Duplicate process_id=%s. Skipping it.\n",
+                  ACE_TEXT ("RM: Duplicate process_id=%s. ")
+                  ACE_TEXT ("Skipping it.\n"),
                   pid));
     }
 }
@@ -243,8 +245,8 @@ ReplicationManager_i::update_appset_map (
   ACE_CString key (key_str);
   /*
   ACE_DEBUG ((LM_TRACE, 
-              "RM: update_appset_map - "
-              "add entry for %s, role = %d\n", 
+              ACE_TEXT ("RM: update_appset_map - ")
+              ACE_TEXT ("add entry for %s, role = %d\n"), 
               key_str, 
               app_info.role));
   */  
@@ -312,7 +314,8 @@ ReplicationManager_i::update_util_map (
           if (result != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          "AppSideReg::activate () returned %d\n",
+                          ACE_TEXT ("AppSideReg::activate () ")
+                          ACE_TEXT ("returned %d\n"),
                           result));
             }
         }
@@ -355,11 +358,11 @@ ReplicationManager_i::process_updates (
       switch (up->type)
         {
           case MonitorUpdate::RUN_NOW:
-            //ACE_DEBUG ((LM_DEBUG,"RUN_NOW\n"));
+            //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RUN_NOW\n")));
             major_update = true;
             break;
           case MonitorUpdate::HOST_UTIL_UPDATE:
-            //ACE_DEBUG ((LM_DEBUG,"HOST_UTIL_UPDATE\n"));
+            //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("HOST_UTIL_UPDATE\n")));
             update_util_map (up->host_id.c_str (),
                              up->value,
                              this->hostid_util_map_);
@@ -367,13 +370,13 @@ ReplicationManager_i::process_updates (
             major_update = true;
             break;
           case MonitorUpdate::PROC_FAIL_UPDATE: 
-            //ACE_DEBUG ((LM_DEBUG,"PROC_FAIL_UPDATE\n"));
+            //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("PROC_FAIL_UPDATE\n")));
             process_proc_failure (up->process_id);
             major_update = true;
             only_util = false;
             break;
           case MonitorUpdate::APP_REG:
-            //ACE_DEBUG ((LM_DEBUG,"RUN_NOW\n"));
+            //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RUN_NOW\n")));
             app_reg (up->app_info);
             only_util = false;
             break;
@@ -384,7 +387,7 @@ ReplicationManager_i::process_updates (
 
   if (!only_util)
     {
-      //ACE_DEBUG ((LM_TRACE, "RM: state_changed () called.\n"));
+      //ACE_DEBUG ((LM_TRACE, ACE_TEXT ("RM: state_changed () called.\n")));
       this->send_state_synchronization_rank_list ();
       agent_->state_changed (this->object_id ());
       standby_ = false;
@@ -399,16 +402,16 @@ ReplicationManager_i::process_proc_failure (
 {
   if (static_mode_)
     {
-      //ACE_DEBUG ((LM_TRACE, "RM: process_proc_failure ()\n"));
+      //ACE_DEBUG ((LM_TRACE, ACE_TEXT ("RM: process_proc_failure ()\n")));
 
       // Collect the app_info of all failed applications
       // of a process.
       std::vector <APP_INFO> failed;
       
       for (OBJECTID_APPSET_MAP::iterator it = 
-	     objectid_appset_map_.begin ();
-	   it != objectid_appset_map_.end ();
-	   ++it)
+	           objectid_appset_map_.begin ();
+	         it != objectid_appset_map_.end ();
+	         ++it)
         {
           // For every object_id appset...
           APP_SET & as = (*it).item ();
@@ -429,7 +432,8 @@ ReplicationManager_i::process_proc_failure (
         }
       
       ACE_DEBUG ((LM_DEBUG,
-                  "RM::process_proc_failure - found %d failed applications\n",
+                  ACE_TEXT ("RM::process_proc_failure - ")
+                  ACE_TEXT ("found %d failed applications\n"),
                   failed.size ()));
 
       CORBA::Object_var new_primary;
@@ -438,20 +442,24 @@ ReplicationManager_i::process_proc_failure (
 	         fit != failed.end ();
 	         ++fit)
         {
-	  // ACE_DEBUG ((LM_TRACE,
-          //             "RM::process_proc_failure dealing with failed app "
-	  //             "for %s\n",
-          //              (*fit).object_id.c_str ()));
-          
+          /*
+	        ACE_DEBUG ((LM_TRACE,
+                      ACE_TEXT ("RM::process_proc_failure ")
+                      ACE_TEXT ("dealing with failed app ")
+	                    ACE_TEXT ("for %s\n"),
+                      (*fit).object_id.c_str ()));
+          */   
           // Remove entry from the appset.
           APP_SET as;
 	  
           if (objectid_appset_map_.find ((*fit).object_id,
                                          as) == 0)
             {
-	      //ACE_DEBUG ((LM_TRACE,
-	      //            "RM::process_proc_failure remove APP_INFO from APP_SET\n"));
-      	      
+              /*
+	            ACE_DEBUG ((LM_TRACE,
+	                        ACE_TEXT ("RM::process_proc_failure ")
+	                        ACE_TEXT ("remove APP_INFO from APP_SET\n")));
+      	      */
               // Remove appinfo from the appset.
               as.remove (*fit);
       	      
@@ -476,25 +484,30 @@ ReplicationManager_i::process_proc_failure (
                 }
               
               if (!found_ranklist)
-		{
-		  /*
-		  ACE_DEBUG ((LM_TRACE,
-			      "RM::process_proc_failure - "
-			      "found no rank_list for object_id=%s",
-			      (*fit).object_id.c_str ()));
-		  */
-		  break;
-		}
-              
-              //ACE_DEBUG ((LM_DEBUG,
-              //            "RM::process_proc_failure - "
-	      //            "rank_list index found is %d.\n", r));
-      	      
+		            {
+		              /*
+		              ACE_DEBUG ((LM_TRACE,
+			                        ACE_TEXT ("RM::process_proc_failure - ")
+			                        ACE_TEXT ("found no rank_list ")
+			                        ACE_TEXT ("for object_id=%s"),
+			                        (*fit).object_id.c_str ()));
+		              */
+		              break;
+		            }
+              /*
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("RM::process_proc_failure - ")
+	                        ACE_TEXT ("rank_list index found is %d.\n"),
+	                        r));
+      	      */
               // Remove application from the rank_list.
               if (rank_list_[r].ior_list.length () == 0)
                 {
-                  //ACE_DEBUG ((LM_WARNING, "RM::process_proc_failure - "
-		  //            "empty ior list.\n"));
+                  /*
+                  ACE_DEBUG ((LM_WARNING, 
+                              ACE_TEXT ("RM::process_proc_failure - ")
+		                          ACE_TEXT ("empty ior list.\n")));
+		              */
                 }
               else 
                 {
@@ -505,8 +518,8 @@ ReplicationManager_i::process_proc_failure (
                     {
 		      /*
                       ACE_DEBUG ((LM_DEBUG,
-                                  "RM::process_proc_failure - "
-				  "remove complete ranklist.\n",
+                                  ACE_TEXT ("RM::process_proc_failure - ")
+				                          ACE_TEXT ("remove complete ranklist.\n"),
                                   r));
 		      */
                       // Remove complete rank_list entry.
@@ -542,8 +555,9 @@ ReplicationManager_i::process_proc_failure (
                             }
                   			      
                           ACE_DEBUG ((LM_TRACE,
-                                      "RM::process_proc_failure - "
-				      "remove entry %d in ior list\n",
+                                      ACE_TEXT ("RM::process_proc_failure - ")
+				                              ACE_TEXT ("remove entry %d ")
+				                              ACE_TEXT ("in ior list\n"),
                                       rm_index));
                           
                           // Now remove the correct element from the list
@@ -564,7 +578,8 @@ ReplicationManager_i::process_proc_failure (
                           // Just make sure to keep on going for the other 
                           // entries here.
                           ACE_DEBUG ((LM_ERROR, 
-                                      "RM::process_proc_failure - caught %d\n",
+                                      ACE_TEXT ("RM::process_proc_failure ")
+                                      ACE_TEXT ("- caught %d\n"),
                                       ex._info ().c_str ()));
                         }
                     } // end else
@@ -575,8 +590,8 @@ ReplicationManager_i::process_proc_failure (
                 {
 		  /*
                   ACE_DEBUG ((LM_TRACE,
-                              "RM::process_proc_failure - "
-			      "select new primary in APP_SET (%d)\n",
+                              ACE_TEXT ("RM::process_proc_failure - ")
+			                        ACE_TEXT ("select new primary in APP_SET (%d)\n"),
                               as.size ()));
 		  */  
                   for (APP_SET::iterator it = as.begin ();
@@ -592,8 +607,8 @@ ReplicationManager_i::process_proc_failure (
                     
 			  /*
                           ACE_DEBUG ((LM_DEBUG,
-                                      "RM::process_proc_failure - "
-				      "found a new primary\n"));
+                                      ACE_TEXT ("RM::process_proc_failure - ")
+				                              ACE_TEXT ("found a new primary\n")));
 			  */
                           break;
                         }
@@ -627,16 +642,18 @@ ReplicationManager_i::process_proc_failure (
           else
             {
               ACE_DEBUG ((LM_ERROR,
-                          "RM: Can't find host=%s in hostid_process_map. "
-                          "Data structure invariant broken.\n",
+                          ACE_TEXT ("RM: Can't find host=%s ")
+                          ACE_TEXT ("in hostid_process_map. ")
+                          ACE_TEXT ("Data structure invariant broken.\n"),
                           host.c_str()));
             }
         }
       else
         {
           ACE_DEBUG ((LM_ERROR,
-                      "RM: Can't find process_id=%s in proc_host_map."
-                      " Data structure invariant broken.\n",
+                      ACE_TEXT ("RM: Can't find process_id=%s ")
+                      ACE_TEXT ("in proc_host_map.")
+                      ACE_TEXT (" Data structure invariant broken.\n"),
                       process_id.c_str ()));
         }
     }
@@ -688,7 +705,7 @@ ReplicationManager_i::remove_from_appset (
       this->objectid_appset_map_.rebind(tag,app_set);
       
       ACE_DEBUG ((LM_DEBUG,
-                  "RM: Removed application %s:%s:%s:%d.\n",
+                  ACE_TEXT ("RM: Removed application %s:%s:%s:%d.\n"),
                   host.c_str (),
                   pid.c_str (),
                   tag.c_str (),
@@ -697,8 +714,8 @@ ReplicationManager_i::remove_from_appset (
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "RM: Can't find appset for tag=%s.\n"
-                  "Data structure invariant broken.",
+                  ACE_TEXT ("RM: Can't find appset for tag=%s.\n")
+                  ACE_TEXT ("Data structure invariant broken."),
                   tag.c_str ()));
     }
 }
@@ -714,13 +731,13 @@ ReplicationManager_i::elevate_backup_to_primary (
     {
       failover_host = ranked_ior_list.host_list.front();
       ACE_DEBUG ((LM_DEBUG,
-                  "RM: Failover host = %s.\n",
+                  ACE_TEXT ("RM: Failover host = %s.\n"),
                   failover_host.c_str ()));
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "RM: Can't find failover host for tag=%s.\n",
+                  ACE_TEXT ("RM: Can't find failover host for tag=%s.\n"),
                   tag.c_str ()));
     }
   
@@ -772,9 +789,9 @@ ReplicationManager_i::elevate_backup_to_primary (
               else
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "RM: Can't find backups for "
-                              "tag=%s in process=%s.\n"
-                              "Data structure invariant broken\n",
+                              ACE_TEXT ("RM: Can't find backups for ")
+                              ACE_TEXT ("tag=%s in process=%s.\n")
+                              ACE_TEXT ("Data structure invariant broken\n"),
                               tag.c_str (),
                               (*as_iter).process_id.c_str ()));
                 }
@@ -788,7 +805,7 @@ ReplicationManager_i::elevate_backup_to_primary (
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "RM: No process found hosting tag=%s.\n",
+                  ACE_TEXT ("RM: No process found hosting tag=%s.\n"),
                   tag.c_str ()));
     }
 }
@@ -854,9 +871,12 @@ ReplicationManager_i::replica_selection_algo (void)
                       : processor_level_host_util_map;
                       
                   STRING_LIST primary_object_list;
+                  int result =
+                    processid_primary_map_.find (*pl_iter,
+                                                  primary_object_list);
                   
-                  if (processid_primary_map_.find (*pl_iter,
-                                                   primary_object_list) == 0) // If present
+                  // If present...
+                  if (result == 0)
                     {
                       for (STRING_LIST::iterator po_iter =
                              primary_object_list.begin ();
@@ -870,7 +890,9 @@ ReplicationManager_i::replica_selection_algo (void)
                           if (host_list.size () >= 1)
                             {
                               std::priority_queue<UtilRank> util_ranked_queue = 
-                                util_sorted_host_list(*po_iter, host_list, host_util_map);
+                                util_sorted_host_list (*po_iter,
+                                                       host_list,
+                                                       host_util_map);
 
                               // this check is necessary to make sure
                               // there is utilization information for
@@ -917,12 +939,12 @@ ReplicationManager_i::print_queue (
       UtilRank ur (queue.top ());
       queue.pop ();
       ACE_DEBUG ((LM_DEBUG,
-                  "%s:%f, ",
+                  ACE_TEXT ("%s:%f, "),
                   ur.host_id.c_str (),
                   ur.util));
     }
   
-  ACE_DEBUG((LM_DEBUG,"\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 }
 
 void
@@ -966,7 +988,7 @@ ReplicationManager_i::non_primary_host_list (
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "RM: No processes for tag = %s.\n",
+                  ACE_TEXT ("RM: No processes for tag = %s.\n"),
                   primary_object_id.c_str ()));
     }
   
@@ -1022,12 +1044,12 @@ ReplicationManager_i::app_reg (APP_INFO & app)
             break;
           default:
             ACE_ERROR ((LM_ERROR,
-                        "RM: in app_reg () - Unknown Role!!\n"));
+                        ACE_TEXT ("RM: in app_reg () - Unknown Role!!\n")));
         }
 
       ACE_DEBUG ((LM_TRACE,
-                  "RM: Registered successfully %s:%s:%s:%d "
-                  "with Replication manager.\n",
+                  ACE_TEXT ("RM: Registered successfully %s:%s:%s:%d ")
+                  ACE_TEXT ("with Replication manager.\n"),
                   host_name,
                   process_id,
                   object_id,
@@ -1053,8 +1075,8 @@ ReplicationManager_i::app_reg (APP_INFO & app)
                                     role);    
 	    /*
             ACE_DEBUG ((LM_DEBUG,
-                        "RM: Registered %s:%s:%s:%d with "
-                        "Replication manager in static mode.\n",
+                        ACE_TEXT ("RM: Registered %s:%s:%s:%d with ")
+                        ACE_TEXT ("Replication manager in static mode.\n"),
                         host_name,
                         process_id,
                         object_id,
@@ -1062,7 +1084,7 @@ ReplicationManager_i::app_reg (APP_INFO & app)
             break;
           default:
             ACE_ERROR ((LM_ERROR,
-                        "RM: in app_reg () - Unknown Role!!\n"));
+                        ACE_TEXT ("RM: in app_reg () - Unknown Role!!\n")));
         }
 
       this->update_enhanced_ranklist ();
@@ -1150,13 +1172,13 @@ ReplicationManager_i::util_sorted_host_list (
           else
             {
               ACE_DEBUG ((LM_WARNING,
-                          "RM: Can't find utilization "
-                          "of host_id=%s\n",
+                          ACE_TEXT ("RM: Can't find utilization ")
+                          ACE_TEXT ("of host_id=%s\n"),
                           (*hl_iter).c_str ()));
 
               /*
               ACE_DEBUG ((LM_ERROR,
-                          "Size of utilmap=%d\n",
+                          ACE_TEXT ("Size of utilmap=%d\n"),
                           hu_map.current_size ()));
               */
               break;
@@ -1166,7 +1188,7 @@ ReplicationManager_i::util_sorted_host_list (
   else
     {
       ACE_DEBUG ((LM_ERROR,
-                  "RM: Can't find load of object_id=%s\n",
+                  ACE_TEXT ("RM: Can't find load of object_id=%s\n"),
                   oid.c_str ()));
     }
 
@@ -1324,8 +1346,8 @@ ReplicationManager_i::update_enhanced_ranklist (void)
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "RM::send_rank_list - "
-                      "could not find primary for %s.\n",
+                      ACE_TEXT ("RM::send_rank_list - ")
+                      ACE_TEXT ("could not find primary for %s.\n"),
 		      object_id.c_str ()));
 
           list_with_primary->length (old_length);
@@ -1389,7 +1411,7 @@ ReplicationManager_i::send_rank_list (void)
       catch (CORBA::SystemException &)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "RM: A client agent agent died.\n"));
+                      ACE_TEXT ("RM: A client agent agent died.\n")));
     
           // Make sure to remove the failed agent from the list.
           AGENT_LIST::iterator tmp_it = al_iter;
@@ -1428,7 +1450,8 @@ ReplicationManager_i::send_state_synchronization_rank_list (void)
       catch (CORBA::SystemException &)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "RM: A state synchronization agent died.\n"));
+                      ACE_TEXT ("RM: A state synchronization ")
+                      ACE_TEXT ("agent died.\n")));
 
           STATE_SYNC_AGENT_LIST::iterator tmp_it = al_iter;
           ++tmp_it;
@@ -1491,7 +1514,7 @@ ReplicationManager_i::update_ior_map (
   else
     {
       ACE_DEBUG ((LM_ERROR,
-                  "RM: Objectid=%s not present in APP_SET\n",
+                  ACE_TEXT ("RM: Objectid=%s not present in APP_SET\n"),
                   oid.c_str ()));
     }
 }
@@ -1507,9 +1530,9 @@ ReplicationManager_i::proc_failure (const char *process_id)
       if (update_list_full_.wait (update_mutex_, &wait_time) == -1)  // timeout
         {
           ACE_DEBUG ((LM_ERROR,
-                      "RM: proc_failure CORBA upcall waited "
-                      "too long. Skipping proc_failure "
-                      "update. process_id=%s\n",
+                      ACE_TEXT ("RM: proc_failure CORBA upcall waited ")
+                      ACE_TEXT ("too long. Skipping proc_failure ")
+                      ACE_TEXT ("update. process_id=%s\n"),
                       process_id));
           return;
         }
@@ -1523,7 +1546,13 @@ void
 ReplicationManager_i::util_update (const char *host_id, 
                                    double util)
 {
-  //ACE_DEBUG ((LM_DEBUG, "Update from %s with UTIL %d\n", host_id, (int)util));
+  /*
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Update from %s with UTIL %d\n"),
+              host_id,
+              (int)util));
+  */
+  
   ACE_Guard <ACE_Thread_Mutex> guard(update_mutex_);
   ACE_Time_Value wait_time (5);
   
@@ -1533,9 +1562,9 @@ ReplicationManager_i::util_update (const char *host_id,
       if (update_list_full_.wait (update_mutex_, &wait_time) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "RM: util_update CORBA upcall "
-                      "waited too long. Skipping "
-                      "util_update. host_id=%s,util=%l\n",
+                      ACE_TEXT ("RM: util_update CORBA upcall ")
+                      ACE_TEXT ("waited too long. Skipping ")
+                      ACE_TEXT ("util_update. host_id=%s,util=%l\n"),
                       host_id,
                       util));
           return;
@@ -1543,8 +1572,8 @@ ReplicationManager_i::util_update (const char *host_id,
     }
     
   update_list_.insert_tail (
-      MonitorUpdate::create_host_util_update(host_id,util));
-  update_available_.broadcast();
+      MonitorUpdate::create_host_util_update (host_id, util));
+  update_available_.broadcast ();
 }
 
 int
@@ -1554,12 +1583,16 @@ ReplicationManager_i::pulse (void)
   ACE_Time_Value wait_time (5);
   
   while (update_list_.size () >= UPDATE_LIST_MAX_SIZE)
-    {  
-      if (update_list_full_.wait (update_mutex_, &wait_time) == -1)  // timeout
+    {
+      int result =
+        update_list_full_.wait (update_mutex_, &wait_time);
+        
+      // Timeout  
+      if (result == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "RM: pulse waited too long. "
-                             "Skipping pulse.\n"),
+                             ACE_TEXT ("RM: pulse waited too long. ")
+                             ACE_TEXT ("Skipping pulse.\n")),
                             0);
         }
     }
@@ -1575,7 +1608,7 @@ RankList *
 ReplicationManager_i::register_agent (
   CORBA::Object_ptr agent_reference)
 {
-  //ACE_DEBUG ((LM_DEBUG, "RM: register_agent () called\n"));
+  //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RM: register_agent () called\n")));
   ForwardingAgent_var agent =
     ForwardingAgent::_narrow (agent_reference);
 
@@ -1585,7 +1618,8 @@ ReplicationManager_i::register_agent (
   ACE_Guard <ACE_Thread_Mutex> agent_list_guard (
     enhanced_rank_list_agent_list_combined_mutex_);
 
-  this->agent_list_.insert_tail (CORBA::Object::_duplicate (agent.in ()));
+  this->agent_list_.insert_tail (
+    CORBA::Object::_duplicate (agent.in ()));
 
   return new RankList (enhanced_rank_list_);
 }
@@ -1596,8 +1630,12 @@ ReplicationManager_i::register_state_synchronization_agent (
   const char * /* process_id */,
   StateSynchronizationAgent_ptr agent)
 {
-  // ((LM_DEBUG, "RM: register_state_synchronization_agent () called\n"));
- 
+  /*
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("RM: register_state_")
+              ACE_TEXT ("synchronization_agent () called\n")));
+  */
+  
   ACE_Guard <ACE_Thread_Mutex> agent_guard (
     state_sync_agent_list_mutex_);
 
@@ -1619,38 +1657,42 @@ ReplicationManager_i::get_next (const char * /* object_id */)
 void
 ReplicationManager_i::set_state (const ::CORBA::Any & state_value)
 {
-  //  ACE_DEBUG ((LM_INFO, "RM: set_state with\n"));
+  //  ACE_DEBUG ((LM_INFO, ACE_TEXT ("RM: set_state with\n")));
   FLARE::ReplicationManager::ReplicationManagerState * value;
 
   if (state_value >>= value);
   else
     ACE_DEBUG ((LM_WARNING,
-                "ReplicationManager_i::set_state () "
-                "could not extract state value from Any."));
+                ACE_TEXT ("ReplicationManager_i::set_state () ")
+                ACE_TEXT ("could not extract state value from Any.")));
 
   for (size_t i = 0;
        i < value->utilization.length ();
        ++i)
     {
-      hostid_util_map_.bind (CORBA::string_dup(value->utilization[i].hostname),
-                             value->utilization[i].utilization);
+      hostid_util_map_.bind (
+        CORBA::string_dup (value->utilization[i].hostname),
+        value->utilization[i].utilization);
     }
 
   for (size_t i = 0;
        i < value->app_set_list.length ();
        ++i)
     {
-      APP_INFO info (CORBA::string_dup (value->app_set_list[i].object_id.in ()),
-                     value->app_set_list[i].load,
-                     CORBA::string_dup (value->app_set_list[i].host_name.in ()),
-                     CORBA::string_dup (value->app_set_list[i].process_id.in ()),
-                     (value->app_set_list[i].role == FLARE::ReplicationManager::PRIMARY ? PRIMARY : BACKUP),
-                     CORBA::Object::_duplicate (value->app_set_list[i].ior.in ()));
+      APP_INFO info (
+        CORBA::string_dup (value->app_set_list[i].object_id.in ()),
+        value->app_set_list[i].load,
+        CORBA::string_dup (value->app_set_list[i].host_name.in ()),
+        CORBA::string_dup (value->app_set_list[i].process_id.in ()),
+        (value->app_set_list[i].role == FLARE::ReplicationManager::PRIMARY
+          ? PRIMARY
+          : BACKUP),
+        CORBA::Object::_duplicate (value->app_set_list[i].ior.in ()));
 
       this->app_reg (info);
     }
 
-  // delete old entries and take over new forwarding agent entries
+  // Delete old entries and take over new forwarding agent entries.
   agent_list_.reset ();
   for (size_t i = 0;
        i < value->forwarding_agents.length ();
@@ -1660,21 +1702,22 @@ ReplicationManager_i::set_state (const ::CORBA::Any & state_value)
         CORBA::Object::_duplicate (value->forwarding_agents[i].in ()));
     }
 
-  // delete old entries and take over new forwarding agent entries
+  // Delete old entries and take over new forwarding agent entries.
   state_synchronization_agent_list_.reset ();
   for (size_t i = 0;
        i < value->state_sync_agents.length ();
        ++i)
     {
       state_synchronization_agent_list_.insert_tail (
-        StateSynchronizationAgent::_narrow (value->state_sync_agents[i].in ()));
+        StateSynchronizationAgent::_narrow (
+          value->state_sync_agents[i].in ()));
     }
 }
   
 CORBA::Any *
 ReplicationManager_i::get_state (void)
 {
-  // create new any object
+  // Create new Any object.
   CORBA::Any_var state (new CORBA::Any);
   
   FLARE::ReplicationManager::ReplicationManagerState_var value (
@@ -1700,9 +1743,9 @@ ReplicationManager_i::get_state (void)
           ai.load = (*ait).load;
           ai.host_name = (*ait).host_name.c_str ();
           ai.process_id = (*ait).process_id.c_str ();
-          ((*ait).role == PRIMARY ? 
-             ai.role = FLARE::ReplicationManager::PRIMARY : 
-             ai.role = FLARE::ReplicationManager::BACKUP);
+          ((*ait).role == PRIMARY
+             ? ai.role = FLARE::ReplicationManager::PRIMARY
+             : ai.role = FLARE::ReplicationManager::BACKUP);
           ai.ior = CORBA::Object::_duplicate ((*ait).ior.in ());
 
           value->app_set_list[index++] = ai;
@@ -1711,6 +1754,7 @@ ReplicationManager_i::get_state (void)
 
   index = 0;
   value->forwarding_agents.length (agent_list_.size ());
+  
   for (AGENT_LIST::iterator al_iter = agent_list_.begin ();
        al_iter != agent_list_.end (); 
        ++al_iter)
@@ -1721,7 +1765,8 @@ ReplicationManager_i::get_state (void)
 
   index = 0;
   value->state_sync_agents.length (state_synchronization_agent_list_.size ());
-  for (STATE_SYNC_AGENT_LIST::iterator ssal_iter = state_synchronization_agent_list_.begin ();
+  for (STATE_SYNC_AGENT_LIST::iterator ssal_iter =
+         state_synchronization_agent_list_.begin ();
        ssal_iter != state_synchronization_agent_list_.end (); 
        ++ssal_iter)
     {
@@ -1732,7 +1777,8 @@ ReplicationManager_i::get_state (void)
   index = 0;
   value->utilization.length (hostid_util_map_.current_size ());
   FLARE::ReplicationManager::HostUtil util;
-  for (STRING_TO_DOUBLE_MAP::iterator h_it = hostid_util_map_.begin ();
+  for (STRING_TO_DOUBLE_MAP::iterator h_it =
+         hostid_util_map_.begin ();
        h_it != hostid_util_map_.end ();
        ++h_it)
     {
@@ -1742,7 +1788,7 @@ ReplicationManager_i::get_state (void)
       value->utilization[index++] = util;
     }
 
-  // insert value into the any object
+  // Insert value into the Any object.
   *state <<= value._retn ();
 
   return state._retn ();

@@ -11,7 +11,9 @@
 #include "Failure_Handler.h"
 #include "HostMonitorImpl.h"
 
-ProcessInfo::ProcessInfo (const std::string &pid, const std::string &hn, size_t p)
+ProcessInfo::ProcessInfo (const std::string &pid,
+                          const std::string &hn,
+                          size_t p)
 : process_id (pid),
   hostname (hn),
   port (p)
@@ -20,7 +22,7 @@ ProcessInfo::ProcessInfo (const std::string &pid, const std::string &hn, size_t 
 
 Failure_Handler::ProcessInfoMap Failure_Handler::process_map_;
 
-Failure_Handler::Failure_Handler ()
+Failure_Handler::Failure_Handler (void)
 : connector_factory_ (0),
   host_monitor_ (0)
 {}
@@ -32,8 +34,8 @@ int Failure_Handler::handle_input (ACE_HANDLE fd)
   if (process_map_.find (fd, pinfo) == 0) /// if found
   {
     ACE_DEBUG ((LM_DEBUG,
-                "It looks like process %s has failed.\n",
-                pinfo.process_id.c_str()));
+                ACE_TEXT ("It looks like process %s has failed.\n"),
+                pinfo.process_id.c_str ()));
     process_map_.unbind (fd);
     
     if (host_monitor_->drop_process (pinfo.process_id) == 0)
@@ -44,8 +46,8 @@ int Failure_Handler::handle_input (ACE_HANDLE fd)
     else
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "drop_process failed process_id = %s.\n",
-                    pinfo.process_id.c_str()));
+                    ACE_TEXT ("drop_process failed process_id = %s.\n"),
+                    pinfo.process_id.c_str ()));
       }
   }
 
@@ -67,13 +69,15 @@ int Failure_Handler::drop_process (ACE_HANDLE fd)
 {
   ProcessInfo pinfo;
   
-  if ((process_map_.find (fd, pinfo) == 0) &&
-      (process_map_.unbind (fd) == 0))
+  if (process_map_.find (fd, pinfo) == 0
+      && process_map_.unbind (fd) == 0)
     {
-      connector_factory_->reactor ()->remove_handler (this, super::ALL_EVENTS_MASK);
+      ACE_Reactor *r = connector_factory_->reactor ();
+      r->remove_handler (this, super::ALL_EVENTS_MASK);
       ACE_DEBUG ((LM_DEBUG,
-                  "Record for process %s removed from the map.\n",
-                  pinfo.process_id.c_str()));
+                  ACE_TEXT ("Record for process %s ")
+                  ACE_TEXT ("removed from the map.\n"),
+                  pinfo.process_id.c_str ()));
       return 0;
     }
   else
@@ -87,5 +91,8 @@ int Failure_Handler::watch_process (ACE_HANDLE fd,
                                     const std::string &hostname,
                                     size_t port)
 {
-  return process_map_.bind (fd, ProcessInfo (process_id, hostname, port));
+  return
+    process_map_.bind (fd,
+                       ProcessInfo (process_id,
+                                    hostname, port));
 }

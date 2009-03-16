@@ -10,7 +10,8 @@
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_string.h"
 
-Client_ORBInitializer::Client_ORBInitializer (ForwardingAgent_i *agent)
+Client_ORBInitializer::Client_ORBInitializer (
+  ForwardingAgent_i *agent)
   : agent_ (agent)
 {
 }
@@ -21,13 +22,13 @@ Client_ORBInitializer::~Client_ORBInitializer (void)
 
 void
 Client_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr)
+  PortableInterceptor::ORBInitInfo_ptr)
 {
 }
 
 void
 Client_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info)
+  PortableInterceptor::ORBInitInfo_ptr info)
 {
   CORBA::String_var orb_id = info->orb_id ();
 

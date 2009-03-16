@@ -38,17 +38,20 @@ StateSynchronizationAgent_i::StateSynchronizationAgent_i (
     {
       if (!this->create_participant ())
         {
-          throw DDSFailure ("SSA could not create DDS participant\n");
+          throw
+            DDSFailure ("SSA could not create DDS participant\n");
         }
 
       if (!this->create_publisher ())
         {
-          throw DDSFailure ("SSA could not create DDS publisher\n");
+          throw
+            DDSFailure ("SSA could not create DDS publisher\n");
         }
       
       if (!this->create_subscriber ())
         {
-          throw DDSFailure ("SSA could not create DDS subscriber\n");
+          throw
+            DDSFailure ("SSA could not create DDS subscriber\n");
         }
     }
 #endif /* FLARE_USES_DDS */
@@ -65,15 +68,17 @@ StateSynchronizationAgent_i::~StateSynchronizationAgent_i (void)
       if (status != DDS::RETCODE_OK)
         {
           ACE_ERROR ((LM_ERROR,
-                      "SSA - "
-                      "Bad retcode from delete_contained_entities()\n"));
+                      ACE_TEXT ("SSA - ")
+                      ACE_TEXT ("Bad retcode from ")
+                      ACE_TEXT ("delete_contained_entities()\n")));
         }
         
       if (! this->delete_participant ())
         {
           ACE_ERROR ((LM_ERROR,
-                      "SSA - "
-                      "Bad retcode from delete_participant()\n"));
+                      ACE_TEXT ("SSA - ")
+                      ACE_TEXT ("Bad retcode from ")
+                      ACE_TEXT ("delete_participant()\n")));
         }
     }
 #endif /* FLARE_USES_DDS */
@@ -84,18 +89,19 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
 {
   /*
   ACE_DEBUG ((LM_TRACE, 
-              "SSA::state_changed (%s) called.\n", 
+              ACE_TEXT ("SSA::state_changed (%s) called.\n"), 
               object_id));
   */
-  // get application reference
+  // Get application reference.
   ReplicatedApplication_var app;
 
   if (application_map_.find (ACE_CString (object_id),
 			                       app) != 0)
     {
       ACE_ERROR ((LM_ERROR, 
-		              "(%P|%t) SSA::state_changed () "
-		              "could not find application for object id %s\n",
+		              ACE_TEXT ("(%P|%t) SSA::state_changed () ")
+		              ACE_TEXT ("could not find application ")
+		              ACE_TEXT ("for object id %s\n"),
 		              object_id));
       return;
     }
@@ -110,11 +116,11 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
    catch (const CORBA::SystemException& ex)
     {
       ACE_DEBUG ((LM_ERROR, 
-		              "(%P|%t) SSA::state_changed () "
-		              "exception while calling the "
-		              "get_state method for application "
-		              "%s:\n"
-		              "%s",
+		              ACE_TEXT ("(%P|%t) SSA::state_changed () ")
+		              ACE_TEXT ("exception while calling the ")
+		              ACE_TEXT ("get_state method for application ")
+		              ACE_TEXT ("%s:\n")
+		              ACE_TEXT ("%s"),
 		              object_id,
 		              ex._info ().c_str ()));
       return;
@@ -128,8 +134,9 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
     {
       /*
       ACE_ERROR ((LM_WARNING, 
-                  "(%P|%t) SSA::state_changed () "
-                  "could not find replicas for the application %s\n",
+                  ACE_TEXT ("(%P|%t) SSA::state_changed () ")
+                  ACE_TEXT ("could not find replicas ")
+                  ACE_TEXT ("for the application %s\n")_,
 		  object_id));
       */
       return;
@@ -149,9 +156,9 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
       catch (const CORBA::SystemException& ex)
 	      {
 	        ACE_DEBUG ((LM_WARNING, 
-		                  "(%P|%t) SSA::state_changed () "
-		                  "exception while contacting a "
-		                  "server replica for %s.\n",
+		                  ACE_TEXT ("(%P|%t) SSA::state_changed () ")
+		                  ACE_TEXT ("exception while contacting a ")
+		                  ACE_TEXT ("server replica for %s.\n"),
 		                  object_id));
 	      }
     }
@@ -181,13 +188,13 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
     }
 
   ACE_DEBUG ((LM_INFO,
-              "SSA::update_rank_list with:\n"));
+              ACE_TEXT ("SSA::update_rank_list with:\n")));
 
   // for each replication group in the replica group list
   for (size_t i = 0; i < rank_list.length (); ++i)
     {
       ACE_DEBUG ((LM_INFO,
-                  "\toid = %s (%d entries)\n", 
+                  ACE_TEXT ("\toid = %s (%d entries)\n"), 
                   rank_list[i].object_id.in (),
                   rank_list[i].ior_list.length ()));
 
@@ -220,15 +227,16 @@ StateSynchronizationAgent_i::update_rank_list (const RankList & rank_list)
                 }
               catch (const CORBA::SystemException& ex)
                 {
-		  /*
+		              /*
                   ACE_DEBUG ((
                     LM_WARNING, 
-                    "(%P|%t) SSA::"
-                    "update_rank_list could not resolve stringified "
-                    "object reference for %s : %s\n",
+                    ACE_TEXT ("(%P|%t) SSA::")
+                    ACE_TEXT ("update_rank_list could ")
+                    ACE_TEXT ("not resolve stringified "(
+                    ACE_TEXT ("object reference for %s : %s\n"),
                     oid.c_str (),
                     ex._info ().c_str ()));
-		  */
+		              */
                 }
             }
 
@@ -243,17 +251,22 @@ StateSynchronizationAgent_i::register_application (
   const char * object_id,
   ReplicatedApplication_ptr app)
 {
-  //ACE_DEBUG ((LM_TRACE,
-  //            "SSA::register_application (%s) called.\n", object_id));
-
+  /*
+  ACE_DEBUG ((LM_TRACE,
+              ACE_TEXT ("SSA::register_application (%s) called.\n"),
+              object_id));
+  */
   ACE_CString oid (object_id);
-
-  if (application_map_.bind (oid, ReplicatedApplication::_duplicate (app)) < 0)
+  int result =
+    application_map_.bind (oid,
+                           ReplicatedApplication::_duplicate (app));
+    
+  if (result < 0)
     {
       ACE_DEBUG ((LM_WARNING, 
-		              "(%P|%t) SSA::register_application () "
-		              "could not bind application %s to "
-		              "the map successfully\n",
+		              ACE_TEXT ("(%P|%t) SSA::register_application () ")
+		              ACE_TEXT ("could not bind application %s to ")
+		              ACE_TEXT ("the map successfully\n"),
 		              object_id));
     }
 }

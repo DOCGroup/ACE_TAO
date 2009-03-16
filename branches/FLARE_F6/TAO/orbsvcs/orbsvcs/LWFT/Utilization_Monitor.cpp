@@ -8,8 +8,8 @@
 #include "HMOptions.h"
 
 Utilization_Monitor::Utilization_Monitor (void)
-: load_ (0.0),
-  outfile_ (HMOptions::instance ()->util_file ().c_str ())
+  : load_ (0.0),
+    outfile_ (HMOptions::instance ()->util_file ().c_str ())
 {
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 

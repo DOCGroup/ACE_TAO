@@ -31,7 +31,7 @@ public:
   {
     try
       {
-        // register ReplicationManager with itself
+        // Register ReplicationManager with itself.
         primary_rm_->register_application (
           local_rm_->object_id (),
           0.0,
@@ -42,9 +42,11 @@ public:
       }
     catch (CORBA::Exception &)
       {
-        ACE_ERROR ((LM_ERROR, "RM: Could not register reference to "
-                    " the ReplicationManager with the primary "
-                    "ReplicationManager.\n"));
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("RM: Could not register reference to ")
+                    ACE_TEXT (" the ReplicationManager ")
+                    ACE_TEXT ("with the primary ")
+                    ACE_TEXT ("ReplicationManager.\n")));
         return 1;
       }
 
@@ -92,8 +94,6 @@ main (int argc, char *argv[])
 
       poa_manager->activate ();
 
-      //      std::cout << "Before StateSyncAgent." << std::endl;
-
       StateSynchronizationAgent_i* ssa_servant =
 	      new StateSynchronizationAgent_i (
 		    AppOptions::instance ()->host_id (),
@@ -111,8 +111,8 @@ main (int argc, char *argv[])
       if (result != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "StateSyncAgentTask::activate () "
-                             "returned %d, errno = %d\n", 
+                             ACE_TEXT ("StateSyncAgentTask::activate () ")
+                             ACE_TEXT ("returned %d, errno = %d\n"), 
                              result, 
                              errno),
                             -1);
@@ -121,18 +121,20 @@ main (int argc, char *argv[])
       if (! RMOptions::instance ()->parse_args (argc, argv))
         {  
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Replication Manager options "
-                             "are incorrect.\n"),
+                             ACE_TEXT ("Replication Manager options ")
+                             ACE_TEXT ("are incorrect.\n")),
                             -1);
         }
         
       ReplicationManager_i *rm_i = 0;
+      
       ACE_NEW_RETURN (rm_i, 
-                      ReplicationManager_i (orb.in (), 
-                                            RMOptions::instance()->hertz(), 
-                                            RMOptions::instance()->proactive(),
-					    RMOptions::instance()->static_mode ()),
-					    1);
+                      ReplicationManager_i (
+                        orb.in (), 
+                        RMOptions::instance()->hertz(), 
+                        RMOptions::instance()->proactive(),
+					              RMOptions::instance()->static_mode ()),
+					            1);
 
       PortableServer::ServantBase_var owner_transfer (rm_i);
 
@@ -141,13 +143,13 @@ main (int argc, char *argv[])
 
       poa->activate_object_with_id (oid.in (), rm_i);
 
-      CORBA::Object_var rm_object = poa->id_to_reference (oid.in ());
-      ReplicationManager_var rm = ReplicationManager::_narrow (rm_object.in ());
+      CORBA::Object_var rm_object =
+        poa->id_to_reference (oid.in ());
+      ReplicationManager_var rm =
+        ReplicationManager::_narrow (rm_object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (rm.in ());
-      
-//      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
       
       if (ior_output_file != 0)
         {
@@ -156,8 +158,8 @@ main (int argc, char *argv[])
           if (output_file == 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Cannot open output file "
-                                 "for writing IOR: %s",
+                                 ACE_TEXT ("Cannot open output file ")
+                                 ACE_TEXT ("for writing IOR: %s"),
                                  ior_output_file),
                                 1);
             }
@@ -189,26 +191,31 @@ main (int argc, char *argv[])
                 }
           
               primary_rm = ReplicationManager::_duplicate (rm.in ());
-
-              //          ACE_DEBUG ((LM_INFO,
-              //                      "ReplicationManager registered with Naming Service\n"));
+              /*
+              ACE_DEBUG ((LM_INFO,
+                          ACE_TEXT ("ReplicationManager registered ")
+                          ACE_TEXT ("with Naming Service\n")));
+              */
             }
           else
             {
-              CORBA::Object_var rm_obj = naming_client->resolve (rm_name);
+              CORBA::Object_var rm_obj =
+                naming_client->resolve (rm_name);
               
-              primary_rm = ReplicationManager::_narrow (rm_obj.in ());
+              primary_rm =
+                ReplicationManager::_narrow (rm_obj.in ());
             }
         }
       else
         {
-          primary_rm = ReplicationManager::_duplicate (rm.in ());
+          primary_rm =
+            ReplicationManager::_duplicate (rm.in ());
         }
 
-      // add reference for state synchronization of the RM itself
+      // Add reference for state synchronization of the RM itself.
       rm_i->agent (sync_agent_thread->agent_ref ());
 
-      // register its own StateSynchronizationAgent
+      // Register its own StateSynchronizationAgent.
       rm_i->register_state_synchronization_agent (
         AppOptions::instance ()->host_id ().c_str (),
 	      AppOptions::instance ()->process_id ().c_str (),
@@ -228,14 +235,13 @@ main (int argc, char *argv[])
           orb->run ();
         }
 
-      // ACE_DEBUG ((LM_DEBUG, "(%P|%t) RM - event loop finished\n"));
-
       poa->destroy (true, true);
       orb->destroy ();
     }
   catch (CORBA::Exception &ex)
     {
-      ex._tao_print_exception ("RM Process: caught exception:");
+      ex._tao_print_exception (
+        ACE_TEXT ("RM Process: caught exception:"));
       return -1;
     }
 

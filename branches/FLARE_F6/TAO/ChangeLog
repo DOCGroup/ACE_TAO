@@ -1,3 +1,33 @@
+Mon Mar 16 18:15:45 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/DDSStateUpdate_T.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:
+        * orbsvcs/orbsvcs/LWFT/CorbaStateUpdate.cpp:
+        * orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.cpp:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i_T.cpp:
+        * orbsvcs/orbsvcs/LWFT/Utilization_Monitor.cpp:
+        * orbsvcs/orbsvcs/LWFT/Client_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.cpp:
+        * orbsvcs/orbsvcs/LWFT/DDSStateReaderListener_T.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Handler.cpp:
+        * orbsvcs/orbsvcs/LWFT/AppOptions.cpp:
+        * orbsvcs/orbsvcs/LWFT/Client_Request_Interceptor.cpp:
+        * orbsvcs/orbsvcs/LWFT/ServerORBInitializer.cpp
+        * orbsvcs/orbsvcs/LWFT/Monitor_Thread.cpp:
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent.cpp:
+        * orbsvcs/orbsvcs/LWFT/Failure_Handler.cpp:
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp:
+        * orbsvcs/orbsvcs/LWFT/RM_Proxy.cpp:
+        * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.cpp:
+        * orbsvcs/orbsvcs/LWFT/HMOptions.cpp:
+        * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
+        * orbsvcs/LWFT_Service/host_monitor.cpp:
+        
+          Added ACE_TEXT wrappers to debug and error strings,
+          plus format changes to shorten line lengths.
+
 Fri Mar 13 19:20:59 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_expression.cpp:

@@ -44,7 +44,7 @@ AppSideMonitor_Thread::stop (void)
   if (reactor_.end_reactor_event_loop() == -1)
     {
       ACE_DEBUG ((LM_ERROR,
-                  "end_reactor_event_loop failed\n"));
+                  ACE_TEXT ("end_reactor_event_loop failed\n")));
     }
 }
 
@@ -67,8 +67,8 @@ AppSideMonitor_Thread::svc (void)
           if (CORBA::is_nil (obj.in ()))
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "AppSideMonitor_Thread::svc: "
-                                 "nil HM reference\n"),
+                                 ACE_TEXT ("AppSideMonitor_Thread::svc: ")
+                                 ACE_TEXT ("nil HM reference\n")),
                                 1);
             }
 
@@ -77,16 +77,17 @@ AppSideMonitor_Thread::svc (void)
           if (CORBA::is_nil (hmvar_.in ()))
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "AppSideMonitor_Thread::svc: "
-                                 "HostMonitor narrow failed.\n"),
+                                 ACE_TEXT ("AppSideMonitor_Thread::svc: ")
+                                 ACE_TEXT ("HostMonitor narrow failed.\n")),
                                 1);
             }
         }    
       catch (CORBA::Exception &ex)
         {
-          ACE_PRINT_EXCEPTION (ex,
-                               "AppSideMonitor_Thread::svc: "
-                               "HostMonitor resolve failed");
+          ACE_PRINT_EXCEPTION (
+            ex,
+            ACE_TEXT ("AppSideMonitor_Thread::svc: ")
+            ACE_TEXT ("HostMonitor resolve failed"));
           return -1;
         }
             
@@ -100,9 +101,10 @@ AppSideMonitor_Thread::svc (void)
             }
           catch (CORBA::Exception &ex)
             {
-              ACE_PRINT_EXCEPTION (ex,
-                                   "AppSideMonitor_Thread::svc: "
-                                   "HostMonitor::heartbeat_port()");
+              ACE_PRINT_EXCEPTION (
+                ex,
+                ACE_TEXT ("AppSideMonitor_Thread::svc: ")
+                ACE_TEXT ("HostMonitor::heartbeat_port()"));
               return -1;
             }
         }
@@ -110,41 +112,42 @@ AppSideMonitor_Thread::svc (void)
         {
           port_ = AppOptions::instance ()->port ();
         }
-
-//      ACE_DEBUG ((LM_TRACE,
-//                  "AppSideReg::svc - got heartbeat port "
-//                  "%d from hm.\n", port_));
-
+      /*
+      ACE_DEBUG ((LM_TRACE,
+                  ACE_TEXT ("AppSideReg::svc - got heartbeat port ")
+                  ACE_TEXT ("%d from hm.\n"),
+                  port_));
+      */
       if (serv_addr_.set (port_) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "AppSideMonitor_Thread::svc: "
-                             "can't set port.\n"),
+                             ACE_TEXT ("AppSideMonitor_Thread::svc: ")
+                             ACE_TEXT ("can't set port.\n")),
                             -1);
         }
       
       if (acceptor_.open (serv_addr_) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "AppSideMonitor_Thread::svc: "
-                             "can't open the socket.\n"),
+                             ACE_TEXT ("AppSideMonitor_Thread::svc: ")
+                             ACE_TEXT ("can't open the socket.\n")),
                             -1);
         }
     }
   catch (...)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "AppSideMonitor_Thread::svc: "
-                         "Unknown exception raised!"),
+                         ACE_TEXT ("AppSideMonitor_Thread::svc: ")
+                         ACE_TEXT ("Unknown exception raised!")),
                         -1);
     }
   }
 
-  //ACE_DEBUG ((LM_DEBUG, "Entering reactor event loop.\n"));
+  //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Entering reactor event loop.\n")));
   if (reactor_.run_reactor_event_loop() == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "run_reactor_event_loop failed\n"),
+                         ACE_TEXT ("run_reactor_event_loop failed\n")),
                         -1);
     }
   
@@ -168,10 +171,8 @@ AppSideMonitor_Thread::activate (long /* flags */,
     {
       return 0;
     }
-  else
-    {
-      activated_ = true;
-    }
+    
+  activated_ = true;
     
   // This will end up back in our overridden svc() method. We
   // want to wait for it to execute the statements in its body
@@ -197,27 +198,28 @@ AppSideMonitor_Thread::activate (long /* flags */,
         {
     /*
           ACE_DEBUG ((LM_TRACE,
-                      "Registered successfully %s "
-                      "with host monitor.\n",
+                      ACE_TEXT ("Registered successfully %s ")
+                      ACE_TEXT ("with host monitor.\n"),
                       AppOptions::instance ()->process_id ().c_str())); 
     */
         }
       else
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Registeration with the monitor "
-                             "failed. Maybe the "
-                             "hostmonitor needs to be set to "
-                             "another "
-                             "port range.\n"),
+                             ACE_TEXT ("Registeration with the monitor ")
+                             ACE_TEXT ("failed. Maybe the ")
+                             ACE_TEXT ("hostmonitor needs to be set to ")
+                             ACE_TEXT ("another ")
+                             ACE_TEXT ("port range.\n")),
                             1);
         }
     }
   catch (CORBA::Exception &ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "AppSideMonitor_Thread::svc: "
-                           "HostMonitor::register_process():");
+      ACE_PRINT_EXCEPTION (
+        ex,
+        ACE_TEXT ("AppSideMonitor_Thread::svc: ")
+        ACE_TEXT ("HostMonitor::register_process():"));
       return -1;
     }
 

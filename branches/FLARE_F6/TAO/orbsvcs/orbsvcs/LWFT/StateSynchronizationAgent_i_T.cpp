@@ -25,18 +25,21 @@ StateSynchronizationAgent_i::register_application_with_dds (
 {
 /*
   ACE_DEBUG ((LM_TRACE,
-              "SSA::register_application_with_dds (%s) called.\n",
+              ACE_TEXT ("SSA::register_application_with_dds ")
+              ACE_TEXT ("(%s) called.\n"),
               object_id));
 */
   ACE_CString oid (object_id);
+  int result =
+    application_map_.bind (oid,
+                           ReplicatedApplication::_duplicate (app));
 
-  if (application_map_.bind (oid,
-                             ReplicatedApplication::_duplicate (app)) != 0)
+  if (result != 0)
     {
       ACE_DEBUG ((LM_WARNING, 
-		              "(%P|%t) SSA::register_application_with_dds () "
-		              "could not bind application %s to "
-		              "the map successfully\n",
+		              ACE_TEXT ("(%P|%t) SSA::register_application_with_dds () ")
+		              ACE_TEXT ("could not bind application %s to ")
+		              ACE_TEXT ("the map successfully\n"),
 		              object_id));
     }
 
@@ -46,15 +49,16 @@ StateSynchronizationAgent_i::register_application_with_dds (
         {
         /*
           ACE_DEBUG ((LM_TRACE,
-                      "SSA::register_application_with_dds add DDS participant"
-                      " for application %s\n",
+                      ACE_TEXT ("SSA::register_application_with_dds ")
+                      ACE_TEXT ("add DDS participant")
+                      ACE_TEXT (" for application %s\n"),
                       object_id));
         */  
-          // create a new list which will have only one entry for DDS
+          // Create a new list which will have only one entry for DDS.
           ReplicaGroup replica_group;
           replica_group.use_dds = true;
           
-          // register a DDS participant for this application
+          // Register a DDS participant for this application,
           replica_group.replicas.push_back (
             typename StateSynchronizationAgent_i::STATEFUL_OBJECT_PTR (
                new DDSStateUpdate_T <DATA_TYPE> (
@@ -67,14 +71,15 @@ StateSynchronizationAgent_i::register_application_with_dds (
 
           ACE_CString oid (object_id);
       
-          // this should work without doing a rebind, since there is
-          // only one application of the same type per process
+          // This should work without doing a rebind, since there is
+          // only one application of the same type per process.
           replica_map_.bind (oid, replica_group);
         }
       catch (const DDSFailure & ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      "SSA::register_application_with_dds () DDS problem : %s\n",
+                      ACE_TEXT ("SSA::register_application_with_dds ")
+                      ACE_TEXT ("() DDS problem : %s\n"),
                       ex.description ().c_str ()));
         }
     } // end !use_corba_

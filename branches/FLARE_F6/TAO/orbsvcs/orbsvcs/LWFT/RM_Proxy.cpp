@@ -22,8 +22,10 @@ RM_Proxy::RM_Proxy (CORBA::ORB_ptr orb)
   if (CORBA::is_nil (obj))
     {
       ACE_DEBUG ((LM_ERROR,
-                  "Nil Reference of ReplicationManager\n"));
-      throw std::runtime_error ("Nil Reference of ReplicationManager");
+                  ACE_TEXT ("Nil Reference of ReplicationManager\n")));
+      throw
+        std::runtime_error (
+          "Nil Reference of ReplicationManager");
     }
 
   /// Downcast the object reference to a reference of type HostMonitor.
@@ -32,8 +34,11 @@ RM_Proxy::RM_Proxy (CORBA::ORB_ptr orb)
   if (CORBA::is_nil (RM_var_.in ()))
     {
       ACE_DEBUG ((LM_ERROR,
-                  "Argument is not a ReplicationManager reference.\n"));
-      throw std::runtime_error ("Argument is not a ReplicationManager reference.");
+                  ACE_TEXT ("Argument is not a ")
+                  ACE_TEXT ("ReplicationManager reference.\n")));
+      throw
+        std::runtime_error (
+          "Argument is not a ReplicationManager reference.");
     }
 }
 
@@ -56,12 +61,13 @@ RM_Proxy::obtain_RM_ior (CORBA::ORB_ptr orb)
       if (CORBA::is_nil (retval))
         {
           ACE_ERROR ((LM_ERROR,
-                      "RM_Proxy: Null RM objref from OR file\n"));
+                      ACE_TEXT ("RM_Proxy: Null RM ")
+                      ACE_TEXT ("objref from OR file\n")));
         }
       else
         {
          // ACE_DEBUG ((LM_TRACE,
-         //             "RM_Proxy: RM resolved from IOR file\n"));
+         //             ACE_TEXT ("RM_Proxy: RM resolved from IOR file\n")));
         }
     }
   else if (ior_access.first == 'n')  /// Naming Service based IOR
@@ -79,12 +85,14 @@ RM_Proxy::obtain_RM_ior (CORBA::ORB_ptr orb)
       if (CORBA::is_nil (retval))
         {
           ACE_ERROR ((LM_ERROR,
-                      "RM_Proxy: Null RM objref from Naming Service\n"));
+                      ACE_TEXT ("RM_Proxy: Null RM objref ")
+                      ACE_TEXT ("from Naming Service\n")));
         }
       else
         {
           //ACE_DEBUG ((LM_TRACE,
-          //            "RM_Proxy: RM resolved from Naming Service\n"));
+          //            ACE_TEXT ("RM_Proxy: RM resolved "
+          //            ACE_TEXT ("from Naming Service\n")));
         }
     }
   else
@@ -95,12 +103,13 @@ RM_Proxy::obtain_RM_ior (CORBA::ORB_ptr orb)
       if (CORBA::is_nil (retval))
         {
           ACE_ERROR ((LM_ERROR,
-                      "RM_Proxy: Null RM objref from IOR file\n"));
+                      ACE_TEXT ("RM_Proxy: Null RM objref ")
+                      ACE_TEXT ("from IOR file\n")));
         }
       else
         {
           //ACE_DEBUG ((LM_TRACE,
-          //            "RM_Proxy: RM resolved from IOR file\n"));
+          //            ACE_TEXT ("RM_Proxy: RM resolved from IOR file\n")));
         }
     }
     
@@ -121,8 +130,8 @@ RM_Proxy::proc_failure (const std::string & process_id)
       if (CORBA::is_nil (RM_var_.in ()))
 	      {
 	        ACE_ERROR ((LM_ERROR,
-	                    "RM_Proxy::proc_failure - "
-		                  "RM reference is nil.\n"));
+	                    ACE_TEXT ("RM_Proxy::proc_failure - ")
+		                  ACE_TEXT ("RM reference is nil.\n")));
 	        return;
 	      }
 
@@ -131,15 +140,22 @@ RM_Proxy::proc_failure (const std::string & process_id)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "RM_Proxy::proc_failure: Exception caught:");
+        ACE_TEXT ("RM_Proxy::proc_failure: Exception caught:"));
     }
 }
 
 int
 RM_Proxy::pulse (void)
 {
-  //ACE_DEBUG((LM_ERROR,"host_id=%s\n",HMOptions::instance()->host_id().c_str()));
-  //ACE_DEBUG((LM_ERROR,"load=%d\n", (int)load_calc_->percent_load()));
+  /*
+  ACE_DEBUG ((LM_ERROR,
+              ACE_TEXT ("host_id=%s\n"),
+              HMOptions::instance ()->host_id ().c_str ()));
+  ACE_DEBUG ((LM_ERROR,
+              ACE_TEXT ("load=%f\n"),
+              load_calc_->percent_load ()));
+  */
+  
   RM_var_->util_update (HMOptions::instance ()->host_id ().c_str (), 
                         load_calc_->percent_load ());
   return 0;

@@ -16,7 +16,8 @@
 #include "HMOptions.h"
 #include "Utilization_Monitor.h"
 
-HostMonitorImpl::HostMonitorImpl (CORBA::ORB_ptr orb, Monitor_Thread *mt)
+HostMonitorImpl::HostMonitorImpl (
+  CORBA::ORB_ptr orb, Monitor_Thread *mt)
   : monitor_thread_ (mt),
     port_counter_ (HMOptions::instance ()->port_range_begin ()),
     connector_ (monitor_thread_->get_reactor ()),
@@ -33,7 +34,7 @@ HostMonitorImpl::~HostMonitorImpl (void)
 void
 HostMonitorImpl::dump (void)
 {
-  //ACE_DEBUG ((LM_DEBUG, "inside dump method\n"));
+  //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("inside dump method\n")));
 }
 
 
@@ -42,7 +43,7 @@ HostMonitorImpl::register_process (const char *process_id,
                                    const char * hostname,
                                    CORBA::Long port)
 {
-  //ACE_DEBUG ((LM_DEBUG, "Entering register process\n"));
+  //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Entering register process\n")));
   Failure_Handler *handler = 0;
   ACE_SOCK_Connector::PEER_ADDR serv_addr;
   serv_addr.set (port, hostname);
@@ -52,7 +53,8 @@ HostMonitorImpl::register_process (const char *process_id,
   if (connector_.connect (handler, serv_addr, options) < 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Failed to open a connector socket.\n"), 1);
+                         ACE_TEXT ("Failed to open a connector socket.\n")),
+                        1);
     }
 
   handler->set_host_monitor (this);
@@ -63,8 +65,8 @@ HostMonitorImpl::register_process (const char *process_id,
   process_map_.bind (process_id, handler);
   /*
   ACE_DEBUG ((LM_TRACE,
-              "HostMonitorImpl::register_process "
-              "process_id = %s, port = %d.\n",
+              ACE_TEXT ("HostMonitorImpl::register_process ")
+              ACE_TEXT ("process_id = %s, port = %d.\n"),
               process_id,
               port));
   */
@@ -79,7 +81,7 @@ HostMonitorImpl::unregister_process (const char *process_id)
   if (process_map_.find (process_id, handler) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "HostMonitorImpl::unregister_process %s.\n",
+                  ACE_TEXT ("HostMonitorImpl::unregister_process %s.\n"),
                   process_id));
                   
       if ((handler->drop_process (handler->get_handle ()) == 0))
@@ -92,16 +94,16 @@ HostMonitorImpl::unregister_process (const char *process_id)
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "HostMonitorImpl::unregister_process "
-                      "Process %s can't be dropped!\n",
+                      ACE_TEXT ("HostMonitorImpl::unregister_process ")
+                      ACE_TEXT ("Process %s can't be dropped!\n"),
                       process_id));
         }
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "HostMonitorImpl::unregister_process "
-                  "Invalid process_id = %s.\n",
+                  ACE_TEXT ("HostMonitorImpl::unregister_process ")
+                  ACE_TEXT ("Invalid process_id = %s.\n"),
                   process_id));
     }
 
@@ -112,8 +114,10 @@ HostMonitorImpl::unregister_process (const char *process_id)
 HostMonitorImpl::heartbeat_port (void)
 { 
   /*
-  ACE_DEBUG ((LM_TRACE, "HostMonitorImpl::heartbeat_port () - "
-              "sent out port number %d\n", port_counter_));
+  ACE_DEBUG ((LM_TRACE,
+              ACE_TEXT ("HostMonitorImpl::heartbeat_port () - ")
+              ACE_TEXT ("sent out port number %d\n"),
+              port_counter_));
   */
   return port_counter_++;
 }
@@ -136,7 +140,7 @@ RM_Proxy *HostMonitorImpl::create_RM_Proxy (void)
   if (rm_proxy_.get() == 0)
     {
       std::auto_ptr <Utilization_Monitor> util_mon (
-          new Utilization_Monitor);
+        new Utilization_Monitor);
       std::auto_ptr <RM_Proxy> rm_proxy (new RM_Proxy (orb_));
 
       rm_proxy->set_Utilization_Monitor (util_mon.get ());

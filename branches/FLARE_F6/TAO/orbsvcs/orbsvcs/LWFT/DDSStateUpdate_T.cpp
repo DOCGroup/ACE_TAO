@@ -51,17 +51,17 @@ DDSStateUpdate_T<DATA_TYPE>::init (void)
 {
   if (!this->create_topic ())
     {
-      throw (DDSFailure ("Could not create topic\n"));
+      throw DDSFailure ("Could not create topic\n");
     }
 
   if (!this->create_datawriter ())
     {
-      throw (DDSFailure ("Could not create datawriter\n"));
+      throw DDSFailure ("Could not create datawriter\n");
     }
 
   if (!this->create_datareader ())
     {
-      throw (DDSFailure ("Could not create datareader\n"));
+      throw DDSFailure ("Could not create datareader\n");
     }
  
   return true;
@@ -79,7 +79,8 @@ DDSStateUpdate_T<DATA_TYPE>::fini (void)
       return false;
     }
 
-  status = this->participant_->delete_topic (this->topic_.in ());
+  status =
+    this->participant_->delete_topic (this->topic_.in ());
 
   if (status != DDS::RETCODE_OK)
     {
