@@ -6,18 +6,15 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $continuous = ($^O eq 'hpux');
 
 print STDERR "\n********** RTCORBA Collocation Unit Test **********\n\n";
 
-if (PerlACE::is_vxworks_test()) {
-    $T = new PerlACE::ProcessVX ("Collocation");
-}
-else {
-    $T = new PerlACE::Process ("Collocation");    
-}
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+
+$T = $server->CreateProcess ("Collocation");
 
 if ($continuous) {
   $T->Arguments("-ORBSvcConf continuous$PerlACE::svcconf_ext");

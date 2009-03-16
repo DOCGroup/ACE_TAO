@@ -1,26 +1,34 @@
+Mon Mar 16 19:17:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Collocation/run_test.pl:
+        * tests/RTCORBA/ORB_init/run_test.pl:
+        * tests/RTCORBA/RTMutex/run_test.pl:
+        * bin/tao_orb_tests.lst:
+          Converted to the new test framework
+
 Mon Mar 16 18:35:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tao/Compression/zlib/ZlibCompressor.cpp:
           Fixed error when compressing a small number of bytes.
           It should be compliant to ZLib spec now.
-          
+
         * tests/Compression/bzip2server.cpp:
         * tests/Compression/lzoserver.cpp:
         * tests/Compression/zlibserver.cpp:
-          Extended tests with compression of a small 
+          Extended tests with compression of a small
           number of bytes.
 
 Mon Mar 16 16:31:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tao/Compression/bzip2/Bzip2Compressor.cpp:
           Fix issue when compressing just a few bytes.
-          
+
         * tao/GIOP_Message_Base.cpp:
           Fixed logging errors.
-        
+
         * tao/ZIOP/ZIOP.cpp:
         * tao/ZIOP/ZIOP.h:
-          Optimized log information. 
+          Optimized log information.
           Better handling of exceptions/return values (GIOP
           should be used).
 
@@ -36,20 +44,20 @@ Mon Mar 16 16:31:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * tests/ZIOP/ZIOP.mpc:
           Added testcompressor. This compressor just throws
           compression and decompression exceptions. These exception
-          should be handled properly by ZIOP. 
-        
+          should be handled properly by ZIOP.
+
         * tests/ZIOP/client.cpp:
         * tests/ZIOP/run_test.pl:
         * tests/ZIOP/server.cpp:
-          Optimized tests. Refactored code by using 
+          Optimized tests. Refactored code by using
           functions. Optimized tests when TAO_HAS_ZIOP define
           is zero or not defined.
-          Added test compressor. 
+          Added test compressor.
 
 Mon Mar 16 15:52:33 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_enum.cpp(gen_ostream_operator):
-        
+
           For the (optional) generation of an ostream operator for
           enums, changed the code generation to use the actual enum
           value for the switch cases, rather than the equivalent
