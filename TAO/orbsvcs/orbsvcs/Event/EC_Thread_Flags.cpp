@@ -74,7 +74,7 @@ TAO_EC_Thread_Flags::parse_symbols (const char* syms)
       if (tok[0] >= '0' && tok[0] <= '9') // Numeric, so just accept it!
         {
           // parse it as a long straight to the flags
- 
+
           // If somebody specifies the scheduler this way, then they
           // lose range checking on the priority.  Bummer, but those
           // are the breaks.
@@ -112,7 +112,7 @@ TAO_EC_Thread_Flags::parse_symbols (const char* syms)
               // Ideally this would call some sort of on-error function...
               // but, it doesn't.
               ACE_ERROR ((LM_ERROR,
-                          "RTEC (%P|%t) unable to parse %s as a thread flag - skipping\n",
+                          "RTEC (%P|%t) unable to parse %C as a thread flag - skipping\n",
                           tok));
             }
         }
