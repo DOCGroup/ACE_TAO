@@ -85,7 +85,7 @@ ACE_System_Time::get_master_system_time (time_t &time_out)
   if (this->delta_time_ == 0)
     {
       // Try to find it
-      void * temp;
+      void * temp = 0;
       if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR, temp) == -1)
         {
           // No time entry in shared memory (meaning no Clerk exists)
