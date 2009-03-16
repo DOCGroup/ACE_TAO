@@ -113,19 +113,19 @@ namespace ACE_Utils
   const UUID &
   UUID::operator = (const UUID & rhs)
   {
-    if (this == &rhs)
-      return *this;
+    if (this != &rhs)
+      {
+        // Copy the values of the UUID.
+        this->time_low_ = rhs.time_low_;
+        this->time_mid_ = rhs.time_mid_;
+        this->time_hi_and_version_ = rhs.time_hi_and_version_;
+        this->clock_seq_hi_and_reserved_ = rhs.clock_seq_hi_and_reserved_;
+        this->clock_seq_low_ = rhs.clock_seq_low_;
+        this->node_ = rhs.node_;
 
-    // Copy the values of the UUID.
-    this->time_low_ = rhs.time_low_;
-    this->time_mid_ = rhs.time_mid_;
-    this->time_hi_and_version_ = rhs.time_hi_and_version_;
-    this->clock_seq_hi_and_reserved_ = rhs.clock_seq_hi_and_reserved_;
-    this->clock_seq_low_ = rhs.clock_seq_low_;
-    this->node_ = rhs.node_;
-
-    // Delete the string version of the UUID.
-    this->as_string_.reset (0);
+        // Delete the string version of the UUID.
+        this->as_string_.reset (0);
+      }
     return *this;
   }
 

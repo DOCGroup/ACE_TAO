@@ -1,3 +1,25 @@
+Mon Mar 16 12:29:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Configuration.cpp:
+        * ace/System_Time.cpp:
+          Initialise pointers with 0
+
+        * ace/MEM_Acceptor.h:
+          Doxygen fix
+
+        * ace/Monitor_Control_Types.cpp (operator=):
+          Check for self assignment
+
+        * ace/Name_Space.cpp:
+        * ace/Name_Space.h:
+          Let operator= return a value
+
+        * ace/SOCK.h:
+          Layout change
+
+        * ace/UUID.cpp:
+          Simplified operator=
+
 Sun Mar 15 18:44:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-ciao.spec:
