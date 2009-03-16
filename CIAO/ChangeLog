@@ -1,3 +1,18 @@
+Mon Mar 16 17:36:12 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/FTComponents/FTTask_exec.cpp
+        * DAnCE/tests/CIAO/FTComponents/FTTask_exec.h:
+        
+          Added timing measurement.
+        
+        * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.cpp:
+        
+          Cosmetic changes and adding timer calibration in ctor.
+        
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp:
+        
+          Changed debugging output.
+
 Fri Mar 13 19:28:40 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/FTComponents/FTClient.idl

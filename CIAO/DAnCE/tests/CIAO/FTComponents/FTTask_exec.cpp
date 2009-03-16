@@ -47,6 +47,8 @@ namespace CIDL_FTTask_Impl
       task_ (state_)
   {
     CIAO_TRACE ("FTTask_exec_i::FTTask_exec_i (void)");
+
+    timer_.calibrate ();
   }
 
   FTTask_exec_i::~FTTask_exec_i (void)
@@ -60,13 +62,22 @@ namespace CIDL_FTTask_Impl
   FTTask_exec_i::run_task (
     ::CORBA::Double execution_time)
   {
-    CIAO_DEBUG ((LM_TRACE, "x(%d) ", state_));
+    CIAO_DEBUG ((LM_TRACE, "x(%d, %f)=", state_, execution_time));
+
+    timer_.start ();
 
     this->cpu_.run (static_cast <size_t> (execution_time));
+
+    timer_.stop ();
 
     ++state_;
     
     agent_->state_changed (object_id_.c_str ());
+
+    ACE_Time_Value rt;
+    timer_.elapsed_time (rt);
+
+    CIAO_DEBUG ((LM_TRACE, "%dms ", rt.msec ()));
 
     task_.signal ();
   }
