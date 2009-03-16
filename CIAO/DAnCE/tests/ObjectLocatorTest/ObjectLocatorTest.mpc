@@ -1,21 +1,21 @@
 // $Id$
 project (ObjectLocatorTestServer): dance, taoserver, iortable, dance_redirection_service, dance_logger {
-	exename = ObjectLocatorTestServer
+  exename = ObjectLocatorTestServer
 
-	IDL_Files {
-   		Dummy.idl
-  	}
+  IDL_Files {
+    Dummy.idl
+  }
 
-	Source_Files {
-		srv_main.cpp
-   		DummyC.cpp
-   		DummyS.cpp
-   		DummyImpl.cpp
-  	}
+  Source_Files {
+    srv_main.cpp
+    DummyC.cpp
+    DummyS.cpp
+    DummyImpl.cpp
+  }
 }
 
 project (ObjectLocatorTestClient): dance, taoclient, anytypecode, dance_logger, portableserver {
-        
+
 	after  += ObjectLocatorTestServer
 	exename = ObjectLocatorTestClient
 
