@@ -1,3 +1,10 @@
+Mon Mar 16 12:44:49 UTC 2009  Simon McQueen  <sm@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+
+          Added bug #3598 tests.
+
 Mon Mar 16 11:50:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Client_Propagated/run_test.pl:
