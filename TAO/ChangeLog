@@ -1,3 +1,15 @@
+Mon Mar 16 18:35:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/Compression/zlib/ZlibCompressor.cpp:
+          Fixed error when compressing a small number of bytes.
+          It should be compliant to ZLib spec now.
+          
+        * tests/Compression/bzip2server.cpp:
+        * tests/Compression/lzoserver.cpp:
+        * tests/Compression/zlibserver.cpp:
+          Extended tests with compression of a small 
+          number of bytes.
+
 Mon Mar 16 16:31:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tao/Compression/bzip2/Bzip2Compressor.cpp:
