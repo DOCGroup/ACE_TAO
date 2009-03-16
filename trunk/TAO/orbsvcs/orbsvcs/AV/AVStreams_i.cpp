@@ -879,7 +879,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
       AVStreams::flowSpec a_flows, b_flows;
       CORBA::Any_var flows_any;
       flows_any = sep_a_->get_property_value ("Flows");
-      AVStreams::flowSpec *temp_flows;
+      AVStreams::flowSpec *temp_flows = 0;
       flows_any.in () >>= temp_flows;
       a_flows = *temp_flows;
       flows_any = sep_b_->get_property_value ("Flows");
@@ -1068,7 +1068,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                         }
                       CORBA::String_var fep_a_name, fep_b_name;
                       flowname_any = fep_a->get_property_value ("FlowName");
-                      const char *temp_name;
+                      const char *temp_name = 0;
                       flowname_any.in () >>= temp_name;
                       fep_a_name = CORBA::string_dup (temp_name);
                       flowname_any = fep_b->get_property_value ("FlowName");
@@ -1579,7 +1579,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
           CORBA::Any_var protocols_any =
             responder->get_property_value ("AvailableProtocols");
           AVStreams::protocolSpec peer_protocols;
-          AVStreams::protocolSpec *temp_protocols;
+          AVStreams::protocolSpec *temp_protocols = 0;
           protocols_any.in () >>= temp_protocols;
           peer_protocols = *temp_protocols;
           for (u_int i=0;i<peer_protocols.length ();i++)
@@ -2211,7 +2211,7 @@ TAO_StreamEndPoint::add_fep_i (AVStreams::FlowEndPoint_ptr fep)
       CORBA::Any_var flow_name_any =
         fep->get_property_value ("FlowName");
 
-      const char *tmp;
+      const char *tmp = 0;
       flow_name_any >>= tmp;
       flow_name = CORBA::string_dup (tmp);
     }
@@ -3226,7 +3226,7 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj)
 
       flow_name_any = fdev->get_property_value ("Flow");
 
-      const char *tmp;
+      const char *tmp = 0;
       *flow_name_any >>= tmp;
       flow_name = CORBA::string_dup (tmp);
     }
@@ -3974,7 +3974,7 @@ TAO_FlowEndPoint::set_protocol_restriction (const AVStreams::protocolSpec & prot
       AvailableProtocols_property <<= protocols;
       this->define_property ("AvailableProtocols",
                              AvailableProtocols_property);
-      AVStreams::protocolSpec *temp_spec;
+      AVStreams::protocolSpec *temp_spec = 0;
       CORBA::Any_var temp_any = this->get_property_value ("AvailableProtocols");
       temp_any.in () >>= temp_spec;
       if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "%N:%l\n"));
@@ -4007,7 +4007,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep)
       exception_message = "TAO_FlowEndPoint::is_fep_compatible - Format";
       format_ptr = this->get_property_value ("Format");
 
-      const char *temp_format;
+      const char *temp_format = 0;
       format_ptr.in () >>= temp_format;
       my_format = CORBA::string_dup (temp_format);
       // get my peer's format value
@@ -4022,7 +4022,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep)
       // since formats are same, check for a common protocol
       CORBA::Any_var AvailableProtocols_ptr;
       AVStreams::protocolSpec my_protocol_spec, peer_protocol_spec;
-      AVStreams::protocolSpec *temp_protocols;;
+      AVStreams::protocolSpec *temp_protocols = 0;
 
       exception_message =
         "TAO_FlowEndPoint::is_fep_compatible - AvailableProtocols";
