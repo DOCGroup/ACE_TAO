@@ -1,3 +1,9 @@
+Mon Mar 16 18:42:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/analyticsTracking.php:
+        * docs/Download.html:
+          Added tracking
+
 Mon Mar 16 13:01:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Asynch_IO.h:
