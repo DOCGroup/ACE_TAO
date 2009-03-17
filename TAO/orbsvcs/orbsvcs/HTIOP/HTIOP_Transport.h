@@ -114,13 +114,6 @@ namespace TAO
                                 TAO_TWOWAY_REQUEST,
                                 ACE_Time_Value *max_time_wait = 0);
 
-      // @@ This is probably not needed - Priyanka
-      // This is needed because we want to send additional information
-      // such as session id etc. in the header.
-      virtual int generate_request_header (TAO_Operation_Details &opdetails,
-                                           TAO_Target_Specification &spec,
-                                           TAO_OutputCDR &msg);
-
       virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
       virtual TAO_Connection_Handler * connection_handler_i (void);

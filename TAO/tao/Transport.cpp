@@ -444,15 +444,6 @@ TAO_Transport::generate_request_header (
     TAO_Target_Specification &spec,
     TAO_OutputCDR &output)
 {
-  // Codeset service context is only supposed to be sent in the first request
-  // on a particular connection.
-  if (this->first_request_)
-    {
-      TAO_Codeset_Manager * const csm = this->orb_core ()->codeset_manager ();
-      if (csm)
-        csm->generate_service_context (opdetails, *this);
-    }
-
   if (this->messaging_object ()->generate_request_header (opdetails,
                                                           spec,
                                                           output) == -1)
@@ -2757,6 +2748,11 @@ TAO_Transport::allocate_partial_message_block (void)
       ACE_NEW (this->partial_message_,
                ACE_Message_Block (partial_message_size));
     }
+}
+
+void
+TAO_Transport::set_bidir_context_info (TAO_Operation_Details &)
+{
 }
 
 /*

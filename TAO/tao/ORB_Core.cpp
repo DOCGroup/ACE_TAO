@@ -1295,7 +1295,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   this->orb_params ()->negotiate_codesets (negotiate_codesets);
 
   if (this->codeset_manager())
-    this->codeset_manager_->open();
+    this->codeset_manager_->open(*this);
   else
     if  (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -1752,26 +1752,6 @@ TAO_ORB_Core::service_raise_transient_failure (
     }
 
   return TAO::TAO_INVOKE_FAILURE;
-}
-
-void
-TAO_ORB_Core::service_context_list (
-    TAO_Stub *stub,
-    TAO_Service_Context &service_context,
-    CORBA::Boolean restart)
-{
-  if (this->protocols_hooks_ != 0)
-    {
-      this->protocols_hooks_->rt_service_context (stub, service_context, restart);
-    }
-
-  // call the network priority protocols hooks that has been
-  // registered.
-  if (network_priority_protocols_hooks_ != 0)
-    {
-      this->network_priority_protocols_hooks_->np_service_context (stub,
-        service_context, restart);
-    }
 }
 
 TAO_Client_Strategy_Factory *

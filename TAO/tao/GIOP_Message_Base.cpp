@@ -1880,7 +1880,7 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (
           return -1;
         }
 
-      const CORBA::ULong request_id = tmp_request_id;
+      CORBA::ULong const request_id = tmp_request_id;
 
       while (this->fragment_stack_.pop (head) != -1)
         {
