@@ -12,7 +12,7 @@ ACE_RCSID (DiffServPolicy,
 #include "tao/Transport.h"
 #include "tao/ORB_Core.h"
 #include "tao/GIOP_Message_Base.h"
-#include "tao/Operation_Details.h"
+#include "tao/operation_details.h"
 #include "tao/Transport_Mux_Strategy.h"
 #include "tao/Stub.h"
 
@@ -41,7 +41,7 @@ TAO_DiffServ_Service_Context_Handler::generate_service_context (
 
       TAO::NetworkPriorityPolicy_var cnp =
          TAO::NetworkPriorityPolicy::_narrow (cnpp.in ());
-         
+
       if (!CORBA::is_nil (cnp.in ()))
         {
           TAO::DiffservCodepoint const reply_diffserv_codepoint =
@@ -59,7 +59,7 @@ TAO_DiffServ_Service_Context_Handler::generate_service_context (
           opdetails.request_service_context ().set_context (IOP::REP_NWPRIORITY, cdr);
         }
     }
-    
+
   return 0;
 }
 
