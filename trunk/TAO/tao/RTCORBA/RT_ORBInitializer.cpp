@@ -26,6 +26,7 @@ ACE_RCSID (RTCORBA,
 #include "tao/RTCORBA/RT_ORB.h"
 #include "tao/RTCORBA/RT_Current.h"
 #include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
+#include "tao/RTCORBA/RT_Service_Context_Handler.h"
 
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
@@ -85,6 +86,12 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 
       throw ::CORBA::INTERNAL ();
     }
+
+  // Bind the service context handler for RTCORBA
+  TAO_RT_Service_Context_Handler* h = 0;
+  ACE_NEW (h,
+           TAO_RT_Service_Context_Handler());
+  tao_info->orb_core ()->service_context_registry ().bind (IOP::RTCorbaPriority, h);
 
   // Set the name of the Protocol_Hooks to be RT_Protocols_Hooks.
   tao_info->orb_core ()->orb_params ()->protocols_hooks_name ("RT_Protocols_Hooks");

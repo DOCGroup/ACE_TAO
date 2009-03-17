@@ -3,6 +3,7 @@
 #include "tao/DiffServPolicy/DiffServPolicy_ORBInitializer.h"
 #include "tao/DiffServPolicy/DiffServPolicy.h"
 #include "tao/DiffServPolicy/DiffServPolicy_Factory.h"
+#include "tao/DiffServPolicy/DiffServ_Service_Context_Handler.h"
 #include "tao/DiffServPolicy/DiffServ_Protocols_Hooks.h"
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"
@@ -15,8 +16,29 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_DiffServPolicy_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr)
+    PortableInterceptor::ORBInitInfo_ptr info)
 {
+  // Narrow to a TAO_ORBInitInfo object to get access to the
+  // orb_core() TAO extension.
+  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
+
+  if (CORBA::is_nil (tao_info.in ()))
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) TAO_RT_ORBInitializer::pre_init:\n"
+                    "(%P|%t)    Unable to narrow "
+                    "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
+                    "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+
+      throw ::CORBA::INTERNAL ();
+    }
+
+  // Bind the service context handler for Diffserv
+  TAO_DiffServ_Service_Context_Handler* h = 0;
+  ACE_NEW (h,
+           TAO_DiffServ_Service_Context_Handler());
+  tao_info->orb_core ()->service_context_registry ().bind (IOP::REP_NWPRIORITY, h);
 }
 
 void

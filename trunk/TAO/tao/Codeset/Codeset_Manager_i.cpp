@@ -14,6 +14,7 @@
 #include "tao/Codeset/Codeset_Translator_Factory.h"
 #include "tao/Codeset/Codeset.h"
 #include "tao/Codeset/CodeSetContextC.h"
+#include "tao/Codeset/Codeset_Service_Context_Handler.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Codeset_Registry.h"
@@ -347,7 +348,7 @@ TAO_Codeset_Manager_i::computeTCS (CONV_FRAME::CodeSetComponent &remote,
 }
 
 void
-TAO_Codeset_Manager_i::open(void)
+TAO_Codeset_Manager_i::open(TAO_ORB_Core& core)
 {
 #if 0
   // These translators help comply with the CORBA 3.0.2 specifcation
@@ -386,6 +387,11 @@ TAO_Codeset_Manager_i::open(void)
                     ));
     }
 #endif
+  //
+  TAO_Codeset_Service_Context_Handler* h = 0;
+  ACE_NEW (h,
+           TAO_Codeset_Service_Context_Handler());
+  core.service_context_registry ().bind (IOP::CodeSets, h);
 
   // add in from the service configurator
   this->codeset_info_.ForCharData.native_code_set =

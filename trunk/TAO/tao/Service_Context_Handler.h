@@ -24,6 +24,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;
+class TAO_Operation_Details;
+class TAO_Target_Specification;
+class TAO_Stub;
 
 /**
  * This is the base of handler classes that each can process a certain
@@ -35,8 +38,17 @@ class TAO_Export TAO_Service_Context_Handler
 {
   public:
     TAO_Service_Context_Handler (void);
-    virtual int process_service_context (TAO_Transport& transport,
-                                         const IOP::ServiceContext& context) = 0;
+    virtual int process_service_context (
+      TAO_Transport& transport,
+      const IOP::ServiceContext& context) = 0;
+      
+    virtual int generate_service_context (
+      TAO_Stub *stub, 
+      TAO_Transport& transport,
+      TAO_Operation_Details &opdetails,
+      TAO_Target_Specification &spec,
+      TAO_OutputCDR &msg) = 0;
+
     virtual ~TAO_Service_Context_Handler (void);
 };
 

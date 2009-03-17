@@ -563,6 +563,8 @@ public:
   /// Can the transport be purged?
   bool can_be_purged (void);
 
+  virtual void set_bidir_context_info (TAO_Operation_Details &opdetails);
+
   /*
    * Specialization hook to add public methods from
    * concrete transport implementations to TAO's transport

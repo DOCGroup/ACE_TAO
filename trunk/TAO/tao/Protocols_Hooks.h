@@ -156,10 +156,6 @@ public:
 
   virtual CORBA::Long get_dscp_codepoint (void) = 0;
 
-  virtual void rt_service_context (TAO_Stub *stub,
-                                   TAO_Service_Context &service_context,
-                                   CORBA::Boolean restart) = 0;
-
   virtual void get_selector_hook (CORBA::Policy *model_policy,
                                   CORBA::Boolean &is_client_propagated,
                                   CORBA::Short &server_priority) = 0;

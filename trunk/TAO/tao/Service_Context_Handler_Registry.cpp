@@ -32,6 +32,29 @@ TAO_Service_Context_Registry::process_service_contexts (
   return 0;
 }
 
+int
+TAO_Service_Context_Registry::generate_service_context (
+  TAO_Stub *stub,
+  TAO_Transport& transport,
+  TAO_Operation_Details &opdetails,
+  TAO_Target_Specification &spec,
+  TAO_OutputCDR &msg)
+{
+  int result = 0;
+  for (Table::iterator x = this->registry_.begin ();
+       x != this->registry_.end ();
+       ++x)
+    {
+      if ((*x).second->generate_service_context (
+        stub, transport, opdetails, spec, msg) == -1)
+        {
+          result = -1;
+          }
+    }
+
+  return result;
+}
+
 TAO_Service_Context_Registry::~TAO_Service_Context_Registry (void)
 {
   for (Table::iterator x = this->registry_.begin ();
