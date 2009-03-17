@@ -25,6 +25,8 @@ namespace CIDL_FTClient_Impl
 
     void set_server (DeCoRAM::Worker_ptr server);
 
+    void set_prefix (const char * prefix);
+
     // Hook method that is called by the reactor when a timer expires.
     virtual int handle_timeout (const ACE_Time_Value &tv,
                                 const void *);
@@ -47,6 +49,8 @@ namespace CIDL_FTClient_Impl
     typedef std::list<CORBA::ULong> TimingList;
 
     TimingList history_;
+
+    std::string prefix_;
   };
 
 } // end namespace CIDL_FTClient_Impl

@@ -51,12 +51,14 @@ namespace CIDL_FTClient_Impl
   // Supported or inherited operations.
 
   void
-  FTClient_exec_i::start (void)
+  FTClient_exec_i::start (const char * prefix)
   {
     CIAO_TRACE ("FTClient_exec_i::start ()");
 
     if (!started_)
       {
+        timeout_handler_.set_prefix (prefix);
+
         // register the timer handler with the ORB reactor
         ACE_Time_Value period;
         period.msec (static_cast<long> (period_));

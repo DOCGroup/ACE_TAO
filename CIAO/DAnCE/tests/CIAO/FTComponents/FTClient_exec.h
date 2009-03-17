@@ -46,7 +46,7 @@ namespace CIDL_FTClient_Impl
 
     // Supported or inherited operations.
 
-    virtual void start (void);
+    virtual void start (const char * prefix);
 
     // Attribute operations.
     virtual ::CORBA::Double

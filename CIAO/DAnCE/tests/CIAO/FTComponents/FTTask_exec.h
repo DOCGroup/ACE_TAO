@@ -47,7 +47,7 @@ namespace CIDL_FTTask_Impl
 
     // Supported or inherited operations.
 
-    virtual void
+    virtual CORBA::ULong
     run_task (
       ::CORBA::Double execution_time);
 
@@ -147,6 +147,8 @@ namespace CIDL_FTTask_Impl
     Failure_Task task_;
 
     ACE_High_Res_Timer timer_;
+
+    ACE_Time_Value last_execution_time_;
   };
 
   extern "C" FTTASK_EXEC_Export ::Components::EnterpriseComponent_ptr

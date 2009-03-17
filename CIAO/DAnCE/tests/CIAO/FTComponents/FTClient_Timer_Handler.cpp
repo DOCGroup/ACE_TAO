@@ -1,10 +1,13 @@
 // $Id$
 
 #include <ace/High_Res_Timer.h>
+#include <ace/Env_Value_T.h>
 //#include <tao/RTCORBA/RTCORBA.h>
 #include "FTClient_Timer_Handler.h"
 #include "ciao/CIAO_common.h"
 #include "FTClient_exec.h"
+
+const char * CORFU_TEXT_ENVIRONMENT_VARIABLE = "CORFU_TEST";
 
 namespace CIDL_FTClient_Impl
 {
@@ -29,6 +32,12 @@ namespace CIDL_FTClient_Impl
   FTClient_Timer_Handler::set_server (DeCoRAM::Worker_ptr server)
   {
     server_ = DeCoRAM::Worker::_duplicate (server);
+  }
+
+  void 
+  FTClient_Timer_Handler::set_prefix (const char * prefix)
+  {
+    prefix_ = prefix;
   }
 
   int
@@ -58,9 +67,12 @@ namespace CIDL_FTClient_Impl
               }
           }
 
+        CORBA::ULong server_processing_time;
+
         timer_.start ();
 
-        server_->run_task (client_executor_->execution_time ());
+        server_processing_time = 
+          server_->run_task (client_executor_->execution_time ());
 
         timer_.stop ();
        
@@ -68,7 +80,7 @@ namespace CIDL_FTClient_Impl
         timer_.elapsed_time (rt);
 
         if (logging_)
-          history_.push_back (rt.msec ());
+          history_.push_back (rt.msec () - server_processing_time);
       }
     catch (CORBA::Exception & ex)
       {
@@ -106,7 +118,9 @@ namespace CIDL_FTClient_Impl
   {
     if (logging_)
       {
-        std::string logfile = client_executor_->name ();
+        std::string logfile; 
+        logfile += prefix_;
+        logfile += client_executor_->name ();
         logfile += "-client.txt";
         std::ofstream out (logfile.c_str ());
 
