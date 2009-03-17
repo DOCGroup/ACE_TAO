@@ -9,7 +9,7 @@ ACE_RCSID (Codeset,
 #include "tao/CDR.h"
 #include "tao/Transport.h"
 #include "tao/ORB_Core.h"
-#include "tao/Operation_Details.h"
+#include "tao/operation_details.h"
 #include "tao/Codeset_Manager.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
