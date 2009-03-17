@@ -12,7 +12,8 @@
 class Client_Timer_Handler : public ACE_Event_Handler
 {
  public:
-  Client_Timer_Handler (long iterations,
+  Client_Timer_Handler (unsigned long iterations,
+                        unsigned long log_start,
                         const std::string & filename,
                         const ACE_Time_Value & period,
                         bool logging = false);
@@ -38,11 +39,13 @@ class Client_Timer_Handler : public ACE_Event_Handler
 
     ACE_Time_Value period_;
 
-    long invocations_;
+    unsigned long invocations_;
 
     std::string logfile_;
 
-    long max_iterations_;
+    unsigned long max_iterations_;
+
+    unsigned long log_start_;
 
     bool logging_;
 

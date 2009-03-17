@@ -7,7 +7,8 @@
 
 extern double execution_time;
 
-Client_Timer_Handler::Client_Timer_Handler (long iterations,
+Client_Timer_Handler::Client_Timer_Handler (unsigned long iterations,
+                                            unsigned long log_start,
                                             const std::string & filename,
                                             const ACE_Time_Value & period,
                                             bool logging)
@@ -15,8 +16,10 @@ Client_Timer_Handler::Client_Timer_Handler (long iterations,
     invocations_ (0),
     logfile_ (filename),
     max_iterations_ (iterations),
+    log_start_ (log_start),
     logging_ (logging)
 {
+  timer_.calibrate ();
 }
 
 Client_Timer_Handler::~Client_Timer_Handler ()
@@ -54,19 +57,23 @@ Client_Timer_Handler::handle_timeout (const ACE_Time_Value &,
 {
   try
     {
+      CORBA::ULong server_processing_time;
+
       timer_.start ();
 
       // we have to do some profiling first to see how we can achieve
       // the correct execution time.
-      worker_->run_task (execution_time);
+      server_processing_time = worker_->run_task (execution_time);
 
       timer_.stop ();
-       
-      ACE_Time_Value rt;
-      timer_.elapsed_time (rt);
 
-      if (logging_)
-	history_.push_back (rt.msec ());
+      if (logging_ && (invocations_ >= log_start_))
+        {
+          ACE_Time_Value rt;
+          timer_.elapsed_time (rt);
+
+          history_.push_back (rt.msec () - server_processing_time);
+        }
     }
   catch (CORBA::SystemException & ex)
     {
@@ -79,7 +86,7 @@ Client_Timer_Handler::handle_timeout (const ACE_Time_Value &,
       return 1;
     }
 
-  if ((max_iterations_ > 0) && (++invocations_ > max_iterations_))
+  if ((max_iterations_ > 0) && (++invocations_ >= max_iterations_))
     {
       worker_->stop ();
       

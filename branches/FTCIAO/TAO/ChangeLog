@@ -1,3 +1,17 @@
+Tue Mar 17 21:37:47 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/client.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker.idl
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Client_Timer_Handler.h
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker_i.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker_i.h
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/server.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Client_Timer_Handler.cpp:
+        
+          Changed server and client to take server processing time into
+          account and added additional client parameters for logging
+          output control.
+
 Fri Mar 13 03:40:01 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
