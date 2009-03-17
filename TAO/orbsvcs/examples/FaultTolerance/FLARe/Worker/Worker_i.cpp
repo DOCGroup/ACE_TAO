@@ -52,19 +52,30 @@ Worker_i::Worker_i (CORBA::ORB_ptr orb,
     suicidal_count_ (invocations),
     task_ (orb_.in (), suicidal_count_, state_)
 {
+  timer_.calibrate ();
   task_.activate ();
 }
 
-void
+CORBA::ULong
 Worker_i::run_task (CORBA::Double execution_time)
 {
+  timer_.start ();
+
   this->cpu_.run (static_cast <size_t> (execution_time));
 
   ++state_;
 
   agent_->state_changed (object_id_.c_str ());
 
+  timer_.stop ();
+
+  timer_.elapsed_time (last_execution_time_);
+
+  ACE_DEBUG ((LM_TRACE, "le=%d\n", last_execution_time_.msec ()));
+
   task_.signal ();
+
+  return last_execution_time_.msec ();
 }
 
 void Worker_i::stop ()

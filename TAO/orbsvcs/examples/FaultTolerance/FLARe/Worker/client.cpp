@@ -10,22 +10,30 @@
 #include "tao/ORB_Core.h"
 
 const ACE_TCHAR *ior1 = ACE_TEXT("file://test.ior");
-long iterations = 0;
+unsigned long iterations = 0;
+unsigned long log_start = 0;
 ACE_Time_Value period;
 double execution_time = 100;
 std::string server_id = "server";
+std::string prefix = "";
 bool logging = false;
 bool kill_me = false;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:r:e:s:i:lk"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:n:p:r:e:s:i:lk"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'f':
+	prefix = get_opts.opt_arg ();
+        break;
+      case 'n':
+	log_start = atoi (get_opts.opt_arg ());
+        break;
       case 'p':
         ior1 = get_opts.opt_arg ();
         break;
@@ -85,7 +93,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
-        return -1;
+        {
+          return -1;
+        }
 
       // Test object 1.
       CORBA::Object_var object =
@@ -99,7 +109,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // PriorityModelPolicy, and get their server priorities.
 
       Client_Timer_Handler timeout_handler (iterations,
-                                            server_id + "-client.txt",
+                                            log_start,
+                                            prefix + server_id + "-client.txt",
                                             period,
                                             logging);
 

@@ -134,6 +134,7 @@ Task::svc (void)
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ());
+
       if (check_for_nil (root_poa.in (), "RootPOA") == -1)
         return -1;
 
@@ -141,33 +142,19 @@ Task::svc (void)
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      // Create child POA with SERVER_DECLARED PriorityModelPolicy,
-      // and MULTIPLE_ID id uniqueness policy (so we can use one
-      // servant to create several objects).
-      CORBA::PolicyList poa_policy_list;
-      poa_policy_list.length (1);
-
-      poa_policy_list[0] =
-	root_poa->create_id_assignment_policy (PortableServer::USER_ID);
-      
-      PortableServer::POA_var child_poa =
-        root_poa->create_POA ("Child_POA",
-                              poa_manager.in (),
-                              poa_policy_list);
-
       // Servant.
       Worker_i server_impl (this->orb_.in (),
-			    child_poa.in (),
+			    root_poa.in (),
 			    AppOptions::instance ()->app_id (),
 			    agent_,
 			    invocations);
 
-      int result = create_object (child_poa.in (), 
+      int result = create_object (root_poa.in (), 
                                   orb_.in (), 
                                   &server_impl,
                                   ior_output.c_str ());
 
-      CORBA::Object_var obj = child_poa->servant_to_reference (&server_impl);
+      CORBA::Object_var obj = root_poa->servant_to_reference (&server_impl);
 
       if (result == -1)
         return -1;

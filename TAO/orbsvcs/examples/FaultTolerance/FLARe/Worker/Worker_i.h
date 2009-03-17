@@ -5,6 +5,7 @@
 #include "CPU/CPU_Worker.h"
 #include "ace/Task.h"
 #include "ace/Condition_T.h"
+#include "ace/High_Res_Timer.h"
 #include "orbsvcs/orbsvcs/LWFT/StateSynchronizationAgentC.h"
 
 class Failure_Task : public ACE_Task_Base
@@ -38,7 +39,7 @@ class Worker_i : public POA_DeCoRAM::Worker
 	    StateSynchronizationAgent_ptr agent,
 	    long invocations);
 
-  virtual void run_task (CORBA::Double execution_time);
+  virtual CORBA::ULong run_task (CORBA::Double execution_time);
 
   virtual void set_state (const CORBA::Any & state_value);
 
@@ -72,6 +73,10 @@ class Worker_i : public POA_DeCoRAM::Worker
   long suicidal_count_;
 
   Failure_Task task_;
+
+  ACE_High_Res_Timer timer_;
+  
+  ACE_Time_Value last_execution_time_;
 };
 
 #endif /* WORKER_I_H_ */
