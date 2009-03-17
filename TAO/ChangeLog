@@ -1,3 +1,8 @@
+Tue Mar 17 21:43:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/ZIOP/client.cpp:
+          Removed unused variable.
+
 Tue Mar 17 19:28:21 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Notify/Persistent_Filter/Makefile.am:
