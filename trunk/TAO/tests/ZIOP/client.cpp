@@ -282,7 +282,6 @@ check_results (CORBA::ORB_ptr orb)
                     1);
 #else
   ACE_UNUSED_ARG (orb);
-  ACE_UNUSED_ARG (hello);
   return 0;
 #endif
 }
