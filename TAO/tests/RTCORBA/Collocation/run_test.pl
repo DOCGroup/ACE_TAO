@@ -28,7 +28,7 @@ if ($test == 2) {
     if ($test != 0) {
         print STDERR "ERROR: test returned $test\n";
         exit 1;
-  }
+    }
 }
 
 exit 0;
