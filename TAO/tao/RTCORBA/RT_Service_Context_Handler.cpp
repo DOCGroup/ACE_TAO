@@ -16,7 +16,7 @@ ACE_RCSID (RTCORBA,
 #include "tao/Transport.h"
 #include "tao/ORB_Core.h"
 #include "tao/GIOP_Message_Base.h"
-#include "tao/Operation_Details.h"
+#include "tao/operation_details.h"
 #include "tao/Transport_Mux_Strategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -59,7 +59,7 @@ TAO_RT_Service_Context_Handler::generate_service_context (
               TAO_Protocols_Hooks *protocol_hooks = stub->orb_core ()->get_protocols_hooks ();
               // Get client thread priority from 'Current' or if not set by implying one
               // from the native thread priority via the mapping.
-              if (protocol_hooks && 
+              if (protocol_hooks &&
                   (protocol_hooks->get_thread_CORBA_priority (client_priority) != -1 ||
                    protocol_hooks->get_thread_implicit_CORBA_priority (client_priority) != -1))
                 {
