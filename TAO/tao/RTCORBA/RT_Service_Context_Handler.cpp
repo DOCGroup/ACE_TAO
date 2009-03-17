@@ -32,10 +32,10 @@ TAO_RT_Service_Context_Handler::process_service_context (
 int
 TAO_RT_Service_Context_Handler::generate_service_context (
   TAO_Stub *stub,
-  TAO_Transport& transport,
+  TAO_Transport&,
   TAO_Operation_Details &opdetails,
-  TAO_Target_Specification &spec,
-  TAO_OutputCDR &msg)
+  TAO_Target_Specification &,
+  TAO_OutputCDR &)
 {
   TAO_RT_Stub *rt_stub =
     dynamic_cast<TAO_RT_Stub *> (stub);
