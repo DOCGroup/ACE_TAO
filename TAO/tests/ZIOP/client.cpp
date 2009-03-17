@@ -192,7 +192,7 @@ prepare_tests (CORBA::ORB_ptr orb, bool create_factories=true)
 }
 
 int
-check_results (CORBA::ORB_ptr orb, Test::Hello_ptr hello)
+check_results (CORBA::ORB_ptr orb)
 {
 #if defined TAO_HAS_ZIOP && TAO_HAS_ZIOP == 1
   switch (test)
@@ -363,7 +363,7 @@ start_tests (Test::Hello_ptr hello, CORBA::ORB_ptr orb)
     }
   result += run_big_reply_test (hello);
 
-  result += check_results (orb, hello);
+  result += check_results (orb);
   return result;
 }
 
