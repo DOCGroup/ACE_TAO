@@ -21,7 +21,7 @@ TestCompressor::compress (
     const ::Compression::Buffer &,
     ::Compression::Buffer &)
 {
-  throw ::Compression::CompressionException (-1, "");
+  throw ::Compression::CompressionException (0, "");
 }
 
 void
@@ -29,7 +29,7 @@ TestCompressor::decompress (
   const ::Compression::Buffer &,
   ::Compression::Buffer &)
 {
-  throw ::Compression::CompressionException (-1, "");
+  throw ::Compression::CompressionException (0, "");
 }
 }
 
