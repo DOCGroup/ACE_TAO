@@ -27,8 +27,8 @@ TAO_Codeset_Service_Context_Handler::generate_service_context (
   TAO_Stub *,
   TAO_Transport& transport,
   TAO_Operation_Details &opdetails,
-  TAO_Target_Specification &spec,
-  TAO_OutputCDR &msg)
+  TAO_Target_Specification &,
+  TAO_OutputCDR &)
 {
   if (transport.first_request ())
     {
