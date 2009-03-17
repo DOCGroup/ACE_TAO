@@ -1,3 +1,9 @@
+Tue Mar 17 09:10:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+          Correct Fri Mar 13 08:16:54 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+          so that CIAO_ROOT and TAO_ROOT are actually set.
+
 Mon Mar 16 20:04:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_compile_stats.sh:
