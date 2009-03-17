@@ -1,3 +1,11 @@
+Tue Mar 17 15:26:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+        
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+          Corrected misspelled log messages.
+        
+        * tests/ZIOP/TestCompressor/TestCompressor.cpp:
+          Resolved compiler warnings on Solaris.
+
 Tue Mar 17 10:09:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:

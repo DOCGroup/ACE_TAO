@@ -182,7 +182,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
       if (TAO_debug_level >= 4)
         {
           ex._tao_print_exception (
-            "Asynch_Reply_Dispacher::connection_closed");
+            "Asynch_Reply_Dispatcher::connection_closed");
         }
 
     }
@@ -237,7 +237,7 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
     {
       if (TAO_debug_level >= 4)
         {
-          ex._tao_print_exception ("Asynch_Reply_Dispacher::reply_timed_out");
+          ex._tao_print_exception ("Asynch_Reply_Dispatcher::reply_timed_out");
         }
     }
 
