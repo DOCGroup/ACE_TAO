@@ -1,13 +1,18 @@
+Tue Mar 17 19:28:21 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Notify/Persistent_Filter/Makefile.am:
+          Fix library paths for autobuild.
+        
 Tue Mar 17 19:09:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/ZIOP/client.cpp:
           Resolved compiler warning.
 
 Tue Mar 17 15:26:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
-        
+
         * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
           Corrected misspelled log messages.
-        
+
         * tests/ZIOP/TestCompressor/TestCompressor.cpp:
           Resolved compiler warnings on Solaris.
 
