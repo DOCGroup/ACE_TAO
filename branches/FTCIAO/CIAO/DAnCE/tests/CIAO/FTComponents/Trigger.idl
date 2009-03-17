@@ -3,7 +3,7 @@
 
 interface Trigger
 {
-  void start ();
+  void start (in string prefix);
 };
 
 #endif /* TRIGGER_IDL_ */

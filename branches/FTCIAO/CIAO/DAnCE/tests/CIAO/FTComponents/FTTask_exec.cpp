@@ -58,28 +58,27 @@ namespace CIDL_FTTask_Impl
 
   // Supported or inherited operations.
 
-  void
+  CORBA::ULong
   FTTask_exec_i::run_task (
     ::CORBA::Double execution_time)
   {
-    CIAO_DEBUG ((LM_TRACE, "x(%d, %f)=", state_, execution_time));
+    CIAO_DEBUG ((LM_TRACE, "x(%d, %f) ", state_, execution_time));
 
     timer_.start ();
 
     this->cpu_.run (static_cast <size_t> (execution_time));
 
-    timer_.stop ();
-
     ++state_;
     
     agent_->state_changed (object_id_.c_str ());
 
-    ACE_Time_Value rt;
-    timer_.elapsed_time (rt);
+    timer_.stop ();
 
-    CIAO_DEBUG ((LM_TRACE, "%dms ", rt.msec ()));
+    timer_.elapsed_time (last_execution_time_);
 
     task_.signal ();
+
+    return last_execution_time_.msec ();
   }
 
   void 

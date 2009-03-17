@@ -4,11 +4,12 @@
 #include "ace/Get_Opt.h"
 
 const ACE_TCHAR *first_ior = ACE_TEXT ("file://first.ior");
+const ACE_TCHAR *prefix = ACE_TEXT ("");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -17,11 +18,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'k':
         first_ior = get_opts.opt_arg ();
         break;
+      case 'n':
+        prefix = get_opts.opt_arg ();
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            "-k <ior> "
+                           "-n <prefix>"
                            "\n",
                            argv [0]),
                           -1);
@@ -52,7 +57,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      trigger->start ();
+      trigger->start (CORBA::string_dup (prefix));
 
       orb->destroy ();
     }

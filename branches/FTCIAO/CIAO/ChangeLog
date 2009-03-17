@@ -1,3 +1,18 @@
+Tue Mar 17 17:45:13 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/FTComponents/Worker.idl
+        * DAnCE/tests/CIAO/FTComponents/FTTask_exec.cpp
+        * DAnCE/tests/CIAO/FTComponents/client_trigger.cpp
+        * DAnCE/tests/CIAO/FTComponents/FTTask_exec.h
+        * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.cpp
+        * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.h
+        * DAnCE/tests/CIAO/FTComponents/FTClient_exec.cpp
+        * DAnCE/tests/CIAO/FTComponents/FTClient_exec.h
+        * DAnCE/tests/CIAO/FTComponents/Trigger.idl:
+        
+          Added prefix paramter to the trigger interface and added a
+          return value for the processing time to the Worker interface.
+
 Mon Mar 16 17:36:12 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/FTComponents/FTTask_exec.cpp
