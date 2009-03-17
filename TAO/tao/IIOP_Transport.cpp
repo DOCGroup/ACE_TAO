@@ -258,39 +258,10 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
 }
 
 int
-TAO_IIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
-                                             TAO_Target_Specification &spec,
-                                             TAO_OutputCDR &msg)
-{
-  // Check whether we have a Bi Dir IIOP policy set, whether the
-  // messaging objects are ready to handle bidirectional connections
-  // and also make sure that we have not recd. or sent any information
-  // regarding this before...
-  if (this->orb_core ()->bidir_giop_policy () &&
-      this->messaging_object ()->is_ready_for_bidirectional (msg) &&
-      this->bidirectional_flag () < 0)
-    {
-      this->set_bidir_context_info (opdetails);
-
-      // Set the flag to 1 (i.e., originating side)
-      this->bidirectional_flag (1);
-
-      // At the moment we enable BiDIR giop we have to get a new
-      // request id to make sure that we follow the even/odd rule
-      // for request id's. We only need to do this when enabled
-      // it, after that the Transport Mux Strategy will make sure
-      // that the rule is followed
-      opdetails.request_id (this->tms ()->request_id ());
-    }
-
-  return TAO_Transport::generate_request_header (opdetails, spec, msg);
-}
-
-int
 TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 {
   CORBA::Boolean byte_order;
-  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+  if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
     return -1;
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
@@ -322,7 +293,7 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
        ++acceptor)
     {
       // Check whether it is an IIOP acceptor
-      if ((*acceptor)->tag () == IOP::TAG_INTERNET_IOP)
+      if ((*acceptor)->tag () == this->tag ())
         {
           if (this->get_listen_point (listen_point_list, *acceptor) == -1)
             {
@@ -433,7 +404,7 @@ TAO_IIOP_Transport::get_listen_point (
 #endif /* ACE_HAS_IPV6 */
 
       // Get the count of the number of elements
-      const CORBA::ULong len = listen_point_list.length ();
+      CORBA::ULong const len = listen_point_list.length ();
 
       // Increase the length by 1
       listen_point_list.length (len + 1);
@@ -447,7 +418,7 @@ TAO_IIOP_Transport::get_listen_point (
       if (TAO_debug_level >= 5)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("TAO (%P|%t) - Listen_Point_List[%d] = <%s:%d>\n"),
+                      ACE_TEXT("TAO (%P|%t) - Listen_Point_List[%d] = <%C:%d>\n"),
                       len,
                       point.host.in (),
                       point.port));

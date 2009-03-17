@@ -94,7 +94,7 @@ public:
   /// initialization.  This will traverse the list of named codeset
   /// translator factories and add any of those that have a native
   /// codeset id matching the manager's native codeset id.
-  void open(void);
+  void open(TAO_ORB_Core& core);
 
   virtual TAO_Codeset_Descriptor_Base *char_codeset_descriptor (void);
   virtual TAO_Codeset_Descriptor_Base *wchar_codeset_descriptor (void);

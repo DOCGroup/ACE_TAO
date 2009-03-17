@@ -54,9 +54,6 @@ namespace TAO
         throw ::CORBA::INTERNAL (TAO::VMCID, CORBA::COMPLETED_NO);
       }
 
-    TAO_Target_Specification tspec;
-    this->init_target_spec (tspec);
-
     TAO_Transport *transport = this->resolver_.transport ();
 
     Invocation_Status s = TAO_INVOKE_FAILURE;
@@ -64,6 +61,9 @@ namespace TAO
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon,
                         transport->output_cdr_lock (), TAO_INVOKE_FAILURE);
       TAO_OutputCDR &cdr = transport->out_stream ();
+
+      TAO_Target_Specification tspec;
+      this->init_target_spec (tspec, cdr);
 
       if (transport->generate_locate_request (tspec, this->details_, cdr) == -1)
         return TAO_INVOKE_FAILURE;

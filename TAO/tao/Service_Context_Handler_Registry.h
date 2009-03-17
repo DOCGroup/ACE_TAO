@@ -27,6 +27,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;
 class TAO_Service_Context_Handler;
+class TAO_Operation_Details;
+class TAO_Target_Specification;
+class TAO_Stub;
 
 class TAO_Export TAO_Service_Context_Registry
 {
@@ -46,6 +49,13 @@ class TAO_Export TAO_Service_Context_Registry
     TAO_Service_Context_Handler* operator[] (IOP::ServiceId id);
 
     int process_service_contexts (IOP::ServiceContextList &sc, TAO_Transport& transport);
+
+    int generate_service_context (
+      TAO_Stub *stub,
+      TAO_Transport& transport,
+      TAO_Operation_Details &opdetails,
+      TAO_Target_Specification &spec,
+      TAO_OutputCDR &msg);
 
   private:
     typedef ACE_Array_Map<IOP::ServiceId,

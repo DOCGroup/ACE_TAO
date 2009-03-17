@@ -739,12 +739,6 @@ public:
    */
   CORBA::ULong hash_service (TAO_Profile *this_p, CORBA::ULong max);
 
-  /// Call the service layers with the Service Context to check
-  /// whether they would like to add something to the list.
-  void service_context_list (TAO_Stub *stub,
-                             TAO_Service_Context &service_context,
-                             CORBA::Boolean retstart);
-
   /// Return a reference to the Fault Tolerant service object.
   TAO_Fault_Tolerance_Service &fault_tolerance_service (void);
 

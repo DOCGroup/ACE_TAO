@@ -62,6 +62,10 @@ public:
   virtual TAO_Invocation_Endpoint_Selector *get_selector (void);
 
 private:
+  void operator= (const RT_Endpoint_Selector_Factory &);
+  RT_Endpoint_Selector_Factory (const RT_Endpoint_Selector_Factory &);
+
+private:
   TAO_RT_Invocation_Endpoint_Selector *rt_invocation_endpoint_selector_;
 };
 
