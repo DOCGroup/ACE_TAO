@@ -1,7 +1,12 @@
+Tue Mar 17 05:25:49 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/RTCORBA/Collocation/run_test.pl:
+          Fuzz fix.
+        
 Mon Mar 16 19:26:32 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * configure.ac:
-        
+
           Added missing declaration for new orbsvcs/Notify test directory.
 
 Mon Mar 16 19:17:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
