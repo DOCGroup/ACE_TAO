@@ -11,7 +11,7 @@ ACE_RCSID (BiDir_GIOP,
 #include "tao/Transport.h"
 #include "tao/ORB_Core.h"
 #include "tao/GIOP_Message_Base.h"
-#include "tao/Operation_Details.h"
+#include "tao/operation_details.h"
 #include "tao/Transport_Mux_Strategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -29,7 +29,7 @@ TAO_BiDIR_Service_Context_Handler::process_service_context (
 
 int
 TAO_BiDIR_Service_Context_Handler::generate_service_context (
-  TAO_Stub *, 
+  TAO_Stub *,
   TAO_Transport& transport,
   TAO_Operation_Details &opdetails,
   TAO_Target_Specification &spec,
@@ -51,7 +51,7 @@ TAO_BiDIR_Service_Context_Handler::generate_service_context (
       // that the rule is followed
       opdetails.request_id (transport.tms ()->request_id ());
     }
-    
+
   return 0;
 }
 
