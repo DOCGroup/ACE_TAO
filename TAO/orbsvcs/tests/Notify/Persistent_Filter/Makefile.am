@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /tao_builds/phil/wustl/ACE+TAO+CIAO/ACE_wrappers/build/native/bin/mwc.pl -type automake -noreldefs
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -28,8 +28,6 @@ consumer_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -DACE_HAS_IPV6 \
-  -DACE_HAS_VERSIONED_NAMESPACE=1 \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 consumer_SOURCES = \
@@ -38,14 +36,14 @@ consumer_SOURCES = \
   Filter.h
 
 consumer_LDADD = \
-  libTAO_CosNaming.la \
-  libTAO_CosNotification_Skel.la \
-  libTAO_CosEvent_Skel.la \
-  libTAO_PortableServer.la \
-  libTAO_CosNotification.la \
-  libTAO_CosEvent.la \
-  libTAO_AnyTypeCode.la \
-  libTAO.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_EXCEPTIONS
@@ -63,8 +61,6 @@ supplier_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -DACE_HAS_IPV6 \
-  -DACE_HAS_VERSIONED_NAMESPACE=1 \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 supplier_SOURCES = \
@@ -73,14 +69,14 @@ supplier_SOURCES = \
   Filter.h
 
 supplier_LDADD = \
-  libTAO_CosNaming.la \
-  libTAO_CosNotification_Skel.la \
-  libTAO_CosEvent_Skel.la \
-  libTAO_PortableServer.la \
-  libTAO_CosNotification.la \
-  libTAO_CosEvent.la \
-  libTAO_AnyTypeCode.la \
-  libTAO.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_EXCEPTIONS
