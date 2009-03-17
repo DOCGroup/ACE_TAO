@@ -32,7 +32,7 @@ TAO_BiDIR_Service_Context_Handler::generate_service_context (
   TAO_Stub *,
   TAO_Transport& transport,
   TAO_Operation_Details &opdetails,
-  TAO_Target_Specification &spec,
+  TAO_Target_Specification &,
   TAO_OutputCDR &msg)
 {
   if (transport.orb_core ()->bidir_giop_policy () &&
