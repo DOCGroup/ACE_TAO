@@ -1,3 +1,10 @@
+Thu Mar 18 21:25:00 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Instructions for building middleware, RACE, SA-POP, & CoSMIC.txt:
+        * Instructions for building SA-POP Federate.txt:
+	Added instructions for building SA-POP, etc.
+
+
 Thu Jan 15 18:55:00 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * C2W/C2W_Demo.cpp:

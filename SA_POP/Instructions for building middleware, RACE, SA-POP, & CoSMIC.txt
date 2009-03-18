@@ -1,0 +1,510 @@
+$Id$
+
+Instructions for building middleware (including ACE, TAO, CIAO, DAnCE), MACRO (including ANA, RACE, SA-POP), & CoSMIC (including PICML)
+  09/25/2008 Revision (John S. Kinnebrew <john.s.kinnebrew@vanderbilt.edu>)
+
+
+MPC (09/25/2008):
+-FIRST TIME (Development version ONLY; e.g. IF using development version of ACE+TAO+CIAO)
+  -Checkout MPC from svn.dre.vanderbilt.edu
+    cd \Middleware\Dev
+    svn co https://svn.dre.vanderbilt.edu/DOC/MPC/trunk MPC
+  -Set environment variables
+-FIRST TIME (Packaged release of ACE+TAO+CIAO ONLY)
+  -comes with packaged (full or source) release of ACE+TAO+CIAO
+  -make sure MPC_ROOT environment variable is *NOT* set
+-Update MPC (Dev version) from svn.dre.vanderbilt.edu
+  cd %MPC_ROOT%
+  svn update
+
+
+
+Boost (06/08/2007):
+-Boost (if using pre-built binary):
+  -Download pre-built OR get current binaries from Kitty (http://www.dre.vanderbilt.edu/~kitty/PICML/).
+  -Extract binaries to C:\Program Files\ (so libs will be in C:\Program Files\Boost\lib & includes in C:\Program Files\Boost\include).
+  -Set environment variables
+-Boost (if building instead of using pre-built) (Spring 2006):
+(http://www.boost.org/more/getting_started.html)
+  -Unzip boost source files to a directory under %BOOST_ROOT% (e.g. C:\Program Files\Boost\boost_1_33_1 for %BOOST_ROOT%=C:\Program Files\Boost).
+  -Unzip boost jam to same directory.
+  -In that directory.
+    bjam "-sTOOLS=vc-8_0" install
+
+
+
+CIDLC (09/25/2008):
+-CIDLC (IF using pre-built binary)
+  -Get appropriate version of cidlc.exe from http://www.dre.vanderbilt.edu/cidlc/binary/ (or http://www.dre.vanderbilt.edu/~isisbuilds/CIDLC/ for latest)
+  -Place cidlc.exe in %CIAO_ROOT%\bin\
+-CIDLC (IF building) (Spring 2006):
+  -Install, build if necessary, and set environment variables for:
+    -Boost [install pre-built or build, & set env. vars.]
+  -Set MPC to use Boost and CIDL
+    -Open %ACE_ROOT%\bin\MakeProjectCreator\config\default.features, then set "cidl" and "boost" to 1, and save.
+  -Generate MSVC++ projects and solution, if necessary.
+    cd %CIAO_ROOT%\CIDLC
+    perl %ACE_ROOT%\bin\mwc.pl -type vc8 CIDLC.mwc
+  -Open CIDLC.sln and build solution (in MSVC++)
+    devenv /build "Debug|Win32" CIDLC.sln
+
+
+ACE/TAO/CIAO/DAnCE (09/25/2008):
+(http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html)
+(http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/TAO-INSTALL.html)
+(http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/CIAO/CIAO-INSTALL.html)
+-Install, build if necessary, and set environment variables for:
+  -Microsoft Visual Studio 2005 Professional [install]
+  -ActiveState ActivePerl (e.g., 5.8.8.820-MSWin32-x86-274739 or later) [install]
+  -MPC [IF using packaged release of ACE+TAO+CIAO it comes with MPC and do *NOT* set MPC_ROOT; otherwise checkout development version or download release version, and set env. vars.]
+  -Subversion (e.g., 1.4.3-r23084 or later) [install]
+  -CIDLC [install pre-built or build] (AFTER extracting release archive or checkout of ACE/TAO/CIAO)
+  -Xerces-C (e.g., 2.7.0-win32-vc8 or 2.8.0-win32-vc8) [install pre-built & set env. vars.]
+-FIRST TIME (Release version ONLY):
+  -Download source for a release/micro-release from http://download.dre.vanderbilt.edu/
+  -Extract (e.g. to C:\Middleware\X_Y_Z for version X.Y.Z so %ACE_ROOT% would be C:\Middleware\X_Y_Z\ACE_wrappers)
+-FIRST TIME (SVN Development version ONLY):
+  -Checkout ACE/CIAO/TAO from svn.dre.vanderbilt.edu (e.g. to C:\Middleware\Dev so %ACE_ROOT% would be C:\Middleware\Dev\ACE)
+    cd \
+    md Middleware
+    cd \Middleware
+    svn co https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk Dev
+-FIRST TIME (all versions):
+  -Set ACE config file in %ACE_ROOT%\ace
+    cd %ACE_ROOT%\ace
+    -create config.h and in it, use: #include "ace/config-win32.h"
+    OR
+    -use a copy of config-win32.h
+      copy config-win32.h config.h
+  -Set Make Project Creator default configuration in %ACE_ROOT%\bin\MakeProjectCreator\config\
+    cd %ACE_ROOT%\bin\MakeProjectCreator\config\
+    copy global.features default.features
+-Set ACE, TAO, & CIAO environment variables
+-(SVN Dev version ONLY) Update ACE/CIAO/TAO from svn.dre.vanderbilt.edu
+  cd C:\Middleware
+  svn update
+-Build ACE/TAO/CIAO/DAnCE
+  -Generate (or regenerate) MSVC++ projects and solution.
+    cd %CIAO_ROOT%
+    perl %ACE_ROOT%\bin\mwc.pl -type vc8 CIAO_TAO_DAnCE.mwc
+  -Open CIAO_TAO_DAnCE.sln and build solution (in MSVC++)
+    devenv /build "Debug|Win32" CIAO_TAO_DAnCE.sln
+
+
+
+RACE/SA-POP (09/25/2008):
+-Install, build if necessary, and set environment variables for:
+  -Microsoft Visual Studio 2005 Professional [install]
+  -ActiveState ActivePerl (e.g., 5.8.8.820-MSWin32-x86-274739 or later) [install]
+  -MPC [checkout and set env. vars., OR use version w/ ACE+TAO+CIAO release package and do *NOT* set MPC_ROOT]
+  -Subversion (e.g., 1.4.3-r23084 or later) [install]
+  -Xerces-C (e.g., 2.7.0-win32-vc8 or 2.8.0-win32-vc8) [install pre-built & set env. vars.]
+  -ACE/TAO/CIAO/DAnCE [build & set env. vars.]
+-FIRST TIME
+  -Checkout RACE/SA-POP (can be placed anywhere; example is under CIAO directory)
+    cd %CIAO_ROOT%
+    svn co https://svn.dre.vanderbilt.edu/DOC/Middleware/branches/RACE_devl RACE
+-Set RACE and SA-POP environment variables
+-Update RACE/SA-POP
+  cd %RACE_ROOT%
+  svn update
+-Generate (or regenerate) MSVC++ projects and solution.
+  cd %RACE_ROOT%
+  perl %ACE_ROOT%\bin\mwc.pl -type vc8 RACE_SAPOP.mwc
+-Open RACE_SAPOP.sln and build solution (in MSVC++)
+  devenv /build "Debug|Win32" RACE_SAPOP.sln
+
+
+SA-POP Standalone (09/25/2008):
+-Install, build if necessary, and set environment variables for:
+  -Microsoft Visual Studio 2005 Professional [install]
+  -ActiveState ActivePerl (e.g., 5.8.8.820-MSWin32-x86-274739 or later) [install]
+  -MPC [checkout/download and set env. vars.]
+  -Subversion (e.g., 1.4.3-r23084 or later) [install]
+  -Xerces-C (e.g., 2.7.0-win32-vc8 or 2.8.0-win32-vc8) [install pre-built & set env. vars.]
+  -ACE [build & set env. vars.]
+-FIRST TIME
+  -Checkout SA-POP (can be placed anywhere; example is under C:\C2W so %SAPOP_ROOT% would be C:\C2W\SA_POP)
+    cd \C2W
+    svn co https://svn.dre.vanderbilt.edu/DOC/Middleware/branches/RACE_devl/SA_POP SA_POP
+-Set SA-POP environment variables
+-Update SA-POP
+  cd %SAPOP_ROOT%
+  svn update
+-Generate (or regenerate) MSVC++ projects and solution.
+  cd %SAPOP_ROOT%
+  perl %ACE_ROOT%\bin\mwc.pl -type vc8 SAPOP_Standalone.mwc
+-Open SAPOP_Standalone.sln and build solution (in MSVC++)
+  devenv /build "Debug|Win32" SAPOP_Standalone.sln
+
+
+
+DAnCE RepositoryManager (09/25/2008):
+-Install and set environment variables for:
+  -Microsoft Visual Studio 2005 Professional [install]
+  -ActiveState ActivePerl (e.g., 5.8.8.820-MSWin32-x86-274739 or later) [install]
+  -MPC [checkout and set env. vars., OR use version w/ ACE+TAO+CIAO release package and do *NOT* set MPC_ROOT]
+  -Subversion (e.g., 1.4.3-r23084 or later) [install]
+  -Xerces-C (e.g., 2.7.0-win32-vc8) [install pre-built & set env. vars.]
+  -zlib (e.g., 1.2.3) [install pre-built & set env. vars.]
+  -ACE/TAO/CIAO/DAnCE [set env. vars.; will all be built along with RepoMan if using CIAO_TAO_DAnCE.mwc]
+-FIRST TIME
+  -Open %ACE_ROOT%\bin\MakeProjectCreator\config\default.features, then set "zlib" to 1, and save.
+    notepad %ACE_ROOT%\bin\MakeProjectCreator\config\default.features
+-For Repoman with ACE/TAO/CIAO/DAnCE, generate (or regenerate) MSVC++ projects and solution, if necessary.
+  cd %CIAO_ROOT%
+  perl %ACE_ROOT%\bin\mwc.pl -type vc8 CIAO_TAO_DAnCE.mwc
+-Open CIAO_TAO_DAnCE.sln and build solution (in MSVC++)
+  devenv /build "Debug|Win32" CIAO_TAO_DAnCE.sln
+-Set environment variable JAWS_DOCUMENT_ROOT=%CIAO_ROOT%/DAnCE/RepositoryManager
+-For JAWS, generate (or regenerate) MSVC++ projects and solution, if necessary.
+  cd %ACE_ROOT%\apps\JAWS
+  perl %ACE_ROOT%\bin\mwc.pl -type vc8
+-Open JAWS.sln and build solution (in MSVC++)
+  devenv /build "Debug|Win32" JAWS.sln
+
+
+
+CoSMIC (06/08/2007):
+(http://www.dre.vanderbilt.edu/cosmic/html/download.html)
+-Install, build, and set environment variables, as necessary, for:
+  -Microsoft Visual Studio 2005 Professional [install]
+  -ActiveState ActivePerl (e.g., 5.8.8.820-MSWin32-x86-274739 or later) [install]
+  -MPC [checkout and set env. vars., OR use version w/ ACE+TAO+CIAO release package and do *NOT* set MPC_ROOT]
+  -Generic Modeling Environment (GME) 6.11.9 [install]
+  -Universal Data Model (UDM) 3.1.1_VC8 [install]
+  -Xerces-C (e.g., 2.7.0-win32-vc8) [install pre-built & set env. vars.]
+  -Boost (1.33.1-vc8) [install pre-built & set env. vars.]
+  -zlib (e.g., 1.2.3) [install pre-built & set env. vars.]
+  -ACE/TAO/CIAO [build & set env. vars.]
+-FIRST TIME
+  -Checkout CoSMIC from Subversion server svn.dre.vanderbilt.edu
+    cd \
+    svn co https://svn.dre.vanderbilt.edu/CoSMIC/trunk/ CoSMIC
+-Update CoSMIC from Subversion server svn.dre.vanderbilt.edu
+  cd %COSMIC_ROOT%
+  svn update
+-Generate (or regenerate) MSVS projects and solution, if necessary:
+  cd %COSMIC_ROOT%
+  perl %ACE_ROOT%\bin\mwc.pl -type vc8 CoSMIC.mwc
+-Open CoSMIC.sln and build solution (in MSVC++)
+  -May have to tell MSVC++ to use the environment variables (with /useenv flag) if things like udm fail to find files
+    cd %COSMIC_ROOT%
+    devenv CoSMIC.sln /build "Debug|Win32"
+-Register new PICML paradigm in GME
+  -Unregister old PICML paradigm, if necessary
+    -File|Register Paradigms
+    -Select PICML Paradigm
+    -Under Register, "choose Systemwide"
+    -Press "Remove"
+  -Register new PICML paradigm
+    -File|Register Paradigms
+    -Select "Systemwide" radio button under "Register:"
+    -Press "Add from File..."
+    -Find file %CoSMIC_ROOT%\PIM\PICML\paradigms\PICML.xmp
+    -Press "OK", then "Close"
+
+
+
+CUTS  (Fall 2006):
+-Install, build, and set environment variables, as necessary, for:
+  -Microsoft Visual Studio 2005 Professional [install]
+  -ActiveState ActivePerl [install]
+  -CoSMIC [build & set env. vars.]
+-Build CUTS
+  -Checkout/update CoSMIC from Subversion server svn.dre.vanderbilt.edu
+    cd \
+    svn co https://svn.dre.vanderbilt.edu/CoSMIC/trunk/ CoSMIC
+    -OR
+    cd %COSMIC_ROOT%
+    svn update
+  -Set CUTS MPC configuration
+    -Open %CUTS_ROOT%\default.features, then set "gme", "mfc", "udm", and "boost" to 1, and save.
+  -Generate (or regenerate) MSVS projects and solution, if necessary:
+    cd %CUTS_ROOT%
+    perl %ACE_ROOT%\bin\mwc.pl -type vc8 CUTS.mwc
+  -Open CUTS.sln and build solution (in MSVC++)
+    -May have to tell MSVC++ to use the environment variables if things like udm fail to find files
+      cd %CUTS_ROOT%
+      devenv CUTS.sln /build "Debug|Win32"
+
+
+
+RACE RT1H example on ISIS blades (Fall 2006):
+(also see %CIAO_ROOT%\RACE\descriptors\README)
+-Build RT1H
+  -Generate (or regenerate) MSVS projects and solution, if necessary:
+    cd %COSMIC_ROOT%\PIM\PICML\examples\RT1H
+    perl %ACE_ROOT%\bin\mwc.pl RT1H_CUTS.mwc -type vc8
+  -Open RT1H_CUTS.sln and build solution (in MSVC++)
+    devenv RT1H_CUTS.sln /build "Debug|Win32"
+-If necessary, modify %CIAO_ROOT%\RACE\descriptors\run_test.pl
+  -Make sure @ports variable has same port numbers as deployment.dat and NodeDetails.dat
+  -Make sure $dat_file = "deployment.dat";
+  -Make sure $cdp_file = "RACE.cdp";
+-Add %COSMIC_ROOT%\PIM\PICML\examples\RT1H\bin to path
+  set path=%PATH%;%COSMIC_ROOT%\PIM\PICML\examples\RT1H\bin
+-Run RACE
+  cd %CIAO_ROOT%\RACE\descriptors
+  set path=%PATH%;%COSMIC_ROOT%\PIM\PICML\examples\RT1H\bin
+  perl run_test.pl
+-Deploy RT1H with RACE (using separate command line window)
+  cd %CIAO_ROOT%\RACE\descriptors
+  %CIAO_ROOT%/RACE/Input_Adapters/Interactive_Input_Adapter/injector -t"RT1H.pcd" -p "RT1H.cdp" -k file://InteractiveAdapter.ior
+
+
+
+RACE RT1H example on local machine (Fall 2006):
+-Build RT1H
+  -Generate (or regenerate) MSVS projects and solution, if necessary:
+    cd %COSMIC_ROOT%\PIM\PICML\examples\RT1H
+    perl %ACE_ROOT%\bin\mwc.pl RT1H_CUTS.mwc -type vc8
+  -Open RT1H_CUTS.sln and build solution (in MSVC++)
+    devenv RT1H_CUTS.sln /build "Debug|Win32"
+-Modify %CIAO_ROOT%\RACE\descriptors\deployment.dat and %CIAO_ROOT%\RACE\descriptors\NodeDetails.dat
+  -Replace lines like: blade35      corbaloc:iiop:blade35.isislab.vanderbilt.edu:50000/NodeManager
+  -With lines like: blade35      corbaloc:iiop:localhost:50000/NodeManager
+-If necessary, modify %CIAO_ROOT%\RACE\descriptors\run_test.pl
+  -Make sure @ports variable has same port numbers as deployment.dat and NodeDetails.dat
+  -Make sure $dat_file = "deployment.dat";
+  -Make sure $cdp_file = "RACE.cdp";
+-Add %COSMIC_ROOT%\PIM\PICML\examples\RT1H\bin to path
+  set path=%PATH%;%COSMIC_ROOT%\PIM\PICML\examples\RT1H\bin
+-Run RACE
+  cd %CIAO_ROOT%\RACE\descriptors
+  set path=%PATH%;%COSMIC_ROOT%\PIM\PICML\examples\RT1H\bin
+  perl run_test.pl
+-Deploy RT1H with RACE (using separate command line window)
+  cd %CIAO_ROOT%\RACE\descriptors
+  %CIAO_ROOT%/RACE/Input_Adapters/Interactive_Input_Adapter/injector -t"RT1H.pcd" -p "RT1H.cdp" -k file://InteractiveAdapter.ior
+
+
+
+
+SPACE (Fall 2006)
+-had to add an include to most if not all generated *_CoWorkEr.cpp files (in *CoWorkEr_exec projects):
+  #include "cuts/ActivationRecord.h"
+-Copy XML Schemas to CIAO schema directory
+  copy %COSMIC_ROOT%\PIM\PICML\examples\SPACE\descriptors\SANet_Network.xsd %CIAO_ROOT%\docs\schema\
+  copy %COSMIC_ROOT%\PIM\PICML\examples\SPACE\descriptors\Task_Map.xsd %CIAO_ROOT%\docs\schema\
+-Build SPACE
+  -Generate (or regenerate) MSVS projects and solution, if necessary:
+    cd %COSMIC_ROOT%\PIM\PICML\examples\SPACE
+    perl %ACE_ROOT%\bin\mwc.pl SPACE_CUTS.mwc -type vc8
+  -Open SPACE_CUTS.sln and build solution (in MSVC++)
+    devenv SPACE_CUTS.sln /build "Debug|Win32"
+-Add %COSMIC_ROOT%\PIM\PICML\examples\SPACE\bin to path
+  set path=%PATH%;%COSMIC_ROOT%\PIM\PICML\examples\SPACE\bin
+-Run RACE
+  cd %COSMIC_ROOT%\PIM\PICML\examples\SPACE\descriptors
+  set path=%PATH%;%COSMIC_ROOT%\PIM\PICML\examples\SPACE\bin
+  perl run_test.pl
+-Deploy SPACE with RACE (using separate command line window)
+  cd %COSMIC_ROOT%\PIM\PICML\examples\SPACE\descriptors 
+  %CIAO_ROOT%/RACE/Input_Adapters/SA_POP_Input_Adapter/injector -s "SPACE.san" -m "SPACE.tm" -t "SPACE.pcd" -p "SPACE.cdp" -k file://InteractiveAdapter.ior
+
+
+
+
+
+
+
+
+Environment Variables  (System & User)
+06/08/2007
+
+If using batch file:
+set Path=C:\Program Files\Scripts;%PATH%
+and then run appropriate environment batch file (example for ACE/TAO/CIAO 5.6.6):
+  ev_mw-5.6.6.bat
+
+
+
+
+
+Environment variables that must be set (example for ACE/TAO/CIAO 5.6.6):
+
+ACE:
+ACE_ROOT=C:/Middleware/5_6_6/ACE_wrappers
+Path=%ACE_ROOT%/bin;%ACE_ROOT%/lib;%PATH%
+
+
+TAO:
+TAO_ROOT=C:/Middleware/5_6_6/ACE_wrappers/TAO
+
+
+CIAO:
+CIAO_ROOT=C:/Middleware/5_6_6/ACE_wrappers/TAO/CIAO
+
+
+Xerces:
+XERCESCROOT=C:/Program Files/xerces/xerces-c-2_7_0-win32-vc8
+Path=%XERCESCROOT%/bin;%XERCESCROOT%/lib;%PATH%
+
+
+RepositoryManager (uses ZLib & JAWS):
+ZLIB_ROOT=C:/Program Files/zlib
+JAWS_DOCUMENT_ROOT=%CIAO_ROOT%/DAnCE/RepositoryManager
+
+
+Boost:
+BOOST_CFG=-vc80-mt
+BOOST_ROOT=C:/Program Files/Boost
+BOOST_VERSION=boost-1_33_1
+Path=%BOOST_ROOT%/lib;%PATH%
+
+
+CoSMIC:
+COSMIC_ROOT=C:/CoSMIC/CoSMIC
+Path=%COSMIC_ROOT%/bin;%COSMIC_ROOT%/lib%PATH%
+
+
+CUTS:
+CUTS_ROOT=%COSMIC_ROOT%/CUTS
+Path=%CUTS_ROOT%/bin;%PATH%
+
+
+RACE:
+RACE_ROOT=C:/Middleware/MACRO/RACE
+
+
+SA-POP:
+SAPOP_ROOT=C:/Middleware/MACRO/RACE/SA_POP
+SANET_ROOT=%SAPOP_ROOT%/SANet
+Path=%SAPOP_ROOT%/lib;%PATH%
+
+
+ANA/MACRO:
+MACRO_ROOT=C:/ANA
+Path=%MACRO_ROOT%/lib;%MACRO_ROOT%/Common/lib;%PATH%
+
+
+
+
+
+
+
+
+Miscellaneous environment Variables to set if using:
+
+wxWindows:
+WXWINDOWS_ROOT=C:/wxWindows-2.4.2
+Path=%WXWINDOWS_ROOT%/lib;%PATH%
+
+
+PCRE:
+PCRE_ROOT=C:/GnuWin32
+Path=%PCRE_ROOT%/bin;%PATH%
+
+
+UnxUtils
+Path=C:/Program Files/UnxUtils/usr/local/wbin;%PATH%
+
+
+MPC:
+MPC_ROOT=C:/Middleware/Dev/MPC
+
+
+
+
+
+
+
+
+
+
+
+Environment variables automatically set by program installs:
+
+Perl (automatically set by installation):
+Path=c:\Perl\site\bin;C:\Perl\bin\;%PATH%
+
+
+Python:
+PYTHON_VERSION=2.4
+PYTHON_ROOT=C:\Python24
+
+
+GME (automatically set by installation):
+GME_ROOT=C:\Program Files\GME
+
+
+UDM (automatically set by installation):
+UDM_3RDPARTY_PATH=C:\Program Files\ISIS\UDM\3rdparty
+UDM_PATH=C:\Program Files\ISIS\UDM
+Path=%UDM_PATH%\bin;%UDM_PATH%\etc;%UDM_3RDPARTY_PATH%\xerces-c_2_5_0\bin;%UDM_3RDPARTY_PATH%\xalan-c_1_8_0\bin;%PATH%
+
+
+MS Visual Studio 2005 v8 (automatically set by installation):
+VS80COMNTOOLS=C:\Program Files\Microsoft Visual Studio 8\Common7\Tools\
+
+
+Rational Purify (automatically set by installation):
+RATL_RTHOME=C:\Program Files\Rational\Rational Test
+TISDIR=C:\Program Files\Rational\common
+Path=C:\Program Files\Rational\common;%PATH%
+
+
+Subversion (automatically set by installation):
+Path=C:\Program Files\Subversion\bin;%PATH%
+
+
+Qt (automatically set by installation - User vars):
+QTDIR=C:\Qt\4.1.2
+QMAKESPEC=win32-msvc.net
+Path=C:\Qt\4.1.2\bin;%PATH%
+
+
+MiKTex (automatically set by installation):
+Path=C:\Program Files\MiKTeX\miktex\bin;%PATH%
+
+
+Matlab (automatically set by installation):
+Path=C:\Program Files\MATLAB704\bin\win32;%PATH%
+
+
+
+
+
+
+
+
+
+Home Desktop Dell E521 System Path (04/12/2007):
+c:\Perl\site\bin;c:\Perl\bin;C:\Program Files\MiKTeX\miktex\bin;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;C:\Program Files\ATI Technologies\ATI.ACE;C:\Program Files\Common Files\Roxio Shared\DLLShared\;C:\Program Files\Common Files\Roxio Shared\DLLShared\;C:\Program Files\Common Files\Roxio Shared\9.0\DLLShared\;C:\Program Files\Subversion\bin;C:\Program Files\UnxUtils\usr\local\wbin;c:\Program Files\Microsoft SQL Server\90\Tools\binn\;C:\Program Files\ISIS\UDM\bin;C:\Program Files\ISIS\UDM\etc;C:\Program Files\ISIS\UDM\3rdparty\xerces-c_2_5_0\bin;C:\Program Files\ISIS\UDM\3rdparty\xalan-c_1_8_0\bin
+
+Home Desktop Dell E521 User Path (04/12/2007):
+%ACE_ROOT%/lib;%ACE_ROOT%/bin;%XERCESCROOT%/bin;%XERCESCROOT%/lib;%COSMIC_ROOT%/bin;%COSMIC_ROOT%/lib;%BOOST_ROOT%/lib
+
+Home Laptop HP ZD8000 Path (05/08/2006):
+Path	%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;C:\Perl\bin\;C:\Python24\.;%MPC_ROOT%;%ACE_ROOT%\lib;%ACE_ROOT%\bin;%XERCESCROOT%\bin;%XERCESCROOT%\lib;%BOOST_ROOT%\lib;%COSMIC_ROOT%\bin;%CUTS_ROOT%\bin;%UDM_PATH%\bin;%UDM_PATH%\etc;%UDM_3RDPARTY_PATH%\xerces-c_2_5_0\bin;%UDM_3RDPARTY_PATH%\xalan-c_1_8_0\bin;%WXWINDOWS_ROOT%\lib;%COSMIC_ROOT%\PIM\PICML\examples\RT1H\bin;C:\GnuWin32\bin;C:\Program Files\MiKTeX\miktex\bin;C:\Program Files\Common Files\GTK\2.0\bin;C:\Program Files\MATLAB704\bin\win32;C:\Program Files\Secure Oasis;C:\Program Files\Subversion\bin;C:\Program Files\QuickTime\QTSystem\;C:\Program Files\ATI Technologies\ATI Control Panel;C:\Program Files\UnxUtils\usr\local\wbin
+
+
+
+
+ISIS Desktop System Path (04/12/2007):
+C:\Program Files\Perl\site\bin;C:\Program Files\Perl\bin;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;C:\Program Files\Subversion\bin;C:\Program Files\UnxUtils\usr\local\wbin;C:\Program Files\ISIS\UDM\bin;C:\Program Files\ISIS\UDM\etc;C:\Program Files\ISIS\UDM\3rdparty\xerces-c_2_5_0\bin;C:\Program Files\ISIS\UDM\3rdparty\xalan-c_1_8_0\bin
+
+ISIS Desktop User Path (04/12/2007):
+%ACE_ROOT%/lib;%ACE_ROOT%/bin;%XERCESCROOT%/bin;%XERCESCROOT%/lib;%COSMIC_ROOT%/bin;%COSMIC_ROOT%/lib;%BOOST_ROOT%/lib
+
+ISIS Desktop System Path (early 2006)
+C:\Program Files\MiKTeX\miktex\bin;C:\Perl\bin\;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\system32\WBEM;%ACE_ROOT%\bin;%ACE_ROOT%\lib;%TAO_ROOT%\lib;C:\Program Files\PuTTY;C:\Program Files\UltraEdit;C:\Program Files\MATLAB704\bin\win32;C:\Program Files\Rational\common;%XERCESCROOT%\bin;%UDM_PATH%bin;%UDM_PATH%etc;%UDM_3RDPARTY_PATH%\xerces-c_2_5_0\bin;%UDM_3RDPARTY_PATH%\xalan-c_1_8_0\bin;C:\Qt\4.0.1\bin;C:\GnuWin32\bin;C:\Program Files\7-Zip
+
+ISIS Desktop Path (05/08/2006):
+Path	%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\system32\WBEM;%MPC_ROOT%;%ACE_ROOT%\bin;%ACE_ROOT%\lib;%XERCESCROOT%\bin;%XERCESCROOT%\lib;%BOOST_ROOT%\lib;%WXWINDOWS_ROOT%\lib;%COSMIC_ROOT%\bin;%CUTS_ROOT%\bin;%UDM_3RDPARTY_PATH%\xalan-c_1_8_0\bin;%UDM_3RDPARTY_PATH%\xerces-c_2_5_0\bin;%UDM_PATH%\bin;%UDM_PATH%\etc;C:\Perl\bin\;C:\Python24;C:\Program Files\MiKTeX\miktex\bin;C:\Program Files\MATLAB704\bin\win32;C:\Program Files\Rational\common;C:\Qt\4.1.2\bin;C:\GnuWin32\bin;C:\Program Files\7-Zip;C:\Program Files\UnxUtils\usr\local\wbin;C:\Program Files\Subversion\bin
+
+PATHEXT	.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+
+
+(User) CLASSPATH	.	
+(User) HOME	C:\Documents and Settings\jkinnebrew
+(User) TEMP	C:\Temp
+(User) TMP	C:\Temp
+(User) TMPDIR	C:\Temp
+(User) APR_ICONV_PATH	C:\Program Files\Subversion\iconv
+
+
+
+
+
