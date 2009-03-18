@@ -4,6 +4,8 @@
 #include <ace/High_Res_Timer.h>
 #include "Client_Timer_Handler.h"
 #include "WorkerC.h"
+#include "ace/Reactor.h"
+#include "tao/ORB_Core.h"
 
 extern double execution_time;
 
@@ -86,11 +88,22 @@ Client_Timer_Handler::handle_timeout (const ACE_Time_Value &,
       return 1;
     }
 
-  if ((max_iterations_ > 0) && (++invocations_ >= max_iterations_))
+  try
     {
-      worker_->stop ();
-      
-      orb_->shutdown ();
+      if ((max_iterations_ > 0) && (++invocations_ >= max_iterations_))
+        {
+          worker_->stop ();
+     
+          orb_->orb_core ()->reactor ()->cancel_timer (this);
+
+          orb_->shutdown ();
+        }
+    }
+  catch (CORBA::Exception & ex)
+    {
+      ACE_DEBUG ((LM_WARNING, 
+                  "Client_Timer_Handler::handle_timeout () after run_task - "
+                  "caught: %s", ex._info ().c_str ()));
     }
 
   return 0;

@@ -1577,10 +1577,13 @@ ReplicationManager_i::send_state_synchronization_rank_list (void)
 
           ACE_CString process_id = al_iter->key ();
 
-          (void) state_synchronization_agent_map_.unbind (al_iter);
+          state_synchronization_agent_map_.unbind (al_iter);
+
           al_iter = tmp_it;
 
+#ifdef ERRORDETECTION_THROUGH_STATE_SYNCH_AGENT_FAILURES
           this->proc_failure (process_id.c_str ());
+#endif
 
           ACE_DEBUG ((LM_TRACE,
                       "RM: A state synchronization agent (pid=%s) died.\n",

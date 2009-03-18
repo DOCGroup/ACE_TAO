@@ -1,3 +1,27 @@
+Wed Mar 18 21:06:23 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        
+          Removed triggering of a process failure in case of a failed
+          StateSynchronizationAgent to prevent duplicate notifications due
+          to HostMonitor messages.
+
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker_i.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Client_Timer_Handler.cpp:
+        
+          Fixed behavioral bugs.
+        
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/client.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker.mpc
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/server.cpp
+        
+          Added RTCORBA code to client and server.
+
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        
+          Removed throw statements that interfere with the interceptor
+          framework.
+
 Tue Mar 17 21:37:47 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/client.cpp

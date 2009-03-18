@@ -9,7 +9,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): lwft_server, lwft_client, naming {
+project(*Server): lwft_server, lwft_client, naming, rtcorba {
   after += *idl
 
   libpaths += $(CUTS_ROOT)/lib
@@ -30,7 +30,7 @@ project(*Server): lwft_server, lwft_client, naming {
   }
 }
 
-project(*Client): lwft_client, naming {
+project(*Client): lwft_client, naming, rtcorba {
   after += *idl
 
   Source_Files {
