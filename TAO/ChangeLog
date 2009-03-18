@@ -1,3 +1,12 @@
+Wed Mar 18 09:47:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/ch_12/client.cpp
+        * examples/Advanced/ch_18/client.cpp
+        * examples/Advanced/ch_21/client.cpp
+        * examples/Advanced/ch_8_and_10/client.cpp
+          Use intermediate variable to resolve ambiguity errors
+          with C++ Builder 2009
+
 Wed Mar 18 07:55:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/RTMutex/run_test.pl:
