@@ -1,3 +1,9 @@
+Wed Mar 18 19:04:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Profile.cpp:
+          Removed not used variable and check the return value of the
+          streaming operators
+
 Wed Mar 18 13:13:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
