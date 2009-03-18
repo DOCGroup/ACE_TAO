@@ -678,22 +678,22 @@ int main(int,char*[])
   int status = 0;
 
   // Test Generic_Sequence_Iterator.
-  status += test_sequence<typename s_sequence::iterator> ();
+  status += test_sequence<s_sequence::iterator> ();
 
   // Test Const_Generic_Sequence_Iterator with non-const sequence.
-  status += test_sequence<typename s_sequence::const_iterator> ();
+  status += test_sequence<s_sequence::const_iterator> ();
 
   // Test Const_Generic_Sequence_Iterator with const sequence.
-  status += test_const_sequence<typename s_sequence::const_iterator> ();
+  status += test_const_sequence<s_sequence::const_iterator> ();
 
   // Test Generic_Sequence_Reverse_Iterator.
-  status += test_sequence_reverse<typename s_sequence::reverse_iterator> ();
+  status += test_sequence_reverse<s_sequence::reverse_iterator> ();
 
   // Test Const_Generic_Sequence_Reverse_Iterator with non-const sequence.
-  status += test_sequence_reverse<typename s_sequence::const_reverse_iterator> ();
+  status += test_sequence_reverse<s_sequence::const_reverse_iterator> ();
 
   // Test Const_Generic_Sequence_Reverse_Iterator with const sequence.
-  status += test_const_sequence_reverse<typename s_sequence::const_reverse_iterator> ();
+  status += test_const_sequence_reverse<s_sequence::const_reverse_iterator> ();
 
   return status;
 }
