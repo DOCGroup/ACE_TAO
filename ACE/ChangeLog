@@ -1,3 +1,9 @@
+Wed Mar 18 14:28:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/ace/RMCast/Acknowledge.cpp:
+        * protocols/ace/RMCast/Protocol.h:
+          Initialise pointers with 0
+
 Wed Mar 18 11:23:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
