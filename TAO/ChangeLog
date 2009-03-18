@@ -1,3 +1,8 @@
+Wed Mar 18 13:13:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+          Fixed wrong delete
+
 Wed Mar 18 13:00:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
