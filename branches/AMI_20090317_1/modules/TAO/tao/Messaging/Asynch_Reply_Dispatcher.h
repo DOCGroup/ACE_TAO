@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Messaging/Asynch_Timeout_Handler.h"
-#include "tao/Asynch_Reply_Dispatcher_Base.h"
+#include "tao/Reply_Dispatcher.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
@@ -33,7 +33,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Reply dispatcher for Asynchoronous Method Invocation (AMI)s.
 class TAO_Asynch_Reply_Dispatcher
-  : public TAO_Asynch_Reply_Dispatcher_Base
+  : public TAO_Reply_Dispatcher
 {
 public:
   /// Constructor.

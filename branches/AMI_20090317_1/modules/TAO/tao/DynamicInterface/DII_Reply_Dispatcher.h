@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/orbconf.h"
-#include "tao/Asynch_Reply_Dispatcher_Base.h"
+#include "tao/Reply_Dispatcher.h"
 
 #if defined (TAO_HAS_AMI)
 #include "tao/Messaging/Messaging.h"
@@ -45,7 +45,7 @@ class TAO_ORB_Core;
  * @brief Reply dispatcher for DII deferred requests.
  */
 class TAO_DynamicInterface_Export TAO_DII_Deferred_Reply_Dispatcher
-  : public TAO_Asynch_Reply_Dispatcher_Base
+  : public TAO_Reply_Dispatcher
 {
 public:
   TAO_DII_Deferred_Reply_Dispatcher (const CORBA::Request_ptr req,
@@ -79,7 +79,7 @@ private:
  * @brief Reply dispatcher for DII asynch requests.
  */
 class TAO_DynamicInterface_Export TAO_DII_Asynch_Reply_Dispatcher
-  : public TAO_Asynch_Reply_Dispatcher_Base
+  : public TAO_Reply_Dispatcher
 {
 public:
   TAO_DII_Asynch_Reply_Dispatcher (const Messaging::ReplyHandler_ptr callback,

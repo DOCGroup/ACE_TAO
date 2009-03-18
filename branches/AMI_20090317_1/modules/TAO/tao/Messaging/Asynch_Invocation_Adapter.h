@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Messaging/Messaging.h"
-#include "tao/Asynch_Reply_Dispatcher_Base.h"
+#include "tao/Reply_Dispatcher.h"
 #include "tao/Invocation_Adapter.h"
 #include "ace/Global_Macros.h"
 #include "ace/Auto_Functor.h"
@@ -37,7 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Operation_Details;
 class TAO_Stub;
 class TAO_Asynch_Reply_Dispatcher;
-class TAO_Asynch_Reply_Dispatcher_Base;
+class TAO_Reply_Dispatcher;
 
 namespace  CORBA
 {
@@ -90,7 +90,7 @@ namespace TAO
 
   private:
     /// Autofunctor to manage the reply dispatcher
-    ACE_Utils::Auto_Functor<TAO_Asynch_Reply_Dispatcher_Base,
+    ACE_Utils::Auto_Functor<TAO_Reply_Dispatcher,
                             ARDB_Refcount_Functor> safe_rd_;
 
   private:

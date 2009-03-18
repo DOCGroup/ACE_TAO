@@ -18,7 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (
     const CORBA::Request_ptr req,
     TAO_ORB_Core *orb_core)
-  : TAO_Asynch_Reply_Dispatcher_Base (orb_core)
+  : TAO_Reply_Dispatcher (orb_core)
   , req_ (req)
 {
 }
@@ -40,7 +40,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   this->locate_reply_status_ = params.locate_reply_status ();
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
-  ACE_Data_Block *db = this->reply_cdr_.clone_from (*params.input_cdr_);
+  ACE_Data_Block *db = this->reply_cdr_->clone_from (*params.input_cdr_);
 
   if (db == 0)
     {
@@ -79,7 +79,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   try
     {
       // Call the Request back and send the reply data.
-      this->req_->handle_response (this->reply_cdr_, this->reply_status_);
+      this->req_->handle_response (*this->reply_cdr_, this->reply_status_);
     }
   catch (const ::CORBA::Exception& ex)
     {
@@ -128,7 +128,7 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
 TAO_DII_Asynch_Reply_Dispatcher::TAO_DII_Asynch_Reply_Dispatcher (
     const Messaging::ReplyHandler_ptr callback,
     TAO_ORB_Core *orb_core)
-  : TAO_Asynch_Reply_Dispatcher_Base (orb_core),
+  : TAO_Reply_Dispatcher (orb_core),
     db_ (sizeof buf_,
          ACE_Message_Block::MB_DATA,
          this->buf_,

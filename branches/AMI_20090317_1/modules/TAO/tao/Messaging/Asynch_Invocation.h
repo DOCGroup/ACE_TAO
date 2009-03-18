@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Synch_Invocation.h"
-#include "tao/Asynch_Reply_Dispatcher_Base.h"
+#include "tao/Reply_Dispatcher.h"
 #include "ace/Global_Macros.h"
 #include "ace/Auto_Functor.h"
 
@@ -34,7 +34,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Operation_Details;
 class TAO_InputCDR;
-class TAO_Asynch_Reply_Dispatcher_Base;
+class TAO_Reply_Dispatcher;
 
 namespace TAO
 {
@@ -47,7 +47,7 @@ namespace TAO
     Asynch_Remote_Invocation (CORBA::Object_ptr otarget,
                               Profile_Transport_Resolver &resolver,
                               TAO_Operation_Details &detail,
-                              TAO_Asynch_Reply_Dispatcher_Base *rd,
+                              TAO_Reply_Dispatcher *rd,
                               bool response_expected = true);
 
     Invocation_Status remote_invocation (ACE_Time_Value *value);
@@ -55,7 +55,7 @@ namespace TAO
   protected:
     // To prevent leaking memory from the reply dispatcher that we
     // are given
-    ACE_Utils::Auto_Functor <TAO_Asynch_Reply_Dispatcher_Base,
+    ACE_Utils::Auto_Functor <TAO_Reply_Dispatcher,
                              ARDB_Refcount_Functor> safe_rd_;
   };
 }
