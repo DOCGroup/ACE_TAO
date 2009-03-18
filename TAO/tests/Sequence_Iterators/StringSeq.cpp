@@ -958,25 +958,25 @@ int main(int,char*[])
   int status = 0;
 
   // Test Generic_Sequence_Iterator.
-  status += test_sequence<typename ::CORBA::StringSeq::iterator> ();
+  status += test_sequence< ::CORBA::StringSeq::iterator> ();
 
   // Test Const_Generic_Sequence_Iterator with non-const sequence.
   status += test_sequence_const_iterator < 
-               typename ::CORBA::StringSeq::const_iterator> ();
+               ::CORBA::StringSeq::const_iterator> ();
 
   // Test Const_Generic_Sequence_Iterator with const sequence.
-  status += test_const_sequence<typename ::CORBA::StringSeq::const_iterator> ();
+  status += test_const_sequence< ::CORBA::StringSeq::const_iterator> ();
 
   // Test Generic_Sequence_Reverse_Iterator.
-  status += test_sequence_reverse<typename ::CORBA::StringSeq::reverse_iterator> ();
+  status += test_sequence_reverse< ::CORBA::StringSeq::reverse_iterator> ();
 
   // Test Const_Generic_Sequence_Reverse_Iterator with non-const sequence.
   status += test_sequence_reverse_const_iterator< 
-                typename ::CORBA::StringSeq::const_reverse_iterator> ();
+                ::CORBA::StringSeq::const_reverse_iterator> ();
 
   // Test Const_Generic_Sequence_Reverse_Iterator with const sequence.
   status += test_const_sequence_reverse< 
-                typename ::CORBA::StringSeq::const_reverse_iterator> ();
+                ::CORBA::StringSeq::const_reverse_iterator> ();
 
   return status;
 }
