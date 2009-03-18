@@ -1,3 +1,9 @@
+Wed Mar 18 09:51:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Disabled a few tests for WCHAR, the needed executables are not
+          compiled
+
 Wed Mar 18 09:47:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Advanced/ch_12/client.cpp
