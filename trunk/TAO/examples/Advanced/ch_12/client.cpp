@@ -201,7 +201,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Show details for each device.
       for ( i = 0; i < list->length (); i++)
-        std::cout << list[i];
+        {
+          CCS::Thermometer_ptr ti = list[i];
+          std::cout << ti;
+        }
 
       std::cout << std::endl;
 
@@ -213,7 +216,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Check that the location was updated
       std::cout << "New details for device "
            << anum << " are:" << std::endl;
-      std::cout << list[0u] << std::endl;
+      CCS::Thermometer_ptr tx = list[0u];
+      std::cout << tx << std::endl;
 
       // Find first thermostat in list.
       CCS::Thermostat_var tmstat;
