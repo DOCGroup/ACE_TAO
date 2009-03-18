@@ -1,3 +1,8 @@
+Wed Mar 18 13:00:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Compression test can always run
+
 Wed Mar 18 09:51:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
