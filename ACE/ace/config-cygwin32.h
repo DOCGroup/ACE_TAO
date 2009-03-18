@@ -202,6 +202,13 @@
 
 #endif  /* ACE_MT_SAFE */
 
+#if CYGWIN_VERSION_API_MINOR >= 207
+// > Cygwin 1.7
+#define ACE_HAS_VWPRINTF
+#define ACE_HAS_VFWPRINTF
+#define ACE_HAS_VSWPRINTF
+#endif
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_CYGWIN32_H */

@@ -1,3 +1,8 @@
+Wed Mar 18 11:23:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Added some support for Cygwin 1.7
+
 Wed Mar 18 09:17:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
