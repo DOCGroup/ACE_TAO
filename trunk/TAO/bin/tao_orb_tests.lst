@@ -392,7 +392,7 @@ TAO/tests/Parallel_Connect_Strategy/run_test.pl: !QUICK !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Parallel_Connect_Strategy/run_test.pl -quick : QUICK !LabVIEW_RT !WinCE !FUZZ !VxWorks55
 TAO/tests/DII_Collocation_Tests/oneway/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/DII_Collocation_Tests/twoway/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT !WinCE !FUZZ
-TAO/tests/Compression/run_test.pl: ZLIB
+TAO/tests/Compression/run_test.pl
 TAO/tests/Collocated_Forwarding/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/ZIOP/run_test.pl: ZIOP ZLIB
 TAO/DevGuideExamples/BiDirectionalGIOP/run_test.pl: !MINIMUM !CORBA_E_MICRO
