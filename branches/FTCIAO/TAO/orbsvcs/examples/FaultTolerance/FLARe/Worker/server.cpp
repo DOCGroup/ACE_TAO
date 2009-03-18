@@ -14,6 +14,8 @@
 #include "orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 
+#include "tao/RTCORBA/RTCORBA.h"
+
 std::string ior_output = "test1.ior";
 long invocations = 0;
 

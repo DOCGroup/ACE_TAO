@@ -9,6 +9,8 @@
 #include "ace/Reactor.h"
 #include "tao/ORB_Core.h"
 
+#include "tao/RTCORBA/RTCORBA.h"
+
 const ACE_TCHAR *ior1 = ACE_TEXT("file://test.ior");
 unsigned long iterations = 0;
 unsigned long log_start = 0;
@@ -129,7 +131,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->run ();
 
-      orb->orb_core ()->reactor ()->cancel_timer (&timeout_handler);
+      //      orb->orb_core ()->reactor ()->cancel_timer (&timeout_handler);
     }
   catch (const CORBA::Exception& ex)
     {

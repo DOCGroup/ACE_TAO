@@ -21,7 +21,7 @@ Failure_Task::svc (void)
       condition_.wait ();
     }
 
-  orb_->shutdown ();
+  orb_->shutdown (true);
 
   return 0;
 }
@@ -71,7 +71,7 @@ Worker_i::run_task (CORBA::Double execution_time)
 
   timer_.elapsed_time (last_execution_time_);
 
-  ACE_DEBUG ((LM_TRACE, "le=%d\n", last_execution_time_.msec ()));
+  ACE_DEBUG ((LM_TRACE, "x=%d ", last_execution_time_.msec ()));
 
   task_.signal ();
 
@@ -81,7 +81,6 @@ Worker_i::run_task (CORBA::Double execution_time)
 void Worker_i::stop ()
 {
   task_.stop ();
-  this->orb_->shutdown ();
 }
 
 void
@@ -95,7 +94,7 @@ Worker_i::set_state (const CORBA::Any & state_value)
     state_ = value;
   else
     ACE_DEBUG ((LM_WARNING,
-                "Worker_i::set_state () "
+                "(%P|%t) Worker_i::set_state () "
                 "could not extract state value from Any."));
 
   ACE_DEBUG ((LM_TRACE, "Worker_i::set_state (%d) called.\n", value));
@@ -110,7 +109,7 @@ Worker_i::get_state ()
   // create intermediate object with the value
   CORBA::Long value = state_;
 
-  ACE_DEBUG ((LM_DEBUG, "Worker_i::get_state returns %d.\n", value));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Worker_i::get_state returns %d.\n", value));
 
   // insert value into the any object
   *state <<= value;
