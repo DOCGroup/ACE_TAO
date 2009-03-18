@@ -14,7 +14,7 @@ my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 
 $SV = $server->CreateProcess ("server");
 
-$test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
+$test = $SV->SpawnWaitKill (60);
 
 if ($test != 0) {
     print STDERR "ERROR: test returned $test\n";
