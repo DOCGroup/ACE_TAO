@@ -347,7 +347,6 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
       return;
     }
 
-  Messaging::PolicyValue pv;
   Messaging::PolicyValueSeq policy_value_seq;
 
   size_t length = 0;
@@ -364,8 +363,11 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
       TAO_OutputCDR out_CDR;
       policy_value_seq[i].ptype = (*policy_list)[i]->policy_type ();
 
-      out_CDR << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
-      (*policy_list)[i]->_tao_encode (out_CDR);
+      if (!(out_CDR << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
+        return;
+
+      if (!((*policy_list)[i]->_tao_encode (out_CDR)))
+        return;
 
       length = out_CDR.total_length ();
       policy_value_seq[i].pvalue.length (static_cast <CORBA::ULong>(length));
