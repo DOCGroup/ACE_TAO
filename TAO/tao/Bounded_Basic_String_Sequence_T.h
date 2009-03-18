@@ -121,40 +121,40 @@ public:
   typedef Const_MM_Sequence_Reverse_Iterator<bounded_basic_string_sequence<charT, MAX> > const_reverse_iterator;
 
   // Get an iterator that points to the beginning of the sequence.
-  iterator begin (void)
+  inline iterator begin (void)
   {
     return iterator (&this->impl_);
   }
 
   // Get a const iterator that points to the beginning of the sequence.
-  const_iterator begin (void) const
+  inline const_iterator begin (void) const
   {
     return const_iterator (&this->impl_);
   }
 
   // Get an iterator that points to the end of the sequence.
-  iterator end (void)
+  inline iterator end (void)
   {
     return iterator (&this->impl_,
                      this->impl_.length ());
   }
 
   // Get a const iterator that points to the end of the sequence.
-  const_iterator end (void) const
+  inline const_iterator end (void) const
   {
     return const_iterator (&this->impl_,
                            this->impl_.length ());
   }
 
   // Get a reverse iterator that points to the end of the sequence.
-  reverse_iterator rbegin (void)
+  inline reverse_iterator rbegin (void)
   {
     return reverse_iterator (&this->impl_,
                              this->impl_.length () - 1);
   }
 
   // Get a const reverse iterator that points to the end of the sequence.
-  const_reverse_iterator rbegin (void) const
+  inline const_reverse_iterator rbegin (void) const
   {
     return const_reverse_iterator (&this->impl_,
                                    this->impl_.length () - 1);
@@ -162,7 +162,7 @@ public:
 
   // Get a reverse iterator that points to one before the beginning
   // of the sequence.
-  reverse_iterator rend (void)
+  inline reverse_iterator rend (void)
   {
     return reverse_iterator (&this->impl_,
                              -1);
@@ -170,7 +170,7 @@ public:
 
   // Get a const reverse iterator that points to one before the
   // beginning of the sequence.
-  const_reverse_iterator rend (void) const
+  inline const_reverse_iterator rend (void) const
   {
     return const_reverse_iterator (&this->impl_,
                                    -1);
