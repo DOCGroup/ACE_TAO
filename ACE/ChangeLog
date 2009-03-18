@@ -1,3 +1,10 @@
+Wed Mar 18 09:17:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          For ACE_BEGINTHREADEX with WinCE, just past all flags to CreateThread,
+          that way the user can also specify STACK_SIZE_PARAM_IS_A_RESERVATION
+          as flag
+
 Tue Mar 17 09:10:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh:
