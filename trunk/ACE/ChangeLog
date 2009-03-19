@@ -1,3 +1,12 @@
+Wed Mar 18 14:48:23 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_unistd.{h,inl}: Added a new ACE_OS::dup() method with
+          one more parameter as process id of target process
+          [ACE_OS:dup(ACE_HANDLE handle, int pid)], so that handle
+          duplicated by dup() can be used in target process.  Thanks to
+          kashif khan <kashif_khan198227 at yahoo dot com> for
+          contributing this.
+
 Wed Mar 18 14:28:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * protocols/ace/RMCast/Acknowledge.cpp:
