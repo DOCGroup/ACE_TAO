@@ -1,4 +1,13 @@
-Thu Mar 18 21:25:00 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+Thu Mar 19 18:12:00 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Instructions for building middleware, RACE, SA-POP, & CoSMIC.txt:
+        Deleted (replaced with new name) because generated VC8 project file could not be opened due to invalid characters in the file name.
+
+        * Instructions for building middleware RACE SA-POP and CoSMIC.txt
+        Added (renamed from above to resolve invalid character problem in generated VC8 project file).
+
+
+Wed Mar 18 21:25:00 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * Instructions for building middleware, RACE, SA-POP, & CoSMIC.txt:
         * Instructions for building SA-POP Federate.txt:
