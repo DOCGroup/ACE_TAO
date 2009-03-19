@@ -201,7 +201,7 @@ TAO_MProfile::add_profiles (TAO_MProfile *pfiles)
 {
   // this->size_ == total number of profiles we can hold
   // this->last_ == the index of the last profile
-  CORBA::ULong space = this->size_ - this->last_;
+  CORBA::ULong const space = this->size_ - this->last_;
 
   if (space < pfiles->last_)
     {
@@ -364,7 +364,7 @@ TAO_MProfile::give_shared_profile (TAO_Profile *pfile)
         pfile->_decr_refcnt();
         return i;
       }
-  return this->give_profile(pfile,0);
+  return this->give_profile(pfile, 0);
 }
 
 
