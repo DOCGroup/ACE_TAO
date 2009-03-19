@@ -1,7 +1,16 @@
+Thu Mar 19 16:07:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/svc_conf_files.mpb:
+          Add all .conf and .conf.xml files to a Svc Conf Files group
+          and use it for all ace/tao projects. That way any service
+          config file is part of the generated visual studio solution
+          which makes it easier to edit these files
+
 Thu Mar 19 12:42:07 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/OS_NS_unistd.inl:
-        
+
           Further clean up to maintain style consistency in new dup()
           impl.
 
