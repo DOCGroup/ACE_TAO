@@ -1,7 +1,8 @@
 $Id$
 
 Instructions for building middleware (including ACE, TAO, CIAO, DAnCE), MACRO (including ANA, RACE, SA-POP), & CoSMIC (including PICML)
-  09/25/2008 Revision (John S. Kinnebrew <john.s.kinnebrew@vanderbilt.edu>)
+  03/19/2009 Revision (John S. Kinnebrew <john.s.kinnebrew@vanderbilt.edu>)
+
 
 
 MPC (09/25/2008):
@@ -115,7 +116,38 @@ RACE/SA-POP (09/25/2008):
   devenv /build "Debug|Win32" RACE_SAPOP.sln
 
 
-SA-POP Standalone (09/25/2008):
+
+ACE [only ACE, without TAO & CIAO] (03/18/2009):
+(http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html)
+-Install and set environment variables for:
+  -Microsoft Visual Studio 2005 Professional [install]
+  -ActiveState ActivePerl (e.g., 5.8.8.820-MSWin32-x86-274739 or later) [install]
+  -Xerces-C (version 2.8.0-win32-vc8) [extract pre-built (e.g. to C:/Program Files/Xerces) & set env. vars.]
+    set XERCESCROOT=C:/Program Files/Xerces/xerces-c_2_8_0-x86-windows-vc_8_0
+    set Path=%XERCESCROOT%/bin;%XERCESCROOT%/lib;%PATH%
+-FIRST TIME:
+  -Download "Sources only" for a release/micro-release from http://download.dre.vanderbilt.edu/
+  -Extract (e.g. to C:\Middleware\X_Y_Z for version X.Y.Z so %ACE_ROOT% would be C:\Middleware\X_Y_Z\ACE_wrappers)
+-Set ACE environment variables (global environment or in batch file before compiling and before running)
+  set ACE_ROOT=C:/Middleware/X_Y_Z/ACE_wrappers
+  set Path=%ACE_ROOT%/bin;%ACE_ROOT%/lib;%PATH%
+-FIRST TIME:
+  -Set ACE config file in %ACE_ROOT%\ace
+    cd %ACE_ROOT%\ace
+    -create config.h and in it, add the line: #include "ace/config-win32.h"
+  -Set Make Project Creator default configuration in %ACE_ROOT%\bin\MakeProjectCreator\config\
+    cd %ACE_ROOT%\bin\MakeProjectCreator\config\
+    copy global.features default.features
+-Build ACE
+  -Generate (or regenerate) MSVC++ projects and solution.
+    cd %ACE_ROOT%
+    perl %ACE_ROOT%\bin\mwc.pl -type vc8 ACE.mwc
+  -Open ACE.sln and build solution (in MSVC++)
+    devenv /build "Debug|Win32" ACE.sln
+
+
+
+SA-POP Standalone (03/18/2009):
 -Install, build if necessary, and set environment variables for:
   -Microsoft Visual Studio 2005 Professional [install]
   -ActiveState ActivePerl (e.g., 5.8.8.820-MSWin32-x86-274739 or later) [install]
@@ -128,6 +160,9 @@ SA-POP Standalone (09/25/2008):
     cd \C2W
     svn co https://svn.dre.vanderbilt.edu/DOC/Middleware/branches/RACE_devl/SA_POP SA_POP
 -Set SA-POP environment variables
+  set SAPOP_ROOT=C:/C2W/SA_POP
+  set SANET_ROOT=%SAPOP_ROOT%/SANet
+  set path=%SAPOP_ROOT%/lib;%PATH%
 -Update SA-POP
   cd %SAPOP_ROOT%
   svn update
@@ -310,8 +345,8 @@ SPACE (Fall 2006)
 
 
 
-Environment Variables  (System & User)
-06/08/2007
+Environment Variables  (System and/or User)
+03/18/2009
 
 If using batch file:
 set Path=C:\Program Files\Scripts;%PATH%
@@ -401,7 +436,7 @@ UnxUtils
 Path=C:/Program Files/UnxUtils/usr/local/wbin;%PATH%
 
 
-MPC:
+MPC (for SVN development version of ACE/TAO/CIAO; DO NOT set MPC_ROOT if using a packaged release/micro-release of ACE/TAO/CIAO):
 MPC_ROOT=C:/Middleware/Dev/MPC
 
 
@@ -420,7 +455,7 @@ Perl (automatically set by installation):
 Path=c:\Perl\site\bin;C:\Perl\bin\;%PATH%
 
 
-Python:
+Python (automatically set by installation):
 PYTHON_VERSION=2.4
 PYTHON_ROOT=C:\Python24
 
@@ -461,50 +496,3 @@ Path=C:\Program Files\MiKTeX\miktex\bin;%PATH%
 
 Matlab (automatically set by installation):
 Path=C:\Program Files\MATLAB704\bin\win32;%PATH%
-
-
-
-
-
-
-
-
-
-Home Desktop Dell E521 System Path (04/12/2007):
-c:\Perl\site\bin;c:\Perl\bin;C:\Program Files\MiKTeX\miktex\bin;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;C:\Program Files\ATI Technologies\ATI.ACE;C:\Program Files\Common Files\Roxio Shared\DLLShared\;C:\Program Files\Common Files\Roxio Shared\DLLShared\;C:\Program Files\Common Files\Roxio Shared\9.0\DLLShared\;C:\Program Files\Subversion\bin;C:\Program Files\UnxUtils\usr\local\wbin;c:\Program Files\Microsoft SQL Server\90\Tools\binn\;C:\Program Files\ISIS\UDM\bin;C:\Program Files\ISIS\UDM\etc;C:\Program Files\ISIS\UDM\3rdparty\xerces-c_2_5_0\bin;C:\Program Files\ISIS\UDM\3rdparty\xalan-c_1_8_0\bin
-
-Home Desktop Dell E521 User Path (04/12/2007):
-%ACE_ROOT%/lib;%ACE_ROOT%/bin;%XERCESCROOT%/bin;%XERCESCROOT%/lib;%COSMIC_ROOT%/bin;%COSMIC_ROOT%/lib;%BOOST_ROOT%/lib
-
-Home Laptop HP ZD8000 Path (05/08/2006):
-Path	%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;C:\Perl\bin\;C:\Python24\.;%MPC_ROOT%;%ACE_ROOT%\lib;%ACE_ROOT%\bin;%XERCESCROOT%\bin;%XERCESCROOT%\lib;%BOOST_ROOT%\lib;%COSMIC_ROOT%\bin;%CUTS_ROOT%\bin;%UDM_PATH%\bin;%UDM_PATH%\etc;%UDM_3RDPARTY_PATH%\xerces-c_2_5_0\bin;%UDM_3RDPARTY_PATH%\xalan-c_1_8_0\bin;%WXWINDOWS_ROOT%\lib;%COSMIC_ROOT%\PIM\PICML\examples\RT1H\bin;C:\GnuWin32\bin;C:\Program Files\MiKTeX\miktex\bin;C:\Program Files\Common Files\GTK\2.0\bin;C:\Program Files\MATLAB704\bin\win32;C:\Program Files\Secure Oasis;C:\Program Files\Subversion\bin;C:\Program Files\QuickTime\QTSystem\;C:\Program Files\ATI Technologies\ATI Control Panel;C:\Program Files\UnxUtils\usr\local\wbin
-
-
-
-
-ISIS Desktop System Path (04/12/2007):
-C:\Program Files\Perl\site\bin;C:\Program Files\Perl\bin;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;C:\Program Files\Subversion\bin;C:\Program Files\UnxUtils\usr\local\wbin;C:\Program Files\ISIS\UDM\bin;C:\Program Files\ISIS\UDM\etc;C:\Program Files\ISIS\UDM\3rdparty\xerces-c_2_5_0\bin;C:\Program Files\ISIS\UDM\3rdparty\xalan-c_1_8_0\bin
-
-ISIS Desktop User Path (04/12/2007):
-%ACE_ROOT%/lib;%ACE_ROOT%/bin;%XERCESCROOT%/bin;%XERCESCROOT%/lib;%COSMIC_ROOT%/bin;%COSMIC_ROOT%/lib;%BOOST_ROOT%/lib
-
-ISIS Desktop System Path (early 2006)
-C:\Program Files\MiKTeX\miktex\bin;C:\Perl\bin\;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\system32\WBEM;%ACE_ROOT%\bin;%ACE_ROOT%\lib;%TAO_ROOT%\lib;C:\Program Files\PuTTY;C:\Program Files\UltraEdit;C:\Program Files\MATLAB704\bin\win32;C:\Program Files\Rational\common;%XERCESCROOT%\bin;%UDM_PATH%bin;%UDM_PATH%etc;%UDM_3RDPARTY_PATH%\xerces-c_2_5_0\bin;%UDM_3RDPARTY_PATH%\xalan-c_1_8_0\bin;C:\Qt\4.0.1\bin;C:\GnuWin32\bin;C:\Program Files\7-Zip
-
-ISIS Desktop Path (05/08/2006):
-Path	%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\system32\WBEM;%MPC_ROOT%;%ACE_ROOT%\bin;%ACE_ROOT%\lib;%XERCESCROOT%\bin;%XERCESCROOT%\lib;%BOOST_ROOT%\lib;%WXWINDOWS_ROOT%\lib;%COSMIC_ROOT%\bin;%CUTS_ROOT%\bin;%UDM_3RDPARTY_PATH%\xalan-c_1_8_0\bin;%UDM_3RDPARTY_PATH%\xerces-c_2_5_0\bin;%UDM_PATH%\bin;%UDM_PATH%\etc;C:\Perl\bin\;C:\Python24;C:\Program Files\MiKTeX\miktex\bin;C:\Program Files\MATLAB704\bin\win32;C:\Program Files\Rational\common;C:\Qt\4.1.2\bin;C:\GnuWin32\bin;C:\Program Files\7-Zip;C:\Program Files\UnxUtils\usr\local\wbin;C:\Program Files\Subversion\bin
-
-PATHEXT	.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
-
-
-(User) CLASSPATH	.	
-(User) HOME	C:\Documents and Settings\jkinnebrew
-(User) TEMP	C:\Temp
-(User) TMP	C:\Temp
-(User) TMPDIR	C:\Temp
-(User) APR_ICONV_PATH	C:\Program Files\Subversion\iconv
-
-
-
-
-
