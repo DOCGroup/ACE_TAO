@@ -524,6 +524,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile
     orbsvcs/tests/Notify/performance-tests/Throughput/Makefile
     orbsvcs/tests/Notify/Timeout/Makefile
+    orbsvcs/tests/Notify/Validate_Client/Makefile
     orbsvcs/tests/Property/Makefile
     orbsvcs/tests/Redundant_Naming/Makefile
     orbsvcs/tests/Sched/Makefile

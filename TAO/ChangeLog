@@ -1,3 +1,35 @@
+Thu Mar 19 13:49:23 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * configure.ac:
+        * orbsvcs/tests/Notify/Makefile.am:
+
+          Add new build to the automake files.
+        
+        * orbsvcs/tests/Notify/Validate_Client/Makefile.am:
+        * orbsvcs/tests/Notify/Validate_Client/README:
+        * orbsvcs/tests/Notify/Validate_Client/Validate_Client.mpc:
+        * orbsvcs/tests/Notify/Validate_Client/proxy_dummy.cpp:
+        * orbsvcs/tests/Notify/Validate_Client/run_test.pl:
+
+          Added a server that generates the persistence file for the
+          notify service that is uses locally created references. This
+          should ensure that the validator feature will actually get a
+          OBJECT_NOT_EXIST exception rather than time out trying to
+          resolve an unknown hostname.
+        
+          The problem with this test was the original source persistence
+          file contained proxy references that were unresolvable, and so
+          on some hosts, it took longer than the timeout period to fail to
+          resolve, and this caused the validator to get a TIMEOUT
+          exception and decide that the peer is still present, just
+          busy. Thus the proxy would not be reaped, and the persistence
+          file would end up with proxy references, causing the test to
+          fail.
+        
+        * orbsvcs/tests/Notify/Validate_Client/persistency_copy:
+
+          Removed this file, the source data file is generated now.
+
 Thu Mar 19 04:55:02 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
@@ -8,7 +40,7 @@ Thu Mar 19 04:55:02 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
           the notify service. This was a problem on some platforms such as
           Solaris where the validator thread continued to run during
           service shutdown, yielding a crash.
-        
+
 Thu Mar 19 03:02:52 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
