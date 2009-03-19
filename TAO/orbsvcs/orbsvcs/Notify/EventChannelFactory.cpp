@@ -163,10 +163,7 @@ TAO_Notify_EventChannelFactory::remove (TAO_Notify_EventChannel* event_channel)
 int
 TAO_Notify_EventChannelFactory::shutdown (void)
 {
-  if (this->validate_client_task_.get () != 0)
-  {
-    this->validate_client_task_->shutdown ();
-  }
+  this->stop_validator();
 
   if (TAO_Notify_Object::shutdown () == 1)
     return 1;
@@ -260,6 +257,14 @@ TAO_Notify_EventChannelFactory::validate ()
   this->ec_container().collection()->for_each(&wrk);
 }
 
+void
+TAO_Notify_EventChannelFactory::stop_validator ()
+{
+  if (this->validate_client_task_.get () != 0)
+    {
+      this->validate_client_task_->shutdown ();
+    }
+}
 
 bool
 TAO_Notify_EventChannelFactory::is_persistent () const
