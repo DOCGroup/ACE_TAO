@@ -313,8 +313,7 @@ TAO_Profile::set_tagged_components (TAO_OutputCDR &out_cdr)
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;
   tagged_component.component_data.length (length);
-  CORBA::Octet *buf =
-    tagged_component.component_data.get_buffer ();
+  CORBA::Octet *buf = tagged_component.component_data.get_buffer ();
 
   for (const ACE_Message_Block *iterator = out_cdr.begin ();
        iterator != 0;

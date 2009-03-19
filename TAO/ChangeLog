@@ -1,10 +1,31 @@
+Thu Mar 19 15:16:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/MProfile.cpp:
+          Const change
+
+        * tao/Profile.cpp:
+          Layout change
+
+        * tao/ZIOP/ZIOP_ORBInitializer.cpp:
+        * tao/ZIOP/ZIOP_Service_Context_Handler.cpp:
+        * tao/ZIOP/ZIOP_Service_Context_Handler.h:
+          Added a ZIOP sc handler that transfers the ZIOP enabled and
+          idlevellist policy from the client to the server. These
+          are transmitted through the Messaging Invocation Policies which
+          aren't supported yet by TAO. We have to make some changes to
+          the core and pluggable transports to make all reply and
+          request service contexts available on all places.
+
+        * tao/Makefile.am:
+          Added new files
+
 Thu Mar 19 13:49:23 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * configure.ac:
         * orbsvcs/tests/Notify/Makefile.am:
 
           Add new build to the automake files.
-        
+
         * orbsvcs/tests/Notify/Validate_Client/Makefile.am:
         * orbsvcs/tests/Notify/Validate_Client/README:
         * orbsvcs/tests/Notify/Validate_Client/Validate_Client.mpc:
@@ -16,7 +37,7 @@ Thu Mar 19 13:49:23 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
           should ensure that the validator feature will actually get a
           OBJECT_NOT_EXIST exception rather than time out trying to
           resolve an unknown hostname.
-        
+
           The problem with this test was the original source persistence
           file contained proxy references that were unresolvable, and so
           on some hosts, it took longer than the timeout period to fail to
@@ -25,7 +46,7 @@ Thu Mar 19 13:49:23 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
           busy. Thus the proxy would not be reaped, and the persistence
           file would end up with proxy references, causing the test to
           fail.
-        
+
         * orbsvcs/tests/Notify/Validate_Client/persistency_copy:
 
           Removed this file, the source data file is generated now.
