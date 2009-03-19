@@ -217,11 +217,11 @@ ACE_OS::dup (ACE_HANDLE handle)
 }
 
 ACE_INLINE ACE_HANDLE
-ACE_OS:dup(ACE_HANDLE handle, int pid)
+ACE_OS::dup(ACE_HANDLE handle, int pid)
 {
   ACE_OS_TRACE("ACE_OS::dup");
-#define(ACE_WIN32)&&!defined(ACE_HAS_WINCE)
-  ACE_HADLE new_fd;
+#if defined (ACE_WIN32) && !defined(ACE_HAS_WINCE)
+  ACE_HANDLE new_fd;
   ACE_HANDLE hTargetProcess = ::OpenProcess (PROCESS_DUP_HANDLE,
                                              FALSE,
                                              pid);
