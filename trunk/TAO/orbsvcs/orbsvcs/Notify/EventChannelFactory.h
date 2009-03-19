@@ -109,6 +109,9 @@ public:
   virtual void reconnect (void);
   virtual void validate ();
 
+  /// at shutdown time, this causes the validator thread to exit.
+  void stop_validator (void);
+
   /// Handle change notifications
   bool handle_change (void);
 
