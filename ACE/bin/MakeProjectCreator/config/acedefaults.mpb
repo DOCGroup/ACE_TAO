@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: ipv6, vc_warnings, build_files, test_files {
+project: ipv6, vc_warnings, build_files, test_files, svc_conf_files {
   staticflags += ACE_AS_STATIC_LIBS
   includes    += $(ACE_ROOT)
   libpaths    += $(ACE_ROOT)/lib
