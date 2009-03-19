@@ -385,6 +385,12 @@ TAO_CosNotify_Service::finalize_service (
           // We're shutting things down, so ignore exceptions
         }
     }
+
+  TAO_Notify_EventChannelFactory* necf =
+    dynamic_cast<TAO_Notify_EventChannelFactory*> (ecf->_servant ());
+  if (necf != 0)
+    necf->stop_validator();
+
 }
 
 void
