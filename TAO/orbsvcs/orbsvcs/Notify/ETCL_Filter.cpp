@@ -115,7 +115,7 @@ TAO_Notify_ETCL_Filter::~TAO_Notify_ETCL_Filter ()
 {
   try
     {
-      this->remove_all_constraints ();
+      this->destroy();
     }
   catch (const CORBA::Exception&)
     {
@@ -445,11 +445,14 @@ TAO_Notify_ETCL_Filter::destroy (void)
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
 
+  if (CORBA::is_nil (this->poa_.in()))
+    return;
+
   this->remove_all_constraints_i ();
 
-  PortableServer::ObjectId_var refTemp = poa_->servant_to_id (this);
-
-  poa_->deactivate_object (refTemp.in ());
+  PortableServer::ObjectId_var refTemp = this->poa_->servant_to_id (this);
+  this->poa_->deactivate_object (refTemp.in ());
+  this->poa_ = PortableServer::POA::_nil();
 }
 
 CORBA::Boolean
