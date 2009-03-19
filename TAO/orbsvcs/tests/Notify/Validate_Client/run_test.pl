@@ -14,7 +14,6 @@ PerlACE::check_privilege_group();
 $notifyior = PerlACE::LocalFile ("notify.ior");
 $notify_conf = PerlACE::LocalFile ("notify$PerlACE::svcconf_ext");
 
-$persistent_file_orig = PerlACE::LocalFile ("persistency_copy");
 $persistent_file_prefix = "persistency.notif";
 $persistent_file = PerlACE::LocalFile ("persistency.notif.xml");
 
@@ -28,14 +27,22 @@ $TS = new PerlACE::Process ("../../../Notify_Service/Notify_Service",
 
 unlink $notifyior;
 unlink <$persistent_file_prefix.*>;
-copy($persistent_file_orig, $persistent_file) or die "Persistent File cannot be copied.";
+
+$DUMMY = new PerlACE::Process ("proxy_dummy", "-o $persistent_file");
+$DUMMY->Spawn();
+if (PerlACE::waitforfile_timed ($persistent_file, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: waiting for the proxy_dummy to start\n";
+    $DUMMY->Kill ();
+    exit 1;
+}
+
 
 $TS->Spawn ();
 
 if (PerlACE::waitforfile_timed ($notifyior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: waiting for the notify service to start\n";
     $TS->Kill ();
-    $NS->Kill ();
+    $DUMMY->Kill ();
     exit 1;
 }
 
@@ -63,7 +70,7 @@ else
 }
 
 $TS->Kill ();
-
+$DUMMY->Kill ();
 
 unlink $persistent_file;
 unlink $notifyior;

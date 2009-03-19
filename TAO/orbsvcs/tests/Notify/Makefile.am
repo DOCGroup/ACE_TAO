@@ -32,7 +32,8 @@ SUBDIRS = \
         Bug_1385_Regression \
         Blocking \
         Basic \
-        Timeout
+        Timeout \
+	Validate_Client
 
 if BUILD_TESTS
 SUBDIRS += performance-tests
