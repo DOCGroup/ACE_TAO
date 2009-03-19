@@ -220,7 +220,11 @@ ACE_INLINE ACE_HANDLE
 ACE_OS::dup(ACE_HANDLE handle, int pid)
 {
   ACE_OS_TRACE("ACE_OS::dup");
-#if defined (ACE_WIN32) && !defined(ACE_HAS_WINCE)
+#if defined (ACE_LACKS_DUP) || defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (pid);
+  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
+#elif defined (ACE_WIN32)
   ACE_HANDLE new_fd;
   ACE_HANDLE hTargetProcess = ::OpenProcess (PROCESS_DUP_HANDLE,
                                              FALSE,
@@ -239,13 +243,8 @@ ACE_OS::dup(ACE_HANDLE handle, int pid)
   else
     ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
   /*NOTREACHED*/
-#elif defined(ACE_LACKS_DUP)
-  ACE_UNUSED_ARGS(handle);
-  ACE_NOTSUP_RETURN(-1);
-#elif defined(ACE_HAS_WINCE)
-  ACE_UNUSED_ARG(handle)
-    ACE_NOTSUP_RETURN(0);
-#else
+#else 
+  ACE_UNUSED_ARG (pid);
   ACE_OSCALL_RETURN(::dup(handle), ACE_HANDLE, ACE_INVALID_HANDLE);
 #endif /*ACE_WIN32 &&  !ACE_HAS_WINCE*/
 }
