@@ -117,10 +117,24 @@ TAO_Notify_ETCL_FilterFactory::create_filter (
     throw CORBA::INTERNAL ();
     return 0;
   }  
-
-  PortableServer::ObjectId_var oid =
-    this->filter_poa_->activate_object (filter);
-
+  
+  PortableServer::ObjectId_var oid;
+  try
+    {
+      oid = this->filter_poa_->activate_object (filter);
+    }
+  catch (PortableServer::POA::ServantAlreadyActive&)
+    {
+      try
+        {
+          oid = this->filter_poa_->servant_to_id (filter);
+        }
+      catch (CORBA::Exception& )
+        {
+          throw CORBA::INTERNAL ();
+          return 0;
+        }
+    }
   CORBA::Object_var obj =
     this->filter_poa_->id_to_reference (oid.in ());
 

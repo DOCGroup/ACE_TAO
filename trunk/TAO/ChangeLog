@@ -1,3 +1,18 @@
+Thu Mar 19 03:02:52 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+        
+          Improve defense against the same pointer value coincidently
+          being reused when allocating a filter servant. This occasionally
+          happens in some of the test drivers, where the same notify
+          service instance is reused although the specific event channel
+          is destroyed after each test. Unfortunately the filter_POA is
+          not, and could hold stale pointers.
+        
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+          Cleaned up the debug output a bit.
+        
 Wed Mar 18 19:04:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Profile.cpp:
