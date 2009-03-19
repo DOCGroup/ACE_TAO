@@ -1,3 +1,9 @@
+Thu Mar 19 11:57:46 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/OS_NS_unistd.inl:
+
+          Clean up compile errors.
+        
 Wed Mar 18 14:48:23 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_NS_unistd.{h,inl}: Added a new ACE_OS::dup() method with
