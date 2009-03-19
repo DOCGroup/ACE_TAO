@@ -72,7 +72,7 @@ else
 $TS->Kill ();
 $DUMMY->Kill ();
 
-unlink $persistent_file;
+unlink <$persistent_file_prefix.*>;
 unlink $notifyior;
 
 
