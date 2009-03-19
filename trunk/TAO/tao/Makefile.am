@@ -6537,6 +6537,7 @@ libTAO_ZIOP_la_SOURCES = \
   ZIOP/ZIOP_ORBInitializer.cpp \
   ZIOP/ZIOP_PolicyFactory.cpp \
   ZIOP/ZIOP_Policy_Validator.cpp \
+  ZIOP/ZIOP_Service_Context_Handler.cpp \
   ZIOP/ZIOP_Policy_i.cpp \
   ZIOP/ZIOP_Stub.cpp \
   ZIOP/ZIOP_Stub_Factory.cpp
@@ -6562,6 +6563,7 @@ nobase_include_HEADERS += \
   ZIOP/ZIOP_PolicyFactory.h \
   ZIOP/ZIOP_Policy_Validator.h \
   ZIOP/ZIOP_Policy_i.h \
+  ZIOP/ZIOP_Service_Context_Handler.h \
   ZIOP/ZIOP_Stub.h \
   ZIOP/ZIOP_Stub_Factory.h \
   ZIOP/ziop_export.h
