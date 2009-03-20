@@ -25,7 +25,7 @@ namespace DAnCE
   public:
     class TreeNode;
     typedef ACE_Map_Manager<ACE_CString, TreeNode*, ACE_Null_Mutex> TNodes;
-    class TreeNode
+    class RedirectionService_Export TreeNode
     {
     public:
       static const char delimiter_ = '/';
