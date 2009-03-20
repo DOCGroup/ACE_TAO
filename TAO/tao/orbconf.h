@@ -911,6 +911,10 @@ enum TAO_Policy_Scope
 # endif
 #endif
 
+#if !defined (TAO_HAS_SEQUENCE_ITERATORS)
+#  define TAO_HAS_SEQUENCE_ITERATORS 1
+#endif
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"

@@ -89,6 +89,71 @@ public:
     implementation_type::freebuf(buffer);
   }
 
+#if TAO_HAS_SEQUENCE_ITERATORS
+
+  ///
+  /// Additions to support iterator semantics for TAO unbounded value
+  /// sequences.
+  ///
+
+  // = Traits and factory methods that create iterators.
+  typedef details::Generic_Sequence_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > iterator;
+  typedef details::Const_Generic_Sequence_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > const_iterator;
+  typedef details::Generic_Sequence_Reverse_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > reverse_iterator;
+  typedef details::Const_Generic_Sequence_Reverse_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > const_reverse_iterator;
+
+  // Get an iterator that points to the beginning of the sequence.
+  iterator begin (void)
+  {
+    return impl_.begin ();
+  }
+
+  // Get a const iterator that points to the beginning of the sequence.
+  const_iterator begin (void) const
+  {
+    return impl_.begin ();
+  }
+
+  // Get an iterator that points to the end of the sequence.
+  iterator end (void)
+  {
+    return impl_.end ();
+  }
+
+  // Get a const iterator that points to the end of the sequence.
+  const_iterator end (void) const
+  {
+    return impl_.end ();
+  }
+
+  // Get a reverse iterator that points to the end of the sequence.
+  reverse_iterator rbegin (void)
+  {
+    return impl_.rbegin ();
+  }
+
+  // Get a const reverse iterator that points to the end of the sequence.
+  const_reverse_iterator rbegin (void) const
+  {
+    return impl_.rbegin ();
+  }
+
+  // Get a reverse iterator that points to one before the beginning
+  // of the sequence.
+  reverse_iterator rend (void)
+  {
+    return impl_.rend ();
+  }
+
+  // Get a const reverse iterator that points to one before the
+  // beginning of the sequence.
+  const_reverse_iterator rend (void) const
+  {
+    return impl_.rend ();
+  }
+
+#endif /* TAO_HAS_SEQUENCE_ITERATORS */
+
 private:
   implementation_type impl_;
 };
