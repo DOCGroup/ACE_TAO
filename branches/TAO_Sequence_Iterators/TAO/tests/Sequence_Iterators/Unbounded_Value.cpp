@@ -151,9 +151,6 @@ int test_sequence ()
   v_sequence test;
   test.length (4);
 
-  // Memory is leaked here from
-  // TAO::details::string_traits_base<char>::default_initializer()
-
   std::copy (a.begin (),
              a.end (),
              test.begin ());
@@ -192,7 +189,6 @@ int test_const_sequence ()
   // setup of an example sequence
   v_sequence setup;
   setup.length (4);
-
 
   int elem0 = 0;
   int elem1 = 1;
@@ -312,9 +308,6 @@ int test_const_sequence ()
   v_sequence test;
   test.length (4);
 
-  // Memory is leaked here from
-  // TAO::details::string_traits_base<char>::default_initializer()
-
   std::copy (a.begin (),
              a.end (),
              test.begin ());
@@ -364,7 +357,6 @@ int test_sequence_reverse ()
   
   // setup of an example sequence
   a.length (4);
-
 
   int elem0 = 0;
   int elem1 = 1;
@@ -476,9 +468,6 @@ int test_sequence_reverse ()
   v_sequence test;
   test.length (a.length ());
 
-  // Memory is leaked here from
-  // TAO::details::string_traits_base<char>::default_initializer()
-
   std::copy (a.begin (),
              a.end (),
              test.begin ());
@@ -517,7 +506,6 @@ int test_const_sequence_reverse ()
   // setup of an example sequence
   v_sequence setup;
   setup.length (4);
-
 
   int elem0 = 0;
   int elem1 = 1;
@@ -636,9 +624,6 @@ int test_const_sequence_reverse ()
 
   v_sequence test;
   test.length (a.length ());
-
-  // Memory is leaked here from
-  // TAO::details::string_traits_base<char>::default_initializer()
 
   std::copy (a.begin (),
              a.end (),
