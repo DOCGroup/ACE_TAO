@@ -31,8 +31,8 @@ proxy_dummy_SOURCES = \
 
 proxy_dummy_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/llibTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/llibTAO.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_EXCEPTIONS
