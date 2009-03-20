@@ -1,3 +1,13 @@
+Fri Mar 20 15:54:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/RedirectionService/CCMObjectLocator.h:
+          Added missing export macro to resolve link problems
+          with CB2009
+
+        * DAnCE/tests/ObjectLocatorTest/DummyImpl.cpp:
+        * DAnCE/tests/ObjectLocatorTest/DummyImpl.h:
+          Layout changes
+
 Mon Mar 16 20:11:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/RedirectionService/CCMObjectLocator.h:
