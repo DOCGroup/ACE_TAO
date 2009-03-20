@@ -181,18 +181,52 @@ void SANet::Network::update_effect_link(TaskID task_ID, CondID cond_ID,
 
 };
 
-void SANet::Network::print_graphviz(std::basic_ostream<char, std::char_traits<char> >& strm)
+void SANet::Network::print_graphviz(std::basic_ostream<char, std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap)
 {
   for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
     node_iter != task_nodes_.end (); node_iter++)
   {
-    strm << "\t" << "\"" << node_iter->second->get_name() << " " << node_iter->first  << "\" " << "[shape=box, color = grey];\n";
+    std::map<std::string, std::string>::iterator titer = graphmap.find(node_iter->second->get_name());
+    if(titer != graphmap.end())
+    {
+      if((*titer).second == "blue" )
+      {
+        (*titer).second = "cornflowerblue";
+    
+      }
+      else if((*titer).second == "green")
+      {
+        (*titer).second = "red";
+      }
+    }
+    else
+    {
+      graphmap[node_iter->second->get_name()] =  "grey";
+    }
+    strm << "\t" << "\"" << node_iter->second->get_name() << " " << node_iter->first  << "\" " << "[shape=box, style=filled, color = " << graphmap[node_iter->second->get_name()] <<"];\n";
   }
 
   for (CondNodeMap::iterator node_iter = cond_nodes_.begin ();
     node_iter != cond_nodes_.end (); node_iter++)
   {
-    strm << "\t" << "\"" << node_iter->second->get_name() << " " << node_iter->first  << "\" " << "[color = grey];\n";
+    std::map<std::string, std::string>::iterator citer = graphmap.find(node_iter->second->get_name());
+    if(citer != graphmap.end())
+    {
+      if((*citer).second == "blue" )
+      {
+        (*citer).second = "cornflowerblue";
+    
+      }
+      else if((*citer).second == "green")
+      {
+        (*citer).second = "red";
+      }
+    }
+    else
+    {
+      graphmap[node_iter->second->get_name()] =  "grey";
+    }
+    strm << "\t" << "\"" << node_iter->second->get_name() << " " << node_iter->first  << "\" " << "[style=filled, color = " << graphmap[node_iter->second->get_name()] << "];\n";
   }
 
   for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();

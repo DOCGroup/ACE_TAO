@@ -17,7 +17,6 @@ project(C2W_Demo) : xerces, aceexe {
   Source_Files {
     C2W_Demo.cpp
     UserInput.cpp
-    LogGraphOut.cpp
   }
 
   Inline_Files {
@@ -25,7 +24,6 @@ project(C2W_Demo) : xerces, aceexe {
 
   Header_Files {
     UserInput.h
-    LogGraphOut.h
   }
 
   Documentation_Files {

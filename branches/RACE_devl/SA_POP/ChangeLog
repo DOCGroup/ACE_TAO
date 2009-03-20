@@ -1,3 +1,37 @@
+Fri Mar 20 19:45:41 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * C2W/C2W_Demo.mpc:
+	Removed the LogGraphOut class as part of the project.
+
+        * C2W/C2W_Demo.cpp:
+	Added the Replan functions into the demo. Also made some changes on keeping track of external conditoon.
+
+        * LogGraphOut.h:
+	Added to SA-POP Root and Exported out for the Library
+
+        * LogGraphOut.cpp:
+	Added to SA-POP Root
+
+        * LogGraphOut_Export.h:
+	Generated to provide accessibility as an outside hook into the Library.
+
+        * Planner.h:
+	Added function prototype for updating effect link(update_effect) and printing the entire SANet for Visualization(print_graph)
+
+        * Planner.cpp:
+	Implements the functions update_effect and print_graph for the Planner. 
+
+        * SANet/SANet.h:
+	Added function prototype for update_effect_link, which propogates the effect link change to the SANet itself. 
+	Added function prototype for print_graphviz, which prints the SANet out into the graphviz dot framework.
+
+        * SANet/SANet.cpp:
+	Implements the two new prototypes: update_effect_link and print_graphviz	
+
+        * SAPOP_w_ACE.mpc:
+	Added the LogGraphOut as part of the SAPOP project, and allows it to export out the functionality to programs that link to the SAPOP library
+
+
 Thu Mar 19 21:45:00 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * Instructions for building middleware RACE SA-POP and CoSMIC.txt
@@ -17,32 +51,32 @@ Wed Mar 18 21:25:00 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.ed
 
         * Instructions for building middleware, RACE, SA-POP, & CoSMIC.txt:
         * Instructions for building SA-POP Federate.txt:
-	Added instructions for building SA-POP, etc.
+        Added instructions for building SA-POP, etc.
 
 
 Thu Jan 15 18:55:00 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * C2W/C2W_Demo.cpp:
-	Uses the replan function in the planner for effects and condition updating
+        Uses the replan function in the planner for effects and condition updating
 
         * SANet/SANode.cpp:
-	Updates CondNode::update and TaskNode::Update to handle effect link weighting changes.
+        Updates CondNode::update and TaskNode::Update to handle effect link weighting changes.
 
         * SA_PlanStrategy.h:
         * SA_PlanStrategy.cpp:
-	Implements a reset function for the PlanStrategy.
+        Implements a reset function for the PlanStrategy.
 
         * SA_SchedStrategy.h:
         * SA_SchedStrategy.cpp:
-	Implements a reset function for the SchedStrategy
+        Implements a reset function for the SchedStrategy
 
         * SA_WorkingPlan.h:
         * SA_WorkingPlan.cpp:
-	Calls the reset functions for both SchedStrategy and PlanStrategy in the replanning function.
-	Updated sched_links_ and reused_insts_ to reflect naming conventions.
+        Calls the reset functions for both SchedStrategy and PlanStrategy in the replanning function.
+        Updated sched_links_ and reused_insts_ to reflect naming conventions.
 
         * SchedStrategy.h:
-	Added virtual function for reset function
+        Added virtual function for reset function
 
 
 Fri Jan  9 21:39:55 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
