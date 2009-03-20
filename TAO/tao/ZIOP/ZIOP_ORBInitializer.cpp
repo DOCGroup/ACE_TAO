@@ -45,11 +45,13 @@ TAO_ZIOP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
   tao_info->orb_core ()->orb_params ()->stub_factory_name ("ZIOP_Stub_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_ZIOP_Stub_Factory);
 
-  // Bind the service context handler for RTCORBA
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+  // Bind the service context handler for ZIOP
   TAO_ZIOP_Service_Context_Handler* h = 0;
   ACE_NEW (h,
            TAO_ZIOP_Service_Context_Handler());
   tao_info->orb_core ()->service_context_registry ().bind (IOP::INVOCATION_POLICIES, h);
+#endif
 }
 
 void

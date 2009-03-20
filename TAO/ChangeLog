@@ -1,3 +1,10 @@
+Fri Mar 20 10:01:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ZIOP/ZIOP_ORBInitializer.cpp:
+        * tao/ZIOP/ZIOP_Service_Context_Handler.cpp:
+        * tao/ZIOP/ZIOP_Service_Context_Handler.h:
+          Don't compile when we have no messaging
+
 Fri Mar 20 07:01:18 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/Xt_Stopwatch/timer.h:
