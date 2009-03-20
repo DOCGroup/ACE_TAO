@@ -1,9 +1,15 @@
+Fri Mar 20 07:01:18 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/Xt_Stopwatch/timer.h:
+        * tests/Xt_Stopwatch/timer.cpp:
+          Added virtual destructor to fix compile warning.
+
 Fri Mar 20 01:54:00 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Notify/Validate_Client/Makefile.am:
 
           Fix for automake builds.
-        
+
 Thu Mar 19 18:34:18 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
