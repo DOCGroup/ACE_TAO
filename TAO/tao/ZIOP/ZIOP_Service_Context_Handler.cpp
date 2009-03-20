@@ -2,6 +2,8 @@
 
 #include "tao/ZIOP/ZIOP_Service_Context_Handler.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 ACE_RCSID (ZIOP,
            ZIOP_Service_Context_Handler,
            "$Id$")
@@ -121,3 +123,5 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif
