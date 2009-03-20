@@ -13,6 +13,10 @@ Timer_imp::Timer_imp (XtAppContext &app,
 {
 }
 
+Timer_imp::~Timer_imp ()
+{
+}
+
 void
 Timer_imp::start (void)
 {
