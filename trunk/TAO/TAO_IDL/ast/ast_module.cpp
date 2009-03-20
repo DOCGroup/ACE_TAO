@@ -775,12 +775,28 @@ AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *i)
 
           if (i->added () == 0)
             {
-              i->set_added (1);
+              i->set_added (true);
               this->add_to_scope (i);
             }
-
-          // @@ Redefinition of forward. Type check not implemented.
-//          i->set_full_definition (itf);   // @@ Memory leak.
+            
+          // If the lookup found the full_definition member of another
+          // interface_fwd, don't reset this full_definition. Otherwise
+          // reset the member and set is_defined_ on i so it itf won't
+          // get destroyed twice.  
+          if (itf->is_defined ())
+            {
+              if (!i->is_defined ())
+                {
+                  AST_Interface *prev_fd = i->full_definition ();
+                  prev_fd->destroy ();
+                  // No need to delete prev_fd, the call to 
+                  // set_full_definition() below will do it.
+                }
+                
+              i->set_full_definition (itf);
+              i->set_as_defined ();
+            }
+            
           return i;
         }
 
