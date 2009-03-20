@@ -1,0 +1,33 @@
+// $Id$
+project(*idl): taoidldefaults {
+  IDL_Files {
+    RolyPoly.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): orbsvcsexe, fault_tolerance, tmcast, pi_server, interceptors {
+  after  += *idl
+  exename = server
+  Source_Files {
+    RolyPolyC.cpp
+    RolyPolyS.cpp
+    RolyPoly_i.cpp
+    ORB_Initializer.cpp
+    ReplicaController.cpp
+    CrashPoint.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, fault_tolerance {
+  after += *idl
+  Source_Files {
+    RolyPolyC.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}

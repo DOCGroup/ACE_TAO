@@ -1,0 +1,485 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!-- $Id$ -->
+
+<HTML>
+<HEAD>
+<TITLE>Using the TAO::Transport::Current Feature</TITLE>
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="transport_current.css">
+
+</HEAD>
+
+<BODY TEXT = "#000000" LINK="#000fff" VLINK="#ff0f0f" BGCOLOR="#ffffff">
+
+<P>
+
+<H1 ALIGN="CENTER">Using the TAO::Transport::Current Feature</H1>
+
+
+<P ALIGN="CENTER">
+Object Computing Inc.<BR>
+St.Louis, Missouri
+</P>
+
+<P ALIGN="CENTER">
+<SMALL><STRONG>
+<A HREF="mailto:iliyan@ociweb.com">Iliyan Jeliazkov</A>
+<A HREF="mailto:mesnier_p@ociweb.com">Phil Mesnier</A>
+ and <A HREF="mailto:<john_c@ociweb.com">Ciju John</A>
+</STRONG></SMALL>
+</P>
+
+<HR>
+
+<P>
+<H3>Scope and Context</H3><P>
+
+<P>In TAO, it is just too hard to obtain statistical or pretty much any operational information about the network transport which the ORB is using. While this is a direct corollary of the CORBA's design paradigm which mandates hiding all this hairy stuff behind non-transparent abstractions, it also precludes effective ORB and network monitoring.
+</P>
+
+<P>
+The Transport::Current feature intends to fill this gap by defining a 
+framework for developing a wide range of solutions to this problem. It also provides a basic implementation for the most common case - the IIOP transport.
+</P>
+
+<P>
+By definition, transport-specific information is available in
+contexts where the ORB has selected a Transport:</P>
+
+<UL>
+  <LI>Within Client-side interception points;</LI>
+  <LI>Within Server-side interception points;</LI>
+  <LI>Inside a Servant up-call</LI>
+</UL>
+
+<P>
+The implementation is based on a generic service-oriented
+framework, implementing the TAO::Transport::Current interface. It is
+an optional service, which can be dynamically loaded. This service makes 
+the Transport::Current interface available through
+orb->resolve_initial_references() . The basic idea is that whenever a Transport is 
+chosen by the ORB, the Transport::Current (or a derivative) will have access 
+to that instance and be able to provide some useful information.
+</P>
+
+<BR><HR>
+
+
+<P>
+<H3>
+Programmer's Reference
+</H3>
+
+<P>
+Consider the following IDL interface, describing a Factory for
+producing TAO::Transport::Traits instance, which represents
+transport-specific data.
+</P>
+
+<PRE>
+#include <IOP.pidl>
+#include <TimeBase.pidl>
+
+module TAO
+{
+  /// A type used to represent counters
+  typedef unsigned long long CounterT;
+
+  module Transport
+  {
+    /// Used to signal that a call was made within improper invocation
+    /// context.  Also, this exception is thrown if no Transport has
+    /// been selected for the current thread, for example in a
+    /// collocated invocation.
+
+    exception NoContext
+    {
+    };
+
+    // The primary interface, providing access to Transport
+    // information, available to the current thread.
+
+    local interface Current
+    {
+      /// Transport ID, unique within the process.
+      readonly attribute long id raises (NoContext);
+
+      /// Bytes sent/received through the transport.
+      readonly attribute CounterT bytes_sent raises (NoContext);
+      readonly attribute CounterT bytes_received raises (NoContext);
+
+      /// Messages (requests and replies) sent/received using the current
+      /// protocol.
+      readonly attribute CounterT messages_sent raises (NoContext);
+      readonly attribute CounterT messages_received raises (NoContext);
+
+      /// The absolute time (miliseconds) since the transport has been
+      /// open.
+      readonly attribute TimeBase::TimeT open_since raises (NoContext);
+    };
+  };
+};
+</PRE>
+
+<P>
+As an example of a specialized Transport::Current is the Transport::IIOP::Current, which derives from Transport::Current and has an interface, described in the following IDL:
+</P>
+
+<PRE>
+#include "TC.idl"
+
+/// Provide a forward reference for the SSLIOP::Current
+module SSLIOP
+{
+  interface Current;
+};
+
+
+module TAO
+{
+  module Transport
+  {
+    module IIOP
+    {
+      // The primary interface, providing access to IIOP-specific
+      // transport information, if it is indeed an IIOP (-like) transport
+      // that has been selected.
+
+      local interface Current : TAO::Transport::Current
+      {
+        /// Remote host
+        readonly attribute string remote_host raises (NoContext);
+
+        /// Remote port Using long (signed) type to better accomodate
+        /// the Java mapping, which has no support for unsigned values
+        readonly attribute long remote_port raises (NoContext);
+
+        /// Local host
+        readonly attribute string local_host raises (NoContext);
+
+        /// Local port
+        readonly attribute long local_port raises (NoContext);
+
+        /// If this is a "secure" transport, this method will give you
+        /// the corresponding SSLIOP::Current
+        readonly attribute ::SSLIOP::Current ssliop_current raises (NoContext);
+      };
+    };
+  };
+};
+</PRE>
+
+
+<P>
+<H3>
+User's Guide
+</H3>
+
+<P>
+The TAO::Transport::Current can be used as a base interface for a more specialized TAO::Transport::X::Current. It is not required, however that a more specialized Current inherits from it.
+</P>
+
+<P>
+Typical, generic usage is shown in the
+$TAO_ROOT/orbsvcs/tests/Transport_Current/Framework test:
+</P>
+
+<PRE>
+...
+  // Get the Current object.                                                                                               
+  ::CORBA::Object_var tcobject =
+    orb->resolve_initial_references ("TAO::Transport::Current"
+                                      ACE_ENV_SINGLE_ARG_DECL);
+  ACE_TRY_CHECK;
+
+  ::TAO::Transport::Current_var tc =
+      ::TAO::Transport::Current::_narrow (tcobject.in ()
+                                      ACE_ENV_SINGLE_ARG_DECL);
+  ACE_TRY_CHECK;
+
+  if (CORBA::is_nil (tc.in ()))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) client - ERROR: Could not resolve ")
+                  ACE_TEXT ("TAO::Transport::Current object.\n")));
+
+      ACE_TRY_THROW (CORBA::INTERNAL ());
+    }
+...
+</PRE>
+
+<P>
+Another example is available from the $TAO_ROOT/orbsvcs/tests/Transport_Current/IIOP test. This fragment shows how to obtain transport-specific information:
+</P>
+
+<PRE>
+...
+   // Get the specific Current object.
+  CORBA::Object_var tcobject =
+    orb->resolve_initial_references (ACE_TEXT_ALWAYS_CHAR ("TAO::Transport::IIOP::Current")
+                                     ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+
+  Transport::IIOP::Current_var tc =
+    Transport::IIOP::Current::_narrow (tcobject.in ()
+                                       ACE_ENV_SINGLE_ARG_DECL);
+  ACE_TRY_CHECK;
+
+  if (CORBA::is_nil (tc.in ()))
+      ACE_TRY_THROW (CORBA::INTERNAL ());
+
+  ::CORBA::String_var rhost (tc->remote_host (ACE_ENV_SINGLE_ARG_PARAMETER));
+  ACE_TRY_CHECK;
+
+  ::CORBA::String_var lhost (tc->local_host (ACE_ENV_SINGLE_ARG_PARAMETER));
+  ACE_TRY_CHECK;
+
+  ::CORBA::Long id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  ::TAO::CounterT bs = tc->bytes_sent (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  ::TAO::CounterT br = tc->bytes_received (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  ::TAO::CounterT rs = tc->messages_sent (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  ::TAO::CounterT rr = tc->messages_received (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+...
+</PRE>
+
+
+
+<P>
+<H3>
+Configuration, Bootstrap, Initialization and Operation
+</H3>
+
+<P>
+To use the Transport Current features the framework must be loaded
+through the Service Configuration framework. For example, using
+something like this:
+</P>
+
+<PRE>
+dynamic TAO_Transport_Current_Loader Service_Object * TAO_TC:_make_TAO_Transport_Current_Loader() ""
+</PRE>
+
+<P>
+The Transport_Current_Loader service uses an ORB initializer to register the "TAO::Transport::Current" name in a way that allows it to be resolved via orb->resolve_initial_references(). The implementation is the TAO::Transport::Current_Impl class.
+</P>
+
+<P>
+A transport-specific Traits_Factory objects are loaded like this:
+</P>
+
+<PRE>
+...
+dynamic TAO_Transport_IIOP_Current_Loader Service_Object * TAO_TC_IIOP:_make_TAO_Transport_IIOP_Current_Loader() ""
+...
+</PRE>
+
+<P>
+Note that any number of transport-specific Current interfaces may be available at any one time.
+</P>
+
+<P>
+Whenever a Transport::Current method is invoked, a pointer to the currently selected Transport instance must be accessible through Thread Specific Storage (TSS). For each thread, this is managed by modifying the TAO classes, instances of which are created on the stack during request/response processing.
+</P>
+
+<P>
+<H3>
+Implementation and Required Changes
+</H3>
+
+<P>
+The primary implementation is predicated upon usage of thread specific
+storage (TSS) and the guarantees C++ provides for calling the
+constructor and the destructor of automatic (stack-based)
+objects. Some existing objects, used in TAO will have to be modified
+and the necessary changes, both for client and the server side are
+detailed below.
+</P>
+
+<H4>
+Client Side: Sending Requests or Replies
+</H4>
+
+
+<P>
+The Profile_Transport_Resolver instance contains the reference to the
+Transport, which is the TAO implementation structure that is needed to extract 
+any protocol-specific information. An
+instance of Profile_Transport_Resolver lives on the stack, starting
+inside a call to Invocation_Adapter::invoke_remote_i(), or
+LocateRequest_Invocation_Adapter::invoke(). In the case of collocated
+invocations no such object is created.
+</P>
+
+<P>
+It is then passed around the calls that follow, except for the calls
+to the following Invocation_Base methods: send_request_interception(),
+receive_other_interception(), receive_reply_interception(),
+handle_any_exception(), handle_all_exception();
+</P>
+
+<P>
+Note that these in turn call the client-side interception points and
+that is where information about the transport will be needed. In order
+to make the transport information accessible inside those methods, we
+changed Profile_Transport_Resolver and the TAO_ServerRequest classes to
+ incorporate an additional member:
+</P>
+
+<PRE>
+...
+TAO::Transport_Selection_Guard transport_;
+...
+</PRE>
+
+
+<P>
+This guard automatically keeps track of the currenty selected Transport from within its constructor and destructor. The rest of the TC framework  makes sure this pointer is stored in a thread-specific storage, by adding an additional member to TSS_Resources:
+</P>
+
+<PRE>
+...
+TAO::Transport_Selection_Guard* tsg_;
+...
+</PRE>
+
+<P>
+The idea is to keep a pointer to the last guard on the current thread. Each guard keeps a pointer to the previous, effectively creating a stack of transport selection guards. The stack structure ensures both that the selection/deselection of a Transport will be correctly handled. It also ensures that, in case the current thread temporarily changes the Transport, the previous “current” transport will be preserved, no matter how many times such change occurs. A good example for this is a nested up-call scenario.
+</P>
+
+<P>
+Inside an interceptor, one can use the methods from Transport Current to obtain information on the currently selected transport. The implementation simply looks up the TAO_Transport pointer via TSS_Resources::tsg_ and obtains the requested data.
+</P>
+
+
+
+<H4>
+Server Side: Request Processing
+</H4>
+
+
+<P>
+On the server side, the TAO_ServerRequest instance already has a
+Transport pointer. The TAO_ServerRequest lives on the stack, starting
+its life inside a call to TAO_GIOP_Message_Base::process_request().
+</P>
+
+<P>
+Similarly to the client-side, we changed the TAO_ServerRequest
+to add a field:
+</P>
+
+<PRE>
+...
+TAO::Transport_Selection_Guard transport_;
+...
+</PRE>
+
+<P>
+Operation is similar to the client-side case. In the collocated case there may not be a 
+transport available, so the TSS slot will be null.
+</P>
+
+<P>
+Inside an interceptor then, one can use an RIR-resolved
+TransportCurrent to create a specialization of TransportInfo, based on
+the kind of Transport used. Then they would _downcast() it to the
+specific type.
+</P>
+
+<H3>
+Structural and Footprint Impact
+</H3>
+
+<P>
+As the IIOP implementation of the Transport Current functionality requires additional 
+data to be kept about the Transport, we added a new field to TAO_Transport:
+</P>
+
+<PRE>
+...
+  /// Transport statistics
+  TAO::Transport::Stats* stats_
+...
+</PRE>
+
+<P>
+TAO::Transport::Stats is a simple structure, which keeps track of useful statistical 
+information about how a transport is used:
+</P>
+
+<PRE>
+...
+    class TAO_Export Stats
+    {
+    public:
+      Stats ();
+
+      void messages_sent (size_t message_length);
+      CORBA::LongLong messages_sent (void) const;
+      CORBA::LongLong bytes_sent (void) const;
+
+      void messages_received (size_t message_length);
+      CORBA::LongLong messages_received (void) const;
+      CORBA::LongLong bytes_received (void) const;
+
+      void opened_since (const ACE_Time_Value& tv);
+      const ACE_Time_Value& opened_since (void) const;
+
+    private:
+      CORBA::LongLong messages_rcvd_; // 32bits not enough (?)
+      CORBA::LongLong messages_sent_; // 32bits not enough (?)
+
+      ACE_Basic_Stats bytes_rcvd_;
+      ACE_Basic_Stats bytes_sent_;
+
+      ACE_Time_Value  opened_since_;
+    };
+...
+</PRE>
+
+<P>
+To gather the statistics the TAO_Transport::send_message_shared() and TAO_Transport::process_parsed_messages() must be modified. These are non-virtual methods and are being called as part of request and reply processing regardless of what the most derived Transport type is. This property ensures that any specific Transport will have access to these statistics.
+</P>
+
+<H3>
+Performance Impact
+</H3>
+
+<P>
+As the implementation of the Transport Current functionality
+necessitates some additional processing on the critical path of an
+invocation, we are expecting a performance impact when the
+functionality is being used. 
+</P>
+
+<P>
+It is possible at build time, to
+disable the functionality, so that applications only incur the penalty
+if they require the features. The ORB, by default enables the Transport::Current 
+functionality. Adding "transport_current=0" to your default.features file will 
+disable it.
+</P>
+
+<H3>
+Example Code
+</H3>
+
+<P>
+Look at $TAO_ROOT/orbsvcs/tests/Transport_Current for code which illustrates and tests this feature.
+</P>
+</BODY>
+</HTML>

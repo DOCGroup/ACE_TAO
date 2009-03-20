@@ -1,0 +1,10 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Client) : namingexe, utils, portableserver {
+  exename = client
+  Source_Files {
+    client.cpp
+  }
+}
+
