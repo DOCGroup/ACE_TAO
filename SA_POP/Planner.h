@@ -19,6 +19,7 @@
 
 #include <string>
 #include <set>
+#include <map>
 #include "SA_POP_Types.h"
 #include "PlanStrategy.h"
 #include "SchedStrategy.h"
@@ -506,7 +507,7 @@ namespace SA_POP {
    *
    * @return nothing
    */
-  virtual void print_graph (std::basic_ostream<char, std::char_traits<char> >& strm);
+  virtual void print_graph (std::basic_ostream<char, std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap);
 
 
   protected:

@@ -153,7 +153,7 @@ namespace SANet {
     /**
      * @param strm  Output stream on which to print network representation.
      */
-    virtual void print_graphviz (std::basic_ostream<char, std::char_traits<char> >& strm);
+    virtual void print_graphviz (std::basic_ostream<char, std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap);
 
     
 

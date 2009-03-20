@@ -15,6 +15,7 @@
 
 #include <string>
 #include <set>
+#include <map>
 #include <stdlib.h>
 #include <fstream>
 #include "SA_POP_Types.h"
@@ -530,9 +531,9 @@ TaskImplID Planner::get_impl_id (TaskInstID task_inst)
 }
 
 
-void Planner::print_graph (std::basic_ostream<char, std::char_traits<char> >& strm)
+void Planner::print_graph (std::basic_ostream<char, std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap)
 {
-  this->sanet_->print_graphviz(strm);
+  this->sanet_->print_graphviz(strm, graphmap);
 
 }
 

@@ -143,6 +143,7 @@ int main (int argc, char* argv[])
 
   SA_POP::Planner *planner = 0;
   SA_POP::LogGraphOut graph_out	(std::cout, 1);
+  
 
 
   try {
@@ -184,7 +185,7 @@ int main (int argc, char* argv[])
 
     //Configure the OutAdapters to use
     SA_POP::LogScreenOut screen_out (std::cout);
-	
+	  graph_out.addTracking(toCheck);
     planner->add_out_adapter (&graph_out);
 	//SA_POP::SchemaOut s_out	(std::cout, *kconds);
     //planner->add_out_adapter (&s_out);
