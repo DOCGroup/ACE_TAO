@@ -20,11 +20,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
         {
           argvm[i] = argv[i];
         }
-      char buf1[32];
-      ACE_OS::sprintf (buf1, "-ORBListenEndpoints");
+      ACE_TCHAR buf1[32];
+      ACE_OS::sprintf (buf1, ACE_TEXT("-ORBListenEndpoints"));
       argvm[argcm-2] = buf1;
-      char buf2[32];
-      ACE_OS::sprintf (buf2, "iiop://:12345");
+      ACE_TCHAR buf2[32];
+      ACE_OS::sprintf (buf2, ACE_TEXT("iiop://:12345"));
       argvm[argcm-1] = buf2;
       argvm[argcm] = 0;
 

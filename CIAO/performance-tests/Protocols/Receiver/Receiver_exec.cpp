@@ -74,7 +74,7 @@ namespace CIDL_ReceiverImpl
 
     if (do_dump_history)
       {
-        this->inter_arrival_times_->dump_samples ("Inter-arrival times", gsf);
+        this->inter_arrival_times_->dump_samples (ACE_TEXT("Inter-arrival times"), gsf);
       }
 
     ACE_Basic_Stats stats;
@@ -116,9 +116,9 @@ namespace CIDL_ReceiverImpl
                     "Session id ends %d\n",
                     this->session_id_));
 
-        stats.dump_results ("Inter-arrival times", gsf);
+        stats.dump_results (ACE_TEXT("Inter-arrival times"), gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Inter-arrival times", gsf,
+        ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Inter-arrival times"), gsf,
                                               this->test_end_ - this->test_start_,
                                               stats.samples_count ());
       }
