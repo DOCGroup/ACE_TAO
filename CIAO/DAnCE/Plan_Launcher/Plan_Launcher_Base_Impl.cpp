@@ -407,14 +407,14 @@ void Plan_Launcher_Base_Impl::parse_args(int argc, ACE_TCHAR *argv[])
 
   ACE_Get_Opt get_opt(argc, argv,
   ACE_TEXT ("k:d:w:t:a:qx:h"), 0);
-  get_opt.long_option("em-ior", 'k', ACE_Get_Opt::ARG_REQUIRED);
-  get_opt.long_option("read-cdr-plan", 'd', ACE_Get_Opt::ARG_REQUIRED);
-  get_opt.long_option("write-cdr-plan", 'w', ACE_Get_Opt::ARG_REQUIRED);
-  get_opt.long_option("plan-uuid", 't', ACE_Get_Opt::ARG_REQUIRED);
-  get_opt.long_option("dam-ior", 'a', ACE_Get_Opt::ARG_REQUIRED);
-  get_opt.long_option("stop-plan", 'q', ACE_Get_Opt::NO_ARG);
-  get_opt.long_option("read-plan", 'x', ACE_Get_Opt::ARG_REQUIRED);
-  get_opt.long_option("help", 'h', ACE_Get_Opt::NO_ARG);
+  get_opt.long_option(ACE_TEXT("em-ior"), 'k', ACE_Get_Opt::ARG_REQUIRED);
+  get_opt.long_option(ACE_TEXT("read-cdr-plan"), 'd', ACE_Get_Opt::ARG_REQUIRED);
+  get_opt.long_option(ACE_TEXT("write-cdr-plan"), 'w', ACE_Get_Opt::ARG_REQUIRED);
+  get_opt.long_option(ACE_TEXT("plan-uuid"), 't', ACE_Get_Opt::ARG_REQUIRED);
+  get_opt.long_option(ACE_TEXT("dam-ior"), 'a', ACE_Get_Opt::ARG_REQUIRED);
+  get_opt.long_option(ACE_TEXT("stop-plan"), 'q', ACE_Get_Opt::NO_ARG);
+  get_opt.long_option(ACE_TEXT("read-plan"), 'x', ACE_Get_Opt::ARG_REQUIRED);
+  get_opt.long_option(ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
 
   int c;
   ACE_CString s;

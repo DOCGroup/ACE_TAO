@@ -22,7 +22,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/Throughput_Stats.h"
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 100;
 int do_dump_history = 0;
 
@@ -32,7 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   // Parse arguments.
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hxk:i:"));
   int c;
-  
+
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -53,7 +53,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         /* Could be any other parameter like -ORBSvcConf file so ignore */
        break;
       }
-      
+
   // Indicates sucessful parsing of the command line
   return 0;
 }
@@ -151,14 +151,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (do_dump_history)
         {
-          history.dump_samples ("HISTORY", gsf);
+          history.dump_samples (ACE_TEXT("HISTORY"), gsf);
         }
 
       ACE_Basic_Stats stats;
       history.collect_basic_stats (stats);
-      stats.dump_results ("Total", gsf);
+      stats.dump_results (ACE_TEXT("Total"), gsf);
 
-      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                              test_end - test_start,
                                              stats.samples_count ());
 

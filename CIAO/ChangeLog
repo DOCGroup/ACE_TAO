@@ -1,3 +1,18 @@
+Fri Mar 20 19:00:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DomainApplicationManager/Node_Locator.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp
+        * DAnCE/tests/NameServiceTest/srv_main.cpp
+        * performance-tests/Benchmark/RoundTrip/client.cpp
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp
+        * performance-tests/Protocols/Controller/Controller.cpp
+        * performance-tests/Protocols/Receiver/Receiver_exec.cpp
+        * performance-tests/Protocols/Sender/Sender_exec.cpp
+        * tests/Bug_2130_Regression/SEC_CheckPoint/controller.cpp
+        * tests/CIAO_ComponentServer/Basic/client.cpp
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+          Fixed unicode compile problems
+
 Fri Mar 20 15:54:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/RedirectionService/CCMObjectLocator.h:

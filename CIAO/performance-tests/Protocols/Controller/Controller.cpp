@@ -27,7 +27,7 @@ static int corba_priority = 0;
 static const char *test_type = "PACED";
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:b:c:d:e:i:m:p:r:s:t:u:v:w:x:y:z:"));
   int c;
