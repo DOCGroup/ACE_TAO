@@ -1,3 +1,16 @@
+Fri Mar 20 16:04:58 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_module.cpp(fe_add_interface_fwd):
+        
+          Fixed logic in setting the 'full_definition' member of
+          a forward declared interface node, and other changes to
+          make sure the memory management is still handled correctly.
+          Thanks to Maxim Khon<mkhon@parallels.com> for reporting
+          the problem of a derived inteface's operation table not
+          containing base class operations, when a forward declaration
+          of the base class interface occurs between the two
+          full definitions,
+
 Fri Mar 20 10:01:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ZIOP/ZIOP_ORBInitializer.cpp:
