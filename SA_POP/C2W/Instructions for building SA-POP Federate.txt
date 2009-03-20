@@ -2,6 +2,7 @@ $Id$
 
 Instructions for building SA-POP Federate
   03/18/2009 Revision (John S. Kinnebrew <john.s.kinnebrew@vanderbilt.edu>)
+  03/20/2009 Revision (Daniel L.C. Mack <daniel.l.mack@vanderbilt.edu>)
 
 
 ACE:
@@ -41,6 +42,9 @@ SA-POP Core:
   -Subversion (e.g., 1.4.3-r23084 or later) [install]
   -Xerces-C (e.g., 2.7.0-win32-vc8 or 2.8.0-win32-vc8) [install pre-built & set env. vars.]
   -ACE [build & set env. vars.]
+  -Graphviz(http://www.graphviz.org/Download..php),
+     -Install latest version (X.YZ) in program files, then set the path for the bin folder like so:
+     -set Path=C:\Program Files\GraphvizX.YZ\Bin;%PATH%
 -FIRST TIME
   -Checkout SA-POP (can be placed anywhere; example is under C:\C2W so %SAPOP_ROOT% would be C:\C2W\SA_POP)
     cd \C2W
@@ -56,5 +60,38 @@ SA-POP Core:
   devenv /build "Debug|Win32" SAPOP_Standalone.sln
 
 
+inputFed Federate:
+-Run %C2WTROOT%\src\cpp\demoSAPOP\inputFed\inputFed.sln file. 
+-Compile release version.
 
 SA-POP Federate:
+
+-Generate the code from demoSAPOP model in %C2WTROOT%\src\models\demoSAPOP
+-Generate the deployment scripts from demoSAPOP model in %C2WTROOT%\src\models\demoSAPOP
+-If you haven't made the environment variables for SA-POP and ACe global, you need to include them at the top of the deployment script in :
+	%C2WTROOT%\generated\scripts\demoSAPOP
+-Generate (or regenerate) MSVC++ projects and solution.
+  cd %C2WTROOT%\src\cpp\demoSAPOP\SAPOP
+  perl %ACE_ROOT%\bin\mpc.pl -type vc8 SAPOPFed.mpc
+
+-Run SAPOPFed.sln file. Compile Debug version.
+
+
+Running the Demo:
+The Demo is a small federation. There is an input federate and then the SA-POP federate. The inputFed takes as input a script.  The script is a newline delimited file of time slices, and conditions to activate as either true or false(1 == true, 0 == false). Look in the  %C2WTROOT%\src\cpp\demoSAPOP\inputFed for two example scripts. To run one, recompile the federate with the absolute path listed in the string at the top of inputFed.cpp. This will run that script when the federation is running. At each time step, the inputFed finds the condition and passes that to the SAPOPFed through a CondEvent interaction. The SAPOPFed reads from this and updates its SANet. It then replans and each step produces a small graphical visual of what must be accomplished in the environment. The SANet is a modified version of the demo scenario .In it, the UAV's and Ground forces are trying to stop the Vehicle with the IED from reaching the destination. TestScript1 shows the use of ground forces. TestScript2 uses the UAVs to carry out the mission with missiles. The Graph shows the last step that occurred. The Action to be completed next is green. The Conditions to be satisfied next is in orange. 
+
+To run:
+From cygwin run the script you either modified for the Environment Variables and Path above or just from:   
+  -%C2WTROOT%\generated\scripts\demoSAPOP
+
+When the SAPOPFed comes up, it will ask which goals to plan for in the scenario. This is where the planner wants to know what you want to accomplish
+in the domain. So for the demo, say you want to plan for 2 goals. The first is 2012 with a utility of 10. The second is 2014 with a utility of 10.
+ 
+
+Then the input fed asks for a character and a return so it can send the next event. The planning is done when the graphic visualization comes up. 
+
+ 
+
+After being satisfied with the current visualization, go back to the inputFed and enter another character. This controls when the next event is sent from the script. Continue until the inputFed says that the script has ended.
+
+	

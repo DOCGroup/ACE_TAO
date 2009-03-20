@@ -1,35 +1,45 @@
+Fri Mar 20 23:10:39 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * C2W/Instructions for building SA-POP Federate.txt:
+	Updated for how to run the SA-POP Federate.
+
+        * C2W/LogGraphOut.h:
+        * C2W/LogGraphOut.cpp:
+
+          Removed these files.
+
 Fri Mar 20 19:45:41 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * C2W/C2W_Demo.mpc:
-	Removed the LogGraphOut class as part of the project.
+        Removed the LogGraphOut class as part of the project.
 
         * C2W/C2W_Demo.cpp:
-	Added the Replan functions into the demo. Also made some changes on keeping track of external conditoon.
+        Added the Replan functions into the demo. Also made some changes on keeping track of external conditoon.
 
         * LogGraphOut.h:
-	Added to SA-POP Root and Exported out for the Library
+        Added to SA-POP Root and Exported out for the Library
 
         * LogGraphOut.cpp:
-	Added to SA-POP Root
+        Added to SA-POP Root
 
         * LogGraphOut_Export.h:
-	Generated to provide accessibility as an outside hook into the Library.
+        Generated to provide accessibility as an outside hook into the Library.
 
         * Planner.h:
-	Added function prototype for updating effect link(update_effect) and printing the entire SANet for Visualization(print_graph)
+        Added function prototype for updating effect link(update_effect) and printing the entire SANet for Visualization(print_graph)
 
         * Planner.cpp:
-	Implements the functions update_effect and print_graph for the Planner. 
+        Implements the functions update_effect and print_graph for the Planner.
 
         * SANet/SANet.h:
-	Added function prototype for update_effect_link, which propogates the effect link change to the SANet itself. 
-	Added function prototype for print_graphviz, which prints the SANet out into the graphviz dot framework.
+        Added function prototype for update_effect_link, which propogates the effect link change to the SANet itself.
+        Added function prototype for print_graphviz, which prints the SANet out into the graphviz dot framework.
 
         * SANet/SANet.cpp:
-	Implements the two new prototypes: update_effect_link and print_graphviz	
+        Implements the two new prototypes: update_effect_link and print_graphviz
 
         * SAPOP_w_ACE.mpc:
-	Added the LogGraphOut as part of the SAPOP project, and allows it to export out the functionality to programs that link to the SAPOP library
+        Added the LogGraphOut as part of the SAPOP project, and allows it to export out the functionality to programs that link to the SAPOP library
 
 
 Thu Mar 19 21:45:00 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
