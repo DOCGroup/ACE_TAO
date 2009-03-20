@@ -21,6 +21,8 @@
 
 #include "tao/Service_Context_Handler.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ZIOP_Service_Context_Handler :
@@ -38,6 +40,8 @@ public:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ZIOP_SERVICE_CONTEXT_HANDLER_H */
