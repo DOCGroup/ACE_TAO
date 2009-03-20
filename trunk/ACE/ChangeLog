@@ -1,3 +1,8 @@
+Fri Mar 20 08:07:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.{h,inl}:
+          Use correct type for pid and WinCE change
+
 Thu Mar 19 16:07:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:

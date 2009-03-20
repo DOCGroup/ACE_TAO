@@ -99,7 +99,7 @@ namespace ACE_OS
   ACE_HANDLE dup (ACE_HANDLE handle);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_HANDLE dup (ACE_HANDLE handle, int pid);
+  ACE_HANDLE dup (ACE_HANDLE handle, pid_t pid);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int dup2 (ACE_HANDLE oldfd,
