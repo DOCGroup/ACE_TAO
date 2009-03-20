@@ -38,7 +38,7 @@
 static int         _testcase           = TESTCASE_NOT_DEFINED;
 static int         _loop               = 0;
 static int         _ident              = 1;
-static const char* _sessionService_ior = 0;
+static const ACE_TCHAR* _sessionService_ior = 0;
 
 
 //-------------------------------------------------------------------
@@ -49,10 +49,10 @@ int
 parse_args
 (
   int   argc,
-  char* argv[]
+  ACE_TCHAR* argv[]
 )
 {
-  ACE_Get_Opt get_opts( argc, argv, "i:k:l:t:" );
+  ACE_Get_Opt get_opts( argc, argv, ACE_TEXT("i:k:l:t:") );
   int c;
 
   while( ( c = get_opts() ) != -1 )
@@ -91,7 +91,7 @@ parse_args
 
   if ( _sessionService_ior == 0 )
   {
-    _sessionService_ior = "file://TSEC_CheckPoint.ior";
+    _sessionService_ior = ACE_TEXT("file://TSEC_CheckPoint.ior");
   }
 
   if( _testcase == 0 )

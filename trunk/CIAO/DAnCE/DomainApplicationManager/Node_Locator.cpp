@@ -139,8 +139,8 @@ namespace DAnCE
         name.length (1);
 
         name[0].id = nodename;
-        name[0].kind = ACE_TEXT("NodeManager");
-        
+        name[0].kind = "NodeManager";
+
         CORBA::Object_var obj = this->nc_->resolve (name);
         ::Deployment::NodeManager_var nm = ::Deployment::NodeManager::_narrow (obj.in ());
 

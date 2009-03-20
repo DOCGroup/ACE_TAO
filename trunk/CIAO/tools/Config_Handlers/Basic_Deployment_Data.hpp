@@ -82,7 +82,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // href
-      // 
+      //
       public:
       bool href_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& href () const;
@@ -93,7 +93,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > href_;
 
       // idref
-      // 
+      //
       public:
       bool idref_p () const;
       ::XMLSchema::IDREF< ACE_TCHAR > const& idref () const;
@@ -170,10 +170,10 @@ namespace CIAO
       Value
       integral () const;
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator== (TCKind const& a, TCKind const& b);
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator!= (TCKind const& a, TCKind const& b);
 
       private:
@@ -192,7 +192,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // kind
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::TCKind const& kind () const;
       void kind (::CIAO::Config_Handlers::TCKind const& );
@@ -201,7 +201,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::TCKind > kind_;
 
       // enum
-      // 
+      //
       public:
       bool enum_p () const;
       ::CIAO::Config_Handlers::EnumType const& enum_ () const;
@@ -211,7 +211,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::EnumType > enum__;
 
       // struct
-      // 
+      //
       public:
       bool struct_p () const;
       ::CIAO::Config_Handlers::StructType const& struct_ () const;
@@ -221,7 +221,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::StructType > struct__;
 
       // value
-      // 
+      //
       public:
       bool value_p () const;
       ::CIAO::Config_Handlers::ValueType const& value () const;
@@ -231,7 +231,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ValueType > value_;
 
       // sequence
-      // 
+      //
       public:
       bool sequence_p () const;
       ::CIAO::Config_Handlers::SequenceType const& sequence () const;
@@ -241,7 +241,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::SequenceType > sequence_;
 
       // alias
-      // 
+      //
       public:
       bool alias_p () const;
       ::CIAO::Config_Handlers::AliasType const& alias () const;
@@ -251,7 +251,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::AliasType > alias_;
 
       // xmi_id
-      // 
+      //
       public:
       bool xmi_id_p () const;
       ::XMLSchema::ID< ACE_TCHAR > const& xmi_id () const;
@@ -280,7 +280,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // short
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::short_ >::iterator short_iterator;
       typedef ::std::list< ::XMLSchema::short_ >::const_iterator short_const_iterator;
@@ -295,7 +295,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::short_ > short_;
 
       // long
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::int_ >::iterator long_iterator;
       typedef ::std::list< ::XMLSchema::int_ >::const_iterator long_const_iterator;
@@ -310,7 +310,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::int_ > long_;
 
       // ushort
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::unsignedShort >::iterator ushort_iterator;
       typedef ::std::list< ::XMLSchema::unsignedShort >::const_iterator ushort_const_iterator;
@@ -325,7 +325,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::unsignedShort > ushort_;
 
       // ulong
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::unsignedInt >::iterator ulong_iterator;
       typedef ::std::list< ::XMLSchema::unsignedInt >::const_iterator ulong_const_iterator;
@@ -340,7 +340,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::unsignedInt > ulong_;
 
       // float
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::float_ >::iterator float_iterator;
       typedef ::std::list< ::XMLSchema::float_ >::const_iterator float_const_iterator;
@@ -355,7 +355,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::float_ > float_;
 
       // double
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::double_ >::iterator double_iterator;
       typedef ::std::list< ::XMLSchema::double_ >::const_iterator double_const_iterator;
@@ -370,7 +370,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::double_ > double_;
 
       // boolean
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::boolean >::iterator boolean_iterator;
       typedef ::std::list< ::XMLSchema::boolean >::const_iterator boolean_const_iterator;
@@ -385,7 +385,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::boolean > boolean_;
 
       // octet
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::unsignedByte >::iterator octet_iterator;
       typedef ::std::list< ::XMLSchema::unsignedByte >::const_iterator octet_const_iterator;
@@ -400,7 +400,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::unsignedByte > octet_;
 
       // enum
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator enum_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator enum_const_iterator;
@@ -415,7 +415,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > enum_;
 
       // string
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator string_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator string_const_iterator;
@@ -430,7 +430,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > string_;
 
       // longlong
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::long_ >::iterator longlong_iterator;
       typedef ::std::list< ::XMLSchema::long_ >::const_iterator longlong_const_iterator;
@@ -445,7 +445,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::long_ > longlong_;
 
       // ulonglong
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::unsignedLong >::iterator ulonglong_iterator;
       typedef ::std::list< ::XMLSchema::unsignedLong >::const_iterator ulonglong_const_iterator;
@@ -460,7 +460,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::unsignedLong > ulonglong_;
 
       // longdouble
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::double_ >::iterator longdouble_iterator;
       typedef ::std::list< ::XMLSchema::double_ >::const_iterator longdouble_const_iterator;
@@ -475,7 +475,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::double_ > longdouble_;
 
       // element
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::DataValue >::iterator element_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::DataValue >::const_iterator element_const_iterator;
@@ -490,7 +490,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::DataValue > element_;
 
       // member
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::NamedValue >::iterator member_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::NamedValue >::const_iterator member_const_iterator;
@@ -523,7 +523,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -532,7 +532,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // typeId
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& typeId () const;
       void typeId (::XMLSchema::string< ACE_TCHAR > const& );
@@ -541,7 +541,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > typeId_;
 
       // elementType
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::DataType const& elementType () const;
       void elementType (::CIAO::Config_Handlers::DataType const& );
@@ -570,7 +570,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -579,7 +579,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // typeId
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& typeId () const;
       void typeId (::XMLSchema::string< ACE_TCHAR > const& );
@@ -588,7 +588,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > typeId_;
 
       // member
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator member_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator member_const_iterator;
@@ -622,7 +622,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -631,7 +631,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // typeId
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& typeId () const;
       void typeId (::XMLSchema::string< ACE_TCHAR > const& );
@@ -640,7 +640,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > typeId_;
 
       // member
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::StructMemberType >::iterator member_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::StructMemberType >::const_iterator member_const_iterator;
@@ -674,7 +674,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -683,7 +683,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // type
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::DataType const& type () const;
       void type (::CIAO::Config_Handlers::DataType const& );
@@ -711,7 +711,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -720,7 +720,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // typeId
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& typeId () const;
       void typeId (::XMLSchema::string< ACE_TCHAR > const& );
@@ -729,7 +729,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > typeId_;
 
       // modifier
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& modifier () const;
       void modifier (::XMLSchema::string< ACE_TCHAR > const& );
@@ -738,7 +738,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > modifier_;
 
       // baseType
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::DataType const& baseType () const;
       void baseType (::CIAO::Config_Handlers::DataType const& );
@@ -747,7 +747,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > baseType_;
 
       // member
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::ValueMemberType >::iterator member_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::ValueMemberType >::const_iterator member_const_iterator;
@@ -783,7 +783,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -792,7 +792,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // visibility
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& visibility () const;
       void visibility (::XMLSchema::string< ACE_TCHAR > const& );
@@ -801,7 +801,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > visibility_;
 
       // type
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::DataType const& type () const;
       void type (::CIAO::Config_Handlers::DataType const& );
@@ -830,7 +830,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -839,7 +839,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // value
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::DataValue const& value () const;
       void value (::CIAO::Config_Handlers::DataValue const& );
@@ -867,7 +867,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // bound
-      // 
+      //
       public:
       bool bound_p () const;
       ::XMLSchema::unsignedInt const& bound () const;
@@ -877,7 +877,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::unsignedInt > bound_;
 
       // elementType
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::DataType const& elementType () const;
       void elementType (::CIAO::Config_Handlers::DataType const& );
@@ -904,7 +904,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // type
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::DataType const& type () const;
       void type (::CIAO::Config_Handlers::DataType const& );
@@ -913,7 +913,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > type_;
 
       // value
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::DataValue const& value () const;
       void value (::CIAO::Config_Handlers::DataValue const& );
@@ -941,7 +941,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -950,7 +950,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // value
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Any const& value () const;
       void value (::CIAO::Config_Handlers::Any const& );
@@ -995,10 +995,10 @@ namespace CIAO
       Value
       integral () const;
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator== (SatisfierPropertyKind const& a, SatisfierPropertyKind const& b);
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator!= (SatisfierPropertyKind const& a, SatisfierPropertyKind const& b);
 
       private:
@@ -1017,7 +1017,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1026,7 +1026,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // kind
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::SatisfierPropertyKind const& kind () const;
       void kind (::CIAO::Config_Handlers::SatisfierPropertyKind const& );
@@ -1035,7 +1035,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierPropertyKind > kind_;
 
       // dynamic
-      // 
+      //
       public:
       ::XMLSchema::boolean const& dynamic () const;
       void dynamic (::XMLSchema::boolean const& );
@@ -1044,7 +1044,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::boolean > dynamic_;
 
       // value
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Any const& value () const;
       void value (::CIAO::Config_Handlers::Any const& );
@@ -1074,7 +1074,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1083,7 +1083,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // resourceType
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator resourceType_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator resourceType_const_iterator;
@@ -1098,7 +1098,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
 
       // property
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::SatisfierProperty >::iterator property_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::SatisfierProperty >::const_iterator property_const_iterator;
@@ -1131,7 +1131,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // resourceType
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceType () const;
       void resourceType (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1140,7 +1140,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1149,7 +1149,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // property
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator property_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator property_const_iterator;
@@ -1183,7 +1183,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // requirementName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requirementName () const;
       void requirementName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1192,7 +1192,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > requirementName_;
 
       // resourceName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceName () const;
       void resourceName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1201,7 +1201,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceName_;
 
       // property
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator property_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator property_const_iterator;
@@ -1235,7 +1235,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1244,7 +1244,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // source
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator source_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator source_const_iterator;
@@ -1259,7 +1259,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > source_;
 
       // node
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& node () const;
       void node (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1268,7 +1268,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > node_;
 
       // location
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator location_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator location_const_iterator;
@@ -1283,7 +1283,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > location_;
 
       // execParameter
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator execParameter_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator execParameter_const_iterator;
@@ -1298,7 +1298,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Property > execParameter_;
 
       // deployRequirement
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
@@ -1313,7 +1313,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // deployedResource
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::ResourceDeploymentDescription >::iterator deployedResource_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::ResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
@@ -1328,7 +1328,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::ResourceDeploymentDescription > deployedResource_;
 
       // xmi_id
-      // 
+      //
       public:
       bool xmi_id_p () const;
       ::XMLSchema::ID< ACE_TCHAR > const& xmi_id () const;
@@ -1358,7 +1358,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1367,7 +1367,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // source
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator source_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator source_const_iterator;
@@ -1382,7 +1382,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > source_;
 
       // artifact
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::IdRef >::iterator artifact_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::IdRef >::const_iterator artifact_const_iterator;
@@ -1397,7 +1397,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::IdRef > artifact_;
 
       // execParameter
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator execParameter_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator execParameter_const_iterator;
@@ -1412,7 +1412,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Property > execParameter_;
 
       // deployRequirement
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
@@ -1427,7 +1427,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // xmi_id
-      // 
+      //
       public:
       bool xmi_id_p () const;
       ::XMLSchema::ID< ACE_TCHAR > const& xmi_id () const;
@@ -1472,10 +1472,10 @@ namespace CIAO
       Value
       integral () const;
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator== (ResourceUsageKind const& a, ResourceUsageKind const& b);
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator!= (ResourceUsageKind const& a, ResourceUsageKind const& b);
 
       private:
@@ -1494,7 +1494,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // resourceUsage
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage () const;
       void resourceUsage (::CIAO::Config_Handlers::ResourceUsageKind const& );
@@ -1503,7 +1503,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ResourceUsageKind > resourceUsage_;
 
       // requirementName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requirementName () const;
       void requirementName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1512,7 +1512,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > requirementName_;
 
       // resourceName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceName () const;
       void resourceName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1521,7 +1521,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceName_;
 
       // property
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator property_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator property_const_iterator;
@@ -1556,7 +1556,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1565,7 +1565,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // node
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& node () const;
       void node (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1574,7 +1574,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > node_;
 
       // source
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& source () const;
       void source (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1583,7 +1583,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > source_;
 
       // implementation
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::IdRef const& implementation () const;
       void implementation (::CIAO::Config_Handlers::IdRef const& );
@@ -1592,7 +1592,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > implementation_;
 
       // configProperty
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
@@ -1607,7 +1607,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Property > configProperty_;
 
       // deployedResource
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription >::iterator deployedResource_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
@@ -1622,7 +1622,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > deployedResource_;
 
       // deployedSharedResource
-      // 
+      //
       public:
       bool deployedSharedResource_p () const;
       ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& deployedSharedResource () const;
@@ -1632,7 +1632,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > deployedSharedResource_;
 
       // xmi_id
-      // 
+      //
       public:
       bool xmi_id_p () const;
       ::XMLSchema::ID< ACE_TCHAR > const& xmi_id () const;
@@ -1681,10 +1681,10 @@ namespace CIAO
       Value
       integral () const;
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator== (CCMComponentPortKind const& a, CCMComponentPortKind const& b);
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator!= (CCMComponentPortKind const& a, CCMComponentPortKind const& b);
 
       private:
@@ -1703,7 +1703,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1712,7 +1712,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // specificType
-      // 
+      //
       public:
       bool specificType_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& specificType () const;
@@ -1722,7 +1722,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > specificType_;
 
       // supportedType
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator supportedType_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator supportedType_const_iterator;
@@ -1737,7 +1737,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > supportedType_;
 
       // provider
-      // 
+      //
       public:
       ::XMLSchema::boolean const& provider () const;
       void provider (::XMLSchema::boolean const& );
@@ -1746,7 +1746,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::boolean > provider_;
 
       // exclusiveProvider
-      // 
+      //
       public:
       ::XMLSchema::boolean const& exclusiveProvider () const;
       void exclusiveProvider (::XMLSchema::boolean const& );
@@ -1755,7 +1755,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::boolean > exclusiveProvider_;
 
       // exclusiveUser
-      // 
+      //
       public:
       ::XMLSchema::boolean const& exclusiveUser () const;
       void exclusiveUser (::XMLSchema::boolean const& );
@@ -1764,7 +1764,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::boolean > exclusiveUser_;
 
       // optional
-      // 
+      //
       public:
       ::XMLSchema::boolean const& optional () const;
       void optional (::XMLSchema::boolean const& );
@@ -1773,7 +1773,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::boolean > optional_;
 
       // kind
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::CCMComponentPortKind const& kind () const;
       void kind (::CIAO::Config_Handlers::CCMComponentPortKind const& );
@@ -1805,7 +1805,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1814,7 +1814,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // type
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::DataType const& type () const;
       void type (::CIAO::Config_Handlers::DataType const& );
@@ -1842,7 +1842,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // portName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& portName () const;
       void portName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1869,7 +1869,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // portName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& portName () const;
       void portName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1878,7 +1878,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > portName_;
 
       // provider
-      // 
+      //
       public:
       bool provider_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& provider () const;
@@ -1888,7 +1888,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > provider_;
 
       // kind
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::CCMComponentPortKind const& kind () const;
       void kind (::CIAO::Config_Handlers::CCMComponentPortKind const& );
@@ -1897,7 +1897,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::CCMComponentPortKind > kind_;
 
       // instance
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::IdRef const& instance () const;
       void instance (::CIAO::Config_Handlers::IdRef const& );
@@ -1926,7 +1926,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // location
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& location () const;
       void location (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1935,7 +1935,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > location_;
 
       // provider
-      // 
+      //
       public:
       ::XMLSchema::boolean const& provider () const;
       void provider (::XMLSchema::boolean const& );
@@ -1944,7 +1944,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::boolean > provider_;
 
       // portName
-      // 
+      //
       public:
       bool portName_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& portName () const;
@@ -1954,7 +1954,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > portName_;
 
       // supportedType
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator supportedType_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator supportedType_const_iterator;
@@ -1988,7 +1988,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // targetName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& targetName () const;
       void targetName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1997,7 +1997,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > targetName_;
 
       // requirementName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requirementName () const;
       void requirementName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2006,7 +2006,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > requirementName_;
 
       // resourceName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceName () const;
       void resourceName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2015,7 +2015,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceName_;
 
       // property
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator property_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator property_const_iterator;
@@ -2050,7 +2050,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2059,7 +2059,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // source
-      // 
+      //
       public:
       bool source_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& source () const;
@@ -2069,7 +2069,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > source_;
 
       // deployRequirement
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
@@ -2084,7 +2084,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // externalEndpoint
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::iterator externalEndpoint_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::const_iterator externalEndpoint_const_iterator;
@@ -2099,7 +2099,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint > externalEndpoint_;
 
       // internalEndpoint
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint >::iterator internalEndpoint_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint >::const_iterator internalEndpoint_const_iterator;
@@ -2114,7 +2114,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint > internalEndpoint_;
 
       // externalReference
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::iterator externalReference_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::const_iterator externalReference_const_iterator;
@@ -2129,7 +2129,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint > externalReference_;
 
       // deployedResource
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription >::iterator deployedResource_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
@@ -2162,7 +2162,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // requiredType
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requiredType () const;
       void requiredType (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2189,7 +2189,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2198,7 +2198,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // resourceType
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator resourceType_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator resourceType_const_iterator;
@@ -2213,7 +2213,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
 
       // property
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::SatisfierProperty >::iterator property_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::SatisfierProperty >::const_iterator property_const_iterator;
@@ -2246,7 +2246,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // resourceUsage
-      // 
+      //
       public:
       bool resourceUsage_p () const;
       ::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage () const;
@@ -2256,7 +2256,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ResourceUsageKind > resourceUsage_;
 
       // resourcePort
-      // 
+      //
       public:
       bool resourcePort_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& resourcePort () const;
@@ -2266,7 +2266,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourcePort_;
 
       // componentPort
-      // 
+      //
       public:
       bool componentPort_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& componentPort () const;
@@ -2276,7 +2276,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > componentPort_;
 
       // resourceType
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceType () const;
       void resourceType (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2285,7 +2285,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2294,7 +2294,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // property
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator property_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator property_const_iterator;
@@ -2328,7 +2328,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // portName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& portName () const;
       void portName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2337,7 +2337,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > portName_;
 
       // instance
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::IdRef const& instance () const;
       void instance (::CIAO::Config_Handlers::IdRef const& );
@@ -2365,7 +2365,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2374,7 +2374,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // deployRequirement
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
@@ -2389,7 +2389,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // internalEndpoint
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::SubcomponentPortEndpoint >::iterator internalEndpoint_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::SubcomponentPortEndpoint >::const_iterator internalEndpoint_const_iterator;
@@ -2404,7 +2404,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::SubcomponentPortEndpoint > internalEndpoint_;
 
       // externalEndpoint
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::iterator externalEndpoint_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::const_iterator externalEndpoint_const_iterator;
@@ -2419,7 +2419,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint > externalEndpoint_;
 
       // externalReference
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::iterator externalReference_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::const_iterator externalReference_const_iterator;
@@ -2466,10 +2466,10 @@ namespace CIAO
       Value
       integral () const;
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator== (PlanLocalityKind const& a, PlanLocalityKind const& b);
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator!= (PlanLocalityKind const& a, PlanLocalityKind const& b);
 
       private:
@@ -2488,7 +2488,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base;
 
       // constraint
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::PlanLocalityKind const& constraint () const;
       void constraint (::CIAO::Config_Handlers::PlanLocalityKind const& );
@@ -2497,7 +2497,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::PlanLocalityKind > constraint_;
 
       // constrainedInstance
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::IdRef const& constrainedInstance () const;
       void constrainedInstance (::CIAO::Config_Handlers::IdRef const& );
@@ -5363,13 +5363,13 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct IdRef : Traversal::IdRef, 
+      struct IdRef : Traversal::IdRef,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::IdRef Type;
         IdRef (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -5380,7 +5380,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         href (Type &o)
         {
 
@@ -5391,7 +5391,7 @@ namespace CIAO
         virtual void
         href (Type const&);
 
-        virtual void 
+        virtual void
         idref (Type &o)
         {
 
@@ -5406,12 +5406,12 @@ namespace CIAO
         IdRef ();
       };
 
-      struct TCKind : Traversal::TCKind, 
+      struct TCKind : Traversal::TCKind,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         TCKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -5424,13 +5424,13 @@ namespace CIAO
         TCKind ();
       };
 
-      struct DataType : Traversal::DataType, 
+      struct DataType : Traversal::DataType,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::DataType Type;
         DataType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -5441,7 +5441,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         kind (Type &o)
         {
 
@@ -5452,7 +5452,7 @@ namespace CIAO
         virtual void
         kind (Type const&);
 
-        virtual void 
+        virtual void
         enum_ (Type &o)
         {
 
@@ -5463,7 +5463,7 @@ namespace CIAO
         virtual void
         enum_ (Type const&);
 
-        virtual void 
+        virtual void
         struct_ (Type &o)
         {
 
@@ -5474,7 +5474,7 @@ namespace CIAO
         virtual void
         struct_ (Type const&);
 
-        virtual void 
+        virtual void
         value (Type &o)
         {
 
@@ -5485,7 +5485,7 @@ namespace CIAO
         virtual void
         value (Type const&);
 
-        virtual void 
+        virtual void
         sequence (Type &o)
         {
 
@@ -5496,7 +5496,7 @@ namespace CIAO
         virtual void
         sequence (Type const&);
 
-        virtual void 
+        virtual void
         alias (Type &o)
         {
 
@@ -5507,7 +5507,7 @@ namespace CIAO
         virtual void
         alias (Type const&);
 
-        virtual void 
+        virtual void
         xmi_id (Type &o)
         {
 
@@ -5522,13 +5522,13 @@ namespace CIAO
         DataType ();
       };
 
-      struct DataValue : Traversal::DataValue, 
+      struct DataValue : Traversal::DataValue,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::DataValue Type;
         DataValue (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -5539,7 +5539,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         short_pre (Type &o)
         {
 
@@ -5550,7 +5550,7 @@ namespace CIAO
         virtual void
         short_pre (Type const&);
 
-        virtual void 
+        virtual void
         short_next (Type &o)
         {
 
@@ -5561,7 +5561,7 @@ namespace CIAO
         virtual void
         short_next (Type const&);
 
-        virtual void 
+        virtual void
         short_post (Type &o)
         {
 
@@ -5572,7 +5572,7 @@ namespace CIAO
         virtual void
         short_post (Type const&);
 
-        virtual void 
+        virtual void
         long_pre (Type &o)
         {
 
@@ -5583,7 +5583,7 @@ namespace CIAO
         virtual void
         long_pre (Type const&);
 
-        virtual void 
+        virtual void
         long_next (Type &o)
         {
 
@@ -5594,7 +5594,7 @@ namespace CIAO
         virtual void
         long_next (Type const&);
 
-        virtual void 
+        virtual void
         long_post (Type &o)
         {
 
@@ -5605,7 +5605,7 @@ namespace CIAO
         virtual void
         long_post (Type const&);
 
-        virtual void 
+        virtual void
         ushort_pre (Type &o)
         {
 
@@ -5616,7 +5616,7 @@ namespace CIAO
         virtual void
         ushort_pre (Type const&);
 
-        virtual void 
+        virtual void
         ushort_next (Type &o)
         {
 
@@ -5627,7 +5627,7 @@ namespace CIAO
         virtual void
         ushort_next (Type const&);
 
-        virtual void 
+        virtual void
         ushort_post (Type &o)
         {
 
@@ -5638,7 +5638,7 @@ namespace CIAO
         virtual void
         ushort_post (Type const&);
 
-        virtual void 
+        virtual void
         ulong_pre (Type &o)
         {
 
@@ -5649,7 +5649,7 @@ namespace CIAO
         virtual void
         ulong_pre (Type const&);
 
-        virtual void 
+        virtual void
         ulong_next (Type &o)
         {
 
@@ -5660,7 +5660,7 @@ namespace CIAO
         virtual void
         ulong_next (Type const&);
 
-        virtual void 
+        virtual void
         ulong_post (Type &o)
         {
 
@@ -5671,7 +5671,7 @@ namespace CIAO
         virtual void
         ulong_post (Type const&);
 
-        virtual void 
+        virtual void
         float_pre (Type &o)
         {
 
@@ -5682,7 +5682,7 @@ namespace CIAO
         virtual void
         float_pre (Type const&);
 
-        virtual void 
+        virtual void
         float_next (Type &o)
         {
 
@@ -5693,7 +5693,7 @@ namespace CIAO
         virtual void
         float_next (Type const&);
 
-        virtual void 
+        virtual void
         float_post (Type &o)
         {
 
@@ -5704,7 +5704,7 @@ namespace CIAO
         virtual void
         float_post (Type const&);
 
-        virtual void 
+        virtual void
         double_pre (Type &o)
         {
 
@@ -5715,7 +5715,7 @@ namespace CIAO
         virtual void
         double_pre (Type const&);
 
-        virtual void 
+        virtual void
         double_next (Type &o)
         {
 
@@ -5726,7 +5726,7 @@ namespace CIAO
         virtual void
         double_next (Type const&);
 
-        virtual void 
+        virtual void
         double_post (Type &o)
         {
 
@@ -5737,7 +5737,7 @@ namespace CIAO
         virtual void
         double_post (Type const&);
 
-        virtual void 
+        virtual void
         boolean_pre (Type &o)
         {
 
@@ -5748,7 +5748,7 @@ namespace CIAO
         virtual void
         boolean_pre (Type const&);
 
-        virtual void 
+        virtual void
         boolean_next (Type &o)
         {
 
@@ -5759,7 +5759,7 @@ namespace CIAO
         virtual void
         boolean_next (Type const&);
 
-        virtual void 
+        virtual void
         boolean_post (Type &o)
         {
 
@@ -5770,7 +5770,7 @@ namespace CIAO
         virtual void
         boolean_post (Type const&);
 
-        virtual void 
+        virtual void
         octet_pre (Type &o)
         {
 
@@ -5781,7 +5781,7 @@ namespace CIAO
         virtual void
         octet_pre (Type const&);
 
-        virtual void 
+        virtual void
         octet_next (Type &o)
         {
 
@@ -5792,7 +5792,7 @@ namespace CIAO
         virtual void
         octet_next (Type const&);
 
-        virtual void 
+        virtual void
         octet_post (Type &o)
         {
 
@@ -5803,7 +5803,7 @@ namespace CIAO
         virtual void
         octet_post (Type const&);
 
-        virtual void 
+        virtual void
         enum_pre (Type &o)
         {
 
@@ -5814,7 +5814,7 @@ namespace CIAO
         virtual void
         enum_pre (Type const&);
 
-        virtual void 
+        virtual void
         enum_next (Type &o)
         {
 
@@ -5825,7 +5825,7 @@ namespace CIAO
         virtual void
         enum_next (Type const&);
 
-        virtual void 
+        virtual void
         enum_post (Type &o)
         {
 
@@ -5836,7 +5836,7 @@ namespace CIAO
         virtual void
         enum_post (Type const&);
 
-        virtual void 
+        virtual void
         string_pre (Type &o)
         {
 
@@ -5847,7 +5847,7 @@ namespace CIAO
         virtual void
         string_pre (Type const&);
 
-        virtual void 
+        virtual void
         string_next (Type &o)
         {
 
@@ -5858,7 +5858,7 @@ namespace CIAO
         virtual void
         string_next (Type const&);
 
-        virtual void 
+        virtual void
         string_post (Type &o)
         {
 
@@ -5869,7 +5869,7 @@ namespace CIAO
         virtual void
         string_post (Type const&);
 
-        virtual void 
+        virtual void
         longlong_pre (Type &o)
         {
 
@@ -5880,7 +5880,7 @@ namespace CIAO
         virtual void
         longlong_pre (Type const&);
 
-        virtual void 
+        virtual void
         longlong_next (Type &o)
         {
 
@@ -5891,7 +5891,7 @@ namespace CIAO
         virtual void
         longlong_next (Type const&);
 
-        virtual void 
+        virtual void
         longlong_post (Type &o)
         {
 
@@ -5902,7 +5902,7 @@ namespace CIAO
         virtual void
         longlong_post (Type const&);
 
-        virtual void 
+        virtual void
         ulonglong_pre (Type &o)
         {
 
@@ -5913,7 +5913,7 @@ namespace CIAO
         virtual void
         ulonglong_pre (Type const&);
 
-        virtual void 
+        virtual void
         ulonglong_next (Type &o)
         {
 
@@ -5924,7 +5924,7 @@ namespace CIAO
         virtual void
         ulonglong_next (Type const&);
 
-        virtual void 
+        virtual void
         ulonglong_post (Type &o)
         {
 
@@ -5935,7 +5935,7 @@ namespace CIAO
         virtual void
         ulonglong_post (Type const&);
 
-        virtual void 
+        virtual void
         longdouble_pre (Type &o)
         {
 
@@ -5946,7 +5946,7 @@ namespace CIAO
         virtual void
         longdouble_pre (Type const&);
 
-        virtual void 
+        virtual void
         longdouble_next (Type &o)
         {
 
@@ -5957,7 +5957,7 @@ namespace CIAO
         virtual void
         longdouble_next (Type const&);
 
-        virtual void 
+        virtual void
         longdouble_post (Type &o)
         {
 
@@ -5968,7 +5968,7 @@ namespace CIAO
         virtual void
         longdouble_post (Type const&);
 
-        virtual void 
+        virtual void
         element_pre (Type &o)
         {
 
@@ -5979,7 +5979,7 @@ namespace CIAO
         virtual void
         element_pre (Type const&);
 
-        virtual void 
+        virtual void
         element_next (Type &o)
         {
 
@@ -5990,7 +5990,7 @@ namespace CIAO
         virtual void
         element_next (Type const&);
 
-        virtual void 
+        virtual void
         element_post (Type &o)
         {
 
@@ -6001,7 +6001,7 @@ namespace CIAO
         virtual void
         element_post (Type const&);
 
-        virtual void 
+        virtual void
         member_pre (Type &o)
         {
 
@@ -6012,7 +6012,7 @@ namespace CIAO
         virtual void
         member_pre (Type const&);
 
-        virtual void 
+        virtual void
         member_next (Type &o)
         {
 
@@ -6023,7 +6023,7 @@ namespace CIAO
         virtual void
         member_next (Type const&);
 
-        virtual void 
+        virtual void
         member_post (Type &o)
         {
 
@@ -6038,13 +6038,13 @@ namespace CIAO
         DataValue ();
       };
 
-      struct AliasType : Traversal::AliasType, 
+      struct AliasType : Traversal::AliasType,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::AliasType Type;
         AliasType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -6055,7 +6055,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -6066,7 +6066,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         typeId (Type &o)
         {
 
@@ -6077,7 +6077,7 @@ namespace CIAO
         virtual void
         typeId (Type const&);
 
-        virtual void 
+        virtual void
         elementType (Type &o)
         {
 
@@ -6092,13 +6092,13 @@ namespace CIAO
         AliasType ();
       };
 
-      struct EnumType : Traversal::EnumType, 
+      struct EnumType : Traversal::EnumType,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::EnumType Type;
         EnumType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -6109,7 +6109,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -6120,7 +6120,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         typeId (Type &o)
         {
 
@@ -6131,7 +6131,7 @@ namespace CIAO
         virtual void
         typeId (Type const&);
 
-        virtual void 
+        virtual void
         member_pre (Type &o)
         {
 
@@ -6142,7 +6142,7 @@ namespace CIAO
         virtual void
         member_pre (Type const&);
 
-        virtual void 
+        virtual void
         member_next (Type &o)
         {
 
@@ -6153,7 +6153,7 @@ namespace CIAO
         virtual void
         member_next (Type const&);
 
-        virtual void 
+        virtual void
         member_post (Type &o)
         {
 
@@ -6168,13 +6168,13 @@ namespace CIAO
         EnumType ();
       };
 
-      struct StructType : Traversal::StructType, 
+      struct StructType : Traversal::StructType,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::StructType Type;
         StructType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -6185,7 +6185,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -6196,7 +6196,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         typeId (Type &o)
         {
 
@@ -6207,7 +6207,7 @@ namespace CIAO
         virtual void
         typeId (Type const&);
 
-        virtual void 
+        virtual void
         member_pre (Type &o)
         {
 
@@ -6218,7 +6218,7 @@ namespace CIAO
         virtual void
         member_pre (Type const&);
 
-        virtual void 
+        virtual void
         member_next (Type &o)
         {
 
@@ -6229,7 +6229,7 @@ namespace CIAO
         virtual void
         member_next (Type const&);
 
-        virtual void 
+        virtual void
         member_post (Type &o)
         {
 
@@ -6244,13 +6244,13 @@ namespace CIAO
         StructType ();
       };
 
-      struct StructMemberType : Traversal::StructMemberType, 
+      struct StructMemberType : Traversal::StructMemberType,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::StructMemberType Type;
         StructMemberType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -6261,7 +6261,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -6272,7 +6272,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         type (Type &o)
         {
 
@@ -6287,13 +6287,13 @@ namespace CIAO
         StructMemberType ();
       };
 
-      struct ValueType : Traversal::ValueType, 
+      struct ValueType : Traversal::ValueType,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ValueType Type;
         ValueType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -6304,7 +6304,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -6315,7 +6315,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         typeId (Type &o)
         {
 
@@ -6326,7 +6326,7 @@ namespace CIAO
         virtual void
         typeId (Type const&);
 
-        virtual void 
+        virtual void
         modifier (Type &o)
         {
 
@@ -6337,7 +6337,7 @@ namespace CIAO
         virtual void
         modifier (Type const&);
 
-        virtual void 
+        virtual void
         baseType (Type &o)
         {
 
@@ -6348,7 +6348,7 @@ namespace CIAO
         virtual void
         baseType (Type const&);
 
-        virtual void 
+        virtual void
         member_pre (Type &o)
         {
 
@@ -6359,7 +6359,7 @@ namespace CIAO
         virtual void
         member_pre (Type const&);
 
-        virtual void 
+        virtual void
         member_next (Type &o)
         {
 
@@ -6370,7 +6370,7 @@ namespace CIAO
         virtual void
         member_next (Type const&);
 
-        virtual void 
+        virtual void
         member_post (Type &o)
         {
 
@@ -6385,13 +6385,13 @@ namespace CIAO
         ValueType ();
       };
 
-      struct ValueMemberType : Traversal::ValueMemberType, 
+      struct ValueMemberType : Traversal::ValueMemberType,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ValueMemberType Type;
         ValueMemberType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -6402,7 +6402,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -6413,7 +6413,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         visibility (Type &o)
         {
 
@@ -6424,7 +6424,7 @@ namespace CIAO
         virtual void
         visibility (Type const&);
 
-        virtual void 
+        virtual void
         type (Type &o)
         {
 
@@ -6439,13 +6439,13 @@ namespace CIAO
         ValueMemberType ();
       };
 
-      struct NamedValue : Traversal::NamedValue, 
+      struct NamedValue : Traversal::NamedValue,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::NamedValue Type;
         NamedValue (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -6456,7 +6456,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -6467,7 +6467,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         value (Type &o)
         {
 
@@ -6482,13 +6482,13 @@ namespace CIAO
         NamedValue ();
       };
 
-      struct SequenceType : Traversal::SequenceType, 
+      struct SequenceType : Traversal::SequenceType,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::SequenceType Type;
         SequenceType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -6499,7 +6499,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         bound (Type &o)
         {
 
@@ -6510,7 +6510,7 @@ namespace CIAO
         virtual void
         bound (Type const&);
 
-        virtual void 
+        virtual void
         elementType (Type &o)
         {
 
@@ -6525,13 +6525,13 @@ namespace CIAO
         SequenceType ();
       };
 
-      struct Any : Traversal::Any, 
+      struct Any : Traversal::Any,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Any Type;
         Any (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -6542,7 +6542,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         type (Type &o)
         {
 
@@ -6553,7 +6553,7 @@ namespace CIAO
         virtual void
         type (Type const&);
 
-        virtual void 
+        virtual void
         value (Type &o)
         {
 
@@ -6568,13 +6568,13 @@ namespace CIAO
         Any ();
       };
 
-      struct Property : Traversal::Property, 
+      struct Property : Traversal::Property,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Property Type;
         Property (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -6585,7 +6585,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -6596,7 +6596,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         value (Type &o)
         {
 
@@ -6611,12 +6611,12 @@ namespace CIAO
         Property ();
       };
 
-      struct SatisfierPropertyKind : Traversal::SatisfierPropertyKind, 
+      struct SatisfierPropertyKind : Traversal::SatisfierPropertyKind,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         SatisfierPropertyKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -6629,13 +6629,13 @@ namespace CIAO
         SatisfierPropertyKind ();
       };
 
-      struct SatisfierProperty : Traversal::SatisfierProperty, 
+      struct SatisfierProperty : Traversal::SatisfierProperty,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::SatisfierProperty Type;
         SatisfierProperty (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -6646,7 +6646,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -6657,7 +6657,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         kind (Type &o)
         {
 
@@ -6668,7 +6668,7 @@ namespace CIAO
         virtual void
         kind (Type const&);
 
-        virtual void 
+        virtual void
         dynamic (Type &o)
         {
 
@@ -6679,7 +6679,7 @@ namespace CIAO
         virtual void
         dynamic (Type const&);
 
-        virtual void 
+        virtual void
         value (Type &o)
         {
 
@@ -6694,13 +6694,13 @@ namespace CIAO
         SatisfierProperty ();
       };
 
-      struct Resource : Traversal::Resource, 
+      struct Resource : Traversal::Resource,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Resource Type;
         Resource (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -6711,7 +6711,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -6722,7 +6722,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         resourceType_pre (Type &o)
         {
 
@@ -6733,7 +6733,7 @@ namespace CIAO
         virtual void
         resourceType_pre (Type const&);
 
-        virtual void 
+        virtual void
         resourceType_next (Type &o)
         {
 
@@ -6744,7 +6744,7 @@ namespace CIAO
         virtual void
         resourceType_next (Type const&);
 
-        virtual void 
+        virtual void
         resourceType_post (Type &o)
         {
 
@@ -6755,7 +6755,7 @@ namespace CIAO
         virtual void
         resourceType_post (Type const&);
 
-        virtual void 
+        virtual void
         property_pre (Type &o)
         {
 
@@ -6766,7 +6766,7 @@ namespace CIAO
         virtual void
         property_pre (Type const&);
 
-        virtual void 
+        virtual void
         property_next (Type &o)
         {
 
@@ -6777,7 +6777,7 @@ namespace CIAO
         virtual void
         property_next (Type const&);
 
-        virtual void 
+        virtual void
         property_post (Type &o)
         {
 
@@ -6792,13 +6792,13 @@ namespace CIAO
         Resource ();
       };
 
-      struct Requirement : Traversal::Requirement, 
+      struct Requirement : Traversal::Requirement,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Requirement Type;
         Requirement (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -6809,7 +6809,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         resourceType (Type &o)
         {
 
@@ -6820,7 +6820,7 @@ namespace CIAO
         virtual void
         resourceType (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -6831,7 +6831,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         property_pre (Type &o)
         {
 
@@ -6842,7 +6842,7 @@ namespace CIAO
         virtual void
         property_pre (Type const&);
 
-        virtual void 
+        virtual void
         property_next (Type &o)
         {
 
@@ -6853,7 +6853,7 @@ namespace CIAO
         virtual void
         property_next (Type const&);
 
-        virtual void 
+        virtual void
         property_post (Type &o)
         {
 
@@ -6868,13 +6868,13 @@ namespace CIAO
         Requirement ();
       };
 
-      struct ResourceDeploymentDescription : Traversal::ResourceDeploymentDescription, 
+      struct ResourceDeploymentDescription : Traversal::ResourceDeploymentDescription,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ResourceDeploymentDescription Type;
         ResourceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -6885,7 +6885,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         requirementName (Type &o)
         {
 
@@ -6896,7 +6896,7 @@ namespace CIAO
         virtual void
         requirementName (Type const&);
 
-        virtual void 
+        virtual void
         resourceName (Type &o)
         {
 
@@ -6907,7 +6907,7 @@ namespace CIAO
         virtual void
         resourceName (Type const&);
 
-        virtual void 
+        virtual void
         property_pre (Type &o)
         {
 
@@ -6918,7 +6918,7 @@ namespace CIAO
         virtual void
         property_pre (Type const&);
 
-        virtual void 
+        virtual void
         property_next (Type &o)
         {
 
@@ -6929,7 +6929,7 @@ namespace CIAO
         virtual void
         property_next (Type const&);
 
-        virtual void 
+        virtual void
         property_post (Type &o)
         {
 
@@ -6944,13 +6944,13 @@ namespace CIAO
         ResourceDeploymentDescription ();
       };
 
-      struct ArtifactDeploymentDescription : Traversal::ArtifactDeploymentDescription, 
+      struct ArtifactDeploymentDescription : Traversal::ArtifactDeploymentDescription,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ArtifactDeploymentDescription Type;
         ArtifactDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -6961,7 +6961,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -6972,7 +6972,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         source_pre (Type &o)
         {
 
@@ -6983,7 +6983,7 @@ namespace CIAO
         virtual void
         source_pre (Type const&);
 
-        virtual void 
+        virtual void
         source_next (Type &o)
         {
 
@@ -6994,7 +6994,7 @@ namespace CIAO
         virtual void
         source_next (Type const&);
 
-        virtual void 
+        virtual void
         source_post (Type &o)
         {
 
@@ -7005,7 +7005,7 @@ namespace CIAO
         virtual void
         source_post (Type const&);
 
-        virtual void 
+        virtual void
         node (Type &o)
         {
 
@@ -7016,7 +7016,7 @@ namespace CIAO
         virtual void
         node (Type const&);
 
-        virtual void 
+        virtual void
         location_pre (Type &o)
         {
 
@@ -7027,7 +7027,7 @@ namespace CIAO
         virtual void
         location_pre (Type const&);
 
-        virtual void 
+        virtual void
         location_next (Type &o)
         {
 
@@ -7038,7 +7038,7 @@ namespace CIAO
         virtual void
         location_next (Type const&);
 
-        virtual void 
+        virtual void
         location_post (Type &o)
         {
 
@@ -7049,7 +7049,7 @@ namespace CIAO
         virtual void
         location_post (Type const&);
 
-        virtual void 
+        virtual void
         execParameter_pre (Type &o)
         {
 
@@ -7060,7 +7060,7 @@ namespace CIAO
         virtual void
         execParameter_pre (Type const&);
 
-        virtual void 
+        virtual void
         execParameter_next (Type &o)
         {
 
@@ -7071,7 +7071,7 @@ namespace CIAO
         virtual void
         execParameter_next (Type const&);
 
-        virtual void 
+        virtual void
         execParameter_post (Type &o)
         {
 
@@ -7082,7 +7082,7 @@ namespace CIAO
         virtual void
         execParameter_post (Type const&);
 
-        virtual void 
+        virtual void
         deployRequirement_pre (Type &o)
         {
 
@@ -7093,7 +7093,7 @@ namespace CIAO
         virtual void
         deployRequirement_pre (Type const&);
 
-        virtual void 
+        virtual void
         deployRequirement_next (Type &o)
         {
 
@@ -7104,7 +7104,7 @@ namespace CIAO
         virtual void
         deployRequirement_next (Type const&);
 
-        virtual void 
+        virtual void
         deployRequirement_post (Type &o)
         {
 
@@ -7115,7 +7115,7 @@ namespace CIAO
         virtual void
         deployRequirement_post (Type const&);
 
-        virtual void 
+        virtual void
         deployedResource_pre (Type &o)
         {
 
@@ -7126,7 +7126,7 @@ namespace CIAO
         virtual void
         deployedResource_pre (Type const&);
 
-        virtual void 
+        virtual void
         deployedResource_next (Type &o)
         {
 
@@ -7137,7 +7137,7 @@ namespace CIAO
         virtual void
         deployedResource_next (Type const&);
 
-        virtual void 
+        virtual void
         deployedResource_post (Type &o)
         {
 
@@ -7148,7 +7148,7 @@ namespace CIAO
         virtual void
         deployedResource_post (Type const&);
 
-        virtual void 
+        virtual void
         xmi_id (Type &o)
         {
 
@@ -7163,13 +7163,13 @@ namespace CIAO
         ArtifactDeploymentDescription ();
       };
 
-      struct MonolithicDeploymentDescription : Traversal::MonolithicDeploymentDescription, 
+      struct MonolithicDeploymentDescription : Traversal::MonolithicDeploymentDescription,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::MonolithicDeploymentDescription Type;
         MonolithicDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -7180,7 +7180,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -7191,7 +7191,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         source_pre (Type &o)
         {
 
@@ -7202,7 +7202,7 @@ namespace CIAO
         virtual void
         source_pre (Type const&);
 
-        virtual void 
+        virtual void
         source_next (Type &o)
         {
 
@@ -7213,7 +7213,7 @@ namespace CIAO
         virtual void
         source_next (Type const&);
 
-        virtual void 
+        virtual void
         source_post (Type &o)
         {
 
@@ -7224,7 +7224,7 @@ namespace CIAO
         virtual void
         source_post (Type const&);
 
-        virtual void 
+        virtual void
         artifact_pre (Type &o)
         {
 
@@ -7235,7 +7235,7 @@ namespace CIAO
         virtual void
         artifact_pre (Type const&);
 
-        virtual void 
+        virtual void
         artifact_next (Type &o)
         {
 
@@ -7246,7 +7246,7 @@ namespace CIAO
         virtual void
         artifact_next (Type const&);
 
-        virtual void 
+        virtual void
         artifact_post (Type &o)
         {
 
@@ -7257,7 +7257,7 @@ namespace CIAO
         virtual void
         artifact_post (Type const&);
 
-        virtual void 
+        virtual void
         execParameter_pre (Type &o)
         {
 
@@ -7268,7 +7268,7 @@ namespace CIAO
         virtual void
         execParameter_pre (Type const&);
 
-        virtual void 
+        virtual void
         execParameter_next (Type &o)
         {
 
@@ -7279,7 +7279,7 @@ namespace CIAO
         virtual void
         execParameter_next (Type const&);
 
-        virtual void 
+        virtual void
         execParameter_post (Type &o)
         {
 
@@ -7290,7 +7290,7 @@ namespace CIAO
         virtual void
         execParameter_post (Type const&);
 
-        virtual void 
+        virtual void
         deployRequirement_pre (Type &o)
         {
 
@@ -7301,7 +7301,7 @@ namespace CIAO
         virtual void
         deployRequirement_pre (Type const&);
 
-        virtual void 
+        virtual void
         deployRequirement_next (Type &o)
         {
 
@@ -7312,7 +7312,7 @@ namespace CIAO
         virtual void
         deployRequirement_next (Type const&);
 
-        virtual void 
+        virtual void
         deployRequirement_post (Type &o)
         {
 
@@ -7323,7 +7323,7 @@ namespace CIAO
         virtual void
         deployRequirement_post (Type const&);
 
-        virtual void 
+        virtual void
         xmi_id (Type &o)
         {
 
@@ -7338,12 +7338,12 @@ namespace CIAO
         MonolithicDeploymentDescription ();
       };
 
-      struct ResourceUsageKind : Traversal::ResourceUsageKind, 
+      struct ResourceUsageKind : Traversal::ResourceUsageKind,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         ResourceUsageKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -7356,13 +7356,13 @@ namespace CIAO
         ResourceUsageKind ();
       };
 
-      struct InstanceResourceDeploymentDescription : Traversal::InstanceResourceDeploymentDescription, 
+      struct InstanceResourceDeploymentDescription : Traversal::InstanceResourceDeploymentDescription,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription Type;
         InstanceResourceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -7373,7 +7373,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         resourceUsage (Type &o)
         {
 
@@ -7384,7 +7384,7 @@ namespace CIAO
         virtual void
         resourceUsage (Type const&);
 
-        virtual void 
+        virtual void
         requirementName (Type &o)
         {
 
@@ -7395,7 +7395,7 @@ namespace CIAO
         virtual void
         requirementName (Type const&);
 
-        virtual void 
+        virtual void
         resourceName (Type &o)
         {
 
@@ -7406,7 +7406,7 @@ namespace CIAO
         virtual void
         resourceName (Type const&);
 
-        virtual void 
+        virtual void
         property_pre (Type &o)
         {
 
@@ -7417,7 +7417,7 @@ namespace CIAO
         virtual void
         property_pre (Type const&);
 
-        virtual void 
+        virtual void
         property_next (Type &o)
         {
 
@@ -7428,7 +7428,7 @@ namespace CIAO
         virtual void
         property_next (Type const&);
 
-        virtual void 
+        virtual void
         property_post (Type &o)
         {
 
@@ -7443,13 +7443,13 @@ namespace CIAO
         InstanceResourceDeploymentDescription ();
       };
 
-      struct InstanceDeploymentDescription : Traversal::InstanceDeploymentDescription, 
+      struct InstanceDeploymentDescription : Traversal::InstanceDeploymentDescription,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::InstanceDeploymentDescription Type;
         InstanceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -7460,7 +7460,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -7471,7 +7471,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         node (Type &o)
         {
 
@@ -7482,7 +7482,7 @@ namespace CIAO
         virtual void
         node (Type const&);
 
-        virtual void 
+        virtual void
         source (Type &o)
         {
 
@@ -7493,7 +7493,7 @@ namespace CIAO
         virtual void
         source (Type const&);
 
-        virtual void 
+        virtual void
         implementation (Type &o)
         {
 
@@ -7504,7 +7504,7 @@ namespace CIAO
         virtual void
         implementation (Type const&);
 
-        virtual void 
+        virtual void
         configProperty_pre (Type &o)
         {
 
@@ -7515,7 +7515,7 @@ namespace CIAO
         virtual void
         configProperty_pre (Type const&);
 
-        virtual void 
+        virtual void
         configProperty_next (Type &o)
         {
 
@@ -7526,7 +7526,7 @@ namespace CIAO
         virtual void
         configProperty_next (Type const&);
 
-        virtual void 
+        virtual void
         configProperty_post (Type &o)
         {
 
@@ -7537,7 +7537,7 @@ namespace CIAO
         virtual void
         configProperty_post (Type const&);
 
-        virtual void 
+        virtual void
         deployedResource_pre (Type &o)
         {
 
@@ -7548,7 +7548,7 @@ namespace CIAO
         virtual void
         deployedResource_pre (Type const&);
 
-        virtual void 
+        virtual void
         deployedResource_next (Type &o)
         {
 
@@ -7559,7 +7559,7 @@ namespace CIAO
         virtual void
         deployedResource_next (Type const&);
 
-        virtual void 
+        virtual void
         deployedResource_post (Type &o)
         {
 
@@ -7570,7 +7570,7 @@ namespace CIAO
         virtual void
         deployedResource_post (Type const&);
 
-        virtual void 
+        virtual void
         deployedSharedResource (Type &o)
         {
 
@@ -7581,7 +7581,7 @@ namespace CIAO
         virtual void
         deployedSharedResource (Type const&);
 
-        virtual void 
+        virtual void
         xmi_id (Type &o)
         {
 
@@ -7596,12 +7596,12 @@ namespace CIAO
         InstanceDeploymentDescription ();
       };
 
-      struct CCMComponentPortKind : Traversal::CCMComponentPortKind, 
+      struct CCMComponentPortKind : Traversal::CCMComponentPortKind,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         CCMComponentPortKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -7614,13 +7614,13 @@ namespace CIAO
         CCMComponentPortKind ();
       };
 
-      struct ComponentPortDescription : Traversal::ComponentPortDescription, 
+      struct ComponentPortDescription : Traversal::ComponentPortDescription,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ComponentPortDescription Type;
         ComponentPortDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -7631,7 +7631,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -7642,7 +7642,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         specificType (Type &o)
         {
 
@@ -7653,7 +7653,7 @@ namespace CIAO
         virtual void
         specificType (Type const&);
 
-        virtual void 
+        virtual void
         supportedType_pre (Type &o)
         {
 
@@ -7664,7 +7664,7 @@ namespace CIAO
         virtual void
         supportedType_pre (Type const&);
 
-        virtual void 
+        virtual void
         supportedType_next (Type &o)
         {
 
@@ -7675,7 +7675,7 @@ namespace CIAO
         virtual void
         supportedType_next (Type const&);
 
-        virtual void 
+        virtual void
         supportedType_post (Type &o)
         {
 
@@ -7686,7 +7686,7 @@ namespace CIAO
         virtual void
         supportedType_post (Type const&);
 
-        virtual void 
+        virtual void
         provider (Type &o)
         {
 
@@ -7697,7 +7697,7 @@ namespace CIAO
         virtual void
         provider (Type const&);
 
-        virtual void 
+        virtual void
         exclusiveProvider (Type &o)
         {
 
@@ -7708,7 +7708,7 @@ namespace CIAO
         virtual void
         exclusiveProvider (Type const&);
 
-        virtual void 
+        virtual void
         exclusiveUser (Type &o)
         {
 
@@ -7719,7 +7719,7 @@ namespace CIAO
         virtual void
         exclusiveUser (Type const&);
 
-        virtual void 
+        virtual void
         optional (Type &o)
         {
 
@@ -7730,7 +7730,7 @@ namespace CIAO
         virtual void
         optional (Type const&);
 
-        virtual void 
+        virtual void
         kind (Type &o)
         {
 
@@ -7745,13 +7745,13 @@ namespace CIAO
         ComponentPortDescription ();
       };
 
-      struct ComponentPropertyDescription : Traversal::ComponentPropertyDescription, 
+      struct ComponentPropertyDescription : Traversal::ComponentPropertyDescription,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ComponentPropertyDescription Type;
         ComponentPropertyDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -7762,7 +7762,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -7773,7 +7773,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         type (Type &o)
         {
 
@@ -7788,13 +7788,13 @@ namespace CIAO
         ComponentPropertyDescription ();
       };
 
-      struct ComponentExternalPortEndpoint : Traversal::ComponentExternalPortEndpoint, 
+      struct ComponentExternalPortEndpoint : Traversal::ComponentExternalPortEndpoint,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ComponentExternalPortEndpoint Type;
         ComponentExternalPortEndpoint (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -7805,7 +7805,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         portName (Type &o)
         {
 
@@ -7820,13 +7820,13 @@ namespace CIAO
         ComponentExternalPortEndpoint ();
       };
 
-      struct PlanSubcomponentPortEndpoint : Traversal::PlanSubcomponentPortEndpoint, 
+      struct PlanSubcomponentPortEndpoint : Traversal::PlanSubcomponentPortEndpoint,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint Type;
         PlanSubcomponentPortEndpoint (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -7837,7 +7837,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         portName (Type &o)
         {
 
@@ -7848,7 +7848,7 @@ namespace CIAO
         virtual void
         portName (Type const&);
 
-        virtual void 
+        virtual void
         provider (Type &o)
         {
 
@@ -7859,7 +7859,7 @@ namespace CIAO
         virtual void
         provider (Type const&);
 
-        virtual void 
+        virtual void
         kind (Type &o)
         {
 
@@ -7870,7 +7870,7 @@ namespace CIAO
         virtual void
         kind (Type const&);
 
-        virtual void 
+        virtual void
         instance (Type &o)
         {
 
@@ -7885,13 +7885,13 @@ namespace CIAO
         PlanSubcomponentPortEndpoint ();
       };
 
-      struct ExternalReferenceEndpoint : Traversal::ExternalReferenceEndpoint, 
+      struct ExternalReferenceEndpoint : Traversal::ExternalReferenceEndpoint,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ExternalReferenceEndpoint Type;
         ExternalReferenceEndpoint (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -7902,7 +7902,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         location (Type &o)
         {
 
@@ -7913,7 +7913,7 @@ namespace CIAO
         virtual void
         location (Type const&);
 
-        virtual void 
+        virtual void
         provider (Type &o)
         {
 
@@ -7924,7 +7924,7 @@ namespace CIAO
         virtual void
         provider (Type const&);
 
-        virtual void 
+        virtual void
         portName (Type &o)
         {
 
@@ -7935,7 +7935,7 @@ namespace CIAO
         virtual void
         portName (Type const&);
 
-        virtual void 
+        virtual void
         supportedType_pre (Type &o)
         {
 
@@ -7946,7 +7946,7 @@ namespace CIAO
         virtual void
         supportedType_pre (Type const&);
 
-        virtual void 
+        virtual void
         supportedType_next (Type &o)
         {
 
@@ -7957,7 +7957,7 @@ namespace CIAO
         virtual void
         supportedType_next (Type const&);
 
-        virtual void 
+        virtual void
         supportedType_post (Type &o)
         {
 
@@ -7972,13 +7972,13 @@ namespace CIAO
         ExternalReferenceEndpoint ();
       };
 
-      struct ConnectionResourceDeploymentDescription : Traversal::ConnectionResourceDeploymentDescription, 
+      struct ConnectionResourceDeploymentDescription : Traversal::ConnectionResourceDeploymentDescription,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription Type;
         ConnectionResourceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -7989,7 +7989,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         targetName (Type &o)
         {
 
@@ -8000,7 +8000,7 @@ namespace CIAO
         virtual void
         targetName (Type const&);
 
-        virtual void 
+        virtual void
         requirementName (Type &o)
         {
 
@@ -8011,7 +8011,7 @@ namespace CIAO
         virtual void
         requirementName (Type const&);
 
-        virtual void 
+        virtual void
         resourceName (Type &o)
         {
 
@@ -8022,7 +8022,7 @@ namespace CIAO
         virtual void
         resourceName (Type const&);
 
-        virtual void 
+        virtual void
         property_pre (Type &o)
         {
 
@@ -8033,7 +8033,7 @@ namespace CIAO
         virtual void
         property_pre (Type const&);
 
-        virtual void 
+        virtual void
         property_next (Type &o)
         {
 
@@ -8044,7 +8044,7 @@ namespace CIAO
         virtual void
         property_next (Type const&);
 
-        virtual void 
+        virtual void
         property_post (Type &o)
         {
 
@@ -8059,13 +8059,13 @@ namespace CIAO
         ConnectionResourceDeploymentDescription ();
       };
 
-      struct PlanConnectionDescription : Traversal::PlanConnectionDescription, 
+      struct PlanConnectionDescription : Traversal::PlanConnectionDescription,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PlanConnectionDescription Type;
         PlanConnectionDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -8076,7 +8076,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -8087,7 +8087,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         source (Type &o)
         {
 
@@ -8098,7 +8098,7 @@ namespace CIAO
         virtual void
         source (Type const&);
 
-        virtual void 
+        virtual void
         deployRequirement_pre (Type &o)
         {
 
@@ -8109,7 +8109,7 @@ namespace CIAO
         virtual void
         deployRequirement_pre (Type const&);
 
-        virtual void 
+        virtual void
         deployRequirement_next (Type &o)
         {
 
@@ -8120,7 +8120,7 @@ namespace CIAO
         virtual void
         deployRequirement_next (Type const&);
 
-        virtual void 
+        virtual void
         deployRequirement_post (Type &o)
         {
 
@@ -8131,7 +8131,7 @@ namespace CIAO
         virtual void
         deployRequirement_post (Type const&);
 
-        virtual void 
+        virtual void
         externalEndpoint_pre (Type &o)
         {
 
@@ -8142,7 +8142,7 @@ namespace CIAO
         virtual void
         externalEndpoint_pre (Type const&);
 
-        virtual void 
+        virtual void
         externalEndpoint_next (Type &o)
         {
 
@@ -8153,7 +8153,7 @@ namespace CIAO
         virtual void
         externalEndpoint_next (Type const&);
 
-        virtual void 
+        virtual void
         externalEndpoint_post (Type &o)
         {
 
@@ -8164,7 +8164,7 @@ namespace CIAO
         virtual void
         externalEndpoint_post (Type const&);
 
-        virtual void 
+        virtual void
         internalEndpoint_pre (Type &o)
         {
 
@@ -8175,7 +8175,7 @@ namespace CIAO
         virtual void
         internalEndpoint_pre (Type const&);
 
-        virtual void 
+        virtual void
         internalEndpoint_next (Type &o)
         {
 
@@ -8186,7 +8186,7 @@ namespace CIAO
         virtual void
         internalEndpoint_next (Type const&);
 
-        virtual void 
+        virtual void
         internalEndpoint_post (Type &o)
         {
 
@@ -8197,7 +8197,7 @@ namespace CIAO
         virtual void
         internalEndpoint_post (Type const&);
 
-        virtual void 
+        virtual void
         externalReference_pre (Type &o)
         {
 
@@ -8208,7 +8208,7 @@ namespace CIAO
         virtual void
         externalReference_pre (Type const&);
 
-        virtual void 
+        virtual void
         externalReference_next (Type &o)
         {
 
@@ -8219,7 +8219,7 @@ namespace CIAO
         virtual void
         externalReference_next (Type const&);
 
-        virtual void 
+        virtual void
         externalReference_post (Type &o)
         {
 
@@ -8230,7 +8230,7 @@ namespace CIAO
         virtual void
         externalReference_post (Type const&);
 
-        virtual void 
+        virtual void
         deployedResource_pre (Type &o)
         {
 
@@ -8241,7 +8241,7 @@ namespace CIAO
         virtual void
         deployedResource_pre (Type const&);
 
-        virtual void 
+        virtual void
         deployedResource_next (Type &o)
         {
 
@@ -8252,7 +8252,7 @@ namespace CIAO
         virtual void
         deployedResource_next (Type const&);
 
-        virtual void 
+        virtual void
         deployedResource_post (Type &o)
         {
 
@@ -8267,13 +8267,13 @@ namespace CIAO
         PlanConnectionDescription ();
       };
 
-      struct ImplementationDependency : Traversal::ImplementationDependency, 
+      struct ImplementationDependency : Traversal::ImplementationDependency,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ImplementationDependency Type;
         ImplementationDependency (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -8284,7 +8284,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         requiredType (Type &o)
         {
 
@@ -8299,13 +8299,13 @@ namespace CIAO
         ImplementationDependency ();
       };
 
-      struct Capability : Traversal::Capability, 
+      struct Capability : Traversal::Capability,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Capability Type;
         Capability (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -8316,7 +8316,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -8327,7 +8327,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         resourceType_pre (Type &o)
         {
 
@@ -8338,7 +8338,7 @@ namespace CIAO
         virtual void
         resourceType_pre (Type const&);
 
-        virtual void 
+        virtual void
         resourceType_next (Type &o)
         {
 
@@ -8349,7 +8349,7 @@ namespace CIAO
         virtual void
         resourceType_next (Type const&);
 
-        virtual void 
+        virtual void
         resourceType_post (Type &o)
         {
 
@@ -8360,7 +8360,7 @@ namespace CIAO
         virtual void
         resourceType_post (Type const&);
 
-        virtual void 
+        virtual void
         property_pre (Type &o)
         {
 
@@ -8371,7 +8371,7 @@ namespace CIAO
         virtual void
         property_pre (Type const&);
 
-        virtual void 
+        virtual void
         property_next (Type &o)
         {
 
@@ -8382,7 +8382,7 @@ namespace CIAO
         virtual void
         property_next (Type const&);
 
-        virtual void 
+        virtual void
         property_post (Type &o)
         {
 
@@ -8397,13 +8397,13 @@ namespace CIAO
         Capability ();
       };
 
-      struct ImplementationRequirement : Traversal::ImplementationRequirement, 
+      struct ImplementationRequirement : Traversal::ImplementationRequirement,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ImplementationRequirement Type;
         ImplementationRequirement (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -8414,7 +8414,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         resourceUsage (Type &o)
         {
 
@@ -8425,7 +8425,7 @@ namespace CIAO
         virtual void
         resourceUsage (Type const&);
 
-        virtual void 
+        virtual void
         resourcePort (Type &o)
         {
 
@@ -8436,7 +8436,7 @@ namespace CIAO
         virtual void
         resourcePort (Type const&);
 
-        virtual void 
+        virtual void
         componentPort (Type &o)
         {
 
@@ -8447,7 +8447,7 @@ namespace CIAO
         virtual void
         componentPort (Type const&);
 
-        virtual void 
+        virtual void
         resourceType (Type &o)
         {
 
@@ -8458,7 +8458,7 @@ namespace CIAO
         virtual void
         resourceType (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -8469,7 +8469,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         property_pre (Type &o)
         {
 
@@ -8480,7 +8480,7 @@ namespace CIAO
         virtual void
         property_pre (Type const&);
 
-        virtual void 
+        virtual void
         property_next (Type &o)
         {
 
@@ -8491,7 +8491,7 @@ namespace CIAO
         virtual void
         property_next (Type const&);
 
-        virtual void 
+        virtual void
         property_post (Type &o)
         {
 
@@ -8506,13 +8506,13 @@ namespace CIAO
         ImplementationRequirement ();
       };
 
-      struct SubcomponentPortEndpoint : Traversal::SubcomponentPortEndpoint, 
+      struct SubcomponentPortEndpoint : Traversal::SubcomponentPortEndpoint,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::SubcomponentPortEndpoint Type;
         SubcomponentPortEndpoint (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -8523,7 +8523,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         portName (Type &o)
         {
 
@@ -8534,7 +8534,7 @@ namespace CIAO
         virtual void
         portName (Type const&);
 
-        virtual void 
+        virtual void
         instance (Type &o)
         {
 
@@ -8549,13 +8549,13 @@ namespace CIAO
         SubcomponentPortEndpoint ();
       };
 
-      struct AssemblyConnectionDescription : Traversal::AssemblyConnectionDescription, 
+      struct AssemblyConnectionDescription : Traversal::AssemblyConnectionDescription,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::AssemblyConnectionDescription Type;
         AssemblyConnectionDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -8566,7 +8566,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         name (Type &o)
         {
 
@@ -8577,7 +8577,7 @@ namespace CIAO
         virtual void
         name (Type const&);
 
-        virtual void 
+        virtual void
         deployRequirement_pre (Type &o)
         {
 
@@ -8588,7 +8588,7 @@ namespace CIAO
         virtual void
         deployRequirement_pre (Type const&);
 
-        virtual void 
+        virtual void
         deployRequirement_next (Type &o)
         {
 
@@ -8599,7 +8599,7 @@ namespace CIAO
         virtual void
         deployRequirement_next (Type const&);
 
-        virtual void 
+        virtual void
         deployRequirement_post (Type &o)
         {
 
@@ -8610,7 +8610,7 @@ namespace CIAO
         virtual void
         deployRequirement_post (Type const&);
 
-        virtual void 
+        virtual void
         internalEndpoint_pre (Type &o)
         {
 
@@ -8621,7 +8621,7 @@ namespace CIAO
         virtual void
         internalEndpoint_pre (Type const&);
 
-        virtual void 
+        virtual void
         internalEndpoint_next (Type &o)
         {
 
@@ -8632,7 +8632,7 @@ namespace CIAO
         virtual void
         internalEndpoint_next (Type const&);
 
-        virtual void 
+        virtual void
         internalEndpoint_post (Type &o)
         {
 
@@ -8643,7 +8643,7 @@ namespace CIAO
         virtual void
         internalEndpoint_post (Type const&);
 
-        virtual void 
+        virtual void
         externalEndpoint_pre (Type &o)
         {
 
@@ -8654,7 +8654,7 @@ namespace CIAO
         virtual void
         externalEndpoint_pre (Type const&);
 
-        virtual void 
+        virtual void
         externalEndpoint_next (Type &o)
         {
 
@@ -8665,7 +8665,7 @@ namespace CIAO
         virtual void
         externalEndpoint_next (Type const&);
 
-        virtual void 
+        virtual void
         externalEndpoint_post (Type &o)
         {
 
@@ -8676,7 +8676,7 @@ namespace CIAO
         virtual void
         externalEndpoint_post (Type const&);
 
-        virtual void 
+        virtual void
         externalReference_pre (Type &o)
         {
 
@@ -8687,7 +8687,7 @@ namespace CIAO
         virtual void
         externalReference_pre (Type const&);
 
-        virtual void 
+        virtual void
         externalReference_next (Type &o)
         {
 
@@ -8698,7 +8698,7 @@ namespace CIAO
         virtual void
         externalReference_next (Type const&);
 
-        virtual void 
+        virtual void
         externalReference_post (Type &o)
         {
 
@@ -8713,12 +8713,12 @@ namespace CIAO
         AssemblyConnectionDescription ();
       };
 
-      struct PlanLocalityKind : Traversal::PlanLocalityKind, 
+      struct PlanLocalityKind : Traversal::PlanLocalityKind,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         PlanLocalityKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -8731,13 +8731,13 @@ namespace CIAO
         PlanLocalityKind ();
       };
 
-      struct PlanLocality : Traversal::PlanLocality, 
+      struct PlanLocality : Traversal::PlanLocality,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PlanLocality Type;
         PlanLocality (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -8748,7 +8748,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         constraint (Type &o)
         {
 
@@ -8759,7 +8759,7 @@ namespace CIAO
         virtual void
         constraint (Type const&);
 
-        virtual void 
+        virtual void
         constrainedInstance (Type &o)
         {
 

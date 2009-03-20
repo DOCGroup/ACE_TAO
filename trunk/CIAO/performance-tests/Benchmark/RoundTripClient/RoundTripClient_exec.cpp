@@ -98,17 +98,17 @@ MyImpl::RoundTripClient_exec_i::start ()
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   CIAO_DEBUG ((LM_DEBUG, CLINFO"done\n"));
 
-  ACE_Env_Value<int> envar ("CIAO_DUMP_SAMPLE_HISTORY", 0);
+  ACE_Env_Value<int> envar (ACE_TEXT("CIAO_DUMP_SAMPLE_HISTORY"), 0);
   if (envar != 0)
     {
-      history.dump_samples ("HISTORY", gsf);
+      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
-  stats.dump_results ("Total", gsf);
+  stats.dump_results (ACE_TEXT("Total"), gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total",
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"),
                                          gsf,
                                          test_end - test_start,
                                          stats.samples_count ());
