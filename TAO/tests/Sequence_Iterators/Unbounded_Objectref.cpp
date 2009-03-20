@@ -527,18 +527,16 @@ int test_const_sequence_reverse ()
   /*
    * JWH2 - Memory leaks show up when duplicate is used. However,
    * seg faults occur if it's not used.
-   */
   setup[0] = mock_reference::_duplicate (elem0);
   setup[1] = mock_reference::_duplicate (elem1);
   setup[2] = mock_reference::_duplicate (elem2);
   setup[3] = mock_reference::_duplicate (elem3);
+   */
 
-  /*
   setup[0] = elem0;
   setup[1] = elem1;
   setup[2] = elem2;
   setup[3] = elem3;
-  */
 
   // JWH2 - I think the double delete problem is here. Shouldn't the
   // underlying assignment operator make sure memory is allocated as
