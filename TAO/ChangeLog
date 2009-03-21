@@ -1,7 +1,13 @@
+Sat Mar 21 17:53:17 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
+        * orbsvcs/tests/Notify/Persistent_Filter/Filter.cpp:
+          Fix for running on wchar systems.
+
 Fri Mar 20 16:04:58 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_module.cpp(fe_add_interface_fwd):
-        
+
           Fixed logic in setting the 'full_definition' member of
           a forward declared interface node, and other changes to
           make sure the memory management is still handled correctly.
