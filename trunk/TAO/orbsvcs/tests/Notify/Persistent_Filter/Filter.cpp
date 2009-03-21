@@ -319,7 +319,8 @@ FilterClient::create_supplieradmin ()
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t)create_supplieradmin %d \n", adminid));
+  ACE_DEBUG ((LM_DEBUG, 
+	      ACE_TEXT ("(%P|%t)create_supplieradmin %d \n"), adminid));
 
   CosNotifyFilter::FilterFactory_var ffact =
     ec_->default_filter_factory ();
@@ -361,7 +362,8 @@ FilterClient::get_supplieradmin ()
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t)get_supplieradmin %d \n", ids[0]));
+  ACE_DEBUG ((LM_DEBUG, 
+	      ACE_TEXT ("(%P|%t)get_supplieradmin %d \n"), ids[0]));
 
   CosNotifyFilter::FilterAdmin_var admin 
     = CosNotifyFilter::FilterAdmin::_narrow (supplier_admin_.in ()); 
@@ -382,7 +384,8 @@ FilterClient::create_consumeradmin ()
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_2_.in ()));
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t)create_consumeradmin %d %d\n", 
+  ACE_DEBUG ((LM_DEBUG, 
+	      ACE_TEXT ("(%P|%t)create_consumeradmin %d %d\n"), 
     adminid_1_id_, adminid_2_id_));
 
   CosNotifyFilter::FilterFactory_var ffact =
@@ -440,8 +443,9 @@ FilterClient::get_consumeradmin ()
   consumer_admin_1_ = ec_->get_consumeradmin (this->adminid_1_id_);
   consumer_admin_2_ = ec_->get_consumeradmin (this->adminid_2_id_);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t)get_consumeradmin %d %d\n", 
-    adminid_1_id_, adminid_2_id_));
+  ACE_DEBUG ((LM_DEBUG, 
+	      ACE_TEXT ("(%P|%t)get_consumeradmin %d %d\n"), 
+	      adminid_1_id_, adminid_2_id_));
 
   CosNotifyFilter::FilterAdmin_var admin 
     = CosNotifyFilter::FilterAdmin::_narrow (consumer_admin_1_.in ()); 
@@ -502,7 +506,8 @@ FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
     for (index = 0; index < infos->length (); ++ index)
     {
       ids[index] = infos[index].constraint_id;
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)modify constraint %d \n", ids[index])); 
+      ACE_DEBUG ((LM_DEBUG, 
+		  ACE_TEXT ("(%P|%t)modify constraint %d \n"), ids[index])); 
 
       infos[index].constraint_expression.constraint_expr 
         = CORBA::string_dup (mod_constraint_expr);
@@ -663,9 +668,11 @@ Filter_StructuredPushConsumer::push_structured_event
 
 
     ACE_DEBUG ((LM_DEBUG,
-                "%s received event, %d\n", my_name_.fast_rep (), val));
+                ACE_TEXT ("%C received event, %d\n"), 
+		my_name_.fast_rep (), val));
 
-    ACE_DEBUG ((LM_DEBUG,"event count %d\n", g_result_count.value ()));
+    ACE_DEBUG ((LM_DEBUG,
+		ACE_TEXT ("event count %d\n"), g_result_count.value ()));
 
     if (++g_result_count == EVENTS_EXPECTED_TO_RECEIVE)
       this->filter_->done (); // all events received, we're done.
@@ -732,7 +739,7 @@ Filter_StructuredPushSupplier::send_event
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s is sending an event \n", my_name_.fast_rep ()));
+              ACE_TEXT ("%C is sending an event \n"), my_name_.fast_rep ()));
 
   proxy_consumer_->push_structured_event (event);
 }

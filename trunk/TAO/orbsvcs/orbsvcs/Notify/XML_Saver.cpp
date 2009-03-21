@@ -177,10 +177,11 @@ namespace TAO_Notify
     ACE_TString tmp(BUF_SIZE);
     for (size_t idx = 0; idx < attrs.size(); ++idx)
     {
-      ACE_TString valuetmp (ACE_TEXT_CHAR_TO_TCHAR(attrs[idx].value.c_str()));
+      ACE_TString valuetmp (ACE_TEXT_CHAR_TO_TCHAR (attrs[idx].value.c_str()));
       ACEXML_escape_string(valuetmp, tmp);
-      ACE_OS::fprintf (out, "%s%s%s%s%s", " ",
-        attrs[idx].name.c_str (), "=\"", tmp.c_str(), "\"");
+      ACE_OS::fprintf (out, "%s%s%s%s%s"," ",
+		       attrs[idx].name.c_str (),
+		       "=\"", ACE_TEXT_ALWAYS_CHAR (tmp.c_str()), "\"");
     }
     ACE_OS::fprintf (out, ">\n");
     this->indent_ += "  ";
