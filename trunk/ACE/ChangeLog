@@ -1,7 +1,12 @@
+Sun Mar 22 06:46:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          For ACE_BEGINTHREADEX with WinCE only pas supported flags
+
 Fri Mar 20 16:15:15 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * THANKS:
-        
+
           Updated email address for Max Khon.
 
 Fri Mar 20 08:07:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
