@@ -289,7 +289,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
   // associations.
 
   ACE_Reactor *reactor = this->reactor ();
-  bool const reset_new_handle;
+  bool reset_new_handle;
 
   if (reactor)
     reset_new_handle = reactor->uses_event_associations ();
