@@ -1,3 +1,8 @@
+Sun Mar 22 19:21:06 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Acceptor.cpp (accept_svc_handler): Zapped the 'const' before
+          the 'bool'.
+
 Fri Mar 20 13:40:47 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Acceptor.cpp (accept_svc_handler): Added a check for a NULL
