@@ -287,7 +287,18 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
   // created handle. This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
-  bool const reset_new_handle = this->reactor ()->uses_event_associations ();
+
+  ACE_Reactor *reactor = this->reactor ();
+  bool const reset_new_handle;
+
+  if (reactor)
+    reset_new_handle = reactor->uses_event_associations ();
+  else
+    {
+      // Acceptor is closed, so reject this call
+      errno = EINVAL;
+      return -1;
+    }
 
   if (this->acceptor ().accept (svc_handler->peer (), // stream
                                 0, // remote address

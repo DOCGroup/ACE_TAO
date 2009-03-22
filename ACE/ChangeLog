@@ -1,3 +1,9 @@
+Fri Mar 20 13:40:47 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Acceptor.cpp (accept_svc_handler): Added a check for a NULL
+          reactor to avoid a race condition.  Thanks to JD Robertson
+          <JD.Robertson at ni dot com> for reporting this.
+
 Sun Mar 22 06:46:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
