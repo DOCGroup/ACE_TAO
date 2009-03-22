@@ -6,7 +6,7 @@
 
 #include <string>
 #include <set>
-
+#include <ace/Date_Time.h>
 #include "ace/OS_NS_unistd.h"
 #include <ace/High_Res_Timer.h>
 #include "AppSideMonitor_Thread.h"
@@ -684,15 +684,26 @@ ReplicationManager_i::process_proc_failure (
   std::ofstream out;
   out.open ("rm-failures.txt", ios_base::app);
 
-  for (PROC_FAIL_TIME_LIST::iterator it = failure_history_.begin ();
-       it != failure_history_.end ();
-       ++it)
-    {
-      out << it->second << " " << it->first << std::endl;
-    }
+  {
+    ACE_Guard <ACE_Thread_Mutex> guard (history_lock_);
 
-  out.close ();
-  failure_history_.clear ();
+    ACE_Date_Time dt;
+    for (PROC_FAIL_TIME_LIST::iterator it = failure_history_.begin ();
+         it != failure_history_.end ();
+         ++it)
+      {
+        dt.update (it->timestamp);
+        out << it->process_id << " " 
+            << dt.hour () << ":"
+            << dt.minute () << ":"
+            << dt.second () << ":"
+            << dt.microsec () << " "
+            << it->delta << std::endl;
+      }
+
+    out.close ();
+    failure_history_.clear ();
+  }
 }
 
 void
@@ -1676,7 +1687,14 @@ ReplicationManager_i::proc_failure (const char *process_id)
 
   ACE_Time_Value tv;
   timer_.elapsed_time (tv);
-  failure_history_.push_back (TProcessFailureTime (tv.msec (), process_id));
+  TProcessFailureTime sample = {tv.msec (), ACE_OS::gettimeofday (), process_id};
+
+  {
+    ACE_Guard <ACE_Thread_Mutex> guard (history_lock_);
+
+    failure_history_.push_back ( sample );
+  }
+
   timer_.reset ();
   timer_.start ();
 }

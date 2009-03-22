@@ -2,7 +2,7 @@
 // $Id$
 
 #include <sstream>
-
+#include <iostream>
 #include "ace/Global_Macros.h"
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
@@ -21,7 +21,8 @@ HMOptions::HMOptions (void)
     port_range_begin_ (7000),
     RM_update_freq_ (1),
     load_monitor_freq_(2),
-    debug_level_ (0)    
+    debug_level_ (0),
+    logging_ (false)
 {
   char hostname [100];
   gethostname (hostname, sizeof (hostname));
@@ -63,6 +64,11 @@ HMOptions::parse_args (int &argc, char **argv)
       else if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-ior_file"))))
         {
           HM_ior_file_ = arg;
+          as.consume_arg ();
+        }
+      else if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-logging"))))
+        {
+          logging_ = true;
           as.consume_arg ();
         }
       else if (0 != (arg = as.get_the_parameter (ACE_TEXT ("-rm_ior"))))
@@ -221,4 +227,10 @@ HMOptions::set_debug_level (void)
 
   ACE_LOG_MSG->priority_mask (mask,
                               ACE_Log_Msg::PROCESS);
+}
+
+bool
+HMOptions::logging (void)
+{
+  return logging_;
 }

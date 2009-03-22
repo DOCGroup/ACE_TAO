@@ -29,7 +29,7 @@ public:
                            ACE_Thread_Mutex>
     ProcessHandlerMap;
 
-  HostMonitorImpl (CORBA::ORB_ptr, Monitor_Thread *);
+  HostMonitorImpl (CORBA::ORB_ptr, Monitor_Thread *, bool logging = false);
   
   int
   drop_process (const std::string &process_id);
@@ -69,6 +69,7 @@ private:
   ProcessHandlerMap process_map_;
   ACE_Connector <Failure_Handler, ACE_SOCK_Connector> connector_;
   CORBA::ORB_var orb_;
+  bool logging_;
 };
 
 #endif // __HOSTMONITORIMPL_H

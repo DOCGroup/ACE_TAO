@@ -8,6 +8,7 @@
 #include "ace/Time_Value.h"
 #include "ace/Synch_Options.h"
 #include "ace/Thread_Mutex.h"
+#include "ace/Date_Time.h"
 
 #include "HostMonitorImpl.h"
 #include "Failure_Handler.h"
@@ -16,11 +17,12 @@
 #include "HMOptions.h"
 #include "Utilization_Monitor.h"
 
-HostMonitorImpl::HostMonitorImpl (CORBA::ORB_ptr orb, Monitor_Thread *mt)
+HostMonitorImpl::HostMonitorImpl (CORBA::ORB_ptr orb, Monitor_Thread *mt, bool logging)
   : monitor_thread_ (mt),
     port_counter_ (HMOptions::instance ()->port_range_begin ()),
     connector_ (monitor_thread_->get_reactor ()),
-    orb_ (CORBA::ORB::_duplicate (orb))
+    orb_ (CORBA::ORB::_duplicate (orb)),
+    logging_ (logging)
 {
   this->create_RM_Proxy ();
 }
@@ -126,6 +128,24 @@ int HostMonitorImpl::drop_process (const std::string &process_id)
   if (process_map_.find (process_id, handler) == 0)
     {
       rm_proxy_->proc_failure (process_id);
+
+      if (logging_)
+        {
+          std::ofstream logfile;
+          logfile.open ("./hm.log", ios_base::app);
+
+          ACE_Date_Time dt;
+
+          logfile << process_id << " " 
+                  << dt.hour () << ":" 
+                  << dt.minute () << ":" 
+                  << dt.second () << ":"
+                  << dt.microsec ()
+                  << std::endl;
+
+          logfile.close ();
+        }
+
       return remove_process (process_id);
     }
   

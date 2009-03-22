@@ -321,9 +321,16 @@ private:
 
   ACE_High_Res_Timer timer_;
   
-  typedef std::pair <unsigned long, std::string> TProcessFailureTime;
+  struct TProcessFailureTime {
+    unsigned long delta;
+    ACE_Time_Value timestamp;
+    std::string process_id;
+  };
+
   typedef std::list <TProcessFailureTime> PROC_FAIL_TIME_LIST;
   PROC_FAIL_TIME_LIST failure_history_;
+
+  ACE_Thread_Mutex history_lock_;
 
   void update_enhanced_ranklist (void);
     
