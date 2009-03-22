@@ -44,6 +44,7 @@ public:
   std::string util_file (void) const;
   std::pair <char, std::string> ior_access (void) const;
   bool use_naming_service (void) const;
+  bool logging (void);
 
   /**
    *  @return the debug level of the application:
@@ -71,6 +72,7 @@ protected:
   size_t load_monitor_freq_;
   std::pair <char, std::string> ior_access_;
   long debug_level_;
+  bool logging_;
 
   /// Singleton-related stuff.
   static HMOptions * volatile instance_;

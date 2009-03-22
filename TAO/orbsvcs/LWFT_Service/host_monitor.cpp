@@ -47,7 +47,7 @@ int main (int argc, char* argv[])
       
       /// Initilize the timedate object on heap.
       HostMonitorImpl * host_monitor =
-        new HostMonitorImpl (orb, &monitor_thread);
+        new HostMonitorImpl (orb, &monitor_thread, opts->logging ());
       PortableServer::ServantBase_var safe_host (host_monitor);
       ACE_UNUSED_ARG (safe_host);
       

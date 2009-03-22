@@ -1,3 +1,15 @@
+Sun Mar 22 03:04:48 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
+        * orbsvcs/orbsvcs/LWFT/HMOptions.h
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.h
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp
+        * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp
+        * orbsvcs/orbsvcs/LWFT/HMOptions.cpp
+        * orbsvcs/LWFT_Service/host_monitor.cpp:
+        
+          Added logging for failure timing.
+
 Wed Mar 18 21:06:23 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
