@@ -38,7 +38,6 @@ int test_sequence ()
   FAIL_RETURN_IF (a.end () != a.end ());
 
   // test for correct behaviour for empty sequence
-
   FAIL_RETURN_IF (a.begin() != a.end ());
 
   // setup of an example sequence
@@ -133,7 +132,8 @@ int test_sequence ()
 
   // test operator[] write
   // NOTE: This now changes the sequence a.
-  // NOTE: This does not work for const_iterators
+  // NOTE: This does not work for const_iterators which are
+  // sometimes used in this function.
   // a_it[0] = CORBA::string_dup (elem0_cstr);
   // FAIL_RETURN_IF (ACE_OS::strcmp (a[2],elem0_cstr) != 0);
 
@@ -154,9 +154,6 @@ int test_sequence ()
   s_sequence test;
   test.length (4);
 
-  // Memory is leaked here from
-  // TAO::details::string_traits_base<char>::default_initializer()
-
   std::copy (a.begin (),
              a.end (),
              test.begin ());
@@ -172,7 +169,6 @@ int test_sequence ()
     }
 
   /// Testing - using ostream_iterator
-
   std::ostringstream ostream;
   std::copy (a.begin (),
              a.end (),
@@ -291,15 +287,6 @@ int test_const_sequence ()
   a_it += 2;
   FAIL_RETURN_IF (ACE_OS::strcmp (a_it[0],a[2]) != 0);
 
-  // test operator[] write
-  // NOTE: This now changes the sequence a.
-  // NOTE: This does not work for const_iterators
-  // a_it[0] = CORBA::string_dup (elem0_cstr);
-  // FAIL_RETURN_IF (ACE_OS::strcmp (a[2],elem0_cstr) != 0);
-
-  // reset content of sequence a
-  //a[2] = CORBA::string_dup (elem2_cstr);
-
   // test for loop behaviour
   s_sequence b = a;
   ITERATOR_T b_it = b.begin ();
@@ -313,9 +300,6 @@ int test_const_sequence ()
 
   s_sequence test;
   test.length (4);
-
-  // Memory is leaked here from
-  // TAO::details::string_traits_base<char>::default_initializer()
 
   std::copy (a.begin (),
              a.end (),
@@ -332,7 +316,6 @@ int test_const_sequence ()
     }
 
   /// Testing - using ostream_iterator
-
   std::ostringstream ostream;
   std::copy (a.begin (),
              a.end (),
@@ -457,7 +440,8 @@ int test_sequence_reverse ()
 
   // test operator[] write
   // NOTE: This now changes the sequence a.
-  // this is not possible for const iterators
+  // this is not possible for const iterators which are
+  // sometimes used by this function.
   // a_it[0] = CORBA::string_dup (elem0_cstr);
   // FAIL_RETURN_IF (ACE_OS::strcmp (a[1],elem0_cstr) != 0);
 
@@ -478,9 +462,6 @@ int test_sequence_reverse ()
   s_sequence test;
   test.length (a.length ());
 
-  // Memory is leaked here from
-  // TAO::details::string_traits_base<char>::default_initializer()
-
   std::copy (a.begin (),
              a.end (),
              test.begin ());
@@ -496,7 +477,6 @@ int test_sequence_reverse ()
     }
 
   /// Testing - using ostream_iterator
-
   std::ostringstream ostream;
   std::copy (a.rbegin (),
              a.rend (),
@@ -615,15 +595,6 @@ int test_const_sequence_reverse ()
   a_it += 2;
   FAIL_RETURN_IF (ACE_OS::strcmp (a_it[0],a[1]) != 0);
 
-  // test operator[] write
-  // NOTE: This now changes the sequence a.
-  // this is not possible for const iterators
-  // a_it[0] = CORBA::string_dup (elem0_cstr);
-  // FAIL_RETURN_IF (ACE_OS::strcmp (a[1],elem0_cstr) != 0);
-
-  // reset content of sequence a
-  //a[1] = CORBA::string_dup (elem1_cstr);
-
   // test for loop behaviour
   s_sequence b = a;
   REVERSE_ITERATOR_T b_it = b.rbegin ();
@@ -637,9 +608,6 @@ int test_const_sequence_reverse ()
 
   s_sequence test;
   test.length (a.length ());
-
-  // Memory is leaked here from
-  // TAO::details::string_traits_base<char>::default_initializer()
 
   std::copy (a.begin (),
              a.end (),
@@ -656,7 +624,6 @@ int test_const_sequence_reverse ()
     }
 
   /// Testing - using ostream_iterator
-
   std::ostringstream ostream;
   std::copy (a.rbegin (),
              a.rend (),
@@ -682,8 +649,6 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
   // Test Generic_Sequence_Iterator.
   status += test_sequence<s_sequence::iterator> ();
 
-  // g++ seems to make the conversion from iterator to const_iterator
-  // and Windows doesn't. Not sure why.
   // Test Const_Generic_Sequence_Iterator with non-const sequence.
   status += test_sequence<s_sequence::const_iterator> ();
 

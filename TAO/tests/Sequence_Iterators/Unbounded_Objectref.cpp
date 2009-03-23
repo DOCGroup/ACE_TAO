@@ -144,9 +144,6 @@ int test_sequence ()
   tested_sequence test;
   test.length (a.length ());
 
-  // Memory is leaked here from
-  // TAO::details::string_traits_base<char>::default_initializer()
-
   std::copy (a.begin (),
              a.end (),
              test.begin ());
@@ -293,11 +290,9 @@ int test_const_sequence ()
   tested_sequence test;
   test.length (4);
 
-  // Memory is leaked here from
-  // TAO::details::string_traits_base<char>::default_initializer()
-
   /*
    * The copy call below causes double deletes and seg faults.
+   */
   std::copy (a.begin (),
              a.end (),
              test.begin ());
@@ -311,7 +306,6 @@ int test_const_sequence ()
     {
       FAIL_RETURN_IF ((*copya_iter)->id () != (*copytest_iter)->id ());
     }
-   */
 
   /// Testing - using ostream_iterator
   /// JWH2 - I don't think the ostream test makes sense for object references.
@@ -448,9 +442,6 @@ int test_sequence_reverse ()
 
   tested_sequence test;
   test.length (a.length ());
-
-  // Memory is leaked here from
-  // TAO::details::string_traits_base<char>::default_initializer()
 
   std::copy (a.begin (),
              a.end (),
@@ -609,6 +600,7 @@ int test_const_sequence_reverse ()
 
   /*
    * The copy call below causes double deletes and seg faults.
+   */
   std::copy (a.begin (),
              a.end (),
              test.begin ());
@@ -622,7 +614,6 @@ int test_const_sequence_reverse ()
     {
       FAIL_RETURN_IF ((*copya_iter)->id () != (*copytest_iter)->id ());
     }
-   */
 
   /// Testing - using ostream_iterator
   /// JWH2 - I don't think the ostream test makes sense for object references.

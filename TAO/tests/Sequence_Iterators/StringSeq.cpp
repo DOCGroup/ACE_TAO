@@ -315,9 +315,6 @@ int test_sequence_const_iterator ()
   ::CORBA::StringSeq test;
   test.length (a.length ());
 
-  // Memory is leaked here from
-  // TAO::details::string_traits_base<char>::default_initializer()
-
   std::copy (a.begin (),
              a.end (),
              test.begin ());
@@ -333,7 +330,6 @@ int test_sequence_const_iterator ()
     }
 
   /// Testing - using ostream_iterator
-
   std::ostringstream ostream;
   std::copy (a.begin (),
              a.end (),
@@ -367,19 +363,10 @@ int test_const_sequence ()
   const ::CORBA::StringSeq a = setup;
 
   // test equality operator
-  // JWH2 - Below are (failed) attempts to make the compiler happy.
-  // The compiler wants to construct a UBS_Sequence_Iterator and
-  // complains about the constructor being passed a const sequence
-  // pointer when it expects a non-const pointer. Why is the compiler
-  // trying to construct a UBS_Sequence_Iterator rather than a
-  // Const_UBS_Sequence_Iterator??
-  //
   FAIL_RETURN_IF (!(a.begin () == a.begin ()));
-  //ITERATOR_T c_iter1 (a.begin ());
-  //::CORBA::StringSeq::const_iterator c_iter1 (a.begin ());
-  //::TAO::Const_UBS_Sequence_Iterator<TAO::unbounded_basic_string_sequence<char> > c_iter1 = a.begin ();
-  //ITERATOR_T c_iter2 = a.begin ();
-  //FAIL_RETURN_IF (!(c_iter1 == c_iter2));
+  ITERATOR_T c_iter1 (a.begin ());
+  ITERATOR_T c_iter2 = a.begin ();
+  FAIL_RETURN_IF (!(c_iter1 == c_iter2));
 
   // test non-equality operator
   FAIL_RETURN_IF (a.end () != a.end ());
@@ -389,8 +376,9 @@ int test_const_sequence ()
   FAIL_RETURN_IF (a_it != a.begin ());
 
   // test non const dereferencing
-  // JWH2 - I guess this test shouldn't be done since we are dealing with
-  // a const iterator. Is that right?
+  // JWH2 - This test shouldn't be done when dealing with
+  // a const iterator (which we sometimes do with the current
+  // testing setup).
   //typename ITERATOR_T::element_type value0 = *a_it;
   //FAIL_RETURN_IF (ACE_OS::strcmp (value0, elem0_cstr) != 0);
 
@@ -485,7 +473,6 @@ int test_const_sequence ()
     }
 
   /// Testing - using ostream_iterator
-
   std::ostringstream ostream;
   std::copy (a.begin (),
              a.end (),
@@ -516,7 +503,6 @@ int test_sequence_reverse ()
   FAIL_RETURN_IF (a.begin() != a.end ());
 
   // setup of an example sequence
-
   const char * elem0_cstr = "elem0";
   const char * elem1_cstr = "elem1";
   const char * elem2_cstr = "elem2";
@@ -642,7 +628,6 @@ int test_sequence_reverse ()
     }
 
   /// Testing - using ostream_iterator
-
   std::ostringstream ostream;
   std::copy (a.rbegin (),
              a.rend (),
@@ -673,7 +658,6 @@ int test_sequence_reverse_const_iterator ()
   FAIL_RETURN_IF (a.begin() != a.end ());
 
   // setup of an example sequence
-
   const char * elem0_cstr = "elem0";
   const char * elem1_cstr = "elem1";
   const char * elem2_cstr = "elem2";
@@ -788,7 +772,6 @@ int test_sequence_reverse_const_iterator ()
     }
 
   /// Testing - using ostream_iterator
-
   std::ostringstream ostream;
   std::copy (a.rbegin (),
              a.rend (),
@@ -926,7 +909,6 @@ int test_const_sequence_reverse ()
     }
 
   /// Testing - using ostream_iterator
-
   std::ostringstream ostream;
   std::copy (a.rbegin (),
              a.rend (),
