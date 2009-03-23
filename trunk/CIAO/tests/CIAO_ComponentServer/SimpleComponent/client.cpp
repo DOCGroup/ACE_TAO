@@ -15,9 +15,9 @@ const char *cs_path = "ciao_componentserver";
 CORBA::ULong spawn_delay = 30;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "s:d:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:d:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -70,15 +70,15 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
 
       poa_manager->activate ();
       ACE_DEBUG ((LM_DEBUG, "foo\n"));
-      
-      CIAO::Deployment::ComponentInstallation_Impl *tmp_ci;
-      
-      ACE_NEW_THROW_EX (tmp_ci, 
+
+      CIAO::Deployment::ComponentInstallation_Impl *tmp_ci = 0;
+
+      ACE_NEW_THROW_EX (tmp_ci,
                         CIAO::Deployment::ComponentInstallation_Impl (),
                         CORBA::NO_MEMORY ());
-      
+
       PortableServer::ServantBase_var safe_servant = tmp_ci;
-      
+
       root_poa->activate_object (tmp_ci);
 
       CIAO_ServerActivator_i *sa_tmp = new CIAO_ServerActivator_i (spawn_delay,

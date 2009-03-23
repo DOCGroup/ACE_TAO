@@ -7,7 +7,7 @@ const ACE_TCHAR *server_1 = ACE_TEXT("file://test1.ior");
 const ACE_TCHAR *server_2 = ACE_TEXT("file://test2.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:j:"));
   int c;
