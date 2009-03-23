@@ -352,6 +352,7 @@ TAO/tests/Transport_Cache_Manager/run_test.pl
 TAO/tests/UNKNOWN_Exception/run_test.pl:
 TAO/tests/Native_Exceptions/run_test.pl:
 TAO/tests/Servant_To_Reference_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
+TAO/tests/Sequence_Iterators/run_test.pl:
 TAO/tests/Sequence_Unit_Tests/run_test.pl -noboost: !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Sequence_Unit_Tests/run_test.pl -boost: BOOST !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Typedef_String_Array/run_test.pl:
