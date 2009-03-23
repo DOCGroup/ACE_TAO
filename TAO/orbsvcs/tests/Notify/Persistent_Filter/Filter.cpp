@@ -4,7 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS.h"
 
-
 ACE_RCSID(Filter, Filter, "Filter.cpp,v 1.13 2002/05/28 20:24:16 pradeep Exp")
 
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
@@ -45,7 +44,7 @@ FilterClient::~FilterClient ()
 }
 
 
-int 
+int
 FilterClient::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("pm"));
@@ -54,10 +53,10 @@ FilterClient::parse_args (int argc, ACE_TCHAR *argv[])
   while ((c = opts ()) != -1)
     switch (c)
       {
-      case 'p':   
+      case 'p':
         this->use_persistent_ = true;
         break;
-      case 'm':   
+      case 'm':
         this->modify_constraint_ = true;
         EVENTS_EXPECTED_TO_RECEIVE = 4*4;
         break;
@@ -76,7 +75,7 @@ void
 FilterClient::init_supplier (int argc, ACE_TCHAR *argv [])
 {
   init_ORB (argc, argv);
-  
+
   if (parse_args (argc, argv) == -1)
   {
     ACE_OS::exit (1);
@@ -90,7 +89,7 @@ FilterClient::init_supplier (int argc, ACE_TCHAR *argv [])
   {
     get_EC ();
   }
-  else 
+  else
   {
     create_EC ();
   }
@@ -136,15 +135,15 @@ FilterClient::init_consumer (int argc, ACE_TCHAR *argv [])
   create_consumers ();
 }
 
-void 
+void
 FilterClient::wait_ready ()
 {
   while ( 1 )
   {
-    CosNotifyChannelAdmin::AdminIDSeq_var cons_ids 
+    CosNotifyChannelAdmin::AdminIDSeq_var cons_ids
       = ec_->get_all_consumeradmins ();
 
-    CosNotifyChannelAdmin::AdminIDSeq_var sup_ids 
+    CosNotifyChannelAdmin::AdminIDSeq_var sup_ids
       = ec_->get_all_supplieradmins ();
 
     if (cons_ids->length () + sup_ids->length () == 3)
@@ -155,15 +154,15 @@ FilterClient::wait_ready ()
 }
 
 
-void 
+void
 FilterClient::wait_consumer_complete ()
 {
   int i = 0;
   const int TIMEOUT = 30;
- 
+
   while ( i < TIMEOUT )
   {
-    try 
+    try
     {
       CosNotifyChannelAdmin::AdminIDSeq_var ids
         = this->ec_->get_all_consumeradmins();
@@ -208,7 +207,7 @@ FilterClient::run_consumer ()
         if (this->orb_->work_pending ())
           this->orb_->perform_work ();
     }
-        
+
   //ACE_DEBUG ((LM_DEBUG, "(%P|%t)destroying consumer admins ... \n"));
 
   //this->consumer_admin_1_->destroy ();
@@ -290,7 +289,7 @@ FilterClient::get_EC ()
   const int TIMEOUT = 20;
   while (i < TIMEOUT)
   {
-    CosNotifyChannelAdmin::ChannelIDSeq_var ids 
+    CosNotifyChannelAdmin::ChannelIDSeq_var ids
       = notify_factory_->get_all_channels ();
 
     if (ids->length () > 0)
@@ -301,7 +300,7 @@ FilterClient::get_EC ()
       ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
       break;
     }
-    else 
+    else
     {
       ++ i;
       ACE_OS::sleep (1);
@@ -319,8 +318,8 @@ FilterClient::create_supplieradmin ()
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
-  ACE_DEBUG ((LM_DEBUG, 
-	      ACE_TEXT ("(%P|%t)create_supplieradmin %d \n"), adminid));
+  ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("(%P|%t)create_supplieradmin %d \n"), adminid));
 
   CosNotifyFilter::FilterFactory_var ffact =
     ec_->default_filter_factory ();
@@ -353,7 +352,7 @@ FilterClient::create_supplieradmin ()
 void
 FilterClient::get_supplieradmin ()
 {
-  CosNotifyChannelAdmin::AdminIDSeq_var ids 
+  CosNotifyChannelAdmin::AdminIDSeq_var ids
     = ec_->get_all_supplieradmins();
 
   ACE_ASSERT (ids->length () == 1);
@@ -362,11 +361,11 @@ FilterClient::get_supplieradmin ()
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
-  ACE_DEBUG ((LM_DEBUG, 
-	      ACE_TEXT ("(%P|%t)get_supplieradmin %d \n"), ids[0]));
+  ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("(%P|%t)get_supplieradmin %d \n"), ids[0]));
 
-  CosNotifyFilter::FilterAdmin_var admin 
-    = CosNotifyFilter::FilterAdmin::_narrow (supplier_admin_.in ()); 
+  CosNotifyFilter::FilterAdmin_var admin
+    = CosNotifyFilter::FilterAdmin::_narrow (supplier_admin_.in ());
   verify_filter (admin, SA_FILTER, MOD_SA_FILTER);
 }
 
@@ -384,8 +383,8 @@ FilterClient::create_consumeradmin ()
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_2_.in ()));
 
-  ACE_DEBUG ((LM_DEBUG, 
-	      ACE_TEXT ("(%P|%t)create_consumeradmin %d %d\n"), 
+  ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("(%P|%t)create_consumeradmin %d %d\n"),
     adminid_1_id_, adminid_2_id_));
 
   CosNotifyFilter::FilterFactory_var ffact =
@@ -432,7 +431,7 @@ FilterClient::create_consumeradmin ()
 void
 FilterClient::get_consumeradmin ()
 {
-  CosNotifyChannelAdmin::AdminIDSeq_var ids 
+  CosNotifyChannelAdmin::AdminIDSeq_var ids
     = ec_->get_all_consumeradmins();
 
   ACE_ASSERT (ids->length () == 2);
@@ -443,36 +442,36 @@ FilterClient::get_consumeradmin ()
   consumer_admin_1_ = ec_->get_consumeradmin (this->adminid_1_id_);
   consumer_admin_2_ = ec_->get_consumeradmin (this->adminid_2_id_);
 
-  ACE_DEBUG ((LM_DEBUG, 
-	      ACE_TEXT ("(%P|%t)get_consumeradmin %d %d\n"), 
-	      adminid_1_id_, adminid_2_id_));
+  ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("(%P|%t)get_consumeradmin %d %d\n"),
+        adminid_1_id_, adminid_2_id_));
 
-  CosNotifyFilter::FilterAdmin_var admin 
-    = CosNotifyFilter::FilterAdmin::_narrow (consumer_admin_1_.in ()); 
+  CosNotifyFilter::FilterAdmin_var admin
+    = CosNotifyFilter::FilterAdmin::_narrow (consumer_admin_1_.in ());
   verify_filter (admin, CA_FILTER, MOD_CA_FILTER);
-  admin = CosNotifyFilter::FilterAdmin::_narrow (consumer_admin_2_.in ()); 
+  admin = CosNotifyFilter::FilterAdmin::_narrow (consumer_admin_2_.in ());
   verify_filter (admin, CA_FILTER, MOD_CA_FILTER);
 }
 
 
-void 
-FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin, 
+void
+FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
                              const char* constraint_expr,
-                             const char* mod_constraint_expr) 
+                             const char* mod_constraint_expr)
 {
-  ACE_UNUSED_ARG (constraint_expr); 
-  // only used to validate assert, which is 
+  ACE_UNUSED_ARG (constraint_expr);
+  // only used to validate assert, which is
   // compiled out for nondebug builds.
-  CosNotifyFilter::FilterIDSeq_var ids 
+  CosNotifyFilter::FilterIDSeq_var ids
     = admin->get_all_filters ();
 
   ACE_ASSERT (ids->length () == 1);
 
-  CosNotifyFilter::Filter_var filter 
+  CosNotifyFilter::Filter_var filter
     = admin->get_filter (ids[0]);
 
   ACE_ASSERT (! CORBA::is_nil (filter.in ()));
- 
+
   CosNotifyFilter::ConstraintInfoSeq_var infos
     = filter->get_all_constraints();
 
@@ -483,15 +482,15 @@ FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
   for (index = 0; index < infos->length (); ++ index)
   {
     CosNotifyFilter::ConstraintID id = infos[index].constraint_id;
-    ACE_UNUSED_ARG (id); 
-    // only used to validate assert, which is 
+    ACE_UNUSED_ARG (id);
+    // only used to validate assert, which is
     // compiled out for nondebug builds.
     ACE_ASSERT (id != 0);
     ACE_ASSERT (ACE_OS::strcmp (infos[index].constraint_expression.constraint_expr.in (), constraint_expr) == 0);
 
     CosNotification::EventTypeSeq& events = infos[index].constraint_expression.event_types;
-    ACE_UNUSED_ARG (events); 
-    // only used to validate assert, which is 
+    ACE_UNUSED_ARG (events);
+    // only used to validate assert, which is
     // compiled out for nondebug builds.
     ACE_ASSERT (events.length () == 1);
 
@@ -506,13 +505,13 @@ FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
     for (index = 0; index < infos->length (); ++ index)
     {
       ids[index] = infos[index].constraint_id;
-      ACE_DEBUG ((LM_DEBUG, 
-		  ACE_TEXT ("(%P|%t)modify constraint %d \n"), ids[index])); 
+      ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("(%P|%t)modify constraint %d \n"), ids[index]));
 
-      infos[index].constraint_expression.constraint_expr 
+      infos[index].constraint_expression.constraint_expr
         = CORBA::string_dup (mod_constraint_expr);
     }
-  
+
     filter->modify_constraints (ids.in (), infos.in());
   }
 }
@@ -668,11 +667,11 @@ Filter_StructuredPushConsumer::push_structured_event
 
 
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%C received event, %d\n"), 
-		my_name_.fast_rep (), val));
+                ACE_TEXT ("%C received event, %d\n"),
+    my_name_.fast_rep (), val));
 
     ACE_DEBUG ((LM_DEBUG,
-		ACE_TEXT ("event count %d\n"), g_result_count.value ()));
+    ACE_TEXT ("event count %d\n"), g_result_count.value ()));
 
     if (++g_result_count == EVENTS_EXPECTED_TO_RECEIVE)
       this->filter_->done (); // all events received, we're done.
