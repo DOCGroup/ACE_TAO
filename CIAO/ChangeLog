@@ -1,3 +1,15 @@
+Mon Mar 23 12:51:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Logger/File_Logger_Backend.h
+        * ciao/Logger/Logger_Service.cpp
+        * ciao/Logger/Logger_Service.h
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp
+        * DAnCE/tests/ObjectLocatorTest/srv_main.cpp
+        * DAnCE/tests/RedirectionServiceTest/srv_main.cpp
+        * tests/CIAO_ComponentServer/Basic/client.cpp
+        * tests/CIAO_ComponentServer/SimpleComponent/client.cpp
+          Fixed unicode compile problems
+
 Fri Mar 20 19:00:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DomainApplicationManager/Node_Locator.cpp

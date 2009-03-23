@@ -66,7 +66,7 @@ bool
 DAnCE_ExecutionManager_Module::parse_args (int argc, char *argv[])
 {
   DANCE_TRACE ("DAnCE_ExecutionManager_Module::parse_args");
-  
+
   ACE_Get_Opt get_opts (argc,
                         argv,
                         "n:e::p::c::r::ifh",
@@ -74,17 +74,17 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, char *argv[])
                         0,
                         ACE_Get_Opt::RETURN_IN_ORDER);
 
-  get_opts.long_option ("exec-mgr", 'e', ACE_Get_Opt::ARG_OPTIONAL);
-  get_opts.long_option ("node-mgr", 'n', ACE_Get_Opt::ARG_REQUIRED);
-  get_opts.long_option ("process-ns", 'p', ACE_Get_Opt::ARG_OPTIONAL);
-  get_opts.long_option ("create-plan-ns", 'c', ACE_Get_Opt::ARG_OPTIONAL);
-  get_opts.long_option ("rebind-plan-ns", 'r', ACE_Get_Opt::ARG_OPTIONAL);
-  get_opts.long_option ("port-indirection", 'i', ACE_Get_Opt::NO_ARG);
-  get_opts.long_option ("ignore-failure", 'f', ACE_Get_Opt::NO_ARG);
-  get_opts.long_option ("help", 'h', ACE_Get_Opt::NO_ARG);
-  get_opts.long_option ("node-map", ACE_Get_Opt::ARG_REQUIRED);
-  get_opts.long_option ("domain-nc", ACE_Get_Opt::ARG_REQUIRED);
-  
+  get_opts.long_option (ACE_TEXT("exec-mgr"), 'e', ACE_Get_Opt::ARG_OPTIONAL);
+  get_opts.long_option (ACE_TEXT("node-mgr"), 'n', ACE_Get_Opt::ARG_REQUIRED);
+  get_opts.long_option (ACE_TEXT("process-ns"), 'p', ACE_Get_Opt::ARG_OPTIONAL);
+  get_opts.long_option (ACE_TEXT("create-plan-ns"), 'c', ACE_Get_Opt::ARG_OPTIONAL);
+  get_opts.long_option (ACE_TEXT("rebind-plan-ns"), 'r', ACE_Get_Opt::ARG_OPTIONAL);
+  get_opts.long_option (ACE_TEXT("port-indirection"), 'i', ACE_Get_Opt::NO_ARG);
+  get_opts.long_option (ACE_TEXT("ignore-failure"), 'f', ACE_Get_Opt::NO_ARG);
+  get_opts.long_option (ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
+  get_opts.long_option (ACE_TEXT("node-map"), ACE_Get_Opt::ARG_REQUIRED);
+  get_opts.long_option (ACE_TEXT("domain-nc"), ACE_Get_Opt::ARG_REQUIRED);
+
   //get_opts.long_option ("help", '?');
 
   char c;
@@ -157,7 +157,7 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, char *argv[])
               this->options_.domain_nc_ = get_opts.opt_arg ();
               break;
             }
-          
+
         case 'h':
           //case '?': // Display help for use of the server.
           //default:
@@ -185,7 +185,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
                                               ACE_TCHAR *argv[])
 {
   DANCE_TRACE ("DAnCE_ExecutionManager_Module::create_object");
-  
+
   try
     {
       if (this->em_impl_ != 0)
