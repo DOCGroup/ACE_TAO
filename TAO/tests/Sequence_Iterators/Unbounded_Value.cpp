@@ -1,5 +1,5 @@
 /**
- * @file Unbounded_String.cpp
+ * @file Unbounded_Value.cpp
  *
  * @brief test for STL iterator behaviour of CORBA bounded string sequence
  *
@@ -8,7 +8,7 @@
  * @author Friedhelm Wolf (fwolf@dre.vanderbilt.edu)
  */
 
-#include <tao/Unbounded_Value_Sequence_T.h>
+#include "tao/Unbounded_Value_Sequence_T.h"
 #include "ace/Log_Msg.h"
 
 #include <iostream>
