@@ -1,3 +1,17 @@
+Mon Mar 23 19:05:25 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Inherited_Operation/*.*:
+        
+          New test, to guard against reoccurrence of an IDL compiler
+          bug that resulted in base class operations missing from
+          the operation table of code generated for a derived interface.
+          Similar bug fixes are tested in the directory IDL_Test, but
+          this bug can be detected only at runtime by a remote call,
+          unlike any of the possible errors detectable by IDL_Test.
+          The IDL compiler bug fix entry is
+          
+          Fri Mar 20 16:04:58 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Mon Mar 23 15:29:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Iterators/Bounded_String.cpp:
