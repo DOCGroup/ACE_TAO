@@ -1,3 +1,16 @@
+Mon Mar 23 15:29:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sequence_Iterators/Bounded_String.cpp:
+        * tests/Sequence_Iterators/StringSeq.cpp:
+        * tests/Sequence_Iterators/Unbounded_Objectref.cpp:
+        * tests/Sequence_Iterators/Unbounded_Value.cpp:
+          Removed checked for ACE_WIN32
+
+        * tao/Generic_Sequence_T.h:
+        * tao/MM_Sequence_Iterator_T.h:
+          Made some constructors explicit to get the tests compiling on
+          win32
+
 Mon Mar 23 15:09:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Iterators/run_test.pl:
