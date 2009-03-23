@@ -710,7 +710,7 @@ public:
       }
 
   /// Copy constructor initializing by a Generic_Sequence_Iterator
-  Const_Generic_Sequence_Iterator (
+  explicit Const_Generic_Sequence_Iterator (
     Generic_Sequence_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
     pos_ (rhs.pos_)

@@ -651,12 +651,10 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
   // Test Generic_Sequence_Iterator.
   status += test_sequence< tested_sequence::iterator> ();
 
-#ifndef ACE_WIN32
   // g++ seems to make the conversion from iterator to const_iterator
   // and Windows doesn't. Not sure why.
   // Test Const_Generic_Sequence_Iterator with non-const sequence.
   status += test_sequence< tested_sequence::const_iterator> ();
-#endif
 
   // Test Const_Generic_Sequence_Iterator with const sequence.
   status += test_const_sequence< tested_sequence::const_iterator> ();
