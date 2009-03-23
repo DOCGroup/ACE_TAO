@@ -1,3 +1,11 @@
+Mon Mar 23 13:48:21 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * rules.tao.GNU:
+
+          Removed section specific to Win32/MinGW that set the make variable
+          TAO_IDL_PREPROCESSOR to the full path to $(CXX).  This is not needed,
+          we can treat it like any other platform.
+
 Mon Mar 23 09:55:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Bounded_Basic_String_Sequence_T.h
