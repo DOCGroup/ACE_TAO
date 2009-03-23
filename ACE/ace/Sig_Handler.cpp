@@ -400,7 +400,10 @@ ACE_Sig_Handlers::register_handler (int signum,
       // Add the ACE signal handler to the set of handlers for this
       // signal (make sure it goes before the external one if there is
       // one of these).
-      if (ACE_Sig_Handlers_Set::instance (signum)->insert (ace_sig_adapter) == -1)
+
+      int result = ACE_Sig_Handlers_Set::instance (signum)->insert (ace_sig_adapter);
+
+      if (result == -1)
         {
           // We couldn't reinstall our handler, so let's pretend like
           // none of this happened...
@@ -483,7 +486,7 @@ ACE_Sig_Handlers::remove_handler (int signum,
 
       for (ACE_Event_Handler **eh;
            handler_iterator.next (eh) != 0;
-           handler_iterator.advance ())
+           )
         {
           // Type-safe downcast would be nice here...
           ACE_Sig_Adapter *sh = (ACE_Sig_Adapter *) *eh;
@@ -551,14 +554,12 @@ ACE_Sig_Handlers::dispatch (int signum,
 
   for (ACE_Event_Handler **eh = 0;
        handler_iterator.next (eh) != 0;
-       handler_iterator.advance ())
-    {
-      if ((*eh)->handle_signal (signum, siginfo, ucontext) == -1)
-        {
-          handler_set->remove (*eh);
-          delete *eh;
-        }
-    }
+       )
+    if ((*eh)->handle_signal (signum, siginfo, ucontext) == -1)
+      {
+        handler_set->remove (*eh);
+        delete *eh;
+      }
 }
 
 // Return the first item in the list of handlers.  Note that this will
