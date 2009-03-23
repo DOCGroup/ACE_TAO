@@ -306,8 +306,8 @@ public:
 
   /// Construct a Const_MM_Sequence_Iterator at position pos from
   /// a const sequence.
-  Const_MM_Sequence_Iterator (const implementation_type *sequence,
-                               size_t pos = 0)
+  explicit Const_MM_Sequence_Iterator (const implementation_type *sequence,
+                                      size_t pos = 0)
     : sequence_ (sequence),
     pos_ (pos)
       {
@@ -326,7 +326,7 @@ public:
       }
 
   /// Copy constructor initializing by a MM_Sequence_Iterator
-  Const_MM_Sequence_Iterator (
+  explicit Const_MM_Sequence_Iterator (
     MM_Sequence_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
     pos_ (rhs.pos_)

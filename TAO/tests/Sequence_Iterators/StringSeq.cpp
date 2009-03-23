@@ -950,13 +950,11 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
   // Test Generic_Sequence_Iterator.
   status += test_sequence< ::CORBA::StringSeq::iterator> ();
 
-#ifndef ACE_WIN32
   // g++ seems to make the conversion from iterator to const_iterator
   // and Windows doesn't. Not sure why.
   // Test Const_Generic_Sequence_Iterator with non-const sequence.
   status += test_sequence_const_iterator <
                ::CORBA::StringSeq::const_iterator> ();
-#endif
 
   // Test Const_Generic_Sequence_Iterator with const sequence.
   status += test_const_sequence< ::CORBA::StringSeq::const_iterator> ();
