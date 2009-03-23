@@ -45,7 +45,7 @@ TAO_UIPMC_Wait_Never::sending_request (TAO_ORB_Core *,
 
 int
 TAO_UIPMC_Wait_Never::wait (ACE_Time_Value *,
-                            TAO_Synch_Reply_Dispatcher &)
+                            TAO_Synch_Reply_Dispatcher *)
 {
   return -1;
 }

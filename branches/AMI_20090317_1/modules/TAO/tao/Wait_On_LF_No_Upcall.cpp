@@ -86,7 +86,7 @@ namespace TAO
 
   int
   Wait_On_LF_No_Upcall::wait (ACE_Time_Value *max_wait_time,
-                              TAO_Synch_Reply_Dispatcher &rd)
+                              TAO_Synch_Reply_Dispatcher *rd)
   {
     Nested_Upcall_Guard upcall_guard (this->transport_);
 

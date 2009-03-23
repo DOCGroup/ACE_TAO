@@ -17,6 +17,7 @@
 #include "ami_test_i.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_time.h"
 
 ACE_RCSID(AMI, ami_test_i, "$Id$")
 
@@ -63,7 +64,10 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
           return 0;
         }
     }
-  ACE_OS::sleep (1);
+
+  ACE_Time_Value udelay(1, ACE_OS::rand() % 1000);
+  struct timespec ts = udelay;
+  ACE_OS::nanosleep (&ts);
   return 931234;
 }
 

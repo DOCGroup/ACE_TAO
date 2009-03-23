@@ -1,3 +1,39 @@
+Mon Mar 23 19:51:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.h:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/LocateRequest_Invocation.cpp:
+        * tao/LocateRequest_Invocation.h:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/Synch_Invocation.h:
+        * tao/Wait_On_Leader_Follower.cpp:
+        * tao/Wait_On_Leader_Follower.h:
+        * tao/Wait_On_LF_No_Upcall.cpp:
+        * tao/Wait_On_LF_No_Upcall.h:
+        * tao/Wait_On_Reactor.cpp:
+        * tao/Wait_On_Reactor.h:
+        * tao/Wait_On_Read.cpp:
+        * tao/Wait_On_Read.h:
+        * tao/Wait_Strategy.h:
+          Reply dispatchers are created on the heap. Changed
+          all references.
+
+        * tao/Reply_Dispatcher.cpp:
+        * tao/Reply_Dispatcher.h:
+          Reverted previous changes (db_ and input_cdr_ are back
+          on the stack again).
+
+        * tao/Muxed_TMS.cpp:
+          In dispatch reply, only lock the table activity instead of locking
+          everything...
+
+        * tests/Bug_3567_Regression/ami_test_i.cpp:
+        * tests/Bug_3567_Regression/client.cpp:
+          Refactored clean up of created servants.
+
+
 Wed Mar 18 15:20:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         First changes on this branch. Branch is created 

@@ -23,7 +23,7 @@ const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
 int niterations = 10;
 int debug = 0;
-int number_of_replies = 0;
+ACE_Atomic_Op <TAO_SYNCH_MUTEX, long> number_of_replies = 0;
 
 CORBA::Long in_number = 931232;
 const char * in_str = "Let's talk AMI.";
@@ -98,7 +98,9 @@ class Client : public ACE_Task_Base
 {
 public:
   /// ctor
-  Client (A::AMI_Test_ptr server, int niterations);
+  Client (A::AMI_Test_ptr server, int niterations, A::AMI_AMI_TestHandler_ptr hnd);
+  /// dtor
+  ~Client () ;
 
   /// The thread entry point.
   virtual int svc (void);
@@ -204,9 +206,6 @@ public:
   A::AMI_Test_var ami_test_var_;
 };
 
-// ReplyHandler.
-Handler handler;
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -251,8 +250,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // Let the client perform the test in a separate thread
+      Handler handler;
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&handler);
 
-      Client client (server.in (), niterations);
+      object = root_poa->id_to_reference (id.in ());
+
+      A::AMI_AMI_TestHandler_var the_handler_var =
+        A::AMI_AMI_TestHandler::_narrow (object.in ());
+
+      handler.set_ami_test (server.in ());
+      
+      Client client (server.in (), niterations, the_handler_var.in ());
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -285,15 +294,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
-                      (nthreads*niterations) - number_of_replies));
+                      (nthreads*niterations) - number_of_replies.value ()));
         }
 
       client.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
+      handler._remove_ref ();
+      
       server->shutdown ();
-
+     
       root_poa->destroy (1,  // ethernalize objects
                          0  // wait for completion
                         );
@@ -311,13 +322,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Client::Client (A::AMI_Test_ptr server,
-                int niterations)
-                :  ami_test_var_ (A::AMI_Test::_duplicate (server)),
-     niterations_ (niterations)
+Client::Client (A::AMI_Test_ptr server, 
+                int niterations,
+                A::AMI_AMI_TestHandler_ptr hnd)
+                :  ami_test_var_ (A::AMI_Test::_duplicate (server))
+                ,  the_handler_var_ (A::AMI_AMI_TestHandler::_duplicate (hnd))
+                ,  niterations_ (niterations)
 {
-  handler.set_ami_test (server);
-  the_handler_var_ = handler._this (/* */);
+
+  }
+
+Client::~Client ()
+{
 }
 
 int
@@ -332,7 +348,7 @@ Client::svc (void)
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) :<%d> Asynchronous methods issued\n",
+                      "(%P|%t) <%d> Asynchronous methods issued\n",
                       niterations));
         }
     }
@@ -356,8 +372,9 @@ Worker::svc (void)
       CORBA::Boolean pending = this->orb_->work_pending();
 
       if (pending)
-        {
-          this->orb_->perform_work();
+        { 
+          ACE_Time_Value tm (1, 0);
+          this->orb_->perform_work(tm);
         }
     }
 

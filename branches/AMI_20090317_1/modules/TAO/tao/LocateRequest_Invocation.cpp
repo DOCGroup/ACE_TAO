@@ -9,6 +9,7 @@
 #include "tao/Profile.h"
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
+#include "ace/Refcounted_Auto_Ptr.h"
 
 #include "ace/Countdown_Time.h"
 
@@ -31,18 +32,28 @@ namespace TAO
   {
   }
 
+  void 
+  LocateRequest_Invocation::create_reply_dispatcher (TAO_Synch_Reply_Dispatcher *rd_p)
+  {
+    ACE_NEW (rd_p,
+             TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
+                                          this->details_.reply_service_info ()));
+  }
+
+
   Invocation_Status
   LocateRequest_Invocation::invoke (ACE_Time_Value *max_wait_time)
   {
     ACE_Countdown_Time countdown (max_wait_time);
 
-    TAO_Synch_Reply_Dispatcher rd (this->resolver_.stub ()->orb_core (),
-                                   this->details_.reply_service_info ());
+    TAO_Synch_Reply_Dispatcher *rd_p;
+    this->create_reply_dispatcher (rd_p);
+    ACE_Refcounted_Auto_Ptr<TAO_Synch_Reply_Dispatcher, ACE_Null_Mutex> rd(rd_p);
 
     // Register a reply dispatcher for this invocation. Use the
     // preallocated reply dispatcher.
     TAO_Bind_Dispatcher_Guard dispatch_guard (this->details_.request_id (),
-                                              &rd,
+                                              rd.get (),
                                               this->resolver_.transport ()->tms ());
 
     if (dispatch_guard.status () != 0)
@@ -84,9 +95,9 @@ namespace TAO
     if (this->resolver_.transport ()->idle_after_send ())
       this->resolver_.transport_released ();
 
-    s = this->wait_for_reply (max_wait_time, rd, dispatch_guard);
+    s = this->wait_for_reply (max_wait_time, rd.get (), dispatch_guard);
 
-    s = this->check_reply (rd);
+    s = this->check_reply (rd.get ());
 
     // For some strategies one may want to release the transport
     // back to  cache after receiving the reply. If the idling is
@@ -98,14 +109,14 @@ namespace TAO
   }
 
   Invocation_Status
-  LocateRequest_Invocation::check_reply (TAO_Synch_Reply_Dispatcher &rd)
+  LocateRequest_Invocation::check_reply (TAO_Synch_Reply_Dispatcher *rd)
   {
-    TAO_InputCDR &cdr = rd.reply_cdr ();
+    TAO_InputCDR &cdr = rd->reply_cdr ();
 
     // Set the translators
     this->resolver_.transport ()->assign_translators (&cdr, 0);
 
-    switch (rd.locate_reply_status ())
+    switch (rd->locate_reply_status ())
       {
       case GIOP::OBJECT_HERE:
         break;

@@ -138,11 +138,11 @@ protected:
 
   /// Datablock that is created on the stack to initialise the CDR
   /// stream underneath.
-  ACE_Data_Block *db_;
+  ACE_Data_Block db_;
 
   /// CDR stream which has the reply information that needs to be
   /// demarshalled by the stubs
-  TAO_InputCDR *reply_cdr_;
+  TAO_InputCDR reply_cdr_;
 
   /// This invocation is using this transport, may change...
   TAO_Transport *transport_;

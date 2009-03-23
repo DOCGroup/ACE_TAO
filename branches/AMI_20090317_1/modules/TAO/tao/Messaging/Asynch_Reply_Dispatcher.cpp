@@ -55,7 +55,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   this->locate_reply_status_ = params.locate_reply_status ();
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
-  ACE_Data_Block *db = this->reply_cdr_->clone_from (*params.input_cdr_);
+  ACE_Data_Block *db = this->reply_cdr_.clone_from (*params.input_cdr_);
 
   if (db == 0)
     {
@@ -127,7 +127,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       try
         {
           // Call the Reply Handler's stub.
-          this->reply_handler_stub_ (*this->reply_cdr_,
+          this->reply_handler_stub_ (this->reply_cdr_,
                                      this->reply_handler_.in (),
                                      reply_error);
         }

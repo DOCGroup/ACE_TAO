@@ -51,7 +51,7 @@ namespace TAO
     virtual ~Wait_On_LF_No_Upcall (void);
 
     virtual int wait (ACE_Time_Value *max_wait_time,
-                      TAO_Synch_Reply_Dispatcher &rd);
+                      TAO_Synch_Reply_Dispatcher *rd);
 
     virtual bool can_process_upcalls (void) const;
   };

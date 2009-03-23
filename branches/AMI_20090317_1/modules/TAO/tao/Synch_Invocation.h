@@ -104,17 +104,20 @@ namespace TAO
      * This method returns an exception when there is an error.
      */
     Invocation_Status wait_for_reply (ACE_Time_Value *max_wait_time,
-                                      TAO_Synch_Reply_Dispatcher &rd,
+                                      TAO_Synch_Reply_Dispatcher *rd,
                                       TAO_Bind_Dispatcher_Guard &bd);
 
   private:
+
+    /// Helper method that creates a new Synch Reply Dispatcher.
+    void create_reply_dispatcher (TAO_Synch_Reply_Dispatcher *rd_p);
 
     /// Helper method that checks the reply status of the
     /// replies and takes appropriate action.
     /**
      * This method returns an exception when there is an error.
      */
-    Invocation_Status check_reply_status (TAO_Synch_Reply_Dispatcher &rd);
+    Invocation_Status check_reply_status (TAO_Synch_Reply_Dispatcher *rd);
   };
 
   /**

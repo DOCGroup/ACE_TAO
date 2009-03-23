@@ -15,6 +15,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Service_Context.h"
 #include "tao/SystemException.h"
+#include "ace/Refcounted_Auto_Ptr.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
@@ -50,13 +51,22 @@ namespace TAO
   {
   }
 
+
+  void 
+  Synch_Twoway_Invocation::create_reply_dispatcher (TAO_Synch_Reply_Dispatcher *rd_p)
+  {
+    ACE_NEW (rd_p, TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
+                                          this->details_.reply_service_info ()));
+  }
+
   Invocation_Status
   Synch_Twoway_Invocation::remote_twoway (ACE_Time_Value *max_wait_time)
   {
     ACE_Countdown_Time countdown (max_wait_time);
 
-    TAO_Synch_Reply_Dispatcher rd (this->resolver_.stub ()->orb_core (),
-                                   this->details_.reply_service_info ());
+    TAO_Synch_Reply_Dispatcher *rd_p;
+    this->create_reply_dispatcher (rd_p);
+    ACE_Refcounted_Auto_Ptr<TAO_Synch_Reply_Dispatcher, ACE_Null_Mutex> rd(rd_p);
 
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
@@ -101,7 +111,7 @@ namespace TAO
         // preallocated reply dispatcher.
         TAO_Bind_Dispatcher_Guard dispatch_guard (
           this->details_.request_id (),
-          &rd,
+          rd.get (),
           transport->tms ());
 
         if (dispatch_guard.status () != 0)
@@ -163,7 +173,7 @@ namespace TAO
         // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
         // environment.
 
-        s = this->wait_for_reply (max_wait_time, rd, dispatch_guard);
+        s = this->wait_for_reply (max_wait_time, rd.get (), dispatch_guard);
 
 #if TAO_HAS_INTERCEPTORS == 1
         if (s == TAO_INVOKE_RESTART)
@@ -182,7 +192,7 @@ namespace TAO
         // What happens when the above call returns an error through
         // the return value? That would be bogus as per the contract
         // in the interface. The call violated the contract
-        s = this->check_reply_status (rd);
+        s = this->check_reply_status (rd.get ());
 
         // For some strategies one may want to release the transport
         // back to  cache after receiving the reply.
@@ -235,7 +245,7 @@ namespace TAO
 
   Invocation_Status
   Synch_Twoway_Invocation::wait_for_reply (ACE_Time_Value *max_wait_time,
-                                           TAO_Synch_Reply_Dispatcher &rd,
+                                           TAO_Synch_Reply_Dispatcher *rd,
                                            TAO_Bind_Dispatcher_Guard &bd)
   {
     /*
@@ -327,7 +337,7 @@ namespace TAO
   }
 
   Invocation_Status
-  Synch_Twoway_Invocation::check_reply_status (TAO_Synch_Reply_Dispatcher &rd)
+  Synch_Twoway_Invocation::check_reply_status (TAO_Synch_Reply_Dispatcher *rd)
   {
     /*
      * Precondition: We probably got a reply. <ACE_Thread::self> is
@@ -338,7 +348,7 @@ namespace TAO
      * returning a restart since that is what needed to be done by the
      * callee.
      */
-    TAO_InputCDR &cdr = rd.reply_cdr ();
+    TAO_InputCDR &cdr = rd->reply_cdr ();
 
     // Set the translators
     this->resolver_.transport ()->assign_translators (&cdr, 0);
@@ -348,7 +358,7 @@ namespace TAO
     // can be assumed that the reply body contains the details
     // required for further processing. All the other details should
     // have been handled in the reply dispatcher/protocol framework.
-    switch (rd.reply_status ())
+    switch (rd->reply_status ())
       {
       case GIOP::NO_EXCEPTION:
         {

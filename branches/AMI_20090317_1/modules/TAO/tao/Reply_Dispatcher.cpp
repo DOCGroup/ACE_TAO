@@ -19,6 +19,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Default Constructor.
 TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (void)
   : transport_ (0)
+  , db_ ()
+  , reply_cdr_ (&db_)
   , lock_ (0)
   , refcount_ (1)
   , is_reply_dispatched_ (false)
@@ -26,8 +28,6 @@ TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (void)
   , locate_reply_status_ (GIOP::UNKNOWN_OBJECT)
   , reply_status_ (GIOP::NO_EXCEPTION)
 {
-  this->db_ = 0;
-  this->reply_cdr_ = 0;
 }
 
 // Copy Constructor.
@@ -35,7 +35,20 @@ TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (
     TAO_ORB_Core *orb_core,
     ACE_Allocator *allocator
   )
-  : transport_ (0)
+  : db_ (sizeof buf_,
+         ACE_Message_Block::MB_DATA,
+         this->buf_,
+         orb_core->input_cdr_buffer_allocator (),
+         orb_core->locking_strategy (),
+         ACE_Message_Block::DONT_DELETE,
+         orb_core->input_cdr_dblock_allocator ())
+  ,  reply_cdr_ (&db_,
+                ACE_Message_Block::MB_DATA,
+                TAO_ENCAP_BYTE_ORDER,
+                TAO_DEF_GIOP_MAJOR,
+                TAO_DEF_GIOP_MINOR,
+                orb_core)
+  , transport_ (0)
   , lock_ (0)
   , refcount_ (1)
   , is_reply_dispatched_ (false)
@@ -44,21 +57,6 @@ TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (
   , reply_status_ (GIOP::NO_EXCEPTION)
 
 {
-    this->db_ = new ACE_Data_Block (sizeof buf_,
-                            ACE_Message_Block::MB_DATA,
-                            this->buf_,
-                            orb_core->input_cdr_buffer_allocator (),
-                            orb_core->locking_strategy (),
-                            ACE_Message_Block::DONT_DELETE,
-                            orb_core->input_cdr_dblock_allocator ());
-                    
-    this->reply_cdr_ = new TAO_InputCDR (db_,
-                            ACE_Message_Block::MB_DATA,
-                            TAO_ENCAP_BYTE_ORDER,
-                            TAO_DEF_GIOP_MAJOR,
-                            TAO_DEF_GIOP_MINOR,
-                            orb_core);
-
   // @@ NOTE: Need a seperate option for this..
   this->lock_ =
     orb_core->resource_factory ()->create_cached_connection_lock ();
@@ -73,10 +71,6 @@ TAO_Reply_Dispatcher::~TAO_Reply_Dispatcher (void)
 
   if (this->lock_)
     delete this->lock_;
-  if (this->db_)
-    delete this->db_;
-  if (this->reply_cdr_)
-    delete reply_cdr_;
 }
 
 void
