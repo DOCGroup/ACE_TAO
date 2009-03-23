@@ -1,3 +1,14 @@
+Mon Mar 23 19:38:59 UTC 2009  Joe Hoffert <jhoffert@dre.vanderbilt.edu>
+
+        * tests/Sequence_Iterators/Bounded_String.cpp:
+        * tests/Sequence_Iterators/StringSeq.cpp:
+        * tests/Sequence_Iterators/Unbounded_Objectref.cpp:
+        * tests/Sequence_Iterators/Unbounded_Value.cpp:
+        * tests/Sequence_Iterators/run_test.pl:
+          Removed extraneous comments, uncommented code that causes
+          crashes in Unbounded_Objectref, and added Perl preamble to
+          run_test.pl so it will run on Linux.
+
 Mon Mar 23 19:33:25 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/TransportCurrent/lib/Client_Request_Interceptor.cpp:
