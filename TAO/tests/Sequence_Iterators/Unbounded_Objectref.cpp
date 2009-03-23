@@ -1,7 +1,7 @@
 /**
  * @file Unbounded_Objectref.cpp
  *
- * @brief test for STL iterator behaviour of CORBA unbounded object reference 
+ * @brief test for STL iterator behaviour of CORBA unbounded object reference
  *        sequence
  *
  * $Id$
@@ -21,10 +21,10 @@
 
 #define FAIL_RETURN_IF(CONDITION) \
           if (CONDITION) \
-	    { \
+      { \
               ACE_DEBUG ((LM_ERROR, ACE_TEXT ("\tFailed at %N:%l\n"))); \
-	      return 1; \
-	    }
+        return 1; \
+      }
 
 typedef TAO::unbounded_object_reference_sequence<mock_reference, mock_reference_var> tested_sequence;
 
@@ -85,7 +85,7 @@ int test_sequence ()
   int a_diff = a_it - a.begin ();
   FAIL_RETURN_IF (a_diff != 1);
 
-  // test copy constructor 
+  // test copy constructor
   ITERATOR_T a_it1 (a_it);
   FAIL_RETURN_IF (a_it1 != a_it);
 
@@ -152,7 +152,7 @@ int test_sequence ()
              test.begin ());
 
   FAIL_RETURN_IF (test.length () != a.length ());
-  
+
   ITERATOR_T copytest_iter = test.begin ();
   for (ITERATOR_T copya_iter = a.begin ();
        copya_iter != a.end ();
@@ -234,7 +234,7 @@ int test_const_sequence ()
   int a_diff = a_it - a.begin ();
   FAIL_RETURN_IF (a_diff != 1);
 
-  // test copy constructor 
+  // test copy constructor
   ITERATOR_T a_it1 (a_it);
   FAIL_RETURN_IF (a_it1 != a_it);
 
@@ -320,7 +320,7 @@ int test_const_sequence ()
   std::copy (a.begin (),
              a.end (),
              std::ostream_iterator<tested_sequence::value_type> (ostream,
-							    "\n"));
+                  "\n"));
 
   FAIL_RETURN_IF (
     ostream.str ().compare ("elem0\nelem1\nelem2\nelem3\n") != 0);
@@ -345,7 +345,7 @@ int test_sequence_reverse ()
   // test for correct behaviour for empty sequence
 
   FAIL_RETURN_IF (a.begin() != a.end ());
-  
+
   // setup of an example sequence
   a.length (4);
 
@@ -390,7 +390,7 @@ int test_sequence_reverse ()
   int a_diff = a_it - a.rbegin ();
   FAIL_RETURN_IF (a_diff != 1);
 
-  // test copy constructor 
+  // test copy constructor
   REVERSE_ITERATOR_T a_it1 (a_it);
   FAIL_RETURN_IF (a_it1 != a_it);
 
@@ -473,7 +473,7 @@ int test_sequence_reverse ()
   std::copy (a.rbegin (),
              a.rend (),
              std::ostream_iterator<tested_sequence::value_type> (ostream,
-								  "\n"));
+                  "\n"));
 
   FAIL_RETURN_IF (
     ostream.str ().compare ("elem3\nelem2\nelem1\nelem0\n") != 0);
@@ -539,7 +539,7 @@ int test_const_sequence_reverse ()
   int a_diff = a_it - a.rbegin ();
   FAIL_RETURN_IF (a_diff != 1);
 
-  // test copy constructor 
+  // test copy constructor
   REVERSE_ITERATOR_T a_it1 (a_it);
   FAIL_RETURN_IF (a_it1 != a_it);
 
@@ -631,7 +631,7 @@ int test_const_sequence_reverse ()
   std::copy (a.rbegin (),
              a.rend (),
              std::ostream_iterator<tested_sequence::value_type> (ostream,
-								  "\n"));
+                  "\n"));
 
   FAIL_RETURN_IF (
     ostream.str ().compare ("elem3\nelem2\nelem1\nelem0\n") != 0);
@@ -669,7 +669,7 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
 
   // Test Const_Generic_Sequence_Reverse_Iterator with const sequence.
   status += test_const_sequence_reverse< tested_sequence::const_reverse_iterator> ();
-  
+
 #endif /* TAO_HAS_SEQUENCE_ITERATORS == 1 */
 
   return status;
