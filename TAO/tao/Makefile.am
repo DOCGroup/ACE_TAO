@@ -1229,6 +1229,7 @@ nobase_include_HEADERS = \
   MCAST_Parser.h \
   MCAST_Parser.inl \
   MMAP_Allocator.h \
+  MM_Sequence_Iterator_T.h \
   MProfile.h \
   MProfile.inl \
   Messaging_PolicyValue.pidl \

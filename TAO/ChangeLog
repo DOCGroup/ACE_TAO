@@ -1,3 +1,26 @@
+Mon Mar 23 09:55:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Bounded_Basic_String_Sequence_T.h
+        * tao/Bounded_Object_Reference_Sequence_T.h
+        * tao/Generic_Sequence_T.h
+        * tao/Makefile.am
+        * tao/MM_Sequence_Iterator_T.h
+        * tao/orbconf.h
+        * tao/tao.mpc
+        * tao/Unbounded_Basic_String_Sequence_T.h
+        * tao/Unbounded_Object_Reference_Sequence_T.h
+        * tao/Unbounded_Value_Sequence_T.h
+        * tests/Sequence_Iterators/*
+          Added support for STL iterators for the CORBA sequences. This
+          has been developed by Joe Hoffert <jhoffert at dre dot vanderbilt dot edu>
+          The code is not 100% finished yet, some last memory leaks and
+          portability issues are left. By merging this to svn head it
+          is much easier to test the code on all the platforms. This
+          feature is disabled by default, you have to define
+          TAO_HAS_SEQUENCE_ITERATORS to 1 in your config.h file to enable
+          this feature. Be aware that these STL iterators are a TAO specific
+          addition and are not part of the CORBA C++ mapping
+
 Sat Mar 21 17:53:17 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
