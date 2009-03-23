@@ -70,7 +70,7 @@ public:
 
   /// Construct a MM_Sequence_Iterator at position pos.
   MM_Sequence_Iterator (implementation_type *sequence,
-			 size_t pos = 0)
+       size_t pos = 0)
     : sequence_ (sequence),
     pos_ (pos)
       {
@@ -319,7 +319,7 @@ public:
 
   /// Copy constructor
   Const_MM_Sequence_Iterator (
-		Const_MM_Sequence_Iterator<SEQUENCE_T> const & rhs)
+    Const_MM_Sequence_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
     pos_ (rhs.pos_)
       {
@@ -327,7 +327,7 @@ public:
 
   /// Copy constructor initializing by a MM_Sequence_Iterator
   Const_MM_Sequence_Iterator (
-		MM_Sequence_Iterator<SEQUENCE_T> const & rhs)
+    MM_Sequence_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
     pos_ (rhs.pos_)
       {
@@ -522,7 +522,7 @@ public:
 
   /// Copy constructor
   MM_Sequence_Reverse_Iterator (
-	MM_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
+  MM_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
     pos_ (rhs.pos_)
       {
@@ -530,7 +530,7 @@ public:
 
   /// Assignment operator
   MM_Sequence_Reverse_Iterator & operator= (
-	MM_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
+  MM_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
     {
       MM_Sequence_Reverse_Iterator tmp(rhs);
       swap (tmp);
@@ -774,7 +774,7 @@ public:
 
   /// Copy constructor
   Const_MM_Sequence_Reverse_Iterator (
-	Const_MM_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
+  Const_MM_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
     pos_ (rhs.pos_)
       {
@@ -782,7 +782,7 @@ public:
 
   /// Copy constructor
   Const_MM_Sequence_Reverse_Iterator (
-	MM_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
+  MM_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
     pos_ (rhs.pos_)
       {
@@ -790,7 +790,7 @@ public:
 
   /// Assignment operator
   Const_MM_Sequence_Reverse_Iterator & operator= (
-	Const_MM_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
+  Const_MM_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
     {
       Const_MM_Sequence_Reverse_Iterator tmp(rhs);
       swap (tmp);
