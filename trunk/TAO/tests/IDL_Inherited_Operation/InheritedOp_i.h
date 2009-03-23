@@ -1,5 +1,9 @@
+// -*- C++ -*-
+// $Id:$
+
 #ifndef INHERITED_OP_I_H
 #define INHERITED_OP_I_H
+
 
 #include "InheritedOpS.h"
 
