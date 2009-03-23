@@ -462,9 +462,9 @@ public:
 
   /// Construct a Generic_Sequence_Iterator at position pos.
   Generic_Sequence_Iterator (generic_sequence<value_type,
-			                      allocation_traits,
-			                      element_traits> *sequence,
-			     size_t pos = 0)
+                            allocation_traits,
+                            element_traits> *sequence,
+           size_t pos = 0)
     : sequence_ (sequence),
     pos_ (pos)
       {
@@ -691,7 +691,7 @@ public:
   Const_Generic_Sequence_Iterator (const generic_sequence<value_type,
                                                           allocation_traits,
                                                           element_traits> *sequence,
-				   size_t pos = 0)
+           size_t pos = 0)
     : sequence_ (sequence),
     pos_ (pos)
       {
@@ -703,7 +703,7 @@ public:
 
   /// Copy constructor
   Const_Generic_Sequence_Iterator (
-		Const_Generic_Sequence_Iterator<SEQUENCE_T> const & rhs)
+    Const_Generic_Sequence_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
     pos_ (rhs.pos_)
       {
@@ -711,7 +711,7 @@ public:
 
   /// Copy constructor initializing by a Generic_Sequence_Iterator
   Const_Generic_Sequence_Iterator (
-		Generic_Sequence_Iterator<SEQUENCE_T> const & rhs)
+    Generic_Sequence_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
     pos_ (rhs.pos_)
       {
@@ -894,9 +894,9 @@ public:
 
   /// Construct a Generic_Sequence_Reverse_Iterator at position pos with before_start flag.
   Generic_Sequence_Reverse_Iterator (generic_sequence<value_type,
-				                      allocation_traits,
-				                      element_traits> *sequence,
-				     size_t pos)
+                              allocation_traits,
+                              element_traits> *sequence,
+             size_t pos)
     : sequence_ (sequence),
     pos_ (pos)
       {
@@ -904,7 +904,7 @@ public:
 
   /// Copy constructor
   Generic_Sequence_Reverse_Iterator (
-	Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
+  Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
     pos_ (rhs.pos_)
       {
@@ -912,7 +912,7 @@ public:
 
   /// Assignment operator
   Generic_Sequence_Reverse_Iterator & operator= (
-	Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
+  Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
     {
       Generic_Sequence_Reverse_Iterator tmp(rhs);
       swap (tmp);
@@ -1135,9 +1135,9 @@ public:
   /// Construct a Const_Generic_Sequence_Reverse_Iterator at position pos
   /// using a const sequence.
   Const_Generic_Sequence_Reverse_Iterator (const generic_sequence<value_type,
-					                          allocation_traits,
-					                          element_traits> *sequence,
-					   size_t pos)
+                                    allocation_traits,
+                                    element_traits> *sequence,
+             size_t pos)
     : sequence_ (sequence),
     pos_ (pos)
       {
@@ -1145,7 +1145,7 @@ public:
 
   /// Copy constructor
   Const_Generic_Sequence_Reverse_Iterator (
-	Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
+  Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
     pos_ (rhs.pos_)
       {
@@ -1153,7 +1153,7 @@ public:
 
   /// Copy constructor
   Const_Generic_Sequence_Reverse_Iterator (
-	Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
+  Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
     pos_ (rhs.pos_)
       {
@@ -1161,7 +1161,7 @@ public:
 
   /// Assignment operator
   Const_Generic_Sequence_Reverse_Iterator & operator= (
-	Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
+  Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
     {
       Const_Generic_Sequence_Reverse_Iterator tmp(rhs);
       swap (tmp);
