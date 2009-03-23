@@ -457,6 +457,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Message_Semantics.h
     Messaging_PolicyValueC.h
     Messaging_SyncScopeC.h
+    MM_Sequence_Iterator_T.h
     MMAP_Allocator.h
     MProfile.h
     Muxed_TMS.h
