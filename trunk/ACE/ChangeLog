@@ -1,3 +1,10 @@
+Mon Mar 23 23:11:49 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Sig_Handler.cpp: Fixed a silly bug in the use of
+          ACE_Fixed_Set_Iterator that was causing every other signal in
+          ACE_Sig_Handlers to be skipped.  Thanks to Andreas_Drescher <ace
+          at anticat dot ch> for reporting this bug.
+
 Sun Mar 22 19:21:06 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Acceptor.cpp (accept_svc_handler): Zapped the 'const' before
