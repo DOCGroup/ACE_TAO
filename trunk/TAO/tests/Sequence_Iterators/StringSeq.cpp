@@ -18,10 +18,10 @@
 
 #define FAIL_RETURN_IF(CONDITION) \
           if (CONDITION) \
-	    { \
+      { \
               ACE_DEBUG ((LM_ERROR, ACE_TEXT ("\tFailed at %N:%l\n"))); \
-	      return 1; \
-	    }
+        return 1; \
+      }
 
 //-----------------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ int test_sequence ()
   // test for correct behaviour for empty sequence
 
   FAIL_RETURN_IF (a.begin() != a.end ());
-  
+
   // setup of an example sequence
 
   const char * elem0_cstr = "elem0";
@@ -93,7 +93,7 @@ int test_sequence ()
   int a_diff = a_it - a.begin ();
   FAIL_RETURN_IF (a_diff != 1);
 
-  // test copy constructor 
+  // test copy constructor
   ITERATOR_T a_it1 (a_it);
   FAIL_RETURN_IF (a_it1 != a_it);
 
@@ -169,7 +169,7 @@ int test_sequence ()
              test.begin ());
 
   FAIL_RETURN_IF (test.length () != a.length ());
-  
+
   ITERATOR_T copytest_iter = test.begin ();
   for (ITERATOR_T copya_iter = a.begin ();
        copya_iter != a.end ();
@@ -210,7 +210,7 @@ int test_sequence_const_iterator ()
   // test for correct behaviour for empty sequence
 
   FAIL_RETURN_IF (a.begin() != a.end ());
-  
+
   // setup of an example sequence
 
   const char * elem0_cstr = "elem0";
@@ -256,7 +256,7 @@ int test_sequence_const_iterator ()
   int a_diff = a_it - a.begin ();
   FAIL_RETURN_IF (a_diff != 1);
 
-  // test copy constructor 
+  // test copy constructor
   ITERATOR_T a_it1 (a_it);
   FAIL_RETURN_IF (a_it1 != a_it);
 
@@ -323,7 +323,7 @@ int test_sequence_const_iterator ()
              test.begin ());
 
   FAIL_RETURN_IF (test.length () != a.length ());
-  
+
   ITERATOR_T copytest_iter = test.begin ();
   for (ITERATOR_T copya_iter = a.begin ();
        copya_iter != a.end ();
@@ -338,7 +338,7 @@ int test_sequence_const_iterator ()
   std::copy (a.begin (),
              a.end (),
              std::ostream_iterator<CORBA::StringSeq::const_value_type>(ostream,
-								       "\n"));
+                       "\n"));
 
   FAIL_RETURN_IF (
     ostream.str ().compare ("elem0\nelem1\nelem2\nelem3\n") != 0);
@@ -411,7 +411,7 @@ int test_const_sequence ()
   int a_diff = a_it - a.begin ();
   FAIL_RETURN_IF (a_diff != 1);
 
-  // test copy constructor 
+  // test copy constructor
   ITERATOR_T a_it1 (a_it);
   FAIL_RETURN_IF (a_it1 != a_it);
 
@@ -475,7 +475,7 @@ int test_const_sequence ()
              test.begin ());
 
   FAIL_RETURN_IF (test.length () != a.length ());
-  
+
   ITERATOR_T copytest_iter = test.begin ();
   for (ITERATOR_T copya_iter = a.begin ();
        copya_iter != a.end ();
@@ -514,7 +514,7 @@ int test_sequence_reverse ()
   // test for correct behaviour for empty sequence
 
   FAIL_RETURN_IF (a.begin() != a.end ());
-  
+
   // setup of an example sequence
 
   const char * elem0_cstr = "elem0";
@@ -561,7 +561,7 @@ int test_sequence_reverse ()
   int a_diff = a_it - a.rbegin ();
   FAIL_RETURN_IF (a_diff != 1);
 
-  // test copy constructor 
+  // test copy constructor
   REVERSE_ITERATOR_T a_it1 (a_it);
   FAIL_RETURN_IF (a_it1 != a_it);
 
@@ -671,7 +671,7 @@ int test_sequence_reverse_const_iterator ()
   // test for correct behaviour for empty sequence
 
   FAIL_RETURN_IF (a.begin() != a.end ());
-  
+
   // setup of an example sequence
 
   const char * elem0_cstr = "elem0";
@@ -714,7 +714,7 @@ int test_sequence_reverse_const_iterator ()
   int a_diff = a_it - a.rbegin ();
   FAIL_RETURN_IF (a_diff != 1);
 
-  // test copy constructor 
+  // test copy constructor
   REVERSE_ITERATOR_T a_it1 (a_it);
   FAIL_RETURN_IF (a_it1 != a_it);
 
@@ -852,7 +852,7 @@ int test_const_sequence_reverse ()
   int a_diff = a_it - a.rbegin ();
   FAIL_RETURN_IF (a_diff != 1);
 
-  // test copy constructor 
+  // test copy constructor
   REVERSE_ITERATOR_T a_it1 (a_it);
   FAIL_RETURN_IF (a_it1 != a_it);
 
@@ -954,7 +954,7 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
   // g++ seems to make the conversion from iterator to const_iterator
   // and Windows doesn't. Not sure why.
   // Test Const_Generic_Sequence_Iterator with non-const sequence.
-  status += test_sequence_const_iterator < 
+  status += test_sequence_const_iterator <
                ::CORBA::StringSeq::const_iterator> ();
 #endif
 
@@ -965,11 +965,11 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
   status += test_sequence_reverse< ::CORBA::StringSeq::reverse_iterator> ();
 
   // Test Const_Generic_Sequence_Reverse_Iterator with non-const sequence.
-  status += test_sequence_reverse_const_iterator< 
+  status += test_sequence_reverse_const_iterator<
                 ::CORBA::StringSeq::const_reverse_iterator> ();
 
   // Test Const_Generic_Sequence_Reverse_Iterator with const sequence.
-  status += test_const_sequence_reverse< 
+  status += test_const_sequence_reverse<
                 ::CORBA::StringSeq::const_reverse_iterator> ();
 #endif
 

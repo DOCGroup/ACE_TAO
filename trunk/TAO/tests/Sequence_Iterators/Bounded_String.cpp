@@ -21,10 +21,10 @@ typedef TAO::bounded_basic_string_sequence<char, 4> s_sequence;
 
 #define FAIL_RETURN_IF(CONDITION) \
           if (CONDITION) \
-	    { \
+      { \
               ACE_DEBUG ((LM_ERROR, ACE_TEXT ("\tFailed at %N:%l\n"))); \
-	      return 1; \
-	    }
+        return 1; \
+      }
 
 template <typename ITERATOR_T>
 int test_sequence ()
@@ -40,7 +40,7 @@ int test_sequence ()
   // test for correct behaviour for empty sequence
 
   FAIL_RETURN_IF (a.begin() != a.end ());
-  
+
   // setup of an example sequence
   a.length (4);
 
@@ -86,7 +86,7 @@ int test_sequence ()
   int a_diff = a_it - a.begin ();
   FAIL_RETURN_IF (a_diff != 1);
 
-  // test copy constructor 
+  // test copy constructor
   ITERATOR_T a_it1 (a_it);
   FAIL_RETURN_IF (a_it1 != a_it);
 
@@ -246,7 +246,7 @@ int test_const_sequence ()
   int a_diff = a_it - a.begin ();
   FAIL_RETURN_IF (a_diff != 1);
 
-  // test copy constructor 
+  // test copy constructor
   ITERATOR_T a_it1 (a_it);
   FAIL_RETURN_IF (a_it1 != a_it);
 
@@ -363,7 +363,7 @@ int test_sequence_reverse ()
   // test for correct behaviour for empty sequence
 
   FAIL_RETURN_IF (a.begin() != a.end ());
-  
+
   // setup of an example sequence
   a.length (4);
 
@@ -410,7 +410,7 @@ int test_sequence_reverse ()
   int a_diff = a_it - a.rbegin ();
   FAIL_RETURN_IF (a_diff != 1);
 
-  // test copy constructor 
+  // test copy constructor
   REVERSE_ITERATOR_T a_it1 (a_it);
   FAIL_RETURN_IF (a_it1 != a_it);
 
@@ -503,7 +503,7 @@ int test_sequence_reverse ()
              // JWH2 - I changed value_type to const_value_type. Is that
              // the correct approach?
              std::ostream_iterator<s_sequence::const_value_type> (ostream,
-								  "\n"));
+                  "\n"));
 
   FAIL_RETURN_IF (
     ostream.str ().compare ("elem3\nelem2\nelem1\nelem0\n") != 0);
@@ -570,7 +570,7 @@ int test_const_sequence_reverse ()
   int a_diff = a_it - a.rbegin ();
   FAIL_RETURN_IF (a_diff != 1);
 
-  // test copy constructor 
+  // test copy constructor
   REVERSE_ITERATOR_T a_it1 (a_it);
   FAIL_RETURN_IF (a_it1 != a_it);
 
@@ -663,7 +663,7 @@ int test_const_sequence_reverse ()
              // JWH2 - I changed value_type to const_value_type. Is that
              // the correct approach?
              std::ostream_iterator<s_sequence::const_value_type> (ostream,
-								  "\n"));
+                  "\n"));
 
   FAIL_RETURN_IF (
     ostream.str ().compare ("elem3\nelem2\nelem1\nelem0\n") != 0);
