@@ -32,22 +32,20 @@ namespace TAO
   {
   }
 
-  void 
-  LocateRequest_Invocation::create_reply_dispatcher (TAO_Synch_Reply_Dispatcher *rd_p)
-  {
-    ACE_NEW (rd_p,
-             TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
-                                          this->details_.reply_service_info ()));
-  }
-
-
   Invocation_Status
   LocateRequest_Invocation::invoke (ACE_Time_Value *max_wait_time)
   {
     ACE_Countdown_Time countdown (max_wait_time);
 
-    TAO_Synch_Reply_Dispatcher *rd_p;
-    this->create_reply_dispatcher (rd_p);
+    TAO_Synch_Reply_Dispatcher *rd_p = 0;
+    ACE_NEW_NORETURN (rd_p,
+             TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
+                                          this->details_.reply_service_info ()));
+    if (rd_p == 0)
+      {
+        throw ::CORBA::INTERNAL (TAO::VMCID, CORBA::COMPLETED_NO);
+      }
+
     ACE_Refcounted_Auto_Ptr<TAO_Synch_Reply_Dispatcher, ACE_Null_Mutex> rd(rd_p);
 
     // Register a reply dispatcher for this invocation. Use the
@@ -95,9 +93,9 @@ namespace TAO
     if (this->resolver_.transport ()->idle_after_send ())
       this->resolver_.transport_released ();
 
-    s = this->wait_for_reply (max_wait_time, rd.get (), dispatch_guard);
+    s = this->wait_for_reply (max_wait_time, *rd.get (), dispatch_guard);
 
-    s = this->check_reply (rd.get ());
+    s = this->check_reply (*rd.get ());
 
     // For some strategies one may want to release the transport
     // back to  cache after receiving the reply. If the idling is
@@ -109,14 +107,14 @@ namespace TAO
   }
 
   Invocation_Status
-  LocateRequest_Invocation::check_reply (TAO_Synch_Reply_Dispatcher *rd)
+  LocateRequest_Invocation::check_reply (TAO_Synch_Reply_Dispatcher &rd)
   {
-    TAO_InputCDR &cdr = rd->reply_cdr ();
+    TAO_InputCDR &cdr = rd.reply_cdr ();
 
     // Set the translators
     this->resolver_.transport ()->assign_translators (&cdr, 0);
 
-    switch (rd->locate_reply_status ())
+    switch (rd.locate_reply_status ())
       {
       case GIOP::OBJECT_HERE:
         break;

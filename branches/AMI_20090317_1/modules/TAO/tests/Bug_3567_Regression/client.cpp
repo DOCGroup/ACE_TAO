@@ -301,8 +301,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
-      handler._remove_ref ();
-      
       server->shutdown ();
      
       root_poa->destroy (1,  // ethernalize objects

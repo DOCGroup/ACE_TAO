@@ -37,13 +37,13 @@ TAO_Wait_On_Read::~TAO_Wait_On_Read (void)
 // Wait on the read operation.
 int
 TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
-                        TAO_Synch_Reply_Dispatcher *rd)
+                        TAO_Synch_Reply_Dispatcher &rd)
 {
   // Start the count down timer to account for the time spent in this
   // method.
   ACE_Countdown_Time countdown (max_wait_time);
 
-  rd->state_changed (TAO_LF_Event::LFS_ACTIVE,
+  rd.state_changed (TAO_LF_Event::LFS_ACTIVE,
                     this->transport_->orb_core ()->leader_follower ());
 
   // Do the same sort of looping that is done in other wait
@@ -56,7 +56,7 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
 
       // If we got our reply, no need to run the loop any
       // further.
-      if (!rd->keep_waiting ())
+      if (!rd.keep_waiting ())
         break;
 
       // @@ We are not checking for timeouts here...
@@ -66,12 +66,12 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
         break;
     }
 
-  if (rd->error_detected () == -1 || retval == -1)
+  if (rd.error_detected () == -1 || retval == -1)
     {
       this->transport_->close_connection ();
     }
 
-  if (rd->successful ())
+  if (rd.successful ())
      {
        TAO_ORB_Core * const oc =
          this->transport_->orb_core ();
@@ -109,7 +109,7 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
        return 0;
      }
 
-  if (rd->error_detected ())
+  if (rd.error_detected ())
     return -1;
 
   return 1;

@@ -62,12 +62,8 @@ namespace TAO
     Invocation_Status invoke (ACE_Time_Value *max_wait_time);
 
   private:
-
-    /// Helper method that creates a new Synch Reply Dispatcher.
-    void create_reply_dispatcher (TAO_Synch_Reply_Dispatcher *rd_p);
-
     /// Helper to check the reply status
-    Invocation_Status check_reply (TAO_Synch_Reply_Dispatcher *rd);
+    Invocation_Status check_reply (TAO_Synch_Reply_Dispatcher &rd);
   };
 }
 

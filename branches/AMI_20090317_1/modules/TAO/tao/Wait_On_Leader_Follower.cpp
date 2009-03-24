@@ -65,11 +65,11 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
 
 int
 TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
-                                   TAO_Synch_Reply_Dispatcher *rd)
+                                   TAO_Synch_Reply_Dispatcher &rd)
 {
   TAO_Leader_Follower &leader_follower =
     this->transport_->orb_core ()->leader_follower ();
-  return leader_follower.wait_for_event (rd, this->transport_, max_wait_time);
+  return leader_follower.wait_for_event (&rd, this->transport_, max_wait_time);
 }
 
 bool

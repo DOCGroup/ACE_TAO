@@ -50,7 +50,7 @@ public:
   // = Documented in TAO_Wait_Strategy.
   virtual int sending_request (TAO_ORB_Core *orb_core, int two_way);
   virtual int wait (ACE_Time_Value *max_wait_time,
-                    TAO_Synch_Reply_Dispatcher *rd);
+                    TAO_Synch_Reply_Dispatcher &rd);
   virtual int register_handler (void);
   virtual bool non_blocking (void) const;
   virtual bool can_process_upcalls (void) const;

@@ -25,7 +25,7 @@ TAO_Wait_On_Reactor::~TAO_Wait_On_Reactor (void)
 
 int
 TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
-                           TAO_Synch_Reply_Dispatcher *rd)
+                           TAO_Synch_Reply_Dispatcher &rd)
 {
   // Start the count down timer to account for the time spent in this
   // method.
@@ -45,7 +45,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
 
       // If we got our reply, no need to run the event loop any
       // further.
-      if (!rd->keep_waiting ())
+      if (!rd.keep_waiting ())
         {
           break;
         }
@@ -67,7 +67,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
       // Otherwise, keep going...
     }
 
-  if (result == -1 || rd->error_detected ())
+  if (result == -1 || rd.error_detected ())
     {
       return -1;
     }
@@ -75,7 +75,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
   // Return an error if there was a problem receiving the reply.
   if (max_wait_time != 0)
     {
-      if (rd->successful () && *max_wait_time == ACE_Time_Value::zero)
+      if (rd.successful () && *max_wait_time == ACE_Time_Value::zero)
         {
           result = -1;
           errno = ETIME;
@@ -85,7 +85,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
     {
       result = 0;
 
-      if (rd->error_detected ())
+      if (rd.error_detected ())
         {
           result = -1;
         }
