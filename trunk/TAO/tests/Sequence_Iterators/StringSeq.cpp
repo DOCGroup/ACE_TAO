@@ -25,6 +25,8 @@
 
 //-----------------------------------------------------------------------------
 
+#if defined TAO_HAS_SEQUENCE_ITERATORS && TAO_HAS_SEQUENCE_ITERATORS == 1
+
 template <typename ITERATOR_T>
 int test_sequence ()
 {
@@ -920,6 +922,8 @@ int test_const_sequence_reverse ()
 
   return 0;
 }
+
+#endif
 
 //-----------------------------------------------------------------------------
 
