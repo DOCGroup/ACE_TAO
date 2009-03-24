@@ -1142,25 +1142,6 @@ ACE_OS::cleanup_tss (const u_int main_thread)
 /*****************************************************************************/
 
 #if defined (ACE_LACKS_COND_T)
-// NOTE: The ACE_OS::cond_* functions for some non-Unix platforms are
-// defined here either because they're too big to be inlined, or
-// to avoid use before definition if they were inline.
-
-// @@ The following functions could be inlined if i could figure where
-// to put it among the #ifdefs!
-int
-ACE_OS::condattr_init (ACE_condattr_t &attributes, int type)
-{
-  attributes.type = type;
-  return 0;
-}
-
-int
-ACE_OS::condattr_destroy (ACE_condattr_t &)
-{
-  return 0;
-}
-
 int
 ACE_OS::cond_broadcast (ACE_cond_t *cv)
 {
@@ -1318,10 +1299,10 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
   // value is not in an inconsistent internal state while being
   // updated by another thread.
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
-  int have_waiters = cv->waiters_ > 0;
+  bool have_waiters = cv->waiters_ > 0;
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
-  if (have_waiters != 0)
+  if (have_waiters)
     return ACE_OS::sema_post (&cv->sema_);
   else
     return 0; // No-op
@@ -1372,7 +1353,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   // We're ready to return, so there's one less waiter.
   --cv->waiters_;
 
-  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
+  bool const last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
 
   // Release the lock so that other collaborating threads can make
   // progress.
@@ -1439,16 +1420,14 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   // Prevent race conditions on the <waiters_> count.
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
-  cv->waiters_++;
+  ++cv->waiters_;
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   int result = 0;
   ACE_Errno_Guard error (errno, 0);
-  int msec_timeout;
+  int msec_timeout = 0;
 
-  if (*timeout == ACE_Time_Value::zero)
-    msec_timeout = 0; // Do a "poll."
-  else
+  if (timeout != 0 && *timeout != ACE_Time_Value::zero)
     {
       // Note that we must convert between absolute time (which is
       // passed as a parameter) and relative time (which is what
@@ -1457,9 +1436,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
       // Watchout for situations where a context switch has caused the
       // current time to be > the timeout.
-      if (relative_time < ACE_Time_Value::zero)
-        msec_timeout = 0;
-      else
+      if (relative_time > ACE_Time_Value::zero)
         msec_timeout = relative_time.msec ();
     }
 
@@ -1502,9 +1479,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   // Reacquire lock to avoid race conditions.
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
-  cv->waiters_--;
+  --cv->waiters_;
 
-  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
+  bool const last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
 
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
@@ -1587,8 +1564,22 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_THREADS */
 }
+#else
+int
+ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
+{
+  ACE_condattr_t attributes;
+  if (ACE_OS::condattr_init (attributes, type) == 0
+      && ACE_OS::cond_init (cv, attributes, name, arg) == 0)
+    {
+      (void) ACE_OS::condattr_destroy (attributes);
+      return 0;
+    }
+  return -1;
+}
+#endif /* ACE_LACKS_COND_T */
 
-# if defined (ACE_HAS_WTHREADS)
+#if defined (ACE_WIN32) && defined (ACE_HAS_WTHREADS)
 int
 ACE_OS::cond_timedwait (ACE_cond_t *cv,
                         ACE_thread_mutex_t *external_mutex,
@@ -1600,18 +1591,31 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   if (timeout == 0)
     return ACE_OS::cond_wait (cv, external_mutex);
 
+#   if defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
+  int msec_timeout = 0;
+  int result = 0;
+
+  ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
+  // Watchout for situations where a context switch has caused the
+  // current time to be > the timeout.
+  if (relative_time > ACE_Time_Value::zero)
+     msec_timeout = relative_time.msec ();
+
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::SleepConditionVariableCS (cv, external_mutex, msec_timeout),
+                                result),
+              int, -1, result);
+  return result;
+#else
   // Prevent race conditions on the <waiters_> count.
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
-  cv->waiters_++;
+  ++cv->waiters_;
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   int result = 0;
   int error = 0;
-  int msec_timeout;
+  int msec_timeout = 0;
 
-  if (*timeout == ACE_Time_Value::zero)
-    msec_timeout = 0; // Do a "poll."
-  else
+  if (timeout != 0 && *timeout != ACE_Time_Value::zero)
     {
       // Note that we must convert between absolute time (which is
       // passed as a parameter) and relative time (which is what
@@ -1620,9 +1624,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
       // Watchout for situations where a context switch has caused the
       // current time to be > the timeout.
-      if (relative_time < ACE_Time_Value::zero)
-        msec_timeout = 0;
-      else
+      if (relative_time > ACE_Time_Value::zero)
         msec_timeout = relative_time.msec ();
     }
 
@@ -1648,9 +1650,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // Reacquire lock to avoid race conditions.
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
 
-  cv->waiters_--;
+  --cv->waiters_;
 
-  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
+  bool const last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
 
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
@@ -1677,6 +1679,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   ACE_OS::thread_mutex_lock (external_mutex);
   errno = error;
   return result;
+#   endif
 #   else
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_THREADS */
@@ -1688,8 +1691,13 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 {
   ACE_OS_TRACE ("ACE_OS::cond_wait");
 #   if defined (ACE_HAS_THREADS)
+#   if defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
+  int result;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SleepConditionVariableCS (cv, external_mutex, INFINITE), result),
+                     int, -1);
+#else
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
-  cv->waiters_++;
+  ++cv->waiters_;
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   int result = 0;
@@ -1720,7 +1728,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
   cv->waiters_--;
 
-  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
+  bool const last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
 
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
@@ -1747,25 +1755,12 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   // Reset errno in case mutex_lock() also fails...
   errno = error;
   return result;
+#endif
 #   else
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_THREADS */
 }
 # endif /* ACE_HAS_WTHREADS */
-#else
-int
-ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
-{
-  ACE_condattr_t attributes;
-  if (ACE_OS::condattr_init (attributes, type) == 0
-      && ACE_OS::cond_init (cv, attributes, name, arg) == 0)
-    {
-      (void) ACE_OS::condattr_destroy (attributes);
-      return 0;
-    }
-  return -1;
-}
-#endif /* ACE_LACKS_COND_T */
 
 /*****************************************************************************/
 // CONDITIONS END
@@ -2987,7 +2982,7 @@ ACE_OS::event_timedwait (ACE_event_t *event,
       // WaitForSingleObjects() expects).
       // <timeout> parameter is given in absolute or relative value
       // depending on parameter <use_absolute_time>.
-      int msec_timeout;
+      int msec_timeout = 0;
       if (use_absolute_time)
         {
           // Time is given in absolute time, we should use
@@ -2997,9 +2992,7 @@ ACE_OS::event_timedwait (ACE_event_t *event,
           // Watchout for situations where a context switch has caused
           // the current time to be > the timeout.  Thanks to Norbert
           // Rapp <NRapp@nexus-informatics.de> for pointing this.
-          if (relative_time < ACE_Time_Value::zero)
-            msec_timeout = 0;
-          else
+          if (relative_time > ACE_Time_Value::zero)
             msec_timeout = relative_time.msec ();
         }
       else

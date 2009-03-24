@@ -92,7 +92,7 @@ void ACE_OS::checkUnicodeFormat (FILE* fp)
       size_t const numRead =
         ACE_OS::fread(&first_two_bytes, sizeof (first_two_bytes), 1, fp);
 
-      if (numRead < 2)
+      if (numRead <= 1)
         {
           if ((first_two_bytes != 0xFFFE) && // not a small endian Unicode file
               (first_two_bytes != 0xFEFF))   // not a big endian Unicode file

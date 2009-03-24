@@ -1,5 +1,23 @@
 Tue Mar 24 15:16:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * ace/config-win32-common.h:
+          When the user defines ACE_HAS_WTHREADS_CONDITION_VARIABLE we don't
+          define ACE_LACKS_COND_T
+
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.inl:
+          Windows Vista/Server 2008 and newer do have native support for
+          condition variables. Added a compilation time flag
+          ACE_HAS_WTHREADS_CONDITION_VARIABLE, when this is defined ACE will
+          use the native Windows condition api's. Did some unrelated const,
+          performance, and code improvements.
+
+        * ace/OS_NS_stdio.cpp (checkUnicodeFormat):
+          Slightly change the check for the return value
+
+Tue Mar 24 15:16:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * ace/Timer_Heap_T.cpp:
         * ace/Timer_Queue_Adapters.cpp:
           Const changes
@@ -17,7 +35,7 @@ Tue Mar 24 11:45:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 Tue Mar 24 11:38:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.cpp (checkUnicodeFormat):
-          Fixed a bug that the file pointer wasn't set toe the start of the
+          Fixed a bug that the file pointer wasn't set to the start of the
           file when the file is just 1 byte large. This fixes bugzilla
           3532, thanks to Martin Gaus <gaus at gmx dot de> for reporting
           this.
