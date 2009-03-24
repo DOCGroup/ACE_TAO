@@ -688,7 +688,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::schedule_i (
   if ((this->cur_size_ + this->cur_limbo_) < this->max_size_)
     {
       // Obtain the next unique sequence number.
-      long timer_id = this->timer_id ();
+      long const timer_id = this->timer_id ();
 
       // Obtain the memory to the new node.
       ACE_Timer_Node_T<TYPE> *temp = 0;

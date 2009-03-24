@@ -1,7 +1,13 @@
+Tue Mar 24 15:16:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Heap_T.cpp:
+        * ace/Timer_Queue_Adapters.cpp:
+          Const changes
+
 Tue Mar 24 13:43:14 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Sig_Handlers_Test.cpp: Added a new test to ensure that the
-          ACE_Sig_Handlers class is working properly. 
+          ACE_Sig_Handlers class is working properly.
 
 Tue Mar 24 11:45:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
