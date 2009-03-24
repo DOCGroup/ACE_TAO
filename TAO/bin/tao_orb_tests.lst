@@ -311,6 +311,7 @@ TAO/tests/Big_Request_Muxing/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E
 TAO/tests/Oneways_Invoking_Twoways/run_test.pl: !ST !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Queued_Message_Test/run_test.pl:
 TAO/tests/DLL_ORB/run_test.pl: !ST !STATIC !LabVIEW_RT !WinCE !FUZZ
+TAO/tests/IDL_Inherited_Operation/run_test.pl
 TAO/tests/InterOp-Naming/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Multiple/run_test.pl: !SUNCC5_1 !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Exposed_Policies/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ
@@ -353,8 +354,7 @@ TAO/tests/UNKNOWN_Exception/run_test.pl:
 TAO/tests/Native_Exceptions/run_test.pl:
 TAO/tests/Servant_To_Reference_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/Sequence_Iterators/run_test.pl:
-TAO/tests/Sequence_Unit_Tests/run_test.pl -noboost: !LabVIEW_RT !WinCE !FUZZ
-TAO/tests/Sequence_Unit_Tests/run_test.pl -boost: BOOST !LabVIEW_RT !WinCE !FUZZ
+TAO/tests/Sequence_Unit_Tests/run_test.pl:
 TAO/tests/Typedef_String_Array/run_test.pl:
 TAO/tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl: !CORBA_E_MICRO !LabVIEW_RT !WinCE !FUZZ !VxWorks_RTP
 TAO/tests/CodeSets/simple/run_test.pl: !GIOP10 !STATIC !LabVIEW_RT !WinCE !FUZZ

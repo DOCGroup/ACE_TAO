@@ -13,9 +13,7 @@
 
 #include "ace/OS_NS_string.h"
 
-#include <boost/test/unit_test.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
+#include "test_macros.h"
 
 #include <sstream>
 
@@ -116,24 +114,25 @@ struct string_sequence_tester
   typedef typename tested_sequence::element_traits tested_element_traits;
   typedef typename tested_sequence::allocation_traits tested_allocation_traits;
 
-  void test_default_constructor()
+  int test_default_constructor()
   {
     expected_calls a(tested_allocation_traits::allocbuf_calls);
     expected_calls f(tested_allocation_traits::freebuf_calls);
     {
       tested_sequence x;
 
-      BOOST_CHECK_EQUAL(
+      CHECK_EQUAL(
           CORBA::ULong(tested_allocation_traits::default_maximum()),
           x.maximum());
-      BOOST_CHECK_EQUAL(CORBA::ULong(0), x.length());
-      BOOST_CHECK_EQUAL(bounded_, x.release());
+      CHECK_EQUAL(CORBA::ULong(0), x.length());
+      CHECK_EQUAL(bounded_, x.release());
     }
-    BOOST_CHECK_MESSAGE(a.expect(0), a);
-    BOOST_CHECK_MESSAGE(f.expect(bounded_ ? 1 : 0), f);
+    FAIL_RETURN_IF_NOT(a.expect(0), a);
+    FAIL_RETURN_IF_NOT(f.expect(bounded_ ? 1 : 0), f);
+    return 0;
   }
 
-  void test_copy_constructor_from_default()
+  int test_copy_constructor_from_default()
   {
     expected_calls a(tested_allocation_traits::allocbuf_calls);
     expected_calls f(tested_allocation_traits::freebuf_calls);
@@ -145,30 +144,32 @@ struct string_sequence_tester
       a.reset(); f.reset(); i.reset(); d.reset();
 
       tested_sequence y(x);
-      BOOST_CHECK_MESSAGE(a.expect(bounded_ ? 1 : 0), a);
-      BOOST_CHECK_MESSAGE(f.expect(0), f);
-      BOOST_CHECK_MESSAGE(i.expect(0), i);
-      BOOST_CHECK_MESSAGE(d.expect(0), d);
+      FAIL_RETURN_IF_NOT(a.expect(bounded_ ? 1 : 0), a);
+      FAIL_RETURN_IF_NOT(f.expect(0), f);
+      FAIL_RETURN_IF_NOT(i.expect(0), i);
+      FAIL_RETURN_IF_NOT(d.expect(0), d);
 
-      BOOST_CHECK_EQUAL(x.maximum(), y.maximum());
-      BOOST_CHECK_EQUAL(x.length(), y.length());
-      BOOST_CHECK_EQUAL(x.release(), y.release());
+      CHECK_EQUAL(x.maximum(), y.maximum());
+      CHECK_EQUAL(x.length(), y.length());
+      CHECK_EQUAL(x.release(), y.release());
     }
-    BOOST_CHECK_MESSAGE(f.expect(bounded_ ? 2 : 0), f);
+    FAIL_RETURN_IF_NOT(f.expect(bounded_ ? 2 : 0), f);
+    return 0;
   }
 
-  void test_index_accessor()
+  int test_index_accessor()
   {
     tested_sequence x;
     x.length(8);
 
     tested_sequence const & y = x;
     character_type const * t = y[4];
-    BOOST_CHECK_MESSAGE(helper::compare_empty(t),
+    FAIL_RETURN_IF_NOT(helper::compare_empty(t),
         "Unexpected string value " << t);
+    return 0;
   }
 
-  void test_index_modifier()
+  int test_index_modifier()
   {
     tested_sequence x;
     x.length(8);
@@ -180,16 +181,17 @@ struct string_sequence_tester
 
     character_type const * t = y[4];
 
-    BOOST_CHECK_MESSAGE(ACE_OS::strcmp(text, x[4]) == 0,
+    FAIL_RETURN_IF_NOT(ACE_OS::strcmp(text, x[4]) == 0,
         "Mismatched values expected=" << text
         << ", got=" << x[4]);
-    BOOST_CHECK_MESSAGE(ACE_OS::strcmp(text, y[4]) == 0,
+    FAIL_RETURN_IF_NOT(ACE_OS::strcmp(text, y[4]) == 0,
         "Mismatched values expected=" << text
         << ", got=" << y[4]);
-    BOOST_CHECK(text != t);
+    CHECK(text != t);
+    return 0;
   }
 
-  void test_index_checking()
+  int test_index_checking()
   {
     tested_sequence x;
     x.length(8);
@@ -197,11 +199,12 @@ struct string_sequence_tester
     tested_sequence const & y = x;
     character_type const * lhs = 0;
     character_type const * rhs = 0;
-    BOOST_CHECK_THROW(lhs = y[32], std::range_error);
-    BOOST_CHECK_THROW(x[32] = rhs, std::range_error);
+    CHECK_THROW(lhs = y[32], std::range_error);
+    CHECK_THROW(x[32] = rhs, std::range_error);
+    return 0;
   }
 
-  void test_copy_constructor_values()
+  int test_copy_constructor_values()
   {
     tested_sequence a;
     a.length(16);
@@ -216,22 +219,23 @@ struct string_sequence_tester
     CORBA::ULong max;
     {
       tested_sequence b(a);
-      BOOST_CHECK_MESSAGE(d.expect(16), d);
+      FAIL_RETURN_IF_NOT(d.expect(16), d);
       max = b.maximum();
 
-      BOOST_CHECK_EQUAL(a.length(), b.length());
+      CHECK_EQUAL(a.length(), b.length());
       for(CORBA::ULong i = 0; i != a.length(); ++i)
       {
-        BOOST_CHECK_MESSAGE(ACE_OS::strcmp(a[i], b[i]) == 0,
+        FAIL_RETURN_IF_NOT(ACE_OS::strcmp(a[i], b[i]) == 0,
             "Mismatched elements at index=" << i
             << ", a=" << a[i]
             << ", b=" << b[i]);
       }
     }
-    BOOST_CHECK_MESSAGE(r.expect(max), r);
+    FAIL_RETURN_IF_NOT(r.expect(max), r);
+    return 0;
   }
 
-  void test_freebuf_releases_elements()
+  int test_freebuf_releases_elements()
   {
     value_type * buffer = tested_sequence::allocbuf(32);
     for(int i = 0; i != 32; ++i)
@@ -244,38 +248,40 @@ struct string_sequence_tester
 
     tested_sequence::freebuf(buffer);
 
-    BOOST_CHECK_MESSAGE(f.expect(1), f);
-    BOOST_CHECK_MESSAGE(r.expect(32), r);
+    FAIL_RETURN_IF_NOT(f.expect(1), f);
+    FAIL_RETURN_IF_NOT(r.expect(32), r);
+    return 0;
   }
 
-  void test_assignment_from_default()
+  int test_assignment_from_default()
   {
     expected_calls a(tested_allocation_traits::allocbuf_calls);
     expected_calls f(tested_allocation_traits::freebuf_calls);
 
     {
       tested_sequence x;
-      BOOST_CHECK_MESSAGE(a.expect(0), a);
-      BOOST_CHECK_EQUAL(
+      FAIL_RETURN_IF_NOT(a.expect(0), a);
+      CHECK_EQUAL(
           CORBA::ULong(tested_allocation_traits::default_maximum()),
           x.maximum());
-      BOOST_CHECK_EQUAL(CORBA::ULong(0), x.length());
-      BOOST_CHECK_EQUAL(bounded_ , x.release());
+      CHECK_EQUAL(CORBA::ULong(0), x.length());
+      CHECK_EQUAL(bounded_ , x.release());
 
       tested_sequence y;
-      BOOST_CHECK_MESSAGE(a.expect(0), a);
+      FAIL_RETURN_IF_NOT(a.expect(0), a);
 
       y = x;
-      BOOST_CHECK_MESSAGE(a.expect(bounded_ ? 1 : 0), a);
-      BOOST_CHECK_MESSAGE(f.expect(bounded_ ? 1 : 0), f);
-      BOOST_CHECK_EQUAL(x.maximum(), y.maximum());
-      BOOST_CHECK_EQUAL(x.length(), y.length());
-      BOOST_CHECK_EQUAL(x.release(), y.release());
+      FAIL_RETURN_IF_NOT(a.expect(bounded_ ? 1 : 0), a);
+      FAIL_RETURN_IF_NOT(f.expect(bounded_ ? 1 : 0), f);
+      CHECK_EQUAL(x.maximum(), y.maximum());
+      CHECK_EQUAL(x.length(), y.length());
+      CHECK_EQUAL(x.release(), y.release());
     }
-    BOOST_CHECK_MESSAGE(f.expect(bounded_ ? 2 : 0), f);
+    FAIL_RETURN_IF_NOT(f.expect(bounded_ ? 2 : 0), f);
+    return 0;
   }
 
-  void test_assignment_values()
+  int test_assignment_values()
   {
     tested_sequence a;
     a.length(16);
@@ -290,24 +296,25 @@ struct string_sequence_tester
     {
       tested_sequence b;
       b = a;
-      BOOST_CHECK_MESSAGE(d.expect(16), d);
+      FAIL_RETURN_IF_NOT(d.expect(16), d);
 
       max = b.maximum();
 
-      BOOST_CHECK_EQUAL(a.maximum(), b.maximum());
-      BOOST_CHECK_EQUAL(a.length(),  b.length());
-      BOOST_CHECK_EQUAL(a.release(), b.release());
+      CHECK_EQUAL(a.maximum(), b.maximum());
+      CHECK_EQUAL(a.length(),  b.length());
+      CHECK_EQUAL(a.release(), b.release());
       for(CORBA::ULong i = 0; i != a.length(); ++i)
       {
-        BOOST_CHECK_MESSAGE(ACE_OS::strcmp(a[i], b[i]) == 0,
+        FAIL_RETURN_IF_NOT(ACE_OS::strcmp(a[i], b[i]) == 0,
             "Mismatched elements at index " << i);
       }
       r.reset();
     }
-    BOOST_CHECK_MESSAGE(r.expect(max), r);
+    FAIL_RETURN_IF_NOT(r.expect(max), r);
+    return 0;
   }
 
-  void test_exception_in_copy_constructor()
+  int test_exception_in_copy_constructor()
   {
     expected_calls f(tested_allocation_traits::freebuf_calls);
     {
@@ -316,13 +323,14 @@ struct string_sequence_tester
 
       expected_calls a(tested_allocation_traits::allocbuf_calls);
       tested_allocation_traits::allocbuf_calls.failure_countdown(1);
-      BOOST_CHECK_THROW(tested_sequence y(x), testing_exception);
-      BOOST_CHECK_MESSAGE(a.expect(1), a);
+      CHECK_THROW(tested_sequence y(x), testing_exception);
+      FAIL_RETURN_IF_NOT(a.expect(1), a);
     }
-    BOOST_CHECK_MESSAGE(f.expect(1), f);
+    FAIL_RETURN_IF_NOT(f.expect(1), f);
+    return 0;
   }
 
-  void test_exception_in_assignment()
+  int test_exception_in_assignment()
   {
     expected_calls f(tested_allocation_traits::freebuf_calls);
     {
@@ -333,17 +341,18 @@ struct string_sequence_tester
       expected_calls a(tested_allocation_traits::allocbuf_calls);
       f.reset();
       tested_allocation_traits::allocbuf_calls.failure_countdown(1);
-      BOOST_CHECK_THROW(y = x, testing_exception);
+      CHECK_THROW(y = x, testing_exception);
 
-      BOOST_CHECK_MESSAGE(a.expect(1), a);
-      BOOST_CHECK_MESSAGE(f.expect(0), f);
+      FAIL_RETURN_IF_NOT(a.expect(1), a);
+      FAIL_RETURN_IF_NOT(f.expect(0), f);
 
-      BOOST_CHECK_EQUAL(CORBA::ULong(3), y.length());
+      CHECK_EQUAL(CORBA::ULong(3), y.length());
     }
-    BOOST_CHECK_MESSAGE(f.expect(2), f);
+    FAIL_RETURN_IF_NOT(f.expect(2), f);
+    return 0;
   }
 
-  void test_duplicate_exception_in_copy_constructor()
+  int test_duplicate_exception_in_copy_constructor()
   {
     expected_calls f(tested_allocation_traits::freebuf_calls);
     {
@@ -361,16 +370,17 @@ struct string_sequence_tester
 
       tested_element_traits::duplicate_calls.failure_countdown(4);
 
-      BOOST_CHECK_THROW(tested_sequence y(x), testing_exception);
-      BOOST_CHECK_MESSAGE(a.expect(1), a);
-      BOOST_CHECK_MESSAGE(f.expect(1), f);
-      BOOST_CHECK_MESSAGE(d.expect(4), d);
-      BOOST_CHECK_MESSAGE(r.expect(x.maximum()), r);
+      CHECK_THROW(tested_sequence y(x), testing_exception);
+      FAIL_RETURN_IF_NOT(a.expect(1), a);
+      FAIL_RETURN_IF_NOT(f.expect(1), f);
+      FAIL_RETURN_IF_NOT(d.expect(4), d);
+      FAIL_RETURN_IF_NOT(r.expect(x.maximum()), r);
     }
-    BOOST_CHECK_MESSAGE(f.expect(1), f);
+    FAIL_RETURN_IF_NOT(f.expect(1), f);
+    return 0;
   }
 
-  void test_duplicate_exception_in_assignment()
+  int test_duplicate_exception_in_assignment()
   {
     expected_calls f(tested_allocation_traits::freebuf_calls);
     {
@@ -399,27 +409,28 @@ struct string_sequence_tester
         r.reset();
         f.reset();
         tested_element_traits::duplicate_calls.failure_countdown(4);
-        BOOST_CHECK_THROW(y = x, testing_exception);
-        BOOST_CHECK_MESSAGE(a.expect(1), a);
-        BOOST_CHECK_MESSAGE(f.expect(1), f);
-        BOOST_CHECK_MESSAGE(d.expect(4), d);
-        BOOST_CHECK_MESSAGE(r.expect(x.maximum()), r);
+        CHECK_THROW(y = x, testing_exception);
+        FAIL_RETURN_IF_NOT(a.expect(1), a);
+        FAIL_RETURN_IF_NOT(f.expect(1), f);
+        FAIL_RETURN_IF_NOT(d.expect(4), d);
+        FAIL_RETURN_IF_NOT(r.expect(x.maximum()), r);
 
-        BOOST_CHECK_EQUAL(CORBA::ULong(4), y.length());
+        CHECK_EQUAL(CORBA::ULong(4), y.length());
         for(CORBA::ULong i = 0; i != 4; ++i)
         {
-          BOOST_CHECK_MESSAGE(
+          FAIL_RETURN_IF_NOT(
               helper::compare_test_string(y[i]),
               "Mismatch in element " << i
               << ", got=" << y[i]);
         }
       }
-      BOOST_CHECK_MESSAGE(f.expect(1), f);
+      FAIL_RETURN_IF_NOT(f.expect(1), f);
     }
-    BOOST_CHECK_MESSAGE(f.expect(1), f);
+    FAIL_RETURN_IF_NOT(f.expect(1), f);
+    return 0;
   }
 
-  void test_get_buffer_const()
+  int test_get_buffer_const()
   {
     tested_sequence a; a.length(8);
     tested_sequence const & b = a;
@@ -427,79 +438,39 @@ struct string_sequence_tester
     const_value_type const * buffer = b.get_buffer();
     a[0] = helper::test_string();
 
-    BOOST_CHECK_EQUAL(buffer, b.get_buffer());
-    BOOST_CHECK_MESSAGE(ACE_OS::strcmp(a[0], buffer[0]) == 0,
+    CHECK_EQUAL(buffer, b.get_buffer());
+    FAIL_RETURN_IF_NOT(ACE_OS::strcmp(a[0], buffer[0]) == 0,
         "Mismatched elements a[0]=" << a[0]
         << ", buffer[0]=" << buffer[0]);
+    return 0;
   }
 
-  void add_all(boost::unit_test_framework::test_suite * ts)
+  int test_all ()
   {
-    boost::shared_ptr<string_sequence_tester> shared_this(self_);
+  int status=0;
+  status += this->test_default_constructor();
+  status += this->test_copy_constructor_from_default();
+  status += this->test_index_accessor();
+  status += this->test_index_modifier();
+  status += this->test_index_checking();
+  status += this->test_copy_constructor_values();
+  status += this->test_freebuf_releases_elements();
+  status += this->test_assignment_from_default();
+  status += this->test_assignment_values();
+  status += this->test_exception_in_copy_constructor();
+  status += this->test_exception_in_assignment();
+  status += this->test_duplicate_exception_in_copy_constructor();
+  status += this->test_duplicate_exception_in_assignment();
+  status += this->test_get_buffer_const();
 
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &string_sequence_tester::test_default_constructor,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &string_sequence_tester::test_copy_constructor_from_default,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &string_sequence_tester::test_index_accessor,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &string_sequence_tester::test_index_modifier,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &string_sequence_tester::test_index_checking,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &string_sequence_tester::test_copy_constructor_values,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &string_sequence_tester::test_freebuf_releases_elements,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &string_sequence_tester::test_assignment_from_default,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &string_sequence_tester::test_assignment_values,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &string_sequence_tester::test_exception_in_copy_constructor,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &string_sequence_tester::test_exception_in_assignment,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &string_sequence_tester::test_duplicate_exception_in_copy_constructor,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &string_sequence_tester::test_duplicate_exception_in_assignment,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &string_sequence_tester::test_get_buffer_const,
-                shared_this));
-
-
+  return status;
   }
-
-  static boost::shared_ptr<string_sequence_tester> allocate(bool bounded = false)
-  {
-    boost::shared_ptr<string_sequence_tester> ptr(
-        new string_sequence_tester(bounded));
-    ptr->self_ = ptr;
-
-    return ptr;
-  }
-
-private:
   string_sequence_tester(bool bounded)
     : bounded_(bounded)
   {}
 
+private:
   bool bounded_;
-
-  boost::weak_ptr<string_sequence_tester> self_;
 };
 
 #endif // guard_string_sequence_tester_hpp
