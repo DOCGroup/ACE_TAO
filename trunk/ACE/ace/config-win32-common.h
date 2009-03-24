@@ -366,7 +366,10 @@
 #define ACE_LACKS_WRITEV
 #define ACE_LACKS_READV
 
-#define ACE_LACKS_COND_T
+#if !defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
+# define ACE_LACKS_COND_T
+#endif
+
 #define ACE_LACKS_RWLOCK_T
 
 #define ACE_LACKS_KEY_T

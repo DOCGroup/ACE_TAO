@@ -121,23 +121,14 @@ ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
 #endif /* ACE_HAS_PTHREADS */
 }
 
-#if !defined (ACE_LACKS_COND_T)
-// NOTE: The ACE_OS::cond_* functions for Unix platforms are defined
-// here because the ACE_OS::sema_* functions below need them.
-// However, ACE_WIN32 and VXWORKS define the ACE_OS::cond_* functions
-// using the ACE_OS::sema_* functions.  So, they are defined in OS.cpp.
-
 ACE_INLINE int
 ACE_OS::condattr_destroy (ACE_condattr_t &attributes)
 {
 #if defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_PTHREADS)
-
-  pthread_condattr_destroy (&attributes);
-
-#   elif defined (ACE_HAS_STHREADS)
+#   if defined (ACE_LACKS_COND_T) || defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_STHREADS)
   attributes.type = 0;
-
+#   elif defined (ACE_HAS_PTHREADS)
+  pthread_condattr_destroy (&attributes);
 #   endif /* ACE_HAS_PTHREADS vs. ACE_HAS_STHREADS */
   return 0;
 # else
@@ -152,7 +143,10 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes,
 {
   ACE_UNUSED_ARG (type);
 # if defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_LACKS_COND_T) || defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_STHREADS)
+  attributes.type = type;
+  return 0;
+#   elif defined (ACE_HAS_PTHREADS)
   int result = -1;
 
 #   if defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600) && (ACE_VXWORKS <= 0x620)
@@ -174,11 +168,6 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes,
      result = -1;       // ACE_ADAPT_RETVAL used it for intermediate status
 
   return result;
-#   elif defined (ACE_HAS_STHREADS)
-  attributes.type = type;
-
-  return 0;
-
 #   else
   ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (type);
@@ -192,6 +181,12 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes,
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_THREADS */
 }
+
+#if !defined (ACE_LACKS_COND_T)
+// NOTE: The ACE_OS::cond_* functions for Unix platforms are defined
+// here because the ACE_OS::sema_* functions below need them.
+// However, ACE_WIN32 and VXWORKS define the ACE_OS::cond_* functions
+// using the ACE_OS::sema_* functions.  So, they are defined in OS_NS_Tread.cpp.
 
 ACE_INLINE int
 ACE_OS::cond_broadcast (ACE_cond_t *cv)
@@ -208,6 +203,9 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_broadcast (cv),
                                        result),
                      int, -1);
+#   elif defined (ACE_HAS_WTHREADS) && defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
+  ::WakeAllConditionVariable  (cv);
+  return 0;
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (cv);
@@ -226,6 +224,9 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 #   elif defined (ACE_HAS_STHREADS)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_destroy (cv), result), int, -1);
+#   elif defined (ACE_HAS_WTHREADS) && defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
+  // Windows doesn't have a destroy
+  return 0;
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (cv);
@@ -269,6 +270,9 @@ ACE_OS::cond_init (ACE_cond_t *cv,
                                                     arg),
                                        result),
                      int, -1);
+#   elif defined (ACE_HAS_WTHREADS) && defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
+    ::InitializeConditionVariable (cv);
+    return 0;
 #   endif /* ACE_HAS_PTHREADS vs. ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (cv);
@@ -310,6 +314,9 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
 #   elif defined (ACE_HAS_STHREADS)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_signal (cv), result), int, -1);
+#   elif defined (ACE_HAS_WTHREADS) && defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
+  ::WakeConditionVariable (cv);
+  return 0;
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (cv);
@@ -331,6 +338,10 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_wait (cv, external_mutex), result),
                      int, -1);
+#   elif defined (ACE_HAS_WTHREADS) && defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
+  int result;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SleepConditionVariableCS (cv, &external_mutex->thr_mutex_, INFINITE), result),
+                     int, -1);
 #   endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (cv);
@@ -346,7 +357,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 {
   ACE_OS_TRACE ("ACE_OS::cond_timedwait");
 # if defined (ACE_HAS_THREADS)
-  int result;
+  int result = 0;
   timespec_t ts;
 
   if (timeout != 0)
@@ -374,6 +385,22 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
                                                     (timestruc_t*)&ts),
                                 result),
               int, -1, result);
+#   elif defined (ACE_HAS_WTHREADS) && defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
+  int msec_timeout = 0;
+  if (timeout != 0)
+    {
+      ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
+      // Watchout for situations where a context switch has caused the
+      // current time to be > the timeout.
+      if (relative_time > ACE_Time_Value::zero)
+        msec_timeout = relative_time.msec ();
+    }
+
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::SleepConditionVariableCS (cv, &external_mutex->thr_mutex_, msec_timeout),
+                                result),
+              int, -1, result);
+
+  return result;
 #   endif /* ACE_HAS_STHREADS */
   if (timeout != 0)
     timeout->set (ts); // Update the time value before returning.
@@ -2465,15 +2492,13 @@ ACE_OS::sigtimedwait (const sigset_t *sset,
   ACE_OS_TRACE ("ACE_OS::sigtimedwait");
 #if defined (ACE_HAS_SIGTIMEDWAIT)
   timespec_t ts;
-  timespec_t *tsp;
+  timespec_t *tsp = 0;
 
   if (timeout != 0)
     {
       ts = *timeout; // Calls ACE_Time_Value::operator timespec_t().
       tsp = &ts;
     }
-  else
-    tsp = 0;
 
   ACE_OSCALL_RETURN (::sigtimedwait (sset, info, tsp),
                      int, -1);
