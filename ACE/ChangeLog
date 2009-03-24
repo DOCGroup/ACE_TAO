@@ -1,3 +1,8 @@
+Tue Mar 24 11:45:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3532_Regression_Test.cpp:
+          Use ACE_TEXT
+
 Tue Mar 24 11:38:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.cpp (checkUnicodeFormat):
