@@ -1,3 +1,11 @@
+Tue Mar 24 11:38:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.cpp (checkUnicodeFormat):
+          Fixed a bug that the file pointer wasn't set toe the start of the
+          file when the file is just 1 byte large. This fixes bugzilla
+          3532, thanks to Martin Gaus <gaus at gmx dot de> for reporting
+          this.
+
 Mon Mar 23 23:11:49 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Sig_Handler.cpp: Fixed a silly bug in the use of

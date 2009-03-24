@@ -88,21 +88,17 @@ void ACE_OS::checkUnicodeFormat (FILE* fp)
       // select correct buffer type.
 
       // At this point, check if the file is Unicode or not.
-      ACE_UINT16 first_two_bytes;
-      size_t numRead =
+      ACE_UINT16 first_two_bytes = 0;
+      size_t const numRead =
         ACE_OS::fread(&first_two_bytes, sizeof (first_two_bytes), 1, fp);
 
-      if (numRead == 1)
+      if (numRead < 2)
         {
           if ((first_two_bytes != 0xFFFE) && // not a small endian Unicode file
               (first_two_bytes != 0xFEFF))   // not a big endian Unicode file
             {
               // set file pointer back to the beginning
-#if defined (ACE_WIN32)
-              ACE_OS::fseek(fp, 0, FILE_BEGIN);
-#else
               ACE_OS::fseek(fp, 0, SEEK_SET);
-#endif /* ACE_WIN32 */
             }
         }
       // if it is a Unicode file, file pointer will be right next to the first
