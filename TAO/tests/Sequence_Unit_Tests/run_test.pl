@@ -6,20 +6,12 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 use strict;
-
-if ($ARGV[0] =~ /^-h/i || $ARGV[0] =~ /^-\?/i) {
-  print "Usage: run_test.pl [-boost|-noboost]\n".
-      "\tDefault is to run all tests, specifying -boost or -noboost will\n".
-      "\teither run the tests that require the boost unit test library or\n".
-      "\tthe other tests, respectively.\n";
-  exit 0;
-}
 
 my $final_result = 0;
 
-my @tests = qw(unbounded_value_sequence_ut
+my @testsToRun = qw(unbounded_value_sequence_ut
                unbounded_array_sequence_ut
                bounded_value_sequence_ut
                string_sequence_element_ut
@@ -34,9 +26,6 @@ my @tests = qw(unbounded_value_sequence_ut
                bounded_object_reference_sequence_ut
                bounded_sequence_cdr_ut
                unbounded_sequence_cdr_ut
-              );
-
-my @testsNoBoost = qw(
                Unbounded_Octet
                Unbounded_Simple_Types
                Bounded_Simple_Types
@@ -44,51 +33,24 @@ my @testsNoBoost = qw(
                Bounded_String
               );
 
-my @testsToRun = qw();
-  
-push(@testsToRun, @tests) if ($#ARGV < 0 || $ARGV[0] eq '-boost');
-push(@testsToRun, @testsNoBoost) if ($#ARGV < 0 || $ARGV[0] eq '-noboost');
-
-
 foreach my $process (@testsToRun) {
 
-
-
-  my $P = 0;
-  if (PerlACE::is_vxworks_test()) {
-      $P = new PerlACE::ProcessVX ($process,
-                                  '--log_level=nothing '
-                                  .'--report_level=no');
-  }
-  else {
-      $P = new PerlACE::Process ($process,
-                                '--log_level=nothing '
-                                .'--report_level=no');
-  }
-  my $executable = $P->Executable;
-
-  # Not all the binaries are generated in all configurations.
-  if (PerlACE::is_vxworks_test()) {
-    next unless -e $executable;
-  }
-  else {
-    next unless -x $executable;
-  }
-
-  print "Running $process ...";
-  my $result = $P->Spawn;
-  if ($result != 0) {
-    print "FAILED\n";
-    $final_result = 1;
-    next;
-  }
-  $result = $P->WaitKill($PerlACE::wait_interval_for_process_creation);
-  if ($result != 0) {
-    print "FAILED\n";
-    $final_result = 1;
-    next;
-  }
-  print "SUCCESS\n";
+    my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+    my $P = $server->CreateProcess ($process);
+    print "Running $process ...\n";
+    my $result = $P->Spawn;
+    if ($result != 0) {
+        print "FAILED $process\n";
+        $final_result = 1;
+        next;
+    }
+    $result = $P->WaitKill($server->ProcessStartWaitInterval());
+    if ($result != 0) {
+        print "FAILED $process\n";
+        $final_result = 1;
+        next;
+    }
+    print "SUCCESS\n";
 }
 
 exit $final_result;

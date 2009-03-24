@@ -12,13 +12,7 @@
 
 #include "ace/OS_NS_string.h"
 
-#include <sstream>
-#include <stdexcept>
-#include <iostream>
-
-#include <boost/test/unit_test.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
+#include "test_macros.h"
 
 using namespace TAO::details;
 
