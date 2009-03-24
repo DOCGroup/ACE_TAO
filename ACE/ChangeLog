@@ -1,3 +1,8 @@
+Tue Mar 24 13:43:14 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Sig_Handlers_Test.cpp: Added a new test to ensure that the
+          ACE_Sig_Handlers class is working properly. 
+
 Tue Mar 24 11:45:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3532_Regression_Test.cpp:
@@ -15,7 +20,7 @@ Mon Mar 23 23:11:49 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Sig_Handler.cpp: Fixed a silly bug in the use of
           ACE_Fixed_Set_Iterator that was causing every other signal in
-          ACE_Sig_Handlers to be skipped.  Thanks to Andreas_Drescher <ace
+          ACE_Sig_Handlers to be skipped.  Thanks to Andreas Drescher <ace
           at anticat dot ch> for reporting this bug.
 
 Sun Mar 22 19:21:06 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
