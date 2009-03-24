@@ -94,7 +94,7 @@ public:
                       ami_return_val,
                       out_l));
         }
-    };
+    }
 
   void foo_excep (::Messaging::ExceptionHolder * excep_holder)
     {
@@ -112,7 +112,7 @@ public:
           ACE_DEBUG ((LM_DEBUG,
                       "... caught the wrong exception -> ERROR\n"));
         }
-    };
+    }
 
 private:
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, long> reply_count_;
@@ -143,10 +143,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       // We reuse the object_var smart pointer!
-      object_var = orb->string_to_object (ior);
+      CORBA::Object_var ior_object = orb->string_to_object (ior);
 
       A::AMI_Test_var ami_test_var =
-        A::AMI_Test::_narrow (object_var.in ());
+        A::AMI_Test::_narrow (ior_object.in ());
 
       if (CORBA::is_nil (ami_test_var.in ()))
         {

@@ -1,3 +1,13 @@
+Tue Mar 24 13:37:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/Reply_Dispatcher.cpp:
+          Don't use db_ to initialize input_cdr; it generates
+          valgrind messages.
+        
+        * tests/Big_AMI/client.cpp:
+          No need for semicoloms. Use a different CORBA::Object_var
+          for different objects.
+
 Tue Mar 24 10:59:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tao/LocateRequest_Invocation.cpp:

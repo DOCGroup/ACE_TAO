@@ -20,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (void)
   : transport_ (0)
   , db_ ()
-  , reply_cdr_ (&db_)
+  , reply_cdr_ ((size_t)0)
   , lock_ (0)
   , refcount_ (1)
   , is_reply_dispatched_ (false)
@@ -33,8 +33,7 @@ TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (void)
 // Copy Constructor.
 TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (
     TAO_ORB_Core *orb_core,
-    ACE_Allocator *allocator
-  )
+    ACE_Allocator *allocator)
   : db_ (sizeof buf_,
          ACE_Message_Block::MB_DATA,
          this->buf_,
