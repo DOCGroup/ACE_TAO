@@ -198,7 +198,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::schedule
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mutex_, -1);
 
-  long result = this->timer_queue_->schedule (handler, act, future_time, interval);
+  long const result = this->timer_queue_->schedule (handler, act, future_time, interval);
   this->condition_.signal ();
   return result;
 }
@@ -209,7 +209,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mutex_, -1);
 
-  int result = this->timer_queue_->cancel (timer_id, act);
+  int const result = this->timer_queue_->cancel (timer_id, act);
   condition_.signal ();
   return result;
 }
