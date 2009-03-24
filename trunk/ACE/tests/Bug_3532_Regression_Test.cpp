@@ -26,13 +26,13 @@ run_main (int, ACE_TCHAR *[])
 
     // Write a ASCII file with one byte (no BOM)
     Buffer[0] = 'T';
-    FILE* pFile = ACE_OS::fopen("OneByteFile", "wb");
+    FILE* pFile = ACE_OS::fopen(ACE_TEXT("OneByteFile"), ACE_TEXT("wb"));
     ACE_OS::fwrite(&Buffer, 1, 1, pFile);
     ACE_OS::fclose(pFile);
 
     // Reopen the file and read the byte
     Buffer[0] = '-';
-    pFile = ACE_OS::fopen("OneByteFile", "rb");
+    pFile = ACE_OS::fopen(ACE_TEXT("OneByteFile"), ACE_TEXT("rb"));
     size_t BytesRead = ACE_OS::fread(&Buffer, 1, 1, pFile);
     if(BytesRead == 1)
     {
