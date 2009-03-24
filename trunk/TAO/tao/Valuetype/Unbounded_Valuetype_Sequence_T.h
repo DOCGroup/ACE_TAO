@@ -13,6 +13,7 @@
 #include "Valuetype_Traits_T.h"
 #include "tao/Generic_Sequence_T.h"
 #include "Valuetype_Sequence_Element_T.h"
+#include "tao/MM_Sequence_Iterator_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -95,6 +96,77 @@ public:
   {
     implementation_type::freebuf(buffer);
   }
+
+#if defined TAO_HAS_SEQUENCE_ITERATORS && TAO_HAS_SEQUENCE_ITERATORS == 1
+
+  ///
+  /// Additions to support iterator semantics for TAO unbounded value type
+  /// sequences.
+  ///
+
+  // = Traits and factory methods that create iterators.
+  typedef MM_Sequence_Iterator<unbounded_valuetype_sequence<object_t, object_t_var> > iterator;
+  typedef Const_MM_Sequence_Iterator<unbounded_valuetype_sequence<object_t, object_t_var> > const_iterator;
+  typedef MM_Sequence_Reverse_Iterator<unbounded_valuetype_sequence<object_t, object_t_var> > reverse_iterator;
+  typedef Const_MM_Sequence_Reverse_Iterator<unbounded_valuetype_sequence<object_t, object_t_var> > const_reverse_iterator;
+
+  // Get an iterator that points to the beginning of the sequence.
+  inline iterator begin (void)
+  {
+    return iterator (&this->impl_);
+  }
+
+  // Get a const iterator that points to the beginning of the sequence.
+  inline const_iterator begin (void) const
+  {
+    return const_iterator (&this->impl_);
+  }
+
+  // Get an iterator that points to the end of the sequence.
+  inline iterator end (void)
+  {
+    return iterator (&this->impl_,
+                     this->impl_.length ());
+  }
+
+  // Get a const iterator that points to the end of the sequence.
+  inline const_iterator end (void) const
+  {
+    return const_iterator (&this->impl_,
+                           this->impl_.length ());
+  }
+
+  // Get a reverse iterator that points to the end of the sequence.
+  inline reverse_iterator rbegin (void)
+  {
+    return reverse_iterator (&this->impl_,
+                             this->impl_.length () - 1);
+  }
+
+  // Get a const reverse iterator that points to the end of the sequence.
+  inline const_reverse_iterator rbegin (void) const
+  {
+    return const_reverse_iterator (&this->impl_,
+                                   this->impl_.length () - 1);
+  }
+
+  // Get a reverse iterator that points to one before the beginning
+  // of the sequence.
+  inline reverse_iterator rend (void)
+  {
+    return reverse_iterator (&this->impl_,
+                             -1);
+  }
+
+  // Get a const reverse iterator that points to one before the
+  // beginning of the sequence.
+  inline const_reverse_iterator rend (void) const
+  {
+    return const_reverse_iterator (&this->impl_,
+                                   -1);
+  }
+
+#endif /* TAO_HAS_SEQUENCE_ITERATORS==1 */
 
 
 private:

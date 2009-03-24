@@ -1,3 +1,9 @@
+Tue Mar 24 16:41:18 UTC 2009  Joe Hoffert  <jhoffert@dre.vanderbilt.edu>
+
+        * tao/Valuetype/Bounded_Valuetype_Sequence_T.h
+        * tao/Valuetype/Unbounded_Valuetype_Sequence_T.h
+          Adding iterators that support memory management.
+
 Tue Mar 24 07:03:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Iterators/Bounded_String.cpp
