@@ -1,3 +1,8 @@
+Tue Mar 24 19:46:00 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3567_Regression/client.cpp:
+          Refactoring in preparation of upcoming AMI changes.
+
 Tue Mar 24 16:41:18 UTC 2009  Joe Hoffert  <jhoffert@dre.vanderbilt.edu>
 
         * tao/Valuetype/Bounded_Valuetype_Sequence_T.h
