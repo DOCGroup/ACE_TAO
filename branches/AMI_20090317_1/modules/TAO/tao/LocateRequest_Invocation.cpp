@@ -43,7 +43,7 @@ namespace TAO
                                           this->details_.reply_service_info ()));
     if (rd_p == 0)
       {
-        throw ::CORBA::INTERNAL (TAO::VMCID, CORBA::COMPLETED_NO);
+        throw ::CORBA::NO_MEMORY ();
       }
 
     ACE_Refcounted_Auto_Ptr<TAO_Synch_Reply_Dispatcher, ACE_Null_Mutex> rd(rd_p);

@@ -121,7 +121,7 @@ class Handler : public POA_A::AMI_AMI_TestHandler
 public:
   Handler (void)
   {
-  };
+  }
 
   void set_ami_test (A::AMI_Test_ptr ami_test)
   {
@@ -148,7 +148,7 @@ public:
       ami_test_var_->sendc_set_yadda (0, 5);
 
       --number_of_replies;
-    };
+    }
 
    void foo_excep (::Messaging::ExceptionHolder * excep_holder)
     {
@@ -163,35 +163,35 @@ public:
         {
           ex._tao_print_exception ("Caught exception:");
         }
-    };
+    }
 
   void get_yadda (CORBA::Long result)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda> called: result <%d>\n",
                   result));
-    };
+    }
 
   void get_yadda_excep (::Messaging::ExceptionHolder *)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called:\n"));
-    };
+    }
 
   void set_yadda (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called:\n"));
-    };
+    }
 
   void set_yadda_excep (::Messaging::ExceptionHolder *)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
-    };
+    }
   ~Handler (void)
   {
-  };
+  }
 
   void inout_arg_test (const char *)
   {
@@ -254,10 +254,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::ObjectId_var id =
         root_poa->activate_object (&handler);
 
-      object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var hnd_object = root_poa->id_to_reference (id.in ());
 
       A::AMI_AMI_TestHandler_var the_handler_var =
-        A::AMI_AMI_TestHandler::_narrow (object.in ());
+        A::AMI_AMI_TestHandler::_narrow (hnd_object.in ());
 
       handler.set_ami_test (server.in ());
       
@@ -276,7 +276,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
-                      number_of_replies));
+                      number_of_replies.value ()));
         }
 
       // ORB loop.

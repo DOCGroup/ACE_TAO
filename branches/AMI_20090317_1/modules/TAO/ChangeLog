@@ -1,3 +1,14 @@
+Tue Mar 24 10:59:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/LocateRequest_Invocation.cpp:
+        * tao/Synch_Invocation.cpp:
+          Throwing appropriate exception when reply dispatcher 
+          cannot be created.
+          
+        * tests/Bug_3567_Regression/client.cpp
+          Make use of different CORBA::Object_var-s for 
+          different objects.
+
 Tue Mar 24 08:54:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.cpp:
