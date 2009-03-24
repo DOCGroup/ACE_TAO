@@ -16,11 +16,9 @@
 
 #include "tao/Unbounded_Object_Reference_Sequence_T.h"
 
-#include <boost/test/unit_test.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
+#include "test_macros.h"
 
-using namespace boost::unit_test_framework;
+
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 struct Tester
@@ -33,7 +31,7 @@ struct Tester
   typedef tested_sequence::allocation_traits tested_allocation_traits;
   typedef TAO::details::range_checking<value_type,true> range;
 
-  void test_default_constructor()
+  int test_default_constructor()
   {
     expected_calls a(tested_allocation_traits::allocbuf_calls);
     expected_calls f(tested_allocation_traits::freebuf_calls);
@@ -41,46 +39,22 @@ struct Tester
     {
       tested_sequence x;
 
-      BOOST_CHECK_EQUAL(CORBA::ULong(0), x.maximum());
-      BOOST_CHECK_EQUAL(CORBA::ULong(0), x.length());
-      BOOST_CHECK_EQUAL(false, x.release());
+      CHECK_EQUAL(CORBA::ULong(0), x.maximum());
+      CHECK_EQUAL(CORBA::ULong(0), x.length());
+      CHECK_EQUAL(false, x.release());
     }
-    BOOST_CHECK_MESSAGE(a.expect(0), a);
-    BOOST_CHECK_MESSAGE(f.expect(0), f);
-    BOOST_CHECK_MESSAGE(i.expect(0), i);
+    FAIL_RETURN_IF_NOT(a.expect(0), a);
+    FAIL_RETURN_IF_NOT(f.expect(0), f);
+    FAIL_RETURN_IF_NOT(i.expect(0), i);
+    return 0;
   }
-
-  void add_all(test_suite * ts)
-  {
-    boost::shared_ptr<Tester> shared_this(self_);
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_default_constructor,
-                shared_this));
-  }
-
-  static boost::shared_ptr<Tester> allocate()
-  {
-    boost::shared_ptr<Tester> ptr(new Tester);
-    ptr->self_ = ptr;
-
-    return ptr;
-  }
-
-private:
-  Tester() {}
-
-  boost::weak_ptr<Tester> self_;
 };
 
-ACE_Proper_Export_Flag test_suite *
-init_unit_test_suite(int, char*[])
+int ACE_TMAIN(int,ACE_TCHAR*[])
 {
-  test_suite * ts =
-      BOOST_TEST_SUITE("unbounded object reference sequence unit test");
-
-  boost::shared_ptr<Tester> tester(Tester::allocate());
-  tester->add_all(ts);
-
-  return ts;
+  int status = 0;
+  Tester x;
+  status += x.test_default_constructor ();
+  
+  return status;
 }
-

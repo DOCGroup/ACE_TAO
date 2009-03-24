@@ -1,3 +1,41 @@
+Tue Mar 24 06:43:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added new IDL_Inherited_Operation and the sequence unit tests
+          are not using boost anymore
+
+        * tests/Sequence_Unit_Tests/bounded_object_reference_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/bounded_sequence_cdr_ut.cpp
+        * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/fwd_mock_reference.cpp
+        * tests/Sequence_Unit_Tests/fwd_mock_reference.hpp
+        * tests/Sequence_Unit_Tests/mock_array.hpp
+        * tests/Sequence_Unit_Tests/mock_reference.hpp
+        * tests/Sequence_Unit_Tests/object_reference_sequence_element_ut.cpp
+        * tests/Sequence_Unit_Tests/run_test.pl
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc
+        * tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp
+        * tests/Sequence_Unit_Tests/string_ut.cpp
+        * tests/Sequence_Unit_Tests/test_macros.h
+        * tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp
+        * tests/Sequence_Unit_Tests/testing_counters.hpp
+        * tests/Sequence_Unit_Tests/testing_string_traits.hpp
+        * tests/Sequence_Unit_Tests/unbounded_array_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/unbounded_fwd_object_reference_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/unbounded_object_reference_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_nocopy_ut.cpp
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/unbounded_sequence_cdr_ut.cpp
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/value_sequence_tester.hpp
+          Removed usage of boost. The boost unit test framework is nice, but we
+          don't have boost on just a few build/test systems which results in the
+          fact that we don't run these tests which we really need to do, given
+          the fact that several of them are broken
+
 Mon Mar 23 20:24:42 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/IDL_Inherited_Operation/InheritedOp_i.h:
