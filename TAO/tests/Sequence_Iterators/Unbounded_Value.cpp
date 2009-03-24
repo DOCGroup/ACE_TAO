@@ -15,6 +15,8 @@
 #include <iterator>
 #include <sstream>
 
+#if defined TAO_HAS_SEQUENCE_ITERATORS && TAO_HAS_SEQUENCE_ITERATORS == 1
+
 typedef TAO::unbounded_value_sequence<int> v_sequence;
 
 #define FAIL_RETURN_IF(CONDITION) \
@@ -654,6 +656,8 @@ int test_const_sequence_reverse ()
 
   return 0;
 }
+
+#endif
 
 //-----------------------------------------------------------------------------
 
