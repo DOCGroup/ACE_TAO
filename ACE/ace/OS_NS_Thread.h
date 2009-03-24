@@ -314,7 +314,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     define THR_SCOPE_SYSTEM        0
 #   endif /* ACE_HAS_PTHREADS / STHREADS / VXWORKS / WTHREADS **********/
 
-#   if defined (ACE_LACKS_COND_T)
+#   if defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
+
+typedef CONDITION_VARIABLE ACE_cond_t;
+
+#   elif defined (ACE_LACKS_COND_T)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -366,6 +370,14 @@ public:
   size_t was_broadcast_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#   endif /* ACE_LACKS_COND_T */
+
+#   if defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE) || defined (ACE_LACKS_COND_T)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 struct ACE_Export ACE_condattr_t
 {
   int type;
@@ -378,7 +390,7 @@ struct ACE_Export ACE_mutexattr_t
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#   endif /* ACE_LACKS_COND_T */
+#   endif /* ACE_HAS_WTHREADS_CONDITION_VARIABLE || ACE_LACKS_COND_T */
 
 #   if defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 
@@ -1072,19 +1084,11 @@ namespace ACE_OS {
   void cleanup_tss (const u_int main_thread);
 
   //@{ @name A set of wrappers for condition variables.
-#if defined (ACE_LACKS_COND_T)
-  extern ACE_Export
-#else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_LACKS_COND_T */
   int condattr_init (ACE_condattr_t &attributes,
                      int type = ACE_DEFAULT_SYNCH_TYPE);
 
-#if defined (ACE_LACKS_COND_T)
-  extern ACE_Export
-#else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_LACKS_COND_T */
   int condattr_destroy (ACE_condattr_t &attributes);
 
 #if defined (ACE_LACKS_COND_T)
@@ -1153,7 +1157,7 @@ namespace ACE_OS {
 #endif /* ACE_LACKS_COND_T */
   int cond_timedwait (ACE_cond_t *cv,
                       ACE_mutex_t *m,
-                      ACE_Time_Value *);
+                      ACE_Time_Value *timeout);
 
 #if defined (ACE_LACKS_COND_T)
   extern ACE_Export
@@ -1164,20 +1168,12 @@ namespace ACE_OS {
                  ACE_mutex_t *m);
 
 # if defined (ACE_WIN32) && defined (ACE_HAS_WTHREADS)
-#   if defined (ACE_LACKS_COND_T)
   extern ACE_Export
-#   else
-  ACE_NAMESPACE_INLINE_FUNCTION
-#   endif /* ACE_LACKS_COND_T */
   int cond_timedwait (ACE_cond_t *cv,
                       ACE_thread_mutex_t *m,
-                      ACE_Time_Value *);
+                      ACE_Time_Value *timeout);
 
-#   if defined (ACE_LACKS_COND_T)
   extern ACE_Export
-#   else
-  ACE_NAMESPACE_INLINE_FUNCTION
-#   endif /* ACE_LACKS_COND_T */
   int cond_wait (ACE_cond_t *cv,
                  ACE_thread_mutex_t *m);
 # endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
