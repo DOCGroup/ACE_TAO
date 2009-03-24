@@ -17,6 +17,8 @@
 #include <iterator>
 #include <sstream>
 
+#if defined TAO_HAS_SEQUENCE_ITERATORS && TAO_HAS_SEQUENCE_ITERATORS == 1
+
 typedef TAO::bounded_basic_string_sequence<char, 4> s_sequence;
 
 #define FAIL_RETURN_IF(CONDITION) \
@@ -637,6 +639,8 @@ int test_const_sequence_reverse ()
 
   return 0;
 }
+
+#endif
 
 //-----------------------------------------------------------------------------
 

@@ -26,6 +26,8 @@
         return 1; \
       }
 
+#if defined TAO_HAS_SEQUENCE_ITERATORS && TAO_HAS_SEQUENCE_ITERATORS == 1
+
 typedef TAO::unbounded_object_reference_sequence<mock_reference, mock_reference_var> tested_sequence;
 
 template <typename ITERATOR_T>
@@ -630,6 +632,8 @@ int test_const_sequence_reverse ()
 
   return 0;
 }
+
+#endif
 
 //-----------------------------------------------------------------------------
 

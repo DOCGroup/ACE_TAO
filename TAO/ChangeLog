@@ -1,3 +1,11 @@
+Tue Mar 24 07:03:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sequence_Iterators/Bounded_String.cpp
+        * tests/Sequence_Iterators/StringSeq.cpp
+        * tests/Sequence_Iterators/Unbounded_Objectref.cpp
+        * tests/Sequence_Iterators/Unbounded_Value.cpp
+          Disable more code when stl iterators are disabled
+
 Tue Mar 24 06:43:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
