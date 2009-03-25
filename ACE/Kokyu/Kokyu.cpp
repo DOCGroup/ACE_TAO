@@ -43,8 +43,8 @@ Dispatcher*
 Dispatcher_Factory::
 create_dispatcher(const Dispatcher_Attributes& attrs)
 {
-  Dispatcher* disp;
-  Dispatcher_Impl* tmp;
+  Dispatcher* disp = 0;
+  Dispatcher_Impl* tmp = 0;
   ACE_NEW_RETURN (tmp, Default_Dispatcher_Impl, 0);
   ACE_NEW_RETURN (disp, Dispatcher, 0);
   disp->implementation (tmp);

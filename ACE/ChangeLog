@@ -1,3 +1,12 @@
+Wed Mar 25 19:09:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_limits.h:
+        * Kokyu/DSRT_Dispatcher_Impl_T.h:
+          Fixed VxWorks 6.7 compile problems
+
+        * Kokyu/Kokyu.cpp:
+          Initialise pointers with 0
+
 Wed Mar 25 13:04:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.7.h:
