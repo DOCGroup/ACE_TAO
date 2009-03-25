@@ -1,3 +1,8 @@
+Wed Mar 25 09:15:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks.GNU:
+          Added support for VxWorks 6.7
+
 Tue Mar 24 15:16:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:

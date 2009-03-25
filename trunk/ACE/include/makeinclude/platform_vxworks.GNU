@@ -22,4 +22,7 @@ endif
 ifeq (vxworks-6.6, $(findstring vxworks-6.6,$(WIND_PLATFORM)))
   include $(ACE_ROOT)/include/makeinclude/platform_vxworks6.6.GNU
 endif
+ifeq (vxworks-6.7, $(findstring vxworks-6.7,$(WIND_PLATFORM)))
+  include $(ACE_ROOT)/include/makeinclude/platform_vxworks6.7.GNU
+endif
 
