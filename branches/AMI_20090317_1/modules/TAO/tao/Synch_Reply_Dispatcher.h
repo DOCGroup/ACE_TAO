@@ -63,6 +63,8 @@ public:
 
   virtual void reply_timed_out (void);
 
+  virtual long schedule_timer (CORBA::ULong , const ACE_Time_Value &);
+
 protected:
   /// The service context list
   IOP::ServiceContextList &reply_service_info_;

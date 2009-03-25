@@ -26,29 +26,4 @@ TAO_Reply_Dispatcher::reply_status (void) const
   return this->reply_status_;
 }
 
-ACE_INLINE int 
-TAO_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
-{
-  return 0;
-}
-
-ACE_INLINE void 
-TAO_Reply_Dispatcher::reply_timed_out (void)
-{
-  return;
-}
-
-ACE_INLINE void 
-TAO_Reply_Dispatcher::connection_closed (void)
-{
-  return;
-}
-
-long
-TAO_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
-                                             const ACE_Time_Value &max_wait_time)
-{
-  return 0;
-}
-
 TAO_END_VERSIONED_NAMESPACE_DECL

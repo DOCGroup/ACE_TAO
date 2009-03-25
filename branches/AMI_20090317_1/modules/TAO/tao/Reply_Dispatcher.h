@@ -59,7 +59,7 @@ public:
   void transport (TAO_Transport *t);
 
   /// Install the timeout handler
-  virtual long schedule_timer (CORBA::ULong , const ACE_Time_Value &);
+  virtual long schedule_timer (CORBA::ULong , const ACE_Time_Value &) = 0;
 
   /// @name Mutators for refcount
   //@{
@@ -76,10 +76,10 @@ public:
    *    protocols implement different variants of such ClientReply
    *    class.
    */
-  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
+  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params) = 0;
 
   /// Inform that the reply timed out
-  virtual void reply_timed_out (void);
+  virtual void reply_timed_out (void) = 0;
 
   /**
    * The used for the pending reply has been closed.
@@ -89,7 +89,7 @@ public:
    *    the exception, it would a matter of simply adding a boolean
    *    argument to this function.
    */
-  virtual void connection_closed (void);
+  virtual void connection_closed (void) = 0;
 
   /// Get the locate reply status.
   GIOP::LocateStatusType locate_reply_status (void) const;

@@ -1,3 +1,15 @@
+Wed Mar 24 07:49:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/Reply_Dispatcher.h:
+        * tao/Reply_Dispatcher.inl:
+          schedule_timer, dispatch_reply, reply_timed_out, 
+          connection_closed are pure virtual now.  Removed 
+          these functions from inl.
+
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/Synch_Reply_Dispatcher.h:
+          Added schedule_timer.
+
 Tue Mar 24 13:37:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tao/Reply_Dispatcher.cpp:

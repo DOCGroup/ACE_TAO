@@ -129,4 +129,10 @@ TAO_Synch_Reply_Dispatcher::connection_closed (void)
                        this->orb_core_->leader_follower ());
 }
 
+long 
+TAO_Synch_Reply_Dispatcher::schedule_timer (CORBA::ULong , const ACE_Time_Value &)
+{
+  return 0;
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL
