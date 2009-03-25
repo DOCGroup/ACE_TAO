@@ -1,3 +1,11 @@
+Wed Mar 25 19:27:45 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/OS_NS_Thread.inl: 
+          Address the possibility that both PTHREADS and STHREADS are
+          available, which is the case on Solaris 5.5 and newer. The
+          header prefers PTHREAD definitions to STHREAD, so now this code
+          does the same.
+
 Wed Mar 25 19:09:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_limits.h:
