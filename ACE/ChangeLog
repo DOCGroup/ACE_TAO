@@ -1,3 +1,8 @@
+Wed Mar 25 13:04:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.7.h:
+          isascii still gives a problem with VxWorks 6.7.
+
 Wed Mar 25 09:15:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks.GNU:
