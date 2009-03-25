@@ -125,7 +125,7 @@ ACE_INLINE int
 ACE_OS::condattr_destroy (ACE_condattr_t &attributes)
 {
 #if defined (ACE_HAS_THREADS)
-#   if defined (ACE_LACKS_COND_T) || defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_STHREADS)
+#   if defined (ACE_LACKS_COND_T) || defined (ACE_HAS_WTHREADS) || (defined (ACE_HAS_STHREADS) && !defined (ACE_HAS_PTHREADS))
   attributes.type = 0;
 #   elif defined (ACE_HAS_PTHREADS)
   pthread_condattr_destroy (&attributes);
@@ -143,7 +143,7 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes,
 {
   ACE_UNUSED_ARG (type);
 # if defined (ACE_HAS_THREADS)
-#   if defined (ACE_LACKS_COND_T) || defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_STHREADS)
+#   if defined (ACE_LACKS_COND_T) || defined (ACE_HAS_WTHREADS) || (defined (ACE_HAS_STHREADS) && !defined (ACE_HAS_PTHREADS))
   attributes.type = type;
   return 0;
 #   elif defined (ACE_HAS_PTHREADS)
