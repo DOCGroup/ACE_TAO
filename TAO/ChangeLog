@@ -1,3 +1,12 @@
+Wed Mar 25 02:49:23 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Sequence_Unit_Tests/bounded_object_reference_sequence_ut.cpp:
+
+          Fixed a few casess where the expected state of the
+          default-constructed sequence was incorrect.
+          This is related to the change in
+          Fri Jun  8 19:23:45 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
 Tue Mar 24 19:46:00 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3567_Regression/client.cpp:
