@@ -112,8 +112,8 @@ struct Tester
 
       tested_sequence y(x);
     }
-    FAIL_RETURN_IF_NOT(a.expect(1), a);
-    FAIL_RETURN_IF_NOT(f.expect(1), f);
+    FAIL_RETURN_IF_NOT(a.expect(0), a);
+    FAIL_RETURN_IF_NOT(f.expect(0), f);
     FAIL_RETURN_IF_NOT(i.expect(0), i);
     return 0;
   }
