@@ -494,11 +494,13 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
     status += ntester.test_all ();
   }
 
+#if defined(ACE_HAS_WCHAR) 
   {
     typedef Tester<unbounded_basic_string_sequence <CORBA::WChar> > wTester;
     wTester wtester;
     status += wtester.test_all ();
   }
+#endif
 
   return status;
 }

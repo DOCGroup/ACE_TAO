@@ -62,6 +62,7 @@ struct string_sequence_test_helpers<char>
   }
 };
 
+#if defined(ACE_HAS_WCHAR)
 template<>
 struct string_sequence_test_helpers<CORBA::WChar>
 {
@@ -101,8 +102,7 @@ struct string_sequence_test_helpers<CORBA::WChar>
     return ACE_OS::strcmp(value, L"") == 0;
   }
 };
-
-
+#endif /* ACE_HAS_WCHAR */
 
 template<class tested_sequence>
 struct string_sequence_tester

@@ -346,11 +346,12 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
   
   status += myntester.test_all();
 
+#if defined(ACE_HAS_WCHAR) 
   typedef TAO::bounded_basic_string_sequence<CORBA::WChar, MAXIMUM> w_sequence;
   typedef Tester<w_sequence> wTester;
   wTester mywtester;
-  
   status += mywtester.test_all();
+#endif  
 
   return status;
 }

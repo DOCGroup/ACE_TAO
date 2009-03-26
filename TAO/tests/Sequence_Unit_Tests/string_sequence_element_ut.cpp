@@ -61,6 +61,7 @@ struct helper <char>
   }
 };
 
+#if defined(ACE_HAS_WCHAR) 
 template<>
 struct helper <CORBA::WChar>
 {
@@ -95,6 +96,7 @@ struct helper <CORBA::WChar>
     return ACE_OS::strcmp (lhs, rhs) == 0;
   }
 };
+#endif
 
 template<class charT>
 struct Tester
