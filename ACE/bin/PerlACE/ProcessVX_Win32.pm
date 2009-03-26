@@ -264,7 +264,7 @@ if (!defined $t) {
   die "ERROR: Telnet failed to <" . $telnet_host . ":". $telnet_port . ">";
 }
 $t->open();
-$t->print("");
+$t->print("\n");
 
 my $target_login = $ENV{'ACE_RUN_VX_LOGIN'};
 my $target_password = $ENV{'ACE_RUN_VX_PASSWORD'};
@@ -279,31 +279,36 @@ if (defined $target_password)  {
   $t->print("$target_password");
 }
 
-$ok = $t->waitfor('/-> $/');
-if ($ok) {
-  my $i = 0;
-  my @lines;
-  while($i < $cmdnr) {
-    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-      print @cmds[$i]."\n";
-    }
-    if ($t->print (@cmds[$i++])) {
-      my $blk;
-      my $buf;
-      while ($blk = $t->get) {
-        printf $blk;
-        $buf .= $blk;
-        if ($buf =~ /$prompt/) {
-          last;
-        }
-      }
-    } else {
-      print $t->errmsg;
-    }
+$t->print("\n");
+# wait for the prompt
+my $blk;
+my $buf;
+while ($blk = $t->get) {
+  printf $blk;
+  $buf .= $blk;
+  if ($buf =~ /$prompt/) {
+    last;
   }
 }
-else {
-  die "ERROR: No prompt appeared\n";
+my $i = 0;
+my @lines;
+while($i < $cmdnr) {
+  if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+    print @cmds[$i]."\n";
+  }
+  if ($t->print (@cmds[$i++])) {
+    my $blk;
+    my $buf;
+    while ($blk = $t->get) {
+      printf $blk;
+      $buf .= $blk;
+      if ($buf =~ /$prompt/) {
+        last;
+      }
+    }
+  } else {
+    print $t->errmsg;
+  }
 }
 $t->close();
 sleep(2);

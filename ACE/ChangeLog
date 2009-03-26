@@ -1,3 +1,10 @@
+Thu Mar 26 17:10:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Changed waiting for the prompt, VxWorks 6.7 telnet server seems to
+          have slight different timing behaviour
+
 Thu Mar 26 12:48:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX.pm:
