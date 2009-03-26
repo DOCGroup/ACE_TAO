@@ -1,3 +1,11 @@
+Thu Mar 26 12:48:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX.pm:
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Added support for ACE_RUN_VX_TGT_STARTUP_SCRIPT. This is a script
+          on the host system that is loaded and then executed on the target
+
 Thu Mar 26 09:21:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-ciao.spec:
