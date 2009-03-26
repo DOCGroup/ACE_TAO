@@ -506,6 +506,9 @@ using the ACE_XtReactor.
 Summary:      Make Project Creator
 Version:      %{ACEVER}
 Group:        Development/Tools/Building
+%if !0%{?suse_version}
+Provides:     perl (Driver) perl(MakeProjectBase) perl(ObjectGenerator) perl(ProjectCreator) perl(WorkspaceCreator) perl(WorkspaceHelper) perl(DependencyWriter)
+%endif
 
 %description -n mpc
 
