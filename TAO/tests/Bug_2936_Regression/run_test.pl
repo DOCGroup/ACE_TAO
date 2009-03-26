@@ -11,7 +11,6 @@ use PerlACE::TestTarget;
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
 $status = 0;
-$file = PerlACE::LocalFile ("test.ior");
 
 my $iorbase = "test.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
