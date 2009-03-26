@@ -125,11 +125,11 @@ ACE_INLINE int
 ACE_OS::condattr_destroy (ACE_condattr_t &attributes)
 {
 #if defined (ACE_HAS_THREADS)
-#   if defined (ACE_LACKS_COND_T) || defined (ACE_HAS_WTHREADS) || (defined (ACE_HAS_STHREADS) && !defined (ACE_HAS_PTHREADS))
-  attributes.type = 0;
-#   elif defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS)
   pthread_condattr_destroy (&attributes);
-#   endif /* ACE_HAS_PTHREADS vs. ACE_HAS_STHREADS */
+#   else
+  attributes.type = 0;
+#   endif /* ACE_HAS_PTHREADS */
   return 0;
 # else
   ACE_UNUSED_ARG (attributes);
@@ -138,15 +138,11 @@ ACE_OS::condattr_destroy (ACE_condattr_t &attributes)
 }
 
 ACE_INLINE int
-ACE_OS::condattr_init (ACE_condattr_t &attributes,
-                       int type)
+ACE_OS::condattr_init (ACE_condattr_t &attributes, int type)
 {
   ACE_UNUSED_ARG (type);
 # if defined (ACE_HAS_THREADS)
-#   if defined (ACE_LACKS_COND_T) || defined (ACE_HAS_WTHREADS) || (defined (ACE_HAS_STHREADS) && !defined (ACE_HAS_PTHREADS))
-  attributes.type = type;
-  return 0;
-#   elif defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS)
   int result = -1;
 
 #   if defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600) && (ACE_VXWORKS <= 0x620)
@@ -169,11 +165,9 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes,
 
   return result;
 #   else
-  ACE_UNUSED_ARG (attributes);
-  ACE_UNUSED_ARG (type);
-  ACE_NOTSUP_RETURN (-1);
-
-#   endif /* ACE_HAS_PTHREADS vs. ACE_HAS_STHREADS */
+  attributes.type = type;
+  return 0;
+#   endif /* ACE_HAS_PTHREADS */
 
 # else
   ACE_UNUSED_ARG (attributes);
