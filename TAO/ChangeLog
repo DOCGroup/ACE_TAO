@@ -1,3 +1,11 @@
+Thu Mar 26 08:52:23 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp:
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+          Only test wchar when it is available
+
 Wed Mar 25 02:49:23 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Sequence_Unit_Tests/bounded_object_reference_sequence_ut.cpp:
