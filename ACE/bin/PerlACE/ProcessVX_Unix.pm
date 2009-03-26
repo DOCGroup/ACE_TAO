@@ -149,6 +149,14 @@ sub Spawn ()
             $PerlACE::ProcessVX::VxDefGw = 0;
         }
 
+        if (defined $ENV{"ACE_RUN_VX_TGT_STARTUP_SCRIPT"}) {
+            my(@start_commands);
+            if (handle_startup_script ($ENV{"ACE_RUN_VX_TGT_STARTUP_SCRIPT"}, \@start_commands)) {
+                push @cmds, @start_commands;
+                $cmdnr += scalar @start_commands;
+            }
+         }
+
         @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
         @cmds[$cmdnr++] = 'C putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
 
@@ -177,6 +185,14 @@ sub Spawn ()
             @cmds[$cmdnr++] = "mRouteAdd(\"0.0.0.0\", \"" . $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} . "\", 0,0,0)";
             $PerlACE::ProcessVX::VxDefGw = 0;
         }
+
+        if (defined $ENV{"ACE_RUN_VX_TGT_STARTUP_SCRIPT"}) {
+            my(@start_commands);
+            if (handle_startup_script ($ENV{"ACE_RUN_VX_TGT_STARTUP_SCRIPT"}, \@start_commands)) {
+                push @cmds, @start_commands;
+                $cmdnr += scalar @start_commands;
+            }
+         }
 
         my(@load_commands);
         my(@unload_commands);

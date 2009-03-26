@@ -383,6 +383,26 @@ sub handle_vxtest_file
   return 1;
 }
 
+# Load a file that is used as startup script. This script has to be
+# located on the host system
+sub handle_startup_script
+{
+  my $script = shift;
+  my $cmds = shift;
+  my $fh = new FileHandle;
+  if (open ($fh, $script)) {
+    while(<$fh>) {
+      my $line1 = $_;
+      chomp $line1;
+      push @$cmds, "$line1";
+    }
+    close $fh;
+  } else {
+    return 0;
+  }
+  return 1;
+}
+
 ### Check for -ExeSubDir commands, store the last one
 my @new_argv = ();
 
