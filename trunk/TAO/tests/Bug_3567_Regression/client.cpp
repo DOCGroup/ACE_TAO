@@ -260,7 +260,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         A::AMI_AMI_TestHandler::_narrow (hnd_object.in ());
 
       handler.set_ami_test (server.in ());
-      
+
       Client client (server.in (), niterations, the_handler_var.in ());
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
@@ -302,7 +302,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
       server->shutdown ();
-     
+
       root_poa->destroy (1,  // ethernalize objects
                          0  // wait for completion
                         );
@@ -320,15 +320,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Client::Client (A::AMI_Test_ptr server, 
+Client::Client (A::AMI_Test_ptr server,
                 int niterations,
                 A::AMI_AMI_TestHandler_ptr hnd)
                 :  ami_test_var_ (A::AMI_Test::_duplicate (server))
-                ,  the_handler_var_ (A::AMI_AMI_TestHandler::_duplicate (hnd))
                 ,  niterations_ (niterations)
+                ,  the_handler_var_ (A::AMI_AMI_TestHandler::_duplicate (hnd))
 {
-
-  }
+}
 
 Client::~Client ()
 {
@@ -370,7 +369,7 @@ Worker::svc (void)
       CORBA::Boolean pending = this->orb_->work_pending();
 
       if (pending)
-        { 
+        {
           ACE_Time_Value tm (1, 0);
           this->orb_->perform_work(tm);
         }
