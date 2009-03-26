@@ -43,7 +43,7 @@ struct testing_string_traits
   static void release(char_type * s)
   {
     release_calls();
-    return real_traits::release(s);
+    real_traits::release(s);
   }
 
   static void not_released_from_const(

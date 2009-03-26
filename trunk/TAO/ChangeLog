@@ -1,3 +1,9 @@
+Thu Mar 26 09:10:23 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/testing_object_reference_traits.hpp:
+        * tests/Sequence_Unit_Tests/testing_string_traits.hpp:
+          Fixed compile errors with HPUX
+
 Thu Mar 26 08:52:23 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
