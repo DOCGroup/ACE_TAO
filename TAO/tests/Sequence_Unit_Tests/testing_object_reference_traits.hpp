@@ -43,7 +43,7 @@ struct testing_object_reference_traits
   static void release(object_type * s)
   {
     release_calls();
-    return real_traits::release(s);
+    real_traits::release(s);
   }
 };
 
