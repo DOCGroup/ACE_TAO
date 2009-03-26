@@ -254,10 +254,6 @@ sub Spawn ()
         }
         elsif (defined $self->{PROCESS}) {
             #child here
-            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-              print "$cmdline\n";
-            }
-
             my $telnet_port = $ENV{'ACE_RUN_VX_TGT_TELNET_PORT'};
             my $telnet_host = $ENV{'ACE_RUN_VX_TGT_TELNET_HOST'};
             if (!defined $telnet_host)  {
@@ -271,7 +267,7 @@ sub Spawn ()
               die "ERROR: Telnet failed to <" . $telnet_host . ":". $telnet_port . ">";
             }
             $t->open();
-            $t->print("");
+            $t->print("\n");
 
             my $target_login = $ENV{'ACE_RUN_VX_LOGIN'};
             my $target_password = $ENV{'ACE_RUN_VX_PASSWORD'};
@@ -286,32 +282,37 @@ sub Spawn ()
               $t->print("$target_password");
             }
 
-            my $ok;
-            $ok = $t->waitfor('/-> $/');
-            if ($ok) {
-              my $i = 0;
-              my @lines;
-              while($i < $cmdnr) {
-                if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-                  print @cmds[$i]."\n";
-                }
-                if ($t->print (@cmds[$i++])) {
-                  my $blk;
-                  my $buf;
-                  while ($blk = $t->get) {
-                    printf $blk;
-                    $buf .= $blk;
-                    if ($buf =~ /$prompt/) {
-                      last;
-                    }
-                  }
-                } else {
-                  print $t->errmsg;
-                }
+            $t->print("\n");
+            my $blk;
+            my $buf;
+            # wait for the prompt
+            while ($blk = $t->get) {
+              printf $blk;
+              $buf .= $blk;
+              if ($buf =~ /$prompt/) {
+                last;
               }
             }
-            else {
-              die "ERROR: exec failed for <" . $cmdline . ">";
+            my $i = 0;
+            my @lines;
+            while($i < $cmdnr) {
+              if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                print @cmds[$i]."\n";
+              }
+              if ($t->print (@cmds[$i++])) {
+                # After each command wait for the prompt
+                my $blk;
+                my $buf;
+                while ($blk = $t->get) {
+                  printf $blk;
+                  $buf .= $blk;
+                  if ($buf =~ /$prompt/) {
+                    last;
+                  }
+                }
+              } else {
+                print $t->errmsg;
+              }
             }
             $t->close();
             sleep(2);
