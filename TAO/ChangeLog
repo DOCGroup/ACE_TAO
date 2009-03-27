@@ -1,3 +1,34 @@
+Fri Mar 27 10:29:10 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Removed !LabVIEW_RT, !WinCE and !FUZZ in order to run
+          the following tests on these targets.
+          
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
+        * tests/RTCORBA/Bug_3382_Regression/run_test.pl:
+        * tests/RTCORBA/Client_Protocol/run_test.pl:
+        * tests/RTCORBA/Collocation/run_test.pl:
+        * tests/RTCORBA/Destroy_Thread_Pool/run_test.pl:
+        * tests/RTCORBA/Dynamic_Thread_Pool/run_test.pl:
+        * tests/RTCORBA/Explicit_Binding/run_test.pl:
+        * tests/RTCORBA/Linear_Priority/run_test.pl:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+        * tests/RTCORBA/Persistent_IOR/run_test.pl:
+        * tests/RTCORBA/Policies/run_test.pl:
+        * tests/RTCORBA/Policy_Combinations/run_test.pl:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/run_test.pl:
+        * tests/RTCORBA/Private_Connection/run_test.pl:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl:
+        * tests/RTCORBA/RTMutex/run_test.pl:
+        * tests/RTCORBA/Server_Declared/run_test.pl:
+        * tests/RTCORBA/Server_Protocol/run_test.pl:
+        * tests/RTCORBA/Thread_Pool/run_test.pl:
+          Made Fuzz compliant
+          
+        * tests/RTCORBA/Dynamic_Thread_Pool/client.cpp:
+          When -x is supplied, the only thing the client has to do, is shutdown
+          the server. 
+
 Thu Mar 26 15:39:23 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2936_Regression/run_test.pl:

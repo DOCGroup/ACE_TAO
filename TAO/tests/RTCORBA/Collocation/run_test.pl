@@ -20,7 +20,7 @@ if ($continuous) {
     $T->Arguments("-ORBSvcConf continuous$PerlACE::svcconf_ext");
 }
 
-$test = $T->SpawnWaitKill(60);
+$test = $T->SpawnWaitKill($server->ProcessStartWaitInterval ());
 if ($test == 2) {
     # Mark as no longer running to avoid errors on exit.
     $T->{RUNNING} = 0;

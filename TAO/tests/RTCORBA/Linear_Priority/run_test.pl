@@ -6,10 +6,19 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
+
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+
+my $iorbase = "ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
+
 
 $status = 0;
-$iorfile = PerlACE::LocalFile("ior");
 
 @configurations =
     (
@@ -62,15 +71,15 @@ $iorfile = PerlACE::LocalFile("ior");
 sub run_client
 {
     my $arg = shift;
-    $CL = new PerlACE::Process ("client", "-k file://$iorfile " . $arg);
+    $CL = $client->CreateProcess ("client", "-k file://$client_iorfile " . $arg);
 
     $CL->Spawn ();
 
-    $client = $CL->WaitKill (120);
+    $client_status = $CL->WaitKill ($client->ProcessStopWaitInterval ());
 
-    if ($client != 0)
+    if ($client_status != 0)
     {
-        print STDERR "ERROR: client returned $client\n";
+        print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
         zap_server (1);
     }
@@ -78,36 +87,32 @@ sub run_client
 
 sub run_server
 {
-    if (PerlACE::is_vxworks_test()) {
-        $SV = new PerlACE::ProcessVX ("server", @_);
-    }
-    else {
-        $SV = new PerlACE::Process ("server", @_);
-    }
+    $SV = $server->CreateProcess ("server", @_);
     if ($SV->Spawn () == -1) {
-    exit 1;
+      exit 1;
     }
-
-    if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1)
-    {
+    
+    if ($server->WaitForFileTimed ($iorbase,
+                  $server->ProcessStartWaitInterval()) == -1) {
         check_supported_priorities ($SV);
-	print STDERR "ERROR: cannot find ior file: $iorfile\n";
-	$status = 1;
-	zap_server (1);
+	      print STDERR "ERROR: cannot find ior file: $server_iorfile\n";
+      	$status = 1;
+	      zap_server (1);
     }
 }
 
 sub zap_server
 {
-    $server = $SV->WaitKill (5);
+    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
 
-    if ($server != 0)
+    if ($server_status != 0)
     {
-        print STDERR "ERROR: server returned $server\n";
+        print STDERR "ERROR: server returned $server_status\n";
         $status = 1;
     }
-
-    unlink $iorfile;
+    
+    $server->DeleteFile($iorbase);
+    $client->DeleteFile($iorbase);
 
     if ($_[0])
     {
@@ -130,7 +135,8 @@ for $test (@configurations)
 {
     print STDERR "\n******************************************************\n";
 
-    unlink $iorfile;
+    $server->DeleteFile($iorbase);
+    $client->DeleteFile($iorbase);
 
     run_server ($test->{server});
 

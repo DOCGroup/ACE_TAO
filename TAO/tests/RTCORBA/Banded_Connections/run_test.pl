@@ -6,17 +6,21 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
+
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+
+$iorbase1 = "test1.ior";
+$iorbase2 = "test2.ior";
+
+$client_iorfile1 = $client->LocalFile ($iorbase1);
+$client_iorfile2 = $client->LocalFile ($iorbase2);
+
+$client->DeleteFile ($iorbase1);
+$client->DeleteFile ($iorbase2);
 
 $status = 0;
-
-$iorfile1base = "test1.ior";
-$iorfile2base = "test2.ior";
-$iorfile1 = PerlACE::LocalFile ("$iorfile1base");
-$iorfile2 = PerlACE::LocalFile ("$iorfile2base");
-
-unlink $iorfile1;
-unlink $iorfile2;
 
 print STDERR "\n********** RTCORBA Priority Banded Connections Unit Test\n";
 
@@ -43,24 +47,17 @@ else {
         "-b bands.unix";
 }
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", $server_args);
-}
-else {
-    $SV = new PerlACE::Process ("server", $server_args);
-}
-if (PerlACE::is_vxworks_rtp_test()) {
-    $CL = new PerlACE::ProcessVX ("client", "-n file://$iorfile1base -o file://$iorfile2base");
-}
-else {
-    $CL = new PerlACE::Process ("client", "-n file://$iorfile1 -o file://$iorfile2");
-}
+$SV = $server->CreateProcess ("server", $server_args),
+
+$CL = $client->CreateProcess ("client", "-n file://$client_iorfile1 -o file://$client_iorfile2");
 
 $SV->Spawn();
-if (PerlACE::waitforfile_timed ($iorfile2, $PerlACE::wait_interval_for_process_creation) == -1)
+
+if ($client->WaitForFileTimed ($iorbase2,
+                               $client->ProcessStartWaitInterval()) == -1) 
 {
-    $server = $SV->TimedWait (1);
-    if ($server == 2)
+    $server_status = $SV->TimedWait (1);
+    if ($server_status == 2)
     {
         # Mark as no longer running to avoid errors on exit.
         $SV->{RUNNING} = 0;
@@ -68,29 +65,29 @@ if (PerlACE::waitforfile_timed ($iorfile2, $PerlACE::wait_interval_for_process_c
     }
     else
     {
-        print STDERR "ERROR: cannot find file <$iorfile2>\n";
+        print STDERR "ERROR: cannot find file <$client_iorfile2>\n";
         $SV->Kill ();
         exit 1;
     }
 }
 
-$client = $CL->SpawnWaitKill (60);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ());
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$server = $SV->WaitKill (30);
+$server_status = $SV->WaitKill (30);
 
-if ($server != 0)
+if ($server_status != 0)
 {
-    print STDERR "ERROR: server returned $server\n";
+    print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-unlink $iorfile1;
-unlink $iorfile2;
+$client->DeleteFile ($iorbase1);
+$client->DeleteFile ($iorbase2);
 
 # Clean up SHMIOP files
 PerlACE::check_n_cleanup_files ("server_shmiop_*");
