@@ -16,7 +16,7 @@ print STDERR "\n********** RTCORBA Destroy_Thread_Pool Unit Test **********\n\n"
 
 $SV = $server->CreateProcess ("Destroy_Thread_Pool");
 if ($continuous) {
-  $SV->Arguments("-ORBSvcConf continuous$PerlACE::svcconf_ext");
+    $SV->Arguments("-ORBSvcConf continuous$PerlACE::svcconf_ext");
 }
 
 $server_status = $SV->SpawnWaitKill (60);

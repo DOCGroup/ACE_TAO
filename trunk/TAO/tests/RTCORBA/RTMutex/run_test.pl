@@ -17,7 +17,7 @@ $SV = $server->CreateProcess ("server");
 $server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval ());
 
 if ($server_status != 0) {
-    print STDERR "ERROR: test returned $test\n";
+    print STDERR "ERROR: test returned $server_status\n";
     exit 1;
 }
 

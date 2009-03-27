@@ -39,16 +39,14 @@ sub run_client
     
     $client_status = $CL->WaitKill ($client->ProcessStartWaitInterval ());
 
-    if ($client_status != 0) 
-    {
+    if ($client_status != 0) {
         print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
         goto kill_server;
     }
 }
 
-for $file (@iorfiles)
-{
+for $file (@iorfiles) {
     $server->DeleteFile ($file);
 }
 
@@ -56,8 +54,7 @@ $SV = $server->CreateProcess ("server");
 
 $SV->Spawn ();
 
-for $file (@iorfiles)
-{
+for $file (@iorfiles) {
     $server_iorfile = $server->LocalFile ($file);
     $client_iorfile = $server->LocalFile ($file);
     if ($server->WaitForFileTimed ($file,
@@ -71,7 +68,7 @@ for $file (@iorfiles)
         } 
         else
         {            
-            print STDERR "ERROR: cannot find ior file: $ior_file\n";
+            print STDERR "ERROR: cannot find ior file: $server_iorfile\n";
             $status = 1;
             goto kill_server;
         }
@@ -84,30 +81,24 @@ for $file (@iorfiles)
     run_client ("-k file://$client_iorfile");
 }
 
-{
-    print STDERR "\n**************************\n";
-    print STDERR "Shutting down the server\n";
-    print STDERR "**************************\n\n";
-    
-    $ior_file = $client->LocalFile ($iorfiles[0]);
-    run_client ("-k file://$ior_file -i 0 -x");
-}
+print STDERR "\n**************************\n";
+print STDERR "Shutting down the server\n";
+print STDERR "**************************\n\n";
 
- kill_server:
-    
-{
-    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
-    
-    if ($server_status != 0) 
-    {
+$ior_file = $client->LocalFile ($iorfiles[0]);
+run_client ("-k file://$ior_file -i 0 -x");
+
+kill_server: 
+    print STDERR "Killing server...\n";
+    $server_status = $SV->Kill ($server->ProcessStopWaitInterval ());
+
+    if ($server_status != 0) {
         print STDERR "ERROR: server returned $server_status\n";
         $status = 1;
     }
-    
-    for $file (@iorfiles)
-    {
+
+    for $file (@iorfiles) {
         $server->DeleteFile ($file);
     }
-}
 
 exit $status;
