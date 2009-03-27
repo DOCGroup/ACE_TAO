@@ -6,19 +6,30 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 use English;
 
-$status = 0;
-$iorfile = "ior_2";
-$client_debuglevel = 0;
-$server_debuglevel = 0;
-$client_debug = 0;
-$server_debug = 0;
-$iiop = 1;
-$shmiop = 1;
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-$extra_client_args = "-k file://$iorfile -ORBdebuglevel $client_debuglevel -d $client_debug -x";
+my $iorbase = "ior_2";
+my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
+
+$server->DeleteFile ($iorbase);
+$client->DeleteFile ($iorbase);
+
+my $client_debuglevel = 0;
+my $server_debuglevel = 0;
+
+my $client_debug = 0;
+my $server_debug = 0;
+
+my $iiop = 1;
+my $shmiop = 1;
+my $status = 0;
+
+$extra_client_args = "-k file://$client_iorfile -ORBdebuglevel $client_debuglevel -d $client_debug -x";
 $extra_server_args = "-ORBdebuglevel $server_debuglevel -d $server_debug";
 
 if ($OSNAME eq "solaris") {
@@ -74,16 +85,16 @@ sub run_client
     my $client_args = "@_" . " $extra_client_args";
 
     print "client $client_args\n";
-
-    $CL = new PerlACE::Process ("client", "$client_args");
+    
+    $CL = $client->CreateProcess ("client", "$client_args");
 
     $CL->Spawn ();
 
-    $client = $CL->WaitKill (120);
+    $client_status = $CL->WaitKill ($client->ProcessStopWaitInterval ());
 
-    if ($client != 0)
+    if ($client_status != 0)
     {
-        print STDERR "ERROR: client returned $client\n";
+        print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
         zap_server (1);
     }
@@ -95,29 +106,29 @@ sub run_server
 
     print "server $server_args\n";
 
-    $SV = new PerlACE::Process ("server", "$server_args");
+    $SV = $server->CreateProcess ("server", "$server_args");
     $SV->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($iorfile,$PerlACE::wait_interval_for_process_creation ) == -1)
-    {
+    if ($server->WaitForFileTimed ($iorbase,
+                                   $server->ProcessStartWaitInterval()) == -1) {
         check_supported_priorities ($SV);
-	print STDERR "ERROR: cannot find ior file: $iorfile\n";
-	$status = 1;
-	zap_server (1);
+        print STDERR "ERROR: cannot find ior file <$server_iorfile>\n";
+      	$status = 1;
+      	zap_server (1);
     }
 }
 
 sub zap_server
 {
-    $server = $SV->WaitKill (5);
+    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
 
-    if ($server != 0)
+    if ($server_status != 0)
     {
-        print STDERR "ERROR: server returned $server\n";
+        print STDERR "ERROR: server returned $server_status\n";
         $status = 1;
     }
 
-    unlink $iorfile;
+    $server->DeleteFile ($iorbase);
 
     if ($_[0])
     {
@@ -144,7 +155,8 @@ for $test (@configurations)
     {
         print STDERR "\n******************************************************\n\n";
 
-        unlink $iorfile;
+        $server->DeleteFile ($iorbase);
+        $client->DeleteFile ($iorbase);
 
         run_server ($test->{server});
 
@@ -154,7 +166,8 @@ for $test (@configurations)
     }
 }
 
-unlink "ior_1";
+$server->DeleteFile ($iorbase);
+$client->DeleteFile ($iorbase);
 
 # Clean up SHMIOP files
 PerlACE::check_n_cleanup_files ("server_shmiop_*");
