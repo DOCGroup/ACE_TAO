@@ -86,11 +86,9 @@ $SV->Spawn ();
 
 
 if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) 
-{
+                               $server->ProcessStartWaitInterval()) == -1) {
     $server_status = $SV->TimedWait (1);
-    if ($server_status == 2)
-    {
+    if ($server_status == 2) {
         # Could not change priority levels so exit.
 
         # redirect STDOUT away from $data_file and set back to normal
@@ -103,8 +101,7 @@ if ($server->WaitForFileTimed ($iorbase,
         $SV->{RUNNING} = 0;
         exit $status;
     }
-    else
-    {
+    else {
         print STDERR "ERROR: cannot find file <$server_iorfile>\n";
         $SV->Kill (); $SV->TimedWait (1);
         exit 1;
@@ -113,16 +110,14 @@ if ($server->WaitForFileTimed ($iorbase,
 
 $client_status = $CL->SpawnWaitKill ($client->ProcessStopWaitInterval ());
 
-if ($client_status != 0)
-{
+if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
 $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
 
-if ($server_status != 0)
-{
+if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
@@ -140,21 +135,18 @@ print STDERR "\n********** Processing test output\n\n";
 
 $errors = system ("perl process-output.pl $data_file $iterations $priority1 $priority2") >> 8;
 
-if ($errors > 0)
-{
+if ($errors > 0) {
     $status = 1;
 
     if (!$quiet) {
         print STDERR "Errors Detected, printing output\n";
-        if (open (DATA, "<$data_file"))
-        {
+        if (open (DATA, "<$data_file")) {
             print STDERR "================================= Begin\n";
             print STDERR <DATA>;
             print STDERR "================================= End\n";
             close (DATA);
         }
-        else
-        {
+        else {
             print STDERR "ERROR: Could not open $data_file\n";
         }
     }

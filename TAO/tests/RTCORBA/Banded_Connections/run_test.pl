@@ -54,17 +54,14 @@ $CL = $client->CreateProcess ("client", "-n file://$client_iorfile1 -o file://$c
 $SV->Spawn();
 
 if ($client->WaitForFileTimed ($iorbase2,
-                               $client->ProcessStartWaitInterval()) == -1) 
-{
+                               $client->ProcessStartWaitInterval()) == -1) {
     $server_status = $SV->TimedWait (1);
-    if ($server_status == 2)
-    {
+    if ($server_status == 2) {
         # Mark as no longer running to avoid errors on exit.
         $SV->{RUNNING} = 0;
         exit $status;
     }
-    else
-    {
+    else {
         print STDERR "ERROR: cannot find file <$client_iorfile2>\n";
         $SV->Kill ();
         exit 1;
@@ -80,8 +77,7 @@ if ($client_status != 0) {
 
 $server_status = $SV->WaitKill (30);
 
-if ($server_status != 0)
-{
+if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }

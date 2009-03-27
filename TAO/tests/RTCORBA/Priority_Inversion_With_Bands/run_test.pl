@@ -21,23 +21,19 @@ my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 fail
 
 
 @configurations =
-  (
-   {
+  ({
     file => "ior_2",
     args => "-b 0",
     description => "Invoking methods on servant in thread lanes without bands",
-   },
-   {
+   },{
     file => "ior_2",
     args => "-b 1",
     description => "Invoking methods on servant in thread lanes with bands",
-   },
-   {
+   },{
     file => "ior_1",
     args => "-b 0",
     description => "Invoking methods on servant in thread pool without bands",
-   },
-   {
+   },{
     file => "ior_1",
     args => "-b 1",
     description => "Invoking methods on servant in thread pool with bands",
@@ -45,11 +41,10 @@ my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 fail
   );
 
 sub run_test
-  {
-    for $test (@configurations)
-      {
+{
+    for $test (@configurations) {
         $server->DeleteFile ($test->{file});
-      }
+    }
 
     my @parms = @_;
     $arg = $parms[0];
@@ -57,70 +52,61 @@ sub run_test
     $SV = $server->CreateProcess ("server", "$common_args -s $server_static_threads -d $server_dynamic_threads");
     
     $server_status = $SV->Spawn ();
-    if ($server_status == -1)
-      {
+    if ($server_status == -1) {
         exit $server_status;
-      }
+    }
 
-    for $test (@configurations)
-      {
+    for $test (@configurations) {
         if ($server->WaitForFileTimed ($test->{file},
-                               $server->ProcessStartWaitInterval()) == -1)
-          {        
+                               $server->ProcessStartWaitInterval()) == -1) {        
             $server_status = $SV->TimedWait (1);
-            if ($server_status == 2)
-              {
+            if ($server_status == 2) {
                 # Mark as no longer running to avoid errors on exit.
                 $status = $server_status;
                 $SV->{RUNNING} = 0;
                 exit $status;
-              }
-            else
-              {
+            }
+            else {
                 print STDERR "ERROR: cannot find ior file: $test->{file}\n";
                 $status = 1;
                 goto kill_server;
-              }
-          }
+            }
+        }
         print $test->{file}."\n";
-      }
+    }
 
     $CL[$i] = $client->CreateProcess ("client", "$common_args $arg");
     $CL[$i]->Spawn ();
 
     $client_status = $CL[$i]->WaitKill ($client->ProcessStopWaitInterval ());
-    if ($client_status != 0)
-      {
+    if ($client_status != 0) {
         print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
         goto kill_server;
-      }
+    }
 
   kill_server:
 
     $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval () + 200);
 
-    if ($server_status != 0)
-      {
+    if ($server_status != 0) {
         print STDERR "ERROR: server returned $server_status\n";
         $status = 1;
-      }
+    }
 
-    for $test (@configurations)
-      {
+    for $test (@configurations) {
         $server->DeleteFile ($test->{file});
-      }
-  }
+    }
+}
 
-for $test (@configurations)
-  {
+for $test (@configurations) {
     print STDERR "\n*************************************************************\n";
     print STDERR "$test->{description}\n";
     print STDERR "*************************************************************\n\n";
 
     my $file = $server->LocalFile($test->{file});
     run_test ("-k file://$file $test->{args}");
-  }
+}
 
 exit $status
 

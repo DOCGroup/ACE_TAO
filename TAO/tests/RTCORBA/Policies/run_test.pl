@@ -13,8 +13,8 @@ my $policies = PerlACE::TestTarget::create_target (1) || die "Create target 1 fa
 $SV = $policies->CreateProcess ("Policies");
 $status = $SV->SpawnWaitKill ($policies->ProcessStopWaitInterval ());
 
-if ($statust != 0) {
-    print STDERR "ERROR: test retu\n";
+if ($status != 0) {
+    print STDERR "ERROR: test returns $status\n";
     exit 1;
 }
 

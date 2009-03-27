@@ -47,7 +47,7 @@ elsif ($^O eq "hpux") {
 }
 
 if ($continuous) {
-  $server_args .= " -ORBSvcConf continuous$PerlACE::svcconf_ext";
+    $server_args .= " -ORBSvcConf continuous$PerlACE::svcconf_ext";
 }
 
 $SV = $server->CreateProcess ("server", "-p $server_iorfile1 -o $server_iorfile2 $server_args");
@@ -55,7 +55,7 @@ $CL = $client->CreateProcess ("client", "-p file://$client_iorfile1 -o file://$c
 
 print STDERR "\n********** RTCORBA SERVER_DECLARED Priority Unit Test\n\n";
 
-$status_status = $SV->Spawn ();
+$server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
@@ -71,16 +71,14 @@ if ($server->WaitForFileTimed ($iorbase2,
 
 $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ());
 
-if ($client_status != 0)
-{
+if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
 $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
 
-if ($server_status != 0)
-{
+if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
