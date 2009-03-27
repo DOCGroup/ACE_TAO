@@ -21,24 +21,23 @@ my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 fail
 
 
 @configurations =
-  ({
-    file => "ior_2",
-    args => "-b 0",
-    description => "Invoking methods on servant in thread lanes without bands",
-   },{
-    file => "ior_2",
-    args => "-b 1",
-    description => "Invoking methods on servant in thread lanes with bands",
-   },{
-    file => "ior_1",
-    args => "-b 0",
-    description => "Invoking methods on servant in thread pool without bands",
-   },{
-    file => "ior_1",
-    args => "-b 1",
-    description => "Invoking methods on servant in thread pool with bands",
-   },
-  );
+    ({
+        file => "ior_2",
+        args => "-b 0",
+        description => "Invoking methods on servant in thread lanes without bands",
+     },{
+        file => "ior_2",
+        args => "-b 1",
+        description => "Invoking methods on servant in thread lanes with bands",
+     },{
+        file => "ior_1",
+        args => "-b 0",
+        description => "Invoking methods on servant in thread pool without bands",
+     },{
+        file => "ior_1",
+        args => "-b 1",
+        description => "Invoking methods on servant in thread pool with bands",
+     },);
 
 sub run_test
 {
@@ -85,7 +84,7 @@ sub run_test
         goto kill_server;
     }
 
-  kill_server:
+kill_server:
 
     $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval () + 200);
 
