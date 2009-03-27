@@ -80,7 +80,7 @@ for $test (@configurations) {
         }
     }
 }
-  
+
 for $test (@configurations) {
     print STDERR "\n*************************************************************\n";
     print STDERR "$test->{description}\n";
@@ -113,4 +113,3 @@ for $test (@configurations) {
 }
 
 exit $status
-

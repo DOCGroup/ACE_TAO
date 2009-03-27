@@ -125,8 +125,8 @@ for $test (@configurations) {
 }
 
 for $file (@iorfiles) {
-  $server->DeleteFile ($file);
-  $client->DeleteFile ($file);
+    $server->DeleteFile ($file);
+    $client->DeleteFile ($file);
 }
 
 exit $status;
