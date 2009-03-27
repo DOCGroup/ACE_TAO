@@ -45,11 +45,17 @@ ACE_RCSID (tests,
 #include /**/ <X11/Intrinsic.h>
 #include /**/ <X11/Xatom.h>
 #include /**/ <X11/Shell.h>
-
-#include /**/ <X11/Xaw/Command.h>
-#include /**/ <X11/Xaw/Label.h>
-#include /**/ <X11/Xaw/Box.h>
 #include /**/ <X11/StringDefs.h>
+
+#if defined (ACE_HAS_ATHENA3D)
+#  include /**/ <X11/Xaw3d/Command.h>
+#  include /**/ <X11/Xaw3d/Label.h>
+#  include /**/ <X11/Xaw3d/Box.h>
+#else
+#  include /**/ <X11/Xaw/Command.h>
+#  include /**/ <X11/Xaw/Label.h>
+#  include /**/ <X11/Xaw/Box.h>
+#endif
 
 static void set_label(Widget w, const char *p)
 {
