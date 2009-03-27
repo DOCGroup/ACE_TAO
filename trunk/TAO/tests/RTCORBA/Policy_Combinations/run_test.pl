@@ -60,14 +60,12 @@ for $file (@iorfiles) {
     if ($server->WaitForFileTimed ($file,
                                    $server->ProcessStartWaitInterval()) == -1) {
         $server_status = $SV->TimedWait (1);
-        if ($server_status == 2) 
-        {
+        if ($server_status == 2) {
             # Mark as no longer running to avoid errors on exit.
             $SV->{RUNNING} = 0;
             exit $status;
         } 
-        else
-        {            
+        else {            
             print STDERR "ERROR: cannot find ior file: $server_iorfile\n";
             $status = 1;
             goto kill_server;
