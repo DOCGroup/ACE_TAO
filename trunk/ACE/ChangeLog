@@ -1,3 +1,10 @@
+Fri Mar 27 13:24:58 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * bin/MakeProjectCreator/config/ace_athena3d.mpb:
+        * tests/XtAthenaReactor_Test.cpp:
+        * tests/tests.mpc:
+          Added support for Athena-3D widgets.
+
 Fri Mar 27 11:19:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:

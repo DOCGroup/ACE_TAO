@@ -1352,6 +1352,13 @@ project(XtAthenaReactor Test) : acetest, ace_xtreactor, ace_athena {
   }
 }
 
+project(XtAthena3dReactor Test) : acetest, ace_xtreactor, ace_athena3d {
+  exename   = XtAthena3dReactor_Test
+  Source_Files {
+    XtAthenaReactor_Test.cpp
+  }
+}
+
 project(FlReactor Test) : acetest, ace_flreactor {
   exename   = FlReactor_Test
 
