@@ -1,3 +1,21 @@
+Fri Mar 27 12:48:10 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
+        * tests/RTCORBA/Destroy_Thread_Pool/run_test.pl:
+        * tests/RTCORBA/Explicit_Binding/run_test.pl:
+        * tests/RTCORBA/Linear_Priority/run_test.pl:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+        * tests/RTCORBA/Persistent_IOR/run_test.pl:
+        * tests/RTCORBA/Policies/run_test.pl:
+        * tests/RTCORBA/Policy_Combinations/run_test.pl:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/run_test.pl:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl:        
+        * tests/RTCORBA/RTMutex/run_test.pl:
+        * tests/RTCORBA/Server_Declared/run_test.pl:
+        * tests/RTCORBA/Server_Protocol/run_test.pl:
+        * tests/RTCORBA/Thread_Pool/run_test.pl:
+          Resolved fuzz errors and warnings.
+
 Fri Mar 27 10:29:10 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/tao_orb_tests.lst:

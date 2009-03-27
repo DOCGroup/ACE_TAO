@@ -92,8 +92,7 @@ sub run_client
 
     $client_status = $CL->WaitKill ($client->ProcessStopWaitInterval ());
 
-    if ($client_status != 0)
-    {
+    if ($client_status != 0) {
         print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
         zap_server (1);
@@ -113,8 +112,8 @@ sub run_server
                                    $server->ProcessStartWaitInterval()) == -1) {
         check_supported_priorities ($SV);
         print STDERR "ERROR: cannot find ior file <$server_iorfile>\n";
-      	$status = 1;
-      	zap_server (1);
+        $status = 1;
+        zap_server (1);
     }
 }
 
@@ -122,37 +121,33 @@ sub zap_server
 {
     $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
 
-    if ($server_status != 0)
-    {
+    if ($server_status != 0) {
         print STDERR "ERROR: server returned $server_status\n";
         $status = 1;
     }
 
     $server->DeleteFile ($iorbase);
 
-    if ($_[0])
-    {
+    if ($_[0]) {
         exit $status;
     }
 }
 
 sub check_supported_priorities
 {
-  $process = shift;
-  $returnVal = $process->TimedWait (1);
-  if ($returnVal == 2) {
-    # Mark as no longer running to avoid errors on exit.
-    $process->{RUNNING} = 0;
-    exit 0;
-  }
+    $process = shift;
+    $returnVal = $process->TimedWait (1);
+    if ($returnVal == 2) {
+        # Mark as no longer running to avoid errors on exit.
+        $process->{RUNNING} = 0;
+        exit 0;
+    }
 }
 
-for $test (@configurations)
-{
+for $test (@configurations) {
     my $clients = $test->{clients};
 
-    for $args (@$clients)
-    {
+    for $args (@$clients) {
         print STDERR "\n******************************************************\n\n";
 
         $server->DeleteFile ($iorbase);

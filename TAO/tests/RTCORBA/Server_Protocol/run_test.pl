@@ -20,9 +20,6 @@ $client->DeleteFile($iorbase);
 $status = 0;
 
 $server_reverse_conf     = $server->LocalFile ("server_reverse$PerlACE::svcconf_ext");
-$server_iiop_conf        = $server->LocalFile ("server_iiop$PerlACE::svcconf_ext");
-$server_uiop_conf        = $server->LocalFile ("server_uiop$PerlACE::svcconf_ext");
-$server_shmiop_conf      = $server->LocalFile ("server_shmiop$PerlACE::svcconf_ext");
 $server_iiop_uiop_conf   = $server->LocalFile ("server_iiop_uiop$PerlACE::svcconf_ext");
 $server_iiop_shmiop_conf = $server->LocalFile ("server_iiop_shmiop$PerlACE::svcconf_ext");
 $server_reverse_nt_conf  = $server->LocalFile ("server_reverse_nt$PerlACE::svcconf_ext");

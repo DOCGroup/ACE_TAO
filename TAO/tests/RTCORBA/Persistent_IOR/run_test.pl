@@ -31,8 +31,7 @@ $extra_server_args = ($continuous ? "-ORBSvcConf continuous$PerlACE::svcconf_ext
      );
 
 @configurations =
-    (
-     {
+    ({
          iorfiles => [ "persistent_ior", "tp_persistent_ior", "transient_ior" ],
          server => "-a ". $server->LocalFile ("tp_persistent_ior") ." -p ". 
                           $server->LocalFile ("persistent_ior") ." -t ".
@@ -40,8 +39,7 @@ $extra_server_args = ($continuous ? "-ORBSvcConf continuous$PerlACE::svcconf_ext
          clients => [ "-k file://".$client->LocalFile("tp_persistent_ior"),
                       "-k file://".$client->LocalFile("persistent_ior"),
                       "-k file://".$client->LocalFile("transient_ior")." -x" ],
-     },
-     {
+     }, {
          iorfiles => [ "not_used_ior_1", "not_used_ior_2", "transient_ior" ],
          server => "-a ". $server->LocalFile ("not_used_ior_1") ." -p ". 
                           $server->LocalFile ("not_used_ior_2") ." -t ".
@@ -62,8 +60,7 @@ sub run_client
 
     $client_status = $CL->WaitKill ($client->ProcessStopWaitInterval ()+200);
 
-    if ($client_status != 0)
-    {
+    if ($client_status != 0) {
         print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
         zap_server (1);
@@ -81,11 +78,9 @@ sub run_server
     $SV = $server->CreateProcess ("server", $args);
     $SV->Spawn ();
 
-    for $file (@$iorfiles)
-    {
+    for $file (@$iorfiles) {
         if ($server->WaitForFileTimed ($file,
-                                      $server->ProcessStartWaitInterval ()) == -1)
-        {
+                                      $server->ProcessStartWaitInterval ()) == -1) {
             print STDERR "ERROR: cannot find ior file: $file\n";
             $status = 1;
             zap_server (1);
@@ -97,16 +92,13 @@ sub zap_server
 {
     $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
 
-    if ($server_status != 0)
-    {
+    if ($server_status != 0) {
         print STDERR "ERROR: server returned $server_status\n";
         $status = 1;
     }
 
-    if ($_[0])
-    {
-        for $file (@iorfiles)
-        {
+    if ($_[0]) {
+        for $file (@iorfiles) {
             $server->DeleteFile ($file);
         }
 
@@ -114,29 +106,25 @@ sub zap_server
     }
 }
 
-for $file (@iorfiles)
-{
-  $server->DeleteFile ($file);
-  $client->DeleteFile ($file);
+for $file (@iorfiles) {
+    $server->DeleteFile ($file);
+    $client->DeleteFile ($file);
 }
 
-for $test (@configurations)
-{
+for $test (@configurations) {
     print STDERR "\n******************************************************\n";
 
     run_server ($test->{server}, $test->{iorfiles});
 
     my $clients = $test->{clients};
-    for $args (@$clients)
-    {
+    for $args (@$clients) {
         run_client ($args);
     }
 
     zap_server (0);
 }
 
-for $file (@iorfiles)
-{
+for $file (@iorfiles) {
   $server->DeleteFile ($file);
   $client->DeleteFile ($file);
 }
