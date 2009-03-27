@@ -291,6 +291,9 @@ while ($blk = $t->get) {
     last;
   }
 }
+if ($buf !~ /$prompt1/) {
+  die "ERROR: Didn't got prompt but got <$buf> <$blk>";
+}
 my $i = 0;
 my @lines;
 while($i < $cmdnr) {
