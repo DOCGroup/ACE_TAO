@@ -1,3 +1,9 @@
+Fri Mar 27 11:19:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Improved error handling
+
 Thu Mar 26 17:10:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:
