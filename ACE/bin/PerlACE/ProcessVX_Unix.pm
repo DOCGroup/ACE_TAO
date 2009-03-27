@@ -267,7 +267,7 @@ sub Spawn ()
               die "ERROR: Telnet failed to <" . $telnet_host . ":". $telnet_port . ">";
             }
             if (!$t->open()) {
-              die "ERROR: Telnet open to <" . $telnet_host . ":". $telnet_port . "> msg: " . $t->errmsg;
+              die "ERROR: Telnet open to <" . $telnet_host . ":". $telnet_port . "> " . $t->errmsg;
             }
             $t->print("\n");
 
