@@ -1,3 +1,11 @@
+Fri Mar 27 15:23:32 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * NEWS:
+        
+          Added entry for bug fix below
+          
+          Fri Mar 20 16:04:58 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Fri Mar 27 14:42:07 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/RTCORBA/Persistent_IOR/run_test.pl:
