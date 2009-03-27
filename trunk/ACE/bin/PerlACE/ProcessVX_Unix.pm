@@ -286,10 +286,11 @@ sub Spawn ()
             my $blk;
             my $buf;
             # wait for the prompt
+            my $prompt1 = '-> $';
             while ($blk = $t->get) {
               printf $blk;
               $buf .= $blk;
-              if ($buf =~ /$prompt/) {
+              if ($buf =~ /$prompt1/) {
                 last;
               }
             }
