@@ -266,7 +266,9 @@ sub Spawn ()
             if (!defined $t) {
               die "ERROR: Telnet failed to <" . $telnet_host . ":". $telnet_port . ">";
             }
-            $t->open();
+            if (!$t->open()) {
+              die "ERROR: Telnet open to <" . $telnet_host . ":". $telnet_port . "> msg: " . $t->errmsg;
+            }
             $t->print("\n");
 
             my $target_login = $ENV{'ACE_RUN_VX_LOGIN'};
