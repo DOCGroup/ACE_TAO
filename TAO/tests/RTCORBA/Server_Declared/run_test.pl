@@ -6,13 +6,25 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$iorfile1 = PerlACE::LocalFile ("test1.ior");
-$iorfile2 = PerlACE::LocalFile ("test2.ior");
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-unlink $iorfile1;
-unlink $iorfile2;
+my $iorbase1 = "test1.ior";
+my $iorbase2 = "test2.ior";
+my $client_iorfile1 = $client->LocalFile ("$iorbase1");
+my $server_iorfile1 = $server->LocalFile ("$iorbase1");
+
+my $client_iorfile2 = $client->LocalFile ("$iorbase2");
+my $server_iorfile2 = $server->LocalFile ("$iorbase2");
+
+$server->DeleteFile($iorbase1);
+$client->DeleteFile($iorbase1);
+
+$server->DeleteFile($iorbase2);
+$client->DeleteFile($iorbase2);
+
 $status = 0;
 
 $server_args =
@@ -38,54 +50,45 @@ if ($continuous) {
   $server_args .= " -ORBSvcConf continuous$PerlACE::svcconf_ext";
 }
 
-$client_args = "-p file://$iorfile1 -o file://$iorfile2";
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-p test1.ior -o test2.ior $server_args");
-}
-else {
-    $SV = new PerlACE::Process ("server", "-p $iorfile1 -o $iorfile2 $server_args");
-}
-$CL = new PerlACE::Process ("client", $client_args);
+$SV = $server->CreateProcess ("server", "-p $server_iorfile1 -o $server_iorfile2 $server_args");
+$CL = $client->CreateProcess ("client", "-p file://$client_iorfile1 -o file://$client_iorfile2");
 
 print STDERR "\n********** RTCORBA SERVER_DECLARED Priority Unit Test\n\n";
 
+$status_status = $SV->Spawn ();
 
-$SV->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile2, $PerlACE::wait_interval_for_process_creation) == -1)
-{
-    $server = $SV->TimedWait (1);
-    if ($server == 2)
-    {
-        # Mark as no longer running to avoid errors on exit.
-        $SV->{RUNNING} = 0;
-        exit $status;
-    }
-    else
-    {
-        print STDERR "ERROR: cannot find file <$iorfile2>\n";
-        $SV->Kill ();
-        exit 1;
-    }
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
 }
 
-$client = $CL->SpawnWaitKill (60);
+if ($server->WaitForFileTimed ($iorbase2,
+                               $server->ProcessStartWaitInterval ()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile2>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
 
-if ($client != 0)
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ());
+
+if ($client_status != 0)
 {
-    print STDERR "ERROR: client returned $client\n";
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$server = $SV->WaitKill (60);
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
 
-if ($server != 0)
+if ($server_status != 0)
 {
-    print STDERR "ERROR: server returned $server\n";
+    print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-unlink $iorfile1;
-unlink $iorfile2;
+$server->DeleteFile($iorbase1);
+$client->DeleteFile($iorbase1);
+
+$server->DeleteFile($iorbase2);
+$client->DeleteFile($iorbase2);
 
 exit $status;

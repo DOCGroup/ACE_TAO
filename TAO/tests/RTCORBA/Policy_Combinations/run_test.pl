@@ -6,9 +6,12 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $status = 0;
+
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 @iorfiles = 
     (
@@ -30,15 +33,15 @@ $status = 0;
 
 sub run_client
 {
-    $CL = new PerlACE::Process ("client", @_);
+    $CL = $client->CreateProcess ("client", @_);
 
     $CL->Spawn ();
     
-    $client = $CL->WaitKill (120);
+    $client_status = $CL->WaitKill ($client->ProcessStartWaitInterval ());
 
-    if ($client != 0) 
+    if ($client_status != 0) 
     {
-        print STDERR "ERROR: client returned $client\n";
+        print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
         goto kill_server;
     }
@@ -46,24 +49,21 @@ sub run_client
 
 for $file (@iorfiles)
 {
-    unlink $file;
+    $server->DeleteFile ($file);
 }
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server");
-}
-else {
-    $SV = new PerlACE::Process ("server");
-}
+$SV = $server->CreateProcess ("server");
+
 $SV->Spawn ();
 
 for $file (@iorfiles)
 {
-    $file = PerlACE::LocalFile($file);
-    if (PerlACE::waitforfile_timed ($file, $PerlACE::wait_interval_for_process_creation) == -1)
-    {
-        $server = $SV->TimedWait (1);
-        if ($server == 2) 
+    $server_iorfile = $server->LocalFile ($file);
+    $client_iorfile = $server->LocalFile ($file);
+    if ($server->WaitForFileTimed ($file,
+                                   $server->ProcessStartWaitInterval()) == -1) {
+        $server_status = $SV->TimedWait (1);
+        if ($server_status == 2) 
         {
             # Mark as no longer running to avoid errors on exit.
             $SV->{RUNNING} = 0;
@@ -71,7 +71,7 @@ for $file (@iorfiles)
         } 
         else
         {            
-            print STDERR "ERROR: cannot find ior file: $file\n";
+            print STDERR "ERROR: cannot find ior file: $ior_file\n";
             $status = 1;
             goto kill_server;
         }
@@ -81,7 +81,7 @@ for $file (@iorfiles)
     print STDERR "Invoking methods on servant in $file poa\n";
     print STDERR "******************************************************\n\n";
     
-    run_client ("-k file://$file");
+    run_client ("-k file://$client_iorfile");
 }
 
 {
@@ -89,23 +89,24 @@ for $file (@iorfiles)
     print STDERR "Shutting down the server\n";
     print STDERR "**************************\n\n";
     
-    run_client ("-k file://$iorfiles[0] -i 0 -x");
+    $ior_file = $client->LocalFile ($iorfiles[0]);
+    run_client ("-k file://$ior_file -i 0 -x");
 }
 
  kill_server:
     
 {
-    $server = $SV->WaitKill (5);
+    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
     
-    if ($server != 0) 
+    if ($server_status != 0) 
     {
-        print STDERR "ERROR: server returned $server\n";
+        print STDERR "ERROR: server returned $server_status\n";
         $status = 1;
     }
     
     for $file (@iorfiles)
     {
-        unlink $file;
+        $server->DeleteFile ($file);
     }
 }
 

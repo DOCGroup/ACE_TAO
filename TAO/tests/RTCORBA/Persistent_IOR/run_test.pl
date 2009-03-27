@@ -6,9 +6,13 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
+
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 $status = 0;
+
 $iiop_port = 27532;
 $tp_iiop_port = 27533;
 
@@ -30,17 +34,21 @@ $extra_server_args = ($continuous ? "-ORBSvcConf continuous$PerlACE::svcconf_ext
     (
      {
          iorfiles => [ "persistent_ior", "tp_persistent_ior", "transient_ior" ],
-         server => "-a tp_persistent_ior -p persistent_ior -t transient_ior $extra_server_args",
-         clients => [ "-k file://".PerlACE::LocalFile("tp_persistent_ior"),
-                      "-k file://".PerlACE::LocalFile("persistent_ior"),
-                      "-k file://".PerlACE::LocalFile("transient_ior")." -x" ],
+         server => "-a ". $server->LocalFile ("tp_persistent_ior") ." -p ". 
+                          $server->LocalFile ("persistent_ior") ." -t ".
+                          $server->LocalFile ("transient_ior") ." $extra_server_args",
+         clients => [ "-k file://".$client->LocalFile("tp_persistent_ior"),
+                      "-k file://".$client->LocalFile("persistent_ior"),
+                      "-k file://".$client->LocalFile("transient_ior")." -x" ],
      },
      {
          iorfiles => [ "not_used_ior_1", "not_used_ior_2", "transient_ior" ],
-         server => "-a not_used_ior_1 -p not_used_ior_2 -t transient_ior $extra_server_args",
-         clients => [ "-k file://".PerlACE::LocalFile("tp_persistent_ior"),
-                      "-k file://".PerlACE::LocalFile("persistent_ior"),
-                      "-k file://".PerlACE::LocalFile("transient_ior")." -x" ],
+         server => "-a ". $server->LocalFile ("not_used_ior_1") ." -p ". 
+                          $server->LocalFile ("not_used_ior_2") ." -t ".
+                          $server->LocalFile ("transient_ior") ." $extra_server_args",
+         clients => [ "-k file://".$client->LocalFile("tp_persistent_ior"),
+                      "-k file://".$client->LocalFile("persistent_ior"),
+                      "-k file://".$client->LocalFile("transient_ior")." -x" ],
      },
      );
 
@@ -48,15 +56,15 @@ sub run_client
 {
     print "\nRunning client with the following args: @_\n\n";
 
-    $CL = new PerlACE::Process ("client", @_);
+    $CL = $client->CreateProcess ("client", @_);
 
     $CL->Spawn ();
 
-    $client = $CL->WaitKill (120);
+    $client_status = $CL->WaitKill ($client->ProcessStopWaitInterval ()+200);
 
-    if ($client != 0)
+    if ($client_status != 0)
     {
-        print STDERR "ERROR: client returned $client\n";
+        print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
         zap_server (1);
     }
@@ -70,24 +78,13 @@ sub run_server
 
     print "\nRunning server with the following args: $args\n\n";
 
-    if (PerlACE::is_vxworks_test()) {
-        $SV = new PerlACE::ProcessVX ("server", $args);
-    }
-    else {
-        $SV = new PerlACE::Process ("server", $args);
-    }
-
+    $SV = $server->CreateProcess ("server", $args);
     $SV->Spawn ();
-
-    # $server = $SV->Wait (10);
-    # if ($server == 0)
-    # {
-    #    return 0;
-    # }
 
     for $file (@$iorfiles)
     {
-        if (PerlACE::waitforfile_timed ($file, 5) == -1)
+        if ($server->WaitForFileTimed ($file,
+                                      $server->ProcessStartWaitInterval ()) == -1)
         {
             print STDERR "ERROR: cannot find ior file: $file\n";
             $status = 1;
@@ -98,11 +95,11 @@ sub run_server
 
 sub zap_server
 {
-    $server = $SV->WaitKill (5);
+    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
 
-    if ($server != 0)
+    if ($server_status != 0)
     {
-        print STDERR "ERROR: server returned $server\n";
+        print STDERR "ERROR: server returned $server_status\n";
         $status = 1;
     }
 
@@ -110,7 +107,7 @@ sub zap_server
     {
         for $file (@iorfiles)
         {
-            unlink $file;
+            $server->DeleteFile ($file);
         }
 
         exit $status;
@@ -119,7 +116,8 @@ sub zap_server
 
 for $file (@iorfiles)
 {
-    unlink $file;
+  $server->DeleteFile ($file);
+  $client->DeleteFile ($file);
 }
 
 for $test (@configurations)
@@ -139,7 +137,8 @@ for $test (@configurations)
 
 for $file (@iorfiles)
 {
-    unlink $file;
+  $server->DeleteFile ($file);
+  $client->DeleteFile ($file);
 }
 
 exit $status;
