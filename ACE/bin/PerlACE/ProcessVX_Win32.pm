@@ -283,10 +283,11 @@ $t->print("\n");
 # wait for the prompt
 my $blk;
 my $buf;
+my $prompt1 = '-> $';
 while ($blk = $t->get) {
   printf $blk;
   $buf .= $blk;
-  if ($buf =~ /$prompt/) {
+  if ($buf =~ /$prompt1/) {
     last;
   }
 }
