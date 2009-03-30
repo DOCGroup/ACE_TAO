@@ -266,6 +266,13 @@ sub Spawn ()
             if (!defined $t) {
               die "ERROR: Telnet failed to <" . $telnet_host . ":". $telnet_port . ">";
             }
+            my $retries = 5;
+            while ($retries--) {
+              if (!$t->open()) {
+                print "Couldn't open telnet connection; sleeping then retrying\n" if ($v);
+                sleep(5);
+              }
+
             if (!$t->open()) {
               die "ERROR: Telnet open to <" . $telnet_host . ":". $telnet_port . "> " . $t->errmsg;
             }
