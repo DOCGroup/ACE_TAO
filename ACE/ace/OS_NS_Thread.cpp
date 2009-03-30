@@ -1784,7 +1784,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (sa);
 
-# if defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600) && (ACE_VXWORKS <= 0x620)
+# if defined (ACE_PTHREAD_MUTEXATTR_T_INITIALIZE)
   /* Tests show that VxWorks 6.x pthread lib does not only
    * require zeroing of mutex/condition objects to function correctly
    * but also of the attribute objects.
@@ -1834,7 +1834,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 
   if (result == 0)
 {
-#   if defined (ACE_VXWORKS)&& (ACE_VXWORKS >= 0x600) && (ACE_VXWORKS <= 0x620)
+#   if defined (ACE_PTHREAD_MUTEX_T_INITIALIZE)
       /* VxWorks 6.x API reference states:
        * If the memory for the mutex variable object has been allocated
        *   dynamically, it is a good policy to always zero out the
@@ -3827,7 +3827,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 # if defined (ACE_HAS_PTHREADS)
   int result;
-# if defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600) && (ACE_VXWORKS <= 0x620)
+# if defined (ACE_PTHREAD_ATTR_T_INITIALIZE)
   /* Tests show that VxWorks 6.x pthread lib does not only
    * require zeroing of mutex/condition objects to function correctly
    * but also of the attribute objects.
