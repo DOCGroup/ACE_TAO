@@ -1,3 +1,14 @@
+Mon Mar 30 07:39:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/run_test.pl:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl:
+        * tests/RTCORBA/RTMutex/run_test.pl:
+        * tests/RTCORBA/Server_Declared/run_test.pl:
+        * tests/RTCORBA/Thread_Pool/run_test.pl:
+          Resolved some runtime errors which were introduced while making these
+          scripts fuzz compliant.
+
 Fri Mar 27 15:23:32 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:

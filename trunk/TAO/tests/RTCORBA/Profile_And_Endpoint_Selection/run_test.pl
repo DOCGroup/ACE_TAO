@@ -90,7 +90,7 @@ sub run_client
 
     $CL->Spawn ();
 
-    $client_status = $CL->WaitKill ($client->ProcessStopWaitInterval ());
+    $client_status = $CL->WaitKill ($client->ProcessStopWaitInterval (120));
 
     if ($client_status != 0) {
         print STDERR "ERROR: client returned $client_status\n";

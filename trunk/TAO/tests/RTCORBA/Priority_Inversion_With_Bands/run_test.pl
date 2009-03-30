@@ -61,7 +61,6 @@ sub run_test
             $server_status = $SV->TimedWait (1);
             if ($server_status == 2) {
                 # Mark as no longer running to avoid errors on exit.
-                $status = $server_status;
                 $SV->{RUNNING} = 0;
                 exit $status;
             }
@@ -86,7 +85,7 @@ sub run_test
 
 kill_server:
 
-    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval () + 200);
+    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval (120));
 
     if ($server_status != 0) {
         print STDERR "ERROR: server returned $server_status\n";
