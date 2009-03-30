@@ -274,6 +274,7 @@ sub Spawn ()
                 }
                 sleep(5);
               }
+            }
 
             if (!$t->open()) {
               die "ERROR: Telnet open to <" . $telnet_host . ":". $telnet_port . "> " . $t->errmsg;
