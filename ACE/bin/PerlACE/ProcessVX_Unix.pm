@@ -269,7 +269,9 @@ sub Spawn ()
             my $retries = 5;
             while ($retries--) {
               if (!$t->open()) {
-                print "Couldn't open telnet connection; sleeping then retrying\n" if ($v);
+                if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                  print "Couldn't open telnet connection; sleeping then retrying\n";
+                }
                 sleep(5);
               }
 
