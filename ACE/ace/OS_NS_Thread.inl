@@ -145,7 +145,7 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes, int type)
 #   if defined (ACE_HAS_PTHREADS)
   int result = -1;
 
-#   if defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600) && (ACE_VXWORKS <= 0x620)
+#   if defined (ACE_PTHREAD_CONDATTR_T_INITIALIZE)
       /* Tests show that VxWorks 6.x pthread lib does not only
        * require zeroing of mutex/condition objects to function correctly
        * but also of the attribute objects.
@@ -241,7 +241,7 @@ ACE_OS::cond_init (ACE_cond_t *cv,
 #   if defined (ACE_HAS_PTHREADS)
   int result = -1;
 
-#     if defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600) && (ACE_VXWORKS <= 0x620)
+#     if defined (ACE_PTHREAD_COND_T_INITIALIZE)
   /* VxWorks 6.x API reference states:
    *   If the memory for the condition variable object has been allocated
    *   dynamically, it is a good policy to always zero out the
