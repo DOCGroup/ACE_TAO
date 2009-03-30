@@ -46,7 +46,7 @@ sub run_clients
     }
 
     for ($i = 0; $i < $clients; $i++) {
-        $client_status = $CL[$i]->WaitKill ($client->ProcessStopWaitInterval () + 90);
+        $client_status = $CL[$i]->WaitKill ($client->ProcessStopWaitInterval (120));
         if ($client_status != 0) {
             print STDERR "ERROR: client returned $client_status\n";
             $status = 1;
