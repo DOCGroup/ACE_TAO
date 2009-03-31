@@ -234,7 +234,7 @@ ACE_High_Res_Timer::global_scale_factor (void)
 #         endif /* ! ACE_WIN32 && ! (linux && __alpha__) */
 
 #         if !defined (ACE_WIN32)
-          if (ACE_High_Res_Timer::global_scale_factor_ == 1u)
+          if (ACE_High_Res_Timer::global_scale_factor_ <= 1u)
             // Failed to retrieve CPU speed from system, so calculate it.
             ACE_High_Res_Timer::calibrate ();
 #         endif // (ACE_WIN32)
