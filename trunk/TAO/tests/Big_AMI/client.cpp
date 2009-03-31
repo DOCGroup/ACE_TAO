@@ -143,10 +143,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       // We reuse the object_var smart pointer!
-      object_var = orb->string_to_object (ior);
+      CORBA::Object_var ior_object = orb->string_to_object (ior);
 
       A::AMI_Test_var ami_test_var =
-        A::AMI_Test::_narrow (object_var.in ());
+        A::AMI_Test::_narrow (ior_object.in ());
 
       if (CORBA::is_nil (ami_test_var.in ()))
         {

@@ -66,7 +66,7 @@ TAO_Muxed_TMS::request_id (void)
 /// Bind the dispatcher with the request id.
 int
 TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
-                                TAO_Reply_Dispatcher *rd)
+                                ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd)
 {
   ACE_GUARD_RETURN (ACE_Lock,
                     ace_mon,
@@ -126,15 +126,16 @@ int
 TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 {
   int result = 0;
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd(0);
+
   // Grab the reply dispatcher for this id.
   {
     ACE_GUARD_RETURN (ACE_Lock,
                       ace_mon,
                       *this->lock_,
                       -1);
-
-    TAO_Reply_Dispatcher *rd = 0;
     result = this->dispatcher_table_.unbind (params.request_id_, rd);
+  }
 
     if (result == 0 && rd)
       {
@@ -144,11 +145,6 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
                       ACE_TEXT ("id = %d\n"),
                       params.request_id_));
 
-        // Do not move it outside the scope of the lock. A follower thread
-        // could have timedout unwinding the stack and the reply
-        // dispatcher, and that would mean the present thread could be left
-        // with a dangling pointer and may crash. To safeguard against such
-        // cases we dispatch with the lock held.
         // Dispatch the reply.
         // They return 1 on success, and -1 on failure.
         result = rd->dispatch_reply (params);
@@ -162,13 +158,13 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
                       params.request_id_,
                       result));
 
-        // Result = 0 means that the mux strategy was not able
-        // to find a registered reply handler, either because the reply
-        // was not our reply - just forget about it - or it was ours, but
-        // the reply timed out - just forget about the reply.
-        result = 0;
-      }
-  }
+      // Result = 0 means that the mux strategy was not able
+      // to find a registered reply handler, either because the reply
+      // was not our reply - just forget about it - or it was ours, but
+      // the reply timed out - just forget about the reply.
+      result = 0;
+    }
+
 
   return result;
 }
@@ -177,7 +173,7 @@ int
 TAO_Muxed_TMS::reply_timed_out (CORBA::ULong request_id)
 {
   int result = 0;
-  TAO_Reply_Dispatcher *rd = 0;
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd(0);
 
   // Grab the reply dispatcher for this id.
   {
@@ -269,7 +265,7 @@ TAO_Muxed_TMS::clear_cache_i (void)
   REQUEST_DISPATCHER_TABLE::ITERATOR const end =
     this->dispatcher_table_.end ();
 
-  ACE_Unbounded_Stack <TAO_Reply_Dispatcher *> ubs;
+  ACE_Unbounded_Stack <ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> > ubs;
 
   for (REQUEST_DISPATCHER_TABLE::ITERATOR i =
          this->dispatcher_table_.begin ();
@@ -284,7 +280,7 @@ TAO_Muxed_TMS::clear_cache_i (void)
 
   for (size_t k = 0 ; k != sz ; ++k)
     {
-      TAO_Reply_Dispatcher *rd = 0;
+      ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd(0);
 
       if (ubs.pop (rd) == 0)
         {

@@ -1,3 +1,33 @@
+Tue Mar 31 10:44:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/Asynch_Reply_Dispatcher_Base.cpp:
+        * tao/Asynch_Reply_Dispatcher_Base.h:
+        * tao/Asynch_Reply_Dispatcher_Base.inl:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/Exclusive_TMS.cpp:
+        * tao/Exclusive_TMS.h:
+        * tao/LocateRequest_Invocation.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/Muxed_TMS.cpp:
+        * tao/Muxed_TMS.h:
+        * tao/Reply_Dispatcher.cpp:
+        * tao/Reply_Dispatcher.h:
+        * tao/Synch_Invocation.cpp:
+        * tao/Transport_Mux_Strategy.h:
+          Refactored Reply Dispatchers. It's now possible to make a CORBA 
+          call (synchronous or asynchronous) during an AMI reply 
+          dispatch without running into a deadlock.
+          Also, the reply dispatchers are now created on the heap, 
+          using an ACE_Intrusive_Auto_Ptr. 
+          This fixes Bugzilla 3567.
+          
+        * tests/Big_AMI/client.cpp:
+          Using a different CORBA:Object_var for ior.
+
+        * NEWS:
+          Listed this change.
+          
+
 Mon Mar 30 07:39:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:

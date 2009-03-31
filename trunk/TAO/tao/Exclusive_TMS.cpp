@@ -55,7 +55,7 @@ TAO_Exclusive_TMS::request_id (void)
 // Bind the handler with the request id.
 int
 TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
-                                    TAO_Reply_Dispatcher *rd)
+                                    ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd)
 {
   this->request_id_ = request_id;
   this->rd_ = rd;
@@ -96,7 +96,7 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       return 0;
     }
 
-  TAO_Reply_Dispatcher *rd = this->rd_;
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd (this->rd_.get (), false);
   this->request_id_ = 0; // @@ What is a good value???
   this->rd_ = 0;
 
@@ -121,7 +121,7 @@ TAO_Exclusive_TMS::reply_timed_out (CORBA::ULong request_id)
       return 0;
     }
 
-  TAO_Reply_Dispatcher *rd = this->rd_;
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd (this->rd_.get (), false);
   this->request_id_ = 0; // @@ What is a good value???
   this->rd_ = 0;
 
