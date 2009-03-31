@@ -1,3 +1,11 @@
+Tue Mar 31 14:59:49 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/High_Res_Timer.cpp:
+
+          Linux configured with "clock=pit" on the boot line (commonly used
+          for virtual machines) can report a 0 MHz CPU, in which case ACE
+          must run calibration for the High Res Timer to avoid a division by 0.
+
 Mon Mar 30 14:32:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
