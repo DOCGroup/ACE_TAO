@@ -31,6 +31,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ORB_Core;
 class TAO_Pluggable_Reply_Params;
 class TAO_Reply_Dispatcher;
+template <class X> class ACE_Intrusive_Auto_Ptr;
 
 /**
  * @class TAO_Muxed_TMS
@@ -60,7 +61,7 @@ public:
   // = Please read the documentation in the TAO_Transport_Mux_Strategy
   //   class.
   virtual int bind_dispatcher (CORBA::ULong request_id,
-                               TAO_Reply_Dispatcher *rh);
+                               ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd);
   virtual int unbind_dispatcher (CORBA::ULong request_id);
 
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
@@ -88,7 +89,7 @@ private:
   TAO_ORB_Core * const orb_core_;
 
   typedef ACE_Hash_Map_Manager_Ex <CORBA::ULong,
-                                   TAO_Reply_Dispatcher *,
+                                   ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher>,
                                    ACE_Hash <CORBA::ULong>,
                                    ACE_Equal_To <CORBA::ULong>,
                                    ACE_Null_Mutex>

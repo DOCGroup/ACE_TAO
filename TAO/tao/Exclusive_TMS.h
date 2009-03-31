@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Intrusive_Auto_Ptr.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Pluggable_Reply_Params;
@@ -56,7 +58,7 @@ public:
   //@{
   virtual CORBA::ULong request_id (void);
   virtual int bind_dispatcher (CORBA::ULong request_id,
-                               TAO_Reply_Dispatcher *rh);
+                               ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd);
   virtual int unbind_dispatcher (CORBA::ULong request_id);
 
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
@@ -78,7 +80,7 @@ protected:
 
   /// Reply Dispatcher corresponding to the request. If this is zero we don't
   /// have a reply, if it not zero we have one
-  TAO_Reply_Dispatcher *rd_;
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
