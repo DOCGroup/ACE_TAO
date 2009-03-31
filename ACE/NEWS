@@ -12,6 +12,21 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.8 and ACE-5.6.9
 
 . Improved again Unicode support
 
+. Added support for the native Windows Vista and Windows Server 2008
+  condition variables. These has to be enabled at compile time, and
+  when enabled the application can only run on Vista or Server 2008.
+  Add ACE_HAS_WTHREADS_CONDITION_VARIABLE to your config.h file to
+  enable these
+
+. Fixed a bug when trying to read a file of 1 byte when unicode is
+  enabled
+
+. Improved Windows CE port
+
+. Fixed sevarl Klocwork reported issues
+
+. Added support for MinGW 3.15
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.7 and ACE-5.6.8
 ====================================================
 
