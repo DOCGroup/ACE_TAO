@@ -27,6 +27,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.8 and ACE-5.6.9
 
 . Added support for MinGW 3.15
 
+. Added support for Incredibuild
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.7 and ACE-5.6.8
 ====================================================
 
