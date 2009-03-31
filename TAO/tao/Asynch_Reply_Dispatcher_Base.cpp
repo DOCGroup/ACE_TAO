@@ -19,9 +19,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Constructor.
 TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
     TAO_ORB_Core *orb_core,
-    ACE_Allocator *allocator
-  )
-  : db_ (sizeof buf_,
+    ACE_Allocator *allocator)
+  : TAO_Reply_Dispatcher (allocator)
+  , db_ (sizeof buf_,
          ACE_Message_Block::MB_DATA,
          this->buf_,
          orb_core->input_cdr_buffer_allocator (),
@@ -36,9 +36,7 @@ TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
                 orb_core)
   , transport_ (0)
   , lock_ (0)
-  , refcount_ (1)
   , is_reply_dispatched_ (false)
-  , allocator_ (allocator)
 {
   // @@ NOTE: Need a seperate option for this..
   this->lock_ =
@@ -65,42 +63,6 @@ TAO_Asynch_Reply_Dispatcher_Base::transport (TAO_Transport *t)
   this->transport_ = t;
 
   this->transport_->add_reference ();
-}
-
-void
-TAO_Asynch_Reply_Dispatcher_Base::incr_refcount (void)
-{
-  ACE_GUARD (ACE_Lock,
-             mutex,
-             *this->lock_);
-  ++this->refcount_;
-}
-
-void
-TAO_Asynch_Reply_Dispatcher_Base::decr_refcount (void)
-{
-  {
-    ACE_GUARD (ACE_Lock,
-               mutex,
-               *this->lock_);
-    --this->refcount_;
-
-    if (this->refcount_ > 0)
-      return;
-  }
-
-  if (this->allocator_)
-    {
-      ACE_DES_FREE (this,
-                    this->allocator_->free,
-                    TAO_Asynch_Reply_Dispatcher_Base);
-    }
-  else
-    {
-      delete this;
-    }
-
-  return;
 }
 
 bool

@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
+#include "tao/Reply_Dispatcher.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
@@ -29,7 +30,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_Reply_Dispatcher;
 class TAO_Transport;
 class TAO_Pluggable_Reply_Params;
 
@@ -58,7 +58,7 @@ public:
   /// Bind the dispatcher with the request id. Commonalities in the
   /// derived class implementations is kept here.
   virtual int bind_dispatcher (CORBA::ULong request_id,
-                               TAO_Reply_Dispatcher *rd) = 0;
+                               ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd) = 0;
 
   /**
    * Unbind the dispatcher, the client is no longer waiting for the

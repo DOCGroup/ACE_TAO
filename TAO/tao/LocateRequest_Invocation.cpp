@@ -9,6 +9,7 @@
 #include "tao/Profile.h"
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
+#include "ace/Intrusive_Auto_Ptr.h"
 
 #include "ace/Countdown_Time.h"
 
@@ -36,13 +37,20 @@ namespace TAO
   {
     ACE_Countdown_Time countdown (max_wait_time);
 
-    TAO_Synch_Reply_Dispatcher rd (this->resolver_.stub ()->orb_core (),
-                                   this->details_.reply_service_info ());
+    TAO_Synch_Reply_Dispatcher *rd_p = 0;
+    ACE_NEW_NORETURN (rd_p, TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
+                                          this->details_.reply_service_info ()));
+    if (!rd_p)
+      {
+        throw ::CORBA::NO_MEMORY ();
+      }
+
+    ACE_Intrusive_Auto_Ptr<TAO_Synch_Reply_Dispatcher> rd(rd_p, false);
 
     // Register a reply dispatcher for this invocation. Use the
     // preallocated reply dispatcher.
     TAO_Bind_Dispatcher_Guard dispatch_guard (this->details_.request_id (),
-                                              &rd,
+                                              rd.get (),
                                               this->resolver_.transport ()->tms ());
 
     if (dispatch_guard.status () != 0)
@@ -84,9 +92,9 @@ namespace TAO
     if (this->resolver_.transport ()->idle_after_send ())
       this->resolver_.transport_released ();
 
-    s = this->wait_for_reply (max_wait_time, rd, dispatch_guard);
+    s = this->wait_for_reply (max_wait_time, *rd.get (), dispatch_guard);
 
-    s = this->check_reply (rd);
+    s = this->check_reply (*rd.get ());
 
     // For some strategies one may want to release the transport
     // back to  cache after receiving the reply. If the idling is
