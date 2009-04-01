@@ -50,12 +50,12 @@ extern "C" {
 #include "ace/OS_NS_stdio.h"
 #endif /* ACE_VXWORKS < 0x600 */
 
-#if defined (ACE_VXWORKS) && ((ACE_VXWORKS == 0x630) || (ACE_VXWORKS == 0x640)) && defined (__RTP__) && defined (ACE_HAS_IPV6)
+#if defined (ACE_VXWORKS) && ((ACE_VXWORKS >= 0x630) && (ACE_VXWORKS <= 0x670)) && defined (__RTP__) && defined (ACE_HAS_IPV6)
 const struct in6_addr in6addr_any = IN6ADDR_ANY_INIT;
 const struct in6_addr in6addr_nodelocal_allnodes = IN6ADDR_NODELOCAL_ALLNODES_INIT;
 const struct in6_addr in6addr_linklocal_allnodes = IN6ADDR_LINKLOCAL_ALLNODES_INIT;
 const struct in6_addr in6addr_linklocal_allrouters = IN6ADDR_LINKLOCAL_ALLROUTERS_INIT;
-#endif /* ACE_VXWORKS == 0x630 && __RTP__ && ACE_HAS_IPV6 */
+#endif /* ACE_VXWORKS >= 0x630 && <= 0x670 && __RTP__ && ACE_HAS_IPV6 */
 
 #if defined (ACE_HAS_WINCE)
 #include /**/ <Iphlpapi.h>
