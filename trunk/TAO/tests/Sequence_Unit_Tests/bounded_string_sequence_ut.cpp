@@ -49,12 +49,16 @@ struct Tester
       tested_sequence x;
 
       x.length(8);
-      FAIL_RETURN_IF_NOT(a.expect(0), a);
+      // length() after default constructed sequence leads to
+      // buffer allocation.
+      FAIL_RETURN_IF_NOT(a.expect(1), a);
       CHECK_EQUAL(CORBA::ULong(MAXIMUM), x.maximum());
       CHECK_EQUAL(CORBA::ULong(8), x.length());
       CHECK_EQUAL(true, x.release());
 
-      FAIL_RETURN_IF_NOT(i.expect(8), i);
+      // 32 is here because allocbuf for bounded sequences
+      // initializes all elements.
+      FAIL_RETURN_IF_NOT(i.expect(32), i);
     }
     FAIL_RETURN_IF_NOT(f.expect(1), f);
     return 0;
@@ -71,9 +75,13 @@ struct Tester
   value_type * alloc_and_init_buffer()
   {
     value_type * buf = tested_sequence::allocbuf();
+    delete[] buf[0];
     buf[0] = helper::to_string(1);
+    delete[] buf[1];
     buf[1] = helper::to_string(4);
+    delete[] buf[2];
     buf[2] = helper::to_string(9);
+    delete[] buf[3];
     buf[3] = helper::to_string(16);
 
     return buf;
@@ -95,21 +103,22 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls r(tested_element_traits::release_calls);
     {
-      tested_sequence a(4, buffer, false);
-      CHECK_EQUAL(CORBA::ULong(MAXIMUM), a.maximum());
-      CHECK_EQUAL(CORBA::ULong(4), a.length());
-      CHECK_EQUAL(buffer, a.get_buffer());
-      CHECK_EQUAL(false, a.release());
-      a.length (3);
-      CHECK_EQUAL(CORBA::ULong(3), a.length());
-      a.length (4);
-      CHECK_EQUAL(CORBA::ULong(4), a.length());
-      CHECK(helper::compare_empty(a[3]));
+      tested_sequence x(4, buffer, true);
+      CHECK_EQUAL(CORBA::ULong(MAXIMUM), x.maximum());
+      CHECK_EQUAL(CORBA::ULong(4), x.length());
+      CHECK_EQUAL(buffer, x.get_buffer());
+      CHECK_EQUAL(true, x.release());
+      x.length (3);
+      CHECK_EQUAL(CORBA::ULong(3), x.length());
+      x.length (4);
+      CHECK_EQUAL(CORBA::ULong(4), x.length());
+      CHECK(helper::compare_empty(x[3]));
     }
     FAIL_RETURN_IF_NOT(a.expect(0), a);
-    FAIL_RETURN_IF_NOT(f.expect(0), f);
-    tested_sequence::freebuf(buffer);
-    FAIL_RETURN_IF_NOT(r.expect(MAXIMUM), r);
+    FAIL_RETURN_IF_NOT(f.expect(1), f);
+    // 1 additional release call happens when we shrink
+    // the sequence to length 3.
+    FAIL_RETURN_IF_NOT(r.expect(MAXIMUM + 1), r);
     return 0;
   }
 
@@ -186,8 +195,10 @@ struct Tester
       tested_sequence a;
       a.replace(4, buffer);
       FAIL_RETURN_IF_NOT(c.expect(0), c);
-      FAIL_RETURN_IF_NOT(f.expect(1), f);
-      FAIL_RETURN_IF_NOT(r.expect(MAXIMUM), r);
+      // Default constructed sequence doesn't allocate a buffer
+      // thus nothing to release and free.
+      FAIL_RETURN_IF_NOT(f.expect(0), f);
+      FAIL_RETURN_IF_NOT(r.expect(0), r);
 
       CHECK_EQUAL(CORBA::ULong(MAXIMUM), a.maximum());
       CHECK_EQUAL(CORBA::ULong(4), a.length());
@@ -213,8 +224,9 @@ struct Tester
       tested_sequence a;
       a.replace(4, buffer, false);
       FAIL_RETURN_IF_NOT(c.expect(0), c);
-      FAIL_RETURN_IF_NOT(f.expect(1), f);
-      FAIL_RETURN_IF_NOT(r.expect(MAXIMUM), r);
+      // Default constructed sequence doesn't allocate a buffer.
+      FAIL_RETURN_IF_NOT(f.expect(0), f);
+      FAIL_RETURN_IF_NOT(r.expect(0), r);
 
       CHECK_EQUAL(CORBA::ULong(MAXIMUM), a.maximum());
       CHECK_EQUAL(CORBA::ULong(4), a.length());
@@ -238,20 +250,22 @@ struct Tester
     expected_calls r(tested_element_traits::release_calls);
     {
       tested_sequence a;
-      a.replace(4, buffer, false);
+      a.replace(4, buffer, true);
       FAIL_RETURN_IF_NOT(c.expect(0), c);
-      FAIL_RETURN_IF_NOT(f.expect(1), f);
-      FAIL_RETURN_IF_NOT(r.expect(MAXIMUM), r);
+      // Default constructed sequence doesn't allocate a buffer.
+      FAIL_RETURN_IF_NOT(f.expect(0), f);
+      FAIL_RETURN_IF_NOT(r.expect(0), r);
 
       CHECK_EQUAL(CORBA::ULong(MAXIMUM), a.maximum());
       CHECK_EQUAL(CORBA::ULong(4), a.length());
       CHECK_EQUAL(buffer, a.get_buffer());
-      CHECK_EQUAL(false, a.release());
+      CHECK_EQUAL(true, a.release());
       check_values(a);
     }
     FAIL_RETURN_IF_NOT(c.expect(0), c);
-    FAIL_RETURN_IF_NOT(f.expect(0), f);
-    tested_sequence::freebuf(buffer);
+    // Since we've given away the ownership the buffer is deallocated by
+    // the sequence.
+    FAIL_RETURN_IF_NOT(f.expect(1), f);
     FAIL_RETURN_IF_NOT(r.expect(MAXIMUM), r);
     return 0;
   }
@@ -297,7 +311,9 @@ struct Tester
       CHECK(0 != b.get_buffer());
       CHECK_EQUAL(true, b.release());
 
-      FAIL_RETURN_IF_NOT(c.expect(0), c);
+      // Ownership was taken by get_buffer(true) and later get_buffer call
+      // allocated a new buffer.
+      FAIL_RETURN_IF_NOT(c.expect(1), c);
 
       CHECK(buffer != b.get_buffer());
     }
@@ -310,13 +326,13 @@ struct Tester
     FAIL_RETURN_IF_NOT(r.expect(MAXIMUM), r);
     return 0;
   }
-  
+
   int test_all ()
   {
     int status = 0;
 
     typedef string_sequence_tester<tested_sequence> common;
-    common X (true);
+    common X;
     status += X.test_all ();
 
     status += this->test_set_length_less_than_maximum();
@@ -332,7 +348,7 @@ struct Tester
     status += this->test_get_buffer_false();
     status += this->test_get_buffer_true_with_release_false();
     status += this->test_get_buffer_true_with_release_true();
-    return status;    
+    return status;
   }
 };
 
@@ -343,16 +359,15 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
   typedef TAO::bounded_basic_string_sequence<char, MAXIMUM> s_sequence;
   typedef Tester<s_sequence> nTester;
   nTester myntester;
-  
+
   status += myntester.test_all();
 
-#if defined(ACE_HAS_WCHAR) 
+#if defined(ACE_HAS_WCHAR)
   typedef TAO::bounded_basic_string_sequence<CORBA::WChar, MAXIMUM> w_sequence;
   typedef Tester<w_sequence> wTester;
   wTester mywtester;
   status += mywtester.test_all();
-#endif  
+#endif
 
   return status;
 }
-

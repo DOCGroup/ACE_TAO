@@ -74,7 +74,9 @@ struct Tester
 
       y = x;
       FAIL_RETURN_IF_NOT(a.expect(1), a);
-      FAIL_RETURN_IF_NOT(f.expect(1), f);
+      // Since above no allocation for y was done then
+      // no deallocation needed during assignment.
+      FAIL_RETURN_IF_NOT(f.expect(0), f);
       CHECK_EQUAL(CORBA::ULong(16), y.maximum());
       CHECK_EQUAL(CORBA::ULong(8), y.length());
       CHECK_EQUAL(true, y.release());
@@ -160,7 +162,9 @@ struct Tester
       CHECK_THROW(x.length(8), testing_exception);
       FAIL_RETURN_IF_NOT(a.expect(1), a);
     }
-    FAIL_RETURN_IF_NOT(f.expect(1), f);
+    // length() above tried to allocate a buffer but it didn't reach
+    // new[] and sequence was not changed, thus no need to deallocate.
+    FAIL_RETURN_IF_NOT(f.expect(0), f);
     return 0;
   }
 
@@ -259,7 +263,8 @@ struct Tester
       tested_sequence a;
       a.replace(8, 4, buffer);
       FAIL_RETURN_IF_NOT(c.expect(0), c);
-      FAIL_RETURN_IF_NOT(f.expect(1), f);
+      // Default constructed sequence doesn't allocate a buffer.
+      FAIL_RETURN_IF_NOT(f.expect(0), f);
 
       CHECK_EQUAL(CORBA::ULong(8), a.maximum());
       CHECK_EQUAL(CORBA::ULong(4), a.length());
@@ -286,7 +291,8 @@ struct Tester
       tested_sequence a;
       a.replace(8, 4, buffer, false);
       FAIL_RETURN_IF_NOT(c.expect(0), c);
-      FAIL_RETURN_IF_NOT(f.expect(1), f);
+      // Default constructed sequence doesn't allocate a buffer.
+      FAIL_RETURN_IF_NOT(f.expect(0), f);
 
       CHECK_EQUAL(CORBA::ULong(8), a.maximum());
       CHECK_EQUAL(CORBA::ULong(4), a.length());
@@ -313,7 +319,8 @@ struct Tester
       tested_sequence a;
       a.replace(8, 4, buffer, true);
       FAIL_RETURN_IF_NOT(c.expect(0), c);
-      FAIL_RETURN_IF_NOT(f.expect(1), f);
+      // Default constructed sequence doesn't allocate a buffer.
+      FAIL_RETURN_IF_NOT(f.expect(0), f);
 
       CHECK_EQUAL(CORBA::ULong(8), a.maximum());
       CHECK_EQUAL(CORBA::ULong(4), a.length());
@@ -398,6 +405,8 @@ struct Tester
     a.replace (n, upper_mb);
     CHECK_EQUAL(CORBA::Octet( 'T'), a[0]);
     CHECK_EQUAL(CORBA::Octet( 'S'), a[6]);
+    delete upper_mb;
+    delete mb;
 #endif
     return 0;
   }
@@ -438,11 +447,9 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
 
   {
     typedef value_sequence_tester<tested_sequence,tested_allocation_traits> common;
-    common tester (false);
+    common tester;
     status += tester.test_all ();
   }
 
   return status;
 }
-
-

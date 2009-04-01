@@ -37,6 +37,13 @@ struct testing_allocation_traits : public base
     return base::allocbuf(maximum);
   }
 
+  // allocbuf_calls must be updated when allocbuf_noinit is called as well.
+  inline static value_type * allocbuf_noinit(CORBA::ULong maximum)
+  {
+    allocbuf_calls();
+    return base::allocbuf_noinit(maximum);
+  }
+
   static call_counter freebuf_calls;
   inline static void freebuf(value_type * buffer)
   {

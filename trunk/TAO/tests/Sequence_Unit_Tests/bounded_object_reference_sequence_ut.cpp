@@ -69,7 +69,9 @@ struct Tester
     }
     FAIL_RETURN_IF_NOT(a.expect(0), a);
     FAIL_RETURN_IF_NOT(f.expect(1), f);
-    FAIL_RETURN_IF_NOT(i.expect(0), i);
+    // 64 is here because this is a bounded sequence and spec requires
+    // that maximum() elements are allocated for them by allocbuf.
+    FAIL_RETURN_IF_NOT(i.expect(64), i);
     return 0;
   }
 
@@ -92,7 +94,8 @@ struct Tester
       }
       FAIL_RETURN_IF_NOT(a.expect(0), a);
       FAIL_RETURN_IF_NOT(f.expect(0), f);
-      FAIL_RETURN_IF_NOT(i.expect(0), i);
+      // Same as above. allocbuf default initializes maximum() elements.
+      FAIL_RETURN_IF_NOT(i.expect(64), i);
 
       tested_sequence::freebuf(data);
     }
@@ -123,7 +126,7 @@ struct Tester
     expected_calls a(tested_allocation_traits::allocbuf_calls);
     expected_calls da(tested_allocation_traits::default_buffer_allocation_calls);
     expected_calls f(tested_allocation_traits::freebuf_calls);
-    expected_calls i(tested_element_traits::default_initializer_calls);
+    expected_calls di(tested_element_traits::default_initializer_calls);
     expected_calls d(mock_reference::duplicate_calls);
     expected_calls r(mock_reference::release_calls);
     CORBA::ULong const l = 16;
@@ -133,8 +136,10 @@ struct Tester
       FAIL_RETURN_IF_NOT(a.expect(0), a);
 
       x.length(l);
-      FAIL_RETURN_IF_NOT(i.expect(l), i);
-      FAIL_RETURN_IF_NOT(a.expect(0), a);
+      // length() allocates a buffer of size maximum() and
+      // default initializes it.
+      FAIL_RETURN_IF_NOT(di.expect(TMAX), i);
+      FAIL_RETURN_IF_NOT(a.expect(1), a);
       FAIL_RETURN_IF_NOT(f.expect(0), f);
       CHECK_EQUAL(l, x.length());
       for(CORBA::ULong i = 0; i != l; ++i)
@@ -147,8 +152,9 @@ struct Tester
       tested_sequence y(x);
       FAIL_RETURN_IF_NOT(a.expect(1), a);
       FAIL_RETURN_IF_NOT(f.expect(0), f);
-      CHECK_EQUAL(l, x.length());
+      CHECK_EQUAL(l, y.length());
       FAIL_RETURN_IF_NOT(d.expect(l), d);
+      FAIL_RETURN_IF_NOT(di.expect(TMAX - l), d);
       for(CORBA::ULong i = 0; i != l; ++i)
       {
         CHECK_EQUAL(int(i), y[i]->id());
@@ -158,7 +164,6 @@ struct Tester
     FAIL_RETURN_IF_NOT(r.expect(2*TMAX), r);
     FAIL_RETURN_IF_NOT(a.expect(0), a);
     FAIL_RETURN_IF_NOT(f.expect(2), f);
-    FAIL_RETURN_IF_NOT(i.expect(0), i);
     return 0;
   }
 
@@ -177,14 +182,16 @@ struct Tester
       FAIL_RETURN_IF_NOT(a.expect(0), a);
 
       x.length(l);
-      FAIL_RETURN_IF_NOT(i.expect(l), i);
+      // length() allocates a buffer of size maximum() and
+      // default initializes it.
+      FAIL_RETURN_IF_NOT(i.expect(TMAX), i);
+      FAIL_RETURN_IF_NOT(a.expect(1), i);
 
-      FAIL_RETURN_IF_NOT(a.expect(0), a);
       FAIL_RETURN_IF_NOT(f.expect(0), f);
       CHECK_EQUAL(l, x.length());
-      for(CORBA::ULong i = 0; i != l; ++i)
+      for(CORBA::ULong inc = 0; inc != l; ++inc)
       {
-        x[i] = mock_reference::allocate(i);
+        x[inc] = mock_reference::allocate(inc);
       }
 
       d.reset(); r.reset();
@@ -201,7 +208,8 @@ struct Tester
     FAIL_RETURN_IF_NOT(r.expect(TMAX), r);
     FAIL_RETURN_IF_NOT(a.expect(0), a);
     FAIL_RETURN_IF_NOT(f.expect(1), f);
-    FAIL_RETURN_IF_NOT(i.expect(0), i);
+    // There are TMAX-16 default initializer calls.
+    FAIL_RETURN_IF_NOT(i.expect(48), i);
     return 0;
   }
 
@@ -219,9 +227,11 @@ struct Tester
       CHECK_EQUAL(CORBA::ULong(8), x.length());
       CHECK_EQUAL(true, x.release());
 
-      FAIL_RETURN_IF_NOT(i.expect(8), i);
+      // length() allocates a buffer of size maximum() and
+      // default initializes it.
+      FAIL_RETURN_IF_NOT(i.expect(TMAX), i);
     }
-    FAIL_RETURN_IF_NOT(a.expect(0), a);
+    FAIL_RETURN_IF_NOT(a.expect(1), a);
     FAIL_RETURN_IF_NOT(da.expect(1), da);
     FAIL_RETURN_IF_NOT(f.expect(1), f);
     return 0;
@@ -238,10 +248,12 @@ struct Tester
       FAIL_RETURN_IF_NOT(da.expect(1), da);
       FAIL_RETURN_IF_NOT(a.expect(0), a);
       x.length(16);
-      FAIL_RETURN_IF_NOT(i.expect(16), i);
+      // length() allocates a buffer of size maximum() and
+      // default initializes it.
+      FAIL_RETURN_IF_NOT(i.expect(TMAX), i);
 
       CHECK_THROW(x.length(2 * TMAX), std::runtime_error);
-      FAIL_RETURN_IF_NOT(a.expect(0), a);
+      FAIL_RETURN_IF_NOT(a.expect(1), a);
       FAIL_RETURN_IF_NOT(f.expect(0), f);
       FAIL_RETURN_IF_NOT(i.expect(0), i);
 
@@ -255,7 +267,7 @@ struct Tester
 
   value_type * alloc_and_init_buffer()
   {
-    value_type * buf = tested_sequence::allocbuf(TMAX);
+    value_type * buf = tested_sequence::allocbuf();
     buf[0] = mock_reference::allocate(1);
     buf[1] = mock_reference::allocate(4);
     buf[2] = mock_reference::allocate(9);
@@ -282,7 +294,7 @@ struct Tester
     expected_calls r(tested_element_traits::release_calls);
     {
       tested_sequence a;
-      a.replace(4, buffer, false);
+      a.replace(4, buffer, true);
       FAIL_RETURN_IF_NOT(c.expect(0), c);
       FAIL_RETURN_IF_NOT(f.expect(0), f);
       FAIL_RETURN_IF_NOT(r.expect(0), r);
@@ -290,12 +302,13 @@ struct Tester
       CHECK_EQUAL(TMAX, a.maximum());
       CHECK_EQUAL(CORBA::ULong(4), a.length());
       CHECK_EQUAL(buffer, a.get_buffer());
-      CHECK_EQUAL(false, a.release());
+      CHECK_EQUAL(true, a.release());
       check_values(a);
     }
     FAIL_RETURN_IF_NOT(c.expect(0), c);
-    FAIL_RETURN_IF_NOT(f.expect(0), f);
-    tested_sequence::freebuf(buffer);
+    // Since we've given away the ownership the buffer is deallocated by
+    // the sequence.
+    FAIL_RETURN_IF_NOT(f.expect(1), f);
     FAIL_RETURN_IF_NOT(r.expect(TMAX), r);
     return 0;
   }
@@ -359,7 +372,7 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
 {
   int status = 0;
   Tester mytester;
-  
+
   status += mytester.test_default_constructor();
   status += mytester.test_buffer_constructor_release_true();
   status += mytester.test_buffer_constructor_release_false();

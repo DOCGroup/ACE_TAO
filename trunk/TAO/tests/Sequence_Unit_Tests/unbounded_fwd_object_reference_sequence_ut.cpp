@@ -55,6 +55,6 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
   int status = 0;
   Tester x;
   status += x.test_default_constructor ();
-  
+
   return status;
 }

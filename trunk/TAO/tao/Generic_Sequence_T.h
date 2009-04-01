@@ -143,10 +143,17 @@ public:
     , buffer_(0)
     , release_(false)
   {
-    if (rhs.maximum_ == 0) return;
+    if (rhs.maximum_ == 0 || rhs.buffer_ == 0)
+    {
+      maximum_ = rhs.maximum_;
+      length_ = rhs.length_;
+      return;
+    }
     generic_sequence tmp(rhs.maximum_, rhs.length_,
                          allocation_traits::allocbuf_noinit(rhs.maximum_),
                          true);
+    element_traits::initialize_range(
+        tmp.buffer_ + tmp.length_, tmp.buffer_ + tmp.maximum_);
     element_traits::copy_range(
         rhs.buffer_,
         rhs.buffer_ + rhs.length_,
@@ -204,7 +211,9 @@ public:
           return;
         }
 
-    if (length < length_)
+      // When sequence doesn't own a buffer it's not allowed
+      // to change it in any way.
+      if (length < length_ && release_)
       {
         // TODO This code does not provide the strong-exception
         //      guarantee, but it does provide the weak-exception
@@ -225,12 +234,14 @@ public:
     generic_sequence tmp(length, length,
                          allocation_traits::allocbuf_noinit(length),
                          true);
+    // First do initialize_range. If it will throw then tmp will be
+    // destructed but *this will remain unchanged.
+    element_traits::initialize_range(
+        tmp.buffer_ + length_, tmp.buffer_ + length);
     element_traits::copy_swap_range(
       buffer_,
       buffer_ + length_,
       ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_));
-    element_traits::initialize_range(
-        tmp.buffer_ + length_, tmp.buffer_ + length);
 
     swap(tmp);
   }

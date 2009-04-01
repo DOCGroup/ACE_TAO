@@ -90,7 +90,7 @@ project(*UB_Octet_Sequence): taoexe {
 }
 
 project(*UB_Oct_Seq_No_Cpy): taoexe {
-  exename = unbounded_octet_sequence_no_copy_ut
+  exename = unbounded_octet_sequence_nocopy_ut
   Source_Files {
     mock_reference.cpp
     unbounded_octet_sequence_nocopy_ut.cpp
