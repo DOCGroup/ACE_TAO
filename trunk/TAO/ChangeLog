@@ -1,3 +1,12 @@
+Wed Apr  1 09:26:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3636_Regression/*:
+          New test for bug 3636, work_pending doesn't return false
+          on solaris. This seems to happen not anymore on svn head
+
+        * bin/tao_orb_tests.lst:
+          Add new test
+
 Tue Mar 31 10:44:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tao/Asynch_Reply_Dispatcher_Base.cpp:
@@ -14,19 +23,19 @@ Tue Mar 31 10:44:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * tao/Reply_Dispatcher.h:
         * tao/Synch_Invocation.cpp:
         * tao/Transport_Mux_Strategy.h:
-          Refactored Reply Dispatchers. It's now possible to make a CORBA 
-          call (synchronous or asynchronous) during an AMI reply 
+          Refactored Reply Dispatchers. It's now possible to make a CORBA
+          call (synchronous or asynchronous) during an AMI reply
           dispatch without running into a deadlock.
-          Also, the reply dispatchers are now created on the heap, 
-          using an ACE_Intrusive_Auto_Ptr. 
+          Also, the reply dispatchers are now created on the heap,
+          using an ACE_Intrusive_Auto_Ptr.
           This fixes Bugzilla 3567.
-          
+
         * tests/Big_AMI/client.cpp:
           Using a different CORBA:Object_var for ior.
 
         * NEWS:
           Listed this change.
-          
+
 
 Mon Mar 30 07:39:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
@@ -42,9 +51,9 @@ Mon Mar 30 07:39:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 Fri Mar 27 15:23:32 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:
-        
+
           Added entry for bug fix below
-          
+
           Fri Mar 20 16:04:58 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Mar 27 14:42:07 UTC 2009  Marcel Smit  <msmit@remedy.nl>
@@ -66,7 +75,7 @@ Fri Mar 27 12:48:10 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * tests/RTCORBA/Policies/run_test.pl:
         * tests/RTCORBA/Policy_Combinations/run_test.pl:
         * tests/RTCORBA/Priority_Inversion_With_Bands/run_test.pl:
-        * tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl:        
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl:
         * tests/RTCORBA/RTMutex/run_test.pl:
         * tests/RTCORBA/Server_Declared/run_test.pl:
         * tests/RTCORBA/Server_Protocol/run_test.pl:
@@ -78,7 +87,7 @@ Fri Mar 27 10:29:10 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * bin/tao_orb_tests.lst:
           Removed !LabVIEW_RT, !WinCE and !FUZZ in order to run
           the following tests on these targets.
-          
+
         * tests/RTCORBA/Banded_Connections/run_test.pl:
         * tests/RTCORBA/Bug_3382_Regression/run_test.pl:
         * tests/RTCORBA/Client_Protocol/run_test.pl:
@@ -99,10 +108,10 @@ Fri Mar 27 10:29:10 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * tests/RTCORBA/Server_Protocol/run_test.pl:
         * tests/RTCORBA/Thread_Pool/run_test.pl:
           Made Fuzz compliant
-          
+
         * tests/RTCORBA/Dynamic_Thread_Pool/client.cpp:
           When -x is supplied, the only thing the client has to do, is shutdown
-          the server. 
+          the server.
 
 Thu Mar 26 15:39:23 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
