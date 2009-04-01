@@ -41,7 +41,7 @@ class ACE_DLL;
  * allows an administrative entity to centrally manage and
  * control the behavior of application services.  Note that if
  * services are removed from the middle of the repository the
- * order won't necessarily be maintained since the @a removeﬂ
+ * order won't necessarily be maintained since the @a remove
  * method performs compaction.  However, the common case is not
  * to remove services, so typically they are deleted in the
  * reverse order that they were added originally.
