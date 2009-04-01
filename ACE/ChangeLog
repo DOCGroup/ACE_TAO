@@ -1,3 +1,9 @@
+Wed Apr  1 15:12:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Repository.h:
+          Removed unicode character. Thanks to Alon Diamant
+          <diamant dot alon at gmail dot com> for reporting this
+
 Tue Mar 31 07:18:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sock_Connect.cpp:
