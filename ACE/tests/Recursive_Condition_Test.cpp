@@ -85,7 +85,7 @@ waiter (void *)
   else
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"), ACE_TEXT ("wait")));
 
-  int copy_int = protected_int;  // Copy it in case it's erroneously changing
+  int const copy_int = protected_int;  // Copy it in case it's erroneously changing
   if (copy_int != 0)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) waiter found protected_int %d\n"),
                 copy_int));
@@ -288,6 +288,7 @@ run_main (int, ACE_TCHAR *[])
       ++status;
     }
 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting to sleep\n")));
   ACE_OS::sleep (10);
   timer_queue.deactivate ();
   timer_queue.wait ();

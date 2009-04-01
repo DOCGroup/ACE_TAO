@@ -26,7 +26,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
 #include "ace/Assert.h"
-#include <string>
 
 ACE_RCSID(tests, Reactor_Timer_Test, "$Id$")
 
@@ -97,7 +96,7 @@ public:
 int
 run_main (int argc, ACE_TCHAR *[])
 {
-/ ACE_START_TEST (ACE_TEXT ("Sig_Handlers_Test"));
+  ACE_START_TEST (ACE_TEXT ("Sig_Handlers_Test"));
 
   ACE_Sig_Handlers multi_handlers;
   ACE_Select_Reactor reactor_impl (&multi_handlers);
