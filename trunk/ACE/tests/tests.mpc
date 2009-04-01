@@ -1086,6 +1086,13 @@ project(Sendfile Test) : acetest {
   }
 }
 
+project(Sig Handlers Test) : acetest {
+  exename = Sig_Handlers_Test
+  Source_Files {
+    Sig_Handlers_Test.cpp
+  }
+}
+
 project(Signal Test) : acetest {
   exename = Signal_Test
   Source_Files {

@@ -1,3 +1,17 @@
+Wed Apr  1 19:48:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Log_Msg_Test.cpp:
+          Fix for vxworks 6.7
+
+        * tests/Recursive_Condition_Test.cpp:
+          Const change and added a debug statement
+
+        * tests/Sig_Handlers_Test.cpp:
+          Removed not needed include and fixed compile issue
+
+        * tests/tests.mpc:
+          Added missing Sig_Handlers_Test
+
 Wed Apr  1 15:12:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Service_Repository.h:
