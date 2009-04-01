@@ -53,7 +53,7 @@ struct Tester
 
   value_type * alloc_and_init_buffer()
   {
-    value_type * buf = tested_sequence::allocbuf(8);
+    value_type * buf = tested_sequence::allocbuf();
     buf[0] = mock_reference::allocate(1);
     buf[1] = mock_reference::allocate(4);
     buf[2] = mock_reference::allocate(9);
@@ -99,7 +99,7 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
 {
   int status = 0;
   Tester mytester;
-  
+
   status += mytester.test_stream();
 
   return status;

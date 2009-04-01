@@ -52,7 +52,7 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
     FAIL_RETURN_IF_NOT(r.expect(0),r );
     FAIL_RETURN_IF_NOT(md.expect(0), md);
     FAIL_RETURN_IF_NOT(mr.expect(1), mr);
-    
+
     return 0;
   }
 

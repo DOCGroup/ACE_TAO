@@ -33,10 +33,10 @@ struct value_sequence_tester
           CORBA::ULong(tested_allocation_traits::default_maximum()),
           x.maximum());
       CHECK_EQUAL(CORBA::ULong(0), x.length());
-      CHECK_EQUAL(bounded_, x.release());
     }
     FAIL_RETURN_IF_NOT(a.expect(0), a);
-    FAIL_RETURN_IF_NOT(f.expect(bounded_ ? 1 : 0), f);
+    // Nothing was allocated then there is nothing to free.
+    FAIL_RETURN_IF_NOT(f.expect(0), f);
     return 0;
   }
 
@@ -52,15 +52,17 @@ struct value_sequence_tester
           CORBA::ULong(tested_allocation_traits::default_maximum()),
           x.maximum());
       CHECK_EQUAL(CORBA::ULong(0), x.length());
-      CHECK_EQUAL(bounded_, x.release());
 
       tested_sequence y(x);
-      FAIL_RETURN_IF_NOT(a.expect(bounded_ ? 1 : 0), a);
+      // Default constructed sequence doesn't have elements,
+      // thus there is nothing to allocate/copy in copy constructor.
+      FAIL_RETURN_IF_NOT(a.expect(0), a);
       CHECK_EQUAL(x.maximum(), y.maximum());
       CHECK_EQUAL(x.length(), y.length());
       CHECK_EQUAL(x.release(), y.release());
     }
-    FAIL_RETURN_IF_NOT(f.expect(bounded_ ? 2 : 0), f);
+    // Nothing was allocated then there is nothing to free.
+    FAIL_RETURN_IF_NOT(f.expect(0), f);
     return 0;
   }
 
@@ -129,19 +131,21 @@ struct value_sequence_tester
           CORBA::ULong(tested_allocation_traits::default_maximum()),
           x.maximum());
       CHECK_EQUAL(CORBA::ULong(0), x.length());
-      CHECK_EQUAL(bounded_, x.release());
 
       tested_sequence y;
       FAIL_RETURN_IF_NOT(a.expect(0), a);
 
       y = x;
-      FAIL_RETURN_IF_NOT(a.expect(bounded_ ? 1 : 0), a);
-      FAIL_RETURN_IF_NOT(f.expect(bounded_ ? 1 : 0), f);
+      // Default constructed sequence doesn't have elements,
+      // thus there is nothing to allocate/copy in operator=.
+      FAIL_RETURN_IF_NOT(a.expect(0), a);
+      FAIL_RETURN_IF_NOT(f.expect(0), f);
       CHECK_EQUAL(x.maximum(), y.maximum());
       CHECK_EQUAL(x.length(), y.length());
       CHECK_EQUAL(x.release(), y.release());
     }
-    FAIL_RETURN_IF_NOT(f.expect(bounded_ ? 2 : 0), f);
+    // Nothing was allocated then there is nothing to free.
+    FAIL_RETURN_IF_NOT(f.expect(0), f);
     return 0;
   }
 
@@ -220,7 +224,7 @@ struct value_sequence_tester
   int test_all()
   {
     int status = 0;
-    
+
     status +=this->test_default_constructor();
     status +=this->test_copy_constructor_from_default();
     status +=this->test_index_accessor();
@@ -232,13 +236,8 @@ struct value_sequence_tester
     status +=this->test_exception_in_copy_constructor();
     status +=this->test_exception_in_assignment();
     status +=this->test_get_buffer_const();
-    return status;    
+    return status;
   }
-  value_sequence_tester(bool bounded)
-    : bounded_ (bounded)
-  {}
-
-  bool bounded_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

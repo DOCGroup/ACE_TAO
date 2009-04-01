@@ -61,7 +61,7 @@ struct helper <char>
   }
 };
 
-#if defined(ACE_HAS_WCHAR) 
+#if defined(ACE_HAS_WCHAR)
 template<>
 struct helper <CORBA::WChar>
 {

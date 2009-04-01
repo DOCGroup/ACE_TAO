@@ -1,3 +1,53 @@
+Wed Apr  1 14:28:11 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_sequence_cdr_ut.cpp:
+        * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/bounded_object_reference_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_object_reference_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+        * tests/Sequence_Unit_Tests/run_test.pl:
+        * tests/Sequence_Unit_Tests/object_reference_sequence_element_ut.cpp:
+        * tests/Sequence_Unit_Tests/testing_counters.hpp:
+        * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_nocopy_ut.cpp:
+        * tests/Sequence_Unit_Tests/bounded_sequence_cdr_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/testing_allocation_traits.hpp:
+        * tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+        * tests/Sequence_Unit_Tests/unbounded_fwd_object_reference_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/Makefile.am:
+
+          Updated the test with respect to all recent changes in the
+          implementation of sequences in TAO. This fixes bug#3488.
+
+        * tao/Unbounded_Octet_Sequence_T.h:
+        * tao/Generic_Sequence_T.h:
+
+          Fixed several things. 1) In copy constructor. When a new
+          sequence is created from a sequence that has buffer_==0
+          there is no need to allocate a buffer in a new sequence.
+          Also if the original sequence has length_<maximum_ then we
+          have to initialize elements length_ through maximum_.
+          2) There were several places in Unbounded_Octet_Sequence_T.h
+          where release_ was not properly set when buffer_ was updated.
+          3) There is no need for initialize_range in
+          Unbounded_Octet_Sequence_T.h since this is a sequence of
+          primitive types and C++ mapping says that "Sequence
+          elements of a basic type, such as ULong, have undefined default
+          values."
+
+        * tao/Bounded_Array_Sequence_T.h:
+        * tao/Valuetype/Bounded_Valuetype_Sequence_T.h:
+        * tao/Bounded_Object_Reference_Sequence_T.h:
+
+          Added allocbuf() with no arguments to bounded sequences as it's
+          required by the C++ mapping (ver 1.2).
+
 Wed Apr  1 09:26:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3636_Regression/*:

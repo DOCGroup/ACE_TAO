@@ -99,7 +99,6 @@ inline std::ostream & operator<<(std::ostream & os, expected_calls const & x)
 {
   return os << "current=" << x.current_count()
             << ",previous=" << x.previous_count();
-    
 }
 
 #endif // guard_testing_counters_hpp

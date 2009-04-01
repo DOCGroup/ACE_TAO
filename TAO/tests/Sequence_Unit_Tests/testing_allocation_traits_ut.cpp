@@ -75,7 +75,9 @@ struct Tester
     s = bounded::default_buffer_allocation();
     FAIL_RETURN_IF_NOT(u.expect(0), u);
     FAIL_RETURN_IF_NOT(b.expect(1), b);
-    CHECK(static_cast<value_type*>(0) != s);
+    // default_buffer_allocation doesn't allocate a buffer for
+    // bounded sequences (see bug 3042).
+    CHECK_EQUAL(static_cast<value_type*>(0), s);
     bounded::freebuf(s);
     return 0;
   }
@@ -140,7 +142,7 @@ struct Tester
     status += this->test_allocbuf_bounded();
     status += this->test_freebuf_unbounded();
     status += this->test_freebuf_bounded();
-     return status;    
+     return status;
   }
   Tester() {}
 };
@@ -167,4 +169,3 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
 
   return status;
 }
-

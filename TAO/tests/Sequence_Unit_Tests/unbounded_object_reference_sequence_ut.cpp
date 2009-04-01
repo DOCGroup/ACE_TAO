@@ -63,7 +63,9 @@ struct Tester
     }
     FAIL_RETURN_IF_NOT(a.expect(1), a);
     FAIL_RETURN_IF_NOT(f.expect(1), f);
-    FAIL_RETURN_IF_NOT(i.expect(0), i);
+    // ulong constructor calls allocbuf and thus there must be
+    // maximum() default initilized elements.
+    FAIL_RETURN_IF_NOT(i.expect(16), i);
     return 0;
   }
 
@@ -100,7 +102,8 @@ struct Tester
     }
     FAIL_RETURN_IF_NOT(a.expect(0), a);
     FAIL_RETURN_IF_NOT(f.expect(1), f);
-    FAIL_RETURN_IF_NOT(i.expect(0), i);
+    // allocbuf default initializes maximum elements.
+    FAIL_RETURN_IF_NOT(i.expect(32), i);
     return 0;
   }
 
@@ -123,7 +126,8 @@ struct Tester
       }
       FAIL_RETURN_IF_NOT(a.expect(0), a);
       FAIL_RETURN_IF_NOT(f.expect(0), f);
-      FAIL_RETURN_IF_NOT(i.expect(0), i);
+      // allocbuf default initializes maximum elements.
+      FAIL_RETURN_IF_NOT(i.expect(64), i);
 
       tested_sequence::freebuf(data);
     }
@@ -242,7 +246,8 @@ struct Tester
       CHECK_EQUAL(CORBA::ULong(8), x.length());
       CHECK_EQUAL(true, x.release());
 
-      FAIL_RETURN_IF_NOT(i.expect(8), i);
+      // allocbuf default initializes 16 elements.
+      FAIL_RETURN_IF_NOT(i.expect(16), i);
     }
     FAIL_RETURN_IF_NOT(a.expect(1), a);
     FAIL_RETURN_IF_NOT(f.expect(1), f);
@@ -262,7 +267,10 @@ struct Tester
       FAIL_RETURN_IF_NOT(a.expect(1), a);
       FAIL_RETURN_IF_NOT(f.expect(1), f);
 
-      FAIL_RETURN_IF_NOT(i.expect(32), i);
+      // ulong constructor calls allocbuf and thus there must be
+      // maximum() default initilized elements + length() leads to buffer
+      // reallocation maximum() gets set to a new value.
+      FAIL_RETURN_IF_NOT(i.expect(48), i);
 
       CHECK_EQUAL(CORBA::ULong(32), x.maximum());
       CHECK_EQUAL(CORBA::ULong(32), x.length());
@@ -383,7 +391,7 @@ struct Tester
     expected_calls r(tested_element_traits::release_calls);
     {
       tested_sequence a;
-      a.replace(8, 4, buffer, false);
+      a.replace(8, 4, buffer, true);
       FAIL_RETURN_IF_NOT(c.expect(0), c);
       FAIL_RETURN_IF_NOT(f.expect(0), f);
       FAIL_RETURN_IF_NOT(r.expect(0), r);
@@ -391,12 +399,13 @@ struct Tester
       CHECK_EQUAL(CORBA::ULong(8), a.maximum());
       CHECK_EQUAL(CORBA::ULong(4), a.length());
       CHECK_EQUAL(buffer, a.get_buffer());
-      CHECK_EQUAL(false, a.release());
+      CHECK_EQUAL(true, a.release());
       check_values(a);
     }
     FAIL_RETURN_IF_NOT(c.expect(0), c);
-    FAIL_RETURN_IF_NOT(f.expect(0), f);
-    tested_sequence::freebuf(buffer);
+    // Since we've given away the ownership the buffer is deallocated by
+    // the sequence.
+    FAIL_RETURN_IF_NOT(f.expect(1), f);
     FAIL_RETURN_IF_NOT(r.expect(8), r);
     return 0;
   }
@@ -473,7 +482,7 @@ struct Tester
     status += this->test_replace_release_true();
     status += this->test_replace_release_false();
     status += this->test_replace_release_default();
-    return status;    
+    return status;
   }
 
   Tester() {}
@@ -489,4 +498,3 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
 
   return status;
 }
-
