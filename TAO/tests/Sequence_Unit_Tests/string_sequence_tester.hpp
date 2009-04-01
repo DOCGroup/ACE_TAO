@@ -125,10 +125,10 @@ struct string_sequence_tester
           CORBA::ULong(tested_allocation_traits::default_maximum()),
           x.maximum());
       CHECK_EQUAL(CORBA::ULong(0), x.length());
-      CHECK_EQUAL(bounded_, x.release());
     }
     FAIL_RETURN_IF_NOT(a.expect(0), a);
-    FAIL_RETURN_IF_NOT(f.expect(bounded_ ? 1 : 0), f);
+    // Nothing was allocated then there is nothing to free.
+    FAIL_RETURN_IF_NOT(f.expect(0), f);
     return 0;
   }
 
@@ -144,7 +144,9 @@ struct string_sequence_tester
       a.reset(); f.reset(); i.reset(); d.reset();
 
       tested_sequence y(x);
-      FAIL_RETURN_IF_NOT(a.expect(bounded_ ? 1 : 0), a);
+      // Default constructed sequence doesn't have elements,
+      // thus there is nothing to allocate/copy in copy constructor.
+      FAIL_RETURN_IF_NOT(a.expect(0), a);
       FAIL_RETURN_IF_NOT(f.expect(0), f);
       FAIL_RETURN_IF_NOT(i.expect(0), i);
       FAIL_RETURN_IF_NOT(d.expect(0), d);
@@ -153,7 +155,8 @@ struct string_sequence_tester
       CHECK_EQUAL(x.length(), y.length());
       CHECK_EQUAL(x.release(), y.release());
     }
-    FAIL_RETURN_IF_NOT(f.expect(bounded_ ? 2 : 0), f);
+    // Nothing was allocated then there is nothing to free.
+    FAIL_RETURN_IF_NOT(f.expect(0), f);
     return 0;
   }
 
@@ -238,10 +241,6 @@ struct string_sequence_tester
   int test_freebuf_releases_elements()
   {
     value_type * buffer = tested_sequence::allocbuf(32);
-    for(int i = 0; i != 32; ++i)
-    {
-      buffer[i] = helper::allocate_test_string();
-    }
 
     expected_calls r(tested_element_traits::release_calls);
     expected_calls f(tested_allocation_traits::freebuf_calls);
@@ -265,19 +264,21 @@ struct string_sequence_tester
           CORBA::ULong(tested_allocation_traits::default_maximum()),
           x.maximum());
       CHECK_EQUAL(CORBA::ULong(0), x.length());
-      CHECK_EQUAL(bounded_ , x.release());
 
       tested_sequence y;
       FAIL_RETURN_IF_NOT(a.expect(0), a);
 
       y = x;
-      FAIL_RETURN_IF_NOT(a.expect(bounded_ ? 1 : 0), a);
-      FAIL_RETURN_IF_NOT(f.expect(bounded_ ? 1 : 0), f);
+      // Default constructed sequence doesn't have elements,
+      // thus there is nothing to allocate/copy in operator=.
+      FAIL_RETURN_IF_NOT(a.expect(0), a);
+      FAIL_RETURN_IF_NOT(f.expect(0), f);
       CHECK_EQUAL(x.maximum(), y.maximum());
       CHECK_EQUAL(x.length(), y.length());
       CHECK_EQUAL(x.release(), y.release());
     }
-    FAIL_RETURN_IF_NOT(f.expect(bounded_ ? 2 : 0), f);
+    // Nothing was allocated then there is nothing to free.
+    FAIL_RETURN_IF_NOT(f.expect(0), f);
     return 0;
   }
 
@@ -403,7 +404,7 @@ struct string_sequence_tester
         {
           y[i] = helper::allocate_test_string();
         }
-        
+
         a.reset();
         d.reset();
         r.reset();
@@ -465,12 +466,6 @@ struct string_sequence_tester
 
   return status;
   }
-  string_sequence_tester(bool bounded)
-    : bounded_(bounded)
-  {}
-
-private:
-  bool bounded_;
 };
 
 #endif // guard_string_sequence_tester_hpp

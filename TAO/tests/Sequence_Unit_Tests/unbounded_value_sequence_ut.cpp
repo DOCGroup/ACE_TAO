@@ -174,24 +174,23 @@ struct Tester
     expected_calls a(tested_allocation_traits::allocbuf_calls);
     expected_calls f(tested_allocation_traits::freebuf_calls);
     {
-      tested_sequence a(8, 4, buffer);
-      CHECK_EQUAL(CORBA::ULong(8), a.maximum());
-      CHECK_EQUAL(CORBA::ULong(4), a.length());
-      CHECK_EQUAL(buffer, a.get_buffer());
-      CHECK_EQUAL(int( 1), a[0]);
-      CHECK_EQUAL(int( 4), a[1]);
-      CHECK_EQUAL(int( 9), a[2]);
-      CHECK_EQUAL(int(16), a[3]);
-      CHECK_EQUAL(false, a.release());
-      a.length (3);
-      CHECK_EQUAL(CORBA::ULong(3), a.length());
-      a.length (4);
-      CHECK_EQUAL(CORBA::ULong(4), a.length());
-      CHECK_EQUAL(int(0), a[3]);
+      tested_sequence x(8, 4, buffer, true);
+      CHECK_EQUAL(CORBA::ULong(8), x.maximum());
+      CHECK_EQUAL(CORBA::ULong(4), x.length());
+      CHECK_EQUAL(buffer, x.get_buffer());
+      CHECK_EQUAL(int( 1), x[0]);
+      CHECK_EQUAL(int( 4), x[1]);
+      CHECK_EQUAL(int( 9), x[2]);
+      CHECK_EQUAL(int(16), x[3]);
+      CHECK_EQUAL(true, x.release());
+      x.length (3);
+      CHECK_EQUAL(CORBA::ULong(3), x.length());
+      x.length (4);
+      CHECK_EQUAL(CORBA::ULong(4), x.length());
+      CHECK_EQUAL(int(0), x[3]);
     }
     FAIL_RETURN_IF_NOT(a.expect(0), a);
-    FAIL_RETURN_IF_NOT(f.expect(0), f);
-    tested_sequence::freebuf(buffer);
+    FAIL_RETURN_IF_NOT(f.expect(1), f);
     return 0;
   }
 
@@ -423,9 +422,8 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
   status += tester.test_all ();
 
   typedef value_sequence_tester<tested_sequence,tested_allocation_traits> common;
-  common tester2 (false);
+  common tester2;
   status += tester2.test_all ();
 
   return status;
 }
-

@@ -12,14 +12,13 @@ use strict;
 my $final_result = 0;
 
 my @testsToRun = qw(unbounded_value_sequence_ut
-               unbounded_array_sequence_ut
                bounded_value_sequence_ut
                string_sequence_element_ut
                unbounded_string_sequence_ut
                bounded_string_sequence_ut
                testing_allocation_traits_ut
                unbounded_octet_sequence_ut
-               unbounded_octet_sequence_no_copy_ut
+               unbounded_octet_sequence_nocopy_ut
                object_reference_sequence_element_ut
                unbounded_object_reference_sequence_ut
                unbounded_fwd_object_reference_sequence_ut

@@ -312,6 +312,8 @@ struct Tester
       CHECK_EQUAL(true, a.release());
     }
     FAIL_RETURN_IF_NOT(c.expect(0), c);
+    // Since we've given away the ownership the buffer is deallocated by
+    // the sequence.
     FAIL_RETURN_IF_NOT(f.expect(1), f);
     return 0;
   }
@@ -369,7 +371,7 @@ struct Tester
   int test_all()
   {
     int status = 0;
-    
+
     status += this->test_ulong_constructor();
     status += this->test_copy_constructor_from_ulong();
     status += this->test_assignment_from_ulong();
@@ -402,7 +404,7 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
 
   {
     typedef value_sequence_tester<tested_sequence,tested_allocation_traits> common;
-    common tester (false);
+    common tester;
     status += tester.test_all ();
   }
 
