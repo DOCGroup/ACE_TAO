@@ -58,7 +58,7 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
                                     ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd)
 {
   this->request_id_ = request_id;
-  this->rd_ = rd;
+  this->rd_ = rd.get ();
 
   return 0;
 }
@@ -74,8 +74,8 @@ TAO_Exclusive_TMS::unbind_dispatcher (CORBA::ULong request_id)
 {
   if (!this->rd_ || this->request_id_ != request_id)
     return -1;
-  this->request_id_ = 0;
-  this->rd_ = 0;
+
+  this->rd_.release ();
 
   return 0;
 }
@@ -96,9 +96,9 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       return 0;
     }
 
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd (this->rd_.get (), false);
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd (this->rd_.get ());
   this->request_id_ = 0; // @@ What is a good value???
-  this->rd_ = 0;
+  this->rd_.release ();
 
   // Dispatch the reply.
   // Returns 1 on success, -1 on failure.
@@ -120,10 +120,10 @@ TAO_Exclusive_TMS::reply_timed_out (CORBA::ULong request_id)
       // did not find the right reply handler.
       return 0;
     }
-
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd (this->rd_.get (), false);
+  
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd (this->rd_.get ());
   this->request_id_ = 0; // @@ What is a good value???
-  this->rd_ = 0;
+  this->rd_.release ();
 
   rd->reply_timed_out ();
 

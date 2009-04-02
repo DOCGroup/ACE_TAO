@@ -30,11 +30,15 @@
 #include "ace/Atomic_Op.h"
 #include "ace/Intrusive_Auto_Ptr.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Allocator;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward Declarations.
 class TAO_Pluggable_Reply_Params;
-class ACE_Allocator;
 
 /**
  * @class TAO_Reply_Dispatcher

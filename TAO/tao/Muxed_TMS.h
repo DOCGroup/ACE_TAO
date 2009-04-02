@@ -25,13 +25,15 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+template <class X> class ACE_Intrusive_Auto_Ptr;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_Pluggable_Reply_Params;
 class TAO_Reply_Dispatcher;
-template <class X> class ACE_Intrusive_Auto_Ptr;
 
 /**
  * @class TAO_Muxed_TMS

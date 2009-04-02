@@ -1,3 +1,14 @@
+Thu Apr  2 11:03:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/Exclusive_TMS.cpp
+        * tao/Exclusive_TMS.h
+          Resolved compiler errors on Codegear 2009.
+
+        * tao/Muxed_TMS.h
+        * tao/Reply_Dispatcher.h
+          Resolved compiler errors when versioned 
+          namespaces are used.
+
 Wed Apr  1 14:28:11 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
