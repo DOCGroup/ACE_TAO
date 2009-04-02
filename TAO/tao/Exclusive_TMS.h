@@ -22,8 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Intrusive_Auto_Ptr.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Pluggable_Reply_Params;
