@@ -1,3 +1,8 @@
+Thu Apr  2 10:05:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sig_Handlers_Test.cpp:
+          Fixed compile error and warning
+
 Wed Apr  1 19:48:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Log_Msg_Test.cpp:

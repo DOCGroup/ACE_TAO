@@ -26,41 +26,42 @@
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
 #include "ace/Assert.h"
+#include "ace/SString.h"
 
 ACE_RCSID(tests, Reactor_Timer_Test, "$Id$")
 
-class Test_SIGINT_Handler : public ACE_Event_Handler 
-{ 
+class Test_SIGINT_Handler : public ACE_Event_Handler
+{
 public:
-  Test_SIGINT_Handler (ACE_Reactor *reactor, const char *message) 
+  Test_SIGINT_Handler (ACE_Reactor *reactor, const char *message)
     : message_ (message)
   {
     int result = reactor->register_handler (SIGINT, this);
-    ACE_DEBUG ((LM_DEBUG, 
-                ACE_TEXT("Main::Test_SIGINT_Handler (%u) - Result %i\n"), 
-                this, 
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Main::Test_SIGINT_Handler (%u) - Result %i\n"),
+                this,
                 result));
     Test_SIGINT_Handler::registration_count_++;
   }
 
-  ~Test_SIGINT_Handler() 
+  ~Test_SIGINT_Handler()
   {
     ACE_ASSERT (Test_SIGINT_Handler::handle_signal_count_ == Test_SIGINT_Handler::registration_count_);
   }
 
-  virtual int handle_signal (int signal, siginfo_t *, ucontext_t *) 
+  virtual int handle_signal (int signal, siginfo_t *, ucontext_t *)
   {
     ACE_ASSERT (signal == SIGINT);
-    ACE_DEBUG ((LM_DEBUG, 
-                ACE_TEXT("Main::Test_SIGINT_Handler (%u) - %s\n"), 
-                this, 
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Main::Test_SIGINT_Handler (%u) - %s\n"),
+                this,
                 this->message_.c_str()));
     Test_SIGINT_Handler::handle_signal_count_++;
     return 0;
   }
 
 private:
-  std::string message_;
+  ACE_CString message_;
 
   static int handle_signal_count_;
 
@@ -70,22 +71,22 @@ private:
 int Test_SIGINT_Handler::handle_signal_count_ = 0;
 int Test_SIGINT_Handler::registration_count_ = 0;
 
-class Test_SIGINT_Shutdown_Handler : public ACE_Event_Handler 
-{ 
+class Test_SIGINT_Shutdown_Handler : public ACE_Event_Handler
+{
 public:
   Test_SIGINT_Shutdown_Handler (ACE_Reactor *reactor)
   {
     int result = reactor->register_handler (SIGINT, this);
-    ACE_DEBUG ((LM_DEBUG, 
-                ACE_TEXT("Main::Test_SIGINT_Shutdown_Handler (%u) - Result %i\n"), 
-                this, 
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Main::Test_SIGINT_Shutdown_Handler (%u) - Result %i\n"),
+                this,
                 result));
   }
 
-  virtual int handle_signal (int signal, siginfo_t *, ucontext_t *) 
+  virtual int handle_signal (int signal, siginfo_t *, ucontext_t *)
   {
     ACE_ASSERT (signal == SIGINT);
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Main::Test_SIGINT_Shutdown_Handler (%u)\n"),
                 this));
     ACE_Reactor::instance ()->end_reactor_event_loop ();
@@ -94,7 +95,7 @@ public:
 };
 
 int
-run_main (int argc, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Sig_Handlers_Test"));
 
@@ -120,7 +121,7 @@ run_main (int argc, ACE_TCHAR *[])
   while (!ACE_Reactor::instance ()->reactor_event_loop_done ())
     {
       ACE_DEBUG ((LM_DEBUG,"\nwaiting for SIGINT\n"));
-      if (ACE_Reactor::instance ()->handle_events () == -1) 
+      if (ACE_Reactor::instance ()->handle_events () == -1)
         ACE_ERROR ((LM_ERROR,"%p\n","handle_events"));
     }
 
