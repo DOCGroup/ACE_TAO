@@ -71,14 +71,14 @@ init_and_setup (int& argc,
                 TAO::SL2::AccessDecision_var& sl2ad)
 {
   orb = CORBA::ORB_init (argc, argv);
-  rootpoa = rir<PortableServer::POA> (orb, "RootPOA");
+  rootpoa = rir<PortableServer::POA> (orb.in (), "RootPOA");
   poamgr = rootpoa->the_POAManager();
 
   sl3current =
-    rir<SecurityLevel3::SecurityCurrent>(orb, "SecurityLevel3:SecurityCurrent");
+    rir<SecurityLevel3::SecurityCurrent>(orb.in (), "SecurityLevel3:SecurityCurrent");
 
   SecurityLevel2::SecurityManager_var sl2sm =
-    rir<SecurityLevel2::SecurityManager> (orb,
+    rir<SecurityLevel2::SecurityManager> (orb.in (),
                                           "SecurityLevel2:SecurityManager");
   SecurityLevel2::AccessDecision_var ad = sl2sm->access_decision ();
 
@@ -172,9 +172,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "non-secure invocations\n"));
 
       // 5. publish references to #1 and #2 to distinct files
-      publish_ior (orb, server1_obj,
+      publish_ior (orb.in (), server1_obj.in (),
                    TAO_Mixed_Security_Test::restricted_ior_file);
-      publish_ior (orb, server2_obj,
+      publish_ior (orb.in (), server2_obj.in (),
                    TAO_Mixed_Security_Test::permitted_ior_file);
       ACE_DEBUG ((LM_DEBUG, "mixed_security/server: "
                   "published IORs for objects\n"));
