@@ -1,3 +1,14 @@
+Fri Apr  3 13:28:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/arpa/os_inet.h:
+        * ace/os_include/sys/os_select.h:
+        * ace/os_include/sys/os_socket.h:
+        * ace/os_include/sys/os_un.h:
+        * ace/Token.h:
+        * ace/config-vxworks6.4.h:
+          Moved some VxWorks checks to the config file and added some
+          new defines
+
 Thu Apr  2 19:33:13 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:
