@@ -46,9 +46,9 @@ void CAddNameServerDlg::OnOK()
 {
   UpdateData();
   if (m_Name.Trim() == _T("")) // Is a particular field still empty?
-   {	
+   {
       AfxMessageBox(_T("Please enter a server name"));
-      return; 
+      return;
    }
   CDialog::OnOK();
 }
