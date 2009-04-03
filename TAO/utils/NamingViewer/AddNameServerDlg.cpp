@@ -44,7 +44,11 @@ END_MESSAGE_MAP()
 
 void CAddNameServerDlg::OnOK()
 {
-  // TODO: Add extra validation here
   UpdateData();
+  if (m_Name.Trim() == _T("")) // Is a particular field still empty?
+   {	
+      AfxMessageBox(_T("Please enter a server name"));
+      return; 
+   }
   CDialog::OnOK();
 }
