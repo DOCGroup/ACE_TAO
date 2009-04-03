@@ -1,3 +1,8 @@
+Fri Apr  3 13:40:46 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/tests/Security/mixed_security_test/server.cpp:
+          Fixed compilation warnings on LynxOS.
+
 Fri Apr  3 13:33:14 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/DevGuideExamples/Security/ParticipatingApp/Messenger_i.h:
