@@ -302,12 +302,12 @@ void CNamingTreeCtrl::OnContextPopupBindContext()
   {
     CNamingObject* pObject = GetTreeObject();
     CosNaming::NamingContext_var Context = pObject->NamingContext();
-    if(CORBA::is_nil(Context))
+    if(CORBA::is_nil(Context.in ()))
     {
       return;
     }
     CosNaming::NamingContext_var NewContext = CosNaming::NamingContext::_narrow(Dialog.GetObject());
-    if(CORBA::is_nil(NewContext))
+    if(CORBA::is_nil(NewContext.in ()))
     {
       AfxMessageBox(ACE_TEXT ("Object is not a CosNaming::NamingContext"));
       return;
@@ -334,7 +334,7 @@ void CNamingTreeCtrl::OnContextPopupBindobject()
     HTREEITEM hItem = GetSelectedItem();
     CNamingObject* pObject = GetTreeObject(hItem);
     CosNaming::NamingContext_var Context = pObject->NamingContext();
-    if(CORBA::is_nil(Context))
+    if(CORBA::is_nil(Context.in ()))
     {
       return;
     }
@@ -363,7 +363,7 @@ void CNamingTreeCtrl::OnContextpopupBindnewcontext()
   HTREEITEM hItem = GetSelectedItem();
   CNamingObject* pObject = GetTreeObject(hItem);
   CosNaming::NamingContext_var Context = pObject->NamingContext();
-  if(CORBA::is_nil(Context))
+  if(CORBA::is_nil(Context.in ()))
   {
     return;
   }
@@ -374,8 +374,7 @@ void CNamingTreeCtrl::OnContextpopupBindnewcontext()
   }
   try
   {
-    CosNaming::NamingContext_var NewContext;
-    NewContext = Context->new_context();
+    CosNaming::NamingContext_var NewContext = Context->new_context();
     Context->bind_context(Dialog.GetName(), NewContext);
     OnContextPopupRefresh();
   }
