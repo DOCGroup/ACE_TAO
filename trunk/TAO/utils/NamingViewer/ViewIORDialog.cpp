@@ -69,7 +69,7 @@ void ViewIORDialog::OnApply()
   UpdateData();
   try
   {
-    m_Object = m_pORB->string_to_object(ACE_TEXT_ALWAYS_CHAR (m_IOR));
+    m_Object = m_pORB->string_to_object(m_IOR);
     DecodeIOR();
   }
   catch(CORBA::Exception& ex)
@@ -99,7 +99,7 @@ void ViewIORDialog::DecodeIOR()
 
   // Iterate through each profile and add an entry to the tree control
   const TAO_MProfile& BaseProfiles= pStub->base_profiles();
-  CORBA::ULong Count = BaseProfiles.profile_count();
+  CORBA::ULong const Count = BaseProfiles.profile_count();
   for(CORBA::ULong Slot = 0; Slot < Count; Slot++)
   {
     const TAO_Profile* pProfile = BaseProfiles.get_profile(Slot);

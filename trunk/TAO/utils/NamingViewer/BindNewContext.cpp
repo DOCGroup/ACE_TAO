@@ -48,7 +48,7 @@ void CBindNewContext::OnOK()
   // TODO: Add extra validation here
   UpdateData();
   m_Name.length(1);
-  m_Name[0].id = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (m_ID));
-  m_Name[0].kind = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (m_Kind));
+  m_Name[0].id = CORBA::string_dup(m_ID);
+  m_Name[0].kind = CORBA::string_dup(m_Kind);
   CDialog::OnOK();
 }

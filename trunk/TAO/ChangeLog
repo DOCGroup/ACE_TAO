@@ -1,3 +1,14 @@
+Fri Apr  3 12:50:23 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/NamingViewer/AddNameServerDlg.cpp:
+        * utils/NamingViewer/BindDialog.cpp:
+        * utils/NamingViewer/BindNewContext.cpp:
+        * utils/NamingViewer/NamingTreeCtrl.cpp:
+        * utils/NamingViewer/NamingViewer.cpp:
+        * utils/NamingViewer/SelectNSDialog.cpp:
+        * utils/NamingViewer/ViewIORDialog.cpp:
+          Minor code improvements
+
 Thu Apr  2 11:03:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tao/Exclusive_TMS.cpp
@@ -6,7 +17,7 @@ Thu Apr  2 11:03:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tao/Muxed_TMS.h
         * tao/Reply_Dispatcher.h
-          Resolved compiler errors when versioned 
+          Resolved compiler errors when versioned
           namespaces are used.
 
 Wed Apr  1 14:28:11 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
