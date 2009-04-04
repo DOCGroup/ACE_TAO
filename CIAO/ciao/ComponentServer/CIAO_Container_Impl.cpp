@@ -339,12 +339,10 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_Container_i::remove_home");
 
-      ::Components::CCMHome_var home (href);
-
       Home_Iterator i = this->home_map_.begin ();
       while (!i.done ())
         {
-          if (i->item ()->_is_equivalent (home.in ()))
+          if (i->item ()->_is_equivalent (href))
             {
               CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_Container_i::remove_home - "
                            "Successfully found matching home\n"));
@@ -363,7 +361,7 @@ namespace CIAO
       CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_Container_i::remove_home - "
                    "Invoking remove on the container impl for home %C.\n",
                    i->key ().c_str ()));
-      this->container_->uninstall_home (home.in ());
+      this->container_->uninstall_home (href);
       CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::remove_home - "
                    "Successfully removed home %C\n",
                    i->key ().c_str ()));
