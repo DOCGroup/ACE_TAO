@@ -239,15 +239,20 @@ namespace CIAO
     CIAO_ComponentServer_i::init (::Components::Deployment::ServerActivator_ptr sa,
                                   Components::ConfigValues *cvs)
     {
-      this->serv_act_ = ::Components::Deployment::ServerActivator::_duplicate(sa);
-      this->config_values_ = cvs;
-      
-      for (CORBA::ULong i = 0; i < this->config_values_->length (); ++i)
-        {
-          if (ACE_OS::strcmp (CIAO::Deployment::COMPONENTINSTALLATION_REF,
-                              this->config_values_[i]->name ()) == 0)
-            this->config_values_[i]->value () >>= this->ci_;
-        }
+      if (sa != 0)
+	this->serv_act_ = ::Components::Deployment::ServerActivator::_duplicate(sa);
+
+      if (cvs != 0)
+	{
+	  this->config_values_ = cvs;
+
+	  for (CORBA::ULong i = 0; i < this->config_values_->length (); ++i)
+	    {
+	      if (ACE_OS::strcmp (CIAO::Deployment::COMPONENTINSTALLATION_REF,
+				  this->config_values_[i]->name ()) == 0)
+		this->config_values_[i]->value () >>= this->ci_;
+	    }
+	}
     }
   }
 }
