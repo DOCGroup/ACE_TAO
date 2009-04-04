@@ -240,19 +240,19 @@ namespace CIAO
                                   Components::ConfigValues *cvs)
     {
       if (sa != 0)
-	this->serv_act_ = ::Components::Deployment::ServerActivator::_duplicate(sa);
+        this->serv_act_ = ::Components::Deployment::ServerActivator::_duplicate(sa);
 
       if (cvs != 0)
-	{
-	  this->config_values_ = cvs;
+        {
+          this->config_values_ = cvs;
 
-	  for (CORBA::ULong i = 0; i < this->config_values_->length (); ++i)
-	    {
-	      if (ACE_OS::strcmp (CIAO::Deployment::COMPONENTINSTALLATION_REF,
-				  this->config_values_[i]->name ()) == 0)
-		this->config_values_[i]->value () >>= this->ci_;
-	    }
-	}
+          for (CORBA::ULong i = 0; i < this->config_values_->length (); ++i)
+            {
+              if (ACE_OS::strcmp (CIAO::Deployment::COMPONENTINSTALLATION_REF,
+                                  this->config_values_[i]->name ()) == 0)
+                this->config_values_[i]->value () >>= this->ci_;
+            }
+        }
     }
   }
 }
