@@ -239,7 +239,7 @@ namespace CIAO
     CIAO_ComponentServer_i::init (::Components::Deployment::ServerActivator_ptr sa,
                                   Components::ConfigValues *cvs)
     {
-      if (sa != 0)
+      if (!CORBA::is_nil (sa != 0))
         this->serv_act_ = ::Components::Deployment::ServerActivator::_duplicate(sa);
 
       if (cvs != 0)
