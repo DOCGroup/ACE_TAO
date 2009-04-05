@@ -1138,6 +1138,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::deactivate_i (int pulse)
       else
         this->state_ = ACE_Message_Queue_Base::DEACTIVATED;
     }
+
   return previous_state;
 }
 
@@ -1171,9 +1172,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::close (void)
   int const result = this->deactivate_i ();
 
   // Free up the remaining messages on the queue.
-  this->flush_i ();
-
-  return result;
+  return this->flush_i ();
 }
 
 template <ACE_SYNCH_DECL> int

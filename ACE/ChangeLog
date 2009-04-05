@@ -1,3 +1,10 @@
+Sun Apr  5 19:08:47 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Message_Queue_T.cpp (close): Fixed this method so it returns
+          the number of messages that were flushed from the queue, as per
+          its documentation.  Thanks to Igor Rayak <igor dot rayak at
+          gmail dot com> for reporting this.
+
 Sun Apr  5 18:39:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_main.cpp:
