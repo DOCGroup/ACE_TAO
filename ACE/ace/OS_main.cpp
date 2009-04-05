@@ -45,7 +45,8 @@ int ace_os_main_i (int argc, char *argv[]) /* user's entry point, e.g., main */
   return vx_ace_main_i_ptr ? (*vx_ace_main_i_ptr) (argc, argv) : (-1);   /* what the user calls "main" */
 }
 #    else /* !ACE_VXWORKS && !__RTP__ */
-int ace_os_main_i (int argc, char *argv[]) /* user's entry point, e.g., main */
+ACE_Export int
+ace_os_main_i (int argc, char *argv[]) /* user's entry point, e.g., main */
 {
   ACE_MAIN_OBJECT_MANAGER
   return ace_main_i (argc, argv);           /* what the user calls "main" */
