@@ -281,7 +281,9 @@ NodeApplication_Impl::~NodeApplication_Impl()
 
               try
                 {
-                  server.ref->remove_container (container.ref.in ());
+		  if (!CORBA::is_nil (container.ref))
+		    server.ref->remove_container (container.ref.in ());
+		  
                   container.ref = CIAO::Deployment::Container::_nil ();
                 }
               catch (const CORBA::Exception &ex)
@@ -303,7 +305,8 @@ NodeApplication_Impl::~NodeApplication_Impl()
 
           try
             {
-              this->activator_->remove_component_server (server.ref.in ());
+	      if (!CORBA::is_nil (server.ref))
+		this->activator_->remove_component_server (server.ref.in ());
             }
           catch (const CORBA::Exception &ex)
             {
