@@ -1,3 +1,8 @@
+Mon Apr  6 07:35:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/RTCORBA/Priority_Inversion_With_Bands/run_test.pl:
+          Fixed time out errors.
+
 Fri Apr  3 13:40:46 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/tests/Security/mixed_security_test/server.cpp:

@@ -76,7 +76,7 @@ sub run_test
     $CL[$i] = $client->CreateProcess ("client", "$common_args $arg");
     $CL[$i]->Spawn ();
 
-    $client_status = $CL[$i]->WaitKill ($client->ProcessStopWaitInterval ());
+    $client_status = $CL[$i]->WaitKill ($client->ProcessStartWaitInterval (60));
     if ($client_status != 0) {
         print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
