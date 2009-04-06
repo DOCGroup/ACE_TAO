@@ -1,3 +1,8 @@
+Mon Apr  6 09:43:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          Added missing ACE_LACKS_GETENV
+
 Mon Apr  6 07:25:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-integritySCA.h:
