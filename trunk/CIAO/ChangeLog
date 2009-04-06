@@ -1,13 +1,19 @@
+Mon Apr  6 13:26:08 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:
+
+          Fixed compile error. 
+        
 Sun Apr  5 20:34:22 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/NodeManager-Deployments/nm_launcher.mpc:
-        
+
           Changed parent from ciao_logger to dance_logger.
-        
+
         * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:
 
-          Properly check if _var is nil. 
-        
+          Properly check if _var is nil.
+
 Sat Apr  4 15:30:13 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:
