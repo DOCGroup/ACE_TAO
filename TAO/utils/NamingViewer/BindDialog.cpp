@@ -20,8 +20,8 @@ CBindDialog::CBindDialog(bool Context, CORBA::ORB_ptr pORB, CWnd* pParent /*=NUL
 {
   //{{AFX_DATA_INIT(CBindDialog)
   m_IOR = _T("");
-  m_ID = _T("");
-  m_Kind = _T("");
+  m_ID = "";
+  m_Kind = "";
   //}}AFX_DATA_INIT
   m_pORB = pORB;
   m_Context = Context;
