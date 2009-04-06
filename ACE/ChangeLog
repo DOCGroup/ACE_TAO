@@ -1,3 +1,18 @@
+Mon Apr  6 07:25:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-integritySCA.h:
+          Added ACE_LACKS_PUTENV_PROTOTYPE
+
+        * ace/config-WinCE.h:
+          WinCE doesn't have environment variables
+
+        * ace/OS_NS_stdlib.cpp:
+        * ace/OS_NS_stdlib.h:
+        * ace/OS_NS_stdlib.inl:
+        * ace/OS_NS_unistd.cpp:
+          Added setenv/unsetenv wrappers and used a specific define per
+          environment method
+
 Sun Apr  5 19:08:47 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Message_Queue_T.cpp (close): Fixed this method so it returns

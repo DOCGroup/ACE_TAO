@@ -48,7 +48,7 @@
 /***** ANSI defines *****/
 #define ACE_LACKS_TEMPNAM /* believe it or not, this is ANSI C */
 #define ACE_HAS_STRERROR
-
+#define ACE_LACKS_PUTENV_PROTOTYPE
 
 #define ACE_LACKS_SENDMSG
 

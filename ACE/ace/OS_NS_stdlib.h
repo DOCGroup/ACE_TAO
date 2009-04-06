@@ -235,6 +235,12 @@ namespace ACE_OS {
               ACE_COMPARE_FUNC);
 
   ACE_NAMESPACE_INLINE_FUNCTION
+  int setenv(const char *envname, const char *envval, int overwrite);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int unsetenv(const char *name);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int rand (void);
 
   ACE_NAMESPACE_INLINE_FUNCTION
