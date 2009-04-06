@@ -1,3 +1,12 @@
+Mon Apr  6 21:59:51 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_sunos5_g++.GNU: Don't acc CFLAGS to
+          CCFLAGS; set options that make sense to C and C++ in the
+          respective CFLAGS/CCFLAGS. Not all options are cross-compatible
+          so they shouldn't be blindly included. Has the side-affect of
+          removing the double -pipe (and other options included twice)
+          and fixes Bugzilla #3232.
+
 Mon Apr  6 15:17:23 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Message_Queue_Test.cpp: Added a new close_test() function
