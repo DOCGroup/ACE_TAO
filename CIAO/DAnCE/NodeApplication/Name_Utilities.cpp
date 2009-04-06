@@ -155,7 +155,7 @@ namespace DAnCE
   {
     DANCE_TRACE ("Name_Utilities::build_name");
     
-    /*ACE_Auto_Basic_Array_Ptr<ACE_TCHAR>*/  ACE_TCHAR *safe_array (new char[ACE_OS::strlen (name)]);
+    /*ACE_Auto_Basic_Array_Ptr<ACE_TCHAR>*/  ACE_TCHAR *safe_array (new char[ACE_OS::strlen (name) + 1]);
     
     ACE_Tokenizer parser (ACE_OS::strcpy (safe_array/*.get ()*/, name));
     parser.delimiter ('/');
