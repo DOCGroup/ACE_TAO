@@ -855,6 +855,48 @@ prio_test (void)
   return status;
 }
 
+static int
+close_test (void)
+{
+  int status = 0;
+
+  int flushed_messages;
+
+  QUEUE mq1;
+  flushed_messages = mq1.close ();
+
+  if (flushed_messages != 0) 
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Closing queue should flush 0 messages, close() reports - %d\n"),
+                  flushed_messages ));
+      status = 1;
+      return status;
+    }
+
+  // There was a bug that return previous queue state instead of
+  // number of flushed messages. Thus, insert 2 messages != ACTIVATE
+  // queue state
+  ACE_Message_Block *pMB1;
+  ACE_Message_Block *pMB2;
+  ACE_NEW_NORETURN (pMB1, ACE_Message_Block (1));
+  ACE_NEW_NORETURN (pMB2, ACE_Message_Block (1));
+  QUEUE mq2;
+  mq2.enqueue_head (pMB1);
+  mq2.enqueue_head (pMB2);
+  flushed_messages = mq2.close ();
+
+  if (flushed_messages != 2) 
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Closing queue should flush 2 messages, close() reports - %d\n"),
+                  flushed_messages ));
+      status = 1;
+      return status;
+    }
+  return status;
+}
+
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
@@ -886,6 +928,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_NEW_RETURN (timer,
                   ACE_High_Res_Timer,
                   -1);
+
+  if (status == 0)
+    status = close_test ();
 
 #if defined (ACE_HAS_THREADS)
   if (status == 0)
@@ -922,6 +967,8 @@ run_main (int argc, ACE_TCHAR *argv[])
                 ACE_TEXT ("test failed")));
   delete timer;
   timer = 0;
+
+  
 
   ACE_END_TEST;
   return status;

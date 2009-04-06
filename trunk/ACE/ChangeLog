@@ -1,3 +1,9 @@
+Mon Apr  6 15:17:23 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Message_Queue_Test.cpp: Added a new close_test() function
+          to test the fix to Message_Queue_T::close().  Thanks to Igor
+          Rayak <igor dot rayak at gmail dot com> for providing this.
+
 Mon Apr  14:46:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:
