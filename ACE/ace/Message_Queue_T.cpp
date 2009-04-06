@@ -1169,7 +1169,9 @@ ACE_Message_Queue<ACE_SYNCH_USE>::close (void)
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::close");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  int const result = this->deactivate_i ();
+  // There's no need to check the return value of deactivate_i() since
+  // it never fails!
+  this->deactivate_i ();
 
   // Free up the remaining messages on the queue.
   return this->flush_i ();
