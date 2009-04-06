@@ -20,8 +20,8 @@ public:
 // Dialog Data
   //{{AFX_DATA(CBindNewContext)
   enum { IDD = IDD_BIND_NEW_CONTEXT };
-  CString m_ID;
-  CString m_Kind;
+  CStringA m_ID;
+  CStringA m_Kind;
   //}}AFX_DATA
   CosNaming::Name& GetName() {return m_Name;};
 

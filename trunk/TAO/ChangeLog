@@ -1,3 +1,11 @@
+Mon Apr  6 08:19:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/NamingViewer/BindDialog.cpp
+        * utils/NamingViewer/BindDialog.h
+        * utils/NamingViewer/BindNewContext.cpp
+        * utils/NamingViewer/BindNewContext.h
+          Fixed unicode compile errors
+
 Mon Apr  6 07:35:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/RTCORBA/Priority_Inversion_With_Bands/run_test.pl:

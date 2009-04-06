@@ -19,8 +19,8 @@ CBindNewContext::CBindNewContext(CWnd* pParent /*=NULL*/)
   : CDialog(CBindNewContext::IDD, pParent)
 {
   //{{AFX_DATA_INIT(CBindNewContext)
-  m_ID = _T("");
-  m_Kind = _T("");
+  m_ID = "";
+  m_Kind = "";
   //}}AFX_DATA_INIT
 }
 
