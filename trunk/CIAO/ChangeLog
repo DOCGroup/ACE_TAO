@@ -1,9 +1,16 @@
+Mon Apr  6 18:18:58 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/Name_Utilities.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+          Stab at a fix for a memory corruption during deployment. 
+        
 Mon Apr  6 13:26:08 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:
 
-          Fixed compile error. 
-        
+          Fixed compile error.
+
 Sun Apr  5 20:34:22 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/NodeManager-Deployments/nm_launcher.mpc:
