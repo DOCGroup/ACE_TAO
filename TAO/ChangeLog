@@ -1,3 +1,12 @@
+Mon Apr  6 13:39:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added 3630 and 3567 has been fixed
+
+        * tests/Bug_3630_Regression/*:
+          Added new test for bugzilla 3630, thanks to Steve Ramsay
+          <steve dot ramsay at caris dot com> for creating this test
+
 Mon Apr  6 08:19:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/NamingViewer/BindDialog.cpp
