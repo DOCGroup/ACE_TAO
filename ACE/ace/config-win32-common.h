@@ -293,6 +293,8 @@
 # define ACE_LACKS_UID_T
 # define ACE_LACKS_GID_T
 #endif
+#define ACE_LACKS_SETENV
+#define ACE_LACKS_UNSETENV
 
 #define ACE_HAS_PDH_H
 #define ACE_HAS_PDHMSG_H
