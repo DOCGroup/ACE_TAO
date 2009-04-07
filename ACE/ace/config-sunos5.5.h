@@ -415,5 +415,8 @@
 // Sum of the iov_len values can't be larger then SSIZE_MAX
 #define ACE_HAS_SOCK_BUF_SIZE_MAX
 
+#define ACE_LACKS_SETENV
+#define ACE_LACKS_UNSETENV
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */
