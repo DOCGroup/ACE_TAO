@@ -3053,6 +3053,8 @@ ACE_CHECK_HAS_FUNCS(getifaddrs)
 
 ACE_CHECK_LACKS_FUNCS(getegid geteuid getgid)
 
+ACE_CHECK_LACKS_FUNCS(setenv unsetenv)
+
 ACE_CHECK_LACKS_FUNCS(getopt)
 if test $ac_cv_func_getopt = yes; then
     AC_CHECK_DECL([getopt],
