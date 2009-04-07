@@ -11,7 +11,10 @@
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
-#include "tao/Unbounded_Octet_Sequence_T.h"
+// This is a unit test and we use our local slightly
+// modified Unbounded_Octet_Sequence_T.h. See mpc file
+// for details.
+#include "Unbounded_Octet_Sequence_T.h"
 
 #include "value_sequence_tester.hpp"
 
