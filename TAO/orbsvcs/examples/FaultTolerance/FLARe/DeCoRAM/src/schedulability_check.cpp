@@ -48,7 +48,7 @@ parse_args (int argc, char *argv[])
       break;
     case 'h':
     default:
-      std::cerr << "usage: tgen "
+      std::cerr << "usage: scheck "
                 << "\t-a" << std::endl
                 << "\t-c" << std::endl
                 << "\t-f <filename>" << std::endl;

@@ -71,7 +71,7 @@ OptimizedWCRT::operator () (double current_wcrt,
       // compare it to the existing on
       double wcrt = (*ctt_) (modified_tasks);
 
-      // TRACE ("wcrt = " << wcrt);
+      TRACE ("wcrt = " << wcrt);
 
       // if we found a schedulable result return maximum wcrt
       if (wcrt != .0)
