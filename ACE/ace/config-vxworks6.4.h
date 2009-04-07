@@ -231,6 +231,8 @@
   #define ACE_LACKS_ISASCII
 #else
   // We are building for kernel mode
+  #define ACE_LACKS_SETENV
+  #define ACE_LACKS_UNSETENV
   #define ACE_LACKS_SUSECONDS_T
   #define ACE_LACKS_INTPTR_T
   #define ACE_LACKS_INTTYPES_H

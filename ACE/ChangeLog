@@ -1,3 +1,11 @@
+Tue Apr  7 06:56:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/config-vxworks6.4.h:
+          VxWorks kernel model lacks setenv/unsetenv
+
+        * bin/fuzz.pl:
+          Added setenv/unsetenv
+
 Mon Apr  6 21:59:51 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_sunos5_g++.GNU: Don't acc CFLAGS to
@@ -13,7 +21,7 @@ Mon Apr  6 15:17:23 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           to test the fix to Message_Queue_T::close().  Thanks to Igor
           Rayak <igor dot rayak at gmail dot com> for providing this.
 
-Mon Apr  14:46:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Apr  6 14:46:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:
           Windows doesn't have setenv/unsetenv
