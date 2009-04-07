@@ -1,9 +1,15 @@
+Tue Apr  7 14:40:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+          Fuzz error. 
+        
 Tue Apr  7 14:37:18 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
 
-          Compile error. 
-        
+          Compile error.
+
 Mon Apr  6 18:18:58 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/Name_Utilities.cpp:
