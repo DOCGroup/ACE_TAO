@@ -346,6 +346,9 @@
 
 #define ACE_LACKS_ISWASCII
 
+#define ACE_LACKS_SETENV
+#define ACE_LACKS_UNSETENV
+
 // Shared library name/path components
 #if defined (__ia64)
 #  define ACE_DLL_SUFFIX  ACE_TEXT (".so")
