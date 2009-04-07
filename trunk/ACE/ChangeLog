@@ -1,3 +1,10 @@
+Tue Apr  7 16:44:37 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * docs/ace_guidelines.vsmacros:
+
+          Bug fix where the script was trying to run on unsupported
+          text files, which was causing an exception.
+
 Tue Apr  7 09:33:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-sunos5.5.h
