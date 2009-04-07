@@ -1,3 +1,14 @@
+Tue Apr  7 09:01:37 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Sequence_Unit_Tests/clean_tao_export.pl:
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_nocopy_ut.cpp:
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+
+          Fixed a test that uses specialization of unbounded_value_sequence
+          for CORBA::Octet on win32. This test requires that the above
+          specialization is compiled into tests code and not imported from
+          TAO.dll as it was done before.
+
 Mon Apr  6 13:39:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
