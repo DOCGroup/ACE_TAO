@@ -36,11 +36,13 @@ Ranked_Scheduler::operator () (const Task & task)
       // TASK_LIST active_backups = 
       TASK_LIST local_tasks = processor_it->second;
 
-      local_tasks.push_back (task);
+      // make sure, task is scheduled as active
+      Task copy = task;
+      copy.role = PRIMARY;
+
+      local_tasks.push_back (copy);
 
       double wcrt = wcrt_algorithm_ (local_tasks);
-
-      TRACE ("wcrt = " << wcrt);
 
       // if the previous step found no valid schedule wcrt will be 0
       // and we have to proceed with the next available processor

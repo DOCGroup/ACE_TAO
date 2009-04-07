@@ -106,6 +106,7 @@ RankedWCRT::RankedWCRT (const SCHEDULE & schedule,
 
               // add the processor set to the failure map
               failure_map_ [p_it->second.name] = relevant_processors;
+              TRACE (p_it->second.name << ":" << relevant_processors);
             } // end if role == BACKUP
         } // end for each task in the group
     } // end for each task group
@@ -115,8 +116,10 @@ struct UnionAccumulator : public std::unary_function <Task,
                                                       void>
 {
 public:
-  UnionAccumulator (FAILURE_MAP & map)
-    : map_ (map)
+  UnionAccumulator (FAILURE_MAP & map,
+                    PROCESSOR_SET & un)
+    : map_ (map),
+      union_ (un)
   {
   }
 
@@ -124,7 +127,8 @@ public:
   {
     PROCESSOR_SET failure_set = map_ [task.name];
     PROCESSOR_SET result;
-    
+
+    /*    
     std::set_union (failure_set.begin (),
                     failure_set.end (),
                     union_.begin (),
@@ -132,24 +136,33 @@ public:
                     std::inserter (result,
                                    result.begin ()));
 
-    union_ = result;
+                                   union_ = result;
+    */
+
+    union_.insert (failure_set.begin (), failure_set.end ());
+
+    TRACE("union(" << task.name << ")=" << union_);
   }
 
-  PROCESSOR_LIST get_union (void)
+  PROCESSOR_LIST get_union (void) const
   {
     PROCESSOR_LIST list;
-    
+   
+    TRACE("union=" << union_);
+
     std::copy (union_.begin (),
                union_.end (),
                std::inserter (list,
                               list.begin ()));
+
+    TRACE("list=" << list);
 
     return list;
   }
 
 private:
   FAILURE_MAP & map_;
-  PROCESSOR_SET union_;
+  PROCESSOR_SET & union_;
 };
 
 // helper functor that looks at a certain set of tasks and determines
@@ -168,7 +181,10 @@ public:
   TASKNAME_SET operator () (const PROCESSOR_SET & failed_processors)
   {
     TASKNAME_SET active_backups;
-    
+
+    if (failed_processors.empty ())
+      return active_backups;
+
     // for each task in the list
     for (TASK_LIST::iterator it = tasks_.begin ();
          it != tasks_.end ();
@@ -177,14 +193,14 @@ public:
         if (it->role == BACKUP)
           {
             // if it is a subset of the failed processors
-            if (std::includes (failed_processors.begin (),
+            if ((std::includes (failed_processors.begin (),
                                failed_processors.end (),
                                map_[it->name].begin (),
-                               map_[it->name].end ()))
+                               map_[it->name].end ())))
               {
                 // add the task to the taskname set
                 active_backups.insert (it->name);
-              } 
+              }            
           } // end if role == BACKUP
       } // end for each task
 
@@ -201,7 +217,8 @@ double
 RankedWCRT::operator () (const TASK_LIST & scheduled_tasks)
 {
   // do a union of all the relevant task sets in the failure map
-  UnionAccumulator union_accumulator (failure_map_);
+  PROCESSOR_SET un;
+  UnionAccumulator union_accumulator (failure_map_, un);
 
   std::for_each (scheduled_tasks.begin (),
                  scheduled_tasks.end (),
@@ -210,6 +227,7 @@ RankedWCRT::operator () (const TASK_LIST & scheduled_tasks)
   // create all possible combinations with size of the number of
   // backups from the processor set union
   PROCESSOR_LIST failure_elements = union_accumulator.get_union ();
+
   PROCESSOR_LIST combination;
 
   unsigned int combination_length =
@@ -246,16 +264,24 @@ RankedWCRT::operator () (const TASK_LIST & scheduled_tasks)
                                        failure_map_);
 
   std::list <TASKNAME_SET> failover_scenarios;
-
-  // start with an empty taskname set to make sure that the non
-  // failure case is handled
-  failover_scenarios.push_back (TASKNAME_SET ());
   
   std::transform (failure_sets.begin (),
                   failure_sets.end (),
                   std::inserter (failover_scenarios,
                                  failover_scenarios.begin ()),
                   get_active_backups);
+
+  TRACE ("failover scenarios: ");
+  for (std::list<TASKNAME_SET>::iterator it = failure_sets.begin ();
+       it != failure_sets.end ();
+       ++it)
+    {
+      TRACE ("(" << *it << ")");
+    }
+
+  // handle the non failure case
+  if (failover_scenarios.empty ())
+    failover_scenarios.push_back (TASKNAME_SET ());
 
   // Calculate the worst case response time for each of these sets and
   // take the maximum, using the OptimizedWCRT functor.
