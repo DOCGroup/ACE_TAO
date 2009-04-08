@@ -1,3 +1,41 @@
+Wed Apr  9 10:59:59 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/config-win32-cegcc.h:
+          Added to support CE gcc compiler
+          
+        * ace/config-win32-common.h:
+          Prevent ACE_HAS_CUSTOM_EXPORT_MACROS from 
+          being defined a second time.
+        
+        * ace/config-win32.h:
+          Introduced ACE_HAS_CEGCC. When defined, 
+          config-win32-cegcc is included.
+          
+        * ace/Numeric_Limits.h:
+          "#ifdef" replace by "#if defined"
+          
+        * ace/os_include/sys/os_stat.h:
+          Prevent defines from being defined a second time.
+          
+        * ace/OS_NS_stdio.inl:
+          Prevent compiler errors when compiling 
+          with CE gcc compiler.
+          
+          Using global namespace for fseek 
+          
+        * ace/OS_NS_stdlib.inl:
+          Prevent compiler errors when compiling 
+          with CE gcc compiler.
+        
+        * ace/OS_NS_Thread.h:
+          Defining STACK_SIZE_PARAM_IS_A_RESERVATION (when it
+          isn't defined yet).
+          
+        * ace/OS_NS_time.h:
+        * ace/Time_Value.inl:
+          Prevent pragma warnings when compiling with
+          CE gcc compiler.
+
 Wed Apr  8 10:13:28 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
