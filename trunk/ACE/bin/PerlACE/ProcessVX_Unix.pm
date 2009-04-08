@@ -280,7 +280,7 @@ sub Spawn ()
               die "ERROR: Telnet open to <" . $telnet_host . ":". $telnet_port . "> " . $t->errmsg;
             }
 
-            $t->print("");
+            $t->print("\n");
 
             my $target_login = $ENV{'ACE_RUN_VX_LOGIN'};
             my $target_password = $ENV{'ACE_RUN_VX_PASSWORD'};
@@ -295,7 +295,7 @@ sub Spawn ()
               $t->print("$target_password");
             }
 
-            $t->print("");
+            $t->print("\n");
 
             my $blk;
             my $buf;
