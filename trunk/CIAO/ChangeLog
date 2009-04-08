@@ -1,9 +1,16 @@
+Wed Apr  8 05:09:48 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * docs/Porting_Hints.txt:
+
+          Reformatted the document so that the text wraps around the
+          80th column.
+
 Tue Apr  7 14:40:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
 
-          Fuzz error. 
-        
+          Fuzz error.
+
 Tue Apr  7 14:37:18 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
