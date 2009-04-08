@@ -1,3 +1,8 @@
+Wed Apr  8 10:01:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+          Increased number of telnet retries
+
 Tue Apr  7 20:29:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-lynxos.h
