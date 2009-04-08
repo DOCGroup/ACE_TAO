@@ -1,3 +1,8 @@
+Wed Apr  8 10:13:28 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          LynxOS 5.0 has setenv/unsetenv.
+
 Wed Apr  8 10:01:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:
