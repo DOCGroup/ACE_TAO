@@ -59,7 +59,7 @@ ACE_OS::atoi (const char *s)
 ACE_INLINE int
 ACE_OS::atoi (const wchar_t *s)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && defined (ACE_HAS_WTOI)
   ACE_OSCALL_RETURN (::_wtoi (s), int, -1);
 #else /* ACE_WIN32 */
   return ACE_OS::atoi (ACE_Wide_To_Ascii (s).char_rep ());
@@ -77,7 +77,7 @@ ACE_OS::atol (const char *s)
 ACE_INLINE long
 ACE_OS::atol (const wchar_t *s)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && defined (ACE_HAS_WTOL)
   ACE_OSCALL_RETURN (::_wtol (s), long, -1);
 #else /* ACE_WIN32 */
   return ACE_OS::atol (ACE_Wide_To_Ascii (s).char_rep ());

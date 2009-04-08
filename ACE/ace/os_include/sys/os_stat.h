@@ -46,19 +46,44 @@ extern "C"
 // the following macros are for POSIX conformance.
 
 #  if !defined (ACE_HAS_USER_MODE_MASKS)
-#    define S_IRWXU 00700         /* read, write, execute: owner. */
-#    define S_IRUSR 00400         /* read permission: owner. */
-#    define S_IWUSR 00200         /* write permission: owner. */
-#    define S_IXUSR 00100         /* execute permission: owner. */
+#    if !defined (S_IRWXU)
+#      define S_IRWXU 00700         /* read, write, execute: owner. */
+#    endif /* !S_IRWXU */
+#    if !defined (S_IRUSR)
+#      define S_IRUSR 00400         /* read permission: owner. */
+#    endif /* !S_IRUSR */
+#    if !defined (S_IWUSR)
+#      define S_IWUSR 00200         /* write permission: owner. */
+#    endif /* !S_IWUSR */
+#    if !defined (S_IXUSR)
+#      define S_IXUSR 00100         /* execute permission: owner. */
+#    endif /* !S_IXUSR */
 #  endif /* ACE_HAS_USER_MODE_MASKS */
-#  define S_IRWXG 00070           /* read, write, execute: group. */
-#  define S_IRGRP 00040           /* read permission: group. */
-#  define S_IWGRP 00020           /* write permission: group. */
-#  define S_IXGRP 00010           /* execute permission: group. */
-#  define S_IRWXO 00007           /* read, write, execute: other. */
-#  define S_IROTH 00004           /* read permission: other. */
-#  define S_IWOTH 00002           /* write permission: other. */
-#  define S_IXOTH 00001           /* execute permission: other. */
+
+#  if !defined (S_IRWXG)
+#    define S_IRWXG 00070
+#  endif /* S_IRWXG */
+#  if !defined (S_IRGRP)
+#    define S_IRGRP 00040
+#  endif /* S_IRGRP */
+#  if !defined (S_IWGRP)
+#    define S_IWGRP 00020
+#  endif /* S_IWGRP */
+#  if !defined (S_IXGRP)
+#    define S_IXGRP 00010
+#  endif /* S_IXGRP */
+#  if !defined (S_IRWXO)
+#    define S_IRWXO 00007
+#  endif /* S_IRWXO */
+#  if !defined (S_IROTH)
+#    define S_IROTH 00004
+#  endif /* S_IROTH */
+#  if !defined (S_IWOTH)
+#    define S_IWOTH 00002
+#  endif /* S_IWOTH */
+#  if !defined (S_IXOTH)
+#    define S_IXOTH 00001
+#  endif /* S_IXOTH */
 
 // WinCE's S_IFLNK is defined with the other bits, below.
 #if !defined (S_IFLNK) && !defined (ACE_HAS_WINCE)
@@ -86,10 +111,11 @@ extern "C"
 #  define S_IFREG FILE_ATTRIBUTE_NORMAL
 #  define S_IFLNK 0
 
-    // Since CE does not have _stat by default as NT/2000 does, the 'stat'
-    // struct defined here will be used.  Also note that CE file system
-    // struct is only for the CE 3.0 or later.
-    // Refer to the WCHAR.H from Visual C++ and WIBASE.H from eVC 3.0.
+#  if !defined (__MINGW32__)
+   // Since CE does not have _stat by default as NT/2000 does, the 'stat'
+   // struct defined here will be used.  Also note that CE file system
+   // struct is only for the CE 3.0 or later.
+   // Refer to the WCHAR.H from Visual C++ and WIBASE.H from eVC 3.0.
    struct stat
    {
       /// always 0 on Windows platforms
@@ -120,6 +146,7 @@ extern "C"
       //u_long st_blksize;        // optimal blocksize for I/O
       //u_long st_flags;          // user defined flags for file
    };
+   #endif
 #endif /* ACE_HAS_WINCE */
 
 #ifdef __cplusplus
