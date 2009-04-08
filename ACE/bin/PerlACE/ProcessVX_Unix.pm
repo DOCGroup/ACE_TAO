@@ -262,6 +262,9 @@ sub Spawn ()
             if (!defined $telnet_port)  {
                 $telnet_port = 23;
               }
+            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                print "Opening telnet connection <" . $telnet_host . ":". $telnet_port . ">\n";
+            }
             my $t = new Net::Telnet(Timeout => 600, Errmode => 'return', Host => $telnet_host, Port => $telnet_port);
             if (!defined $t) {
               die "ERROR: Telnet failed to <" . $telnet_host . ":". $telnet_port . ">";
