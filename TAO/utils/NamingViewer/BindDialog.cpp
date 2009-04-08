@@ -20,8 +20,8 @@ CBindDialog::CBindDialog(bool Context, CORBA::ORB_ptr pORB, CWnd* pParent /*=NUL
 {
   //{{AFX_DATA_INIT(CBindDialog)
   m_IOR = _T("");
-  m_ID = "";
-  m_Kind = "";
+  m_ID = _T("");
+  m_Kind = _T("");
   //}}AFX_DATA_INIT
   m_pORB = pORB;
   m_Context = Context;
@@ -87,8 +87,8 @@ void CBindDialog::OnOK()
   // TODO: Add extra validation here
   UpdateData();
   m_Name.length(1);
-  m_Name[0].id = CORBA::string_dup(m_ID);
-  m_Name[0].kind = CORBA::string_dup(m_Kind);
+  m_Name[0].id = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (m_ID));
+  m_Name[0].kind = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (m_Kind));
   try
   {
     m_Object = m_pORB->string_to_object(m_IOR);
