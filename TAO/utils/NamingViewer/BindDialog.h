@@ -22,8 +22,8 @@ public:
   //{{AFX_DATA(CBindDialog)
   enum { IDD = IDD_BIND };
   CString m_IOR;
-  CStringA m_ID;
-  CStringA m_Kind;
+  CString m_ID;
+  CString m_Kind;
   //}}AFX_DATA
   CORBA::Object_ptr GetObject() {return m_Object;};
 

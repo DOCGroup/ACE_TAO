@@ -19,8 +19,8 @@ CBindNewContext::CBindNewContext(CWnd* pParent /*=NULL*/)
   : CDialog(CBindNewContext::IDD, pParent)
 {
   //{{AFX_DATA_INIT(CBindNewContext)
-  m_ID = "";
-  m_Kind = "";
+  m_ID = _T("");
+  m_Kind = _T("");
   //}}AFX_DATA_INIT
 }
 
@@ -48,7 +48,7 @@ void CBindNewContext::OnOK()
   // TODO: Add extra validation here
   UpdateData();
   m_Name.length(1);
-  m_Name[0].id = CORBA::string_dup(m_ID);
-  m_Name[0].kind = CORBA::string_dup(m_Kind);
+  m_Name[0].id = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (m_ID));
+  m_Name[0].kind = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (m_Kind));
   CDialog::OnOK();
 }
