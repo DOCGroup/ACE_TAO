@@ -43,43 +43,30 @@ CTT_Basic::operator () (const TASK_LIST & tasks)
   return wcrt;
 }
 
-struct AddExecutionTimes : public std::binary_function <double,
-							Task,
-							double>
+double CTT_Basic::AddExecutionTimes::operator () (double time, const Task & task)
 {
-  double operator () (double time, const Task & task)
-  {
-    return time + task.execution_time;
-  }
-};
+  return time + task.execution_time;
+}
 
-struct WCET_Heuristic_Step : public std::binary_function <double,
-							  Task,
-							  double>
+CTT_Basic::WCET_Heuristic_Step::WCET_Heuristic_Step (double R)
+  : R_ (R)
 {
-  WCET_Heuristic_Step (double R)
-    : R_ (R)
-  {
-  }
+}
 
-  double operator () (double time, const Task & task)
-  {
-    return time + 
-      ceil (R_ / task.period) * 
-      task.execution_time;
-  }
-private:
-  double R_;
-};
-
+double 
+CTT_Basic::WCET_Heuristic_Step::operator () (double time, const Task & task)
+{
+  return time + 
+    ceil (R_ / task.period) * 
+    task.execution_time;
+}
 
 double
 CTT_Basic::worst_case_response_time_check (const Task & task, 
                                            const TASK_LIST & higher_prio_tasks)
 {
-  // std::cout << "WCRT for " << task
-  //          << " and " << higher_prio_tasks
-  //          << std::endl;
+  // TRACE ("WCRT for " << task
+  //       << " and " << higher_prio_tasks);
 
   // R0 = C1 + C2 + ... + Cn
   double R = std::accumulate (higher_prio_tasks.begin (),
@@ -93,13 +80,14 @@ CTT_Basic::worst_case_response_time_check (const Task & task,
 
   while (R <= task.period)
     {
+      WCET_Heuristic_Step wcet(R);
       R_copy = R;
       R = std::accumulate (higher_prio_tasks.begin (),
                            higher_prio_tasks.end (),
                            task.execution_time,
-                           WCET_Heuristic_Step (R));
+                           wcet);
 
-      // std::cout << "R = " << R << std::endl;
+      // TRACE("R = " << R);
       
       if (equals (R_copy, R))
         break;

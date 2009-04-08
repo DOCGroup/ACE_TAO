@@ -74,7 +74,7 @@ CTT_Enhanced::worst_case_response_time_check (
 }
 
 double
-AddExecutionTimes::operator () (double time, const Task & task)
+CTT_Enhanced::AddExecutionTimes::operator () (double time, const Task & task)
 {
   // determine execution time based on type of application
   double exec_time = (task.role == PRIMARY ? 
@@ -84,13 +84,13 @@ AddExecutionTimes::operator () (double time, const Task & task)
   return time + exec_time;
 }
 
-WCET_Heuristic_Step::WCET_Heuristic_Step (double R)
+CTT_Enhanced::WCET_Heuristic_Step::WCET_Heuristic_Step (double R)
   : R_ (R)
 {
 }
 
 double
-WCET_Heuristic_Step::operator () (double time, const Task & task)
+CTT_Enhanced::WCET_Heuristic_Step::operator () (double time, const Task & task)
 {
   // determine execution time based on type of application
   double exec_time = (task.role == PRIMARY ? 
