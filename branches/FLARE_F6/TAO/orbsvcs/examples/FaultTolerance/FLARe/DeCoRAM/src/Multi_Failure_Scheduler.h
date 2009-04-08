@@ -17,7 +17,7 @@
 
 typedef std::list <PROCESSOR_SET> FAILURE_SCENARIOS;
 typedef std::list <TASKNAME_SET> FAILOVER_SCENARIOS;
-typedef std::map <Processor, Taskname> BACKUP_PRIMARY_MAP;
+typedef std::map <Taskname, Processor> BACKUP_PRIMARY_MAP;
 
 /**
  *  @struct PrimaryFinder
@@ -35,7 +35,7 @@ public:
 
   // finds a task's priamry in a schedule and returns a pair of the
   // taskname and the processor name
-  std::pair <Processor, Taskname> operator () (const Task & task);
+  BACKUP_PRIMARY_MAP::value_type operator () (const Task & task);
 
 private:
   SCHEDULE & schedule_;
