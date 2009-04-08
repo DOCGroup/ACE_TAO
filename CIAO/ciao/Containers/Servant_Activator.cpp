@@ -141,14 +141,14 @@ namespace CIAO
         Port_Activator_var pa;
         if (this->pa_.get (pa, t) == -1)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO
+            CIAO_ERROR ((LM_WARNING, CLINFO
               "Servant_Activator_i::etherealize - Could not get Port Activator\n"));
             continue;
           }
 
         if (tmp == 0)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO
+            CIAO_ERROR ((LM_WARNING, CLINFO
               "Servant_Activator_i::etherealize - Port Activator is NULL\n"));
             continue;
           }
