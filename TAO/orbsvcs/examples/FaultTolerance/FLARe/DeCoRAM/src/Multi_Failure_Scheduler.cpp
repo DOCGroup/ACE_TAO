@@ -24,7 +24,7 @@ PrimaryFinder::PrimaryFinder (SCHEDULE & schedule)
 {
 }
 
-std::pair <Processor, Taskname> 
+BACKUP_PRIMARY_MAP::value_type
 PrimaryFinder::operator () (const Task & task)
 {
   Processor processor;
@@ -52,7 +52,7 @@ PrimaryFinder::operator () (const Task & task)
         }
     }
 
-  return std::pair <Processor, Taskname> (processor, task.name);
+  return std::pair <Taskname, Processor> (task.name, processor);
 }
 
 //-----------------------------------------------------------------------------
@@ -83,7 +83,6 @@ Multi_Failure_Scheduler::operator () (const Task & task)
     {
       // iterate through all possible failure cases that might affect
       // this processor, based on its tasks
-      // TASK_LIST active_backups = 
       TASK_LIST local_tasks = processor_it->second;
       
       FAILOVER_SCENARIOS failover_scenarios = 
@@ -94,8 +93,10 @@ Multi_Failure_Scheduler::operator () (const Task & task)
           processor_it->first,
           task);
 
-      // add task name itself to each failure scenario that has 
-
+      // add task name itself to each failure scenario and always
+      // schedule it as active
+      Task copy = task;
+      copy.role = PRIMARY;
       local_tasks.push_back (task);
 
       // this will go over all the possible combinations of active
@@ -210,13 +211,12 @@ Multi_Failure_Scheduler::get_primary_processors (const TASK_LIST & tasks,
 
 //-----------------------------------------------------------------------------
 
-struct AddProcessor : public std::unary_function <std::pair <Processor,
-                                                             Taskname>,
+struct AddProcessor : public std::unary_function <BACKUP_PRIMARY_MAP::value_type,
                                                   Processor>
 {
-  Processor operator () (const std::pair <Processor, Taskname> & entry)
+  Processor operator () (const BACKUP_PRIMARY_MAP::value_type & entry)
   {
-    return entry.first;
+    return entry.second;
   }
 };
 
@@ -295,11 +295,16 @@ struct ActiveBackupCalculator : public std::unary_function <PROCESSOR_SET,
 
     // select all the backups as active that have relevant primaries
     TASKNAME_SET active_backups;
-    std::transform (relevant_primary_processors.begin (),
-                    relevant_primary_processors.end (),
-                    std::inserter (active_backups,
-                                   active_backups.begin ()),
-                    BackupSelector (backups_to_primary_processors));
+    for (TASK_LIST::iterator it = backups.begin ();
+         it != backups.end ();
+         ++it)
+      {
+        Processor primary = backups_to_primary_processors[it->name];
+
+        if (relevant_primary_processors.find (primary) != 
+            relevant_primary_processors.end ())
+          active_backups.insert (it->name);
+      }
 
     return active_backups;
   }
@@ -339,7 +344,7 @@ Multi_Failure_Scheduler::calculate_relevant_failure_scenarios (
   if (task.role == BACKUP)
     {
       failing_backups = failure_number - 1;
-      primary_proc = primary_finder_ (task).first;
+      primary_proc = primary_finder_ (task).second;
       backups_to_primary_processors.erase (primary_proc);
     }
   else
@@ -349,15 +354,20 @@ Multi_Failure_Scheduler::calculate_relevant_failure_scenarios (
   
   // create a set of processors that contain primaries for these
   // backups
-  PROCESSOR_LIST relevant_processors;
+  PROCESSOR_SET relevant_processors_set;
   std::transform (backups_to_primary_processors.begin (),
                   backups_to_primary_processors.end (),
-                  std::inserter (relevant_processors,
-                                 relevant_processors.begin ()),
+                  std::inserter (relevant_processors_set,
+                                 relevant_processors_set.begin ()),
                   AddProcessor ());
   
-  TRACE ("PP=" << relevant_processors);
-  
+  TRACE ("PP=" << relevant_processors_set);
+  PROCESSOR_LIST relevant_processors;
+  std::copy (relevant_processors_set.begin (),
+             relevant_processors_set.end (),
+             std::inserter (relevant_processors,
+                            relevant_processors.begin ()));
+
   // initialize the list of combinations of processors If we have more
   // processors in here than the number of failures, we account for,
   // we will look at all failure scenarios with the maximum numbers of
@@ -376,7 +386,7 @@ Multi_Failure_Scheduler::calculate_relevant_failure_scenarios (
        c_index < combination_size; 
        ++c_index, ++it)
     {
-      combination.push_back (it->first);
+      combination.push_back (it->second);
     }
 
   // here we will add all possible failure scenarios from zero
