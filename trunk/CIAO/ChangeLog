@@ -1,3 +1,10 @@
+Wed Apr  8 18:14:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Containers/Servant_Activator.cpp:
+
+          I'm not sure the absent port activator is an error, changing it to 
+          a warning.  I'll investigate later. 
+        
 Wed Apr  8 05:09:48 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * docs/Porting_Hints.txt:
