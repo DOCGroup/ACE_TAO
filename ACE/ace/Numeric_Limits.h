@@ -37,7 +37,7 @@
 # include "ace/Basic_Types.h"
 #else
 
-# ifdef __MINGW32__
+# if defined __MINGW32__
 // Windows defines min/max macros that interfere with the
 // numeric_limits::min/max() traits.  Undefine those macros before
 // including <limits>.

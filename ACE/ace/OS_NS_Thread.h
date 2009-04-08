@@ -304,6 +304,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     define THR_DAEMON              0          /* ignore in most places */
 #     define THR_JOINABLE            0          /* ignore in most places */
 #     define THR_SUSPENDED   CREATE_SUSPENDED
+#     if !defined (STACK_SIZE_PARAM_IS_A_RESERVATION)
+#       define STACK_SIZE_PARAM_IS_A_RESERVATION  0x00010000
+#     endif /* STACK_SIZE_PARAM_IS_A_RESERVATION */
 #     define THR_USE_AFX             0x01000000
 #     define THR_SCHED_FIFO          0
 #     define THR_SCHED_RR            0

@@ -498,9 +498,15 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fdopen");
 #if defined (ACE_HAS_WINCE)
-  ACE_OSCALL_RETURN (::_wfdopen (handle, ACE_TEXT_ALWAYS_WCHAR (mode)),
+# if defined (ACE_HAS_NONCONST_WFDOPEN)
+  ACE_OSCALL_RETURN (::_wfdopen ((int)handle, const_cast <ACE_TCHAR*> (ACE_TEXT_ALWAYS_WCHAR (mode))),
                      FILE*,
                      0);
+# else
+  ACE_OSCALL_RETURN (::_wfdopen ((int)handle, ACE_TEXT_ALWAYS_WCHAR (mode)),
+                     FILE*,
+                     0);
+# endif
 #elif defined (ACE_WIN32)
   // kernel file handle -> FILE* conversion...
   // Options: _O_APPEND, _O_RDONLY and _O_TEXT are lost
@@ -873,7 +879,7 @@ ACE_OS::rewind (FILE *fp)
 #else
   // This isn't perfect since it doesn't reset EOF, but it's probably
   // the closest we can get on WINCE.
-  (void) fseek (fp, 0L, SEEK_SET);
+  (void) ::fseek (fp, 0L, SEEK_SET);
 #endif /* ACE_HAS_WINCE */
 }
 
