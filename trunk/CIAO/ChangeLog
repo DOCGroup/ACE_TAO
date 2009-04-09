@@ -1,3 +1,9 @@
+Thu Apr  9 14:57:50 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * docs/CIAO.pdf:
+
+          Updated the CIAO chapter of the Dev Guide.
+
 Thu Apr  9 13:20:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tests/ObjectLocatorTest/srv_main.cpp
