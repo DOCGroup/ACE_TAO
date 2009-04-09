@@ -1,4 +1,9 @@
-Wed Apr  9 10:59:59 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+Thu Apr  9 11:45:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/OS_NS_stdio.inl:
+          Resolved compiler error on WinCE 5 VC 8.
+
+Wed Apr  8 10:59:59 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * ace/config-win32-cegcc.h:
           Added to support CE gcc compiler
