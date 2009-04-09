@@ -1,3 +1,10 @@
+Thu Apr  9 20:44:31 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+        * DAnCE/RedirectionService/RedirectionService.mpc:
+
+          avoids minimum corba. 
+        
 Thu Apr  9 14:57:50 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
         * docs/CIAO.pdf:
