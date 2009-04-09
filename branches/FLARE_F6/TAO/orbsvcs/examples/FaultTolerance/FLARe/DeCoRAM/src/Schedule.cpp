@@ -13,37 +13,6 @@
 #include <sstream>
 #include "Schedule.h"
 
-unsigned int
-rank_backups (SCHEDULE_RESULT_LIST & result_list)
-{
-  std::sort (result_list.begin (),
-             result_list.end (),
-             WCRTComparison ());
-
-  unsigned int rank = 0;
-  unsigned int scheduled_backups = 0;
-  for (SCHEDULE_RESULT_LIST::iterator r_it = result_list.begin ();
-       r_it != result_list.end ();
-       ++r_it)
-    {
-      // abort if a tasks happens to be not schedulable
-      if (r_it->wcrt <= .0)
-        continue;
-
-      Task t = r_it->task;
-      
-      t.rank = ++rank;
-      std::stringstream ss;
-      ss << t.name << "_" << t.rank;
-      t.name = ss.str ();
-      r_it->task = t;
-
-      ++scheduled_backups;
-    }  
-
-  return scheduled_backups;
-}
-
 SCHEDULING_MAP 
 transform_schedule (const SCHEDULE & schedule)
 {
@@ -92,11 +61,12 @@ create_tasks (const Task & task,
 {
   TASK_LIST output;
   Task t = task;
-  t.role = BACKUP;
+  t.role = PRIMARY;
   t.rank = 0;
 
+  // add a primary and the appropriate number of backup tasks
   for (unsigned int i = 0; 
-       i < backup_number;
+       i <= backup_number;
        ++i)
     {
       output.push_back (t);
@@ -173,4 +143,8 @@ SCHEDULE read_schedule (std::istream & istr)
     }
   
   return s;
+}
+
+Ranking_Algorithm::~Ranking_Algorithm ()
+{
 }

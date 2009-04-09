@@ -36,11 +36,7 @@ Ranked_Scheduler::operator () (const Task & task)
       // TASK_LIST active_backups = 
       TASK_LIST local_tasks = processor_it->second;
 
-      // make sure, task is scheduled as active
-      Task copy = task;
-      copy.role = PRIMARY;
-
-      local_tasks.push_back (copy);
+      local_tasks.push_back (task);
 
       double wcrt = wcrt_algorithm_ (local_tasks);
 

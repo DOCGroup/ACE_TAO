@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    CTT_Optimized.cpp
+ *  @file    CTT_Enhanced.cpp
  *
  *  $Id$
  *
@@ -21,18 +21,24 @@ CTT_Enhanced::~CTT_Enhanced ()
 double
 CTT_Enhanced::operator () (const TASK_LIST & tasks)
 {
-  //TRACE ("(" << tasks << ")");
+  TRACE ("(" << tasks << ")");
 
   // copy tasks for local modifications
   TASK_LIST scheduled_tasks = tasks;
 
   // take last element and use it for schedulability analysis.
   // It is assumed that all other tasks are schedulable
-  Task t = scheduled_tasks [scheduled_tasks.size () - 1];
-  scheduled_tasks.pop_back ();
 
-  // return the wcrt for this task
-  return this->worst_case_response_time_check (t, scheduled_tasks);
+  if (scheduled_tasks.size () > 0)
+    {
+      Task t = scheduled_tasks [scheduled_tasks.size () - 1];
+      scheduled_tasks.pop_back ();
+
+      // return the wcrt for this task
+      return this->worst_case_response_time_check (t, scheduled_tasks);
+    }
+
+  return .0;
 }
 
 double

@@ -22,7 +22,8 @@ CTT_Basic::~CTT_Basic ()
 double
 CTT_Basic::operator () (const TASK_LIST & tasks)
 {
-  TRACE ("begin");
+  TRACE (tasks);
+
   TASK_LIST scheduled_tasks;
   Task t;
   double wcrt = 0;

@@ -29,7 +29,8 @@ class FTRMFF_Ranked_Algorithm :
 {
 public:
   FTRMFF_Ranked_Algorithm (const PROCESSOR_LIST & processors,
-                             unsigned int consistency_level);
+                           unsigned int consistency_level,
+                           const std::string & ranking_type = "simple");
 
   virtual ~FTRMFF_Ranked_Algorithm ();
 
@@ -41,6 +42,7 @@ private:
   SCHEDULE schedule_;
   SCHEDULE_PROGRESS_LIST unschedulable_;
   unsigned int consistency_level_;
+  std::auto_ptr<Ranking_Algorithm> ranking_algorithm_;
 };
 
 #endif /* FTRMFF_RANKED_ALGORITHM_H_ */

@@ -48,8 +48,8 @@ private:
   SCHEDULE schedule_;
   SCHEDULE_PROGRESS_LIST unschedulable_;
   unsigned int consistency_level_;
-
   CTT_Algorithm & ctt_;
+  std::auto_ptr<Ranking_Algorithm> ranking_algorithm_;
 };
 
 #endif /* FTRMFF_BASIC_ALGORITHM_H_ */

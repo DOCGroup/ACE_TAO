@@ -13,6 +13,8 @@
 #include <sstream>
 #include "FTRMFF_Ranked.h"
 #include "Ranked_Scheduler.h"
+#include "Simple_Ranking.h"
+#include "Utilization_Ranking.h"
 
 FTRMFF_Ranked::~FTRMFF_Ranked ()
 {
@@ -22,7 +24,8 @@ FTRMFF_Output
 FTRMFF_Ranked::operator () (const FTRMFF_Input & input)
 {
   FTRMFF_Ranked_Algorithm algorithm (input.processors,
-                                     input.backup_count);
+                                     input.backup_count,
+                                     "utilization");
 
   FTRMFF_Output output;
   output.schedule = algorithm (input.tasks);
@@ -33,7 +36,8 @@ FTRMFF_Ranked::operator () (const FTRMFF_Input & input)
 
 FTRMFF_Ranked_Algorithm::FTRMFF_Ranked_Algorithm (
   const PROCESSOR_LIST & processors,
-  unsigned int consistency_level)
+  unsigned int consistency_level,
+  const std::string & ranking_type)
   : consistency_level_ (consistency_level)
 {
   for (PROCESSOR_LIST::const_iterator it = processors.begin ();
@@ -42,6 +46,11 @@ FTRMFF_Ranked_Algorithm::FTRMFF_Ranked_Algorithm (
     {
       schedule_[*it] = Schedule_Entry ();
     }
+
+  if (ranking_type.compare ("utilization") == 0)
+    ranking_algorithm_.reset (new Utilization_Ranking ());
+  else
+    ranking_algorithm_.reset (new Simple_Ranking ());
 }
 
 FTRMFF_Ranked_Algorithm::~FTRMFF_Ranked_Algorithm ()
@@ -51,7 +60,6 @@ FTRMFF_Ranked_Algorithm::~FTRMFF_Ranked_Algorithm ()
 SCHEDULING_MAP
 FTRMFF_Ranked_Algorithm::operator () (const TASK_LIST & tasks)
 {
-  double_equal equals;
   // sort tasks based on their periods, which results in a priority
   // ordered list since we do rate monotonic scheduling
   TASK_LIST sorted_input = tasks;
@@ -73,23 +81,11 @@ FTRMFF_Ranked_Algorithm::operator () (const TASK_LIST & tasks)
       Ranked_Scheduler scheduler (temp_schedule,
                                   wcrt_algorithm);
 
-      // schedule primary
-      Task primary = *it;
-      primary.role = PRIMARY;
-
-      ScheduleResult primary_schedule = scheduler (primary);
-
-      if (equals (primary_schedule.wcrt, .0))
-        {
-          ScheduleProgress pg = { *it, 0 };
-          unschedulable_.push_back (pg);
-          continue;
-        }
 
       // create the right amount of backup replica tasks
       TASK_LIST task_group = create_tasks (*it, consistency_level_);
 
-      // schedule the backup tasks of one application
+      // schedule the tasks of one application
       SCHEDULE_RESULT_LIST results;
       std::transform (task_group.begin (),
                       task_group.end (),
@@ -98,17 +94,19 @@ FTRMFF_Ranked_Algorithm::operator () (const TASK_LIST & tasks)
                       scheduler);
           
       // rank backups according to their wcrt
-      unsigned int scheduled_backups = rank_backups (results);
-      if (scheduled_backups < results.size ())
+      unsigned int scheduled_replicas = 
+        (*ranking_algorithm_) (results,
+                               schedule_);
+
+      if (scheduled_replicas < results.size ())
         {
           // could not schedule all backups
-          ScheduleProgress pg = {*it, 1 + scheduled_backups};
+          ScheduleProgress pg = {*it, scheduled_replicas};
           unschedulable_.push_back (pg);
           continue;
         }
 
       // if we reach this code, we can add all tasks to the schedule
-      results.push_back (primary_schedule);
       add_schedule_results (results, schedule_);
     }
 

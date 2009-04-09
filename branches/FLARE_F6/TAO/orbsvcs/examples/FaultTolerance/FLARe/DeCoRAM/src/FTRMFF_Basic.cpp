@@ -13,6 +13,7 @@
 #include <sstream>
 #include "FTRMFF_Basic.h"
 #include "Task_Scheduler.h"
+#include "Simple_Ranking.h"
 
 FTRMFF_Basic::FTRMFF_Basic (CTT_Algorithm & ctt)
   : ctt_ (ctt)
@@ -42,7 +43,8 @@ FTRMFF_Basic_Algorithm::FTRMFF_Basic_Algorithm (
   unsigned int consistency_level,
   CTT_Algorithm & ctt)
   : consistency_level_ (consistency_level),
-    ctt_ (ctt)
+    ctt_ (ctt),
+    ranking_algorithm_ (new Simple_Ranking ())
 {
   for (PROCESSOR_LIST::const_iterator it = processors.begin ();
        it != processors.end ();
@@ -102,7 +104,10 @@ FTRMFF_Basic_Algorithm::operator () (const TASK_LIST & tasks)
                       scheduler);
           
       // rank backups according to their wcrt
-      unsigned int scheduled_backups = rank_backups (results);
+      unsigned int scheduled_backups = 
+        (*ranking_algorithm_) (results,
+                               schedule_);
+
       if (scheduled_backups < results.size ())
         {
           // could not schedule all backups
