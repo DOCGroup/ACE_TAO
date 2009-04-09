@@ -99,9 +99,11 @@ project(*UB_Octet_Sequence): taoexe {
 project(*UB_Oct_Seq_No_Cpy): aceexe {
   exename = unbounded_octet_sequence_nocopy_ut
   includes += $(TAO_ROOT)
-  prebuild  = <%cp%> $(TAO_ROOT)<%slash%>tao<%slash%>Unbounded_Octet_Sequence_T.h Unbounded_Octet_Sequence_T.h <%and%> \
-              perl clean_tao_export.pl Unbounded_Octet_Sequence_T.h
-  postbuild = <%rm%> Unbounded_Octet_Sequence_T.h
+  specific (!automake, !gnuace) {
+    prebuild  = <%cp%> $(TAO_ROOT)<%slash%>tao<%slash%>Unbounded_Octet_Sequence_T.h Unbounded_Octet_Sequence_T.h <%and%> \
+                perl clean_tao_export.pl Unbounded_Octet_Sequence_T.h
+    postbuild = <%rm%> Unbounded_Octet_Sequence_T.h
+  }
   Source_Files {
     mock_reference.cpp
     unbounded_octet_sequence_nocopy_ut.cpp
