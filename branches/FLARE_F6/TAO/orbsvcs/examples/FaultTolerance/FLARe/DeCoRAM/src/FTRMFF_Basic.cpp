@@ -61,7 +61,6 @@ FTRMFF_Basic_Algorithm::~FTRMFF_Basic_Algorithm ()
 SCHEDULING_MAP
 FTRMFF_Basic_Algorithm::operator () (const TASK_LIST & tasks)
 {
-  double_equal equals;
   // sort tasks based on their periods, which results in a priority
   // ordered list since we do rate monotonic scheduling
   TASK_LIST sorted_input = tasks;
@@ -78,19 +77,6 @@ FTRMFF_Basic_Algorithm::operator () (const TASK_LIST & tasks)
       SCHEDULE temp_schedule = schedule_;
       Task_Scheduler scheduler (temp_schedule,
                                 ctt_);
-
-      // schedule primary
-      Task primary = *it;
-      primary.role = PRIMARY;
-
-      ScheduleResult primary_schedule = scheduler (primary);
-
-      if (equals (primary_schedule.wcrt, .0))
-        {
-          ScheduleProgress pg = { *it, 0 };
-          unschedulable_.push_back (pg);
-          continue;
-        }
 
       // create the right amount of backup replica tasks
       TASK_LIST task_group = create_tasks (*it, consistency_level_);
@@ -117,7 +103,6 @@ FTRMFF_Basic_Algorithm::operator () (const TASK_LIST & tasks)
         }
 
       // if we reach this code, we can add all tasks to the schedule
-      results.push_back (primary_schedule);
       add_schedule_results (results, schedule_);
     }
 
