@@ -1,3 +1,8 @@
+Thu Apr  9 12:34:41 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/OS_NS_stdio.inl:
+          Reverted renaming of ACE_HAS_NONCONST_WFDOPEN define
+
 Thu Apr  9 11:45:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * ace/OS_NS_stdio.inl:

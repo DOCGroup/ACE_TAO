@@ -498,7 +498,7 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fdopen");
 #if defined (ACE_HAS_WINCE)
-# if defined (ACE_HAS_CONST_WFDOPEN)
+# if defined (ACE_HAS_NONCONST_WFDOPEN)
   ACE_OSCALL_RETURN (::_wfdopen ((int)handle, const_cast <ACE_TCHAR*> (ACE_TEXT_ALWAYS_WCHAR (mode))),
                      FILE*,
                      0);
