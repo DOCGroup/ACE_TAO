@@ -11,6 +11,7 @@ project (basic_ftrmff) {
     CTT_Basic.cpp
     FTRMFF_Basic.cpp
     basic_ftrmff.cpp
+    Simple_Ranking.cpp
   }
 }
 
@@ -29,6 +30,7 @@ project (statesync_only_ftrmff) {
     CTT_Enhanced.cpp
     FTRMFF_Basic.cpp
     ss_ftrmff.cpp
+    Simple_Ranking.cpp
   }
 }
 
@@ -48,6 +50,7 @@ project (enhanced_ftrmff) {
     CTT_Enhanced.cpp
     FTRMFF_Enhanced.cpp
     enhanced_ftrmff.cpp
+    Simple_Ranking.cpp
   }
 }
 
@@ -66,6 +69,8 @@ project (ranked_ftrmff) {
     RankedWCRT.cpp
     Ranked_Scheduler.cpp
     CTT_Enhanced.cpp
+    Simple_Ranking.cpp
+    Utilization_Ranking.cpp
     FTRMFF_Ranked.cpp
     ranked_ftrmff.cpp
   }

@@ -13,6 +13,7 @@
 #include <sstream>
 #include "FTRMFF_Enhanced.h"
 #include "Multi_Failure_Scheduler.h"
+#include "Simple_Ranking.h"
 
 FTRMFF_Enhanced::~FTRMFF_Enhanced ()
 {
@@ -34,7 +35,8 @@ FTRMFF_Enhanced::operator () (const FTRMFF_Input & input)
 FTRMFF_Enhanced_Algorithm::FTRMFF_Enhanced_Algorithm (
   const PROCESSOR_LIST & processors,
   unsigned int consistency_level)
-  : consistency_level_ (consistency_level)
+  : consistency_level_ (consistency_level),
+    ranking_algorithm_ (new Simple_Ranking ())
 {
   for (PROCESSOR_LIST::const_iterator it = processors.begin ();
        it != processors.end ();
@@ -106,7 +108,10 @@ FTRMFF_Enhanced_Algorithm::operator () (const TASK_LIST & tasks)
                       scheduler);
 
       // rank backups according to their wcrt
-      unsigned int scheduled_backups = rank_backups (results);
+      unsigned int scheduled_backups = 
+        (*ranking_algorithm_) (results,
+                              schedule_);
+
       if (scheduled_backups < results.size ())
         {
           // could not schedule all backups

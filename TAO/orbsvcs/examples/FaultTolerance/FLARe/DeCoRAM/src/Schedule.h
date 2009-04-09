@@ -40,10 +40,19 @@ struct ScheduleResult
 
 typedef std::vector <ScheduleResult> SCHEDULE_RESULT_LIST;
 
-/// This method will order the result_list based on the
-/// worst-case response times of the entries
+/// This abtract base class represents a class of algorithms that will
+/// determine the rank of scheduled replicas
 /// @return the number of backups that could actually be ranked
-unsigned int rank_backups (SCHEDULE_RESULT_LIST & result_list);
+class Ranking_Algorithm : public std::binary_function <SCHEDULE_RESULT_LIST,
+                                                       SCHEDULE, 
+                                                       unsigned long>
+{
+ public:
+  virtual ~Ranking_Algorithm ();
+
+  virtual unsigned long operator () (SCHEDULE_RESULT_LIST & result_list,
+                                     const SCHEDULE & schedule) = 0;
+};
 
 /// @param schedule in form of Processor -> TASK_LIST
 /// @return schedule in the form Task -> Processor

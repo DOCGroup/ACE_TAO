@@ -41,6 +41,7 @@ private:
   SCHEDULE schedule_;
   SCHEDULE_PROGRESS_LIST unschedulable_;
   unsigned int consistency_level_;
+  std::auto_ptr<Ranking_Algorithm> ranking_algorithm_;
 };
 
 #endif /* FTRMFF_ENHANCED_ALGORITHM_H_ */
