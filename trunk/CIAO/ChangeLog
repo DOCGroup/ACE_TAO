@@ -1,10 +1,18 @@
+Thu Apr  9 13:20:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/ObjectLocatorTest/srv_main.cpp
+        * DAnCE/tests/RedirectionServiceTest/srv_main.cpp
+        * examples/Hello/Sender/starter.cpp
+        * performance-tests/Protocols/Controller/Controller.cpp
+          Unicode changes
+
 Wed Apr  8 23:11:22 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Hello/descriptors/DeploymentPlan.cdp:
 
           Removed some unicode characters that may be causing problems
-          on some platforms. 
-        
+          on some platforms.
+
 Wed Apr  8 18:14:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Containers/Servant_Activator.cpp:
