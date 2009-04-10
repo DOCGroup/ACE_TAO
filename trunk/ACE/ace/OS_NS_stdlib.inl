@@ -361,6 +361,10 @@ ACE_OS::unsetenv(const char *name)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (-1);
 #else
+# if defined (ACE_HAS_VOID_UNSETENV)
+  ::unsetenv (name);
+  return 0;
+# endif /* ACE_HAS_VOID_UNSETENV */
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::unsetenv (name), int, -1);
 #endif
 }
