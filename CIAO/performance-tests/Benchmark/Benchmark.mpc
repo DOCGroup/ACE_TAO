@@ -63,7 +63,7 @@ project(Benchmark_skel) : ciao_executor, avoids_ace_for_tao {
   }
 }
 
-project (Benchmark_server) : taoserver, strategies, ciao_executor {
+project (Benchmark_server) : taoserver, strategies, ciao_executor, avoids_ace_for_tao {
   exename = server
   after += Benchmark_skel
   libs  += Benchmark_skel Benchmark_stub

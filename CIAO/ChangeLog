@@ -1,9 +1,22 @@
+Fri Apr 10 03:10:46 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+        * DAnCE/TargetManager/TM_Client.mpc:
+        * DAnCE/TargetManager/TargetManager.mpc:
+        * examples/DevGuideExamples/Messenger/Administrator_Client_IDL2.mpc:
+        * examples/DevGuideExamples/Messenger/Administrator_Client_IDL3.mpc:
+        * performance-tests/Benchmark/Benchmark.mpc:
+        * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
+        * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc:
+
+          ace_for_tao fixes. 
+        
 Thu Apr  9 20:54:33 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_client.mpb:
 
-          static linking error. 
-        
+          static linking error.
+
 Thu Apr  9 20:44:31 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc:
