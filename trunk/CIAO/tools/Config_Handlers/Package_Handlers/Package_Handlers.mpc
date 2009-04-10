@@ -1,6 +1,6 @@
 // $Id$
 
-project (Package_Config_Handlers) : acelib, dance_deployment_stub, ciao_config_handlers_base, dance, typecodefactory, ciao_output, avoids_ace_for_tao {
+project (Package_Config_Handlers) : acelib, dance_deployment_stub, ciao_config_handlers_base, dance, typecodefactory, ciao_output  {
   sharedname = Package_Config_Handlers
   dynamicflags = PACKAGING_HANDLERS_BUILD_DLL
 
