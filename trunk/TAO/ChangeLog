@@ -1,3 +1,8 @@
+Fri Apr 10 12:17:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          3630 is not fixed yet
+
 Thu Apr  9 11:01:26 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Sequence_Unit_Tests/unbounded_octet_sequence_nocopy_ut.cpp:
