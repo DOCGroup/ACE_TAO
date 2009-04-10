@@ -1,3 +1,13 @@
+Fri Apr 10 12:44:12 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Sequence_Unit_Tests/clean_tao_export.pl:
+        * tests/Sequence_Unit_Tests/run_test.pl:
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_nocopy_ut.cpp:
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+
+          Reverted my previous attempts to fix this test on windows
+          and disabled unbounded octet sequence test on this platform.
+
 Fri Apr 10 12:17:16 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
