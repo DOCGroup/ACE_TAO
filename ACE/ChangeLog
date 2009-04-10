@@ -1,3 +1,9 @@
+Fri Apr 10 03:32:04 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/OS_NS_stdlib.inl:
+        
+          Fix typo from previous commit. 
+        
 Fri Apr 10 03:00:44 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/OS_NS_stdlib.inl:
@@ -7,7 +13,7 @@ Fri Apr 10 03:00:44 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
           because that platform defines unsetenv as having a void
           return. It is possible that other platforms have this as well,
           as legacy linux man pages show that signature.
-        
+
 Thu Apr  9 12:34:41 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * ace/OS_NS_stdio.inl:

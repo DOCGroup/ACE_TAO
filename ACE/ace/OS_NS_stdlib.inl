@@ -364,9 +364,10 @@ ACE_OS::unsetenv(const char *name)
 # if defined (ACE_HAS_VOID_UNSETENV)
   ::unsetenv (name);
   return 0;
-# endif /* ACE_HAS_VOID_UNSETENV */
+#else
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::unsetenv (name), int, -1);
-#endif
+# endif /* ACE_HAS_VOID_UNSETENV */
+#endif /* ACE_LACKS_UNSETENV */
 }
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
