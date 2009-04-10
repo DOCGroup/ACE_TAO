@@ -89,21 +89,8 @@ project(*UB_Octet_Sequence): taoexe {
   }
 }
 
-// On Win32 we cannot build this test as taoexe since
-// it will import unbounded_value_sequence<CORBA::Octet>
-// and other related things from TAO.dll but this test
-// requires that unbounded_value_sequence is a template
-// and will be compiled into the tests code. So, only for
-// this test we copy original Unbounded_Octet_Sequence_T.h
-// and remove all occurences of TAO_Export from it.
-project(*UB_Oct_Seq_No_Cpy): aceexe {
+project(*UB_Oct_Seq_No_Cpy): taoexe {
   exename = unbounded_octet_sequence_nocopy_ut
-  includes += $(TAO_ROOT)
-  specific (!automake, !gnuace) {
-    prebuild  = <%cp%> $(TAO_ROOT)<%slash%>tao<%slash%>Unbounded_Octet_Sequence_T.h Unbounded_Octet_Sequence_T.h <%and%> \
-                perl clean_tao_export.pl Unbounded_Octet_Sequence_T.h
-    postbuild = <%rm%> Unbounded_Octet_Sequence_T.h
-  }
   Source_Files {
     mock_reference.cpp
     unbounded_octet_sequence_nocopy_ut.cpp

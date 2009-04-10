@@ -11,14 +11,7 @@
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
-#if defined (ACE_WIN32) || defined (ACE_WIN64)
-// This is a unit test and we use our local slightly
-// modified Unbounded_Octet_Sequence_T.h. See mpc file
-// for details.
-# include "Unbounded_Octet_Sequence_T.h"
-#else
-# include "tao/Unbounded_Octet_Sequence_T.h"
-#endif
+#include "tao/Unbounded_Octet_Sequence_T.h"
 
 #include "value_sequence_tester.hpp"
 

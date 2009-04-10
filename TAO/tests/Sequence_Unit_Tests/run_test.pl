@@ -18,7 +18,6 @@ my @testsToRun = qw(unbounded_value_sequence_ut
                bounded_string_sequence_ut
                testing_allocation_traits_ut
                unbounded_octet_sequence_ut
-               unbounded_octet_sequence_nocopy_ut
                object_reference_sequence_element_ut
                unbounded_object_reference_sequence_ut
                unbounded_fwd_object_reference_sequence_ut
@@ -31,6 +30,10 @@ my @testsToRun = qw(unbounded_value_sequence_ut
                Unbounded_String
                Bounded_String
               );
+
+if ($^O ne "MSWin32") {
+    push @testsToRun, qw(unbounded_octet_sequence_nocopy_ut);
+}
 
 foreach my $process (@testsToRun) {
 
