@@ -194,4 +194,7 @@
 #define ACE_LACKS_ISCTYPE
 #define ACE_LACKS_ISBLANK
 
+#define ACE_LACKS_SETENV
+#define ACE_LACKS_UNSETENV
+
 #endif

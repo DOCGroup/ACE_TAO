@@ -1,9 +1,14 @@
+Fri Apr 10 10:26:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-openvms.h
+          OpenVMS lacks setenv/unsetenv
+
 Fri Apr 10 03:32:04 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/OS_NS_stdlib.inl:
-        
-          Fix typo from previous commit. 
-        
+
+          Fix typo from previous commit.
+
 Fri Apr 10 03:00:44 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/OS_NS_stdlib.inl:
