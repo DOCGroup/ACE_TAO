@@ -1,3 +1,10 @@
+Sat Apr 11 13:13:49 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/config-macosx-leopard.h:
+        
+          Darwin also has a variation that varies the signature of
+          unsetenv().
+
 Fri Apr 10 10:26:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-openvms.h
