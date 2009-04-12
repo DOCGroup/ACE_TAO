@@ -1,3 +1,9 @@
+Sun Apr 12 01:58:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/dance_repository_manager.mpb:
+
+          Linking error on static builds. 
+        
 Fri Apr 10 17:36:19 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc:
