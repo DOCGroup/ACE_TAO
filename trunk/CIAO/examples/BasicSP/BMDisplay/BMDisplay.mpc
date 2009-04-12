@@ -1,6 +1,6 @@
 // $Id$
 
-project(BMDisplay_stub_gen): ciaoidldefaults,anytypecode {
+project(BMDisplay_stub_gen): ciaoidldefaults,anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -I $(CIAO_ROOT)/examples/BasicSP
   idlflags += -Wb,stub_export_macro=BMDISPLAY_STUB_Export
@@ -13,7 +13,7 @@ project(BMDisplay_stub_gen): ciaoidldefaults,anytypecode {
   }
 }
 
-project(BMDisplay_lem_gen) : ciaocidldefaults, ciaoidldefaults {
+project(BMDisplay_lem_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
   after += BasicSP_lem_gen
   custom_only = 1
   cidlflags += -I $(CIAO_ROOT)/examples/BasicSP
@@ -32,7 +32,7 @@ project(BMDisplay_lem_gen) : ciaocidldefaults, ciaoidldefaults {
   }
 
 }
-project(BMDisplay_stub): ccm_stub {
+project(BMDisplay_stub): ccm_stub, avoids_ace_for_tao {
   after += BasicSP_stub BMDisplay_stub_gen
   sharedname = BMDisplay_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
@@ -63,7 +63,7 @@ project(BMDisplay_stub): ccm_stub {
 
 
 
-project(BMDisplay_exec) : ciao_executor {
+project(BMDisplay_exec) : ciao_executor, avoids_ace_for_tao {
   after      += BMDisplay_stub BMDisplay_lem_gen BasicSP_exec
 
   sharedname = BMDisplay_exec
@@ -97,7 +97,7 @@ project(BMDisplay_exec) : ciao_executor {
 }
 
 
-project(BMDisplay_svnt) : ciao_servant {
+project(BMDisplay_svnt) : ciao_servant, avoids_ace_for_tao {
   after += BasicSP_svnt BMDisplay_exec
   includes += $(CIAO_ROOT)/examples/BasicSP
 

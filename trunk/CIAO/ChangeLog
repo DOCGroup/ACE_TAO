@@ -1,9 +1,20 @@
+Sun Apr 12 18:55:13 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/BasicSP/BasicSP.mpc:
+        * examples/BasicSP/EC/EC.mpc:
+        
+          Scoreboard clean-up ACE_FOR_TAO does not build CIDLC which is
+          required for these examples.
+
 Sun Apr 12 01:58:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/dance_repository_manager.mpb:
 
-          Linking error on static builds. 
-        
+          Linking error on static builds.
+
 Fri Apr 10 17:36:19 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc:
