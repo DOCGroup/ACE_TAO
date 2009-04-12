@@ -1,6 +1,6 @@
 // $Id$
 
-project(BMClosedED_stub_gen): ciaoidldefaults,anytypecode {
+project(BMClosedED_stub_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -I $(CIAO_ROOT)/examples/BasicSP
   idlflags += -Wb,stub_export_macro=BMCLOSEDED_STUB_Export
@@ -13,7 +13,7 @@ project(BMClosedED_stub_gen): ciaoidldefaults,anytypecode {
   }
 }
 
-project(BMClosedED_lem_gen) : ciaocidldefaults, ciaoidldefaults {
+project(BMClosedED_lem_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
   after += BasicSP_lem_gen
   custom_only = 1
   cidlflags += -I $(CIAO_ROOT)/examples/BasicSP
@@ -33,7 +33,7 @@ project(BMClosedED_lem_gen) : ciaocidldefaults, ciaoidldefaults {
 
 }
 
-project(BMClosedED_stub): ccm_stub {
+project(BMClosedED_stub): ccm_stub, avoids_ace_for_tao {
   libout = ../lib
   libpaths += ../lib
   after += BasicSP_stub BMClosedED_stub_gen
@@ -60,7 +60,7 @@ project(BMClosedED_stub): ccm_stub {
 }
 
 
-project(BMClosedED_exec) : ciao_executor {
+project(BMClosedED_exec) : ciao_executor, avoids_ace_for_tao {
   after      += BMClosedED_stub BMClosedED_lem_gen BasicSP_exec
   sharedname = BMClosedED_exec
   libs       += BMClosedED_stub
@@ -91,7 +91,7 @@ project(BMClosedED_exec) : ciao_executor {
 
 }
 
-project(BMClosedED_svnt) : ciao_servant {
+project(BMClosedED_svnt) : ciao_servant, avoids_ace_for_tao {
   after += BasicSP_svnt BMClosedED_exec
 
   includes += $(CIAO_ROOT)/examples/BasicSP
