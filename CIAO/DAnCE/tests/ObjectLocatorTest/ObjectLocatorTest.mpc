@@ -1,5 +1,5 @@
 // $Id$
-project (ObjectLocatorTestServer): dance, taoserver, iortable, dance_redirection_service, dance_logger {
+project (ObjectLocatorTestServer): avoids_minimum_corba, dance, taoserver, iortable, dance_redirection_service, dance_logger {
   exename = ObjectLocatorTestServer
 
   IDL_Files {
@@ -14,7 +14,7 @@ project (ObjectLocatorTestServer): dance, taoserver, iortable, dance_redirection
   }
 }
 
-project (ObjectLocatorTestClient): dance, taoclient, anytypecode, dance_logger, portableserver {
+project (ObjectLocatorTestClient): avoids_minimum_corba, dance, taoclient, anytypecode, dance_logger, portableserver {
 
 	after  += ObjectLocatorTestServer
 	exename = ObjectLocatorTestClient
