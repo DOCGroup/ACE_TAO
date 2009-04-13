@@ -1,3 +1,9 @@
+Mon Apr 13 15:03:24 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * DAnCE/tests/ObjectLocatorTest/ObjectLocatorTest.mpc:
+
+          Scoreboard clean-up to avoid minimum corba builds for this test.  
+
 Sun Apr 12 18:55:13 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * examples/BasicSP/BMClosedED/BMClosedED.mpc:
@@ -5,7 +11,7 @@ Sun Apr 12 18:55:13 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
         * examples/BasicSP/BMDisplay/BMDisplay.mpc:
         * examples/BasicSP/BasicSP.mpc:
         * examples/BasicSP/EC/EC.mpc:
-        
+
           Scoreboard clean-up ACE_FOR_TAO does not build CIDLC which is
           required for these examples.
 
