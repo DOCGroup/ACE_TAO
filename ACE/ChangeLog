@@ -1,11 +1,17 @@
+Mon Apr 13 12:19:18 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/config-linux-common.h:
+
+          Reverted previous change.
+        
 Sun Apr 12 20:37:11 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/config-linux-common.h:
-        
+
           The Rawhide nightly build shows that the scandir and alphasort
           functions have been redefined to finally take dirrent args. The
           detectable difference appears to be in the glibc version code,
-          which is 2.9 on the Rawhide build machine. 
+          which is 2.9 on the Rawhide build machine.
 
 Sat Apr 11 13:13:49 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
