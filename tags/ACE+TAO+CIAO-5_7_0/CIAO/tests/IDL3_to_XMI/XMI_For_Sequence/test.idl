@@ -1,5 +1,0 @@
-// $Id$
-
-module TestXMISequence {
-  typedef sequence<char> SeqChar;
-};

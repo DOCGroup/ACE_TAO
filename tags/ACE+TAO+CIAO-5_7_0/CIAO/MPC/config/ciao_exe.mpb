@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ciao {
-  install = $(CIAO_ROOT)/bin
-}
