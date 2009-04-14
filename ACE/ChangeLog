@@ -1,9 +1,15 @@
+Tue Apr 14 13:57:16 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+        
+          Reworded entries to be consistent with release note.
+
 Mon Apr 13 12:19:18 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/config-linux-common.h:
 
           Reverted previous change.
-        
+
 Sun Apr 12 20:37:11 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/config-linux-common.h:
