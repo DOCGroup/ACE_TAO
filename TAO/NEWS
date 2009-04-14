@@ -4,25 +4,24 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 USER VISIBLE CHANGES BETWEEN TAO-1.6.8 and TAO-1.6.9
 ====================================================
 
-  Reply Dispatchers are refactored. No deadlock occurs 
-  when an (a)synchronous CORBA call is made during dispatching
-  a reply.
+. Reply Dispatchers are refactored. No deadlock occurs when an
+  (a)synchronous CORBA call is made during dispatching a reply.
   
-. Fixed IDL compiler bug that in some cases caused code
-  generation for inherited operations to be skipped.
+. Fixed IDL compiler bug that in some cases caused code generation for
+  inherited operations to be skipped.
 
-. The Transport Cache Size maximum is now a hard maximum
+. The Transport Cache Size maximum is now a hard maximum.
 
-. Fixed several bugs related to the purging of transports when the
-  cache is almost full
+. Fixed several bugs related to the purging of transports when the cache
+  is almost full.
 
 . New TAO-specific feature of Notification service improves management
-  of proxies when peer goes away without disconnecting from proxy. See
+  of proxies when peer goes away without disconnecting from proxy.  See
   orbsvcs/Notify_Service/README for details in the svc.conf section.
 
 . Improved Notification topology persistence, now persists filters.
 
-. Updated ZIOP to match the beta 1 OMG specification
+. Updated ZIOP to match the beta 1 OMG specification.
 
 USER VISIBLE CHANGES BETWEEN TAO-1.6.7 and TAO-1.6.8
 ====================================================

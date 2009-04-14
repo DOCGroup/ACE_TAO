@@ -1,3 +1,9 @@
+Tue Apr 14 13:57:16 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+        
+          Reworded entries to be consistent with release note.
+
 Fri Apr 10 12:44:12 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Sequence_Unit_Tests/clean_tao_export.pl:
