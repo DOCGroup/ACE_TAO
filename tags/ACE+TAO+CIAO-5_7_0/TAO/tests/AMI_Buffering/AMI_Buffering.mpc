@@ -1,0 +1,48 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults, ami {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, ami {
+  after += *idl
+  Source_Files {
+    AMI_Buffering.cpp
+    server.cpp
+    TestS.cpp
+    TestC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoserver, ami {
+  after += *idl
+  exename = client
+  Source_Files {
+    Client_Task.cpp
+    Reply_Handler.cpp
+    client.cpp
+    TestS.cpp
+    TestC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Admin): taoserver, ami {
+  after += *idl
+  exename = admin
+  Source_Files {
+    AMI_Buffering_Admin.cpp
+    admin.cpp
+    TestS.cpp
+    TestC.cpp
+  }
+  IDL_Files {
+  }
+}

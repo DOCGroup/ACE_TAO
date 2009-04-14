@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : taolib, install, portableserver, pi {
+  after   += EndpointPolicy
+  libs    += TAO_EndpointPolicy
+}

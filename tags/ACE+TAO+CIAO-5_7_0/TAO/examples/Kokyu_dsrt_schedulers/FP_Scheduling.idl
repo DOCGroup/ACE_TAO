@@ -1,0 +1,32 @@
+//$Id$
+
+/**
+ * @file FP_Scheduling.idl
+ *
+ * $Id$
+ *
+ */
+
+#include "tao/RTScheduling/RTScheduler_include.pidl"
+#include "tao/RTCORBA/RTCORBA_include.pidl"
+
+module FP_Scheduling
+{
+  struct SegmentSchedulingParameter
+  {
+    RTCORBA::Priority base_priority;
+  };
+
+  local interface SegmentSchedulingParameterPolicy
+  : CORBA::Policy
+  {
+    attribute SegmentSchedulingParameter value;
+  };
+
+  local interface FP_Scheduler : RTScheduling::Scheduler
+  {
+    SegmentSchedulingParameterPolicy
+      create_segment_scheduling_parameter
+        (in SegmentSchedulingParameter value);
+  };
+};

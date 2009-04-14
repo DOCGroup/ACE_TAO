@@ -1,0 +1,43 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults, valuetype {
+  IDL_Files {
+    TreeBase.idl
+    TreeController.idl
+    TreeNode.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, valuetype {
+  after += *idl
+  Source_Files {
+    Test_impl.cpp
+    server.cpp
+  }
+  Source_Files {
+    TreeBaseC.cpp
+    TreeBaseS.cpp
+    TreeControllerC.cpp
+    TreeControllerS.cpp
+    TreeNodeC.cpp
+    TreeNodeS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, valuetype {
+  after += *idl
+  Source_Files {
+    client.cpp
+  }
+  Source_Files {
+    TreeBaseC.cpp
+    TreeControllerC.cpp
+    TreeNodeC.cpp
+  }
+  IDL_Files {
+  }
+}
