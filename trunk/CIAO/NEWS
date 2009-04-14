@@ -83,30 +83,26 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.6.8 and CIAO-0.6.9
 ======================================================
 
 .  The CIAO refactoring branch has been merged to the main line of
-   development.  This version of CIAO contains extensive refactoring
-   of the CIAO container code and includes a new version of DAnCE
-   based on code provided by PrismTech. 
+   development.  This version of CIAO contains extensive refactoring of
+   the CIAO container code and includes a new version of DAnCE based on
+   code provided by PrismTech.
 
 .  Porting hints may be found at CIAO_ROOT/docs/Porting_Hints.txt
 
-.  CIAO no longer supports implicitly homed components.  This means
-   that components must either be deployed using an explicity
-   deployed and nominated home, or must be deployed without the use of
-   a home.  Unhomed components require new factory methods similar to
-   those used for homes.  These can be obtained by issuing the
-   --gen-exec-impl operation to the CIDL compiler. 
-
-.  CoSMIC support is not currently available for this version of
-   CIAO/DAnCE.
+.  CIAO no longer supports implicitly homed components.  This means that
+   components must either be deployed using an explicity deployed and
+   nominated home, or must be deployed without the use of a home.
+   Unhomed components require new factory methods similar to those used
+   for homes.  These can be obtained by issuing the --gen-exec-impl
+   operation to the CIDL compiler.
 
 .  Extant deployment plans are no longer valid for this version of
    DAnCE.  Until CoSMIC support is available,
-   DANCE_ROOT/bin/generate_plan.py may be used to assist in the
-   creation of well-formed deployment plans. 
+   DANCE_ROOT/bin/generate_plan.py may be used to assist in the creation
+   of well-formed deployment plans.
 
-.  Names for most DAnCE executables have changed.  Please see the
-   Quoter tutorial found at CIAO_ROOT/docs/tutorials/Quoter for
-   details.  
+.  Names for most DAnCE executables have changed.  Please see the Quoter
+   tutorial found at CIAO_ROOT/docs/tutorials/Quoter for details.
 
 .  DAnCE now supports connection endpoints realized by extra-plan
    object references. 
@@ -120,6 +116,8 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.6.8 and CIAO-0.6.9
 
 .  CIAO/DAnCE now supports by Xerces 3.X and 2.X. 
 
+.  Note that CoSMIC support is not currently available for this version
+   of CIAO/DAnCE.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.6.7 and CIAO-0.6.8
 ======================================================
