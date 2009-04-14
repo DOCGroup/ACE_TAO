@@ -1,0 +1,26 @@
+// $Id$
+
+#if !defined (CCM_SERVANTCONTAINERINTERCEPTOR_IDL)
+#define CCM_SERVANTCONTAINERINTERCEPTOR_IDL
+
+#include "ciao/CCM_ContainerInterceptor.idl"
+#include "ciao/CCM_ContainerServantRequestInfo.idl"
+#include "tao/PI/PIForwardRequest.pidl"
+
+module Components
+{
+  module ContainerPortableInterceptor
+  {
+    local interface ServantContainerInterceptor : ContainerInterceptor
+    {
+      void servant_receive_request (in ContainerServantRequestInfo info, out boolean proceed_call)
+        raises (PortableInterceptor::ForwardRequest);
+      void servant_send_reply (in ContainerServantRequestInfo info, out boolean proceed_call);
+      void servant_send_exception (in ContainerServantRequestInfo info, out boolean proceed_call)
+        raises (PortableInterceptor::ForwardRequest);
+      void servant_send_other (in ContainerServantRequestInfo info)
+        raises (PortableInterceptor::ForwardRequest);
+    };
+  };
+};
+#endif /* CCM_SERVANTCONTAINERINTERCEPTOR_IDL */

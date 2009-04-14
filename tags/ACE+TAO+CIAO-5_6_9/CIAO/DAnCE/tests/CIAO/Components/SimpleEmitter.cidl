@@ -1,0 +1,11 @@
+// $Id$
+#include "SimpleEmitter.idl"
+
+composition session SimpleEmitter_Impl
+{
+  home executor SimpleEmitterHome_Exec
+  {
+    implements Simple::SimpleEmitterHome;
+    manages SimpleEmitter_Exec;
+  };
+};

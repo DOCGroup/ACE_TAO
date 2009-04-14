@@ -1,0 +1,11 @@
+// $Id$
+#include "SimpleAttribute.idl"
+
+composition session SimpleAttribute_Impl
+{
+  home executor SimpleAttributeHome_Exec
+  {
+    implements Simple::SimpleAttributeHome;
+    manages SimpleAttribute_Exec;
+  };
+};

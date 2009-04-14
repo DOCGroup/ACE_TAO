@@ -1,0 +1,11 @@
+// $Id$
+#include "SimpleMultipleUser.idl"
+
+composition session SimpleMultipleUser_Impl
+{
+  home executor SimpleMultipleUserHome_Exec
+  {
+    implements Simple::SimpleMultipleUserHome;
+    manages SimpleMultipleUser_Exec;
+  };
+};
