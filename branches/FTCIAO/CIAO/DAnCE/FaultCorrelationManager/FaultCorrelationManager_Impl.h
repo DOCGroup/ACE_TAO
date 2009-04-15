@@ -150,10 +150,18 @@ namespace DAnCE
 
     ACE_High_Res_Timer timer_;
 
-    typedef std::pair <unsigned long, std::string> TFouShutdownTime;
+    struct TFouShutdownTime {
+      unsigned long shutdown;
+      ACE_Time_Value start_shutdown;
+      ACE_Time_Value end_shutdown;
+      std::string fou_id;
+    };
+    
     typedef std::list <TFouShutdownTime> SHUTDOWN_TIME_LIST;
 
     SHUTDOWN_TIME_LIST history_;
+
+    ACE_Thread_Mutex history_lock_;
   };
 }
 

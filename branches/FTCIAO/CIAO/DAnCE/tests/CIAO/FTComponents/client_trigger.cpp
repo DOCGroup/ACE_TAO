@@ -1,36 +1,29 @@
 // $Id$
 
+#include <string>
+#include <vector>
 #include "TriggerC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *first_ior = ACE_TEXT ("file://first.ior");
 const ACE_TCHAR *prefix = ACE_TEXT ("");
+std::vector <std::string> applications;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:"));
-  int c;
+  if (argc > 1)
+    prefix = argv[1];
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        first_ior = get_opts.opt_arg ();
-        break;
-      case 'n':
-        prefix = get_opts.opt_arg ();
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           "-k <ior> "
-                           "-n <prefix>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+  if (argc > 2)
+    {
+      for (int i = 2; i < argc; ++i)
+        {
+          applications.push_back (argv[i]);
+        }
+    }
+  else
+    return -1;
+
   // Indicates sucessful parsing of the command line
   return 0;
 }
@@ -45,19 +38,33 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object(first_ior);
+      std::vector <Trigger_var> triggers;
 
-      Trigger_var trigger = Trigger::_narrow(tmp.in ());
-
-      if (CORBA::is_nil (trigger.in ()))
+      for (std::vector<std::string>::iterator it = applications.begin ();
+           it != applications.end ();
+           ++it)
         {
-          ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Trigger reference <%s>\n",
-                             first_ior),
-                            1);
+          CORBA::Object_var tmp = orb->string_to_object(it->c_str ());
+
+          Trigger_var trigger = Trigger::_narrow(tmp.in ());
+
+          if (CORBA::is_nil (trigger.in ()))
+            {
+              ACE_ERROR_RETURN ((LM_DEBUG,
+                                 "Nil Trigger reference <%s>\n",
+                                 it->c_str ()),
+                                1);
+            }
+          
+          triggers.push_back (trigger);
         }
 
-      trigger->start (CORBA::string_dup (prefix));
+      for (std::vector<Trigger_var>::iterator it2 = triggers.begin ();
+           it2 != triggers.end ();
+           ++it2)
+        {
+          (*it2)->start (CORBA::string_dup (prefix));
+        }
 
       orb->destroy ();
     }

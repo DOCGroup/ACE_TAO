@@ -47,7 +47,7 @@ namespace CIDL_FTTask_Impl
 
     // Supported or inherited operations.
 
-    virtual CORBA::ULong
+    virtual CORBA::Long
     run_task (
       ::CORBA::Double execution_time);
 

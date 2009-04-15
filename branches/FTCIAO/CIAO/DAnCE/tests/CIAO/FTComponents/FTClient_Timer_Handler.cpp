@@ -53,8 +53,8 @@ namespace CIDL_FTClient_Impl
           rt_current->the_priority (client_executor_->priority ());
         */
 
-        CIAO_DEBUG ((LM_TRACE, "s(%d) ",
-                     count_));
+        CIAO_DEBUG ((LM_EMERGENCY, "s(%s) ",
+                     client_executor_->name ()));
 
         if (CORBA::is_nil (server_.in ()))
           {
@@ -67,20 +67,23 @@ namespace CIDL_FTClient_Impl
               }
           }
 
-        CORBA::ULong server_processing_time;
+        ACE_Time_Value server_processing_time;
 
         timer_.start ();
 
-        server_processing_time = 
-          server_->run_task (client_executor_->execution_time ());
+        server_processing_time.msec (
+          server_->run_task (client_executor_->execution_time ()));
 
         timer_.stop ();
        
         ACE_Time_Value rt;
         timer_.elapsed_time (rt);
 
-        if (logging_)
-          history_.push_back (rt.msec () - server_processing_time);
+        if (logging_ && (count_ >= client_executor_->logstart ()))
+          {
+            ResponseTimeMeasurement m = {server_processing_time, rt};
+            history_.push_back (m);
+          }
       }
     catch (CORBA::Exception & ex)
       {
@@ -128,7 +131,7 @@ namespace CIDL_FTClient_Impl
              it != history_.end ();
              ++it)
           {
-            out << *it << std::endl;
+            out << it->server_time.msec () << " " << it->client_time.msec () << std::endl;
           }
 
         out.close ();

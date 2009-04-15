@@ -111,6 +111,19 @@ namespace CIDL_FTClient_Impl
     iterations_ = iterations;
   }
 
+
+  CORBA::ULong
+  FTClient_exec_i::logstart (void)
+  {
+    return logstart_;
+  }
+
+  void
+  FTClient_exec_i::logstart (CORBA::ULong logstart)
+  {
+    logstart_ = logstart;
+  }
+
   char *
   FTClient_exec_i::server_ior ()
   {
