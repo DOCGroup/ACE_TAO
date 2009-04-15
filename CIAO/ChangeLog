@@ -1,3 +1,37 @@
+Wed Apr 15 15:58:24 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/FTComponents/FTClient.idl
+        * DAnCE/tests/CIAO/FTComponents/FTClient_exec.cpp
+        * DAnCE/tests/CIAO/FTComponents/FTClient_exec.h:
+        
+          Added attribute logstart to delay logging for a number of
+          invocations.
+          
+        * DAnCE/tests/CIAO/FTComponents/Worker.idl
+        * DAnCE/tests/CIAO/FTComponents/FTTask_exec.h
+        * DAnCE/tests/CIAO/FTComponents/FTTask_exec.cpp:
+        
+          Changed run_task return value, server shutdown behavior and
+          naming convention for ior file.
+        
+        * DAnCE/tests/CIAO/FTComponents/client_trigger.cpp:
+        
+          Added support for triggering several clients in one invocation.
+
+        * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.h        
+        * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.cpp:
+        
+          Changed logging output.
+        
+        * DAnCE/tests/CIAO/FTComponents/Failure_Task.cpp:
+         
+          Changed shutdown behavior.
+        
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp:
+        
+          Changed logging behavior.
+
 Tue Mar 17 17:45:13 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/FTComponents/Worker.idl

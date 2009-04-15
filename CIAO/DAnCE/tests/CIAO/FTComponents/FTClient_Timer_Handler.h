@@ -46,7 +46,12 @@ namespace CIDL_FTClient_Impl
 
     CORBA::ULong count_;
 
-    typedef std::list<CORBA::ULong> TimingList;
+    struct ResponseTimeMeasurement {
+      ACE_Time_Value server_time;
+      ACE_Time_Value client_time;
+    };
+
+    typedef std::list<ResponseTimeMeasurement> TimingList;
 
     TimingList history_;
 

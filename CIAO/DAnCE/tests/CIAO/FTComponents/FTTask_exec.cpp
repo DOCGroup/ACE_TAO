@@ -58,11 +58,11 @@ namespace CIDL_FTTask_Impl
 
   // Supported or inherited operations.
 
-  CORBA::ULong
+  CORBA::Long
   FTTask_exec_i::run_task (
     ::CORBA::Double execution_time)
   {
-    CIAO_DEBUG ((LM_TRACE, "x(%d, %f) ", state_, execution_time));
+    CIAO_DEBUG ((LM_EMERGENCY, "x(%s) ", object_id_.c_str ()));
 
     timer_.start ();
 
@@ -85,7 +85,6 @@ namespace CIDL_FTTask_Impl
   FTTask_exec_i::stop (void)
   {
     task_.stop ();
-    this->orb_->shutdown ();
   }
 
   void
@@ -343,23 +342,28 @@ namespace CIDL_FTTask_Impl
 				  (primary_ ? 1 : 2),
 				  myself_.in ());
 
+        DeCoRAM::Worker_var ref = DeCoRAM::Worker::_narrow (myself_.in ());
+
 	// publish application in NameService for the client
 	if (primary_)
 	  {
 	    Name_Helper_T <Worker> tnh (orb_.in ());
 
-            DeCoRAM::Worker_var ref = DeCoRAM::Worker::_narrow (myself_.in ());
-
 	    tnh.bind ("FLARE_TESTAPPLICATION/" + object_id_,
 		      ref.in ());
+          }
 
-            // and write it to a file
-            std::string iorfilename = object_id_ + ".ior";
-            std::ofstream file (iorfilename.c_str ());
-            file << orb_->object_to_string (ref.in ());
-            file.flush ();
-            file.close ();
-	  }
+        // and write it to a file
+        std::string iorfilename;
+        if (!primary_) 
+          iorfilename = object_id_ + "-b.ior";
+        else
+          iorfilename = object_id_ + ".ior";
+
+        std::ofstream file (iorfilename.c_str ());
+        file << orb_->object_to_string (ref.in ());
+        file.flush ();
+        file.close ();
 
         task_.init (orb_.in (), suicidal_count_);
         task_.activate ();

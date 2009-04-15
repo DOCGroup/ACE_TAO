@@ -7,7 +7,7 @@ module DeCoRAM
      *        ms.
      * @return time in ms that has elapsed since the method started.
      */
-    unsigned long run_task (in double execution_time);
+    long run_task (in double execution_time);
     void stop ();
   };
 };

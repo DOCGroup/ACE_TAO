@@ -40,8 +40,7 @@ Failure_Task::svc (void)
     }
 
   // don't call shutdown on regular stop
-  if (!stop_)
-    orb_->shutdown ();
+  orb_->shutdown (true);
 
   return 0;
 }

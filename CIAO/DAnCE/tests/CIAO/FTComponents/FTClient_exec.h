@@ -61,11 +61,17 @@ namespace CIDL_FTClient_Impl
     virtual void
     execution_time (::CORBA::Double execution_time);
 
-    virtual ::CORBA::ULong
+    virtual CORBA::ULong
     iterations (void);
 
     virtual void
-    iterations (::CORBA::ULong iterations);
+    iterations (CORBA::ULong iterations);
+
+    virtual CORBA::ULong
+    logstart (void);
+
+    virtual void
+    logstart (CORBA::ULong logstart);
 
     virtual char *
     server_ior (void);
@@ -113,6 +119,8 @@ namespace CIDL_FTClient_Impl
     CORBA::Double execution_time_;
 
     CORBA::ULong iterations_;
+
+    CORBA::ULong logstart_;
 
     CORBA::String_var server_ior_;
 

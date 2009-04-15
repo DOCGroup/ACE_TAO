@@ -11,6 +11,7 @@
 //=============================================================================
 
 #include "ace/High_Res_Timer.h"
+#include "ace/Date_Time.h"
 #include "FaultCorrelationManager_Impl.h"
 #include "ciao/FTComponentServer/CIAO_PropertiesC.h"
 #include "DAnCE/Logger/Log_Macros.h"
@@ -78,16 +79,33 @@ namespace DAnCE
         // add all logged proc_failure info to the log file
         std::ofstream out;
         out.open ("fou-shutdown.txt", ios_base::app);
+        ACE_Date_Time start, end;
 
-        for (SHUTDOWN_TIME_LIST::iterator it = history_.begin ();
-             it != history_.end ();
-             ++it)
-          {
-            out << it->second << " " << it->first << std::endl;
-          }
+        {
+          ACE_Guard <ACE_Thread_Mutex> guard (history_lock_);
 
+          for (SHUTDOWN_TIME_LIST::iterator it = history_.begin ();
+               it != history_.end ();
+               ++it)
+            {
+              start.update (it->start_shutdown);
+              end.update (it->end_shutdown);
+              out << it->fou_id << " " 
+                  << start.hour () << ":"
+                  << start.minute () << ":"
+                  << start.second () << ":"
+                  << start.microsec () << " "
+                  << end.hour () << ":"
+                  << end.minute () << ":"
+                  << end.second () << ":"
+                  << end.microsec () << " "
+                  << it->shutdown << std::endl;
+            }
+
+          history_.clear ();
+        }
+        
         out.close ();
-        history_.clear ();
       }
 
     return 0;
@@ -115,9 +133,11 @@ namespace DAnCE
             return;
           }
 
-        Deployment::Applications_var apps = dam->getApplications();
+        ACE_Time_Value start (ACE_OS::gettimeofday ());
 
         timer_.start ();
+
+        Deployment::Applications_var apps = dam->getApplications();
 
         for (size_t i = 0; i < apps->length(); ++i)
           {
@@ -152,7 +172,12 @@ namespace DAnCE
 
         ACE_Time_Value tv;
         timer_.elapsed_time (tv);
-        history_.push_back (TFouShutdownTime (tv.msec (), fou_id));
+        TFouShutdownTime sample = {tv.msec (), start, ACE_OS::gettimeofday (), fou_id};
+
+        {
+          ACE_Guard <ACE_Thread_Mutex> guard (history_lock_);
+          history_.push_back (sample);
+        }
       }
     catch (const CORBA::Exception & ex)
       {
@@ -170,6 +195,8 @@ namespace DAnCE
   {
     DANCE_DEBUG ((LM_TRACE, "FCM: app_failure ()\n"));
 
+    ACE_Time_Value tv = ACE_OS::gettimeofday ();
+
     {
       ACE_Guard <ACE_Thread_Mutex> guard (app_failure_lock_);
 
@@ -182,6 +209,13 @@ namespace DAnCE
     }
 
     new_notification_.signal ();
+
+    TFouShutdownTime sample = {0, tv, ACE_Time_Value (), host};
+
+    {
+      ACE_Guard <ACE_Thread_Mutex> guard (history_lock_);
+      history_.push_back (sample);
+    }
   }
 
   void
