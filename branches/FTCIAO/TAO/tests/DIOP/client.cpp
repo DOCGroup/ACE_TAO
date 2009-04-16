@@ -46,7 +46,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'k':
         ior = get_opts.opt_arg ();
@@ -142,8 +142,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       root_poa->destroy (1,  // ethernalize objects
-                         0  // wait for completion
-                         );
+                         0);  // wait for completion
 
       orb->destroy ();
 

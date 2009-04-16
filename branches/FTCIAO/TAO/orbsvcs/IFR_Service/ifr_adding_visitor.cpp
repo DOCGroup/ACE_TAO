@@ -1622,7 +1622,7 @@ ifr_adding_visitor::visit_structure_fwd (AST_StructureFwd *node)
           CORBA::StructMemberSeq dummyMembers;
           dummyMembers.length (0);
           CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
- 
+
           if (be_global->ifr_scopes ().top (current_scope) != 0)
             {
               ACE_ERROR_RETURN ((
@@ -1634,7 +1634,7 @@ ifr_adding_visitor::visit_structure_fwd (AST_StructureFwd *node)
                 -1
               );
             }
- 
+
           CORBA::StructDef_var struct_def =
             current_scope->create_struct (
                 node->repoID (),
@@ -1642,7 +1642,7 @@ ifr_adding_visitor::visit_structure_fwd (AST_StructureFwd *node)
                 node->version (),
                 dummyMembers
               );
- 
+
           node->full_definition ()->ifr_fwd_added (true);
         }
     }
@@ -1989,7 +1989,7 @@ ifr_adding_visitor::visit_union_fwd (AST_UnionFwd *node)
           CORBA::UnionMemberSeq dummyMembers;
           dummyMembers.length (0);
           CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
- 
+
           if (be_global->ifr_scopes ().top (current_scope) != 0)
             {
               ACE_ERROR_RETURN ((
@@ -2001,7 +2001,7 @@ ifr_adding_visitor::visit_union_fwd (AST_UnionFwd *node)
                 -1
               );
             }
- 
+
           CORBA::UnionDef_var union_def =
             current_scope->create_union (
                 node->repoID (),
@@ -2010,7 +2010,7 @@ ifr_adding_visitor::visit_union_fwd (AST_UnionFwd *node)
                 CORBA::IDLType::_nil (),
                 dummyMembers
               );
- 
+
           node->full_definition ()->ifr_fwd_added (true);
         }
     }
@@ -2082,10 +2082,10 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
           AST_Decl *enum_val =
             node->defined_in ()->lookup_by_name (cv->n (), true);
           AST_Decl *d = ScopeAsDecl (enum_val->defined_in ());
- 
+
           CORBA::Contained_var contained =
             be_global->repository ()->lookup_id (d->repoID ());
- 
+
           this->ir_current_ = CORBA::IDLType::_narrow (contained.in ());
         }
       else
@@ -2093,7 +2093,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
           // This constant's type is a primitive type - fetch it from the
           // repo and pass it to create_constant().
           CORBA::PrimitiveKind pkind = this->expr_type_to_pkind (et);
- 
+
           this->ir_current_ =
             be_global->repository ()->get_primitive (pkind);
         }
@@ -2144,7 +2144,7 @@ ifr_adding_visitor::visit_array (AST_Array *node)
       AST_Type *bt = node->base_type ();
       UTL_Scope *bts = bt->defined_in ();
       UTL_Scope *ns = node->defined_in ();
- 
+
       if (bts == ns && !bt->ifr_added ())
         {
           // What we most likely have if we get here is an
@@ -2156,7 +2156,7 @@ ifr_adding_visitor::visit_array (AST_Array *node)
           // happens.
           owned = true;
         }
- 
+
       this->element_type (bt, owned);
 
       AST_Expression **dims = node->dims ();
@@ -2573,7 +2573,7 @@ ifr_adding_visitor::load_any (AST_Expression::AST_ExprValue *ev,
 
         wstr[len] = 0;
         any <<= wstr;
-        delete wstr;
+        delete [] wstr;
         break;
       }
     case AST_Expression::EV_enum:

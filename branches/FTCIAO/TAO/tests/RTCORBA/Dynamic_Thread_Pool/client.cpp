@@ -95,7 +95,6 @@ Task::svc (void)
       // We need to set the client thread CORBA priority
       current->the_priority (get_implicit_thread_CORBA_priority (this->orb_.in ()));
 
-
       CORBA::Long tc = 0;
 
       for (int i = 0; i != iterations; ++i)
@@ -129,7 +128,7 @@ Task::svc (void)
             }
         }
 
-      ACE_OS::sleep (10);
+      ACE_OS::sleep (20);
 
       CORBA::Long end = 0;
       CORBA::Long re =
@@ -144,11 +143,6 @@ Task::svc (void)
       if (end != 0)
         {
           ACE_ERROR ((LM_ERROR, "Dynamic thread count should be 0, not %d\n", end));
-        }
-
-      if (shutdown_server)
-        {
-          test->shutdown ();
         }
     }
   catch (const CORBA::Exception& ex)
@@ -173,47 +167,61 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (result != 0)
         return result;
 
-      // Thread Manager for managing task.
-      ACE_Thread_Manager thread_manager;
-
-      // Create task.
-      Task task (thread_manager,
-                 orb.in ());
-
-      // Task activation flags.
-      long flags =
-        THR_NEW_LWP |
-        THR_JOINABLE |
-        orb->orb_core ()->orb_params ()->thread_creation_flags ();
-
-      // Activate task.
-      result =
-        task.activate (flags);
-      if (result == -1)
+      if (shutdown_server)
         {
-          if (errno == EPERM)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Cannot create thread with scheduling policy %s\n"
-                                 "because the user does not have the appropriate privileges, terminating program....\n"
-                                 "Check svc.conf options and/or run as root\n",
-                                 sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
-                                2);
-            }
-          else
-            // Unexpected error.
-            ACE_ASSERT (0);
-        }
+          CORBA::Object_var object =
+            orb->string_to_object (ior);
 
-      // Wait for task to exit.
-      result =
-        thread_manager.wait ();
-      ACE_ASSERT (result != -1);
+          test_var test =
+            test::_narrow (object.in ());
 
-      if (decreased == false)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR, "ERROR: Number of threads didn't decrease\n"), -1);
+          test->shutdown ();
         }
+      else
+      {
+
+        // Thread Manager for managing task.
+        ACE_Thread_Manager thread_manager;
+
+        // Create task.
+        Task task (thread_manager,
+                   orb.in ());
+
+        // Task activation flags.
+        long flags =
+          THR_NEW_LWP |
+          THR_JOINABLE |
+          orb->orb_core ()->orb_params ()->thread_creation_flags ();
+
+        // Activate task.
+        result =
+          task.activate (flags);
+        if (result == -1)
+          {
+            if (errno == EPERM)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "Cannot create thread with scheduling policy %s\n"
+                                   "because the user does not have the appropriate privileges, terminating program....\n"
+                                   "Check svc.conf options and/or run as root\n",
+                                   sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
+                                  2);
+              }
+            else
+              // Unexpected error.
+              ACE_ASSERT (0);
+          }
+
+        // Wait for task to exit.
+        result =
+          thread_manager.wait ();
+        ACE_ASSERT (result != -1);
+
+        if (decreased == false)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR, "ERROR: Number of threads didn't decrease\n"), -1);
+          }
+      }
     }
   catch (const CORBA::Exception& ex)
     {

@@ -151,7 +151,7 @@ namespace TAO
        * handshake.  This includes both the TCP handshake and the SSL
        * handshake.
        */
-      const ACE_Time_Value timeout_;
+      ACE_Time_Value const timeout_;
 
     };
 

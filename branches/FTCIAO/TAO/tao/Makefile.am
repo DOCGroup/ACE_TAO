@@ -1229,6 +1229,7 @@ nobase_include_HEADERS = \
   MCAST_Parser.h \
   MCAST_Parser.inl \
   MMAP_Allocator.h \
+  MM_Sequence_Iterator_T.h \
   MProfile.h \
   MProfile.inl \
   Messaging_PolicyValue.pidl \
@@ -1581,6 +1582,7 @@ libTAO_Codeset_la_SOURCES = \
   Codeset/Codeset_Descriptor.cpp \
   Codeset/Codeset_Manager_Factory.cpp \
   Codeset/Codeset_Manager_i.cpp \
+  Codeset/Codeset_Service_Context_Handler.cpp \
   Codeset/Codeset_Translator_Factory.cpp \
   Codeset/UTF16_BOM_Factory.cpp \
   Codeset/UTF16_BOM_Translator.cpp \
@@ -1599,6 +1601,7 @@ nobase_include_HEADERS += \
   Codeset/CodeSetContextC.h \
   Codeset/CodeSetContextS.h \
   Codeset/Codeset.h \
+  Codeset/Codeset_Service_Context_Handler.h \
   Codeset/Codeset_Descriptor.h \
   Codeset/Codeset_Manager_Factory.h \
   Codeset/Codeset_Manager_i.h \
@@ -3742,6 +3745,7 @@ libTAO_DiffServPolicy_la_SOURCES = \
   DiffServPolicy/DiffServPolicy.cpp \
   DiffServPolicy/DiffServPolicyA.cpp \
   DiffServPolicy/DiffServPolicyC.cpp \
+  DiffServPolicy/DiffServ_Service_Context_Handler.cpp \
   DiffServPolicy/DiffServPolicy_Factory.cpp \
   DiffServPolicy/DiffServPolicy_ORBInitializer.cpp \
   DiffServPolicy/DiffServ_Network_Priority_Hook.cpp \
@@ -3761,6 +3765,7 @@ libTAO_DiffServPolicy_la_LIBADD = \
 
 nobase_include_HEADERS += \
   DiffServPolicy/Client_Network_Priority_Policy.h \
+  DiffServPolicy/DiffServ_Service_Context_Handler.h \
   DiffServPolicy/DiffServPolicy.h \
   DiffServPolicy/DiffServPolicy.pidl \
   DiffServPolicy/DiffServPolicyA.h \
@@ -5335,6 +5340,7 @@ libTAO_RTCORBA_la_SOURCES = \
   RTCORBA/RTCORBAC.cpp \
   RTCORBA/RTCORBA_includeC.cpp \
   RTCORBA/RT_Current.cpp \
+  RTCORBA/RT_Service_Context_Handler.cpp \
   RTCORBA/RT_Endpoint_Selector_Factory.cpp \
   RTCORBA/RT_Endpoint_Utils.cpp \
   RTCORBA/RT_Invocation_Endpoint_Selectors.cpp \
@@ -5368,6 +5374,7 @@ nobase_include_HEADERS += \
   RTCORBA/Continuous_Priority_Mapping.h \
   RTCORBA/Direct_Priority_Mapping.h \
   RTCORBA/Linear_Network_Priority_Mapping.h \
+  RTCORBA/RT_Service_Context_Handler.h \
   RTCORBA/Linear_Priority_Mapping.h \
   RTCORBA/Multi_Priority_Mapping.h \
   RTCORBA/Network_Priority_Mapping.h \
@@ -6531,6 +6538,7 @@ libTAO_ZIOP_la_SOURCES = \
   ZIOP/ZIOP_ORBInitializer.cpp \
   ZIOP/ZIOP_PolicyFactory.cpp \
   ZIOP/ZIOP_Policy_Validator.cpp \
+  ZIOP/ZIOP_Service_Context_Handler.cpp \
   ZIOP/ZIOP_Policy_i.cpp \
   ZIOP/ZIOP_Stub.cpp \
   ZIOP/ZIOP_Stub_Factory.cpp
@@ -6556,6 +6564,7 @@ nobase_include_HEADERS += \
   ZIOP/ZIOP_PolicyFactory.h \
   ZIOP/ZIOP_Policy_Validator.h \
   ZIOP/ZIOP_Policy_i.h \
+  ZIOP/ZIOP_Service_Context_Handler.h \
   ZIOP/ZIOP_Stub.h \
   ZIOP/ZIOP_Stub_Factory.h \
   ZIOP/ziop_export.h

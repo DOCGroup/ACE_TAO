@@ -23,7 +23,7 @@ const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
 int niterations = 10;
 int debug = 0;
-int number_of_replies = 0;
+ACE_Atomic_Op <TAO_SYNCH_MUTEX, long> number_of_replies = 0;
 
 CORBA::Long in_number = 931232;
 const char * in_str = "Let's talk AMI.";
@@ -98,7 +98,9 @@ class Client : public ACE_Task_Base
 {
 public:
   /// ctor
-  Client (A::AMI_Test_ptr server, int niterations);
+  Client (A::AMI_Test_ptr server, int niterations, A::AMI_AMI_TestHandler_ptr hnd);
+  /// dtor
+  ~Client () ;
 
   /// The thread entry point.
   virtual int svc (void);
@@ -119,7 +121,7 @@ class Handler : public POA_A::AMI_AMI_TestHandler
 public:
   Handler (void)
   {
-  };
+  }
 
   void set_ami_test (A::AMI_Test_ptr ami_test)
   {
@@ -146,7 +148,7 @@ public:
       ami_test_var_->sendc_set_yadda (0, 5);
 
       --number_of_replies;
-    };
+    }
 
    void foo_excep (::Messaging::ExceptionHolder * excep_holder)
     {
@@ -161,35 +163,35 @@ public:
         {
           ex._tao_print_exception ("Caught exception:");
         }
-    };
+    }
 
   void get_yadda (CORBA::Long result)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda> called: result <%d>\n",
                   result));
-    };
+    }
 
   void get_yadda_excep (::Messaging::ExceptionHolder *)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called:\n"));
-    };
+    }
 
   void set_yadda (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called:\n"));
-    };
+    }
 
   void set_yadda_excep (::Messaging::ExceptionHolder *)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
-    };
+    }
   ~Handler (void)
   {
-  };
+  }
 
   void inout_arg_test (const char *)
   {
@@ -203,9 +205,6 @@ public:
 
   A::AMI_Test_var ami_test_var_;
 };
-
-// ReplyHandler.
-Handler handler;
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -251,8 +250,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // Let the client perform the test in a separate thread
+      Handler handler;
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&handler);
 
-      Client client (server.in (), niterations);
+      CORBA::Object_var hnd_object = root_poa->id_to_reference (id.in ());
+
+      A::AMI_AMI_TestHandler_var the_handler_var =
+        A::AMI_AMI_TestHandler::_narrow (hnd_object.in ());
+
+      handler.set_ami_test (server.in ());
+
+      Client client (server.in (), niterations, the_handler_var.in ());
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -267,7 +276,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
-                      number_of_replies));
+                      number_of_replies.value ()));
         }
 
       // ORB loop.
@@ -285,7 +294,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
-                      (nthreads*niterations) - number_of_replies));
+                      (nthreads*niterations) - number_of_replies.value ()));
         }
 
       client.thr_mgr ()->wait ();
@@ -312,12 +321,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 // ****************************************************************
 
 Client::Client (A::AMI_Test_ptr server,
-                int niterations)
-                :  ami_test_var_ (A::AMI_Test::_duplicate (server)),
-     niterations_ (niterations)
+                int niterations,
+                A::AMI_AMI_TestHandler_ptr hnd)
+                :  ami_test_var_ (A::AMI_Test::_duplicate (server))
+                ,  niterations_ (niterations)
+                ,  the_handler_var_ (A::AMI_AMI_TestHandler::_duplicate (hnd))
 {
-  handler.set_ami_test (server);
-  the_handler_var_ = handler._this (/* */);
+}
+
+Client::~Client ()
+{
 }
 
 int
@@ -332,7 +345,7 @@ Client::svc (void)
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) :<%d> Asynchronous methods issued\n",
+                      "(%P|%t) <%d> Asynchronous methods issued\n",
                       niterations));
         }
     }
@@ -357,7 +370,8 @@ Worker::svc (void)
 
       if (pending)
         {
-          this->orb_->perform_work();
+          ACE_Time_Value tm (1, 0);
+          this->orb_->perform_work(tm);
         }
     }
 

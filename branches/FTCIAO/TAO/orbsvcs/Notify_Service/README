@@ -142,9 +142,37 @@ The "TAO_CosNotify_Service" service object accepts the following options:
 "-NoUpdates"                         : Globally disables subscription and
                                        publication updates.
 
-"-DefaultConsumerAdminFilterOp [op]" : Sets the default consumer admin filter operator [OR|AND].
+"-ValidateClient"                    : Creates a thread that periodically
+                                       walks the topology tree visiting each
+                                       proxy and checking the liviness of 
+                                       the peer. A peer which had ordinary 
+                                       activity within the validation time
+                                       period is considered alive. Otherwise
+                                       the peer's _non_existent() operation
+                                       is invoked. If this fails the proxy's
+                                       disconnect operation is invoked.
 
-"-DefaultSupplierAdminFilterOp [op]" : Sets the default consumer admin filter operator [OR|AND].
+"-ValidateClientDelay [sec]"         : Specifies the initial delay from the
+                                       start of the validator task until the
+                                       first pass through the topology. If
+                                       left at the default value of 0, the
+                                       validator taks will start immediately.
+                                       A long delay is useful when the Notify
+                                       service restarts after a shutdown and
+                                       has to repopulate its topology from a
+                                       persistent store, which takes time.
+
+"-ValidateClientInterval [sec]"      : Specifies how frequently after the 
+                                       first pass to revisit the topology
+                                       to further validate clients. The 
+                                       default value of 0 means validation 
+                                       will only happen once.
+
+"-DefaultConsumerAdminFilterOp [op]" : Sets the default consumer admin filter
+                                       operator [OR|AND]. Default is AND.
+
+"-DefaultSupplierAdminFilterOp [op]" : Sets the default supplier admin filter
+                                       operator [OR|AND]. Default is AND.
 
 All other options are deprecated and should not be used.
 

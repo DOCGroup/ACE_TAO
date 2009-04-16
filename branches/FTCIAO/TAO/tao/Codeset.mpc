@@ -1,17 +1,28 @@
 //$Id$
-
-project(Codeset) : taolib, tao_output, install, tao_versioning_idl_defaults, nolink_codecfactory {
-  sharedname   = TAO_Codeset
-  dynamicflags = TAO_CODESET_BUILD_DLL
-  pch_header   =
-  pch_source   =
+project(*idl) : tao_versioning_idl_defaults {
+  custom_only = 1
   idlflags += -SS -Sci -Sorb \
               -Wb,export_macro=TAO_Codeset_Export \
               -Wb,export_include=tao/Codeset/codeset_export.h \
               -o Codeset
+  IDL_Files {
+    Codeset/CodeSetContext.pidl
+  }
+}
+
+project(Codeset) : taolib, tao_output, install, taoidldefaults, nolink_codecfactory {
+  sharedname   = TAO_Codeset
+  after       += *idl
+  dynamicflags = TAO_CODESET_BUILD_DLL
+  pch_header   =
+  pch_source   =
 
   Source_Files {
     Codeset
+  }
+
+  Source_Files {
+    Codeset/CodeSetContextC.cpp
   }
 
   Header_Files {
@@ -30,9 +41,9 @@ project(Codeset) : taolib, tao_output, install, tao_versioning_idl_defaults, nol
   }
 
   PIDL_Files {
+    Codeset
   }
 
   IDL_Files {
-    Codeset/CodeSetContext.pidl
   }
 }

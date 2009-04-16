@@ -41,6 +41,10 @@ public:
   ~TAO_LF_Event_Binder (void);
 
 private:
+  void operator= (const TAO_LF_Event_Binder &);
+  TAO_LF_Event_Binder (const TAO_LF_Event_Binder &);
+
+private:
   /// Keep a reference to the leader follower
   TAO_LF_Event * const event_;
   TAO_LF_Follower * const follower_;

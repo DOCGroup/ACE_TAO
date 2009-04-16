@@ -198,6 +198,10 @@ protected:
   //@}
 
 private:
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Connection_Handler &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Connection_Handler (const TAO_Connection_Handler &))
+
+private:
   /// Pointer to the TAO_ORB_Core
   TAO_ORB_Core * const orb_core_;
 

@@ -102,6 +102,10 @@ protected:
   TAO_ORB_Core &orb_core_;
 
 private:
+  void operator= (const TAO_Policy_Validator &);
+  TAO_Policy_Validator (const TAO_Policy_Validator &);
+
+private:
   TAO_Policy_Validator *next_;
 };
 

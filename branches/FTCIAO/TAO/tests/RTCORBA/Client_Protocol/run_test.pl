@@ -6,72 +6,77 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
+
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 $status = 0;
-$iorfile1base = "test1.ior";
-$iorfile2base = "test2.ior";
-$iorfile1 = PerlACE::LocalFile ("$iorfile1base");
-$iorfile2 = PerlACE::LocalFile ("$iorfile2base");
 
-unlink $iorfile1;
-unlink $iorfile2;
+my $iorbase1 = "test1.ior";
+my $iorbase2 = "test2.ior";
+
+my $server_iorfile1 = $server->LocalFile ($iorbase1);
+my $server_iorfile2 = $server->LocalFile ($iorbase2);
+
+my $client_iorfile1 = $client->LocalFile ($iorbase1);
+my $client_iorfile2 = $client->LocalFile ($iorbase2);
+
+$server->DeleteFile ($iorbase1);
+$server->DeleteFile ($iorbase2);
+
+$client->DeleteFile ($iorbase1);
+$client->DeleteFile ($iorbase2);
 
 print STDERR "\n********** RTCORBA Client Protocol Policy Unit Test\n\n";
 
 # Arguments are platform-dependent (UIOP not available on Windows).
 $server_args =
-    (PerlACE::is_vxworks_test() ? "" : (($^O eq "MSWin32") ? "-p 1413566210 " : "-p 1413566208 "))
-    ."-ORBendpoint iiop:// "
-    .(PerlACE::is_vxworks_test() ? "" : "-ORBendpoint shmiop:// ")
+
+    (($^O eq "MSWin32") ? "-p 1413566210 " : "-p 1413566208 ")
+    ."-ORBendpoint iiop:// -ORBendpoint shmiop:// "
     .(($^O eq "MSWin32" || $^O eq "VMS") ? "" : "-ORBEndpoint uiop:// ");
+
+
 $client_args =
-    "-s file://$iorfile1 -c file://$iorfile2 "
+    "-s file://$client_iorfile1 -c file://$client_iorfile2 "
     .(($^O eq "MSWin32" || $^O eq "VMS") ? "" : "-p 1413566210 ")
     ."-ORBdebuglevel 1 ";
 
-#if ($^O eq "MSWin32") {
-#    $server_args =
-#        "-p 1413566210 "
-#        ."-ORBendpoint iiop:// -ORBendpoint shmiop:// ";
-#    $client_args =
-#        "-s file://$iorfile1 -c file://$iorfile2 -ORBdebuglevel 1";
-#}
-
 # Start server.
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-s $iorfile1base -c $iorfile2base $server_args");
-}
-else {
-    $SV = new PerlACE::Process ("server", "-s $iorfile1 -c $iorfile2 $server_args");
-}
-$CL = new PerlACE::Process ("client", $client_args);
+$SV = $server->CreateProcess ("server", "-s $server_iorfile1 -c $server_iorfile2 $server_args");
+
+$CL = $client->CreateProcess ("client", $client_args);
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile2, $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile2>\n";
-    $SV->Kill ();
+if ($server->WaitForFileTimed ($iorbase2,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile2>\n";
+    $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
 # Start client.
-$client = $CL->SpawnWaitKill (60);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ());
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$server = $SV->WaitKill (60);
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-unlink $iorfile1;
-unlink $iorfile2;
+$server->DeleteFile ($iorbase1);
+$server->DeleteFile ($iorbase2);
+
+$client->DeleteFile ($iorbase1);
+$client->DeleteFile ($iorbase2);
 
 # Clean up SHMIOP files
 PerlACE::check_n_cleanup_files ("server_shmiop_*");

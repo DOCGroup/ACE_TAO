@@ -896,13 +896,13 @@ TAO_TypeCodeFactory_i::compute_default_label (
   dv.enum_val = 0;
 
   CORBA::ULong const len = members.length ();
-  int success = 0;
+  bool success = false;
 
   // A collision forces us to start over, because the label
   // values need not be in sorted order.
-  while (success == 0)
+  while (!success)
     {
-      success = 1;
+      success = true;
 
       for (CORBA::ULong i = 0; i < len; ++i)
         {
@@ -921,7 +921,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               if (u.char_val == dv.char_val)
                 {
                   dv.char_val++;
-                  success = 0;
+                  success = false;
                 }
               break;
             case CORBA::tk_boolean:
@@ -930,7 +930,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               if (u.bool_val == dv.bool_val)
                 {
                   dv.bool_val = !dv.bool_val;
-                  success = 0;
+                  success = false;
                 }
               break;
             case CORBA::tk_short:
@@ -939,7 +939,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               if (u.short_val == dv.short_val)
                 {
                   dv.short_val++;
-                  success = 0;
+                  success = false;
                 }
               break;
             case CORBA::tk_ushort:
@@ -948,7 +948,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               if (u.ushort_val == dv.ushort_val)
                 {
                   dv.ushort_val++;
-                  success = 0;
+                  success = false;
                 }
               break;
             case CORBA::tk_long:
@@ -957,7 +957,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               if (u.long_val == dv.long_val)
                 {
                   dv.long_val++;
-                  success = 0;
+                  success = false;
                 }
               break;
             case CORBA::tk_ulong:
@@ -966,7 +966,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               if (u.ulong_val == dv.ulong_val)
                 {
                   dv.ulong_val++;
-                  success = 0;
+                  success = false;
                 }
               break;
 #if !defined (ACE_LACKS_LONGLONG_T)
@@ -976,7 +976,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               if (u.ulonglong_val == dv.ulonglong_val)
                 {
                   dv.ulonglong_val++;
-                  success = 0;
+                  success = false;
                 }
               break;
 #endif /* ACE_LACKS_LONGLONG_T */
@@ -1011,7 +1011,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               if (u.enum_val == dv.enum_val)
                 {
                   dv.enum_val++;
-                  success = 0;
+                  success = false;
                 }
               break;
             }
@@ -1020,7 +1020,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
           }
 
           // If there's been a collision, we should start over right away.
-          if (success == 0)
+          if (!success)
             {
               break;
             }
@@ -1814,7 +1814,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                     || member_tc_kind == CORBA::tk_event)
                   {
                     char const * member_tc_id = member_tc->id ();
-                    
+
                     if (working_id != 0
                         && ACE_OS::strcmp (working_id, member_tc_id) == 0)
                       {
@@ -1823,12 +1823,12 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                         // the recursion, which would otherwise never return.
                         break;
                       }
-                      
+
                     // Update working_id to catch non-top-level recursion
                     // of valuetype or eventtype. Other case caught below.
                     working_id = member_tc_id;
                   }
-                
+
                 bool const recursion_detected =
                   this->check_recursion (kind,
                                          id,
@@ -1856,7 +1856,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 
         CORBA::TCKind const content_tc_kind =
           content_tc->kind ();
-          
+
         char const * content_tc_id = 0;
 
         if (content_tc_kind == CORBA::tk_struct
@@ -1875,7 +1875,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
             // end the recursion, which would otherwise never return.
             break;
           }
- 
+
        if (content_tc_kind == CORBA::TAO_TC_KIND_COUNT)
           {
             if (ACE_OS::strcmp (id, content_tc_id) == 0)

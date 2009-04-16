@@ -106,6 +106,8 @@ public:
   virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
     const TAO_Notify::NVPList& attrs);
 
+  virtual void validate () = 0;
+
 protected:
 
   /// Filter Administration

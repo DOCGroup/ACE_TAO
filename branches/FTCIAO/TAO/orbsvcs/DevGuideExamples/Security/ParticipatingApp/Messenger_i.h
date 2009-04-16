@@ -3,6 +3,9 @@
 #ifndef MESSENGERI_H_
 #define MESSENGERI_H_
 
+// This is needed on LynxOS 4.0 with GCC 2.95
+#include "ace/OS_NS_stdio.h"
+
 #include <openssl/ssl.h>
 #include <openssl/x509.h>
 #include "orbsvcs/SecurityC.h"

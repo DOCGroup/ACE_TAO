@@ -22,11 +22,9 @@
 #include "tao/Unbounded_Sequence_CDR_T.h"
 #include "tao/CDR.h"
 
-#include <boost/test/unit_test.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
+#include "test_macros.h"
 
-using namespace boost::unit_test_framework;
+
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 typedef unbounded_object_reference_sequence<mock_reference, mock_reference_var> tested_sequence;
@@ -61,15 +59,16 @@ struct Tester
     return buf;
   }
 
-  void check_values(tested_sequence const & a)
+  int check_values(tested_sequence const & a)
   {
-    BOOST_CHECK_EQUAL( 1, a[0]->id());
-    BOOST_CHECK_EQUAL( 4, a[1]->id());
-    BOOST_CHECK_EQUAL( 9, a[2]->id());
-    BOOST_CHECK_EQUAL(16, a[3]->id());
+    CHECK_EQUAL( 1, a[0]->id());
+    CHECK_EQUAL( 4, a[1]->id());
+    CHECK_EQUAL( 9, a[2]->id());
+    CHECK_EQUAL(16, a[3]->id());
+    return 0;
   }
 
-  void test_stream()
+  int test_stream()
   {
     value_type * buffer = alloc_and_init_buffer();
 
@@ -78,50 +77,26 @@ struct Tester
       tested_sequence a;
       a.replace(8, 4, buffer, false);
 
-      BOOST_CHECK_EQUAL(CORBA::ULong(8), a.maximum());
-      BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
-      BOOST_CHECK_EQUAL(buffer, a.get_buffer());
-      BOOST_CHECK_EQUAL(false, a.release());
+      CHECK_EQUAL(CORBA::ULong(8), a.maximum());
+      CHECK_EQUAL(CORBA::ULong(4), a.length());
+      CHECK_EQUAL(buffer, a.get_buffer());
+      CHECK_EQUAL(false, a.release());
       check_values(a);
 
       TAO_OutputCDR stream;
       stream << a;
-      BOOST_CHECK_MESSAGE(s.expect(4), s);
+      FAIL_RETURN_IF_NOT(s.expect(4), s);
     }
     tested_sequence::freebuf(buffer);
+    return 0;
   }
-
-  void add_all(test_suite * ts)
-  {
-    boost::shared_ptr<Tester> shared_this(self_);
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_stream,
-                shared_this));
-  }
-
-  static boost::shared_ptr<Tester> allocate()
-  {
-    boost::shared_ptr<Tester> ptr(new Tester);
-    ptr->self_ = ptr;
-
-    return ptr;
-  }
-
-private:
-  Tester() {}
-
-  boost::weak_ptr<Tester> self_;
 };
 
-ACE_Proper_Export_Flag test_suite *
-init_unit_test_suite(int, char*[])
+int ACE_TMAIN(int,ACE_TCHAR*[])
 {
-  test_suite * ts =
-      BOOST_TEST_SUITE("unbounded object reference sequence unit test");
+  int status = 0;
+  Tester x;
+  status += x.test_stream ();
 
-  boost::shared_ptr<Tester> tester(Tester::allocate());
-  tester->add_all(ts);
-
-  return ts;
+  return status;
 }
-

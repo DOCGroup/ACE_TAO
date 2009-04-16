@@ -41,12 +41,12 @@ Stock_StockBroker_i::Stock_StockBroker_i (CORBA::ORB_ptr orb,
   // Stock_StockNameConsumer_i will be activated under this POA.
   PortableServer::POA_var child_poa = 
     poa->create_POA ("StockNameConsumer_POA", 
-                     poa_mgr,
+                     poa_mgr. in(),
                      consumer_policies);
   
   // Narrow the POA to a <RTPortableServer::POA>.
   RTPortableServer::POA_var rt_poa =
-    RTPortableServer::POA::_narrow (child_poa);
+    RTPortableServer::POA::_narrow (child_poa.in ());
 
   // Create and activate the <consumer_>.
   this->consumer_ = 
@@ -81,7 +81,7 @@ void Stock_StockBroker_i::connect_quoter_info (::Stock::StockQuoter_ptr c)
 
 ::Stock::StockQuoter_ptr Stock_StockBroker_i::get_connection_quoter_info ()
 {
-  return Stock::StockQuoter::_duplicate (this->quoter_);
+  return Stock::StockQuoter::_duplicate (this->quoter_.in ());
 }
 
 void 
@@ -142,7 +142,7 @@ Stock_StockBrokerHome_i::create (Stock::StockDistributor_ptr dist,
       // mechanisms, we can activate it under the <default_POA>, which
       // is the <RootPOA>.
       Stock_StockBroker_i *broker =
-        new Stock_StockBroker_i (orb_, dist, stock_name);
+        new Stock_StockBroker_i (orb_.in (), dist, stock_name);
       PortableServer::ServantBase_var owner_transfer 
         = broker;
       this->broker_ = broker->_this ();

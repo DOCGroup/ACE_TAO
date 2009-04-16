@@ -90,7 +90,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
     }
 
   // This was dynamically allocated. Now the job is done.
-  (void) this->decr_refcount ();
+  this->intrusive_remove_ref (this);
 
   return 1;
 }
@@ -122,7 +122,7 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
         }
     }
 
-  (void) this->decr_refcount ();
+  this->intrusive_remove_ref (this);
 }
 
 TAO_DII_Asynch_Reply_Dispatcher::TAO_DII_Asynch_Reply_Dispatcher (
@@ -202,7 +202,7 @@ TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply (
         }
     }
   // This was dynamically allocated. Now the job is done.
-  (void) this->decr_refcount ();
+  this->intrusive_remove_ref (this);
 
   return 1;
 }
@@ -236,6 +236,6 @@ TAO_DII_Asynch_Reply_Dispatcher::connection_closed (void)
         }
     }
 
-  (void) this->decr_refcount ();
+  this->intrusive_remove_ref (this);
 }
 TAO_END_VERSIONED_NAMESPACE_DECL

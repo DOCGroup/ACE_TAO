@@ -180,6 +180,50 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         properties->defaultSupplierAdminFilterOp (op);
         arg_shifter.consume_arg ();
       }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ValidateClient")) == 0)
+      {
+        arg_shifter.consume_arg ();
+        TAO_Notify_PROPERTIES::instance()->validate_client (true);
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Using reactive client control.\n")));
+      }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ValidateClientDelay")) == 0)
+      {
+        current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ValidateClientDelay"));
+        if (current_arg != 0)
+        {
+          ACE_Time_Value tv (ACE_OS::atoi (current_arg));
+          TAO_Notify_PROPERTIES::instance()->validate_client_delay (tv);
+        }
+        else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
+            ACE_TEXT ("argument (%s).  Ignoring invalid ")
+            ACE_TEXT ("-ValidateClientDelay usage.\n"),
+            (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+        }
+        if (current_arg != 0)
+          arg_shifter.consume_arg ();
+      }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ValidateClientInterval")) == 0)
+      {
+        current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ValidateClientInterval"));
+        if (current_arg != 0)
+        {
+          ACE_Time_Value tv (ACE_OS::atoi (current_arg));
+          TAO_Notify_PROPERTIES::instance()->validate_client_interval (tv);
+        }
+        else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
+            ACE_TEXT ("argument (%s).  Ignoring invalid ")
+            ACE_TEXT ("-ValidateClientDelay usage.\n"),
+            (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+        }
+        if (current_arg != 0)
+          arg_shifter.consume_arg ();
+      }
       else
       {
         ACE_ERROR ((LM_ERROR,
@@ -341,6 +385,12 @@ TAO_CosNotify_Service::finalize_service (
           // We're shutting things down, so ignore exceptions
         }
     }
+
+  TAO_Notify_EventChannelFactory* necf =
+    dynamic_cast<TAO_Notify_EventChannelFactory*> (ecf->_servant ());
+  if (necf != 0)
+    necf->stop_validator();
+
 }
 
 void

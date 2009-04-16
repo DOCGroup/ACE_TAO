@@ -2543,10 +2543,7 @@ TAO_CodeGen::destroy (void)
   delete this->server_inline_;
   delete this->anyop_source_;
   delete this->anyop_header_;
-#if !defined (linux) && !defined (__QNX__) && !defined (__GLIBC__)
-  // This causes a seg fault on Linux RH 5.1.  Let it leak . . .
   delete this->gperf_input_stream_;
-#endif /* ! linux */
   delete [] this->gperf_input_filename_;
   this->curr_os_ = 0;
 }

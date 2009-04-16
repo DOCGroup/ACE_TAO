@@ -85,7 +85,7 @@ void CSelectNSDialog::OnAdd()
 void CSelectNSDialog::OnRemove()
 {
   // TODO: Add your control notification handler code here
-  int index = m_Servers.GetCurSel();
+  int const index = m_Servers.GetCurSel();
   if(index == LB_ERR)
   {
     return;
@@ -119,7 +119,7 @@ BOOL CSelectNSDialog::OnInitDialog()
       ACE_OS::strcpy(pIOR, value.c_str());
       m_Servers.SetItemData(pos, (DWORD)pIOR);
     }
-    index++;
+    ++index;
   }
 
   return TRUE;  // return TRUE unless you set the focus to a control
@@ -131,7 +131,7 @@ void CSelectNSDialog::OnDestroy()
   CDialog::OnDestroy();
 
   // TODO: Add your message handler code here
-  int count = m_Servers.GetCount();
+  int const count = m_Servers.GetCount();
   for(int i=0; i < count; i++)
   {
     delete (char*)m_Servers.GetItemData(i);

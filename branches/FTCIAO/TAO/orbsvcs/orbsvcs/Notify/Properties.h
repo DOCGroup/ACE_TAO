@@ -72,6 +72,12 @@ public:
 
   bool allow_reconnect (void);
   void allow_reconnect (bool b);
+  bool validate_client (void);
+  void validate_client (bool b);
+  ACE_Time_Value validate_client_delay (void);
+  void validate_client_delay (ACE_Time_Value b);
+  ACE_Time_Value validate_client_interval (void);
+  void validate_client_interval (ACE_Time_Value b);
 
   // Turn on/off update messages.
   CORBA::Boolean updates (void);
@@ -136,6 +142,9 @@ protected:
 
   /// True if clients can reconnect to proxies.
   bool allow_reconnect_;
+  bool validate_client_;
+  ACE_Time_Value validate_client_delay_;
+  ACE_Time_Value validate_client_interval_;
 
   /// True is separate dispatching orb
   bool separate_dispatching_orb_;

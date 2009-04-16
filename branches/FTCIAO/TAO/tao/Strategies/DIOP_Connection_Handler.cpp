@@ -285,7 +285,7 @@ TAO_DIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 int
 TAO_DIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  int result =
+  int const result =
     this->handle_output_eh (handle, this);
 
   if (result == -1)
@@ -393,7 +393,7 @@ TAO_DIOP_Connection_Handler::set_tos (int tos)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - DIOP_Connection_Handler::"
-                      "set_dscp_codepoint, dscp: %x; result: %d; %s\n",
+                      "set_dscp_codepoint, dscp: %x; result: %d; %C\n",
                       tos,
                       result,
                       result == -1 ? "try running as superuser" : ""));

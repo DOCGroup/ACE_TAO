@@ -18,9 +18,8 @@
 //
 // ============================================================================
 
-#include    "CCSC.h"        // ORB-specific
-#include    <iostream>
-// #include    <fstream.h>
+#include "CCSC.h"        // ORB-specific
+#include <ace/streams.h>
 
 using namespace std;
 
@@ -166,7 +165,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             ctrl = CCS::Controller::_narrow(obj.in());
         } catch (const CORBA::SystemException &se) {
             std::cerr << "Cannot narrow controller reference: "
-                      //<< se
+                      << se
                       << std::endl;
             throw 0;
         }
@@ -199,7 +198,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         list = ctrl->list();
         // Show details for each device.
         for ( i = 0; i < list->length(); i++)
-            std::cout << list[i];
+          {
+            CCS::Thermometer_ptr ti = list[i];
+            std::cout << ti;
+          }
         std::cout << std::endl;
 
         // Change the location of first device in the list
@@ -210,7 +212,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         // Check that the location was updated
         std::cout << "New details for device "
              << anum << " are:" << std::endl;
-        std::cout << list[0U] << std::endl;
+        CCS::Thermometer_ptr tx = list[0u];
+        std::cout << tx << std::endl;
 
         // Find first thermostat in list.
         CCS::Thermostat_var tmstat;
@@ -271,7 +274,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
     } catch (const CORBA::Exception & e) {
         std::cerr << "Uncaught CORBA exception: "
-                  //<< e
+                  << e
                   << std::endl;
         return 1;
     } catch (...) {

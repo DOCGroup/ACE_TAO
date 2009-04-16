@@ -27,6 +27,12 @@ Hello::get_big_reply ()
 
   reply_mesg->length (this->length_);
 
+  for (unsigned int i = 0; i < this->length_; ++i)
+    {
+      int size = 128;
+      for (int ch = 0; ch < size && i < this->length_ - 1; ++ch)
+        reply_mesg[++i] = ACE_OS::rand() % size--;
+    }
   return reply_mesg._retn ();
 }
 

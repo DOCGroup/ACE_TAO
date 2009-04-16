@@ -4,8 +4,8 @@ ACE_RCSID (LZO,
            LzoCompressor,
            "$Id$")
 
-#include <lzo/lzo1x.h>
-#include <lzo/lzoutil.h>
+#include <lzo1x.h>
+#include <lzoutil.h>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

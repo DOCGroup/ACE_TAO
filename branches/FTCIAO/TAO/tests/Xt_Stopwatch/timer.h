@@ -29,7 +29,10 @@ class Timer_imp
   Timer_imp (XtAppContext &,
              CORBA::Long,
              Stopwatch_display *);
-  // Constructor..
+  // Constructor
+
+  virtual ~Timer_imp ();
+  // Destructor
 
   void start (void);
   // Resets, and starts the clock ticking

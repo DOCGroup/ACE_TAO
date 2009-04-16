@@ -16,7 +16,7 @@ Failure_Task::svc (void)
 {
   ACE_Guard <ACE_Thread_Mutex> guard (lock_);
 
-  while (((limit_ == 0) || (count_ < limit_)) && !stop_)
+  while (((limit_ == 0) || (count_ <= limit_)) && !stop_)
     {
       condition_.wait ();
     }
@@ -59,6 +59,8 @@ Worker_i::Worker_i (CORBA::ORB_ptr orb,
 CORBA::ULong
 Worker_i::run_task (CORBA::Double execution_time)
 {
+  ACE_DEBUG ((LM_EMERGENCY, "x(%d) ", state_));
+
   timer_.start ();
 
   this->cpu_.run (static_cast <size_t> (execution_time));

@@ -56,6 +56,10 @@ public:
   TAO_Service_Callbacks *service_callback (void);
 
 private:
+  void operator= (const TAO_Fault_Tolerance_Service &);
+  TAO_Fault_Tolerance_Service (const TAO_Fault_Tolerance_Service &);
+
+private:
 
   /// hook to callback on to the service
   TAO_Service_Callbacks *ft_service_callback_;

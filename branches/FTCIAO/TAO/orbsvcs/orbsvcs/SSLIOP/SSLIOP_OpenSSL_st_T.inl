@@ -2,6 +2,8 @@
 //
 // $Id$
 
+// This is needed on LynxOS 4.0 with GCC 2.95
+#include "ace/OS_NS_stdio.h"
 
 #include <openssl/crypto.h>
 

@@ -66,7 +66,7 @@ namespace TAO
   protected:
 
     /// Initialize the @a spec.
-    void init_target_spec (TAO_Target_Specification &spec);
+    void init_target_spec (TAO_Target_Specification &spec, TAO_OutputCDR& output);
 
     /// Write the GIOP header into the stream.
     void write_header (TAO_OutputCDR &out_stream);

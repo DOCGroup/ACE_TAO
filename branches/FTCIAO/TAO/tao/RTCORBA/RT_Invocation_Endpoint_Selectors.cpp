@@ -36,7 +36,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
   CORBA::Policy_var client_protocol_policy_base =
     TAO_RT_Endpoint_Utils::policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL, *r);
 
-  if (client_protocol_policy_base.ptr () == 0)
+  if (CORBA::is_nil(client_protocol_policy_base.in ()))
     {
       do
         {
@@ -49,7 +49,6 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
 
       // If we get here, we completely failed to find an endpoint selector
       // that we know how to use, so throw an exception.
-      // NO NO throw ::CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
   else
     {
@@ -120,9 +119,9 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
   // policy with no success.  Throw exception.
   if (!valid_profile_found)
     {
-      if (r.inconsistent_policies ())
+      CORBA::PolicyList *p = r.inconsistent_policies ();
+      if (p)
         {
-          CORBA::PolicyList *p = r.inconsistent_policies ();
 
           p->length (1);
           (*p)[0u] = CORBA::Policy::_duplicate (client_protocol_policy);
@@ -132,8 +131,6 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
 
   // If we get here, we found at least one pertinent profile, but no
   // usable endpoints.
-  // throw ::CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
-
 }
 
 int
@@ -164,14 +161,14 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   CORBA::Short max_priority = 0;
 
   // If the priority model policy is not set.
-  if (priority_model_policy.ptr () == 0)
+  if (CORBA::is_nil (priority_model_policy.in ()))
     {
       // Bands without priority model do not make sense.
-      if (bands_policy.ptr () != 0)
+      if (!CORBA::is_nil (bands_policy.in ()))
         {
-          if (r.inconsistent_policies ())
+          CORBA::PolicyList *p = r.inconsistent_policies ();
+          if (p)
             {
-              CORBA::PolicyList *p = r.inconsistent_policies ();
 
               p->length (1);
               (*p)[0u] = CORBA::Policy::_duplicate (bands_policy.in ());
@@ -250,10 +247,9 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
                   // If priority doesn't fall into any of the bands.
                   if (!in_range)
                     {
-                      if (r.inconsistent_policies ())
+                      CORBA::PolicyList *p = r.inconsistent_policies ();
+                      if (p)
                         {
-
-                          CORBA::PolicyList *p = r.inconsistent_policies ();
                           p->length (2);
                           (*p)[0u] = CORBA::Policy::_duplicate (bands_policy.in ());
                           (*p)[1u] =

@@ -287,7 +287,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          ACE_TEXT ("TAO (%P|%t) ")
                          ACE_TEXT ("SCIOP_Acceptor::open - ")
                          ACE_TEXT ("no port number after the ")
-                         ACE_TEXT ("colon in \"%s\"\n"),
+                         ACE_TEXT ("colon in \"%C\"\n"),
                          address),
                         -1);
     }
@@ -326,7 +326,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO (%P|%t) ")
                        ACE_TEXT ("SCIOP_Acceptor::open - ")
-                       ACE_TEXT ("no hostnames in string \"%s\"\n"),
+                       ACE_TEXT ("no hostnames in string \"%C\"\n"),
                        tmp_host),
                       -1);
   }
@@ -418,7 +418,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       if (TAO_debug_level > 2)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Overriding address in IOR with %s\n"),
+                    ACE_TEXT ("Overriding address in IOR with %C\n"),
                     this->hostname_in_ior_));
       }
       if (this->hostname (orb_core,
@@ -776,7 +776,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
           if (TAO_debug_level > 2)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Overriding address in IOR with %s\n"),
+                          ACE_TEXT ("Overriding address in IOR with %C\n"),
                           this->hostname_in_ior_));
             }
           if (this->hostname (orb_core,
@@ -980,7 +980,7 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
           if (slot == len - 1
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) SCIOP option <%s> is ")
+                               ACE_TEXT ("TAO (%P|%t) SCIOP option <%C> is ")
                                ACE_TEXT ("missing a value.\n"),
                                opt.c_str ()),
                               -1);
@@ -1008,7 +1008,7 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
               if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("TAO (%P|%t) Invalid SCIOP endpoint ")
-                                   ACE_TEXT ("portspan: <%s>\n")
+                                   ACE_TEXT ("portspan: <%C>\n")
                                    ACE_TEXT ("Valid range 1 -- %d\n"),
                                    value.c_str (), ACE_MAX_DEFAULT_PORT),
                                   -1);
@@ -1021,7 +1021,7 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) Invalid SCIOP option: <%s>\n"),
+                               ACE_TEXT ("TAO (%P|%t) Invalid SCIOP option: <%C>\n"),
                                name.c_str ()),
                               -1);
 

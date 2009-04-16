@@ -1711,6 +1711,8 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                          "fclose"),
                         -1);
     }
+  // And reset file to 0 because otherwise there is a problem during destruction of stream.
+  tao_cg->gperf_input_stream ()->file () = 0;
 
   // Open the temp file.
 #if defined (ACE_OPENVMS)

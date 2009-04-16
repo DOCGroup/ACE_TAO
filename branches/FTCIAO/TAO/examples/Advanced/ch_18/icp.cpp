@@ -45,9 +45,9 @@ typedef map<unsigned long, DeviceState> StateMap;
 
 const size_t MAXSTR = 32;       // Max len of string including NUL
 
-const short MIN_TEMP = 40;      // 40 F ==  4.44 C
-const short MAX_TEMP = 90;      // 90 F == 32.22 C
-const short DFLT_TEMP = 68;     // 68 F == 20.00 C
+const long MIN_TEMP = 40;      // 40 F ==  4.44 C
+const long MAX_TEMP = 90;      // 90 F == 32.22 C
+const long DFLT_TEMP = 68;     // 68 F == 20.00 C
 
 static StateMap dstate;         // Map of known devices
 
@@ -123,15 +123,10 @@ ICP_offline(unsigned long id)
 //      exact temperature:      40%
 
 static
-short
-vary_temp(short temp)
+long
+vary_temp(long temp)
 {
-    #if defined (__BORLANDC__) || defined (_MSC_VER)
-        long r = ACE_OS::rand() % 50;
-    #else
-        long r = lrand48() % 50;
-    #endif
-
+    long r = ACE_OS::rand() % 50;
     long delta;
     if  (r < 5)
         delta = 3;
@@ -142,13 +137,8 @@ vary_temp(short temp)
     else
         delta = 0;
 
-    #if defined (__BORLANDC__) || defined (_MSC_VER)
-        if (ACE_OS::rand() % 2)
-    #else
-        if (lrand48() % 2)
-    #endif
-
-    delta = -delta;
+    if (ACE_OS::rand() % 2)
+      delta = -delta;
   return temp + delta;
 
 }
@@ -193,7 +183,7 @@ private:
 // determined by vary_temp().
 
 static
-short
+long
 actual_temp(const StateMap::iterator & pos)
 {
     long sum = 0;
@@ -260,15 +250,15 @@ ICP_get(
             return -1;                      // Must be thermostat
         ACE_OS::memcpy(
             value, &pos->second.nominal_temp,
-            std::min(len, sizeof(pos->second.nominal_temp))
+            ace_min(len, sizeof(pos->second.nominal_temp))
         );
     } else if (ACE_OS::strcmp(attr, "temperature") == 0) {
-        short temp = actual_temp(pos);
-        ACE_OS::memcpy(value, &temp, std::min(len, sizeof(temp)));
+        long temp = actual_temp(pos);
+        ACE_OS::memcpy(value, &temp, ace_min(len, sizeof(temp)));
     } else if (ACE_OS::strcmp(attr, "MIN_TEMP") == 0) {
-        ACE_OS::memcpy(value, &MIN_TEMP, std::min(len, sizeof(MIN_TEMP)));
+        ACE_OS::memcpy(value, &MIN_TEMP, ace_min(len, sizeof(MIN_TEMP)));
     } else if (ACE_OS::strcmp(attr, "MAX_TEMP") == 0) {
-        ACE_OS::memcpy(value, &MAX_TEMP, std::min(len, sizeof(MAX_TEMP)));
+        ACE_OS::memcpy(value, &MAX_TEMP, ace_min(len, sizeof(MAX_TEMP)));
     } else {
         return -1;                          // No such attribute
     }

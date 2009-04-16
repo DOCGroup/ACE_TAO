@@ -52,4 +52,20 @@ TAO_Notify_CosEC_ProxyPushSupplier::get_proxy_type_name (void) const
   return "ec_proxy_push_supplier";
 }
 
+void 
+TAO_Notify_CosEC_ProxyPushSupplier::validate ()
+{
+  TAO_Notify_Consumer* con = this->consumer ();
+  if (con != 0 && ! con->is_alive (true))
+  {
+    if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_TEXT ("(%P|%t) TAO_Notify_CosEC_ProxyPushSupplier::validate(%d)")
+                  ACE_TEXT ("disconnecting \n"), this->id ()));
+    }
+    this->disconnect_push_supplier ();
+  }
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL

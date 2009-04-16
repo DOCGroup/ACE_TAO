@@ -54,7 +54,7 @@ void CBindDialog::OnViewior()
   try
   {
     UpdateData();
-    m_Object = m_pORB->string_to_object(ACE_TEXT_ALWAYS_CHAR (m_IOR));
+    m_Object = m_pORB->string_to_object(m_IOR);
   }
   catch(CORBA::Exception& ex)
   {
@@ -91,7 +91,7 @@ void CBindDialog::OnOK()
   m_Name[0].kind = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (m_Kind));
   try
   {
-    m_Object = m_pORB->string_to_object(ACE_TEXT_ALWAYS_CHAR (m_IOR));
+    m_Object = m_pORB->string_to_object(m_IOR);
   }
   catch(CORBA::Exception& ex)
   {

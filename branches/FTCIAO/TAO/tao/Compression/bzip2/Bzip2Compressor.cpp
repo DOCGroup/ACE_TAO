@@ -23,18 +23,17 @@ Bzip2Compressor::compress (
     ::Compression::Buffer & target
   )
 {
-  unsigned int max_length = 
-    static_cast <unsigned int> (source.length () * 1.1) + TAO_GIOP_MESSAGE_HEADER_LEN;
+  unsigned int max_length =
+    static_cast <unsigned int> (source.length () * 1.01) + 600;
   target.length (static_cast <CORBA::ULong> (max_length));
 
-  // todo, check 0,1 values
   int const retval = ::BZ2_bzBuffToBuffCompress (reinterpret_cast <char*>(target.get_buffer ()),
                                   &max_length,
                                   reinterpret_cast <char*>(const_cast<CORBA::Octet*>(source.get_buffer ())),
                                   source.length (),
-                                  0,
+                                  9,
                                   1,
-                                  this->compression_level ());
+                                  this->compression_level () * 25);
 
   if (retval != BZ_OK)
     {

@@ -244,6 +244,9 @@ namespace TAO
         throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
       }
 
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, transport->output_cdr_lock (),
+                      TAO_INVOKE_FAILURE);
+
     transport->messaging_object ()->out_stream ().reset_byte_order (
       request_->_tao_byte_order ());
 
@@ -253,6 +256,8 @@ namespace TAO
         op,
         this->rd_,
         this->request_);
+
+    ace_mon.release ();
 
     Invocation_Status status = synch.remote_invocation (max_wait_time);
 

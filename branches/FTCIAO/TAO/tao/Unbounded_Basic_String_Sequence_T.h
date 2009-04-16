@@ -14,6 +14,7 @@
 #include "tao/Generic_Sequence_T.h"
 #include "tao/String_Sequence_Element_T.h"
 #include "tao/String_Const_Sequence_Element_T.h"
+#include "tao/MM_Sequence_Iterator_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -113,9 +114,116 @@ public:
   }
 
 
+#if defined TAO_HAS_SEQUENCE_ITERATORS && TAO_HAS_SEQUENCE_ITERATORS == 1
+
+  ///
+  /// Additions to support iterator semantics for TAO unbounded basic
+  /// string sequences.
+  ///
+
+  // = Traits and factory methods that create iterators.
+  typedef MM_Sequence_Iterator<unbounded_basic_string_sequence<charT> > iterator;
+  typedef Const_MM_Sequence_Iterator<unbounded_basic_string_sequence<charT> > const_iterator;
+  typedef MM_Sequence_Reverse_Iterator<unbounded_basic_string_sequence<charT> > reverse_iterator;
+  typedef Const_MM_Sequence_Reverse_Iterator<unbounded_basic_string_sequence<charT> > const_reverse_iterator;
+
+  // Get an iterator that points to the beginning of the sequence.
+  inline iterator begin (void)
+  {
+    return iterator (&this->impl_);
+  }
+
+  // Get a const iterator that points to the beginning of the sequence.
+  inline const_iterator begin (void) const
+  {
+    return const_iterator (&this->impl_);
+  }
+
+  // Get an iterator that points to the end of the sequence.
+  inline iterator end (void)
+  {
+    return iterator (&this->impl_,
+                     this->impl_.length ());
+  }
+
+  // Get a const iterator that points to the end of the sequence.
+  inline const_iterator end (void) const
+  {
+    return const_iterator (&this->impl_,
+                           this->impl_.length ());
+  }
+
+  // Get a reverse iterator that points to the end of the sequence.
+  inline reverse_iterator rbegin (void)
+  {
+    return reverse_iterator (&this->impl_,
+                             this->impl_.length () - 1);
+  }
+
+  // Get a const reverse iterator that points to the end of the sequence.
+  inline const_reverse_iterator rbegin (void) const
+  {
+    return const_reverse_iterator (&this->impl_,
+                                   this->impl_.length () - 1);
+  }
+
+  // Get a reverse iterator that points to one before the beginning
+  // of the sequence.
+  inline reverse_iterator rend (void)
+  {
+    return reverse_iterator (&this->impl_,
+                             -1);
+  }
+
+  // Get a const reverse iterator that points to one before the
+  // beginning of the sequence.
+  inline const_reverse_iterator rend (void) const
+  {
+    return const_reverse_iterator (&this->impl_,
+                                   -1);
+  }
+
+#endif /* TAO_HAS_SEQUENCE_ITERATORS==1 */
+
 private:
   implementation_type impl_;
 };
+
+#if defined TAO_HAS_SEQUENCE_ITERATORS && TAO_HAS_SEQUENCE_ITERATORS == 1
+/*
+// Below is an attempt at template specialization that would
+// not compile. It might be useful later.
+// Generic_Sequence_Iterator template specializations for
+// Unbounded_Basic_String_Sequence. These are needed since
+// Unbounded_Basic_String_Sequence does some memory management with
+// the strings. Without these specialization we leak memory.
+
+/// Dereference operator returns a reference to the item contained
+/// at the current position. This dereference implies string
+/// memory management.
+// template<typename charT>
+   unbounded_basic_string_sequence<char>::element_type&
+     details::Generic_Sequence_Iterator<unbounded_basic_string_sequence<char>, unbounded_basic_string_sequence::allocation_traits, unbounded_basic_string_sequence::element_traits >::operator* (void)
+     {
+       // Access the underlying element in the sequence.
+       //return element_type (impl_[i], release());
+       return element_type ((*(this->sequence_))[this->pos_],
+                            this->sequence_->release());
+     }
+
+ /// Returns a const reference to the item contained at the current position
+   // template<typename charT>
+   unbounded_basic_string_sequence<char>::const_element_type&
+   details::Generic_Sequence_Iterator<unbounded_basic_string_sequence<char> >::operator* (void) const
+ {
+   // Access the underlying element in the sequence.
+   //return const_element_type (impl_[i], release());
+   return const_element_type ((*(this->sequence_))[this->pos_],
+                              this->sequence_->release ());
+ }
+*/
+#endif /* TAO_HAS_SEQUENCE_ITERATORS==1 */
+
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -25,6 +25,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/Malloc_Base.h"
 
 ACE_RCSID(MT_Client_Test, client, "$Id$")
 
@@ -178,7 +179,7 @@ MT_Client::run (void)
 MT_Client::~MT_Client (void)
 {
   if (this->object_key_ != 0)
-    ACE_OS::free (this->object_key_);
+    ACE_Allocator::instance ()->free (this->object_key_);
   if (this->argv_ != 0)
     delete [] this->argv_;
 }

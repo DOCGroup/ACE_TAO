@@ -1,10 +1,40 @@
 //$Id$
-project(ImR_Client) : taolib, tao_output, install, portableserver, tao_versioning_idl_defaults {
+project(*idl) : tao_versioning_idl_defaults {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -Gp -Ssi -Gd -Sorb -GA \
+                -Wb,export_macro=TAO_IMR_Client_Export \
+                -Wb,export_include=tao/ImR_Client/imr_client_export.h \
+                -o ImR_Client
+    idlflags -= -Sa -St
+    ImR_Client/ServerObject.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Gp -Ssi -Gd -Sorb -GX \
+                -Wb,export_macro=TAO_IMR_Client_Export \
+                -Wb,export_include=tao/ImR_Client/imr_client_export.h \
+                -o ImR_Client
+    idlflags -= -Sa -St
+    ImR_Client/ImplRepo.pidl
+  }
+}
+
+project(ImR_Client) : taolib, tao_output, install, portableserver, taoidldefaults {
+  after       += *idl
   sharedname   = TAO_ImR_Client
   dynamicflags = TAO_IMR_CLIENT_BUILD_DLL
 
   Source_Files {
     ImR_Client
+  }
+
+  Source_Files {
+    ImR_Client/ServerObjectC.cpp
+    ImR_Client/ServerObjectA.cpp
+    ImR_Client/ServerObjectS.cpp
+    ImR_Client/ImplRepoC.cpp
+    ImR_Client/ImplRepoS.cpp
   }
 
   Header_Files {
@@ -28,21 +58,6 @@ project(ImR_Client) : taolib, tao_output, install, portableserver, tao_versionin
   }
 
   IDL_Files {
-    idlflags += -Gp -Ssi -Gd -Sorb -GA \
-                -Wb,export_macro=TAO_IMR_Client_Export \
-                -Wb,export_include=tao/ImR_Client/imr_client_export.h \
-                -o ImR_Client
-    idlflags -= -Sa -St
-    ImR_Client/ServerObject.pidl
-  }
-
-  IDL_Files {
-    idlflags += -Gp -Ssi -Gd -Sorb -GX \
-                -Wb,export_macro=TAO_IMR_Client_Export \
-                -Wb,export_include=tao/ImR_Client/imr_client_export.h \
-                -o ImR_Client
-    idlflags -= -Sa -St
-    ImR_Client/ImplRepo.pidl
   }
 
   Pkgconfig_Files {
