@@ -589,9 +589,9 @@ def create_file_lists (base_dir, prefix, exclude):
                 continue
             else:
                 if bin_regex.search (fullitem) is not None:
-                    bin_files.append (os.path.join (prefix, fullitem))
+                    bin_files.append ('"' + os.path.join (prefix, fullitem) + '"')
                 else:
-                    text_files.append (os.path.join (prefix, fullitem))
+                    text_files.append ('"' + os.path.join (prefix, fullitem) + '"')
 
     return (text_files, bin_files)
 
