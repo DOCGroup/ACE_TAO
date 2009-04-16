@@ -1,18 +1,24 @@
+Thu Apr 16 16:13:22 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+
+          Added new section anticipating version 0.7.
+
 Tue Apr 14 10:06:19 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* CIAO version 0.6.9 released.
+        * CIAO version 0.6.9 released.
 
 Tue Apr 14 13:57:16 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
-        
+
           Reworded entries to be consistent with release note.
 
 Mon Apr 13 15:03:24 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * DAnCE/tests/ObjectLocatorTest/ObjectLocatorTest.mpc:
 
-          Scoreboard clean-up to avoid minimum corba builds for this test.  
+          Scoreboard clean-up to avoid minimum corba builds for this test.
 
 Sun Apr 12 18:55:13 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
