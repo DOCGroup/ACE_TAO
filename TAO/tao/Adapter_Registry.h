@@ -104,6 +104,10 @@ private:
   size_t adapters_count_;
   TAO_Adapter **adapters_;
   //@}
+
+private:
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Adapter_Registry &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Adapter_Registry (const TAO_Adapter_Registry &))
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

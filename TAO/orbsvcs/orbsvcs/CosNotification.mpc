@@ -111,10 +111,11 @@ project(CosNotification_Skel) : orbsvcslib, orbsvcs_output, install, notificatio
   }
 }
 
-project(CosNotification_Serv) : orbsvcslib, orbsvcs_output, svc_utils, install, notification_skel, dynamicany, etcl{
+project(CosNotification_Serv) : orbsvcslib, orbsvcs_output, svc_utils, install, notification_skel, dynamicany, etcl, messaging{
   sharedname   = TAO_CosNotification_Serv
   dynamicflags = TAO_NOTIFY_SERV_BUILD_DLL
   tagchecks   += Notify
+  after       += Messaging
 
   IDL_Files {
   }
@@ -144,6 +145,7 @@ project(CosNotification_Serv) : orbsvcslib, orbsvcs_output, svc_utils, install, 
     Notify/Event_Manager.cpp
     Notify/Event_Persistence_Factory.cpp
     Notify/FilterAdmin.cpp
+    Notify/Validate_Client_Task.cpp
     Notify/ID_Factory.cpp
     Notify/Method_Request.cpp
     Notify/Method_Request_Dispatch.cpp

@@ -79,6 +79,9 @@ public:
   static value_type * allocbuf(CORBA::ULong maximum) {
     return implementation_type::allocbuf(maximum);
   }
+  static value_type * allocbuf() {
+    return implementation_type::allocbuf(MAX);
+  }
   static void freebuf(value_type * buffer) {
     implementation_type::freebuf(buffer);
   }

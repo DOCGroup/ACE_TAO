@@ -51,8 +51,6 @@ public:
   TAO_DII_Deferred_Reply_Dispatcher (const CORBA::Request_ptr req,
                                      TAO_ORB_Core *orb_core);
 
-
-
   /// The Reply_Dispatcher methods
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &param);
 

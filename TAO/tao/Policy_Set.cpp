@@ -57,22 +57,18 @@ TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
               continue;
             }
 
-          CORBA::Policy_var copy =
-            policy->copy ();
+          CORBA::Policy_var copy = policy->copy ();
 
-          TAO_Cached_Policy_Type const cached_type =
-            copy->_tao_cached_type ();
+          TAO_Cached_Policy_Type const cached_type = copy->_tao_cached_type ();
 
           // Add the "cacheable" policies into the cache.
-          if (cached_type != TAO_CACHED_POLICY_UNCACHED
-              && cached_type >= 0)
+          if (cached_type != TAO_CACHED_POLICY_UNCACHED && cached_type >= 0)
             {
               this->cached_policies_[cached_type] = copy.ptr ();
             }
 
           this->policy_list_[i] = copy._retn ();
         }
-
     }
   catch (const ::CORBA::Exception& ex)
     {
@@ -108,8 +104,7 @@ TAO_Policy_Set::copy_from (TAO_Policy_Set *source)
           throw ::CORBA::NO_PERMISSION ();
         }
 
-      CORBA::Policy_var copy =
-        policy->copy ();
+      CORBA::Policy_var copy = policy->copy ();
 
       CORBA::ULong const length = this->policy_list_.length ();
       this->policy_list_.length (length + 1);
@@ -310,15 +305,12 @@ TAO_Policy_Set::get_policy (CORBA::PolicyType type)
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      const CORBA::ULong current =
-        this->policy_list_[i]->policy_type ();
+      CORBA::PolicyType const current = this->policy_list_[i]->policy_type ();
 
-      if (current != type)
+      if (current == type)
         {
-          continue;
+          return CORBA::Policy::_duplicate (this->policy_list_[i]);
         }
-
-      return CORBA::Policy::_duplicate (this->policy_list_[i]);
     }
 
   return CORBA::Policy::_nil ();
@@ -327,8 +319,7 @@ TAO_Policy_Set::get_policy (CORBA::PolicyType type)
 CORBA::Policy_ptr
 TAO_Policy_Set::get_cached_const_policy (TAO_Cached_Policy_Type type) const
 {
-  if (type != TAO_CACHED_POLICY_UNCACHED
-      && type < TAO_CACHED_POLICY_MAX_CACHED)
+  if (type != TAO_CACHED_POLICY_UNCACHED && type < TAO_CACHED_POLICY_MAX_CACHED)
     {
       return this->cached_policies_[type];
     }
@@ -339,8 +330,7 @@ TAO_Policy_Set::get_cached_const_policy (TAO_Cached_Policy_Type type) const
 CORBA::Policy_ptr
 TAO_Policy_Set::get_cached_policy (TAO_Cached_Policy_Type type)
 {
-  if (type != TAO_CACHED_POLICY_UNCACHED
-      && type < TAO_CACHED_POLICY_MAX_CACHED)
+  if (type != TAO_CACHED_POLICY_UNCACHED && type < TAO_CACHED_POLICY_MAX_CACHED)
     {
       return CORBA::Policy::_duplicate (this->cached_policies_[type]);
     }

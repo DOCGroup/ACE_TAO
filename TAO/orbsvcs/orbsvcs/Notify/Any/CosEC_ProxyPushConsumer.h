@@ -50,6 +50,7 @@ public:
 
 
   virtual const char * get_proxy_type_name (void) const;
+  virtual void validate ();
 
 protected:
   ///= CosNotifyChannelAdmin::ProxyPushConsumer methods

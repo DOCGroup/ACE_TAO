@@ -49,7 +49,7 @@ public:
   CORBA::Long get_dscp_codepoint (TAO_Stub *stub, CORBA::Object *object);
 
   /// This function is used by the server side to figure out the
-  /// DiffServ codepoint that is attached and sent as part of the 
+  /// DiffServ codepoint that is attached and sent as part of the
   /// service context of the request from the client side.
   /// Specifically, when CLIENT_PROPAGATED networ priority model
   /// is followed, the clients sent the DiffServ codepoint, they
@@ -57,23 +57,6 @@ public:
   /// entry in the request.
   ///
   CORBA::Long get_dscp_codepoint (TAO_Service_Context &sc);
-
-  /// This function is called from the ORB_Core to add
-  /// network priority policy specific information on the request
-  /// service context. Specifically, when CLIENT_PROPAGATED network
-  /// priority model is used, the DiffServ codepoint that needs to be used
-  /// by the server side in the reply, is specified as a service context
-  /// entry, just like how RT-CORBA's CLIENT_PROPAGATED priority model works.
-  ///
-  void np_service_context (TAO_Stub *stub,
-                           TAO_Service_Context &service_context,
-                           CORBA::Boolean restart);
-
-  /// Helper function that is used by the np_service_context () method.
-  ///
-  void add_rep_np_service_context_hook (
-    TAO_Service_Context &service_context,
-    CORBA::Long &dscp_codepoint);
 
 protected:
 

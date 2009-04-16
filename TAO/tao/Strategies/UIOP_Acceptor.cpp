@@ -283,7 +283,7 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous,
   if (TAO_debug_level > 5)
     ACE_DEBUG ((LM_DEBUG,
                 "\nTAO (%P|%t) UIOP_Acceptor::open_i - "
-                "listening on: <%s>\n",
+                "listening on: <%C>\n",
                 addr.get_path_name ()));
 
   // In the event that an accept() fails, we can examine the reason.  If
@@ -452,7 +452,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
           if (slot == len - 1
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "TAO (%P|%t) UIOP option <%s> is "
+                               "TAO (%P|%t) UIOP option <%C> is "
                                "missing a value.\n",
                                opt.c_str ()),
                               -1);
@@ -477,7 +477,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "TAO (%P|%t) Invalid UIOP option: <%s>\n",
+                               "TAO (%P|%t) Invalid UIOP option: <%C>\n",
                                name.c_str ()),
                               -1);
         }

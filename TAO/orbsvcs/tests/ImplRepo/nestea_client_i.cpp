@@ -63,18 +63,20 @@ Nestea_Client_i::run ()
   this->server_->drink (40);
   this->server_->drink (100);
 
+  CORBA::String_var praise = this->server_->get_praise ();
   ACE_DEBUG ((LM_DEBUG, "Cans: %d\n"
                         "Praise: %s\n",
                         this->server_->bookshelf_size (),
-                        this->server_->get_praise ()));
+                        praise.in ()));
 
   this->server_->drink (500);
   this->server_->crush (200);
 
+  praise = this->server_->get_praise ();
   ACE_DEBUG ((LM_DEBUG, "Cans: %d\n"
                         "Praise: %s\n",
                         this->server_->bookshelf_size (),
-                        this->server_->get_praise ()));
+                        praise.in ()));
 
   if (shutdown_server_)
     server_->shutdown();

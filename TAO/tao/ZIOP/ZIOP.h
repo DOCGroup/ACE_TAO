@@ -60,6 +60,9 @@ public:
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);
+  
+  /// Converts compressor ID to a compressor name.
+  static const char * ziop_compressorid_name (::Compression::CompressorId st);
 
 private:
 
@@ -67,7 +70,13 @@ private:
   /// activated.
   static bool is_activated_;
 
-  /// Get the compression low value, returns 0 when it is not set
+  /// dump a ZIOP datablock after (de)compression
+  void dump_msg (const char *type,  const u_char *ptr,
+                size_t len, size_t original_data_length, 
+                ::Compression::CompressorId  compressor_id, 
+                ::Compression::CompressionLevel compression_level);
+
+/// Get the compression low value, returns 0 when it is not set
   CORBA::ULong compression_policy_value (CORBA::Policy_ptr policy) const;
 
   bool get_compressor_details (
@@ -80,7 +89,7 @@ private:
                         Compression::CompressorId &compressor_id,
                         Compression::CompressionLevel &compression_level);
 
-  void complete_compression (Compression::Compressor_ptr compressor,
+  bool complete_compression (Compression::Compressor_ptr compressor,
                              TAO_OutputCDR &cdr,
                              ACE_Message_Block& mb,
                              char *initial_rd_ptr,
@@ -103,8 +112,12 @@ private:
   bool decompress (Compression::Compressor_ptr compressor,
                    const ::Compression::Buffer &source,
                    ::Compression::Buffer &target);
+  
+  CORBA::ULong get_ratio (CORBA::OctetSeq& uncompressed, 
+                          CORBA::OctetSeq& compressed);
 
-  bool check_min_ratio (::Compression::CompressionRatio ratio,
+  bool check_min_ratio (const CORBA::ULong& this_ratio,
+                        ::Compression::CompressionRatio overall_ratio,
                         CORBA::Long min_ratio) const;
 };
 

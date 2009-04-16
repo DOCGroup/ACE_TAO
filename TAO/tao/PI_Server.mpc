@@ -1,12 +1,30 @@
 //$Id$
-project(PI_Server) : taolib, tao_output, pi, portableserver, install, tao_versioning_idl_defaults {
-  sharedname   = TAO_PI_Server
-  dynamicflags = TAO_PI_SERVER_BUILD_DLL
-
+project(*idl) : tao_versioning_idl_defaults {
+  custom_only = 1
   idlflags += \
               -Wb,export_macro=TAO_PI_Server_Export \
               -Wb,export_include=tao/PI_Server/pi_server_export.h \
               -o PI_Server
+
+  IDL_Files {
+    idlflags += -Sci -SS -GA -Gp -Gd -Sorb -Sal
+//                -Wb,include_guard=TAO_PI_SERVER_SAFE_INCLUDE \
+//                -Wb,safe_include=tao/PI_Server/PI_Server.h
+    idlflags -= -Sa -St
+    PI_Server/ServerRequestInfo.pidl
+  }
+
+  IDL_Files {
+    idlflags += -SS -Sorb -GX -Sci \
+                -Wb,unique_include=tao/PI_Server/PI_Server.h
+    PI_Server/PI_Server_include.pidl
+  }
+}
+
+project(PI_Server) : taolib, tao_output, pi, portableserver, install, taoidldefaults {
+  after       += *idl
+  sharedname   = TAO_PI_Server
+  dynamicflags = TAO_PI_SERVER_BUILD_DLL
 
   specific(bmake) {
     compile_flags += -Q
@@ -14,6 +32,11 @@ project(PI_Server) : taolib, tao_output, pi, portableserver, install, tao_versio
 
   Source_Files {
     PI_Server
+  }
+
+  Source_Files {
+    PI_Server/ServerRequestInfoC.cpp
+    PI_Server/PI_Server_includeC.cpp
   }
 
   Header_Files {
@@ -37,17 +60,6 @@ project(PI_Server) : taolib, tao_output, pi, portableserver, install, tao_versio
   }
 
   IDL_Files {
-    idlflags += -Sci -SS -GA -Gp -Gd -Sorb -Sal
-//                -Wb,include_guard=TAO_PI_SERVER_SAFE_INCLUDE \
-//                -Wb,safe_include=tao/PI_Server/PI_Server.h
-    idlflags -= -Sa -St
-    PI_Server/ServerRequestInfo.pidl
-  }
-
-  IDL_Files {
-    idlflags += -SS -Sorb -GX -Sci \
-                -Wb,unique_include=tao/PI_Server/PI_Server.h
-    PI_Server/PI_Server_include.pidl
   }
 
   Pkgconfig_Files {

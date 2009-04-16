@@ -80,6 +80,9 @@ public:
   virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
 
 protected:
+
+  friend class TAO_Notify_Constraint_Interpreter;
+
   /// Init this object.
   void init_i (const char* domain_name, const char* type_name);
 

@@ -1,6 +1,7 @@
 // $Id$
 
 #include <sstream>
+#include <fstream>
 #include "WorkerC.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/orbsvcs/LWFT/LWFT_Client_Init.h"
@@ -8,6 +9,7 @@
 #include "ace/Sig_Handler.h"
 #include "ace/Reactor.h"
 #include "tao/ORB_Core.h"
+#include "Trigger_i.h"
 
 #include "tao/RTCORBA/RTCORBA.h"
 
@@ -119,15 +121,30 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       timeout_handler.set_orb (orb.in ());
       timeout_handler.set_worker (server1.in ());
 
-      // add a the handler for the SIGINT signal here                                                              
+      // add a the handler for the SIGINT signal here
       ACE_Sig_Handler sig_handler;
       sig_handler.register_handler (SIGINT, &timeout_handler);
-      
-      // register the timer handler with the ORB reactor
-      orb->orb_core ()->reactor ()->schedule_timer (&timeout_handler,
-                                                    0,
-                                                    ACE_Time_Value::zero,
-                                                    period);
+
+      Trigger_i * trigger = new Trigger_i (orb.in (),
+                                           timeout_handler,
+                                           period.msec ());
+
+      PortableServer::ServantBase_var ownership_transfer (trigger);
+
+      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
+
+      PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in ());
+
+      PortableServer::POAManager_var poa_mgr = poa->the_POAManager ();
+
+      poa_mgr->activate ();
+
+      Trigger_var trig = trigger->_this ();
+
+      std::string fname = server_id + "Client.ior";
+      std::ofstream file (fname.c_str ());
+      file << orb->object_to_string (trig.in ());
+      file.close ();
 
       orb->run ();
 

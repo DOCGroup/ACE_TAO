@@ -19,8 +19,7 @@
 //
 // ============================================================================
 
-#include <iostream>
-#include <fstream>
+#include <ace/streams.h>
 #include <strstream>
 #include "server.h"
 #include <algorithm>
@@ -686,7 +685,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   catch  (const CORBA::Exception & e)
     {
       std::cerr << "Uncaught CORBA exception: "
-                //<< e
+                << e
                 << std::endl;
       return 1;
     }

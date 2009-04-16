@@ -9,8 +9,8 @@ ACE_RCSID (FL_Callback,
            progress,
            "$Id$")
 
-#include <FL/Fl.h>
-#include <FL/Fl_Window.h>
+#include <FL/Fl.H>
+#include <FL/Fl_Window.H>
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("progress.ior");
 int n_iterations = 1000;

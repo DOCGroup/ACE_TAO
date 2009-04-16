@@ -54,6 +54,8 @@ TAO_Notify_ProxyConsumer::init (TAO_Notify::Topology_Parent* topology_parent)
   this->supplier_admin_.reset (dynamic_cast<TAO_Notify_SupplierAdmin *>(topology_parent));
   ACE_ASSERT (this->supplier_admin_.get() != 0);
 
+  this->filter_admin_.event_channel (this->supplier_admin_->event_channel());
+
   const CosNotification::QoSProperties &default_ps_qos =
     TAO_Notify_PROPERTIES::instance ()->default_proxy_consumer_qos_properties ();
 
@@ -111,6 +113,8 @@ TAO_Notify_ProxyConsumer::connect (TAO_Notify_Supplier *supplier)
 void
 TAO_Notify_ProxyConsumer::push_i (TAO_Notify_Event * event)
 {
+  last_ping_ = ACE_OS::gettimeofday ();
+
   if (this->supports_reliable_events ())
     {
       TAO_Notify_Event::Ptr pevent(event->queueable_copy());
@@ -182,5 +186,20 @@ TAO_Notify_ProxyConsumer::destroy (void)
   // Do not reset this->supplier_.
   // It is not safe to delete the non-refcounted supplier here.
 }
+
+
+ACE_Time_Value 
+TAO_Notify_ProxyConsumer::last_ping() const
+{
+  return this->last_ping_.value ();
+}
+
+
+void 
+TAO_Notify_ProxyConsumer::last_ping(const ACE_Time_Value& tv)
+{
+  this->last_ping_ = tv;
+}
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL

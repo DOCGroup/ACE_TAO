@@ -49,7 +49,7 @@ public:
     : maximum_ (allocation_traits::default_maximum())
     , length_ (0)
     , buffer_ (allocation_traits::default_buffer_allocation())
-    , release_ (true)
+    , release_ (buffer_ != 0)
     , mb_ (0)
   {}
   inline explicit unbounded_value_sequence<CORBA::Octet>(CORBA::ULong maximum)
@@ -132,18 +132,6 @@ public:
       {
         if (this->mb_ == 0)
           {
-            if (length_ < length)
-            {
-              // TODO This code does not provide the strong-exception
-              //      guarantee, but it does provide the weak-exception
-              //      guarantee.  The problem would appear when
-              //      initialize_range() raises an exception after several
-              //      elements have been modified.  One could argue that
-              //      this problem is irrelevant, as the elements already
-              //      modified are unreachable to conforming applications.
-              element_traits::initialize_range(
-                  buffer_ + length_, buffer_ + length);
-            }
             length_ = length;
           }
         else
@@ -165,8 +153,6 @@ public:
       buffer_,
       buffer_ + length_,
       ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_));
-    element_traits::initialize_range(
-        tmp.buffer_ + length_, tmp.buffer_ + length);
     swap(tmp);
   }
   inline value_type const & operator[](CORBA::ULong i) const {
@@ -189,6 +175,7 @@ public:
     if (buffer_ == 0)
       {
         buffer_ = allocbuf(maximum_);
+        release_ = true;
       }
     return buffer_;
   }
@@ -200,6 +187,10 @@ public:
     if (buffer_ == 0)
     {
       buffer_ = allocbuf(maximum_);
+      if (!orphan)
+        {
+          release_ = true;
+        }
     }
     if (!orphan)
     {
@@ -268,6 +259,12 @@ public:
     , release_(false)
     , mb_ (0)
   {
+    if (rhs.maximum_ == 0 || rhs.buffer_ == 0)
+    {
+      maximum_ = rhs.maximum_;
+      length_ = rhs.length_;
+      return;
+    }
     unbounded_value_sequence<CORBA::Octet> tmp(rhs.maximum_);
     tmp.length_ = rhs.length_;
     if (rhs.mb_ == 0)
@@ -312,7 +309,7 @@ private:
 
   /// If true then the sequence should release the buffer when it is
   /// destroyed.
-  CORBA::Boolean release_;
+  mutable CORBA::Boolean release_;
   ACE_Message_Block* mb_;
 };
 

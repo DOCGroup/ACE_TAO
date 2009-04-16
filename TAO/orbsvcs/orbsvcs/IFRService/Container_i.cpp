@@ -844,6 +844,7 @@ TAO_Container_i::create_constant_i (const char *id,
       TAO_InputCDR in (out);
       mb = in.steal_contents ();
     }
+  ACE_Auto_Ptr<ACE_Message_Block> safe (mb);
 
   CORBA::TypeCode_var val_tc = value.type ();
 

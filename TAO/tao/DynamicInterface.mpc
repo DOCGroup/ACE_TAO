@@ -24,6 +24,7 @@ project(DynamicInterface) : taolib, tao_output, install, messaging, minimum_corb
   }
 
   PIDL_Files {
+    DynamicInterface
   }
 
   IDL_Files {

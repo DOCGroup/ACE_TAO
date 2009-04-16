@@ -65,14 +65,12 @@ BOOL CNamingViewerApp::InitInstance()
 
   ACE::init();
   {
-
-    int argc = Argv.argc();
-    ACE_Argv_Type_Converter argcon (argc, Argv.argv ());
-    CORBA::ORB_var ORB = CORBA::ORB_init(argcon.get_argc (),
-                                         argcon.get_ASCII_argv ());
+    int argc = Argv.argc ();
+    CORBA::ORB_var ORB = CORBA::ORB_init(argc, Argv.argv());
+    
     CNamingViewerDlg dlg(ORB);
     m_pMainWnd = &dlg;
-    int nResponse = dlg.DoModal();
+    int const nResponse = dlg.DoModal();
     if (nResponse == IDOK)
     {
       // TODO: Place code here to handle when the dialog is

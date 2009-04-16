@@ -87,7 +87,7 @@ namespace Test
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 
-      ACE_OS::sprintf (temp, "%d", this->requestID_);
+      ACE_OS::sprintf (temp, "%ld", this->requestID_);
       ++this->requestID_;
     }
 

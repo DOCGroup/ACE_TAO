@@ -6,6 +6,33 @@
 #include "Stock_QuoterC.h"
 #include "UDPTestC.h"
 #include "ace/streams.h"
+#include "ace/Task.h"
+
+class OrbTask : public ACE_Task_Base
+{
+public:
+  OrbTask(const CORBA::ORB_ptr orb)
+      : orb_(CORBA::ORB::_duplicate(orb))
+  {
+  }
+
+  virtual int svc()
+  {
+      try
+        {
+          this->orb_->run ();
+        }
+      catch (const CORBA::Exception&)
+        {
+        }
+      return 0;
+  }
+
+private:
+  CORBA::ORB_var orb_;
+};
+
+static int n_threads = 1;
 
 unsigned char Msg[1000] = { 0 } ;
 
@@ -24,6 +51,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     CORBA::Object_var stock_quoter_obj =
       orb->resolve_initial_references ("MyStockQuoter");
+
+    OrbTask task(orb.in());
+
+    if (task.activate (THR_NEW_LWP | THR_JOINABLE,
+                          n_threads) != 0)
+       ACE_ERROR_RETURN ((LM_ERROR,
+                          "Cannot activate threads\n"),
+                         1);
 
     UDPTestI_var server = UDPTestI::_narrow (udp_obj.in ());
 
@@ -46,6 +81,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
     quoter->shutdown ();
+
+    task.wait();
 
     orb->destroy ();
   }

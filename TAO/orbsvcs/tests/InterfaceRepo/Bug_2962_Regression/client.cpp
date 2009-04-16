@@ -10,7 +10,7 @@ const char *member_type_id= "IDL:arrayOfStruct:1.0";
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-    CORBA::ORB_ptr the_orb = CORBA::ORB_init (argc, argv);
+    CORBA::ORB_var the_orb = CORBA::ORB_init (argc, argv);
 
     CORBA::Object_var obj = the_orb->string_to_object (ifr_ior);
     if (CORBA::is_nil (obj.in()))
@@ -57,8 +57,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       tc_content = orig_type->type ();
     const CORBA::ULong
       length= tc_content->length ();
+    CORBA::TypeCode_var
+      cont_type = tc_content->content_type ();
     const char
-      *name= tc_content->content_type ()->name ();
+      *name= cont_type->name ();
     ACE_DEBUG ((LM_DEBUG,
                 " = %C [%u]\n",
                 name,

@@ -411,9 +411,9 @@ endif BUILD_BOOST
 if BUILD_BOOST
 if BUILD_EXCEPTIONS
 
-noinst_PROGRAMS += unbounded_octet_sequence_no_copy_ut
+noinst_PROGRAMS += unbounded_octet_sequence_nocopy_ut
 
-unbounded_octet_sequence_no_copy_ut_CPPFLAGS = \
+unbounded_octet_sequence_nocopy_ut_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -421,15 +421,15 @@ unbounded_octet_sequence_no_copy_ut_CPPFLAGS = \
   -I$(BOOST_ROOT)/include/$(BOOST_VERSION) \
   -I$(BOOST_ROOT)/.
 
-unbounded_octet_sequence_no_copy_ut_SOURCES = \
+unbounded_octet_sequence_nocopy_ut_SOURCES = \
   mock_reference.cpp \
   unbounded_octet_sequence_nocopy_ut.cpp \
   mock_reference.hpp
 
-unbounded_octet_sequence_no_copy_ut_LDFLAGS = \
+unbounded_octet_sequence_nocopy_ut_LDFLAGS = \
   -L$(BOOST_ROOT)/lib
 
-unbounded_octet_sequence_no_copy_ut_LDADD = \
+unbounded_octet_sequence_nocopy_ut_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
   -l$(BOOST_STATIC_LIB_PREFIX)boost_unit_test_framework$(BOOST_CFG)

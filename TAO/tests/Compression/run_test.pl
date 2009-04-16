@@ -10,13 +10,24 @@ use PerlACE::TestTarget;
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-$SV = $server->CreateProcess ("server");
+my @tests = qw(
+               zlibserver
+               bzip2server
+               lzoserver
+              );
+
+foreach my $process (@tests) {
+
+$SV = $server->CreateProcess ("$process");
+my $executable = $SV->Executable;
+next unless -e $executable;
 
 $test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($test != 0) {
     print STDERR "ERROR: test returned $test\n";
     exit 1;
+}
 }
 
 exit 0;

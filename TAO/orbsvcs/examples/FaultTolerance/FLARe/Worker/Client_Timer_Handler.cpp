@@ -69,6 +69,14 @@ Client_Timer_Handler::handle_timeout (const ACE_Time_Value &,
 
       timer_.stop ();
 
+      ++invocations_;
+
+      ACE_DEBUG ((LM_EMERGENCY, "m(%s,%d,%d,%d) ",
+                  logfile_.c_str (),
+                  max_iterations_,
+                  log_start_,
+                  invocations_));
+
       if (logging_ && (invocations_ >= log_start_))
         {
           ACE_Time_Value rt;
@@ -79,9 +87,9 @@ Client_Timer_Handler::handle_timeout (const ACE_Time_Value &,
     }
   catch (CORBA::SystemException & ex)
     {
-      ACE_DEBUG ((LM_WARNING, 
-                   ACE_TEXT ("Client_Timer_Handler::handle_timeout () -"
-                             "caught: %s"), ex._info ().c_str ()));
+      ACE_DEBUG ((LM_EMERGENCY, 
+                  ACE_TEXT ("Client_Timer_Handler::handle_timeout () -"
+                            "caught: %s"), ex._info ().c_str ()));
 
       orb_->shutdown ();
 
@@ -90,7 +98,7 @@ Client_Timer_Handler::handle_timeout (const ACE_Time_Value &,
 
   try
     {
-      if ((max_iterations_ > 0) && (++invocations_ >= max_iterations_))
+      if ((max_iterations_ > 0) && (invocations_ >= max_iterations_))
         {
           worker_->stop ();
      
@@ -112,6 +120,8 @@ Client_Timer_Handler::handle_timeout (const ACE_Time_Value &,
 int
 Client_Timer_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {
+  orb_->orb_core ()->reactor ()->cancel_timer (this);
+
   orb_->shutdown ();
 
   return 0;

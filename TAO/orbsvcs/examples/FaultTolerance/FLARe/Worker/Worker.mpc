@@ -30,15 +30,19 @@ project(*Server): lwft_server, lwft_client, naming, rtcorba {
   }
 }
 
-project(*Client): lwft_client, naming, rtcorba {
+project(*Client): lwft_client, naming, rtcorba, portableserver {
   after += *idl
 
   Source_Files {
     client.cpp
     Client_Timer_Handler.cpp
-    WorkerC.cpp
+    WorkerC.cpp 
+    TriggerS.cpp
+    TriggerC.cpp
+    Trigger_i.cpp
   }
 
   IDL_Files {
+    Trigger.idl
   }
 }

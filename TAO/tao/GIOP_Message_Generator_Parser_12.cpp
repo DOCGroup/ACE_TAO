@@ -121,10 +121,12 @@ TAO_GIOP_Message_Generator_Parser_12::write_reply_header (
     TAO_Pluggable_Reply_Params_Base &reply)
 {
   // Write the request ID
-  output.write_ulong (reply.request_id_);
+  if (!(output.write_ulong (reply.request_id_)))
+    return false;
 
   // Write the reply status
-  output.write_ulong (reply.reply_status ());
+  if (!(output.write_ulong (reply.reply_status ())))
+    return false;
 
   if (!(output << reply.service_context_notowned ()))
     return false;
@@ -147,10 +149,12 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_reply_mesg (
     CORBA::ULong request_id,
     TAO_GIOP_Locate_Status_Msg &status_info)
 {
-  output.write_ulong (request_id);
+  if (!(output.write_ulong (request_id)))
+    return false;
 
   // Make the header for the locate request
-  output.write_ulong (status_info.status);
+  if (!(output.write_ulong (status_info.status)))
+    return false;
 
   // Note: We dont align the pointer to an 8 byte boundary for a
   // locate reply body. This is due to an urgent issue raised by Michi
@@ -177,7 +181,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_reply_mesg (
         CORBA::Object_ptr object_ptr =
           status_info.forward_location_var.in ();
 
-        if ( ! (output << object_ptr))
+        if (!(output << object_ptr))
         {
           if (TAO_debug_level > 0)
             {

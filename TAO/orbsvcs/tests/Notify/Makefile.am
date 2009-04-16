@@ -20,6 +20,7 @@ SUBDIRS = \
         Sequence_Multi_ETCL_Filter \
         Reconnecting \
         RT_lib \
+        Persistent_Filter \
         Persistent_POA \
         Ordering \
         MT_Dispatching \
@@ -31,7 +32,8 @@ SUBDIRS = \
         Bug_1385_Regression \
         Blocking \
         Basic \
-        Timeout
+        Timeout \
+	Validate_Client
 
 if BUILD_TESTS
 SUBDIRS += performance-tests

@@ -1327,7 +1327,7 @@ CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
   if (result != 0 && errno != ENOENT)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("Unable to initialize the ")
                   ACE_TEXT ("Service Configurator")));
       throw ::CORBA::INITIALIZE (

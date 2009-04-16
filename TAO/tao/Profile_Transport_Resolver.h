@@ -157,6 +157,9 @@ namespace TAO
     /// ORB.
     bool get_connection_timeout (ACE_Time_Value &max_wait_time);
 
+    void operator= (const Profile_Transport_Resolver &);
+    Profile_Transport_Resolver (const Profile_Transport_Resolver &);
+
   private:
     bool try_connect_i (TAO_Transport_Descriptor_Interface *desc,
                         ACE_Time_Value *val,

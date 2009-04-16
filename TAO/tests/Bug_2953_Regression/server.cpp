@@ -160,7 +160,7 @@ removeServant(
   RTCORBA::ThreadpoolId id)
 {
   PortableServer::ObjectId_var oid = poa->servant_to_id(servant);
-  poa->deactivate_object(oid);
+  poa->deactivate_object(oid.in());
   rtorb->destroy_threadpool(id);
   ACE_DEBUG ((LM_DEBUG,
               "Destroyed threadpool with id <%d>\n",

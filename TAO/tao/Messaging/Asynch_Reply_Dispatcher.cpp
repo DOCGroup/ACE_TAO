@@ -138,7 +138,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
         }
     }
 
-  this->decr_refcount ();
+  this->intrusive_remove_ref (this);
 
   return 1;
 }
@@ -182,12 +182,12 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
       if (TAO_debug_level >= 4)
         {
           ex._tao_print_exception (
-            "Asynch_Reply_Dispacher::connection_closed");
+            "Asynch_Reply_Dispatcher::connection_closed");
         }
 
     }
 
-  (void) this->decr_refcount ();
+  this->intrusive_remove_ref (this);
 }
 
 // AMI Timeout Handling Begin
@@ -237,11 +237,11 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
     {
       if (TAO_debug_level >= 4)
         {
-          ex._tao_print_exception ("Asynch_Reply_Dispacher::reply_timed_out");
+          ex._tao_print_exception ("Asynch_Reply_Dispatcher::reply_timed_out");
         }
     }
 
-  (void) this->decr_refcount ();
+  this->intrusive_remove_ref (this);
 }
 
 long

@@ -96,10 +96,13 @@ namespace TAO
     };
 
   Transport_Selection_Guard& operator=(const Transport_Selection_Guard& rhs) {
+    if (this != &rhs)
+      {
 #if TAO_HAS_TRANSPORT_CURRENT == 1
-    prev_ = rhs.prev_;
+        prev_ = rhs.prev_;
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
-    curr_ = rhs.curr_;
+        curr_ = rhs.curr_;
+      }
     return *this;
   }
 
