@@ -1,8 +1,9 @@
 # Set the version number here.
-%define ACEVER  5.6.9
-%define TAOVER  1.6.9
-%define CIAOVER 0.6.9
+%define ACEVER  5.7
+%define TAOVER  1.7
+%define CIAOVER 0.7
 # Set is_major_ver if the version is X.Y instead X.Y.Z
+%define is_major_ver 1
 
 # TODO
 # Test whether a TAO app with MPC can be build against MPC installed version
