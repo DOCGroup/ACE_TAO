@@ -43,7 +43,7 @@ namespace CIDL_Messenger_Impl
     // Your code here.
 
     // MY CODE
-    ACE_Guard<ACE_Mutex> guard(this->lock_);
+    ACE_Guard<TAO_SYNCH_MUTEX> guard(this->lock_);
 
     ACE_DEBUG((LM_INFO, ACE_TEXT("History_i::get_all\n") ));
 
@@ -52,15 +52,15 @@ namespace CIDL_Messenger_Impl
     retval->length( this->messages_.size() );
 
     // iterate through the MessageList, copying messages into the return sequence
-    int i = 0;
+    CORBA::ULong i = 0;
     for ( MessageList::iterator messageItr = this->messages_.begin();
           messageItr != this->messages_.end();
-          ++messageItr ) {
-
-      // because the MessageList contains Message_vars, reference counting
-      // upon assignment into the sequence is handled properly for us.
-      (*retval)[i++] = *messageItr;
-    }
+          ++messageItr )
+      {
+        // because the MessageList contains Message_vars, reference counting
+        // upon assignment into the sequence is handled properly for us.
+        (*retval)[i++] = *messageItr;
+      }
     return retval;
   }
 
@@ -70,7 +70,7 @@ namespace CIDL_Messenger_Impl
     // Your code here.
 
     // MY CODE
-    ACE_Guard<ACE_Mutex> guard(this->lock_);
+    ACE_Guard<TAO_SYNCH_MUTEX> guard(this->lock_);
 
     ACE_DEBUG((LM_INFO, ACE_TEXT("History_i::get_latest\n") ));
 
@@ -83,9 +83,9 @@ namespace CIDL_Messenger_Impl
 
   // MY CODE
   void
-    History_exec_i::add( ::Message* message )
+  History_exec_i::add( ::Message* message )
   {
-    ACE_Guard<ACE_Mutex> guard(lock_);
+    ACE_Guard<TAO_SYNCH_MUTEX> guard(lock_);
 
     // bump up the reference count; we don't own it.
     // the _var in the STL list takes ownership of the "copy"

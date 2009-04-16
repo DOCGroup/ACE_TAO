@@ -1,8 +1,8 @@
 // $Id$
 #include "DomainDataManager.h"
 
-#include "Config_Handlers/DD_Handler.h"
-#include "Config_Handlers/DnC_Dump.h"
+#include "tools/Config_Handlers/DD_Handler.h"
+#include "tools/Config_Handlers/DnC_Dump.h"
 #include "ciao/CIAO_common.h"
 
 const char * domain_file_name = "Domain.cdd";
@@ -10,8 +10,7 @@ const char * domain_file_name = "Domain.cdd";
 CIAO::DomainDataManager* CIAO::DomainDataManager::global_data_manager_ = 0;
 
 CIAO::DomainDataManager * CIAO::DomainDataManager::create (CORBA::ORB_ptr orb,
-                            ::Deployment::TargetManager_ptr target
-                            )
+                            ::Deployment::TargetManager_ptr target)
 {
   if (global_data_manager_ == 0)
     {
@@ -26,7 +25,6 @@ CIAO::DomainDataManager::get_data_manager ()
 {
   return global_data_manager_;
 }
-
 
 void
 CIAO::DomainDataManager::delete_data_manger ()
@@ -92,14 +90,14 @@ CIAO::DomainDataManager::
 DomainDataManager (CORBA::ORB_ptr orb,
                    ::Deployment::TargetManager_ptr target)
   : orb_ (CORBA::ORB::_duplicate (orb)),
-    deployment_config_ (orb_.in()),
+//    deployment_config_ (orb_.in()),
     target_mgr_ (::Deployment::TargetManager::_duplicate(target))
 {
   CIAO::Config_Handlers::DD_Handler dd (domain_file_name);
   ::Deployment::Domain* dmn = dd.domain_idl ();
 
-  if (CIAO::debug_level () > 9)
-    ::Deployment::DnC_Dump::dump (*dmn);
+//  if (CIAO::debug_level () > 9)
+    //::Deployment::DnC_Dump::dump (*dmn);
 
   current_domain_ = *dmn;
   initial_domain_ = current_domain_;
@@ -131,13 +129,13 @@ int CIAO::DomainDataManager::readin_domain_data ()
 
 int CIAO::DomainDataManager::call_all_node_managers ()
 {
-  if ( this->deployment_config_.init ("NodeDetails.dat") == -1 )
+/*  if ( this->deployment_config_.init ("NodeDetails.dat") == -1 )
     {
       ACE_ERROR ((LM_ERROR,
                   "TargetM (%P|%t) DomainDataManager.cpp -"
                   "CIAO::DomainDataManager::call_all_node_managers -"
                   "ERROR while trying to initialize after reading "
-                  "node details DAT file \n"));
+                  "node details DAT file\n"));
       return 0;
     }
 
@@ -190,15 +188,16 @@ int CIAO::DomainDataManager::call_all_node_managers ()
             }
         }
     }
+*/
   return 0;
 
 }
 
 
-void CIAO::DomainDataManager
-::commitResources (
-                   const ::Deployment::DeploymentPlan & plan)
+::Deployment::ResourceCommitmentManager_ptr CIAO::DomainDataManager
+::commitResources (const ::Deployment::ResourceAllocations &)
 {
+/*
   // commit the resources
   // parse into the plan and commit resources ...
 
@@ -232,15 +231,16 @@ void CIAO::DomainDataManager
 
   // here commit the commitresources
   provisioned_data_ = temp_provisioned_data;
+  */
+  return 0;
 }
 
 
 void CIAO::DomainDataManager::
-releaseResources (
-                  const ::Deployment::DeploymentPlan& plan)
+releaseResources (const ::Deployment::ResourceCommitmentManager_ptr)
 {
   // release the resources
-
+/*
 
   // set the action value
   current_action_ = release;
@@ -259,7 +259,7 @@ releaseResources (
           }
         }
     }
-
+*/
 }
 
 
@@ -279,7 +279,6 @@ match_requirement_resource (
         {
           if (!ACE_OS::strcmp (deployed[i].requirementName, available[j].name))
             {
-              if (CIAO::debug_level () > 9)
               // search for the resourcename in the resourceType
               for (CORBA::ULong k = 0;k < available[j].resourceType.length ();k++)
                 {
@@ -399,7 +398,7 @@ void CIAO::DomainDataManager::commit_release_resource (
 void CIAO::DomainDataManager::stop_monitors ()
 {
 
-  CORBA::ULong length = initial_domain_.node.length ();
+  CORBA::ULong const length = initial_domain_.node.length ();
 
   for (CORBA::ULong i=0;i < length;i++)
     {
@@ -407,18 +406,17 @@ void CIAO::DomainDataManager::stop_monitors ()
 
       try
         {
-          node_manager =
-            deployment_config_.get_node_manager
-            (initial_domain_.node[i].name.in ());
+//          node_manager =
+            //deployment_config_.get_node_manager
+//            (initial_domain_.node[i].name.in ());
         }
-      catch (CORBA::Exception&)
+      catch (const CORBA::Exception&)
         {
           ACE_ERROR ((LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
                       "Error in get Node Manager from Deployment Config %s\n",
                       initial_domain_.node[i].name.in ()));
           continue;
         }
-
 
       if (!CORBA::is_nil (node_manager.in ()))
         {
@@ -458,7 +456,7 @@ int CIAO::DomainDataManager::add_to_domain (
       ::Deployment::Node a_node;
 
       if (!this->find_in_initial_domain (domain.node[i].name.in (),
-                                        a_node))
+                                         a_node))
         continue; // dont know this node
 
       //check if already present

@@ -15,7 +15,7 @@
     <artifact xmi:idref="Hello_Receiver_ExecArtifact" />
     <artifact xmi:idref="Hello_Receiver_SvntArtifact" />
     <execParameter>
-      <!-- entrypoint as exec parameter (see §10.6.1) -->
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>home factory</name>
       <value>
         <type>
@@ -74,7 +74,7 @@
     <artifact xmi:idref="Hello_Sender_ExecArtifact" />
     <artifact xmi:idref="Hello_Sender_SvntArtifact" />
     <execParameter>
-      <!-- entrypoint as exec parameter (see §10.6.1) -->
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>home factory</name>
       <value>
         <type>

@@ -23,7 +23,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "MessengerEC.h"
+#include "Messenger_svnt.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -55,29 +55,22 @@ namespace CIDL_Messenger_Impl
 
     // Attribute operations.
 
-    virtual char *
-    subject ();
+    virtual char *subject ();
 
-    virtual void
-    subject (const char * subject);
+    virtual void subject (const char * subject);
 
     // Port operations.
 
-    virtual ::CCM_Runnable_ptr
-    get_control ();
+    virtual ::CCM_Runnable_ptr get_control ();
 
-    virtual ::CCM_Publication_ptr
-    get_content ();
+    virtual ::CCM_Publication_ptr get_content ();
 
-    virtual ::CCM_History_ptr
-    get_message_history ();
+    virtual ::CCM_History_ptr get_message_history ();
 
     // Operations from Components::SessionComponent
 
-    virtual void
-    set_session_context (
-      ::Components::SessionContext_ptr ctx);
-    
+    virtual void set_session_context ( ::Components::SessionContext_ptr ctx);
+
     virtual void configuration_complete (void);
 
     virtual void ccm_activate ();

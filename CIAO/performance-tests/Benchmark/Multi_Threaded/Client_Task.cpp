@@ -18,7 +18,7 @@ Client_Task::svc (void)
   //check if controller is non nil
   if (CORBA::is_nil (controller.in ()))
       ACE_ERROR_RETURN ((LM_DEBUG,
-                         "Nil Benchmark::Controller reference \n"),
+                         "Nil Benchmark::Controller reference\n"),
                         1);
 
   ACE_DEBUG ((LM_DEBUG, "Sending Trigger\n"));

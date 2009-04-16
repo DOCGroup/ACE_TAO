@@ -75,9 +75,6 @@ namespace CIAO
     // @@Jai, see the problem with a coarse grained stuff here.
     if (component_removed_ == true)
       {
-        // svt->ciao_preactivate ();
-        // svt->ciao_activate ();
-        // svt->ciao_postactivate ();
         component_removed_ = false;
       }
 

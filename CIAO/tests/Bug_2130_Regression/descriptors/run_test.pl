@@ -21,6 +21,8 @@ $dat_file = "TestNodeManagerMap.dat";
 $cdp_file = "DeploymentPlan.cdp";
 $controller_exec = "../SEC_CheckPoint/controller";
 
+PerlACE::add_lib_path ('../SEC_CheckPoint');
+
 $E = 0;
 $EM = 0;
 

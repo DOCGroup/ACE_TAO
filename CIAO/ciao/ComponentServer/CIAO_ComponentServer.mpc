@@ -46,17 +46,19 @@ project(CIAO_ComponentServer_stub) : ccm_componentserver_stub, ciaolib_with_idl,
 }
 
 project(CIAO_CS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_componentserver_stub, portableserver, \
-    ciao_client, ciao_lib {
+    ciao_client, ciao_lib, threads, avoids_ace_for_tao {
   dynamicflags = CIAO_CS_CLIENT_SVNT_BUILD_DLL
   after += CIAO_CS_Client_IDL
   IDL_Files {
   }
   Source_Files {
     CIAO_ServerActivator_Impl.cpp
+    CIAO_ComponentInstallation_Impl.cpp
     CIAO_CS_ClientS.cpp
   }
   Header_Files {
     CIAO_ServerActivator_Impl.h
+    CIAO_ComponentInstallation_Impl.h
     CIAO_CS_ClientS.h
     CIAO_CS_Client_svnt_export.h
   }
@@ -85,10 +87,10 @@ project(CIAO_ComponentServer_svnt) : ccm_componentserver_svnt, ciao_componentser
 
 project(CIAO_ComponentServer_exe) : ccm_componentserver_svnt, portableserver, ciao_componentserver_svnt, \
 				    messaging, anytypecode, ciao_server, ciaoexe, ciao_session_container,\
-                                    {
+                                    ciao_logger {
   exename = ciao_componentserver
-  libs += CIAO_Basic_Configurator CIAO_Logger
-  after += CIAO_Basic_Configurator CIAO_Logger
+  libs += CIAO_Basic_Configurator
+  after += CIAO_Basic_Configurator
   macros += CIAO_BUILD_COMPONENTSERVER_EXE
   Source_Files {
     CIAO_ComponentServer.cpp

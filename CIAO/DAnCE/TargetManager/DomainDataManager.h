@@ -15,8 +15,8 @@
 #define DOMAIN_DATA_MGRH
 
 #include "TargetManagerImplC.h"
-#include "DAnCE/DomainApplicationManager/Deployment_Configuration.h"
-#include "DAnCE/Deployment/Deployment_ResourceCommitmentManagerC.h"
+#include "DAnCE/DomainApplicationManager/Node_Locator.h"
+//#include "DAnCE/Deployment/Deployment_ResourceCommitmentManagerC.h"
 
 /**
  * @namespace CIAO
@@ -49,8 +49,7 @@ namespace CIAO
          */
         int update_domain (const ::CORBA::StringSeq & elements,
                            const ::Deployment::Domain & domainSubset,
-                           ::Deployment::DomainUpdateKind updateKind
-                           );
+                           ::Deployment::DomainUpdateKind updateKind);
       /**
        * @brief        This function is called from the Executor code
        *               to get the Original Domain data.
@@ -75,8 +74,7 @@ namespace CIAO
        *
        */
       static DomainDataManager * create (CORBA::ORB_ptr orb,
-                                  ::Deployment::TargetManager_ptr target
-                                  );
+                                  ::Deployment::TargetManager_ptr target);
 
       /**
        * @brief Returns the static pointer to the
@@ -96,8 +94,8 @@ namespace CIAO
        * @brief returns the sequence of node managers
        * object reference
        */
-       void commitResources (
-       const ::Deployment::DeploymentPlan & plan);
+       ::Deployment::ResourceCommitmentManager_ptr  commitResources (
+         const ::Deployment::ResourceAllocations & resources);
 
        /**
         * @brief The function releases the resources held by a plan
@@ -105,7 +103,7 @@ namespace CIAO
         *                resources are to be released
         */
        void releaseResources (
-       const ::Deployment::DeploymentPlan& plan);
+        const ::Deployment::ResourceCommitmentManager_ptr manager);
 
        /**
         * The node manager in turn stops the monitor
@@ -143,8 +141,7 @@ namespace CIAO
        * @param target The Target Manager Object Reference
        */
       DomainDataManager (CORBA::ORB_ptr orb,
-                         ::Deployment::TargetManager_ptr target
-                         );
+                         ::Deployment::TargetManager_ptr target);
 
       /**
        * @brief   It will read the initial Domain data from
@@ -253,19 +250,18 @@ namespace CIAO
       int commit_release_RA (
           const ::Deployment::ResourceAllocations& resources);
 
-
       /// The ORB pointer
       CORBA::ORB_var orb_;
 
       /// The Deployment Configuration
-      CIAO::Deployment_Configuration deployment_config_;
+//      CIAO::Deployment_Configuration deployment_config_;
 
       /// The Initial Domain - contains resources
       /// at total capacity
       ::Deployment::Domain initial_domain_;
 
       /// The staic data member , replacing a global variable
-      static DomainDataManager* global_data_manager_; 
+      static DomainDataManager* global_data_manager_;
       /// The Current Domain - contains resources
       /// at current capacity
       ::Deployment::Domain current_domain_;

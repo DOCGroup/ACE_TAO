@@ -57,7 +57,7 @@ namespace CIAO
           else
             {
               ACE_DEBUG((LM_ERROR,
-                         "(%P|%t) Warning:  IDD %s has no idref \n",
+                         "(%P|%t) Warning:  IDD %s has no idref\n",
                          src.name ().c_str ()));
             }
 
@@ -71,12 +71,12 @@ namespace CIAO
             (ACE_CString (src.implementation ().idref ().id ().c_str ()), tmp);
 
           dest.implementationRef = tmp;
-          
+
           dest.configProperty.length (src.count_configProperty ());
           std::for_each (src.begin_configProperty (),
                          src.end_configProperty (),
                          Property_Functor (dest.configProperty));
-          
+
           dest.deployedResource.length (src.count_deployedResource ());
           std::for_each (src.begin_deployedResource (),
                          src.end_deployedResource (),
@@ -101,7 +101,7 @@ namespace CIAO
                       src.name ().c_str ()));
           throw Config_Error (src.name (), "Unknown exception");
         }
-            
+
       // Done!
     }
 

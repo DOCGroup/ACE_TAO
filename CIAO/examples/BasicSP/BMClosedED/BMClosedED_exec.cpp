@@ -32,10 +32,10 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *)
 {
 
   ACE_DEBUG ((LM_EMERGENCY,
-              "BMClosedED - Doing computations \n"));
-  
+              "BMClosedED - Doing computations\n"));
+
   ACE_DEBUG ((LM_EMERGENCY,
-              "BMClosedED - Doing data fetch \n"));
+              "BMClosedED - Doing data fetch\n"));
 
   // Refresh position
   BasicSP::ReadData_var dat
@@ -44,7 +44,7 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *)
   if (CORBA::is_nil (dat.in ()))
     {
       ACE_DEBUG ((LM_EMERGENCY,
-                  "BMClosedED - got nil from get_connection \n"));
+                  "BMClosedED - got nil from get_connection\n"));
 
       throw CORBA::BAD_INV_ORDER ();
     }
@@ -53,7 +53,7 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *)
     dat->get_data ();
 
   ACE_DEBUG ((LM_EMERGENCY,
-              "BMClosedED - Display data is [%s] \n",
+              "BMClosedED - Display data is [%s]\n",
               str.in ()));
 
   if (ACE_OS::strcmp (str.in (), "BM DEVICE DATA") == 0)
@@ -120,7 +120,7 @@ create_BasicSP_BMClosedED_Impl (void)
 {
   ::Components::EnterpriseComponent_ptr retval =
     ::Components::EnterpriseComponent::_nil ();
-  
+
   ACE_NEW_RETURN (retval,
                   MyImpl::BMClosedED_exec_i,
                   ::Components::EnterpriseComponent::_nil ());

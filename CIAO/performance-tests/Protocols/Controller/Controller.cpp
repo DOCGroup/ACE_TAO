@@ -7,9 +7,9 @@
 #include "ace/OS_NS_string.h"
 
 
-static const char *sender_ior = "file://sender.ior";
-static const char *distributor_ior = "file://distributor.ior";
-static const char *receiver_ior = "file://receiver.ior";
+static const ACE_TCHAR *sender_ior = ACE_TEXT("file://sender.ior");
+static const ACE_TCHAR *distributor_ior = ACE_TEXT("file://distributor.ior");
+static const ACE_TCHAR *receiver_ior = ACE_TEXT("file://receiver.ior");
 static int shutdown_sender = 0;
 static int shutdown_distributor = 0;
 static int shutdown_receiver = 0;
@@ -24,10 +24,10 @@ static int print_statistics = 1;
 static int number_of_connection_attempts = 20;
 static int enable_diffserv_code_points = 0;
 static int corba_priority = 0;
-static const char *test_type = "PACED";
+static const ACE_TCHAR *test_type = ACE_TEXT("PACED");
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:b:c:d:e:i:m:p:r:s:t:u:v:w:x:y:z:"));
   int c;
@@ -178,9 +178,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         test_protocol_tag = TAO_TAG_SCIOP_PROFILE;
 
       Protocols::Sender_Controller::Test_Type test_type_tag = Protocols::Sender_Controller::PACED;
-      if (ACE_OS::strcmp (test_type, "THROUGHPUT") == 0)
+      if (ACE_OS::strcmp (test_type, ACE_TEXT("THROUGHPUT")) == 0)
         test_type_tag = Protocols::Sender_Controller::THROUGHPUT;
-      else if (ACE_OS::strcmp (test_type, "LATENCY") == 0)
+      else if (ACE_OS::strcmp (test_type, ACE_TEXT("LATENCY")) == 0)
         test_type_tag = Protocols::Sender_Controller::LATENCY;
 
       sender->start (iterations,

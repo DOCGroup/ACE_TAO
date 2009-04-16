@@ -15,7 +15,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
   try
     {
       int argcm = argc + 2;
-      char ** argvm = new ACE_TCHAR* [argcm+1];
+      ACE_TCHAR ** argvm = new ACE_TCHAR* [argcm+1];
       for (int i = 0; i < argc; ++i)
         {
           argvm[i] = argv[i];
@@ -23,7 +23,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       ACE_TCHAR buf1[32];
       ACE_OS::sprintf (buf1, ACE_TEXT("-ORBListenEndpoints"));
       argvm[argcm-2] = buf1;
-      char buf2[32];
+      ACE_TCHAR buf2[32];
       ACE_OS::sprintf (buf2, ACE_TEXT("iiop://:12345"));
       argvm[argcm-1] = buf2;
       argvm[argcm] = 0;

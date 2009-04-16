@@ -430,7 +430,7 @@ namespace
          << "this->context_ =" << endl
          << "  " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_Context::_narrow ("
-         << "ctx);" 
+         << "ctx);"
          << endl;
 
       os << "if (CORBA::is_nil (this->context_.in ()))" << endl
@@ -446,19 +446,19 @@ namespace
          << "}";
 
       os << "void" << endl
-         << t.name () << "_exec_i::ccm_activate ()" << endl
+         << t.name () << "_exec_i::ccm_activate (void)" << endl
          << "{"
          << STRS[YCH]
          << "}";
 
       os << "void" << endl
-         << t.name () << "_exec_i::ccm_passivate ()" << endl
+         << t.name () << "_exec_i::ccm_passivate (void)" << endl
          << "{"
          << STRS[YCH]
          << "}";
 
       os << "void" << endl
-         << t.name () << "_exec_i::ccm_remove ()" << endl
+         << t.name () << "_exec_i::ccm_remove (void)" << endl
          << "{"
          << STRS[YCH]
          << "}";

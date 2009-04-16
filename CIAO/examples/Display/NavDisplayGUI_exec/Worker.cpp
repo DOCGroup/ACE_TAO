@@ -1,13 +1,11 @@
 // $Id$
 
 #include "Worker.h"
-#include <qapplication.h>
-#include <qmotifstyle.h>
-#include <qcdestyle.h>
-#include <qwindowsstyle.h>
-#include <qplatinumstyle.h>
-#include <qsgistyle.h>
-
+#include <Qt/qapplication.h>
+#include <Qt/qmotifstyle.h>
+#include <Qt/qcdestyle.h>
+#include <Qt/qwindowsstyle.h>
+#include <Qt/qdesktopwidget.h>
 
 int
 Worker::svc (void)
@@ -15,8 +13,8 @@ Worker::svc (void)
   ACE_DEBUG((LM_DEBUG, "ENTER: Worker::svc()\n"));
 
   QApplication a(argc_, argv_);
-  a.setStyle(new QPlatinumStyle);
-  QCanvas canvas(600, 387);
+//  a.setStyle(new QPlatinumStyle);
+  Q3Canvas canvas(600, 387);
   //QCanvas canvas(566, 679);
   //QCanvas canvas(550, 723);
   canvas.setAdvancePeriod(30);

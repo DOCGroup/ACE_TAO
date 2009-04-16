@@ -73,12 +73,12 @@ if (PerlACE::waitforfile_timed ($emior, 5) == -1) {
 }
 
 sleep(5);
-#Start the plan laucnher
+#Start the plan  launcher
 $EX = new PerlACE::Process ("$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher",
                             "-p ../descriptors/Application-flattened.cdp ".
                             "-k file://$emior -o $plior");
 
-#Stop the plan launcher 
+#Stop the plan launcher
 $EX2 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher",
                              "-k file://$emior -i file://$plior");
 

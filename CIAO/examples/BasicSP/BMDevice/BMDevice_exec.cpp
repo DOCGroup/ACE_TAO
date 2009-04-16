@@ -31,7 +31,7 @@ MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *)
   BasicSP::DataAvailable_var event = new OBV_BasicSP::DataAvailable;
 
   ACE_DEBUG ((LM_EMERGENCY,
-              "BMDevice, received a timeout from EC \n"));
+              "BMDevice, received a timeout from EC\n"));
 
   this->context_->push_data_available (event);
 }
@@ -84,11 +84,11 @@ create_BasicSP_BMDevice_Impl (void)
 {
   ::Components::EnterpriseComponent_ptr retval =
     ::Components::EnterpriseComponent::_nil ();
-  
+
   ACE_NEW_RETURN (retval,
                   MyImpl::BMDevice_exec_i,
                   ::Components::EnterpriseComponent::_nil ());
-  
+
   return retval;
 }
 

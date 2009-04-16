@@ -2,7 +2,7 @@
 
 #include "RootPanel.h"
 #include "UpdatePositionCmd.h"
-#include <qlcdnumber.h>
+#include <Qt/qlcdnumber.h>
 #include "NavUnit.h"
 
 

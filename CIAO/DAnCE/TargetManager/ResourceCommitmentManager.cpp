@@ -41,11 +41,11 @@ void CIAO::ResourceCommitmentManager_i::releaseResources (
 int CIAO::ResourceCommitmentManager_i::add_to_commited_resource (
     ::Deployment::ResourceAllocations res)
 {
-  CORBA::ULong current_length = this->resources_.length ();
+  CORBA::ULong const current_length = this->resources_.length ();
 
   this->resources_.length (current_length + res.length ());
 
-  for (CORBA::ULong i =0;i < res.length ();i++)
+  for (CORBA::ULong i = 0;i < res.length ();i++)
     this->resources_[current_length + i] = res[i];
 
   return 0;

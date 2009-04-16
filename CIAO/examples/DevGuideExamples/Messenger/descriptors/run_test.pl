@@ -17,14 +17,14 @@ if (defined $ENV{'CIAO_ROOT'}) {
   $CIAO_ROOT = $ENV{'CIAO_ROOT'};
 }
 else {
-  $CIAO_ROOT = $ACE_ROOT/TAO/CIAO;
+  $CIAO_ROOT = "$ACE_ROOT/TAO/CIAO";
 }
 
 if (defined $ENV{'DANCE_ROOT'}) {
   $DANCE_ROOT = $ENV{'DANCE_ROOT'};
 }
 else {
-  $DANCE_ROOT = $ACE_ROOT/TAO/CIAO/DAnCE;
+  $DANCE_ROOT = "$ACE_ROOT/TAO/CIAO/DAnCE";
 }
 
 
@@ -81,11 +81,11 @@ if (PerlACE::waitforfile_timed ($emior, 5) == -1) {
 }
 
 sleep(5);
-#Start the plan laucnher
+#Start the plan  launcher
 $EX = new PerlACE::Process ("$DANCE_ROOT/bin/dance_plan_launcher",
                             "-x Application-flattened_Unhomed.cdp -k file://$emior ");
 
-#Stop the plan launcher 
+#Stop the plan launcher
 $EX2 = new PerlACE::Process ("$DANCE_ROOT/bin/dance_plan_launcher",
                              "-k file://$emior -x Application-flattened_Unhomed.cdp");
 

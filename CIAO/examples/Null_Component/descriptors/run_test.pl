@@ -21,6 +21,8 @@ $daemons = 1;
 $status = 0;
 $dat_file = "NodeMap.dat";
 
+PerlACE::add_lib_path ('..');
+
 $nsior = PerlACE::LocalFile ("ns.ior");
 
 $E = 0;

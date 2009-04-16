@@ -7,7 +7,7 @@
 #include "utl_string.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 ACE_RCSID (be,
            be_sunsoft,
@@ -80,29 +80,31 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
       switch (ev->et)
         {
         case AST_Expression::EV_short:
-          this->TAO_OutStream::print ("%hd", ev->u.sval);
+          this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII, ev->u.sval);
           break;
         case AST_Expression::EV_ushort:
-          this->TAO_OutStream::print ("%hu%c", ev->u.usval, 'U');
+          this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII "%c", ev->u.usval, 'U');
           break;
         case AST_Expression::EV_long:
-          this->TAO_OutStream::print ("%ld", ev->u.lval);
+          this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII, ev->u.lval);
           break;
         case AST_Expression::EV_ulong:
-          this->TAO_OutStream::print ("%u%c", ev->u.ulval, 'U');
+          this->TAO_OutStream::print (ACE_UINT32_FORMAT_SPECIFIER_ASCII "%c", ev->u.ulval, 'U');
           break;
+        // The ACE_LACKS_LONGLONG_T guards have been removed around
+        // the next 2 cases since the macros now used should work
+        // whether native 64-bit integers are defined or not.
         case AST_Expression::EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
-          this->TAO_OutStream::print ("%ld", ev->u.llval);
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
+          this->TAO_OutStream::print ("ACE_INT64_LITERAL (");
+          this->TAO_OutStream::print (ACE_INT64_FORMAT_SPECIFIER_ASCII,
+                                      ev->u.llval);
+          this->TAO_OutStream::print (")");
           break;
         case AST_Expression::EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
           this->TAO_OutStream::print ("ACE_UINT64_LITERAL (");
-          this->TAO_OutStream::print (ACE_TEXT_ALWAYS_CHAR (ACE_UINT64_FORMAT_SPECIFIER),
+          this->TAO_OutStream::print (ACE_UINT64_FORMAT_SPECIFIER_ASCII,
                                       ev->u.ullval);
           this->TAO_OutStream::print (")");
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
           break;
         case AST_Expression::EV_float:
           this->TAO_OutStream::print ("%f%c", ev->u.fval, 'F');
@@ -125,9 +127,9 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           // or as an unsigned number too large for a char.
           else if ((unsigned char) ev->u.cval > ACE_CHAR_MAX)
             this->TAO_OutStream::print ("%hd", ev->u.cval);
-          else if (isprint (ev->u.cval))
+          else if (ACE_OS::ace_isprint (ev->u.cval))
             this->TAO_OutStream::print ("'%c'", ev->u.cval);
-          else if (iscntrl (ev->u.cval))
+          else if (ACE_OS::ace_iscntrl (ev->u.cval))
             switch (ev->u.cval)
               {
                 case '\n':

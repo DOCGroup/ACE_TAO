@@ -10,7 +10,7 @@
 #ifndef TARGETMGR_IDL
 #define TARGETMGR_IDL
 
-#include "ciao/Components.idl"
+#include "ccm/Components.idl"
 #include "DAnCE/Deployment/Deployment_PlanError.idl"
 #include "DAnCE/TargetManager/TargetManagerExt.idl"
 #include "DAnCE/TargetManager/DomainEvents.idl"

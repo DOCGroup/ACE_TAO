@@ -208,7 +208,7 @@ namespace CIAO
 
             if (! CORBA::is_nil (retv.in ()))
               CIAO_DEBUG ((LM_DEBUG,
-                          "NAConfigManager::Create NetworkPriority policy \n"));
+                          "NAConfigManager::Create NetworkPriority policy\n"));
           }
           break;
 

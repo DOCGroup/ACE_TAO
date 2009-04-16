@@ -4,6 +4,7 @@
 #include "ciao/ComponentServer/CIAO_CS_ClientS.h"
 #include "ciao/ComponentServer/CIAO_ComponentServerC.h"
 #include "ciao/ComponentServer/CIAO_ServerActivator_Impl.h"
+#include "ciao/ComponentServer/CIAO_ComponentInstallation_Impl.h"
 #include "ciao/Valuetype_Factories/ConfigValue.h"
 
 const char *cs_path = "ciao_componentserver";
@@ -63,17 +64,25 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
       
       poa_manager->activate ();
 
+      CIAO::Deployment::ComponentInstallation_Impl *tmp_ci;
+      
+      ACE_NEW_THROW_EX (tmp_ci, 
+                        CIAO::Deployment::ComponentInstallation_Impl (),
+                        CORBA::NO_MEMORY ());
+      
+      PortableServer::ServantBase_var safe_servant = tmp_ci;
+      
       CIAO_ServerActivator_i *sa_tmp = new CIAO_ServerActivator_i (spawn_delay,
                                                                    cs_path,
                                                                    0,
                                                                    false,
+                                                                   tmp_ci->_this (),
                                                                    orb.in (),
                                                                    root_poa.in ());
       
       PortableServer::ServantBase_var safe = sa_tmp;
       
       ServerActivator_var sa = sa_tmp->_this ();
-      
       
       // Make our configvalues
       // ::Components::ConfigValues_var configs = new 

@@ -9,7 +9,7 @@
 namespace CIAO
 {
   Logger_Service::Logger_Service (void)
-    : filename_ (""),
+    : filename_ (ACE_TEXT("")),
       trace_ (false),
       log_level_ (5)
   {
@@ -20,13 +20,13 @@ namespace CIAO
   {
     // Get prospective values from the environment first, those given on
     // command line can override
-    ACE_Env_Value<int> log ("CIAO_LOG_LEVEL", this->log_level_);
+    ACE_Env_Value<int> log (ACE_TEXT("CIAO_LOG_LEVEL"), this->log_level_);
     this->log_level_ = log;
 
-    ACE_Env_Value<int> trace ("CIAO_TRACE_ENABLE", this->trace_);
+    ACE_Env_Value<int> trace (ACE_TEXT("CIAO_TRACE_ENABLE"), this->trace_);
     this->trace_ = trace;
 
-    ACE_Env_Value<const char *> filename ("CIAO_LOG_FILE", this->filename_.c_str ());
+    ACE_Env_Value<const ACE_TCHAR *> filename (ACE_TEXT("CIAO_LOG_FILE"), this->filename_.c_str ());
     this->filename_ = filename;
 
     this->parse_args (argc, argv);

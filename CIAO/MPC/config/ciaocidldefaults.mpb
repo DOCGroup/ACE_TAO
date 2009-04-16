@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project {
+project: build_files {
   after += CIDLC
   // Set the cidl compiler and flags as template values
   specific {

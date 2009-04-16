@@ -1,8 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Display_Base -u Display NavDisplay"
 
-project(Display_NavDisplay_idl_gen) : ciaoidldefaults, anytypecode {
-  avoids += ace_for_tao
+project(Display_NavDisplay_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NAVDISPLAY_STUB_Export \
               -Wb,stub_export_include=NavDisplay_stub_export.h \
@@ -14,8 +13,7 @@ project(Display_NavDisplay_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(Display_NavDisplay_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
-  avoids += ace_for_tao
+project(Display_NavDisplay_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
   cidlflags += --svnt-export-macro NAVDISPLAY_SVNT_Export \
                --svnt-export-include NavDisplay_svnt_export.h
@@ -32,11 +30,11 @@ project(Display_NavDisplay_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   }
 }
 
-project(Display_NavDisplay_stub) : ccm_stub {
-  requires += dummy_label
-  avoids += ace_for_tao
+project(Display_NavDisplay_stub) : ccm_stub, avoids_ace_for_tao {
   after += Display_NavDisplay_idl_gen Display_Base_stub
   libs  += Display_Base_stub
+  libout = ../lib
+  libpaths += ../lib
 
   sharedname = NavDisplay_stub
   dynamicflags   = NAVDISPLAY_STUB_BUILD_DLL
@@ -58,12 +56,12 @@ project(Display_NavDisplay_stub) : ccm_stub {
   }
 }
 
-project(Display_NavDisplay_exec) : ciao_executor {
-  requires += dummy_label
-  avoids += ace_for_tao
+project(Display_NavDisplay_exec) : ciao_executor, avoids_ace_for_tao {
   after   += Display_NavDisplay_cidl_gen Display_NavDisplay_stub
   sharedname = NavDisplay_exec
   libs += NavDisplay_stub Display_Base_stub
+  libout = ../lib
+  libpaths += ../lib
 
   dynamicflags   = NAVDISPLAY_EXEC_BUILD_DLL
 
@@ -87,15 +85,15 @@ project(Display_NavDisplay_exec) : ciao_executor {
 }
 
 
-project(Display_NavDisplay_svnt) : ciao_servant {
-  requires += dummy_label
-  avoids += ace_for_tao
+project(Display_NavDisplay_svnt) : ciao_servant, avoids_ace_for_tao {
   after      += Display_Base_skel Display_NavDisplay_exec
   sharedname  = NavDisplay_svnt
   libs       += NavDisplay_exec \
                 NavDisplay_stub \
                 Display_Base_skel \
                 Display_Base_stub
+  libout = ../lib
+  libpaths += ../lib
 
   dynamicflags = NAVDISPLAY_SVNT_BUILD_DLL
 

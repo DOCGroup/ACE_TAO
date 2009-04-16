@@ -1,8 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n -c server Benchmark"
 
-project(Benchmark_idl_gen) : ciaoidldefaults, anytypecode {
-  avoids += ace_for_tao
+project(Benchmark_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=BENCHMARK_STUB_Export \
               -Wb,stub_export_include=Benchmark_stub_export.h \
@@ -14,8 +13,7 @@ project(Benchmark_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(Benchmark_stub) : ccm_stub {
-  avoids += ace_for_tao
+project(Benchmark_stub) : ccm_stub, avoids_ace_for_tao {
   after += Benchmark_idl_gen
   libs  +=
 
@@ -40,8 +38,7 @@ project(Benchmark_stub) : ccm_stub {
 }
 
 
-project(Benchmark_skel) : ciao_executor {
-  avoids += ace_for_tao
+project(Benchmark_skel) : ciao_executor, avoids_ace_for_tao {
   after      +=  Benchmark_stub
   sharedname  = Benchmark_skel
   libs       += Benchmark_stub
@@ -66,7 +63,7 @@ project(Benchmark_skel) : ciao_executor {
   }
 }
 
-project (Benchmark_server) : taoserver, strategies, ciao_executor {
+project (Benchmark_server) : taoserver, strategies, ciao_executor, avoids_ace_for_tao {
   exename = server
   after += Benchmark_skel
   libs  += Benchmark_skel Benchmark_stub

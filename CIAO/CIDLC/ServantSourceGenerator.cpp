@@ -1713,7 +1713,7 @@ namespace
 
         os << "if ( ::CORBA::is_nil (sub.in ()))" << endl
            << "{"
-           << "::CORBA::Boolean substitutable =" << endl
+           << "::CORBA::Boolean const substitutable =" << endl
            << "  subscribe->ciao_is_substitutable (" << endl
            << "  ";
 
@@ -2597,7 +2597,7 @@ namespace
       virtual void
       traverse (SemanticGraph::SingleUser& u)
       {
-        os << "::CIAO::Servant_Impl_Base::describe_simplex_receptacle<"
+        os << "::CIAO::Servant::describe_simplex_receptacle<"
            << endl
            << "    ";
 
@@ -2630,7 +2630,7 @@ namespace
              << "0);" << endl;
         }
 
-        os << "::CIAO::Servant_Impl_Base::describe_multiplex_receptacle<"
+        os << "::CIAO::Servant::describe_multiplex_receptacle<"
            << endl
            << "    ";
 
@@ -2706,7 +2706,7 @@ namespace
              << "0);" << endl;
         }
 
-        os << "::CIAO::Servant_Impl_Base::describe_pub_event_source<"
+        os << "::CIAO::Servant::describe_pub_event_source<"
            << endl
            << "    ";
 
@@ -2775,7 +2775,7 @@ namespace
       virtual void
       traverse (SemanticGraph::Emitter& e)
       {
-        os << "::CIAO::Servant_Impl_Base::describe_emit_event_source<"
+        os << "::CIAO::Servant::describe_emit_event_source<"
            << endl
            << "    ";
 
@@ -3535,7 +3535,7 @@ namespace
 
       os << "}";
     }
-    
+
     virtual void
     post (Type& t)
     {
@@ -3548,7 +3548,7 @@ namespace
         ostr << t.scoped_name ();
         name = regex::perl_s (ostr.str (), "/::/_/");
       }
-      
+
       os << "extern \"C\" " << ctx.export_macro ()
          << " ::PortableServer::Servant"
          << endl

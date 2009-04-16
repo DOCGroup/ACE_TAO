@@ -1,8 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Minimum_Base Receiver"
 
-project(Minimum_Base_Receiver_idl_gen) : ciaoidldefaults, anytypecode {
-  avoids += ace_for_tao
+project(Minimum_Base_Receiver_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
               -Wb,stub_export_include=Receiver_stub_export.h \
@@ -14,8 +13,7 @@ project(Minimum_Base_Receiver_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(Minimum_Base_Receiver_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
-  avoids += ace_for_tao
+project(Minimum_Base_Receiver_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
   cidlflags += --svnt-export-macro RECEIVER_SVNT_Export \
                --svnt-export-include Receiver_svnt_export.h
@@ -31,8 +29,7 @@ project(Minimum_Base_Receiver_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   }
 }
 
-project(Minimum_Base_Receiver_stub) : ccm_stub {
-  avoids += ace_for_tao
+project(Minimum_Base_Receiver_stub) : ccm_stub, avoids_ace_for_tao {
   after += Minimum_Base_Receiver_idl_gen Minimum_Base_stub
   libs  += Minimum_Base_stub
   libpaths += ../Minimum_Base
@@ -57,8 +54,7 @@ project(Minimum_Base_Receiver_stub) : ccm_stub {
   }
 }
 
-project(Minimum_Base_Receiver_exec) : ciao_executor {
-  avoids += ace_for_tao
+project(Minimum_Base_Receiver_exec) : ciao_executor, avoids_ace_for_tao {
   after   += Minimum_Base_Receiver_cidl_gen Minimum_Base_Receiver_stub
   sharedname = Receiver_exec
   libs += Receiver_stub Minimum_Base_stub
@@ -86,8 +82,7 @@ project(Minimum_Base_Receiver_exec) : ciao_executor {
 }
 
 
-project(Minimum_Base_Receiver_svnt) : ciao_servant {
-  avoids += ace_for_tao
+project(Minimum_Base_Receiver_svnt) : ciao_servant, avoids_ace_for_tao {
   after      += Minimum_Base_skel Minimum_Base_Receiver_exec
   sharedname  = Receiver_svnt
   libs       += Minimum_Base_stub \

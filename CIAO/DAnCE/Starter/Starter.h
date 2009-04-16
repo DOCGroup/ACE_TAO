@@ -36,7 +36,7 @@ namespace DAnCE
       int argc_;
       ACE_TCHAR** argv_;
       bool optNS_;
-      ACE_CString optNSFile_;
+      ACE_TString optNSFile_;
       ACE_CString optNSOptions_;
       ACE_Map_Manager<ACE_CString, Node, ACE_Null_Mutex> nodes_;
       bool optEM_;
@@ -52,7 +52,7 @@ namespace DAnCE
                               , const char * plan
                               , const char * component
                               , const char * port);
-      void write_IOR (const char * ior_file_name, const char* ior);
+      void write_IOR (const ACE_TCHAR * ior_file_name, const char* ior);
 
       void initNaming();
       CORBA::Object_ptr initNodeManager (const char * node);

@@ -23,17 +23,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "MessengerEC.h"
+#include "Messenger_svnt.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Messenger_exec_export.h"
-#include "tao/LocalObject.h"
 
 // MY CODE
-#include "ace/Synch.h"
+#include "tao/LocalObject.h"
+#include "ace/Thread_Mutex.h"
 
 namespace CIDL_Messenger_Impl
 {
@@ -47,18 +47,15 @@ namespace CIDL_Messenger_Impl
 
     // Operations from ::Runnable
 
-    virtual void
-    start ();
+    virtual void start ();
 
-    virtual void
-    stop ();
+    virtual void stop ();
 
     // MY CODE
-
-    ACE_Mutex& get_run_lock();
+    TAO_SYNCH_MUTEX& get_run_lock();
 
   private:
-    ACE_Mutex run_lock_;
+    TAO_SYNCH_MUTEX run_lock_;
   };
 }
 

@@ -46,7 +46,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "usage:  %s\n"
                            "-o (Start the distribution service)\n"
                            "-f (Stop the distribution service)\n"
-                           "-k <Distributor IOR> (default is file:\\distributor.ior) \n"
+                           "-k <Distributor IOR> (default is file:\\distributor.ior)\n"
                            "-r <broadcast frequency in Hertz> (default is 2)\n"
                            "\n",
                            argv [0]),
@@ -105,7 +105,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception ("Who is the culprit \n");
+    ex._tao_print_exception ("Who is the culprit\n");
     ACE_ERROR_RETURN ((LM_ERROR,
                         "Uncaught CORBA exception\n"),
                       1);

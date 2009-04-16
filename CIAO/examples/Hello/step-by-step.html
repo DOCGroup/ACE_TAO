@@ -36,17 +36,22 @@ This Hello example is contructed in the following ways:
 <h3>Hello_Base</h3>
 
 <OL>
-<li>Write an IDL file (<code>Hello_Base.idl</code>) which contains all
+<li>Write an IDL file (<a href="./Hello_Base/Hello_Base.idl"><code>Hello_Base.idl</code></a>) which contains all
     the interfaces and events common to all the components. The reason
-    we do this is becuse the generated lib of this idl file will be
+    we do this is because the generated lib of this idl file will be
     linked in by all the components in the system. To reduce the size
     of the component lib we have to include only the necesary part. In
     this example, we have an eventtype <code>timeout</code> and an
     interface <code>ReadMessage</code>, which are used by both the
-    Sender and the Receiver, so we put both of them in Hello.idl.</li>
+    Sender and the Receiver, so we put both of them in <a href="Hello_Base/Hello_Base.idl">Hello_Base.idl</a>.</li>
     <P>
 
-<li>Look at the <code>Hello_Base.mpc</code> file to get an idea how the Hello_Base_stub and Hello_Base_svnt projects are organized. <a href="http://downloads.ociweb.com/MPC/MakeProjectCreator.pdf">MPC</a> is a utility we used to generate makefiles or VC project/solution files for all <a href="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</a>, <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a> and <a href="http://www.cs.wustl.edu/~schmidt/CIAO.html">CIAO</a> libraries.</li>
+<li>Look at the <a href="Hello_Base/Hello_Base.mpc"><code>Hello_Base.mpc</code></a> file to get an idea how the Hello_Base_stub
+	and Hello_Base_svnt projects are organized.
+	<a href="http://downloads.ociweb.com/MPC/MakeProjectCreator.pdf">MPC</a> is a utility we used to generate makefiles or VC
+	project/solution files for all <a href="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</a>,
+	<a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a> and <a href="http://www.cs.wustl.edu/~schmidt/CIAO.html">CIAO</a>
+	libraries.</li>
 </Ol>
 
 <hr>
@@ -68,10 +73,10 @@ Note:
 
 </ul><P>
 
-<li>Use the export script to generate the export files. (3 files per
-    component).</li> <P>
+<li>Use the $(ACE_ROOT)/bin/generate_export_file.pl to generate the export header files. (3 files per
+    component (..._svnt_export.h, ..._exec_export.h and ..._stub_export.h)).</li> <P>
 
-<li>Write an idl file for every compoent. Here you can put the
+<li>Write an idl file for every component. Here you can put the
     component specific IDL definitions in this file. In this example
     we have a interface <code>trigger</code> specific to the
     Sender. Please note that the Sender component
@@ -109,9 +114,10 @@ supplied as a command argument. Please see the the last part of
 
 <UL>
 <li>Go to the directory <code>$CIAO_ROOT/DAnCE</code> and do:<br>
-    <code>$ACE_ROOT/bin/mwc.pl</code> (use -type option if you are using a compiler/IDE other than gnuace -which by default generates GNU makefiles)</li>
-    <br>For example, using <code>$ACE_ROOT/bin/mwc.pl -type vc71</code> if you are using Visual C++ 7.1 IDE.</li><P>
-<li>Look at the generated Makefile(*unx) , Solution/workspace files(Windows) and you got it.</li>
+    <code>$ACE_ROOT/bin/mwc.pl</code></li>
+    <br>For example, using <code>$ACE_ROOT/bin/mwc.pl -type vc71</code> if you are using Visual C++ 7.1 IDE
+    <br>or $ACE_ROOT/bin/mwc.pl -type gnuace on Linux platforms.</li><P>
+<li>Look at the generated Makefile(*unx) or Solution/workspace files(Windows) and you got it.</li>
 </UL>
 
 <P><hr>
@@ -121,16 +127,22 @@ supplied as a command argument. Please see the the last part of
 Now we can step forward to build the assembly. Here we are going to
 build the simplest case only, which is 1 Receiver and 1 Sender. If you
 are interested in CIAO you could try 1 Sender with multiple
-Receiver. However, you need to change the Sender.idl to make it
-<em>publishes</em> timeout event instead of <em>emits</em> event.
+Receivers. However, you need to change the Sender.idl to make it
+<em>publishes</em> timeout event instead of <em>emits</em> event.<br>
+Note: Creating the deployment plan descriptor is a tedious and
+    error-prone job, you can download <a
+    href="http://www.dre.vanderbilt.edu/cosmic">CoSMIC</a> to assist
+    you in this step. <P>
 
 <UL>
-<li> You need to create an XML descriptor file to describe your
-    <em>deployment plan</em>, which is defined in a <EM>Deployment Plan Descriptor</EM> (.cdp).
-   In this file, you need to declaratively specify how the component assembly is constructed. Specificly, you need to specify the component types, component instances, component connections, implementation artifact descriptions, and whether you want to register component instances with naming service. <P>
+<li>You need to create an XML descriptor file to describe your <em>deployment plan</em>, which is
+	defined in a <EM>Deployment Plan Descriptor</EM> (.cdp) (see <a href="./descriptors/DeploymentPlan.cdp">Hello deployment plan<a>).
+	In this file, you need to declaratively specify how the component assembly is constructed. Specificly, you need to specify
+	the component types, component instances, component connections, implementation artifact descriptions, and whether you
+  want to register component instances with naming service.<P>
 
 <li> Please make sure that the Modified_Deployment.xsd and XMI.xsd files are in the Hello/descriptors directory.
-The former file could be found in $CIAO_ROOT/docs/schema directory. <P>
+The former file can be found in $CIAO_ROOT/docs/schema directory. <P>
 
 <li> Create the <em>NodeManagerMap.dat</em> file containing the CORBALOC IIOP address of each <code>NodeManager</code>
      where it is running. Please refer to the existing <code>NodeManagerMap.dat</code> for details,
@@ -138,11 +150,6 @@ The former file could be found in $CIAO_ROOT/docs/schema directory. <P>
      will be installed in the different <code>NodeApplication</code> server. Please refer to the
      <em>flattened_deploymentplan.cdp</em> file to see how a deployer
     could specify the mapping between components and nodes.</li>
-
-Note: Creating the deployment plan descriptor is a tedious and
-    error-prone job, you can download <a
-    href="http://www.dre.vanderbilt.edu/cosmic">CoSMIC</a> to assist
-    you in this step. <P>
 </li>
 </UL>
 
@@ -159,8 +166,8 @@ Finally you are ready to deploy the component-based application you have develop
   <LI> Go into the <em> descriptors </em> directory Start NodeManagers
       (NodeDameon) by running <code> run_NodeDaemons.pl </code> <P>
 
-  <LI> Start the execution manager:
-  <code>$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager -o EM.ior -i NodeManagerMap.dat </code>
+  <LI> Now you can start the execution manager from the same directory:
+  <code>$CIAO_ROOT/DAnCE/bin/dance_execution_manager -o EM.ior -i NodeManagerMap.dat </code>
   </LI>
 
   <ul type="square"> <li> <em>NOTE</em>: As one can see, we use the "NodeManagerMap.dat" file to instruct the
@@ -168,15 +175,15 @@ Finally you are ready to deploy the component-based application you have develop
        component(s) will be deployed, so this is non-standard. We plan to use Naming Service to do this in the future.
   </ul><P>
 
-  <LI> Start the plan launcher:
-  <code> $CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p flattened_deploymentplan.cdp -k file://EM.ior </code>
+  <LI> Start the plan launcher, using the Naming Service. Go to <em>descriptors_naming</em> and execute:<br/>
+  <code> $CIAO_ROOT/DAnCE/bin/dance_plan_launcher -p deploymentplan_naming.cdp -k file://EM.ior </code><br/>
 
   <ul type="square"> <li> If you don't want to register component(s) with CORBA naming service, then you don't have to start
-  your naming service, and you can use the below code to start the executor:
+  your naming service, and you can use the below code to start the executor:<br/>
 
-  <code> $CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p flattened_deploymentplan_without_ns.cdp -k file://EM.ior </code><P>
+  <code> $CIAO_ROOT/DAnCE/bin/dance_plan_launcher -p deploymentplan.cdp -k file://EM.ior </code><P>
 
-  After this, components should be deployed successfully. </ul><P>
+  After this, components should be deployed successfully.</li></ul><P>
 
   <LI> You can go into the <em>
       $CIAO_ROOT/DAnCE/examples/Hello/descriptor </em> directory and

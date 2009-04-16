@@ -223,9 +223,9 @@ Impl::TSEC_CheckPoint_exec_i::installServant
 )
 {
   assert( this->_p_sessionContainer );
-
+  PortableServer::ObjectId_var oid;
   return this->_p_sessionContainer->install_servant( Servant,
-                             CIAO::Container::Component );
+                             CIAO::Container_Types::COMPONENT_t, oid.out ());
 }
 
 
@@ -241,7 +241,7 @@ Impl::TSEC_CheckPoint_exec_i::uninstallServant
 {
   assert( this->_p_sessionContainer );
 
-  this->_p_sessionContainer->uninstall( ObjRef, CIAO::Container::Component );
+  this->_p_sessionContainer->uninstall( ObjRef, CIAO::Container_Types::COMPONENT_t);
 }
 
 
@@ -442,7 +442,7 @@ Impl::TSEC_CheckPoint_exec_i::set_session_context
     throw CORBA::INTERNAL();
   }
 
-  this->_p_sessionContainer = p_checkPoint_Context->_ciao_the_Container();
+  this->_p_sessionContainer = dynamic_cast < ::CIAO::Session_Container*>(p_checkPoint_Context->_ciao_the_Container());
 
   if( !_p_sessionContainer )
   {

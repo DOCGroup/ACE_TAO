@@ -41,7 +41,7 @@ namespace CIAO
       {
         CIAO_ERROR ((LM_DEBUG, CLINFO
                     "Container_i::get_receptacle_policy - No policies found "
-                    "for the receptacle %s\n",
+                    "for the receptacle %C\n",
                     name));
       }
 

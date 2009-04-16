@@ -18,6 +18,8 @@ $daemons = 1;
 @nodenames = ( "Node" );
 $status = 0;
 
+PerlACE::add_lib_path ('../Components');
+
 $E = 0;
 $EM = 0;
 
