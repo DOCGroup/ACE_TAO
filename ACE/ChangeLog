@@ -1,3 +1,15 @@
+Thu Apr 16 16:03:32 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * bin/make_release.py:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+        * rpmbuild/ace-tao-ciao.spec:
+
+          Updated in anticipation of 5.7 release.
+
 Tue Apr 14 10:06:19 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* ACE version 5.6.9 released.
