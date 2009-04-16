@@ -1,11 +1,17 @@
+Thu Apr 16 16:11:07 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+
+          Added new section anticipating version 1.7.
+
 Tue Apr 14 10:06:19 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* TAO version 1.6.9 released.
+        * TAO version 1.6.9 released.
 
 Tue Apr 14 13:57:16 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
-        
+
           Reworded entries to be consistent with release note.
 
 Fri Apr 10 12:44:12 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
