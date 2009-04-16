@@ -23,17 +23,16 @@
 #include "TargetManager_exec_export.h"
 #include "tao/LocalObject.h"
 #include "DomainDataManager.h"
+#include "TargetManagerEC.h"
 
 /**
  * TargetManager Executor namespace
  */
 namespace CIDL_TargetManager_i
 {
-  class TargetManager_exec_i;
-
   class TARGETMANAGER_EXEC_Export TargetManagerImpl_exec_i
   : public virtual TargetManagerImpl_Exec,
-  public virtual ::CORBA::LocalObject
+    public virtual ::CORBA::LocalObject
   {
     public:
     TargetManagerImpl_exec_i (void);
@@ -54,31 +53,29 @@ namespace CIDL_TargetManager_i
     set_session_context (
     ::Components::SessionContext_ptr ctx);
 
-    virtual void ciao_preactivate ();
-
-    virtual void ciao_postactivate ();
-
     virtual void ccm_activate ();
 
     virtual void ccm_passivate ();
 
     virtual void ccm_remove ();
 
-  protected:
+    virtual void configuration_complete ();
+
+  public:
     /// The service context pointer
-    TargetManagerImpl_Context *context_;
+    ::CIAO::CCM_TargetManagerImpl_Context_var context_;
 
     /// The exec Object
     ::Deployment::CCM_TargetManager_var exec_object_;
   };
+
   class TARGETMANAGER_EXEC_Export TargetManager_exec_i
   : public virtual ::Deployment::CCM_TargetManager,
-  public virtual ::CORBA::LocalObject
+    public virtual ::CORBA::LocalObject
   {
     public:
     TargetManager_exec_i (TargetManagerImpl_exec_i* exec,
-                          CORBA::ORB_ptr orb,
-                          TargetManagerImpl_Context *context);
+                          CORBA::ORB_ptr orb);
     virtual ~TargetManager_exec_i (void);
 
     // Operations from ::Deployment::TargetManager
@@ -87,9 +84,10 @@ namespace CIDL_TargetManager_i
 
     virtual ::Deployment::Domain * getAvailableResources ();
 
-    virtual void commitResources (const ::Deployment::DeploymentPlan & plan);
+    virtual ::Deployment::ResourceCommitmentManager_ptr
+      commitResources (const ::Deployment::ResourceAllocations & resources);
 
-    virtual void releaseResources (const ::Deployment::DeploymentPlan & argname);
+    virtual void releaseResources (::Deployment::ResourceCommitmentManager_ptr manager);
 
     virtual void
     updateDomain (
@@ -105,23 +103,18 @@ namespace CIDL_TargetManager_i
     ::Deployment::ResourceCommitmentManager_ptr resources);
 
   private:
-    TargetManagerImpl_exec_i * _exec;
+    TargetManagerImpl_exec_i * exec_;
 
     /// The pointer to the Domain Manager
     auto_ptr<CIAO::DomainDataManager> dataManager_;
 
     /// The CORBA ORB ...
     CORBA::ORB_var orb_;
-
-    /// The context object ...
-    TargetManagerImpl_Context *context_;
   };
-
-
 
   class TARGETMANAGER_EXEC_Export TargetManagerHome_exec_i
   : public virtual TargetManagerHome_Exec,
-  public virtual ::CORBA::LocalObject
+    public virtual ::CORBA::LocalObject
   {
     public:
     TargetManagerHome_exec_i (void);

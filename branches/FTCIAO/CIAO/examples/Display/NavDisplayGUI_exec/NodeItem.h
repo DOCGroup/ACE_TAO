@@ -4,20 +4,18 @@
 #define __NODEITEM_H
 
 #include "NavUnit.h"
-#include <qcanvas.h>
-//#include <qlist.h>
-#include <qtimer.h>
-#include <qbrush.h>
-#include <qobject.h>
+#include <Qt/q3canvas.h>
+#include <Qt/qtimer.h>
+#include <Qt/qbrush.h>
+#include <Qt/qobject.h>
 
-
-
-class NodeItem: public QObject, public QCanvasEllipse
+class NodeItem: public QObject,
+                public Q3CanvasEllipse
 {
   Q_OBJECT
 
 public:
-  NodeItem(QCanvas *canvas, NavUnit &unit);
+  NodeItem(Q3Canvas *canvas, NavUnit &unit);
 
   ~NodeItem() {}
 

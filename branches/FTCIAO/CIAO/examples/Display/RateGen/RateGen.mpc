@@ -1,8 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Display_Base -u Display -c controller RateGen"
 
-project(Display_RateGen_idl_gen) : ciaoidldefaults, anytypecode {
-  avoids += ace_for_tao
+project(Display_RateGen_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=RATEGEN_STUB_Export \
               -Wb,stub_export_include=RateGen_stub_export.h \
@@ -14,8 +13,7 @@ project(Display_RateGen_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(Display_RateGen_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
-  avoids += ace_for_tao
+project(Display_RateGen_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
   cidlflags += --svnt-export-macro RATEGEN_SVNT_Export \
                --svnt-export-include RateGen_svnt_export.h
@@ -32,9 +30,9 @@ project(Display_RateGen_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   }
 }
 
-project(Display_RateGen_stub) : ccm_stub {
-  requires += dummy_label
-  avoids += ace_for_tao
+project(Display_RateGen_stub) : ccm_stub, avoids_ace_for_tao {
+  libout = ../lib
+  libpaths += ../lib
   after += Display_RateGen_idl_gen Display_Base_stub
   libs  += Display_Base_stub
 
@@ -58,9 +56,9 @@ project(Display_RateGen_stub) : ccm_stub {
   }
 }
 
-project(Display_RateGen_exec) : ciao_executor {
-  requires += dummy_label
-  avoids += ace_for_tao
+project(Display_RateGen_exec) : ciao_executor, avoids_ace_for_tao {
+  libout = ../lib
+  libpaths += ../lib
   after   += Display_RateGen_cidl_gen Display_RateGen_stub
   sharedname = RateGen_exec
   libs += RateGen_stub Display_Base_stub
@@ -87,9 +85,9 @@ project(Display_RateGen_exec) : ciao_executor {
 }
 
 
-project(Display_RateGen_svnt) : ciao_servant {
-  requires += dummy_label
-  avoids += ace_for_tao
+project(Display_RateGen_svnt) : ciao_servant, avoids_ace_for_tao {
+  libout = ../lib
+  libpaths += ../lib
   after      += Display_Base_skel Display_RateGen_exec
   sharedname  = RateGen_svnt
   libs       += RateGen_exec \
@@ -121,9 +119,9 @@ project(Display_RateGen_svnt) : ciao_servant {
   }
 }
 
-project (Display_controller) : ccm_stub, valuetype {
-  requires += dummy_label
-  avoids += ace_for_tao
+project (Display_controller) : ccm_stub, valuetype, avoids_ace_for_tao {
+  libout = ../lib
+  libpaths += ../lib
   exename = controller
   after += Display_RateGen_stub
   libs  += RateGen_stub Display_Base_stub

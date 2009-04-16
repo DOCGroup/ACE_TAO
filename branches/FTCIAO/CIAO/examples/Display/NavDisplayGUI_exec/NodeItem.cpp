@@ -1,15 +1,14 @@
 // $Id$
 
 #include "NodeItem.h"
-//#include <qbrush.h>
+#include <Qt/qbrush.h>
+
+QBrush *NodeItem::normal = new QBrush(Qt::red);
+QBrush *NodeItem::highlighted = new QBrush(Qt::green);
 
 
-QBrush *NodeItem::normal = new QBrush(red);
-QBrush *NodeItem::highlighted = new QBrush(green);
-
-
-NodeItem::NodeItem(QCanvas *canvas, NavUnit &unit)
-  : QCanvasEllipse(8, 8, canvas),
+NodeItem::NodeItem(Q3Canvas *canvas, NavUnit &unit)
+  : Q3CanvasEllipse(8, 8, canvas),
     unit_(unit),
     blink_timer(canvas),
     is_selected_(0)
@@ -21,7 +20,7 @@ NodeItem::NodeItem(QCanvas *canvas, NavUnit &unit)
 
 void NodeItem::moveBy(double dx, double dy, double /* dz */)
 {
-  QCanvasEllipse::moveBy (dx, dy);
+  Q3CanvasEllipse::moveBy (dx, dy);
 }
 
 

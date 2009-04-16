@@ -9,7 +9,7 @@ project (XSC_XML_Generation) : xscdefaults {
   xscflags += --cxx-namespace-regex  "%.*Deployment.*%CIAO/Config_Handlers%" //<%quote%>
   xscflags += --cxx-export-header XSC_XML_Handlers_Export.h
   xscflags += --search-path "$(CIAO_ROOT)/docs/schema"
-  
+
   custom_only = 1
 
   XSC_Files {
@@ -67,16 +67,16 @@ project (XSC_XML_Handlers) : acelib, xerces, ciao_lib, ciao_xml_utils {
 project (XSC_Config_Handlers) : dance_deployment_stub, ciao_config_handlers_base, ciao_lib, dance {
   after += XSC_DynAny_Handler \
            XSC_Config_Handlers_Common
-	   
+
   sharedname = XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
   libs += CIAO_XML_Utils \
           XSC_XML_Handlers \
           XSC_DynAny_Handler \
           XSC_Config_Handlers_Common
-	  
+
   includes += $(CIAO_ROOT)/ciao
-  
+
   Source_Files {
     DP_Handler.cpp
     CCD_Handler.cpp
@@ -128,7 +128,6 @@ project (XSC_Config_Handlers_Tests) : dance_deployment_stub, ciao_config_handler
   requires += dummy_label
   includes += $(CIAO_ROOT)/tools/Config_Handlers
   exename = test
-  dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
 
   Source_Files {

@@ -25,7 +25,7 @@ namespace DAnCE
   public:
     class TreeNode;
     typedef ACE_Map_Manager<ACE_CString, TreeNode*, ACE_Null_Mutex> TNodes;
-    class TreeNode
+    class RedirectionService_Export TreeNode
     {
     public:
       static const char delimiter_ = '/';
@@ -55,15 +55,13 @@ namespace DAnCE
 
     CCMObjectLocator (CORBA::ORB_ptr orb, PortableServer::POA_ptr parent_poa, const char * poa_name);
 
-
-    ~CCMObjectLocator();
+    virtual ~CCMObjectLocator();
 
     virtual ::PortableServer::Servant preinvoke (
                                                  const ::PortableServer::ObjectId & oid,
                                                  ::PortableServer::POA_ptr adapter,
                                                  const char * operation,
-                                                 ::PortableServer::ServantLocator::Cookie & the_cookie
-                                                 );
+                                                 ::PortableServer::ServantLocator::Cookie & the_cookie);
 
     virtual void postinvoke (
                              const ::PortableServer::ObjectId & /*oid*/,

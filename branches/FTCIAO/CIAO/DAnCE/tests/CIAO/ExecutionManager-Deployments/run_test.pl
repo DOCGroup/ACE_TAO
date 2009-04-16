@@ -20,9 +20,10 @@ $daemons = 2;
 @nodenames = ( "NodeOne", "NodeTwo" );
 $status = 0;
 $dat_file = "NodeManagerMap.dat";
-$controller_exec = "$CIAO_ROOT/examples/Hello/Sender/starter";
 
 $nsior = PerlACE::LocalFile ("ns.ior");
+
+PerlACE::add_lib_path ('../Components');
 
 $E = 0;
 $EM = 0;

@@ -1,6 +1,6 @@
 // $Id$
 
-project(BMDevice_stub_gen): ciaoidldefaults,anytypecode {
+project(BMDevice_stub_gen): ciaoidldefaults,anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -I $(CIAO_ROOT)/examples/BasicSP
   idlflags += -Wb,stub_export_macro=BMDEVICE_STUB_Export
@@ -13,7 +13,7 @@ project(BMDevice_stub_gen): ciaoidldefaults,anytypecode {
   }
 }
 
-project(BMDevice_lem_gen) : ciaocidldefaults, ciaoidldefaults {
+project(BMDevice_lem_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
   after += BasicSP_lem_gen
   custom_only = 1
   cidlflags += -I $(CIAO_ROOT)/examples/BasicSP
@@ -33,8 +33,9 @@ project(BMDevice_lem_gen) : ciaocidldefaults, ciaoidldefaults {
 
 }
 
-project(BMDevice_stub): ccm_stub {
-  libpaths += ..
+project(BMDevice_stub): ccm_stub, avoids_ace_for_tao {
+  libout = ../lib
+  libpaths += ../lib
   after += BasicSP_stub BMDevice_stub_gen
   sharedname = BMDevice_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
@@ -62,12 +63,13 @@ project(BMDevice_stub): ccm_stub {
 
 }
 
-project(BMDevice_exec) : ciao_executor {
+project(BMDevice_exec) : ciao_executor, avoids_ace_for_tao {
   after      += BMDevice_stub BMDevice_lem_gen BasicSP_exec
 
   sharedname = BMDevice_exec
   libs       += BMDevice_stub BasicSP_exec BasicSP_stub
-  libpaths += ..
+  libout = ../lib
+  libpaths += ../lib
 
   includes += $(CIAO_ROOT)/examples/BasicSP
 
@@ -91,7 +93,7 @@ project(BMDevice_exec) : ciao_executor {
   }
 }
 
-project(BMDevice_svnt) : ciao_servant {
+project(BMDevice_svnt) : ciao_servant, avoids_ace_for_tao {
   after += BasicSP_svnt BMDevice_exec
   includes += $(CIAO_ROOT)/examples/BasicSP
 
@@ -100,7 +102,8 @@ project(BMDevice_svnt) : ciao_servant {
   libs    += BMDevice_stub BMDevice_exec
   libs    += BasicSP_stub BasicSP_exec BasicSP_svnt
   dynamicflags = BMDEVICE_SVNT_BUILD_DLL
-  libpaths += ..
+  libout = ../lib
+  libpaths += ../lib
 
   CIDL_Files {
   }

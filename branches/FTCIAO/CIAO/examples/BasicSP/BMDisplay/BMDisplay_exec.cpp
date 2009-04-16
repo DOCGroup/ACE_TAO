@@ -23,10 +23,10 @@ MyImpl::BMDisplay_exec_i::push_data_ready (
   ACE_UNUSED_ARG (ev);
 
   ACE_DEBUG ((LM_EMERGENCY,
-              "BMDisplay - Doing computations \n"));
-  
+              "BMDisplay - Doing computations\n"));
+
   ACE_DEBUG ((LM_EMERGENCY,
-              "BMDisplay - Doing data fetch \n"));
+              "BMDisplay - Doing data fetch\n"));
   // Refresh position
   BasicSP::ReadData_var dat
     = this->context_->get_connection_comp_data ();
@@ -38,7 +38,7 @@ MyImpl::BMDisplay_exec_i::push_data_ready (
     dat->get_data ();
 
   ACE_DEBUG ((LM_EMERGENCY,
-              "BMDisplay - Display data is [%s] \n",
+              "BMDisplay - Display data is [%s]\n",
               str.in ()));
 
 }
@@ -92,11 +92,11 @@ create_BasicSP_BMDisplay_Impl (void)
 {
   ::Components::EnterpriseComponent_ptr retval =
     ::Components::EnterpriseComponent::_nil ();
-  
+
   ACE_NEW_RETURN (retval,
                   MyImpl::BMDisplay_exec_i,
                   ::Components::EnterpriseComponent::_nil ());
-  
+
   return retval;
 }
 

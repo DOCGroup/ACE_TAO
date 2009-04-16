@@ -1,8 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl SimpleComponent"
 
-project(SimpleComponent_idl_gen) : ciaoidldefaults, anytypecode {
-  avoids += ace_for_tao
+project(SimpleComponent_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLECOMPONENT_STUB_Export \
               -Wb,stub_export_include=SimpleComponent_stub_export.h \
@@ -14,8 +13,7 @@ project(SimpleComponent_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(SimpleComponent_cidl_gen) : ciaocidldefaults {
-  avoids += ace_for_tao
+project(SimpleComponent_cidl_gen) : ciaocidldefaults, avoids_ace_for_tao {
   custom_only = 1
 
   CIDL_Files {
@@ -23,8 +21,7 @@ project(SimpleComponent_cidl_gen) : ciaocidldefaults {
   }
 }
 
-project(SimpleComponent_idle_gen) : ciaoidldefaults {
-  avoids += ace_for_tao
+project(SimpleComponent_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
   after += SimpleComponent_cidl_gen
   idlflags  += -Wb,stub_export_macro=SIMPLECOMPONENT_EXEC_Export \
@@ -36,8 +33,7 @@ project(SimpleComponent_idle_gen) : ciaoidldefaults {
   }
 }
 
-project(SimpleComponent_stub) : ccm_stub {
-  avoids += ace_for_tao
+project(SimpleComponent_stub) : ccm_stub, avoids_ace_for_tao {
   after += SimpleComponent_idl_gen
 
   sharedname = SimpleComponent_stub
@@ -60,9 +56,8 @@ project(SimpleComponent_stub) : ccm_stub {
   }
 }
 
-project(SimpleComponent_exec) : ciao_executor {
-  avoids += ace_for_tao
-  after   += SimpleComponent_idle_gen
+project(SimpleComponent_exec) : ciao_executor, avoids_ace_for_tao {
+  after   += SimpleComponent_idle_gen SimpleComponent_stub
   sharedname = SimpleComponent_exec
   libs += SimpleComponent_stub
 
@@ -88,8 +83,7 @@ project(SimpleComponent_exec) : ciao_executor {
 }
 
 
-project(SimpleComponent_svnt) : ciao_servant {
-  avoids += ace_for_tao
+project(SimpleComponent_svnt) : ciao_servant, avoids_ace_for_tao {
   sharedname  = SimpleComponent_svnt
   libs       += SimpleComponent_stub SimpleComponent_exec
   after      += SimpleComponent_stub SimpleComponent_exec
@@ -115,9 +109,9 @@ project(SimpleComponent_svnt) : ciao_servant {
   }
 }
 
-project (SimpleComp_CIAOComponentServer_Tst) : ciao_componentserver_stub, ccm_configvalue, ciao_cs_client {
+project (SimpleComp_CIAOComponentServer_Tst) : ciao_componentserver_stub, ccm_configvalue, ciao_cs_client, ciao_logger {
    after += SimpleComponent_stub SimpleComponent_svnt
-   libs += SimpleComponent_stub CIAO_Logger
+   libs += SimpleComponent_stub
    IDL_Files {
    }
    Source_Files {

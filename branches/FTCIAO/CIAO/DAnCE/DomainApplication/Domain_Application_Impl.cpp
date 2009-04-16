@@ -96,7 +96,7 @@ namespace DAnCE
             throw Deployment::StartError();
           }
         DANCE_DEBUG ((LM_TRACE, DLINFO "DomainApplication_Impl::startLaunch - "
-                      "Application startLaunch succeeded, received %u connections \n",
+                      "Application startLaunch succeeded, received %u connections\n",
                       conn->length ()));
 
         this->node_applications_.bind (na, (*iter).ext_id_);

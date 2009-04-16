@@ -104,7 +104,7 @@ namespace CIAO
       else
         {
           ACE_DEBUG((LM_ERROR,
-                     "(%P|%t) Warning:  MDD %s has no idref \n",
+                     "(%P|%t) Warning:  MDD %s has no idref\n",
                      desc.name ().c_str ()));
         }
     }

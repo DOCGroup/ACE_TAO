@@ -1,9 +1,8 @@
 // $Id$
 #include "TargetManager_exec.h"
-#include "ciao/CIAO_common.h"
-#include <orbsvcs/CosNamingC.h>
-#include "Config_Handlers/DD_Handler.h"
-#include "Config_Handlers/DnC_Dump.h"
+//#include "ciao/CIAO_common.h"
+#include "tools/Config_Handlers/DD_Handler.h"
+#include "tools/Config_Handlers/DnC_Dump.h"
 
 #include "DomainEventsC.h"
 
@@ -17,26 +16,18 @@ namespace CIDL_TargetManager_i
 
   TargetManager_exec_i::
   TargetManager_exec_i (TargetManagerImpl_exec_i* exec ,
-                        CORBA::ORB_ptr orb,
-                        TargetManagerImpl_Context *context)
-    : _exec (exec),
-      orb_ (CORBA::ORB::_duplicate (orb)),
-      context_ (context)
+                        CORBA::ORB_ptr orb)
+    : exec_ (exec),
+      orb_ (::CORBA::ORB::_duplicate (orb))
   {
     // The DomainDataManager created here ...
 
     // get its own obj ref , then call
-
-    CORBA::Object_var object = context_->get_CCM_object ();
-    CIAO::TargetManagerImpl_var target_impl =
-            CIAO::TargetManagerImpl::_narrow (object.in ());
-    ::Deployment::TargetManager_var target =
-            target_impl->provide_targetMgr ();
-
+    ::Deployment::TargetManager_var target = this->exec_->get_targetMgr ();
+    
     // Create Domain Data here
 
     CIAO::DomainDataManager::create (orb_.in (), target.in ());
-//    CIAO::Domain_Singleton::instance ();
   }
 
   TargetManager_exec_i::~TargetManager_exec_i (void)
@@ -59,20 +50,20 @@ namespace CIDL_TargetManager_i
       get_data_manager ()->get_current_domain ();
   }
 
-  void
+  ::Deployment::ResourceCommitmentManager_ptr
   TargetManager_exec_i::commitResources (
-  const ::Deployment::DeploymentPlan & plan)
+  const ::Deployment::ResourceAllocations & resources)
   {
     return CIAO::DomainDataManager::
-      get_data_manager ()->commitResources (plan);
+      get_data_manager ()->commitResources (resources);
   }
 
   void
   TargetManager_exec_i::releaseResources (
-  const ::Deployment::DeploymentPlan &  plan)
+  ::Deployment::ResourceCommitmentManager_ptr manager)
   {
     return CIAO::DomainDataManager::
-      get_data_manager ()->releaseResources (plan);
+      get_data_manager ()->releaseResources (manager);
   }
 
   void
@@ -104,8 +95,7 @@ namespace CIDL_TargetManager_i
 
         changed_event->changes (temp_domain);
         changed_event->change_kind (updateKind);
-
-        context_->push_changes (changed_event);
+        this->exec_->context_->push_changes (changed_event);
       }
 
   }
@@ -132,11 +122,11 @@ namespace CIDL_TargetManager_i
 
   void
   TargetManager_exec_i::destroyResourceCommitment (
-  ::Deployment::ResourceCommitmentManager_ptr resources)
+  ::Deployment::ResourceCommitmentManager_ptr manager)
   {
     ::Deployment::ResourceAllocations res;
     res.length (0);
-    resources->releaseResources (res);
+    manager->releaseResources (res);
     return;
   }
   //==================================================================
@@ -166,8 +156,7 @@ namespace CIDL_TargetManager_i
     if (CORBA::is_nil (this->exec_object_.in ()))
       {
         this->exec_object_ = new TargetManager_exec_i(this,
-                      context_->_ciao_the_Container()->the_ORB(),
-                      context_);
+                                     context_->_get_orb());
       }
 
     return ::Deployment::CCM_TargetManager::_duplicate (this->exec_object_.in ());
@@ -179,27 +168,18 @@ namespace CIDL_TargetManager_i
   TargetManagerImpl_exec_i::set_session_context (
   ::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
-    TargetManagerImpl_Context::_narrow (ctx);
-
-    if (this->context_ == 0)
+    this->context_ = ::CIAO::CCM_TargetManagerImpl_Context::_narrow (ctx);
+    if (CORBA::is_nil (this->context_.in ()))
     {
       throw CORBA::INTERNAL ();
     }
   }
 
   void
-  TargetManagerImpl_exec_i::ciao_preactivate ()
+  TargetManagerImpl_exec_i::configuration_complete ()
   {
     // Your code here.
   }
-
-  void
-  TargetManagerImpl_exec_i::ciao_postactivate ()
-  {
-    // Your code here.
-  }
-
 
   void
   TargetManagerImpl_exec_i::ccm_activate ()

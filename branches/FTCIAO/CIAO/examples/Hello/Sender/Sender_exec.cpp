@@ -165,7 +165,7 @@ namespace CIDL_Sender_Impl
   ::Components::EnterpriseComponent_ptr
   SenderHome_exec_i::create ()
   {
-    ACE_DEBUG ((LM_EMERGENCY, "(%P|%t) creating SenderHome \n"));
+    ACE_DEBUG ((LM_EMERGENCY, "(%P|%t) creating SenderHome\n"));
 
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();

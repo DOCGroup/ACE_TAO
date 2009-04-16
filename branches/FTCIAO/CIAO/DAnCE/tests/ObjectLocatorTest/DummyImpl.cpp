@@ -4,8 +4,7 @@
 namespace ObjectLocatorTest
   {
 
-    char * DummyImpl::sayHello (
-    )
+    char * DummyImpl::sayHello (void)
     {
       return CORBA::string_dup (this->helloSentence);
     }

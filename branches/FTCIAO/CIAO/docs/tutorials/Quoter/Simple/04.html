@@ -58,18 +58,18 @@ COLOR:black'>%CIAO_ROOT%/docs/tutorials/Quoter/Simple/descriptors</span></code><
     <li style='COLOR:black;'> Start NodeManagers (NodeDameon) by running:</li>
   </UL>
 </DIV>
-<P style="COLOR: black;    ">&nbsp;<FONT face="Courier New" size="2">&nbsp;&nbsp;&nbsp;&nbsp; 
-  %CIAO_ROOT%/bin/NodeManager -ORBListenendpoints iiop://localhost:30000 -s 
-  %CIAO_ROOT%/bin/NodeApplication -d 1000</FONT></P>
-<P style="COLOR: black;    "><FONT face="Courier New" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%CIAO_ROOT%/bin/NodeManager 
-  -ORBListenendpoints iiop://localhost:40000 -s %CIAO_ROOT%/bin/NodeApplication 
+<P style="COLOR: black;    ">&nbsp;<FONT face="Courier New" size="2">&nbsp;&nbsp;&nbsp;&nbsp;
+  %DANCE_ROOT%/bin/dance_node_manager -ORBListenendpoints iiop://localhost:30000 -s
+  %CIAO_ROOT%/bin/ciao_componentserver -d 1000</FONT></P>
+<P style="COLOR: black;    "><FONT face="Courier New" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%DANCE_ROOT%/bin/dance_node_manager
+  -ORBListenendpoints iiop://localhost:40000 -s %CIAO_ROOT%/bin/ciao_componentserver
   -d 1000</FONT></P>
 <UL type="disc">
   <li style='COLOR:black;'> Start the execution manager:</li>
 </UL>
-<P style="COLOR: black;    ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-  &nbsp;&nbsp;&nbsp; <code> <span style='FONT-SIZE:10pt'>%CIAO_ROOT%/bin/Execution_Manager
-  -o ior -i NodeMap.dat</span></code>&nbsp; </P>
+<P style="COLOR: black;    ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp; <code> <span style='FONT-SIZE:10pt'>
+  %DANCE_ROOT%/bin/dance_execution_manager -o ior -i NodeMap.dat</span></code>&nbsp; </P>
 <p><span style='COLOR:black'>The </span><code><span style='FONT-SIZE:10pt;
 COLOR:black'>NodeMap.dat</span></code><span style='COLOR:black'> file describes
   the deployment daemons CIAO's Execution_Manager will contact to instantiate
@@ -77,15 +77,15 @@ COLOR:black'>NodeMap.dat</span></code><span style='COLOR:black'> file describes
   of a installation "destination" and the corresponding IOR for the
   CIAO_Daemon.</span></p>
 <ul type="square">
-  <li style='COLOR:black;'> <em>NOTE</em>: As one can see, we use the "NodeMap.dat" file to instruct the 
-    Execution_Manager how to find the endpoint of each individual NodeManager 
-    (i.e., Node Daemon) where component(s) will be deployed, so this is 
+  <li style='COLOR:black;'> <em>NOTE</em>: As one can see, we use the "NodeMap.dat" file to instruct the
+    Execution Manager how to find the endpoint of each individual NodeManager
+    (i.e., Node Daemon) where component(s) will be deployed, so this is
     non-standard. We plan to use Naming Service to do this in the future.</li>
 </ul>
 <ul type="disc">
-  <li style='COLOR:black;'> Start the plan_launcher by running <code> <span style='FONT-SIZE:10pt'>%CIAO_ROOT%/bin/plan_launcher
+  <li style='COLOR:black;'> Start the DaNCE Repository Manager by running <code> <span style='FONT-SIZE:10pt'>%CIAO_ROOT%/bin/dance_repository_manager
     -p Plan.cdp -k file://ior</span></code>
-  <li style='COLOR:black;'> By now the components should be successfully deployed. You may run the driver 
+  <li style='COLOR:black;'> By now the components should be successfully deployed. You may run the driver
     program to start the application. e.g. you can try the following
     :
     <UL>
@@ -93,12 +93,14 @@ COLOR:black'>NodeMap.dat</span></code><span style='COLOR:black'> file describes
     </UL>
   </li>
 </ul>
-<P style="MARGIN-BOTTOM: 12pt"><span style='COLOR:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><code><span style='FONT-SIZE:10pt;COLOR:black'>%CIAO_ROOT%/docs/tutorials/Quoter/Simple/Distributor/StockDistributorDriver.exe
-  -o</span></code></P>
+<P style="MARGIN-BOTTOM: 12pt"><span style='COLOR:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+    <code><span style='FONT-SIZE:10pt;COLOR:black'>%CIAO_ROOT%/docs/tutorials/Quoter/Simple/Distributor/StockDistributorDriver.exe-o</span>
+    </code>
+</P>
 <UL dir="ltr" style="MARGIN-RIGHT: 0px">
   <UL dir="ltr" style="MARGIN-RIGHT: 0px">
-    <LI> <span style='COLOR:black'>Instruct the StockBroker 
-      to subscirbe to MSFT stock 
+    <LI> <span style='COLOR:black'>Instruct the StockBroker
+      to subscirbe to MSFT stock
       publications: </span></LI>
   </UL>
 </UL>
@@ -108,17 +110,16 @@ black'>%CIAO_ROOT%/docs/tutorials/Quoter/Simple/Broker/StockBrokerDriver.exe
   -s MSFT</span></code></P>
 <UL dir="ltr" style="MARGIN-RIGHT: 0px">
   <UL dir="ltr" style="MARGIN-RIGHT: 0px">
-    <LI> <CODE> <SPAN style="FONT-SIZE: 10pt; COLOR: black"> <SPAN style="COLOR: black"> <FONT face="Times New Roman"><FONT size="3">Instruct the StockBroker to subscirbe 
+    <LI> <CODE> <SPAN style="FONT-SIZE: 10pt; COLOR: black"> <SPAN style="COLOR: black"> <FONT face="Times New Roman"><FONT size="3">Instruct the StockBroker to subscirbe
       to&nbsp;IBM stock publications</FONT>:</FONT></SPAN> </SPAN></CODE></LI>
   </UL>
 </UL>
 <P><span style='COLOR:black'> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><code><span style='FONT-SIZE:
 10pt;COLOR:
-black'>%CIAO_ROOT%/docs/tutorials/Quoter/Simple/Broker/StockBrokerDriver.exe
-  -s IBM</span></code></P>
+black'>%CIAO_ROOT%/docs/tutorials/Quoter/Simple/Broker/StockBrokerDriver.exe -s IBM</span></code></P>
 <UL dir="ltr" style="MARGIN-RIGHT: 0px">
   <UL dir="ltr" style="MARGIN-RIGHT: 0px">
-    <LI> <CODE> </CODE><span style='COLOR:black'><SPAN style="COLOR: black">Instruct the StockBroker to unsubscirbe to MSFT stock 
+    <LI> <CODE> </CODE><span style='COLOR:black'><SPAN style="COLOR: black">Instruct the StockBroker to unsubscirbe to MSFT stock
       publications:</SPAN> </span></LI>
   </UL>
 </UL>
@@ -129,8 +130,8 @@ black'>%CIAO_ROOT%/docs/tutorials/Quoter/Simple/Broker/StockBrokerDriver.exe
   -u MSFT</span></code><span style='COLOR:black'></P>
 <UL>
   <UL>
-    <LI> <SPAN style="COLOR: black"> <SPAN style="COLOR: black">Instruct the 
-      StockDistributor component to stop publishing stock 
+    <LI> <SPAN style="COLOR: black"> <SPAN style="COLOR: black">Instruct the
+      StockDistributor component to stop publishing stock
       quotes:</SPAN></LI>
   </UL>
 </UL>
@@ -141,10 +142,10 @@ black'>%CIAO_ROOT%/docs/tutorials/Quoter/Simple/Distributor/StockDistributorDriv
   &#8211;f</span></code><code><span style='FONT-SIZE:10pt'> </span></code></P>
 <UL>
   <DIV style="MARGIN-BOTTOM: 12pt">
-    <LI style="COLOR: black;    "> <FONT color="#ff0000"><EM>NOTE</EM>: Windows uses %VARIABLE% to fetch the values of 
-      environment variables. Linux/Unix uses $VARIABLE to fetch the values of 
-      environment variables. As such, if you're running this tutorial on Linux/Unix 
-      operating system, change the above commands to use $VARIABLE instead of 
+    <LI style="COLOR: black;    "> <FONT color="#ff0000"><EM>NOTE</EM>: Windows uses %VARIABLE% to fetch the values of
+      environment variables. Linux/Unix uses $VARIABLE to fetch the values of
+      environment variables. As such, if you're running this tutorial on Linux/Unix
+      operating system, change the above commands to use $VARIABLE instead of
       %VARIABLE% when you run the programs.</FONT></SPAN></CODE></LI>
   </DIV>
 </UL>

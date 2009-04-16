@@ -306,13 +306,13 @@ namespace
          << "set_session_context (" << endl
          << STRS[COMP_SC] << "_ptr ctx);" << endl;
 
-      os << "virtual void configuration_complete ();" << endl;
+      os << "virtual void configuration_complete (void);" << endl;
 
-      os << "virtual void ccm_activate ();" << endl;
+      os << "virtual void ccm_activate (void);" << endl;
 
-      os << "virtual void ccm_passivate ();" << endl;
+      os << "virtual void ccm_passivate (void);" << endl;
 
-      os << "virtual void ccm_remove ();" << endl;
+      os << "virtual void ccm_remove (void);" << endl;
     }
 
     virtual void

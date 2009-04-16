@@ -63,7 +63,7 @@ namespace CIDL_Messenger_Impl
       // get the run_lock from the Runnable executor; we have an
       // agreement with the Runnable executor that we must posess the
       // run_lock to publish
-      ACE_Guard<ACE_Mutex> guard( this->control_->get_run_lock() );
+      ACE_Guard<TAO_SYNCH_MUTEX> guard( this->control_->get_run_lock() );
 
       // create a message to publish
       ::Message_var msg = new ::OBV_Message();
@@ -193,11 +193,11 @@ namespace CIDL_Messenger_Impl
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_RETURN (retval,
                     Messenger_exec_i,
                     ::Components::EnterpriseComponent::_nil ());
-    
+
     return retval;
   }
 

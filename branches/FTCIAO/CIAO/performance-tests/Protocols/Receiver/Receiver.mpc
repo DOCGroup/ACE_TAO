@@ -1,8 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Protocols Receiver"
 
-project(Protocols_Receiver_idl_gen) : ciaoidldefaults, anytypecode {
-  avoids += ace_for_tao
+project(Protocols_Receiver_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
               -Wb,stub_export_include=Receiver_stub_export.h \
@@ -14,8 +13,7 @@ project(Protocols_Receiver_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(Protocols_Receiver_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
-  avoids += ace_for_tao
+project(Protocols_Receiver_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
   cidlflags += --svnt-export-macro RECEIVER_SVNT_Export \
                --svnt-export-include Receiver_svnt_export.h
@@ -32,8 +30,7 @@ project(Protocols_Receiver_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
   }
 }
 
-project(Protocols_Receiver_stub) : ccm_stub {
-  avoids += ace_for_tao
+project(Protocols_Receiver_stub) : ccm_stub, avoids_ace_for_tao {
   after += Protocols_Receiver_idl_gen Protocols_stub
   libs  += Protocols_stub
   libpaths += ../common
@@ -58,8 +55,7 @@ project(Protocols_Receiver_stub) : ccm_stub {
   }
 }
 
-project(Protocols_Receiver_exec) : ciao_executor {
-  avoids += ace_for_tao
+project(Protocols_Receiver_exec) : ciao_executor, avoids_ace_for_tao {
   after   += Protocols_Receiver_cidl_gen Protocols_Receiver_stub
   sharedname = Protocols_Receiver_exec
   libs += Protocols_Receiver_stub \
@@ -88,8 +84,7 @@ project(Protocols_Receiver_exec) : ciao_executor {
 }
 
 
-project(Protocols_Receiver_svnt) : ciao_servant {
-  avoids += ace_for_tao
+project(Protocols_Receiver_svnt) : ciao_servant, avoids_ace_for_tao {
   after      += Protocols_skel Protocols_Receiver_exec
   sharedname  = Protocols_Receiver_svnt
   libs       += Protocols_Receiver_exec \

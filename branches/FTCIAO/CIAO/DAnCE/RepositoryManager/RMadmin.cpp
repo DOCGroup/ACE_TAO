@@ -239,7 +239,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Unknown exception \n");
+      ex._tao_print_exception ("Unknown exception\n");
       return -1;
     }
 

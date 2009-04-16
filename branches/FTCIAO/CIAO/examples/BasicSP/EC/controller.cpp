@@ -11,7 +11,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 
-const char *rategen_ior_ = "file://rategen.ior";
+const ACE_TCHAR *rategen_ior_ = ACE_TEXT("file://rategen.ior");
 int rate = 3;
 int turn_on = 1;
 
@@ -58,7 +58,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
   if (rategen_ior_ == 0)
     {
-      rategen_ior_ = "file://ec.ior";
+      rategen_ior_ = ACE_TEXT("file://ec.ior");
     }
 
   if (rate == 0)
@@ -116,7 +116,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Who is the culprit \n");
+      ex._tao_print_exception ("Who is the culprit\n");
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Uncaught CORBA exception\n"),
                         1);

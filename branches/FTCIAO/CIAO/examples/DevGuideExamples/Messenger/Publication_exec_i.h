@@ -34,7 +34,7 @@
 
 // MY CODE
 #include <string>
-#include "ace/Synch.h"
+#include "ace/Thread_Mutex.h"
 
 namespace CIDL_Messenger_Impl
 {
@@ -43,29 +43,24 @@ namespace CIDL_Messenger_Impl
     public virtual ::CORBA::LocalObject
   {
   public:
-    Publication_exec_i ( const char* text,
-                         CORBA::UShort period );
+    Publication_exec_i (const char* text, CORBA::UShort period);
     virtual ~Publication_exec_i (void);
 
     // Operations from ::Publication
 
-    virtual char*
-    text ();
+    virtual char* text ();
 
-    virtual void
-    text ( const char* text);
+    virtual void text ( const char* text);
 
-    virtual CORBA::UShort
-    period ();
+    virtual CORBA::UShort period ();
 
-    virtual void
-    period ( CORBA::UShort period);
+    virtual void period ( CORBA::UShort period);
 
   private:
     std::string text_;
     CORBA::UShort period_;
 
-    ACE_Mutex lock_;
+    TAO_SYNCH_MUTEX lock_;
   };
 }
 

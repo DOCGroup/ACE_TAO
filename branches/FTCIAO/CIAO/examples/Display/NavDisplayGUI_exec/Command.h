@@ -3,7 +3,7 @@
 #ifndef __COMMAND_H
 #define __COMMAND_H
 
-#include <qdatetime.h>
+#include <Qt/qdatetime.h>
 
 class CommandBase
 {

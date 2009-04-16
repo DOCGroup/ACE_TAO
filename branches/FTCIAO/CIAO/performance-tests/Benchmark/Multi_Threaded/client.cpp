@@ -51,7 +51,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           CORBA::is_nil (obj4.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Nil Benchmark::RoundtripClient reference \n"),
+                             "Nil Benchmark::RoundtripClient reference\n"),
                             1);
         }
 
