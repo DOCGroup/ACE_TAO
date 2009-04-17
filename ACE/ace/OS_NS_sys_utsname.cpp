@@ -213,7 +213,7 @@ ACE_OS::uname (ACE_utsname *name)
 # endif /* ACE_LACKS_HOSTNAME */
 
 #elif defined (ACE_VXWORKS)
-  size_t maxnamelen = sizeof name->nodename;
+  size_t const maxnamelen = sizeof name->nodename;
   ACE_OS::strcpy (name->sysname, "VxWorks");
   ACE_OS::strcpy (name->release, kernelVersion());
   ACE_OS::strcpy (name->version, sysBspRev ());

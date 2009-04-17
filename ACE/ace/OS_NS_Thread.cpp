@@ -4630,6 +4630,14 @@ ACE_OS::thr_get_affinity (ACE_hthread_t thr_id,
       return -1;
     }
   return 0;
+#elif defined (ACE_HAS_TASKCPUAFFINITYSET)
+  ACE_UNUSED_ARG (cpu_set_size);
+  int result = 0;
+  if (ACE_ADAPT_RETVAL (::taskCpuAffinitySet (thr_id, *cpu_mask), result) == -1)
+    {
+      return -1;
+    }
+  return 0;
 #else
   ACE_UNUSED_ARG (thr_id);
   ACE_UNUSED_ARG (cpu_set_size);
@@ -4668,6 +4676,13 @@ ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
   // thr_id process id obtained by ACE_OS::getpid (), but whole process will bind your CPUs
   //
   if (::sched_setaffinity (thr_id, cpu_set_size, cpu_mask) == -1)
+    {
+      return -1;
+    }
+  return 0;
+#elif defined (ACE_HAS_TASKCPUAFFINITYSET)
+  int result = 0;
+  if (ACE_ADAPT_RETVAL (::taskCpuAffinitySet (thr_id, *cpu_mask), result) == -1)
     {
       return -1;
     }
