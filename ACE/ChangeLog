@@ -1,3 +1,8 @@
+Fri Apr 17 15:06:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debianbuild/patches/19-gcc43.dpatch:
+          Removed, not needed anymore
+
 Fri Apr 17 15:03:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Atomic_Op.{h,inl}:
