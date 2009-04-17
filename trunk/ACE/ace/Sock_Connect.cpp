@@ -1180,8 +1180,7 @@ get_ip_interfaces_vxworks_lt600 (size_t &count,
 // responsible for calling delete [] on parray
 
 int
-ACE::get_ip_interfaces (size_t &count,
-                        ACE_INET_Addr *&addrs)
+ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
 {
   ACE_TRACE ("ACE::get_ip_interfaces");
 
@@ -1198,7 +1197,7 @@ ACE::get_ip_interfaces (size_t &count,
   return get_ip_interfaces_aix (count, addrs);
 #elif defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600) && !defined (ACE_HAS_VXWORKS551_MEDUSA)
   return get_ip_interfaces_vxworks_lt600 (count, addrs);
-#elif (defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (ACE_OPENVMS) || (defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x650)) || defined (ACE_HAS_RTEMS)) && !defined (ACE_LACKS_NETWORKING)
+#elif (defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (ACE_OPENVMS) || (defined (ACE_VXWORKS) && !defined (ACE_HAS_GETIFADDRS)) || defined (ACE_HAS_RTEMS)) && !defined (ACE_LACKS_NETWORKING)
   // COMMON (SVR4 and BSD) UNIX CODE
 
   // Call specific routine as necessary.
@@ -1210,7 +1209,7 @@ ACE::get_ip_interfaces (size_t &count,
                        ACE_TEXT ("ACE::get_ip_interfaces:open")),
                       -1);
 
-  size_t num_ifs, num_ifs_found;
+  size_t num_ifs = 0;
 
   if (ACE::count_interfaces (handle, num_ifs))
     {
@@ -1269,7 +1268,7 @@ ACE::get_ip_interfaces (size_t &count,
                   -1); // caller must free
 
   struct IFREQ *pcur = p_ifs.get ();
-  num_ifs_found = ifcfg.IFC_LEN / sizeof (struct IFREQ); // get the number of returned ifs
+  size_t num_ifs_found = ifcfg.IFC_LEN / sizeof (struct IFREQ); // get the number of returned ifs
 
   // Pull the address out of each INET interface.  Not every interface
   // is for IP, so be careful to count properly.  When setting the
@@ -1404,16 +1403,9 @@ ACE::get_ip_interfaces (size_t &count,
 // list of ifreq structs.
 
 int
-ACE::count_interfaces (ACE_HANDLE handle,
-                       size_t &how_many)
+ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
 {
-#if defined (ACE_WIN32) || defined (ACE_HAS_GETIFADDRS) || defined (__hpux) || defined (_AIX) || (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
-  // none of these platforms make use of count_interfaces
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (how_many);
-  ACE_NOTSUP_RETURN (-1); // no implementation
-
-#elif defined (SIOCGIFNUM)
+#if defined (SIOCGIFNUM)
 # if defined (SIOCGLIFNUM)
   int cmd = SIOCGLIFNUM;
   struct lifnum if_num = {AF_UNSPEC,0,0};
@@ -1434,22 +1426,21 @@ ACE::count_interfaces (ACE_HANDLE handle,
 # endif /* SIOCGLIFNUM */
 return 0;
 
-#elif (defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (ACE_OPENVMS) || defined (ACE_HAS_RTEMS)) && !defined (ACE_LACKS_NETWORKING)
+#elif (defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (ACE_OPENVMS) || defined (ACE_HAS_RTEMS) || (defined (ACE_VXWORKS) && !defined (ACE_HAS_GETIFADDRS))) && !defined (ACE_LACKS_NETWORKING)
   // Note: DEC CXX doesn't define "unix".  BSD compatible OS: HP UX,
   // AIX, SunOS 4.x perform some ioctls to retrieve ifconf list of
   // ifreq structs no SIOCGIFNUM on SunOS 4.x, so use guess and scan
   // algorithm
 
   // Probably hard to put this many ifs in a unix box..
-  const int MAX_IF = 50;
+  int const MAX_IF = 50;
 
   // HACK - set to an unreasonable number
-  int num_ifs = MAX_IF;
+  int const num_ifs = MAX_IF;
 
   struct ifconf ifcfg;
   size_t ifreq_size = num_ifs * sizeof (struct ifreq);
-  struct ifreq *p_ifs =
-    (struct ifreq *) ACE_OS::malloc (ifreq_size);
+  struct ifreq *p_ifs = (struct ifreq *) ACE_OS::malloc (ifreq_size);
 
   if (!p_ifs)
     {
@@ -1475,7 +1466,8 @@ return 0;
                         -1);
     }
 
-  int if_count = 0, i;
+  int if_count = 0;
+  int i = 0;
 
   // get if address out of ifreq buffers.  ioctl puts a blank-named
   // interface to mark the end of the returned interfaces.

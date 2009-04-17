@@ -71,7 +71,6 @@ Source1:      ace-tao-rpmlintrc
 ## Source1: ace-tao-etc.tar.gz
 ## Source2: ace-tao-macros.patch
 ## Patch0: ace-tao-config.patch
-## Patch5: ace-tao-orbsvcs-daemon.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %if 0%{?centos_version}
@@ -508,7 +507,7 @@ Summary:      Make Project Creator
 Version:      %{ACEVER}
 Group:        Development/Tools/Building
 %if !0%{?suse_version}
-Provides:     perl (Driver) perl(MakeProjectBase) perl(ObjectGenerator) perl(ProjectCreator) perl(WorkspaceCreator) perl(WorkspaceHelper) perl(DependencyWriter)
+Provides:     perl(Driver) perl(MakeProjectBase) perl(ObjectGenerator) perl(ProjectCreator) perl(WorkspaceCreator) perl(WorkspaceHelper) perl(DependencyWriter)
 %endif
 
 %description -n mpc
@@ -826,9 +825,6 @@ export TAO_ROOT=$ACE_ROOT/TAO
 export CIAO_ROOT=$TAO_ROOT/CIAO
 
 # patch0 and patch1 are applied a bit later
-
-#patch5 -p 1
-cat ${ACE_ROOT}/rpmbuild/ace-tao-orbsvcs-daemon.patch | patch -p 1
 
 # don't use patch8 until we verify wether needed
 
@@ -1287,12 +1283,6 @@ rm -f tao-headers.tmp
 
 # install the TAO_IDL compiler
 install -d %{buildroot}%{_libdir}
-
-# NOTE - it appears that when TAO's build copies the files to the
-# ACE_ROOT/ace directory they get versioned with ACE's version number
-# rather then TAO's.  Use the ACEVERSO macro for now ...
-install \
-        %{buildroot}%{_libdir}
 
 install -d %{buildroot}%{_bindir}
 install ${ACE_ROOT}/bin/ace_gperf %{buildroot}%{_bindir}

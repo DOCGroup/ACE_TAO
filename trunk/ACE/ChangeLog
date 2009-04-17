@@ -1,3 +1,38 @@
+Fri Apr 17 15:03:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Atomic_Op.{h,inl}:
+          Added support for VxWorks vxAtomicLib. If you want to use
+          that library add ACE_HAS_VXATOMICLIB to your config.h file
+
+        * ace/config-vxworks6.4.h:
+          VxWorks 6.4 has cpuset_t and taskCpuAffinitySet
+
+        * ace/os_include/os_sched.h:
+          VxWorks has cpuset_t
+
+        * ace/OS_NS_sys_mman.inl:
+          Updated VxWorks version checks
+
+        * ace/OS_NS_sys_utsname.cpp:
+          const change
+
+        * ace/OS_NS_Thread.cpp:
+          Added support for taskCpuAffinitySet
+
+        * ace/Sock_Connect.cpp:
+          Changed the checks for VxWorks to correctly detect which
+          implementation of get_ip_interfaces we have to use
+
+        * rpmbuild/ace-tao-orbsvcs-daemon.patch:
+          This patch doesn't work anymore with svn head, if this
+          is a real issue, it has to be addressed in the real code
+          and not with a patch. This should already be possible with
+          the -ORBDeamon flag
+
+        * rpmbuild/ace-tao-ciao.spec:
+          Don't apply ace-tao-orbsvcs-daemon.patch, fixed a small
+          provides bug
+
 Thu Apr 16 16:03:32 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
@@ -17,7 +52,7 @@ Tue Apr 14 10:06:19 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 Tue Apr 14 13:57:16 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
-        
+
           Reworded entries to be consistent with release note.
 
 Mon Apr 13 12:19:18 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
