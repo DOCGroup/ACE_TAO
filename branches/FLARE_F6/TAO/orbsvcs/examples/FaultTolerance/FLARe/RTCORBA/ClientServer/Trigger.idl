@@ -1,0 +1,9 @@
+#ifndef TRIGGER_IDL_
+#define TRIGGER_IDL_
+
+interface Trigger
+{
+  void start (in string prefix);
+};
+
+#endif /* TRIGGER_IDL_ */

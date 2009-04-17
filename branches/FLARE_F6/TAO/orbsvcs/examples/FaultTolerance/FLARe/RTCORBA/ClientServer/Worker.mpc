@@ -1,0 +1,46 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Worker.idl
+  }
+
+  custom_only = 1
+}
+
+project(*Server): lwft_server, lwft_client, naming, rtcorba {
+  after += *idl
+
+  libs += LWFT_StateSyncAgent
+
+  Source_Files {
+    Worker_i.cpp
+    server.cpp
+  }
+
+  Source_Files {
+    WorkerC.cpp
+    WorkerS.cpp
+  }
+
+  IDL_Files {
+  }
+}
+
+project(*Client): lwft_client, naming, rtcorba, portableserver {
+  after += *idl
+
+  Source_Files {
+    client.cpp
+    Client_Timer_Handler.cpp
+    WorkerC.cpp 
+    TriggerS.cpp
+    TriggerC.cpp
+    Trigger_i.cpp
+  }
+
+  IDL_Files {
+    Trigger.idl
+  }
+}
