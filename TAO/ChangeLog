@@ -1,3 +1,9 @@
+Fri Apr 17 21:42:53 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/ClientServer:
+        
+          Added new testing application.
+
 Mon Mar 16 18:15:45 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/DDSStateUpdate_T.cpp:
