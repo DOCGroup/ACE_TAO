@@ -1,3 +1,9 @@
+Sun Apr 19 19:10:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux-11.00.h
+        * ace/Sock_Connect.cpp:
+          Added ACE_HAS_STRUCT_LIFNUM, hpux doesn't have this
+
 Sun Apr 19 06:57:04 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * ace/UUID.h:
