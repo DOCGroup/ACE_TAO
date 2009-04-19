@@ -1346,7 +1346,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
   // Retrieve IPv6 local interfaces by scanning /proc/net/if_inet6 if
   // it exists.  If we cannot open it then ignore possible IPv6
   // interfaces, we did our best;-)
-  FILE* fp;
+  FILE* fp = 0;
   char addr_p[8][5];
   char s_ipaddr[64];
   int scopeid;
@@ -1406,7 +1406,7 @@ int
 ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
 {
 #if defined (SIOCGIFNUM)
-# if defined (SIOCGLIFNUM)
+# if defined (SIOCGLIFNUM) && !defined (ACE_LACKS_STRUCT_LIFNUM)
   int cmd = SIOCGLIFNUM;
   struct lifnum if_num = {AF_UNSPEC,0,0};
 # else
