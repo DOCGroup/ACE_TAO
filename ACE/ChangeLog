@@ -1,3 +1,20 @@
+Sun Apr 19 06:57:04 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ace/UUID.h:
+        * ace/UUID.inl:
+        * ace/UUID.cpp:
+        * tests/UUID_Test.cpp:
+
+          Redesigned the internal structure of the UUID so that its key
+          data members are a contiguous chunk of memory.
+
+          Implemented a hash () method for the UUID. This will enable it
+          to be used in ACE_Hash_Map_Manager objects.
+
+          Remvoed the default constructor (), copy constructor () and
+          assignmetnt operator from the UUID_Node object since the UUID
+          performs such operations.
+
 Fri Apr 17 15:06:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debianbuild/patches/19-gcc43.dpatch:
@@ -52,7 +69,7 @@ Thu Apr 16 16:03:32 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Tue Apr 14 10:06:19 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* ACE version 5.6.9 released.
+        * ACE version 5.6.9 released.
 
 Tue Apr 14 13:57:16 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
