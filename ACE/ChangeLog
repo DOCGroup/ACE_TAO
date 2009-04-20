@@ -1,3 +1,8 @@
+Mon Apr 20 17:16:06 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/config-win32-cegcc.h:
+          Fixes compiler error on CE gcc
+
 Mon Apr 20 13:52:06 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * ace/config-win32-cegcc.h:
