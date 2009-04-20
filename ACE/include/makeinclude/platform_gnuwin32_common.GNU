@@ -74,7 +74,7 @@ endif
 
 OCFLAGS += -O3
 PIC        =
-AR         = ar
+AR         = ${COMPARCH}ar
 ARFLAGS    = rsuv
 RANLIB     = ${COMPARCH}ranlib
 SOEXT      = dll
