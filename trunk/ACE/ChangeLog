@@ -1,3 +1,8 @@
+Mon Apr 20 20:01:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_string.cpp:
+          Fixed argument not used warning
+
 Mon Apr 20 19:51:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Malloc_Test.cpp:
