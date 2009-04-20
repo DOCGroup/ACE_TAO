@@ -58,7 +58,7 @@ const struct in6_addr in6addr_linklocal_allrouters = IN6ADDR_LINKLOCAL_ALLROUTER
 #endif /* ACE_VXWORKS >= 0x630 && <= 0x670 && __RTP__ && ACE_HAS_IPV6 */
 
 #if defined (ACE_HAS_WINCE)
-#include /**/ <Iphlpapi.h>
+#include /**/ <iphlpapi.h>
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 // The following code is suggested by microsoft as a workaround to the fact
 // that on Windows CE, these constants are exported as function addresses
