@@ -913,4 +913,8 @@ else
   LINK.cc = $(PURELINK) $(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
 endif # LINK.cc.override
 
-SOLINK.cc = $(PRELINK) $(DLD) $(SOFLAGS)
+ifeq ($(SOLINK.cc),override)
+  SOLINK.cc = $(SOLINK.cc.override)
+else
+  SOLINK.cc = $(PRELINK) $(DLD) $(SOFLAGS)
+endif # SOLINK.cc.override
