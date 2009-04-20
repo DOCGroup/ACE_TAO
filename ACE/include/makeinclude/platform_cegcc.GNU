@@ -26,6 +26,7 @@ versioned_so=0
 # See https://sourceforge.net/tracker/?func=detail&atid=102435&aid=683455&group_id=2435
 # for the details why to do this.
 LDFLAGS += -Wl,--enable-auto-import
+CPPFLAGS += -DACE_HAS_CEGCC
 
 cpumodelflag=0
 tunemodelflag=0
