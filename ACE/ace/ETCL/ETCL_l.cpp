@@ -1542,7 +1542,7 @@ FILE *file;
 
 #if defined (ACE_HAS_WINCE)
     // Mimic the behavior as WinCE does not have isatty().
-    if ((file != 0) && (file == fileno(file))) {
+    if ((file != 0) && (file == (FILE*)fileno(file))) {
         b->yy_is_interactive = 1;
     }
     else {
