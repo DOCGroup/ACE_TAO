@@ -6,8 +6,9 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 USER VISIBLE CHANGES BETWEEN ACE-5.6.9 and ACE-5.7.0
 ====================================================
 
-. Added support for the VxWorks vxAtomicLib. If you want to use this library
-  add ACE_HAS_VXATOMICLIB to your config.h file
+. Added support for the VxWorks vxAtomicLib which is available with VxWorks 6.6
+  and newer. If you don't want to use this library undef ACE_HAS_VXATOMICLIB
+  in your config.h file
 
 USER VISIBLE CHANGES BETWEEN ACE-5.6.8 and ACE-5.6.9
 ====================================================

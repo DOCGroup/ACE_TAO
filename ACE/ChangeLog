@@ -1,3 +1,11 @@
+Mon Apr 20 08:51:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.6.h:
+        * NEWS:
+          Enabled the vxAtomicLib by default for VxWorks 6.6 and newer.
+          If you don't want to use this library, undef ACE_HAS_VXATOMICLIB
+          in your config.h file
+
 Mon Apr 20 08:45:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sock_Connect.cpp:
