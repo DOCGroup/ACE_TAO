@@ -1,3 +1,11 @@
+Mon Apr 20 17:47:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/WFMO_Reactor.cpp:
+          Fixed argument not used warning with WinCE
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          dlltool is also dependent on architecture
+
 Mon Apr 20 17:43:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sock_Connect.cpp:
