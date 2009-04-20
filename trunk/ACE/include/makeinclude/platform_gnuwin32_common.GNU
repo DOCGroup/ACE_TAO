@@ -32,7 +32,7 @@ endif
 CC      = ${COMPARCH}gcc
 CXX     = ${COMPARCH}g++
 RC      = ${COMPARCH}windres
-DLLTOOL = dlltool
+DLLTOOL = ${COMPARCH}dlltool
 
 RC_OUTPUT_FLAG = -o
 
