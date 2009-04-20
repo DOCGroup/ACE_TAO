@@ -1,3 +1,8 @@
+Mon Apr 20 17:39:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_unistd.h:
+          Added a cast to resolve cegcc compile error
+
 Mon Apr 20 17:34:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_errno.h:
