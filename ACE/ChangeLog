@@ -1,3 +1,9 @@
+Mon Apr 20 18:08:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ETCL/ETCL_l.cpp:
+        * ace/ETCL/ETCL_l.cpp.diff:
+          Added a cast for WinCE with GCC
+
 Mon Apr 20 17:47:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/WFMO_Reactor.cpp:
