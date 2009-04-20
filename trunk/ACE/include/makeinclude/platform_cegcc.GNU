@@ -30,8 +30,8 @@ LDFLAGS += -Wl,--enable-auto-import
 cpumodelflag=0
 tunemodelflag=0
 
-#COMPARCH = i386-mingw32ce-
-COMPARCH = arm-wince-mingw32ce-
+#COMPARCH ?= i386-mingw32ce-
+COMPARCH ?= arm-wince-mingw32ce-
 
 LIBS += -lcoredll -lmingw32 -lmingwex -lws2 -lsupc++ -liphlpapi
 
