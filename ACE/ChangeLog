@@ -1,3 +1,8 @@
+Mon Apr 20 19:51:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Malloc_Test.cpp:
+          Fixed argument not used warning with cegcc
+
 Mon Apr 20 18:16:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_gnuwin32_common.GNU:
