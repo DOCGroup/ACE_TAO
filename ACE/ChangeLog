@@ -1,3 +1,9 @@
+Mon Apr 20 09:01:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.6.h:
+        * ace/config-vxworks6.4.h:
+          VxWorks 6.6 and newer have cpuset_t and taskCpuAffinitySet
+
 Mon Apr 20 08:51:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.6.h:
