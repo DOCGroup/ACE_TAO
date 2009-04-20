@@ -1,3 +1,8 @@
+Mon Apr 20 17:26:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-cegcc.h:
+          Include _mingw.h and check the MinGW version
+
 Mon Apr 20 17:16:06 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * ace/config-win32-cegcc.h:
