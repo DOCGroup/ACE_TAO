@@ -203,8 +203,6 @@
 #define ACE_LACKS_SYMLINKS
 #define ACE_LACKS_ISCTYPE
 
-#define ACE_HAS_CPUSET_T
-
 #if defined __RTP__
   // We are building for RTP mode
   #if !defined (ACE_AS_STATIC_LIBS)
@@ -286,7 +284,6 @@
   #define ACE_LACKS_TZSET
   #define ACE_LACKS_ISWCTYPE
   #define ACE_LACKS_ISBLANK
-  #define ACE_HAS_TASKCPUAFFINITYSET
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
