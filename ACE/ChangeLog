@@ -1,3 +1,49 @@
+Mon Apr 20 10:17:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/Basic_Types.h:
+        * ace/config-WinCE.h:
+        * ace/OS_NS_stropts.h:
+        * ace/OS_NS_sys_socket.h:
+        * ace/OS_NS_Thread.cpp:
+          Removed WinCE support for versions < 5.0.
+          
+        * ace/config-win32-cegcc.h:
+          Removed temporary defines.
+          
+        * ace/config-win32-common.h:
+          Replaced UNDER_CE with _WIN32_WCE.
+          
+        * ace/OS_main.cpp:
+        * ace/OS_main.h:
+          Removed CE gcc compiler warning by 
+          adding destructor.
+          
+        * ace/OS_NS_Thread.inl:
+          Removed WinCE support for versions before 5.0.
+          Added ACE_LACKS_CE_THREAD_PRIORITY define in order
+          to compile on CE gcc.
+        
+        * ace/Process.cpp:
+          Removed CE gcc compiler warning by
+          using ACE_UNUSED_ARG.
+
+        * ace/Registry.cpp:
+        * ace/Registry.h:
+          Removed CE gcc compiler warning by 
+          adding destructor.
+          Removed CE gcc compiler warning by
+          using ACE_UNUSED_ARG.
+                  
+        * ace/SV_Semaphore_Simple.cpp:
+          Removed pragma's for CE gcc compiler. Removed
+          check on ACE_WIN64 define.
+          
+        * include/makeinclude/platform_cegcc.GNU:
+          Default platform macros for CE gcc compiler.
+        
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Added support for CE gcc compiler.
+
 Mon Apr 20 09:01:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.6.h:

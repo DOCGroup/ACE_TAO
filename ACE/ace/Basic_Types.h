@@ -349,13 +349,6 @@ typedef unsigned char ACE_Byte;
 #   define ACE_SIZEOF_VOID_P ACE_SIZEOF_LONG
 # endif /* ACE_SIZEOF_VOID_P */
 
-// Type for doing arithmetic on pointers ... as elsewhere, we assume
-// that unsigned versions of a type are the same size as the signed
-// version of the same type.
-# if defined (ACE_HAS_WINCE) && (_WIN32_WCE < 400)
-typedef unsigned long ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
-# endif
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 // Byte-order (endian-ness) determination.

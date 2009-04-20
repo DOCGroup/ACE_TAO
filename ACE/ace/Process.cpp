@@ -838,6 +838,12 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
   command_line_buf_[0] = '\0';
   process_name_[0] = '\0';
 
+#if defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG(inherit_environment);
+  ACE_UNUSED_ARG(env_buf_len);
+  ACE_UNUSED_ARG(max_env_args);
+#endif
+
 #if !defined (ACE_HAS_WINCE)
   working_directory_[0] = '\0';
   ACE_NEW (environment_buf_,
