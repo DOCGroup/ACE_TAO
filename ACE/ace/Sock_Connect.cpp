@@ -1419,7 +1419,7 @@ ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
                        ACE_TEXT ("ACE::count_interfaces:")
                        ACE_TEXT ("ioctl - SIOCGLIFNUM failed")),
                       -1);
-# if defined (SIOCGLIFNUM)
+# if defined (SIOCGLIFNUM) && !defined (ACE_LACKS_STRUCT_LIFNUM)
   how_many = if_num.lifn_count;
 # else
   how_many = if_num;
