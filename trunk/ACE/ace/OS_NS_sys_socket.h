@@ -80,7 +80,6 @@ namespace ACE_OS
                      struct sockaddr *addr,
                      int *addrlen);
 
-#if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
   /**
    * QoS-enabled @c accept, which passes @a qos_params to @c accept.  If
    * the OS platform doesn't support QoS-enabled @c accept then the
@@ -91,7 +90,6 @@ namespace ACE_OS
                      struct sockaddr *addr,
                      int *addrlen,
                      const ACE_Accept_QoS_Params &qos_params);
-#endif  /* !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500)) */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int bind (ACE_HANDLE s,
@@ -108,7 +106,6 @@ namespace ACE_OS
                struct sockaddr *addr,
                int addrlen);
 
-#if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
   /**
    * QoS-enabled @c connect, which passes @a qos_params to @c connect.
    * If the OS platform doesn't support QoS-enabled @c connect then the
@@ -119,7 +116,6 @@ namespace ACE_OS
                const sockaddr *addr,
                int addrlen,
                const ACE_QoS_Params &qos_params);
-#endif  /* !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500)) */
 
   /// Retrieve information about available transport protocols
   /// installed on the local machine. Windows specific...
@@ -144,14 +140,12 @@ namespace ACE_OS
                   char *optval,
                   int *optlen);
 
-#if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
   /// Joins a leaf node into a QoS-enabled multi-point session.
   extern ACE_Export
   ACE_HANDLE join_leaf (ACE_HANDLE socket,
                         const sockaddr *name,
                         int namelen,
                         const ACE_QoS_Params &qos_params);
-#endif  /* !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500)) */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int listen (ACE_HANDLE handle,

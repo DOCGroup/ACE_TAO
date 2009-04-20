@@ -238,6 +238,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Main_Base
 {
 public:
+  virtual ~ACE_Main_Base (void);
   int run (HINSTANCE, HINSTANCE, LPWSTR, int);
   virtual int run_i (int, ACE_TCHAR *[]) = 0;
 };

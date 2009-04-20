@@ -33,7 +33,7 @@ ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
 #if !defined(ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 # define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
        (*THR_ID = ::_beginthreadex ((void(_Optlink*)(void*))ENTRY_POINT, STACK, STACKSIZE, ARGS), *THR_ID)
-#elif defined (ACE_HAS_WINCE) && defined (UNDER_CE) && (UNDER_CE >= 211)
+#elif defined (ACE_HAS_WINCE)
 # define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
       CreateThread (0, STACKSIZE, (unsigned long (__stdcall *) (void *)) ENTRY_POINT, ARGS, (FLAGS) & (CREATE_SUSPENDED | STACK_SIZE_PARAM_IS_A_RESERVATION), (unsigned long *) THR_ID)
 #elif defined(ACE_HAS_WTHREADS)

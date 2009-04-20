@@ -490,30 +490,11 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
   // need to release the lock one fewer times than this thread has acquired
   // it. Remember how many times, and reacquire it that many more times when
   // the condition is signaled.
-  //
-  // For WinCE, the situation is a bit trickier. CE doesn't have
-  // RecursionCount, and LockCount has changed semantics over time.
-  // In CE 3 (and maybe 4?) LockCount is not an indicator of recursion;
-  // instead, see when it's unlocked by watching the OwnerThread, which will
-  // change to something other than the current thread when it's been
-  // unlocked "enough" times. Note that checking for 0 (unlocked) is not
-  // sufficient. Another thread may acquire the lock between our unlock and
-  // checking the OwnerThread. So grab our thread ID value first, then
-  // compare to it in the loop condition. NOTE - the problem with this
-  // scheme is that we really want to unlock the mutex one _less_ times than
-  // required to release it for another thread to acquire. With CE 5 we
-  // can do this by watching LockCount alone. I _think_ it can be done by
-  // watching LockCount on CE 4 as well (though its meaning is different),
-  // but I'm leary of changing this code since a user reported success
-  // with it.
-  //
+
   // We're using undocumented fields in the CRITICAL_SECTION structure
   // and they've been known to change across Windows variants and versions./
   // So be careful if you need to change these - there may be other
   // Windows variants that depend on existing values and limits.
-#      if defined (ACE_HAS_WINCE) && (UNDER_CE < 500)
-  ACE_thread_t me = ACE_OS::thr_self ();
-#      endif /* ACE_HAS_WINCE && CE 4 or earlier */
 
   state.relock_count_ = 0;
   while (
@@ -521,13 +502,8 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
          m->LockCount > 0 && m->RecursionCount > 1
 #      else
          // WinCE doesn't have RecursionCount and the LockCount semantic
-         // has changed between versions; pre-Mobile 5 the LockCount
-         // was 0-indexed, and Mobile 5 has it 1-indexed.
-#        if (UNDER_CE < 500)
-         m->LockCount > 0 && m->OwnerThread == (HANDLE)me
-#        else
+         // Mobile 5 has it 1-indexed.
          m->LockCount > 1
-#        endif /* UNDER_CE < 500 */
 #      endif /* ACE_HAS_WINCE */
          )
     {
@@ -2705,11 +2681,12 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (ht_id, &priority), result), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
   ACE_Errno_Guard error (errno);
-#   if !defined (ACE_HAS_WINCE)
-  priority = ::GetThreadPriority (ht_id);
-#   else
+
+#   if defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_CE_THREAD_PRIORITY)
   priority = ::CeGetThreadPriority (ht_id);
-#   endif
+#   else
+  priority = ::GetThreadPriority (ht_id);
+#   endif /* defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_CE_THREAD_PRIORITY) */
 
 #   if defined (ACE_HAS_PHARLAP)
 #     if defined (ACE_PHARLAP_LABVIEW_RT)
@@ -3136,15 +3113,17 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
                                        result),
                      int, -1);
 # elif defined (ACE_HAS_WTHREADS)
-#  if !defined (ACE_HAS_WINCE)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (ht_id, priority),
-                                          ace_result_),
-                        int, -1);
-#  else
+
+#   if defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_CE_THREAD_PRIORITY)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CeSetThreadPriority (ht_id, priority),
                                           ace_result_),
                         int, -1);
-#  endif /* ACE_HAS_WINCE */
+#   else
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (ht_id, priority),
+                                          ace_result_),
+                        int, -1);
+#   endif /* defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_CE_THREAD_PRIORITY) */
+
 # elif defined (ACE_HAS_VXTHREADS)
   ACE_OSCALL_RETURN (::taskPrioritySet (ht_id, priority), int, -1);
 # else
