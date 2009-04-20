@@ -37,6 +37,11 @@
 
 #include /**/ <cegcc.h>
 #include /**/ <w32api.h>
+#include /**/ <_mingw.h>
+
+#if (__MINGW32_MAJOR_VERSION > 3)  || ((__MINGW32_MAJOR_VERSION == 3) && (__MINGW32_MINOR_VERSION >= 15))
+# undef ACE_LACKS_USECONDS_T
+#endif
 
 #define ACE_HAS_USER_MODE_MASKS
 
