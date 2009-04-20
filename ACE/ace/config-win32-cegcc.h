@@ -35,9 +35,6 @@
 
 #include "ace/config-g++-common.h"
 
-#undef _WIN32_WCE
-#define _WIN32_WCE 0x600
-
 #include /**/ <cegcc.h>
 #include /**/ <w32api.h>
 
@@ -100,6 +97,7 @@
 #undef ACE_HAS_WTOL
 #define ACE_LACKS_GETSYSTEMTIMEASFILETIME
 #define ACE_LACKS_FILELOCKS
+#define ACE_LACKS_CE_THREAD_PRIORITY
 
 #define ACE_INT64_FORMAT_SPECIFIER_ASCII "%I64d"
 #define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%I64u"
@@ -109,6 +107,8 @@
 #else
 #  define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 #endif /* _WIN32_WCE */
+
+#undef ACE_HAS_CUSTOM_EXPORT_MACROS
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_CEGCC_H */
