@@ -1,3 +1,11 @@
+Mon Apr 20 13:52:06 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/config-win32-cegcc.h:
+          Made a few define's CE gcc version depended.
+
+        * include/makeinclude/platform_cegcc.GNU:
+          Included ACE_HAS_CEGCC as define
+
 Mon Apr 20 12:53:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/wrapper_macros.GNU:
