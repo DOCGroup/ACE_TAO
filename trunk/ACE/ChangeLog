@@ -1,3 +1,9 @@
+Mon Apr 20 17:34:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_errno.h:
+          Prevent redefinitions and when we don't have errno.h, define
+          the error numbers if they are not defined yet. Needed for cegcc
+
 Mon Apr 20 17:26:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-cegcc.h:
