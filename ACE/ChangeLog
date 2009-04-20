@@ -2,7 +2,8 @@ Mon Apr 20 12:53:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/wrapper_macros.GNU:
           For quantify use PURELINK, quantify shouldn't be used when
-          linking a shared library
+          linking a shared library. This fixes bugzilla 1865, thanks
+          to <moyyo at freetekno dot cz> for reporting this.
 
 Mon Apr 20 11:40:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
