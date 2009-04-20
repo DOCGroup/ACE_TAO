@@ -1,3 +1,9 @@
+Mon Apr 20 17:43:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sock_Connect.cpp:
+          Include iphlpapi.h with all lower cases to resolve compile
+          error when using cross compilation using a linux host
+
 Mon Apr 20 17:39:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_unistd.h:
