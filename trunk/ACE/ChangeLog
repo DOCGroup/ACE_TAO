@@ -1,3 +1,8 @@
+Mon Apr 20 11:40:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Addes support for SOLINK.cc.override
+
 Mon Apr 20 11:38:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_cegcc.GNU:
