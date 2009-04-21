@@ -31,6 +31,8 @@ FTRMFF_Ranked::operator () (const FTRMFF_Input & input)
   output.schedule = algorithm (input.tasks);
   output.unscheduled_tasks = algorithm.get_unschedulable ();
 
+  DBG_OUT (algorithm.schedule ());
+
   return output;
 }
 
@@ -38,15 +40,9 @@ FTRMFF_Ranked_Algorithm::FTRMFF_Ranked_Algorithm (
   const PROCESSOR_LIST & processors,
   unsigned int consistency_level,
   const std::string & ranking_type)
-  : consistency_level_ (consistency_level)
+  : schedule_ (create_schedule (processors)),
+    consistency_level_ (consistency_level)
 {
-  for (PROCESSOR_LIST::const_iterator it = processors.begin ();
-       it != processors.end ();
-       ++it)
-    {
-      schedule_[*it] = Schedule_Entry ();
-    }
-
   if (ranking_type.compare ("utilization") == 0)
     ranking_algorithm_.reset (new Utilization_Ranking ());
   else
@@ -119,4 +115,10 @@ SCHEDULE_PROGRESS_LIST
 FTRMFF_Ranked_Algorithm::get_unschedulable ()
 {
   return unschedulable_;
+}
+
+const SCHEDULE & 
+FTRMFF_Ranked_Algorithm::schedule () const
+{
+  return schedule_;
 }

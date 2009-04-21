@@ -31,6 +31,10 @@ std::ostream & operator<< (std::ostream & ostr, const SCHEDULE & s);
 
 SCHEDULE read_schedule (std::istream & istr);
 
+SCHEDULE create_schedule (const PROCESSOR_LIST & processors);
+
+unsigned long processor_usage (const SCHEDULE & schedule);
+
 struct ScheduleResult
 {
   Task task;

@@ -36,7 +36,7 @@ transform_schedule (const SCHEDULE & schedule)
         }
     }
 
-  DBG_OUT (schedule);
+  //DBG_OUT (schedule);
 
   return output;
 }
@@ -143,6 +143,36 @@ SCHEDULE read_schedule (std::istream & istr)
     }
   
   return s;
+}
+
+SCHEDULE create_schedule (const PROCESSOR_LIST & processors)
+{
+  SCHEDULE result;
+
+  for (PROCESSOR_LIST::const_iterator it = processors.begin ();
+       it != processors.end ();
+       ++it)
+    {
+      result[*it] = Schedule_Entry ();
+    }
+
+  return result;
+}
+
+unsigned long 
+processor_usage (const SCHEDULE & schedule)
+{
+  unsigned long count = 0;
+  
+  for (SCHEDULE::const_iterator it = schedule.begin ();
+       it != schedule.end ();
+       ++it)
+    {
+      if (it->second.size () > 0)
+        count++;
+    }
+
+  return count;
 }
 
 Ranking_Algorithm::~Ranking_Algorithm ()

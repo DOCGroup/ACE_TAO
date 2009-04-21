@@ -73,17 +73,7 @@ int main (int argc, char *argv[])
 
   if (counting_mode)
     {
-      unsigned long count = 0;
-
-      for (SCHEDULE::iterator it = schedule.begin ();
-           it != schedule.end ();
-           ++it)
-        {
-          if (it->second.size () > 0)
-            count++;
-        }
-
-      std::cout << count << std::endl;
+      std::cout << processor_usage (schedule) << std::endl;
     }
   else if (average_mode)
     {

@@ -38,6 +38,8 @@ public:
 
   SCHEDULE_PROGRESS_LIST get_unschedulable ();
 
+  const SCHEDULE & schedule () const;
+
 private:
   SCHEDULE schedule_;
   SCHEDULE_PROGRESS_LIST unschedulable_;

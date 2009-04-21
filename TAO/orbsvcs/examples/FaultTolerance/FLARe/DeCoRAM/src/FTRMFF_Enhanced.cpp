@@ -29,21 +29,18 @@ FTRMFF_Enhanced::operator () (const FTRMFF_Input & input)
   output.schedule = algorithm (input.tasks);
   output.unscheduled_tasks = algorithm.get_unschedulable ();
 
+  DBG_OUT (algorithm.schedule ());
+
   return output;
 }
 
 FTRMFF_Enhanced_Algorithm::FTRMFF_Enhanced_Algorithm (
   const PROCESSOR_LIST & processors,
   unsigned int consistency_level)
-  : consistency_level_ (consistency_level),
+  : schedule_ (create_schedule (processors)),
+    consistency_level_ (consistency_level),
     ranking_algorithm_ (new Simple_Ranking ())
 {
-  for (PROCESSOR_LIST::const_iterator it = processors.begin ();
-       it != processors.end ();
-       ++it)
-    {
-      schedule_[*it] = Schedule_Entry ();
-    }
 }
 
 FTRMFF_Enhanced_Algorithm::~FTRMFF_Enhanced_Algorithm ()
@@ -112,4 +109,10 @@ SCHEDULE_PROGRESS_LIST
 FTRMFF_Enhanced_Algorithm::get_unschedulable ()
 {
   return unschedulable_;
+}
+
+const SCHEDULE &
+FTRMFF_Enhanced_Algorithm::schedule () const
+{
+  return schedule_;
 }
