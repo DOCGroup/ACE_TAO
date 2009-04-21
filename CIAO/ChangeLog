@@ -1,7 +1,7 @@
 Tue Apr 21 06:50:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/fm/*:
-          Added FrameMaker 8 files for the MPC pdf file. When making changes
+          Added FrameMaker 8 files for the CIAO pdf file. When making changes
           make sure track changes is enabled.
 
           This documentation is based on original work contributed by
