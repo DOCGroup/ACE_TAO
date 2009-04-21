@@ -54,7 +54,9 @@ static size_t n_threads = ACE_MAX_THREADS;
 
 // ACE_Recursive_Thread_Mutex::get_nesting_level() will return a
 // meaningful value.
+#if !defined (ACE_HAS_WTHREADS)
 static bool nesting_level_supported = false;
+#endif
 
 static void
 test_recursion_depth (int nesting_level,
@@ -94,7 +96,7 @@ test_recursion_depth (int nesting_level,
       test_recursion_depth (nesting_level + 1,
                             rm);
 
-#if !defined (ACE_HAS_WTHREADS) 
+#if !defined (ACE_HAS_WTHREADS)
       if (nesting_level_supported
           && (nesting_level + 1) != rm->get_nesting_level ())
         {
@@ -364,7 +366,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 #if !defined (ACE_HAS_WTHREADS)
   // This will work for Windows, too, if ACE_TEST_MUTEX is
   // ACE_Recursive_Thread_Mutex instead of ACE_Process_Mutex.
-  nesting_level_supported = 
+  nesting_level_supported =
     (rm.get_nesting_level () != -1 || errno != ENOTSUP);
 #endif  /* !ACE_HAS_WTHREADS */
 
