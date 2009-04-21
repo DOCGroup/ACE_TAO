@@ -1,7 +1,13 @@
+Tue Apr 21 14:50:23 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * docs/ace_guidelines.vsmacros:
+
+          Prevented the macros from saving .rc files.
+
 Tue Apr 21 13:50:48 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh:
-        
+
           Fixed the olddate to be consistent with the release of 5.6.9.
 
 Tue Apr 21 07:02:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
