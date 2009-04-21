@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    basic_ftrmff.cpp
+ *  @file    bestfit_ftrmff.cpp
  *
  *  $Id$
  *
@@ -14,8 +14,7 @@
 #include <sstream>
 #include <iostream>
 #include <ace/Get_Opt.h>
-#include "FTRMFF_Basic.h"
-#include "CTT_Basic.h"
+#include "FTRMFF_Bestfit.h"
 
 std::string filename = "test.sd"; // filename of task list input
 unsigned int m = 4; // number of processors
@@ -58,14 +57,25 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   
   ifile.close ();
 
-  CTT_Basic ctt;
-  FTRMFF_Basic ftrmff (ctt);
+  FTRMFF_Bestfit ftrmff;
 
   FTRMFF_Input input;
   input.tasks = tasks;
   input.processors = procs;
   input.backup_count = c;
   FTRMFF_Output result = ftrmff (input);
+
+#if 0
+  for (SCHEDULING_MAP::iterator it = result.schedule.begin ();
+       it != result.schedule.end ();
+       ++it)
+    {
+      std::cout << it->first << " -> " 
+                << it->second.processor 
+                << " (" << it->second.priority << ")" 
+                << std::endl;
+    }
+#endif
 
   if (result.unscheduled_tasks.size () > 0)
     {
@@ -79,4 +89,3 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-

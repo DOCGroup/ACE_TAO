@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    FTRMFF_Enhanced.h
+ *  @file    FTRMFF_Bestfit.h
  *
  *  $Id$
  *
@@ -10,40 +10,37 @@
  */
 //=============================================================================
 
-#ifndef FTRMFF_ENHANCED_ALGORITHM_H_
-#define FTRMFF_ENHANCED_ALGORITHM_H_
+#ifndef FTRMFF_BESTFIT_ALGORITHM_H_
+#define FTRMFF_BESTFIT_ALGORITHM_H_
 
 #include "Schedule.h"
 
-class FTRMFF_Enhanced : public FTRMFF_Algorithm
+class FTRMFF_Bestfit : public FTRMFF_Algorithm
 {
 public:
-  virtual ~FTRMFF_Enhanced ();
+  virtual ~FTRMFF_Bestfit ();
 
   virtual FTRMFF_Output operator () (const FTRMFF_Input & input);
 };
 
-class FTRMFF_Enhanced_Algorithm : 
+class FTRMFF_Bestfit_Algorithm : 
   public std::unary_function <TASK_LIST,
                               SCHEDULING_MAP>
 {
 public:
-  FTRMFF_Enhanced_Algorithm (const PROCESSOR_LIST & processors,
-                             unsigned int consistency_level);
+  FTRMFF_Bestfit_Algorithm (const PROCESSOR_LIST & processors,
+                           unsigned int consistency_level);
 
-  virtual ~FTRMFF_Enhanced_Algorithm ();
+  virtual ~FTRMFF_Bestfit_Algorithm ();
 
   virtual SCHEDULING_MAP operator () (const TASK_LIST & tasks);
 
   SCHEDULE_PROGRESS_LIST get_unschedulable ();
 
-  const SCHEDULE & schedule () const;
-
 private:
-  SCHEDULE schedule_;
+  const PROCESSOR_LIST & processors_;
   SCHEDULE_PROGRESS_LIST unschedulable_;
   unsigned int consistency_level_;
-  std::auto_ptr<Ranking_Algorithm> ranking_algorithm_;
 };
 
-#endif /* FTRMFF_ENHANCED_ALGORITHM_H_ */
+#endif /* FTRMFF_BESTFIT_ALGORITHM_H_ */

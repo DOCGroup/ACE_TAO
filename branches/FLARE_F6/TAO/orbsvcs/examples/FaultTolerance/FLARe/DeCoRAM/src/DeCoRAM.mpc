@@ -76,6 +76,25 @@ project (ranked_ftrmff) {
   }
 }
 
+project (bestfit_ftrmff) {
+
+  exename = ftrmbf
+  exeout = ../bin
+
+  Source_Files {
+    Algorithms.cpp
+    Schedule.cpp
+    CTT_Basic.cpp
+    CTT_Enhanced.cpp
+    Task_Scheduler.cpp
+    Simple_Ranking.cpp
+    FTRMFF_Primary.cpp
+    FTRMFF_Basic.cpp
+    FTRMFF_Bestfit.cpp
+    bestfit_ftrmff.cpp
+  }
+}
+
 project (schedulability_check) : acelib {
 
   exename = scheck

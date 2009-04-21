@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    FTRMFF_Enhanced.h
+ *  @file    FTRMFF_Primary.h
  *
  *  $Id$
  *
@@ -10,28 +10,28 @@
  */
 //=============================================================================
 
-#ifndef FTRMFF_ENHANCED_ALGORITHM_H_
-#define FTRMFF_ENHANCED_ALGORITHM_H_
+#ifndef FTRMFF_PRIMARY_H_
+#define FTRMFF_PRIMARY_H_
 
 #include "Schedule.h"
+#include "CTT_Basic.h"
 
-class FTRMFF_Enhanced : public FTRMFF_Algorithm
+class FTRMFF_Primary : public FTRMFF_Algorithm
 {
 public:
-  virtual ~FTRMFF_Enhanced ();
+  virtual ~FTRMFF_Primary ();
 
   virtual FTRMFF_Output operator () (const FTRMFF_Input & input);
 };
 
-class FTRMFF_Enhanced_Algorithm : 
+class FTRMFF_Primary_Algorithm : 
   public std::unary_function <TASK_LIST,
                               SCHEDULING_MAP>
 {
 public:
-  FTRMFF_Enhanced_Algorithm (const PROCESSOR_LIST & processors,
-                             unsigned int consistency_level);
+  FTRMFF_Primary_Algorithm (const PROCESSOR_LIST & processors);
 
-  virtual ~FTRMFF_Enhanced_Algorithm ();
+  virtual ~FTRMFF_Primary_Algorithm ();
 
   virtual SCHEDULING_MAP operator () (const TASK_LIST & tasks);
 
@@ -42,8 +42,7 @@ public:
 private:
   SCHEDULE schedule_;
   SCHEDULE_PROGRESS_LIST unschedulable_;
-  unsigned int consistency_level_;
-  std::auto_ptr<Ranking_Algorithm> ranking_algorithm_;
+  CTT_Basic ctt_;
 };
 
-#endif /* FTRMFF_ENHANCED_ALGORITHM_H_ */
+#endif /* FTRMFF_PRIMARY_H_ */
