@@ -76,4 +76,6 @@ struct WCRTComparison : public std::binary_function <ScheduleResult,
                     const ScheduleResult & r2);
 };
 
+std::ostream & operator<< (std::ostream & ostr, const ScheduleResult & r);
+
 #endif /* SCHEDULE_H_ */

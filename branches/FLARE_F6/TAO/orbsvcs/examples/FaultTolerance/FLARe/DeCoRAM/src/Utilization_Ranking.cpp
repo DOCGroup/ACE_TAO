@@ -50,7 +50,6 @@ Utilization_Ranking::operator () (SCHEDULE_RESULT_LIST & result_list,
 
       if (proc_it == schedule.end ())
         {
-          std::cerr << "OOOPS" << std::endl;
           continue;
         }
 

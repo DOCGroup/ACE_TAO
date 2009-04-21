@@ -60,18 +60,21 @@ OptimizedWCRT::operator () (double current_wcrt,
       // create modified task list where all backups that are not
       // active get treated as primaries
       TASK_LIST modified_tasks;
+
+      std::cout << "Original: " << tasks_ << std::endl
+                << "Active: " << active_backups << std::endl;
       
       std::transform (tasks_.begin (),
                       tasks_.end (),
                       std::inserter (modified_tasks,
                                      modified_tasks.begin ()),
                       TaskRoleModifier (active_backups));
-  
+
       // calculate wcrt using CTT algorithm and 
       // compare it to the existing on
       double wcrt = (*ctt_) (modified_tasks);
 
-      TRACE ("wcrt = " << wcrt);
+      TRACE ("WCRT: " << modified_tasks << " = " << wcrt);
 
       // if we found a schedulable result return maximum wcrt
       if (wcrt != .0)

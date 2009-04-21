@@ -148,3 +148,12 @@ SCHEDULE read_schedule (std::istream & istr)
 Ranking_Algorithm::~Ranking_Algorithm ()
 {
 }
+
+std::ostream & 
+operator<< (std::ostream & ostr, const ScheduleResult & r)
+{
+  ostr << "<" << r.task << "|" << r.processor 
+       << "|" << r.wcrt << ">" << std::endl;
+
+  return ostr;
+}
