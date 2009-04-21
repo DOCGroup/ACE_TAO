@@ -196,7 +196,7 @@ Request_Handler::handle_input (ACE_HANDLE fd)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) Errno is %d  and result is %d\n",
+                  "(%t) Errno is %d and result is %d\n",
                   errno, result));
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) Request_Handler: 0x%x peer closed (0x%x)\n",
