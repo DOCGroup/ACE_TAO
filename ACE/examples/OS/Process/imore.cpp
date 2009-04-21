@@ -94,6 +94,7 @@ parse_args (int argc, ACE_TCHAR **argv)
   return 0;
 }
 
+#if !defined (ACE_WIN32)
 static int
 setup_named_pipes (ACE_Process_Options &opt)
 {
@@ -142,7 +143,9 @@ setup_named_pipes (ACE_Process_Options &opt)
   wfifo.close ();
   return 0;
 }
+#endif
 
+#if !defined (ACE_WIN32)
 static int
 setup_unnamed_pipe (ACE_Process_Options &opt)
 {
@@ -169,6 +172,7 @@ setup_unnamed_pipe (ACE_Process_Options &opt)
   pipe.close ();
   return 0;
 }
+#endif
 
 static int
 print_file (ACE_HANDLE infd)
@@ -193,7 +197,7 @@ print_file (ACE_HANDLE infd)
             }
         }
     }
-    
+
   return 0;
 }
 
