@@ -1,3 +1,13 @@
+Tue Apr 21 06:50:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/fm/*:
+          Added FrameMaker 8 files for the MPC pdf file. When making changes
+          make sure track changes is enabled.
+
+          This documentation is based on original work contributed by
+          Object Computing, Inc. (OCI), St. Louis, MO, USA,
+          http://www.ociweb.com.
+
 Thu Apr 16 16:13:22 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
