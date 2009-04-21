@@ -1,3 +1,8 @@
+Tue Apr 21 10:17:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Bug_3643_Regression/*:
+          New regression test
+
 Tue Apr 21 09:52:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/nslist/nslist.cpp:
