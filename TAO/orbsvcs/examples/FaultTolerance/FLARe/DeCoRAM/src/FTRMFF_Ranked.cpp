@@ -108,6 +108,8 @@ FTRMFF_Ranked_Algorithm::operator () (const TASK_LIST & tasks)
 
       // if we reach this code, we can add all tasks to the schedule
       add_schedule_results (results, schedule_);
+
+      TRACE ("New Schedule:" << std::endl << schedule_ << std::endl);
     }
 
   return transform_schedule (schedule_);

@@ -51,7 +51,7 @@ Ranked_Scheduler::operator () (const Task & task)
           // remove this processor from the schedule so that
           // following backups are not scheduled on the same processor
           current_schedule_.erase (processor_it);
-          
+
           break;
         }
     } // end for
