@@ -1,3 +1,8 @@
+Tue Apr 21 09:52:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/nslist/nslist.cpp:
+          Removed argc/argv conversion
+
 Thu Apr 16 16:11:07 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
