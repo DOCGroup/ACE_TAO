@@ -81,15 +81,16 @@ project (bestfit_ftrmff) {
   exename = ftrmbf
   exeout = ../bin
 
+  macros += DO_DEBUG
+
   Source_Files {
     Algorithms.cpp
     Schedule.cpp
-    CTT_Basic.cpp
     CTT_Enhanced.cpp
-    Task_Scheduler.cpp
+    Utilization_Ranking.cpp
+    OptimizedWCRT.cpp
+    RankedWCRT.cpp
     Simple_Ranking.cpp
-    FTRMFF_Primary.cpp
-    FTRMFF_Basic.cpp
     FTRMFF_Bestfit.cpp
     bestfit_ftrmff.cpp
   }

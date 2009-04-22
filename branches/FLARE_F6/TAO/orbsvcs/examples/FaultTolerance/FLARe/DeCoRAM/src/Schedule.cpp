@@ -159,6 +159,31 @@ SCHEDULE create_schedule (const PROCESSOR_LIST & processors)
   return result;
 }
 
+class ScheduleProcessorName : public std::unary_function <
+                                       SCHEDULE::value_type,
+                                       PROCESSOR_LIST::value_type>
+{
+public:
+  PROCESSOR_LIST::value_type operator () (const SCHEDULE::value_type & entry)
+  {
+    return entry.first;
+  }
+};
+
+PROCESSOR_LIST 
+get_processors (const SCHEDULE & schedule)
+{
+  PROCESSOR_LIST processors;
+
+  std::transform (schedule.begin (),
+                  schedule.end (),
+                  std::inserter (processors,
+                                 processors.begin ()),
+                  ScheduleProcessorName ());
+
+  return processors;
+}
+
 unsigned long 
 processor_usage (const SCHEDULE & schedule)
 {
@@ -183,7 +208,7 @@ std::ostream &
 operator<< (std::ostream & ostr, const ScheduleResult & r)
 {
   ostr << "<" << r.task << "|" << r.processor 
-       << "|" << r.wcrt << ">" << std::endl;
+       << "|" << r.wcrt << ">";
 
   return ostr;
 }

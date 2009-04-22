@@ -126,18 +126,6 @@ public:
   void operator () (const Task & task)
   {
     PROCESSOR_SET failure_set = map_ [task.name];
-    PROCESSOR_SET result;
-
-    /*    
-    std::set_union (failure_set.begin (),
-                    failure_set.end (),
-                    union_.begin (),
-                    union_.end (),
-                    std::inserter (result,
-                                   result.begin ()));
-
-                                   union_ = result;
-    */
 
     union_.insert (failure_set.begin (), failure_set.end ());
 
