@@ -1,3 +1,28 @@
+Wed Apr 22 17:59:18 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_sequence.h:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        
+          Added check to catch illegal use of incomplete sequence
+          type (sequence of undefined struct or union) as an
+          operation return type or parameter. Thanks to
+          Ron van Hoof <rvhoof27@gmail.com> for reporting the bug
+          and for sending in the example IDL. This fix closes
+          [BUGID:3648].
+          
+        * TAO_IDL/util/utl_err.cpp:
+        
+          Changed message associated with EIDL_ILLEGAL_ADD flag
+          to be more informative.
+
+        * TAO_IDL/tao_idl.mpc:
+        
+          Removed a redundant item from the 'after' line of
+          TAO_IDL_EXE.
+          
 Wed Apr 22 09:07:44 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Bug_3632_Regression/test.cpp:
