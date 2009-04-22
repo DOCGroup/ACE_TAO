@@ -31,9 +31,6 @@ Ranked_Scheduler::operator () (const Task & task)
        processor_it != current_schedule_.end ();
        ++processor_it)
     {
-      // iterate through all possible failure cases that might affect
-      // this processor, based on its tasks
-      // TASK_LIST active_backups = 
       TASK_LIST local_tasks = processor_it->second;
 
       local_tasks.push_back (task);

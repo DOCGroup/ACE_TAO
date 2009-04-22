@@ -11,9 +11,8 @@
 //=============================================================================
 
 #include "FTRMFF_Bestfit.h"
-#include "FTRMFF_Primary.h"
-#include "FTRMFF_Basic.h"
-#include "CTT_Enhanced.h"
+#include "RankedWCRT.h"
+#include "Utilization_Ranking.h"
 
 FTRMFF_Bestfit::~FTRMFF_Bestfit ()
 {
@@ -29,13 +28,15 @@ FTRMFF_Bestfit::operator () (const FTRMFF_Input & input)
   output.schedule = algorithm (input.tasks);
   output.unscheduled_tasks = algorithm.get_unschedulable ();
 
+  DBG_OUT (algorithm.schedule ());
+
   return output;
 }
 
 FTRMFF_Bestfit_Algorithm::FTRMFF_Bestfit_Algorithm (
   const PROCESSOR_LIST & processors,
   unsigned int consistency_level)
-  : processors_ (processors),
+  : schedule_ (create_schedule (processors)),
     consistency_level_ (consistency_level)
 {
 }
@@ -47,47 +48,98 @@ FTRMFF_Bestfit_Algorithm::~FTRMFF_Bestfit_Algorithm ()
 SCHEDULING_MAP
 FTRMFF_Bestfit_Algorithm::operator () (const TASK_LIST & tasks)
 {
-  // step one, only schedule primaries to get lower bound
-  FTRMFF_Primary_Algorithm primary_ftrmff (processors_);
+  // sort tasks according to their worst case response times
+  TASK_LIST sorted_tasks = tasks;
 
-  primary_ftrmff (tasks);
+  std::sort (sorted_tasks.begin (), 
+	     sorted_tasks.end (), 
+	     PeriodComparison <Task> ());
 
-  unsigned long minimum = 
-    processor_usage (primary_ftrmff.schedule ());
+  // for each task
+  for (TASK_LIST::const_iterator task_it = sorted_tasks.begin ();
+       task_it != sorted_tasks.end ();
+       ++task_it)
+    {
+      // create a set of replicas
+      TASK_LIST replica_group = create_tasks (*task_it, consistency_level_);
 
-  std::cout << minimum << " ";
+      // copy global schedule for per-task scheduling
+      SCHEDULE local_schedule = schedule_;
 
-  // step two, schedule replicas with only state synchronization times
-  CTT_Enhanced ctt_enhanced;
-  FTRMFF_Basic_Algorithm only_ss_ftrmff (processors_,
-                                         consistency_level_,
-                                         ctt_enhanced);
+      // initialize worst-case response time algorithm
+      RankedWCRT wcrt_algorithm (local_schedule,
+                                 consistency_level_);
 
-  only_ss_ftrmff (tasks);
-  
-  unsigned long lower_bound = 
-    processor_usage (only_ss_ftrmff.schedule ());
+      // this data-structure will store result schedules
+      SCHEDULE_RESULT_LIST schedule_results;
 
-  std::cout << lower_bound << " ";
+      // for each replica
+      for (TASK_LIST::iterator replica_it = replica_group.begin ();
+           replica_it != replica_group.end ();
+           ++replica_it)
+        {
+          ScheduleResult best_result;
+          best_result.wcrt = -1.0;
 
-  // step three, schedule all replicas as active
-  CTT_Basic ctt_basic;
-  FTRMFF_Basic_Algorithm active_ftrmff (processors_,
-                                        consistency_level_,
-                                        ctt_basic);
+          // for each processor
+          for (SCHEDULE::iterator proc_it = local_schedule.begin ();
+               proc_it != local_schedule.end ();
+               ++proc_it)
+            {
+              // calculate worst-case response time of replica on processor
+              TASK_LIST local_tasks = local_schedule[proc_it->first];
 
-  active_ftrmff (tasks);
-  
-  unsigned long upper_bound = 
-    processor_usage (active_ftrmff.schedule ());
+              local_tasks.push_back (*task_it);
 
-  std::cout << upper_bound << std::endl;
+              double wcrt = wcrt_algorithm (local_tasks);
 
-  return SCHEDULING_MAP ();
+              // remember result with minimum worst-case response time
+              if ((best_result.wcrt < .0) || (wcrt < best_result.wcrt))
+                {
+                  best_result.task = *task_it;
+                  best_result.processor = proc_it->first;
+                  best_result.wcrt = wcrt;
+                }
+            }
+
+          // use best schedule entry
+          schedule_results.push_back (best_result);
+
+          local_schedule.erase (best_result.processor);
+        }
+
+      // rank replicas based on the non-failure case response time
+      Utilization_Ranking ranking_algorithm;
+
+      unsigned int scheduled_replicas = 
+        ranking_algorithm (schedule_results,
+                           schedule_);
+
+      // if all tasks are schedulable
+      if (scheduled_replicas == schedule_results.size ())
+        {
+          // schedule all schedule entries for replicas
+          add_schedule_results (schedule_results, schedule_);
+        }
+      else
+        {
+          // if not add to unschedulable list
+          ScheduleProgress pg = {*task_it, scheduled_replicas};
+          unschedulable_.push_back (pg);
+        }
+    }
+
+  return transform_schedule (schedule_);
 }
 
 SCHEDULE_PROGRESS_LIST
 FTRMFF_Bestfit_Algorithm::get_unschedulable ()
 {
   return unschedulable_;
+}
+
+const SCHEDULE & 
+FTRMFF_Bestfit_Algorithm::schedule () const
+{
+  return schedule_;
 }

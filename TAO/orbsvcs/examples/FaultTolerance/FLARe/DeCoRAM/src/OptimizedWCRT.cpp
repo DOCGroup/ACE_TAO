@@ -61,8 +61,8 @@ OptimizedWCRT::operator () (double current_wcrt,
       // active get treated as primaries
       TASK_LIST modified_tasks;
 
-      std::cout << "Original: " << tasks_ << std::endl
-                << "Active: " << active_backups << std::endl;
+      TRACE ("Original: " << tasks_ << std::endl
+             << "Active: " << active_backups);
       
       std::transform (tasks_.begin (),
                       tasks_.end (),

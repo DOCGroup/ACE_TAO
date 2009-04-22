@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    FTRMFF_Bestfit.h
+ *  @file    FTRMFF_Binary_Search.h
  *
  *  $Id$
  *
@@ -15,32 +15,30 @@
 
 #include "Schedule.h"
 
-class FTRMFF_Bestfit : public FTRMFF_Algorithm
+class FTRMFF_Binary_Search : public FTRMFF_Algorithm
 {
 public:
-  virtual ~FTRMFF_Bestfit ();
+  virtual ~FTRMFF_Binary_Search ();
 
   virtual FTRMFF_Output operator () (const FTRMFF_Input & input);
 };
 
-class FTRMFF_Bestfit_Algorithm : 
+class FTRMFF_Binary_Search_Algorithm : 
   public std::unary_function <TASK_LIST,
                               SCHEDULING_MAP>
 {
 public:
-  FTRMFF_Bestfit_Algorithm (const PROCESSOR_LIST & processors,
+  FTRMFF_Binary_Search_Algorithm (const PROCESSOR_LIST & processors,
                            unsigned int consistency_level);
 
-  virtual ~FTRMFF_Bestfit_Algorithm ();
+  virtual ~FTRMFF_Binary_Search_Algorithm ();
 
   virtual SCHEDULING_MAP operator () (const TASK_LIST & tasks);
 
   SCHEDULE_PROGRESS_LIST get_unschedulable ();
 
-  const SCHEDULE & schedule () const;
-
 private:
-  SCHEDULE schedule_;
+  const PROCESSOR_LIST & processors_;
   SCHEDULE_PROGRESS_LIST unschedulable_;
   unsigned int consistency_level_;
 };

@@ -33,7 +33,7 @@ unsigned long
 Utilization_Ranking::operator () (SCHEDULE_RESULT_LIST & result_list,
                                   const SCHEDULE & schedule)
 {
-  unsigned long scheduled_replicas;
+  unsigned long scheduled_replicas = 0;
 
   for (SCHEDULE_RESULT_LIST::iterator it = result_list.begin ();
        it != result_list.end ();
