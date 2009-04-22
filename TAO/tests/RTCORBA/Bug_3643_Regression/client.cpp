@@ -10,7 +10,7 @@
 
 ACE_RCSID(Thread_Pool, client, "$Id$")
 
-const char *ior = "file://ior_1";
+const ACE_TCHAR *ior = "file://ior_1";
 int iterations = 1000;
 int shutdown_server = 0;
 bool decreased = false;
@@ -37,7 +37,7 @@ sched_policy_name (int sched_policy)
 }
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "xk:i:");
   int c;

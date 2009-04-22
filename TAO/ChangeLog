@@ -1,3 +1,8 @@
+Wed Apr 22 09:32:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/RTCORBA/Bug_3643_Regression/client.cpp:
+          Resolved unicode compiler error.
+
 Tue Apr 21 10:17:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Bug_3643_Regression/*:
