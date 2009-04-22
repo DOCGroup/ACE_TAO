@@ -129,7 +129,7 @@ error_string (UTL_Error::ErrorCode c)
     case UTL_Error::EIDL_LABEL_TYPE:
       return "label type incompatible with union discriminator type, ";
     case UTL_Error::EIDL_ILLEGAL_ADD:
-      return "forward declared type may be used only as a sequence element, ";
+      return "illegal use of incomplete type, ";
     case UTL_Error::EIDL_ILLEGAL_USE:
       return "illegal type used in expression, ";
     case UTL_Error::EIDL_ILLEGAL_RAISES:

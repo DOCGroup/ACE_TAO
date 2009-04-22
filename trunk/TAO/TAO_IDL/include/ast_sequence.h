@@ -104,6 +104,10 @@ public:
   // union, array, typedef, and interface.
   virtual bool legal_for_primary_key (void) const;
   
+  // Is the element type a forward declared struct or union
+  // that hasn't yet been fully defined?
+  virtual bool is_defined (void);
+  
   // Cleanup method.
   virtual void destroy (void);
 

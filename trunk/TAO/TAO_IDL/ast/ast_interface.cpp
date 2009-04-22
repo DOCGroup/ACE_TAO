@@ -1090,7 +1090,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
   // lookup is all that's needed.
   AST_Decl *d = s->lookup_by_name_local (i->local_name (),
                                          0);
-
+                                         
   AST_Interface *fd = 0;
 
   if (d != 0)
@@ -1138,6 +1138,14 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
             {
               idl_global->err ()->redef_error (i->full_name (),
                                                d->full_name ());
+            }
+            
+          AST_InterfaceFwd *fwd =
+            AST_InterfaceFwd::narrow_from_decl (d);
+            
+          if (fwd != 0)
+            {
+              fwd->set_as_defined ();
             }
         }
       // If it is a forward declared interface..
@@ -1368,6 +1376,7 @@ AST_Interface::redefine (AST_Interface *from)
   this->set_file_name (idl_global->filename ()->get_string ());
   this->ifr_added_ = from->ifr_added_;
   this->ifr_fwd_added_ = from->ifr_fwd_added_;
+  this->fwd_decl_->set_as_defined ();
 }
 
 // Data accessors.
