@@ -19,6 +19,11 @@ ACE_RCSID (ace, OS_NS_unistd, "$Id$")
 #include "ace/os_include/sys/os_pstat.h"
 #include "ace/os_include/sys/os_sysctl.h"
 
+#if defined ACE_HAS_VXCPULIB
+# include "vxCpuLib.h"
+# include "cpuset.h"
+#endif /* ACE_HAS_VXCPULIB */
+
 #if defined (ACE_NEEDS_FTRUNCATE)
 extern "C" int
 ftruncate (ACE_HANDLE handle, long len)
@@ -378,6 +383,8 @@ ACE_OS::num_processors (void)
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
   return sys_info.dwNumberOfProcessors;
+#elif defined (ACE_HAS_VXCPULIB)
+  return vxCpuConfiguredGet();
 #elif defined (_SC_NPROCESSORS_CONF)
   return ::sysconf (_SC_NPROCESSORS_CONF);
 #elif defined (ACE_HAS_SYSCTL)
@@ -418,6 +425,19 @@ ACE_OS::num_processors_online (void)
       mask >>= 1;
     }
   return active_processors;
+#elif defined (ACE_HAS_VXCPULIB)
+  long num_cpu = 0;
+  cpuset_t cpuset;
+  CPUSET_ZERO (cpuset);
+  cpuset = vxCpuEnabledGet();
+  for (int i =0; i < 32; i++)
+    {
+      if (CPUSET_ISSET (cpuset, i))
+        {
+          ++num_cpu;
+        }
+    }
+  return num_cpu;
 #elif defined (_SC_NPROCESSORS_ONLN)
   return ::sysconf (_SC_NPROCESSORS_ONLN);
 #elif defined (ACE_HAS_SYSCTL)
