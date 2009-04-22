@@ -38,7 +38,7 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::dump (void) const
   // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->mutex_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP, this));
 #endif /* ACE_HAS_DUMP */
 }
 

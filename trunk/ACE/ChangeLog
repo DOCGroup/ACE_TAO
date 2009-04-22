@@ -1,3 +1,11 @@
+Wed Apr 22 09:48:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Atomic_Op_T.cpp:
+        * ace/Guard_T.cpp:
+          Fixed compile problems when ACE_HAS_DUMP is enabled. Thanks to
+          Skrzyniarz Alexandre <alexandre dot skrzyniarz at fr dot thalesgroup dot com>
+          for reporting this
+
 Tue Apr 21 14:50:23 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * docs/ace_guidelines.vsmacros:
