@@ -13,7 +13,7 @@ $status = 0;
 my $target = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
 my $idl = "test.idl";
-my $dtd = "XMI.dtd";
+my $dtd = "../XMI.dtd";
 my $xmi = "generated.xmi";
 my $target_idl = $target->LocalFile ($idl);
 my $target_dtd = $target->LocalFile ($dtd);
@@ -42,7 +42,7 @@ open (DAT, $xmi) || die ("ERROR: Could not open file <$xmi>!");
 close (DAT);
 
 $num = grep (/<UML:Attribute/, @data);
-if ($num == 1) {
+if ($num == 2) {
     print "TEST OK. Correct tags in there.\n";
 } else {
     print STDERR "ERROR: generated XMI does not contain a brace of UML:Attribute tags !\n\nXMI is:\n\n";
