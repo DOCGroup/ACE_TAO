@@ -29,7 +29,7 @@ class FTRMFF_Bestfit_Algorithm :
 {
 public:
   FTRMFF_Bestfit_Algorithm (const PROCESSOR_LIST & processors,
-                           unsigned int consistency_level);
+                            unsigned int consistency_level);
 
   virtual ~FTRMFF_Bestfit_Algorithm ();
 

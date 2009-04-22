@@ -78,6 +78,8 @@ typedef std::string Processor;
 typedef std::list <Processor> PROCESSOR_LIST;
 typedef unsigned long Priority;
 
+PROCESSOR_LIST create_processors (unsigned long count);
+
 struct TaskPlacement
 {
   Processor processor;
