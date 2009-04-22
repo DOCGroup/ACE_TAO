@@ -53,7 +53,10 @@ public:
     return impl_.length();
   }
   inline void length(CORBA::ULong length) {
-    impl_.length(length);
+    if (MAX >= length)
+      {
+        impl_.length(length);
+      }
   }
   inline value_type const & operator[](CORBA::ULong i) const {
     return impl_[i];
