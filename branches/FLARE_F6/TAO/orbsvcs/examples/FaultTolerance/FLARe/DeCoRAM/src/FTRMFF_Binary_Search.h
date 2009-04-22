@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef FTRMFF_BESTFIT_ALGORITHM_H_
-#define FTRMFF_BESTFIT_ALGORITHM_H_
+#ifndef FTRMFF_BINARY_SEARCH_ALGORITHM_H_
+#define FTRMFF_BINARY_SEARCH_ALGORITHM_H_
 
 #include "Schedule.h"
 
@@ -29,7 +29,7 @@ class FTRMFF_Binary_Search_Algorithm :
 {
 public:
   FTRMFF_Binary_Search_Algorithm (const PROCESSOR_LIST & processors,
-                           unsigned int consistency_level);
+                                  unsigned int consistency_level);
 
   virtual ~FTRMFF_Binary_Search_Algorithm ();
 
@@ -37,10 +37,13 @@ public:
 
   SCHEDULE_PROGRESS_LIST get_unschedulable ();
 
+  const SCHEDULE & schedule () const;
+
 private:
   const PROCESSOR_LIST & processors_;
+  SCHEDULE schedule_;
   SCHEDULE_PROGRESS_LIST unschedulable_;
   unsigned int consistency_level_;
 };
 
-#endif /* FTRMFF_BESTFIT_ALGORITHM_H_ */
+#endif /* FTRMFF_BINARY_SEARCH_ALGORITHM_H_ */

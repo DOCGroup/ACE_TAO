@@ -14,6 +14,26 @@
 #include <sstream>
 #include "Algorithms.h"
 
+PROCESSOR_LIST create_processors (unsigned long count)
+{
+  PROCESSOR_LIST procs;
+
+  for (unsigned long i = 1; i <= count; ++i)
+    {
+      std::stringstream ss;
+      ss << "P";
+      if (i < 10)
+        ss << "00";
+      else if (i < 100)
+        ss << "0";
+
+      ss << i;
+      procs.push_back (ss.str ());
+    }
+
+  return procs;
+}
+
 FTRMFF_Algorithm::~FTRMFF_Algorithm ()
 {
 }
