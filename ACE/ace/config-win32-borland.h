@@ -32,7 +32,7 @@
 #  define __ACE_INLINE__ 1
 # endif /* __ACE_INLINE__ */
 
-# define ACE_CC_NAME ACE_TEXT ("Borland C++ Builder")
+# define ACE_CC_NAME ACE_TEXT ("Embarcadero C++ Builder")
 # define ACE_CC_MAJOR_VERSION (__BORLANDC__ / 0x100)
 # define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
 # define ACE_CC_BETA_VERSION (0)
@@ -143,9 +143,10 @@
 #if (__BORLANDC__ <= 0x610)
 # define ACE_LACKS_ISBLANK
 # define ACE_LACKS_ISWBLANK
-# define ACE_LACKS_ISCTYPE
 # define ACE_LACKS_ISWCTYPE
 #endif
+
+#define ACE_LACKS_ISCTYPE
 
 #if (__BORLANDC__ <= 0x610)
 // Older Borland compilers can't handle assembly in inline methods or
