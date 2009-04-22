@@ -1,3 +1,18 @@
+Wed Apr 22 14:34:02 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
+        * tools/IDL3_to_XMI/be_global.cpp:
+        * tools/IDL3_to_XMI/Literals.cpp:
+        * tools/IDL3_to_XMI/Literals.h:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+
+          Fixed bug#3607. This also fixes a number of other things. In
+          particular XML generation for module reopening and forward
+          declared types. Proper xmi.id generation in a number of places.
+          XML generation for native types. Proper generation of associations
+          for arrays and sequences. Fixed several typos and beautified the
+          code.
+
 Tue Apr 21 06:50:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/fm/*:
