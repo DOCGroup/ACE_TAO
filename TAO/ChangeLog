@@ -1,3 +1,26 @@
+Wed Apr 22 09:07:44 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Bug_3632_Regression/test.cpp:
+        * tests/Bug_3632_Regression/test.idl:
+        * tests/Bug_3632_Regression/Bug_3632_Regression.mpc:
+        * tests/Bug_3632_Regression/run_test.pl:
+        * tests/Bug_3632_Regression/README:
+
+          Added a regression test.
+
+        * bin/tao_orb_tests.lst:
+
+          Scheduled the test for run.
+
+        * tao/Bounded_Array_Sequence_T.h:
+        * tao/Bounded_Basic_String_Sequence_T.h:
+        * tao/Valuetype/Bounded_Valuetype_Sequence_T.h:
+        * tao/Bounded_Value_Sequence_T.h:
+        * tao/Bounded_Object_Reference_Sequence_T.h:
+
+          Fixed bug#3632. Now user cannot change a maximum value
+          of a bounded sequence.
+
 Wed Apr 22 09:32:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/RTCORBA/Bug_3643_Regression/client.cpp:
