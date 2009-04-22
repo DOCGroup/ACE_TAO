@@ -1,3 +1,21 @@
+Wed Apr 22 14:56:08 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/IDL3_to_XMI/XMI_For_Array/test.idl:
+        * tests/IDL3_to_XMI/XMI_For_Array/XMI.dtd:
+        * tests/IDL3_to_XMI/XMI_For_Array/run_test.pl:
+        * tests/IDL3_to_XMI/XMI.dtd:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/XMI.dtd:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/test.idl:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/XMI.dtd:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/run_test.pl:
+        * tests/IDL3_to_XMI/Bug_3607_Regression/test.idl:
+        * tests/IDL3_to_XMI/Bug_3607_Regression/XMI.dtd:
+        * tests/IDL3_to_XMI/Bug_3607_Regression/run_test.pl:
+
+          Extended and updated the tests. Now they share XMI.dtd which
+          is the same for all of them.
+
 Wed Apr 22 14:34:02 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
