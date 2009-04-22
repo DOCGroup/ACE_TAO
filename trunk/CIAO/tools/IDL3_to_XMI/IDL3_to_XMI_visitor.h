@@ -27,6 +27,7 @@
 #include "Literals.h"
 #include "XML/XercesString.h"
 #include "CIAO_IDL3_TO_XMI_Export.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -124,10 +125,16 @@ namespace CIAO
 
       /// implementation for elements common to both eventtypes
       /// and valuetypes
-      void visit_valuetype_impl (AST_ValueType *, const ACE_TCHAR *stereotype);
+      void visit_valuetype_impl (AST_ValueType *node);
 
       /// implementation of elements common to exceptions and structures.
-      void visit_struct_impl (AST_Structure *, const ACE_TCHAR *stereotype);
+      void visit_struct_impl (AST_Structure *node);
+
+      /// Generation of common associations of anonymous and typedefed arrays.
+      void gen_array_associations (AST_Decl *node, AST_Array *array);
+
+      /// Generation of common associations of anonymous and typedefed sequences.
+      void gen_sequence_associations (AST_Decl *node, AST_Sequence *sequence);
 
       /// sets an attribute on the element at the top of the stack.
       void set_attribute (const ACE_TCHAR *name,
@@ -238,6 +245,16 @@ namespace CIAO
       /// element.
       ELEMENT_STACK stack_;
 
+      typedef ACE_Hash_Map_Manager_Ex< ACE_TString,
+                                       XERCES_CPP_NAMESPACE::DOMElement *,
+                                       ACE_Hash <ACE_TString>,
+                                       ACE_Equal_To <ACE_TString>,
+                                       ACE_Null_Mutex > REPO_ID_MAP;
+
+      /// Stores elements that were forward declared. Also stores modules that can
+      /// be reopened.
+      REPO_ID_MAP repo_id_map_;
+
       /// Provides a "protected" push that is popped when the current scope
       /// is exited.
       struct ES_Guard
@@ -285,6 +302,9 @@ namespace CIAO
 
       bool skip_imported_;
 
+      /// true if we are in enum "scope".
+      bool visiting_enum_;
+
       /// Used to determine IDL ordering of union labels.
       size_t order_;
 
@@ -296,4 +316,5 @@ namespace CIAO
     };
   }
 }
+
 #endif

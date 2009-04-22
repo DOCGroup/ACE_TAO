@@ -186,26 +186,22 @@ void
 BE_GlobalData::usage (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("-f \t\t Simulates IFR type filtering on included types.\n")
+              ACE_TEXT (" -f\t\t\tsimulates IFR type filtering on included types\n")
               ));
-  ACE_DEBUG ((
-              LM_DEBUG,
-              ACE_TEXT (" -od <dir>\t\tOutput directory for the generated file.")
-              ACE_TEXT (" Default is current directory\n")
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT (" -od <dir>\t\toutput directory for the generated file ")
+              ACE_TEXT ("(default is current directory)\n")
               ));
-  ACE_DEBUG ((
-              LM_DEBUG,
-              ACE_TEXT (" -of <dir>\t\tOutput file for the generated XMI.")
-              ACE_TEXT (" Default for example.idl is example.xmi\n")
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT (" -of <dir>\t\toutput file for the generated XMI ")
+              ACE_TEXT ("(default for example.idl is example.xmi)\n")
               ));
-  ACE_DEBUG ((
-              LM_DEBUG,
-              ACE_TEXT (" -xd <dtd_file>\t\tFull path to XMI dtd file to include in generated file..")
-              ACE_TEXT (" Default is XMI.dtd.\n")
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT (" -xd <dtd_file>\t\tfull path to XMI dtd file to include in generated file ")
+              ACE_TEXT ("(default is XMI.dtd)\n")
               ));
-  ACE_DEBUG ((
-              LM_DEBUG,
-              ACE_TEXT (" -n \t\t\t. Exports XMI for non-local entities.\n")
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT (" -n\t\t\texports XMI for non-local entities\n")
               ));
 }
 
