@@ -127,8 +127,8 @@ protected:
   /// true: register itself with the name service
   bool use_name_svc_;
 
-  /// File where the IOR of the server object is stored.
-  FILE *ior_output_file_;
+  /// File name where the IOR of the server object is stored.
+  const ACE_TCHAR *ior_output_file_name_;
 
   /// The Factory name.
   ACE_CString notify_factory_name_;

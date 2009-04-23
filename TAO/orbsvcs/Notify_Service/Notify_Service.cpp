@@ -24,7 +24,7 @@ TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
 : notify_service_ (0)
 , bootstrap_ (false)
 , use_name_svc_ (true)
-, ior_output_file_ (0)
+, ior_output_file_name_ (0)
 , notify_factory_name_ (NOTIFY_KEY)
 , register_event_channel_ (false)
 , nthreads_ (1)
@@ -36,18 +36,12 @@ TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
 
 TAO_Notify_Service_Driver::~TAO_Notify_Service_Driver (void)
 {
-  if (ior_output_file_)
-    ACE_OS::fclose(ior_output_file_);
 }
 
 int
 TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv [])
 {
-  // Copy command line parameter.
-  ACE_Argv_Type_Converter command_line(argc, argv);
-
-  this->orb_ = CORBA::ORB_init (command_line.get_argc(),
-                                command_line.get_ASCII_argv());
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
   this->apply_timeout (this->orb_.in ());
 
@@ -73,12 +67,7 @@ TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv [])
 int
 TAO_Notify_Service_Driver::init_dispatching_ORB (int& argc, ACE_TCHAR *argv [])
 {
-  // Copy command line parameter.
-  ACE_Argv_Type_Converter command_line(argc, argv);
-
-  this->dispatching_orb_ = CORBA::ORB_init (command_line.get_argc(),
-                                command_line.get_TCHAR_argv(),
-                                "dispatcher");
+  this->dispatching_orb_ = CORBA::ORB_init (argc, argv, "dispatcher");
 
   this->apply_timeout (this->dispatching_orb_.in ());
 
@@ -270,7 +259,8 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
               this->naming_->rebind (name.in (), ec.in ());
 
               ACE_DEBUG ((LM_DEBUG,
-                          "Registered an Event Channel with the naming service as: %C\n",
+                          "Registered an Event Channel with the naming "
+                          "service as: %C\n",
                           (*ci).c_str()));
             }
         }
@@ -281,11 +271,20 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
   CORBA::String_var str =
     this->orb_->object_to_string (this->notify_factory_.in ());
 
-  if (this->ior_output_file_)
+  if (this->ior_output_file_name_)
     {
-      ACE_OS::fprintf (this->ior_output_file_, "%s", str.in ());
-      ACE_OS::fclose (this->ior_output_file_);
-      this->ior_output_file_ = 0;
+       FILE* ior_output_file = ACE_OS::fopen (ior_output_file_name_,
+                                              ACE_TEXT("w"));
+       if (ior_output_file == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to open %s for writing: %p\n",
+                             this->ior_output_file_name_, "Notify_Service"),
+                             -1);
+        }
+
+      ACE_OS::fprintf (ior_output_file, "%s", str.in ());
+      ACE_OS::fclose (ior_output_file);
     }
   else if (TAO_debug_level > 0)
     {
@@ -309,8 +308,7 @@ TAO_Notify_Service_Driver::resolve_naming_service (void)
                        " (%P|%t) Unable to resolve the Naming Service.\n"),
                       -1);
 
-  this->naming_ =
-    CosNaming::NamingContextExt::_narrow (naming_obj.in ());
+  this->naming_ = CosNaming::NamingContextExt::_narrow (naming_obj.in ());
 
   return 0;
 }
@@ -360,7 +358,8 @@ TAO_Notify_Service_Driver::shutdown (void)
       naming->unbind (name.in ());
     }
 
-  poa->destroy (true, true);
+  if (!CORBA::is_nil (poa.in ()))
+    poa->destroy (true, true);
 
   // shutdown the ORB.
   if (!CORBA::is_nil (orb.in ()))
@@ -427,11 +426,7 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput"))))
         {
-          this->ior_output_file_ = ACE_OS::fopen (current_arg, ACE_TEXT("w"));
-          if (this->ior_output_file_ == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Unable to open %s for writing: %p\n",
-                               current_arg, "Notify_Service"), -1);
+          this->ior_output_file_name_ = current_arg;
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ChannelName"))))
@@ -512,17 +507,18 @@ LoggingWorker::LoggingWorker(TAO_Notify_Service_Driver* ns)
 void
 LoggingWorker::start ()
 {
-  ACE_Logging_Strategy* logging_strategy =  ACE_Dynamic_Service<ACE_Logging_Strategy>::instance ("Logging_Strategy");
+  ACE_Logging_Strategy* logging_strategy =
+    ACE_Dynamic_Service<ACE_Logging_Strategy>::instance ("Logging_Strategy");
   if (logging_strategy == 0)
-  {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)logging_strategy == 0\n")));
-  }
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) logging_strategy == 0\n")));
+    }
   else
-  {
+    {
       if (this->activate (THR_NEW_LWP | THR_JOINABLE, 1) == -1)
       {
          ACE_DEBUG ((LM_DEBUG,
-                     ACE_TEXT ("(%P|%t)can not activate the ")
+                     ACE_TEXT ("(%P|%t) Can not activate the ")
                      ACE_TEXT ("logging event thread\n")));
       }
       else {
@@ -534,15 +530,13 @@ LoggingWorker::start ()
                               this->ns_->logging_interval_) == -1)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT("(%P|%t)failed to schedule ")
+                        ACE_TEXT("(%P|%t) Failed to schedule ")
                         ACE_TEXT("logging switch timer\n")));
           }
         }
       }
-
-  }
+    }
 }
-
 
 int
 LoggingWorker::svc (void)
