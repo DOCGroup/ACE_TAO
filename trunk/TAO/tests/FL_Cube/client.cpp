@@ -181,7 +181,7 @@ Client::parse_args (int argc, ACE_TCHAR *argv[])
       }
 
   CORBA::Object_var object =
-    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
+    this->orb_->string_to_object (ior);
 
   this->server_ =
     Simple_Server::_narrow (object.in ());

@@ -53,7 +53,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
+        orb->string_to_object (ior);
 
       Simple_Server_var server =
         Simple_Server::_narrow (object.in ());

@@ -51,7 +51,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      tmp = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
+      tmp = orb->string_to_object (ior);
     }
   catch (const CORBA::Exception& ex)
     {
