@@ -73,7 +73,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     // create the factory object reference,
     CORBA::Object_var distributor_obj =
-      orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (distributor_ior));
+      orb->string_to_object (distributor_ior);
 
     // downcast the object reference to the appropriate type
     Stock::StockDistributor_var distributor =

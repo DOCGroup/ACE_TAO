@@ -90,7 +90,7 @@ namespace TM_Tester
       // in real applications we use the naming service, but let's do
       // the easy part first!
       CORBA::Object_var factory_object =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (TM_Tester::stringified_TM_IOR));
+        orb->string_to_object (TM_Tester::stringified_TM_IOR);
 
       // Now downcast the object reference to the appropriate type
       CIAO::TargetManagerImpl_var targetCmp =
