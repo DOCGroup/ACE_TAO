@@ -15,12 +15,10 @@ DllORB::DllORB ()
 {
 }
 
-
 DllORB::~DllORB ()
 {
   delete mp_barrier_;
 }
-
 
 int
 DllORB::init (int argc, ACE_TCHAR *argv[])

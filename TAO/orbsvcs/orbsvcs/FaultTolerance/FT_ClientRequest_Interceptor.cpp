@@ -260,7 +260,7 @@ namespace TAO
           if (!(ocdr << gtc.object_group_ref_version))
             return;
 
-          CORBA::ULong length =
+          CORBA::ULong const length =
             static_cast<CORBA::ULong> (ocdr.total_length ());
           sc.context_data.length (length);
           CORBA::Octet *buf = sc.context_data.get_buffer ();
@@ -274,8 +274,7 @@ namespace TAO
           }
         }
       // Add this context to the service context list.
-      ri->add_request_service_context (sc,
-        0);
+      ri->add_request_service_context (sc, 0);
 
     }
     catch (const CORBA::Exception&)
@@ -350,8 +349,7 @@ namespace TAO
       }
 
       // Add this context to the service context list.
-      ri->add_request_service_context (sc,
-        0);
+      ri->add_request_service_context (sc, 0);
     }
     catch (const CORBA::Exception&)
     {

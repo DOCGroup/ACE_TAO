@@ -108,9 +108,7 @@ Notify_Test_Client::resolve_Notify_factory (void)
     this->naming_context_->resolve (name);
 
   this->notify_factory_ =
-    CosNotifyChannelAdmin::EventChannelFactory::_narrow (
-                                                    obj.in ()
-                                                  );
+    CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ());
 }
 
 int
@@ -177,13 +175,11 @@ Notify_Test_Client::root_poa (void)
   return this->root_poa_.in ();
 }
 
-
 CosNaming::NamingContext_ptr
 Notify_Test_Client::naming_context (void)
 {
   return this->naming_context_.in ();
 }
-
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
 Notify_Test_Client::notify_factory (void)
@@ -191,10 +187,8 @@ Notify_Test_Client::notify_factory (void)
   return this->notify_factory_.in ();
 }
 
-
 CosNotifyChannelAdmin::EventChannel_ptr
-Notify_Test_Client::create_event_channel (const char* cname,
-                                          int resolve)
+Notify_Test_Client::create_event_channel (const char* cname, bool resolve)
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
   CosNaming::Name name (1);
@@ -220,7 +214,6 @@ Notify_Test_Client::create_event_channel (const char* cname,
       ec = notify_factory_->create_channel (initial_qos,
                                             initial_admin,
                                             id);
-
 
       naming_context_->rebind(name, ec.in());
     }

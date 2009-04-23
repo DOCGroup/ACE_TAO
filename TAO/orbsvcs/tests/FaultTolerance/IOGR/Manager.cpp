@@ -119,11 +119,11 @@ Manager::make_merged_iors (void)
 {
   // First  server
   this->object_primary_ =
-    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (first_ior));
+    this->orb_->string_to_object (first_ior);
 
   //Second server
   this->object_secondary_ =
-    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (second_ior));
+    this->orb_->string_to_object (second_ior);
 
   // Get an object reference for the ORBs IORManipultion object!
   CORBA::Object_var IORM =

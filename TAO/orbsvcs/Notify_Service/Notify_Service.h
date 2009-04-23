@@ -40,7 +40,7 @@ class LoggingWorker : public ACE_Task_Base
    void start ();
    void end ();
    private:
-     
+
      ACE_Reactor logging_reactor_;
      TAO_Notify_Service_Driver* ns_;
      bool started_;
@@ -133,8 +133,8 @@ protected:
   /// The Factory name.
   ACE_CString notify_factory_name_;
 
-  /// The Factory name.
-  ACE_CString notify_channel_name_;
+  /// The event channel names.
+  ACE_Unbounded_Set <ACE_CString> notify_channel_name_;
 
   /// true: create an event channel and registers it with the Naming Service
   /// with the name <notify_channel_name_>
