@@ -1139,14 +1139,6 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
               idl_global->err ()->redef_error (i->full_name (),
                                                d->full_name ());
             }
-            
-          AST_InterfaceFwd *fwd =
-            AST_InterfaceFwd::narrow_from_decl (d);
-            
-          if (fwd != 0)
-            {
-              fwd->set_as_defined ();
-            }
         }
       // If it is a forward declared interface..
       else if (!fd->is_defined ())

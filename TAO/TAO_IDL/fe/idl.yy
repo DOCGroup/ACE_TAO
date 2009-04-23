@@ -4261,8 +4261,11 @@ param_type_spec
                             }
                             
                           if (elem_nt == AST_Decl::NT_interface
+                              || elem_nt == AST_Decl::NT_interface_fwd
                               || elem_nt == AST_Decl::NT_valuetype
-                              || elem_nt == AST_Decl::NT_component)
+                              || elem_nt == AST_Decl::NT_valuetype_fwd
+                              || elem_nt == AST_Decl::NT_component
+                              || elem_nt == AST_Decl::NT_component_fwd)
                             {
                               can_be_undefined = true;
                             }
