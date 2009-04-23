@@ -127,11 +127,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       AVStreams::StreamCtrl_var stream_control =
         stream_control_impl._this ();
 
-      obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ping_ior));
+      obj = orb->string_to_object (ping_ior);
       AVStreams::MMDevice_var ping_sender =
         AVStreams::MMDevice::_narrow (obj.in ());
 
-      obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (pong_ior));
+      obj = orb->string_to_object (pong_ior);
       AVStreams::MMDevice_var pong_sender =
         AVStreams::MMDevice::_narrow (obj.in ());
 

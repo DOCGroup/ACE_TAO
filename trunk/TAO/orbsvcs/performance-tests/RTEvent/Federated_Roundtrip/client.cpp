@@ -164,7 +164,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Finished peer configuration and activation\n"));
 
       CORBA::Object_var object =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
+        orb->string_to_object (ior);
 
       Federated_Test::Control_var control =
         Federated_Test::Control::_narrow (object.in ());
