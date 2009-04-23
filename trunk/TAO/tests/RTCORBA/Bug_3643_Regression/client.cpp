@@ -10,7 +10,7 @@
 
 ACE_RCSID(Thread_Pool, client, "$Id$")
 
-const ACE_TCHAR *ior = "file://ior_1";
+const ACE_TCHAR *ior = ACE_TEXT ("file://ior_1");
 int iterations = 1000;
 int shutdown_server = 0;
 bool decreased = false;

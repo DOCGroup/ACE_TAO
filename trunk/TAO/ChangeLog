@@ -1,3 +1,8 @@
+Thu Apr 23 08:13:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/RTCORBA/Bug_3643_Regression/client.cpp:
+          Resolved unicode compiler error.
+
 Wed Apr 22 17:59:18 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_sequence.h:
