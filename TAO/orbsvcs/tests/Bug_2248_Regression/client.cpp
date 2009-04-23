@@ -147,7 +147,7 @@ Manager::make_merged_iors (void)
   if (CORBA::is_nil (iorm.in()))
     return -1;
 
-  CORBA::Object_var first = orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (first_ior));
+  CORBA::Object_var first = orb_->string_to_object (first_ior);
 
   if (CORBA::is_nil (first.in()))
     return -1;
@@ -172,13 +172,13 @@ Manager::make_merged_iors (void)
       return -1;
     }
 
-  first = orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (first_ior));
+  first = orb_->string_to_object (first_ior);
   if (CORBA::is_nil (first.in()))
     {
       return -1;
     }
 
-  CORBA::Object_var second = orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (second_ior));
+  CORBA::Object_var second = orb_->string_to_object (second_ior);
 
   if (CORBA::is_nil (second.in()))
     {

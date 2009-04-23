@@ -273,7 +273,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         }
 
       CORBA::Object_var obj =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (monitor_ior));
+        orb->string_to_object (monitor_ior);
       CosNotification::NotificationServiceMonitorControl_var nsm =
         CosNotification::NotificationServiceMonitorControl::_narrow (obj.in ());
 

@@ -110,7 +110,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::ORB_ptr orb = client.orb ();
       CORBA::Object_var object =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
+        orb->string_to_object (ior);
 
       MonitorTestInterface_var sig =
         MonitorTestInterface::_narrow (object.in ());

@@ -26,14 +26,12 @@ TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
 , use_name_svc_ (true)
 , ior_output_file_ (0)
 , notify_factory_name_ (NOTIFY_KEY)
-, notify_channel_name_ (NOTIFY_CHANNEL_NAME)
 , register_event_channel_ (false)
 , nthreads_ (1)
 , separate_dispatching_orb_ (false)
 , timeout_ (0)
 , logging_worker_(this)
 {
-  // No-Op.
 }
 
 TAO_Notify_Service_Driver::~TAO_Notify_Service_Driver (void)
@@ -132,7 +130,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 
   if (this->notify_service_ == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Service not found. Check service ")
                   ACE_TEXT ("configurator file.\n")));
       return -1;
@@ -156,8 +154,8 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 
   if (this->nthreads_ > 0) // we have chosen to run in a thread pool.
     {
-      ACE_DEBUG ((LM_DEBUG, 
-                  ACE_TEXT("Running %d ORB threads\n"), 
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("Running %d ORB threads\n"),
                   this->nthreads_));
       worker_.orb (this->orb_.in ());
 
@@ -181,7 +179,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
   if (this->use_name_svc_)
     {
       // Resolve the naming service.
-      int ns_ret = this->resolve_naming_service ();
+      int const ns_ret = this->resolve_naming_service ();
 
       if (ns_ret != 0)
         return -1;
@@ -204,6 +202,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 
       IORTable::Table_var adapter =
         IORTable::Table::_narrow (table_object.in ());
+
       if (CORBA::is_nil (adapter.in ()))
         {
           ACE_ERROR ((LM_ERROR,
@@ -217,7 +216,6 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
         }
     }
 
-
   // Register with the Name service, if asked
   if (this->use_name_svc_)
     {
@@ -225,7 +223,6 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 
       CosNaming::Name_var name =
         this->naming_->to_name (this->notify_factory_name_.c_str ());
-
 
       this->naming_->rebind (name.in (),
                              this->notify_factory_.in ());
@@ -236,38 +233,46 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 
       if (this->register_event_channel_)
         {
-          // create an event channel
-          CosNotifyChannelAdmin::ChannelID id;
-
-          CosNotification::QoSProperties initial_qos;
-          CosNotification::AdminProperties initial_admin;
-
-          CosNotifyChannelAdmin::EventChannel_var ec;
-          TAO_Notify_EventChannelFactory* factory_impl =
-            dynamic_cast<TAO_Notify_EventChannelFactory*> (
-              this->notify_factory_->_servant ());
-          if (factory_impl == 0)
+          // If we don't have any name configured, default to the standard name
+          if (this->notify_channel_name_.is_empty ())
             {
-              ec = this->notify_factory_->create_channel (initial_qos,
-                                                          initial_admin,
-                                                          id);
-            }
-          else
-            {
-              ec = factory_impl->create_named_channel (
-                                   initial_qos, initial_admin,id,
-                                   this->notify_channel_name_.c_str ());
+              notify_channel_name_.insert (NOTIFY_CHANNEL_NAME);
             }
 
-          name = this->naming_->to_name (this->notify_channel_name_.c_str ());
+          for (ACE_Unbounded_Set<ACE_CString>::const_iterator ci (
+                this->notify_channel_name_); !ci.done(); ci++)
+            {
+              // create an event channel
+              CosNotifyChannelAdmin::ChannelID id;
 
-          this->naming_->rebind (name.in (),
-                                 ec.in ());
+              CosNotification::QoSProperties initial_qos;
+              CosNotification::AdminProperties initial_admin;
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "Registered an Event Channel with the naming service as: %C\n",
-                      this->notify_channel_name_.c_str()));
+              CosNotifyChannelAdmin::EventChannel_var ec;
+              TAO_Notify_EventChannelFactory* factory_impl =
+                dynamic_cast<TAO_Notify_EventChannelFactory*> (
+                  this->notify_factory_->_servant ());
+              if (factory_impl == 0)
+                {
+                  ec = this->notify_factory_->create_channel (initial_qos,
+                                                              initial_admin,
+                                                              id);
+                }
+              else
+                {
+                  ec = factory_impl->create_named_channel (
+                                       initial_qos, initial_admin,id,
+                                       (*ci).c_str ());
+                }
 
+              name = this->naming_->to_name ((*ci).c_str ());
+
+              this->naming_->rebind (name.in (), ec.in ());
+
+              ACE_DEBUG ((LM_DEBUG,
+                          "Registered an Event Channel with the naming service as: %C\n",
+                          (*ci).c_str()));
+            }
         }
     }
 
@@ -314,9 +319,9 @@ int
 TAO_Notify_Service_Driver::run (void)
 {
   if (TAO_debug_level > 0 )
-    ACE_DEBUG ((LM_DEBUG, 
-                ACE_TEXT ("%s: Running the Notification Service\n"),
-                ACE_TEXT_CHAR_TO_TCHAR (__FILE__)));
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("%C: Running the Notification Service\n"),
+                __FILE__));
 
   if (this->nthreads_ > 0)
     {
@@ -431,7 +436,7 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ChannelName"))))
         {
-          this->notify_channel_name_.set(ACE_TEXT_ALWAYS_CHAR(current_arg));
+          this->notify_channel_name_.insert(ACE_CString(ACE_TEXT_ALWAYS_CHAR(current_arg)));
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Channel")) == 0)
@@ -443,7 +448,7 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Notify_TPReactor"))))
         {
-          ACE_DEBUG((LM_DEBUG, 
+          ACE_DEBUG((LM_DEBUG,
                      ACE_TEXT ("-Notify_TPReactor option is deprecated, ")
                      ACE_TEXT ("use -ORBRunThreads option\n")));
 
@@ -516,7 +521,7 @@ LoggingWorker::start ()
   {
       if (this->activate (THR_NEW_LWP | THR_JOINABLE, 1) == -1)
       {
-         ACE_DEBUG ((LM_DEBUG, 
+         ACE_DEBUG ((LM_DEBUG,
                      ACE_TEXT ("(%P|%t)can not activate the ")
                      ACE_TEXT ("logging event thread\n")));
       }
@@ -525,21 +530,21 @@ LoggingWorker::start ()
         {
           ACE_Time_Value delay;
           if (this->ns_->orb_->orb_core()->reactor()->
-              schedule_timer (logging_strategy, 0, delay, 
+              schedule_timer (logging_strategy, 0, delay,
                               this->ns_->logging_interval_) == -1)
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT("(%P|%t)failed to schedule ")
                         ACE_TEXT("logging switch timer\n")));
           }
         }
       }
-      
+
   }
 }
 
 
-int 
+int
 LoggingWorker::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -586,13 +591,13 @@ Worker::svc (void)
   int priority;
   if (ACE_Thread::getprio (current, priority) == -1)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Failed to get ")
                   ACE_TEXT ("Worker thread priority\n")));
       return -1;
     }
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Activated Worker Thread to run ")
               ACE_TEXT ("the ORB @ priority:%d\n", priority));
 #endif
