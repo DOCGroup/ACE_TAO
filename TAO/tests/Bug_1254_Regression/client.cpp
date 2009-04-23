@@ -43,7 +43,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ACE_TEXT_ALWAYS_CHAR (ior));
+        orb->string_to_object (ior);
 
       BlobServer_var blobServer = BlobServer::_narrow(tmp.in());
       if(CORBA::is_nil(blobServer.in()))

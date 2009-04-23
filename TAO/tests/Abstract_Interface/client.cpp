@@ -197,7 +197,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       CORBA::Object_var obj =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior_input_file));
+        orb->string_to_object (ior_input_file);
 
       if (CORBA::is_nil (obj.in ()))
         {

@@ -63,7 +63,7 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
 
     try
     {
-      co = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior_file_.c_str ()));
+      co = orb->string_to_object (ior_file_.c_str ());
 
       if (co == 0)
         {

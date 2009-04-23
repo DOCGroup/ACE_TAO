@@ -1,3 +1,44 @@
+Thu Apr 23 07:18:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/FL_Cube/client.cpp
+        * tests/HandleExhaustion/client.cpp
+        * tests/Abstract_Interface/client.cpp
+        * tests/Big_Reply/client.cpp
+        * tests/Bug_1254_Regression/client.cpp
+        * tests/Bug_2174_Regression/client.cpp
+        * tests/Bug_2734_Regression/client.cpp
+        * tests/Bug_2768_Regression/client.cpp
+        * tests/Bug_3198_Regression/bug_3198_regression.cpp
+        * tests/Bug_3598a_Regression/client.cpp
+        * tests/Client_Leaks/client.cpp
+        * tests/Leader_Followers/client.cpp
+        * tests/MProfile_Forwarding/Manager.cpp
+        * tests/Multiple/client.cpp
+        * tests/Nested_Event_Loop/client.cpp
+        * tests/NestedUpcall/Simple/client.cpp
+        * tests/NestedUpcall/Simple/simple-client.cpp
+        * tests/ORB_Local_Config/Two_DLL_ORB/client.cpp
+        * tests/POA/EndpointPolicy/client.cpp
+        * tests/POA/Generic_Servant/client.cpp
+        * tests/POA/Persistent_ID/client.cpp
+        * tests/Portable_Interceptors/AdvSlot/client.cpp
+        * tests/Portable_Interceptors/AdvSlotDblCpy/client.cpp
+        * tests/Portable_Interceptors/AdvSlotExt/client.cpp
+        * tests/Portable_Interceptors/AMI/client.cpp
+        * tests/Portable_Interceptors/Bug_2133/client.cpp
+        * tests/RTCORBA/Linear_Priority/client.cpp
+        * tests/RTCORBA/Persistent_IOR/client.cpp
+        * tests/RTCORBA/Policy_Combinations/client.cpp
+        * tests/Server_Connection_Purging/client2.cpp
+        * tests/Single_Read/client.cpp
+        * tests/Smart_Proxies/dtor/client.cpp
+        * tests/Timed_Buffered_Oneways/client.cpp
+        * tests/Timeout/client.cpp
+          Removed not needed unicode to ascii conversion
+
+        * tests/Hello/client.cpp:
+          Fixed typo in comment
+
 Thu Apr 23 08:13:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/RTCORBA/Bug_3643_Regression/client.cpp:
@@ -10,24 +51,24 @@ Wed Apr 22 17:59:18 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/ast/ast_sequence.cpp:
         * TAO_IDL/fe/y.tab.cpp:
         * TAO_IDL/fe/idl.yy:
-        
+
           Added check to catch illegal use of incomplete sequence
           type (sequence of undefined struct or union) as an
           operation return type or parameter. Thanks to
           Ron van Hoof <rvhoof27@gmail.com> for reporting the bug
           and for sending in the example IDL. This fix closes
           [BUGID:3648].
-          
+
         * TAO_IDL/util/utl_err.cpp:
-        
+
           Changed message associated with EIDL_ILLEGAL_ADD flag
           to be more informative.
 
         * TAO_IDL/tao_idl.mpc:
-        
+
           Removed a redundant item from the 'after' line of
           TAO_IDL_EXE.
-          
+
 Wed Apr 22 09:07:44 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Bug_3632_Regression/test.cpp:

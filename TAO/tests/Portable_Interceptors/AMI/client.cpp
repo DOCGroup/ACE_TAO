@@ -79,7 +79,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       CORBA::Object_var tmp =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
+        orb->string_to_object (ior);
 
       Test::Echo_var echo =
         Test::Echo::_narrow (tmp.in ());

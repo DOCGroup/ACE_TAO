@@ -43,7 +43,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
 
     CORBA::Object_var object_temp =
-      orb->string_to_object(ACE_TEXT_ALWAYS_CHAR (ior));
+      orb->string_to_object (ior);
 
     SimpleMessenger::Messenger_var messenger =
       SimpleMessenger::Messenger::_unchecked_narrow( object_temp.in ());
