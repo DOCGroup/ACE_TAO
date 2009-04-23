@@ -137,7 +137,7 @@ ACT_TMAIN (int argc, ACE_TCHAR **argv)
 
       poa_manager->activate ();
 
-      object = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
+      object = orb->string_to_object (ior);
 
       server_var server = server::_narrow (object.in ());
 
