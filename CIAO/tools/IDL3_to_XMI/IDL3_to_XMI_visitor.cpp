@@ -130,7 +130,7 @@ namespace CIAO
       // least a correct char value instead of some non-printable xml.
       std::stringstream str;
 
-      str << static_cast<unsigned long>(static_cast<unsigned wchar_t> (val));
+      str << static_cast<unsigned long>(static_cast<wchar_t> (val));
 
       return ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (str.str ().c_str ()));
     }
