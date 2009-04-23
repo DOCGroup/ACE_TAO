@@ -1,3 +1,17 @@
+Thu Apr 23 16:09:54 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        
+          Further tweaks to the fix of
+          
+          Wed Apr 22 17:59:18 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          to correct a problem uncovered by processing
+          RTPortableServer.pidl. Thanks to Will Otte
+          <wotte at dre dot vanderbilt.edu> for reporting the problem.
+
 Thu Apr 23 11:10:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/Notify_Service.{h,cpp}:
