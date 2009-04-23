@@ -1,3 +1,9 @@
+Thu Apr 23 11:10:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/Notify_Service.{h,cpp}:
+          Only keep the IOR file open when we write the IOR, close it
+          directly after we are ready
+
 Thu Apr 23 10:14:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2626_Regression
