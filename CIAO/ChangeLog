@@ -1,3 +1,10 @@
+Thu Apr 23 11:07:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/TargetManager/CmpClient.cpp
+        * docs/tutorials/Quoter/Simple/Broker/StockBrokerDriver.cpp
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributorDriver.cpp
+          Removed not needed unicode to ascii conversions
+
 Thu Apr 23 08:06:25 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * bin/ciao_tests.lst:

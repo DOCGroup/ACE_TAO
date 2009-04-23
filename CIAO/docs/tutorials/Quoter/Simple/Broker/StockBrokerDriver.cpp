@@ -66,7 +66,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     // create the factory object reference of StockBrokerHome
     CORBA::Object_var broker_obj =
-      orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (broker_ior));
+      orb->string_to_object (broker_ior);
 
     // downcast the object reference to the appropriate type
     Stock::StockBroker_var broker =
