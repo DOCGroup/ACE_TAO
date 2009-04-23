@@ -1,3 +1,12 @@
+Thu Apr 23 10:14:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2626_Regression
+        * orbsvcs/tests/Notify/Bug_2626_Regression
+          Move tests to notify directory
+
+        * bin/tao_other_tests.lst:
+          Updated 2926
+
 Thu Apr 23 09:31:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
