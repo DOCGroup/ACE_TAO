@@ -1,3 +1,9 @@
+Fri Apr 24 20:40:16 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * docs/ace_guidelines.vsmacros:
+
+          Excluded Purify files from edit macros.
+
 Fri Apr 24 12:21:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Condition_Recursive_Thread_Mutex.h:
