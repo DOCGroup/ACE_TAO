@@ -1,3 +1,10 @@
+Fri Apr 24 09:18:44 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/IDL3_to_XMI/IDL2XMI_Test/run_test.pl:
+
+          Extended a bit error reporting so that errors are not
+          missed in the final log.
+
 Thu Apr 23 11:07:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/TargetManager/CmpClient.cpp
