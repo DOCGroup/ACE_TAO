@@ -1,3 +1,8 @@
+Fri Apr 24 15:17:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Bug_3646a_Regression/Consumer.cpp:
+          Fixed variable not used warning
+
 Fri Apr 24 15:11:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:

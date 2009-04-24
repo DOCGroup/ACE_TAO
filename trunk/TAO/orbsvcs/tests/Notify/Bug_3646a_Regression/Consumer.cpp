@@ -22,7 +22,6 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       if (status == 0)
         {
           CosNaming::NamingContext_ptr naming = client.naming_context ();
-          CORBA::ORB_ptr orb = client.orb ();
           if (CORBA::is_nil (naming))
             {
               ACE_ERROR_RETURN ((LM_ERROR,
