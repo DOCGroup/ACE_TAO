@@ -1,3 +1,14 @@
+Fri Apr 24 12:21:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Condition_Recursive_Thread_Mutex.h:
+          Doxygen change
+
+        * ace/config-cygwin32.h:
+          Change for Cygwin 1.7
+
+        * ace/OS_NS_unistd.cpp (num_processors_online):
+          Don't use a hard max of 32.
+
 Wed Apr 22 10:14:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.cpp:
