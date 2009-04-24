@@ -159,27 +159,19 @@ SCHEDULE create_schedule (const PROCESSOR_LIST & processors)
   return result;
 }
 
-class ScheduleProcessorName : public std::unary_function <
-                                       SCHEDULE::value_type,
-                                       PROCESSOR_LIST::value_type>
-{
-public:
-  PROCESSOR_LIST::value_type operator () (const SCHEDULE::value_type & entry)
-  {
-    return entry.first;
-  }
-};
-
 PROCESSOR_LIST 
-get_processors (const SCHEDULE & schedule)
+get_processors (const SCHEDULE & schedule,
+                bool only_utilized)
 {
   PROCESSOR_LIST processors;
 
-  std::transform (schedule.begin (),
-                  schedule.end (),
-                  std::inserter (processors,
-                                 processors.begin ()),
-                  ScheduleProcessorName ());
+  for (SCHEDULE::const_iterator it = schedule.begin ();
+       it != schedule.end ();
+       ++it)
+    {
+      if (!(it->second.empty () && only_utilized))
+        processors.push_back (it->first);
+    }
 
   return processors;
 }

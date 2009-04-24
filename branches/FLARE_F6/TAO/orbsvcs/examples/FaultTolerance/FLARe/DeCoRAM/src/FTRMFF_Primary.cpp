@@ -12,7 +12,6 @@
 
 #include <sstream>
 #include "FTRMFF_Primary.h"
-#include "Task_Scheduler.h"
 
 FTRMFF_Primary::~FTRMFF_Primary ()
 {

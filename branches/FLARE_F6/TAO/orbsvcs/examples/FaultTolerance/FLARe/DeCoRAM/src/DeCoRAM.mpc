@@ -120,6 +120,24 @@ project (binary_ftrmff) {
   }
 }
 
+project (packing_ftrmff) {
+
+  exename = pkftrmff
+  exeout = ../bin
+
+  macros += DO_DEBUG
+
+  Source_Files {
+    Algorithms.cpp
+    Schedule.cpp
+    CTT_Basic.cpp
+    CTT_Enhanced.cpp
+    FTRMFF_Packing.cpp
+    FTRMFF_Primary.cpp
+    packing_ftrmff.cpp
+  }
+}
+
 project (schedulability_check) : acelib {
 
   exename = scheck

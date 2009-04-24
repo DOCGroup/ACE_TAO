@@ -33,7 +33,8 @@ SCHEDULE read_schedule (std::istream & istr);
 
 SCHEDULE create_schedule (const PROCESSOR_LIST & processors);
 
-PROCESSOR_LIST get_processors (const SCHEDULE & schedule);
+PROCESSOR_LIST get_processors (const SCHEDULE & schedule,
+                               bool only_utilized = false);
 
 unsigned long processor_usage (const SCHEDULE & schedule);
 
