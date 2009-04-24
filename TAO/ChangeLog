@@ -1,3 +1,22 @@
+Fri Apr 24 13:57:18 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          First attempt at fixing bug 3647.
+          The ORB is blocking in ACE::sendv(), because we are passing a
+          timeout parameter which results in blocking for the prescribed
+          timeout period on select().  But on a select() call with only
+          one socket!
+          What we want to achieve is pass the timeout parameter when we
+          are using the blocking configurations of the ORB, such as RW
+          waiting strategies.
+          This fix, changes the way the timeout parameter to sendv() calls
+          is computed, by looking at the wait_strategy.
+          Unfortunately, this missed the blocking flushing strategies,
+          where we want to block too!  The Oneway_Send_Timeout tests
+          caught this.
+          So more work is needed, but I want to save the work first.
+
 Fri Apr 24 13:46:38 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tests/Bug_3647_Regression:

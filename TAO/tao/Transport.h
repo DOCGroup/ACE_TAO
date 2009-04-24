@@ -30,6 +30,7 @@
 #include "tao/Message_Semantics.h"
 #include "ace/Time_Value.h"
 #include "ace/Basic_Stats.h"
+#include "ace/Copy_Disabled.h"
 
 struct iovec;
 
@@ -243,7 +244,7 @@ namespace TAO
  * https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/TAO/docs/pluggable_protocols/index.html?revision=HEAD
  *
  */
-class TAO_Export TAO_Transport
+class TAO_Export TAO_Transport : private ACE_Copy_Disabled
 {
 public:
 
@@ -928,9 +929,20 @@ private:
   /// partial_message_ data member.
   void allocate_partial_message_block (void);
 
-  // Disallow copying and assignment.
-  TAO_Transport (const TAO_Transport&);
-  void operator= (const TAO_Transport&);
+  /**
+   * @brief Re-factor computation of I/O timeouts based on operation
+   * timeouts.
+   * Depending on the wait strategy, we need to timeout I/O operations or
+   * not.  For example, if we are using a non-blocking strategy, we want
+   * to pass 0 to all I/O operations, and rely on the ACE_NONBLOCK
+   * settings on the underlying sockets.  However, for blocking strategies
+   * we want to pass the operation timeouts, to respect the application
+   * level policies.
+   *
+   * This function was introduced as part of the fixes for bug 3647.
+   */
+  ACE_Time_Value const *io_timeout(
+      ACE_Time_Value const * operation_timeout) const;
 
   /*
    * Specialization hook to add concrete private methods from
