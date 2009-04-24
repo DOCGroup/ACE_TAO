@@ -1,3 +1,38 @@
+Fri Apr 24 13:46:38 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Bug_3647_Regression:
+        * tests/Bug_3647_Regression/Bug_3647_Regression.mpc:
+        * tests/Bug_3647_Regression/run_test.pl:
+        * tests/Bug_3647_Regression/README:
+        * tests/Bug_3647_Regression/svc.conf:
+        * tests/Bug_3647_Regression/Test.idl:
+        * tests/Bug_3647_Regression/Throw_Spec.h:
+          Add a regression test for bug #3647.  The test consists of three
+          processeses:
+
+        * tests/Bug_3647_Regression/Backend_Impl.hpp:
+        * tests/Bug_3647_Regression/Backend_Impl.cpp:
+        * tests/Bug_3647_Regression/backend_server.cpp:
+          The backend server receives oneway calls.  On request, it calls
+          sleep for a long period of time to block its I/O on particular
+          sockets.
+
+        * tests/Bug_3647_Regression/Middle_Impl.hpp:
+        * tests/Bug_3647_Regression/Middle_Impl.cpp:
+        * tests/Bug_3647_Regression/middle_server.cpp:
+          A middle tier server, which never calls sleep, but because of
+          bug 3647 it blocks trying to make calls on the backend server,
+          though it should not.
+
+        * tests/Bug_3647_Regression/client.cpp:
+          The client coordinates the work.  It setups connections between
+          all the servers and makes calls on the middle tier server.  It
+          expects the middle tier server to be always available, but it
+          did not before the fixes.
+
+        * bin/tao_orb_tests.lst:
+          Add Bug_3647_Regression to the list.
+
 Fri Apr 24 12:03:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/start_services:
