@@ -1,3 +1,8 @@
+Fri Apr 24 15:11:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+          Unicode fix
+
 Fri Apr 24 12:03:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/start_services:

@@ -109,7 +109,7 @@ TAO_Notify_POA_Helper::create_i (
   if (DEBUG_LEVEL > 0)
     {
       CORBA::String_var the_name = this->poa_->the_name ();
-      ACE_DEBUG ((LM_DEBUG, "Created POA : %s\n", the_name.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Created POA : %C\n", the_name.in ()));
     }
 
   /*
