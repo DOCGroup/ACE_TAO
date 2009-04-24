@@ -1,0 +1,98 @@
+Legend:
+
+@@ signifies a to-be-done item
+
+%% signifies a done item (should be cleaned-up periodically)
+
+@% signifies a partially-done item
+
+++ signifies difficulty of an item (the more pluses the more difficult)
+
+------------------------------------------------------------------------
+
+@@ In operation comma member function is used both for parameters and
+   exceptions. As a result one can get unexpected extra commas.
+
+@@ Make CCF buildable with MPC.
+
+@@ Write proper build instructions.
+
+@@ Can I use C++ templates instead of m4 in BuiltIn stuff?
+
+@@ Typedef.hpp TypeId.hpp: naming inconsistency.
+
+@@ Need ICE mechanism (search for abort ())
+
+@@ Need evolution of semantic action error handling/reporting.
+
+@@+ It's a good idea to include ostream instead of iostream where I only
+    use ostreams.
+
+@@+++ Currently character stream is scanned completely before parsing. The
+      better approach would be scanning on demand (1).
+
+@@+++ IDL2::Parsing::parse () should be eliminated (or terminated if you
+      like ;-). This item depends on (1).
+
+@@++ 'using namespace' cleanup.
+
+@@ Replace all i++ with ++i.
+
+@@ It seems that SyntaxTree::Node origin in terms of file:line should be
+   preserved for subsequent diagnostic implemented as separate paths
+   (see repository id generator for example).
+
+@@++++ Diagnostic evolution
+
+@%++ XML indentation buffer
+
+@@+++ Introduction (injection) of names into scope
+
+@@++++ C Preprocessor integration (wave)
+
+
+%% IDL feature: type id/prefix
+
+%% IDL feature: exception declaration
+
+%% IDL feature: built-in types
+
+%% IDL feature: struct
+
+%% IDL feature: enum
+
+%% IDL feature: factories/finders (completion) (left: finder)
+
+%% IDL feature: oprations (completion) (left: oneway)
+
+---
+
+@% IDL feature: literals and constant expression (3)
+
+@% IDL feature: constant declaration; depends on 3
+
+@% IDL feature: sequences; depends on 2,3 (left: bounded seq)
+
+@% IDL feature: attribute (completion) (left: exception spec)
+
+@% IDL feature: valuetype (4)
+
+@% IDL feature: event (completion); do after (4)
+
+@% IDL feature: literals (left FP, fixed)
+
+---
+
+%% Inherited name lookup
+
+%% Revisit LEM for interconnected rules.
+
+@@ Maybe do something with diagnostic
+
+---
+
+@@ IDL feature: array; depends on 2,3
+
+@@ IDL feature: union
+
+@@ IDL feature: fixed; depends on 2,3

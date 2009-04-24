@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ *  @file Messenger.cidl
+ *
+ *  @author Don Busch <busch_d@ociweb.com>
+ */
+
+#ifndef MESSENGER_CIDL
+#define MESSENGER_CIDL
+
+#include "Messenger.idl"
+
+composition session Messenger_Impl
+{
+    home executor MessengerHome_Exec
+    {
+        implements MessengerHome;
+        manages    Messenger_Exec;
+    };
+};
+
+#endif
+

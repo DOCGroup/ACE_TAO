@@ -1,0 +1,17 @@
+// $Id$
+
+#include "ccm/CCM_Container.idl"
+#include "tao/PortableServer/PortableServer_include.pidl"
+
+module CIAO
+{
+  local interface UpgradeableContext : ::Components::SessionContext
+  {
+    ::Components::ConsumerDescriptions get_registered_consumers
+        (in ::Components::FeatureName publisher_name)
+      raises (::Components::InvalidName, ::Components::InvalidConnection);
+    void deactivate_facet (in PortableServer::ObjectId oid);
+    void update_port_activator (in PortableServer::ObjectId oid);
+    void remove_facet (in Object reference);
+  };
+};

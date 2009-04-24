@@ -1,0 +1,60 @@
+/* -*- C++ -*- */
+// $Id$
+
+#if !defined (_CONSUMER_IDL)
+#define _CONSUMER_IDL
+
+module Callback_Quoter
+{
+  // = TITLE
+  // This module contains the data structure defined to store
+  // information and the consumer interface.
+
+  exception Invalid_Stock
+  {
+    // = TITLE
+    //   Requested stock does not exist.
+
+    string reason;
+    // The message which declares the reason for this execption.
+
+  };
+
+  exception Invalid_Handle
+  {
+    // = TITLE
+    //   Requested object does not exist.
+
+    string reason;
+    // The actual reason which caused the exception.
+
+  };
+
+  struct Info
+  {
+    // = TITLE
+    // The information passed by the Notifier to the consumer.
+
+    string stock_name;
+    // This is the name of the stock about whom the consumer
+    // is seeking information.
+
+    long value;
+    // This is the market price of the stock.
+  };
+
+  interface Consumer
+    {
+      // = TITLE
+      // The Consumer interface which is utilized by the Notifier
+      // to pass information to the consumer.
+
+      void push (in Callback_Quoter::Info data);
+      // Notifier sends data to the consumer.
+
+      void shutdown ();
+      // the process shuts down.
+    };
+};
+
+#endif /* _CONSUMER_IDL */

@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: TAO_Monitor
+Description: TAO Monitor Library
+Requires: TAO_PortableServer, TAO_ETCL_Parser, ACE_MonitorControl
+Version: @VERSION@
+Libs: -L${libdir} -lTAO_Monitor
+Cflags: -I${includedir}
