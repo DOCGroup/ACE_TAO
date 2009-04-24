@@ -34,6 +34,7 @@ foreach my $idl_file (@idls) {
     }
 
     if (! -f $xmi) {
+        print STDERR "ERROR: tao_idl3_to_xmi didn't produce XMI\n";
         print "\n";
         next;
     }
