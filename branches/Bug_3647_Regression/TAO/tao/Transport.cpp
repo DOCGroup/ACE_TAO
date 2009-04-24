@@ -410,7 +410,8 @@ TAO_Transport::sendfile (TAO_MMAP_Allocator * /* allocator */,
   //    implementation to this base class method, and leave any TCP
   //    specific configuration out of this base class method.
   //      -Ossama
-  return this->send (iov, iovcnt, bytes_transferred, timeout);
+  return this->send (iov, iovcnt, bytes_transferred,
+                     this->io_timeout (timeout));
 }
 #endif  /* TAO_HAS_SENDFILE==1 */
 
@@ -927,7 +928,8 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[], ACE_Time_Value *max
                              byte_count);
   else
 #endif  /* TAO_HAS_SENDFILE==1 */
-    retval = this->send (iov, iovcnt, byte_count, max_wait_time);
+    retval = this->send (iov, iovcnt, byte_count,
+                         this->io_timeout (max_wait_time));
 
   if (TAO_debug_level == 5)
     {
@@ -1852,7 +1854,7 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
   // Read the message into the existing message block on heap
   ssize_t const n = this->recv (q_data->msg_block ()->wr_ptr(),
                                 recv_size,
-                                max_wait_time);
+                                this->io_timeout (max_wait_time));
 
   if (n <= 0)
     {
@@ -2068,7 +2070,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
   // the stack.
   ssize_t const n = this->recv (message_block.wr_ptr (),
                                 recv_size,
-                                max_wait_time);
+                                this->io_timeout (max_wait_time));
 
   // If there is an error return to the reactor..
   if (n <= 0)
@@ -2753,6 +2755,17 @@ TAO_Transport::allocate_partial_message_block (void)
 void
 TAO_Transport::set_bidir_context_info (TAO_Operation_Details &)
 {
+}
+
+ACE_Time_Value const *
+TAO_Transport::io_timeout(
+    ACE_Time_Value const * operation_timeout) const
+{
+  if (this->wait_strategy()->can_process_upcalls())
+  {
+    return 0;
+  }
+  return operation_timeout;
 }
 
 /*
