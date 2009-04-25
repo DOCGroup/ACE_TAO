@@ -183,7 +183,7 @@ FTRMFF_Packing_Algorithm::merge_processors (unsigned long primary_processors)
 
   do
     {
-      DBG_OUT (merge_matrix[current_processor]);
+      TRACE (merge_matrix[current_processor]);
 
       if (!merge_marker[current_processor])
         {
@@ -217,14 +217,14 @@ FTRMFF_Packing_Algorithm::merge_processors (unsigned long primary_processors)
                       // if schedulable no matter which tasks become active
                       if (merge_check (all_tasks))
                         {
-                          DBG_OUT ("merge " 
-                                   << merge_matrix[current_processor]
-                                   << ": " 
-                                   << schedule_[merge_matrix[current_processor]]
-                                   << " with " 
-                                   << merge_matrix[match_processor]
-                                   << ": "
-                                   << schedule_[merge_matrix[match_processor]]);
+                          TRACE ("merge " 
+                                 << merge_matrix[current_processor]
+                                 << ": " 
+                                 << schedule_[merge_matrix[current_processor]]
+                                 << " with " 
+                                 << merge_matrix[match_processor]
+                                 << ": "
+                                 << schedule_[merge_matrix[match_processor]]);
 
                           schedule_[merge_matrix[match_processor]] =
                             merge_lists (all_tasks);
@@ -237,8 +237,8 @@ FTRMFF_Packing_Algorithm::merge_processors (unsigned long primary_processors)
                     }
                   else
                     {
-                      DBG_OUT ("cannot merge" << merge_matrix[current_processor]
-                               << " with " << merge_matrix[match_processor]);
+                      TRACE ("cannot merge" << merge_matrix[current_processor]
+                             << " with " << merge_matrix[match_processor]);
                     }
                 }
 
