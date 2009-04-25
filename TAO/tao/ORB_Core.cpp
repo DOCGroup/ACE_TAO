@@ -1072,7 +1072,17 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
           arg_shifter.consume_arg ();
         }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBForwardInvocationOnObjectNotExist"))))
+        {
+          int forward = ACE_OS::atoi (current_arg);
+          if (forward)
+            this->orb_params_.forward_invocation_on_object_not_exist (true);
+          else
+            this->orb_params_.forward_invocation_on_object_not_exist (false);
 
+          arg_shifter.consume_arg ();
+        }
       ////////////////////////////////////////////////////////////////
       // catch any unknown -ORB args                                //
       ////////////////////////////////////////////////////////////////
