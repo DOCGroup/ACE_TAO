@@ -54,6 +54,7 @@ freeze(CORBA::ULong seconds)
             "Backend_Impl::sleep(%P|%t) - finished after %d seconds\n",
             seconds));
   }
+  shutdown();
 }
 
 void Bug_3647_Regression::Backend_Impl::
