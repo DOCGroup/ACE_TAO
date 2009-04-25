@@ -538,6 +538,10 @@ namespace TAO
         throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }
 
+    bool forward_on_object_not_exist 
+      = ACE_OS_String::strcmp (type_id.in (), "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0 ?        
+        this->stub ()->orb_core ()->orb_params ()->forward_invocation_on_object_not_exist() : false;
+       
     // Special handling for non-fatal system exceptions.
     //
     // Note that we are careful to retain "at most once" semantics.
@@ -548,7 +552,8 @@ namespace TAO
          ACE_OS_String::strcmp (type_id.in (),
                                 "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0 ||
          ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0) &&
+                                "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0 ||
+         forward_on_object_not_exist) &&
         (CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES)
       {
         {

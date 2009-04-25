@@ -1,3 +1,111 @@
+Sat Apr 25 06:25:37 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        Added IMR changes OCI prepared for some customers. 
+          
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.h:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+
+          - Added -UnregisterIfAddressReused IMR option to enable the address reuse
+            checking upon server registering via server_is_running. If a new server
+            reuses already registered server's address, the previous server will be
+            unregistered from IMR.
+          - Current implementation registers server per POA instead of per server
+            process. The ServerId info is added to ServerInfo to help identify if
+            different POAs are from same server process. The POA registering will
+            not affect the POAs registered with the same ServerId.
+
+        * tao/ImR_Client/ImR_Client.cpp:
+
+          Made server ID (set via -ORBServerId) info be part of the server
+          name info to pass to IMR. This info helps IMR to identify if two
+          poas created by same server process.
+
+        * tao/ORB_Core.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/params.h:
+        * tao/params.inl:
+        * tao/params.cpp:
+
+          Added new ORB option -ORBForwardInvocationOnObjectNotExist to support
+          request forwarding to next available profile upon receiving OBJECT_NOT_EXIST
+          exception reply.
+
+        * orbsvcs/tests/ImplRepo/ReconnectServer/ReconnectServer.mpc:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/client.cpp:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/serverA.cpp:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/serverB.cpp:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/test.idl:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/test_i.h:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/test_i.cpp:
+
+          Added test case for the changes.
+
+        * bin/tao_other_tests.lst:
+
+          Added ImplRepo ReconnectServer test.
+
+Sat Apr 25 06:14:45 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.h:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+
+          - Added -UnregisterIfAddressReused IMR option to enable the address reuse
+            checking upon server registering via server_is_running. If a new server
+            reuses already registered server's address, the previous server will be
+            unregistered from IMR.
+          - Current implementation registers server per POA instead of per server
+            process. The ServerId info is added to ServerInfo to help identify if
+            different POAs are from same server process. The POA registering will
+            not affect the POAs registered with the same ServerId.
+
+        * tao/ImR_Client/ImR_Client.cpp:
+
+          Made server ID (set via -ORBServerId) info be part of the server
+          name info to pass to IMR. This info helps IMR to identify if two
+          poas created by same server process.
+
+        * tao/ORB_Core.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/params.h:
+        * tao/params.inl:
+        * tao/params.cpp:
+
+          Added new ORB option -ORBForwardInvocationOnObjectNotExist to support
+          request forwarding to next available profile upon receiving OBJECT_NOT_EXIST
+          exception reply.
+
+        * orbsvcs/tests/ImplRepo/ReconnectServer/ReconnectServer.mpc:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/client.cpp:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/serverA.cpp:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/serverB.cpp:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/test.idl:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/test_i.h:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/test_i.cpp:
+
+          Added test case for the changes.
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+
+          Added ImplRepo ReconnectServer test.
+
 Fri Apr 24 15:17:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Bug_3646a_Regression/Consumer.cpp:

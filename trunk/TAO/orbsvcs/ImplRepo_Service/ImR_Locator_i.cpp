@@ -58,6 +58,7 @@ ImR_Locator_i::ImR_Locator_i (void)
   , ins_locator_ (0)
   , debug_ (0)
   , read_only_ (false)
+  , unregister_if_address_reused_ (false)
 {
   // Visual C++ 6.0 is not smart enough to do a direct assignment
   // while allocating the INS_Locator.  So, we have to do it in
@@ -85,6 +86,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
   read_only_ = opts.readonly ();
   startup_timeout_ = opts.startup_timeout ();
   ping_interval_ = opts.ping_interval ();
+  unregister_if_address_reused_ = opts.unregister_if_address_reused ();
 
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("RootPOA");
@@ -791,7 +793,8 @@ ImR_Locator_i::add_or_update_server (const char* server,
       if (this->debug_ > 1)
         ACE_DEBUG ((LM_DEBUG, "ImR: Adding server <%s>.\n", server));
 
-      this->repository_.add_server (server,
+      this->repository_.add_server ("",
+                                    server,
                                     options.activator.in (),
                                     options.command_line.in (),
                                     options.environment,
@@ -965,30 +968,52 @@ ImR_Locator_i::shutdown_server (const char* server)
 }
 
 void
-ImR_Locator_i::server_is_running (const char* name,
+ImR_Locator_i::server_is_running (const char* id,
                                   const char* partial_ior,
                                   ImplementationRepository::ServerObject_ptr server)
 {
-  ACE_ASSERT (name != 0);
+  ACE_ASSERT (id != 0);
   ACE_ASSERT (partial_ior != 0);
   ACE_ASSERT (! CORBA::is_nil (server));
 
+  ACE_CString server_id;
+  ACE_CString name;
+
+  const char *pos = ACE_OS::strchr (id, ':');
+  if (pos)
+  {
+    ACE_CString idstr (id);
+    server_id = idstr.substr (0, pos - id);
+    name = idstr.substr (pos - id + 1);
+  }
+  else
+  {
+    name = id;
+  }
+
   if (this->debug_ > 0)
-    ACE_DEBUG ((LM_DEBUG, "ImR: Server %s is running at %s.\n", name, partial_ior));
+    ACE_DEBUG ((LM_DEBUG, "ImR: Server %s is running at %s.\n", 
+      name.c_str (), partial_ior));
+
 
   CORBA::String_var ior = orb_->object_to_string (server);
 
   if (this->debug_ > 1)
-    ACE_DEBUG ((LM_DEBUG, "ImR: Server %s callback at %s.\n", name, ior.in ()));
+    ACE_DEBUG ((LM_DEBUG, "ImR: Server %s callback at %s.\n", 
+      name.c_str (), ior.in ()));
+
+  if (this->unregister_if_address_reused_)
+    this->repository_.unregister_if_address_reused (server_id, name, partial_ior);
 
   Server_Info_Ptr info = this->repository_.get_server (name);
   if (info.null ())
     {
       if (this->debug_ > 0)
-        ACE_DEBUG ((LM_DEBUG, "ImR: Auto adding NORMAL server <%s>.\n", name));
+        ACE_DEBUG ((LM_DEBUG, "ImR: Auto adding NORMAL server <%s>.\n", name.c_str ()));
 
       ImplementationRepository::EnvironmentList env (0);
-      this->repository_.add_server (name,
+      this->repository_.add_server (server_id,
+                                    name,
                                     "", // no activator
                                     "", // no cmdline
                                     ImplementationRepository::EnvironmentList (),
@@ -1002,22 +1027,32 @@ ImR_Locator_i::server_is_running (const char* name,
     }
   else
     {
+      if (info->server_id != server_id)
+      {
+        if (! info->server_id.empty())
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("ImR - WARNING: server \"%s\" changed server id from ")
+                      ACE_TEXT ("\"%s\" to \"%s\" waiting PER_CLIENT clients.\n"),
+                      name.c_str (), info->server_id.c_str (), server_id.c_str ()));
+        info->server_id = server_id;
+      }
+
       if (info->activation_mode != ImplementationRepository::PER_CLIENT) {
         info->ior = ior.in ();
         info->partial_ior = partial_ior;
         info->server = ImplementationRepository::ServerObject::_nil (); // Will connect at first access
-
+        
         int err = this->repository_.update_server (*info);
         ACE_ASSERT (err == 0);
         ACE_UNUSED_ARG (err);
 
-        waiter_svt_.unblock_one (name, partial_ior, ior.in (), false);
+        waiter_svt_.unblock_one (name.c_str (), partial_ior, ior.in (), false);
       } else {
         // Note : There's no need to unblock all the waiting request until
         // we know the final status of the server.
         if (info->waiting_clients > 0)
         {
-          waiter_svt_.unblock_one (name, partial_ior, ior.in (), true);
+          waiter_svt_.unblock_one (name.c_str (), partial_ior, ior.in (), true);
         }
         else if (this->debug_ > 1)
         {
