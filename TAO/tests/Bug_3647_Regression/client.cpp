@@ -117,7 +117,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "client(%P|%t) - test started up\n"));
 
       int const iterations = 10000;
-      int const interval = 10;
+      int const interval = iterations / 20;
       ACE_DEBUG ((LM_DEBUG, "client(%P|%t) - running pings"));
       for (int i = 0; i != iterations; ++i)
       {

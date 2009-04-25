@@ -69,6 +69,80 @@ namespace TAO
     /// Transport-level statistics. Initially introduced to support
     /// the "Transport Current" functionality.
     class Stats;
+
+  /**
+   * @struct Drain_Constraints
+   *
+   * @brief Encapsulate the flushing control parameters.
+   *
+   * At several points, the ORB needs to flush data from a transport to the
+   * underlying I/O mechanisms.  How this data is flushed depends on the
+   * context where the request is made, the ORB configuration and the
+   * application level policies in effect.
+   *
+   * Some examples:
+   * 
+   * # When idle, the ORB will want to send data on any socket that has
+   *   space available.  In this case, the queue must be drained on 
+   *   a best-effort basis, without any blocking.
+   * # If the ORB is configured to handle nested upcalls, any two-way
+   *   request should block and push data to the underlying socket as fast
+   *   as possible.
+   * # In the same use-case, but now with a timeout policy in
+   *   effect, the ORB will need to send the data use I/O operations with
+   *   timeouts (as implemented by ACE::sendv()
+   * # When the ORB is configured to support nested upcalls, any two-way,
+   *   reliable oneway or similar should wait using the reactor or
+   *   Leader-Follower implementation.  While still respecting the timeout
+   *   policies.
+   *
+   * Instead of sprinkling if() statements throughput the critical path
+   * trying to determine how the I/O operations should be performed, we
+   * pass the information encapsulated in this class.  The caller into the
+   * Transport object determines the right parameters to use, and the
+   * Transport object simply obeys those instructions.
+   */
+  class Drain_Constraints : private ACE_Copy_Disabled
+  {
+  public:
+    /// Default constructor
+    Drain_Constraints()
+      : timeout_(0)
+      , block_on_io_(false)
+    {
+    }
+
+    /// Constructor
+    Drain_Constraints(
+        ACE_Time_Value const * timeout,
+        bool block_on_io)
+      : timeout_(timeout)
+      , block_on_io_(block_on_io)
+    {
+    }
+
+    /**
+     * If true, then the ORB should block on I/O operations instead of
+     * using non-blocking I/O.
+     */
+    bool block_on_io() const
+    {
+      return block_on_io_;
+    }
+
+    /**
+     * The maximum time to block on I/O operations (or nested loops) based
+     * on the current timeout policies.
+     */
+    ACE_Time_Value const * timeout() const
+    {
+      return timeout_;
+    }
+
+  private:
+    ACE_Time_Value const * timeout_;
+    bool block_on_io_;
+  };
   }
 }
 
@@ -291,7 +365,7 @@ public:
   TAO_Wait_Strategy *wait_strategy (void) const;
 
   /// Callback method to reactively drain the outgoing data queue
-  int handle_output (ACE_Time_Value *max_wait_time);
+  int handle_output (TAO::Transport::Drain_Constraints const & c);
 
   /// Get the bidirectional flag
   int bidirectional_flag (void) const;
@@ -412,7 +486,7 @@ public:
   virtual ssize_t send (iovec *iov,
                         int iovcnt,
                         size_t &bytes_transferred,
-                        const ACE_Time_Value *timeout = 0) = 0;
+                        ACE_Time_Value const * timeout) = 0;
 
 #if TAO_HAS_SENDFILE == 1
   /// Send data through zero-copy write mechanism, if available.
@@ -429,7 +503,7 @@ public:
                             iovec * iov,
                             int iovcnt,
                             size_t &bytes_transferred,
-                            ACE_Time_Value const * timeout = 0);
+      TAO::Transport::Drain_Constraints const & dc);
 #endif  /* TAO_HAS_SENDFILE==1 */
 
 
@@ -709,7 +783,14 @@ public:
                             ACE_Time_Value *max_wait_time,
                             TAO_Stub* stub);
 
-  /// Send a message block chain,
+  /**
+   * This is a very specialized interface to send a simple chain of
+   * messages through the Transport.  The only place we use this interface
+   * is in GIOP_Message_Base.cpp, to send error messages (i.e., an
+   * indication that we received a malformed GIOP message,) and to close
+   * the connection.
+   *
+   */
   int send_message_block_chain (const ACE_Message_Block *message_block,
                                 size_t &bytes_transferred,
                                 ACE_Time_Value *max_wait_time = 0);
@@ -717,7 +798,8 @@ public:
   /// Send a message block chain, assuming the lock is held
   int send_message_block_chain_i (const ACE_Message_Block *message_block,
                                   size_t &bytes_transferred,
-                                  ACE_Time_Value *max_wait_time);
+                                  TAO::Transport::Drain_Constraints const & dc);
+
   /// Cache management
   int purge_entry (void);
 
@@ -802,10 +884,10 @@ private:
    * Returns 0 if there is more data to send, -1 if there was an error
    * and 1 if the message was completely sent.
    */
-  int drain_queue (ACE_Time_Value *max_wait_time);
+  int drain_queue (TAO::Transport::Drain_Constraints const & dc);
 
   /// Implement drain_queue() assuming the lock is held
-  int drain_queue_i (ACE_Time_Value *max_wait_time);
+  int drain_queue_i (TAO::Transport::Drain_Constraints const & dc);
 
   /// Check if there are messages pending in the queue
   /**
@@ -817,7 +899,8 @@ private:
   bool queue_is_empty_i (void) const;
 
   /// A helper routine used in drain_queue_i()
-  int drain_queue_helper (int &iovcnt, iovec iov[], ACE_Time_Value *max_wait_time);
+  int drain_queue_helper (int &iovcnt, iovec iov[],
+      TAO::Transport::Drain_Constraints const & dc);
 
   /// These classes need privileged access to:
   /// - schedule_output_i()
@@ -942,8 +1025,22 @@ private:
    * This function was introduced as part of the fixes for bug 3647.
    */
   ACE_Time_Value const *io_timeout(
-      ACE_Time_Value const * operation_timeout) const;
+      TAO::Transport::Drain_Constraints const & dc) const;
 
+  /**
+   * Return true if blocking I/O should be used for sending synchronous
+   * (two-way, reliable oneways, etc.) messages.  This is determined based
+   * on the current flushing and waiting strategies.
+   */
+  bool using_blocking_io_for_synch_messages() const;
+  
+  /**
+   * Return true if blocking I/O should be used for sending asynchronous
+   * (AMI calls, non-blocking oneways, responses to operations, etc.)
+   * messages.  This is determined based on the current flushing strategy.
+   */
+  bool using_blocking_io_for_asynch_messages() const;
+  
   /*
    * Specialization hook to add concrete private methods from
    * TAO's protocol implementation onto the base Transport class

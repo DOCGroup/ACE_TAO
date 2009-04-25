@@ -10,11 +10,26 @@ use PerlACE::TestTarget;
 use strict;
 
 my $verbose = '';
+my $mode = 'DELAYED';
 
 foreach my $i (@ARGV) {
-    if ($i eq '-verbose') {
-        $verbose = ' -v';
-    }
+  if ($i eq '-verbose') {
+    $verbose = ' -v';
+  } elsif ($i eq '-none') {
+    $mode = 'NONE';
+  } elsif ($i eq '-delayed') {
+    $mode = 'DELAYED';
+  } elsif ($i eq '-transport') {
+    # In this mode, the test is *expected* to fail.  We only run it
+    # like this to verify that the test is a good test (i.e. it
+    # detects failures.)  Same comment applies for SERVER and TARGET
+    # modes.
+    $mode = 'TRANSPORT';
+  } elsif ($i eq '-server') {
+    $mode = 'SERVER';
+  } elsif ($i eq '-target') {
+    $mode = 'TARGET';
+  }
 }
 
 my $backend = PerlACE::TestTarget::create_target(1)
@@ -42,14 +57,15 @@ my $BE =
 			   " -o $backend_iorfile"
 			   . $verbose);
 my $MD =
-  $middle->CreateProcess ("/usr/bin/strace"," -o md.strace.txt ./middle_server".
-			  " -s DELAYED -t 300 "
+  $middle->CreateProcess (#"/usr/bin/strace"," -o md.strace.txt ./middle_server".
+			  "middle_server",
+			  " -s $mode -t 5 "
 			  ." -o $middle_out_iorfile"
 			  . $verbose
 			  . " -k file://$middle_in_iorfile");
 my $CL = $client->CreateProcess ("client",
 				 " -k file://$client_in_iorfile"
-				 ." -t 600 "
+				 ." -t 1 "
 				 .$verbose);
 my $be_status = $BE->Spawn ();
 if ($be_status != 0) {

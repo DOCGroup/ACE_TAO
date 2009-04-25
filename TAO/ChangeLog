@@ -1,3 +1,38 @@
+Sat Apr 25 11:31:50 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Connection_Handler.cpp:
+          Seemingly completed the fixes for 3647.
+          Fundamentally, the calls to sendv() need to use a timeout
+          parameter when called with the blocking flushing strategy or
+          with the read-write waiting strategy *and* when there is a
+          timeout.
+          Unfortunately, the point(s) where we call sendv() does not have
+          enough context to determine if the parameter is needed.
+          I changed the Transport class to pass a little struct with both
+          the timeout value and flag to indicate if using blocking I/O
+          calls was desired.
+          The caller makes the determination and passes the parameter into
+          the Transport object, for example, the Block_Flushing_Strategy
+          certainly wants to use blocking I/O calls.
+          Several interface in TAO_Transport changed, and so did its
+          callers.
+
+        * tests/Bug_3647_Regression/client.cpp:
+        * tests/Bug_3647_Regression/Middle_Impl.cpp:
+        * tests/Bug_3647_Regression/Backend_Impl.cpp:
+        * tests/Bug_3647_Regression/run_test.pl:
+          Fine-tune the test so it would pass all the time.  The default
+          parameters showed the problem before the changes, but then
+          failed due to a timeout during shutdown.
+          Also expanded run_test.pl to test with SYNC_NONE vs. other
+          policies.  It was important to me to verify that the test
+          continues to fail with SYNC_WITH_SERVER, so my "fine tuning" did
+          not hide real errors.
+
 Fri Apr 24 13:57:18 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tao/Transport.h:

@@ -27,19 +27,23 @@ TAO_Block_Flushing_Strategy::flush_message (TAO_Transport *transport,
 {
   while (!msg->all_data_sent ())
     {
-      if (transport->handle_output (max_wait_time) == -1)
+      TAO::Transport::Drain_Constraints dc(
+          max_wait_time, true);
+      if (transport->handle_output (dc) == -1)
         return -1;
     }
   return 0;
 }
 
 int
-TAO_Block_Flushing_Strategy::flush_transport (TAO_Transport *transport
-                                              , ACE_Time_Value *max_wait_time)
+TAO_Block_Flushing_Strategy::flush_transport (TAO_Transport *transport,
+                                              ACE_Time_Value *max_wait_time)
 {
   while (!transport->queue_is_empty ())
     {
-      if (transport->handle_output (max_wait_time) == -1)
+      TAO::Transport::Drain_Constraints dc(
+          max_wait_time, true);
+      if (transport->handle_output (dc) == -1)
         return -1;
     }
   return 0;
