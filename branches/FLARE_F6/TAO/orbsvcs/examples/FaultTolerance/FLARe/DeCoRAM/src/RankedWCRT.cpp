@@ -154,7 +154,7 @@ private:
 };
 
 // helper functor that looks at a certain set of tasks and determines
-// whether which tasks become active if the set of processors fails
+// which tasks become active if the set of processors fails
 struct GetActiveBackups : public std::unary_function <PROCESSOR_SET,
                                                       TASKNAME_SET>
 {

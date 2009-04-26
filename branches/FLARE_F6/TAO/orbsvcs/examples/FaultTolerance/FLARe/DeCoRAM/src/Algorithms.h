@@ -171,4 +171,6 @@ struct double_equal : public std::binary_function <double, double, bool>
   bool operator () (double d1, double d2);
 };
 
+Taskname primary_name (const Task & task);
+
 #endif /* FTRMFF_ALGORITHMS_H_ */
