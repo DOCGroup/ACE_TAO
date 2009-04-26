@@ -164,3 +164,8 @@ TaskNamePredicate::operator () (const Task & task)
 {
   return task_name_.compare (task.name) == 0;
 }
+
+Taskname primary_name (const Task & task)
+{
+  return task.name.substr (0, '_');
+}
