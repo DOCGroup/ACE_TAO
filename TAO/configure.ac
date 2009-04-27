@@ -430,7 +430,6 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Bug_2709_Regression/Makefile
     orbsvcs/tests/Bug_2800_Regression/Makefile
     orbsvcs/tests/Bug_2925_Regression/Makefile
-    orbsvcs/tests/Bug_2926_Regression/Makefile
     orbsvcs/tests/Bug_3215_Regression/Makefile
     orbsvcs/tests/Bug_3216_Regression/Makefile
     orbsvcs/tests/COIOP_Naming_Test/Makefile
