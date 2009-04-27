@@ -124,20 +124,32 @@ The svc.conf options:
 
 The "TAO_CosNotify_Service" service object accepts the following options:
 
-"-DispatchingThreads [thread_count]" : Enables MT dispatching with the specified number
-                                       of threads.
-
-"-ListenerThreads"                   : How many threads for listener filter evaluation.
-
-"-AsynchUpdates"                     : Send subscription and
-                                       publication updates
-                                       asynchronously.
-
-"-AllocateTaskperProxy"              : Allocate worker tasks per
-                                       proxy 
+"-AllocateTaskperProxy"              : Allocate worker tasks per proxy
                                        *see footnote below for explanation*
+
 "-AllowReconnect"                    : Allows consumers and suppliers to
                                        reconnect to existing proxies.
+
+"-AsynchUpdates"                     : Send subscription and publication 
+                                       updates asynchronously.
+
+"-DefaultConsumerAdminFilterOp [op]" : Sets the default consumer admin filter 
+                                       operator. op can be either "OR" or
+                                       "AND". The default is "OR" to be 
+                                       consistent with older releases of TAO.
+
+"-DefaultSupplierAdminFilterOp [op]" : Sets the default supplier admin filter
+                                       operator. op can be either "OR" or
+                                       "AND". The default is "OR" to be 
+                                       consistent with older releases of TAO.
+
+"-DispatchingThreads [thread_count]" : Enables MT dispatching with the 
+                                       specified number of threads. This 
+                                       option supercedes the deprecated
+                                       ListenerThreads, MTListenerEval and 
+                                       MTDispatching options. Note that
+                                       "AllocateTaskperProxy" affects how this
+                                       value is applied.
 
 "-NoUpdates"                         : Globally disables subscription and
                                        publication updates.
@@ -168,11 +180,12 @@ The "TAO_CosNotify_Service" service object accepts the following options:
                                        default value of 0 means validation 
                                        will only happen once.
 
-"-DefaultConsumerAdminFilterOp [op]" : Sets the default consumer admin filter
-                                       operator [OR|AND]. Default is AND.
-
-"-DefaultSupplierAdminFilterOp [op]" : Sets the default supplier admin filter
-                                       operator [OR|AND]. Default is AND.
+"-SourceThreads [thread_count]"      : Specifies the number of threads for each
+                                       supplier admin or proxy consumer. See 
+                                       the note below for details about thread
+                                       assignments. This option supercedes the
+                                       deprecated LookupThreads, MTSourceEval,
+                                       and MTLookup options.
 
 All other options are deprecated and should not be used.
 
@@ -185,20 +198,19 @@ This means that we want to enable event dispatching with 2 threads.
 What does the "-AllocateTaskperProxy" option do?
 
 A Task here implies a thread pool that performs a fixed work in the
-Notify.
-e.g. When you specify "DispatchingThreads 1".
-It means that there is 1 thread to perform the event dispatching to
-consumers IRRESPECTIVE OF THE NUMBER OF PROXYSUPPLIERS. It also means that
-events destined for each consumer will be queued to a buffer for that consumer. 
-Therefore, you can also think of this option as Enable Consumer-side Buffering
-of Events.
+Notify Service. e.g. When you specify "-DispatchingThreads 1" this
+means there is 1 thread to perform the event dispatching to consumers
+IRRESPECTIVE OF THE NUMBER OF PROXY SUPPLIERS. It also means that
+events destined for each consumer will be queued to a buffer for that
+consumer.  Therefore, you can also think of this option as Enable
+Consumer-side Buffering of Events.
 
 This is the default case.
 
 When you specify "-AllocateTaskperProxy" it asks notify to create a
-dispatching task (with the specified thread pool size) PER
-PROXYSUPPLIER. So if you use this option and connect 50 consumers with
-1 thread for the dispatching task you will have created 50 dispatching
+dispatching task with the specified thread pool size PER PROXY
+SUPPLIER.  So if you use this option and connect 50 consumers with 1
+thread for the dispatching task you will have created 50 dispatching
 threads! so use this option with care and you might not need it in
 most cases.
 
@@ -209,10 +221,11 @@ and how much thread resources are deployed.  e.g. a channel could have
 quantities.  A dedicated thread pool to this proxy will ensure better
 throughput to it's consumers. (Eventually I want to be able to set the
 thread pool size via a QoS property)
-Similarly "-ListenerThreads 2" specifies a thread pool for use by 
-the supplier-side processing. This enables Buffering on the Supplier-side, with
-the thread pool being used to process supplier side filters and push the 
-events to the Consumer side. 
+
+Similarly "-SupplierThreads 2" specifies a thread pool for use by the
+supplier-side processing. This enables Buffering on the Supplier-side,
+with the thread pool being used to process supplier side filters and
+push the events to the Consumer side.
 
 How to use the NT_Notify_Service
 ================================

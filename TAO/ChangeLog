@@ -1,8 +1,21 @@
+Mon Apr 27 15:54:55 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/Notify_Service/README:
+        
+          The README file was out of date with reality regarding the names
+          and purpose of some svc.conf arguments. I've cleaned up the list
+          to remove deprecated entries and add an entry for an option that
+          was overlooked before. I suspect that a previous author mistook
+          the purpose of the -ListenerThreads option to be that of the 
+          -SourceThreads option. The two appear to be similar in name, but 
+          in fact -ListenerThreads is a deprecated synonym for 
+          -DispatchingThreads. 
+
 Mon Apr 27 15:12:06 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_mcpp_preproc.cpp:
         * TAO_IDL/driver/drv_preproc.cpp:
-        
+
           Applied patches from Ken Sedgwick <ken at bonsai dot com>
           for platforms (including Fedora RPM) that use TAO_IDL_INCLUDE_DIR
           instead of TAO_ROOT. This checkin closes [BUGID:3661].
@@ -17,11 +30,11 @@ Mon Apr 27 03:20:52 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * orbsvcs/tests/ImplRepo/ReconnectServer/test_i.cpp:
 
           Fixed fuzz errors and compilation errors in unicode builds.
-          
+
         * NEWS:
-          
+
           Added entry for the new features.
-                    
+
 Sat Apr 25 06:25:37 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         Added IMR changes OCI prepared for some customers.
@@ -37,14 +50,17 @@ Sat Apr 25 06:25:37 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * orbsvcs/ImplRepo_Service/Server_Info.h:
         * orbsvcs/ImplRepo_Service/Server_Info.cpp:
 
-          - Added -UnregisterIfAddressReused IMR option to enable the address reuse
-            checking upon server registering via server_is_running. If a new server
-            reuses already registered server's address, the previous server will be
-            unregistered from IMR.
-          - Current implementation registers server per POA instead of per server
-            process. The ServerId info is added to ServerInfo to help identify if
-            different POAs are from same server process. The POA registering will
-            not affect the POAs registered with the same ServerId.
+          Added -UnregisterIfAddressReused IMR option to enable the
+          address reuse checking upon server registering via
+          server_is_running. If a new server reuses already registered
+          server's address, the previous server will be unregistered
+          from IMR.
+        
+          Current implementation registers server per POA instead of per
+          server process. The ServerId info is added to ServerInfo to
+          help identify if different POAs are from same server
+          process. The POA registering will not affect the POAs
+          registered with the same ServerId.
 
         * tao/ImR_Client/ImR_Client.cpp:
 
@@ -58,9 +74,9 @@ Sat Apr 25 06:25:37 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * tao/params.inl:
         * tao/params.cpp:
 
-          Added new ORB option -ORBForwardInvocationOnObjectNotExist to support
-          request forwarding to next available profile upon receiving OBJECT_NOT_EXIST
-          exception reply.
+          Added new ORB option -ORBForwardInvocationOnObjectNotExist to
+          support request forwarding to next available profile upon
+          receiving OBJECT_NOT_EXIST exception reply.
 
         * orbsvcs/tests/ImplRepo/ReconnectServer/ReconnectServer.mpc:
         * orbsvcs/tests/ImplRepo/ReconnectServer/client.cpp:
@@ -90,14 +106,17 @@ Sat Apr 25 06:14:45 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * orbsvcs/ImplRepo_Service/Server_Info.h:
         * orbsvcs/ImplRepo_Service/Server_Info.cpp:
 
-          - Added -UnregisterIfAddressReused IMR option to enable the address reuse
-            checking upon server registering via server_is_running. If a new server
-            reuses already registered server's address, the previous server will be
-            unregistered from IMR.
-          - Current implementation registers server per POA instead of per server
-            process. The ServerId info is added to ServerInfo to help identify if
-            different POAs are from same server process. The POA registering will
-            not affect the POAs registered with the same ServerId.
+          Added -UnregisterIfAddressReused IMR option to enable the
+          address reuse checking upon server registering via
+          server_is_running. If a new server reuses already registered
+          server's address, the previous server will be unregistered from
+          IMR.
+        
+          Current implementation registers server per POA instead of per
+          server process. The ServerId info is added to ServerInfo to help
+          identify if different POAs are from same server process. The POA
+          registering will not affect the POAs registered with the same
+          ServerId.
 
         * tao/ImR_Client/ImR_Client.cpp:
 
@@ -111,9 +130,9 @@ Sat Apr 25 06:14:45 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * tao/params.inl:
         * tao/params.cpp:
 
-          Added new ORB option -ORBForwardInvocationOnObjectNotExist to support
-          request forwarding to next available profile upon receiving OBJECT_NOT_EXIST
-          exception reply.
+          Added new ORB option -ORBForwardInvocationOnObjectNotExist to
+          support request forwarding to next available profile upon
+          receiving OBJECT_NOT_EXIST exception reply.
 
         * orbsvcs/tests/ImplRepo/ReconnectServer/ReconnectServer.mpc:
         * orbsvcs/tests/ImplRepo/ReconnectServer/client.cpp:
