@@ -1,3 +1,12 @@
+Mon Apr 27 15:12:06 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        
+          Applied patches from Ken Sedgwick <ken at bonsai dot com>
+          for platforms (including Fedora RPM) that use TAO_IDL_INCLUDE_DIR
+          instead of TAO_ROOT. This checkin closes [BUGID:3661].
+
 Mon Apr 27 03:20:52 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/ReconnectServer/client.cpp:

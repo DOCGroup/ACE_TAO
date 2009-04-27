@@ -292,8 +292,12 @@ DRV_cpp_init (void)
               // TAO_IDL_INCLUDE_DIR may be in quotes,
               // e.g. "/usr/local/include/tao"
               // We deal with a case like this below ...
-              DRV_add_include_path (include_path1, TAO_IDL_INCLUDE_DIR, 0);
-              DRV_add_include_path (include_path2, ".", 0);
+              DRV_add_include_path (include_path1,
+                                    TAO_IDL_INCLUDE_DIR,
+                                    0);
+              DRV_add_include_path (include_path2,
+                                    TAO_IDL_INCLUDE_DIR,
+                                    "/tao");
 #else
               DRV_add_include_path (include_path1, ".", 0);
 #endif  /* TAO_IDL_INCLUDE_DIR */
@@ -507,9 +511,15 @@ DRV_cpp_post_init (void)
         }
       else
         {
+#if defined (TAO_IDL_INCLUDE_DIR)
+          DRV_add_include_path (include_path3,
+                                TAO_IDL_INCLUDE_DIR,
+                                "/orbsvcs");
+#else
           // If ACE_ROOT isn't defined either, there will already
           // be a warning from DRV_preproc().
           DRV_add_include_path (include_path3, ".", 0);
+#endif  /* TAO_IDL_INCLUDE_DIR */
         }
     }
 
@@ -544,10 +554,22 @@ DRV_cpp_post_init (void)
         }
       else
         {
+#if defined (TAO_IDL_INCLUDE_DIR)
+          DRV_add_include_path (include_path4,
+                                TAO_IDL_INCLUDE_DIR,
+                                0);
+          DRV_add_include_path (include_path5,
+                                TAO_IDL_INCLUDE_DIR,
+                                "/ciao");
+          DRV_add_include_path (include_path5,
+                                TAO_IDL_INCLUDE_DIR,
+                                "/ccm");
+#else
           // If ACE_ROOT isn't defined either, there will already
           // be a warning from DRV_preproc().
           DRV_add_include_path (include_path4, ACE_ROOT, ".");
           DRV_add_include_path (include_path5, ACE_ROOT, ".");
+#endif  /* TAO_IDL_INCLUDE_DIR */
         }
     }
 
