@@ -222,7 +222,7 @@ quantities.  A dedicated thread pool to this proxy will ensure better
 throughput to it's consumers. (Eventually I want to be able to set the
 thread pool size via a QoS property)
 
-Similarly "-SupplierThreads 2" specifies a thread pool for use by the
+Similarly "-SourceThreads 2" specifies a thread pool for use by the
 supplier-side processing. This enables Buffering on the Supplier-side,
 with the thread pool being used to process supplier side filters and
 push the events to the Consumer side.
