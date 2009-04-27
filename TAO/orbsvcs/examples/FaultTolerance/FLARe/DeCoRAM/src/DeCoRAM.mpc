@@ -149,6 +149,7 @@ project (forward_packing_ftrmff) {
     Algorithms.cpp
     Schedule.cpp
     CTT_Basic.cpp
+    CTT_Enhanced.cpp
     Packing_Scheduler.cpp
     FTRMFF_Forward_Packing.cpp
     forward_packing_ftrmff.cpp

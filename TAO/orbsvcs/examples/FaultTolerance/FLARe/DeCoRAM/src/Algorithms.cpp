@@ -167,5 +167,15 @@ TaskNamePredicate::operator () (const Task & task)
 
 Taskname primary_name (const Task & task)
 {
-  return task.name.substr (0, '_');
+  return task.name.substr (0, task.name.find ('_'));
 }
+
+Task
+PrimaryConversion::operator () (const Task & task)
+{
+  Task t = task;
+  t.role = PRIMARY;
+
+  return t;
+}
+
