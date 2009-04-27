@@ -1,3 +1,4 @@
+// $Id$
 #include "testS.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
@@ -5,7 +6,7 @@
 #include <ace/OS.h>
 
 
-const ACE_TCHAR *ior_input_file = "file://serverA.ior";
+const ACE_TCHAR *ior_input_file = ACE_TEXT ("file://serverA.ior");
 int test_duration_sec = 15;
 
 class Client_Task : public ACE_Task_Base

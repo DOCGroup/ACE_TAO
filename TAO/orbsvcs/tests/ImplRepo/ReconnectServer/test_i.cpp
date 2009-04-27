@@ -1,3 +1,4 @@
+// $Id$
 #include "test_i.h"
 #include "ace/OS_NS_time.h"
 
@@ -14,9 +15,6 @@ Test_Dummy_i::~Test_Dummy_i (void)
 
 char * Test_Dummy_i::getMessage (
     void
-  )
-  throw (
-    ::CORBA::SystemException
   )
 {
    // Add your implementation here
@@ -35,9 +33,6 @@ Test_Time_i::~Test_Time_i (void)
 ::CORBA::Long Test_Time_i::current_time (
     void
   )
-  throw (
-    ::CORBA::SystemException
-  )
 {
    ACE_DEBUG ((LM_DEBUG, "(%P|%t)Test_Time_i::current_time called\n"));
    return CORBA::Long (ACE_OS::time (0));
@@ -45,9 +40,6 @@ Test_Time_i::~Test_Time_i (void)
 
 void Test_Time_i::shutdown (
     void
-  )
-  throw (
-    ::CORBA::SystemException
   )
 {
   ACE_DEBUG ((LM_DEBUG,
