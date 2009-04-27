@@ -1,7 +1,22 @@
+Mon Apr 27 03:20:52 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/ReconnectServer/client.cpp:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/serverA.cpp:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/serverB.cpp:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/test.idl:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/test_i.h:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/test_i.cpp:
+
+          Fixed fuzz errors and compilation errors in unicode builds.
+          
+        * NEWS:
+          
+          Added entry for the new features.
+                    
 Sat Apr 25 06:25:37 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
-        Added IMR changes OCI prepared for some customers. 
-          
+        Added IMR changes OCI prepared for some customers.
+
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
         * orbsvcs/ImplRepo_Service/Locator_Options.h:

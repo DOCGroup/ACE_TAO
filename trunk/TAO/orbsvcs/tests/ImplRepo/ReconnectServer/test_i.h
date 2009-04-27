@@ -1,5 +1,6 @@
-#ifndef IMR_SWITCHSERVER_H
-#define IMR_SWITCHSERVER_H
+// $Id$
+#ifndef IMR_RECONNECTSERVER_H
+#define IMR_RECONNECTSERVER_H
 
 #include "testS.h"
 
@@ -18,10 +19,7 @@ public:
   // Destructor 
   virtual ~Test_Dummy_i (void);
   
-  virtual  char * getMessage (void)
-    throw (
-      ::CORBA::SystemException
-    );
+  virtual  char * getMessage (void);
 };
 
 class  Test_Time_i
@@ -37,20 +35,14 @@ public:
   virtual
   ::CORBA::Long current_time (
       void
-    )
-    throw (
-      ::CORBA::SystemException
     );
   
   virtual
   void shutdown (
       void
-    )
-    throw (
-      ::CORBA::SystemException
     );
 };
 
 
-#endif /* IMR_SWITCHSERVER_H  */
+#endif /* IMR_RECONNECTSERVER_H  */
 
