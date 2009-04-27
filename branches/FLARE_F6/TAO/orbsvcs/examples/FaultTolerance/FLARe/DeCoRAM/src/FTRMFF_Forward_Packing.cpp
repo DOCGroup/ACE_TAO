@@ -38,7 +38,7 @@ FTRMFF_Forward_Packing_Algorithm::FTRMFF_Forward_Packing_Algorithm (
   unsigned int consistency_level)
   : schedule_ (create_schedule (processors)),
     consistency_level_ (consistency_level),
-    scheduler_ (schedule_)
+    scheduler_ (schedule_, consistency_level)
 {
 }
 
@@ -65,14 +65,14 @@ FTRMFF_Forward_Packing_Algorithm::operator () (const TASK_LIST & tasks)
       TASK_LIST task_group = this->create_tasks (*it);
 
       // schedule the tasks of one application
-      for (TASK_LIST::iterator it = task_group.begin ();
-           it != task_group.end ();
-           ++it)
+      for (TASK_LIST::iterator task_it = task_group.begin ();
+           task_it != task_group.end ();
+           ++task_it)
         {
-          if (scheduler_ (*it).wcrt <= .0)
+          if (scheduler_ (*task_it).wcrt <= .0)
             {
-              ScheduleProgress pg = {*it, 
-                                     it->rank - consistency_level_ + 1};
+              ScheduleProgress pg = {*task_it, 
+                                     task_it->rank - consistency_level_ + 1};
               unschedulable_.push_back (pg);
               break;
             }
@@ -115,6 +115,8 @@ FTRMFF_Forward_Packing_Algorithm::create_tasks (const Task & task)
         {
           t.role = PRIMARY;
         }
+
+      tasks.push_back (t);
     }
 
   return tasks;

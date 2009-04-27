@@ -301,19 +301,6 @@ FTRMFF_Packing_Algorithm::schedule () const
   return schedule_;
 }
 
-class PrimaryConversion : public std::unary_function<Task,
-                                                     Task>
-{
-public:
-  Task operator () (const Task & task)
-  {
-    Task t = task;
-    t.role = PRIMARY;
-
-    return t;
-  }
-};
-
 bool
 FTRMFF_Packing_Algorithm::merge_check (const TASK_LISTS & lists)
 {

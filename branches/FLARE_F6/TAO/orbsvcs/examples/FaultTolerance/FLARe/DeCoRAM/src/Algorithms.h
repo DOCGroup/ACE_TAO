@@ -54,7 +54,7 @@ struct Task
   double period;
   double sync_time;
   TaskRole role;
-  int rank;
+  unsigned int rank;
 };
 
 typedef std::vector <Task> TASK_LIST;
@@ -172,5 +172,14 @@ struct double_equal : public std::binary_function <double, double, bool>
 };
 
 Taskname primary_name (const Task & task);
+
+
+class PrimaryConversion : public std::unary_function<Task,
+                                                     Task>
+{
+public:
+  Task operator () (const Task & task);
+};
+
 
 #endif /* FTRMFF_ALGORITHMS_H_ */
