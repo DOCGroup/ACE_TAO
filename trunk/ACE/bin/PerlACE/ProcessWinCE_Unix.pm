@@ -247,7 +247,7 @@ sub Spawn ()
               }
             }
             if ($buf !~ /$prompt/) {
-              die "ERROR: Didn't got prompt but got <$buf> <$blk>";
+              die "ERROR: Didn't got prompt but got <$buf>";
             }
             my $i = 0;
             my @lines;
