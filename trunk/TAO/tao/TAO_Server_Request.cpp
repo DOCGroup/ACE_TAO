@@ -589,6 +589,6 @@ TAO_ServerRequest::rs_pi_current (void)
   return this->rs_pi_current_;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #endif /* TAO_HAS_INTERCEPTORS */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
