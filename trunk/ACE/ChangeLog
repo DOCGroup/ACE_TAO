@@ -1,3 +1,9 @@
+Tue Apr 28 17:42:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessWinCE_Unix.pm:
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          Extended for WinCE cross platform testing
+
 Tue Apr 28 11:42:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SSL/SSL_Context.cpp (set_mode):

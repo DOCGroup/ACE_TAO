@@ -183,7 +183,7 @@ sub Spawn ()
           push @cmds, @unload_commands;
           $cmdnr += scalar @unload_commands;
         }
-        $prompt = '\> $';
+        $prompt = '[\\\\].*>[\ ]$';
 
     FORK:
     {
@@ -214,15 +214,14 @@ sub Spawn ()
                 if (defined $ENV{'ACE_TEST_VERBOSE'}) {
                   print "Couldn't open telnet connection; sleeping then retrying\n";
                 }
+                if ($retries == 0) {
+                  die "ERROR: Telnet open to <" . $telnet_host . ":". $telnet_port . "> " . $t->errmsg;
+                }
                 sleep(5);
+              } else {
+                last;
               }
             }
-
-            if (!$t->open()) {
-              die "ERROR: Telnet open to <" . $telnet_host . ":". $telnet_port . "> " . $t->errmsg;
-            }
-
-            $t->print("");
 
             my $target_login = $ENV{'ACE_RUN_VX_LOGIN'};
             my $target_password = $ENV{'ACE_RUN_VX_PASSWORD'};
@@ -237,16 +236,13 @@ sub Spawn ()
               $t->print("$target_password");
             }
 
-            $t->print("");
-
             my $blk;
-            my $buf;
+            my $buf = '';
             # wait for the prompt
-            my $prompt1 = '-> $';
             while ($blk = $t->get) {
-              printf $blk;
+              print $blk;
               $buf .= $blk;
-              if ($buf =~ /$prompt1/) {
+              if ($buf =~ /$prompt/) {
                 last;
               }
             }
@@ -262,9 +258,9 @@ sub Spawn ()
               if ($t->print (@cmds[$i++])) {
                 # After each command wait for the prompt
                 my $blk;
-                my $buf;
+                my $buf = '';
                 while ($blk = $t->get) {
-                  printf $blk;
+                  print $blk;
                   $buf .= $blk;
                   if ($buf =~ /$prompt/) {
                     last;
@@ -409,5 +405,27 @@ sub TimedWait ($)
     return -1;
 }
 
+sub handle_vxtest_file
+{
+  my $vxtestfile = shift;
+  my $vx_ref = shift;
+  my $unld_ref = shift;
+  my $fh = new FileHandle;
+  if (open ($fh, $vxtestfile)) {
+    push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/MSVCR80D.dll .";
+    my $line1 = <$fh>;
+    chomp $line1;
+    while(<$fh>) {
+      $line1 = $_;
+      chomp $line1;
+      push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/$line1" . "d.dll .";
+      unshift @$unld_ref, "del $line1" . "d.dll";
+    }
+    close $fh;
+  } else {
+    return 0;
+  }
+  return 1;
+}
 
 1;
