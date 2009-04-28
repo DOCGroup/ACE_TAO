@@ -1,3 +1,8 @@
+Tue Apr 28 18:00:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_cegcc.GNU:
+          No prelib for cegcc
+
 Tue Apr 28 17:42:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessWinCE_Unix.pm:
