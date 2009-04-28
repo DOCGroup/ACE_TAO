@@ -1,3 +1,12 @@
+Tue Apr 28 10:00:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Bug_3663_Regression:
+          New test for bugzilla bug 3663, not fixed yet, seems a problem with
+          service configurator
+
+        * bin/tao_other_tests.lst
+          Added new test
+
 Tue Apr 28 09:51:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/tao_notify_service.mpb:
