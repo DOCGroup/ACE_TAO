@@ -1,3 +1,9 @@
+Tue Apr 28 18:52:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_Context.cpp (set_mode):
+           Fix compile error with OpenSSL 1.0 beta 2. Thanks to
+           Jules Colding  <colding at 42tools dot com> for reporting this
+
 Tue Apr 28 18:33:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm
