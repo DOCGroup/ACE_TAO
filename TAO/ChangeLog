@@ -1,3 +1,11 @@
+Tue Apr 28 15:04:45 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+
+          Fixed compile errors on Solaris9_i386_gcc_Debug.
+
 Tue Apr 28 10:00:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Bug_3663_Regression:
