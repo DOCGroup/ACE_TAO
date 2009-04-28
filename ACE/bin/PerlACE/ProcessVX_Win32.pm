@@ -295,7 +295,7 @@ while (1) {
   }
 }
 if ($buf !~ /$prompt1/) {
-  die "ERROR: Didn't got prompt but got <$buf> <$blk>";
+  die "ERROR: Didn't got prompt but got <$buf>";
 }
 my $i = 0;
 my @lines;
