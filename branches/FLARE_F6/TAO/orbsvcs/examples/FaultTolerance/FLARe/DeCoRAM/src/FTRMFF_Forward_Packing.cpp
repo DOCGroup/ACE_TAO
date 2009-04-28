@@ -12,7 +12,6 @@
 
 #include <sstream>
 #include "FTRMFF_Forward_Packing.h"
-#include "Packing_Scheduler.h"
 
 FTRMFF_Forward_Packing::~FTRMFF_Forward_Packing ()
 {
@@ -36,9 +35,8 @@ FTRMFF_Forward_Packing::operator () (const FTRMFF_Input & input)
 FTRMFF_Forward_Packing_Algorithm::FTRMFF_Forward_Packing_Algorithm (
   const PROCESSOR_LIST & processors,
   unsigned int consistency_level)
-  : schedule_ (create_schedule (processors)),
-    consistency_level_ (consistency_level),
-    scheduler_ (schedule_, consistency_level)
+  : consistency_level_ (consistency_level),
+    scheduler_ (processors, consistency_level)
 {
 }
 
@@ -69,17 +67,20 @@ FTRMFF_Forward_Packing_Algorithm::operator () (const TASK_LIST & tasks)
            task_it != task_group.end ();
            ++task_it)
         {
-          if (scheduler_ (*task_it).wcrt <= .0)
+          ScheduleResult r = scheduler_ (*task_it);
+          if (r.wcrt <= .0)
             {
               ScheduleProgress pg = {*task_it, 
                                      task_it->rank - consistency_level_ + 1};
               unschedulable_.push_back (pg);
               break;
             }
+
+          TRACE (*task_it << " -> " << r.processor);
         }
     }
 
-  return transform_schedule (schedule_);
+  return transform_schedule (scheduler_.schedule ());
 }
 
 SCHEDULE_PROGRESS_LIST
@@ -88,10 +89,10 @@ FTRMFF_Forward_Packing_Algorithm::get_unschedulable ()
   return unschedulable_;
 }
 
-const SCHEDULE & 
+SCHEDULE
 FTRMFF_Forward_Packing_Algorithm::schedule () const
 {
-  return schedule_;
+  return scheduler_.schedule ();
 }
 
 TASK_LIST 
