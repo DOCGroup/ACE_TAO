@@ -1,3 +1,11 @@
+Tue Apr 28 07:58:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/PerlACE/ProcessVX.pm:
+        * bin/PerlACE/ProcessWinCE_Unix.pm:
+        * bin/PerlACE/Run_Test.pm:
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          Changed to run Windows CE tests, build with CE gcc, on Linux. 
+
 Fri Apr 24 20:40:16 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * docs/ace_guidelines.vsmacros:
