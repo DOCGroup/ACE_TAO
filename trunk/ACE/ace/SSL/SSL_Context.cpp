@@ -236,7 +236,7 @@ ACE_SSL_Context::set_mode (int mode)
   if (this->context_ != 0)
     return -1;
 
-  const SSL_METHOD *method = 0;
+  SSL_METHOD *method = 0;
 
   switch (mode)
     {
