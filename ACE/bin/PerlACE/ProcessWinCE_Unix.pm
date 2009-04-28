@@ -246,7 +246,7 @@ sub Spawn ()
                 last;
               }
             }
-            if ($buf !~ /$prompt1/) {
+            if ($buf !~ /$prompt/) {
               die "ERROR: Didn't got prompt but got <$buf> <$blk>";
             }
             my $i = 0;
