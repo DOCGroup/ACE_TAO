@@ -38,12 +38,11 @@ public:
 
   SCHEDULE_PROGRESS_LIST get_unschedulable ();
 
-  const SCHEDULE & schedule () const;
+  SCHEDULE schedule () const;
 private:
   TASK_LIST create_tasks (const Task & task);
 
 private:
-  SCHEDULE schedule_;
   SCHEDULE_PROGRESS_LIST unschedulable_;
   unsigned int consistency_level_;
   Packing_Scheduler scheduler_;
