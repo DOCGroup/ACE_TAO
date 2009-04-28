@@ -112,7 +112,7 @@ if ($OSNAME eq "MSWin32") {
 } else {
   my $process = new PerlACE::ProcessVX (@_, $self);  return $process;
 }
-}
+}
 
 # Need a reboot when this target is destroyed.
 sub NeedReboot ($)
