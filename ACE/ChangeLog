@@ -1,3 +1,12 @@
+Tue Apr 28 18:33:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm
+        * bin/PerlACE/ProcessVX_Win32.pm
+        * bin/PerlACE/ProcessWinCE.pm
+        * bin/PerlACE/ProcessWinCE_Unix.pm
+        * bin/PerlACE/TestTarget_VxWorks.pm
+          Improved waiting for the prompt
+
 Tue Apr 28 18:00:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_cegcc.GNU:

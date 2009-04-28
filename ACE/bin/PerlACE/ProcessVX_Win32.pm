@@ -284,11 +284,11 @@ if (defined $target_password)  {
 
 $t->print("\n");
 # wait for the prompt
-my $blk;
-my $buf;
+my $buf = '';
 my $prompt1 = '-> $';
-while ($blk = $t->get) {
-  printf $blk;
+while (1) {
+  my $blk = $t->get;
+  print $blk;
   $buf .= $blk;
   if ($buf =~ /$prompt1/) {
     last;
@@ -304,10 +304,10 @@ while($i < $cmdnr) {
     print @cmds[$i]."\n";
   }
   if ($t->print (@cmds[$i++])) {
-    my $blk;
-    my $buf;
-    while ($blk = $t->get) {
-      printf $blk;
+    my $buf = '';
+    while (1) {
+      my $blk = $t->get;
+      print $blk;
       $buf .= $blk;
       if ($buf =~ /$prompt/) {
         last;
