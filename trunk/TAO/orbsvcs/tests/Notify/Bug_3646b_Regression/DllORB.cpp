@@ -88,7 +88,7 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
         }
 
       // Initialize the ORB
-      mv_orb_ = CORBA::ORB_init (argc, argv ());
+      mv_orb_ = CORBA::ORB_init (argc, argv);
       if (CORBA::is_nil (mv_orb_.in ()))
         {
           ACE_DEBUG ((LM_ERROR, ACE_TEXT ("nil ORB\n")));
@@ -225,4 +225,4 @@ int DllORB::svc ()
 }
 
 
-ACE_FACTORY_DEFINE (bug2926, DllORB)
+ACE_FACTORY_DEFINE (bug3646b, DllORB)

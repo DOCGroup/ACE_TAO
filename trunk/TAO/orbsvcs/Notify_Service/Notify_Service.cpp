@@ -149,12 +149,12 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
       worker_.orb (this->orb_.in ());
 
       // Task activation flags.
-      long flags =
+      long const flags =
         THR_NEW_LWP |
         THR_JOINABLE |
         this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
 
-      int priority =
+      int const priority =
         ACE_Sched_Params::priority_min (ACE_Utils::truncate_cast<ACE_Sched_Params::Policy> (this->orb_->orb_core ()->orb_params ()->sched_policy ()),
                                         ACE_Utils::truncate_cast<int> (this->orb_->orb_core ()->orb_params ()->scope_policy ()));
 
@@ -333,13 +333,14 @@ TAO_Notify_Service_Driver::run (void)
   return 0;
 }
 
-void
-TAO_Notify_Service_Driver::shutdown (void)
+int
+TAO_Notify_Service_Driver::fini (void)
 {
   /// Release all the _vars as the ORB about to go away.
   CosNotifyChannelAdmin::EventChannelFactory_var factory =
     this->notify_factory_._retn ();
   CORBA::ORB_var orb = this->orb_._retn ();
+  CORBA::ORB_var dispatching_orb = this->dispatching_orb_._retn ();
   PortableServer::POA_var poa = this->poa_._retn ();
   CosNaming::NamingContextExt_var naming = this->naming_._retn ();
 
@@ -347,6 +348,8 @@ TAO_Notify_Service_Driver::shutdown (void)
   // correctly.  Depending upon the type of service loaded, it may
   // or may not actually perform any actions.
   this->notify_service_->finalize_service (factory.in ());
+
+  this->notify_service_->fini ();
 
   // Deactivate.
   if (this->use_name_svc_ && !CORBA::is_nil (naming.in ()))
@@ -359,15 +362,30 @@ TAO_Notify_Service_Driver::shutdown (void)
     }
 
   if (!CORBA::is_nil (poa.in ()))
-    poa->destroy (true, true);
+    {
+      poa->destroy (true, true);
+    }
 
   // shutdown the ORB.
   if (!CORBA::is_nil (orb.in ()))
-    orb->shutdown ();
+    {
+      orb->shutdown ();
+      
+      orb->destroy ();
+    }
+
+  if (!CORBA::is_nil (dispatching_orb_.in ()))
+    {
+      dispatching_orb->shutdown ();
+
+      dispatching_orb->destroy ();
+    }
+
+  return 0;
 }
 
 int
-TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
+TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -450,7 +468,7 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
           this->nthreads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ORBRunThreads"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-RunThreads"))))
         {
           this->nthreads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -478,7 +496,7 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
                      ACE_TEXT ("-Boot -[No]NameSvc ")
                      ACE_TEXT ("-IORoutput file_name ")
                      ACE_TEXT ("-Channel -ChannelName channel_name ")
-                     ACE_TEXT ("-ORBRunThreads threads ")
+                     ACE_TEXT ("-RunThreads threads ")
                      ACE_TEXT ("-Timeout <msec>\n")
                      ACE_TEXT ("default: %s -Factory NotifyEventChannelFactory ")
                      ACE_TEXT ("-NameSvc -Channel NotifyEventChannel -ORBRunThreads 1\n"),
@@ -529,7 +547,7 @@ LoggingWorker::start ()
               schedule_timer (logging_strategy, 0, delay,
                               this->ns_->logging_interval_) == -1)
           {
-            ACE_DEBUG ((LM_DEBUG,
+            ACE_ERROR ((LM_ERROR,
                         ACE_TEXT("(%P|%t) Failed to schedule ")
                         ACE_TEXT("logging switch timer\n")));
           }
@@ -599,10 +617,19 @@ Worker::svc (void)
   try
     {
       this->orb_->run ();
-
     }
   catch (const CORBA::Exception&)
     {
     }
   return 0;
 }
+
+ACE_STATIC_SVC_DEFINE (TAO_Notify_Service_Driver,
+                       ACE_TEXT ("TAO_Notify_Service_Driver"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (TAO_Notify_Service_Driver),
+                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       0)
+
+
+ACE_FACTORY_DEFINE (TAO_Notify_Service, TAO_Notify_Service_Driver)

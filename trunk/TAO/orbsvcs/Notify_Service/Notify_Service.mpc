@@ -1,28 +1,34 @@
 // -*- MPC -*-
 // $Id$
 
-project : valuetype, orbsvcsexe, install, notification_serv, naming, iortable, messaging_optional {
-  exename  = Notify_Service
+project(TAO_Notify_Service) : orbsvcslib, orbsvcs_output, install, valuetype, orbsvcsexe, install, notification_serv, naming, iortable, messaging_optional {
+  sharedname   = TAO_Notify_Service
+  dynamicflags = TAO_NOTIFY_SERVICE_BUILD_DLL
   Source_Files {
-    Notify_Server.cpp
     Notify_Service.cpp
   }
   Header_Files {
     Notify_Service.h
+    Notify_Service_Export.h
   }
 }
 
-project(NT_Notify_Service) : valuetype, orbsvcsexe, install, notification_serv, naming, iortable, messaging_optional {
+project(Notify_Service) : orbsvcsexe, install, tao_notify_service {
+  exename  = Notify_Service
+  Source_Files {
+    Notify_Server.cpp
+  }
+}
+
+project(NT_Notify_Service) : orbsvcsexe, install, tao_notify_service {
   avoids += ace_for_tao
   requires += winnt
   exename  = NT_Notify_Service
   Source_Files {
-    Notify_Service.cpp
     NT_Notify_Server.cpp
     NT_Notify_Service.cpp
   }
   Header_Files {
-    Notify_Service.h
     NT_Notify_Service.h
   }
 }

@@ -1,3 +1,48 @@
+Tue Apr 28 09:51:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/tao_notify_service.mpb:
+          new base project
+
+        * orbsvcs/Notify_Service/Notify_Server.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.h:
+        * orbsvcs/Notify_Service/Notify_Service.mpc:
+        * orbsvcs/Notify_Service/Notify_Service_Export.h:
+          Moved the TAO_Notify_Service_Driver class to its own
+          DLL which then can be loaded with service configurator as
+          done in regression 3646b.
+
+          Changed -ORBRunThreads to -RunThreads, the -ORB options
+          are reserved for the ORB and shouldn't be used by
+          services. This caused problems when trying to load
+          the TAO_Notify_Service as DLL.
+
+          Make sure we destroy the ORB so that we can do multiple
+          load/unload cycles
+
+        * orbsvcs/Notify_Service/README:
+          Updated -ORBRunThreads to -RunThreads
+
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+          Layout changes
+
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+          Use true/false
+
+        * orbsvcs/tests/Notify/Bug_2926_Regression/DllORB.cpp:
+        * orbsvcs/tests/Notify/Bug_3252_Regression/DllOrb.cpp
+          No need for arg converter
+
+        * orbsvcs/tests/Notify/Bug_3646b_Regression/bug3646b_export.h
+        * orbsvcs/tests/Notify/Bug_3646b_Regression/Bug_3646b_Regression.mpc
+        * orbsvcs/tests/Notify/Bug_3646b_Regression/DllORB.cpp
+        * orbsvcs/tests/Notify/Bug_3646b_Regression/DllORB.h
+        * orbsvcs/tests/Notify/Bug_3646b_Regression/run_test.pl
+        * orbsvcs/tests/Notify/Bug_3646b_Regression/server.cpp
+        * bin/tao_other_tests.lst
+          New regression test for loading and unloading the TAO_Notify_Service
+          dll
+
 Tue Apr 28 08:00:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Any_Unknown_IDL_Type.{h,cpp}:
