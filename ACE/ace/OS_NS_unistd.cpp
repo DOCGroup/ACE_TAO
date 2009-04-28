@@ -431,7 +431,7 @@ ACE_OS::num_processors_online (void)
   CPUSET_ZERO (cpuset);
   cpuset = vxCpuEnabledGet();
   unsigned int const maxcpu = vxCpuConfiguredGet();
-  for (int i =0; i < maxcpu; i++)
+  for (unsigned int i =0; i < maxcpu; i++)
     {
       if (CPUSET_ISSET (cpuset, i))
         {
