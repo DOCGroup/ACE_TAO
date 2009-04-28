@@ -18,6 +18,7 @@ use PerlACE::TestTarget;
 use PerlACE::ProcessVX;
 use File::Copy;
 use Cwd;
+use English;
 
 our @ISA = qw(PerlACE::TestTarget);
 
