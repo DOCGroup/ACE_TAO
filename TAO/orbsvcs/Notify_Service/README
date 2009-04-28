@@ -46,8 +46,8 @@ Command line arguments:
                               Naming Service.
                               The default is "NotifyEventChannel".
 
-"-ORBRunThreads nthreads"   : Number of threads to run the
-                              ORB::run method.
+"-RunThreads nthreads"   : Number of threads to run the
+                           ORB::run method.
 
 "-UseSeparateDispatchingORB 1|0"
                             : Indicates whether the service should create and
@@ -60,7 +60,7 @@ Command line arguments:
                   'corba_messaging' MPC feature during building of the
                   Notify_Service, which is on by default.
 
-!! The -Notify_TPReactor option is deprecated!! use the -ORBRunThreads
+!! The -Notify_TPReactor option is deprecated!! use the -RunThreads
 option instead.
 
 "-Notify_TPReactor [threads]": Tells the Notify Service that the ORB
@@ -75,7 +75,7 @@ on this.
 
 Running the Service:
 -------------------
-1. Start the Naming Service from 
+1. Start the Naming Service from
 
 $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -m 1
 
@@ -86,10 +86,10 @@ if you are using the "-NameSvc" options.
 
    Note:
    ====
-   By default, the Naming Service disables multicast discovery. 
+   By default, the Naming Service disables multicast discovery.
    The "-m 1" option enables the Naming Service to be resolved via
-   multicast. 
-   
+   multicast.
+
    If you do not wish to do this, then use the
    -ORBInitRef option in which case the Naming Service should be started
    as:
@@ -130,23 +130,23 @@ The "TAO_CosNotify_Service" service object accepts the following options:
 "-AllowReconnect"                    : Allows consumers and suppliers to
                                        reconnect to existing proxies.
 
-"-AsynchUpdates"                     : Send subscription and publication 
+"-AsynchUpdates"                     : Send subscription and publication
                                        updates asynchronously.
 
-"-DefaultConsumerAdminFilterOp [op]" : Sets the default consumer admin filter 
+"-DefaultConsumerAdminFilterOp [op]" : Sets the default consumer admin filter
                                        operator. op can be either "OR" or
-                                       "AND". The default is "OR" to be 
+                                       "AND". The default is "OR" to be
                                        consistent with older releases of TAO.
 
 "-DefaultSupplierAdminFilterOp [op]" : Sets the default supplier admin filter
                                        operator. op can be either "OR" or
-                                       "AND". The default is "OR" to be 
+                                       "AND". The default is "OR" to be
                                        consistent with older releases of TAO.
 
-"-DispatchingThreads [thread_count]" : Enables MT dispatching with the 
-                                       specified number of threads. This 
+"-DispatchingThreads [thread_count]" : Enables MT dispatching with the
+                                       specified number of threads. This
                                        option supercedes the deprecated
-                                       ListenerThreads, MTListenerEval and 
+                                       ListenerThreads, MTListenerEval and
                                        MTDispatching options. Note that
                                        "AllocateTaskperProxy" affects how this
                                        value is applied.
@@ -156,8 +156,8 @@ The "TAO_CosNotify_Service" service object accepts the following options:
 
 "-ValidateClient"                    : Creates a thread that periodically
                                        walks the topology tree visiting each
-                                       proxy and checking the liviness of 
-                                       the peer. A peer which had ordinary 
+                                       proxy and checking the liviness of
+                                       the peer. A peer which had ordinary
                                        activity within the validation time
                                        period is considered alive. Otherwise
                                        the peer's _non_existent() operation
@@ -174,14 +174,14 @@ The "TAO_CosNotify_Service" service object accepts the following options:
                                        has to repopulate its topology from a
                                        persistent store, which takes time.
 
-"-ValidateClientInterval [sec]"      : Specifies how frequently after the 
+"-ValidateClientInterval [sec]"      : Specifies how frequently after the
                                        first pass to revisit the topology
-                                       to further validate clients. The 
-                                       default value of 0 means validation 
+                                       to further validate clients. The
+                                       default value of 0 means validation
                                        will only happen once.
 
 "-SourceThreads [thread_count]"      : Specifies the number of threads for each
-                                       supplier admin or proxy consumer. See 
+                                       supplier admin or proxy consumer. See
                                        the note below for details about thread
                                        assignments. This option supercedes the
                                        deprecated LookupThreads, MTSourceEval,
