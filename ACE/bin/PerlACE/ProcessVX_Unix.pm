@@ -297,12 +297,12 @@ sub Spawn ()
               $t->print("$target_password");
             }
 
-            my $blk;
             my $buf = '';
             # wait for the prompt
-            my $prompt1 = '-> $';
-            while ($blk = $t->get) {
-              printf $blk;
+            my $prompt1 = '->[\ ]$';
+            while (1) {
+              my $blk = $t->get;
+              print $blk;
               $buf .= $blk;
               if ($buf =~ /$prompt1/) {
                 last;
@@ -319,10 +319,10 @@ sub Spawn ()
               }
               if ($t->print (@cmds[$i++])) {
                 # After each command wait for the prompt
-                my $blk;
                 my $buf = '';
-                while ($blk = $t->get) {
-                  printf $blk;
+                while (1) {
+                  my $blk = $t->get;
+                  print $blk;
                   $buf .= $blk;
                   if ($buf =~ /$prompt/) {
                     last;

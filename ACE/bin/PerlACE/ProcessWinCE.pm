@@ -205,8 +205,10 @@ if (!defined $t) {
 $t->open();
 
 my $ok = false;
-while ($blk = $t->get) {
-  printf $blk;
+my $buf = '';
+while (1) {
+  my $blk = $t->get;
+  print $blk;
   $buf .= $blk;
   if ($buf =~ /$prompt/) {
     $ok = true;
@@ -221,9 +223,9 @@ if ($ok) {
       print @cmds[$i]."\n";
     }
     if ($t->print (@cmds[$i++])) {
-      my $blk;
-      my $buf;
-      while ($blk = $t->get) {
+      my $buf = '';
+      while (1) {
+        my $blk = $t->get;
         printf $blk;
         $buf .= $blk;
         if ($buf =~ /$prompt/) {
