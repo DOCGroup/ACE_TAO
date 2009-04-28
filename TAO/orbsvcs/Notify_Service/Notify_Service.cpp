@@ -370,7 +370,7 @@ TAO_Notify_Service_Driver::fini (void)
   if (!CORBA::is_nil (orb.in ()))
     {
       orb->shutdown ();
-      
+
       orb->destroy ();
     }
 
@@ -463,7 +463,7 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG((LM_DEBUG,
                      ACE_TEXT ("-Notify_TPReactor option is deprecated, ")
-                     ACE_TEXT ("use -ORBRunThreads option\n")));
+                     ACE_TEXT ("use -RunThreads option\n")));
 
           this->nthreads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
