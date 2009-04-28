@@ -1,10 +1,18 @@
+Tue Apr 28 10:26:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.cpp:
+          Fixed vxworks warning
+
+        * ace/Service_Object.cpp:
+          Layout changes
+
 Tue Apr 28 07:58:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/PerlACE/ProcessVX.pm:
         * bin/PerlACE/ProcessWinCE_Unix.pm:
         * bin/PerlACE/Run_Test.pm:
         * bin/PerlACE/TestTarget_WinCE.pm:
-          Changed to run Windows CE tests, build with CE gcc, on Linux. 
+          Changed to run Windows CE tests, build with CE gcc, on Linux.
 
 Fri Apr 24 20:40:16 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
 
