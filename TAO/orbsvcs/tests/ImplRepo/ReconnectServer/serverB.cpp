@@ -6,8 +6,8 @@
 #include <ace/OS.h>
 
 const ACE_TCHAR * ior_output_file = ACE_TEXT ("serverB.ior");
-// delay between resolving RootPOA init ref and create_POA.
-int delay = 0;
+// server_notify_delay between resolving RootPOA init ref and create_POA.
+int server_notify_delay = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -23,13 +23,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
           ior_output_file = get_opts.opt_arg ();
           break;
         case 'l':
-          delay = ACE_OS::atoi (get_opts.opt_arg ());
+          server_notify_delay = ACE_OS::atoi (get_opts.opt_arg ());
           break;
         case '?':
           default:
           ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-o <iorfile> -l <delay>"
+                           "-o <iorfile> -l <server_notify_delay>"
                            "\n",
                            argv [0]),
                           -1);
@@ -79,9 +79,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     policies[4] =
       rootPOA->create_thread_policy (PortableServer::ORB_CTRL_MODEL);
 
-    if (delay > 0)
+    if (server_notify_delay > 0)
     {
-      ACE_OS::sleep (delay);
+      ACE_OS::sleep (server_notify_delay);
     }
 
     PortableServer::POA_var poa_a = rootPOA->create_POA ("poaB",
