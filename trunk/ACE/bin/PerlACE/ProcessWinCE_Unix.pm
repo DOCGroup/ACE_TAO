@@ -418,7 +418,7 @@ sub handle_vxtest_file
     while(<$fh>) {
       $line1 = $_;
       chomp $line1;
-      push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/$line1" . "d.dll .";
+      push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/$line1" . ".dll .";
       unshift @$unld_ref, "del $line1" . "d.dll";
     }
     close $fh;
