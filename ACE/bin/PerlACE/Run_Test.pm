@@ -42,7 +42,11 @@ if ($PerlACE::LabVIEW_RT_Test) {
 
 $PerlACE::WinCE_Test = $config->check_config("WINCE");
 if ($PerlACE::WinCE_Test) {
+if ($OSNAME eq "MSWin32") {
     require PerlACE::ProcessWinCE;
+} else {
+    require PerlACE::ProcessWinCE_Unix;
+}
 }
 
 # Figure out the svc.conf extension
