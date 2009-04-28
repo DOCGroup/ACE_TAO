@@ -1,9 +1,15 @@
-Tue Apr 28 10:30:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Apr 28 09:39:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_Context.cpp (set_mode):
+        Fix compile error with OpenSSL 1.0 beta 2. Thanks to
+        Jules Colding  <colding at 42tools dot com> for reporting this
+
+Tue Apr 28 09:30:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.3.GNU:
           Fixed vxworks 6.7 rtp shared library link
 
-Tue Apr 28 10:26:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Apr 28 09:26:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.cpp:
           Fixed vxworks warning
