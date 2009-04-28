@@ -275,15 +275,14 @@ sub Spawn ()
                 if (defined $ENV{'ACE_TEST_VERBOSE'}) {
                   print "Couldn't open telnet connection; sleeping then retrying\n";
                 }
+                if ($retries == 0) {
+                  die "ERROR: Telnet open to <" . $telnet_host . ":". $telnet_port . "> " . $t->errmsg;
+                }
                 sleep(5);
+              } else {
+                last;
               }
             }
-
-            if (!$t->open()) {
-              die "ERROR: Telnet open to <" . $telnet_host . ":". $telnet_port . "> " . $t->errmsg;
-            }
-
-            $t->print("");
 
             my $target_login = $ENV{'ACE_RUN_VX_LOGIN'};
             my $target_password = $ENV{'ACE_RUN_VX_PASSWORD'};
@@ -298,10 +297,8 @@ sub Spawn ()
               $t->print("$target_password");
             }
 
-            $t->print("");
-
             my $blk;
-            my $buf;
+            my $buf = '';
             # wait for the prompt
             my $prompt1 = '-> $';
             while ($blk = $t->get) {
@@ -323,7 +320,7 @@ sub Spawn ()
               if ($t->print (@cmds[$i++])) {
                 # After each command wait for the prompt
                 my $blk;
-                my $buf;
+                my $buf = '';
                 while ($blk = $t->get) {
                   printf $blk;
                   $buf .= $blk;
