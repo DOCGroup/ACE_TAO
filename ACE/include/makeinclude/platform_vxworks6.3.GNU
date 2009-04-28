@@ -226,13 +226,13 @@ ifeq ("$(TOOL_FAMILY)","gnu")
     SOFLAGS += -fpic
   endif
   SOFLAGS += -shared
-  LDFLAGS += -non-static
+  LDFLAGS += -non-static -shared
 else
   ifeq ($(rtp),1)
     PIC = -Xpic
   endif
   SOFLAGS += -Xshared
-  LDFLAGS += -Xdynamic
+  LDFLAGS += -Xdynamic -Xshared
 endif
 endif
 
