@@ -362,7 +362,7 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
 
   status += myntester.test_all();
 
-#if defined(ACE_HAS_WCHAR)
+#if defined(ACE_HAS_WCHAR) && !defined(TAO_LACKS_WCHAR_CXX_STDLIB)
   typedef TAO::bounded_basic_string_sequence<CORBA::WChar, MAXIMUM> w_sequence;
   typedef Tester<w_sequence> wTester;
   wTester mywtester;

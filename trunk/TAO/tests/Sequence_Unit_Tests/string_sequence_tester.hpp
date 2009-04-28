@@ -62,7 +62,11 @@ struct string_sequence_test_helpers<char>
   }
 };
 
-#if defined(ACE_HAS_WCHAR)
+#if defined(_GLIBCPP_VERSION) && !defined(_GLIBCPP_USE_WCHAR_T)
+# define TAO_LACKS_WCHAR_CXX_STDLIB
+#endif
+
+#if defined(ACE_HAS_WCHAR) && !defined(TAO_LACKS_WCHAR_CXX_STDLIB)
 template<>
 struct string_sequence_test_helpers<CORBA::WChar>
 {
