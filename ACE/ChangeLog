@@ -1,3 +1,8 @@
+Tue Apr 28 11:42:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_Context.cpp (set_mode):
+          Reverted change below, it breaks current ssl support
+
 Tue Apr 28 09:39:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SSL/SSL_Context.cpp (set_mode):
