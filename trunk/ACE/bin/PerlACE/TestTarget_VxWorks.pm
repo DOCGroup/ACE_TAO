@@ -17,6 +17,7 @@ use strict;
 use PerlACE::TestTarget;
 use PerlACE::ProcessVX;
 use Cwd;
+use English;
 
 our @ISA = qw(PerlACE::TestTarget);
 
