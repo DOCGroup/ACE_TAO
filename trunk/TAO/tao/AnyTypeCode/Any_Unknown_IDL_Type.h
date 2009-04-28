@@ -54,8 +54,7 @@ namespace TAO
     virtual TAO_InputCDR &_tao_get_cdr (void);
     virtual int _tao_byte_order (void) const;
 
-    virtual void _tao_decode (TAO_InputCDR &
-                             );
+    virtual void _tao_decode (TAO_InputCDR &);
 
     virtual CORBA::Boolean to_object (CORBA::Object_ptr &) const;
     virtual CORBA::Boolean to_value (CORBA::ValueBase *&) const;
@@ -82,7 +81,7 @@ namespace TAO
     typedef ACE_Refcounted_Auto_Ptr<ACE_Lock,
                                     ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >
       LOCK;
-    static LOCK lock_i (void);
+    static LOCK const lock_i (void);
     LOCK const lock_;
     mutable TAO_InputCDR cdr_;
   };

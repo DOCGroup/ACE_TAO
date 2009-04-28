@@ -1,3 +1,16 @@
+Tue Apr 28 08:00:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.{h,cpp}:
+          Return a const object from lock_i, this fixes bugzilla 3665. Thanks to
+          Rob Beekmans <r dot a dot beekmans at philips dot com> for reporting this.
+          It is really a diab compiler bug but we can easily work around it
+
+        * tao/AnyTypeCode/Enum_TypeCode.cpp:
+        * tao/AnyTypeCode/Enum_TypeCode_Static.cpp:
+        * tao/CORBALOC_Parser.cpp:
+        * tao/Intrusive_Ref_Count_Handle_T.h
+          layout change
+
 Tue Apr 28 01:51:44 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/ReconnectServer/serverB.cpp:
@@ -8,9 +21,9 @@ Tue Apr 28 01:51:44 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 Mon Apr 27 16:08:54 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/Notify_Service/README:
-          
+
           Fixed typo
-        
+
 
 Mon Apr 27 15:54:55 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
