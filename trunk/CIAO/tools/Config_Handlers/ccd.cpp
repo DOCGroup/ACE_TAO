@@ -33,12 +33,18 @@ namespace CIAO
     }
 
     ComponentInterfaceDescription::
-    ComponentInterfaceDescription (::CIAO::Config_Handlers::ComponentInterfaceDescription const& s)
+    ComponentInterfaceDescription (ComponentInterfaceDescription const& s)
     :
     ::XSCRT::Type (),
     label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
     specificType_ (s.specificType_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.specificType_) : 0),
+    supportedType_ (s.supportedType_),
+    idlFile_ (s.idlFile_),
+    configProperty_ (s.configProperty_),
+    port_ (s.port_),
+    property_ (s.property_),
+    infoProperty_ (s.infoProperty_),
     contentLocation_ (s.contentLocation_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.contentLocation_) : 0),
     href_ (s.href_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.href_) : 0),
     regulator__ ()
@@ -46,78 +52,44 @@ namespace CIAO
       if (label_.get ()) label_->container (this);
       if (UUID_.get ()) UUID_->container (this);
       if (specificType_.get ()) specificType_->container (this);
-      {
-        for (supportedType_const_iterator i (s.supportedType_.begin ());i != s.supportedType_.end ();++i) add_supportedType (*i);
-      }
-
-      {
-        for (idlFile_const_iterator i (s.idlFile_.begin ());i != s.idlFile_.end ();++i) add_idlFile (*i);
-      }
-
-      {
-        for (configProperty_const_iterator i (s.configProperty_.begin ());i != s.configProperty_.end ();++i) add_configProperty (*i);
-      }
-
-      {
-        for (port_const_iterator i (s.port_.begin ());i != s.port_.end ();++i) add_port (*i);
-      }
-
-      {
-        for (property_const_iterator i (s.property_.begin ());i != s.property_.end ();++i) add_property (*i);
-      }
-
-      {
-        for (infoProperty_const_iterator i (s.infoProperty_.begin ());i != s.infoProperty_.end ();++i) add_infoProperty (*i);
-      }
-
       if (contentLocation_.get ()) contentLocation_->container (this);
       if (href_.get ()) href_->container (this);
     }
 
-    ::CIAO::Config_Handlers::ComponentInterfaceDescription& ComponentInterfaceDescription::
-    operator= (::CIAO::Config_Handlers::ComponentInterfaceDescription const& s)
+    ComponentInterfaceDescription& ComponentInterfaceDescription::
+    operator= (ComponentInterfaceDescription const& s)
     {
-      if (s.label_.get ()) label (*(s.label_));
-      else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.label_.get ())
+        label (*(s.label_));
+      else
+        label_.reset (0);
 
-      if (s.UUID_.get ()) UUID (*(s.UUID_));
-      else UUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.UUID_.get ())
+        UUID (*(s.UUID_));
+      else
+        UUID_.reset (0);
 
-      if (s.specificType_.get ()) specificType (*(s.specificType_));
-      else specificType_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.specificType_.get ())
+        specificType (*(s.specificType_));
+      else
+        specificType_.reset (0);
 
-      supportedType_.clear ();
-      {
-        for (supportedType_const_iterator i (s.supportedType_.begin ());i != s.supportedType_.end ();++i) add_supportedType (*i);
-      }
+      supportedType_ = s.supportedType_;
 
-      idlFile_.clear ();
-      {
-        for (idlFile_const_iterator i (s.idlFile_.begin ());i != s.idlFile_.end ();++i) add_idlFile (*i);
-      }
+      idlFile_ = s.idlFile_;
 
-      configProperty_.clear ();
-      {
-        for (configProperty_const_iterator i (s.configProperty_.begin ());i != s.configProperty_.end ();++i) add_configProperty (*i);
-      }
+      configProperty_ = s.configProperty_;
 
-      port_.clear ();
-      {
-        for (port_const_iterator i (s.port_.begin ());i != s.port_.end ();++i) add_port (*i);
-      }
+      port_ = s.port_;
 
-      property_.clear ();
-      {
-        for (property_const_iterator i (s.property_.begin ());i != s.property_.end ();++i) add_property (*i);
-      }
+      property_ = s.property_;
 
-      infoProperty_.clear ();
-      {
-        for (infoProperty_const_iterator i (s.infoProperty_.begin ());i != s.infoProperty_.end ();++i) add_infoProperty (*i);
-      }
+      infoProperty_ = s.infoProperty_;
 
-      if (s.contentLocation_.get ()) contentLocation (*(s.contentLocation_));
-      else contentLocation_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.contentLocation_.get ())
+        contentLocation (*(s.contentLocation_));
+      else
+        contentLocation_.reset (0);
 
       if (s.href_.get ()) href (*(s.href_));
       else href_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
@@ -630,7 +602,7 @@ namespace CIAO
       {
         ComponentInterfaceDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (ComponentInterfaceDescription));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ComponentInterfaceDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -780,7 +752,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentInterfaceDescription::Type::supportedType_iterator b (o.begin_supportedType()), e (o.end_supportedType());
+        ::CIAO::Config_Handlers::ComponentInterfaceDescription::supportedType_iterator b (o.begin_supportedType()), e (o.end_supportedType());
 
         if (b != e)
         {
@@ -802,7 +774,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentInterfaceDescription::Type::supportedType_const_iterator b (o.begin_supportedType()), e (o.end_supportedType());
+        ::CIAO::Config_Handlers::ComponentInterfaceDescription::supportedType_const_iterator b (o.begin_supportedType()), e (o.end_supportedType());
 
         if (b != e)
         {
@@ -864,7 +836,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentInterfaceDescription::Type::idlFile_iterator b (o.begin_idlFile()), e (o.end_idlFile());
+        ::CIAO::Config_Handlers::ComponentInterfaceDescription::idlFile_iterator b (o.begin_idlFile()), e (o.end_idlFile());
 
         if (b != e)
         {
@@ -886,7 +858,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentInterfaceDescription::Type::idlFile_const_iterator b (o.begin_idlFile()), e (o.end_idlFile());
+        ::CIAO::Config_Handlers::ComponentInterfaceDescription::idlFile_const_iterator b (o.begin_idlFile()), e (o.end_idlFile());
 
         if (b != e)
         {
@@ -948,7 +920,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentInterfaceDescription::Type::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+        ::CIAO::Config_Handlers::ComponentInterfaceDescription::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
 
         if (b != e)
         {
@@ -970,7 +942,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentInterfaceDescription::Type::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+        ::CIAO::Config_Handlers::ComponentInterfaceDescription::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
 
         if (b != e)
         {
@@ -1032,7 +1004,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentInterfaceDescription::Type::port_iterator b (o.begin_port()), e (o.end_port());
+        ::CIAO::Config_Handlers::ComponentInterfaceDescription::port_iterator b (o.begin_port()), e (o.end_port());
 
         if (b != e)
         {
@@ -1054,7 +1026,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentInterfaceDescription::Type::port_const_iterator b (o.begin_port()), e (o.end_port());
+        ::CIAO::Config_Handlers::ComponentInterfaceDescription::port_const_iterator b (o.begin_port()), e (o.end_port());
 
         if (b != e)
         {
@@ -1116,7 +1088,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentInterfaceDescription::Type::property_iterator b (o.begin_property()), e (o.end_property());
+        ::CIAO::Config_Handlers::ComponentInterfaceDescription::property_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
         {
@@ -1138,7 +1110,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentInterfaceDescription::Type::property_const_iterator b (o.begin_property()), e (o.end_property());
+        ::CIAO::Config_Handlers::ComponentInterfaceDescription::property_const_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
         {
@@ -1200,7 +1172,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentInterfaceDescription::Type::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+        ::CIAO::Config_Handlers::ComponentInterfaceDescription::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
 
         if (b != e)
         {
@@ -1222,7 +1194,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentInterfaceDescription::Type::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+        ::CIAO::Config_Handlers::ComponentInterfaceDescription::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
 
         if (b != e)
         {

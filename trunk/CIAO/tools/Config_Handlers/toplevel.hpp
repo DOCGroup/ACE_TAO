@@ -127,6 +127,12 @@ namespace CIAO
         basePackage_post (Type const&);
 
         virtual void
+        basePackage_none (Type&);
+
+        virtual void
+        basePackage_none (Type const&);
+
+        virtual void
         post (Type&);
 
         virtual void
@@ -153,10 +159,8 @@ namespace CIAO
         virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
@@ -164,10 +168,8 @@ namespace CIAO
         virtual void 
         basePackage_pre (Type &o)
         {
-
           this->basePackage_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         basePackage_pre (Type const&);
@@ -175,10 +177,8 @@ namespace CIAO
         virtual void 
         basePackage_next (Type &o)
         {
-
           this->basePackage_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         basePackage_next (Type const&);
@@ -186,10 +186,8 @@ namespace CIAO
         virtual void 
         basePackage_post (Type &o)
         {
-
           this->basePackage_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         basePackage_post (Type const&);

@@ -112,7 +112,7 @@ namespace CIAO
 
         try {
           return new ImplementationArtifactDescription
-            (implementationArtifactDescription (dom));
+            (reader::implementationArtifactDescription (dom));
         }
         catch (...) {
           throw Parse_Error ("Unable to create XSC structure for IAD");

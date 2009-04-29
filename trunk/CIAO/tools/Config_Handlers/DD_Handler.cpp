@@ -28,7 +28,7 @@ namespace CIAO
         throw DD_Handler::NoDomain ();
 
       Domain *dm =
-        new Domain (domain (dom));
+        new Domain (reader::domain (dom));
 
       //      Domain d = domain (dom);
 

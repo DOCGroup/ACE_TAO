@@ -147,7 +147,7 @@ namespace CIAO
 
         try {
           //ACE_ERROR ((LM_ERROR, "Creating new CPD XSC Object\n"));
-          return new ComponentPackageDescription (componentPackageDescription (dom));
+          return new ComponentPackageDescription (reader::componentPackageDescription (dom));
         }
         catch (...) {
           throw Parse_Error ("Unable to create XSC structure for CID");

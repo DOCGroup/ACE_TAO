@@ -1,3 +1,45 @@
+Wed Apr 29 02:27:23 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/xscdefaults.mpb:
+        * docs/schema/Basic_Deployment_Data.xsd:
+        * docs/schema/cid.xsd:
+        * docs/schema/pcd.xsd:
+        * docs/schema/toplevel.xsd:
+        * tools/Config_Handlers/ADD_Handler.cpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/DD_Handler.cpp:
+        * tools/Config_Handlers/Deployment.cpp:
+        * tools/Config_Handlers/Deployment.hpp:
+        * tools/Config_Handlers/IDD_Handler.cpp:
+        * tools/Config_Handlers/MDD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/XMI.cpp:
+        * tools/Config_Handlers/XMI.hpp:
+        * tools/Config_Handlers/XML_File_Intf.cpp:
+        * tools/Config_Handlers/ccd.cpp:
+        * tools/Config_Handlers/ccd.hpp:
+        * tools/Config_Handlers/cdd.cpp:
+        * tools/Config_Handlers/cdd.hpp:
+        * tools/Config_Handlers/cdp.hpp:
+        * tools/Config_Handlers/cdp.cpp:
+        * tools/Config_Handlers/cid.hpp:
+        * tools/Config_Handlers/cid.cpp:
+        * tools/Config_Handlers/cpd.cpp:
+        * tools/Config_Handlers/cpd.hpp:
+        * tools/Config_Handlers/iad.cpp:
+        * tools/Config_Handlers/iad.hpp:
+        * tools/Config_Handlers/pcd.hpp:
+        * tools/Config_Handlers/pcd.cpp:
+        * tools/Config_Handlers/toplevel.hpp:
+        * tools/Config_Handlers/toplevel.cpp:
+
+          Updates to work with SVN Head version of XSC. 
+        
 Fri Apr 24 09:18:44 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/IDL3_to_XMI/IDL2XMI_Test/run_test.pl:

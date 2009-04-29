@@ -95,9 +95,9 @@ namespace CIAO
                      Requirement_Functor (toconfig.deployRequirement));
 
       // Handle the idref
-      if (desc.xmi_id_p ())
+      if (desc.id_p ())
         {
-          ACE_CString cstr (desc.xmi_id ().c_str ());
+          ACE_CString cstr (desc.id ().c_str ());
 
           MDD_Handler::IDREF.bind_ref (cstr, pos);
         }
@@ -166,7 +166,7 @@ namespace CIAO
       // Bind the ref and set it in the IDD
       MDD_Handler::IDREF.bind_next_available (mdd_id);
 
-      mdd.xmi_id (xml_id);
+      mdd.id (xml_id);
 
       return mdd;
     }
