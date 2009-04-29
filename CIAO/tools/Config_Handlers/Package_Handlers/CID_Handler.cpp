@@ -378,7 +378,7 @@ namespace CIAO
 
         try {
           return new ComponentImplementationDescription
-            (componentImplementationDescription (dom));
+            (reader::componentImplementationDescription (dom));
         }
         catch (...) {
           throw Parse_Error ("Unable to create XSC structure for CID");

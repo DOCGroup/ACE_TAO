@@ -38,7 +38,7 @@ namespace CIAO
     }
 
     PackagedComponentImplementation::
-    PackagedComponentImplementation (::CIAO::Config_Handlers::PackagedComponentImplementation const& s)
+    PackagedComponentImplementation (PackagedComponentImplementation const& s)
     :
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
@@ -49,12 +49,12 @@ namespace CIAO
       referencedImplementation_->container (this);
     }
 
-    ::CIAO::Config_Handlers::PackagedComponentImplementation& PackagedComponentImplementation::
-    operator= (::CIAO::Config_Handlers::PackagedComponentImplementation const& s)
+    PackagedComponentImplementation& PackagedComponentImplementation::
+    operator= (PackagedComponentImplementation const& s)
     {
-      name (s.name ());
+      name (*s.name_);
 
-      referencedImplementation (s.referencedImplementation ());
+      referencedImplementation (*s.referencedImplementation_);
 
       return *this;
     }
@@ -95,18 +95,20 @@ namespace CIAO
     ComponentPackageDescription::
     ComponentPackageDescription ()
     : 
-    ::XSCRT::Type (), 
     regulator__ ()
     {
     }
 
     ComponentPackageDescription::
-    ComponentPackageDescription (::CIAO::Config_Handlers::ComponentPackageDescription const& s)
+    ComponentPackageDescription (ComponentPackageDescription const& s)
     :
     ::XSCRT::Type (),
     label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
     realizes_ (s.realizes_.get () ? new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.realizes_) : 0),
+    configProperty_ (s.configProperty_),
+    implementation_ (s.implementation_),
+    infoProperty_ (s.infoProperty_),
     contentLocation_ (s.contentLocation_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.contentLocation_) : 0),
     href_ (s.href_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.href_) : 0),
     regulator__ ()
@@ -114,51 +116,38 @@ namespace CIAO
       if (label_.get ()) label_->container (this);
       if (UUID_.get ()) UUID_->container (this);
       if (realizes_.get ()) realizes_->container (this);
-      {
-        for (configProperty_const_iterator i (s.configProperty_.begin ());i != s.configProperty_.end ();++i) add_configProperty (*i);
-      }
-
-      {
-        for (implementation_const_iterator i (s.implementation_.begin ());i != s.implementation_.end ();++i) add_implementation (*i);
-      }
-
-      {
-        for (infoProperty_const_iterator i (s.infoProperty_.begin ());i != s.infoProperty_.end ();++i) add_infoProperty (*i);
-      }
-
       if (contentLocation_.get ()) contentLocation_->container (this);
       if (href_.get ()) href_->container (this);
     }
 
-    ::CIAO::Config_Handlers::ComponentPackageDescription& ComponentPackageDescription::
-    operator= (::CIAO::Config_Handlers::ComponentPackageDescription const& s)
+    ComponentPackageDescription& ComponentPackageDescription::
+    operator= (ComponentPackageDescription const& s)
     {
-      if (s.label_.get ()) label (*(s.label_));
-      else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.label_.get ())
+        label (*(s.label_));
+      else
+        label_.reset (0);
 
-      if (s.UUID_.get ()) UUID (*(s.UUID_));
-      else UUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.UUID_.get ())
+        UUID (*(s.UUID_));
+      else
+        UUID_.reset (0);
 
-      if (s.realizes_.get ()) realizes (*(s.realizes_));
-      else realizes_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (0);
+      if (s.realizes_.get ())
+        realizes (*(s.realizes_));
+      else
+        realizes_.reset (0);
 
-      configProperty_.clear ();
-      {
-        for (configProperty_const_iterator i (s.configProperty_.begin ());i != s.configProperty_.end ();++i) add_configProperty (*i);
-      }
+      configProperty_ = s.configProperty_;
 
-      implementation_.clear ();
-      {
-        for (implementation_const_iterator i (s.implementation_.begin ());i != s.implementation_.end ();++i) add_implementation (*i);
-      }
+      implementation_ = s.implementation_;
 
-      infoProperty_.clear ();
-      {
-        for (infoProperty_const_iterator i (s.infoProperty_.begin ());i != s.infoProperty_.end ();++i) add_infoProperty (*i);
-      }
+      infoProperty_ = s.infoProperty_;
 
-      if (s.contentLocation_.get ()) contentLocation (*(s.contentLocation_));
-      else contentLocation_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.contentLocation_.get ())
+        contentLocation (*(s.contentLocation_));
+      else
+        contentLocation_.reset (0);
 
       if (s.href_.get ()) href (*(s.href_));
       else href_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
@@ -572,7 +561,7 @@ namespace CIAO
       {
         PackagedComponentImplementationTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (PackagedComponentImplementation));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::PackagedComponentImplementation));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -586,7 +575,7 @@ namespace CIAO
       {
         ComponentPackageDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (ComponentPackageDescription));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ComponentPackageDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -796,7 +785,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentPackageDescription::Type::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+        ::CIAO::Config_Handlers::ComponentPackageDescription::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
 
         if (b != e)
         {
@@ -818,7 +807,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentPackageDescription::Type::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+        ::CIAO::Config_Handlers::ComponentPackageDescription::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
 
         if (b != e)
         {
@@ -880,7 +869,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentPackageDescription::Type::implementation_iterator b (o.begin_implementation()), e (o.end_implementation());
+        ::CIAO::Config_Handlers::ComponentPackageDescription::implementation_iterator b (o.begin_implementation()), e (o.end_implementation());
 
         if (b != e)
         {
@@ -902,7 +891,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentPackageDescription::Type::implementation_const_iterator b (o.begin_implementation()), e (o.end_implementation());
+        ::CIAO::Config_Handlers::ComponentPackageDescription::implementation_const_iterator b (o.begin_implementation()), e (o.end_implementation());
 
         if (b != e)
         {
@@ -964,7 +953,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentPackageDescription::Type::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+        ::CIAO::Config_Handlers::ComponentPackageDescription::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
 
         if (b != e)
         {
@@ -986,7 +975,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentPackageDescription::Type::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+        ::CIAO::Config_Handlers::ComponentPackageDescription::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
 
         if (b != e)
         {

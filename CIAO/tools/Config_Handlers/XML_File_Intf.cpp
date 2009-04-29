@@ -49,7 +49,7 @@ namespace CIAO
           CIAO_DEBUG ((LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
                        "Parsing XML file with XSC\n"));
           deploymentPlan dp =
-            DeploymentPlan (dom);
+            CIAO::Config_Handlers::reader::DeploymentPlan (dom);
           
           CIAO_DEBUG ((LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
                        "Processing using config handlers\n"));

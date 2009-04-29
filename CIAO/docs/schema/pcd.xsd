@@ -9,7 +9,7 @@
   
   <xsd:complexType name="ComponentPackageImport">
     <xsd:sequence>
-      <xsd:element name="location" type="xsd:string" maxOccurs="unbounded" />
+      <xsd:element name="location" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
     </xsd:sequence>
   </xsd:complexType>
 
@@ -25,7 +25,7 @@
         <xsd:element name="selectRequirement" type="Deployment:Requirement" minOccurs="0" maxOccurs="unbounded" />
         <xsd:element name="configProperty" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded" />
       </xsd:sequence>
-      <xsd:element name="contentLocation" type="xsd:string"/>
+      <xsd:element name="contentLocation" type="xsd:string" minOccurs="0"/>
     </xsd:choice>
   </xsd:complexType>
 

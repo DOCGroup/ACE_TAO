@@ -33,23 +33,18 @@ namespace CIAO
     }
 
     TopLevelPackageDescription::
-    TopLevelPackageDescription (::CIAO::Config_Handlers::TopLevelPackageDescription const& s)
+    TopLevelPackageDescription (TopLevelPackageDescription const& s)
     :
     ::XSCRT::Type (),
+    basePackage_ (s.basePackage_),
     regulator__ ()
     {
-      {
-        for (basePackage_const_iterator i (s.basePackage_.begin ());i != s.basePackage_.end ();++i) add_basePackage (*i);
-      }
     }
 
-    ::CIAO::Config_Handlers::TopLevelPackageDescription& TopLevelPackageDescription::
-    operator= (::CIAO::Config_Handlers::TopLevelPackageDescription const& s)
+    TopLevelPackageDescription& TopLevelPackageDescription::
+    operator= (TopLevelPackageDescription const& s)
     {
-      basePackage_.clear ();
-      {
-        for (basePackage_const_iterator i (s.basePackage_.begin ());i != s.basePackage_.end ();++i) add_basePackage (*i);
-      }
+      basePackage_ = s.basePackage_;
 
       return *this;
     }
@@ -149,7 +144,7 @@ namespace CIAO
       {
         TopLevelPackageDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (TopLevelPackageDescription));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::TopLevelPackageDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -203,7 +198,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        TopLevelPackageDescription::Type::basePackage_iterator b (o.begin_basePackage()), e (o.end_basePackage());
+        ::CIAO::Config_Handlers::TopLevelPackageDescription::basePackage_iterator b (o.begin_basePackage()), e (o.end_basePackage());
 
         if (b != e)
         {
@@ -216,6 +211,8 @@ namespace CIAO
 
           basePackage_post (o);
         }
+
+        else basePackage_none (o);
       }
 
       void TopLevelPackageDescription::
@@ -223,7 +220,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        TopLevelPackageDescription::Type::basePackage_const_iterator b (o.begin_basePackage()), e (o.end_basePackage());
+        ::CIAO::Config_Handlers::TopLevelPackageDescription::basePackage_const_iterator b (o.begin_basePackage()), e (o.end_basePackage());
 
         if (b != e)
         {
@@ -236,6 +233,8 @@ namespace CIAO
 
           basePackage_post (o);
         }
+
+        else basePackage_none (o);
       }
 
       void TopLevelPackageDescription::
@@ -265,6 +264,16 @@ namespace CIAO
 
       void TopLevelPackageDescription::
       basePackage_post (Type const&)
+      {
+      }
+
+      void TopLevelPackageDescription::
+      basePackage_none (Type&)
+      {
+      }
+
+      void TopLevelPackageDescription::
+      basePackage_none (Type const&)
       {
       }
 
