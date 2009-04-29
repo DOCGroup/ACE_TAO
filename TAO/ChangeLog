@@ -1,3 +1,9 @@
+Wed Apr 29 13:18:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Makefile.am:
+          Added missing files. Thanks to Steven Hartmann
+          <shartmann at militho dot com> for reporting this
+
 Wed Apr 29 07:08:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Bug_2926_Regression/DllORB.cpp:
