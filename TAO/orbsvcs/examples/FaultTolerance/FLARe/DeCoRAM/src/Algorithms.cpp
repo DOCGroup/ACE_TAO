@@ -178,4 +178,3 @@ PrimaryConversion::operator () (const Task & task)
 
   return t;
 }
-

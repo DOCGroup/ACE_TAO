@@ -13,15 +13,18 @@
 #ifndef FTRMFF_FORWARD_PACKING_ALGORITHM_H_
 #define FTRMFF_FORWARD_PACKING_ALGORITHM_H_
 
-#include "Schedule.h"
-#include "Packing_Scheduler.h"
+#include "Scheduler.h"
 
 class FTRMFF_Forward_Packing : public FTRMFF_Algorithm
 {
 public:
+  FTRMFF_Forward_Packing (const std::string & algorithm = "Forward_Packing");
+
   virtual ~FTRMFF_Forward_Packing ();
 
   virtual FTRMFF_Output operator () (const FTRMFF_Input & input);
+private:
+  std::string algorithm_;
 };
 
 class FTRMFF_Forward_Packing_Algorithm : 
@@ -30,7 +33,8 @@ class FTRMFF_Forward_Packing_Algorithm :
 {
 public:
   FTRMFF_Forward_Packing_Algorithm (const PROCESSOR_LIST & processors,
-                                    unsigned int consistency_level);
+                                    unsigned int consistency_level,
+                                    const std::string & scheduler);
 
   virtual ~FTRMFF_Forward_Packing_Algorithm ();
 
@@ -45,7 +49,7 @@ private:
 private:
   SCHEDULE_PROGRESS_LIST unschedulable_;
   unsigned int consistency_level_;
-  Packing_Scheduler scheduler_;
+  std::auto_ptr<Scheduler> scheduler_;
 };
 
 #endif /* FTRMFF_FORWARD_PACKING_ALGORITHM_H_ */

@@ -1,6 +1,21 @@
-project (basic_ftrmff) {
+project (primary_ftrmff) {
 
-  exename = bftrmff
+  exename = pftrmff
+  exeout = ../bin
+  macros += DO_DEBUG
+
+  Source_Files {
+    Algorithms.cpp
+    Schedule.cpp
+    CTT_Basic.cpp
+    FTRMFF_Primary.cpp
+    primary_ftrmff.cpp
+  }
+}
+
+project (active_ftrmff) {
+
+  exename = aftrmff
   exeout = ../bin
   macros += DO_DEBUG
 
@@ -34,11 +49,11 @@ project (statesync_only_ftrmff) {
   }
 }
 
-project (enhanced_ftrmff) {
+project (unranked_ftrmff) {
 
   after += statesync_only_ftrmff
 
-  exename = eftrmff
+  exename = uftrmff
   exeout = ../bin
   macros += DO_DEBUG
 
@@ -56,7 +71,7 @@ project (enhanced_ftrmff) {
 
 project (ranked_ftrmff) {
 
-  after += enhanced_ftrmff
+  after += unranked_ftrmff
 
   exename = rftrmff
   exeout = ../bin
@@ -76,9 +91,9 @@ project (ranked_ftrmff) {
   }
 }
 
-project (bestfit_ftrmff) {
+project (worstfit_ranked_ftrmff) {
 
-  exename = ftrmbf
+  exename = rftrmwf
   exeout = ../bin
 
   macros += DO_DEBUG
@@ -96,9 +111,9 @@ project (bestfit_ftrmff) {
   }
 }
 
-project (binary_ftrmff) {
+project (binary_ranked_ftrmff) {
 
-  exename = bsftrmff
+  exename = bsftrmwf
   exeout = ../bin
 
   macros += DO_DEBUG
@@ -120,9 +135,9 @@ project (binary_ftrmff) {
   }
 }
 
-project (packing_ftrmff) {
+project (backward_packing_ftrmff) {
 
-  exename = pkftrmff
+  exename = bpftrmff
   exeout = ../bin
 
   macros += DO_DEBUG
@@ -153,7 +168,28 @@ project (forward_packing_ftrmff) {
     Scheduler.cpp
     Packing_Scheduler.cpp
     FTRMFF_Forward_Packing.cpp
+    Forward_Ranking_Scheduler.cpp
     forward_packing_ftrmff.cpp
+  }
+}
+
+project (forward_ranking_ftrmff) {
+
+  exename = frftrmff
+  exeout = ../bin
+
+  macros += DO_DEBUGu
+
+  Source_Files {
+    Algorithms.cpp
+    Schedule.cpp
+    CTT_Basic.cpp
+    CTT_Enhanced.cpp
+    Scheduler.cpp
+    Packing_Scheduler.cpp
+    Forward_Ranking_Scheduler.cpp
+    FTRMFF_Forward_Packing.cpp
+    forward_ranking_ftrmff.cpp
   }
 }
 

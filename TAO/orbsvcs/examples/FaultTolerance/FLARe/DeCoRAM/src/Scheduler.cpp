@@ -92,6 +92,24 @@ Scheduler::schedule (void) const
   return schedule_;
 }
 
+ProcessorNameComparison::ProcessorNameComparison (const Processor & p)
+  :p_ (p)
+{
+}
+
+Processor 
+ProcessorPicker::operator () (const TASK_POSITIONS::value_type & entry)
+{
+  return entry.first;
+}
+
+bool
+ProcessorNameComparison::operator () (bool equal, 
+                                      const TASK_POSITIONS::value_type & pos)
+{
+  return (equal || (pos.first.compare (p_) == 0));
+}
+
 std::ostream & operator<< (std::ostream & ostr, 
                            const TASK_POSITION & tp)
 {

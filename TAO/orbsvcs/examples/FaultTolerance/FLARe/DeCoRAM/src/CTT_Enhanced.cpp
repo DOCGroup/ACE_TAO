@@ -21,8 +21,6 @@ CTT_Enhanced::~CTT_Enhanced ()
 double
 CTT_Enhanced::operator () (const TASK_LIST & tasks)
 {
-  TRACE ("(" << tasks << ")");
-
   // copy tasks for local modifications
   TASK_LIST scheduled_tasks = tasks;
 
@@ -34,10 +32,15 @@ CTT_Enhanced::operator () (const TASK_LIST & tasks)
       Task t = scheduled_tasks [scheduled_tasks.size () - 1];
       scheduled_tasks.pop_back ();
 
+      double wcrt = this->worst_case_response_time_check (t, scheduled_tasks);
+
+      TRACE ("(" << tasks << ") = " << wcrt);
+
       // return the wcrt for this task
-      return this->worst_case_response_time_check (t, scheduled_tasks);
+      return wcrt;
     }
 
+  TRACE ("(" << tasks << ") = 0");
   return .0;
 }
 
