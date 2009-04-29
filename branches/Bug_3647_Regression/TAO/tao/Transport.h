@@ -114,7 +114,7 @@ namespace TAO
 
     /// Constructor
     Drain_Constraints(
-        ACE_Time_Value const * timeout,
+        ACE_Time_Value * timeout,
         bool block_on_io)
       : timeout_(timeout)
       , block_on_io_(block_on_io)
@@ -134,13 +134,13 @@ namespace TAO
      * The maximum time to block on I/O operations (or nested loops) based
      * on the current timeout policies.
      */
-    ACE_Time_Value const * timeout() const
+    ACE_Time_Value * timeout() const
     {
       return timeout_;
     }
 
   private:
-    ACE_Time_Value const * timeout_;
+    ACE_Time_Value * timeout_;
     bool block_on_io_;
   };
   }

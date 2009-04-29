@@ -1,4 +1,4 @@
-#include "Middle_Impl.hpp"
+#include "Middle_Impl.h"
 
 Bug_3647_Regression::Middle_Impl::
 Middle_Impl(
@@ -21,7 +21,6 @@ Bug_3647_Regression::Middle_Impl::
 
 void Bug_3647_Regression::Middle_Impl::
 startup_test()
-      THROW_SPEC (CORBA::SystemException)
 {
   if (verbose_)
   {
@@ -46,7 +45,6 @@ startup_test()
 
 void Bug_3647_Regression::Middle_Impl::
 ping()
-      THROW_SPEC (CORBA::SystemException)
 {
   if (verbose_)
   {
@@ -77,7 +75,6 @@ ping()
 
 void Bug_3647_Regression::Middle_Impl::
 shutdown()
-      THROW_SPEC (CORBA::SystemException)
 {
   if (verbose_)
   {
