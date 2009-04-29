@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Middle_Impl.hpp"
+#include "Middle_Impl.h"
 
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "tao/Utils/Servant_Var.h"

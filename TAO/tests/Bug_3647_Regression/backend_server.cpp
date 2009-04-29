@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Backend_Impl.hpp"
+#include "Backend_Impl.h"
 
 #include "tao/Strategies/advanced_resource.h"
 

@@ -1,4 +1,4 @@
-#include "Backend_Impl.hpp"
+#include "Backend_Impl.h"
 #include "ace/OS.h"
 
 Bug_3647_Regression::Backend_Impl::
@@ -16,7 +16,6 @@ Bug_3647_Regression::Backend_Impl::
 
 void Bug_3647_Regression::Backend_Impl::
 startup_test()
-      THROW_SPEC (CORBA::SystemException)
 {
   if (verbose_)
   {
@@ -27,7 +26,6 @@ startup_test()
 
 void Bug_3647_Regression::Backend_Impl::
 ping(Bug_3647_Regression::Payload const & p)
-      THROW_SPEC (CORBA::SystemException)
 {
   if (verbose_)
   {
@@ -39,7 +37,6 @@ ping(Bug_3647_Regression::Payload const & p)
 
 void Bug_3647_Regression::Backend_Impl::
 freeze(CORBA::ULong seconds)
-      THROW_SPEC (CORBA::SystemException)
 {
   if (verbose_)
   {
@@ -59,7 +56,6 @@ freeze(CORBA::ULong seconds)
 
 void Bug_3647_Regression::Backend_Impl::
 shutdown()
-      THROW_SPEC (CORBA::SystemException)
 {
   if (verbose_)
   {

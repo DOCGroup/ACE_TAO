@@ -1,8 +1,7 @@
-#ifndef Bug_3647_Regression_Backend_Impl_hpp
-#define Bug_3647_Regression_Backend_Impl_hpp
+#ifndef Bug_3647_Regression_Backend_Impl_h
+#define Bug_3647_Regression_Backend_Impl_h
 
 #include "TestS.h"
-#include "Throw_Spec.h"
 
 namespace Bug_3647_Regression
 {
@@ -19,15 +18,11 @@ public:
   Backend_Impl(CORBA::ORB_ptr orb, bool verbose);
   virtual ~Backend_Impl();
 
-  virtual void startup_test()
-      THROW_SPEC (CORBA::SystemException);
-  virtual void ping(Bug_3647_Regression::Payload const & the_payload)
-      THROW_SPEC (CORBA::SystemException);
-  virtual void freeze(CORBA::ULong seconds)
-      THROW_SPEC (CORBA::SystemException);
+  virtual void startup_test();
+  virtual void ping(Bug_3647_Regression::Payload const & the_payload);
+  virtual void freeze(CORBA::ULong seconds);
 
-  virtual void shutdown()
-      THROW_SPEC (CORBA::SystemException);
+  virtual void shutdown();
 
 private:
   /// Keep a reference to the ORB so we can shutdown the application.
@@ -39,4 +34,4 @@ private:
 
 } // namespace Bug_3647_Regression
 
-#endif // Bug_3647_Regression_Backend_hpp
+#endif // Bug_3647_Regression_Backend_h

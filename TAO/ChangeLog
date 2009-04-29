@@ -1,3 +1,31 @@
+Wed Apr 29 00:12:29 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Restore the ACE_Countdown_Time object in drain_queue_helper().
+          I removed it because I thought there were no side effects and it
+          was not needed, but after Johnny W asked, I realised it was
+          indeed important.
+          The header changes are required because the Drain_Constraints
+          object needs a non-const ACE_Time_Value* parameter now.
+
+        * tests/Bug_3647_Regression/Backend_Impl.cpp:
+        * tests/Bug_3647_Regression/backend_server.cpp:
+        * tests/Bug_3647_Regression/Backend_Impl.hpp:
+        * tests/Bug_3647_Regression/Backend_Impl.h:
+        * tests/Bug_3647_Regression/Middle_Impl.cpp:
+        * tests/Bug_3647_Regression/Throw_Spec.h:
+        * tests/Bug_3647_Regression/Middle_Impl.hpp:
+        * tests/Bug_3647_Regression/middle_server.cpp:
+        * tests/Bug_3647_Regression/Middle_Impl.h:
+          I used a hacky macro to compile this code with both
+          TAO-1.5.1 (need throw specs) and TAO-1.6.9 (cannot have throw
+          specs)
+          I also changed the .hpp files to .h to be less consistent with
+          the .cpp files, but more consistent with the rest of ACE+TAO.
+          Thanks to Johnny to point out the ugliness before it reached the
+          main branch.
+
 Sat Apr 25 11:31:50 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tao/Transport.h:

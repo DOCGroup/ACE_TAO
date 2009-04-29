@@ -925,6 +925,11 @@ int
 TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
     TAO::Transport::Drain_Constraints const & dc)
 {
+  // As a side-effect, this decrements the timeout() pointed-to value by
+  // the time used in this function.  That might be important as there are
+  // potentially long running system calls invoked from here.
+  ACE_Countdown_Time countdown(dc.timeout());
+
   size_t byte_count = 0;
 
   // ... send the message ...

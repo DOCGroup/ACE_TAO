@@ -1,8 +1,7 @@
-#ifndef Bug_3647_Regression_Middle_Impl_hpp
-#define Bug_3647_Regression_Middle_Impl_hpp
+#ifndef Bug_3647_Regression_Middle_Impl_h
+#define Bug_3647_Regression_Middle_Impl_h
 
 #include "TestS.h"
-#include "Throw_Spec.h"
 
 namespace Bug_3647_Regression
 {
@@ -23,13 +22,10 @@ public:
       long timeout);
   virtual ~Middle_Impl();
 
-  virtual void startup_test()
-      THROW_SPEC (CORBA::SystemException);
-  virtual void ping()
-      THROW_SPEC (CORBA::SystemException);
+  virtual void startup_test();
+  virtual void ping();
 
-  virtual void shutdown()
-      THROW_SPEC (CORBA::SystemException);
+  virtual void shutdown();
 
 private:
   /// Keep a reference to the backend so we can call it, shutdown, etc.
