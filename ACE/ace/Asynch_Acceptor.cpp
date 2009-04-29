@@ -338,7 +338,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
       && result.error () != ECANCELED
 #endif
       )
-    this->accept (this->bytes_to_read_);
+    this->accept (this->bytes_to_read_, result.act ());
 }
 
 template <class HANDLER> int

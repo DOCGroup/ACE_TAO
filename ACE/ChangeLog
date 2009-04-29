@@ -1,3 +1,10 @@
+Wed Apr 29 16:30:05  2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Asynch_Acceptor.cpp (handle_accept): Pass the ACT to accept()
+          when restarting the accept. Thanks to Dicky for this fix.
+
+        * THANKS: Added Dicky <qianchendi at gmail dot com>.
+
 Wed Apr 29 13:52:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Active_Objects/active_objects.mpc
