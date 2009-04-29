@@ -1,3 +1,14 @@
+Wed Apr 29 07:08:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Bug_2926_Regression/DllORB.cpp:
+          Fixed compile error
+
+        * orbsvcs/tests/Notify/Bug_3646b_Regression/server.cpp:
+          Fixed variable not used warning
+
+        * orbsvcs/tests/Notify/Bug_3663_Regression/server.cpp
+          Fixed variable not used warning
+
 Tue Apr 28 20:33:21 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * tao/TAO_Server_Request.cpp:

@@ -74,6 +74,8 @@ void loadunloadcycle()
   TAO_Notify_Service_Driver * p_notifyService =
     ACE_Dynamic_Service<TAO_Notify_Service_Driver>::instance("testNotifyService");
 
+  ACE_UNUSED_ARG (p_notifyService);
+
   ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - unloading\n")
