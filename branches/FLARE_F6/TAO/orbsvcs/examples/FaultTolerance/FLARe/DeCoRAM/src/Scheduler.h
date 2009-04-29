@@ -55,7 +55,41 @@ protected:
   REPLICA_GROUPS replica_groups_;
 };
 
+/*** Helper classes and operators ***/
 
+/**
+ * @class ProcessorNameComparison 
+ *
+ * @brief Can be used with the accumulate algorithm to find out if a
+ *        processor name belongs to a list of task positions
+ */
+class ProcessorNameComparison : public std::binary_function <
+  bool,
+  TASK_POSITIONS::value_type,
+  bool>
+{
+public:
+  ProcessorNameComparison (const Processor & p);
+
+  bool operator () (bool equal, const TASK_POSITIONS::value_type & pos);
+private:
+  Processor p_;
+};
+
+/**
+ * @class ProcessorPicker
+ * 
+ * @brief can be used within transform to extract the 
+ *        processor names from a TASK_POSITIONS structure.
+ */
+class ProcessorPicker : public std::unary_function<REPLICA_GROUPS::value_type,
+                                                   Processor>
+{
+public:
+  Processor operator () (const TASK_POSITIONS::value_type & entry);
+};
+
+// streaming operators for used data structures
 std::ostream & operator<< (std::ostream & ostr, 
                            const TASK_POSITION & tp);
 
