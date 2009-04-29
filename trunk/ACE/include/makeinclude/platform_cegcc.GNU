@@ -38,6 +38,6 @@ LIBS += -lcoredll -lmingw32 -lmingwex -lws2 -lsupc++ -liphlpapi
 
 no_hidden_visibility ?= 1
 
-include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU
+LIB_PREFIX =
 
-PRELIB:=
+include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU
