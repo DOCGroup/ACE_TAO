@@ -1,3 +1,9 @@
+Wed Apr 29 09:47:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Don't use a harcoded lib prefix when checking the existance of the
+          libraries, but use $(LIB_PREFIX)
+
 Wed Apr 29 09:29:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_cegcc.GNU:
