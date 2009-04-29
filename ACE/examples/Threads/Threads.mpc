@@ -25,15 +25,13 @@ project(*cancel) : aceexe {
     cancel.cpp
   }
 }
-project(*future1) : aceexe {
-  avoids += ace_for_tao
+project(*future1) : aceexe, avoids_ace_for_tao {
   exename = future1
   Source_Files {
     future1.cpp
   }
 }
-project(*future2) : aceexe {
-  avoids += ace_for_tao
+project(*future2) : aceexe, avoids_ace_for_tao {
   exename = future2
   Source_Files {
     future2.cpp
@@ -45,15 +43,13 @@ project(*manual_event) : aceexe {
     manual_event.cpp
   }
 }
-project(*process_mutex) : aceexe {
-  avoids += ace_for_tao
+project(*process_mutex) : aceexe, avoids_ace_for_tao {
   exename = process_mutex
   Source_Files {
     process_mutex.cpp
   }
 }
-project(*process_semaphore) : aceexe {
-  avoids += ace_for_tao
+project(*process_semaphore) : aceexe, avoids_ace_for_tao {
   exename = process_semaphore
   Source_Files {
     process_semaphore.cpp
