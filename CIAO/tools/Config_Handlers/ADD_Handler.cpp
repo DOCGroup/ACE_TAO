@@ -87,9 +87,9 @@ namespace CIAO
                            dest.execParameter[len++]);
           }
 
-        if (src.xmi_id_p ())
+        if (src.id_p ())
           {
-            ACE_CString cstr (src.xmi_id ().c_str ());
+            ACE_CString cstr (src.id ().c_str ());
 
             ADD_Handler::IDREF.bind_ref (cstr,pos);
           }
@@ -169,7 +169,7 @@ namespace CIAO
         // Bind the ref and set it in the IDD
         ADD_Handler::IDREF.bind_next_available (add_id);
 
-        add.xmi_id (xml_id);
+        add.id (xml_id);
 
         return add;
       }

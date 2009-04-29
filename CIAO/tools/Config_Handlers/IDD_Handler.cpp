@@ -49,9 +49,9 @@ namespace CIAO
           dest.name = src.name ().c_str ();
           dest.node = src.node ().c_str ();
 
-          if (src.xmi_id_p ())
+          if (src.id_p ())
             {
-              ACE_CString cstr (src.xmi_id ().c_str ());
+              ACE_CString cstr (src.id ().c_str ());
               IDD_Handler::IDREF.bind_ref (cstr, pos);
             }
           else
@@ -159,7 +159,7 @@ namespace CIAO
       // Bind the ref and set it in the IDD
       IDD_Handler::IDREF.bind_next_available (idd_id);
 
-      idd.xmi_id (xml_id);
+      idd.id (xml_id);
 
       return idd;
     }

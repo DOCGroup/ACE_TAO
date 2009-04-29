@@ -155,7 +155,7 @@ namespace CIAO
 
         try {
           return new ComponentInterfaceDescription
-            (componentInterfaceDescription (dom));
+            (reader::componentInterfaceDescription (dom));
         }
         catch (...) {
           throw Parse_Error ("Unable to create XSC structure for Component Interface Description");

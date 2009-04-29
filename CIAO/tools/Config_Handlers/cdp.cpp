@@ -33,92 +33,57 @@ namespace CIAO
     }
 
     deploymentPlan::
-    deploymentPlan (::CIAO::Config_Handlers::deploymentPlan const& s)
+    deploymentPlan (deploymentPlan const& s)
     :
     ::XSCRT::Type (),
     label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
     realizes_ (s.realizes_.get () ? new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.realizes_) : 0),
+    implementation_ (s.implementation_),
+    instance_ (s.instance_),
+    connection_ (s.connection_),
+    dependsOn_ (s.dependsOn_),
+    artifact_ (s.artifact_),
+    infoProperty_ (s.infoProperty_),
+    localityConstraint_ (s.localityConstraint_),
     regulator__ ()
     {
       if (label_.get ()) label_->container (this);
       if (UUID_.get ()) UUID_->container (this);
       if (realizes_.get ()) realizes_->container (this);
-      {
-        for (implementation_const_iterator i (s.implementation_.begin ());i != s.implementation_.end ();++i) add_implementation (*i);
-      }
-
-      {
-        for (instance_const_iterator i (s.instance_.begin ());i != s.instance_.end ();++i) add_instance (*i);
-      }
-
-      {
-        for (connection_const_iterator i (s.connection_.begin ());i != s.connection_.end ();++i) add_connection (*i);
-      }
-
-      {
-        for (dependsOn_const_iterator i (s.dependsOn_.begin ());i != s.dependsOn_.end ();++i) add_dependsOn (*i);
-      }
-
-      {
-        for (artifact_const_iterator i (s.artifact_.begin ());i != s.artifact_.end ();++i) add_artifact (*i);
-      }
-
-      {
-        for (infoProperty_const_iterator i (s.infoProperty_.begin ());i != s.infoProperty_.end ();++i) add_infoProperty (*i);
-      }
-
-      {
-        for (localityConstraint_const_iterator i (s.localityConstraint_.begin ());i != s.localityConstraint_.end ();++i) add_localityConstraint (*i);
-      }
     }
 
-    ::CIAO::Config_Handlers::deploymentPlan& deploymentPlan::
-    operator= (::CIAO::Config_Handlers::deploymentPlan const& s)
+    deploymentPlan& deploymentPlan::
+    operator= (deploymentPlan const& s)
     {
-      if (s.label_.get ()) label (*(s.label_));
-      else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.label_.get ())
+        label (*(s.label_));
+      else
+        label_.reset (0);
 
-      if (s.UUID_.get ()) UUID (*(s.UUID_));
-      else UUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.UUID_.get ())
+        UUID (*(s.UUID_));
+      else
+        UUID_.reset (0);
 
-      if (s.realizes_.get ()) realizes (*(s.realizes_));
-      else realizes_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (0);
+      if (s.realizes_.get ())
+        realizes (*(s.realizes_));
+      else
+        realizes_.reset (0);
 
-      implementation_.clear ();
-      {
-        for (implementation_const_iterator i (s.implementation_.begin ());i != s.implementation_.end ();++i) add_implementation (*i);
-      }
+      implementation_ = s.implementation_;
 
-      instance_.clear ();
-      {
-        for (instance_const_iterator i (s.instance_.begin ());i != s.instance_.end ();++i) add_instance (*i);
-      }
+      instance_ = s.instance_;
 
-      connection_.clear ();
-      {
-        for (connection_const_iterator i (s.connection_.begin ());i != s.connection_.end ();++i) add_connection (*i);
-      }
+      connection_ = s.connection_;
 
-      dependsOn_.clear ();
-      {
-        for (dependsOn_const_iterator i (s.dependsOn_.begin ());i != s.dependsOn_.end ();++i) add_dependsOn (*i);
-      }
+      dependsOn_ = s.dependsOn_;
 
-      artifact_.clear ();
-      {
-        for (artifact_const_iterator i (s.artifact_.begin ());i != s.artifact_.end ();++i) add_artifact (*i);
-      }
+      artifact_ = s.artifact_;
 
-      infoProperty_.clear ();
-      {
-        for (infoProperty_const_iterator i (s.infoProperty_.begin ());i != s.infoProperty_.end ();++i) add_infoProperty (*i);
-      }
+      infoProperty_ = s.infoProperty_;
 
-      localityConstraint_.clear ();
-      {
-        for (localityConstraint_const_iterator i (s.localityConstraint_.begin ());i != s.localityConstraint_.end ();++i) add_localityConstraint (*i);
-      }
+      localityConstraint_ = s.localityConstraint_;
 
       return *this;
     }
@@ -587,7 +552,7 @@ namespace CIAO
       {
         deploymentPlanTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (deploymentPlan));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::deploymentPlan));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -731,7 +696,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        deploymentPlan::Type::implementation_iterator b (o.begin_implementation()), e (o.end_implementation());
+        ::CIAO::Config_Handlers::deploymentPlan::implementation_iterator b (o.begin_implementation()), e (o.end_implementation());
 
         if (b != e)
         {
@@ -753,7 +718,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        deploymentPlan::Type::implementation_const_iterator b (o.begin_implementation()), e (o.end_implementation());
+        ::CIAO::Config_Handlers::deploymentPlan::implementation_const_iterator b (o.begin_implementation()), e (o.end_implementation());
 
         if (b != e)
         {
@@ -815,7 +780,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        deploymentPlan::Type::instance_iterator b (o.begin_instance()), e (o.end_instance());
+        ::CIAO::Config_Handlers::deploymentPlan::instance_iterator b (o.begin_instance()), e (o.end_instance());
 
         if (b != e)
         {
@@ -837,7 +802,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        deploymentPlan::Type::instance_const_iterator b (o.begin_instance()), e (o.end_instance());
+        ::CIAO::Config_Handlers::deploymentPlan::instance_const_iterator b (o.begin_instance()), e (o.end_instance());
 
         if (b != e)
         {
@@ -899,7 +864,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        deploymentPlan::Type::connection_iterator b (o.begin_connection()), e (o.end_connection());
+        ::CIAO::Config_Handlers::deploymentPlan::connection_iterator b (o.begin_connection()), e (o.end_connection());
 
         if (b != e)
         {
@@ -921,7 +886,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        deploymentPlan::Type::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
+        ::CIAO::Config_Handlers::deploymentPlan::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
 
         if (b != e)
         {
@@ -983,7 +948,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        deploymentPlan::Type::dependsOn_iterator b (o.begin_dependsOn()), e (o.end_dependsOn());
+        ::CIAO::Config_Handlers::deploymentPlan::dependsOn_iterator b (o.begin_dependsOn()), e (o.end_dependsOn());
 
         if (b != e)
         {
@@ -1005,7 +970,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        deploymentPlan::Type::dependsOn_const_iterator b (o.begin_dependsOn()), e (o.end_dependsOn());
+        ::CIAO::Config_Handlers::deploymentPlan::dependsOn_const_iterator b (o.begin_dependsOn()), e (o.end_dependsOn());
 
         if (b != e)
         {
@@ -1067,7 +1032,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        deploymentPlan::Type::artifact_iterator b (o.begin_artifact()), e (o.end_artifact());
+        ::CIAO::Config_Handlers::deploymentPlan::artifact_iterator b (o.begin_artifact()), e (o.end_artifact());
 
         if (b != e)
         {
@@ -1089,7 +1054,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        deploymentPlan::Type::artifact_const_iterator b (o.begin_artifact()), e (o.end_artifact());
+        ::CIAO::Config_Handlers::deploymentPlan::artifact_const_iterator b (o.begin_artifact()), e (o.end_artifact());
 
         if (b != e)
         {
@@ -1151,7 +1116,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        deploymentPlan::Type::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+        ::CIAO::Config_Handlers::deploymentPlan::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
 
         if (b != e)
         {
@@ -1173,7 +1138,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        deploymentPlan::Type::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+        ::CIAO::Config_Handlers::deploymentPlan::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
 
         if (b != e)
         {
@@ -1235,7 +1200,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        deploymentPlan::Type::localityConstraint_iterator b (o.begin_localityConstraint()), e (o.end_localityConstraint());
+        ::CIAO::Config_Handlers::deploymentPlan::localityConstraint_iterator b (o.begin_localityConstraint()), e (o.end_localityConstraint());
 
         if (b != e)
         {
@@ -1257,7 +1222,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        deploymentPlan::Type::localityConstraint_const_iterator b (o.begin_localityConstraint()), e (o.end_localityConstraint());
+        ::CIAO::Config_Handlers::deploymentPlan::localityConstraint_const_iterator b (o.begin_localityConstraint()), e (o.end_localityConstraint());
 
         if (b != e)
         {

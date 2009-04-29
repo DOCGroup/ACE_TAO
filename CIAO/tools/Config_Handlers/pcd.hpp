@@ -248,6 +248,12 @@ namespace CIAO
         location_post (Type const&);
 
         virtual void
+        location_none (Type&);
+
+        virtual void
+        location_none (Type const&);
+
+        virtual void
         post (Type&);
 
         virtual void
@@ -439,10 +445,8 @@ namespace CIAO
         virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
@@ -450,10 +454,8 @@ namespace CIAO
         virtual void 
         location_pre (Type &o)
         {
-
           this->location_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         location_pre (Type const&);
@@ -461,10 +463,8 @@ namespace CIAO
         virtual void 
         location_next (Type &o)
         {
-
           this->location_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         location_next (Type const&);
@@ -472,10 +472,8 @@ namespace CIAO
         virtual void 
         location_post (Type &o)
         {
-
           this->location_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         location_post (Type const&);
@@ -493,10 +491,8 @@ namespace CIAO
         virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
@@ -504,10 +500,8 @@ namespace CIAO
         virtual void 
         label (Type &o)
         {
-
           this->label (const_cast <Type const &> (o));
         }
-
 
         virtual void
         label (Type const&);
@@ -515,10 +509,8 @@ namespace CIAO
         virtual void 
         UUID (Type &o)
         {
-
           this->UUID (const_cast <Type const &> (o));
         }
-
 
         virtual void
         UUID (Type const&);
@@ -526,10 +518,8 @@ namespace CIAO
         virtual void 
         basePackage (Type &o)
         {
-
           this->basePackage (const_cast <Type const &> (o));
         }
-
 
         virtual void
         basePackage (Type const&);
@@ -537,10 +527,8 @@ namespace CIAO
         virtual void 
         specializedConfig (Type &o)
         {
-
           this->specializedConfig (const_cast <Type const &> (o));
         }
-
 
         virtual void
         specializedConfig (Type const&);
@@ -548,10 +536,8 @@ namespace CIAO
         virtual void 
         importedPackage (Type &o)
         {
-
           this->importedPackage (const_cast <Type const &> (o));
         }
-
 
         virtual void
         importedPackage (Type const&);
@@ -559,10 +545,8 @@ namespace CIAO
         virtual void 
         referencedPackage (Type &o)
         {
-
           this->referencedPackage (const_cast <Type const &> (o));
         }
-
 
         virtual void
         referencedPackage (Type const&);
@@ -570,10 +554,8 @@ namespace CIAO
         virtual void 
         selectRequirement_pre (Type &o)
         {
-
           this->selectRequirement_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         selectRequirement_pre (Type const&);
@@ -581,10 +563,8 @@ namespace CIAO
         virtual void 
         selectRequirement_next (Type &o)
         {
-
           this->selectRequirement_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         selectRequirement_next (Type const&);
@@ -592,10 +572,8 @@ namespace CIAO
         virtual void 
         selectRequirement_post (Type &o)
         {
-
           this->selectRequirement_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         selectRequirement_post (Type const&);
@@ -603,10 +581,8 @@ namespace CIAO
         virtual void 
         configProperty_pre (Type &o)
         {
-
           this->configProperty_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         configProperty_pre (Type const&);
@@ -614,10 +590,8 @@ namespace CIAO
         virtual void 
         configProperty_next (Type &o)
         {
-
           this->configProperty_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         configProperty_next (Type const&);
@@ -625,10 +599,8 @@ namespace CIAO
         virtual void 
         configProperty_post (Type &o)
         {
-
           this->configProperty_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         configProperty_post (Type const&);
@@ -636,10 +608,8 @@ namespace CIAO
         virtual void 
         contentLocation (Type &o)
         {
-
           this->contentLocation (const_cast <Type const &> (o));
         }
-
 
         virtual void
         contentLocation (Type const&);

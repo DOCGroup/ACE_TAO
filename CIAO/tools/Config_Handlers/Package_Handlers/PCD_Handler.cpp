@@ -41,7 +41,7 @@ namespace CIAO
           {
             TopLevelPackageDescription tpd;
         
-        tpd = topLevelPackageDescription (dom);
+	    tpd = reader::topLevelPackageDescription (dom);
 
             PCD_Handler::package_config (*tpd.begin_basePackage (),
                                          toconfig);
@@ -49,7 +49,7 @@ namespace CIAO
         else if (root == XStr ("Deployment:packageConfiguration"))
           {
             PackageConfiguration pcd;
-            pcd = packageConfiguration (dom);
+            pcd = reader::packageConfiguration (dom);
             PCD_Handler::package_config (pcd, toconfig);
           }
         else
@@ -151,7 +151,7 @@ namespace CIAO
           throw Parse_Error ("Unable to create DOM for PackageConfiguration");
 
         try {
-          return new PackageConfiguration (packageConfiguration (dom));
+          return new PackageConfiguration (reader::packageConfiguration (dom));
         }
         catch (...) {
           throw Parse_Error ("Unable to create XSC structure for PackageConfiguration");

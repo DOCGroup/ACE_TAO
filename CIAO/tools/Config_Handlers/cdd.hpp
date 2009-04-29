@@ -143,7 +143,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Property > infoProperty_;
 
       public:
-      Domain ();
+      Domain (::std::list< ::CIAO::Config_Handlers::Node > const& node__);
 
       Domain (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Domain (Domain const& s);
@@ -210,7 +210,8 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Resource > resource_;
 
       public:
-      Bridge (::XMLSchema::string< ACE_TCHAR > const& name__);
+      Bridge (::XMLSchema::string< ACE_TCHAR > const& name__,
+              ::std::list< ::CIAO::Config_Handlers::Interconnect > const& connect__);
 
       Bridge (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Bridge (Bridge const& s);
@@ -292,7 +293,8 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Resource > resource_;
 
       public:
-      Interconnect (::XMLSchema::string< ACE_TCHAR > const& name__);
+      Interconnect (::XMLSchema::string< ACE_TCHAR > const& name__,
+                    ::std::list< ::CIAO::Config_Handlers::Node > const& connect__);
 
       Interconnect (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Interconnect (Interconnect const& s);
@@ -1059,10 +1061,8 @@ namespace CIAO
         virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
@@ -1070,10 +1070,8 @@ namespace CIAO
         virtual void 
         UUID (Type &o)
         {
-
           this->UUID (const_cast <Type const &> (o));
         }
-
 
         virtual void
         UUID (Type const&);
@@ -1081,10 +1079,8 @@ namespace CIAO
         virtual void 
         label (Type &o)
         {
-
           this->label (const_cast <Type const &> (o));
         }
-
 
         virtual void
         label (Type const&);
@@ -1092,10 +1088,8 @@ namespace CIAO
         virtual void 
         node_pre (Type &o)
         {
-
           this->node_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         node_pre (Type const&);
@@ -1103,10 +1097,8 @@ namespace CIAO
         virtual void 
         node_next (Type &o)
         {
-
           this->node_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         node_next (Type const&);
@@ -1114,10 +1106,8 @@ namespace CIAO
         virtual void 
         node_post (Type &o)
         {
-
           this->node_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         node_post (Type const&);
@@ -1125,10 +1115,8 @@ namespace CIAO
         virtual void 
         interconnect_pre (Type &o)
         {
-
           this->interconnect_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         interconnect_pre (Type const&);
@@ -1136,10 +1124,8 @@ namespace CIAO
         virtual void 
         interconnect_next (Type &o)
         {
-
           this->interconnect_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         interconnect_next (Type const&);
@@ -1147,10 +1133,8 @@ namespace CIAO
         virtual void 
         interconnect_post (Type &o)
         {
-
           this->interconnect_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         interconnect_post (Type const&);
@@ -1158,10 +1142,8 @@ namespace CIAO
         virtual void 
         bridge_pre (Type &o)
         {
-
           this->bridge_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         bridge_pre (Type const&);
@@ -1169,10 +1151,8 @@ namespace CIAO
         virtual void 
         bridge_next (Type &o)
         {
-
           this->bridge_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         bridge_next (Type const&);
@@ -1180,10 +1160,8 @@ namespace CIAO
         virtual void 
         bridge_post (Type &o)
         {
-
           this->bridge_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         bridge_post (Type const&);
@@ -1191,10 +1169,8 @@ namespace CIAO
         virtual void 
         sharedResource_pre (Type &o)
         {
-
           this->sharedResource_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         sharedResource_pre (Type const&);
@@ -1202,10 +1178,8 @@ namespace CIAO
         virtual void 
         sharedResource_next (Type &o)
         {
-
           this->sharedResource_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         sharedResource_next (Type const&);
@@ -1213,10 +1187,8 @@ namespace CIAO
         virtual void 
         sharedResource_post (Type &o)
         {
-
           this->sharedResource_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         sharedResource_post (Type const&);
@@ -1224,10 +1196,8 @@ namespace CIAO
         virtual void 
         infoProperty_pre (Type &o)
         {
-
           this->infoProperty_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         infoProperty_pre (Type const&);
@@ -1235,10 +1205,8 @@ namespace CIAO
         virtual void 
         infoProperty_next (Type &o)
         {
-
           this->infoProperty_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         infoProperty_next (Type const&);
@@ -1246,10 +1214,8 @@ namespace CIAO
         virtual void 
         infoProperty_post (Type &o)
         {
-
           this->infoProperty_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         infoProperty_post (Type const&);
@@ -1267,10 +1233,8 @@ namespace CIAO
         virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
@@ -1278,10 +1242,8 @@ namespace CIAO
         virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
@@ -1289,10 +1251,8 @@ namespace CIAO
         virtual void 
         label (Type &o)
         {
-
           this->label (const_cast <Type const &> (o));
         }
-
 
         virtual void
         label (Type const&);
@@ -1300,10 +1260,8 @@ namespace CIAO
         virtual void 
         connect_pre (Type &o)
         {
-
           this->connect_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         connect_pre (Type const&);
@@ -1311,10 +1269,8 @@ namespace CIAO
         virtual void 
         connect_next (Type &o)
         {
-
           this->connect_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         connect_next (Type const&);
@@ -1322,10 +1278,8 @@ namespace CIAO
         virtual void 
         connect_post (Type &o)
         {
-
           this->connect_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         connect_post (Type const&);
@@ -1333,10 +1287,8 @@ namespace CIAO
         virtual void 
         resource_pre (Type &o)
         {
-
           this->resource_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resource_pre (Type const&);
@@ -1344,10 +1296,8 @@ namespace CIAO
         virtual void 
         resource_next (Type &o)
         {
-
           this->resource_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resource_next (Type const&);
@@ -1355,10 +1305,8 @@ namespace CIAO
         virtual void 
         resource_post (Type &o)
         {
-
           this->resource_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resource_post (Type const&);
@@ -1376,10 +1324,8 @@ namespace CIAO
         virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
@@ -1387,10 +1333,8 @@ namespace CIAO
         virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
@@ -1398,10 +1342,8 @@ namespace CIAO
         virtual void 
         label (Type &o)
         {
-
           this->label (const_cast <Type const &> (o));
         }
-
 
         virtual void
         label (Type const&);
@@ -1409,10 +1351,8 @@ namespace CIAO
         virtual void 
         connection_pre (Type &o)
         {
-
           this->connection_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         connection_pre (Type const&);
@@ -1420,10 +1360,8 @@ namespace CIAO
         virtual void 
         connection_next (Type &o)
         {
-
           this->connection_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         connection_next (Type const&);
@@ -1431,10 +1369,8 @@ namespace CIAO
         virtual void 
         connection_post (Type &o)
         {
-
           this->connection_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         connection_post (Type const&);
@@ -1442,10 +1378,8 @@ namespace CIAO
         virtual void 
         connect_pre (Type &o)
         {
-
           this->connect_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         connect_pre (Type const&);
@@ -1453,10 +1387,8 @@ namespace CIAO
         virtual void 
         connect_next (Type &o)
         {
-
           this->connect_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         connect_next (Type const&);
@@ -1464,10 +1396,8 @@ namespace CIAO
         virtual void 
         connect_post (Type &o)
         {
-
           this->connect_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         connect_post (Type const&);
@@ -1475,10 +1405,8 @@ namespace CIAO
         virtual void 
         resource_pre (Type &o)
         {
-
           this->resource_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resource_pre (Type const&);
@@ -1486,10 +1414,8 @@ namespace CIAO
         virtual void 
         resource_next (Type &o)
         {
-
           this->resource_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resource_next (Type const&);
@@ -1497,10 +1423,8 @@ namespace CIAO
         virtual void 
         resource_post (Type &o)
         {
-
           this->resource_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resource_post (Type const&);
@@ -1518,10 +1442,8 @@ namespace CIAO
         virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
@@ -1529,10 +1451,8 @@ namespace CIAO
         virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
@@ -1540,10 +1460,8 @@ namespace CIAO
         virtual void 
         label (Type &o)
         {
-
           this->label (const_cast <Type const &> (o));
         }
-
 
         virtual void
         label (Type const&);
@@ -1551,10 +1469,8 @@ namespace CIAO
         virtual void 
         connection_pre (Type &o)
         {
-
           this->connection_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         connection_pre (Type const&);
@@ -1562,10 +1478,8 @@ namespace CIAO
         virtual void 
         connection_next (Type &o)
         {
-
           this->connection_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         connection_next (Type const&);
@@ -1573,10 +1487,8 @@ namespace CIAO
         virtual void 
         connection_post (Type &o)
         {
-
           this->connection_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         connection_post (Type const&);
@@ -1584,10 +1496,8 @@ namespace CIAO
         virtual void 
         sharedResource_pre (Type &o)
         {
-
           this->sharedResource_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         sharedResource_pre (Type const&);
@@ -1595,10 +1505,8 @@ namespace CIAO
         virtual void 
         sharedResource_next (Type &o)
         {
-
           this->sharedResource_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         sharedResource_next (Type const&);
@@ -1606,10 +1514,8 @@ namespace CIAO
         virtual void 
         sharedResource_post (Type &o)
         {
-
           this->sharedResource_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         sharedResource_post (Type const&);
@@ -1617,10 +1523,8 @@ namespace CIAO
         virtual void 
         resource_pre (Type &o)
         {
-
           this->resource_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resource_pre (Type const&);
@@ -1628,10 +1532,8 @@ namespace CIAO
         virtual void 
         resource_next (Type &o)
         {
-
           this->resource_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resource_next (Type const&);
@@ -1639,10 +1541,8 @@ namespace CIAO
         virtual void 
         resource_post (Type &o)
         {
-
           this->resource_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resource_post (Type const&);
@@ -1660,10 +1560,8 @@ namespace CIAO
         virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
@@ -1671,10 +1569,8 @@ namespace CIAO
         virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
@@ -1682,10 +1578,8 @@ namespace CIAO
         virtual void 
         resourceType (Type &o)
         {
-
           this->resourceType (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resourceType (Type const&);
@@ -1693,10 +1587,8 @@ namespace CIAO
         virtual void 
         node (Type &o)
         {
-
           this->node (const_cast <Type const &> (o));
         }
-
 
         virtual void
         node (Type const&);
@@ -1704,10 +1596,8 @@ namespace CIAO
         virtual void 
         property (Type &o)
         {
-
           this->property (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property (Type const&);
