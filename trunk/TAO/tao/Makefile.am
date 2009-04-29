@@ -1228,6 +1228,7 @@ nobase_include_HEADERS = \
   LongSeqS.h \
   MCAST_Parser.h \
   MCAST_Parser.inl \
+  Message_Semantics.h \
   MMAP_Allocator.h \
   MM_Sequence_Iterator_T.h \
   MProfile.h \
@@ -1452,6 +1453,8 @@ nobase_include_HEADERS = \
   UB_String_Argument_T.h \
   UB_String_Argument_T.inl \
   UB_String_Arguments.h \
+  Unbounded_BD_String_Sequence_T.h \
+  Bounded_BD_String_Sequence_T.h \
   ULongLongSeq.pidl \
   ULongLongSeq.pidl \
   ULongLongSeqC.h \
