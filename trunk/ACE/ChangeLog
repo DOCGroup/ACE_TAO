@@ -1,3 +1,9 @@
+Wed Apr 29 06:09:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+        * include/makeinclude/platform_vxworks6.7.GNU:
+          Moved the workaround to the vxworks 6.7 file
+
 Tue Apr 28 18:52:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SSL/SSL_Context.cpp (set_mode):
