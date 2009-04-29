@@ -270,8 +270,6 @@ if (!$t->open()) {
 my $target_login = $ENV{'ACE_RUN_VX_LOGIN'};
 my $target_password = $ENV{'ACE_RUN_VX_PASSWORD'};
 
-$t->print("\n");
-
 if (defined $target_login)  {
   $t->waitfor('/VxWorks login: $/');
   $t->print("$target_login");
@@ -282,7 +280,6 @@ if (defined $target_password)  {
   $t->print("$target_password");
 }
 
-$t->print("\n");
 # wait for the prompt
 my $buf = '';
 my $prompt1 = '-> $';
