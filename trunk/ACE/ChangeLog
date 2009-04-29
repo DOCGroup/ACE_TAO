@@ -1,3 +1,53 @@
+Wed Apr 29 13:52:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Active_Objects/active_objects.mpc
+        * examples/APG/Config/config.mpc
+        * examples/APG/Containers/containers.mpc
+        * examples/APG/Misc_IPC/misc_ipc.mpc
+        * examples/APG/Naming/naming.mpc
+        * examples/APG/Proactor/proactor.mpc
+        * examples/APG/Processes/processes.mpc
+        * examples/APG/Shared_Memory/shared_memory.mpc
+        * examples/APG/Streams/streams.mpc
+        * examples/APG/Svc_Config/svc_config.mpc
+        * examples/APG/ThreadPools/threadpools.mpc
+        * examples/APG/ThreadSafety/threadsafety.mpc
+        * examples/ASX/Event_Server/Event_Server/Event.mpc
+        * examples/ASX/UPIPE_Event_Server/UPIPE_Event.mpc
+        * examples/C++NPv1/C++NPv1.mpc
+        * examples/C++NPv2/C++NPv2.mpc
+        * examples/Connection/blocking/Connection_Blocking.mpc
+        * examples/Connection/misc/Connection_Misc.mpc
+        * examples/Connection/non_blocking/Connection_Non_Blocking.mpc
+        * examples/IPC_SAP/DEV_SAP/reader/dev_sap_reader.mpc
+        * examples/IPC_SAP/DEV_SAP/writer/dev_sap_writer.mpc
+        * examples/IPC_SAP/FIFO_SAP/fifo_sap.mpc
+        * examples/IPC_SAP/FILE_SAP/file_sap_client.mpc
+        * examples/IPC_SAP/SOCK_SAP/sock_sap.mpc
+        * examples/IPC_SAP/SSL_SAP/SSL_SAP.mpc
+        * examples/IPC_SAP/UPIPE_SAP/UPIPE_SAP.mpc
+        * examples/Mem_Map/file-reverse/Mem_Map_File_Reverse.mpc
+        * examples/Mem_Map/IO-tests/Mem_Map_IO_Tests.mpc
+        * examples/Misc/Misc.mpc
+        * examples/Naming/Naming.mpc
+        * examples/OS/Process/OS_Process.mpc
+        * examples/QOS/Diffserv/QOS_Diffserv.mpc
+        * examples/Reactor/Dgram/Reactor_Dgram.mpc
+        * examples/Reactor/FIFO/Reactor_FIFO.mpc
+        * examples/Reactor/Proactor/Proactor.mpc
+        * examples/Reactor/WFMO_Reactor/WFMO_Reactor.mpc
+        * examples/Semaphores/Semaphores.mpc
+        * examples/Service_Configurator/IPC-tests/client/Svc_Cfg_IPC_Client.mpc
+        * examples/Service_Configurator/IPC-tests/server/Svc_Cfg_IPC_Server.mpc
+        * examples/Shared_Malloc/Shared_Malloc.mpc
+        * examples/Shared_Memory/Shared_Memory.mpc
+        * examples/Synch/Synch.mpc
+        * examples/System_V_IPC/SV_Message_Queues/SV_Message_Queues.mpc
+        * examples/System_V_IPC/SV_Semaphores/SV_Semaphores.mpc
+        * examples/Threads/Threads.mpc
+        * examples/Web_Crawler/Web_Crawler.mpc
+          Use the avoids_ace_for_tao base project
+
 Wed Apr 29 09:47:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
