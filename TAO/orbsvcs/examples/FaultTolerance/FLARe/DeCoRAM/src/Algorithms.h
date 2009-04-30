@@ -57,6 +57,8 @@ struct Task
   unsigned int rank;
 };
 
+unsigned int extract_rank (const Taskname & taskname);
+
 typedef std::vector <Task> TASK_LIST;
 
 class CTT_Algorithm : public std::unary_function <TASK_LIST, bool>

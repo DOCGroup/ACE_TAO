@@ -23,6 +23,7 @@ std::string filename = "test.sd"; // filename of task list input
 bool counting_mode = false;
 bool average_mode = false;
 bool check_overbooking = false;
+unsigned int consistency_level = 0;
 
 class ScheduleChecker : public std::binary_function <double,
                                                      SCHEDULE::value_type,
@@ -63,7 +64,41 @@ public:
 
   double operator () (double previous, const SCHEDULE::value_type & entry)
   {
+    PROCESSOR_SETS scenarios = 
+      this->calculate_failure_scenarions (entry.first,
+                                          this->max_rank ());
+
     return .0;
+  }
+
+private:
+  PROCESSOR_SETS calculate_failure_scenarions (const Processor & processor,
+                                               unsigned int consistency_level)
+  {
+    PROCESSOR_SETS result;
+    PROCESSOR_LIST all_processors = get_processors (schedule_, true);
+
+    return result;
+  }
+
+  unsigned int max_rank (void)
+  {
+    unsigned int max_rank = 0;
+
+    for (SCHEDULE::const_iterator sched_it = schedule_.begin ();
+         sched_it != schedule_.end ();
+         ++sched_it)
+      {
+        for (TASK_LIST::const_iterator task_it = sched_it->second.begin ();
+             task_it != sched_it->second.end ();
+             ++task_it)
+          {
+            max_rank = std::max (max_rank,
+                                 extract_rank (task_it->name));
+          }
+      }
+
+    return max_rank;
   }
 
 private:
