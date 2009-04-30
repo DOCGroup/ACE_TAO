@@ -167,6 +167,7 @@ project (forward_packing_ftrmff) {
     CTT_Enhanced.cpp
     Scheduler.cpp
     Packing_Scheduler.cpp
+    FailureAwareWCRT.cpp
     FTRMFF_Forward_Packing.cpp
     Forward_Ranking_Scheduler.cpp
     forward_packing_ftrmff.cpp
