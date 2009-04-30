@@ -538,14 +538,11 @@ namespace TAO
         throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }
 
-    bool forward_on_object_not_exist 
-      = ACE_OS_String::strcmp (type_id.in (), "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0 ?        
-        this->stub ()->orb_core ()->orb_params ()->forward_invocation_on_object_not_exist() : false;
-       
     // Special handling for non-fatal system exceptions.
     //
     // Note that we are careful to retain "at most once" semantics.
-    if ((ACE_OS_String::strcmp (type_id.in (),
+    if ((CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES &&
+        (ACE_OS_String::strcmp (type_id.in (),
                                 "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0 ||
          ACE_OS_String::strcmp (type_id.in (),
                                 "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0 ||
@@ -553,24 +550,23 @@ namespace TAO
                                 "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0 ||
          ACE_OS_String::strcmp (type_id.in (),
                                 "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0 ||
-         forward_on_object_not_exist) &&
-        (CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES)
-      {
-        {
-          // Start the special case for FTCORBA.
-          /**
-           * There has been a unanimous view that this is not the
-           * right way to do things. But a need to be compliant is
-           * forcing us into this.
-           */
-          Invocation_Status const s =
-            this->stub ()->orb_core ()->service_raise_transient_failure (
-              this->details_.request_service_context ().service_info (),
-              this->resolver_.profile ());
+         (this->stub ()->orb_core ()->orb_params ()->forward_invocation_on_object_not_exist()
+         && ACE_OS_String::strcmp (type_id.in (),
+                                "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)))
+    {
+        // Start the special case for FTCORBA.
+        /**
+          * There has been a unanimous view that this is not the
+          * right way to do things. But a need to be compliant is
+          * forcing us into this.
+          */
+        Invocation_Status const s =
+          this->stub ()->orb_core ()->service_raise_transient_failure (
+            this->details_.request_service_context ().service_info (),
+            this->resolver_.profile ());
 
-          if (s == TAO_INVOKE_RESTART)
-            return s;
-        }
+        if (s == TAO_INVOKE_RESTART)
+          return s;
 
         // Attempt profile retry.
         /**
