@@ -14,11 +14,47 @@
 #define FORWARD_RANKING_SCHEDULER_H_
 
 #include "Scheduler.h"
-#include "CTT_Enhanced.h"
 
-typedef std::list<PROCESSOR_SET> PROCESSOR_SETS;
+typedef std::map <Taskname, PROCESSOR_SET> FAILURE_MAP;
 
-typedef std::list<TASK_LIST> TASK_SCENARIOS;
+/**
+ * @class ReplicaFinder
+ *
+ * @brief Functor that uses the replica group to determine the
+ *        processors that need to fail in order for a given backup
+ *        task to become active
+ */
+class ReplicaFinder : public std::unary_function <Task,
+                                                  PROCESSOR_SET>
+{
+public:
+  ReplicaFinder (const REPLICA_GROUPS & rep_groups);
+
+  PROCESSOR_SET operator () (const Task & task);
+
+private:
+  const REPLICA_GROUPS rep_groups_;
+  ProcessorPicker processor_picker_;
+};
+
+/**
+ * @class FailureMapFinder
+ *
+ * @brief Functor that uses the replica group to determine the
+ *        processors that need to fail in order for a given backup
+ *        task to become active
+ */
+class FailureMapFinder : public std::unary_function <Task,
+                                                     PROCESSOR_SET>
+{
+public:
+  FailureMapFinder (const FAILURE_MAP & failure_map);
+
+  PROCESSOR_SET operator () (const Task & task);
+
+private:
+  const FAILURE_MAP & failure_map_;
+};
 
 class Forward_Ranking_Scheduler : public Scheduler
 {
@@ -29,7 +65,15 @@ public:
 
   virtual double schedule_task (const Task & task,
                                 const Processor & processor);
+
+protected:
+  virtual void update_schedule (const Task & task,
+                                const Processor & processor);
+
 private:
+  void update_failure_map (const Task & task,
+                           const Processor & processor);
+
   bool check_for_existing_replicas (const Task & task,
                                      const Processor & processor);
 
@@ -48,14 +92,10 @@ private:
   double accumulate_wcrt (const TASK_SCENARIOS & scenarios);
 
 private:
-  CTT_Enhanced ctt_;
+  FAILURE_MAP failure_map_;
 };
 
-// streaming operators for data structures defined in this header
 std::ostream & operator<< (std::ostream & ostr, 
-                           const PROCESSOR_SETS & ps);
-
-std::ostream & operator<< (std::ostream & ostr, 
-                           const TASK_SCENARIOS & ts);
+                           const FAILURE_MAP & fm);
 
 #endif /* FORWARD_RANKING_SCHEDULER_H_ */

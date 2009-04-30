@@ -146,3 +146,34 @@ std::ostream & operator<< (std::ostream & ostr,
   
   return ostr;
 }
+
+
+std::ostream & operator<< (std::ostream & ostr, 
+                           const PROCESSOR_SETS & ps)
+{
+  ostr << "{";
+  for (PROCESSOR_SETS::const_iterator it = ps.begin ();
+       it != ps.end ();
+       ++it)
+    {
+      ostr << *it << "| ";
+    }
+  ostr << "}";
+
+  return ostr;
+}
+
+std::ostream & operator<< (std::ostream & ostr, 
+                           const TASK_SCENARIOS & ts)
+{
+  ostr << "{";
+  for (TASK_SCENARIOS::const_iterator it = ts.begin ();
+       it != ts.end ();
+       ++it)
+    {
+      ostr << *it << "| ";
+    }
+  ostr << "}";
+
+  return ostr;  
+}

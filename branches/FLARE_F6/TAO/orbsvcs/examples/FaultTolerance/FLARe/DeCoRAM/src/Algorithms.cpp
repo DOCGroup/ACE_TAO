@@ -14,6 +14,24 @@
 #include <sstream>
 #include "Algorithms.h"
 
+unsigned int extract_rank (const Taskname & taskname)
+{
+  unsigned int rank = 0;
+  size_t first_underscore = taskname.find_first_of ("_");
+
+  if (first_underscore != std::string::npos)
+    {
+      std::string rankstring = taskname.substr (first_underscore + 1);
+
+      if (!rankstring.empty ())
+        {
+          rank = atoi (rankstring.c_str ());
+        }
+    }
+
+  return rank;
+}
+
 PROCESSOR_LIST create_processors (unsigned long count)
 {
   PROCESSOR_LIST procs;
@@ -52,7 +70,7 @@ std::ostream & operator<< (std::ostream & ostr, const Task & t)
        << t.period
        << ","
        << t.sync_time
-//       << (t.role == PRIMARY ? ",p" : ",b")
+       << (t.role == PRIMARY ? ",p" : ",b")
        << ")";
 
   return ostr;

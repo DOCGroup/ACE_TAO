@@ -19,6 +19,8 @@
 typedef std::pair <Processor, Task> TASK_POSITION;
 typedef std::vector <TASK_POSITION> TASK_POSITIONS;
 typedef std::map <Taskname, TASK_POSITIONS> REPLICA_GROUPS;
+typedef std::list<PROCESSOR_SET> PROCESSOR_SETS;
+typedef std::list<TASK_LIST> TASK_SCENARIOS;
 
 class Scheduler : public std::unary_function <Task, 
                                               ScheduleResult>
@@ -98,5 +100,11 @@ std::ostream & operator<< (std::ostream & ostr,
 
 std::ostream & operator<< (std::ostream & ostr, 
                            const REPLICA_GROUPS & rg);
+
+std::ostream & operator<< (std::ostream & ostr, 
+                           const PROCESSOR_SETS & ps);
+
+std::ostream & operator<< (std::ostream & ostr, 
+                           const TASK_SCENARIOS & ts);
 
 #endif /* SCHEDULER_H_ */
