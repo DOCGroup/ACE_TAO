@@ -25,7 +25,7 @@ for TASK_NUMBER in 10 20 40 80 160; do \
     -l $PERIOD_LOWER \
     -s $SS_UPPER \
     -z $SS_LOWER > ./$DATA_DIR/$TASK_NUMBER-tasks.input && \
-  for ALGORITHM in bftrmff sftrmff eftrmff rftrmff; do \
+  for ALGORITHM in aftrmff sftrmff uftrmff rftrmff; do \
     echo "run $ALGORITHM for $TASK_NUMBER tasks..." && \
     $DECORAM_BIN/$ALGORITHM \
       ./$DATA_DIR/$TASK_NUMBER-tasks.input \
