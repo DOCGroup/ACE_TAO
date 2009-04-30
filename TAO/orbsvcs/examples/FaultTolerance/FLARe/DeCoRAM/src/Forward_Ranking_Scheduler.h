@@ -18,26 +18,6 @@
 typedef std::map <Taskname, PROCESSOR_SET> FAILURE_MAP;
 
 /**
- * @class ReplicaFinder
- *
- * @brief Functor that uses the replica group to determine the
- *        processors that need to fail in order for a given backup
- *        task to become active
- */
-class ReplicaFinder : public std::unary_function <Task,
-                                                  PROCESSOR_SET>
-{
-public:
-  ReplicaFinder (const REPLICA_GROUPS & rep_groups);
-
-  PROCESSOR_SET operator () (const Task & task);
-
-private:
-  const REPLICA_GROUPS rep_groups_;
-  ProcessorPicker processor_picker_;
-};
-
-/**
  * @class FailureMapFinder
  *
  * @brief Functor that uses the replica group to determine the
@@ -86,10 +66,8 @@ private:
                                      const PROCESSOR_SET & exchangeable,
                                      unsigned int failure_number);
 
-  TASK_SCENARIOS activate_tasks (const TASK_LIST & tasks,
-                                 const PROCESSOR_SETS & failures);
-
-  double accumulate_wcrt (const TASK_SCENARIOS & scenarios);
+  double accumulate_wcrt (const TASK_LIST & tasks,
+                          const PROCESSOR_SETS & scenarios);
 
 private:
   FAILURE_MAP failure_map_;

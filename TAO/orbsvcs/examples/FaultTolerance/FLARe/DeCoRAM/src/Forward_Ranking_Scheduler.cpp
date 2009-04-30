@@ -12,33 +12,8 @@
 
 #include <numeric>
 #include "Forward_Ranking_Scheduler.h"
+#include "FailureAwareWCRT.h"
 #include "Combination_T.h"
-#include "CTT_Enhanced.h"
-
-ReplicaFinder::ReplicaFinder (const REPLICA_GROUPS & rep_groups)
-  : rep_groups_ (rep_groups) 
-{
-}
-
-PROCESSOR_SET 
-ReplicaFinder::operator () (const Task & task)
-{
-  PROCESSOR_SET result;
-  
-  REPLICA_GROUPS::const_iterator replicas = 
-    rep_groups_.find (primary_name (task));
-  
-  if (replicas != rep_groups_.end ())
-    {
-      std::transform (replicas->second.begin (),
-                      replicas->second.begin () + task.rank,
-                      std::inserter (result,
-                                     result.begin ()),
-                      processor_picker_);
-    }
-  
-  return result;
-}
 
 FailureMapFinder::FailureMapFinder (const FAILURE_MAP & failure_map)
   : failure_map_ (failure_map)
@@ -106,13 +81,8 @@ Forward_Ranking_Scheduler::schedule_task (const Task & task,
 
   TRACE ("Relevant Failure Scenarios: " << failure_scenarios);
 
-  TASK_SCENARIOS activation_scenarios = 
-    this->activate_tasks (local_tasks,
-                          failure_scenarios);
-
-  TRACE ("Task Scenarios: " << activation_scenarios);
-
-  double wcrt = this->accumulate_wcrt (activation_scenarios);
+  double wcrt = this->accumulate_wcrt (local_tasks,
+                                       failure_scenarios);
 
   TRACE ("Maximum wcrt: " << wcrt);
 
@@ -278,123 +248,15 @@ Forward_Ranking_Scheduler::permute_processors (
   return failure_sets;
 }
 
-class ActivateFailedTask : public std::unary_function <PROCESSOR_SET,
-                                                       Task>
-{
-public:
-  ActivateFailedTask (const PROCESSOR_SET & failures,
-                      const REPLICA_GROUPS & rep_groups)
-    : failures_ (failures),      
-      rep_groups_ (rep_groups),
-      find_replicas_ (rep_groups) {}
-
-  Task operator () (const Task & task)
-  {
-    // check in the replica map if all previous tasks get activated
-    // and switch the task to primary if this is the case
-    PROCESSOR_SET necessary_failures = find_replicas_ (task);
-
-    PROCESSOR_SET difference;
-    std::set_intersection (failures_.begin (),
-                           failures_.end (),
-                           necessary_failures.begin (),
-                           necessary_failures.end (),
-                           std::inserter (difference,
-                                          difference.begin ()));
-
-    // If all necessary processors are failing, make the task primary.
-    // This is the case if all necessary_failures are contained in the
-    // difference set.
-    if (difference.size () == necessary_failures.size ())
-      return convert_ (task);
-
-    return task;
-  }
-
-private:
-  const PROCESSOR_SET & failures_;
-  const REPLICA_GROUPS & rep_groups_;
-  PrimaryConversion convert_;
-  ReplicaFinder find_replicas_;
-};
-
-class ActivateFailedTasks : public std::unary_function <PROCESSOR_SET,
-                                                        TASK_LIST>
-{
-public:
-  ActivateFailedTasks (const TASK_LIST & tasks,
-                       const REPLICA_GROUPS & rep_groups)
-    : tasks_ (tasks),
-      rep_groups_ (rep_groups){}
-
-  TASK_LIST operator () (const PROCESSOR_SET & scenario)
-  {
-    TASK_LIST result;
-
-    // for each backup check whether it is activated
-    std::transform (tasks_.begin (),
-                    tasks_.end (),
-                    std::inserter (result,
-                                   result.begin ()),
-                    ActivateFailedTask (scenario,
-                                        rep_groups_));
-
-    return result;
-  }
-
-private:
-  const TASK_LIST & tasks_;
-  const REPLICA_GROUPS & rep_groups_;
-};
-
-TASK_SCENARIOS 
-Forward_Ranking_Scheduler::activate_tasks (const TASK_LIST & tasks,
-                                           const PROCESSOR_SETS & failures)
-{
-  TASK_SCENARIOS result;
-
-  // add an empty one for the primary case
-  result.push_back (tasks);
-
-  // add a case for each failure scenario
-  std::transform (failures.begin (),
-                  failures.end (),
-                  std::inserter (result,
-                                 result.begin ()),
-                  ActivateFailedTasks (tasks,
-                                       replica_groups_));
-
-  return result;
-}
-
-class WCRTAccumulator : public std::binary_function <double,
-                                                     TASK_LIST,
-                                                     double>
-{
-public:
-  double operator () (double previous,
-                      const TASK_LIST & tasks)
-  {
-    double result = ctt_ (tasks);
-
-    if ((result > .0) && (previous != .0))
-      return std::max(result,
-                      previous);
-    else
-      return .0;
-  }
-
-private:
-  CTT_Enhanced ctt_;
-};
-
 double
-Forward_Ranking_Scheduler::accumulate_wcrt (const TASK_SCENARIOS & scenarios)
+Forward_Ranking_Scheduler::accumulate_wcrt (const TASK_LIST & tasks,
+                                            const PROCESSOR_SETS & scenarios)
 {
   return std::accumulate (scenarios.begin (),
                           scenarios.end (),
                           -1.0,
-                          WCRTAccumulator ());
+                          FailureAwareWCRT (tasks,
+                                            replica_groups_));
 }
 
 std::ostream & operator<< (std::ostream & ostr, 

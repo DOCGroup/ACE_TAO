@@ -17,6 +17,8 @@
 #include "Scheduler.h"
 #include "CTT_Enhanced.h"
 #include "CTT_Basic.h"
+#include "FailureAwareWCRT.h"
+#include "Combination_T.h"
 #include <ace/Get_Opt.h>
 
 std::string filename = "test.sd"; // filename of task list input
@@ -31,8 +33,10 @@ class ScheduleChecker : public std::binary_function <double,
 {
 public:
   ScheduleChecker (const SCHEDULE & schedule)
-    : schedule_ (schedule)
+    : schedule_ (schedule)      
   {
+    max_rank_ = this->max_rank ();
+
     // build replica_groups data structure
     for (SCHEDULE::const_iterator sched_it = schedule.begin ();
          sched_it != schedule.end ();
@@ -66,9 +70,13 @@ public:
   {
     PROCESSOR_SETS scenarios = 
       this->calculate_failure_scenarions (entry.first,
-                                          this->max_rank ());
+                                          max_rank_);
 
-    return .0;
+    return std::accumulate (scenarios.begin (),
+                            scenarios.end (),
+                            -1.0,
+                            FailureAwareWCRT (entry.second,
+                                              replica_groups_));
   }
 
 private:
@@ -77,6 +85,41 @@ private:
   {
     PROCESSOR_SETS result;
     PROCESSOR_LIST all_processors = get_processors (schedule_, true);
+
+    // remove current processor
+    PROCESSOR_LIST::iterator myprocessor = std::find (all_processors.begin (),
+                                                      all_processors.end (),
+                                                      processor);
+    
+    all_processors.erase (myprocessor);
+
+    unsigned int tupel_size = std::min (consistency_level,
+                                        (unsigned int) all_processors.size ());
+
+    PROCESSOR_LIST combination;
+    PROCESSOR_LIST::iterator it = all_processors.begin ();
+    for (unsigned int c_index = 0; 
+         c_index < tupel_size; 
+         ++c_index, ++it)
+      {
+        combination.push_back (*it);
+      }
+
+    do
+      {
+        PROCESSOR_SET set;
+        // add a permutation of the relevant failures
+        std::copy (combination.begin (),
+                   combination.end (),
+                   std::inserter (set,
+                                  set.begin ()));
+
+        result.push_back (set);
+      }
+    while (next_combination (all_processors.begin (),
+                             all_processors.end (),
+                             combination.begin (),
+                             combination.end ()));
 
     return result;
   }
@@ -104,6 +147,7 @@ private:
 private:
   const SCHEDULE & schedule_;
   REPLICA_GROUPS replica_groups_;
+  unsigned int max_rank_;
 };
 
 static int
@@ -199,17 +243,23 @@ int main (int argc, char *argv[])
 
       SCHEDULE min_schedule;
       SCHEDULE::const_iterator schedule_it = schedule.begin ();
-      for (unsigned long i = 0; i < usage; ++i)
+      for (unsigned long i = 0; i < usage; ++i, ++schedule_it)
         {
           min_schedule.insert (*schedule_it);
         }
 
-      std::map <Processor, double> wcrts;
-
-      double wcrt = std::accumulate (min_schedule.begin (),
-                                     min_schedule.end (),
-                                     -1.0,
-                                     ScheduleChecker (min_schedule));
+      ScheduleChecker checker (min_schedule);
+      double wcrt = -1.0;
+      for (SCHEDULE::iterator it = min_schedule.begin ();
+           it != min_schedule.end ();
+           ++it)
+        {
+          wcrt = checker (wcrt, *it);
+          if (wcrt > .0)
+            DBG_OUT (it->first << ": " << "(" << wcrt << "," << (--(it->second.end ()))->period << ")");
+          else
+            DBG_OUT (it->first << ": not schedulable");
+        }
       
       return wcrt > .0;
     } // end else counting_mode not true
