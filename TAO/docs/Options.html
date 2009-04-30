@@ -879,6 +879,12 @@ run as a background process. Note, that this changes the working directory to
 be the root directory "/". This especially affects relative paths specified at the command line.
 This option is only meaningful on OS platforms that support daemonization.</td>
       </tr>
+      <tr>
+        <td><code>-ORBForwardInvocationOnObjectNotExist</code> <em>boolean (0|1)</em></td>
+        <td>If this option is 1, the ORB forwards the request to next available profile when 
+        receiving OBJECT_NOT_EXIST exception reply. The default is <CODE>0</CODE>(disabled).  
+        </td>
+      </tr>
     </tbody>
   </table>
   </p>
