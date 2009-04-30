@@ -1,14 +1,21 @@
+Thu Apr 30 21:31:11 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp:
+
+          This test uses an arbitrary constant from the PortableServer module
+          so we'll use one that's present in CORBA/e Compact configurations.
+
 Thu Apr 30 18:35:47 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * tao/Synch_Invocation.cpp:
 
           Moved the strcmp for OBJECT_NOT_EXIST to if condition instead of outside
           of if statement to improve the performance a little bit.
-          
+
         * docs/Options.html:
 
           Added description for -ORBForwardInvocationOnObjectNotExist.
-          
+
 Wed Apr 29 13:18:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Makefile.am:
