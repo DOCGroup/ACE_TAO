@@ -25,7 +25,7 @@ $DECORAM_BIN/tgen \
   -z $SS_LOWER > ./$DATA_DIR/tasks.input
 
 for BACKUP_NO in 0 1 2 3 4 5; do \
-  for ALGORITHM in bftrmff eftrmff rftrmff sftrmff; do
+  for ALGORITHM in aftrmff uftrmff rftrmff sftrmff; do
     echo "run $ALGORITHM for $BACKUP_NO backups..." && \
     $DECORAM_BIN/$ALGORITHM \
       ./$DATA_DIR/tasks.input \

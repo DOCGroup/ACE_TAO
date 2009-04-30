@@ -9,7 +9,7 @@ if [ ! -d ./$RESULT_DIR ]; then mkdir -p ./$RESULT_DIR; fi
 rm ./$RESULT_DIR/*.dat
 
 for TASK_NUMBER in 10 20 40 80 160; do \
-  for ALGORITHM in bftrmff sftrmff eftrmff rftrmff pftrmff; do \
+  for ALGORITHM in aftrmff sftrmff uftrmff rftrmff pftrmff; do \
     echo "count processors used by $ALGORITHM for $TASK_NUMBER tasks..." && \
     $DECORAM_BIN/scheck -c -f ./$DATA_DIR/$ALGORITHM-$TASK_NUMBER.txt >> ./$RESULT_DIR/$EXPERIMENT_NAME-$ALGORITHM.dat; 
   done;\

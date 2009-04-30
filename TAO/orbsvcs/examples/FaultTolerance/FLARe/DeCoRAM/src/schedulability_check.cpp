@@ -14,7 +14,7 @@
 #include <sstream>
 #include <iostream>
 #include <numeric>
-#include "Schedule.h"
+#include "Scheduler.h"
 #include "CTT_Enhanced.h"
 #include "CTT_Basic.h"
 #include <ace/Get_Opt.h>
@@ -23,6 +23,53 @@ std::string filename = "test.sd"; // filename of task list input
 bool counting_mode = false;
 bool average_mode = false;
 bool check_overbooking = false;
+
+class ScheduleChecker : public std::binary_function <double,
+                                                     SCHEDULE::value_type,
+                                                     double>
+{
+public:
+  ScheduleChecker (const SCHEDULE & schedule)
+    : schedule_ (schedule)
+  {
+    // build replica_groups data structure
+    for (SCHEDULE::const_iterator sched_it = schedule.begin ();
+         sched_it != schedule.end ();
+         ++sched_it)
+      {
+        Processor processor = sched_it->first;
+        for (TASK_LIST::const_iterator task_it = sched_it->second.begin ();
+             task_it != sched_it->second.end ();
+             ++task_it)
+          {
+            REPLICA_GROUPS::iterator rep_it = 
+              replica_groups_.find (primary_name (*task_it));
+
+            TASK_POSITION position (processor, *task_it);
+            if (rep_it == replica_groups_.end ())
+              {
+                TASK_POSITIONS entry;
+                entry.push_back (position);
+                replica_groups_[primary_name (*task_it)] = entry;
+              }
+            else
+              {
+                replica_groups_[
+                  primary_name (*task_it)].push_back (position);
+              }
+          }
+      }
+  }
+
+  double operator () (double previous, const SCHEDULE::value_type & entry)
+  {
+    return .0;
+  }
+
+private:
+  const SCHEDULE & schedule_;
+  REPLICA_GROUPS replica_groups_;
+};
 
 static int
 parse_args (int argc, char *argv[])
@@ -113,41 +160,23 @@ int main (int argc, char *argv[])
     }
   else
     {
-      std::auto_ptr <CTT_Algorithm> ctt;
-      if (check_overbooking)
-        ctt.reset (new CTT_Basic ());
-      else
-        ctt.reset (new CTT_Enhanced ());
+      unsigned long usage = processor_usage (schedule);
 
-      int status = 0;
-      double wcrt = 0;
-      double period = 0;
-
-      for (SCHEDULE::iterator it = schedule.begin ();
-           it != schedule.end ();
-           ++it)
+      SCHEDULE min_schedule;
+      SCHEDULE::const_iterator schedule_it = schedule.begin ();
+      for (unsigned long i = 0; i < usage; ++i)
         {
-          std::cout << it->first << ": ";
-          wcrt = (*ctt) (it->second);
-
-          if (wcrt > 0)
-            {
-              period = it->second.back ().period;
-
-              std::cout << wcrt << " / "
-                        << period;
-            }
-          else
-            {
-              std::cout << "not schedulable";
-            }
-          std::cout << std::endl;
-
-          if ((wcrt > period) || (wcrt == 0))
-            ++status;
+          min_schedule.insert (*schedule_it);
         }
+
+      std::map <Processor, double> wcrts;
+
+      double wcrt = std::accumulate (min_schedule.begin (),
+                                     min_schedule.end (),
+                                     -1.0,
+                                     ScheduleChecker (min_schedule));
       
-        return status;
+      return wcrt > .0;
     } // end else counting_mode not true
 
   return 0;
