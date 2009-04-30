@@ -70,7 +70,7 @@ std::ostream & operator<< (std::ostream & ostr, const Task & t)
        << t.period
        << ","
        << t.sync_time
-       << (t.role == PRIMARY ? ",p" : ",b")
+//       << (t.role == PRIMARY ? ",p" : ",b")
        << ")";
 
   return ostr;

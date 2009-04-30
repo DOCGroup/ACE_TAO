@@ -91,6 +91,26 @@ public:
   Processor operator () (const TASK_POSITIONS::value_type & entry);
 };
 
+/**
+ * @class ReplicaFinder
+ *
+ * @brief Functor that uses the replica group to determine the
+ *        processors that need to fail in order for a given backup
+ *        task to become active
+ */
+class ReplicaFinder : public std::unary_function <Task,
+                                                  PROCESSOR_SET>
+{
+public:
+  ReplicaFinder (const REPLICA_GROUPS & rep_groups);
+
+  PROCESSOR_SET operator () (const Task & task);
+
+private:
+  const REPLICA_GROUPS rep_groups_;
+  ProcessorPicker processor_picker_;
+};
+
 // streaming operators for used data structures
 std::ostream & operator<< (std::ostream & ostr, 
                            const TASK_POSITION & tp);

@@ -97,17 +97,42 @@ ProcessorNameComparison::ProcessorNameComparison (const Processor & p)
 {
 }
 
+bool
+ProcessorNameComparison::operator () (bool equal, 
+                                      const TASK_POSITIONS::value_type & pos)
+{
+  return (equal || (pos.first.compare (p_) == 0));
+}
+
 Processor 
 ProcessorPicker::operator () (const TASK_POSITIONS::value_type & entry)
 {
   return entry.first;
 }
 
-bool
-ProcessorNameComparison::operator () (bool equal, 
-                                      const TASK_POSITIONS::value_type & pos)
+ReplicaFinder::ReplicaFinder (const REPLICA_GROUPS & rep_groups)
+  : rep_groups_ (rep_groups) 
 {
-  return (equal || (pos.first.compare (p_) == 0));
+}
+
+PROCESSOR_SET 
+ReplicaFinder::operator () (const Task & task)
+{
+  PROCESSOR_SET result;
+  
+  REPLICA_GROUPS::const_iterator replicas = 
+    rep_groups_.find (primary_name (task));
+  
+  if (replicas != rep_groups_.end ())
+    {
+      std::transform (replicas->second.begin (),
+                      replicas->second.begin () + task.rank,
+                      std::inserter (result,
+                                     result.begin ()),
+                      processor_picker_);
+    }
+  
+  return result;
 }
 
 std::ostream & operator<< (std::ostream & ostr, 
