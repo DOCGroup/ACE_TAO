@@ -68,15 +68,19 @@ public:
 
   double operator () (double previous, const SCHEDULE::value_type & entry)
   {
+    if (previous == .0)
+      return .0;
+
     PROCESSOR_SETS scenarios = 
       this->calculate_failure_scenarions (entry.first,
                                           max_rank_);
 
-    return std::accumulate (scenarios.begin (),
-                            scenarios.end (),
-                            -1.0,
-                            FailureAwareWCRT (entry.second,
-                                              replica_groups_));
+    return std::max(std::accumulate (scenarios.begin (),
+                                     scenarios.end (),
+                                     -1.0,
+                                     FailureAwareWCRT (entry.second,
+                                                       replica_groups_)),
+                    previous);
   }
 
 private:

@@ -100,7 +100,7 @@ Forward_Ranking_Scheduler::update_schedule (const Task & task,
 
 void 
 Forward_Ranking_Scheduler::update_failure_map (const Task & task,
-                                               const Processor & processor)
+                                               const Processor & /* processor */)
 {
   PROCESSOR_SET proc_dependencies;
 
