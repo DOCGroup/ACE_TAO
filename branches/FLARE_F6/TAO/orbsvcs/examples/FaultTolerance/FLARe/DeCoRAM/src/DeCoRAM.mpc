@@ -178,7 +178,7 @@ project (forward_ranking_ftrmff) {
   exename = frftrmff
   exeout = ../bin
 
-  macros += DO_DEBUG DO_TRACE
+  macros += DO_DEBUG
 
   Source_Files {
     Algorithms.cpp
