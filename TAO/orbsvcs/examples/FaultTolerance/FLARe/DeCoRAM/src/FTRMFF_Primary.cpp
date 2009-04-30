@@ -78,7 +78,7 @@ FTRMFF_Primary_Algorithm::operator () (const TASK_LIST & tasks)
       if (wcrt <= .0)
         {
           // could not schedule task
-          ScheduleProgress pg = {it->name, 1};
+          ScheduleProgress pg = {*it, 1};
           unschedulable_.push_back (pg);
         }
     }
