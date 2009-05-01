@@ -1,3 +1,8 @@
+Fri May  1 12:27:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Default_Constants.h:
+          ACE_DEFAULT_MAP_SIZE and ACE_DEFAULT_TIMERS shouldn't be zero
+
 Fri May  1 12:19:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/INET_Addr_Test_IPV6.cpp:
