@@ -928,7 +928,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   if (table_size == 0)
     {
-      ACE_ERROR ((LM_ERROR, "ERROR: Table size is 0\n"));
+      ACE_ERROR ((LM_ERROR, "LM_ERROR: Table size is 0\n"));
       ++result;
     }
   else
