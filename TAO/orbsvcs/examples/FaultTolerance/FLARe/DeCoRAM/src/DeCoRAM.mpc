@@ -106,8 +106,8 @@ project (worstfit_ranked_ftrmff) {
     OptimizedWCRT.cpp
     RankedWCRT.cpp
     Simple_Ranking.cpp
-    FTRMFF_Bestfit.cpp
-    bestfit_ftrmff.cpp
+    FTRMFF_Worstfit.cpp
+    worstfit_ftrmff.cpp
   }
 }
 
@@ -128,7 +128,7 @@ project (binary_ranked_ftrmff) {
     OptimizedWCRT.cpp
     RankedWCRT.cpp
     Simple_Ranking.cpp
-    FTRMFF_Bestfit.cpp
+    FTRMFF_Worstfit.cpp
     FTRMFF_Binary_Search.cpp
     FTRMFF_Basic.cpp
     binary_ftrmff.cpp

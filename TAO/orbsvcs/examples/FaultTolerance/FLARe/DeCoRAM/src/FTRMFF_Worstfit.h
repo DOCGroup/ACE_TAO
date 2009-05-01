@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    FTRMFF_Bestfit.h
+ *  @file    FTRMFF_Worstfit.h
  *
  *  $Id$
  *
@@ -10,28 +10,28 @@
  */
 //=============================================================================
 
-#ifndef FTRMFF_BESTFIT_ALGORITHM_H_
-#define FTRMFF_BESTFIT_ALGORITHM_H_
+#ifndef FTRMFF_WORSTFIT_ALGORITHM_H_
+#define FTRMFF_WORSTFIT_ALGORITHM_H_
 
 #include "Schedule.h"
 
-class FTRMFF_Bestfit : public FTRMFF_Algorithm
+class FTRMFF_Worstfit : public FTRMFF_Algorithm
 {
 public:
-  virtual ~FTRMFF_Bestfit ();
+  virtual ~FTRMFF_Worstfit ();
 
   virtual FTRMFF_Output operator () (const FTRMFF_Input & input);
 };
 
-class FTRMFF_Bestfit_Algorithm : 
+class FTRMFF_Worstfit_Algorithm : 
   public std::unary_function <TASK_LIST,
                               SCHEDULING_MAP>
 {
 public:
-  FTRMFF_Bestfit_Algorithm (const PROCESSOR_LIST & processors,
+  FTRMFF_Worstfit_Algorithm (const PROCESSOR_LIST & processors,
                             unsigned int consistency_level);
 
-  virtual ~FTRMFF_Bestfit_Algorithm ();
+  virtual ~FTRMFF_Worstfit_Algorithm ();
 
   virtual SCHEDULING_MAP operator () (const TASK_LIST & tasks);
 
@@ -45,4 +45,4 @@ private:
   unsigned int consistency_level_;
 };
 
-#endif /* FTRMFF_BESTFIT_ALGORITHM_H_ */
+#endif /* FTRMFF_WORSTFIT_ALGORITHM_H_ */
