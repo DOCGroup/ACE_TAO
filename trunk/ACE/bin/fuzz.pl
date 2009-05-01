@@ -137,7 +137,7 @@ sub store_file ($)
     elsif ($name =~ /\.(mpc|mwc|mpb|mpt)$/i) {
         push @files_mpc, ($name);
     }
-    elsif ($name =~ /\.(icc|ncb|opt|zip)$/i) {
+    elsif ($name =~ /\.(icc|ncb|zip)$/i) {
         push @files_noncvs, ($name);
     }
 }
