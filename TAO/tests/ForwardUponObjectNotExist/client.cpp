@@ -9,7 +9,7 @@ ACE_RCSID(Forwarding, client, "$Id$")
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 1;
 int do_shutdown = 0;
-static const char corbaloc_prefix[] = "corbaloc:";
+static const ACE_TCHAR corbaloc_prefix[] = ACE_TEXT("corbaloc:");
 int expected_object_not_exist = 0;
 
 int
