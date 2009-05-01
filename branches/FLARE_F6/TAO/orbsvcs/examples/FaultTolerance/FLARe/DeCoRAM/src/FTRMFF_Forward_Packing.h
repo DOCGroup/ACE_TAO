@@ -14,6 +14,7 @@
 #define FTRMFF_FORWARD_PACKING_ALGORITHM_H_
 
 #include "Scheduler.h"
+#include <memory>
 
 class FTRMFF_Forward_Packing : public FTRMFF_Algorithm
 {
