@@ -1,3 +1,15 @@
+Fri May  1 12:19:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/INET_Addr_Test_IPV6.cpp:
+          No need for ACE_UNUSED_ARG
+
+        * tests/Map_Manager_Test.cpp:
+          Use ACE_TEST_ASSERT and added some more checks
+
+        * tests/test_config.h:
+          Removed ghs workaround and check return value of log_msg open
+          call
+
 Fri May  1 11:43:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Event_Handler.cpp:
