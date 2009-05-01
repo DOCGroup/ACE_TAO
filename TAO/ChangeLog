@@ -1,3 +1,13 @@
+Fri May  1 08:09:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Bug_3646c_Regression/*:
+          New test that where we use the TAO_Notify_Service to create
+          multiple channels using service config. This closes enhancement
+          issue 3646
+
+        * bin/tao_other_tests.lst:
+          Added new test
+
 Fri May  1 07:05:29 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * tests/ForwardUponObjectNotExist/ForwardUponObjectNotExist.mpc:
@@ -11,8 +21,8 @@ Fri May  1 07:05:29 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * tests/ForwardUponObjectNotExist/test_i.cpp:
 
           Added test for -ORBForwardInvocationOnObjectNotExist option
-          and feature without using any service. 
-      
+          and feature without using any service.
+
         * bin/tao_orb_tests.lst:
 
           Added ForwardUponObjectNotExist test.
