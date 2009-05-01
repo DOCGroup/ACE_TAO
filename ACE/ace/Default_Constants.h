@@ -310,6 +310,10 @@
 #   define ACE_DEFAULT_MAP_SIZE 1024
 # endif /* ACE_DEFAULT_MAP_SIZE */
 
+# if defined (ACE_DEFAULT_MAP_SIZE) && (ACE_DEFAULT_MAP_SIZE == 0)
+#  error ACE_DEFAULT_MAP_SIZE should not be zero
+# endif /* ACE_DEFAULT_MAP_SIZE */
+
 // Defaults for ACE Timer Wheel
 # if !defined (ACE_DEFAULT_TIMER_WHEEL_SIZE)
 #   define ACE_DEFAULT_TIMER_WHEEL_SIZE 1024
@@ -461,9 +465,13 @@
 
 // Default number of ACE_Event_Handlers supported by
 // ACE_Timer_Heap.
-# if !defined (ACE_DEFAULT_TIMERS)
-#   define ACE_DEFAULT_TIMERS _POSIX_TIMER_MAX
-# endif /* ACE_DEFAULT_TIMERS */
+#if !defined (ACE_DEFAULT_TIMERS)
+#  define ACE_DEFAULT_TIMERS _POSIX_TIMER_MAX
+#endif /* ACE_DEFAULT_TIMERS */
+
+#if defined (ACE_DEFAULT_TIMERS) && (ACE_DEFAULT_TIMERS == 0)
+#error ACE_DEFAULT_TIMERS should not be zero
+#endif
 
 #if defined (ACE_WIN32)
 #  define ACE_PLATFORM_A "Win32"
