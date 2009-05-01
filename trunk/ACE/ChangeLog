@@ -1,3 +1,14 @@
+Fri May  1 07:37:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-rpmlintrc.txt:
+          Fixed line wrapper
+
+        * rpmbuild/ace-tao.txt:
+          Removed, we are not maintaining this file anymore
+
+        * rpmbuild/README:
+          Small updates
+
 Fri May  1 07:31:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/*:
