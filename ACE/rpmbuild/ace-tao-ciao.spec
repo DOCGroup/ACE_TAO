@@ -68,9 +68,6 @@ URL:          http://www.cs.wustl.edu/~schmidt/ACE.html
 License:      DOC License
 Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-src-%{ACEVER}.tar.bz2
 Source1:      ace-tao-rpmlintrc
-## Source1: ace-tao-etc.tar.gz
-## Source2: ace-tao-macros.patch
-## Patch0: ace-tao-config.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %if 0%{?centos_version}
@@ -1299,17 +1296,15 @@ install ${ACE_ROOT}/bin/tao_nslist %{buildroot}%{_bindir}/tao_nslist
 # ================================================================
 
 install -d %{buildroot}%{_sysconfdir}
-tar -jxvf ${ACE_ROOT}/rpmbuild/ace-tao-etc.tar.bz2 \
-        -C %{buildroot}%{_sysconfdir}
+cp -R ${ACE_ROOT}/rpmbuild/logrotate.d %{buildroot}%{_sysconfdir}/logrotate.d
+cp -R ${ACE_ROOT}/tao %{buildroot}%{_sysconfdir}/tao
 
 %if %{defined suse_version}
-tar -jxvf ${ACE_ROOT}/rpmbuild/ace-tao-init-suse.tar.bz2 \
-        -C %{buildroot}%{_sysconfdir}
+cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse %{buildroot}%{_sysconfdir}
 mkdir -p %{buildroot}%{_localstatedir}/adm
 mv %{buildroot}%{_sysconfdir}/fillup-templates %{buildroot}%{_localstatedir}/adm/
 %else
-tar -jxvf ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora.tar.bz2 \
-        -C %{buildroot}%{_sysconfdir}
+cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora %{buildroot}%{_sysconfdir}
 %endif
 
 %if %{defined suse_version}
