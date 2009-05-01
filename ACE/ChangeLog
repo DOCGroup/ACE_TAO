@@ -1,3 +1,8 @@
+Fri May  1 18:35:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp (add_to_argv):
+          Do nothing if the length of the string is zero
+
 Fri May  1 18:17:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
