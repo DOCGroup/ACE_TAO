@@ -703,8 +703,6 @@ def generate_workspaces (stage_dir):
 
     # Build option string for VC8 platforms
     ce_option = ' -name_modifier *_vc8_WinCE -features "uses_wchar=1,wince=1" '
-    ce_option += ' -value_template platforms=\'"Pocket PC 2003 (ARMV4)"\' '
-    ce_option += ' -value_template platforms+=\'"Smartphone 2003 (ARMV4)"\' '
     ce_option += ' -value_template platforms+=\'"Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"\' '
     ce_option += ' -value_template platforms+=\'"Windows Mobile 5.0 Smartphone SDK (ARMV4I)"\' '
     ce_option += ' -value_template platforms+=\'"Windows Mobile 6 Standard SDK (ARMV4I)"\' '
