@@ -24,13 +24,16 @@ public:
   FailureAwareWCRT (const TASK_LIST & tasks,
                     const REPLICA_GROUPS & rep_groups);
 
+  FailureAwareWCRT (const TASK_LIST & tasks,
+                    const ReplicaFinder & replica_finder);
+
   double operator () (double previous,
                       const PROCESSOR_SET & failures);
 
 private:
   CTT_Enhanced ctt_;
   TASK_LIST tasks_;
-  ReplicaFinder replica_finder_;
+  const ReplicaFinder & replica_finder_;
 };
 
 #endif /* FAILURE_AWARE_WCRT_H_ */

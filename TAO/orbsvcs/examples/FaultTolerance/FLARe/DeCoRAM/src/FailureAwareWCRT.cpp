@@ -19,6 +19,13 @@ FailureAwareWCRT::FailureAwareWCRT (const TASK_LIST & tasks,
 {
 }
 
+FailureAwareWCRT::FailureAwareWCRT (const TASK_LIST & tasks,
+                                    const ReplicaFinder & replica_finder)
+  : tasks_ (tasks),
+    replica_finder_ (replica_finder)
+{
+}
+
 double
 FailureAwareWCRT::operator () (double previous,
                                const PROCESSOR_SET & failures)

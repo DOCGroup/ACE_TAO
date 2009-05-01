@@ -104,10 +104,12 @@ class ReplicaFinder : public std::unary_function <Task,
 public:
   ReplicaFinder (const REPLICA_GROUPS & rep_groups);
 
-  PROCESSOR_SET operator () (const Task & task);
+  virtual ~ReplicaFinder (void);
+
+  virtual PROCESSOR_SET operator () (const Task & task) const;
 
 private:
-  const REPLICA_GROUPS rep_groups_;
+  const REPLICA_GROUPS & rep_groups_;
   ProcessorPicker processor_picker_;
 };
 
