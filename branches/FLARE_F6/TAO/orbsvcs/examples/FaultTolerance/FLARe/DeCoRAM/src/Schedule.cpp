@@ -75,6 +75,34 @@ create_tasks (const Task & task,
   return output;
 }
 
+TASK_LIST create_ranked_tasks (const Task & task,
+                               unsigned int backup_number)
+{
+  TASK_LIST tasks;
+
+  for (unsigned int i = 0; i <= backup_number; ++i)
+    {
+      Task t = task;
+      t.rank = i;
+      if (t.rank > 0)
+        {
+          t.role = BACKUP;
+
+          std::stringstream ss;
+          ss << t.name << "_" << i;
+          t.name = ss.str ();
+        }
+      else
+        {
+          t.role = PRIMARY;
+        }
+
+      tasks.push_back (t);
+    }
+
+  return tasks;
+}
+
 bool
 WCRTComparison::operator () (const ScheduleResult & r1,
                              const ScheduleResult & r2)
