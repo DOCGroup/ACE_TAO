@@ -14,6 +14,7 @@
 #include "CTT_Enhanced.h"
 #include "FTRMFF_Packing.h"
 #include "FTRMFF_Primary.h"
+#include <algorithm>
 
 FTRMFF_Packing::~FTRMFF_Packing ()
 {

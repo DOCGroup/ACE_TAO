@@ -15,6 +15,7 @@
 #include "Ranked_Scheduler.h"
 #include "Simple_Ranking.h"
 #include "Utilization_Ranking.h"
+#include <algorithm>
 
 FTRMFF_Ranked::~FTRMFF_Ranked ()
 {

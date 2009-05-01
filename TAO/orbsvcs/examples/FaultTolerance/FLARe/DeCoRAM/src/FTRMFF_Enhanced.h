@@ -14,6 +14,7 @@
 #define FTRMFF_ENHANCED_ALGORITHM_H_
 
 #include "Schedule.h"
+#include <memory>
 
 class FTRMFF_Enhanced : public FTRMFF_Algorithm
 {

@@ -12,6 +12,7 @@
 
 #include <sstream>
 #include "Utilization_Ranking.h"
+#include <algorithm>
 
 class WCRTOrdering : std::binary_function <ScheduleResult,
                                            ScheduleResult,

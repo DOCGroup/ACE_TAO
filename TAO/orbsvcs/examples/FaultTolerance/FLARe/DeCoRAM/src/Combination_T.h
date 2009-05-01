@@ -16,6 +16,8 @@
 #ifndef COMBINATION_T_H_
 #define COMBINATION_T_H_
 
+#include <algorithm>
+
 template <class ITERATOR>
 inline bool
 next_combination (ITERATOR base_begin,

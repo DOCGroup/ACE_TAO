@@ -12,6 +12,7 @@
 
 #include <sstream>
 #include "Simple_Ranking.h"
+#include <algorithm>
 
 Simple_Ranking::~Simple_Ranking ()
 {

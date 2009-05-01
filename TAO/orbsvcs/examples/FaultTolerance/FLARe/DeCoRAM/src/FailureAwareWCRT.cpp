@@ -11,6 +11,7 @@
 //=============================================================================
 
 #include "FailureAwareWCRT.h"
+#include <algorithm>
 
 FailureAwareWCRT::FailureAwareWCRT (const TASK_LIST & tasks,
                                     const REPLICA_GROUPS & rep_groups)

@@ -14,6 +14,7 @@
 #include "FTRMFF_Enhanced.h"
 #include "Multi_Failure_Scheduler.h"
 #include "Simple_Ranking.h"
+#include <algorithm>
 
 FTRMFF_Enhanced::~FTRMFF_Enhanced ()
 {
