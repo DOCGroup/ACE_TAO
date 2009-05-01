@@ -1301,8 +1301,6 @@ cp -R ${ACE_ROOT}/tao %{buildroot}%{_sysconfdir}/tao
 
 %if %{defined suse_version}
 cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse %{buildroot}%{_sysconfdir}
-mkdir -p %{buildroot}%{_localstatedir}/adm
-mv %{buildroot}%{_sysconfdir}/fillup-templates %{buildroot}%{_localstatedir}/adm/
 %else
 cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora %{buildroot}%{_sysconfdir}
 %endif
@@ -2371,7 +2369,7 @@ fi
 %if %{defined suse_version}
 %{_sysconfdir}/init.d/tao-cosnaming
 %{_sbindir}/rctao-cosnaming
-%{_localstatedir}/adm/fillup-templates/tao-cosnaming
+%{_sysconfdir}/tao/tao-cosnaming
 %else
 %{_sysconfdir}/rc.d/init.d/tao-cosnaming
 %config(noreplace) %{_sysconfdir}/tao/tao-cosnaming.opt
@@ -2400,7 +2398,7 @@ fi
 %if %{defined suse_version}
 %{_sysconfdir}/init.d/tao-cosevent
 %{_sbindir}/rctao-cosevent
-%{_localstatedir}/adm/fillup-templates/tao-cosevent
+%{_sysconfdir}/tao/tao-cosevent
 %else
 %{_sysconfdir}/rc.d/init.d/tao-cosevent
 %config(noreplace) %{_sysconfdir}/tao/tao-cosevent.opt
@@ -2427,7 +2425,7 @@ fi
 %if %{defined suse_version}
 %{_sysconfdir}/init.d/tao-cosnotification
 %{_sbindir}/rctao-cosnotification
-%{_localstatedir}/adm/fillup-templates/tao-cosnotification
+%{_sysconfdir}/tao/tao-cosnotification
 %else
 %{_sysconfdir}/rc.d/init.d/tao-cosnotification
 %config(noreplace) %{_sysconfdir}/tao/tao-cosnotification.opt
@@ -2455,7 +2453,7 @@ fi
 %if %{defined suse_version}
 %{_sysconfdir}/init.d/tao-costrading
 %{_sbindir}/rctao-costrading
-%{_localstatedir}/adm/fillup-templates/tao-costrading
+%{_sysconfdir}/tao/tao-costrading
 %else
 %{_sysconfdir}/rc.d/init.d/tao-costrading
 %config(noreplace) %{_sysconfdir}/tao/tao-costrading.opt
@@ -2482,7 +2480,7 @@ fi
 %if %{defined suse_version}
 %{_sysconfdir}/init.d/tao-rtevent
 %{_sbindir}/rctao-rtevent
-%{_localstatedir}/adm/fillup-templates/tao-rtevent
+%{_sysconfdir}/tao/tao-rtevent
 %else
 %{_sysconfdir}/rc.d/init.d/tao-rtevent
 %config(noreplace) %{_sysconfdir}/tao/tao-rtevent.opt
@@ -2509,7 +2507,7 @@ fi
 %if %{defined suse_version}
 %{_sysconfdir}/init.d/tao-cosconcurrency
 %{_sbindir}/rctao-cosconcurrency
-%{_localstatedir}/adm/fillup-templates/tao-cosconcurrency
+%{_sysconfdir}/tao/tao-cosconcurrency
 %else
 %{_sysconfdir}/rc.d/init.d/tao-cosconcurrency
 %config(noreplace) %{_sysconfdir}/tao/tao-cosconcurrency.opt
