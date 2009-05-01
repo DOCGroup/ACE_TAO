@@ -18,13 +18,16 @@
 #define ACE_DEFAULT_CONSTANTS_H
 #include /**/ "ace/pre.h"
 
-// Included just keep compilers that see #pragma dierctive first
+// Included just keep compilers that see #pragma directive first
 // happy.
 #include /**/ "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+// For _POSIX_TIMER_MAX
+#include "ace/os_include/os_limits.h"
 
 // Define the default constants for ACE.  Many of these are used for
 // the ACE tests and applications.  You can change these values by
@@ -465,12 +468,12 @@
 
 // Default number of ACE_Event_Handlers supported by
 // ACE_Timer_Heap.
-#if !defined (ACE_DEFAULT_TIMERS)
+#if !defined (ACE_DEFAULT_TIMERS) && defined (_POSIX_TIMER_MAX)
 #  define ACE_DEFAULT_TIMERS _POSIX_TIMER_MAX
 #endif /* ACE_DEFAULT_TIMERS */
 
-#if defined (ACE_DEFAULT_TIMERS) && (ACE_DEFAULT_TIMERS == 0)
-//#error ACE_DEFAULT_TIMERS should not be zero
+#if !defined (ACE_DEFAULT_TIMERS) || (defined (ACE_DEFAULT_TIMERS) && (ACE_DEFAULT_TIMERS == 0))
+#error ACE_DEFAULT_TIMERS should be defined and not be zero
 #endif /* ACE_DEFAULT_TIMERS */
 
 #if defined (ACE_WIN32)
