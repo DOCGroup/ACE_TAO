@@ -1,3 +1,8 @@
+Fri May  1 07:31:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/*:
+          Changed location of config files for suse
+
 Fri May  1 07:15:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/*:
