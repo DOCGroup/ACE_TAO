@@ -11,6 +11,7 @@
 //=============================================================================
 
 #include "Scheduler.h"
+#include <algorithm>
 
 Scheduler::Scheduler (const PROCESSOR_LIST & processors,
                       unsigned int max_failures)
