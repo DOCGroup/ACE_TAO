@@ -18,13 +18,9 @@
 class FTRMFF_Bestfit : public FTRMFF_Algorithm
 {
 public:
-  FTRMFF_Bestfit (const std::string & algorithm = "Bestfit");
-
   virtual ~FTRMFF_Bestfit ();
 
   virtual FTRMFF_Output operator () (const FTRMFF_Input & input);
-private:
-  std::string algorithm_;
 };
 
 class FTRMFF_Bestfit_Algorithm : 
@@ -33,8 +29,7 @@ class FTRMFF_Bestfit_Algorithm :
 {
 public:
   FTRMFF_Bestfit_Algorithm (const PROCESSOR_LIST & processors,
-                            unsigned int consistency_level,
-                            const std::string & scheduler);
+                            unsigned int consistency_level);
 
   virtual ~FTRMFF_Bestfit_Algorithm ();
 

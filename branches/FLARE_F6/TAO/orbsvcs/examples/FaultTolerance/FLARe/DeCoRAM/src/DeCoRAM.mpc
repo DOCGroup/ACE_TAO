@@ -219,7 +219,7 @@ project (schedulability_check) : acelib {
   exename = scheck
   exeout = ../bin
 
-  macros += DO_DEBUG 
+  macros += DO_DEBUG // DO_TRACE
 
   Source_Files {
     Algorithms.cpp

@@ -27,13 +27,14 @@ bool average_mode = false;
 bool check_overbooking = false;
 unsigned int consistency_level = 0;
 
-class ScheduleChecker : public std::binary_function <double,
-                                                     SCHEDULE::value_type,
-                                                     double>
+typedef std::map <Processor, FailureAwareWCRT> WCRT_MAP;
+
+class ScheduleChecker
 {
 public:
   ScheduleChecker (const SCHEDULE & schedule)
-    : schedule_ (schedule)      
+    : schedule_ (schedule),
+      replica_finder_ (replica_groups_)
   {
     max_rank_ = this->max_rank ();
 
@@ -63,41 +64,23 @@ public:
                   primary_name (*task_it)].push_back (position);
               }
           }
+
+        // fill wcrt_map
+        wcrt_map_.insert (std::pair <Processor, FailureAwareWCRT> (
+                             processor, 
+                             FailureAwareWCRT (sched_it->second,
+                                               replica_finder_)));
       }
+
+
+    
   }
 
-  double operator () (double previous, const SCHEDULE::value_type & entry)
+  int check_schedulability (void)
   {
-    if (previous == .0)
-      return .0;
-
-    PROCESSOR_SETS scenarios = 
-      this->calculate_failure_scenarions (entry.first,
-                                          max_rank_);
-
-    return std::max(std::accumulate (scenarios.begin (),
-                                     scenarios.end (),
-                                     -1.0,
-                                     FailureAwareWCRT (entry.second,
-                                                       replica_groups_)),
-                    previous);
-  }
-
-private:
-  PROCESSOR_SETS calculate_failure_scenarions (const Processor & processor,
-                                               unsigned int consistency_level)
-  {
-    PROCESSOR_SETS result;
     PROCESSOR_LIST all_processors = get_processors (schedule_, true);
 
-    // remove current processor
-    PROCESSOR_LIST::iterator myprocessor = std::find (all_processors.begin (),
-                                                      all_processors.end (),
-                                                      processor);
-    
-    all_processors.erase (myprocessor);
-
-    unsigned int tupel_size = std::min (consistency_level,
+    unsigned int tupel_size = std::min (max_rank_,
                                         (unsigned int) all_processors.size ());
 
     PROCESSOR_LIST combination;
@@ -112,22 +95,39 @@ private:
     do
       {
         PROCESSOR_SET set;
-        // add a permutation of the relevant failures
         std::copy (combination.begin (),
                    combination.end (),
                    std::inserter (set,
                                   set.begin ()));
+        
+        // check combination against each task;
+        for (WCRT_MAP::iterator wcrt_it = wcrt_map_.begin ();
+             wcrt_it != wcrt_map_.end ();
+             ++wcrt_it)
+          {
+            // ignore failure sets that contain the own processor
+            if (set.find (wcrt_it->first) != set.end ())              
+              continue;
 
-        result.push_back (set);
+            DBG_OUT ("checking " << wcrt_it->first << " with " << set);
+
+            double wcrt = (wcrt_it->second) (-1.0, set);
+            if (!(wcrt > .0))
+              {
+                DBG_OUT (wcrt_it->first << " not schedulable with " << set << ": " << wcrt);
+                return 1;
+              }
+          }
       }
     while (next_combination (all_processors.begin (),
                              all_processors.end (),
                              combination.begin (),
                              combination.end ()));
 
-    return result;
+    return 0;
   }
 
+private:
   unsigned int max_rank (void)
   {
     unsigned int max_rank = 0;
@@ -151,6 +151,8 @@ private:
 private:
   const SCHEDULE & schedule_;
   REPLICA_GROUPS replica_groups_;
+  ReplicaFinder replica_finder_;
+  WCRT_MAP wcrt_map_;
   unsigned int max_rank_;
 };
 
@@ -253,19 +255,8 @@ int main (int argc, char *argv[])
         }
 
       ScheduleChecker checker (min_schedule);
-      double wcrt = -1.0;
-      for (SCHEDULE::iterator it = min_schedule.begin ();
-           it != min_schedule.end ();
-           ++it)
-        {
-          wcrt = checker (wcrt, *it);
-          if (wcrt > .0)
-            DBG_OUT (it->first << ": " << "(" << wcrt << "," << (--(it->second.end ()))->period << ")");
-          else
-            DBG_OUT (it->first << ": not schedulable");
-        }
-      
-      return wcrt > .0;
+           
+      return checker.check_schedulability ();
     } // end else counting_mode not true
 
   return 0;
