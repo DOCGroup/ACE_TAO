@@ -153,7 +153,7 @@ project (backward_packing_ftrmff) {
   }
 }
 
-project (forward_packing_ftrmff) {
+project (forward_packing_ftrmff) : acelib {
 
   exename = fpftrmff
   exeout = ../bin
@@ -174,7 +174,7 @@ project (forward_packing_ftrmff) {
   }
 }
 
-project (forward_ranking_ftrmff) {
+project (forward_ranking_ftrmff) : acelib {
 
   exename = frftrmff
   exeout = ../bin

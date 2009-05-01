@@ -14,8 +14,14 @@
 #define FORWARD_RANKING_SCHEDULER_H_
 
 #include "Scheduler.h"
+#include <ace/Hash_Map_Manager_T.h>
+#include <ace/Null_Mutex.h>
 
-typedef std::map <Taskname, PROCESSOR_SET> FAILURE_MAP;
+typedef ACE_Hash_Map_Manager_Ex <ACE_CString, 
+                                 PROCESSOR_SET,
+                                 ACE_Hash <ACE_CString>,
+                                 ACE_Equal_To <ACE_CString>,
+                                 ACE_Null_Mutex> FAILURE_MAP;
 
 /**
  * @class FailureMapFinder
@@ -24,13 +30,13 @@ typedef std::map <Taskname, PROCESSOR_SET> FAILURE_MAP;
  *        processors that need to fail in order for a given backup
  *        task to become active
  */
-class FailureMapFinder : public std::unary_function <Task,
-                                                     PROCESSOR_SET>
+class FailureMapFinder : public ReplicaFinder
 {
 public:
-  FailureMapFinder (const FAILURE_MAP & failure_map);
+  FailureMapFinder (const REPLICA_GROUPS & rep_groups,
+                    const FAILURE_MAP & failure_map);
 
-  PROCESSOR_SET operator () (const Task & task);
+  virtual PROCESSOR_SET operator () (const Task & task) const;
 
 private:
   const FAILURE_MAP & failure_map_;
@@ -71,6 +77,7 @@ private:
 
 private:
   FAILURE_MAP failure_map_;
+  FailureMapFinder replica_finder_;
 };
 
 std::ostream & operator<< (std::ostream & ostr, 

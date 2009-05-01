@@ -115,8 +115,12 @@ ReplicaFinder::ReplicaFinder (const REPLICA_GROUPS & rep_groups)
 {
 }
 
+ReplicaFinder::~ReplicaFinder (void)
+{
+}
+
 PROCESSOR_SET 
-ReplicaFinder::operator () (const Task & task)
+ReplicaFinder::operator () (const Task & task) const
 {
   PROCESSOR_SET result;
   

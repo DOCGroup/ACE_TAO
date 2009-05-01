@@ -15,29 +15,36 @@
 #include "FailureAwareWCRT.h"
 #include "Combination_T.h"
 
-FailureMapFinder::FailureMapFinder (const FAILURE_MAP & failure_map)
-  : failure_map_ (failure_map)
+FailureMapFinder::FailureMapFinder (const REPLICA_GROUPS & rep_groups,
+                                    const FAILURE_MAP & failure_map)
+  : ReplicaFinder (rep_groups),
+    failure_map_ (failure_map)
 {
 }
 
 PROCESSOR_SET 
-FailureMapFinder::operator () (const Task & task)
+FailureMapFinder::operator () (const Task & task) const
 {
-  FAILURE_MAP::const_iterator it = 
-    failure_map_.find (task.name);
-
-  if (it != failure_map_.end ())
-    return it->second;
+  PROCESSOR_SET result;
+  if (failure_map_.find (task.name.c_str (),
+                         result) == 0)
+    {
+      TRACE (task);
+      return result;
+    }
   else
-    TRACE ("OOPS(" << task << ")");
-
-  return PROCESSOR_SET ();
+    {
+      TRACE (task << "delegate");
+      return this->ReplicaFinder::operator () (task);
+    }
 }
 
 Forward_Ranking_Scheduler::Forward_Ranking_Scheduler (
   const PROCESSOR_LIST & processors,
   unsigned int max_failures)
-  : Scheduler (processors, max_failures)
+  : Scheduler (processors, max_failures),
+    replica_finder_ (replica_groups_,
+                     failure_map_)
 {
 }
 
@@ -117,7 +124,7 @@ Forward_Ranking_Scheduler::update_failure_map (const Task & task,
         }
     }
 
-  failure_map_[task.name] = proc_dependencies;
+  failure_map_.bind (task.name.c_str (), proc_dependencies);
 
   TRACE ("Failure Map: " << failure_map_);
 }
@@ -139,9 +146,7 @@ Forward_Ranking_Scheduler::check_for_existing_replicas (
 PROCESSOR_SET
 Forward_Ranking_Scheduler::replica_processors (const Task & task)
 {
-  ReplicaFinder finder (replica_groups_);
-
-  return finder (task);
+  return replica_finder_ (task);
 }
 
 class RelevantProcessorAccumulator : std::binary_function <PROCESSOR_SET,
@@ -149,27 +154,23 @@ class RelevantProcessorAccumulator : std::binary_function <PROCESSOR_SET,
                                                            PROCESSOR_SET>
 {
 public:
-  RelevantProcessorAccumulator (const REPLICA_GROUPS & rep_groups)
-    : rep_groups_ (rep_groups)
+  RelevantProcessorAccumulator (const ReplicaFinder & rep_finder)
+    : rep_finder_ (rep_finder)
   {
   }
 
   PROCESSOR_SET operator () (const PROCESSOR_SET & previous,
                              const Task & task)
   {
-    PROCESSOR_SET result = previous;
-    
-    std::transform (rep_groups_.find (primary_name (task))->second.begin (),
-                    rep_groups_.find (primary_name (task))->second.begin () + task.rank,
-                    std::inserter (result,
-                                   result.begin ()),
-                    ProcessorPicker ());
+    PROCESSOR_SET result = rep_finder_ (task);
+
+    result.insert (previous.begin (), previous.end ());
 
     return result;
   }
 
 private:
-  const REPLICA_GROUPS & rep_groups_;
+  const ReplicaFinder & rep_finder_;
 };
 
 PROCESSOR_SET 
@@ -181,7 +182,7 @@ Forward_Ranking_Scheduler::relevant_processors (
     std::accumulate (tasks.begin (),
                      tasks.end (),
                      PROCESSOR_SET (),
-                     RelevantProcessorAccumulator (replica_groups_));
+                     RelevantProcessorAccumulator (replica_finder_));
 
   PROCESSOR_SET result;
 
@@ -256,7 +257,7 @@ Forward_Ranking_Scheduler::accumulate_wcrt (const TASK_LIST & tasks,
                           scenarios.end (),
                           -1.0,
                           FailureAwareWCRT (tasks,
-                                            replica_groups_));
+                                            replica_finder_));
 }
 
 std::ostream & operator<< (std::ostream & ostr, 
@@ -267,7 +268,7 @@ std::ostream & operator<< (std::ostream & ostr,
        it != fm.end ();
        ++it)
     {
-      ostr << it->first << ": " << it->second << ", ";
+      ostr << it->key ().c_str () << ": " << it->item () << ", ";
     }
   ostr << "}";
 
