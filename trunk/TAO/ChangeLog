@@ -1,3 +1,9 @@
+Fri May  1 19:12:14 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/ForwardUponObjectNotExist/client.cpp:
+
+          Fixed compilation errors on wchar builds.
+
 Fri May  1 08:09:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Bug_3646c_Regression/*:
