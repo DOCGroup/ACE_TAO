@@ -5176,7 +5176,7 @@ add_to_argv (int& argc, char** argv, int max_args, char* string)
           if (argc < max_args)
             {
               argv[argc] = string + previous;
-              argc++;
+              ++argc;
             }
           else
             {
@@ -5194,7 +5194,7 @@ add_to_argv (int& argc, char** argv, int max_args, char* string)
 
           // Make sure we don't skip over a character due
           // to the above loop to skip over whitespace
-          i--;
+          --i;
         }
     }
 }
@@ -5320,9 +5320,10 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
   int argc = 1;
 
   // Peel off arguments to run_main () and put into argv.
-
-  if (arg)
-    add_to_argv(argc, argv, ACE_MAX_ARGS, arg);
+  if (arg && strlen (arg) > 0)
+    {
+      add_to_argv(argc, argv, ACE_MAX_ARGS, arg);
+    }
 
   // fill unused argv slots with 0 to get rid of leftovers
   // from previous invocations
