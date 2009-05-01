@@ -1,3 +1,11 @@
+Fri May  1 09:13:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          opt files are allowed in svn
+
+        * bin/make_release.py:
+          Don't generate Pocket PC 2003 and Smartphone 2003 projects
+
 Fri May  1 07:37:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-rpmlintrc.txt:
