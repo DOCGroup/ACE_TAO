@@ -14,6 +14,7 @@
 #define OPTIMIZED_WCRT_H_
 
 #include "Schedule.h"
+#include <memory>
 
 struct OptimizedWCRT : public std::binary_function <double,
                                                     TASKNAME_SET,

@@ -14,6 +14,7 @@
 #define RANKED_WCRT_H_
 
 #include "Schedule.h"
+#include <memory>
 
 /// this map associates a task with all the possible combinations of
 /// processor failures for which it becomes active

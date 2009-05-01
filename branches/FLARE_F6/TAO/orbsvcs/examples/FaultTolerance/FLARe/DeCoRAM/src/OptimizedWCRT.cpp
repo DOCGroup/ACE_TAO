@@ -12,6 +12,7 @@
 
 #include "OptimizedWCRT.h"
 #include "CTT_Enhanced.h"
+#include <algorithm>
 
 /**
  *  @struct TaskRoleModifier

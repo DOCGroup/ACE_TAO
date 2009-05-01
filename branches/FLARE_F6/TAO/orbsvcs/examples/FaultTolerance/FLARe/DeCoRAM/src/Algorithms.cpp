@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <stdlib.h>
 #include "Algorithms.h"
 
 unsigned int extract_rank (const Taskname & taskname)

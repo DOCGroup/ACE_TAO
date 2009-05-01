@@ -14,6 +14,9 @@
 #define FTRMFF_BASIC_ALGORITHM_H_
 
 #include "Schedule.h"
+#include <stdlib.h>
+#include <algorithm>
+#include <memory>
 
 typedef std::auto_ptr <CTT_Algorithm> CTT_PTR;
 

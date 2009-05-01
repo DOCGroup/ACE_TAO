@@ -14,6 +14,7 @@
 #define FTRMFF_RANKED_ALGORITHM_H_
 
 #include "Schedule.h"
+#include <memory>
 
 class FTRMFF_Ranked : public FTRMFF_Algorithm
 {

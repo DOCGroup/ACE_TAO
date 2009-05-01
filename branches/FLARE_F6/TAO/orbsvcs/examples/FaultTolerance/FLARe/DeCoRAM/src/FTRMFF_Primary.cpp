@@ -12,6 +12,7 @@
 
 #include <sstream>
 #include "FTRMFF_Primary.h"
+#include <algorithm>
 
 FTRMFF_Primary::~FTRMFF_Primary ()
 {

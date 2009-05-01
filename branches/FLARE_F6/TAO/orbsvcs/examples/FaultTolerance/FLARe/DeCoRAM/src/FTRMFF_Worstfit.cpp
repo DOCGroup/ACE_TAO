@@ -13,6 +13,7 @@
 #include "FTRMFF_Worstfit.h"
 #include "RankedWCRT.h"
 #include "Utilization_Ranking.h"
+#include <algorithm>
 
 FTRMFF_Worstfit::~FTRMFF_Worstfit ()
 {
