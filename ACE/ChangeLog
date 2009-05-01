@@ -1,3 +1,17 @@
+Fri May  1 11:43:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Event_Handler.cpp:
+          Initialise members in the ACE_Notification_Buffer constructor
+
+        * ace/Log_Record.h:
+          Doxygen fix
+
+        * ace/Notification_Queue.cpp:
+          Layout change
+
+        * ace/Select_Reactor_Base.cpp:
+          Small code simplification
+
 Fri May  1 09:13:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
