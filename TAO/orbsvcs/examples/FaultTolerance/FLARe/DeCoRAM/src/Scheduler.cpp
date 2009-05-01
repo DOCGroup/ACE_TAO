@@ -119,6 +119,9 @@ PROCESSOR_SET
 ReplicaFinder::operator () (const Task & task) const
 {
   PROCESSOR_SET result;
+
+  TRACE ("TEST");
+  TRACE (rep_groups_);
   
   REPLICA_GROUPS::const_iterator replicas = 
     rep_groups_.find (primary_name (task));

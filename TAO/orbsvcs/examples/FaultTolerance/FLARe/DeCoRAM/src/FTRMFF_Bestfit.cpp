@@ -16,11 +16,6 @@
 #include "Forward_Ranking_Scheduler.h"
 #include "Packing_Scheduler.h"
 
-FTRMFF_Bestfit::FTRMFF_Bestfit (const std::string & algorithm)
-  : algorithm_ (algorithm)
-{
-}
-
 FTRMFF_Bestfit::~FTRMFF_Bestfit ()
 {
 }
@@ -29,8 +24,7 @@ FTRMFF_Output
 FTRMFF_Bestfit::operator () (const FTRMFF_Input & input)
 {
   FTRMFF_Bestfit_Algorithm algorithm (input.processors,
-                                              input.backup_count,
-                                              algorithm_);
+                                      input.backup_count);
 
   FTRMFF_Output output;
   output.schedule = algorithm (input.tasks);
@@ -43,8 +37,7 @@ FTRMFF_Bestfit::operator () (const FTRMFF_Input & input)
 
 FTRMFF_Bestfit_Algorithm::FTRMFF_Bestfit_Algorithm (
   const PROCESSOR_LIST & processors,
-  unsigned int consistency_level,
-  const std::string & scheduler)
+  unsigned int consistency_level)
   : consistency_level_ (consistency_level),
     scheduler_ (processors,
                 consistency_level_)

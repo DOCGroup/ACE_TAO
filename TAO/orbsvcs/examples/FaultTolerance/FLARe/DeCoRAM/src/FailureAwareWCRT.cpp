@@ -26,13 +26,18 @@ FailureAwareWCRT::operator () (double previous,
 {
   // find all tasks that need to become active
   std::set<Taskname> active_tasks;
+
   for (TASK_LIST::iterator t_it = tasks_.begin ();
        t_it != tasks_.end ();
        ++t_it)
     {
+      TRACE (*t_it);
+
       // check in the replica map if all previous tasks get activated
       // and switch the task to primary if this is the case
       PROCESSOR_SET necessary_failures = replica_finder_ (*t_it);
+
+      TRACE (necessary_failures);
 
       PROCESSOR_SET difference;
       std::set_intersection (failures.begin (),
