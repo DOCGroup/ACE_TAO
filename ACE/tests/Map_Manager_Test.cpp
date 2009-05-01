@@ -904,7 +904,7 @@ run_test (int (*ptf) (size_t, size_t, int),
               ACE_TEXT ("time per call = %f usecs\n"),
               (et.real_time / ACE_timer_t (iterations)) * 1000000));
 
-  return 0;              
+  return 0;
 }
 
 int
@@ -931,41 +931,43 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_ERROR ((LM_ERROR, "Table size is 0\n"));
       ++result;
     }
+  else
+    {
+      // Test the <ACE_Map_Manager>.
+      result += run_test (&test_map_manager,
+                          table_size,
+                          iterations,
+                          test_iterators,
+                          ACE_TEXT ("Map_Manager"));
 
-  // Test the <ACE_Map_Manager>.
-  result += run_test (&test_map_manager,
-                      table_size,
-                      iterations,
-                      test_iterators,
-                      ACE_TEXT ("Map_Manager"));
+      // Test the <ACE_Hash_Map_Manager>.
+      result += run_test (&test_hash_map_manager,
+                          table_size,
+                          iterations,
+                          test_iterators,
+                          ACE_TEXT ("Hash_Map_Manager"));
 
-  // Test the <ACE_Hash_Map_Manager>.
-  result += run_test (&test_hash_map_manager,
-                      table_size,
-                      iterations,
-                      test_iterators,
-                      ACE_TEXT ("Hash_Map_Manager"));
+      // Test the <ACE_Hash_Map_Manager>.
+      result += run_test (&test_active_map_manager,
+                          table_size,
+                          iterations,
+                          test_iterators,
+                          ACE_TEXT ("Active_Map_Manager"));
 
-  // Test the <ACE_Hash_Map_Manager>.
-  result += run_test (&test_active_map_manager,
-                      table_size,
-                      iterations,
-                      test_iterators,
-                      ACE_TEXT ("Active_Map_Manager"));
+      // Test the <ACE_Cache_Map_Manager>.
+      result += run_test (&test_cache_map_manager,
+                          table_size,
+                          iterations,
+                          test_iterators,
+                          ACE_TEXT ("Cache_Map_Manager"));
 
-  // Test the <ACE_Cache_Map_Manager>.
-  result += run_test (&test_cache_map_manager,
-                      table_size,
-                      iterations,
-                      test_iterators,
-                      ACE_TEXT ("Cache_Map_Manager"));
-
-  // Test the <ACE_Hash_Cache_Map_Manager>.
-  result += run_test (&test_hash_cache_map_manager,
-                      table_size,
-                      iterations,
-                      test_iterators,
-                      ACE_TEXT ("Hash_Cache_Map_Manager"));
+      // Test the <ACE_Hash_Cache_Map_Manager>.
+      result += run_test (&test_hash_cache_map_manager,
+                          table_size,
+                          iterations,
+                          test_iterators,
+                          ACE_TEXT ("Hash_Cache_Map_Manager"));
+    }
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
   ACE_END_TEST;
   return result;
