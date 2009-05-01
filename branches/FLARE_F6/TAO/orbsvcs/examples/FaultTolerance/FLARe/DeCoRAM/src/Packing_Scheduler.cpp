@@ -14,6 +14,7 @@
 #include "Packing_Scheduler.h"
 #include "CTT_Basic.h"
 #include "CTT_Enhanced.h"
+#include <algorithm>
 
 Packing_Scheduler::Packing_Scheduler (const PROCESSOR_LIST & processors,
                                       unsigned int max_failures)
