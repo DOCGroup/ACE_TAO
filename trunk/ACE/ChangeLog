@@ -1,3 +1,8 @@
+Fri May  1 18:17:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Only add the arg from vx_execae when the string has data.
+
 Fri May  1 17:46:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Map_Manager_Test.cpp:
