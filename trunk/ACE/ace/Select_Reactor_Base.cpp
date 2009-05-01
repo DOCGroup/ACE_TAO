@@ -800,14 +800,9 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
                                                      more_messages_queued,
                                                      next);
 
-  if (result == 0)
+  if (result == 0 || result == -1)
     {
-      return 0;
-    }
-
-  if (result == -1)
-    {
-      return -1;
+      return result;
     }
 
   if(more_messages_queued)
