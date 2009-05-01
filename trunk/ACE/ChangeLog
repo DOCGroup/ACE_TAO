@@ -1,3 +1,9 @@
+Fri May  1 07:15:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/*:
+          Extract all archives and put them in subdirectories, makes it much
+          easier to update these files
+
 Wed Apr 29 16:30:05  2009  Steve Huston  <shuston@riverace.com>
 
         * ace/Asynch_Acceptor.cpp (handle_accept): Pass the ACT to accept()
