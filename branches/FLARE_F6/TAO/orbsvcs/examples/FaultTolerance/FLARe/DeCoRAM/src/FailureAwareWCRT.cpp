@@ -14,13 +14,6 @@
 #include <algorithm>
 
 FailureAwareWCRT::FailureAwareWCRT (const TASK_LIST & tasks,
-                                    const REPLICA_GROUPS & rep_groups)
-  : tasks_ (tasks),
-    replica_finder_ (rep_groups)
-{
-}
-
-FailureAwareWCRT::FailureAwareWCRT (const TASK_LIST & tasks,
                                     const ReplicaFinder & replica_finder)
   : tasks_ (tasks),
     replica_finder_ (replica_finder)

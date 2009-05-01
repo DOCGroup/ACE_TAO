@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    worstfit_ftrmff.cpp
+ *  @file    bestfit_ftrmff.cpp
  *
  *  $Id$
  *
@@ -14,7 +14,7 @@
 #include <sstream>
 #include <iostream>
 #include <ace/Get_Opt.h>
-#include "FTRMFF_Worstfit.h"
+#include "FTRMFF_Bestfit.h"
 
 std::string filename = "test.sd"; // filename of task list input
 unsigned int m = 4; // number of processors
@@ -57,7 +57,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   
   ifile.close ();
 
-  FTRMFF_Worstfit ftrmff;
+  FTRMFF_Bestfit ftrmff;
 
   FTRMFF_Input input;
   input.tasks = tasks;

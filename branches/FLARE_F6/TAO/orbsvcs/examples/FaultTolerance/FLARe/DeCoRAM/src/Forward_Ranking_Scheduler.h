@@ -52,7 +52,6 @@ public:
   virtual double schedule_task (const Task & task,
                                 const Processor & processor);
 
-protected:
   virtual void update_schedule (const ScheduleResult & result);
 
 private:
