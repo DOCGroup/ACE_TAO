@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    FTRMFF_Bestfit.cpp
+ *  @file    FTRMFF_Worstfit.cpp
  *
  *  $Id$
  *
@@ -10,18 +10,18 @@
  */
 //=============================================================================
 
-#include "FTRMFF_Bestfit.h"
+#include "FTRMFF_Worstfit.h"
 #include "RankedWCRT.h"
 #include "Utilization_Ranking.h"
 
-FTRMFF_Bestfit::~FTRMFF_Bestfit ()
+FTRMFF_Worstfit::~FTRMFF_Worstfit ()
 {
 }
 
 FTRMFF_Output
-FTRMFF_Bestfit::operator () (const FTRMFF_Input & input)
+FTRMFF_Worstfit::operator () (const FTRMFF_Input & input)
 {
-  FTRMFF_Bestfit_Algorithm algorithm (input.processors,
+  FTRMFF_Worstfit_Algorithm algorithm (input.processors,
                                       input.backup_count);
 
   FTRMFF_Output output;
@@ -33,7 +33,7 @@ FTRMFF_Bestfit::operator () (const FTRMFF_Input & input)
   return output;
 }
 
-FTRMFF_Bestfit_Algorithm::FTRMFF_Bestfit_Algorithm (
+FTRMFF_Worstfit_Algorithm::FTRMFF_Worstfit_Algorithm (
   const PROCESSOR_LIST & processors,
   unsigned int consistency_level)
   : schedule_ (create_schedule (processors)),
@@ -41,12 +41,12 @@ FTRMFF_Bestfit_Algorithm::FTRMFF_Bestfit_Algorithm (
 {
 }
 
-FTRMFF_Bestfit_Algorithm::~FTRMFF_Bestfit_Algorithm ()
+FTRMFF_Worstfit_Algorithm::~FTRMFF_Worstfit_Algorithm ()
 {
 }
 
 SCHEDULING_MAP
-FTRMFF_Bestfit_Algorithm::operator () (const TASK_LIST & tasks)
+FTRMFF_Worstfit_Algorithm::operator () (const TASK_LIST & tasks)
 {
   // sort tasks according to their worst case response times
   TASK_LIST sorted_tasks = tasks;
@@ -133,13 +133,13 @@ FTRMFF_Bestfit_Algorithm::operator () (const TASK_LIST & tasks)
 }
 
 SCHEDULE_PROGRESS_LIST
-FTRMFF_Bestfit_Algorithm::get_unschedulable ()
+FTRMFF_Worstfit_Algorithm::get_unschedulable ()
 {
   return unschedulable_;
 }
 
 const SCHEDULE & 
-FTRMFF_Bestfit_Algorithm::schedule () const
+FTRMFF_Worstfit_Algorithm::schedule () const
 {
   return schedule_;
 }

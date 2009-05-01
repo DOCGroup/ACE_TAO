@@ -12,7 +12,7 @@
 
 #include "FTRMFF_Binary_Search.h"
 #include "FTRMFF_Basic.h"
-#include "FTRMFF_Bestfit.h"
+#include "FTRMFF_Worstfit.h"
 #include "CTT_Enhanced.h"
 #include "CTT_Basic.h"
 
@@ -92,21 +92,21 @@ FTRMFF_Binary_Search_Algorithm::operator () (const TASK_LIST & tasks)
       TRACE ("Binary Search: max = " << max << " min = " << min);
 
       // schedule with the average value between minimum and maximum
-      FTRMFF_Bestfit_Algorithm bestfit_ftrmff (
+      FTRMFF_Worstfit_Algorithm worstfit_ftrmff (
         create_processors (min + ((max - min)/2)),
         consistency_level_);
      
-      bestfit_ftrmff (tasks);
+      worstfit_ftrmff (tasks);
 
       // determine number of used processors
-      processors = processor_usage (bestfit_ftrmff.schedule ());
+      processors = processor_usage (worstfit_ftrmff.schedule ());
 
       // if successful schedule
-      if (bestfit_ftrmff.get_unschedulable ().empty ())
+      if (worstfit_ftrmff.get_unschedulable ().empty ())
         {
           // store number of processors as new max
           max = processors;
-          schedule_ = bestfit_ftrmff.schedule ();
+          schedule_ = worstfit_ftrmff.schedule ();
         }
       else // not schedulable
         {
@@ -124,15 +124,15 @@ FTRMFF_Binary_Search_Algorithm::operator () (const TASK_LIST & tasks)
     {
       // in failure case try maximum number of processors and then
       // give up.
-      FTRMFF_Bestfit_Algorithm bestfit_ftrmff (
+      FTRMFF_Worstfit_Algorithm worstfit_ftrmff (
         create_processors (max),
         consistency_level_);
       
-      SCHEDULING_MAP result = bestfit_ftrmff (tasks);
+      SCHEDULING_MAP result = worstfit_ftrmff (tasks);
 
-      unschedulable_ = bestfit_ftrmff.get_unschedulable ();
+      unschedulable_ = worstfit_ftrmff.get_unschedulable ();
 
-      schedule_ = bestfit_ftrmff.schedule ();
+      schedule_ = worstfit_ftrmff.schedule ();
 
       return result;
     }
