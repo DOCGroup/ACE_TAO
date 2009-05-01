@@ -470,8 +470,8 @@
 #endif /* ACE_DEFAULT_TIMERS */
 
 #if defined (ACE_DEFAULT_TIMERS) && (ACE_DEFAULT_TIMERS == 0)
-#error ACE_DEFAULT_TIMERS should not be zero
-#endif
+//#error ACE_DEFAULT_TIMERS should not be zero
+#endif /* ACE_DEFAULT_TIMERS */
 
 #if defined (ACE_WIN32)
 #  define ACE_PLATFORM_A "Win32"
