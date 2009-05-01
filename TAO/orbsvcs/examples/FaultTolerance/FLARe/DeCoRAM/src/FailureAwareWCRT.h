@@ -22,9 +22,6 @@ class FailureAwareWCRT : public std::binary_function <double,
 {
 public:
   FailureAwareWCRT (const TASK_LIST & tasks,
-                    const REPLICA_GROUPS & rep_groups);
-
-  FailureAwareWCRT (const TASK_LIST & tasks,
                     const ReplicaFinder & replica_finder);
 
   double operator () (double previous,

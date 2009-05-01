@@ -195,6 +195,25 @@ project (forward_ranking_ftrmff) : acelib {
   }
 }
 
+project (bestfit_ranked_ftrmff) : acelib {
+
+  exename = ftrmbf
+  exeout = ../bin
+
+  macros += DO_DEBUG
+
+  Source_Files {
+    Algorithms.cpp
+    Schedule.cpp
+    Scheduler.cpp
+    CTT_Enhanced.cpp
+    Forward_Ranking_Scheduler.cpp
+    FailureAwareWCRT.cpp
+    FTRMFF_Bestfit.cpp
+    bestfit_ftrmff.cpp
+  }
+}
+
 project (schedulability_check) : acelib {
 
   exename = scheck
