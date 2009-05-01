@@ -43,9 +43,6 @@ Scheduler::operator () (const Task & task)
           result.wcrt = wcrt;
           result.processor = processor_it->first;
 
-          // add the task to the schedule
-          this->update_schedule (task, processor_it->first);
-
           break;
         }
     } // end for
@@ -54,33 +51,31 @@ Scheduler::operator () (const Task & task)
 }
 
 void
-Scheduler::update_schedule (const Task & task,
-                            const Processor & processor)
+Scheduler::update_schedule (const ScheduleResult & result)
 {
-  schedule_[processor].push_back (task);
+  schedule_[result.processor].push_back (result.task);
 
-  this->update_replica_groups (task, processor);
+  this->update_replica_groups (result);
 }
 
 void
-Scheduler::update_replica_groups (const Task & task,
-                                  const Processor & processor)
+Scheduler::update_replica_groups (const ScheduleResult & result)
 {
   // create entry
-  TASK_POSITION tp (processor, 
-                    task);
+  TASK_POSITION tp (result.processor, 
+                    result.task);
 
   // add entry to respective replica group
-  if (task.rank == 0)
+  if (result.task.rank == 0)
     {
       // create a new group
       TASK_POSITIONS group;
       group.push_back (tp);
-      replica_groups_[primary_name (task)] = group;
+      replica_groups_[primary_name (result.task)] = group;
     }
   else
     {
-      replica_groups_[primary_name (task)].push_back (tp);
+      replica_groups_[primary_name (result.task)].push_back (tp);
     }
 
   TRACE (replica_groups_);

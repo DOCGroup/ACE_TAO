@@ -98,12 +98,11 @@ private:
 };
 
 void
-Packing_Scheduler::update_schedule (const Task & task,
-                                    const Processor & processor)
+Packing_Scheduler::update_schedule (const ScheduleResult & result)
 {
-  this->Scheduler::update_schedule (task, processor);
+  this->Scheduler::update_schedule (result);
 
-  this->update_task_groups (task, processor);
+  this->update_task_groups (result);
 }
 
 double
@@ -200,30 +199,29 @@ private:
 };
 
 void
-Packing_Scheduler::update_task_groups (const Task & task,
-                                       const Processor & processor)
+Packing_Scheduler::update_task_groups (const ScheduleResult & result)
 {
   // add task to existing task groups
-  TASK_LISTS & local_groups = task_groups_[processor];
+  TASK_LISTS & local_groups = task_groups_[result.processor];
 
-  if (task.rank == 0)
+  if (result.task.rank == 0)
     {
       // if this is a primary check wether there are other
       // primaries on this processors
       if (!std::accumulate (local_groups.begin (),
                             local_groups.end (),
                             false,
-                            TaskListPrimaryAccumulator (task)))
+                            TaskListPrimaryAccumulator (result.task)))
         {
           // create a new group if there is no primary yet
           TASK_LIST new_list;
-          new_list.push_back (task);
+          new_list.push_back (result.task);
           local_groups.push_back (new_list);
         }
     }
   else // if the task is a backup task
     {
-      this->add_backup (task, local_groups);
+      this->add_backup (result.task, local_groups);
     }
 
   TRACE (task_groups_);

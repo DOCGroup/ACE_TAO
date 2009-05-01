@@ -94,6 +94,10 @@ FTRMFF_Forward_Packing_Algorithm::operator () (const TASK_LIST & tasks)
               unschedulable_.push_back (pg);
               break;
             }
+          else
+            {
+              scheduler_->update_schedule (r);
+            }
 
           TRACE (*task_it << " -> " << r.processor);
         }

@@ -53,15 +53,13 @@ public:
                                 const Processor & processor);
 
 protected:
-  virtual void update_schedule (const Task & task,
-                                const Processor & processor);
+  virtual void update_schedule (const ScheduleResult & result);
 
 private:
-  void update_failure_map (const Task & task,
-                           const Processor & processor);
+  void update_failure_map (const ScheduleResult & result);
 
   bool check_for_existing_replicas (const Task & task,
-                                     const Processor & processor);
+                                    const Processor & processor);
 
   PROCESSOR_SET replica_processors (const Task & task);
 
