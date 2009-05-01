@@ -5142,59 +5142,62 @@ add_to_argv (int& argc, char** argv, int max_args, char* string)
   size_t previous = 0;
   size_t length   = ACE_OS::strlen (string);
 
-  // We use <= to make sure that we get the last argument
-  for (size_t i = 0; i <= length; i++)
+  if (length > 0)
     {
-      // Is it a double quote that hasn't been escaped?
-      if (string[i] == '\"' && (i == 0 || string[i - 1] != '\\'))
+      // We use <= to make sure that we get the last argument
+      for (size_t i = 0; i <= length; i++)
         {
-          indouble ^= 1;
-          if (indouble)
+          // Is it a double quote that hasn't been escaped?
+          if (string[i] == '\"' && (i == 0 || string[i - 1] != '\\'))
             {
-              // We have just entered a double quoted string, so
-              // save the starting position of the contents.
-              previous = i + 1;
+              indouble ^= 1;
+              if (indouble)
+                {
+                  // We have just entered a double quoted string, so
+                  // save the starting position of the contents.
+                  previous = i + 1;
+                }
+              else
+                {
+                  // We have just left a double quoted string, so
+                  // zero out the ending double quote.
+                  string[i] = '\0';
+                }
             }
-          else
+          else if (string[i] == '\\')  // Escape the next character
             {
-              // We have just left a double quoted string, so
-              // zero out the ending double quote.
+              // The next character is automatically
+              // skipped because of the strcpy
+              ACE_OS::strcpy (string + i, string + i + 1);
+              --length;
+            }
+          else if (!indouble &&
+                   (ACE_OS::ace_isspace (string[i]) || string[i] == '\0'))
+            {
               string[i] = '\0';
-            }
-        }
-      else if (string[i] == '\\')  // Escape the next character
-        {
-          // The next character is automatically
-          // skipped because of the strcpy
-          ACE_OS::strcpy (string + i, string + i + 1);
-          length--;
-        }
-      else if (!indouble &&
-               (ACE_OS::ace_isspace (string[i]) || string[i] == '\0'))
-        {
-          string[i] = '\0';
-          if (argc < max_args)
-            {
-              argv[argc] = string + previous;
-              ++argc;
-            }
-          else
-            {
-              ACE_OS::fprintf (stderr, "spae(): number of arguments "
-                                       "limited to %d\n", max_args);
-            }
+              if (argc < max_args)
+                {
+                  argv[argc] = string + previous;
+                  ++argc;
+                }
+              else
+                {
+                  ACE_OS::fprintf (stderr, "spae(): number of arguments "
+                                           "limited to %d\n", max_args);
+                }
 
-          // Skip over whitespace in between arguments
-          for(++i; i < length && ACE_OS::ace_isspace (string[i]); ++i)
-            {
+              // Skip over whitespace in between arguments
+              for(++i; i < length && ACE_OS::ace_isspace (string[i]); ++i)
+                {
+                }
+
+              // Save the starting point for the next time around
+              previous = i;
+
+              // Make sure we don't skip over a character due
+              // to the above loop to skip over whitespace
+              --i;
             }
-
-          // Save the starting point for the next time around
-          previous = i;
-
-          // Make sure we don't skip over a character due
-          // to the above loop to skip over whitespace
-          --i;
         }
     }
 }
@@ -5320,7 +5323,7 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
   int argc = 1;
 
   // Peel off arguments to run_main () and put into argv.
-  if (arg && strlen (arg) > 0)
+  if (arg)
     {
       add_to_argv(argc, argv, ACE_MAX_ARGS, arg);
     }
