@@ -35,12 +35,10 @@ public:
                                 const Processor & processor);
 
 protected:
-  virtual void update_schedule (const Task & task,
-                                const Processor & processor);
+  virtual void update_schedule (const ScheduleResult & result);
 
 private:
-  void update_task_groups (const Task & task,
-                           const Processor & processor);
+  void update_task_groups (const ScheduleResult & result);
 
   void add_backup (const Task & task,
                    TASK_LISTS & tg);

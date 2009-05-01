@@ -97,34 +97,32 @@ Forward_Ranking_Scheduler::schedule_task (const Task & task,
 }
 
 void
-Forward_Ranking_Scheduler::update_schedule (const Task & task,
-                                            const Processor & processor)
+Forward_Ranking_Scheduler::update_schedule (const ScheduleResult & result)
 {
-  this->Scheduler::update_schedule (task, processor);
+  this->Scheduler::update_schedule (result);
 
-  this->update_failure_map (task, processor);
+  this->update_failure_map (result);
 }
 
 void 
-Forward_Ranking_Scheduler::update_failure_map (const Task & task,
-                                               const Processor & /* processor */)
+Forward_Ranking_Scheduler::update_failure_map (const ScheduleResult & result)
 {
   PROCESSOR_SET proc_dependencies;
 
   REPLICA_GROUPS::iterator it =
-    replica_groups_.find (primary_name (task));
+    replica_groups_.find (primary_name (result.task));
 
   if (it != replica_groups_.end ())
     {
       for (TASK_POSITIONS::iterator tp_it = it->second.begin ();
-           tp_it != it->second.begin () + task.rank;
+           tp_it != it->second.begin () + result.task.rank;
            ++tp_it)
         {
           proc_dependencies.insert (tp_it->first);
         }
     }
 
-  failure_map_.bind (task.name.c_str (), proc_dependencies);
+  failure_map_.bind (result.task.name.c_str (), proc_dependencies);
 
   TRACE ("Failure Map: " << failure_map_);
 }

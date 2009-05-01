@@ -44,12 +44,10 @@ public:
   // getter method for the schedule
   SCHEDULE schedule () const;
 
-protected:
-  virtual void update_schedule (const Task & task,
-                                const Processor & processor);
+  virtual void update_schedule (const ScheduleResult & result);
 
-  void update_replica_groups (const Task & task,
-                              const Processor & processor);
+protected:
+  void update_replica_groups (const ScheduleResult & result);
 
 protected:
   SCHEDULE schedule_;
