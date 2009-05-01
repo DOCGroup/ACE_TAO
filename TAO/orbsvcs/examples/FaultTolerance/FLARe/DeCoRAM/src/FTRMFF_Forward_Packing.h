@@ -43,8 +43,6 @@ public:
   SCHEDULE_PROGRESS_LIST get_unschedulable ();
 
   SCHEDULE schedule () const;
-private:
-  TASK_LIST create_tasks (const Task & task);
 
 private:
   SCHEDULE_PROGRESS_LIST unschedulable_;

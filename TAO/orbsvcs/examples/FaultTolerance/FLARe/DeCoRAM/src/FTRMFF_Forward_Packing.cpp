@@ -79,7 +79,7 @@ FTRMFF_Forward_Packing_Algorithm::operator () (const TASK_LIST & tasks)
        ++it)
     {
       // create the right amount of backup replica tasks
-      TASK_LIST task_group = this->create_tasks (*it);
+      TASK_LIST task_group = create_ranked_tasks (*it, consistency_level_);
 
       // schedule the tasks of one application
       for (TASK_LIST::iterator task_it = task_group.begin ();
@@ -116,32 +116,4 @@ SCHEDULE
 FTRMFF_Forward_Packing_Algorithm::schedule () const
 {
   return scheduler_->schedule ();
-}
-
-TASK_LIST 
-FTRMFF_Forward_Packing_Algorithm::create_tasks (const Task & task)
-{
-  TASK_LIST tasks;
-
-  for (unsigned int i = 0; i <= consistency_level_; ++i)
-    {
-      Task t = task;
-      t.rank = i;
-      if (t.rank > 0)
-        {
-          t.role = BACKUP;
-
-          std::stringstream ss;
-          ss << t.name << "_" << i;
-          t.name = ss.str ();
-        }
-      else
-        {
-          t.role = PRIMARY;
-        }
-
-      tasks.push_back (t);
-    }
-
-  return tasks;
 }

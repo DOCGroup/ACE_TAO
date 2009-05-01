@@ -75,6 +75,10 @@ void add_schedule_results (const SCHEDULE_RESULT_LIST & result_list,
 TASK_LIST create_tasks (const Task & task,
                         unsigned int backup_number);
 
+/// helper function that creates a list of tasks that is already ranked
+TASK_LIST create_ranked_tasks (const Task & task,
+                               unsigned int backup_number);
+
 struct WCRTComparison : public std::binary_function <ScheduleResult,
                                                      ScheduleResult,
                                                      bool>
