@@ -1,3 +1,22 @@
+Fri May  1 07:05:29 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/ForwardUponObjectNotExist/ForwardUponObjectNotExist.mpc:
+        * tests/ForwardUponObjectNotExist/README:
+        * tests/ForwardUponObjectNotExist/client.cpp:
+        * tests/ForwardUponObjectNotExist/run_test.pl:
+        * tests/ForwardUponObjectNotExist/server.cpp:
+        * tests/ForwardUponObjectNotExist/test.idl:
+        * tests/ForwardUponObjectNotExist/test_i.h:
+        * tests/ForwardUponObjectNotExist/test_i.inl:
+        * tests/ForwardUponObjectNotExist/test_i.cpp:
+
+          Added test for -ORBForwardInvocationOnObjectNotExist option
+          and feature without using any service. 
+      
+        * bin/tao_orb_tests.lst:
+
+          Added ForwardUponObjectNotExist test.
+
 Thu Apr 30 21:31:11 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp:
