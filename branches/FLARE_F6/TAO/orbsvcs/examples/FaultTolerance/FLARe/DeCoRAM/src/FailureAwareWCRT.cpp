@@ -24,6 +24,9 @@ double
 FailureAwareWCRT::operator () (double previous,
                                const PROCESSOR_SET & failures)
 {
+  if (previous == .0)
+    return .0;
+
   // find all tasks that need to become active
   std::set<Taskname> active_tasks;
 
@@ -38,6 +41,9 @@ FailureAwareWCRT::operator () (double previous,
       PROCESSOR_SET necessary_failures = replica_finder_ (*t_it);
 
       TRACE (necessary_failures);
+
+      if (necessary_failures.empty ())
+        continue;
 
       PROCESSOR_SET difference;
       std::set_intersection (failures.begin (),
@@ -57,7 +63,7 @@ FailureAwareWCRT::operator () (double previous,
           // activate relevant tasks
           t_it->role = PRIMARY;
         }
-    }
+    } // end for
 
   double result = ctt_ (tasks_);
 
@@ -72,7 +78,7 @@ FailureAwareWCRT::operator () (double previous,
         }
     }
 
-  if ((result > .0) && (previous != .0))
+  if (result > .0)
     return std::max(result,
                     previous);
 

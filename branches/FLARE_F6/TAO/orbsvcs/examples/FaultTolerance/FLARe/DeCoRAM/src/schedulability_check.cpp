@@ -70,60 +70,63 @@ public:
                              processor, 
                              FailureAwareWCRT (sched_it->second,
                                                replica_finder_)));
-      }
-
-
-    
+      }    
   }
 
   int check_schedulability (void)
   {
     PROCESSOR_LIST all_processors = get_processors (schedule_, true);
 
-    unsigned int tupel_size = std::min (max_rank_,
-                                        (unsigned int) all_processors.size ());
-
-    PROCESSOR_LIST combination;
-    PROCESSOR_LIST::iterator it = all_processors.begin ();
-    for (unsigned int c_index = 0; 
-         c_index < tupel_size; 
-         ++c_index, ++it)
+    if (all_processors.size () > max_rank_)
       {
-        combination.push_back (*it);
-      }
-
-    do
-      {
-        PROCESSOR_SET set;
-        std::copy (combination.begin (),
-                   combination.end (),
-                   std::inserter (set,
-                                  set.begin ()));
-        
-        // check combination against each task;
-        for (WCRT_MAP::iterator wcrt_it = wcrt_map_.begin ();
-             wcrt_it != wcrt_map_.end ();
-             ++wcrt_it)
+        PROCESSOR_LIST combination;
+        PROCESSOR_LIST::iterator it = all_processors.begin ();
+        for (unsigned int c_index = 0; 
+             c_index < max_rank_;
+             ++c_index, ++it)
           {
-            // ignore failure sets that contain the own processor
-            if (set.find (wcrt_it->first) != set.end ())              
-              continue;
+            combination.push_back (*it);
+          }
 
-            DBG_OUT ("checking " << wcrt_it->first << " with " << set);
-
-            double wcrt = (wcrt_it->second) (-1.0, set);
-            if (!(wcrt > .0))
+        do
+          {
+            PROCESSOR_SET set;
+            std::copy (combination.begin (),
+                       combination.end (),
+                       std::inserter (set,
+                                      set.begin ()));
+        
+            // check combination against each task;
+            for (WCRT_MAP::iterator wcrt_it = wcrt_map_.begin ();
+                 wcrt_it != wcrt_map_.end ();
+                 ++wcrt_it)
               {
-                DBG_OUT (wcrt_it->first << " not schedulable with " << set << ": " << wcrt);
-                return 1;
+                // ignore failure sets that contain the own processor
+                if (set.find (wcrt_it->first) != set.end ())              
+                  continue;
+
+                TRACE ("checking " << wcrt_it->first << " with " << set);
+
+                double wcrt = (wcrt_it->second) (-1.0, set);
+
+                if (!(wcrt > .0))
+                  {
+                    DBG_OUT (wcrt_it->first << " not schedulable with " << set << ": " << wcrt);
+                    return 1;
+                  }
               }
           }
+        while (next_combination (all_processors.begin (),
+                                 all_processors.end (),
+                                 combination.begin (),
+                                 combination.end ()));
       }
-    while (next_combination (all_processors.begin (),
-                             all_processors.end (),
-                             combination.begin (),
-                             combination.end ()));
-
+    else 
+      {
+        DBG_OUT ("There are not enough processors for " << max_rank_ << " failures.");
+        return 1;
+      }
+        
     return 0;
   }
 
