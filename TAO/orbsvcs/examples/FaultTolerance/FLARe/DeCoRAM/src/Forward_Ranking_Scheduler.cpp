@@ -210,7 +210,7 @@ Forward_Ranking_Scheduler::permute_processors (
     {
       unsigned int tupel_size = max_failures_ - fixed.size ();
 
-      if (exchangeable.size () < tupel_size)
+      if (exchangeable.size () <= tupel_size)
         {
           failure_sets.push_back (exchangeable);
         }
