@@ -76,6 +76,8 @@ CTT_Enhanced::worst_case_response_time_check (
         break;
     }
 
+  std::cout << "Last task is " << task.name << " with CTT " << R << std::endl;
+
   if (R <= task.period)
     return R;
   else
