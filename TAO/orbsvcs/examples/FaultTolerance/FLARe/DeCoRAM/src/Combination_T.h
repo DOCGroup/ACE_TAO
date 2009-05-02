@@ -35,7 +35,7 @@ next_combination (ITERATOR base_begin,
   --temp_comb_end;
 
   for (ITERATOR it = temp_comb_end;
-       it != comb_begin && base_it != base_begin;
+       it != comb_begin || it == comb_begin;
        --it, --base_it)
     {
       if (*it == *base_it)
@@ -43,7 +43,7 @@ next_combination (ITERATOR base_begin,
           if (it != comb_begin)
             {
               marked = true;
-              comb_mark = --it;
+              comb_mark = (--it);
               ++it;
               continue;
             }
@@ -52,12 +52,20 @@ next_combination (ITERATOR base_begin,
               return false;
             }
         }
-      else
+      else if (*it != *base_it)
         {
-          if (marked)
+          if (marked == true)
             {
-              ITERATOR base_mark = 
-                std::find (base_begin, base_end, *comb_mark);
+              ITERATOR base_mark;
+              for (ITERATOR base_it2=base_begin;
+                   base_it2 != base_end; ++base_it2)
+                {
+                  if (*comb_mark == *base_it2)
+                    {
+                      base_mark = base_it2;
+                      break;
+                    }
+                }
 
               ITERATOR kt = ++base_mark;
               
