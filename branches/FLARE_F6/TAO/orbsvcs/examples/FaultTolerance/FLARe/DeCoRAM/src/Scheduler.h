@@ -37,12 +37,16 @@ public:
   // If the WCRT response time is 0, it is not schedulable.
   ScheduleResult operator () (const Task & task);
 
+  // tries to schedule a task on a specific processor
+  ScheduleResult operator () (const Task & task,
+                              const Processor & processor);
+
   // this needs to be implemented by each scheduling algorithm
   virtual double schedule_task (const Task & task, 
                                 const Processor & processor) = 0;
 
   // getter method for the schedule
-  SCHEDULE schedule () const;
+  const SCHEDULE & schedule () const;
 
   virtual void update_schedule (const ScheduleResult & result);
 

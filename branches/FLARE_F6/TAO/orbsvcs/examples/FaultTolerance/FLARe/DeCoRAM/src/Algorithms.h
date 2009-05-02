@@ -183,5 +183,4 @@ public:
   Task operator () (const Task & task);
 };
 
-
 #endif /* FTRMFF_ALGORITHMS_H_ */

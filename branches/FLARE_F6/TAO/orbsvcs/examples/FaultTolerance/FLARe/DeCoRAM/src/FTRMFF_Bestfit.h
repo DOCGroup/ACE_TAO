@@ -23,6 +23,8 @@ public:
   virtual FTRMFF_Output operator () (const FTRMFF_Input & input);
 };
 
+typedef std::map <Processor, ScheduleResult> RESULT_MAP;
+
 class FTRMFF_Bestfit_Algorithm : 
   public std::unary_function <TASK_LIST,
                               SCHEDULING_MAP>
@@ -37,10 +39,14 @@ public:
 
   SCHEDULE_PROGRESS_LIST get_unschedulable ();
 
-  SCHEDULE schedule () const;
+  const SCHEDULE & schedule () const;
+
+private:
+  PROCESSOR_LIST best_processors (void);
 
 private:
   SCHEDULE_PROGRESS_LIST unschedulable_;
+  RESULT_MAP last_results_;
   unsigned int consistency_level_;
   Forward_Ranking_Scheduler scheduler_;
 };

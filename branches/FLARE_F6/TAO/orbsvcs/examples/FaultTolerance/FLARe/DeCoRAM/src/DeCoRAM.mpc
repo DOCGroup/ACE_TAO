@@ -200,7 +200,7 @@ project (bestfit_ranked_ftrmff) : acelib {
   exename = ftrmbf
   exeout = ../bin
 
-  macros += DO_DEBUG
+  macros += DO_DEBUG // DO_TRACE
 
   Source_Files {
     Algorithms.cpp
@@ -219,7 +219,7 @@ project (schedulability_check) : acelib {
   exename = scheck
   exeout = ../bin
 
-  macros += DO_DEBUG // DO_TRACE
+  macros += DO_DEBUG
 
   Source_Files {
     Algorithms.cpp

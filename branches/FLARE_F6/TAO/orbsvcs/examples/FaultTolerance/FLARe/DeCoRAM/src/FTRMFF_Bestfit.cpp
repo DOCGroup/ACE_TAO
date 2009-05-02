@@ -42,6 +42,18 @@ FTRMFF_Bestfit_Algorithm::FTRMFF_Bestfit_Algorithm (
     scheduler_ (processors,
                 consistency_level_)
 {
+  // fill last_results data structure
+  ScheduleResult result = { {"NoTask", .0, .0, .0, PRIMARY, 0}, 
+                            "NO PROCESSOR", 
+                            .0};
+
+  for (PROCESSOR_LIST::const_iterator it = processors.begin ();
+       it != processors.end ();
+       ++it)
+    {
+      result.processor = *it;
+      last_results_[*it] = result;
+    }
 }
 
 FTRMFF_Bestfit_Algorithm::~FTRMFF_Bestfit_Algorithm ()
@@ -72,8 +84,25 @@ FTRMFF_Bestfit_Algorithm::operator () (const TASK_LIST & tasks)
            task_it != task_group.end ();
            ++task_it)
         {
-          ScheduleResult r = scheduler_ (*task_it);
-          if (r.wcrt <= .0)
+          std::cout << *task_it << std::endl;
+
+          PROCESSOR_LIST processors = this->best_processors ();
+
+          ScheduleResult schedule_result;
+          for (PROCESSOR_LIST::iterator p_it = processors.begin ();
+               p_it != processors.end ();
+               ++p_it)
+            {
+              TRACE (*task_it << " on " << *p_it);
+
+              schedule_result = scheduler_ (*task_it, *p_it);
+              if (schedule_result.wcrt > .0)
+                {
+                  break;
+                }
+            }
+
+          if (schedule_result.wcrt <= .0)
             {
               ScheduleProgress pg = {*task_it, 
                                      task_it->rank - consistency_level_ + 1};
@@ -82,10 +111,12 @@ FTRMFF_Bestfit_Algorithm::operator () (const TASK_LIST & tasks)
             }
           else
             {
-              scheduler_.update_schedule (r);
+              scheduler_.update_schedule (schedule_result);
+              last_results_[schedule_result.processor] = schedule_result;
             }
-
-          TRACE (*task_it << " -> " << r.processor);
+          
+          
+          TRACE (*task_it << " -> " << schedule_result.processor);
         }
     }
 
@@ -98,8 +129,60 @@ FTRMFF_Bestfit_Algorithm::get_unschedulable ()
   return unschedulable_;
 }
 
-SCHEDULE
+const SCHEDULE &
 FTRMFF_Bestfit_Algorithm::schedule () const
 {
   return scheduler_.schedule ();
+}
+
+struct ScheduleResultComparison : public std::binary_function <
+  RESULT_MAP::value_type, 
+  RESULT_MAP::value_type,
+  bool>
+{
+  bool operator () (const RESULT_MAP::value_type & r1, 
+                    const RESULT_MAP::value_type & r2)
+  {
+    return (r1.second.wcrt < r2.second.wcrt);
+  }
+};
+
+struct ProcessorAccumulator : public std::unary_function <
+  RESULT_MAP::value_type,
+  Processor>
+{
+public:
+  Processor operator () (const RESULT_MAP::value_type & entry)
+  {
+    return entry.second.processor;
+  }
+};
+
+typedef std::pair <Processor, ScheduleResult> RESULT_PAIR;
+
+PROCESSOR_LIST 
+FTRMFF_Bestfit_Algorithm::best_processors (void)
+{
+  TRACE ("last_results: " << last_results_.size ());
+
+  std::vector <RESULT_PAIR> entries;
+  std::copy (last_results_.begin (),
+             last_results_.end (),
+             std::inserter (entries,
+                            entries.begin ()));
+
+  std::sort (entries.begin (),
+             entries.end (),
+             ScheduleResultComparison ());
+
+  TRACE ("entries : " << entries.size ());
+
+  PROCESSOR_LIST result;
+  std::transform (entries.begin (),
+                  entries.end (),
+                  std::inserter (result,
+                                 result.begin ()),
+                  ProcessorAccumulator ());
+
+  return result;
 }
