@@ -438,6 +438,7 @@ endif
 OBJEXT ?= o
 SOEXT ?= so
 LIBEXT ?= a
+LIB_PREFIX ?= lib
 
 CC_OUTPUT_FLAG ?= -o
 SO_OUTPUT_FLAG ?= -o

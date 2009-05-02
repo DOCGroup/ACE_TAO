@@ -35,7 +35,6 @@ endif # versioned_so
 # The following targets arrange to build both unshared and shared libraries
 #----------------------------------------------------------------------------
 
-LIB_PREFIX ?= lib
 VLIB = $(ARCH_LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 CLEANUP_VLIB = $(CLEANUP_LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 

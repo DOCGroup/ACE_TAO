@@ -1,3 +1,16 @@
+Sat May  2 03:21:01 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Moved the definition of LIB_PREFIX from rules.lib.GNU to
+          wrapper_macros.GNU.
+          Now that the checks for library dependencies (i.e. the LIB_CHECK
+          variable) depends on LIB_PREFIX, this latter variable needs to
+          be defined in all Makefiles.
+          However, Makefiles for binaries do not include rules.lib.GNU.
+          I am pretty sure they call include wrapper_macros, thus my
+          choice for the new location.
+
 Fri May  1 18:54:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/*
