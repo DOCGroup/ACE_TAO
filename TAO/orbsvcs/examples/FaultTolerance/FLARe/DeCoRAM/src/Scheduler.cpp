@@ -51,6 +51,19 @@ Scheduler::operator () (const Task & task)
   return result;  
 }
 
+ScheduleResult 
+Scheduler::operator () (const Task & task,
+                        const Processor & processor)
+{
+  ScheduleResult result;
+  result.task = task;
+  result.processor = processor;
+  result.wcrt = this->schedule_task (task, processor);
+    
+  return result;
+}
+
+
 void
 Scheduler::update_schedule (const ScheduleResult & result)
 {
@@ -82,7 +95,7 @@ Scheduler::update_replica_groups (const ScheduleResult & result)
   TRACE (replica_groups_);
 }
 
-SCHEDULE
+const SCHEDULE &
 Scheduler::schedule (void) const
 {
   return schedule_;
@@ -120,9 +133,6 @@ ReplicaFinder::operator () (const Task & task) const
 {
   PROCESSOR_SET result;
 
-  TRACE ("TEST");
-  TRACE (rep_groups_);
-  
   REPLICA_GROUPS::const_iterator replicas = 
     rep_groups_.find (primary_name (task));
   

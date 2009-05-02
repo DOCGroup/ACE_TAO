@@ -83,8 +83,7 @@ Forward_Ranking_Scheduler::schedule_task (const Task & task,
 
   PROCESSOR_SETS failure_scenarios = 
     this->permute_processors (fixed_failures,
-                              additional_failures,
-                              max_failures_ - fixed_failures.size ());
+                              additional_failures);
 
   TRACE ("Relevant Failure Scenarios: " << failure_scenarios);
 
@@ -199,50 +198,63 @@ Forward_Ranking_Scheduler::relevant_processors (
 PROCESSOR_SETS
 Forward_Ranking_Scheduler::permute_processors (
   const PROCESSOR_SET & fixed,
-  const PROCESSOR_SET & exchangeable,
-  unsigned int failure_number)
+  const PROCESSOR_SET & exchangeable)
 {
   PROCESSOR_SETS failure_sets;
-  PROCESSOR_LIST combination;
-  unsigned int tupel_size = 
-    std::min (failure_number,
-              static_cast <unsigned int> (exchangeable.size ()));
 
-  PROCESSOR_SET::iterator it = exchangeable.begin ();
-  for (unsigned int c_index = 0; 
-       c_index < tupel_size; 
-       ++c_index, ++it)
+  if (fixed.size () == max_failures_)
     {
-      combination.push_back (*it);
+      failure_sets.push_back (fixed);
     }
-
-  PROCESSOR_LIST failure_elements;
-  std::copy (exchangeable.begin (),
-             exchangeable.end (),
-             std::inserter (failure_elements,
-                            failure_elements.begin ()));
-
-  do
+  else 
     {
-      PROCESSOR_SET set;
-      // add a permutation of the relevant failures
-      std::copy (combination.begin (),
-                 combination.end (),
-                 std::inserter (set,
-                                set.begin ()));
+      unsigned int tupel_size = max_failures_ - fixed.size ();
 
-      // add the fixed aspects
-      std::copy (fixed.begin (),
-                 fixed.end (),
-                 std::inserter (set,
-                                set.begin ()));
+      if (exchangeable.size () < tupel_size)
+        {
+          failure_sets.push_back (exchangeable);
+        }
+      else
+        {
+          PROCESSOR_LIST combination;
 
-      failure_sets.push_back (set);
-    }
-  while (next_combination (failure_elements.begin (),
-                           failure_elements.end (),
-                           combination.begin (),
-                           combination.end ()));
+          PROCESSOR_SET::iterator it = exchangeable.begin ();
+          for (unsigned int c_index = 0; 
+               c_index < tupel_size; 
+               ++c_index, ++it)
+            {
+              combination.push_back (*it);
+            }
+
+          PROCESSOR_LIST failure_elements;
+          std::copy (exchangeable.begin (),
+                     exchangeable.end (),
+                     std::inserter (failure_elements,
+                                    failure_elements.begin ()));
+
+          do
+            {
+              PROCESSOR_SET set;
+              // add a permutation of the relevant failures
+              std::copy (combination.begin (),
+                         combination.end (),
+                         std::inserter (set,
+                                        set.begin ()));
+              
+              // add the fixed aspects
+              std::copy (fixed.begin (),
+                         fixed.end (),
+                         std::inserter (set,
+                                        set.begin ()));
+
+              failure_sets.push_back (set);
+            }
+          while (next_combination (failure_elements.begin (),
+                                   failure_elements.end (),
+                                   combination.begin (),
+                                   combination.end ()));
+        } // end else if x > y
+    } // end else w != y
 
   return failure_sets;
 }

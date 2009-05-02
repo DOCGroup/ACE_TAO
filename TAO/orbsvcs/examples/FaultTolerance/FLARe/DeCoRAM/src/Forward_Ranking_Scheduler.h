@@ -66,8 +66,7 @@ private:
                                      const PROCESSOR_SET & ignored_processors);
 
   PROCESSOR_SETS permute_processors (const PROCESSOR_SET & fixed,
-                                     const PROCESSOR_SET & exchangeable,
-                                     unsigned int failure_number);
+                                     const PROCESSOR_SET & exchangeable);
 
   double accumulate_wcrt (const TASK_LIST & tasks,
                           const PROCESSOR_SETS & scenarios);
