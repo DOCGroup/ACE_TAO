@@ -92,6 +92,8 @@ Forward_Ranking_Scheduler::schedule_task (const Task & task,
 
   TRACE ("Maximum wcrt: " << wcrt);
 
+  std::cout << "WCRT of task " << task.name << " in pro " << processor << " is " << wcrt << " with fixed pros " << fixed_failures << " and exc pros " << additional_failures << " and failure sets " << failure_scenarios << std::endl;
+
   return wcrt;
 }
 
@@ -202,61 +204,235 @@ Forward_Ranking_Scheduler::permute_processors (
 {
   PROCESSOR_SETS failure_sets;
 
+  if (exchangeable.size () > 0)
+    {
+      // there are multiple backup replicas that are already hosted
+      // on the processor we are trying to allocate a primary or a backup
+      // replica
+      if (fixed.size () == 0)
+        {
+          // we are adding a primary replica to a processor that
+          // already has multiple backup replicas
+          if (exchangeable.size () <= max_failures_)
+            {
+              // we have less than or equal to 'K' processors to check
+              // we just check them. We do not need any permutations
+              failure_sets.push_back (exchangeable);
+            }
+          else if (exchangeable.size () > max_failures_)
+            {
+              // We have more than 'k' processors to check.
+              // We need permutations of 'k' size each
+              PROCESSOR_LIST failure_combination;
+              PROCESSOR_SET::iterator failure_it = exchangeable.begin ();
+              for (unsigned int exchange_index = 0;
+                   exchange_index < max_failures_;
+                   ++exchange_index, ++failure_it)
+                {
+                  failure_combination.push_back (*failure_it);
+                }
+              PROCESSOR_LIST exchangeable_elements;
+              std::copy (exchangeable.begin (),
+                         exchangeable.end (),
+                         std::inserter (exchangeable_elements,
+                                        exchangeable_elements.begin ()));
+              do
+                {
+                  PROCESSOR_SET proc_fail_set;
+                  std::copy (failure_combination.begin (),
+                             failure_combination.end (),
+                             std::inserter (proc_fail_set,
+                                            proc_fail_set.begin ()));
+                  failure_sets.push_back (proc_fail_set);
+                }
+              while (next_combination (exchangeable_elements.begin (),
+                                       exchangeable_elements.end (),
+                                       failure_combination.begin (),
+                                       failure_combination.end ()));
+            }
+        }
+      else if (fixed.size () > 0)
+        {
+          // we are adding a backup replica to a processor that already
+          // has multiple backup replicas
+          unsigned int total_proc_size =
+            exchangeable.size () + fixed.size ();
+
+          PROCESSOR_SET fixed_exchangeable_set;
+          std::copy (exchangeable.begin (),
+                     exchangeable.end (),
+                     std::inserter (fixed_exchangeable_set,
+                                    fixed_exchangeable_set.begin ()));
+          std::copy (fixed.begin (),
+                     fixed.end (),
+                     std::inserter (fixed_exchangeable_set,
+                                    fixed_exchangeable_set.begin ()));
+
+          if (total_proc_size <= max_failures_)
+            {
+              // We have less than or equal to 'k' processors to check
+              // We do not need any permutations.
+              failure_sets.push_back (fixed_exchangeable_set);
+            }
+          else if (total_proc_size > max_failures_)
+            {
+              // We have more than 'k' processors to check.
+              // We need permutations of 'k' size each
+              PROCESSOR_LIST combination;
+              PROCESSOR_SET::iterator it = fixed_exchangeable_set.begin ();
+              for (unsigned int comb_index = 0;
+                   comb_index < max_failures_; ++comb_index, ++it)
+                {
+                  combination.push_back (*it);
+                }
+              PROCESSOR_LIST failure_elements;
+              std::copy (fixed_exchangeable_set.begin (),
+                         fixed_exchangeable_set.end (),
+                         std::inserter (failure_elements,
+                                        failure_elements.begin ()));
+              do
+                {
+                  PROCESSOR_SET set;
+                  std::copy (combination.begin (),
+                             combination.end (),
+                             std::inserter (set,
+                                            set.begin ()));
+                  failure_sets.push_back (set);
+                }
+              while (next_combination (failure_elements.begin (),
+                                       failure_elements.end (),
+                                       combination.begin (),
+                                       combination.end ()));
+            }
+        }
+    }
+  else if (exchangeable.size () == 0)
+    {
+      // we are adding a backup replica or a primary replica to a procssor
+      // that does not have any backup replicas already hosted
+      // So we do not need to check any failure scenarios
+      if (fixed.size () == 0)
+        {
+          failure_sets.push_back (exchangeable);
+        }
+      else if (fixed.size () > 0)
+        {
+          failure_sets.push_back (fixed);
+        }
+    }
+
+  return failure_sets;
+
+/*
+
   if (fixed.size () == max_failures_)
     {
       failure_sets.push_back (fixed);
     }
-  else 
+  else if (fixed.size () < max_failures_)
     {
       unsigned int tupel_size = max_failures_ - fixed.size ();
 
-      if (exchangeable.size () <= tupel_size)
+      if (fixed.size () == 0)
         {
-          failure_sets.push_back (exchangeable);
-        }
-      else
-        {
-          PROCESSOR_LIST combination;
-
-          PROCESSOR_SET::iterator it = exchangeable.begin ();
-          for (unsigned int c_index = 0; 
-               c_index < tupel_size; 
-               ++c_index, ++it)
+          if (exchangeable.size () <= tupel_size)
             {
-              combination.push_back (*it);
+              failure_sets.push_back (exchangeable);
             }
-
-          PROCESSOR_LIST failure_elements;
-          std::copy (exchangeable.begin (),
-                     exchangeable.end (),
-                     std::inserter (failure_elements,
-                                    failure_elements.begin ()));
-
-          do
+          else
             {
-              PROCESSOR_SET set;
-              // add a permutation of the relevant failures
-              std::copy (combination.begin (),
-                         combination.end (),
-                         std::inserter (set,
-                                        set.begin ()));
-              
-              // add the fixed aspects
+              PROCESSOR_LIST failure_combination;
+              PROCESSOR_SET::iterator fail_it = exchangeable.begin ();
+              for (unsigned int c_index = 0;c_index < tupel_size;
+                   ++c_index, ++fail_it)
+                {
+                  failure_combination.push_back (*fail_it);
+                }
+              PROCESSOR_LIST fail_elements;
+              std::copy (exchangeable.begin (),
+                         exchangeable.end (),
+                         std::inserter (fail_elements,
+                                        fail_elements.begin ()));
+              do
+                {
+                  PROCESSOR_SET fail_set;
+                  std::copy (failure_combination.begin (),
+                             failure_combination.end (),
+                             std::inserter (fail_set,
+                                            fail_set.begin ()));
+                  std::copy (fixed.begin (),
+                             fixed.end (),
+                             std::inserter (fail_set,
+                                            fail_set.begin ()));
+
+                  failure_sets.push_back (fail_set);
+                }
+              while (next_combination (fail_elements.begin (),
+                                       fail_elements.end (),
+                                       failure_combination.begin (),
+                                       failure_combination.end ()));
+            }
+        }
+      else if (fixed.size () > 0)
+        {
+          if (exchangeable.size () <= tupel_size)
+            {
+              PROCESSOR_SET fixed_exchangeable_set;
+
+              // add the fixed elements
               std::copy (fixed.begin (),
                          fixed.end (),
-                         std::inserter (set,
-                                        set.begin ()));
+                         std::inserter (fixed_exchangeable_set,
+                                        fixed_exchangeable_set.begin ()));
+              
+              // add the exchangeable elements
+              std::copy (exchangeable.begin (),
+                         exchangeable.end (),
+                         std::inserter (fixed_exchangeable_set,
+                                        fixed_exchangeable_set.begin ()));
 
-              failure_sets.push_back (set);
+              failure_sets.push_back (fixed_exchangeable_set);
             }
-          while (next_combination (failure_elements.begin (),
-                                   failure_elements.end (),
-                                   combination.begin (),
-                                   combination.end ()));
-        } // end else if x > y
-    } // end else w != y
+          else
+            {
+              PROCESSOR_LIST combination;
+              PROCESSOR_SET::iterator it = exchangeable.begin ();
+              for (unsigned int comb_index = 0;comb_index < tupel_size;
+                   ++comb_index, ++it)
+                {
+                  combination.push_back (*it);
+                }
+              PROCESSOR_LIST failure_elements;
+              std::copy (exchangeable.begin (),
+                         exchangeable.end (),
+                         std::inserter (failure_elements,
+                                        failure_elements.begin ())); 
+              do
+                {
+                  PROCESSOR_SET set;
+                  std::copy (combination.begin (),
+                             combination.end (),
+                             std::inserter (set,
+                                            set.begin ()));
+                  std::copy (fixed.begin (),
+                             fixed.end (),
+                             std::inserter (set,
+                                            set.begin ()));
+
+                  failure_sets.push_back (set);
+                }
+              while (next_combination (failure_elements.begin (),
+                                       failure_elements.end (),
+                                       combination.begin (),
+                                       combination.end ()));
+            }
+        }
+    }
 
   return failure_sets;
+
+*/
+
 }
 
 double
