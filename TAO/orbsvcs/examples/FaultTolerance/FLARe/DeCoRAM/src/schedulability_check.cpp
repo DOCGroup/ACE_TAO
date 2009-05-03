@@ -29,6 +29,18 @@ unsigned int consistency_level = 0;
 
 typedef std::map <Processor, FailureAwareWCRT> WCRT_MAP;
 
+class TaskSorter : public std::binary_function <TASK_POSITION,
+                                                TASK_POSITION,
+                                                bool>
+{
+public:
+  bool operator () (const TASK_POSITION & p1,
+                    const TASK_POSITION & p2)
+  {
+    return (extract_rank (p1.second.name) < extract_rank (p2.second.name));
+  }
+};
+
 class ScheduleChecker
 {
 public:
@@ -63,6 +75,15 @@ public:
                 replica_groups_[
                   primary_name (*task_it)].push_back (position);
               }
+          }
+
+        for (REPLICA_GROUPS::iterator rg_it = replica_groups_.begin ();
+             rg_it != replica_groups_.end ();
+             ++rg_it)
+          {
+            std::sort (rg_it->second.begin (),
+                       rg_it->second.end (),
+                       TaskSorter ());
           }
 
         // fill wcrt_map
