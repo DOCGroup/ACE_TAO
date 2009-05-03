@@ -36,6 +36,8 @@ FailureAwareWCRT::operator () (double previous,
     {
       TRACE (*t_it);
 
+      //std::cout << "Checking Task " << t_it->name << " with role " << t_it->role << std::endl;
+
       // check in the replica map if all previous tasks get activated
       // and switch the task to primary if this is the case
       PROCESSOR_SET necessary_failures = replica_finder_ (*t_it);
@@ -44,6 +46,9 @@ FailureAwareWCRT::operator () (double previous,
 
       if (necessary_failures.empty ())
         continue;
+
+      //std::cout << "Necc failures are " << necessary_failures << std::endl;
+      //std::cout << "Checking failures are " << failures << std::endl;
 
       PROCESSOR_SET difference;
       std::set_intersection (failures.begin (),
