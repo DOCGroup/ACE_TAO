@@ -143,7 +143,7 @@ struct ScheduleResultComparison : public std::binary_function <
   bool operator () (const RESULT_MAP::value_type & r1, 
                     const RESULT_MAP::value_type & r2)
   {
-    return (r1.second.wcrt < r2.second.wcrt);
+    return (r1.second.wcrt > r2.second.wcrt);
   }
 };
 
