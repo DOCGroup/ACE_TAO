@@ -92,7 +92,7 @@ Forward_Ranking_Scheduler::schedule_task (const Task & task,
 
   TRACE ("Maximum wcrt: " << wcrt);
 
-  std::cout << "WCRT of task " << task.name << " in pro " << processor << " is " << wcrt << " with fixed pros " << fixed_failures << " and exc pros " << additional_failures << " and failure sets " << failure_scenarios << std::endl;
+  // std::cout << "WCRT of task " << task.name << " in pro " << processor << " is " << wcrt << " with fixed pros " << fixed_failures << " and exc pros " << additional_failures << " and failure sets " << failure_scenarios << std::endl;
 
   return wcrt;
 }
