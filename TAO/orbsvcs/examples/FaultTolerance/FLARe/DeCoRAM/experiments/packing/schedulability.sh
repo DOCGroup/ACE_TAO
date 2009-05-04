@@ -12,7 +12,7 @@ for ALGORITHM in pftrmff aftrmff frftrmff bsftrmbf; do \
     echo "$TASK_NO tasks:" >> ./$RESULT_DIR/$EXPERIMENT_NAME-$ALGORITHM.dat && \
     for BACKUP_NO in 1 2 3 4; do \
       if [ -s ./$DATA_DIR/$ALGORITHM-$BACKUP_NO-backups-$TASK_NO-tasks.txt ]; then \
-        echo "count processors used by $ALGORITHM for $BACKUP_NO backups and $TASK_NO tasks ..." && \
+        echo "check schedulability of $ALGORITHM result for $BACKUP_NO backups and $TASK_NO tasks ..." && \
         echo "$BACKUP_NO backups: `$DECORAM_BIN/scheck -f ./$DATA_DIR/$ALGORITHM-$BACKUP_NO-backups-$TASK_NO-tasks.txt`" >> ./$RESULT_DIR/$EXPERIMENT_NAME-$ALGORITHM.dat; \
       fi;\
     done; \
