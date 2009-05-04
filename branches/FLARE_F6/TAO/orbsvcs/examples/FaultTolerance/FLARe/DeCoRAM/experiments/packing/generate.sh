@@ -25,10 +25,14 @@ for TASK_NO in 10 20 40 80 160; do \
   for BACKUP_NO in 1 2 3 4; do \
     for ALGORITHM in pftrmff aftrmff frftrmff bsftrmbf; do \
       echo "run $ALGORITHM for $BACKUP_NO backups..." && \
+      echo "start $ALGORITHM with $TASK_NO tasks and $BACKUP_NO backups at `date`" >> ./$DATA_DIR/timing.log && \
       $DECORAM_BIN/$ALGORITHM \
         ./$DATA_DIR/$TASK_NO-tasks.input \
         $[ $TASK_NO * $BACKUP_NO ] \
-           $BACKUP_NO > ./$DATA_DIR/$ALGORITHM-$BACKUP_NO-backups-$TASK_NO-tasks.txt; \
+           $BACKUP_NO > ./$DATA_DIR/$ALGORITHM-$BACKUP_NO-backups-$TASK_NO-tasks.txt && \
+      echo "stop  $ALGORITHM with $TASK_NO tasks and $BACKUP_NO backups at `date`" >> ./$DATA_DIR/timing.log; \
     done; \
   done; \
 done
+
+echo "---------------- done -----------------" >> ./$DATA_DIR/timing.log
