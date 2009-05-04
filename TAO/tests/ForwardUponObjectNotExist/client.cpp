@@ -93,9 +93,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            "(%P|%t) Cannot activate worker threads\n"),
                           1);
 
-      ACE_Time_Value tv (5, 0);
-
-      orb->run (tv);
+      int timeout = 30;
+      int now = 0;
+      while (now < timeout && worker.got_object_not_exist () != expected_object_not_exist)
+      {
+        now += 5;
+        ACE_Time_Value tv (5, 0);
+        orb->run (tv);
+      }
 
       if (do_shutdown)
         {
