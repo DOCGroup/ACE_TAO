@@ -37,10 +37,12 @@ FTRMFF_Bestfit::operator () (const FTRMFF_Input & input)
 
 FTRMFF_Bestfit_Algorithm::FTRMFF_Bestfit_Algorithm (
   const PROCESSOR_LIST & processors,
-  unsigned int consistency_level)
+  unsigned int consistency_level,
+  bool bestfit)
   : FTRMFF_Algorithm_Impl (consistency_level),
     scheduler_ (processors,
-                consistency_level_)
+                consistency_level_),
+    bestfit_ (bestfit)
 {
   // fill last_results data structure
   ScheduleResult result = { {"NoTask", .0, .0, .0, PRIMARY, 0}, 
@@ -127,7 +129,7 @@ FTRMFF_Bestfit_Algorithm::schedule () const
   return scheduler_.schedule ();
 }
 
-struct ScheduleResultComparison : public std::binary_function <
+struct BestfitScheduleResultComparison : public std::binary_function <
   RESULT_MAP::value_type, 
   RESULT_MAP::value_type,
   bool>
@@ -136,6 +138,18 @@ struct ScheduleResultComparison : public std::binary_function <
                     const RESULT_MAP::value_type & r2)
   {
     return (r1.second.wcrt > r2.second.wcrt);
+  }
+};
+
+struct WorstfitScheduleResultComparison : public std::binary_function <
+  RESULT_MAP::value_type, 
+  RESULT_MAP::value_type,
+  bool>
+{
+  bool operator () (const RESULT_MAP::value_type & r1, 
+                    const RESULT_MAP::value_type & r2)
+  {
+    return (r1.second.wcrt < r2.second.wcrt);
   }
 };
 
@@ -163,9 +177,14 @@ FTRMFF_Bestfit_Algorithm::best_processors (void)
              std::inserter (entries,
                             entries.begin ()));
 
-  std::sort (entries.begin (),
-             entries.end (),
-             ScheduleResultComparison ());
+  if (bestfit_)
+    std::sort (entries.begin (),
+               entries.end (),
+               BestfitScheduleResultComparison ());
+  else
+    std::sort (entries.begin (),
+               entries.end (),
+               WorstfitScheduleResultComparison ());
 
   TRACE ("entries : " << entries.size ());
 
