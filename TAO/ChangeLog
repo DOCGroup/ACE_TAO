@@ -1,3 +1,11 @@
+Mon May  4 18:27:17 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/ForwardUponObjectNotExist/client.cpp:
+
+          Increased the orb run time to maximum 30 seconds to resolve the 
+          test failure on some platforms that reply is not received 
+          before orb is shutdown.
+          
 Fri May  1 19:12:14 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * tests/ForwardUponObjectNotExist/client.cpp:
