@@ -13,6 +13,31 @@
 #include <sstream>
 #include "Schedule.h"
 
+SCHEDULE remove_empty_processors (const SCHEDULE & schedule)
+{
+  SCHEDULE new_schedule;
+
+  // use a new list of processor names to assign the scheduled entries
+  PROCESSOR_LIST new_processors = create_processors (schedule.size ());
+  PROCESSOR_LIST::const_iterator next_processor = new_processors.begin ();
+
+  for (SCHEDULE::const_iterator it = schedule.begin ();
+       it != schedule.end ();
+       ++it)
+    {
+      // only copy the entry into the new schedule if the processor
+      // contains tasks
+      if (!it->second.empty ())
+        {
+          // use a new processor name as key
+          new_schedule[*next_processor] = it->second;
+          ++next_processor;
+        }
+    }
+
+  return new_schedule;
+}
+
 SCHEDULING_MAP 
 transform_schedule (const SCHEDULE & schedule)
 {

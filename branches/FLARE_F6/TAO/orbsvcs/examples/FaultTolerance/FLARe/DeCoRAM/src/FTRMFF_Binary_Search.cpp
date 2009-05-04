@@ -38,7 +38,7 @@ FTRMFF_Binary_Search::operator () (const FTRMFF_Input & input)
   output.schedule = algorithm (input.tasks);
   output.unscheduled_tasks = algorithm.get_unschedulable ();
 
-  DBG_OUT (algorithm.schedule ());
+  DBG_OUT (remove_empty_processors (algorithm.schedule ()));
 
   return output;
 }
@@ -166,3 +166,4 @@ FTRMFF_Binary_Search_Algorithm::create_scheduling_algorithm (
     return new FTRMFF_Worstfit_Algorithm (processors,
                                           consistency_level_);
 }
+
