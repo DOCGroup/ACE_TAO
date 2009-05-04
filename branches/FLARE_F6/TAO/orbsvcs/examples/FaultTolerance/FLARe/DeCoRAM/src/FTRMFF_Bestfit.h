@@ -25,13 +25,30 @@ public:
 
 typedef std::map <Processor, ScheduleResult> RESULT_MAP;
 
+// This abstract base class allows for different strategies to weight
+// the processors for best-fit
+class ResultUpdater : public std::unary_function <ScheduleResult,
+                                                  void>
+{
+public:
+  ResultUpdater (RESULT_MAP & result_map);
+
+  virtual ~ResultUpdater (void);
+
+  virtual void operator () (const ScheduleResult & result) = 0;
+
+protected:
+  RESULT_MAP & result_map_;
+};
+
 class FTRMFF_Bestfit_Algorithm : 
   public FTRMFF_Algorithm_Impl
 {
 public:
   FTRMFF_Bestfit_Algorithm (const PROCESSOR_LIST & processors,
                             unsigned int consistency_level,
-                            bool bestfit = true);
+                            bool bestfit = true,
+                            bool weight_for_failure_case = true);
 
   virtual ~FTRMFF_Bestfit_Algorithm ();
 
@@ -46,6 +63,7 @@ private:
   RESULT_MAP last_results_;
   Forward_Ranking_Scheduler scheduler_;
   bool bestfit_;
+  std::auto_ptr<ResultUpdater> result_updater_;
 };
 
 #endif /* FTRMFF_BEST_FIT_ALGORITHM_H_ */
