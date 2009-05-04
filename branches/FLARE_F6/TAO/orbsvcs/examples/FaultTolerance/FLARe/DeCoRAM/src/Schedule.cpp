@@ -232,3 +232,18 @@ operator<< (std::ostream & ostr, const ScheduleResult & r)
 
   return ostr;
 }
+
+FTRMFF_Algorithm_Impl::~FTRMFF_Algorithm_Impl (void)
+{
+}
+
+FTRMFF_Algorithm_Impl::FTRMFF_Algorithm_Impl (unsigned int consistency_level)
+  : consistency_level_ (consistency_level)
+{
+}
+
+const SCHEDULE_PROGRESS_LIST &
+FTRMFF_Algorithm_Impl::get_unschedulable () const
+{
+  return unschedulable_;
+}

@@ -26,8 +26,7 @@ public:
 typedef std::map <Processor, ScheduleResult> RESULT_MAP;
 
 class FTRMFF_Bestfit_Algorithm : 
-  public std::unary_function <TASK_LIST,
-                              SCHEDULING_MAP>
+  public FTRMFF_Algorithm_Impl
 {
 public:
   FTRMFF_Bestfit_Algorithm (const PROCESSOR_LIST & processors,
@@ -37,17 +36,13 @@ public:
 
   virtual SCHEDULING_MAP operator () (const TASK_LIST & tasks);
 
-  SCHEDULE_PROGRESS_LIST get_unschedulable ();
-
-  const SCHEDULE & schedule () const;
+  virtual const SCHEDULE & schedule () const;
 
 private:
   PROCESSOR_LIST best_processors (void);
 
 private:
-  SCHEDULE_PROGRESS_LIST unschedulable_;
   RESULT_MAP last_results_;
-  unsigned int consistency_level_;
   Forward_Ranking_Scheduler scheduler_;
 };
 

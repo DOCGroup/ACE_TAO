@@ -13,10 +13,17 @@
 #include "FTRMFF_Binary_Search.h"
 #include "FTRMFF_Basic.h"
 #include "FTRMFF_Worstfit.h"
+#include "FTRMFF_Bestfit.h"
 #include "CTT_Enhanced.h"
 #include "CTT_Basic.h"
 
-FTRMFF_Binary_Search::~FTRMFF_Binary_Search ()
+FTRMFF_Binary_Search::FTRMFF_Binary_Search (
+  const std::string & scheduling_algorithm)
+  : scheduling_algorithm_ (scheduling_algorithm)
+{
+}
+
+FTRMFF_Binary_Search::~FTRMFF_Binary_Search (void)
 {
 }
 
@@ -24,7 +31,8 @@ FTRMFF_Output
 FTRMFF_Binary_Search::operator () (const FTRMFF_Input & input)
 {
   FTRMFF_Binary_Search_Algorithm algorithm (input.processors,
-                                      input.backup_count);
+                                            input.backup_count,
+                                            scheduling_algorithm_);
 
   FTRMFF_Output output;
   output.schedule = algorithm (input.tasks);
@@ -37,10 +45,12 @@ FTRMFF_Binary_Search::operator () (const FTRMFF_Input & input)
 
 FTRMFF_Binary_Search_Algorithm::FTRMFF_Binary_Search_Algorithm (
   const PROCESSOR_LIST & processors,
-  unsigned int consistency_level)
-  : processors_ (processors),
+  unsigned int consistency_level,
+  const std::string & scheduling_algorithm)
+  : FTRMFF_Algorithm_Impl (consistency_level),
+    processors_ (processors),
     schedule_ (create_schedule (processors)),
-    consistency_level_ (consistency_level)
+    scheduling_algorithm_ (scheduling_algorithm)
 {
 }
 
@@ -92,21 +102,21 @@ FTRMFF_Binary_Search_Algorithm::operator () (const TASK_LIST & tasks)
       TRACE ("Binary Search: max = " << max << " min = " << min);
 
       // schedule with the average value between minimum and maximum
-      FTRMFF_Worstfit_Algorithm worstfit_ftrmff (
-        create_processors (min + ((max - min)/2)),
-        consistency_level_);
+      std::auto_ptr <FTRMFF_Algorithm_Impl> ftrmff ( 
+        this->create_scheduling_algorithm (
+                create_processors (min + ((max - min)/2))));
      
-      worstfit_ftrmff (tasks);
+      (*ftrmff) (tasks);
 
       // determine number of used processors
-      processors = processor_usage (worstfit_ftrmff.schedule ());
+      processors = processor_usage (ftrmff->schedule ());
 
       // if successful schedule
-      if (worstfit_ftrmff.get_unschedulable ().empty ())
+      if (ftrmff->get_unschedulable ().empty ())
         {
           // store number of processors as new max
           max = processors;
-          schedule_ = worstfit_ftrmff.schedule ();
+          schedule_ = ftrmff->schedule ();
         }
       else // not schedulable
         {
@@ -124,15 +134,14 @@ FTRMFF_Binary_Search_Algorithm::operator () (const TASK_LIST & tasks)
     {
       // in failure case try maximum number of processors and then
       // give up.
-      FTRMFF_Worstfit_Algorithm worstfit_ftrmff (
-        create_processors (max),
-        consistency_level_);
+      std::auto_ptr <FTRMFF_Algorithm_Impl> ftrmff (
+        this->create_scheduling_algorithm (create_processors (max)));
       
-      SCHEDULING_MAP result = worstfit_ftrmff (tasks);
+      SCHEDULING_MAP result = (*ftrmff) (tasks);
 
-      unschedulable_ = worstfit_ftrmff.get_unschedulable ();
+      unschedulable_ = ftrmff->get_unschedulable ();
 
-      schedule_ = worstfit_ftrmff.schedule ();
+      schedule_ = ftrmff->schedule ();
 
       return result;
     }
@@ -140,14 +149,20 @@ FTRMFF_Binary_Search_Algorithm::operator () (const TASK_LIST & tasks)
   return transform_schedule (schedule_);
 }
 
-SCHEDULE_PROGRESS_LIST
-FTRMFF_Binary_Search_Algorithm::get_unschedulable ()
-{
-  return unschedulable_;
-}
-
 const SCHEDULE & 
-FTRMFF_Binary_Search_Algorithm::schedule () const
+FTRMFF_Binary_Search_Algorithm::schedule (void) const
 {
   return schedule_;
+}
+
+FTRMFF_Algorithm_Impl *
+FTRMFF_Binary_Search_Algorithm::create_scheduling_algorithm (
+  const PROCESSOR_LIST & processors)
+{
+  if (scheduling_algorithm_ == "bestfit")
+    return new FTRMFF_Bestfit_Algorithm (processors,
+                                         consistency_level_);
+  else
+    return new FTRMFF_Worstfit_Algorithm (processors,
+                                          consistency_level_);
 }

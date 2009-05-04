@@ -22,8 +22,8 @@ for TASK_NO in 10 20 40 80 160; do \
     -l $PERIOD_LOWER \
     -s $SS_UPPER \
     -z $SS_LOWER > ./$DATA_DIR/$TASK_NO-tasks.input && \
-  for BACKUP_NO in 1 2 3 4 5; do \
-    for ALGORITHM in pftrmff aftrmff frftrmff; do \
+  for BACKUP_NO in 1 2 3 4; do \
+    for ALGORITHM in pftrmff aftrmff frftrmff bsftrmbf; do \
       echo "run $ALGORITHM for $BACKUP_NO backups..." && \
       $DECORAM_BIN/$ALGORITHM \
         ./$DATA_DIR/$TASK_NO-tasks.input \

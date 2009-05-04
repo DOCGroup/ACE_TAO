@@ -38,7 +38,7 @@ FTRMFF_Bestfit::operator () (const FTRMFF_Input & input)
 FTRMFF_Bestfit_Algorithm::FTRMFF_Bestfit_Algorithm (
   const PROCESSOR_LIST & processors,
   unsigned int consistency_level)
-  : consistency_level_ (consistency_level),
+  : FTRMFF_Algorithm_Impl (consistency_level),
     scheduler_ (processors,
                 consistency_level_)
 {
@@ -84,8 +84,6 @@ FTRMFF_Bestfit_Algorithm::operator () (const TASK_LIST & tasks)
            task_it != task_group.end ();
            ++task_it)
         {
-          std::cout << *task_it << std::endl;
-
           PROCESSOR_LIST processors = this->best_processors ();
 
           ScheduleResult schedule_result;
@@ -121,12 +119,6 @@ FTRMFF_Bestfit_Algorithm::operator () (const TASK_LIST & tasks)
     }
 
   return transform_schedule (scheduler_.schedule ());
-}
-
-SCHEDULE_PROGRESS_LIST
-FTRMFF_Bestfit_Algorithm::get_unschedulable ()
-{
-  return unschedulable_;
 }
 
 const SCHEDULE &

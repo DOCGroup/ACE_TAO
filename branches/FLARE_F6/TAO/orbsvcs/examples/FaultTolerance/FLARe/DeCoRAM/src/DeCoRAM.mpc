@@ -111,7 +111,7 @@ project (worstfit_ranked_ftrmff) {
   }
 }
 
-project (binary_ranked_ftrmff) {
+project (binary_worstfit_ftrmff) : acelib {
 
   exename = bsftrmwf
   exeout = ../bin
@@ -121,17 +121,49 @@ project (binary_ranked_ftrmff) {
   Source_Files {
     Algorithms.cpp
     Schedule.cpp
+    Scheduler.cpp
     CTT_Basic.cpp
     CTT_Enhanced.cpp
     Task_Scheduler.cpp
+    Forward_Ranking_Scheduler.cpp
     Utilization_Ranking.cpp
     OptimizedWCRT.cpp
     RankedWCRT.cpp
+    FailureAwareWCRT.cpp
     Simple_Ranking.cpp
     FTRMFF_Worstfit.cpp
+    FTRMFF_Bestfit.cpp
     FTRMFF_Binary_Search.cpp
     FTRMFF_Basic.cpp
-    binary_ftrmff.cpp
+    binary_worstfit_ftrmff.cpp
+  }
+}
+
+project (binary_bestfit_ftrmff) : acelib {
+
+  exename = bsftrmbf
+  exeout = ../bin
+
+  macros += DO_DEBUG
+
+  Source_Files {
+    Algorithms.cpp
+    Schedule.cpp
+    Scheduler.cpp
+    CTT_Basic.cpp
+    CTT_Enhanced.cpp
+    Task_Scheduler.cpp
+    Forward_Ranking_Scheduler.cpp
+    Utilization_Ranking.cpp
+    OptimizedWCRT.cpp
+    RankedWCRT.cpp
+    FailureAwareWCRT.cpp
+    Simple_Ranking.cpp
+    FTRMFF_Worstfit.cpp
+    FTRMFF_Bestfit.cpp
+    FTRMFF_Binary_Search.cpp
+    FTRMFF_Basic.cpp
+    binary_bestfit_ftrmff.cpp
   }
 }
 
