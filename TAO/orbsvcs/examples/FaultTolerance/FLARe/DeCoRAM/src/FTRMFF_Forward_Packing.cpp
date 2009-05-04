@@ -45,7 +45,7 @@ FTRMFF_Forward_Packing_Algorithm::FTRMFF_Forward_Packing_Algorithm (
   const PROCESSOR_LIST & processors,
   unsigned int consistency_level,
   const std::string & scheduler)
-  : consistency_level_ (consistency_level)
+  : FTRMFF_Algorithm_Impl (consistency_level)
 {
   if (scheduler == "Forward_Ranking")
     {
@@ -106,13 +106,7 @@ FTRMFF_Forward_Packing_Algorithm::operator () (const TASK_LIST & tasks)
   return transform_schedule (scheduler_->schedule ());
 }
 
-SCHEDULE_PROGRESS_LIST
-FTRMFF_Forward_Packing_Algorithm::get_unschedulable ()
-{
-  return unschedulable_;
-}
-
-SCHEDULE
+const SCHEDULE &
 FTRMFF_Forward_Packing_Algorithm::schedule () const
 {
   return scheduler_->schedule ();

@@ -29,8 +29,7 @@ private:
 };
 
 class FTRMFF_Forward_Packing_Algorithm : 
-  public std::unary_function <TASK_LIST,
-                              SCHEDULING_MAP>
+  public FTRMFF_Algorithm_Impl
 {
 public:
   FTRMFF_Forward_Packing_Algorithm (const PROCESSOR_LIST & processors,
@@ -41,13 +40,9 @@ public:
 
   virtual SCHEDULING_MAP operator () (const TASK_LIST & tasks);
 
-  SCHEDULE_PROGRESS_LIST get_unschedulable ();
-
-  SCHEDULE schedule () const;
+  virtual const SCHEDULE & schedule () const;
 
 private:
-  SCHEDULE_PROGRESS_LIST unschedulable_;
-  unsigned int consistency_level_;
   std::auto_ptr<Scheduler> scheduler_;
 };
 
