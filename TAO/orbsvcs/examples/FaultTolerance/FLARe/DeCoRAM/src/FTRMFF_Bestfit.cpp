@@ -15,6 +15,51 @@
 
 #include "Forward_Ranking_Scheduler.h"
 #include "Packing_Scheduler.h"
+#include "CTT_Enhanced.h"
+
+class FailureResultUpdater : public ResultUpdater
+{
+public:
+  FailureResultUpdater (RESULT_MAP & result_map)
+    : ResultUpdater (result_map)
+  {
+  }
+
+  virtual void operator () (const ScheduleResult & result)
+  {
+    result_map_[result.processor] = result;
+  }
+};
+
+class NonFailureResultUpdater : public ResultUpdater
+{
+public:
+  NonFailureResultUpdater (RESULT_MAP & result_map,
+                           const SCHEDULE & schedule)
+    : ResultUpdater (result_map),
+      schedule_ (schedule)
+  {
+  }
+
+  virtual void operator () (const ScheduleResult & result)
+  {
+    ScheduleResult modified_result = result;
+    // calculate response time in non-failure case using the enhanced
+    // ctt algorithm.
+    SCHEDULE::const_iterator entry = schedule_.find (result.processor);
+
+    if (entry != schedule_.end ())
+      {
+        modified_result.wcrt = ctt_ (entry->second);
+      }
+
+    // add modified result to the mao
+    result_map_[result.processor] = modified_result;
+  }
+private:
+  const SCHEDULE & schedule_;
+  CTT_Enhanced ctt_;
+};
 
 FTRMFF_Bestfit::~FTRMFF_Bestfit ()
 {
@@ -38,7 +83,8 @@ FTRMFF_Bestfit::operator () (const FTRMFF_Input & input)
 FTRMFF_Bestfit_Algorithm::FTRMFF_Bestfit_Algorithm (
   const PROCESSOR_LIST & processors,
   unsigned int consistency_level,
-  bool bestfit)
+  bool bestfit,
+  bool weight_for_failure_case)
   : FTRMFF_Algorithm_Impl (consistency_level),
     scheduler_ (processors,
                 consistency_level_),
@@ -55,6 +101,16 @@ FTRMFF_Bestfit_Algorithm::FTRMFF_Bestfit_Algorithm (
     {
       result.processor = *it;
       last_results_[*it] = result;
+    }
+
+  if(weight_for_failure_case)
+    {
+      result_updater_.reset (new FailureResultUpdater (last_results_));
+    }
+  else
+    {
+      result_updater_.reset (new NonFailureResultUpdater (last_results_, 
+                                                          scheduler_.schedule ()));
     }
 }
 
@@ -112,7 +168,7 @@ FTRMFF_Bestfit_Algorithm::operator () (const TASK_LIST & tasks)
           else
             {
               scheduler_.update_schedule (schedule_result);
-              last_results_[schedule_result.processor] = schedule_result;
+              (*result_updater_) (schedule_result);
             }
           
           
@@ -196,4 +252,13 @@ FTRMFF_Bestfit_Algorithm::best_processors (void)
                   ProcessorAccumulator ());
 
   return result;
+}
+
+ResultUpdater::ResultUpdater (RESULT_MAP & result_map)
+  : result_map_ (result_map)
+{
+}
+
+ResultUpdater::~ResultUpdater (void)
+{
 }

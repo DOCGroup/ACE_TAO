@@ -166,6 +166,16 @@ FTRMFF_Binary_Search_Algorithm::create_scheduling_algorithm (
     return new FTRMFF_Bestfit_Algorithm (processors,
                                          consistency_level_,
                                          false);
+  else if (scheduling_algorithm_ == "bestfit-nofailure")
+    return new FTRMFF_Bestfit_Algorithm (processors,
+                                         consistency_level_,
+                                         true,
+                                         false);
+  else if (scheduling_algorithm_ == "worstfit-nofailure")
+    return new FTRMFF_Bestfit_Algorithm (processors,
+                                         consistency_level_,
+                                         false,
+                                         false);
   else // this algorithm is outdated
     return new FTRMFF_Worstfit_Algorithm (processors,
                                           consistency_level_);
