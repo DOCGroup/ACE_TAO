@@ -47,6 +47,26 @@ struct ScheduleResult
 
 typedef std::vector <ScheduleResult> SCHEDULE_RESULT_LIST;
 
+class FTRMFF_Algorithm_Impl : public std::unary_function <
+  TASK_LIST, 
+  SCHEDULING_MAP> 
+{
+public:
+  FTRMFF_Algorithm_Impl (unsigned int consistency_level);
+
+  virtual ~FTRMFF_Algorithm_Impl (void);
+
+  virtual SCHEDULING_MAP operator () (const TASK_LIST & tasks) = 0;
+
+  virtual const SCHEDULE & schedule (void) const = 0;
+
+  virtual const SCHEDULE_PROGRESS_LIST & get_unschedulable (void) const;
+
+protected:
+  SCHEDULE_PROGRESS_LIST unschedulable_;
+  unsigned int consistency_level_;
+};
+
 /// This abtract base class represents a class of algorithms that will
 /// determine the rank of scheduled replicas
 /// @return the number of backups that could actually be ranked

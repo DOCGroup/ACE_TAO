@@ -57,7 +57,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   
   ifile.close ();
 
-  FTRMFF_Binary_Search ftrmff;
+  FTRMFF_Binary_Search ftrmff ("bestfit");
 
   FTRMFF_Input input;
   input.tasks = tasks;

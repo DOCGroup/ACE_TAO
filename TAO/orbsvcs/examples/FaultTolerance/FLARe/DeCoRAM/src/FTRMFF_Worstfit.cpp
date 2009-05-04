@@ -37,8 +37,8 @@ FTRMFF_Worstfit::operator () (const FTRMFF_Input & input)
 FTRMFF_Worstfit_Algorithm::FTRMFF_Worstfit_Algorithm (
   const PROCESSOR_LIST & processors,
   unsigned int consistency_level)
-  : schedule_ (create_schedule (processors)),
-    consistency_level_ (consistency_level)
+  : FTRMFF_Algorithm_Impl (consistency_level),
+    schedule_ (create_schedule (processors))
 {
 }
 
@@ -131,12 +131,6 @@ FTRMFF_Worstfit_Algorithm::operator () (const TASK_LIST & tasks)
     }
 
   return transform_schedule (schedule_);
-}
-
-SCHEDULE_PROGRESS_LIST
-FTRMFF_Worstfit_Algorithm::get_unschedulable ()
-{
-  return unschedulable_;
 }
 
 const SCHEDULE & 
