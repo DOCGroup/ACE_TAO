@@ -27,7 +27,7 @@ FTRMFF_Primary::operator () (const FTRMFF_Input & input)
   output.schedule = algorithm (input.tasks);
   output.unscheduled_tasks = algorithm.get_unschedulable ();
 
-  DBG_OUT (algorithm.schedule ());
+  DBG_OUT (remove_empty_processors (algorithm.schedule ()));
 
   return output;
 }

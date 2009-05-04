@@ -85,6 +85,9 @@ class Ranking_Algorithm : public std::binary_function <SCHEDULE_RESULT_LIST,
 /// @return schedule in the form Task -> Processor
 SCHEDULING_MAP transform_schedule (const SCHEDULE & schedule);
 
+/// removes empty processors and renames processors
+SCHEDULE remove_empty_processors (const SCHEDULE & schedule);
+
 /// enters a list of tasks into the schedule according to its
 /// ScheduleResult entry.
 void add_schedule_results (const SCHEDULE_RESULT_LIST & result_list,
