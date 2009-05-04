@@ -41,7 +41,7 @@ namespace CIAO
           {
             TopLevelPackageDescription tpd;
         
-	    tpd = reader::topLevelPackageDescription (dom);
+            tpd = reader::topLevelPackageDescription (dom);
 
             PCD_Handler::package_config (*tpd.begin_basePackage (),
                                          toconfig);
