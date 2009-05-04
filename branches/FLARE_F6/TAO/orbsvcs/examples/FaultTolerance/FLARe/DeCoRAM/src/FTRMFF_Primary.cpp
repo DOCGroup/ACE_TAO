@@ -34,7 +34,8 @@ FTRMFF_Primary::operator () (const FTRMFF_Input & input)
 
 FTRMFF_Primary_Algorithm::FTRMFF_Primary_Algorithm (
   const PROCESSOR_LIST & processors)
-  : schedule_ (create_schedule (processors))
+  : FTRMFF_Algorithm_Impl (0),
+    schedule_ (create_schedule (processors))
 {
 }
 
@@ -85,12 +86,6 @@ FTRMFF_Primary_Algorithm::operator () (const TASK_LIST & tasks)
     }
 
   return transform_schedule (schedule_);
-}
-
-SCHEDULE_PROGRESS_LIST
-FTRMFF_Primary_Algorithm::get_unschedulable ()
-{
-  return unschedulable_;
 }
 
 const SCHEDULE & 

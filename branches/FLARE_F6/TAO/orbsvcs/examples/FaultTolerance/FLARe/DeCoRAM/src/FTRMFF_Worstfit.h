@@ -38,7 +38,6 @@ public:
 
 private:
   SCHEDULE schedule_;
-  SCHEDULE_PROGRESS_LIST unschedulable_;
 };
 
 #endif /* FTRMFF_WORSTFIT_ALGORITHM_H_ */

@@ -41,8 +41,8 @@ FTRMFF_Ranked_Algorithm::FTRMFF_Ranked_Algorithm (
   const PROCESSOR_LIST & processors,
   unsigned int consistency_level,
   const std::string & ranking_type)
-  : schedule_ (create_schedule (processors)),
-    consistency_level_ (consistency_level)
+  : FTRMFF_Algorithm_Impl (consistency_level),
+    schedule_ (create_schedule (processors))
 {
   if (ranking_type.compare ("utilization") == 0)
     ranking_algorithm_.reset (new Utilization_Ranking ());
@@ -111,13 +111,6 @@ FTRMFF_Ranked_Algorithm::operator () (const TASK_LIST & tasks)
 
   return transform_schedule (schedule_);
 }
-
-SCHEDULE_PROGRESS_LIST
-FTRMFF_Ranked_Algorithm::get_unschedulable ()
-{
-  return unschedulable_;
-}
-
 const SCHEDULE & 
 FTRMFF_Ranked_Algorithm::schedule () const
 {

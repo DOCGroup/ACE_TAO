@@ -38,8 +38,8 @@ FTRMFF_Enhanced::operator () (const FTRMFF_Input & input)
 FTRMFF_Enhanced_Algorithm::FTRMFF_Enhanced_Algorithm (
   const PROCESSOR_LIST & processors,
   unsigned int consistency_level)
-  : schedule_ (create_schedule (processors)),
-    consistency_level_ (consistency_level),
+  : FTRMFF_Algorithm_Impl (consistency_level),
+    schedule_ (create_schedule (processors)),
     ranking_algorithm_ (new Simple_Ranking ())
 {
 }
@@ -104,12 +104,6 @@ FTRMFF_Enhanced_Algorithm::operator () (const TASK_LIST & tasks)
     }
 
   return transform_schedule (schedule_);
-}
-
-SCHEDULE_PROGRESS_LIST
-FTRMFF_Enhanced_Algorithm::get_unschedulable ()
-{
-  return unschedulable_;
 }
 
 const SCHEDULE &

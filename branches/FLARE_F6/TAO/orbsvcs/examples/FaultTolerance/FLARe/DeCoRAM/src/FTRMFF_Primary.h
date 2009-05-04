@@ -24,9 +24,7 @@ public:
   virtual FTRMFF_Output operator () (const FTRMFF_Input & input);
 };
 
-class FTRMFF_Primary_Algorithm : 
-  public std::unary_function <TASK_LIST,
-                              SCHEDULING_MAP>
+class FTRMFF_Primary_Algorithm : public FTRMFF_Algorithm_Impl
 {
 public:
   FTRMFF_Primary_Algorithm (const PROCESSOR_LIST & processors);
@@ -35,13 +33,10 @@ public:
 
   virtual SCHEDULING_MAP operator () (const TASK_LIST & tasks);
 
-  SCHEDULE_PROGRESS_LIST get_unschedulable ();
-
-  const SCHEDULE & schedule () const;
+  virtual const SCHEDULE & schedule () const;
 
 private:
   SCHEDULE schedule_;
-  SCHEDULE_PROGRESS_LIST unschedulable_;
   CTT_Basic ctt_;
 };
 
