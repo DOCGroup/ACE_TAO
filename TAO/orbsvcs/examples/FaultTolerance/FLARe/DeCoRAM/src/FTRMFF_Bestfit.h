@@ -30,7 +30,8 @@ class FTRMFF_Bestfit_Algorithm :
 {
 public:
   FTRMFF_Bestfit_Algorithm (const PROCESSOR_LIST & processors,
-                            unsigned int consistency_level);
+                            unsigned int consistency_level,
+                            bool bestfit = true);
 
   virtual ~FTRMFF_Bestfit_Algorithm ();
 
@@ -44,6 +45,7 @@ private:
 private:
   RESULT_MAP last_results_;
   Forward_Ranking_Scheduler scheduler_;
+  bool bestfit_;
 };
 
 #endif /* FTRMFF_BEST_FIT_ALGORITHM_H_ */
