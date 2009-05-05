@@ -1,3 +1,8 @@
+Tue May  5 13:26:24 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * examples/RTCORBA/Activity/Builder.cpp:
+          Fixed memset's parameter order.
+
 Tue May  5 08:41:48 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Bug_2356_Regression/client.cpp:
