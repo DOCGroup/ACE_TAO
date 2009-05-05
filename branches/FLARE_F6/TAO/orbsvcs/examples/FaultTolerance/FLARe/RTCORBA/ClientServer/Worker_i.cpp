@@ -57,15 +57,16 @@ Worker_i::Worker_i (CORBA::ORB_ptr orb,
 }
 
 void
-Worker_i::run_method (CORBA::ULong prime_number,
-                  CORBA::ULong kill)
+Worker_i::run_method (CORBA::ULong work, CORBA::ULong prime_number,
+                      CORBA::ULong kill)
 {
   if (kill)
     ACE_OS::exit (1);
-  
-  ACE::is_prime (prime_number,
-                 2,
-                 prime_number / 2);
+
+  for (; work != 0; work--)
+    {
+      ACE::is_prime (prime_number, 2, prime_number / 2);
+    }
 }
 
 void
