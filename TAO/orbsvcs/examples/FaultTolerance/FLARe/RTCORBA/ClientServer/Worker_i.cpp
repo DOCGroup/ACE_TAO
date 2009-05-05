@@ -57,6 +57,18 @@ Worker_i::Worker_i (CORBA::ORB_ptr orb,
 }
 
 void
+Worker_i::run_method (CORBA::ULong prime_number,
+                  CORBA::ULong kill)
+{
+  if (kill)
+    ACE_OS::exit (1);
+  
+  ACE::is_prime (prime_number,
+                 2,
+                 prime_number / 2);
+}
+
+void
 Worker_i::run_task (CORBA::Double execution_time,
                     bool ignore)
 {

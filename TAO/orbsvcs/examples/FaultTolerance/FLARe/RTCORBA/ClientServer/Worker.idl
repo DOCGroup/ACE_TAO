@@ -7,6 +7,9 @@ module DeCoRAM
     void run_task (in double execution_time,
                    in boolean ignore);
 
+    void run_method (in unsigned long prime_number,
+                 in unsigned long kill);
+
     void stop ();
   };
 };
