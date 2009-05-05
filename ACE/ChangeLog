@@ -1,3 +1,8 @@
+Tue May  5 13:23:57 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * apps/drwho/CM_Server.cpp:
+          Fixed memset's parameter order.
+
 Sat May  2 03:21:01 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
 
         * include/makeinclude/rules.lib.GNU:
