@@ -13,8 +13,10 @@ Client_Timer_Handler::Client_Timer_Handler (unsigned long iterations,
                                             unsigned long log_start,
                                             const std::string & filename,
                                             const ACE_Time_Value & period,
+                                            const ACE_Time_Value & execution_time,
                                             bool logging)
   : period_ (period),
+    execution_time_ (execution_time),
     invocations_ (0),
     logfile_ (filename),
     max_iterations_ (iterations),
@@ -65,7 +67,7 @@ Client_Timer_Handler::handle_timeout (const ACE_Time_Value &,
 
       // we have to do some profiling first to see how we can achieve
       // the correct execution time.
-      server_processing_time = worker_->run_task (execution_time);
+      server_processing_time = worker_->run_task (execution_time_.msec ());
 
       timer_.stop ();
 

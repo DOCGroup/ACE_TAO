@@ -9,14 +9,14 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): lwft_server, lwft_client, naming, rtcorba {
+project(*Server): lwft_server, lwft_client, naming, rtcorba, rtportableserver {
   after += *idl
 
   libs += LWFT_StateSyncAgent
 
   Source_Files {
     Worker_i.cpp
-    server.cpp
+    server-rt.cpp
   }
 
   Source_Files {
@@ -32,7 +32,7 @@ project(*Client): lwft_client, naming, rtcorba, portableserver {
   after += *idl
 
   Source_Files {
-    client.cpp
+    client-rt.cpp
     Client_Timer_Handler.cpp
     WorkerC.cpp 
     TriggerS.cpp

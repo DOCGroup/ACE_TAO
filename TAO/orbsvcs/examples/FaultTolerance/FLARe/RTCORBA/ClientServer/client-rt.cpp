@@ -13,6 +13,7 @@
 #include "ace/Array_Base.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Throughput_Stats.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
@@ -187,7 +188,6 @@ parse_args (int argc, char *argv[])
                            "\t-q <prime number> (defaults to %d)\n"
                            "\t-r <rates file> (defaults to %s)\n"
                            "\t-t <time for test> (defaults to %d)\n"
-                           "\t-u <continuous worker priority> (defaults to %d)\n"
                            "\t-v <priority setting: AT_THREAD_CREATION = 0, AFTER_THREAD_CREATION = 1> (defaults to %s)\n"
                            "\t-w <work> (defaults to %d)\n"
                            "\t-x <shutdown server> (defaults to %d)\n"
@@ -195,7 +195,6 @@ parse_args (int argc, char *argv[])
                            "\t-z <timeout for max throughput measurement> (defaults to %d)\n"
                            "\n",
                            argv [0],
-                           continuous_workers,
                            count_missed_end_deadlines,
                            do_dump_history,
                            individual_continuous_worker_stats,
@@ -250,8 +249,7 @@ start_synchronization (DeCoRAM::Worker_ptr test,
            i < synchronization_iterations;
            ++i)
         {
-          // test->method (0, 0, work,
-                        //prime_number, 0);
+          test->run_task (2, true);
         }
     }
   catch (const CORBA::Exception& ex)
@@ -383,8 +381,7 @@ max_throughput (DeCoRAM::Worker_ptr test,
           if (now > end)
             break;
 
-          // test->method (0, 0, work,
-                        // prime_number, 0);
+          test->run_task (2, true);
 
           ++calls_made;
         }
@@ -715,7 +712,7 @@ Paced_Worker::svc (void)
 
       ACE_DEBUG ((LM_DEBUG, "******************************\n"));
 
-      this->test_->dump ();
+      //      this->test_->dump ();
     }
   catch (const CORBA::Exception& ex)
     {
@@ -921,7 +918,7 @@ Task::svc (void)
 
       if (shutdown_server)
         {
-          test->shutdown ();
+          server1->stop ();
         }
     }
   catch (const CORBA::Exception& ex)
