@@ -1,11 +1,18 @@
+Tue May  5 08:41:48 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Bug_2356_Regression/client.cpp:
+        * tests/Bug_2356_Regression/ami_test_i.cpp:
+
+          Fixed memory leaks.
+
 Mon May  4 18:27:17 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * tests/ForwardUponObjectNotExist/client.cpp:
 
-          Increased the orb run time to maximum 30 seconds to resolve the 
-          test failure on some platforms that reply is not received 
+          Increased the orb run time to maximum 30 seconds to resolve the
+          test failure on some platforms that reply is not received
           before orb is shutdown.
-          
+
 Fri May  1 19:12:14 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * tests/ForwardUponObjectNotExist/client.cpp:
