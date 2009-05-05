@@ -1,3 +1,16 @@
+Tue May  5 19:21:34 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/ClientServer/Worker.idl
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/ClientServer/Client_Timer_Handler.h
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/ClientServer/Worker_i.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/ClientServer/client-rt.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/ClientServer/Worker.mpc
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/ClientServer/Worker_i.h
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/ClientServer/server-rt.cpp
+        * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/ClientServer/Client_Timer_Handler.cpp:
+        
+          Adopted new client and server executables.
+
 Fri Apr 17 21:42:53 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/examples/FaultTolerance/FLARe/RTCORBA/ClientServer:

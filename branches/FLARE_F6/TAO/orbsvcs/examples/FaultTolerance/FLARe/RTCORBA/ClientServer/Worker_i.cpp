@@ -56,28 +56,20 @@ Worker_i::Worker_i (CORBA::ORB_ptr orb,
   task_.activate ();
 }
 
-CORBA::ULong
-Worker_i::run_task (CORBA::Double execution_time)
+void
+Worker_i::run_task (CORBA::Double execution_time,
+                    bool ignore)
 {
-  ACE_DEBUG ((LM_EMERGENCY, "x(%d) ", state_));
-
-  timer_.start ();
-
   /* do prime number calculation here */
 
-  ++state_;
+  if (!ignore)
+    {
+      ++state_;
 
-  agent_->state_changed (object_id_.c_str ());
-
-  timer_.stop ();
-
-  timer_.elapsed_time (last_execution_time_);
-
-  ACE_DEBUG ((LM_TRACE, "x=%d ", last_execution_time_.msec ()));
+      agent_->state_changed (object_id_.c_str ());
+    }
 
   task_.signal ();
-
-  return last_execution_time_.msec ();
 }
 
 void Worker_i::stop ()

@@ -92,7 +92,7 @@ parse_args (int argc, char *argv[])
                            default_thread_priority,
                            lanes_file,
                            number_of_lanes,
-                           ior_output,
+                           ior_output.c_str (),
                            static_threads),
                           -1);
       }
@@ -339,10 +339,10 @@ Task::svc (void)
                             agent_,
                             invocations);
 
-      int result = create_object (root_poa.in (),
-                                  orb_.in (),
-                                  &server_impl,
-                                  ior_output.c_str ());
+      result = create_object (root_poa.in (),
+                              orb_.in (),
+                              &server_impl,
+                              ior_output.c_str ());
 
       CORBA::Object_var obj = root_poa->servant_to_reference (&server_impl);
 

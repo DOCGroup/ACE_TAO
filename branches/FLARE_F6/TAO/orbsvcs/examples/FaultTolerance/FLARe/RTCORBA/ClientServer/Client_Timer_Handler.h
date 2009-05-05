@@ -16,6 +16,7 @@ class Client_Timer_Handler : public ACE_Event_Handler
                         unsigned long log_start,
                         const std::string & filename,
                         const ACE_Time_Value & period,
+                        const ACE_Time_Value & execution_time,
                         bool logging = false);
 
   ~Client_Timer_Handler ();
@@ -38,6 +39,8 @@ class Client_Timer_Handler : public ACE_Event_Handler
     ACE_High_Res_Timer timer_;
 
     ACE_Time_Value period_;
+
+    ACE_Time_Value execution_time_;
 
     unsigned long invocations_;
 

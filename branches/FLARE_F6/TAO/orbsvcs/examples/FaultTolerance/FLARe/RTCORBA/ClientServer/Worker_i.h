@@ -38,7 +38,8 @@ class Worker_i : public POA_DeCoRAM::Worker
 	    StateSynchronizationAgent_ptr agent,
 	    long invocations);
 
-  virtual CORBA::ULong run_task (CORBA::Double execution_time);
+  virtual void run_task (CORBA::Double execution_time,
+                         bool ignore);
 
   virtual void set_state (const CORBA::Any & state_value);
 

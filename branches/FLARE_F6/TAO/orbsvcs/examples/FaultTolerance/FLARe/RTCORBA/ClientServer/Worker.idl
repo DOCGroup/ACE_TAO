@@ -4,7 +4,8 @@ module DeCoRAM
 {
   interface Worker : ReplicatedApplication
   {
-    unsigned long run_task (in double execution_time);
+    void run_task (in double execution_time,
+                   in boolean ignore);
 
     void stop ();
   };
