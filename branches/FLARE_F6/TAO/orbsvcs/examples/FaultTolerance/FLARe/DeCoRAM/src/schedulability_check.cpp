@@ -25,9 +25,44 @@ std::string filename = "test.sd"; // filename of task list input
 bool counting_mode = false;
 bool average_mode = false;
 bool check_overbooking = false;
+bool count_tasks = false;
+bool utilization = false;
 unsigned int consistency_level = 0;
 
 typedef std::map <Processor, FailureAwareWCRT> WCRT_MAP;
+
+class UtilizationProcessor : public std::binary_function <double,
+                                                          Task,
+                                                          double>
+{
+public:
+  double operator () (double util, const Task & task)
+  {
+    double result = util;
+
+    if (extract_rank (task.name) == 0)
+      result += task.execution_time / task.period;
+
+    return result;
+  }
+};
+
+class PrimaryCounter : public std::binary_function <unsigned int,
+                                                    Task,
+                                                    unsigned int>
+{
+public:
+  unsigned int operator () (unsigned int sum,
+                            const Task & task)
+  {
+    unsigned int result = sum;
+
+    if (extract_rank (task.name) == 0)
+      ++result;
+
+    return result;
+  }
+};
 
 class TaskSorter : public std::binary_function <TASK_POSITION,
                                                 TASK_POSITION,
@@ -183,7 +218,7 @@ private:
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("acf:ho"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("acf:hotu"));
 
   int c;
 
@@ -198,6 +233,12 @@ parse_args (int argc, char *argv[])
       break;
     case 'a':
       average_mode = true;
+      break;
+    case 't':
+      count_tasks = true;
+      break;
+    case 'u':
+      utilization = true;
       break;
     case 'o':
       check_overbooking = true;
@@ -230,6 +271,44 @@ int main (int argc, char *argv[])
   if (counting_mode)
     {
       std::cout << processor_usage (schedule) << std::endl;
+    }
+  else if (count_tasks)
+    {
+      for (SCHEDULE::iterator it = schedule.begin ();
+           it != schedule.end ();
+           ++it)
+        {
+          unsigned int primary_count =
+            std::accumulate (it->second.begin (),
+                             it->second.end (),
+                             0,
+                             PrimaryCounter ());
+
+          unsigned int backup_count = it->second.size () - primary_count;
+
+          std::cout << it->first << ": " 
+                    << primary_count << " " 
+                    << backup_count << std::endl;
+        }
+    }
+  else if (utilization)
+    {
+      for (SCHEDULE::iterator it = schedule.begin ();
+           it != schedule.end ();
+           ++it)
+        {
+          TASK_LIST primaries;
+          
+          double primary_utilization =
+            std::accumulate (it->second.begin (),
+                             it->second.end (),
+                             0.0,
+                             UtilizationProcessor ());
+
+          std::cout << it->first << ": " 
+                    << primary_utilization << std::endl;
+        }
+      
     }
   else if (average_mode)
     {
