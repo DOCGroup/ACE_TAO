@@ -674,11 +674,11 @@ Paced_Worker::svc (void)
           if (i == terminate_count)
           {
             // sample_vector[count++] = 0;
-            this->test_->method (prime_number, 1);
+            this->test_->method (work, prime_number, 1);
           }
           else
           {
-            this->test_->method (prime_number, 0);
+            this->test_->method (work, prime_number, 0);
           }
 
           ACE_hrtime_t time_after_call =

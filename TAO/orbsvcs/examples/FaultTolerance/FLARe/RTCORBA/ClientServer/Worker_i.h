@@ -41,7 +41,8 @@ class Worker_i : public POA_DeCoRAM::Worker
   virtual void run_task (CORBA::Double execution_time,
                          bool ignore);
 
-  virtual void run_method (CORBA::ULong prime_number, CORBA::ULong kill);
+  virtual void run_method (CORBA::ULong work, 
+                           CORBA::ULong prime_number, CORBA::ULong kill);
 
   virtual void set_state (const CORBA::Any & state_value);
 
