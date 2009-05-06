@@ -228,7 +228,8 @@ Task::svc (void)
         RTCORBA::Current::_narrow (object.in ());
 
       default_thread_priority =
-        current->the_priority ();
+        // current->the_priority ();
+        get_implicit_thread_CORBA_priority (this->orb_.in ());
 
       int result = 0;
       CORBA::ULong stacksize = 0;

@@ -346,16 +346,16 @@ int
 max_throughput (DeCoRAM::Worker_ptr test,
                 RTCORBA::Current_ptr current,
                 RTCORBA::PriorityMapping &priority_mapping,
-                CORBA::ULong &max_rate)
+                CORBA::ULong &max_rate, CORBA::Short corba_priority)
 {
   CORBA::ULong calls_made = 0;
-  CORBA::Short CORBA_priority = 0;
+  CORBA::Short CORBA_priority = corba_priority;
   CORBA::Short native_priority = 0;
 
   try
     {
-      CORBA_priority =
-        current->the_priority ();
+      //CORBA_priority =
+        //current->the_priority ();
 
       CORBA::Boolean result =
         priority_mapping.to_native (CORBA_priority,
@@ -635,7 +635,7 @@ Paced_Worker::svc (void)
   try
     {
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor (); 
-      size_t terminate_count =  this->history_.max_samples () / 2;
+      size_t terminate_count =  this->history_.max_samples ();
       int result =
         this->setup ();
 
@@ -673,18 +673,18 @@ Paced_Worker::svc (void)
 
           if (i == terminate_count)
           {
-            // sample_vector[count++] = 0;
-            this->test_->method (work, prime_number, 1);
+            sample_vector[count++] = 0;
+            this->test_->run_method (work, prime_number, 1);
           }
           else
           {
-            this->test_->method (work, prime_number, 0);
+            this->test_->run_method (work, prime_number, 0);
           }
 
           ACE_hrtime_t time_after_call =
             ACE_OS::gethrtime ();
           this->history_.sample (time_after_call - time_before_call);
-          // sample_vector[count++] = ((time_after_call - time_before_call) / gsf);
+          sample_vector[count++] = ((time_after_call - time_before_call) / gsf);
 
           if (time_after_call > deadline_for_current_call)
             {
@@ -804,12 +804,15 @@ Task::svc (void)
       synchronizers.number_of_workers_ =
         rates.size ();
 
+      CORBA::Short corba_priority =
+        get_implicit_thread_CORBA_priority (this->orb_.in());
+
       CORBA::ULong max_rate = 0;
       result =
         max_throughput (server1.in (),
                         current.in (),
                         priority_mapping,
-                        max_rate);
+                        max_rate), corba_priority;
       if (result != 0)
         return result;
 
