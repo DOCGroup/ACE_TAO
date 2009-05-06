@@ -1,3 +1,10 @@
+Wed May  6 12:53:20 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/Bug_1269_Regression/Server_Timer.cpp:
+        * tests/Bug_1270_Regression/Server_Timer.cpp:
+        * tests/Bug_1361_Regression/Echo.cpp:
+          Fixed memset's parameter order.
+
 Tue May  5 13:26:24 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * examples/RTCORBA/Activity/Builder.cpp:
