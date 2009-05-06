@@ -67,7 +67,7 @@ Client_Timer_Handler::handle_timeout (const ACE_Time_Value &,
 
       // we have to do some profiling first to see how we can achieve
       // the correct execution time.
-      server_processing_time = worker_->run_task (execution_time_.msec ());
+      //      server_processing_time = worker_->run_task (execution_time_.msec ());
 
       timer_.stop ();
 
