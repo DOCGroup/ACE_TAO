@@ -1,0 +1,6 @@
+commands:
+========
+
+1. ./client -c 0 -p <invocation-priority-file> -r <invocation-rate-file> -t <time> -z 10 -w 30 -q <prime-number> -a <history-file> -g 1
+
+2. ./server -l three-lanes-with-best-effort -b three-bands-with-best-effort
