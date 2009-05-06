@@ -32,7 +32,7 @@ Server_Timer::handle_timeout (ACE_Time_Value const &, void const *)
   Test::Payload pload(1024);
   pload.length(1024);
 
-  ACE_OS::memset(pload.get_buffer(), pload.length(), 0);
+  ACE_OS::memset(pload.get_buffer(), 0, pload.length());
 
   try
   {
