@@ -812,7 +812,7 @@ Task::svc (void)
         max_throughput (server1.in (),
                         current.in (),
                         priority_mapping,
-                        max_rate), corba_priority;
+                        max_rate, corba_priority);
       if (result != 0)
         return result;
 
