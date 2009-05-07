@@ -1,3 +1,14 @@
+Thu May  7 01:43:48 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/drv_extern.h:
+        * TAO_IDL/driverdrv_preproc.cpp(DRV_pre_proc):
+        
+          Doubled the size of the command line buffer to 8192
+          and added a check of the return value from calling
+          command_line() on ACE_Process_Options. Thanks to
+          Russ Noseworthy <j dot russell dot noseworthy at said dot com>
+          for sending in the patches.
+
 Wed May  6 12:53:20 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/Bug_1269_Regression/Server_Timer.cpp:
