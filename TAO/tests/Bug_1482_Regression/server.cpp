@@ -2,7 +2,6 @@
 
 #include "Hello.h"
 #include "ace/Get_Opt.h"
-#include "Server_Task.h"
 
 ACE_RCSID (LongUpcall_Crash_Test,
            server,
@@ -90,16 +89,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      Server_Task st (orb.in (),
-                      ACE_Thread_Manager::instance ());
-
-      if (st.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Error activating server task\n"));
-
-          return -1;
-        }
       orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));

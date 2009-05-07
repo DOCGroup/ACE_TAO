@@ -72,7 +72,7 @@ if ($sv != 0) {
 unlink $iorfile;
 
 print STDERR "======== Running in no collocation mode and two ORBS \n";
-$SV->Arguments ("-o $iorfile -k file://$iorfile -n -ORBCollocation per-orb");
+$SV->Arguments ("-o $iorfile -k file://$iorfile -n -ORBCollocation no");
 $sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {

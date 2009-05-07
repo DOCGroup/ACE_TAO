@@ -1,8 +1,31 @@
+Thu May  7 13:01:00 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Bug_2084_Regression/Hello.cpp:
+        * tests/Bug_2084_Regression/EventNode.cpp:
+        * tests/Bug_2084_Regression/Collocated_Test.cpp:
+        * tests/Bug_2084_Regression/run_test.pl:
+        * tests/Bug_1482_Regression/Client_Task.cpp:
+        * tests/Bug_1482_Regression/Client_Task.h:
+        * tests/Bug_1482_Regression/server.cpp:
+        * tests/Bug_1482_Regression/run_test.pl:
+        * tests/COIOP/Hello.cpp:
+        * tests/Collocation_Oneway_Tests/Hello.cpp:
+        * tests/Collocation_Exception_Test/Hello.cpp:
+        * tests/Bug_1568_Regression/server.cpp:
+        * tests/DII_Collocation_Tests/oneway/Hello.cpp:
+        * tests/DII_Collocation_Tests/oneway/run_test.pl:
+        * tests/DII_Collocation_Tests/twoway/Hello.cpp:
+        * tests/DII_Collocation_Tests/twoway/run_test.pl:
+
+          Fixed memory leaks in these tests. And also changed
+          perl scripts so that no collocation is used when it was
+          meant.
+
 Thu May  7 01:43:48 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/drv_extern.h:
         * TAO_IDL/driverdrv_preproc.cpp(DRV_pre_proc):
-        
+
           Doubled the size of the command line buffer to 8192
           and added a check of the return value from calling
           command_line() on ACE_Process_Options. Thanks to
