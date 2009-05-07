@@ -51,8 +51,6 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  os->gen_ifdef_macro (node->flat_name ());
-
   *os << be_nl << be_nl
       << "class " << node->local_name () << ";" ;
 
@@ -153,8 +151,6 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
 
   *os << be_uidt_nl
       << "};";
-
-  os->gen_endif ();
 
   // Generate typecode declaration.
   if (be_global->tc_support ())

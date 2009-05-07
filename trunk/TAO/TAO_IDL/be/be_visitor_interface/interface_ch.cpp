@@ -53,9 +53,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  // Now the interface definition itself.
-  os->gen_ifdef_macro (node->flat_name ());
-
   // Now generate the class definition.
   *os << be_nl << be_nl
       << "class " << be_global->stub_export_macro ()
@@ -290,7 +287,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << node->local_name () << " &);" << be_nl << be_nl;
     }
 
-
   // Local interfaces don't support stub objects.
   if (! node->is_local ())
     {
@@ -363,8 +359,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
             }
         }
     }
-
-  os->gen_endif ();
 
   if (be_global->tc_support () && !node->home_equiv ())
     {

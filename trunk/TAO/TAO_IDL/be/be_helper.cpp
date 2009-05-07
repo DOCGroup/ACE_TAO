@@ -238,13 +238,9 @@ TAO_OutStream::gen_ifdef_macro (const char *flat_name,
   ACE_OS::sprintf (macro,
                    "_%s_",
                    tao_cg->upcase (flat_name));
+                   
   if (suffix != 0)
     {
-      //ACE_OS::sprintf (macro, "%s_%s_", macro, cg->upcase (suffix));
-      // Can't have macro on both sides of sprintf
-      // I'm not sure if the first strcat of "_" should be here or
-      // not, but having it gives the same functionality as the old
-      // sprintf call...
       ACE_OS::strcat (macro, "_");
       ACE_OS::strcat (macro, tao_cg->upcase (suffix));
       ACE_OS::strcat (macro, "_");
@@ -252,34 +248,36 @@ TAO_OutStream::gen_ifdef_macro (const char *flat_name,
 
   // Append a suffix representing the stream type.
   if (add_stream_type_suffix)
-    switch (this->st_)
     {
-      case TAO_OutStream::TAO_CLI_HDR:
-        ACE_OS::strcat (macro, "CH_");
-        break;
-      case TAO_OutStream::TAO_CLI_INL:
-        ACE_OS::strcat (macro, "CI_");
-        break;
-      case TAO_OutStream::TAO_CLI_IMPL:
-        ACE_OS::strcat (macro, "CS_");
-        break;
-      case TAO_OutStream::TAO_SVR_HDR:
-        ACE_OS::strcat (macro, "SH_");
-        break;
-      case TAO_OutStream::TAO_IMPL_HDR:
-        ACE_OS::strcat (macro, "IH_");
-        break;
-      case TAO_OutStream::TAO_IMPL_SKEL:
-        ACE_OS::strcat (macro, "IS_");
-        break;
-      case TAO_OutStream::TAO_SVR_INL:
-        ACE_OS::strcat (macro, "SI_");
-        break;
-      case TAO_OutStream::TAO_SVR_IMPL:
-        ACE_OS::strcat (macro, "SS_");
-        break;
-      default:
-        return -1;
+      switch (this->st_)
+        {
+          case TAO_OutStream::TAO_CLI_HDR:
+            ACE_OS::strcat (macro, "CH_");
+            break;
+          case TAO_OutStream::TAO_CLI_INL:
+            ACE_OS::strcat (macro, "CI_");
+            break;
+          case TAO_OutStream::TAO_CLI_IMPL:
+            ACE_OS::strcat (macro, "CS_");
+            break;
+          case TAO_OutStream::TAO_SVR_HDR:
+            ACE_OS::strcat (macro, "SH_");
+            break;
+          case TAO_OutStream::TAO_IMPL_HDR:
+            ACE_OS::strcat (macro, "IH_");
+            break;
+          case TAO_OutStream::TAO_IMPL_SKEL:
+            ACE_OS::strcat (macro, "IS_");
+            break;
+          case TAO_OutStream::TAO_SVR_INL:
+            ACE_OS::strcat (macro, "SI_");
+            break;
+          case TAO_OutStream::TAO_SVR_IMPL:
+            ACE_OS::strcat (macro, "SS_");
+            break;
+          default:
+            return -1;
+        }
     }
 
   *this << "\n\n#if !defined (" << macro << ")\n";

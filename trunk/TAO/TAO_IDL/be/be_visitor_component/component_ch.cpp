@@ -52,9 +52,6 @@ be_visitor_component_ch::visit_component (be_component *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  // Now the interface definition itself.
-  os->gen_ifdef_macro (node->flat_name ());
-
   if (!node->is_local () && !node->is_abstract ())
     {
       // Forward class declarations.
@@ -259,8 +256,6 @@ be_visitor_component_ch::visit_component (be_component *node)
                              -1);
          }
     }
-
-  os->gen_endif ();
 
   if (be_global->tc_support ())
     {
