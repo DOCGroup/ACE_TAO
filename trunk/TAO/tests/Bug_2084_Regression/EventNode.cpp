@@ -5,6 +5,7 @@
 #include "tid_to_int.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Table.h"
+#include "tao/ORB_Core_Auto_Ptr.h"
 
 ACE_RCSID(EventNode, EventNode, "$Id$")
 
@@ -35,7 +36,8 @@ void EventNode::registerHello ( ::Test::Hello_ptr h )
           TAO::ORB_Table * const orb_table =
             TAO::ORB_Table::instance ();
 
-          if (orb_table->find ("server_orb") == 0)
+          TAO_ORB_Core_Auto_Ptr tmp (orb_table->find ("server_orb"));
+          if (tmp.get () == 0)
             {
               // We are running on a single ORB and this is an error.
               ACE_ERROR ((LM_ERROR,

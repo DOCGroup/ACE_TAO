@@ -17,13 +17,6 @@ Client_Task::Client_Task (Test::Hello_ptr receiver,
     , orb_ (CORBA::ORB::_duplicate (o))
 {
   this->handler_var_ = this->handler_._this ();
-  this->handler_var_->_stubobj ()->_incr_refcnt ();
-  this->handler_var_->_add_ref ();
-}
-
-Client_Task::~Client_Task (void)
-{
-  (void) this->handler_var_._retn ();
 }
 
 int
