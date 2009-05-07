@@ -1180,18 +1180,34 @@ ACE_Process_Options::~ACE_Process_Options (void)
 int
 ACE_Process_Options::command_line (const ACE_TCHAR *const argv[])
 {
-  // @@ Factor out the code between this
   int i = 0;
 
   if (argv[i])
     {
       ACE_OS::strcat (command_line_buf_, argv[i]);
+      
       while (argv[++i])
         {
-          ACE_OS::strcat (command_line_buf_,
-                          ACE_TEXT (" "));
-          ACE_OS::strcat (command_line_buf_,
-                          argv[i]);
+          // Check to see if the next argument will overflow the  
+          // command_line buffer.
+          int cur_len =
+            static_cast<int> (
+              ACE_OS::strlen (command_line_buf_)
+              + ACE_OS:: strlen (argv[i])
+              + 2);
+              
+          if (cur_len > command_line_buf_len_)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("ACE_Process:command_line: ")
+                                 ACE_TEXT ("command line is ")
+                                 ACE_TEXT ("longer than %d\n"),
+                                 command_line_buf_len_),
+                                1);
+            }
+            
+          ACE_OS::strcat (command_line_buf_, ACE_TEXT (" "));
+          ACE_OS::strcat (command_line_buf_, argv[i]);
         }
     }
 
