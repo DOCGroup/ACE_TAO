@@ -69,8 +69,6 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  os->gen_ifdef_macro (node->flat_name (), "");
-
   if (node->is_abstract ())
     {
       *os << be_nl << be_nl
@@ -111,7 +109,6 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           << "}" ;
     }
 
-  os->gen_endif ();
   node->cli_inline_gen (true);
   return 0;
 }

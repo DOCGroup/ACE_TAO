@@ -52,8 +52,6 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  os->gen_ifdef_macro (node->flat_name ());
-
   *os << be_nl << be_nl << "class " << be_global->stub_export_macro ()
             << " " << node->local_name ()
             << " : public ::CORBA::UserException" << be_nl;
@@ -142,7 +140,6 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
         }
     }
 
-  os->gen_endif ();
   node->cli_hdr_gen (1);
   return 0;
 }
