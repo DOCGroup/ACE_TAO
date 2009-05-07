@@ -1,3 +1,15 @@
+Thu May  7 19:45:01 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * examples/RTCORBA/Activity/Builder.cpp:
+
+          Fuzz fix.
+        
+        * orbsvcs/tests/ImplRepo/ReconnectServer/client.cpp:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/serverA.cpp:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/serverB.cpp:
+
+          Clean up compiler errors.
+
 Thu May  7 18:14:03 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_exception\exception_ch.cpp:
@@ -14,15 +26,15 @@ Thu May  7 18:14:03 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_valuetype\valuetype_obv_ch.cpp:
         * TAO_IDL/be/be_visitor_valuetype\valuetype_init_ch.cpp:
         * TAO_IDL/be/be_visitor_valuetype\valuetype_ch.cpp:
-        
+
           Removed generation of #ifdef guards for all type declarations
           except sequences (duplicate anonymous sequence declarations
           of the same element type, and thus with the same constructed
           name, can appear in the same scope).
-          
+
         * TAO_IDL/be/be_helper.cpp:
         * TAO_IDL/be/be_codegen.cpp:
-        
+
           Cosmetic changes.
 
 Thu May  7 13:01:00 UTC 2009  Vladimir Zykov  <vz@prismtech.com>

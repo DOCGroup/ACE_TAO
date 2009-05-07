@@ -119,7 +119,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
           else
             return -1;
         }
-        else
+      else
         {
           arg_shifter.ignore_arg ();
         }
@@ -145,7 +145,7 @@ Builder::fini (void)
   delete [] this->job_list_;
 
   for (count = 0; count < this->poa_count_; ++count)
-      delete this->poa_list_[count];
+    delete this->poa_list_[count];
   delete [] this->poa_list_;
 
   already_cleaned = true;
