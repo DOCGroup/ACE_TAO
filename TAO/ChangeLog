@@ -1,9 +1,15 @@
+Thu May  7 22:46:50 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/RTCORBA/Bug_3643_Regression/Bug_3643_Regression.mpc:
+        
+          Prevent building the server for corba_e/minimum_corba.
+
 Thu May  7 19:45:01 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * examples/RTCORBA/Activity/Builder.cpp:
 
           Fuzz fix.
-        
+
         * orbsvcs/tests/ImplRepo/ReconnectServer/client.cpp:
         * orbsvcs/tests/ImplRepo/ReconnectServer/serverA.cpp:
         * orbsvcs/tests/ImplRepo/ReconnectServer/serverB.cpp:
