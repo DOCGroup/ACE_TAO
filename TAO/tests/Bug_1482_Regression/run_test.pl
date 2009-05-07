@@ -47,7 +47,7 @@ $client2 = $CL2->Spawn ();
 $client3 = $CL3->Spawn ();
 
 
-sleep (60);
+sleep (90);
 $SV->WaitKill (3) unless $sv1 < 0;
 $CL1->WaitKill (3);
 $CL2->WaitKill (3);
