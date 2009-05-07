@@ -68,7 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _DRV_EXTERN_DRV_EXTERN_HH
 
 // The ACE_Process_Options default size of 1024 is sometimes not enough.
-const unsigned long TAO_IDL_COMMAND_LINE_BUFFER_SIZE = 4 * 1024;
+const unsigned long TAO_IDL_COMMAND_LINE_BUFFER_SIZE = 8 * 1024;
 
 // External functions for the IDL compiler driver program.
 extern void DRV_parse_args (long, char **);
