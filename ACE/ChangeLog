@@ -1,3 +1,16 @@
+Thu May  7 01:32:22 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Process.cpp(command_line):
+        
+          Added check for buffer overflow. Thanks to Russ
+          Noseworthy <j dot russell dot noseworthy at saic dot com>
+          for submitting the patch.
+          
+        * Monitor_Admin.h:
+        * Monitor_Control/Auto_Update_Starter.h:
+        
+          Cosmetic changes.
+
 Tue May  5 13:23:57 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * apps/drwho/CM_Server.cpp:
