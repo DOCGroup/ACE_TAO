@@ -1113,7 +1113,7 @@ DRV_pre_proc (const char *myfile)
   ACE_Process process;
 
   // For complex builds, the default command line buffer size of 1024
-  // is sometimes not enough. We use 4096 here.
+  // is sometimes not enough. We use 8192 here.
   ACE_Process_Options cpp_options (1,       // Inherit environment.
                                    TAO_IDL_COMMAND_LINE_BUFFER_SIZE);
 
@@ -1121,7 +1121,14 @@ DRV_pre_proc (const char *myfile)
   DRV_cpp_putarg (t_ifile);
   DRV_cpp_putarg (0); // Null terminate the DRV_arglist.
 
-  cpp_options.command_line (DRV_arglist);
+  if (cpp_options.command_line (DRV_arglist) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%s: command line processing \"%s\" failed\n"),
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  DRV_arglist[0]));
+      throw Bailout ();
+    }
 
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.  Renaming is (supposed to be) an atomic
