@@ -335,12 +335,14 @@ Task::svc (void)
                               policies);
 
       Worker_i server_impl (this->orb_.in (),
-                            root_poa.in (),
+                            // root_poa.in (),
+                            poa.in (),
                             AppOptions::instance ()->app_id (),
                             agent_,
                             invocations);
 
-      result = create_object (root_poa.in (),
+      result = create_object (poa.in (),
+                              // root_poa.in (),
                               orb_.in (),
                               &server_impl,
                               ior_output.c_str ());
