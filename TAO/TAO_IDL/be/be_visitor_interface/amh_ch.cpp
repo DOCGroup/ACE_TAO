@@ -41,9 +41,6 @@ be_visitor_amh_interface_ch::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Now the interface definition itself.
-  os->gen_ifdef_macro (node->flat_name ());
-
   // Now generate the class definition.
   *os << "class " << be_global->stub_export_macro ()
       << " " << node->local_name () << be_idt_nl

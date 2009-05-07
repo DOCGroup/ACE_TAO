@@ -48,8 +48,6 @@ be_visitor_component_ci::visit_component (be_component *node)
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
-  os->gen_ifdef_macro (node->flat_name (), "");
-
   // Generate the constructor from stub and servant.
   node->gen_stub_ctor (os);
 
@@ -65,7 +63,6 @@ be_visitor_component_ci::visit_component (be_component *node)
       << "{" << be_nl
       << "}" ;
 
-  os->gen_endif ();
   node->cli_inline_gen (true);
   return 0;
 }

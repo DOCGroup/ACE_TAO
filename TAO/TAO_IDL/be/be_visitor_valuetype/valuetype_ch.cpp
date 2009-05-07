@@ -60,9 +60,6 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  // Now the valuetype definition itself.
-  os->gen_ifdef_macro (node->flat_name ());
-
   if (node->node_type () == AST_Decl::NT_eventtype)
     {
       *os << be_nl << be_nl
@@ -363,8 +360,6 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
   *os << be_uidt_nl
       << "};";
-
-  os->gen_endif ();
 
   // Generate the _init -related declarations.
   be_visitor_context ctx (*this->ctx_);
