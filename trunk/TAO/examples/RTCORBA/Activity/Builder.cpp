@@ -40,7 +40,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
           task_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (task_list_, Periodic_Task*[task_count_], -1);
           ACE_OS::memset (this->task_list_,
-			  0,
+                          0,
                           this->task_count_ * sizeof (this->task_list_[0]));
           arg_shifter.consume_arg ();
         }
@@ -49,7 +49,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
           job_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (job_list_, Job_i*[job_count_], -1);
           ACE_OS::memset (this->job_list_,
-			  0,
+                          0,
                           this->job_count_ * sizeof (this->job_list_[0]));
           arg_shifter.consume_arg ();
         }
@@ -58,7 +58,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
           poa_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (poa_list_, POA_Holder*[poa_count_], -1);
           ACE_OS::memset (this->poa_list_,
-			  0,
+                          0,
                           this->poa_count_ * sizeof (this->poa_list_[0]));
           arg_shifter.consume_arg ();
         }
