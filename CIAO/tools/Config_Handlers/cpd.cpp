@@ -270,7 +270,7 @@ namespace CIAO
     }
 
     void ComponentPackageDescription::
-    add_configProperty (::CIAO::Config_Handlers::Property const& e)
+    add_configProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       configProperty_.push_back (e);
     }
@@ -308,7 +308,7 @@ namespace CIAO
     }
 
     void ComponentPackageDescription::
-    add_implementation (::CIAO::Config_Handlers::PackagedComponentImplementation const& e)
+    add_implementation (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackagedComponentImplementation, ACE_Null_Mutex >  const& e)
     {
       implementation_.push_back (e);
     }
@@ -346,7 +346,7 @@ namespace CIAO
     }
 
     void ComponentPackageDescription::
-    add_infoProperty (::CIAO::Config_Handlers::Property const& e)
+    add_infoProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       infoProperty_.push_back (e);
     }
@@ -495,19 +495,19 @@ namespace CIAO
 
         else if (n == "configProperty")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
         else if (n == "implementation")
         {
-          ::CIAO::Config_Handlers::PackagedComponentImplementation t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackagedComponentImplementation, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PackagedComponentImplementation (e));
           add_implementation (t);
         }
 
         else if (n == "infoProperty")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
         }
 
@@ -792,7 +792,7 @@ namespace CIAO
           configProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) configProperty_next (o);
           }
 
@@ -814,7 +814,7 @@ namespace CIAO
           configProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) configProperty_next (o);
           }
 
@@ -876,7 +876,7 @@ namespace CIAO
           implementation_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) implementation_next (o);
           }
 
@@ -898,7 +898,7 @@ namespace CIAO
           implementation_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) implementation_next (o);
           }
 
@@ -960,7 +960,7 @@ namespace CIAO
           infoProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) infoProperty_next (o);
           }
 
@@ -982,7 +982,7 @@ namespace CIAO
           infoProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) infoProperty_next (o);
           }
 

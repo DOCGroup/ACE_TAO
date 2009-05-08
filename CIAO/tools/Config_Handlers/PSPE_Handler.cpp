@@ -26,7 +26,7 @@ namespace CIAO
            iei_b != iei_e;
            ++iei_b)
         {
-          PSPE_Handler::sub_component_port_endpoint ((*iei_b),
+          PSPE_Handler::sub_component_port_endpoint (*(*iei_b),
                                                      dest[pos++]);
         }
     }

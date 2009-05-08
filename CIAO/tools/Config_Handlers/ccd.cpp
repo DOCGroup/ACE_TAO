@@ -212,7 +212,7 @@ namespace CIAO
     }
 
     void ComponentInterfaceDescription::
-    add_supportedType (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_supportedType (ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  const& e)
     {
       supportedType_.push_back (e);
     }
@@ -250,7 +250,7 @@ namespace CIAO
     }
 
     void ComponentInterfaceDescription::
-    add_idlFile (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_idlFile (ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  const& e)
     {
       idlFile_.push_back (e);
     }
@@ -288,7 +288,7 @@ namespace CIAO
     }
 
     void ComponentInterfaceDescription::
-    add_configProperty (::CIAO::Config_Handlers::Property const& e)
+    add_configProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       configProperty_.push_back (e);
     }
@@ -326,7 +326,7 @@ namespace CIAO
     }
 
     void ComponentInterfaceDescription::
-    add_port (::CIAO::Config_Handlers::ComponentPortDescription const& e)
+    add_port (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentPortDescription, ACE_Null_Mutex >  const& e)
     {
       port_.push_back (e);
     }
@@ -364,7 +364,7 @@ namespace CIAO
     }
 
     void ComponentInterfaceDescription::
-    add_property (::CIAO::Config_Handlers::ComponentPropertyDescription const& e)
+    add_property (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentPropertyDescription, ACE_Null_Mutex >  const& e)
     {
       property_.push_back (e);
     }
@@ -402,7 +402,7 @@ namespace CIAO
     }
 
     void ComponentInterfaceDescription::
-    add_infoProperty (::CIAO::Config_Handlers::Property const& e)
+    add_infoProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       infoProperty_.push_back (e);
     }
@@ -518,37 +518,37 @@ namespace CIAO
 
         else if (n == "supportedType")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_supportedType (t);
         }
 
         else if (n == "idlFile")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_idlFile (t);
         }
 
         else if (n == "configProperty")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
         else if (n == "port")
         {
-          ::CIAO::Config_Handlers::ComponentPortDescription t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentPortDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ComponentPortDescription (e));
           add_port (t);
         }
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::ComponentPropertyDescription t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentPropertyDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ComponentPropertyDescription (e));
           add_property (t);
         }
 
         else if (n == "infoProperty")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
         }
 
@@ -759,7 +759,7 @@ namespace CIAO
           supportedType_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) supportedType_next (o);
           }
 
@@ -781,7 +781,7 @@ namespace CIAO
           supportedType_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) supportedType_next (o);
           }
 
@@ -843,7 +843,7 @@ namespace CIAO
           idlFile_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) idlFile_next (o);
           }
 
@@ -865,7 +865,7 @@ namespace CIAO
           idlFile_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) idlFile_next (o);
           }
 
@@ -927,7 +927,7 @@ namespace CIAO
           configProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) configProperty_next (o);
           }
 
@@ -949,7 +949,7 @@ namespace CIAO
           configProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) configProperty_next (o);
           }
 
@@ -1011,7 +1011,7 @@ namespace CIAO
           port_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) port_next (o);
           }
 
@@ -1033,7 +1033,7 @@ namespace CIAO
           port_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) port_next (o);
           }
 
@@ -1095,7 +1095,7 @@ namespace CIAO
           property_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) property_next (o);
           }
 
@@ -1117,7 +1117,7 @@ namespace CIAO
           property_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) property_next (o);
           }
 
@@ -1179,7 +1179,7 @@ namespace CIAO
           infoProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) infoProperty_next (o);
           }
 
@@ -1201,7 +1201,7 @@ namespace CIAO
           infoProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) infoProperty_next (o);
           }
 

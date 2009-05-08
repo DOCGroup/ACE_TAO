@@ -34,6 +34,9 @@ namespace CIAO
 #include <list>
 #include "XMLSchema/Types.hpp"
 
+#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Null_Mutex.h"
+
 #include "Basic_Deployment_Data.hpp"
 
 #include "cpd.hpp"
@@ -46,20 +49,23 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ComponentPackageImport, ACE_Null_Mutex > _ptr;
+
       // location
       // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator location_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator location_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator location_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator location_const_iterator;
       location_iterator begin_location ();
       location_iterator end_location ();
       location_const_iterator begin_location () const;
       location_const_iterator end_location () const;
-      void add_location (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_location ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_location (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > location_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > location_;
 
       public:
       ComponentPackageImport ();
@@ -78,6 +84,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export PackageConfiguration : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < PackageConfiguration, ACE_Null_Mutex > _ptr;
 
       // label
       // 
@@ -142,32 +151,32 @@ namespace CIAO
       // selectRequirement
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator selectRequirement_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator selectRequirement_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::iterator selectRequirement_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::const_iterator selectRequirement_const_iterator;
       selectRequirement_iterator begin_selectRequirement ();
       selectRequirement_iterator end_selectRequirement ();
       selectRequirement_const_iterator begin_selectRequirement () const;
       selectRequirement_const_iterator end_selectRequirement () const;
-      void add_selectRequirement (::CIAO::Config_Handlers::Requirement const& );
+      void add_selectRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
       size_t count_selectRequirement (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Requirement > selectRequirement_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > > selectRequirement_;
 
       // configProperty
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator configProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator configProperty_const_iterator;
       configProperty_iterator begin_configProperty ();
       configProperty_iterator end_configProperty ();
       configProperty_const_iterator begin_configProperty () const;
       configProperty_const_iterator end_configProperty () const;
-      void add_configProperty (::CIAO::Config_Handlers::Property const& );
+      void add_configProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_configProperty (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > configProperty_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > configProperty_;
 
       // contentLocation
       // 

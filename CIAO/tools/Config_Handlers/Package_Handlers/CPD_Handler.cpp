@@ -81,9 +81,9 @@ namespace CIAO
 
         // Packaged Component Implementations
         toconfig.implementation.length ( cpd->count_implementation ());
-    SEQ_HAND_GCC_BUG_WORKAROUND (PCI_Handler::handle_pci,
-                     cpd->begin_implementation (),
-                     toconfig.implementation);
+        SEQ_HAND_GCC_BUG_WORKAROUND (PCI_Handler::handle_pci,
+                                     (*cpd->begin_implementation ()),
+                                     toconfig.implementation);
         std::for_each (cpd->begin_implementation (),
                        cpd->end_implementation (),
                        PCI_Functor (toconfig.implementation));
@@ -111,7 +111,7 @@ namespace CIAO
           toconfig.realizes
             (Comp_Intf_Descr_Handler::comp_intf_descr (src.realizes));
         }
-
+#if 0
         for (size_t i = 0; i < src.configProperty.length (); ++i)
           {
             toconfig.add_configProperty (
@@ -129,7 +129,7 @@ namespace CIAO
             toconfig.add_infoProperty (
                        Property_Handler::get_property (src.infoProperty[i]));
           }
-
+#endif
         return toconfig;
       }
 

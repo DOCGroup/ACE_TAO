@@ -30,11 +30,17 @@ namespace XMI
 #include <list>
 #include "XMLSchema/Types.hpp"
 
+#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Null_Mutex.h"
+
 namespace XMI
 {
   class XSC_XML_Handlers_Export Extension : public ::XSCRT::Type
   {
     typedef ::XSCRT::Type Base;
+
+    public:
+    typedef ACE_Refcounted_Auto_Ptr < Extension, ACE_Null_Mutex > _ptr;
 
     // id
     // 

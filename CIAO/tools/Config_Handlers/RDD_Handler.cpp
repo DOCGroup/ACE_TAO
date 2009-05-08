@@ -45,7 +45,7 @@ namespace CIAO
            i != src.property.length ();
            ++i)
         {
-          rdd.add_property (Property_Handler::get_property (src.property[i]));
+          //rdd.add_property (Property_Handler::get_property (src.property[i]));
         }
 
       return rdd;

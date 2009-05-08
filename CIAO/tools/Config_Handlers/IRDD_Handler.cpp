@@ -107,7 +107,7 @@ namespace CIAO
 
       for (CORBA::ULong i = 0; i < src.property.length (); ++i)
         {
-          irdd.add_property (Property_Handler::get_property (src.property[i]));
+          //irdd.add_property (Property_Handler::get_property (src.property[i]));
         }
 
 

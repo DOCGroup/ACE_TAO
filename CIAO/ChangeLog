@@ -1,9 +1,64 @@
+Fri May  8 16:30:19 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/ADD_Handler.cpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/CCD_Handler.cpp:
+        * tools/Config_Handlers/CEPE_Handler.cpp:
+        * tools/Config_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/CRDD_Handler.cpp:
+        * tools/Config_Handlers/DD_Handler.cpp:
+        * tools/Config_Handlers/DP_Handler.cpp:
+        * tools/Config_Handlers/Deployment.hpp:
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynStruct_Handler.cpp:
+        * tools/Config_Handlers/ERE_Handler.cpp:
+        * tools/Config_Handlers/IDD_Handler.cpp:
+        * tools/Config_Handlers/IRDD_Handler.cpp:
+        * tools/Config_Handlers/MDD_Handler.cpp:
+        * tools/Config_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/PSPE_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.cpp:
+        * tools/Config_Handlers/RDD_Handler.cpp:
+        * tools/Config_Handlers/Req_Handler.cpp:
+        * tools/Config_Handlers/Utils/Functors.h:
+        * tools/Config_Handlers/XMI.hpp:
+        * tools/Config_Handlers/XMLSchema/Types.hpp:
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+        * tools/Config_Handlers/ccd.cpp:
+        * tools/Config_Handlers/ccd.hpp:
+        * tools/Config_Handlers/cdd.cpp:
+        * tools/Config_Handlers/cdd.hpp:
+        * tools/Config_Handlers/cdp.cpp:
+        * tools/Config_Handlers/cdp.hpp:
+        * tools/Config_Handlers/cid.hpp:
+        * tools/Config_Handlers/cid.cpp:
+        * tools/Config_Handlers/cpd.cpp:
+        * tools/Config_Handlers/cpd.hpp:
+        * tools/Config_Handlers/iad.cpp:
+        * tools/Config_Handlers/iad.hpp:
+        * tools/Config_Handlers/pcd.hpp:
+        * tools/Config_Handlers/pcd.cpp:
+        * tools/Config_Handlers/toplevel.hpp:
+        * tools/Config_Handlers/toplevel.cpp:
+
+          New version of XSC generated code, and necessary porting in the handlers
+          as a potential fix for BCB2009 compilation issues. 
+        
 Mon May  4 15:52:14 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
 
           Fuzz fix.
-        
+
 Wed Apr 29 02:27:23 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/xscdefaults.mpb:

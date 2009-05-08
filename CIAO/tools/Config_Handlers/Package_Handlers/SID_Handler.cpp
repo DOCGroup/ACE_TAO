@@ -100,10 +100,10 @@ namespace CIAO
         else if (src.importedPackage.length () == 1)
           {
             ComponentPackageImport ci;
-
+#if 0
             for (CORBA::ULong i = 0; i < src.importedPackage[0].location.length (); ++i)
               ci.add_location (src.importedPackage[0].location[i].in ());
-
+#endif
             retval.importedPackage (ci);
           }
         else if (src.referencedPackage.length () == 1)
@@ -114,7 +114,7 @@ namespace CIAO
 
             retval.referencedPackage (cpr);
           }
-
+#if 0
         for (CORBA::ULong i = 0; i < src.selectRequirement.length (); ++i)
           retval.add_selectRequirement
             (Req_Handler::get_requirement (src.selectRequirement[i]));
@@ -122,7 +122,7 @@ namespace CIAO
         for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
           retval.add_configProperty
             (Property_Handler::get_property (src.configProperty[i]));
-
+#endif
         // @@MAJO This is not a good way of binding reverse IDREFS.
         std::auto_ptr <ACE_Utils::UUID> safe_uuid (
           ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());

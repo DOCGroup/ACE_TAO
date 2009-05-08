@@ -39,6 +39,9 @@ namespace CIAO
 #include <list>
 #include "XMLSchema/Types.hpp"
 
+#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Null_Mutex.h"
+
 #include "Basic_Deployment_Data.hpp"
 
 #include "ccd.hpp"
@@ -54,6 +57,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export ComponentPackageReference : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ComponentPackageReference, ACE_Null_Mutex > _ptr;
 
       // requiredUUID
       // 
@@ -102,6 +108,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < SubcomponentInstantiationDescription, ACE_Null_Mutex > _ptr;
+
       // name
       // 
       public:
@@ -134,32 +143,32 @@ namespace CIAO
       // selectRequirement
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator selectRequirement_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator selectRequirement_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::iterator selectRequirement_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::const_iterator selectRequirement_const_iterator;
       selectRequirement_iterator begin_selectRequirement ();
       selectRequirement_iterator end_selectRequirement ();
       selectRequirement_const_iterator begin_selectRequirement () const;
       selectRequirement_const_iterator end_selectRequirement () const;
-      void add_selectRequirement (::CIAO::Config_Handlers::Requirement const& );
+      void add_selectRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
       size_t count_selectRequirement (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Requirement > selectRequirement_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > > selectRequirement_;
 
       // configProperty
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator configProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator configProperty_const_iterator;
       configProperty_iterator begin_configProperty ();
       configProperty_iterator end_configProperty ();
       configProperty_const_iterator begin_configProperty () const;
       configProperty_const_iterator end_configProperty () const;
-      void add_configProperty (::CIAO::Config_Handlers::Property const& );
+      void add_configProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_configProperty (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > configProperty_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > configProperty_;
 
       // referencedPackage
       // 
@@ -210,6 +219,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < SubcomponentPropertyReference, ACE_Null_Mutex > _ptr;
+
       // propertyName
       // 
       public:
@@ -247,6 +259,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < AssemblyPropertyMapping, ACE_Null_Mutex > _ptr;
+
       // name
       // 
       public:
@@ -268,17 +283,17 @@ namespace CIAO
       // delegatesTo
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::SubcomponentPropertyReference >::iterator delegatesTo_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::SubcomponentPropertyReference >::const_iterator delegatesTo_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPropertyReference, ACE_Null_Mutex > >::iterator delegatesTo_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPropertyReference, ACE_Null_Mutex > >::const_iterator delegatesTo_const_iterator;
       delegatesTo_iterator begin_delegatesTo ();
       delegatesTo_iterator end_delegatesTo ();
       delegatesTo_const_iterator begin_delegatesTo () const;
       delegatesTo_const_iterator end_delegatesTo () const;
-      void add_delegatesTo (::CIAO::Config_Handlers::SubcomponentPropertyReference const& );
+      void add_delegatesTo ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPropertyReference, ACE_Null_Mutex > const& );
       size_t count_delegatesTo (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::SubcomponentPropertyReference > delegatesTo_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPropertyReference, ACE_Null_Mutex > > delegatesTo_;
 
       public:
       AssemblyPropertyMapping (::XMLSchema::string< ACE_TCHAR > const& name__,
@@ -299,50 +314,53 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ComponentAssemblyDescription, ACE_Null_Mutex > _ptr;
+
       // instance
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription >::iterator instance_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription >::const_iterator instance_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentInstantiationDescription, ACE_Null_Mutex > >::iterator instance_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentInstantiationDescription, ACE_Null_Mutex > >::const_iterator instance_const_iterator;
       instance_iterator begin_instance ();
       instance_iterator end_instance ();
       instance_const_iterator begin_instance () const;
       instance_const_iterator end_instance () const;
-      void add_instance (::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& );
+      void add_instance ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentInstantiationDescription, ACE_Null_Mutex > const& );
       size_t count_instance (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription > instance_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentInstantiationDescription, ACE_Null_Mutex > > instance_;
 
       // connection
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::AssemblyConnectionDescription >::iterator connection_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::AssemblyConnectionDescription >::const_iterator connection_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyConnectionDescription, ACE_Null_Mutex > >::iterator connection_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyConnectionDescription, ACE_Null_Mutex > >::const_iterator connection_const_iterator;
       connection_iterator begin_connection ();
       connection_iterator end_connection ();
       connection_const_iterator begin_connection () const;
       connection_const_iterator end_connection () const;
-      void add_connection (::CIAO::Config_Handlers::AssemblyConnectionDescription const& );
+      void add_connection ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyConnectionDescription, ACE_Null_Mutex > const& );
       size_t count_connection (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::AssemblyConnectionDescription > connection_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyConnectionDescription, ACE_Null_Mutex > > connection_;
 
       // externalProperty
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::AssemblyPropertyMapping >::iterator externalProperty_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::AssemblyPropertyMapping >::const_iterator externalProperty_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyPropertyMapping, ACE_Null_Mutex > >::iterator externalProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyPropertyMapping, ACE_Null_Mutex > >::const_iterator externalProperty_const_iterator;
       externalProperty_iterator begin_externalProperty ();
       externalProperty_iterator end_externalProperty ();
       externalProperty_const_iterator begin_externalProperty () const;
       externalProperty_const_iterator end_externalProperty () const;
-      void add_externalProperty (::CIAO::Config_Handlers::AssemblyPropertyMapping const& );
+      void add_externalProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyPropertyMapping, ACE_Null_Mutex > const& );
       size_t count_externalProperty (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::AssemblyPropertyMapping > externalProperty_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyPropertyMapping, ACE_Null_Mutex > > externalProperty_;
 
       public:
       ComponentAssemblyDescription ();
@@ -362,65 +380,68 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < MonolithicImplementationDescription, ACE_Null_Mutex > _ptr;
+
       // nodeExecParameter
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator nodeExecParameter_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator nodeExecParameter_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator nodeExecParameter_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator nodeExecParameter_const_iterator;
       nodeExecParameter_iterator begin_nodeExecParameter ();
       nodeExecParameter_iterator end_nodeExecParameter ();
       nodeExecParameter_const_iterator begin_nodeExecParameter () const;
       nodeExecParameter_const_iterator end_nodeExecParameter () const;
-      void add_nodeExecParameter (::CIAO::Config_Handlers::Property const& );
+      void add_nodeExecParameter ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_nodeExecParameter (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > nodeExecParameter_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > nodeExecParameter_;
 
       // componentExecParameter
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator componentExecParameter_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator componentExecParameter_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator componentExecParameter_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator componentExecParameter_const_iterator;
       componentExecParameter_iterator begin_componentExecParameter ();
       componentExecParameter_iterator end_componentExecParameter ();
       componentExecParameter_const_iterator begin_componentExecParameter () const;
       componentExecParameter_const_iterator end_componentExecParameter () const;
-      void add_componentExecParameter (::CIAO::Config_Handlers::Property const& );
+      void add_componentExecParameter ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_componentExecParameter (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > componentExecParameter_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > componentExecParameter_;
 
       // deployRequirement
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ImplementationRequirement >::iterator deployRequirement_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ImplementationRequirement >::const_iterator deployRequirement_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationRequirement, ACE_Null_Mutex > >::iterator deployRequirement_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationRequirement, ACE_Null_Mutex > >::const_iterator deployRequirement_const_iterator;
       deployRequirement_iterator begin_deployRequirement ();
       deployRequirement_iterator end_deployRequirement ();
       deployRequirement_const_iterator begin_deployRequirement () const;
       deployRequirement_const_iterator end_deployRequirement () const;
-      void add_deployRequirement (::CIAO::Config_Handlers::ImplementationRequirement const& );
+      void add_deployRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationRequirement, ACE_Null_Mutex > const& );
       size_t count_deployRequirement (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ImplementationRequirement > deployRequirement_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationRequirement, ACE_Null_Mutex > > deployRequirement_;
 
       // primaryArtifact
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::NamedImplementationArtifact >::iterator primaryArtifact_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::NamedImplementationArtifact >::const_iterator primaryArtifact_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex > >::iterator primaryArtifact_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex > >::const_iterator primaryArtifact_const_iterator;
       primaryArtifact_iterator begin_primaryArtifact ();
       primaryArtifact_iterator end_primaryArtifact ();
       primaryArtifact_const_iterator begin_primaryArtifact () const;
       primaryArtifact_const_iterator end_primaryArtifact () const;
-      void add_primaryArtifact (::CIAO::Config_Handlers::NamedImplementationArtifact const& );
+      void add_primaryArtifact ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex > const& );
       size_t count_primaryArtifact (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::NamedImplementationArtifact > primaryArtifact_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex > > primaryArtifact_;
 
       public:
       MonolithicImplementationDescription ();
@@ -439,6 +460,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export ComponentImplementationDescription : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ComponentImplementationDescription, ACE_Null_Mutex > _ptr;
 
       // label
       // 
@@ -493,62 +517,62 @@ namespace CIAO
       // configProperty
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator configProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator configProperty_const_iterator;
       configProperty_iterator begin_configProperty ();
       configProperty_iterator end_configProperty ();
       configProperty_const_iterator begin_configProperty () const;
       configProperty_const_iterator end_configProperty () const;
-      void add_configProperty (::CIAO::Config_Handlers::Property const& );
+      void add_configProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_configProperty (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > configProperty_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > configProperty_;
 
       // capability
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Capability >::iterator capability_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Capability >::const_iterator capability_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex > >::iterator capability_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex > >::const_iterator capability_const_iterator;
       capability_iterator begin_capability ();
       capability_iterator end_capability ();
       capability_const_iterator begin_capability () const;
       capability_const_iterator end_capability () const;
-      void add_capability (::CIAO::Config_Handlers::Capability const& );
+      void add_capability ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex > const& );
       size_t count_capability (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Capability > capability_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex > > capability_;
 
       // dependsOn
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ImplementationDependency >::iterator dependsOn_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ImplementationDependency >::const_iterator dependsOn_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex > >::iterator dependsOn_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex > >::const_iterator dependsOn_const_iterator;
       dependsOn_iterator begin_dependsOn ();
       dependsOn_iterator end_dependsOn ();
       dependsOn_const_iterator begin_dependsOn () const;
       dependsOn_const_iterator end_dependsOn () const;
-      void add_dependsOn (::CIAO::Config_Handlers::ImplementationDependency const& );
+      void add_dependsOn ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex > const& );
       size_t count_dependsOn (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ImplementationDependency > dependsOn_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex > > dependsOn_;
 
       // infoProperty
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator infoProperty_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator infoProperty_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator infoProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator infoProperty_const_iterator;
       infoProperty_iterator begin_infoProperty ();
       infoProperty_iterator end_infoProperty ();
       infoProperty_const_iterator begin_infoProperty () const;
       infoProperty_const_iterator end_infoProperty () const;
-      void add_infoProperty (::CIAO::Config_Handlers::Property const& );
+      void add_infoProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_infoProperty (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > infoProperty_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > infoProperty_;
 
       // contentLocation
       // 
