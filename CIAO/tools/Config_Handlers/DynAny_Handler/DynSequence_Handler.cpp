@@ -76,7 +76,7 @@ namespace CIAO
                 {
                   DynamicAny::DynAny_var dynany 
                     (DYNANY_HANDLER->extract_into_dynany (type.sequence ().elementType (),
-                                                          *i));
+                                                          **i));
                   dynseq[pos++] = dynany->copy ();
                 }
           

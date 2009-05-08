@@ -77,7 +77,7 @@ namespace CIAO
     }
 
     void TopLevelPackageDescription::
-    add_basePackage (::CIAO::Config_Handlers::PackageConfiguration const& e)
+    add_basePackage (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex >  const& e)
     {
       basePackage_.push_back (e);
     }
@@ -111,7 +111,7 @@ namespace CIAO
 
         if (n == "basePackage")
         {
-          ::CIAO::Config_Handlers::PackageConfiguration t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PackageConfiguration (e));
           add_basePackage (t);
         }
 
@@ -205,7 +205,7 @@ namespace CIAO
           basePackage_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) basePackage_next (o);
           }
 
@@ -227,7 +227,7 @@ namespace CIAO
           basePackage_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) basePackage_next (o);
           }
 

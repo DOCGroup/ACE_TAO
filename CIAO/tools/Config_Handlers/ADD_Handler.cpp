@@ -29,7 +29,7 @@ namespace CIAO
              aci_e != aci_b;
              ++aci_b)
           {
-            ADD_Handler::artifact_deployment_descr ((*aci_b),
+            ADD_Handler::artifact_deployment_descr (*(*aci_b),
                                                     dest[pos],
                                                     pos);
             pos++;
@@ -58,7 +58,7 @@ namespace CIAO
              start != end;
              ++start)
           {
-            dest.location[len++] = start->c_str ();
+            dest.location[len++] = (*start)->c_str ();
           }
 
         ArtifactDeploymentDescription::source_const_iterator sce =
@@ -70,7 +70,7 @@ namespace CIAO
              scb != sce;
              ++scb)
           {
-            dest.source[len++] = scb->c_str ();
+            dest.source[len++] = (*scb)->c_str ();
           }
 
         // @@TODO: See this loop is repeated
@@ -83,8 +83,8 @@ namespace CIAO
              adcb != adce;
              ++adcb)
           {
-            Property_Handler::handle_property ((*adcb),
-                           dest.execParameter[len++]);
+            Property_Handler::handle_property (*(*adcb),
+                                               dest.execParameter[len++]);
           }
 
         if (src.id_p ())
@@ -140,7 +140,7 @@ namespace CIAO
         for (size_t i = 0; i < total; ++i)
           {
             XMLSchema::string< char > curr ((src.location[i]));
-            add.add_location (curr);
+            //add.add_location (curr);
           }
 
         //As above, for the source(s)
@@ -148,14 +148,14 @@ namespace CIAO
         for (size_t j = 0; j < total; ++j)
           {
             XMLSchema::string< char > curr ((src.source[j]));
-            add.add_source (curr);
+            //add.add_source (curr);
           }
 
         //As above for the execParameter(s)
         total = src.execParameter.length ();
         for (size_t k = 0; k < total; ++k)
           {
-            add.add_execParameter (Property_Handler::get_property (src.execParameter[k]));
+            //add.add_execParameter (Property_Handler::get_property (src.execParameter[k]));
           }
 
         // Generate a UUID to use for the IDREF.

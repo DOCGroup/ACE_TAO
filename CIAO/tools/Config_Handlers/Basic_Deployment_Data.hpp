@@ -71,6 +71,9 @@ namespace CIAO
 #include <list>
 #include "XMLSchema/Types.hpp"
 
+#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Null_Mutex.h"
+
 #include "XMI.hpp"
 
 namespace CIAO
@@ -80,6 +83,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export IdRef : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < IdRef, ACE_Null_Mutex > _ptr;
 
       // href
       // 
@@ -191,6 +197,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < DataType, ACE_Null_Mutex > _ptr;
+
       // kind
       // 
       public:
@@ -279,230 +288,233 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < DataValue, ACE_Null_Mutex > _ptr;
+
       // short
       // 
       public:
-      typedef ::std::list< ::XMLSchema::short_ >::iterator short_iterator;
-      typedef ::std::list< ::XMLSchema::short_ >::const_iterator short_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::short_, ACE_Null_Mutex > >::iterator short_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::short_, ACE_Null_Mutex > >::const_iterator short_const_iterator;
       short_iterator begin_short ();
       short_iterator end_short ();
       short_const_iterator begin_short () const;
       short_const_iterator end_short () const;
-      void add_short (::XMLSchema::short_ const& );
+      void add_short ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::short_, ACE_Null_Mutex > const& );
       size_t count_short (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::short_ > short__;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::short_, ACE_Null_Mutex > > short__;
 
       // long
       // 
       public:
-      typedef ::std::list< ::XMLSchema::int_ >::iterator long_iterator;
-      typedef ::std::list< ::XMLSchema::int_ >::const_iterator long_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::int_, ACE_Null_Mutex > >::iterator long_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::int_, ACE_Null_Mutex > >::const_iterator long_const_iterator;
       long_iterator begin_long ();
       long_iterator end_long ();
       long_const_iterator begin_long () const;
       long_const_iterator end_long () const;
-      void add_long (::XMLSchema::int_ const& );
+      void add_long ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::int_, ACE_Null_Mutex > const& );
       size_t count_long (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::int_ > long__;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::int_, ACE_Null_Mutex > > long__;
 
       // ushort
       // 
       public:
-      typedef ::std::list< ::XMLSchema::unsignedShort >::iterator ushort_iterator;
-      typedef ::std::list< ::XMLSchema::unsignedShort >::const_iterator ushort_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedShort, ACE_Null_Mutex > >::iterator ushort_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedShort, ACE_Null_Mutex > >::const_iterator ushort_const_iterator;
       ushort_iterator begin_ushort ();
       ushort_iterator end_ushort ();
       ushort_const_iterator begin_ushort () const;
       ushort_const_iterator end_ushort () const;
-      void add_ushort (::XMLSchema::unsignedShort const& );
+      void add_ushort ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedShort, ACE_Null_Mutex > const& );
       size_t count_ushort (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::unsignedShort > ushort_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedShort, ACE_Null_Mutex > > ushort_;
 
       // ulong
       // 
       public:
-      typedef ::std::list< ::XMLSchema::unsignedInt >::iterator ulong_iterator;
-      typedef ::std::list< ::XMLSchema::unsignedInt >::const_iterator ulong_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex > >::iterator ulong_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex > >::const_iterator ulong_const_iterator;
       ulong_iterator begin_ulong ();
       ulong_iterator end_ulong ();
       ulong_const_iterator begin_ulong () const;
       ulong_const_iterator end_ulong () const;
-      void add_ulong (::XMLSchema::unsignedInt const& );
+      void add_ulong ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex > const& );
       size_t count_ulong (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::unsignedInt > ulong_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex > > ulong_;
 
       // float
       // 
       public:
-      typedef ::std::list< ::XMLSchema::float_ >::iterator float_iterator;
-      typedef ::std::list< ::XMLSchema::float_ >::const_iterator float_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::float_, ACE_Null_Mutex > >::iterator float_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::float_, ACE_Null_Mutex > >::const_iterator float_const_iterator;
       float_iterator begin_float ();
       float_iterator end_float ();
       float_const_iterator begin_float () const;
       float_const_iterator end_float () const;
-      void add_float (::XMLSchema::float_ const& );
+      void add_float ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::float_, ACE_Null_Mutex > const& );
       size_t count_float (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::float_ > float__;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::float_, ACE_Null_Mutex > > float__;
 
       // double
       // 
       public:
-      typedef ::std::list< ::XMLSchema::double_ >::iterator double_iterator;
-      typedef ::std::list< ::XMLSchema::double_ >::const_iterator double_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > >::iterator double_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > >::const_iterator double_const_iterator;
       double_iterator begin_double ();
       double_iterator end_double ();
       double_const_iterator begin_double () const;
       double_const_iterator end_double () const;
-      void add_double (::XMLSchema::double_ const& );
+      void add_double ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > const& );
       size_t count_double (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::double_ > double__;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > > double__;
 
       // boolean
       // 
       public:
-      typedef ::std::list< ::XMLSchema::boolean >::iterator boolean_iterator;
-      typedef ::std::list< ::XMLSchema::boolean >::const_iterator boolean_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::boolean, ACE_Null_Mutex > >::iterator boolean_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::boolean, ACE_Null_Mutex > >::const_iterator boolean_const_iterator;
       boolean_iterator begin_boolean ();
       boolean_iterator end_boolean ();
       boolean_const_iterator begin_boolean () const;
       boolean_const_iterator end_boolean () const;
-      void add_boolean (::XMLSchema::boolean const& );
+      void add_boolean ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::boolean, ACE_Null_Mutex > const& );
       size_t count_boolean (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::boolean > boolean_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::boolean, ACE_Null_Mutex > > boolean_;
 
       // octet
       // 
       public:
-      typedef ::std::list< ::XMLSchema::unsignedByte >::iterator octet_iterator;
-      typedef ::std::list< ::XMLSchema::unsignedByte >::const_iterator octet_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedByte, ACE_Null_Mutex > >::iterator octet_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedByte, ACE_Null_Mutex > >::const_iterator octet_const_iterator;
       octet_iterator begin_octet ();
       octet_iterator end_octet ();
       octet_const_iterator begin_octet () const;
       octet_const_iterator end_octet () const;
-      void add_octet (::XMLSchema::unsignedByte const& );
+      void add_octet ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedByte, ACE_Null_Mutex > const& );
       size_t count_octet (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::unsignedByte > octet_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedByte, ACE_Null_Mutex > > octet_;
 
       // enum
       // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator enum_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator enum_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator enum_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator enum_const_iterator;
       enum_iterator begin_enum ();
       enum_iterator end_enum ();
       enum_const_iterator begin_enum () const;
       enum_const_iterator end_enum () const;
-      void add_enum (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_enum ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_enum (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > enum__;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > enum__;
 
       // string
       // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator string_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator string_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator string_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator string_const_iterator;
       string_iterator begin_string ();
       string_iterator end_string ();
       string_const_iterator begin_string () const;
       string_const_iterator end_string () const;
-      void add_string (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_string ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_string (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > string_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > string_;
 
       // longlong
       // 
       public:
-      typedef ::std::list< ::XMLSchema::long_ >::iterator longlong_iterator;
-      typedef ::std::list< ::XMLSchema::long_ >::const_iterator longlong_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::long_, ACE_Null_Mutex > >::iterator longlong_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::long_, ACE_Null_Mutex > >::const_iterator longlong_const_iterator;
       longlong_iterator begin_longlong ();
       longlong_iterator end_longlong ();
       longlong_const_iterator begin_longlong () const;
       longlong_const_iterator end_longlong () const;
-      void add_longlong (::XMLSchema::long_ const& );
+      void add_longlong ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::long_, ACE_Null_Mutex > const& );
       size_t count_longlong (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::long_ > longlong_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::long_, ACE_Null_Mutex > > longlong_;
 
       // ulonglong
       // 
       public:
-      typedef ::std::list< ::XMLSchema::unsignedLong >::iterator ulonglong_iterator;
-      typedef ::std::list< ::XMLSchema::unsignedLong >::const_iterator ulonglong_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedLong, ACE_Null_Mutex > >::iterator ulonglong_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedLong, ACE_Null_Mutex > >::const_iterator ulonglong_const_iterator;
       ulonglong_iterator begin_ulonglong ();
       ulonglong_iterator end_ulonglong ();
       ulonglong_const_iterator begin_ulonglong () const;
       ulonglong_const_iterator end_ulonglong () const;
-      void add_ulonglong (::XMLSchema::unsignedLong const& );
+      void add_ulonglong ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedLong, ACE_Null_Mutex > const& );
       size_t count_ulonglong (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::unsignedLong > ulonglong_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedLong, ACE_Null_Mutex > > ulonglong_;
 
       // longdouble
       // 
       public:
-      typedef ::std::list< ::XMLSchema::double_ >::iterator longdouble_iterator;
-      typedef ::std::list< ::XMLSchema::double_ >::const_iterator longdouble_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > >::iterator longdouble_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > >::const_iterator longdouble_const_iterator;
       longdouble_iterator begin_longdouble ();
       longdouble_iterator end_longdouble ();
       longdouble_const_iterator begin_longdouble () const;
       longdouble_const_iterator end_longdouble () const;
-      void add_longdouble (::XMLSchema::double_ const& );
+      void add_longdouble ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > const& );
       size_t count_longdouble (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::double_ > longdouble_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > > longdouble_;
 
       // element
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::DataValue >::iterator element_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::DataValue >::const_iterator element_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::DataValue, ACE_Null_Mutex > >::iterator element_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::DataValue, ACE_Null_Mutex > >::const_iterator element_const_iterator;
       element_iterator begin_element ();
       element_iterator end_element ();
       element_const_iterator begin_element () const;
       element_const_iterator end_element () const;
-      void add_element (::CIAO::Config_Handlers::DataValue const& );
+      void add_element ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::DataValue, ACE_Null_Mutex > const& );
       size_t count_element (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::DataValue > element_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::DataValue, ACE_Null_Mutex > > element_;
 
       // member
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::NamedValue >::iterator member_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::NamedValue >::const_iterator member_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedValue, ACE_Null_Mutex > >::iterator member_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedValue, ACE_Null_Mutex > >::const_iterator member_const_iterator;
       member_iterator begin_member ();
       member_iterator end_member ();
       member_const_iterator begin_member () const;
       member_const_iterator end_member () const;
-      void add_member (::CIAO::Config_Handlers::NamedValue const& );
+      void add_member ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedValue, ACE_Null_Mutex > const& );
       size_t count_member (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::NamedValue > member_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedValue, ACE_Null_Mutex > > member_;
 
       public:
       DataValue ();
@@ -521,6 +533,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export AliasType : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < AliasType, ACE_Null_Mutex > _ptr;
 
       // name
       // 
@@ -569,6 +584,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < EnumType, ACE_Null_Mutex > _ptr;
+
       // name
       // 
       public:
@@ -590,22 +608,22 @@ namespace CIAO
       // member
       // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator member_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator member_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator member_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator member_const_iterator;
       member_iterator begin_member ();
       member_iterator end_member ();
       member_const_iterator begin_member () const;
       member_const_iterator end_member () const;
-      void add_member (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_member ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_member (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > member_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > member_;
 
       public:
       EnumType (::XMLSchema::string< ACE_TCHAR > const& name__,
                 ::XMLSchema::string< ACE_TCHAR > const& typeId__,
-                ::std::list< ::XMLSchema::string< ACE_TCHAR > > const& member__);
+                ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > const& member__);
 
       EnumType (::XSCRT::XML::Element< ACE_TCHAR > const&);
       EnumType (EnumType const& s);
@@ -622,6 +640,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < StructType, ACE_Null_Mutex > _ptr;
+
       // name
       // 
       public:
@@ -643,17 +664,17 @@ namespace CIAO
       // member
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::StructMemberType >::iterator member_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::StructMemberType >::const_iterator member_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::StructMemberType, ACE_Null_Mutex > >::iterator member_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::StructMemberType, ACE_Null_Mutex > >::const_iterator member_const_iterator;
       member_iterator begin_member ();
       member_iterator end_member ();
       member_const_iterator begin_member () const;
       member_const_iterator end_member () const;
-      void add_member (::CIAO::Config_Handlers::StructMemberType const& );
+      void add_member ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::StructMemberType, ACE_Null_Mutex > const& );
       size_t count_member (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::StructMemberType > member_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::StructMemberType, ACE_Null_Mutex > > member_;
 
       public:
       StructType (::XMLSchema::string< ACE_TCHAR > const& name__,
@@ -673,6 +694,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export StructMemberType : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < StructMemberType, ACE_Null_Mutex > _ptr;
 
       // name
       // 
@@ -710,6 +734,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export ValueType : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ValueType, ACE_Null_Mutex > _ptr;
 
       // name
       // 
@@ -750,17 +777,17 @@ namespace CIAO
       // member
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ValueMemberType >::iterator member_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ValueMemberType >::const_iterator member_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ValueMemberType, ACE_Null_Mutex > >::iterator member_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ValueMemberType, ACE_Null_Mutex > >::const_iterator member_const_iterator;
       member_iterator begin_member ();
       member_iterator end_member ();
       member_const_iterator begin_member () const;
       member_const_iterator end_member () const;
-      void add_member (::CIAO::Config_Handlers::ValueMemberType const& );
+      void add_member ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ValueMemberType, ACE_Null_Mutex > const& );
       size_t count_member (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ValueMemberType > member_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ValueMemberType, ACE_Null_Mutex > > member_;
 
       public:
       ValueType (::XMLSchema::string< ACE_TCHAR > const& name__,
@@ -782,6 +809,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export ValueMemberType : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ValueMemberType, ACE_Null_Mutex > _ptr;
 
       // name
       // 
@@ -830,6 +860,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < NamedValue, ACE_Null_Mutex > _ptr;
+
       // name
       // 
       public:
@@ -866,6 +899,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export SequenceType : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < SequenceType, ACE_Null_Mutex > _ptr;
 
       // bound
       // 
@@ -904,6 +940,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < Any, ACE_Null_Mutex > _ptr;
+
       // type
       // 
       public:
@@ -940,6 +979,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export Property : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < Property, ACE_Null_Mutex > _ptr;
 
       // name
       // 
@@ -1017,6 +1059,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < SatisfierProperty, ACE_Null_Mutex > _ptr;
+
       // name
       // 
       public:
@@ -1074,6 +1119,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < Resource, ACE_Null_Mutex > _ptr;
+
       // name
       // 
       public:
@@ -1086,36 +1134,36 @@ namespace CIAO
       // resourceType
       // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator resourceType_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator resourceType_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator resourceType_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator resourceType_const_iterator;
       resourceType_iterator begin_resourceType ();
       resourceType_iterator end_resourceType ();
       resourceType_const_iterator begin_resourceType () const;
       resourceType_const_iterator end_resourceType () const;
-      void add_resourceType (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_resourceType ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_resourceType (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > resourceType_;
 
       // property
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::SatisfierProperty >::iterator property_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::SatisfierProperty >::const_iterator property_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > >::iterator property_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > >::const_iterator property_const_iterator;
       property_iterator begin_property ();
       property_iterator end_property ();
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
-      void add_property (::CIAO::Config_Handlers::SatisfierProperty const& );
+      void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > const& );
       size_t count_property (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::SatisfierProperty > property_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > > property_;
 
       public:
       Resource (::XMLSchema::string< ACE_TCHAR > const& name__,
-                ::std::list< ::XMLSchema::string< ACE_TCHAR > > const& resourceType__);
+                ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > const& resourceType__);
 
       Resource (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Resource (Resource const& s);
@@ -1131,6 +1179,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export Requirement : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < Requirement, ACE_Null_Mutex > _ptr;
 
       // resourceType
       // 
@@ -1153,17 +1204,17 @@ namespace CIAO
       // property
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator property_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator property_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator property_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator property_const_iterator;
       property_iterator begin_property ();
       property_iterator end_property ();
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
-      void add_property (::CIAO::Config_Handlers::Property const& );
+      void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_property (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > property_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > property_;
 
       public:
       Requirement (::XMLSchema::string< ACE_TCHAR > const& resourceType__,
@@ -1183,6 +1234,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export ResourceDeploymentDescription : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ResourceDeploymentDescription, ACE_Null_Mutex > _ptr;
 
       // requirementName
       // 
@@ -1205,17 +1259,17 @@ namespace CIAO
       // property
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator property_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator property_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator property_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator property_const_iterator;
       property_iterator begin_property ();
       property_iterator end_property ();
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
-      void add_property (::CIAO::Config_Handlers::Property const& );
+      void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_property (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > property_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > property_;
 
       public:
       ResourceDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& requirementName__,
@@ -1236,6 +1290,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ArtifactDeploymentDescription, ACE_Null_Mutex > _ptr;
+
       // name
       // 
       public:
@@ -1248,17 +1305,17 @@ namespace CIAO
       // source
       // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator source_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator source_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator source_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator source_const_iterator;
       source_iterator begin_source ();
       source_iterator end_source ();
       source_const_iterator begin_source () const;
       source_const_iterator end_source () const;
-      void add_source (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_source ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_source (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > source_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > source_;
 
       // node
       // 
@@ -1272,62 +1329,62 @@ namespace CIAO
       // location
       // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator location_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator location_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator location_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator location_const_iterator;
       location_iterator begin_location ();
       location_iterator end_location ();
       location_const_iterator begin_location () const;
       location_const_iterator end_location () const;
-      void add_location (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_location ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_location (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > location_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > location_;
 
       // execParameter
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator execParameter_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator execParameter_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator execParameter_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator execParameter_const_iterator;
       execParameter_iterator begin_execParameter ();
       execParameter_iterator end_execParameter ();
       execParameter_const_iterator begin_execParameter () const;
       execParameter_const_iterator end_execParameter () const;
-      void add_execParameter (::CIAO::Config_Handlers::Property const& );
+      void add_execParameter ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_execParameter (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > execParameter_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > execParameter_;
 
       // deployRequirement
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::iterator deployRequirement_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::const_iterator deployRequirement_const_iterator;
       deployRequirement_iterator begin_deployRequirement ();
       deployRequirement_iterator end_deployRequirement ();
       deployRequirement_const_iterator begin_deployRequirement () const;
       deployRequirement_const_iterator end_deployRequirement () const;
-      void add_deployRequirement (::CIAO::Config_Handlers::Requirement const& );
+      void add_deployRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
       size_t count_deployRequirement (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > > deployRequirement_;
 
       // deployedResource
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ResourceDeploymentDescription >::iterator deployedResource_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ResourceDeploymentDescription, ACE_Null_Mutex > >::iterator deployedResource_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ResourceDeploymentDescription, ACE_Null_Mutex > >::const_iterator deployedResource_const_iterator;
       deployedResource_iterator begin_deployedResource ();
       deployedResource_iterator end_deployedResource ();
       deployedResource_const_iterator begin_deployedResource () const;
       deployedResource_const_iterator end_deployedResource () const;
-      void add_deployedResource (::CIAO::Config_Handlers::ResourceDeploymentDescription const& );
+      void add_deployedResource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ResourceDeploymentDescription, ACE_Null_Mutex > const& );
       size_t count_deployedResource (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ResourceDeploymentDescription > deployedResource_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ResourceDeploymentDescription, ACE_Null_Mutex > > deployedResource_;
 
       // id
       // 
@@ -1359,6 +1416,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < MonolithicDeploymentDescription, ACE_Null_Mutex > _ptr;
+
       // name
       // 
       public:
@@ -1371,62 +1431,62 @@ namespace CIAO
       // source
       // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator source_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator source_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator source_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator source_const_iterator;
       source_iterator begin_source ();
       source_iterator end_source ();
       source_const_iterator begin_source () const;
       source_const_iterator end_source () const;
-      void add_source (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_source ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_source (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > source_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > source_;
 
       // artifact
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::IdRef >::iterator artifact_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::IdRef >::const_iterator artifact_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > >::iterator artifact_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > >::const_iterator artifact_const_iterator;
       artifact_iterator begin_artifact ();
       artifact_iterator end_artifact ();
       artifact_const_iterator begin_artifact () const;
       artifact_const_iterator end_artifact () const;
-      void add_artifact (::CIAO::Config_Handlers::IdRef const& );
+      void add_artifact ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > const& );
       size_t count_artifact (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::IdRef > artifact_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > > artifact_;
 
       // execParameter
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator execParameter_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator execParameter_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator execParameter_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator execParameter_const_iterator;
       execParameter_iterator begin_execParameter ();
       execParameter_iterator end_execParameter ();
       execParameter_const_iterator begin_execParameter () const;
       execParameter_const_iterator end_execParameter () const;
-      void add_execParameter (::CIAO::Config_Handlers::Property const& );
+      void add_execParameter ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_execParameter (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > execParameter_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > execParameter_;
 
       // deployRequirement
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::iterator deployRequirement_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::const_iterator deployRequirement_const_iterator;
       deployRequirement_iterator begin_deployRequirement ();
       deployRequirement_iterator end_deployRequirement ();
       deployRequirement_const_iterator begin_deployRequirement () const;
       deployRequirement_const_iterator end_deployRequirement () const;
-      void add_deployRequirement (::CIAO::Config_Handlers::Requirement const& );
+      void add_deployRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
       size_t count_deployRequirement (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > > deployRequirement_;
 
       // id
       // 
@@ -1495,6 +1555,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < InstanceResourceDeploymentDescription, ACE_Null_Mutex > _ptr;
+
       // resourceUsage
       // 
       public:
@@ -1525,17 +1588,17 @@ namespace CIAO
       // property
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator property_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator property_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator property_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator property_const_iterator;
       property_iterator begin_property ();
       property_iterator end_property ();
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
-      void add_property (::CIAO::Config_Handlers::Property const& );
+      void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_property (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > property_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > property_;
 
       public:
       InstanceResourceDeploymentDescription (::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage__,
@@ -1556,6 +1619,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export InstanceDeploymentDescription : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < InstanceDeploymentDescription, ACE_Null_Mutex > _ptr;
 
       // name
       // 
@@ -1596,32 +1662,32 @@ namespace CIAO
       // configProperty
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator configProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator configProperty_const_iterator;
       configProperty_iterator begin_configProperty ();
       configProperty_iterator end_configProperty ();
       configProperty_const_iterator begin_configProperty () const;
       configProperty_const_iterator end_configProperty () const;
-      void add_configProperty (::CIAO::Config_Handlers::Property const& );
+      void add_configProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_configProperty (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > configProperty_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > configProperty_;
 
       // deployedResource
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription >::iterator deployedResource_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription, ACE_Null_Mutex > >::iterator deployedResource_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription, ACE_Null_Mutex > >::const_iterator deployedResource_const_iterator;
       deployedResource_iterator begin_deployedResource ();
       deployedResource_iterator end_deployedResource ();
       deployedResource_const_iterator begin_deployedResource () const;
       deployedResource_const_iterator end_deployedResource () const;
-      void add_deployedResource (::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& );
+      void add_deployedResource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription, ACE_Null_Mutex > const& );
       size_t count_deployedResource (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > deployedResource_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription, ACE_Null_Mutex > > deployedResource_;
 
       // deployedSharedResource
       // 
@@ -1704,6 +1770,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ComponentPortDescription, ACE_Null_Mutex > _ptr;
+
       // name
       // 
       public:
@@ -1726,17 +1795,17 @@ namespace CIAO
       // supportedType
       // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator supportedType_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator supportedType_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator supportedType_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator supportedType_const_iterator;
       supportedType_iterator begin_supportedType ();
       supportedType_iterator end_supportedType ();
       supportedType_const_iterator begin_supportedType () const;
       supportedType_const_iterator end_supportedType () const;
-      void add_supportedType (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_supportedType ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_supportedType (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > supportedType_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > supportedType_;
 
       // provider
       // 
@@ -1806,6 +1875,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ComponentPropertyDescription, ACE_Null_Mutex > _ptr;
+
       // name
       // 
       public:
@@ -1843,6 +1915,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ComponentExternalPortEndpoint, ACE_Null_Mutex > _ptr;
+
       // portName
       // 
       public:
@@ -1869,6 +1944,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export PlanSubcomponentPortEndpoint : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < PlanSubcomponentPortEndpoint, ACE_Null_Mutex > _ptr;
 
       // portName
       // 
@@ -1927,6 +2005,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ExternalReferenceEndpoint, ACE_Null_Mutex > _ptr;
+
       // location
       // 
       public:
@@ -1958,17 +2039,17 @@ namespace CIAO
       // supportedType
       // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator supportedType_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator supportedType_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator supportedType_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator supportedType_const_iterator;
       supportedType_iterator begin_supportedType ();
       supportedType_iterator end_supportedType ();
       supportedType_const_iterator begin_supportedType () const;
       supportedType_const_iterator end_supportedType () const;
-      void add_supportedType (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_supportedType ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_supportedType (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > supportedType_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > supportedType_;
 
       public:
       ExternalReferenceEndpoint (::XMLSchema::string< ACE_TCHAR > const& location__,
@@ -1988,6 +2069,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export ConnectionResourceDeploymentDescription : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ConnectionResourceDeploymentDescription, ACE_Null_Mutex > _ptr;
 
       // targetName
       // 
@@ -2019,17 +2103,17 @@ namespace CIAO
       // property
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator property_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator property_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator property_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator property_const_iterator;
       property_iterator begin_property ();
       property_iterator end_property ();
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
-      void add_property (::CIAO::Config_Handlers::Property const& );
+      void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_property (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > property_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > property_;
 
       public:
       ConnectionResourceDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& targetName__,
@@ -2050,6 +2134,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export PlanConnectionDescription : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < PlanConnectionDescription, ACE_Null_Mutex > _ptr;
 
       // name
       // 
@@ -2073,77 +2160,77 @@ namespace CIAO
       // deployRequirement
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::iterator deployRequirement_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::const_iterator deployRequirement_const_iterator;
       deployRequirement_iterator begin_deployRequirement ();
       deployRequirement_iterator end_deployRequirement ();
       deployRequirement_const_iterator begin_deployRequirement () const;
       deployRequirement_const_iterator end_deployRequirement () const;
-      void add_deployRequirement (::CIAO::Config_Handlers::Requirement const& );
+      void add_deployRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
       size_t count_deployRequirement (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > > deployRequirement_;
 
       // externalEndpoint
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::iterator externalEndpoint_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::const_iterator externalEndpoint_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > >::iterator externalEndpoint_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > >::const_iterator externalEndpoint_const_iterator;
       externalEndpoint_iterator begin_externalEndpoint ();
       externalEndpoint_iterator end_externalEndpoint ();
       externalEndpoint_const_iterator begin_externalEndpoint () const;
       externalEndpoint_const_iterator end_externalEndpoint () const;
-      void add_externalEndpoint (::CIAO::Config_Handlers::ComponentExternalPortEndpoint const& );
+      void add_externalEndpoint ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > const& );
       size_t count_externalEndpoint (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint > externalEndpoint_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > > externalEndpoint_;
 
       // internalEndpoint
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint >::iterator internalEndpoint_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint >::const_iterator internalEndpoint_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint, ACE_Null_Mutex > >::iterator internalEndpoint_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint, ACE_Null_Mutex > >::const_iterator internalEndpoint_const_iterator;
       internalEndpoint_iterator begin_internalEndpoint ();
       internalEndpoint_iterator end_internalEndpoint ();
       internalEndpoint_const_iterator begin_internalEndpoint () const;
       internalEndpoint_const_iterator end_internalEndpoint () const;
-      void add_internalEndpoint (::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint const& );
+      void add_internalEndpoint ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint, ACE_Null_Mutex > const& );
       size_t count_internalEndpoint (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint > internalEndpoint_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint, ACE_Null_Mutex > > internalEndpoint_;
 
       // externalReference
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::iterator externalReference_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::const_iterator externalReference_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > >::iterator externalReference_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > >::const_iterator externalReference_const_iterator;
       externalReference_iterator begin_externalReference ();
       externalReference_iterator end_externalReference ();
       externalReference_const_iterator begin_externalReference () const;
       externalReference_const_iterator end_externalReference () const;
-      void add_externalReference (::CIAO::Config_Handlers::ExternalReferenceEndpoint const& );
+      void add_externalReference ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > const& );
       size_t count_externalReference (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint > externalReference_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > > externalReference_;
 
       // deployedResource
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription >::iterator deployedResource_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription, ACE_Null_Mutex > >::iterator deployedResource_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription, ACE_Null_Mutex > >::const_iterator deployedResource_const_iterator;
       deployedResource_iterator begin_deployedResource ();
       deployedResource_iterator end_deployedResource ();
       deployedResource_const_iterator begin_deployedResource () const;
       deployedResource_const_iterator end_deployedResource () const;
-      void add_deployedResource (::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription const& );
+      void add_deployedResource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription, ACE_Null_Mutex > const& );
       size_t count_deployedResource (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription > deployedResource_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription, ACE_Null_Mutex > > deployedResource_;
 
       public:
       PlanConnectionDescription (::XMLSchema::string< ACE_TCHAR > const& name__);
@@ -2162,6 +2249,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export ImplementationDependency : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ImplementationDependency, ACE_Null_Mutex > _ptr;
 
       // requiredType
       // 
@@ -2190,6 +2280,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < Capability, ACE_Null_Mutex > _ptr;
+
       // name
       // 
       public:
@@ -2202,32 +2295,32 @@ namespace CIAO
       // resourceType
       // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator resourceType_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator resourceType_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator resourceType_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator resourceType_const_iterator;
       resourceType_iterator begin_resourceType ();
       resourceType_iterator end_resourceType ();
       resourceType_const_iterator begin_resourceType () const;
       resourceType_const_iterator end_resourceType () const;
-      void add_resourceType (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_resourceType ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_resourceType (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > resourceType_;
 
       // property
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::SatisfierProperty >::iterator property_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::SatisfierProperty >::const_iterator property_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > >::iterator property_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > >::const_iterator property_const_iterator;
       property_iterator begin_property ();
       property_iterator end_property ();
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
-      void add_property (::CIAO::Config_Handlers::SatisfierProperty const& );
+      void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > const& );
       size_t count_property (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::SatisfierProperty > property_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > > property_;
 
       public:
       Capability (::XMLSchema::string< ACE_TCHAR > const& name__);
@@ -2246,6 +2339,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export ImplementationRequirement : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ImplementationRequirement, ACE_Null_Mutex > _ptr;
 
       // resourceUsage
       // 
@@ -2298,17 +2394,17 @@ namespace CIAO
       // property
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator property_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator property_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator property_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator property_const_iterator;
       property_iterator begin_property ();
       property_iterator end_property ();
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
-      void add_property (::CIAO::Config_Handlers::Property const& );
+      void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_property (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > property_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > property_;
 
       public:
       ImplementationRequirement (::XMLSchema::string< ACE_TCHAR > const& resourceType__,
@@ -2328,6 +2424,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export SubcomponentPortEndpoint : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < SubcomponentPortEndpoint, ACE_Null_Mutex > _ptr;
 
       // portName
       // 
@@ -2366,6 +2465,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < AssemblyConnectionDescription, ACE_Null_Mutex > _ptr;
+
       // name
       // 
       public:
@@ -2378,62 +2480,62 @@ namespace CIAO
       // deployRequirement
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::iterator deployRequirement_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::const_iterator deployRequirement_const_iterator;
       deployRequirement_iterator begin_deployRequirement ();
       deployRequirement_iterator end_deployRequirement ();
       deployRequirement_const_iterator begin_deployRequirement () const;
       deployRequirement_const_iterator end_deployRequirement () const;
-      void add_deployRequirement (::CIAO::Config_Handlers::Requirement const& );
+      void add_deployRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
       size_t count_deployRequirement (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > > deployRequirement_;
 
       // internalEndpoint
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::SubcomponentPortEndpoint >::iterator internalEndpoint_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::SubcomponentPortEndpoint >::const_iterator internalEndpoint_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPortEndpoint, ACE_Null_Mutex > >::iterator internalEndpoint_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPortEndpoint, ACE_Null_Mutex > >::const_iterator internalEndpoint_const_iterator;
       internalEndpoint_iterator begin_internalEndpoint ();
       internalEndpoint_iterator end_internalEndpoint ();
       internalEndpoint_const_iterator begin_internalEndpoint () const;
       internalEndpoint_const_iterator end_internalEndpoint () const;
-      void add_internalEndpoint (::CIAO::Config_Handlers::SubcomponentPortEndpoint const& );
+      void add_internalEndpoint ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPortEndpoint, ACE_Null_Mutex > const& );
       size_t count_internalEndpoint (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::SubcomponentPortEndpoint > internalEndpoint_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPortEndpoint, ACE_Null_Mutex > > internalEndpoint_;
 
       // externalEndpoint
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::iterator externalEndpoint_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::const_iterator externalEndpoint_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > >::iterator externalEndpoint_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > >::const_iterator externalEndpoint_const_iterator;
       externalEndpoint_iterator begin_externalEndpoint ();
       externalEndpoint_iterator end_externalEndpoint ();
       externalEndpoint_const_iterator begin_externalEndpoint () const;
       externalEndpoint_const_iterator end_externalEndpoint () const;
-      void add_externalEndpoint (::CIAO::Config_Handlers::ComponentExternalPortEndpoint const& );
+      void add_externalEndpoint ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > const& );
       size_t count_externalEndpoint (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint > externalEndpoint_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > > externalEndpoint_;
 
       // externalReference
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::iterator externalReference_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::const_iterator externalReference_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > >::iterator externalReference_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > >::const_iterator externalReference_const_iterator;
       externalReference_iterator begin_externalReference ();
       externalReference_iterator end_externalReference ();
       externalReference_const_iterator begin_externalReference () const;
       externalReference_const_iterator end_externalReference () const;
-      void add_externalReference (::CIAO::Config_Handlers::ExternalReferenceEndpoint const& );
+      void add_externalReference ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > const& );
       size_t count_externalReference (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint > externalReference_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > > externalReference_;
 
       public:
       AssemblyConnectionDescription (::XMLSchema::string< ACE_TCHAR > const& name__);
@@ -2488,6 +2590,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export PlanLocality : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < PlanLocality, ACE_Null_Mutex > _ptr;
 
       // constraint
       // 

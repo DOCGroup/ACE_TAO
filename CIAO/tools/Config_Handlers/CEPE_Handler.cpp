@@ -24,8 +24,8 @@ namespace CIAO
            eeci_b != eeci_e;
            ++eeci_b)
         {
-          CEPE_Handler::handle_external_port_endpoint ((*eeci_b),
-                                                dest[pos++]);
+          CEPE_Handler::handle_external_port_endpoint (*(*eeci_b),
+                                                       dest[pos++]);
         }
     }
 

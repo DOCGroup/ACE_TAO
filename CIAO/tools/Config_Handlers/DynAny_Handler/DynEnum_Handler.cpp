@@ -35,7 +35,7 @@ namespace CIAO
             DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
           DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow (temp.in ());
 
-          retval->set_as_string (value.begin_enum ()->c_str ());
+          retval->set_as_string ((*value.begin_enum ())->c_str ());
 
           return retval._retn ();
         }
@@ -88,7 +88,7 @@ namespace CIAO
            i != type.enum_ ().end_member ();
            ++i)
         {
-          members[index++] = CORBA::string_dup (i->c_str ());
+          members[index++] = CORBA::string_dup ((*i)->c_str ());
         }
 
       // @@ Leak this guy onto the heap to avoid a compile problem.

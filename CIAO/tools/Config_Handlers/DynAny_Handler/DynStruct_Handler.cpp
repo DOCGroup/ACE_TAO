@@ -24,7 +24,7 @@ namespace CIAO
       for (StructType::member_const_iterator i = type.struct_ ().begin_member ();
            i != type.struct_ ().end_member (); ++i)
         {
-          dt_map[i->name ()] = &(i->type ());
+          dt_map[(*i)->name ()] = &((*i)->type ());
         }
     }
 
@@ -57,9 +57,9 @@ namespace CIAO
           for (DataValue::member_const_iterator i = value.begin_member ();
                i != value.end_member (); ++i)
             {
-              values[pos].id = i->name ().c_str ();
-              values[pos].value = DYNANY_HANDLER->extract_into_dynany (*dt_map[i->name ()],
-                                                                       i->value ());
+              values[pos].id = (*i)->name ().c_str ();
+              values[pos].value = DYNANY_HANDLER->extract_into_dynany (*dt_map[(*i)->name ()],
+                                                                       (*i)->value ());
               pos++;
             }
           
@@ -107,8 +107,8 @@ namespace CIAO
       for (StructType::member_const_iterator i = type.struct_ ().begin_member ();
            i != type.struct_ ().end_member (); ++i)
         {
-          members[pos].name = i->name ().c_str ();
-          members[pos].type = DYNANY_HANDLER->create_typecode (i->type ());
+          members[pos].name = (*i)->name ().c_str ();
+          members[pos].type = DYNANY_HANDLER->create_typecode ((*i)->type ());
           ++pos;
         }
 

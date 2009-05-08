@@ -37,6 +37,9 @@ namespace CIAO
 #include <list>
 #include "XMLSchema/Types.hpp"
 
+#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Null_Mutex.h"
+
 #include "Basic_Deployment_Data.hpp"
 
 namespace CIAO
@@ -46,6 +49,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export Domain : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < Domain, ACE_Null_Mutex > _ptr;
 
       // UUID
       // 
@@ -70,80 +76,80 @@ namespace CIAO
       // node
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Node >::iterator node_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Node >::const_iterator node_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > >::iterator node_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > >::const_iterator node_const_iterator;
       node_iterator begin_node ();
       node_iterator end_node ();
       node_const_iterator begin_node () const;
       node_const_iterator end_node () const;
-      void add_node (::CIAO::Config_Handlers::Node const& );
+      void add_node ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > const& );
       size_t count_node (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Node > node_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > > node_;
 
       // interconnect
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Interconnect >::iterator interconnect_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Interconnect >::const_iterator interconnect_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > >::iterator interconnect_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > >::const_iterator interconnect_const_iterator;
       interconnect_iterator begin_interconnect ();
       interconnect_iterator end_interconnect ();
       interconnect_const_iterator begin_interconnect () const;
       interconnect_const_iterator end_interconnect () const;
-      void add_interconnect (::CIAO::Config_Handlers::Interconnect const& );
+      void add_interconnect ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > const& );
       size_t count_interconnect (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Interconnect > interconnect_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > > interconnect_;
 
       // bridge
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Bridge >::iterator bridge_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Bridge >::const_iterator bridge_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > >::iterator bridge_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > >::const_iterator bridge_const_iterator;
       bridge_iterator begin_bridge ();
       bridge_iterator end_bridge ();
       bridge_const_iterator begin_bridge () const;
       bridge_const_iterator end_bridge () const;
-      void add_bridge (::CIAO::Config_Handlers::Bridge const& );
+      void add_bridge ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > const& );
       size_t count_bridge (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Bridge > bridge_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > > bridge_;
 
       // sharedResource
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::SharedResource >::iterator sharedResource_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::SharedResource >::const_iterator sharedResource_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > >::iterator sharedResource_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > >::const_iterator sharedResource_const_iterator;
       sharedResource_iterator begin_sharedResource ();
       sharedResource_iterator end_sharedResource ();
       sharedResource_const_iterator begin_sharedResource () const;
       sharedResource_const_iterator end_sharedResource () const;
-      void add_sharedResource (::CIAO::Config_Handlers::SharedResource const& );
+      void add_sharedResource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > const& );
       size_t count_sharedResource (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::SharedResource > sharedResource_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > > sharedResource_;
 
       // infoProperty
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator infoProperty_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator infoProperty_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator infoProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator infoProperty_const_iterator;
       infoProperty_iterator begin_infoProperty ();
       infoProperty_iterator end_infoProperty ();
       infoProperty_const_iterator begin_infoProperty () const;
       infoProperty_const_iterator end_infoProperty () const;
-      void add_infoProperty (::CIAO::Config_Handlers::Property const& );
+      void add_infoProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_infoProperty (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > infoProperty_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > infoProperty_;
 
       public:
-      Domain (::std::list< ::CIAO::Config_Handlers::Node > const& node__);
+      Domain (::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > > const& node__);
 
       Domain (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Domain (Domain const& s);
@@ -160,6 +166,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < Bridge, ACE_Null_Mutex > _ptr;
+
       // name
       // 
       public:
@@ -182,36 +191,36 @@ namespace CIAO
       // connect
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Interconnect >::iterator connect_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Interconnect >::const_iterator connect_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > >::iterator connect_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > >::const_iterator connect_const_iterator;
       connect_iterator begin_connect ();
       connect_iterator end_connect ();
       connect_const_iterator begin_connect () const;
       connect_const_iterator end_connect () const;
-      void add_connect (::CIAO::Config_Handlers::Interconnect const& );
+      void add_connect ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > const& );
       size_t count_connect (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Interconnect > connect_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > > connect_;
 
       // resource
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Resource >::iterator resource_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Resource >::const_iterator resource_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > >::iterator resource_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > >::const_iterator resource_const_iterator;
       resource_iterator begin_resource ();
       resource_iterator end_resource ();
       resource_const_iterator begin_resource () const;
       resource_const_iterator end_resource () const;
-      void add_resource (::CIAO::Config_Handlers::Resource const& );
+      void add_resource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > const& );
       size_t count_resource (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Resource > resource_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > > resource_;
 
       public:
       Bridge (::XMLSchema::string< ACE_TCHAR > const& name__,
-              ::std::list< ::CIAO::Config_Handlers::Interconnect > const& connect__);
+              ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > > const& connect__);
 
       Bridge (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Bridge (Bridge const& s);
@@ -228,6 +237,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < Interconnect, ACE_Null_Mutex > _ptr;
+
       // name
       // 
       public:
@@ -250,51 +262,51 @@ namespace CIAO
       // connection
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Bridge >::iterator connection_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Bridge >::const_iterator connection_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > >::iterator connection_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > >::const_iterator connection_const_iterator;
       connection_iterator begin_connection ();
       connection_iterator end_connection ();
       connection_const_iterator begin_connection () const;
       connection_const_iterator end_connection () const;
-      void add_connection (::CIAO::Config_Handlers::Bridge const& );
+      void add_connection ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > const& );
       size_t count_connection (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Bridge > connection_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > > connection_;
 
       // connect
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Node >::iterator connect_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Node >::const_iterator connect_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > >::iterator connect_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > >::const_iterator connect_const_iterator;
       connect_iterator begin_connect ();
       connect_iterator end_connect ();
       connect_const_iterator begin_connect () const;
       connect_const_iterator end_connect () const;
-      void add_connect (::CIAO::Config_Handlers::Node const& );
+      void add_connect ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > const& );
       size_t count_connect (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Node > connect_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > > connect_;
 
       // resource
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Resource >::iterator resource_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Resource >::const_iterator resource_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > >::iterator resource_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > >::const_iterator resource_const_iterator;
       resource_iterator begin_resource ();
       resource_iterator end_resource ();
       resource_const_iterator begin_resource () const;
       resource_const_iterator end_resource () const;
-      void add_resource (::CIAO::Config_Handlers::Resource const& );
+      void add_resource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > const& );
       size_t count_resource (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Resource > resource_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > > resource_;
 
       public:
       Interconnect (::XMLSchema::string< ACE_TCHAR > const& name__,
-                    ::std::list< ::CIAO::Config_Handlers::Node > const& connect__);
+                    ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > > const& connect__);
 
       Interconnect (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Interconnect (Interconnect const& s);
@@ -311,6 +323,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < Node, ACE_Null_Mutex > _ptr;
+
       // name
       // 
       public:
@@ -333,47 +348,47 @@ namespace CIAO
       // connection
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Interconnect >::iterator connection_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Interconnect >::const_iterator connection_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > >::iterator connection_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > >::const_iterator connection_const_iterator;
       connection_iterator begin_connection ();
       connection_iterator end_connection ();
       connection_const_iterator begin_connection () const;
       connection_const_iterator end_connection () const;
-      void add_connection (::CIAO::Config_Handlers::Interconnect const& );
+      void add_connection ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > const& );
       size_t count_connection (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Interconnect > connection_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > > connection_;
 
       // sharedResource
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::SharedResource >::iterator sharedResource_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::SharedResource >::const_iterator sharedResource_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > >::iterator sharedResource_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > >::const_iterator sharedResource_const_iterator;
       sharedResource_iterator begin_sharedResource ();
       sharedResource_iterator end_sharedResource ();
       sharedResource_const_iterator begin_sharedResource () const;
       sharedResource_const_iterator end_sharedResource () const;
-      void add_sharedResource (::CIAO::Config_Handlers::SharedResource const& );
+      void add_sharedResource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > const& );
       size_t count_sharedResource (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::SharedResource > sharedResource_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > > sharedResource_;
 
       // resource
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Resource >::iterator resource_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Resource >::const_iterator resource_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > >::iterator resource_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > >::const_iterator resource_const_iterator;
       resource_iterator begin_resource ();
       resource_iterator end_resource ();
       resource_const_iterator begin_resource () const;
       resource_const_iterator end_resource () const;
-      void add_resource (::CIAO::Config_Handlers::Resource const& );
+      void add_resource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > const& );
       size_t count_resource (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Resource > resource_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > > resource_;
 
       public:
       Node (::XMLSchema::string< ACE_TCHAR > const& name__);
@@ -392,6 +407,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export SharedResource : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < SharedResource, ACE_Null_Mutex > _ptr;
 
       // name
       // 
