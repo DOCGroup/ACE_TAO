@@ -726,7 +726,9 @@ public:
   }
 };
 
-class Initialiser : public  PortableInterceptor::ORBInitializer
+class Initialiser
+  : public virtual PortableInterceptor::ORBInitializer
+  , public virtual TAO_Local_RefCounted_Object
 {
 public:
   Initialiser( AnInterceptor* interceptor )
