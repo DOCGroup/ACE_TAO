@@ -1,7 +1,22 @@
+Fri May  8 14:23:07 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Bug_2234_Regression/server.cpp:
+        * tests/Bug_3171_Regression/server.cpp:
+        * tests/Bug_2345_Regression/server.cpp:
+        * tests/DII_AMI_Forward/server_interceptor.cpp:
+        * tests/DII_AMI_Forward/server_interceptor.h:
+        * tests/DII_AMI_Forward/orb_initializer.h:
+
+          Fixed memory leaks in these tests.
+
+        * tao/ORB.cpp:
+
+          Fixed allocation of a string with incorrect length.
+
 Thu May  7 22:46:50 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/RTCORBA/Bug_3643_Regression/Bug_3643_Regression.mpc:
-        
+
           Prevent building the server for corba_e/minimum_corba.
 
 Thu May  7 19:45:01 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>

@@ -949,12 +949,15 @@ CORBA::ORB::resolve_initial_references (const char *name,
 
   // Look for an environment variable called "<name>IOR".
   //
+  static const char ior_string[] = "IOR";
+
   CORBA::String_var ior_env_var_name =
-    CORBA::string_alloc (static_cast<CORBA::ULong> (ACE_OS::strlen (name) + 3));
+    CORBA::string_alloc (
+      static_cast<CORBA::ULong> (ACE_OS::strlen (name) + sizeof (ior_string)));
 
   ACE_OS::strcpy (ior_env_var_name.inout (), name);
 
-  ACE_OS::strcat (ior_env_var_name.inout (), "IOR");
+  ACE_OS::strcat (ior_env_var_name.inout (), ior_string);
 
   ACE_CString service_ior = ACE_OS::getenv (ior_env_var_name.in ());
 
