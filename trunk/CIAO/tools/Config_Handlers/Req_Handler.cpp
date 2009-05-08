@@ -48,7 +48,7 @@ namespace CIAO
 
       for (CORBA::ULong i = 0; i < src.property.length (); ++i)
         {
-          req.add_property (Property_Handler::get_property (src.property[i]));
+          //req.add_property (Property_Handler::get_property (src.property[i]));
         }
 
       return req;

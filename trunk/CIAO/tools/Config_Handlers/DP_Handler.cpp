@@ -112,7 +112,7 @@ ACE_RCSID (Config_Handlers,
           {
             CORBA::ULong len = this->idl_dp_->dependsOn.length ();
             this->idl_dp_->dependsOn.length (len + 1);
-            ID_Handler::get_ImplementationDependency (*dstart,
+            ID_Handler::get_ImplementationDependency (*(*dstart),
                                                       this->idl_dp_->dependsOn [len]);
 
           }
@@ -127,7 +127,7 @@ ACE_RCSID (Config_Handlers,
 
             this->idl_dp_->infoProperty.length (len + 1);
 
-            Property_Handler::handle_property (*pstart,
+            Property_Handler::handle_property (*(*pstart),
                                                this->idl_dp_->infoProperty [len]);
           }
 
@@ -194,9 +194,7 @@ ACE_RCSID (Config_Handlers,
              j < len;
              ++j)
           {
-            this->xsc_dp_->add_dependsOn(
-                                         ID_Handler::impl_dependency(
-                                                                     plan.dependsOn[j]));
+            //this->xsc_dp_->add_dependsOn(ID_Handler::impl_dependency(plan.dependsOn[j]));
           }
 
         // ... And the property stuff
@@ -213,9 +211,7 @@ ACE_RCSID (Config_Handlers,
                 continue;
               }
 
-            this->xsc_dp_->add_infoProperty (
-                                             Property_Handler::get_property (
-                                                                             plan.infoProperty[q]));
+            //this->xsc_dp_->add_infoProperty (Property_Handler::get_property (plan.infoProperty[q]));
           }
 
 
@@ -238,9 +234,7 @@ ACE_RCSID (Config_Handlers,
             k < len;
             k++)
           {
-            this->xsc_dp_->add_artifact (
-                                         ADD_Handler::artifact_deployment_descr (
-                                                                                 plan.artifact[k]));
+            //this->xsc_dp_->add_artifact (ADD_Handler::artifact_deployment_descr (plan.artifact[k]));
           }
 
         //Take care of the implementation(s) if they exist
@@ -249,9 +243,7 @@ ACE_RCSID (Config_Handlers,
             l < len;
             l++)
           {
-            this->xsc_dp_->add_implementation (
-                                               MDD_Handler::mono_deployment_description (
-                                                                                         plan.implementation[l]));
+            //this->xsc_dp_->add_implementation (MDD_Handler::mono_deployment_description (plan.implementation[l]));
           }
 
         //Ditto for the instance(s)
@@ -260,17 +252,14 @@ ACE_RCSID (Config_Handlers,
             m < len;
             m++)
           {
-            this->xsc_dp_->add_instance (
-                                         IDD_Handler::instance_deployment_descr (
-                                                                                 plan.instance[m]));
+            //this->xsc_dp_->add_instance (IDD_Handler::instance_deployment_descr (plan.instance[m]));
           }
 
         //Finally, take care of the Connection Planning
         len = plan.connection.length();
         for(size_t n = 0; n < len; n++)
           {
-            this->xsc_dp_->add_connection (PCD_Handler::get_PlanConnectionDescription (
-                                                                                  plan.connection[n]));
+            //this->xsc_dp_->add_connection (PCD_Handler::get_PlanConnectionDescription (plan.connection[n]));
           }
 
         retval_ = true;

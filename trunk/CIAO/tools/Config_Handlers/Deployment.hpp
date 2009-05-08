@@ -32,6 +32,9 @@ namespace CIAO
 #include <list>
 #include "XMLSchema/Types.hpp"
 
+#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Null_Mutex.h"
+
 #include "Basic_Deployment_Data.hpp"
 
 #include "cpd.hpp"

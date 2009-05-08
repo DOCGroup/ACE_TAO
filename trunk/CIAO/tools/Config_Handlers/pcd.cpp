@@ -77,7 +77,7 @@ namespace CIAO
     }
 
     void ComponentPackageImport::
-    add_location (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_location (ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  const& e)
     {
       location_.push_back (e);
     }
@@ -370,7 +370,7 @@ namespace CIAO
     }
 
     void PackageConfiguration::
-    add_selectRequirement (::CIAO::Config_Handlers::Requirement const& e)
+    add_selectRequirement (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
     {
       selectRequirement_.push_back (e);
     }
@@ -408,7 +408,7 @@ namespace CIAO
     }
 
     void PackageConfiguration::
-    add_configProperty (::CIAO::Config_Handlers::Property const& e)
+    add_configProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       configProperty_.push_back (e);
     }
@@ -471,7 +471,7 @@ namespace CIAO
 
         if (n == "location")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_location (t);
         }
 
@@ -534,13 +534,13 @@ namespace CIAO
 
         else if (n == "selectRequirement")
         {
-          ::CIAO::Config_Handlers::Requirement t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
           add_selectRequirement (t);
         }
 
         else if (n == "configProperty")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
@@ -654,7 +654,7 @@ namespace CIAO
           location_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) location_next (o);
           }
 
@@ -676,7 +676,7 @@ namespace CIAO
           location_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) location_next (o);
           }
 
@@ -940,7 +940,7 @@ namespace CIAO
           selectRequirement_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) selectRequirement_next (o);
           }
 
@@ -962,7 +962,7 @@ namespace CIAO
           selectRequirement_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) selectRequirement_next (o);
           }
 
@@ -1024,7 +1024,7 @@ namespace CIAO
           configProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) configProperty_next (o);
           }
 
@@ -1046,7 +1046,7 @@ namespace CIAO
           configProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) configProperty_next (o);
           }
 

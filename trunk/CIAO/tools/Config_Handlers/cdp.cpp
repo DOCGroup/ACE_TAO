@@ -203,7 +203,7 @@ namespace CIAO
     }
 
     void deploymentPlan::
-    add_implementation (::CIAO::Config_Handlers::MonolithicDeploymentDescription const& e)
+    add_implementation (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::MonolithicDeploymentDescription, ACE_Null_Mutex >  const& e)
     {
       implementation_.push_back (e);
     }
@@ -241,7 +241,7 @@ namespace CIAO
     }
 
     void deploymentPlan::
-    add_instance (::CIAO::Config_Handlers::InstanceDeploymentDescription const& e)
+    add_instance (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceDeploymentDescription, ACE_Null_Mutex >  const& e)
     {
       instance_.push_back (e);
     }
@@ -279,7 +279,7 @@ namespace CIAO
     }
 
     void deploymentPlan::
-    add_connection (::CIAO::Config_Handlers::PlanConnectionDescription const& e)
+    add_connection (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanConnectionDescription, ACE_Null_Mutex >  const& e)
     {
       connection_.push_back (e);
     }
@@ -317,7 +317,7 @@ namespace CIAO
     }
 
     void deploymentPlan::
-    add_dependsOn (::CIAO::Config_Handlers::ImplementationDependency const& e)
+    add_dependsOn (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex >  const& e)
     {
       dependsOn_.push_back (e);
     }
@@ -355,7 +355,7 @@ namespace CIAO
     }
 
     void deploymentPlan::
-    add_artifact (::CIAO::Config_Handlers::ArtifactDeploymentDescription const& e)
+    add_artifact (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ArtifactDeploymentDescription, ACE_Null_Mutex >  const& e)
     {
       artifact_.push_back (e);
     }
@@ -393,7 +393,7 @@ namespace CIAO
     }
 
     void deploymentPlan::
-    add_infoProperty (::CIAO::Config_Handlers::Property const& e)
+    add_infoProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       infoProperty_.push_back (e);
     }
@@ -431,7 +431,7 @@ namespace CIAO
     }
 
     void deploymentPlan::
-    add_localityConstraint (::CIAO::Config_Handlers::PlanLocality const& e)
+    add_localityConstraint (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanLocality, ACE_Null_Mutex >  const& e)
     {
       localityConstraint_.push_back (e);
     }
@@ -483,43 +483,43 @@ namespace CIAO
 
         else if (n == "implementation")
         {
-          ::CIAO::Config_Handlers::MonolithicDeploymentDescription t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::MonolithicDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::MonolithicDeploymentDescription (e));
           add_implementation (t);
         }
 
         else if (n == "instance")
         {
-          ::CIAO::Config_Handlers::InstanceDeploymentDescription t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::InstanceDeploymentDescription (e));
           add_instance (t);
         }
 
         else if (n == "connection")
         {
-          ::CIAO::Config_Handlers::PlanConnectionDescription t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanConnectionDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PlanConnectionDescription (e));
           add_connection (t);
         }
 
         else if (n == "dependsOn")
         {
-          ::CIAO::Config_Handlers::ImplementationDependency t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ImplementationDependency (e));
           add_dependsOn (t);
         }
 
         else if (n == "artifact")
         {
-          ::CIAO::Config_Handlers::ArtifactDeploymentDescription t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ArtifactDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ArtifactDeploymentDescription (e));
           add_artifact (t);
         }
 
         else if (n == "infoProperty")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
         }
 
         else if (n == "localityConstraint")
         {
-          ::CIAO::Config_Handlers::PlanLocality t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanLocality, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PlanLocality (e));
           add_localityConstraint (t);
         }
 
@@ -703,7 +703,7 @@ namespace CIAO
           implementation_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) implementation_next (o);
           }
 
@@ -725,7 +725,7 @@ namespace CIAO
           implementation_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) implementation_next (o);
           }
 
@@ -787,7 +787,7 @@ namespace CIAO
           instance_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) instance_next (o);
           }
 
@@ -809,7 +809,7 @@ namespace CIAO
           instance_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) instance_next (o);
           }
 
@@ -871,7 +871,7 @@ namespace CIAO
           connection_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) connection_next (o);
           }
 
@@ -893,7 +893,7 @@ namespace CIAO
           connection_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) connection_next (o);
           }
 
@@ -955,7 +955,7 @@ namespace CIAO
           dependsOn_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) dependsOn_next (o);
           }
 
@@ -977,7 +977,7 @@ namespace CIAO
           dependsOn_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) dependsOn_next (o);
           }
 
@@ -1039,7 +1039,7 @@ namespace CIAO
           artifact_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) artifact_next (o);
           }
 
@@ -1061,7 +1061,7 @@ namespace CIAO
           artifact_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) artifact_next (o);
           }
 
@@ -1123,7 +1123,7 @@ namespace CIAO
           infoProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) infoProperty_next (o);
           }
 
@@ -1145,7 +1145,7 @@ namespace CIAO
           infoProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) infoProperty_next (o);
           }
 
@@ -1207,7 +1207,7 @@ namespace CIAO
           localityConstraint_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) localityConstraint_next (o);
           }
 
@@ -1229,7 +1229,7 @@ namespace CIAO
           localityConstraint_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) localityConstraint_next (o);
           }
 

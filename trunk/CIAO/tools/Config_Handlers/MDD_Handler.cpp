@@ -30,7 +30,7 @@ namespace CIAO
            imp_b != imp_e;
            ++imp_b)
         {
-          MDD_Handler::mono_deployment_description (*imp_b,
+          MDD_Handler::mono_deployment_description (*(*imp_b),
                                                     dest[pos],
                                                     pos);
           pos++;
@@ -56,7 +56,7 @@ namespace CIAO
            ++se)
         {
           toconfig.source[len++] =
-            CORBA::string_dup ((*se).c_str ());
+            CORBA::string_dup ((*se)->c_str ());
         }
 
       MonolithicDeploymentDescription::artifact_const_iterator ae =
@@ -70,7 +70,7 @@ namespace CIAO
         {
           CORBA::ULong tmp = 0;
 
-          ADD_Handler::IDREF.find_ref (ACE_CString (ab->idref ().id ().c_str ()),
+          ADD_Handler::IDREF.find_ref (ACE_CString ((*ab)->idref ().id ().c_str ()),
                                        tmp);
 
           toconfig.artifactRef[len++] = tmp;
@@ -85,8 +85,8 @@ namespace CIAO
            epcb != epce;
            ++epcb)
         {
-          Property_Handler::handle_property ((*epcb),
-                                          toconfig.execParameter[len++]);
+          Property_Handler::handle_property (*(*epcb),
+                                             toconfig.execParameter[len++]);
         }
 
       toconfig.deployRequirement.length (desc.count_deployRequirement ());
@@ -125,7 +125,7 @@ namespace CIAO
       for(size_t i = 0; i < total; i++)
         {
           XMLSchema::string< char > curr ((src.source[i]));
-          mdd.add_source(curr);
+          //mdd.add_source(curr);
         }
 
       //Get the artifactRef(s) from the IDL and store them
@@ -136,23 +136,21 @@ namespace CIAO
           ADD_Handler::IDREF.find_ref(src.artifactRef[j], tmp);
           IdRef idref;
           idref.idref (tmp.c_str ());
-          mdd.add_artifact (idref);
+          //mdd.add_artifact (idref);
         }
 
       //Get the execParameter(s) from the IDL and store them
       total = src.execParameter.length();
       for(size_t k = 0; k < total; k++)
         {
-          mdd.add_execParameter (
-                                 Property_Handler::get_property (src.execParameter[k]));
+          //mdd.add_execParameter (Property_Handler::get_property (src.execParameter[k]));
         }
 
       //Get the deployRequirement(s) from the IDL and store them
       total = src.deployRequirement.length();
       for(size_t l = 0; l < total; l++)
         {
-          mdd.add_deployRequirement(
-                                    Req_Handler::get_requirement (src.deployRequirement[l]));
+          //mdd.add_deployRequirement(Req_Handler::get_requirement (src.deployRequirement[l]));
         }
 
       // Generate a UUID to use for the IDREF.

@@ -12,6 +12,7 @@
 // #include <iostream> //@@ tmp
 
 #include "XSCRT/Parser.hpp"
+#include "ace/Refcounted_Auto_Ptr.h"
 
 namespace XSCRT
 {
@@ -220,6 +221,8 @@ namespace XSCRT
   class FundamentalType : public Type
   {
   public:
+    typedef ACE_Refcounted_Auto_Ptr < FundamentalType, ACE_Null_Mutex > _ptr;
+    
     FundamentalType ()
     {
     }

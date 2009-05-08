@@ -517,7 +517,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_short (::XMLSchema::short_ const& e)
+    add_short (ACE_Refcounted_Auto_Ptr < ::XMLSchema::short_, ACE_Null_Mutex >  const& e)
     {
       short__.push_back (e);
     }
@@ -555,7 +555,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_long (::XMLSchema::int_ const& e)
+    add_long (ACE_Refcounted_Auto_Ptr < ::XMLSchema::int_, ACE_Null_Mutex >  const& e)
     {
       long__.push_back (e);
     }
@@ -593,7 +593,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_ushort (::XMLSchema::unsignedShort const& e)
+    add_ushort (ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedShort, ACE_Null_Mutex >  const& e)
     {
       ushort_.push_back (e);
     }
@@ -631,7 +631,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_ulong (::XMLSchema::unsignedInt const& e)
+    add_ulong (ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex >  const& e)
     {
       ulong_.push_back (e);
     }
@@ -669,7 +669,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_float (::XMLSchema::float_ const& e)
+    add_float (ACE_Refcounted_Auto_Ptr < ::XMLSchema::float_, ACE_Null_Mutex >  const& e)
     {
       float__.push_back (e);
     }
@@ -707,7 +707,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_double (::XMLSchema::double_ const& e)
+    add_double (ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex >  const& e)
     {
       double__.push_back (e);
     }
@@ -745,7 +745,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_boolean (::XMLSchema::boolean const& e)
+    add_boolean (ACE_Refcounted_Auto_Ptr < ::XMLSchema::boolean, ACE_Null_Mutex >  const& e)
     {
       boolean_.push_back (e);
     }
@@ -783,7 +783,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_octet (::XMLSchema::unsignedByte const& e)
+    add_octet (ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedByte, ACE_Null_Mutex >  const& e)
     {
       octet_.push_back (e);
     }
@@ -821,7 +821,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_enum (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_enum (ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  const& e)
     {
       enum__.push_back (e);
     }
@@ -859,7 +859,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_string (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_string (ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  const& e)
     {
       string_.push_back (e);
     }
@@ -897,7 +897,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_longlong (::XMLSchema::long_ const& e)
+    add_longlong (ACE_Refcounted_Auto_Ptr < ::XMLSchema::long_, ACE_Null_Mutex >  const& e)
     {
       longlong_.push_back (e);
     }
@@ -935,7 +935,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_ulonglong (::XMLSchema::unsignedLong const& e)
+    add_ulonglong (ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedLong, ACE_Null_Mutex >  const& e)
     {
       ulonglong_.push_back (e);
     }
@@ -973,7 +973,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_longdouble (::XMLSchema::double_ const& e)
+    add_longdouble (ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex >  const& e)
     {
       longdouble_.push_back (e);
     }
@@ -1011,7 +1011,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_element (::CIAO::Config_Handlers::DataValue const& e)
+    add_element (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::DataValue, ACE_Null_Mutex >  const& e)
     {
       element_.push_back (e);
     }
@@ -1049,7 +1049,7 @@ namespace CIAO
     }
 
     void DataValue::
-    add_member (::CIAO::Config_Handlers::NamedValue const& e)
+    add_member (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedValue, ACE_Null_Mutex >  const& e)
     {
       member_.push_back (e);
     }
@@ -1155,7 +1155,7 @@ namespace CIAO
     EnumType::
     EnumType (::XMLSchema::string< ACE_TCHAR > const& name__,
               ::XMLSchema::string< ACE_TCHAR > const& typeId__,
-              ::std::list< ::XMLSchema::string< ACE_TCHAR > > const& member__)
+              ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > const& member__)
     : 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     typeId_ (new ::XMLSchema::string< ACE_TCHAR > (typeId__)),
@@ -1247,7 +1247,7 @@ namespace CIAO
     }
 
     void EnumType::
-    add_member (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_member (ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  const& e)
     {
       member_.push_back (e);
     }
@@ -1355,7 +1355,7 @@ namespace CIAO
     }
 
     void StructType::
-    add_member (::CIAO::Config_Handlers::StructMemberType const& e)
+    add_member (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::StructMemberType, ACE_Null_Mutex >  const& e)
     {
       member_.push_back (e);
     }
@@ -1572,7 +1572,7 @@ namespace CIAO
     }
 
     void ValueType::
-    add_member (::CIAO::Config_Handlers::ValueMemberType const& e)
+    add_member (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ValueMemberType, ACE_Null_Mutex >  const& e)
     {
       member_.push_back (e);
     }
@@ -2096,7 +2096,7 @@ namespace CIAO
 
     Resource::
     Resource (::XMLSchema::string< ACE_TCHAR > const& name__,
-              ::std::list< ::XMLSchema::string< ACE_TCHAR > > const& resourceType__)
+              ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > const& resourceType__)
     : 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     resourceType_ (resourceType__),
@@ -2171,7 +2171,7 @@ namespace CIAO
     }
 
     void Resource::
-    add_resourceType (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_resourceType (ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  const& e)
     {
       resourceType_.push_back (e);
     }
@@ -2209,7 +2209,7 @@ namespace CIAO
     }
 
     void Resource::
-    add_property (::CIAO::Config_Handlers::SatisfierProperty const& e)
+    add_property (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex >  const& e)
     {
       property_.push_back (e);
     }
@@ -2317,7 +2317,7 @@ namespace CIAO
     }
 
     void Requirement::
-    add_property (::CIAO::Config_Handlers::Property const& e)
+    add_property (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       property_.push_back (e);
     }
@@ -2425,7 +2425,7 @@ namespace CIAO
     }
 
     void ResourceDeploymentDescription::
-    add_property (::CIAO::Config_Handlers::Property const& e)
+    add_property (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       property_.push_back (e);
     }
@@ -2536,7 +2536,7 @@ namespace CIAO
     }
 
     void ArtifactDeploymentDescription::
-    add_source (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_source (ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  const& e)
     {
       source_.push_back (e);
     }
@@ -2588,7 +2588,7 @@ namespace CIAO
     }
 
     void ArtifactDeploymentDescription::
-    add_location (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_location (ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  const& e)
     {
       location_.push_back (e);
     }
@@ -2626,7 +2626,7 @@ namespace CIAO
     }
 
     void ArtifactDeploymentDescription::
-    add_execParameter (::CIAO::Config_Handlers::Property const& e)
+    add_execParameter (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       execParameter_.push_back (e);
     }
@@ -2664,7 +2664,7 @@ namespace CIAO
     }
 
     void ArtifactDeploymentDescription::
-    add_deployRequirement (::CIAO::Config_Handlers::Requirement const& e)
+    add_deployRequirement (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
     {
       deployRequirement_.push_back (e);
     }
@@ -2702,7 +2702,7 @@ namespace CIAO
     }
 
     void ArtifactDeploymentDescription::
-    add_deployedResource (::CIAO::Config_Handlers::ResourceDeploymentDescription const& e)
+    add_deployedResource (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ResourceDeploymentDescription, ACE_Null_Mutex >  const& e)
     {
       deployedResource_.push_back (e);
     }
@@ -2838,7 +2838,7 @@ namespace CIAO
     }
 
     void MonolithicDeploymentDescription::
-    add_source (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_source (ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  const& e)
     {
       source_.push_back (e);
     }
@@ -2876,7 +2876,7 @@ namespace CIAO
     }
 
     void MonolithicDeploymentDescription::
-    add_artifact (::CIAO::Config_Handlers::IdRef const& e)
+    add_artifact (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex >  const& e)
     {
       artifact_.push_back (e);
     }
@@ -2914,7 +2914,7 @@ namespace CIAO
     }
 
     void MonolithicDeploymentDescription::
-    add_execParameter (::CIAO::Config_Handlers::Property const& e)
+    add_execParameter (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       execParameter_.push_back (e);
     }
@@ -2952,7 +2952,7 @@ namespace CIAO
     }
 
     void MonolithicDeploymentDescription::
-    add_deployRequirement (::CIAO::Config_Handlers::Requirement const& e)
+    add_deployRequirement (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
     {
       deployRequirement_.push_back (e);
     }
@@ -3143,7 +3143,7 @@ namespace CIAO
     }
 
     void InstanceResourceDeploymentDescription::
-    add_property (::CIAO::Config_Handlers::Property const& e)
+    add_property (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       property_.push_back (e);
     }
@@ -3308,7 +3308,7 @@ namespace CIAO
     }
 
     void InstanceDeploymentDescription::
-    add_configProperty (::CIAO::Config_Handlers::Property const& e)
+    add_configProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       configProperty_.push_back (e);
     }
@@ -3346,7 +3346,7 @@ namespace CIAO
     }
 
     void InstanceDeploymentDescription::
-    add_deployedResource (::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& e)
+    add_deployedResource (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription, ACE_Null_Mutex >  const& e)
     {
       deployedResource_.push_back (e);
     }
@@ -3595,7 +3595,7 @@ namespace CIAO
     }
 
     void ComponentPortDescription::
-    add_supportedType (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_supportedType (ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  const& e)
     {
       supportedType_.push_back (e);
     }
@@ -4046,7 +4046,7 @@ namespace CIAO
     }
 
     void ExternalReferenceEndpoint::
-    add_supportedType (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_supportedType (ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  const& e)
     {
       supportedType_.push_back (e);
     }
@@ -4175,7 +4175,7 @@ namespace CIAO
     }
 
     void ConnectionResourceDeploymentDescription::
-    add_property (::CIAO::Config_Handlers::Property const& e)
+    add_property (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       property_.push_back (e);
     }
@@ -4310,7 +4310,7 @@ namespace CIAO
     }
 
     void PlanConnectionDescription::
-    add_deployRequirement (::CIAO::Config_Handlers::Requirement const& e)
+    add_deployRequirement (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
     {
       deployRequirement_.push_back (e);
     }
@@ -4348,7 +4348,7 @@ namespace CIAO
     }
 
     void PlanConnectionDescription::
-    add_externalEndpoint (::CIAO::Config_Handlers::ComponentExternalPortEndpoint const& e)
+    add_externalEndpoint (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex >  const& e)
     {
       externalEndpoint_.push_back (e);
     }
@@ -4386,7 +4386,7 @@ namespace CIAO
     }
 
     void PlanConnectionDescription::
-    add_internalEndpoint (::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint const& e)
+    add_internalEndpoint (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint, ACE_Null_Mutex >  const& e)
     {
       internalEndpoint_.push_back (e);
     }
@@ -4424,7 +4424,7 @@ namespace CIAO
     }
 
     void PlanConnectionDescription::
-    add_externalReference (::CIAO::Config_Handlers::ExternalReferenceEndpoint const& e)
+    add_externalReference (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex >  const& e)
     {
       externalReference_.push_back (e);
     }
@@ -4462,7 +4462,7 @@ namespace CIAO
     }
 
     void PlanConnectionDescription::
-    add_deployedResource (::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription const& e)
+    add_deployedResource (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription, ACE_Null_Mutex >  const& e)
     {
       deployedResource_.push_back (e);
     }
@@ -4598,7 +4598,7 @@ namespace CIAO
     }
 
     void Capability::
-    add_resourceType (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_resourceType (ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  const& e)
     {
       resourceType_.push_back (e);
     }
@@ -4636,7 +4636,7 @@ namespace CIAO
     }
 
     void Capability::
-    add_property (::CIAO::Config_Handlers::SatisfierProperty const& e)
+    add_property (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex >  const& e)
     {
       property_.push_back (e);
     }
@@ -4852,7 +4852,7 @@ namespace CIAO
     }
 
     void ImplementationRequirement::
-    add_property (::CIAO::Config_Handlers::Property const& e)
+    add_property (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       property_.push_back (e);
     }
@@ -5015,7 +5015,7 @@ namespace CIAO
     }
 
     void AssemblyConnectionDescription::
-    add_deployRequirement (::CIAO::Config_Handlers::Requirement const& e)
+    add_deployRequirement (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
     {
       deployRequirement_.push_back (e);
     }
@@ -5053,7 +5053,7 @@ namespace CIAO
     }
 
     void AssemblyConnectionDescription::
-    add_internalEndpoint (::CIAO::Config_Handlers::SubcomponentPortEndpoint const& e)
+    add_internalEndpoint (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPortEndpoint, ACE_Null_Mutex >  const& e)
     {
       internalEndpoint_.push_back (e);
     }
@@ -5091,7 +5091,7 @@ namespace CIAO
     }
 
     void AssemblyConnectionDescription::
-    add_externalEndpoint (::CIAO::Config_Handlers::ComponentExternalPortEndpoint const& e)
+    add_externalEndpoint (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex >  const& e)
     {
       externalEndpoint_.push_back (e);
     }
@@ -5129,7 +5129,7 @@ namespace CIAO
     }
 
     void AssemblyConnectionDescription::
-    add_externalReference (::CIAO::Config_Handlers::ExternalReferenceEndpoint const& e)
+    add_externalReference (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex >  const& e)
     {
       externalReference_.push_back (e);
     }
@@ -5498,91 +5498,91 @@ namespace CIAO
 
         if (n == "short")
         {
-          ::XMLSchema::short_ t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::short_, ACE_Null_Mutex >  t (new ::XMLSchema::short_ (e));
           add_short (t);
         }
 
         else if (n == "long")
         {
-          ::XMLSchema::int_ t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::int_, ACE_Null_Mutex >  t (new ::XMLSchema::int_ (e));
           add_long (t);
         }
 
         else if (n == "ushort")
         {
-          ::XMLSchema::unsignedShort t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedShort, ACE_Null_Mutex >  t (new ::XMLSchema::unsignedShort (e));
           add_ushort (t);
         }
 
         else if (n == "ulong")
         {
-          ::XMLSchema::unsignedInt t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex >  t (new ::XMLSchema::unsignedInt (e));
           add_ulong (t);
         }
 
         else if (n == "float")
         {
-          ::XMLSchema::float_ t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::float_, ACE_Null_Mutex >  t (new ::XMLSchema::float_ (e));
           add_float (t);
         }
 
         else if (n == "double")
         {
-          ::XMLSchema::double_ t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex >  t (new ::XMLSchema::double_ (e));
           add_double (t);
         }
 
         else if (n == "boolean")
         {
-          ::XMLSchema::boolean t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::boolean, ACE_Null_Mutex >  t (new ::XMLSchema::boolean (e));
           add_boolean (t);
         }
 
         else if (n == "octet")
         {
-          ::XMLSchema::unsignedByte t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedByte, ACE_Null_Mutex >  t (new ::XMLSchema::unsignedByte (e));
           add_octet (t);
         }
 
         else if (n == "enum")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_enum (t);
         }
 
         else if (n == "string")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_string (t);
         }
 
         else if (n == "longlong")
         {
-          ::XMLSchema::long_ t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::long_, ACE_Null_Mutex >  t (new ::XMLSchema::long_ (e));
           add_longlong (t);
         }
 
         else if (n == "ulonglong")
         {
-          ::XMLSchema::unsignedLong t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedLong, ACE_Null_Mutex >  t (new ::XMLSchema::unsignedLong (e));
           add_ulonglong (t);
         }
 
         else if (n == "longdouble")
         {
-          ::XMLSchema::double_ t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex >  t (new ::XMLSchema::double_ (e));
           add_longdouble (t);
         }
 
         else if (n == "element")
         {
-          ::CIAO::Config_Handlers::DataValue t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::DataValue, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::DataValue (e));
           add_element (t);
         }
 
         else if (n == "member")
         {
-          ::CIAO::Config_Handlers::NamedValue t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedValue, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::NamedValue (e));
           add_member (t);
         }
 
@@ -5660,7 +5660,7 @@ namespace CIAO
 
         else if (n == "member")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_member (t);
         }
 
@@ -5699,7 +5699,7 @@ namespace CIAO
 
         else if (n == "member")
         {
-          ::CIAO::Config_Handlers::StructMemberType t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::StructMemberType, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::StructMemberType (e));
           add_member (t);
         }
 
@@ -5783,7 +5783,7 @@ namespace CIAO
 
         else if (n == "member")
         {
-          ::CIAO::Config_Handlers::ValueMemberType t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ValueMemberType, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ValueMemberType (e));
           add_member (t);
         }
 
@@ -6076,13 +6076,13 @@ namespace CIAO
 
         else if (n == "resourceType")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_resourceType (t);
         }
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::SatisfierProperty t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SatisfierProperty (e));
           add_property (t);
         }
 
@@ -6121,7 +6121,7 @@ namespace CIAO
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_property (t);
         }
 
@@ -6160,7 +6160,7 @@ namespace CIAO
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_property (t);
         }
 
@@ -6193,7 +6193,7 @@ namespace CIAO
 
         else if (n == "source")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_source (t);
         }
 
@@ -6205,25 +6205,25 @@ namespace CIAO
 
         else if (n == "location")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_location (t);
         }
 
         else if (n == "execParameter")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_execParameter (t);
         }
 
         else if (n == "deployRequirement")
         {
-          ::CIAO::Config_Handlers::Requirement t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
           add_deployRequirement (t);
         }
 
         else if (n == "deployedResource")
         {
-          ::CIAO::Config_Handlers::ResourceDeploymentDescription t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ResourceDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ResourceDeploymentDescription (e));
           add_deployedResource (t);
         }
 
@@ -6271,25 +6271,25 @@ namespace CIAO
 
         else if (n == "source")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_source (t);
         }
 
         else if (n == "artifact")
         {
-          ::CIAO::Config_Handlers::IdRef t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::IdRef (e));
           add_artifact (t);
         }
 
         else if (n == "execParameter")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_execParameter (t);
         }
 
         else if (n == "deployRequirement")
         {
-          ::CIAO::Config_Handlers::Requirement t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
           add_deployRequirement (t);
         }
 
@@ -6390,7 +6390,7 @@ namespace CIAO
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_property (t);
         }
 
@@ -6441,13 +6441,13 @@ namespace CIAO
 
         else if (n == "configProperty")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
         else if (n == "deployedResource")
         {
-          ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription (e));
           add_deployedResource (t);
         }
 
@@ -6551,7 +6551,7 @@ namespace CIAO
 
         else if (n == "supportedType")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_supportedType (t);
         }
 
@@ -6731,7 +6731,7 @@ namespace CIAO
 
         else if (n == "supportedType")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_supportedType (t);
         }
 
@@ -6776,7 +6776,7 @@ namespace CIAO
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_property (t);
         }
 
@@ -6815,31 +6815,31 @@ namespace CIAO
 
         else if (n == "deployRequirement")
         {
-          ::CIAO::Config_Handlers::Requirement t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
           add_deployRequirement (t);
         }
 
         else if (n == "externalEndpoint")
         {
-          ::CIAO::Config_Handlers::ComponentExternalPortEndpoint t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ComponentExternalPortEndpoint (e));
           add_externalEndpoint (t);
         }
 
         else if (n == "internalEndpoint")
         {
-          ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint (e));
           add_internalEndpoint (t);
         }
 
         else if (n == "externalReference")
         {
-          ::CIAO::Config_Handlers::ExternalReferenceEndpoint t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ExternalReferenceEndpoint (e));
           add_externalReference (t);
         }
 
         else if (n == "deployedResource")
         {
-          ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription (e));
           add_deployedResource (t);
         }
 
@@ -6899,13 +6899,13 @@ namespace CIAO
 
         else if (n == "resourceType")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_resourceType (t);
         }
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::SatisfierProperty t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SatisfierProperty (e));
           add_property (t);
         }
 
@@ -6962,7 +6962,7 @@ namespace CIAO
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_property (t);
         }
 
@@ -7028,25 +7028,25 @@ namespace CIAO
 
         else if (n == "deployRequirement")
         {
-          ::CIAO::Config_Handlers::Requirement t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
           add_deployRequirement (t);
         }
 
         else if (n == "internalEndpoint")
         {
-          ::CIAO::Config_Handlers::SubcomponentPortEndpoint t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPortEndpoint, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SubcomponentPortEndpoint (e));
           add_internalEndpoint (t);
         }
 
         else if (n == "externalEndpoint")
         {
-          ::CIAO::Config_Handlers::ComponentExternalPortEndpoint t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ComponentExternalPortEndpoint (e));
           add_externalEndpoint (t);
         }
 
         else if (n == "externalReference")
         {
-          ::CIAO::Config_Handlers::ExternalReferenceEndpoint t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ExternalReferenceEndpoint (e));
           add_externalReference (t);
         }
 
@@ -8071,7 +8071,7 @@ namespace CIAO
           short_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) short_next (o);
           }
 
@@ -8093,7 +8093,7 @@ namespace CIAO
           short_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) short_next (o);
           }
 
@@ -8155,7 +8155,7 @@ namespace CIAO
           long_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) long_next (o);
           }
 
@@ -8177,7 +8177,7 @@ namespace CIAO
           long_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) long_next (o);
           }
 
@@ -8239,7 +8239,7 @@ namespace CIAO
           ushort_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) ushort_next (o);
           }
 
@@ -8261,7 +8261,7 @@ namespace CIAO
           ushort_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) ushort_next (o);
           }
 
@@ -8323,7 +8323,7 @@ namespace CIAO
           ulong_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) ulong_next (o);
           }
 
@@ -8345,7 +8345,7 @@ namespace CIAO
           ulong_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) ulong_next (o);
           }
 
@@ -8407,7 +8407,7 @@ namespace CIAO
           float_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) float_next (o);
           }
 
@@ -8429,7 +8429,7 @@ namespace CIAO
           float_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) float_next (o);
           }
 
@@ -8491,7 +8491,7 @@ namespace CIAO
           double_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) double_next (o);
           }
 
@@ -8513,7 +8513,7 @@ namespace CIAO
           double_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) double_next (o);
           }
 
@@ -8575,7 +8575,7 @@ namespace CIAO
           boolean_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) boolean_next (o);
           }
 
@@ -8597,7 +8597,7 @@ namespace CIAO
           boolean_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) boolean_next (o);
           }
 
@@ -8659,7 +8659,7 @@ namespace CIAO
           octet_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) octet_next (o);
           }
 
@@ -8681,7 +8681,7 @@ namespace CIAO
           octet_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) octet_next (o);
           }
 
@@ -8743,7 +8743,7 @@ namespace CIAO
           enum_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) enum_next (o);
           }
 
@@ -8765,7 +8765,7 @@ namespace CIAO
           enum_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) enum_next (o);
           }
 
@@ -8827,7 +8827,7 @@ namespace CIAO
           string_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) string_next (o);
           }
 
@@ -8849,7 +8849,7 @@ namespace CIAO
           string_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) string_next (o);
           }
 
@@ -8911,7 +8911,7 @@ namespace CIAO
           longlong_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) longlong_next (o);
           }
 
@@ -8933,7 +8933,7 @@ namespace CIAO
           longlong_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) longlong_next (o);
           }
 
@@ -8995,7 +8995,7 @@ namespace CIAO
           ulonglong_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) ulonglong_next (o);
           }
 
@@ -9017,7 +9017,7 @@ namespace CIAO
           ulonglong_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) ulonglong_next (o);
           }
 
@@ -9079,7 +9079,7 @@ namespace CIAO
           longdouble_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) longdouble_next (o);
           }
 
@@ -9101,7 +9101,7 @@ namespace CIAO
           longdouble_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) longdouble_next (o);
           }
 
@@ -9163,7 +9163,7 @@ namespace CIAO
           element_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) element_next (o);
           }
 
@@ -9185,7 +9185,7 @@ namespace CIAO
           element_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) element_next (o);
           }
 
@@ -9247,7 +9247,7 @@ namespace CIAO
           member_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) member_next (o);
           }
 
@@ -9269,7 +9269,7 @@ namespace CIAO
           member_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) member_next (o);
           }
 
@@ -9479,7 +9479,7 @@ namespace CIAO
           member_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) member_next (o);
           }
 
@@ -9499,7 +9499,7 @@ namespace CIAO
           member_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) member_next (o);
           }
 
@@ -9617,7 +9617,7 @@ namespace CIAO
           member_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) member_next (o);
           }
 
@@ -9639,7 +9639,7 @@ namespace CIAO
           member_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) member_next (o);
           }
 
@@ -9863,7 +9863,7 @@ namespace CIAO
           member_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) member_next (o);
           }
 
@@ -9885,7 +9885,7 @@ namespace CIAO
           member_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) member_next (o);
           }
 
@@ -10453,7 +10453,7 @@ namespace CIAO
           resourceType_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) resourceType_next (o);
           }
 
@@ -10473,7 +10473,7 @@ namespace CIAO
           resourceType_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) resourceType_next (o);
           }
 
@@ -10523,7 +10523,7 @@ namespace CIAO
           property_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) property_next (o);
           }
 
@@ -10545,7 +10545,7 @@ namespace CIAO
           property_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) property_next (o);
           }
 
@@ -10675,7 +10675,7 @@ namespace CIAO
           property_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) property_next (o);
           }
 
@@ -10697,7 +10697,7 @@ namespace CIAO
           property_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) property_next (o);
           }
 
@@ -10827,7 +10827,7 @@ namespace CIAO
           property_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) property_next (o);
           }
 
@@ -10849,7 +10849,7 @@ namespace CIAO
           property_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) property_next (o);
           }
 
@@ -10979,7 +10979,7 @@ namespace CIAO
           source_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) source_next (o);
           }
 
@@ -11001,7 +11001,7 @@ namespace CIAO
           source_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) source_next (o);
           }
 
@@ -11075,7 +11075,7 @@ namespace CIAO
           location_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) location_next (o);
           }
 
@@ -11097,7 +11097,7 @@ namespace CIAO
           location_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) location_next (o);
           }
 
@@ -11159,7 +11159,7 @@ namespace CIAO
           execParameter_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) execParameter_next (o);
           }
 
@@ -11181,7 +11181,7 @@ namespace CIAO
           execParameter_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) execParameter_next (o);
           }
 
@@ -11243,7 +11243,7 @@ namespace CIAO
           deployRequirement_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployRequirement_next (o);
           }
 
@@ -11265,7 +11265,7 @@ namespace CIAO
           deployRequirement_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployRequirement_next (o);
           }
 
@@ -11327,7 +11327,7 @@ namespace CIAO
           deployedResource_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployedResource_next (o);
           }
 
@@ -11349,7 +11349,7 @@ namespace CIAO
           deployedResource_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployedResource_next (o);
           }
 
@@ -11497,7 +11497,7 @@ namespace CIAO
           source_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) source_next (o);
           }
 
@@ -11519,7 +11519,7 @@ namespace CIAO
           source_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) source_next (o);
           }
 
@@ -11581,7 +11581,7 @@ namespace CIAO
           artifact_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) artifact_next (o);
           }
 
@@ -11603,7 +11603,7 @@ namespace CIAO
           artifact_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) artifact_next (o);
           }
 
@@ -11665,7 +11665,7 @@ namespace CIAO
           execParameter_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) execParameter_next (o);
           }
 
@@ -11687,7 +11687,7 @@ namespace CIAO
           execParameter_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) execParameter_next (o);
           }
 
@@ -11749,7 +11749,7 @@ namespace CIAO
           deployRequirement_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployRequirement_next (o);
           }
 
@@ -11771,7 +11771,7 @@ namespace CIAO
           deployRequirement_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployRequirement_next (o);
           }
 
@@ -11937,7 +11937,7 @@ namespace CIAO
           property_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) property_next (o);
           }
 
@@ -11959,7 +11959,7 @@ namespace CIAO
           property_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) property_next (o);
           }
 
@@ -12127,7 +12127,7 @@ namespace CIAO
           configProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) configProperty_next (o);
           }
 
@@ -12149,7 +12149,7 @@ namespace CIAO
           configProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) configProperty_next (o);
           }
 
@@ -12211,7 +12211,7 @@ namespace CIAO
           deployedResource_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployedResource_next (o);
           }
 
@@ -12233,7 +12233,7 @@ namespace CIAO
           deployedResource_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployedResource_next (o);
           }
 
@@ -12429,7 +12429,7 @@ namespace CIAO
           supportedType_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) supportedType_next (o);
           }
 
@@ -12451,7 +12451,7 @@ namespace CIAO
           supportedType_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) supportedType_next (o);
           }
 
@@ -12891,7 +12891,7 @@ namespace CIAO
           supportedType_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) supportedType_next (o);
           }
 
@@ -12913,7 +12913,7 @@ namespace CIAO
           supportedType_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) supportedType_next (o);
           }
 
@@ -13057,7 +13057,7 @@ namespace CIAO
           property_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) property_next (o);
           }
 
@@ -13079,7 +13079,7 @@ namespace CIAO
           property_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) property_next (o);
           }
 
@@ -13229,7 +13229,7 @@ namespace CIAO
           deployRequirement_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployRequirement_next (o);
           }
 
@@ -13251,7 +13251,7 @@ namespace CIAO
           deployRequirement_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployRequirement_next (o);
           }
 
@@ -13313,7 +13313,7 @@ namespace CIAO
           externalEndpoint_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) externalEndpoint_next (o);
           }
 
@@ -13335,7 +13335,7 @@ namespace CIAO
           externalEndpoint_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) externalEndpoint_next (o);
           }
 
@@ -13397,7 +13397,7 @@ namespace CIAO
           internalEndpoint_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) internalEndpoint_next (o);
           }
 
@@ -13419,7 +13419,7 @@ namespace CIAO
           internalEndpoint_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) internalEndpoint_next (o);
           }
 
@@ -13481,7 +13481,7 @@ namespace CIAO
           externalReference_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) externalReference_next (o);
           }
 
@@ -13503,7 +13503,7 @@ namespace CIAO
           externalReference_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) externalReference_next (o);
           }
 
@@ -13565,7 +13565,7 @@ namespace CIAO
           deployedResource_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployedResource_next (o);
           }
 
@@ -13587,7 +13587,7 @@ namespace CIAO
           deployedResource_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployedResource_next (o);
           }
 
@@ -13757,7 +13757,7 @@ namespace CIAO
           resourceType_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) resourceType_next (o);
           }
 
@@ -13779,7 +13779,7 @@ namespace CIAO
           resourceType_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) resourceType_next (o);
           }
 
@@ -13841,7 +13841,7 @@ namespace CIAO
           property_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) property_next (o);
           }
 
@@ -13863,7 +13863,7 @@ namespace CIAO
           property_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) property_next (o);
           }
 
@@ -14071,7 +14071,7 @@ namespace CIAO
           property_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) property_next (o);
           }
 
@@ -14093,7 +14093,7 @@ namespace CIAO
           property_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) property_next (o);
           }
 
@@ -14281,7 +14281,7 @@ namespace CIAO
           deployRequirement_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployRequirement_next (o);
           }
 
@@ -14303,7 +14303,7 @@ namespace CIAO
           deployRequirement_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployRequirement_next (o);
           }
 
@@ -14365,7 +14365,7 @@ namespace CIAO
           internalEndpoint_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) internalEndpoint_next (o);
           }
 
@@ -14387,7 +14387,7 @@ namespace CIAO
           internalEndpoint_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) internalEndpoint_next (o);
           }
 
@@ -14449,7 +14449,7 @@ namespace CIAO
           externalEndpoint_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) externalEndpoint_next (o);
           }
 
@@ -14471,7 +14471,7 @@ namespace CIAO
           externalEndpoint_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) externalEndpoint_next (o);
           }
 
@@ -14533,7 +14533,7 @@ namespace CIAO
           externalReference_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) externalReference_next (o);
           }
 
@@ -14555,7 +14555,7 @@ namespace CIAO
           externalReference_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) externalReference_next (o);
           }
 

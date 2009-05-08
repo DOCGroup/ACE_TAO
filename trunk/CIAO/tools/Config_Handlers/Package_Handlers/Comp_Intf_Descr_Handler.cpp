@@ -94,9 +94,9 @@ namespace CIAO
                        CIAO::Config_Handlers::CPD_Functor (toconfig.port));
 
         toconfig.property.length (cid->count_property ());
-    SEQ_HAND_GCC_BUG_WORKAROUND (Comp_Prop_Handler::handle_cpd,
-                     cid->begin_property (),
-                     toconfig.property);
+        SEQ_HAND_GCC_BUG_WORKAROUND (Comp_Prop_Handler::handle_cpd,
+                                     (*cid->begin_property ()),
+                                     toconfig.property);
         std::for_each (cid->begin_property (),
                        cid->end_property (),
                        Comp_Prop_Functor (toconfig.property));
@@ -118,7 +118,7 @@ namespace CIAO
         retval.label (src.label.in ());
         retval.UUID (src.UUID.in ());
         retval.specificType (src.specificType.in ());
-
+#if 0
         for (CORBA::ULong i = 0; i < src.supportedType.length (); ++i)
           retval.add_supportedType (src.supportedType[i].in ());
 
@@ -139,7 +139,7 @@ namespace CIAO
         for (CORBA::ULong i = 0; i < src.infoProperty.length (); ++i)
           retval.add_infoProperty (
                                    Property_Handler::get_property (src.infoProperty[i]));
-
+#endif
         return retval;
       }
 

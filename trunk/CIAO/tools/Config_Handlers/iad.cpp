@@ -240,7 +240,7 @@ namespace CIAO
     }
 
     void ImplementationArtifactDescription::
-    add_location (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_location (ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  const& e)
     {
       location_.push_back (e);
     }
@@ -278,7 +278,7 @@ namespace CIAO
     }
 
     void ImplementationArtifactDescription::
-    add_dependsOn (::CIAO::Config_Handlers::NamedImplementationArtifact const& e)
+    add_dependsOn (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex >  const& e)
     {
       dependsOn_.push_back (e);
     }
@@ -316,7 +316,7 @@ namespace CIAO
     }
 
     void ImplementationArtifactDescription::
-    add_execParameter (::CIAO::Config_Handlers::Property const& e)
+    add_execParameter (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       execParameter_.push_back (e);
     }
@@ -354,7 +354,7 @@ namespace CIAO
     }
 
     void ImplementationArtifactDescription::
-    add_infoProperty (::CIAO::Config_Handlers::Property const& e)
+    add_infoProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       infoProperty_.push_back (e);
     }
@@ -392,7 +392,7 @@ namespace CIAO
     }
 
     void ImplementationArtifactDescription::
-    add_deployRequirement (::CIAO::Config_Handlers::Requirement const& e)
+    add_deployRequirement (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
     {
       deployRequirement_.push_back (e);
     }
@@ -535,31 +535,31 @@ namespace CIAO
 
         else if (n == "location")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_location (t);
         }
 
         else if (n == "dependsOn")
         {
-          ::CIAO::Config_Handlers::NamedImplementationArtifact t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::NamedImplementationArtifact (e));
           add_dependsOn (t);
         }
 
         else if (n == "execParameter")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_execParameter (t);
         }
 
         else if (n == "infoProperty")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
         }
 
         else if (n == "deployRequirement")
         {
-          ::CIAO::Config_Handlers::Requirement t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
           add_deployRequirement (t);
         }
 
@@ -822,7 +822,7 @@ namespace CIAO
           location_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) location_next (o);
           }
 
@@ -844,7 +844,7 @@ namespace CIAO
           location_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) location_next (o);
           }
 
@@ -906,7 +906,7 @@ namespace CIAO
           dependsOn_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) dependsOn_next (o);
           }
 
@@ -928,7 +928,7 @@ namespace CIAO
           dependsOn_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) dependsOn_next (o);
           }
 
@@ -990,7 +990,7 @@ namespace CIAO
           execParameter_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) execParameter_next (o);
           }
 
@@ -1012,7 +1012,7 @@ namespace CIAO
           execParameter_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) execParameter_next (o);
           }
 
@@ -1074,7 +1074,7 @@ namespace CIAO
           infoProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) infoProperty_next (o);
           }
 
@@ -1096,7 +1096,7 @@ namespace CIAO
           infoProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) infoProperty_next (o);
           }
 
@@ -1158,7 +1158,7 @@ namespace CIAO
           deployRequirement_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployRequirement_next (o);
           }
 
@@ -1180,7 +1180,7 @@ namespace CIAO
           deployRequirement_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployRequirement_next (o);
           }
 
