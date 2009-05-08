@@ -7,6 +7,7 @@
 #define TAO_SERVER_ORB_INITIALIZER_H
 #include /**/ "ace/pre.h"
 
+#include "tao/LocalObject.h"
 #include "tao/PI/PI.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -25,8 +26,9 @@ class ForwardTest_Request_Interceptor;
 #endif /* _MSC_VER */
 
 /// Server ORB initializer.
-class Server_ORBInitializer :
-  public virtual PortableInterceptor::ORBInitializer
+class Server_ORBInitializer
+  : public virtual PortableInterceptor::ORBInitializer
+  , public virtual TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor

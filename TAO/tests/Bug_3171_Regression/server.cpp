@@ -65,7 +65,8 @@ private:
 };
 
 class MyORBinitializer
-  : public PortableInterceptor::ORBInitializer
+  : public virtual PortableInterceptor::ORBInitializer
+  , public virtual TAO_Local_RefCounted_Object
 {
 public:
   MyORBinitializer( ACE_CString orbID )
