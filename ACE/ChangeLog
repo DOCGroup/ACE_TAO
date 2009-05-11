@@ -1,3 +1,9 @@
+Mon May 11 18:28:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sock_Connect.cpp:
+          Some WinCE workarounds are only needed for older WinCE versions
+          and when IPv6 is enabled
+
 Mon May 11 18:17:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.cpp:
