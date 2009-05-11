@@ -69,6 +69,10 @@ ACE_OS::argv_to_string (int argc,
                         bool substitute_env_args,
                         bool quote_args)
 {
+#if defined (ACE_LACKS_STRENVDUP)
+  ACE_UNUSED_ARG (substitute_env_args);
+#endif /* ACE_LACKS_STRENVDUP */
+
   if (argc <= 0 || argv == 0 || argv[0] == 0)
     return 0;
 
@@ -762,6 +766,10 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
                         ACE_TCHAR **&argv,
                         bool substitute_env_args)
 {
+#if defined (ACE_LACKS_STRENVDUP)
+  ACE_UNUSED_ARG (substitute_env_args);
+#endif /* ACE_LACKS_STRENVDUP */
+
   // Reset the number of arguments
   argc = 0;
 
