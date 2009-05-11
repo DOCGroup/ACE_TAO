@@ -1,3 +1,10 @@
+Mon May 11 18:17:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.cpp:
+        * ace/Pagefile_Memory_Pool.cpp:
+        * ace/Pagefile_Memory_Pool.h:
+          Fixed cegcc compile warnings
+
 Sun May 10 14:50:46 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * m4/aio.m4 (Test_Aio): Removed all the commented out 'cout'
