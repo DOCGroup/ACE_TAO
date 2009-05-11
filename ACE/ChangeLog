@@ -1,3 +1,13 @@
+Mon May 11 06:54:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.inl (fflush):
+          Don't handle fflush(0) special for VxWorks. On VxWorks
+          fflush(0) is not supported and returns -1, just pass that
+          error back to the caller and not hide it.
+
+        * ace/Mem_Map_Test.cpp:
+          Updated for VxWorks 6.7
+
 Sun May 10 10:31:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/*
