@@ -1,3 +1,14 @@
+Sun May 10 14:50:46 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * m4/aio.m4 (Test_Aio): Removed all the commented out 'cout'
+          lines.  Thanks to Johnny for this suggestion.
+
+Sat May  9 03:29:08 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * m4/aio.m4: Change #include <iostream.h> to #include <iostream>.
+          Thanks to Boyan Kasarov <bkasarov at gmail dot com> for
+          reporting this.
+
 Mon May 11 06:54:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.inl (fflush):
