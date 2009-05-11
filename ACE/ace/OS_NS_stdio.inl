@@ -544,14 +544,6 @@ ACE_INLINE int
 ACE_OS::fflush (FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fflush");
-#if defined (ACE_VXWORKS)
-  if (fp == 0)
-    {
-      // Do not allow fflush(0) on VxWorks
-      return 0;
-    }
-#endif /* ACE_VXWORKS */
-
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fflush (fp), int, -1);
 }
 
