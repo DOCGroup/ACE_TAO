@@ -1,3 +1,8 @@
+Mon May 11 09:54:38 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/DII_AMI_Forward/server_interceptor.cpp:
+          Fixed fuzz error.
+        
 Mon May 11 07:21:16 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/DII_AMI_Forward/server_interceptor.cpp:
