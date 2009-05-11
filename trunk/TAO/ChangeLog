@@ -1,9 +1,14 @@
+Mon May 11 07:21:16 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/DII_AMI_Forward/server_interceptor.cpp:
+          Fixed compile warning.
+
 Fri May  8 19:30:55 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * examples/RTCORBA/Activity/Builder.cpp:
 
           Really fix fuzz.
-        
+
 Fri May  8 14:23:07 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Bug_2234_Regression/server.cpp:
