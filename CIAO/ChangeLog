@@ -1,3 +1,9 @@
+Tue May 12 19:04:31 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+
+          Compile fix. 
+        
 Fri May  8 16:30:19 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/ADD_Handler.cpp:
@@ -51,8 +57,8 @@ Fri May  8 16:30:19 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/toplevel.cpp:
 
           New version of XSC generated code, and necessary porting in the handlers
-          as a potential fix for BCB2009 compilation issues. 
-        
+          as a potential fix for BCB2009 compilation issues.
+
 Mon May  4 15:52:14 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
