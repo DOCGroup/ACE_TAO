@@ -209,7 +209,7 @@ fail_no_listener_nonblocking (void)
       ACE_DEBUG ((LM_WARNING,
                   ACE_TEXT ("Test not executed fully; ")
                   ACE_TEXT ("expected EWOULDBLOCK, %p (%d)\n"),
-                  ACE_TEXT ("not"), errno));
+                  ACE_TEXT ("not"), ACE_ERRNO_GET));
       status = -1;
     }
 
