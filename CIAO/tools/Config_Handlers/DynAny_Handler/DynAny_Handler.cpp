@@ -244,6 +244,8 @@ namespace CIAO
           throw Config_Error ("", "reverse mapping for this type not supported");
         }
 #endif
+      Any retval (TCKind::tk_char, val);
+      return retval;
     }
     
     CORBA::TypeCode_ptr 
