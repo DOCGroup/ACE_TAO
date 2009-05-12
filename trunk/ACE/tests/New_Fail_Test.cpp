@@ -128,7 +128,7 @@ run_main (int, ACE_TCHAR *[])
                         ACE_TEXT ("expected ENOMEM, %p (%d)\n"),
                         i,
                         ACE_TEXT ("got"),
-                        errno));
+                        ACE_ERRNO_GET));
         }
 
       // Free the memory to try ACE_NEW_RETURN
@@ -163,7 +163,7 @@ run_main (int, ACE_TCHAR *[])
                         ACE_TEXT ("expected ENOMEM, %p (%d)\n"),
                         i,
                         ACE_TEXT ("got"),
-                        errno));
+                        ACE_ERRNO_GET));
         }
       while (i >= 0)
         delete [] blocks[i--];
@@ -196,7 +196,7 @@ run_main (int, ACE_TCHAR *[])
                         ACE_TEXT ("expected ENOMEM, %p (%d)\n"),
                         i,
                         ACE_TEXT ("got"),
-                        errno));
+                        ACE_ERRNO_GET));
         }
       while (i >= 0)
         delete [] blocks[i--];
