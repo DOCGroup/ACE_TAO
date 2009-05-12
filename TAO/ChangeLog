@@ -1,8 +1,17 @@
+Tue May 12 08:26:55 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Bug_2234_Regression/server.cpp:
+        * tests/Bug_3171_Regression/server.cpp:
+        * tests/DII_AMI_Forward/orb_initializer.h:
+
+          TAO_Local_RefCounted_Object is deprecated. Changed
+          it to CORBA::LocalObject.
+
 Mon May 11 09:54:38 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/DII_AMI_Forward/server_interceptor.cpp:
           Fixed fuzz error.
-        
+
 Mon May 11 07:21:16 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/DII_AMI_Forward/server_interceptor.cpp:

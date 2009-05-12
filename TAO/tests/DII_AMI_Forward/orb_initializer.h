@@ -14,7 +14,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//#include "tao/LocalObject.h"
 
 class ForwardTest_Request_Interceptor;
 
@@ -28,7 +27,7 @@ class ForwardTest_Request_Interceptor;
 /// Server ORB initializer.
 class Server_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer
-  , public virtual TAO_Local_RefCounted_Object
+  , public virtual CORBA::LocalObject
 {
 public:
   /// Constructor
