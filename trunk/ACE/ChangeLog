@@ -1,3 +1,10 @@
+Tue May 12 18:26:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/lib/Client_Logging_Handler.cpp
+        * protocols/tests/HTBP/Reactor_Tests/client.cpp
+        * protocols/tests/HTBP/Send_Large_Msg/client.cpp
+          More usage of ACE_ERRNO_GET
+
 Tue May 12 12:35:07 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * apps/gperf/src/Key_List.cpp:
