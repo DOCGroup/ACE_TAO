@@ -35,19 +35,19 @@ int AcceptHandler::open(void) {
     // open a port using the acceptor; reuse the address later
     if (mAcceptor.open(addr, 1) == -1)
       ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to open ")
-                        ACE_TEXT ("listening socket. (errno = %i: %m)\n"), errno), -1);
+                        ACE_TEXT ("listening socket. (errno = %i: %m)\n"), ACE_ERRNO_GET), -1);
 
     // register the handler with the reactor
     if (mReactor->register_handler(this,
             ACE_Event_Handler::ACCEPT_MASK) == -1) {
       ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to register accept ")
-                 ACE_TEXT ("handler. (errno = %i: %m)\n"), errno));
+                 ACE_TEXT ("handler. (errno = %i: %m)\n"), ACE_ERRNO_GET));
 
         // don't leave the acceptor open
         if (mAcceptor.close() == -1)
           ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to close the socket ")
                      ACE_TEXT ("after previous error. (errno = %i: %m)\n"),
-                        errno));
+                        ACE_ERRNO_GET));
         return -1;
     }
 

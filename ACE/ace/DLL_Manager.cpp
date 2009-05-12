@@ -153,7 +153,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                             ACE_TEXT ("(\'%s\') failed, errno=")
                             ACE_TEXT ("%d: %s\n"),
                             name->c_str (),
-                            errno,
+                            ACE_ERRNO_GET,
                             this->error ()->c_str ()));
 
 #if defined (AIX)

@@ -108,7 +108,7 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("%p (%d) <%s>\n"),
                              ACE_TEXT ("Write to file failed:"),
-                             errno,
+                             ACE_ERRNO_GET,
                              filename),
                             -1);
         }

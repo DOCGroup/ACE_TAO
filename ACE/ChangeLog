@@ -1,3 +1,29 @@
+Tue May 12 08:31:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_errno.h:
+          Added ACE_ERRNO_GET, this has to be used when errno is passed to a
+          C variable length argument . With WinCE errno is a class instance
+          which we can't pass through a variable length argument, the cegcc
+          compiler gives a warning about this, it results to an abort at
+          runtime. ACE_ERRNO_GET will return the errno as int with WinCE
+
+        * ace/DLL_Manager.cpp:
+        * examples/Reactor/TP_Reactor/AcceptHandler.cpp:
+        * examples/Reactor/TP_Reactor/client.cpp:
+        * examples/Reactor/TP_Reactor/ReadHandler.cpp:
+        * tests/Mem_Map_Test.cpp:
+        * tests/MT_Reactor_Timer_Test.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * tests/New_Fail_Test.cpp:
+        * tests/Priority_Task_Test.cpp:
+        * tests/Reactor_Performance_Test.cpp:
+        * tests/SOCK_Connector_Test.cpp:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+          Use ACE_ERRNO_GET
+
+        * tests/Reactor_Notify_Test.cpp:
+          Fixed typo in comment
+
 Mon May 11 18:28:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sock_Connect.cpp:
