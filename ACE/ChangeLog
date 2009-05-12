@@ -1,3 +1,9 @@
+Tue May 12 12:35:07 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * apps/gperf/src/Key_List.cpp:
+
+          Fixed an incorrect check which resulted in valgrind warning.
+
 Tue May 12 08:31:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_errno.h:
