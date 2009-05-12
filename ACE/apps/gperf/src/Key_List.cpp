@@ -234,10 +234,10 @@ Key_List::output_types (void)
           ACE_OS::strncpy (struct_tag,
                            array_type_,
                            struct_tag_length);
-          if (struct_tag[struct_tag_length] != ' ')
+          if (struct_tag[struct_tag_length - 1] != ' ')
             {
               struct_tag[struct_tag_length] = ' ';
-              struct_tag_length++;
+              ++struct_tag_length;
             }
           struct_tag[struct_tag_length] = '\0';
         }
