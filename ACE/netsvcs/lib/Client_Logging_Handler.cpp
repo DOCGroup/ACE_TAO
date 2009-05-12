@@ -611,7 +611,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("%m, using stderr\n"),
                   this->server_addr_.get_host_name (),
                   this->server_addr_.get_port_number (),
-                  errno));
+                  ACE_ERRNO_GET));
 
       if (ACE_Log_Msg::instance ()->msg_ostream () == 0)
         // If we can't connect to the server then we'll send the logging
