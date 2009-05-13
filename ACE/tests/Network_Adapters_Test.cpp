@@ -567,20 +567,20 @@ Stop_Handler::open (void)
   if (this->reactor ()->register_handler (SIGINT, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Stop_Handler::open: %p\n"),
-                       ACE_TEXT ("register_handler for SIGINT")),
+                       ACE_TEXT ("register_handler for SIGINT <%d>"), SIGINT),
                       -1);
 
   if (this->reactor ()->register_handler (SIGTERM, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Stop_Handler::open: %p\n"),
-                       ACE_TEXT ("register_handler for SIGTERM")),
+                       ACE_TEXT ("register_handler for SIGTERM <%d>"), SIGTERM),
                       -1);
 
 #if ! defined (ACE_WIN32)
   if (this->reactor ()->register_handler (SIGQUIT, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Stop_Handler::open: %p\n"),
-                       ACE_TEXT ("register_handler for SIGQUIT")),
+                       ACE_TEXT ("register_handler for SIGQUIT <%d>"), SIGQUIT),
                       -1);
 #endif /* #if ! defined (ACE_WIN32) */
   return 0;
