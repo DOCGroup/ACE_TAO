@@ -1,132 +1,131 @@
 Fri Mar 20 23:10:39 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * C2W/Instructions for building SA-POP Federate.txt:
-	Updated for how to run the SA-POP Federate.
+          Updated for how to run the SA-POP Federate.
 
         * C2W/LogGraphOut.h:
         * C2W/LogGraphOut.cpp:
-
           Removed these files.
 
 Fri Mar 20 19:45:41 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * C2W/C2W_Demo.mpc:
-        Removed the LogGraphOut class as part of the project.
+          Removed the LogGraphOut class as part of the project.
 
         * C2W/C2W_Demo.cpp:
-        Added the Replan functions into the demo. Also made some changes on keeping track of external conditoon.
+          Added the Replan functions into the demo. Also made some changes on keeping track of external conditoon.
 
         * LogGraphOut.h:
-        Added to SA-POP Root and Exported out for the Library
+          Added to SA-POP Root and Exported out for the Library
 
         * LogGraphOut.cpp:
-        Added to SA-POP Root
+          Added to SA-POP Root
 
         * LogGraphOut_Export.h:
-        Generated to provide accessibility as an outside hook into the Library.
+          Generated to provide accessibility as an outside hook into the Library.
 
         * Planner.h:
-        Added function prototype for updating effect link(update_effect) and printing the entire SANet for Visualization(print_graph)
+          Added function prototype for updating effect link(update_effect) and printing the entire SANet for Visualization(print_graph)
 
         * Planner.cpp:
-        Implements the functions update_effect and print_graph for the Planner.
+          Implements the functions update_effect and print_graph for the Planner.
 
         * SANet/SANet.h:
-        Added function prototype for update_effect_link, which propogates the effect link change to the SANet itself.
-        Added function prototype for print_graphviz, which prints the SANet out into the graphviz dot framework.
+          Added function prototype for update_effect_link, which propogates the effect link change to the SANet itself.
+          Added function prototype for print_graphviz, which prints the SANet out into the graphviz dot framework.
 
         * SANet/SANet.cpp:
-        Implements the two new prototypes: update_effect_link and print_graphviz
+          Implements the two new prototypes: update_effect_link and print_graphviz
 
         * SAPOP_w_ACE.mpc:
-        Added the LogGraphOut as part of the SAPOP project, and allows it to export out the functionality to programs that link to the SAPOP library
+          Added the LogGraphOut as part of the SAPOP project, and allows it to export out the functionality to programs that link to the SAPOP library
 
 
 Thu Mar 19 21:45:00 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * Instructions for building middleware RACE SA-POP and CoSMIC.txt
-        Updated instructions.
+          Updated instructions.
 
 
 Thu Mar 19 18:12:00 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * Instructions for building middleware, RACE, SA-POP, & CoSMIC.txt:
-        Deleted (replaced with new name) because generated VC8 project file could not be opened due to invalid characters in the file name.
+          Deleted (replaced with new name) because generated VC8 project file could not be opened due to invalid characters in the file name.
 
         * Instructions for building middleware RACE SA-POP and CoSMIC.txt
-        Added (renamed from above to resolve invalid character problem in generated VC8 project file).
+          Added (renamed from above to resolve invalid character problem in generated VC8 project file).
 
 
 Wed Mar 18 21:25:00 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * Instructions for building middleware, RACE, SA-POP, & CoSMIC.txt:
         * Instructions for building SA-POP Federate.txt:
-        Added instructions for building SA-POP, etc.
+          Added instructions for building SA-POP, etc.
 
 
 Thu Jan 15 18:55:00 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * C2W/C2W_Demo.cpp:
-        Uses the replan function in the planner for effects and condition updating
+          Uses the replan function in the planner for effects and condition updating
 
         * SANet/SANode.cpp:
-        Updates CondNode::update and TaskNode::Update to handle effect link weighting changes.
+          Updates CondNode::update and TaskNode::Update to handle effect link weighting changes.
 
         * SA_PlanStrategy.h:
         * SA_PlanStrategy.cpp:
-        Implements a reset function for the PlanStrategy.
+          Implements a reset function for the PlanStrategy.
 
         * SA_SchedStrategy.h:
         * SA_SchedStrategy.cpp:
-        Implements a reset function for the SchedStrategy
+          Implements a reset function for the SchedStrategy
 
         * SA_WorkingPlan.h:
         * SA_WorkingPlan.cpp:
-        Calls the reset functions for both SchedStrategy and PlanStrategy in the replanning function.
-        Updated sched_links_ and reused_insts_ to reflect naming conventions.
+          Calls the reset functions for both SchedStrategy and PlanStrategy in the replanning function.
+          Updated sched_links_ and reused_insts_ to reflect naming conventions.
 
         * SchedStrategy.h:
-        Added virtual function for reset function
+          Added virtual function for reset function
 
 
 Fri Jan  9 21:39:55 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * C2W/C2W_Demo.cpp:
-        Utilize update_effect function
+          Utilize update_effect function
 
         * C2W/LogGraphOut.cpp:
-        Utilizes Complete Graphviz Visualization
+          Utilizes Complete Graphviz Visualization
 
         * Planner.h:
         * Planner.cpp:
-        Uses SANET::update_effect
+          Uses SANET::update_effect
 
         * SANet/SANet.h:
         * SANet/SANet.cpp:
-        Implements SANET::update_effect, which updates an effect link in a SANet, calls TaskNode::update_effect_link
+          Implements SANET::update_effect, which updates an effect link in a SANet, calls TaskNode::update_effect_link
 
         * SANet/SANode.h:
         * SANet/SANode.cpp:
-        Implements TaskNode::update_effect_link and CondNode::update_pre_link
+          Implements TaskNode::update_effect_link and CondNode::update_pre_link
 
         * SA_WorkingPlan.cpp:
-        Clears causal links in reset_plan.
+          Clears causal links in reset_plan.
 
 Wed Dec 17 23:21:30 UTC 2008  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * C2W/C2W_Demo.cpp:
-        Minor update to setting effect
+          Minor update to setting effect
 
         * Planner.cpp:
-        Fixed typo
+          Fixed typo
 
         * SANet/SANode.cpp:
-        Check for changed condition value in CondNode::update()
+          Check for changed condition value in CondNode::update()
 
 Wed Dec 17 22:55:40 UTC 2008  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * SAPOP_C2W.mwc:
-        Added mwc for C2W.
+          Added mwc for C2W.
 
 Wed Dec 17 22:53:31 UTC 2008  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
@@ -142,2418 +141,709 @@ Wed Dec 17 22:53:31 UTC 2008  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
         * C2W/readme.txt:
         * SchemaOut.h:
         * SchemaOut.cpp:
-
-        Added the C2w Files.
+          Added the C2w Files.
 
 Sun Sep 28 21:14:16 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
-        * SA_POP/SANet/SANetFileIn.cpp:
-        * SA_POP/SANet/XML_SANet.cpp:
-        * SA_POP/SANet/XML_SANet.hpp:
-        * SA_POP/TaskMapFileIn.cpp:
-        * SA_POP/XML_TaskMap.hpp:
-        * SA_POP/XML_TaskMap.cpp:
-
+        * SANet/SANetFileIn.cpp:
+        * SANet/XML_SANet.cpp:
+        * SANet/XML_SANet.hpp:
+        * TaskMapFileIn.cpp:
+        * XML_TaskMap.hpp:
+        * XML_TaskMap.cpp:
           Updated to latest XSC genrated code to solve borland compilation errors.
-        * utils/Logger.h:
 
+        * ../utils/Logger.h:
           Borland compilation errors.
 
 Sat Sep 27 18:55:14 UTC 2008  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * SA_POP/Component/Planning_exec.cpp:
-
+        * Component/Planning_exec.cpp:
           Updated UUID generation code with changed function name in ace/UUID.h
-
-        * RACE.mwc:
-        * RACE_SAPOP.mwc:
-        * TM_Daemon:
-        * TM_Daemon/TM_Daemon.idl:
-        * TM_Daemon/TM_Daemon.mpc:
-        * TM_Daemon/TM_Daemon_stub_export.h:
-        * TM_Daemon/TM_Daemon_svnt_export.h:
-        * TM_Proxy/TM_Proxy.mpc:
-
-          Updated RACE to include TM_Daemon (TEMPORARY until TM_Daemon is included in DAnCE)
 
 Thu Sep 18 18:12:57 UTC 2008  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * Allocator/Base/Allocator_Base.idl:
-        * Allocator/Base/Allocator_Base.mpc:
+        * ../RACE_SAPOP.mwc:
 
-        * Allocator/FirstFit/FirstFit.idl:
-        * Allocator/FirstFit/FirstFit.mpc:
+        * Component/Planning_exec.h:
+        * Component/Planning_exec.cpp:
+        * Component/SA_POP_Component.idl:
+        * Component/SA_POP_Component.mpc:
 
-        * Conductor/Conductor.idl:
-        * Conductor/Conductor.mpc:
+        * SA_POP_for_RACE.mpc:
 
-        * Controller/Base/Controller_Base.idl:
-        * Controller/Base/Controller_Base.mpc:
+        * Tester/Tester_Component.idl:
+        * Tester/Tester_Component.mpc:
 
-        * Controller/Component/Controller.idl:
-        * Controller/Component/Controller.mpc:
-        * Controller/Component/Poller.h:
+        * examples/Space/source/Analysis/Analysis_Component.mpc:
 
-        * Controller/EUCON/EUCON_Controller.idl:
-        * Controller/EUCON/EUCON_Controller.mpc:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.mpc:
 
-        * Controller/FMUF/FMUF_Controller.idl:
-        * Controller/FMUF/FMUF_Controller.mpc:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.mpc:
 
-        * Data_Base/Data_Base.idl:
-        * Data_Base/Data_Base.mpc:
+        * examples/Space/source/Comm/Comm_Component.mpc:
 
-        * Effectors/Base/Effector_Base.idl:
-        * Effectors/Base/Effector_Base.mpc:
+        * examples/Space/source/Compression/Compression_Component.mpc:
 
-        * Effectors/Callback/Callback.mpc:
+        * examples/Space/source/Exec/Exec_Component.mpc:
 
-        * Effectors/EUCON/ApplicationActuator_exec.h:
-        * Effectors/EUCON/EUCON_Effector.idl:
-        * Effectors/EUCON/EUCON_Effector.mpc:
+        * examples/Space/source/Filter/Filter_Component.mpc:
 
-        * Input_Adapters/Base/Input_Adapter_Base.idl:
-        * Input_Adapters/Base/Input_Adapter_Base.mpc:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High.mpc:
 
-        * Input_Adapters/Interactive_Input_Adapter/Admin_exec.h:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low.mpc:
 
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.mpc:
 
-        * MPC:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High.mpc:
 
-        * MPC/config:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.mpc:
 
-        * MPC/config/race_common.mpb:
-        * MPC/config/race_idl.mpb:
+        * examples/Space/source/Ground/Ground_Component.mpc:
 
-        * Monitor/Central_Monitor/Monitor.idl:
-        * Monitor/Central_Monitor/Monitor.mpc:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo.mpc:
 
-        * Monitor/Local_Monitor/Local_Monitor.h:
-        * Monitor/Local_Monitor/Local_Monitor.cpp:
+        * examples/Space/source/common/Event_Types.mpc:
 
-        * Output_Adapters/Base/Output_Adapter.idl:
-        * Output_Adapters/Base/Output_Adapter.mpc:
-
-        * Output_Adapters/Component/Output_Manager.idl:
-        * Output_Adapters/Component/Output_Manager.mpc:
-
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
-
-        * Output_Adapters/Interface/Output_Adapter_Interface.mpc:
-        * Output_Adapters/Interface/PlanEgress.idl:
-
-        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.idl:
-        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.mpc:
-
-        * Plan_Analyzer/Component/Plan_Analyzer.idl:
-        * Plan_Analyzer/Component/Plan_Analyzer.mpc:
-
-        * Plan_Analyzer/Interface/Analyzer_I.idl:
-        * Plan_Analyzer/Interface/PlanIngress.idl:
-        * Plan_Analyzer/Interface/Plan_Analyzer_Interface.mpc:
-
-        * Planner_Manager/Component/Planner_Manager.cidl:
-        * Planner_Manager/Component/Planner_Manager.idl:
-        * Planner_Manager/Component/Planner_Manager.mpc:
-
-        * Planner_Manager/Interface/Planner_Manager_I.idl:
-        * Planner_Manager/Interface/Planner_Manager_Interface.mpc:
-
-        * Planners/Base/Planner.idl:
-        * Planners/Base/Planner.mpc:
-
-        * Planners/Interface/Planner_I.idl:
-        * Planners/Interface/Planner_Interface.mpc:
-
-        * Planners/StaticPlanner/StaticPlanner.mpc:
-
-        * RACE.mwc:
-        * RACE_SAPOP.mwc:
-
-        * SA_POP/Component/Planning_exec.h:
-        * SA_POP/Component/Planning_exec.cpp:
-        * SA_POP/Component/SA_POP_Component.idl:
-        * SA_POP/Component/SA_POP_Component.mpc:
-
-        * SA_POP/SA_POP_for_RACE.mpc:
-
-        * SA_POP/Tester/Tester_Component.idl:
-        * SA_POP/Tester/Tester_Component.mpc:
-
-        * SA_POP/examples/Space/source/Analysis/Analysis_Component.mpc:
-
-        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.mpc:
-
-        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.mpc:
-
-        * SA_POP/examples/Space/source/Comm/Comm_Component.mpc:
-
-        * SA_POP/examples/Space/source/Compression/Compression_Component.mpc:
-
-        * SA_POP/examples/Space/source/Exec/Exec_Component.mpc:
-
-        * SA_POP/examples/Space/source/Filter/Filter_Component.mpc:
-
-        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High.mpc:
-
-        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low.mpc:
-
-        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.mpc:
-
-        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High.mpc:
-
-        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.mpc:
-
-        * SA_POP/examples/Space/source/Ground/Ground_Component.mpc:
-
-        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo.mpc:
-
-        * SA_POP/examples/Space/source/common/Event_Types.mpc:
-
-        * SA_POP/server/Driver.h:
-        * SA_POP/server/Driver.idl:
-        * SA_POP/server/Driver.mpc:
-
-        * TM_Proxy/TM_Proxy.mpc:
-
-        * Tester/Interactive_IA_Tester.cpp:
-        * Tester/tester.mpc:
-
-        * common/OpString.idl:
-        * common/RACE_common.idl:
-        * common/RACE_common.mpc:
-
-        * examples/E2E_Task/Base/Event_Types.mpc:
-
-        * examples/E2E_Task/Subtask/Subtask.mpc:
-
-        * examples/E2E_Task/Trigger/Trigger.mpc:
-
-        * examples/E2E_Task/Workload/Workload.mpc:
-
-        * examples/E2E_Task/utils/App_utils.mpc:
-
-        * utils/RACE_utils.mpc:
+        * server/Driver.h:
+        * server/Driver.idl:
+        * server/Driver.mpc:
 
           Updated RACE build system to use $(RACE_ROOT) environment variable.
 
-Thu Apr 10 23:06:32 UTC 2008  Nilabja R  <nilabjar@nospam.com>
-
-        * Allocator/Base/Allocator_Base.idl:
-        * Allocator/Base/Allocator_Base.mpc:
-        * Allocator/Base/Allocator_Base_exec_export.h:
-        * Allocator/Base/Allocator_Base_stub_export.h:
-        * Allocator/Base/Allocator_Base_svnt_export.h:
-        * Allocator/FirstFit/FirstFit.cidl:
-        * Allocator/FirstFit/FirstFit.idl:
-        * Allocator/FirstFit/FirstFit.mpc:
-        * Allocator/FirstFit/FirstFitE.idl:
-        * Allocator/FirstFit/FirstFit_exec.h:
-        * Allocator/FirstFit/FirstFit_exec.cpp:
-        * Allocator/FirstFit/FirstFit_exec_export.h:
-        * Allocator/FirstFit/FirstFit_stub_export.h:
-        * Allocator/FirstFit/FirstFit_svnt_export.h:
-        * Allocator/FirstFit/Single_D_BP.h:
-        * Allocator/FirstFit/Single_D_BP.cpp:
-
-          The allocator component.
-
-Thu Apr  3 20:13:49 UTC 2008  Nilabja Roy  <nilabja@nospam.com>
-
-        * Effectors/Callback/Callback.mpc:
-
-        * RACE.mwc:
-
-        * common/RACE_common.mpc:
-
-        * utils/RACE_utils.mpc:
-          Changed the files to address the problem of libout
-
-Tue Apr  1 00:16:43 UTC 2008  Nishanth Shankaran  <nshanakr@nospam.com>
-
-        * examples/E2E_Task/Model/Baseline.xme:
-
-        Updated the model.
-
-        * examples/E2E_Task/descriptors/baseline/average/ATask1.cdp:
-        * examples/E2E_Task/descriptors/baseline/average/ATask2.cdp:
-        * examples/E2E_Task/descriptors/baseline/average/ATask3.cdp:
-        * examples/E2E_Task/descriptors/baseline/average/ATask4.cdp:
-        * examples/E2E_Task/descriptors/baseline/average/ATask5.cdp:
-        * examples/E2E_Task/descriptors/baseline/average/ATask6.cdp:
-        * examples/E2E_Task/descriptors/baseline/average/ATask7.cdp:
-
-        * examples/E2E_Task/descriptors/baseline/best/BTask1.cdp:
-        * examples/E2E_Task/descriptors/baseline/best/BTask10.cdp:
-        * examples/E2E_Task/descriptors/baseline/best/BTask2.cdp:
-        * examples/E2E_Task/descriptors/baseline/best/BTask3.cdp:
-        * examples/E2E_Task/descriptors/baseline/best/BTask4.cdp:
-        * examples/E2E_Task/descriptors/baseline/best/BTask5.cdp:
-        * examples/E2E_Task/descriptors/baseline/best/BTask6.cdp:
-        * examples/E2E_Task/descriptors/baseline/best/BTask7.cdp:
-        * examples/E2E_Task/descriptors/baseline/best/BTask8.cdp:
-        * examples/E2E_Task/descriptors/baseline/best/BTask9.cdp:
-
-        Added these files.
-
-Mon Mar 31 15:46:24 UTC 2008  Nishanth Shanakran  <nshankar@nospam.com>
-
-        * Controller/EUCON/MPC_Controller.cpp:
-
-        Updated the controller to handle utilization constraints.
-
-        * Tester/Interactive_IA_Tester.cpp:
-
-        Updated this file to first stop the controller before deploying
-        new string in the system.
-
-        * descriptors/NodeDetails.dat:
-        * descriptors/RACE.cdp:
-        * descriptors/run_NS.pl:
-
-        Updated these files.
-
-        * examples/E2E_Task/Model/Baseline.xme:
-
-        Added the model for the baseline task configuration.
-
-        * examples/E2E_Task/Model/E2E_Tasks.xme:
-
-        Updated the model.
-
-        * examples/E2E_Task/Trigger/Trigger_exec.h:
-        * examples/E2E_Task/Trigger/Trigger_exec.cpp:
-
-        Updated the trigger implementation.
-
-        * examples/E2E_Task/descriptors/baseline:
-        * examples/E2E_Task/descriptors/baseline/average:
-        * examples/E2E_Task/descriptors/baseline/best:
-        * examples/E2E_Task/descriptors/baseline/worst:
-
-        * examples/E2E_Task/descriptors/baseline/worst/WTask1.cdp:
-        * examples/E2E_Task/descriptors/baseline/worst/WTask2.cdp:
-        * examples/E2E_Task/descriptors/baseline/worst/WTask3.cdp:
-        * examples/E2E_Task/descriptors/baseline/worst/WTask4.cdp:
-        * examples/E2E_Task/descriptors/baseline/worst/WTask5.cdp:
-
-        Added these files.
-
-        * examples/E2E_Task/descriptors/scanario:
-        * examples/E2E_Task/descriptors/scanario/Domain.cdd:
-        * examples/E2E_Task/descriptors/scanario/NodeDetails.dat:
-        * examples/E2E_Task/descriptors/scanario/Task1.cdp:
-        * examples/E2E_Task/descriptors/scanario/Task2.cdp:
-        * examples/E2E_Task/descriptors/scanario/Task3.cdp:
-        * examples/E2E_Task/descriptors/scanario/Task4.cdp:
-        * examples/E2E_Task/descriptors/scanario/Task5.cdp:
-        * examples/E2E_Task/descriptors/scanario/Task6.cdp:
-        * examples/E2E_Task/descriptors/scanario/Task7.cdp:
-        * examples/E2E_Task/descriptors/scanario/Task8.cdp:
-        * examples/E2E_Task/descriptors/scanario/run_all.pl:
-
-        Added these files.
-
-        * examples/E2E_Task/descriptors/Domain.cdd:
-        * examples/E2E_Task/descriptors/NodeDetails.dat:
-        * examples/E2E_Task/descriptors/Task1.cdp:
-        * examples/E2E_Task/descriptors/Task2.cdp:
-        * examples/E2E_Task/descriptors/Task3.cdp:
-        * examples/E2E_Task/descriptors/Task4.cdp:
-        * examples/E2E_Task/descriptors/Task5.cdp:
-        * examples/E2E_Task/descriptors/Task6.cdp:
-        * examples/E2E_Task/descriptors/Task7.cdp:
-        * examples/E2E_Task/descriptors/Task8.cdp:
-        * examples/E2E_Task/descriptors/run_all.pl:
-
-          Removed these files.
-
-Fri Mar  7 22:11:51 UTC 2008  Nishanth Shankaran  <nshankar@nosoam.com>
-
-        * examples/E2E_Task/Model/E2E_Tasks.xme:
-
-        Updated the model.
-
-Fri Mar  7 22:08:24 UTC 2008  Nishanth Shankaran  <nshankar@nosoam.com>
-
-        * Conductor/Admin_exec.h:
-        * Conductor/Admin_exec.cpp:
-        * Conductor/Conductor.idl:
-
-        Added capabilities to unregister opstrings.
-
-        * Controller/EUCON/Controller.h:
-        * Controller/EUCON/Controller.cpp:
-        * Controller/EUCON/MPC_Controller.cpp:
-        * Controller/EUCON/Operations_exec.cpp:
-        * Effectors/EUCON/ApplicationActuator_exec.cpp:
-
-        Added capabilities to register and unregister strings while the
-        controller in running.
-
-
-        * Input_Adapters/Interactive_Input_Adapter/Admin_exec.h:
-        * Input_Adapters/Interactive_Input_Adapter/Admin_exec.cpp:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
-        Added capabilities to unregister opstrings.
-
-        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
-
-        Made cosmetic mods.
-
-        * Tester/Interactive_IA_Tester.cpp:
-
-        Updated this file to deploy multiple plans.
-
-        * descriptors/NodeDetails.dat:
-        * examples/E2E_Task/descriptors/Task1.cdp:
-        * examples/E2E_Task/descriptors/Task2.cdp:
-        * examples/E2E_Task/descriptors/Task3.cdp:
-        * examples/E2E_Task/descriptors/Task4.cdp:
-        * examples/E2E_Task/descriptors/Task5.cdp:
-        * examples/E2E_Task/descriptors/Task6.cdp:
-        * examples/E2E_Task/descriptors/Task7.cdp:
-        * examples/E2E_Task/descriptors/Task8.cdp:
-
-        Updated these files.
-
-        * utils/Logger.h:
-        * utils/Logger.cpp:
-
-        Updated the logger.
-
-Tue Mar  4 19:29:50 UTC 2008  Nishanth Shanakran  <nshankar@nospam.com>
-
-        * Conductor/Admin_exec.cpp:
-        * Tester/Interactive_IA_Tester.cpp:
-
-        Updated these files.
-
-
-Mon Mar  3 21:06:11 UTC 2008  Nishanth Shanakran  <nshankar@nospam.com>
-
-        * examples/E2E_Task/Trigger/Trigger_exec.cpp:
-
-        Made cosmetic mods.
-
-Mon Mar  3 20:57:36 UTC 2008  Nishanth Shanakran  <nshankar@nospam.com>
-
-        * Controller/EUCON/Controller.cpp:
-
-        Updated the debug statements.
-
-        * descriptors/NodeDetails.dat:
-
-        Updated this file.
-
-        * examples/E2E_Task/Subtask/Subtask.mpc:
-        * examples/E2E_Task/Subtask/Subtask_exec.cpp:
-        * examples/E2E_Task/Trigger/Trigger.mpc:
-        * examples/E2E_Task/Trigger/Trigger_exec.h:
-        * examples/E2E_Task/Trigger/Trigger_exec.cpp:
-
-        Enhanced the trigger and subtask implementation to use the logger.
-
-
-        * examples/E2E_Task/descriptors/Task1.cdp:
-
-        * examples/E2E_Task/utils/App_utils.mpc:
-        * examples/E2E_Task/utils/Logger.h:
-        * examples/E2E_Task/utils/Logger.cpp:
-        * examples/E2E_Task/utils/Logger_export.h:
-        * examples/E2E_Task/utils/RACE_utils.h:
-        * examples/E2E_Task/utils/RACE_utils.cpp:
-
-        Checking in the initial implementation of the application logger.
-
-        * examples/E2E_Task/utils/RT.h:
-        * examples/E2E_Task/utils/RT.cpp:
-
-        Updated these files.
-
-
-
-Mon Mar  3 16:08:18 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * examples/E2E_Task/utils:
-        * examples/E2E_Task/utils/RT.h:
-        * examples/E2E_Task/utils/RT.cpp:
-
-        Checking in these files.
-
-Mon Mar  3 16:01:41 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Tester/Interactive_IA_Tester.cpp:
-
-        Made cosmetic mods.
-
-        * examples/E2E_Task/Model/E2E_Tasks.xme:
-
-        Updated the model.
-
-        * examples/E2E_Task/Subtask/Subtask.mpc:
-        * examples/E2E_Task/Subtask/Subtask_exec.cpp:
-
-        Updated debug statements in these files.
-
-        * examples/E2E_Task/Trigger/Trigger.mpc:
-        * examples/E2E_Task/Trigger/Trigger_exec.h:
-        * examples/E2E_Task/Trigger/Trigger_exec.cpp:
-        * examples/E2E_Task/Trigger/Metrics.h:
-
-        Added the monitor to measure the deadline throughput and miss
-        ratio.
-
-        * examples/E2E_Task/descriptors/Domain.cdd:
-        * examples/E2E_Task/descriptors/Task1.cdp:
-        * examples/E2E_Task/descriptors/Task2.cdp:
-        * examples/E2E_Task/descriptors/Task3.cdp:
-        * examples/E2E_Task/descriptors/Task4.cdp:
-        * examples/E2E_Task/descriptors/Task5.cdp:
-        * examples/E2E_Task/descriptors/Task6.cdp:
-        * examples/E2E_Task/descriptors/Task7.cdp:
-        * examples/E2E_Task/descriptors/Task8.cdp:
-        * examples/E2E_Task/descriptors/run_all.pl:
-
-        Updated these files.
-
-Thu Feb 28 20:05:06 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * examples/E2E_Task/Workload:
-        * examples/E2E_Task/Workload/load.cpp:
-        * examples/E2E_Task/Workload/loader.mpc:
-
-        Checking in these files.
-
-Wed Feb 27 23:08:43 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * examples/E2E_Task/Model:
-        * examples/E2E_Task/Model/E2E_Tasks.xme:
-
-        Checking in the PICMl model.
-
-        * examples/E2E_Task/Subtask/Subtask_exec.cpp:
-
-        Made cosmetic modifications.
-
-        * examples/E2E_Task/Trigger/Trigger.idl:
-        * examples/E2E_Task/Trigger/Callback.idl:
-        * examples/E2E_Task/Trigger/Trigger.mpc:
-        * examples/E2E_Task/Trigger/Trigger_exec.h:
-        * examples/E2E_Task/Trigger/Trigger_exec.cpp:
-
-        Enhanced the trigger implementation to include hooks using which
-        RACE's effectors can update the task period/rate.
-
-        * examples/E2E_Task/descriptors/Task1.cdp:
-        * examples/E2E_Task/descriptors/Task2.cdp:
-        * examples/E2E_Task/descriptors/Task3.cdp:
-        * examples/E2E_Task/descriptors/Task4.cdp:
-        * examples/E2E_Task/descriptors/Task5.cdp:
-        * examples/E2E_Task/descriptors/Task6.cdp:
-        * examples/E2E_Task/descriptors/Task7.cdp:
-        * examples/E2E_Task/descriptors/Task8.cdp:
-        * examples/E2E_Task/descriptors/run_all.pl:
-
-        Added these descriptors.
-
-Tue Feb 26 23:37:04 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * examples/E2E_Task/Subtask/Subtask.idl:
-        * examples/E2E_Task/Trigger/Trigger.idl:
-
-        Modified these files to convert "publishes" to "emits".
-
-        * examples/E2E_Task/Trigger/Trigger_exec.cpp:
-
-        Made cosmetic mods.
-
-        * examples/E2E_Task/descriptors/NodeDetails.dat:
-        * examples/E2E_Task/descriptors/Task1.cdp:
-        * examples/E2E_Task/descriptors/run_all.pl:
-
-        Updated these files.
-
-Tue Feb 26 21:42:32 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Input_Adapters/Interactive_Input_Adapter/Admin_exec.h:
-        * Input_Adapters/Interactive_Input_Adapter/Admin_exec.cpp:
-
-        Updated these files so that "rates" can be floating point values.
-
-
-Tue Feb 26 20:19:16 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Input_Adapters/Interactive_Input_Adapter/Admin_exec.h:
-        * Input_Adapters/Interactive_Input_Adapter/Admin_exec.cpp:
-
-        Checking in these file.
-
-Tue Feb 26 18:57:18 UTC 2008  Nishanth Shanakran  <nshankar@nospam.com>
-
-        * examples:
-
-        * examples/E2E_Task:
-
-        * examples/E2E_Task/Base:
-
-        * examples/E2E_Task/Base/Event_Types.idl:
-        * examples/E2E_Task/Base/Event_Types.mpc:
-        * examples/E2E_Task/Base/Event_Types_stub_export.h:
-        * examples/E2E_Task/Base/Event_Types_svnt_export.h:
-
-        * examples/E2E_Task/Subtask:
-
-        * examples/E2E_Task/Subtask/Subtask.cidl:
-        * examples/E2E_Task/Subtask/Subtask.idl:
-        * examples/E2E_Task/Subtask/Subtask.mpc:
-        * examples/E2E_Task/Subtask/Subtask_exec.h:
-        * examples/E2E_Task/Subtask/Subtask_exec.cpp:
-        * examples/E2E_Task/Subtask/Subtask_exec_export.h:
-        * examples/E2E_Task/Subtask/Subtask_stub_export.h:
-        * examples/E2E_Task/Subtask/Subtask_svnt_export.h:
-
-        * examples/E2E_Task/Trigger:
-
-        * examples/E2E_Task/Trigger/Trigger.cidl:
-        * examples/E2E_Task/Trigger/Trigger.idl:
-        * examples/E2E_Task/Trigger/Trigger.mpc:
-        * examples/E2E_Task/Trigger/Trigger_exec.h:
-        * examples/E2E_Task/Trigger/Trigger_exec.cpp:
-        * examples/E2E_Task/Trigger/Trigger_exec_export.h:
-        * examples/E2E_Task/Trigger/Trigger_stub_export.h:
-        * examples/E2E_Task/Trigger/Trigger_svnt_export.h:
-
-        * examples/E2E_Task/descriptors:
-
-        * examples/E2E_Task/descriptors/NodeDetails.dat:
-        * examples/E2E_Task/descriptors/Task1.cdp:
-        * examples/E2E_Task/descriptors/run_all.pl:
-
-        Checking in the initial implementation of the E2E task model.
-
-Thu Jan 17 18:00:25 UTC 2008  Nishanth Shankaran  <nshanakr@nospam.com>
-
-        * descriptors/String1.cdp:
-        * descriptors/results.plt:
-
-        Checking in necessary files.
-
-
-Thu Jan 17 16:53:08 UTC 2008  Nishanth Shankaran  <nshanakr@nospam.com>
-
-        * Controller/EUCON/Controller.h:
-        * Controller/EUCON/Controller.cpp:
-
-        Added a "logger" to periodically dump resource utilization and
-        execution rates of applications to a file.
-
-        * descriptors/NodeDetails.dat:
-
-        Updated this file.
-
-        * descriptors/RACE.cdp:
-
-        Modified the sampling period of the controller.
-
-Tue Jan 15 21:27:51 UTC 2008  Nishanth Shankaran  <nshanakr@nospam.com>
-
-        * Controller/EUCON/Controller.cpp:
-
-        Updated this file to first initialize the effector while the
-        controller was being started up.
-
-        * Effectors/Base/Effector_Base.idl:
-
-        Added the init method.
-
-        * Effectors/Callback:
-        * Effectors/Callback/Callback.idl:
-        * Effectors/Callback/Callback.mpc:
-        * Effectors/Callback/Callback_stub_export.h:
-        * Effectors/Callback/Callback_svnt_export.h:
-
-        Checking in the Callback interface that application's effector
-        components have to implement.
-
-        * Effectors/EUCON/ApplicationActuator_exec.h:
-        * Effectors/EUCON/ApplicationActuator_exec.cpp:
-        * Effectors/EUCON/EUCON_Effector.mpc:
-
-        Added implementation for init, modifyApplications methods.
-
-        * common/OpString.idl:
-
-        Added the monitorID entry to the opstring structure.
-
-Mon Jan 14 22:34:25 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Controller/Base/Controller_Base.idl:
-        * Controller/Base/Controller_Base.mpc:
-        * Controller/EUCON/Controller.h:
-        * Controller/EUCON/Controller.cpp:
-        * Controller/EUCON/EUCON_Controller.mpc:
-
-        Updated these files to employ RACE Effectors.
-
-        * Effectors:
-        * Effectors/Base:
-        * Effectors/Base/Effector_Base.idl:
-        * Effectors/Base/Effector_Base.mpc:
-        * Effectors/Base/Effector_Base_stub_export.h:
-        * Effectors/Base/Effector_Base_svnt_export.h:
-
-        Checking in RACE's Base Effector.
-
-        * Effectors/EUCON:
-        * Effectors/EUCON/ApplicationActuator_exec.h:
-        * Effectors/EUCON/ApplicationActuator_exec.cpp:
-        * Effectors/EUCON/EUCON_Effector.cidl:
-        * Effectors/EUCON/EUCON_Effector.idl:
-        * Effectors/EUCON/EUCON_Effector.mpc:
-        * Effectors/EUCON/EUCON_Effector_exec.h:
-        * Effectors/EUCON/EUCON_Effector_exec.cpp:
-        * Effectors/EUCON/EUCON_Effector_exec_export.h:
-        * Effectors/EUCON/EUCON_Effector_stub_export.h:
-        * Effectors/EUCON/EUCON_Effector_svnt_export.h:
-        * Effectors/EUCON/SystemActuator_exec.h:
-        * Effectors/EUCON/SystemActuator_exec.cpp:
-
-        Checking in the initial implementation of EUCON_Effector.
-
-        * RACE.mwc:
-
-        Updated this file to include the Effectors directory.
-
-        * TM_Proxy/TM_Proxy_exec.h:
-        * TM_Proxy/TM_Proxy_exec.cpp:
-
-        Made cosmetic modifications.
-
-        * descriptors/RACE.cdp:
-
-        Regenerated the descriptor after including the EUCON_Effector.
-
-Fri Jan 11 21:56:02 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Controller/EUCON/Controller.h:
-        * Controller/EUCON/Controller.cpp:
-
-        Added helper methods.
-
-        * Conductor/Admin_exec.cpp:
-        * Controller/EUCON/MPC_Controller.cpp:
-        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
-
-        Made cosmetic changes.
-
-        * common/OpString.idl:
-
-        Removed nodeRef field in InstanceDescription.
-
-        * descriptors/NodeDetails.dat:
-
-        Updated this file.
-
-Thu Jan 10 17:31:49 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Controller/EUCON/Controller.cpp:
-        * Controller/EUCON/Task.h:
-
-        Made cosmetic changes.
-
-Thu Jan 10 17:24:15 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.h:
-        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl:
-
-        Removed the deploy_plan and redeploy_plan methods from the Admin
-        interface.
-
-Thu Jan 10 17:16:40 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Conductor/Conductor.idl:
-        * Conductor/Conductor_exec.h:
-        * Conductor/Conductor_exec.cpp:
-
-        Removed the "Test" interface, which comprised of deploy and
-        redeply plan methord.
-
-Wed Jan  9 21:28:23 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Conductor/Admin_exec.h:
-        * Conductor/Admin_exec.cpp:
-        * Conductor/Conductor.idl:
-        * Conductor/Conductor_exec.cpp:
-
-        Updated these files. In this updated version, the Admin servant
-        contacts the controller to register a string with the controller,
-        initializes and starts the controller.
-
-        * Controller/EUCON/Controller.cpp:
-
-        Added more debug messages.
-
-        * Controller/EUCON/Operations_exec.cpp:
-
-        Updated this file so that the operations servant forwards the
-        invocations to the concrete implementation of the controller.
-
-
-
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.cidl:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.h:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.cpp:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec_export.h:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_stub_export.h:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_svnt_export.h:
-
-        Checking in the initial implementation of the interactive input
-        adapter.
-
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.cidl:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
-
-        Made cosmetic modifications.
-
-        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
-
-        Enhansed the OA so that it converts the opstring to a deployment
-        plan without depending on the repo man.
-
-        * Tester/Interactive_IA_Tester.cpp:
-
-        Checking in an Interactive Input Adapter tester.
-
-        * Tester/tester.mpc:
-
-        Updated this file.
-
-        * descriptors/RACE.cdp:
-
-        Regenerated the descriptor. The updated RACE assembly uses the
-        IIA, and not the SA_POP_IA.
-
-        * descriptors/RACE_SA-POP_IA.cdp:
-
-        Checking in a deployment plan in which RACE uses the SA_POP_IA.
-
-        * Tester/tester.cpp:
-
-          Removed this file.
-
-Tue Jan  8 19:21:02 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Input_Adapters/Base/Input_Adapter_Base.idl:
-        * Input_Adapters/Base/Input_Adapter_Base.mpc:
-        * Input_Adapters/Base/Input_Adapter_Base_stub_export.h:
-        * Input_Adapters/Base/Input_Adapter_Base_svnt_export.h:
-
-        Added the Input_Adapter_Base component.
-
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.h:
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.cidl:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.h:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.cpp:
-
-        Updated the SA_POP_IA component so that it derives from the
-        Input_Adapter_Base component.
-
-        * descriptors/RACE.cdp:
-
-        Regenerated the descriptor.
-
-        * RACE.mwc:
-
-        Updated the project file to include Input_Adapter/Base.
-
-        * Input_Adapters/Base/Input_Adapter.idl:
-        * Input_Adapters/Base/Input_Adapter.mpc:
-        * Input_Adapters/Base/Input_Adapter_stub_export.h:
-        * Input_Adapters/Base/Input_Adapter_svnt_export.h:
-
-        Removed these files.
-
-Mon Jan  7 22:14:22 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Conductor/Admin_exec.h:
-        * Conductor/Conductor_exec.cpp:
-
-        Updated these files to invoke the controller.
-
-        * Controller/EUCON/Admin_exec.cpp:
-        * Controller/EUCON/Controller.cpp:
-        * Controller/EUCON/EUCON_Controller.mpc:
-        * Controller/EUCON/EUCON_Controller_exec.cpp:
-
-        Updated the controller to parse the domain structure obtained from
-        the TM_Proxy component.
-
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
-
-        Made cosmetic modification.
-
-        * TM_Proxy/SystemSnapshot.cpp:
-        * TM_Proxy/TM_Proxy_exec.cpp:
-        * TM_Proxy/Utility.cpp:
-
-        The proxy component now forwards the invocation to the TM.
-
-        * utils/Logger.cpp:
-        * utils/RACE_utils.h:
-
-        Made cosmetic modifications.
-
-Fri Dec 14 23:05:11 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Conductor/Conductor.idl:
-        * Conductor/Conductor.mpc:
-        * Conductor/Conductor_exec.cpp:
-
-        Integrated the conductor with the controller.
-
-        * Controller/EUCON/Admin_exec.cpp:
-        * Controller/EUCON/Controller.h:
-        * Controller/EUCON/Controller.cpp:
-
-        Added features to the EUCON controller in order to talk to the
-        TM_Porxy component to obtain system resource utilization.
-
-        * RACE.mwc:
-
-        Included the TM_Proxy component in the project.
-
-        * TM_Proxy/SystemSnapshot.h:
-        * TM_Proxy/SystemSnapshot.cpp:
-        * TM_Proxy/TM_Proxy.idl:
-        * TM_Proxy/TM_Proxy.mpc:
-        * TM_Proxy/TM_Proxy_exec.h:
-        * TM_Proxy/TM_Proxy_exec.cpp:
-        * TM_Proxy/Utility.h:
-        * TM_Proxy/Utility.cpp:
-
-        Integrated the TM_Proxy component and the TM_Daemon. The TM_Proxy
-        successfully forwards requests to the TM_Daemon, thereby acting as
-        a proxy.
-
-        * descriptors/RACE.cdp:
-        * descriptors/run_NS.pl:
-        * descriptors/run_RACE.pl:
-
-        Updated the scripts.
-
-        * utils/Logger.cpp:
-
-        Updated the logger.
-
-Wed Dec 12 20:11:50 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Data_Base/Data_Base.idl:
-
-        Fixed compilation errors.
-
-        * Controller/EUCON/EUCON.mpc:
-
-          Removed this file.
-
-Wed Dec 12 19:36:09 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Controller/Base/Controller_Base.idl:
-
-        Added a method to initialize the controller.
-
-        * Controller/EUCON/Admin_exec.h:
-        * Controller/EUCON/Admin_exec.cpp:
-        * Controller/EUCON/Controller.h:
-        * Controller/EUCON/Controller.cpp:
-        * Controller/EUCON/EUCON_Controller.cidl:
-        * Controller/EUCON/EUCON_Controller.idl:
-        * Controller/EUCON/EUCON_Controller.mpc:
-        * Controller/EUCON/EUCON_Controller_exec.h:
-        * Controller/EUCON/EUCON_Controller_exec.cpp:
-        * Controller/EUCON/EUCON_Controller_exec_export.h:
-        * Controller/EUCON/EUCON_Controller_stub_export.h:
-        * Controller/EUCON/EUCON_Controller_svnt_export.h:
-        * Controller/EUCON/Operations_exec.h:
-        * Controller/EUCON/Operations_exec.cpp:
-        * Controller/EUCON/Subtask.h:
-        * Controller/EUCON/Task.h:
-
-        Wrapped the EUCON controller in a component.
-
-        * Controller/FMUF/FMUF_Controller.mpc:
-        * Controller/FMUF/FMUF_Controller_exec.h:
-        * Controller/FMUF/FMUF_Controller_exec.cpp:
-
-        Added features to the FMUF controller.
-
-        * Data_Base/Admin_exec.cpp:
-
-        Made cosmetic changes.
-
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.h:
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.h:
-
-        Made cosmetic changes.
-
-        * common/Goal.idl:
-        * common/OpString.idl:
-        * common/RACE_common.mpc:
-        * common/Utils.idl:
-
-        Reorganized these IDL files.
-
-        * common/Time.idl:
-
-          Removed this file.
-
-Mon Dec 10 18:49:28 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Data_Base/Data_Base_exec.h:
-
-        Fixed VC8 compiler warnings.
-
-Mon Dec 10 17:58:22 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Controller/FMUF/FMUF_Controller_exec_export.h:
-
-        Checking in the export file.
-
-        * RACE.mwc:
-
-        Modified the project file to include RACE controllers.
-
-Mon Dec 10 17:49:35 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Conductor/Conductor.mpc:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
-
-        Made cosmetic changes.
-
-        * Controller/Base/Controller_Base.idl:
-        * Controller/Base/Controller_Base.mpc:
-        * Controller/Base/Controller_Base_stub_export.h:
-        * Controller/Base/Controller_Base_svnt_export.h:
-
-        Checking in the initial interface of the base controller.
-
-        * Controller/FMUF/FMUF_Controller.cidl:
-        * Controller/FMUF/FMUF_Controller.idl:
-        * Controller/FMUF/FMUF_Controller.mpc:
-        * Controller/FMUF/FMUF_Controller_exec.h:
-        * Controller/FMUF/FMUF_Controller_exec.cpp:
-        * Controller/FMUF/FMUF_Controller_stub_export.h:
-        * Controller/FMUF/FMUF_Controller_svnt_export.h:
-
-        Checking in the initial implementation of the FMUF controller.
-
-
-Wed Dec  5 22:10:47 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Controller/Base/Controller.idl:
-
-        Added the IDL of the base controller.
-
-        * Controller/EUCON/EUCON.mpc:
-        * Controller/EUCON/MPC_Controller.h:
-        * Controller/EUCON/MPC_Controller.cpp:
-        * Controller/EUCON/Task.h:
-        * Controller/EUCON/constant.h:
-        * Controller/EUCON/e2esimu.cpp:
-
-        Checking in an initial implementation of the EUCON controller.
-
-        * extern:
-        * extern/MATLAB:
-
-        * extern/MATLAB/bin:
-        * extern/MATLAB/bin/liblsq.ctf:
-        * extern/MATLAB/bin/liblsq.dll:
-
-        * extern/MATLAB/include:
-        * extern/MATLAB/include/liblsq.h:
-        * extern/MATLAB/include/liblsq.cpp:
-
-        * extern/MATLAB/lib:
-        * extern/MATLAB/lib/liblsq.lib
-        * extern/MATLAB/lib/liblsq.exp
-
-        * extern/MATLAB/lsqlin_simple2.m:
-        * extern/MATLAB/readme.txt:
-
-        Checking in MATLAB related files required by the EUCON controller.
-
-Tue Dec  4 20:45:34 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Controller/EUCON:
-        * Controller/EUCON/Domain.h:
-        * Controller/EUCON/Subtask.h:
-        * Controller/EUCON/Task.h:
-
-        Added a new directory and necessary files to for the EUCON
-        controller.
-
-        * Controller/FMUF:
-
-        Added a new directory for the FMUF controller.
-
-        * Controller/Base/Domain.h:
-        * Controller/Base/Subtask.h:
-        * Controller/Base/Task.h:
-
-        Removed these files.
-
-Wed Nov 21 20:03:34 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * RACE.mwc:
-
-        Updated this file to include the Conductor and Tester projects.
-
-Wed Nov 21 20:00:29 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Conductor:
-        * Conductor/Admin_exec.h:
-        * Conductor/Admin_exec.cpp:
-        * Conductor/Conductor.cidl:
-        * Conductor/Conductor.idl:
-        * Conductor/Conductor.mpc:
-        * Conductor/Conductor_exec.h:
-        * Conductor/Conductor_exec.cpp:
-        * Conductor/Conductor_exec_export.h:
-        * Conductor/Conductor_stub_export.h:
-        * Conductor/Conductor_svnt_export.h:
-
-        Added the initial implementation of the Conductor.
-
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.h:
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.h:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.cpp:
-
-        Modified the SA_POP_IA to use the Conductor.
-
-        * Tester:
-        * Tester/tester.cpp:
-        * Tester/tester.mpc:
-
-        Added a tester client.
-
-        * descriptors/RACE.cdp:
-
-        Updated this file to include the Conductor.
-
-        * Input_Adapters/SA_POP_Input_Adapter/tester.cpp:
-
-          Removed this file.
-
-Tue Nov 20 22:57:32 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * TM_Proxy/TM_Proxy.mpc:
-        * TM_Proxy/TM_Proxy_exec.h:
-        * TM_Proxy/TM_Proxy_exec.cpp:
-
-        Added support to contact the Naming Service and obtaining the
-        object reference of the TM_Daemon.
-
-        * descriptors/RACE.cdp:
-
-        Added the TM_Proxy component.
-
-Mon Nov 19 21:55:53 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * TM_Proxy/ResourceManager.h:
-        * TM_Proxy/ResourceManager.cpp:
-        * TM_Proxy/SystemSnapshot.h:
-        * TM_Proxy/SystemSnapshot.cpp:
-        * TM_Proxy/TM_Proxy_exec.h:
-        * TM_Proxy/TM_Proxy_exec.cpp:
-        * TM_Proxy/Utility.h:
-        * TM_Proxy/Utility.cpp:
-
-        Made cosmetic modifications.
-
-Mon Nov 19 21:51:41 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * TM_Proxy:
-        * TM_Proxy/ResourceManager.h:
-        * TM_Proxy/ResourceManager.cpp:
-        * TM_Proxy/SystemSnapshot.h:
-        * TM_Proxy/SystemSnapshot.cpp:
-        * TM_Proxy/TM_Proxy.cidl:
-        * TM_Proxy/TM_Proxy.idl:
-        * TM_Proxy/TM_Proxy.mpc:
-        * TM_Proxy/TM_Proxy_exec.h:
-        * TM_Proxy/TM_Proxy_exec.cpp:
-        * TM_Proxy/TM_Proxy_exec_export.h:
-        * TM_Proxy/TM_Proxy_stub_export.h:
-        * TM_Proxy/TM_Proxy_svnt_export.h:
-        * TM_Proxy/Utility.h:
-        * TM_Proxy/Utility.cpp:
-
-        Adding the initial implementation of the TM_Proxy component.
-
-Fri Nov 16 22:18:28 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.h:
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.h:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.cpp:
-        * Input_Adapters/SA_POP_Input_Adapter/tester.cpp:
-        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.h:
-        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
-        * RACE.mwc:
-
-        Updated these files to use new logger.
-
-        * descriptors/NodeDetails.dat:
-        * descriptors/RACE.cdp:
-        * descriptors/run_RACE.pl:
-
-        Updated these files.
-
-        * descriptors/RACE_SA-POP.cdp:
-
-        Created a separate CDP for RACE+SA_POP.
-
-        * utils:
-        * utils/Logger.h:
-        * utils/Logger.cpp:
-        * utils/Logger_export.h:
-        * utils/RACE_utils.h:
-        * utils/RACE_utils.cpp:
-        * utils/RACE_utils.mpc:
-
-        Added the initial version of RACE logger.
-
-Wed Oct  3 06:17:20 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
-
-        * descriptors/NodeDetails_Space1Demo.dat:
-        * descriptors/Space1Demo.cdp:
-        * descriptors/run_Space1Demo.pl:
-
-          Added Space1Demo files (MACRO demo for NASA annual review).
-
-Wed Oct  3 06:10:36 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
-
-        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
-
-          Added debug statements for error conditions.
-
 Fri Sep 28 21:15:48 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * SA_POP/examples/Space/packages:
-        * SA_POP/examples/Space/packages/win32-vc8:
-        * SA_POP/examples/Space/packages/win32-vc8/Analysis.cpk:
-        * SA_POP/examples/Space/packages/win32-vc8/Comm.cpk:
-        * SA_POP/examples/Space/packages/win32-vc8/Compression.cpk:
-        * SA_POP/examples/Space/packages/win32-vc8/Exec.cpk:
-        * SA_POP/examples/Space/packages/win32-vc8/Filter.cpk:
-        * SA_POP/examples/Space/packages/win32-vc8/Gizmo1_High.cpk:
-        * SA_POP/examples/Space/packages/win32-vc8/Gizmo1_Low.cpk:
-        * SA_POP/examples/Space/packages/win32-vc8/Gizmo1_Medium.cpk:
-        * SA_POP/examples/Space/packages/win32-vc8/Gizmo2_High.cpk:
-        * SA_POP/examples/Space/packages/win32-vc8/Gizmo2_Medium.cpk:
-        * SA_POP/examples/Space/packages/win32-vc8/Ground.cpk:
+        * examples/Space/packages:
+        * examples/Space/packages/win32-vc8:
+        * examples/Space/packages/win32-vc8/Analysis.cpk:
+        * examples/Space/packages/win32-vc8/Comm.cpk:
+        * examples/Space/packages/win32-vc8/Compression.cpk:
+        * examples/Space/packages/win32-vc8/Exec.cpk:
+        * examples/Space/packages/win32-vc8/Filter.cpk:
+        * examples/Space/packages/win32-vc8/Gizmo1_High.cpk:
+        * examples/Space/packages/win32-vc8/Gizmo1_Low.cpk:
+        * examples/Space/packages/win32-vc8/Gizmo1_Medium.cpk:
+        * examples/Space/packages/win32-vc8/Gizmo2_High.cpk:
+        * examples/Space/packages/win32-vc8/Gizmo2_Medium.cpk:
+        * examples/Space/packages/win32-vc8/Ground.cpk:
 
           Added SPACE Demo packages for Win32-VC8.
 
 
-        * SA_POP/examples/Space/source:
-        * SA_POP/examples/Space/source/Analysis:
-        * SA_POP/examples/Space/source/Analysis/Analysis_Component.ccd:
-        * SA_POP/examples/Space/source/Analysis/Analysis_Component.cidl:
-        * SA_POP/examples/Space/source/Analysis/Analysis_Component.idl:
-        * SA_POP/examples/Space/source/Analysis/Analysis_Component.mpc:
-        * SA_POP/examples/Space/source/Analysis/Analysis_Component_exec.h:
-        * SA_POP/examples/Space/source/Analysis/Analysis_Component_exec.cpp:
-        * SA_POP/examples/Space/source/Analysis/Analysis_Component_exec_export.h:
-        * SA_POP/examples/Space/source/Analysis/Analysis_Component_stub_export.h:
-        * SA_POP/examples/Space/source/Analysis/Analysis_Component_svnt_export.h:
-        * SA_POP/examples/Space/source/Backup_Gizmo_High:
-        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.cidl:
-        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.idl:
-        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.mpc:
-        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_exec.h:
-        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_exec.cpp:
-        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_exec_export.h:
-        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_stub_export.h:
-        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_svnt_export.h:
-        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_Low.ccd:
-        * SA_POP/examples/Space/source/Backup_Gizmo_Low:
-        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.ccd:
-        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.cidl:
-        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.idl:
-        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.mpc:
-        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_exec.h:
-        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_exec.cpp:
-        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_exec_export.h:
-        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_stub_export.h:
-        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_svnt_export.h:
-        * SA_POP/examples/Space/source/Comm:
-        * SA_POP/examples/Space/source/Comm/Comm_Component.ccd:
-        * SA_POP/examples/Space/source/Comm/Comm_Component.cidl:
-        * SA_POP/examples/Space/source/Comm/Comm_Component.idl:
-        * SA_POP/examples/Space/source/Comm/Comm_Component.mpc:
-        * SA_POP/examples/Space/source/Comm/Comm_Component_exec.h:
-        * SA_POP/examples/Space/source/Comm/Comm_Component_exec.cpp:
-        * SA_POP/examples/Space/source/Comm/Comm_Component_exec_export.h:
-        * SA_POP/examples/Space/source/Comm/Comm_Component_stub_export.h:
-        * SA_POP/examples/Space/source/Comm/Comm_Component_svnt_export.h:
-        * SA_POP/examples/Space/source/Compression:
-        * SA_POP/examples/Space/source/Compression/Compression_Component.ccd:
-        * SA_POP/examples/Space/source/Compression/Compression_Component.cidl:
-        * SA_POP/examples/Space/source/Compression/Compression_Component.idl:
-        * SA_POP/examples/Space/source/Compression/Compression_Component.mpc:
-        * SA_POP/examples/Space/source/Compression/Compression_Component_exec.h:
-        * SA_POP/examples/Space/source/Compression/Compression_Component_exec.cpp:
-        * SA_POP/examples/Space/source/Compression/Compression_Component_exec_export.h:
-        * SA_POP/examples/Space/source/Compression/Compression_Component_stub_export.h:
-        * SA_POP/examples/Space/source/Compression/Compression_Component_svnt_export.h:
-        * SA_POP/examples/Space/source/Exec:
-        * SA_POP/examples/Space/source/Exec/Exec_Component.ccd:
-        * SA_POP/examples/Space/source/Exec/Exec_Component.cidl:
-        * SA_POP/examples/Space/source/Exec/Exec_Component.idl:
-        * SA_POP/examples/Space/source/Exec/Exec_Component.mpc:
-        * SA_POP/examples/Space/source/Exec/Exec_Component_exec.h:
-        * SA_POP/examples/Space/source/Exec/Exec_Component_exec.cpp:
-        * SA_POP/examples/Space/source/Exec/Exec_Component_exec_export.h:
-        * SA_POP/examples/Space/source/Exec/Exec_Component_stub_export.h:
-        * SA_POP/examples/Space/source/Exec/Exec_Component_svnt_export.h:
-        * SA_POP/examples/Space/source/Filter:
-        * SA_POP/examples/Space/source/Filter/Filter_Component.ccd:
-        * SA_POP/examples/Space/source/Filter/Filter_Component.cidl:
-        * SA_POP/examples/Space/source/Filter/Filter_Component.idl:
-        * SA_POP/examples/Space/source/Filter/Filter_Component.mpc:
-        * SA_POP/examples/Space/source/Filter/Filter_Component_exec.h:
-        * SA_POP/examples/Space/source/Filter/Filter_Component_exec.cpp:
-        * SA_POP/examples/Space/source/Filter/Filter_Component_exec_export.h:
-        * SA_POP/examples/Space/source/Filter/Filter_Component_stub_export.h:
-        * SA_POP/examples/Space/source/Filter/Filter_Component_svnt_export.h:
-        * SA_POP/examples/Space/source/Gizmo1_High:
-        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High.ccd:
-        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High.cidl:
-        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High.idl:
-        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High.mpc:
-        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High_exec.h:
-        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High_exec.cpp:
-        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High_exec_export.h:
-        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High_stub_export.h:
-        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High_svnt_export.h:
-        * SA_POP/examples/Space/source/Gizmo1_Low:
-        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low.ccd:
-        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low.cidl:
-        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low.idl:
-        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low.mpc:
-        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low_exec.h:
-        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low_exec.cpp:
-        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low_exec_export.h:
-        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low_stub_export.h:
-        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low_svnt_export.h:
-        * SA_POP/examples/Space/source/Gizmo1_Medium:
-        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.ccd:
-        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.cidl:
-        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.idl:
-        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.mpc:
-        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_exec.h:
-        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_exec.cpp:
-        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_exec_export.h:
-        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_stub_export.h:
-        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_svnt_export.h:
-        * SA_POP/examples/Space/source/Gizmo2_High:
-        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High.ccd:
-        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High.cidl:
-        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High.idl:
-        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High.mpc:
-        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High_exec.h:
-        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High_exec.cpp:
-        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High_exec_export.h:
-        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High_stub_export.h:
-        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High_svnt_export.h:
-        * SA_POP/examples/Space/source/Gizmo2_Medium:
-        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.ccd:
-        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.cidl:
-        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.idl:
-        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.mpc:
-        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_exec.h:
-        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_exec.cpp:
-        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_exec_export.h:
-        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_stub_export.h:
-        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_svnt_export.h:
-        * SA_POP/examples/Space/source/Ground:
-        * SA_POP/examples/Space/source/Ground/Ground_Component.ccd:
-        * SA_POP/examples/Space/source/Ground/Ground_Component.cidl:
-        * SA_POP/examples/Space/source/Ground/Ground_Component.idl:
-        * SA_POP/examples/Space/source/Ground/Ground_Component.mpc:
-        * SA_POP/examples/Space/source/Ground/Ground_Component_exec.h:
-        * SA_POP/examples/Space/source/Ground/Ground_Component_exec.cpp:
-        * SA_POP/examples/Space/source/Ground/Ground_Component_exec_export.h:
-        * SA_POP/examples/Space/source/Ground/Ground_Component_stub_export.h:
-        * SA_POP/examples/Space/source/Ground/Ground_Component_svnt_export.h:
-        * SA_POP/examples/Space/source/Primary_Gizmo:
-        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo.ccd:
-        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo.cidl:
-        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo.idl:
-        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo.mpc:
-        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo_exec.h:
-        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo_exec.cpp:
-        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo_exec_export.h:
-        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo_stub_export.h:
-        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo_svnt_export.h:
-        * SA_POP/examples/Space/source/common:
-        * SA_POP/examples/Space/source/common/Event_Types.idl:
-        * SA_POP/examples/Space/source/common/Event_Types.mpc:
-        * SA_POP/examples/Space/source/common/Event_Types_exec_export.h:
-        * SA_POP/examples/Space/source/common/Event_Types_stub_export.h:
-        * SA_POP/examples/Space/source/common/Event_Types_svnt_export.h:
+        * examples/Space/source:
+        * examples/Space/source/Analysis:
+        * examples/Space/source/Analysis/Analysis_Component.ccd:
+        * examples/Space/source/Analysis/Analysis_Component.cidl:
+        * examples/Space/source/Analysis/Analysis_Component.idl:
+        * examples/Space/source/Analysis/Analysis_Component.mpc:
+        * examples/Space/source/Analysis/Analysis_Component_exec.h:
+        * examples/Space/source/Analysis/Analysis_Component_exec.cpp:
+        * examples/Space/source/Analysis/Analysis_Component_exec_export.h:
+        * examples/Space/source/Analysis/Analysis_Component_stub_export.h:
+        * examples/Space/source/Analysis/Analysis_Component_svnt_export.h:
+        * examples/Space/source/Backup_Gizmo_High:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.cidl:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.idl:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.mpc:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_exec.h:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_exec.cpp:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_exec_export.h:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_stub_export.h:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_svnt_export.h:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_Low.ccd:
+        * examples/Space/source/Backup_Gizmo_Low:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.ccd:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.cidl:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.idl:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.mpc:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_exec.h:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_exec.cpp:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_exec_export.h:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_stub_export.h:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_svnt_export.h:
+        * examples/Space/source/Comm:
+        * examples/Space/source/Comm/Comm_Component.ccd:
+        * examples/Space/source/Comm/Comm_Component.cidl:
+        * examples/Space/source/Comm/Comm_Component.idl:
+        * examples/Space/source/Comm/Comm_Component.mpc:
+        * examples/Space/source/Comm/Comm_Component_exec.h:
+        * examples/Space/source/Comm/Comm_Component_exec.cpp:
+        * examples/Space/source/Comm/Comm_Component_exec_export.h:
+        * examples/Space/source/Comm/Comm_Component_stub_export.h:
+        * examples/Space/source/Comm/Comm_Component_svnt_export.h:
+        * examples/Space/source/Compression:
+        * examples/Space/source/Compression/Compression_Component.ccd:
+        * examples/Space/source/Compression/Compression_Component.cidl:
+        * examples/Space/source/Compression/Compression_Component.idl:
+        * examples/Space/source/Compression/Compression_Component.mpc:
+        * examples/Space/source/Compression/Compression_Component_exec.h:
+        * examples/Space/source/Compression/Compression_Component_exec.cpp:
+        * examples/Space/source/Compression/Compression_Component_exec_export.h:
+        * examples/Space/source/Compression/Compression_Component_stub_export.h:
+        * examples/Space/source/Compression/Compression_Component_svnt_export.h:
+        * examples/Space/source/Exec:
+        * examples/Space/source/Exec/Exec_Component.ccd:
+        * examples/Space/source/Exec/Exec_Component.cidl:
+        * examples/Space/source/Exec/Exec_Component.idl:
+        * examples/Space/source/Exec/Exec_Component.mpc:
+        * examples/Space/source/Exec/Exec_Component_exec.h:
+        * examples/Space/source/Exec/Exec_Component_exec.cpp:
+        * examples/Space/source/Exec/Exec_Component_exec_export.h:
+        * examples/Space/source/Exec/Exec_Component_stub_export.h:
+        * examples/Space/source/Exec/Exec_Component_svnt_export.h:
+        * examples/Space/source/Filter:
+        * examples/Space/source/Filter/Filter_Component.ccd:
+        * examples/Space/source/Filter/Filter_Component.cidl:
+        * examples/Space/source/Filter/Filter_Component.idl:
+        * examples/Space/source/Filter/Filter_Component.mpc:
+        * examples/Space/source/Filter/Filter_Component_exec.h:
+        * examples/Space/source/Filter/Filter_Component_exec.cpp:
+        * examples/Space/source/Filter/Filter_Component_exec_export.h:
+        * examples/Space/source/Filter/Filter_Component_stub_export.h:
+        * examples/Space/source/Filter/Filter_Component_svnt_export.h:
+        * examples/Space/source/Gizmo1_High:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High.ccd:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High.cidl:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High.idl:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High.mpc:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High_exec.h:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High_exec.cpp:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High_exec_export.h:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High_stub_export.h:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High_svnt_export.h:
+        * examples/Space/source/Gizmo1_Low:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low.ccd:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low.cidl:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low.idl:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low.mpc:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low_exec.h:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low_exec.cpp:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low_exec_export.h:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low_stub_export.h:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low_svnt_export.h:
+        * examples/Space/source/Gizmo1_Medium:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.ccd:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.cidl:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.idl:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.mpc:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_exec.h:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_exec.cpp:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_exec_export.h:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_stub_export.h:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_svnt_export.h:
+        * examples/Space/source/Gizmo2_High:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High.ccd:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High.cidl:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High.idl:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High.mpc:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High_exec.h:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High_exec.cpp:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High_exec_export.h:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High_stub_export.h:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High_svnt_export.h:
+        * examples/Space/source/Gizmo2_Medium:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.ccd:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.cidl:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.idl:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.mpc:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_exec.h:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_exec.cpp:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_exec_export.h:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_stub_export.h:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_svnt_export.h:
+        * examples/Space/source/Ground:
+        * examples/Space/source/Ground/Ground_Component.ccd:
+        * examples/Space/source/Ground/Ground_Component.cidl:
+        * examples/Space/source/Ground/Ground_Component.idl:
+        * examples/Space/source/Ground/Ground_Component.mpc:
+        * examples/Space/source/Ground/Ground_Component_exec.h:
+        * examples/Space/source/Ground/Ground_Component_exec.cpp:
+        * examples/Space/source/Ground/Ground_Component_exec_export.h:
+        * examples/Space/source/Ground/Ground_Component_stub_export.h:
+        * examples/Space/source/Ground/Ground_Component_svnt_export.h:
+        * examples/Space/source/Primary_Gizmo:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo.ccd:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo.cidl:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo.idl:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo.mpc:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo_exec.h:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo_exec.cpp:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo_exec_export.h:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo_stub_export.h:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo_svnt_export.h:
+        * examples/Space/source/common:
+        * examples/Space/source/common/Event_Types.idl:
+        * examples/Space/source/common/Event_Types.mpc:
+        * examples/Space/source/common/Event_Types_exec_export.h:
+        * examples/Space/source/common/Event_Types_stub_export.h:
+        * examples/Space/source/common/Event_Types_svnt_export.h:
 
           Added SPACE Demo source files.
 
 
 Thu Sep 27 21:29:33 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
-        * SA_POP/Component/SA_POP_Component.mpc
-        * SA_POP/Tester/Tester_Component.mpc
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc
-        * Data_Base/Data_Base.mpc
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc
+        * Component/SA_POP_Component.mpc
+        * Tester/Tester_Component.mpc
 
           Added missing libs+= to enable building on OS X.
 
-Wed Sep 26 23:16:48 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
-
-        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
-
-        * descriptors/NodeDetails_Tester.dat:
-        * descriptors/TesterDeploymentPlan.cdp:
-        * descriptors/run_RACE_SAPOP_Tester.pl:
-        * descriptors/run_RepoMan.pl:
-
-          Updated for LMCO ATC demo for NASA review of MACRO.
-
 Fri Sep 14 22:44:32 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
-        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
-        * SA_POP/Component/Planning_exec.cpp:
+        * Component/Planning_exec.cpp:
 
           Revised IDL return values.
 
 Fri Sep 14 19:31:50 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * RACE_SAPOP.mwc:
+        * ../RACE_SAPOP.mwc:
 
-        * SA_POP/Component/Planning_exec.cpp:
-        * SA_POP/Component/SA_POP_Component.mpc:
-        * SA_POP/Component/SA_POP_Component_exec.cpp:
+        * Component/Planning_exec.cpp:
+        * Component/SA_POP_Component.mpc:
+        * Component/SA_POP_Component_exec.cpp:
 
           Fixed pointer error in SA-POP Component.
 
-        * SA_POP/Tester:
-        * SA_POP/Tester/Tester_Client.cpp:
-        * SA_POP/Tester/Tester_Component.cidl:
-        * SA_POP/Tester/Tester_Component.idl:
-        * SA_POP/Tester/Tester_Component.mpc:
-        * SA_POP/Tester/Tester_Component_exec.h:
-        * SA_POP/Tester/Tester_Component_exec.cpp:
-        * SA_POP/Tester/Tester_Component_exec_export.h:
-        * SA_POP/Tester/Tester_Component_stub_export.h:
-        * SA_POP/Tester/Tester_Component_svnt_export.h:
+        * Tester:
+        * Tester/Tester_Client.cpp:
+        * Tester/Tester_Component.cidl:
+        * Tester/Tester_Component.idl:
+        * Tester/Tester_Component.mpc:
+        * Tester/Tester_Component_exec.h:
+        * Tester/Tester_Component_exec.cpp:
+        * Tester/Tester_Component_exec_export.h:
+        * Tester/Tester_Component_stub_export.h:
+        * Tester/Tester_Component_svnt_export.h:
 
           Added SA-POP (with RACE) Tester component.
 
-        * SA_POP/models:
-        * SA_POP/models/RACE_SAPOP_tester.xme:
+        * models:
+        * models/RACE_SAPOP_tester.xme:
 
           Added SA-POP/RACE Tester model.
 
-        * descriptors/NodeDetails_Tester.dat:
-        * descriptors/TesterDeploymentPlan.cdp:
-        * descriptors/run_RACE_SAPOP_Tester.pl:
-        * descriptors/test.san:
-        * descriptors/test.tm:
+        * ../descriptors/NodeDetails_Tester.dat:
+        * ../descriptors/TesterDeploymentPlan.cdp:
+        * ../descriptors/run_RACE_SAPOP_Tester.pl:
+        * ../descriptors/test.san:
+        * ../descriptors/test.tm:
 
           Added SA-POP/RACE Tester descriptor files.
 
 
-Mon Sep 10 21:19:24 UTC 2007  Nishanth Shankaran  <shankaran_n@dre.vanderbilt.edu>
-
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.h:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.cpp:
-        * Input_Adapters/SA_POP_Input_Adapter/tester.cpp:
-
-        Modified these files to support deployment of application assembly
-        via ReDAC.
-
 2007-07-06    <wotte@localhost.localdomain>
 
-        * SA_POP/SA_POP.mpc:
-        * SA_POP/SANet/XML_SANet.hpp:
-        * SA_POP/SANet/XML_SANet.cpp:
+        * SA_POP.mpc:
+        * SANet/XML_SANet.hpp:
+        * SANet/XML_SANet.cpp:
 
           Added an additional schema from previous commit.
 
 2007-07-05    <wotte@localhost.localdomain>
 
-        * SA_POP/XML_TaskMap.cpp:
-        * SA_POP/XML_TaskMap.hpp:
-        * SA_POP/SA_POP.mpc:
+        * XML_TaskMap.cpp:
+        * XML_TaskMap.hpp:
+        * SA_POP.mpc:
 
           Updated generated code to latest version of XSC and added an
           XSC generation project to the MPC file.
 
 Thu May 17 17:49:57 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * SA_POP/SA_POP_Standalone.mwc:
-        * SA_POP/Standalone/SA_POP_Demo.cpp:
+        * SA_POP_Standalone.mwc:
+        * Standalone/SA_POP_Demo.cpp:
 
         Updated standalone (command line) version of SA-POP.
 
 Wed Apr 18 06:35:44 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * SA_POP/Component/Planning_exec.h:
-        * SA_POP/Component/Planning_exec.cpp:
-        * SA_POP/Component/SA_POP_Component.idl:
-        * SA_POP/Component/SA_POP_Component.mpc:
-        * SA_POP/Component/SA_POP_Component_exec.h:
-        * SA_POP/Component/SA_POP_Component_exec.cpp:
+        * Component/Planning_exec.h:
+        * Component/Planning_exec.cpp:
+        * Component/SA_POP_Component.idl:
+        * Component/SA_POP_Component.mpc:
+        * Component/SA_POP_Component_exec.h:
+        * Component/SA_POP_Component_exec.cpp:
 
         Updated SA-POP component with internal SA-POP planner.
 
 
-        * descriptors/SPACE.san:
-        * descriptors/SPACE.tm:
+        * ../descriptors/SPACE.san:
+        * ../descriptors/SPACE.tm:
 
         Added SPACE example task network and task map to descriptors directory.
 
 Mon Apr 16 23:41:13 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * RACE_SAPOP.mwc:
+        * ../RACE_SAPOP.mwc:
 
         Added workspace for building RACE and SA-POP.
 
 
 Mon Apr 16 23:33:09 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * SA_POP/Component:
-        * SA_POP/Component/Planning_exec.h:
-        * SA_POP/Component/Planning_exec.cpp:
-        * SA_POP/Component/SA_POP_Component.cidl:
-        * SA_POP/Component/SA_POP_Component.idl:
-        * SA_POP/Component/SA_POP_Component.mpc:
-        * SA_POP/Component/SA_POP_ComponentE.idl:
-        * SA_POP/Component/SA_POP_Component_exec.h:
-        * SA_POP/Component/SA_POP_Component_exec.cpp:
-        * SA_POP/Component/SA_POP_Component_exec_export.h:
-        * SA_POP/Component/SA_POP_Component_stub_export.h:
-        * SA_POP/Component/SA_POP_Component_svnt_export.h:
-
-        Added files for SA-POP component.
-
-
-        * SA_POP/SANet/SANet.h:
-        * SA_POP/SANet/SANet.cpp:
-        * SA_POP/SANet/SANetFileIn.h:
-        * SA_POP/SANet/SANetFileIn.cpp:
-        * SA_POP/SANet/SANet_Standalone.mpc:
-        * SA_POP/SANet/SANet_Types.h:
-        * SA_POP/SANet/SANet_UI.cpp:
-        * SA_POP/SANet/SANode.h:
-        * SA_POP/SANet/SANode.cpp:
-        * SA_POP/SANet/readme.txt:
-
-        Revised SANet to also allow standalone operation.
-
-
-        * SA_POP/SA_POP.mpc:
-        * SA_POP/SA_POP_for_RACE.mpc:
-        * SA_POP/SA_POP_Types.h:
-        * SA_POP/SANet_Network.xsd:
-        * SA_POP/Task_Map.xsd:
-        * SA_POP/Standalone:
-        * SA_POP/Standalone/SA_POP_Demo.cpp:
-        * SA_POP/Standalone/SA_POP_Demo.mpc:
-        * SA_POP/Standalone/UserInput.h:
-        * SA_POP/Standalone/UserInput.cpp:
-        * SA_POP/Standalone/readme.txt:
-
-        Revised SA-POP to allow operation with RACE or standalone.
-
-
-        * SA_POP/Standalone/XML_Utils:
-        * SA_POP/Standalone/XML_Utils/Utils:
-        * SA_POP/Standalone/XML_Utils/Utils/CIAO_XML_Utils_Export.h:
-        * SA_POP/Standalone/XML_Utils/Utils/Exceptions.h:
-        * SA_POP/Standalone/XML_Utils/Utils/Functors.h:
-        * SA_POP/Standalone/XML_Utils/Utils/Utils.mpc.old:
-        * SA_POP/Standalone/XML_Utils/Utils/XML_Error_Handler.h:
-        * SA_POP/Standalone/XML_Utils/Utils/XML_Error_Handler.cpp:
-        * SA_POP/Standalone/XML_Utils/Utils/XML_Helper.h:
-        * SA_POP/Standalone/XML_Utils/Utils/XML_Helper.cpp:
-        * SA_POP/Standalone/XML_Utils/Utils/XML_Schema_Resolver.h:
-        * SA_POP/Standalone/XML_Utils/Utils/XML_Schema_Resolver.cpp:
-        * SA_POP/Standalone/XML_Utils/Utils/XercesString.h:
-        * SA_POP/Standalone/XML_Utils/Utils/XercesString.cpp:
-        * SA_POP/Standalone/XML_Utils/XMLSchema:
-        * SA_POP/Standalone/XML_Utils/XMLSchema/Traversal.hpp:
-        * SA_POP/Standalone/XML_Utils/XMLSchema/Traversal.ipp:
-        * SA_POP/Standalone/XML_Utils/XMLSchema/Traversal.tpp:
-        * SA_POP/Standalone/XML_Utils/XMLSchema/TypeInfo.hpp:
-        * SA_POP/Standalone/XML_Utils/XMLSchema/TypeInfo.ipp:
-        * SA_POP/Standalone/XML_Utils/XMLSchema/TypeInfo.tpp:
-        * SA_POP/Standalone/XML_Utils/XMLSchema/Types.hpp:
-        * SA_POP/Standalone/XML_Utils/XMLSchema/Types.ipp:
-        * SA_POP/Standalone/XML_Utils/XMLSchema/Types.tpp:
-        * SA_POP/Standalone/XML_Utils/XMLSchema/Writer.hpp:
-        * SA_POP/Standalone/XML_Utils/XMLSchema/Writer.ipp:
-        * SA_POP/Standalone/XML_Utils/XMLSchema/Writer.tpp:
-        * SA_POP/Standalone/XML_Utils/XSCRT:
-        * SA_POP/Standalone/XML_Utils/XSCRT/Elements.hpp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/Elements.ipp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/Elements.tpp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/ExtendedTypeInfo.hpp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/ExtendedTypeInfo.ipp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/Parser.hpp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/Parser.ipp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/Parser.tpp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/Traversal.hpp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/Traversal.ipp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/Traversal.tpp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/Writer.hpp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/Writer.ipp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/Writer.tpp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/XML.hpp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/XML.ipp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/XML.tpp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/XMLSchema.hpp:
-
-        Added a slightly modified copy of CIAO Config Handlers XML utilities for SA-POP standalone.
-
-
-        * SA_POP/examples:
-        * SA_POP/examples/Scheduling:
-        * SA_POP/examples/Scheduling/sched_main_test.san.xml:
-        * SA_POP/examples/Scheduling/sched_main_test.tm.xml:
-        * SA_POP/examples/Scheduling/sched_main_test1.san.xml:
-        * SA_POP/examples/Scheduling/sched_test1.san.xml:
-        * SA_POP/examples/Scheduling/sched_test1.tm.xml:
-        * SA_POP/examples/Scheduling/sched_test2.san.xml:
-        * SA_POP/examples/Scheduling/sched_test2.tm.xml:
-        * SA_POP/examples/Scheduling/sched_test4.san.xml:
-        * SA_POP/examples/Scheduling/sched_test4.tm.xml:
-        * SA_POP/examples/Scheduling/sched_test5.san.xml:
-        * SA_POP/examples/Scheduling/sched_test5.tm.xml:
-        * SA_POP/examples/Simple:
-        * SA_POP/examples/Simple/simple.san.xml:
-        * SA_POP/examples/Simple/simple.tm.xml:
-        * SA_POP/examples/Space:
-        * SA_POP/examples/Space/SPACE.san.xml:
-        * SA_POP/examples/Space/SPACE.tm.xml:
-        * SA_POP/examples/Space/SPACE_Goal1.san.xml:
-        * SA_POP/examples/Space/SPACE_Goal2.san.xml:
+        * Component:
+        * Component/Planning_exec.h:
+        * Component/Planning_exec.cpp:
+        * Component/SA_POP_Component.cidl:
+        * Component/SA_POP_Component.idl:
+        * Component/SA_POP_Component.mpc:
+        * Component/SA_POP_ComponentE.idl:
+        * Component/SA_POP_Component_exec.h:
+        * Component/SA_POP_Component_exec.cpp:
+        * Component/SA_POP_Component_exec_export.h:
+        * Component/SA_POP_Component_stub_export.h:
+        * Component/SA_POP_Component_svnt_export.h:
+
+          Added files for SA-POP component.
+
+
+        * SANet/SANet.h:
+        * SANet/SANet.cpp:
+        * SANet/SANetFileIn.h:
+        * SANet/SANetFileIn.cpp:
+        * SANet/SANet_Standalone.mpc:
+        * SANet/SANet_Types.h:
+        * SANet/SANet_UI.cpp:
+        * SANet/SANode.h:
+        * SANet/SANode.cpp:
+        * SANet/readme.txt:
+
+          Revised SANet to also allow standalone operation.
+
+
+        * SA_POP.mpc:
+        * SA_POP_for_RACE.mpc:
+        * SA_POP_Types.h:
+        * SANet_Network.xsd:
+        * Task_Map.xsd:
+        * Standalone:
+        * Standalone/SA_POP_Demo.cpp:
+        * Standalone/SA_POP_Demo.mpc:
+        * Standalone/UserInput.h:
+        * Standalone/UserInput.cpp:
+        * Standalone/readme.txt:
+
+          Revised SA-POP to allow operation with RACE or standalone.
+
+
+        * Standalone/XML_Utils:
+        * Standalone/XML_Utils/Utils:
+        * Standalone/XML_Utils/Utils/CIAO_XML_Utils_Export.h:
+        * Standalone/XML_Utils/Utils/Exceptions.h:
+        * Standalone/XML_Utils/Utils/Functors.h:
+        * Standalone/XML_Utils/Utils/Utils.mpc.old:
+        * Standalone/XML_Utils/Utils/XML_Error_Handler.h:
+        * Standalone/XML_Utils/Utils/XML_Error_Handler.cpp:
+        * Standalone/XML_Utils/Utils/XML_Helper.h:
+        * Standalone/XML_Utils/Utils/XML_Helper.cpp:
+        * Standalone/XML_Utils/Utils/XML_Schema_Resolver.h:
+        * Standalone/XML_Utils/Utils/XML_Schema_Resolver.cpp:
+        * Standalone/XML_Utils/Utils/XercesString.h:
+        * Standalone/XML_Utils/Utils/XercesString.cpp:
+        * Standalone/XML_Utils/XMLSchema:
+        * Standalone/XML_Utils/XMLSchema/Traversal.hpp:
+        * Standalone/XML_Utils/XMLSchema/Traversal.ipp:
+        * Standalone/XML_Utils/XMLSchema/Traversal.tpp:
+        * Standalone/XML_Utils/XMLSchema/TypeInfo.hpp:
+        * Standalone/XML_Utils/XMLSchema/TypeInfo.ipp:
+        * Standalone/XML_Utils/XMLSchema/TypeInfo.tpp:
+        * Standalone/XML_Utils/XMLSchema/Types.hpp:
+        * Standalone/XML_Utils/XMLSchema/Types.ipp:
+        * Standalone/XML_Utils/XMLSchema/Types.tpp:
+        * Standalone/XML_Utils/XMLSchema/Writer.hpp:
+        * Standalone/XML_Utils/XMLSchema/Writer.ipp:
+        * Standalone/XML_Utils/XMLSchema/Writer.tpp:
+        * Standalone/XML_Utils/XSCRT:
+        * Standalone/XML_Utils/XSCRT/Elements.hpp:
+        * Standalone/XML_Utils/XSCRT/Elements.ipp:
+        * Standalone/XML_Utils/XSCRT/Elements.tpp:
+        * Standalone/XML_Utils/XSCRT/ExtendedTypeInfo.hpp:
+        * Standalone/XML_Utils/XSCRT/ExtendedTypeInfo.ipp:
+        * Standalone/XML_Utils/XSCRT/Parser.hpp:
+        * Standalone/XML_Utils/XSCRT/Parser.ipp:
+        * Standalone/XML_Utils/XSCRT/Parser.tpp:
+        * Standalone/XML_Utils/XSCRT/Traversal.hpp:
+        * Standalone/XML_Utils/XSCRT/Traversal.ipp:
+        * Standalone/XML_Utils/XSCRT/Traversal.tpp:
+        * Standalone/XML_Utils/XSCRT/Writer.hpp:
+        * Standalone/XML_Utils/XSCRT/Writer.ipp:
+        * Standalone/XML_Utils/XSCRT/Writer.tpp:
+        * Standalone/XML_Utils/XSCRT/XML.hpp:
+        * Standalone/XML_Utils/XSCRT/XML.ipp:
+        * Standalone/XML_Utils/XSCRT/XML.tpp:
+        * Standalone/XML_Utils/XSCRT/XMLSchema.hpp:
+
+          Added a slightly modified copy of CIAO Config Handlers XML utilities for SA-POP standalone.
+
+
+        * examples:
+        * examples/Scheduling:
+        * examples/Scheduling/sched_main_test.san.xml:
+        * examples/Scheduling/sched_main_test.tm.xml:
+        * examples/Scheduling/sched_main_test1.san.xml:
+        * examples/Scheduling/sched_test1.san.xml:
+        * examples/Scheduling/sched_test1.tm.xml:
+        * examples/Scheduling/sched_test2.san.xml:
+        * examples/Scheduling/sched_test2.tm.xml:
+        * examples/Scheduling/sched_test4.san.xml:
+        * examples/Scheduling/sched_test4.tm.xml:
+        * examples/Scheduling/sched_test5.san.xml:
+        * examples/Scheduling/sched_test5.tm.xml:
+        * examples/Simple:
+        * examples/Simple/simple.san.xml:
+        * examples/Simple/simple.tm.xml:
+        * examples/Space:
+        * examples/Space/SPACE.san.xml:
+        * examples/Space/SPACE.tm.xml:
+        * examples/Space/SPACE_Goal1.san.xml:
+        * examples/Space/SPACE_Goal2.san.xml:
 
-        Added some SA-POP domain examples (task networks and task maps).
+          Added some SA-POP domain examples (task networks and task maps).
 
 
-        * SA_POP/experiments:
-        * SA_POP/experiments/EU_Test:
-        * SA_POP/experiments/EU_Test/EU_Test.mpc:
-        * SA_POP/experiments/EU_Test/EU_Test.cpp:
-        * SA_POP/experiments/EU_Test/Histogram.h:
-        * SA_POP/experiments/EU_Test/RandomGenerator.h:
-        * SA_POP/experiments/EU_Test/RandomGenerator.cpp:
+        * experiments:
+        * experiments/EU_Test:
+        * experiments/EU_Test/EU_Test.mpc:
+        * experiments/EU_Test/EU_Test.cpp:
+        * experiments/EU_Test/Histogram.h:
+        * experiments/EU_Test/RandomGenerator.h:
+        * experiments/EU_Test/RandomGenerator.cpp:
 
-        Added skeleton of Expected Utility experiment.
+          Added skeleton of Expected Utility experiment.
 
 
-        * SA_POP/server/Driver.mpc:
+        * server/Driver.mpc:
 
-        Revised Driver for current RACE configuration (but will not compile until Interactive_Input_Adapters is updated).
+          Revised Driver for current RACE configuration (but will not compile until Interactive_Input_Adapters is updated).
 
 
-        * descriptors/RACE.cdp:
+        * ../descriptors/RACE.cdp:
 
-        Revised RACE deployment plan to include SA-POP.
+          Revised RACE deployment plan to include SA-POP.
 
 
-        * descriptors/run_RACE.pl:
+        * ../descriptors/run_RACE.pl:
 
-        Revised run_RACE script with correct locations of DAnCE executables.
+          Revised run_RACE script with correct locations of DAnCE executables.
 
-
-Mon Apr  9 22:36:12 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Data_Base/Data_Base.mpc:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
-
-        Fixed linking errors on windows.
-
-Thu Apr  5 20:38:24 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Data_Base/Data_Base.mpc:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
-          Updated the sharedname filed for all the projects.
-
-        * Input_Adapters/SA_POP_Input_Adapter/tester.cpp: Added a simple
-          client to test RACE. This client deploys a deployment plan
-          generated via PICML. NOTE: This does not use the repository
-          manager.
-
-        * descriptors/NodeDetails.dat:
-        * descriptors/RACE.cdp:
-        * descriptors/run_RACE.pl:
-
-        Added necessary "scripts" to deploy RACE.
-
-        * descriptors/Domain.cdd:
-        * descriptors/run_all.pl:
-        * descriptors/run_ground.pl:
-        * descriptors/run_space.pl:
-
-          Removed these files.
-
-Thu Apr  5 18:17:48 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.h:
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp: Performed
-          cosmetic changes.
-
-        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.h:
-        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
-
-        Factered-out the implementation of the admin facet to seperate
-        files.
-
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
-
-        Updated these files to include redepoyment of
-        operational-strings/deployment-plans.
-
-        * RACE.mwc: Created a new solution file that builds the new RACE
-          entities.
-
-Sun Apr  1 22:35:12 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Data_Base/Admin_exec.h:
-        * Data_Base/Admin_exec.cpp:
-        * Data_Base/Data_Base.idl:
-
-        Added a method to the Admin interface.
-
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.h:
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
-
-        Updated the input adapter.
-
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
-
-        Update the output adapter.
-
-Fri Mar 30 22:01:45 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Data_Base/Admin_exec.cpp: Made cosmetic changes.
-
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.h:
-        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.cidl:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.h:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.cpp:
-
-        Updated it.
-
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.cidl:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
-
-        Updated the output adapter to use the new operational string
-        structure.
-
-Fri Mar 30 19:56:52 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Data_Base:
-        * Data_Base/Admin_exec.h:
-        * Data_Base/Admin_exec.cpp:
-        * Data_Base/Data_Base.cidl:
-        * Data_Base/Data_Base.idl:
-        * Data_Base/Data_Base.mpc:
-        * Data_Base/Data_Base_exec.h:
-        * Data_Base/Data_Base_exec.cpp:
-        * Data_Base/Data_Base_exec_export.h:
-        * Data_Base/Data_Base_stub_export.h:
-        * Data_Base/Data_Base_svnt_export.h:
-        * Data_Base/Query_exec.h:
-        * Data_Base/Query_exec.cpp: Added the data base component.
-
-        * common/OpString.idl:
-        * common/RACE_common.idl: Updated these IDL structures.
-
-Wed Mar 21 16:39:31 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Monitor/Local_Monitor/Local_Monitor.h:
-        * Monitor/Local_Monitor/Local_Monitor.cpp: Updated the monitor.
-
-Tue Mar 20 15:25:18 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Controller/common/Task.h: Updated the task structure.
-
-
-Fri Mar 16 22:56:39 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Input_Adapters/SA_POP_Input_Adapter:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.cidl:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec_export.h:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_stub_export.h:
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_svnt_export.h:
-
-        Added a new SA_POP input adapter.
-
-        * common/Goal.idl:
-        * common/OpString.idl:
-        * common/QoS.idl:
-        * common/RACE_common.idl:
-        * common/RACE_common.mpc:
-        * common/Time.idl:
-
-        Updated these IDL files.
-
-
-Thu Mar  8 23:17:24 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * common/Goal.idl:
-        * common/OpString.idl:
-        * common/QoS.idl:
-        * common/Time.idl:
-
-        Refined the operational string structure and re-structured the IDL files.
-
-        * common/RACE_common.mpc: Commented out building of RACE_common
-          project due to compilation errors. Need to fix later on.
-
-Wed Mar  7 16:27:59 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Controller/common/Subtask.h: Added the time_val structure.
-
-        * Controller/common/Task.h: Made cosmetic changes to the
-          structure.
-
-Tue Mar  6 23:31:42 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Controller/common:
-        * Controller/common/Domain.h:
-        * Controller/common/Subtask.h:
-        * Controller/common/Task.h: Adding structure of an end-to-end
-          task.
-
-Fri Jan 19 18:52:36 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Monitor/Central_Monitor/Monitor.idl:
-        * Monitor/Central_Monitor/Monitor.mpc:
-        * Monitor/Local_Monitor/Local_Monitor.h:
-        * Monitor/Local_Monitor/Local_Monitor.mpc: Updated these files to
-          fix compilation errors on linux.
-
-        * Monitor/Central_Monitor/Interface.idl:
-        * Monitor/Central_Monitor/Interface_stub_export.h:
-        * Monitor/Central_Monitor/Interface_svnt_export.h:
-
-          Removed these files.
-
-Fri Jan 19 17:53:23 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Monitor/Central_Monitor/Interface.idl:
-        * Monitor/Central_Monitor/Interface_stub_export.h:
-        * Monitor/Central_Monitor/Interface_svnt_export.h: Refactored the
-          Interface "provided" by the Central Monitor component into a
-          separate IDL file.
-
-Fri Jan 19 17:44:42 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Controller/Component/Controller.idl:
-        * Controller/Component/Interface.idl:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
-        * Monitor/Central_Monitor/Monitor.idl:
-        * Monitor/Central_Monitor/Monitor.mpc:
-        * Monitor/Local_Monitor/Local_Monitor.h:
-        * Monitor/Local_Monitor/Local_Monitor.cpp:
-        * Monitor/Local_Monitor/Local_Monitor.mpc:
-        * Output_Adapters/Interface/PlanEgress.idl:
-        * Plan_Analyzer/Interface/Analyzer_I.idl:
-        * Plan_Analyzer/Interface/PlanIngress.idl:
-        * Planner_Manager/Interface/Planner_Manager_I.idl:
-        * Planners/Interface/Planner_I.idl:
-        * Planners/StaticPlanner/StaticPlanner.idl:
-        * common/RACE_common.idl: Fixed the IDL files to be consistent
-          with the recent refactoring of CIAO IDL files.
-
-Thu Nov 30 19:00:22 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Controller/Component/Controller.mpc:
-        * Input_Adapters/Base/Input_Adapter.mpc:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
-        * Monitor/Central_Monitor/Monitor.mpc:
-        * Output_Adapters/Component/Output_Manager.mpc:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
-        * Output_Adapters/Interface/Output_Adapter_Interface.mpc:
-        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.mpc:
-        * Plan_Analyzer/Component/Plan_Analyzer.mpc:
-        * Plan_Analyzer/Interface/Plan_Analyzer_Interface.mpc:
-        * Planner_Manager/Component/Planner_Manager.mpc:
-        * Planner_Manager/Interface/Planner_Manager_Interface.mpc:
-        * Planners/Base/Planner.mpc:
-        * Planners/Interface/Planner_Interface.mpc:
-        * Planners/StaticPlanner/StaticPlanner.mpc:
-        * common/RACE_common.mpc: Modified the mpc files to take care of
-          the export macro stuff.
 
 Tue Nov 14 18:52:38 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * SA_POP/SPACE.san.xml: Removed
-        * SA_POP/SPACE.tm.xml: Removed
-        * SA_POP/SPACE_Goal1.san.xml: Removed
-        * SA_POP/SPACE_Goal2.san.xml: Removed
+        * SPACE.san.xml: Removed
+        * SPACE.tm.xml: Removed
+        * SPACE_Goal1.san.xml: Removed
+        * SPACE_Goal2.san.xml: Removed
 
-        * SA_POP/server/SPACE.san: Added revised space example task network
-        * SA_POP/server/SPACE.tm: Added revised space example task network
-        * SA_POP/server/client.cpp: Revised for multiple condition goals
+        * server/SPACE.san: Added revised space example task network
+        * server/SPACE.tm: Added revised space example task network
+        * server/client.cpp: Revised for multiple condition goals
 
-        Updated SA-POP SPACE example and client.
-
-Tue Nov 14 05:44:28 GMT 2006  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * Monitor/Local_Monitor/Local_Monitor_export.h: Added the export
-          macro file.
-
-        * Monitor/Local_Monitor/Local_Monitor.cpp:
-        * Monitor/Local_Monitor/Local_Monitor.h (CIAO):
-        * Monitor/Local_Monitor/Local_Monitor.mpc (project): Updated the monitor.
+          Updated SA-POP SPACE example and client.
 
 Wed Nov  8 00:38:28 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * SA_POP/server/Driver.cpp:
-        * SA_POP/server/client.h:
-        * SA_POP/server/client.cpp:
-        * SA_POP/server/server.cpp:
+        * server/Driver.cpp:
+        * server/client.h:
+        * server/client.cpp:
+        * server/server.cpp:
 
-        Client and server updates/debugging for ATC Demo
+          Client and server updates/debugging for ATC Demo
 
 Tue Nov  7 19:50:13 UTC 2006  Nishanth Shankaran  <nshankar@nosmam.com>
 
-        * SA_POP/SA_POP.mpc:
-        * SA_POP/SA_WorkingPlan.h:
+        * SA_POP.mpc:
+        * SA_WorkingPlan.h:
 
-        * SA_POP/server/Driver.cpp:
-        * SA_POP/server/Driver.mpc: Fixed linking error on mac.
+        * server/Driver.cpp:
+        * server/Driver.mpc:
+
+          Fixed linking error on mac.
 
 Tue Nov  7 19:23:15 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
 
-        * SA_POP/Builder.h:
-        * SA_POP/LogScreenOut.h:
-        * SA_POP/LogScreenOut_Export.h:
+        * Builder.h:
+        * LogScreenOut.h:
+        * LogScreenOut_Export.h:
 
-        * SA_POP/SANet/SANetFileIn.h:
-        * SA_POP/SANet/SANetFileIn_Export.h:
+        * SANet/SANetFileIn.h:
+        * SANet/SANetFileIn_Export.h:
 
-        * SA_POP/SA_Builder.h:
-        * SA_POP/SA_Builder.cpp:
-        * SA_POP/SA_Builder_Export.h:
-        * SA_POP/SA_POP.mpc:
-        * SA_POP/TaskMapFileIn.h:
-        * SA_POP/TaskMapFileIn_Export.h:
+        * SA_Builder.h:
+        * SA_Builder.cpp:
+        * SA_Builder_Export.h:
+        * SA_POP.mpc:
+        * TaskMapFileIn.h:
+        * TaskMapFileIn_Export.h:
 
-        * SA_POP/server/Driver.h:
-        * SA_POP/server/Driver.cpp:
-        * SA_POP/server/Driver.idl:
-        * SA_POP/server/Driver.mpc:
-        * SA_POP/server/Driver_stub_export.h:
-        * SA_POP/server/Driver_svnt_export.h: Fixed problems related to
-          "export macros" on windows.
+        * server/Driver.h:
+        * server/Driver.cpp:
+        * server/Driver.idl:
+        * server/Driver.mpc:
+        * server/Driver_stub_export.h:
+        * server/Driver_svnt_export.h:
+
+          Fixed problems related to "export macros" on windows.
 
 Mon Nov  6 22:37:28 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * SA_POP/server/Driver.mpc:
-        * SA_POP/server/client.h: Added file.
-        * SA_POP/server/client.cpp:
+        * server/Driver.mpc:
+        * server/client.h: Added file.
+        * server/client.cpp:
 
-        Updated SA-POP demo client for text UI options.
+          Updated SA-POP demo client for text UI options.
 
 Mon Nov  6 04:42:43 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * common/OpString.idl:
+        * ../common/OpString.idl:
 
-        * SA_POP/SA_POP.mpc:
-        * SA_POP/SA_POP_Types.h:
-        * SA_POP/SA_WorkingPlan.cpp:
-        * SA_POP/Converter.h: Removed
-        * SA_POP/Converter.cpp: Removed
-        * SA_POP/Driever.cpp: Removed
+        * SA_POP.mpc:
+        * SA_POP_Types.h:
+        * SA_WorkingPlan.cpp:
+        * Converter.h: Removed
+        * Converter.cpp: Removed
+        * Driever.cpp: Removed
 
-        * SA_POP/server/Driver.h:
-        * SA_POP/server/Driver.cpp:
-        * SA_POP/server/Driver.mpc:
-        * SA_POP/server/server.cpp:
+        * server/Driver.h:
+        * server/Driver.cpp:
+        * server/Driver.mpc:
+        * server/server.cpp:
 
-        Updated SA-POP driver/server to handle IDL goal structure.
+          Updated SA-POP driver/server to handle IDL goal structure.
 
 Sat Nov  4 19:07:07 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * SA_POP/Driver.cpp:
-        * SA_POP/Planner.h:
-        * SA_POP/Planner.cpp:
-        * SA_POP/SA_POP_Types.h:
-        * SA_POP/SA_WorkingPlan.h:
-        * SA_POP/SA_WorkingPlan.cpp:
-        * SA_POP/SPACE.san.xml:
-        * SA_POP/WorkingPlan.h:
-        * SA_POP/SANet/SANet.cpp:
-        * SA_POP/SANet/SANode.h:
-        * SA_POP/SANet/SANode.cpp:
+        * Driver.cpp:
+        * Planner.h:
+        * Planner.cpp:
+        * SA_POP_Types.h:
+        * SA_WorkingPlan.h:
+        * SA_WorkingPlan.cpp:
+        * SPACE.san.xml:
+        * WorkingPlan.h:
+        * SANet/SANet.cpp:
+        * SANet/SANode.h:
+        * SANet/SANode.cpp:
 
-        Updated SA-POP goal handling.
+          Updated SA-POP goal handling.
 
 
 Thu Nov  2 23:41:56 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
 
-        * SA_POP/server:
-        * SA_POP/server/Driver.h:
-        * SA_POP/server/Driver.idl:
-        * SA_POP/server/Driver.cpp:
-        * SA_POP/server/Driver.mpc:
-        * SA_POP/server/client.cpp:
-        * SA_POP/server/server.cpp: Added the "driver server".
+        * server:
+        * server/Driver.h:
+        * server/Driver.idl:
+        * server/Driver.cpp:
+        * server/Driver.mpc:
+        * server/client.cpp:
+        * server/server.cpp:
+
+          Added the "driver server".
 
 Thu Nov  2 19:25:01 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * SA_POP/Driver.cpp:
-        * SA_POP/SA_POP_Types.h:
-        * SA_POP/SA_PlanCommands.cpp:
-        * SA_POP/SA_WorkingPlan.cpp:
+        * Driver.cpp:
+        * SA_POP_Types.h:
+        * SA_PlanCommands.cpp:
+        * SA_WorkingPlan.cpp:
 
-        Revised code to correct errors in Linux compilation.
-
-Thu Nov  2 17:48:07 UTC 2006  Nishanth Shankaran  <nshanka@nospam.com>
-
-        * Controller/Component/Poller.cpp: Fixed compiler warnings.
-
-        * Output_Adapters/Component/Output_Manager_exec.cpp:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
-
-        Make some cosmetic changes.
-
-        * Output_Adapters/XML_Output_Adapter:
-        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.cidl:
-        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.idl:
-        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.mpc:
-        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec.h:
-        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec.cpp:
-        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec_export.h:
-        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_stub_export.h:
-        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_svnt_export.h:
-
-        Added the XML output adapter.
-
-        * RACE.mwc: Create a new project file.
-
-        * descriptors/RACE.cdp: Modified the descriptor to include the XML
-          output adapter.
-Wed Nov  1 19:24:27 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
-
-        * descriptors/run_all.pl:
-        * descriptors/run_ground.pl:
-        * descriptors/run_space.pl: Added these startup scripts.
+          Revised code to correct errors in Linux compilation.
 
 Wed Nov  1 18:58:45 UTC 2006  Nishanth Shankaran  <nshankar@nospan.com>
 
-        * SA_POP/Converter.h:
-        * SA_POP/SANet/SANetFileIn.h:
-        * SA_POP/SA_POP.mpc:
-        * common/OpString.idl:
+        * Converter.h:
+        * SANet/SANetFileIn.h:
+        * SA_POP.mpc:
+        * ../common/OpString.idl:
 
-        Fixed compilation errors and warnings on linux.
+          Fixed compilation errors and warnings on linux.
 
 Wed Nov  1 17:07:41 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
 
-        * SA_POP/Converter.cpp:
-        * SA_POP/Driver.cpp:
+        * Converter.cpp:
+        * Driver.cpp:
 
-        * descriptors/Domain.cdd:
-        * descriptors/NodeDetails.dat:
-        * descriptors/RACE.cdp:
-        * descriptors/run_RACE.pl:
+        * ../descriptors/Domain.cdd:
+        * ../descriptors/NodeDetails.dat:
+        * ../descriptors/RACE.cdp:
+        * ../descriptors/run_RACE.pl:
 
-        Checking in the codebase used for the ATC demo.
+          Checking in the codebase used for the ATC demo.
 
 Wed Oct 25 22:27:20 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * common/OpString.idl:  Added Goal IDL structure.
+        * ../common/OpString.idl:
+
+          Added Goal IDL structure.
 
 Fri Oct 13 15:52:30 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * SA_POP/Builder.h
-        * SA_POP/Converter.cpp
-        * SA_POP/Converter.h
-        * SA_POP/Driver.cpp
-        * SA_POP/LogFileOut.cpp
-        * SA_POP/LogFileOut.h
-        * SA_POP/LogScreenOut.cpp
-        * SA_POP/LogScreenOut.h
-        * SA_POP/OutAdapter.h
-        * SA_POP/PlanCommands.h
-        * SA_POP/PlanHeuristics.h
-        * SA_POP/Planner.cpp
-        * SA_POP/Planner.h
-        * SA_POP/PlanStrategy.h
-        * SA_POP/SA_Builder.cpp
-        * SA_POP/SA_Builder.h
-        * SA_POP/SA_PlanCommands.cpp
-        * SA_POP/SA_PlanCommands.h
-        * SA_POP/SA_PlanHeuristics.cpp
-        * SA_POP/SA_PlanHeuristics.h
-        * SA_POP/SA_PlanStrategy.cpp
-        * SA_POP/SA_PlanStrategy.h
-        * SA_POP/SA_POP.mpc
-        * SA_POP/SA_POP_Exceptions.cpp
-        * SA_POP/SA_POP_Exceptions.h
-        * SA_POP/SA_POP_Types.h
-        * SA_POP/SA_SchedStrategy.cpp
-        * SA_POP/SA_SchedStrategy.h
-        * SA_POP/SA_WorkingPlan.cpp
-        * SA_POP/SA_WorkingPlan.h
-        * SA_POP/SchedStrategy.h
-        * SA_POP/SPACE.san.xml
-        * SA_POP/SPACE.tm.xml
-        * SA_POP/SPACE_Goal1.san.xml
-        * SA_POP/SPACE_Goal2.san.xml
-        * SA_POP/TaskImpl.cpp
-        * SA_POP/TaskImpl.h
-        * SA_POP/TaskMap.cpp
-        * SA_POP/TaskMap.h
-        * SA_POP/TaskMapFileIn.cpp
-        * SA_POP/TaskMapFileIn.h
-        * SA_POP/WorkingPlan.h
-        * SA_POP/XML_TaskMap.cpp
-        * SA_POP/XML_TaskMap.hpp
-        * SA_POP/SANet/SANet.cpp
-        * SA_POP/SANet/SANet.h
-        * SA_POP/SANet/SANetFileIn.cpp
-        * SA_POP/SANet/SANetFileIn.h
-        * SA_POP/SANet/SANet_Exceptions.cpp
-        * SA_POP/SANet/SANet_Exceptions.h
-        * SA_POP/SANet/SANet_Types.h
-        * SA_POP/SANet/SANode.cpp
-        * SA_POP/SANet/SANode.h
-        * SA_POP/SANet/XML_SANet.cpp
-        * SA_POP/SANet/XML_SANet.hpp
-        * common/OpString.idl: Revised to fix namespace problem with TimeValue.
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc: Removed Converter project.
-        * Input_Adapters/Interactive_Input_Adapter/Converter.cpp: Moved to SA_POP directory.
-        * Input_Adapters/Interactive_Input_Adapter/Converter.h: Moved to SA_POP directory.
-
-        Added SA-POP files.
-
-
-Wed Oct 11 14:02:30 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
-
-        * Controller/Component/starter.cpp:
-        * Monitor/Local_Monitor/Local_Monitor.h:
-        * Monitor/Local_Monitor/Local_Monitor.cpp: Fixed compilation
-          errors on windows.
-
-        * common/OpString.idl: Fixed compilation errors.
-
-Wed Oct 11 00:48:28 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
-
-        * Controller/Component/Controller.mpc:
-        * Controller/Component/Controller_exec.cpp:
-        * Controller/Component/Descriptor.cpp: Fixed compilation errors
-          related to variadic macros.
-
-        * Controller/Component/RACE_common.h:
-
-          Removed this file.
-
-
-
-Tue Oct 10 23:12:25 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
-
-        * Input_Adapters/Interactive_Input_Adapter/Converter.h:
-        * Input_Adapters/Interactive_Input_Adapter/Converter.cpp: Checking
-          in the initial version of the "converter" that converts
-          OperationalString IDL structure to DeploymentPlan IDL structure.
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.h:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.cpp:
-
-        Updated the IIA to accept inputs from the converter.
-
-        * common/OpString.idl: Extended the OperationalString and
-          InstanceDescription structures.
-
-
-Mon Oct  2 20:14:55 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
-
-        * Output_Adapters/Component/Output_Manager.mpc:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
-          Fixed linking errors on mac.
-
-        * descriptors/RACE.cdp: Checking in the CDP generated from the
-          RACE model.
-
-Mon Sep 18 23:24:48 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
-
-        * common/Opstring.idl: Updated the IDL structure.
-
-Mon Sep 18 18:57:51 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
-
-        * common/OpString.idl:
-        * common/OpString_stub_export.h:
-        * common/RACE_common.idl:
-        * common/RACE_common.mpc: Added the operational-string IDL
-          structure.
-
-Tue Sep  5 23:29:45 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
-
-        * Controller/Component/Controller.mpc:
-        * Output_Adapters/Component/Output_Manager.mpc:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
-        * Planner_Manager/Component/Planner_Manager.mpc:
-        * Planners/StaticPlanner/StaticPlanner.mpc: Updated the mpc files
-          to prevent linking errors on mac.
-
-        * Controller/Component/Path.idl: Removed this file as it's no
-          longer needed.
-
-Tue Sep  5 21:03:22 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
-
-        * descriptors/flattened_deploymentplan.cdp: Removed this file
-          since it was accidently added during the previous check-in.
-
-Tue Sep  5 20:33:35 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
-
-        * Controller:
-
-        * Controller/Component:
-
-        * Controller/Component/Controller.cidl:
-        * Controller/Component/Controller.idl:
-        * Controller/Component/Controller.mpc:
-        * Controller/Component/Controller_exec.h:
-        * Controller/Component/Controller_exec.cpp:
-        * Controller/Component/Controller_exec_export.h:
-        * Controller/Component/Controller_stub_export.h:
-        * Controller/Component/Controller_svnt_export.h:
-        * Controller/Component/Descriptor.h:
-        * Controller/Component/Descriptor.cpp:
-        * Controller/Component/Interface.idl:
-        * Controller/Component/Path.idl:
-        * Controller/Component/PathS_T.h:
-        * Controller/Component/PathS_T.inl:
-        * Controller/Component/PathS_T.cpp:
-        * Controller/Component/Path_exec_export.h:
-        * Controller/Component/Path_stub_export.h:
-        * Controller/Component/Path_svnt_export.h:
-        * Controller/Component/Poller.:
-        * Controller/Component/Poller.h:
-        * Controller/Component/Poller.cpp:
-        * Controller/Component/RACE_common.h:
-        * Controller/Component/common.h:
-        * Controller/Component/starter.cpp:
-
-        * Input_Adapters:
-
-        * Input_Adapters/Base:
-
-        * Input_Adapters/Base/Input_Adapter.idl:
-        * Input_Adapters/Base/Input_Adapter.mpc:
-        * Input_Adapters/Base/Input_Adapter_stub_export.h:
-        * Input_Adapters/Base/Input_Adapter_svnt_export.h:
-
-        * Input_Adapters/Interactive_Input_Adapter:
-
-        * Input_Adapters/Interactive_Input_Adapter/Injector.cpp:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.cidl:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.h:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.cpp:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec_export.h:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_stub_export.h:
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_svnt_export.h:
-
-        * Monitor:
-
-        * Monitor/Central_Monitor:
-
-        * Monitor/Central_Monitor/Monitor.h:
-        * Monitor/Central_Monitor/Monitor.cidl:
-        * Monitor/Central_Monitor/Monitor.idl:
-        * Monitor/Central_Monitor/Monitor.cpp:
-        * Monitor/Central_Monitor/Monitor.mpc:
-        * Monitor/Central_Monitor/Monitor_exec.h:
-        * Monitor/Central_Monitor/Monitor_exec.cpp:
-        * Monitor/Central_Monitor/Monitor_exec_export.h:
-        * Monitor/Central_Monitor/Monitor_stub_export.h:
-        * Monitor/Central_Monitor/Monitor_svnt_export.h:
-
-        * Monitor/Local_Monitor:
-
-        * Monitor/Local_Monitor/Local_Monitor.h:
-        * Monitor/Local_Monitor/Local_Monitor.cpp:
-        * Monitor/Local_Monitor/Local_Monitor.mpc:
-
-        * Output_Adapters:
-
-        * Output_Adapters/Base:
-
-        * Output_Adapters/Base/Output_Adapter.idl:
-        * Output_Adapters/Base/Output_Adapter.mpc:
-        * Output_Adapters/Base/Output_Adapter_stub_export.h:
-        * Output_Adapters/Base/Output_Adapter_svnt_export.h:
-
-        * Output_Adapters/Component:
-
-        * Output_Adapters/Component/Output_Manager.cidl:
-        * Output_Adapters/Component/Output_Manager.idl:
-        * Output_Adapters/Component/Output_Manager.mpc:
-        * Output_Adapters/Component/Output_Manager_exec.h:
-        * Output_Adapters/Component/Output_Manager_exec.cpp:
-        * Output_Adapters/Component/Output_Manager_exec_export.h:
-        * Output_Adapters/Component/Output_Manager_stub_export.h:
-        * Output_Adapters/Component/Output_Manager_svnt_export.h:
-
-        * Output_Adapters/DAnCE_Output_Adapter:
-
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.cidl:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec_export.h:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_stub_export.h:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_svnt_export.h:
-
-        * Output_Adapters/Interface:
-
-        * Output_Adapters/Interface/Output_Adapter_Interface.mpc:
-        * Output_Adapters/Interface/Output_Adapter_Interface_stub_export.h:
-        * Output_Adapters/Interface/Output_Adapter_Interface_svnt_export.h:
-        * Output_Adapters/Interface/PlanEgress.idl:
-
-        * Plan_Analyzer:
-
-        * Plan_Analyzer/Component:
-
-        * Plan_Analyzer/Component/Plan_Analyzer.cidl:
-        * Plan_Analyzer/Component/Plan_Analyzer.idl:
-        * Plan_Analyzer/Component/Plan_Analyzer.mpc:
-        * Plan_Analyzer/Component/Plan_Analyzer_exec.h:
-        * Plan_Analyzer/Component/Plan_Analyzer_exec.cpp:
-        * Plan_Analyzer/Component/Plan_Analyzer_exec_export.h:
-        * Plan_Analyzer/Component/Plan_Analyzer_stub_export.h:
-        * Plan_Analyzer/Component/Plan_Analyzer_svnt_export.h:
-
-        * Plan_Analyzer/Interface:
-
-        * Plan_Analyzer/Interface/Analyzer_I.idl:
-        * Plan_Analyzer/Interface/Analyzer_I_exec_export.h:
-        * Plan_Analyzer/Interface/Analyzer_I_stub_export.h:
-        * Plan_Analyzer/Interface/Analyzer_I_svnt_export.h:
-        * Plan_Analyzer/Interface/PlanIngress.idl:
-        * Plan_Analyzer/Interface/Plan_Analyzer_Interface.mpc:
-        * Plan_Analyzer/Interface/Plan_Analyzer_Interface_stub_export.h:
-        * Plan_Analyzer/Interface/Plan_Analyzer_Interface_svnt_export.h:
-
-        * Planner_Manager:
-
-        * Planner_Manager/Component:
-
-        * Planner_Manager/Component/Planner_Manager.cidl:
-        * Planner_Manager/Component/Planner_Manager.idl:
-        * Planner_Manager/Component/Planner_Manager.mpc:
-        * Planner_Manager/Component/Planner_Manager_exec.h:
-        * Planner_Manager/Component/Planner_Manager_exec.cpp:
-        * Planner_Manager/Component/Planner_Manager_exec_export.h:
-        * Planner_Manager/Component/Planner_Manager_stub_export.h:
-        * Planner_Manager/Component/Planner_Manager_svnt_export.h:
-
-        * Planner_Manager/Interface:
-
-        * Planner_Manager/Interface/Planner_Manager_I.idl:
-        * Planner_Manager/Interface/Planner_Manager_Interface.mpc:
-        * Planner_Manager/Interface/Planner_Manager_Interface_stub_export.h:
-        * Planner_Manager/Interface/Planner_Manager_Interface_svnt_export.h:
-
-        * Planners:
-
-        * Planners/Base:
-
-        * Planners/Base/Planner.idl:
-        * Planners/Base/Planner.mpc:
-        * Planners/Base/Planner_stub_export.h:
-        * Planners/Base/Planner_svnt_export.h:
-
-        * Planners/Interface:
-
-        * Planners/Interface/Planner_I.idl:
-        * Planners/Interface/Planner_Interface.mpc:
-        * Planners/Interface/Planner_Interface_stub_export.h:
-        * Planners/Interface/Planner_Interface_svnt_export.h:
-
-        * Planners/StaticPlanner:
-
-        * Planners/StaticPlanner/StaticPlanner.cidl:
-        * Planners/StaticPlanner/StaticPlanner.idl:
-        * Planners/StaticPlanner/StaticPlanner.mpc:
-        * Planners/StaticPlanner/StaticPlanner_exec.h:
-        * Planners/StaticPlanner/StaticPlanner_exec.cpp:
-        * Planners/StaticPlanner/StaticPlanner_exec_export.h:
-        * Planners/StaticPlanner/StaticPlanner_stub_export.h:
-        * Planners/StaticPlanner/StaticPlanner_svnt_export.h:
-
-        * common/RACE_Log_Msg.h:
-
-        * descriptors/Domain.cdd:
-        * descriptors/NodeDetails.dat:
-        * descriptors/RACE.cdp:
-        * descriptors/run_RACE.pl:
-
-        Checking in the initial version of RACE.
+        * Builder.h
+        * Converter.cpp
+        * Converter.h
+        * Driver.cpp
+        * LogFileOut.cpp
+        * LogFileOut.h
+        * LogScreenOut.cpp
+        * LogScreenOut.h
+        * OutAdapter.h
+        * PlanCommands.h
+        * PlanHeuristics.h
+        * Planner.cpp
+        * Planner.h
+        * PlanStrategy.h
+        * SA_Builder.cpp
+        * SA_Builder.h
+        * SA_PlanCommands.cpp
+        * SA_PlanCommands.h
+        * SA_PlanHeuristics.cpp
+        * SA_PlanHeuristics.h
+        * SA_PlanStrategy.cpp
+        * SA_PlanStrategy.h
+        * SA_POP.mpc
+        * SA_POP_Exceptions.cpp
+        * SA_POP_Exceptions.h
+        * SA_POP_Types.h
+        * SA_SchedStrategy.cpp
+        * SA_SchedStrategy.h
+        * SA_WorkingPlan.cpp
+        * SA_WorkingPlan.h
+        * SchedStrategy.h
+        * SPACE.san.xml
+        * SPACE.tm.xml
+        * SPACE_Goal1.san.xml
+        * SPACE_Goal2.san.xml
+        * TaskImpl.cpp
+        * TaskImpl.h
+        * TaskMap.cpp
+        * TaskMap.h
+        * TaskMapFileIn.cpp
+        * TaskMapFileIn.h
+        * WorkingPlan.h
+        * XML_TaskMap.cpp
+        * XML_TaskMap.hpp
+        * SANet/SANet.cpp
+        * SANet/SANet.h
+        * SANet/SANetFileIn.cpp
+        * SANet/SANetFileIn.h
+        * SANet/SANet_Exceptions.cpp
+        * SANet/SANet_Exceptions.h
+        * SANet/SANet_Types.h
+        * SANet/SANode.cpp
+        * SANet/SANode.h
+        * SANet/XML_SANet.cpp
+        * SANet/XML_SANet.hpp
+
+          Checking in initial version of SA-POP.
+
+        * ..common/OpString.idl:
+
+          Revised to fix namespace problem with TimeValue.
+
+        * ../Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
+
+          Removed Converter project.
+
+        * ../Input_Adapters/Interactive_Input_Adapter/Converter.cpp:
+        * ../Input_Adapters/Interactive_Input_Adapter/Converter.h:
+
+          Removed (moved to SA_POP directory).
