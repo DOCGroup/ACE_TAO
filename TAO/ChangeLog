@@ -1,3 +1,8 @@
+Wed May 13 16:33:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Added 3673
+
 Wed May 13 16:30:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_3673_Regression/*:
