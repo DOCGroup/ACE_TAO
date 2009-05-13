@@ -1,3 +1,11 @@
+Wed May 13 16:30:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_3673_Regression/*:
+          Added new test for bug 3673
+
+        * orbsvcs/tests/ior_corbaname/ior_corbaname_client_i.cpp:
+          Const change
+
 Wed May 13 13:35:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
 
         * bin/tao_orb_tests.lst:
