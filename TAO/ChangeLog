@@ -1,3 +1,13 @@
+Wed May 13 13:35:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
+
+        * bin/tao_orb_tests.lst:
+        * tests/Bug_3674_Regression/test.idl:
+        * tests/Bug_3674_Regression/run_test.pl:
+        * tests/Bug_3674_Regression/Bug_3674_Regression.mpc:
+        * tests/Bug_3674_Regression/test.cpp:
+
+          Added regression test for PICurrent TSC client corruption.
+
 Tue May 12 08:26:55 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Bug_2234_Regression/server.cpp:
