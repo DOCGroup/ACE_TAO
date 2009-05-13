@@ -1,3 +1,9 @@
+Wed May 13 17:02:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Network_Adapters_Test.cpp:
+          When registering the signal handlers fails also print the
+          signal number that failed
+
 Tue May 12 18:26:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/lib/Client_Logging_Handler.cpp
