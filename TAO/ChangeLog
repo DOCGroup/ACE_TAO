@@ -1,3 +1,9 @@
+Wed May 13 19:44:04 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Strategies/DIOP_Acceptor.cpp:
+
+          Fixed a crash that occurs with -ORBUseSharedProfile 1.
+
 Wed May 13 16:33:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
