@@ -78,8 +78,7 @@ IOR_corbaname_Client_i::run (void)
         }
 
       // Invoke a request on the server
-      CORBA::Boolean ret_value =
-        factory->print_status ();
+      CORBA::Boolean const ret_value = factory->print_status ();
 
       if (!ret_value)
         {
