@@ -1068,7 +1068,7 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
       errno = ENOENT; \
       return -1; \
     } \
-  int result = OP (ptr, ARG); \
+  int const result = OP (ptr, ARG); \
   ACE_Errno_Guard error (errno); \
   while (! this->thr_to_be_removed_.is_empty ()) { \
     ACE_Thread_Descriptor * td = 0; \
@@ -1719,7 +1719,7 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
       // Save/restore errno.
       ACE_Errno_Guard error (errno);
 
-      for (ACE_Thread_Descriptor *td;
+      for (ACE_Thread_Descriptor *td = 0;
            this->thr_to_be_removed_.dequeue_head (td) != -1;
            )
         this->remove_thr (td, 1);

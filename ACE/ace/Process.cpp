@@ -138,7 +138,6 @@ ACE_Process::spawn (ACE_Process_Options &options)
   // like other OS environment.  Therefore, it is user's whole responsibility to call
   // 'ACE_Process_Options::process_name(const ACE_TCHAR *name)' to set the proper
   // process name (the execution file name with path if needed).
-
   BOOL fork_result =
     ACE_TEXT_CreateProcess (options.process_name(),
                             options.command_line_buf(),
