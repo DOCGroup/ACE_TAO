@@ -23,18 +23,8 @@
 class Tester
 {
 public:
-  int init (void);
   int test (void);
 };
-
-
-int
-Tester::init (void)
-{
-  ///Initialise the UUID Generator
-  ACE_Utils::UUID_GENERATOR::instance ()->init ();
-  return 0;
-}
 
 int
 Tester::test (void)
@@ -143,13 +133,6 @@ int run_main(int, ACE_TCHAR* [])
   ACE_START_TEST (ACE_TEXT ("UUID_Test"));
 
   Tester tester;
-
-  if (tester.init () == -1)
-    {
-      ACE_DEBUG((LM_DEBUG,
-                 ACE_TEXT ("UUIDTest: Tester::init failed\n")));
-      return -1;
-    }
 
   int result = tester.test();
 

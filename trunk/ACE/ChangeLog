@@ -1,3 +1,15 @@
+Thu May 14 00:01:54 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ace/UUID.h:
+        * ace/UUID.inl:
+        * ace/UUID.cpp:
+        * tests/UUID_Test.cpp:
+
+          The constructor for the UUID generator now calls init ().
+
+          Added ACE_SINGLETON_DECLARE to the UUID_GENERATOR singleton
+          so it will be properly exported from the ACE library.
+
 Wed May 13 17:02:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Network_Adapters_Test.cpp:
