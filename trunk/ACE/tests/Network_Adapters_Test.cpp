@@ -566,21 +566,21 @@ Stop_Handler::open (void)
   // Register the signal handler object to catch the signals.
   if (this->reactor ()->register_handler (SIGINT, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p\n"),
-                       ACE_TEXT ("register_handler for SIGINT <%d>"), SIGINT),
+                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
+                       ACE_TEXT ("register_handler for SIGINT"), SIGINT),
                       -1);
 
   if (this->reactor ()->register_handler (SIGTERM, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p\n"),
-                       ACE_TEXT ("register_handler for SIGTERM <%d>"), SIGTERM),
+                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
+                       ACE_TEXT ("register_handler for SIGTERM"), SIGTERM),
                       -1);
 
 #if ! defined (ACE_WIN32)
   if (this->reactor ()->register_handler (SIGQUIT, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p\n"),
-                       ACE_TEXT ("register_handler for SIGQUIT <%d>"), SIGQUIT),
+                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
+                       ACE_TEXT ("register_handler for SIGQUIT"), SIGQUIT),
                       -1);
 #endif /* #if ! defined (ACE_WIN32) */
   return 0;
