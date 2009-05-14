@@ -177,7 +177,7 @@ public:
   {
     char tmp[10];
     order += ACE_OS::itoa (sleep_time_, tmp, 10);
-    running_tasks++;
+    ++running_tasks;
     activate ();
     return 0;
   }
@@ -216,7 +216,7 @@ public:
   int close (u_long)
       // FUZZ: enable check_for_lack_ACE_OS
   {
-    running_tasks--;
+    --running_tasks;
     return 0;
   }
 
@@ -296,11 +296,11 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       // child process: sleep & exit
       ACE_TCHAR lognm[MAXPATHLEN];
-      int mypid (ACE_OS::getpid ());
+      int const mypid (ACE_OS::getpid ());
       ACE_OS::sprintf(lognm, ACE_TEXT ("Process_Manager_Test-child-%d"), mypid);
 
       ACE_START_TEST (lognm);
-      int secs = ACE_OS::atoi (argv[get_opt.opt_ind ()]);
+      int const secs = ACE_OS::atoi (argv[get_opt.opt_ind ()]);
       ACE_OS::sleep (secs ? secs : 1);
 
       ACE_TCHAR prio[64];
@@ -583,7 +583,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P) Reactor loop done!\n") ));
 
-  size_t nr_procs = mgr.managed ();
+  size_t const nr_procs = mgr.managed ();
   if (nr_procs != 0)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P) %d processes left in manager\n"),
