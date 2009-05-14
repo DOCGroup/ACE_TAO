@@ -142,9 +142,9 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
 
   opts.process_name (argv0);
 #if defined (ACE_HAS_WINCE)
-  // Make sure argv0 is set to 0 for wince. WinCE expects the process name
-  // to be set by the call above.
-  argv0 = 0;
+  // Make sure argv0 is set to an empty string for wince.
+  // WinCE expects the process name to be set by the call above.
+  argv0 = "";
 #endif
   opts.command_line (cmdline_format,
                      argv0,
