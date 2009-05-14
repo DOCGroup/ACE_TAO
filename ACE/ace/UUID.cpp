@@ -27,18 +27,10 @@ namespace ACE_Utils
   // NIL version of the UUID
   const UUID UUID::NIL_UUID;
 
-  void UUID::init (void)
+  UUID::UUID (const ACE_CString& uuid_string)
   {
-    // Zero the contents of the UUID. We do not have to worry about the
-    // node ID in the case since its constructor will zero its contents.
-    ACE_OS::memset (&this->uuid_, 0, BINARY_SIZE);
-  }
-
-  UUID::UUID (const UUID &right)
-    : thr_id_ (right.thr_id_),
-      pid_ (right.pid_)
-  {
-    ACE_OS::memcpy (&this->uuid_, &right.uuid_, BINARY_SIZE);
+    this->init ();
+    this->from_string_i (uuid_string);
   }
 
   const UUID &
@@ -64,12 +56,6 @@ namespace ACE_Utils
     this->pid_ = rhs.pid_;
 
     return *this;
-  }
-
-  unsigned long UUID::hash (void) const
-  {
-    return ACE::hash_pjw (reinterpret_cast <const char *> (&this->uuid_),
-                          UUID::BINARY_SIZE);
   }
 
   const ACE_CString * UUID::to_string (void) const
@@ -307,15 +293,16 @@ namespace ACE_Utils
       }
   }
 
-  UUID_Generator::UUID_Generator ()
+  UUID_Generator::UUID_Generator (void)
     : time_last_ (0),
-      destroy_lock_ (true)
+      destroy_lock_ (true),
+      is_init_ (false)
   {
-    ACE_NEW (lock_,
-             ACE_SYNCH_MUTEX);
+    ACE_NEW (lock_, ACE_SYNCH_MUTEX);
+    this->init ();
   }
 
-  UUID_Generator::~UUID_Generator ()
+  UUID_Generator::~UUID_Generator (void)
   {
     if (destroy_lock_)
       delete lock_;
@@ -324,6 +311,9 @@ namespace ACE_Utils
   void
   UUID_Generator::init (void)
   {
+    if (this->is_init_)
+      return;
+
     ACE_OS::macaddr_node_t macaddress;
     int result = ACE_OS::getmacaddress (&macaddress);
 
@@ -355,6 +345,8 @@ namespace ACE_Utils
                       node_id,
                       UUID_Node::NODE_ID_SIZE);
     }
+
+    this->is_init_ = true;
   }
 
   void
