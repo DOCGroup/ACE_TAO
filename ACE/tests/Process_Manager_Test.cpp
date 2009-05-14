@@ -86,7 +86,9 @@ spawn_child (const ACE_TCHAR *argv0,
              int my_process_id)
 {
 
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WINCE)
+const ACE_TCHAR *cmdline_format = ACE_TEXT("%s %d");
+#elif defined (ACE_WIN32)
 const ACE_TCHAR *cmdline_format = ACE_TEXT("\"%s\" %s %d");
 #elif !defined (ACE_USES_WCHAR)
 const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%s %s %d");
@@ -141,15 +143,16 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
 #endif
 
   opts.process_name (argv0);
-#if defined (ACE_HAS_WINCE)
-  // Make sure argv0 is set to an empty string for wince.
-  // WinCE expects the process name to be set by the call above.
-  argv0 = ACE_TEXT("");
-#endif
   opts.command_line (cmdline_format,
+#if !defined (ACE_HAS_WINCE)
                      argv0,
+#endif /* !ACE_HAS_WINCE */
                      cmd,
                      sleep_time);
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Spawning <%s> <%s>\n"),
+                        opts.process_name(),
+                        opts.command_line_buf ()));
 
   pid_t result = mgr.spawn (opts);
 
