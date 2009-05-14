@@ -506,7 +506,7 @@
 #  define ACE_DLL_SUFFIX ACE_TEXT (".dll")
 #  if !defined (ACE_DLL_PREFIX)
 #    define ACE_DLL_PREFIX ACE_TEXT ("")
-#  #endif /* !ACE_DLL_PREFIX */
+#  endif /* !ACE_DLL_PREFIX */
 #else /* !ACE_WIN32 */
 #  if !defined (ACE_LD_SEARCH_PATH)
 #    define ACE_LD_SEARCH_PATH ACE_TEXT ("LD_LIBRARY_PATH")
