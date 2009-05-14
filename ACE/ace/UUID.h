@@ -195,9 +195,14 @@ namespace ACE_Utils
 
     enum {ACE_UUID_CLOCK_SEQ_MASK = 0x3FFF};
 
-    UUID_Generator();
+    /// Default constructor.
+    UUID_Generator(void);
+
+    /// Destructor.
     ~UUID_Generator();
 
+    /// Initialize the UUID generator
+    /// @deprecated This method may go away in some future release.
     void init (void);
 
     /// Format timestamp, clockseq, and nodeID into an UUID of the
@@ -218,11 +223,9 @@ namespace ACE_Utils
     ACE_SYNCH_MUTEX* lock (void);
 
     /// Set a new locking strategy and return the old one.
-    void lock (ACE_SYNCH_MUTEX* lock,
-               bool release_lock);
+    void lock (ACE_SYNCH_MUTEX* lock, bool release_lock);
 
   private:
-
     /// The system time when that last uuid was generated.
     UUID_Time time_last_;
 
@@ -247,18 +250,23 @@ namespace ACE_Utils
 
     /// Obtain the system time in UTC as a count of 100 nanosecond intervals
     /// since 00:00:00.00, 15 October 1582 (the date of Gregorian reform to
-  /// the Christian calendar).
+    /// the Christian calendar).
     void get_systemtime( UUID_Time& timeNow);
 
     /// The UUID generator persistent state.
     UUID_State uuid_state_;
 
     ACE_SYNCH_MUTEX* lock_;
+
     bool destroy_lock_;
+
+    /// Initalization state of the generator.
+    bool is_init_;
   };
 
-  typedef ACE_Singleton<UUID_Generator, ACE_SYNCH_MUTEX> UUID_GENERATOR;
+  typedef ACE_Singleton <UUID_Generator, ACE_SYNCH_MUTEX> UUID_GENERATOR;
 
+  ACE_SINGLETON_DECLARE (ACE_Singleton, UUID_Generator, ACE_SYNCH_MUTEX);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -25,16 +25,30 @@ namespace ACE_Utils
   }
 
   ACE_INLINE
-  UUID::UUID (const ACE_CString& uuid_string)
+  UUID::UUID (const UUID &right)
+    : thr_id_ (right.thr_id_),
+      pid_ (right.pid_)
   {
-    this->init ();
-    this->from_string_i (uuid_string);
+    ACE_OS::memcpy (&this->uuid_, &right.uuid_, BINARY_SIZE);
   }
 
   ACE_INLINE
   UUID::~UUID (void)
   {
 
+  }
+
+  ACE_INLINE void
+  UUID::init (void)
+  {
+    ACE_OS::memset (&this->uuid_, 0, BINARY_SIZE);
+  }
+
+  ACE_INLINE unsigned long
+  UUID::hash (void) const
+  {
+    return ACE::hash_pjw (reinterpret_cast <const char *> (&this->uuid_),
+                          UUID::BINARY_SIZE);
   }
 
   ACE_INLINE ACE_UINT32
