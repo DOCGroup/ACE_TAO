@@ -140,6 +140,7 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
   prio[0] = ACE_TEXT ('\0');
 #endif
 
+  opts.process_name (argv0);
   opts.command_line (cmdline_format,
                      argv0,
                      cmd,
