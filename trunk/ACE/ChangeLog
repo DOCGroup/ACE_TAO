@@ -1,9 +1,22 @@
+Thu May 14 19:39:58 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * bin/MakeProjectCreator/config/ace_fl.mpb:
+        * bin/MakeProjectCreator/config/ace_gl.mpb:
+        * bin/MakeProjectCreator/config/ace_mc.mpb:
+        * bin/MakeProjectCreator/config/ace_qt.mpb:
+        * bin/MakeProjectCreator/config/ace_x11.mpb:
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/crosscompile.mpb:
+
+          Replaced: specific(nmake, vc71, vc8, vc9, vc10)
+          With: specific(prop:microsoft)
+
 Thu May 14 18:27:53 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * ace/UUID.h:
         * ace/UUID.cpp:
-          
-          Fixed compilation errors related to namespace issues when 
+
+          Fixed compilation errors related to namespace issues when
           declaring the UUID_Generator singleton.
 
 Thu May 14 10:18:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
