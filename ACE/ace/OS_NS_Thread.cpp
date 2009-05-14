@@ -117,17 +117,15 @@ ACE_OS_thread_key_t ACE_TSS_Emulation::native_tss_key_;
 #    if defined (ACE_HAS_THR_C_FUNC)
 extern "C"
 void
-ACE_TSS_Emulation_cleanup (void *ptr)
+ACE_TSS_Emulation_cleanup (void *)
 {
-   ACE_UNUSED_ARG (ptr);
    // Really this must be used for ACE_TSS_Emulation code to make the TSS
    // cleanup
 }
 #    else
 void
-ACE_TSS_Emulation_cleanup (void *ptr)
+ACE_TSS_Emulation_cleanup (void *)
 {
-   ACE_UNUSED_ARG (ptr);
    // Really this must be used for ACE_TSS_Emulation code to make the TSS
    // cleanup
 }

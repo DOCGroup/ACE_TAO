@@ -504,11 +504,9 @@
 #  define ACE_LD_SEARCH_PATH ACE_TEXT ("PATH")
 #  define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_TEXT (";")
 #  define ACE_DLL_SUFFIX ACE_TEXT (".dll")
-#  if defined (__MINGW32__)
-#    define ACE_DLL_PREFIX ACE_TEXT ("lib")
-#  else /* __MINGW32__ */
+#  if !defined (ACE_DLL_PREFIX)
 #    define ACE_DLL_PREFIX ACE_TEXT ("")
-#  endif /* __MINGW32__ */
+#  #endif /* !ACE_DLL_PREFIX */
 #else /* !ACE_WIN32 */
 #  if !defined (ACE_LD_SEARCH_PATH)
 #    define ACE_LD_SEARCH_PATH ACE_TEXT ("LD_LIBRARY_PATH")

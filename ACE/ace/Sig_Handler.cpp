@@ -148,8 +148,7 @@ ACE_Sig_Handler::register_handler_i (int signum,
   if (ACE_Sig_Handler::in_range (signum))
     {
       ACE_Sig_Action sa; // Define a "null" action.
-      ACE_Event_Handler *sh = ACE_Sig_Handler::handler_i (signum,
-                                                          new_sh);
+      ACE_Event_Handler *sh = ACE_Sig_Handler::handler_i (signum, new_sh);
 
       // Return a pointer to the old <ACE_Sig_Handler> if the user
       // asks for this.

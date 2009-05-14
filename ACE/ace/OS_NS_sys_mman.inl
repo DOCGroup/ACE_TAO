@@ -93,7 +93,7 @@ ACE_OS::mmap (void *addr,
     {
       SECURITY_ATTRIBUTES sa_buffer;
       SECURITY_DESCRIPTOR sd_buffer;
-      const LPSECURITY_ATTRIBUTES attr =
+      LPSECURITY_ATTRIBUTES const attr =
         ACE_OS::default_win32_security_attributes_r (sa,
                                                      &sa_buffer,
                                                      &sd_buffer);
