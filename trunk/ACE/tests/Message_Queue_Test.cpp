@@ -136,7 +136,7 @@ Counting_Test_Producer::svc (void)
               seq,
               delay_ms));
 
-  ACE_Message_Block *first, *prev, *b;
+  ACE_Message_Block *first = 0, *prev = 0, *b = 0;
   ACE_Time_Value delay (0, delay_ms);
   ACE_Time_Value timeout (10);
   while (produced < count)
@@ -338,7 +338,7 @@ iterator_test (void)
                        ACE_TEXT ("%d"),
                        i + 1);
 
-      ACE_Message_Block *entry;
+      ACE_Message_Block *entry = 0;
       ACE_NEW_RETURN (entry,
                       ACE_Message_Block ((char *) buffer[i],
                                          sizeof buffer[i]),
@@ -563,7 +563,7 @@ single_thread_performance_test (int queue_type = 0)
   // Set up blocks to receive the messages.  Allocate these off the
   // heap in case messages is large relative to the amount of
   // stack space available.
-  ACE_Message_Block *receive_block;
+  ACE_Message_Block *receive_block = 0;
   ACE_NEW_RETURN (receive_block,
                   ACE_Message_Block[max_messages],
                   -1);
