@@ -1,3 +1,11 @@
+Thu May 14 18:27:53 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ace/UUID.h:
+        * ace/UUID.cpp:
+          
+          Fixed compilation errors related to namespace issues when 
+          declaring the UUID_Generator singleton.
+
 Thu May 14 10:18:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Process_Manager_Test.cpp:

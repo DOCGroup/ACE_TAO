@@ -479,7 +479,7 @@ namespace ACE_Utils
     now.to_usec (time);
     time = time * 10;
     timestamp = time + timeOffset;
-}
+  }
 
   ACE_SYNCH_MUTEX*
   UUID_Generator::lock (void)
@@ -488,8 +488,7 @@ namespace ACE_Utils
   }
 
   void
-  UUID_Generator::lock (ACE_SYNCH_MUTEX* lock,
-                        bool release_lock)
+  UUID_Generator::lock (ACE_SYNCH_MUTEX* lock, bool release_lock)
   {
     if (this->destroy_lock_)
       delete this->lock_;
@@ -497,12 +496,11 @@ namespace ACE_Utils
     this->lock_ = lock;
     this->destroy_lock_ = release_lock;
   }
-
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX> *
-  ACE_Singleton<ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>::singleton_;
+  template ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX> *
+  ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
