@@ -1,9 +1,16 @@
+Thu May 14 19:12:56 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * MPC/config/cidlc.mpb:
+
+          Replaced: specific(nmake, vc71, vc8, vc9, vc10)
+          With: specific(prop:microsoft)
+
 Tue May 12 19:04:31 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
 
-          Compile fix. 
-        
+          Compile fix.
+
 Fri May  8 16:30:19 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/ADD_Handler.cpp:
