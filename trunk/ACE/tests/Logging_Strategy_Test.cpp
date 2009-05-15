@@ -436,9 +436,6 @@ int run_main (int argc, ACE_TCHAR *argv [])
   // previous ofstream is closed only at the end (ACE_END_TEST)
   ACE_CLOSE_TEST_LOG;
 
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Closed test log\n")));
-
   // When Dlls are used, we utilize the dynamic service configuration
   // mechanism to activate the logging strategy. This is not a must
   // though, and you may activate the logging strategy as described in
