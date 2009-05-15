@@ -119,9 +119,12 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 
   if (this->notify_service_ == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Service not found. Check service ")
-                  ACE_TEXT ("configurator file.\n")));
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Service not found. Check service ")
+                      ACE_TEXT ("configurator file.\n")));
+        }
       return -1;
     }
 
@@ -143,9 +146,12 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 
   if (this->nthreads_ > 0) // we have chosen to run in a thread pool.
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("Running %d ORB threads\n"),
-                  this->nthreads_));
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("Running %d ORB threads\n"),
+                      this->nthreads_));
+        }
       worker_.orb (this->orb_.in ());
 
       // Task activation flags.
@@ -160,8 +166,10 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 
       if (worker_.activate (flags,
                             this->nthreads_, 0, priority) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate client threads\n"), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate client threads\n"), -1);
+        }
     }
 
   // Check first if the naming service
@@ -174,8 +182,11 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
         return -1;
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("\nStarting up the Notification Service...\n")));
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("\nStarting up the Notification Service...\n")));
+    }
 
   // Activate the factory
   this->notify_factory_ =
@@ -194,8 +205,11 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (adapter.in ()))
         {
-          ACE_ERROR ((LM_ERROR,
-                      "Nil IORTable. corbaloc support not enabled.\n"));
+          if (TAO_debug_level > 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "Nil IORTable. corbaloc support not enabled.\n"));
+            }
         }
       else
         {
@@ -216,9 +230,12 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
       this->naming_->rebind (name.in (),
                              this->notify_factory_.in ());
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Registered with the naming service as: %C\n",
-                  this->notify_factory_name_.c_str()));
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Registered with the naming service as: %C\n",
+                      this->notify_factory_name_.c_str()));
+        }
 
       if (this->register_event_channel_)
         {
@@ -258,10 +275,13 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 
               this->naming_->rebind (name.in (), ec.in ());
 
-              ACE_DEBUG ((LM_DEBUG,
-                          "Registered an Event Channel with the naming "
-                          "service as: %C\n",
-                          (*ci).c_str()));
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Registered an Event Channel with the naming "
+                              "service as: %C\n",
+                              (*ci).c_str()));
+                }
             }
         }
     }
@@ -405,18 +425,24 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
           (ACE_OS::strcmp(ACE_TEXT ("0"), current_arg) == 0 ||
            ACE_OS::strcmp(ACE_TEXT ("1"), current_arg) == 0))
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Using separate dispatching ORB\n")));
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Using separate dispatching ORB\n")));
+            }
           this->separate_dispatching_orb_ =
                         static_cast<bool> (ACE_OS::atoi(current_arg));
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("WARNING: Unrecognized ")
-                      ACE_TEXT ("argument (%s) to ")
-                      ACE_TEXT ("-UseSeparateDispatchingORB.\n"),
-                      (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("WARNING: Unrecognized ")
+                          ACE_TEXT ("argument (%s) to ")
+                          ACE_TEXT ("-UseSeparateDispatchingORB.\n"),
+                          (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+            }
         }
       if (current_arg != 0)
         arg_shifter.consume_arg ();
@@ -461,9 +487,12 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Notify_TPReactor"))))
         {
-          ACE_DEBUG((LM_DEBUG,
-                     ACE_TEXT ("-Notify_TPReactor option is deprecated, ")
-                     ACE_TEXT ("use -RunThreads option\n")));
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG((LM_DEBUG,
+                         ACE_TEXT ("-Notify_TPReactor option is deprecated, ")
+                         ACE_TEXT ("use -RunThreads option\n")));
+            }
 
           this->nthreads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -479,9 +508,12 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
           this->timeout_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
 #else
-          ACE_DEBUG((LM_DEBUG,
-                     ACE_TEXT ("WARNING: CORBA Messaging has been disabled.")
-                     ACE_TExT ("The timeout will not be applied.\n")));
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG((LM_DEBUG,
+                         ACE_TEXT ("WARNING: CORBA Messaging has been disabled.")
+                         ACE_TExT ("The timeout will not be applied.\n")));
+            }
 #endif /* TAO_HAS_CORBA_MESSAGING != 0 */
         }
       else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-LoggingInterval"))))
@@ -534,11 +566,14 @@ LoggingWorker::start ()
   else
     {
       if (this->activate (THR_NEW_LWP | THR_JOINABLE, 1) == -1)
-      {
-         ACE_DEBUG ((LM_DEBUG,
-                     ACE_TEXT ("(%P|%t) Can not activate the ")
-                     ACE_TEXT ("logging event thread\n")));
-      }
+        {
+          if (TAO_debug_level > 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Can not activate the ")
+                         ACE_TEXT ("logging event thread\n")));
+            }
+        }
       else {
         if (this->ns_->logging_interval_ > ACE_Time_Value::zero)
         {
@@ -559,8 +594,11 @@ LoggingWorker::start ()
 int
 LoggingWorker::svc (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t)Running logging reactor \n")));
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t)Running logging reactor \n")));
+    }
   started_ = true;
   this->logging_reactor_.run_event_loop();
 
@@ -603,15 +641,21 @@ Worker::svc (void)
   int priority;
   if (ACE_Thread::getprio (current, priority) == -1)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Failed to get ")
-                  ACE_TEXT ("Worker thread priority\n")));
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) - Failed to get ")
+                      ACE_TEXT ("Worker thread priority\n")));
+        }
       return -1;
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Activated Worker Thread to run ")
-              ACE_TEXT ("the ORB @ priority:%d\n", priority));
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Activated Worker Thread to run ")
+                  ACE_TEXT ("the ORB @ priority:%d\n", priority));
+    }
 #endif
 
   try

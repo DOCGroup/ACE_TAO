@@ -8,6 +8,7 @@ ACE_RCSID(Hello, client, "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://shutdown.ior");
 bool shutdown_nsmain = false;
+int test_count = 10;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -67,31 +68,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       name[3].id   = CORBA::string_dup("memory");
       name[3].kind = CORBA::string_dup("");
 
-      try
+      for (int i = 0; i < test_count; i++)
         {
-          tmp = root->resolve (name);
-          ACE_DEBUG ((LM_INFO, "**** Resolved #example/Hello\n"));
-
-          Test::Hello_var hello =
-            Test::Hello::_narrow(tmp.in ());
-
-          if (CORBA::is_nil (hello.in ()))
+          try
             {
+              tmp = root->resolve (name);
+              ACE_DEBUG ((LM_INFO, "**** Resolved #example/Hello\n"));
+
+              Test::Hello_var hello =
+                Test::Hello::_narrow(tmp.in ());
+
               ACE_ERROR_RETURN ((LM_DEBUG,
                                  "Nil Test::Hello reference\n"),
-                                1);
+                                 1);
             }
-
-          CORBA::String_var the_string = hello->get_string ();
-
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
-                      the_string.in ()));
-
-          hello->shutdown ();
-        }
-      catch (const CosNaming::NamingContext::NotFound&)
-        {
-          ACE_DEBUG ((LM_DEBUG, "Caught correct exception\n"));
+          catch (const CosNaming::NamingContext::NotFound&)
+            {
+              ACE_DEBUG ((LM_DEBUG, "Caught correct exception\n"));
+            }
         }
 
       if (shutdown_nsmain)
