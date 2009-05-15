@@ -1,3 +1,9 @@
+Fri May 15 08:10:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Bug_3674_Regression/test.cpp:
+
+          Fixed Fuzz error (MS_VER_ 1200)
+
 Wed May 13 19:44:04 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Strategies/DIOP_Acceptor.cpp:
