@@ -1,3 +1,9 @@
+Fri May 15 12:50:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Bug_3674_Regression/test.cpp:
+
+          Removed unused parameter warnings.
+
 Fri May 15 11:50:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2800_Regression/NamingTask.cpp:
