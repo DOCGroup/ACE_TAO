@@ -1,3 +1,9 @@
+Fri May 15 11:50:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2800_Regression/NamingTask.cpp:
+        * orbsvcs/tests/Bug_3673_Regression/NamingTask.cpp:
+          Fixed memory leaks
+
 Fri May 15 10:50:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
