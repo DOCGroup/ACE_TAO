@@ -13,9 +13,7 @@ ACE_RCSID (PICurrent,
            "test.cpp,v 1.7 2003/11/01 11:15:11 dhinton Exp")
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -276,7 +274,7 @@ namespace
     };
 }
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
