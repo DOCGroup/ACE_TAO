@@ -1,3 +1,36 @@
+Fri May 15 07:10:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Logging_Strategy_Test.cpp:
+          Added debug statement to assist in analyzing the cegcc failure
+
+Thu May 14 12:06:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Default_Constants.h:
+          Only define ACE_DLL_PREFIX when it has not been defined yet,
+          that way the mingw specific define can move to the mingw config
+          file
+
+        * ace/config-win32-mingw.h:
+          Define ACE_DLL_PREFIX here
+
+        * ace/OS_NS_dlfcn.inl:
+          Initialise pointer with 0
+
+        * ace/OS_NS_sys_mman.inl:
+          Const change
+
+        * ace/OS_NS_Thread.cpp:
+          Removed some not needed ACE_UNUSED_ARG
+
+        * ace/OS_Thread_Adapter.h:
+        * ace/Process.cpp:
+        * ace/Sig_Handler.cpp:
+        * ace/Thread_Manager.inl:
+          Layout change
+
+        * ace/Thread_Manager.cpp:
+          Const change, initialise pointer with 0
+
 Thu May 14 19:39:58 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
         * bin/MakeProjectCreator/config/ace_fl.mpb:
