@@ -70,35 +70,35 @@ namespace
     virtual void destroy () {}
 
     virtual void send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri)
+      PortableInterceptor::ClientRequestInfo_ptr)
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". CLIENT Interception, send_request\n"));
       }
 
     virtual void send_poll (
-      PortableInterceptor::ClientRequestInfo_ptr ri)
+      PortableInterceptor::ClientRequestInfo_ptr)
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". CLIENT Interception, send_poll\n"));
       }
 
     virtual void receive_reply (
-      PortableInterceptor::ClientRequestInfo_ptr ri)
+      PortableInterceptor::ClientRequestInfo_ptr)
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". CLIENT Interception, receive_reply\n"));
       }
 
     virtual void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr ri)
+      PortableInterceptor::ClientRequestInfo_ptr)
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". CLIENT Interception, receive_exception\n"));
       }
 
     virtual void receive_other (
-      PortableInterceptor::ClientRequestInfo_ptr ri)
+      PortableInterceptor::ClientRequestInfo_ptr)
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". CLIENT Interception, receive_other\n"));
@@ -126,8 +126,8 @@ namespace
 
     #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
       virtual void tao_ft_interception_point (
-          PortableInterceptor::ServerRequestInfo_ptr ri,
-          CORBA::OctetSeq_out ocs)
+          PortableInterceptor::ServerRequestInfo_ptr,
+          CORBA::OctetSeq_out)
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". SERVER Interception, tao_ft_interception_point\n"));
@@ -135,35 +135,35 @@ namespace
     #endif // TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
 
       virtual void receive_request_service_contexts (
-          PortableInterceptor::ServerRequestInfo_ptr ri)
+          PortableInterceptor::ServerRequestInfo_ptr)
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". SERVER Interception, receive_request_service_contexts\n"));
       }
 
       virtual void receive_request (
-          PortableInterceptor::ServerRequestInfo_ptr ri)
+          PortableInterceptor::ServerRequestInfo_ptr)
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". SERVER Interception, receive_request\n"));
       }
 
       virtual void send_reply (
-          PortableInterceptor::ServerRequestInfo_ptr ri)
+          PortableInterceptor::ServerRequestInfo_ptr)
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". SERVER Interception, send_reply\n"));
       }
 
       virtual void send_exception (
-          PortableInterceptor::ServerRequestInfo_ptr ri)
+          PortableInterceptor::ServerRequestInfo_ptr)
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". SERVER Interception, send_exception\n"));
       }
 
       virtual void send_other (
-          PortableInterceptor::ServerRequestInfo_ptr ri)
+          PortableInterceptor::ServerRequestInfo_ptr)
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". SERVER Interception, send_other\n"));
@@ -181,7 +181,7 @@ namespace
       ~MyORBInitializer() {slot_id= 2093843221;} // Invalidate slot
       /// The pre-initialization hook.
       virtual void pre_init (
-        PortableInterceptor::ORBInitInfo_ptr /*info*/ )
+        PortableInterceptor::ORBInitInfo_ptr)
       {}
 
       /// The post-initialization hook.
