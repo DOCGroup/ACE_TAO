@@ -1,3 +1,9 @@
+Fri May 15 12:36:35 UTC 2009  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ace/UUID.h:
+
+          Removed the unnecessary semicolon.
+
 Fri May 15 07:10:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Logging_Strategy_Test.cpp:
