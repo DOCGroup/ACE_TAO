@@ -26,18 +26,16 @@ versioned_so=0
 # See https://sourceforge.net/tracker/?func=detail&atid=102435&aid=683455&group_id=2435
 # for the details why to do this.
 LDFLAGS += -Wl,--enable-auto-import
-CPPFLAGS += -DACE_HAS_CEGCC
+CPPFLAGS += -DACE_HAS_CEGCC 
 
 cpumodelflag=0
 tunemodelflag=0
 
-#COMPARCH ?= i386-mingw32ce-
-COMPARCH ?= arm-wince-mingw32ce-
+COMPARCH ?= i386-mingw32ce-
+#COMPARCH ?= arm-wince-mingw32ce-
 
 LIBS += -lcoredll -lmingw32 -lmingwex -lws2 -lsupc++ -liphlpapi
 
 no_hidden_visibility ?= 1
-
-LIB_PREFIX =
 
 include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU
