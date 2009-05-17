@@ -518,11 +518,7 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
                                              KEY_ALL_ACCESS,
                                              0,
                                              &result_key,
-#if defined (__MINGW32__)
                                              (PDWORD) 0
-#else
-                                             0
-#endif /* __MINGW32__ */
                                              )) != ERROR_SUCCESS)
         {
           errno = errnum;
@@ -1049,11 +1045,7 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
                                                             KEY_ALL_ACCESS,
                                                             0,
                                                             &subkey,
-#if defined (__MINGW32__)
                                                             (PDWORD) 0
-#else
-                                                            0
-#endif /* __MINGW32__ */
                                                             )) !=ERROR_SUCCESS)
             {
               errno = errnum;
