@@ -106,14 +106,11 @@
 
 #define ACE_INT64_FORMAT_SPECIFIER_ASCII "%I64d"
 #define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%I64u"
-
-#if defined (_WIN32_WCE)
-#  define ACE_ENDTHREADEX(STATUS) ExitThread ((DWORD) STATUS)
-#else
-#  define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
-#endif /* _WIN32_WCE */
+#define ACE_ENDTHREADEX(STATUS) ExitThread ((DWORD) STATUS)
 
 #undef ACE_HAS_CUSTOM_EXPORT_MACROS
+
+#define ACE_DLL_PREFIX ACE_TEXT ("lib")
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_CEGCC_H */

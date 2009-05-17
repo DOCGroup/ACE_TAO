@@ -1,3 +1,17 @@
+Sun May 17 10:34:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-cegcc.h:
+          Use lib prefix, the gcc toolchain expects it
+
+        * ace/Future.cpp:
+          Layout changes
+
+        * include/makeinclude/platform_cegcc.GNU:
+          Just use the default lib prefix
+
+        * ace/Configuration.cpp:
+          Removed mingw check, that code also works with other compilers
+
 Sat May 16 18:03:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/OS/Process/imore.cpp:
