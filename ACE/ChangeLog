@@ -1,3 +1,9 @@
+Mon May 18 17:11:28 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/UUID.cpp: Reverted:
+          Mon May 18 15:33:17 UTC 2009  Steve Huston  <shuston@riverace.com>
+          It breaks g++ builds. Working on another solution...
+
 Mon May 18 15:33:17 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/UUID.cpp: Add explicit instantiation of UUID_Generator singleton.
