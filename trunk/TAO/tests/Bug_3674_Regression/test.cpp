@@ -56,7 +56,7 @@ namespace
   // registered for the use of PICurrent to make sense in the application.
   struct ClientRequestInterceptor
     : public virtual PortableInterceptor::ClientRequestInterceptor,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual CORBA::LocalObject
   {
     /// Constructor.
     ClientRequestInterceptor () {}
@@ -111,7 +111,7 @@ namespace
   // registered for the use of PICurrent to make sense in the application.
   struct ServerRequestInterceptor
     : public virtual PortableInterceptor::ServerRequestInterceptor,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual CORBA::LocalObject
     {
       /// Constructor.
       ServerRequestInterceptor () {}
@@ -175,7 +175,7 @@ namespace
   // for this test.
   class MyORBInitializer :
     public virtual PortableInterceptor::ORBInitializer,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual CORBA::LocalObject
     {
     public:
       ~MyORBInitializer() {slot_id= 2093843221;} // Invalidate slot
