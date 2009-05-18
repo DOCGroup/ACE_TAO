@@ -1,3 +1,14 @@
+Mon May 18 08:26:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Countdown_Time.cpp
+        * ace/Countdown_Time.h
+        * ace/Countdown_Time.inl
+        * ace/Makefile.am:
+          Added inline file for Countdown_Time
+
+        * ace/os_include/sys/os_time.h:
+          Removed workaround for deprecated sco
+
 Mon May 18 07:48:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Condition_Recursive_Thread_Mutex.cpp:
