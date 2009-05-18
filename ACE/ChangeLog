@@ -1,3 +1,9 @@
+Mon May 18 14:44:27 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * bin/fuzz.pl:
+
+          Added and enabled check_for_TAO_Local_RefCounted_Object.
+
 Mon May 18 10:11:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/High_Res_Timer.cpp:
