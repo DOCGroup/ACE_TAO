@@ -498,6 +498,9 @@ namespace ACE_Utils
   }
 }
 
+// Force instantiation here, else the code won't be generated for AIX.
+template class ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>;
+
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
   template ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX> *
   ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>::singleton_;
