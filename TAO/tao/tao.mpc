@@ -233,6 +233,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Remote_Object_Proxy_Broker.cpp
     Reply_Dispatcher.cpp
     Request_Dispatcher.cpp
+    RequestInterceptor_Adapter.cpp
     Resource_Factory.cpp
     Resume_Handle.cpp
     Server_Strategy_Factory.cpp
@@ -531,6 +532,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Remote_Object_Proxy_Broker.h
     Reply_Dispatcher.h
     Request_Dispatcher.h
+    RequestInterceptor_Adapter.h
     Resource_Factory.h
     Resume_Handle.h
     Seq_Out_T.h
