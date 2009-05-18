@@ -1,10 +1,31 @@
+Mon May 18 13:38:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
+
+        * bin/tao_orb_tests.lst:
+        * tao/RequestInterceptor_Adapter.h:
+        * tao/RequestInterceptor_Adapter.cpp:
+        * tao/tao.mpc:
+        * tao/Invocation_Base.h:
+        * tao/Invocation_Base.cpp:
+        * tao/ClientRequestInterceptor_Adapter.h:
+        * tao/PI_Server/ServerInterceptorAdapter.h:
+        * tao/PI/RequestInterceptor_Adapter_Impl.cpp:
+        * tao/PI/RequestInterceptor_Adapter_Impl.h:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.h:
+        * tao/PI/PICurrent_Impl.h:
+        * tao/PI/PICurrent.cpp:
+        * tao/PI/PICurrent_Impl.cpp:
+        * tao/PI/PICurrent_Impl.inl:
+        * tao/ServerRequestInterceptor_Adapter.h:
+
+          Bugzilla 3674 Fix.
+
 Mon May 18 10:39:46 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Bug_3676_Regression/Hello.mpc:
 
           Renamed MPC file to Bug_3676_Regression.mpc.
 
-Tue May 18 09:15:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
+Mon May 18 09:15:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
 
         * tests/Bug_3674_Regression/test.cpp:
 
