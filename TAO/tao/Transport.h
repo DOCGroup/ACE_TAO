@@ -775,8 +775,8 @@ public:
   /// Return true if the tcs has been set
   CORBA::Boolean is_tcs_set() const;
 
-  /// Set the state of the first_request_ flag to false
-  void first_request_sent();
+  /// Set the state of the first_request_ to flag.
+  void first_request_sent (bool flag = false);
 
   /// Get the first request flag
   bool first_request () const;
