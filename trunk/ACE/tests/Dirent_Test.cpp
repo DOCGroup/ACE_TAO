@@ -249,6 +249,8 @@ dirent_count (const ACE_TCHAR *dir_path,
                        dir_path),
                       -1);
 # endif
+#else
+  ACE_UNUSED_ARG (dir_path);
 #endif /* !ACE_LACKS_CHDIR */
 
   ACE_Dirent dir;
