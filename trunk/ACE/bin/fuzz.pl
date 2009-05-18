@@ -1842,6 +1842,35 @@ sub check_for_refcountservantbase ()
     }
 }
 
+sub check_for_TAO_Local_RefCounted_Object ()
+{
+    print "Running TAO_Local_RefCounted_Object check\n";
+
+    ITERATION: foreach $file (@files_h, @files_cpp, @files_inl) {
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                if (/FUZZ\: disable check_for_TAO_Local_RefCounted_Object/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_TAO_Local_RefCounted_Object/) {
+                    $disable = 0;
+                    next ITERATION;
+                }
+
+                if ($disable == 0 and /TAO_Local_RefCounted_Object/) {
+                  print_error ("$file:$.: TAO_Local_RefCounted_Object is deprecated, use CORBA::LocalObject instead");
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 # This test checks for the correct use of ORB_init() so as
 # to be compatiable with wide character builds.
 sub check_for_ORB_init ()
@@ -1975,6 +2004,7 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
            check_for_non_bool_operators
            check_for_long_file_names
            check_for_refcountservantbase
+           check_for_TAO_Local_RefCounted_Object
            check_for_ORB_init\n";
     exit (1);
 }
@@ -2040,6 +2070,7 @@ check_for_include () if ($opt_l >= 5);
 check_for_non_bool_operators () if ($opt_l > 2);
 check_for_long_file_names () if ($opt_l > 1 );
 check_for_improper_main_declaration ();
+check_for_TAO_Local_RefCounted_Object ();
 check_for_ORB_init ();
 
 print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
