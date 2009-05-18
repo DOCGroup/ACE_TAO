@@ -1,3 +1,13 @@
+Mon May 18 10:11:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/High_Res_Timer.cpp:
+        * ace/High_Res_Timer.inl:
+          Const changes
+
+        * ace/Token.h:
+          When not defined ACE_USES_WINCE_SEMA_SIMULATION use the
+          semaphore implementation
+
 Mon May 18 08:26:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Countdown_Time.cpp
