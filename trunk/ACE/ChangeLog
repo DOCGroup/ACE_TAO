@@ -1,3 +1,8 @@
+Mon May 18 15:33:17 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/UUID.cpp: Add explicit instantiation of UUID_Generator singleton.
+          Ensures the code is compiled; resolves missing extern sym on AIX.
+
 Mon May 18 14:44:27 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
         * bin/fuzz.pl:
