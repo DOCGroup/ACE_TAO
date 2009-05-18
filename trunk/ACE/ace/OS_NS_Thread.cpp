@@ -1150,7 +1150,7 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
   // This is needed to ensure that <waiters_> and <was_broadcast_> are
   // consistent relative to each other.
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
-  int have_waiters = 0;
+  bool have_waiters = false;
 
   if (cv->waiters_ > 0)
     {
@@ -1159,7 +1159,7 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
       // cond_wait() method know how to optimize itself.  Be sure to
       // set this with the <waiters_lock_> held.
       cv->was_broadcast_ = 1;
-      have_waiters = 1;
+      have_waiters = true;
     }
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
   int result = 0;
@@ -1297,7 +1297,7 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
   // value is not in an inconsistent internal state while being
   // updated by another thread.
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
-  bool have_waiters = cv->waiters_ > 0;
+  bool const have_waiters = cv->waiters_ > 0;
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   if (have_waiters)

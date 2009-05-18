@@ -1,3 +1,21 @@
+Mon May 18 07:48:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Condition_Recursive_Thread_Mutex.cpp:
+          Const change
+
+        * ace/OS_NS_stdio.{h,inl}:
+          Removed ACE_OS::fileno(), gives problems with CE at this moment
+
+        * ace/Recursive_Thread_Mutex.cpp (get_nesting_level):
+          Disabled again for WinCE, the fact that it compiled is a bug
+          in the CEGCC header files
+
+        * ace/OS_NS_Thread.cpp:
+          Bool changes
+
+        * ace/OS_NS_stdlib.cpp:
+          WinCE has ExitProcess
+
 Mon May 18 06:45:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Recursive_Thread_Mutex.cpp (get_nesting_level):
