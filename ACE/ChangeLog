@@ -1,3 +1,9 @@
+Mon May 18 06:12:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/TP_Reactor/AcceptHandler.cpp:
+        * examples/Reactor/TP_Reactor/server.cpp:
+          Use ACE_ERRNO_GET
+
 Sun May 17 10:34:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-cegcc.h:
