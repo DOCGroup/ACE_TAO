@@ -970,6 +970,12 @@ ACE_OS::vprintf (const wchar_t *format, va_list argptr)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
+ACE_OS::fileno (FILE* fp)
+{
+  return ACE_STD_NAMESPACE::fileno (fp);
+}
+
+ACE_INLINE int
 ACE_OS::vfprintf (FILE *fp, const char *format, va_list argptr)
 {
   return ACE_STD_NAMESPACE::vfprintf (fp, format, argptr);
