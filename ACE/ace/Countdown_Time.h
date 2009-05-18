@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Time_Value.h"
+#include "ace/Copy_Disabled.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -34,7 +35,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * time the stop() method is called the @c max_wait_time is
  * updated.
  */
-class ACE_Export ACE_Countdown_Time
+class ACE_Export ACE_Countdown_Time : private ACE_Copy_Disabled
 {
 public:
   /// Cache the @a max_wait_time and call @c start().
@@ -67,14 +68,14 @@ private:
 
   /// Keeps track of whether we've already been stopped.
   bool stopped_;
-
-  // Prevent copying
-  ACE_Countdown_Time (const ACE_Countdown_Time &);
-  ACE_Countdown_Time &operator= (const ACE_Countdown_Time &);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
+
+#if defined (__ACE_INLINE__)
+#include "ace/Countdown_Time.inl"
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_COUNTDOWN_TIME_H */

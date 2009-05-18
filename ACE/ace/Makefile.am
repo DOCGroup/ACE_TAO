@@ -475,6 +475,7 @@ nobase_include_HEADERS += \
   Containers_T.inl \
   Copy_Disabled.h \
   Countdown_Time.h \
+  Countdown_Time.inl \
   DEV.h \
   DEV.inl \
   DEV_Addr.h \
