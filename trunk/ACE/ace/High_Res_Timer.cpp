@@ -273,14 +273,14 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
        i < iterations;
        ++i)
     {
-      const ACE_Time_Value actual_start =
+      ACE_Time_Value const actual_start =
         ACE_OS::gettimeofday ();
-      const ACE_hrtime_t start =
+      ACE_hrtime_t const start =
         ACE_OS::gethrtime ();
       ACE_OS::sleep (sleep_time);
-      const ACE_hrtime_t stop =
+      ACE_hrtime_t const stop =
         ACE_OS::gethrtime ();
-      const ACE_Time_Value actual_delta =
+      ACE_Time_Value const actual_delta =
         ACE_OS::gettimeofday () - actual_start;
 
       // Store the sample.
