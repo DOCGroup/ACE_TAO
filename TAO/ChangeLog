@@ -1,3 +1,10 @@
+Mon May 18 14:47:24 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * tao/LocalObject.h:
+        * tao/LocalObject.inl:
+
+          Disabled fuzz check_for_TAO_Local_RefCounted_Object.
+
 Mon May 18 14:05:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
 
         * tao/Makefile.am:

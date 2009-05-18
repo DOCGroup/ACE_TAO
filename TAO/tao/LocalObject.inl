@@ -42,11 +42,15 @@ CORBA::LocalObject::LocalObject (void)
 {
 }
 
+//FUZZ: disable check_for_TAO_Local_RefCounted_Object
+
 #if !defined (ACE_LACKS_DEPRECATED_MACROS)
 ACE_INLINE
 TAO_Local_RefCounted_Object::TAO_Local_RefCounted_Object (void)
 {
 }
 #endif
+
+//FUZZ: enable check_for_TAO_Local_RefCounted_Object
 
 TAO_END_VERSIONED_NAMESPACE_DECL
