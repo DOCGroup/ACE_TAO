@@ -1,3 +1,10 @@
+Tue May 18 09:15:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Bug_3674_Regression/test.cpp:
+
+          TAO_Local_RefCounted_Object is deprecated. Changed
+          it to CORBA::LocalObject.
+
 Mon May 18 08:09:16 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tao/Transport.h:
