@@ -1,3 +1,11 @@
+Mon May 18 19:58:35 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-5.x.h: Add explicit instantiation for the
+          ACE_EXPORT_SINGLETON_DECLARE - the compiler needs to be forced to
+          generate the template code even if there's no use of it. Fixes
+          unsats for ACE_Utils::UUID_Generator singleton.
+          Also removed settings for AIX Visual Age, etc. earlier than V6.
+
 Mon May 18 17:11:28 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/UUID.cpp: Reverted:
