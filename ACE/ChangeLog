@@ -1,3 +1,17 @@
+Mon May 18 06:15:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Dirent_Test.cpp:
+          Fixed argument not used warning
+
+        * tests/Based_Pointer_Test.cpp:
+          Improved debug message
+
+        * tests/Config_Test.cpp:
+          Const change
+
+        * tests/Thread_Pool_Reactor_Test.cpp:
+          Fixed rcsid
+
 Mon May 18 06:12:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/TP_Reactor/AcceptHandler.cpp:

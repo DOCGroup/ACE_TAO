@@ -560,7 +560,7 @@ run_tests (void)
 
   ACE_Configuration_Win32Registry RegConfig (root);
   {
-    int result = test (&RegConfig);
+    int const result = test (&RegConfig);
     if (result)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Win32 registry test root failed (%d)\n"),
