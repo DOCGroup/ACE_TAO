@@ -1,3 +1,26 @@
+Mon May 18 08:09:16 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tao/Transport.h:
+        * tao/LocateRequest_Invocation.cpp:
+        * tao/Transport.inl:
+
+          Fixed bug#3676. Now after sending LocateRequest message
+          transport will remain in a state when no first request is
+          send. This is necessary for codeset negotiation which
+          happens in the first normal request.
+
+        * tests/Bug_3676_Regression/client.cpp:
+        * tests/Bug_3676_Regression/Hello.mpc:
+        * tests/Bug_3676_Regression/Hello.cpp:
+        * tests/Bug_3676_Regression/Test.idl:
+        * tests/Bug_3676_Regression/server.cpp:
+        * tests/Bug_3676_Regression/Hello.h:
+        * tests/Bug_3676_Regression/README:
+        * tests/Bug_3676_Regression/run_test.pl:
+        * bin/tao_orb_tests.lst:
+
+          Added a regression test and scheduled it for run.
+
 Fri May 15 12:50:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
 
         * tests/Bug_3674_Regression/test.cpp:
