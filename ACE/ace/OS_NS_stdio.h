@@ -412,9 +412,6 @@ namespace ACE_OS {
   long ftell (FILE* fp);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int fileno (FILE* fp);
-
-  ACE_NAMESPACE_INLINE_FUNCTION
   size_t fwrite (const void *ptr,
                  size_t size,
                  size_t nitems,

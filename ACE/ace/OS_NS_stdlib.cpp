@@ -61,17 +61,11 @@ ACE_OS::exit (int status)
     (*exit_hook_) ();
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
-#if !defined (ACE_HAS_WINCE)
-# if defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   ::ExitProcess ((UINT) status);
-# else
-  ::exit (status);
-# endif /* ACE_WIN32 */
 #else
-  // @@ This is not exactly the same as ExitProcess.  But this is the
-  // closest one I can get.
-  ::TerminateProcess (::GetCurrentProcess (), status);
-#endif /* ACE_HAS_WINCE */
+  ::exit (status);
+#endif /* ACE_WIN32 */
 }
 
 void
