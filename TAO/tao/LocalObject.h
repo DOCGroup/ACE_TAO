@@ -174,6 +174,9 @@ namespace CORBA
   };
 }   // End CORBA namespace
 
+
+//FUZZ: disable check_for_TAO_Local_RefCounted_Object
+
 #if !defined (ACE_LACKS_DEPRECATED_MACROS)
 /**
  * @brief This class is there to keep backwards compatibility to the
@@ -201,6 +204,8 @@ class TAO_Export TAO_Local_RefCounted_Object
      //@}
 };
 #endif
+
+//FUZZ: enable check_for_TAO_Local_RefCounted_Object
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
