@@ -13,6 +13,7 @@
 #define CE_ARGV_H
 
 #include <windows.h>
+#include <ctype.h>
 
 
 /**
