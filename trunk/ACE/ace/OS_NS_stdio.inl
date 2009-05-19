@@ -581,6 +581,16 @@ ACE_OS::fgets (wchar_t *buf, int size, FILE *fp)
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_FGETWS */
 
+ACE_INLINE ACE_HANDLE
+ACE_OS::fileno (FILE *stream)
+{
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+  return (ACE_HANDLE)_get_osfhandle (ACE_STD_NAMESPACE::fileno (stream));
+#else
+  return ACE_STD_NAMESPACE::fileno (stream);
+#endif
+}
+
 #if !(defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 // Win32 PC implementation of fopen () is in OS_NS_stdio.cpp.
 ACE_INLINE FILE *

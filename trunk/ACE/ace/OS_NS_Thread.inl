@@ -1362,8 +1362,8 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*s), ace_result_), int, -1);
 #     else /* ACE_USES_WINCE_SEMA_SIMULATION */
   // Free up underlying objects of the simulated semaphore.
-  int r1 = ACE_OS::thread_mutex_destroy (&s->lock_);
-  int r2 = ACE_OS::event_destroy (&s->count_nonzero_);
+  int const r1 = ACE_OS::thread_mutex_destroy (&s->lock_);
+  int const r2 = ACE_OS::event_destroy (&s->count_nonzero_);
   return r1 != 0 || r2 != 0 ? -1 : 0;
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #   elif defined (ACE_VXWORKS)
