@@ -10,7 +10,7 @@ project: vc_warnings {
   Source_Files {
     FaCE.cpp
     Main.cpp
-    CE_ARGV.CPP
+    CE_ARGV.cpp
     CE_Screen_Output.cpp
   }
 }
