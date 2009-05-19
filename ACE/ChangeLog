@@ -1,3 +1,8 @@
+Tue May 19 10:12:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * contrib/FaCE/CE_Screen_Output.h:
+          Added missing include of stdio.h for FILE
+
 Tue May 19 07:13:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Mem_Map/IO-tests/IO_Test.cpp:
