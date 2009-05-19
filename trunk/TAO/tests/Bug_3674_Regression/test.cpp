@@ -299,7 +299,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           guardORB(int argc, ACE_TCHAR *argv[])
             {orb= CORBA::ORB_init (argc, argv, "test_orb");}
-          ~guardORB() {orb= 0;}
+          ~guardORB() {PICurrent= 0; orb= 0;}
         } guardORB_(argc, argv);
 
       CORBA::Object_var

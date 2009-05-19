@@ -44,8 +44,8 @@ namespace TAO
     , target_ (t)
     , stub_ (stub)
 #if TAO_HAS_INTERCEPTORS == 1
-    , CRIadapter_ (stub_->orb_core ()->clientrequestinterceptor_adapter ())
-    , SRIadapter_ (stub_->orb_core ()->serverrequestinterceptor_adapter ())
+    , cri_adapter_ (stub_->orb_core ()->clientrequestinterceptor_adapter ())
+    , sri_adapter_ (stub_->orb_core ()->serverrequestinterceptor_adapter ())
     , stack_size_ (0)
     , invoke_status_ (TAO_INVOKE_START)
     , caught_exception_ (0)
@@ -56,8 +56,8 @@ namespace TAO
 
   Invocation_Base::~Invocation_Base (void)
   {
-    TAO_INTERCEPTOR (CRIadapter_= 0);
-    TAO_INTERCEPTOR (SRIadapter_= 0);
+    TAO_INTERCEPTOR (cri_adapter_= 0);
+    TAO_INTERCEPTOR (sri_adapter_= 0);
   }
 
   TAO_Service_Context &
@@ -76,12 +76,12 @@ namespace TAO
   Invocation_Status
   Invocation_Base::send_request_interception (void)
   {
-    if (CRIadapter_)
+    if (cri_adapter_)
       {
         try
           {
             // This is a begin interception point
-            this->CRIadapter_->send_request (*this);
+            this->cri_adapter_->send_request (*this);
           }
         catch ( ::CORBA::Exception& ex)
           {
@@ -97,11 +97,11 @@ namespace TAO
         if (this->reply_status_ == GIOP::LOCATION_FORWARD)
           return TAO_INVOKE_RESTART;
 
-        this->CRIadapter_->pushTSC (this->stub_->orb_core ());
+        this->cri_adapter_->pushTSC (this->stub_->orb_core ());
       }
-    else if (SRIadapter_)
+    else if (sri_adapter_)
       {
-        this->SRIadapter_->pushTSC (this->stub_->orb_core ());
+        this->sri_adapter_->pushTSC (this->stub_->orb_core ());
       }
 
     // What are the other cases??
@@ -111,12 +111,12 @@ namespace TAO
   Invocation_Status
   Invocation_Base::receive_reply_interception (void)
   {
-    if (CRIadapter_)
+    if (cri_adapter_)
       {
         try
           {
-            this->CRIadapter_->popTSC (this->stub_->orb_core ());
-            this->CRIadapter_->receive_reply (*this);
+            this->cri_adapter_->popTSC (this->stub_->orb_core ());
+            this->cri_adapter_->receive_reply (*this);
           }
         catch ( ::CORBA::Exception& ex)
           {
@@ -132,9 +132,9 @@ namespace TAO
         if (this->reply_status_ == GIOP::LOCATION_FORWARD)
           return TAO_INVOKE_RESTART;
       }
-    else if (SRIadapter_)
+    else if (sri_adapter_)
       {
-        this->SRIadapter_->popTSC (this->stub_->orb_core ());
+        this->sri_adapter_->popTSC (this->stub_->orb_core ());
       }
 
     return TAO_INVOKE_SUCCESS;
@@ -143,12 +143,12 @@ namespace TAO
   Invocation_Status
   Invocation_Base::receive_other_interception (void)
   {
-    if (CRIadapter_)
+    if (cri_adapter_)
       {
         try
           {
-            this->CRIadapter_->popTSC (this->stub_->orb_core ());
-            this->CRIadapter_->receive_other (*this);
+            this->cri_adapter_->popTSC (this->stub_->orb_core ());
+            this->cri_adapter_->receive_other (*this);
           }
         catch ( ::CORBA::Exception& ex)
           {
@@ -164,9 +164,9 @@ namespace TAO
         if (this->reply_status_ == GIOP::LOCATION_FORWARD)
           return TAO_INVOKE_RESTART;
       }
-    else if (SRIadapter_)
+    else if (sri_adapter_)
       {
-        this->SRIadapter_->popTSC (this->stub_->orb_core ());
+        this->sri_adapter_->popTSC (this->stub_->orb_core ());
       }
 
     return TAO_INVOKE_SUCCESS;
@@ -180,10 +180,10 @@ namespace TAO
     PortableInterceptor::ReplyStatus status =
       PortableInterceptor::SYSTEM_EXCEPTION;
 
-    if (CRIadapter_)
+    if (cri_adapter_)
       {
-        this->CRIadapter_->popTSC (this->stub_->orb_core ());
-        this->CRIadapter_->receive_exception (*this);
+        this->cri_adapter_->popTSC (this->stub_->orb_core ());
+        this->cri_adapter_->receive_exception (*this);
 
         if (this->reply_status_ == GIOP::LOCATION_FORWARD)
           {
@@ -191,12 +191,12 @@ namespace TAO
           }
         else
           {
-            status = this->CRIadapter_->pi_reply_status (*this);
+            status = this->cri_adapter_->pi_reply_status (*this);
           }
       }
-    else if (SRIadapter_)
+    else if (sri_adapter_)
       {
-        this->SRIadapter_->popTSC (this->stub_->orb_core ());
+        this->sri_adapter_->popTSC (this->stub_->orb_core ());
       }
 
     return status;
@@ -210,16 +210,16 @@ namespace TAO
     PortableInterceptor::ReplyStatus status =
       PortableInterceptor::SYSTEM_EXCEPTION;
 
-    if (CRIadapter_)
+    if (cri_adapter_)
       {
-        this->CRIadapter_->popTSC (this->stub_->orb_core ());
-        this->CRIadapter_->receive_exception (*this);
+        this->cri_adapter_->popTSC (this->stub_->orb_core ());
+        this->cri_adapter_->receive_exception (*this);
 
-        status = this->CRIadapter_->pi_reply_status (*this);
+        status = this->cri_adapter_->pi_reply_status (*this);
       }
-    else if (SRIadapter_)
+    else if (sri_adapter_)
       {
-        this->SRIadapter_->popTSC (this->stub_->orb_core ());
+        this->sri_adapter_->popTSC (this->stub_->orb_core ());
       }
 
     return status;
@@ -241,9 +241,9 @@ namespace TAO
   PortableInterceptor::ReplyStatus
   Invocation_Base::pi_reply_status (void) const
   {
-    if (CRIadapter_)
+    if (cri_adapter_)
       {
-        return this->CRIadapter_->pi_reply_status (*this);
+        return this->cri_adapter_->pi_reply_status (*this);
       }
     else
       {
