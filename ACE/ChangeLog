@@ -1,3 +1,8 @@
+Tue May 19 06:50:05  2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/config-win32-cegcc.h
+          Removed compiler flags since they are now in platform_cegcc.GNU.
+
 Tue May 19 06:31:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_cegcc.GNU:
