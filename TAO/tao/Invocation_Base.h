@@ -218,8 +218,8 @@ namespace TAO
 
   protected:
     /// The client requestor adapter
-    ClientRequestInterceptor_Adapter *CRIadapter_;
-    ServerRequestInterceptor_Adapter *SRIadapter_;
+    ClientRequestInterceptor_Adapter *cri_adapter_;
+    ServerRequestInterceptor_Adapter *sri_adapter_;
 
     size_t stack_size_;
 

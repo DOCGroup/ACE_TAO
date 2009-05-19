@@ -1,3 +1,16 @@
+Tue May 19 12:12:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
+
+        * tao/Invocation_Base.h:
+        * tao/Invocation_Base.cpp:
+
+          Cosmetic variable name change to better conform to coding
+          standard.
+
+        * tests/Bug_3674_Regression/test.cpp:
+
+          Ensure that PICurrent global is destroyed, BEFORE orb
+          is destroyed.
+
 Tue May 19 09:43:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
