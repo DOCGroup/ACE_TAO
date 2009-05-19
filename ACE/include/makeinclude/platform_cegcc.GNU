@@ -22,11 +22,15 @@ rwho = 0
 # because fe ace.dll.5.2.3 isn't a valid dll name
 versioned_so=0
 
+ACE_CE_VER ?= 0x600
+
 # Disable auto-import warnings. The Cygwin linker has a problem with imports
 # See https://sourceforge.net/tracker/?func=detail&atid=102435&aid=683455&group_id=2435
 # for the details why to do this.
 LDFLAGS += -Wl,--enable-auto-import
 CPPFLAGS += -DACE_HAS_CEGCC 
+
+CPPFLAGS += -D_WIN32_WCE=$(ACE_CE_VER) -DUNICODE=1 -D_UNICODE=1 -D_WINDOWS=1 -DCEVER -DWIN32 -D_WINSOCKAPI_
 
 cpumodelflag=0
 tunemodelflag=0
