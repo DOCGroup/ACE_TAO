@@ -1,3 +1,8 @@
+Tue May 19 11:22:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_cegcc.GNU:
+          Set RCFLAGS
+
 Tue May 19 10:12:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * contrib/FaCE/CE_Screen_Output.h:
