@@ -1,3 +1,8 @@
+Tue May 19 13:23:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_cegcc.GNU:
+          Added _WIN32_IE=0x0500 to RCFLAGS
+
 Tue May 19 13:14:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * contrib/FaCE/FaCE.mpc:
