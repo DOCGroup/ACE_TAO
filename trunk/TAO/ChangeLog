@@ -1,3 +1,8 @@
+Tue May 19 09:43:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+          Unbind also the event channels from the naming service
+
 Mon May 18 14:47:24 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
         * tao/LocalObject.h:
