@@ -455,7 +455,7 @@ HWND CreateRpCommandBar(HWND hwnd)
 }
 
 // Mesage handler for the About box.
-LRESULT CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM)
 {
     SHINITDLGINFO shidi;
 
@@ -488,7 +488,7 @@ ACE_TEXT("See License.txt for more information.");
 }
 
 
-LRESULT CALLBACK CommandLine(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CommandLine(HWND hDlg, UINT message, WPARAM wParam, LPARAM)
 {
     int wmId;
     int wmEvent;
@@ -529,7 +529,7 @@ LRESULT CALLBACK CommandLine(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 }
 
 
-LRESULT CALLBACK SaveFileName(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SaveFileName(HWND hDlg, UINT message, WPARAM wParam, LPARAM)
 {
     int wmId;
     int wmEvent;
@@ -617,7 +617,7 @@ LRESULT CALLBACK SaveFileName(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPa
 }
 
 
-LRESULT CALLBACK FileError(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK FileError(HWND hDlg, UINT message, WPARAM wParam, LPARAM)
 {
     switch (message)
     {
@@ -637,7 +637,7 @@ LRESULT CALLBACK FileError(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
 }
 
 
-LRESULT CALLBACK FileExist(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK FileExist(HWND hDlg, UINT message, WPARAM wParam, LPARAM)
 {
     switch (message)
     {
