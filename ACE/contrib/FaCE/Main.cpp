@@ -13,7 +13,7 @@ extern BOOL InitInstance (HINSTANCE, int);
 extern void InitSetup();
 
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, ACE_TCHAR* lpCmdLine, int nCmdShow)
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, ACE_TCHAR*, int nCmdShow)
 {
     MSG msg;
     HACCEL hAccelTable;
