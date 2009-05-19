@@ -41,7 +41,8 @@ ACE_Countdown_Time::stop (void)
       ACE_Time_Value const elapsed_time =
         ACE_OS::gettimeofday () - this->start_time_;
 
-      if (*this->max_wait_time_ > elapsed_time)
+      if (elapsed_time >= ACE_Time_Value::zero &&
+          *this->max_wait_time_ > elapsed_time)
         {
           *this->max_wait_time_ -= elapsed_time;
         }

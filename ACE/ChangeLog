@@ -1,3 +1,11 @@
+Tue May 19 06:52:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Countdown_Time.cpp (stop):
+          Make sure elapsed_time is equal or bigger then zero to prevent
+          expanding the max_wait_time at the moment the system time
+          has been changed. Thanks to Michael Guntli
+          <michael dot guntli at leica-geosystems dot com> for reporting this.
+
 Tue May 19 06:50:05  2009  Marcel Smit  <msmit@remedy.nl>
 
         * ace/config-win32-cegcc.h
