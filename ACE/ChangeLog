@@ -1,3 +1,20 @@
+Tue May 19 06:14:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_stdio.inl:
+          Added fileno wrapper which returns ACE_HANDLE. The CEGCC developers
+          fixed their header files
+
+        * ace/ETCL/ETCL_l.cpp:
+        * ace/ETCL/ETCL_l.cpp.diff
+          Use ACE_OS::fileno
+
+        * ace/os_include/os_unistd.h:
+          Removed obsolete casts for WinCE
+
+        * ace/OS_NS_Thread.inl:
+          Const changes
+
 Mon May 18 19:58:35 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-5.x.h: Add explicit instantiation for the

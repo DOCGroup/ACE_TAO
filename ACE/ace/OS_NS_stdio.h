@@ -298,6 +298,10 @@ namespace ACE_OS {
 
   //@}
 
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  ACE_HANDLE fileno (FILE *stream);
+
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   extern ACE_Export
 #else
