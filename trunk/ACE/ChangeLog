@@ -1,3 +1,9 @@
+Tue May 19 13:14:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * contrib/FaCE/FaCE.mpc:
+        * contrib/FaCE/FaCENOACE.mpc:
+          Added missing lib
+
 Tue May 19 11:22:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_cegcc.GNU:
