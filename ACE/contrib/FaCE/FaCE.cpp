@@ -460,9 +460,9 @@ LRESULT CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     SHINITDLGINFO shidi;
 
     ACE_TCHAR* copyrightNote =
-ACE_TEXT("ACE© and TAO© are copyrighted by Dr. Douglas C. Schmidt and Center for Distributed Object") \
-ACE_TEXT("Computing at Washington University,© 1993-2002, all rights reserved.")  \
-ACE_TEXT("FaCE is copyrighted by Object Computing, Inc.,© 2002,\n all rights reserved.\n") \
+ACE_TEXT("ACE and TAO are copyrighted by Dr. Douglas C. Schmidt and Center for Distributed Object") \
+ACE_TEXT("Computing at Washington University, 1993-2002, all rights reserved.")  \
+ACE_TEXT("FaCE is copyrighted by Object Computing, Inc., 2002,\n all rights reserved.\n") \
 ACE_TEXT("See License.txt for more information.");
 
     switch (message)
