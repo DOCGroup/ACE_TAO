@@ -630,7 +630,7 @@ TAO_RT_Protocols_Hooks::set_thread_native_priority (
                          ACE_TEXT ("(%N,%l) Error setting thread ")
                          ACE_TEXT ("priority to %d, errno %d %m\n"),
                          native_priority,
-                         errno ),
+                         ACE_ERRNO_GET),
                        -1);
     }
 

@@ -86,7 +86,7 @@ TAO_DIOP_Transport::recv (char *buf,
                   n,
                   from_addr.get_host_name (),
                   from_addr.get_port_number (),
-                  errno));
+                  ACE_ERRNO_GET));
     }
 
   // Most of the errors handling is common for

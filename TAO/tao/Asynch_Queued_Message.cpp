@@ -28,7 +28,9 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
   , abs_timeout_ (ACE_Time_Value::zero)
 {
   if (timeout != 0)// && *timeout != ACE_Time_Value::zero)
-    this->abs_timeout_ = ACE_High_Res_Timer::gettimeofday_hr () + *timeout;
+    {
+      this->abs_timeout_ = ACE_High_Res_Timer::gettimeofday_hr () + *timeout;
+    }
   // @@ Use a pool for these guys!!
   ACE_NEW (this->buffer_, char[this->size_]);
 
