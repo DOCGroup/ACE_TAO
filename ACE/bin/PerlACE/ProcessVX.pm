@@ -363,6 +363,7 @@ sub reboot {
 # Helper for spawning with list of kernel modules in a .vxtest file
 sub handle_vxtest_file
 {
+  my $self = shift;
   my $vxtestfile = shift;
   my $vx_ref = shift;
   my $unld_ref = shift;
