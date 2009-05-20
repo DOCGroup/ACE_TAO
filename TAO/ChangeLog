@@ -1,3 +1,30 @@
+Wed May 20 09:32:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/SmartProxies/SmartProxies.rc
+        * tao/BiDir_GIOP/TAO_BiDir_GIOP.rc
+        * tao/Compression/bzip2/TAO_Bzip2Compressor.rc
+        * tao/CodecFactory/TAO_CodecFactory.rc
+        * tao/Compression/TAO_Compression.rc
+        * tao/DynamicAny/TAO_DynamicAny.rc
+        * tao/DynamicInterface/TAO_DynamicInterface.rc
+        * tao/IFR_Client/TAO_IFR_Client.rc
+        * tao/ImR_Client/TAO_IMR_Client.rc
+        * tao/IORInterceptor/TAO_IORInterceptor.rc
+        * tao/IORManipulation/TAO_IORManip.rc
+        * tao/IORTable/TAO_IORTable.rc
+        * tao/Compression/lzo/TAO_LzoCompressor.rc
+        * tao/Messaging/TAO_Messaging.rc
+        * tao/ObjRefTemplate/TAO_ObjRefTemplate.rc
+        * tao/PortableServer/TAO_PortableServer.rc
+        * tao/RTCORBA/TAO_RTCORBA.rc
+        * tao/RTPortableServer/TAO_RTPortableServer.rc
+        * tao/RTScheduling/TAO_RTScheduler.rc
+        * tao/Strategies/TAO_Strategies.rc
+        * tao/Valuetype/TAO_Valuetype.rc
+        * tao/Compression/zlib/TAO_ZlibCompressor.rc
+        * tao/TypeCodeFactory/TypeCodeFactory.rc
+          Use unix style of includes to work with cegcc
+
 Wed May 20 09:21:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Client_Leaks/Process_Factory.cpp:
