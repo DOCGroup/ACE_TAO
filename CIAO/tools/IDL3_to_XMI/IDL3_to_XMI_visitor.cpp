@@ -2088,8 +2088,8 @@ namespace CIAO
       this->add_stereotype (ST_UNION, CLASS);
       this->add_stereotype (ST_USES, ASSOC);
       this->add_stereotype (ST_SEQ, CLASS);
-      this->add_stereotype (ST_ROE, _NULL);
-      this->add_stereotype (ST_RO, _NULL);
+      this->add_stereotype (ST_ROE, __NULL);
+      this->add_stereotype (ST_RO, __NULL);
       this->add_stereotype (ST_OBJ, DATATYPE);
       this->add_stereotype (ST_STR, DATATYPE);
       this->add_stereotype (ST_LD, DATATYPE);

@@ -1,3 +1,19 @@
+Wed May 20 01:41:39 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/TargetManager/TargetManager.mpc:
+        * DAnCE/TargetManager/TargetManagerExt.idl:
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+        * tools/Config_Handlers/ERE_Handler.h:
+        * tools/Config_Handlers/Utils/Functors.h:
+        * tools/Config_Handlers/XMLSchema/Types.hpp:
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+        * tools/IDL3_to_XMI/Literals.h:
+        * tools/XML/XML_Schema_Resolver.tpp:
+        * tools/XML/XercesString.h:
+
+          Updates for borland. 
+        
 Thu May 14 19:12:56 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
         * MPC/config/cidlc.mpb:

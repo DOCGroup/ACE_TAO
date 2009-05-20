@@ -53,7 +53,7 @@ module CIAO
     string host_;
 
     /// the node manager IOR
-    ::DAnCE::NodeManagerDaemon node_mgr_;
+    ::Deployment::NodeManager node_mgr_;
   };
 
   /// Sequence of NodeManager.
