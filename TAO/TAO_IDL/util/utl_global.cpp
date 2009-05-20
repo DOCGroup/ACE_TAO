@@ -1486,9 +1486,9 @@ IDL_GlobalData::check_gperf (void)
   ACE_Process_Options process_options;
 
   // Set the command line for the gperf program.
-  process_options.command_line ("%s"
-                                " "
-                                "-V",
+  process_options.command_line (ACE_TEXT ("%s")
+                                ACE_TEXT (" ")
+                                ACE_TEXT ("-V"),
                                 idl_global->gperf_path ());
 
   // Spawn a process for gperf.
