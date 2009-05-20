@@ -1,3 +1,12 @@
+Wed May 20 07:38:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_stdio.inl:
+          On some platforms fileno is a macro
+
+        * ace/OS_NS_dirent.cpp:
+          Layout and const changes
+
 Tue May 19 13:23:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_cegcc.GNU:
