@@ -75,7 +75,7 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::send, ")
                       ACE_TEXT ("send failure (errno: %d) - %m\n"),
-                      this->id (), errno));
+                      this->id (), ACE_ERRNO_GET));
         }
     }
 
@@ -155,7 +155,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::sendfile, ")
                   ACE_TEXT ("sendfile failure - %m (errno: %d)\n"),
                   this->id (),
-                  errno));
+                  ACE_ERRNO_GET));
     }
 
   return retval;
@@ -179,7 +179,7 @@ TAO_IIOP_Transport::recv (char *buf,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::recv, ")
                   ACE_TEXT ("read failure - %m errno %d\n"),
                   this->id (),
-                  errno));
+                  ACE_ERRNO_GET));
     }
 
   // Error handling

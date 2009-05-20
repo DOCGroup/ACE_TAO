@@ -1,8 +1,28 @@
+Wed May 20 09:06:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Leader_Follower.cpp
+          Layout changes
+
+        * tao/GIOP_Message_Base.cpp
+        * tao/IIOP_Transport.cpp
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp
+        * tao/Strategies/DIOP_Transport.cpp
+        * tao/Transport.cpp
+        * tao/Transport_Connector.cpp
+          Use ACE_ERRNO_GET
+
+        * tao/Messaging/Messaging_Queueing_Strategies.cpp
+          Const changes
+
+        * tao/SystemException.cpp
+          Initialise pointer with 0
+
 Wed May 20 07:26:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp
         * TAO_IDL/util/utl_global.cpp
-          
+
           Fixed compiler errors on CE gcc on Cygwin.
 
 Tue May 19 12:12:00 UTC 2009  Simon Massey  <sma at prismtech dot com>

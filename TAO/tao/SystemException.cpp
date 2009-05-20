@@ -312,7 +312,7 @@ CORBA::SystemException::_info (void) const
           location = "unknown location";
         }
 
-      const char *errno_indication;
+      const char *errno_indication = 0;
       char unknown_errno [255];
       CORBA::ULong minor_code = this->minor () & 0x7FU;
       switch (minor_code)

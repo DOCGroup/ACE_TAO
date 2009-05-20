@@ -541,7 +541,7 @@ TAO_Transport::handle_output (ACE_Time_Value *max_wait_time)
                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_output, ")
                   ACE_TEXT ("drain_queue returns %d/%d\n"),
                   this->id (),
-                  retval, errno));
+                  retval, ACE_ERRNO_GET));
     }
 
   // Any errors are returned directly to the Reactor
@@ -953,7 +953,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[], ACE_Time_Value *max
           ACE_DEBUG ((LM_DEBUG,
              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_helper, ")
              ACE_TEXT ("error during send() (errno: %d) - %m\n"),
-             this->id (), errno));
+             this->id (), ACE_ERRNO_GET));
         }
 
       if (errno == EWOULDBLOCK || errno == EAGAIN)

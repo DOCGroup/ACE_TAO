@@ -370,7 +370,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
           ACE_DEBUG ((LM_DEBUG,
             ACE_TEXT ("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
             ACE_TEXT ("transport [%d], Connection failed. (%d)\n"),
-                      transport->id (), errno));
+                      transport->id (), ACE_ERRNO_GET));
         }
 
       // purge from the connection cache.  If we are not in the
@@ -440,7 +440,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
                     ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
                     ACE_TEXT(" unknown error waiting on transport [%d] (%d)\n"),
                     transport->id (),
-                    errno));
+                    ACE_ERRNO_GET));
                 }
             }
           // purge from the connection cache.  If we are not in the
@@ -758,7 +758,7 @@ TAO_Connector::wait_for_connection_completion (
                       ACE_TEXT("TAO (%P|%t) - Transport_Connector::")
                       ACE_TEXT("wait_for_connection_completion, ")
                       ACE_TEXT("transport [%d], Connection failed. (%d) %p\n"),
-                      transport->id (), errno, ACE_TEXT("")));
+                      transport->id (), ACE_ERRNO_GET, ACE_TEXT("")));
         }
       result = -1;
     }
@@ -843,7 +843,7 @@ TAO_Connector::wait_for_connection_completion (
                                       ACE_TEXT("wait_for_connection_completion, ")
                                       ACE_TEXT("transport [%d], wait for completion failed")
                                       ACE_TEXT(" (%d) %p\n"),
-                                      transport->id (), errno, ACE_TEXT("")));
+                                      transport->id (), ACE_ERRNO_GET, ACE_TEXT("")));
                         }
                       TAO_Connection_Handler *con =
                         transport->connection_handler ();

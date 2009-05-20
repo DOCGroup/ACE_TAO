@@ -264,7 +264,7 @@ int
 TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub* stub)
 {
   this->set_giop_flags (stream);
-  
+
   bool log_msg = TAO_debug_level > 9;
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
@@ -1473,7 +1473,7 @@ TAO_GIOP_Message_Base::
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
            ACE_TEXT ("(%P|%t) error closing connection %u, errno = %d\n"),
-           transport->id (), errno));
+           transport->id (), ACE_ERRNO_GET));
     }
 
   transport->close_connection ();
