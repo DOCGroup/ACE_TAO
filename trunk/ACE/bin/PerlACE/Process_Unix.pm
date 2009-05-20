@@ -87,6 +87,14 @@ sub Executable
     }
 
     my $executable = $self->{EXECUTABLE};
+    # If the target's config has a different ACE_ROOT, rebase the executable
+    # from $ACE_ROOT to the target's root.
+    if (defined $self->{TARGET} &&
+        $self->{TARGET}->ACE_ROOT() ne $ENV{"ACE_ROOT"}) {
+        $executable = File::Spec->rel2abs($executable);
+        $executable = File::Spec->abs2rel($executable, $ENV{"ACE_ROOT"});
+        $executable = $self->{TARGET}->ACE_ROOT() . "/$executable";
+    }
 
     if ($self->{IGNOREHOSTROOT} == 0) {
       if (PerlACE::is_vxworks_test()) {
