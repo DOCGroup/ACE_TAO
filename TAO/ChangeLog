@@ -1,3 +1,40 @@
+Wed May 20 09:35:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV.rc
+        * orbsvcs/orbsvcs/CosConcurrency.rc
+        * orbsvcs/orbsvcs/CosEvent.rc
+        * orbsvcs/orbsvcs/CosEvent_Serv.rc
+        * orbsvcs/orbsvcs/CosEvent_Skel.rc
+        * orbsvcs/orbsvcs/CosLifeCycle.rc
+        * orbsvcs/orbsvcs/CosLoadBalancing.rc
+        * orbsvcs/orbsvcs/CosNaming.rc
+        * orbsvcs/orbsvcs/CosNaming_Serv.rc
+        * orbsvcs/orbsvcs/CosNaming_Skel.rc
+        * orbsvcs/orbsvcs/CosNotification.rc
+        * orbsvcs/orbsvcs/CosNotification_Serv.rc
+        * orbsvcs/orbsvcs/CosNotification_Skel.rc
+        * orbsvcs/orbsvcs/CosProperty.rc
+        * orbsvcs/orbsvcs/CosTime.rc
+        * orbsvcs/orbsvcs/CosTrading.rc
+        * orbsvcs/orbsvcs/CosTrading_Serv.rc
+        * orbsvcs/orbsvcs/CosTrading_Skel.rc
+        * orbsvcs/orbsvcs/DsEventLogAdmin.rc
+        * orbsvcs/orbsvcs/DsLogAdmin.rc
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.rc
+        * orbsvcs/orbsvcs/FaultTolerance.rc
+        * orbsvcs/orbsvcs/IFRService.rc
+        * orbsvcs/orbsvcs/PortableGroup.rc
+        * orbsvcs/orbsvcs/RT_Notification.rc
+        * orbsvcs/orbsvcs/RTEvent.rc
+        * orbsvcs/orbsvcs/RTEvent_Serv.rc
+        * orbsvcs/orbsvcs/RTEvent_Skel.rc
+        * orbsvcs/orbsvcs/RTSched.rc
+        * orbsvcs/orbsvcs/RTSchedEvent.rc
+        * orbsvcs/orbsvcs/Security.rc
+        * orbsvcs/orbsvcs/SSLIOP.rc
+        * orbsvcs/orbsvcs/Svc_Utils.rc
+          Use unix style of includes to work with cegcc
+
 Wed May 20 09:32:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/SmartProxies/SmartProxies.rc
