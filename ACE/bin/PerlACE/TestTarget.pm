@@ -199,6 +199,10 @@ sub GetConfigSettings ($)
     if (exists $ENV{$env_name}) {
         $self->{HOST_ROOT} = $ENV{$env_name};
     }
+    $env_name = $env_prefix.'SYSTEM_LIBS';
+    if (exists $ENV{$env_name}) {
+        $self->{SYSTEM_LIBS} = $ENV{$env_name};
+    }
 }
 
 ##################################################################
@@ -235,6 +239,12 @@ sub ExeSubDir ($)
         $self->{EXE_SUBDIR} = $new_val;
     }
     return $self->{EXE_SUBDIR};
+}
+
+sub SystemLibs ($)
+{
+    my $self = shift;
+    return $self->{SYSTEM_LIBS};
 }
 
 sub RandomPort ($)
