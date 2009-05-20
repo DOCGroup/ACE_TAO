@@ -584,11 +584,7 @@ ACE_OS::fgets (wchar_t *buf, int size, FILE *fp)
 ACE_INLINE ACE_HANDLE
 ACE_OS::fileno (FILE *stream)
 {
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-  return (ACE_HANDLE)_get_osfhandle (ACE_STD_NAMESPACE::fileno (stream));
-#else
-  return ACE_STD_NAMESPACE::fileno (stream);
-#endif
+  return ace_fileno_helper (stream);
 }
 
 #if !(defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
