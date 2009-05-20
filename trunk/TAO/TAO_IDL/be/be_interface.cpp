@@ -1791,67 +1791,67 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
   {
       // Perfect Hashing.
     case BE_GlobalData::TAO_PERFECT_HASH:
-      process_options.command_line ("%s"
-                                    " "
-                                    "-m -M -J -c -C"
-                                    " "
-                                    "-D -E -T -f 0"
-                                    " "
-                                    "-F 0,0"
-                                    " "
-                                    "-a -o -t -p -K"
-                                    " "
-                                    "opname -L C++"
-                                    " "
-                                    "-Z TAO_%s_Perfect_Hash_OpTable"
-                                    " "
-                                    "-N lookup",
+      process_options.command_line (ACE_TEXT ("%s")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-m -M -J -c -C")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-D -E -T -f 0")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-F 0,0")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-a -o -t -p -K")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("opname -L C++")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-Z TAO_%s_Perfect_Hash_OpTable")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-N lookup"),
                                     idl_global->gperf_path (),
                                     flat_name);
       break;
 
       // Binary search methods from GPERF. Everythis and the -B flag.
     case BE_GlobalData::TAO_BINARY_SEARCH:
-      process_options.command_line ("%s"
-                                    " "
-                                    "-B"
-                                    "  "
-                                    "-m -M -J -c -C"
-                                    " "
-                                    "-D -E -T -f 0"
-                                    " "
-                                    "-F 0,0,0"
-                                    " "
-                                    "-a -o -t -p -K"
-                                    " "
-                                    "opname -L C++"
-                                    " "
-                                    "-Z TAO_%s_Binary_Search_OpTable"
-                                    " "
-                                    "-N lookup",
+      process_options.command_line (ACE_TEXT ("%s")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-B")
+                                    ACE_TEXT ("  ")
+                                    ACE_TEXT ("-m -M -J -c -C")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-D -E -T -f 0")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-F 0,0,0")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-a -o -t -p -K")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("opname -L C++")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-Z TAO_%s_Binary_Search_OpTable")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-N lookup"),
                                     idl_global->gperf_path (),
                                     flat_name);
       break;
 
       // Linear search methods from GPERF. Everything and the -Z flag.
     case BE_GlobalData::TAO_LINEAR_SEARCH:
-      process_options.command_line ("%s"
-                                    " "
-                                    "-b"
-                                    "  "
-                                    "-m -M -J -c -C"
-                                    " "
-                                    "-D -E -T -f 0"
-                                    " "
-                                    "-F 0,0"
-                                    " "
-                                    "-a -o -t -p -K"
-                                    " "
-                                    "opname -L C++"
-                                    " "
-                                    "-Z TAO_%s_Linear_Search_OpTable"
-                                    " "
-                                    "-N lookup",
+      process_options.command_line (ACE_TEXT ("%s")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-b")
+                                    ACE_TEXT ("  ")
+                                    ACE_TEXT ("-m -M -J -c -C")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-D -E -T -f 0")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-F 0,0")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-a -o -t -p -K")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("opname -L C++")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-Z TAO_%s_Linear_Search_OpTable")
+                                    ACE_TEXT (" ")
+                                    ACE_TEXT ("-N lookup"),
                                     idl_global->gperf_path (),
                                     flat_name);
       break;
