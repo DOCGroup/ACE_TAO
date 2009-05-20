@@ -221,7 +221,7 @@ namespace XSCRT
   class FundamentalType : public Type
   {
   public:
-    typedef ACE_Refcounted_Auto_Ptr < FundamentalType, ACE_Null_Mutex > _ptr;
+    //    typedef ACE_Refcounted_Auto_Ptr < FundamentalType, ACE_Null_Mutex > _ptr;
     
     FundamentalType ()
     {
