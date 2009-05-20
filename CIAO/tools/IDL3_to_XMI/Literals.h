@@ -77,7 +77,7 @@ namespace CIAO
         CLASS,
         DATATYPE,
         PACKAGE,
-        _NULL,
+        __NULL,
         ATTR,
         PUBLIC,
         _PRIVATE,

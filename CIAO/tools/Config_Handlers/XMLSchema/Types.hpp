@@ -59,7 +59,7 @@ namespace XMLSchema
     typedef basic_string<C> Base__ ;
     
   public:
-    typedef ACE_Refcounted_Auto_Ptr < string, ACE_Null_Mutex > _ptr;
+    //    typedef ACE_Refcounted_Auto_Ptr < string, ACE_Null_Mutex > _ptr;
     
     //@@ VC6 does not inject XSCRT::Type into the scope so I have
     //   to qualify it all the time.

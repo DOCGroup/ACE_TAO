@@ -108,7 +108,7 @@ namespace CIAO
 
         case TCKind::tk_octet_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_octet);
-          retval->insert_octet (static_cast <const unsigned char &> (*value.begin_octet ()));
+          retval->insert_octet (static_cast <const unsigned char &> (*(*(value.begin_octet ()))));
           break;
 
         case TCKind::tk_string_l:
