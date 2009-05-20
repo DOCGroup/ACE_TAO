@@ -160,7 +160,7 @@ sub Spawn ()
         my(@load_commands);
         my(@unload_commands);
         my $vxtest_file = $program . '.vxtest';
-        if (handle_vxtest_file($vxtest_file, \@load_commands, \@unload_commands)) {
+        if (handle_vxtest_file($self, $vxtest_file, \@load_commands, \@unload_commands)) {
             push @cmds, @load_commands;
             $cmdnr += scalar @load_commands;
           } else {
@@ -407,12 +407,20 @@ sub TimedWait ($)
 
 sub handle_vxtest_file
 {
+  my $self = shift;
   my $vxtestfile = shift;
   my $vx_ref = shift;
   my $unld_ref = shift;
   my $fh = new FileHandle;
+
+  if (defined $self->{TARGET} && $self->{TARGET}->SystemLibs())
+    {
+      my @tokens = split(/;/, $self->{TARGET}->SystemLibs());
+      foreach my $token (@tokens) {
+        push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/" . $token . " .";
+      }
+    }
   if (open ($fh, $vxtestfile)) {
-    push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/MSVCR80D.dll .";
     my $line1 = <$fh>;
     chomp $line1;
     while(<$fh>) {

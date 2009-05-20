@@ -198,7 +198,7 @@ sub Spawn ()
         my(@unload_commands);
         if (!$PerlACE::Static && !$PerlACE::VxWorks_RTP_Test) {
           my $vxtest_file = $program . '.vxtest';
-          if (handle_vxtest_file($vxtest_file, \@load_commands, \@unload_commands)) {
+          if (handle_vxtest_file($self, $vxtest_file, \@load_commands, \@unload_commands)) {
               @cmds[$cmdnr++] = "cd \"$ENV{'ACE_RUN_VX_TGTSVR_ROOT'}/lib\"";
               push @cmds, @load_commands;
               $cmdnr += scalar @load_commands;
