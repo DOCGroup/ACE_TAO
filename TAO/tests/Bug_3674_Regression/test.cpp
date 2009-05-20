@@ -355,6 +355,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Check that the data in the PICurrent slot has not been corrupted.
       CORBA::Any_var data2= PICurrent.in ()->get_slot (slot_id);
       isCorrect (data2.in (), 1, ACE_TEXT ("CLIENT"));
+      ACE_DEBUG ((LM_DEBUG, "End of actual regression test...\n"));
+
+      RootPOA->destroy (1, 1);
+      orb->destroy ();
     }
   catch (const ::CORBA::Exception &ex)
     {
