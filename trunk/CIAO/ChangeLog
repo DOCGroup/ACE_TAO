@@ -1,3 +1,9 @@
+Thu May 21 01:13:28 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tools/Config_Handlers/ERE_Handler.h:
+
+          fix fuzz.
+
 Wed May 20 01:41:39 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/TargetManager.mpc:
@@ -12,8 +18,8 @@ Wed May 20 01:41:39 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/XML/XML_Schema_Resolver.tpp:
         * tools/XML/XercesString.h:
 
-          Updates for borland. 
-        
+          Updates for borland.
+
 Thu May 14 19:12:56 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
         * MPC/config/cidlc.mpb:
