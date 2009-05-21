@@ -55,13 +55,13 @@ namespace CIAO
                                   const Deployment::ExternalReferenceEndpoint& src);
 
       static void handle_external_ref_endpoint (const ExternalReferenceEndpoint &src,
-						Deployment::ExternalReferenceEndpoint &dest);
+                                                Deployment::ExternalReferenceEndpoint &dest);
     };
 
       typedef Sequence_Handler < ExternalReferenceEndpoint,
-	::Deployment::ExternalReferenceEndpoints,
-	::Deployment::ExternalReferenceEndpoint,
-	ERE_Handler::handle_external_ref_endpoint > ERE_Functor;
+        ::Deployment::ExternalReferenceEndpoints,
+        ::Deployment::ExternalReferenceEndpoint,
+        ERE_Handler::handle_external_ref_endpoint > ERE_Functor;
 
     }
 }
