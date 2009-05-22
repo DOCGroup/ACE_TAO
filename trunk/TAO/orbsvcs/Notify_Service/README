@@ -40,7 +40,10 @@ Command line arguments:
 
 "-Channel"              : If this option is specified, a EventChannel is
                           created and registered with the Naming Service.
-                          This option is disabled by default.
+                          This option is disabled by default. This option can
+                          be specified multiple times, each option will result
+                          in a created and registered EventChannel
+
 
 "-ChannelName channel_name" : Specifies the <channel_name> to register with the
                               Naming Service.
