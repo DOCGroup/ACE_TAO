@@ -1,3 +1,9 @@
+Fri May 22 07:41:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/run_all.pl:
+        * bin/run_all_win32.pl:
+          Not maintained for some time and seems they are broken
+
 Fri May 22 07:26:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/JAWS/IO.cpp
