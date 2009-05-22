@@ -1,3 +1,10 @@
+Fri May 22 16:20:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Message_Queue_Test.cpp:
+          Run part of this test again on VxWorks and reduced the number
+          it messages in the counting test for WinCE, the amount of messages
+          is too much for CE to finish the test in time
+
 Fri May 22 16:10:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/ACE_Init_Test.cpp:
