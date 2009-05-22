@@ -269,7 +269,9 @@ succeed_nonblocking (void)
   else
     {
       if (sock.get_handle () != ACE_INVALID_HANDLE)
-        status = con.complete (sock);
+        {
+          status = con.complete (sock);
+        }
 
       if (status == -1)
         {
@@ -284,7 +286,8 @@ succeed_nonblocking (void)
           else
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT("%p\n"),
+                          ACE_TEXT("Errno <%d>: %p\n"),
+                          ACE_ERRNO_GET,
                           ACE_TEXT("connect should succeed, but")));
             }
         }
