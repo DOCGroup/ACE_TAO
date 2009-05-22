@@ -1,3 +1,8 @@
+Fri May 22 10:57:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_cegcc.GNU:
+          Some defines only have to be set, not to 1
+
 Fri May 22 10:51:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS3/jaws3/IO.cpp
