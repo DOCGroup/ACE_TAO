@@ -1,3 +1,24 @@
+Fri May 22 10:51:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS3/jaws3/IO.cpp
+        * apps/JAWS3/jaws3/IO.h
+        * apps/JAWS3/jaws3/Jaws_IO.cpp
+        * apps/JAWS3/jaws3/Jaws_IO.h
+          Renamed to Jaws_IO to fix problems on windows
+
+        * apps/JAWS3/jaws3/Asynch_IO.cpp
+        * apps/JAWS3/jaws3/Asynch_IO.h
+        * apps/JAWS3/jaws3/Asynch_IO_Helpers.h
+        * apps/JAWS3/jaws3/jaws3.mpc
+        * apps/JAWS3/jaws3/Makefile.am
+        * apps/JAWS3/jaws3/Reactive_IO.cpp
+        * apps/JAWS3/jaws3/Reactive_IO.h
+        * apps/JAWS3/jaws3/Reactive_IO_Helpers.h
+        * apps/JAWS3/jaws3/Synch_IO.cpp
+        * apps/JAWS3/jaws3/Synch_IO.h
+        * apps/JAWS3/jaws3/Templates.cpp
+          Updated includes and filenames
+
 Fri May 22 08:31:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Module.h:
