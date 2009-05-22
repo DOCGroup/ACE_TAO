@@ -10,7 +10,7 @@
 #include "ace/Time_Value.h"
 
 #include "jaws3/Export.h"
-#include "jaws3/IO.h"
+#include "jaws3/Jaws_IO.h"
 #include "jaws3/Event_Result.h"
 
 class JAWS_Reactive_IO;
