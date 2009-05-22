@@ -34,7 +34,7 @@ libJAWS2_la_SOURCES = \
   FILE.cpp \
   Filecache.cpp \
   Headers.cpp \
-  IO.cpp \
+  Jaws_IO.cpp \
   IO_Acceptor.cpp \
   IO_Handler.cpp \
   Parse_Headers.cpp \
@@ -65,7 +65,7 @@ noinst_HEADERS = \
   Hash_Bucket_T.cpp \
   Hash_Bucket_T.h \
   Headers.h \
-  IO.h \
+  Jaws_IO.h \
   IO_Acceptor.h \
   IO_Handler.h \
   Parse_Headers.h \
