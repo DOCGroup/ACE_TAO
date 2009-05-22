@@ -1,3 +1,20 @@
+Fri May 22 07:26:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS2/JAWS/IO.cpp
+        * apps/JAWS2/JAWS/IO.h
+        * apps/JAWS2/JAWS/Jaws_IO.cpp
+        * apps/JAWS2/JAWS/Jaws_IO.h
+          Renamed to Jaws_IO to fix problems on windows
+
+        * apps/JAWS2/JAWS/Concurrency.h
+        * apps/JAWS2/JAWS/IO_Acceptor.h
+        * apps/JAWS2/JAWS/IO_Handler.cpp
+        * apps/JAWS2/JAWS/jaws2.mpc
+        * apps/JAWS2/JAWS/Makefile.am
+        * apps/JAWS2/JAWS/Pipeline_Tasks.cpp
+        * apps/JAWS2/JAWS/Server.cpp
+          Updated includes and filenames
+
 Wed May 20 12:13:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX.pm:

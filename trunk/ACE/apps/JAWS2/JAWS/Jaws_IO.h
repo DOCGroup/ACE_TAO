@@ -38,8 +38,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 class JAWS_IO_Handler;
 class JAWS_IO_Acceptor;
 
-
-
 class JAWS_Export JAWS_IO
   // = TITLE
   //
