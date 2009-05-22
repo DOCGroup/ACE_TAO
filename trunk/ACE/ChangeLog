@@ -1,3 +1,9 @@
+Fri May 22 12:11:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessWinCE.pm:
+        * bin/PerlACE/ProcessWinCE_Unix.pm:
+          Only use the vxtest file in a non static test
+
 Fri May 22 11:12:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SOCK_Dgram.cpp:
