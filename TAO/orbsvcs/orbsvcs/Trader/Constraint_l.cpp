@@ -1437,7 +1437,7 @@ FILE *file;
 #if YY_NEVER_INTERACTIVE
   b->yy_is_interactive = 0;
 #else
-  b->yy_is_interactive = file ? (ACE_OS::isatty( fileno(file) ) > 0) : 0;
+  b->yy_is_interactive = file ? (ACE_OS::isatty( ACE_OS::fileno(file) ) > 0) : 0;
 #endif
 #endif
   }
@@ -1818,7 +1818,7 @@ trader_strtoull(const char* s, unsigned int base)
           result = (result * base) + (*s - 'A' + 10);
         }
       else
-        { 
+        {
           break;
         }
 
