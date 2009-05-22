@@ -1,3 +1,8 @@
+Fri May 22 08:31:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Module.h:
+          Doxygen fixes
+
 Fri May 22 07:41:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/run_all.pl:
