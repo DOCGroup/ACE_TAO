@@ -348,18 +348,20 @@ sub handle_vxtest_file
         push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/" . $token . " .";
       }
     }
-  if (open ($fh, $vxtestfile)) {
-    my $line1 = <$fh>;
-    chomp $line1;
-    while(<$fh>) {
-      $line1 = $_;
+  if (!$PerlACE::Static) {
+    if (open ($fh, $vxtestfile)) {
+      my $line1 = <$fh>;
       chomp $line1;
-      push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/$line1" . "d.dll .";
-      unshift @$unld_ref, "del $line1" . "d.dll";
+      while(<$fh>) {
+        $line1 = $_;
+        chomp $line1;
+        push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/$line1" . "d.dll .";
+        unshift @$unld_ref, "del $line1" . "d.dll";
+      }
+      close $fh;
+    } else {
+      return 0;
     }
-    close $fh;
-  } else {
-    return 0;
   }
   return 1;
 }
