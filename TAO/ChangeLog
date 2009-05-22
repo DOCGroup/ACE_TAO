@@ -1,4 +1,9 @@
-Wed May 20 09:56:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri May 22 15:02:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/README:
+          Extended this file
+
+Fri May 22 09:56:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
         * orbsvcs/tests/FT_App/FT_Client.cpp:
