@@ -1,3 +1,9 @@
+Fri May 22 11:12:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_Dgram_Mcast.cpp:
+          Fixed casing of include for cegcc
+
 Fri May 22 10:57:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_cegcc.GNU:
