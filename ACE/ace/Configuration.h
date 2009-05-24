@@ -177,7 +177,7 @@ public:
   /**
    * @param key          Section key to remove the named section from.
    * @param sub_section  Name of the section to remove.
-   * @param recursive    If non zero, any subkeys below @a sub_section are
+   * @param recursive    If true, any subkeys below @a sub_section are
    *                     removed as well.
    *
    * @retval   0 for success.
@@ -185,7 +185,7 @@ public:
    */
   virtual int remove_section (const ACE_Configuration_Section_Key &key,
                               const ACE_TCHAR *sub_section,
-                              int recursive) = 0;
+                              bool recursive) = 0;
 
   /**
    * Enumerates through the values in a section.
@@ -483,7 +483,7 @@ public:
 
   virtual int remove_section (const ACE_Configuration_Section_Key& key,
                               const ACE_TCHAR* sub_section,
-                              int recursive);
+                              bool recursive);
 
   virtual int enumerate_values (const ACE_Configuration_Section_Key& key,
                                 int index,
@@ -805,7 +805,7 @@ public:
 
   virtual int remove_section (const ACE_Configuration_Section_Key& key,
                               const ACE_TCHAR* sub_section,
-                              int recursive);
+                              bool recursive);
 
   virtual int enumerate_values (const ACE_Configuration_Section_Key& key,
                                 int index,

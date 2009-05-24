@@ -536,7 +536,7 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
 int
 ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section_Key& key,
                                                  const ACE_TCHAR* sub_section,
-                                                 int recursive)
+                                                 bool recursive)
 {
   if (validate_name (sub_section))
     return -1;
@@ -570,13 +570,23 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
                                     0,
                                     0) == ERROR_SUCCESS)
         {
-          remove_section (section, name_buffer, 1);
+          remove_section (section, name_buffer, true);
           buffer_size = ACE_DEFAULT_BUFSIZE;
         }
     }
 
-  int errnum;
-  errnum = ACE_TEXT_RegDeleteKey (base_key, sub_section);
+#if defined (ACE_HAS_WINCE)
+  // On WinCE RegDeleteKey also deletes everything recursively, so
+  // first check if we have subkeys before we start a delete
+  ACE_TString name;
+  if (!recursive && this->enumerate_sections (key, 0, name) == 0)
+    {
+      // We have subkeys so fail to remove them
+      return -1;
+    }
+#endif /* ACE_HAS_WINCE */
+
+  int const errnum = ACE_TEXT_RegDeleteKey (base_key, sub_section);
   if (errnum != ERROR_SUCCESS)
     {
       errno = errnum;
@@ -1587,7 +1597,7 @@ ACE_Configuration_Heap::open_simple_section (const ACE_Configuration_Section_Key
 int
 ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key,
                                         const ACE_TCHAR* sub_section,
-                                        int recursive)
+                                        bool recursive)
 {
   ACE_ASSERT (this->allocator_);
   if (validate_name (sub_section))
@@ -1624,7 +1634,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
       ACE_TString name;
       while (!enumerate_sections (section, index, name))
         {
-          if (remove_section (section, name.fast_rep (), 1))
+          if (remove_section (section, name.fast_rep (), true))
             return -1;
 
           ++index;

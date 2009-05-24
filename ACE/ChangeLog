@@ -1,3 +1,11 @@
+Sun May 24 18:27:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Configuration.{h,cpp}
+          With WinCE RegKeyDelete just does a recursive delete, on regular
+          Windows RegKeyDelete only works when there are no subkeys. Added
+          WinCE specific code to check if we have subkeys, if yes, then
+          return with an error
+
 Fri May 22 16:20:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Message_Queue_Test.cpp:
