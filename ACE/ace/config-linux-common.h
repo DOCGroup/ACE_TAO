@@ -320,11 +320,8 @@
 #define ACE_HAS_SCANDIR
 #if (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 10)
 // Although the scandir man page says otherwise, this setting is correct.
+// The setting was fixed in 2.10, so do not use the hack after that.
 #define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
-#else
-// The prototype was fixed in 2009/03/15, the first release after that
-// is 2.10.  I am curious as to what other operating systems do.
-#define ACE_SCANDIR_CMP_USES_CONST_DIRENT
 #endif
 
 // A conflict appears when including both <ucontext.h> and
