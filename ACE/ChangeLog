@@ -1,3 +1,11 @@
+Mon May 25 18:21:40 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * ace/OS_NS_dirent.h:
+        * ace/config-linux-common.h:
+          Fixed bug 3681, code would not build with glibc-2.10 because the
+          prototype for scandir() changed.  Automatically detect the
+          version of glibc and use the right prototype for it.
+
 Mon May 25 11:26:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS/server/IO.cpp
