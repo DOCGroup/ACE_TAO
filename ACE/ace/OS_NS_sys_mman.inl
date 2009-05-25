@@ -75,10 +75,15 @@ ACE_OS::mmap (void *addr,
 
   if (ACE_BIT_ENABLED (flags, MAP_PRIVATE))
     {
-#  if !defined(ACE_HAS_WINCE)
+#  if defined(ACE_HAS_WINCE)
+      // PAGE_WRITECOPY is not avaible on CE, but this should be the same
+      // as PAGE_READONLY according to MSDN
+      prot = PAGE_READONLY;
+      nt_flags = FILE_MAP_ALL_ACCESS;
+#  else
       prot = PAGE_WRITECOPY;
-#  endif  // ACE_HAS_WINCE
       nt_flags = FILE_MAP_COPY;
+#  endif  // ACE_HAS_WINCE
     }
   else if (ACE_BIT_ENABLED (flags, MAP_SHARED))
     {
@@ -116,20 +121,20 @@ ACE_OS::mmap (void *addr,
   DWORD low_off  = ACE_LOW_PART (off);
   DWORD high_off = ACE_HIGH_PART (off);
 
-#  if !defined (ACE_HAS_WINCE)
+#  if defined (ACE_HAS_WINCE)
+  void *addr_mapping = ::MapViewOfFile (*file_mapping,
+                                        nt_flags,
+                                        high_off,
+                                        low_off,
+                                        len);
+#  else
   void *addr_mapping = ::MapViewOfFileEx (*file_mapping,
                                           nt_flags,
                                           high_off,
                                           low_off,
                                           len,
                                           addr);
-#  else
-  void *addr_mapping = ::MapViewOfFile (*file_mapping,
-                                        nt_flags,
-                                        high_off,
-                                        low_off,
-                                        len);
-#  endif /* ! ACE_HAS_WINCE */
+#  endif /* ACE_HAS_WINCE */
 
   // Only close this down if we used the temporary.
   if (file_mapping == &local_handle)
