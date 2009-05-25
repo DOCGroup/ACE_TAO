@@ -78,7 +78,6 @@ ACE_OS::mmap (void *addr,
 #  if defined(ACE_HAS_WINCE)
       // PAGE_WRITECOPY is not avaible on CE, but this should be the same
       // as PAGE_READONLY according to MSDN
-      prot = PAGE_READONLY;
       nt_flags = FILE_MAP_ALL_ACCESS;
 #  else
       prot = PAGE_WRITECOPY;
