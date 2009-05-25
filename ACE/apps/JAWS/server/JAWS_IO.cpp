@@ -7,7 +7,7 @@
 #include "ace/Min_Max.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Filecache.h"
-#include "IO.h"
+#include "JAWS_IO.h"
 #include "HTTP_Helpers.h"
 
 #include "ace/OS_NS_fcntl.h"

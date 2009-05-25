@@ -11,7 +11,7 @@
 #include "HTTP_Request.h"
 #include "HTTP_Helpers.h"
 #include "HTTP_Config.h"
-#include "IO.h"
+#include "JAWS_IO.h"
 
 ACE_RCSID(server, HTTP_Response, "$Id$")
 

@@ -1,3 +1,18 @@
+Mon May 25 11:26:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS/server/IO.cpp
+        * apps/JAWS/server/IO.h
+        * apps/JAWS/server/JAWS_IO.cpp
+        * apps/JAWS/server/JAWS_IO.h
+          Renamed to JAWS_IO
+
+        * apps/JAWS/server/HTTP_Handler.h
+        * apps/JAWS/server/HTTP_Response.cpp
+        * apps/JAWS/server/JAWS_Concurrency.h
+        * apps/JAWS/server/Makefile.am
+        * apps/JAWS/server/server.mpc
+          Updated because of change above
+
 Mon May 25 09:47:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_mman.inl:
