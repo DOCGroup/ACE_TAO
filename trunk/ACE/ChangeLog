@@ -1,3 +1,9 @@
+Mon May 25 18:47:24 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * ace/config-linux-common.h:
+        * ace/OS_NS_dirent.h:
+          Johnny Willemsen found a more elegant fix.  Applied.
+
 Mon May 25 18:21:40 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
 
         * ace/OS_NS_dirent.h:

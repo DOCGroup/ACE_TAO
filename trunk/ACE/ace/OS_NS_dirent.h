@@ -40,10 +40,7 @@
 // uses void*, that's handled internal to the ACE_OS::scandir() wrapper using
 // the ACE_SCANDIR_OS_COMPARATOR.
 extern "C" {
-#if defined (ACE_SCANDIR_CMP_USES_CONST_DIRECT)
-  typedef int (*ACE_SCANDIR_OS_COMPARATOR)(ACE_DIRENT const **f1,
-					   ACE_DIRENT const **f2);
-#elif defined (ACE_SCANDIR_CMP_USES_VOIDPTR)
+#if defined (ACE_SCANDIR_CMP_USES_VOIDPTR)
   typedef int (*ACE_SCANDIR_OS_COMPARATOR)(void *f1, void *f2);
 #elif defined (ACE_SCANDIR_CMP_USES_CONST_VOIDPTR)
   typedef int (*ACE_SCANDIR_OS_COMPARATOR)(const void *f1, const void *f2);
