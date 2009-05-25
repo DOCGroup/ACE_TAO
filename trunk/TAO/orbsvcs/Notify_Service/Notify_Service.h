@@ -168,11 +168,16 @@ protected:
   suseconds_t timeout_;
 
   /// Logging interval
-
   ACE_Time_Value logging_interval_;
 
   /// Logging worker
   LoggingWorker logging_worker_;
+
+  /// Shutdown the ORB?
+  bool shutdown_orb_;
+
+  /// Shutdown the dispatching ORB?
+  bool shutdown_dispatching_orb_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

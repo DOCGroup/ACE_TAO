@@ -1,3 +1,16 @@
+Mon May 24 12:54:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.h:
+        * orbsvcs/Notify_Service/README:
+          By default the notify service does a shutdown of the global
+          orb and its dispatching ORB. In case the notify service is
+          loaded into a process using service config this could cause
+          issues to other parts that use the same ORBs. Added a
+          -ShutdownORB and -ShutdownDispatchingORB which are default
+          1, but they could be set to 0 to not shutdown the mentioned
+          ORB
+
 Fri May 22 15:02:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/README:

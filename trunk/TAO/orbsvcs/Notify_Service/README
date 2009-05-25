@@ -57,6 +57,12 @@ Command line arguments:
                               and use a separate ORB dedicated to dispatching of
                               events.
 
+"-ShutdownORB 1|0" : Indicates that we have to shutdown the default ORB,
+                     1 by default
+
+"-ShutdownDispatchingORB 1|0" : Indicates that we have to shutdown the
+                                dispatching ORB, 1 by default
+
 "-Timeout msec" : Applies a relative round-trip timeout of msec microseconds
                   to the main ORB and, if -UseSeparateDispatchingORB 1 is
                   specified, to the dispatching ORB.  This requires the
