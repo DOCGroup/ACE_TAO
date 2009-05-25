@@ -31,6 +31,8 @@ TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
 , separate_dispatching_orb_ (false)
 , timeout_ (0)
 , logging_worker_(this)
+, shutdown_orb_ (true)
+, shutdown_dispatching_orb_ (true)
 {
 }
 
@@ -398,14 +400,14 @@ TAO_Notify_Service_Driver::fini (void)
     }
 
   // shutdown the ORB.
-  if (!CORBA::is_nil (orb.in ()))
+  if (this->shutdown_orb_ && !CORBA::is_nil (orb.in ()))
     {
       orb->shutdown ();
 
       orb->destroy ();
     }
 
-  if (!CORBA::is_nil (dispatching_orb_.in ()))
+  if (this->shutdown_dispatching_orb_ && !CORBA::is_nil (dispatching_orb_.in ()))
     {
       dispatching_orb->shutdown ();
 
@@ -428,35 +430,63 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
           this->notify_factory_name_.set (ACE_TEXT_ALWAYS_CHAR(current_arg));
           arg_shifter.consume_arg ();
         }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ShutdownORB")) == 0)
+        {
+          current_arg = arg_shifter.get_the_parameter
+                              (ACE_TEXT("-ShutdownORB"));
+          if (current_arg != 0 &&
+              (ACE_OS::strcmp(ACE_TEXT ("0"), current_arg) == 0 ||
+               ACE_OS::strcmp(ACE_TEXT ("1"), current_arg) == 0))
+            {
+              this->shutdown_orb_ =
+                            static_cast<bool> (ACE_OS::atoi(current_arg));
+            }
+          if (current_arg != 0)
+            arg_shifter.consume_arg ();
+        }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ShutdownDispatchingORB")) == 0)
+        {
+          current_arg = arg_shifter.get_the_parameter
+                              (ACE_TEXT("-ShutdownDispatchingORB"));
+          if (current_arg != 0 &&
+              (ACE_OS::strcmp(ACE_TEXT ("0"), current_arg) == 0 ||
+               ACE_OS::strcmp(ACE_TEXT ("1"), current_arg) == 0))
+            {
+              this->shutdown_dispatching_orb_ =
+                            static_cast<bool> (ACE_OS::atoi(current_arg));
+            }
+          if (current_arg != 0)
+            arg_shifter.consume_arg ();
+        }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-UseSeparateDispatchingORB")) == 0)
         {
-      current_arg = arg_shifter.get_the_parameter
-                            (ACE_TEXT("-UseSeparateDispatchingORB"));
-      if (current_arg != 0 &&
-          (ACE_OS::strcmp(ACE_TEXT ("0"), current_arg) == 0 ||
-           ACE_OS::strcmp(ACE_TEXT ("1"), current_arg) == 0))
-        {
-          if (TAO_debug_level > 0)
+          current_arg = arg_shifter.get_the_parameter
+                              (ACE_TEXT("-UseSeparateDispatchingORB"));
+          if (current_arg != 0 &&
+              (ACE_OS::strcmp(ACE_TEXT ("0"), current_arg) == 0 ||
+               ACE_OS::strcmp(ACE_TEXT ("1"), current_arg) == 0))
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Using separate dispatching ORB\n")));
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("Using separate dispatching ORB\n")));
+                }
+              this->separate_dispatching_orb_ =
+                            static_cast<bool> (ACE_OS::atoi(current_arg));
             }
-          this->separate_dispatching_orb_ =
-                        static_cast<bool> (ACE_OS::atoi(current_arg));
-        }
-      else
-        {
-          if (TAO_debug_level > 0)
+          else
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("WARNING: Unrecognized ")
-                          ACE_TEXT ("argument (%s) to ")
-                          ACE_TEXT ("-UseSeparateDispatchingORB.\n"),
-                          (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("WARNING: Unrecognized ")
+                              ACE_TEXT ("argument (%s) to ")
+                              ACE_TEXT ("-UseSeparateDispatchingORB.\n"),
+                              (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+                }
             }
-        }
-      if (current_arg != 0)
-        arg_shifter.consume_arg ();
+          if (current_arg != 0)
+            arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Boot")) == 0)
         {
@@ -541,6 +571,8 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
                      ACE_TEXT ("-Channel -ChannelName channel_name ")
                      ACE_TEXT ("-RunThreads threads ")
                      ACE_TEXT ("-Timeout <msec>\n")
+                     ACE_TEXT ("-ShutdownORB 1|0")
+                     ACE_TEXT ("-ShutdownDispatchingORB 1|0")
                      ACE_TEXT ("default: %s -Factory NotifyEventChannelFactory ")
                      ACE_TEXT ("-NameSvc -Channel NotifyEventChannel -ORBRunThreads 1\n"),
                      argv[0], argv[0]));
