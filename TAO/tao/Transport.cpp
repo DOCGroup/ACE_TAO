@@ -401,7 +401,7 @@ TAO_Transport::sendfile (TAO_MMAP_Allocator * /* allocator */,
                          iovec * iov,
                          int iovcnt,
                          size_t &bytes_transferred,
-                         ACE_Time_Value const * timeout)
+                         TAO::Transport::Drain_Constraints const & dc)
 {
   // Concrete pluggable transport doesn't implement sendfile().
   // Fallback on TAO_Transport::send().
@@ -410,7 +410,8 @@ TAO_Transport::sendfile (TAO_MMAP_Allocator * /* allocator */,
   //    implementation to this base class method, and leave any TCP
   //    specific configuration out of this base class method.
   //      -Ossama
-  return this->send (iov, iovcnt, bytes_transferred, timeout);
+  return this->send (iov, iovcnt, bytes_transferred,
+                     this->io_timeout (dc));
 }
 #endif  /* TAO_HAS_SENDFILE==1 */
 
@@ -521,19 +522,23 @@ TAO_Transport::update_transport (void)
  *
  */
 int
-TAO_Transport::handle_output (ACE_Time_Value *max_wait_time)
+TAO_Transport::handle_output (TAO::Transport::Drain_Constraints const & dc)
 {
   if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_output\n"),
-                  this->id ()));
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_output"
+                            " - block_on_io=%d, timeout=%d.%06d\n"),
+                  this->id (),
+              dc.block_on_io(),
+              dc.timeout() ? dc.timeout()->sec() : -1,
+              dc.timeout() ? dc.timeout()->usec() : -1 ));
     }
 
   // The flushing strategy (potentially via the Reactor) wants to send
   // more data, first check if there is a current message that needs
   // more sending...
-  int const retval = this->drain_queue (max_wait_time);
+  int const retval = this->drain_queue (dc);
 
   if (TAO_debug_level > 3)
     {
@@ -566,15 +571,18 @@ TAO_Transport::send_message_block_chain (const ACE_Message_Block *mb,
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
 
+  TAO::Transport::Drain_Constraints dc(
+      max_wait_time, true);
+
   return this->send_message_block_chain_i (mb,
                                            bytes_transferred,
-                                           max_wait_time);
+                                           dc);
 }
 
 int
 TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
                                            size_t &bytes_transferred,
-                                           ACE_Time_Value *max_wait_time)
+                                           TAO::Transport::Drain_Constraints const & dc)
 {
   size_t const total_length = mb->total_length ();
 
@@ -584,7 +592,7 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
 
   synch_message.push_back (this->head_, this->tail_);
 
-  int const n = this->drain_queue_i (max_wait_time);
+  int const n = this->drain_queue_i (dc);
 
   if (n == -1)
     {
@@ -769,7 +777,10 @@ int
 TAO_Transport::send_synch_message_helper_i (TAO_Synch_Queued_Message &synch_message,
                                             ACE_Time_Value * max_wait_time)
 {
-  int const n = this->drain_queue_i (max_wait_time);
+  TAO::Transport::Drain_Constraints dc(
+      max_wait_time, this->using_blocking_io_for_synch_messages());
+  
+  int const n = this->drain_queue_i (dc);
 
   if (n == -1)
     {
@@ -890,10 +901,10 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
 }
 
 int
-TAO_Transport::drain_queue (ACE_Time_Value *max_wait_time)
+TAO_Transport::drain_queue (TAO::Transport::Drain_Constraints const & dc)
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-  int const retval = this->drain_queue_i (max_wait_time);
+  int const retval = this->drain_queue_i (dc);
 
   if (retval == 1)
     {
@@ -911,10 +922,15 @@ TAO_Transport::drain_queue (ACE_Time_Value *max_wait_time)
 }
 
 int
-TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[], ACE_Time_Value *max_wait_time)
+TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
+    TAO::Transport::Drain_Constraints const & dc)
 {
+  // As a side-effect, this decrements the timeout() pointed-to value by
+  // the time used in this function.  That might be important as there are
+  // potentially long running system calls invoked from here.
+  ACE_Countdown_Time countdown(dc.timeout());
+
   size_t byte_count = 0;
-  ACE_Countdown_Time countdown (max_wait_time);
 
   // ... send the message ...
   ssize_t retval = -1;
@@ -924,10 +940,12 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[], ACE_Time_Value *max
     retval = this->sendfile (this->mmap_allocator_,
                              iov,
                              iovcnt,
-                             byte_count);
+                             byte_count,
+                             dc);
   else
 #endif  /* TAO_HAS_SENDFILE==1 */
-    retval = this->send (iov, iovcnt, byte_count, max_wait_time);
+    retval = this->send (iov, iovcnt, byte_count,
+                         this->io_timeout (dc));
 
   if (TAO_debug_level == 5)
     {
@@ -988,7 +1006,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[], ACE_Time_Value *max
 }
 
 int
-TAO_Transport::drain_queue_i (ACE_Time_Value *max_wait_time)
+TAO_Transport::drain_queue_i (TAO::Transport::Drain_Constraints const & dc)
 {
   // This is the vector used to send data, it must be declared outside
   // the loop because after the loop there may still be data to be
@@ -1039,8 +1057,7 @@ TAO_Transport::drain_queue_i (ACE_Time_Value *max_wait_time)
       // IOV_MAX elements ...
       if (iovcnt == ACE_IOV_MAX)
         {
-          int const retval = this->drain_queue_helper (iovcnt, iov,
-                                                       max_wait_time);
+          int const retval = this->drain_queue_helper (iovcnt, iov, dc);
 
           now = ACE_High_Res_Timer::gettimeofday_hr ();
 
@@ -1067,7 +1084,7 @@ TAO_Transport::drain_queue_i (ACE_Time_Value *max_wait_time)
 
   if (iovcnt != 0)
     {
-      int const retval = this->drain_queue_helper (iovcnt, iov, max_wait_time);
+      int const retval = this->drain_queue_helper (iovcnt, iov, dc);
 
       if (TAO_debug_level > 4)
         {
@@ -1345,6 +1362,9 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
   bool partially_sent = false;
   bool timeout_encountered = false;
 
+  TAO::Transport::Drain_Constraints dc(
+      max_wait_time, this->using_blocking_io_for_asynch_messages());
+
   if (try_sending_first)
     {
       ssize_t n = 0;
@@ -1367,7 +1387,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
       // code I will re-visit this decision
       n = this->send_message_block_chain_i (message_block,
                                             byte_count,
-                                            max_wait_time);
+                                            dc);
 
       if (n == -1)
         {
@@ -2753,6 +2773,37 @@ TAO_Transport::allocate_partial_message_block (void)
 void
 TAO_Transport::set_bidir_context_info (TAO_Operation_Details &)
 {
+}
+
+ACE_Time_Value const *
+TAO_Transport::io_timeout(
+    TAO::Transport::Drain_Constraints const & dc) const
+{
+  if (dc.block_on_io())
+  {
+    return dc.timeout();
+  }
+  if (this->wait_strategy()->can_process_upcalls())
+  {
+    return 0;
+  }
+  return dc.timeout();
+}
+
+bool
+TAO_Transport::using_blocking_io_for_synch_messages() const
+{
+  if (this->wait_strategy()->can_process_upcalls())
+  {
+    return false;
+  }
+  return true;
+}
+
+bool
+TAO_Transport::using_blocking_io_for_asynch_messages() const
+{
+  return false;
 }
 
 /*
