@@ -1,6 +1,8 @@
 #include "Backend_Impl.h"
 #include "ace/OS.h"
 
+ACE_RCSID(Bug_3647_Regression, Backend_Impl, "$Id$")
+
 Bug_3647_Regression::Backend_Impl::
 Backend_Impl(CORBA::ORB_ptr orb, bool verbose)
   : POA_Bug_3647_Regression::Backend()

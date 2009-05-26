@@ -20,13 +20,13 @@ usage(ACE_TCHAR const *cmd,
       ACE_TCHAR const *msg)
 {
   ACE_ERROR ((LM_ERROR,
-	      "usage:  %s "
-	      "-v "
-	      "-k <ior> "
-	      "-t timeout "
-	      "\n"
-	      "        %s\n",
-	      cmd, msg));
+              "usage:  %s "
+              "-v "
+              "-k <ior> "
+              "-t timeout "
+              "\n"
+              "        %s\n",
+              cmd, msg));
 }
 
 int
@@ -53,8 +53,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       case '?':
       default:
-	usage(argv[0], "unknown argument");
-	return -1;
+        usage(argv[0], "unknown argument");
+        return -1;
       }
 
   if (stimeout != 0)

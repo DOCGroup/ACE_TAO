@@ -7,6 +7,8 @@
  * Doxygen documentation for all the tests.  Also, it makes it clear as to
  * what types are local vs. coming from the library vs. generated.
  *
+ * $Id$
+ *
  */
 
 module Bug_3647_Regression
