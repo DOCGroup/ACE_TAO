@@ -88,7 +88,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
                               iovec * iov,
                               int iovcnt,
                               size_t &bytes_transferred,
-			      TAO::Transport::Drain_Constraints const & dc)
+                              TAO::Transport::Drain_Constraints const & dc)
 {
   // @@ We should probably set the TCP_CORK socket option to minimize
   //    network operations.  It may also be useful to adjust the
@@ -107,7 +107,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
     {
       if (-1 == allocator->offset (index->iov_base))
         return this->send (iov, iovcnt, bytes_transferred,
-			   this->io_timeout(dc));
+                           this->io_timeout(dc));
     }
 
   ssize_t retval = -1;
@@ -130,7 +130,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
         {
           int val = 0;
           if (ACE::enter_send_timedwait (out_fd,
-					 this->io_timeout(dc), val) == -1)
+                                         this->io_timeout(dc), val) == -1)
             return retval;
           else
             {

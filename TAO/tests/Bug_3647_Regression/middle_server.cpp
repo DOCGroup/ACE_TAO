@@ -26,15 +26,15 @@ usage(ACE_TCHAR const *cmd,
       ACE_TCHAR const *msg)
 {
   ACE_ERROR ((LM_ERROR,
-	      "Usage:  %s "
-	      "-v "
-	      "-k <ior> "
-	      "-o <iorfile> "
-	      "-s <NONE|TRANSPORT|SERVER|TARGET|DELAYED> "
-	      "-t timeout "
-	      "\n"
-	      "        %s\n",
-	      cmd, msg));
+              "Usage:  %s "
+              "-v "
+              "-k <ior> "
+              "-o <iorfile> "
+              "-s <NONE|TRANSPORT|SERVER|TARGET|DELAYED> "
+              "-t timeout "
+              "\n"
+              "        %s\n",
+              cmd, msg));
 }
 
 int
@@ -70,8 +70,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       case '?':
       default:
-	usage(argv[0], "unknown argument");
-	return -1;
+        usage(argv[0], "unknown argument");
+        return -1;
       }
 
   if (ACE_OS::strcmp(sname, "NONE") == 0) {
@@ -94,10 +94,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
       ACE_TCHAR *end;
       long tmp = ACE_OS::strtol(stimeout, &end, 10);
       if (end == 0 || *end != '\0')
-	{
-	  usage(argv[0], "Invalid timeout value");
-	  return -1;
-	}
+        {
+          usage(argv[0], "Invalid timeout value");
+          return -1;
+        }
       timeout = tmp;
     }
 
@@ -174,7 +174,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       using namespace Bug_3647_Regression;
       TAO::Utils::Servant_Var<Middle_Impl> impl(
           new Middle_Impl(backend.in(), orb.in(), verbose,
-			  timeout));
+                          timeout));
 
       PortableServer::ObjectId_var id =
           root_poa->activate_object (impl.in());

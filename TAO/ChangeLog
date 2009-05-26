@@ -1,3 +1,20 @@
+Tue May 26 17:09:00 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tao/Transport.h:
+        * tao/IIOP_Transport.h:
+        * tao/Transport.cpp:
+        * tao/IIOP_Transport.cpp:
+        * tests/Bug_3647_Regression/client.cpp:
+        * tests/Bug_3647_Regression/Middle_Impl.cpp:
+        * tests/Bug_3647_Regression/Middle_Impl.h:
+        * tests/Bug_3647_Regression/middle_server.cpp:
+        * tests/Bug_3647_Regression/Test.idl:
+        * tests/Bug_3647_Regression/Backend_Impl.cpp:
+        * tests/Bug_3647_Regression/run_test.pl:
+        * tests/Bug_3647_Regression/Backend_Impl.h:
+          Fix fuzz problems, tabs, indentation in perl scripts, the Id
+          stuff, etc.
+
 Tue May 26 11:25:03 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
 
         * tao/Transport.h:
