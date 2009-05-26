@@ -575,17 +575,6 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
         }
     }
 
-#if defined (ACE_HAS_WINCE)
-  // On WinCE RegDeleteKey also deletes everything recursively, so
-  // first check if we have subkeys before we start a delete
-  ACE_TString name;
-  if (!recursive && this->enumerate_sections (key, 0, name) == 0)
-    {
-      // We have subkeys so fail to remove them
-      return -1;
-    }
-#endif /* ACE_HAS_WINCE */
-
   int const errnum = ACE_TEXT_RegDeleteKey (base_key, sub_section);
   if (errnum != ERROR_SUCCESS)
     {
