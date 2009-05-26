@@ -1,3 +1,8 @@
+Tue May 26 05:56:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS/server/HTTP_Server.cpp:
+          Fixed include
+
 Mon May 25 18:47:24 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
 
         * ace/config-linux-common.h:
