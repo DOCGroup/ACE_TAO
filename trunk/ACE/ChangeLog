@@ -1,3 +1,17 @@
+Tue May 26 06:56:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Configuration.{h,cpp}
+          Removed my WinCE code again, it seems to break another part
+          of the test
+
+        * ace/os_include/netinet/os_in.h:
+          Layout change
+
+        * ace/config-win32-msvc-10.h:
+        * ace/config-win32-msvc-9.h:
+          If we compile for Vista or higher then enable the native
+          windows condition variables
+
 Tue May 26 05:56:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS/server/HTTP_Server.cpp:
