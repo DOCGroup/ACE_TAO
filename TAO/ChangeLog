@@ -1,3 +1,8 @@
+Tue May 26 09:26:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug 3672 regression as not fixed
+
 Mon May 25 19:05:22 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
 
         * Fixed bug #3647.  In this commit I am merging the changes form
@@ -6,10 +11,10 @@ Mon May 25 19:05:22 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
           $ svn merge --accept postpone -r85163:HEAD \
               https://svn.dre.vanderbilt.edu/DOC/Middleware/\
               branches/Bug_3647_Regression .
-        
+
           The typical conflict in the ChangeLog was manually resolved.
 
-        * bin/tao_orb_tests.lst: 
+        * bin/tao_orb_tests.lst:
           Add the new test, in alphabetical order, preserve tests added in
           trunk.
 
@@ -122,12 +127,12 @@ Mon May 25 19:05:22 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
         * bin/tao_orb_tests.lst:
           Add Bug_3647_Regression to the list.
 
-Mon May 24 14:26:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon May 25 14:26:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3672_Regression:
           New test for bug 3672, we seem to have a resource leak with AMI
 
-Mon May 24 12:54:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon May 25 12:54:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
         * orbsvcs/Notify_Service/Notify_Service.h:
