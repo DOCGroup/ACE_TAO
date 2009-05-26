@@ -1,5 +1,7 @@
 #include "Middle_Impl.h"
 
+ACE_RCSID(Bug_3647_Regression, Middle_Impl, "$Id$")
+
 Bug_3647_Regression::Middle_Impl::
 Middle_Impl(
     Backend_ptr backend,
