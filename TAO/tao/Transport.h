@@ -503,7 +503,7 @@ public:
                             iovec * iov,
                             int iovcnt,
                             size_t &bytes_transferred,
-      TAO::Transport::Drain_Constraints const & dc);
+			    TAO::Transport::Drain_Constraints const & dc);
 #endif  /* TAO_HAS_SENDFILE==1 */
 
 
@@ -775,6 +775,21 @@ protected:
   int queue_message_i (const ACE_Message_Block *message_block,
                        ACE_Time_Value *max_wait_time, bool back=true);
 
+  /**
+   * @brief Re-factor computation of I/O timeouts based on operation
+   * timeouts.
+   * Depending on the wait strategy, we need to timeout I/O operations or
+   * not.  For example, if we are using a non-blocking strategy, we want
+   * to pass 0 to all I/O operations, and rely on the ACE_NONBLOCK
+   * settings on the underlying sockets.  However, for blocking strategies
+   * we want to pass the operation timeouts, to respect the application
+   * level policies.
+   *
+   * This function was introduced as part of the fixes for bug 3647.
+   */
+  ACE_Time_Value const *io_timeout(
+      TAO::Transport::Drain_Constraints const & dc) const;
+
 public:
   /// Format and queue a message for @a stream
   /// @param max_wait_time The maximum time that the operation can
@@ -1011,21 +1026,6 @@ private:
   /// Allocate a partial message block and store it in our
   /// partial_message_ data member.
   void allocate_partial_message_block (void);
-
-  /**
-   * @brief Re-factor computation of I/O timeouts based on operation
-   * timeouts.
-   * Depending on the wait strategy, we need to timeout I/O operations or
-   * not.  For example, if we are using a non-blocking strategy, we want
-   * to pass 0 to all I/O operations, and rely on the ACE_NONBLOCK
-   * settings on the underlying sockets.  However, for blocking strategies
-   * we want to pass the operation timeouts, to respect the application
-   * level policies.
-   *
-   * This function was introduced as part of the fixes for bug 3647.
-   */
-  ACE_Time_Value const *io_timeout(
-      TAO::Transport::Drain_Constraints const & dc) const;
 
   /**
    * Return true if blocking I/O should be used for sending synchronous

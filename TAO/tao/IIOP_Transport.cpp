@@ -88,7 +88,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
                               iovec * iov,
                               int iovcnt,
                               size_t &bytes_transferred,
-                              ACE_Time_Value const * timeout)
+			      TAO::Transport::Drain_Constraints const & dc)
 {
   // @@ We should probably set the TCP_CORK socket option to minimize
   //    network operations.  It may also be useful to adjust the
@@ -97,7 +97,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
   // If we don't have an allocator, fallback to the regular way of sending
   // data
   if (allocator == 0)
-    return this->send (iov, iovcnt, bytes_transferred, timeout);
+    return this->send (iov, iovcnt, bytes_transferred, this->io_timeout(dc));
 
   // We can only use sendfile when all data is coming from the mmap allocator,
   // if not, we just fallback to to the regular way of sending data
@@ -106,7 +106,8 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
   for (iovec * index = off_check_begin; index != off_check_end; ++index)
     {
       if (-1 == allocator->offset (index->iov_base))
-        return this->send (iov, iovcnt, bytes_transferred, timeout);
+        return this->send (iov, iovcnt, bytes_transferred,
+			   this->io_timeout(dc));
     }
 
   ssize_t retval = -1;
@@ -125,17 +126,17 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
     {
       off_t offset = allocator->offset (i->iov_base);
 
-      if (timeout)
+      if (this->io_timeout(dc))
         {
           int val = 0;
-          if (ACE::enter_send_timedwait (out_fd, timeout, val) == -1)
+          if (ACE::enter_send_timedwait (out_fd,
+					 this->io_timeout(dc), val) == -1)
             return retval;
           else
             {
               retval =
                 ACE_OS::sendfile (out_fd, in_fd, &offset, i->iov_len);
               ACE::restore_non_blocking_mode (out_fd, val);
-
             }
         }
       else
