@@ -1,3 +1,19 @@
+Tue May 26 11:25:03 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * tao/Transport.h:
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+          I had the signature of sendfile() completely wrong in
+          IIOP_Transport.  Lucky for me, Johnny pointed out the warnings
+          in the Solaris10_Studio12_Debug build.
+          I also had to move the io_timeout() function in Tranport to the
+          protected section.  This whole sendfile() thing looks like a
+          hack.
+
+        * tao/Transport.cpp:
+          Fix Unicode build problem.  Again, thanks to Johnny for keeping
+          an eye out for me.
+
 Tue May 26 09:26:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:

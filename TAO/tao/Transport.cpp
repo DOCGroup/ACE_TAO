@@ -527,8 +527,8 @@ TAO_Transport::handle_output (TAO::Transport::Drain_Constraints const & dc)
   if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_output"
-                            " - block_on_io=%d, timeout=%d.%06d\n"),
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_output")
+		  ACE_TEXT (" - block_on_io=%d, timeout=%d.%06d\n"),
                   this->id (),
               dc.block_on_io(),
               dc.timeout() ? dc.timeout()->sec() : -1,
