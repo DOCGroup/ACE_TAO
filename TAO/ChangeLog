@@ -1,3 +1,10 @@
+Wed May 27 03:00:37 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Bug_3647_Regression/client.cpp:
+        * tests/Bug_3647_Regression/middle_server.cpp:
+        * tests/Bug_3647_Regression/backend_server.cpp:
+          Fixed Unicode build problems.
+
 Tue May 26 17:09:00 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tao/Transport.h:
