@@ -26,14 +26,14 @@ usage(ACE_TCHAR const *cmd,
       ACE_TCHAR const *msg)
 {
   ACE_ERROR ((LM_ERROR,
-              "Usage:  %s "
-              "-v "
-              "-k <ior> "
-              "-o <iorfile> "
-              "-s <NONE|TRANSPORT|SERVER|TARGET|DELAYED> "
-              "-t timeout "
-              "\n"
-              "        %s\n",
+              ACE_TEXT("Usage:  %s ")
+              ACE_TEXT("-v ")
+              ACE_TEXT("-k <ior> ")
+              ACE_TEXT("-o <iorfile> ")
+              ACE_TEXT("-s <NONE|TRANSPORT|SERVER|TARGET|DELAYED> ")
+              ACE_TEXT("-t timeout ")
+              ACE_TEXT("\n")
+              ACE_TEXT("        %s\n"),
               cmd, msg));
 }
 
@@ -42,7 +42,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("vo:k:s:t:"));
   int c;
-  ACE_TCHAR const *sname = "NONE";
+  ACE_TCHAR const *sname = ACE_TEXT("NONE");
   ACE_TCHAR const *stimeout = 0;
 
   while ((c = get_opts ()) != -1)
@@ -70,22 +70,22 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       case '?':
       default:
-        usage(argv[0], "unknown argument");
+        usage(argv[0], ACE_TEXT("unknown argument"));
         return -1;
       }
 
-  if (ACE_OS::strcmp(sname, "NONE") == 0) {
+  if (ACE_OS::strcmp(sname, ACE_TEXT("NONE")) == 0) {
     scope = Messaging::SYNC_NONE;
-  } else if (ACE_OS::strcmp(sname, "TRANSPORT") == 0) {
+  } else if (ACE_OS::strcmp(sname, ACE_TEXT("TRANSPORT")) == 0) {
     scope = Messaging::SYNC_WITH_TRANSPORT;
-  } else if (ACE_OS::strcmp(sname, "SERVER") == 0) {
+  } else if (ACE_OS::strcmp(sname, ACE_TEXT("SERVER")) == 0) {
     scope = Messaging::SYNC_WITH_SERVER;
-  } else if (ACE_OS::strcmp(sname, "TARGET") == 0) {
+  } else if (ACE_OS::strcmp(sname, ACE_TEXT("TARGET")) == 0) {
     scope = Messaging::SYNC_WITH_TARGET;
-  } else if (ACE_OS::strcmp(sname, "DELAYED") == 0) {
+  } else if (ACE_OS::strcmp(sname, ACE_TEXT("DELAYED")) == 0) {
     scope = TAO::SYNC_DELAYED_BUFFERING;
   } else {
-    usage(argv[0], "Invalid scope value");
+    usage(argv[0], ACE_TEXT("Invalid scope value"));
     return -1;
   }
 
@@ -95,7 +95,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       long tmp = ACE_OS::strtol(stimeout, &end, 10);
       if (end == 0 || *end != '\0')
         {
-          usage(argv[0], "Invalid timeout value");
+          usage(argv[0], ACE_TEXT("Invalid timeout value"));
           return -1;
         }
       timeout = tmp;

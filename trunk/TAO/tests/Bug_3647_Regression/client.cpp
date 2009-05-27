@@ -20,12 +20,12 @@ usage(ACE_TCHAR const *cmd,
       ACE_TCHAR const *msg)
 {
   ACE_ERROR ((LM_ERROR,
-              "usage:  %s "
-              "-v "
-              "-k <ior> "
-              "-t timeout "
-              "\n"
-              "        %s\n",
+              ACE_TEXT("usage:  %s ")
+              ACE_TEXT("-v ")
+              ACE_TEXT("-k <ior> ")
+              ACE_TEXT("-t timeout ")
+              ACE_TEXT("\n")
+              ACE_TEXT("        %s\n"),
               cmd, msg));
 }
 
@@ -53,7 +53,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       case '?':
       default:
-        usage(argv[0], "unknown argument");
+        usage(argv[0], ACE_TEXT("unknown argument"));
         return -1;
       }
 
@@ -63,7 +63,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     long tmp = ACE_OS::strtol(stimeout, &end, 10);
     if (end == 0 || *end != '\0')
     {
-      usage(argv[0], "Invalid timeout value");
+      usage(argv[0], ACE_TEXT("Invalid timeout value"));
       return -1;
     }
     timeout = tmp;
