@@ -21,7 +21,7 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
-#include "../orbsvcs/Notify/CosNotify_Initializer.h"
+#include "orbsvcs/Notify/CosNotify_Initializer.h"
 #include "ace/SString.h"
 #include "ace/Reactor.h"
 #include "ace/Service_Object.h"
