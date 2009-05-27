@@ -35,7 +35,7 @@ namespace CIAO
 
           virtual void ciao_preactivate ();
 
-          virtual void ciao_postactivate ();
+          virtual void configuration_complete ();
 
           virtual void ccm_activate ();
 

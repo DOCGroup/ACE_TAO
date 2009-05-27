@@ -64,7 +64,7 @@ namespace CIDL_Filter_Component
   }
 
   void
-  Filter_Component_exec_i::ciao_postactivate (
+  Filter_Component_exec_i::configuration_complete (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::CCMException))

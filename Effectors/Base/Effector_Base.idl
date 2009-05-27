@@ -10,7 +10,7 @@
 #ifndef EFFECTOR_BASE_IDL
 #define EFFECTOR_BASE_IDL
 
-#include "ciao/Components.idl"
+#include "Components.idl"
 #include "common/OpString.idl"
 
 module CIAO

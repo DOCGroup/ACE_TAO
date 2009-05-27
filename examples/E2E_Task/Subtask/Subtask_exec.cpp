@@ -90,7 +90,7 @@ namespace CIAO
       }
 
       void
-      Subtask_exec_i::ciao_postactivate ()
+      Subtask_exec_i::configuration_complete ()
       {
         // Your code here.
       }

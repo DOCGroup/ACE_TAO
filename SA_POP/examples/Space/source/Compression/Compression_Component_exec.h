@@ -72,7 +72,7 @@ namespace CIDL_Compression_Component
                       ::Components::CCMException));
 
     virtual void
-    ciao_postactivate (
+    configuration_complete (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
                       ::CORBA::SystemException,

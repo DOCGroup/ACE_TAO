@@ -64,7 +64,7 @@ namespace CIDL_Analysis_Component
   }
 
   void
-  Analysis_Component_exec_i::ciao_postactivate (
+  Analysis_Component_exec_i::configuration_complete (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::CCMException))

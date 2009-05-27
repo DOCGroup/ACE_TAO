@@ -5,7 +5,7 @@
 #include "DAnCE_Output_Adapter_exec_export.h"
 #include "tao/LocalObject.h"
 
-#include "Plan_Launcher/Plan_Launcher_Impl.h"
+#include "Plan_Launcher/Plan_Launcher_Base_Impl.h"
 #include "Plan_Generator_Impl.h"
 #include "Logger.h"
 
@@ -19,12 +19,13 @@ namespace CIAO
       {
         class DANCE_OUTPUT_ADAPTER_EXEC_Export Admin_exec_i
           : public virtual ::CIAO::RACE::DAnCE_OA::CCM_Admin,
-          public virtual TAO_Local_RefCounted_Object
+            public virtual TAO_Local_RefCounted_Object,
+            public DAnCE::Plan_Launcher::Plan_Launcher_Base_Impl
         {
         public:
           Admin_exec_i (DAnCE_OA_Component_Context *context,
-            const char * repoman_id,
-            Logger &logger);
+                        const char * repoman_id,
+                        Logger &logger);
 
           virtual ~Admin_exec_i (void);
 
@@ -54,9 +55,6 @@ namespace CIAO
 
           /// Pointer to the component's context object.
           DAnCE_OA_Component_Context *context_;
-
-          /// PlanLauncher object.
-          Plan_Launcher::Plan_Launcher_i launcher_;
 
           /// ID of the repoman.
           CORBA::String_var repoman_id_;

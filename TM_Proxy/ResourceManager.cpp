@@ -1,4 +1,4 @@
-// $Id:$
+// $Id$
 #include "ResourceManager.h"
 
 namespace CIAO

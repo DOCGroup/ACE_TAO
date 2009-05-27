@@ -15,7 +15,7 @@
 #include "SA_POP_Types.h"
 #include "TaskMapFileIn.h"
 #include "Builder.h"
-#include "Utils/XML_Helper.h"
+#include "SA_POP_XML_Typedefs.h"
 #include "XML_TaskMap.hpp"
 
 using namespace SA_POP;
@@ -32,19 +32,20 @@ TaskMapFileIn::~TaskMapFileIn (void)
   // Nothing to do.
 };
 
+using SA_POP::XML::XML_Helper;
+
 // Build task map from XML file.
 void TaskMapFileIn::build_task_map (std::string filename, Builder *builder)
 {
-  CIAO::Config_Handlers::XML_Helper helper;
-  if (!helper.is_initialized ())
+  if (!XML_Helper::XML_HELPER.is_initialized ())
     throw "SA_POP::TaskMapFileIn::build_task_map (): Could not initialize XML_Helper";
 
   // Parse file with Xerces.
   XERCES_CPP_NAMESPACE::DOMDocument *dom =
 #if defined (SA_POP_HAS_CIAO)
-    helper.create_dom (filename.c_str ());
+    XML_Helper::XML_HELPER.create_dom (filename.c_str ());
 #else
-    helper.create_dom (filename.c_str (), "");
+  XML_Helper::XML_HELPER.create_dom (filename.c_str (), "");
 #endif  /* SA_POP_HAS_CIAO */
   if (!dom)
     throw "SA_POP::TaskMapFileIn::build_task_map (): Could not create Xerces DOMDocument from file";

@@ -50,7 +50,7 @@ namespace CIAO
         }
 
         void
-        Interactive_IA_Component_exec_i::ciao_postactivate ()
+        Interactive_IA_Component_exec_i::configuration_complete ()
         {
         }
 

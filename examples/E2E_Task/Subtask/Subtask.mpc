@@ -31,7 +31,7 @@ project(Subtask_cidl_gen) : ciaocidldefaults, taoidldefaults, race_idl {
   }
 }
 
-project(Subtask_stub) : ciao_client_dnc, race_common {
+project(Subtask_stub) : ccm_stub, race_common {
   avoids += ace_for_tao
   after += Subtask_idl_gen \
            Event_Types_stub
@@ -59,7 +59,7 @@ project(Subtask_stub) : ciao_client_dnc, race_common {
   }
 }
 
-project(Subtask_exec) : ciao_component_dnc, race_common {
+project(Subtask_exec) : ciao_executor, race_common {
   avoids += ace_for_tao
   after   += Subtask_cidl_gen \
              Subtask_stub \
@@ -95,7 +95,7 @@ project(Subtask_exec) : ciao_component_dnc, race_common {
 }
 
 
-project(Subtask_svnt) : ciao_servant_dnc, race_common {
+project(Subtask_svnt) : ciao_servant, race_common {
   avoids += ace_for_tao
   after      +=  Subtask_exec \
                  Event_Types_svnt

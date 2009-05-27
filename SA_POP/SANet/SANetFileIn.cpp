@@ -19,7 +19,7 @@
 #include "Builder.h"
 #endif
 
-#include "Utils/XML_Helper.h"
+#include "SA_POP_XML_Typedefs.h"
 #include "XML_SANet.hpp"
 
 using namespace SANet;
@@ -36,19 +36,20 @@ SANetFileIn::~SANetFileIn (void)
   // Nothing to do.
 };
 
+using SA_POP::XML::XML_Helper;
+
 // Build network from XML file.
 Network *SANetFileIn::build_net (std::string filename)
 {
-  CIAO::Config_Handlers::XML_Helper helper;
-  if (!helper.is_initialized ())
+  if (!XML_Helper::XML_HELPER.is_initialized ())
     return 0;
 
   // Parse file with Xerces.
   XERCES_CPP_NAMESPACE::DOMDocument *dom =
 #if defined (SA_POP_HAS_CIAO)
-    helper.create_dom (filename.c_str ());
+    XML_Helper::XML_HELPER.create_dom (filename.c_str ());
 #else
-    helper.create_dom (filename.c_str (), "");
+  XML_Helper::XML_HELPER.create_dom (filename.c_str (), "");
 #endif  /* SA_POP_HAS_CIAO */
   if (!dom)
     return 0;
@@ -150,16 +151,15 @@ Network *SANetFileIn::build_net (std::string filename)
 // Build network from XML file.
 void SANetFileIn::build_net (std::string filename, SA_POP::Builder *builder)
 {
-  CIAO::Config_Handlers::XML_Helper helper;
-  if (!helper.is_initialized ())
+  if (!XML_Helper::XML_HELPER.is_initialized ())
     return;
 
   // Parse file with Xerces.
   XERCES_CPP_NAMESPACE::DOMDocument *dom =
 #if defined (SA_POP_HAS_CIAO)
-    helper.create_dom (filename.c_str ());
+    XML_Helper::XML_HELPER.create_dom (filename.c_str ());
 #else
-    helper.create_dom (filename.c_str (), "");
+  XML_Helper::XML_HELPER.create_dom (filename.c_str (), "");
 #endif  /* SA_POP_HAS_CIAO */
   if (!dom)
     return;

@@ -1,7 +1,8 @@
 #include "Admin_exec.h"
 #include "ciao/CIAO_common.h"
+#include "ciao/Containers/Container_Base.h"
 #include "Config_Handlers/DP_Handler.h"
-#include "Config_Handlers/Utils/XML_Helper.h"
+#include "Config_Handlers/XML_Typedefs.h"
 #include "Config_Handlers/Deployment.hpp"
 #include "Config_Handlers/DnC_Dump.h"
 #include <sstream>
@@ -18,15 +19,15 @@ namespace CIAO
           DAnCE_OA_Component_Context *context,
           const char * repoman_id,
           Logger &logger)
-          : context_ (context),
+          : Plan_Launcher_Base_Impl (dynamic_cast<CIAO::Container_i *>
+                                     (this->context_->_ciao_the_Container ())->the_ORB (),
+                                     0,
+                                     0),
+            context_ (context),
             repoman_id_ (CORBA::string_dup (repoman_id)),
             repoman_ (false),
             logger_ (logger)
         {
-          this->launcher_.init (
-            0,
-            this->context_->_ciao_the_Container ()->the_ORB ());
-
           std::string msg;
 
           if (this->repoman_id_.in () != 0)
@@ -36,10 +37,9 @@ namespace CIAO
               this->logger_.log (msg);
 
 
-              if (this->plan_gen_.init (
-                    this->context_->_ciao_the_Container ()->the_ORB (),
-                    true,
-                    this->repoman_id_.in ()))
+              if (this->plan_gen_.init (dynamic_cast <CIAO::Container_i *> (this->context_->_ciao_the_Container ())->the_ORB (),
+                                        true,
+                                        this->repoman_id_.in ()))
                 {
                   this->repoman_ = true;
                   msg = "Done!";
@@ -79,7 +79,7 @@ namespace CIAO
               // delete the_xsc;
               // Now do the remaining stuff.
               //              Deployment::DnC_Dump::dump (plan);
-              ACE_CString uuid (this->launcher_.launch_plan (plan));
+              ACE_CString uuid (this->launch_plan (plan));
               std::string msg;
               if (uuid.c_str () == 0)
                 {
@@ -97,7 +97,7 @@ namespace CIAO
                 }
 
             }
-          catch (Plan_Launcher::Plan_Launcher_i::Deployment_Failure &)
+          catch (Plan_Launcher_Base_Impl::Deployment_Failure &)
             {
               std::string msg = "Exception caught::Unable to "
                                 "launch plan with UUID ";
@@ -110,9 +110,12 @@ namespace CIAO
         bool
         Admin_exec_i::redeploy_plan (const ::Deployment::DeploymentPlan &plan)
         {
+          throw CORBA::NO_IMPLEMENT ();
+          
+          /*
           try
             {
-              ACE_CString uuid (this->launcher_.re_launch_plan (plan));
+              ACE_CString uuid (this->re_launch_plan (plan));
 
               if (uuid.c_str () == 0)
                 {
@@ -138,6 +141,7 @@ namespace CIAO
               this->logger_.log (msg);
             }
           return false;
+          */
         }
 
         ::CORBA::Boolean
@@ -291,7 +295,7 @@ namespace CIAO
           std::stringstream msg;
           try
             {
-              if (this->launcher_.teardown_plan(ID))
+              if (this->teardown_plan(ID))
                 {
                   msg << "DANCE_OA::tear_down_string(): "
                       <<   "successfully torn down plan with UUID "

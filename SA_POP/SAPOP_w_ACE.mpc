@@ -68,7 +68,7 @@ project(SA_POP) : xerces, acelib {
 
    Source_Files {
       SA_POP_Exceptions.cpp
-
+      SA_POP_XML_Typedefs.cpp
       SA_Builder.cpp
 
       Planner.cpp

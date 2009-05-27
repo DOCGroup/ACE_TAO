@@ -67,7 +67,7 @@ namespace CIAO
         }
 
         void
-        EUCON_Effector_exec_i::ciao_postactivate ()
+        EUCON_Effector_exec_i::configuration_complete ()
         {
           // Your code here.
         }

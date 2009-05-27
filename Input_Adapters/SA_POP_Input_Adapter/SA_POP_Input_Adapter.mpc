@@ -1,4 +1,4 @@
-project(SA_POP_Input_Adapter_stub): ciao_client_dnc, ciao_deployment_stub, race_idl {
+project(SA_POP_Input_Adapter_stub): ccm_stub, dance_deployment_stub, race_idl {
 
   sharedname = SA_POP_IA_Component_stub
 
@@ -27,7 +27,7 @@ project(SA_POP_Input_Adapter_stub): ciao_client_dnc, ciao_deployment_stub, race_
   }
 }
 
-project(SA_POP_Input_Adapter_svnt) : ciao_servant_dnc, race_idl {
+project(SA_POP_Input_Adapter_svnt) : ciao_servant, race_idl {
 
   sharedname  = SA_POP_IA_Component_svnt
 
@@ -64,7 +64,7 @@ project(SA_POP_Input_Adapter_svnt) : ciao_servant_dnc, race_idl {
   }
 }
 
-project(SA_POP_Input_Adapter_exec) : ciao_component_dnc, ciao_config_handlers, race_common {
+project(SA_POP_Input_Adapter_exec) : ciao_executor, ciao_config_handlers, race_common {
 
  sharedname = SA_POP_IA_Component_exec
 

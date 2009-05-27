@@ -33,7 +33,7 @@ project(Conductor_cidl_gen) : ciaocidldefaults, taoidldefaults, race_idl {
   }
 }
 
-project(Conductor_stub) : ciao_client_dnc, race_common {
+project(Conductor_stub) : ccm_stub, race_common {
   avoids += ace_for_tao
   after += Conductor_idl_gen \
            OpString_stub \
@@ -68,7 +68,7 @@ project(Conductor_stub) : ciao_client_dnc, race_common {
   }
 }
 
-project(Conductor_exec) : ciao_component_dnc, ciao_config_handlers, race_common {
+project(Conductor_exec) : ciao_executor, ciao_config_handlers, race_common {
   avoids += ace_for_tao
   after   += Conductor_cidl_gen Conductor_stub RACE_utils
   sharedname = Conductor_Component_exec
@@ -105,7 +105,7 @@ project(Conductor_exec) : ciao_component_dnc, ciao_config_handlers, race_common 
 }
 
 
-project(Conductor_svnt) : ciao_servant_dnc, race_common {
+project(Conductor_svnt) : ciao_servant, race_common {
   avoids += ace_for_tao
   after += Conductor_exec
 

@@ -1,4 +1,4 @@
-project(Plan_Analyzer_Interface_stub): ciao_deployment_stub, ciao_race_component, race_idl {
+project(Plan_Analyzer_Interface_stub): dance_deployment_stub, ciao_race_component, race_idl {
 
   sharedname = Plan_Analyzer_Interface_stub
   idlflags += -Wb,stub_export_macro=PLAN_ANALYZER_INTERFACE_STUB_Export \
@@ -24,7 +24,7 @@ project(Plan_Analyzer_Interface_stub): ciao_deployment_stub, ciao_race_component
   }
 }
 
-project(Plan_Analyzer_Interface_svnt) : ciao_servant_dnc, ciao_race_component, race_common {
+project(Plan_Analyzer_Interface_svnt) : ciao_servant, ciao_race_component, race_common {
 
   after +=  Plan_Analyzer_Interface_stub
   sharedname  = Plan_Analyzer_Interface_svnt
@@ -48,7 +48,7 @@ project(Plan_Analyzer_Interface_svnt) : ciao_servant_dnc, ciao_race_component, r
   }
 }
 
-project(Analyzer_I_stub): ciao_deployment_stub, ciao_race_component, race_idl {
+project(Analyzer_I_stub): dance_deployment_stub, ciao_race_component, race_idl {
   sharedname = Analyzer_I_stub
   idlflags += -Wb,stub_export_macro=ANALYZER_I_STUB_Export \
               -Wb,stub_export_include=Analyzer_I_stub_export.h \
@@ -75,7 +75,7 @@ project(Analyzer_I_stub): ciao_deployment_stub, ciao_race_component, race_idl {
 
 }
 
-project(Analyzer_I_svnt) : ciao_servant_dnc, ciao_race_component, race_common {
+project(Analyzer_I_svnt) : ciao_servant, ciao_race_component, race_common {
   after +=  Analyzer_I_stub
   sharedname  = Analyzer_I_svnt
   libs    += Analyzer_I_stub

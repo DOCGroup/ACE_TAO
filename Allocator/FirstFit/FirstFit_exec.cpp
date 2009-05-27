@@ -233,7 +233,7 @@ namespace CIAO
         }
 
         void
-        First_Fit_Allocator_exec_i::ciao_postactivate ()
+        First_Fit_Allocator_exec_i::configuration_complete ()
         {
           // Your code here.
         }

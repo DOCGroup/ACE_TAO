@@ -513,7 +513,7 @@ namespace CIAO
       }
 
       void
-      Planner_Manager_exec_i::ciao_postactivate (
+      Planner_Manager_exec_i::configuration_complete (
                                                  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((
                          ::CORBA::SystemException,

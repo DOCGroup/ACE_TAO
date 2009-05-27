@@ -10,7 +10,7 @@
 #ifndef TM_PROXY_IDL
 #define TM_PROXY_IDL
 
-#include "ciao/Components.idl"
+#include "Components.idl"
 #include "DAnCE/Deployment/Deployment_TargetData.idl"
 module CIAO
 {

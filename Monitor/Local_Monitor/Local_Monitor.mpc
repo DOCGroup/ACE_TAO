@@ -1,4 +1,4 @@
-project(Local_Monitor): ciao_client_dnc, naming, ciao_race_default, portableserver{
+project(Local_Monitor): ccm_stub, naming, ciao_race_default, portableserver{
   sharedname = Local_Monitor
   after += Monitor_stub
   libs += Monitor_stub

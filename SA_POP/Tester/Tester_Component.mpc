@@ -1,6 +1,6 @@
 // $Id$
 
-project(Tester_Component_stub): ciao_client_dnc, ciao_deployment_stub, race_idl {
+project(Tester_Component_stub): ccm_stub, dance_deployment_stub, race_idl {
   
   sharedname = Tester_Component_stub
   
@@ -31,7 +31,7 @@ project(Tester_Component_stub): ciao_client_dnc, ciao_deployment_stub, race_idl 
   }
 }
 
-project(Tester_Component_svnt) : ciao_servant_dnc, race_idl {
+project(Tester_Component_svnt) : ciao_servant, race_idl {
   after      +=  Tester_Component_stub
   sharedname  = Tester_Component_svnt
   libs       += Tester_Component_stub \
@@ -68,7 +68,7 @@ project(Tester_Component_svnt) : ciao_servant_dnc, race_idl {
   }
 }
 
-project(Tester_Component_exec) : ciao_component_dnc, race_common {
+project(Tester_Component_exec) : ciao_executor, race_common {
   after   += Tester_Component_svnt
   sharedname = Tester_Component_exec
 
@@ -93,7 +93,7 @@ project(Tester_Component_exec) : ciao_component_dnc, race_common {
 }
 
 
-project (Tester_Client) : ciao_client_dnc, valuetype, ciao_deployment_stub, race_common {
+project (Tester_Client) : ccm_stub, valuetype, dance_deployment_stub, race_common {
   avoids += ace_for_tao
   exename = tester_client
   after += Tester_Component_stub

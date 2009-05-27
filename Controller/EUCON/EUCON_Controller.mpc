@@ -34,7 +34,7 @@ project(EUCON_Controller_cidl_gen) : ciaocidldefaults, taoidldefaults, race_idl 
   }
 }
 
-project(EUCON_Controller_stub) : ciao_client_dnc, race_common {
+project(EUCON_Controller_stub) : ccm_stub, race_common {
   avoids += ace_for_tao
   after += EUCON_Controller_idl_gen \
            Controller_Base_stub
@@ -60,7 +60,7 @@ project(EUCON_Controller_stub) : ciao_client_dnc, race_common {
   }
 }
 
-project(EUCON_Controller_exec) : ciao_component_dnc, ciao_config_handlers, race_common {
+project(EUCON_Controller_exec) : ciao_executor, ciao_config_handlers, race_common {
   avoids += ace_for_tao
   after   += EUCON_Controller_cidl_gen EUCON_Controller_stub
   sharedname = EUCON_Controller_exec
@@ -115,7 +115,7 @@ project(EUCON_Controller_exec) : ciao_component_dnc, ciao_config_handlers, race_
 }
 
 
-project(EUCON_Controller_svnt) : ciao_servant_dnc, race_common {
+project(EUCON_Controller_svnt) : ciao_servant, race_common {
   avoids += ace_for_tao
   after      +=  EUCON_Controller_exec
   sharedname  = EUCON_Controller_svnt

@@ -50,7 +50,7 @@ namespace CIAO
         }
 
         void
-        Data_Base_Component_exec_i::ciao_postactivate ()
+        Data_Base_Component_exec_i::configuration_complete ()
         {
         }
 
