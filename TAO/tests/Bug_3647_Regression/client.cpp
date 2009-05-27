@@ -122,7 +122,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       for (int i = 0; i != iterations; ++i)
       {
         middle->ping();
-        if (i % interval == 0 and i > 0)
+        if (i % interval == 0 && i > 0)
         {
           ACE_DEBUG((LM_DEBUG, "."));
         }
