@@ -34,7 +34,7 @@ project(FMUF_Controller_cidl_gen) : ciaocidldefaults, taoidldefaults, race_idl {
   }
 }
 
-project(FMUF_Controller_stub) : ciao_client_dnc, race_common {
+project(FMUF_Controller_stub) : ccm_stub, race_common {
   avoids += ace_for_tao
   after += FMUF_Controller_idl_gen \
            Controller_Base_stub
@@ -61,7 +61,7 @@ project(FMUF_Controller_stub) : ciao_client_dnc, race_common {
   }
 }
 
-project(FMUF_Controller_exec) : ciao_component_dnc, race_common {
+project(FMUF_Controller_exec) : ciao_executor, race_common {
   avoids += ace_for_tao
   after   += FMUF_Controller_cidl_gen FMUF_Controller_stub
   sharedname = FMUF_Controller_exec
@@ -101,7 +101,7 @@ project(FMUF_Controller_exec) : ciao_component_dnc, race_common {
 }
 
 
-project(FMUF_Controller_svnt) : ciao_servant_dnc, race_common {
+project(FMUF_Controller_svnt) : ciao_servant, race_common {
   avoids += ace_for_tao
   after      +=  FMUF_Controller_exec
   sharedname  = FMUF_Controller_svnt

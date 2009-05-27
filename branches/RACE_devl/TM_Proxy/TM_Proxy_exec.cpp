@@ -7,6 +7,7 @@
 #include "Utility.h"
 #include "SystemSnapshot.h"
 
+#include "ciao/Containers/Container_Base.h"
 
 namespace CIAO
 {
@@ -82,16 +83,16 @@ namespace CIAO
         }
 
         void
-          TM_Proxy_Component_exec_i::ciao_postactivate ()
+          TM_Proxy_Component_exec_i::configuration_complete ()
         {
           std::stringstream msg;
           msg << "TM_Proxy_Component_exec_i::"
-                 "ciao_postactivate (): Trying to obtain "
+                 "configuration_complete (): Trying to obtain "
                  "the object reference of the TM\n";
           try
           {
             ::CORBA::ORB_ptr orb =
-              this->context_->_ciao_the_Container()->the_ORB();
+              dynamic_cast<CIAO::Container_i *>  (this->context_->_ciao_the_Container())->the_ORB();
 
             /// Trying to get the object reference from the Naming Service.
             CORBA::Object_var naming_obj =

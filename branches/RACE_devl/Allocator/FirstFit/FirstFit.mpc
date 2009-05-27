@@ -31,7 +31,7 @@ project(FirstFit_cidl_gen) : ciaocidldefaults, taoidldefaults, race_idl {
   }
 }
 
-project(FirstFit_stub) : ciao_client_dnc, race_common {
+project(FirstFit_stub) : ccm_stub, race_common {
   avoids += ace_for_tao
   after += FirstFit_idl_gen 
   libs  += Allocator_Base_stub  
@@ -56,7 +56,7 @@ project(FirstFit_stub) : ciao_client_dnc, race_common {
   }
 }
 
-project(FirstFit_exec) : ciao_component_dnc, ciao_config_handlers, race_common {
+project(FirstFit_exec) : ciao_executor, ciao_config_handlers, race_common {
   avoids += ace_for_tao
   after   += FirstFit_cidl_gen FirstFit_stub
   sharedname = FirstFit_exec
@@ -89,7 +89,7 @@ project(FirstFit_exec) : ciao_component_dnc, ciao_config_handlers, race_common {
 }
 
 
-project(FirstFit_svnt) : ciao_servant_dnc, race_common {
+project(FirstFit_svnt) : ciao_servant, race_common {
   avoids += ace_for_tao
   after      +=  FirstFit_exec
   sharedname  = FirstFit_svnt

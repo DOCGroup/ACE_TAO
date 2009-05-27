@@ -49,7 +49,7 @@ namespace CIAO
         }
 
         void
-        SA_POP_IA_Component_exec_i::ciao_postactivate ()
+        SA_POP_IA_Component_exec_i::configuration_complete ()
         {
         }
 

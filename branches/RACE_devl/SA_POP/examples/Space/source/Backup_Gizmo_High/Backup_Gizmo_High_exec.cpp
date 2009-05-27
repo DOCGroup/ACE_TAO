@@ -59,7 +59,7 @@ namespace CIDL_Backup_Gizmo_Low
   }
 
   void
-  Backup_Gizmo_High_exec_i::ciao_postactivate (
+  Backup_Gizmo_High_exec_i::configuration_complete (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::CCMException))

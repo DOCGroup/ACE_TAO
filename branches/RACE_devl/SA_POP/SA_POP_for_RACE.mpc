@@ -1,4 +1,4 @@
-project(SA_POP) : ciao_config_handlers, ciao_deployment_stub, xerces, race_common {
+project(SA_POP) : ciao_config_handlers, dance_deployment_stub, xerces, race_common {
 
    after += XSC_Config_Handlers
    sharedname   = SA_POP

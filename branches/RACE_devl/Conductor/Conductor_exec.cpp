@@ -56,7 +56,7 @@ namespace CIAO
         }
 
         void
-        Conductor_Component_exec_i::ciao_postactivate ()
+        Conductor_Component_exec_i::configuration_complete ()
         {
           // Your code here.
         }

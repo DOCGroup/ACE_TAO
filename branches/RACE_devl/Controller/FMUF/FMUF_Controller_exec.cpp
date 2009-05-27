@@ -71,7 +71,7 @@ namespace CIAO
         }
 
         void
-        FMUF_Controller_exec_i::ciao_postactivate ()
+        FMUF_Controller_exec_i::configuration_complete ()
         {
           this->controller_ = new Controller (this->context_,
                                               this->sampling_period_);

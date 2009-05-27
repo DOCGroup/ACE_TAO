@@ -134,7 +134,7 @@ namespace CIAO
         }
 
         void
-        Tester_Component_exec_i::ciao_postactivate ()
+        Tester_Component_exec_i::configuration_complete ()
         {
           // Your code here.
         }

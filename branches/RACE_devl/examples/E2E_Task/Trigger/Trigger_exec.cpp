@@ -248,7 +248,7 @@ namespace CIAO
       }
 
       void
-      Trigger_exec_i::ciao_postactivate ()
+      Trigger_exec_i::configuration_complete ()
       {
         // Now start the active object.
         if (this->activate () != 0)

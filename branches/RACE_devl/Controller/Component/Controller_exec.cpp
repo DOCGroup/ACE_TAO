@@ -90,7 +90,7 @@ namespace CIAO
       }
 
       void
-      Controller_exec_i::ciao_postactivate ()
+      Controller_exec_i::configuration_complete ()
         throw (::CORBA::SystemException, ::Components::CCMException)
       {
         try
@@ -130,7 +130,7 @@ namespace CIAO
         catch (CORBA::Exception & ex)
           {
             ACE_PRINT_EXCEPTION (ex, "(%P|%T|%N|%l) [RACE:] Exception caught "
-                                 "in Controller_exec_i::ciao_postactivate ()");
+                                 "in Controller_exec_i::configuration_complete ()");
           }
 
       }

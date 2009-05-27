@@ -63,7 +63,7 @@ namespace CIAO
         }
 
         void
-        DAnCE_OA_Component_exec_i::ciao_postactivate ()
+        DAnCE_OA_Component_exec_i::configuration_complete ()
         {
         }
 

@@ -61,7 +61,7 @@ namespace CIAO
         throw (::CORBA::SystemException, ::Components::CCMException);
 
         virtual void
-        ciao_postactivate ()
+        configuration_complete ()
         throw (::CORBA::SystemException, ::Components::CCMException);
 
         virtual void

@@ -1,11 +1,155 @@
+Wed May 27 23:44:58 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * Allocator/Base/Allocator_Base.mpc:
+        * Allocator/FirstFit/FirstFit.mpc:
+        * Allocator/FirstFit/FirstFit_exec.h:
+        * Allocator/FirstFit/FirstFit_exec.cpp:
+        * Conductor/Conductor.mpc:
+        * Conductor/Conductor_exec.h:
+        * Conductor/Conductor_exec.cpp:
+        * Controller/Base/Controller_Base.mpc:
+        * Controller/Component/Controller.mpc:
+        * Controller/Component/Controller_exec.h:
+        * Controller/Component/Controller_exec.cpp:
+        * Controller/EUCON/EUCON_Controller.mpc:
+        * Controller/EUCON/EUCON_Controller_exec.h:
+        * Controller/EUCON/EUCON_Controller_exec.cpp:
+        * Controller/FMUF/FMUF_Controller.mpc:
+        * Controller/FMUF/FMUF_Controller_exec.h:
+        * Controller/FMUF/FMUF_Controller_exec.cpp:
+        * Data_Base/Data_Base.mpc:
+        * Data_Base/Data_Base_exec.h:
+        * Data_Base/Data_Base_exec.cpp:
+        * Effectors/Base/Effector_Base.idl:
+        * Effectors/Base/Effector_Base.mpc:
+        * Effectors/EUCON/EUCON_Effector.mpc:
+        * Effectors/EUCON/EUCON_Effector_exec.h:
+        * Effectors/EUCON/EUCON_Effector_exec.cpp:
+        * Input_Adapters/Base/Input_Adapter_Base.mpc:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.cidl:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.h:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.cpp:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.cidl:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.h:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.cpp:
+        * Monitor/Central_Monitor/Monitor.mpc:
+        * Monitor/Central_Monitor/Monitor_exec.h:
+        * Monitor/Central_Monitor/Monitor_exec.cpp:
+        * Monitor/Local_Monitor/Local_Monitor.mpc:
+        * Output_Adapters/Base/Output_Adapter.mpc:
+        * Output_Adapters/Component/Output_Manager.mpc:
+        * Output_Adapters/Component/Output_Manager_exec.h:
+        * Output_Adapters/Component/Output_Manager_exec.cpp:
+        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.h:
+        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
+        * Output_Adapters/Interface/Output_Adapter_Interface.mpc:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.mpc:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec.h:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec.cpp:
+        * Plan_Analyzer/Component/Plan_Analyzer.mpc:
+        * Plan_Analyzer/Component/Plan_Analyzer_exec.h:
+        * Plan_Analyzer/Component/Plan_Analyzer_exec.cpp:
+        * Plan_Analyzer/Interface/Plan_Analyzer_Interface.mpc:
+        * Planner_Manager/Component/Planner_Manager.mpc:
+        * Planner_Manager/Component/Planner_Manager_exec.h:
+        * Planner_Manager/Component/Planner_Manager_exec.cpp:
+        * Planner_Manager/Interface/Planner_Manager_Interface.mpc:
+        * Planners/Base/Planner.mpc:
+        * Planners/Interface/Planner_Interface.mpc:
+        * Planners/StaticPlanner/StaticPlanner.mpc:
+        * Planners/StaticPlanner/StaticPlanner_exec.h:
+        * Planners/StaticPlanner/StaticPlanner_exec.cpp:
+        * SA_POP/Component/SA_POP_Component.mpc:
+        * SA_POP/Component/SA_POP_Component_exec.h:
+        * SA_POP/Component/SA_POP_Component_exec.cpp:
+        * SA_POP/SANet/SANetFileIn.cpp:
+        * SA_POP/SAPOP_w_ACE.mpc:
+        * SA_POP/SA_POP_XML_Typedefs.h:
+        * SA_POP/SA_POP_XML_Typedefs.cpp:
+        * SA_POP/SA_POP_for_RACE.mpc:
+        * SA_POP/TaskMapFileIn.cpp:
+        * SA_POP/Tester/Tester_Component.mpc:
+        * SA_POP/Tester/Tester_Component_exec.h:
+        * SA_POP/Tester/Tester_Component_exec.cpp:
+        * SA_POP/examples/Space/source/Analysis/Analysis_Component.mpc:
+        * SA_POP/examples/Space/source/Analysis/Analysis_Component_exec.h:
+        * SA_POP/examples/Space/source/Analysis/Analysis_Component_exec.cpp:
+        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.mpc:
+        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_exec.h:
+        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_exec.cpp:
+        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.mpc:
+        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_exec.h:
+        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_exec.cpp:
+        * SA_POP/examples/Space/source/Comm/Comm_Component.mpc:
+        * SA_POP/examples/Space/source/Comm/Comm_Component_exec.h:
+        * SA_POP/examples/Space/source/Comm/Comm_Component_exec.cpp:
+        * SA_POP/examples/Space/source/Compression/Compression_Component.mpc:
+        * SA_POP/examples/Space/source/Compression/Compression_Component_exec.h:
+        * SA_POP/examples/Space/source/Compression/Compression_Component_exec.cpp:
+        * SA_POP/examples/Space/source/Exec/Exec_Component.mpc:
+        * SA_POP/examples/Space/source/Exec/Exec_Component_exec.h:
+        * SA_POP/examples/Space/source/Exec/Exec_Component_exec.cpp:
+        * SA_POP/examples/Space/source/Filter/Filter_Component.mpc:
+        * SA_POP/examples/Space/source/Filter/Filter_Component_exec.h:
+        * SA_POP/examples/Space/source/Filter/Filter_Component_exec.cpp:
+        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High.mpc:
+        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High_exec.h:
+        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High_exec.cpp:
+        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low.mpc:
+        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low_exec.h:
+        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low_exec.cpp:
+        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.mpc:
+        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_exec.h:
+        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_exec.cpp:
+        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High.mpc:
+        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High_exec.h:
+        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High_exec.cpp:
+        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.mpc:
+        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_exec.h:
+        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_exec.cpp:
+        * SA_POP/examples/Space/source/Ground/Ground_Component.mpc:
+        * SA_POP/examples/Space/source/Ground/Ground_Component_exec.h:
+        * SA_POP/examples/Space/source/Ground/Ground_Component_exec.cpp:
+        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo.mpc:
+        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo_exec.h:
+        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo_exec.cpp:
+        * SA_POP/examples/Space/source/common/Event_Types.mpc:
+        * SA_POP/server/Driver.mpc:
+        * TM_Daemon/TM_Daemon.mpc:
+        * TM_Proxy/ResourceManager.h:
+        * TM_Proxy/ResourceManager.cpp:
+        * TM_Proxy/TM_Proxy.idl:
+        * TM_Proxy/TM_Proxy.mpc:
+        * TM_Proxy/TM_Proxy_exec.h:
+        * TM_Proxy/TM_Proxy_exec.cpp:
+        * Tester/tester.mpc:
+        * common/RACE_common.mpc:
+        * examples/E2E_Task/Base/Event_Types.mpc:
+        * examples/E2E_Task/Subtask/Subtask.mpc:
+        * examples/E2E_Task/Subtask/Subtask_exec.h:
+        * examples/E2E_Task/Subtask/Subtask_exec.cpp:
+        * examples/E2E_Task/Trigger/Trigger.mpc:
+        * examples/E2E_Task/Trigger/Trigger_exec.h:
+        * examples/E2E_Task/Trigger/Trigger_exec.cpp:
+        * examples/E2E_Task/Workload/Workload.mpc:
+        * lib:
+        * utils/RACE_utils.cpp:
+
+          Updates for new CIAO. 
+        
 Mon Feb  2 03:05:39 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * Input_Adapters/Interactive_Input_Adapter/Admin_exec.cpp:
         * SA_POP/Tester/Tester_Component.mpc:
         * Tester/tester.mpc:
 
-	  Compile fixes for Linux. 
-	
+          Compile fixes for Linux.
+
 Sun Sep 28 21:14:16 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * SA_POP/SANet/SANetFileIn.cpp:

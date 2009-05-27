@@ -14,7 +14,7 @@ project(Controller_Base_idl_gen) : taoidldefaults, anytypecode, race_idl {
   }
 }
 
-project(Controller_Base_stub) : ciao_client_dnc, race_common {
+project(Controller_Base_stub) : ccm_stub, race_common {
   avoids += ace_for_tao
   after += Controller_Base_idl_gen \
            OpString_stub \
@@ -48,7 +48,7 @@ project(Controller_Base_stub) : ciao_client_dnc, race_common {
   }
 }
 
-project(Controller_Base_svnt) : ciao_servant_dnc, race_common {
+project(Controller_Base_svnt) : ciao_servant, race_common {
   avoids += ace_for_tao
   after      +=  Controller_Base_stub
 

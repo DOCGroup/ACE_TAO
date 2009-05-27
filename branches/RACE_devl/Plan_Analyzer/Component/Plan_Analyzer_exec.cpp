@@ -175,7 +175,7 @@ namespace CIAO
       }
 
       void
-      Plan_Analyzer_exec_i::ciao_postactivate (
+      Plan_Analyzer_exec_i::configuration_complete (
         ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((
                         ::CORBA::SystemException,

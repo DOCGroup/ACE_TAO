@@ -15,7 +15,7 @@ project(Input_Adapter_Base_idl_gen) : taoidldefaults, anytypecode, race_idl {
   }
 }
 
-project(Input_Adapter_Base_stub) : ciao_client_dnc, race_common {
+project(Input_Adapter_Base_stub) : ccm_stub, race_common {
   avoids += ace_for_tao
   after += Input_Adapter_Base_idl_gen  Conductor_stub
   libs  += Conductor_Component_stub
@@ -40,7 +40,7 @@ project(Input_Adapter_Base_stub) : ciao_client_dnc, race_common {
   }
 }
 
-project(Input_Adapter_Base_svnt) : ciao_servant_dnc, race_common {
+project(Input_Adapter_Base_svnt) : ciao_servant, race_common {
   avoids += ace_for_tao
   after      +=  Input_Adapter_Base_stub
   sharedname  = Input_Adapter_Base_svnt

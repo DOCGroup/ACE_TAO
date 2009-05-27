@@ -1,5 +1,5 @@
 // $Id$
-project(TM_Proxy_stub) : ciao_client_dnc, ciao_deployment_stub, race_idl {
+project(TM_Proxy_stub) : ccm_stub, dance_deployment_stub, race_idl {
   sharedname = TM_Proxy_Component_stub
   dynamicflags   = TM_PROXY_STUB_BUILD_DLL
 
@@ -28,7 +28,7 @@ project(TM_Proxy_stub) : ciao_client_dnc, ciao_deployment_stub, race_idl {
   }
 }
 
-project(TM_Proxy_svnt) : ciao_servant_dnc, race_idl {
+project(TM_Proxy_svnt) : ciao_servant, race_idl {
   after      += TM_Proxy_stub
   sharedname  = TM_Proxy_Component_svnt
   libs       += TM_Proxy_Component_stub
@@ -67,7 +67,7 @@ project(TM_Proxy_svnt) : ciao_servant_dnc, race_idl {
   }
 }
 
-project(TM_Proxy_exec) : ciao_component_dnc, race_common {
+project(TM_Proxy_exec) : ciao_executor, race_common, naming {
   after   +=  TM_Proxy_svnt \
               TM_Daemon_stub
 

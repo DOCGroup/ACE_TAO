@@ -1,4 +1,4 @@
-// $Id:$
+// $Id$
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
 

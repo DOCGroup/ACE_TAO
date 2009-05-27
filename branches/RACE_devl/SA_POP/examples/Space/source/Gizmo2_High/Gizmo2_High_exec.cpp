@@ -70,7 +70,7 @@ namespace CIDL_Gizmo2_High
   }
 
   void
-  Gizmo2_High_exec_i::ciao_postactivate (
+  Gizmo2_High_exec_i::configuration_complete (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::CCMException))

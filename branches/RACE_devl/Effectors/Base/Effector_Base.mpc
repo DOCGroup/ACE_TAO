@@ -14,7 +14,7 @@ project(Effector_Base_idl_gen) : taoidldefaults, anytypecode, race_idl {
   }
 }
 
-project(Effector_Base_stub) : ciao_client_dnc, race_common {
+project(Effector_Base_stub) : ccm_stub, race_common {
   avoids += ace_for_tao
   after += Effector_Base_idl_gen \
            OpString_stub
@@ -40,7 +40,7 @@ project(Effector_Base_stub) : ciao_client_dnc, race_common {
   }
 }
 
-project(Effector_Base_svnt) : ciao_servant_dnc, race_common {
+project(Effector_Base_svnt) : ciao_servant, race_common {
   avoids += ace_for_tao
   after      +=  Effector_Base_stub
   sharedname  = Effector_Base_svnt

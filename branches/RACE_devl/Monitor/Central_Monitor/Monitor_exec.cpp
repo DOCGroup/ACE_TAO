@@ -153,7 +153,7 @@ namespace CIAO
       }
 
       void
-      Central_Monitor_exec_i::ciao_postactivate ()
+      Central_Monitor_exec_i::configuration_complete ()
         throw (::CORBA::SystemException,
                ::Components::CCMException)
       {

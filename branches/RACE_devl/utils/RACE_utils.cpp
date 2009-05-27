@@ -1,4 +1,4 @@
-// $Id:$
+// $Id$
 
 #include "RACE_utils.h"
 #include "ace/Env_Value_T.h"

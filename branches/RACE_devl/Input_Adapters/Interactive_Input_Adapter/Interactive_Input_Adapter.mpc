@@ -32,7 +32,7 @@ project(Interactive_Input_Adapter_cidl_gen) : ciaocidldefaults, taoidldefaults, 
   }
 }
 
-project(Interactive_Input_Adapter_stub) : ciao_client_dnc, race_common {
+project(Interactive_Input_Adapter_stub) : ccm_stub, race_common {
   avoids += ace_for_tao
   after += Interactive_Input_Adapter_idl_gen \
            Input_Adapter_Base_stub \
@@ -60,7 +60,7 @@ project(Interactive_Input_Adapter_stub) : ciao_client_dnc, race_common {
   }
 }
 
-project(Interactive_Input_Adapter_exec) : ciao_component_dnc, ciao_config_handlers, race_common {
+project(Interactive_Input_Adapter_exec) : ciao_executor, ciao_config_handlers, race_common {
   avoids += ace_for_tao
   after   += Interactive_Input_Adapter_cidl_gen \
              Interactive_Input_Adapter_stub \
@@ -98,7 +98,7 @@ project(Interactive_Input_Adapter_exec) : ciao_component_dnc, ciao_config_handle
 }
 
 
-project(Interactive_Input_Adapter_svnt) : ciao_servant_dnc, race_common {
+project(Interactive_Input_Adapter_svnt) : ciao_servant, race_common {
   avoids += ace_for_tao
   after      +=  Interactive_Input_Adapter_exec \
                  Input_Adapter_Base_svnt
