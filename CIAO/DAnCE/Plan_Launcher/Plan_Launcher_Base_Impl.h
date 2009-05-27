@@ -51,7 +51,7 @@ public:
   static void write_cdr_plan_file(const char * filename,
       const Deployment::DeploymentPlan & plan);
 
-protected:
+ protected:
 
   /**
    * @brief Launch a plan, given an IDL deployment plan
