@@ -1,3 +1,12 @@
+Wed May 27 18:10:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+        * TAO_IDL/tao_idl.cpp:
+          Unicode fixes
+
+        * tao/PortableServer/Root_POA.h:
+          Layout changes
+
 Wed May 27 18:03:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/Notify_Service.h:
