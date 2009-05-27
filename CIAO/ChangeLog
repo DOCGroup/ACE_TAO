@@ -1,10 +1,18 @@
+Wed May 27 23:58:23 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Generator/Plan_Generator.mpc:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.h:
+        * MPC/config/ciao_plan_generator.mpb:
+
+          Updates for RACE. 
+        
 Fri May 22 12:58:33 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Basic_Deployment_Data.cpp:
         * tools/Config_Handlers/XMI.cpp:
 
-          Warning fixes. 
-        
+          Warning fixes.
+
 Thu May 21 01:13:28 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tools/Config_Handlers/ERE_Handler.h:
