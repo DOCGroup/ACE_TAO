@@ -418,8 +418,7 @@ public:
 
   void cleanup_servant (
     PortableServer::Servant servant,
-    const PortableServer::ObjectId &user_id
-   );
+    const PortableServer::ObjectId &user_id);
 
   void post_invoke_servant_cleanup(
     const PortableServer::ObjectId &system_id,
@@ -432,9 +431,7 @@ public:
   PortableServer::ObjectId *activate_object_i (
       PortableServer::Servant p_servant,
       CORBA::Short priority,
-      bool &wait_occurred_restart_call
-
-    );
+      bool &wait_occurred_restart_call);
 
   CORBA::Object_ptr id_to_reference_i (const PortableServer::ObjectId &oid,
                                        bool indirect);
