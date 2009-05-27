@@ -196,9 +196,9 @@ DRV_drive (const char *s)
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s: preprocessing %s\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (s)));
+                  ACE_TEXT("%C: preprocessing %C\n"),
+                  idl_global->prog_name (),
+                  s));
     }
 
   DRV_pre_proc (s);
@@ -214,9 +214,9 @@ DRV_drive (const char *s)
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s: parsing %s\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (s)));
+                  ACE_TEXT("%C: parsing %C\n"),
+                  idl_global->prog_name (),
+                  s));
     }
 
   // Return value not used - error count stored in idl_global
@@ -225,8 +225,8 @@ DRV_drive (const char *s)
 
   // Filename set by FE_yyparse(), so we output it immediately after.
   ACE_DEBUG ((LM_DEBUG,
-              "processing %s\n",
-              ACE_TEXT_CHAR_TO_TCHAR (idl_global->filename ()->get_string ())));
+              ACE_TEXT("processing %C\n"),
+              idl_global->filename ()->get_string ()));
 
   // We must do this as late as possible to make sure any
   // forward declared structs or unions contained in a
@@ -237,9 +237,9 @@ DRV_drive (const char *s)
   if (idl_global->err_count () > 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: %s: found %d error%s\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (s),
+                  ACE_TEXT("%C: %C: found %d error%s\n"),
+                  idl_global->prog_name (),
+                  s,
                   idl_global->err_count (),
                   (idl_global->err_count () > 1
                     ? ACE_TEXT ("s")
@@ -254,9 +254,9 @@ DRV_drive (const char *s)
       && (idl_global->compile_flags () & IDL_CF_DUMP_AST))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s: dump %s\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (s)));
+                  ACE_TEXT("%C: dump %C\n"),
+                  idl_global->prog_name (),
+                  s));
     }
 
   if (idl_global->compile_flags () & IDL_CF_DUMP_AST)
@@ -271,9 +271,9 @@ DRV_drive (const char *s)
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s: BE processing on %s\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (s)));
+                  ACE_TEXT("%C: BE processing on %C\n"),
+                  idl_global->prog_name (),
+                  s));
     }
 
   // Make sure all forward declared structs and unions are defined

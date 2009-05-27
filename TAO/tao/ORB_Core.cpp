@@ -1131,7 +1131,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("ERROR: Environment variable ")
                           ACE_TEXT ("TAO_ORBENDPOINT set to invalid value ")
-                          ACE_TEXT ("<%s>.\n"),
+                          ACE_TEXT ("<%C>.\n"),
                           env_endpoint));
             }
 
