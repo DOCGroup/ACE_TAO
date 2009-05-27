@@ -1,3 +1,12 @@
+Wed May 27 11:58:05 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * tests/Bug_3647_Regression/client.cpp:
+          I guess not all compilers know that 'and' is a keyword in C++.
+
+        * tests/Bug_3647_Regression/Middle_Impl.cpp:
+          Make sure I use the exceptions caught in this program, at least
+          for debugging output.  Eliminates warnings for VC8
+
 Wed May 27 03:00:37 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tests/Bug_3647_Regression/client.cpp:

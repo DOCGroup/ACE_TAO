@@ -65,12 +65,14 @@ ping()
     {
       ACE_DEBUG ((LM_INFO,
               "Middle_Impl::ping(%P|%t) - timeout raised\n"));
+      ex._tao_print_exception ("Exception caught:");
     }
   }
   catch(CORBA::Exception const & ex)
   {
     ACE_DEBUG ((LM_INFO,
             "Middle_Impl::ping(%P|%t) - unexpected exception raised\n"));
+    ex._tao_print_exception ("Exception caught:");
     throw;
   }
 }
