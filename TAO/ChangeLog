@@ -1,3 +1,8 @@
+Thu May 28 14:56:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_3673_Regression/client.cpp:
+          Print the iteration count when we get an exception
+
 Thu May 28 14:12:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_3673_Regression/client.cpp:

@@ -85,7 +85,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
           catch (const CosNaming::NamingContext::NotFound&)
             {
-              ACE_DEBUG ((LM_DEBUG, "Caught correct exception\n"));
+              ACE_DEBUG ((LM_DEBUG, "Caught correct exception for iteration %d\n", i));
             }
         }
 
