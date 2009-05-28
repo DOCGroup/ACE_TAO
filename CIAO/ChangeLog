@@ -1,3 +1,14 @@
+Thu May 28 18:52:27 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        
+          Applied check for the command line option added in
+          
+          Thu May 28 14:01:45 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+          
+          in several places needed for correct generation of 
+          the executor IDL file.
+
 Thu May 28 14:01:45 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
