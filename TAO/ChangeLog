@@ -1,3 +1,8 @@
+Thu May 28 14:12:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_3673_Regression/client.cpp:
+          Field id of name 0 has to be set
+
 Thu May 28 07:32:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
