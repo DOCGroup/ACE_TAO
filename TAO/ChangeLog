@@ -1,3 +1,8 @@
+Thu May 28 07:32:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+          Fix a bug when unregistering from the naming service
+
 Wed May 27 18:10:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
