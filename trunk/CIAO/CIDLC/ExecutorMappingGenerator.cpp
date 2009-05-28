@@ -471,13 +471,14 @@ namespace
   //
   struct MonolithEmitter : ComponentEmitter
   {
-    MonolithEmitter (Context& c, ostream& os)
+    MonolithEmitter (Context& c, ostream& os, CommandLine const& cl)
         : ComponentEmitter (c, os),
           monolith_name_emitter (c, os, "CCM_"),
           attribute (c, os),
           consumer (c, os),
-          provider (c, os),
-          type_name_emitter (c, os)
+          provider (c, os, cl),
+          type_name_emitter (c, os),
+          cl_ (cl)
     {
       edge_traverser (inherits);
       edge_traverser (defines);
@@ -512,6 +513,13 @@ namespace
     inherits_pre (Type&)
     {
       os << " : ";
+      
+      string enclosing = cl_.get_value ("lem-enclosing-module", "");
+      
+      if (enclosing != "")
+      {
+        os << "::" << enclosing;
+      }
     }
 
     virtual void
@@ -592,9 +600,21 @@ namespace
 
     struct Provider : Traversal::ProviderGet, Emitter
     {
-      Provider (Context& c, ostream& os)
-          : Emitter (c, os)
+      Provider (Context& c, ostream& os, CommandLine const& cl)
+        : Emitter (c, os),
+          cl_ (cl)
       {
+      }
+      
+      virtual void
+      pre (Type& c)
+      {
+        string enclosing = cl_.get_value ("lem-enclosing-module", "");
+        
+        if (enclosing != "")
+        {
+          os << "::" << enclosing;
+        }
       }
 
       virtual void
@@ -620,6 +640,9 @@ namespace
       {
         os << ";";
       }
+      
+    private:
+      CommandLine const& cl_;
     };
 
     Traversal::Inherits inherits;
@@ -635,6 +658,7 @@ namespace
     Traversal::Belongs provider_belongs;
 
     FullTypeNameEmitter type_name_emitter;
+    CommandLine const& cl_;
   };
 
 
@@ -807,6 +831,13 @@ namespace
     inherits_pre (Type&)
     {
       os << " : ";
+      
+      string enclosing = cl_.get_value ("lem-enclosing-module", "");
+      
+      if (enclosing != "")
+      {
+        os << "::" << enclosing;
+      }
     }
 
     virtual void
@@ -1101,8 +1132,9 @@ namespace
 
   struct HomeExplicitEmitter : HomeEmitter
   {
-    HomeExplicitEmitter (Context& c, ostream& os)
-        : HomeEmitter (c, os), name_emitter (c, os, "CCM_", "Explicit")
+    HomeExplicitEmitter (Context& c, ostream& os, CommandLine const& cl)
+      : HomeEmitter (c, os), name_emitter (c, os, "CCM_", "Explicit"),
+        cl_ (cl)
     {
       edge_traverser (inherits);
       inherits.node_traverser (name_emitter);
@@ -1124,6 +1156,13 @@ namespace
     inherits_pre (Type&)
     {
       os << " : ";
+      
+      string enclosing = cl_.get_value ("lem-enclosing-module", "");
+      
+      if (enclosing != "")
+      {
+        os << "::" << enclosing;
+      }
     }
 
     virtual void
@@ -1165,6 +1204,7 @@ namespace
   private:
     Traversal::Inherits inherits;
     NameMangler name_emitter;
+    CommandLine const& cl_;
   };
 
 
@@ -1433,7 +1473,7 @@ namespace
     virtual void
     inherits (Type& i)
     {
-      os << " : " << i.name ();
+      os << " : " << i.scoped_name ();
     }
 
     virtual void
@@ -1509,9 +1549,10 @@ namespace
 
   struct ComponentContextEmitter : Traversal::ComponentExecutor, Emitter
   {
-    ComponentContextEmitter (Context& c, ostream& os)
+    ComponentContextEmitter (Context& c, ostream& os, CommandLine const& cl)
         : Emitter (c, os),
-          name_emitter_ (c, os, "CCM_", "_Context")
+          name_emitter_ (c, os, "CCM_", "_Context"),
+          cl_ (cl)
     {
       implements_traverser_.node_traverser (name_emitter_);
     }
@@ -1524,6 +1565,14 @@ namespace
       //
       // os << "local interface ";
       os << "typedef ";
+      
+      string enclosing = cl_.get_value ("lem-enclosing-module", "");
+      
+      if (enclosing != "")
+      {
+        os << "::" << enclosing;
+      }
+      
       Traversal::ComponentExecutor::implements (i, implements_traverser_);
     }
 
@@ -1555,14 +1604,16 @@ namespace
   private:
     NameMangler name_emitter_;
     Traversal::Implements implements_traverser_;
+    CommandLine const& cl_;
   };
 
 
   struct ComponentExecutorEmitter : Traversal::ComponentExecutor, Emitter
   {
-    ComponentExecutorEmitter (Context& c, ostream& os)
+    ComponentExecutorEmitter (Context& c, ostream& os, CommandLine const& cl)
         : Emitter (c, os),
-          name_emitter_ (c, os, "CCM_")
+          name_emitter_ (c, os, "CCM_"),
+          cl_ (cl)
     {
       implements_traverser_.node_traverser (name_emitter_);
     }
@@ -1583,6 +1634,13 @@ namespace
     implements (Type& i)
     {
       os << " : ";
+      
+      string enclosing = cl_.get_value ("lem-enclosing-module", "");
+      
+      if (enclosing != "")
+      {
+        os << "::" << enclosing;
+      }
 
       Traversal::ComponentExecutor::implements (i, implements_traverser_);
 
@@ -1599,14 +1657,16 @@ namespace
   private:
     NameMangler name_emitter_;
     Traversal::Implements implements_traverser_;
+    CommandLine const& cl_;
   };
 
 
   struct HomeExecutorEmitter : Traversal::HomeExecutor, Emitter
   {
-    HomeExecutorEmitter (Context& c, ostream& os)
+    HomeExecutorEmitter (Context& c, ostream& os, CommandLine const& cl)
         : Emitter (c, os),
-          name_emitter_ (c, os, "CCM_")
+          name_emitter_ (c, os, "CCM_"),
+          cl_ (cl)
     {
       implements_traverser_.node_traverser (name_emitter_);
     }
@@ -1628,6 +1688,13 @@ namespace
     {
       os << " : ";
 
+      string enclosing = cl_.get_value ("lem-enclosing-module", "");
+      
+      if (enclosing != "")
+      {
+        os << "::" << enclosing;
+      }
+
       Traversal::HomeExecutor::implements (i, implements_traverser_);
     }
 
@@ -1640,6 +1707,7 @@ namespace
   private:
     NameMangler name_emitter_;
     Traversal::Implements implements_traverser_;
+    CommandLine const& cl_;
   };
 
   //
@@ -2024,11 +2092,11 @@ generate (CommandLine const& cl,
     InterfaceEmitter interface_ (ctx, os);
     InterfaceFwdEmitter interface_fwd (ctx, os);
 
-    MonolithEmitter component_monolith (ctx, os);
+    MonolithEmitter component_monolith (ctx, os, cl);
     ContextEmitter component_context (ctx, os, cl);
 
     HomeImplicitEmitter home_implicit (ctx, os);
-    HomeExplicitEmitter home_explicit (ctx, os);
+    HomeExplicitEmitter home_explicit (ctx, os, cl);
     HomeMainEmitter home_main (ctx, os);
 
     defines.node_traverser (module);
@@ -2070,9 +2138,9 @@ generate (CommandLine const& cl,
     //--
     FullTypeNameEmitter type (ctx, os);
 
-    ComponentContextEmitter session_component_context (ctx, os);
-    ComponentExecutorEmitter session_component_executor (ctx, os);
-    HomeExecutorEmitter session_home_executor (ctx, os);
+    ComponentContextEmitter session_component_context (ctx, os, cl);
+    ComponentExecutorEmitter session_component_executor (ctx, os, cl);
+    HomeExecutorEmitter session_home_executor (ctx, os, cl);
 
     ContextPortEmitter port_context (ctx, os);
     ExplicitPortEmitter port_explicit (ctx, os);
