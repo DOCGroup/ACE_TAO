@@ -513,13 +513,6 @@ namespace
     inherits_pre (Type&)
     {
       os << " : ";
-      
-      string enclosing = cl_.get_value ("lem-enclosing-module", "");
-      
-      if (enclosing != "")
-      {
-        os << "::" << enclosing;
-      }
     }
 
     virtual void
@@ -831,13 +824,6 @@ namespace
     inherits_pre (Type&)
     {
       os << " : ";
-      
-      string enclosing = cl_.get_value ("lem-enclosing-module", "");
-      
-      if (enclosing != "")
-      {
-        os << "::" << enclosing;
-      }
     }
 
     virtual void
@@ -1156,13 +1142,13 @@ namespace
     inherits_pre (Type&)
     {
       os << " : ";
-      
+/*      
       string enclosing = cl_.get_value ("lem-enclosing-module", "");
       
       if (enclosing != "")
       {
         os << "::" << enclosing;
-      }
+      }*/
     }
 
     virtual void
