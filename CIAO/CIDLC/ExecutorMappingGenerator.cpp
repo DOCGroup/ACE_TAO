@@ -1649,8 +1649,9 @@ namespace
                            Traversal::BracketIncludes,
                            Emitter
   {
-    IncludesEmitter (Context& c, ostream& os)
-        : Emitter (c, os)
+    IncludesEmitter (Context& c, ostream& os, CommandLine const& cl)
+        : Emitter (c, os),
+          cl_ (cl)
     {
     }
 
@@ -1658,6 +1659,14 @@ namespace
     traverse (SemanticGraph::QuoteIncludes& qi)
     {
       os << "#include \"" << qi.file ().string () << "\"" << endl;
+      
+      string enclosing = cl_.get_value ("lem-enclosing-module", "");
+      
+      if (enclosing != "")
+      {
+        os << endl << "module " << enclosing << endl
+           << "{";
+      }
     }
 
     virtual void
@@ -1665,6 +1674,9 @@ namespace
     {
       os << "#include <" << bi.file ().string () << ">" << endl;
     }
+    
+  private:
+    CommandLine const& cl_;
   };
 }
 
@@ -1692,6 +1704,14 @@ options (CL::Description& d)
                   "regex",
                   "Use provided regular expression when constructing "
                   "name of local executor mapping file.",
+                  CL::OptionType::value));
+
+  d.add_option (CL::OptionDescription (
+                  "lem-enclosing-module",
+                  "name",
+                  "Adds an enclosing module to the entire IDL file "
+                  "to disambiguate repeated code generation of "
+                  "inherited facets.",
                   CL::OptionType::value));
 }
 
@@ -1942,7 +1962,7 @@ generate (CommandLine const& cl,
     {
       os << "#include <ciao/Contexts/Swapping/CIAO_UpgradeableContext.idl>" << endl;
     }
-
+    
     Traversal::TranslationUnit unit;
 
     // Layer 1
@@ -1968,7 +1988,7 @@ generate (CommandLine const& cl,
     Traversal::ContainsRoot contains_root;
     Traversal::QuoteIncludes quote_includes;
     Traversal::BracketIncludes bracket_includes;
-    IncludesEmitter includes_emitter (ctx, os);
+    IncludesEmitter includes_emitter (ctx, os, cl);
 
 
     principal_region.edge_traverser (includes_emitter);
@@ -2095,5 +2115,13 @@ generate (CommandLine const& cl,
     // end
 
     unit.traverse (tu);
+    
+    string enclosing = cl.get_value ("lem-enclosing-module", "");
+    
+    if (enclosing != "")
+    {
+      os << endl
+         << "};" << endl;
+    }
   }
 }
