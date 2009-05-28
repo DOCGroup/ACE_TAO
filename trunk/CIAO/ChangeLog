@@ -1,3 +1,24 @@
+Thu May 28 14:01:45 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantSourceGenerator.cpp:
+          
+          Fixed cut/paste error in comment.
+          
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        
+          Added command line option to generate an IDL module that
+          encloses the entire executor IDL file, and
+          corresponding 'using namespace' declarations in the
+          servant and executor impl header files. This change is
+          a temporary fix for build errors occurring when facet
+          executor IDL generation is duplicated across IDL files
+          for components which have an inheritance relationship
+          but are located in separate translation units. Thanks
+          to Will Otte <wotte@dre.vanderbilt.edu> for reporting
+          the problem and suggesting the fix.
+
 Wed May 27 23:58:23 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Generator/Plan_Generator.mpc:

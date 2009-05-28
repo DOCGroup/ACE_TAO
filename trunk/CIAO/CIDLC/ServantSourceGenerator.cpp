@@ -3625,7 +3625,7 @@ namespace
       {}
 
       // Overriden to do nothing since we don't want to generate
-      // component swapping related code for facet operations.
+      // component swapping related code for home operations.
       virtual void
       gen_swap_related (SemanticGraph::Operation&)
       {

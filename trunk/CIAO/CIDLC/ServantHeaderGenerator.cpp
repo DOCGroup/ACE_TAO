@@ -1568,6 +1568,13 @@ ServantHeaderEmitter::pre (TranslationUnit&)
      << (swapping ? "Swapping/Swapping_Servant_Home_Impl_T.h"
                   : "Home_Servant_Impl_T.h")
      << "\"" << endl << endl;
+      
+  string enclosing = cl_.get_value ("lem-enclosing-module", "");
+  
+  if (enclosing != "")
+  {
+    os << "using namespace " << enclosing << ";" << endl << endl;
+  }
 }
 
 void

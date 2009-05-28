@@ -689,6 +689,13 @@ ExecImplHeaderEmitter::pre (TranslationUnit&)
   }
 
   os << "#include \"tao/LocalObject.h\"" << endl << endl;
+      
+  string enclosing = cl_.get_value ("lem-enclosing-module", "");
+  
+  if (enclosing != "")
+  {
+    os << "using namespace " << enclosing << ";" << endl;
+  }
 }
 
 void
