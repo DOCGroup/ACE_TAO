@@ -60,6 +60,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CosNaming::Name name;
       name.length(4);
+      name[0].id   = CORBA::string_dup("This");
       name[0].kind = CORBA::string_dup("");
       name[1].id   = CORBA::string_dup("eat");
       name[1].kind = CORBA::string_dup("");
