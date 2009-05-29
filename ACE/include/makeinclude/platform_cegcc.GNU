@@ -42,5 +42,6 @@ COMPARCH ?= i386-mingw32ce-
 LIBS += -lcoredll -lmingw32 -lmingwex -lws2 -lsupc++ -liphlpapi
 
 no_hidden_visibility ?= 1
+qos ?= 1
 
 include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU

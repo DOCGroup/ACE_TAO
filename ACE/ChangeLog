@@ -1,3 +1,12 @@
+Fri May 29 13:36:05  2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/OS_NS_stropts.cpp:
+        * ace/OS_NS_sys_socket.cpp:
+        * include/makeinclude/platform_cegcc.GNU:
+        
+          Fixed compiler error for QoS when compiler is CE gcc.
+          Removed UNDER_CE < 500.
+
 Fri May 29 11:41:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/QoS/qos.mpc:
