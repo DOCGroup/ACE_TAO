@@ -1,3 +1,10 @@
+Fri May 29 16:08:32 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * tests/Bug_2740_Regression_Test.cpp:
+        * tests/tests.mpc:
+        * tests/run_test.lst: New test based on code submitted in
+          Bugzilla 2740.
+
 Fri May 29 13:36:05  2009  Marcel Smit  <msmit@remedy.nl>
 
         * ace/OS_NS_stropts.cpp:
