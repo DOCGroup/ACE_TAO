@@ -1,3 +1,8 @@
+Fri May 29 10:29:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3683_Regression/*:
+          New regression test
+
 Thu May 28 14:56:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_3673_Regression/client.cpp:
