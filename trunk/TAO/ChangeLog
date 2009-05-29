@@ -1,3 +1,8 @@
+Fri May 29 11:27:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ZIOP/TestCompressor/TAO_TestCompressor.rc:
+          Fixed for WinCE GCC
+
 Fri May 29 10:29:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3683_Regression/*:
