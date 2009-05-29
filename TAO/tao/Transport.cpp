@@ -807,7 +807,18 @@ TAO_Transport::schedule_output_i (void)
   ACE_Reactor * const reactor = eh->reactor ();
 
   if (reactor == 0)
-     return -1;
+    {
+      if (TAO_debug_level > 1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) - ")
+                      ACE_TEXT ("Transport[%d]::schedule_output_i ")
+                      ACE_TEXT ("no reactor,")
+                      ACE_TEXT ("returning -1\n"),
+                      this->id ()));
+        }
+      return -1;
+    }
 
   // Check to see if our event handler is still registered with the
   // reactor.  It's possible for another thread to have run close_connection()
@@ -821,7 +832,7 @@ TAO_Transport::schedule_output_i (void)
         {
           if (TAO_debug_level > 3)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - ")
                           ACE_TEXT ("Transport[%d]::schedule_output_i ")
                           ACE_TEXT ("event handler not found in reactor,")
@@ -2576,7 +2587,6 @@ TAO_Transport::notify_reactor (void)
          ACE_TEXT ("notify to Reactor\n"),
          this->id ()));
     }
-
 
   // Send a notification to the reactor...
   int const retval = reactor->notify (eh, ACE_Event_Handler::READ_MASK);
