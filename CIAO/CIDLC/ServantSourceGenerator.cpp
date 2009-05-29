@@ -259,8 +259,9 @@ namespace
   struct FacetEmitter : Traversal::UnconstrainedInterface,
                         EmitterBase
   {
-    FacetEmitter (Context& c)
-      : EmitterBase (c)
+    FacetEmitter (Context& c, CommandLine const &cl)
+      : EmitterBase (c),
+        cl_ (cl)
     {
     }
 
@@ -388,6 +389,7 @@ namespace
         os << scope_.name () << "_Servant_T<T>::"
            << a.name () << " ()" << endl;
       }
+
     };
 
     virtual void
@@ -409,14 +411,15 @@ namespace
       /// Open a namespace made from the interface scope's name.
       os << "namespace " << STRS[FACET_PREFIX] << name
          << "{";
-
+      
+      string enclosing = cl_.get_value ("lem-enclosing-module", "");
       os << "template <typename T>" << endl
          << i.name () << "_Servant_T<T>::" << i.name ()
          << "_Servant_T (" << endl
-         << i.scoped_name ().scope_name () << "::CCM_" << i.name ()
+         << enclosing << i.scoped_name ().scope_name () << "::CCM_" << i.name ()
          << "_ptr executor," << endl
          << "::Components::CCMContext_ptr c)" << endl
-         << "  : executor_ ( " << i.scoped_name ().scope_name () << "::CCM_"
+         << "  : executor_ ( " << enclosing << i.scoped_name ().scope_name () << "::CCM_"
          << i.name () << "::_duplicate (executor))," << endl
          << "    ctx_ ( ::Components::CCMContext::_duplicate (c))" << endl
          << "{"
@@ -501,12 +504,15 @@ namespace
 
       i.context ().set ("facet_src_gen", true);
     }
+    
+    CommandLine const &cl_;
   };
 
   struct ContextEmitter : Traversal::Component, EmitterBase
   {
-    ContextEmitter (Context& c)
-      : EmitterBase (c)
+    ContextEmitter (Context& c, CommandLine const& cl)
+      : EmitterBase (c),
+        cl_ (cl)
     {}
 
     // Nested classes used by ContextEmitter.
@@ -1173,6 +1179,8 @@ namespace
     virtual void
     pre (Type& t)
     {
+      string enclosing = cl_.get_value ("lem-enclosing-module", "");
+
       os << t.name () << "_Context::"
          << t.name () << "_Context (" << endl
          << "::Components::CCMHome_ptr h," << endl
@@ -1180,7 +1188,7 @@ namespace
          << t.name () << "_Servant *sv)" << endl
          << "  : ::CIAO::Context_Impl_Base (h, c), " << endl
          << "    ::CIAO::Context_Impl<" << endl
-         << "        " << t.scoped_name ().scope_name () << "::CCM_"
+         << "        " << enclosing << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_Context," << endl
          << "        " << t.name () << "_Servant," << endl
          << "        " << t.scoped_name () << endl
@@ -1193,7 +1201,7 @@ namespace
         {
           os << "," << endl
              << "    ::CIAO::Upgradeable_Context_Impl<" << endl
-             << "        " << t.scoped_name ().scope_name () << "::CCM_"
+             << "        " << enclosing << t.scoped_name ().scope_name () << "::CCM_"
              << t.name () << "_Context," << endl
              << "        " << t.name () << "_Servant," << endl
              << "        " << t.scoped_name () << endl
@@ -1291,12 +1299,15 @@ namespace
          << endl
          << "}";
     }
+    
+    CommandLine const &cl_;
   };
 
   struct ServantEmitter : Traversal::Component, EmitterBase
   {
-    ServantEmitter (Context& c)
-      : EmitterBase (c)
+    ServantEmitter (Context& c, CommandLine const &cl)
+      : EmitterBase (c),
+        cl_ (cl)
     {}
 
     // Nested classes used by ServantEmitter.
@@ -1829,7 +1840,8 @@ namespace
                                   EmitterBase
     {
       FacetProvidesEmitter (Context& c,
-                            SemanticGraph::Component& scope)
+                            SemanticGraph::Component& scope,
+                            CommandLine const &cl)
         : EmitterBase (c),
           type_name_emitter_ (c),
           simple_type_name_emitter_ (c),
@@ -1837,7 +1849,8 @@ namespace
           enclosing_type_name_emitter_ (c),
           facet_enclosing_type_name_emitter_ (c),
           repo_id_emitter_ (c),
-          scope_ (scope)
+          scope_ (scope),
+          cl_ (cl)
       {
         belongs_.node_traverser (type_name_emitter_);
         simple_belongs_.node_traverser (simple_type_name_emitter_);
@@ -1927,9 +1940,9 @@ namespace
         os << "::";
 
         Traversal::ProviderData::belongs (p, servant_belongs_);
-
+        string enclosing = cl_.get_value ("lem-enclosing-module", "");        
         os << "," << endl
-           << "    ";
+           << "    " << enclosing;
 
         Traversal::ProviderData::belongs (p, enclosing_belongs_);
 
@@ -2000,17 +2013,20 @@ namespace
       Traversal::Belongs facet_enclosing_belongs_;
       Traversal::Belongs repo_id_belongs_;
       SemanticGraph::Component& scope_;
+      CommandLine const &cl_;
+      
     };
 
     struct ConsumesEmitter : Traversal::ConsumerData,
                              EmitterBase
     {
-      ConsumesEmitter (Context& c, SemanticGraph::Component& scope)
+      ConsumesEmitter (Context& c, SemanticGraph::Component& scope, CommandLine const &cl)
         : EmitterBase (c),
           type_name_emitter_ (c),
           simple_type_name_emitter_ (c),
           repo_id_emitter_ (c),
-          scope_ (scope)
+          scope_ (scope),
+          cl_ (cl)
       {
         belongs_.node_traverser (type_name_emitter_);
         simple_belongs_.node_traverser (simple_type_name_emitter_);
@@ -2028,20 +2044,21 @@ namespace
            << "_Servant::";
 
         Traversal::ConsumerData::belongs (c, simple_belongs_);
-
+        
+        string enclosing = cl_.get_value ("lem-enclosing-module", "");        
         os << "Consumer_" << c.name ()
            << "_Servant (" << endl
-           << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
+           << enclosing << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
            << c.scoped_name ().scope_name ().simple_name  ()
            << "_ptr executor,"
            << endl
-           << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
+           << enclosing << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
            << c.scoped_name ().scope_name ().simple_name  ()
            << "_Context_ptr c)" << endl
-           << "  : executor_ ( " << c.scoped_name ().scope_name ().scope_name ()
+           << "  : executor_ ( " << enclosing << c.scoped_name ().scope_name ().scope_name ()
            << "::CCM_" << c.scoped_name ().scope_name ().simple_name  ()
            << "::_duplicate (executor))," << endl
-           << "    ctx_ ( " << c.scoped_name ().scope_name ().scope_name ()
+           << "    ctx_ ( " << enclosing << c.scoped_name ().scope_name ().scope_name ()
            << "::CCM_" << c.scoped_name ().scope_name ().simple_name  ()
            << "_Context::_duplicate (c))" << endl
            << "{"
@@ -2241,12 +2258,12 @@ namespace
         os << scope_.name  () << "_Servant::";
 
         Traversal::ConsumerData::belongs (c, simple_belongs_);
-
+        
         os << "Consumer_" << c.name () << "_Servant," << endl
-           << "    " << c.scoped_name ().scope_name ().scope_name ()
+           << "    " << enclosing << c.scoped_name ().scope_name ().scope_name ()
            << "::CCM_" << c.scoped_name ().scope_name ().simple_name ()
            << "," << endl
-           << "    " << c.scoped_name ().scope_name ().scope_name ()
+           << "    " << enclosing << c.scoped_name ().scope_name ().scope_name ()
            << "::CCM_" << c.scoped_name ().scope_name ().simple_name ()
            << "_Context," << endl
            << "    " << scope_.name () << "_Servant>" << endl
@@ -2307,6 +2324,7 @@ namespace
       Traversal::Belongs simple_belongs_;
       Traversal::Belongs repo_id_belongs_;
       SemanticGraph::Component& scope_;
+      CommandLine const &cl_;
     };
 
     struct OperationExistsEmitter;
@@ -2802,18 +2820,21 @@ namespace
       Traversal::Belongs repo_id_belongs_;
       unsigned long slot_;
     };
-
+  
   public:
+      
     virtual void
     pre (Type& t)
     {
       ScopedName scoped (t.scoped_name ());
       Name stripped (scoped.begin () + 1, scoped.end ());
 
+      string enclosing = cl_.get_value ("lem-enclosing-module", "");
+
       // Servant Constructor
       os << t.name () << "_Servant::"
          << t.name () << "_Servant (" << endl
-         << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
+         << enclosing << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
          << "::Components::CCMHome_ptr h," << endl
          << "const char *ins_name," << endl
@@ -2823,7 +2844,7 @@ namespace
          << "(h, hs, c)," << endl
          << "    ::CIAO::Servant_Impl<" << endl
          << "        ::POA_" << stripped << "," << endl
-         << "        " << t.scoped_name ().scope_name () << "::CCM_"
+         << "        " << enclosing << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "," << endl
          << "        " << t.name () << "_Context" << endl
          << "      > (exe, h, hs, c)," << endl
@@ -2934,7 +2955,7 @@ namespace
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (inherits);
 
-        FacetProvidesEmitter provides_emitter (ctx, t);
+        FacetProvidesEmitter provides_emitter (ctx, t, cl_);
         defines.node_traverser (provides_emitter);
 
         component_emitter.traverse (t);
@@ -2968,7 +2989,7 @@ namespace
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (inherits);
 
-        ConsumesEmitter consumes_emitter (ctx, t);
+        ConsumesEmitter consumes_emitter (ctx, t, cl_);
         defines.node_traverser (consumes_emitter);
 
         component_emitter.traverse (t);
@@ -3549,6 +3570,8 @@ namespace
         name = regex::perl_s (ostr.str (), "/::/_/");
       }
 
+      string enclosing = cl_.get_value ("lem-enclosing-module", "");
+
       os << "extern \"C\" " << ctx.export_macro ()
          << " ::PortableServer::Servant"
          << endl
@@ -3557,9 +3580,9 @@ namespace
          << "::CIAO::Container_ptr c," << endl
          << "const char *ins_name)" << endl
          << "{"
-         << t.scoped_name ().scope_name () << "::CCM_"
+         << enclosing << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_var x =" << endl
-         << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
+         << enclosing << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "::_narrow (p);" << endl
          << "if (::CORBA::is_nil (x.in ()))" << endl
          << "{"
@@ -3574,6 +3597,8 @@ namespace
          << "return retval;" << endl
          << "}";
     }
+    
+    CommandLine const &cl_;
   };
 
   struct HomeEmitter : Traversal::Home, EmitterBase
@@ -3853,9 +3878,10 @@ namespace
     virtual void
     pre (Type& t)
     {
+      string enclosing = cl_.get_value ("lem-enclosing-module", "");
       os << t.name () << "_Servant::"
          << t.name () << "_Servant (" << endl
-         << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
+         << enclosing << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
          << "const char *ins_name," << endl
          << "::CIAO::Container_ptr c)" << endl
@@ -3870,7 +3896,7 @@ namespace
 
       os << (swapping ? "Swapping_" : "") << "Home_Servant_Impl<" << endl
          << "          ::POA_" << stripped << "," << endl
-         << "          " << t.scoped_name ().scope_name () << "::CCM_"
+         << "          " << enclosing << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "," << endl
          << "          ";
 
@@ -4086,6 +4112,7 @@ namespace
         name = regex::perl_s (ostr.str (), "/::/_/");
       }
 
+      string enclosing = cl_.get_value ("lem-enclosing-module", "");
       os << "extern \"C\" " << ctx.export_macro ()
          << " ::PortableServer::Servant"
          << endl
@@ -4094,9 +4121,9 @@ namespace
          << "::CIAO::Container_ptr c," << endl
          << "const char *ins_name)" << endl
          << "{"
-         << t.scoped_name ().scope_name () << "::CCM_"
+         << enclosing << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_var x =" << endl
-         << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
+         << enclosing << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "::_narrow (p);" << endl
          << "if (::CORBA::is_nil (x.in ()))" << endl
          << "{"
@@ -4197,8 +4224,8 @@ ServantSourceEmitter::generate (TranslationUnit& u)
   home_executor.edge_traverser (implements);
 
   //--
-  ContextEmitter context_emitter (c);
-  ServantEmitter servant_emitter (c);
+  ContextEmitter context_emitter (c, cl_);
+  ServantEmitter servant_emitter (c, cl_);
   HomeEmitter home_emitter (c, cl_);
   implements.node_traverser (context_emitter);
   implements.node_traverser (servant_emitter);
@@ -4318,7 +4345,7 @@ ServantSourceEmitter::generate_facets (TranslationUnit& u, Context& c)
   Traversal::Belongs belongs;
   provider.edge_traverser (belongs);
 
-  FacetEmitter facet_emitter (c);
+  FacetEmitter facet_emitter (c, cl_);
   belongs.node_traverser (facet_emitter);
 
   unit.traverse (u);
