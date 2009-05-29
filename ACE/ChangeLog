@@ -1,3 +1,8 @@
+Fri May 29 11:41:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/QoS/qos.mpc:
+          Use prop:windows
+
 Tue May 26 06:56:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Configuration.{h,cpp}
