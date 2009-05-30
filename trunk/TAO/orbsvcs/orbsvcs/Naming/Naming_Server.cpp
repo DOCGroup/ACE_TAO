@@ -431,7 +431,7 @@ TAO_Naming_Server::init_with_orb (int argc,
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("Unable to open %s for writing:(%u) %p\n"),
                              this->ior_file_name_,
-                             errno,
+                             ACE_ERRNO_GET,
                              ACE_TEXT("TAO_Naming_Server::init_with_orb")),
                             -1);
         }
