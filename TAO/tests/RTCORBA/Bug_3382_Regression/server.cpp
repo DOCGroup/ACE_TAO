@@ -279,7 +279,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             // Unexpected error.
             ACE_ERROR_RETURN ((LM_ERROR,
                                  "ERROR: Cannot create thread. errno = %d\n",
-                                 errno),
+                                 ACE_ERRNO_GET),
                                 -1);
         }
 
