@@ -248,19 +248,19 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
       if (socket->open (new_subscription.mcast_addr, this->net_if_, 1) == -1) {
         ACE_ERROR ((LM_ERROR,
                     "Error: %d - Unable to open multicast socket\n",
-                    errno ));
+                    ACE_ERRNO_GET));
       }
 
       if ( socket->enable (ACE_NONBLOCK) != 0 ) {
         ACE_ERROR ((LM_ERROR,
                     "Error: %d - Unable to enable nonblocking on mcast_eh\n",
-                    errno ));
+                    ACE_ERRNO_GET));
       }
 
       if (socket->join (new_subscription.mcast_addr, 1, this->net_if_) == -1) {
         ACE_ERROR ((LM_ERROR,
                     "Error: %d - Unable to join multicast group\n",
-                    errno ));
+                    ACE_ERRNO_GET));
       }
 
       if (this->recvbuf_size_ != 0
@@ -272,7 +272,7 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
         {
           ACE_ERROR ((LM_ERROR,
                       "Error: %d - Unable to set mcast_eh recvbuf_size:%d\n",
-                      errno,
+                      ACE_ERRNO_GET,
                       this->recvbuf_size_));
         }
       (void) this->reactor ()->register_handler (
