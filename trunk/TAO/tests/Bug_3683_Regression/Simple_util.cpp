@@ -284,7 +284,7 @@ Client<ServerInterface>::~Client (void)
 }
 
 template <class ServerInterface> int
-Client<ServerInterface>::init (const char *name,
+Client<ServerInterface>::init (const char *,
                                int argc,
                                ACE_TCHAR **argv)
 {
