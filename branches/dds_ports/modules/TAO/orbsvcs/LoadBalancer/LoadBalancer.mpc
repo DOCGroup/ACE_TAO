@@ -1,0 +1,24 @@
+// -*- MPC -*-
+//
+// $Id$
+
+
+project(LoadManager): namingexe, portableserver, install, iortable, iormanip, loadbalancing {
+  exename  = LoadManager
+  requires += ami interceptors
+  Source_Files {
+    LoadManager.cpp
+    Signal_Handler.cpp
+  }
+}
+
+project(LoadMonitor): namingexe, portableserver, install, loadbalancing {
+  requires += ami interceptors
+  exename  = LoadMonitor
+  Source_Files {
+    LoadMonitor.cpp
+    Push_Handler.cpp
+    Monitor_Signal_Handler.cpp
+    Signal_Handler.cpp
+  }
+}
