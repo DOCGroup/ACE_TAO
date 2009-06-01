@@ -375,7 +375,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
           else if (pathlen > 0)
               return 0;
 #else
-          ACE_TCHAR *ld_path;
+          const ACE_TCHAR *ld_path = 0;
 #  if defined ACE_DEFAULT_LD_SEARCH_PATH
           ld_path = ACE_DEFAULT_LD_SEARCH_PATH;
 #  else
@@ -593,8 +593,8 @@ ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
                                  buffer);
 
   // Make sure to return -1 if there is an error
-  if (result == 0 && ::GetLastError () != ERROR_SUCCESS
-      || result > static_cast<int> (buffer_len))
+  if ((result == 0 && ::GetLastError () != ERROR_SUCCESS)
+      || (result > static_cast<int> (buffer_len)))
     result = -1;
 
 #else /* ACE_WIN32 */
