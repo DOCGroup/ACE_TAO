@@ -11,7 +11,7 @@
 #error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
-#if (__BORLANDC__ < 0x610)
+#if (__BORLANDC__ < 0x613)
 #error This version of CodeGear C++ is not supported.
 #endif
 
@@ -139,7 +139,7 @@
 # endif /* !_MT && !ACE_HAS_WINCE */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
-#if (__BORLANDC__ <= 0x610)
+#if (__BORLANDC__ <= 0x613)
 # define ACE_LACKS_ISBLANK
 # define ACE_LACKS_ISWBLANK
 # define ACE_LACKS_ISWCTYPE
@@ -148,7 +148,7 @@
 
 #define ACE_LACKS_ISCTYPE
 
-#if (__BORLANDC__ <= 0x610)
+#if (__BORLANDC__ <= 0x613)
 // Older Borland compilers can't handle assembly in inline methods or
 // templates (E2211). When we build for pentium optimized and we are inlining
 // then we disable inline assembly
