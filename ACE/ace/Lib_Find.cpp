@@ -375,7 +375,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
           else if (pathlen > 0)
               return 0;
 #else
-          const ACE_TCHAR *ld_path = 0;
+          ACE_TCHAR *ld_path = 0;
 #  if defined ACE_DEFAULT_LD_SEARCH_PATH
           ld_path = ACE_DEFAULT_LD_SEARCH_PATH;
 #  else
