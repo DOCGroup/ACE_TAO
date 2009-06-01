@@ -377,7 +377,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
 #else
           ACE_TCHAR *ld_path = 0;
 #  if defined ACE_DEFAULT_LD_SEARCH_PATH
-          ld_path = ACE_DEFAULT_LD_SEARCH_PATH;
+          ld_path = const_cast <ACE_TCHAR*> (ACE_DEFAULT_LD_SEARCH_PATH);
 #  else
 #    if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
           ld_path = ACE_OS::getenv (ACE_LD_SEARCH_PATH);
