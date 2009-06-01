@@ -1,0 +1,19 @@
+// $Id$
+
+#if !defined (CCM_KEYLESSCCMHOME_IDL)
+#define CCM_KEYLESSCCMHOME_IDL
+
+#include "ccm/CCM_Object.idl"
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  interface KeylessCCMHome
+  {
+    CCMObject create_component()
+      raises (CreateFailure);
+  };
+
+};
+#endif /* CCM_KEYLESSCCMHOME_IDL */
