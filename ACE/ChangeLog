@@ -1,3 +1,12 @@
+Mon Jun  1 08:09:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Lib_Find.cpp:
+          Fixed gcc4.4 warning in a different way, broke other builds
+
+        * ace/config-win32-borland.h:
+          Changed version checks to not have to patch again for a next
+          path from Embarcadero
+
 Mon Jun  1 05:22:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Lib_Find.cpp:
