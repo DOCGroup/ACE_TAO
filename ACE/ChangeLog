@@ -1,3 +1,8 @@
+Mon Jun  1 05:22:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Lib_Find.cpp:
+          Fixed gcc4.4 warnings
+
 Mon Jun  1 05:15:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h:
