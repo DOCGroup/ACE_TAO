@@ -1,3 +1,8 @@
+Mon Jun  1 05:15:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          We new require to have update pack 3 installed
+
 Fri May 29 16:08:32 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * tests/Bug_2740_Regression_Test.cpp:
@@ -10,7 +15,7 @@ Fri May 29 13:36:05  2009  Marcel Smit  <msmit@remedy.nl>
         * ace/OS_NS_stropts.cpp:
         * ace/OS_NS_sys_socket.cpp:
         * include/makeinclude/platform_cegcc.GNU:
-        
+
           Fixed compiler error for QoS when compiler is CE gcc.
           Removed UNDER_CE < 500.
 
