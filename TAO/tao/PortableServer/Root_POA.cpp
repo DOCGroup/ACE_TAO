@@ -1275,7 +1275,6 @@ TAO_Root_POA::deactivate_object (const PortableServer::ObjectId &oid)
   this->deactivate_object_i (oid);
 }
 
-
 void
 TAO_Root_POA::deactivate_object_i (const PortableServer::ObjectId &id)
 {
@@ -2225,7 +2224,7 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
   for (CORBA::ULong i = 0; i != len; ++i)
     {
       this->add_ior_component (mprofile, this->tagged_component_[i]);
-      }
+    }
 
   len = this->tagged_component_id_.length ();
 

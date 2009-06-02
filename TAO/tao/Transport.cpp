@@ -779,7 +779,7 @@ TAO_Transport::send_synch_message_helper_i (TAO_Synch_Queued_Message &synch_mess
 {
   TAO::Transport::Drain_Constraints dc(
       max_wait_time, this->using_blocking_io_for_synch_messages());
-  
+
   int const n = this->drain_queue_i (dc);
 
   if (n == -1)
@@ -812,7 +812,7 @@ TAO_Transport::schedule_output_i (void)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - ")
-                      ACE_TEXT ("Transport[%d]::schedule_output_i ")
+                      ACE_TEXT ("Transport[%d]::schedule_output_i, ")
                       ACE_TEXT ("no reactor,")
                       ACE_TEXT ("returning -1\n"),
                       this->id ()));
