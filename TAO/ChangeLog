@@ -1,3 +1,30 @@
+Tue  Jun  2 06:47:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Options.html:
+          When we use ClientConnectionHandler RW we don't use the LF
+          loop. In case the buffers are full, we use the flushing
+          strategy for which the default is leader follower, but that
+          will not work because we don't use the lf loop in this case.
+          Added a note the ClientConnectionHandler RW needs a
+          FlusingStrategy of blocking
+
+        * tests/Bug_3683_Regression/Echo_Client_i.cpp
+        * tests/Bug_3683_Regression/Echo_Client_i.h
+        * tests/Bug_3683_Regression/run_test.pl
+        * tests/Bug_3683_Regression/Simple_util.cpp
+          Use a commandline argument -p to indicate the size of the
+          string in megabytes.
+
+        * tests/Bug_3683_Regression/svc.conf
+          Set the FlushingStrategy to blocking
+
+        * tao/Transport.cpp:
+          Small layout to debug message
+
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/LocateRequest_Invocation_Adapter.cpp
+          Layout change
+
 Fri May 29 12:47:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp (schedule_output):

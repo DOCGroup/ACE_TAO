@@ -55,8 +55,7 @@ namespace TAO
 
     Invocation_Status s = TAO_INVOKE_START;
 
-    while (s == TAO_INVOKE_START ||
-           s == TAO_INVOKE_RESTART)
+    while (s == TAO_INVOKE_START || s == TAO_INVOKE_RESTART)
       {
         Profile_Transport_Resolver resolver (effective_target.in (), stub, true);
 

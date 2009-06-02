@@ -36,7 +36,7 @@ template <class Servant> int
 Server<Servant>::parse_args (void)
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_,
-                        ACE_TEXT ("do:ni:"), 1, 0,
+                        ACE_TEXT ("do:i:"), 1, 0,
                         ACE_Get_Opt::REQUIRE_ORDER);
   int c = 0;
 
@@ -52,17 +52,6 @@ Server<Servant>::parse_args (void)
       case 'i': // For Testing the InterOperable Naming Service.
         this->ins_ = get_opts.opt_arg ();
         break;
-      case 'h':  // display help for use of the server.
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage:  %s")
-                           ACE_TEXT (" [-d (debug)]")
-                           ACE_TEXT (" [-o] <ior_output_file>")
-                           ACE_TEXT (" [-i] <InterOperable Naming Service simple object key>")
-                           ACE_TEXT (" [-h (help)]")
-                           ACE_TEXT ("\n"),
-                           this->argv_ [0]),
-                          -1);
       }
 
   // Indicates successful parsing of command line.
