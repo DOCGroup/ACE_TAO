@@ -1,3 +1,12 @@
+Tue  Jun  2 07:21:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Bug_3646d_Regression/*:
+          Another test that loads and unload the notify service, this one
+          also loads the naming service and uses one run thread
+
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+          Const change
+
 Tue  Jun  2 06:50:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
