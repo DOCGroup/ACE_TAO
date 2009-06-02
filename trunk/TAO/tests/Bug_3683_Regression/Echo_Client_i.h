@@ -13,9 +13,9 @@
 //    This class implements the  interface calls for RMI.
 //
 // = AUTHOR
-//    
+//
 //   Balachandran Natarajan <bala@cs.wustl.edu>
-//    
+//
 // ============================================================================
 
 #ifndef ECHO_CLIENT_I_H
@@ -44,8 +44,12 @@ public:
   // Execute the methods
 
 private:
+  int parse_args (int argc, ACE_TCHAR *argv[]);
+
   Client<Echo> client_;
   // Instantiate the client object.
+
+  size_t payload_length_;
 };
 
 #endif /* TIME_CLIENT_I_H */
