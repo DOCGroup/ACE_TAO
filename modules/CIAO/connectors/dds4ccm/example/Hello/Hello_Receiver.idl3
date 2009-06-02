@@ -1,0 +1,13 @@
+#include "Hello_Base.idl3p"
+
+module Hello_DDS
+{
+  component Receiver
+  {
+    uses CCM_DDS::Reader<T> read_message_data;
+    uses CCM_DDS::ListenerControl read_message_control;
+    provides CCM_DDS::RawListener<T> read_message_listener;
+    uses DDS::DataReader read_message_dds_entity;
+    provides CCM_DDS::PortStatusListener read_message_status;
+  };
+};

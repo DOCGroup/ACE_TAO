@@ -1,0 +1,10 @@
+#include "Hello_Base.idl3p"
+
+module Hello_DDS
+{
+  component Sender
+  {
+    uses CCM_DDS::Writer<T> push_data_data;
+    uses DDS::DataWriter push_data_dds_entity;
+  };
+};
