@@ -144,7 +144,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
       this->notify_service_->init_service (this->orb_.in ());
     }
 
-  logging_worker_.start();
+  this->logging_worker_.start();
 
   if (this->nthreads_ > 0) // we have chosen to run in a thread pool.
     {
@@ -222,7 +222,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
     }
 
   // Register with the Name service, if asked
-  if (this->use_name_svc_ && !CORBA::is_nil (naming.in ()))
+  if (this->use_name_svc_ && !CORBA::is_nil (this->naming_.in ()))
     {
       CosNaming::Name_var name =
         this->naming_->to_name (this->notify_factory_name_.c_str ());
