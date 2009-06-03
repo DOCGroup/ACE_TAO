@@ -348,8 +348,10 @@ TAO_Notify_Service_Driver::run (void)
       worker_.thr_mgr ()->wait ();
       return 0;
     }
-
-  this->orb_->run ();
+  else
+    {
+      this->orb_->run ();
+    }
 
   this->logging_worker_.end();
   return 0;

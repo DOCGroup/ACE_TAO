@@ -1,3 +1,8 @@
+Wed  Jun  3 08:20:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+          Only run the orb when we have no orb threads
+
 Tue  Jun  2 18:40:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
