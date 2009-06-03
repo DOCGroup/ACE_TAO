@@ -6,8 +6,8 @@
 
 module ZIOP
 {
-  struct CompressedData {
-    Compression::CompressorId compressorid;
+  struct CompressionData {
+    Compression::CompressorId compressor;
     unsigned long original_length;
     Compression::Buffer data;
    };
