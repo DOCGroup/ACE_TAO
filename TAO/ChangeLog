@@ -1,3 +1,9 @@
+Wed  Jun  3 12:54:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+          Make sure we have use the name service before using it and don't
+          use asserts
+
 Wed  Jun  3 12:30:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Incoming_Message_Stack.h:

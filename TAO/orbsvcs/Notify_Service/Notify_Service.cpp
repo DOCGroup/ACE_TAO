@@ -222,10 +222,8 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
     }
 
   // Register with the Name service, if asked
-  if (this->use_name_svc_)
+  if (this->use_name_svc_ && !CORBA::is_nil (naming.in ()))
     {
-      ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
-
       CosNaming::Name_var name =
         this->naming_->to_name (this->notify_factory_name_.c_str ());
 
@@ -375,20 +373,20 @@ TAO_Notify_Service_Driver::fini (void)
 
   this->notify_service_->fini ();
 
-  // Unbind all event channels from the naming service
-  if (this->register_event_channel_ && !CORBA::is_nil (naming.in ()))
-    {
-      for (ACE_Unbounded_Set<ACE_CString>::const_iterator ci (
-           this->notify_channel_name_); !ci.done(); ci++)
-        {
-          CosNaming::Name_var name = naming->to_name ((*ci).c_str ());
-          naming->unbind (name.in ());
-        }
-    }
-
   // Deactivate.
   if (this->use_name_svc_ && !CORBA::is_nil (naming.in ()))
     {
+      // Unbind all event channels from the naming service
+      if (this->register_event_channel_)
+        {
+          for (ACE_Unbounded_Set<ACE_CString>::const_iterator ci (
+               this->notify_channel_name_); !ci.done(); ci++)
+            {
+              CosNaming::Name_var name = naming->to_name ((*ci).c_str ());
+              naming->unbind (name.in ());
+            }
+        }
+
       // Unbind from the naming service.
       CosNaming::Name_var name =
         naming->to_name (this->notify_factory_name_.c_str ());
