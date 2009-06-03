@@ -159,7 +159,6 @@ sub Spawn ()
             $cmdnr += scalar @load_commands;
           } else {
             print STDERR "ERROR: Cannot find <", $vxtest_file, ">\n";
-            return -1;
           }
 
         if (defined $self->{ARGUMENTS}) {
