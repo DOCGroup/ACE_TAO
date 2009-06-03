@@ -1,3 +1,10 @@
+Wed Jun  3 07:52:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessWinCE.pm:
+        * bin/PerlACE/ProcessWinCE_Unix.pm:
+          If we can't find the vxtest file, log it as error but just
+          continue
+
 Mon Jun  1 08:09:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Lib_Find.cpp:
