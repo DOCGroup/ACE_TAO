@@ -3,6 +3,7 @@
 
 project(*idl): taoidldefaults {
   idlflags += -Sp
+  requires += corba_messaging
   IDL_Files {
     Test.idl
   }
