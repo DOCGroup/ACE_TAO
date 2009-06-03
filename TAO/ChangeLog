@@ -1,3 +1,10 @@
+Wed Jun  3 09:07:07 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Bug_3676_Regression/Bug_3676_Regression.mpc:
+        * bin/tao_orb_tests.lst:
+
+          Test 3676 requires corba_messaging.
+
 Wed  Jun  3 08:20:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
