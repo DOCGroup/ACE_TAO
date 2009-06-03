@@ -63,10 +63,9 @@ namespace TAO
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       if (this->uncompressed_bytes_ > 0)
         {
-          return_value = 
-            static_cast < ::Compression::CompressionRatio>(100 - 
-            (((CORBA::Double)this->uncompressed_bytes_ / this->compressed_bytes_) * 
-            (CORBA::Double)100));
+          return_value =
+            static_cast <::Compression::CompressionRatio>
+              ((::Compression::CompressionRatio) this->compressed_bytes_ / this->uncompressed_bytes_);
         }
     }
     return return_value;

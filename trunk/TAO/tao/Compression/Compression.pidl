@@ -21,7 +21,7 @@ module Compression
      */
     exception CompressionException
     {
-        unsigned long reason;
+        long reason;
         string description;
     };
 
@@ -63,7 +63,7 @@ module Compression
     /**
      * CompressionRatio type.
      */
-    typedef long CompressionRatio;
+    typedef float CompressionRatio;
 
     /**
      * CompressionLevelId struc.
