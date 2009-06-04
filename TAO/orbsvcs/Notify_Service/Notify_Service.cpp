@@ -344,6 +344,7 @@ TAO_Notify_Service_Driver::run (void)
   if (this->nthreads_ > 0)
     {
       worker_.thr_mgr ()->wait ();
+      worker_.orb (CORBA::ORB::_nil ());
       return 0;
     }
   else
@@ -592,7 +593,8 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 /*****************************************************************/
 LoggingWorker::LoggingWorker(TAO_Notify_Service_Driver* ns)
 : ns_ (ns),
-  started_ (false)
+  started_ (false),
+  timer_id_ (-1)
 {
 }
 
@@ -620,15 +622,15 @@ LoggingWorker::start ()
       else {
         if (this->ns_->logging_interval_ > ACE_Time_Value::zero)
         {
-          ACE_Time_Value delay;
-          if (this->ns_->orb_->orb_core()->reactor()->
-              schedule_timer (logging_strategy, 0, delay,
-                              this->ns_->logging_interval_) == -1)
-          {
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT("(%P|%t) Failed to schedule ")
-                        ACE_TEXT("logging switch timer\n")));
-          }
+          timer_id_ = this->ns_->orb_->orb_core()->reactor()->
+              schedule_timer (logging_strategy, 0, this->ns_->logging_interval_,
+                              this->ns_->logging_interval_);
+          if (timer_id_ == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT("(%P|%t) Failed to schedule ")
+                          ACE_TEXT("logging switch timer\n")));
+            }
         }
       }
     }
@@ -644,7 +646,7 @@ LoggingWorker::svc (void)
     }
   started_ = true;
   this->logging_reactor_.run_event_loop();
-
+  
   return 0;
 }
 
@@ -656,6 +658,13 @@ LoggingWorker::end ()
     this->logging_reactor_.end_event_loop();
     this->thr_mgr ()->wait ();
   }
+
+  if (timer_id_ != -1)
+    {
+      this->ns_->orb_->orb_core()->reactor()->
+        cancel_timer (timer_id_);
+      timer_id_ = -1;  
+    }
 }
 
 Worker::Worker (void)
