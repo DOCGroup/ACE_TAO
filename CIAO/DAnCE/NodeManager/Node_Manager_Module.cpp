@@ -171,14 +171,14 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
                         get_opts.opt_arg ()));
           this->options_.timeout_ = ACE_OS::atoi (get_opts.opt_arg ());
           break;
-          
+
         case 'd':
           DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
                         "Binding to provided Domain Naming Context: '%s'\n",
                         get_opts.opt_arg ()));
           this->options_.domain_nc_ = get_opts.opt_arg ();
           break;
-          
+
         case 'h':
           //case '?': // Display help for use of the server.
           //default:
@@ -204,7 +204,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
               this->options_.server_args_ = get_opts.opt_arg ();
             }
           else if (ACE_OS::strcmp (get_opts.long_option (),
-                                   "instance-nc") == 0)
+                                   ACE_TEXT("instance-nc")) == 0)
             {
               if (get_opts.opt_arg () == 0)
                 {
@@ -221,7 +221,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
               else
                 {
                   DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                                "Using provided instance NC: %C\n",
+                                "Using provided instance NC: %s\n",
                                 get_opts.opt_arg ()));
                   this->options_.instance_nc_ = get_opts.opt_arg ();
                 }
@@ -229,7 +229,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
           else
             {
               DANCE_ERROR ((LM_ERROR, DLINFO "Node_Manager_Module::parse_args - "
-                            "ERROR: unknown long option %C\n",
+                            "ERROR: unknown long option %s\n",
                             get_opts.long_option ()));
             }
 
@@ -542,7 +542,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                           "Error: Unable to write IOR to file %C\n",
                           node_file.c_str ()));
         }
-      
+
       // Activate POA manager
       PortableServer::POAManager_var mgr = this->root_poa_->the_POAManager ();
       mgr->activate ();
@@ -550,7 +550,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
       // Finishing Deployment part
       DANCE_DEBUG ((LM_NOTICE, DLINFO "DAnCE_NodeManager_Module::create_object - "
                     "DAnCE_NodeManager is running...\n"));
-      
+
       DANCE_DEBUG ((LM_DEBUG, DLINFO "DAnCE_NodeManager_Module::create_object - "
                     "NodeManager IOR: %s\n", ior.in ()));
 
