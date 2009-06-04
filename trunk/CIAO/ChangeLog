@@ -1,9 +1,18 @@
+Thu Jun  4 19:12:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp
+        * DAnCE/NodeManager/Node_Manager_Module.cpp
+        * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp
+        * tests/CIAO_ComponentServer/SimpleComponent/client.cpp
+          Unicode fixes
+
 Thu Jun  4 14:06:06 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * NEWS:
 
-          News updates for next release. 
-        
+          News updates for next release.
+
 Mon Jun  1 20:29:12 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIDLC/cidlc.cpp:

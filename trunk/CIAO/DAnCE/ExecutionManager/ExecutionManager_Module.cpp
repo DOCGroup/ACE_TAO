@@ -63,7 +63,7 @@ DAnCE_ExecutionManager_Module::~DAnCE_ExecutionManager_Module (void)
 }
 
 bool
-DAnCE_ExecutionManager_Module::parse_args (int argc, char *argv[])
+DAnCE_ExecutionManager_Module::parse_args (int argc, ACE_TCHAR *argv[])
 {
   DANCE_TRACE ("DAnCE_ExecutionManager_Module::parse_args");
 
@@ -94,7 +94,7 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, char *argv[])
         {
         case 'e':
           DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_ExecutionManager_Module::parse_args -  "
-                        "Output filename is %C\n",
+                        "Output filename is %s\n",
                         get_opts.opt_arg ()));
           this->options_.exec_mgr_file_ = get_opts.opt_arg ();
           break;
@@ -142,7 +142,7 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, char *argv[])
                               "node-map") == 0)
             {
               DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                            "Found Node map filename %C.\n",
+                            "Found Node map filename %s.\n",
                             get_opts.opt_arg ()));
               this->options_.node_map_ = get_opts.opt_arg ();
               break;
@@ -152,7 +152,7 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, char *argv[])
                                    "domain-nc") == 0)
             {
               DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                            "Binding to domain naming context %C.\n",
+                            "Binding to domain naming context %s.\n",
                             get_opts.opt_arg ()));
               this->options_.domain_nc_ = get_opts.opt_arg ();
               break;
@@ -162,7 +162,7 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, char *argv[])
           //case '?': // Display help for use of the server.
           //default:
           DANCE_ERROR_RETURN ((LM_ERROR,
-                               "usage:  %C\n"
+                               "usage:  %s\n"
                                "\t--exec-mgr,-e [execution manager ior file name]\n"
                                "\t--node-mgr,-n <node name>[=node manager ior file name]\n"
                                "\t--node-map <file name> \t\tFile containing a node manager map\n"
