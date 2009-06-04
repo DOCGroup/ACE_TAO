@@ -1,3 +1,10 @@
+Thu Jun  4 00:33:14 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Compression/Base_Compressor.cpp:      
+          It seems the syntax of '<::' or '<:' is converted to '[' by the
+          compiler or preprocessor. Changing the syntax to be '< ::'
+          resolves that.
+
 Wed  Jun  3 12:54:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
@@ -8,6 +15,25 @@ Wed  Jun  3 12:30:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Incoming_Message_Stack.h:
           Updated for CB2009 Update 3
+
+Wed Jun  3 12:16:21  2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/ZIOP/ZIOP.cpp
+        * tao/ZIOP/ZIOP.h
+          Applied ZIOP beta 2 spec. Compression ratio is defined
+          as float and renamed struct CompressedData into
+          CompressionData
+
+        * tao/ZIOP/ZIOP.pidl
+          Renamed struct CompressedData into CompressionData
+          (according to ZIOP beta 2 spec).
+
+        * tao/Compression/Base_Compressor.cpp
+        * tao/Compression/Compression.pidl
+        * tests/ZIOP/client.cpp
+        * tests/ZIOP/server.cpp
+          Applied ZIOP beta 2 spec. Compression ratio is defined
+          as float.
 
 Wed Jun  3 09:07:07 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
