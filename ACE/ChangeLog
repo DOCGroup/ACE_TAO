@@ -1,3 +1,10 @@
+Thu Jun  4 08:56:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.inl (isatty):
+          Check the return value of _open_osfhandle, if it returns -1,
+          it failed and then calling _isatty with -1 will cause an
+          assert of the msvc9 runtime
+
 Wed Jun  3 07:52:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessWinCE.pm:
