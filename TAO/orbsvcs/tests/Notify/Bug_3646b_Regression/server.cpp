@@ -108,25 +108,18 @@ int ACE_TMAIN (int , ACE_TCHAR **)
     ACE_TEXT ("(%P|%t) main - entered\n")
   ));
 
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) main - cycle 1 ...\n")
-  ));
-  loadunloadcycle();
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) main - cycle 1 done\n")
-  ));
-
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) main - cycle 2 ...\n")
-  ));
-  loadunloadcycle();
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) main - cycle 2 done\n")
-  ));
+  for (int cnt = 0, max = 2; cnt < max; ++cnt)
+    {
+      ACE_DEBUG((
+        LM_DEBUG,
+        ACE_TEXT ("(%P|%t) main - cycle %d ...\n"), cnt
+      ));
+      loadunloadcycle();
+      ACE_DEBUG((
+        LM_DEBUG,
+        ACE_TEXT ("(%P|%t) main - cycle %d done\n"), cnt
+      ));
+    }
 
   ACE_DEBUG((
     LM_DEBUG,

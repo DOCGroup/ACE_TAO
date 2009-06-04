@@ -1,3 +1,21 @@
+Thu Jun  4 10:17:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+          Do better cleanup, check for nil, use the correct wait() methods
+
+        * orbsvcs/tests/Notify/Bug_3646b_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3646c_Regression/server.cpp:
+          Use a loop instead of duplicated code
+
+        * orbsvcs/tests/Notify/Bug_3646d_Regression/Bug_3646d_Regression.mpc:
+          We don't need a consumer
+
+        * orbsvcs/tests/Notify/Bug_3646d_Regression/Consumer.cpp:
+          Deleted from the repository
+
+        * orbsvcs/tests/Notify/Bug_3646d_Regression/run_test.pl:
+          Simplified
+
 Thu Jun  4 09:13:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
