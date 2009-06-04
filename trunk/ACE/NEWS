@@ -10,6 +10,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.9 and ACE-5.7.0
   and newer. If you don't want to use this library undef ACE_HAS_VXATOMICLIB
   in your config.h file
 
+. Added support for C++ Builder 2009 Update 3
+
+. Added support for ACE/TAO using the CEGCC project
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.8 and ACE-5.6.9
 ====================================================
 
