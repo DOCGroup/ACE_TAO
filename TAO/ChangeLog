@@ -1,6 +1,12 @@
+Thu Jun  4 07:21:46 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Bug_3676_Regression/Bug_3676_Regression.mpc:
+
+          Properly fixed mpc which requires corba_messaging.
+
 Thu Jun  4 00:33:14 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
-        * tao/Compression/Base_Compressor.cpp:      
+        * tao/Compression/Base_Compressor.cpp:
           It seems the syntax of '<::' or '<:' is converted to '[' by the
           compiler or preprocessor. Changing the syntax to be '< ::'
           resolves that.
