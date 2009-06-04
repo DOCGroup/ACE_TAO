@@ -1,3 +1,9 @@
+Thu Jun  4 09:42:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * contrib/FaCE/CE_ARGV.h:
+        * contrib/FaCE/FaCE.cpp:
+          Fixed GCC 4.4 warnings
+
 Thu Jun  4 09:12:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.h:

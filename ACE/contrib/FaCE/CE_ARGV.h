@@ -52,7 +52,7 @@ public:
     /**
      * Returns the 'char**' that contains the converted command line parameters.
      */
-    wchar_t** const argv(void);
+    wchar_t** argv(void);
 
 private:
     /**
@@ -83,7 +83,7 @@ inline int CE_ARGV::argc()
 }
 
 
-inline wchar_t** const CE_ARGV::argv()
+inline wchar_t** CE_ARGV::argv()
 {
     return ce_argv_;
 }

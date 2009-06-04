@@ -21,7 +21,7 @@
 // This utility does not use ACE, and shouldn't.
 //FUZZ: disable check_for_lack_ACE_OS
 
-ACE_TCHAR* g_ParameterFileName = ACE_TEXT("Parameters.txt");
+const ACE_TCHAR* g_ParameterFileName = ACE_TEXT("Parameters.txt");
 
 /**
  * This simple and small class manages user-input command line
@@ -459,7 +459,7 @@ LRESULT CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM)
 {
     SHINITDLGINFO shidi;
 
-    ACE_TCHAR* copyrightNote =
+    const ACE_TCHAR* copyrightNote =
 ACE_TEXT("ACE and TAO are copyrighted by Dr. Douglas C. Schmidt and Center for Distributed Object") \
 ACE_TEXT("Computing at Washington University, 1993-2002, all rights reserved.")  \
 ACE_TEXT("FaCE is copyrighted by Object Computing, Inc., 2002,\n all rights reserved.\n") \
