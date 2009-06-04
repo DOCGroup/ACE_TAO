@@ -22,7 +22,7 @@ ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testNotifyService",
   "TAO_Notify_Service",
   "_make_TAO_Notify_Service_Driver",
-  "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 1 -ORBInitRef NameService=file://naming.ior -IORoutput notify.ior"
+  "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 10 -ORBInitRef NameService=file://naming.ior -IORoutput notify.ior"
 );
 
 ACE_TCHAR const * const scpc_unloadNotifyService = ACE_REMOVE_SERVICE_DIRECTIVE("testNotifyService");
@@ -128,25 +128,18 @@ int ACE_TMAIN (int , ACE_TCHAR **)
     ACE_TEXT ("(%P|%t) main - entered\n")
   ));
 
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) main - cycle 1 ...\n")
-  ));
-  loadunloadcycle();
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) main - cycle 1 done\n")
-  ));
-
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) main - cycle 2 ...\n")
-  ));
-  loadunloadcycle();
-  ACE_DEBUG((
-    LM_DEBUG,
-    ACE_TEXT ("(%P|%t) main - cycle 2 done\n")
-  ));
+  for (int cnt = 0, max = 10; cnt < max; ++cnt)
+    {
+      ACE_DEBUG((
+        LM_DEBUG,
+        ACE_TEXT ("(%P|%t) main - cycle %d ...\n"), cnt
+      ));
+      loadunloadcycle();
+      ACE_DEBUG((
+        LM_DEBUG,
+        ACE_TEXT ("(%P|%t) main - cycle %d done\n"), cnt
+      ));
+    }
 
   ACE_DEBUG((
     LM_DEBUG,
