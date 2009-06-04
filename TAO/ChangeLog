@@ -1,3 +1,10 @@
+Thu Jun  4 09:13:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.h:
+          Set the ORB in the worker to nil and also cancel the timer
+          when we don't need it anymore
+
 Thu Jun  4 07:21:46 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Bug_3676_Regression/Bug_3676_Regression.mpc:
