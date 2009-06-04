@@ -343,7 +343,7 @@ TAO_Notify_Service_Driver::run (void)
 
   if (this->nthreads_ > 0)
     {
-      worker_.wait ();
+      this->worker_.wait ();
       return 0;
     }
   else
@@ -365,7 +365,6 @@ TAO_Notify_Service_Driver::fini (void)
   CORBA::ORB_var dispatching_orb = this->dispatching_orb_._retn ();
   PortableServer::POA_var poa = this->poa_._retn ();
   CosNaming::NamingContextExt_var naming = this->naming_._retn ();
-  worker_.orb (CORBA::ORB::_nil ());
 
   // This must be called to ensure that all services shut down
   // correctly.  Depending upon the type of service loaded, it may
@@ -403,24 +402,38 @@ TAO_Notify_Service_Driver::fini (void)
       poa->destroy (true, true);
       poa = PortableServer::POA::_nil ();
     }
-
+    
   if (this->shutdown_dispatching_orb_ && !CORBA::is_nil (dispatching_orb_.in ()))
     {
       dispatching_orb->shutdown ();
-
-      dispatching_orb->destroy ();
     }
    
-  dispatching_orb_ = CORBA::ORB::_nil ();  
-
   // shutdown the ORB.
   if (this->shutdown_orb_ && !CORBA::is_nil (orb.in ()))
     {
       orb->shutdown ();
+    }
 
+  // Make sure all worker threads are gone.
+  this->worker_.wait ();
+  this->logging_worker_.wait ();
+
+  // Destroy the ORB
+  if (this->shutdown_dispatching_orb_ && !CORBA::is_nil (dispatching_orb_.in ()))
+    {
+      dispatching_orb->destroy ();
+    }
+
+  // Destroy the ORB.
+  if (this->shutdown_orb_ && !CORBA::is_nil (orb.in ()))
+    {
       orb->destroy ();
     }
 
+  dispatching_orb_ = CORBA::ORB::_nil ();  
+
+  worker_.orb (CORBA::ORB::_nil ());
+    
   orb = CORBA::ORB::_nil ();  
 
   return 0;
