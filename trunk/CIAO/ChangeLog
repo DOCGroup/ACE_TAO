@@ -1,3 +1,9 @@
+Thu Jun  4 14:06:06 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * NEWS:
+
+          News updates for next release. 
+        
 Mon Jun  1 20:29:12 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIDLC/cidlc.cpp:
@@ -6,7 +12,7 @@ Mon Jun  1 20:29:12 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
           Added two options:  --suppress-lem and --suppress-svnt, which will
           suppress generation of the local executor mapping and servant code,
           respectively.
-        
+
 Fri May 29 00:48:01 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
