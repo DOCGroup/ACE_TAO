@@ -756,7 +756,7 @@ Plan_Launcher_Base_Impl::check_mode_consistentness()
   }
 
 ACE_CString
-Plan_Launcher_Base_Impl::expand_env_vars (const char * s)
+Plan_Launcher_Base_Impl::expand_env_vars (const ACE_TCHAR * s)
   {
     ACE_CString src = s;
     ACE_CString res;
