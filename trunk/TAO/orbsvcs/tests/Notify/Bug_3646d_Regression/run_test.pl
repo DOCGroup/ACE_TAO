@@ -8,55 +8,29 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-PerlACE::add_lib_path ('../lib');
+$status = 0;
+$file = PerlACE::LocalFile ("test.ior");
 
-use strict;
+unlink $file;
 
-my $status = 0;
-my $port = 3000;
-my $namingior = PerlACE::LocalFile("naming.ior");
-my $notifyior = PerlACE::LocalFile("notify.ior");
-
-my $NS = new PerlACE::Process("../../../Naming_Service/Naming_Service",
-                              "-ORBEndpoint iiop://localhost:$port " .
-                              "-o $namingior -ORBDebugLevel 10");
-my $TS = new PerlACE::Process("server",
-                              "-ORBInitRef NameService=iioploc://" .
-                              "localhost:$port/NameService " .
-                              "-IORoutput $notifyior");
-my $STC1 = new PerlACE::Process("Consumer",
-                                "-ORBInitRef NameService=iioploc://" .
-                                "localhost:$port/NameService");
-
-unlink($notifyior, $namingior);
-
-$NS->Spawn();
-if (PerlACE::waitforfile_timed($namingior, $PerlACE::wait_interval_for_process_creation) == -1) {
-  print STDERR "ERROR: waiting for the naming service to start\n";
-  $NS->Kill();
-  exit(1);
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "");
+}
+else {
+    $SV = new PerlACE::Process ("server", "");
 }
 
-$TS->Spawn();
-if (PerlACE::waitforfile_timed($notifyior, $PerlACE::wait_interval_for_process_creation) == -1) {
-  print STDERR "ERROR: waiting for the notify service to start\n";
-  $TS->Kill();
-  $NS->Kill();
-  exit(1);
+print STDERR "\n\n==== Running bug 3646d regression test\n";
+
+$SV->Spawn ();
+
+$collocated = $SV->WaitKill (200);
+
+if ($collocated != 0) {
+    print STDERR "ERROR: Bug_3646d_Regression returned $collocated\n";
+    $status = 1;
 }
 
-$STC1->Spawn();
+unlink $file;
 
-sleep(2);
-
-my $client = $STC1->WaitKill(5);
-if ($client != 0) {
-  $status = 1;
-}
-
-$TS->Kill();
-$NS->Kill();
-
-unlink($notifyior, $namingior);
-
-exit($status);
+exit $status;
