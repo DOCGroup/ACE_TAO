@@ -1,9 +1,20 @@
 PLANNED CHANGES BEFORE NEXT RELEASE
 ===================================
 
-This is advanced notification that the CIAO-0.6.7 release of CIAO will be
-the last release before a major refactoring is introduced into CIAO/DAnCE
-that will remove several features, with no planned replacement in
+.  The RepositoryManager will be ported to the new DAnCE.
+
+.  The TargetManager will be ported to the new DAnCE. 
+
+.  The CIDL Compiler may be deprecated in the near future to be replaced by
+   code generation being handled entirely by tao_idl.  As a result, CIDL will
+   no longer be used to specify containers and local executor mappings for component
+   implementations, to be instead handled by either command line options to the
+   compiler or some new file type.  
+
+PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
+===========================================================================
+
+. Several features have been recently removed, with no planned replacement in
 their current form, such as:
 
 .  ReDaC
@@ -17,9 +28,6 @@ replacement in the near term:
 .  TargetManager
 .  RepositoryManager
 .  Swapping container
-
-PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
-===========================================================================
 
 . Enhance Execution Manager and Domain Application Manager to make calls
   on the Target Manager to get resource information.
@@ -52,18 +60,6 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
   can be implemented in such a way as to not break copliance with the DnC
   specification.
 
-. Implement Resource Allocation and Control Engine (RACE), which is a
-  component middleware framework built atop of CIAO/DAnCE that integrates
-  multiple resource allocation/control algorithms for (re)deploying and
-  (re)configuring component applications. RACE enables (1) system
-  developers to configure algorithms depending on the characteristics of
-  applications and operating environment, and (2) swapping in and swapping
-  out multiple algorithms to make different resource allocation and control
-  decisions, without handcrafting the mechanisms needed to (1) configure
-  the algorithms and (2) deploy the decisions made by the algorithms.
-
-. Implement support for more complex type initialization with XML.
-
 . Decouple dependencies to NodeApplication from other DAnCE tools.
   These dependencies were added to support static configurator.  We
   need to have these tools in both conventional version and static
@@ -81,7 +77,10 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.6.9 and CIAO-0.7.0
 =======================================================
-
+.  CIDLC compiler has new command line options:  --suppress-lem which will suppress
+   generation of the local executor mapping, --suppress-svnt which will suppress
+   generation of the servant code, --lem-enclosing-module which will generate the 
+   local executor mapping inside a given module.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.6.8 and CIAO-0.6.9
 ======================================================
