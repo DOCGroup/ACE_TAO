@@ -14,6 +14,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.9 and ACE-5.7.0
 
 . Added support for ACE/TAO using the CEGCC project
 
+. Added support for upcoming Fedora 11 and OpenSuSE Factory
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.8 and ACE-5.6.9
 ====================================================
 
