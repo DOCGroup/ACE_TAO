@@ -114,16 +114,17 @@ inline int ace_ungetc_helper (int ch, FILE *fp)
 
 inline ACE_HANDLE ace_fileno_helper (FILE *fp)
 {
-#if defined (fileno)
+#if defined (fileno) && !defined (ACE_WIN32)
   return fileno (fp);
-#undef fileno
 #elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   return (ACE_HANDLE)_get_osfhandle (ACE_STD_NAMESPACE::fileno (fp));
 #else
   return ACE_STD_NAMESPACE::fileno (fp);
 #endif /* defined (fileno) */
+#if defined (fileno)
+# undef fileno
+#endif /* defined (fileno) */
 }
-
 
 #if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID) \
     && !defined(ACE_WIN32) && !defined (ACE_VXWORKS)

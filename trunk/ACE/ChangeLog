@@ -1,3 +1,8 @@
+Thu Jun  4 09:12:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.h:
+          Fixed MinGW compile problem
+
 Thu Jun  4 08:56:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.inl (isatty):
