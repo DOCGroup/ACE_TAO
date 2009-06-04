@@ -45,6 +45,7 @@ class LoggingWorker : public ACE_Task_Base
     ACE_Reactor logging_reactor_;
     TAO_Notify_Service_Driver* ns_;
     bool started_;
+    long timer_id_;
 };
 
 /**
