@@ -623,8 +623,12 @@ ACE_OS::isatty (ACE_HANDLE handle)
   return 0;
 #else
   int const fd = ::_open_osfhandle (intptr_t (handle), 0);
-  int const status = ::_isatty (fd);
-  ::_close (fd);
+  int status = 0;
+  if (fd != -1)
+    {
+      status = ::_isatty (fd);
+      ::_close (fd);
+    }
   return status;
 #endif /* ACE_LACKS_ISATTY */
 }
