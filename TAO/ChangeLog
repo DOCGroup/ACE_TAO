@@ -1,3 +1,14 @@
+Thu Jun  4 11:15:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+          Another set of cleanup improvements
+
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+          Added a missing \n
+
+        * orbsvcs/tests/Notify/Bug_3646d_Regression/server.cpp:
+          Use a loop and more worker threads
+
 Thu Jun  4 10:17:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
