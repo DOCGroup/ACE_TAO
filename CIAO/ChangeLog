@@ -1,3 +1,13 @@
+Fri Jun  5 18:17:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp
+        * ciao/ComponentServer/CIAO_ComponentServer.h
+        * ciao/Logger/File_Logger_Backend.cpp
+        * ciao/Server_init.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * tools/XML/XML_Schema_Resolver.h
+          Unicode fixes
+
 Thu Jun  4 19:12:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ExecutionManager/ExecutionManager_Module.cpp

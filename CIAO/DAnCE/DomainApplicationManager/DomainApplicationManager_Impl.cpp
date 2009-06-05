@@ -15,7 +15,7 @@ DomainApplicationManager_Impl::DomainApplicationManager_Impl (CORBA::ORB_ptr orb
   , plan_ (plan)
   , nodes_ (nodes)
 {
-  DANCE_TRACE(DLINFO "DomainApplicationManager_Impl::DomainApplicationManager_Impl");
+  DANCE_TRACE(DLINFO ACE_TEXT("DomainApplicationManager_Impl::DomainApplicationManager_Impl"));
   this->preparePlan();
   DANCE_DEBUG((LM_DEBUG, DLINFO "DomainApplicationManager_Impl::DomainApplicationManager_Impl - "
                "Successfully prepared plan : %C\n", this->plan_.UUID.in()));
@@ -160,7 +160,7 @@ DomainApplicationManager_Impl::getApplications ()
 ::Deployment::DeploymentPlan *
 DomainApplicationManager_Impl::getPlan ()
 {
-  DANCE_TRACE ( DLINFO "DomainApplicationManager_Impl::getPlan ()");
+  DANCE_TRACE ( DLINFO ACE_TEXT("DomainApplicationManager_Impl::getPlan ()"));
 
   Deployment::DeploymentPlan* plan = 0;
 
