@@ -88,8 +88,8 @@ namespace CIAO
      */
     struct CIAO_XML_Utils_Export Environment_Resolver
     {
-      Environment_Resolver (const ACE_TCHAR *variable = "",
-                            const ACE_TCHAR *path = "./");
+      Environment_Resolver (const ACE_TCHAR *variable = ACE_TXT(""),
+                            const ACE_TCHAR *path = ACE_TXT("./"));
       
       void add_path (const ACE_TCHAR *variable, 
                      const ACE_TCHAR *path);
