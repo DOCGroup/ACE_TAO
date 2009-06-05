@@ -1,3 +1,11 @@
+Fri Jun  5 12:06:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Bug_3688_Regression/*
+          New regression test
+
+        * bin/tao_other_tests.lst:
+          Added 3688
+
 Fri Jun  5 08:20:56 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/Bug_3683_Regression/Echo_Client_i.cpp:
