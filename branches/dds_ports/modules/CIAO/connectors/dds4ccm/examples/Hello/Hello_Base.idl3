@@ -35,15 +35,15 @@ module Hello_DDS
 {
   component Hello_sender_Connector
   {
-    provides CCM_DDS::Writer<T> sender_data;
+    provides CCM_DDS::string_Writer sender_data;
     provides DDS::DataWriter sender_dds_entity;
   };
   
   component Hello_receiver_Connector
   {
-    provides CCM_DDS::Reader<T> receiver_data;
+    provides CCM_DDS::string_Reader receiver_data;
     provides CCM_DDS::ListenerControl receiver_control;
-    uses CCM_DDS::RawListener<T> receiver_listener;
+    uses CCM_DDS::string_RawListener receiver_listener;
     provides DDS::DataReader receiver_dds_entity;
     uses CCM_DDS::PortStatusListener receiver_status;
   };
