@@ -1,10 +1,18 @@
+Fri Jun  5 20:10:11 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Hello/Hello_Base.idl3:
+        * connectors/dds4ccm/examples/Hello/Hello_Receiver.idl3:
+        * connectors/dds4ccm/examples/Hello/Hello_Sender.idl3:
+
+          Finished the by-hand translation to idl3.
+        
 Fri Jun  5 19:48:15 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Logger/Logger_Service.cpp:
 
-          Now swallows any command line arguments it finds. 
-        
-Tue Jun  2 03:43:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+          Now swallows any command line arguments it finds.
+
+Tue Jun  2 03:43:30 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/Deployment/Module_Main.h
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp

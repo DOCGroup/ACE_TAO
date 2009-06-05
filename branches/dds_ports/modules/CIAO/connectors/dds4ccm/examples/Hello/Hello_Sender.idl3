@@ -4,7 +4,7 @@ module Hello_DDS
 {
   component Sender
   {
-    uses CCM_DDS::Writer<T> push_data_data;
+    uses CCM_DDS::string_Writer push_data_data;
     uses DDS::DataWriter push_data_dds_entity;
   };
 };
