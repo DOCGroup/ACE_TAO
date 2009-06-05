@@ -1,3 +1,41 @@
+Fri Jun  5 21:01:43 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.cpp:
+    
+          Fixed a bug in build_tree() that ignored the user defined 
+          constraint expression when the domain name or event type is
+          defined.
+          
+        * orbsvcs/tests/Notify/Bug_3688_Regression/Bug_3688_Regression.mpc:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/common.h:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/consumer.cpp:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/supplier.cpp:
+
+          Added simple test based on Bug_1884_Regression test.
+
+        * orbsvcs/tests/Notify/Bug_3688_Regression/Bug_3688.mpc:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/DllORB.h:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/DllORB.cpp:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/TestBroadcaster.h:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/TestBroadcaster.cpp:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/TestListener.h:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/TestListener.cpp:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/bug3688_export.h:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/server.cpp:
+
+          Removed these files.
+
+        * bin/tao_other_tests.lst:
+
+          Added Bug_3688_Regression test.
+          
+        * orbsvcs/tests/Notify/Bug_1884_Regression/consumer.cpp:
+
+          Made received flag set true when consumer receives message. It did
+          not show any problem is because the test defaults to not expecting
+          to receive events.
+          
 Fri Jun  5 17:37:27 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/contrib/mcpp/directive.cpp:
@@ -13,7 +51,7 @@ Fri Jun  5 17:37:27 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * TAO_IDL/contrib/mcpp/system.cpp:
 
           Porting for Windows/VC8.
-        
+
 Fri Jun  5 16:33:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
