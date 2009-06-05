@@ -1,12 +1,12 @@
 // -*- MPC -*-
 // $Id$
 
-project (*lib): notify, taolib, portableserver, threads, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
+project (*lib): tao_notify_service, notify, taolib, portableserver, threads, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
   sharedname = bug3688
   dynamicflags += BUG3688_BUILD_DLL
 
   Source_Files {
-    DllORB.cpp,
+    DllORB.cpp
     TestListener.cpp
     TestBroadcaster.cpp
   }
