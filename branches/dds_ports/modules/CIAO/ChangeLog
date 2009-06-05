@@ -1,5 +1,33 @@
 Tue Jun  2 03:43:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
+        * DAnCE/Deployment/Module_Main.h
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp
+          
+          Added \n to debug statements.
+          
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp
+          
+          In a DANCE_DEBUG statement, an %C was declared without an input variable.
+          This results in an exception.
+          
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher.h
+          
+          Changed code outlining.
+          
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp
+          
+          When logging the command line parameters in a logfile, every line is prefixed 
+          with a timestamp, hostid, ...... This results in a log line which is hard to read.
+          The command line parameters are now logged using several lines.
+          
+        * examples/Hello/descriptors/run_test.pl
+          
+          Added logging regarding processes and commandline parameters
+
+Tue Jun  2 03:43:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
         * connectors:
         * connectors/dds4ccm:
         * connectors/dds4ccm/example:

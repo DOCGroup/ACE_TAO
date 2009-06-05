@@ -64,7 +64,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
         }
       
       DANCE_DEBUG ((LM_TRACE, DLINFO 
-                    "Module_Main.h - initializing module instance"));
+                    "Module_Main.h - initializing module instance\n"));
       DANCE_MODULE_MAIN_CLASS_NAME module_instance;
       
       CORBA::Object_var obj = module_instance.create_object (orb.in (),

@@ -398,12 +398,11 @@ void Plan_Launcher_Base_Impl::usage(const ACE_TCHAR* program)
 
 void Plan_Launcher_Base_Impl::parse_args(int argc, ACE_TCHAR *argv[])
 {
-  DANCE_DEBUG ((LM_TRACE, DLINFO "PL options : \""));
+  DANCE_DEBUG ((LM_TRACE, DLINFO "PL options :\n"));
   for (int i = 0; i < argc; ++i)
     {
-      DANCE_DEBUG ( (LM_TRACE, " %s", argv[i]));
+      DANCE_DEBUG ( (LM_TRACE, "\t%s\n", argv[i]));
     }
-  DANCE_DEBUG ( (LM_TRACE, "\"\n"));
 
   ACE_Get_Opt get_opt(argc, argv,
   ACE_TEXT ("k:d:w:t:a:qx:h"), 0);
