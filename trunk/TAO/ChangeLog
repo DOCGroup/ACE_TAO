@@ -1,3 +1,11 @@
+Fri Jun 05 22:45:57 UTC 2009  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+
+          Changed enqueue method to log and return -1 when the enqueue is
+          not attempted.  This should help identify the case where the
+          enqueues are not occurring and memory is leaking.
+
 Fri Jun  5 20:42:42 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/contrib/mcpp/directive.cpp:
