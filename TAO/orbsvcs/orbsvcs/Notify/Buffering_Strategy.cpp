@@ -165,6 +165,12 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
 
       local_not_empty_.signal ();
     }
+  else
+    {
+      ACE_DEBUG((LM_DEBUG,
+                 "Notify (%P|%t) - Panic! did not attempt to enqueue event\n"));
+      return -1;
+    }
 
   size_t count = this->msg_queue_.message_count ();
   if (this->tracker_ != 0)
