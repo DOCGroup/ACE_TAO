@@ -384,13 +384,13 @@ public:
   };
 
 protected:
-  /// Returns 1 if <d> is a delimiter, 0 otherwise.  If <d> should be
-  /// replaced with @a r, <replace> is set to 1, otherwise 0.
+  /// Returns 1 if @a d is a delimiter, 0 otherwise.  If @a d should be
+  /// replaced with @a r, @a replace is set to 1, otherwise 0.
   int is_delimiter (ACE_TCHAR d, int &replace, ACE_TCHAR &r);
 
   /**
-   * If <start> is a start preserve designator, returns 1 and sets
-   * <stop> to the stop designator.  Returns 0 if <start> is not a
+   * If @a start is a start preserve designator, returns 1 and sets
+   * @a stop to the stop designator.  Returns 0 if @a start is not a
    * preserve designator.
    */
   int is_preserve_designator (ACE_TCHAR start, ACE_TCHAR &stop, int &strip);
