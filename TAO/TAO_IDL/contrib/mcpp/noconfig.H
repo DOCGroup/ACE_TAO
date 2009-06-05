@@ -574,7 +574,7 @@
  */
 
 /* stdin, stdout, stderr, FILE, NULL, fgets(), fputs() and other functions. */
-#include    "stdio.h"
+#include    "ace/OS_NS_stdio.h"
 
 /* PATHMAX is the maximum length of path-list on the host system.   */
 /* _POSIX_* only to get PATH_MAX    */
@@ -598,18 +598,19 @@
 #endif
 
 /* islower(), isupper(), toupper(), isdigit(), isxdigit(), iscntrl()        */
-#include    "ctype.h"
+#include    "ace/OS_NS_ctype.h"
 
 /* errno    */
-#include    "errno.h"
+#include    "ace/OS_NS_errno.h"
 
-#include    "string.h"
-#include    "stdlib.h"
-#include    "time.h"
+#include    "ace/OS_NS_string.h"
+#include    "ace/OS_NS_stdlib.h"
+#include    "ace/OS_NS_time.h"
 #include    "setjmp.h"
 
 /* For debugging malloc systems by kmatsui  */
 #if     KMMALLOC && _MEM_DEBUG
 #include        "xalloc.h"
 #endif
-
+#define NEED_GETOPT 1
+    using namespace ACE_OS;

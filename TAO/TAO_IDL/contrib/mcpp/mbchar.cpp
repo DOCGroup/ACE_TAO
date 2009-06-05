@@ -372,7 +372,7 @@ const char *    set_encoding(
              * and lowered.
              */
 
-    if (strlen( name) >= NAMLEN) {
+    if (ACE_OS::strlen( name) >= NAMLEN) {
         if ((env || pragma) && (warn_level & 1)) {
             cwarn( too_long, name, 0L, 0);
         } else {
@@ -380,18 +380,18 @@ const char *    set_encoding(
             mcpp_fputc( '\n', ERR);
         }
     }
-    strcpy( norm, name);
+    ACE_OS::strcpy( norm, name);
     if (norm[ 5] == '.')
-        memmove( norm, norm + 5, strlen( norm + 5) + 1);
+        ACE_OS::memmove( norm, norm + 5, ACE_OS::strlen( norm + 5) + 1);
         /* Remove initial 'xxxxx.' as 'ja_JP.', 'en_US.' or any other   */
-    conv_case( norm, norm + strlen( norm), LOWER);
+    conv_case( norm, norm + ACE_OS::strlen( norm), LOWER);
     strip_bar( norm);
 
-    if (strlen( name) == 0) {                       /* ""       */
+    if (ACE_OS::strlen( name) == 0) {                       /* ""       */
         mbchar = MBCHAR;    /* Restore to the default encoding  */
-    } else if (memcmp( norm, "iso8859", 7) == 0     /* iso8859* */
-            || memcmp( norm, "latin", 5) == 0       /* latin*   */
-            || memcmp( norm, "en", 2) == 0) {       /* en*      */
+    } else if (ACE_OS::memcmp( norm, "iso8859", 7) == 0     /* iso8859* */
+            || ACE_OS::memcmp( norm, "latin", 5) == 0       /* latin*   */
+            || ACE_OS::memcmp( norm, "en", 2) == 0) {       /* en*      */
         mbchar = 0;                 /* No multi-byte character  */
     } else {
         alias = 2;
@@ -454,7 +454,7 @@ static void strip_bar(
 
     while (*cp != EOS) {
         if (*cp == '_' || *cp == '-' || *cp == '.')
-            memmove( cp, cp + 1, strlen( cp));
+            ACE_OS::memmove( cp, cp + 1, ACE_OS::strlen( cp));
         else
             cp++;
     }

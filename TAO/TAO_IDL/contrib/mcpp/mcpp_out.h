@@ -2,12 +2,16 @@
 #ifndef _MCPP_OUT_H
 #define _MCPP_OUT_H
 
+#ifdef OUT
+#undef OUT
+#endif
+
 /* Choices for output destination */
-typedef enum {
+enum OUTDEST {
     OUT,                        /* ~= fp_out    */
     ERR,                        /* ~= fp_err    */
     DBG,                        /* ~= fp_debug  */
     NUM_OUTDEST
-} OUTDEST;
+};
 
 #endif  /* _MCPP_OUT_H  */

@@ -42,7 +42,7 @@
 #define SYSTEM_H
 
 #if     HAVE_CONFIG_H
-#include    "configed.H"
+//#include    "configed.H"
 #else
 #include    "noconfig.H"
 #endif
